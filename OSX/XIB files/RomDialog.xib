@@ -45,12 +45,11 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="120" y="186" width="480" height="615"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="480" height="615"/>
-            <value key="maxSize" type="size" width="480" height="615"/>
             <view key="contentView" id="RiN-ft-iE3">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="615"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a1g-J9-JeN">
                         <rect key="frame" x="74" y="578" width="388" height="17"/>
@@ -63,14 +62,14 @@
                     </textField>
                     <box fixedFrame="YES" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="K9r-2n-lSs">
                         <rect key="frame" x="17" y="427" width="446" height="117"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <view key="contentView" ambiguous="YES" id="JJV-IA-8wg">
                             <rect key="frame" x="1" y="1" width="444" height="115"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TBA-Lc-PJo" customClass="RomDropView" customModule="VirtualC64" customModuleProvider="target">
                                     <rect key="frame" x="5" y="6" width="96" height="101"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="rom_light" id="lcJ-mc-D6S"/>
                                     <connections>
                                         <outlet property="dialogController" destination="-2" id="8EI-Fb-taq"/>
@@ -96,7 +95,7 @@
                                 </textField>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="69e-Pv-35r">
                                     <rect key="frame" x="408" y="16" width="20" height="20"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="trashTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" imageScaling="proportionallyDown" inset="2" id="cFv-U4-2kG">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -106,8 +105,8 @@
                                     </connections>
                                 </button>
                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4P2-2W-3hB">
-                                    <rect key="frame" x="107" y="44" width="324" height="32"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <rect key="frame" x="107" y="29" width="324" height="51"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" selectable="YES" title="This 8 KB Rom contains Commodore's Basic interpreter. It occupies the address space from $A000 to $BFFF." id="i5N-5r-gAc">
                                         <font key="font" metaFont="cellTitle"/>
                                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -115,8 +114,8 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eV4-Pb-dQR">
-                                    <rect key="frame" x="107" y="15" width="274" height="17"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <rect key="frame" x="107" y="15" width="296" height="17"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="/User/JohnDoe/VirtualC64/Kernal.bin" id="hOz-O2-mnP">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -125,7 +124,7 @@
                                 </textField>
                                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SvH-ce-WrE">
                                     <rect key="frame" x="242" y="85" width="188" height="18"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="right" title="Hash: 1020304050607080" id="hxR-wK-F8F">
                                         <font key="font" metaFont="system" size="11"/>
                                         <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
@@ -137,14 +136,14 @@
                     </box>
                     <box fixedFrame="YES" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="0ce-aY-vda">
                         <rect key="frame" x="17" y="303" width="446" height="122"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <view key="contentView" ambiguous="YES" id="xy3-Pa-rGi">
                             <rect key="frame" x="1" y="1" width="444" height="120"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iGa-Pr-gDP" customClass="RomDropView" customModule="VirtualC64" customModuleProvider="target">
                                     <rect key="frame" x="5" y="9" width="96" height="101"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="rom_light" id="Ma7-Be-zmU"/>
                                     <connections>
                                         <outlet property="dialogController" destination="-2" id="eyc-RB-mJH"/>
@@ -170,7 +169,7 @@
                                 </textField>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8rW-Ql-SJR">
                                     <rect key="frame" x="406" y="16" width="20" height="20"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="trashTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" imageScaling="proportionallyDown" inset="2" id="tLT-LQ-uEB">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -181,7 +180,7 @@
                                 </button>
                                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hzp-pR-PlJ">
                                     <rect key="frame" x="240" y="93" width="188" height="18"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="right" title="Hash: 1020304050607080" id="kib-Hs-LRG">
                                         <font key="font" metaFont="system" size="11"/>
                                         <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
@@ -189,8 +188,8 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="znA-Fh-0ke">
-                                    <rect key="frame" x="105" y="48" width="324" height="32"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <rect key="frame" x="105" y="33" width="324" height="51"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" selectable="YES" title="This 4 KB Rom contains the C64's character set. It occupies the address space from $D000 to $DFFF." id="BU8-Jw-CW9">
                                         <font key="font" metaFont="cellTitle"/>
                                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -198,8 +197,8 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aTA-Za-Apw">
-                                    <rect key="frame" x="105" y="17" width="274" height="17"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <rect key="frame" x="105" y="17" width="296" height="17"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="/User/JohnDoe/VirtualC64/Kernal.bin" id="dtY-FY-AfN">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -211,14 +210,14 @@
                     </box>
                     <box fixedFrame="YES" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="jhr-Le-P26">
                         <rect key="frame" x="17" y="179" width="446" height="122"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <view key="contentView" ambiguous="YES" id="n0v-7c-TfM">
                             <rect key="frame" x="1" y="1" width="444" height="120"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U1D-eb-STq" customClass="RomDropView" customModule="VirtualC64" customModuleProvider="target">
                                     <rect key="frame" x="5" y="9" width="96" height="101"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="rom_light" id="bUM-12-JUr"/>
                                     <connections>
                                         <outlet property="dialogController" destination="-2" id="S8E-5e-mnI"/>
@@ -244,7 +243,7 @@
                                 </textField>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f1b-sd-22I">
                                     <rect key="frame" x="406" y="16" width="20" height="20"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="trashTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" imageScaling="proportionallyDown" inset="2" id="3sQ-2r-TH0">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -255,7 +254,7 @@
                                 </button>
                                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hkk-RJ-uX4">
                                     <rect key="frame" x="240" y="92" width="188" height="18"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="right" title="Hash: 1020304050607080" id="IjM-oW-4Za">
                                         <font key="font" metaFont="system" size="11"/>
                                         <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
@@ -263,8 +262,8 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qa4-Qo-hNY">
-                                    <rect key="frame" x="103" y="48" width="324" height="32"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <rect key="frame" x="103" y="32" width="324" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" selectable="YES" title="This 8 KB Rom contains the low-level operation system. It occupies the address space from $D000 to $DFFF." id="6ET-wD-ErX">
                                         <font key="font" metaFont="cellTitle"/>
                                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -272,8 +271,8 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sJQ-HH-Ube">
-                                    <rect key="frame" x="103" y="17" width="274" height="17"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <rect key="frame" x="103" y="17" width="296" height="17"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="/User/JohnDoe/VirtualC64/Kernal.bin" id="EqD-e3-MZB">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -287,15 +286,6 @@
                         <rect key="frame" x="74" y="560" width="384" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Use drag and drop to add ROM images." id="tmf-ZF-Qag">
-                            <font key="font" metaFont="cellTitle"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sMG-1V-ztt">
-                        <rect key="frame" x="17" y="21" width="335" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Click help button to learn more about compatible ROMs." id="0Cl-vs-f4d">
                             <font key="font" metaFont="cellTitle"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -316,8 +306,8 @@ DQ
                         </connections>
                     </button>
                     <button horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zyn-98-bfj">
-                        <rect key="frame" x="356" y="16" width="25" height="25"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <rect key="frame" x="18" y="17" width="25" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nbU-q4-9dA">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -333,14 +323,14 @@ DQ
                     </imageView>
                     <box fixedFrame="YES" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="4XL-pd-FHd">
                         <rect key="frame" x="17" y="55" width="446" height="122"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <view key="contentView" ambiguous="YES" id="n7U-1l-mTZ">
                             <rect key="frame" x="1" y="1" width="444" height="120"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mLd-ch-26X" customClass="RomDropView" customModule="VirtualC64" customModuleProvider="target">
                                     <rect key="frame" x="5" y="8" width="96" height="101"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="rom_light" id="AN8-L9-hto"/>
                                     <connections>
                                         <outlet property="dialogController" destination="-2" id="hhx-35-Ejc"/>
@@ -366,7 +356,7 @@ DQ
                                 </textField>
                                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fIa-Zy-br9">
                                     <rect key="frame" x="238" y="93" width="188" height="18"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="right" title="Hash: 1020304050607080" id="2ni-da-hsm">
                                         <font key="font" metaFont="system" size="11"/>
                                         <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
@@ -375,7 +365,7 @@ DQ
                                 </textField>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lrl-Cz-4yH">
                                     <rect key="frame" x="407" y="16" width="20" height="20"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="trashTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" imageScaling="proportionallyDown" inset="2" id="d0x-le-qjf">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -385,8 +375,8 @@ DQ
                                     </connections>
                                 </button>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q6W-VC-fxM">
-                                    <rect key="frame" x="105" y="17" width="274" height="17"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <rect key="frame" x="105" y="17" width="296" height="17"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="/User/JohnDoe/VirtualC64/Kernal.bin" id="VfF-Ca-NGG">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -394,8 +384,8 @@ DQ
                                     </textFieldCell>
                                 </textField>
                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o4V-DA-cDE">
-                                    <rect key="frame" x="105" y="48" width="324" height="32"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <rect key="frame" x="105" y="36" width="324" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" selectable="YES" title="This 16 KB Rom contains the firmware of Commodore's VC1541 floppy disk drive." id="1b8-t2-T3i">
                                         <font key="font" metaFont="cellTitle"/>
                                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -405,6 +395,15 @@ DQ
                             </subviews>
                         </view>
                     </box>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sMG-1V-ztt">
+                        <rect key="frame" x="47" y="20" width="327" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Click help button to learn more about compatible ROMs." id="0Cl-vs-f4d">
+                            <font key="font" metaFont="cellTitle"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
             <point key="canvasLocation" x="956" y="455.5"/>

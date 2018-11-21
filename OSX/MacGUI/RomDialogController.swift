@@ -10,31 +10,49 @@
 import Foundation
 
 let knownBasicRoms : [UInt64 : String] = [
-    0 :
-    "This 8 KB Rom contains Commodore's Basic interpreter. It occupies the address space from $A000 to $BFFF."
+    0x0000000000000000:
+    "This 8 KB Rom contains Commodore's Basic interpreter. There is essentially only revision of this chip.",
+    0x20765FEA67A8762D:
+    "Commodore 64 Basic V2"
 ]
 
 let knownCharacterRoms : [UInt64 : String] = [
-    0 :
-    "This 4 KB Rom contains the C64's character set. It occupies the address space from $D000 to $DFFF."
+    0x0000000000000000:
+    "This 4 KB Rom contains the C64's character set. Depending on the region, Commodore has shipped slightly different versions of this chip.",
+    0x3CA9D37AA3DE0969:
+    "Character ROM from a Swedish C64 (C2D007)",
+    0x6E3827A65FFF116F:
+    "Character ROM from a Swedish C64",
+    0x623CDF045B74B691:
+    "Character ROM from a Spanish C64C",
+    0x79A236A3B3645231:
+    "Character rom from a Danish C64",
+    0xACC576F7B332AC15:
+    "The Commodore 64 character set"
 ]
 
 let knownKernalRoms : [UInt64 : String] = [
-    0 :
-    "This 8 KB Rom contains the low-level operation system. It occupies the address space from $D000 to $DFFF."
+    0x0000000000000000:
+    "This 8 KB Rom contains the low-level operating system. There are three major revisions of this chip, the third being the most common.",
+    0xFB166E49AF709AB8:
+    "Commodore 64 Kernal (1st revision)",
+    0x4232D81CCD24FAAE:
+    "Commodore 64 Kernal (2nd revision)",
+    0x4AF60EE54BEC9701:
+    "Commodore 64 Kernal (3rd revision)"
 ]
 
 let knownVc1541Roms : [UInt64: String] = [
-    0:
-    "This 16 KB Rom contains the firmware of Commodore's VC1541 floppy disk drive.",
+    0x0000000000000000:
+    "This 16 KB Rom contains the firmware of Commodore's VC1541 floppy drive.",
     0x44BBA0EAC5898597:
     "1541-II firmware. Released in 1987.",
     0xA1D36980A17C8756:
     "1541-II firmware appearing in drives with a modern Newtronics Motor.",
     0x361A1EC48F04F5A4:
-    "The firmware of an old-style 1541 in white case.",
+    "Firmware of the old-style 1541 in white case.",
     0xB938E2DA07F4FE40:
-    "An upgrade firmware for the 1541C drive."
+    "Upgraded firmware for the 1541C drive."
 ]
 
 class RomDialogController : UserDialogController {
@@ -122,7 +140,7 @@ class RomDialogController : UserDialogController {
         basicRom.image = hasBasicRom ? romImage : romImageLight
         basicRomDragText.isHidden = hasBasicRom
         basicRomHash.isHidden = !hasBasicRom
-        basicRomHash.stringValue = String(format: "Hash: %X", basicHash)
+        basicRomHash.stringValue = String(format: "Hash: %llX", basicHash)
         basicRomPath.isHidden = !hasBasicRom
         basicRomPath.stringValue = basicURL?.path ?? ""
         basicRomButton.isHidden = !hasBasicRom
@@ -130,14 +148,14 @@ class RomDialogController : UserDialogController {
             basicRomDescription.stringValue = description
             basicRomDescription.textColor = NSColor.textColor
         } else {
-            basicRomDescription.stringValue = "" // An unknown, possibly patched Basic ROM."
+            basicRomDescription.stringValue = "An unknown, possibly patched Basic ROM."
             basicRomDescription.textColor = .red
         }
         
         kernalRom.image = hasKernalRom ? romImage : romImageLight
         kernalRomDragText.isHidden = hasKernalRom
         kernalRomHash.isHidden = !hasKernalRom
-        kernalRomHash.stringValue = String(format: "Hash: %X", kernalHash)
+        kernalRomHash.stringValue = String(format: "Hash: %llX", kernalHash)
         kernalRomPath.isHidden = !hasKernalRom
         kernalRomPath.stringValue = kernalURL?.path ?? ""
         kernelRomButton.isHidden = !hasKernalRom
@@ -145,14 +163,14 @@ class RomDialogController : UserDialogController {
             kernalRomDescription.stringValue = description
             kernalRomDescription.textColor = NSColor.textColor
         } else {
-            kernalRomDescription.stringValue = "" // An unknown, possibly patched Kernal ROM."
+            kernalRomDescription.stringValue = "An unknown, possibly patched Kernal ROM."
             kernalRomDescription.textColor = .red
         }
 
         characterRom.image = hasCharacterRom ? romImage : romImageLight
         characterRomDragText.isHidden = hasCharacterRom
         characterRomHash.isHidden = !hasCharacterRom
-        characterRomHash.stringValue = String(format: "Hash: %X", characterHash)
+        characterRomHash.stringValue = String(format: "Hash: %llX", characterHash)
         characterRomDescription.textColor = NSColor.textColor
         characterRomPath.isHidden = !hasCharacterRom
         characterRomPath.stringValue = characterURL?.path ?? ""
@@ -161,7 +179,7 @@ class RomDialogController : UserDialogController {
             characterRomDescription.stringValue = description
             characterRomDescription.textColor = NSColor.textColor
         } else {
-            characterRomDescription.stringValue = "" // An unknown, possibly patched Character ROM."
+            characterRomDescription.stringValue = "An unknown, possibly patched Character ROM."
             characterRomDescription.textColor = .red
         }
 
