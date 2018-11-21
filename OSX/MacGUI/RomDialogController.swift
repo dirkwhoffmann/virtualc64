@@ -39,7 +39,13 @@ let knownKernalRoms : [UInt64 : String] = [
     0x4232D81CCD24FAAE:
     "Commodore 64 Kernal (2nd revision)",
     0x4AF60EE54BEC9701:
-    "Commodore 64 Kernal (3rd revision)"
+    "Commodore 64 Kernal (3rd revision)",
+    0x429EA22675CAB478:
+    "Commodore 64 Kernal (3rd revision, Danish)",
+    0x8C4548E2202CB366:
+    "Commodore SX-64 Kernal",
+    0x746EB1BC008B07E1:
+    "Commodore SX-64 Kernal (Scandinavian)",
 ]
 
 let knownVc1541Roms : [UInt64: String] = [
