@@ -24,9 +24,14 @@ extension MyController : NSWindowDelegate {
 
         // Register for mouse move events
         window?.acceptsMouseMovedEvents = true
+        
+        // Make sure the aspect ratio is correct
+        adjustWindowSize()
     }
     
     public func windowDidResignMain(_ notification: Notification) {
+        
+        track()
         
         // Disable audio
         c64.sid.rampDown()
