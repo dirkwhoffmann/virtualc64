@@ -105,8 +105,8 @@
 		506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCD20223E5E009742CF /* AppDelegate.swift */; };
 		506D3DD020224BF4009742CF /* MyDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCF20224BF4009742CF /* MyDocument.swift */; };
 		506D4D0D20B331A00093C5C6 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D4D0C20B331A00093C5C6 /* Formatter.swift */; };
-		506D54C820321C830026D8B4 /* RomDialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54C720321C830026D8B4 /* RomDialogController.swift */; };
-		506D54CA20321EDF0026D8B4 /* RomDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506D54C920321EDF0026D8B4 /* RomDialog.xib */; };
+		506D54C820321C830026D8B4 /* RomPrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54C720321C830026D8B4 /* RomPrefsController.swift */; };
+		506D54CA20321EDF0026D8B4 /* RomPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506D54C920321EDF0026D8B4 /* RomPrefs.xib */; };
 		506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54CB2032255A0026D8B4 /* RomDropView.swift */; };
 		50720F4220C853910010EBF2 /* CpuTraceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50720F4120C853910010EBF2 /* CpuTraceView.swift */; };
 		50763277202989D300575110 /* UserDialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* UserDialogController.swift */; };
@@ -361,8 +361,8 @@
 		506D3DCD20223E5E009742CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		506D3DCF20224BF4009742CF /* MyDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDocument.swift; sourceTree = "<group>"; };
 		506D4D0C20B331A00093C5C6 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
-		506D54C720321C830026D8B4 /* RomDialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDialogController.swift; sourceTree = "<group>"; };
-		506D54C920321EDF0026D8B4 /* RomDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RomDialog.xib; sourceTree = "<group>"; };
+		506D54C720321C830026D8B4 /* RomPrefsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomPrefsController.swift; sourceTree = "<group>"; };
+		506D54C920321EDF0026D8B4 /* RomPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RomPrefs.xib; sourceTree = "<group>"; };
 		506D54CB2032255A0026D8B4 /* RomDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDropView.swift; sourceTree = "<group>"; };
 		50720F4120C853910010EBF2 /* CpuTraceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CpuTraceView.swift; sourceTree = "<group>"; };
 		50763276202989D300575110 /* UserDialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDialogController.swift; sourceTree = "<group>"; };
@@ -777,7 +777,7 @@
 			isa = PBXGroup;
 			children = (
 				50763276202989D300575110 /* UserDialogController.swift */,
-				506D54C720321C830026D8B4 /* RomDialogController.swift */,
+				506D54C720321C830026D8B4 /* RomPrefsController.swift */,
 				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
 				5052CD5E2136ADFA0000E890 /* DevicesPrefsController.swift */,
 				50F97E00203D8D1E0005E19C /* EmulatorPrefsController.swift */,
@@ -810,8 +810,8 @@
 			children = (
 				50F55DCB0F28EC010040592B /* MainMenu.xib */,
 				50F55DA30F28EADC0040592B /* MyDocument.xib */,
-				506D54C920321EDF0026D8B4 /* RomDialog.xib */,
 				50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */,
+				506D54C920321EDF0026D8B4 /* RomPrefs.xib */,
 				5052CD602136AF690000E890 /* DevicesPrefs.xib */,
 				50F97E02203D8D570005E19C /* EmulatorPrefs.xib */,
 				500EF688203EB0210043F4FC /* HardwarePrefs.xib */,
@@ -879,13 +879,13 @@
 		50F175242196C4290004E853 /* Cartridges */ = {
 			isa = PBXGroup;
 			children = (
+				5054BF1020133BA2003D86D4 /* Cartridge.h */,
+				5054BF0F20133BA2003D86D4 /* Cartridge.cpp */,
 				5017B71F21874B9A0014EDE4 /* CartridgeRom.h */,
 				5017B71E21874B9A0014EDE4 /* CartridgeRom.cpp */,
 				5017B719218729DA0014EDE4 /* FlashRom.h */,
 				5017B718218729DA0014EDE4 /* FlashRom.cpp */,
 				50171AA3208372CF00C07AAD /* Cartridge_types.h */,
-				5054BF1020133BA2003D86D4 /* Cartridge.h */,
-				5054BF0F20133BA2003D86D4 /* Cartridge.cpp */,
 				50B5861C201C673900742DB3 /* CustomCartridges.h */,
 				50B5861B201C673900742DB3 /* CustomCartridges.cpp */,
 				50F1752C2196C8820004E853 /* ActionReplay.h */,
@@ -1104,7 +1104,7 @@
 				5051A1601B885FDD00CBFB5A /* 1541_track_change_2.aiff in Resources */,
 				501E427D20D975AD000BB48D /* IconCRT.icns in Resources */,
 				50FB749C203306A700E05051 /* DiskInspector.xib in Resources */,
-				506D54CA20321EDF0026D8B4 /* RomDialog.xib in Resources */,
+				506D54CA20321EDF0026D8B4 /* RomPrefs.xib in Resources */,
 				50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */,
 				50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */,
 				50A519431B8DA360006771E2 /* drive_snatch_uae.aiff in Resources */,
@@ -1198,7 +1198,7 @@
 				506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */,
 				50F99559203AB3B9004C4856 /* KeyboardDialog.swift in Sources */,
 				50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */,
-				506D54C820321C830026D8B4 /* RomDialogController.swift in Sources */,
+				506D54C820321C830026D8B4 /* RomPrefsController.swift in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				5028921521A2F96800622969 /* Kingsoft.cpp in Sources */,
 				50FF16FD205D17F5000A729A /* ProcessorPort.cpp in Sources */,

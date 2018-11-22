@@ -70,9 +70,6 @@ public:
     bool hasResetButton() { return false; }
     bool getJumper() { return val[2]; }
     void setJumper(bool value) { val[2] = value; }
-    
-
-    
 };
 
 #endif

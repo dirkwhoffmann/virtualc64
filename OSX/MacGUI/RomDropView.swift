@@ -23,7 +23,7 @@ extension NSDraggingInfo
 
 class RomDropView : NSImageView
 {
-    @IBOutlet var dialogController: RomDialogController!
+    @IBOutlet var dialogController: RomPrefsController!
     
     override func awakeFromNib()
     {

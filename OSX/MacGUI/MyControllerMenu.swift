@@ -176,10 +176,31 @@ extension MyController {
     // Action methods (VirtualC64 menu)
     //
     
-    @IBAction func openRomPreferences(_ sender: Any!) {
+    @IBAction func openDevicePrefsAction(_ sender: Any!) {
+        
+        let nibName = NSNib.Name(rawValue: "DevicesPrefs")
+        let controller = DevicesPrefsController.init(windowNibName: nibName)
+        controller.showSheet(withParent: self)
+    }
+
+    @IBAction func openEmulatorPrefsAction(_ sender: Any!) {
+        
+        let nibName = NSNib.Name(rawValue: "EmulatorPrefs")
+        let controller = EmulatorPrefsController.init(windowNibName: nibName)
+        controller.showSheet(withParent: self)
+    }
+
+    @IBAction func openHardwarePrefsAction(_ sender: Any!) {
     
-        let nibName = NSNib.Name(rawValue: "RomDialog")
-        let controller = RomDialogController.init(windowNibName: nibName)
+        let nibName = NSNib.Name(rawValue: "HardwarePrefs")
+        let controller = HardwarePrefsController.init(windowNibName: nibName)
+        controller.showSheet(withParent: self)
+    }
+    
+    @IBAction func openRomPrefsAction(_ sender: Any!) {
+        
+        let nibName = NSNib.Name(rawValue: "RomPrefs")
+        let controller = RomPrefsController.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
     }
     

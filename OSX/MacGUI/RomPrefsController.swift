@@ -61,7 +61,7 @@ let knownVc1541Roms : [UInt64: String] = [
     "Upgraded firmware for the 1541C drive."
 ]
 
-class RomDialogController : UserDialogController {
+class RomPrefsController : UserDialogController {
     
     let romImage = NSImage.init(named: NSImage.Name.init(rawValue: "rom"))
     let romImageLight = NSImage.init(named: NSImage.Name.init(rawValue: "rom_light"))

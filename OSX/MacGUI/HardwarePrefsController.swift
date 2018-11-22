@@ -201,7 +201,14 @@ class HardwarePrefsController : UserDialogController {
         c64.mem.setRamInitPattern(sender.tag)
         update()
     }
-            
+    
+    @IBAction func romAction(_ sender: NSButton!) {
+        
+        track()
+        hideSheet()
+        parent.openRomPrefsAction(self)
+    }
+    
     @IBAction override func cancelAction(_ sender: Any!) {
         
         track()

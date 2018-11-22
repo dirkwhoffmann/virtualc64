@@ -65,7 +65,7 @@ class MyController : NSWindowController, MessageReceiver {
     var virtualKeyboardSheet: VirtualKeyboardController? = nil
 
     /// Rom Dialog controller
-    var romDialogController: RomDialogController? = nil
+    var romDialogController: RomPrefsController? = nil
     
     /// Loop timer
     /// The timer fires 60 times a second and executes all tasks that need to be
@@ -562,7 +562,7 @@ extension MyController {
             if (romDialogController == nil) {
                 track("MSG_ROM_MISSING")
                 let nibName = NSNib.Name(rawValue: "RomDialog")
-                romDialogController = RomDialogController.init(windowNibName: nibName)
+                romDialogController = RomPrefsController.init(windowNibName: nibName)
                 romDialogController!.showSheet(withParent: self)
             }
             
