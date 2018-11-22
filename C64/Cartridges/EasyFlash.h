@@ -59,6 +59,7 @@ public:
     //! @functiongroup Methods from Cartridge
     //
     
+    void resetCartConfig();
     void loadChip(unsigned nr, CRTFile *c);
     uint8_t peek(uint16_t addr);
     void poke(uint16_t addr, uint8_t value);

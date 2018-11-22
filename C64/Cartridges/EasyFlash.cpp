@@ -106,6 +106,14 @@ EasyFlash::saveToBuffer(uint8_t **buffer)
 }
 
 void
+EasyFlash::resetCartConfig()
+{
+    // Start in Ultimax mode
+    c64->expansionport.setGameLine(0);
+    c64->expansionport.setExromLine(1);
+}
+
+void
 EasyFlash::loadChip(unsigned nr, CRTFile *c)
 {
     static int bank;
