@@ -17,22 +17,6 @@ class EmulatorPrefsController : UserDialogController {
     // Video
     @IBOutlet weak var upscaler: NSPopUpButton!
     @IBOutlet weak var palettePopup: NSPopUpButton!
-    @IBOutlet weak var colorWell0: NSColorWell!
-    @IBOutlet weak var colorWell1: NSColorWell!
-    @IBOutlet weak var colorWell2: NSColorWell!
-    @IBOutlet weak var colorWell3: NSColorWell!
-    @IBOutlet weak var colorWell4: NSColorWell!
-    @IBOutlet weak var colorWell5: NSColorWell!
-    @IBOutlet weak var colorWell6: NSColorWell!
-    @IBOutlet weak var colorWell7: NSColorWell!
-    @IBOutlet weak var colorWell8: NSColorWell!
-    @IBOutlet weak var colorWell9: NSColorWell!
-    @IBOutlet weak var colorWell10: NSColorWell!
-    @IBOutlet weak var colorWell11: NSColorWell!
-    @IBOutlet weak var colorWell12: NSColorWell!
-    @IBOutlet weak var colorWell13: NSColorWell!
-    @IBOutlet weak var colorWell14: NSColorWell!
-    @IBOutlet weak var colorWell15: NSColorWell!
     @IBOutlet weak var brightnessSlider: NSSlider!
     @IBOutlet weak var contrastSlider: NSSlider!
     @IBOutlet weak var saturationSlider: NSSlider!

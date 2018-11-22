@@ -12,7 +12,6 @@
                 <outlet property="glueLogic" destination="1B1-NV-ylV" id="kPh-gH-o7i"/>
                 <outlet property="grayDotBug" destination="4SM-kq-3rz" id="aBg-9q-Bv7"/>
                 <outlet property="infoText" destination="bhW-rI-Wak" id="FP8-g1-UgV"/>
-                <outlet property="profile" destination="VzD-St-jng" id="m0p-iW-SIg"/>
                 <outlet property="ramInitPattern" destination="DIR-u7-EiD" id="UKe-eK-dKb"/>
                 <outlet property="sidChipModel" destination="yFu-8o-Koh" id="9vv-pr-p65"/>
                 <outlet property="sidEngine" destination="Viw-Xr-mTq" id="yx1-wh-Ylq"/>

@@ -12,7 +12,6 @@ import Foundation
 class HardwarePrefsController : UserDialogController {
 
     // C64
-    // @IBOutlet weak var profile: NSPopUpButton!
     @IBOutlet weak var infoText: NSTextField!
     
     // VIC
