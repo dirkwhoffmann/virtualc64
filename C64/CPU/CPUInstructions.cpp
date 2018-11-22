@@ -531,10 +531,9 @@ CPU::executeOneCycle()
                     setErrorState(CPU_HARD_BREAKPOINT_REACHED);
                 }
                 debug(1, "Breakpoint reached\n");
-                return false;
             }
             
-            return true;
+            return errorState == CPU_OK;
             
         //
         // Illegal instructions
