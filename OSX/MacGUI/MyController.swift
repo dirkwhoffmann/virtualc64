@@ -254,7 +254,7 @@ class MyController : NSWindowController, MessageReceiver {
     @IBOutlet weak var spriteExtraColor2: NSButton!
     @IBOutlet weak var spriteExpandX: NSButton!
     @IBOutlet weak var spriteExpandY: NSButton!
-    @IBOutlet weak var spritePriority: NSButton!
+    @IBOutlet weak var spritePriority: NSPopUpButton!
     @IBOutlet weak var spriteCollidesWithSprite: NSButton!
     @IBOutlet weak var spriteSpriteIrqEnabled: NSButton!
     @IBOutlet weak var spriteCollidesWithBackground: NSButton!

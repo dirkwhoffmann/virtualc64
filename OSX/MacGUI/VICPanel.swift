@@ -69,7 +69,7 @@ extension MyController {
         spriteExtraColorCell2.backgroundColor = c64.vic.color(Int(sinfo.extraColor2))
         spriteExpandX.state = sinfo.expandX ? .on : .off
         spriteExpandY.state = sinfo.expandY ? .on : .off
-        spritePriority.state = sinfo.priority ? .on : .off
+        spritePriority.selectItem(withTag: sinfo.priority ? 1 : 0)
         spriteCollidesWithSprite.state = sinfo.collidesWithSprite ? .on : .off
         spriteSpriteIrqEnabled.state = info.spriteCollisionIrqEnabled ? .on : .off
         spriteCollidesWithBackground.state = sinfo.collidesWithBackground ? .on : .off
@@ -319,7 +319,7 @@ extension MyController {
         
         let sprite = value.0
         let info = c64.vic.getSpriteInfo(sprite)
-        let oldValue = info.x
+        let oldValue = info.y
         let newValue = value.1
         
         if (newValue != oldValue) {
@@ -440,7 +440,7 @@ extension MyController {
     func _spritePriorityAction(_ value: (Int,Bool)) {
         
         let info = c64.vic.getSpriteInfo(value.0)
-        let oldValue = info.multicolor
+        let oldValue = info.priority
         let actionName = oldValue ? "Set Priority Bit" : "Clear Priority Bit"
         
         if (value.1 != oldValue) {
@@ -456,6 +456,7 @@ extension MyController {
     @IBAction func spritePriorityAction(_ sender: NSPopUpButton!) {
         
         let value = sender.selectedTag() != 0
+        track("\(value)")
         _spritePriorityAction((sprite, value))
     }
     
