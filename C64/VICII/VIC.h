@@ -931,6 +931,9 @@ private:
     //! @brief    Simulates a memory access via the address and data bus.
     uint8_t memAccess(uint16_t addr);
 
+    //! @brief    Same as memAccess without side effects.
+    uint8_t memSpyAccess(uint16_t addr);
+
     //! @brief    Returns true if memAccess will read from Character ROM
     bool isCharRomAddr(uint16_t addr);
 
@@ -1540,7 +1543,10 @@ public:
     
     //! @brief    Sets the Y coordinate of sprite.
     void setSpriteY(unsigned nr, uint8_t y);
-    
+
+    //! @brief    Sets the data source pointer of sprite.
+    void setSpritePtr(unsigned nr, uint8_t ptr);
+
     //! @brief    Enables or disables a sprite.
     void setSpriteEnabled(uint8_t nr, bool b);
     

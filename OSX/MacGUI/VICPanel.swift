@@ -16,10 +16,10 @@ extension MyController {
         var info = c64.vic.getInfo()
         let sinfo = c64.vic.getSpriteInfo(sprite)
         
-        // Note: It is likely that getInfo() captured the VIC state when the emualtion
-        // thread is waiting. As a result, the displayed values for cycle and rasterline
-        // do not seem randomly distributed. To make the debugger output look realistic,
-        // we fake the output a little bit ...
+        // Note: It is likely that getInfo() captured the VIC state when the
+        // emualtion thread is waiting. As a result, the displayed values for
+        // cycle and rasterline do not seem randomly distributed. To make the
+        // debugger output look realistic, we fake the output ...
         if c64.isRunning() {
             info.rasterline = UInt16((vicRasterline.intValue + 173) % 263)
             info.cycle = UInt8((vicCycle.intValue + 17) % 64)
@@ -58,7 +58,11 @@ extension MyController {
         
         spriteEnabled.state = sinfo.enabled ? .on : .off
         spriteX.intValue = Int32(sinfo.x)
+        spriteXStepper.intValue = Int32(sinfo.x)
         spriteY.intValue = Int32(sinfo.y)
+        spriteYStepper.intValue = Int32(sinfo.y)
+        spritePtr.intValue = Int32(sinfo.ptr)
+        spritePtrStepper.intValue = Int32(sinfo.ptr)
         spriteColorCell.backgroundColor = c64.vic.color(Int(sinfo.color))
         spriteIsMulticolor.selectItem(withTag: sinfo.multicolor ? 1 : 0)
         spriteExtraColorCell1.backgroundColor = c64.vic.color(Int(sinfo.extraColor1))
@@ -113,11 +117,10 @@ extension MyController {
         }
     }
     
-    @IBAction func displayModeAction(_ sender: Any!) {
+    @IBAction func displayModeAction(_ sender: NSPopUpButton!) {
         
         track()
         
-        let sender = sender as! NSPopUpButton
         let value = UInt32(sender.selectedTag())
         _displayModeAction(DisplayMode(rawValue: value))
     }
@@ -137,9 +140,8 @@ extension MyController {
         }
     }
     
-    @IBAction func screenGeometryAction(_ sender: Any!) {
+    @IBAction func screenGeometryAction(_ sender: NSPopUpButton!) {
         
-        let sender = sender as! NSPopUpButton
         let value = UInt32(sender.selectedTag())
         _screenGeometryAction(ScreenGeometry(rawValue: value))
     }
@@ -159,9 +161,8 @@ extension MyController {
         }
     }
     
-    @IBAction func memoryBankAction(_ sender: Any!) {
+    @IBAction func memoryBankAction(_ sender: NSPopUpButton!) {
         
-        let sender = sender as! NSPopUpButton
         let value = UInt16(sender.selectedTag())
         _memoryBankAction(value)
     }
@@ -181,9 +182,8 @@ extension MyController {
         }
     }
     
-    @IBAction func screenMemoryAction(_ sender: Any!) {
+    @IBAction func screenMemoryAction(_ sender: NSPopUpButton!) {
         
-        let sender = sender as! NSPopUpButton
         let value = UInt16(sender.selectedTag())
         _screenMemoryAction(value)
     }
@@ -203,9 +203,8 @@ extension MyController {
         }
     }
     
-    @IBAction func characterMemoryAction(_ sender: Any!) {
+    @IBAction func characterMemoryAction(_ sender: NSPopUpButton!) {
         
-        let sender = sender as! NSPopUpButton
         let value = UInt16(sender.selectedTag())
         _characterMemoryAction(value)
     }
@@ -225,15 +224,13 @@ extension MyController {
         }
     }
     
-    @IBAction func dxAction(_ sender: Any!) {
+    @IBAction func dxAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _dxAction(UInt8(sender.intValue))
     }
     
-    @IBAction func dxStepperAction(_ sender: Any!) {
+    @IBAction func dxStepperAction(_ sender: NSStepper!) {
         
-        let sender = sender as! NSStepper
         _dxAction(UInt8(sender.intValue & 0x07))
     }
 
@@ -252,15 +249,13 @@ extension MyController {
         }
     }
     
-    @IBAction func dyAction(_ sender: Any!) {
+    @IBAction func dyAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _dyAction(UInt8(sender.intValue))
     }
     
-    @IBAction func dyStepperAction(_ sender: Any!) {
+    @IBAction func dyStepperAction(_ sender: NSStepper!) {
         
-        let sender = sender as! NSStepper
         _dyAction(UInt8(sender.intValue & 0x07))
     }
     
@@ -288,9 +283,8 @@ extension MyController {
         }
     }
     
-    @IBAction func spriteEnableAction(_ sender: Any!) {
+    @IBAction func spriteEnableAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         _spriteEnableAction((sprite, sender.intValue != 0))
     }
  
@@ -311,12 +305,16 @@ extension MyController {
         }
     }
     
-    @IBAction func spriteXAction(_ sender: Any!) {
+    @IBAction func spriteXAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _spriteXAction((sprite, UInt16(sender.intValue)))
     }
     
+    @IBAction func spriteXStepperAction(_ sender: NSStepper!) {
+        
+        _spriteXAction((sprite, UInt16(sender.intValue)))
+    }
+
     func _spriteYAction(_ value: (Int,UInt16)) {
         
         let sprite = value.0
@@ -334,10 +332,42 @@ extension MyController {
         }
     }
     
-    @IBAction func spriteYAction(_ sender: Any!) {
+    @IBAction func spriteYAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _spriteYAction((sprite, UInt16(sender.intValue)))
+    }
+    
+    @IBAction func spriteYStepperAction(_ sender: NSStepper!) {
+        
+        _spriteYAction((sprite, UInt16(sender.intValue)))
+    }
+    
+    func _spritePtrAction(_ value: (Int,UInt8)) {
+        
+        let sprite = value.0
+        let info = c64.vic.getSpriteInfo(sprite)
+        let oldValue = info.ptr
+        let newValue = value.1
+        
+        if (newValue != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._spritePtrAction(value)
+            }
+            undoManager?.setActionName("Set Sprite Data Pointer")
+            c64.vic.setSpritePtr(sprite, value: Int(newValue))
+            refreshVIC()
+        }
+    }
+    
+    @IBAction func spritePtrAction(_ sender: NSTextField!) {
+        
+        track("\(sender.intValue)")
+        _spritePtrAction((sprite, UInt8(sender.intValue)))
+    }
+    
+    @IBAction func spritePtrStepperAction(_ sender: NSStepper!) {
+        
+        _spritePtrAction((sprite, UInt8(sender.intValue)))
     }
     
     func _spriteExpandXAction(_ value: (Int,Bool)) {
@@ -357,9 +387,8 @@ extension MyController {
         }
     }
     
-    @IBAction func spriteExpandXAction(_ sender: Any!) {
+    @IBAction func spriteExpandXAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         _spriteExpandXAction((sprite, sender.intValue != 0))
     }
     
@@ -380,9 +409,8 @@ extension MyController {
         }
     }
     
-    @IBAction func spriteExpandYAction(_ sender: Any!) {
+    @IBAction func spriteExpandYAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         _spriteExpandYAction((sprite, sender.intValue != 0))
     }
     
@@ -403,9 +431,8 @@ extension MyController {
         }
     }
     
-    @IBAction func spriteMulticolorAction(_ sender: Any!) {
+    @IBAction func spriteMulticolorAction(_ sender: NSPopUpButton!) {
         
-        let sender = sender as! NSPopUpButton
         let value = sender.selectedTag() != 0
         _spriteMulticolorAction((sprite, value))
     }
@@ -426,9 +453,8 @@ extension MyController {
         }
     }
     
-    @IBAction func spritePriorityAction(_ sender: Any!) {
+    @IBAction func spritePriorityAction(_ sender: NSPopUpButton!) {
         
-        let sender = sender as! NSPopUpButton
         let value = sender.selectedTag() != 0
         _spritePriorityAction((sprite, value))
     }
@@ -449,9 +475,8 @@ extension MyController {
         }
     }
     
-    @IBAction func spriteSpriteCollisionIrqAction(_ sender: Any!) {
+    @IBAction func spriteSpriteCollisionIrqAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         _spriteSpriteCollisionIrqAction(sender.intValue != 0)
     }
     
@@ -471,9 +496,8 @@ extension MyController {
         }
     }
     
-    @IBAction func spriteBackgroundCollisionIrqAction(_ sender: Any!) {
+    @IBAction func spriteBackgroundCollisionIrqAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         _spriteBackgroundCollisionIrqAction(sender.intValue != 0)
     }
     
@@ -493,9 +517,8 @@ extension MyController {
         }
     }
     
-    @IBAction func rasterIrqEnabledAction(_ sender: Any!) {
+    @IBAction func rasterIrqEnabledAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         _rasterIrqEnabledAction(sender.intValue != 0)
     }
     
@@ -514,9 +537,8 @@ extension MyController {
         }
     }
     
-    @IBAction func irqRasterlineAction(_ sender: Any!) {
+    @IBAction func irqRasterlineAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _irqRasterlineAction(UInt16(sender.intValue))
     }
     
@@ -565,11 +587,8 @@ extension MyController {
         refreshVIC()
     }
     
-    @IBAction func colorAction(_ sender: Any!) {
+    @IBAction func colorAction(_ sender: NSButton!) {
         
-        track()
-        
-        let sender = sender as! NSButton
         let oldColor = color(colorTag: sender.tag, spriteNr: sprite)
         _colorAction((sender.tag, sprite, (oldColor + 1) % 16))
     }

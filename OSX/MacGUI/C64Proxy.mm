@@ -462,6 +462,10 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->vic->setSpriteY((unsigned)nr, (uint8_t)y);
 }
+- (void) setSpritePtr:(NSInteger)nr value:(NSInteger)ptr
+{
+    wrapper->vic->setSpritePtr((unsigned)nr, (uint8_t)ptr);
+}
 - (void) setSpriteStretchX:(NSInteger)nr value:(BOOL)flag
 {
     wrapper->vic->setSpriteStretchX((unsigned)nr, flag);

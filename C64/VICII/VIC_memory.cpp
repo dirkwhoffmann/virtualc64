@@ -681,6 +681,48 @@ VIC::memAccess(uint16_t addr)
     return result;
 }
 
+uint8_t
+VIC::memSpyAccess(uint16_t addr)
+{
+    uint8_t result;
+    
+    assert((addr & 0xC000) == 0);
+    assert((bankAddr & 0x3FFF) == 0);
+    
+    uint16_t addrBus = bankAddr | addr;
+    
+    if (getUltimax()) {
+        
+        switch (addrBus >> 12) {
+            case 0xF:
+            case 0xB:
+            case 0x7:
+            case 0x3:
+                result = c64->expansionport.spypeek(addrBus | 0xF000);
+                break;
+            case 0xE:
+            case 0xD:
+            case 0x9:
+            case 0x8:
+            case 0x0:
+                result = c64->mem.ram[addrBus];
+                break;
+            default:
+                result = c64->mem.ram[addrBus];
+        }
+        
+    } else {
+        
+        if (isCharRomAddr(addr)) {
+            result = c64->mem.rom[0xC000 + addr];
+        } else {
+            result = c64->mem.ram[addrBus];
+        }
+    }
+    
+    return result;
+}
+
 bool
 VIC::isCharRomAddr(uint16_t addr)
 {

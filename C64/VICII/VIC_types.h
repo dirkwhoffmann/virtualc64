@@ -340,6 +340,7 @@ typedef struct {
     bool enabled; 
     uint16_t x;
     uint8_t y;
+    uint8_t ptr; 
     uint8_t color;
     bool multicolor;
     uint8_t extraColor1;

@@ -90,7 +90,7 @@ extension MyController {
                          alarmHours, alarmMinutes, alarmSeconds, alarmTenth,
                          ciaImr, ciaIcr])
         assignFormatter(fmt8,
-                        [vicCycle, spriteY, potX, potY])
+                        [vicCycle, spriteY, spritePtr, potX, potY])
     
         assignFormatter(fmt9,
                         [vicRasterline, vicIrqRasterline, spriteX, vicXCounter])
@@ -143,7 +143,7 @@ extension MyController {
             
             // VIC panel
             vicDx, vicDy, vicIrqRasterline,
-            spriteX, spriteY
+            spriteX, spriteY, spritePtr
         ]
   
         for control in controls {

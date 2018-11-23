@@ -146,9 +146,6 @@ class MyController : NSWindowController, MessageReceiver {
     @IBOutlet weak var pauseTbItem: NSToolbarItem!
     @IBOutlet weak var snapshotSegCtrl: NSSegmentedControl!
 
-    // Menu
-    // @IBOutlet weak var recentDisksMenu: NSMenu!
-    
     // Debug panel (commons)
     var hex = true
     @IBOutlet weak var debugPanel: NSTabView!
@@ -246,7 +243,11 @@ class MyController : NSWindowController, MessageReceiver {
     @IBOutlet weak var spriteSelector: NSSegmentedControl!
     @IBOutlet weak var spriteEnabled: NSButton!
     @IBOutlet weak var spriteX: NSTextField!
+    @IBOutlet weak var spriteXStepper: NSStepper!
     @IBOutlet weak var spriteY: NSTextField!
+    @IBOutlet weak var spriteYStepper: NSStepper!
+    @IBOutlet weak var spritePtr: NSTextField!
+    @IBOutlet weak var spritePtrStepper: NSStepper!
     @IBOutlet weak var spriteIsMulticolor: NSPopUpButton!
     @IBOutlet weak var spriteColor: NSButton!
     @IBOutlet weak var spriteExtraColor1: NSButton!

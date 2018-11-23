@@ -354,6 +354,7 @@ struct AnyC64FileWrapper;
 - (void) toggleSpriteEnabled:(NSInteger)nr;
 - (void) setSpriteX:(NSInteger)nr value:(NSInteger)x;
 - (void) setSpriteY:(NSInteger)nr value:(NSInteger)y;
+- (void) setSpritePtr:(NSInteger)nr value:(NSInteger)ptr;
 - (void) setSpriteStretchX:(NSInteger)nr value:(BOOL)flag;
 - (void) toggleSpriteStretchX:(NSInteger)nr;
 - (void) setSpriteStretchY:(NSInteger)nr value:(BOOL)flag;

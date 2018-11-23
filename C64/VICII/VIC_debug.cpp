@@ -62,9 +62,10 @@ VIC::getSpriteInfo(unsigned i)
 {
     SpriteInfo info;
     
-    info.enabled = GET_BIT(spriteDisplay, i);
+    info.enabled = GET_BIT(reg.current.sprEnable, i);
     info.x = reg.current.sprX[i];
     info.y = reg.current.sprY[i];
+    info.ptr = memSpyAccess((VM13VM12VM11VM10() << 6) | 0x03F8 | i);
     info.color = reg.current.colors[COLREG_SPR0 + i];
     info.extraColor1 = reg.current.colors[COLREG_SPR_EX1];
     info.extraColor2 = reg.current.colors[COLREG_SPR_EX2];
@@ -239,6 +240,19 @@ VIC::setSpriteY(unsigned nr, uint8_t y)
     suspend();
     reg.current.sprY[nr] = y;
     delay |= VICUpdateRegisters;
+    resume();
+}
+
+void
+VIC::setSpritePtr(unsigned nr, uint8_t ptr)
+{
+    assert(nr < 8);
+    
+    debug("setSpritePtr(%d, %d)\n", nr, ptr);
+    
+    suspend();
+    uint16_t addr = (VM13VM12VM11VM10() << 6) | 0x03F8 | nr;
+    c64->mem.ram[addr] = ptr;
     resume();
 }
 
