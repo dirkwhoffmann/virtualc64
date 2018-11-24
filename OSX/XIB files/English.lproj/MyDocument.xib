@@ -497,19 +497,8 @@
             <rect key="frame" x="0.0" y="0.0" width="300" height="640"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button toolTip="Run / Pause" verticalHuggingPriority="750" id="2100">
-                    <rect key="frame" x="8" y="5" width="36" height="36"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="pauseTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="axesIndependently" inset="2" id="2101">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="stopAndGoAction:" target="-2" id="2103"/>
-                    </connections>
-                </button>
                 <button toolTip="Step Into" verticalHuggingPriority="750" id="2098">
-                    <rect key="frame" x="50" y="5" width="36" height="36"/>
+                    <rect key="frame" x="39" y="7" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="stepIntoTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="axesIndependently" inset="2" id="2099">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -520,7 +509,7 @@
                     </connections>
                 </button>
                 <button toolTip="Step Over" verticalHuggingPriority="750" id="PqI-SN-vTw">
-                    <rect key="frame" x="92" y="5" width="36" height="36"/>
+                    <rect key="frame" x="71" y="7" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="stepOverTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="axesIndependently" inset="2" id="p1T-lM-Wfo">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -758,7 +747,7 @@
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <clipView key="contentView" id="n9s-md-sVQ">
                                                                 <rect key="frame" x="1" y="0.0" width="266" height="408"/>
-                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="1838" id="767" customClass="CpuTableView" customModule="VirtualC64" customModuleProvider="target">
                                                                         <rect key="frame" x="0.0" y="0.0" width="266" height="391"/>
@@ -2923,6 +2912,17 @@
                         <action selector="setHexadecimalAction:" target="-2" id="2013"/>
                     </connections>
                 </matrix>
+                <button toolTip="Run / Pause" verticalHuggingPriority="750" id="2100">
+                    <rect key="frame" x="7" y="7" width="32" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="pauseTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="axesIndependently" inset="2" id="2101">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="stopAndGoAction:" target="-2" id="2103"/>
+                    </connections>
+                </button>
             </subviews>
             <point key="canvasLocation" x="539" y="408"/>
         </customView>
