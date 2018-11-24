@@ -39,8 +39,12 @@
 
 // RELEASE NOTES (Version 3.2)
 //
-// Added support for cartridges of type Kingsoft and StarDos.
-// The Rom dialog has been reworked and can be opend manually via a new menu item.
+// Added support for cartridges of type Kingsoft, StarDos, and Atomic Power.
+// The Rom dialog has been reworked and can be opend manually from the hardware preferences.
+// CRT monitor emulation has been improved. Furthermore, the emulator preferences window has been redesign to control the video options more easily. 
+// Fixed a bug in the VIC implementation that caused too many rasterline IRQs to be triggered under some circumstances.
+// Fixed a bug in the VIC implementation that caused too many sprite-sprite and sprite-background IRQs to be triggered.
+
 //
 // TODOs for the next release:
 //

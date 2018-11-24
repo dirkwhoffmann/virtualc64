@@ -325,15 +325,21 @@ VIC::drawSprites()
             // Is it a sprite/sprite collision?
             if ((pixelSource[i] & 0xFF) & ((pixelSource[i] & 0xFF) - 1)) {
                 
+                // Trigger an IRQ if this is first detected collision
+                if (!spriteSpriteCollision) {
+                    triggerIrq(4);
+                }
                 spriteSpriteCollision |= (pixelSource[i] & 0xFF);
-                triggerIrq(4);
             }
             
             // Is it a sprite/background collision?
             if ((pixelSource[i] & 0x100) && spriteBackgroundCollisionEnabled) {
                 
+                // Trigger an IRQ if this is first detected collision
+                if (!spriteBackgroundColllision) {
+                    triggerIrq(2);
+                }
                 spriteBackgroundColllision |= (pixelSource[i] & 0xFF);
-                triggerIrq(2);
             }
         }
     }
