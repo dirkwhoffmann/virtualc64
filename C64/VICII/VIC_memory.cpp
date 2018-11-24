@@ -446,16 +446,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             
         case 0x11: // Control register 1
             
-            if ((reg.delayed.ctrl1 & 0x80) != (value & 0x80)) {
-                
-                reg.current.ctrl1 = value;
-                // Check if we need to trigger a rasterline interrupt
-                if (yCounter == rasterInterruptLine())
-                    triggerIrq(1);
-                
-            } else {
-                reg.current.ctrl1 = value;
-            }
+            reg.current.ctrl1 = value;
             
             // Check the DEN bit. If it gets set somehwere in line 30, a bad
             // line conditions occurs.
@@ -471,14 +462,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             
         case 0x12: // RASTER_COUNTER
             
-            if (rasterIrqLine != value) {
-                
-                rasterIrqLine = value;
-                
-                // Check if we need to trigger a rasterline interrupt
-                if (yCounter == rasterInterruptLine())
-                    triggerIrq(1);
-            }
+            rasterIrqLine = value;
             return;
             
         case 0x13: // Lightpen X
