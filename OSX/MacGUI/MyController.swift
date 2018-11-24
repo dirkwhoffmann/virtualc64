@@ -562,7 +562,7 @@ extension MyController {
 
             if (romDialogController == nil) {
                 track("MSG_ROM_MISSING")
-                let nibName = NSNib.Name(rawValue: "RomDialog")
+                let nibName = NSNib.Name(rawValue: "RomPrefs")
                 romDialogController = RomPrefsController.init(windowNibName: nibName)
                 romDialogController!.showSheet(withParent: self)
             }
