@@ -44,6 +44,7 @@
 // CRT monitor emulation has been improved. Furthermore, the emulator preferences window has been redesign to control the video options more easily. 
 // Fixed a bug in the VIC implementation that caused too many rasterline IRQs to be triggered under some circumstances.
 // Fixed a bug in the VIC implementation that caused too many sprite-sprite and sprite-background IRQs to be triggered.
+// Improved the emulation of VICII's sprite shift register.
 // Fixed multiple issues in the sprite debug panel.
 //
 // TODOs for the next release:
