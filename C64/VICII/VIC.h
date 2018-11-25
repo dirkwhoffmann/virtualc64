@@ -1320,16 +1320,20 @@ public:
     #define DRAW17 if (!vblank) draw17(); DRAW_SPRITES; bufferoffset += 8;
     #define DRAW55 if (!vblank) draw55(); DRAW_SPRITES; bufferoffset += 8;
     #define DRAW59 if (!vblank) draw(); DRAW_SPRITES59; bufferoffset += 8;
-    #define DRAW_IDLE \
+    #define DRAW_IDLE DRAW_SPRITES;
+/*
+    #define DRAW_IDLE
     for (unsigned i = 0; i < 8; i++) { zBuffer[i] = pixelSource[i] = 0; } \
     DRAW_SPRITES;
+*/
     
     #define C_ACCESS if (badLine) cAccess();
     
     #define END_CYCLE \
     dataBusPhi2 = 0xFF; \
     xCounter += 8; \
-    if (unlikely(delay != 0)) { processDelayedActions(); }
+    for (unsigned i = 0; i < 8; i++) { zBuffer[i] = pixelSource[i] = 0; } \
+    if (unlikely(delay)) { processDelayedActions(); }
 
     #define END_VISIBLE_CYCLE \
     END_CYCLE
