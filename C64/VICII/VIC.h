@@ -319,7 +319,13 @@ private:
          *            trigger condition is met (sprite X trigger coord reaches
          *            xCounter). When all bits are drawn, this value reaches 0.
          */
-        int remaining_bits;
+        // int remaining_bits;
+ 
+        /*! @brief    Indicates if the shift register is currently running
+         *  @details  Once the shift register is started, it runs as long
+         *            it contains at least one '1' bit (data != 0).
+         */
+        bool active;
         
         /*! @brief    Multi-color synchronization flipflop
          *  @details  Whenever the shift register is loaded, the synchronization

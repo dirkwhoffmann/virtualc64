@@ -354,9 +354,6 @@ VIC::drawSpritePixel(unsigned pixel,
     // Iterate over all sprites
     for (unsigned sprite = 0; sprite < 8; sprite++) {
         
-        assert(spriteSr[sprite].remaining_bits >= -1);
-        assert(spriteSr[sprite].remaining_bits <= 26);
-
         if (!GET_BIT(enableBits, sprite))
             continue;
         
@@ -367,7 +364,7 @@ VIC::drawSpritePixel(unsigned pixel,
         
         // Stop shift register if applicable
         if (halt) {
-            spriteSr[sprite].remaining_bits = -1;
+            spriteSr[sprite].active = false;
             spriteSr[sprite].colBits = 0;
         }
         
@@ -376,8 +373,8 @@ VIC::drawSpritePixel(unsigned pixel,
             
             // Check for horizontal trigger condition
             if (xCounter + pixel == reg.delayed.sprX[sprite]) {
-                if (spriteSr[sprite].remaining_bits == -1) {
-                    spriteSr[sprite].remaining_bits = 26; // 24 data bits + 2 clearing zeroes
+                if (!spriteSr[sprite].active) {
+                    spriteSr[sprite].active = true;
                     spriteSr[sprite].expFlop = true;
                     spriteSr[sprite].mcFlop = true;
                     /*
@@ -388,7 +385,7 @@ VIC::drawSpritePixel(unsigned pixel,
             }
             
             // Run shift register if there are remaining pixels to draw
-            if (spriteSr[sprite].remaining_bits > 0) {
+            if (spriteSr[sprite].active) {
                 
                 /*
                 debug("l: %d c: %d s: %d X run shift reg [%04X] mcflops: %02X expffs: %02X\n",
@@ -423,7 +420,9 @@ VIC::drawSpritePixel(unsigned pixel,
                 
                     // Perform the shift operation
                     spriteSr[sprite].data <<= 1;
-                    spriteSr[sprite].remaining_bits--;
+                    
+                    // Inactivate shift register if everything is pumped out
+                    spriteSr[sprite].active = spriteSr[sprite].data || spriteSr[sprite].colBits;
                 }
                 
                 // Toggle expansion flipflop for horizontally stretched sprites
