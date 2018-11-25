@@ -359,6 +359,7 @@ VIC::drawSpritePixel(unsigned pixel,
             continue;
         */
         
+        bool enable = GET_BIT(enableBits, sprite);
         bool freeze = GET_BIT(freezeBits, sprite);
         bool halt = GET_BIT(haltBits, sprite);
         bool mCol = GET_BIT(reg.delayed.sprMC, sprite);
@@ -367,14 +368,14 @@ VIC::drawSpritePixel(unsigned pixel,
         // Stop shift register if applicable
         if (halt) {
             spriteSr[sprite].active = false;
-            spriteSr[sprite].colBits = 0;
+            // spriteSr[sprite].colBits = 0;
         }
         
         // Run shift register if applicable
         if (!freeze) {
             
             // Check for horizontal trigger condition
-            if (xCounter + pixel == reg.delayed.sprX[sprite] && GET_BIT(enableBits, sprite)) {
+            if (enable && xCounter + pixel == reg.delayed.sprX[sprite]) {
                 if (!spriteSr[sprite].active) {
                     spriteSr[sprite].active = true;
                     spriteSr[sprite].expFlop = true;
@@ -436,7 +437,7 @@ VIC::drawSpritePixel(unsigned pixel,
         }
         
         // Draw pixel
-        if (!hideSprites) {
+        if (spriteSr[sprite].active && !hideSprites) {
             
             switch (spriteSr[sprite].colBits) {
                     
