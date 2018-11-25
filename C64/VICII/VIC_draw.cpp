@@ -351,6 +351,11 @@ VIC::drawSpritePixel(unsigned pixel,
                      uint8_t freezeBits,
                      uint8_t haltBits)
 {
+    // Quick exit condition
+    if (!enableBits && !spriteSrActive) {
+        return;
+    }
+    
     // Iterate over all sprites
     for (unsigned sprite = 0; sprite < 8; sprite++) {
         
@@ -368,75 +373,65 @@ VIC::drawSpritePixel(unsigned pixel,
         
         bool active = GET_BIT(spriteSrActive, sprite);
         
-        // Run shift register if applicable
-        if (!freeze) {
-            
-            // Check for horizontal trigger condition
-            if (enable && xCounter + pixel == reg.delayed.sprX[sprite]) {
-                if (!active) {
-                    SET_BIT(spriteSrActive, sprite);
-                    spriteSr[sprite].expFlop = true;
-                    spriteSr[sprite].mcFlop = true;
-                    /*
-                    debug("f: %d l: %d c: %d Sprite %d hits X: %d + %d\n",
-                          c64->frame, c64->rasterLine, c64->rasterCycle - 1, sprite, xCounter, pixel);
-                    */
-                }
-            }
-            
-            // Run shift register if there are remaining pixels to draw
-            if (GET_BIT(spriteSrActive, sprite)) {
+        // If a sprite is enabled, activate it's shift register if the
+        // horizontal trigger condition holds.
+        if (enable) {
+            if (!active && xCounter + pixel == reg.delayed.sprX[sprite] && !freeze) {
                 
-                /*
-                debug("l: %d c: %d s: %d X run shift reg [%04X] mcflops: %02X expffs: %02X\n",
-                          c64->rasterLine, c64->rasterCycle - 1, sprite, spriteSr[sprite].data,spriteSr[sprite].mcFlop, spriteSr[sprite].expFlop);
-                */
-                
-                // Only proceed if the expansion flipflop is set
-                if (spriteSr[sprite].expFlop) {
-                    
-                    // Extract color bits from the shift register
-                    if (mCol) {
-                        
-                        // In multi-color mode, get 2 bits every second pixel
-                        if (spriteSr[sprite].mcFlop) {
-                            spriteSr[sprite].colBits = (spriteSr[sprite].data >> 22) & 0x03;
-                            /*
-                            debug("f: %d l: %d c: %d Sprite %d loads mc colBits: %02X\n",
-                                  c64->frame, c64->rasterLine, c64->rasterCycle - 1, sprite, spriteSr[sprite].colBits);
-                            */
-                        }
-                        spriteSr[sprite].mcFlop = !spriteSr[sprite].mcFlop;
-                    
-                    } else {
-                        
-                        // In single-color mode, get a new bit for each pixel
-                        spriteSr[sprite].colBits = (spriteSr[sprite].data >> 22) & 0x02;
-                        /*
-                        debug("f: %d l: %d c: %d Sprite %d loads single colBit: %02X\n",
-                              c64->frame, c64->rasterLine, c64->rasterCycle - 1, sprite, spriteSr[sprite].colBits);
-                        */
-                    }
-                
-                    // Perform the shift operation
-                    spriteSr[sprite].data <<= 1;
-                    
-                    // Inactivate shift register if everything is pumped out
-                    if (!spriteSr[sprite].data && !spriteSr[sprite].colBits) {
-                        CLR_BIT(spriteSrActive, sprite);
-                    }
-                }
-                
-                // Toggle expansion flipflop for horizontally stretched sprites
-                if (xExp)
-                    spriteSr[sprite].expFlop = !spriteSr[sprite].expFlop;
-                else
-                    spriteSr[sprite].expFlop = true;
+                SET_BIT(spriteSrActive, sprite);
+                active = true;
+                spriteSr[sprite].expFlop = true;
+                spriteSr[sprite].mcFlop = true;
             }
         }
         
+        // Run shift register if it is activated
+        if (active && !freeze) {
+            
+            // Only proceed if the expansion flipflop is set
+            if (spriteSr[sprite].expFlop) {
+                
+                // Extract color bits from the shift register
+                if (mCol) {
+                    
+                    // In multi-color mode, get 2 bits every second pixel
+                    if (spriteSr[sprite].mcFlop) {
+                        spriteSr[sprite].colBits = (spriteSr[sprite].data >> 22) & 0x03;
+                        /*
+                         debug("f: %d l: %d c: %d Sprite %d loads mc colBits: %02X\n",
+                         c64->frame, c64->rasterLine, c64->rasterCycle - 1, sprite, spriteSr[sprite].colBits);
+                         */
+                    }
+                    spriteSr[sprite].mcFlop = !spriteSr[sprite].mcFlop;
+                    
+                } else {
+                    
+                    // In single-color mode, get a new bit for each pixel
+                    spriteSr[sprite].colBits = (spriteSr[sprite].data >> 22) & 0x02;
+                }
+                
+                // Perform the shift operation
+                spriteSr[sprite].data <<= 1;
+                
+                // Inactivate shift register if everything is pumped out
+                if (!spriteSr[sprite].data && !spriteSr[sprite].colBits) {
+                    active = false;
+                    CLR_BIT(spriteSrActive, sprite);
+                }
+            }
+            
+            // Toggle expansion flipflop for horizontally stretched sprites
+            /*
+            if (xExp)
+                spriteSr[sprite].expFlop = !spriteSr[sprite].expFlop;
+            else
+                spriteSr[sprite].expFlop = true;
+             */
+            spriteSr[sprite].expFlop = !spriteSr[sprite].expFlop || !xExp;
+        }
+        
         // Draw pixel
-        if (GET_BIT(spriteSrActive, sprite) && !hideSprites) {
+        if (active && !hideSprites) {
             
             switch (spriteSr[sprite].colBits) {
                     
