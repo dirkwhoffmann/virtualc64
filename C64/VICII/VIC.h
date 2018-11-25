@@ -313,20 +313,6 @@ private:
         //! @brief    The shift register data is read in three chunks
         uint8_t chunk1, chunk2, chunk3;
         
-        /*! @brief    Remaining bits to be pumped out
-         *  @details  At the beginning of each rasterline, this value is
-         *            initialized with -1 and set to 26 when the horizontal
-         *            trigger condition is met (sprite X trigger coord reaches
-         *            xCounter). When all bits are drawn, this value reaches 0.
-         */
-        // int remaining_bits;
- 
-        /*! @brief    Indicates if the shift register is currently running
-         *  @details  Once the shift register is started, it runs as long
-         *            it contains at least one '1' bit (data != 0).
-         */
-        bool active;
-        
         /*! @brief    Multi-color synchronization flipflop
          *  @details  Whenever the shift register is loaded, the synchronization
          *            flipflop is also set. It is toggled with each pixel and
