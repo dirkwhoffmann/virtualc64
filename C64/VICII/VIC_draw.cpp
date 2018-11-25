@@ -354,11 +354,6 @@ VIC::drawSpritePixel(unsigned pixel,
     // Iterate over all sprites
     for (unsigned sprite = 0; sprite < 8; sprite++) {
         
-        /*
-        if (!GET_BIT(enableBits, sprite))
-            continue;
-        */
-        
         bool enable = GET_BIT(enableBits, sprite);
         bool freeze = GET_BIT(freezeBits, sprite);
         bool halt = GET_BIT(haltBits, sprite);
@@ -368,7 +363,8 @@ VIC::drawSpritePixel(unsigned pixel,
         // Stop shift register if applicable
         if (halt) {
             spriteSr[sprite].active = false;
-            // spriteSr[sprite].colBits = 0;
+            CLR_BIT(spriteSrActive, sprite);
+            assert(spriteSr[sprite].active == (GET_BIT(spriteSrActive, sprite) != 0));
         }
         
         // Run shift register if applicable
@@ -377,7 +373,9 @@ VIC::drawSpritePixel(unsigned pixel,
             // Check for horizontal trigger condition
             if (enable && xCounter + pixel == reg.delayed.sprX[sprite]) {
                 if (!spriteSr[sprite].active) {
+                    SET_BIT(spriteSrActive, sprite);
                     spriteSr[sprite].active = true;
+                    assert(spriteSr[sprite].active == (GET_BIT(spriteSrActive, sprite) != 0));
                     spriteSr[sprite].expFlop = true;
                     spriteSr[sprite].mcFlop = true;
                     /*
@@ -426,6 +424,10 @@ VIC::drawSpritePixel(unsigned pixel,
                     
                     // Inactivate shift register if everything is pumped out
                     spriteSr[sprite].active = spriteSr[sprite].data || spriteSr[sprite].colBits;
+                    if (!spriteSr[sprite].data && !spriteSr[sprite].colBits) {
+                        CLR_BIT(spriteSrActive, sprite);
+                    }
+                    assert(spriteSr[sprite].active == (GET_BIT(spriteSrActive, sprite) != 0));
                 }
                 
                 // Toggle expansion flipflop for horizontally stretched sprites

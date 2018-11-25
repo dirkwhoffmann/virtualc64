@@ -346,11 +346,17 @@ private:
                 
     } spriteSr[8];
     
+    /*! @brief    Indicates for each sprite if the shift register is active.
+     *  @details  Once the shift register is started, it runs as long
+     *            it contains at least one '1' bit (data != 0).
+     */
+    uint8_t spriteSrActive;
+    
     //! @brief    Sprite-sprite collision register (12)
-    uint8_t  spriteSpriteCollision;
+    uint8_t spriteSpriteCollision;
 
     //! @brief    Sprite-background collision register (12)
-    uint8_t  spriteBackgroundColllision;
+    uint8_t spriteBackgroundColllision;
 
     
     //

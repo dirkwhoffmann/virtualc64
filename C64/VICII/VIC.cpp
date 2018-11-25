@@ -69,7 +69,8 @@ VIC::VIC()
         { &colorLine,                   sizeof(colorLine),                      CLEAR_ON_RESET },
         { &vmli,                        sizeof(vmli),                           CLEAR_ON_RESET },
         { &sr,                          sizeof(sr),                             CLEAR_ON_RESET },
-        { &spriteSr,                   sizeof(spriteSr),                        CLEAR_ON_RESET },
+        { &spriteSr,                    sizeof(spriteSr),                       CLEAR_ON_RESET },
+        { &spriteSrActive,              sizeof(spriteSrActive),                 CLEAR_ON_RESET },
         { &spriteSpriteCollision,       sizeof(spriteSpriteCollision),          CLEAR_ON_RESET },
         { &spriteBackgroundColllision,  sizeof(spriteBackgroundColllision),     CLEAR_ON_RESET },
 
