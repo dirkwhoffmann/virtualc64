@@ -354,8 +354,10 @@ VIC::drawSpritePixel(unsigned pixel,
     // Iterate over all sprites
     for (unsigned sprite = 0; sprite < 8; sprite++) {
         
+        /*
         if (!GET_BIT(enableBits, sprite))
             continue;
+        */
         
         bool freeze = GET_BIT(freezeBits, sprite);
         bool halt = GET_BIT(haltBits, sprite);
@@ -372,7 +374,7 @@ VIC::drawSpritePixel(unsigned pixel,
         if (!freeze) {
             
             // Check for horizontal trigger condition
-            if (xCounter + pixel == reg.delayed.sprX[sprite]) {
+            if (xCounter + pixel == reg.delayed.sprX[sprite] && GET_BIT(enableBits, sprite)) {
                 if (!spriteSr[sprite].active) {
                     spriteSr[sprite].active = true;
                     spriteSr[sprite].expFlop = true;
