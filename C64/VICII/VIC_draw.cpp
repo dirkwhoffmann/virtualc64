@@ -258,7 +258,7 @@ VIC::drawSprites()
     uint8_t secondDMA = isSecondDMAcycle;
     
     // Pixel 0
-    drawSpritePixel(0, spriteDisplayDelayed, secondDMA, 0);
+    drawSpritePixel(0, spriteDisplayDelayed, secondDMA);
     
     // After the first pixel, color register changes show up
     reg.delayed.colors[COLREG_SPR_EX1] = reg.current.colors[COLREG_SPR_EX1];
@@ -268,16 +268,20 @@ VIC::drawSprites()
     }
     
     // Pixel 1, Pixel 2, Pixel 3
-    drawSpritePixel(1, spriteDisplayDelayed, secondDMA, 0);
-    drawSpritePixel(2, spriteDisplayDelayed, secondDMA, secondDMA);
-    drawSpritePixel(3, spriteDisplayDelayed, firstDMA | secondDMA, 0);
+    drawSpritePixel(1, spriteDisplayDelayed, secondDMA);
+    
+    // Stop shift register on the second DMA cycle
+    spriteSrActive &= ~secondDMA;
+    
+    drawSpritePixel(2, spriteDisplayDelayed, secondDMA);
+    drawSpritePixel(3, spriteDisplayDelayed, firstDMA | secondDMA);
     
     // If a shift register is loaded, the new data appears here.
     updateSpriteShiftRegisters();
 
     // Pixel 4, Pixel 5
-    drawSpritePixel(4, spriteDisplay, firstDMA | secondDMA, 0);
-    drawSpritePixel(5, spriteDisplay, firstDMA | secondDMA, 0);
+    drawSpritePixel(4, spriteDisplay, firstDMA | secondDMA);
+    drawSpritePixel(5, spriteDisplay, firstDMA | secondDMA);
     
     // Changes of the X expansion bits and the priority bits show up here
     reg.delayed.sprExpandX = reg.current.sprExpandX;
@@ -301,7 +305,7 @@ VIC::drawSprites()
     }
     
     // Pixel 6
-    drawSpritePixel(6, spriteDisplay, firstDMA | secondDMA, 0);
+    drawSpritePixel(6, spriteDisplay, firstDMA | secondDMA);
     
     // Update multicolor bits if an old VICII is emulated
     if (toggle && is656x()) {
@@ -314,7 +318,7 @@ VIC::drawSprites()
     }
     
     // Pixel 7
-    drawSpritePixel(7, spriteDisplay, firstDMA, 0);
+    drawSpritePixel(7, spriteDisplay, firstDMA);
     
     // Check for collisions
     for (unsigned i = 0; i < 8; i++) {
@@ -348,8 +352,7 @@ VIC::drawSprites()
 void
 VIC::drawSpritePixel(unsigned pixel,
                      uint8_t enableBits,
-                     uint8_t freezeBits,
-                     uint8_t haltBits)
+                     uint8_t freezeBits)
 {
     // Quick exit condition
     if (!enableBits && !spriteSrActive) {
@@ -359,18 +362,10 @@ VIC::drawSpritePixel(unsigned pixel,
     // Iterate over all sprites
     for (unsigned sprite = 0; sprite < 8; sprite++) {
         
- 
         bool enable = GET_BIT(enableBits, sprite);
         bool freeze = GET_BIT(freezeBits, sprite);
-        bool halt = GET_BIT(haltBits, sprite);
         bool mCol = GET_BIT(reg.delayed.sprMC, sprite);
         bool xExp = GET_BIT(reg.delayed.sprExpandX, sprite);
-        
-        // Stop shift register if applicable
-        if (halt) {
-            CLR_BIT(spriteSrActive, sprite);
-        }
-        
         bool active = GET_BIT(spriteSrActive, sprite);
         
         // If a sprite is enabled, activate it's shift register if the

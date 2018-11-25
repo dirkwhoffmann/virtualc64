@@ -1414,14 +1414,11 @@ private:
      *  @param    enableBits are the spriteDisplay bits
      *  @param    freezeBits If set to true, the sprites shift register will
      *                     freeze temporarily
-     *  @param    haltBits  If set to true, the sprites shift shift register will
-     *                     be deactivated
      *  @seealso  drawSprites()
      */
     void drawSpritePixel(unsigned pixel,
                          uint8_t enableBits,
-                         uint8_t freezeBits,
-                         uint8_t haltBits);
+                         uint8_t freezeBits);
     
     
     //
