@@ -10,7 +10,7 @@
 import Cocoa
 
 @NSApplicationMain
-public class AppDelegate: NSObject, NSApplicationDelegate {
+@objc public class AppDelegate: NSObject, NSApplicationDelegate {
     
     public func applicationDidFinishLaunching(_ aNotification: Notification) {
         
@@ -25,6 +25,12 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
     public func applicationWillTerminate(_ aNotification: Notification) {
 
         track()
+    }
+    
+    @objc public func handleResetCommand(_ command: NSScriptCommand) {
+
+        print("Hallo ****");
+        // return true as AnyObject;
     }
     
     /*

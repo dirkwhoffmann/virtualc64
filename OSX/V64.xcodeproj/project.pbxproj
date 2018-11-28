@@ -41,6 +41,8 @@
 		5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018AF65202EDD2000B4C886 /* UserDefaults.swift */; };
 		5018E48112240F7100F0820E /* AnyC64File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5018E48012240F7100F0820E /* AnyC64File.cpp */; };
 		50195C2A20B007A1003844FB /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50195C2920B007A1003844FB /* Debugger.swift */; };
+		501A4A5821AF1A6200DDE409 /* VirtualC64.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 501A4A5721AF1A6200DDE409 /* VirtualC64.sdef */; };
+		501A4A5A21AF3BAF00DDE409 /* AppleScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501A4A5921AF3BAF00DDE409 /* AppleScript.swift */; };
 		501B9755215D86B7000CFB1D /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501B9754215D86B7000CFB1D /* Sparkle.framework */; };
 		501B9756215D89C6000CFB1D /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 501B9754215D86B7000CFB1D /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		501DE30A20C9C41B00707130 /* pot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE2F220C9C41800707130 /* pot.cc */; };
@@ -260,6 +262,8 @@
 		5018E47F12240F7100F0820E /* AnyC64File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyC64File.h; sourceTree = "<group>"; };
 		5018E48012240F7100F0820E /* AnyC64File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnyC64File.cpp; sourceTree = "<group>"; };
 		50195C2920B007A1003844FB /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
+		501A4A5721AF1A6200DDE409 /* VirtualC64.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = VirtualC64.sdef; sourceTree = "<group>"; };
+		501A4A5921AF3BAF00DDE409 /* AppleScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleScript.swift; sourceTree = "<group>"; };
 		501B9754215D86B7000CFB1D /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		501D2C7D1B85C0F700B1AD0F /* VIC_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_types.h; sourceTree = "<group>"; };
 		501DE2EE20C9C41700707130 /* siddefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = siddefs.h; sourceTree = "<group>"; };
@@ -544,6 +548,7 @@
 				8D15AC360486D014006FF6A4 /* Info.plist */,
 				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
 				50D197DF21606DEC008BC551 /* dsa_pub.pem */,
+				501A4A5721AF1A6200DDE409 /* VirtualC64.sdef */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -685,6 +690,7 @@
 				50F236AE12DF1CCB00B1F275 /* C64GUI.h */,
 				50DBB44A2025CE5700489271 /* Basics.swift */,
 				506D3DCD20223E5E009742CF /* AppDelegate.swift */,
+				501A4A5921AF3BAF00DDE409 /* AppleScript.swift */,
 				5000473F12DCEC9B0098D890 /* Model */,
 				5000474012DCECAB0098D890 /* View */,
 				5000474112DCECBA0098D890 /* Controller */,
@@ -1083,6 +1089,7 @@
 				50B1644E202DDAA600447D3E /* ExportDiskDialog.xib in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */,
+				501A4A5821AF1A6200DDE409 /* VirtualC64.sdef in Resources */,
 				50F99557203AB2A9004C4856 /* KeyboardDialog.xib in Resources */,
 				503E199020C42C6D007E91F1 /* Media.xcassets in Resources */,
 				50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */,
@@ -1201,6 +1208,7 @@
 				506D54C820321C830026D8B4 /* RomPrefsController.swift in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				5028921521A2F96800622969 /* Kingsoft.cpp in Sources */,
+				501A4A5A21AF3BAF00DDE409 /* AppleScript.swift in Sources */,
 				50FF16FD205D17F5000A729A /* ProcessorPort.cpp in Sources */,
 				50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
