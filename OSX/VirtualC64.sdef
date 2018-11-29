@@ -194,7 +194,7 @@
         </class>
         
         <class name="document" code="docu" description="A document.">
-            <cocoa class="NSDocument"/>
+            <cocoa class="VirtualC64.MyDocument"/>
             <property name="name" code="pnam" type="text" access="r" description="Its name.">
                 <cocoa key="displayName"/>
             </property>
