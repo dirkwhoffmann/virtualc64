@@ -444,45 +444,4 @@ extension MyController {
         defaults.set(c64.vic.glueLogic(), forKey: VC64Keys.glueLogic)
         defaults.set(c64.mem.ramInitPattern(), forKey: VC64Keys.initPattern)
     }
-
-    /// This function is called after the user defaults have been loaded
-    /// It allows the user to overwrite some settings via command line
-    /// parameters
-    func processCommandLineArgs() {
-        
-        var command = ""
-        
-        for argument in CommandLine.arguments {
-            
-            switch command {
-                
-            case "-model":
-                track("-model \(argument)")
-                switch argument {
-                case "C64": c64.setModel(Int(C64_PAL.rawValue))
-                case "C64II": c64.setModel(Int(C64_II_PAL.rawValue))
-                case "C64OLD": c64.setModel(Int(C64_OLD_PAL.rawValue))
-                case "C64NTSC": c64.setModel(Int(C64_NTSC.rawValue))
-                case "C64IINTSC": c64.setModel(Int(C64_II_NTSC.rawValue))
-                case "C64OLDNTSC": c64.setModel(Int(C64_OLD_NTSC.rawValue))
-                default:
-                    track("Unknown C64 model: \(argument)")
-                    NSApp.terminate(self)
-                }
-                
-            case "-alwayswarp":
-                track("-alwayswarp")
-                c64.setAlwaysWarp(true)
-                
-            case "-automount":
-                track("-automount")
-                autoMount = true
-                
-            default:
-                break
-            }
-            
-        command = argument
-        }
-    }
 }

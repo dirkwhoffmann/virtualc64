@@ -364,9 +364,6 @@ extension MyController {
         // Load user defaults
         loadUserDefaults()
         
-        // Process command line arguments
-        processCommandLineArgs()
-        
         // Enable message processing (register callback)
         addListener()
 
