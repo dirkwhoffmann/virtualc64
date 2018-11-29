@@ -271,11 +271,6 @@
             <result type="boolean" description="The result of the invocation. True if it succeeds, False if it does not"/>
         </command>
         
-        <command name="forcequit" code="VCemFCqt" description="Quits the emulator without saving.">
-            <cocoa class="VirtualC64.VC64ForceQuitCommand"/>
-            <result type="boolean" description="The result of the invocation. True if it succeeds, False if it does not"/>
-        </command>
-        
         <command name="configure" code="VCemCOnf" description="Configures the emulator.">
             <cocoa class="VirtualC64.VC64ConfigureCommand"/>
             
@@ -318,6 +313,12 @@
             <result type="boolean" description="The result of the invocation. True if it succeeds, False if it does not"/>
         </command>
         
+        <enumeration name="image format" code="IMfo">
+            <enumerator name="png" code="png " description="Save image in PNG format."/>
+            <enumerator name="jpg" code="jpg " description="Save image in JPG format."/>
+            <enumerator name="tiff" code="tiff" description="Save image in TIFF format."/>
+        </enumeration>
+        
         <command name="takeScreenshot" code="VCemTKss" description="Takes a screenshot of the emulator window.">
             <cocoa class="VirtualC64.VC64TakeScreenshotCommand"/>
             
@@ -326,7 +327,7 @@
                 <cocoa key="VC64Path"/>
             </parameter>
             
-            <parameter name="format" code="VCif" type="text" optional="yes"
+            <parameter name="format" code="VCif" type="image format" optional="yes"
                 description="an image format.">
                 <cocoa key="VC64ImageFormat"/>
             </parameter>

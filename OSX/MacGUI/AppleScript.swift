@@ -44,6 +44,7 @@ class VC64ResetCommand: NSScriptCommand {
     }
 }
 
+/*
 class VC64ForceQuitCommand: NSScriptCommand {
     
     override func performDefaultImplementation() -> Any? {
@@ -57,6 +58,7 @@ class VC64ForceQuitCommand: NSScriptCommand {
         return true
     }
 }
+*/
 
 class VC64ConfigureCommand: NSScriptCommand {
     
