@@ -268,14 +268,43 @@
         
         <command name="reset" code="VCemRSet" description="Resets the emulator.">
             <cocoa class="VirtualC64.VC64ResetCommand"/>
+            <result type="boolean" description="The result of the invocation. True if it succeeds, False if it does not"/>
         </command>
         
-        <command name="setModel" code="VCemMOdl" description="Sets the hardware configuration to emulate.">
-            <cocoa class="VirtualC64.VC64SetModelCommand"/>
+        <command name="forcequit" code="VCemFCqt" description="Quits the emulator without saving.">
+            <cocoa class="VirtualC64.VC64ForceQuitCommand"/>
+            <result type="boolean" description="The result of the invocation. True if it succeeds, False if it does not"/>
+        </command>
+        
+        <command name="configure" code="VCemCOnf" description="Configures the emulator.">
+            <cocoa class="VirtualC64.VC64ConfigureCommand"/>
             
-            <parameter name="model" code="VCdl" type="text" optional="no"
+            <parameter name="model" code="VCcf" type="text" optional="yes"
                 description="a C64 hardware model.">
-                <cocoa key="VC64Model"/>
+                <cocoa key="VC64HwModel"/>
+            </parameter>
+            <parameter name="autowarp" code="VCau" type="text" optional="yes"
+                description="on or off.">
+                <cocoa key="VC64AutoWarp"/>
+            </parameter>
+            <parameter name="alwayswarp" code="VCal" type="text" optional="yes"
+                description="on or off.">
+                <cocoa key="VC64AlwaysWarp"/>
+            </parameter>
+            <parameter name="automount" code="VCam" type="text" optional="yes"
+                description="on or off.">
+                <cocoa key="VC64AutoMount"/>
+            </parameter>
+            
+            <result type="boolean" description="The result of the invocation. True if it succeeds, False if it does not"/>
+        </command>
+        
+        <command name="dragin" code="VCemDRag" description="Emulates a drag and drop event.">
+            <cocoa class="VirtualC64.VC64DragInCommand"/>
+            
+            <parameter name="path" code="VCth" type="text"
+                description="a file URL.">
+                <cocoa key="VC64Path"/>
             </parameter>
             
             <result type="boolean" description="The result of the invocation. True if it succeeds, False if it does not"/>
@@ -284,20 +313,22 @@
         <command name="typeText" code="VCemTYtx" description="Types a text inside the emulator.">
             <cocoa class="VirtualC64.VC64TypeTextCommand"/>
             
-            <parameter name="text" code="VCxt" type="text" optional="no"
-                description="a text string.">
-                <cocoa key="VC64Text"/>
-            </parameter>
-            
+            <direct-parameter type="text" description="a text string."/>
+
             <result type="boolean" description="The result of the invocation. True if it succeeds, False if it does not"/>
         </command>
         
         <command name="takeScreenshot" code="VCemTKss" description="Takes a screenshot of the emulator window.">
             <cocoa class="VirtualC64.VC64TakeScreenshotCommand"/>
             
-            <parameter name="path" code="VCth" type="text" optional="no"
+            <parameter name="path" code="VCth" type="text"
                 description="a file URL.">
-                <cocoa key="VCPath"/>
+                <cocoa key="VC64Path"/>
+            </parameter>
+            
+            <parameter name="format" code="VCif" type="text" optional="yes"
+                description="an image format.">
+                <cocoa key="VC64ImageFormat"/>
             </parameter>
             
             <result type="boolean" description="The result of the invocation. True if it succeeds, False if it does not"/>

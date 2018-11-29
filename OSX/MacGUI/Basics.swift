@@ -29,8 +29,30 @@ public func track(_ message: String = "",
 
 
 //
-// Image processing
+// Handling images
 //
+
+extension NSBitmapImageRep {
+    var png: Data? {
+        return representation(using: .png, properties: [:])
+    }
+    var jpg: Data? {
+        return representation(using: .jpeg, properties: [:])
+    }
+}
+extension Data {
+    var bitmap: NSBitmapImageRep? {
+        return NSBitmapImageRep(data: self)
+    }
+}
+extension NSImage {
+    var pngRepresentation: Data? {
+        return tiffRepresentation?.bitmap?.png
+    }
+    var jpgRepresentation: Data? {
+        return tiffRepresentation?.bitmap?.jpg
+    }
+}
 
 extension NSImage {
     
