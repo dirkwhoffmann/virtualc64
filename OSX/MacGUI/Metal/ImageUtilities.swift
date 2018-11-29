@@ -232,18 +232,27 @@ public extension MetalView
     // Image handling
     //
 
-    func screenshot() -> NSImage?
+    func screenshot(texture: MTLTexture) -> NSImage?
     {
         // Use the blitter to copy the texture data back from the GPU
-        let queue = scanlineTexture.device.makeCommandQueue()!
+        let queue = texture.device.makeCommandQueue()!
         let commandBuffer = queue.makeCommandBuffer()!
         let blitEncoder = commandBuffer.makeBlitCommandEncoder()!
-        blitEncoder.synchronize(texture: scanlineTexture, slice: 0, level: 0)
+        blitEncoder.synchronize(texture: texture, slice: 0, level: 0)
         blitEncoder.endEncoding()
         commandBuffer.commit()
         commandBuffer.waitUntilCompleted()
         
-        return NSImage.make(texture: scanlineTexture, rect: textureRect)
+        return NSImage.make(texture: texture, rect: textureRect)
+    }
+    
+    func screenshot(afterUpscaling: Bool = true) -> NSImage?
+    {
+        if afterUpscaling {
+            return screenshot(texture: upscaledTexture)
+        } else {
+            return screenshot(texture: emulatorTexture)
+        }
     }
     
     func createBackgroundTexture() -> MTLTexture? {
