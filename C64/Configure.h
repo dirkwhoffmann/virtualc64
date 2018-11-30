@@ -46,7 +46,9 @@
 // Fixed a bug in the VICII implementation that caused too many sprite-sprite and sprite-background IRQs to be triggered.
 // The emulation of VICII's sprite shift register is more accurate now.
 // Fixed several user interface issues in the Sprite Debug Panel.
+// In positional key mapping mode, the left and right shift key are now treated as two different keys.
 // Starting with this version, VirtualC64 offers limited scripting support via Apple's Open Scripting Architecture.
+//
 //
 // TODOs for the next release:
 //
