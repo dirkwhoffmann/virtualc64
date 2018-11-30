@@ -62,6 +62,12 @@ void TimeDelayed<T>::writeWithDelay(T value, uint8_t waitCycles)
     // Shift pipeline
     int64_t diff = referenceTime - timeStamp;
     for (int i = this->capacity; i >= 0; i--) {
+        /*
+        if (!((i - diff <= 0) || (i - diff <= this->capacity))) {
+            printf("i = %d diff = %lld capacity = %d reference = %lld timeStamp = %lld\n",
+                  i, diff, capacity, referenceTime, timeStamp);
+        }
+        */
         assert((i - diff <= 0) || (i - diff <= this->capacity));
         pipeline[i] = (i - diff > 0) ? pipeline[i - diff] : pipeline[0];
     }
@@ -137,6 +143,10 @@ void TimeDelayed<T>::saveToBuffer(uint8_t **buffer)
         write64(buffer, (uint64_t)pipeline[i]);
     }
     write64(buffer, timeStamp);
+    /*
+    printf("SAVING: capacity = %d reference = %lld timeStamp = %lld\n",
+           capacity, *clock, timeStamp);
+    */
     
     assert(*buffer - old == stateSize());
 }

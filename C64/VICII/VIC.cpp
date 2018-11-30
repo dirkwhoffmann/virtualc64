@@ -138,8 +138,8 @@ VIC::reset()
     yCounter = PAL_HEIGHT;
     
     // Reset timed delay variables
-    baLine.reset(0);
-    gAccessResult.reset(0);
+    baLine.clear();
+    gAccessResult.clear();
     
     expansionFF = 0xFF;
     

@@ -24,11 +24,11 @@
 
 // Snapshot version number of this release
 #define V_MAJOR 3
-#define V_MINOR 1
+#define V_MINOR 2
 #define V_SUBMINOR 0
 
 // Disable assertion checking (Uncomment in release build)
-// #define NDEBUG
+#define NDEBUG
 
 // Default debug level for all components (Set to 1 in release build)
 #define DEBUG_LEVEL 1
@@ -47,7 +47,7 @@
 // The emulation of VICII's sprite shift register is more accurate now.
 // Fixed several user interface issues in the Sprite Debug Panel.
 // In positional key mapping mode, the left and right shift key are now treated as two different keys.
-// Starting with this version, VirtualC64 offers limited scripting support via Apple's Open Scripting Architecture.
+// Starting with this version, VirtualC64 offers limited scripting support via Apple's Open Scripting Architecture. It can be controlled remotely via Applescript or JXA.
 //
 //
 // TODOs for the next release:

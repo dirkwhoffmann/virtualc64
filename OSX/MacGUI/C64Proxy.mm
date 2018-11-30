@@ -1770,7 +1770,9 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 + (instancetype) makeWithC64:(C64Proxy *)c64proxy
 {
     C64 *c64 = [c64proxy wrapper]->c64;
+    c64->suspend();
     Snapshot *snapshot = Snapshot::makeWithC64(c64);
+    c64->resume();
     return [self make:snapshot];
 }
 
