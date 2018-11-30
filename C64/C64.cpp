@@ -101,9 +101,7 @@ C64::C64()
         &drive1,
         &drive2,
         &datasette,
-        &mouse1350,
-        &mouse1351,
-        &neosMouse,
+        &mouse,
         NULL };
     
     registerSubComponents(subcomponents, sizeof(subcomponents));
@@ -127,7 +125,6 @@ C64::C64()
     registerSnapshotItems(items, sizeof(items));
 
     // Set initial hardware configuration
-    mouse = &mouse1350;
     mousePort = 0;
     vic.setModel(PAL_8565);
     drive1.powerOn();
@@ -607,7 +604,7 @@ C64::endFrame()
     port2.execute();
 
     // Update mouse coordinates
-    if (mousePort != 0) mouse->execute();
+    if (mousePort != 0) mouse.execute();
     
     // Take a snapshot once in a while
     if (snapshotInterval > 0 &&
@@ -625,23 +622,8 @@ void
 C64::setMouseModel(MouseModel value)
 {
     suspend();
-    
-    switch(value) {
-        case MOUSE1350:
-        mouse = &mouse1350;
-        break;
-        case MOUSE1351:
-        mouse = &mouse1351;
-        break;
-        case NEOSMOUSE:
-        mouse = &neosMouse;
-        break;
-        default:
-        warn("Unknown mouse model selected.\n");
-        mouse = &mouse1350;
-    }
-    
-    mouse->reset();
+    mouse.setModel(value);
+    mouse.reset();
     resume();
 }
 
@@ -655,43 +637,19 @@ C64::connectMouse(unsigned port)
 uint8_t
 C64::mouseBits(unsigned port)
 {
-    if (mousePort != port) {
-        return 0xFF;
-    } else {
-        return mouse->readControlPort();
-    }
+    return (mousePort == port) ? mouse.readControlPort() : 0xFF;
 }
 
 uint8_t
 C64::potXBits()
 {
-    if (mousePort != 0) {
-        switch (mouse->mouseModel()) {
-            case MOUSE1350:
-                return mouse1350.readPotX();
-            case MOUSE1351:
-                return mouse1351.readPotX();
-            case NEOSMOUSE:
-                return neosMouse.readPotX();
-        }
-    }
-    return 0xFF;
+    return mousePort ? mouse.readPotX() : 0xFF;
 }
 
 uint8_t
 C64::potYBits()
 {
-    if (mousePort != 0) {
-        switch (mouse->mouseModel()) {
-            case MOUSE1350:
-                return mouse1350.readPotY();
-            case MOUSE1351:
-                return mouse1351.readPotY();
-            case NEOSMOUSE:
-                return neosMouse.readPotY();
-        }
-    }
-    return 0xFF;
+     return mousePort ? mouse.readPotY() : 0xFF;
 }
 
 bool

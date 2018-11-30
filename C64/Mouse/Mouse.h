@@ -22,17 +22,27 @@
 #define MOUSE_H
 
 #include "Mouse_types.h"
-/*
 #include "Mouse1350.h"
 #include "Mouse1351.h"
-#include "NeoMouse.h"
-*/
+#include "NeosMouse.h"
 
-//! @brief Base class for all mouse emulations
-class Mouse {
+//! @brief An external mouse plugged into the control port
+class Mouse : public VirtualComponent {
     
-    //! @brief    Target mouse position
-    /*! @details  In order to achieve a smooth mouse movement, a new mouse
+    //! @brief    Emulated mouse model
+    MouseModel model = MOUSE1350;
+    
+    //! @brief    A Commdore 1350 (digital) mouse
+    Mouse1350 mouse1350;
+
+    //! @brief    A Commdore 1351 (analog) mouse
+    Mouse1351 mouse1351;
+
+    //! @brief    A Neos (analog) mouse
+    NeosMouse mouseNeos;
+
+    /*! @brief    Target mouse position
+     *  @details  In order to achieve a smooth mouse movement, a new mouse
      *            coordinate is not written directly into mouseX and mouseY.
      *            Instead, these variables are set. In execute(), mouseX and
      *            mouseY are shifted smoothly towards the target positions.
@@ -49,29 +59,37 @@ public:
     ~Mouse();
     
     //! @brief   Reset
-    virtual void reset() = 0;
+    void reset();
 
     //! @brief   Returns the model of this mouse
-    virtual MouseModel mouseModel() = 0;
-    
+    MouseModel mouseModel() { return model; }
+
+    //! @brief   Sets the emulated mouse model
+    void setModel(MouseModel model) { this->model = model; }
+
     //! @brief   Updates the mouse coordinates
     void setXY(int64_t x, int64_t y) { targetX = x; targetY = y; }
 
     //! @brief   Updates the button states
-    virtual void setLeftMouseButton(bool value) = 0;
-    virtual void setRightMouseButton(bool value) = 0;
+    void setLeftMouseButton(bool value);
+    void setRightMouseButton(bool value);
+    
+    //! @brief    Triggers a state change (Neos mouse only)
+    void risingStrobe(int portNr) { mouseNeos.risingStrobe(portNr); }
+    
+    //! @brief    Triggers a state change (Neos mouse only)
+    void fallingStrobe(int portNr) { mouseNeos.fallingStrobe(portNr); }
     
     //! @brief   Returns the pot X bits as set by the mouse
-    virtual uint8_t readPotX() = 0;
+    uint8_t readPotX();
 
     //! @brief   Returns the pot Y bits as set by the mouse
-    virtual uint8_t readPotY() = 0;
+    uint8_t readPotY();
 
     //! @brief   Returns the control port bits as set by the mouse
-    virtual uint8_t readControlPort() = 0;
+    uint8_t readControlPort();
 
     //! @brief   Execution function
-    virtual void execute(int64_t targetX, int64_t targetY) = 0;
     void execute();
 };
 

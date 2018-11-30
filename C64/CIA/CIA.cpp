@@ -1212,9 +1212,9 @@ CIA1::updatePA()
     
     // An edge on PA4 triggers the NeosMouse on port 2
     if (FALLING_EDGE_BIT(oldPA, PA, 4))
-        c64->neosMouse.fallingStrobe(2 /* Port */);
+        c64->mouse.fallingStrobe(2 /* Port */);
     if (RISING_EDGE_BIT(oldPA, PA, 4))
-        c64->neosMouse.risingStrobe(2 /* Port */);
+        c64->mouse.risingStrobe(2 /* Port */);
 }
 
 //                    -------
@@ -1270,9 +1270,9 @@ CIA1::updatePB()
     
     // An edge on PB4 triggers the NeosMouse on port 1
     if (FALLING_EDGE_BIT(oldPB, PB, 4))
-        c64->neosMouse.fallingStrobe(1 /* Port */);
+        c64->mouse.fallingStrobe(1 /* Port */);
     if (RISING_EDGE_BIT(oldPB, PB, 4))
-        c64->neosMouse.risingStrobe(1 /* Port */);
+        c64->mouse.risingStrobe(1 /* Port */);
 }
 
 

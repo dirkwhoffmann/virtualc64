@@ -22,9 +22,8 @@
 #define MOUSE1350_H
 
 #include "VirtualComponent.h"
-#include "Mouse.h"
 
-class Mouse1350 : public VirtualComponent, public Mouse {
+class Mouse1350 : public VirtualComponent {
     
 private:
     
@@ -57,10 +56,7 @@ public:
     
     //! @brief   Methods from VirtualComponent class
     void reset();
-    
-    //! @brief   Methods from Mouse class
-    MouseModel mouseModel() { return MOUSE1350; }
-    
+        
     //! @brief   Updates the button state
     void setLeftMouseButton(bool value) { leftButton = value; }
     void setRightMouseButton(bool value) { rightButton = value; }

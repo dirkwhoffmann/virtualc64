@@ -65,9 +65,8 @@
 // Peripherals
 #include "Drive.h"
 #include "Datasette.h"
-#include "Mouse1350.h"
-#include "Mouse1351.h"
-#include "NeosMouse.h"
+#include "Mouse.h"
+
 
 /*! @class    A complete virtual Commodore 64
  *  @brief    This class is the most prominent one of all. To run the emulator,
@@ -131,14 +130,17 @@ class C64 : public VirtualComponent {
     //! @brief    A Commodore 1530 (C2N) Datasette
     Datasette datasette;
     
+    //! @brief    An external mouse
+    Mouse mouse;
+    
     //! @brief    A Commodore Mouse 1350
-    Mouse1350 mouse1350;
+    // Mouse1350 mouse1350;
     
     //! @brief    A Commodore Mouse 1351
-    Mouse1351 mouse1351;
+    // Mouse1351 mouse1351;
     
     //! @brief    A Neos Mouse
-    NeosMouse neosMouse;
+    // NeosMouse neosMouse;
     
     
     //
@@ -147,7 +149,7 @@ class C64 : public VirtualComponent {
     
     //! @brief    Selected mouse model
     //! @details  Points to mouse130, mouse1351, or neosMouse
-    Mouse *mouse;
+    // Mouse *mouse;
     
     //! @brief    Control port of plugged in mouse
     /*! @details  0 = unconnected, 1,2 = connected to port 1 or 2
@@ -448,7 +450,7 @@ class C64 : public VirtualComponent {
     public:
     
     //! @brief    Returns the hardware model of the selected mouse.
-    MouseModel getMouseModel() { return mouse->mouseModel(); }
+    MouseModel getMouseModel() { return mouse.mouseModel(); }
     
     //! @brief    Sets the mouse hardware model.
     void setMouseModel(MouseModel value);

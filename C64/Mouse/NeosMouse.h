@@ -22,9 +22,8 @@
 #define NEOSMOUSE_H
 
 #include "VirtualComponent.h"
-#include "Mouse.h"
 
-class NeosMouse : public VirtualComponent, public Mouse {
+class NeosMouse : public VirtualComponent {
     
     //! @brief    Mouse position
     int64_t mouseX;
@@ -76,9 +75,6 @@ public:
     //! @brief    Methods from VirtualComponent class
     void reset();
     
-    //! @brief   Methods from Mouse class
-    MouseModel mouseModel() { return NEOSMOUSE; }
- 
     //! @brief   Updates the button state
     void setLeftMouseButton(bool value) { leftButton = value; }
     void setRightMouseButton(bool value) { rightButton = value; }

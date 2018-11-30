@@ -22,9 +22,8 @@
 #define MOUSE1351_H
 
 #include "VirtualComponent.h"
-#include "Mouse.h"
 
-class Mouse1351 : public VirtualComponent, public Mouse {
+class Mouse1351 : public VirtualComponent {
     
     //! @brief    Mouse position
     int64_t mouseX;
@@ -52,9 +51,6 @@ public:
     
     //! @brief   Methods from VirtualComponent class
     void reset();
-    
-    //! @brief   Methods from Mouse class
-    MouseModel mouseModel() { return MOUSE1351; }
     
     //! @brief   Updates the button state
     void setLeftMouseButton(bool value) { leftButton = value; }

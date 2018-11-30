@@ -1441,15 +1441,15 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (void) setMouseXY:(NSPoint)pos
 {
-    wrapper->c64->mouse->setXY((int64_t)pos.x, (int64_t)pos.y);
+    wrapper->c64->mouse.setXY((int64_t)pos.x, (int64_t)pos.y);
 }
 - (void) setMouseLeftButton:(BOOL)pressed
 {
-    wrapper->c64->mouse->setLeftMouseButton(pressed);
+    wrapper->c64->mouse.setLeftMouseButton(pressed);
 }
 - (void) setMouseRightButton:(BOOL)pressed
 {
-    wrapper->c64->mouse->setRightMouseButton(pressed);
+    wrapper->c64->mouse.setRightMouseButton(pressed);
 }
 
 // Managing the execution thread
