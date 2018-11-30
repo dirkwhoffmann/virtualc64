@@ -35,25 +35,13 @@
 
 #endif 
 
-
-
-// RELEASE NOTES (Version 3.2)
+// RELEASE NOTES (Version 3.3)
 //
-// VirtualC64 now supports Kingsoft, StarDos and Atomic Power cartridges.
-// The Rom dialog has been revised and can be opened manually via the hardware settings.
-// CRT monitor emulation has been improved and the emulator settings window redesigned to make video options easier to control.
-// Fixed a bug in the VICII implementation that caused too many rasterline IRQs to be triggered under some circumstances.
-// Fixed a bug in the VICII implementation that caused too many sprite-sprite and sprite-background IRQs to be triggered.
-// The emulation of VICII's sprite shift register is more accurate now.
-// Fixed several user interface issues in the Sprite Debug Panel.
-// In positional key mapping mode, the left and right shift key are now treated as two different keys.
-// Starting with this version, VirtualC64 offers limited scripting support via Apple's Open Scripting Architecture. It can be controlled remotely via Applescript or JXA.
 //
 //
 // TODOs for the next release:
 //
 //
-// Map right Mac shift key to right Commodore key
 //
 //
 // CLEANUP:

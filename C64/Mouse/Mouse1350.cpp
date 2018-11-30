@@ -34,8 +34,13 @@ void
 Mouse1350::reset()
 {
     VirtualComponent::reset();
-    Mouse::reset();
     
+    leftButton = false;
+    rightButton = false;
+    mouseX = 0;
+    mouseY = 0;
+    targetX = 0;
+    targetY = 0;
     shiftX = INT_MAX;
     shiftY = INT_MAX;
     dividerX = 64;
@@ -44,6 +49,22 @@ Mouse1350::reset()
     
     for (unsigned i = 0; i < 3; i++)
         latchedX[i] = latchedY[i] = 0;
+}
+
+void
+Mouse1350::setXY(int64_t x, int64_t y)
+{
+    targetX = x / dividerX;
+    targetY = y / dividerY;
+    
+    // Sync mouse coords with target coords if more than 8 shifts would
+    // be needed to reach target coords
+    if (abs(targetX - mouseX) / 8 > shiftX) {
+        mouseX = targetX;
+    }
+    if (abs(targetY - mouseY) / 8 > shiftY) {
+        mouseY = targetY;
+    }
 }
 
 uint8_t
@@ -55,7 +76,11 @@ Mouse1350::readControlPort()
 void
 Mouse1350::execute()
 {
-    Mouse::execute();
+    
+    if (targetX < mouseX) mouseX -= MIN(mouseX - targetX, shiftX);
+    else if (targetX > mouseX) mouseX += MIN(targetX - mouseX, shiftX);
+    if (targetY < mouseY) mouseY -= MIN(mouseY - targetY, shiftY);
+    else if (targetY > mouseY) mouseY += MIN(targetY - mouseY, shiftY);
     
     controlPort = 0xFF;
     

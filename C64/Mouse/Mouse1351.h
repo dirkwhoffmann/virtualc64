@@ -39,7 +39,17 @@ public:
     
     //! @brief   Methods from Mouse class
     MouseModel mouseModel() { return MOUSE1351; }
+    
+    //! @brief   Updates the mouse coordinates
+    void setXY(int64_t x, int64_t y);
+    
+    //! @brief   Returns the control port bits triggered by the mouse
     uint8_t readControlPort();
+    
+    /*! @brief   Execution function
+     *  @details Shifts mouseX and mouseY smoothly towards targetX and targetX.
+     */
+    void execute();
     
     //! @brief   Returns the mouse X bits as they show up in the SID register
     uint8_t mouseXBits() { return (mouseX & 0x3F) << 1; }

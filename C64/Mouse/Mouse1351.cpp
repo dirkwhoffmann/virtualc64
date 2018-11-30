@@ -34,12 +34,33 @@ void
 Mouse1351::reset()
 {
     VirtualComponent::reset();
-    Mouse::reset();
     
+    leftButton = false;
+    rightButton = false;
+    mouseX = 0;
+    mouseY = 0;
+    targetX = 0;
+    targetY = 0;
     shiftX = 31;
     shiftY = 31;
     dividerX = 256;
     dividerY = 256;
+}
+
+void
+Mouse1351::setXY(int64_t x, int64_t y)
+{
+    targetX = x / dividerX;
+    targetY = y / dividerY;
+    
+    // Sync mouse coords with target coords if more than 8 shifts would
+    // be needed to reach target coords
+    if (abs(targetX - mouseX) / 8 > shiftX) {
+        mouseX = targetX;
+    }
+    if (abs(targetY - mouseY) / 8 > shiftY) {
+        mouseY = targetY;
+    }
 }
 
 uint8_t
@@ -51,4 +72,13 @@ Mouse1351::readControlPort()
     if (rightButton) CLR_BIT(result, 0);
 
     return result;
+}
+
+void
+Mouse1351::execute()
+{
+    if (targetX < mouseX) mouseX -= MIN(mouseX - targetX, shiftX);
+    else if (targetX > mouseX) mouseX += MIN(targetX - mouseX, shiftX);
+    if (targetY < mouseY) mouseY -= MIN(mouseY - targetY, shiftY);
+    else if (targetY > mouseY) mouseY += MIN(targetY - mouseY, shiftY);
 }

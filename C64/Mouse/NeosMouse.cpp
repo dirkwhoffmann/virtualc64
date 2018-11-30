@@ -34,8 +34,13 @@ void
 NeosMouse::reset()
 {
     VirtualComponent::reset();
-    Mouse::reset();
     
+    leftButton = false;
+    rightButton = false;
+    mouseX = 0;
+    mouseY = 0;
+    targetX = 0;
+    targetY = 0;
     shiftX = 127;
     shiftY = 127;
     dividerX = 512;
@@ -47,6 +52,22 @@ NeosMouse::reset()
     latchedY = 0;
     deltaX = 0;
     deltaY = 0;
+}
+
+void
+NeosMouse::setXY(int64_t x, int64_t y)
+{
+    targetX = x / dividerX;
+    targetY = y / dividerY;
+    
+    // Sync mouse coords with target coords if more than 8 shifts would
+    // be needed to reach target coords
+    if (abs(targetX - mouseX) / 8 > shiftX) {
+        mouseX = targetX;
+    }
+    if (abs(targetY - mouseY) / 8 > shiftY) {
+        mouseY = targetY;
+    }
 }
 
 uint8_t
@@ -83,6 +104,15 @@ NeosMouse::readControlPort()
     }
     
     return result;
+}
+
+void
+NeosMouse::execute()
+{
+    if (targetX < mouseX) mouseX -= MIN(mouseX - targetX, shiftX);
+    else if (targetX > mouseX) mouseX += MIN(targetX - mouseX, shiftX);
+    if (targetY < mouseY) mouseY -= MIN(mouseY - targetY, shiftY);
+    else if (targetY > mouseY) mouseY += MIN(targetY - mouseY, shiftY);
 }
 
 void
@@ -134,5 +164,4 @@ NeosMouse::latchPosition()
     latchedX = mouseX;
     latchedY = mouseY;
 }
-
 

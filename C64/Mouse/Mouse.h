@@ -66,21 +66,19 @@ public:
     ~Mouse();
     
     //! @brief   Reset
-    virtual void reset();
+    virtual void reset() = 0;
 
     //! @brief   Returns the model of this mouse
     virtual MouseModel mouseModel() = 0;
     
     //! @brief   Updates the mouse coordinates
-    void setXY(int64_t x, int64_t y);
+    virtual void setXY(int64_t x, int64_t y) = 0;
     
     //! @brief   Returns the control port bits triggered by the mouse
     virtual uint8_t readControlPort() = 0;
     
     //! @brief   Execution function
-    /*! @details Shifts mouseX and mouseY smoothly towards targetX and targetX.
-     */
-    virtual void execute();
+    virtual void execute() = 0;
 };
 
 #endif

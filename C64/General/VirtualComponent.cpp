@@ -61,7 +61,6 @@ VirtualComponent::reset()
                 memset(snapshotItems[i].data, 0, snapshotItems[i].size);
     
     debug(3, "Resetting...\n");
-    
 }
 
 void
