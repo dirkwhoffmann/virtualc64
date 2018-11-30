@@ -51,21 +51,14 @@ NeosMouse::reset()
     deltaY = 0;
 }
 
+/*
 void
 NeosMouse::setXY(int64_t x, int64_t y)
 {
-    targetX = x / dividerX;
-    targetY = y / dividerY;
-    
-    // Sync mouse coords with target coords if more than 8 shifts would
-    // be needed to reach target coords
-    if (abs(targetX - mouseX) / 8 > shiftX) {
-        mouseX = targetX;
-    }
-    if (abs(targetY - mouseY) / 8 > shiftY) {
-        mouseY = targetY;
-    }
+    targetX /= dividerX;
+    targetY /= dividerY;
 }
+*/
 
 uint8_t
 NeosMouse::readControlPort()
@@ -104,8 +97,16 @@ NeosMouse::readControlPort()
 }
 
 void
-NeosMouse::execute()
+NeosMouse::execute(int64_t targetX, int64_t targetY)
 {
+    targetX /= dividerX;
+    targetY /= dividerY;
+    
+    // Jump directly to target coordinates if they are more than 8 shifts away.
+    if (abs(targetX - mouseX) / 8 > shiftX) mouseX = targetX;
+    if (abs(targetY - mouseY) / 8 > shiftY) mouseY = targetY;
+    
+    // Move mouse coordinates towards target coordinates
     if (targetX < mouseX) mouseX -= MIN(mouseX - targetX, shiftX);
     else if (targetX > mouseX) mouseX += MIN(targetX - mouseX, shiftX);
     if (targetY < mouseY) mouseY -= MIN(mouseY - targetY, shiftY);

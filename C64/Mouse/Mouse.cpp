@@ -28,4 +28,9 @@ Mouse::~Mouse()
 {
 }
 
+void
+Mouse::execute()
+{
+    execute(targetX, targetY);
+}
 

@@ -54,7 +54,7 @@ public:
     MouseModel mouseModel() { return MOUSE1350; }
     
     //! @brief   Updates the mouse coordinates
-    void setXY(int64_t x, int64_t y);
+    // void setXY(int64_t x, int64_t y);
     
     //! @brief   Returns the control port bits triggered by the mouse
     uint8_t readControlPort();
@@ -62,7 +62,7 @@ public:
     /*! @brief   Execution function
      *  @details Translates movement deltas into joystick events.
      */
-    void execute();
+    void execute(int64_t targetX, int64_t targetY);
 };
 
 #endif

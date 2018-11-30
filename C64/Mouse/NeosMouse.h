@@ -74,7 +74,7 @@ public:
     MouseModel mouseModel() { return NEOSMOUSE; }
  
     //! @brief   Updates the mouse coordinates
-    void setXY(int64_t x, int64_t y);
+    // void setXY(int64_t x, int64_t y);
     
     //! @brief   Returns the control port bits triggered by the mouse
     uint8_t readControlPort();
@@ -82,7 +82,7 @@ public:
     /*! @brief   Execution function
      *  @details Shifts mouseX and mouseY smoothly towards targetX and targetX.
      */
-    void execute();
+    void execute(int64_t targetX, int64_t targetY);
     
     //! @brief    Triggers a state change (rising edge on control port line)
     void risingStrobe(int portNr);

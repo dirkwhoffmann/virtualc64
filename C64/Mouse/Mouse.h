@@ -69,13 +69,14 @@ public:
     virtual MouseModel mouseModel() = 0;
     
     //! @brief   Updates the mouse coordinates
-    virtual void setXY(int64_t x, int64_t y) = 0;
+    void setXY(int64_t x, int64_t y) { targetX = x; targetY = y; }
     
     //! @brief   Returns the control port bits triggered by the mouse
     virtual uint8_t readControlPort() = 0;
     
     //! @brief   Execution function
-    virtual void execute() = 0;
+    virtual void execute(int64_t targetX, int64_t targetY) = 0;
+    void execute();
 };
 
 #endif
