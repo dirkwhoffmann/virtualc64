@@ -26,6 +26,10 @@
 
 class Mouse1351 : public VirtualComponent, public Mouse {
     
+    //! @brief    Mouse movement in pixels per execution step
+    int64_t shiftX = 31;
+    int64_t shiftY = 31;
+    
 public:
     
     //! @brief    Constructor

@@ -27,7 +27,11 @@
 class NeosMouse : public VirtualComponent, public Mouse {
     
 private:
-        
+    
+    //! @brief    Mouse movement in pixels per execution step
+    int64_t shiftX = 127;
+    int64_t shiftY = 127;
+    
     //! @brief    Mouse state
     /*! @details  When the mouse switches to state 0, the current mouse
      *            position is latched and the deltaX and deltaY are computed.

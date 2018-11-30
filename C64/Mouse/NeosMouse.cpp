@@ -19,6 +19,7 @@
  */
 
 #include "C64.h"
+#include "NeosMouse.h"
 
 NeosMouse::NeosMouse() {
     
@@ -41,8 +42,6 @@ NeosMouse::reset()
     mouseY = 0;
     targetX = 0;
     targetY = 0;
-    shiftX = 127;
-    shiftY = 127;
     dividerX = 512;
     dividerY = 256;
 

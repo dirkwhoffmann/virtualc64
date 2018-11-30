@@ -19,6 +19,7 @@
  */
 
 #include "C64.h"
+#include "Mouse1351.h"
 
 Mouse1351::Mouse1351() {
     
@@ -41,8 +42,6 @@ Mouse1351::reset()
     mouseY = 0;
     targetX = 0;
     targetY = 0;
-    shiftX = 31;
-    shiftY = 31;
     dividerX = 256;
     dividerY = 256;
 }

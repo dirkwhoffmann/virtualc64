@@ -22,6 +22,11 @@
 #define MOUSE_H
 
 #include "Mouse_types.h"
+/*
+#include "Mouse1350.h"
+#include "Mouse1351.h"
+#include "NeoMouse.h"
+*/
 
 //! @brief Base class for all mouse emulations
 class Mouse {
@@ -48,10 +53,6 @@ protected:
      */
     int64_t targetX;
     int64_t targetY;
-    
-    //! @brief    Shift deltas for each execution step
-    int64_t shiftX;
-    int64_t shiftY;
     
     //! @brief    Scaling dividers applied to raw coordinates in setXY()
     int dividerX;
