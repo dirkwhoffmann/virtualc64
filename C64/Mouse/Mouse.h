@@ -30,20 +30,6 @@
 
 //! @brief Base class for all mouse emulations
 class Mouse {
-
-public:
-    
-    //! @brief    Indicates if left button is pressed
-    bool leftButton;
-    
-    //! @brief    Indicates if right button is pressed
-    bool rightButton;
-    
-protected:
-    
-    //! @brief    Mouse position
-    int64_t mouseX;
-    int64_t mouseY;
     
     //! @brief    Target mouse position
     /*! @details  In order to achieve a smooth mouse movement, a new mouse
@@ -70,10 +56,20 @@ public:
     
     //! @brief   Updates the mouse coordinates
     void setXY(int64_t x, int64_t y) { targetX = x; targetY = y; }
+
+    //! @brief   Updates the button states
+    virtual void setLeftMouseButton(bool value) = 0;
+    virtual void setRightMouseButton(bool value) = 0;
     
-    //! @brief   Returns the control port bits triggered by the mouse
+    //! @brief   Returns the pot X bits as set by the mouse
+    virtual uint8_t readPotX() = 0;
+
+    //! @brief   Returns the pot Y bits as set by the mouse
+    virtual uint8_t readPotY() = 0;
+
+    //! @brief   Returns the control port bits as set by the mouse
     virtual uint8_t readControlPort() = 0;
-    
+
     //! @brief   Execution function
     virtual void execute(int64_t targetX, int64_t targetY) = 0;
     void execute();

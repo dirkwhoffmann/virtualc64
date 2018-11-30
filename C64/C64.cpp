@@ -668,11 +668,11 @@ C64::potXBits()
     if (mousePort != 0) {
         switch (mouse->mouseModel()) {
             case MOUSE1350:
-            return mouse1350.rightButton ? 0x00 : 0xFF;
+                return mouse1350.readPotX();
             case MOUSE1351:
-            return mouse1351.mouseXBits();
+                return mouse1351.readPotX();
             case NEOSMOUSE:
-            return neosMouse.rightButton ? 0xFF : 0x00;
+                return neosMouse.readPotX();
         }
     }
     return 0xFF;
@@ -681,11 +681,17 @@ C64::potXBits()
 uint8_t
 C64::potYBits()
 {
-    if (mousePort != 0 && mouse->mouseModel() == MOUSE1351) {
-        return mouse1351.mouseYBits();
-    } else {
-        return 0xFF;
+    if (mousePort != 0) {
+        switch (mouse->mouseModel()) {
+            case MOUSE1350:
+                return mouse1350.readPotY();
+            case MOUSE1351:
+                return mouse1351.readPotY();
+            case NEOSMOUSE:
+                return neosMouse.readPotY();
+        }
     }
+    return 0xFF;
 }
 
 bool

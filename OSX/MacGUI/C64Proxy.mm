@@ -1445,11 +1445,11 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (void) setMouseLeftButton:(BOOL)pressed
 {
-    wrapper->c64->mouse->leftButton = pressed;
+    wrapper->c64->mouse->setLeftMouseButton(pressed);
 }
 - (void) setMouseRightButton:(BOOL)pressed
 {
-    wrapper->c64->mouse->rightButton = pressed;
+    wrapper->c64->mouse->setRightMouseButton(pressed);
 }
 
 // Managing the execution thread

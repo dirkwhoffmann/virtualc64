@@ -40,9 +40,6 @@ NeosMouse::reset()
     rightButton = false;
     mouseX = 0;
     mouseY = 0;
-    targetX = 0;
-    targetY = 0;
- 
     state = 0;
     triggerCycle = 0;
     latchedX = 0;
@@ -51,14 +48,17 @@ NeosMouse::reset()
     deltaY = 0;
 }
 
-/*
-void
-NeosMouse::setXY(int64_t x, int64_t y)
+uint8_t
+NeosMouse::readPotX()
 {
-    targetX /= dividerX;
-    targetY /= dividerY;
+    return rightButton ? 0xFF : 0x00;
 }
-*/
+
+uint8_t
+NeosMouse::readPotY()
+{
+    return 0xFF;
+}
 
 uint8_t
 NeosMouse::readControlPort()

@@ -28,6 +28,14 @@ class Mouse1350 : public VirtualComponent, public Mouse {
     
 private:
     
+    //! @brief    Mouse position
+    int64_t mouseX;
+    int64_t mouseY;
+    
+    //! @brief    Mouse button states
+    bool leftButton;
+    bool rightButton;
+    
     //! @brief    Dividers applied to raw coordinates in setXY()
     int dividerX = 64;
     int dividerY = 64;
@@ -53,8 +61,15 @@ public:
     //! @brief   Methods from Mouse class
     MouseModel mouseModel() { return MOUSE1350; }
     
-    //! @brief   Updates the mouse coordinates
-    // void setXY(int64_t x, int64_t y);
+    //! @brief   Updates the button state
+    void setLeftMouseButton(bool value) { leftButton = value; }
+    void setRightMouseButton(bool value) { rightButton = value; }
+
+    //! @brief   Returns the pot X bits as set by the mouse
+    uint8_t readPotX();
+    
+    //! @brief   Returns the pot Y bits as set by the mouse
+    uint8_t readPotY();
     
     //! @brief   Returns the control port bits triggered by the mouse
     uint8_t readControlPort();

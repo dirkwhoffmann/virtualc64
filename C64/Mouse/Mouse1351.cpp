@@ -40,18 +40,19 @@ Mouse1351::reset()
     rightButton = false;
     mouseX = 0;
     mouseY = 0;
-    targetX = 0;
-    targetY = 0;
 }
 
-/*
-void
-Mouse1351::setXY(int64_t x, int64_t y)
+uint8_t
+Mouse1351::readPotX()
 {
-    targetX = x / dividerX;
-    targetY = y / dividerY;
+    return mouseXBits();
 }
-*/
+
+uint8_t
+Mouse1351::readPotY()
+{
+    return mouseYBits();
+}
 
 uint8_t
 Mouse1351::readControlPort()

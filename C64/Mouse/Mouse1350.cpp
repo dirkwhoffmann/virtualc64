@@ -40,22 +40,23 @@ Mouse1350::reset()
     rightButton = false;
     mouseX = 0;
     mouseY = 0;
-    targetX = 0;
-    targetY = 0;
     controlPort = 0xFF;
     
     for (unsigned i = 0; i < 3; i++)
         latchedX[i] = latchedY[i] = 0;
 }
 
-/*
-void
-Mouse1350::setXY(int64_t x, int64_t y)
+uint8_t
+Mouse1350::readPotX()
 {
-    targetX = x / dividerX;
-    targetY = y / dividerY;
+    return rightButton ? 0x00 : 0xFF;
 }
-*/
+
+uint8_t
+Mouse1350::readPotY()
+{
+    return 0xFF;
+}
 
 uint8_t
 Mouse1350::readControlPort()
