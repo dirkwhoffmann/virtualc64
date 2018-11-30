@@ -45,8 +45,10 @@ class KeyboardDialogWindow : NSWindow {
     override func flagsChanged(with event: NSEvent) {
         
         let controller = delegate as! KeyboardDialog
-        if event.modifierFlags.contains(.shift) {
-            controller.keyDown(with: MacKey.shift)
+        if event.modifierFlags.contains(.shift) && event.keyCode == 56 {
+            controller.keyDown(with: MacKey.leftShift)
+        } else if event.modifierFlags.contains(.shift) && event.keyCode == 60 {
+            controller.keyDown(with: MacKey.rightShift)
         } else if event.modifierFlags.contains(.control) {
             controller.keyDown(with: MacKey.control)
         } else if event.modifierFlags.contains(.option) {

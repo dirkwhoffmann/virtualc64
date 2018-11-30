@@ -15,13 +15,17 @@ class KeyboardController: NSObject {
     
     var controller : MyController!
     
-    /// Determines whether the joystick emulation keys should be uncoupled from the keyboard.
+    /// Determines whether the joystick emulation keys should be uncoupled from
+    // the keyboard.
     var disconnectEmulationKeys: Bool = true
     
     /**
      Key mapping mode
      
-     The user can choose between a symbolic and a positional assignment of the keys. The symbolic assignment tries to assign the keys according to their meaning while the positional assignment establishes a one-to-one mapping between Mac keys and C64 keys.
+     The user can choose between a symbolic and a positional key assignment.
+     Symbolic assignment tries to assign the keys according to their meaning
+     while positional assignment establishes a one-to-one mapping between Mac
+     keys and C64 keys.
     */
     var mapKeysByPosition: Bool = false
     
@@ -36,7 +40,8 @@ class KeyboardController: NSObject {
     func setMapKeysByPosition(_ b: Bool) { mapKeysByPosition = b }
 
     /// Remembers the currently pressed key modifiers
-    var shift: Bool = false
+    var leftShift: Bool = false
+    var rightShift: Bool = false
     var control: Bool = false
     var option: Bool = false
     var command: Bool = false
@@ -44,26 +49,32 @@ class KeyboardController: NSObject {
     /**
      Remembers the currently pressed keys and their assigned C64 key list
 
-     This variable is only used when keys are mapped symbolically. It's written in keyDown and picked up in keyUp.
+     This variable is only used when keys are mapped symbolically. It's written
+     in keyDown and picked up in keyUp.
      */
     var pressedKeys: [MacKey:[C64Key]] = [:]
     
     /**
-     Checks if the internal values are consistent with the provides modifier flags.
+     Checks if the internal values are consistent with the provides flags.
      
-     There should never be an insonsistency. But if there is, we release the suspicous key. Otherwise, we risk to block the C64's keyboard matrix forever.
+     There should never be an insonsistency. But if there is, we release the
+     suspicous key. Otherwise, we risk to block the C64's keyboard matrix
+     for good.
      */
-    func checkConsistency(withFlags flags: NSEvent.ModifierFlags) {
+    func checkConsistency(withEvent event: NSEvent) {
         
-        if (shift != flags.contains(NSEvent.ModifierFlags.shift)) {
-            keyUp(with: MacKey.shift)
-            Swift.print("*** SHIFT inconsistency detected *** \(shift)")
+        let flags = event.modifierFlags
+        
+        if (leftShift || rightShift) != flags.contains(NSEvent.ModifierFlags.shift) {
+            keyUp(with: MacKey.leftShift)
+            keyUp(with: MacKey.rightShift)
+            Swift.print("*** SHIFT inconsistency detected *** \(leftShift) \(rightShift)")
         }
-        if (control != flags.contains(NSEvent.ModifierFlags.control)) {
+        if control != flags.contains(NSEvent.ModifierFlags.control) {
             keyUp(with: MacKey.control)
             Swift.print("*** SHIFT inconsistency *** \(control)")
         }
-        if (option != flags.contains(NSEvent.ModifierFlags.option)) {
+        if option != flags.contains(NSEvent.ModifierFlags.option) {
             keyUp(with: MacKey.option)
             Swift.print("*** SHIFT inconsistency *** \(option)")
         }
@@ -101,35 +112,45 @@ class KeyboardController: NSObject {
         
         // Create and press MacKey
         let macKey = MacKey.init(keyCode: keyCode, characters: characters)
-        checkConsistency(withFlags: flags)
+        checkConsistency(withEvent: event)
         keyDown(with: macKey)
     }
     
     func keyUp(with event: NSEvent)
     {
         let keyCode = event.keyCode
-        let flags = event.modifierFlags
         let characters = event.charactersIgnoringModifiers
 
         // Create and release macKey
         let macKey = MacKey.init(keyCode: keyCode, characters: characters)
-        checkConsistency(withFlags: flags)
+        checkConsistency(withEvent: event)
         keyUp(with: macKey)
     }
     
     func flagsChanged(with event: NSEvent) {
         
+        // track("\(event)")
         let mod = event.modifierFlags
+        let keyCode = event.keyCode
         
-        if mod.contains(.shift) && !shift {
-            shift = true
-            keyDown(with: MacKey.shift)
+        if keyCode == kVK_Shift {
+            if !leftShift {
+                leftShift = true
+                keyDown(with: MacKey.leftShift)
+            } else {
+                leftShift = false
+                keyUp(with: MacKey.leftShift)
+            }
         }
-        if !mod.contains(.shift) && shift {
-            shift = false
-            keyUp(with: MacKey.shift)
+        if keyCode == kVK_RightShift {
+            if !rightShift {
+                rightShift = true
+                keyDown(with: MacKey.rightShift)
+            } else {
+                rightShift = false
+                keyUp(with: MacKey.rightShift)
+            }
         }
-        
         if mod.contains(.control) && !control {
             control = true
             keyDown(with: MacKey.control)
@@ -138,7 +159,6 @@ class KeyboardController: NSObject {
             control = false
             keyUp(with: MacKey.control)
         }
-        
         if mod.contains(.option) && !option {
             option = true
             keyDown(with: MacKey.option)
@@ -216,7 +236,7 @@ class KeyboardController: NSObject {
     }
 
     
-    /// Standard physical key mapping
+    /// Standard physical key map
     /// Keys are matched based on their position on the keyboard
     static let standardKeyMap: [MacKey:C64Key] = [
         
@@ -273,7 +293,8 @@ class KeyboardController: NSObject {
         
         // Fourth row of C64 keyboard
         MacKey.option: C64Key.commodore,
-        MacKey.shift: C64Key.shift,
+        MacKey.leftShift: C64Key.shift,
+        MacKey.rightShift: C64Key.rightShift,
         MacKey.ansi.Z: C64Key.Z,
         MacKey.ansi.X: C64Key.X,
         MacKey.ansi.C: C64Key.C,

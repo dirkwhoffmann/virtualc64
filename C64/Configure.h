@@ -39,13 +39,14 @@
 
 // RELEASE NOTES (Version 3.2)
 //
-// Added support for cartridges of type Kingsoft, StarDos, and Atomic Power.
-// The Rom dialog has been reworked and can be opend manually from the hardware preferences.
-// CRT monitor emulation has been improved. Furthermore, the emulator preferences window has been redesign to control the video options more easily. 
-// Fixed a bug in the VIC implementation that caused too many rasterline IRQs to be triggered under some circumstances.
-// Fixed a bug in the VIC implementation that caused too many sprite-sprite and sprite-background IRQs to be triggered.
-// Improved the emulation of VICII's sprite shift register.
-// Fixed multiple issues in the sprite debug panel.
+// VirtualC64 now supports Kingsoft, StarDos and Atomic Power cartridges.
+// The Rom dialog has been revised and can be opened manually via the hardware settings.
+// CRT monitor emulation has been improved and the emulator settings window redesigned to make video options easier to control.
+// Fixed a bug in the VICII implementation that caused too many rasterline IRQs to be triggered under some circumstances.
+// Fixed a bug in the VICII implementation that caused too many sprite-sprite and sprite-background IRQs to be triggered.
+// The emulation of VICII's sprite shift register is more accurate now.
+// Fixed several user interface issues in the Sprite Debug Panel.
+// Starting with this version, VirtualC64 offers limited scripting support via Apple's Open Scripting Architecture.
 //
 // TODOs for the next release:
 //
@@ -55,7 +56,7 @@
 //
 // CLEANUP:
 // Don't use mount() for inserting disks. Use insertDisk instead
-// Replace Mouse* C64::mouse by (enum) MouseModel C64::mouse
+// Replace Mouse* C64::mouse by (enum) MouseModel C64::mouse (use bridge pattern)
 //
 // OPTIMIZATION:
 // Update IEC bus inside CIA and VIA. Use delay flags if neccessary

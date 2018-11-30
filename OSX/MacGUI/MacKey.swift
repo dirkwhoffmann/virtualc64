@@ -85,7 +85,8 @@ extension MacKey {
     static let space = MacKey.init(keyCode: kVK_Space, characters: "\u{23b5}")
     static let delete = MacKey.init(keyCode: kVK_Delete, characters: "\u{232b}")
     static let escape = MacKey.init(keyCode: kVK_Escape, characters: "\u{238b}")
-    static let shift = MacKey.init(keyCode: kVK_Shift, characters: "\u{21e7}")
+    static let leftShift = MacKey.init(keyCode: kVK_Shift, characters: "\u{21e7}")
+    static let rightShift = MacKey.init(keyCode: kVK_RightShift, characters: "\u{21e7}")
     static let option = MacKey.init(keyCode: kVK_Option, characters: "\u{2325}")
     static let control = MacKey.init(keyCode: kVK_Control, characters: "\u{2303}")
     
