@@ -42,9 +42,7 @@ NeosMouse::reset()
     mouseY = 0;
     targetX = 0;
     targetY = 0;
-    dividerX = 512;
-    dividerY = 256;
-
+ 
     state = 0;
     triggerCycle = 0;
     latchedX = 0;

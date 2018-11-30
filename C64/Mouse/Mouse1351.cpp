@@ -42,8 +42,6 @@ Mouse1351::reset()
     mouseY = 0;
     targetX = 0;
     targetY = 0;
-    dividerX = 256;
-    dividerY = 256;
 }
 
 void

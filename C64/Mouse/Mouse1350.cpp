@@ -42,8 +42,6 @@ Mouse1350::reset()
     mouseY = 0;
     targetX = 0;
     targetY = 0;
-    dividerX = 64;
-    dividerY = 64;
     controlPort = 0xFF;
     
     for (unsigned i = 0; i < 3; i++)

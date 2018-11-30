@@ -26,6 +26,10 @@
 
 class Mouse1351 : public VirtualComponent, public Mouse {
     
+    //! @brief    Dividers applied to raw coordinates in setXY()
+    int dividerX = 256;
+    int dividerY = 256;
+        
     //! @brief    Mouse movement in pixels per execution step
     int64_t shiftX = 31;
     int64_t shiftY = 31;

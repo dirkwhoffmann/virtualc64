@@ -28,12 +28,16 @@ class Mouse1350 : public VirtualComponent, public Mouse {
     
 private:
     
-    //! @brief    Control port bits
-    uint8_t controlPort;
+    //! @brief    Dividers applied to raw coordinates in setXY()
+    int dividerX = 64;
+    int dividerY = 64;
     
     //! @brief    Latched mouse positions
     int64_t latchedX[3];
     int64_t latchedY[3];
+    
+    //! @brief    Control port bits
+    uint8_t controlPort;
     
 public:
     

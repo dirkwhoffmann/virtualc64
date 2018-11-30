@@ -54,10 +54,6 @@ protected:
     int64_t targetX;
     int64_t targetY;
     
-    //! @brief    Scaling dividers applied to raw coordinates in setXY()
-    int dividerX;
-    int dividerY;
-
 public:
     
     //! @brief   Constructor

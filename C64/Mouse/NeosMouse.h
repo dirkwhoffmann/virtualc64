@@ -28,6 +28,10 @@ class NeosMouse : public VirtualComponent, public Mouse {
     
 private:
     
+    //! @brief    Dividers applied to raw coordinates in setXY()
+    int dividerX = 512;
+    int dividerY = 256;
+    
     //! @brief    Mouse movement in pixels per execution step
     int64_t shiftX = 127;
     int64_t shiftY = 127;
