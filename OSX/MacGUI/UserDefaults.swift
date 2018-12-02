@@ -176,7 +176,7 @@ extension MyController {
             VC64Keys.vicChip: PAL_8565.rawValue,
             VC64Keys.grayDotBug: true,
 
-            VC64Keys.ciaChip: MOS_6526_OLD.rawValue,
+            VC64Keys.ciaChip: MOS_6526.rawValue,
             VC64Keys.timerBBug: true,
 
             VC64Keys.reSID: true,

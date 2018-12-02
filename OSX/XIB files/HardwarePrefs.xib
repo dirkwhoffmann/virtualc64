@@ -387,18 +387,18 @@ DQ
                                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Btr-RC-7Z0">
                                     <rect key="frame" x="332" y="272" width="182" height="26"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                    <popUpButtonCell key="cell" type="push" title="MOS 6526 (NMOS)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="vw0-Z8-BKD" id="VrC-RA-WhH">
+                                    <popUpButtonCell key="cell" type="push" title="MOS 6526" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="vw0-Z8-BKD" id="VrC-RA-WhH">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="menu"/>
                                         <menu key="menu" title="OtherViews" id="Mcx-Ku-DW1">
                                             <items>
-                                                <menuItem title="MOS 6526 (NMOS)" state="on" id="vw0-Z8-BKD">
+                                                <menuItem title="MOS 6526" state="on" id="vw0-Z8-BKD">
                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                     <connections>
                                                         <action selector="ciaChipModelAction:" target="-2" id="pSg-R1-imO"/>
                                                     </connections>
                                                 </menuItem>
-                                                <menuItem title="MOS 6526 (HMOS II)" tag="1" id="Ijk-W7-CGb">
+                                                <menuItem title="MOS 8521" tag="1" id="Ijk-W7-CGb">
                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                     <connections>
                                                         <action selector="ciaChipModelAction:" target="-2" id="deb-d1-97q"/>

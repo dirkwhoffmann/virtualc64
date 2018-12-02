@@ -276,7 +276,7 @@ public:
     void setModel(CIAModel m);
     
     //! @brief    Determines if the emulated model is affected by the timer B bug.
-    bool hasTimerBBug() { return model == MOS_6526_OLD; }
+    bool hasTimerBBug() { return model == MOS_6526; }
     
     //! @brief    Returns true if the timer B bug should be emulated.
     bool getEmulateTimerBBug() { return emulateTimerBBug; }

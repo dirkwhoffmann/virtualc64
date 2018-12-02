@@ -10,12 +10,12 @@
 
 //! @brief    CIA model
 typedef enum {
-    MOS_6526_OLD,
-    MOS_6526_NEW
+    MOS_6526,
+    MOS_8521
 } CIAModel;
 
 inline bool isCIAModel(CIAModel model) {
-    return (model == MOS_6526_OLD) || (model == MOS_6526_NEW);
+    return (model == MOS_6526) || (model == MOS_8521);
 }
 
 /*! @brief    TOD info
