@@ -1425,19 +1425,19 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 // Handling mice
 - (NSInteger) mouseModel
 {
-    return (NSInteger)wrapper->c64->getMouseModel();
+    return (NSInteger)wrapper->c64->mouse.getModel();
 }
 - (void) setMouseModel:(NSInteger)model
 {
-    wrapper->c64->setMouseModel((MouseModel)model);
+    wrapper->c64->mouse.setModel((MouseModel)model);
 }
 - (void) connectMouse:(NSInteger)toPort
 {
-    wrapper->c64->connectMouse((unsigned)toPort);
+    wrapper->c64->mouse.connectMouse((unsigned)toPort);
 }
 - (void) disconnectMouse
 {
-    wrapper->c64->connectMouse(0);
+    wrapper->c64->mouse.disconnectMouse();
 }
 - (void) setMouseXY:(NSPoint)pos
 {

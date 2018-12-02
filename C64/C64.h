@@ -133,29 +133,6 @@ class C64 : public VirtualComponent {
     //! @brief    An external mouse
     Mouse mouse;
     
-    //! @brief    A Commodore Mouse 1350
-    // Mouse1350 mouse1350;
-    
-    //! @brief    A Commodore Mouse 1351
-    // Mouse1351 mouse1351;
-    
-    //! @brief    A Neos Mouse
-    // NeosMouse neosMouse;
-    
-    
-    //
-    // Mouse
-    //
-    
-    //! @brief    Selected mouse model
-    //! @details  Points to mouse130, mouse1351, or neosMouse
-    // Mouse *mouse;
-    
-    //! @brief    Control port of plugged in mouse
-    /*! @details  0 = unconnected, 1,2 = connected to port 1 or 2
-     */
-    unsigned mousePort;
-    
     
     //
     // Frame, rasterline, and rasterline cycle information
@@ -450,22 +427,22 @@ class C64 : public VirtualComponent {
     public:
     
     //! @brief    Returns the hardware model of the selected mouse.
-    MouseModel getMouseModel() { return mouse.mouseModel(); }
+    // MouseModel getMouseModel() { return mouse.mouseModel(); }
     
     //! @brief    Sets the mouse hardware model.
-    void setMouseModel(MouseModel value);
+    // void setMouseModel(MouseModel value);
     
     //! @brief    Connects the selected mouse with the control port.
-    void connectMouse(unsigned port);
+    //  void connectMouse(unsigned port);
     
     //! @brief    Reads the control port mouse bits.
-    uint8_t mouseBits(unsigned port);
+    // uint8_t mouseBits(unsigned port);
     
     //! @brief    Returns the potX bits as they show up in the SID register.
-    uint8_t potXBits();
+    // uint8_t potXBits();
     
     //! @brief    Returns the potY bits as they show up in the SID register.
-    uint8_t potYBits();
+    // uint8_t potYBits();
     
     
     //

@@ -116,8 +116,6 @@ C64::C64()
         { &frequency,          sizeof(frequency),          KEEP_ON_RESET  },
         { &durationOfOneCycle, sizeof(durationOfOneCycle), KEEP_ON_RESET  },
         { &warp,               sizeof(warp),               CLEAR_ON_RESET },
-        // { &alwaysWarp,         sizeof(alwaysWarp),         CLEAR_ON_RESET },
-        // { &warpLoad,           sizeof(warpLoad),           KEEP_ON_RESET  },
         { &ultimax,            sizeof(ultimax),            CLEAR_ON_RESET },
         
         { NULL,             0,                       0 }};
@@ -125,7 +123,6 @@ C64::C64()
     registerSnapshotItems(items, sizeof(items));
 
     // Set initial hardware configuration
-    mousePort = 0;
     vic.setModel(PAL_8565);
     drive1.powerOn();
     drive2.powerOff();
@@ -604,7 +601,7 @@ C64::endFrame()
     port2.execute();
 
     // Update mouse coordinates
-    if (mousePort != 0) mouse.execute();
+    mouse.execute();
     
     // Take a snapshot once in a while
     if (snapshotInterval > 0 &&
@@ -618,6 +615,7 @@ C64::endFrame()
     }
 }
 
+/*
 void
 C64::setMouseModel(MouseModel value)
 {
@@ -631,26 +629,27 @@ void
 C64::connectMouse(unsigned port)
 {
     assert(port <= 2);
-    mousePort = port;
+    mouse.connectMouse(port);
 }
 
 uint8_t
 C64::mouseBits(unsigned port)
 {
-    return (mousePort == port) ? mouse.readControlPort() : 0xFF;
+    return mouse.readControlPort(port);
 }
 
 uint8_t
 C64::potXBits()
 {
-    return mousePort ? mouse.readPotX() : 0xFF;
+    return mouse.readPotX();
 }
 
 uint8_t
 C64::potYBits()
 {
-     return mousePort ? mouse.readPotY() : 0xFF;
+     return mouse.readPotY();
 }
+*/
 
 bool
 C64::getWarp()

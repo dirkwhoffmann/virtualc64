@@ -188,7 +188,7 @@ ControlPort::bitmask() {
     if (axisX ==  1) CLR_BIT(result, 3);
     if (button)      CLR_BIT(result, 4);
     
-    uint8_t mouseBits = c64->mouseBits(nr);
+    uint8_t mouseBits = c64->mouse.readControlPort(nr);
     result &= mouseBits;
     
     return result;
