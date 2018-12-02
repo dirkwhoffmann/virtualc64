@@ -28,6 +28,7 @@
 @class VIAProxy;
 @class DiskProxy;
 @class DatasetteProxy;
+@class MouseProxy;
 
 @class AnyC64FileProxy;
 @class AnyArchiveProxy;
@@ -58,6 +59,7 @@ struct Via6522Wrapper;
 struct DiskWrapper;
 struct DriveWrapper;
 struct DatasetteWrapper;
+struct MouseWrapper;
 struct AnyC64FileWrapper;
 
 
@@ -84,6 +86,7 @@ struct AnyC64FileWrapper;
     DriveProxy *drive1;
     DriveProxy *drive2;
     DatasetteProxy *datasette;
+    MouseProxy *mouse;
 }
 
 @property (readonly) struct C64Wrapper *wrapper;
@@ -101,6 +104,7 @@ struct AnyC64FileWrapper;
 @property (readonly) DriveProxy *drive1;
 @property (readonly) DriveProxy *drive2;
 @property (readonly) DatasetteProxy *datasette;
+@property (readonly) MouseProxy *mouse;
 
 - (void) kill;
 
@@ -130,15 +134,6 @@ struct AnyC64FileWrapper;
 - (BOOL) isHalted;
 - (void) step;
 - (void) stepOver;
-
-// Handling mice
-- (NSInteger) mouseModel;
-- (void) setMouseModel:(NSInteger)model;
-- (void) connectMouse:(NSInteger)toPort;
-- (void) disconnectMouse;
-- (void) setMouseXY:(NSPoint)position;
-- (void) setMouseLeftButton:(BOOL)pressed;
-- (void) setMouseRightButton:(BOOL)pressed;
 
 // Managing the execution thread
 - (BOOL) warp;
@@ -663,6 +658,26 @@ struct AnyC64FileWrapper;
 - (void) setHeadInCycles:(long)value;
 - (BOOL) motor;
 - (BOOL) playKey;
+
+@end
+
+
+// -----------------------------------------------------------------------------
+//                                 Mouse proxy
+// -----------------------------------------------------------------------------
+
+@interface MouseProxy : NSObject {
+    
+    struct MouseWrapper *wrapper;
+}
+
+- (NSInteger) model;
+- (void) setModel:(NSInteger)model;
+- (void) connect:(NSInteger)toPort;
+- (void) disconnect;
+- (void) setXY:(NSPoint)position;
+- (void) setLeftButton:(BOOL)pressed;
+- (void) setRightButton:(BOOL)pressed;
 
 @end
 

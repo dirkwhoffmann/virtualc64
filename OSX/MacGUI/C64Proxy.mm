@@ -26,6 +26,7 @@ struct Via6522Wrapper { VIA6522 *via; };
 struct DiskWrapper { Disk *disk; };
 struct DriveWrapper { VC1541 *drive; };
 struct DatasetteWrapper { Datasette *datasette; };
+struct MouseWrapper { Mouse *mouse; };
 struct AnyC64FileWrapper { AnyC64File *file; };
 
 //
@@ -1276,12 +1277,57 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->datasette->getPlayKey();
 }
-
 @end
 
 
 //
-// C64 proxy
+// Mouse
+//
+
+@implementation MouseProxy
+
+- (instancetype) initWithMouse:(Mouse *)mouse
+{
+    if (self = [super init]) {
+        wrapper = new MouseWrapper();
+        wrapper->mouse = mouse;
+    }
+    return self;
+}
+
+- (NSInteger) model
+{
+    return (NSInteger)wrapper->mouse->getModel();
+}
+- (void) setModel:(NSInteger)model
+{
+    wrapper->mouse->setModel((MouseModel)model);
+}
+- (void) connect:(NSInteger)toPort
+{
+    wrapper->mouse->connectMouse((unsigned)toPort);
+}
+- (void) disconnect
+{
+    wrapper->mouse->disconnectMouse();
+}
+- (void) setXY:(NSPoint)pos
+{
+    wrapper->mouse->setXY((int64_t)pos.x, (int64_t)pos.y);
+}
+- (void) setLeftButton:(BOOL)pressed
+{
+    wrapper->mouse->setLeftButton(pressed);
+}
+- (void) setRightButton:(BOOL)pressed
+{
+    wrapper->mouse->setRightButton(pressed);
+}
+@end
+
+
+//
+// C64
 //
 
 @implementation C64Proxy
@@ -1289,7 +1335,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 @synthesize wrapper;
 @synthesize mem, cpu, vic, cia1, cia2, sid;
 @synthesize keyboard, port1, port2, iec;
-@synthesize expansionport, drive1, drive2, datasette;
+@synthesize expansionport, drive1, drive2, datasette, mouse;
 
 - (instancetype) init
 {
@@ -1317,7 +1363,8 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 	drive1 = [[DriveProxy alloc] initWithVC1541:&c64->drive1];
     drive2 = [[DriveProxy alloc] initWithVC1541:&c64->drive2];
     datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
-    
+    mouse = [[MouseProxy alloc] initWithMouse:&c64->mouse];
+
     return self;
 }
 
@@ -1420,36 +1467,6 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 - (void) stepOver
 {
     wrapper->c64->stepOver();
-}
-
-// Handling mice
-- (NSInteger) mouseModel
-{
-    return (NSInteger)wrapper->c64->mouse.getModel();
-}
-- (void) setMouseModel:(NSInteger)model
-{
-    wrapper->c64->mouse.setModel((MouseModel)model);
-}
-- (void) connectMouse:(NSInteger)toPort
-{
-    wrapper->c64->mouse.connectMouse((unsigned)toPort);
-}
-- (void) disconnectMouse
-{
-    wrapper->c64->mouse.disconnectMouse();
-}
-- (void) setMouseXY:(NSPoint)pos
-{
-    wrapper->c64->mouse.setXY((int64_t)pos.x, (int64_t)pos.y);
-}
-- (void) setMouseLeftButton:(BOOL)pressed
-{
-    wrapper->c64->mouse.setLeftMouseButton(pressed);
-}
-- (void) setMouseRightButton:(BOOL)pressed
-{
-    wrapper->c64->mouse.setRightMouseButton(pressed);
 }
 
 // Managing the execution thread

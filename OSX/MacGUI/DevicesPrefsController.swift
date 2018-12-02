@@ -121,7 +121,7 @@ class DevicesPrefsController : UserDialogController {
         autofireFrequency.isEnabled = autofire.state == .on
         
         // Mouse
-        let model = c64.mouseModel()
+        let model = c64.mouse.model()
         mouseModel.selectItem(withTag: model)
         mouseInfo.isHidden = (model == Int(MOUSE1350.rawValue))
     }
@@ -259,7 +259,7 @@ class DevicesPrefsController : UserDialogController {
     
     @IBAction func mouseModelAction(_ sender: NSPopUpButton!) {
         
-        c64.setMouseModel(sender.selectedTag())
+        c64.mouse.setModel(sender.selectedTag())
         update()
     }
     
@@ -291,7 +291,7 @@ class DevicesPrefsController : UserDialogController {
         c64.port2.setAutofireFrequency(2.5)
         
         // Mouse
-        c64.setMouseModel(0)
+        c64.mouse.setModel(0)
         
         update()
     }

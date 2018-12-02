@@ -242,7 +242,7 @@ extension MyController {
         c64.port2.setAutofireFrequency(defaults.float(forKey: VC64Keys.autofireFrequency))
         
         // Mouse
-        c64.setMouseModel(defaults.integer(forKey: VC64Keys.mouseModel))
+        c64.mouse.setModel(defaults.integer(forKey: VC64Keys.mouseModel))
         
         c64.resume()
     }
@@ -374,7 +374,7 @@ extension MyController {
         defaults.set(c64.port1.autofireFrequency(), forKey: VC64Keys.autofireFrequency)
         
         // Mouse
-        defaults.set(c64.mouseModel(), forKey: VC64Keys.mouseModel)
+        defaults.set(c64.mouse.model(), forKey: VC64Keys.mouseModel)
     }
  
     func saveKeyMapUserDefaults() {

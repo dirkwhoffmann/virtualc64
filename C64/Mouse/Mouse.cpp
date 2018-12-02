@@ -64,7 +64,7 @@ Mouse::setXY(int64_t x, int64_t y)
 }
 
 void
-Mouse::setLeftMouseButton(bool value)
+Mouse::setLeftButton(bool value)
 {
     switch(model) {
         case MOUSE1350:
@@ -82,7 +82,7 @@ Mouse::setLeftMouseButton(bool value)
 }
 
 void
-Mouse::setRightMouseButton(bool value)
+Mouse::setRightButton(bool value)
 {
     switch(model) {
         case MOUSE1350:

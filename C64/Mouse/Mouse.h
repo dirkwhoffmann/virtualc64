@@ -82,8 +82,8 @@ public:
     void setXY(int64_t x, int64_t y);
 
     //! @brief   Emulates a mouse button event.
-    void setLeftMouseButton(bool value);
-    void setRightMouseButton(bool value);
+    void setLeftButton(bool value);
+    void setRightButton(bool value);
     
     //! @brief    Triggers a state change (Neos mouse only).
     void risingStrobe(int portNr) { mouseNeos.risingStrobe(portNr); }

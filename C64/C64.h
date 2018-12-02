@@ -421,31 +421,6 @@ class C64 : public VirtualComponent {
     
     
     //
-    //! @functiongroup Handling mice
-    //
-    
-    public:
-    
-    //! @brief    Returns the hardware model of the selected mouse.
-    // MouseModel getMouseModel() { return mouse.mouseModel(); }
-    
-    //! @brief    Sets the mouse hardware model.
-    // void setMouseModel(MouseModel value);
-    
-    //! @brief    Connects the selected mouse with the control port.
-    //  void connectMouse(unsigned port);
-    
-    //! @brief    Reads the control port mouse bits.
-    // uint8_t mouseBits(unsigned port);
-    
-    //! @brief    Returns the potX bits as they show up in the SID register.
-    // uint8_t potXBits();
-    
-    //! @brief    Returns the potY bits as they show up in the SID register.
-    // uint8_t potYBits();
-    
-    
-    //
     //! @functiongroup Managing the execution thread
     //
     
