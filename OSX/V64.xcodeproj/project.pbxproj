@@ -669,9 +669,9 @@
 		500E3A6B21B5C30F00935CB3 /* Automation */ = {
 			isa = PBXGroup;
 			children = (
-				501A4A5921AF3BAF00DDE409 /* AppleScript.swift */,
 				500E3A6621B5C29100935CB3 /* ScriptCommands.swift */,
 				500E3A6821B5C2A700935CB3 /* Notifications.swift */,
+				501A4A5921AF3BAF00DDE409 /* AppleScript.swift */,
 				501A4A5721AF1A6200DDE409 /* VirtualC64.sdef */,
 			);
 			path = Automation;
