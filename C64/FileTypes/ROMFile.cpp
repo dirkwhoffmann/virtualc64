@@ -26,6 +26,7 @@ const uint8_t ROMFile::magicKernalRomBytes[]  = { 0x85, 0x56, 0x20, 0x00 };
 const uint8_t ROMFile::magicVC1541RomBytes1[] = { 0x97, 0xAA, 0xAA, 0x00 };
 const uint8_t ROMFile::magicVC1541RomBytes2[] = { 0x97, 0xE0, 0x43, 0x00 };
 const uint8_t ROMFile::magicVC1541RomBytes3[] = { 0x97, 0x46, 0xAD, 0x00 };
+const uint8_t ROMFile::magicVC1541RomBytes4[] = { 0x97, 0xDB, 0x43, 0x00 };
 
 bool
 ROMFile::isRomBuffer(const uint8_t *buffer, size_t length)
@@ -65,7 +66,8 @@ ROMFile::isVC1541RomBuffer(const uint8_t *buffer, size_t length)
     return
     checkBufferHeader(buffer, length, magicVC1541RomBytes1) ||
     checkBufferHeader(buffer, length, magicVC1541RomBytes2) ||
-    checkBufferHeader(buffer, length, magicVC1541RomBytes3);
+    checkBufferHeader(buffer, length, magicVC1541RomBytes3) ||
+    checkBufferHeader(buffer, length, magicVC1541RomBytes4);
 }
 
 bool
@@ -106,7 +108,8 @@ ROMFile::isVC1541RomFile(const char *filename)
     return
     checkFileHeader(filename, magicVC1541RomBytes1) ||
     checkFileHeader(filename, magicVC1541RomBytes2) ||
-    checkFileHeader(filename, magicVC1541RomBytes3);
+    checkFileHeader(filename, magicVC1541RomBytes3) ||
+    checkFileHeader(filename, magicVC1541RomBytes4);
 }
 
 ROMFile *

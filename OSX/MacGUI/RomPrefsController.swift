@@ -46,19 +46,27 @@ let knownKernalRoms : [UInt64 : String] = [
     "Commodore SX-64 Kernal",
     0x746EB1BC008B07E1:
     "Commodore SX-64 Kernal (Scandinavian)",
+    0xDE7F07008B787040:
+    "Commodore 64 Kernel (Jiffy DOS patch)",
+    0xA9D2AD1A4E5F782C:
+    "Commodore SX-64 Kernal (Jiffy DOS patch)"
 ]
 
 let knownVc1541Roms : [UInt64: String] = [
     0x0000000000000000:
     "This 16 KB Rom contains the firmware of Commodore's VC1541 floppy drive.",
     0x44BBA0EAC5898597:
-    "1541-II firmware. Released in 1987.",
+    "1541-II firmware released in 1987",
     0xA1D36980A17C8756:
-    "1541-II firmware appearing in drives with a modern Newtronics Motor.",
+    "1541-II firmware appearing in drives with a modern Newtronics Motor",
     0x361A1EC48F04F5A4:
-    "Firmware of the old-style 1541 in white case.",
+    "Firmware of the old-style 1541 in white case",
     0xB938E2DA07F4FE40:
-    "Upgraded firmware for the 1541C drive."
+    "Upgraded firmware for the 1541C drive",
+    0x47CBA55F16FB3E09:
+    "1541-II firmware with relocation patch",
+    0x8B2A523E29BED889:
+    "1541-II firmware (Jiffy DOS patch)"
 ]
 
 class RomPrefsController : UserDialogController {
