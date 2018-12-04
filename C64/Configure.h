@@ -37,7 +37,7 @@
 
 // RELEASE NOTES (Version 3.3)
 //
-//
+// Added JiffyDOS Roms to the list of known Rom images.
 //
 // TODOs for the next release:
 //
