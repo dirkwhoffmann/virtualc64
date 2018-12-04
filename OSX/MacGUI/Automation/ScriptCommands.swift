@@ -150,3 +150,9 @@ func takeScreenshotCmd(arguments: [AnyHashable : Any]?) -> Bool {
     }
     return false
 }
+
+func quitScriptCmd(arguments: [AnyHashable : Any]?) {
+    
+    currentDocument?.updateChangeCount(.changeCleared)
+    NSApplication.shared.terminate(nil)
+}
