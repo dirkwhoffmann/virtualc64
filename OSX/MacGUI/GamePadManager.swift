@@ -100,6 +100,7 @@ class GamePadManager: NSObject {
     
     //! @brief   Returns true iff the specified game pad slot is free
     public func slotIsEmpty(_ nr: Int) -> Bool {
+        
         return gamePads[nr] == nil
     }
     

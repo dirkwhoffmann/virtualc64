@@ -17,6 +17,9 @@ struct VC64Keys {
     static let kernalRom            = "VC64KernelRomFileKey"
     static let vc1541Rom            = "VC64VC1541RomFileKey"
 
+    static let inputDevice1         = "VC64InputDevice1"
+    static let inputDevice2         = "VC64InputDevice2"
+
     // Keyboard
     static let mapKeysByPosition    = "VC64MapKeysByPosition"
     static let keyMap               = "VC64KeyMap"
@@ -86,7 +89,7 @@ extension MyController {
     static func registerUserDefaults() {
         
         track()
-        registerJoystickUserDefaults()
+        registerDevicesUserDefaults()
         registerVideoUserDefaults()
         registerEmulatorUserDefaults()
         registerHardwareUserDefaults()
@@ -106,7 +109,7 @@ extension MyController {
     }
     
     /// Registers default values for all devices dialog properties
-    static func registerJoystickUserDefaults() {
+    static func registerDevicesUserDefaults() {
         
         track()
         let dictionary : [String:Any] = [
@@ -207,7 +210,7 @@ extension MyController {
         keyboardcontroller.mapKeysByPosition = defaults.bool(forKey: VC64Keys.mapKeysByPosition)
         
         c64.suspend()
-        loadJoystickUserDefaults()
+        loadDevicesUserDefaults()
         loadVideoUserDefaults()
         loadEmulatorUserDefaults()
         loadHardwareUserDefaults()
@@ -216,7 +219,7 @@ extension MyController {
     }
     
     /// Loads the user defaults for all properties that are set in the joystick dialog
-    func loadJoystickUserDefaults() {
+    func loadDevicesUserDefaults() {
         
         track()
         let defaults = UserDefaults.standard
@@ -355,24 +358,8 @@ extension MyController {
     // Saving
     //
 
-    /// Saves all user defaults from database
-    /*
-    func saveUserDefaults() {
-        
-        track()
-        let defaults = UserDefaults.standard
-        defaults.set(keyboardcontroller.mapKeysByPosition, forKey: VC64Keys.mapKeysByPosition)
-        
-        saveDeviceskUserDefaults()
-        saveVideoUserDefaults()
-        saveEmulatorUserDefaults()
-        saveHardwareUserDefaults()
-        saveKeyMapUserDefaults()
-    }
-    */
-    
-    /// Saves the user defaults for all properties that are set in the joystick dialog
-    func saveJoystickUserDefaults() {
+    /// Saves the user defaults for all properties that are set in the devices dialog
+    func saveDevicesUserDefaults() {
      
         track()
         let defaults = UserDefaults.standard

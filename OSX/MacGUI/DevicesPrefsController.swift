@@ -272,7 +272,7 @@ class DevicesPrefsController : UserDialogController {
     
     @IBAction override func cancelAction(_ sender: Any!) {
         
-        parent.loadJoystickUserDefaults()
+        parent.loadDevicesUserDefaults()
         hideSheet()
     }
     
@@ -298,7 +298,7 @@ class DevicesPrefsController : UserDialogController {
     
     @IBAction func okAction(_ sender: Any!) {
         
-        parent.saveJoystickUserDefaults()
+        parent.saveDevicesUserDefaults()
         hideSheet()
     }
 }

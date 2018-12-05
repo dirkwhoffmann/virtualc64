@@ -35,6 +35,12 @@
                                                 <action selector="openDevicePrefsAction:" target="-1" id="RjP-uj-fUQ"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Video ..." id="IVN-Er-CgT">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openVideoPrefsAction:" target="-1" id="Tff-R4-XvK"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Emulator ..." id="IaM-OI-EET">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>

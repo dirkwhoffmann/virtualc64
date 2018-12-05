@@ -82,7 +82,6 @@ extension MyController {
     func validateJoystickToolbarItem(_ popup: NSPopUpButton, selectedSlot: Int, port: ControlPortProxy!) {
         
         let menu =  popup.menu
-        // let item2 = menu?.item(withTag: InputDevice.mouse)
         let item3 = menu?.item(withTag: InputDevice.joystick1)
         let item4 = menu?.item(withTag: InputDevice.joystick2)
         
@@ -101,47 +100,55 @@ extension MyController {
         validateJoystickToolbarItem(controlPort1, selectedSlot: gamepadSlot1, port: c64.port1)
         validateJoystickToolbarItem(controlPort2, selectedSlot: gamepadSlot2, port: c64.port2)
     }
-        
+    
     @IBAction func port1Action(_ sender: NSPopUpButton) {
         
-        track()
+        setPort1(sender.selectedTag())
+    }
+ 
+    func setPort1(_ value: Int) {
         
-        // Remember selection
-        gamepadSlot1 = sender.selectedTag();
-
-        // Avoid double mappings
-        gamepadSlot2 = (gamepadSlot1 == gamepadSlot2) ? InputDevice.none : gamepadSlot2
+        if value == InputDevice.none || !gamePadManager.slotIsEmpty(value) {
+            
+            // Remember selection
+            gamepadSlot1 = value
+            
+            // Avoid double mappings
+            gamepadSlot2 = (gamepadSlot1 == gamepadSlot2) ? InputDevice.none : gamepadSlot2
+            
+            // Connect or disconnect analog mouse
+            c64.mouse.connect(gamepadSlot1 == InputDevice.mouse ? 1 : 0);
         
-        // Connect or disconnect analog mouse
-        c64.mouse.connect(gamepadSlot1 == InputDevice.mouse ? 1 : 0);
-
-        validateJoystickToolbarItems();
+            UserDefaults.standard.set(gamepadSlot1, forKey: VC64Keys.inputDevice1)
+            UserDefaults.standard.set(gamepadSlot2, forKey: VC64Keys.inputDevice2)
+            validateJoystickToolbarItems();
+        }
     }
     
     @IBAction func port2Action(_ sender: NSPopUpButton) {
         
-        track()
-        
-        // Remember selection
-        gamepadSlot2 = sender.selectedTag();
-        
-        // Avoid double mappings
-        gamepadSlot1 = (gamepadSlot1 == gamepadSlot2) ? InputDevice.none : gamepadSlot1
-        
-        // Connect or disconnect analog mouse
-        c64.mouse.connect(gamepadSlot2 == InputDevice.mouse ? 2 : 0);
-        
-        validateJoystickToolbarItems();
+        setPort2(sender.selectedTag())
     }
     
-    /*
-    @IBAction func mediaAction(_ sender: Any!) {
-        
-        let nibName = NSNib.Name(rawValue: "DiskInspector")
-        let controller = DiskInspectorController.init(windowNibName: nibName)
-        controller.showSheet(withParent: self)
+    func setPort2(_ value: Int) {
+    
+        if value == InputDevice.none || !gamePadManager.slotIsEmpty(value) {
+            
+            // Remember selection
+            gamepadSlot2 = value
+            
+            // Avoid double mappings
+            gamepadSlot1 = (gamepadSlot1 == gamepadSlot2) ? InputDevice.none : gamepadSlot1
+            
+            // Connect or disconnect analog mouse
+            c64.mouse.connect(gamepadSlot2 == InputDevice.mouse ? 2 : 0)
+            
+            UserDefaults.standard.set(gamepadSlot1, forKey: VC64Keys.inputDevice1)
+            UserDefaults.standard.set(gamepadSlot2, forKey: VC64Keys.inputDevice2)
+            validateJoystickToolbarItems()
+        }
     }
-    */
+        
     @IBAction func diskInspectorAction(_ sender: Any!) {
  
         let nibName = NSNib.Name(rawValue: "DiskInspector")

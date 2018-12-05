@@ -99,10 +99,10 @@ class MyController : NSWindowController, MessageReceiver {
     var statusBar = true
     
     /// Selected game pad slot for joystick in port A
-    var gamepadSlot1 = 0
+    var gamepadSlot1 = -1
     
     /// Selected game pad slot for joystick in port B
-    var gamepadSlot2 = 0
+    var gamepadSlot2 = -1
     
     /// Default image for USB devices
     var genericDeviceImage: NSImage?
@@ -358,8 +358,12 @@ extension MyController {
             track("Failed to create game pad manager")
             return
         }
-        gamepadSlot1 = -1 // No gampad assigned
-        gamepadSlot2 = -1
+        
+        // Assign input devices
+        let device1 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice1)
+        let device2 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice2)
+        setPort1(device1)
+        setPort2(device2)
 
         // Setup toolbar, window, and debugger
         configureToolbar()

@@ -37,7 +37,13 @@
 
 // RELEASE NOTES (Version 3.3)
 //
-// Added JiffyDOS Roms to the list of known Rom images.
+// All video settings have been moved to a separate Preferences window.
+// The input device selection is now retained in the user settings memory.
+// The user can now choose whether to save the emulator texture or the upscaled texture as a screenshot image.
+// If the menu "Save Snapshot..." is selected, the emulator is paused until the screenshot has been saved. (TODO)
+// The assignment of keystrokes to joystick events has been improved when multiple keys are pressed at the same time.
+// The JiffyDOS Rom images have been added to the list of known images.
+//
 //
 // TODOs for the next release:
 //
