@@ -120,7 +120,7 @@ class MyController : NSWindowController, MessageReceiver {
     /// Screenshot resolution (0 = low, 1 = high)
     var screenshotResolution = EmulatorDefaults.screenshotResolution
 
-    /// Screenshot resolution (0 = low, 1 = high)
+    /// Screenshot format ("png", "jpg", or "tiff")
     var screenshotFormat = EmulatorDefaults.screenshotFormat
 
     
