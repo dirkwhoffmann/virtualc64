@@ -20,71 +20,33 @@ import Cocoa
         if #available(OSX 10.12.2, *) {
             NSApplication.shared.isAutomaticCustomizeTouchBarMenuItemEnabled = true
         }
+        
+        // Add observers
+        let dc = DistributedNotificationCenter.default
+        dc.addObserver(self, selector: #selector(vc64ResetCommand(_:)),
+                       name: Notification.Name("VC64Reset"),
+                       object: nil)
+        dc.addObserver(self, selector: #selector(vc64ConfigureCommand(_:)),
+                       name: Notification.Name("VC64Configure"),
+                       object: nil)
+        dc.addObserver(self, selector: #selector(vc64DragInCommand(_:)),
+                       name: Notification.Name("VC64DragIn"),
+                       object: nil)
+        dc.addObserver(self, selector: #selector(vc64TypeTextCommand(_:)),
+                       name: Notification.Name("VC64TypeText"),
+                       object: nil)
+        dc.addObserver(self, selector: #selector(vc64TakeScreenshotCommand(_:)),
+                       name: Notification.Name("VC64TakeScreenshot"),
+                       object: nil)
+        dc.addObserver(self, selector: #selector(vc64QuitCommand(_:)),
+                       name: Notification.Name("VC64Quit"),
+                       object: nil)
     }
     
     public func applicationWillTerminate(_ aNotification: Notification) {
 
         track()
     }
-    
-    @objc public func handleResetCommand(_ command: NSScriptCommand) {
-
-        print("Hallo ****");
-        // return true as AnyObject;
-    }
-    
-    /*
-    public func application(_ application: NSApplication, willPresentError error: Error) -> Error {
-
-        track()
-        
-        let nserror = error as NSError
-        
-        if (nserror.domain == "VirtualC64") {
-
-            switch (nserror.code) {
-                
-            case 1:
-                return NSError.snapshotVersionError(filename: "The provided snapshot")
-
-            case 2:
-                return NSError.unsupportedFormatError(filename: "The provided file")
-
-            case 3:
-                return NSError.corruptedFileError(filename: "The provided file")
-                
-            default:
-                assert(false)
-            }
-        }
-        
-        return error
-    }
-    */
-
-    /*
-    public func applicationShouldHandleReopen(_ sender: NSApplication,
-                                              hasVisibleWindows flag: Bool) -> Bool {
-        print("\(#function)")
-        assert(false)
-        return false
-    }
-    
-    public func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
-        print("\(#function)")
-        assert(false)
-        return false
-    }
- */
 }
 
-/*
-extension AppDelegate: NSOpenSavePanelDelegate {
-    
-    public func panel(_ sender: Any, shouldEnable url: URL) -> Bool {
-        
-        track()
-        return false
-    }
-}
-*/
+

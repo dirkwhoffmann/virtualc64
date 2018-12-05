@@ -183,6 +183,13 @@ extension MyController {
         controller.showSheet(withParent: self)
     }
 
+    @IBAction func openVideoPrefsAction(_ sender: Any!) {
+        
+        let nibName = NSNib.Name(rawValue: "VideoPrefs")
+        let controller = EmulatorPrefsController.init(windowNibName: nibName)
+        controller.showSheet(withParent: self)
+    }
+    
     @IBAction func openEmulatorPrefsAction(_ sender: Any!) {
         
         let nibName = NSNib.Name(rawValue: "EmulatorPrefs")
@@ -218,11 +225,31 @@ extension MyController {
     
     @IBAction func quicksaveScreenshot(_ sender: Any!) {
         
+        var data: Data?
+        var name: String
+        
+        // Take screenshot
+        let image = metalScreen.screenshot(afterUpscaling: screenshotResolution > 0)
+        
+        // Convert to target image format
+        switch screenshotFormat {
+        case "jpg":
+            data = image?.jpgRepresentation
+            name = "Untitled" + ".jpg"
+        case "tiff":
+            data = image?.tiffRepresentation
+            name = "Untitled" + ".tiff"
+        default:
+            data = image?.pngRepresentation
+            name = "Untitled" + ".png"
+        }
+        
+        track("Saving to file \(name)")
+        
+        // Get URL and save
         let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
         let desktopUrl = NSURL.init(fileURLWithPath: paths[0])
-        if let url = desktopUrl.appendingPathComponent("Untitled.tiff") {
-            let image = metalScreen.screenshot()
-            let data = image?.tiffRepresentation
+        if let url = desktopUrl.appendingPathComponent(name) {
             do {
                 try data?.write(to: url, options: .atomic)
             } catch {

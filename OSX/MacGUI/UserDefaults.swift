@@ -12,76 +12,66 @@ import Foundation
 struct VC64Keys {
     
     // General
-    static let basicRom           = "VC64BasicRomFileKey"
-    static let charRom            = "VC64CharRomFileKey"
-    static let kernalRom          = "VC64KernelRomFileKey"
-    static let vc1541Rom          = "VC64VC1541RomFileKey"
+    static let basicRom             = "VC64BasicRomFileKey"
+    static let charRom              = "VC64CharRomFileKey"
+    static let kernalRom            = "VC64KernelRomFileKey"
+    static let vc1541Rom            = "VC64VC1541RomFileKey"
 
     // Keyboard
-    static let mapKeysByPosition  = "VC64MapKeysByPosition"
-    static let keyMap             = "VC64KeyMap"
+    static let mapKeysByPosition    = "VC64MapKeysByPosition"
+    static let keyMap               = "VC64KeyMap"
     
     // Devices preferences dialog
-    static let joyKeyMap1         = "VC64JoyKeyMap1"
-    static let joyKeyMap2         = "VC64JoyKeyMap2"
-    static let disconnectKeys     = "VC64DisconnectKeys"
+    static let joyKeyMap1           = "VC64JoyKeyMap1"
+    static let joyKeyMap2           = "VC64JoyKeyMap2"
+    static let disconnectKeys       = "VC64DisconnectKeys"
     
-    static let autofire           = "VC64Autofire"
-    static let autofireBullets    = "VC64AutofireBullets"
-    static let autofireFrequency  = "VC64AutofireFrequency"
+    static let autofire             = "VC64Autofire"
+    static let autofireBullets      = "VC64AutofireBullets"
+    static let autofireFrequency    = "VC64AutofireFrequency"
     
-    static let mouseModel         = "VC64MouseModelKey"
+    static let mouseModel           = "VC64MouseModelKey"
+    
+    // Video preferences dialog
+    static let videoUpscaler        = "VC64UpscalerKey"
+    static let videoPalette         = "VC64PaletteKey"
+    static let brightness           = "VC64BrightnessKey"
+    static let contrast             = "VC64ContrastKey"
+    static let saturation           = "VC64SaturationKey"
+
+    static let shaderOptions        = "VC64ShaderOptionsKey"
+    
+    static let aspectRatio          = "VC64FullscreenKeepAspectRatioKey"
+    static let eyeX                 = "VC64EyeX"
+    static let eyeY                 = "VC64EyeY"
+    static let eyeZ                 = "VC64EyeZ"
     
     // Emulator preferences dialog
-    static let videoUpscaler      = "VC64UpscalerKey"
-    static let videoPalette       = "VC64PaletteKey"
-    static let brightness         = "VC64BrightnessKey"
-    static let contrast           = "VC64ContrastKey"
-    static let saturation         = "VC64SaturationKey"
+    static let warpLoad             = "VC64WarpLoadKey"
+    static let driveNoise           = "VC64DriveNoiseKey"
+    
+    static let screenshotResolution = "VC64ScreenshotResolutionKey"
+    static let screenshotFormat     = "VC64ScreenshotFormatKey"
 
-    static let shaderOptions      = "VC64ShaderOptionsKey"
-    
-    static let aspectRatio        = "VC64FullscreenKeepAspectRatioKey"
-    static let eyeX               = "VC64EyeX"
-    static let eyeY               = "VC64EyeY"
-    static let eyeZ               = "VC64EyeZ"
-    
-    // DEPRECATED
-    /*
-    static let videoFilter        = "VC64FilterKey"
-    static let blur               = "VC64BlurKey"
-    
-    static let scanlines          = "VC64ScanlinesKey"
-    static let scanlineBrightness = "VC64ScanlineBrightness"
-    static let scanlineWeight     = "VC64ScanlineWeight"
-    static let bloomFactor        = "VC64BloomFactor"
-    static let mask               = "VC64Mask"
-    static let maskBrightness     = "VC64MaskBrightness"
-    */
-    // END DEPRECATED
- 
-    
-    static let warpLoad           = "VC64WarpLoadKey"
-    static let driveNoise         = "VC64DriveNoiseKey"
-    
-    static let pauseInBackground  = "VC64PauseInBackground"
-    static let snapshotInterval   = "VC64SnapshotInterval"
-    static let autoMount          = "VC64AutoMount"
+    static let autoMount            = "VC64AutoMount"
+
+    static let pauseInBackground    = "VC64PauseInBackground"
+    static let snapshotInterval     = "VC64SnapshotInterval"
 
     // Hardware preferences dialog
-    static let vicChip            = "VC64VICChipModelKey"
-    static let grayDotBug         = "VC64VICGrayDotBugKey"
+    static let vicChip              = "VC64VICChipModelKey"
+    static let grayDotBug           = "VC64VICGrayDotBugKey"
 
-    static let ciaChip            = "VC64CIAChipModelKey"
-    static let timerBBug          = "VC64CIATimerBBugKey"
+    static let ciaChip              = "VC64CIAChipModelKey"
+    static let timerBBug            = "VC64CIATimerBBugKey"
 
-    static let reSID              = "VC64SIDReSIDKey"
-    static let audioChip          = "VC64SIDChipModelKey"
-    static let audioFilter        = "VC64SIDFilterKey"
-    static let samplingMethod     = "VC64SIDSamplingMethodKey"
+    static let reSID                = "VC64SIDReSIDKey"
+    static let audioChip            = "VC64SIDChipModelKey"
+    static let audioFilter          = "VC64SIDFilterKey"
+    static let samplingMethod       = "VC64SIDSamplingMethodKey"
 
-    static let glueLogic          = "VC64GlueLogicKey"
-    static let initPattern        = "VC64InitPatternKey"
+    static let glueLogic            = "VC64GlueLogicKey"
+    static let initPattern          = "VC64InitPatternKey"
 }
 
 /// This class extension handles the UserDefaults management
@@ -97,6 +87,7 @@ extension MyController {
         
         track()
         registerJoystickUserDefaults()
+        registerVideoUserDefaults()
         registerEmulatorUserDefaults()
         registerHardwareUserDefaults()
         
@@ -114,7 +105,7 @@ extension MyController {
         defaults.register(defaults: dictionary)
     }
     
-    /// Registers the default values for all emulator dialog properties
+    /// Registers default values for all devices dialog properties
     static func registerJoystickUserDefaults() {
         
         track()
@@ -132,8 +123,8 @@ extension MyController {
         defaults.register(defaults: dictionary)
     }
 
-    /// Registers the default values for all emulator dialog properties
-    static func registerEmulatorUserDefaults() {
+    /// Registers default values for all video dialog properties
+    static func registerVideoUserDefaults() {
         
         track()
         let dictionary : [String:Any] = [
@@ -149,6 +140,21 @@ extension MyController {
             VC64Keys.eyeX: EmulatorDefaults.eyeX,
             VC64Keys.eyeY: EmulatorDefaults.eyeY,
             VC64Keys.eyeZ: EmulatorDefaults.eyeZ,
+        ]
+        
+        let defaults = UserDefaults.standard
+        defaults.register(defaults: dictionary)
+        
+        if let encoded = try? PropertyListEncoder().encode(ShaderDefaultsTFT) {
+            UserDefaults.standard.register(defaults: [VC64Keys.shaderOptions: encoded])
+        }
+    }
+    
+    /// Registers default values for all emulator dialog properties
+    static func registerEmulatorUserDefaults() {
+        
+        track()
+        let dictionary : [String:Any] = [
             
             VC64Keys.warpLoad: true,
             VC64Keys.driveNoise: true,
@@ -161,13 +167,9 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         defaults.register(defaults: dictionary)
-        
-        if let encoded = try? PropertyListEncoder().encode(ShaderDefaultsTFT) {
-            UserDefaults.standard.register(defaults: [VC64Keys.shaderOptions: encoded])
-        }
     }
     
-    /// Registers the default values for all hardware dialog properties
+    /// Registers default values for all hardware dialog properties
     static func registerHardwareUserDefaults() {
         
         track()
@@ -206,6 +208,7 @@ extension MyController {
         
         c64.suspend()
         loadJoystickUserDefaults()
+        loadVideoUserDefaults()
         loadEmulatorUserDefaults()
         loadHardwareUserDefaults()
         loadKeyMapUserDefaults()
@@ -247,12 +250,12 @@ extension MyController {
         c64.resume()
     }
     
-    /// Loads the user defaults for all properties that are set in the hardware dialog
-    func loadEmulatorUserDefaults() {
+    /// Loads the user defaults for all properties that are set in the video preferences dialog
+    func loadVideoUserDefaults() {
         
         track()
         let defaults = UserDefaults.standard
-
+        
         c64.suspend()
         
         // Video
@@ -261,7 +264,7 @@ extension MyController {
         c64.vic.setBrightness(defaults.double(forKey: VC64Keys.brightness))
         c64.vic.setContrast(defaults.double(forKey: VC64Keys.contrast))
         c64.vic.setSaturation(defaults.double(forKey: VC64Keys.saturation))
-
+        
         // Effects
         if let data = defaults.value(forKey: VC64Keys.shaderOptions) as? Data {
             if let options = try? PropertyListDecoder().decode(ShaderOptions.self, from: data) {
@@ -276,15 +279,32 @@ extension MyController {
         metalScreen.setEyeY(defaults.float(forKey: VC64Keys.eyeY))
         metalScreen.setEyeZ(defaults.float(forKey: VC64Keys.eyeZ))
         
+        c64.resume()
+    }
+    
+    /// Loads the user defaults for all properties that are set in the emulator preferences dialog
+    func loadEmulatorUserDefaults() {
+        
+        track()
+        let defaults = UserDefaults.standard
+
+        c64.suspend()
+        
         // Drive
         c64.setWarpLoad(defaults.bool(forKey: VC64Keys.warpLoad))
         c64.drive1.setSendSoundMessages(defaults.bool(forKey: VC64Keys.driveNoise))
         c64.drive2.setSendSoundMessages(defaults.bool(forKey: VC64Keys.driveNoise))
+
+        // Screenshots
+        screenshotResolution = defaults.integer(forKey: VC64Keys.screenshotResolution)
+        screenshotFormat = defaults.string(forKey: VC64Keys.screenshotFormat) ?? "png"
         
+        // Documents
+        autoMount = defaults.bool(forKey: VC64Keys.autoMount)
+
         // Misc
         pauseInBackground = defaults.bool(forKey: VC64Keys.pauseInBackground)
         c64.setSnapshotInterval(defaults.integer(forKey: VC64Keys.snapshotInterval))
-        autoMount = defaults.bool(forKey: VC64Keys.autoMount)
         
         c64.resume()
     }
@@ -343,7 +363,8 @@ extension MyController {
         let defaults = UserDefaults.standard
         defaults.set(keyboardcontroller.mapKeysByPosition, forKey: VC64Keys.mapKeysByPosition)
         
-        saveJoystickUserDefaults()
+        saveDeviceskUserDefaults()
+        saveVideoUserDefaults()
         saveEmulatorUserDefaults()
         saveHardwareUserDefaults()
         saveKeyMapUserDefaults()
@@ -385,8 +406,8 @@ extension MyController {
         }
     }
     
-    /// Saves the user defaults for all properties that are set in the hardware dialog
-    func saveEmulatorUserDefaults() {
+    /// Saves the user defaults for all properties that are set in the video preferences dialog
+    func saveVideoUserDefaults() {
         
         track()
         let defaults = UserDefaults.standard
@@ -397,7 +418,7 @@ extension MyController {
         defaults.set(c64.vic.brightness(), forKey: VC64Keys.brightness)
         defaults.set(c64.vic.contrast(), forKey: VC64Keys.contrast)
         defaults.set(c64.vic.saturation(), forKey: VC64Keys.saturation)
-
+        
         // Effects
         UserDefaults.standard.set(try?
             PropertyListEncoder().encode(metalScreen.shaderOptions),
@@ -408,19 +429,32 @@ extension MyController {
         defaults.set(metalScreen.eyeX(), forKey: VC64Keys.eyeX)
         defaults.set(metalScreen.eyeY(), forKey: VC64Keys.eyeY)
         defaults.set(metalScreen.eyeZ(), forKey: VC64Keys.eyeZ)
+    }
+    
+    /// Saves the user defaults for all properties that are set in the emulator preferences dialog
+    func saveEmulatorUserDefaults() {
+        
+        track()
+        let defaults = UserDefaults.standard
         
         // Drive
         defaults.set(c64.warpLoad(), forKey: VC64Keys.warpLoad)
         defaults.set(c64.drive1.sendSoundMessages(), forKey: VC64Keys.driveNoise)
         defaults.set(c64.drive2.sendSoundMessages(), forKey: VC64Keys.driveNoise)
         
+        // Screenshots
+        defaults.set(screenshotResolution, forKey: VC64Keys.screenshotResolution)
+        defaults.set(screenshotFormat, forKey: VC64Keys.screenshotFormat)
+        
+        // Documents
+        defaults.set(autoMount, forKey: VC64Keys.autoMount)
+        
         // Misc
         defaults.set(pauseInBackground, forKey: VC64Keys.pauseInBackground)
         defaults.set(c64.snapshotInterval(), forKey: VC64Keys.snapshotInterval)
-        defaults.set(autoMount, forKey: VC64Keys.autoMount)
     }
     
-    /// Saves the user defaults for all properties that are set in the hardware dialog
+    /// Saves the user defaults for all properties that are set in the hardware preferences dialog
     func saveHardwareUserDefaults() {
         
         track()

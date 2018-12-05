@@ -32,6 +32,8 @@ struct EmulatorDefaults {
     static let fullscreenAspectRatio = false
     static let warpLoad = true
     static let sendSoundMessages = true
+    static let screenshotResolution = 0
+    static let screenshotFormat = "png"
     static let pauseInBackground = false
     static let snapshotInterval = 3
     static let autoMount = false
@@ -114,8 +116,14 @@ class MyController : NSWindowController, MessageReceiver {
 
     /// Indicates if the user dialog should be skipped when opening archives.
     var autoMount = false
-    
 
+    /// Screenshot resolution (0 = low, 1 = high)
+    var screenshotResolution = EmulatorDefaults.screenshotResolution
+
+    /// Screenshot format ("png", "jpg", or "tiff")
+    var screenshotFormat = EmulatorDefaults.screenshotFormat
+
+    
     //
     // Outlets
     //

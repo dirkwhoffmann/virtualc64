@@ -198,21 +198,28 @@ extension MyController {
         }
     }
  
-    @IBAction func devicesAction(_ sender: Any!) {
+    @IBAction func devicesPrefsAction(_ sender: Any!) {
         
         let nibName = NSNib.Name(rawValue: "DevicesPrefs")
         let controller = DevicesPrefsController.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
     }
-    
-    @IBAction func propertiesAction(_ sender: Any!) {
+
+    @IBAction func videoPrefsAction(_ sender: Any!) {
+        
+        let nibName = NSNib.Name(rawValue: "VideoPrefs")
+        let controller = VideoPrefsController.init(windowNibName: nibName)
+        controller.showSheet(withParent: self)
+    }
+
+    @IBAction func emulatorPrefsAction(_ sender: Any!) {
         
         let nibName = NSNib.Name(rawValue: "EmulatorPrefs")
         let controller = EmulatorPrefsController.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
     }
     
-    @IBAction func hardwareAction(_ sender: Any!) {
+    @IBAction func hardwarePrefsAction(_ sender: Any!) {
         
         let nibName = NSNib.Name(rawValue: "HardwarePrefs")
         let controller = HardwarePrefsController.init(windowNibName: nibName)
@@ -223,17 +230,10 @@ extension MyController {
         
         switch(sender.selectedSegment) {
             
-        case 0: // Devices
-            
-            devicesAction(sender)
-            
-        case 1: // Emulator
-            
-            propertiesAction(sender)
-            
-        case 2: // Hardware
-
-            hardwareAction(sender)
+        case 0: devicesPrefsAction(sender)
+        case 1: videoPrefsAction(sender)
+        case 2: emulatorPrefsAction(sender)
+        case 3: hardwarePrefsAction(sender)
             
         default:
             assert(false)
