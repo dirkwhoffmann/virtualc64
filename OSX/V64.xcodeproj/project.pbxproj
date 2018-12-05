@@ -17,6 +17,8 @@
 		5003C1B721981BA6009AA08D /* Epyx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5003C1B521981BA6009AA08D /* Epyx.cpp */; };
 		5006087921256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5006087821256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp */; };
 		500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500B6CA40B905CEC002C36EC /* TOD.cpp */; };
+		500E3A6721B5C29100935CB3 /* ScriptCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500E3A6621B5C29100935CB3 /* ScriptCommands.swift */; };
+		500E3A6921B5C2A700935CB3 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500E3A6821B5C2A700935CB3 /* Notifications.swift */; };
 		500EC05110E4DCC4005A19A3 /* MessageQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* MessageQueue.cpp */; };
 		500EF689203EB0210043F4FC /* HardwarePrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500EF688203EB0210043F4FC /* HardwarePrefs.xib */; };
 		500EF68B203EB5180043F4FC /* HardwarePrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500EF68A203EB5180043F4FC /* HardwarePrefsController.swift */; };
@@ -216,6 +218,8 @@
 		5006087821256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_cycles_ntsc.cpp; sourceTree = "<group>"; };
 		500B6CA30B905CEC002C36EC /* TOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOD.h; sourceTree = "<group>"; };
 		500B6CA40B905CEC002C36EC /* TOD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TOD.cpp; sourceTree = "<group>"; };
+		500E3A6621B5C29100935CB3 /* ScriptCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptCommands.swift; sourceTree = "<group>"; };
+		500E3A6821B5C2A700935CB3 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		500EC04F10E4DCC4005A19A3 /* MessageQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageQueue.h; sourceTree = "<group>"; };
 		500EC05010E4DCC4005A19A3 /* MessageQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageQueue.cpp; sourceTree = "<group>"; };
 		500EF688203EB0210043F4FC /* HardwarePrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HardwarePrefs.xib; sourceTree = "<group>"; };
@@ -548,7 +552,6 @@
 				8D15AC360486D014006FF6A4 /* Info.plist */,
 				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
 				50D197DF21606DEC008BC551 /* dsa_pub.pem */,
-				501A4A5721AF1A6200DDE409 /* VirtualC64.sdef */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -663,6 +666,17 @@
 			path = CPU;
 			sourceTree = "<group>";
 		};
+		500E3A6B21B5C30F00935CB3 /* Automation */ = {
+			isa = PBXGroup;
+			children = (
+				500E3A6621B5C29100935CB3 /* ScriptCommands.swift */,
+				500E3A6821B5C2A700935CB3 /* Notifications.swift */,
+				501A4A5921AF3BAF00DDE409 /* AppleScript.swift */,
+				501A4A5721AF1A6200DDE409 /* VirtualC64.sdef */,
+			);
+			path = Automation;
+			sourceTree = "<group>";
+		};
 		50176C4E0A6F72F3009E80BD /* C64 */ = {
 			isa = PBXGroup;
 			children = (
@@ -687,10 +701,10 @@
 		50176C6D0A6F7357009E80BD /* MacGUI */ = {
 			isa = PBXGroup;
 			children = (
+				500E3A6B21B5C30F00935CB3 /* Automation */,
 				50F236AE12DF1CCB00B1F275 /* C64GUI.h */,
 				50DBB44A2025CE5700489271 /* Basics.swift */,
 				506D3DCD20223E5E009742CF /* AppDelegate.swift */,
-				501A4A5921AF3BAF00DDE409 /* AppleScript.swift */,
 				5000473F12DCEC9B0098D890 /* Model */,
 				5000474012DCECAB0098D890 /* View */,
 				5000474112DCECBA0098D890 /* Controller */,
@@ -1165,6 +1179,7 @@
 				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,
 				50FE726A212DE8F600E99755 /* VIC_memory.cpp in Sources */,
 				50E9B92D201F299500065A89 /* MyController.swift in Sources */,
+				500E3A6721B5C29100935CB3 /* ScriptCommands.swift in Sources */,
 				5052CD5F2136ADFA0000E890 /* DevicesPrefsController.swift in Sources */,
 				50DBB44B2025CE5700489271 /* Basics.swift in Sources */,
 				5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */,
@@ -1195,6 +1210,7 @@
 				50414727122188FC00A80E0C /* CRTFile.cpp in Sources */,
 				5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */,
 				503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */,
+				500E3A6921B5C2A700935CB3 /* Notifications.swift in Sources */,
 				501DE31020C9C41B00707130 /* wave.cc in Sources */,
 				504606341BE4B99100463FD7 /* G64File.cpp in Sources */,
 				5018E48112240F7100F0820E /* AnyC64File.cpp in Sources */,
