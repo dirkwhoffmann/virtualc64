@@ -183,6 +183,13 @@ extension MyController {
         controller.showSheet(withParent: self)
     }
 
+    @IBAction func openVideoPrefsAction(_ sender: Any!) {
+        
+        let nibName = NSNib.Name(rawValue: "VideoPrefs")
+        let controller = EmulatorPrefsController.init(windowNibName: nibName)
+        controller.showSheet(withParent: self)
+    }
+    
     @IBAction func openEmulatorPrefsAction(_ sender: Any!) {
         
         let nibName = NSNib.Name(rawValue: "EmulatorPrefs")
