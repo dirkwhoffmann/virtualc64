@@ -217,45 +217,91 @@ extension MyController {
     //
     
     @IBAction func saveScreenshotDialog(_ sender: Any!) {
-    
-        let nibName = NSNib.Name(rawValue: "ExportScreenshotDialog")
-        let exportPanel = ExportScreenshotController.init(windowNibName: nibName)
-        exportPanel.showSheet(withParent: self)
+        
+        // Halt emulation to freeze the current texture
+        c64.halt()
+        
+        // Create save panel
+        let savePanel = NSSavePanel()
+        savePanel.prompt = "Export"
+        savePanel.title = "Export"
+        savePanel.nameFieldLabel = "Export As:"
+        
+        // Set allowed file types
+        switch screenshotFormat {
+        case "jpg":
+            savePanel.allowedFileTypes = ["jpg"]
+        case "tiff":
+            savePanel.allowedFileTypes = ["tiff"]
+        default:
+            savePanel.allowedFileTypes = ["png"]
+        }
+        
+        // Run panel as sheet
+        savePanel.beginSheetModal(for: window!, completionHandler: { result in
+            if result == .OK {
+                if let url = savePanel.url {
+                    do {
+                        try self.saveScreenshot(url: url)
+                    } catch {
+                        NSApp.presentError(error)
+                    }
+                }
+            }
+            self.c64.run()
+        })
     }
     
     @IBAction func quicksaveScreenshot(_ sender: Any!) {
         
-        var data: Data?
-        var name: String
+        // Determine file suffix
+        var suffix: String
+        switch screenshotFormat {
+        case "jpg": suffix = ".jpg"
+        case "tiff": suffix = ".tiff"
+        default: suffix = ".png"
+        }
+        
+        // Assemble file name
+        let date = Date.init()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let dateString = formatter.string(from: date)
+        formatter.dateFormat = "hh.mm.ss"
+        let timeString = formatter.string(from: date)
+        let name = "Screenshot " + dateString + " at " + timeString + suffix
+        track("Saving to file \(name)")
+        
+        // Assemble URL and save
+        let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
+        let desktopUrl = NSURL.init(fileURLWithPath: paths[0])
+        if let url = desktopUrl.appendingPathComponent(name) {
+            do {
+                try saveScreenshot(url: url)
+            } catch {
+                track("Cannot quicksave screenshot")
+            }
+        }
+    }
+    
+    func saveScreenshot(url: URL) throws {
         
         // Take screenshot
         let image = metalScreen.screenshot(afterUpscaling: screenshotResolution > 0)
         
         // Convert to target image format
+        var data: Data?
         switch screenshotFormat {
         case "jpg":
             data = image?.jpgRepresentation
-            name = "Untitled" + ".jpg"
         case "tiff":
             data = image?.tiffRepresentation
-            name = "Untitled" + ".tiff"
         default:
             data = image?.pngRepresentation
-            name = "Untitled" + ".png"
         }
         
-        track("Saving to file \(name)")
-        
-        // Get URL and save
-        let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-        let desktopUrl = NSURL.init(fileURLWithPath: paths[0])
-        if let url = desktopUrl.appendingPathComponent(name) {
-            do {
-                try data?.write(to: url, options: .atomic)
-            } catch {
-                track("Cannot quicksave screenshot")
-            }
-        }
+        // Save
+        try data?.write(to: url, options: .atomic)
     }
     
     @IBAction func takeSnapshot(_ sender: Any!) {
