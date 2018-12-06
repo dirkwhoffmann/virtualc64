@@ -17,10 +17,13 @@ import IOKit.hid
 
 class GamePad
 {
-    //! @brief    Keymap of the managed device
-    /*! @details  Only used for keyboard emulated devices
+    /*! @brief    Keymap of the managed device
+     *  @details  Only used for keyboard emulated devices
      */
     var keyMap: [MacKey:UInt32]?
+    
+    //! @brief    Indicates if a joystick emulation key is currently pressed
+    var keyUp = false, keyDown = false, keyLeft = false, keyRight = false;
     
     //! @brief    Name of the connected controller
     var name: String?
@@ -154,15 +157,19 @@ extension GamePad {
             switch (JoystickDirection(direction)) {
                 
             case JOYSTICK_UP:
+                keyUp = true
                 events = [PULL_UP]
                 
             case  JOYSTICK_DOWN:
+                keyDown = true
                 events = [PULL_DOWN]
                 
             case JOYSTICK_LEFT:
+                keyLeft = true
                 events = [PULL_LEFT]
                 
             case JOYSTICK_RIGHT:
+                keyRight = true
                 events = [PULL_RIGHT]
                 
             case JOYSTICK_FIRE:
@@ -190,11 +197,22 @@ extension GamePad {
             var events: [JoystickEvent]
             
             switch (JoystickDirection(direction)) {
-            case JOYSTICK_UP, JOYSTICK_DOWN:
-                events = [RELEASE_Y]
+            
+            case JOYSTICK_UP:
+                keyUp = false
+                events = keyDown ? [PULL_DOWN] : [RELEASE_Y]
                 
-            case JOYSTICK_LEFT, JOYSTICK_RIGHT:
-                events = [RELEASE_X]
+            case JOYSTICK_DOWN:
+                keyDown = false
+                events = keyUp ? [PULL_UP] : [RELEASE_Y]
+                
+            case JOYSTICK_LEFT:
+                keyLeft = false
+                events = keyRight ? [PULL_RIGHT] : [RELEASE_X]
+                
+            case JOYSTICK_RIGHT:
+                keyRight = false
+                events = keyLeft ? [PULL_LEFT] : [RELEASE_X]
                 
             case JOYSTICK_FIRE:
                 events = [RELEASE_FIRE]
