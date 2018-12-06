@@ -52,7 +52,7 @@ class EmulatorPrefsController : UserDialogController {
         autoMountButton.state = parent.autoMount ? .on : .off
         closeWithoutAskingButton.state = parent.closeWithoutAsking ? .on : .off
         ejectWithoutAskingButton.state = parent.ejectWithoutAsking ? .on : .off
-
+        
         // Miscellaneous
         pauseInBackground.state = parent.pauseInBackground ? .on : .off
         autoSnapshots.state = (c64.snapshotInterval() > 0) ? .on : .off
@@ -112,15 +112,12 @@ class EmulatorPrefsController : UserDialogController {
 
     @IBAction func closeWithoutAskingAction(_ sender: NSButton!) {
         
-        track()
         parent.closeWithoutAsking = (sender.state == .on)
-        parent.needsSaving = parent.c64.isRunning()
         update()
     }
     
     @IBAction func ejectWithoutAskingAction(_ sender: NSButton!) {
         
-        track()
         parent.ejectWithoutAsking = (sender.state == .on)
         update()
     }
@@ -189,6 +186,13 @@ class EmulatorPrefsController : UserDialogController {
     @IBAction func okAction(_ sender: Any!) {
         
         parent.saveEmulatorUserDefaults()
+        
+        if parent.closeWithoutAsking {
+            parent.needsSaving = false
+        } else if c64.isRunning() {
+            parent.needsSaving = true
+        }
+        
         hideSheet()
     }
 }
