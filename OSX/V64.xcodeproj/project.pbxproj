@@ -37,7 +37,6 @@
 		5017B71A218729DA0014EDE4 /* FlashRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5017B718218729DA0014EDE4 /* FlashRom.cpp */; };
 		5017B71D21873FD00014EDE4 /* EasyFlash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5017B71B21873FD00014EDE4 /* EasyFlash.cpp */; };
 		5017B72021874B9A0014EDE4 /* CartridgeRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5017B71E21874B9A0014EDE4 /* CartridgeRom.cpp */; };
-		50186A1E202E309C00EEAD72 /* ExportScreenshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */; };
 		50186A20202E31B700EEAD72 /* ExportScreenshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */; };
 		5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */; };
 		5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018AF65202EDD2000B4C886 /* UserDefaults.swift */; };
@@ -261,7 +260,6 @@
 		5017B71C21873FD00014EDE4 /* EasyFlash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EasyFlash.h; sourceTree = "<group>"; };
 		5017B71E21874B9A0014EDE4 /* CartridgeRom.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CartridgeRom.cpp; sourceTree = "<group>"; };
 		5017B71F21874B9A0014EDE4 /* CartridgeRom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CartridgeRom.h; sourceTree = "<group>"; };
-		50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportScreenshotController.swift; sourceTree = "<group>"; };
 		50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportScreenshotDialog.xib; sourceTree = "<group>"; };
 		5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "C64_Pro_Mono-STYLE.ttf"; sourceTree = "<group>"; };
 		5018AF65202EDD2000B4C886 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
@@ -814,7 +812,6 @@
 				50265F56202D00940041C315 /* TapeMountController.swift */,
 				50FB74A1203322C900E05051 /* DiskInspectorController.swift */,
 				50B1644B202DD52500447D3E /* ExportDiskController.swift */,
-				50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */,
 				506D54CB2032255A0026D8B4 /* RomDropView.swift */,
 				50031B39206FB0FC00A1969B /* SnapshotController.swift */,
 			);
@@ -1246,7 +1243,6 @@
 				50E542A5212E988A00026EEF /* VIC_debug.cpp in Sources */,
 				506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */,
 				5014D684200CD62C00044217 /* MetalSetup.swift in Sources */,
-				50186A1E202E309C00EEAD72 /* ExportScreenshotController.swift in Sources */,
 				50E8366E20DC4A090017A5BB /* FastVoice.cpp in Sources */,
 				5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */,
 				506D39D2141780E500268AF6 /* SIDBridge.cpp in Sources */,
