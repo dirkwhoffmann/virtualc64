@@ -47,9 +47,9 @@ let knownKernalRoms : [UInt64 : String] = [
     0x746EB1BC008B07E1:
     "Commodore SX-64 Kernal (Scandinavian)",
     0xDE7F07008B787040:
-    "Commodore 64 Kernel (Jiffy DOS patch)",
+    "Commodore 64 Kernel (JiffyDOS patch)",
     0xA9D2AD1A4E5F782C:
-    "Commodore SX-64 Kernal (Jiffy DOS patch)"
+    "Commodore SX-64 Kernal (JiffyDOS patch)"
 ]
 
 let knownVc1541Roms : [UInt64: String] = [
@@ -66,7 +66,9 @@ let knownVc1541Roms : [UInt64: String] = [
     0x47CBA55F16FB3E09:
     "1541-II firmware with relocation patch",
     0x8B2A523E29BED889:
-    "1541-II firmware (Jiffy DOS patch)"
+    "1541-II firmware (JiffyDOS patch)",
+    0xF7F4D931219DBB5D:
+    "1541-II firmware (JiffyDOS patch 6.00)"
 ]
 
 class RomPrefsController : UserDialogController {
