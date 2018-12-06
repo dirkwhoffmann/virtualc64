@@ -37,6 +37,8 @@ struct EmulatorDefaults {
     static let pauseInBackground = false
     static let snapshotInterval = 3
     static let autoMount = false
+    static let closeWithoutAsking = false
+    static let ejectWithoutAsking = false
 }
 
 protocol MessageReceiver {
@@ -115,7 +117,13 @@ class MyController : NSWindowController, MessageReceiver {
     var pauseInBackgroundSavedState = true
 
     /// Indicates if the user dialog should be skipped when opening archives.
-    var autoMount = false
+    var autoMount = EmulatorDefaults.autoMount
+
+    /// Indicates if the user should be warned if an unsaved document is closed.
+    var closeWithoutAsking = EmulatorDefaults.closeWithoutAsking
+
+    /// Indicates if the user should be warned if an unsaved disk is ejected.
+    var ejectWithoutAsking = EmulatorDefaults.ejectWithoutAsking
 
     /// Screenshot resolution (0 = low, 1 = high)
     var screenshotResolution = EmulatorDefaults.screenshotResolution
@@ -316,6 +324,21 @@ extension MyController {
             return document as! MyDocument
         }
     }
+    
+    /// Indicates if the emulator needs saving
+    var needsSaving: Bool {
+        get {
+            return document?.changeCount != 0
+        }
+        set {
+            if (newValue && !closeWithoutAsking) {
+                document?.updateChangeCount(.changeDone)
+            } else {
+                document?.updateChangeCount(.changeCleared)
+            }
+        }
+    }
+    
     
     //
     // Initialization
@@ -553,7 +576,7 @@ extension MyController {
     
         case MSG_RUN:
             
-            document?.updateChangeCount(.changeDone)
+            needsSaving = true
             disableUserEditing()
             validateToolbarItems()
             refresh()

@@ -206,21 +206,21 @@ extension MyController {
     
     @IBAction func stepIntoAction(_ sender: Any!) {
         
-        document?.updateChangeCount(.changeDone)
+       needsSaving = true
         c64.step()
         refresh()
     }
   
     @IBAction func stepOverAction(_ sender: Any!) {
 
-        document?.updateChangeCount(.changeDone)
+        needsSaving = true
         c64.stepOver()
         refresh()
     }
     
     @IBAction func stopAndGoAction(_ sender: Any!) {
     
-        document?.updateChangeCount(.changeDone)
+        needsSaving = true
         if c64.isHalted() {
             c64.run()
         } else {
@@ -240,7 +240,7 @@ extension MyController {
     
     @IBAction func continueAction(_ sender: Any!) {
         
-        document?.updateChangeCount(.changeDone)
+        needsSaving = true
         if c64.isHalted() {
             c64.run()
         }

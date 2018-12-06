@@ -57,6 +57,8 @@ struct VC64Keys {
     static let screenshotFormat     = "VC64ScreenshotFormatKey"
 
     static let autoMount            = "VC64AutoMount"
+    static let closeWithoutAsking   = "VC64CloseWithoutAsking"
+    static let ejectWithoutAsking   = "VC64EjectWithoutAsking"
 
     static let pauseInBackground    = "VC64PauseInBackground"
     static let snapshotInterval     = "VC64SnapshotInterval"
@@ -165,7 +167,9 @@ extension MyController {
             VC64Keys.disconnectKeys: true,
             VC64Keys.pauseInBackground: false,
             VC64Keys.snapshotInterval: 3,
-            VC64Keys.autoMount: false
+            VC64Keys.autoMount: false,
+            VC64Keys.closeWithoutAsking: false,
+            VC64Keys.ejectWithoutAsking: false
         ]
         
         let defaults = UserDefaults.standard
@@ -302,8 +306,10 @@ extension MyController {
         screenshotResolution = defaults.integer(forKey: VC64Keys.screenshotResolution)
         screenshotFormat = defaults.string(forKey: VC64Keys.screenshotFormat) ?? "png"
         
-        // Documents
+        // User Dialogs
         autoMount = defaults.bool(forKey: VC64Keys.autoMount)
+        closeWithoutAsking = defaults.bool(forKey: VC64Keys.closeWithoutAsking)
+        ejectWithoutAsking = defaults.bool(forKey: VC64Keys.ejectWithoutAsking)
 
         // Misc
         pauseInBackground = defaults.bool(forKey: VC64Keys.pauseInBackground)
@@ -433,8 +439,10 @@ extension MyController {
         defaults.set(screenshotResolution, forKey: VC64Keys.screenshotResolution)
         defaults.set(screenshotFormat, forKey: VC64Keys.screenshotFormat)
         
-        // Documents
+        // User Dialogs
         defaults.set(autoMount, forKey: VC64Keys.autoMount)
+        defaults.set(closeWithoutAsking, forKey: VC64Keys.closeWithoutAsking)
+        defaults.set(ejectWithoutAsking, forKey: VC64Keys.ejectWithoutAsking)
         
         // Misc
         defaults.set(pauseInBackground, forKey: VC64Keys.pauseInBackground)

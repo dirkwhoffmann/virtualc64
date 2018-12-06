@@ -27,44 +27,6 @@ extension MyController {
         static let open = 2
         static let closing = 3
     }
-
-    /*
-    open override func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
-        
-        let tag = item.tag
-        
-        track("Validating \(tag)...")
-        assert(false)
-        
-        if c64 != nil && c64.isRunning() {
-            mydocument.updateChangeCount(.changeDone)
-        }
-    
-        // Snapshot handling
-        if tag == 5 {
-            // return c64.numAutoSnapshots() != 0
-            return true
-        }
-        if tag == 6 {
-            return c64.numUserSnapshots() != 0
-        }
-
-        // Pause/Continue
-        if tag == 1 {
-            if c64.isRunning() {
-                item.image = NSImage.init(named: NSImage.Name(rawValue: "pause32"))
-                item.label = "Pause"
-            } else {
-                item.image = NSImage.init(named: NSImage.Name(rawValue: "play32"))
-                item.label = "Continue"
-            }
-            return true
-        }
-    
-        // All other items
-        return true
-    }
-    */
     
     func validateToolbarItems() {
         let button = pauseTbItem.view as! NSButton

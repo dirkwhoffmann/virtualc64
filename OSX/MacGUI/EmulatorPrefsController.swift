@@ -19,8 +19,10 @@ class EmulatorPrefsController : UserDialogController {
     @IBOutlet weak var screenshotResolutionPopup: NSPopUpButton!
     @IBOutlet weak var screenshotFormatPopup: NSPopUpButton!
 
-    // Documents
-    @IBOutlet weak var autoMount: NSButton!
+    // User Dialogs
+    @IBOutlet weak var autoMountButton: NSButton!
+    @IBOutlet weak var closeWithoutAskingButton: NSButton!
+    @IBOutlet weak var ejectWithoutAskingButton: NSButton!
 
     // Misc
     @IBOutlet weak var pauseInBackground: NSButton!
@@ -47,7 +49,9 @@ class EmulatorPrefsController : UserDialogController {
         }
 
         // Documents
-        autoMount.state = parent.autoMount ? .on : .off
+        autoMountButton.state = parent.autoMount ? .on : .off
+        closeWithoutAskingButton.state = parent.closeWithoutAsking ? .on : .off
+        ejectWithoutAskingButton.state = parent.ejectWithoutAsking ? .on : .off
 
         // Miscellaneous
         pauseInBackground.state = parent.pauseInBackground ? .on : .off
@@ -97,7 +101,7 @@ class EmulatorPrefsController : UserDialogController {
 
     
     //
-    // Action methods (Documents)
+    // Action methods (User Dialogs)
     //
 
     @IBAction func autoMountAction(_ sender: NSButton!) {
@@ -106,6 +110,21 @@ class EmulatorPrefsController : UserDialogController {
         update()
     }
 
+    @IBAction func closeWithoutAskingAction(_ sender: NSButton!) {
+        
+        track()
+        parent.closeWithoutAsking = (sender.state == .on)
+        parent.needsSaving = parent.c64.isRunning()
+        update()
+    }
+    
+    @IBAction func ejectWithoutAskingAction(_ sender: NSButton!) {
+        
+        track()
+        parent.ejectWithoutAsking = (sender.state == .on)
+        update()
+    }
+    
     
     //
     // Action methods (Miscellaneous)
@@ -155,8 +174,10 @@ class EmulatorPrefsController : UserDialogController {
         parent.screenshotResolution = EmulatorDefaults.screenshotResolution
         parent.screenshotFormat = EmulatorDefaults.screenshotFormat
         
-        // Documents
+        // User Dialogs
         parent.autoMount = EmulatorDefaults.autoMount
+        parent.closeWithoutAsking = EmulatorDefaults.closeWithoutAsking
+        parent.ejectWithoutAsking = EmulatorDefaults.ejectWithoutAsking
 
         // Misc
         parent.pauseInBackground = EmulatorDefaults.pauseInBackground

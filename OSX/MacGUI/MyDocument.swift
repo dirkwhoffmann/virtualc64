@@ -176,7 +176,7 @@ class MyDocument : NSDocument {
         }
     }
     
-    
+
     //
     // Creating attachments
     //

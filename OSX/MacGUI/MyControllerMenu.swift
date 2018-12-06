@@ -891,7 +891,7 @@ extension MyController {
     
     @IBAction func resetAction(_ sender: Any!) {
         
-        mydocument.updateChangeCount(.changeDone)
+        needsSaving = true
         metalScreen.rotateBack()
         c64.powerUp()
         refresh()

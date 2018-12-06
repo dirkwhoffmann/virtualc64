@@ -109,8 +109,6 @@ public extension MetalView {
                 do {
                     try document.createAttachment(from: url)
                     return document.processAttachmentAfterDragAndDrop()
-                    // document.readFromAttachment(warnAboutUnsafedDisk: true, showMountDialog: !controller.autoMount)
-                    // return true
                     
                 } catch {
                     let dragAndDropError = error
