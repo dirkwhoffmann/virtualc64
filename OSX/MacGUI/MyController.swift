@@ -33,7 +33,7 @@ struct EmulatorDefaults {
     static let warpLoad = true
     static let sendSoundMessages = true
     static let screenshotResolution = 0
-    static let screenshotFormat = "png"
+    static let screenshotFormat = NSBitmapImageRep.FileType.png
     static let pauseInBackground = false
     static let snapshotInterval = 3
     static let autoMount = false
@@ -128,9 +128,12 @@ class MyController : NSWindowController, MessageReceiver {
     /// Screenshot resolution (0 = low, 1 = high)
     var screenshotResolution = EmulatorDefaults.screenshotResolution
 
-    /// Screenshot format ("png", "jpg", or "tiff")
+    /// Screenshot image format
     var screenshotFormat = EmulatorDefaults.screenshotFormat
-
+    var screenshotFormatIntValue : Int {
+        get { return Int(screenshotFormat.rawValue) }
+        set { screenshotFormat = NSBitmapImageRep.FileType(rawValue: UInt(newValue))! }
+    }
     
     //
     // Outlets

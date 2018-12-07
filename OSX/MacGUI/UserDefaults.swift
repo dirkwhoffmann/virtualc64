@@ -304,7 +304,7 @@ extension MyController {
 
         // Screenshots
         screenshotResolution = defaults.integer(forKey: VC64Keys.screenshotResolution)
-        screenshotFormat = defaults.string(forKey: VC64Keys.screenshotFormat) ?? "png"
+        screenshotFormatIntValue = defaults.integer(forKey: VC64Keys.screenshotFormat)
         
         // User Dialogs
         autoMount = defaults.bool(forKey: VC64Keys.autoMount)
@@ -437,7 +437,7 @@ extension MyController {
         
         // Screenshots
         defaults.set(screenshotResolution, forKey: VC64Keys.screenshotResolution)
-        defaults.set(screenshotFormat, forKey: VC64Keys.screenshotFormat)
+        defaults.set(screenshotFormatIntValue, forKey: VC64Keys.screenshotFormat)
         
         // User Dialogs
         defaults.set(autoMount, forKey: VC64Keys.autoMount)

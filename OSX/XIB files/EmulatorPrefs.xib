@@ -228,27 +228,39 @@ Gw
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vbW-G1-HhL">
                         <rect key="frame" x="105" y="80" width="178" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="PNG image" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="idY-TR-cIC" id="GVe-IM-JLS">
+                        <popUpButtonCell key="cell" type="push" title="TIFF image" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="idY-TR-cIC" id="GVe-IM-JLS">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" autoenablesItems="NO" id="YGF-Sf-Ij8">
                                 <items>
-                                    <menuItem title="PNG image" state="on" id="idY-TR-cIC">
+                                    <menuItem title="TIFF image" state="on" id="idY-TR-cIC">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                         <connections>
                                             <action selector="screenshotFormatAction:" target="-2" id="XeR-EF-ZNv"/>
                                         </connections>
                                     </menuItem>
-                                    <menuItem title="JPG image" tag="1" id="H7P-wV-pVl">
+                                    <menuItem title="BMP image" tag="1" id="H7P-wV-pVl">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                         <connections>
                                             <action selector="screenshotFormatAction:" target="-2" id="Xf1-4w-hBF"/>
                                         </connections>
                                     </menuItem>
-                                    <menuItem title="TIFF image" tag="2" id="suu-Zx-YPP">
+                                    <menuItem title="GIF image" tag="2" id="suu-Zx-YPP">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                         <connections>
                                             <action selector="screenshotFormatAction:" target="-2" id="qk6-Ze-vJQ"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem title="JPG image" tag="3" id="iaO-Hl-Liu">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                        <connections>
+                                            <action selector="screenshotFormatAction:" target="-2" id="TVv-pE-d9i"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem title="PNG image" tag="4" id="aYu-h9-cqw">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                        <connections>
+                                            <action selector="screenshotFormatAction:" target="-2" id="7B1-qW-rNe"/>
                                         </connections>
                                     </menuItem>
                                 </items>

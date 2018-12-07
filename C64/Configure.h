@@ -24,7 +24,7 @@
 
 // Snapshot version number of this release
 #define V_MAJOR 3
-#define V_MINOR 2
+#define V_MINOR 3
 #define V_SUBMINOR 0
 
 // Disable assertion checking (Uncomment in release build)
@@ -41,8 +41,8 @@
 // The input device selection is now retained in the user settings memory.
 // The user can now choose whether to save the emulator texture or the upscaled texture as a screenshot image.
 // If the menu "Save Snapshot..." is selected, the emulator is paused until the screenshot has been saved.
-// The assignment of keystrokes to joystick events has been improved when multiple keys are pressed at the same time (TODO).
-// A new option in the emulator settings allows the user to select a warning level for unsaved data (TODO).
+// The assignment of keystrokes to joystick events has been improved when multiple keys are pressed at the same time.
+// New options in the emulator settings allows the user to silence some user dialogs.
 // The JiffyDOS Rom images have been added to the list of known images.
 //
 // Options:

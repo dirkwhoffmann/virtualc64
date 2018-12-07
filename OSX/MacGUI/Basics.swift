@@ -29,9 +29,33 @@ public func track(_ message: String = "",
 
 
 //
+// Handling URLs
+//
+
+extension URL {
+    
+    /*
+     func makeWithTimeStamp(path: String, name: String, suffix: String) -> URL? {
+     
+     func makeWithUniqueTimeStamp(path: String, name: String, suffix: String) -> URL? {
+     
+     func make(path: String, name: String, suffix: String) -> URL? {
+        
+        var number = ""
+        
+        let pathURL = NSURL.init(fileURLWithPath: path)
+        let url = pathURL.appendingPathComponent(name + suffix)
+        return url
+    }
+    */
+}
+
+
+//
 // Handling images
 //
 
+/*
 extension NSBitmapImageRep {
     var png: Data? {
         return representation(using: .png, properties: [:])
@@ -40,21 +64,29 @@ extension NSBitmapImageRep {
         return representation(using: .jpeg, properties: [:])
     }
 }
+*/
+
 extension Data {
     var bitmap: NSBitmapImageRep? {
         return NSBitmapImageRep(data: self)
     }
 }
 extension NSImage {
+    
+    /*
     var pngRepresentation: Data? {
         return tiffRepresentation?.bitmap?.png
     }
     var jpgRepresentation: Data? {
         return tiffRepresentation?.bitmap?.jpg
     }
-}
-
-extension NSImage {
+    */
+    
+    func representation(using: NSBitmapImageRep.FileType) -> Data? {
+        
+        let bitmap = tiffRepresentation?.bitmap
+        return bitmap?.representation(using: using, properties: [:])
+    }
     
     func resizeImage(width: CGFloat, height: CGFloat,
                      cutout: NSRect,

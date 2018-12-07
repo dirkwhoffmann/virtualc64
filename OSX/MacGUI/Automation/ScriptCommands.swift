@@ -113,42 +113,17 @@ func typeTextCmd(arguments: [AnyHashable : Any]?) -> Bool {
 
 func takeScreenshotCmd(arguments: [AnyHashable : Any]?) -> Bool {
     
-    var url: URL?
-    var image: NSImage?
-    var data: Data?
-    
-    // Compute URL
-    if let path = arguments?["VC64Path"] as? String {
-        url = URL(fileURLWithPath: path)
+    guard let path = arguments?["VC64Path"] as? String else {
+        return false
     }
-    
-    // Take screenshot
-    image = currentController?.metalScreen.screenshot(afterUpscaling: false)
-    if let format = arguments?["VC64ImageFormat"] as? String {
-        switch format {
-        case "tiff":
-            data = image?.tiffRepresentation
-        case "jpg":
-            data = image?.jpgRepresentation
-        case "png":
-            data = image?.pngRepresentation
-        default:
-            break
-        }
-    } else {
-        data = image?.pngRepresentation
+
+    do {
+        try currentController?.saveScreenshot(url: URL(fileURLWithPath: path))
+        return true
+    } catch {
+        track("Remote control: Failed to save screenshot")
+        return false
     }
-    
-    // Write screenshot to URL
-    if url != nil && data != nil {
-        do {
-            try data!.write(to: url!, options: .atomic)
-            return true
-        } catch {
-            track("Remote control: Failed to save screenshot")
-        }
-    }
-    return false
 }
 
 func quitScriptCmd(arguments: [AnyHashable : Any]?) {

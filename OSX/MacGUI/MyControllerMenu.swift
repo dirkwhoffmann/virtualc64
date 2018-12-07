@@ -229,12 +229,14 @@ extension MyController {
         
         // Set allowed file types
         switch screenshotFormat {
-        case "jpg":
-            savePanel.allowedFileTypes = ["jpg"]
-        case "tiff":
-            savePanel.allowedFileTypes = ["tiff"]
+        case .tiff: savePanel.allowedFileTypes = ["jpg"]
+        case .bmp: savePanel.allowedFileTypes = ["bmp"]
+        case .gif: savePanel.allowedFileTypes = ["gif"]
+        case .jpeg: savePanel.allowedFileTypes = ["jpg"]
+        case .png: savePanel.allowedFileTypes = ["png"]
         default:
-            savePanel.allowedFileTypes = ["png"]
+            track("Unsupported image format: \(screenshotFormat)")
+            return
         }
         
         // Run panel as sheet
@@ -257,9 +259,14 @@ extension MyController {
         // Determine file suffix
         var suffix: String
         switch screenshotFormat {
-        case "jpg": suffix = ".jpg"
-        case "tiff": suffix = ".tiff"
-        default: suffix = ".png"
+        case .tiff: suffix = "tiff"
+        case .bmp: suffix = "bmp"
+        case .gif: suffix = "gif"
+        case .jpeg: suffix = "jpg"
+        case .png: suffix = "png"
+        default:
+            track("Unsupported image format: \(screenshotFormat)")
+            return
         }
         
         // Assemble file name
@@ -269,7 +276,7 @@ extension MyController {
         let dateString = formatter.string(from: date)
         formatter.dateFormat = "hh.mm.ss"
         let timeString = formatter.string(from: date)
-        let name = "Screenshot " + dateString + " at " + timeString + suffix
+        let name = "Screenshot " + dateString + " at " + timeString + "." + suffix
         track("Saving to file \(name)")
         
         // Assemble URL and save
@@ -289,18 +296,10 @@ extension MyController {
         // Take screenshot
         let image = metalScreen.screenshot(afterUpscaling: screenshotResolution > 0)
         
-        // Convert to target image format
-        var data: Data?
-        switch screenshotFormat {
-        case "jpg":
-            data = image?.jpgRepresentation
-        case "tiff":
-            data = image?.tiffRepresentation
-        default:
-            data = image?.pngRepresentation
-        }
+        // Convert to target format
+        let data = image?.representation(using: screenshotFormat)
         
-        // Save
+        // Save to file
         try data?.write(to: url, options: .atomic)
     }
     

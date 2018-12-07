@@ -42,11 +42,7 @@ class EmulatorPrefsController : UserDialogController {
         
         // Screenshots
         screenshotResolutionPopup.selectItem(withTag: parent.screenshotResolution)
-        switch parent.screenshotFormat {
-        case "jpg": screenshotFormatPopup.selectItem(withTag: 1)
-        case "tiff": screenshotFormatPopup.selectItem(withTag: 2)
-        default: screenshotFormatPopup.selectItem(withTag: 0)
-        }
+        screenshotFormatPopup.selectItem(withTag: parent.screenshotFormatIntValue)
 
         // Documents
         autoMountButton.state = parent.autoMount ? .on : .off
@@ -91,11 +87,7 @@ class EmulatorPrefsController : UserDialogController {
 
     @IBAction func screenshotFormatAction(_ sender: NSMenuItem!) {
         
-        switch sender.tag {
-        case 1: parent.screenshotFormat = "jpg"
-        case 2: parent.screenshotFormat = "tiff"
-        default: parent.screenshotFormat = "png"
-        }
+        parent.screenshotFormatIntValue = sender.tag
         update()
     }
 
