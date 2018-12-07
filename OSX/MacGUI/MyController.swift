@@ -386,10 +386,8 @@ extension MyController {
         }
         
         // Assign input devices
-        let device1 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice1)
-        let device2 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice2)
-        setPort1(device1)
-        setPort2(device2)
+        gamepadSlot1 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice1)
+        gamepadSlot2 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice2)
 
         // Setup toolbar, window, and debugger
         configureToolbar()
