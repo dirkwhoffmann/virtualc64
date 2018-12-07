@@ -1,4 +1,4 @@
 language: objective-c
-osx_image: xcode10.1
+osx_image: xcode10
 xcode_project: OSX/V64.xcodeproj
 xcode_scheme: VirtualC64
