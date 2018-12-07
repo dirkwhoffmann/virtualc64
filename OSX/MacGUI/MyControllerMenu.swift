@@ -269,22 +269,12 @@ extension MyController {
             return
         }
         
-        // Assemble file name
-        let date = Date.init()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        let dateString = formatter.string(from: date)
-        formatter.dateFormat = "hh.mm.ss"
-        let timeString = formatter.string(from: date)
-        let name = "Screenshot " + dateString + " at " + timeString + "." + suffix
-        track("Saving to file \(name)")
-        
         // Assemble URL and save
         let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
         let desktopUrl = NSURL.init(fileURLWithPath: paths[0])
-        if let url = desktopUrl.appendingPathComponent(name) {
+        if let url = desktopUrl.appendingPathComponent("Screenshot." + suffix) {
             do {
-                try saveScreenshot(url: url)
+                try saveScreenshot(url: url.addTimeStamp().makeUnique())
             } catch {
                 track("Cannot quicksave screenshot")
             }

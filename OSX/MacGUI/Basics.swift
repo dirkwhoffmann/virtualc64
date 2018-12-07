@@ -34,20 +34,39 @@ public func track(_ message: String = "",
 
 extension URL {
     
-    /*
-     func makeWithTimeStamp(path: String, name: String, suffix: String) -> URL? {
-     
-     func makeWithUniqueTimeStamp(path: String, name: String, suffix: String) -> URL? {
-     
-     func make(path: String, name: String, suffix: String) -> URL? {
+    func addTimeStamp() -> URL {
         
-        var number = ""
+        let path = self.deletingPathExtension().path
+        let suffix = self.pathExtension
         
-        let pathURL = NSURL.init(fileURLWithPath: path)
-        let url = pathURL.appendingPathComponent(name + suffix)
-        return url
+        let date = Date.init()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let dateString = formatter.string(from: date)
+        formatter.dateFormat = "hh.mm.ss"
+        let timeString = formatter.string(from: date)
+        let timeStamp = dateString + " at " + timeString
+
+        return URL(fileURLWithPath: path + " " + timeStamp + "." + suffix)
     }
-    */
+    
+    func makeUnique() -> URL {
+        
+        let path = self.deletingPathExtension().path
+        let suffix = self.pathExtension
+        let fileManager = FileManager.default
+        
+        for i in 0...127 {
+            
+            let numberStr = (i == 0) ? "." : " \(i)."
+            let url = URL(fileURLWithPath: path + numberStr + suffix)
+
+            if !fileManager.fileExists(atPath: url.path) {
+                return url
+            }
+        }
+        return self
+    }
 }
 
 
