@@ -9,6 +9,7 @@
 
 import Foundation
 
+// MOVE to user defaults
 struct EmulatorDefaults {
     static let palette = Int(COLOR_PALETTE.rawValue)
     static let upscaler = 0
@@ -386,8 +387,8 @@ extension MyController {
         }
         
         // Assign input devices
-        gamepadSlot1 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice1)
-        gamepadSlot2 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice2)
+        // gamepadSlot1 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice1)
+        // gamepadSlot2 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice2)
 
         // Setup toolbar, window, and debugger
         configureToolbar()

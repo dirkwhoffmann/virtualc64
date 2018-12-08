@@ -161,12 +161,13 @@ class KeyboardDialog : UserDialogController {
 
     @IBAction func factorySettingsAction(_ sender: Any!) {
         
-        // Revert to standard map from KeyboardController
-        keyMap = KeyboardController.standardKeyMap
+        parent.keyboardcontroller.keyMap = Defaults.keyMap
         update()
     }
     
     @IBAction func okAction(_ sender: Any!) {
+        
+        // TODO: Modify keymap directly. Add cancelAction as in other dialogs
         
         // Write customized KeyMap back to KeyboardController and save to user defaults
         parent.keyboardcontroller.keyMap = keyMap

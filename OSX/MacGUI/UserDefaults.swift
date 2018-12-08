@@ -21,9 +21,24 @@ struct VC64Keys {
     static let inputDevice1         = "VC64InputDevice1"
     static let inputDevice2         = "VC64InputDevice2"
     
-    // Keyboard
+    // Keyboard mapping mode
     static let mapKeysByPosition    = "VC64MapKeysByPosition"
-    static let keyMap               = "VC64KeyMap"
+}
+
+struct Defaults {
+    
+    // Roms
+    static let basicRom = ""
+    static let charRom = ""
+    static let kernalRom = ""
+    static let vc1541Rom = ""
+    
+    // Control ports
+    static let inputDevice1 = -1
+    static let inputDevice2 = -1
+    
+    // Keyboard mapping mode
+    static let mapKeysByPosition = false
 }
 
 //
@@ -35,23 +50,9 @@ extension MyController {
     static func registerUserDefaults() {
         
         track()
-        
-        let dictionary : [String:Any] = [
-            
-            VC64Keys.basicRom: "",
-            VC64Keys.charRom: "",
-            VC64Keys.kernalRom: "",
-            VC64Keys.vc1541Rom: "",
-            
-            VC64Keys.inputDevice1: -1,
-            VC64Keys.inputDevice2: -1,
-
-            VC64Keys.mapKeysByPosition: false
-        ]
-        
-        let defaults = UserDefaults.standard
-        defaults.register(defaults: dictionary)
-        
+  
+        registerGeneralUserDefaults()
+        registerKeyMapUserDefaults()
         registerDevicesUserDefaults()
         registerVideoUserDefaults()
         registerEmulatorUserDefaults()
@@ -62,20 +63,78 @@ extension MyController {
         
         track()
         
-        let defaults = UserDefaults.standard
-        keyboardcontroller.mapKeysByPosition = defaults.bool(forKey: VC64Keys.mapKeysByPosition)
-        
         c64.suspend()
+        loadGeneralUserDefaults()
+        loadKeyMapUserDefaults()
         loadDevicesUserDefaults()
         loadVideoUserDefaults()
         loadEmulatorUserDefaults()
         loadHardwareUserDefaults()
-        loadKeyMapUserDefaults()
         c64.resume()
     }
 }
 
+
+//
+// User defaults (general)
+//
+
 extension MyController {
+
+    static func registerGeneralUserDefaults() {
+        
+        track()
+        
+        let dictionary : [String:Any] = [
+            
+            VC64Keys.basicRom: Defaults.basicRom,
+            VC64Keys.charRom: Defaults.charRom,
+            VC64Keys.kernalRom: Defaults.kernalRom,
+            VC64Keys.vc1541Rom: Defaults.vc1541Rom,
+            
+            VC64Keys.inputDevice1: Defaults.inputDevice1,
+            VC64Keys.inputDevice2: Defaults.inputDevice2,
+            
+            VC64Keys.mapKeysByPosition: Defaults.mapKeysByPosition
+        ]
+        
+        let defaults = UserDefaults.standard
+        defaults.register(defaults: dictionary)
+    }
+    
+    func loadGeneralUserDefaults() {
+        
+        track()
+        let defaults = UserDefaults.standard
+        
+        c64.suspend()
+        gamepadSlot1 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice1)
+        gamepadSlot2 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice2)
+        keyboardcontroller.mapKeysByPosition = defaults.bool(forKey: VC64Keys.mapKeysByPosition)
+        c64.resume()
+    }
+}
+
+//
+// User defaults (Keymap)
+//
+
+extension VC64Keys {
+    static let keyMap = "VC64KeyMap"
+}
+
+extension Defaults {
+    static let keyMap = KeyboardController.standardKeyMap
+}
+
+extension MyController {
+    
+    static func registerKeyMapUserDefaults() {
+        
+        if let data = try? JSONEncoder().encode(Defaults.keyMap) {
+            UserDefaults.standard.register(defaults: [VC64Keys.keyMap: data])
+        }
+    }
     
     func saveKeyMapUserDefaults() {
         

@@ -203,14 +203,12 @@ class HardwarePrefsController : UserDialogController {
     
     @IBAction func romAction(_ sender: NSButton!) {
         
-        track()
         hideSheet()
         parent.openRomPrefsAction(self)
     }
     
     @IBAction override func cancelAction(_ sender: Any!) {
         
-        track()
         parent.loadHardwareUserDefaults()
         hideSheet()
     }
