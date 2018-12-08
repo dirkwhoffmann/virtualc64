@@ -155,22 +155,22 @@ class EmulatorPrefsController : UserDialogController {
     @IBAction func factorySettingsAction(_ sender: Any!) {
         
         // VC1541
-        c64.setWarpLoad(EmulatorDefaults.warpLoad)
-        c64.drive1.setSendSoundMessages(EmulatorDefaults.sendSoundMessages)
-        c64.drive2.setSendSoundMessages(EmulatorDefaults.sendSoundMessages)
+        c64.setWarpLoad(Defaults.warpLoad)
+        c64.drive1.setSendSoundMessages(Defaults.driveNoise)
+        c64.drive2.setSendSoundMessages(Defaults.driveNoise)
         
         // Screenshots
-        parent.screenshotResolution = EmulatorDefaults.screenshotResolution
-        parent.screenshotFormat = EmulatorDefaults.screenshotFormat
+        parent.screenshotResolution = Defaults.screenshotResolution
+        parent.screenshotFormat = Defaults.screenshotFormat
         
         // User Dialogs
-        parent.autoMount = EmulatorDefaults.autoMount
-        parent.closeWithoutAsking = EmulatorDefaults.closeWithoutAsking
-        parent.ejectWithoutAsking = EmulatorDefaults.ejectWithoutAsking
+        parent.autoMount = Defaults.autoMount
+        parent.closeWithoutAsking = Defaults.closeWithoutAsking
+        parent.ejectWithoutAsking = Defaults.ejectWithoutAsking
 
         // Misc
-        parent.pauseInBackground = EmulatorDefaults.pauseInBackground
-        c64.setSnapshotInterval(EmulatorDefaults.snapshotInterval)
+        parent.pauseInBackground = Defaults.pauseInBackground
+        c64.setSnapshotInterval(Defaults.snapshotInterval)
 
         update()
     }

@@ -9,39 +9,6 @@
 
 import Foundation
 
-// MOVE to user defaults
-struct EmulatorDefaults {
-    static let palette = Int(COLOR_PALETTE.rawValue)
-    static let upscaler = 0
-    static let scanlineFilter = 1
-    static let filter = 1
-    static let brightness = Double(50.0)
-    static let contrast = Double(100.0)
-    static let saturation = Double(50.0)
-    static let blur = Float(1.5)
-    static let bloomRadius = Float(1.0)
-    static let scanlines = 1
-    static let dotMask = 1
-    static let scanlineBrightness = Float(0.12)
-    static let scanlineWeight = Float(6.0)
-    static let bloomBrightness = Float(0.044)
-    static let bloomWeight = Float(1.33)
-    static let maskBrightness = Float(0.7)
-    static let eyeX = Float(0.0)
-    static let eyeY = Float(0.0)
-    static let eyeZ = Float(0.0)
-    static let fullscreenAspectRatio = false
-    static let warpLoad = true
-    static let sendSoundMessages = true
-    static let screenshotResolution = 0
-    static let screenshotFormat = NSBitmapImageRep.FileType.png
-    static let pauseInBackground = false
-    static let snapshotInterval = 3
-    static let autoMount = false
-    static let closeWithoutAsking = false
-    static let ejectWithoutAsking = false
-}
-
 protocol MessageReceiver {
     func processMessage(_ msg: Message)
 }
@@ -118,19 +85,19 @@ class MyController : NSWindowController, MessageReceiver {
     var pauseInBackgroundSavedState = true
 
     /// Indicates if the user dialog should be skipped when opening archives.
-    var autoMount = EmulatorDefaults.autoMount
+    var autoMount = Defaults.autoMount
 
     /// Indicates if the user should be warned if an unsaved document is closed.
-    var closeWithoutAsking = EmulatorDefaults.closeWithoutAsking
+    var closeWithoutAsking = Defaults.closeWithoutAsking
 
     /// Indicates if the user should be warned if an unsaved disk is ejected.
-    var ejectWithoutAsking = EmulatorDefaults.ejectWithoutAsking
+    var ejectWithoutAsking = Defaults.ejectWithoutAsking
 
     /// Screenshot resolution (0 = low, 1 = high)
-    var screenshotResolution = EmulatorDefaults.screenshotResolution
+    var screenshotResolution = Defaults.screenshotResolution
 
     /// Screenshot image format
-    var screenshotFormat = EmulatorDefaults.screenshotFormat
+    var screenshotFormat = Defaults.screenshotFormat
     var screenshotFormatIntValue : Int {
         get { return Int(screenshotFormat.rawValue) }
         set { screenshotFormat = NSBitmapImageRep.FileType(rawValue: UInt(newValue))! }

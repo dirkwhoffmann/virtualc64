@@ -149,11 +149,11 @@ public class MetalView: MTKView {
     var textureRect = CGRect.init(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
  
     /// Currently selected texture upscaler
-    var videoUpscaler = EmulatorDefaults.upscaler {
+    var upscaler = Defaults.upscaler {
         didSet {
-            if videoUpscaler >= upscalerGallery.count || upscalerGallery[videoUpscaler] == nil {
+            if upscaler >= upscalerGallery.count || upscalerGallery[upscaler] == nil {
                 track("Sorry, the selected GPU upscaler is unavailable.")
-                videoUpscaler = 0
+                upscaler = 0
             }
         }
     }
@@ -165,7 +165,7 @@ public class MetalView: MTKView {
     var fullscreen = false
     
     //! If true, the 3D renderer is also used in fullscreen mode
-    var fullscreenKeepAspectRatio = true
+    var keepAspectRatio = true
     
     //! If false, the C64 screen is not drawn (background texture will be visible)
     var drawC64texture = false
@@ -273,10 +273,10 @@ public class MetalView: MTKView {
     /// Returns the compute kernel of the currently selected pixel upscaler
     func currentUpscaler() -> ComputeKernel {
     
-        precondition(videoUpscaler < upscalerGallery.count)
+        precondition(upscaler < upscalerGallery.count)
         precondition(upscalerGallery[0] != nil)
         
-        return upscalerGallery[videoUpscaler]!
+        return upscalerGallery[upscaler]!
     }
 
     /// Returns the compute kernel of the currently selected bloom filter
@@ -531,7 +531,7 @@ public class MetalView: MTKView {
         drawable = metalLayer.nextDrawable()
         if (drawable != nil) {
             updateTexture()
-            if fullscreen && !fullscreenKeepAspectRatio {
+            if fullscreen && !keepAspectRatio {
                 drawScene2D()
             } else {
                 drawScene3D()

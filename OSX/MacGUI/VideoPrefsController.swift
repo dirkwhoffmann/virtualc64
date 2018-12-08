@@ -59,7 +59,7 @@ class VideoPrefsController : UserDialogController {
         let shaderOptions = parent.metalScreen.shaderOptions
         
         // Video
-        upscalerPopup.selectItem(withTag: parent.metalScreen.videoUpscaler)
+        upscalerPopup.selectItem(withTag: parent.metalScreen.upscaler)
         palettePopup.selectItem(withTag: document.c64.vic.videoPalette())
         brightnessSlider.doubleValue = document.c64.vic.brightness()
         contrastSlider.doubleValue = document.c64.vic.contrast()
@@ -92,7 +92,7 @@ class VideoPrefsController : UserDialogController {
         scanlineWeightSlider.isEnabled = shaderOptions.scanlines == 2
         
         // Geometry
-        fullscreenAspectRatioButton.state = parent.metalScreen.fullscreenKeepAspectRatio ? .on : .off
+        fullscreenAspectRatioButton.state = parent.metalScreen.keepAspectRatio ? .on : .off
         eyeXSlider.floatValue = parent.metalScreen.eyeX()
         eyeYSlider.floatValue = parent.metalScreen.eyeY()
         eyeZSlider.floatValue = parent.metalScreen.eyeZ()
@@ -168,7 +168,7 @@ class VideoPrefsController : UserDialogController {
     
     @IBAction func upscalerAction(_ sender: NSPopUpButton!) {
         
-        parent.metalScreen.videoUpscaler = sender.selectedTag()
+        parent.metalScreen.upscaler = sender.selectedTag()
         update()
     }
     
@@ -257,7 +257,7 @@ class VideoPrefsController : UserDialogController {
     
     @IBAction func fullscreenAspectRatioAction(_ sender: NSButton!) {
         
-        parent.metalScreen.fullscreenKeepAspectRatio = (sender.state == .on)
+        parent.metalScreen.keepAspectRatio = (sender.state == .on)
         update()
     }
     
@@ -293,17 +293,17 @@ class VideoPrefsController : UserDialogController {
     func factorySettingsAction() {
         
         // Video
-        parent.metalScreen.videoUpscaler = EmulatorDefaults.upscaler
-        c64.vic.setVideoPalette(EmulatorDefaults.palette)
-        c64.vic.setBrightness(EmulatorDefaults.brightness)
-        c64.vic.setContrast(EmulatorDefaults.contrast)
-        c64.vic.setSaturation(EmulatorDefaults.saturation)
+        parent.metalScreen.upscaler = Defaults.upscaler
+        c64.vic.setVideoPalette(Int(Defaults.palette.rawValue))
+        c64.vic.setBrightness(Defaults.brightness)
+        c64.vic.setContrast(Defaults.contrast)
+        c64.vic.setSaturation(Defaults.saturation)
         
         // Geometry
-        parent.metalScreen.setEyeX(EmulatorDefaults.eyeX)
-        parent.metalScreen.setEyeY(EmulatorDefaults.eyeY)
-        parent.metalScreen.setEyeZ(EmulatorDefaults.eyeZ)
-        parent.metalScreen.fullscreenKeepAspectRatio = EmulatorDefaults.fullscreenAspectRatio
+        parent.metalScreen.setEyeX(Defaults.eyeX)
+        parent.metalScreen.setEyeY(Defaults.eyeY)
+        parent.metalScreen.setEyeZ(Defaults.eyeZ)
+        parent.metalScreen.keepAspectRatio = Defaults.keepAspectRatio
         
         update()
         updatePalettePreviewImages()
