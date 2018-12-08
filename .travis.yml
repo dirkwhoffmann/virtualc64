@@ -1,5 +1,6 @@
 language: swift
 osx_image: xcode10.1
-xcode_project: OSX/V64.xcodeproj
+before_install: cd OSX
+xcode_project: V64.xcodeproj
 xcode_scheme: VirtualC64
 xcode_sdk: macosx10.14
