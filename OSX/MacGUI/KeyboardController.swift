@@ -1,5 +1,5 @@
 //
-// This file is part of VirtualC64 - A user-friendly Commodore 64 emulator
+// This file is part of VirtualC64 - A cycle accurate Commodore 64 emulator
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
 // Licensed under the GNU General Public License v3
@@ -27,7 +27,7 @@ class KeyboardController: NSObject {
      while positional assignment establishes a one-to-one mapping between Mac
      keys and C64 keys.
     */
-    var mapKeysByPosition: Bool = false
+    var mapKeysByPosition = Defaults.mapKeysByPosition
     
     /// Used key map if keys are mapped by position
  

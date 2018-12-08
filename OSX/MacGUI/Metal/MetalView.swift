@@ -1,5 +1,5 @@
 //
-// This file is part of VirtualC64 - A user-friendly Commodore 64 emulator
+// This file is part of VirtualC64 - A cycle accurate Commodore 64 emulator
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
 // Licensed under the GNU General Public License v3
@@ -13,8 +13,6 @@ import Foundation
 import Metal
 import MetalKit
 import MetalPerformanceShaders
-
-
 
 struct C64Texture {
     static let orig = NSSize.init(width: 512, height: 512)
@@ -120,7 +118,7 @@ public class MetalView: MTKView {
     var samplerLinear : MTLSamplerState! = nil
     
     // Shader options
-    var shaderOptions = ShaderDefaultsTFT
+    var shaderOptions = Defaults.shaderOptions
     
     // Animation parameters
     var currentXAngle = Float(0.0)
@@ -132,14 +130,14 @@ public class MetalView: MTKView {
     var currentZAngle = Float(0.0)
     var targetZAngle = Float(0.0)
     var deltaZAngle = Float(0.0)
-    var currentEyeX = Float(0.0)
-    var targetEyeX = Float(0.0)
+    var currentEyeX = Defaults.eyeX
+    var targetEyeX = Defaults.eyeX
     var deltaEyeX = Float(0.0)
-    var currentEyeY = Float(0.0)
-    var targetEyeY = Float(0.0)
+    var currentEyeY = Defaults.eyeY
+    var targetEyeY = Defaults.eyeY
     var deltaEyeY = Float(0.0)
-    var currentEyeZ = Float(0.0)
-    var targetEyeZ = Float(0.0)
+    var currentEyeZ = Defaults.eyeZ
+    var targetEyeZ = Defaults.eyeZ
     var deltaEyeZ = Float(0.0)
     var currentAlpha = Float(0.0)
     var targetAlpha = Float(0.0)
@@ -165,7 +163,7 @@ public class MetalView: MTKView {
     var fullscreen = false
     
     //! If true, the 3D renderer is also used in fullscreen mode
-    var keepAspectRatio = true
+    var keepAspectRatio = Defaults.keepAspectRatio
     
     //! If false, the C64 screen is not drawn (background texture will be visible)
     var drawC64texture = false

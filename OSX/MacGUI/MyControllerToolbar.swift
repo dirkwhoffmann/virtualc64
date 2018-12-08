@@ -1,5 +1,5 @@
 //
-// This file is part of VirtualC64 - A user-friendly Commodore 64 emulator
+// This file is part of VirtualC64 - A cycle accurate Commodore 64 emulator
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
 // Licensed under the GNU General Public License v3
@@ -59,8 +59,8 @@ extension MyController {
     
     func validateJoystickToolbarItems() {
     
-        validateJoystickToolbarItem(controlPort1, selectedSlot: gamepadSlot1, port: c64.port1)
-        validateJoystickToolbarItem(controlPort2, selectedSlot: gamepadSlot2, port: c64.port2)
+        validateJoystickToolbarItem(controlPort1, selectedSlot: inputDevice1, port: c64.port1)
+        validateJoystickToolbarItem(controlPort2, selectedSlot: inputDevice2, port: c64.port2)
     }
     
     @IBAction func port1Action(_ sender: NSPopUpButton) {
@@ -71,16 +71,16 @@ extension MyController {
     func setPort1(_ value: Int) {
         
         // Remember selection
-        gamepadSlot1 = value
+        inputDevice1 = value
         
         // Avoid double mappings
-        gamepadSlot2 = (gamepadSlot1 == gamepadSlot2) ? InputDevice.none : gamepadSlot2
+        inputDevice2 = (inputDevice1 == inputDevice2) ? InputDevice.none : inputDevice2
         
         // Connect or disconnect analog mouse
-        c64.mouse.connect(gamepadSlot1 == InputDevice.mouse ? 1 : 0);
+        c64.mouse.connect(inputDevice1 == InputDevice.mouse ? 1 : 0);
         
-        UserDefaults.standard.set(gamepadSlot1, forKey: VC64Keys.inputDevice1)
-        UserDefaults.standard.set(gamepadSlot2, forKey: VC64Keys.inputDevice2)
+        UserDefaults.standard.set(inputDevice1, forKey: VC64Keys.inputDevice1)
+        UserDefaults.standard.set(inputDevice2, forKey: VC64Keys.inputDevice2)
         validateJoystickToolbarItems();
     }
     
@@ -92,16 +92,16 @@ extension MyController {
     func setPort2(_ value: Int) {
         
         // Remember selection
-        gamepadSlot2 = value
+        inputDevice2 = value
         
         // Avoid double mappings
-        gamepadSlot1 = (gamepadSlot1 == gamepadSlot2) ? InputDevice.none : gamepadSlot1
+        inputDevice1 = (inputDevice1 == inputDevice2) ? InputDevice.none : inputDevice1
         
         // Connect or disconnect analog mouse
-        c64.mouse.connect(gamepadSlot2 == InputDevice.mouse ? 2 : 0)
+        c64.mouse.connect(inputDevice2 == InputDevice.mouse ? 2 : 0)
         
-        UserDefaults.standard.set(gamepadSlot1, forKey: VC64Keys.inputDevice1)
-        UserDefaults.standard.set(gamepadSlot2, forKey: VC64Keys.inputDevice2)
+        UserDefaults.standard.set(inputDevice1, forKey: VC64Keys.inputDevice1)
+        UserDefaults.standard.set(inputDevice2, forKey: VC64Keys.inputDevice2)
         validateJoystickToolbarItems()
     }
         

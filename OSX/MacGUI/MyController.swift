@@ -1,5 +1,5 @@
 //
-// This file is part of VirtualC64 - A user-friendly Commodore 64 emulator
+// This file is part of VirtualC64 - A cycle accurate Commodore 64 emulator
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
 // Licensed under the GNU General Public License v3
@@ -69,18 +69,18 @@ class MyController : NSWindowController, MessageReceiver {
     var statusBar = true
     
     /// Selected game pad slot for joystick in port A
-    var gamepadSlot1 = -1
+    var inputDevice1 = Defaults.inputDevice1
     
     /// Selected game pad slot for joystick in port B
-    var gamepadSlot2 = -1
+    var inputDevice2 = Defaults.inputDevice2
     
     /// Default image for USB devices
     var genericDeviceImage: NSImage?
 
     /// Indicates if the emulator should pause when it looses focus.
-    var pauseInBackground = false
+    var pauseInBackground =  Defaults.pauseInBackground
 
-    /// Remembers if the emulator was running or paused when it lose focus.
+    /// Remembers if the emulator was running or paused when it lost focus.
     /// Needed to implement the pauseInBackground feature.
     var pauseInBackgroundSavedState = true
 
@@ -354,8 +354,8 @@ extension MyController {
         }
         
         // Assign input devices
-        // gamepadSlot1 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice1)
-        // gamepadSlot2 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice2)
+        // inputDevice1 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice1)
+        // inputDevice2 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice2)
 
         // Setup toolbar, window, and debugger
         configureToolbar()
@@ -788,12 +788,12 @@ extension MyController {
     @discardableResult
     func joystickEvent(slot: Int, events: [JoystickEvent]) -> Bool {
         
-        if (slot == gamepadSlot1) {
+        if (slot == inputDevice1) {
             for event in events { c64.port1.trigger(event) }
             return true
         }
 
-        if (slot == gamepadSlot2) {
+        if (slot == inputDevice2) {
             for event in events { c64.port2.trigger(event) }
             return true
         }

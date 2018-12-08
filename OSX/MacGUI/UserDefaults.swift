@@ -1,5 +1,5 @@
 //
-// This file is part of VirtualC64 - A user-friendly Commodore 64 emulator
+// This file is part of VirtualC64 - A cycle accurate Commodore 64 emulator
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
 // Licensed under the GNU General Public License v3
@@ -106,8 +106,8 @@ extension MyController {
         
         c64.suspend()
         
-        gamepadSlot1 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice1)
-        gamepadSlot2 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice2)
+        inputDevice1 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice1)
+        inputDevice2 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice2)
         keyboardcontroller.mapKeysByPosition = defaults.bool(forKey: VC64Keys.mapKeysByPosition)
         
         c64.resume()
@@ -226,6 +226,7 @@ extension MyController {
         let defaults = UserDefaults.standard
         
         c64.suspend()
+        c64.mouse.setModel(defaults.integer(forKey: VC64Keys.mouseModel))
         keyboardcontroller.disconnectEmulationKeys = defaults.bool(forKey: VC64Keys.disconnectKeys)
         c64.port1.setAutofire(defaults.bool(forKey: VC64Keys.autofire))
         c64.port2.setAutofire(defaults.bool(forKey: VC64Keys.autofire))
@@ -233,8 +234,6 @@ extension MyController {
         c64.port2.setAutofireBullets(defaults.integer(forKey: VC64Keys.autofireBullets))
         c64.port1.setAutofireFrequency(defaults.float(forKey: VC64Keys.autofireFrequency))
         c64.port2.setAutofireFrequency(defaults.float(forKey: VC64Keys.autofireFrequency))
-        
-        c64.mouse.setModel(defaults.integer(forKey: VC64Keys.mouseModel))
         
         if let data = defaults.data(forKey: VC64Keys.joyKeyMap1) {
             if let keyMap = try? JSONDecoder().decode([MacKey:UInt32].self, from: data) {
@@ -253,13 +252,11 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         
+        defaults.set(c64.mouse.model(), forKey: VC64Keys.mouseModel)
         defaults.set(keyboardcontroller.disconnectEmulationKeys, forKey: VC64Keys.disconnectKeys)
         defaults.set(c64.port1.autofire(), forKey: VC64Keys.autofire)
         defaults.set(c64.port1.autofireBullets(), forKey: VC64Keys.autofireBullets)
         defaults.set(c64.port1.autofireFrequency(), forKey: VC64Keys.autofireFrequency)
-        
-        defaults.set(c64.mouse.model(), forKey: VC64Keys.mouseModel)
-        
         if let keyMap = try? JSONEncoder().encode(gamePadManager.gamePads[0]?.keyMap) {
             defaults.set(keyMap, forKey: VC64Keys.joyKeyMap1)
         }
