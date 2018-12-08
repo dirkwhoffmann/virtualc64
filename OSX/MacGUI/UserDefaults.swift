@@ -9,6 +9,42 @@
 
 import Foundation
 
+
+//
+// User defaults (all)
+//
+
+extension MyController {
+    
+    static func registerUserDefaults() {
+        
+        track()
+        registerGeneralUserDefaults()
+        registerKeyMapUserDefaults()
+        registerDevicesUserDefaults()
+        registerVideoUserDefaults()
+        registerEmulatorUserDefaults()
+        registerHardwareUserDefaults()
+    }
+    
+    func loadUserDefaults() {
+        
+        track()
+        c64.suspend()
+        loadGeneralUserDefaults()
+        loadKeyMapUserDefaults()
+        loadDevicesUserDefaults()
+        loadVideoUserDefaults()
+        loadEmulatorUserDefaults()
+        loadHardwareUserDefaults()
+        c64.resume()
+    }
+}
+
+//
+// User defaults (general)
+//
+
 struct VC64Keys {
     
     // Roms
@@ -16,7 +52,7 @@ struct VC64Keys {
     static let charRom              = "VC64CharRomFileKey"
     static let kernalRom            = "VC64KernelRomFileKey"
     static let vc1541Rom            = "VC64VC1541RomFileKey"
-
+    
     // Control ports
     static let inputDevice1         = "VC64InputDevice1"
     static let inputDevice2         = "VC64InputDevice2"
@@ -40,44 +76,6 @@ struct Defaults {
     // Keyboard mapping mode
     static let mapKeysByPosition = false
 }
-
-//
-// User defaults (all)
-//
-
-extension MyController {
-    
-    static func registerUserDefaults() {
-        
-        track()
-  
-        registerGeneralUserDefaults()
-        registerKeyMapUserDefaults()
-        registerDevicesUserDefaults()
-        registerVideoUserDefaults()
-        registerEmulatorUserDefaults()
-        registerHardwareUserDefaults()
-    }
-    
-    func loadUserDefaults() {
-        
-        track()
-        
-        c64.suspend()
-        loadGeneralUserDefaults()
-        loadKeyMapUserDefaults()
-        loadDevicesUserDefaults()
-        loadVideoUserDefaults()
-        loadEmulatorUserDefaults()
-        loadHardwareUserDefaults()
-        c64.resume()
-    }
-}
-
-
-//
-// User defaults (general)
-//
 
 extension MyController {
 
@@ -162,35 +160,68 @@ extension MyController {
 extension VC64Keys {
     
     // Joysticks
-    static let joyKeyMap1           = "VC64JoyKeyMap1"
-    static let joyKeyMap2           = "VC64JoyKeyMap2"
-    static let disconnectKeys       = "VC64DisconnectKeys"
+    static let joyKeyMap1        = "VC64JoyKeyMap1"
+    static let joyKeyMap2        = "VC64JoyKeyMap2"
+    static let disconnectKeys    = "VC64DisconnectKeys"
     
-    static let autofire             = "VC64Autofire"
-    static let autofireBullets      = "VC64AutofireBullets"
-    static let autofireFrequency    = "VC64AutofireFrequency"
+    static let autofire          = "VC64Autofire"
+    static let autofireBullets   = "VC64AutofireBullets"
+    static let autofireFrequency = "VC64AutofireFrequency"
     
     // Mouse
-    static let mouseModel           = "VC64MouseModelKey"
+    static let mouseModel        = "VC64MouseModelKey"
 }
 
+extension Defaults {
+    
+    // Mouse
+    static let mouseModel        = MOUSE1350
+    
+    // Joysticks
+    static let disconnectKeys    = true
+    static let autofire          = false
+    static let autofireBullets   = -3
+    static let autofireFrequency = Float(2.5)
+    
+    static let joyKeyMap1 = [
+        MacKey.curLeft:  JOYSTICK_LEFT.rawValue,
+        MacKey.curRight: JOYSTICK_RIGHT.rawValue,
+        MacKey.curUp:    JOYSTICK_UP.rawValue,
+        MacKey.curDown:  JOYSTICK_DOWN.rawValue,
+        MacKey.space:    JOYSTICK_FIRE.rawValue
+    ]
+    static let joyKeyMap2 = [
+        MacKey.ansi.s:   JOYSTICK_LEFT.rawValue,
+        MacKey.ansi.d:   JOYSTICK_RIGHT.rawValue,
+        MacKey.ansi.e:   JOYSTICK_UP.rawValue,
+        MacKey.ansi.x:   JOYSTICK_DOWN.rawValue,
+        MacKey.ansi.c:   JOYSTICK_FIRE.rawValue
+    ]
+}
+    
 extension MyController {
     
     static func registerDevicesUserDefaults() {
         
         track()
+        
         let dictionary : [String:Any] = [
-            
-            VC64Keys.disconnectKeys: true,
-            VC64Keys.autofire: false,
-            VC64Keys.autofireBullets: -3,
-            VC64Keys.autofireFrequency: 2.5,
-            
-            VC64Keys.mouseModel: 0
+            VC64Keys.mouseModel: Int(Defaults.mouseModel.rawValue),
+            VC64Keys.disconnectKeys: Defaults.disconnectKeys,
+            VC64Keys.autofire: Defaults.autofire,
+            VC64Keys.autofireBullets: Defaults.autofireBullets,
+            VC64Keys.autofireFrequency: Defaults.autofireFrequency
         ]
         
         let defaults = UserDefaults.standard
         defaults.register(defaults: dictionary)
+        
+        if let data = try? JSONEncoder().encode(Defaults.joyKeyMap1) {
+            UserDefaults.standard.register(defaults: [VC64Keys.joyKeyMap1: data])
+        }
+        if let data = try? JSONEncoder().encode(Defaults.joyKeyMap2) {
+            UserDefaults.standard.register(defaults: [VC64Keys.joyKeyMap2: data])
+        }
     }
 
     func loadDevicesUserDefaults() {

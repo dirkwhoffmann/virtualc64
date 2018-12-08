@@ -309,20 +309,7 @@ class GamePadManager: NSObject {
     {
         track()
     
-        gamePads[0]!.keyMap = [
-            MacKey.curLeft: JOYSTICK_LEFT.rawValue,
-            MacKey.curRight: JOYSTICK_RIGHT.rawValue,
-            MacKey.curUp: JOYSTICK_UP.rawValue,
-            MacKey.curDown: JOYSTICK_DOWN.rawValue,
-            MacKey.space: JOYSTICK_FIRE.rawValue,
-        ]
-        
-        gamePads[1]!.keyMap = [
-            MacKey.ansi.s: JOYSTICK_LEFT.rawValue,
-            MacKey.ansi.d: JOYSTICK_RIGHT.rawValue,
-            MacKey.ansi.e: JOYSTICK_UP.rawValue,
-            MacKey.ansi.x: JOYSTICK_DOWN.rawValue,
-            MacKey.ansi.c: JOYSTICK_FIRE.rawValue,
-        ]
+        gamePads[0]!.keyMap = Defaults.joyKeyMap1
+        gamePads[1]!.keyMap = Defaults.joyKeyMap2
     }
 }
