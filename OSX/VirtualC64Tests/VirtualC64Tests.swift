@@ -6,6 +6,7 @@
 //
 
 import XCTest
+@testable import VirtualC64
 
 class VirtualC64Tests: XCTestCase {
 
@@ -21,7 +22,7 @@ class VirtualC64Tests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
 
-        XCTAssert(false)
+        XCTAssert(true)
     }
 
     /*

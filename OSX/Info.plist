@@ -177,10 +177,6 @@
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleHelpBookFolder</key>
-	<string>Documentation</string>
-	<key>CFBundleHelpBookName</key>
-	<string>VirtualC64 Help</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
