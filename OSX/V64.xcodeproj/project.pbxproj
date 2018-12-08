@@ -79,6 +79,7 @@
 		503E199020C42C6D007E91F1 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 503E198F20C42C6D007E91F1 /* Media.xcassets */; };
 		50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50412B0C2028F31800CC90A1 /* DiskMountController.swift */; };
 		50414727122188FC00A80E0C /* CRTFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50414725122188FC00A80E0C /* CRTFile.cpp */; };
+		5043436621BBB6F0009749CA /* VirtualC64UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043436521BBB6F0009749CA /* VirtualC64UITests.swift */; };
 		504606341BE4B99100463FD7 /* G64File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504606321BE4B99100463FD7 /* G64File.cpp */; };
 		5046C413202344F3000D9B1C /* ArchiveMountDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */; };
 		5046C415202349EE000D9B1C /* ArchiveMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5046C414202349EE000D9B1C /* ArchiveMountController.swift */; };
@@ -183,6 +184,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5043436821BBB6F0009749CA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D15AC270486D014006FF6A4;
+			remoteInfo = VirtualC64;
+		};
 		50790A2421BAF20300979B7A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
@@ -340,6 +348,9 @@
 		50412B0C2028F31800CC90A1 /* DiskMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskMountController.swift; sourceTree = "<group>"; };
 		50414725122188FC00A80E0C /* CRTFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRTFile.cpp; sourceTree = "<group>"; };
 		50414726122188FC00A80E0C /* CRTFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRTFile.h; sourceTree = "<group>"; };
+		5043436321BBB6F0009749CA /* VirtualC64UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VirtualC64UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5043436521BBB6F0009749CA /* VirtualC64UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualC64UITests.swift; sourceTree = "<group>"; };
+		5043436721BBB6F0009749CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5045C4FE2105D07200A9A62D /* Drive_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Drive_types.h; sourceTree = "<group>"; };
 		504606321BE4B99100463FD7 /* G64File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = G64File.cpp; sourceTree = "<group>"; };
 		504606331BE4B99100463FD7 /* G64File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = G64File.h; sourceTree = "<group>"; };
@@ -478,6 +489,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5043436021BBB6F0009749CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50790A1C21BAF20300979B7A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -527,6 +545,7 @@
 			children = (
 				8D15AC370486D014006FF6A4 /* VirtualC64.app */,
 				50790A1F21BAF20300979B7A /* VirtualC64Tests.xctest */,
+				5043436321BBB6F0009749CA /* VirtualC64UITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -539,6 +558,7 @@
 				503E198F20C42C6D007E91F1 /* Media.xcassets */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
 				50790A2021BAF20300979B7A /* VirtualC64Tests */,
+				5043436421BBB6F0009749CA /* VirtualC64UITests */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
 			);
@@ -760,6 +780,15 @@
 				5038CA9620B6C2BE000D9193 /* SIDPanel.swift */,
 			);
 			name = Debugger;
+			sourceTree = "<group>";
+		};
+		5043436421BBB6F0009749CA /* VirtualC64UITests */ = {
+			isa = PBXGroup;
+			children = (
+				5043436521BBB6F0009749CA /* VirtualC64UITests.swift */,
+				5043436721BBB6F0009749CA /* Info.plist */,
+			);
+			path = VirtualC64UITests;
 			sourceTree = "<group>";
 		};
 		504B39910C45192700286F18 /* Peripherals */ = {
@@ -1080,6 +1109,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		5043436221BBB6F0009749CA /* VirtualC64UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5043436D21BBB6F0009749CA /* Build configuration list for PBXNativeTarget "VirtualC64UITests" */;
+			buildPhases = (
+				5043435F21BBB6F0009749CA /* Sources */,
+				5043436021BBB6F0009749CA /* Frameworks */,
+				5043436121BBB6F0009749CA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5043436921BBB6F0009749CA /* PBXTargetDependency */,
+			);
+			name = VirtualC64UITests;
+			productName = VirtualC64UITests;
+			productReference = 5043436321BBB6F0009749CA /* VirtualC64UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		50790A1E21BAF20300979B7A /* VirtualC64Tests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50790A2921BAF20300979B7A /* Build configuration list for PBXNativeTarget "VirtualC64Tests" */;
@@ -1126,6 +1173,11 @@
 				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1000;
 				TargetAttributes = {
+					5043436221BBB6F0009749CA = {
+						CreatedOnToolsVersion = 10.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 8D15AC270486D014006FF6A4;
+					};
 					50790A1E21BAF20300979B7A = {
 						CreatedOnToolsVersion = 10.1;
 						ProvisioningStyle = Automatic;
@@ -1149,11 +1201,19 @@
 			targets = (
 				8D15AC270486D014006FF6A4 /* VirtualC64 */,
 				50790A1E21BAF20300979B7A /* VirtualC64Tests */,
+				5043436221BBB6F0009749CA /* VirtualC64UITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5043436121BBB6F0009749CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50790A1D21BAF20300979B7A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1209,6 +1269,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5043435F21BBB6F0009749CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5043436621BBB6F0009749CA /* VirtualC64UITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50790A1B21BAF20300979B7A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1352,6 +1420,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5043436921BBB6F0009749CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D15AC270486D014006FF6A4 /* VirtualC64 */;
+			targetProxy = 5043436821BBB6F0009749CA /* PBXContainerItemProxy */;
+		};
 		50790A2521BAF20300979B7A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8D15AC270486D014006FF6A4 /* VirtualC64 */;
@@ -1395,7 +1468,139 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		504F836A0A89E0D2009FA225 /* Development */ = {
+		5043436A21BBB6F0009749CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = VirtualC64UITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = dirkwhoffmann.VirtualC64UITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TEST_TARGET_NAME = VirtualC64;
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		5043436B21BBB6F0009749CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = VirtualC64UITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = dirkwhoffmann.VirtualC64UITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
+				TEST_TARGET_NAME = VirtualC64;
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+		504F836A0A89E0D2009FA225 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1444,9 +1649,9 @@
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
-			name = Development;
+			name = Debug;
 		};
-		504F836B0A89E0D2009FA225 /* Deployment */ = {
+		504F836B0A89E0D2009FA225 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1493,57 +1698,9 @@
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		504F836C0A89E0D2009FA225 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_CXX0X_EXTENSIONS = NO;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Crashlytics/",
-				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SYSTEM_DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = V64_Prefix.pch;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_PEDANTIC = NO;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[arch=*]" = "@loader_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = de.dirkwhoffmann.VirtualC64;
-				PRODUCT_NAME = VirtualC64;
-				SDKROOT = macosx;
-				SWIFT_OBJC_BRIDGING_HEADER = "MacGUI/VirtualC64-Bridging-Header.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
-				WRAPPER_EXTENSION = app;
-			};
-			name = Default;
-		};
-		504F836E0A89E0D2009FA225 /* Development */ = {
+		504F836E0A89E0D2009FA225 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -1580,9 +1737,9 @@
 				SDKROOT = macosx;
 				VERSIONING_SYSTEM = "";
 			};
-			name = Development;
+			name = Debug;
 		};
-		504F836F0A89E0D2009FA225 /* Deployment */ = {
+		504F836F0A89E0D2009FA225 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -1622,44 +1779,9 @@
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
-			name = Deployment;
+			name = Release;
 		};
-		504F83700A89E0D2009FA225 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				DEPLOYMENT_LOCATION = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_VERSION = "";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				SDKROOT = macosx;
-			};
-			name = Default;
-		};
-		50790A2621BAF20300979B7A /* Development */ = {
+		50790A2621BAF20300979B7A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1727,9 +1849,9 @@
 				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VirtualC64.app/Contents/MacOS/VirtualC64";
 			};
-			name = Development;
+			name = Debug;
 		};
-		50790A2721BAF20300979B7A /* Deployment */ = {
+		50790A2721BAF20300979B7A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1789,102 +1911,46 @@
 				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VirtualC64.app/Contents/MacOS/VirtualC64";
 			};
-			name = Deployment;
-		};
-		50790A2821BAF20300979B7A /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = VirtualC64Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = dirkwhoffmann.VirtualC64Tests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.2;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VirtualC64.app/Contents/MacOS/VirtualC64";
-			};
-			name = Default;
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5043436D21BBB6F0009749CA /* Build configuration list for PBXNativeTarget "VirtualC64UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5043436A21BBB6F0009749CA /* Debug */,
+				5043436B21BBB6F0009749CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		504F83690A89E0D2009FA225 /* Build configuration list for PBXNativeTarget "VirtualC64" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				504F836A0A89E0D2009FA225 /* Development */,
-				504F836B0A89E0D2009FA225 /* Deployment */,
-				504F836C0A89E0D2009FA225 /* Default */,
+				504F836A0A89E0D2009FA225 /* Debug */,
+				504F836B0A89E0D2009FA225 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Release;
 		};
 		504F836D0A89E0D2009FA225 /* Build configuration list for PBXProject "V64" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				504F836E0A89E0D2009FA225 /* Development */,
-				504F836F0A89E0D2009FA225 /* Deployment */,
-				504F83700A89E0D2009FA225 /* Default */,
+				504F836E0A89E0D2009FA225 /* Debug */,
+				504F836F0A89E0D2009FA225 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Release;
 		};
 		50790A2921BAF20300979B7A /* Build configuration list for PBXNativeTarget "VirtualC64Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				50790A2621BAF20300979B7A /* Development */,
-				50790A2721BAF20300979B7A /* Deployment */,
-				50790A2821BAF20300979B7A /* Default */,
+				50790A2621BAF20300979B7A /* Debug */,
+				50790A2721BAF20300979B7A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

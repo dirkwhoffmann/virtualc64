@@ -22,7 +22,7 @@
          </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "YES"
+            buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
             buildForAnalyzing = "NO">
@@ -31,6 +31,20 @@
                BlueprintIdentifier = "50790A1E21BAF20300979B7A"
                BuildableName = "VirtualC64Tests.xctest"
                BlueprintName = "VirtualC64Tests"
+               ReferencedContainer = "container:V64.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5043436221BBB6F0009749CA"
+               BuildableName = "VirtualC64UITests.xctest"
+               BlueprintName = "VirtualC64UITests"
                ReferencedContainer = "container:V64.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -49,6 +63,16 @@
                BlueprintIdentifier = "50790A1E21BAF20300979B7A"
                BuildableName = "VirtualC64Tests.xctest"
                BlueprintName = "VirtualC64Tests"
+               ReferencedContainer = "container:V64.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5043436221BBB6F0009749CA"
+               BuildableName = "VirtualC64UITests.xctest"
+               BlueprintName = "VirtualC64UITests"
                ReferencedContainer = "container:V64.xcodeproj">
             </BuildableReference>
          </TestableReference>
