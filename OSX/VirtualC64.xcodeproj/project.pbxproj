@@ -59,7 +59,7 @@
 		501E427D20D975AD000BB48D /* IconCRT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427820D975AC000BB48D /* IconCRT.icns */; };
 		501E427E20D975AD000BB48D /* IconT64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427920D975AD000BB48D /* IconT64.icns */; };
 		501E427F20D975AD000BB48D /* IconPRG.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427A20D975AD000BB48D /* IconPRG.icns */; };
-		501E428020D975AD000BB48D /* IconV64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427B20D975AD000BB48D /* IconV64.icns */; };
+		501E428020D975AD000BB48D /* IconVirtualC64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427B20D975AD000BB48D /* IconVirtualC64.icns */; };
 		5020434C1EE71B47006C3FD3 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5020F28B0BBABE3C0093C396 /* IEC.cpp */; };
 		5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */; };
@@ -321,7 +321,7 @@
 		501E427820D975AC000BB48D /* IconCRT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconCRT.icns; sourceTree = "<group>"; };
 		501E427920D975AD000BB48D /* IconT64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconT64.icns; sourceTree = "<group>"; };
 		501E427A20D975AD000BB48D /* IconPRG.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconPRG.icns; sourceTree = "<group>"; };
-		501E427B20D975AD000BB48D /* IconV64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconV64.icns; sourceTree = "<group>"; };
+		501E427B20D975AD000BB48D /* IconVirtualC64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconVirtualC64.icns; sourceTree = "<group>"; };
 		5020F28A0BBABE3C0093C396 /* IEC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEC.h; sourceTree = "<group>"; };
 		5020F28B0BBABE3C0093C396 /* IEC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEC.cpp; sourceTree = "<group>"; };
 		502107DA2133CF9F003D133D /* Configure.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Configure.h; sourceTree = "<group>"; };
@@ -590,7 +590,7 @@
 				501E427720D975AC000BB48D /* IconD64.icns */,
 				501E427A20D975AD000BB48D /* IconPRG.icns */,
 				501E427920D975AD000BB48D /* IconT64.icns */,
-				501E427B20D975AD000BB48D /* IconV64.icns */,
+				501E427B20D975AD000BB48D /* IconVirtualC64.icns */,
 				5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */,
 				5051A1501B8842F100CBFB5A /* Sounds */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
@@ -1187,7 +1187,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 504F836D0A89E0D2009FA225 /* Build configuration list for PBXProject "V64" */;
+			buildConfigurationList = 504F836D0A89E0D2009FA225 /* Build configuration list for PBXProject "VirtualC64" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -1237,7 +1237,7 @@
 				5052AD0C202A57C4005FDD88 /* TapeMountDialog.xib in Resources */,
 				50D2A69E210F20CB00F13D43 /* VirtualKeyboard.xib in Resources */,
 				50F97E03203D8D570005E19C /* EmulatorPrefs.xib in Resources */,
-				501E428020D975AD000BB48D /* IconV64.icns in Resources */,
+				501E428020D975AD000BB48D /* IconVirtualC64.icns in Resources */,
 				50031B34206FABA400A1969B /* SnapshotDialog.xib in Resources */,
 				50D197E021606DEC008BC551 /* dsa_pub.pem in Resources */,
 				509A26072027AA1100D28827 /* DiskMountDialog.xib in Resources */,
@@ -1746,7 +1746,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		504F836D0A89E0D2009FA225 /* Build configuration list for PBXProject "V64" */ = {
+		504F836D0A89E0D2009FA225 /* Build configuration list for PBXProject "VirtualC64" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				504F836E0A89E0D2009FA225 /* Debug */,

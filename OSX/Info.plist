@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSAppleScriptEnabled</key>
-	<true/>
-	<key>OSAScriptingDefinition</key>
-	<string>VirtualC64.sdef</string>
 	<key>ATSApplicationFontsPath</key>
 	<string>.</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -177,6 +173,8 @@
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIconFile</key>
+	<string>IconVirtualC64</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -196,10 +194,14 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSAppleScriptEnabled</key>
+	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>OSAScriptingDefinition</key>
+	<string>VirtualC64.sdef</string>
 	<key>SUAllowsAutomaticUpdates</key>
 	<string>NO</string>
 	<key>SUEnableAutomaticChecks</key>
@@ -208,10 +210,10 @@
 	<string>NO</string>
 	<key>SUFeedURL</key>
 	<string>http://dirkwhoffmann.de/virtualc64/VirtualC64Appcast.xml</string>
-	<key>SUPublicEDKey</key>
-	<string>RI5wz5tuFpBVuU/2PDNsNEBETCVMfj5+voxlIDzCamQ=</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
+	<key>SUPublicEDKey</key>
+	<string>RI5wz5tuFpBVuU/2PDNsNEBETCVMfj5+voxlIDzCamQ=</string>
 	<key>SUShowReleaseNotes</key>
 	<string>YES</string>
 </dict>

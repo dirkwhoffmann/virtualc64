@@ -17,7 +17,7 @@
                BlueprintIdentifier = "8D15AC270486D014006FF6A4"
                BuildableName = "VirtualC64.app"
                BlueprintName = "VirtualC64"
-               ReferencedContainer = "container:V64.xcodeproj">
+               ReferencedContainer = "container:VirtualC64.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -31,7 +31,7 @@
                BlueprintIdentifier = "50790A1E21BAF20300979B7A"
                BuildableName = "VirtualC64Tests.xctest"
                BlueprintName = "VirtualC64Tests"
-               ReferencedContainer = "container:V64.xcodeproj">
+               ReferencedContainer = "container:VirtualC64.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -45,7 +45,7 @@
                BlueprintIdentifier = "5043436221BBB6F0009749CA"
                BuildableName = "VirtualC64UITests.xctest"
                BlueprintName = "VirtualC64UITests"
-               ReferencedContainer = "container:V64.xcodeproj">
+               ReferencedContainer = "container:VirtualC64.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -63,7 +63,7 @@
                BlueprintIdentifier = "50790A1E21BAF20300979B7A"
                BuildableName = "VirtualC64Tests.xctest"
                BlueprintName = "VirtualC64Tests"
-               ReferencedContainer = "container:V64.xcodeproj">
+               ReferencedContainer = "container:VirtualC64.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -73,7 +73,7 @@
                BlueprintIdentifier = "5043436221BBB6F0009749CA"
                BuildableName = "VirtualC64UITests.xctest"
                BlueprintName = "VirtualC64UITests"
-               ReferencedContainer = "container:V64.xcodeproj">
+               ReferencedContainer = "container:VirtualC64.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -83,7 +83,7 @@
             BlueprintIdentifier = "8D15AC270486D014006FF6A4"
             BuildableName = "VirtualC64.app"
             BlueprintName = "VirtualC64"
-            ReferencedContainer = "container:V64.xcodeproj">
+            ReferencedContainer = "container:VirtualC64.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -106,7 +106,7 @@
             BlueprintIdentifier = "8D15AC270486D014006FF6A4"
             BuildableName = "VirtualC64.app"
             BlueprintName = "VirtualC64"
-            ReferencedContainer = "container:V64.xcodeproj">
+            ReferencedContainer = "container:VirtualC64.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -125,7 +125,7 @@
             BlueprintIdentifier = "8D15AC270486D014006FF6A4"
             BuildableName = "VirtualC64.app"
             BlueprintName = "VirtualC64"
-            ReferencedContainer = "container:V64.xcodeproj">
+            ReferencedContainer = "container:VirtualC64.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
