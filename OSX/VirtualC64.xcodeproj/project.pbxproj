@@ -69,6 +69,8 @@
 		5031D59A200B47B70088C802 /* ImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D599200B47B70088C802 /* ImageUtilities.swift */; };
 		5031D59C200B81D20088C802 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D59B200B81D20088C802 /* Animation.swift */; };
 		50340D4020F63AFE009A53A5 /* VIC_cycles_pal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50340D3F20F63AFE009A53A5 /* VIC_cycles_pal.cpp */; };
+		5035A62F21BD631C00C4EAFA /* MyDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCF20224BF4009742CF /* MyDocument.swift */; };
+		5035A63021BD634700C4EAFA /* MyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92C201F299500065A89 /* MyController.swift */; };
 		5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA8E20B6C263000D9193 /* CPUPanel.swift */; };
 		5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9020B6C281000D9193 /* MemoryPanel.swift */; };
 		5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9220B6C298000D9193 /* CIAPanel.swift */; };
@@ -1272,6 +1274,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5035A63021BD634700C4EAFA /* MyController.swift in Sources */,
+				5035A62F21BD631C00C4EAFA /* MyDocument.swift in Sources */,
 				5043436621BBB6F0009749CA /* VirtualC64UITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

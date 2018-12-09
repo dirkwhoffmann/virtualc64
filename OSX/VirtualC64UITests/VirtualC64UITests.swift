@@ -31,8 +31,24 @@ class VirtualC64UITests: XCTestCase {
     }
 
     func testExample() {
+        
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        /*
+        let screen = XCUIScreen.main
+        let fullscreenshot = screen.screenshot()
+        let fullScreenshotAttachment = XCTAttachment(screenshot: fullscreenshot)
+        fullScreenshotAttachment.lifetime = .keepAlways
+        add(fullScreenshotAttachment)
+        
+        let app = XCUIApplication()
+        let screenshot = app.windows.firstMatch.screenshot()
+        let screenshotAttachment = XCTAttachment(screenshot: screenshot)
+        screenshotAttachment.lifetime = .keepAlways
+        add(screenshotAttachment)
+        */
+        
     }
 
 }
