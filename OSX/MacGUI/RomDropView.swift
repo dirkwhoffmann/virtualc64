@@ -56,16 +56,9 @@ class RomDropView : NSImageView
         guard let url = sender.url else {
             return false
         }
-        if !dialogController.parent.mydocument.loadRom(url) {
+        if !dialogController.parent.loadRom(url) {
             return false
         }
-        
-        // Check if all ROMs are loaded
-        /*
-        if dialogController.c64.isRunnable() {
-            dialogController.hideSheet()
-        }
-        */
         return true
     }
     

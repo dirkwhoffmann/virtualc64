@@ -113,10 +113,10 @@ extension VC64Keys {
 
 extension Defaults {
     
-    static let basicRom = ""
-    static let charRom = ""
-    static let kernalRom = ""
-    static let vc1541Rom = ""
+    static let basicRom = URL(fileURLWithPath: "/")
+    static let charRom = URL(fileURLWithPath: "/")
+    static let kernalRom = URL(fileURLWithPath: "/")
+    static let vc1541Rom = URL(fileURLWithPath: "/")
 }
 
 extension MyController {
@@ -138,31 +138,30 @@ extension MyController {
     func loadRomUserDefaults() {
         
         let defaults = UserDefaults.standard
-        let doc = document as! MyDocument
-        
-        doc.loadRom(defaults.url(forKey: VC64Keys.basicRom))
-        doc.loadRom(defaults.url(forKey: VC64Keys.charRom))
-        doc.loadRom(defaults.url(forKey: VC64Keys.kernalRom))
-        doc.loadRom(defaults.url(forKey: VC64Keys.vc1541Rom))
-        
-        /*
-        let defaults = UserDefaults.standard
-        
+
         c64.suspend()
+        
         loadRom(defaults.url(forKey: VC64Keys.basicRom))
         loadRom(defaults.url(forKey: VC64Keys.charRom))
         loadRom(defaults.url(forKey: VC64Keys.kernalRom))
         loadRom(defaults.url(forKey: VC64Keys.vc1541Rom))
+        
         c64.resume()
-         */
     }
     
     func saveRomUserDefaults() {
         
-        /*
         let defaults = UserDefaults.standard
-        */
-   
+        
+        track("\(basicRomURL)")
+        track("\(charRomURL)")
+        track("\(kernalRomURL)")
+        track("\(vc1541RomURL)")
+        
+        defaults.set(basicRomURL, forKey: VC64Keys.basicRom)
+        defaults.set(charRomURL, forKey: VC64Keys.charRom)
+        defaults.set(kernalRomURL, forKey: VC64Keys.kernalRom)
+        defaults.set(vc1541RomURL, forKey: VC64Keys.vc1541Rom)
     }
 }
 

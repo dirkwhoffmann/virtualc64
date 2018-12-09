@@ -77,6 +77,8 @@ class RomPrefsController : UserDialogController {
     let romImageLight = NSImage.init(named: "rom_light")
     let romImageMedium = NSImage.init(named: "rom_medium")
 
+    var opendOnAppLaunch = false
+    
     @IBOutlet weak var headerImage: NSImageView!
     @IBOutlet weak var headerText: NSTextField!
     @IBOutlet weak var headerSubText: NSTextField!
@@ -110,11 +112,20 @@ class RomPrefsController : UserDialogController {
     @IBOutlet weak var vc1541RomButton: NSButton!
 
     @IBOutlet weak var okButton: NSButton!
-    
+    @IBOutlet weak var cancelButton: NSButton!
+
     override func awakeFromNib()
     {
-        // The user might delete Roms, so we better pause emulation while the
-        // dialog is open.
+        // Determine if the dialog was opened on start up. This happens when
+        // the emulator can't run because of missing Roms.
+        opendOnAppLaunch = !c64.isRunnable()
+
+        // If the dialog was opend on start up, we only want to show a Quit
+        // button to the user.
+        cancelButton.isHidden = opendOnAppLaunch
+        
+        // The user might delete Roms. Hence, we better pause emulation while
+        // the dialog is open.
         c64.halt()
         
         refresh()
@@ -127,11 +138,10 @@ class RomPrefsController : UserDialogController {
         let hasCharacterRom = c64.isCharRomLoaded()
         let hasVc1541Rom = c64.isVC1541RomLoaded()
 
-        let defaults = UserDefaults.standard
-        let basicURL = defaults.url(forKey: VC64Keys.basicRom)
-        let characterURL = defaults.url(forKey: VC64Keys.charRom)
-        let kernalURL = defaults.url(forKey: VC64Keys.kernalRom)
-        let vc1541URL = defaults.url(forKey: VC64Keys.vc1541Rom)
+        let basicURL = parent.basicRomURL
+        let characterURL = parent.charRomURL
+        let kernalURL = parent.kernalRomURL
+        let vc1541URL = parent.vc1541RomURL
         
         let basicHash = parent.c64.basicRomFingerprint()
         let kernalHash = parent.c64.kernalRomFingerprint()
@@ -158,7 +168,7 @@ class RomPrefsController : UserDialogController {
         basicRomHash.isHidden = !hasBasicRom
         basicRomHash.stringValue = String(format: "Hash: %llX", basicHash)
         basicRomPath.isHidden = !hasBasicRom
-        basicRomPath.stringValue = basicURL?.path ?? ""
+        basicRomPath.stringValue = basicURL.path
         basicRomButton.isHidden = !hasBasicRom
         if let description = knownBasicRoms[basicHash] {
             basicRomDescription.stringValue = description
@@ -173,7 +183,7 @@ class RomPrefsController : UserDialogController {
         kernalRomHash.isHidden = !hasKernalRom
         kernalRomHash.stringValue = String(format: "Hash: %llX", kernalHash)
         kernalRomPath.isHidden = !hasKernalRom
-        kernalRomPath.stringValue = kernalURL?.path ?? ""
+        kernalRomPath.stringValue = kernalURL.path
         kernelRomButton.isHidden = !hasKernalRom
         if let description = knownKernalRoms[kernalHash] {
             kernalRomDescription.stringValue = description
@@ -189,7 +199,7 @@ class RomPrefsController : UserDialogController {
         characterRomHash.stringValue = String(format: "Hash: %llX", characterHash)
         characterRomDescription.textColor = NSColor.textColor
         characterRomPath.isHidden = !hasCharacterRom
-        characterRomPath.stringValue = characterURL?.path ?? ""
+        characterRomPath.stringValue = characterURL.path
         characterRomButton.isHidden = !hasCharacterRom
         if let description = knownCharacterRoms[characterHash] {
             characterRomDescription.stringValue = description
@@ -205,7 +215,7 @@ class RomPrefsController : UserDialogController {
         vc1541RomHash.stringValue = String(format: "Hash: %llX", vc1541Hash)
         vc1541RomDescription.textColor = NSColor.textColor
         vc1541RomPath.isHidden = !hasVc1541Rom
-        vc1541RomPath.stringValue = vc1541URL?.path ?? ""
+        vc1541RomPath.stringValue = vc1541URL.path
         vc1541RomButton.isHidden = !hasVc1541Rom
         if let description = knownVc1541Roms[vc1541Hash] {
             vc1541RomDescription.stringValue = description
@@ -223,40 +233,32 @@ class RomPrefsController : UserDialogController {
     
     @IBAction func deleteBasicRom(_ sender: Any!)
     {
-        let defaults = UserDefaults.standard
-        
-        track()
-        defaults.set(URL.init(string: ""), forKey: VC64Keys.basicRom)
+        parent.basicRomURL = URL(fileURLWithPath: "/")
+        parent.c64.halt()
         parent.c64.mem.deleteBasicRom()
         refresh()
     }
     
     @IBAction func deleteCharacterRom(_ sender: Any!)
     {
-        let defaults = UserDefaults.standard
-
-        track()
-        defaults.set(URL.init(string: ""), forKey: VC64Keys.charRom)
+        parent.charRomURL = URL(fileURLWithPath: "/")
+        parent.c64.halt()
         parent.c64.mem.deleteCharacterRom()
         refresh()
     }
     
     @IBAction func deleteKernalRom(_ sender: Any!)
     {
-        let defaults = UserDefaults.standard
-        
-        track()
-        defaults.set(URL.init(string: ""), forKey: VC64Keys.kernalRom)
+        parent.kernalRomURL = URL(fileURLWithPath: "/")
+        parent.c64.halt()
         parent.c64.mem.deleteKernalRom()
         refresh()
     }
     
     @IBAction func deleteVC1541Rom(_ sender: Any!)
     {
-        let defaults = UserDefaults.standard
-        
-        track()
-        defaults.set(URL.init(string: ""), forKey: VC64Keys.vc1541Rom)
+        parent.vc1541RomURL = URL(fileURLWithPath: "/")
+        parent.c64.halt()
         parent.c64.drive1.deleteRom()
         parent.c64.drive2.deleteRom()
         refresh()
@@ -269,9 +271,17 @@ class RomPrefsController : UserDialogController {
         }
     }
     
+    @IBAction override func cancelAction(_ sender: Any!) {
+        
+        track()
+        
+        parent.loadRomUserDefaults()
+        hideSheet()
+    }
+    
     @IBAction func okAction(_ sender: Any!)
     {
-        track()
+        parent.saveRomUserDefaults()
         hideSheet()
         
         if (c64.isRunnable()) {

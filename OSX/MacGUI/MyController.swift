@@ -77,6 +77,12 @@ class MyController : NSWindowController, MessageReceiver {
     /// Default image for USB devices
     var genericDeviceImage: NSImage?
 
+    /// Rom file URLs
+    var basicRomURL: URL = Defaults.basicRom
+    var charRomURL: URL = Defaults.charRom
+    var kernalRomURL: URL = Defaults.kernalRom
+    var vc1541RomURL: URL = Defaults.vc1541Rom
+
     /// Indicates if the emulator should pause when it looses focus.
     var pauseInBackground =  Defaults.pauseInBackground
 
@@ -770,6 +776,40 @@ extension MyController {
             assert(false)
         }
     }
+
+    
+    //
+    // Loading Roms
+    //
+    
+    @discardableResult
+    func loadRom(_ url: URL?) -> Bool {
+        
+        if (url == nil) {
+            return false
+        }
+        
+        if c64.loadBasicRom(url!) {
+            basicRomURL = url!
+            return true
+        }
+        if c64.loadCharRom(url!) {
+            charRomURL = url!
+            return true
+        }
+        if c64.loadKernalRom(url!) {
+            kernalRomURL = url!
+            return true
+        }
+        if c64.loadVC1541Rom(url!) {
+            vc1541RomURL = url!
+            return true
+        }
+        
+        track("ROM file \(url!) not found")
+        return false
+    }
+    
 
     //
     // Keyboard events

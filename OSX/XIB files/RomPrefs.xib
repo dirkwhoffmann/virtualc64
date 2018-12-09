@@ -14,6 +14,7 @@
                 <outlet property="basicRomDragText" destination="J3c-Rt-LWZ" id="Iy0-2u-O4m"/>
                 <outlet property="basicRomHash" destination="SvH-ce-WrE" id="gUS-Zb-RLi"/>
                 <outlet property="basicRomPath" destination="eV4-Pb-dQR" id="lal-MR-oQT"/>
+                <outlet property="cancelButton" destination="tiB-zg-9ZA" id="b4R-CO-WoW"/>
                 <outlet property="characterRom" destination="iGa-Pr-gDP" id="RZL-R0-gNO"/>
                 <outlet property="characterRomButton" destination="8rW-Ql-SJR" id="r7w-fu-FxL"/>
                 <outlet property="characterRomDescription" destination="znA-Fh-0ke" id="xNR-wr-QSL"/>
@@ -305,17 +306,6 @@ DQ
                             <action selector="okAction:" target="-2" id="hpa-ob-AR7"/>
                         </connections>
                     </button>
-                    <button horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zyn-98-bfj">
-                        <rect key="frame" x="18" y="17" width="25" height="25"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nbU-q4-9dA">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="helpAction:" target="-2" id="Nur-2m-M9c"/>
-                        </connections>
-                    </button>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d9S-bG-Ahm">
                         <rect key="frame" x="20" y="553" width="48" height="48"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -396,14 +386,39 @@ DQ
                         </view>
                     </box>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sMG-1V-ztt">
-                        <rect key="frame" x="47" y="20" width="327" height="18"/>
+                        <rect key="frame" x="132" y="21" width="217" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Click help button to learn more about compatible ROMs." id="0Cl-vs-f4d">
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Learn more about compatible ROMs" id="0Cl-vs-f4d">
                             <font key="font" metaFont="cellTitle"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tiB-zg-9ZA">
+                        <rect key="frame" x="14" y="13" width="81" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="YCL-if-j8Z">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="cancelAction:" target="-2" id="Jxr-BS-3Ge"/>
+                        </connections>
+                    </button>
+                    <button horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zyn-98-bfj">
+                        <rect key="frame" x="350" y="16" width="25" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nbU-q4-9dA">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="helpAction:" target="-2" id="Nur-2m-M9c"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <point key="canvasLocation" x="956" y="455.5"/>
