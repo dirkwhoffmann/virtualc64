@@ -77,7 +77,7 @@ class MyDocument : NSDocument {
         
         track()
         
-        let nibName = NSNib.Name(rawValue: "MyDocument")
+        let nibName = NSNib.Name("MyDocument")
         let controller = MyController.init(windowNibName: nibName)
         controller.c64 = c64
         self.addWindowController(controller)
@@ -265,25 +265,25 @@ class MyDocument : NSDocument {
     //
     
     func runArchiveMountDialog(_ parent: MyController) {
-        let nibName = NSNib.Name(rawValue: "ArchiveMountDialog")
+        let nibName = NSNib.Name("ArchiveMountDialog")
         let controller = ArchiveMountController.init(windowNibName: nibName)
         controller.showSheet(withParent: parent)
     }
     
     func runDiskMountDialog(_ parent: MyController) {
-        let nibName = NSNib.Name(rawValue: "DiskMountDialog")
+        let nibName = NSNib.Name("DiskMountDialog")
         let controller = DiskMountController.init(windowNibName: nibName)
         controller.showSheet(withParent: parent)
     }
     
     func runTapeMountDialog(_ parent: MyController) {
-        let nibName = NSNib.Name(rawValue: "TapeMountDialog")
+        let nibName = NSNib.Name("TapeMountDialog")
         let controller = TapeMountController.init(windowNibName: nibName)
         controller.showSheet(withParent: parent)
     }
     
     func runCartridgeMountDialog(_ parent: MyController) {
-        let nibName = NSNib.Name(rawValue: "CartridgeMountDialog")
+        let nibName = NSNib.Name("CartridgeMountDialog")
         let controller = CartridgeMountController.init(windowNibName: nibName)
         controller.showSheet(withParent: parent)
     }

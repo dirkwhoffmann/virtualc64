@@ -12,7 +12,7 @@ import Foundation
 extension NSDraggingInfo
 {
     var url: URL? {
-        let pasteBoard = draggingPasteboard()
+        let pasteBoard = draggingPasteboard
         let types = [NSPasteboard.PasteboardType.compatibleFileURL]
         if let _ = pasteBoard.availableType(from: types) {
             return NSURL.init(from: pasteBoard) as URL?

@@ -52,7 +52,7 @@ class DiskMountController : UserDialogController {
         switch disk.type() {
             
         case G64_FILE:
-            icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconD64"))
+            icon.image = NSImage.init(named: "IconD64")
             header.stringValue = "G64 Format"
             break;
 

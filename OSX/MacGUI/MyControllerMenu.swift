@@ -9,9 +9,9 @@
 
 import Foundation
 
-extension MyController {
+extension MyController : NSMenuItemValidation {
     
-    override open func validateMenuItem(_ item: NSMenuItem) -> Bool {
+    open func validateMenuItem(_ item: NSMenuItem) -> Bool {
 
         // track("validateMenuItem")
         
@@ -27,7 +27,7 @@ extension MyController {
             if let url = mydocument.getRecentlyUsedURL(pos, from: list) {
                 item.title = url.lastPathComponent
                 item.isHidden = false
-                item.image = NSImage.init(named: NSImage.Name(rawValue: image))
+                item.image = NSImage.init(named: image)
             } else {
                 item.isHidden = true
                 item.image = nil
@@ -178,35 +178,35 @@ extension MyController {
     
     @IBAction func openDevicePrefsAction(_ sender: Any!) {
         
-        let nibName = NSNib.Name(rawValue: "DevicesPrefs")
+        let nibName = NSNib.Name("DevicesPrefs")
         let controller = DevicesPrefsController.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
     }
 
     @IBAction func openVideoPrefsAction(_ sender: Any!) {
         
-        let nibName = NSNib.Name(rawValue: "VideoPrefs")
+        let nibName = NSNib.Name("VideoPrefs")
         let controller = EmulatorPrefsController.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
     }
     
     @IBAction func openEmulatorPrefsAction(_ sender: Any!) {
         
-        let nibName = NSNib.Name(rawValue: "EmulatorPrefs")
+        let nibName = NSNib.Name("EmulatorPrefs")
         let controller = EmulatorPrefsController.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
     }
 
     @IBAction func openHardwarePrefsAction(_ sender: Any!) {
     
-        let nibName = NSNib.Name(rawValue: "HardwarePrefs")
+        let nibName = NSNib.Name("HardwarePrefs")
         let controller = HardwarePrefsController.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
     }
     
     @IBAction func openRomPrefsAction(_ sender: Any!) {
         
-        let nibName = NSNib.Name(rawValue: "RomPrefs")
+        let nibName = NSNib.Name("RomPrefs")
         let controller = RomPrefsController.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
     }
@@ -401,7 +401,7 @@ extension MyController {
     @IBAction func stickyKeyboardAction(_ sender: Any!) {
         
         // Open the virtual keyboard as a window
-        let nibName = NSNib.Name(rawValue: "VirtualKeyboard")
+        let nibName = NSNib.Name("VirtualKeyboard")
         virtualKeyboard = VirtualKeyboardController.init(windowNibName: nibName)
         virtualKeyboard?.showWindow(withParent: self)
     }
@@ -419,7 +419,7 @@ extension MyController {
     @IBAction func customizeKeyMap(_ sender: Any!) {
         
         track()
-        let nibName = NSNib.Name(rawValue: "KeyboardDialog")
+        let nibName = NSNib.Name("KeyboardDialog")
         let controller = KeyboardDialog.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
         
@@ -607,7 +607,7 @@ extension MyController {
         let nr = (sender as! NSMenuItem).tag
         precondition(nr == 1 || nr == 2)
         
-        let nibName = NSNib.Name(rawValue: "ExportDiskDialog")
+        let nibName = NSNib.Name("ExportDiskDialog")
         let exportPanel = ExportDiskController.init(windowNibName: nibName)
         exportPanel.showSheet(withParent: self, drive: nr)
     }

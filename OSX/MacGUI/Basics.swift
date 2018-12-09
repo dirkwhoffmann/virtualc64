@@ -144,7 +144,7 @@ extension NSImage {
         
         let width  = size.width
         let height = size.height
-        let glossy = NSImage(named: NSImage.Name(rawValue: "glossy"))
+        let glossy = NSImage(named: "glossy")
         let rect   = NSRect(x: 0, y: 0, width: width, height: height)
         
         lockFocus()

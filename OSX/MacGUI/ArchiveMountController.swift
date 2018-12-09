@@ -53,25 +53,25 @@ class ArchiveMountController : UserDialogController {
         switch archive.type() {
 
         case T64_FILE:
-            icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconT64"))
+            icon.image = NSImage.init(named: "IconT64")
             header.stringValue = "T64 File Archive"
             insertButton.title = "Insert as Disk"
             break
             
         case PRG_FILE:
-            icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconPRG"))
+            icon.image = NSImage.init(named: "IconPRG")
             header.stringValue = "PRG File Container"
             insertButton.title = "Insert as Disk"
             break
             
         case P00_FILE:
-            icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconP00"))
+            icon.image = NSImage.init(named: "IconP00")
             header.stringValue = "P00 File Container"
             insertButton.title = "Insert as Disk"
             break
             
         case D64_FILE:
-            icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconD64"))
+            icon.image = NSImage.init(named: "IconD64")
             header.stringValue = "D64 File Archive"
             subheader.stringValue = "This file contains a byte-accurate image of a C64 diskette."
             subsubheader.stringValue = "Flushing files into memory is not recommended for this file type."

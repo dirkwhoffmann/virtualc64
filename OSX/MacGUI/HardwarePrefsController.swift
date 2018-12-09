@@ -82,18 +82,18 @@ class HardwarePrefsController : UserDialogController {
              PAL_6569_R3.rawValue,
              PAL_8565.rawValue:
             
-            vicIcon.image = NSImage(named: NSImage.Name(rawValue: "pref_vicii_pal"))
+            vicIcon.image = NSImage(named: "pref_vicii_pal")
             vicDescription.stringValue = "PAL 0.985 MHz 65 cycles"
             
         case NTSC_6567_R56A.rawValue:
             
-            vicIcon.image = NSImage(named: NSImage.Name(rawValue: "pref_vicii_ntsc"))
+            vicIcon.image = NSImage(named: "pref_vicii_ntsc")
             vicDescription.stringValue = "NTSC 1.023 MHz 64 cycles"
             
         case NTSC_6567.rawValue,
              NTSC_8562.rawValue:
             
-            vicIcon.image = NSImage(named: NSImage.Name(rawValue: "pref_vicii_ntsc"))
+            vicIcon.image = NSImage(named: "pref_vicii_ntsc")
             vicDescription.stringValue = "NTSC 1.023 MHz 63 cycles"
             
         default:

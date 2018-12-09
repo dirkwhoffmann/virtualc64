@@ -73,9 +73,9 @@ let knownVc1541Roms : [UInt64: String] = [
 
 class RomPrefsController : UserDialogController {
     
-    let romImage = NSImage.init(named: NSImage.Name.init(rawValue: "rom"))
-    let romImageLight = NSImage.init(named: NSImage.Name.init(rawValue: "rom_light"))
-    let romImageMedium = NSImage.init(named: NSImage.Name.init(rawValue: "rom_medium"))
+    let romImage = NSImage.init(named: "rom")
+    let romImageLight = NSImage.init(named: "rom_light")
+    let romImageMedium = NSImage.init(named: "rom_medium")
 
     @IBOutlet weak var headerImage: NSImageView!
     @IBOutlet weak var headerText: NSTextField!
@@ -140,14 +140,14 @@ class RomPrefsController : UserDialogController {
 
         if c64.isRunnable() {
             
-            headerImage.image = NSImage.init(named: NSImage.Name(rawValue: "AppIcon"))
+            headerImage.image = NSImage.init(named: "AppIcon")
             headerText.stringValue = "All required ROMs are loaded."
             headerSubText.stringValue = "VirtualC64 is ready to run."
             okButton.title = "OK"
             
         } else {
             
-            headerImage.image = NSImage.init(named: NSImage.Name(rawValue: "alertIcon"))
+            headerImage.image = NSImage.init(named: "alertIcon")
             headerText.stringValue = "VirtualC64 cannot run because some ROMs are missing."
             headerSubText.stringValue = "Use drag and drop to add ROM images."
             okButton.title = "Quit"

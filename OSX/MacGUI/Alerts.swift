@@ -42,7 +42,7 @@ public extension MetalView {
         
         let alert = NSAlert()
         alert.alertStyle = .critical
-        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "metal"))
+        alert.icon = NSImage.init(named: "metal")
         alert.messageText = "No suitable GPU hardware found"
         alert.informativeText = "VirtualC64 can only run on machines supporting the Metal graphics technology (2012 models and above)."
         alert.addButton(withTitle: "Exit")
@@ -57,7 +57,7 @@ extension MyDocument {
        
         let alert = NSAlert()
         alert.alertStyle = .warning
-        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
+        alert.icon = NSImage.init(named: "diskette")
         alert.messageText = "Drive \(nr) contains an unexported disk."
         alert.informativeText = "Your changes will be lost if you proceed."
         alert.addButton(withTitle: "Proceed")
@@ -70,7 +70,7 @@ extension MyDocument {
         
         let alert = NSAlert()
         alert.alertStyle = .warning
-        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
+        alert.icon = NSImage.init(named: "diskette")
         alert.messageText = "Drive 1 and 2 contain unexported disks."
         alert.informativeText = "Your changes will be lost if you proceed."
         alert.addButton(withTitle: "Proceed")
@@ -123,7 +123,7 @@ extension MyDocument {
         
         let alert = NSAlert()
         alert.alertStyle = .critical
-        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
+        alert.icon = NSImage.init(named: "diskette")
         alert.messageText = "Cannot export an empty disk."
         alert.informativeText = "The \(format) format is designed to store a single file."
         alert.addButton(withTitle: "OK")
@@ -134,7 +134,7 @@ extension MyDocument {
         
         let alert = NSAlert()
         alert.alertStyle = .informational
-        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
+        alert.icon = NSImage.init(named: "diskette")
         alert.messageText = "Only the first file will be exported."
         alert.informativeText = "The \(format) format is designed to store a single file."
         alert.addButton(withTitle: "OK")
@@ -146,7 +146,7 @@ extension MyDocument {
         let path = url.path
         let alert = NSAlert()
         alert.alertStyle = .critical
-        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
+        alert.icon = NSImage.init(named: "diskette")
         alert.messageText = "Failed to export disk to file"
         alert.informativeText = "\(path)."
         alert.addButton(withTitle: "OK")
@@ -173,7 +173,7 @@ extension MyController {
         
         let alert = NSAlert()
         alert.alertStyle = .warning // .critical
-        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "pref_sid"))
+        alert.icon = NSImage.init(named: "pref_sid")
         alert.messageText = "Incompatible Sampling Method"
         alert.informativeText = "The current sampling method is not compatible with the selected SID model and will be changed to \"Interpolate\"."
         alert.addButton(withTitle: "OK")

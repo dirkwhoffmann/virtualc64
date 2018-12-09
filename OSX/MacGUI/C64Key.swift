@@ -312,25 +312,25 @@ extension C64Key {
 //
 
 extension NSImage.Name {
-    static let key_clr = NSImage.Name(rawValue: "key_clr")
-    static let key_home = NSImage.Name(rawValue: "key_home")
-    static let key_inst = NSImage.Name(rawValue: "key_inst")
-    static let key_del = NSImage.Name(rawValue: "key_del")
-    static let key_crsr_up = NSImage.Name(rawValue: "key_crsr_up")
-    static let key_crsr_down = NSImage.Name(rawValue: "key_crsr_down")
-    static let key_crsr_left = NSImage.Name(rawValue: "key_crsr_left")
-    static let key_crsr_right = NSImage.Name(rawValue: "key_crsr_right")
-    static let key_ctrl = NSImage.Name(rawValue: "key_ctrl")
-    static let key_ctrl_pressed = NSImage.Name(rawValue: "key_ctrl_pressed")
-    static let key_restore = NSImage.Name(rawValue: "key_restore")
-    static let key_runstop = NSImage.Name(rawValue: "key_runstop")
-    static let key_shiftlock = NSImage.Name(rawValue: "key_shiftlock")
-    static let key_shiftlock_pressed = NSImage.Name(rawValue: "key_shiftlock_pressed")
-    static let key_return = NSImage.Name(rawValue: "key_return")
-    static let key_commodore = NSImage.Name(rawValue: "key_commodore")
-    static let key_commodore_pressed = NSImage.Name(rawValue: "key_commodore_pressed")
-    static let key_shift = NSImage.Name(rawValue: "key_shift")
-    static let key_shift_pressed = NSImage.Name(rawValue: "key_shift_pressed")
+    static let key_clr = NSImage.Name("key_clr")
+    static let key_home = NSImage.Name("key_home")
+    static let key_inst = NSImage.Name("key_inst")
+    static let key_del = NSImage.Name("key_del")
+    static let key_crsr_up = NSImage.Name("key_crsr_up")
+    static let key_crsr_down = NSImage.Name("key_crsr_down")
+    static let key_crsr_left = NSImage.Name("key_crsr_left")
+    static let key_crsr_right = NSImage.Name("key_crsr_right")
+    static let key_ctrl = NSImage.Name("key_ctrl")
+    static let key_ctrl_pressed = NSImage.Name("key_ctrl_pressed")
+    static let key_restore = NSImage.Name("key_restore")
+    static let key_runstop = NSImage.Name("key_runstop")
+    static let key_shiftlock = NSImage.Name("key_shiftlock")
+    static let key_shiftlock_pressed = NSImage.Name("key_shiftlock_pressed")
+    static let key_return = NSImage.Name("key_return")
+    static let key_commodore = NSImage.Name("key_commodore")
+    static let key_commodore_pressed = NSImage.Name("key_commodore_pressed")
+    static let key_shift = NSImage.Name("key_shift")
+    static let key_shift_pressed = NSImage.Name("key_shift_pressed")
 }
 
 extension C64Key {
@@ -355,14 +355,14 @@ extension C64Key {
     var background: NSImage {
         get {
             let imageName = (nr == 16 || nr == 32 || nr == 48 || nr == 64) ? "key_dark" : "key"
-            let background = NSImage(named: NSImage.Name(rawValue: imageName))!
+            let background = NSImage(named: imageName)!
             return background.resizeImage(width: CGFloat(layout.0), height: CGFloat(layout.1))
         }
     }
     
     func plainKeyImage(width: Int, height: Int, dark: Bool = false) -> NSImage {
 
-        let name = NSImage.Name(rawValue: dark ? "key_dark" : "key")
+        let name = NSImage.Name(dark ? "key_dark" : "key")
         let background = NSImage(named: name)!
         return background.resizeImage(width: CGFloat(width), height: CGFloat(height))
     }
@@ -448,9 +448,9 @@ extension C64Key {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
         let textFontAttributes1 = [
-            NSAttributedStringKey.font: font,
-            NSAttributedStringKey.foregroundColor: NSColor.black,
-            NSAttributedStringKey.paragraphStyle: paragraphStyle,
+            NSAttributedString.Key.font: font,
+            NSAttributedString.Key.foregroundColor: NSColor.black,
+            NSAttributedString.Key.paragraphStyle: paragraphStyle,
         ]
         let image = background
         image.lockFocus()
@@ -503,14 +503,14 @@ extension C64Key {
         let font1 = NSFont.systemFont(ofSize: 12)
         let font2 = NSFont.systemFont(ofSize: 16)
         let textFontAttributes1 = [
-            NSAttributedStringKey.font: font1,
-            NSAttributedStringKey.foregroundColor: NSColor.gray,
-            NSAttributedStringKey.paragraphStyle: textStyle
+            NSAttributedString.Key.font: font1,
+            NSAttributedString.Key.foregroundColor: NSColor.gray,
+            NSAttributedString.Key.paragraphStyle: textStyle
         ]
         let textFontAttributes2 = [
-            NSAttributedStringKey.font: font2,
-            NSAttributedStringKey.foregroundColor: NSColor.black,
-            NSAttributedStringKey.paragraphStyle: textStyle
+            NSAttributedString.Key.font: font2,
+            NSAttributedString.Key.foregroundColor: NSColor.black,
+            NSAttributedString.Key.paragraphStyle: textStyle
         ]
         
         image.lockFocus()

@@ -389,7 +389,7 @@ extension MyController {
         // Adjust size and enable auto-save for window coordinates
         adjustWindowSize()
         window?.windowController?.shouldCascadeWindows = false // true ?!
-        let name = NSWindow.FrameAutosaveName(rawValue: "dirkwhoffmann.de.virtualC64.window")
+        let name = NSWindow.FrameAutosaveName("dirkwhoffmann.de.virtualC64.window")
         window?.setFrameAutosaveName(name)
         
         // Enable fullscreen mode
@@ -401,13 +401,13 @@ extension MyController {
         // Get and resize images
         let cutout = NSMakeRect(2, 0, 28, 28)
         
-        var none = NSImage(named: NSImage.Name("oxygen_none"))
+        var none = NSImage(named: "oxygen_none")
         none = none?.resizeImage(width: 32, height: 32, cutout: cutout)
-        var keyset = NSImage(named: NSImage.Name(rawValue: "oxygen_keys"))
+        var keyset = NSImage(named: "oxygen_keys")
         keyset = keyset?.resizeImage(width: 32, height: 32, cutout: cutout)
-        var mouse = NSImage(named: NSImage.Name(rawValue: "devMouseTemplate"))
+        var mouse = NSImage(named: "devMouseTemplate")
         mouse = mouse?.resizeImage(width: 32, height: 32, cutout: cutout)
-        var gamepad = NSImage(named: NSImage.Name(rawValue: "crystal_gamepad"))
+        var gamepad = NSImage(named: "crystal_gamepad")
         gamepad = gamepad?.resizeImage(width: 32, height: 32, cutout: cutout)
         genericDeviceImage = gamepad
         
@@ -566,7 +566,7 @@ extension MyController {
 
             if (romDialogController == nil) {
                 track("MSG_ROM_MISSING")
-                let nibName = NSNib.Name(rawValue: "RomPrefs")
+                let nibName = NSNib.Name("RomPrefs")
                 romDialogController = RomPrefsController.init(windowNibName: nibName)
                 romDialogController!.showSheet(withParent: self)
             }
@@ -589,13 +589,13 @@ extension MyController {
              MSG_ALWAYS_WARP_OFF:
 
             if c64.alwaysWarp() {
-                let name = NSImage.Name(rawValue: "hourglass3Template")
+                let name = NSImage.Name("hourglass3Template")
                 warpIcon.image = NSImage.init(named: name)
             } else if (c64.warp()) {
-                let name = NSImage.Name(rawValue: "hourglass2Template")
+                let name = NSImage.Name("hourglass2Template")
                 warpIcon.image = NSImage.init(named: name)
             } else {
-                let name = NSImage.Name(rawValue: "hourglass1Template") 
+                let name = NSImage.Name("hourglass1Template")
                 warpIcon.image = NSImage.init(named: name)
             }
     
@@ -612,7 +612,7 @@ extension MyController {
 
         case MSG_VC1541_ATTACHED:
             
-            let image = NSImage.init(named: NSImage.Name(rawValue:"LEDgreen"))
+            let image = NSImage.init(named: "LEDgreen")
             
             if firstDrive() {
                 greenLED1.image = image
@@ -622,7 +622,7 @@ extension MyController {
 
         case MSG_VC1541_DETACHED:
             
-            let image = NSImage.init(named: NSImage.Name(rawValue:"LEDgray"))
+            let image = NSImage.init(named: "LEDgray")
             
             if firstDrive() {
                 greenLED1.image = image
@@ -686,7 +686,7 @@ extension MyController {
             
         case MSG_DISK_SAVED:
             
-            let image = NSImage.init(named: NSImage.Name(rawValue: "mediaDiskSavedTemplate"))
+            let image = NSImage.init(named: "mediaDiskSavedTemplate")
             if firstDrive() {
                 diskIcon1.image = image
             } else {
@@ -696,7 +696,7 @@ extension MyController {
         case MSG_DISK_UNSAVED:
             
             track("Disk is unsaved")
-            let image = NSImage.init(named: NSImage.Name(rawValue: "mediaDiskUnsavedTemplate"))
+            let image = NSImage.init(named: "mediaDiskUnsavedTemplate")
             if firstDrive() {
                 diskIcon1.image = image
             } else {
@@ -705,7 +705,7 @@ extension MyController {
             
         case MSG_VC1541_RED_LED_ON:
             
-            let image = NSImage.init(named: NSImage.Name(rawValue: "LEDred"))
+            let image = NSImage.init(named: "LEDred")
             if firstDrive() {
                 redLED1.image = image
                 redLED1.setNeedsDisplay()
@@ -716,7 +716,7 @@ extension MyController {
             
         case MSG_VC1541_RED_LED_OFF:
             
-            let image = NSImage.init(named: NSImage.Name(rawValue: "LEDgray"))
+            let image = NSImage.init(named: "LEDgray")
             if firstDrive() {
                 redLED1.image = image
                 redLED1.setNeedsDisplay()
@@ -886,7 +886,7 @@ extension MyController {
 
     func playSound(name: String, volume: Float) {
         
-        if let s = NSSound.init(named: NSSound.Name(rawValue: name)) {
+        if let s = NSSound.init(named: name) {
             s.volume = volume
             s.play()
         } else {

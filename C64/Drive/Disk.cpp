@@ -361,7 +361,7 @@ Disk::analyzeHalftrack(Halftrack ht)
     }
     
     // Compute offsets for all sectors
-    uint8_t sector;
+    uint8_t sector = UINT8_MAX;
     for (unsigned i = startOffset; i < startOffset + len; i++) {
         
         if (sync[i] == 0x08) {

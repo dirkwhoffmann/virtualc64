@@ -63,43 +63,43 @@ public extension MetalView {
     
     public func updateAngles() {
     
-        if fabs(currentXAngle - targetXAngle) < fabs(deltaXAngle) {
+        if abs(currentXAngle - targetXAngle) < abs(deltaXAngle) {
             currentXAngle = targetXAngle
         } else {
             currentXAngle += deltaXAngle
         }
     
-        if fabs(currentYAngle - targetYAngle) < fabs(deltaYAngle) {
+        if abs(currentYAngle - targetYAngle) < abs(deltaYAngle) {
             currentYAngle = targetYAngle
         } else {
             currentYAngle += deltaYAngle
         }
     
-        if fabs(currentZAngle - targetZAngle) < fabs(deltaZAngle) {
+        if abs(currentZAngle - targetZAngle) < abs(deltaZAngle) {
             currentZAngle = targetZAngle
         } else {
             currentZAngle += deltaZAngle
         }
     
-        if fabs(currentEyeX - targetEyeX) < fabs(deltaEyeX) {
+        if abs(currentEyeX - targetEyeX) < abs(deltaEyeX) {
             currentEyeX = targetEyeX
         } else {
             currentEyeX += deltaEyeX
         }
     
-        if fabs(currentEyeY - targetEyeY) < fabs(deltaEyeY) {
+        if abs(currentEyeY - targetEyeY) < abs(deltaEyeY) {
             currentEyeY = targetEyeY
         } else {
             currentEyeY += deltaEyeY
         }
     
-        if fabs(currentEyeZ - targetEyeZ) < fabs(deltaEyeZ) {
+        if abs(currentEyeZ - targetEyeZ) < abs(deltaEyeZ) {
             currentEyeZ = targetEyeZ
         } else {
             currentEyeZ += deltaEyeZ
         }
     
-        if fabs(currentAlpha - targetAlpha) < fabs(deltaAlpha) {
+        if abs(currentAlpha - targetAlpha) < abs(deltaAlpha) {
             currentAlpha = targetAlpha
         } else {
             currentAlpha += deltaAlpha

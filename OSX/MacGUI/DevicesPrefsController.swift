@@ -138,7 +138,7 @@ class DevicesPrefsController : UserDialogController {
         var macKeyDesc: String = ""
         for (key, dir) in keyMap! {
             if dir == direction.rawValue {
-                 let attr = [NSAttributedStringKey.foregroundColor: NSColor.black]
+                let attr = [NSAttributedString.Key.foregroundColor: NSColor.black]
                 macKey = key
                 // macKeyCode = NSString(format: "%02X", macKey!.keyCode) as String
                 let myStr = NSString(format: "%02X", macKey!.keyCode) as String
@@ -152,10 +152,10 @@ class DevicesPrefsController : UserDialogController {
         let recordKey = (nr == 0) ? recordKey1 : recordKey2
         if (recordKey == direction) {
             button.title = ""
-            button.image = NSImage(named: NSImage.Name(rawValue: "key_red"))
+            button.image = NSImage(named: "key_red")
             button.imageScaling = .scaleAxesIndependently
         } else {
-            button.image = NSImage(named: NSImage.Name(rawValue: "key"))
+            button.image = NSImage(named: "key")
             button.imageScaling = .scaleAxesIndependently
         }
         button.attributedTitle = macKeyCode

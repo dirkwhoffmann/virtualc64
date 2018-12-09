@@ -162,19 +162,19 @@ extension MyController {
         
     // Change image and state of debugger control buttons
         if !c64.isRunnable() {
-            stopAndGoButton.image = NSImage.init(named: NSImage.Name(rawValue: "continueTemplate"))
+            stopAndGoButton.image = NSImage.init(named: "continueTemplate")
             stopAndGoButton.toolTip = "Run"
             stopAndGoButton.isEnabled = false
             stepIntoButton.isEnabled = false
             stepOverButton.isEnabled = false
         } else if c64.isHalted() {
-            stopAndGoButton.image = NSImage.init(named: NSImage.Name(rawValue: "continueTemplate"))
+            stopAndGoButton.image = NSImage.init(named: "continueTemplate")
             stopAndGoButton.toolTip = "Run"
             stopAndGoButton.isEnabled = true
             stepIntoButton.isEnabled = true
             stepOverButton.isEnabled = true
         } else {
-            stopAndGoButton.image = NSImage.init(named: NSImage.Name(rawValue: "pauseTemplate"))
+            stopAndGoButton.image = NSImage.init(named: "pauseTemplate")
             stopAndGoButton.toolTip = "Pause"
             stopAndGoButton.isEnabled = true
             stepIntoButton.isEnabled = false

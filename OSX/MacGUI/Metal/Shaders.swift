@@ -134,7 +134,7 @@ class ComputeKernel : NSObject {
             track("ERROR: Cannot create compute kernel '\(name)'.")
             let alert = NSAlert()
             alert.alertStyle = .informational
-            alert.icon = NSImage.init(named: NSImage.Name(rawValue: "metal"))
+            alert.icon = NSImage.init(named: "metal")
             alert.messageText = "Failed to create compute kernel."
             alert.informativeText = "Kernel '\(name)' will be ignored when selected."
             alert.addButton(withTitle: "OK")

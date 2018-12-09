@@ -28,7 +28,7 @@ public extension MetalView {
 
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
         
-        let pasteBoard = sender.draggingPasteboard()
+        let pasteBoard = sender.draggingPasteboard
         guard let type = pasteBoard.availableType(from: acceptedTypes()) else {
             return NSDragOperation()
         }
@@ -68,7 +68,7 @@ public extension MetalView {
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         
         let document = controller.mydocument
-        let pasteBoard = sender.draggingPasteboard()
+        let pasteBoard = sender.draggingPasteboard
         guard let type = pasteBoard.availableType(from: acceptedTypes()) else {
             return false
         }

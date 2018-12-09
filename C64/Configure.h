@@ -59,8 +59,16 @@
 // CLEANUP:
 // Don't use mount() for inserting disks. Use insertDisk instead
 // Replace Mouse* C64::mouse by (enum) MouseModel C64::mouse (use bridge pattern)
+// Remove prefix.pch from project
 //
 // OPTIMIZATION:
+//
+// Check, how -Ofast compares to -O3
+// Check how USE_OPTIMIZATION_PROFILE = true influences runtime
+// Try enable warning option "Pedantic Warning"
+// Try enable warning option "Implicit float conversions"
+//
+// 
 // Update IEC bus inside CIA and VIA. Use delay flags if neccessary
 // Use a simpler implementation for the raster irq trigger. Edge sensitive matching value
 // Call CA1 action in VIA class only if the pin value really has changed.

@@ -31,10 +31,10 @@ extension MyController {
     func validateToolbarItems() {
         let button = pauseTbItem.view as! NSButton
         if c64.isRunning() {
-            button.image = NSImage.init(named: NSImage.Name(rawValue: "pauseTemplate"))
+            button.image = NSImage.init(named: "pauseTemplate")
             pauseTbItem.label = "Pause"
         } else {
-            button.image = NSImage.init(named: NSImage.Name(rawValue: "continueTemplate"))
+            button.image = NSImage.init(named: "continueTemplate")
             pauseTbItem.label = "Run"
         }
         // snapshotSegCtrl.setEnabled(c64.numUserSnapshots() != 0, forSegment: 2)
@@ -107,7 +107,7 @@ extension MyController {
         
     @IBAction func diskInspectorAction(_ sender: Any!) {
  
-        let nibName = NSNib.Name(rawValue: "DiskInspector")
+        let nibName = NSNib.Name("DiskInspector")
         let controller = DiskInspectorController.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
     }
@@ -163,28 +163,28 @@ extension MyController {
  
     @IBAction func devicesPrefsAction(_ sender: Any!) {
         
-        let nibName = NSNib.Name(rawValue: "DevicesPrefs")
+        let nibName = NSNib.Name("DevicesPrefs")
         let controller = DevicesPrefsController.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
     }
 
     @IBAction func videoPrefsAction(_ sender: Any!) {
         
-        let nibName = NSNib.Name(rawValue: "VideoPrefs")
+        let nibName = NSNib.Name("VideoPrefs")
         let controller = VideoPrefsController.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
     }
 
     @IBAction func emulatorPrefsAction(_ sender: Any!) {
         
-        let nibName = NSNib.Name(rawValue: "EmulatorPrefs")
+        let nibName = NSNib.Name("EmulatorPrefs")
         let controller = EmulatorPrefsController.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
     }
     
     @IBAction func hardwarePrefsAction(_ sender: Any!) {
         
-        let nibName = NSNib.Name(rawValue: "HardwarePrefs")
+        let nibName = NSNib.Name("HardwarePrefs")
         let controller = HardwarePrefsController.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
     }
@@ -231,7 +231,7 @@ extension MyController {
         case 3: // Browse
             
             track("Browse")
-            let nibName = NSNib.Name(rawValue: "SnapshotDialog")
+            let nibName = NSNib.Name("SnapshotDialog")
             let controller = SnapshotDialog.init(windowNibName: nibName)
             controller.showSheet(withParent: self)
 
@@ -243,14 +243,14 @@ extension MyController {
     @IBAction func keyboardAction(_ sender: Any!) {
         
         // Open the virtual keyboard as a sheet
-        let nibName = NSNib.Name(rawValue: "VirtualKeyboard")
+        let nibName = NSNib.Name("VirtualKeyboard")
         virtualKeyboardSheet = VirtualKeyboardController.init(windowNibName: nibName)
         virtualKeyboardSheet?.showSheet(withParent: self)
     }
 
     @IBAction func snapshotsAction(_ sender: Any!) {
         
-        let nibName = NSNib.Name(rawValue: "SnapshotDialog")
+        let nibName = NSNib.Name("SnapshotDialog")
         let controller = SnapshotDialog.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
     }
@@ -276,9 +276,9 @@ extension MyController {
 
         // Printing properties
         let printInfo = mydocument.printInfo
-        printInfo.horizontalPagination = .fitPagination
+        printInfo.horizontalPagination = .fit
         printInfo.isHorizontallyCentered = true
-        printInfo.verticalPagination = .fitPagination
+        printInfo.verticalPagination = .fit
         printInfo.isVerticallyCentered = true
         printInfo.orientation = .landscape
         printInfo.leftMargin = 32.0
