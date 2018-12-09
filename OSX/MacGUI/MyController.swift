@@ -73,9 +73,6 @@ class MyController : NSWindowController, MessageReceiver {
     
     /// Selected game pad slot for joystick in port B
     var inputDevice2 = Defaults.inputDevice2
-    
-    /// Default image for USB devices
-    var genericDeviceImage: NSImage?
 
     /// Rom file URLs
     var basicRomURL: URL = Defaults.basicRom
@@ -415,7 +412,6 @@ extension MyController {
         mouse = mouse?.resizeImage(width: 32, height: 32, cutout: cutout)
         var gamepad = NSImage(named: "crystal_gamepad")
         gamepad = gamepad?.resizeImage(width: 32, height: 32, cutout: cutout)
-        genericDeviceImage = gamepad
         
         validateJoystickToolbarItems()
     }

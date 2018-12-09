@@ -34,6 +34,7 @@ extension MyController {
         track()
         
         c64.suspend()
+        
         loadGeneralUserDefaults()
         loadRomUserDefaults()
         loadKeyMapUserDefaults()
@@ -41,6 +42,7 @@ extension MyController {
         loadVideoUserDefaults()
         loadEmulatorUserDefaults()
         loadHardwareUserDefaults()
+        
         c64.resume()
     }
 }
@@ -233,6 +235,7 @@ extension Defaults {
     static let autofire          = false
     static let autofireBullets   = -3
     static let autofireFrequency = Float(2.5)
+    
     static let joyKeyMap1 = [
         MacKey.curLeft:  JOYSTICK_LEFT.rawValue,
         MacKey.curRight: JOYSTICK_RIGHT.rawValue,
@@ -277,6 +280,7 @@ extension MyController {
         let defaults = UserDefaults.standard
         
         c64.suspend()
+        
         c64.mouse.setModel(defaults.integer(forKey: VC64Keys.mouseModel))
         keyboardcontroller.disconnectEmulationKeys = defaults.bool(forKey: VC64Keys.disconnectKeys)
         c64.port1.setAutofire(defaults.bool(forKey: VC64Keys.autofire))
@@ -296,6 +300,7 @@ extension MyController {
                 gamePadManager.gamePads[1]?.keyMap = keyMap
             }
         }
+        
         c64.resume()
     }
     
@@ -429,7 +434,6 @@ extension MyController {
                                   forKey: VC64Keys.shaderOptions)
     }
 }
-
 
 //
 // User defaults (Emulator)
