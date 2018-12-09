@@ -82,7 +82,7 @@ class MyController : NSWindowController, MessageReceiver {
 
     /// Remembers if the emulator was running or paused when it lost focus.
     /// Needed to implement the pauseInBackground feature.
-    var pauseInBackgroundSavedState = true
+    var pauseInBackgroundSavedState = false
 
     /// Indicates if the user dialog should be skipped when opening archives.
     var autoMount = Defaults.autoMount

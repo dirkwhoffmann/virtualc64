@@ -21,6 +21,7 @@ extension MyController {
         track()
         
         registerGeneralUserDefaults()
+        registerRomUserDefaults()
         registerKeyMapUserDefaults()
         registerDevicesUserDefaults()
         registerVideoUserDefaults()
@@ -34,6 +35,7 @@ extension MyController {
         
         c64.suspend()
         loadGeneralUserDefaults()
+        loadRomUserDefaults()
         loadKeyMapUserDefaults()
         loadDevicesUserDefaults()
         loadVideoUserDefaults()
@@ -49,12 +51,6 @@ extension MyController {
 
 struct VC64Keys {
     
-    // Roms
-    static let basicRom          = "VC64BasicRomFileKey"
-    static let charRom           = "VC64CharRomFileKey"
-    static let kernalRom         = "VC64KernelRomFileKey"
-    static let vc1541Rom         = "VC64VC1541RomFileKey"
-    
     // Control ports
     static let inputDevice1      = "VC64InputDevice1"
     static let inputDevice2      = "VC64InputDevice2"
@@ -64,12 +60,6 @@ struct VC64Keys {
 }
 
 struct Defaults {
-    
-    // Roms
-    static let basicRom = ""
-    static let charRom = ""
-    static let kernalRom = ""
-    static let vc1541Rom = ""
     
     // Control ports
     static let inputDevice1 = -1
@@ -84,11 +74,6 @@ extension MyController {
     static func registerGeneralUserDefaults() {
         
         let dictionary : [String:Any] = [
-            
-            VC64Keys.basicRom: Defaults.basicRom,
-            VC64Keys.charRom: Defaults.charRom,
-            VC64Keys.kernalRom: Defaults.kernalRom,
-            VC64Keys.vc1541Rom: Defaults.vc1541Rom,
             
             VC64Keys.inputDevice1: Defaults.inputDevice1,
             VC64Keys.inputDevice2: Defaults.inputDevice2,
@@ -111,6 +96,73 @@ extension MyController {
         keyboardcontroller.mapKeysByPosition = defaults.bool(forKey: VC64Keys.mapKeysByPosition)
         
         c64.resume()
+    }
+}
+
+//
+// User defaults (Roms)
+//
+
+extension VC64Keys {
+    
+    static let basicRom          = "VC64BasicRomFileKey"
+    static let charRom           = "VC64CharRomFileKey"
+    static let kernalRom         = "VC64KernelRomFileKey"
+    static let vc1541Rom         = "VC64VC1541RomFileKey"
+}
+
+extension Defaults {
+    
+    static let basicRom = ""
+    static let charRom = ""
+    static let kernalRom = ""
+    static let vc1541Rom = ""
+}
+
+extension MyController {
+    
+    static func registerRomUserDefaults() {
+        
+        let dictionary : [String:Any] = [
+            
+            VC64Keys.basicRom: Defaults.basicRom,
+            VC64Keys.charRom: Defaults.charRom,
+            VC64Keys.kernalRom: Defaults.kernalRom,
+            VC64Keys.vc1541Rom: Defaults.vc1541Rom,
+            ]
+        
+        let defaults = UserDefaults.standard
+        defaults.register(defaults: dictionary)
+    }
+
+    func loadRomUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        let doc = document as! MyDocument
+        
+        doc.loadRom(defaults.url(forKey: VC64Keys.basicRom))
+        doc.loadRom(defaults.url(forKey: VC64Keys.charRom))
+        doc.loadRom(defaults.url(forKey: VC64Keys.kernalRom))
+        doc.loadRom(defaults.url(forKey: VC64Keys.vc1541Rom))
+        
+        /*
+        let defaults = UserDefaults.standard
+        
+        c64.suspend()
+        loadRom(defaults.url(forKey: VC64Keys.basicRom))
+        loadRom(defaults.url(forKey: VC64Keys.charRom))
+        loadRom(defaults.url(forKey: VC64Keys.kernalRom))
+        loadRom(defaults.url(forKey: VC64Keys.vc1541Rom))
+        c64.resume()
+         */
+    }
+    
+    func saveRomUserDefaults() {
+        
+        /*
+        let defaults = UserDefaults.standard
+        */
+   
     }
 }
 

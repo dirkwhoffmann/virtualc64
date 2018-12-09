@@ -371,6 +371,8 @@ C64::updateVicFunctionTable()
 void
 C64::powerUp()
 {
+    debug("*********** powerUp\n");
+    
     suspend();
     reset();
     resume();
@@ -384,6 +386,7 @@ C64::run()
         
         // Check for ROM images
         if (!isRunnable()) {
+            debug("$$$$$$$$$$ NOT RUNNABLE\n");
             putMessage(MSG_ROM_MISSING);
             return;
         }

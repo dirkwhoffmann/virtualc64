@@ -60,17 +60,6 @@ class MyDocument : NSDocument {
         
         // Create emulator instance
         c64 = C64Proxy()
-        
-        // Try to load ROMs
-        let defaults = UserDefaults.standard
-        loadRom(defaults.url(forKey: VC64Keys.basicRom))
-        loadRom(defaults.url(forKey: VC64Keys.charRom))
-        loadRom(defaults.url(forKey: VC64Keys.kernalRom))
-        loadRom(defaults.url(forKey: VC64Keys.vc1541Rom))
-                
-        // Try to run. The emulator will either run (if all ROMs were found)
-        // or write a MISSING_ROM message into the message queue.
-        // c64.run()
     }
  
     override open func makeWindowControllers() {
@@ -499,6 +488,7 @@ class MyDocument : NSDocument {
     
     /// Loads a ROM image file into the emulator and stores the URL in the
     /// the user defaults.
+    /// DEPRECATED
     @discardableResult
     func loadRom(_ url: URL?) -> Bool {
         
