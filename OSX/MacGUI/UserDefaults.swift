@@ -45,6 +45,19 @@ extension MyController {
         
         c64.resume()
     }
+    
+    func saveUserDefaults() {
+        
+        track()
+        
+        saveGeneralUserDefaults()
+        saveRomUserDefaults()
+        saveKeyMapUserDefaults()
+        saveDevicesUserDefaults()
+        saveVideoUserDefaults()
+        saveEmulatorUserDefaults()
+        saveHardwareUserDefaults()
+    }
 }
 
 //
@@ -98,6 +111,15 @@ extension MyController {
         keyboardcontroller.mapKeysByPosition = defaults.bool(forKey: VC64Keys.mapKeysByPosition)
         
         c64.resume()
+    }
+    
+    func saveGeneralUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        
+        defaults.set(inputDevice1, forKey: VC64Keys.inputDevice1)
+        defaults.set(inputDevice2, forKey: VC64Keys.inputDevice2)
+        defaults.set(keyboardcontroller.mapKeysByPosition, forKey: VC64Keys.mapKeysByPosition)
     }
 }
 
@@ -154,11 +176,6 @@ extension MyController {
     func saveRomUserDefaults() {
         
         let defaults = UserDefaults.standard
-        
-        track("\(basicRomURL)")
-        track("\(charRomURL)")
-        track("\(kernalRomURL)")
-        track("\(vc1541RomURL)")
         
         defaults.set(basicRomURL, forKey: VC64Keys.basicRom)
         defaults.set(charRomURL, forKey: VC64Keys.charRom)
@@ -217,7 +234,7 @@ extension VC64Keys {
     static let mouseModel        = "VC64MouseModelKey"
 
     // Joysticks
-    static let disconnectKeys    = "VC64DisconnectKeys"
+    static let disconnectJoyKeys = "VC64DisconnectKeys"
     static let autofire          = "VC64Autofire"
     static let autofireBullets   = "VC64AutofireBullets"
     static let autofireFrequency = "VC64AutofireFrequency"
@@ -231,7 +248,7 @@ extension Defaults {
     static let mouseModel        = MOUSE1350
     
     // Joysticks
-    static let disconnectKeys    = true
+    static let disconnectJoyKeys = true
     static let autofire          = false
     static let autofireBullets   = -3
     static let autofireFrequency = Float(2.5)
@@ -258,7 +275,7 @@ extension MyController {
         
         let dictionary : [String:Any] = [
             VC64Keys.mouseModel: Int(Defaults.mouseModel.rawValue),
-            VC64Keys.disconnectKeys: Defaults.disconnectKeys,
+            VC64Keys.disconnectJoyKeys: Defaults.disconnectJoyKeys,
             VC64Keys.autofire: Defaults.autofire,
             VC64Keys.autofireBullets: Defaults.autofireBullets,
             VC64Keys.autofireFrequency: Defaults.autofireFrequency
@@ -278,11 +295,11 @@ extension MyController {
     func loadDevicesUserDefaults() {
         
         let defaults = UserDefaults.standard
-        
+    
         c64.suspend()
         
         c64.mouse.setModel(defaults.integer(forKey: VC64Keys.mouseModel))
-        keyboardcontroller.disconnectEmulationKeys = defaults.bool(forKey: VC64Keys.disconnectKeys)
+        keyboardcontroller.disconnectJoyKeys = defaults.bool(forKey: VC64Keys.disconnectJoyKeys)
         c64.port1.setAutofire(defaults.bool(forKey: VC64Keys.autofire))
         c64.port2.setAutofire(defaults.bool(forKey: VC64Keys.autofire))
         c64.port1.setAutofireBullets(defaults.integer(forKey: VC64Keys.autofireBullets))
@@ -309,7 +326,7 @@ extension MyController {
         let defaults = UserDefaults.standard
         
         defaults.set(c64.mouse.model(), forKey: VC64Keys.mouseModel)
-        defaults.set(keyboardcontroller.disconnectEmulationKeys, forKey: VC64Keys.disconnectKeys)
+        defaults.set(keyboardcontroller.disconnectJoyKeys, forKey: VC64Keys.disconnectJoyKeys)
         defaults.set(c64.port1.autofire(), forKey: VC64Keys.autofire)
         defaults.set(c64.port1.autofireBullets(), forKey: VC64Keys.autofireBullets)
         defaults.set(c64.port1.autofireFrequency(), forKey: VC64Keys.autofireFrequency)

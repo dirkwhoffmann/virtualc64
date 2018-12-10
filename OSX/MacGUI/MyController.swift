@@ -47,11 +47,11 @@ class MyController : NSWindowController, MessageReceiver {
     // Timer lock
     var timerLock: NSLock!
     
-    /// Used inside the timer function to fine tune timed events
-    var animationCounter = 0
-    
     /// Speedometer to measure clock frequence and frames per second
     var speedometer: Speedometer!
+    
+    /// Used inside the timer function to fine tune timed events
+    var animationCounter = 0
     
     /// Current keyboard modifier flags
     /// These flags tell us if one of the special keysare currently pressed.
@@ -80,13 +80,16 @@ class MyController : NSWindowController, MessageReceiver {
     var kernalRomURL: URL = Defaults.kernalRom
     var vc1541RomURL: URL = Defaults.vc1541Rom
 
-    /// Indicates if the emulator should pause when it looses focus.
-    var pauseInBackground =  Defaults.pauseInBackground
-
-    /// Remembers if the emulator was running or paused when it lost focus.
-    /// Needed to implement the pauseInBackground feature.
-    var pauseInBackgroundSavedState = false
-
+    /// Screenshot resolution (0 = low, 1 = high)
+    var screenshotResolution = Defaults.screenshotResolution
+    
+    /// Screenshot image format
+    var screenshotFormat = Defaults.screenshotFormat
+    var screenshotFormatIntValue : Int {
+        get { return Int(screenshotFormat.rawValue) }
+        set { screenshotFormat = NSBitmapImageRep.FileType(rawValue: UInt(newValue))! }
+    }
+    
     /// Indicates if the user dialog should be skipped when opening archives.
     var autoMount = Defaults.autoMount
 
@@ -96,15 +99,13 @@ class MyController : NSWindowController, MessageReceiver {
     /// Indicates if the user should be warned if an unsaved disk is ejected.
     var ejectWithoutAsking = Defaults.ejectWithoutAsking
 
-    /// Screenshot resolution (0 = low, 1 = high)
-    var screenshotResolution = Defaults.screenshotResolution
-
-    /// Screenshot image format
-    var screenshotFormat = Defaults.screenshotFormat
-    var screenshotFormatIntValue : Int {
-        get { return Int(screenshotFormat.rawValue) }
-        set { screenshotFormat = NSBitmapImageRep.FileType(rawValue: UInt(newValue))! }
-    }
+    /// Indicates if the emulator should pause when it looses focus.
+    var pauseInBackground =  Defaults.pauseInBackground
+    
+    /// Remembers if the emulator was running or paused when it lost focus.
+    /// Needed to implement the pauseInBackground feature.
+    var pauseInBackgroundSavedState = false
+ 
     
     //
     // Outlets

@@ -370,9 +370,7 @@ C64::updateVicFunctionTable()
 
 void
 C64::powerUp()
-{
-    debug("*********** powerUp\n");
-    
+{    
     suspend();
     reset();
     resume();

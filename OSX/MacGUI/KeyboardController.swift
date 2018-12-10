@@ -17,7 +17,7 @@ class KeyboardController: NSObject {
     
     /// Determines whether the joystick emulation keys should be uncoupled from
     // the keyboard.
-    var disconnectEmulationKeys: Bool = true
+    var disconnectJoyKeys = Defaults.disconnectJoyKeys
     
     /**
      Key mapping mode
@@ -31,11 +31,11 @@ class KeyboardController: NSObject {
     
     /// Used key map if keys are mapped by position
  
-    var keyMap: [MacKey:C64Key] = KeyboardController.standardKeyMap
+    var keyMap: [MacKey:C64Key] = Defaults.keyMap
     
     // Delete when Objective-C code is gone
-    func getDisconnectEmulationKeys() -> Bool { return disconnectEmulationKeys }
-    func setDisconnectEmulationKeys(_ b: Bool) { disconnectEmulationKeys = b }
+    func getDisconnectEmulationKeys() -> Bool { return disconnectJoyKeys }
+    func setDisconnectEmulationKeys(_ b: Bool) { disconnectJoyKeys = b }
     func getMapKeysByPosition() -> Bool { return mapKeysByPosition }
     func setMapKeysByPosition(_ b: Bool) { mapKeysByPosition = b }
 
@@ -176,7 +176,7 @@ class KeyboardController: NSObject {
         // track("\(macKey)")
         
         // Check if this key is used for joystick emulation
-        if controller.gamePadManager.keyDown(with: macKey) && disconnectEmulationKeys {
+        if controller.gamePadManager.keyDown(with: macKey) && disconnectJoyKeys {
             return
         }
         
@@ -210,7 +210,7 @@ class KeyboardController: NSObject {
     func keyUp(with macKey: MacKey) {
         
         // Check if this key is used for joystick emulation
-        if controller.gamePadManager.keyUp(with: macKey) && disconnectEmulationKeys {
+        if controller.gamePadManager.keyUp(with: macKey) && disconnectJoyKeys {
             return
         }
         

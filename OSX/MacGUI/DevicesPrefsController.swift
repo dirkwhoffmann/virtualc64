@@ -104,7 +104,7 @@ class DevicesPrefsController : UserDialogController {
         updateKeyMap(1, direction: JOYSTICK_LEFT, button: left2button, txt: left2)
         updateKeyMap(1, direction: JOYSTICK_RIGHT, button: right2button, txt: right2)
         updateKeyMap(1, direction: JOYSTICK_FIRE, button: fire2button, txt: fire2)
-        disconnectKeys.state = parent.keyboardcontroller.disconnectEmulationKeys ? .on : .off
+        disconnectKeys.state = parent.keyboardcontroller.disconnectJoyKeys ? .on : .off
 
         assert(c64.port1.autofire() == c64.port2.autofire())
         assert(c64.port1.autofireBullets() == c64.port2.autofireBullets())
@@ -213,7 +213,7 @@ class DevicesPrefsController : UserDialogController {
 
     @IBAction func disconnectKeysAction(_ sender: NSButton!) {
         
-        parent.keyboardcontroller.disconnectEmulationKeys = (sender.state == .on)
+        parent.keyboardcontroller.disconnectJoyKeys = (sender.state == .on)
         update()
     }
     
@@ -280,7 +280,7 @@ class DevicesPrefsController : UserDialogController {
         
         // Joystick emulation keys
         parent.gamePadManager.restoreFactorySettings()
-        parent.keyboardcontroller.disconnectEmulationKeys = true
+        parent.keyboardcontroller.disconnectJoyKeys = true
 
         // Joystick buttons
         c64.port1.setAutofire(false)
