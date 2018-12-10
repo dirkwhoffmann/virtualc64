@@ -155,20 +155,7 @@ extension MyDocument {
 }
 
 extension MyController {
-    
-    /*
-    func userSnapshotStorageFull() {
         
-        let alert = NSAlert()
-        alert.alertStyle = .warning
-        // alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
-        alert.messageText = "Cannot save snapshot"
-        alert.informativeText = "All slots are filled. Delete some snapshots manually."
-        alert.addButton(withTitle: "OK")
-        alert.runModal()
-    }
-    */
-    
     func showResidSamplingMethodAlert() {
         
         let alert = NSAlert()
