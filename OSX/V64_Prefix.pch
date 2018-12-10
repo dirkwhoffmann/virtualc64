@@ -1,5 +1,0 @@
-/* Prefix header for all source files of the 'V64' target in the 'V64' project */
-
-#ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-#endif
