@@ -4,5 +4,3 @@ before_install: cd OSX
 xcode_project: VirtualC64.xcodeproj
 xcode_scheme: VirtualC64
 xcode_destination: platform=macOS
-script:
-- echo "Skipping tests"
