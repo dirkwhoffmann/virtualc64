@@ -1,4 +1,6 @@
+[![Build Status](https://travis-ci.org/dirkwhoffmann/virtualc64.svg?branch=master)](https://travis-ci.org/dirkwhoffmann/virtualc64)
 [![GitQ](https://gitq.com/badge.svg)](https://gitq.com/dirkwhoffmann/virtualc64)
+
 
 ![alt Logo](http://www.dirkwhoffmann.de/virtualC64/pics/banner.png#1)
 
