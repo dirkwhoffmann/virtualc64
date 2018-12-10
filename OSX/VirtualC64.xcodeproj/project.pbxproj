@@ -459,7 +459,6 @@
 		50ED5BF712DD99C000596417 /* Speedometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speedometer.swift; sourceTree = "<group>"; };
 		50F1752B2196C8820004E853 /* ActionReplay.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ActionReplay.cpp; sourceTree = "<group>"; };
 		50F1752C2196C8820004E853 /* ActionReplay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActionReplay.h; sourceTree = "<group>"; };
-		50F236AE12DF1CCB00B1F275 /* C64GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64GUI.h; sourceTree = "<group>"; };
 		50F2381D12DF505B00B1F275 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		50F2AB1A1EF267510040BC3A /* VIC_colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_colors.cpp; sourceTree = "<group>"; };
 		50F55DA40F28EADC0040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
@@ -737,7 +736,6 @@
 			isa = PBXGroup;
 			children = (
 				500E3A6B21B5C30F00935CB3 /* Automation */,
-				50F236AE12DF1CCB00B1F275 /* C64GUI.h */,
 				50DBB44A2025CE5700489271 /* Basics.swift */,
 				506D3DCD20223E5E009742CF /* AppDelegate.swift */,
 				5000473F12DCEC9B0098D890 /* Model */,

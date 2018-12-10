@@ -48,5 +48,3 @@ import Cocoa
         track()
     }
 }
-
-

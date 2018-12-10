@@ -8,7 +8,7 @@
 //
 
 
-#import "C64GUI.h"
+#import "C64Proxy.h"
 #import "C64.h"
 #import "VirtualC64-Swift.h"
 

@@ -9,6 +9,7 @@
 
 
 #import <Cocoa/Cocoa.h>
+#import <MetalKit/MetalKit.h>
 #import "C64_types.h"
 #import "basic.h"
 
