@@ -4,3 +4,6 @@ before_install: cd OSX
 xcode_project: VirtualC64.xcodeproj
 xcode_scheme: VirtualC64
 xcode_destination: platform=macOS
+script: 
+- set -o pipefail && xcodebuild -project VirtualC64.xcodeproj -scheme VirtualC64 -destination platform\=macOS build | xcpretty
+
