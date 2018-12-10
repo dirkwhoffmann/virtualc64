@@ -42,17 +42,10 @@ public class AudioEngine: NSObject {
         }
         
         // Query AudioUnit
-        // let inputbusses = audiounit.inputBusses.count
-        // let outputbusses = audiounit.outputBusses.count
         let hardwareFormat = audiounit.outputBusses[0].format
         let channels = hardwareFormat.channelCount
         let sampleRate = hardwareFormat.sampleRate
         let stereo = (channels > 1)
-        // NSLog("  Number of input busses:      \(inputbusses)")
-        // NSLog("  Number of output busses:     \(outputbusses)")
-        // NSLog("  Number of channels of bus 0: \(channels)")
-        // NSLog("  Sample rate:                 \(sampleRate)")
-        // NSLog("  Stereo:                      \(stereo)")
         
         // Make input bus compatible with output bus
         let renderFormat = AVAudioFormat(standardFormatWithSampleRate: sampleRate,
@@ -123,7 +116,7 @@ public class AudioEngine: NSObject {
     func startPlayback() -> Bool {
 
         do { try audiounit.startHardware() } catch {
-            NSLog("Failed to start audio hardware")
+            track("Failed to start audio hardware")
             return false
         }
         

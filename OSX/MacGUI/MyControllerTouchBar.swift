@@ -45,11 +45,12 @@ extension MyController : NSTouchBarDelegate
 
     override open func makeTouchBar() -> NSTouchBar? {
  
+        track()
+        
         if (c64 == nil) {
-            return nil // Only create TouchBar for controllers having a C64 proxy
+            track("Cannot create touch bar (no C64 proxy).")
+            return nil
         }
-
-        NSLog("\(#function)")
 
         let touchBar = NSTouchBar()
         touchBar.delegate = self

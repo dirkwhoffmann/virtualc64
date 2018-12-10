@@ -22,7 +22,7 @@ struct ControlPortWrapper { ControlPort *port; };
 struct SidBridgeWrapper { SIDBridge *sid; };
 struct IecWrapper { IEC *iec; };
 struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
-struct Via6522Wrapper { VIA6522 *via; };
+struct ViaWrapper { VIA6522 *via; };
 struct DiskWrapper { Disk *disk; };
 struct DriveWrapper { VC1541 *drive; };
 struct DatasetteWrapper { Datasette *datasette; };
@@ -1000,7 +1000,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 - (instancetype) initWithVIA:(VIA6522 *)via
 {
     if (self = [super init]) {
-        wrapper = new Via6522Wrapper();
+        wrapper = new ViaWrapper();
         wrapper->via = via;
     }
     return self;

@@ -151,7 +151,7 @@ class MyDocument : NSDocument {
         
         switch (url.pathExtension.uppercased()) {
             
-        case "D64", "T64", "G64", "NIB", "PRG", "P00":
+        case "D64", "T64", "G64", "PRG", "P00":
             noteNewRecentlyInsertedDiskURL(url)
 
         case "TAP":
@@ -202,38 +202,39 @@ class MyDocument : NSDocument {
         track("Read \(length) bytes from file \(filename).")
         
         switch (typeName) {
+            
         case "VC64":
             if SnapshotProxy.isUnsupportedSnapshot(buffer, length: length) {
                 throw NSError.snapshotVersionError(filename: filename)
             }
             attachment = SnapshotProxy.make(withBuffer: buffer, length: length)
             openAsUntitled = false
-            break
+            
         case "CRT":
             if CRTFileProxy.isUnsupportedCRTBuffer(buffer, length: length) {
                 let type = CRTFileProxy.typeName(ofCRTBuffer: buffer, length: length)!
                 throw NSError.unsupportedCartridgeError(filename: filename, type: type)
             }
             attachment = CRTFileProxy.make(withBuffer: buffer, length: length)
-            break
+            
         case "TAP":
             attachment = TAPFileProxy.make(withBuffer: buffer, length: length)
-            break
+            
         case "T64":
             attachment = T64FileProxy.make(withBuffer: buffer, length: length)
-            break
+            
         case "PRG":
             attachment = PRGFileProxy.make(withBuffer: buffer, length: length)
-            break
+            
         case "D64":
             attachment = D64FileProxy.make(withBuffer: buffer, length: length)
-            break
+            
         case "P00":
             attachment = P00FileProxy.make(withBuffer: buffer, length: length)
-            break
+            
         case "G64":
             attachment = G64FileProxy.make(withBuffer: buffer, length: length)
-            break
+            
         default:
             throw NSError.unsupportedFormatError(filename: filename)
         }
@@ -241,10 +242,11 @@ class MyDocument : NSDocument {
         if openAsUntitled {
             fileURL = nil
         }
+        
         if attachment == nil {
             throw NSError.corruptedFileError(filename: filename)
         }
-        track("filename = \(filename)")
+        
         attachment!.setPath(filename)
     }
     
@@ -305,20 +307,16 @@ class MyDocument : NSDocument {
     
         case CRT_FILE:
             runCartridgeMountDialog(parent)
-            return
                 
         case TAP_FILE:
             runTapeMountDialog(parent)
-            return
                 
         case T64_FILE, D64_FILE,
              PRG_FILE, P00_FILE:
             runArchiveMountDialog(parent)
-            return
                 
         case G64_FILE:
             runDiskMountDialog(parent)
-            return
             
         default:
             track("Unknown attachment type \(type).")
@@ -410,10 +408,12 @@ class MyDocument : NSDocument {
         // Check if disk data would be lost, if we continue
         let type = attachment!.type()
         switch type {
+            
         case V64_FILE, T64_FILE, D64_FILE, G64_FILE:
             if (!proceedWithUnexportedDisk(drive: 1)) { return false }
+            
         default:
-            break;
+            break
         }
         
         if attachment!.type() == V64_FILE {
@@ -435,25 +435,23 @@ class MyDocument : NSDocument {
             
         case CRT_FILE:
             runCartridgeMountDialog(parent)
-            return true
             
         case TAP_FILE:
             runTapeMountDialog(parent)
-            return true
             
         case T64_FILE, D64_FILE,
              PRG_FILE, P00_FILE:
             runArchiveMountDialog(parent)
-            return true
             
         case G64_FILE:
             runDiskMountDialog(parent)
-            return true
             
         default:
             track("Unknown attachment type \(type).")
             fatalError()
         }
+        
+        return true
     }
     
     func flashAttachment(archive: AnyArchiveProxy, item: Int = 0) {
@@ -486,39 +484,6 @@ class MyDocument : NSDocument {
         try createAttachment(from: url)
     }
     
-    /// Loads a ROM image file into the emulator and stores the URL in the
-    /// the user defaults.
-    /// DEPRECATED
-    @discardableResult
-    func loadRom(_ url: URL?) -> Bool {
-        
-        if (url == nil) {
-            return false
-        }
-        
-        let defaults = UserDefaults.standard
-        
-        if c64.loadBasicRom(url!) {
-            defaults.set(url, forKey: VC64Keys.basicRom)
-            return true
-        }
-        if c64.loadCharRom(url!) {
-            defaults.set(url, forKey: VC64Keys.charRom)
-            return true
-        }
-        if c64.loadKernalRom(url!) {
-            defaults.set(url, forKey: VC64Keys.kernalRom)
-            return true
-        }
-        if c64.loadVC1541Rom(url!) {
-            defaults.set(url, forKey: VC64Keys.vc1541Rom)
-            return true
-        }
-        
-        track("ROM file \(url!) not found")
-        return false
-    }
-    
     
     //
     // Saving
@@ -529,8 +494,6 @@ class MyDocument : NSDocument {
         track("Trying to write \(typeName) file.")
         
         if typeName == "VC64" {
-
-            NSLog("Type is VC64")
             
             // Take snapshot
             if let snapshot = SnapshotProxy.make(withC64: c64) {
@@ -632,12 +595,12 @@ class MyDocument : NSDocument {
     
     open override func removeWindowController(_ windowController: NSWindowController) {
         
-        NSLog("MyDocument:\(#function)")
+        track()
 
         super.removeWindowController(windowController)
         
         // Shut down the emulator.
-        // Note that all GUI elements need to be inactive when we set the proxy
+        // Note that all GUI elements have to be inactive when the proxy is set
         // to nil. Hence, the emulator should be shut down as late as possible.
         c64.kill()
     }

@@ -498,8 +498,6 @@ public class MetalView: MTKView {
         layerWidth = drawableSize.width
         layerHeight = drawableSize.height
     
-        // NSLog("MetalLayer::reshape (%f,%f)", drawableSize.width, drawableSize.height);
-    
         // Rebuild matrices
         buildMatricesBg()
         buildMatrices2D()

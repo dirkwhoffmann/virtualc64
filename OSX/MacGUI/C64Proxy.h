@@ -1,12 +1,11 @@
-// -----------------------------------------------------------------------------
-// This file is part of VirtualC64 - Yet another Commodore 64 emulator
+//
+// This file is part of VirtualC64 - A cycle accurate Commodore 64 emulator
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
 // Licensed under the GNU General Public License v3
 //
 // See https://www.gnu.org for license information
-// -----------------------------------------------------------------------------
-
+//
 
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
@@ -16,8 +15,8 @@
 // Forward declarations of proxy classes
 @class MyController;
 @class C64Proxy;
-@class MemoryProxy;
 @class CPUProxy;
+@class MemoryProxy;
 @class VICProxy;
 @class CIAProxy;
 @class SIDProxy;
@@ -51,14 +50,14 @@ struct CpuWrapper;
 struct MemoryWrapper;
 struct VicWrapper;
 struct CiaWrapper;
+struct SidBridgeWrapper;
 struct KeyboardWrapper;
 struct ControlPortWrapper;
-struct SidBridgeWrapper;
 struct IecWrapper;
 struct ExpansionPortWrapper;
-struct Via6522Wrapper;
-struct DiskWrapper;
 struct DriveWrapper;
+struct ViaWrapper;
+struct DiskWrapper;
 struct DatasetteWrapper;
 struct MouseWrapper;
 struct AnyC64FileWrapper;
@@ -72,9 +71,8 @@ struct AnyC64FileWrapper;
     
     struct C64Wrapper *wrapper;
     
-    // Hardware components
-    MemoryProxy *mem;
     CPUProxy *cpu;
+    MemoryProxy *mem;
     VICProxy *vic;
     CIAProxy *cia1;
     CIAProxy *cia2;
@@ -91,8 +89,8 @@ struct AnyC64FileWrapper;
 }
 
 @property (readonly) struct C64Wrapper *wrapper;
-@property (readonly) MemoryProxy *mem;
 @property (readonly) CPUProxy *cpu;
+@property (readonly) MemoryProxy *mem;
 @property (readonly) VICProxy *vic;
 @property (readonly) CIAProxy *cia1;
 @property (readonly) CIAProxy *cia2;
@@ -592,7 +590,7 @@ struct AnyC64FileWrapper;
 
 @interface VIAProxy : NSObject {
     
-    struct Via6522Wrapper *wrapper;
+    struct ViaWrapper *wrapper;
 }
 
 - (void) dump;

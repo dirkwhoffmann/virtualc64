@@ -61,7 +61,7 @@ extension TimeTravelTouchBar: NSTouchBarDelegate {
 
     func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
         
-        NSLog("\(#function)")
+       track()
         
         switch identifier {
         default:

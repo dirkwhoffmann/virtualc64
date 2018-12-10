@@ -58,8 +58,6 @@ class CartridgeMountController : UserDialogController {
     
     @IBAction func okAction(_ sender: Any!) {
         
-        NSLog("OK Action")
-        
         // Attach cartridge
         c64.expansionport.attachCartridgeAndReset(cartridge)
         parent.metalScreen.rotateBack()

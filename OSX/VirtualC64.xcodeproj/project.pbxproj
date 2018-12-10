@@ -735,9 +735,9 @@
 		50176C6D0A6F7357009E80BD /* MacGUI */ = {
 			isa = PBXGroup;
 			children = (
-				500E3A6B21B5C30F00935CB3 /* Automation */,
 				50DBB44A2025CE5700489271 /* Basics.swift */,
 				506D3DCD20223E5E009742CF /* AppDelegate.swift */,
+				500E3A6B21B5C30F00935CB3 /* Automation */,
 				5000473F12DCEC9B0098D890 /* Model */,
 				5000474012DCECAB0098D890 /* View */,
 				5000474112DCECBA0098D890 /* Controller */,
