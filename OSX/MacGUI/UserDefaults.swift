@@ -46,6 +46,24 @@ extension MyController {
         c64.resume()
     }
     
+    func loadUserDefaults(url: URL) {
+        
+        track()
+        
+        if let fileContents = NSDictionary(contentsOf: url) {
+            
+            print(fileContents)
+            
+            if let dictionary = fileContents as? Dictionary<String,Any> {
+                
+                print(dictionary)
+                
+                let defaults = UserDefaults.standard
+                defaults.register(defaults: dictionary)
+            }
+        }
+    }
+    
     func saveUserDefaults() {
         
         track()
@@ -58,6 +76,16 @@ extension MyController {
         saveEmulatorUserDefaults()
         saveHardwareUserDefaults()
     }
+
+    func saveUserDefaults(url: URL) {
+        
+        track()
+        
+        let dictionary = UserDefaults.standard.dictionaryRepresentation()
+        let fileContents = NSDictionary.init(dictionary: dictionary)
+        fileContents.write(to: url, atomically: true)
+    }
+    
 }
 
 //
