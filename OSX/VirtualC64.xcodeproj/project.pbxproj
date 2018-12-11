@@ -102,6 +102,8 @@
 		505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505EB0A00F3047C300960BC0 /* Snapshot.cpp */; };
 		506004661B78E9C500EBDD93 /* VIC_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506004641B78E9C500EBDD93 /* VIC_draw.cpp */; };
 		50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */; };
+		506A724821C033EF00DA0AC3 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506A724721C033EF00DA0AC3 /* Preferences.xib */; };
+		506A724A21C0341900DA0AC3 /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A724921C0341900DA0AC3 /* PreferencesController.swift */; };
 		506B315220DCDF87007913A8 /* ROMFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506B315020DCDF87007913A8 /* ROMFile.cpp */; };
 		506B315420DD0AEB007913A8 /* DriveMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506B315320DD0AEB007913A8 /* DriveMemory.cpp */; };
 		506D39D2141780E500268AF6 /* SIDBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D1141780E500268AF6 /* SIDBridge.cpp */; };
@@ -380,6 +382,8 @@
 		505EB0A00F3047C300960BC0 /* Snapshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Snapshot.cpp; sourceTree = "<group>"; };
 		506004641B78E9C500EBDD93 /* VIC_draw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_draw.cpp; sourceTree = "<group>"; };
 		50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
+		506A724721C033EF00DA0AC3 /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
+		506A724921C0341900DA0AC3 /* PreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesController.swift; sourceTree = "<group>"; };
 		506B315020DCDF87007913A8 /* ROMFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ROMFile.cpp; sourceTree = "<group>"; };
 		506B315120DCDF87007913A8 /* ROMFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ROMFile.h; sourceTree = "<group>"; };
 		506B315320DD0AEB007913A8 /* DriveMemory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DriveMemory.cpp; sourceTree = "<group>"; };
@@ -839,6 +843,7 @@
 			isa = PBXGroup;
 			children = (
 				50763276202989D300575110 /* UserDialogController.swift */,
+				506A724921C0341900DA0AC3 /* PreferencesController.swift */,
 				506D54C720321C830026D8B4 /* RomPrefsController.swift */,
 				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
 				5052CD5E2136ADFA0000E890 /* DevicesPrefsController.swift */,
@@ -882,6 +887,7 @@
 				50F55DCB0F28EC010040592B /* MainMenu.xib */,
 				50F55DA30F28EADC0040592B /* MyDocument.xib */,
 				50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */,
+				506A724721C033EF00DA0AC3 /* Preferences.xib */,
 				506D54C920321EDF0026D8B4 /* RomPrefs.xib */,
 				5052CD602136AF690000E890 /* DevicesPrefs.xib */,
 				50F97E02203D8D570005E19C /* EmulatorPrefs.xib */,
@@ -1213,6 +1219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5084C1D021B80A27006B688E /* VideoPrefs.xib in Resources */,
+				506A724821C033EF00DA0AC3 /* Preferences.xib in Resources */,
 				5052AD0A202A526E005FDD88 /* CartridgeMountDialog.xib in Resources */,
 				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
 				50B1644E202DDAA600447D3E /* ExportDiskDialog.xib in Resources */,
@@ -1288,6 +1295,7 @@
 				5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */,
 				50DC89C820B2EB54005E0557 /* CpuTableView.swift in Sources */,
 				50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */,
+				506A724A21C0341900DA0AC3 /* PreferencesController.swift in Sources */,
 				506004661B78E9C500EBDD93 /* VIC_draw.cpp in Sources */,
 				50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */,
 				501DE30F20C9C41B00707130 /* version.cc in Sources */,
