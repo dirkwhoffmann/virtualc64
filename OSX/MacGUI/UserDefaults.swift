@@ -48,18 +48,16 @@ extension MyController {
     
     func loadUserDefaults(url: URL) {
         
-        track()
-        
         if let fileContents = NSDictionary(contentsOf: url) {
             
-            print(fileContents)
-            
-            if let dictionary = fileContents as? Dictionary<String,Any> {
+            if let dict = fileContents as? Dictionary<String,Any> {
                 
-                print(dictionary)
+                let filteredDict = dict.filter { $0.0.hasPrefix("VC64") }
                 
                 let defaults = UserDefaults.standard
-                defaults.register(defaults: dictionary)
+                defaults.setValuesForKeys(filteredDict)
+                
+                loadUserDefaults()
             }
         }
     }
@@ -81,9 +79,10 @@ extension MyController {
         
         track()
         
-        let dictionary = UserDefaults.standard.dictionaryRepresentation()
-        let fileContents = NSDictionary.init(dictionary: dictionary)
-        fileContents.write(to: url, atomically: true)
+        let dict = UserDefaults.standard.dictionaryRepresentation()
+        let filteredDict = dict.filter { $0.0.hasPrefix("VC64") }
+        let nsDict = NSDictionary.init(dictionary: filteredDict)
+        nsDict.write(to: url, atomically: true)
     }
     
 }

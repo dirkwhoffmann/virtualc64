@@ -53,6 +53,19 @@
                                                 <action selector="openHardwarePrefsAction:" target="-1" id="AXi-wO-30t"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="Azm-fl-Tcf"/>
+                                        <menuItem title="Import settings ..." id="pcy-gf-QDR">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="importPrefsAction:" target="-1" id="kdv-Rr-qzs"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Export settings ..." id="WND-Dt-Sq8">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="exportPrefsAction:" target="-1" id="XiY-H4-A5y"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
