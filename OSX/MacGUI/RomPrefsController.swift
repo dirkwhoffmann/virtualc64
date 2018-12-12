@@ -9,68 +9,6 @@
 
 import Foundation
 
-let knownBasicRoms : [UInt64 : String] = [
-    0x0000000000000000:
-    "This 8 KB Rom contains Commodore's Basic interpreter. There is essentially only revision of this chip.",
-    0x20765FEA67A8762D:
-    "Commodore 64 Basic V2"
-]
-
-let knownCharacterRoms : [UInt64 : String] = [
-    0x0000000000000000:
-    "This 4 KB Rom contains the C64's character set. Depending on the region, Commodore has shipped slightly different versions of this chip.",
-    0x3CA9D37AA3DE0969:
-    "Character ROM from a Swedish C64 (C2D007)",
-    0x6E3827A65FFF116F:
-    "Character ROM from a Swedish C64",
-    0x623CDF045B74B691:
-    "Character ROM from a Spanish C64C",
-    0x79A236A3B3645231:
-    "Character rom from a Danish C64",
-    0xACC576F7B332AC15:
-    "The Commodore 64 character set"
-]
-
-let knownKernalRoms : [UInt64 : String] = [
-    0x0000000000000000:
-    "This 8 KB Rom contains the low-level operating system. There are three major revisions of this chip, the third being the most common.",
-    0xFB166E49AF709AB8:
-    "Commodore 64 Kernal (1st revision)",
-    0x4232D81CCD24FAAE:
-    "Commodore 64 Kernal (2nd revision)",
-    0x4AF60EE54BEC9701:
-    "Commodore 64 Kernal (3rd revision)",
-    0x429EA22675CAB478:
-    "Commodore 64 Kernal (3rd revision, Danish)",
-    0x8C4548E2202CB366:
-    "Commodore SX-64 Kernal",
-    0x746EB1BC008B07E1:
-    "Commodore SX-64 Kernal (Scandinavian)",
-    0xDE7F07008B787040:
-    "Commodore 64 Kernel (JiffyDOS patch)",
-    0xA9D2AD1A4E5F782C:
-    "Commodore SX-64 Kernal (JiffyDOS patch)"
-]
-
-let knownVc1541Roms : [UInt64: String] = [
-    0x0000000000000000:
-    "This 16 KB Rom contains the firmware of Commodore's VC1541 floppy drive.",
-    0x44BBA0EAC5898597:
-    "1541-II firmware released in 1987",
-    0xA1D36980A17C8756:
-    "1541-II firmware appearing in drives with a modern Newtronics Motor",
-    0x361A1EC48F04F5A4:
-    "Firmware of the old-style 1541 in white case",
-    0xB938E2DA07F4FE40:
-    "Upgraded firmware for the 1541C drive",
-    0x47CBA55F16FB3E09:
-    "1541-II firmware with relocation patch",
-    0x8B2A523E29BED889:
-    "1541-II firmware (JiffyDOS patch)",
-    0xF7F4D931219DBB5D:
-    "1541-II firmware (JiffyDOS patch 6.00)"
-]
-
 class RomPrefsController : UserDialogController {
     
     let romImage = NSImage.init(named: "rom")
@@ -131,7 +69,7 @@ class RomPrefsController : UserDialogController {
         refresh()
     }
 
-    func refresh()
+    override func refresh()
     {
         let hasBasicRom = c64.isBasicRomLoaded()
         let hasKernalRom = c64.isKernalRomLoaded()

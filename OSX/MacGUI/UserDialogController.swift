@@ -31,6 +31,10 @@ class UserDialogController : NSWindowController
         })
     }
     
+    func refresh() {
+    
+    }
+    
     func cleanup() {
         // Don't delete this function. Calling cleanup in the sheet's completion handler
         // makes sure that ARC doesn't delete the reference too early.

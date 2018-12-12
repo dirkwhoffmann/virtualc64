@@ -102,7 +102,7 @@ class DiskInspectorController : UserDialogController {
     }
     
     /// Updates dirty GUI elements
-    func refresh() {
+    override func refresh() {
         
         drive1.state = (driveNr == 1) ? .on : .off
         drive2.state = (driveNr == 2) ? .on : .off

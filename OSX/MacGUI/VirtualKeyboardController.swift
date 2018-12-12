@@ -70,7 +70,7 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
         releaseSpecialKeys()
     }
     
-    func refresh() {
+    override func refresh() {
         
         var needsUpdate = false;
         

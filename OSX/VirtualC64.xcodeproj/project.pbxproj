@@ -99,6 +99,7 @@
 		5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */; };
 		5058F0EF20A77E90008BFA92 /* Mouse1351.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5058F0ED20A77E90008BFA92 /* Mouse1351.cpp */; };
 		5058F0F220A77EDC008BFA92 /* NeosMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5058F0F020A77EDC008BFA92 /* NeosMouse.cpp */; };
+		505D492821C155DD00A7C575 /* RomPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505D492721C155DD00A7C575 /* RomPrefs.swift */; };
 		505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505EB0A00F3047C300960BC0 /* Snapshot.cpp */; };
 		506004661B78E9C500EBDD93 /* VIC_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506004641B78E9C500EBDD93 /* VIC_draw.cpp */; };
 		50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */; };
@@ -378,6 +379,7 @@
 		5058F0EE20A77E90008BFA92 /* Mouse1351.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mouse1351.h; sourceTree = "<group>"; };
 		5058F0F020A77EDC008BFA92 /* NeosMouse.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NeosMouse.cpp; sourceTree = "<group>"; };
 		5058F0F120A77EDC008BFA92 /* NeosMouse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NeosMouse.h; sourceTree = "<group>"; };
+		505D492721C155DD00A7C575 /* RomPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomPrefs.swift; sourceTree = "<group>"; };
 		505EB09F0F3047C300960BC0 /* Snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Snapshot.h; sourceTree = "<group>"; };
 		505EB0A00F3047C300960BC0 /* Snapshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Snapshot.cpp; sourceTree = "<group>"; };
 		506004641B78E9C500EBDD93 /* VIC_draw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_draw.cpp; sourceTree = "<group>"; };
@@ -844,6 +846,7 @@
 			children = (
 				50763276202989D300575110 /* UserDialogController.swift */,
 				506A724921C0341900DA0AC3 /* PreferencesController.swift */,
+				505D492721C155DD00A7C575 /* RomPrefs.swift */,
 				506D54C720321C830026D8B4 /* RomPrefsController.swift */,
 				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
 				5052CD5E2136ADFA0000E890 /* DevicesPrefsController.swift */,
@@ -1377,6 +1380,7 @@
 				50F681EA1BEA3BE4008568E3 /* Datasette.cpp in Sources */,
 				50E542A5212E988A00026EEF /* VIC_debug.cpp in Sources */,
 				506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */,
+				505D492821C155DD00A7C575 /* RomPrefs.swift in Sources */,
 				5014D684200CD62C00044217 /* MetalSetup.swift in Sources */,
 				50E8366E20DC4A090017A5BB /* FastVoice.cpp in Sources */,
 				5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */,

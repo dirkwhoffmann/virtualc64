@@ -29,28 +29,9 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Preferences" id="sB1-CL-iAJ">
                                     <items>
-                                        <menuItem title="Game Devices ..." id="L87-Y8-Gla">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        <menuItem title="Show ..." keyEquivalent="," id="L87-Y8-Gla">
                                             <connections>
-                                                <action selector="openDevicePrefsAction:" target="-1" id="RjP-uj-fUQ"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Video ..." id="IVN-Er-CgT">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="openVideoPrefsAction:" target="-1" id="Tff-R4-XvK"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Emulator ..." id="IaM-OI-EET">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="openEmulatorPrefsAction:" target="-1" id="pu5-56-x38"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Hardware ..." id="1Va-R5-z8O">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="openHardwarePrefsAction:" target="-1" id="AXi-wO-30t"/>
+                                                <action selector="preferencesAction:" target="-1" id="x7k-IT-b56"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="Azm-fl-Tcf"/>

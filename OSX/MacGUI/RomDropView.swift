@@ -23,7 +23,7 @@ extension NSDraggingInfo
 
 class RomDropView : NSImageView
 {
-    @IBOutlet var dialogController: RomPrefsController!
+    @IBOutlet var dialogController: UserDialogController!
     
     override func awakeFromNib()
     {
@@ -34,7 +34,7 @@ class RomDropView : NSImageView
     {
         if let url = sender.url {
             if dialogController.c64.isRom(url) {
-                image = dialogController.romImageMedium
+                image = NSImage.init(named: "rom_medium")
                 return .copy
             }
         }
