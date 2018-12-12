@@ -46,6 +46,22 @@ extension MyController {
         c64.resume()
     }
     
+    func loadUserDefaults(url: URL) {
+        
+        if let fileContents = NSDictionary(contentsOf: url) {
+            
+            if let dict = fileContents as? Dictionary<String,Any> {
+                
+                let filteredDict = dict.filter { $0.0.hasPrefix("VC64") }
+                
+                let defaults = UserDefaults.standard
+                defaults.setValuesForKeys(filteredDict)
+                
+                loadUserDefaults()
+            }
+        }
+    }
+    
     func saveUserDefaults() {
         
         track()
@@ -58,6 +74,17 @@ extension MyController {
         saveEmulatorUserDefaults()
         saveHardwareUserDefaults()
     }
+
+    func saveUserDefaults(url: URL) {
+        
+        track()
+        
+        let dict = UserDefaults.standard.dictionaryRepresentation()
+        let filteredDict = dict.filter { $0.0.hasPrefix("VC64") }
+        let nsDict = NSDictionary.init(dictionary: filteredDict)
+        nsDict.write(to: url, atomically: true)
+    }
+    
 }
 
 //

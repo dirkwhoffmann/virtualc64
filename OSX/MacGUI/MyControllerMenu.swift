@@ -211,6 +211,40 @@ extension MyController : NSMenuItemValidation {
         controller.showSheet(withParent: self)
     }
     
+    @IBAction func importPrefsAction(_ sender: Any!) {
+        
+        track()
+        
+        let panel = NSOpenPanel()
+        panel.prompt = "Import"
+        panel.allowedFileTypes = ["vc64conf"]
+        
+        panel.beginSheetModal(for: window!, completionHandler: { result in
+            if result == .OK {
+                if let url = panel.url {
+                    self.loadUserDefaults(url: url)
+                }
+            }
+        })
+    }
+   
+    @IBAction func exportPrefsAction(_ sender: Any!) {
+        
+        track()
+        
+        let panel = NSSavePanel()
+        panel.prompt = "Export"
+        panel.allowedFileTypes = ["vc64conf"]
+        
+        panel.beginSheetModal(for: window!, completionHandler: { result in
+            if result == .OK {
+                if let url = panel.url {
+                    track()
+                    self.saveUserDefaults(url: url)
+                }
+            }
+        })
+    }
     
     //
     // Action methods (File menu)
@@ -224,8 +258,6 @@ extension MyController : NSMenuItemValidation {
         // Create save panel
         let savePanel = NSSavePanel()
         savePanel.prompt = "Export"
-        savePanel.title = "Export"
-        savePanel.nameFieldLabel = "Export As:"
         
         // Set allowed file types
         switch screenshotFormat {
