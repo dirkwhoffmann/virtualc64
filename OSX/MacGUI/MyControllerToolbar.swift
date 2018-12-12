@@ -160,7 +160,14 @@ extension MyController {
             assert(false)
         }
     }
- 
+
+    @IBAction func preferencesAction(_ sender: Any!) {
+        
+        let nibName = NSNib.Name("Preferences")
+        let controller = PreferencesController.init(windowNibName: nibName)
+        controller.showSheet(withParent: self)
+    }
+    
     @IBAction func devicesPrefsAction(_ sender: Any!) {
         
         let nibName = NSNib.Name("DevicesPrefs")
@@ -189,7 +196,7 @@ extension MyController {
         controller.showSheet(withParent: self)
     }
     
-    @IBAction func preferencesAction(_ sender: NSSegmentedControl) {
+    @IBAction func prefAction(_ sender: NSSegmentedControl) {
         
         switch(sender.selectedSegment) {
             
