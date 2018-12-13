@@ -180,6 +180,9 @@ extension PreferencesController {
             romVc1541Description.stringValue = "An unknown, possibly patched 15xx ROM."
             romVc1541Description.textColor = .red
         }
+        
+        romCancelButton.isHidden = hideCancelButton
+        romOkButton.title = okButtonTitle
     }
     
     //

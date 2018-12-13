@@ -87,6 +87,9 @@ extension PreferencesController {
             descr = "is a custom configuration. It matches no known C64 model"
         }
         hwInfoText.stringValue = "This configuration \(descr)."
+
+        hwCancelButton.isHidden = hideCancelButton
+        hwOkButton.title = okButtonTitle
     }
     
     @IBAction func hwVicModelAction(_ sender: NSPopUpButton!) {

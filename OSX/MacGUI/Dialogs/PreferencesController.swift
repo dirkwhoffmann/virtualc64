@@ -14,6 +14,8 @@ class PreferencesController : UserDialogController {
     @IBOutlet weak var prefTabView: NSTabView!
     
     var opendOnAppLaunch = false
+    var hideCancelButton = false
+    var okButtonTitle = "OK"
     
     //
     // Rom preferences
@@ -79,6 +81,50 @@ class PreferencesController : UserDialogController {
     @IBOutlet weak var hwRamInitPatternPopup: NSPopUpButton!
     @IBOutlet weak var hwInfoText: NSTextField!
 
+    @IBOutlet weak var hwOkButton: NSButton!
+    @IBOutlet weak var hwCancelButton: NSButton!
+    
+    //
+    // Video preferences
+    //
+    
+    // Palette
+    @IBOutlet weak var vidPalettePopup: NSPopUpButton!
+    @IBOutlet weak var vidBrightnessSlider: NSSlider!
+    @IBOutlet weak var vidContrastSlider: NSSlider!
+    @IBOutlet weak var vidSaturationSlider: NSSlider!
+    
+    // Effects
+    @IBOutlet weak var vidUpscalerPopup: NSPopUpButton!
+    @IBOutlet weak var vidBlurPopUp: NSPopUpButton!
+    @IBOutlet weak var vidBlurRadiusSlider: NSSlider!
+    
+    @IBOutlet weak var vidBloomPopup:NSPopUpButton!
+    @IBOutlet weak var vidBloomRadiusRSlider: NSSlider!
+    @IBOutlet weak var vidBloomRadiusGSlider: NSSlider!
+    @IBOutlet weak var vidBloomRadiusBSlider: NSSlider!
+    @IBOutlet weak var vidBloomBrightnessSlider: NSSlider!
+    @IBOutlet weak var vidBloomWeightSlider: NSSlider!
+    
+    @IBOutlet weak var vidDotMaskPopUp: NSPopUpButton!
+    @IBOutlet weak var vidDotMaskBrightnessSlider: NSSlider!
+    
+    @IBOutlet weak var vidScanlinesPopUp: NSPopUpButton!
+    @IBOutlet weak var vidScanlineBrightnessSlider: NSSlider!
+    @IBOutlet weak var vidScanlineWeightSlider: NSSlider!
+    
+    @IBOutlet weak var vidMisalignmentPopUp: NSPopUpButton!
+    @IBOutlet weak var vidMisalignmentXSlider: NSSlider!
+    @IBOutlet weak var vidMisalignmentYSlider: NSSlider!
+    
+    // Geometry
+    @IBOutlet weak var vidAspectRatioButton: NSButton!
+    @IBOutlet weak var vidEyeXSlider: NSSlider!
+    @IBOutlet weak var vidEyeYSlider: NSSlider!
+    @IBOutlet weak var vidEyeZSlider: NSSlider!
+    
+    @IBOutlet weak var vidOkButton: NSButton!
+    @IBOutlet weak var vidCancelButton: NSButton!
     
     
     override func awakeFromNib() {
@@ -88,15 +134,17 @@ class PreferencesController : UserDialogController {
         opendOnAppLaunch = !c64.isRunnable()
         
         // If the dialog was opend on start up, we don't want to present the
-        // Cancel button to the user.
-        romCancelButton.isHidden = opendOnAppLaunch
-        
+        // Cancel button to the user. Furthermore, we rename the OK button.
+        hideCancelButton = opendOnAppLaunch
+        okButtonTitle = opendOnAppLaunch ? "Quit" : "OK"
+            
         // Connect outlets of drop views
         romBasicImage.dragImage = romBasicDragImage
         romCharImage.dragImage = romCharDragImage
         romKernalImage.dragImage = romKernalDragImage
         romVc1541Image.dragImage = romVc1541DragImage
 
+        awakeVideoPrefsFromNib()
         refresh()
     }
     
