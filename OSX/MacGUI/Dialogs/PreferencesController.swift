@@ -202,6 +202,20 @@ class PreferencesController : UserDialogController {
     // Keymap preferences
     //
     
+    @IBOutlet weak var info1: NSTextField!
+    @IBOutlet weak var info2: NSTextField!
+    @IBOutlet weak var icon: NSImageView!
+    @IBOutlet weak var keyMatrix: NSCollectionView!
+    
+    // Double array of key images, indexed by their row and column number
+    var keyImage = Array(repeating: Array(repeating: nil as NSImage?, count: 8), count: 8)
+    
+    // Keymap that is going to be customized
+    var keyMap: [MacKey:C64Key] = [:]
+    
+    // Selected C64 key
+    var selectedKey: C64Key? = nil
+    
     @IBOutlet weak var keyOkButton: NSButton!
     @IBOutlet weak var keyCancelButton: NSButton!
     
@@ -223,6 +237,7 @@ class PreferencesController : UserDialogController {
         romVc1541Image.dragImage = romVc1541DragImage
 
         awakeVideoPrefsFromNib()
+        awakeKeymapPrefsFromNib()
         refresh()
     }
     
@@ -248,7 +263,7 @@ class PreferencesController : UserDialogController {
             
             switch id {
             case "Devices": devKeyDown(with: key)
-            case "Keyboard": track()
+            case "Keyboard": mapKeyDown(with: key)
             default: break
             }
         }

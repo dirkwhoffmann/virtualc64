@@ -9,6 +9,7 @@
 
 import Foundation
 
+/*
 class KeyViewItem: NSCollectionViewItem {
     
     override func viewDidLoad() {
@@ -17,6 +18,7 @@ class KeyViewItem: NSCollectionViewItem {
         view.wantsLayer = true
     }
 }
+*/
 
 class KeyboardDialogWindow : NSWindow {
     

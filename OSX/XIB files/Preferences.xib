@@ -65,6 +65,8 @@
                 <outlet property="hwVicGrayDotBug" destination="Tgn-hC-LhH" id="755-yB-V5Y"/>
                 <outlet property="hwVicIcon" destination="WuF-5Y-4hm" id="iar-AO-rVd"/>
                 <outlet property="hwVicModelPopup" destination="ZQk-5s-Q3i" id="GTx-Ou-jHT"/>
+                <outlet property="icon" destination="LTh-It-90F" id="MOa-EA-WYi"/>
+                <outlet property="keyMatrix" destination="oJh-Cc-rn9" id="RsF-CI-beB"/>
                 <outlet property="prefTabView" destination="baz-eW-A74" id="fgy-dU-alU"/>
                 <outlet property="romBasicButton" destination="nSa-0I-2sF" id="LaM-hr-eDI"/>
                 <outlet property="romBasicDescription" destination="Val-uF-mCs" id="VL7-B6-3sn"/>
@@ -142,7 +144,7 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Roms" identifier="Roms" id="VwS-fe-RFZ">
-                                <view key="view" id="4If-78-eR2">
+                                <view key="view" ambiguous="YES" id="4If-78-eR2">
                                     <rect key="frame" x="10" y="33" width="600" height="502"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -895,7 +897,7 @@ DQ
                                         </button>
                                         <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="niU-ei-SQA">
                                             <rect key="frame" x="9" y="51" width="582" height="5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         </box>
                                         <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G7A-Sb-Z0Q" userLabel="System">
                                             <rect key="frame" x="83" y="9" width="196" height="26"/>
@@ -949,7 +951,7 @@ DQ
                                         </box>
                                         <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Zqw-i2-bRT">
                                             <rect key="frame" x="9" y="51" width="582" height="5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         </box>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ya2-Fb-SXo">
                                             <rect key="frame" x="19" y="101" width="114" height="17"/>
@@ -1720,7 +1722,7 @@ DQ
                                         </button>
                                         <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="4J9-i2-IT1">
                                             <rect key="frame" x="9" y="51" width="582" height="5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         </box>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LUa-AU-ni7">
                                             <rect key="frame" x="84" y="5" width="185" height="32"/>
@@ -2273,7 +2275,7 @@ DQ
                                         </button>
                                         <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="E2z-qK-zCm">
                                             <rect key="frame" x="9" y="51" width="582" height="5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         </box>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VzN-3N-LoN">
                                             <rect key="frame" x="86" y="5" width="185" height="32"/>
@@ -2299,25 +2301,29 @@ DQ
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Keyboard" identifier="Keyboard" id="Fw7-cE-DIs">
-                                <view key="view" ambiguous="YES" id="vPT-yd-wGg">
+                                <view key="view" id="vPT-yd-wGg">
                                     <rect key="frame" x="10" y="33" width="600" height="502"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <scrollView wantsLayer="YES" fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3H-16-RH1">
-                                            <rect key="frame" x="71" y="92" width="458" height="363"/>
+                                            <rect key="frame" x="71" y="72" width="458" height="349"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                             <clipView key="contentView" ambiguous="YES" id="GxJ-gG-I1j">
-                                                <rect key="frame" x="1" y="1" width="456" height="361"/>
+                                                <rect key="frame" x="1" y="1" width="456" height="347"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <collectionView ambiguous="YES" selectable="YES" id="oJh-Cc-rn9">
-                                                        <rect key="frame" x="0.0" y="0.0" width="456" height="361"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="456" height="347"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="4" minimumLineSpacing="4" id="FFa-s8-Xrr">
                                                             <size key="itemSize" width="48" height="48"/>
                                                             <edgeInsets key="sectionInset" left="4" right="4" top="4" bottom="4"/>
                                                         </collectionViewFlowLayout>
                                                         <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        <connections>
+                                                            <outlet property="dataSource" destination="-2" id="Ahv-r3-M6I"/>
+                                                            <outlet property="delegate" destination="-2" id="RhS-N5-fyF"/>
+                                                        </connections>
                                                     </collectionView>
                                                 </subviews>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -2328,15 +2334,10 @@ DQ
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                             <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.5" horizontal="NO" id="fgb-66-g0h">
-                                                <rect key="frame" x="441" y="1" width="16" height="361"/>
+                                                <rect key="frame" x="441" y="1" width="16" height="347"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                         </scrollView>
-                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LTh-It-90F">
-                                            <rect key="frame" x="458" y="422" width="71" height="67"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="KQ1-ON-v1w"/>
-                                        </imageView>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KU9-uV-hRQ">
                                             <rect key="frame" x="3" y="5" width="81" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2367,10 +2368,10 @@ DQ
                                         </button>
                                         <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="yHe-8x-xSL">
                                             <rect key="frame" x="9" y="49" width="582" height="5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         </box>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uV6-AB-BJ5">
-                                            <rect key="frame" x="69" y="472" width="65" height="17"/>
+                                            <rect key="frame" x="69" y="459" width="65" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="left" title="Key map:" id="ocP-Pw-Vno">
                                                 <font key="font" metaFont="system"/>
@@ -2379,7 +2380,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GNx-5i-6jP">
-                                            <rect key="frame" x="138" y="465" width="113" height="26"/>
+                                            <rect key="frame" x="138" y="452" width="113" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Symbolic" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="eiK-yy-zys" id="oQr-sN-xF2">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -2397,7 +2398,7 @@ DQ
                                             </popUpButtonCell>
                                         </popUpButton>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r5W-gp-Zux">
-                                            <rect key="frame" x="69" y="68" width="367" height="17"/>
+                                            <rect key="frame" x="69" y="430" width="367" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="To assign a key, click on a key in the keyboard matrix above." id="HJN-Sc-AsZ">
                                                 <font key="font" metaFont="system"/>
@@ -2407,12 +2408,20 @@ DQ
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WGw-GP-Edk">
                                             <rect key="frame" x="92" y="5" width="162" height="32"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <buttonCell key="cell" type="push" title="Restore default map" bezelStyle="rounded" alignment="center" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AZ1-dP-bEc">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="mapFactorySettingsAction:" target="-2" id="KwI-Bp-aZd"/>
+                                            </connections>
                                         </button>
+                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LTh-It-90F">
+                                            <rect key="frame" x="465" y="429" width="64" height="64"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSCaution" id="KQ1-ON-v1w"/>
+                                        </imageView>
                                     </subviews>
                                 </view>
                             </tabViewItem>
