@@ -126,6 +126,30 @@ class PreferencesController : UserDialogController {
     @IBOutlet weak var vidOkButton: NSButton!
     @IBOutlet weak var vidCancelButton: NSButton!
     
+    //
+    // Emulator preferences
+    //
+    
+    // VC1541
+    @IBOutlet weak var emuWarpLoad: NSButton!
+    @IBOutlet weak var emuDriveSounds: NSButton!
+    
+    // Screenshots
+    @IBOutlet weak var emuScreenshotSourcePopup: NSPopUpButton!
+    @IBOutlet weak var emuScreenshotTargetPopup: NSPopUpButton!
+    
+    // User Dialogs
+    @IBOutlet weak var emuAutoMountButton: NSButton!
+    @IBOutlet weak var emuCloseWithoutAskingButton: NSButton!
+    @IBOutlet weak var emuEjectWithoutAskingButton: NSButton!
+    
+    // Misc
+    @IBOutlet weak var emuPauseInBackground: NSButton!
+    @IBOutlet weak var emuAutoSnapshots: NSButton!
+    @IBOutlet weak var emuSnapshotInterval: NSTextField!
+    
+    @IBOutlet weak var emuOkButton: NSButton!
+    @IBOutlet weak var emuCancelButton: NSButton!
     
     override func awakeFromNib() {
         

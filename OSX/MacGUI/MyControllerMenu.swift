@@ -260,14 +260,14 @@ extension MyController : NSMenuItemValidation {
         savePanel.prompt = "Export"
         
         // Set allowed file types
-        switch screenshotFormat {
+        switch screenshotTarget {
         case .tiff: savePanel.allowedFileTypes = ["jpg"]
         case .bmp: savePanel.allowedFileTypes = ["bmp"]
         case .gif: savePanel.allowedFileTypes = ["gif"]
         case .jpeg: savePanel.allowedFileTypes = ["jpg"]
         case .png: savePanel.allowedFileTypes = ["png"]
         default:
-            track("Unsupported image format: \(screenshotFormat)")
+            track("Unsupported image format: \(screenshotTarget)")
             return
         }
         
@@ -290,14 +290,14 @@ extension MyController : NSMenuItemValidation {
         
         // Determine file suffix
         var suffix: String
-        switch screenshotFormat {
+        switch screenshotTarget {
         case .tiff: suffix = "tiff"
         case .bmp: suffix = "bmp"
         case .gif: suffix = "gif"
         case .jpeg: suffix = "jpg"
         case .png: suffix = "png"
         default:
-            track("Unsupported image format: \(screenshotFormat)")
+            track("Unsupported image format: \(screenshotTarget)")
             return
         }
         
@@ -316,10 +316,10 @@ extension MyController : NSMenuItemValidation {
     func saveScreenshot(url: URL) throws {
         
         // Take screenshot
-        let image = metalScreen.screenshot(afterUpscaling: screenshotResolution > 0)
+        let image = metalScreen.screenshot(afterUpscaling: screenshotSource > 0)
         
         // Convert to target format
-        let data = image?.representation(using: screenshotFormat)
+        let data = image?.representation(using: screenshotTarget)
         
         // Save to file
         try data?.write(to: url, options: .atomic)

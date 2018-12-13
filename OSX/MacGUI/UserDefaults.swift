@@ -490,8 +490,8 @@ extension VC64Keys {
     static let driveNoise           = "VC64DriveNoiseKey"
     
     // Screenshots
-    static let screenshotResolution = "VC64ScreenshotResolutionKey"
-    static let screenshotFormat     = "VC64ScreenshotFormatKey"
+    static let screenshotSource     = "VC64ScreenshotSourceKey"
+    static let screenshotTarget     = "VC64ScreenshotTargetKey"
     
     // User dialogs
     static let autoMount            = "VC64AutoMount"
@@ -510,8 +510,8 @@ extension Defaults {
     static let driveNoise           = true
     
     // Screenshots
-    static let screenshotResolution = 0
-    static let screenshotFormat     = NSBitmapImageRep.FileType.png
+    static let screenshotSource     = 0
+    static let screenshotTarget     = NSBitmapImageRep.FileType.png
     
     // User dialogs
     static let autoMount            = false
@@ -532,8 +532,8 @@ extension MyController {
             VC64Keys.warpLoad: Defaults.warpLoad,
             VC64Keys.driveNoise: Defaults.driveNoise,
             
-            VC64Keys.screenshotResolution: Defaults.screenshotResolution,
-            VC64Keys.screenshotFormat: Int(Defaults.screenshotFormat.rawValue),
+            VC64Keys.screenshotSource: Defaults.screenshotSource,
+            VC64Keys.screenshotTarget: Int(Defaults.screenshotTarget.rawValue),
 
             VC64Keys.autoMount: Defaults.autoMount,
             VC64Keys.closeWithoutAsking: Defaults.closeWithoutAsking,
@@ -557,8 +557,8 @@ extension MyController {
         c64.drive1.setSendSoundMessages(defaults.bool(forKey: VC64Keys.driveNoise))
         c64.drive2.setSendSoundMessages(defaults.bool(forKey: VC64Keys.driveNoise))
     
-        screenshotResolution = defaults.integer(forKey: VC64Keys.screenshotResolution)
-        screenshotFormatIntValue = defaults.integer(forKey: VC64Keys.screenshotFormat)
+        screenshotSource = defaults.integer(forKey: VC64Keys.screenshotSource)
+        screenshotTargetIntValue = defaults.integer(forKey: VC64Keys.screenshotTarget)
     
         autoMount = defaults.bool(forKey: VC64Keys.autoMount)
         closeWithoutAsking = defaults.bool(forKey: VC64Keys.closeWithoutAsking)
@@ -578,8 +578,8 @@ extension MyController {
         defaults.set(c64.drive1.sendSoundMessages(), forKey: VC64Keys.driveNoise)
         defaults.set(c64.drive2.sendSoundMessages(), forKey: VC64Keys.driveNoise)
 
-        defaults.set(screenshotResolution, forKey: VC64Keys.screenshotResolution)
-        defaults.set(screenshotFormatIntValue, forKey: VC64Keys.screenshotFormat)
+        defaults.set(screenshotSource, forKey: VC64Keys.screenshotSource)
+        defaults.set(screenshotTargetIntValue, forKey: VC64Keys.screenshotTarget)
         
         defaults.set(autoMount, forKey: VC64Keys.autoMount)
         defaults.set(closeWithoutAsking, forKey: VC64Keys.closeWithoutAsking)

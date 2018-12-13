@@ -16,8 +16,8 @@ class EmulatorPrefsController : UserDialogController {
     @IBOutlet weak var driveNoise: NSButton!
     
     // Screenshots
-    @IBOutlet weak var screenshotResolutionPopup: NSPopUpButton!
-    @IBOutlet weak var screenshotFormatPopup: NSPopUpButton!
+    @IBOutlet weak var screenshotSourcePopup: NSPopUpButton!
+    @IBOutlet weak var screenshotTargetPopup: NSPopUpButton!
 
     // User Dialogs
     @IBOutlet weak var autoMountButton: NSButton!
@@ -41,8 +41,8 @@ class EmulatorPrefsController : UserDialogController {
         driveNoise.state = c64.drive1.sendSoundMessages() ? .on : .off
         
         // Screenshots
-        screenshotResolutionPopup.selectItem(withTag: parent.screenshotResolution)
-        screenshotFormatPopup.selectItem(withTag: parent.screenshotFormatIntValue)
+        screenshotSourcePopup.selectItem(withTag: parent.screenshotSource)
+        screenshotTargetPopup.selectItem(withTag: parent.screenshotTargetIntValue)
 
         // Documents
         autoMountButton.state = parent.autoMount ? .on : .off
@@ -79,15 +79,15 @@ class EmulatorPrefsController : UserDialogController {
     // Action methods (Screenshots)
     //
     
-    @IBAction func screenshotResolutionAction(_ sender: NSMenuItem!) {
+    @IBAction func screenshotSourceAction(_ sender: NSMenuItem!) {
         
-        parent.screenshotResolution = sender.tag
+        parent.screenshotSource = sender.tag
         update()
     }
 
-    @IBAction func screenshotFormatAction(_ sender: NSMenuItem!) {
+    @IBAction func screenshotTargetAction(_ sender: NSMenuItem!) {
         
-        parent.screenshotFormatIntValue = sender.tag
+        parent.screenshotTargetIntValue = sender.tag
         update()
     }
 
@@ -160,8 +160,8 @@ class EmulatorPrefsController : UserDialogController {
         c64.drive2.setSendSoundMessages(Defaults.driveNoise)
         
         // Screenshots
-        parent.screenshotResolution = Defaults.screenshotResolution
-        parent.screenshotFormat = Defaults.screenshotFormat
+        parent.screenshotSource = Defaults.screenshotSource
+        parent.screenshotTarget = Defaults.screenshotTarget
         
         // User Dialogs
         parent.autoMount = Defaults.autoMount

@@ -81,13 +81,13 @@ class MyController : NSWindowController, MessageReceiver {
     var vc1541RomURL: URL = Defaults.vc1541Rom
 
     /// Screenshot resolution (0 = low, 1 = high)
-    var screenshotResolution = Defaults.screenshotResolution
+    var screenshotSource = Defaults.screenshotSource
     
     /// Screenshot image format
-    var screenshotFormat = Defaults.screenshotFormat
-    var screenshotFormatIntValue : Int {
-        get { return Int(screenshotFormat.rawValue) }
-        set { screenshotFormat = NSBitmapImageRep.FileType(rawValue: UInt(newValue))! }
+    var screenshotTarget = Defaults.screenshotTarget
+    var screenshotTargetIntValue : Int {
+        get { return Int(screenshotTarget.rawValue) }
+        set { screenshotTarget = NSBitmapImageRep.FileType(rawValue: UInt(newValue))! }
     }
     
     /// Indicates if the user dialog should be skipped when opening archives.
