@@ -26,6 +26,10 @@ class RomDropView : NSImageView
     @IBOutlet var dialogController: UserDialogController!
     var dragImage: NSImageView?
 
+    func acceptDragSource(url: URL) -> Bool {
+        return dialogController.c64.isRom(url)
+    }
+    
     override func awakeFromNib()
     {
         registerForDraggedTypes([NSPasteboard.PasteboardType.compatibleFileURL])
@@ -34,7 +38,7 @@ class RomDropView : NSImageView
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation
     {
         if let url = sender.url {
-            if dialogController.c64.isRom(url) {
+            if acceptDragSource(url: url) {
                 image = NSImage.init(named: "rom_medium")
                 dragImage?.isHidden = true
                 return .copy
@@ -72,3 +76,30 @@ class RomDropView : NSImageView
     }
 }
 
+class BasicRomDropView : RomDropView
+{
+    override func acceptDragSource(url: URL) -> Bool {
+        return dialogController.c64.isBasicRom(url)
+    }
+}
+
+class CharRomDropView : RomDropView
+{
+    override func acceptDragSource(url: URL) -> Bool {
+        return dialogController.c64.isCharRom(url)
+    }
+}
+
+class KernalRomDropView : RomDropView
+{
+    override func acceptDragSource(url: URL) -> Bool {
+        return dialogController.c64.isKernalRom(url)
+    }
+}
+
+class Vc1541RomDropView : RomDropView
+{
+    override func acceptDragSource(url: URL) -> Bool {
+        return dialogController.c64.isVC1541Rom(url)
+    }
+}
