@@ -11,14 +11,14 @@
                 <outlet property="prefTabView" destination="baz-eW-A74" id="fgy-dU-alU"/>
                 <outlet property="romBasicButton" destination="nSa-0I-2sF" id="LaM-hr-eDI"/>
                 <outlet property="romBasicDescription" destination="Val-uF-mCs" id="VL7-B6-3sn"/>
-                <outlet property="romBasicDragText" destination="JwW-L5-hpi" id="sM4-gc-brF"/>
+                <outlet property="romBasicDragImage" destination="wqf-Zy-EtN" id="GsF-nK-1j7"/>
                 <outlet property="romBasicHashText" destination="10b-BC-y6b" id="XWk-c0-wYf"/>
                 <outlet property="romBasicImage" destination="rV9-BQ-AAx" id="gjn-vP-yXL"/>
                 <outlet property="romBasicPathText" destination="LBs-Al-1wH" id="lSF-pL-uSt"/>
                 <outlet property="romCancelButton" destination="ZhO-d6-muu" id="U1C-ne-iYK"/>
                 <outlet property="romCharButton" destination="wF6-vA-6xk" id="nXM-a7-0pH"/>
                 <outlet property="romCharDescription" destination="Pea-uJ-4G8" id="raO-PO-Cfy"/>
-                <outlet property="romCharDragText" destination="d4L-vo-32L" id="NgK-vn-OcV"/>
+                <outlet property="romCharDragImage" destination="bq3-pi-7i2" id="2yN-BB-wr7"/>
                 <outlet property="romCharHashText" destination="pJq-X4-x2y" id="dnt-HT-phH"/>
                 <outlet property="romCharImage" destination="I3M-ht-lkl" id="Hal-Hp-Zn2"/>
                 <outlet property="romCharPathText" destination="4Wh-MS-Mx7" id="bXV-MG-aEf"/>
@@ -26,7 +26,7 @@
                 <outlet property="romHeaderSubText" destination="Iu8-Zf-nWB" id="tue-dw-aF0"/>
                 <outlet property="romHeaderText" destination="LwW-aA-bBr" id="onC-hJ-rEA"/>
                 <outlet property="romKernalDescription" destination="olG-Cx-dQe" id="lv4-Xh-rQf"/>
-                <outlet property="romKernalDragText" destination="Rcl-ZO-Vcw" id="zfy-BD-PNA"/>
+                <outlet property="romKernalDragImage" destination="kaA-og-KWc" id="dQN-A0-Ng9"/>
                 <outlet property="romKernalHashText" destination="DhW-S3-d80" id="WI0-BK-0QC"/>
                 <outlet property="romKernalImage" destination="khi-bK-T0V" id="eUE-h3-46V"/>
                 <outlet property="romKernalPathText" destination="1iD-sE-Iu0" id="Xjx-WF-D8f"/>
@@ -34,7 +34,7 @@
                 <outlet property="romOkButton" destination="sYt-GY-XZQ" id="x48-u0-P2N"/>
                 <outlet property="romVc1541Button" destination="5aa-kC-14X" id="M1r-50-IEw"/>
                 <outlet property="romVc1541Description" destination="hMS-xE-H7T" id="0k1-GI-MJa"/>
-                <outlet property="romVc1541DragText" destination="wsJ-vw-d9w" id="4f4-MB-BEc"/>
+                <outlet property="romVc1541DragImage" destination="efp-cS-PpO" id="Yut-Ew-TSf"/>
                 <outlet property="romVc1541HashText" destination="DMA-Yr-TF0" id="JyR-Rz-yQz"/>
                 <outlet property="romVc1541Image" destination="A84-Oz-THd" id="dJE-QV-9gG"/>
                 <outlet property="romVc1541PathText" destination="MDH-B1-lYs" id="qHS-4U-0IV"/>
@@ -50,7 +50,7 @@
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="646" height="564"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <tabView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="baz-eW-A74">
                         <rect key="frame" x="13" y="2" width="620" height="548"/>
@@ -152,15 +152,11 @@ Gw
                                                             <outlet property="dialogController" destination="-2" id="33v-8i-e25"/>
                                                         </connections>
                                                     </imageView>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JwW-L5-hpi">
-                                                        <rect key="frame" x="23" y="17" width="53" height="56"/>
+                                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wqf-Zy-EtN">
+                                                        <rect key="frame" x="32" y="25" width="40" height="40"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Drag File Here" id="H1c-jZ-cbo">
-                                                            <font key="font" metaFont="systemMedium" size="13"/>
-                                                            <color key="textColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="dragTemplate" id="m8M-ZE-S04"/>
+                                                    </imageView>
                                                 </subviews>
                                             </view>
                                         </box>
@@ -215,15 +211,6 @@ Gw
                                                             <outlet property="dialogController" destination="-2" id="Gl8-2C-FhI"/>
                                                         </connections>
                                                     </imageView>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d4L-vo-32L">
-                                                        <rect key="frame" x="24" y="16" width="53" height="56"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Drag File Here" id="Zdz-jq-IPP">
-                                                            <font key="font" metaFont="systemMedium" size="13"/>
-                                                            <color key="textColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wF6-vA-6xk">
                                                         <rect key="frame" x="544" y="9" width="20" height="20"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
@@ -235,6 +222,11 @@ Gw
                                                             <action selector="romDeleteCharAction:" target="-2" id="JP3-Ps-6JR"/>
                                                         </connections>
                                                     </button>
+                                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bq3-pi-7i2">
+                                                        <rect key="frame" x="33" y="24" width="40" height="40"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="dragTemplate" id="6Dm-iE-6Zm"/>
+                                                    </imageView>
                                                 </subviews>
                                             </view>
                                         </box>
@@ -289,15 +281,6 @@ Gw
                                                             <outlet property="dialogController" destination="-2" id="z85-4B-Yl4"/>
                                                         </connections>
                                                     </imageView>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rcl-ZO-Vcw">
-                                                        <rect key="frame" x="24" y="16" width="53" height="56"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Drag File Here" id="JDL-oQ-jsf">
-                                                            <font key="font" metaFont="systemMedium" size="13"/>
-                                                            <color key="textColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sT6-dg-rcI">
                                                         <rect key="frame" x="544" y="10" width="20" height="20"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
@@ -309,6 +292,11 @@ Gw
                                                             <action selector="romDeleteKernalAction:" target="-2" id="Cxe-vI-IAq"/>
                                                         </connections>
                                                     </button>
+                                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kaA-og-KWc">
+                                                        <rect key="frame" x="33" y="25" width="40" height="40"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="dragTemplate" id="cEf-jm-Xhr"/>
+                                                    </imageView>
                                                 </subviews>
                                             </view>
                                         </box>
@@ -363,15 +351,6 @@ Gw
                                                             <outlet property="dialogController" destination="-2" id="Jrr-Pe-eEA"/>
                                                         </connections>
                                                     </imageView>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wsJ-vw-d9w">
-                                                        <rect key="frame" x="21" y="17" width="53" height="56"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Drag File Here" id="L9T-ad-uZl">
-                                                            <font key="font" metaFont="systemMedium" size="13"/>
-                                                            <color key="textColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5aa-kC-14X">
                                                         <rect key="frame" x="542" y="9" width="20" height="20"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
@@ -383,6 +362,11 @@ Gw
                                                             <action selector="romDeleteVC1541Action:" target="-2" id="JAB-n3-gPW"/>
                                                         </connections>
                                                     </button>
+                                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="efp-cS-PpO">
+                                                        <rect key="frame" x="31" y="25" width="40" height="40"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="dragTemplate" id="57P-gr-Q9v"/>
+                                                    </imageView>
                                                 </subviews>
                                             </view>
                                         </box>
@@ -2081,7 +2065,7 @@ DQ
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                             <clipView key="contentView" ambiguous="YES" id="GxJ-gG-I1j">
                                                 <rect key="frame" x="1" y="1" width="456" height="361"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <collectionView ambiguous="YES" selectable="YES" id="oJh-Cc-rn9">
                                                         <rect key="frame" x="0.0" y="0.0" width="456" height="361"/>
@@ -2201,6 +2185,7 @@ DQ
     </objects>
     <resources>
         <image name="NSCaution" width="128" height="128"/>
+        <image name="dragTemplate" width="92" height="92"/>
         <image name="joystick2" width="569.45452880859375" height="654.54547119140625"/>
         <image name="key" width="198" height="187"/>
         <image name="pref_cia" width="257" height="257"/>

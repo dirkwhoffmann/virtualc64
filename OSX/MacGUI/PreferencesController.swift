@@ -19,36 +19,33 @@ class PreferencesController : UserDialogController {
     // Rom preferences
     //
     
-    let romImage = NSImage.init(named: "rom")
-    let romImageLight = NSImage.init(named: "rom_light")
-    
     @IBOutlet weak var romHeaderImage: NSImageView!
     @IBOutlet weak var romHeaderText: NSTextField!
     @IBOutlet weak var romHeaderSubText: NSTextField!
     
-    @IBOutlet weak var romBasicImage: NSImageView!
-    @IBOutlet weak var romBasicDragText: NSTextField!
+    @IBOutlet weak var romBasicImage: RomDropView!
+    @IBOutlet weak var romBasicDragImage: NSImageView!
     @IBOutlet weak var romBasicHashText: NSTextField!
     @IBOutlet weak var romBasicPathText: NSTextField!
     @IBOutlet weak var romBasicDescription: NSTextField!
     @IBOutlet weak var romBasicButton: NSButton!
     
-    @IBOutlet weak var romKernalImage: NSImageView!
-    @IBOutlet weak var romKernalDragText: NSTextField!
+    @IBOutlet weak var romKernalImage: RomDropView!
+    @IBOutlet weak var romKernalDragImage: NSImageView!
     @IBOutlet weak var romKernalHashText: NSTextField!
     @IBOutlet weak var romKernalPathText: NSTextField!
     @IBOutlet weak var romKernalDescription: NSTextField!
     @IBOutlet weak var romKernelButton: NSButton!
     
-    @IBOutlet weak var romCharImage: NSImageView!
-    @IBOutlet weak var romCharDragText: NSTextField!
+    @IBOutlet weak var romCharImage: RomDropView!
+    @IBOutlet weak var romCharDragImage: NSImageView!
     @IBOutlet weak var romCharHashText: NSTextField!
     @IBOutlet weak var romCharPathText: NSTextField!
     @IBOutlet weak var romCharDescription: NSTextField!
     @IBOutlet weak var romCharButton: NSButton!
     
-    @IBOutlet weak var romVc1541Image: NSImageView!
-    @IBOutlet weak var romVc1541DragText: NSTextField!
+    @IBOutlet weak var romVc1541Image: RomDropView!
+    @IBOutlet weak var romVc1541DragImage: NSImageView!
     @IBOutlet weak var romVc1541HashText: NSTextField!
     @IBOutlet weak var romVc1541PathText: NSTextField!
     @IBOutlet weak var romVc1541Description: NSTextField!
@@ -67,6 +64,12 @@ class PreferencesController : UserDialogController {
         // Cancel button to the user.
         romCancelButton.isHidden = opendOnAppLaunch
         
+        // Connect outlets of drop views
+        romBasicImage.dragImage = romBasicDragImage
+        romCharImage.dragImage = romCharDragImage
+        romKernalImage.dragImage = romKernalDragImage
+        romVc1541Image.dragImage = romVc1541DragImage
+
         refresh()
     }
     
@@ -86,11 +89,6 @@ class PreferencesController : UserDialogController {
             default: break
             }
         }
-    }
-    
-    func refreshAll() {
-        
-        refreshRomTab()
     }
     
     @IBAction override func cancelAction(_ sender: Any!) {

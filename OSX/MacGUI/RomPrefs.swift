@@ -75,6 +75,9 @@ extension PreferencesController {
 
     func refreshRomTab() {
         
+        let romImage = NSImage.init(named: "rom")
+        let romImageLight = NSImage.init(named: "rom_light")
+        
         // Gather information about Roms
         let hasBasicRom = c64.isBasicRomLoaded()
         let hasKernalRom = c64.isKernalRomLoaded()
@@ -112,7 +115,7 @@ extension PreferencesController {
         
         // Basic Rom
         romBasicImage.image = hasBasicRom ? romImage : romImageLight
-        romBasicDragText.isHidden = hasBasicRom
+        romBasicDragImage.isHidden = hasBasicRom
         romBasicHashText.isHidden = !hasBasicRom
         romBasicHashText.stringValue = String(format: "Hash: %llX", basicHash)
         romBasicPathText.isHidden = !hasBasicRom
@@ -128,7 +131,7 @@ extension PreferencesController {
         
         // Kernal Rom
         romKernalImage.image = hasKernalRom ? romImage : romImageLight
-        romKernalDragText.isHidden = hasKernalRom
+        romKernalDragImage.isHidden = hasKernalRom
         romKernalHashText.isHidden = !hasKernalRom
         romKernalHashText.stringValue = String(format: "Hash: %llX", kernalHash)
         romKernalPathText.isHidden = !hasKernalRom
@@ -144,7 +147,7 @@ extension PreferencesController {
         
         // Character Rom
         romCharImage.image = hasCharacterRom ? romImage : romImageLight
-        romCharDragText.isHidden = hasCharacterRom
+        romCharDragImage.isHidden = hasCharacterRom
         romCharHashText.isHidden = !hasCharacterRom
         romCharHashText.stringValue = String(format: "Hash: %llX", characterHash)
         romCharDescription.textColor = NSColor.textColor
@@ -161,7 +164,7 @@ extension PreferencesController {
         
         // VC1541 Rom
         romVc1541Image.image = hasVc1541Rom ? romImage : romImageLight
-        romVc1541DragText.isHidden = hasVc1541Rom
+        romVc1541DragImage.isHidden = hasVc1541Rom
         romVc1541HashText.isHidden = !hasVc1541Rom
         romVc1541HashText.stringValue = String(format: "Hash: %llX", vc1541Hash)
         romVc1541Description.textColor = NSColor.textColor

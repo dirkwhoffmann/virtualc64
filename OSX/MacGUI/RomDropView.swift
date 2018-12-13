@@ -24,7 +24,8 @@ extension NSDraggingInfo
 class RomDropView : NSImageView
 {
     @IBOutlet var dialogController: UserDialogController!
-    
+    var dragImage: NSImageView?
+
     override func awakeFromNib()
     {
         registerForDraggedTypes([NSPasteboard.PasteboardType.compatibleFileURL])
@@ -35,6 +36,7 @@ class RomDropView : NSImageView
         if let url = sender.url {
             if dialogController.c64.isRom(url) {
                 image = NSImage.init(named: "rom_medium")
+                dragImage?.isHidden = true
                 return .copy
             }
         }
@@ -43,6 +45,7 @@ class RomDropView : NSImageView
     
     override func draggingExited(_ sender: NSDraggingInfo?)
     {
+        dragImage?.isHidden = false
         dialogController.refresh()
     }
     
