@@ -8,10 +8,23 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PreferencesController" customModule="VirtualC64" customModuleProvider="target">
             <connections>
+                <outlet property="hwCiaModelPopup" destination="MVI-Fh-OO6" id="coA-3a-xgT"/>
+                <outlet property="hwCiaTimerBBug" destination="4rD-qd-qGj" id="6Nf-wz-IRb"/>
+                <outlet property="hwGlueLogicPopup" destination="eOu-BN-YUt" id="H5c-VY-ROb"/>
+                <outlet property="hwInfoText" destination="nV7-HX-859" id="fGO-8O-4dt"/>
+                <outlet property="hwRamInitPatternPopup" destination="N53-b0-EtR" id="fpe-DG-QfY"/>
+                <outlet property="hwSidEnginePopup" destination="BTz-kT-JtT" id="tcq-vb-6f3"/>
+                <outlet property="hwSidFilter" destination="ViO-fU-69W" id="gJN-wt-Ava"/>
+                <outlet property="hwSidModelPopup" destination="Htk-aA-fCu" id="5ni-vE-Vtl"/>
+                <outlet property="hwSidSamplingPopup" destination="atg-zP-MC1" id="b91-vM-RJA"/>
+                <outlet property="hwVicDescription" destination="XWk-lQ-das" id="1zY-xQ-rLX"/>
+                <outlet property="hwVicGrayDotBug" destination="Tgn-hC-LhH" id="755-yB-V5Y"/>
+                <outlet property="hwVicIcon" destination="WuF-5Y-4hm" id="iar-AO-rVd"/>
+                <outlet property="hwVicModelPopup" destination="ZQk-5s-Q3i" id="GTx-Ou-jHT"/>
                 <outlet property="prefTabView" destination="baz-eW-A74" id="fgy-dU-alU"/>
                 <outlet property="romBasicButton" destination="nSa-0I-2sF" id="LaM-hr-eDI"/>
                 <outlet property="romBasicDescription" destination="Val-uF-mCs" id="VL7-B6-3sn"/>
-                <outlet property="romBasicDragImage" destination="wqf-Zy-EtN" id="GsF-nK-1j7"/>
+                <outlet property="romBasicDragImage" destination="wqf-Zy-EtN" id="hKq-xc-r2n"/>
                 <outlet property="romBasicHashText" destination="10b-BC-y6b" id="XWk-c0-wYf"/>
                 <outlet property="romBasicImage" destination="rV9-BQ-AAx" id="gjn-vP-yXL"/>
                 <outlet property="romBasicPathText" destination="LBs-Al-1wH" id="lSF-pL-uSt"/>
@@ -58,7 +71,7 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Roms" identifier="Roms" id="VwS-fe-RFZ">
-                                <view key="view" ambiguous="YES" id="4If-78-eR2">
+                                <view key="view" id="4If-78-eR2">
                                     <rect key="frame" x="10" y="33" width="600" height="502"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -408,12 +421,12 @@ Gw
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Hardware" identifier="Hardware" id="vMg-zr-Ex1">
-                                <view key="view" id="yrH-J2-nFc">
+                                <view key="view" ambiguous="YES" id="yrH-J2-nFc">
                                     <rect key="frame" x="10" y="33" width="600" height="502"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XWk-lQ-das">
-                                            <rect key="frame" x="95" y="422" width="140" height="14"/>
+                                            <rect key="frame" x="95" y="427" width="140" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" title="Lorem ipsum" placeholderString="" id="rxf-xI-96z">
                                                 <font key="font" metaFont="smallSystem"/>
@@ -422,7 +435,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OsI-DD-TfG">
-                                            <rect key="frame" x="325" y="453" width="83" height="20"/>
+                                            <rect key="frame" x="325" y="457" width="83" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Model:" id="gf2-0n-bLs">
                                                 <font key="font" metaFont="system"/>
@@ -431,51 +444,33 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZQk-5s-Q3i" userLabel="System">
-                                            <rect key="frame" x="412" y="450" width="182" height="26"/>
+                                            <rect key="frame" x="412" y="454" width="182" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="MOS 6569 R1" bezelStyle="rounded" imagePosition="right" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="eM3-YM-a9W" id="3A2-Za-Kyn" userLabel="System">
+                                            <popUpButtonCell key="cell" type="push" title="MOS 6569 R1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="eM3-YM-a9W" id="3A2-Za-Kyn" userLabel="System">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="iEf-S6-IbN">
                                                     <items>
                                                         <menuItem title="MOS 6569 R1" state="on" tag="1" id="eM3-YM-a9W">
                                                             <attributedString key="attributedTitle"/>
-                                                            <connections>
-                                                                <action selector="vicChipModelAction:" target="-1" id="VDh-IX-CDA"/>
-                                                            </connections>
                                                         </menuItem>
-                                                        <menuItem title="MOS 6569 R3" tag="2" id="X5T-vd-adB">
-                                                            <connections>
-                                                                <action selector="vicChipModelAction:" target="-1" id="hRq-OX-1xn"/>
-                                                            </connections>
-                                                        </menuItem>
+                                                        <menuItem title="MOS 6569 R3" tag="2" id="X5T-vd-adB"/>
                                                         <menuItem title="MOS 8565" tag="4" id="PRe-f4-iSB">
-                                                            <connections>
-                                                                <action selector="vicChipModelAction:" target="-1" id="1TZ-R0-h1j"/>
-                                                            </connections>
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem isSeparatorItem="YES" id="OLa-XA-2LX"/>
-                                                        <menuItem title="MOS 6567  R56A" tag="8" id="6cl-4h-IcH">
-                                                            <connections>
-                                                                <action selector="vicChipModelAction:" target="-1" id="sg0-t9-M2z"/>
-                                                            </connections>
-                                                        </menuItem>
-                                                        <menuItem title="MOS 6567" tag="16" id="f7G-hl-JPf">
-                                                            <connections>
-                                                                <action selector="vicChipModelAction:" target="-1" id="kCm-pR-pX0"/>
-                                                            </connections>
-                                                        </menuItem>
-                                                        <menuItem title="MOS 8562" tag="32" id="1zU-oY-xYp">
-                                                            <connections>
-                                                                <action selector="vicChipModelAction:" target="-1" id="4qS-qO-5vq"/>
-                                                            </connections>
-                                                        </menuItem>
+                                                        <menuItem title="MOS 6567  R56A" tag="8" id="6cl-4h-IcH"/>
+                                                        <menuItem title="MOS 6567" tag="16" id="f7G-hl-JPf"/>
+                                                        <menuItem title="MOS 8562" tag="32" id="1zU-oY-xYp"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="hwVicModelAction:" target="-2" id="J2Q-wN-Xt4"/>
+                                            </connections>
                                         </popUpButton>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B6w-F5-PJa">
-                                            <rect key="frame" x="95" y="457" width="70" height="17"/>
+                                            <rect key="frame" x="95" y="462" width="70" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="VIC II" id="XVq-4o-DZH">
                                                 <font key="font" metaFont="systemBold"/>
@@ -489,7 +484,7 @@ Gw
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="pref_vicii_pal" id="ahb-PH-qrV"/>
                                         </imageView>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5iD-iw-yrC">
-                                            <rect key="frame" x="95" y="439" width="140" height="14"/>
+                                            <rect key="frame" x="95" y="444" width="140" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Video Interface Controller" id="ONx-Hz-l6a">
                                                 <font key="font" metaFont="smallSystem"/>
@@ -498,19 +493,22 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tgn-hC-LhH">
-                                            <rect key="frame" x="413" y="428" width="168" height="18"/>
+                                            <rect key="frame" x="413" y="432" width="168" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Emulate grey dot bug" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="gFY-HC-hxa">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="hwVicGrayDotBugAction:" target="-2" id="SyS-Ot-nqu"/>
+                                            </connections>
                                         </button>
                                         <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Rbx-NE-Q5i">
-                                            <rect key="frame" x="9" y="335" width="582" height="5"/>
+                                            <rect key="frame" x="9" y="319" width="582" height="5"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         </box>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gD2-kC-9md">
-                                            <rect key="frame" x="325" y="161" width="83" height="20"/>
+                                            <rect key="frame" x="325" y="138" width="83" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Glue logic:" id="WMc-tm-KgS">
                                                 <font key="font" metaFont="system"/>
@@ -519,7 +517,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eOu-BN-YUt" userLabel="System">
-                                            <rect key="frame" x="412" y="158" width="182" height="26"/>
+                                            <rect key="frame" x="412" y="135" width="182" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Discrete" bezelStyle="rounded" imagePosition="right" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="oNe-R3-j5U" id="O50-3t-Tsw" userLabel="System">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -533,9 +531,12 @@ Gw
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="hwGlueLogicAction:" target="-2" id="9uQ-u4-707"/>
+                                            </connections>
                                         </popUpButton>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qrl-b5-Rxe">
-                                            <rect key="frame" x="266" y="132" width="142" height="21"/>
+                                            <rect key="frame" x="266" y="109" width="142" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Ram init pattern:" id="QCw-V4-NFT">
                                                 <font key="font" metaFont="system"/>
@@ -544,7 +545,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N53-b0-EtR" userLabel="System">
-                                            <rect key="frame" x="412" y="129" width="182" height="26"/>
+                                            <rect key="frame" x="412" y="106" width="182" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="C64" bezelStyle="rounded" imagePosition="right" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="c0k-4E-Bw7" id="9X3-bD-eLr" userLabel="System">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -558,9 +559,12 @@ Gw
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="hwRamInitPatternAction:" target="-2" id="UWF-1H-6RY"/>
+                                            </connections>
                                         </popUpButton>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NWG-hq-HKF">
-                                            <rect key="frame" x="325" y="302" width="83" height="19"/>
+                                            <rect key="frame" x="325" y="286" width="83" height="19"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Model:" id="ehv-gZ-5K7">
                                                 <font key="font" metaFont="system"/>
@@ -569,7 +573,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A86-4U-ixl">
-                                            <rect key="frame" x="314" y="245" width="94" height="17"/>
+                                            <rect key="frame" x="314" y="229" width="94" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Sound engine: " id="Q6e-aH-e7v">
                                                 <font key="font" metaFont="system"/>
@@ -578,10 +582,10 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atg-zP-MC1">
-                                            <rect key="frame" x="412" y="211" width="182" height="26"/>
+                                            <rect key="frame" x="412" y="195" width="182" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Nearest neighbor" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="SW9-GZ-YXr" id="TQi-iH-9G5">
-                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                            <popUpButtonCell key="cell" type="push" title="Nearest neighbor" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="SW9-GZ-YXr" id="TQi-iH-9G5">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" id="ard-Ny-B6Y">
                                                     <items>
@@ -597,11 +601,14 @@ Gw
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="hwSidSamplingAction:" target="-2" id="3HC-Pc-Rnm"/>
+                                            </connections>
                                         </popUpButton>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Htk-aA-fCu">
-                                            <rect key="frame" x="412" y="298" width="182" height="26"/>
+                                            <rect key="frame" x="412" y="282" width="182" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="MOS 8580" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="yhv-8R-wh7" id="kOD-Qi-JqI">
+                                            <popUpButtonCell key="cell" type="push" title="MOS 8580" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="yhv-8R-wh7" id="kOD-Qi-JqI">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" id="xr9-Ut-4eK">
@@ -615,12 +622,15 @@ Gw
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="hwSidModelAction:" target="-2" id="9Om-y6-M4f"/>
+                                            </connections>
                                         </popUpButton>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BTz-kT-JtT">
-                                            <rect key="frame" x="412" y="240" width="182" height="26"/>
+                                            <rect key="frame" x="412" y="224" width="182" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="ReSID" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="gVz-1D-gyU" id="BJt-dQ-yBe">
-                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                            <popUpButtonCell key="cell" type="push" title="ReSID" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="gVz-1D-gyU" id="BJt-dQ-yBe">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" id="NC9-aE-UnS">
                                                     <items>
@@ -633,14 +643,17 @@ Gw
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="hwSidEngineAction:" target="-2" id="yaR-Ed-TdQ"/>
+                                            </connections>
                                         </popUpButton>
                                         <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jFL-A9-5jT">
-                                            <rect key="frame" x="29" y="274" width="55" height="55"/>
+                                            <rect key="frame" x="29" y="258" width="55" height="55"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="pref_sid" id="w4L-8V-3bo"/>
                                         </imageView>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XmO-Sa-KL5">
-                                            <rect key="frame" x="95" y="305" width="114" height="17"/>
+                                            <rect key="frame" x="95" y="289" width="114" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="SID" id="CZ0-xb-rCR">
                                                 <font key="font" metaFont="systemBold"/>
@@ -649,15 +662,18 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ViO-fU-69W">
-                                            <rect key="frame" x="412" y="277" width="168" height="18"/>
+                                            <rect key="frame" x="412" y="261" width="168" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Emulate audio filter" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="i1G-xG-FwI">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="hwSidFilterAction:" target="-2" id="cde-Ak-Wro"/>
+                                            </connections>
                                         </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B7S-Ia-4wU">
-                                            <rect key="frame" x="294" y="217" width="114" height="17"/>
+                                            <rect key="frame" x="294" y="201" width="114" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Sampling method:" id="len-xz-Iki">
                                                 <font key="font" metaFont="system"/>
@@ -666,7 +682,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7jt-xG-gbs">
-                                            <rect key="frame" x="95" y="289" width="127" height="14"/>
+                                            <rect key="frame" x="95" y="273" width="127" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Sound Interface Device" id="8FC-r9-ajd">
                                                 <font key="font" metaFont="smallSystem"/>
@@ -675,11 +691,11 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="dZN-gI-fop">
-                                            <rect key="frame" x="9" y="410" width="582" height="5"/>
+                                            <rect key="frame" x="9" y="402" width="582" height="5"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         </box>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W9r-Pu-qL9">
-                                            <rect key="frame" x="325" y="378" width="83" height="19"/>
+                                            <rect key="frame" x="325" y="370" width="83" height="19"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Model:" id="Xkd-Qc-NxF">
                                                 <font key="font" metaFont="system"/>
@@ -688,10 +704,10 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MVI-Fh-OO6">
-                                            <rect key="frame" x="412" y="374" width="182" height="26"/>
+                                            <rect key="frame" x="412" y="366" width="182" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="MOS 6526" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="Lc2-VF-Hgl" id="LpY-G9-5wk">
-                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                            <popUpButtonCell key="cell" type="push" title="MOS 6526" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="Lc2-VF-Hgl" id="LpY-G9-5wk">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" id="RtS-bT-3rE">
                                                     <items>
@@ -704,14 +720,17 @@ Gw
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="hwCiaModelAction:" target="-2" id="GSX-cZ-Vun"/>
+                                            </connections>
                                         </popUpButton>
                                         <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hbv-1T-uJU">
-                                            <rect key="frame" x="29" y="349" width="55" height="55"/>
+                                            <rect key="frame" x="29" y="341" width="55" height="55"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="pref_cia" id="Scu-Eu-XtK"/>
                                         </imageView>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FmD-sa-EYL">
-                                            <rect key="frame" x="95" y="380" width="114" height="17"/>
+                                            <rect key="frame" x="95" y="372" width="114" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="CIA" id="rvQ-bL-bbY">
                                                 <font key="font" metaFont="systemBold"/>
@@ -720,7 +739,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hfY-0G-EHl">
-                                            <rect key="frame" x="95" y="364" width="151" height="14"/>
+                                            <rect key="frame" x="95" y="356" width="151" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Complex Interface Adapters" id="oiR-WS-BnA">
                                                 <font key="font" metaFont="smallSystem"/>
@@ -729,12 +748,12 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RUj-7K-u9z">
-                                            <rect key="frame" x="27" y="134" width="55" height="55"/>
+                                            <rect key="frame" x="27" y="113" width="55" height="55"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="pref_mem" id="oDa-5i-2aI"/>
                                         </imageView>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MOj-h4-iSU">
-                                            <rect key="frame" x="95" y="165" width="114" height="17"/>
+                                            <rect key="frame" x="95" y="142" width="114" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Memory" id="Gp2-zR-n47">
                                                 <font key="font" metaFont="systemBold"/>
@@ -743,19 +762,22 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="eV0-Ww-5oH">
-                                            <rect key="frame" x="9" y="195" width="582" height="5"/>
+                                            <rect key="frame" x="9" y="172" width="582" height="5"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         </box>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4rD-qd-qGj">
-                                            <rect key="frame" x="411" y="351" width="168" height="18"/>
+                                            <rect key="frame" x="411" y="343" width="168" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Emulate timer B bug" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="G5X-PL-OYX">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="hwCiaTimerBBugAction:" target="-2" id="muc-sb-otz"/>
+                                            </connections>
                                         </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QkZ-3u-5O0">
-                                            <rect key="frame" x="95" y="148" width="120" height="14"/>
+                                            <rect key="frame" x="95" y="125" width="120" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Glue logic, RAM, ROM" id="uIN-38-uUI">
                                                 <font key="font" metaFont="smallSystem"/>
@@ -764,7 +786,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nV7-HX-859">
-                                            <rect key="frame" x="35" y="104" width="528" height="14"/>
+                                            <rect key="frame" x="35" y="73" width="528" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="The selected configuration matches an old C64 with PAL video output. " id="Py0-mI-81A">
                                                 <font key="font" metaFont="smallSystem"/>
@@ -801,7 +823,7 @@ DQ
                                             </connections>
                                         </button>
                                         <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="niU-ei-SQA">
-                                            <rect key="frame" x="9" y="82" width="582" height="5"/>
+                                            <rect key="frame" x="9" y="51" width="582" height="5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                         </box>
                                         <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G7A-Sb-Z0Q" userLabel="System">
@@ -829,6 +851,9 @@ DQ
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="hwFactorySettingsAction:" target="-2" id="doU-Yz-7Ka"/>
+                                            </connections>
                                         </popUpButton>
                                     </subviews>
                                 </view>
@@ -2174,6 +2199,9 @@ DQ
                                 </view>
                             </tabViewItem>
                         </tabViewItems>
+                        <connections>
+                            <outlet property="delegate" destination="-2" id="qhf-Mp-cqR"/>
+                        </connections>
                     </tabView>
                 </subviews>
             </view>
@@ -2184,7 +2212,7 @@ DQ
         </window>
     </objects>
     <resources>
-        <image name="NSCaution" width="128" height="128"/>
+        <image name="NSCaution" width="32" height="32"/>
         <image name="dragTemplate" width="92" height="92"/>
         <image name="joystick2" width="569.45452880859375" height="654.54547119140625"/>
         <image name="key" width="198" height="187"/>

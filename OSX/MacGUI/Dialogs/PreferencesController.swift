@@ -54,6 +54,33 @@ class PreferencesController : UserDialogController {
     @IBOutlet weak var romOkButton: NSButton!
     @IBOutlet weak var romCancelButton: NSButton!
 
+    //
+    // Hardware preferences
+    //
+    
+    // VIC
+    @IBOutlet weak var hwVicModelPopup: NSPopUpButton!
+    @IBOutlet weak var hwVicIcon: NSImageView!
+    @IBOutlet weak var hwVicDescription: NSTextField!
+    @IBOutlet weak var hwVicGrayDotBug: NSButton!
+    
+    // CIA
+    @IBOutlet weak var hwCiaModelPopup: NSPopUpButton!
+    @IBOutlet weak var hwCiaTimerBBug: NSButton!
+    
+    // SID
+    @IBOutlet weak var hwSidModelPopup: NSPopUpButton!
+    @IBOutlet weak var hwSidFilter: NSButton!
+    @IBOutlet weak var hwSidEnginePopup: NSPopUpButton!
+    @IBOutlet weak var hwSidSamplingPopup: NSPopUpButton!
+    
+    // Board logic
+    @IBOutlet weak var hwGlueLogicPopup: NSPopUpButton!
+    @IBOutlet weak var hwRamInitPatternPopup: NSPopUpButton!
+    @IBOutlet weak var hwInfoText: NSTextField!
+
+    
+    
     override func awakeFromNib() {
         
         // Determine if the dialog was opened on start up. This happens when
@@ -76,8 +103,6 @@ class PreferencesController : UserDialogController {
     override func refresh() {
         
         if let id = prefTabView.selectedTabViewItem?.identifier as? String {
-            
-            track("\(id)")
             
             switch id {
             case "Roms": refreshRomTab()
@@ -112,5 +137,14 @@ class PreferencesController : UserDialogController {
         
         parent.saveRomUserDefaults()
         
+    }
+}
+
+extension PreferencesController : NSTabViewDelegate {
+
+    func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
+
+        track()
+        refresh()
     }
 }
