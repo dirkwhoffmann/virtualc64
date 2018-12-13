@@ -145,6 +145,7 @@
 		50B1644E202DDAA600447D3E /* ExportDiskDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */; };
 		50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */; };
 		50B5861D201C673900742DB3 /* CustomCartridges.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B5861B201C673900742DB3 /* CustomCartridges.cpp */; };
+		50B929F221C2B5C90039E8F2 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */; };
 		50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF77D120309A2A006E000F /* WindowDelegate.swift */; };
 		50C72DE41BC7BC8800F1863B /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C72DE31BC7BC8800F1863B /* Metal.framework */; };
 		50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* Shaders.metal */; };
@@ -444,6 +445,7 @@
 		50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyControllerTouchBar.swift; sourceTree = "<group>"; };
 		50B5861B201C673900742DB3 /* CustomCartridges.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CustomCartridges.cpp; sourceTree = "<group>"; };
 		50B5861C201C673900742DB3 /* CustomCartridges.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomCartridges.h; sourceTree = "<group>"; };
+		50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
 		50BF77D120309A2A006E000F /* WindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDelegate.swift; sourceTree = "<group>"; };
 		50C72DE31BC7BC8800F1863B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		50C72DE51BC7F42100F1863B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
@@ -680,6 +682,7 @@
 			isa = PBXGroup;
 			children = (
 				50763276202989D300575110 /* UserDialogController.swift */,
+				50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */,
 				506A724921C0341900DA0AC3 /* PreferencesController.swift */,
 				505D492721C155DD00A7C575 /* RomPrefs.swift */,
 				5002FA7A21C2650600DA4BBC /* HardwarePrefs.swift */,
@@ -1356,6 +1359,7 @@
 				509AEA0C0C324AB0001FC9FD /* PRGFile.cpp in Sources */,
 				5084C1D221B8155F006B688E /* VideoPrefsController.swift in Sources */,
 				509AEAFF0C325EFB001FC9FD /* P00File.cpp in Sources */,
+				50B929F221C2B5C90039E8F2 /* PreferencesWindow.swift in Sources */,
 				5058F0EF20A77E90008BFA92 /* Mouse1351.cpp in Sources */,
 				50AFEDBC0C3A7A78007749E7 /* AnyArchive.cpp in Sources */,
 				5086296B217DD69A00F1C9CD /* AnyDisk.cpp in Sources */,

@@ -166,7 +166,7 @@ class DevicesPrefsController : UserDialogController {
     // Keyboard events
     //
     
-    func keyDown(with macKey: MacKey) {
+    override func keyDown(with macKey: MacKey) {
         
         track()
         

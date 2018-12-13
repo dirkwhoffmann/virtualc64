@@ -151,6 +151,60 @@ class PreferencesController : UserDialogController {
     @IBOutlet weak var emuOkButton: NSButton!
     @IBOutlet weak var emuCancelButton: NSButton!
     
+    //
+    // Devices preferences
+    //
+    
+    /// Indicates if a keycode should be recorded for keyset 1
+    var devRecordKey1: JoystickDirection?
+    
+    /// Indicates if a keycode should be recorded for keyset 1
+    var devRecordKey2: JoystickDirection?
+    
+    /// Joystick emulation keys
+    @IBOutlet weak var devLeft1: NSTextField!
+    @IBOutlet weak var devLeft1button: NSButton!
+    @IBOutlet weak var devRight1: NSTextField!
+    @IBOutlet weak var devRight1button: NSButton!
+    @IBOutlet weak var devUp1: NSTextField!
+    @IBOutlet weak var devUp1button: NSButton!
+    @IBOutlet weak var devDown1: NSTextField!
+    @IBOutlet weak var devDown1button: NSButton!
+    @IBOutlet weak var devFire1: NSTextField!
+    @IBOutlet weak var devFire1button: NSButton!
+    @IBOutlet weak var devLeft2: NSTextField!
+    @IBOutlet weak var devLeft2button: NSButton!
+    @IBOutlet weak var devRight2: NSTextField!
+    @IBOutlet weak var devRight2button: NSButton!
+    @IBOutlet weak var devUp2: NSTextField!
+    @IBOutlet weak var devUp2button: NSButton!
+    @IBOutlet weak var devDown2: NSTextField!
+    @IBOutlet weak var devDown2button: NSButton!
+    @IBOutlet weak var devFire2: NSTextField!
+    @IBOutlet weak var devFire2button: NSButton!
+    @IBOutlet weak var devDisconnectKeys: NSButton!
+    
+    // Joystick buttons
+    @IBOutlet weak var devAutofire: NSButton!
+    @IBOutlet weak var devAutofireCease: NSButton!
+    @IBOutlet weak var devAutofireCeaseText: NSTextField!
+    @IBOutlet weak var devAutofireBullets: NSTextField!
+    @IBOutlet weak var devAutofireFrequency: NSSlider!
+    
+    // Mouse
+    @IBOutlet weak var devMouseModel: NSPopUpButton!
+    @IBOutlet weak var devMouseInfo: NSTextField!
+
+    @IBOutlet weak var devOkButton: NSButton!
+    @IBOutlet weak var devCancelButton: NSButton!
+    
+    //
+    // Keymap preferences
+    //
+    
+    @IBOutlet weak var keyOkButton: NSButton!
+    @IBOutlet weak var keyCancelButton: NSButton!
+    
     override func awakeFromNib() {
         
         // Determine if the dialog was opened on start up. This happens when
@@ -188,12 +242,24 @@ class PreferencesController : UserDialogController {
         }
     }
     
+    override func keyDown(with key: MacKey) {
+        
+        if let id = prefTabView.selectedTabViewItem?.identifier as? String {
+            
+            switch id {
+            case "Devices": devKeyDown(with: key)
+            case "Keyboard": track()
+            default: break
+            }
+        }
+    }
+    
     @IBAction override func cancelAction(_ sender: Any!) {
         
         track()
         
         hideSheet()
-        parent.loadRomUserDefaults()
+        parent.loadUserDefaults()
         
     }
     
@@ -207,7 +273,7 @@ class PreferencesController : UserDialogController {
             NSApp.terminate(self)
         }
         
-        parent.saveRomUserDefaults()
+        parent.saveUserDefaults()
         
     }
 }

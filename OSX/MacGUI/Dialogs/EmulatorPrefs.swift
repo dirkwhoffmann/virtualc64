@@ -33,6 +33,9 @@ extension PreferencesController {
         emuAutoSnapshots.state = (c64.snapshotInterval() > 0) ? .on : .off
         emuSnapshotInterval.integerValue = Int(c64.snapshotInterval().magnitude)
         emuSnapshotInterval.isEnabled = (c64.snapshotInterval() > 0)
+        
+        emuCancelButton.isHidden = hideCancelButton
+        emuOkButton.title = okButtonTitle
     }
 
     //
