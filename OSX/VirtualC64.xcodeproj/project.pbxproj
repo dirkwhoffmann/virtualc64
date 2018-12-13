@@ -11,6 +11,11 @@
 		389E77800C7A3B6F00BEAFA6 /* ControlPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 389E777E0C7A3B6F00BEAFA6 /* ControlPort.cpp */; };
 		5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C80D0D13CE680011A2E9 /* C64Memory.cpp */; };
 		5000C8240D13CEE10011A2E9 /* Drive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C8230D13CEE10011A2E9 /* Drive.cpp */; };
+		5002FA7B21C2650600DA4BBC /* HardwarePrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002FA7A21C2650600DA4BBC /* HardwarePrefs.swift */; };
+		5002FA7D21C2651B00DA4BBC /* VideoPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002FA7C21C2651B00DA4BBC /* VideoPrefs.swift */; };
+		5002FA7F21C2653600DA4BBC /* EmulatorPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002FA7E21C2653600DA4BBC /* EmulatorPrefs.swift */; };
+		5002FA8121C2654B00DA4BBC /* DevicesPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002FA8021C2654B00DA4BBC /* DevicesPrefs.swift */; };
+		5002FA8321C2655800DA4BBC /* KeyboardPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */; };
 		50031B34206FABA400A1969B /* SnapshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50031B33206FABA400A1969B /* SnapshotDialog.xib */; };
 		50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50031B39206FB0FC00A1969B /* SnapshotController.swift */; };
 		5003C1B4219807F8009AA08D /* StarDos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5003C1B2219807F8009AA08D /* StarDos.cpp */; };
@@ -231,6 +236,11 @@
 		5000C8220D13CEE10011A2E9 /* Drive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drive.h; sourceTree = "<group>"; };
 		5000C8230D13CEE10011A2E9 /* Drive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Drive.cpp; sourceTree = "<group>"; };
 		5000C9610D13DED40011A2E9 /* DriveMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DriveMemory.h; sourceTree = "<group>"; };
+		5002FA7A21C2650600DA4BBC /* HardwarePrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HardwarePrefs.swift; sourceTree = "<group>"; };
+		5002FA7C21C2651B00DA4BBC /* VideoPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPrefs.swift; sourceTree = "<group>"; };
+		5002FA7E21C2653600DA4BBC /* EmulatorPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulatorPrefs.swift; sourceTree = "<group>"; };
+		5002FA8021C2654B00DA4BBC /* DevicesPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesPrefs.swift; sourceTree = "<group>"; };
+		5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardPrefs.swift; sourceTree = "<group>"; };
 		50031B33206FABA400A1969B /* SnapshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SnapshotDialog.xib; sourceTree = "<group>"; };
 		50031B39206FB0FC00A1969B /* SnapshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
 		5003C1B2219807F8009AA08D /* StarDos.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StarDos.cpp; sourceTree = "<group>"; };
@@ -647,6 +657,7 @@
 				5038CA9820B6C2D8000D9193 /* Debugger */,
 				5018AF65202EDD2000B4C886 /* UserDefaults.swift */,
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
+				5002FA7921C264C100DA4BBC /* Dialogs */,
 				50FE5B342039B392006CE7C7 /* Keyboard Controller */,
 				50763278202989E000575110 /* User Dialog Controllers */,
 				50B4B6071EEFE77400D56499 /* TouchBar */,
@@ -663,6 +674,21 @@
 				50ED5BF712DD99C000596417 /* Speedometer.swift */,
 			);
 			name = Misc;
+			sourceTree = "<group>";
+		};
+		5002FA7921C264C100DA4BBC /* Dialogs */ = {
+			isa = PBXGroup;
+			children = (
+				50763276202989D300575110 /* UserDialogController.swift */,
+				506A724921C0341900DA0AC3 /* PreferencesController.swift */,
+				505D492721C155DD00A7C575 /* RomPrefs.swift */,
+				5002FA7A21C2650600DA4BBC /* HardwarePrefs.swift */,
+				5002FA7C21C2651B00DA4BBC /* VideoPrefs.swift */,
+				5002FA7E21C2653600DA4BBC /* EmulatorPrefs.swift */,
+				5002FA8021C2654B00DA4BBC /* DevicesPrefs.swift */,
+				5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */,
+			);
+			path = Dialogs;
 			sourceTree = "<group>";
 		};
 		5006087A21256D6800C7C6C5 /* VICII */ = {
@@ -844,9 +870,6 @@
 		50763278202989E000575110 /* User Dialog Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				50763276202989D300575110 /* UserDialogController.swift */,
-				506A724921C0341900DA0AC3 /* PreferencesController.swift */,
-				505D492721C155DD00A7C575 /* RomPrefs.swift */,
 				506D54C720321C830026D8B4 /* RomPrefsController.swift */,
 				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
 				5052CD5E2136ADFA0000E890 /* DevicesPrefsController.swift */,
@@ -1314,7 +1337,9 @@
 				5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */,
 				502CD90F2128297E00C5A8F0 /* TimeDelayed.cpp in Sources */,
 				5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */,
+				5002FA7B21C2650600DA4BBC /* HardwarePrefs.swift in Sources */,
 				500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */,
+				5002FA8121C2654B00DA4BBC /* DevicesPrefs.swift in Sources */,
 				501DE30D20C9C41B00707130 /* voice.cc in Sources */,
 				50265F57202D00940041C315 /* TapeMountController.swift in Sources */,
 				5017B71A218729DA0014EDE4 /* FlashRom.cpp in Sources */,
@@ -1335,6 +1360,7 @@
 				50AFEDBC0C3A7A78007749E7 /* AnyArchive.cpp in Sources */,
 				5086296B217DD69A00F1C9CD /* AnyDisk.cpp in Sources */,
 				50B5861D201C673900742DB3 /* CustomCartridges.cpp in Sources */,
+				5002FA8321C2655800DA4BBC /* KeyboardPrefs.swift in Sources */,
 				389E77800C7A3B6F00BEAFA6 /* ControlPort.cpp in Sources */,
 				507887CC20B1858B00941F7E /* MemTableView.swift in Sources */,
 				50775E0F1B8EE8A9002EB58D /* Disk.cpp in Sources */,
@@ -1372,6 +1398,7 @@
 				50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
 				506D3DD020224BF4009742CF /* MyDocument.swift in Sources */,
+				5002FA7F21C2653600DA4BBC /* EmulatorPrefs.swift in Sources */,
 				506B315420DD0AEB007913A8 /* DriveMemory.cpp in Sources */,
 				501DE31220C9C41B00707130 /* filter.cc in Sources */,
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
@@ -1401,6 +1428,7 @@
 				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
 				50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */,
 				507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */,
+				5002FA7D21C2651B00DA4BBC /* VideoPrefs.swift in Sources */,
 				5003C1B4219807F8009AA08D /* StarDos.cpp in Sources */,
 				50F1752D2196C8820004E853 /* ActionReplay.cpp in Sources */,
 				5017B71D21873FD00014EDE4 /* EasyFlash.cpp in Sources */,

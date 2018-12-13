@@ -81,11 +81,11 @@ class PreferencesController : UserDialogController {
             
             switch id {
             case "Roms": refreshRomTab()
-            case "Hardware": track()
-            case "Video": track()
-            case "Emulator": track()
-            case "Devices": track()
-            case "Keyboard": track()
+            case "Hardware": refreshHardwareTab()
+            case "Video": refreshVideoTab()
+            case "Emulator": refreshEmulatorTab()
+            case "Devices": refreshDevicesTab()
+            case "Keyboard": refreshKeyboardTab()
             default: break
             }
         }

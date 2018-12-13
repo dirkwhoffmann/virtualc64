@@ -75,6 +75,8 @@ extension PreferencesController {
 
     func refreshRomTab() {
         
+        track()
+        
         let romImage = NSImage.init(named: "rom")
         let romImageLight = NSImage.init(named: "rom_light")
         
@@ -98,7 +100,7 @@ extension PreferencesController {
         if c64.isRunnable() {
             romHeaderImage.image = NSImage.init(named: "AppIcon")
             romHeaderText.stringValue = "All required ROMs are loaded. VirtualC64 is ready to run."
-            romHeaderSubText.stringValue = "Click OK to get startet."
+            romHeaderSubText.stringValue = ""
             romOkButton.title = "OK"
         } else {
             let numMissing = (hasBasicRom ? 0 : 1)
@@ -178,8 +180,6 @@ extension PreferencesController {
             romVc1541Description.stringValue = "An unknown, possibly patched 15xx ROM."
             romVc1541Description.textColor = .red
         }
-        
-        track()
     }
     
     //
