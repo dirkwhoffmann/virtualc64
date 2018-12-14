@@ -22,60 +22,58 @@ extension PreferencesController {
     
     func awakeKeymapPrefsFromNib() {
      
-        keyMap = parent.keyboardcontroller.keyMap
         updateImages()
     }
     
     func refreshKeyboardTab() {
         
-        track()
+        track("\(parent.keyboardcontroller.mapKeysByPosition)")
         
-        if selectedKey == nil {
-            icon.isHidden = true
-            // info1.isHidden = true
-            // info2.isHidden = true
+        keyMappingPopup.selectItem(withTag: parent.keyboardcontroller.mapKeysByPosition ? 1 : 0)
+    
+        if parent.keyboardcontroller.mapKeysByPosition {
+            
+            keyMappingPopup.selectItem(withTag: 1)
+            info.stringValue = "In positonal assignment mode, the Mac keys are assigned to the C64 keys according to the following mapping table:"
+            keyMatrixScrollView.isHidden = false
+            updateImages()
+            
         } else {
-            icon.isHidden = false
-            // info1.isHidden = false
-            // info2.isHidden = false
+            
+            keyMappingPopup.selectItem(withTag: 0)
+            info.stringValue = "In symbolic assignment mode, the Mac keys are assigned to C64 keys according to the symbols they represent."
+            keyMatrixScrollView.isHidden = true
         }
         
-        updateImages()
-        
-        devCancelButton.isHidden = hideCancelButton
-        devOkButton.title = okButtonTitle
+        keyCancelButton.isHidden = hideCancelButton
+        keyOkButton.title = okButtonTitle
     }
     
     func updateImages() {
         
-        // Clear old images
-        for row in 0...7 {
-            for col in 0...7 {
-                keyImage[row][col] = nil
-            }
-        }
+        let keyMap = parent.keyboardcontroller.keyMap
         
-        // Create images for all mapped keys
+        // Create labels
+        var labels = Array(repeating: Array(repeating: "", count: 8), count: 8)
         for (macKey,c64Key) in keyMap {
-            let keyCodeString = String.init(format: "%02X", macKey.keyCode) as NSString
-            keyImage[c64Key.row][c64Key.col] = c64Key.image(keyCode: keyCodeString)
+            labels[c64Key.row][c64Key.col] = String.init(format: "%02X", macKey.keyCode)
         }
         
-        // Create images for all unmapped keys
+        // Create labeled images
         for row in 0...7 {
             for col in 0...7 {
-                if keyImage[row][col] == nil {
-                    keyImage[row][col] = C64Key.init( (row,col) ).image(keyCode: "")
-                }
+                let c64key = C64Key.init( (row,col) )
+                let selected = (c64key == selectedKey)
+                keyImage[row][col] = c64key.image(keyCode: labels[row][col], red: selected)
             }
         }
-        
-        keyMatrix.reloadData()
+
+        keyMatrixCollectionView.reloadData()
     }
     
     func mapKeyDown(with macKey: MacKey) {
         
-        track()
+        let keyMap = parent.keyboardcontroller.keyMap
         
         // Check for ESC key
         if macKey == MacKey.escape {
@@ -86,20 +84,28 @@ extension PreferencesController {
         // Remove old key assignment (if any)
         for (macKey, key) in keyMap {
             if key == selectedKey {
-                keyMap[macKey] = nil
+                parent.keyboardcontroller.keyMap[macKey] = nil
             }
         }
         
         // Assign new key
-        keyMap[macKey] = selectedKey
+        parent.keyboardcontroller.keyMap[macKey] = selectedKey
         
         // Update  view
-        icon.image = selectedKey?.image(keyCode: macKey.keyCodeStr as NSString)
+        selectedKey = nil
+        refresh()
+    }
+    
+    @IBAction func mapKeyMappingAction(_ sender: NSPopUpButton!) {
+        
+        let value = (sender.selectedTag() == 1) ? true : false
+        parent.keyboardcontroller.mapKeysByPosition = value
         refresh()
     }
     
     @IBAction func mapFactorySettingsAction(_ sender: Any!) {
         
+        parent.keyboardcontroller.mapKeysByPosition = Defaults.mapKeysByPosition
         parent.keyboardcontroller.keyMap = Defaults.keyMap
         refresh()
     }
@@ -116,15 +122,17 @@ extension PreferencesController : NSCollectionViewDataSource {
         return 8
     }
     
-    func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: NSCollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
         
         return 8
     }
     
-    func collectionView(_ itemForRepresentedObjectAtcollectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+    func collectionView(_ itemForRepresentedObjectAtcollectionView: NSCollectionView,
+                        itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         
         let id = NSUserInterfaceItemIdentifier(rawValue: "KeyViewItem")
-        let item = keyMatrix.makeItem(withIdentifier: id, for: indexPath)
+        let item = keyMatrixCollectionView.makeItem(withIdentifier: id, for: indexPath)
         guard let keyViewItem = item as? KeyViewItem else {
             return item
         }
@@ -138,17 +146,16 @@ extension PreferencesController : NSCollectionViewDataSource {
 
 extension PreferencesController : NSCollectionViewDelegate {
     
-    func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
+    func collectionView(_ collectionView: NSCollectionView,
+                        didSelectItemsAt indexPaths: Set<IndexPath>) {
         
-        guard let indexPath = indexPaths.first else { return }
-        
-        let row = indexPath.section
-        let col = indexPath.item
-        selectedKey = C64Key( (row,col) )
-        icon.image = selectedKey?.image()
-        refresh()
-        
-        // Hey, CollectionView, why do you steal first responder status? Give it back!
-        (window as! PreferencesWindow).respondToEvents()
+        if let indexPath = indexPaths.first {
+            
+            selectedKey = C64Key( (indexPath.section, indexPath.item) )
+            refresh()
+            
+            // Make sure that we can receive keyboard events
+            (window as! PreferencesWindow).respondToEvents()
+        }
     }
 }

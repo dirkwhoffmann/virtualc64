@@ -202,16 +202,13 @@ class PreferencesController : UserDialogController {
     // Keymap preferences
     //
     
-    @IBOutlet weak var info1: NSTextField!
-    @IBOutlet weak var info2: NSTextField!
-    @IBOutlet weak var icon: NSImageView!
-    @IBOutlet weak var keyMatrix: NSCollectionView!
-    
+    @IBOutlet weak var info: NSTextField!
+    @IBOutlet weak var keyMappingPopup: NSPopUpButton!
+    @IBOutlet weak var keyMatrixScrollView: NSScrollView!
+    @IBOutlet weak var keyMatrixCollectionView: NSCollectionView!
+
     // Double array of key images, indexed by their row and column number
     var keyImage = Array(repeating: Array(repeating: nil as NSImage?, count: 8), count: 8)
-    
-    // Keymap that is going to be customized
-    var keyMap: [MacKey:C64Key] = [:]
     
     // Selected C64 key
     var selectedKey: C64Key? = nil
@@ -289,7 +286,6 @@ class PreferencesController : UserDialogController {
         }
         
         parent.saveUserDefaults()
-        
     }
 }
 

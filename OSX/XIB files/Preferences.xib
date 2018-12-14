@@ -65,8 +65,13 @@
                 <outlet property="hwVicGrayDotBug" destination="Tgn-hC-LhH" id="755-yB-V5Y"/>
                 <outlet property="hwVicIcon" destination="WuF-5Y-4hm" id="iar-AO-rVd"/>
                 <outlet property="hwVicModelPopup" destination="ZQk-5s-Q3i" id="GTx-Ou-jHT"/>
-                <outlet property="icon" destination="LTh-It-90F" id="MOa-EA-WYi"/>
-                <outlet property="keyMatrix" destination="oJh-Cc-rn9" id="RsF-CI-beB"/>
+                <outlet property="info" destination="cf0-iO-MNj" id="62M-ws-4Ax"/>
+                <outlet property="keyCancelButton" destination="KU9-uV-hRQ" id="1kK-9n-e1e"/>
+                <outlet property="keyMapping" destination="GNx-5i-6jP" id="Kgh-wb-ngc"/>
+                <outlet property="keyMappingPopup" destination="GNx-5i-6jP" id="hCM-qV-No8"/>
+                <outlet property="keyMatrixCollectionView" destination="oJh-Cc-rn9" id="mw2-1T-eJS"/>
+                <outlet property="keyMatrixScrollView" destination="I3H-16-RH1" id="NNZ-ae-iqB"/>
+                <outlet property="keyOkButton" destination="qf2-f2-Cbn" id="rsO-Ta-9iX"/>
                 <outlet property="prefTabView" destination="baz-eW-A74" id="fgy-dU-alU"/>
                 <outlet property="romBasicButton" destination="nSa-0I-2sF" id="LaM-hr-eDI"/>
                 <outlet property="romBasicDescription" destination="Val-uF-mCs" id="VL7-B6-3sn"/>
@@ -134,6 +139,8 @@
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="646" height="564"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <value key="minSize" type="size" width="646" height="564"/>
+            <value key="maxSize" type="size" width="646" height="564"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="646" height="564"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -144,7 +151,7 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Roms" identifier="Roms" id="VwS-fe-RFZ">
-                                <view key="view" ambiguous="YES" id="4If-78-eR2">
+                                <view key="view" id="4If-78-eR2">
                                     <rect key="frame" x="10" y="33" width="600" height="502"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -2301,19 +2308,19 @@ DQ
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Keyboard" identifier="Keyboard" id="Fw7-cE-DIs">
-                                <view key="view" id="vPT-yd-wGg">
+                                <view key="view" ambiguous="YES" id="vPT-yd-wGg">
                                     <rect key="frame" x="10" y="33" width="600" height="502"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <scrollView wantsLayer="YES" fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3H-16-RH1">
-                                            <rect key="frame" x="71" y="72" width="458" height="349"/>
+                                            <rect key="frame" x="71" y="76" width="458" height="338"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                             <clipView key="contentView" ambiguous="YES" id="GxJ-gG-I1j">
-                                                <rect key="frame" x="1" y="1" width="456" height="347"/>
+                                                <rect key="frame" x="1" y="1" width="456" height="336"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <collectionView ambiguous="YES" selectable="YES" id="oJh-Cc-rn9">
-                                                        <rect key="frame" x="0.0" y="0.0" width="456" height="347"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="456" height="336"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="4" minimumLineSpacing="4" id="FFa-s8-Xrr">
                                                             <size key="itemSize" width="48" height="48"/>
@@ -2334,7 +2341,7 @@ DQ
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                             <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.5" horizontal="NO" id="fgb-66-g0h">
-                                                <rect key="frame" x="441" y="1" width="16" height="347"/>
+                                                <rect key="frame" x="441" y="1" width="16" height="336"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                         </scrollView>
@@ -2371,38 +2378,11 @@ DQ
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         </box>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uV6-AB-BJ5">
-                                            <rect key="frame" x="69" y="459" width="65" height="17"/>
+                                            <rect key="frame" x="69" y="467" width="109" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="left" title="Key map:" id="ocP-Pw-Vno">
+                                            <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="left" title="Key assignment:" id="ocP-Pw-Vno">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GNx-5i-6jP">
-                                            <rect key="frame" x="138" y="452" width="113" height="26"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Symbolic" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="eiK-yy-zys" id="oQr-sN-xF2">
-                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="menu"/>
-                                                <menu key="menu" title="OtherViews" autoenablesItems="NO" id="s6M-ci-NG1">
-                                                    <items>
-                                                        <menuItem title="Symbolic" state="on" id="eiK-yy-zys">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                        <menuItem title="Positionsal" tag="1" id="JdT-Le-1Fs">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                    </items>
-                                                </menu>
-                                            </popUpButtonCell>
-                                        </popUpButton>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r5W-gp-Zux">
-                                            <rect key="frame" x="69" y="430" width="367" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="To assign a key, click on a key in the keyboard matrix above." id="HJN-Sc-AsZ">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
@@ -2417,11 +2397,36 @@ DQ
                                                 <action selector="mapFactorySettingsAction:" target="-2" id="KwI-Bp-aZd"/>
                                             </connections>
                                         </button>
-                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LTh-It-90F">
-                                            <rect key="frame" x="465" y="429" width="64" height="64"/>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cf0-iO-MNj">
+                                            <rect key="frame" x="69" y="419" width="462" height="36"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" selectable="YES" title="Multiline Label" id="q8M-xr-G85">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GNx-5i-6jP">
+                                            <rect key="frame" x="176" y="462" width="113" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSCaution" id="KQ1-ON-v1w"/>
-                                        </imageView>
+                                            <popUpButtonCell key="cell" type="push" title="Symbolic" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="eiK-yy-zys" id="oQr-sN-xF2">
+                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="menu"/>
+                                                <menu key="menu" title="OtherViews" autoenablesItems="NO" id="s6M-ci-NG1">
+                                                    <items>
+                                                        <menuItem title="Symbolic" state="on" id="eiK-yy-zys">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                        <menuItem title="Positional" tag="1" id="JdT-Le-1Fs">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="mapKeyMappingAction:" target="-2" id="mrb-z6-62T"/>
+                                            </connections>
+                                        </popUpButton>
                                     </subviews>
                                 </view>
                             </tabViewItem>

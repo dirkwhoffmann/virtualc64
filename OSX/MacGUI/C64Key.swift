@@ -360,9 +360,10 @@ extension C64Key {
         }
     }
     
-    func plainKeyImage(width: Int, height: Int, dark: Bool = false) -> NSImage {
+    func plainKeyImage(width: Int, height: Int,
+                       dark: Bool = false, red: Bool = false) -> NSImage {
 
-        let name = NSImage.Name(dark ? "key_dark" : "key")
+        let name = NSImage.Name(red ? "key_red" : dark ? "key_dark" : "key")
         let background = NSImage(named: name)!
         return background.resizeImage(width: CGFloat(width), height: CGFloat(height))
     }
@@ -461,7 +462,7 @@ extension C64Key {
     
     /// Returns an image representation for this key that is used in the
     /// user dialog for configuring the key mapping.
-    func image(keyCode: NSString) -> NSImage {
+    func image(keyCode: String, red: Bool = false) -> NSImage {
         
         precondition(nr != 31 /* RESTORE */);
         precondition(nr != 34 /* SHIFT LOCK */);
@@ -495,7 +496,7 @@ extension C64Key {
         let width = 48.0
         let height = 48.0
 
-        let image = plainKeyImage(width: Int(width), height: Int(height))
+        let image = plainKeyImage(width: Int(width), height: Int(height), red: red)
         let imageRect = CGRect(x: 0, y: 0, width: width, height: height)
         let textRect1 = CGRect(x: 7, y: -2, width: width-7, height: height-2)
         let textRect2 = CGRect(x: 14, y: -10, width: width-14, height: height-10)
