@@ -13,10 +13,6 @@ class PreferencesController : UserDialogController {
 
     @IBOutlet weak var prefTabView: NSTabView!
     
-    var opendOnAppLaunch = false
-    var hideCancelButton = false
-    var okButtonTitle = "OK"
-    
     //
     // Rom preferences
     //
@@ -218,15 +214,6 @@ class PreferencesController : UserDialogController {
     
     override func awakeFromNib() {
         
-        // Determine if the dialog was opened on start up. This happens when
-        // the emulator can't run because of missing Roms.
-        opendOnAppLaunch = !c64.isRunnable()
-        
-        // If the dialog was opend on start up, we don't want to present the
-        // Cancel button to the user. Furthermore, we rename the OK button.
-        hideCancelButton = opendOnAppLaunch
-        okButtonTitle = opendOnAppLaunch ? "Quit" : "OK"
-            
         // Connect outlets of drop views
         romBasicImage.dragImage = romBasicDragImage
         romCharImage.dragImage = romCharDragImage
@@ -234,7 +221,6 @@ class PreferencesController : UserDialogController {
         romVc1541Image.dragImage = romVc1541DragImage
 
         awakeVideoPrefsFromNib()
-        awakeKeymapPrefsFromNib()
         refresh()
     }
     
@@ -275,17 +261,16 @@ class PreferencesController : UserDialogController {
         
     }
     
-    @IBAction func okAction(_ sender: Any!) {
+    @IBAction override func okAction(_ sender: Any!) {
         
         track()
         
         hideSheet()
+        parent.saveUserDefaults()
         
         if !c64.isRunnable() {
             NSApp.terminate(self)
         }
-        
-        parent.saveUserDefaults()
     }
 }
 
@@ -293,7 +278,6 @@ extension PreferencesController : NSTabViewDelegate {
 
     func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
 
-        track()
         refresh()
     }
 }

@@ -167,7 +167,7 @@ class KeyboardDialog : UserDialogController {
         update()
     }
     
-    @IBAction func okAction(_ sender: Any!) {
+    @IBAction override func okAction(_ sender: Any!) {
         
         // TODO: Modify keymap directly. Add cancelAction as in other dialogs
         

@@ -47,8 +47,7 @@ extension PreferencesController {
         devMouseModel.selectItem(withTag: model)
         devMouseInfo.isHidden = (model == Int(MOUSE1350.rawValue))
         
-        devCancelButton.isHidden = hideCancelButton
-        devOkButton.title = okButtonTitle
+        devOkButton.title = parent.c64.isRunnable() ? "OK" : "Quit"
     }
     
     func updateJoyKeyMap(_ nr: Int, dir: JoystickDirection, button: NSButton, txt: NSTextField) {

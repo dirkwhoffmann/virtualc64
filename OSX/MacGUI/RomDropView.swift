@@ -66,6 +66,9 @@ class RomDropView : NSImageView
         if !dialogController.parent.loadRom(url) {
             return false
         }
+        if dialogController.parent.c64.isRunnable() {
+            dialogController.okAction(self)
+        }
         return true
     }
     

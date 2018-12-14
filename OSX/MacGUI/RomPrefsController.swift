@@ -217,7 +217,7 @@ class RomPrefsController : UserDialogController {
         hideSheet()
     }
     
-    @IBAction func okAction(_ sender: Any!)
+    @IBAction override func okAction(_ sender: Any!)
     {
         parent.saveRomUserDefaults()
         hideSheet()

@@ -67,7 +67,6 @@
                 <outlet property="hwVicModelPopup" destination="ZQk-5s-Q3i" id="GTx-Ou-jHT"/>
                 <outlet property="info" destination="cf0-iO-MNj" id="62M-ws-4Ax"/>
                 <outlet property="keyCancelButton" destination="KU9-uV-hRQ" id="1kK-9n-e1e"/>
-                <outlet property="keyMapping" destination="GNx-5i-6jP" id="Kgh-wb-ngc"/>
                 <outlet property="keyMappingPopup" destination="GNx-5i-6jP" id="hCM-qV-No8"/>
                 <outlet property="keyMatrixCollectionView" destination="oJh-Cc-rn9" id="mw2-1T-eJS"/>
                 <outlet property="keyMatrixScrollView" destination="I3H-16-RH1" id="NNZ-ae-iqB"/>

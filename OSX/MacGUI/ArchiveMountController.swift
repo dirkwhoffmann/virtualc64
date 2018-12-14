@@ -87,7 +87,7 @@ class ArchiveMountController : UserDialogController {
     // Action methods
     //
 
-    @IBAction func okAction(_ sender: Any!) {
+    @IBAction override func okAction(_ sender: Any!) {
         
         track()
         

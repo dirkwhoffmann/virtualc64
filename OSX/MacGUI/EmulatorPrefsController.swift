@@ -175,7 +175,7 @@ class EmulatorPrefsController : UserDialogController {
         update()
     }
     
-    @IBAction func okAction(_ sender: Any!) {
+    @IBAction override func okAction(_ sender: Any!) {
         
         parent.saveEmulatorUserDefaults()
         

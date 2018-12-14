@@ -37,8 +37,12 @@ class MyController : NSWindowController, MessageReceiver {
     var virtualKeyboardSheet: VirtualKeyboardController? = nil
 
     /// Rom Dialog controller
+    /// Deprecated
     var romDialogController: RomPrefsController? = nil
     
+    /// Preferences controller
+    var preferencesController: PreferencesController?
+
     /// Loop timer
     /// The timer fires 60 times a second and executes all tasks that need to be
     //  done perdiodically (e.g., updating the speedometer and the debug panels)
@@ -566,13 +570,16 @@ extension MyController {
             break
             
         case MSG_ROM_MISSING:
-
+            openPreferences()
+            
+            /*
             if (romDialogController == nil) {
                 track("MSG_ROM_MISSING")
                 let nibName = NSNib.Name("RomPrefs")
                 romDialogController = RomPrefsController.init(windowNibName: nibName)
                 romDialogController!.showSheet(withParent: self)
             }
+             */
             
         case MSG_SNAPSHOT_TAKEN:
             break
@@ -774,6 +781,18 @@ extension MyController {
         }
     }
 
+    //
+    // Dialogs
+    //
+    
+    func openPreferences() {
+        
+        if preferencesController == nil {
+            let nibName = NSNib.Name("Preferences")
+            preferencesController = PreferencesController.init(windowNibName: nibName)
+        }
+        preferencesController!.showSheet(withParent: self)
+    }
     
     //
     // Loading Roms
@@ -920,7 +939,7 @@ extension MyController {
     //
     // Misc
     //
-
+    
     func playSound(name: String, volume: Float) {
         
         if let s = NSSound.init(named: name) {

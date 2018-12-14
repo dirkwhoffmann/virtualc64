@@ -88,8 +88,7 @@ extension PreferencesController {
         }
         hwInfoText.stringValue = "This configuration \(descr)."
 
-        hwCancelButton.isHidden = hideCancelButton
-        hwOkButton.title = okButtonTitle
+        hwOkButton.title = parent.c64.isRunnable() ? "OK" : "Quit"
     }
     
     @IBAction func hwVicModelAction(_ sender: NSPopUpButton!) {

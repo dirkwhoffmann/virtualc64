@@ -35,7 +35,7 @@ class TapeMountController : UserDialogController {
         autoPress.isEnabled = (sender.integerValue == 1)
     }
     
-    @IBAction func okAction(_ sender: Any!) {
+    @IBAction override func okAction(_ sender: Any!) {
         
         // Insert tape
         c64.datasette.insertTape(tape)

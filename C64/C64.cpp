@@ -384,7 +384,6 @@ C64::run()
         
         // Check for ROM images
         if (!isRunnable()) {
-            debug("$$$$$$$$$$ NOT RUNNABLE\n");
             putMessage(MSG_ROM_MISSING);
             return;
         }

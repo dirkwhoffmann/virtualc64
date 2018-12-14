@@ -181,8 +181,7 @@ extension PreferencesController {
             romVc1541Description.textColor = .red
         }
         
-        romCancelButton.isHidden = hideCancelButton
-        romOkButton.title = okButtonTitle
+        romOkButton.title = parent.c64.isRunnable() ? "OK" : "Quit"
     }
     
     //

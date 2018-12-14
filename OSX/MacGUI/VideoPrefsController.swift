@@ -322,7 +322,7 @@ class VideoPrefsController : UserDialogController {
         factorySettingsAction()
     }
     
-    @IBAction func okAction(_ sender: Any!) {
+    @IBAction override func okAction(_ sender: Any!) {
         
         parent.saveVideoUserDefaults()
         hideSheet()

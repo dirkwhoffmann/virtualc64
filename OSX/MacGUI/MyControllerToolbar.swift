@@ -163,9 +163,7 @@ extension MyController {
 
     @IBAction func preferencesAction(_ sender: Any!) {
         
-        let nibName = NSNib.Name("Preferences")
-        let controller = PreferencesController.init(windowNibName: nibName)
-        controller.showSheet(withParent: self)
+        openPreferences()
     }
     
     @IBAction func devicesPrefsAction(_ sender: Any!) {

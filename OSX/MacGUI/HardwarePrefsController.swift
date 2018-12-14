@@ -213,7 +213,7 @@ class HardwarePrefsController : UserDialogController {
         hideSheet()
     }
     
-    @IBAction func okAction(_ sender: Any!) {
+    @IBAction override func okAction(_ sender: Any!) {
         
         parent.saveHardwareUserDefaults()
         hideSheet()

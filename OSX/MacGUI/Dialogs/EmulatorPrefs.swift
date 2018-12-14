@@ -34,8 +34,7 @@ extension PreferencesController {
         emuSnapshotInterval.integerValue = Int(c64.snapshotInterval().magnitude)
         emuSnapshotInterval.isEnabled = (c64.snapshotInterval() > 0)
         
-        emuCancelButton.isHidden = hideCancelButton
-        emuOkButton.title = okButtonTitle
+        emuOkButton.title = parent.c64.isRunnable() ? "OK" : "Quit"
     }
 
     //
@@ -147,8 +146,7 @@ extension PreferencesController {
         parent.pauseInBackground = Defaults.pauseInBackground
         c64.setSnapshotInterval(Defaults.snapshotInterval)
         
-        emuCancelButton.isHidden = hideCancelButton
-        emuOkButton.title = okButtonTitle
+        emuOkButton.title = parent.c64.isRunnable() ? "OK" : "Quit"
         
         refresh()
     }

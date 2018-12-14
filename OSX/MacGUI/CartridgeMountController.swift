@@ -56,7 +56,7 @@ class CartridgeMountController : UserDialogController {
     // Action methods
     //
     
-    @IBAction func okAction(_ sender: Any!) {
+    @IBAction override func okAction(_ sender: Any!) {
         
         // Attach cartridge
         c64.expansionport.attachCartridgeAndReset(cartridge)

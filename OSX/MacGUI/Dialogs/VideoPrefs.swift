@@ -73,8 +73,7 @@ extension PreferencesController {
         vidEyeYSlider.floatValue = parent.metalScreen.eyeY()
         vidEyeZSlider.floatValue = parent.metalScreen.eyeZ()
         
-        vidCancelButton.isHidden = hideCancelButton
-        vidOkButton.title = okButtonTitle
+        vidOkButton.title = parent.c64.isRunnable() ? "OK" : "Quit"
     }
     
     func updatePalettePreviewImages() {

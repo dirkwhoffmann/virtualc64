@@ -43,6 +43,13 @@ class UserDialogController : NSWindowController
         window?.orderOut(self)
         parentWindow.endSheet(window!, returnCode: .cancel)
     }
+ 
+    // Default action method for OK
+    @IBAction func okAction(_ sender: Any!) {
+        
+        track()
+        hideSheet()
+    }
     
     // Default action method for Cancel
     @IBAction func cancelAction(_ sender: Any!) {
@@ -50,6 +57,5 @@ class UserDialogController : NSWindowController
         track()
         hideSheet()
     }
-    
 }
 

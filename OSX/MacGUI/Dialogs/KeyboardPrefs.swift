@@ -20,10 +20,12 @@ class KeyViewItem: NSCollectionViewItem {
 
 extension PreferencesController {
     
+    /*
     func awakeKeymapPrefsFromNib() {
      
         updateImages()
     }
+    */
     
     func refreshKeyboardTab() {
         
@@ -45,8 +47,7 @@ extension PreferencesController {
             keyMatrixScrollView.isHidden = true
         }
         
-        keyCancelButton.isHidden = hideCancelButton
-        keyOkButton.title = okButtonTitle
+        keyOkButton.title = parent.c64.isRunnable() ? "OK" : "Quit"
     }
     
     func updateImages() {
