@@ -191,4 +191,12 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
             }
         }
     }
+    
+    override func mouseDown(with event: NSEvent) {
+        
+        track()
+        if (autoClose) {
+            cancelAction(self)
+        }
+    }
 }
