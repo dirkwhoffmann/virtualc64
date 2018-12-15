@@ -110,18 +110,18 @@ extension MyController : NSWindowDelegate {
     
     public func window(_ window: NSWindow, willUseFullScreenContentSize proposedSize: NSSize) -> NSSize {
 
-        // track("Proposed size: \(proposedSize.width) x \(proposedSize.height)")
         var myRect = metalScreen.bounds
         myRect.size = proposedSize
         return proposedSize
     }
-
-    public func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
+    
+    // Fixes a NSSize to match our desired aspect ration
+    func fixSize(window: NSWindow, size: NSSize) -> NSSize {
         
         // Get some basic parameters
-        let windowFrame = sender.frame
-        let deltaX = frameSize.width - windowFrame.size.width
-        let deltaY = frameSize.height - windowFrame.size.height
+        let windowFrame = window.frame
+        let deltaX = size.width - windowFrame.size.width
+        let deltaY = size.height - windowFrame.size.height
         
         // How big would the metal view become?
         let metalFrame = metalScreen.frame
@@ -129,10 +129,30 @@ extension MyController : NSWindowDelegate {
         let metalY = metalFrame.size.height + deltaY
         
         // We want to achieve an aspect ratio of 804:621
-        let newMetalY  = metalX * (621.0 / 804.0)
-        let correction = newMetalY - metalY
+        let newMetalX  = metalY * (804.0 / 621.0)
+        let dx = newMetalX - metalX
         
-        return NSMakeSize(frameSize.width, frameSize.height + correction)
+        return NSMakeSize(size.width + dx, size.height)
+    }
+
+    // Fixes a NSRect to match our desired aspect ration
+    func fixRect(window: NSWindow, rect: NSRect) -> NSRect {
+        
+        let newSize = fixSize(window: window, size: rect.size)
+        let newOriginX = (rect.width - newSize.width) / 2.0
+        
+        return NSMakeRect(newOriginX, 0, newSize.width, newSize.height)
+    }
+    
+    public func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
+        
+        return fixSize(window: sender, size: frameSize)
+    }
+    
+    public func windowWillUseStandardFrame(_ window: NSWindow,
+                                           defaultFrame newFrame: NSRect) -> NSRect {
+
+        return fixRect(window: window, rect: newFrame)
     }
 }
 
