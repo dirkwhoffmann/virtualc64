@@ -501,6 +501,11 @@ extension VC64Keys {
     // Miscellaneous
     static let pauseInBackground    = "VC64PauseInBackground"
     static let snapshotInterval     = "VC64SnapshotInterval"
+    
+    // Media files
+    static let autoMountAction      = "VC64AutoMountAction"
+    static let autoType             = "VC64AutoType"
+    static let autoTypeText         = "VC64AutoTypeText"
 }
 
 extension Defaults {
@@ -521,6 +526,14 @@ extension Defaults {
     // Miscellaneous
     static let pauseInBackground    = false
     static let snapshotInterval     = 3
+    
+    // Media files
+    static let autoMountAction      = [ "D64": AutoMountAction.insertIntoDrive8,
+                                        "PRG": AutoMountAction.flashFirstFile]
+    static let autoType             = [ "D64": true,
+                                        "PRG": true]
+    static let autoTypeText         = [ "D64": "LOAD \"*\",8,1:",
+                                        "PRG": "RUN"]
 }
 
 extension MyController {

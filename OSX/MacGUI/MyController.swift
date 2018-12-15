@@ -9,6 +9,16 @@
 
 import Foundation
 
+enum AutoMountAction : Int {
+    
+    case openBrowser = 0
+    case flashFirstFile = 1
+    case insertIntoDrive8 = 2
+    case insertIntoDrive9 = 3
+    case insertIntoDatasette = 4
+    case attachToExpansionPort = 5
+}
+
 protocol MessageReceiver {
     func processMessage(_ msg: Message)
 }
@@ -87,7 +97,17 @@ class MyController : NSWindowController, MessageReceiver {
         set { screenshotTarget = NSBitmapImageRep.FileType(rawValue: UInt(newValue))! }
     }
     
+    /// Media file default actions
+    var autoMountAction : [String: AutoMountAction] = Defaults.autoMountAction
+
+    /// Media file auto-type enable / disable
+    var autoType : [String: Bool] = Defaults.autoType
+
+    /// Media file auto-type text
+    var autoTypeText : [String: String] = Defaults.autoTypeText
+    
     /// Indicates if the user dialog should be skipped when opening archives.
+    /// DEPRECATED
     var autoMount = Defaults.autoMount
 
     /// Indicates if the user should be warned if an unsaved document is closed.

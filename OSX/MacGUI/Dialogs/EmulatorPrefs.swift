@@ -34,6 +34,45 @@ extension PreferencesController {
         emuSnapshotInterval.integerValue = Int(c64.snapshotInterval().magnitude)
         emuSnapshotInterval.isEnabled = (c64.snapshotInterval() > 0)
         
+        // Media files
+        var autoMountAction : Int
+        autoMountAction = parent.autoMountAction["D64"]?.rawValue ?? 0
+        emuD64Popup.selectItem(withTag: autoMountAction)
+        autoMountAction = parent.autoMountAction["PRG"]?.rawValue ?? 0
+        emuPrgPopup.selectItem(withTag: autoMountAction)
+        autoMountAction = parent.autoMountAction["T64"]?.rawValue ?? 0
+        emuT64Popup.selectItem(withTag: autoMountAction)
+        autoMountAction = parent.autoMountAction["TAP"]?.rawValue  ?? 0
+        emuTapPopup.selectItem(withTag: autoMountAction)
+        autoMountAction = parent.autoMountAction["CRT"]?.rawValue  ?? 0
+        emuCrtPopup.selectItem(withTag: autoMountAction)
+        
+        var autoType : Bool
+        autoType = parent.autoType["D64"] ?? false
+        emuD64AutoTypeButton.intValue = autoType ? 1 : 0
+        autoType = parent.autoType["PRG"] ?? false
+        emuPrgAutoTypeButton.intValue = autoType ? 1 : 0
+        autoType = parent.autoType["T64"] ?? false
+        emuT64AutoTypeButton.intValue = autoType ? 1 : 0
+        autoType = parent.autoType["TAP"] ?? false
+        emuTapAutoTypeButton.intValue = autoType ? 1 : 0
+        autoType = parent.autoType["CRT"] ?? false
+        emuCrtAutoTypeButton.intValue = autoType ? 1 : 0
+        
+        
+        var autoTypeText : String
+        autoTypeText = parent.autoTypeText["D64"] ?? ""
+        emuD64AutoTypeText.stringValue = autoTypeText
+        autoTypeText = parent.autoTypeText["PRG"] ?? ""
+        emuPrgAutoTypeText.stringValue = autoTypeText
+        autoTypeText = parent.autoTypeText["T64"] ?? ""
+        emuT64AutoTypeText.stringValue = autoTypeText
+        autoTypeText = parent.autoTypeText["TAP"] ?? ""
+        emuTapAutoTypeText.stringValue = autoTypeText
+        autoTypeText = parent.autoTypeText["CRT"] ?? ""
+        emuCrtAutoTypeText.stringValue = autoTypeText
+        
+        // OK button
         emuOkButton.title = parent.c64.isRunnable() ? "OK" : "Quit"
     }
 
@@ -76,11 +115,13 @@ extension PreferencesController {
     // Action methods (User Dialogs)
     //
     
+    /*
     @IBAction func emuAutoMountAction(_ sender: NSButton!) {
         
         parent.autoMount = (sender.state == .on)
         refresh()
     }
+    */
     
     @IBAction func emuCloseWithoutAskingAction(_ sender: NSButton!) {
         
@@ -149,5 +190,45 @@ extension PreferencesController {
         emuOkButton.title = parent.c64.isRunnable() ? "OK" : "Quit"
         
         refresh()
+    }
+    
+    //
+    // Action methods (Media files)
+    //
+    
+    private func mediaFileType(_ tag: Int) -> String? {
+        switch(tag) {
+        case 0: return "D64"
+        case 1: return "PRG"
+        case 2: return "T64"
+        case 3: return "TAP"
+        case 4: return "CRT"
+        default: return nil
+        }
+    }
+    
+    @IBAction func emuAutoMountAction(_ sender: NSPopUpButton!) {
+        
+        if let fileType = mediaFileType(sender.tag) {
+            let action = AutoMountAction(rawValue: sender.selectedTag())
+            parent.autoMountAction[fileType] = action
+        }
+        track("\(parent.autoMountAction)")
+    }
+    
+    @IBAction func emuAutoTypeAction(_ sender: NSButton!) {
+        
+        if let fileType = mediaFileType(sender.tag) {
+            parent.autoType[fileType] = (sender.intValue == 0)  ? false : true
+        }
+        track("\(parent.autoType)")
+    }
+
+    @IBAction func emuAutoTypeTextAction(_ sender: NSTextField!) {
+        
+        if let fileType = mediaFileType(sender.tag) {
+            parent.autoTypeText[fileType] = sender.stringValue
+            track("\(parent.autoTypeText)")
+        }
     }
 }

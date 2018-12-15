@@ -147,6 +147,26 @@ class PreferencesController : UserDialogController {
     @IBOutlet weak var emuOkButton: NSButton!
     @IBOutlet weak var emuCancelButton: NSButton!
     
+    // Media files
+    @IBOutlet weak var emuD64Popup: NSPopUpButton!
+    @IBOutlet weak var emuPrgPopup: NSPopUpButton!
+    @IBOutlet weak var emuT64Popup: NSPopUpButton!
+    @IBOutlet weak var emuTapPopup: NSPopUpButton!
+    @IBOutlet weak var emuCrtPopup: NSPopUpButton!
+
+    @IBOutlet weak var emuD64AutoTypeButton: NSButton!
+    @IBOutlet weak var emuPrgAutoTypeButton: NSButton!
+    @IBOutlet weak var emuT64AutoTypeButton: NSButton!
+    @IBOutlet weak var emuTapAutoTypeButton: NSButton!
+    @IBOutlet weak var emuCrtAutoTypeButton: NSButton!
+
+    @IBOutlet weak var emuD64AutoTypeText: NSTextField!
+    @IBOutlet weak var emuPrgAutoTypeText: NSTextField!
+    @IBOutlet weak var emuT64AutoTypeText: NSTextField!
+    @IBOutlet weak var emuTapAutoTypeText: NSTextField!
+    @IBOutlet weak var emuCrtAutoTypeText: NSTextField!
+
+
     //
     // Devices preferences
     //

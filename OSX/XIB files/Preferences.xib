@@ -42,13 +42,28 @@
                 <outlet property="emuAutoSnapshots" destination="EUl-ML-vxG" id="ZSQ-Z0-7Yg"/>
                 <outlet property="emuCancelButton" destination="D1p-5o-Lpk" id="skR-c2-1a5"/>
                 <outlet property="emuCloseWithoutAskingButton" destination="faD-zw-7fO" id="ZgP-gj-lvt"/>
+                <outlet property="emuCrtAutoTypeButton" destination="tWL-Ra-haj" id="vt1-b7-md6"/>
+                <outlet property="emuCrtAutoTypeText" destination="Wbh-vb-oWR" id="cId-wp-5s9"/>
+                <outlet property="emuCrtPopup" destination="BM5-Fh-glM" id="Je7-yX-N0f"/>
+                <outlet property="emuD64AutoTypeButton" destination="T2g-hq-OSh" id="ZWb-hS-eme"/>
+                <outlet property="emuD64AutoTypeText" destination="rYR-T7-yVQ" id="6CA-kb-fEA"/>
+                <outlet property="emuD64Popup" destination="LrU-LG-yfM" id="DLC-h7-taH"/>
                 <outlet property="emuDriveSounds" destination="ClS-Ae-0ty" id="mib-nq-ZO7"/>
                 <outlet property="emuEjectWithoutAskingButton" destination="AJ6-dV-aBm" id="UUV-EB-6ZM"/>
                 <outlet property="emuOkButton" destination="zAR-Cw-JcH" id="nVJ-Qk-iGG"/>
                 <outlet property="emuPauseInBackground" destination="KGL-Xj-tLX" id="pmE-hC-l1q"/>
+                <outlet property="emuPrgAutoTypeButton" destination="0IA-WK-3xc" id="oP5-94-8mp"/>
+                <outlet property="emuPrgAutoTypeText" destination="oSj-uP-peJ" id="XSB-Fj-ZNu"/>
+                <outlet property="emuPrgPopup" destination="cEf-nh-E7e" id="QXV-Wq-7o2"/>
                 <outlet property="emuScreenshotSourcePopup" destination="r9b-OW-xJR" id="Wy5-iX-9MH"/>
                 <outlet property="emuScreenshotTargetPopup" destination="MMd-M5-OMQ" id="7uQ-e0-Ie6"/>
                 <outlet property="emuSnapshotInterval" destination="EjE-IB-Rz1" id="6l8-rh-ye9"/>
+                <outlet property="emuT64AutoTypeButton" destination="iAA-Es-0tF" id="c41-eB-VpB"/>
+                <outlet property="emuT64AutoTypeText" destination="Wnp-Te-5Kh" id="77a-7T-Zbh"/>
+                <outlet property="emuT64Popup" destination="UJK-Ze-ozW" id="3J0-fA-rug"/>
+                <outlet property="emuTapAutoTypeButton" destination="gSk-DU-rv0" id="K3k-gx-w35"/>
+                <outlet property="emuTapAutoTypeText" destination="nFD-Hf-VAg" id="twr-4e-tmw"/>
+                <outlet property="emuTapPopup" destination="lgb-kz-IcQ" id="0OQ-4W-pRk"/>
                 <outlet property="emuWarpLoad" destination="jQ0-jt-CGq" id="m2W-9e-r5B"/>
                 <outlet property="hwCancelButton" destination="B3P-il-3nh" id="bC8-or-l9N"/>
                 <outlet property="hwCiaModelPopup" destination="MVI-Fh-OO6" id="coA-3a-xgT"/>
@@ -1866,17 +1881,17 @@ DQ
                                                         <menuItem title="Insert into drive 9" tag="3" id="sym-q4-CP8">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Insert into datasette" tag="1" id="gwH-89-NnO">
+                                                        <menuItem title="Insert into datasette" tag="4" id="gwH-89-NnO">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Atach to expansion port" tag="1" id="tYZ-ev-0QX">
+                                                        <menuItem title="Atach to expansion port" tag="5" id="tYZ-ev-0QX">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="emuScreenshotSourceAction:" target="-2" id="IZI-bA-Spy"/>
+                                                <action selector="emuAutoMountAction:" target="-2" id="8Nu-VS-OQm"/>
                                             </connections>
                                         </popUpButton>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rYR-T7-yVQ">
@@ -1887,6 +1902,9 @@ DQ
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <connections>
+                                                <action selector="emuAutoTypeTextAction:" target="-2" id="pxG-14-Nuy"/>
+                                            </connections>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T2g-hq-OSh">
                                             <rect key="frame" x="328" y="366" width="51" height="20"/>
@@ -1895,6 +1913,9 @@ DQ
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="smallSystem"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="emuCloseWithoutAskingAction:" target="-2" id="SEf-qa-WRU"/>
+                                            </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SN6-BA-zBp">
                                             <rect key="frame" x="309" y="328" width="70" height="18"/>
@@ -1905,7 +1926,7 @@ DQ
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cEf-nh-E7e">
+                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="cEf-nh-E7e">
                                             <rect key="frame" x="383" y="323" width="208" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Open contents browser ..." bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="dI0-C9-HCO" id="egL-sG-N3Q">
@@ -1925,20 +1946,20 @@ DQ
                                                         <menuItem title="Insert into drive 9" tag="3" id="B57-29-6tR">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Insert into datasette" tag="1" id="9vO-J0-ApA">
+                                                        <menuItem title="Insert into datasette" tag="4" id="9vO-J0-ApA">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Atach to expansion port" tag="1" id="CGf-3A-f0w">
+                                                        <menuItem title="Atach to expansion port" tag="5" id="CGf-3A-f0w">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="emuScreenshotSourceAction:" target="-2" id="AQF-Nn-Xdd"/>
+                                                <action selector="emuAutoMountAction:" target="-2" id="Fgt-Ja-2pN"/>
                                             </connections>
                                         </popUpButton>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oSj-uP-peJ">
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="oSj-uP-peJ">
                                             <rect key="frame" x="385" y="301" width="187" height="19"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="oPb-10-awC">
@@ -1946,6 +1967,9 @@ DQ
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <connections>
+                                                <action selector="emuAutoTypeTextAction:" target="-2" id="qWN-9J-P1k"/>
+                                            </connections>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0IA-WK-3xc">
                                             <rect key="frame" x="328" y="300" width="51" height="20"/>
@@ -1954,6 +1978,9 @@ DQ
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="smallSystem"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="emuAutoTypeAction:" target="-2" id="5yR-Lk-gDr"/>
+                                            </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mbu-l4-Dgh">
                                             <rect key="frame" x="309" y="262" width="70" height="18"/>
@@ -1964,7 +1991,7 @@ DQ
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UJK-Ze-ozW">
+                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="UJK-Ze-ozW">
                                             <rect key="frame" x="383" y="257" width="208" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Open contents browser ..." bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="CND-V4-M72" id="7GB-7T-ftA">
@@ -1994,10 +2021,10 @@ DQ
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="emuScreenshotSourceAction:" target="-2" id="zgk-20-o03"/>
+                                                <action selector="emuAutoMountAction:" target="-2" id="tAN-RJ-i4J"/>
                                             </connections>
                                         </popUpButton>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wnp-Te-5Kh">
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="Wnp-Te-5Kh">
                                             <rect key="frame" x="385" y="235" width="187" height="19"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="PRQ-2m-P9z">
@@ -2005,6 +2032,9 @@ DQ
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <connections>
+                                                <action selector="emuAutoTypeTextAction:" target="-2" id="EHc-zi-m4P"/>
+                                            </connections>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iAA-Es-0tF">
                                             <rect key="frame" x="328" y="234" width="51" height="20"/>
@@ -2013,6 +2043,9 @@ DQ
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="smallSystem"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="emuAutoTypeAction:" target="-2" id="Xwt-qf-sxQ"/>
+                                            </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dr3-sg-eYV">
                                             <rect key="frame" x="309" y="196" width="70" height="18"/>
@@ -2023,7 +2056,7 @@ DQ
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lgb-kz-IcQ">
+                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="lgb-kz-IcQ">
                                             <rect key="frame" x="383" y="191" width="208" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Open contents browser ..." bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="OQE-sl-oAX" id="fK6-oc-n5C">
@@ -2043,20 +2076,20 @@ DQ
                                                         <menuItem title="Insert into drive 9" tag="3" id="0C8-QQ-xdx">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Insert into datasette" tag="1" id="1gP-uf-n2c">
+                                                        <menuItem title="Insert into datasette" tag="4" id="1gP-uf-n2c">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Atach to expansion port" tag="1" id="dbp-0a-oJ0">
+                                                        <menuItem title="Atach to expansion port" tag="5" id="dbp-0a-oJ0">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="emuScreenshotSourceAction:" target="-2" id="Phz-dj-5lG"/>
+                                                <action selector="emuAutoMountAction:" target="-2" id="UjE-iw-Fch"/>
                                             </connections>
                                         </popUpButton>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nFD-Hf-VAg">
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="nFD-Hf-VAg">
                                             <rect key="frame" x="385" y="169" width="187" height="19"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="lqX-c4-qd7">
@@ -2064,6 +2097,9 @@ DQ
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <connections>
+                                                <action selector="emuAutoTypeTextAction:" target="-2" id="c5L-o7-AA5"/>
+                                            </connections>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gSk-DU-rv0">
                                             <rect key="frame" x="328" y="168" width="51" height="20"/>
@@ -2072,6 +2108,9 @@ DQ
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="smallSystem"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="emuAutoTypeAction:" target="-2" id="ghn-Zp-MeE"/>
+                                            </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fE0-C8-gM0">
                                             <rect key="frame" x="309" y="130" width="70" height="18"/>
@@ -2082,7 +2121,7 @@ DQ
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BM5-Fh-glM">
+                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="BM5-Fh-glM">
                                             <rect key="frame" x="383" y="125" width="208" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Open contents browser ..." bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="gSF-s1-usg" id="aFV-Yu-OwI">
@@ -2102,20 +2141,20 @@ DQ
                                                         <menuItem title="Insert into drive 9" tag="3" id="bZr-tC-npx">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Insert into datasette" tag="1" id="Avg-1Y-EZz">
+                                                        <menuItem title="Insert into datasette" tag="4" id="Avg-1Y-EZz">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Atach to expansion port" tag="1" id="Ye0-ZG-m4c">
+                                                        <menuItem title="Atach to expansion port" tag="5" id="Ye0-ZG-m4c">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="emuScreenshotSourceAction:" target="-2" id="Zt1-sk-zgh"/>
+                                                <action selector="emuAutoMountAction:" target="-2" id="SQF-qv-K42"/>
                                             </connections>
                                         </popUpButton>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wbh-vb-oWR">
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="Wbh-vb-oWR">
                                             <rect key="frame" x="385" y="103" width="187" height="19"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="9mF-nl-Il1">
@@ -2123,6 +2162,9 @@ DQ
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <connections>
+                                                <action selector="emuAutoTypeTextAction:" target="-2" id="ODZ-cc-G3t"/>
+                                            </connections>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tWL-Ra-haj">
                                             <rect key="frame" x="328" y="102" width="51" height="20"/>
@@ -2131,6 +2173,9 @@ DQ
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="smallSystem"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="emuAutoTypeAction:" target="-2" id="AV4-ZA-bmR"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                 </view>
