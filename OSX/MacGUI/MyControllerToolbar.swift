@@ -166,48 +166,6 @@ extension MyController {
         openPreferences()
     }
     
-    @IBAction func devicesPrefsAction(_ sender: Any!) {
-        
-        let nibName = NSNib.Name("DevicesPrefs")
-        let controller = DevicesPrefsController.init(windowNibName: nibName)
-        controller.showSheet(withParent: self)
-    }
-
-    @IBAction func videoPrefsAction(_ sender: Any!) {
-        
-        let nibName = NSNib.Name("VideoPrefs")
-        let controller = VideoPrefsController.init(windowNibName: nibName)
-        controller.showSheet(withParent: self)
-    }
-
-    @IBAction func emulatorPrefsAction(_ sender: Any!) {
-        
-        let nibName = NSNib.Name("EmulatorPrefs")
-        let controller = EmulatorPrefsController.init(windowNibName: nibName)
-        controller.showSheet(withParent: self)
-    }
-    
-    @IBAction func hardwarePrefsAction(_ sender: Any!) {
-        
-        let nibName = NSNib.Name("HardwarePrefs")
-        let controller = HardwarePrefsController.init(windowNibName: nibName)
-        controller.showSheet(withParent: self)
-    }
-    
-    @IBAction func prefAction(_ sender: NSSegmentedControl) {
-        
-        switch(sender.selectedSegment) {
-            
-        case 0: devicesPrefsAction(sender)
-        case 1: videoPrefsAction(sender)
-        case 2: emulatorPrefsAction(sender)
-        case 3: hardwarePrefsAction(sender)
-            
-        default:
-            assert(false)
-        }
-    }
- 
     @IBAction func snapshotAction(_ sender: NSSegmentedControl) {
         
         switch(sender.selectedSegment) {

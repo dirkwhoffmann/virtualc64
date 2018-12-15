@@ -25,8 +25,6 @@
 		500E3A6721B5C29100935CB3 /* ScriptCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500E3A6621B5C29100935CB3 /* ScriptCommands.swift */; };
 		500E3A6921B5C2A700935CB3 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500E3A6821B5C2A700935CB3 /* Notifications.swift */; };
 		500EC05110E4DCC4005A19A3 /* MessageQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* MessageQueue.cpp */; };
-		500EF689203EB0210043F4FC /* HardwarePrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500EF688203EB0210043F4FC /* HardwarePrefs.xib */; };
-		500EF68B203EB5180043F4FC /* HardwarePrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500EF68A203EB5180043F4FC /* HardwarePrefsController.swift */; };
 		500FC6790D17D2190044131D /* VIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500FC6780D17D2190044131D /* VIA.cpp */; };
 		50133B97200D4EED00167227 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50133B96200D4EED00167227 /* MetalView.swift */; };
 		5014D684200CD62C00044217 /* MetalSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014D683200CD62C00044217 /* MetalSetup.swift */; };
@@ -97,8 +95,6 @@
 		5052AD0A202A526E005FDD88 /* CartridgeMountDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5052AD09202A526E005FDD88 /* CartridgeMountDialog.xib */; };
 		5052AD0C202A57C4005FDD88 /* TapeMountDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5052AD0B202A57C4005FDD88 /* TapeMountDialog.xib */; };
 		5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5052AD0D202A5C1B005FDD88 /* CartridgeMountController.swift */; };
-		5052CD5F2136ADFA0000E890 /* DevicesPrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5052CD5E2136ADFA0000E890 /* DevicesPrefsController.swift */; };
-		5052CD612136AF690000E890 /* DevicesPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5052CD602136AF690000E890 /* DevicesPrefs.xib */; };
 		5054BF1120133BA2003D86D4 /* Cartridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5054BF0F20133BA2003D86D4 /* Cartridge.cpp */; };
 		5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5055A83E1BC7996900399A20 /* MetalKit.framework */; };
 		5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */; };
@@ -117,8 +113,6 @@
 		506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCD20223E5E009742CF /* AppDelegate.swift */; };
 		506D3DD020224BF4009742CF /* MyDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCF20224BF4009742CF /* MyDocument.swift */; };
 		506D4D0D20B331A00093C5C6 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D4D0C20B331A00093C5C6 /* Formatter.swift */; };
-		506D54C820321C830026D8B4 /* RomPrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54C720321C830026D8B4 /* RomPrefsController.swift */; };
-		506D54CA20321EDF0026D8B4 /* RomPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506D54C920321EDF0026D8B4 /* RomPrefs.xib */; };
 		506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54CB2032255A0026D8B4 /* RomDropView.swift */; };
 		50720F4220C853910010EBF2 /* CpuTraceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50720F4120C853910010EBF2 /* CpuTraceView.swift */; };
 		50763277202989D300575110 /* UserDialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* UserDialogController.swift */; };
@@ -127,8 +121,6 @@
 		50790A2221BAF20300979B7A /* VirtualC64Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50790A2121BAF20300979B7A /* VirtualC64Tests.swift */; };
 		507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */; };
 		5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* AudioEngine.swift */; };
-		5084C1D021B80A27006B688E /* VideoPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5084C1CF21B80A27006B688E /* VideoPrefs.xib */; };
-		5084C1D221B8155F006B688E /* VideoPrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5084C1D121B8155F006B688E /* VideoPrefsController.swift */; };
 		5086296B217DD69A00F1C9CD /* AnyDisk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50862969217DD69A00F1C9CD /* AnyDisk.cpp */; };
 		5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5088E6861C3515DB006A80E5 /* VC64Object.cpp */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
@@ -174,10 +166,6 @@
 		50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCB0F28EC010040592B /* MainMenu.xib */; };
 		50F681E71BEA2927008568E3 /* TAPFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E61BEA2927008568E3 /* TAPFile.cpp */; };
 		50F681EA1BEA3BE4008568E3 /* Datasette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E81BEA3BE4008568E3 /* Datasette.cpp */; };
-		50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F97E00203D8D1E0005E19C /* EmulatorPrefsController.swift */; };
-		50F97E03203D8D570005E19C /* EmulatorPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F97E02203D8D570005E19C /* EmulatorPrefs.xib */; };
-		50F99557203AB2A9004C4856 /* KeyboardDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F99556203AB2A9004C4856 /* KeyboardDialog.xib */; };
-		50F99559203AB3B9004C4856 /* KeyboardDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F99558203AB3B9004C4856 /* KeyboardDialog.swift */; };
 		50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F99563203AEC80004C4856 /* KeyViewItem.xib */; };
 		50FB749C203306A700E05051 /* DiskInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50FB749B203306A700E05051 /* DiskInspector.xib */; };
 		50FB74A2203322C900E05051 /* DiskInspectorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FB74A1203322C900E05051 /* DiskInspectorController.swift */; };
@@ -255,8 +243,6 @@
 		500E3A6821B5C2A700935CB3 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		500EC04F10E4DCC4005A19A3 /* MessageQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageQueue.h; sourceTree = "<group>"; };
 		500EC05010E4DCC4005A19A3 /* MessageQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageQueue.cpp; sourceTree = "<group>"; };
-		500EF688203EB0210043F4FC /* HardwarePrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HardwarePrefs.xib; sourceTree = "<group>"; };
-		500EF68A203EB5180043F4FC /* HardwarePrefsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HardwarePrefsController.swift; sourceTree = "<group>"; };
 		500FC6770D17D2190044131D /* VIA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIA.h; sourceTree = "<group>"; };
 		500FC6780D17D2190044131D /* VIA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIA.cpp; sourceTree = "<group>"; };
 		50133B96200D4EED00167227 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
@@ -379,8 +365,6 @@
 		5052AD09202A526E005FDD88 /* CartridgeMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CartridgeMountDialog.xib; sourceTree = "<group>"; };
 		5052AD0B202A57C4005FDD88 /* TapeMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TapeMountDialog.xib; sourceTree = "<group>"; };
 		5052AD0D202A5C1B005FDD88 /* CartridgeMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartridgeMountController.swift; sourceTree = "<group>"; };
-		5052CD5E2136ADFA0000E890 /* DevicesPrefsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesPrefsController.swift; sourceTree = "<group>"; };
-		5052CD602136AF690000E890 /* DevicesPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DevicesPrefs.xib; sourceTree = "<group>"; };
 		5054BF0F20133BA2003D86D4 /* Cartridge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Cartridge.cpp; sourceTree = "<group>"; };
 		5054BF1020133BA2003D86D4 /* Cartridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cartridge.h; sourceTree = "<group>"; };
 		5055A83E1BC7996900399A20 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
@@ -407,8 +391,6 @@
 		506D3DCD20223E5E009742CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		506D3DCF20224BF4009742CF /* MyDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDocument.swift; sourceTree = "<group>"; };
 		506D4D0C20B331A00093C5C6 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
-		506D54C720321C830026D8B4 /* RomPrefsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomPrefsController.swift; sourceTree = "<group>"; };
-		506D54C920321EDF0026D8B4 /* RomPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RomPrefs.xib; sourceTree = "<group>"; };
 		506D54CB2032255A0026D8B4 /* RomDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDropView.swift; sourceTree = "<group>"; };
 		50720F4120C853910010EBF2 /* CpuTraceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CpuTraceView.swift; sourceTree = "<group>"; };
 		50763276202989D300575110 /* UserDialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDialogController.swift; sourceTree = "<group>"; };
@@ -420,8 +402,6 @@
 		50790A2321BAF20300979B7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerCartridges.swift; sourceTree = "<group>"; };
 		5081AB621EF29E6400D6F616 /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
-		5084C1CF21B80A27006B688E /* VideoPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoPrefs.xib; sourceTree = "<group>"; };
-		5084C1D121B8155F006B688E /* VideoPrefsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPrefsController.swift; sourceTree = "<group>"; };
 		50862969217DD69A00F1C9CD /* AnyDisk.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AnyDisk.cpp; sourceTree = "<group>"; };
 		5086296A217DD69A00F1C9CD /* AnyDisk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnyDisk.h; sourceTree = "<group>"; };
 		5088E6861C3515DB006A80E5 /* VC64Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VC64Object.cpp; sourceTree = "<group>"; };
@@ -485,10 +465,6 @@
 		50F681E61BEA2927008568E3 /* TAPFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TAPFile.cpp; sourceTree = "<group>"; };
 		50F681E81BEA3BE4008568E3 /* Datasette.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Datasette.cpp; sourceTree = "<group>"; };
 		50F681E91BEA3BE4008568E3 /* Datasette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Datasette.h; sourceTree = "<group>"; };
-		50F97E00203D8D1E0005E19C /* EmulatorPrefsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulatorPrefsController.swift; sourceTree = "<group>"; };
-		50F97E02203D8D570005E19C /* EmulatorPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmulatorPrefs.xib; sourceTree = "<group>"; };
-		50F99556203AB2A9004C4856 /* KeyboardDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyboardDialog.xib; sourceTree = "<group>"; };
-		50F99558203AB3B9004C4856 /* KeyboardDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardDialog.swift; sourceTree = "<group>"; };
 		50F99563203AEC80004C4856 /* KeyViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyViewItem.xib; sourceTree = "<group>"; };
 		50FB749B203306A700E05051 /* DiskInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskInspector.xib; sourceTree = "<group>"; };
 		50FB74A1203322C900E05051 /* DiskInspectorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskInspectorController.swift; sourceTree = "<group>"; };
@@ -873,13 +849,7 @@
 		50763278202989E000575110 /* User Dialog Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				506D54C720321C830026D8B4 /* RomPrefsController.swift */,
 				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
-				5052CD5E2136ADFA0000E890 /* DevicesPrefsController.swift */,
-				5084C1D121B8155F006B688E /* VideoPrefsController.swift */,
-				50F97E00203D8D1E0005E19C /* EmulatorPrefsController.swift */,
-				500EF68A203EB5180043F4FC /* HardwarePrefsController.swift */,
-				50F99558203AB3B9004C4856 /* KeyboardDialog.swift */,
 				5046C414202349EE000D9B1C /* ArchiveMountController.swift */,
 				50412B0C2028F31800CC90A1 /* DiskMountController.swift */,
 				5052AD0D202A5C1B005FDD88 /* CartridgeMountController.swift */,
@@ -917,12 +887,6 @@
 				50F55DA30F28EADC0040592B /* MyDocument.xib */,
 				50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */,
 				506A724721C033EF00DA0AC3 /* Preferences.xib */,
-				506D54C920321EDF0026D8B4 /* RomPrefs.xib */,
-				5052CD602136AF690000E890 /* DevicesPrefs.xib */,
-				50F97E02203D8D570005E19C /* EmulatorPrefs.xib */,
-				5084C1CF21B80A27006B688E /* VideoPrefs.xib */,
-				500EF688203EB0210043F4FC /* HardwarePrefs.xib */,
-				50F99556203AB2A9004C4856 /* KeyboardDialog.xib */,
 				50F99563203AEC80004C4856 /* KeyViewItem.xib */,
 				5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */,
 				509A26062027AA1100D28827 /* DiskMountDialog.xib */,
@@ -1247,7 +1211,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5084C1D021B80A27006B688E /* VideoPrefs.xib in Resources */,
 				506A724821C033EF00DA0AC3 /* Preferences.xib in Resources */,
 				5052AD0A202A526E005FDD88 /* CartridgeMountDialog.xib in Resources */,
 				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
@@ -1255,17 +1218,14 @@
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */,
 				501A4A5821AF1A6200DDE409 /* VirtualC64.sdef in Resources */,
-				50F99557203AB2A9004C4856 /* KeyboardDialog.xib in Resources */,
 				503E199020C42C6D007E91F1 /* Media.xcassets in Resources */,
 				50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */,
 				5052AD0C202A57C4005FDD88 /* TapeMountDialog.xib in Resources */,
 				50D2A69E210F20CB00F13D43 /* VirtualKeyboard.xib in Resources */,
-				50F97E03203D8D570005E19C /* EmulatorPrefs.xib in Resources */,
 				501E428020D975AD000BB48D /* IconVirtualC64.icns in Resources */,
 				50031B34206FABA400A1969B /* SnapshotDialog.xib in Resources */,
 				50D197E021606DEC008BC551 /* dsa_pub.pem in Resources */,
 				509A26072027AA1100D28827 /* DiskMountDialog.xib in Resources */,
-				5052CD612136AF690000E890 /* DevicesPrefs.xib in Resources */,
 				5046C413202344F3000D9B1C /* ArchiveMountDialog.xib in Resources */,
 				5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */,
 				501E427E20D975AD000BB48D /* IconT64.icns in Resources */,
@@ -1276,12 +1236,10 @@
 				5051A1601B885FDD00CBFB5A /* 1541_track_change_2.aiff in Resources */,
 				501E427D20D975AD000BB48D /* IconCRT.icns in Resources */,
 				50FB749C203306A700E05051 /* DiskInspector.xib in Resources */,
-				506D54CA20321EDF0026D8B4 /* RomPrefs.xib in Resources */,
 				50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */,
 				50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */,
 				50A519431B8DA360006771E2 /* drive_snatch_uae.aiff in Resources */,
 				5051A1621B88661000CBFB5A /* 1541_track_change_1.aiff in Resources */,
-				500EF689203EB0210043F4FC /* HardwarePrefs.xib in Resources */,
 				5020434C1EE71B47006C3FD3 /* (null) in Resources */,
 				5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */,
 				501E427F20D975AD000BB48D /* IconPRG.icns in Resources */,
@@ -1350,14 +1308,12 @@
 				50FE726A212DE8F600E99755 /* VIC_memory.cpp in Sources */,
 				50E9B92D201F299500065A89 /* MyController.swift in Sources */,
 				500E3A6721B5C29100935CB3 /* ScriptCommands.swift in Sources */,
-				5052CD5F2136ADFA0000E890 /* DevicesPrefsController.swift in Sources */,
 				50DBB44B2025CE5700489271 /* Basics.swift in Sources */,
 				5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */,
 				50D500520C2ED13F0022CA3A /* T64File.cpp in Sources */,
 				50A52A190C2FD43700A1377F /* D64File.cpp in Sources */,
 				5058F0F220A77EDC008BFA92 /* NeosMouse.cpp in Sources */,
 				509AEA0C0C324AB0001FC9FD /* PRGFile.cpp in Sources */,
-				5084C1D221B8155F006B688E /* VideoPrefsController.swift in Sources */,
 				509AEAFF0C325EFB001FC9FD /* P00File.cpp in Sources */,
 				50B929F221C2B5C90039E8F2 /* PreferencesWindow.swift in Sources */,
 				5058F0EF20A77E90008BFA92 /* Mouse1351.cpp in Sources */,
@@ -1392,14 +1348,11 @@
 				5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */,
 				50720F4220C853910010EBF2 /* CpuTraceView.swift in Sources */,
 				506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */,
-				50F99559203AB3B9004C4856 /* KeyboardDialog.swift in Sources */,
 				50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */,
-				506D54C820321C830026D8B4 /* RomPrefsController.swift in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				5028921521A2F96800622969 /* Kingsoft.cpp in Sources */,
 				501A4A5A21AF3BAF00DDE409 /* AppleScript.swift in Sources */,
 				50FF16FD205D17F5000A729A /* ProcessorPort.cpp in Sources */,
-				50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
 				506D3DD020224BF4009742CF /* MyDocument.swift in Sources */,
 				5002FA7F21C2653600DA4BBC /* EmulatorPrefs.swift in Sources */,
@@ -1440,7 +1393,6 @@
 				5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */,
 				50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */,
 				50195C2A20B007A1003844FB /* Debugger.swift in Sources */,
-				500EF68B203EB5180043F4FC /* HardwarePrefsController.swift in Sources */,
 				50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */,
 				50340D4020F63AFE009A53A5 /* VIC_cycles_pal.cpp in Sources */,
 				50F2AB1B1EF267510040BC3A /* VIC_colors.cpp in Sources */,

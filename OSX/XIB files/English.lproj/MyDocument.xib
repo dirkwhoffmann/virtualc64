@@ -328,7 +328,7 @@
                         <popUpButton key="view" tag="11" id="4MP-rV-xX2" userLabel="Port 2">
                             <rect key="frame" x="0.0" y="14" width="48" height="23"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xyt-eC-0im" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" image="devNoneTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xyt-eC-0im" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
@@ -422,25 +422,6 @@
                             <action selector="stopAndGoAction:" target="-2" id="nYX-eP-iZh"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="5A13498A-2D77-4A1E-8192-28745F42E387" label="Preferences" paletteLabel="Preferences" sizingBehavior="auto" id="Qe9-To-rxA">
-                        <nil key="toolTip"/>
-                        <segmentedControl key="view" verticalHuggingPriority="750" id="LAq-0H-kvY">
-                            <rect key="frame" x="0.0" y="14" width="169" height="23"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="W70-WS-d3m">
-                                <font key="font" metaFont="system"/>
-                                <segments>
-                                    <segment toolTip="Devices Preferences" image="prefDevicesTemplate" width="40"/>
-                                    <segment toolTip="Video Preferences" image="prefVideoTemplate" width="40" tag="1"/>
-                                    <segment toolTip="Emulator Preferences" image="prefEmulatorTemplate" width="40" tag="2"/>
-                                    <segment image="prefHwTemplate" width="40" tag="3"/>
-                                </segments>
-                            </segmentedCell>
-                            <connections>
-                                <action selector="prefAction:" target="-2" id="Uk3-9T-P2K"/>
-                            </connections>
-                        </segmentedControl>
-                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="24E37695-F012-4018-9A52-6D5F6A2522D8" label="Snapshots" paletteLabel="Snapshots" sizingBehavior="auto" id="nxb-IG-KLe">
                         <nil key="toolTip"/>
                         <segmentedControl key="view" verticalHuggingPriority="750" id="AHD-MB-nXC">
@@ -489,7 +470,6 @@
                     <toolbarItem reference="Ckl-d3-vFW"/>
                     <toolbarItem reference="1851"/>
                     <toolbarItem reference="z3f-Tz-HUC"/>
-                    <toolbarItem reference="Qe9-To-rxA"/>
                     <toolbarItem reference="1851"/>
                     <toolbarItem reference="dOU-Sh-aV4"/>
                     <toolbarItem reference="wVB-PW-axj"/>
@@ -1004,7 +984,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" id="vEY-WC-bMl">
                                             <rect key="frame" x="1" y="0.0" width="270" height="484"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <tableView focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="1841" id="67" customClass="MemTableView" customModule="VirtualC64" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="270" height="467"/>
@@ -2960,10 +2940,7 @@
         <image name="mediaTapeTemplate" width="241" height="240"/>
         <image name="pauseTemplate" width="240" height="241"/>
         <image name="powerTemplate" width="241" height="240"/>
-        <image name="prefDevicesTemplate" width="241" height="241"/>
         <image name="prefEmulatorTemplate" width="241" height="240"/>
-        <image name="prefHwTemplate" width="240" height="241"/>
-        <image name="prefVideoTemplate" width="241" height="241"/>
         <image name="stepIntoTemplate" width="240" height="241"/>
         <image name="stepOverTemplate" width="241" height="241"/>
         <image name="ttBrowseTemplate" width="240" height="240"/>

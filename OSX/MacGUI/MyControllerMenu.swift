@@ -47,13 +47,6 @@ extension MyController : NSMenuItemValidation {
         }
         
         // Keyboard menu
-        if item.action == #selector(MyController.mapKeysByPositionAction(_:)) {
-            item.state = keyboardcontroller.mapKeysByPosition ? .on : .off
-            return true
-        }
-        if item.action == #selector(MyController.customizeKeyMap(_:)) {
-            return keyboardcontroller.mapKeysByPosition
-        }
         if item.action == #selector(MyController.shiftLockAction(_:)) {
             item.state = c64.keyboard.shiftLockIsHoldDown() ? .on : .off
             return true
@@ -176,6 +169,7 @@ extension MyController : NSMenuItemValidation {
     // Action methods (VirtualC64 menu)
     //
     
+    /*
     @IBAction func openDevicePrefsAction(_ sender: Any!) {
         
         let nibName = NSNib.Name("DevicesPrefs")
@@ -210,6 +204,7 @@ extension MyController : NSMenuItemValidation {
         let controller = RomPrefsController.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
     }
+    */
     
     @IBAction func importPrefsAction(_ sender: Any!) {
         
@@ -438,26 +433,6 @@ extension MyController : NSMenuItemValidation {
         virtualKeyboard?.showWindow(withParent: self)
     }
     
-    @IBAction func mapKeysByPositionAction(_ sender: Any!) {
-        
-        track()
-        undoManager?.registerUndo(withTarget: self) {
-            targetSelf in targetSelf.mapKeysByPositionAction(sender)
-        }
-        
-        keyboardcontroller.mapKeysByPosition = !keyboardcontroller.mapKeysByPosition
-    }
-    
-    @IBAction func customizeKeyMap(_ sender: Any!) {
-        
-        track()
-        let nibName = NSNib.Name("KeyboardDialog")
-        let controller = KeyboardDialog.init(windowNibName: nibName)
-        controller.showSheet(withParent: self)
-        
-    }
-    
- 
     // -----------------------------------------------------------------
     @IBAction func runstopAction(_ sender: Any!) {
         keyboardcontroller.typeOnKeyboard(key: C64Key.runStop)

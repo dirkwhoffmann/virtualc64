@@ -35,10 +35,6 @@ class MyController : NSWindowController, MessageReceiver {
 
     /// Virtual C64 keyboard (opened as a sheet)
     var virtualKeyboardSheet: VirtualKeyboardController? = nil
-
-    /// Rom Dialog controller
-    /// Deprecated
-    var romDialogController: RomPrefsController? = nil
     
     /// Preferences controller
     var preferencesController: PreferencesController?
