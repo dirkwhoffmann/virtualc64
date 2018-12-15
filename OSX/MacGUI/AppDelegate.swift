@@ -12,6 +12,9 @@ import Cocoa
 @NSApplicationMain
 @objc public class AppDelegate: NSObject, NSApplicationDelegate {
     
+    /// Virtual C64 keyboard (opened as a separate window)
+    var virtualKeyboard: VirtualKeyboardController? = nil
+    
     public func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         track()
@@ -45,6 +48,9 @@ import Cocoa
     
     public func applicationWillTerminate(_ aNotification: Notification) {
 
+        // Close virtual keyboard
+        virtualKeyboard?.close()
+        
         track()
     }
 }

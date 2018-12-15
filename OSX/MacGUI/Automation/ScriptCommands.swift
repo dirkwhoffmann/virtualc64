@@ -9,22 +9,34 @@
 
 import Foundation
 
-// The document of the currently active emulator instance
-private var currentDocument: MyDocument? {
+// The delegate of this application
+var appDelegate: AppDelegate {
     get {
-        return NSApplication.shared.orderedDocuments.first as? MyDocument
+        return NSApp.delegate as! AppDelegate
+    }
+}
+
+// The document of the currently active emulator instance
+var currentDocument: MyDocument? {
+    get {
+        if let doc = NSApplication.shared.orderedDocuments.first as? MyDocument {
+            return doc
+        } else {
+            track("No document object found. Returning nil.")
+            return nil
+        }
     }
 }
 
 // The controller of the currently active emulator instance
-private var currentController: MyController? {
+var currentController: MyController? {
     get {
         return currentDocument?.windowControllers.first as? MyController
     }
 }
 
 // The emulator proxy of the currently active emulator instance
-private var currentProxy: C64Proxy? {
+var currentProxy: C64Proxy? {
     get {
         return currentDocument?.c64
     }

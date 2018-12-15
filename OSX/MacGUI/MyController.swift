@@ -29,9 +29,6 @@ class MyController : NSWindowController, MessageReceiver {
     
     /// Keyboard controller
     var keyboardcontroller: KeyboardController!
-    
-    /// Virtual C64 keyboard (opened as a separate window)
-    var virtualKeyboard: VirtualKeyboardController? = nil
 
     /// Virtual C64 keyboard (opened as a sheet)
     var virtualKeyboardSheet: VirtualKeyboardController? = nil
@@ -613,7 +610,14 @@ extension MyController {
         case MSG_KEYMATRIX,
              MSG_CHARSET:
             
-            virtualKeyboard?.refresh()
+            let appDelegate = NSApp.delegate as! AppDelegate
+            track("MSG_KEYMATRIX appDelegate = \(appDelegate)")
+            if appDelegate.virtualKeyboard != nil {
+                track("Refreshing virtual keyboard")
+                appDelegate.virtualKeyboard?.refresh()
+            }
+            
+            // virtualKeyboard?.refresh()
             virtualKeyboardSheet?.refresh()
 
         case MSG_VC1541_ATTACHED:

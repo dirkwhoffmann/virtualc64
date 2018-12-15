@@ -70,32 +70,42 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
         releaseSpecialKeys()
     }
     
+    func windowDidBecomeMain(_ notification: Notification) {
+        
+        track()
+        refresh()
+    }
+    
     override func refresh() {
+        
+        guard let keyboard = currentProxy?.keyboard else { return }
+        
+        track("keyboard = \(keyboard)")
         
         var needsUpdate = false;
         
-        if lshift != c64.keyboard.leftShiftIsPressed() {
-            lshift = c64.keyboard.leftShiftIsPressed()
+        if lshift != keyboard.leftShiftIsPressed() {
+            lshift = keyboard.leftShiftIsPressed()
             needsUpdate = true
         }
-        if rshift != c64.keyboard.rightShiftIsPressed() {
-            rshift = c64.keyboard.rightShiftIsPressed()
+        if rshift != keyboard.rightShiftIsPressed() {
+            rshift = keyboard.rightShiftIsPressed()
             needsUpdate = true
         }
-        if shiftLock != c64.keyboard.shiftLockIsHoldDown() {
-            shiftLock = c64.keyboard.shiftLockIsHoldDown()
+        if shiftLock != keyboard.shiftLockIsHoldDown() {
+            shiftLock = keyboard.shiftLockIsHoldDown()
             needsUpdate = true
         }
-        if control != c64.keyboard.controlIsPressed() {
-            control = c64.keyboard.controlIsPressed()
+        if control != keyboard.controlIsPressed() {
+            control = keyboard.controlIsPressed()
             needsUpdate = true
         }
-        if commodore != c64.keyboard.commodoreIsPressed() {
-            commodore = c64.keyboard.commodoreIsPressed()
+        if commodore != keyboard.commodoreIsPressed() {
+            commodore = keyboard.commodoreIsPressed()
             needsUpdate = true
         }
-        if lowercase != !c64.keyboard.inUpperCaseMode() {
-            lowercase = !c64.keyboard.inUpperCaseMode()
+        if lowercase != !keyboard.inUpperCaseMode() {
+            lowercase = !keyboard.inUpperCaseMode()
             needsUpdate = true
         }
         
@@ -105,10 +115,13 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
     }
     
     func updateImages() {
-                
+        
+        guard let keyboard = currentProxy?.keyboard else { return }
+        
         for nr in 0 ... 65 {
             
-            let shiftLock = c64.keyboard.shiftLockIsHoldDown()
+            let shiftLock = keyboard.shiftLockIsHoldDown()
+            
             let pressed =
                 (nr == 17 && control) ||
                 (nr == 34 && shiftLock) ||
@@ -116,7 +129,7 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
                 (nr == 50 && lshift) ||
                 (nr == 61 && rshift)
             let shift = lshift || rshift || shiftLock
-            
+        
             keyView[nr]!.image = C64Key(nr).image(pressed: pressed,
                                                   shift: shift,
                                                   control: control,
@@ -127,40 +140,40 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
     
     func releaseSpecialKeys() {
         
-        self.parent.c64.keyboard.releaseKey(atRow: C64Key.control.row,
-                                            col: C64Key.control.col)
-        self.parent.c64.keyboard.releaseKey(atRow: C64Key.commodore.row,
-                                            col: C64Key.commodore.col)
-        self.parent.c64.keyboard.releaseKey(atRow: C64Key.shift.row,
-                                            col: C64Key.shift.col)
-        self.parent.c64.keyboard.releaseKey(atRow: C64Key.rightShift.row,
-                                            col: C64Key.rightShift.col)
+        guard let keyboard = currentProxy?.keyboard else { return }
+        
+        keyboard.releaseKey(atRow: C64Key.control.row, col: C64Key.control.col)
+        keyboard.releaseKey(atRow: C64Key.commodore.row, col: C64Key.commodore.col)
+        keyboard.releaseKey(atRow: C64Key.shift.row, col: C64Key.shift.col)
+        keyboard.releaseKey(atRow: C64Key.rightShift.row, col: C64Key.rightShift.col)
     }
     
     @IBAction func pressVirtualC64Key(_ sender: Any!) {
         
+        guard let keyboard = currentProxy?.keyboard else { return }
+
         let tag = (sender as! NSButton).tag
         let key = C64Key(tag)
         
         func press() {
             if key.nr == 31 {
-                parent.c64.keyboard.pressRestoreKey()
+                keyboard.pressRestoreKey()
             } else {
-                parent.c64.keyboard.pressKey(atRow: key.row, col: key.col)
+                keyboard.pressKey(atRow: key.row, col: key.col)
             }
         }
         func release() {
             if key.nr == 31 {
-                parent.c64.keyboard.releaseRestoreKey()
+                keyboard.releaseRestoreKey()
             } else {
-                parent.c64.keyboard.releaseKey(atRow: key.row, col: key.col)
+                keyboard.releaseKey(atRow: key.row, col: key.col)
             }
         }
         
         switch (key.nr) {
             
         case 34: // Shift Lock
-            shiftLock ? c64.keyboard.unlockShift() : c64.keyboard.lockShift()
+            shiftLock ? keyboard.unlockShift() : keyboard.lockShift()
 
         case 17: // Control
             control ? release() : press()

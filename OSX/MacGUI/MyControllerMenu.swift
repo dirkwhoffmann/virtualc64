@@ -429,8 +429,10 @@ extension MyController : NSMenuItemValidation {
         
         // Open the virtual keyboard as a window
         let nibName = NSNib.Name("VirtualKeyboard")
-        virtualKeyboard = VirtualKeyboardController.init(windowNibName: nibName)
-        virtualKeyboard?.showWindow(withParent: self)
+        // virtualKeyboard = VirtualKeyboardController.init(windowNibName: nibName)
+        // virtualKeyboard?.showWindow(withParent: self)
+        appDelegate.virtualKeyboard = VirtualKeyboardController.init(windowNibName: nibName)
+        appDelegate.virtualKeyboard?.showWindow(withParent: self)
     }
     
     // -----------------------------------------------------------------
