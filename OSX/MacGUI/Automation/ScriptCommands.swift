@@ -86,17 +86,7 @@ func configureScriptCmd(arguments: [AnyHashable : Any]?) -> Bool {
         default: return false
         }
     }
-    
-    // Auto mount
-    if let argument = arguments?["VC64AutoMount"] as? String {
-        track();
-        switch argument {
-        case "on": track(); currentController?.autoMount = true
-        case "off": track(); currentController?.autoMount = false
-        default: return false
-        }
-    }
-    
+        
     return true
 }
 

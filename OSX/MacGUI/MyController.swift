@@ -9,7 +9,7 @@
 
 import Foundation
 
-enum AutoMountAction : Int {
+enum AutoMountAction : Int, Codable {
     
     case openBrowser = 0
     case flashFirstFile = 1
@@ -106,10 +106,6 @@ class MyController : NSWindowController, MessageReceiver {
     /// Media file auto-type text
     var autoTypeText : [String: String] = Defaults.autoTypeText
     
-    /// Indicates if the user dialog should be skipped when opening archives.
-    /// DEPRECATED
-    var autoMount = Defaults.autoMount
-
     /// Indicates if the user should be warned if an unsaved document is closed.
     var closeWithoutAsking = Defaults.closeWithoutAsking
 
@@ -631,9 +627,7 @@ extension MyController {
              MSG_CHARSET:
             
             let appDelegate = NSApp.delegate as! AppDelegate
-            track("MSG_KEYMATRIX appDelegate = \(appDelegate)")
             if appDelegate.virtualKeyboard != nil {
-                track("Refreshing virtual keyboard")
                 appDelegate.virtualKeyboard?.refresh()
             }
             

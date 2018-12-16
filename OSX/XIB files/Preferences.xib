@@ -38,7 +38,6 @@
                 <outlet property="devUp1button" destination="sBd-JY-JXR" id="VPl-zJ-cNB"/>
                 <outlet property="devUp2" destination="zh0-97-wYm" id="RVh-hY-Aju"/>
                 <outlet property="devUp2button" destination="yVE-JU-tqA" id="vBO-oh-Dg2"/>
-                <outlet property="emuAutoMountButton" destination="g7M-B3-K48" id="U9d-hf-pM4"/>
                 <outlet property="emuAutoSnapshots" destination="EUl-ML-vxG" id="ZSQ-Z0-7Yg"/>
                 <outlet property="emuCancelButton" destination="D1p-5o-Lpk" id="skR-c2-1a5"/>
                 <outlet property="emuCloseWithoutAskingButton" destination="faD-zw-7fO" id="ZgP-gj-lvt"/>
@@ -1616,7 +1615,7 @@ DQ
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ocC-cr-vSR">
-                                            <rect key="frame" x="14" y="240" width="143" height="17"/>
+                                            <rect key="frame" x="14" y="264" width="143" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Miscellaneous" id="QHh-pl-oeA">
                                                 <font key="font" metaFont="systemBold"/>
@@ -1624,19 +1623,8 @@ DQ
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g7M-B3-K48">
-                                            <rect key="frame" x="13" y="332" width="284" height="25"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="Skip file browser when opening a media file" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6TJ-yA-QMd">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="emuAutoMountAction:" target="-2" id="Wdy-A5-RwZ"/>
-                                            </connections>
-                                        </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="faD-zw-7fO">
-                                            <rect key="frame" x="13" y="305" width="274" height="25"/>
+                                            <rect key="frame" x="13" y="329" width="274" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Close unsaved documents without asking" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="aPZ-PJ-VjB">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1647,7 +1635,7 @@ DQ
                                             </connections>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EUl-ML-vxG">
-                                            <rect key="frame" x="13" y="177" width="161" height="25"/>
+                                            <rect key="frame" x="13" y="201" width="161" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Take a snapshot every " bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="HxX-GG-Bxo">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1658,7 +1646,7 @@ DQ
                                             </connections>
                                         </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7ea-5R-ItB">
-                                            <rect key="frame" x="211" y="183" width="56" height="17"/>
+                                            <rect key="frame" x="211" y="207" width="56" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="seconds" id="eJ1-mE-Phi">
                                                 <font key="font" metaFont="system"/>
@@ -1667,7 +1655,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EjE-IB-Rz1">
-                                            <rect key="frame" x="174" y="179" width="32" height="22"/>
+                                            <rect key="frame" x="174" y="203" width="32" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="255" drawsBackground="YES" id="VKM-EE-otr">
                                                 <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="iHi-N5-yWH">
@@ -1683,7 +1671,7 @@ DQ
                                             </connections>
                                         </textField>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KGL-Xj-tLX">
-                                            <rect key="frame" x="13" y="207" width="249" height="25"/>
+                                            <rect key="frame" x="13" y="231" width="249" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Pause emulation while in background" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="09D-hG-jbr">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1694,7 +1682,7 @@ DQ
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DfV-8h-bR4">
-                                            <rect key="frame" x="13" y="366" width="143" height="17"/>
+                                            <rect key="frame" x="13" y="364" width="143" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="User Dialogs" id="QJ9-gN-ICy">
                                                 <font key="font" metaFont="systemBold"/>
@@ -1703,7 +1691,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AJ6-dV-aBm">
-                                            <rect key="frame" x="13" y="278" width="274" height="25"/>
+                                            <rect key="frame" x="13" y="302" width="274" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Eject unsaved disks without asking" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="xlg-VI-mKu">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1757,7 +1745,7 @@ DQ
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sZS-uO-CWf">
-                                            <rect key="frame" x="13" y="140" width="143" height="17"/>
+                                            <rect key="frame" x="13" y="164" width="143" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Screenshots" id="KgI-3c-Jd5">
                                                 <font key="font" metaFont="systemBold"/>
@@ -1766,7 +1754,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8kq-mb-PYF">
-                                            <rect key="frame" x="20" y="110" width="76" height="18"/>
+                                            <rect key="frame" x="20" y="134" width="76" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Source:" id="Uhu-gV-URk">
                                                 <font key="font" metaFont="system"/>
@@ -1775,7 +1763,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r9b-OW-xJR">
-                                            <rect key="frame" x="100" y="105" width="178" height="26"/>
+                                            <rect key="frame" x="100" y="129" width="178" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Emulator Texture" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="dfw-jr-gWv" id="Ou3-1P-ZzR">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1796,7 +1784,7 @@ DQ
                                             </connections>
                                         </popUpButton>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5W6-tn-wR1">
-                                            <rect key="frame" x="20" y="80" width="76" height="18"/>
+                                            <rect key="frame" x="20" y="104" width="76" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Target:" id="DB6-n2-OF0">
                                                 <font key="font" metaFont="system"/>
@@ -1805,7 +1793,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MMd-M5-OMQ">
-                                            <rect key="frame" x="100" y="75" width="178" height="26"/>
+                                            <rect key="frame" x="100" y="99" width="178" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="TIFF image" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="0Pb-2x-N3x" id="eeo-p0-EDG">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1897,13 +1885,14 @@ DQ
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rYR-T7-yVQ">
                                             <rect key="frame" x="385" y="366" width="187" height="19"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="VcS-RI-b0Z">
+                                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="VcS-RI-b0Z">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
                                                 <action selector="emuAutoTypeTextAction:" target="-2" id="pxG-14-Nuy"/>
+                                                <outlet property="delegate" destination="-2" id="2qZ-am-uTk"/>
                                             </connections>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T2g-hq-OSh">
@@ -1969,6 +1958,7 @@ DQ
                                             </textFieldCell>
                                             <connections>
                                                 <action selector="emuAutoTypeTextAction:" target="-2" id="qWN-9J-P1k"/>
+                                                <outlet property="delegate" destination="-2" id="01w-Ub-D8h"/>
                                             </connections>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0IA-WK-3xc">
@@ -2034,6 +2024,7 @@ DQ
                                             </textFieldCell>
                                             <connections>
                                                 <action selector="emuAutoTypeTextAction:" target="-2" id="EHc-zi-m4P"/>
+                                                <outlet property="delegate" destination="-2" id="Hvq-fy-6PI"/>
                                             </connections>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iAA-Es-0tF">
@@ -2099,6 +2090,7 @@ DQ
                                             </textFieldCell>
                                             <connections>
                                                 <action selector="emuAutoTypeTextAction:" target="-2" id="c5L-o7-AA5"/>
+                                                <outlet property="delegate" destination="-2" id="Zbb-WS-pbo"/>
                                             </connections>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gSk-DU-rv0">
@@ -2164,6 +2156,7 @@ DQ
                                             </textFieldCell>
                                             <connections>
                                                 <action selector="emuAutoTypeTextAction:" target="-2" id="ODZ-cc-G3t"/>
+                                                <outlet property="delegate" destination="-2" id="czi-Hj-5fj"/>
                                             </connections>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tWL-Ra-haj">
@@ -2799,6 +2792,7 @@ DQ
             </connections>
             <point key="canvasLocation" x="222" y="294"/>
         </window>
+        <userDefaultsController representsSharedInstance="YES" id="boj-yF-D6X"/>
     </objects>
     <resources>
         <image name="NSCaution" width="32" height="32"/>

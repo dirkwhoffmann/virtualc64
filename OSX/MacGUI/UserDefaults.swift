@@ -494,7 +494,6 @@ extension VC64Keys {
     static let screenshotTarget     = "VC64ScreenshotTargetKey"
     
     // User dialogs
-    static let autoMount            = "VC64AutoMount"
     static let closeWithoutAsking   = "VC64CloseWithoutAsking"
     static let ejectWithoutAsking   = "VC64EjectWithoutAsking"
     
@@ -519,7 +518,6 @@ extension Defaults {
     static let screenshotTarget     = NSBitmapImageRep.FileType.png
     
     // User dialogs
-    static let autoMount            = false
     static let closeWithoutAsking   = false
     static let ejectWithoutAsking   = false
     
@@ -528,15 +526,51 @@ extension Defaults {
     static let snapshotInterval     = 3
     
     // Media files
-    static let autoMountAction      = [ "D64": AutoMountAction.insertIntoDrive8,
-                                        "PRG": AutoMountAction.flashFirstFile]
+    static let autoMountAction      = [ "D64": AutoMountAction.openBrowser,
+                                        "PRG": AutoMountAction.openBrowser,
+                                        "T64": AutoMountAction.openBrowser,
+                                        "TAP": AutoMountAction.openBrowser,
+                                        "CRT": AutoMountAction.openBrowser,]
     static let autoType             = [ "D64": true,
-                                        "PRG": true]
+                                        "PRG": true,
+                                        "T64": true,
+                                        "TAP": true,
+                                        "CRT": false]
     static let autoTypeText         = [ "D64": "LOAD \"*\",8,1:",
-                                        "PRG": "RUN"]
+                                        "PRG": "RUN",
+                                        "T64": "RUN",
+                                        "TAP": "LOAD",
+                                        "CRT": ""]
+}
+
+
+func register<T: Encodable>(_ item: T, forKey key: String) {
+    if let data = try? PropertyListEncoder().encode(item) {
+        UserDefaults.standard.register(defaults: [key: data])
+    }
 }
 
 extension MyController {
+    
+    func encode<T: Encodable>(_ item: T, forKey key: String) {
+       
+        track("Encoding \(item)")
+        
+        UserDefaults.standard.set(try?
+            PropertyListEncoder().encode(item), forKey: key)
+    }
+    
+    func decode<T: Decodable>(_ item: inout T, forKey key: String) {
+        
+        track("Decoding \(item)")
+        
+        if let data = UserDefaults.standard.data(forKey: key) {
+            if let decoded = try? PropertyListDecoder().decode(T.self, from: data) {
+                item = decoded
+                track("\(item)")
+            }
+        }
+    }
     
     static func registerEmulatorUserDefaults() {
         
@@ -548,7 +582,6 @@ extension MyController {
             VC64Keys.screenshotSource: Defaults.screenshotSource,
             VC64Keys.screenshotTarget: Int(Defaults.screenshotTarget.rawValue),
 
-            VC64Keys.autoMount: Defaults.autoMount,
             VC64Keys.closeWithoutAsking: Defaults.closeWithoutAsking,
             VC64Keys.ejectWithoutAsking: Defaults.ejectWithoutAsking,
 
@@ -558,12 +591,26 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         defaults.register(defaults: dictionary)
+        
+        register(Defaults.autoMountAction, forKey: VC64Keys.autoMountAction)
+        register(Defaults.autoType, forKey: VC64Keys.autoType)
+        register(Defaults.autoTypeText, forKey: VC64Keys.autoTypeText)
     }
     
     func loadEmulatorUserDefaults() {
         
-        let defaults = UserDefaults.standard
+        /*
+        func decodeOld<T: Decodable>(_ key: String, t: T) -> T? {
+            if let data = UserDefaults.standard.data(forKey: key) {
+                return try? PropertyListDecoder().decode(T.self, from: data)
+            } else {
+                return nil
+            }
+        }
+        */
         
+        let defaults = UserDefaults.standard
+            
         c64.suspend()
         
         c64.setWarpLoad(defaults.bool(forKey: VC64Keys.warpLoad))
@@ -573,12 +620,15 @@ extension MyController {
         screenshotSource = defaults.integer(forKey: VC64Keys.screenshotSource)
         screenshotTargetIntValue = defaults.integer(forKey: VC64Keys.screenshotTarget)
     
-        autoMount = defaults.bool(forKey: VC64Keys.autoMount)
         closeWithoutAsking = defaults.bool(forKey: VC64Keys.closeWithoutAsking)
         ejectWithoutAsking = defaults.bool(forKey: VC64Keys.ejectWithoutAsking)
 
         pauseInBackground = defaults.bool(forKey: VC64Keys.pauseInBackground)
         c64.setSnapshotInterval(defaults.integer(forKey: VC64Keys.snapshotInterval))
+        
+        decode(&autoMountAction, forKey: VC64Keys.autoMountAction)
+        decode(&autoType, forKey: VC64Keys.autoType)
+        decode(&autoTypeText, forKey: VC64Keys.autoTypeText)
         
         c64.resume()
     }
@@ -594,12 +644,15 @@ extension MyController {
         defaults.set(screenshotSource, forKey: VC64Keys.screenshotSource)
         defaults.set(screenshotTargetIntValue, forKey: VC64Keys.screenshotTarget)
         
-        defaults.set(autoMount, forKey: VC64Keys.autoMount)
         defaults.set(closeWithoutAsking, forKey: VC64Keys.closeWithoutAsking)
         defaults.set(ejectWithoutAsking, forKey: VC64Keys.ejectWithoutAsking)
         
         defaults.set(pauseInBackground, forKey: VC64Keys.pauseInBackground)
         defaults.set(c64.snapshotInterval(), forKey: VC64Keys.snapshotInterval)
+        
+        encode(autoMountAction, forKey: VC64Keys.autoMountAction)
+        encode(autoType, forKey: VC64Keys.autoType)
+        encode(autoTypeText, forKey: VC64Keys.autoTypeText)
     }
 }
 

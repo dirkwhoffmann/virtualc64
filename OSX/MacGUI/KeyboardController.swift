@@ -396,29 +396,36 @@ class KeyboardController: NSObject {
         }
     }
     
-    func typeOnKeyboard(string: String,
+    func typeOnKeyboard(string: String?,
                               initialDelay: useconds_t = 0,
                               completion: (() -> Void)?) {
 
-        let truncated = (string.count < 256) ? string : string.prefix(256) + "..."
-
-        DispatchQueue.global().async {
-        
-            usleep(initialDelay);
-            for c in truncated.lowercased() {
-                let c64Keys = C64Key.translate(char: String(c))
-                self._typeOnKeyboard(keyList: c64Keys)
-                usleep(useconds_t(20000))
+        if var truncated = string {
+            
+            // Shorten string if it is too large
+            if (truncated.count > 255) {
+                truncated = truncated.prefix(256) + "..."
             }
-            completion?()
+            
+            // Type string ...
+            DispatchQueue.global().async {
+                
+                usleep(initialDelay);
+                for c in truncated.lowercased() {
+                    let c64Keys = C64Key.translate(char: String(c))
+                    self._typeOnKeyboard(keyList: c64Keys)
+                    usleep(useconds_t(20000))
+                }
+                completion?()
+            }
         }
     }
     
-    func type(_ string: String) {
+    func type(_ string: String?) {
         typeOnKeyboard(string: string, completion: nil)
     }
         
-    func typeOnKeyboardAndPressPlay(string: String) {
+    func typeOnKeyboardAndPressPlay(string: String?) {
         typeOnKeyboard(string: string, completion: controller.c64.datasette.pressPlay)
     }
 }

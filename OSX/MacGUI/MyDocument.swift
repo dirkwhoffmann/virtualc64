@@ -173,7 +173,7 @@ class MyDocument : NSDocument {
     /// Creates an attachment from a URL
     func createAttachment(from url: URL) throws {
     
-        track("Creating attachment for file \(url.lastPathComponent).")
+        track("Creating attachment from URL \(url.lastPathComponent).")
 
         // Try to create the attachment
         let fileWrapper = try FileWrapper.init(url: url)
@@ -197,20 +197,26 @@ class MyDocument : NSDocument {
         
         let buffer = (data as NSData).bytes
         let length = data.count
-        var openAsUntitled = true
+        // var openAsUntitled = true
         
         track("Read \(length) bytes from file \(filename).")
         
         switch (typeName) {
             
         case "VC64":
+            // Check for outdated snapshot formats
             if SnapshotProxy.isUnsupportedSnapshot(buffer, length: length) {
                 throw NSError.snapshotVersionError(filename: filename)
             }
-            attachment = SnapshotProxy.make(withBuffer: buffer, length: length)
-            openAsUntitled = false
+            // Open document as 'Untitled'
+            fileURL = nil
             
+            attachment = SnapshotProxy.make(withBuffer: buffer, length: length)
+           
+            // openAsUntitled = false
+
         case "CRT":
+            // Check for unsupported cartridge types
             if CRTFileProxy.isUnsupportedCRTBuffer(buffer, length: length) {
                 let type = CRTFileProxy.typeName(ofCRTBuffer: buffer, length: length)!
                 throw NSError.unsupportedCartridgeError(filename: filename, type: type)
@@ -239,9 +245,11 @@ class MyDocument : NSDocument {
             throw NSError.unsupportedFormatError(filename: filename)
         }
         
+        /*
         if openAsUntitled {
             fileURL = nil
         }
+        */
         
         if attachment == nil {
             throw NSError.corruptedFileError(filename: filename)
@@ -254,6 +262,76 @@ class MyDocument : NSDocument {
     //
     // Processing attachments
     //
+    
+    @discardableResult
+    func mountAttachment() -> Bool {
+
+        let parent = windowForSheet!.windowController as! MyController
+        
+        // Determine action to perform and text to type
+        var action = AutoMountAction.openBrowser
+        var autoTypeText: String?
+
+        func getAction(_ type: String) {
+            track("\(parent.autoMountAction)")
+            track("\(parent.autoTypeText)")
+
+            action = parent.autoMountAction[type] ?? action
+            if action != .openBrowser && (parent.autoType[type] ?? false) {
+                autoTypeText = parent.autoTypeText[type]
+            }
+        }
+
+        switch(attachment) {
+        case _ as D64FileProxy, _ as G64FileProxy: getAction("D64")
+        case _ as PRGFileProxy, _ as P00FileProxy: getAction("PRG")
+        case _ as T64FileProxy: getAction("T64")
+        case _ as TAPFileProxy: getAction("TAP")
+        case _ as CRTFileProxy: getAction("CRT")
+        default: return false
+        }
+    
+        // Perform action
+        track("Action = \(action)")
+        switch action {
+        case .openBrowser: runMountDialog(parent)
+        case .insertIntoDrive8: mountAttachmentAsDisk(drive: 1)
+        case .insertIntoDrive9: mountAttachmentAsDisk(drive: 2)
+        case .flashFirstFile: flashAttachmentIntoMemory()
+        case .insertIntoDatasette: mountAttachmentAsTape()
+        case .attachToExpansionPort: mountAttachmentAsCartridge()
+        }
+        
+        // Type text
+        if autoTypeText != nil {
+            track("Auto typing: \(autoTypeText!)")
+            parent.keyboardcontroller.type(autoTypeText! + "\n")
+        }
+        
+        return true
+    }
+    
+    func runMountDialog(_ parent: MyController) {
+        
+        switch attachment {
+            
+        case _ as CRTFileProxy:
+            runCartridgeMountDialog(parent)
+            
+        case _ as TAPFileProxy:
+            runTapeMountDialog(parent)
+            
+        case _ as T64FileProxy, _ as D64FileProxy,
+             _ as PRGFileProxy, _ as P00FileProxy:
+            runArchiveMountDialog(parent)
+            
+        case _ as G64FileProxy:
+            runDiskMountDialog(parent)
+            
+        default:
+            break
+        }
+    }
     
     func runArchiveMountDialog(_ parent: MyController) {
         let nibName = NSNib.Name("ArchiveMountDialog")
@@ -279,7 +357,57 @@ class MyDocument : NSDocument {
         controller.showSheet(withParent: parent)
     }
     
+    @discardableResult
+    func mountAttachmentAsDisk(drive nr: Int) -> Bool {
+        
+        if let archive = attachment as? AnyArchiveProxy {
+            
+            if proceedWithUnexportedDisk(drive: nr) {
+                
+                let parent = windowForSheet!.windowController as! MyController
+                parent.changeDisk(archive, drive: nr)
+                return true
+            }
+        }
+        return false
+    }
     
+    @discardableResult
+    func mountAttachmentAsTape() -> Bool {
+        
+        if let tape = attachment as? TAPFileProxy {
+            
+            let parent = windowForSheet!.windowController as! MyController
+            return parent.c64.datasette.insertTape(tape)
+        }
+        return false
+    }
+    
+    @discardableResult
+    func flashAttachmentIntoMemory() -> Bool {
+        
+        if let archive = attachment as? AnyArchiveProxy {
+            
+            let parent = windowForSheet!.windowController as! MyController
+            return parent.c64.flash(archive, item: 0)
+        }
+        return false
+    }
+    
+    @discardableResult
+    func mountAttachmentAsCartridge() -> Bool {
+        
+        if let cartridge = attachment as? CRTFileProxy {
+            
+            let parent = windowForSheet!.windowController as! MyController
+            return parent.c64.expansionport.attachCartridgeAndReset(cartridge)
+        }
+        return false
+    }
+    
+    
+    
+    // DEPRECATED
     /**
      This method is called when a new document is created. It analyzes the
      attachment type and performs several actions. When mount dialogs are
@@ -297,10 +425,12 @@ class MyDocument : NSDocument {
             c64.flash(attachment!)
             return
         }
+        /*
         if parent.autoMount {
             parent.mount(attachment)
             return
         }
+        */
         
         let type = attachment!.type()
         switch type {
@@ -324,6 +454,7 @@ class MyDocument : NSDocument {
         }
     }
     
+    // DEPRECATED
     /**
      This method is called when the user selects "Insert Disk..." or "Insert
      Recent" from the Drive menu. In contrast to openAttachmentWithDocument(),
@@ -344,6 +475,7 @@ class MyDocument : NSDocument {
         return false
     }
     
+    // DEPRECATED
     /**
      This method is called when the user selects "Insert Tape..." or "Insert
      Recent" from the Tape menu. In contrast to openAttachmentWithDocument(),
@@ -368,6 +500,7 @@ class MyDocument : NSDocument {
         }
     }
     
+    // DEPRECATED
     /**
      This method is called when the user selects "Attach Cartridge..." or
      "Attach Recent" from the Cartridge menu. In contrast to
@@ -392,6 +525,7 @@ class MyDocument : NSDocument {
         }
     }
     
+    // DEPRECATED
     /**
      This method is called after a media file has been dragged and dropped
      into the emulator.
@@ -421,6 +555,7 @@ class MyDocument : NSDocument {
         }
         
         // Perform default behavior if mount dialogs are disabled
+        /*
         if parent.autoMount {
             if type == PRG_FILE || type == P00_FILE {
                 flashAttachment(archive: attachment as! AnyArchiveProxy)
@@ -429,6 +564,7 @@ class MyDocument : NSDocument {
                 return parent.mount(attachment)
             }
         }
+        */
         
         // Show mount dialog
         switch type {
