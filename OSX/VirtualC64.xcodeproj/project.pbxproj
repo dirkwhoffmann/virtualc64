@@ -637,7 +637,6 @@
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
 				5002FA7921C264C100DA4BBC /* Dialogs */,
 				50FE5B342039B392006CE7C7 /* Keyboard Controller */,
-				50763278202989E000575110 /* User Dialog Controllers */,
 				50B4B6071EEFE77400D56499 /* TouchBar */,
 			);
 			name = Controller;
@@ -658,14 +657,12 @@
 			isa = PBXGroup;
 			children = (
 				50763276202989D300575110 /* UserDialogController.swift */,
-				50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */,
-				506A724921C0341900DA0AC3 /* PreferencesController.swift */,
-				505D492721C155DD00A7C575 /* RomPrefs.swift */,
-				5002FA7A21C2650600DA4BBC /* HardwarePrefs.swift */,
-				5002FA7C21C2651B00DA4BBC /* VideoPrefs.swift */,
-				5002FA7E21C2653600DA4BBC /* EmulatorPrefs.swift */,
-				5002FA8021C2654B00DA4BBC /* DevicesPrefs.swift */,
-				5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */,
+				50C12A4221C6B634007EFAF6 /* Preferences */,
+				50C12A4321C6B6A6007EFAF6 /* MediaBrowsers */,
+				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
+				50FB74A1203322C900E05051 /* DiskInspectorController.swift */,
+				50B1644B202DD52500447D3E /* ExportDiskController.swift */,
+				50031B39206FB0FC00A1969B /* SnapshotController.swift */,
 			);
 			path = Dialogs;
 			sourceTree = "<group>";
@@ -846,22 +843,6 @@
 			path = Metal;
 			sourceTree = "<group>";
 		};
-		50763278202989E000575110 /* User Dialog Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
-				5046C414202349EE000D9B1C /* ArchiveMountController.swift */,
-				50412B0C2028F31800CC90A1 /* DiskMountController.swift */,
-				5052AD0D202A5C1B005FDD88 /* CartridgeMountController.swift */,
-				50265F56202D00940041C315 /* TapeMountController.swift */,
-				50FB74A1203322C900E05051 /* DiskInspectorController.swift */,
-				50B1644B202DD52500447D3E /* ExportDiskController.swift */,
-				506D54CB2032255A0026D8B4 /* RomDropView.swift */,
-				50031B39206FB0FC00A1969B /* SnapshotController.swift */,
-			);
-			name = "User Dialog Controllers";
-			sourceTree = "<group>";
-		};
 		50790A2021BAF20300979B7A /* VirtualC64Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -878,6 +859,33 @@
 				5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */,
 			);
 			name = TouchBar;
+			sourceTree = "<group>";
+		};
+		50C12A4221C6B634007EFAF6 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */,
+				506A724921C0341900DA0AC3 /* PreferencesController.swift */,
+				505D492721C155DD00A7C575 /* RomPrefs.swift */,
+				5002FA7A21C2650600DA4BBC /* HardwarePrefs.swift */,
+				5002FA7C21C2651B00DA4BBC /* VideoPrefs.swift */,
+				5002FA7E21C2653600DA4BBC /* EmulatorPrefs.swift */,
+				5002FA8021C2654B00DA4BBC /* DevicesPrefs.swift */,
+				5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */,
+				506D54CB2032255A0026D8B4 /* RomDropView.swift */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
+		50C12A4321C6B6A6007EFAF6 /* MediaBrowsers */ = {
+			isa = PBXGroup;
+			children = (
+				5046C414202349EE000D9B1C /* ArchiveMountController.swift */,
+				50412B0C2028F31800CC90A1 /* DiskMountController.swift */,
+				5052AD0D202A5C1B005FDD88 /* CartridgeMountController.swift */,
+				50265F56202D00940041C315 /* TapeMountController.swift */,
+			);
+			path = MediaBrowsers;
 			sourceTree = "<group>";
 		};
 		50C4F055202D8B37004C5F21 /* XIB files */ = {
