@@ -61,6 +61,23 @@ extension MyController {
         registerHardwareUserDefaults()
     }
     
+    func resetUserDefaults() {
+        
+        track()
+        
+        c64.suspend()
+        
+        resetGeneralUserDefaults()
+        resetRomUserDefaults()
+        resetKeyMapUserDefaults()
+        resetDevicesUserDefaults()
+        resetVideoUserDefaults()
+        resetEmulatorUserDefaults()
+        resetHardwareUserDefaults()
+        
+        c64.resume()
+    }
+    
     func loadUserDefaults() {
         
         track()
@@ -128,9 +145,6 @@ struct VC64Keys {
     // Control ports
     static let inputDevice1      = "VC64InputDevice1"
     static let inputDevice2      = "VC64InputDevice2"
-    
-    // Keyboard mapping mode
-    static let mapKeysByPosition = "VC64MapKeysByPosition"
 }
 
 struct Defaults {
@@ -138,9 +152,6 @@ struct Defaults {
     // Control ports
     static let inputDevice1 = -1
     static let inputDevice2 = -1
-    
-    // Keyboard mapping mode
-    static let mapKeysByPosition = false
 }
 
 extension MyController {
@@ -151,12 +162,25 @@ extension MyController {
             
             VC64Keys.inputDevice1: Defaults.inputDevice1,
             VC64Keys.inputDevice2: Defaults.inputDevice2,
-            
-            VC64Keys.mapKeysByPosition: Defaults.mapKeysByPosition
         ]
         
         let defaults = UserDefaults.standard
         defaults.register(defaults: dictionary)
+    }
+    
+    func resetGeneralUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        
+        for key in [ VC64Keys.inputDevice1,
+                     VC64Keys.inputDevice2,
+                     
+                     VC64Keys.mapKeysByPosition]
+        {
+            defaults.removeObject(forKey: key)
+        }
+        
+        loadGeneralUserDefaults()
     }
     
     func loadGeneralUserDefaults() {
@@ -165,9 +189,8 @@ extension MyController {
         
         c64.suspend()
         
-        inputDevice1 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice1)
-        inputDevice2 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice2)
-        keyboardcontroller.mapKeysByPosition = defaults.bool(forKey: VC64Keys.mapKeysByPosition)
+        inputDevice1 = defaults.integer(forKey: VC64Keys.inputDevice1)
+        inputDevice2 = defaults.integer(forKey: VC64Keys.inputDevice2)
         
         c64.resume()
     }
@@ -178,7 +201,6 @@ extension MyController {
         
         defaults.set(inputDevice1, forKey: VC64Keys.inputDevice1)
         defaults.set(inputDevice2, forKey: VC64Keys.inputDevice2)
-        defaults.set(keyboardcontroller.mapKeysByPosition, forKey: VC64Keys.mapKeysByPosition)
     }
 }
 
@@ -218,6 +240,21 @@ extension MyController {
         defaults.register(defaults: dictionary)
     }
 
+    func resetRomUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        
+        for key in [ VC64Keys.basicRom,
+                     VC64Keys.charRom,
+                     VC64Keys.kernalRom,
+                     VC64Keys.vc1541Rom]
+        {
+            defaults.removeObject(forKey: key)
+        }
+        
+        loadRomUserDefaults()
+    }
+    
     func loadRomUserDefaults() {
         
         let defaults = UserDefaults.standard
@@ -249,30 +286,53 @@ extension MyController {
 
 extension VC64Keys {
     static let keyMap = "VC64KeyMap"
+    static let mapKeysByPosition = "VC64MapKeysByPosition"
 }
 
 extension Defaults {
     static let keyMap = KeyboardController.standardKeyMap
+    static let mapKeysByPosition = false
 }
 
 extension MyController {
     
     static func registerKeyMapUserDefaults() {
         
+        let dictionary : [String:Any] = [
+            
+            VC64Keys.mapKeysByPosition: Defaults.mapKeysByPosition
+        ]
+        
         let defaults = UserDefaults.standard
+        defaults.register(defaults: dictionary)
         defaults.register(encodableItem: Defaults.keyMap, forKey: VC64Keys.keyMap)
+    }
+    
+    func resetKeyMapUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        
+        for key in [ VC64Keys.mapKeysByPosition,
+                     VC64Keys.keyMap]
+        {
+            defaults.removeObject(forKey: key)
+        }
+        
+        loadKeyMapUserDefaults()
+    }
+    
+    func loadKeyMapUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        keyboardcontroller.mapKeysByPosition = defaults.bool(forKey: VC64Keys.mapKeysByPosition)
+        defaults.decode(&keyboardcontroller.keyMap, forKey: VC64Keys.keyMap)
     }
     
     func saveKeyMapUserDefaults() {
         
         let defaults = UserDefaults.standard
         defaults.encode(keyboardcontroller.keyMap, forKey: VC64Keys.keyMap)
-    }
-    
-    func loadKeyMapUserDefaults() {
-        
-        let defaults = UserDefaults.standard
-        defaults.decode(&keyboardcontroller.keyMap, forKey: VC64Keys.keyMap)
+        defaults.set(keyboardcontroller.mapKeysByPosition, forKey: VC64Keys.mapKeysByPosition)
     }
 }
 
@@ -339,6 +399,26 @@ extension MyController {
         defaults.register(encodableItem: Defaults.joyKeyMap2, forKey: VC64Keys.joyKeyMap2)
     }
 
+    func resetDevicesUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        
+        for key in [ VC64Keys.mouseModel,
+                     VC64Keys.disconnectJoyKeys,
+                     VC64Keys.autofire,
+                     VC64Keys.autofireBullets,
+                     VC64Keys.autofireFrequency,
+                     
+                     VC64Keys.joyKeyMap1,
+                     VC64Keys.joyKeyMap2
+                     ]
+        {
+            defaults.removeObject(forKey: key)
+        }
+        
+        loadDevicesUserDefaults()
+    }
+    
     func loadDevicesUserDefaults() {
         
         let defaults = UserDefaults.standard
@@ -434,6 +514,30 @@ extension MyController {
         let defaults = UserDefaults.standard
         defaults.register(defaults: dictionary)
         defaults.register(encodableItem: Defaults.shaderOptions, forKey: VC64Keys.shaderOptions)
+    }
+    
+    func resetVideoUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        
+        for key in [ VC64Keys.palette,
+                     VC64Keys.brightness,
+                     VC64Keys.contrast,
+                     VC64Keys.saturation,
+                     VC64Keys.upscaler,
+                     
+                     VC64Keys.keepAspectRatio,
+                     VC64Keys.eyeX,
+                     VC64Keys.eyeY,
+                     VC64Keys.eyeZ,
+                     
+                     VC64Keys.shaderOptions
+            ]
+        {
+            defaults.removeObject(forKey: key)
+        }
+        
+        loadVideoUserDefaults()
     }
     
     func loadVideoUserDefaults() {
@@ -569,6 +673,33 @@ extension MyController {
         defaults.register(encodableItem: Defaults.autoType, forKey: VC64Keys.autoType)
         defaults.register(encodableItem: Defaults.autoTypeText, forKey: VC64Keys.autoTypeText)
     }
+
+    func resetEmulatorUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        
+        for key in [VC64Keys.warpLoad,
+                    VC64Keys.driveNoise,
+                    
+                    VC64Keys.screenshotSource,
+                    VC64Keys.screenshotTarget,
+                    
+                    VC64Keys.closeWithoutAsking,
+                    VC64Keys.ejectWithoutAsking,
+                    
+                    VC64Keys.pauseInBackground,
+                    VC64Keys.snapshotInterval,
+                    
+                    VC64Keys.autoMountAction,
+                    VC64Keys.autoType,
+                    VC64Keys.autoTypeText
+                    ]
+        {
+            defaults.removeObject(forKey: key)
+        }
+        
+        loadEmulatorUserDefaults()
+    }
     
     func loadEmulatorUserDefaults() {
         
@@ -688,6 +819,31 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         defaults.register(defaults: dictionary)
+    }
+    
+    func resetHardwareUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        
+        for key in [VC64Keys.vicChip,
+                    VC64Keys.grayDotBug,
+                    
+                    VC64Keys.ciaChip,
+                    VC64Keys.timerBBug,
+                    
+                    VC64Keys.reSID,
+                    VC64Keys.audioChip,
+                    VC64Keys.audioFilter,
+                    VC64Keys.samplingMethod,
+                    
+                    VC64Keys.glueLogic,
+                    VC64Keys.initPattern
+            ]
+        {
+            defaults.removeObject(forKey: key)
+        }
+        
+        loadHardwareUserDefaults()
     }
     
     func loadHardwareUserDefaults() {

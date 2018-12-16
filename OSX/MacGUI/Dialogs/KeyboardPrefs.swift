@@ -106,8 +106,11 @@ extension PreferencesController {
     
     @IBAction func mapFactorySettingsAction(_ sender: Any!) {
         
+        parent.resetKeyMapUserDefaults()
+        /*
         parent.keyboardcontroller.mapKeysByPosition = Defaults.mapKeysByPosition
         parent.keyboardcontroller.keyMap = Defaults.keyMap
+        */
         refresh()
     }
 }

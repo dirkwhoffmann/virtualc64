@@ -277,6 +277,9 @@ extension PreferencesController {
     
     func vidFactorySettingsAction() {
         
+        parent.resetVideoUserDefaults()
+        
+        /*
         // Video
         parent.metalScreen.upscaler = Defaults.upscaler
         c64.vic.setVideoPalette(Int(Defaults.palette.rawValue))
@@ -289,6 +292,7 @@ extension PreferencesController {
         parent.metalScreen.setEyeY(Defaults.eyeY)
         parent.metalScreen.setEyeZ(Defaults.eyeZ)
         parent.metalScreen.keepAspectRatio = Defaults.keepAspectRatio
+        */
         
         refresh()
         updatePalettePreviewImages()

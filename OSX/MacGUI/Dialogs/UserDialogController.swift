@@ -29,6 +29,8 @@ class UserDialogController : NSWindowController
                 completionHandler?()
             }
         })
+        
+        refresh()
     }
     
     func refresh() { }

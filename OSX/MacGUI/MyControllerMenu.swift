@@ -206,14 +206,8 @@ extension MyController : NSMenuItemValidation {
     
     @IBAction func factorySettingsAction(_ sender: Any!) {
         
-        
-        loadGeneralUserDefaults()
-        loadRomUserDefaults()
-        loadKeyMapUserDefaults()
-        loadDevicesUserDefaults()
-        loadVideoUserDefaults()
-        loadEmulatorUserDefaults()
-        loadHardwareUserDefaults()
+        track()
+        resetUserDefaults()
     }
     
     //

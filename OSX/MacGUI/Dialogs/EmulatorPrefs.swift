@@ -168,6 +168,9 @@ extension PreferencesController {
     
     @IBAction func emuFactorySettingsAction(_ sender: Any!) {
         
+        parent.resetEmulatorUserDefaults()
+        
+        /*
         // VC1541
         c64.setWarpLoad(Defaults.warpLoad)
         c64.drive1.setSendSoundMessages(Defaults.driveNoise)
@@ -189,6 +192,7 @@ extension PreferencesController {
         parent.autoMountAction = Defaults.autoMountAction
         parent.autoType = Defaults.autoType
         parent.autoTypeText = Defaults.autoTypeText
+        */
         
         refresh()
     }

@@ -7,7 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application">
+        <customObject id="-3" userLabel="Application" customClass="NSObject">
             <connections>
                 <outlet property="delegate" destination="9vR-C0-Vqf" id="r0s-NL-ZMs"/>
             </connections>
@@ -50,6 +50,13 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="exportPrefsAction:" target="-1" id="XiY-H4-A5y"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="lCW-rx-2mw"/>
+                                        <menuItem title="Reset factory settings" id="m5l-K9-GLd">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="factorySettingsAction:" target="-1" id="OZa-HG-B7e"/>
                                             </connections>
                                         </menuItem>
                                     </items>

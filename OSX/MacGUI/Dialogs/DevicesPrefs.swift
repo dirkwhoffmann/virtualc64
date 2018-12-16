@@ -195,6 +195,9 @@ extension PreferencesController {
     
     @IBAction func devFactorySettingsAction(_ sender: Any!) {
         
+        parent.resetDevicesUserDefaults()
+
+        /*
         // Joystick emulation keys
         parent.gamePadManager.restoreFactorySettings()
         parent.keyboardcontroller.disconnectJoyKeys = Defaults.disconnectJoyKeys
@@ -209,6 +212,7 @@ extension PreferencesController {
         
         // Mouse
         c64.mouse.setModel(Int(Defaults.mouseModel.rawValue))
+        */
         
         refresh()
     }
