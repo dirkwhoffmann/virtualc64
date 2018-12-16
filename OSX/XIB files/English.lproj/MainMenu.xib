@@ -53,7 +53,7 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="lCW-rx-2mw"/>
-                                        <menuItem title="Reset factory settings" id="m5l-K9-GLd">
+                                        <menuItem title="Restore factory settings" id="m5l-K9-GLd">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="factorySettingsAction:" target="-1" id="OZa-HG-B7e"/>
