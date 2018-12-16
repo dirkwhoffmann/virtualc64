@@ -45,7 +45,6 @@ extension PreferencesController {
         let autoCrtAction = parent.autoMountAction["CRT"]?.rawValue ?? 0
         emuCrtPopup.selectItem(withTag: autoCrtAction)
         
-        track("\(autoD64Action) \(autoPrgAction) \(autoT64Action)")
         var autoType : Bool
         autoType = parent.autoType["D64"] ?? false
         emuD64AutoTypeButton.isEnabled = (autoD64Action != 0)
@@ -186,7 +185,10 @@ extension PreferencesController {
         parent.pauseInBackground = Defaults.pauseInBackground
         c64.setSnapshotInterval(Defaults.snapshotInterval)
         
-        emuOkButton.title = parent.c64.isRunnable() ? "OK" : "Quit"
+        // Media files
+        parent.autoMountAction = Defaults.autoMountAction
+        parent.autoType = Defaults.autoType
+        parent.autoTypeText = Defaults.autoTypeText
         
         refresh()
     }
@@ -237,8 +239,6 @@ extension PreferencesController {
 extension PreferencesController : NSTextFieldDelegate {
 
     func controlTextDidChange(_ obj: Notification) {
-
-        track()
 
         // Make sure the new text gets processed
         emuAutoTypeTextAction(emuD64AutoTypeText)

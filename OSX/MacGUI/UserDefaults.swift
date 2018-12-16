@@ -26,16 +26,12 @@ extension UserDefaults {
     /// Encodes an item of generic type 'Encodable'
     func encode<T: Encodable>(_ item: T, forKey key: String) {
         
-        track("Encoding \(item)")
-        
         set(try?
             PropertyListEncoder().encode(item), forKey: key)
     }
     
     /// Encodes an item of generic type 'Decodable'
     func decode<T: Decodable>(_ item: inout T, forKey key: String) {
-        
-        track("Decoding \(item)")
         
         if let data = data(forKey: key) {
             if let decoded = try? PropertyListDecoder().decode(T.self, from: data) {

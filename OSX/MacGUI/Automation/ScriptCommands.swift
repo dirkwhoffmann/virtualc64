@@ -96,7 +96,7 @@ func dragInScriptCmd(arguments: [AnyHashable : Any]?) -> Bool {
         let url = URL(fileURLWithPath: argument)
         do {
             try currentDocument?.createAttachment(from: url)
-            return currentDocument?.processAttachmentAfterDragAndDrop() ?? false
+            return currentDocument?.mountAttachment() ?? false
         } catch {
             track("Remote control: Emulated drag operation failed.")
         }

@@ -78,9 +78,8 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
     
     override func refresh() {
         
+        if !(window?.isVisible ?? false) { return }
         guard let keyboard = currentProxy?.keyboard else { return }
-        
-        track("keyboard = \(keyboard)")
         
         var needsUpdate = false;
         

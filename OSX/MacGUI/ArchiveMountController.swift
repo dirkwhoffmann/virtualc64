@@ -109,7 +109,21 @@ class ArchiveMountController : UserDialogController {
         }
         
         // Flash file into memory
-        parent.mydocument.flashAttachment(archive: archive, item: contents.selectedRow)
+        parent.mydocument.flashAttachmentIntoMemory()
+        parent.keyboardcontroller.type("RUN\n")
+        
+        /*
+        // Get load address of the selected item
+        archive.selectItem(item)
+        let loadAddress = archive.destinationAddrOfItem()
+        
+        // Type RUN or SYS, depending of the load address
+        if loadAddress == 0x801 {
+            parent.keyboardcontroller.type("RUN\n")
+        } else {
+            parent.keyboardcontroller.type("SYS \(loadAddress)")
+        }
+        */
         
         hideSheet()
     }

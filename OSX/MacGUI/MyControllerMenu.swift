@@ -168,44 +168,7 @@ extension MyController : NSMenuItemValidation {
     //
     // Action methods (VirtualC64 menu)
     //
-    
-    /*
-    @IBAction func openDevicePrefsAction(_ sender: Any!) {
-        
-        let nibName = NSNib.Name("DevicesPrefs")
-        let controller = DevicesPrefsController.init(windowNibName: nibName)
-        controller.showSheet(withParent: self)
-    }
 
-    @IBAction func openVideoPrefsAction(_ sender: Any!) {
-        
-        let nibName = NSNib.Name("VideoPrefs")
-        let controller = EmulatorPrefsController.init(windowNibName: nibName)
-        controller.showSheet(withParent: self)
-    }
-    
-    @IBAction func openEmulatorPrefsAction(_ sender: Any!) {
-        
-        let nibName = NSNib.Name("EmulatorPrefs")
-        let controller = EmulatorPrefsController.init(windowNibName: nibName)
-        controller.showSheet(withParent: self)
-    }
-
-    @IBAction func openHardwarePrefsAction(_ sender: Any!) {
-    
-        let nibName = NSNib.Name("HardwarePrefs")
-        let controller = HardwarePrefsController.init(windowNibName: nibName)
-        controller.showSheet(withParent: self)
-    }
-    
-    @IBAction func openRomPrefsAction(_ sender: Any!) {
-        
-        let nibName = NSNib.Name("RomPrefs")
-        let controller = RomPrefsController.init(windowNibName: nibName)
-        controller.showSheet(withParent: self)
-    }
-    */
-    
     @IBAction func importPrefsAction(_ sender: Any!) {
         
         track()
@@ -239,6 +202,18 @@ extension MyController : NSMenuItemValidation {
                 }
             }
         })
+    }
+    
+    @IBAction func factorySettingsAction(_ sender: Any!) {
+        
+        
+        loadGeneralUserDefaults()
+        loadRomUserDefaults()
+        loadKeyMapUserDefaults()
+        loadDevicesUserDefaults()
+        loadVideoUserDefaults()
+        loadEmulatorUserDefaults()
+        loadHardwareUserDefaults()
     }
     
     //
@@ -511,7 +486,7 @@ extension MyController : NSMenuItemValidation {
         let emptyArchive = AnyArchiveProxy.make()
         
         mydocument.attachment = D64FileProxy.make(withAnyArchive: emptyArchive)
-        mydocument.insertAttachmentAsDisk(drive: tag)
+        mydocument.mountAttachmentAsDisk(drive: tag)
         mydocument.clearRecentlyExportedDiskURLs(drive: tag)
     }
     
@@ -537,7 +512,7 @@ extension MyController : NSMenuItemValidation {
                 if let url = openPanel.url {
                     do {
                         try self.mydocument.createAttachment(from: url)
-                        self.mydocument.insertAttachmentAsDisk(drive: tag)
+                        self.mydocument.mountAttachmentAsDisk(drive: tag)
                     } catch {
                         NSApp.presentError(error)
                     }
@@ -560,7 +535,7 @@ extension MyController : NSMenuItemValidation {
             do {
                 try mydocument.createAttachment(from: url)
                 if (mydocument.proceedWithUnexportedDisk(drive: nr)) {
-                    mydocument.insertAttachmentAsDisk(drive: nr)
+                    mydocument.mountAttachmentAsDisk(drive: nr)
                 }
             } catch {
                 NSApp.presentError(error)
@@ -672,7 +647,7 @@ extension MyController : NSMenuItemValidation {
                 if let url = openPanel.url {
                     do {
                         try self.mydocument.createAttachment(from: url)
-                        self.mydocument.insertAttachmentAsTape()
+                        self.mydocument.mountAttachmentAsTape()
                     } catch {
                         NSApp.presentError(error)
                     }
@@ -690,7 +665,7 @@ extension MyController : NSMenuItemValidation {
         if let url = mydocument.getRecentlyInsertedTapeURL(tag) {
             do {
                 try mydocument.createAttachment(from: url)
-                mydocument.insertAttachmentAsTape()
+                mydocument.mountAttachmentAsTape()
             } catch {
                 NSApp.presentError(error)
             }
@@ -736,7 +711,7 @@ extension MyController : NSMenuItemValidation {
                 if let url = openPanel.url {
                     do {
                         try self.mydocument.createAttachment(from: url)
-                        self.mydocument.attachAttachmentAsCartridge()
+                        self.mydocument.mountAttachmentAsCartridge()
                     } catch {
                         NSApp.presentError(error)
                     }
@@ -754,7 +729,7 @@ extension MyController : NSMenuItemValidation {
         if let url = mydocument.getRecentlyAtachedCartridgeURL(tag) {
             do {
                 try mydocument.createAttachment(from: url)
-                mydocument.attachAttachmentAsCartridge()
+                mydocument.mountAttachmentAsCartridge()
             } catch {
                 NSApp.presentError(error)
             }
