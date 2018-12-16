@@ -9,6 +9,42 @@
 
 import Foundation
 
+//
+// Convenience extensions to UserDefaults
+//
+
+extension UserDefaults {
+    
+    /// Registers an item of generic type 'Encodable'
+    func register<T: Encodable>(encodableItem item: T, forKey key: String) {
+        
+        if let data = try? PropertyListEncoder().encode(item) {
+            register(defaults: [key: data])
+        }
+    }
+
+    /// Encodes an item of generic type 'Encodable'
+    func encode<T: Encodable>(_ item: T, forKey key: String) {
+        
+        track("Encoding \(item)")
+        
+        set(try?
+            PropertyListEncoder().encode(item), forKey: key)
+    }
+    
+    /// Encodes an item of generic type 'Decodable'
+    func decode<T: Decodable>(_ item: inout T, forKey key: String) {
+        
+        track("Decoding \(item)")
+        
+        if let data = data(forKey: key) {
+            if let decoded = try? PropertyListDecoder().decode(T.self, from: data) {
+                item = decoded
+                track("\(item)")
+            }
+        }
+    }
+}
 
 //
 // User defaults (all)
@@ -227,27 +263,20 @@ extension MyController {
     
     static func registerKeyMapUserDefaults() {
         
-        if let data = try? JSONEncoder().encode(Defaults.keyMap) {
-            UserDefaults.standard.register(defaults: [VC64Keys.keyMap: data])
-        }
+        let defaults = UserDefaults.standard
+        defaults.register(encodableItem: Defaults.keyMap, forKey: VC64Keys.keyMap)
     }
     
     func saveKeyMapUserDefaults() {
         
         let defaults = UserDefaults.standard
-        if let keyMap = try? JSONEncoder().encode(keyboardcontroller.keyMap) {
-            defaults.set(keyMap, forKey: VC64Keys.keyMap)
-        }
+        defaults.encode(keyboardcontroller.keyMap, forKey: VC64Keys.keyMap)
     }
     
     func loadKeyMapUserDefaults() {
         
         let defaults = UserDefaults.standard
-        if let data = defaults.data(forKey: VC64Keys.keyMap) {
-            if let keyMap = try? JSONDecoder().decode([MacKey:C64Key].self, from: data) {
-                keyboardcontroller.keyMap = keyMap
-            }
-        }
+        defaults.decode(&keyboardcontroller.keyMap, forKey: VC64Keys.keyMap)
     }
 }
 
@@ -310,13 +339,8 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         defaults.register(defaults: dictionary)
-        
-        if let data = try? JSONEncoder().encode(Defaults.joyKeyMap1) {
-            UserDefaults.standard.register(defaults: [VC64Keys.joyKeyMap1: data])
-        }
-        if let data = try? JSONEncoder().encode(Defaults.joyKeyMap2) {
-            UserDefaults.standard.register(defaults: [VC64Keys.joyKeyMap2: data])
-        }
+        defaults.register(encodableItem: Defaults.joyKeyMap1, forKey: VC64Keys.joyKeyMap1)
+        defaults.register(encodableItem: Defaults.joyKeyMap2, forKey: VC64Keys.joyKeyMap2)
     }
 
     func loadDevicesUserDefaults() {
@@ -333,18 +357,9 @@ extension MyController {
         c64.port2.setAutofireBullets(defaults.integer(forKey: VC64Keys.autofireBullets))
         c64.port1.setAutofireFrequency(defaults.float(forKey: VC64Keys.autofireFrequency))
         c64.port2.setAutofireFrequency(defaults.float(forKey: VC64Keys.autofireFrequency))
-        
-        if let data = defaults.data(forKey: VC64Keys.joyKeyMap1) {
-            if let keyMap = try? JSONDecoder().decode([MacKey:UInt32].self, from: data) {
-                gamePadManager.gamePads[0]?.keyMap = keyMap
-            }
-        }
-        if let data = defaults.data(forKey: VC64Keys.joyKeyMap2) {
-            if let keyMap = try? JSONDecoder().decode([MacKey:UInt32].self, from: data) {
-                gamePadManager.gamePads[1]?.keyMap = keyMap
-            }
-        }
-        
+        defaults.decode(&gamePadManager.gamePads[0]!.keyMap, forKey: VC64Keys.joyKeyMap1)
+        defaults.decode(&gamePadManager.gamePads[1]!.keyMap, forKey: VC64Keys.joyKeyMap2)
+ 
         c64.resume()
     }
     
@@ -357,12 +372,8 @@ extension MyController {
         defaults.set(c64.port1.autofire(), forKey: VC64Keys.autofire)
         defaults.set(c64.port1.autofireBullets(), forKey: VC64Keys.autofireBullets)
         defaults.set(c64.port1.autofireFrequency(), forKey: VC64Keys.autofireFrequency)
-        if let keyMap = try? JSONEncoder().encode(gamePadManager.gamePads[0]?.keyMap) {
-            defaults.set(keyMap, forKey: VC64Keys.joyKeyMap1)
-        }
-        if let keyMap = try? JSONEncoder().encode(gamePadManager.gamePads[1]?.keyMap) {
-            defaults.set(keyMap, forKey: VC64Keys.joyKeyMap2)
-        }
+        defaults.encode(gamePadManager.gamePads[0]!.keyMap, forKey: VC64Keys.joyKeyMap1)
+        defaults.encode(gamePadManager.gamePads[1]!.keyMap, forKey: VC64Keys.joyKeyMap2)
     }
 }
 
@@ -426,10 +437,7 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         defaults.register(defaults: dictionary)
-        
-        if let data = try? PropertyListEncoder().encode(Defaults.shaderOptions) {
-            UserDefaults.standard.register(defaults: [VC64Keys.shaderOptions: data])
-        }
+        defaults.register(encodableItem: Defaults.shaderOptions, forKey: VC64Keys.shaderOptions)
     }
     
     func loadVideoUserDefaults() {
@@ -448,13 +456,10 @@ extension MyController {
         metalScreen.setEyeX(defaults.float(forKey: VC64Keys.eyeX))
         metalScreen.setEyeY(defaults.float(forKey: VC64Keys.eyeY))
         metalScreen.setEyeZ(defaults.float(forKey: VC64Keys.eyeZ))
-
-        if let data = defaults.value(forKey: VC64Keys.shaderOptions) as? Data {
-            if let options = try? PropertyListDecoder().decode(ShaderOptions.self, from: data) {
-                metalScreen.shaderOptions = options
-                metalScreen.buildDotMasks()
-            }
-        }
+        
+        defaults.decode(&metalScreen.shaderOptions, forKey: VC64Keys.shaderOptions)
+        metalScreen.buildDotMasks()
+ 
         c64.resume()
     }
     
@@ -472,10 +477,8 @@ extension MyController {
         defaults.set(metalScreen.eyeX(), forKey: VC64Keys.eyeX)
         defaults.set(metalScreen.eyeY(), forKey: VC64Keys.eyeY)
         defaults.set(metalScreen.eyeZ(), forKey: VC64Keys.eyeZ)
-        
-        UserDefaults.standard.set(try?
-            PropertyListEncoder().encode(metalScreen.shaderOptions),
-                                  forKey: VC64Keys.shaderOptions)
+  
+        defaults.encode(metalScreen.shaderOptions, forKey: VC64Keys.shaderOptions)
     }
 }
 
@@ -543,34 +546,7 @@ extension Defaults {
                                         "CRT": ""]
 }
 
-
-func register<T: Encodable>(_ item: T, forKey key: String) {
-    if let data = try? PropertyListEncoder().encode(item) {
-        UserDefaults.standard.register(defaults: [key: data])
-    }
-}
-
 extension MyController {
-    
-    func encode<T: Encodable>(_ item: T, forKey key: String) {
-       
-        track("Encoding \(item)")
-        
-        UserDefaults.standard.set(try?
-            PropertyListEncoder().encode(item), forKey: key)
-    }
-    
-    func decode<T: Decodable>(_ item: inout T, forKey key: String) {
-        
-        track("Decoding \(item)")
-        
-        if let data = UserDefaults.standard.data(forKey: key) {
-            if let decoded = try? PropertyListDecoder().decode(T.self, from: data) {
-                item = decoded
-                track("\(item)")
-            }
-        }
-    }
     
     static func registerEmulatorUserDefaults() {
         
@@ -590,24 +566,15 @@ extension MyController {
         ]
         
         let defaults = UserDefaults.standard
+        
         defaults.register(defaults: dictionary)
         
-        register(Defaults.autoMountAction, forKey: VC64Keys.autoMountAction)
-        register(Defaults.autoType, forKey: VC64Keys.autoType)
-        register(Defaults.autoTypeText, forKey: VC64Keys.autoTypeText)
+        defaults.register(encodableItem: Defaults.autoMountAction, forKey: VC64Keys.autoMountAction)
+        defaults.register(encodableItem: Defaults.autoType, forKey: VC64Keys.autoType)
+        defaults.register(encodableItem: Defaults.autoTypeText, forKey: VC64Keys.autoTypeText)
     }
     
     func loadEmulatorUserDefaults() {
-        
-        /*
-        func decodeOld<T: Decodable>(_ key: String, t: T) -> T? {
-            if let data = UserDefaults.standard.data(forKey: key) {
-                return try? PropertyListDecoder().decode(T.self, from: data)
-            } else {
-                return nil
-            }
-        }
-        */
         
         let defaults = UserDefaults.standard
             
@@ -626,9 +593,9 @@ extension MyController {
         pauseInBackground = defaults.bool(forKey: VC64Keys.pauseInBackground)
         c64.setSnapshotInterval(defaults.integer(forKey: VC64Keys.snapshotInterval))
         
-        decode(&autoMountAction, forKey: VC64Keys.autoMountAction)
-        decode(&autoType, forKey: VC64Keys.autoType)
-        decode(&autoTypeText, forKey: VC64Keys.autoTypeText)
+        defaults.decode(&autoMountAction, forKey: VC64Keys.autoMountAction)
+        defaults.decode(&autoType, forKey: VC64Keys.autoType)
+        defaults.decode(&autoTypeText, forKey: VC64Keys.autoTypeText)
         
         c64.resume()
     }
@@ -650,9 +617,9 @@ extension MyController {
         defaults.set(pauseInBackground, forKey: VC64Keys.pauseInBackground)
         defaults.set(c64.snapshotInterval(), forKey: VC64Keys.snapshotInterval)
         
-        encode(autoMountAction, forKey: VC64Keys.autoMountAction)
-        encode(autoType, forKey: VC64Keys.autoType)
-        encode(autoTypeText, forKey: VC64Keys.autoTypeText)
+        defaults.encode(autoMountAction, forKey: VC64Keys.autoMountAction)
+        defaults.encode(autoType, forKey: VC64Keys.autoType)
+        defaults.encode(autoTypeText, forKey: VC64Keys.autoTypeText)
     }
 }
 
