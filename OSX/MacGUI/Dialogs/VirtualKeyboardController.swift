@@ -44,8 +44,8 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
         
         track()
         
-        parent = controller
-        parentWindow = parent.window
+        // parent = controller
+        // parentWindow = parent.window
         // c64 = parent.mydocument.c64
         autoClose = false
         

@@ -11,18 +11,18 @@ import Foundation
 
 class UserDialogController : NSWindowController
 {
-    var parent: MyController!
-    var parentWindow: NSWindow!
+    // var parent: MyController!
+    // var parentWindow: NSWindow!
     // var c64: C64Proxy!
     
     func showSheet(withParent controller: MyController, completionHandler:(() -> Void)? = nil) {
         
         track()
-        parent = controller
-        parentWindow = parent.window
+        // parent = controller
+        // parentWindow = parent.window
         // c64 = parent.mydocument.c64
 
-        parentWindow.beginSheet(window!, completionHandler: { result in
+        myWindow?.beginSheet(window!, completionHandler: { result in
             if result == NSApplication.ModalResponse.OK {
                 
                 self.cleanup()
@@ -42,8 +42,10 @@ class UserDialogController : NSWindowController
     
     func hideSheet() {
     
-        window?.orderOut(self)
-        parentWindow.endSheet(window!, returnCode: .cancel)
+        if let win = window {
+            win.orderOut(self)
+            myWindow?.endSheet(win, returnCode: .cancel)
+        }
     }
  
     // Default action method for OK

@@ -12,11 +12,12 @@ import Foundation
 extension PreferencesController {
     
     func refreshDevicesTab() {
-        
+
+        guard let con = myController else { return }
+        guard let c64 = proxy else { return }
+
         track()
     
-        guard let c64 = proxy else { return }
-        
         // Joystick emulation keys
         updateJoyKeyMap(0, dir: JOYSTICK_UP, button: devUp1button, txt: devUp1)
         updateJoyKeyMap(0, dir: JOYSTICK_DOWN, button: devDown1button, txt: devDown1)
@@ -28,7 +29,7 @@ extension PreferencesController {
         updateJoyKeyMap(1, dir: JOYSTICK_LEFT, button: devLeft2button, txt: devLeft2)
         updateJoyKeyMap(1, dir: JOYSTICK_RIGHT, button: devRight2button, txt: devRight2)
         updateJoyKeyMap(1, dir: JOYSTICK_FIRE, button: devFire2button, txt: devFire2)
-        devDisconnectKeys.state = parent.keyboardcontroller.disconnectJoyKeys ? .on : .off
+        devDisconnectKeys.state = con.keyboardcontroller.disconnectJoyKeys ? .on : .off
         
         assert(c64.port1.autofire() == c64.port2.autofire())
         assert(c64.port1.autofireBullets() == c64.port2.autofireBullets())
@@ -49,20 +50,21 @@ extension PreferencesController {
         devMouseModel.selectItem(withTag: model)
         devMouseInfo.isHidden = (model == Int(MOUSE1350.rawValue))
         
-        devOkButton.title = parent.c64.isRunnable() ? "OK" : "Quit"
+        devOkButton.title = c64.isRunnable() ? "OK" : "Quit"
     }
     
     func updateJoyKeyMap(_ nr: Int, dir: JoystickDirection, button: NSButton, txt: NSTextField) {
         
         precondition(nr == 0 || nr == 1)
         
-        let keyMap = parent.gamePadManager.gamePads[nr]?.keyMap
+        guard let manager = myController?.gamePadManager else { return }
+        guard let keyMap = manager.gamePads[nr]?.keyMap else { return }
         
         // Which MacKey is assigned to this joystick action?
         var macKey: MacKey?
         var macKeyCode: NSAttributedString = NSAttributedString.init()
         var macKeyDesc: String = ""
-        for (key, direction) in keyMap! {
+        for (key, direction) in keyMap {
             if direction == dir.rawValue {
                 let attr = [NSAttributedString.Key.foregroundColor: NSColor.black]
                 macKey = key
@@ -93,6 +95,7 @@ extension PreferencesController {
     
     func devKeyDown(with macKey: MacKey) {
         
+        guard let manager = myController?.gamePadManager else { return }
         track()
         
         // Check for ESC key
@@ -103,12 +106,12 @@ extension PreferencesController {
         
         if devRecordKey1 != nil {
             
-            parent.gamePadManager.gamePads[0]?.assign(key: macKey, direction: devRecordKey1!)
+            manager.gamePads[0]?.assign(key: macKey, direction: devRecordKey1!)
             devRecordKey1 = nil
         }
         if devRecordKey2 != nil {
             
-            parent.gamePadManager.gamePads[1]?.assign(key: macKey, direction: devRecordKey2!)
+            manager.gamePads[1]?.assign(key: macKey, direction: devRecordKey2!)
             devRecordKey2 = nil
         }
         
@@ -138,7 +141,7 @@ extension PreferencesController {
     
     @IBAction func devDisconnectKeysAction(_ sender: NSButton!) {
         
-        parent.keyboardcontroller.disconnectJoyKeys = (sender.state == .on)
+        myController?.keyboardcontroller.disconnectJoyKeys = (sender.state == .on)
         
         refresh()
     }
@@ -199,7 +202,7 @@ extension PreferencesController {
     
     @IBAction func devFactorySettingsAction(_ sender: Any!) {
         
-        parent.resetDevicesUserDefaults()
+        myController?.resetDevicesUserDefaults()
         refresh()
     }
 }

@@ -75,9 +75,10 @@ extension PreferencesController {
 
     func refreshRomTab() {
         
-        track()
-        
+        guard let con = myController else { return }
         guard let c64 = proxy else { return }
+        
+        track()
         
         let romImage = NSImage.init(named: "rom")
         let romImageLight = NSImage.init(named: "rom_light")
@@ -88,15 +89,15 @@ extension PreferencesController {
         let hasCharacterRom = c64.isCharRomLoaded()
         let hasVc1541Rom = c64.isVC1541RomLoaded()
        
-        let basicURL = parent.basicRomURL
-        let characterURL = parent.charRomURL
-        let kernalURL = parent.kernalRomURL
-        let vc1541URL = parent.vc1541RomURL
+        let basicURL = con.basicRomURL
+        let characterURL = con.charRomURL
+        let kernalURL = con.kernalRomURL
+        let vc1541URL = con.vc1541RomURL
         
-        let basicHash = parent.c64.basicRomFingerprint()
-        let kernalHash = parent.c64.kernalRomFingerprint()
-        let characterHash = parent.c64.charRomFingerprint()
-        let vc1541Hash = parent.c64.vc1541RomFingerprint()
+        let basicHash = c64.basicRomFingerprint()
+        let kernalHash = c64.kernalRomFingerprint()
+        let characterHash = c64.charRomFingerprint()
+        let vc1541Hash = c64.vc1541RomFingerprint()
         
         // Header image and description
         if c64.isRunnable() {
@@ -183,7 +184,7 @@ extension PreferencesController {
             romVc1541Description.textColor = .red
         }
         
-        romOkButton.title = parent.c64.isRunnable() ? "OK" : "Quit"
+        romOkButton.title = c64.isRunnable() ? "OK" : "Quit"
     }
     
     //
@@ -192,34 +193,34 @@ extension PreferencesController {
     
     @IBAction func romDeleteBasicAction(_ sender: Any!)
     {
-        parent.basicRomURL = URL(fileURLWithPath: "/")
-        parent.c64.halt()
-        parent.c64.mem.deleteBasicRom()
+        myController?.basicRomURL = URL(fileURLWithPath: "/")
+        proxy?.halt()
+        proxy?.mem.deleteBasicRom()
         refresh()
     }
     
     @IBAction func romDeleteCharAction(_ sender: Any!)
     {
-        parent.charRomURL = URL(fileURLWithPath: "/")
-        parent.c64.halt()
-        parent.c64.mem.deleteCharacterRom()
+        myController?.charRomURL = URL(fileURLWithPath: "/")
+        proxy?.halt()
+        proxy?.mem.deleteCharacterRom()
         refresh()
     }
     
     @IBAction func romDeleteKernalAction(_ sender: Any!)
     {
-        parent.kernalRomURL = URL(fileURLWithPath: "/")
-        parent.c64.halt()
-        parent.c64.mem.deleteKernalRom()
+        myController?.kernalRomURL = URL(fileURLWithPath: "/")
+        proxy?.halt()
+        proxy?.mem.deleteKernalRom()
         refresh()
     }
     
     @IBAction func romDeleteVC1541Action(_ sender: Any!)
     {
-        parent.vc1541RomURL = URL(fileURLWithPath: "/")
-        parent.c64.halt()
-        parent.c64.drive1.deleteRom()
-        parent.c64.drive2.deleteRom()
+        myController?.vc1541RomURL = URL(fileURLWithPath: "/")
+        proxy?.halt()
+        proxy?.drive1.deleteRom()
+        proxy?.drive2.deleteRom()
         refresh()
     }
     

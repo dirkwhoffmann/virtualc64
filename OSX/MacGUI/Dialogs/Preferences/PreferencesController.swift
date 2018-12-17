@@ -277,7 +277,7 @@ class PreferencesController : UserDialogController {
         track()
         
         hideSheet()
-        parent.loadUserDefaults()
+        myController?.loadUserDefaults()
         
     }
     
@@ -286,7 +286,7 @@ class PreferencesController : UserDialogController {
         track()
         
         hideSheet()
-        parent.saveUserDefaults()
+        myController?.saveUserDefaults()
         
         if proxy == nil || !proxy!.isRunnable() {
             NSApp.terminate(self)

@@ -28,12 +28,14 @@ extension PreferencesController {
     */
     
     func refreshKeyboardTab() {
-        
-        track("\(parent.keyboardcontroller.mapKeysByPosition)")
-        
-        keyMappingPopup.selectItem(withTag: parent.keyboardcontroller.mapKeysByPosition ? 1 : 0)
     
-        if parent.keyboardcontroller.mapKeysByPosition {
+        // guard let controller = myController else { return }
+        guard let kbController = myController?.keyboardcontroller else { return }
+        guard let c64 = proxy else { return }
+        
+        keyMappingPopup.selectItem(withTag: kbController.mapKeysByPosition ? 1 : 0)
+    
+        if kbController.mapKeysByPosition {
             
             keyMappingPopup.selectItem(withTag: 1)
             info.stringValue = "In positonal assignment mode, the Mac keys are assigned to the C64 keys according to the following mapping table:"
@@ -47,12 +49,13 @@ extension PreferencesController {
             keyMatrixScrollView.isHidden = true
         }
         
-        keyOkButton.title = parent.c64.isRunnable() ? "OK" : "Quit"
+        keyOkButton.title = c64.isRunnable() ? "OK" : "Quit"
     }
     
     func updateImages() {
         
-        let keyMap = parent.keyboardcontroller.keyMap
+        guard let kbController = myController?.keyboardcontroller else { return }
+        let keyMap = kbController.keyMap
         
         // Create labels
         var labels = Array(repeating: Array(repeating: "", count: 8), count: 8)
@@ -74,7 +77,8 @@ extension PreferencesController {
     
     func mapKeyDown(with macKey: MacKey) {
         
-        let keyMap = parent.keyboardcontroller.keyMap
+        guard let kbController = myController?.keyboardcontroller else { return }
+        let keyMap = kbController.keyMap
         
         // Check for ESC key
         if macKey == MacKey.escape {
@@ -85,12 +89,12 @@ extension PreferencesController {
         // Remove old key assignment (if any)
         for (macKey, key) in keyMap {
             if key == selectedKey {
-                parent.keyboardcontroller.keyMap[macKey] = nil
+                kbController.keyMap[macKey] = nil
             }
         }
         
         // Assign new key
-        parent.keyboardcontroller.keyMap[macKey] = selectedKey
+        kbController.keyMap[macKey] = selectedKey
         
         // Update  view
         selectedKey = nil
@@ -100,17 +104,13 @@ extension PreferencesController {
     @IBAction func mapKeyMappingAction(_ sender: NSPopUpButton!) {
         
         let value = (sender.selectedTag() == 1) ? true : false
-        parent.keyboardcontroller.mapKeysByPosition = value
+        myController?.keyboardcontroller.mapKeysByPosition = value
         refresh()
     }
     
     @IBAction func mapFactorySettingsAction(_ sender: Any!) {
         
-        parent.resetKeyMapUserDefaults()
-        /*
-        parent.keyboardcontroller.mapKeysByPosition = Defaults.mapKeysByPosition
-        parent.keyboardcontroller.keyMap = Defaults.keyMap
-        */
+        myController?.resetKeyMapUserDefaults()
         refresh()
     }
 }

@@ -15,74 +15,74 @@ extension PreferencesController {
         
         track()
         
-        guard let c64 = proxy else { return }
+        guard let c64 = proxy, let controller = myController else { return }
         
         // VC1541
         emuWarpLoad.state = c64.warpLoad() ? .on : .off
         emuDriveSounds.state = c64.drive1.sendSoundMessages() ? .on : .off
         
         // Screenshots
-        emuScreenshotSourcePopup.selectItem(withTag: parent.screenshotSource)
-        emuScreenshotTargetPopup.selectItem(withTag: parent.screenshotTargetIntValue)
+        emuScreenshotSourcePopup.selectItem(withTag: controller.screenshotSource)
+        emuScreenshotTargetPopup.selectItem(withTag: controller.screenshotTargetIntValue)
         
         // Documents
-        emuCloseWithoutAskingButton.state = parent.closeWithoutAsking ? .on : .off
-        emuEjectWithoutAskingButton.state = parent.ejectWithoutAsking ? .on : .off
+        emuCloseWithoutAskingButton.state = controller.closeWithoutAsking ? .on : .off
+        emuEjectWithoutAskingButton.state = controller.ejectWithoutAsking ? .on : .off
         
         // Miscellaneous
-        emuPauseInBackground.state = parent.pauseInBackground ? .on : .off
+        emuPauseInBackground.state = controller.pauseInBackground ? .on : .off
         emuAutoSnapshots.state = (c64.snapshotInterval() > 0) ? .on : .off
         emuSnapshotInterval.integerValue = Int(c64.snapshotInterval().magnitude)
         emuSnapshotInterval.isEnabled = (c64.snapshotInterval() > 0)
         
         // Media files
-        let autoD64Action = parent.autoMountAction["D64"]?.rawValue ?? 0
+        let autoD64Action = controller.autoMountAction["D64"]?.rawValue ?? 0
         emuD64Popup.selectItem(withTag: autoD64Action)
-        let autoPrgAction = parent.autoMountAction["PRG"]?.rawValue ?? 0
+        let autoPrgAction = controller.autoMountAction["PRG"]?.rawValue ?? 0
         emuPrgPopup.selectItem(withTag: autoPrgAction)
-        let autoT64Action = parent.autoMountAction["T64"]?.rawValue ?? 0
+        let autoT64Action = controller.autoMountAction["T64"]?.rawValue ?? 0
         emuT64Popup.selectItem(withTag: autoT64Action)
-        let autoTapAction = parent.autoMountAction["TAP"]?.rawValue ?? 0
+        let autoTapAction = controller.autoMountAction["TAP"]?.rawValue ?? 0
         emuTapPopup.selectItem(withTag: autoTapAction)
-        let autoCrtAction = parent.autoMountAction["CRT"]?.rawValue ?? 0
+        let autoCrtAction = controller.autoMountAction["CRT"]?.rawValue ?? 0
         emuCrtPopup.selectItem(withTag: autoCrtAction)
         
         var autoType : Bool
-        autoType = parent.autoType["D64"] ?? false
+        autoType = controller.autoType["D64"] ?? false
         emuD64AutoTypeButton.isEnabled = (autoD64Action != 0)
         emuD64AutoTypeButton.intValue = autoType ? 1 : 0
-        autoType = parent.autoType["PRG"] ?? false
+        autoType = controller.autoType["PRG"] ?? false
         emuPrgAutoTypeButton.isEnabled = (autoPrgAction != 0)
         emuPrgAutoTypeButton.intValue = autoType ? 1 : 0
-        autoType = parent.autoType["T64"] ?? false
+        autoType = controller.autoType["T64"] ?? false
         emuT64AutoTypeButton.isEnabled = (autoT64Action != 0)
         emuT64AutoTypeButton.intValue = autoType ? 1 : 0
-        autoType = parent.autoType["TAP"] ?? false
+        autoType = controller.autoType["TAP"] ?? false
         emuTapAutoTypeButton.isEnabled = (autoTapAction != 0)
         emuTapAutoTypeButton.intValue = autoType ? 1 : 0
-        autoType = parent.autoType["CRT"] ?? false
+        autoType = controller.autoType["CRT"] ?? false
         emuCrtAutoTypeButton.isEnabled = (autoCrtAction != 0)
         emuCrtAutoTypeButton.intValue = autoType ? 1 : 0
 
         var autoTypeText : String
-        autoTypeText = parent.autoTypeText["D64"] ?? ""
+        autoTypeText = controller.autoTypeText["D64"] ?? ""
         emuD64AutoTypeText.isEnabled = (autoD64Action != 0)
         emuD64AutoTypeText.stringValue = autoTypeText
-        autoTypeText = parent.autoTypeText["PRG"] ?? ""
+        autoTypeText = controller.autoTypeText["PRG"] ?? ""
         emuPrgAutoTypeText.isEnabled = (autoPrgAction != 0)
         emuPrgAutoTypeText.stringValue = autoTypeText
-        autoTypeText = parent.autoTypeText["T64"] ?? ""
+        autoTypeText = controller.autoTypeText["T64"] ?? ""
         emuT64AutoTypeText.isEnabled = (autoT64Action != 0)
         emuT64AutoTypeText.stringValue = autoTypeText
-        autoTypeText = parent.autoTypeText["TAP"] ?? ""
+        autoTypeText = controller.autoTypeText["TAP"] ?? ""
         emuTapAutoTypeText.isEnabled = (autoTapAction != 0)
         emuTapAutoTypeText.stringValue = autoTypeText
-        autoTypeText = parent.autoTypeText["CRT"] ?? ""
+        autoTypeText = controller.autoTypeText["CRT"] ?? ""
         emuCrtAutoTypeText.isEnabled = (autoCrtAction != 0)
         emuCrtAutoTypeText.stringValue = autoTypeText
 
         // OK button
-        emuOkButton.title = parent.c64.isRunnable() ? "OK" : "Quit"
+        emuOkButton.title = controller.c64.isRunnable() ? "OK" : "Quit"
     }
 
     //
@@ -109,13 +109,13 @@ extension PreferencesController {
     
     @IBAction func emuScreenshotSourceAction(_ sender: NSPopUpButton!) {
         
-        parent.screenshotSource = sender.selectedTag()
+        myController?.screenshotSource = sender.selectedTag()
         refresh()
     }
     
     @IBAction func emuScreenshotTargetAction(_ sender: NSPopUpButton!) {
         
-        parent.screenshotTargetIntValue = sender.selectedTag()
+        myController?.screenshotTargetIntValue = sender.selectedTag()
         refresh()
     }
     
@@ -126,13 +126,13 @@ extension PreferencesController {
     
     @IBAction func emuCloseWithoutAskingAction(_ sender: NSButton!) {
         
-        parent.closeWithoutAsking = (sender.state == .on)
+        myController?.closeWithoutAsking = (sender.state == .on)
         refresh()
     }
     
     @IBAction func emuEjectWithoutAskingAction(_ sender: NSButton!) {
         
-        parent.ejectWithoutAsking = (sender.state == .on)
+        myController?.ejectWithoutAsking = (sender.state == .on)
         refresh()
     }
     
@@ -143,7 +143,7 @@ extension PreferencesController {
     
     @IBAction func emuPauseInBackgroundAction(_ sender: NSButton!) {
         
-        parent.pauseInBackground =  (sender.state == .on)
+        myController?.pauseInBackground = (sender.state == .on)
         refresh()
     }
     
@@ -170,7 +170,7 @@ extension PreferencesController {
     
     @IBAction func emuFactorySettingsAction(_ sender: Any!) {
         
-        parent.resetEmulatorUserDefaults()
+        myController?.resetEmulatorUserDefaults()
         refresh()
     }
     
@@ -193,26 +193,23 @@ extension PreferencesController {
         
         if let fileType = mediaFileType(sender.tag) {
             let action = AutoMountAction(rawValue: sender.selectedTag())
-            parent.autoMountAction[fileType] = action
+            myController?.autoMountAction[fileType] = action
             refresh()
         }
-        track("\(parent.autoMountAction)")
     }
     
     @IBAction func emuAutoTypeAction(_ sender: NSButton!) {
         
         if let fileType = mediaFileType(sender.tag) {
-            parent.autoType[fileType] = (sender.intValue == 0) ? false : true
+            myController?.autoType[fileType] = (sender.intValue == 0) ? false : true
             refresh()
         }
-        track("\(parent.autoType)")
     }
 
     @IBAction func emuAutoTypeTextAction(_ sender: NSTextField!) {
         
         if let fileType = mediaFileType(sender.tag) {
-            parent.autoTypeText[fileType] = sender.stringValue
-            // refresh()
+            myController?.autoTypeText[fileType] = sender.stringValue
         }
     }
 }

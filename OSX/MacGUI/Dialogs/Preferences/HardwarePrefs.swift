@@ -13,9 +13,10 @@ extension PreferencesController {
     
     func refreshHardwareTab() {
         
-        track()
-        
+        // guard let con = myController else { return }
         guard let c64 = proxy else { return }
+        
+        track()
         
         // VIC
         let model = c64.vic.model()
@@ -90,7 +91,7 @@ extension PreferencesController {
         }
         hwInfoText.stringValue = "This configuration \(descr)."
 
-        hwOkButton.title = parent.c64.isRunnable() ? "OK" : "Quit"
+        hwOkButton.title = c64.isRunnable() ? "OK" : "Quit"
     }
     
     @IBAction func hwVicModelAction(_ sender: NSPopUpButton!) {
@@ -140,13 +141,13 @@ extension PreferencesController {
     @IBAction func hwSidModelAction(_ sender: NSPopUpButton!) {
         
         guard let c64 = proxy else { return }
-        
         let model = UInt32(sender.selectedTag())
         let method = UInt32(c64.sid.samplingMethod())
         
         track("Model = \(model) method = \(method)")
+        
         if (model == MOS_8580.rawValue && method == SID_SAMPLE_FAST.rawValue) {
-            parent.showResidSamplingMethodAlert()
+            myController?.showResidSamplingMethodAlert()
             c64.sid.setSamplingMethod(Int(SID_SAMPLE_INTERPOLATE.rawValue))
         }
         
