@@ -16,19 +16,10 @@ class ExportDiskController : UserDialogController {
     var savePanel: NSSavePanel!
     var selectedURL: URL?
     
-    /*
-    override func awakeFromNib() {
-    }
-    */
-    
-    func showSheet(withParent: MyController, drive nr: Int) {
+    func showSheet(forDrive nr: Int) {
         
         precondition(nr == 1 || nr == 2)
         
-        parent = withParent
-        parentWindow = parent.window
-        c64 = parent.mydocument.c64
-       
         // Create save panel
         savePanel = NSSavePanel()
         savePanel.allowedFileTypes = ["d64"]
@@ -38,11 +29,13 @@ class ExportDiskController : UserDialogController {
         savePanel.accessoryView = window?.contentView
 
         // Run panel as sheet
-        savePanel.beginSheetModal(for: parent.window!, completionHandler: { result in
-            if result == .OK {
-                self.parent.mydocument.export(drive: nr, to: self.savePanel.url)
-            }
-        })
+        if let win = myWindow {
+            savePanel.beginSheetModal(for: win, completionHandler: { result in
+                if result == .OK {
+                    myDocument?.export(drive: nr, to: self.savePanel.url)
+                }
+            })
+        }
     }
     
     @IBAction func selectD64(_ sender: Any!) {

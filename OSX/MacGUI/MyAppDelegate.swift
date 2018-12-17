@@ -38,6 +38,14 @@ var myController: MyController? {
     }
 }
 
+/// The window of the currently active emulator instance.
+/// This variable is global and can be accessed from anywhere in the Swift code.
+var myWindow: NSWindow? {
+    get {
+        return myController?.window
+    }
+}
+
 // The C64 proxy of the currently active emulator instance.
 /// This variable is global and can be accessed from anywhere in the Swift code.
 var proxy: C64Proxy? {
