@@ -197,7 +197,7 @@ class MyDocument : NSDocument {
         
         let buffer = (data as NSData).bytes
         let length = data.count
-        // var openAsUntitled = true
+        var openAsUntitled = true
         
         track("Read \(length) bytes from file \(filename).")
         
@@ -208,12 +208,8 @@ class MyDocument : NSDocument {
             if SnapshotProxy.isUnsupportedSnapshot(buffer, length: length) {
                 throw NSError.snapshotVersionError(filename: filename)
             }
-            // Open document as 'Untitled'
-            fileURL = nil
-            
             attachment = SnapshotProxy.make(withBuffer: buffer, length: length)
-           
-            // openAsUntitled = false
+            openAsUntitled = false
 
         case "CRT":
             // Check for unsupported cartridge types
@@ -245,16 +241,12 @@ class MyDocument : NSDocument {
             throw NSError.unsupportedFormatError(filename: filename)
         }
         
-        /*
-        if openAsUntitled {
-            fileURL = nil
-        }
-        */
-        
         if attachment == nil {
             throw NSError.corruptedFileError(filename: filename)
         }
-        
+        if openAsUntitled {
+            fileURL = nil
+        }
         attachment!.setPath(filename)
     }
     

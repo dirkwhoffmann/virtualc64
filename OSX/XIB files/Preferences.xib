@@ -1852,12 +1852,12 @@ DQ
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LrU-LG-yfM">
                                             <rect key="frame" x="383" y="389" width="208" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Open contents browser ..." bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="ghB-VG-s8m" id="zoL-A4-hhX">
+                                            <popUpButtonCell key="cell" type="push" title="Open content browser ..." bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="ghB-VG-s8m" id="zoL-A4-hhX">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" autoenablesItems="NO" id="Uoh-TE-6CN">
                                                     <items>
-                                                        <menuItem title="Open contents browser ..." state="on" id="ghB-VG-s8m">
+                                                        <menuItem title="Open content browser ..." state="on" id="ghB-VG-s8m">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="Flash first file into memory" tag="1" id="7Nx-md-6Sr">
@@ -1869,10 +1869,10 @@ DQ
                                                         <menuItem title="Insert into drive 9" tag="3" id="sym-q4-CP8">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Insert into datasette" tag="4" id="gwH-89-NnO">
+                                                        <menuItem title="Insert into datasette" tag="4" enabled="NO" id="gwH-89-NnO">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Atach to expansion port" tag="5" id="tYZ-ev-0QX">
+                                                        <menuItem title="Attach to expansion port" tag="5" enabled="NO" id="tYZ-ev-0QX">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                     </items>
@@ -1903,7 +1903,7 @@ DQ
                                                 <font key="font" metaFont="smallSystem"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="emuCloseWithoutAskingAction:" target="-2" id="SEf-qa-WRU"/>
+                                                <action selector="emuAutoTypeAction:" target="-2" id="yBy-PG-bpb"/>
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SN6-BA-zBp">
@@ -1918,12 +1918,12 @@ DQ
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="cEf-nh-E7e">
                                             <rect key="frame" x="383" y="323" width="208" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Open contents browser ..." bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="dI0-C9-HCO" id="egL-sG-N3Q">
+                                            <popUpButtonCell key="cell" type="push" title="Open content browser ..." bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="dI0-C9-HCO" id="egL-sG-N3Q">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" autoenablesItems="NO" id="pJc-Fb-ic9">
                                                     <items>
-                                                        <menuItem title="Open contents browser ..." state="on" id="dI0-C9-HCO">
+                                                        <menuItem title="Open content browser ..." state="on" id="dI0-C9-HCO">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="Flash first file into memory" tag="1" id="dND-OO-MtA">
@@ -1935,10 +1935,10 @@ DQ
                                                         <menuItem title="Insert into drive 9" tag="3" id="B57-29-6tR">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Insert into datasette" tag="4" id="9vO-J0-ApA">
+                                                        <menuItem title="Insert into datasette" tag="4" enabled="NO" id="9vO-J0-ApA">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Atach to expansion port" tag="5" id="CGf-3A-f0w">
+                                                        <menuItem title="Attach to expansion port" tag="5" enabled="NO" id="CGf-3A-f0w">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                     </items>
@@ -1961,7 +1961,7 @@ DQ
                                                 <outlet property="delegate" destination="-2" id="01w-Ub-D8h"/>
                                             </connections>
                                         </textField>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0IA-WK-3xc">
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="0IA-WK-3xc">
                                             <rect key="frame" x="328" y="300" width="51" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Type:" bezelStyle="regularSquare" imagePosition="left" alignment="right" controlSize="small" state="on" inset="2" id="Dp9-bb-mDq">
@@ -1984,12 +1984,12 @@ DQ
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="UJK-Ze-ozW">
                                             <rect key="frame" x="383" y="257" width="208" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Open contents browser ..." bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="CND-V4-M72" id="7GB-7T-ftA">
+                                            <popUpButtonCell key="cell" type="push" title="Open content browser ..." bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="CND-V4-M72" id="7GB-7T-ftA">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" autoenablesItems="NO" id="h6Q-GK-s3l">
                                                     <items>
-                                                        <menuItem title="Open contents browser ..." state="on" id="CND-V4-M72">
+                                                        <menuItem title="Open content browser ..." state="on" id="CND-V4-M72">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="Flash first file into memory" tag="1" id="eJa-eL-o5E">
@@ -2001,10 +2001,10 @@ DQ
                                                         <menuItem title="Insert into drive 9" tag="3" id="F4H-J0-xqK">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Insert into datasette" tag="1" id="g8n-eO-SCB">
+                                                        <menuItem title="Insert into datasette" tag="1" enabled="NO" id="g8n-eO-SCB">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Atach to expansion port" tag="1" id="3rT-ko-RJ6">
+                                                        <menuItem title="Attach to expansion port" tag="1" enabled="NO" id="3rT-ko-RJ6">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                     </items>
@@ -2027,7 +2027,7 @@ DQ
                                                 <outlet property="delegate" destination="-2" id="Hvq-fy-6PI"/>
                                             </connections>
                                         </textField>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iAA-Es-0tF">
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="iAA-Es-0tF">
                                             <rect key="frame" x="328" y="234" width="51" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Type:" bezelStyle="regularSquare" imagePosition="left" alignment="right" controlSize="small" state="on" inset="2" id="GKU-BF-cOK">
@@ -2050,27 +2050,27 @@ DQ
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="lgb-kz-IcQ">
                                             <rect key="frame" x="383" y="191" width="208" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Open contents browser ..." bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="OQE-sl-oAX" id="fK6-oc-n5C">
+                                            <popUpButtonCell key="cell" type="push" title="Open content browser ..." bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="OQE-sl-oAX" id="fK6-oc-n5C">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" autoenablesItems="NO" id="xpV-Kw-ctl">
                                                     <items>
-                                                        <menuItem title="Open contents browser ..." state="on" id="OQE-sl-oAX">
+                                                        <menuItem title="Open content browser ..." state="on" id="OQE-sl-oAX">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Flash first file into memory" tag="1" id="5bn-HO-8bE">
+                                                        <menuItem title="Flash first file into memory" tag="1" enabled="NO" id="5bn-HO-8bE">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Insert into drive 8" tag="2" id="WZT-lJ-nWT">
+                                                        <menuItem title="Insert into drive 8" tag="2" enabled="NO" id="WZT-lJ-nWT">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Insert into drive 9" tag="3" id="0C8-QQ-xdx">
+                                                        <menuItem title="Insert into drive 9" tag="3" enabled="NO" id="0C8-QQ-xdx">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="Insert into datasette" tag="4" id="1gP-uf-n2c">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Atach to expansion port" tag="5" id="dbp-0a-oJ0">
+                                                        <menuItem title="Attach to expansion port" tag="5" enabled="NO" id="dbp-0a-oJ0">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                     </items>
@@ -2093,7 +2093,7 @@ DQ
                                                 <outlet property="delegate" destination="-2" id="Zbb-WS-pbo"/>
                                             </connections>
                                         </textField>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gSk-DU-rv0">
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="gSk-DU-rv0">
                                             <rect key="frame" x="328" y="168" width="51" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Type:" bezelStyle="regularSquare" imagePosition="left" alignment="right" controlSize="small" state="on" inset="2" id="B7d-Mw-RdI">
@@ -2116,27 +2116,27 @@ DQ
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="BM5-Fh-glM">
                                             <rect key="frame" x="383" y="125" width="208" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Open contents browser ..." bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="gSF-s1-usg" id="aFV-Yu-OwI">
+                                            <popUpButtonCell key="cell" type="push" title="Open content browser ..." bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="gSF-s1-usg" id="aFV-Yu-OwI">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" autoenablesItems="NO" id="RF1-l3-wTO">
                                                     <items>
-                                                        <menuItem title="Open contents browser ..." state="on" id="gSF-s1-usg">
+                                                        <menuItem title="Open content browser ..." state="on" id="gSF-s1-usg">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Flash first file into memory" tag="1" id="kS2-wb-9Hf">
+                                                        <menuItem title="Flash first file into memory" tag="1" enabled="NO" id="kS2-wb-9Hf">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Insert into drive 8" tag="2" id="v2q-Ep-PEz">
+                                                        <menuItem title="Insert into drive 8" tag="2" enabled="NO" id="v2q-Ep-PEz">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Insert into drive 9" tag="3" id="bZr-tC-npx">
+                                                        <menuItem title="Insert into drive 9" tag="3" enabled="NO" id="bZr-tC-npx">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Insert into datasette" tag="4" id="Avg-1Y-EZz">
+                                                        <menuItem title="Insert into datasette" tag="4" enabled="NO" id="Avg-1Y-EZz">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Atach to expansion port" tag="5" id="Ye0-ZG-m4c">
+                                                        <menuItem title="Attach to expansion port" tag="5" id="Ye0-ZG-m4c">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                     </items>
@@ -2159,7 +2159,7 @@ DQ
                                                 <outlet property="delegate" destination="-2" id="czi-Hj-5fj"/>
                                             </connections>
                                         </textField>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tWL-Ra-haj">
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="tWL-Ra-haj">
                                             <rect key="frame" x="328" y="102" width="51" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Type:" bezelStyle="regularSquare" imagePosition="left" alignment="right" controlSize="small" state="on" inset="2" id="cVf-Rv-1Gy">
