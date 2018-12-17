@@ -419,7 +419,7 @@ class DiskInspectorController : UserDialogController {
         
         // Stop receiving messages
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
-        parent.c64.removeListener(myself)
+        proxy?.removeListener(myself)
         
         super.cancelAction(self)
     }

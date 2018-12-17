@@ -78,38 +78,38 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
     
     override func refresh() {
         
-        if !(window?.isVisible ?? false) { return }
-        guard let keyboard = proxy?.keyboard else { return }
-        
-        var needsUpdate = false;
-        
-        if lshift != keyboard.leftShiftIsPressed() {
-            lshift = keyboard.leftShiftIsPressed()
-            needsUpdate = true
-        }
-        if rshift != keyboard.rightShiftIsPressed() {
-            rshift = keyboard.rightShiftIsPressed()
-            needsUpdate = true
-        }
-        if shiftLock != keyboard.shiftLockIsHoldDown() {
-            shiftLock = keyboard.shiftLockIsHoldDown()
-            needsUpdate = true
-        }
-        if control != keyboard.controlIsPressed() {
-            control = keyboard.controlIsPressed()
-            needsUpdate = true
-        }
-        if commodore != keyboard.commodoreIsPressed() {
-            commodore = keyboard.commodoreIsPressed()
-            needsUpdate = true
-        }
-        if lowercase != !keyboard.inUpperCaseMode() {
-            lowercase = !keyboard.inUpperCaseMode()
-            needsUpdate = true
-        }
-        
-        if needsUpdate {
-            updateImages()
+        if let win = window, win.isVisible, let keyboard = proxy?.keyboard {
+            
+            var needsUpdate = false;
+            
+            if lshift != keyboard.leftShiftIsPressed() {
+                lshift = keyboard.leftShiftIsPressed()
+                needsUpdate = true
+            }
+            if rshift != keyboard.rightShiftIsPressed() {
+                rshift = keyboard.rightShiftIsPressed()
+                needsUpdate = true
+            }
+            if shiftLock != keyboard.shiftLockIsHoldDown() {
+                shiftLock = keyboard.shiftLockIsHoldDown()
+                needsUpdate = true
+            }
+            if control != keyboard.controlIsPressed() {
+                control = keyboard.controlIsPressed()
+                needsUpdate = true
+            }
+            if commodore != keyboard.commodoreIsPressed() {
+                commodore = keyboard.commodoreIsPressed()
+                needsUpdate = true
+            }
+            if lowercase != !keyboard.inUpperCaseMode() {
+                lowercase = !keyboard.inUpperCaseMode()
+                needsUpdate = true
+            }
+            
+            if needsUpdate {
+                updateImages()
+            }
         }
     }
     
