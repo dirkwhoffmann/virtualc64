@@ -17,14 +17,12 @@ class TapeMountController : UserDialogController {
     @IBOutlet weak var autoLoad: NSButton!
     @IBOutlet weak var autoPress: NSButton!
     
-    override func showSheet(withParent controller: MyController,
-                   completionHandler:(() -> Void)? = nil) {
+    override func showSheet(completionHandler handler:(() -> Void)? = nil) {
         
         if let attachment = myDocument?.attachment as? TAPFileProxy {
             
             tape = attachment
-            super.showSheet(withParent: controller,
-                            completionHandler: completionHandler)
+            super.showSheet(completionHandler: handler)
         }
     }
     

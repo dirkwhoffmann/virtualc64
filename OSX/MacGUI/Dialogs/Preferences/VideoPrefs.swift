@@ -318,20 +318,27 @@ extension PreferencesController {
     func vidFactorySettingsAction() {
         
         myController?.resetVideoUserDefaults()
-        refresh()
         updatePalettePreviewImages()
+        refresh()
     }
     
     @IBAction func vidFactorySettingsActionTFT(_ sender: Any!)
     {
-        myController?.metalScreen.shaderOptions = ShaderDefaultsTFT
-        vidFactorySettingsAction()
+        track()
         
+        myController?.resetVideoUserDefaults()
+        myController?.metalScreen.shaderOptions = ShaderDefaultsTFT
+        updatePalettePreviewImages()
+        refresh()
     }
     
     @IBAction func vidFactorySettingsActionCRT(_ sender: Any!)
     {
+        track()
+        
+        myController?.resetVideoUserDefaults()
         myController?.metalScreen.shaderOptions = ShaderDefaultsCRT
-        vidFactorySettingsAction()
+        updatePalettePreviewImages()
+        refresh()
     }
 }

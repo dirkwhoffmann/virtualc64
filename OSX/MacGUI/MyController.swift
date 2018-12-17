@@ -807,7 +807,7 @@ extension MyController {
             let nibName = NSNib.Name("Preferences")
             preferencesController = PreferencesController.init(windowNibName: nibName)
         }
-        preferencesController!.showSheet(withParent: self)
+        preferencesController!.showSheet()
     }
     
     //

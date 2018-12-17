@@ -29,14 +29,12 @@ class DiskMountController : UserDialogController {
     @IBOutlet weak var stepper: NSStepper!
     @IBOutlet weak var driveSelector: NSPopUpButton!
     
-    override func showSheet(withParent controller: MyController,
-                            completionHandler:(() -> Void)? = nil) {
+    override func showSheet(completionHandler handler:(() -> Void)? = nil) {
     
         if let attachment = myDocument?.attachment as? AnyDiskProxy {
             
             disk = attachment
-            super.showSheet(withParent: controller,
-                            completionHandler: completionHandler)
+            super.showSheet(completionHandler: handler)
         }
     }
     

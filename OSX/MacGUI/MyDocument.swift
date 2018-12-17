@@ -258,19 +258,16 @@ class MyDocument : NSDocument {
     @discardableResult
     func mountAttachment() -> Bool {
 
-        let parent = windowForSheet!.windowController as! MyController
+        guard let con = myController else { return false }
         
         // Determine action to perform and text to type
         var action = AutoMountAction.openBrowser
         var autoTypeText: String?
 
         func getAction(_ type: String) {
-            track("\(parent.autoMountAction)")
-            track("\(parent.autoTypeText)")
-
-            action = parent.autoMountAction[type] ?? action
-            if action != .openBrowser && (parent.autoType[type] ?? false) {
-                autoTypeText = parent.autoTypeText[type]
+            action = con.autoMountAction[type] ?? action
+            if action != .openBrowser && (con.autoType[type] ?? false) {
+                autoTypeText = con.autoTypeText[type]
             }
         }
 
@@ -286,7 +283,7 @@ class MyDocument : NSDocument {
         // Perform action
         track("Action = \(action)")
         switch action {
-        case .openBrowser: runMountDialog(parent)
+        case .openBrowser: runMountDialog()
         case .insertIntoDrive8: mountAttachmentAsDisk(drive: 1)
         case .insertIntoDrive9: mountAttachmentAsDisk(drive: 2)
         case .flashFirstFile: flashAttachmentIntoMemory()
@@ -305,56 +302,56 @@ class MyDocument : NSDocument {
             let booting = c64.cpu.cycle() < 3000000
             let delay = booting ? 2.5 /* seconds */ : 0.0
             
-            parent.keyboardcontroller.type(text, initialDelay: delay)
+            con.keyboardcontroller.type(text, initialDelay: delay)
         }
         
         return true
     }
     
-    func runMountDialog(_ parent: MyController) {
+    func runMountDialog() {
         
         switch attachment {
             
         case _ as CRTFileProxy:
-            runCartridgeMountDialog(parent)
+            runCartridgeMountDialog()
             
         case _ as TAPFileProxy:
-            runTapeMountDialog(parent)
+            runTapeMountDialog()
             
         case _ as T64FileProxy, _ as D64FileProxy,
              _ as PRGFileProxy, _ as P00FileProxy:
-            runArchiveMountDialog(parent)
+            runArchiveMountDialog()
             
         case _ as G64FileProxy:
-            runDiskMountDialog(parent)
+            runDiskMountDialog()
             
         default:
             break
         }
     }
     
-    func runArchiveMountDialog(_ parent: MyController) {
+    func runArchiveMountDialog() {
         let nibName = NSNib.Name("ArchiveMountDialog")
         let controller = ArchiveMountController.init(windowNibName: nibName)
-        controller.showSheet(withParent: parent)
+        controller.showSheet()
     }
     
-    func runDiskMountDialog(_ parent: MyController) {
+    func runDiskMountDialog() {
         let nibName = NSNib.Name("DiskMountDialog")
         let controller = DiskMountController.init(windowNibName: nibName)
-        controller.showSheet(withParent: parent)
+        controller.showSheet()
     }
     
-    func runTapeMountDialog(_ parent: MyController) {
+    func runTapeMountDialog() {
         let nibName = NSNib.Name("TapeMountDialog")
         let controller = TapeMountController.init(windowNibName: nibName)
-        controller.showSheet(withParent: parent)
+        controller.showSheet()
     }
     
-    func runCartridgeMountDialog(_ parent: MyController) {
+    func runCartridgeMountDialog() {
         let nibName = NSNib.Name("CartridgeMountDialog")
         let controller = CartridgeMountController.init(windowNibName: nibName)
-        controller.showSheet(withParent: parent)
+        controller.showSheet()
     }
     
     @discardableResult

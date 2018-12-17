@@ -109,7 +109,7 @@ extension MyController {
  
         let nibName = NSNib.Name("DiskInspector")
         let controller = DiskInspectorController.init(windowNibName: nibName)
-        controller.showSheet(withParent: self)
+        controller.showSheet()
     }
 
     public func debugOpenAction(_ sender: Any!) {
@@ -196,7 +196,7 @@ extension MyController {
             track("Browse")
             let nibName = NSNib.Name("SnapshotDialog")
             let controller = SnapshotDialog.init(windowNibName: nibName)
-            controller.showSheet(withParent: self)
+            controller.showSheet()
 
         default:
             assert(false)
@@ -208,14 +208,14 @@ extension MyController {
         // Open the virtual keyboard as a sheet
         let nibName = NSNib.Name("VirtualKeyboard")
         virtualKeyboardSheet = VirtualKeyboardController.init(windowNibName: nibName)
-        virtualKeyboardSheet?.showSheet(withParent: self)
+        virtualKeyboardSheet?.showSheet()
     }
 
     @IBAction func snapshotsAction(_ sender: Any!) {
         
         let nibName = NSNib.Name("SnapshotDialog")
         let controller = SnapshotDialog.init(windowNibName: nibName)
-        controller.showSheet(withParent: self)
+        controller.showSheet()
     }
 
     @IBAction func restoreLatestAutoSnapshotAction(_ sender: Any!) {

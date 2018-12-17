@@ -26,14 +26,12 @@ class ArchiveMountController : UserDialogController {
     @IBOutlet weak var insertButton: NSButton!
     @IBOutlet weak var driveSelector: NSPopUpButton!
 
-    override func showSheet(withParent controller: MyController,
-                            completionHandler:(() -> Void)? = nil) {
+    override func showSheet(completionHandler handler:(() -> Void)? = nil) {
         
         if let attachment = myDocument?.attachment as? AnyArchiveProxy {
             
             archive = attachment
-            super.showSheet(withParent: controller,
-                            completionHandler: completionHandler)
+            super.showSheet(completionHandler: handler)
         }
     }
     

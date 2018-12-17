@@ -21,14 +21,12 @@ class CartridgeMountController : UserDialogController {
     @IBOutlet weak var game: NSTextField!
     @IBOutlet weak var data: NSTableView!
     
-    override func showSheet(withParent controller: MyController,
-                            completionHandler:(() -> Void)? = nil) {
+    override func showSheet(completionHandler handler:(() -> Void)? = nil) {
         
         if let attachment = myDocument?.attachment as? CRTFileProxy {
             
             cartridge = attachment
-            super.showSheet(withParent: controller,
-                            completionHandler: completionHandler)
+            super.showSheet(completionHandler: handler)
         }
     }
         
