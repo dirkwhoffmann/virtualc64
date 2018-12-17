@@ -29,9 +29,12 @@ class ArchiveMountController : UserDialogController {
     override func showSheet(withParent controller: MyController,
                             completionHandler:(() -> Void)? = nil) {
         
-        track()
-        archive = controller.mydocument.attachment as? AnyArchiveProxy
-        super.showSheet(withParent: controller, completionHandler: completionHandler)
+        if let attachment = myDocument?.attachment as? AnyArchiveProxy {
+            
+            archive = attachment
+            super.showSheet(withParent: controller,
+                            completionHandler: completionHandler)
+        }
     }
     
     override public func awakeFromNib() {
@@ -89,15 +92,11 @@ class ArchiveMountController : UserDialogController {
 
     @IBAction override func okAction(_ sender: Any!) {
         
-        track()
+        let nr = (driveSelector.selectedItem!.tag == 1) ? 1 : 2
         
-        if driveSelector.selectedItem!.tag == 1 {
-            parent.changeDisk(archive, drive: 1)
-        } else {
-            parent.changeDisk(archive, drive: 2)
-        }
+        myController?.changeDisk(archive, drive: nr)
+        myController?.metalScreen.rotateBack()
         
-        parent.metalScreen.rotateBack()
         hideSheet()
     }
     
@@ -109,8 +108,8 @@ class ArchiveMountController : UserDialogController {
         }
         
         // Flash file into memory
-        parent.mydocument.flashAttachmentIntoMemory()
-        parent.keyboardcontroller.type("RUN\n")
+        myController?.mydocument.flashAttachmentIntoMemory()
+        myController?.keyboardcontroller.type("RUN\n")
         
         /*
         // Get load address of the selected item
@@ -119,9 +118,9 @@ class ArchiveMountController : UserDialogController {
         
         // Type RUN or SYS, depending of the load address
         if loadAddress == 0x801 {
-            parent.keyboardcontroller.type("RUN\n")
+            myController?.keyboardcontroller.type("RUN\n")
         } else {
-            parent.keyboardcontroller.type("SYS \(loadAddress)")
+            myController?.keyboardcontroller.type("SYS \(loadAddress)")
         }
         */
         

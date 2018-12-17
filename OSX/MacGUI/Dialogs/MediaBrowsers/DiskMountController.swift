@@ -31,10 +31,13 @@ class DiskMountController : UserDialogController {
     
     override func showSheet(withParent controller: MyController,
                             completionHandler:(() -> Void)? = nil) {
-        
-        track()
-        disk = controller.mydocument.attachment as? AnyDiskProxy
-        super.showSheet(withParent: controller, completionHandler: completionHandler)
+    
+        if let attachment = myDocument?.attachment as? AnyDiskProxy {
+            
+            disk = attachment
+            super.showSheet(withParent: controller,
+                            completionHandler: completionHandler)
+        }
     }
     
     override public func awakeFromNib() {
@@ -95,15 +98,11 @@ class DiskMountController : UserDialogController {
     
     @IBAction override func okAction(_ sender: Any!) {
         
-        track()
+        let nr = (driveSelector.selectedItem!.tag == 1) ? 1 : 2
         
-        if driveSelector.selectedItem!.tag == 1 {
-            parent.changeDisk(disk, drive: 1)
-        } else {
-            parent.changeDisk(disk, drive: 2)
-        }
+        myController?.changeDisk(disk, drive: nr)
+        myController?.metalScreen.rotateBack()
         
-        parent.metalScreen.rotateBack()
         hideSheet()
     }
 }

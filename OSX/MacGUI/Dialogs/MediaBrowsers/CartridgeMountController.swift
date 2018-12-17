@@ -24,9 +24,12 @@ class CartridgeMountController : UserDialogController {
     override func showSheet(withParent controller: MyController,
                             completionHandler:(() -> Void)? = nil) {
         
-        track()
-        cartridge = controller.mydocument.attachment as? CRTFileProxy
-        super.showSheet(withParent: controller, completionHandler: completionHandler)
+        if let attachment = myDocument?.attachment as? CRTFileProxy {
+            
+            cartridge = attachment
+            super.showSheet(withParent: controller,
+                            completionHandler: completionHandler)
+        }
     }
         
     override public func awakeFromNib() {
@@ -59,8 +62,8 @@ class CartridgeMountController : UserDialogController {
     @IBAction override func okAction(_ sender: Any!) {
         
         // Attach cartridge
-        c64.expansionport.attachCartridgeAndReset(cartridge)
-        parent.metalScreen.rotateBack()
+        proxy?.expansionport.attachCartridgeAndReset(cartridge)
+        myController?.metalScreen.rotateBack()
         
         hideSheet()
     }

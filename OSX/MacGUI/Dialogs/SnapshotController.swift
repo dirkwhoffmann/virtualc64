@@ -45,7 +45,7 @@ class SnapshotDialog : UserDialogController  {
         if numAutoSnapshots == -1 {
             
             // Disable auto snapshot saving while dialog is open
-            c64.suspendAutoSnapshots()
+            proxy?.suspendAutoSnapshots()
             
             // Setup snapshot caches
             reloadAutoSnapshotCache()
@@ -81,58 +81,63 @@ class SnapshotDialog : UserDialogController  {
     
     func reloadAutoSnapshotCache() {
         
-        c64.suspend()
-        numAutoSnapshots = c64.numAutoSnapshots()
-        for n in 0..<numAutoSnapshots {
-            let takenAt = TimeInterval(c64.autoSnapshotTimestamp(n))
-            autoSnapshotImage[n] = c64.autoSnapshotImage(n)
-            autoTimeStamp[n] = timeInfo(timeStamp: takenAt)
-            autoTimeDiff[n] = timeDiffInfo(timeStamp: takenAt)
+        if let c64 = proxy {
+            
+            c64.suspend()
+            numAutoSnapshots = c64.numAutoSnapshots()
+            for n in 0..<numAutoSnapshots {
+                let takenAt = TimeInterval(c64.autoSnapshotTimestamp(n))
+                autoSnapshotImage[n] = c64.autoSnapshotImage(n)
+                autoTimeStamp[n] = timeInfo(timeStamp: takenAt)
+                autoTimeDiff[n] = timeDiffInfo(timeStamp: takenAt)
+            }
+            c64.resume()
+            autoTableView.reloadData()
         }
-        c64.resume()
-        autoTableView.reloadData()
     }
     
     func reloadUserSnapshotCache() {
         
-        c64.suspend()
-        numUserSnapshots = c64.numUserSnapshots()
-        track("numUserSnaps = \(numUserSnapshots)")
-        for n in 0..<numUserSnapshots {
-            let takenAt = TimeInterval(c64.userSnapshotTimestamp(n))
-            userSnapshotImage[n] = c64.userSnapshotImage(n)
-            userTimeStamp[n] = timeInfo(timeStamp: takenAt)
-            userTimeDiff[n] = timeDiffInfo(timeStamp: takenAt)
+        if let c64 = proxy {
+            
+            c64.suspend()
+            numUserSnapshots = c64.numUserSnapshots()
+            for n in 0..<numUserSnapshots {
+                let takenAt = TimeInterval(c64.userSnapshotTimestamp(n))
+                userSnapshotImage[n] = c64.userSnapshotImage(n)
+                userTimeStamp[n] = timeInfo(timeStamp: takenAt)
+                userTimeDiff[n] = timeDiffInfo(timeStamp: takenAt)
+            }
+            c64.resume()
+            userTableView.reloadData()
         }
-        c64.resume()
-        userTableView.reloadData()
     }
     
     @IBAction func deleteAction(_ sender: Any!) {
         
         let sender = sender as! NSButton
-        c64.deleteUserSnapshot(sender.tag)
+        proxy?.deleteUserSnapshot(sender.tag)
         reloadUserSnapshotCache()
     }
     
     @IBAction override func cancelAction(_ sender: Any!) {
         
         track()
-        c64.resumeAutoSnapshots()
+        proxy?.resumeAutoSnapshots()
         hideSheet()
     }
     
     @IBAction func autoDoubleClick(_ sender: Any!) {
         
         let sender = sender as! NSTableView
-        c64.restoreAutoSnapshot(sender.selectedRow)
+        proxy?.restoreAutoSnapshot(sender.selectedRow)
         cancelAction(self)
     }
     
     @IBAction func userDoubleClick(_ sender: Any!) {
         
         let sender = sender as! NSTableView
-        c64.restoreUserSnapshot(sender.selectedRow)
+        proxy?.restoreUserSnapshot(sender.selectedRow)
         cancelAction(self)
     }
 }
@@ -194,6 +199,11 @@ extension SnapshotDialog {
     func tableView(_ tableView: NSTableView,
                    writeRowsWith rowIndexes: IndexSet,
                    to pboard: NSPasteboard) -> Bool {
+        
+        // Get active emulator instance
+        guard let c64 = proxy else {
+            return false
+        }
         
         // Get index of dragged item
         guard let index = rowIndexes.first else {

@@ -20,9 +20,12 @@ class TapeMountController : UserDialogController {
     override func showSheet(withParent controller: MyController,
                    completionHandler:(() -> Void)? = nil) {
         
-        track()
-        tape = controller.mydocument.attachment as? TAPFileProxy
-        super.showSheet(withParent: controller, completionHandler: completionHandler)
+        if let attachment = myDocument?.attachment as? TAPFileProxy {
+            
+            tape = attachment
+            super.showSheet(withParent: controller,
+                            completionHandler: completionHandler)
+        }
     }
     
     //
@@ -38,8 +41,8 @@ class TapeMountController : UserDialogController {
     @IBAction override func okAction(_ sender: Any!) {
         
         // Insert tape
-        c64.datasette.insertTape(tape)
-        parent.metalScreen.rotateBack()
+        proxy?.datasette.insertTape(tape)
+        myController?.metalScreen.rotateBack()
         
         // Process options
         if autoLoad.integerValue == 1 {
