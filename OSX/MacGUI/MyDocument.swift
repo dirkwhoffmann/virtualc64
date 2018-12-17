@@ -280,6 +280,21 @@ class MyDocument : NSDocument {
         default: return false
         }
     
+        // Check if the emulator has just been startet. In that case, we have
+        // to wait until the Kernal boot routine has been executed. Otherwise,
+        // the C64 would ignore everything we are doing here.
+        let delay = (c64.cpu.cycle() < 3000000) ? 2.0 : 0.0
+
+        // Execute asynchronously ...
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
+            self.mountAttachment(action: action, text: autoTypeText)
+        })
+        
+        return true
+    }
+    
+    func mountAttachment(action: AutoMountAction, text: String?) {
+        
         // Perform action
         track("Action = \(action)")
         switch action {
@@ -292,20 +307,10 @@ class MyDocument : NSDocument {
         }
         
         // Type text
-        if autoTypeText != nil {
-            
-            track("Auto typing: \(autoTypeText!)")
-            let text = autoTypeText! + "\n"
-            
-            // Delay typing if the emuator is still booting. Otherwise, all
-            // key presses would be ignored.
-            let booting = c64.cpu.cycle() < 3000000
-            let delay = booting ? 2.5 /* seconds */ : 0.0
-            
-            con.keyboardcontroller.type(text, initialDelay: delay)
+        if text != nil {
+            track("Auto typing: \(text!)")
+            myController?.keyboardcontroller.type(text! + "\n")
         }
-        
-        return true
     }
     
     func runMountDialog() {
