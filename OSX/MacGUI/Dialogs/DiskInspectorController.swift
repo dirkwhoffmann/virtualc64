@@ -71,7 +71,7 @@ class DiskInspectorController : UserDialogController {
     override public func awakeFromNib() {
         
         driveNr = 1
-        drive = c64.drive1
+        drive = proxy!.drive1
     
         // Start receiving messages
         addListener()
@@ -86,7 +86,7 @@ class DiskInspectorController : UserDialogController {
         // Convert 'self' to a void pointer
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
         
-        c64.addListener(myself) { (ptr, type, data) in
+        proxy?.addListener(myself) { (ptr, type, data) in
             
             // Convert void pointer back to 'self'
             let myself = Unmanaged<DiskInspectorController>.fromOpaque(ptr!).takeUnretainedValue()
@@ -284,7 +284,7 @@ class DiskInspectorController : UserDialogController {
     @IBAction func selectDriveAction(_ sender: Any!) {
     
         driveNr = (sender as! NSButton).tag
-        drive = c64.drive(driveNr)
+        drive = proxy!.drive(driveNr)
         diskInfoIsDirty = true
         trackDataIsDirty = true
         headPositionIsDirty = true

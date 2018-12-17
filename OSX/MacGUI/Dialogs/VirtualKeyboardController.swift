@@ -46,7 +46,7 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
         
         parent = controller
         parentWindow = parent.window
-        c64 = parent.mydocument.c64
+        // c64 = parent.mydocument.c64
         autoClose = false
         
         showWindow(self)

@@ -77,6 +77,8 @@ extension PreferencesController {
         
         track()
         
+        guard let c64 = proxy else { return }
+        
         let romImage = NSImage.init(named: "rom")
         let romImageLight = NSImage.init(named: "rom_light")
         

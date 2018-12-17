@@ -15,6 +15,8 @@ extension PreferencesController {
         
         track()
     
+        guard let c64 = proxy else { return }
+        
         // Joystick emulation keys
         updateJoyKeyMap(0, dir: JOYSTICK_UP, button: devUp1button, txt: devUp1)
         updateJoyKeyMap(0, dir: JOYSTICK_DOWN, button: devDown1button, txt: devDown1)
@@ -137,52 +139,54 @@ extension PreferencesController {
     @IBAction func devDisconnectKeysAction(_ sender: NSButton!) {
         
         parent.keyboardcontroller.disconnectJoyKeys = (sender.state == .on)
+        
         refresh()
     }
     
     @IBAction func devAutofireAction(_ sender: NSButton!) {
         
-        let value = sender.state
-        track("value = \(value)")
-        c64.port1.setAutofire(sender.state == .on)
-        c64.port2.setAutofire(sender.state == .on)
+        proxy?.port1.setAutofire(sender.state == .on)
+        proxy?.port2.setAutofire(sender.state == .on)
+        
         refresh()
     }
     
     @IBAction func devAutofireCeaseAction(_ sender: NSButton!) {
         
-        let value = sender.state
-        track("value = \(value)")
+        if let bullets = proxy?.port1.autofireBullets().magnitude {
         
-        assert(c64.port1.autofireBullets() == c64.port2.autofireBullets())
-        let bullets = Int(c64.port1.autofireBullets().magnitude)
-        let sign = sender.state == .on ? 1 : -1;
-        c64.port1.setAutofireBullets(bullets * sign)
-        c64.port2.setAutofireBullets(bullets * sign)
-        refresh()
+            let sign = sender.state == .on ? 1 : -1
+            proxy?.port1.setAutofireBullets(Int(bullets) * sign)
+            proxy?.port2.setAutofireBullets(Int(bullets) * sign)
+            
+            refresh()
+        }
     }
     
     @IBAction func devAutofireBulletsAction(_ sender: NSTextField!) {
         
         let value = sender.integerValue
-        track("value = \(value)")
-        c64.port1.setAutofireBullets(value)
-        c64.port2.setAutofireBullets(value)
+        
+        proxy?.port1.setAutofireBullets(value)
+        proxy?.port2.setAutofireBullets(value)
+        
         refresh()
     }
     
     @IBAction func devAutofireFrequencyAction(_ sender: NSSlider!) {
         
         let value = sender.floatValue
-        track("value = \(value)")
-        c64.port1.setAutofireFrequency(value)
-        c64.port2.setAutofireFrequency(value)
+        
+        proxy?.port1.setAutofireFrequency(value)
+        proxy?.port2.setAutofireFrequency(value)
+        
         refresh()
     }
     
     @IBAction func devMouseModelAction(_ sender: NSPopUpButton!) {
         
-        c64.mouse.setModel(sender.selectedTag())
+        proxy?.mouse.setModel(sender.selectedTag())
+        
         refresh()
     }
     
@@ -196,24 +200,6 @@ extension PreferencesController {
     @IBAction func devFactorySettingsAction(_ sender: Any!) {
         
         parent.resetDevicesUserDefaults()
-
-        /*
-        // Joystick emulation keys
-        parent.gamePadManager.restoreFactorySettings()
-        parent.keyboardcontroller.disconnectJoyKeys = Defaults.disconnectJoyKeys
-        
-        // Autofire
-        c64.port1.setAutofire(Defaults.autofire)
-        c64.port2.setAutofire(Defaults.autofire)
-        c64.port1.setAutofireBullets(Defaults.autofireBullets)
-        c64.port2.setAutofireBullets(Defaults.autofireBullets)
-        c64.port1.setAutofireFrequency(Defaults.autofireFrequency)
-        c64.port2.setAutofireFrequency(Defaults.autofireFrequency)
-        
-        // Mouse
-        c64.mouse.setModel(Int(Defaults.mouseModel.rawValue))
-        */
-        
         refresh()
     }
 }

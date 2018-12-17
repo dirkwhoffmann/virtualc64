@@ -13,14 +13,14 @@ class UserDialogController : NSWindowController
 {
     var parent: MyController!
     var parentWindow: NSWindow!
-    var c64: C64Proxy!
+    // var c64: C64Proxy!
     
     func showSheet(withParent controller: MyController, completionHandler:(() -> Void)? = nil) {
         
         track()
         parent = controller
         parentWindow = parent.window
-        c64 = parent.mydocument.c64
+        // c64 = parent.mydocument.c64
 
         parentWindow.beginSheet(window!, completionHandler: { result in
             if result == NSApplication.ModalResponse.OK {

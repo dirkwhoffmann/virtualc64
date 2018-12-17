@@ -15,6 +15,8 @@ extension PreferencesController {
         
         track()
         
+        guard let c64 = proxy else { return }
+        
         // VIC
         let model = c64.vic.model()
         hwVicModelPopup.selectItem(withTag: model)
@@ -93,49 +95,51 @@ extension PreferencesController {
     
     @IBAction func hwVicModelAction(_ sender: NSPopUpButton!) {
         
-        c64.vic.setModel(sender.selectedTag())
+        proxy?.vic.setModel(sender.selectedTag())
         refresh()
     }
     
     @IBAction func hwVicGrayDotBugAction(_ sender: NSButton!) {
         
-        c64.vic.setEmulateGrayDotBug(sender.state == .on)
+        proxy?.vic.setEmulateGrayDotBug(sender.state == .on)
         refresh()
     }
     
     @IBAction func hwCiaModelAction(_ sender: NSPopUpButton!) {
         
-        c64.cia1.setModel(sender.selectedTag())
-        c64.cia2.setModel(sender.selectedTag())
+        proxy?.cia1.setModel(sender.selectedTag())
+        proxy?.cia2.setModel(sender.selectedTag())
         refresh()
     }
     
     @IBAction func hwCiaTimerBBugAction(_ sender: NSButton!) {
         
-        c64.cia1.setEmulateTimerBBug(sender.state == .on)
-        c64.cia2.setEmulateTimerBBug(sender.state == .on)
+        proxy?.cia1.setEmulateTimerBBug(sender.state == .on)
+        proxy?.cia2.setEmulateTimerBBug(sender.state == .on)
         refresh()
     }
     
     @IBAction func hwSidFilterAction(_ sender: NSButton!) {
         
-        c64.sid.setAudioFilter(sender.state == .on)
+        proxy?.sid.setAudioFilter(sender.state == .on)
         refresh()
     }
     
     @IBAction func hwSidEngineAction(_ sender: NSPopUpButton!) {
         
-        c64.sid.setReSID(sender.selectedTag() == 1)
+        proxy?.sid.setReSID(sender.selectedTag() == 1)
         refresh()
     }
     
     @IBAction func hwSidSamplingAction(_ sender: NSPopUpButton!) {
         
-        c64.sid.setSamplingMethod(sender.selectedTag())
+        proxy?.sid.setSamplingMethod(sender.selectedTag())
         refresh()
     }
     
     @IBAction func hwSidModelAction(_ sender: NSPopUpButton!) {
+        
+        guard let c64 = proxy else { return }
         
         let model = UInt32(sender.selectedTag())
         let method = UInt32(c64.sid.samplingMethod())
@@ -152,20 +156,20 @@ extension PreferencesController {
     
     @IBAction func hwGlueLogicAction(_ sender: NSPopUpButton!) {
         
-        c64.vic.setGlueLogic(sender.selectedTag())
+        proxy?.vic.setGlueLogic(sender.selectedTag())
         refresh()
     }
     
     @IBAction func hwRamInitPatternAction(_ sender: NSPopUpButton!) {
         
-        c64.mem.setRamInitPattern(sender.selectedTag())
+        proxy?.mem.setRamInitPattern(sender.selectedTag())
         refresh()
     }
 
     @IBAction func hwFactorySettingsAction(_ sender: NSPopUpButton!) {
         
         if sender.selectedTag() != C64_CUSTOM.rawValue {
-            c64.setModel(sender.selectedTag())
+            proxy?.setModel(sender.selectedTag())
         }
         refresh()
     }

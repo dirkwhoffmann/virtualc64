@@ -27,7 +27,7 @@ class RomDropView : NSImageView
     var dragImage: NSImageView?
 
     func acceptDragSource(url: URL) -> Bool {
-        return dialogController.c64.isRom(url)
+        return proxy?.isRom(url) ?? false
     }
     
     override func awakeFromNib()
@@ -60,13 +60,14 @@ class RomDropView : NSImageView
 
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool
     {
-        guard let url = sender.url else {
+        guard let url = sender.url else { return false }
+        guard let controller = myController else { return false }
+        guard let c64 = proxy else { return false }
+        
+        if !controller.loadRom(url) {
             return false
         }
-        if !dialogController.parent.loadRom(url) {
-            return false
-        }
-        if dialogController.parent.c64.isRunnable() {
+        if c64.isRunnable() {
             dialogController.okAction(self)
         }
         return true
@@ -74,7 +75,6 @@ class RomDropView : NSImageView
     
     override func concludeDragOperation(_ sender: NSDraggingInfo?)
     {
-        track()
         dialogController.refresh()
     }
 }
@@ -82,27 +82,27 @@ class RomDropView : NSImageView
 class BasicRomDropView : RomDropView
 {
     override func acceptDragSource(url: URL) -> Bool {
-        return dialogController.c64.isBasicRom(url)
+        return proxy?.isBasicRom(url) ?? false
     }
 }
 
 class CharRomDropView : RomDropView
 {
     override func acceptDragSource(url: URL) -> Bool {
-        return dialogController.c64.isCharRom(url)
+        return proxy?.isCharRom(url) ?? false
     }
 }
 
 class KernalRomDropView : RomDropView
 {
     override func acceptDragSource(url: URL) -> Bool {
-        return dialogController.c64.isKernalRom(url)
+        return proxy?.isKernalRom(url) ?? false
     }
 }
 
 class Vc1541RomDropView : RomDropView
 {
     override func acceptDragSource(url: URL) -> Bool {
-        return dialogController.c64.isVC1541Rom(url)
+        return proxy?.isVC1541Rom(url) ?? false
     }
 }

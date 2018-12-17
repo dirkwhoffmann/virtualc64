@@ -15,6 +15,8 @@ extension PreferencesController {
         
         track()
         
+        guard let c64 = proxy else { return }
+        
         // VC1541
         emuWarpLoad.state = c64.warpLoad() ? .on : .off
         emuDriveSounds.state = c64.drive1.sendSoundMessages() ? .on : .off
@@ -89,14 +91,14 @@ extension PreferencesController {
     
     @IBAction func emuWarpLoadAction(_ sender: NSButton!) {
         
-        c64.setWarpLoad(sender.state == .on)
+        proxy?.setWarpLoad(sender.state == .on)
         refresh()
     }
     
     @IBAction func emuDriveSoundsAction(_ sender: NSButton!) {
         
-        c64.drive1.setSendSoundMessages(sender.state == .on)
-        c64.drive2.setSendSoundMessages(sender.state == .on)
+        proxy?.drive1.setSendSoundMessages(sender.state == .on)
+        proxy?.drive2.setSendSoundMessages(sender.state == .on)
         refresh()
     }
     
@@ -148,16 +150,16 @@ extension PreferencesController {
     @IBAction func emuAutoSnapshotAction(_ sender: NSButton!) {
         
         if sender.state == .on {
-            c64.enableAutoSnapshots()
+            proxy?.enableAutoSnapshots()
         } else {
-            c64.disableAutoSnapshots()
+            proxy?.disableAutoSnapshots()
         }
         refresh()
     }
     
     @IBAction func emuSnapshotIntervalAction(_ sender: NSTextField!) {
         
-        c64.setSnapshotInterval(sender.integerValue)
+        proxy?.setSnapshotInterval(sender.integerValue)
         refresh()
     }
     
@@ -169,31 +171,6 @@ extension PreferencesController {
     @IBAction func emuFactorySettingsAction(_ sender: Any!) {
         
         parent.resetEmulatorUserDefaults()
-        
-        /*
-        // VC1541
-        c64.setWarpLoad(Defaults.warpLoad)
-        c64.drive1.setSendSoundMessages(Defaults.driveNoise)
-        c64.drive2.setSendSoundMessages(Defaults.driveNoise)
-        
-        // Screenshots
-        parent.screenshotSource = Defaults.screenshotSource
-        parent.screenshotTarget = Defaults.screenshotTarget
-        
-        // User Dialogs
-        parent.closeWithoutAsking = Defaults.closeWithoutAsking
-        parent.ejectWithoutAsking = Defaults.ejectWithoutAsking
-        
-        // Misc
-        parent.pauseInBackground = Defaults.pauseInBackground
-        c64.setSnapshotInterval(Defaults.snapshotInterval)
-        
-        // Media files
-        parent.autoMountAction = Defaults.autoMountAction
-        parent.autoType = Defaults.autoType
-        parent.autoTypeText = Defaults.autoTypeText
-        */
-        
         refresh()
     }
     
