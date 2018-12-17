@@ -9,8 +9,46 @@
 
 import Cocoa
 
+/// The delegate object of this application.
+/// This variable is global and can be accessed from anywhere in the Swift code.
+var myAppDelegate: MyAppDelegate {
+    get {
+        return NSApp.delegate as! MyAppDelegate
+    }
+}
+
+/// The document of the currently active emulator instance.
+/// This variable is global and can be accessed from anywhere in the Swift code.
+var myDocument: MyDocument? {
+    get {
+        if let doc = NSApplication.shared.orderedDocuments.first as? MyDocument {
+            return doc
+        } else {
+            track("No document object found. Returning nil.")
+            return nil
+        }
+    }
+}
+
+/// The window controller of the currently active emulator instance.
+/// This variable is global and can be accessed from anywhere in the Swift code.
+var myController: MyController? {
+    get {
+        return myDocument?.windowControllers.first as? MyController
+    }
+}
+
+// The C64 proxy of the currently active emulator instance.
+/// This variable is global and can be accessed from anywhere in the Swift code.
+var proxy: C64Proxy? {
+    get {
+        return myDocument?.c64
+    }
+}
+
+
 @NSApplicationMain
-@objc public class AppDelegate: NSObject, NSApplicationDelegate {
+@objc public class MyAppDelegate: NSObject, NSApplicationDelegate {
     
     /// Virtual C64 keyboard (opened as a separate window)
     var virtualKeyboard: VirtualKeyboardController? = nil

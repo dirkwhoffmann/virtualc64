@@ -296,8 +296,16 @@ class MyDocument : NSDocument {
         
         // Type text
         if autoTypeText != nil {
+            
             track("Auto typing: \(autoTypeText!)")
-            parent.keyboardcontroller.type(autoTypeText! + "\n")
+            let text = autoTypeText! + "\n"
+            
+            // Delay typing if the emuator is still booting. Otherwise, all
+            // key presses would be ignored.
+            let booting = c64.cpu.cycle() < 3000000
+            let delay = booting ? 2.5 /* seconds */ : 0.0
+            
+            parent.keyboardcontroller.type(text, initialDelay: delay)
         }
         
         return true

@@ -358,7 +358,7 @@ class KeyboardController: NSObject {
         }
     }
     
-    func _typeOnKeyboard(keyList: [C64Key]) {
+    func _type(keyList: [C64Key]) {
         
         for key in keyList {
             if (key == .restore) {
@@ -378,27 +378,27 @@ class KeyboardController: NSObject {
         }
     }
     
-    func _typeOnKeyboard(key: C64Key) {
-        typeOnKeyboard(keyList: [key])
+    func _type(key: C64Key) {
+        type(keyList: [key])
     }
 
-    func typeOnKeyboard(keyList: [C64Key]) {
+    func type(keyList: [C64Key]) {
         
         DispatchQueue.global().async {
-            self._typeOnKeyboard(keyList: keyList)
+            self._type(keyList: keyList)
         }
     }
  
-    func typeOnKeyboard(key: C64Key) {
+    func type(key: C64Key) {
         
         DispatchQueue.global().async {
-            self._typeOnKeyboard(key: key)
+            self._type(key: key)
         }
     }
     
-    func typeOnKeyboard(string: String?,
-                              initialDelay: useconds_t = 0,
-                              completion: (() -> Void)?) {
+    func type(string: String?,
+              initialDelay: useconds_t = 0,
+              completion: (() -> Void)? = nil) {
 
         if var truncated = string {
             
@@ -413,7 +413,7 @@ class KeyboardController: NSObject {
                 usleep(initialDelay);
                 for c in truncated.lowercased() {
                     let c64Keys = C64Key.translate(char: String(c))
-                    self._typeOnKeyboard(keyList: c64Keys)
+                    self._type(keyList: c64Keys)
                     usleep(useconds_t(20000))
                 }
                 completion?()
@@ -421,11 +421,12 @@ class KeyboardController: NSObject {
         }
     }
     
-    func type(_ string: String?) {
-        typeOnKeyboard(string: string, completion: nil)
+    func type(_ string: String?, initialDelay seconds: Double = 0.0) {
+        let uSeconds = useconds_t(1000000 * seconds)
+        type(string: string, initialDelay: uSeconds)
     }
-        
+    
     func typeOnKeyboardAndPressPlay(string: String?) {
-        typeOnKeyboard(string: string, completion: controller.c64.datasette.pressPlay)
+        type(string: string, completion: controller.c64.datasette.pressPlay)
     }
 }

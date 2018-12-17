@@ -110,7 +110,7 @@
 		506B315420DD0AEB007913A8 /* DriveMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506B315320DD0AEB007913A8 /* DriveMemory.cpp */; };
 		506D39D2141780E500268AF6 /* SIDBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D1141780E500268AF6 /* SIDBridge.cpp */; };
 		506D39D6141788E700268AF6 /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D4141788E600268AF6 /* ReSID.cpp */; };
-		506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCD20223E5E009742CF /* AppDelegate.swift */; };
+		506D3DCE20223E5E009742CF /* MyAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCD20223E5E009742CF /* MyAppDelegate.swift */; };
 		506D3DD020224BF4009742CF /* MyDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCF20224BF4009742CF /* MyDocument.swift */; };
 		506D4D0D20B331A00093C5C6 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D4D0C20B331A00093C5C6 /* Formatter.swift */; };
 		506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54CB2032255A0026D8B4 /* RomDropView.swift */; };
@@ -388,7 +388,7 @@
 		506D39D3141780FF00268AF6 /* SIDBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIDBridge.h; sourceTree = "<group>"; };
 		506D39D4141788E600268AF6 /* ReSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReSID.cpp; sourceTree = "<group>"; };
 		506D39D5141788E700268AF6 /* ReSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReSID.h; sourceTree = "<group>"; };
-		506D3DCD20223E5E009742CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		506D3DCD20223E5E009742CF /* MyAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppDelegate.swift; sourceTree = "<group>"; };
 		506D3DCF20224BF4009742CF /* MyDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDocument.swift; sourceTree = "<group>"; };
 		506D4D0C20B331A00093C5C6 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		506D54CB2032255A0026D8B4 /* RomDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDropView.swift; sourceTree = "<group>"; };
@@ -560,7 +560,6 @@
 			isa = PBXGroup;
 			children = (
 				50176C6D0A6F7357009E80BD /* MacGUI */,
-				50C4F055202D8B37004C5F21 /* XIB files */,
 				50176C4E0A6F72F3009E80BD /* C64 */,
 			);
 			name = Classes;
@@ -603,9 +602,9 @@
 		5000473F12DCEC9B0098D890 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				506D3DCF20224BF4009742CF /* MyDocument.swift */,
 				50176C790A6F7357009E80BD /* C64Proxy.h */,
 				50176C7A0A6F7357009E80BD /* C64Proxy.mm */,
-				506D3DCF20224BF4009742CF /* MyDocument.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -744,12 +743,13 @@
 			isa = PBXGroup;
 			children = (
 				50DBB44A2025CE5700489271 /* Basics.swift */,
-				506D3DCD20223E5E009742CF /* AppDelegate.swift */,
-				500E3A6B21B5C30F00935CB3 /* Automation */,
+				506D3DCD20223E5E009742CF /* MyAppDelegate.swift */,
 				5000473F12DCEC9B0098D890 /* Model */,
 				5000474012DCECAB0098D890 /* View */,
 				5000474112DCECBA0098D890 /* Controller */,
+				500E3A6B21B5C30F00935CB3 /* Automation */,
 				5000474312DCED190098D890 /* Misc */,
+				50C4F055202D8B37004C5F21 /* XIB files */,
 			);
 			path = MacGUI;
 			sourceTree = "<group>";
@@ -1355,7 +1355,7 @@
 				50D19B8820ACA0C40004C47B /* Mouse1350.cpp in Sources */,
 				5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */,
 				50720F4220C853910010EBF2 /* CpuTraceView.swift in Sources */,
-				506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */,
+				506D3DCE20223E5E009742CF /* MyAppDelegate.swift in Sources */,
 				50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				5028921521A2F96800622969 /* Kingsoft.cpp in Sources */,

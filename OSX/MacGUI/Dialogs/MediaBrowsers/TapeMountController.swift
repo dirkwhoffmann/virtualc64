@@ -45,9 +45,9 @@ class TapeMountController : UserDialogController {
         if autoLoad.integerValue == 1 {
             let kb = parent.keyboardcontroller!
             if autoPress.integerValue == 1 {
-                kb.typeOnKeyboard(string: "LOAD\n", completion: c64.datasette.pressPlay)
+                kb.type(string: "LOAD\n", completion: c64.datasette.pressPlay)
             } else {
-                kb.typeOnKeyboard(string: "LOAD\n", completion: nil)
+                kb.type(string: "LOAD\n", completion: nil)
             }
         }
         

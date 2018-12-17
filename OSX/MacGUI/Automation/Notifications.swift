@@ -9,7 +9,7 @@
 
 import Foundation
 
-extension AppDelegate {
+extension MyAppDelegate {
     
     @objc func vc64ResetCommand(_ notification: Notification) {
         

@@ -628,7 +628,7 @@ extension MyController {
         case MSG_KEYMATRIX,
              MSG_CHARSET:
             
-            let appDelegate = NSApp.delegate as! AppDelegate
+            let appDelegate = NSApp.delegate as! MyAppDelegate
             if appDelegate.virtualKeyboard != nil {
                 appDelegate.virtualKeyboard?.refresh()
             }

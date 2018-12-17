@@ -9,46 +9,13 @@
 
 import Foundation
 
-// The delegate of this application
-var appDelegate: AppDelegate {
-    get {
-        return NSApp.delegate as! AppDelegate
-    }
-}
-
-// The document of the currently active emulator instance
-var currentDocument: MyDocument? {
-    get {
-        if let doc = NSApplication.shared.orderedDocuments.first as? MyDocument {
-            return doc
-        } else {
-            track("No document object found. Returning nil.")
-            return nil
-        }
-    }
-}
-
-// The controller of the currently active emulator instance
-var currentController: MyController? {
-    get {
-        return currentDocument?.windowControllers.first as? MyController
-    }
-}
-
-// The emulator proxy of the currently active emulator instance
-var currentProxy: C64Proxy? {
-    get {
-        return currentDocument?.c64
-    }
-}
-
 //
 // Commands
 //
 
 func resetScriptCmd(arguments: [AnyHashable : Any]?) -> Bool {
     
-    currentProxy?.powerUp()
+    proxy?.powerUp()
     return true
 }
 
@@ -57,12 +24,12 @@ func configureScriptCmd(arguments: [AnyHashable : Any]?) -> Bool {
     // Hardware model
     if let argument = arguments?["VC64HwModel"] as? String {
         switch argument {
-        case "C64_PAL": currentProxy?.setModel(Int(C64_PAL.rawValue))
-        case "C64_II_PAL": currentProxy?.setModel(Int(C64_II_PAL.rawValue))
-        case "C64_OLD_PAL": currentProxy?.setModel(Int(C64_OLD_PAL.rawValue))
-        case "C64_NTSC": currentProxy?.setModel(Int(C64_NTSC.rawValue))
-        case "C64_II_NTSC": currentProxy?.setModel(Int(C64_II_NTSC.rawValue))
-        case "C64_OLD_NTSC": currentProxy?.setModel(Int(C64_OLD_NTSC.rawValue))
+        case "C64_PAL": proxy?.setModel(Int(C64_PAL.rawValue))
+        case "C64_II_PAL": proxy?.setModel(Int(C64_II_PAL.rawValue))
+        case "C64_OLD_PAL": proxy?.setModel(Int(C64_OLD_PAL.rawValue))
+        case "C64_NTSC": proxy?.setModel(Int(C64_NTSC.rawValue))
+        case "C64_II_NTSC": proxy?.setModel(Int(C64_II_NTSC.rawValue))
+        case "C64_OLD_NTSC": proxy?.setModel(Int(C64_OLD_NTSC.rawValue))
         default: return false
         }
     }
@@ -71,8 +38,8 @@ func configureScriptCmd(arguments: [AnyHashable : Any]?) -> Bool {
     if let argument = arguments?["VC64AutoWarp"] as? String {
         track();
         switch argument {
-        case "on": track(); currentProxy?.setWarpLoad(true)
-        case "off": track(); currentProxy?.setWarpLoad(false)
+        case "on": track(); proxy?.setWarpLoad(true)
+        case "off": track(); proxy?.setWarpLoad(false)
         default: return false
         }
     }
@@ -81,8 +48,8 @@ func configureScriptCmd(arguments: [AnyHashable : Any]?) -> Bool {
     if let argument = arguments?["VC64AlwaysWarp"] as? String {
         track();
         switch argument {
-        case "on": track(); currentProxy?.setAlwaysWarp(true)
-        case "off": track(); currentProxy?.setAlwaysWarp(false)
+        case "on": track(); proxy?.setAlwaysWarp(true)
+        case "off": track(); proxy?.setAlwaysWarp(false)
         default: return false
         }
     }
@@ -95,8 +62,8 @@ func dragInScriptCmd(arguments: [AnyHashable : Any]?) -> Bool {
     if let argument = arguments?["VC64Path"] as? String {
         let url = URL(fileURLWithPath: argument)
         do {
-            try currentDocument?.createAttachment(from: url)
-            return currentDocument?.mountAttachment() ?? false
+            try myDocument?.createAttachment(from: url)
+            return myDocument?.mountAttachment() ?? false
         } catch {
             track("Remote control: Emulated drag operation failed.")
         }
@@ -107,7 +74,7 @@ func dragInScriptCmd(arguments: [AnyHashable : Any]?) -> Bool {
 func typeTextCmd(arguments: [AnyHashable : Any]?) -> Bool {
     
     if let text = arguments?[""] as? String {
-        currentController?.keyboardcontroller.type(text)
+        myController?.keyboardcontroller.type(text)
         return true
     }
     return false
@@ -120,7 +87,7 @@ func takeScreenshotCmd(arguments: [AnyHashable : Any]?) -> Bool {
     }
 
     do {
-        try currentController?.saveScreenshot(url: URL(fileURLWithPath: path))
+        try myController?.saveScreenshot(url: URL(fileURLWithPath: path))
         return true
     } catch {
         track("Remote control: Failed to save screenshot")
@@ -130,6 +97,6 @@ func takeScreenshotCmd(arguments: [AnyHashable : Any]?) -> Bool {
 
 func quitScriptCmd(arguments: [AnyHashable : Any]?) {
     
-    currentDocument?.updateChangeCount(.changeCleared)
+    myDocument?.updateChangeCount(.changeCleared)
     NSApplication.shared.terminate(nil)
 }

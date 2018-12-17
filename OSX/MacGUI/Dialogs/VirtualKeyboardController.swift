@@ -79,7 +79,7 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
     override func refresh() {
         
         if !(window?.isVisible ?? false) { return }
-        guard let keyboard = currentProxy?.keyboard else { return }
+        guard let keyboard = proxy?.keyboard else { return }
         
         var needsUpdate = false;
         
@@ -115,7 +115,7 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
     
     func updateImages() {
         
-        guard let keyboard = currentProxy?.keyboard else { return }
+        guard let keyboard = proxy?.keyboard else { return }
         
         for nr in 0 ... 65 {
             
@@ -139,7 +139,7 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
     
     func releaseSpecialKeys() {
         
-        guard let keyboard = currentProxy?.keyboard else { return }
+        guard let keyboard = proxy?.keyboard else { return }
         
         keyboard.releaseKey(atRow: C64Key.control.row, col: C64Key.control.col)
         keyboard.releaseKey(atRow: C64Key.commodore.row, col: C64Key.commodore.col)
@@ -149,7 +149,7 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
     
     @IBAction func pressVirtualC64Key(_ sender: Any!) {
         
-        guard let keyboard = currentProxy?.keyboard else { return }
+        guard let keyboard = proxy?.keyboard else { return }
 
         let tag = (sender as! NSButton).tag
         let key = C64Key(tag)
