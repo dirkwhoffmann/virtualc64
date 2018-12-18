@@ -137,9 +137,11 @@ class MyController : NSWindowController, MessageReceiver {
     @IBOutlet weak var progress2: NSProgressIndicator!
     @IBOutlet weak var diskIcon1: NSButton!
     @IBOutlet weak var diskIcon2: NSButton!
-    @IBOutlet weak var cartridgeIcon: NSButton!
     @IBOutlet weak var tapeIcon: NSButton!
     @IBOutlet weak var tapeProgress: NSProgressIndicator!
+    @IBOutlet weak var crtIcon: NSButton!
+    @IBOutlet weak var crtFreeze: NSButton!
+    @IBOutlet weak var crtReset: NSButton!
     @IBOutlet weak var clockSpeed: NSTextField!
     @IBOutlet weak var clockSpeedBar: NSLevelIndicator!
     @IBOutlet weak var warpIcon: NSButton!
@@ -785,11 +787,11 @@ extension MyController {
     
         case MSG_CARTRIDGE:
             
-            cartridgeIcon.isHidden = false
+            crtIcon.isHidden = false
     
         case MSG_NO_CARTRIDGE:
             
-            cartridgeIcon.isHidden = true
+            crtIcon.isHidden = true
             
         default:
             track("Unknown message: \(msg)")

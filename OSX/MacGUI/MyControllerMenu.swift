@@ -326,23 +326,30 @@ extension MyController : NSMenuItemValidation {
     
     public func showStatusBar(_ value: Bool) {
         
+        let items: [NSView : Bool] = [
+            greenLED1: false,
+            redLED1: false,
+            progress1: false,
+            diskIcon1: false || !c64.drive1.hasDisk(),
+            greenLED2: false,
+            redLED2: false,
+            progress2: false,
+            diskIcon2: false,
+            crtIcon: !c64.expansionport.cartridgeAttached(),
+            crtFreeze: false,
+            crtReset: false,
+            tapeIcon: !c64.datasette.hasTape(),
+            tapeProgress: false,
+            clockSpeed: false,
+            clockSpeedBar: false,
+            warpIcon: false
+        ]
+        
         if !statusBar && value {
-            
-            greenLED1.isHidden = false
-            redLED1.isHidden = false
-            progress1.isHidden = false
-            diskIcon1.isHidden = !c64.drive1.hasDisk()
-            greenLED2.isHidden = false
-            redLED2.isHidden = false
-            progress2.isHidden = false
-            diskIcon2.isHidden = !c64.drive2.hasDisk()
-            cartridgeIcon.isHidden = !c64.expansionport.cartridgeAttached()
-            tapeIcon.isHidden = !c64.datasette.hasTape()
-            tapeProgress.isHidden = false
-            clockSpeed.isHidden = false
-            clockSpeedBar.isHidden = false
-            warpIcon.isHidden = false
-            
+        
+            for (item,hide) in items {
+                item.isHidden = hide
+            }
             metalScreen.shrink()
             window?.setContentBorderThickness(24, for: .minY)
             adjustWindowSize()
@@ -351,21 +358,9 @@ extension MyController : NSMenuItemValidation {
  
         if statusBar && !value {
             
-            greenLED1.isHidden = true
-            redLED1.isHidden = true
-            progress1.isHidden = true
-            diskIcon1.isHidden = true
-            greenLED2.isHidden = true
-            redLED2.isHidden = true
-            progress2.isHidden = true
-            diskIcon2.isHidden = true
-            cartridgeIcon.isHidden = true
-            tapeIcon.isHidden = true
-            tapeProgress.isHidden = true
-            clockSpeed.isHidden = true
-            clockSpeedBar.isHidden = true
-            warpIcon.isHidden = true
-            
+            for (item,_) in items {
+                item.isHidden = true
+            }
             metalScreen.expand()
             window?.setContentBorderThickness(0, for: .minY)
             adjustWindowSize()

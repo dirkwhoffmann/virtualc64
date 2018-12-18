@@ -54,6 +54,9 @@
                 <outlet property="controlPort2" destination="4MP-rV-xX2" id="6Ux-IE-l65"/>
                 <outlet property="cpuTableView" destination="767" id="945"/>
                 <outlet property="cpuTraceView" destination="gDD-e1-Fh0" id="sy3-BG-K54"/>
+                <outlet property="crtFreeze" destination="lFn-7a-MSQ" id="CmZ-wW-dWe"/>
+                <outlet property="crtIcon" destination="2003" id="CVl-nZ-xP2"/>
+                <outlet property="crtReset" destination="WXT-md-2lk" id="uzw-dj-Pd4"/>
                 <outlet property="debugPanel" destination="42" id="KyW-HY-D2p"/>
                 <outlet property="debugger" destination="35" id="Sfw-lz-Vnh"/>
                 <outlet property="decayRate" destination="H4H-4t-pmr" id="GJp-Nq-b9R"/>
@@ -216,7 +219,7 @@
                         </buttonCell>
                     </button>
                     <button hidden="YES" id="NlM-JA-g9p">
-                        <rect key="frame" x="211" y="2" width="20" height="20"/>
+                        <rect key="frame" x="188" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="mediaTapeTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="Rze-Qf-HUV">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -232,15 +235,23 @@
                         </buttonCell>
                     </button>
                     <button hidden="YES" id="2003">
-                        <rect key="frame" x="185" y="2" width="20" height="20"/>
+                        <rect key="frame" x="235" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="mediaCrtTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="2004">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                     </button>
+                    <button hidden="YES" toolTip="Freeze" id="lFn-7a-MSQ">
+                        <rect key="frame" x="259" y="2" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtButtonOffTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="IJt-r3-Tyd">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system" size="10"/>
+                        </buttonCell>
+                    </button>
                     <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="H1X-Kk-fcE">
-                        <rect key="frame" x="237" y="4" width="16" height="16"/>
+                        <rect key="frame" x="214" y="4" width="16" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </progressIndicator>
                     <button toolTip="Connect / Disconnect drive" tag="2" id="FWS-Ng-oe6">
@@ -255,7 +266,7 @@
                         </connections>
                     </button>
                     <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="xzf-hU-AKK">
-                        <rect key="frame" x="165" y="4" width="16" height="16"/>
+                        <rect key="frame" x="166" y="4" width="16" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </progressIndicator>
                     <button toolTip="Drive LED" tag="2" id="iKN-RM-vsV">
@@ -281,6 +292,14 @@
                             <outlet property="controller" destination="-2" id="DoA-Vt-vqv"/>
                         </connections>
                     </customView>
+                    <button hidden="YES" toolTip="Reset" id="WXT-md-2lk">
+                        <rect key="frame" x="283" y="2" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtButtonOffTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="daD-pA-smb">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system" size="10"/>
+                        </buttonCell>
+                    </button>
                 </subviews>
             </view>
             <toolbar key="toolbar" implicitIdentifier="562FDE63-25B0-4E4E-80C7-EF6E742B5F6F" displayMode="iconAndLabel" sizeMode="regular" id="1845">
@@ -740,7 +759,7 @@
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <clipView key="contentView" id="n9s-md-sVQ">
                                                                 <rect key="frame" x="1" y="0.0" width="266" height="408"/>
-                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="1838" id="767" customClass="CpuTableView" customModule="VirtualC64" customModuleProvider="target">
                                                                         <rect key="frame" x="0.0" y="0.0" width="266" height="391"/>
@@ -2922,6 +2941,7 @@
     </objects>
     <resources>
         <image name="LEDgray" width="128" height="128"/>
+        <image name="crtButtonOffTemplate" width="241" height="241"/>
         <image name="debugTemplate" width="240" height="241"/>
         <image name="devGamepadTemplate" width="24" height="24"/>
         <image name="devKeyboardTemplate" width="24" height="24"/>
