@@ -24,7 +24,6 @@ extension NSDraggingInfo
 class RomDropView : NSImageView
 {
     @IBOutlet var dialogController: UserDialogController!
-    var dragImage: NSImageView?
 
     func acceptDragSource(url: URL) -> Bool {
         return proxy?.isRom(url) ?? false
@@ -40,7 +39,6 @@ class RomDropView : NSImageView
         if let url = sender.url {
             if acceptDragSource(url: url) {
                 image = NSImage.init(named: "rom_medium")
-                dragImage?.isHidden = true
                 return .copy
             }
         }
@@ -49,7 +47,6 @@ class RomDropView : NSImageView
     
     override func draggingExited(_ sender: NSDraggingInfo?)
     {
-        dragImage?.isHidden = false
         dialogController.refresh()
     }
     

@@ -2,12 +2,54 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "rom_light.png",
+      "filename" : "roms_light_l-1.pdf",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "roms_light_l.pdf",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "light"
+        }
+      ],
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "roms_light_d.pdf",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
       "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "light"
+        }
+      ]
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ]
     },
     {
       "idiom" : "universal",

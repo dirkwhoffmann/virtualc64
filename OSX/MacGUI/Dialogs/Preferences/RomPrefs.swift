@@ -120,7 +120,6 @@ extension PreferencesController {
         
         // Basic Rom
         romBasicImage.image = hasBasicRom ? romImage : romImageLight
-        romBasicDragImage.isHidden = hasBasicRom
         romBasicHashText.isHidden = !hasBasicRom
         romBasicHashText.stringValue = String(format: "Hash: %llX", basicHash)
         romBasicPathText.isHidden = !hasBasicRom
@@ -136,7 +135,6 @@ extension PreferencesController {
         
         // Kernal Rom
         romKernalImage.image = hasKernalRom ? romImage : romImageLight
-        romKernalDragImage.isHidden = hasKernalRom
         romKernalHashText.isHidden = !hasKernalRom
         romKernalHashText.stringValue = String(format: "Hash: %llX", kernalHash)
         romKernalPathText.isHidden = !hasKernalRom
@@ -152,7 +150,6 @@ extension PreferencesController {
         
         // Character Rom
         romCharImage.image = hasCharacterRom ? romImage : romImageLight
-        romCharDragImage.isHidden = hasCharacterRom
         romCharHashText.isHidden = !hasCharacterRom
         romCharHashText.stringValue = String(format: "Hash: %llX", characterHash)
         romCharDescription.textColor = NSColor.textColor
@@ -169,7 +166,6 @@ extension PreferencesController {
         
         // VC1541 Rom
         romVc1541Image.image = hasVc1541Rom ? romImage : romImageLight
-        romVc1541DragImage.isHidden = hasVc1541Rom
         romVc1541HashText.isHidden = !hasVc1541Rom
         romVc1541HashText.stringValue = String(format: "Hash: %llX", vc1541Hash)
         romVc1541Description.textColor = NSColor.textColor
