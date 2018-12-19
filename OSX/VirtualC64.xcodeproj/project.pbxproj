@@ -547,6 +547,7 @@
 			children = (
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
 				503E198F20C42C6D007E91F1 /* Media.xcassets */,
+				50C4F055202D8B37004C5F21 /* XIB files */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
 				50790A2021BAF20300979B7A /* VirtualC64Tests */,
 				5043436421BBB6F0009749CA /* VirtualC64UITests */,
@@ -749,7 +750,6 @@
 				5000474112DCECBA0098D890 /* Controller */,
 				500E3A6B21B5C30F00935CB3 /* Automation */,
 				5000474312DCED190098D890 /* Misc */,
-				50C4F055202D8B37004C5F21 /* XIB files */,
 			);
 			path = MacGUI;
 			sourceTree = "<group>";
