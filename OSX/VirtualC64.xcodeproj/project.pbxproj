@@ -27,6 +27,7 @@
 		500EC05110E4DCC4005A19A3 /* MessageQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* MessageQueue.cpp */; };
 		500FC6790D17D2190044131D /* VIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500FC6780D17D2190044131D /* VIA.cpp */; };
 		50133B97200D4EED00167227 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50133B96200D4EED00167227 /* MetalView.swift */; };
+		50138AA621CACDD7007F01BA /* GeoRam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50138AA421CACDD7007F01BA /* GeoRam.cpp */; };
 		5014D684200CD62C00044217 /* MetalSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014D683200CD62C00044217 /* MetalSetup.swift */; };
 		5015F36620B546A30024B4AA /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5015F36520B546A30024B4AA /* WaveformView.swift */; };
 		50176C630A6F72F3009E80BD /* basic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C4F0A6F72F3009E80BD /* basic.cpp */; };
@@ -246,6 +247,8 @@
 		500FC6770D17D2190044131D /* VIA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIA.h; sourceTree = "<group>"; };
 		500FC6780D17D2190044131D /* VIA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIA.cpp; sourceTree = "<group>"; };
 		50133B96200D4EED00167227 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
+		50138AA421CACDD7007F01BA /* GeoRam.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GeoRam.cpp; sourceTree = "<group>"; };
+		50138AA521CACDD7007F01BA /* GeoRam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeoRam.h; sourceTree = "<group>"; };
 		5014D683200CD62C00044217 /* MetalSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalSetup.swift; sourceTree = "<group>"; };
 		5015F36520B546A30024B4AA /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		50171A9E2083708800C07AAD /* CIA_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIA_types.h; sourceTree = "<group>"; };
@@ -719,6 +722,29 @@
 			path = Automation;
 			sourceTree = "<group>";
 		};
+		50138AA321CACD95007F01BA /* CustomCartridges */ = {
+			isa = PBXGroup;
+			children = (
+				50B5861C201C673900742DB3 /* CustomCartridges.h */,
+				50B5861B201C673900742DB3 /* CustomCartridges.cpp */,
+				50F1752C2196C8820004E853 /* ActionReplay.h */,
+				50F1752B2196C8820004E853 /* ActionReplay.cpp */,
+				5017B71C21873FD00014EDE4 /* EasyFlash.h */,
+				5017B71B21873FD00014EDE4 /* EasyFlash.cpp */,
+				503A424C2187A133003011D1 /* FinalIII.h */,
+				503A424B2187A133003011D1 /* FinalIII.cpp */,
+				5003C1B3219807F8009AA08D /* StarDos.h */,
+				5003C1B2219807F8009AA08D /* StarDos.cpp */,
+				5003C1B621981BA6009AA08D /* Epyx.h */,
+				5003C1B521981BA6009AA08D /* Epyx.cpp */,
+				5028921421A2F96800622969 /* Kingsoft.h */,
+				5028921321A2F96800622969 /* Kingsoft.cpp */,
+				50138AA521CACDD7007F01BA /* GeoRam.h */,
+				50138AA421CACDD7007F01BA /* GeoRam.cpp */,
+			);
+			path = CustomCartridges;
+			sourceTree = "<group>";
+		};
 		50176C4E0A6F72F3009E80BD /* C64 */ = {
 			isa = PBXGroup;
 			children = (
@@ -958,27 +984,14 @@
 		50F175242196C4290004E853 /* Cartridges */ = {
 			isa = PBXGroup;
 			children = (
+				50171AA3208372CF00C07AAD /* Cartridge_types.h */,
 				5054BF1020133BA2003D86D4 /* Cartridge.h */,
 				5054BF0F20133BA2003D86D4 /* Cartridge.cpp */,
 				5017B71F21874B9A0014EDE4 /* CartridgeRom.h */,
 				5017B71E21874B9A0014EDE4 /* CartridgeRom.cpp */,
 				5017B719218729DA0014EDE4 /* FlashRom.h */,
 				5017B718218729DA0014EDE4 /* FlashRom.cpp */,
-				50171AA3208372CF00C07AAD /* Cartridge_types.h */,
-				50B5861C201C673900742DB3 /* CustomCartridges.h */,
-				50B5861B201C673900742DB3 /* CustomCartridges.cpp */,
-				50F1752C2196C8820004E853 /* ActionReplay.h */,
-				50F1752B2196C8820004E853 /* ActionReplay.cpp */,
-				5017B71C21873FD00014EDE4 /* EasyFlash.h */,
-				5017B71B21873FD00014EDE4 /* EasyFlash.cpp */,
-				503A424C2187A133003011D1 /* FinalIII.h */,
-				503A424B2187A133003011D1 /* FinalIII.cpp */,
-				5003C1B3219807F8009AA08D /* StarDos.h */,
-				5003C1B2219807F8009AA08D /* StarDos.cpp */,
-				5003C1B621981BA6009AA08D /* Epyx.h */,
-				5003C1B521981BA6009AA08D /* Epyx.cpp */,
-				5028921421A2F96800622969 /* Kingsoft.h */,
-				5028921321A2F96800622969 /* Kingsoft.cpp */,
+				50138AA321CACD95007F01BA /* CustomCartridges */,
 			);
 			path = Cartridges;
 			sourceTree = "<group>";
@@ -1332,6 +1345,7 @@
 				389E77800C7A3B6F00BEAFA6 /* ControlPort.cpp in Sources */,
 				507887CC20B1858B00941F7E /* MemTableView.swift in Sources */,
 				50775E0F1B8EE8A9002EB58D /* Disk.cpp in Sources */,
+				50138AA621CACDD7007F01BA /* GeoRam.cpp in Sources */,
 				5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */,
 				5000C8240D13CEE10011A2E9 /* Drive.cpp in Sources */,
 				501DE31120C9C41B00707130 /* envelope.cc in Sources */,

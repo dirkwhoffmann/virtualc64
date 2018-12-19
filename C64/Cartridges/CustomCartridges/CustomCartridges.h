@@ -26,6 +26,7 @@
 #include "ActionReplay.h"
 #include "EasyFlash.h"
 #include "FinalIII.h"
+#include "GeoRam.h"
 #include "StarDos.h"
 #include "Epyx.h"
 #include "Kingsoft.h"
@@ -171,33 +172,6 @@ public:
     bool hasFreezeButton() { return true; }
     void pressFreezeButton();
     void releaseFreezeButton();
-};
-
-//! @brief    GeoRAM cartridge
-class GeoRAM : public Cartridge {
-    
-private:
-    
-    //! @brief   Selected RAM bank
-    uint8_t bank;
-    
-    //! @brief   Selected page inside the selected RAM bank.
-    uint8_t page;
-        
-    //! @brief   Computes the offset for accessing the cartridge RAM
-    unsigned offset(uint8_t addr);
-    
-public:
-    GeoRAM(C64 *c64);
-    CartridgeType getCartridgeType() { return CRT_GEO_RAM; }
-    void reset();
-    size_t stateSize();
-    void loadFromBuffer(uint8_t **buffer);
-    void saveToBuffer(uint8_t **buffer);
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t peekIO2(uint16_t addr);
-    void pokeIO1(uint16_t addr, uint8_t value);
-    void pokeIO2(uint16_t addr, uint8_t value);
 };
 
 #endif

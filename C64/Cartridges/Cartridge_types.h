@@ -113,6 +113,7 @@ typedef enum {
     CRT_EASYCALC = 59,
     CRT_GMOD2 = 60,
     
+    CRT_ISEPIC = 253,
     CRT_GEO_RAM = 254,
     CRT_NONE = 255
 } CartridgeType;
