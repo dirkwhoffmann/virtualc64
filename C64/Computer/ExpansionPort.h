@@ -173,7 +173,10 @@ public:
     
     //! @brief    Creates and attaches a GeoRAM cartridge
     bool attachGeoRamCartridge(uint32_t capacity);
-    
+
+    //! @brief    Creates and attaches an Isepic cartridge
+    void attachIsepicCartridge();
+
     //! @brief    Removes a cartridge from the expansion port (if any)
     void detachCartridge();
 
@@ -198,6 +201,15 @@ public:
     //! @brief    Releases the second cartridge button
     void releaseResetButton() { if (cartridge) cartridge->releaseResetButton(); }
     
+    //! @brief    Returns true if a cartridge with a switch is attached
+    bool hasSwitch() { return cartridge ? cartridge->hasSwitch() : false; }
+    
+    //! @brief    Returns the current position of the switch
+    uint8_t getSwitch() { return cartridge ? cartridge->getSwitch() : 0; }
+
+    //! @brief    Puts the switch in the provided position
+    void setSwitch(uint8_t pos) { if (cartridge) cartridge->setSwitch(pos); }
+
     //! @brief    Returns true if the attached cartridge has a RAM backing battery.
     bool hasBattery() { return cartridge != NULL && cartridge->persistentRam; }
 

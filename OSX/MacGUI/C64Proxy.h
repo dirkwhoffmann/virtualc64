@@ -488,6 +488,7 @@ struct AnyC64FileWrapper;
 - (CartridgeType) cartridgeType;
 - (BOOL) attachCartridgeAndReset:(CRTFileProxy *)c;
 - (BOOL) attachGeoRamCartridge:(NSInteger)capacity;
+- (void) attachIsepicCartridge;
 - (void) detachCartridgeAndReset;
 - (BOOL) hasFreezeButton;
 - (void) pressFreezeButton;
@@ -495,6 +496,9 @@ struct AnyC64FileWrapper;
 - (BOOL) hasResetButton;
 - (void) pressResetButton;
 - (void) releaseResetButton;
+- (BOOL) hasSwitch;
+- (NSInteger) switchPosition;
+- (void) setSwitchPosition:(NSInteger)pos;
 - (BOOL) hasBattery;
 - (void) setBattery:(BOOL)value;
 

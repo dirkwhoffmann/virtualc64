@@ -309,6 +309,12 @@ ExpansionPort::attachGeoRamCartridge(uint32_t capacity)
 }
 
 void
+ExpansionPort::attachIsepicCartridge()
+{
+    debug("Creating Isepic cartridge\n");
+}
+
+void
 ExpansionPort::detachCartridge()
 {
     if (cartridge) {

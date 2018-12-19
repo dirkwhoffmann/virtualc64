@@ -865,6 +865,10 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->expansionPort->attachGeoRamCartridge((uint32_t)capacity);
 }
+- (void) attachIsepicCartridge
+{
+    wrapper->expansionPort->attachIsepicCartridge();
+}
 - (void) detachCartridgeAndReset
 {
     wrapper->expansionPort->detachCartridgeAndReset();
@@ -892,6 +896,18 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 - (void) releaseResetButton
 {
     wrapper->expansionPort->releaseResetButton();
+}
+- (BOOL) hasSwitch
+{
+    return wrapper->expansionPort->hasSwitch();
+}
+- (NSInteger) switchPosition
+{
+    return wrapper->expansionPort->getSwitch();
+}
+- (void) setSwitchPosition:(NSInteger)pos
+{
+    wrapper->expansionPort->setSwitch(pos);
 }
 - (BOOL) hasBattery
 {

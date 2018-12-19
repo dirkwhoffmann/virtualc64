@@ -140,6 +140,7 @@ class MyController : NSWindowController, MessageReceiver {
     @IBOutlet weak var tapeIcon: NSButton!
     @IBOutlet weak var tapeProgress: NSProgressIndicator!
     @IBOutlet weak var crtIcon: NSButton!
+    @IBOutlet weak var crtSwitch: NSButton!
     @IBOutlet weak var crtFreeze: NSButton!
     @IBOutlet weak var crtReset: NSButton!
     @IBOutlet weak var clockSpeed: NSTextField!
@@ -754,6 +755,7 @@ extension MyController {
             }
     
         case MSG_IEC_BUS_BUSY:
+            
             if c64.drive1.isRotating() {
                 progress1.startAnimation(self)
             }
@@ -762,6 +764,7 @@ extension MyController {
             }
     
         case MSG_IEC_BUS_IDLE:
+            
             progress1.stopAnimation(self)
             progress2.stopAnimation(self)
             
@@ -788,12 +791,19 @@ extension MyController {
         case MSG_CARTRIDGE:
             
             crtIcon.isHidden = false
-    
+            crtSwitch.isHidden = !c64.expansionport.hasSwitch()
+            crtFreeze.isHidden = !c64.expansionport.hasFreezeButton()
+            crtReset.isHidden = !c64.expansionport.hasResetButton()
+
         case MSG_NO_CARTRIDGE:
             
             crtIcon.isHidden = true
+            crtSwitch.isHidden = true
+            crtFreeze.isHidden = true
+            crtReset.isHidden = true
             
         default:
+            
             track("Unknown message: \(msg)")
             assert(false)
         }

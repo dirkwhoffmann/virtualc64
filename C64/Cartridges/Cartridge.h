@@ -90,7 +90,10 @@ class Cartridge : public VirtualComponent {
     
     //! @brief    Indicates if the RAM is kept alive during a reset.
     bool persistentRam = false;
-    
+
+    //! @brief    Current position of the cartridge switch (if any)
+    uint8_t switchPos = 0;
+
     /*! @brief    Temporary storage for cycle information
      *  @details  Some custom cartridges need to remember when certain event
      *            took place. When such an event happens, they preserve the
@@ -337,6 +340,16 @@ public:
      *  @seealso  pressSecondButton
      */
     virtual void releaseResetButton() { };
+    
+    //! @brief    Returns true if the cartridge has a switch
+    virtual bool hasSwitch() { return false; }
+
+    //! @brief    Returns the current position of the switch
+    virtual uint8_t getSwitch() { return switchPos; }
+
+    //! @brief    Puts the switch in the provided position
+    virtual void setSwitch(uint8_t pos) { switchPos = pos; }
+
 };
 
 #endif 

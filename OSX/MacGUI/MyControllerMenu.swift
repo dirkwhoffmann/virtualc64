@@ -336,6 +336,7 @@ extension MyController : NSMenuItemValidation {
             progress2: false,
             diskIcon2: false,
             crtIcon: !c64.expansionport.cartridgeAttached(),
+            crtSwitch: false,
             crtFreeze: false,
             crtReset: false,
             tapeIcon: !c64.datasette.hasTape(),
@@ -737,19 +738,31 @@ extension MyController : NSMenuItemValidation {
         c64.expansionport.attachGeoRamCartridge(capacity)
     }
     
+    @IBAction func attachIsepicAction(_ sender: Any!) {
+        track("")
+        c64.expansionport.attachIsepicCartridge()
+    }
+    
     @IBAction func geoRamBatteryAction(_ sender: Any!) {
         c64.expansionport.setBattery(!c64.expansionport.hasBattery())
     }
     
-    @IBAction func pressFreezeButtonAction(_ sender: Any!) {
+    @IBAction func pressFreezeButtonAction(_ sender: NSButton!) {
         track()
         c64.expansionport.pressFreezeButton()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.c64.expansionport.releaseFreezeButton()
         }
     }
-    
-    @IBAction func pressResetButtonAction(_ sender: Any!) {
+
+    @IBAction func toggleSwitchAction(_ sender: NSButton!) {
+        
+        let pos = (sender.state == .on) ? 1 : 0
+        c64.expansionport.setSwitchPosition(pos)
+    }
+
+    @IBAction func pressResetButtonAction(_ sender: NSButton!) {
+        
         track()
         c64.expansionport.pressResetButton()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {

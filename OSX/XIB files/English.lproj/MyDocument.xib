@@ -20,7 +20,6 @@
                 <outlet property="breakAt" destination="D6T-6b-vx3" id="TCZ-Ol-2fN"/>
                 <outlet property="bufferOverflows" destination="hM4-tV-xDx" id="GoS-wd-pBN"/>
                 <outlet property="bufferUnderflows" destination="dyg-Wz-OoO" id="s4Q-Yk-TUx"/>
-                <outlet property="cartridgeIcon" destination="2003" id="2010"/>
                 <outlet property="cflag" destination="191" id="sTB-gS-cZU"/>
                 <outlet property="ciaDDRA" destination="98p-Rg-m2I" id="dmp-09-XwV"/>
                 <outlet property="ciaDDRB" destination="GqH-U7-BOD" id="dSd-SA-sUP"/>
@@ -54,9 +53,10 @@
                 <outlet property="controlPort2" destination="4MP-rV-xX2" id="6Ux-IE-l65"/>
                 <outlet property="cpuTableView" destination="767" id="945"/>
                 <outlet property="cpuTraceView" destination="gDD-e1-Fh0" id="sy3-BG-K54"/>
-                <outlet property="crtFreeze" destination="lFn-7a-MSQ" id="CmZ-wW-dWe"/>
+                <outlet property="crtFreeze" destination="lFn-7a-MSQ" id="zXW-Hp-GQf"/>
                 <outlet property="crtIcon" destination="2003" id="CVl-nZ-xP2"/>
-                <outlet property="crtReset" destination="WXT-md-2lk" id="uzw-dj-Pd4"/>
+                <outlet property="crtReset" destination="WXT-md-2lk" id="QEi-ih-8C1"/>
+                <outlet property="crtSwitch" destination="nGE-Yp-TgF" id="i83-HJ-RBg"/>
                 <outlet property="debugPanel" destination="42" id="KyW-HY-D2p"/>
                 <outlet property="debugger" destination="35" id="Sfw-lz-Vnh"/>
                 <outlet property="decayRate" destination="H4H-4t-pmr" id="GJp-Nq-b9R"/>
@@ -235,7 +235,7 @@
                         </buttonCell>
                     </button>
                     <button hidden="YES" id="2003">
-                        <rect key="frame" x="235" y="2" width="20" height="20"/>
+                        <rect key="frame" x="258" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="mediaCrtTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="2004">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -243,12 +243,15 @@
                         </buttonCell>
                     </button>
                     <button hidden="YES" toolTip="Freeze" id="lFn-7a-MSQ">
-                        <rect key="frame" x="259" y="2" width="20" height="20"/>
+                        <rect key="frame" x="282" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtButtonOffTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="IJt-r3-Tyd">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtButtonOffTemplate" imagePosition="only" alignment="right" alternateImage="crtButtonOnTemplate" imageScaling="proportionallyUpOrDown" id="IJt-r3-Tyd">
+                            <behavior key="behavior" lightByContents="YES"/>
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="pressFreezeButtonAction:" target="-1" id="0am-Bn-lUE"/>
+                        </connections>
                     </button>
                     <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="H1X-Kk-fcE">
                         <rect key="frame" x="214" y="4" width="16" height="16"/>
@@ -281,7 +284,7 @@
                         <rect key="frame" x="140" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="mediaDiskSavedTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="dWc-LE-E52">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                     </button>
@@ -293,12 +296,26 @@
                         </connections>
                     </customView>
                     <button hidden="YES" toolTip="Reset" id="WXT-md-2lk">
-                        <rect key="frame" x="283" y="2" width="20" height="20"/>
+                        <rect key="frame" x="306" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtButtonOffTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="daD-pA-smb">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtButtonOffTemplate" imagePosition="only" alignment="right" alternateImage="crtButtonOnTemplate" imageScaling="proportionallyUpOrDown" id="daD-pA-smb">
+                            <behavior key="behavior" lightByContents="YES"/>
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="pressResetButtonAction:" target="-2" id="tnV-XA-mtB"/>
+                        </connections>
+                    </button>
+                    <button hidden="YES" toolTip="Freeze" id="nGE-Yp-TgF">
+                        <rect key="frame" x="234" y="2" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtSwitchOffTemplate" imagePosition="only" alignment="right" alternateImage="crtSwitchOnTemplate" imageScaling="proportionallyUpOrDown" id="0s7-pA-Q79">
+                            <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system" size="10"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="toggleSwitchAction:" target="-1" id="MvY-UF-tSi"/>
+                        </connections>
                     </button>
                 </subviews>
             </view>
@@ -2942,6 +2959,9 @@
     <resources>
         <image name="LEDgray" width="128" height="128"/>
         <image name="crtButtonOffTemplate" width="241" height="241"/>
+        <image name="crtButtonOnTemplate" width="241" height="241"/>
+        <image name="crtSwitchOffTemplate" width="241" height="240"/>
+        <image name="crtSwitchOnTemplate" width="240" height="241"/>
         <image name="debugTemplate" width="240" height="241"/>
         <image name="devGamepadTemplate" width="24" height="24"/>
         <image name="devKeyboardTemplate" width="24" height="24"/>

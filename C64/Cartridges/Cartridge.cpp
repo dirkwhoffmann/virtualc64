@@ -253,7 +253,8 @@ Cartridge::stateSize()
     size += sizeof(ramCapacity);
     size += ramCapacity;
     size += 1; // persistentRam
-
+    size += 1; // switchPos
+    
     size += sizeof(val);
     size += sizeof(cycle);
     size += sizeof(regValue);
@@ -281,6 +282,7 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
     setRamCapacity(read32(buffer));
     readBlock(buffer, externalRam, ramCapacity);
     persistentRam = (bool)read8(buffer);
+    switchPos = read8(buffer);
     
     readBlock(buffer, val, sizeof(val));
     cycle = read64(buffer);
@@ -310,7 +312,8 @@ Cartridge::saveToBuffer(uint8_t **buffer)
     write32(buffer, ramCapacity);
     writeBlock(buffer, externalRam, ramCapacity);
     write8(buffer, (uint8_t)persistentRam);
-    
+    write8(buffer, switchPos);
+
     writeBlock(buffer, val, sizeof(val));
     write64(buffer, cycle);
     write8(buffer, regValue);
