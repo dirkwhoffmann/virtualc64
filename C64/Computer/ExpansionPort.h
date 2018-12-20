@@ -166,7 +166,7 @@ public:
     bool getCartridgeAttached() { return cartridge != NULL; }
 
     //! @brief    Attaches a cartridge to the expansion port.
-    bool attachCartridge(Cartridge *c);
+    void attachCartridge(Cartridge *c);
 
     //! @brief    Attaches a cartridge from a file and resets.
     bool attachCartridgeAndReset(CRTFile *c);

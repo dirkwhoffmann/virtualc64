@@ -28,6 +28,7 @@
 		500FC6790D17D2190044131D /* VIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500FC6780D17D2190044131D /* VIA.cpp */; };
 		50133B97200D4EED00167227 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50133B96200D4EED00167227 /* MetalView.swift */; };
 		50138AA621CACDD7007F01BA /* GeoRam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50138AA421CACDD7007F01BA /* GeoRam.cpp */; };
+		50138AA921CB872B007F01BA /* Isepic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50138AA721CB872B007F01BA /* Isepic.cpp */; };
 		5014D684200CD62C00044217 /* MetalSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014D683200CD62C00044217 /* MetalSetup.swift */; };
 		5015F36620B546A30024B4AA /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5015F36520B546A30024B4AA /* WaveformView.swift */; };
 		50176C630A6F72F3009E80BD /* basic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C4F0A6F72F3009E80BD /* basic.cpp */; };
@@ -249,6 +250,8 @@
 		50133B96200D4EED00167227 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
 		50138AA421CACDD7007F01BA /* GeoRam.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GeoRam.cpp; sourceTree = "<group>"; };
 		50138AA521CACDD7007F01BA /* GeoRam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeoRam.h; sourceTree = "<group>"; };
+		50138AA721CB872B007F01BA /* Isepic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Isepic.cpp; sourceTree = "<group>"; };
+		50138AA821CB872B007F01BA /* Isepic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Isepic.h; sourceTree = "<group>"; };
 		5014D683200CD62C00044217 /* MetalSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalSetup.swift; sourceTree = "<group>"; };
 		5015F36520B546A30024B4AA /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		50171A9E2083708800C07AAD /* CIA_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIA_types.h; sourceTree = "<group>"; };
@@ -731,16 +734,18 @@
 				50F1752B2196C8820004E853 /* ActionReplay.cpp */,
 				5017B71C21873FD00014EDE4 /* EasyFlash.h */,
 				5017B71B21873FD00014EDE4 /* EasyFlash.cpp */,
-				503A424C2187A133003011D1 /* FinalIII.h */,
-				503A424B2187A133003011D1 /* FinalIII.cpp */,
-				5003C1B3219807F8009AA08D /* StarDos.h */,
-				5003C1B2219807F8009AA08D /* StarDos.cpp */,
 				5003C1B621981BA6009AA08D /* Epyx.h */,
 				5003C1B521981BA6009AA08D /* Epyx.cpp */,
-				5028921421A2F96800622969 /* Kingsoft.h */,
-				5028921321A2F96800622969 /* Kingsoft.cpp */,
+				503A424C2187A133003011D1 /* FinalIII.h */,
+				503A424B2187A133003011D1 /* FinalIII.cpp */,
 				50138AA521CACDD7007F01BA /* GeoRam.h */,
 				50138AA421CACDD7007F01BA /* GeoRam.cpp */,
+				50138AA821CB872B007F01BA /* Isepic.h */,
+				50138AA721CB872B007F01BA /* Isepic.cpp */,
+				5028921421A2F96800622969 /* Kingsoft.h */,
+				5028921321A2F96800622969 /* Kingsoft.cpp */,
+				5003C1B3219807F8009AA08D /* StarDos.h */,
+				5003C1B2219807F8009AA08D /* StarDos.cpp */,
 			);
 			path = CustomCartridges;
 			sourceTree = "<group>";
@@ -1414,6 +1419,7 @@
 				501DE30C20C9C41B00707130 /* sid.cc in Sources */,
 				5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */,
 				50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */,
+				50138AA921CB872B007F01BA /* Isepic.cpp in Sources */,
 				50195C2A20B007A1003844FB /* Debugger.swift in Sources */,
 				50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */,
 				50340D4020F63AFE009A53A5 /* VIC_cycles_pal.cpp in Sources */,

@@ -486,7 +486,7 @@ struct AnyC64FileWrapper;
 
 - (BOOL) cartridgeAttached;
 - (CartridgeType) cartridgeType;
-- (BOOL) attachCartridgeAndReset:(CRTFileProxy *)c;
+- (void) attachCartridgeAndReset:(CRTFileProxy *)c;
 - (BOOL) attachGeoRamCartridge:(NSInteger)capacity;
 - (void) attachIsepicCartridge;
 - (void) detachCartridgeAndReset;

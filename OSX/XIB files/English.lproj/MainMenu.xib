@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
     </dependencies>
     <objects>
@@ -1082,10 +1083,16 @@ CA
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Use Battery Backed RAM" id="wKq-Mc-2EU">
+                            <menuItem title="Attach Isepic cartridge" id="wKq-Mc-2EU">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="geoRamBatteryAction:" target="-1" id="3NE-mB-L1P"/>
+                                    <action selector="attachIsepicAction:" target="-1" id="QGB-Oq-aVg"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Use Battery Backed RAM" id="eNK-2B-o7I">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="geoRamBatteryAction:" target="-1" id="z8D-bF-zgq"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="RwF-gp-Lvh"/>

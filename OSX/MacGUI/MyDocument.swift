@@ -402,7 +402,8 @@ class MyDocument : NSDocument {
         if let cartridge = attachment as? CRTFileProxy {
             
             let parent = windowForSheet!.windowController as! MyController
-            return parent.c64.expansionport.attachCartridgeAndReset(cartridge)
+            parent.c64.expansionport.attachCartridgeAndReset(cartridge)
+            return true
         }
         return false
     }

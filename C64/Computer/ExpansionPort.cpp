@@ -251,7 +251,7 @@ ExpansionPort::updatePeekPokeLookupTables()
     }
 }
 
-bool
+void
 ExpansionPort::attachCartridge(Cartridge *c)
 {
     assert(c != NULL);
@@ -266,8 +266,6 @@ ExpansionPort::attachCartridge(Cartridge *c)
     c64->putMessage(MSG_CARTRIDGE);
     debug(1, "Cartridge attached to expansion port");
     cartridge->dump();
-
-    return true;
 }
 
 bool
@@ -305,13 +303,17 @@ ExpansionPort::attachGeoRamCartridge(uint32_t capacity)
     geoRAM->setRamCapacity(capacityInBytes);
     debug("Created GeoRAM cartridge (%d KB)\n", capacity);
     
-    return attachCartridge(geoRAM);
+    attachCartridge(geoRAM);
+    return true;
 }
 
 void
 ExpansionPort::attachIsepicCartridge()
 {
     debug("Creating Isepic cartridge\n");
+    
+    Cartridge *isepic = Cartridge::makeWithType(c64, CRT_ISEPIC);
+    return attachCartridge(isepic);
 }
 
 void

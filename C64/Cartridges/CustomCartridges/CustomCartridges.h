@@ -25,11 +25,12 @@
 #include "Cartridge.h"
 #include "ActionReplay.h"
 #include "EasyFlash.h"
+#include "Epyx.h"
 #include "FinalIII.h"
 #include "GeoRam.h"
-#include "StarDos.h"
-#include "Epyx.h"
+#include "Isepic.h"
 #include "Kingsoft.h"
+#include "StarDos.h"
 
 //! @brief    Type 2 cartridges
 class KcsPower : public Cartridge {

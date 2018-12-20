@@ -474,6 +474,7 @@ CPU::executeOneCycle()
             // Check interrupt lines
             if (unlikely(doNmi)) {
                 
+                debug("NMI (source = %02X)\n", nmiLine);
                 // if (tracingEnabled()) debug("NMI (source = %02X)\n", nmiLine);
                 IDLE_FETCH
                 edgeDetector.clear();
@@ -629,6 +630,7 @@ CPU::executeOneCycle()
 
             READ_FROM(0xFFFB)
             setPCH(regD);
+            debug("NMI addr = %04X\n", regPC);
             DONE
 
         //

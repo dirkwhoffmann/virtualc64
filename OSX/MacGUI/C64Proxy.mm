@@ -856,10 +856,10 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->expansionPort->getCartridgeAttached();
 }
-- (BOOL) attachCartridgeAndReset:(CRTFileProxy *)c
+- (void) attachCartridgeAndReset:(CRTFileProxy *)c
 {
     CRTFile *file = (CRTFile *)([c wrapper]->file);
-    return wrapper->expansionPort->attachCartridgeAndReset(file);
+    wrapper->expansionPort->attachCartridgeAndReset(file);
 }
 - (BOOL) attachGeoRamCartridge:(NSInteger)capacity
 {

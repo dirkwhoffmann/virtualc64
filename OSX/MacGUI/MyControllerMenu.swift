@@ -759,6 +759,10 @@ extension MyController : NSMenuItemValidation {
         
         let pos = (sender.state == .on) ? 1 : 0
         c64.expansionport.setSwitchPosition(pos)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            // Give the crt the chance to perform a delayed action
+            self.c64.expansionport.setSwitchPosition(255)
+        }
     }
 
     @IBAction func pressResetButtonAction(_ sender: NSButton!) {

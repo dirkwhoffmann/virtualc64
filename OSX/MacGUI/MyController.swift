@@ -913,7 +913,8 @@ extension MyController {
         switch (type) {
             
         case CRT_FILE:
-            return c64.expansionport.attachCartridgeAndReset(item as? CRTFileProxy)
+            c64.expansionport.attachCartridgeAndReset(item as? CRTFileProxy)
+            return true
             
         case TAP_FILE:
             return c64.datasette.insertTape(item as? TAPFileProxy)

@@ -92,7 +92,7 @@ class Cartridge : public VirtualComponent {
     bool persistentRam = false;
 
     //! @brief    Current position of the cartridge switch (if any)
-    uint8_t switchPos = 0;
+    uint8_t switchPos = 1;
 
     /*! @brief    Temporary storage for cycle information
      *  @details  Some custom cartridges need to remember when certain event

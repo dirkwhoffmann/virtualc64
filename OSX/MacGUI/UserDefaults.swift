@@ -36,7 +36,6 @@ extension UserDefaults {
         if let data = data(forKey: key) {
             if let decoded = try? PropertyListDecoder().decode(T.self, from: data) {
                 item = decoded
-                track("\(item)")
             }
         }
     }
