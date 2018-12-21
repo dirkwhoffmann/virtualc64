@@ -330,7 +330,7 @@
                         <popUpButton key="view" tag="10" id="L2b-nG-yBo" userLabel="Port 1">
                             <rect key="frame" x="0.0" y="14" width="48" height="23"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" image="devNoneTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" autoenablesItems="NO" id="zHf-yH-YTM">
@@ -339,10 +339,10 @@
                                         <menuItem title="Keyset 1" image="joyKeys1Template" id="L2h-xt-iO6"/>
                                         <menuItem title="Keyset 2" image="joyKeys2Template" tag="1" id="Ohe-Pi-c1S"/>
                                         <menuItem title="Mouse" image="devMouseTemplate" tag="2" id="yOc-MG-77p"/>
-                                        <menuItem title="USB Joystick 1" image="devGamepadTemplate" tag="3" id="1PP-xx-NoT" userLabel="USB Joystick 1">
+                                        <menuItem title="USB Joystick 1" image="devGamepad1Template" tag="3" id="1PP-xx-NoT" userLabel="USB Joystick 1">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
-                                        <menuItem title="USB Joystick 2" image="devGamepadTemplate" tag="4" id="7sJ-UA-Pfj">
+                                        <menuItem title="USB Joystick 2" image="devGamepad2Template" tag="4" id="7sJ-UA-Pfj">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                     </items>
@@ -369,10 +369,10 @@
                                         <menuItem title="Keyset 1" image="joyKeys1Template" id="PAa-za-K8O"/>
                                         <menuItem title="Keyset 2" image="joyKeys2Template" tag="1" id="1M8-Dz-dop"/>
                                         <menuItem title="Mouse" image="devMouseTemplate" tag="2" id="JM3-8Y-xZU"/>
-                                        <menuItem title="USB Joystick 1" image="devGamepadTemplate" tag="3" id="Ahc-WA-2jp">
+                                        <menuItem title="USB Joystick 1" image="devGamepad1Template" tag="3" id="Ahc-WA-2jp">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
-                                        <menuItem title="USB Joystick 2" image="devGamepadTemplate" tag="4" id="L3T-8p-gOj">
+                                        <menuItem title="USB Joystick 2" image="devGamepad2Template" tag="4" id="L3T-8p-gOj">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                     </items>
@@ -2963,7 +2963,8 @@
         <image name="crtSwitchOffTemplate" width="241" height="240"/>
         <image name="crtSwitchOnTemplate" width="240" height="241"/>
         <image name="debugTemplate" width="240" height="241"/>
-        <image name="devGamepadTemplate" width="24" height="24"/>
+        <image name="devGamepad1Template" width="24" height="24"/>
+        <image name="devGamepad2Template" width="24" height="24"/>
         <image name="devMouseTemplate" width="24" height="24"/>
         <image name="devNoneTemplate" width="24" height="24"/>
         <image name="hourglass1Template" width="241" height="241"/>
