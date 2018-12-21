@@ -351,10 +351,7 @@ extension MyController {
     override open func windowDidLoad() {
  
         track()
-
-        // Create audio engine
-        // audioEngine = AudioEngine.init(withSID: c64.sid)
-            
+        
         // Reset mouse coordinates
         mouseXY = NSZeroPoint
         hideMouse = false
@@ -373,10 +370,6 @@ extension MyController {
             return
         }
         
-        // Assign input devices
-        // inputDevice1 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice1)
-        // inputDevice2 = UserDefaults.standard.integer(forKey: VC64Keys.inputDevice2)
-
         // Setup toolbar, window, and debugger
         configureToolbar()
         configureWindow()
@@ -452,7 +445,6 @@ extension MyController {
             DispatchQueue.main.async {
                 let mType = MessageType(rawValue: UInt32(type))
                 myself.processMessage(Message(type: mType, data: data))
-                // myself.processMessage(Message(UInt32(msg)))
             }
         }
         
