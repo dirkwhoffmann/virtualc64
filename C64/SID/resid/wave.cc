@@ -25,6 +25,11 @@
 namespace reSID
 {
 
+// Number of cycles after which the shift register is reset
+// when the test bit is set.
+const cycle_count SHIFT_REGISTER_RESET_6581 = 0x8000;
+const cycle_count SHIFT_REGISTER_RESET_8580 = 0x950000;
+
 // Waveform lookup tables.
 unsigned short WaveformGenerator::model_wave[2][8][1 << 12] = {
   {
@@ -202,7 +207,7 @@ void WaveformGenerator::writeCONTROL_REG(reg8 control)
     shift_pipeline = 0;
 
     // Set reset time for shift register.
-    shift_register_reset = 0x8000;
+    shift_register_reset = (sid_model == MOS6581) ? SHIFT_REGISTER_RESET_6581 : SHIFT_REGISTER_RESET_8580;
 
     // The test bit sets pulse high.
     pulse_output = 0xfff;
@@ -273,7 +278,12 @@ void WaveformGenerator::reset()
   no_pulse = 0xfff;
   pulse_output = 0xfff;
 
-  reset_shift_register();
+  // reset shift register
+  // when reset is released the shift register is clocked once
+  shift_register = 0x7ffffe;
+  shift_register_reset = 0;
+  set_noise_output();
+
   shift_pipeline = 0;
 
   waveform_output = 0;

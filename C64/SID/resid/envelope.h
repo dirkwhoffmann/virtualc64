@@ -117,11 +117,6 @@ void EnvelopeGenerator::clock()
   // The ENV3 value is sampled at the first phase of the clock
   env3 = envelope_counter;
 
-  if (unlikely(new_exponential_counter_period > 0)) {
-    exponential_counter_period = new_exponential_counter_period;
-    new_exponential_counter_period = 0;
-  }
-
   if (unlikely(state_pipeline)) {
     state_change();
   }
@@ -133,8 +128,8 @@ void EnvelopeGenerator::clock()
       if (state == ATTACK) {
         ++envelope_counter &= 0xff;
         if (unlikely(envelope_counter == 0xff)) {
-          next_state = DECAY_SUSTAIN;
-          state_pipeline = 2;
+            state = DECAY_SUSTAIN;
+            rate_period = rate_counter_period[decay];
         }
       }
       else if ((state == DECAY_SUSTAIN) || (state == RELEASE)) {
@@ -175,8 +170,9 @@ void EnvelopeGenerator::clock()
       envelope_pipeline = 2;
     }
     else {
-      if (++exponential_counter == exponential_counter_period)
+      if ((!hold_zero) && ++exponential_counter == exponential_counter_period) {
         exponential_pipeline = exponential_counter_period != 1 ? 2 : 1;
+      }
     }
   }
 
@@ -353,21 +349,14 @@ void EnvelopeGenerator::state_change()
 
   switch (next_state) {
     case ATTACK:
-      if (state_pipeline == 1) {
+      if (state_pipeline == 0) {
         state = ATTACK;
-        // The decay register is "accidentally" activated during first cycle of attack phase
-        rate_period = rate_counter_period[decay];
-      } else if (state_pipeline == 0) {
         // The attack register is correctly activated during second cycle of attack phase
         rate_period = rate_counter_period[attack];
         hold_zero = false;
       }
       break;
     case DECAY_SUSTAIN:
-      if (state_pipeline == 0) {
-        state = DECAY_SUSTAIN;
-        rate_period = rate_counter_period[decay];
-      }
       break;
     case RELEASE:
       if (((state == ATTACK) && (state_pipeline == 0))
@@ -377,10 +366,7 @@ void EnvelopeGenerator::state_change()
       }
       break;
     case FREEZED:
-      if (state_pipeline == 0) {
-        state = FREEZED;
-        hold_zero = true;
-     }
+     break;
   }
 }
 
@@ -402,34 +388,32 @@ void EnvelopeGenerator::set_exponential_counter()
   // Check for change of exponential counter period.
   switch (envelope_counter) {
   case 0xff:
-    new_exponential_counter_period = 1;
+    exponential_counter_period = 1;
     break;
   case 0x5d:
-    new_exponential_counter_period = 2;
+    exponential_counter_period = 2;
     break;
   case 0x36:
-    new_exponential_counter_period = 4;
+    exponential_counter_period = 4;
     break;
   case 0x1a:
-    new_exponential_counter_period = 8;
+    exponential_counter_period = 8;
     break;
   case 0x0e:
-    new_exponential_counter_period = 16;
+    exponential_counter_period = 16;
     break;
   case 0x06:
-    new_exponential_counter_period = 30;
+    exponential_counter_period = 30;
     break;
   case 0x00:
     // TODO write a test to verify that 0x00 really changes the period
     // e.g. set R = 0xf, gate on to 0x06, gate off to 0x00, gate on to 0x04,
     // gate off, sample.
-    new_exponential_counter_period = 1;
+    exponential_counter_period = 1;
 
     // When the envelope counter is changed to zero, it is frozen at zero.
     // This has been verified by sampling ENV3.
-    // The counter is disabled with a two cycles delay
-    next_state = FREEZED;
-    state_pipeline = 2;
+    hold_zero = true;
     break;
   }
 }

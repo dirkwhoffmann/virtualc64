@@ -1768,9 +1768,9 @@ int Filter::solve_integrate_8580(int dt, int vi, int& vx, int& vc, model_filter_
   // since they are all used in subtractions which cancel out the translation:
   // (a - t) - (b - t) = a - b
 
-  // Dac voltages for triode mode calculation.
+  // Dac voltages.
   unsigned int Vgst = kVgt - vx;
-  unsigned int Vgdt = kVgt - vi;
+  unsigned int Vgdt = (vi < kVgt) ? kVgt - vi : 0;  // triode/saturation mode
 
   // Dac current, scaled by (1/m)*2^13*m*2^16*m*2^16*2^-15 = m*2^30
   int n_I_rfc = n_dac*(int(Vgst*Vgst - Vgdt*Vgdt) >> 15);

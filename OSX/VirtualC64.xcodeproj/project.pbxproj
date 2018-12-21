@@ -54,12 +54,8 @@
 		501DE30A20C9C41B00707130 /* pot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE2F220C9C41800707130 /* pot.cc */; };
 		501DE30B20C9C41B00707130 /* dac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE2F520C9C41800707130 /* dac.cc */; };
 		501DE30C20C9C41B00707130 /* sid.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE2F720C9C41800707130 /* sid.cc */; };
-		501DE30D20C9C41B00707130 /* voice.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE2FB20C9C41900707130 /* voice.cc */; };
 		501DE30E20C9C41B00707130 /* extfilt.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE2FE20C9C41900707130 /* extfilt.cc */; };
 		501DE30F20C9C41B00707130 /* version.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE30020C9C41900707130 /* version.cc */; };
-		501DE31020C9C41B00707130 /* wave.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE30320C9C41A00707130 /* wave.cc */; };
-		501DE31120C9C41B00707130 /* envelope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE30420C9C41A00707130 /* envelope.cc */; };
-		501DE31220C9C41B00707130 /* filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE30620C9C41A00707130 /* filter.cc */; };
 		501E427C20D975AD000BB48D /* IconD64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427720D975AC000BB48D /* IconD64.icns */; };
 		501E427D20D975AD000BB48D /* IconCRT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427820D975AC000BB48D /* IconCRT.icns */; };
 		501E427E20D975AD000BB48D /* IconT64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427920D975AD000BB48D /* IconT64.icns */; };
@@ -119,6 +115,10 @@
 		50720F4220C853910010EBF2 /* CpuTraceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50720F4120C853910010EBF2 /* CpuTraceView.swift */; };
 		50763277202989D300575110 /* UserDialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* UserDialogController.swift */; };
 		50775E0F1B8EE8A9002EB58D /* Disk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50775E0E1B8EE8A9002EB58D /* Disk.cpp */; };
+		507867F521CD3B840015034B /* envelope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 507867F421CD3B830015034B /* envelope.cc */; };
+		507867F821CD3BA30015034B /* filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 507867F621CD3BA20015034B /* filter.cc */; };
+		507867FA21CD3BE60015034B /* voice.cc in Sources */ = {isa = PBXBuildFile; fileRef = 507867F921CD3BE60015034B /* voice.cc */; };
+		507867FC21CD3BEE0015034B /* wave.cc in Sources */ = {isa = PBXBuildFile; fileRef = 507867FB21CD3BED0015034B /* wave.cc */; };
 		507887CC20B1858B00941F7E /* MemTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507887CB20B1858B00941F7E /* MemTableView.swift */; };
 		50790A2221BAF20300979B7A /* VirtualC64Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50790A2121BAF20300979B7A /* VirtualC64Tests.swift */; };
 		507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */; };
@@ -302,23 +302,17 @@
 		501DE2F320C9C41800707130 /* resid-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "resid-config.h"; sourceTree = "<group>"; };
 		501DE2F420C9C41800707130 /* wave6581_PST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave6581_PST.h; sourceTree = "<group>"; };
 		501DE2F520C9C41800707130 /* dac.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dac.cc; sourceTree = "<group>"; };
-		501DE2F620C9C41800707130 /* envelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = envelope.h; sourceTree = "<group>"; };
 		501DE2F720C9C41800707130 /* sid.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sid.cc; sourceTree = "<group>"; };
 		501DE2F820C9C41900707130 /* wave8580_PST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave8580_PST.h; sourceTree = "<group>"; };
 		501DE2F920C9C41900707130 /* wave6581__ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave6581__ST.h; sourceTree = "<group>"; };
 		501DE2FA20C9C41900707130 /* pot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pot.h; sourceTree = "<group>"; };
-		501DE2FB20C9C41900707130 /* voice.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voice.cc; sourceTree = "<group>"; };
 		501DE2FC20C9C41900707130 /* wave8580_PS_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave8580_PS_.h; sourceTree = "<group>"; };
 		501DE2FD20C9C41900707130 /* wave8580__ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave8580__ST.h; sourceTree = "<group>"; };
 		501DE2FE20C9C41900707130 /* extfilt.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = extfilt.cc; sourceTree = "<group>"; };
 		501DE2FF20C9C41900707130 /* dac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dac.h; sourceTree = "<group>"; };
 		501DE30020C9C41900707130 /* version.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = version.cc; sourceTree = "<group>"; };
 		501DE30120C9C41A00707130 /* voice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voice.h; sourceTree = "<group>"; };
-		501DE30220C9C41A00707130 /* filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filter.h; sourceTree = "<group>"; };
-		501DE30320C9C41A00707130 /* wave.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wave.cc; sourceTree = "<group>"; };
-		501DE30420C9C41A00707130 /* envelope.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = envelope.cc; sourceTree = "<group>"; };
 		501DE30520C9C41A00707130 /* wave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave.h; sourceTree = "<group>"; };
-		501DE30620C9C41A00707130 /* filter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filter.cc; sourceTree = "<group>"; };
 		501DE30720C9C41A00707130 /* wave8580_P_T.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave8580_P_T.h; sourceTree = "<group>"; };
 		501DE30820C9C41B00707130 /* wave6581_PS_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave6581_PS_.h; sourceTree = "<group>"; };
 		501DE30920C9C41B00707130 /* extfilt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = extfilt.h; sourceTree = "<group>"; };
@@ -402,6 +396,12 @@
 		50763276202989D300575110 /* UserDialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDialogController.swift; sourceTree = "<group>"; };
 		50775E0E1B8EE8A9002EB58D /* Disk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Disk.cpp; sourceTree = "<group>"; };
 		50775E101B8EE95B002EB58D /* Disk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Disk.h; sourceTree = "<group>"; };
+		507867F321CD3B830015034B /* envelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = envelope.h; sourceTree = "<group>"; };
+		507867F421CD3B830015034B /* envelope.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = envelope.cc; sourceTree = "<group>"; };
+		507867F621CD3BA20015034B /* filter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filter.cc; sourceTree = "<group>"; };
+		507867F721CD3BA20015034B /* filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filter.h; sourceTree = "<group>"; };
+		507867F921CD3BE60015034B /* voice.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voice.cc; sourceTree = "<group>"; };
+		507867FB21CD3BED0015034B /* wave.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wave.cc; sourceTree = "<group>"; };
 		507887CB20B1858B00941F7E /* MemTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemTableView.swift; sourceTree = "<group>"; };
 		50790A1F21BAF20300979B7A /* VirtualC64Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VirtualC64Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50790A2121BAF20300979B7A /* VirtualC64Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualC64Tests.swift; sourceTree = "<group>"; };
@@ -944,12 +944,12 @@
 			children = (
 				501DE2F520C9C41800707130 /* dac.cc */,
 				501DE2FF20C9C41900707130 /* dac.h */,
-				501DE30420C9C41A00707130 /* envelope.cc */,
-				501DE2F620C9C41800707130 /* envelope.h */,
 				501DE2FE20C9C41900707130 /* extfilt.cc */,
 				501DE30920C9C41B00707130 /* extfilt.h */,
-				501DE30620C9C41A00707130 /* filter.cc */,
-				501DE30220C9C41A00707130 /* filter.h */,
+				507867F421CD3B830015034B /* envelope.cc */,
+				507867F321CD3B830015034B /* envelope.h */,
+				507867F621CD3BA20015034B /* filter.cc */,
+				507867F721CD3BA20015034B /* filter.h */,
 				501DE2F220C9C41800707130 /* pot.cc */,
 				501DE2FA20C9C41900707130 /* pot.h */,
 				501DE2F320C9C41800707130 /* resid-config.h */,
@@ -958,9 +958,9 @@
 				501DE2EE20C9C41700707130 /* siddefs.h */,
 				501DE2F020C9C41800707130 /* spline.h */,
 				501DE30020C9C41900707130 /* version.cc */,
-				501DE2FB20C9C41900707130 /* voice.cc */,
+				507867F921CD3BE60015034B /* voice.cc */,
 				501DE30120C9C41A00707130 /* voice.h */,
-				501DE30320C9C41A00707130 /* wave.cc */,
+				507867FB21CD3BED0015034B /* wave.cc */,
 				501DE30520C9C41A00707130 /* wave.h */,
 				501DE2F920C9C41900707130 /* wave6581__ST.h */,
 				501DE2F120C9C41800707130 /* wave6581_P_T.h */,
@@ -1296,9 +1296,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				507867FC21CD3BEE0015034B /* wave.cc in Sources */,
 				503A424D2187A133003011D1 /* FinalIII.cpp in Sources */,
 				50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */,
 				50176C630A6F72F3009E80BD /* basic.cpp in Sources */,
+				507867F821CD3BA30015034B /* filter.cc in Sources */,
 				50176C640A6F72F3009E80BD /* C64.cpp in Sources */,
 				5017B72021874B9A0014EDE4 /* CartridgeRom.cpp in Sources */,
 				50176C650A6F72F3009E80BD /* CIA.cpp in Sources */,
@@ -1313,6 +1315,7 @@
 				50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */,
 				501DE30F20C9C41B00707130 /* version.cc in Sources */,
 				5054BF1120133BA2003D86D4 /* Cartridge.cpp in Sources */,
+				507867FA21CD3BE60015034B /* voice.cc in Sources */,
 				50D2A6A0210F20F700F13D43 /* VirtualKeyboardController.swift in Sources */,
 				50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */,
 				50763277202989D300575110 /* UserDialogController.swift in Sources */,
@@ -1327,7 +1330,6 @@
 				5002FA7B21C2650600DA4BBC /* HardwarePrefs.swift in Sources */,
 				500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */,
 				5002FA8121C2654B00DA4BBC /* DevicesPrefs.swift in Sources */,
-				501DE30D20C9C41B00707130 /* voice.cc in Sources */,
 				50265F57202D00940041C315 /* TapeMountController.swift in Sources */,
 				5017B71A218729DA0014EDE4 /* FlashRom.cpp in Sources */,
 				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,
@@ -1353,7 +1355,6 @@
 				50138AA621CACDD7007F01BA /* GeoRam.cpp in Sources */,
 				5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */,
 				5000C8240D13CEE10011A2E9 /* Drive.cpp in Sources */,
-				501DE31120C9C41B00707130 /* envelope.cc in Sources */,
 				5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */,
 				50E8366D20DC4A090017A5BB /* FastSID.cpp in Sources */,
 				500FC6790D17D2190044131D /* VIA.cpp in Sources */,
@@ -1367,7 +1368,6 @@
 				5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */,
 				503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */,
 				500E3A6921B5C2A700935CB3 /* Notifications.swift in Sources */,
-				501DE31020C9C41B00707130 /* wave.cc in Sources */,
 				504606341BE4B99100463FD7 /* G64File.cpp in Sources */,
 				5018E48112240F7100F0820E /* AnyC64File.cpp in Sources */,
 				5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */,
@@ -1384,9 +1384,9 @@
 				506D3DD020224BF4009742CF /* MyDocument.swift in Sources */,
 				5002FA7F21C2653600DA4BBC /* EmulatorPrefs.swift in Sources */,
 				506B315420DD0AEB007913A8 /* DriveMemory.cpp in Sources */,
-				501DE31220C9C41B00707130 /* filter.cc in Sources */,
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
 				5003C1B721981BA6009AA08D /* Epyx.cpp in Sources */,
+				507867F521CD3B840015034B /* envelope.cc in Sources */,
 				50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */,
 				50F681EA1BEA3BE4008568E3 /* Datasette.cpp in Sources */,
 				50E542A5212E988A00026EEF /* VIC_debug.cpp in Sources */,
