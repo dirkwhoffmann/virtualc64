@@ -160,7 +160,7 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Roms" identifier="Roms" id="VwS-fe-RFZ">
-                                <view key="view" ambiguous="YES" id="4If-78-eR2">
+                                <view key="view" id="4If-78-eR2">
                                     <rect key="frame" x="10" y="33" width="600" height="502"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -1644,6 +1644,7 @@ DQ
                                             </textFieldCell>
                                             <connections>
                                                 <action selector="emuSnapshotIntervalAction:" target="-2" id="0Rn-hs-N87"/>
+                                                <outlet property="delegate" destination="-2" id="MIP-eb-adC"/>
                                             </connections>
                                         </textField>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KGL-Xj-tLX">
@@ -2150,7 +2151,7 @@ DQ
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Devices" identifier="Devices" id="UAr-A6-she">
-                                <view key="view" id="BsV-QO-hSc">
+                                <view key="view" ambiguous="YES" id="BsV-QO-hSc">
                                     <rect key="frame" x="10" y="33" width="600" height="502"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -2369,6 +2370,7 @@ DQ
                                             </textFieldCell>
                                             <connections>
                                                 <action selector="devAutofireBulletsAction:" target="-2" id="eIg-rc-jfN"/>
+                                                <outlet property="delegate" destination="-2" id="cIZ-H9-1ag"/>
                                             </connections>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kNb-kD-wye">

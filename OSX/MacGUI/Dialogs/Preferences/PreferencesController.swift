@@ -275,6 +275,14 @@ class PreferencesController : UserDialogController {
         
         track()
         
+        // Make sure that all NSTextFields have been processed before quitting
+        emuSnapshotIntervalAction(emuSnapshotInterval)
+        emuAutoTypeTextAction(emuD64AutoTypeText)
+        emuAutoTypeTextAction(emuPrgAutoTypeText)
+        emuAutoTypeTextAction(emuT64AutoTypeText)
+        emuAutoTypeTextAction(emuTapAutoTypeText)
+        emuAutoTypeTextAction(emuCrtAutoTypeText)
+        
         hideSheet()
         myController?.saveUserDefaults()
         

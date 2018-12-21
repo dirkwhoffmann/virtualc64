@@ -210,6 +210,7 @@ extension PreferencesController {
         
         if let fileType = mediaFileType(sender.tag) {
             myController?.autoTypeText[fileType] = sender.stringValue
+            refresh()
         }
     }
 }
@@ -217,12 +218,33 @@ extension PreferencesController {
 extension PreferencesController : NSTextFieldDelegate {
 
     func controlTextDidChange(_ obj: Notification) {
-
-        // Make sure the new text gets processed
-        emuAutoTypeTextAction(emuD64AutoTypeText)
-        emuAutoTypeTextAction(emuPrgAutoTypeText)
-        emuAutoTypeTextAction(emuT64AutoTypeText)
-        emuAutoTypeTextAction(emuTapAutoTypeText)
-        emuAutoTypeTextAction(emuCrtAutoTypeText)
+        
+        if let view = obj.object as? NSTextField {
+            
+            let formatter = view.formatter as? NumberFormatter
+            
+            switch view {
+                
+            case emuSnapshotInterval:
+                
+                if let _ = formatter?.number(from: view.stringValue) {
+                    emuSnapshotIntervalAction(view)
+                }
+                
+            case emuD64AutoTypeText, emuPrgAutoTypeText, emuT64AutoTypeText,
+                 emuTapAutoTypeText, emuCrtAutoTypeText:
+                
+                emuAutoTypeTextAction(emuD64AutoTypeText)
+                
+            case devAutofireBullets:
+                
+                if let _ = formatter?.number(from: view.stringValue) {
+                    devAutofireBulletsAction(view)
+                }
+                
+            default:
+                break
+            }
+        }
     }
 }
