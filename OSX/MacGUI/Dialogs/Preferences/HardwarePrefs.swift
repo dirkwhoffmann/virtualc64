@@ -140,18 +140,7 @@ extension PreferencesController {
     
     @IBAction func hwSidModelAction(_ sender: NSPopUpButton!) {
         
-        guard let c64 = proxy else { return }
-        let model = UInt32(sender.selectedTag())
-        let method = UInt32(c64.sid.samplingMethod())
-        
-        track("Model = \(model) method = \(method)")
-        
-        if (model == MOS_8580.rawValue && method == SID_SAMPLE_FAST.rawValue) {
-            myController?.showResidSamplingMethodAlert()
-            c64.sid.setSamplingMethod(Int(SID_SAMPLE_INTERPOLATE.rawValue))
-        }
-        
-        c64.sid.setModel(sender.selectedTag())
+        proxy?.sid.setModel(sender.selectedTag())
         refresh()
     }
     

@@ -155,18 +155,7 @@ extension MyDocument {
 }
 
 extension MyController {
-        
-    func showResidSamplingMethodAlert() {
-        
-        let alert = NSAlert()
-        alert.alertStyle = .warning // .critical
-        alert.icon = NSImage.init(named: "pref_sid")
-        alert.messageText = "Incompatible Sampling Method"
-        alert.informativeText = "The current sampling method is not compatible with the selected SID model and will be changed to \"Interpolate\"."
-        alert.addButton(withTitle: "OK")
-        alert.runModal()
-    }
-    
+            
     func proceedWithUnexportedDisk(drive nr: Int) -> Bool {
         return mydocument.proceedWithUnexportedDisk(drive: nr)
     }
