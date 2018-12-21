@@ -29,6 +29,7 @@ extension MyController {
     }
     
     func validateToolbarItems() {
+        
         let button = pauseTbItem.view as! NSButton
         if c64.isRunning() {
             button.image = NSImage.init(named: "pauseTemplate")
@@ -37,8 +38,8 @@ extension MyController {
             button.image = NSImage.init(named: "continueTemplate")
             pauseTbItem.label = "Run"
         }
-        // snapshotSegCtrl.setEnabled(c64.numUserSnapshots() != 0, forSegment: 2)
         
+        validateJoystickToolbarItems()
     }
     
     func validateJoystickToolbarItem(_ popup: NSPopUpButton, selectedSlot: Int, port: ControlPortProxy!) {

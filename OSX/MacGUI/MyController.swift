@@ -397,6 +397,9 @@ extension MyController {
         
         // Create speed monitor and get the timer tunning
         createTimer()
+        
+        // Update toolbar
+        validateToolbarItems()
     }
     
     func configureWindow() {

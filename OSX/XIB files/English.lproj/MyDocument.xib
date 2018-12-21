@@ -366,8 +366,8 @@
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
                                     <items>
                                         <menuItem title="None" state="on" image="devNoneTemplate" tag="-1" id="xyt-eC-0im"/>
-                                        <menuItem title="Keyset 1" image="devKeyboardTemplate" id="PAa-za-K8O"/>
-                                        <menuItem title="Keyset 2" image="devKeyboardTemplate" tag="1" id="1M8-Dz-dop"/>
+                                        <menuItem title="Keyset 1" image="joyKeys1Template" id="PAa-za-K8O"/>
+                                        <menuItem title="Keyset 2" image="joyKeys2Template" tag="1" id="1M8-Dz-dop"/>
                                         <menuItem title="Mouse" image="devMouseTemplate" tag="2" id="JM3-8Y-xZU"/>
                                         <menuItem title="USB Joystick 1" image="devGamepadTemplate" tag="3" id="Ahc-WA-2jp">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -2964,7 +2964,6 @@
         <image name="crtSwitchOnTemplate" width="240" height="241"/>
         <image name="debugTemplate" width="240" height="241"/>
         <image name="devGamepadTemplate" width="24" height="24"/>
-        <image name="devKeyboardTemplate" width="24" height="24"/>
         <image name="devMouseTemplate" width="24" height="24"/>
         <image name="devNoneTemplate" width="24" height="24"/>
         <image name="hourglass1Template" width="241" height="241"/>
