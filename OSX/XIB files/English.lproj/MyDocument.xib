@@ -237,7 +237,7 @@
                     <button hidden="YES" id="2003">
                         <rect key="frame" x="258" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="mediaCrtTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="2004">
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtLedOnTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="2004">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
@@ -2960,6 +2960,7 @@
         <image name="LEDgray" width="128" height="128"/>
         <image name="crtButtonOffTemplate" width="241" height="241"/>
         <image name="crtButtonOnTemplate" width="241" height="241"/>
+        <image name="crtLedOnTemplate" width="24" height="24"/>
         <image name="crtSwitchOffTemplate" width="241" height="240"/>
         <image name="crtSwitchOnTemplate" width="240" height="241"/>
         <image name="debugTemplate" width="240" height="241"/>
@@ -2972,7 +2973,6 @@
         <image name="joyKeys1Template" width="24" height="24"/>
         <image name="joyKeys2Template" width="24" height="24"/>
         <image name="keyboardTemplate" width="24" height="24"/>
-        <image name="mediaCrtTemplate" width="241" height="241"/>
         <image name="mediaDiskSavedTemplate" width="241" height="241"/>
         <image name="mediaTapeTemplate" width="241" height="240"/>
         <image name="pauseTemplate" width="240" height="241"/>

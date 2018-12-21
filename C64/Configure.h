@@ -37,19 +37,15 @@
 
 // RELEASE NOTES (Version 3.3)
 //
-// All video settings have been moved to a separate Preferences window.
-// The input device selection is now retained in the user settings memory.
-// The user can now choose whether to save the emulator texture or the upscaled texture as a screenshot image.
-// If the menu "Save Snapshot..." is selected, the emulator is paused until the screenshot has been saved.
-// The assignment of keystrokes to joystick events has been improved when multiple keys are pressed at the same time.
-// New options in the emulator settings allows the user to silence some user dialogs.
+// The ReSID sound engine has been upgraded to the one used in VICE V3.3.
+// All emulator preferences have been merged into a unified preferences pane.
+// New options in the emulator settings allow the user to customize the behavior taken when a media file is opened.
 // The JiffyDOS Rom images have been added to the list of known images.
-//
-// Options:
-// File handling:
-// Skip file browser when opening a media file
-// Close unsaved documents without asking
-// Eject unsaved disks without asking
+// The input device selection is now retained in the user default storage.
+// The user can now choose whether to save the emulator texture or the upscaled texture as a screenshot image.
+// If menu item "Save Snapshot..." is selected, emulation is paused until the screenshot has been saved.
+// The assignment of keystrokes to joystick events has been improved when multiple keys are pressed at the same time.
+// Cardridge buttons are now displayed in the bottom bar as small (clickable) icons.
 //
 // TODOs for the next release:
 //
