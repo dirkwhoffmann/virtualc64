@@ -27,28 +27,13 @@
 #include "EasyFlash.h"
 #include "Epyx.h"
 #include "FinalIII.h"
+#include "Expert.h"
 #include "GeoRam.h"
 #include "Isepic.h"
+#include "Kcs.h"
 #include "Kingsoft.h"
 #include "StarDos.h"
 
-//! @brief    Type 2 cartridges
-class KcsPower : public Cartridge {
-    
-public:
-    KcsPower(C64 *c64);
-    CartridgeType getCartridgeType() { return CRT_KCS_POWER; }
-    void reset();
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t spypeekIO1(uint16_t addr);
-    uint8_t peekIO2(uint16_t addr);
-    void pokeIO1(uint16_t addr, uint8_t value);
-    void pokeIO2(uint16_t addr, uint8_t value);
-    bool hasFreezeButton() { return false; }
-    bool hasResetButton() { return true; }
-    void pressResetButton();
-    void releaseResetButton();
-};
 
 //! @brief    Type 4 cartridges
 class SimonsBasic : public Cartridge {

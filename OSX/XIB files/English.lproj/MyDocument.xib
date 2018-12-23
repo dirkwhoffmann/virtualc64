@@ -237,7 +237,7 @@
                     <button hidden="YES" id="2003">
                         <rect key="frame" x="258" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtLedOnTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="2004">
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="2004">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
@@ -2960,8 +2960,8 @@
         <image name="LEDgray" width="128" height="128"/>
         <image name="crtButtonOffTemplate" width="24" height="24"/>
         <image name="crtButtonOnTemplate" width="24" height="24"/>
-        <image name="crtLedOnTemplate" width="24" height="24"/>
         <image name="crtSwitchNeutralTemplate" width="24" height="24"/>
+        <image name="crtTemplate" width="24" height="24"/>
         <image name="debugTemplate" width="240" height="241"/>
         <image name="devGamepad1Template" width="24" height="24"/>
         <image name="devGamepad2Template" width="24" height="24"/>

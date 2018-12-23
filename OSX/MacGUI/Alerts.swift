@@ -32,7 +32,7 @@ extension NSError {
     static func unsupportedCartridgeError(filename: String, type: String) -> NSError {
         return NSError(domain: "VirtualC64", code: 0, userInfo:
             [NSLocalizedDescriptionKey: "The document \"\(filename)\" could not be opened.",
-                NSLocalizedRecoverySuggestionErrorKey: "Cartridges of type \"\(type)\" are no supported by the emulator, yet."])
+                NSLocalizedRecoverySuggestionErrorKey: "Cartridges of type \"\(type)\" are not supported by the emulator, yet."])
     }
 }
 

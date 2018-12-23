@@ -97,7 +97,7 @@ Cartridge::isSupportedType(CartridgeType type)
         case CRT_FINAL_III:
         case CRT_SIMONS_BASIC:
         case CRT_OCEAN:
-            
+        case CRT_EXPERT:
         case CRT_FUNPLAY:
         case CRT_SUPER_GAMES:
         case CRT_ATOMIC_POWER:
@@ -142,6 +142,7 @@ Cartridge::makeWithType(C64 *c64, CartridgeType type)
         case CRT_FINAL_III:      return new FinalIII(c64);
         case CRT_SIMONS_BASIC:   return new SimonsBasic(c64);
         case CRT_OCEAN:          return new Ocean(c64);
+        case CRT_EXPERT:         return new Expert(c64);
         case CRT_FUNPLAY:        return new Funplay(c64);
         case CRT_SUPER_GAMES:    return new Supergames(c64);
         case CRT_ATOMIC_POWER:   return new AtomicPower(c64);

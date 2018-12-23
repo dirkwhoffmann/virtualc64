@@ -1,5 +1,5 @@
 /*!
- * @header      Isepic.h
+ * @header      Expert.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
  * @copyright   Dirk W. Hoffmann. All rights reserved.
  */
@@ -19,31 +19,30 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _ISEPIC_INC
-#define _ISEPIC_INC
+#ifndef _EXPERT_INC
+#define _EXPERT_INC
 
 #include "Cartridge.h"
 
-class Isepic : public Cartridge {
+class Expert : public Cartridge {
     
-    //! @brief   Selected page inside the selected RAM bank.
-    uint8_t page;
+    // On-board flipflop
+    bool active;
     
 public:
-    Isepic(C64 *c64);
-    CartridgeType getCartridgeType() { return CRT_ISEPIC; }
+    Expert(C64 *c64);
+    CartridgeType getCartridgeType() { return CRT_EXPERT; }
     
     void reset();
     size_t stateSize();
     void loadFromBuffer(uint8_t **buffer);
     void saveToBuffer(uint8_t **buffer);
     
+    bool hasFreezeButton() { return true; }
+    bool hasResetButton() { return true; }
     bool hasSwitch() { return true; }
     void setSwitch(int8_t pos);
-    bool cartIsVisible() { return getSwitch() < 0; }
-    bool cartIsHidden() { return getSwitch() >= 0; }
-
-    void updatePeekPokeLookupTables();
+    
     uint8_t peek(uint16_t addr);
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);

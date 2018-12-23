@@ -22,7 +22,8 @@
 #ifndef _EASYFLASH_INC
 #define _EASYFLASH_INC
 
-//! @brief    Type 32 cartridges
+#include "Cartridge.h"
+
 class EasyFlash : public Cartridge {
     
     //!@brief    Flash Rom mapping to ROML ($8000 - $9FFF)

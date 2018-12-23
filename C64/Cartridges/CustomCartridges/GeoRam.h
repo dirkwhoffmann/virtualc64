@@ -22,7 +22,8 @@
 #ifndef _GEORAM_INC
 #define _GEORAM_INC
 
-//! @brief    GeoRAM cartridge
+#include "Cartridge.h"
+
 class GeoRAM : public Cartridge {
     
 private:

@@ -141,6 +141,8 @@
 		50B5861D201C673900742DB3 /* CustomCartridges.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B5861B201C673900742DB3 /* CustomCartridges.cpp */; };
 		50B929F221C2B5C90039E8F2 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */; };
 		50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF77D120309A2A006E000F /* WindowDelegate.swift */; };
+		50C52F4021CFA6E1005E6013 /* Expert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50C52F3E21CFA6E1005E6013 /* Expert.cpp */; };
+		50C52F4321CFA9F0005E6013 /* Kcs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50C52F4121CFA9F0005E6013 /* Kcs.cpp */; };
 		50C72DE41BC7BC8800F1863B /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C72DE31BC7BC8800F1863B /* Metal.framework */; };
 		50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* Shaders.metal */; };
 		50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */; };
@@ -433,6 +435,10 @@
 		50B5861C201C673900742DB3 /* CustomCartridges.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomCartridges.h; sourceTree = "<group>"; };
 		50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
 		50BF77D120309A2A006E000F /* WindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDelegate.swift; sourceTree = "<group>"; };
+		50C52F3E21CFA6E1005E6013 /* Expert.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Expert.cpp; sourceTree = "<group>"; };
+		50C52F3F21CFA6E1005E6013 /* Expert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Expert.h; sourceTree = "<group>"; };
+		50C52F4121CFA9F0005E6013 /* Kcs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Kcs.cpp; sourceTree = "<group>"; };
+		50C52F4221CFA9F0005E6013 /* Kcs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Kcs.h; sourceTree = "<group>"; };
 		50C72DE31BC7BC8800F1863B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		50C72DE51BC7F42100F1863B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePadManager.swift; sourceTree = "<group>"; };
@@ -736,12 +742,16 @@
 				5017B71B21873FD00014EDE4 /* EasyFlash.cpp */,
 				5003C1B621981BA6009AA08D /* Epyx.h */,
 				5003C1B521981BA6009AA08D /* Epyx.cpp */,
+				50C52F3F21CFA6E1005E6013 /* Expert.h */,
+				50C52F3E21CFA6E1005E6013 /* Expert.cpp */,
 				503A424C2187A133003011D1 /* FinalIII.h */,
 				503A424B2187A133003011D1 /* FinalIII.cpp */,
 				50138AA521CACDD7007F01BA /* GeoRam.h */,
 				50138AA421CACDD7007F01BA /* GeoRam.cpp */,
 				50138AA821CB872B007F01BA /* Isepic.h */,
 				50138AA721CB872B007F01BA /* Isepic.cpp */,
+				50C52F4221CFA9F0005E6013 /* Kcs.h */,
+				50C52F4121CFA9F0005E6013 /* Kcs.cpp */,
 				5028921421A2F96800622969 /* Kingsoft.h */,
 				5028921321A2F96800622969 /* Kingsoft.cpp */,
 				5003C1B3219807F8009AA08D /* StarDos.h */,
@@ -1371,6 +1381,7 @@
 				504606341BE4B99100463FD7 /* G64File.cpp in Sources */,
 				5018E48112240F7100F0820E /* AnyC64File.cpp in Sources */,
 				5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */,
+				50C52F4021CFA6E1005E6013 /* Expert.cpp in Sources */,
 				50D19B8820ACA0C40004C47B /* Mouse1350.cpp in Sources */,
 				5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */,
 				50720F4220C853910010EBF2 /* CpuTraceView.swift in Sources */,
@@ -1404,6 +1415,7 @@
 				5006087921256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp in Sources */,
 				5015F36620B546A30024B4AA /* WaveformView.swift in Sources */,
 				50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */,
+				50C52F4321CFA9F0005E6013 /* Kcs.cpp in Sources */,
 				501DE30A20C9C41B00707130 /* pot.cc in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
 				5046C415202349EE000D9B1C /* ArchiveMountController.swift in Sources */,

@@ -22,6 +22,8 @@
 #ifndef _FINALIII_INC
 #define _FINALIII_INC
 
+#include "Cartridge.h"
+
 class FinalIII : public Cartridge {
     
     public:

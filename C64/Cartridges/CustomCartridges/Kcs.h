@@ -1,5 +1,5 @@
 /*!
- * @header      Isepic.h
+ * @header      Kcs.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
  * @copyright   Dirk W. Hoffmann. All rights reserved.
  */
@@ -19,38 +19,27 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _ISEPIC_INC
-#define _ISEPIC_INC
+#ifndef _KCS_INC
+#define _KCS_INC
 
 #include "Cartridge.h"
 
-class Isepic : public Cartridge {
-    
-    //! @brief   Selected page inside the selected RAM bank.
-    uint8_t page;
+class KcsPower : public Cartridge {
     
 public:
-    Isepic(C64 *c64);
-    CartridgeType getCartridgeType() { return CRT_ISEPIC; }
-    
+    KcsPower(C64 *c64);
+    CartridgeType getCartridgeType() { return CRT_KCS_POWER; }
     void reset();
-    size_t stateSize();
-    void loadFromBuffer(uint8_t **buffer);
-    void saveToBuffer(uint8_t **buffer);
-    
-    bool hasSwitch() { return true; }
-    void setSwitch(int8_t pos);
-    bool cartIsVisible() { return getSwitch() < 0; }
-    bool cartIsHidden() { return getSwitch() >= 0; }
-
-    void updatePeekPokeLookupTables();
-    uint8_t peek(uint16_t addr);
     uint8_t peekIO1(uint16_t addr);
+    uint8_t spypeekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
-    void poke(uint16_t addr, uint8_t value);
     void pokeIO1(uint16_t addr, uint8_t value);
     void pokeIO2(uint16_t addr, uint8_t value);
+    bool hasFreezeButton() { return false; }
+    bool hasResetButton() { return true; }
+    void pressResetButton();
+    void releaseResetButton();
 };
 
-
 #endif
+

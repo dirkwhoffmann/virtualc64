@@ -493,6 +493,7 @@ extension MyController {
             // Update cartridge LED
             if c64.expansionport.hasLed() {
                 let led = c64.expansionport.led() ? 1 : 0
+                track("\(led)")
                 if crtIcon.tag != led {
                     crtIcon.tag = led
                     crtIcon.image = NSImage(named: led == 1 ? "crtLedOnTemplate" : "crtTemplate")
