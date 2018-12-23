@@ -314,7 +314,7 @@ public:
 
 
     //
-    // Operating cartridge buttons (if any)
+    // Handling buttons (if any)
     //
 
     //! @brief    Returns true if the cartridge has a freeze button.
@@ -349,7 +349,7 @@ public:
     
     
     //
-    // Operating cartridge switches (if any)
+    // Handling switches (if any)
     //
     
     //! @brief    Returns true if the cartridge has a switch
@@ -366,7 +366,7 @@ public:
 
     
     //
-    // Operating cartridge LEDs (if any)
+    // Operating Handling LEDs (if any)
     //
     
     //! @brief    Returns true if the cartridge has a LED.

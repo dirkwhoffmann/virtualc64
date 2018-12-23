@@ -38,6 +38,8 @@ public:
     void loadFromBuffer(uint8_t **buffer);
     void saveToBuffer(uint8_t **buffer);
     
+    void loadChip(unsigned nr, CRTFile *c);
+    
     bool hasFreezeButton() { return true; }
     bool hasResetButton() { return true; }
     bool hasSwitch() { return true; }

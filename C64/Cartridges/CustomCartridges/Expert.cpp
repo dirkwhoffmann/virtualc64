@@ -19,6 +19,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// This implementation is based mainly by the following documents:
+// Schematics and explanation by Martin Sikström:
+// https://people.kth.se/~e93_msi/c64/expert.html
+
 #include "C64.h"
 
 Expert::Expert(C64 *c64) : Cartridge(c64)
@@ -67,6 +71,28 @@ Expert::saveToBuffer(uint8_t **buffer)
     if (*buffer - old != stateSize()) {
         assert(false);
     }
+}
+
+void
+Expert::loadChip(unsigned nr, CRTFile *c)
+{
+    debug("nr = %d\n", nr);
+    
+    uint16_t chipSize = c->chipSize(nr);
+    uint16_t chipAddr = c->chipAddr(nr);
+    uint8_t *chipData = c->chipData(nr);
+    
+    if (nr != 0 || chipSize != 0x2000 || chipAddr != 0x8000) {
+        warn("Corrupted CRT file. Aborting.");
+        return;
+    }
+
+    // Initialize RAM with data from CRT file
+    debug("Copying file contents into Expert RAM\n");
+    assert(externalRam != NULL);
+    assert(ramCapacity == chipSize);
+    memcpy(externalRam, chipData, chipSize);
+    
 }
 
 uint8_t
