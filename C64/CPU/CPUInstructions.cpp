@@ -630,7 +630,7 @@ CPU::executeOneCycle()
 
             READ_FROM(0xFFFB)
             setPCH(regD);
-            // debug("NMI addr = %04X\n", regPC);
+            debug("NMI addr = %04X\n", regPC);
             DONE
 
         //

@@ -29,10 +29,11 @@ Expert::Expert(C64 *c64) : Cartridge(c64)
 {
     setDescription("Expert");
     
-    // Allocate 8KB bytes on-board RAM
-    setRamCapacity(0x2000);
-    
     active = false;
+
+    // Allocate 8KB bytes persistant RAM
+    setRamCapacity(0x2000);
+    persistentRam = true;
     
     debug("Expert cartridge created\n");
 }
@@ -42,7 +43,6 @@ Expert::reset()
 {
     Cartridge::reset();
     active = false;
-    memset(externalRam, 0, ramCapacity);
 }
 
 size_t
@@ -98,9 +98,14 @@ Expert::pressFreezeButton() {
     
     debug("Expert::pressFreezeButton\n");
     
-    // Trigger NMI
     c64->suspend();
+
+    // Switch on cartridge
+    active = true;
+    
+    // Trigger NMI
     c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+    
     c64->resume();
 }
 
@@ -117,7 +122,7 @@ Expert::releaseFreezeButton()
 void
 Expert::updatePeekPokeLookupTables()
 {
-    debug("Setting up faked Ultimax mode...\n");
+    // debug("Setting up faked Ultimax mode...\n");
     
     for (unsigned i = 0; i < 16; i++) {
         c64->mem.peekSrc[i] = c64->mem.pokeTarget[i] = M_CRTLO;
@@ -135,8 +140,6 @@ uint8_t
 Expert::peek(uint16_t addr)
 {
     if (cartridgeRamIsVisible(addr)) {
-
-        assert(false);
         
         // Get value from cartridge RAM
         return externalRam[addr & 0x1FFF];
@@ -153,7 +156,10 @@ Expert::peekIO1(uint16_t addr)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
     
+    debug("Expert::peekIO1\n");
+    
     // Any IO1 access disabled the cartridge
+    // if (!switchInOnPosition())
     active = false;
     
     return 0;
@@ -174,10 +180,9 @@ Expert::poke(uint16_t addr, uint8_t value)
 {
     if (cartridgeRamIsVisible(addr)) {
         
-        assert(false);
-        
         // Write value into cartridge RAM if it is write enabled
         if (cartridgeRamIsWritable(addr)) {
+            debug("Writing RAM cell %04X with %02X\n", addr & 0x1FFF, value);
             externalRam[addr & 0x1FFF] = value;
         }
     
@@ -192,6 +197,8 @@ void
 Expert::pokeIO1(uint16_t addr, uint8_t value)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
+    
+    debug("Expert::pokeIO1\n");
     
     // Any IO1 access disabled the cartridge
     active = false;
