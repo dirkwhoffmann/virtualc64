@@ -89,7 +89,7 @@ Isepic::peek(uint16_t addr)
         uint8_t exrom = 0x10;
         uint8_t game  = 0x08;
         uint8_t index = (c64->processorPort.read() & 0x07) | exrom | game;
-        MemoryType source = c64->mem.BankMap[index][5];
+        MemoryType source = c64->mem.bankMap[index][addr >> 12];
         switch (source) {
             case M_KERNAL:
                 return c64->mem.rom[addr];

@@ -39,9 +39,14 @@ Kingsoft::updatePeekPokeLookupTables()
         uint8_t game  = 0x08;
         uint8_t index = (c64->processorPort.read() & 0x07) | exrom | game;
 
-        c64->mem.updatePeekPokeLookupTables_1000_7FFF(index);
-        c64->mem.updatePeekPokeLookupTables_C000_CFFF(index);
-        c64->mem.updatePeekPokeLookupTables_D000_DFFF(index);
+        for (unsigned bank = 0x1; bank <= 0x7; bank++) {
+            MemoryType type = c64->mem.bankMap[index][bank];
+            c64->mem.peekSrc[bank] = c64->mem.pokeTarget[bank] = type;
+        }
+        for (unsigned bank = 0xC; bank <= 0xD; bank++) {
+            MemoryType type = c64->mem.bankMap[index][bank];
+            c64->mem.peekSrc[bank] = c64->mem.pokeTarget[bank] = type;
+        }
     }
 }
 

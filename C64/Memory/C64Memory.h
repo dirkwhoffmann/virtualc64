@@ -32,18 +32,16 @@
  */
 class C64Memory : public Memory {
 
-    public:
+public:
     
-    //! @brief    C64 bank mapping
-    //
-    // If x = (EXROM, GAME, CHAREN, HIRAM, LORAM), then
-    //   BankMap[x][0] = mapping for range $1000 - $7FFF
-    //   BankMap[x][1] = mapping for range $8000 - $9FFF
-    //   BankMap[x][2] = mapping for range $A000 - $BFFF
-    //   BankMap[x][3] = mapping for range $C000 - $CFFF
-    //   BankMap[x][4] = mapping for range $D000 - $DFFF
-    //   BankMap[x][5] = mapping for range $E000 - $FFFF
-
+    /*! @brief    C64 bank mapping
+     *  @details  BankMap[index][range] where
+     *             index = (EXROM, GAME, CHAREN, HIRAM, LORAM)
+     *             range = upper four bits of address
+     */
+    MemoryType bankMap[32][16];
+    
+    /*
     const MemoryType BankMap[32][6] = {
         {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
         {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
@@ -81,7 +79,8 @@ class C64Memory : public Memory {
         {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNAL},
         {M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_IO,   M_KERNAL}
     };
-			
+    */
+    
 	//! @brief    Random Access Memory
 	uint8_t ram[65536];
 
@@ -102,8 +101,6 @@ class C64Memory : public Memory {
     
     //! @brief    RAM init pattern type
     RamInitPattern ramInitPattern;
-    
-public:
     
     //! @brief    Peek source lookup table
     MemoryType peekSrc[16];
@@ -182,13 +179,15 @@ public:
     void updatePeekPokeLookupTables();
     
     //! @brief    Work horse for updatePeekPokeLookupTables()
+    /*
     void updatePeekPokeLookupTables_1000_7FFF(uint8_t index);
     void updatePeekPokeLookupTables_8000_9FFF(uint8_t index);
     void updatePeekPokeLookupTables_A000_BFFF(uint8_t index);
     void updatePeekPokeLookupTables_C000_CFFF(uint8_t index);
     void updatePeekPokeLookupTables_D000_DFFF(uint8_t index);
     void updatePeekPokeLookupTables_E000_FFFF(uint8_t index);
-
+     */
+    
     //! @brief    Returns the current peek source of the specified memory address
     MemoryType getPeekSource(uint16_t addr) { return peekSrc[addr >> 12]; }
     
@@ -197,6 +196,7 @@ public:
 
     // Reading from memory
     uint8_t peek(uint16_t addr, MemoryType source);
+    uint8_t peek(uint16_t addr, bool gameLine, bool exromLine);
     uint8_t peek(uint16_t addr) { return peek(addr, peekSrc[addr >> 12]); }
     uint8_t peekZP(uint8_t addr);
     uint8_t peekIO(uint16_t addr);

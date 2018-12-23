@@ -44,7 +44,75 @@ C64Memory::C64Memory()
     
     registerSnapshotItems(items, sizeof(items));
     
-    ramInitPattern = INIT_PATTERN_C64; 
+    ramInitPattern = INIT_PATTERN_C64;
+    
+    //
+    // Setup the C64's memory bank map
+    //
+    
+    // If x = (EXROM, GAME, CHAREN, HIRAM, LORAM), then
+    //   map[x][0] = mapping for range $1000 - $7FFF
+    //   map[x][1] = mapping for range $8000 - $9FFF
+    //   map[x][2] = mapping for range $A000 - $BFFF
+    //   map[x][3] = mapping for range $C000 - $CFFF
+    //   map[x][4] = mapping for range $D000 - $DFFF
+    //   map[x][5] = mapping for range $E000 - $FFFF
+    MemoryType map[32][6] = {
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
+        {M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_CHAR, M_KERNAL},
+        {M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_CHAR, M_KERNAL},
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM},
+        {M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_IO,   M_KERNAL},
+        {M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_IO,   M_KERNAL},
+        
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_RAM},
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNAL},
+        {M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_CHAR, M_KERNAL},
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM},
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNAL},
+        {M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_IO,   M_KERNAL},
+        
+        {M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI},
+        {M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI},
+        {M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI},
+        {M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI},
+        {M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI},
+        {M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI},
+        {M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI},
+        {M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI},
+        
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_RAM},
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNAL},
+        {M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_CHAR, M_KERNAL},
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM},
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNAL},
+        {M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_IO,   M_KERNAL}
+    };
+    
+    for (unsigned i = 0; i < 32; i++) {
+        bankMap[i][0x0] = M_PP;
+        bankMap[i][0x1] = map[i][0];
+        bankMap[i][0x2] = map[i][0];
+        bankMap[i][0x3] = map[i][0];
+        bankMap[i][0x4] = map[i][0];
+        bankMap[i][0x5] = map[i][0];
+        bankMap[i][0x6] = map[i][0];
+        bankMap[i][0x7] = map[i][0];
+        bankMap[i][0x8] = map[i][1];
+        bankMap[i][0x9] = map[i][1];
+        bankMap[i][0xA] = map[i][2];
+        bankMap[i][0xB] = map[i][2];
+        bankMap[i][0xC] = map[i][3];
+        bankMap[i][0xD] = map[i][4];
+        bankMap[i][0xE] = map[i][5];
+        bankMap[i][0xF] = map[i][5];
+    }
 }
 
 C64Memory::~C64Memory()
@@ -132,125 +200,24 @@ C64Memory::eraseWithPattern(RamInitPattern pattern)
     memset(&ram[0x400], 0x01, 40*25);
 }
 
-void
-C64Memory::updatePeekPokeLookupTables_1000_7FFF(uint8_t index)
-{
-    MemoryType source = BankMap[index][0];
-    assert(source == M_RAM || source == M_NONE);
-    peekSrc[0x1] = pokeTarget[0x1] = source;
-    peekSrc[0x2] = pokeTarget[0x2] = source;
-    peekSrc[0x3] = pokeTarget[0x3] = source;
-    peekSrc[0x4] = pokeTarget[0x4] = source;
-    peekSrc[0x5] = pokeTarget[0x5] = source;
-    peekSrc[0x6] = pokeTarget[0x6] = source;
-    peekSrc[0x7] = pokeTarget[0x7] = source;
-}
-
-void
-C64Memory::updatePeekPokeLookupTables_8000_9FFF(uint8_t index)
-{
-    MemoryType source = BankMap[index][1]; // 0x8000 - 0x9FFF (CRT or RAM)
-    assert(source == M_CRTLO || source == M_RAM);
-    peekSrc[0x8] = pokeTarget[0x8] = source;
-    peekSrc[0x9] = pokeTarget[0x9] = source;
-}
-
-void
-C64Memory::updatePeekPokeLookupTables_A000_BFFF(uint8_t index)
-{
-    MemoryType source = BankMap[index][2];
-    assert(source == M_CRTHI || source == M_BASIC ||
-           source == M_RAM   || source == M_NONE);
-    peekSrc[0xA] = pokeTarget[0xA] = source;
-    peekSrc[0xB] = pokeTarget[0xB] = source;
-}
-
-void
-C64Memory::updatePeekPokeLookupTables_C000_CFFF(uint8_t index)
-{
-    MemoryType source = BankMap[index][3];
-    assert(source == M_RAM || source == M_NONE);
-    peekSrc[0xC] = pokeTarget[0xC] = source;
-}
-
-void
-C64Memory::updatePeekPokeLookupTables_D000_DFFF(uint8_t index)
-{
-    MemoryType source = BankMap[index][4];
-    assert(source == M_IO || source == M_CHAR || source == M_RAM);
-    peekSrc[0xD] = pokeTarget[0xD] = source;
-}
-
-void
-C64Memory::updatePeekPokeLookupTables_E000_FFFF(uint8_t index)
-{
-    MemoryType source = BankMap[index][5];
-    assert(source == M_CRTHI || source == M_KERNAL || source == M_RAM);
-    peekSrc[0xE] = pokeTarget[0xE] = source;
-    peekSrc[0xF] = pokeTarget[0xF] = source;
-}
-
 void 
 C64Memory::updatePeekPokeLookupTables()
 {
-    // MemoryType source;
-    // MemoryType target;
-    
-    uint8_t exrom = c64->expansionport.getExromLinePhi2() ? 0x10 : 0x00;
+    // Read game line, exrom line, and processor port bits
     uint8_t game  = c64->expansionport.getGameLinePhi2() ? 0x08 : 0x00;
+    uint8_t exrom = c64->expansionport.getExromLinePhi2() ? 0x10 : 0x00;
     uint8_t index = (c64->processorPort.read() & 0x07) | exrom | game;
 
     // Set ultimax flag
     c64->setUltimax(exrom && !game);
 
     // Update table entries
-    updatePeekPokeLookupTables_1000_7FFF(index);
-    updatePeekPokeLookupTables_8000_9FFF(index);
-    updatePeekPokeLookupTables_A000_BFFF(index);
-    updatePeekPokeLookupTables_C000_CFFF(index);
-    updatePeekPokeLookupTables_D000_DFFF(index);
-    updatePeekPokeLookupTables_E000_FFFF(index);
-    
-#if 0
-    // Set peek sources
-    source = BankMap[index][0]; // 0x1000 - 0x7FFF (RAM or open)
-    assert(source == M_RAM || source == M_NONE);
-    peekSrc[0x1] = pokeTarget[0x1] = source;
-    peekSrc[0x2] = pokeTarget[0x2] = source;
-    peekSrc[0x3] = pokeTarget[0x3] = source;
-    peekSrc[0x4] = pokeTarget[0x4] = source;
-    peekSrc[0x5] = pokeTarget[0x5] = source;
-    peekSrc[0x6] = pokeTarget[0x6] = source;
-    peekSrc[0x7] = pokeTarget[0x7] = source;
-
-    source = BankMap[index][1]; // 0x8000 - 0x9FFF (CRT or RAM)
-    assert(source == M_CRTLO || source == M_RAM);
-    peekSrc[0x8] = pokeTarget[0x8] = source;
-    peekSrc[0x9] = pokeTarget[0x9] = source;
-
-    source = BankMap[index][2]; // 0xA000 - 0xBFFF (CRT, Basic ROM, RAM, or open)
-    assert(source == M_CRTHI || source == M_BASIC ||
-           source == M_RAM   || source == M_NONE);
-    peekSrc[0xA] = pokeTarget[0xA] = source;
-    peekSrc[0xB] = pokeTarget[0xB] = source;
-
-    source = BankMap[index][3]; // 0xC000 - 0xCFFF (RAM or open)
-    assert(source == M_RAM || source == M_NONE);
-    peekSrc[0xC] = pokeTarget[0xC] = source;
-
-    source = BankMap[index][4]; // 0xD000 - 0xDFFF (I/O, Character ROM, or RAM)
-    assert(source == M_IO || source == M_CHAR || source == M_RAM);
-    peekSrc[0xD] = pokeTarget[0xD] = source;
-
-    source = BankMap[index][5]; // 0xE000 - 0xFFFF (CRT, Kernal ROM, or RAM)
-    assert(source == M_CRTHI || source == M_KERNAL || source == M_RAM);
-    peekSrc[0xE] = pokeTarget[0xE] = source;
-    peekSrc[0xF] = pokeTarget[0xF] = source;
-    
-#endif
+    for (unsigned bank = 1; bank < 16; bank++) {
+        peekSrc[bank] = pokeTarget[bank] = bankMap[index][bank];
+    }
     
     // An attached cartridge may influence the settings. Let's give it a chance
-    // to adjust the tables ...
+    // to modify the tables...
     c64->expansionport.updatePeekPokeLookupTables();
 }
 
@@ -288,6 +255,16 @@ C64Memory::peek(uint16_t addr, MemoryType source)
         assert(0);
         return 0;
     }
+}
+
+uint8_t
+C64Memory::peek(uint16_t addr, bool gameLine, bool exromLine)
+{
+    uint8_t game  = gameLine ? 0x08 : 0x00;
+    uint8_t exrom = exromLine ? 0x10 : 0x00;
+    uint8_t index = (c64->processorPort.read() & 0x07) | exrom | game;
+    
+    return peek(addr, bankMap[index][addr >> 12]);
 }
 
 uint8_t

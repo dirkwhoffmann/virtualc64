@@ -45,6 +45,7 @@ public:
     bool hasSwitch() { return true; }
     void setSwitch(int8_t pos);
     
+    void updatePeekPokeLookupTables();
     uint8_t peek(uint16_t addr);
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);

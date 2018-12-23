@@ -95,6 +95,15 @@ Expert::loadChip(unsigned nr, CRTFile *c)
     
 }
 
+void
+Expert::updatePeekPokeLookupTables()
+{
+    // Redirect all memory accesses to the cartridge
+    for (int i = 1; i < 16; i++) {
+        c64->mem.peekSrc[i] = c64->mem.pokeTarget[i] = M_CRTLO;
+    }
+}
+
 uint8_t
 Expert::peek(uint16_t addr)
 {
