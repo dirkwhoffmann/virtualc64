@@ -41,17 +41,30 @@ public:
     void loadChip(unsigned nr, CRTFile *c);
     
     bool hasFreezeButton() { return true; }
+    void pressFreezeButton();
+    void releaseFreezeButton();
     bool hasResetButton() { return true; }
     bool hasSwitch() { return true; }
     void setSwitch(int8_t pos);
     
+    bool switchInPrgPosition() { return switchIsLeft(); }
+    bool switchInOffPosition() { return switchIsNeutral(); }
+    bool switchInOnPosition() { return switchIsRight(); }
+
     void updatePeekPokeLookupTables();
     uint8_t peek(uint16_t addr);
     uint8_t peekIO1(uint16_t addr);
-    uint8_t peekIO2(uint16_t addr);
+    // uint8_t peekIO2(uint16_t addr);
     void poke(uint16_t addr, uint8_t value);
     void pokeIO1(uint16_t addr, uint8_t value);
-    void pokeIO2(uint16_t addr, uint8_t value);
+    // void pokeIO2(uint16_t addr, uint8_t value);
+    
+    //! @brief    Returns true if cartridge RAM is visible
+    bool cartridgeRamIsVisible(uint16_t addr);    
+
+    //! @brief    Returns true if cartridge RAM is write enabled
+    bool cartridgeRamIsWritable(uint16_t addr);
+
 };
 
 

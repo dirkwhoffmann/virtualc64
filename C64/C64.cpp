@@ -155,8 +155,11 @@ C64::reset()
     mem.poke(0x0001, 0x1F);  // IO port, set default memory layout
 
     // Initialize program counter
-    bool takeFromRom = mem.getPeekSource(0xFFFC) == M_ROM;
-    cpu.regPC = takeFromRom ? 0xFCE2 : LO_HI(mem.spypeek(0xFFFC), mem.spypeek(0xFFFD));
+    if (ultimax) {
+        cpu.regPC = LO_HI(mem.peek(0xFFFC), mem.peek(0xFFFD));
+    } else {
+        cpu.regPC = 0xFCE2;
+    }
     
     rasterCycle = 1;
     nanoTargetTime = 0UL;

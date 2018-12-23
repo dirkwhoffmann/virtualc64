@@ -177,17 +177,7 @@ public:
      *            and the cartridge exrom and game lines.
      */
     void updatePeekPokeLookupTables();
-    
-    //! @brief    Work horse for updatePeekPokeLookupTables()
-    /*
-    void updatePeekPokeLookupTables_1000_7FFF(uint8_t index);
-    void updatePeekPokeLookupTables_8000_9FFF(uint8_t index);
-    void updatePeekPokeLookupTables_A000_BFFF(uint8_t index);
-    void updatePeekPokeLookupTables_C000_CFFF(uint8_t index);
-    void updatePeekPokeLookupTables_D000_DFFF(uint8_t index);
-    void updatePeekPokeLookupTables_E000_FFFF(uint8_t index);
-     */
-    
+
     //! @brief    Returns the current peek source of the specified memory address
     MemoryType getPeekSource(uint16_t addr) { return peekSrc[addr >> 12]; }
     
@@ -208,6 +198,7 @@ public:
     
     // Writing into memory
     void poke(uint16_t addr, uint8_t value, MemoryType target);
+    void poke(uint16_t addr, uint8_t value, bool gameLine, bool exromLine);
     void poke(uint16_t addr, uint8_t value) { poke(addr, value, pokeTarget[addr >> 12]); }
     void pokeZP(uint8_t addr, uint8_t value);
     void pokeIO(uint16_t addr, uint8_t value);

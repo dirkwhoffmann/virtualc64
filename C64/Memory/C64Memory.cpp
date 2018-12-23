@@ -366,7 +366,8 @@ C64Memory::spypeek(uint16_t addr, MemoryType source)
     }
 }
 
-uint8_t C64Memory::spypeekIO(uint16_t addr)
+uint8_t
+C64Memory::spypeekIO(uint16_t addr)
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
     
@@ -410,7 +411,8 @@ uint8_t C64Memory::spypeekIO(uint16_t addr)
     }
 }
 
-void C64Memory::poke(uint16_t addr, uint8_t value, MemoryType target)
+void
+C64Memory::poke(uint16_t addr, uint8_t value, MemoryType target)
 {
     switch(target) {
             
@@ -447,7 +449,18 @@ void C64Memory::poke(uint16_t addr, uint8_t value, MemoryType target)
     }
 }
 
-void C64Memory::pokeZP(uint8_t addr, uint8_t value)
+void
+C64Memory::poke(uint16_t addr, uint8_t value, bool gameLine, bool exromLine)
+{
+    uint8_t game  = gameLine ? 0x08 : 0x00;
+    uint8_t exrom = exromLine ? 0x10 : 0x00;
+    uint8_t index = (c64->processorPort.read() & 0x07) | exrom | game;
+    
+    poke(addr, value, bankMap[index][addr >> 12]);
+}
+
+void
+C64Memory::pokeZP(uint8_t addr, uint8_t value)
 {
     if (likely(addr >= 0x02)) {
         ram[addr] = value;
@@ -458,7 +471,8 @@ void C64Memory::pokeZP(uint8_t addr, uint8_t value)
     }
 }
 
-void C64Memory::pokeIO(uint16_t addr, uint8_t value)
+void
+C64Memory::pokeIO(uint16_t addr, uint8_t value)
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
     

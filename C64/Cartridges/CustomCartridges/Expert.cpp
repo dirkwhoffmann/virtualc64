@@ -76,8 +76,6 @@ Expert::saveToBuffer(uint8_t **buffer)
 void
 Expert::loadChip(unsigned nr, CRTFile *c)
 {
-    debug("nr = %d\n", nr);
-    
     uint16_t chipSize = c->chipSize(nr);
     uint16_t chipAddr = c->chipAddr(nr);
     uint8_t *chipData = c->chipData(nr);
@@ -96,18 +94,58 @@ Expert::loadChip(unsigned nr, CRTFile *c)
 }
 
 void
+Expert::pressFreezeButton() {
+    
+    debug("Expert::pressFreezeButton\n");
+    
+    // Trigger NMI
+    c64->suspend();
+    c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+    c64->resume();
+}
+
+void
+Expert::releaseFreezeButton()
+{
+    debug("Expert::releaseFreezeButton\n");
+
+    c64->suspend();
+    c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+    c64->resume();
+}
+
+void
 Expert::updatePeekPokeLookupTables()
 {
-    // Redirect all memory accesses to the cartridge
-    for (int i = 1; i < 16; i++) {
+    debug("Setting up faked Ultimax mode...\n");
+    
+    for (unsigned i = 0; i < 16; i++) {
         c64->mem.peekSrc[i] = c64->mem.pokeTarget[i] = M_CRTLO;
     }
+    /*
+    c64->mem.peekSrc[0x8] = c64->mem.pokeTarget[0x8] = M_CRTLO;
+    c64->mem.peekSrc[0x9] = c64->mem.pokeTarget[0x9] = M_CRTLO;
+
+    c64->mem.peekSrc[0xE] = c64->mem.pokeTarget[0xE] = M_CRTLO;
+    c64->mem.peekSrc[0xF] = c64->mem.pokeTarget[0xF] = M_CRTLO;
+     */
 }
 
 uint8_t
 Expert::peek(uint16_t addr)
 {
-    return 0;
+    if (cartridgeRamIsVisible(addr)) {
+
+        assert(false);
+        
+        // Get value from cartridge RAM
+        return externalRam[addr & 0x1FFF];
+        
+    } else {
+        
+        // Get value as if no cartridge was attached
+        return c64->mem.peek(addr, 1, 1);
+    }
 }
 
 uint8_t
@@ -115,9 +153,13 @@ Expert::peekIO1(uint16_t addr)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
     
+    // Any IO1 access disabled the cartridge
+    active = false;
+    
     return 0;
 }
 
+/*
 uint8_t
 Expert::peekIO2(uint16_t addr)
 {
@@ -125,24 +167,43 @@ Expert::peekIO2(uint16_t addr)
     
     return 0;
 }
+*/
 
 void
 Expert::poke(uint16_t addr, uint8_t value)
 {
-  
+    if (cartridgeRamIsVisible(addr)) {
+        
+        assert(false);
+        
+        // Write value into cartridge RAM if it is write enabled
+        if (cartridgeRamIsWritable(addr)) {
+            externalRam[addr & 0x1FFF] = value;
+        }
+    
+    } else {
+    
+        // Write value as if no cartridge was attached
+        c64->mem.poke(addr, value, 1, 1);
+    }
 }
 
 void
 Expert::pokeIO1(uint16_t addr, uint8_t value)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
+    
+    // Any IO1 access disabled the cartridge
+    active = false;
 }
 
+/*
 void
 Expert::pokeIO2(uint16_t addr, uint8_t value)
 {
  
 }
+*/
 
 void
 Expert::setSwitch(int8_t pos)
@@ -150,4 +211,25 @@ Expert::setSwitch(int8_t pos)
     debug("Setting switch to %d\n", pos);
 
     Cartridge::setSwitch(pos);
+}
+
+bool
+Expert::cartridgeRamIsVisible(uint16_t addr)
+{
+    if (addr < 0x8000) {
+        return false;
+    }
+    if (addr < 0xA000) {
+        return switchInPrgPosition() || (switchInOnPosition() && active);
+    }
+    if (addr < 0xE000) {
+        return false;
+    }
+    return switchInOnPosition() && active;
+}
+
+bool
+Expert::cartridgeRamIsWritable(uint16_t addr)
+{
+    return isROMLaddr(addr);
 }

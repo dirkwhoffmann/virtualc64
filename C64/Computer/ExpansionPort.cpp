@@ -193,7 +193,7 @@ ExpansionPort::spypeekIO2(uint16_t addr)
 void
 ExpansionPort::poke(uint16_t addr, uint8_t value)
 {
-    if (cartridge != NULL) cartridge->poke(addr, value);
+    if (cartridge) cartridge->poke(addr, value);
 
     if (!c64->getUltimax())
         c64->mem.ram[addr] = value;
@@ -203,16 +203,16 @@ void
 ExpansionPort::pokeIO1(uint16_t addr, uint8_t value)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
-    if (cartridge != NULL)
-        cartridge->pokeIO1(addr, value);
+    
+    if (cartridge) cartridge->pokeIO1(addr, value);
 }
 
 void
 ExpansionPort::pokeIO2(uint16_t addr, uint8_t value)
 {
     assert(addr >= 0xDF00 && addr <= 0xDFFF);
-    if (cartridge != NULL)
-        cartridge->pokeIO2(addr, value);
+    
+    if (cartridge) cartridge->pokeIO2(addr, value);
 }
 
 void
@@ -246,9 +246,7 @@ ExpansionPort::setExromLinePhi2(bool value)
 void
 ExpansionPort::updatePeekPokeLookupTables()
 {
-    if (cartridge) {
-        cartridge->updatePeekPokeLookupTables();
-    }
+    if (cartridge) cartridge->updatePeekPokeLookupTables();
 }
 
 void
