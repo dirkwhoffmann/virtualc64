@@ -205,11 +205,23 @@ public:
     bool hasSwitch() { return cartridge ? cartridge->hasSwitch() : false; }
     
     //! @brief    Returns the current position of the switch
-    uint8_t getSwitch() { return cartridge ? cartridge->getSwitch() : 0; }
-
+    int8_t getSwitch() { return cartridge ? cartridge->getSwitch() : 0; }
+    bool switchIsNeutral() { return cartridge ? cartridge->switchIsNeutral() : false; }
+    bool switchIsLeft() { return cartridge ? cartridge->switchIsLeft() : false; }
+    bool switchIsRight() { return cartridge ? cartridge->switchIsRight() : false; }
+    
     //! @brief    Puts the switch in the provided position
     void setSwitch(uint8_t pos) { if (cartridge) cartridge->setSwitch(pos); }
 
+    //! @brief    Returns true if the cartridge has a LED.
+    bool hasLED() { return cartridge ? cartridge->hasLED() : false; }
+    
+    //! @brief    Returns true if the LED is switched on.
+    bool getLED() { return cartridge ? cartridge->getLED() : false; }
+    
+    //! @brief    Switches the LED on or off.
+    void setLED(bool value) { if (cartridge) cartridge->setLED(value); }
+    
     //! @brief    Returns true if the attached cartridge has a RAM backing battery.
     bool hasBattery() { return cartridge != NULL && cartridge->persistentRam; }
 

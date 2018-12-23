@@ -1096,16 +1096,16 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="RwF-gp-Lvh"/>
-                            <menuItem title="Press Button" id="4hq-fg-qHb">
+                            <menuItem title="Buttons" id="4hq-fg-qHb">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Press Button" id="gIs-wR-no0">
+                                <menu key="submenu" title="Buttons" id="gIs-wR-no0">
                                     <items>
-                                        <menuItem title="Freeze" keyEquivalent="f" id="KqP-hK-eI5">
+                                        <menuItem title="Press Freeze Button" image="crtButtonOnTemplate" keyEquivalent="f" id="KqP-hK-eI5">
                                             <connections>
                                                 <action selector="pressFreezeButtonAction:" target="-1" id="MJk-Vn-Kcv"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Reset" id="2oe-rD-sgA">
+                                        <menuItem title="Press Reset Button" image="crtButtonOnTemplate" id="2oe-rD-sgA">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="pressResetButtonAction:" target="-1" id="26o-an-OuP"/>
@@ -1115,6 +1115,34 @@ CA
                                 </menu>
                                 <connections>
                                     <action selector="pressButtonAction:" target="-1" id="zum-7k-cvA"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Switch" id="AsX-t4-FAq">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Switch" id="1lV-IB-uDT">
+                                    <items>
+                                        <menuItem title="Pull Left" image="crtSwitchLeftTemplate" tag="-1" id="Sdc-BJ-Ocs">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="setSwitchLeftAction:" target="-1" id="YPd-Dx-Y8y"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Set Neutral" image="crtSwitchNeutralTemplate" id="8cR-7V-o5r">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="setSwitchNeutralAction:" target="-1" id="wYi-4o-bid"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Pull Right" image="crtSwitchRightTemplate" tag="1" id="wHK-hw-uqT">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="setSwitchRightAction:" target="-1" id="m0P-ns-Z2L"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                                <connections>
+                                    <action selector="setSwitchDummyAction:" target="-1" id="49F-XT-gkd"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -1158,4 +1186,10 @@ CA
             </items>
         </menu>
     </objects>
+    <resources>
+        <image name="crtButtonOnTemplate" width="24" height="24"/>
+        <image name="crtSwitchLeftTemplate" width="24" height="24"/>
+        <image name="crtSwitchNeutralTemplate" width="24" height="24"/>
+        <image name="crtSwitchRightTemplate" width="24" height="24"/>
+    </resources>
 </document>

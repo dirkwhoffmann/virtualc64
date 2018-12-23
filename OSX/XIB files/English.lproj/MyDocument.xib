@@ -309,8 +309,8 @@
                     <button hidden="YES" toolTip="Freeze" id="nGE-Yp-TgF">
                         <rect key="frame" x="234" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtSwitchOffTemplate" imagePosition="only" alignment="right" alternateImage="crtSwitchOnTemplate" state="on" imageScaling="proportionallyUpOrDown" id="0s7-pA-Q79">
-                            <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtSwitchNeutralTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="0s7-pA-Q79">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                         <connections>
@@ -2958,11 +2958,10 @@
     </objects>
     <resources>
         <image name="LEDgray" width="128" height="128"/>
-        <image name="crtButtonOffTemplate" width="241" height="241"/>
-        <image name="crtButtonOnTemplate" width="241" height="241"/>
+        <image name="crtButtonOffTemplate" width="24" height="24"/>
+        <image name="crtButtonOnTemplate" width="24" height="24"/>
         <image name="crtLedOnTemplate" width="24" height="24"/>
-        <image name="crtSwitchOffTemplate" width="241" height="240"/>
-        <image name="crtSwitchOnTemplate" width="240" height="241"/>
+        <image name="crtSwitchNeutralTemplate" width="24" height="24"/>
         <image name="debugTemplate" width="240" height="241"/>
         <image name="devGamepad1Template" width="24" height="24"/>
         <image name="devGamepad2Template" width="24" height="24"/>

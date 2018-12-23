@@ -73,7 +73,7 @@ Isepic::saveToBuffer(uint8_t **buffer)
 uint8_t
 Isepic::peek(uint16_t addr)
 {
-    if (switchPos == 0) {
+    if (cartIsHidden()) {
         assert(false);
         return Cartridge::peek(addr);
     }
@@ -106,10 +106,8 @@ Isepic::peekIO1(uint16_t addr)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
     
-    if (switchPos == 1) {
+    if (cartIsVisible()) {
         page = ((addr & 0b001) << 2) | (addr & 0b010) | ((addr & 0b100) >> 2);
-    } else {
-        assert(switchPos == 0);
     }
 
     return 0;
@@ -120,22 +118,20 @@ Isepic::peekIO2(uint16_t addr)
 {
     assert(addr >= 0xDF00 && addr <= 0xDFFF);
     
-    if (switchPos == 1) {
+    if (cartIsVisible()) {
         //  debug("Reading %02X from %d:%d\n", externalRam[(page * 256) + (addr & 0xFF)], page, addr & 0xFF);
         return externalRam[(page * 256) + (addr & 0xFF)];
-    } else {
-        assert(switchPos == 0);
-        // debug("HIDDEN");
     }
+    
     return 0;
 }
 
 void
 Isepic::poke(uint16_t addr, uint8_t value)
 {
-    if (switchPos == 0) {
+    if (cartIsHidden()) {
+        // Should never be called on a hidden cartridge
         assert(false);
-        Cartridge::poke(addr, value);
     }
     
     if (isROMLaddr(addr)) {
@@ -157,54 +153,47 @@ Isepic::pokeIO1(uint16_t addr, uint8_t value)
 void
 Isepic::pokeIO2(uint16_t addr, uint8_t value)
 {
-    if (switchPos == 1) {
+    if (cartIsVisible()) {
         // debug("Writing %02X into %d:%d\n", value, page, addr & 0xFF);
         externalRam[(page * 256) + (addr & 0xFF)] = value;
-    } else {
-        assert(switchPos == 0);
-        // debug("HIDDEN");
     }
 }
 
 void
-Isepic::setSwitch(uint8_t pos)
+Isepic::setSwitch(int8_t pos)
 {
     debug("Setting switch to %d\n", pos);
     
+    bool wasVisible = cartIsVisible();
+    Cartridge::setSwitch(pos);
+    
+    if (wasVisible == cartIsVisible()) {
+        return;
+    }
+    
     c64->suspend();
     
-    if (pos == 0) {
+    if (cartIsVisible()) {
+        
+        debug("Activating Ipsec cartridge\n");
+        
+        // Enable Ultimax mode
+        c64->expansionport.setGameLinePhi2(0);
+        c64->expansionport.setExromLinePhi2(1);
+        
+        // Trigger an NMI
+        c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+    
+    } else {
         
         debug("Hiding Ipsec cartridge\n");
-
-        switchPos = pos;
         
         c64->expansionport.setGameLinePhi2(1);
         c64->expansionport.setExromLinePhi2(1);
         
         c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
     }
-    if (pos == 1) {
-        
-        debug("Activating Ipsec cartridge\n");
-        
-        switchPos = pos;
-        
-        // Enable Ultimax mode
-        c64->expansionport.setGameLinePhi2(0);
-        c64->expansionport.setExromLinePhi2(1);
-    
-        // Trigger an NMI
-        c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
-    }
-    if (pos == 255) {
-        
-        /*
-        debug("Releasing the NMI line ...\n");
-        c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
-        */
-    }
-    
+  
     c64->resume();
 }
 
@@ -212,7 +201,7 @@ void
 Isepic::updatePeekPokeLookupTables()
 {
     // Remap all memory locations that are unmapped in Ultimax mode.
-    if (switchPos == 1) {
+    if (cartIsVisible()) {
         
         uint8_t exrom = c64->expansionport.getExromLinePhi2() ? 0x10 : 0x00;
         uint8_t game  = c64->expansionport.getGameLinePhi2() ? 0x08 : 0x00;

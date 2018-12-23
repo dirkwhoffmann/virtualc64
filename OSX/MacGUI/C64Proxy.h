@@ -498,7 +498,13 @@ struct AnyC64FileWrapper;
 - (void) releaseResetButton;
 - (BOOL) hasSwitch;
 - (NSInteger) switchPosition;
+- (BOOL) switchIsNeutral;
+- (BOOL) switchIsLeft;
+- (BOOL) switchIsRight;
 - (void) setSwitchPosition:(NSInteger)pos;
+- (BOOL) hasLed;
+- (BOOL) led;
+- (void) setLed:(BOOL)value;
 - (BOOL) hasBattery;
 - (void) setBattery:(BOOL)value;
 

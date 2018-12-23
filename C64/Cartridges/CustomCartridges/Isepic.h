@@ -38,7 +38,9 @@ public:
     void saveToBuffer(uint8_t **buffer);
     
     bool hasSwitch() { return true; }
-    void setSwitch(uint8_t pos);
+    void setSwitch(int8_t pos);
+    bool cartIsVisible() { return getSwitch() < 0; }
+    bool cartIsHidden() { return getSwitch() >= 0; }
 
     void updatePeekPokeLookupTables();
     uint8_t peek(uint16_t addr);

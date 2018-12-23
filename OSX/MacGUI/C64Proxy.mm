@@ -905,9 +905,33 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->expansionPort->getSwitch();
 }
+- (BOOL) switchIsNeutral
+{
+    return wrapper->expansionPort->switchIsNeutral();
+}
+- (BOOL) switchIsLeft
+{
+    return wrapper->expansionPort->switchIsLeft();
+}
+- (BOOL) switchIsRight
+{
+    return wrapper->expansionPort->switchIsRight();
+}
 - (void) setSwitchPosition:(NSInteger)pos
 {
     wrapper->expansionPort->setSwitch(pos);
+}
+- (BOOL) hasLed
+{
+    return wrapper->expansionPort->hasLED();
+}
+- (BOOL) led
+{
+    return wrapper->expansionPort->getLED();
+}
+- (void) setLed:(BOOL)value
+{
+    wrapper->expansionPort->setLED(value);
 }
 - (BOOL) hasBattery
 {

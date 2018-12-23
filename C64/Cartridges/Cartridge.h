@@ -62,7 +62,7 @@ class Cartridge : public VirtualComponent {
     uint8_t chipL = 0;
     uint8_t chipH = 0;
 
-    //! @brief    Number of bytes that are mapped to ROMX
+    //! @brief    Number of bytes that are mapped to ROMx
     /*! @details  For most cartridges, this value is equals packet[romX]->size
      *            which means that the ROM is completely mapped.
      *            A value of 0 indicates that no ROM is currently mapped.
@@ -91,9 +91,15 @@ class Cartridge : public VirtualComponent {
     //! @brief    Indicates if the RAM is kept alive during a reset.
     bool persistentRam = false;
 
-    //! @brief    Current position of the cartridge switch (if any)
-    uint8_t switchPos = 1;
+    /*! @brief    Current position of the cartridge switch (if any)
+     *  @details  Only a cery few cartridges such as ISEPIC and EXPERT have
+     *            a switch.
+     */
+    int8_t switchPos = 0;
 
+    //! @brief    Status of the cartridge LED (true = on)
+    bool led = false;
+    
     /*! @brief    Temporary storage for cycle information
      *  @details  Some custom cartridges need to remember when certain event
      *            took place. When such an event happens, they preserve the
@@ -308,48 +314,69 @@ public:
 
 
     //
-    // Cartridge buttons
+    // Operating cartridge buttons (if any)
     //
 
-    //! @brief    Returns true if the cartridge has a freeze button
+    //! @brief    Returns true if the cartridge has a freeze button.
     virtual bool hasFreezeButton() { return false; }
 
-    //! @brief    Simulates pressing the freeze cartridge button (if present)
+    //! @brief    Simulates pressing the freeze cartridge button.
     /*! @note     Make sure to call releaseFreezeButton() afterwards.
      *  @seealso  releaseFreezeButton, hasFreezeButton
      */
     virtual void pressFreezeButton() { };
 
-    //! @brief    Simulates releasing the freeze cartridge button (if present)
+    //! @brief    Simulates releasing the freeze cartridge button.
     /*! @note     Make sure to call pressFreezeButton() first.
      *  @seealso  pressFreezeButton, hasFreezeButton
      */
     virtual void releaseFreezeButton() { };
     
-    //! @brief    Returns true if the cartridge has a reset button
+    //! @brief    Returns true if the cartridge has a reset button.
     virtual bool hasResetButton() { return false; }
     
-    //! @brief    Simulates pressing the reset cartridge button (if present)
+    //! @brief    Simulates pressing the reset cartridge button.
     /*! @note     Make sure to call releaseResetButton() afterwards.
      *  @seealso  releaseResetButton
      */
     virtual void pressResetButton();
     
-    //! @brief    Simulates releasing the reset cartridge button (if present)
+    //! @brief    Simulates releasing the reset cartridge button.
     /*! @note     Make sure to call pressResetButton() first.
      *  @seealso  pressSecondButton
      */
     virtual void releaseResetButton() { };
     
+    
+    //
+    // Operating cartridge switches (if any)
+    //
+    
     //! @brief    Returns true if the cartridge has a switch
     virtual bool hasSwitch() { return false; }
 
     //! @brief    Returns the current position of the switch
-    virtual uint8_t getSwitch() { return switchPos; }
+    virtual int8_t getSwitch() { return switchPos; }
+    virtual bool switchIsNeutral() { return switchPos == 0; }
+    virtual bool switchIsLeft() { return switchPos < 0; }
+    virtual bool switchIsRight() { return switchPos > 0; }
 
     //! @brief    Puts the switch in the provided position
-    virtual void setSwitch(uint8_t pos) { switchPos = pos; }
+    virtual void setSwitch(int8_t pos) { switchPos = pos; }
 
+    
+    //
+    // Operating cartridge LEDs (if any)
+    //
+    
+    //! @brief    Returns true if the cartridge has a LED.
+    virtual bool hasLED() { return false; }
+    
+    //! @brief    Returns true if the LED is switched on.
+    virtual bool getLED() { return led; }
+    
+    //! @brief    Switches the LED on or off.
+    virtual void setLED(bool value) { led = value; }
 };
 
 #endif 

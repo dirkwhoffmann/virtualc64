@@ -112,6 +112,7 @@ extension MyController : NSMenuItemValidation {
             return c64.expansionport.cartridgeAttached()
         }
         if item.action == #selector(MyController.pressButtonAction(_:)) {
+            track()
             return c64.expansionport.hasFreezeButton() || c64.expansionport.hasResetButton()
         }
         if item.action == #selector(MyController.pressFreezeButtonAction(_:)) {
@@ -119,6 +120,21 @@ extension MyController : NSMenuItemValidation {
         }
         if item.action == #selector(MyController.pressResetButtonAction(_:)) {
             return c64.expansionport.hasResetButton()
+        }
+        if item.action == #selector(MyController.setSwitchDummyAction(_:)) {
+            return c64.expansionport.hasSwitch()
+        }
+        if item.action == #selector(MyController.setSwitchNeutralAction(_:)) {
+            item.state = c64.expansionport.switchIsNeutral() ? .on : .off
+            return c64.expansionport.hasSwitch()
+        }
+        if item.action == #selector(MyController.setSwitchLeftAction(_:)) {
+            item.state = c64.expansionport.switchIsLeft() ? .on : .off
+            return c64.expansionport.hasSwitch()
+        }
+        if item.action == #selector(MyController.setSwitchRightAction(_:)) {
+            item.state = c64.expansionport.switchIsRight() ? .on : .off
+            return c64.expansionport.hasSwitch()
         }
         if item.action == #selector(MyController.geoRamBatteryAction(_:)) {
             item.state = c64.expansionport.hasBattery() ? .on : .off
@@ -710,10 +726,9 @@ extension MyController : NSMenuItemValidation {
         })
     }
     
-    @IBAction func attachRecentCartridgeAction(_ sender: Any!) {
+    @IBAction func attachRecentCartridgeAction(_ sender: NSMenuItem!) {
         
         track()
-        let sender = sender as! NSMenuItem
         let tag = sender.tag
         
         if let url = mydocument.getRecentlyAtachedCartridgeURL(tag) {
@@ -755,16 +770,6 @@ extension MyController : NSMenuItemValidation {
         }
     }
 
-    @IBAction func toggleSwitchAction(_ sender: NSButton!) {
-        
-        let pos = (sender.state == .on) ? 1 : 0
-        c64.expansionport.setSwitchPosition(pos)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            // Give the crt the chance to perform a delayed action
-            self.c64.expansionport.setSwitchPosition(255)
-        }
-    }
-
     @IBAction func pressResetButtonAction(_ sender: NSButton!) {
         
         track()
@@ -778,6 +783,40 @@ extension MyController : NSMenuItemValidation {
         // Dummy action method to enable menu item validation
     }
 
+    @IBAction func setSwitchNeutralAction(_ sender: Any!) {
+        
+        c64.expansionport.setSwitchPosition(0)
+        crtSwitch.image = NSImage(named: "crtSwitchNeutralTemplate")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            // TODO: Delete or call a method here if it is really needed.
+        }
+    }
+
+    @IBAction func setSwitchLeftAction(_ sender: Any!) {
+        
+        c64.expansionport.setSwitchPosition(-1)
+        crtSwitch.image = NSImage(named: "crtSwitchLeftTemplate")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            // TODO: Delete or call a method here if it is really needed.
+        }
+    }
+
+    @IBAction func setSwitchRightAction(_ sender: Any!) {
+        
+        c64.expansionport.setSwitchPosition(1)
+        crtSwitch.image = NSImage(named: "crtSwitchRightTemplate")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            // TODO: Delete or call a method here if it is really needed.
+        }
+    }
+
+    @IBAction func setSwitchDummyAction(_ sender: Any!) {
+        // Dummy action method to enable menu item validation
+    }
+    
     
     //
     // Action methods (Debug menu)

@@ -481,12 +481,22 @@ extension MyController {
 
         // Do 12 times a second ...
         if (animationCounter % 1) == 0 {
- 
+            
             // Refresh debug panel if open
             if c64.isRunning() {
                 let state = debugger.state
                 if state == NSDrawerState.open || state == NSDrawerState.opening {
                     refresh()
+                }
+            }
+            
+            // Update cartridge LED
+            if c64.expansionport.hasLed() {
+                let led = c64.expansionport.led() ? 1 : 0
+                if crtIcon.tag != led {
+                    crtIcon.tag = led
+                    crtIcon.image = NSImage(named: led == 1 ? "crtLedOnTemplate" : "crtTemplate")
+                    crtIcon.needsDisplay = true
                 }
             }
         }
