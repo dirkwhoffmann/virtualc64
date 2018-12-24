@@ -150,16 +150,13 @@ C64::reset()
     // Reset all sub components
     VirtualComponent::reset();
     
-    // Initialize processor port data direction register and processor port
+    // Initialize processor port
     mem.poke(0x0000, 0x2F);  // Data direction
     mem.poke(0x0001, 0x1F);  // IO port, set default memory layout
 
     // Initialize program counter
-    if (ultimax) {
-        cpu.regPC = LO_HI(mem.peek(0xFFFC), mem.peek(0xFFFD));
-    } else {
-        cpu.regPC = 0xFCE2;
-    }
+    cpu.regPC = mem.resetVector();
+    debug("Setting PC to %04X\n", cpu.regPC);
     
     rasterCycle = 1;
     nanoTargetTime = 0UL;

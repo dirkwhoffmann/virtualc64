@@ -175,11 +175,6 @@ C64Memory::dump()
     */
 }
 
-
-//
-// Accessing the memory
-//
-
 void
 C64Memory::eraseWithPattern(RamInitPattern pattern)
 {
@@ -203,6 +198,8 @@ C64Memory::eraseWithPattern(RamInitPattern pattern)
 void 
 C64Memory::updatePeekPokeLookupTables()
 {
+    // debug("C64Memory::updatePeekPokeLookupTables\n");
+    
     // Read game line, exrom line, and processor port bits
     uint8_t game  = c64->expansionport.getGameLinePhi2() ? 0x08 : 0x00;
     uint8_t exrom = c64->expansionport.getExromLinePhi2() ? 0x10 : 0x00;
@@ -531,3 +528,35 @@ C64Memory::pokeIO(uint16_t addr, uint8_t value)
     
     assert(false);
 }
+
+uint16_t
+C64Memory::nmiVector() {
+    
+    if (peekSrc[0xF] != M_ROM || kernalRomIsLoaded()) {
+        return LO_HI(peek(0xFFFA), peek(0xFFFB));
+    } else {
+        return 0xFE43;
+    }
+}
+
+uint16_t
+C64Memory::irqVector() {
+    
+    if (peekSrc[0xF] != M_ROM || kernalRomIsLoaded()) {
+        return LO_HI(peek(0xFFFE), peek(0xFFFF));
+    } else {
+        return 0xFF48;
+    }
+}
+
+uint16_t
+C64Memory::resetVector() {
+    
+    if (peekSrc[0xF] != M_ROM || kernalRomIsLoaded()) {
+        debug("Grabbing reset vector from source %d\n", peekSrc[0xF]);
+        return LO_HI(peek(0xFFFC), peek(0xFFFD));
+    } else {
+        return 0xFCE2;
+    }
+}
+

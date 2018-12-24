@@ -41,8 +41,23 @@ Expert::Expert(C64 *c64) : Cartridge(c64)
 void
 Expert::reset()
 {
-    Cartridge::reset();
-    active = false;
+    // Cartridge::reset();
+    debug("Expert::reset()\n");
+}
+
+void
+Expert::dump()
+{
+    Cartridge::dump();
+    
+    msg("               active: %d\n", active);
+    msg("             switch: %d ", switchPos);
+    if (switchInPrgPosition()) msg("(PRG)\n");
+    if (switchInOffPosition()) msg("(OFF)\n");
+    if (switchInOnPosition()) msg("(ON)\n");
+    msg("         NMI vector: %04X\n", LO_HI(externalRam[0x1FFA], externalRam[0x1FFB]));
+    msg("         IRQ vector: %04X\n", LO_HI(externalRam[0x1FFE], externalRam[0x1FFF]));
+    msg("       Reset vector: %04X\n", LO_HI(externalRam[0x1FFC], externalRam[0x1FFD]));
 }
 
 size_t
@@ -91,6 +106,7 @@ Expert::loadChip(unsigned nr, CRTFile *c)
     assert(ramCapacity == chipSize);
     memcpy(externalRam, chipData, chipSize);
     
+    dump();
 }
 
 void
@@ -120,6 +136,25 @@ Expert::releaseFreezeButton()
 }
 
 void
+Expert::pressResetButton()
+{
+    debug("Expert::pressResetButton\n");
+
+    c64->suspend();
+
+    dump();
+    
+    if (switchInOnPosition()) {
+        debug("Switching on cartridge\n");
+        active = true;
+    }
+    Cartridge::pressResetButton();
+    dump();
+    
+    c64->resume();
+}
+
+void
 Expert::updatePeekPokeLookupTables()
 {
     // debug("Setting up faked Ultimax mode...\n");
@@ -139,6 +174,12 @@ Expert::updatePeekPokeLookupTables()
 uint8_t
 Expert::peek(uint16_t addr)
 {
+    /*
+    if (addr >= 0xFF00) {
+        debug("Expert::peek(%04X)\n", addr);
+    }
+    */
+    
     if (cartridgeRamIsVisible(addr)) {
         
         // Get value from cartridge RAM
@@ -164,16 +205,6 @@ Expert::peekIO1(uint16_t addr)
     
     return 0;
 }
-
-/*
-uint8_t
-Expert::peekIO2(uint16_t addr)
-{
-    assert(addr >= 0xDF00 && addr <= 0xDFFF);
-    
-    return 0;
-}
-*/
 
 void
 Expert::poke(uint16_t addr, uint8_t value)
@@ -203,14 +234,6 @@ Expert::pokeIO1(uint16_t addr, uint8_t value)
     // Any IO1 access disabled the cartridge
     active = false;
 }
-
-/*
-void
-Expert::pokeIO2(uint16_t addr, uint8_t value)
-{
- 
-}
-*/
 
 void
 Expert::setSwitch(int8_t pos)

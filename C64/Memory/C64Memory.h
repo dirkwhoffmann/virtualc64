@@ -120,7 +120,7 @@ public:
 	void reset();
     
     //! @brief    Restors initial state, but keeps RAM alive
-    void resetWithoutRAM();
+    // void resetWithoutRAM();
 
 	//! @brief    Method from VirtualComponent
 	void dump();
@@ -202,6 +202,15 @@ public:
     void poke(uint16_t addr, uint8_t value) { poke(addr, value, pokeTarget[addr >> 12]); }
     void pokeZP(uint8_t addr, uint8_t value);
     void pokeIO(uint16_t addr, uint8_t value);
+    
+    //! @brief    Reads the NMI vector from memory.
+    uint16_t nmiVector();
+    
+    //! @brief    Reads the IRQ vector from memory.
+    uint16_t irqVector();
+    
+    //! @brief    Reads the Reset vector from memory.
+    uint16_t resetVector();
 };
 
 #endif

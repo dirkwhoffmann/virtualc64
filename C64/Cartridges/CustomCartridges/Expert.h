@@ -34,6 +34,7 @@ public:
     CartridgeType getCartridgeType() { return CRT_EXPERT; }
     
     void reset();
+    void dump();
     size_t stateSize();
     void loadFromBuffer(uint8_t **buffer);
     void saveToBuffer(uint8_t **buffer);
@@ -43,7 +44,10 @@ public:
     bool hasFreezeButton() { return true; }
     void pressFreezeButton();
     void releaseFreezeButton();
+
     bool hasResetButton() { return true; }
+    void pressResetButton();
+
     bool hasSwitch() { return true; }
     void setSwitch(int8_t pos);
     
