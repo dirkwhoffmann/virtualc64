@@ -360,7 +360,12 @@ public:
     virtual bool switchIsNeutral() { return switchPos == 0; }
     virtual bool switchIsLeft() { return switchPos < 0; }
     virtual bool switchIsRight() { return switchPos > 0; }
-
+    
+    /*! @brief    Returns a textual description for a switch position.
+     *  @details  The description is used in the expansion port menu.
+     */
+    virtual const char *getSwitchDescription(int8_t pos);
+    
     //! @brief    Puts the switch in the provided position
     virtual void setSwitch(int8_t pos) { switchPos = pos; }
 

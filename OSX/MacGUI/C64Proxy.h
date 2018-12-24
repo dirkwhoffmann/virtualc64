@@ -498,6 +498,7 @@ struct AnyC64FileWrapper;
 - (void) releaseResetButton;
 - (BOOL) hasSwitch;
 - (NSInteger) switchPosition;
+- (NSString *) switchDescription:(NSInteger)pos;
 - (BOOL) switchIsNeutral;
 - (BOOL) switchIsLeft;
 - (BOOL) switchIsRight;
@@ -684,7 +685,7 @@ struct AnyC64FileWrapper;
 - (void) setModel:(NSInteger)model;
 - (void) connect:(NSInteger)toPort;
 - (void) disconnect;
-- (void) setXY:(NSPoint)position;
+- (void) setXY:(NSPoint)pos;
 - (void) setLeftButton:(BOOL)pressed;
 - (void) setRightButton:(BOOL)pressed;
 

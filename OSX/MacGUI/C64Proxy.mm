@@ -905,6 +905,11 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->expansionPort->getSwitch();
 }
+- (NSString *) switchDescription:(NSInteger)pos
+{
+    std::string s = wrapper->expansionPort->getSwitchDescription(pos);
+    return [NSString stringWithUTF8String:s.c_str()];
+}
 - (BOOL) switchIsNeutral
 {
     return wrapper->expansionPort->switchIsNeutral();

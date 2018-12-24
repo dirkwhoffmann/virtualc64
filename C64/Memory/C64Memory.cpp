@@ -46,9 +46,7 @@ C64Memory::C64Memory()
     
     ramInitPattern = INIT_PATTERN_C64;
     
-    //
     // Setup the C64's memory bank map
-    //
     
     // If x = (EXROM, GAME, CHAREN, HIRAM, LORAM), then
     //   map[x][0] = mapping for range $1000 - $7FFF
@@ -113,6 +111,12 @@ C64Memory::C64Memory()
         bankMap[i][0xE] = map[i][5];
         bankMap[i][0xF] = map[i][5];
     }
+    
+    // Initialize peekSource and pokeTarket tables
+    peekSrc[0x0] = pokeTarget[0x0] = M_PP;
+    for (unsigned i = 0x1; i <= 0xF; i++) {
+        peekSrc[i] = pokeTarget[i] = M_RAM;
+    }
 }
 
 C64Memory::~C64Memory()
@@ -133,18 +137,6 @@ C64Memory::reset()
     for (unsigned i = 0; i < sizeof(colorRam); i++) {
         colorRam[i] = (rand() & 0xFF);
     }
-    
-    // Initialize peek source lookup table
-    for (unsigned i = 0x1; i <= 0xF; i++) {
-        peekSrc[i] = M_RAM;
-    }
-    peekSrc[0x0] = M_PP;
-    
-    // Initialize poke source lookup table
-    for (unsigned i = 0x1; i <= 0xF; i++) {
-        pokeTarget[i] = M_RAM;
-    }
-    pokeTarget[0x0] = M_PP;
 }
 
 void 

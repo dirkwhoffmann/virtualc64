@@ -555,3 +555,11 @@ Cartridge::pressResetButton()
     memcpy(c64->mem.ram, ram, 0xFFFF);
     resume();
 }
+
+const char *
+Cartridge::getSwitchDescription(int8_t pos)
+{
+    if (pos < 0) return "Push left";
+    if (pos > 0) return "Push right";
+    return "Set neutral";
+}

@@ -125,14 +125,17 @@ extension MyController : NSMenuItemValidation {
             return c64.expansionport.hasSwitch()
         }
         if item.action == #selector(MyController.setSwitchNeutralAction(_:)) {
+            item.title = c64.expansionport.switchDescription(0)
             item.state = c64.expansionport.switchIsNeutral() ? .on : .off
             return c64.expansionport.hasSwitch()
         }
         if item.action == #selector(MyController.setSwitchLeftAction(_:)) {
+            item.title = c64.expansionport.switchDescription(-1)
             item.state = c64.expansionport.switchIsLeft() ? .on : .off
             return c64.expansionport.hasSwitch()
         }
         if item.action == #selector(MyController.setSwitchRightAction(_:)) {
+            item.title = c64.expansionport.switchDescription(1)
             item.state = c64.expansionport.switchIsRight() ? .on : .off
             return c64.expansionport.hasSwitch()
         }

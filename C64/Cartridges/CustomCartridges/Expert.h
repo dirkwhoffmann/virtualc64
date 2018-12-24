@@ -54,7 +54,8 @@ public:
     bool switchInPrgPosition() { return switchIsLeft(); }
     bool switchInOffPosition() { return switchIsNeutral(); }
     bool switchInOnPosition() { return switchIsRight(); }
-
+    const char *getSwitchDescription(int8_t pos);
+    
     void updatePeekPokeLookupTables();
     uint8_t peek(uint16_t addr);
     uint8_t peekIO1(uint16_t addr);

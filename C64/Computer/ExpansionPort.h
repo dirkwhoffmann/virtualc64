@@ -209,6 +209,8 @@ public:
     bool switchIsNeutral() { return cartridge ? cartridge->switchIsNeutral() : false; }
     bool switchIsLeft() { return cartridge ? cartridge->switchIsLeft() : false; }
     bool switchIsRight() { return cartridge ? cartridge->switchIsRight() : false; }
+    const char *getSwitchDescription(int8_t pos) {
+        return cartridge ? cartridge->getSwitchDescription(pos) : ""; }
     
     //! @brief    Puts the switch in the provided position
     void setSwitch(uint8_t pos) { if (cartridge) cartridge->setSwitch(pos); }

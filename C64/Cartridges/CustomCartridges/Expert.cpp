@@ -151,6 +151,14 @@ Expert::pressResetButton()
     c64->resume();
 }
 
+const char *
+Expert::getSwitchDescription(int8_t pos)
+{
+    if (pos < 0) return "Prg";
+    if (pos > 0) return "On";
+    return "Off";
+}
+
 void
 Expert::updatePeekPokeLookupTables()
 {
@@ -237,8 +245,8 @@ Expert::nmiWillTrigger()
 {
     debug("NMI notification");
 
-    // Activate cartridge
-    active = 1;
+    // Activate cartridge if switch is in 'ON' position
+    if (switchInOnPosition()) { active = 1; }
 }
 
 void
