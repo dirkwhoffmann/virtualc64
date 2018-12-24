@@ -227,6 +227,13 @@ public:
 
     //! @brief    Enables or disables RAM backing during a reset.
     void setBattery(bool value) { if (cartridge) cartridge->persistentRam = value; }
+    
+    //
+    // Notifications
+    //
+    
+    // @brief    Called when the C64 CPU triggers an NMI
+    void nmiWillTrigger() { if (cartridge) cartridge->nmiWillTrigger(); }
 };
     
 #endif

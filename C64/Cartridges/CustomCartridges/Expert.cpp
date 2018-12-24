@@ -115,11 +115,8 @@ Expert::pressFreezeButton() {
     debug("Expert::pressFreezeButton\n");
     
     c64->suspend();
-
-    // Switch on cartridge
-    active = true;
     
-    // Trigger NMI
+    // Pressing the freeze button grounds the NMI line
     c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
     
     c64->resume();
@@ -233,6 +230,15 @@ Expert::pokeIO1(uint16_t addr, uint8_t value)
     
     // Any IO1 access disabled the cartridge
     active = false;
+}
+
+void
+Expert::nmiWillTrigger()
+{
+    debug("NMI notification");
+
+    // Activate cartridge
+    active = 1;
 }
 
 void

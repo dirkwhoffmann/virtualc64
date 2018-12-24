@@ -58,17 +58,16 @@ public:
     void updatePeekPokeLookupTables();
     uint8_t peek(uint16_t addr);
     uint8_t peekIO1(uint16_t addr);
-    // uint8_t peekIO2(uint16_t addr);
     void poke(uint16_t addr, uint8_t value);
     void pokeIO1(uint16_t addr, uint8_t value);
-    // void pokeIO2(uint16_t addr, uint8_t value);
+    
+    void nmiWillTrigger();
     
     //! @brief    Returns true if cartridge RAM is visible
     bool cartridgeRamIsVisible(uint16_t addr);    
 
     //! @brief    Returns true if cartridge RAM is write enabled
     bool cartridgeRamIsWritable(uint16_t addr);
-
 };
 
 

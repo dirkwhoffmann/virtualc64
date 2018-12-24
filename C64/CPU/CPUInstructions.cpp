@@ -474,6 +474,10 @@ CPU::executeOneCycle()
             // Check interrupt lines
             if (unlikely(doNmi)) {
                 
+                if (isC64CPU()) {
+                    c64->expansionport.nmiWillTrigger();
+                }
+                
                 // debug("NMI (source = %02X)\n", nmiLine);
                 // if (tracingEnabled()) debug("NMI (source = %02X)\n", nmiLine);
                 IDLE_FETCH
@@ -630,7 +634,7 @@ CPU::executeOneCycle()
 
             READ_FROM(0xFFFB)
             setPCH(regD);
-            debug("NMI addr = %04X\n", regPC);
+            // debug("NMI addr = %04X\n", regPC);
             DONE
 
         //

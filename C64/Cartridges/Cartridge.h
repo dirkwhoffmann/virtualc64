@@ -377,6 +377,13 @@ public:
     
     //! @brief    Switches the LED on or off.
     virtual void setLED(bool value) { led = value; }
+    
+    //
+    // Delegation methods
+    //
+    
+    // @brief    Called when the C64 CPU triggers an NMI
+    virtual void nmiWillTrigger() { }
 };
 
 #endif 

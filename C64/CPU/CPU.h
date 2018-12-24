@@ -305,6 +305,9 @@ class CPU : public VirtualComponent {
 	//! @brief    Destructor
 	~CPU();
 
+    //! @brief    Returns true if this is the C64's CPU
+    bool isC64CPU() { return model == MOS_6510; }
+    
     private:
     
     //! @brief    Registers a single opcode
