@@ -30,7 +30,9 @@ Expert::Expert(C64 *c64) : Cartridge(c64)
     setDescription("Expert");
     
     active = false;
-
+    switchPos = 0;
+    newSwitchPos = 1;
+    
     // Allocate 8KB bytes persistant RAM
     setRamCapacity(0x2000);
     persistentRam = true;
@@ -63,7 +65,7 @@ Expert::dump()
 size_t
 Expert::stateSize()
 {
-    return Cartridge::stateSize() + 1;
+    return Cartridge::stateSize() + 2;
 }
 
 void
@@ -72,6 +74,7 @@ Expert::loadFromBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
     Cartridge::loadFromBuffer(buffer);
     active = read8(buffer);
+    newSwitchPos = (int8_t)read8(buffer);
     if (*buffer - old != stateSize()) {
         assert(false);
     }
@@ -83,6 +86,7 @@ Expert::saveToBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
     Cartridge::saveToBuffer(buffer);
     write8(buffer, (uint8_t)active);
+    write8(buffer, (uint8_t)newSwitchPos);
     if (*buffer - old != stateSize()) {
         assert(false);
     }
@@ -149,14 +153,6 @@ Expert::pressResetButton()
     dump();
     
     c64->resume();
-}
-
-const char *
-Expert::getSwitchDescription(int8_t pos)
-{
-    if (pos < 0) return "Prg";
-    if (pos > 0) return "On";
-    return "Off";
 }
 
 void
@@ -249,12 +245,39 @@ Expert::nmiWillTrigger()
     if (switchInOnPosition()) { active = 1; }
 }
 
+const char *
+Expert::getSwitchDescription(int8_t pos)
+{
+    if (pos < 0) return "Prg";
+    if (pos > 0) return "On";
+    return "Off";
+}
+
 void
 Expert::setSwitch(int8_t pos)
 {
     debug("Setting switch to %d\n", pos);
 
     Cartridge::setSwitch(pos);
+}
+
+void
+Expert::toggleSwitch()
+{
+    debug("Expert::toggleSwitch\n");
+    debug("current: %d new: %d\n", switchPos, newSwitchPos);
+    if (newSwitchPos < 0) {
+        newSwitchPos = 0;
+        switchPos = -1;
+    } else if (newSwitchPos > 0) {
+        newSwitchPos = 0;
+        switchPos = 1;
+    } else {
+        newSwitchPos = (switchPos < 0) ? 1 : -1;
+        switchPos = 0;
+    }
+    debug("  current: %d new: %d\n", switchPos, newSwitchPos);
+    c64->putMessage(MSG_CART_SWITCH);
 }
 
 bool

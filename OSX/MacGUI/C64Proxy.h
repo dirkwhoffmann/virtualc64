@@ -503,6 +503,7 @@ struct AnyC64FileWrapper;
 - (BOOL) switchIsLeft;
 - (BOOL) switchIsRight;
 - (void) setSwitchPosition:(NSInteger)pos;
+- (void) toggleSwitch;
 - (BOOL) hasLed;
 - (BOOL) led;
 - (void) setLed:(BOOL)value;

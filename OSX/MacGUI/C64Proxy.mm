@@ -926,6 +926,10 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->expansionPort->setSwitch(pos);
 }
+- (void) toggleSwitch
+{
+    wrapper->expansionPort->toggleSwitch();
+}
 - (BOOL) hasLed
 {
     return wrapper->expansionPort->hasLED();

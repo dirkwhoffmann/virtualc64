@@ -39,7 +39,12 @@ public:
     void saveToBuffer(uint8_t **buffer);
     
     bool hasSwitch() { return true; }
+    const char *getSwitchDescription(int8_t pos);
     void setSwitch(int8_t pos);
+    bool switchInOffPosition() { return switchIsLeft(); }
+    bool switchInOnPosition() { return switchIsRight(); }
+    void toggleSwitch();
+
     bool cartIsVisible() { return getSwitch() < 0; }
     bool cartIsHidden() { return getSwitch() >= 0; }
 

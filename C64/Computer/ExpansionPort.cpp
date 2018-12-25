@@ -51,6 +51,7 @@ ExpansionPort::ping()
 {
     VirtualComponent::ping();
     c64->putMessage(cartridge ? MSG_CARTRIDGE : MSG_NO_CARTRIDGE);
+    c64->putMessage(MSG_CART_SWITCH);
 }
 
 size_t
@@ -263,6 +264,8 @@ ExpansionPort::attachCartridge(Cartridge *c)
     cartridge->reset();
     
     c64->putMessage(MSG_CARTRIDGE);
+    if (cartridge->hasSwitch()) c64->putMessage(MSG_CART_SWITCH);
+    
     debug(1, "Cartridge attached to expansion port");
     cartridge->dump();
 }

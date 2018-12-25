@@ -215,6 +215,9 @@ public:
     //! @brief    Puts the switch in the provided position
     void setSwitch(uint8_t pos) { if (cartridge) cartridge->setSwitch(pos); }
 
+    //! @brief    Push to next switch position
+    void toggleSwitch() { if (cartridge) cartridge->toggleSwitch(); }
+
     //! @brief    Returns true if the cartridge has a LED.
     bool hasLED() { return cartridge ? cartridge->hasLED() : false; }
     

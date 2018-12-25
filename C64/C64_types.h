@@ -135,7 +135,8 @@ typedef enum {
 
     // Peripherals (Expansion port)
     MSG_CARTRIDGE,
-    MSG_NO_CARTRIDGE
+    MSG_NO_CARTRIDGE,
+    MSG_CART_SWITCH
 
 } MessageType;
 

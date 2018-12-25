@@ -808,6 +808,15 @@ extension MyController {
             crtFreeze.isHidden = true
             crtReset.isHidden = true
             
+        case MSG_CART_SWITCH:
+            
+            let pos = c64.expansionport.switchPosition()
+            crtSwitch.image = NSImage(named:
+                (pos < 0) ? "crtSwitchLeftTemplate"
+                    : (pos > 0) ? "crtSwitchRightTemplate"
+                    : "crtSwitchNeutralTemplate")
+            crtSwitch.toolTip = c64.expansionport.switchDescription(pos)
+            
         default:
             
             track("Unknown message: \(msg)")

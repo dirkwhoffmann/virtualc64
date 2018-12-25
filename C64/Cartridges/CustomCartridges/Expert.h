@@ -29,6 +29,9 @@ class Expert : public Cartridge {
     // On-board flipflop
     bool active;
     
+    // Next switch position (as set by toggleSwitch() )
+    int8_t newSwitchPos;
+    
 public:
     Expert(C64 *c64);
     CartridgeType getCartridgeType() { return CRT_EXPERT; }
@@ -49,13 +52,13 @@ public:
     void pressResetButton();
 
     bool hasSwitch() { return true; }
+    const char *getSwitchDescription(int8_t pos);
     void setSwitch(int8_t pos);
-    
     bool switchInPrgPosition() { return switchIsLeft(); }
     bool switchInOffPosition() { return switchIsNeutral(); }
     bool switchInOnPosition() { return switchIsRight(); }
-    const char *getSwitchDescription(int8_t pos);
-    
+    void toggleSwitch();
+
     void updatePeekPokeLookupTables();
     uint8_t peek(uint16_t addr);
     uint8_t peekIO1(uint16_t addr);

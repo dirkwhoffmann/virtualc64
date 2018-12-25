@@ -29,7 +29,8 @@ Isepic::Isepic(C64 *c64) : Cartridge(c64)
     setRamCapacity(2048);
 
     page = 0;
-    
+    switchPos = -1;
+   
     debug("Isepic cartridge created\n");
 }
 
@@ -74,7 +75,7 @@ uint8_t
 Isepic::peek(uint16_t addr)
 {
     if (cartIsHidden()) {
-        assert(false);
+        // assert(false);
         return Cartridge::peek(addr);
     }
     
@@ -159,6 +160,14 @@ Isepic::pokeIO2(uint16_t addr, uint8_t value)
     }
 }
 
+const char *
+Isepic::getSwitchDescription(int8_t pos)
+{
+    if (pos < 0) return "Off";
+    if (pos > 0) return "On";
+    return "";
+}
+
 void
 Isepic::setSwitch(int8_t pos)
 {
@@ -195,6 +204,13 @@ Isepic::setSwitch(int8_t pos)
     }
   
     c64->resume();
+}
+
+void
+Isepic::toggleSwitch()
+{
+    switchPos *= -1;
+    c64->putMessage(MSG_CART_SWITCH);
 }
 
 void

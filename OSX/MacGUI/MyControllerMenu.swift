@@ -789,7 +789,6 @@ extension MyController : NSMenuItemValidation {
     @IBAction func setSwitchNeutralAction(_ sender: Any!) {
         
         c64.expansionport.setSwitchPosition(0)
-        crtSwitch.image = NSImage(named: "crtSwitchNeutralTemplate")
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             // TODO: Delete or call a method here if it is really needed.
@@ -799,7 +798,6 @@ extension MyController : NSMenuItemValidation {
     @IBAction func setSwitchLeftAction(_ sender: Any!) {
         
         c64.expansionport.setSwitchPosition(-1)
-        crtSwitch.image = NSImage(named: "crtSwitchLeftTemplate")
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             // TODO: Delete or call a method here if it is really needed.
@@ -809,7 +807,6 @@ extension MyController : NSMenuItemValidation {
     @IBAction func setSwitchRightAction(_ sender: Any!) {
         
         c64.expansionport.setSwitchPosition(1)
-        crtSwitch.image = NSImage(named: "crtSwitchRightTemplate")
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             // TODO: Delete or call a method here if it is really needed.
@@ -820,6 +817,9 @@ extension MyController : NSMenuItemValidation {
         // Dummy action method to enable menu item validation
     }
     
+    @IBAction func toggleSwitchAction(_ sender: NSButton!) {
+        c64.expansionport.toggleSwitch()
+    }
     
     //
     // Action methods (Debug menu)

@@ -563,3 +563,10 @@ Cartridge::getSwitchDescription(int8_t pos)
     if (pos > 0) return "Push right";
     return "Set neutral";
 }
+
+void
+Cartridge::setSwitch(int8_t pos)
+{
+    switchPos = pos;
+    c64->putMessage(MSG_CART_SWITCH);
+}

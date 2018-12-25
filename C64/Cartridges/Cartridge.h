@@ -367,9 +367,11 @@ public:
     virtual const char *getSwitchDescription(int8_t pos);
     
     //! @brief    Puts the switch in the provided position
-    virtual void setSwitch(int8_t pos) { switchPos = pos; }
+    virtual void setSwitch(int8_t pos);
 
-    
+    //! @brief    Push to next switch position
+    virtual void toggleSwitch() { }
+
     //
     // Operating Handling LEDs (if any)
     //
