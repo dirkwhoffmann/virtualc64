@@ -108,6 +108,12 @@ extension MyController : NSMenuItemValidation {
         if item.action == #selector(MyController.attachRecentCartridgeAction(_:)) {
             return validateURLlist(mydocument.recentlyAttachedCartridgeURLs, image: "cartridge_small")
         }
+        if item.action == #selector(MyController.attachGeoRamDummyAction(_:)) {
+            item.state = (c64.expansionport.cartridgeType() == CRT_GEO_RAM) ? .on : .off
+        }
+        if item.action == #selector(MyController.attachIsepicAction(_:)) {
+            item.state = (c64.expansionport.cartridgeType() == CRT_ISEPIC) ? .on : .off
+        }
         if item.action == #selector(MyController.detachCartridgeAction(_:)) {
             return c64.expansionport.cartridgeAttached()
         }
@@ -126,16 +132,19 @@ extension MyController : NSMenuItemValidation {
         }
         if item.action == #selector(MyController.setSwitchNeutralAction(_:)) {
             item.title = c64.expansionport.switchDescription(0)
+            item.isHidden = item.title == ""
             item.state = c64.expansionport.switchIsNeutral() ? .on : .off
             return c64.expansionport.hasSwitch()
         }
         if item.action == #selector(MyController.setSwitchLeftAction(_:)) {
             item.title = c64.expansionport.switchDescription(-1)
+            item.isHidden = item.title == ""
             item.state = c64.expansionport.switchIsLeft() ? .on : .off
             return c64.expansionport.hasSwitch()
         }
         if item.action == #selector(MyController.setSwitchRightAction(_:)) {
             item.title = c64.expansionport.switchDescription(1)
+            item.isHidden = item.title == ""
             item.state = c64.expansionport.switchIsRight() ? .on : .off
             return c64.expansionport.hasSwitch()
         }
@@ -748,7 +757,11 @@ extension MyController : NSMenuItemValidation {
         track()
         c64.expansionport.detachCartridgeAndReset()
     }
-    
+
+    @IBAction func attachGeoRamDummyAction(_ sender: Any!) {
+        // Dummy action method to enable menu item validation
+    }
+
     @IBAction func attachGeoRamAction(_ sender: Any!) {
         let sender = sender as! NSMenuItem
         let capacity = sender.tag

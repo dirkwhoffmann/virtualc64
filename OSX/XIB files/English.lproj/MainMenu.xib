@@ -1082,6 +1082,9 @@ CA
                                         </menuItem>
                                     </items>
                                 </menu>
+                                <connections>
+                                    <action selector="attachGeoRamDummyAction:" target="-1" id="k8E-wn-umq"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Attach Isepic cartridge" id="wKq-Mc-2EU">
                                 <modifierMask key="keyEquivalentModifierMask"/>
