@@ -82,8 +82,7 @@ Cartridge::reset()
 void
 Cartridge::resetCartConfig() {
 
-    c64->expansionport.setGameLine(gameLineInCrtFile);
-    c64->expansionport.setExromLine(exromLineInCrtFile);
+    c64->expansionport.setGameAndExrom(gameLineInCrtFile, exromLineInCrtFile);
 }
 
 bool

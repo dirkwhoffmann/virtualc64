@@ -35,8 +35,7 @@ uint8_t
 SimonsBasic::peekIO1(uint16_t addr)
 {
     if (addr == 0xDE00) {
-        // Switch to 8KB configuration
-        c64->expansionport.setGameLine(1);
+        c64->expansionport.setCartridgeMode(CRT_8K);
     }
     return Cartridge::peekIO1(addr);
 }
@@ -51,8 +50,7 @@ void
 SimonsBasic::pokeIO1(uint16_t addr, uint8_t value)
 {
     if (addr == 0xDE00) {
-        // Switch to 16KB configuration
-        c64->expansionport.setGameLine(0);
+        c64->expansionport.setCartridgeMode(CRT_16K);
     }
 }
 
@@ -99,8 +97,7 @@ Funplay::pokeIO1(uint16_t addr, uint8_t value)
     if (addr == 0xDE00) {
        
         if (value == 0x86) {
-            c64->expansionport.setGameLine(1);
-            c64->expansionport.setExromLine(1);
+            c64->expansionport.setCartridgeMode(CRT_OFF);
             return;
         }
         
@@ -125,21 +122,13 @@ Supergames::pokeIO2(uint16_t addr, uint8_t value)
     
     if (addr == 0xDF00) {
         
-        uint8_t bank    = value & 0x03;
-        uint8_t ctrl    = value & 0x04;
-        // uint8_t protect = value & 0x08;
-        
-        // debug ("value = %02X, bank = %d, ctrl = %d", value, bank, ctrl);
-        
-        if (ctrl) {
-            c64->expansionport.setExromLine(false);
-            c64->expansionport.setGameLine(true);
+        if (value & 0x04) {
+            c64->expansionport.setCartridgeMode(CRT_8K);
         } else {
-            c64->expansionport.setExromLine(0);
-            c64->expansionport.setGameLine(0);
+            c64->expansionport.setCartridgeMode(CRT_16K);
         }
         
-        bankIn(bank);
+        bankIn(value & 0x03);
     }
 }
 
@@ -153,7 +142,7 @@ Westermann::peekIO2(uint16_t addr)
 {
     // Any read access to I/O space 2 switches to 8KB configuration
     if (addr >= 0xDF00 && addr <= 0xDFFF) {
-        c64->expansionport.setGameLine(1);
+        c64->expansionport.setCartridgeMode(CRT_8K);
     }
     return 0;
 }
@@ -174,14 +163,12 @@ Rex::peekIO2(uint16_t addr)
 {
     // Any read access to $DF00 - $DFBF disables the ROM
     if (addr >= 0xDF00 && addr <= 0xDFBF) {
-        c64->expansionport.setExromLine(1);
-        c64->expansionport.setGameLine(1);
+        c64->expansionport.setCartridgeMode(CRT_OFF);
     }
     
     // Any read access to $DFC0 - $DFFF switches to 8KB configuration
     if (addr >= 0xDFC0 && addr <= 0xDFFF) {
-        c64->expansionport.setExromLine(0);
-        c64->expansionport.setGameLine(1);
+        c64->expansionport.setCartridgeMode(CRT_8K);
     }
     
     return 0;
@@ -201,9 +188,7 @@ Rex::spypeekIO2(uint16_t addr)
 void
 WarpSpeed::resetCartConfig()
 {
-    // Start in 16KB game mode
-    c64->expansionport.setGameLine(0);
-    c64->expansionport.setExromLine(0);
+    c64->expansionport.setCartridgeMode(CRT_16K);
 }
 
 uint8_t
@@ -221,17 +206,13 @@ WarpSpeed::peekIO2(uint16_t addr)
 void
 WarpSpeed::pokeIO1(uint16_t addr, uint8_t value)
 {
-    // debug("Enabling ROM at 0x8000\n");
-    c64->expansionport.setGameLine(0);
-    c64->expansionport.setExromLine(0);
+    c64->expansionport.setCartridgeMode(CRT_16K);
 }
 
 void
 WarpSpeed::pokeIO2(uint16_t addr, uint8_t value)
 {
-    // debug("Disabling ROM at 0x8000\n");
-    c64->expansionport.setGameLine(1);
-    c64->expansionport.setExromLine(1);
+    c64->expansionport.setCartridgeMode(CRT_OFF);
 }
 
 
@@ -338,8 +319,7 @@ void
 Comal80::reset()
 {
     debug("Comal80::reset\n");
-    c64->expansionport.setExromLine(0);
-    c64->expansionport.setGameLine(0);
+    c64->expansionport.setCartridgeMode(CRT_16K);
     bankIn(0);
 }
 
@@ -367,19 +347,16 @@ Comal80::pokeIO1(uint16_t addr, uint8_t value)
         
         switch (value & 0xE0) {
                 
-            case 0xe0: // Disables the cartridge
-                c64->expansionport.setExromLine(1);
-                c64->expansionport.setGameLine(1);
+            case 0xe0:
+                c64->expansionport.setCartridgeMode(CRT_OFF);
                 break;
                 
-            case 0x40: // 8 KB configuration
-                c64->expansionport.setExromLine(0);
-                c64->expansionport.setGameLine(1);
+            case 0x40:
+                c64->expansionport.setCartridgeMode(CRT_8K);
                 break;
                 
-            default:   // 16 KB configuration
-                c64->expansionport.setExromLine(0);
-                c64->expansionport.setGameLine(0);
+            default:
+                c64->expansionport.setCartridgeMode(CRT_16K);
                 break;
         }
     }
@@ -404,11 +381,7 @@ uint8_t
 FreezeFrame::peekIO1(uint16_t addr)
 {
     // Reading from IO1 switched to 8K game mode
-    // if (addr == 0) {
-    {
-        c64->expansionport.setExromLine(0);
-        c64->expansionport.setGameLine(1);
-    }
+    c64->expansionport.setCartridgeMode(CRT_8K);
     return 0;
 }
 
@@ -416,11 +389,7 @@ uint8_t
 FreezeFrame::peekIO2(uint16_t addr)
 {
     // Reading from IO2 disables the cartridge
-    // if (addr == 0) {
-    {
-        c64->expansionport.setExromLine(1);
-        c64->expansionport.setGameLine(1);
-    }
+    c64->expansionport.setCartridgeMode(CRT_OFF);
     return 0; 
 }
 
@@ -429,8 +398,7 @@ FreezeFrame::pressFreezeButton()
 {
     // Pressing the freeze button switches to ultimax mode and triggers an NMI
     suspend();
-    c64->expansionport.setExromLine(1);
-    c64->expansionport.setGameLine(0);
+    c64->expansionport.setCartridgeMode(CRT_ULTIMAX);
     c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
     resume();
 }

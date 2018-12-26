@@ -56,8 +56,7 @@ Kingsoft::peekIO1(uint16_t addr)
     debug("Switching to 16KB game mode\n");
     
     // Switch to 16KB game mode
-    c64->expansionport.setGameLine(0);
-    c64->expansionport.setExromLine(0);
+    c64->expansionport.setCartridgeMode(CRT_16K);
  
     // Bank in second packet to ROMH
     bankInROMH(1, 0x2000, 0);
@@ -70,9 +69,8 @@ Kingsoft::pokeIO1(uint16_t addr, uint8_t value)
 {
     debug("Switching to (modified) Ultimax mode\n");
     
-    // Switch to (modified) Ultimax mode
-    c64->expansionport.setGameLine(0);
-    c64->expansionport.setExromLine(1);
+    // Switch to (faked) Ultimax mode
+    c64->expansionport.setCartridgeMode(CRT_ULTIMAX);
     
     // Bank in third packet to ROMH
     bankInROMH(2, 0x2000, 0);

@@ -187,8 +187,7 @@ Isepic::setSwitch(int8_t pos)
         debug("Activating Ipsec cartridge\n");
         
         // Enable Ultimax mode
-        // c64->expansionport.setGameLinePhi2(0);
-        // c64->expansionport.setExromLinePhi2(1);
+        // c64->expansionport.setCartridgeMode(CRT_ULTIMAX);
         
         // Trigger an NMI
         c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
@@ -197,8 +196,7 @@ Isepic::setSwitch(int8_t pos)
         
         debug("Hiding Ipsec cartridge\n");
         
-        // c64->expansionport.setGameLinePhi2(1);
-        // c64->expansionport.setExromLinePhi2(1);
+        // c64->expansionport.setCartridgeMode(CRT_OFF);
         
         c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
     }

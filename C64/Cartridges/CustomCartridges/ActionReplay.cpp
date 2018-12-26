@@ -92,8 +92,7 @@ void
 ActionReplay3::setControlReg(uint8_t value)
 {
     regValue = value;
-    c64->expansionport.setGameLine(game());
-    c64->expansionport.setExromLine(exrom());
+    c64->expansionport.setGameAndExrom(game(), exrom());
 }
 
 
@@ -121,10 +120,7 @@ void
 ActionReplay::resetCartConfig()
 {
     debug("Starting ActionReplay cartridge in 8K game mode.\n");
-    
-    // Start in 8K game mode
-    c64->expansionport.setGameLine(1);
-    c64->expansionport.setExromLine(0);
+    c64->expansionport.setCartridgeMode(CRT_8K);
 }
 
 uint8_t
@@ -230,8 +226,7 @@ ActionReplay::setControlReg(uint8_t value)
      *   0    1 = /GAME low" [VICE]
      */
     
-    c64->expansionport.setGameLine(game());
-    c64->expansionport.setExromLine(exrom());
+    c64->expansionport.setGameAndExrom(game(), exrom());
     
     bankInROML(bank(), 0x2000, 0);
     bankInROMH(bank(), 0x2000, 0);

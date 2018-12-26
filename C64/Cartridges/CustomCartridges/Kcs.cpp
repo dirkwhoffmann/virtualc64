@@ -37,9 +37,7 @@ KcsPower::reset()
 uint8_t
 KcsPower::peekIO1(uint16_t addr)
 {
-    c64->expansionport.setGameLine(true);
-    c64->expansionport.setExromLine(addr & 0x02 ? true : false);
-    
+    c64->expansionport.setGameAndExrom(1,  addr & 0x02 ? 1 : 0);
     return peekRomL(0x1E00 | (addr & 0xFF));
 }
 
@@ -71,8 +69,7 @@ KcsPower::peekIO2(uint16_t addr)
 void
 KcsPower::pokeIO1(uint16_t addr, uint8_t value)
 {
-    c64->expansionport.setGameLine(false);
-    c64->expansionport.setExromLine(addr & 0x02 ? true : false);
+    c64->expansionport.setGameAndExrom(0, addr & 0x02 ? 1 : 0);
 }
 
 void
@@ -88,8 +85,7 @@ KcsPower::pressResetButton()
 {
     // Pressing the freeze bottom triggers an NMI in ultimax mode
     suspend();
-    c64->expansionport.setGameLine(0);
-    c64->expansionport.setExromLine(1);
+    c64->expansionport.setCartridgeMode(CRT_ULTIMAX);
     c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
     resume();
 };

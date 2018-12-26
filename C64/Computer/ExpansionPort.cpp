@@ -39,11 +39,8 @@ ExpansionPort::reset()
         cartridge->reset();
         cartridge->resetCartConfig();
     } else {
-        setGameLine(1);
-        setExromLine(1);
+        setCartridgeMode(CRT_OFF);
     }
-    
-    // debug("Resetting port: game = %d exrom = %d\n", cartridge->getInitialGameLine(), cartridge->getInitialExromLine());
 }
 
 void
@@ -229,6 +226,15 @@ ExpansionPort::setExromLine(bool value)
     c64->mem.updatePeekPokeLookupTables();
 }
 
+void
+ExpansionPort::setGameAndExrom(bool game, bool exrom)
+{
+    gameLine = game;
+    exromLine = exrom;
+    c64->vic.setUltimax(!gameLine && exromLine);
+    c64->mem.updatePeekPokeLookupTables();
+}
+
 CartridgeMode
 ExpansionPort::getCartridgeMode()
 {
@@ -245,14 +251,11 @@ void
 ExpansionPort::setCartridgeMode(CartridgeMode mode)
 {
     switch (mode) {
-        case CRT_16K:     exromLine = 0; gameLine = 0; break;
-        case CRT_8K:      exromLine = 0; gameLine = 1; break;
-        case CRT_ULTIMAX: exromLine = 1; gameLine = 0; break;
-        default:          exromLine = 1; gameLine = 1;
+        case CRT_16K:     setGameAndExrom(0,0); return;
+        case CRT_8K:      setGameAndExrom(1,0); return;
+        case CRT_ULTIMAX: setGameAndExrom(0,1); return;
+        default:          setGameAndExrom(1,1);
     }
-    
-    c64->vic.setUltimax(!gameLine && exromLine);
-    c64->mem.updatePeekPokeLookupTables();
 }
 
 void
@@ -338,8 +341,7 @@ ExpansionPort::detachCartridge()
         delete cartridge;
         cartridge = NULL;
         
-        setGameLine(1);
-        setExromLine(1);
+        setCartridgeMode(CRT_OFF);
         
         debug(1, "Cartridge detached from expansion port");
         

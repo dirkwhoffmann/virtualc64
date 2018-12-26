@@ -213,10 +213,9 @@ Expert::peekIO1(uint16_t addr)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
     
-    debug("Expert::peekIO1\n");
+    // debug("Expert::peekIO1\n");
     
     // Any IO1 access disabled the cartridge
-    // if (!switchInOnPosition())
     active = false;
     
     return 0;
@@ -254,7 +253,7 @@ Expert::pokeIO1(uint16_t addr, uint8_t value)
 void
 Expert::nmiWillTrigger()
 {
-    debug("NMI notification");
+    // debug("NMI notification");
 
     // Activate cartridge if switch is in 'ON' position
     if (switchInOnPosition()) { active = 1; }

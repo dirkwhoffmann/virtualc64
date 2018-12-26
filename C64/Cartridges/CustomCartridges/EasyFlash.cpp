@@ -108,9 +108,7 @@ EasyFlash::saveToBuffer(uint8_t **buffer)
 void
 EasyFlash::resetCartConfig()
 {
-    // Start in Ultimax mode
-    c64->expansionport.setGameLine(0);
-    c64->expansionport.setExromLine(1);
+    c64->expansionport.setCartridgeMode(CRT_ULTIMAX);
 }
 
 void
@@ -285,8 +283,7 @@ EasyFlash::pokeIO1(uint16_t addr, uint8_t value)
             return;
         }
         
-        c64->expansionport.setGameLine(game);
-        c64->expansionport.setExromLine(exrom);
+        c64->expansionport.setGameAndExrom(game, exrom);
     }
 }
 

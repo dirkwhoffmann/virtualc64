@@ -140,12 +140,12 @@ public:
      *  @details  The cartridge mode is determined by the current values of the
      *            Game and Exrom line.
      */
-    CartridgeMode getCartridgeMode(); 
+    CartridgeMode getCartridgeMode();
     
-    /*! @brief    Sets the specified cartridge mode.
-     *  @details  This method is a convenience wrapper around setGameLine() and
-     *            setExromLine().
-     */
+    //! @brief    Sets the state of the Game and Exrom line
+    void setGameAndExrom(bool game, bool exrom);
+
+    //! @brief    Convenience wrapper for setGame(), setExrom()
     void setCartridgeMode(CartridgeMode mode);
 
     

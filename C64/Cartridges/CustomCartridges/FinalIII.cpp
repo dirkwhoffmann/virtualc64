@@ -30,9 +30,7 @@ FinalIII::reset()
 void
 FinalIII::resetCartConfig()
 {
-    // Start in 16KB game mode
-    c64->expansionport.setGameLine(0);
-    c64->expansionport.setExromLine(0);
+    c64->expansionport.setCartridgeMode(CRT_16K);
 }
 
 uint8_t
@@ -79,8 +77,7 @@ FinalIII::pokeIO2(uint16_t addr, uint8_t value) {
                 
         // Bit 7
         if (hide) {
-            c64->expansionport.setGameLine(1);
-            c64->expansionport.setExromLine(1);
+            c64->expansionport.setCartridgeMode(CRT_OFF);
         }
         
         // Bit 6
@@ -88,8 +85,7 @@ FinalIII::pokeIO2(uint16_t addr, uint8_t value) {
         c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
         
         // Bit 5 and 4
-        c64->expansionport.setGameLine(game);
-        c64->expansionport.setExromLine(exrom);
+        c64->expansionport.setGameAndExrom(game, exrom);
         
         // Bit 1 and 0
         bankIn(bank);
@@ -104,8 +100,7 @@ FinalIII::pressFreezeButton() {
     // triggering an NMI
     c64->suspend();
     bankIn(0);
-    c64->expansionport.setGameLine(0);
-    c64->expansionport.setExromLine(1);
+    c64->expansionport.setCartridgeMode(CRT_ULTIMAX);
     c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
     c64->resume();
 }

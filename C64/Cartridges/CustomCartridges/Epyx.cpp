@@ -31,9 +31,7 @@ EpyxFastLoad::reset()
 void
 EpyxFastLoad::resetCartConfig()
 {
-    // Start in 8KB game mode
-    c64->expansionport.setGameLine(1);
-    c64->expansionport.setExromLine(0);
+    c64->expansionport.setCartridgeMode(CRT_8K);
 }
 
 void
@@ -52,8 +50,7 @@ EpyxFastLoad::dischargeCapacitor()
      */
     cycle = c64->cpu.cycle + 512;
     
-    c64->expansionport.setExromLine(0);
-    c64->expansionport.setGameLine(1);
+    c64->expansionport.setCartridgeMode(CRT_8K);
 }
 
 bool
@@ -66,8 +63,7 @@ EpyxFastLoad::checkCapacitor()
         
         // Switch cartridge off
         // Should be really change exrom and game line???
-        c64->expansionport.setExromLine(1);
-        c64->expansionport.setGameLine(1);
+        c64->expansionport.setCartridgeMode(CRT_OFF);
         return false;
     }
     
