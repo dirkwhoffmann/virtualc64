@@ -102,6 +102,7 @@ VIC::VIC()
         { &lpLine,                      sizeof(lpLine),                         CLEAR_ON_RESET },
         { &lightpenIRQhasOccured,       sizeof(lightpenIRQhasOccured),          CLEAR_ON_RESET },
 
+        { &memSrc,                      sizeof(memSrc),                         KEEP_ON_RESET },
         { &ultimax,                     sizeof(ultimax),                        CLEAR_ON_RESET },
         { &dataBusPhi1,                 sizeof(dataBusPhi1),                    CLEAR_ON_RESET },
         { &dataBusPhi2,                 sizeof(dataBusPhi2),                    CLEAR_ON_RESET },
@@ -141,6 +142,10 @@ VIC::reset()
     baLine.clear();
     gAccessResult.clear();
     
+    // Reset the memory source lookup table
+    setUltimax(false);
+
+    // Reset sprite logic
     expansionFF = 0xFF;
     
     // Preset some video parameters to show a blank blue sreen on power up

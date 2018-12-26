@@ -523,6 +523,13 @@ private:
     
 private:
     
+    /*! @brief    Memory source lookup table
+     *  @details  If VICII is not running in Ultimax mode, it has access to RAM
+     *            and the character Rom. In ultimax mode, VICII has access to
+     *            ROMH and some portions of RAM.
+     */
+    MemoryType memSrc[16];
+    
     /*! @brief    Indicates whether VICII is running in ultimax mode.
      *  @details  Ultimax mode can be enabled by external cartridges by pulling
      *            game line low and keeping exrom line high. In ultimax mode,
@@ -888,8 +895,8 @@ public:
     uint8_t getUltimax() { return ultimax; }
 
     //! @brief    Sets the ultimax flag
-    void setUltimax(bool value) { ultimax = value; }
-
+    void setUltimax(bool value);
+    
     //! @brief    Returns the latest value of the VICII's data bus during phi1.
     uint8_t getDataBusPhi1() { return dataBusPhi1; }
 

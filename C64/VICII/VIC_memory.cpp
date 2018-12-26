@@ -20,6 +20,51 @@
 #include "C64.h"
 
 void
+VIC::setUltimax(bool value) {
+    
+    ultimax = value;
+    
+    if (value) {
+        
+        memSrc[0x0] = M_RAM;
+        memSrc[0x1] = M_RAM;
+        memSrc[0x2] = M_RAM;
+        memSrc[0x3] = M_CRTHI;
+        memSrc[0x4] = M_RAM;
+        memSrc[0x5] = M_RAM;
+        memSrc[0x6] = M_RAM;
+        memSrc[0x7] = M_CRTHI;
+        memSrc[0x8] = M_RAM;
+        memSrc[0x9] = M_RAM;
+        memSrc[0xA] = M_RAM;
+        memSrc[0xB] = M_CRTHI;
+        memSrc[0xC] = M_RAM;
+        memSrc[0xD] = M_RAM;
+        memSrc[0xE] = M_RAM;
+        memSrc[0xF] = M_CRTHI;
+    
+    } else {
+        
+        memSrc[0x0] = M_RAM;
+        memSrc[0x1] = M_CHAR;
+        memSrc[0x2] = M_RAM;
+        memSrc[0x3] = M_RAM;
+        memSrc[0x4] = M_RAM;
+        memSrc[0x5] = M_RAM;
+        memSrc[0x6] = M_RAM;
+        memSrc[0x7] = M_RAM;
+        memSrc[0x8] = M_RAM;
+        memSrc[0x9] = M_CHAR;
+        memSrc[0xA] = M_RAM;
+        memSrc[0xB] = M_RAM;
+        memSrc[0xC] = M_RAM;
+        memSrc[0xD] = M_RAM;
+        memSrc[0xE] = M_RAM;
+        memSrc[0xF] = M_RAM;
+    }
+}
+
+void
 VIC::switchBank(uint16_t addr) {
 
      if (glueLogic == GLUE_DISCRETE) {
@@ -586,12 +631,7 @@ uint8_t
 VIC::memAccess(uint16_t addr)
 {
     uint8_t result;
-    
-    /* VIC has only 14 address lines. To be able to access the complete 64KB
-     * main memory, it inverts bit 0 and bit 1 of the CIA2 portA register and
-     * uses these values as the upper two address bits.
-     */
-    
+        
     assert((addr & 0xC000) == 0); // 14 bit address
     assert((bankAddr & 0x3FFF) == 0); // multiple of 16 KB
     
@@ -629,6 +669,7 @@ VIC::memAccess(uint16_t addr)
             case 0xB:
             case 0x7:
             case 0x3:
+                assert(memSrc[addrBus >> 12] == M_CRTHI);
                 result = c64->expansionport.peek(addrBus | 0xF000);
                 break;
             case 0xE:
@@ -636,30 +677,23 @@ VIC::memAccess(uint16_t addr)
             case 0x9:
             case 0x8:
             case 0x0:
+                assert(memSrc[addrBus >> 12] == M_RAM);
                 result = c64->mem.ram[addrBus];
                 break;
             default:
+                assert(memSrc[addrBus >> 12] == M_RAM);
                 result = c64->mem.ram[addrBus];
         }
         
     } else {
         
         if (isCharRomAddr(addr)) {
+            assert(memSrc[addrBus >> 12] == M_CHAR);
             result = c64->mem.rom[0xC000 + addr];
         } else {
+            assert(memSrc[addrBus >> 12] == M_RAM);
             result = c64->mem.ram[addrBus];
         }
-            
-        /*
-        switch (addrBus >> 12) {
-            case 0x9:
-            case 0x1:
-                result = c64->mem.rom[0xC000 + addr];
-                break;
-            default:
-                result = c64->mem.ram[addrBus];
-        }
-        */
     }
     
     return result;
