@@ -24,17 +24,26 @@
 
 #include "Cartridge.h"
 #include "ActionReplay.h"
+#include "Comal80.h"
 #include "EasyFlash.h"
 #include "Epyx.h"
-#include "FinalIII.h"
 #include "Expert.h"
+#include "FinalIII.h"
+#include "FreezeFrame.h"
+#include "Funplay.h"
 #include "GeoRam.h"
 #include "Isepic.h"
 #include "Kcs.h"
 #include "Kingsoft.h"
+#include "MagicDesk.h"
 #include "Ocean.h"
+#include "Rex.h"
 #include "SimonsBasic.h"
 #include "StarDos.h"
+#include "SuperGames.h"
+#include "WarpSpeed.h"
+#include "Westermann.h"
+#include "Zaxxon.h"
 
 
 
