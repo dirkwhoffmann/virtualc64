@@ -213,9 +213,9 @@ Expert::peekIO1(uint16_t addr)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
     
-    // debug("Expert::peekIO1\n");
+    debug("Expert::peekIO1\n");
     
-    // Any IO1 access disabled the cartridge
+    // Any IO1 access disables the cartridge
     active = false;
     
     return 0;
