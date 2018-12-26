@@ -441,6 +441,7 @@
 		50C52F4221CFA9F0005E6013 /* Kcs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Kcs.h; sourceTree = "<group>"; };
 		50C72DE31BC7BC8800F1863B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		50C72DE51BC7F42100F1863B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		50C809E521D394C500B67033 /* ExpansionPort_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExpansionPort_types.h; sourceTree = "<group>"; };
 		50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePadManager.swift; sourceTree = "<group>"; };
 		50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerMenu.swift; sourceTree = "<group>"; };
 		50D197DF21606DEC008BC551 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
@@ -1111,6 +1112,7 @@
 				389E777F0C7A3B6F00BEAFA6 /* ControlPort.h */,
 				50171AA22083727400C07AAD /* ControlPort_types.h */,
 				389E777E0C7A3B6F00BEAFA6 /* ControlPort.cpp */,
+				50C809E521D394C500B67033 /* ExpansionPort_types.h */,
 				5058B17F1A6AD2D900A99F1C /* ExpansionPort.h */,
 				5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */,
 				5020F28A0BBABE3C0093C396 /* IEC.h */,

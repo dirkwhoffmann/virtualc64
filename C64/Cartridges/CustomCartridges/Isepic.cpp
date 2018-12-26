@@ -187,8 +187,8 @@ Isepic::setSwitch(int8_t pos)
         debug("Activating Ipsec cartridge\n");
         
         // Enable Ultimax mode
-        c64->expansionport.setGameLinePhi2(0);
-        c64->expansionport.setExromLinePhi2(1);
+        // c64->expansionport.setGameLinePhi2(0);
+        // c64->expansionport.setExromLinePhi2(1);
         
         // Trigger an NMI
         c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
@@ -197,8 +197,8 @@ Isepic::setSwitch(int8_t pos)
         
         debug("Hiding Ipsec cartridge\n");
         
-        c64->expansionport.setGameLinePhi2(1);
-        c64->expansionport.setExromLinePhi2(1);
+        // c64->expansionport.setGameLinePhi2(1);
+        // c64->expansionport.setExromLinePhi2(1);
         
         c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
     }
@@ -219,8 +219,8 @@ Isepic::updatePeekPokeLookupTables()
     // Remap all memory locations that are unmapped in Ultimax mode.
     if (cartIsVisible()) {
         
-        uint8_t exrom = c64->expansionport.getExromLinePhi2() ? 0x10 : 0x00;
-        uint8_t game  = c64->expansionport.getGameLinePhi2() ? 0x08 : 0x00;
+        uint8_t exrom = c64->expansionport.getExromLine() ? 0x10 : 0x00;
+        uint8_t game  = c64->expansionport.getGameLine() ? 0x08 : 0x00;
         uint8_t index = (c64->processorPort.read() & 0x07) | exrom | game;
         
         debug("Exrom: %d Game: %d index: %X\n", exrom != 0, game != 0, index & 0x07);

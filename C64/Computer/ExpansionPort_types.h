@@ -1,5 +1,5 @@
 /*!
- * @header      ControlPort_types.h
+ * @header      ExpansionPort_types.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
  * @copyright   Dirk W. Hoffmann. All rights reserved.
  */
@@ -18,35 +18,18 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef CONTROLPORT_TYPES_H
-#define CONTROLPORT_TYPES_H
+#ifndef EXPANSIONPORT_TYPES_H
+#define EXPANSIONPORT_TYPES_H
 
-/*! @brief    Joystick directions
+/*! @brief    Cartridge mode
  */
 typedef enum {
     
-    JOYSTICK_UP,
-    JOYSTICK_DOWN,
-    JOYSTICK_LEFT,
-    JOYSTICK_RIGHT,
-    JOYSTICK_FIRE
+    CRT_16K,
+    CRT_8K,
+    CRT_ULTIMAX,
+    CRT_OFF
     
-} JoystickDirection;
+} CartridgeMode;
 
-/*! @brief    Joystick events
- */
-typedef enum {
-    
-    PULL_UP,
-    PULL_DOWN,
-    PULL_LEFT,
-    PULL_RIGHT,
-    PRESS_FIRE,
-    RELEASE_X,
-    RELEASE_Y,
-    RELEASE_XY,
-    RELEASE_FIRE
-    
-} JoystickEvent;
-
-#endif 
+#endif

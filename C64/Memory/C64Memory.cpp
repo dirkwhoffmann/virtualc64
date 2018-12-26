@@ -193,8 +193,8 @@ C64Memory::updatePeekPokeLookupTables()
     // debug("C64Memory::updatePeekPokeLookupTables\n");
     
     // Read game line, exrom line, and processor port bits
-    uint8_t game  = c64->expansionport.getGameLinePhi2() ? 0x08 : 0x00;
-    uint8_t exrom = c64->expansionport.getExromLinePhi2() ? 0x10 : 0x00;
+    uint8_t game  = c64->expansionport.getGameLine() ? 0x08 : 0x00;
+    uint8_t exrom = c64->expansionport.getExromLine() ? 0x10 : 0x00;
     uint8_t index = (c64->processorPort.read() & 0x07) | exrom | game;
 
     // Set ultimax flag

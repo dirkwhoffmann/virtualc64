@@ -1,7 +1,7 @@
 /*!
  * @header      ExpansionPort.h
- * @author      Written by Dirk Hoffmann based on the original code by A. Carl Douglas.
- * @copyright   All rights reserved.
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   Dirk W. Hoffmann. All rights reserved.
  */
 /* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@
 #define _EXPANSIONPORT_H
 
 #include "Cartridge.h"
+#include "ExpansionPort_types.h"
 
 class ExpansionPort : public VirtualComponent {
  
@@ -48,25 +49,15 @@ private:
      */
     Cartridge *cartridge = NULL;
     
-    /*! @brief    Current value of the Game line in phase phi1 (VICII access)
+    /*! @brief    Current value of the Game line.
      *  @details  Equals 1, if no cartridge if attached.
      */
-    bool gameLinePhi1 = 1;
-
-    /*! @brief    Current value of the Game line in phase phi2 (CPU access)
-     *  @details  Equals 1, if no cartridge if attached.
-     */
-    bool gameLinePhi2 = 1;
+    bool gameLine = 1;
     
-    /*! @brief    Current value of the Exrom line in phase phi1 (VICII access)
+    /*! @brief    Current value of the Exrom line.
      *  @details  Equals 1, if no cartridge if attached.
      */
-    bool exromLinePhi1 = 1;
-
-    /*! @brief    Current value of the Exrom line in phase phi2 (CPU access)
-     *  @details  Equals 1, if no cartridge if attached.
-     */
-    bool exromLinePhi2 = 1;
+    bool exromLine = 1;
     
 public:
     
@@ -130,26 +121,33 @@ public:
     CartridgeType getCartridgeType();
     
     //! @brief    Returns the state of the Game line
-    bool getGameLinePhi1() { return gameLinePhi1; }
-    bool getGameLinePhi2() { return gameLinePhi2; }
+    bool getGameLine() { return gameLine; }
 
     /*! @brief    Sets the state of the Game line
-     *  @details  Value has an effect on the C64's peek sources and poke targets
+     *  @note     This value affects the C64's and VICII's mem source table.
      */
-    void setGameLinePhi1(bool value);
-    void setGameLinePhi2(bool value);
-    void setGameLine(bool value) { setGameLinePhi1(value); setGameLinePhi2(value); }
+    void setGameLine(bool value);
     
     //! @brief    Returns the state of the Exrom line
-    bool getExromLinePhi1() { return exromLinePhi1; }
-    bool getExromLinePhi2() { return exromLinePhi2; }
+    bool getExromLine() { return exromLine; }
 
     /*! @brief    Sets the state of the Exrom line
-     *  @details  Value has an effect on the C64's peek sources and poke targets
+     *  @note     This value affects the C64's and VICII's mem source table.
      */
-    void setExromLinePhi1(bool value);
-    void setExromLinePhi2(bool value);
-    void setExromLine(bool value) { setExromLinePhi1(value); setExromLinePhi2(value); }
+    void setExromLine(bool value);
+    
+    /*! @brief    Returns the current cartridge mode.
+     *  @details  The cartridge mode is determined by the current values of the
+     *            Game and Exrom line.
+     */
+    CartridgeMode getCartridgeMode(); 
+    
+    /*! @brief    Sets the specified cartridge mode.
+     *  @details  This method is a convenience wrapper around setGameLine() and
+     *            setExromLine().
+     */
+    void setCartridgeMode(CartridgeMode mode);
+
     
     /*! @brief    Modifies the memory source lookup tables if required
      *  @details  This function is called in C64::updatePeekPokeLookupTables()

@@ -10,6 +10,7 @@
 #include "VIC_types.h"
 #include "SID_types.h"
 #include "ControlPort_types.h"
+#include "ExpansionPort_types.h"
 #include "Cartridge_types.h"
 #include "Drive_types.h"
 #include "Disk_types.h"
