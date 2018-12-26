@@ -1,5 +1,5 @@
 /*!
- * @file        Kingsoft.h
+ * @file        Kingsoft.cpp
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
  * @copyright   Dirk W. Hoffmann. All rights reserved.
  */

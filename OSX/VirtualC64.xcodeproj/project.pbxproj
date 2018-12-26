@@ -145,6 +145,8 @@
 		50C52F4321CFA9F0005E6013 /* Kcs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50C52F4121CFA9F0005E6013 /* Kcs.cpp */; };
 		50C72DE41BC7BC8800F1863B /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C72DE31BC7BC8800F1863B /* Metal.framework */; };
 		50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* Shaders.metal */; };
+		50C809E821D3A8A100B67033 /* SimonsBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50C809E621D3A8A100B67033 /* SimonsBasic.cpp */; };
+		50C809EB21D3A94300B67033 /* Ocean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50C809E921D3A94300B67033 /* Ocean.cpp */; };
 		50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */; };
 		50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */; };
 		50D197E021606DEC008BC551 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 50D197DF21606DEC008BC551 /* dsa_pub.pem */; };
@@ -442,6 +444,10 @@
 		50C72DE31BC7BC8800F1863B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		50C72DE51BC7F42100F1863B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		50C809E521D394C500B67033 /* ExpansionPort_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExpansionPort_types.h; sourceTree = "<group>"; };
+		50C809E621D3A8A100B67033 /* SimonsBasic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SimonsBasic.cpp; sourceTree = "<group>"; };
+		50C809E721D3A8A100B67033 /* SimonsBasic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimonsBasic.h; sourceTree = "<group>"; };
+		50C809E921D3A94300B67033 /* Ocean.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Ocean.cpp; sourceTree = "<group>"; };
+		50C809EA21D3A94300B67033 /* Ocean.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ocean.h; sourceTree = "<group>"; };
 		50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePadManager.swift; sourceTree = "<group>"; };
 		50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerMenu.swift; sourceTree = "<group>"; };
 		50D197DF21606DEC008BC551 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
@@ -755,6 +761,10 @@
 				50C52F4121CFA9F0005E6013 /* Kcs.cpp */,
 				5028921421A2F96800622969 /* Kingsoft.h */,
 				5028921321A2F96800622969 /* Kingsoft.cpp */,
+				50C809EA21D3A94300B67033 /* Ocean.h */,
+				50C809E921D3A94300B67033 /* Ocean.cpp */,
+				50C809E721D3A8A100B67033 /* SimonsBasic.h */,
+				50C809E621D3A8A100B67033 /* SimonsBasic.cpp */,
 				5003C1B3219807F8009AA08D /* StarDos.h */,
 				5003C1B2219807F8009AA08D /* StarDos.cpp */,
 			);
@@ -1343,6 +1353,7 @@
 				500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */,
 				5002FA8121C2654B00DA4BBC /* DevicesPrefs.swift in Sources */,
 				50265F57202D00940041C315 /* TapeMountController.swift in Sources */,
+				50C809E821D3A8A100B67033 /* SimonsBasic.cpp in Sources */,
 				5017B71A218729DA0014EDE4 /* FlashRom.cpp in Sources */,
 				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,
 				50FE726A212DE8F600E99755 /* VIC_memory.cpp in Sources */,
@@ -1350,6 +1361,7 @@
 				500E3A6721B5C29100935CB3 /* ScriptCommands.swift in Sources */,
 				50DBB44B2025CE5700489271 /* Basics.swift in Sources */,
 				5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */,
+				50C809EB21D3A94300B67033 /* Ocean.cpp in Sources */,
 				50D500520C2ED13F0022CA3A /* T64File.cpp in Sources */,
 				50A52A190C2FD43700A1377F /* D64File.cpp in Sources */,
 				5058F0F220A77EDC008BFA92 /* NeosMouse.cpp in Sources */,

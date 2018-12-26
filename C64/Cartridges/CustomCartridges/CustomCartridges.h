@@ -32,30 +32,10 @@
 #include "Isepic.h"
 #include "Kcs.h"
 #include "Kingsoft.h"
+#include "Ocean.h"
+#include "SimonsBasic.h"
 #include "StarDos.h"
 
-
-//! @brief    Type 4 cartridges
-class SimonsBasic : public Cartridge {
-    
-public:
-    using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_SIMONS_BASIC; }
-    void reset();
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t readIO1(uint16_t addr);
-    void pokeIO1(uint16_t addr, uint8_t value);
-};
-
-
-//! @brief    Type 5 cartridges
-class Ocean : public Cartridge {
-    
-public:
-    using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_OCEAN; }
-    void pokeIO1(uint16_t addr, uint8_t value);
-};
 
 
 //! @brief    Type 7 cartridges
