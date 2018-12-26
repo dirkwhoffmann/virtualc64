@@ -120,9 +120,28 @@ Expert::pressFreezeButton() {
     
     c64->suspend();
     
-    // Pressing the freeze button grounds the NMI line
-    c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+    if (switchInOnPosition()) {
+        debug("Switching on cartridge\n");
+        active = true;
+    }
     
+    // The Expert cartridge uses two three-state buffers in parallel to force
+    // the NMI line high, even if a program leaves it low to protect itself
+    // against freezers. The following code is surely not accurate, but it
+    // forces an NMI a trigger, regardless of the current value of the NMI
+    // line.
+    
+    uint8_t oldLine = c64->cpu.nmiLine;
+    uint8_t newLine = oldLine | CPU::INTSRC_EXPANSION;
+    
+    c64->cpu.releaseNmiLine((CPU::IntSource)0xFF);
+    c64->cpu.pullDownNmiLine((CPU::IntSource)newLine);
+    c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+    
+    /*
+    c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+    c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+    */
     c64->resume();
 }
 
@@ -130,10 +149,6 @@ void
 Expert::releaseFreezeButton()
 {
     debug("Expert::releaseFreezeButton\n");
-
-    c64->suspend();
-    c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
-    c64->resume();
 }
 
 void
@@ -264,8 +279,6 @@ Expert::setSwitch(int8_t pos)
 void
 Expert::toggleSwitch()
 {
-    debug("Expert::toggleSwitch\n");
-    debug("current: %d new: %d\n", switchPos, newSwitchPos);
     if (newSwitchPos < 0) {
         newSwitchPos = 0;
         switchPos = -1;
@@ -276,7 +289,6 @@ Expert::toggleSwitch()
         newSwitchPos = (switchPos < 0) ? 1 : -1;
         switchPos = 0;
     }
-    debug("  current: %d new: %d\n", switchPos, newSwitchPos);
     c64->putMessage(MSG_CART_SWITCH);
 }
 

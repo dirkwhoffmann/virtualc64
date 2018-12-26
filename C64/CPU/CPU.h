@@ -203,6 +203,8 @@ class CPU : public VirtualComponent {
     //! @brief    Cycle of the most recent falling edge of the rdyLine
     uint64_t rdyLineDown;
     
+    public:
+    
     /*! @brief    NMI line (non maskable interrupts)
      *  @details  This variable is usually set to 0 which means that the NMI
      *            line is in high state. When an external component requests an
@@ -212,7 +214,6 @@ class CPU : public VirtualComponent {
      */
     uint8_t nmiLine;
     
-    public:
     
     /*! @brief    IRQ line (maskable interrupts)
      *  @details  This variable is usually set to 0 which means that the IRQ
