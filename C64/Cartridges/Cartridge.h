@@ -113,8 +113,6 @@ private:
     // Hardware switches
     //
     
-protected:
-    
     /*! @brief    Current position of the cartridge switch (if any)
      *  @details  Only a cery few cartridges such as ISEPIC and EXPERT have
      *            a switch.
@@ -123,6 +121,13 @@ protected:
 
     //! @brief    Status of the cartridge LED (true = on)
     bool led = false;
+    
+    
+protected:
+    
+    //
+    // Temporary storage (TODO: Move to custom cartridge classes)
+    //
     
     /*! @brief    Temporary storage for cycle information
      *  @details  Some custom cartridges need to remember when certain event
@@ -154,17 +159,17 @@ public:
     //! @functiongroup Class methods
     //
     
-    /*! @brief    Check cartridge type
+    /*! @brief    Checks the cartridge type.
      *  @details  Returns true iff the cartridge type is supported.
      */
     static bool isSupportedType(CartridgeType type);
     
-    /*! @brief    Returns true if addr is located in the ROML address space
+    /*! @brief    Returns true if addr is located in the ROML address space.
      *  @details  If visible, ROML is always mapped to 0x8000 - 0x9FFF.
      */
     static bool isROMLaddr (uint16_t addr) { return addr >= 0x8000 && addr <= 0x9FFF; }
     
-    /*! @brief    Returns true if addr is located in the ROMH address space
+    /*! @brief    Returns true if addr is located in the ROMH address space.
      *  @details  ROMH can appear in 0xA000 - 0xBFFF or 0xE000 - 0xFFFF.
      */
     static bool isROMHaddr (uint16_t addr) {
@@ -184,6 +189,9 @@ public:
     //! @brief    Deletes all chip packages
     void dealloc();
 
+    //! @brief    Returns the cartridge type
+    virtual CartridgeType getCartridgeType() { return CRT_NORMAL; }
+    
     //! @brief    Factory method
     /*! @details  Creates a cartridge with the specified type. Make sure to pass
      *            containers of the supported cartridge type, only.
@@ -207,7 +215,10 @@ public:
     //! @brief    Saves all chip packets to a buffer
     virtual void savePacketsToBuffer(uint8_t **buffer);
     
-    //! @brief    Methods from VirtualComponent
+    //
+    //! @functiongroup Methods from VirtualComponent
+    //
+    
     void reset();
     void ping() { };
     size_t stateSize();
@@ -215,14 +226,53 @@ public:
     void saveToBuffer(uint8_t **buffer);
     void dump();
     
-    //! @brief    Execution thread callback
-    /*! @details  This function is invoked by the expansion port. Only a few
-     *            cartridges such as EpyxFastLoader will do some action here.
-     */
-    virtual void execute() { };
     
-    //! @brief    Modifies the memory source lookup tables if required
-    virtual void updatePeekPokeLookupTables() { };
+    //
+    //! @functiongroup Managing the cartridge configuration
+    //
+    
+    //! @brief    Returns the initial state of the game line.
+    bool getGameLineInCrtFile() { return gameLineInCrtFile; }
+    
+    //! @brief    Returns the initial state of the exrom line.
+    bool getExromLineInCrtFile() { return exromLineInCrtFile; }
+    
+    /*! @brief    Resets the Game and Exrom line.
+     *  @details  The default implementation resets the values to those found
+     *            in the CRT file. Some custom cartridges need other start
+     *            configurations and overwrite this function.
+     */
+    virtual void resetCartConfig();
+    
+    
+    //
+    //! @functiongroup Handling ROM packets
+    //
+    
+    //! @brief    Reads in a chip packet from a CRT file
+    virtual void loadChip(unsigned nr, CRTFile *c);
+    
+    //! @brief    Banks in a rom chip into the ROML space
+    void bankInROML(unsigned nr, uint16_t size, uint16_t offset);
+    
+    //! @brief    Banks in a rom chip into the ROMH space
+    void bankInROMH(unsigned nr, uint16_t size, uint16_t offset);
+    
+    //! @brief    Banks in a rom chip
+    /*! @details  This function calls bankInROML or bankInROMH with the default
+     *            parameters for this chip as provided in the CRT file.
+     */
+    void bankIn(unsigned nr);
+    
+    //! @brief    Banks out a chip
+    /*! @details  RAM contents will show in memory
+     */
+    void bankOut(unsigned nr);
+
+    
+    //
+    //! @functiongroup Peeking and poking
+    //
     
     /*! @brief    Peek fallthrough
      *  @param    addr must be a value in
@@ -285,8 +335,6 @@ public:
     //! @brief    Poke fallthrough for I/O space 2
     virtual void pokeIO2(uint16_t addr, uint8_t value) { }
 
-    //! @brief    Returns the cartridge type
-    virtual CartridgeType getCartridgeType() { return CRT_NORMAL; }
     
     //
     //! @functiongroup Managing external Ram
@@ -309,59 +357,20 @@ public:
     void setPersistentRam(bool value) { persistentRam = value; }
 
     //! @brief    Reads a byte from the on-board RAM.
-    uint8_t peekRAM(uint16_t addr) { assert(addr < ramCapacity); return externalRam[addr]; }
+    uint8_t peekRAM(uint16_t addr) {
+        assert(addr < ramCapacity); return externalRam[addr]; }
 
     //! @brief    Writes a byte into the on-board RAM.
-    void pokeRAM(uint16_t addr, uint8_t value) { assert(addr < ramCapacity); externalRam[addr] = value; }
+    void pokeRAM(uint16_t addr, uint8_t value) {
+        assert(addr < ramCapacity); externalRam[addr] = value; }
 
     //! @brief    Erase the on-board RAM.
-    void eraseRAM(uint8_t value) { assert(externalRam != NULL); memset(externalRam, value, ramCapacity); }
+    void eraseRAM(uint8_t value) {
+        assert(externalRam != NULL); memset(externalRam, value, ramCapacity); }
     
-    //
-    //! @functiongroup Managing the cartridge configuration
-    //
-    
-    //! @brief    Returns the initial state of the game line.
-    bool getGameLineInCrtFile() { return gameLineInCrtFile; }
-        
-    //! @brief    Returns the initial state of the exrom line.
-    bool getExromLineInCrtFile() { return exromLineInCrtFile; }
-    
-    /*! @brief    Resets the Game and Exrom line.
-     *  @details  The default implementation resets the values to those found
-     *            in the CRT file. Some custom cartridges need other start
-     *            configurations and overwrite this function.
-     */
-    virtual void resetCartConfig();
-    
-    
-    //
-    //! @functiongroup Handling ROM packets
-    //
-    
-    //! @brief    Reads in a chip packet from a CRT file
-    virtual void loadChip(unsigned nr, CRTFile *c);
-
-    //! @brief    Banks in a rom chip into the ROML space
-    void bankInROML(unsigned nr, uint16_t size, uint16_t offset);
-
-    //! @brief    Banks in a rom chip into the ROMH space
-    void bankInROMH(unsigned nr, uint16_t size, uint16_t offset);
-
-    //! @brief    Banks in a rom chip
-    /*! @details  This function calls bankInROML or bankInROMH with the default
-     *            parameters for this chip as provided in the CRT file.
-     */
-    void bankIn(unsigned nr);
-    
-    //! @brief    Banks out a chip
-    /*! @details  RAM contents will show in memory
-     */
-    void bankOut(unsigned nr);
-
 
     //
-    // Handling buttons (if any)
+    // Operating buttons
     //
 
     //! @brief    Returns true if the cartridge has a freeze button.
@@ -396,7 +405,7 @@ public:
     
     
     //
-    // Handling switches
+    // Operating switches
     //
     
     //! @brief    Returns true if the cartridge has a switch
@@ -419,8 +428,9 @@ public:
     //! @brief    Push to next switch position
     virtual void toggleSwitch() { }
 
+    
     //
-    // Handling LEDs
+    // Operating LEDs
     //
     
     //! @brief    Returns true if the cartridge has a LED.
@@ -432,11 +442,21 @@ public:
     //! @brief    Switches the LED on or off.
     virtual void setLED(bool value) { led = value; }
     
+    
     //
     // Delegation methods
     //
     
-    // @brief    Called when the C64 CPU triggers an NMI
+    //! @brief    Execution thread callback
+    /*! @details  This function is invoked by the expansion port. Only a few
+     *            cartridges such as EpyxFastLoader will do some action here.
+     */
+    virtual void execute() { };
+    
+    //! @brief    Modifies the memory source lookup tables if required
+    virtual void updatePeekPokeLookupTables() { };
+    
+    //! @brief    Called when the C64 CPU triggers an NMI
     virtual void nmiWillTrigger() { }
 };
 

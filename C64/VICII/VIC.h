@@ -391,13 +391,6 @@ private:
     //
     // Housekeeping information
     //
-
-    /*! @brief    Column counter
-     *  @details  Counts the drawn visible columns. The counter is 0 outside
-     *            the visible area. Inside the visible area, it is incremented
-     *            by one after a column has been drawn.
-     */
-    // int8_t visibleColumnCnt;
     
     /*! @brief    Indicates wether we are in a visible display column or not
      *  @details  The visible columns comprise canvas columns and border

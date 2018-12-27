@@ -30,7 +30,7 @@ Expert::Expert(C64 *c64) : Cartridge(c64)
     setDescription("Expert");
     
     active = false;
-    switchPos = 0;
+    setSwitch(0);
     newSwitchPos = 1;
     
     // Allocate 8KB bytes persistant RAM
@@ -53,7 +53,7 @@ Expert::dump()
     Cartridge::dump();
     
     msg("               active: %d\n", active);
-    msg("             switch: %d ", switchPos);
+    msg("             switch: %d ", getSwitch());
     if (switchInPrgPosition()) msg("(PRG)\n");
     if (switchInOffPosition()) msg("(OFF)\n");
     if (switchInOnPosition()) msg("(ON)\n");
@@ -274,13 +274,13 @@ Expert::toggleSwitch()
 {
     if (newSwitchPos < 0) {
         newSwitchPos = 0;
-        switchPos = -1;
+        setSwitch(-1);
     } else if (newSwitchPos > 0) {
         newSwitchPos = 0;
-        switchPos = 1;
+        setSwitch(1);
     } else {
-        newSwitchPos = (switchPos < 0) ? 1 : -1;
-        switchPos = 0;
+        newSwitchPos = (getSwitch() < 0) ? 1 : -1;
+        setSwitch(0);
     }
     c64->putMessage(MSG_CART_SWITCH);
 }

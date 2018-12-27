@@ -29,7 +29,7 @@ Isepic::Isepic(C64 *c64) : Cartridge(c64)
     setRamCapacity(2048);
 
     page = 0;
-    switchPos = -1;
+    setSwitch(-1);
    
     debug("Isepic cartridge created\n");
 }
@@ -206,7 +206,7 @@ Isepic::setSwitch(int8_t pos)
 void
 Isepic::toggleSwitch()
 {
-    switchPos *= -1;
+    setSwitch(getSwitch() * -1);
     c64->putMessage(MSG_CART_SWITCH);
 }
 
