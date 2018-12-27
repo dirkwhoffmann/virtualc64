@@ -31,7 +31,7 @@ void
 KcsPower::reset()
 {
     Cartridge::reset();
-    memset(externalRam, 0xFF, 0x80);
+    eraseRAM(0xFF);
 }
 
 uint8_t
@@ -57,12 +57,12 @@ KcsPower::peekIO2(uint16_t addr)
          uint8_t game = c64->expansionport.getGameLine() ? 0x40 : 0x00;
          return exrom | game | (c64->vic.getDataBusPhi1() & 0x3F);
          */
-        return externalRam[addr & 0x7F];
+        return peekRAM(addr & 0x7F);
         
     } else {
         
         // Return value from onboard RAM
-        return externalRam[addr & 0x7F];
+        return peekRAM(addr & 0x7F);
     }
 }
 
@@ -76,7 +76,7 @@ void
 KcsPower::pokeIO2(uint16_t addr, uint8_t value)
 {
     if (!(addr & 0x80)) {
-        externalRam[addr & 0x7F] = value;
+        pokeRAM(addr & 0x7F, value);
     }
 }
 

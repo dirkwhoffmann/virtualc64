@@ -38,8 +38,7 @@ void
 Isepic::reset()
 {
     Cartridge::reset();
-    
-    memset(externalRam, 0, ramCapacity);
+    eraseRAM(0);
     page = 0;
 }
 
@@ -80,11 +79,11 @@ Isepic::peek(uint16_t addr)
     }
     
     if (addr == 0xFFFA || addr == 0xFFFB) {
-        return externalRam[(page * 256) + (addr & 0xFF)];
+        return peekRAM((page * 256) + (addr & 0xFF));
     }
     
     if (isROMLaddr(addr)) {
-        return externalRam[(page * 256) + (addr & 0xFF)];
+        return peekRAM((page * 256) + (addr & 0xFF));
     } else if (isROMHaddr(addr)) {
         
         uint8_t exrom = 0x10;
@@ -121,7 +120,7 @@ Isepic::peekIO2(uint16_t addr)
     
     if (cartIsVisible()) {
         //  debug("Reading %02X from %d:%d\n", externalRam[(page * 256) + (addr & 0xFF)], page, addr & 0xFF);
-        return externalRam[(page * 256) + (addr & 0xFF)];
+        return peekRAM((page * 256) + (addr & 0xFF));
     }
     
     return 0;
@@ -136,7 +135,7 @@ Isepic::poke(uint16_t addr, uint8_t value)
     }
     
     if (isROMLaddr(addr)) {
-        externalRam[(page * 256) + (addr & 0xFF)] = value;
+        pokeRAM((page * 256) + (addr & 0xFF), value);
     } else if (isROMHaddr(addr)) {
         c64->mem.ram[addr] = value;
     } else {
@@ -156,7 +155,7 @@ Isepic::pokeIO2(uint16_t addr, uint8_t value)
 {
     if (cartIsVisible()) {
         // debug("Writing %02X into %d:%d\n", value, page, addr & 0xFF);
-        externalRam[(page * 256) + (addr & 0xFF)] = value;
+        pokeRAM((page * 256) + (addr & 0xFF), value);
     }
 }
 

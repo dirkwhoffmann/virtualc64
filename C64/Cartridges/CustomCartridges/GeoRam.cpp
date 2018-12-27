@@ -29,9 +29,9 @@ GeoRAM::GeoRAM(C64 *c64) : Cartridge(c64)
 void
 GeoRAM::reset()
 {
-    if (!persistentRam) {
+    if (!getPersistentRam()) {
         debug("Erasing GeoRAM\n");
-        memset(externalRam, 0, ramCapacity);
+        eraseRAM(0);
     } else {
         debug("Preserving GeoRAM\n");
     }
@@ -79,7 +79,7 @@ GeoRAM::offset(uint8_t addr)
      *  256-byte pages inside of 16k, the value in $dffe ranges from 0 to 63."
      */
     
-    unsigned bankOffset = (bank * 16384) % ramCapacity;
+    unsigned bankOffset = (bank * 16384) % getRamCapacity();
     unsigned pageOffset = (page & 0x3F) * 256;
     return bankOffset + pageOffset + addr;
 }
@@ -88,10 +88,7 @@ uint8_t
 GeoRAM::peekIO1(uint16_t addr)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
-    unsigned i = offset(addr - 0xDE00);
-    assert(externalRam != NULL);
-    assert(i < ramCapacity);
-    return externalRam[i];
+    return peekRAM(offset(addr - 0xDE00));
 }
 
 uint8_t
@@ -104,10 +101,7 @@ void
 GeoRAM::pokeIO1(uint16_t addr, uint8_t value)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
-    unsigned i = offset(addr - 0xDE00);
-    assert(externalRam != NULL);
-    assert(i < ramCapacity);
-    externalRam[i] = value;
+    pokeRAM(offset(addr - 0xDE00), value);
 }
 
 void

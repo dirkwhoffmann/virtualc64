@@ -35,7 +35,7 @@ Expert::Expert(C64 *c64) : Cartridge(c64)
     
     // Allocate 8KB bytes persistant RAM
     setRamCapacity(0x2000);
-    persistentRam = true;
+    setPersistentRam(true);
     
     debug("Expert cartridge created\n");
 }
@@ -57,9 +57,9 @@ Expert::dump()
     if (switchInPrgPosition()) msg("(PRG)\n");
     if (switchInOffPosition()) msg("(OFF)\n");
     if (switchInOnPosition()) msg("(ON)\n");
-    msg("         NMI vector: %04X\n", LO_HI(externalRam[0x1FFA], externalRam[0x1FFB]));
-    msg("         IRQ vector: %04X\n", LO_HI(externalRam[0x1FFE], externalRam[0x1FFF]));
-    msg("       Reset vector: %04X\n", LO_HI(externalRam[0x1FFC], externalRam[0x1FFD]));
+    msg("         NMI vector: %04X\n", LO_HI(peekRAM(0x1FFA), peekRAM(0x1FFB)));
+    msg("         IRQ vector: %04X\n", LO_HI(peekRAM(0x1FFE), peekRAM(0x1FFF)));
+    msg("       Reset vector: %04X\n", LO_HI(peekRAM(0x1FFC), peekRAM(0x1FFD)));
 }
 
 size_t
@@ -104,13 +104,13 @@ Expert::loadChip(unsigned nr, CRTFile *c)
         return;
     }
 
+    assert(getRamCapacity() == chipSize);
+
     // Initialize RAM with data from CRT file
     debug("Copying file contents into Expert RAM\n");
-    assert(externalRam != NULL);
-    assert(ramCapacity == chipSize);
-    memcpy(externalRam, chipData, chipSize);
-    
-    dump();
+    for (unsigned i = 0; i < chipSize; i++) {
+        pokeRAM(i, chipData[i]);
+    }
 }
 
 void
@@ -193,7 +193,7 @@ Expert::peek(uint16_t addr)
     if (cartridgeRamIsVisible(addr)) {
         
         // Get value from cartridge RAM
-        return externalRam[addr & 0x1FFF];
+        return peekRAM(addr & 0x1FFF);
         
     } else {
         
@@ -223,7 +223,7 @@ Expert::poke(uint16_t addr, uint8_t value)
         // Write value into cartridge RAM if it is write enabled
         if (cartridgeRamIsWritable(addr)) {
             debug("Writing RAM cell %04X with %02X\n", addr & 0x1FFF, value);
-            externalRam[addr & 0x1FFF] = value;
+            pokeRAM(addr & 0x1FFF, value);
         }
     
     } else {

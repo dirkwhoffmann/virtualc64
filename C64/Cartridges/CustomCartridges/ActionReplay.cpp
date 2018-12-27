@@ -127,7 +127,7 @@ uint8_t
 ActionReplay::peek(uint16_t addr)
 {
     if (ramIsEnabled(addr)) {
-        return externalRam[addr & 0x1FFF];
+        return peekRAM(addr & 0x1FFF);
     }
     return Cartridge::peek(addr);
 }
@@ -136,12 +136,8 @@ void
 ActionReplay::poke(uint16_t addr, uint8_t value)
 {
     if (ramIsEnabled(addr)) {
-        externalRam[addr & 0x1FFF] = value;
-    } else {
-        // debug("poke(%04X, %02X)\n", addr, value);
-        // Cartridge::poke(addr, value);
+        pokeRAM(addr & 0x1FFF, value);
     }
-    
 }
 
 uint8_t
@@ -159,7 +155,7 @@ ActionReplay::peekIO2(uint16_t addr)
     
     // I/O space 2 mirrors $1F00 to $1FFF from the selected ROM bank or RAM.
     if (ramIsEnabled(addr)) {
-        return externalRam[0x1F00 + offset];
+        return peekRAM(0x1F00 + offset);
     } else {
         return packet[chipL]->peek(0x1F00 + offset);
     }
@@ -179,7 +175,7 @@ ActionReplay::pokeIO2(uint16_t addr, uint8_t value)
     uint16_t offset = addr & 0xFF;
     
     if (ramIsEnabled(addr)) {
-        externalRam[0x1F00 + offset] = value;
+        pokeRAM(0x1F00 + offset, value);
     }
 }
 

@@ -41,7 +41,7 @@ EasyFlash::reset()
     Cartridge::reset();
     
     bank = 0;
-    memset(externalRam, 0xFF, ramCapacity);
+    eraseRAM(0xFF);
 }
 
 void
@@ -54,7 +54,7 @@ EasyFlash::dump()
 
     msg("bank = %d\n", bank);
     for (unsigned i = 0; i < 256; i++) {
-        msg("%02X ", externalRam[i]);
+        msg("%02X ", peekRAM(i));
         if (i % 16 == 15) msg("\n");
     }
     msg("\n");
@@ -214,7 +214,7 @@ EasyFlash::peekIO1(uint16_t addr)
 uint8_t
 EasyFlash::peekIO2(uint16_t addr)
 {
-    return externalRam[addr & 0xFF];
+    return peekRAM(addr & 0xFF);
 }
 
 void
@@ -290,7 +290,7 @@ EasyFlash::pokeIO1(uint16_t addr, uint8_t value)
 void
 EasyFlash::pokeIO2(uint16_t addr, uint8_t value)
 {
-    externalRam[addr & 0xFF] = value;
+    pokeRAM(addr & 0xFF, value);
 }
 
 

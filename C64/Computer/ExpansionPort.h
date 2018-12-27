@@ -226,10 +226,11 @@ public:
     void setLED(bool value) { if (cartridge) cartridge->setLED(value); }
     
     //! @brief    Returns true if the attached cartridge has a RAM backing battery.
-    bool hasBattery() { return cartridge != NULL && cartridge->persistentRam; }
+    bool hasBattery() { return cartridge ? cartridge->getPersistentRam() : false; }
 
     //! @brief    Enables or disables RAM backing during a reset.
-    void setBattery(bool value) { if (cartridge) cartridge->persistentRam = value; }
+    void setBattery(bool value) { if (cartridge) cartridge->setPersistentRam(value); }
+    
     
     //
     // Notifications

@@ -19,7 +19,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 #ifndef _CARTRIDGE_INC
 #define _CARTRIDGE_INC
 
@@ -35,10 +34,16 @@ class ExpansionPort;
  */
 class Cartridge : public VirtualComponent {
     
-    public:
+public:
     
     //! @brief    Maximum number of chip packets on a single cartridge.
     static const unsigned MAX_PACKETS = 128;
+    
+private:
+    
+    //
+    // Cartridge configuration
+    //
     
     /*! @brief    Initial value of the game line
      *  @details  The value is read from the CRT filt and the game line is set
@@ -52,16 +57,22 @@ class Cartridge : public VirtualComponent {
      */
     bool exromLineInCrtFile = 1;
     
+protected:
+    
+    //
+    // ROM packets
+    //
+    
     //! @brief    Number of ROM packets
     uint8_t numPackets = 0;
     
     //! @brief    ROM chips contained in this cartridge
     CartridgeRom *packet[MAX_PACKETS];
     
-    //! @brief    Number of the ROM chip that is currently mapped to ROMx
+    //! @brief    The ROM packet that is currently mapped to ROMx
     uint8_t chipL = 0;
     uint8_t chipH = 0;
-
+    
     //! @brief    Number of bytes that are mapped to ROMx
     /*! @details  For most cartridges, this value is equals packet[romX]->size
      *            which means that the ROM is completely mapped.
@@ -71,11 +82,17 @@ class Cartridge : public VirtualComponent {
     uint16_t mappedBytesH = 0;
 
     //! @brief    Offset into the ROM chip's data array
-    /*! @details  The first ROMX byte is: chip[romX] + romOffsetX
-     *            The last ROMX byte is: chip[romX] + romOffsetX + romSizeX - 1
+    /*! @details  The first ROMx byte has index offsetx
+     *            The last ROMx byte has index  offsetx + mappedBytesx - 1
      */
     uint16_t offsetL = 0;
     uint16_t offsetH = 0;
+    
+private:
+    
+    //
+    // On-board RAM
+    //
     
     /*! @brief    Additional RAM
      *  @details  Some cartridges such as ActionReplay contain additional RAM.
@@ -91,6 +108,13 @@ class Cartridge : public VirtualComponent {
     //! @brief    Indicates if the RAM is kept alive during a reset.
     bool persistentRam = false;
 
+    
+    //
+    // Hardware switches
+    //
+    
+protected:
+    
     /*! @brief    Current position of the cartridge switch (if any)
      *  @details  Only a cery few cartridges such as ISEPIC and EXPERT have
      *            a switch.
@@ -130,6 +154,11 @@ public:
     //! @functiongroup Class methods
     //
     
+    /*! @brief    Check cartridge type
+     *  @details  Returns true iff the cartridge type is supported.
+     */
+    static bool isSupportedType(CartridgeType type);
+    
     /*! @brief    Returns true if addr is located in the ROML address space
      *  @details  If visible, ROML is always mapped to 0x8000 - 0x9FFF.
      */
@@ -140,12 +169,7 @@ public:
      */
     static bool isROMHaddr (uint16_t addr) {
         return (addr >= 0xA000 && addr <= 0xBFFF) || (addr >= 0xE000 && addr <= 0xFFFF); }
-    
-    /*! @brief    Check cartridge type
-     *  @details  Returns true iff the cartridge type is supported.
-     */
-    static bool isSupportedType(CartridgeType type);
-    
+
     
     //
     //! @functiongroup Creating and destructing
@@ -174,13 +198,6 @@ public:
      */
     static Cartridge *makeWithCRTFile(C64 *c64, CRTFile *file);
     
-    /*! @brief    Set the game line / exrom line to it's reset value.
-     *  @details  The custom implementation returns the value that was found
-     *            in the CRT file. Some custom cartridges need other start
-     *            configurations and overwrite this function.
-     */
-    virtual void resetCartConfig();
-
     //! @brief    State size function for chip packet data
     virtual size_t packetStateSize();
     
@@ -271,6 +288,10 @@ public:
     //! @brief    Returns the cartridge type
     virtual CartridgeType getCartridgeType() { return CRT_NORMAL; }
     
+    //
+    //! @functiongroup Managing external Ram
+    //
+    
     //! @brief    Returns the RAM size in bytes.
     uint32_t getRamCapacity(); 
 
@@ -281,15 +302,41 @@ public:
      */
     void setRamCapacity(uint32_t size);
 
+    //! @brief    Returns true if RAM data is preserved during a reset.
+    bool getPersistentRam() { return persistentRam; }
+
+    //! @brief    Enables or disables persistent RAM.
+    void setPersistentRam(bool value) { persistentRam = value; }
+
+    //! @brief    Reads a byte from the on-board RAM.
+    uint8_t peekRAM(uint16_t addr) { assert(addr < ramCapacity); return externalRam[addr]; }
+
+    //! @brief    Writes a byte into the on-board RAM.
+    void pokeRAM(uint16_t addr, uint8_t value) { assert(addr < ramCapacity); externalRam[addr] = value; }
+
+    //! @brief    Erase the on-board RAM.
+    void eraseRAM(uint8_t value) { assert(externalRam != NULL); memset(externalRam, value, ramCapacity); }
+    
+    //
+    //! @functiongroup Managing the cartridge configuration
+    //
+    
     //! @brief    Returns the initial state of the game line.
     bool getGameLineInCrtFile() { return gameLineInCrtFile; }
         
     //! @brief    Returns the initial state of the exrom line.
     bool getExromLineInCrtFile() { return exromLineInCrtFile; }
     
+    /*! @brief    Resets the Game and Exrom line.
+     *  @details  The default implementation resets the values to those found
+     *            in the CRT file. Some custom cartridges need other start
+     *            configurations and overwrite this function.
+     */
+    virtual void resetCartConfig();
+    
     
     //
-    //! @functiongroup ROM chip handling
+    //! @functiongroup Handling ROM packets
     //
     
     //! @brief    Reads in a chip packet from a CRT file
@@ -349,7 +396,7 @@ public:
     
     
     //
-    // Handling switches (if any)
+    // Handling switches
     //
     
     //! @brief    Returns true if the cartridge has a switch
@@ -373,7 +420,7 @@ public:
     virtual void toggleSwitch() { }
 
     //
-    // Operating Handling LEDs (if any)
+    // Handling LEDs
     //
     
     //! @brief    Returns true if the cartridge has a LED.
