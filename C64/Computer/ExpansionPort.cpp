@@ -101,8 +101,8 @@ ExpansionPort::dump()
     msg("Expansion port\n");
     msg("--------------\n");
     
-    msg(" Game line:  %d / %d\n", gameLine);
-    msg("Exrom line:  %d / %d\n", exromLine);
+    msg(" Game line:  %d\n", gameLine);
+    msg("Exrom line:  %d\n", exromLine);
 
     if (cartridge == NULL) {
         msg("No cartridge attached\n");
@@ -339,8 +339,8 @@ ExpansionPort::detachCartridge()
         setCartridgeMode(CRT_OFF);
         
         debug(1, "Cartridge detached from expansion port");
-        
         c64->putMessage(MSG_NO_CARTRIDGE);
+       
         resume();
     }
 }

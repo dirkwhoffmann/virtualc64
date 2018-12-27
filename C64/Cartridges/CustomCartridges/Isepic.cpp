@@ -51,12 +51,14 @@ Isepic::stateSize()
 void
 Isepic::didLoadFromBuffer(uint8_t **buffer)
 {
+    Cartridge::didLoadFromBuffer(buffer);
     page = read8(buffer);
 }
 
 void
 Isepic::didSaveToBuffer(uint8_t **buffer)
 {
+    Cartridge::didSaveToBuffer(buffer);
     write8(buffer, page);
 }
 

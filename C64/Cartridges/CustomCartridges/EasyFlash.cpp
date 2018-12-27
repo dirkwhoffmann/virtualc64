@@ -66,7 +66,7 @@ EasyFlash::dump()
 size_t
 EasyFlash::stateSize()
 {
-    return VirtualComponent::stateSize()
+    return Cartridge::stateSize()
     + 1
     + flashRomL.stateSize()
     + flashRomH.stateSize();
@@ -75,6 +75,7 @@ EasyFlash::stateSize()
 void
 EasyFlash::didLoadFromBuffer(uint8_t **buffer)
 {
+    Cartridge::didLoadFromBuffer(buffer);
     bank = read8(buffer);
     flashRomL.loadFromBuffer(buffer);
     flashRomH.loadFromBuffer(buffer);
@@ -83,6 +84,7 @@ EasyFlash::didLoadFromBuffer(uint8_t **buffer)
 void
 EasyFlash::didSaveToBuffer(uint8_t **buffer)
 {
+    Cartridge::didSaveToBuffer(buffer);
     write8(buffer, bank);
     flashRomL.saveToBuffer(buffer);
     flashRomH.saveToBuffer(buffer);

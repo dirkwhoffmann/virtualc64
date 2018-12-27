@@ -46,6 +46,7 @@ GeoRAM::stateSize()
 void
 GeoRAM::didLoadFromBuffer(uint8_t **buffer)
 {
+    Cartridge::didLoadFromBuffer(buffer);
     bank = read8(buffer);
     page = read8(buffer);
 }
@@ -53,6 +54,7 @@ GeoRAM::didLoadFromBuffer(uint8_t **buffer)
 void
 GeoRAM::didSaveToBuffer(uint8_t **buffer)
 {
+    Cartridge::didSaveToBuffer(buffer);
     write8(buffer, bank);
     write8(buffer, page);
 }
