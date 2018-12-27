@@ -20,7 +20,7 @@ extension MyController : NSWindowDelegate {
         audioEngine.startPlayback()
         
         // Start emulator if it was only paused while in background
-        if pauseInBackgroundSavedState { c64.run() }
+        if pauseInBackground && pauseInBackgroundSavedState { c64.run() }
 
         // Register for mouse move events
         window?.acceptsMouseMovedEvents = true

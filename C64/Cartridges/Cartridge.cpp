@@ -51,7 +51,6 @@ Cartridge::Cartridge(C64 *c64, const char *description)
         { &switchPos,          sizeof(switchPos),          KEEP_ON_RESET },
         { &led,                sizeof(led),                CLEAR_ON_RESET },
 
-        { &cycle,              sizeof(cycle),              CLEAR_ON_RESET },
         { &val[0],             sizeof(val),                CLEAR_ON_RESET },
         { &regValue,           sizeof(regValue),           CLEAR_ON_RESET },
      
@@ -98,7 +97,6 @@ Cartridge::reset()
     
     // Delete general-purpose variables
     memset(val, 0, sizeof(val));
-    cycle = 0;
     regValue = 0;
     
     // Bank in visibile chips (chips with low numbers show up first)

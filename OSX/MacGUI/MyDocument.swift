@@ -258,20 +258,21 @@ class MyDocument : NSDocument {
     @discardableResult
     func mountAttachment() -> Bool {
 
-        guard let con = myController else { return false }
+        guard let controller = myController else { return false }
         
         // Determine action to perform and text to type
         var action = AutoMountAction.openBrowser
         var autoTypeText: String?
 
         func getAction(_ type: String) {
-            action = con.autoMountAction[type] ?? action
-            if action != .openBrowser && (con.autoType[type] ?? false) {
-                autoTypeText = con.autoTypeText[type]
+            action = controller.autoMountAction[type] ?? action
+            if action != .openBrowser && (controller.autoType[type] ?? false) {
+                autoTypeText = controller.autoTypeText[type]
             }
         }
 
         switch(attachment) {
+        case _ as SnapshotProxy: c64.flash(attachment); return true
         case _ as D64FileProxy, _ as G64FileProxy: getAction("D64")
         case _ as PRGFileProxy, _ as P00FileProxy: getAction("PRG")
         case _ as T64FileProxy: getAction("T64")

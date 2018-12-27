@@ -226,7 +226,7 @@ extension SnapshotDialog {
         let fileWrapper = FileWrapper.init(regularFileWithContents: data)
         fileWrapper.preferredFilename = "Snapshot.VC64"
         pboard.write(fileWrapper)
-        
+
         return true;
     }
 }

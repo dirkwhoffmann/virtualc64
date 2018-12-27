@@ -22,6 +22,9 @@
 void
 VIC::setUltimax(bool value) {
     
+    // For details, see:
+    // VIC memory mapping (http://www.harries.dk/files/C64MemoryMaps.pdf)
+    
     ultimax = value;
     
     if (value) {
@@ -630,74 +633,99 @@ VIC::poke(uint16_t addr, uint8_t value)
 uint8_t
 VIC::memAccess(uint16_t addr)
 {
-    uint8_t result;
-        
     assert((addr & 0xC000) == 0); // 14 bit address
     assert((bankAddr & 0x3FFF) == 0); // multiple of 16 KB
     
     addrBus = bankAddr | addr;
-    
-    // VIC memory mapping (http://www.harries.dk/files/C64MemoryMaps.pdf)
-    // Note: Final Cartridge III (freezer mode) only works when BLANK is replaced
-    //       by RAM. So this mapping might not be 100% correct.
-    //
-    //          Ultimax  Standard
-    // 0xF000:   ROMH      RAM
-    // 0xE000:   RAM       RAM
-    // 0xD000:   RAM       RAM
-    // 0xC000:   BLANK     RAM
-    // --------------------------
-    // 0xB000:   ROMH      RAM
-    // 0xA000:   BLANK     RAM
-    // 0x9000:   RAM       CHAR
-    // 0x8000:   RAM       RAM
-    // --------------------------
-    // 0x7000:   ROMH      RAM
-    // 0x6000:   BLANK     RAM
-    // 0x5000:   BLANK     RAM
-    // 0x4000:   BLANK     RAM
-    // --------------------------
-    // 0x3000:   ROMH      RAM
-    // 0x2000:   BLANK     RAM
-    // 0x1000:   BLANK     CHAR
-    // 0x0000:   RAM       RAM
-    
-    if (getUltimax()) {
-        
-        switch (addrBus >> 12) {
-            case 0xF:
-            case 0xB:
-            case 0x7:
-            case 0x3:
-                assert(memSrc[addrBus >> 12] == M_CRTHI);
-                result = c64->expansionport.peek(addrBus | 0xF000);
-                break;
-            case 0xE:
-            case 0xD:
-            case 0x9:
-            case 0x8:
-            case 0x0:
-                assert(memSrc[addrBus >> 12] == M_RAM);
-                result = c64->mem.ram[addrBus];
-                break;
-            default:
-                assert(memSrc[addrBus >> 12] == M_RAM);
-                result = c64->mem.ram[addrBus];
-        }
-        
-    } else {
-        
-        if (isCharRomAddr(addr)) {
-            assert(memSrc[addrBus >> 12] == M_CHAR);
-            result = c64->mem.rom[0xC000 + addr];
-        } else {
-            assert(memSrc[addrBus >> 12] == M_RAM);
-            result = c64->mem.ram[addrBus];
-        }
+    switch (memSrc[addrBus >> 12]) {
+            
+        case M_RAM:
+            return c64->mem.ram[addrBus];
+            
+        case M_CHAR:
+            return c64->mem.rom[0xC000 + addr];
+
+        case M_CRTHI:
+            return c64->expansionport.peek(addrBus | 0xF000);
+            
+        default:
+            return c64->mem.ram[addrBus];
     }
-    
-    return result;
 }
+
+/*
+ uint8_t
+ VIC::memAccess(uint16_t addr)
+ {
+ uint8_t result;
+ 
+ assert((addr & 0xC000) == 0); // 14 bit address
+ assert((bankAddr & 0x3FFF) == 0); // multiple of 16 KB
+ 
+ addrBus = bankAddr | addr;
+ 
+ // VIC memory mapping (http://www.harries.dk/files/C64MemoryMaps.pdf)
+ // Note: Final Cartridge III (freezer mode) only works when BLANK is replaced
+ //       by RAM. So this mapping might not be 100% correct.
+ //
+ //          Ultimax  Standard
+ // 0xF000:   ROMH      RAM
+ // 0xE000:   RAM       RAM
+ // 0xD000:   RAM       RAM
+ // 0xC000:   BLANK     RAM
+ // --------------------------
+ // 0xB000:   ROMH      RAM
+ // 0xA000:   BLANK     RAM
+ // 0x9000:   RAM       CHAR
+ // 0x8000:   RAM       RAM
+ // --------------------------
+ // 0x7000:   ROMH      RAM
+ // 0x6000:   BLANK     RAM
+ // 0x5000:   BLANK     RAM
+ // 0x4000:   BLANK     RAM
+ // --------------------------
+ // 0x3000:   ROMH      RAM
+ // 0x2000:   BLANK     RAM
+ // 0x1000:   BLANK     CHAR
+ // 0x0000:   RAM       RAM
+ 
+ if (getUltimax()) {
+ 
+ switch (addrBus >> 12) {
+ case 0xF:
+ case 0xB:
+ case 0x7:
+ case 0x3:
+ assert(memSrc[addrBus >> 12] == M_CRTHI);
+ result = c64->expansionport.peek(addrBus | 0xF000);
+ break;
+ case 0xE:
+ case 0xD:
+ case 0x9:
+ case 0x8:
+ case 0x0:
+ assert(memSrc[addrBus >> 12] == M_RAM);
+ result = c64->mem.ram[addrBus];
+ break;
+ default:
+ assert(memSrc[addrBus >> 12] == M_RAM);
+ result = c64->mem.ram[addrBus];
+ }
+ 
+ } else {
+ 
+ if (isCharRomAddr(addr)) {
+ assert(memSrc[addrBus >> 12] == M_CHAR);
+ result = c64->mem.rom[0xC000 + addr];
+ } else {
+ assert(memSrc[addrBus >> 12] == M_RAM);
+ result = c64->mem.ram[addrBus];
+ }
+ }
+ 
+ return result;
+ }
+ */
 
 uint8_t
 VIC::memSpyAccess(uint16_t addr)

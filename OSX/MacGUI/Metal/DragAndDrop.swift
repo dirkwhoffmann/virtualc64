@@ -97,7 +97,10 @@ public extension MetalView {
                 return false
             }
             if document.proceedWithUnexportedDisk() {
-                controller.c64.flash(snapshot)
+                DispatchQueue.main.async {
+                    let snap = snapshot
+                    self.controller.c64.flash(snap)
+                }
                 return true
             } else {
                 return false
@@ -108,7 +111,6 @@ public extension MetalView {
             if let url = NSURL.init(from: pasteBoard) as URL? {
                 do {
                     try document.createAttachment(from: url)
-                    // return document.processAttachmentAfterDragAndDrop()
                     return document.mountAttachment()
                     
                 } catch {
