@@ -828,7 +828,7 @@
 				5062EE1320A4AD0400F77BA4 /* SID */,
 				50F1752A2196C6B70004E853 /* Computer */,
 				504B39910C45192700286F18 /* Peripherals */,
-				50F175272196C53B0004E853 /* FileTypes */,
+				50F175272196C53B0004E853 /* FileFormats */,
 			);
 			name = C64;
 			path = ../C64;
@@ -1097,7 +1097,7 @@
 			path = Drive;
 			sourceTree = "<group>";
 		};
-		50F175272196C53B0004E853 /* FileTypes */ = {
+		50F175272196C53B0004E853 /* FileFormats */ = {
 			isa = PBXGroup;
 			children = (
 				5018E47F12240F7100F0820E /* AnyC64File.h */,
@@ -1125,7 +1125,7 @@
 				504606331BE4B99100463FD7 /* G64File.h */,
 				504606321BE4B99100463FD7 /* G64File.cpp */,
 			);
-			path = FileTypes;
+			path = FileFormats;
 			sourceTree = "<group>";
 		};
 		50F175282196C6070004E853 /* Datasette */ = {

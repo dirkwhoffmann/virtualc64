@@ -190,12 +190,6 @@ Expert::updatePeekPokeLookupTables()
 uint8_t
 Expert::peek(uint16_t addr)
 {
-    /*
-    if (addr >= 0xFF00) {
-        debug("Expert::peek(%04X)\n", addr);
-    }
-    */
-    
     if (cartridgeRamIsVisible(addr)) {
         
         // Get value from cartridge RAM
