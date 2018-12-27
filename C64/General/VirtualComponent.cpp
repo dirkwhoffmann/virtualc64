@@ -141,11 +141,13 @@ void
 VirtualComponent::loadFromBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
-    size_t stateSize = VirtualComponent::stateSize();
     
-    debug(3, "    Loading internal state (%d bytes) ...\n", stateSize);
+    debug(3, "    Loading internal state ...\n");
     
-    // Load internal state of sub components
+    // Call delegation method
+    willLoadFromBuffer(buffer);
+    
+    // Load internal state of all sub components
     if (subComponents != NULL)
         for (unsigned i = 0; subComponents[i] != NULL; i++)
             subComponents[i]->loadFromBuffer(buffer);
@@ -180,8 +182,13 @@ VirtualComponent::loadFromBuffer(uint8_t **buffer)
         }
     }
     
-    if (*buffer - old != VirtualComponent::stateSize()) {
-        panic("loadFromBuffer: Snapshot size is wrong.\n");
+    // Call delegation method
+    didLoadFromBuffer(buffer);
+    
+    // Verify that the number of read bytes matches the state size
+    if (*buffer - old != stateSize()) {
+        panic("loadFromBuffer: Snapshot size is wrong. Got %d, expected %d.",
+              *buffer - old, stateSize());
         assert(false);
     }
 }
@@ -190,11 +197,13 @@ void
 VirtualComponent::saveToBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
-    size_t stateSize = VirtualComponent::stateSize();
     
-    debug(3, "    Saving internal state (%d bytes) ...\n", stateSize);
+    debug(3, "    Saving internal state ...\n");
 
-    // Save internal state of sub components
+    // Call delegation method
+    willSaveToBuffer(buffer);
+    
+    // Save internal state of all sub components
     if (subComponents != NULL) {
         for (unsigned i = 0; subComponents[i] != NULL; i++)
             subComponents[i]->saveToBuffer(buffer);
@@ -230,8 +239,13 @@ VirtualComponent::saveToBuffer(uint8_t **buffer)
         }
     }
     
-    if (*buffer - old != stateSize) {
-        panic("saveToBuffer: Snapshot size is wrong.");
+    // Call delegation method
+    didSaveToBuffer(buffer);
+    
+    // Verify that the number of written bytes matches the state size
+    if (*buffer - old != stateSize()) {
+        panic("saveToBuffer: Snapshot size is wrong. Got %d, expected %d.",
+              *buffer - old, stateSize());
         assert(false);
     }
 }

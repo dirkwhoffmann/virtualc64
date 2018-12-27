@@ -30,7 +30,34 @@ Cartridge::Cartridge(C64 *c64, const char *description)
     this->c64 = c64;
     
     memset(packet, 0, sizeof(packet));
-    memset(val, 0, sizeof(val));
+    
+    SnapshotItem items[] = {
+        
+        // Configuration items
+        { &gameLineInCrtFile,  sizeof(gameLineInCrtFile),  KEEP_ON_RESET },
+        { &exromLineInCrtFile, sizeof(exromLineInCrtFile), KEEP_ON_RESET },
+        { &numPackets,         sizeof(numPackets),         KEEP_ON_RESET },
+        
+        { &chipL,              sizeof(chipL),              CLEAR_ON_RESET },
+        { &chipH,              sizeof(chipH),              CLEAR_ON_RESET },
+        { &mappedBytesL,       sizeof(mappedBytesL),       CLEAR_ON_RESET },
+        { &mappedBytesH,       sizeof(mappedBytesH),       CLEAR_ON_RESET },
+        { &offsetL,            sizeof(offsetL),            CLEAR_ON_RESET },
+        { &offsetH,            sizeof(offsetH),            CLEAR_ON_RESET },
+
+        { &ramCapacity,        sizeof(ramCapacity),        KEEP_ON_RESET },
+        { &persistentRam,      sizeof(persistentRam),      KEEP_ON_RESET },
+
+        { &switchPos,          sizeof(switchPos),          KEEP_ON_RESET },
+        { &led,                sizeof(led),                CLEAR_ON_RESET },
+
+        { &cycle,              sizeof(cycle),              CLEAR_ON_RESET },
+        { &val[0],             sizeof(val),                CLEAR_ON_RESET },
+        { &regValue,           sizeof(regValue),           CLEAR_ON_RESET },
+     
+        { NULL,                0,                          0 }};
+    
+    registerSnapshotItems(items, sizeof(items));
 }
 
 Cartridge::~Cartridge()
@@ -52,6 +79,7 @@ Cartridge::dealloc()
         delete packet[i];
         packet[i] = NULL;
     }
+    
     numPackets = 0;
 }
 
@@ -190,138 +218,57 @@ Cartridge::makeWithCRTFile(C64 *c64, CRTFile *file)
 size_t
 Cartridge::packetStateSize()
 {
-    size_t result = 1 /* numPackets */;
+    size_t result = 0;
     
     for (unsigned i = 0; i < numPackets; i++) {
         assert(packet[i] != NULL);
         result += packet[i]->stateSize();
     }
-
+    
     return result;
 }
 
 void
 Cartridge::loadPacketsFromBuffer(uint8_t **buffer)
 {
-    uint8_t *old = *buffer;
-    
-    dump();
-    dealloc();
-    
-    numPackets = read8(buffer);
     for (unsigned i = 0; i < numPackets; i++) {
         assert(packet[i] == NULL);
-        packet[i] = new CartridgeRom(buffer);
-    }
-    
-    if (*buffer - old != packetStateSize()) {
-        assert(false);
+        packet[i] = new CartridgeRom();
+        packet[i]->loadFromBuffer(buffer);
     }
 }
 
 void
 Cartridge::savePacketsToBuffer(uint8_t **buffer)
 {
-    uint8_t *old = *buffer;
-    
-    write8(buffer, numPackets);
     for (unsigned i = 0; i < numPackets; i++) {
         assert(packet[i] != NULL);
         packet[i]->saveToBuffer(buffer);
-    }
-    
-    if (*buffer - old != packetStateSize()) {
-        assert(false);
     }
 }
 
 size_t
 Cartridge::stateSize()
 {
-    uint32_t size = 0;
-
-    size += 1; // initialGameLine
-    size += 1; // initialExromLine
-    
-    size += packetStateSize();
-    
-    size += sizeof(chipL);
-    size += sizeof(chipH);
-    size += sizeof(mappedBytesL);
-    size += sizeof(mappedBytesH);
-    size += sizeof(offsetL);
-    size += sizeof(offsetH);
-
-    size += sizeof(ramCapacity);
-    size += ramCapacity;
-    size += 1; // persistentRam
-    size += 1; // switchPos
-    
-    size += sizeof(val);
-    size += sizeof(cycle);
-    size += sizeof(regValue);
-
-    return size;
+    return VirtualComponent::stateSize()
+    + packetStateSize()
+    + ramCapacity;
 }
 
 void
-Cartridge::loadFromBuffer(uint8_t **buffer)
+Cartridge::didLoadFromBuffer(uint8_t **buffer)
 {
-    uint8_t *old = *buffer;
-    
-    gameLineInCrtFile = (bool)read8(buffer);
-    exromLineInCrtFile = (bool)read8(buffer);
+    setRamCapacity(ramCapacity);
     
     loadPacketsFromBuffer(buffer);
-    
-    chipL = read8(buffer);
-    chipH = read8(buffer);
-    mappedBytesL = read16(buffer);
-    mappedBytesH = read16(buffer);
-    offsetL = read16(buffer);
-    offsetH = read16(buffer);
-    
-    setRamCapacity(read32(buffer));
     readBlock(buffer, externalRam, ramCapacity);
-    persistentRam = (bool)read8(buffer);
-    switchPos = (int8_t)read8(buffer);
-    
-    readBlock(buffer, val, sizeof(val));
-    cycle = read64(buffer);
-    regValue = read8(buffer);
-
-    debug(2, "  Cartridge state loaded (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == Cartridge::stateSize());
 }
 
 void
-Cartridge::saveToBuffer(uint8_t **buffer)
+Cartridge::didSaveToBuffer(uint8_t **buffer)
 {
-    uint8_t *old = *buffer;
-    
-    write8(buffer, (uint8_t)gameLineInCrtFile);
-    write8(buffer, (uint8_t)exromLineInCrtFile);
-
     savePacketsToBuffer(buffer);
-    
-    write8(buffer, chipL);
-    write8(buffer, chipH);
-    write16(buffer, mappedBytesL);
-    write16(buffer, mappedBytesH);
-    write16(buffer, offsetL);
-    write16(buffer, offsetH);
-    
-    write32(buffer, ramCapacity);
     writeBlock(buffer, externalRam, ramCapacity);
-    write8(buffer, (uint8_t)persistentRam);
-    write8(buffer, (uint8_t)switchPos);
-
-    writeBlock(buffer, val, sizeof(val));
-    write64(buffer, cycle);
-    write8(buffer, regValue);
-
-    debug(4, "  Cartridge state saved (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == Cartridge::stateSize());
 }
 
 void

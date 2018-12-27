@@ -247,42 +247,23 @@ VIC::dump()
 size_t
 VIC::stateSize()
 {
-    size_t result = VirtualComponent::stateSize();
-
-    result += baLine.stateSize();
-    result += gAccessResult.stateSize();
-
-    return result;
+    return VirtualComponent::stateSize()
+    + baLine.stateSize()
+    + gAccessResult.stateSize();
 }
 
 void
-VIC::loadFromBuffer(uint8_t **buffer)
+VIC::didLoadFromBuffer(uint8_t **buffer)
 {
-    uint8_t *old = *buffer;
-    
-    VirtualComponent::loadFromBuffer(buffer);
-
     baLine.loadFromBuffer(buffer);
     gAccessResult.loadFromBuffer(buffer);
-    
-    if (*buffer - old != stateSize()) {
-        assert(false);
-    }
 }
 
 void
-VIC::saveToBuffer(uint8_t **buffer)
+VIC::didSaveToBuffer(uint8_t **buffer)
 {
-    uint8_t *old = *buffer;
-    
-    VirtualComponent::saveToBuffer(buffer);
-    
     baLine.saveToBuffer(buffer);
     gAccessResult.saveToBuffer(buffer);
- 
-    if (*buffer - old != stateSize()) {
-        assert(false);
-    }
 }
 
 void

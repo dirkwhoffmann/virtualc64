@@ -222,8 +222,9 @@ public:
     void reset();
     void ping() { };
     size_t stateSize();
-    void loadFromBuffer(uint8_t **buffer);
-    void saveToBuffer(uint8_t **buffer);
+    void willLoadFromBuffer(uint8_t **buffer) { dealloc(); }
+    void didLoadFromBuffer(uint8_t **buffer);
+    void didSaveToBuffer(uint8_t **buffer);
     void dump();
     
     

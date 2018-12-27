@@ -114,18 +114,14 @@ public:
 	//! @brief    Destructor
 	~SIDBridge();
 			
-    //! @brief    Method from VirtualComponent
+    //! @functiongroup    Methods from VirtualComponent
     void reset();
-    
-    //! @brief    Method from VirtualComponent
+    void dump();
     void setClockFrequency(uint32_t frequency);
-    
-    //! Load state
-    void loadFromBuffer(uint8_t **buffer);
+    void didLoadFromBuffer(uint8_t **buffer) { clearRingbuffer(); }
     
 	//! @brief    Prints debug information
     void dump(SIDInfo info);
-    void dump();
 
     //! @brief    Gathers all values that are displayed in the debugger
     SIDInfo getInfo();

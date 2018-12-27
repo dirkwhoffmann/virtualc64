@@ -22,6 +22,16 @@ ExpansionPort::ExpansionPort()
 {
     setDescription("Expansion port");
     debug(3, "  Creating expansion port at address %p...\n", this);
+    
+    // Register snapshot items
+    SnapshotItem items[] = {
+        
+        // Internal state
+        { &gameLine,          sizeof(gameLine),        KEEP_ON_RESET },
+        { &exromLine,         sizeof(exromLine),       KEEP_ON_RESET },
+        { NULL,               0,                       0 }};
+    
+    registerSnapshotItems(items, sizeof(items));
 }
 
 ExpansionPort::~ExpansionPort()
@@ -54,50 +64,35 @@ ExpansionPort::ping()
 size_t
 ExpansionPort::stateSize()
 {
-    return 4 + (cartridge ? cartridge->stateSize() : 0);
+    return VirtualComponent::stateSize()
+    + 2
+    + (cartridge ? cartridge->stateSize() : 0);
 }
 
 void
-ExpansionPort::loadFromBuffer(uint8_t **buffer)
+ExpansionPort::didLoadFromBuffer(uint8_t **buffer)
 {
-    uint8_t *old = *buffer;
-    
     // Delete old cartridge (if any)
     if (cartridge != NULL) {
         delete cartridge;
         cartridge = NULL;
     }
     
-    // Read cartridge type
+    // Read cartridge type and cartridge (if any)
     CartridgeType cartridgeType = (CartridgeType)read16(buffer);
-    gameLine = read8(buffer);
-    exromLine = read8(buffer);
-    
-    // Read cartridge data (if any)
     if (cartridgeType != CRT_NONE) {
         cartridge = Cartridge::makeWithType(c64, cartridgeType);
         cartridge->loadFromBuffer(buffer);
     }
-    
-    debug(2, "  Expansion port state loaded (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
 }
 
 void
-ExpansionPort::saveToBuffer(uint8_t **buffer)
+ExpansionPort::didSaveToBuffer(uint8_t **buffer)
 {
-    uint8_t *old = *buffer;
-    
+    // Write cartridge type and data (if any)
     write16(buffer, cartridge ? cartridge->getCartridgeType() : CRT_NONE);
-    write8(buffer, gameLine);
-    write8(buffer, exromLine);
-
-    // Write cartridge data (if any)
     if (cartridge != NULL)
         cartridge->saveToBuffer(buffer);
- 
-    debug(4, "  Expansion port state saved (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
 }
 
 void

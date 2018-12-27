@@ -58,10 +58,8 @@ ControlPort::reset()
 }
 
 void
-ControlPort::loadFromBuffer(uint8_t **buffer)
+ControlPort::didLoadFromBuffer(uint8_t **buffer)
 {
-    VirtualComponent::loadFromBuffer(buffer);
-    
     // Discard any active joystick movements
     button = false;
     axisX = 0;

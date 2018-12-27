@@ -20,19 +20,34 @@
 
 #include "CartridgeRom.h"
 
-CartridgeRom::CartridgeRom(uint8_t **buffer)
+CartridgeRom::CartridgeRom()
 {
-    assert(buffer != NULL);
-    size = read16(buffer);
-    loadAddress = read16(buffer);
-    rom = new uint8_t[size];
-    readBlock(buffer, rom, size);
+    setDescription("CartridgeRom");
+    debug(3, "  Creating cartridge Rom at address %p...\n", this);
+    
+    // Register snapshot items
+    SnapshotItem items[] = {
+        
+        // Internal state
+        { &size,        sizeof(size),        KEEP_ON_RESET },
+        { &loadAddress, sizeof(loadAddress), KEEP_ON_RESET },
+        { NULL,         0,                   0 }};
+    
+    registerSnapshotItems(items, sizeof(items));
 }
 
-CartridgeRom::CartridgeRom(uint16_t _size, uint16_t _loadAddress, const uint8_t *buffer)
+/*
+CartridgeRom::CartridgeRom(uint8_t **buffer) : CartridgeRom()
 {
-    size = _size;
-    loadAddress = _loadAddress;
+    assert(buffer != NULL);
+    loadFromBuffer(buffer);
+}
+*/
+
+CartridgeRom::CartridgeRom(uint16_t size, uint16_t loadAddress, const uint8_t *buffer) : CartridgeRom()
+{
+    this->size = size;
+    this->loadAddress = loadAddress;
     rom = new uint8_t[size];
     if (buffer) {
         memcpy(rom, buffer, size);
@@ -48,41 +63,24 @@ CartridgeRom::~CartridgeRom()
 size_t
 CartridgeRom::stateSize()
 {
-    return 4 + size;
+    return VirtualComponent::stateSize() + size;
 }
 
 void
-CartridgeRom::loadFromBuffer(uint8_t **buffer)
+CartridgeRom::didLoadFromBuffer(uint8_t **buffer)
 {
-    uint8_t *old = *buffer;
-    
-    if (rom != NULL) {
-        assert(size > 0);
-        delete[] rom;
-    }
-    
-    size = read16(buffer);
-    loadAddress = read16(buffer);
+    debug("didLoadFromBuffer\n");
+    if (rom) delete[] rom;
     rom = new uint8_t[size];
-    readBlock(buffer, rom, size);
     
-    if (*buffer - old != CartridgeRom::stateSize()) {
-        assert(false);
-    }
+    readBlock(buffer, rom, size);
 }
 
 void
-CartridgeRom::saveToBuffer(uint8_t **buffer)
+CartridgeRom::didSaveToBuffer(uint8_t **buffer)
 {
-    uint8_t *old = *buffer;
-    
-    write16(buffer, size);
-    write16(buffer, loadAddress);
+    debug("didSaveToBuffer\n");
     writeBlock(buffer, rom, size);
-
-    if (*buffer - old != CartridgeRom::stateSize()) {
-        assert(false);
-    }
 }
 
 bool

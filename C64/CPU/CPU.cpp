@@ -124,24 +124,21 @@ CPU::dump()
 size_t
 CPU::stateSize()
 {
-    return
-    VirtualComponent::stateSize() +
-    levelDetector.stateSize() +
-    edgeDetector.stateSize();
+    return VirtualComponent::stateSize()
+    + levelDetector.stateSize()
+    + edgeDetector.stateSize();
 }
 
 void
-CPU::loadFromBuffer(uint8_t **buffer)
+CPU::didLoadFromBuffer(uint8_t **buffer)
 {
-    VirtualComponent::loadFromBuffer(buffer);
     levelDetector.loadFromBuffer(buffer);
     edgeDetector.loadFromBuffer(buffer);
 }
 
 void
-CPU::saveToBuffer(uint8_t **buffer)
+CPU::didSaveToBuffer(uint8_t **buffer)
 {
-    VirtualComponent::saveToBuffer(buffer);
     levelDetector.saveToBuffer(buffer);
     edgeDetector.saveToBuffer(buffer);
 }

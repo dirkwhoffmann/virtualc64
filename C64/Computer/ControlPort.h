@@ -71,7 +71,7 @@ public:
     void reset();
 
     //! @brief    Method from VirtualComponent
-    void loadFromBuffer(uint8_t **buffer);
+    void didLoadFromBuffer(uint8_t **buffer);
     
     //! @brief    Method from VirtualComponent
     void dump();

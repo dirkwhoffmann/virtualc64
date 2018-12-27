@@ -189,26 +189,40 @@ public:
     //! @functiongroup Loading and saving snapshots
     //
 
-    /*! @brief    Returns size of internal state in bytes
-     */
+    //! @brief    Returns the size of the internal state in bytes
     virtual size_t stateSize();
-    
+
     /*! @brief    Load internal state from memory buffer
      *  @note     Snapshot items of size 2, 4, or 8 are converted to big endian
      *            format automatically. Otherwise, a byte array is assumed.
      *  @param    buffer Pointer to next byte to read
      *  @seealso  WORD_ARRAY, DWORD_ARRAY, QWORD_ARRAY
      */
-    virtual void loadFromBuffer(uint8_t **buffer);
+    void loadFromBuffer(uint8_t **buffer);
     
+    /*! @brief    Delegation methods called inside loadFromBuffer()
+     *  @details  Some components overwrite this method to add custom behavior
+     *            such as loading items that cannot be handled by the default
+     *            implementation.
+     */
+    virtual void  willLoadFromBuffer(uint8_t **buffer) { };
+    virtual void  didLoadFromBuffer(uint8_t **buffer) { };
+
     /*! @brief    Save internal state to memory buffer
      *  @note     Snapshot items of size 2, 4, or 8 are converted to big endian
      *            format automatically. Otherwise, a byte array is assumed.
      *  @param    buffer Pointer to next byte to read
      *  @seealso  WORD_ARRAY, DWORD_ARRAY, QWORD_ARRAY
      */
-    virtual void saveToBuffer(uint8_t **buffer);
+    void saveToBuffer(uint8_t **buffer);
+    
+    /*! @brief    Delegation methods called inside saveToBuffer()
+     *  @details  Some components overwrite this method to add custom behavior
+     *            such as saving items that cannot be handled by the default
+     *            implementation.
+     */
+    virtual void  willSaveToBuffer(uint8_t **buffer) { };
+    virtual void  didSaveToBuffer(uint8_t **buffer) { };
 };
 
 #endif
-

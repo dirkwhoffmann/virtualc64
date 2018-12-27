@@ -71,13 +71,6 @@ SIDBridge::setClockFrequency(uint32_t frequency)
     fastsid.setClockFrequency(frequency);
 }
 
-void
-SIDBridge::loadFromBuffer(uint8_t **buffer)
-{
-    VirtualComponent::loadFromBuffer(buffer);
-    clearRingbuffer();
-}
-
 void 
 SIDBridge::setReSID(bool enable)
 {

@@ -123,9 +123,6 @@ public:
 
     //! Dump internal state to console
     void dump();
-
-    //! Load state
-    void loadFromBuffer(uint8_t **buffer);
     
     //! @brief    Gathers all values that are displayed in the debugger
     SIDInfo getInfo();

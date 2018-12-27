@@ -30,12 +30,12 @@ class CartridgeRom : public VirtualComponent {
     protected:
     
     //! @brief    Rom data
-    uint8_t *rom;
+    uint8_t *rom = NULL;
     
     public:
     
     //! @brief    Size in bytes
-    uint16_t size;
+    uint16_t size = 0;
     
     /*! @brief    Load address
      *  @details  This value is taken from the .CRT file. Possible values are
@@ -43,12 +43,13 @@ class CartridgeRom : public VirtualComponent {
      *            mapping into the ROMH area in 16KB game mode, and $E000 for
      *            chips mapping into the ROMH area in ultimax mode.
      */
-    uint16_t loadAddress;
+    uint16_t loadAddress = 0;
     
     public:
     
     //! @brief    Constructor
-    CartridgeRom(uint8_t **buffer);
+    CartridgeRom();
+    // CartridgeRom(uint8_t **buffer);
     CartridgeRom(uint16_t _size, uint16_t _loadAddress, const uint8_t *buffer = NULL);
     
     //! @brief    Destructor
@@ -56,8 +57,8 @@ class CartridgeRom : public VirtualComponent {
     
     //! @brief    Methods from VirtualComponent
     size_t stateSize();
-    void loadFromBuffer(uint8_t **buffer);
-    void saveToBuffer(uint8_t **buffer);
+    void didLoadFromBuffer(uint8_t **buffer);
+    void didSaveToBuffer(uint8_t **buffer);
     
     //! @brief    Returns true if this Rom chip maps to ROML, only.
     bool mapsToL();

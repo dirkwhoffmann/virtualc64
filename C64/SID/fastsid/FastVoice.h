@@ -170,11 +170,9 @@ public:
     //! @brief    Destructor
     ~FastVoice();
     
-    //! @brief    Method from VirtualComponent
+    //! @functiongroup Methods from VirtualComponent
     void reset();
-
-    //! @brief    Loads the current state from a buffer
-    void loadFromBuffer(uint8_t **buffer);
+    void didLoadFromBuffer(uint8_t **buffer) { updateWaveTablePtr(); }
     
     //! @brief    Initializes the wave tables
     /*! @details  Needs to be called once prior to using this class

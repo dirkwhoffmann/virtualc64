@@ -90,13 +90,6 @@ FastVoice::reset()
 }
 
 void
-FastVoice::loadFromBuffer(uint8_t **buffer)
-{
-    VirtualComponent::loadFromBuffer(buffer);
-    updateWaveTablePtr();
-}
-
-void
 FastVoice::initWaveTables()
 {
     // Most tables are the same for SID6581 and SID8580, so let's initialize both.

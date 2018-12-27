@@ -65,31 +65,21 @@ Expert::dump()
 size_t
 Expert::stateSize()
 {
-    return Cartridge::stateSize() + 2;
+    return 2;
 }
 
 void
-Expert::loadFromBuffer(uint8_t **buffer)
+Expert::didLoadFromBuffer(uint8_t **buffer)
 {
-    uint8_t *old = *buffer;
-    Cartridge::loadFromBuffer(buffer);
     active = read8(buffer);
     newSwitchPos = (int8_t)read8(buffer);
-    if (*buffer - old != stateSize()) {
-        assert(false);
-    }
 }
 
 void
-Expert::saveToBuffer(uint8_t **buffer)
+Expert::didSaveToBuffer(uint8_t **buffer)
 {
-    uint8_t *old = *buffer;
-    Cartridge::saveToBuffer(buffer);
     write8(buffer, (uint8_t)active);
     write8(buffer, (uint8_t)newSwitchPos);
-    if (*buffer - old != stateSize()) {
-        assert(false);
-    }
 }
 
 void

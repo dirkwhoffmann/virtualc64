@@ -40,31 +40,21 @@ GeoRAM::reset()
 size_t
 GeoRAM::stateSize()
 {
-    return Cartridge::stateSize() + sizeof(bank) + sizeof(page);
+    return Cartridge::stateSize() + 2;
 }
 
 void
-GeoRAM::loadFromBuffer(uint8_t **buffer)
+GeoRAM::didLoadFromBuffer(uint8_t **buffer)
 {
-    uint8_t *old = *buffer;
-    Cartridge::loadFromBuffer(buffer);
     bank = read8(buffer);
     page = read8(buffer);
-    if (*buffer - old != stateSize()) {
-        assert(false);
-    }
 }
 
 void
-GeoRAM::saveToBuffer(uint8_t **buffer)
+GeoRAM::didSaveToBuffer(uint8_t **buffer)
 {
-    uint8_t *old = *buffer;
-    Cartridge::saveToBuffer(buffer);
     write8(buffer, bank);
     write8(buffer, page);
-    if (*buffer - old != stateSize()) {
-        assert(false);
-    }
 }
 
 unsigned

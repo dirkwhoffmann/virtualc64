@@ -74,14 +74,10 @@ public:
 	//! Destructor.
 	~ReSID();
 	
-	//! Method from VirtualComponent
+	//! @functiongroup Methods from VirtualComponent
 	void reset();
-	
-    //! Load state
-	void loadFromBuffer(uint8_t **buffer);
-
-    //! Save state
-    void saveToBuffer(uint8_t **buffer);
+    void didLoadFromBuffer(uint8_t **buffer) { sid->write_state(st); }
+    void willSaveToBuffer(uint8_t **buffer) { st = sid->read_state(); }
 	
     //! @brief    Gathers all values that are displayed in the debugger
     SIDInfo getInfo();

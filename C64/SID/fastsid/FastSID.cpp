@@ -137,12 +137,6 @@ FastSID::dump()
     }
 }
 
-void
-FastSID::loadFromBuffer(uint8_t **buffer)
-{
-    VirtualComponent::loadFromBuffer(buffer);
-}
-
 SIDInfo
 FastSID::getInfo()
 {

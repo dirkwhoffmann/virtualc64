@@ -215,20 +215,6 @@ ReSID::setSamplingMethod(SamplingMethod value)
     assert((SamplingMethod)sid->sampling == samplingMethod);
 }
 
-void
-ReSID::loadFromBuffer(uint8_t **buffer)
-{
-    VirtualComponent::loadFromBuffer(buffer);
-    sid->write_state(st);
-}
-
-void
-ReSID::saveToBuffer(uint8_t **buffer)
-{
-    st = sid->read_state();
-    VirtualComponent::saveToBuffer(buffer);
-}
-
 uint8_t
 ReSID::peek(uint16_t addr)
 {	

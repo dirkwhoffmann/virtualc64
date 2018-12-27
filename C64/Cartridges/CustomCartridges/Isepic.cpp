@@ -45,29 +45,19 @@ Isepic::reset()
 size_t
 Isepic::stateSize()
 {
-    return Cartridge::stateSize() + sizeof(page);
+    return Cartridge::stateSize() + 1;
 }
 
 void
-Isepic::loadFromBuffer(uint8_t **buffer)
+Isepic::didLoadFromBuffer(uint8_t **buffer)
 {
-    uint8_t *old = *buffer;
-    Cartridge::loadFromBuffer(buffer);
     page = read8(buffer);
-    if (*buffer - old != stateSize()) {
-        assert(false);
-    }
 }
 
 void
-Isepic::saveToBuffer(uint8_t **buffer)
+Isepic::didSaveToBuffer(uint8_t **buffer)
 {
-    uint8_t *old = *buffer;
-    Cartridge::saveToBuffer(buffer);
     write8(buffer, page);
-    if (*buffer - old != stateSize()) {
-        assert(false);
-    }
 }
 
 uint8_t

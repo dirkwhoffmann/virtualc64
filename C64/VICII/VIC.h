@@ -746,8 +746,8 @@ public:
     void ping();
 	void dump();
     size_t stateSize();
-    void loadFromBuffer(uint8_t **buffer);
-    void saveToBuffer(uint8_t **buffer);
+    void didLoadFromBuffer(uint8_t **buffer);
+    void didSaveToBuffer(uint8_t **buffer);
     
 
     //

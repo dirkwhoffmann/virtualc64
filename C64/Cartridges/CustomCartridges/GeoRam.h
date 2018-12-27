@@ -42,8 +42,8 @@ public:
     CartridgeType getCartridgeType() { return CRT_GEO_RAM; }
     void reset();
     size_t stateSize();
-    void loadFromBuffer(uint8_t **buffer);
-    void saveToBuffer(uint8_t **buffer);
+    void didLoadFromBuffer(uint8_t **buffer);
+    void didSaveToBuffer(uint8_t **buffer);
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
     void pokeIO1(uint16_t addr, uint8_t value);

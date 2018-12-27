@@ -77,10 +77,10 @@ public:
     size_t stateSize();
 
     //! @brief    Method from VirtualComponent
-    void loadFromBuffer(uint8_t **buffer);
+    void didLoadFromBuffer(uint8_t **buffer);
     
     //! @brief    Method from VirtualComponent
-    void saveToBuffer(uint8_t **buffer);
+    void didSaveToBuffer(uint8_t **buffer);
     
     //! @brief    Method from VirtualComponent
     void dump();	

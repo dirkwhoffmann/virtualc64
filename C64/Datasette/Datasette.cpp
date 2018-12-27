@@ -78,34 +78,23 @@ Datasette::stateSize()
 }
 
 void
-Datasette::loadFromBuffer(uint8_t **buffer)
+Datasette::didLoadFromBuffer(uint8_t **buffer)
 {
-    uint8_t *old = *buffer;
+    if (data) delete[] data;
     
-    VirtualComponent::loadFromBuffer(buffer);
     if (size) {
-        if (data == NULL)
-            data = new uint8_t[size];
-        readBlock(buffer, (uint8_t *)data, size);
+        data = new uint8_t[size];
+        readBlock(buffer, data, size);
     }
-    
-    if (*buffer - old != stateSize())
-        assert(false);
 }
 
 void
-Datasette::saveToBuffer(uint8_t **buffer)
+Datasette::didSaveToBuffer(uint8_t **buffer)
 {
-    uint8_t *old = *buffer;
-    
-    VirtualComponent::saveToBuffer(buffer);
     if (size) {
         assert(data != NULL);
-        writeBlock(buffer, (uint8_t *)data, size);
+        writeBlock(buffer, data, size);
     }
-    
-    if (*buffer - old != stateSize())
-        assert(false);
 }
 
 void
