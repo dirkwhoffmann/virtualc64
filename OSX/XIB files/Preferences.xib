@@ -1811,7 +1811,7 @@ DQ
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O9F-hj-TKo">
                                             <rect key="frame" x="309" y="427" width="281" height="29"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <textFieldCell key="cell" controlSize="small" selectable="YES" title="The following actions are performed when a file has been opened or dropped into the emulator window:" id="lNB-1c-d3u">
+                                            <textFieldCell key="cell" controlSize="small" selectable="YES" title="The following actions are performed when a file is opened or dragged into the emulator window:" id="lNB-1c-d3u">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

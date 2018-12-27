@@ -1080,6 +1080,13 @@ CA
                                                 <action selector="attachGeoRamAction:" target="-1" id="unP-gr-RPf"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="7sM-8y-EY3"/>
+                                        <menuItem title="RAM battery" id="eNK-2B-o7I">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="geoRamBatteryAction:" target="-1" id="z8D-bF-zgq"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                                 <connections>
@@ -1090,12 +1097,6 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="attachIsepicAction:" target="-1" id="QGB-Oq-aVg"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Use Battery Backed RAM" id="eNK-2B-o7I">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="geoRamBatteryAction:" target="-1" id="z8D-bF-zgq"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="RwF-gp-Lvh"/>
