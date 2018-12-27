@@ -344,7 +344,8 @@ SIDBridge::readData()
             volume -= MIN(volumeDelta, volume - targetVolume);
         }
     }
-    float divider = 75000.0f; // useReSID ? 100000.0f : 150000.0f;
+    // float divider = 75000.0f; // useReSID ? 100000.0f : 150000.0f;
+    float divider = 40000.0f;
     value = (volume <= 0) ? 0.0f : value * (float)volume / divider;
     
     // Advance read pointer
