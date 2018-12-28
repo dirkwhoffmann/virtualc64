@@ -29,12 +29,14 @@ class Expert : public Cartridge {
     // On-board flipflop
     bool active;
     
-    // Next switch position (as set by toggleSwitch() )
-    int8_t newSwitchPos;
-    
 public:
+    
     Expert(C64 *c64);
     CartridgeType getCartridgeType() { return CRT_EXPERT; }
+    
+    //
+    //! @functiongroup Methods from VirtualComponent
+    //
     
     void reset();
     void dump();
@@ -42,22 +44,21 @@ public:
     void didLoadFromBuffer(uint8_t **buffer);
     void didSaveToBuffer(uint8_t **buffer);
     
+    //
+    //! @functiongroup Methods from Cartridge
+    //
+    
     void loadChip(unsigned nr, CRTFile *c);
     
-    bool hasFreezeButton() { return true; }
-    void pressFreezeButton();
-    void releaseFreezeButton();
-
-    bool hasResetButton() { return true; }
-    void pressResetButton();
-
+    unsigned numButtons() { return 2; }
+    const char *getButtonTitle(unsigned nr);
+    void pressButton(unsigned nr);
+    
     bool hasSwitch() { return true; }
     const char *getSwitchDescription(int8_t pos);
-    void setSwitch(int8_t pos);
     bool switchInPrgPosition() { return switchIsLeft(); }
     bool switchInOffPosition() { return switchIsNeutral(); }
     bool switchInOnPosition() { return switchIsRight(); }
-    void toggleSwitch();
 
     void updatePeekPokeLookupTables();
     uint8_t peek(uint16_t addr);

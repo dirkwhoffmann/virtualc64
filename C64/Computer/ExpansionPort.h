@@ -193,32 +193,11 @@ public:
         return cartridge ? cartridge->getButtonTitle(nr) : NULL; }
     
     //! @brief    Presses a button
-    virtual void pressButton(unsigned nr) { if (cartridge) cartridge->pressButton(nr); }
+    virtual void pressButton(unsigned nr) { debug("Pressing %d\n", nr); if (cartridge) cartridge->pressButton(nr); }
     
     //! @brief    Releases a button
-    virtual void releaseButton(unsigned nr) { if (cartridge) cartridge->releaseButton(nr); }
-    
-    
-    
-    
-    //! @brief    Returns true if a cartridge with a freeze button is attached
-    bool hasFreezeButton() { return cartridge ? cartridge->hasFreezeButton() : false; }
-    
-    //! @brief    Presses the first cartridge button
-    void pressFreezeButton() { if (cartridge) cartridge->pressFreezeButton(); }
-
-    //! @brief    Releases the first cartridge button
-    void releaseFreezeButton() { if (cartridge) cartridge->releaseFreezeButton(); }
-
-    //! @brief    Returns true if a cartridge with a reset button is attached
-    bool hasResetButton() { return cartridge ? cartridge->hasResetButton() : false; }
-    
-    //! @brief    Presses the second cartridge button
-    void pressResetButton() { if (cartridge) cartridge->pressResetButton(); }
-    
-    //! @brief    Releases the second cartridge button
-    void releaseResetButton() { if (cartridge) cartridge->releaseResetButton(); }
-    
+    virtual void releaseButton(unsigned nr) { debug("Releasing %d\n", nr); if (cartridge) cartridge->releaseButton(nr); }
+   
     //! @brief    Returns true if a cartridge with a switch is attached
     bool hasSwitch() { return cartridge ? cartridge->hasSwitch() : false; }
     
@@ -229,12 +208,11 @@ public:
     bool switchIsRight() { return cartridge ? cartridge->switchIsRight() : false; }
     const char *getSwitchDescription(int8_t pos) {
         return cartridge ? cartridge->getSwitchDescription(pos) : NULL; }
+    bool validSwitchPosition(int8_t pos) {
+        return cartridge ? cartridge->validSwitchPosition(pos) : false; }
     
     //! @brief    Puts the switch in the provided position
     void setSwitch(uint8_t pos) { if (cartridge) cartridge->setSwitch(pos); }
-
-    //! @brief    Push to next switch position
-    void toggleSwitch() { if (cartridge) cartridge->toggleSwitch(); }
 
     //! @brief    Returns true if the cartridge has a LED.
     bool hasLED() { return cartridge ? cartridge->hasLED() : false; }

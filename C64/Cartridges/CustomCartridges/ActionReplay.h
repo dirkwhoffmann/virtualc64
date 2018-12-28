@@ -28,19 +28,27 @@
 // Action Replay (hardware version 3)
 //
 
-class ActionReplay3 : public Cartridge {
+class ActionReplay3 : public CartridgeWithRegister {
     
-    public:
-    using Cartridge::Cartridge;
+public:
+    
+    ActionReplay3(C64 *c64) : CartridgeWithRegister(c64, "AR3") { };
     CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY3; }
+    
+    //
+    //! @functiongroup Methods from Cartridge
+    //
+    
     uint8_t peek(uint16_t addr);
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
+    
     void pokeIO1(uint16_t addr, uint8_t value);
-    bool hasFreezeButton() { return true; }
-    void pressFreezeButton();
-    void releaseFreezeButton();
-    bool hasResetButton() { return true; }
+    
+    unsigned numButtons() { return 2; }
+    const char *getButtonTitle(unsigned nr);
+    void pressButton(unsigned nr);
+    void releaseButton(unsigned nr);
     
     //! @brief   Sets the cartridge's control register
     /*! @details This function triggers all side effects that take place when
@@ -48,10 +56,10 @@ class ActionReplay3 : public Cartridge {
      */
     void setControlReg(uint8_t value);
     
-    unsigned bank() { return regValue & 0x01; }
-    bool game() { return !!(regValue & 0x02); }
-    bool exrom() { return !(regValue & 0x08); }
-    bool disabled() { return !!(regValue & 0x04); }
+    unsigned bank() { return control & 0x01; }
+    bool game() { return !!(control & 0x02); }
+    bool exrom() { return !(control & 0x08); }
+    bool disabled() { return !!(control & 0x04); }
 };
 
 
@@ -59,23 +67,43 @@ class ActionReplay3 : public Cartridge {
 // Action Replay (hardware version 4 and above)
 //
 
-class ActionReplay : public Cartridge {
+class ActionReplay : public CartridgeWithRegister {
     
-    public:
+public:
+    
     ActionReplay(C64 *c64);
     CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY; }
+    
+    //
+    //! @functiongroup Methods from VirtualComponent
+    //
+    
     void reset();
+    size_t stateSize() { return Cartridge::stateSize() + 1; }
+    void didLoadFromBuffer(uint8_t **buffer) {
+        Cartridge::didLoadFromBuffer(buffer); control = read8(buffer); }
+    void didSaveToBuffer(uint8_t **buffer) {
+        Cartridge::didSaveToBuffer(buffer); write8(buffer, control); }
+    
+    //
+    //! @functiongroup Methods from Cartridge
+    //
+    
     void resetCartConfig();
+    
     uint8_t peek(uint16_t addr);
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
+    
     void poke(uint16_t addr, uint8_t value);
     void pokeIO1(uint16_t addr, uint8_t value);
     void pokeIO2(uint16_t addr, uint8_t value);
-    bool hasFreezeButton() { return true; }
-    void pressFreezeButton();
-    void releaseFreezeButton();
-    bool hasResetButton() { return true; }
+    
+    unsigned numButtons() { return 2; }
+    const char *getButtonTitle(unsigned nr);
+    void pressButton(unsigned nr);
+    void releaseButton(unsigned nr);
+    
     
     //! @brief   Sets the cartridge's control register
     /*! @details This function triggers all side effects that take place when
@@ -83,11 +111,11 @@ class ActionReplay : public Cartridge {
      */
     void setControlReg(uint8_t value);
     
-    virtual unsigned bank() { return (regValue >> 3) & 0x03; }
-    virtual bool game() { return (regValue & 0x01) == 0; }
-    virtual bool exrom() { return (regValue & 0x02) != 0; }
-    virtual bool disabled() { return (regValue & 0x04) != 0; }
-    virtual bool resetFreezeMode() { return (regValue & 0x40) != 0; }
+    virtual unsigned bank() { return (control >> 3) & 0x03; }
+    virtual bool game() { return (control & 0x01) == 0; }
+    virtual bool exrom() { return (control & 0x02) != 0; }
+    virtual bool disabled() { return (control & 0x04) != 0; }
+    virtual bool resetFreezeMode() { return (control & 0x40) != 0; }
     
     //! @brief  Returns true if the cartridge RAM shows up at addr
     virtual bool ramIsEnabled(uint16_t addr); 
@@ -100,11 +128,9 @@ class ActionReplay : public Cartridge {
 
 class AtomicPower : public ActionReplay {
     
-    public:
-    AtomicPower(C64 *c64) : ActionReplay(c64) {
-        setDescription("AtomicPower");
-    };
+public:
     
+    AtomicPower(C64 *c64);
     CartridgeType getCartridgeType() { return CRT_ATOMIC_POWER; }
     
     /*! @brief    Indicates if special ROM / RAM config has to be used.
@@ -119,13 +145,11 @@ class AtomicPower : public ActionReplay {
      *            Bit 0b00000010 (Exrom)        is 1.
      *            Bit 0b00000001 (Game)         is 0.
      */
-    bool specialMapping() { return (regValue & 0b11100111) == 0b00100010; }
+    bool specialMapping() { return (control & 0b11100111) == 0b00100010; }
     
     bool game();
     bool exrom();
     bool ramIsEnabled(uint16_t addr);
 };
-
-
 
 #endif

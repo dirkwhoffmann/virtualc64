@@ -53,9 +53,9 @@
                 <outlet property="controlPort2" destination="4MP-rV-xX2" id="6Ux-IE-l65"/>
                 <outlet property="cpuTableView" destination="767" id="945"/>
                 <outlet property="cpuTraceView" destination="gDD-e1-Fh0" id="sy3-BG-K54"/>
-                <outlet property="crtFreeze" destination="lFn-7a-MSQ" id="zXW-Hp-GQf"/>
+                <outlet property="crtButton1" destination="lFn-7a-MSQ" id="PDj-6q-G6u"/>
+                <outlet property="crtButton2" destination="WXT-md-2lk" id="kGk-bZ-cof"/>
                 <outlet property="crtIcon" destination="2003" id="CVl-nZ-xP2"/>
-                <outlet property="crtReset" destination="WXT-md-2lk" id="QEi-ih-8C1"/>
                 <outlet property="crtSwitch" destination="nGE-Yp-TgF" id="i83-HJ-RBg"/>
                 <outlet property="debugPanel" destination="42" id="KyW-HY-D2p"/>
                 <outlet property="debugger" destination="35" id="Sfw-lz-Vnh"/>
@@ -242,7 +242,7 @@
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                     </button>
-                    <button hidden="YES" toolTip="Freeze" id="lFn-7a-MSQ">
+                    <button hidden="YES" tag="1" id="lFn-7a-MSQ">
                         <rect key="frame" x="282" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtButtonOffTemplate" imagePosition="only" alignment="right" alternateImage="crtButtonOnTemplate" imageScaling="proportionallyUpOrDown" id="IJt-r3-Tyd">
@@ -250,7 +250,7 @@
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressFreezeButtonAction:" target="-1" id="0am-Bn-lUE"/>
+                            <action selector="pressCartridgeButton1Action:" target="-2" id="G7M-GS-6Os"/>
                         </connections>
                     </button>
                     <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="H1X-Kk-fcE">
@@ -295,7 +295,7 @@
                             <outlet property="controller" destination="-2" id="DoA-Vt-vqv"/>
                         </connections>
                     </customView>
-                    <button hidden="YES" toolTip="Reset" id="WXT-md-2lk">
+                    <button hidden="YES" tag="2" id="WXT-md-2lk">
                         <rect key="frame" x="306" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtButtonOffTemplate" imagePosition="only" alignment="right" alternateImage="crtButtonOnTemplate" imageScaling="proportionallyUpOrDown" id="daD-pA-smb">
@@ -303,10 +303,10 @@
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressResetButtonAction:" target="-2" id="tnV-XA-mtB"/>
+                            <action selector="pressCartridgeButton2Action:" target="-1" id="465-Oy-aeF"/>
                         </connections>
                     </button>
-                    <button hidden="YES" id="nGE-Yp-TgF">
+                    <button hidden="YES" tag="1" id="nGE-Yp-TgF">
                         <rect key="frame" x="234" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtSwitchNeutralTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="0s7-pA-Q79">
@@ -360,7 +360,7 @@
                         <popUpButton key="view" tag="11" id="4MP-rV-xX2" userLabel="Port 2">
                             <rect key="frame" x="0.0" y="14" width="48" height="23"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xyt-eC-0im" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" image="devNoneTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xyt-eC-0im" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">

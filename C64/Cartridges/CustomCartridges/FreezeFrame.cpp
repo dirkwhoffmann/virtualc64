@@ -27,7 +27,7 @@ FreezeFrame::reset()
     Cartridge::reset();
     
     // In Ultimax mode, the same ROM chip that appears in ROML also appears
-    // in ROMH. By default, it get banked in ROML only, so let's bank it in
+    // in ROMH. By default, it it appears in ROML only, so let's bank it in
     // ROMH manually.
     bankInROMH(0, 0x2000, 0);
 }
@@ -49,19 +49,25 @@ FreezeFrame::peekIO2(uint16_t addr)
 }
 
 void
-FreezeFrame::pressFreezeButton()
+FreezeFrame::pressButton(unsigned nr)
 {
-    // Pressing the freeze button switches to ultimax mode and triggers an NMI
-    suspend();
-    c64->expansionport.setCartridgeMode(CRT_ULTIMAX);
-    c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
-    resume();
+    if (nr == 1) {
+        
+        // Pressing the freeze button triggers an NMI in Ultimax mode
+        suspend();
+        c64->expansionport.setCartridgeMode(CRT_ULTIMAX);
+        c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+        resume();
+    }
 }
 
 void
-FreezeFrame::releaseFreezeButton()
+FreezeFrame::releaseButton(unsigned nr)
 {
-    suspend();
-    c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
-    resume();
+    if (nr == 1) {
+        
+        suspend();
+        c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+        resume();
+    }
 }

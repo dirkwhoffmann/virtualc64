@@ -24,15 +24,7 @@
 uint8_t
 Westermann::peekIO2(uint16_t addr)
 {
-    // Any read access to I/O space 2 switches to 8KB configuration
-    if (addr >= 0xDF00 && addr <= 0xDFFF) {
-        c64->expansionport.setCartridgeMode(CRT_8K);
-    }
-    return 0;
-}
-
-uint8_t
-Westermann::spypeekIO2(uint16_t addr)
-{
+    // Reading from I/O 2 switched the cartridge on
+    c64->expansionport.setCartridgeMode(CRT_8K);
     return 0;
 }

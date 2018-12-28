@@ -144,15 +144,6 @@ protected:
      */
     uint8_t val[16]; 
     
-    /*! @brief    Temporary value storage
-     *  @details  Some custom cartridges need to remember the last value that
-     *            has been peeked or poked into the I/O registers. They preserve
-     *            this value in this variable.
-     *  @deprecated Use val[] instead
-     */
-    uint8_t regValue = 0;
-
-    
 public:
     
     //
@@ -214,6 +205,7 @@ public:
     
     //! @brief    Saves all chip packets to a buffer
     virtual void savePacketsToBuffer(uint8_t **buffer);
+    
     
     //
     //! @functiongroup Methods from VirtualComponent
@@ -338,7 +330,7 @@ public:
 
     
     //
-    //! @functiongroup Managing external Ram
+    //! @functiongroup Managing on-board RAM
     //
     
     //! @brief    Returns the RAM size in bytes.
@@ -376,7 +368,7 @@ public:
 
     //! @brief    Returns the number of available cartridge buttons
     virtual unsigned numButtons() { return 0; }
-
+    
     /*! @brief    Returns a textual description for a button.
      *  @return   NULL, if there is no such button.
      */
@@ -392,44 +384,7 @@ public:
      */
     virtual void releaseButton(unsigned nr) { }
 
-    
-    //! @brief    Returns true if the cartridge has a freeze button.
-    //! @deprecated
-    virtual bool hasFreezeButton() { return false; }
 
-    //! @brief    Simulates pressing the freeze cartridge button.
-    /*! @note     Make sure to call releaseFreezeButton() afterwards.
-     *  @seealso  releaseFreezeButton, hasFreezeButton
-     *  @deprecated
-     */
-    virtual void pressFreezeButton() { };
-
-    //! @brief    Simulates releasing the freeze cartridge button.
-    /*! @note     Make sure to call pressFreezeButton() first.
-     *  @seealso  pressFreezeButton, hasFreezeButton
-     *  @deprecated
-     */
-    virtual void releaseFreezeButton() { };
-    
-    //! @brief    Returns true if the cartridge has a reset button.
-    //! @deprecated
-    virtual bool hasResetButton() { return false; }
-    
-    //! @brief    Simulates pressing the reset cartridge button.
-    /*! @note     Make sure to call releaseResetButton() afterwards.
-     *  @seealso  releaseResetButton
-     *  @deprecated
-     */
-    virtual void pressResetButton();
-    
-    //! @brief    Simulates releasing the reset cartridge button.
-    /*! @note     Make sure to call pressResetButton() first.
-     *  @seealso  pressSecondButton
-     *  @deprecated
-     */
-    virtual void releaseResetButton() { };
-    
-    
     //
     // Operating switches
     //
@@ -441,20 +396,20 @@ public:
     virtual int8_t getSwitch() { return switchPos; }
     
     //! @brief    Convenience wrappers around getSwitch()
-    virtual bool switchIsNeutral() { return getSwitch() == 0; }
-    virtual bool switchIsLeft() { return getSwitch() < 0; }
-    virtual bool switchIsRight() { return getSwitch() > 0; }
+    bool switchIsNeutral() { return getSwitch() == 0; }
+    bool switchIsLeft() { return getSwitch() < 0; }
+    bool switchIsRight() { return getSwitch() > 0; }
     
     /*! @brief    Returns a textual description for a switch position.
      *  @return   NULL, if the switch cannot be positioned this way.
      */
     virtual const char *getSwitchDescription(int8_t pos) { return NULL; }
     
+    //! @brief    Convenience wrappers around getSwitchDescription()
+    bool validSwitchPosition(int8_t pos) { return getSwitchDescription(pos) != NULL; }
+    
     //! @brief    Puts the switch in the provided position
     virtual void setSwitch(int8_t pos);
-
-    //! @brief    Push to next switch position
-    virtual void toggleSwitch() { }
 
     
     //
@@ -486,6 +441,46 @@ public:
     
     //! @brief    Called when the C64 CPU triggers an NMI
     virtual void nmiWillTrigger() { }
+    
+    
+    //
+    // Little helpers
+    //
+    
+    void resetWithoutDeletingRam();
 };
+
+
+/*!
+ * @brief    Cartridge with an auxililary control register
+ * @details  Many non-standard cartridges carry an addition register on board.
+ */
+class CartridgeWithRegister : public Cartridge {
+
+protected:
+    uint8_t control;
+    
+public:
+    using Cartridge::Cartridge;
+  
+    void reset() {
+        Cartridge::reset();
+        control = 0;
+    };
+    size_t stateSize() {
+        return Cartridge::stateSize() + 1;
+    }
+    void didLoadFromBuffer(uint8_t **buffer)
+    {
+        Cartridge::didLoadFromBuffer(buffer);
+        control = read8(buffer);
+    }
+    void didSaveToBuffer(uint8_t **buffer)
+    {
+        Cartridge::didSaveToBuffer(buffer);
+        write8(buffer, control);
+    }
+};
+
 
 #endif 

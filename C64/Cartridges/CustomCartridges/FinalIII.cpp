@@ -93,22 +93,53 @@ FinalIII::pokeIO2(uint16_t addr, uint8_t value) {
     }
 }
 
+const char *
+FinalIII::getButtonTitle(unsigned nr)
+{
+    return (nr == 1) ? "Freeze" : (nr == 2) ? "Reset" : NULL;
+}
+
 void
-FinalIII::pressFreezeButton() {
+FinalIII::pressButton(unsigned nr)
+{
+    assert(nr <= numButtons());
+    debug("Pressing %s button.\n", getButtonTitle(nr));
     
-    // The freezer is enabled by selecting bank 0 in ultimax mode and
-    // triggering an NMI
     c64->suspend();
-    bankIn(0);
-    c64->expansionport.setCartridgeMode(CRT_ULTIMAX);
-    c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+    
+    switch (nr) {
+            
+        case 1: // Freeze
+            
+            // Selecting bank 0 in Ultimax mode and trigger an NMI
+            bankIn(0);
+            c64->expansionport.setCartridgeMode(CRT_ULTIMAX);
+            c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+            break;
+            
+        case 2: // Reset
+            
+            resetWithoutDeletingRam();
+    }
+    
     c64->resume();
 }
 
 void
-FinalIII::releaseFreezeButton()
+FinalIII::releaseButton(unsigned nr)
 {
+    assert(nr <= numButtons());
+    debug("Releasing %s button.\n", getButtonTitle(nr));
+    
     c64->suspend();
-    c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+    
+    switch (nr) {
+            
+        case 1: // Freeze
+            
+            c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+            break;
+    }
+    
     c64->resume();
 }

@@ -24,31 +24,17 @@
 void
 Comal80::reset()
 {
-    debug("Comal80::reset\n");
+    CartridgeWithRegister::reset();
     c64->expansionport.setCartridgeMode(CRT_16K);
     bankIn(0);
-}
-
-uint8_t
-Comal80::peekIO1(uint16_t addr)
-{
-    return regValue; // 'value' contains the latest value passed to pokeIO1()
-}
-
-uint8_t
-Comal80::peekIO2(uint16_t addr)
-{
-    return 0;
 }
 
 void
 Comal80::pokeIO1(uint16_t addr, uint8_t value)
 {
-    // debug("Comal80::pokeIO(%04X, %02X)\n", addr, value);
-    
     if (addr >= 0xDE00 && addr <= 0xDEFF) {
         
-        regValue = value & 0xC7;
+        control = value & 0xC7;
         bankIn(value & 0x03);
         
         switch (value & 0xE0) {

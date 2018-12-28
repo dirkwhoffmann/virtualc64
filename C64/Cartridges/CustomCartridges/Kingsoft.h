@@ -31,13 +31,17 @@ public:
     Kingsoft(C64 *c64) : Cartridge(c64, "Kingsoft") { };
     CartridgeType getCartridgeType() { return CRT_KINGSOFT; }
     
-    void resetCartConfig();
-    void updatePeekPokeLookupTables();
-    uint8_t peekIO1(uint16_t addr);
-    void pokeIO1(uint16_t addr, uint8_t value);
+    //
+    //! @functiongroup Methods from Cartridge
+    //
     
-    // uint8_t getMode() { return regValue; }
-    // void setMode(uint8_t value) { regValue = value; }
+    void resetCartConfig();
+
+    uint8_t peekIO1(uint16_t addr);
+    uint8_t spyPeek(uint16_t addr) { return 0; }
+    void pokeIO1(uint16_t addr, uint8_t value);
+
+    void updatePeekPokeLookupTables();
 };
 
 

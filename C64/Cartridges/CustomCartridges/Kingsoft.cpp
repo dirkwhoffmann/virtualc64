@@ -53,8 +53,6 @@ Kingsoft::updatePeekPokeLookupTables()
 uint8_t
 Kingsoft::peekIO1(uint16_t addr)
 {
-    debug("Switching to 16KB game mode\n");
-    
     // Switch to 16KB game mode
     c64->expansionport.setCartridgeMode(CRT_16K);
  
@@ -67,8 +65,6 @@ Kingsoft::peekIO1(uint16_t addr)
 void
 Kingsoft::pokeIO1(uint16_t addr, uint8_t value)
 {
-    debug("Switching to (modified) Ultimax mode\n");
-    
     // Switch to (faked) Ultimax mode
     c64->expansionport.setCartridgeMode(CRT_ULTIMAX);
     

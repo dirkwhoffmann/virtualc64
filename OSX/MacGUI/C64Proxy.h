@@ -496,25 +496,19 @@ struct AnyC64FileWrapper;
 - (void) pressButton:(NSInteger)nr;
 - (void) releaseButton:(NSInteger)nr;
 
-
-
-- (BOOL) hasFreezeButton;
-- (void) pressFreezeButton;
-- (void) releaseFreezeButton;
-- (BOOL) hasResetButton;
-- (void) pressResetButton;
-- (void) releaseResetButton;
 - (BOOL) hasSwitch;
 - (NSInteger) switchPosition;
 - (NSString *) switchDescription:(NSInteger)pos;
+- (BOOL) validSwitchPosition:(NSInteger)pos;
 - (BOOL) switchIsNeutral;
 - (BOOL) switchIsLeft;
 - (BOOL) switchIsRight;
 - (void) setSwitchPosition:(NSInteger)pos;
-- (void) toggleSwitch;
+
 - (BOOL) hasLed;
 - (BOOL) led;
 - (void) setLed:(BOOL)value;
+
 - (BOOL) hasBattery;
 - (void) setBattery:(BOOL)value;
 

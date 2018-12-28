@@ -141,8 +141,8 @@ class MyController : NSWindowController, MessageReceiver {
     @IBOutlet weak var tapeProgress: NSProgressIndicator!
     @IBOutlet weak var crtIcon: NSButton!
     @IBOutlet weak var crtSwitch: NSButton!
-    @IBOutlet weak var crtFreeze: NSButton!
-    @IBOutlet weak var crtReset: NSButton!
+    @IBOutlet weak var crtButton1: NSButton!
+    @IBOutlet weak var crtButton2: NSButton!
     @IBOutlet weak var clockSpeed: NSTextField!
     @IBOutlet weak var clockSpeedBar: NSLevelIndicator!
     @IBOutlet weak var warpIcon: NSButton!
@@ -798,15 +798,17 @@ extension MyController {
             
             crtIcon.isHidden = false
             crtSwitch.isHidden = !c64.expansionport.hasSwitch()
-            crtFreeze.isHidden = !c64.expansionport.hasFreezeButton()
-            crtReset.isHidden = !c64.expansionport.hasResetButton()
+            crtButton1.isHidden = c64.expansionport.numButtons() < 1
+            crtButton2.isHidden = c64.expansionport.numButtons() < 2
+            crtButton1.toolTip = c64.expansionport.getButtonTitle(1)
+            crtButton2.toolTip = c64.expansionport.getButtonTitle(2)
 
         case MSG_NO_CARTRIDGE:
             
             crtIcon.isHidden = true
             crtSwitch.isHidden = true
-            crtFreeze.isHidden = true
-            crtReset.isHidden = true
+            crtButton1.isHidden = true
+            crtButton2.isHidden = true
             
         case MSG_CART_SWITCH:
             

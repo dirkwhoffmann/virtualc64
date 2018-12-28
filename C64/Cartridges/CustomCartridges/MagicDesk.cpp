@@ -24,13 +24,13 @@
 uint8_t
 MagicDesk::peekIO1(uint16_t addr)
 {
-    return regValue;
+    return control;
 }
 
 void
 MagicDesk::pokeIO1(uint16_t addr, uint8_t value)
 {
-    regValue = value & 0x8F;
+    control = value & 0x8F;
     
     /* This cartridge type is very similar to the OCEAN cart type: ROM  memory
      * is  organized  in  8Kb  ($2000)  banks  located  at  $8000-$9FFF.  Bank

@@ -22,7 +22,7 @@
 #include "C64.h"
 
 //
-// Action Replay (hardware version 3)
+// Action Replay (hardware revision 3)
 //
 
 //! @brief    An older generation Action Replay cartridge
@@ -62,46 +62,79 @@ void
 ActionReplay3::pokeIO1(uint16_t addr, uint8_t value)
 {
     if (!disabled())
-    setControlReg(value);
+        setControlReg(value);
+}
+
+const char *
+ActionReplay3::getButtonTitle(unsigned nr)
+{
+    return (nr == 1) ? "Freeze" : (nr == 2) ? "Reset" : NULL;
 }
 
 void
-ActionReplay3::pressFreezeButton()
+ActionReplay3::pressButton(unsigned nr)
 {
-    suspend();
-    c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
-    c64->cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);
+    assert(nr <= numButtons());
+    debug("Pressing %s button.\n", getButtonTitle(nr));
     
-    // By setting the control register to 0, exrom/game is set to 1/0
-    // which activates ultimax mode. This mode is reset later, in the
-    // ActionReplay's interrupt handler.
-    setControlReg(0);
-    resume();
+    c64->suspend();
+    
+    switch (nr) {
+            
+        case 1: // Freeze
+            
+            c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+            c64->cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);
+            
+            // By setting the control register to 0, exrom/game is set to 1/0
+            // which activates ultimax mode. This mode is reset later, in the
+            // ActionReplay's interrupt handler.
+            setControlReg(0);
+            break;
+            
+        case 2: // Reset
+            
+            resetWithoutDeletingRam();
+            break;
+    }
+    
+    c64->resume();
 }
 
 void
-ActionReplay3::releaseFreezeButton()
+ActionReplay3::releaseButton(unsigned nr)
 {
-    suspend();
-    c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
-    c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
-    resume();
+    assert(nr <= numButtons());
+    debug("Releasing %s button.\n", getButtonTitle(nr));
+    
+    c64->suspend();
+    
+    switch (nr) {
+            
+        case 1: // Freeze
+            
+            c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+            c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
+            break;
+    }
+    
+    c64->resume();
 }
 
 void
 ActionReplay3::setControlReg(uint8_t value)
 {
-    regValue = value;
+    control = value;
     c64->expansionport.setGameAndExrom(game(), exrom());
 }
 
 
 //
-// Action Replay (hardware version 4 and above)
+// Action Replay (hardware revision 4 and above)
 //
 
 //! @brief    A newer generation Action Replay cartridge
-ActionReplay::ActionReplay(C64 *c64) : Cartridge(c64)
+ActionReplay::ActionReplay(C64 *c64) : CartridgeWithRegister(c64, "AR")
 {
     debug("ActionReplay constructor\n");
     
@@ -143,8 +176,7 @@ ActionReplay::poke(uint16_t addr, uint8_t value)
 uint8_t
 ActionReplay::peekIO1(uint16_t addr)
 {
-    // debug("peekIO1(uint16_t %04X)\n", addr);
-    return regValue;
+    return control;
 }
 
 uint8_t
@@ -179,34 +211,65 @@ ActionReplay::pokeIO2(uint16_t addr, uint8_t value)
     }
 }
 
-void
-ActionReplay::pressFreezeButton()
+const char *
+ActionReplay::getButtonTitle(unsigned nr)
 {
-    suspend();
-    
-    // Turn Ultimax mode on
-    setControlReg(0x23);
-
-    // Pressing the freeze bottom pulls down both the NMI and the IRQ line
-    c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
-    c64->cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);
-    
-    resume();
+    return (nr == 1) ? "Freeze" : (nr == 2) ? "Reset" : NULL;
 }
 
 void
-ActionReplay::releaseFreezeButton()
+ActionReplay::pressButton(unsigned nr)
 {
-    suspend();
-    c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
-    c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
-    resume();
+    assert(nr <= numButtons());
+    debug("Pressing %s button.\n", getButtonTitle(nr));
+    
+    c64->suspend();
+    
+    switch (nr) {
+            
+        case 1: // Freeze
+            
+            // Turn Ultimax mode on
+            setControlReg(0x23);
+            
+            // Pressing the freeze bottom pulls down both the NMI and the IRQ line
+            c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+            c64->cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);
+            break;
+            
+        case 2: // Reset
+            
+            resetWithoutDeletingRam();
+            break;
+    }
+    
+    c64->resume();
+}
+
+void
+ActionReplay::releaseButton(unsigned nr)
+{
+    assert(nr <= numButtons());
+    debug("Releasing %s button.\n", getButtonTitle(nr));
+    
+    c64->suspend();
+    
+    switch (nr) {
+            
+        case 1: // Freeze
+            
+            c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+            c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
+            break;
+    }
+    
+    c64->resume();
 }
 
 void
 ActionReplay::setControlReg(uint8_t value)
 {
-    regValue = value;
+    control = value;
     
     debug(2, "PC: %04X setControlReg(%02X)\n", c64->cpu.getPC(), value);
     
@@ -240,7 +303,7 @@ ActionReplay::setControlReg(uint8_t value)
 bool
 ActionReplay::ramIsEnabled(uint16_t addr)
 {
-    if (regValue & 0x20) {
+    if (control & 0x20) {
         
         if (addr >= 0xDF00 && addr <= 0xDFFF) { // RAM mirrored in IO2
             return true;
@@ -257,6 +320,12 @@ ActionReplay::ramIsEnabled(uint16_t addr)
 // Atomic Power 
 //
 
+AtomicPower::AtomicPower(C64 *c64) : ActionReplay(c64) {
+    
+    debug("AtomicPower constructor\n");
+    setDescription("AtomicPower");
+};
+
 bool
 AtomicPower::game()
 {
@@ -272,7 +341,7 @@ AtomicPower::exrom()
 bool
 AtomicPower::ramIsEnabled(uint16_t addr)
 {
-    if (regValue & 0x20) {
+    if (control & 0x20) {
         
         if (addr >= 0xDF00 && addr <= 0xDFFF) { // RAM mirrored in IO2
             return true;

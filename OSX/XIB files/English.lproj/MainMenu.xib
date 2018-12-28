@@ -1104,21 +1104,22 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Buttons" id="gIs-wR-no0">
                                     <items>
-                                        <menuItem title="Press Freeze Button" image="crtButtonOnTemplate" keyEquivalent="f" id="KqP-hK-eI5">
-                                            <connections>
-                                                <action selector="pressFreezeButtonAction:" target="-1" id="MJk-Vn-Kcv"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Press Reset Button" image="crtButtonOnTemplate" id="2oe-rD-sgA">
+                                        <menuItem title="Press Button 1" image="crtButtonOnTemplate" id="KqP-hK-eI5">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="pressResetButtonAction:" target="-1" id="26o-an-OuP"/>
+                                                <action selector="pressCartridgeButton1Action:" target="-1" id="GoU-qf-RLr"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Press Button 2" image="crtButtonOnTemplate" id="2oe-rD-sgA">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="pressCartridgeButton2Action:" target="-1" id="8Cl-PC-UK2"/>
                                             </connections>
                                         </menuItem>
                                     </items>
                                 </menu>
                                 <connections>
-                                    <action selector="pressButtonAction:" target="-1" id="zum-7k-cvA"/>
+                                    <action selector="pressButtonDummyAction:" target="-1" id="7ZO-bS-cuw"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Switch" id="AsX-t4-FAq">

@@ -46,7 +46,6 @@
 #include "Zaxxon.h"
 
 
-
 //! @brief    Type 7 cartridges
 class Funplay : public Cartridge {
     
@@ -64,16 +63,6 @@ public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_SUPER_GAMES; }
     void pokeIO2(uint16_t addr, uint8_t value);
-};
-
-//! @brief    Type 11 cartridges
-class Westermann : public Cartridge {
-    
-public:
-    using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_WESTERMANN; }
-    uint8_t peekIO2(uint16_t addr);
-    uint8_t spypeekIO2(uint16_t addr);
 };
 
 //! @brief    Type 12 cartridges
@@ -109,44 +98,6 @@ public:
     CartridgeType getCartridgeType() { return CRT_ZAXXON; }
     uint8_t peekRomL(uint16_t addr);
     uint8_t spypeekRomL(uint16_t addr);
-};
-
-//! @brief    Type 19 cartridges
-class MagicDesk : public Cartridge {
-    
-public:
-    using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_MAGIC_DESK; }
-    uint8_t peekIO1(uint16_t addr);
-    void pokeIO1(uint16_t addr, uint8_t value);
-};
-
-//! @brief    Type 21 cartridges
-class Comal80 : public Cartridge {
-    
-public:
-    using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_COMAL80; }
-    void reset();
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t peekIO2(uint16_t addr);
-    void pokeIO1(uint16_t addr, uint8_t value);
-};
-
-//! @brief    Type 45 cartridges
-class FreezeFrame : public Cartridge {
-    
-public:
-    using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_FREEZE_FRAME; }
-    void reset();
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t spypeekIO1(uint16_t addr) { return 0; }
-    uint8_t peekIO2(uint16_t addr);
-    uint8_t spypeekIO2(uint16_t addr) { return 0; }
-    bool hasFreezeButton() { return true; }
-    void pressFreezeButton();
-    void releaseFreezeButton();
 };
 
 #endif

@@ -43,7 +43,6 @@ public:
     void setSwitch(int8_t pos);
     bool switchInOffPosition() { return switchIsLeft(); }
     bool switchInOnPosition() { return switchIsRight(); }
-    void toggleSwitch();
 
     bool cartIsVisible() { return getSwitch() < 0; }
     bool cartIsHidden() { return getSwitch() >= 0; }

@@ -52,7 +52,6 @@ Cartridge::Cartridge(C64 *c64, const char *description)
         { &led,                sizeof(led),                CLEAR_ON_RESET },
 
         { &val[0],             sizeof(val),                CLEAR_ON_RESET },
-        { &regValue,           sizeof(regValue),           CLEAR_ON_RESET },
      
         { NULL,                0,                          0 }};
     
@@ -97,7 +96,6 @@ Cartridge::reset()
     
     // Delete general-purpose variables
     memset(val, 0, sizeof(val));
-    regValue = 0;
     
     // Bank in visibile chips (chips with low numbers show up first)
     for (int i = MAX_PACKETS - 1; i >= 0; i--) {
@@ -488,21 +486,20 @@ Cartridge::bankOut(unsigned nr)
 }
 
 void
-Cartridge::pressResetButton()
-{
-    // Reset all components, but keep memory contents
-    uint8_t ram[0xFFFF];
-    
-    suspend();
-    memcpy(ram, c64->mem.ram, 0xFFFF);
-    c64->reset();
-    memcpy(c64->mem.ram, ram, 0xFFFF);
-    resume();
-}
-
-void
 Cartridge::setSwitch(int8_t pos)
 {
     switchPos = pos;
     c64->putMessage(MSG_CART_SWITCH);
+}
+
+void
+Cartridge::resetWithoutDeletingRam()
+{
+    uint8_t ram[0x10000];
+    
+    debug(1, "Resetting virtual C64 (preserving RAM)\n");
+    
+    memcpy(ram, c64->mem.ram, 0x10000);
+    c64->reset();
+    memcpy(c64->mem.ram, ram, 0x10000);
 }

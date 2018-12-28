@@ -69,7 +69,6 @@ CartridgeRom::stateSize()
 void
 CartridgeRom::didLoadFromBuffer(uint8_t **buffer)
 {
-    debug("didLoadFromBuffer\n");
     if (rom) delete[] rom;
     rom = new uint8_t[size];
     
@@ -79,7 +78,6 @@ CartridgeRom::didLoadFromBuffer(uint8_t **buffer)
 void
 CartridgeRom::didSaveToBuffer(uint8_t **buffer)
 {
-    debug("didSaveToBuffer\n");
     writeBlock(buffer, rom, size);
 }
 

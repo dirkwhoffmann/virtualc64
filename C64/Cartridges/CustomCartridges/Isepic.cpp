@@ -154,7 +154,7 @@ Isepic::pokeIO2(uint16_t addr, uint8_t value)
 const char *
 Isepic::getSwitchDescription(int8_t pos)
 {
-    return (pos < 0) ? "Off" : (pos > 0) ? "On" : NULL;
+    return (pos == -1) ? "Off" : (pos == 1) ? "On" : NULL;
 }
 
 void
@@ -191,13 +191,6 @@ Isepic::setSwitch(int8_t pos)
     }
   
     c64->resume();
-}
-
-void
-Isepic::toggleSwitch()
-{
-    setSwitch(getSwitch() * -1);
-    c64->putMessage(MSG_CART_SWITCH);
 }
 
 void

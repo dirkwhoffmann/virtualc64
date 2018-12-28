@@ -890,32 +890,6 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->expansionPort->releaseButton((unsigned)nr);
 }
-
-
-- (BOOL) hasFreezeButton
-{
-    return wrapper->expansionPort->hasFreezeButton();
-}
-- (void) pressFreezeButton
-{
-    wrapper->expansionPort->pressFreezeButton();
-}
-- (void) releaseFreezeButton
-{
-    wrapper->expansionPort->releaseFreezeButton();
-}
-- (BOOL) hasResetButton
-{
-    return wrapper->expansionPort->hasResetButton();
-}
-- (void) pressResetButton
-{
-    wrapper->expansionPort->pressResetButton();
-}
-- (void) releaseResetButton
-{
-    wrapper->expansionPort->releaseResetButton();
-}
 - (BOOL) hasSwitch
 {
     return wrapper->expansionPort->hasSwitch();
@@ -928,6 +902,10 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     const char *str = wrapper->expansionPort->getSwitchDescription(pos);
     return str ? [NSString stringWithUTF8String:str] : NULL;
+}
+- (BOOL) validSwitchPosition:(NSInteger)pos
+{
+    return wrapper->expansionPort->validSwitchPosition(pos);
 }
 - (BOOL) switchIsNeutral
 {
@@ -944,10 +922,6 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 - (void) setSwitchPosition:(NSInteger)pos
 {
     wrapper->expansionPort->setSwitch(pos);
-}
-- (void) toggleSwitch
-{
-    wrapper->expansionPort->toggleSwitch();
 }
 - (BOOL) hasLed
 {

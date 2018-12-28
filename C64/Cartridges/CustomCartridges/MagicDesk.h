@@ -24,4 +24,20 @@
 
 #include "Cartridge.h"
 
+class MagicDesk : public CartridgeWithRegister {
+    
+public:
+    
+    MagicDesk(C64 *c64) : CartridgeWithRegister(c64, "MagicDesk") { };
+    CartridgeType getCartridgeType() { return CRT_MAGIC_DESK; }
+    
+    //
+    //! @functiongroup Methods from Cartridge
+    //
+    
+    uint8_t peekIO1(uint16_t addr);
+    void pokeIO1(uint16_t addr, uint8_t value);
+};
+
+
 #endif

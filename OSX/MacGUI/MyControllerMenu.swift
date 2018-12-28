@@ -117,15 +117,20 @@ extension MyController : NSMenuItemValidation {
         if item.action == #selector(MyController.detachCartridgeAction(_:)) {
             return c64.expansionport.cartridgeAttached()
         }
-        if item.action == #selector(MyController.pressButtonAction(_:)) {
-            track()
-            return c64.expansionport.hasFreezeButton() || c64.expansionport.hasResetButton()
+        if item.action == #selector(MyController.pressButtonDummyAction(_:)) {
+            return c64.expansionport.numButtons() > 0
         }
-        if item.action == #selector(MyController.pressFreezeButtonAction(_:)) {
-            return c64.expansionport.hasFreezeButton()
+        if item.action == #selector(MyController.pressCartridgeButton1Action(_:)) {
+            let title = c64.expansionport.getButtonTitle(1)
+            item.title = title ?? ""
+            item.isHidden = title == nil
+            return title != nil
         }
-        if item.action == #selector(MyController.pressResetButtonAction(_:)) {
-            return c64.expansionport.hasResetButton()
+        if item.action == #selector(MyController.pressCartridgeButton2Action(_:)) {
+            let title = c64.expansionport.getButtonTitle(2)
+            item.title = title ?? ""
+            item.isHidden = title == nil
+            return title != nil
         }
         if item.action == #selector(MyController.setSwitchDummyAction(_:)) {
             return c64.expansionport.hasSwitch()
@@ -368,8 +373,8 @@ extension MyController : NSMenuItemValidation {
             diskIcon2: !c64.drive2.hasDisk(),
             crtIcon: !c64.expansionport.cartridgeAttached(),
             crtSwitch: !c64.expansionport.hasSwitch(),
-            crtFreeze: !c64.expansionport.hasFreezeButton(),
-            crtReset: !c64.expansionport.hasResetButton(),
+            crtButton1: c64.expansionport.numButtons() < 1,
+            crtButton2: c64.expansionport.numButtons() < 2,
             tapeIcon: !c64.datasette.hasTape(),
             tapeProgress: false,
             clockSpeed: false,
@@ -781,24 +786,25 @@ extension MyController : NSMenuItemValidation {
         c64.expansionport.setBattery(!c64.expansionport.hasBattery())
     }
     
-    @IBAction func pressFreezeButtonAction(_ sender: NSButton!) {
-        track()
-        c64.expansionport.pressFreezeButton()
+    @IBAction func pressCartridgeButton1Action(_ sender: NSButton!) {
+        
+        c64.expansionport.pressButton(1)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.c64.expansionport.releaseFreezeButton()
+            self.c64.expansionport.releaseButton(1)
         }
     }
 
-    @IBAction func pressResetButtonAction(_ sender: NSButton!) {
+    @IBAction func pressCartridgeButton2Action(_ sender: NSButton!) {
         
-        track()
-        c64.expansionport.pressResetButton()
+        c64.expansionport.pressButton(2)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.c64.expansionport.releaseResetButton()
+            self.c64.expansionport.releaseButton(2)
         }
     }
     
-    @IBAction func pressButtonAction(_ sender: Any!) {
+    @IBAction func pressButtonDummyAction(_ sender: Any!) {
         // Dummy action method to enable menu item validation
     }
 
@@ -834,9 +840,24 @@ extension MyController : NSMenuItemValidation {
     }
     
     @IBAction func toggleSwitchAction(_ sender: NSButton!) {
-        c64.expansionport.toggleSwitch()
+        
+        // tag remembers if we previously pulled left or right
+        let dir = sender.tag
+        let pos = c64.expansionport.switchPosition()
+        
+        // Move to the next valid switch position
+        for newPos in [pos + dir, pos + 2 * dir, pos - dir, pos - 2 * dir] {
+            
+            if c64.expansionport.validSwitchPosition(newPos) {
+                track("old pos = \(pos) new pos = \(newPos)")
+                
+                c64.expansionport.setSwitchPosition(newPos)
+                sender.tag = (newPos > pos) ? 1 : -1
+                break
+            }
+        }
     }
-    
+        
     //
     // Action methods (Debug menu)
     //

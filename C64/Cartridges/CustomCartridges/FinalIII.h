@@ -26,18 +26,35 @@
 
 class FinalIII : public Cartridge {
     
-    public:
+public:
+    
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_FINAL_III; }
+    
+    //
+    //! @functiongroup Methods from VirtualComponent
+    //
+    
     void reset();
+    
+    //
+    //! @functiongroup Methods from Cartridge
+    //
+    
     void resetCartConfig();
+    
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
     void pokeIO2(uint16_t addr, uint8_t value);
-    void pressFreezeButton();
-    void releaseFreezeButton();
-    bool hasFreezeButton() { return true; }
-    bool hasResetButton() { return true; }
+    
+    //
+    //! @functiongroup Methods from Cartridge
+    //
+    
+    unsigned numButtons() { return 2; }
+    const char *getButtonTitle(unsigned nr);
+    void pressButton(unsigned nr);
+    void releaseButton(unsigned nr);
 };
 
 #endif

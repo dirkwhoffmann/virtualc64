@@ -29,16 +29,23 @@ class KcsPower : public Cartridge {
 public:
     KcsPower(C64 *c64);
     CartridgeType getCartridgeType() { return CRT_KCS_POWER; }
+    
     void reset();
+    
+    //
+    //! @functiongroup Methods from Cartridge
+    //
+    
     uint8_t peekIO1(uint16_t addr);
     uint8_t spypeekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
     void pokeIO1(uint16_t addr, uint8_t value);
     void pokeIO2(uint16_t addr, uint8_t value);
-    bool hasFreezeButton() { return false; }
-    bool hasResetButton() { return true; }
-    void pressResetButton();
-    void releaseResetButton();
+    
+    unsigned numButtons() { return 1; }
+    const char *getButtonTitle(unsigned nr) { return (nr == 1) ? "Freeze" : NULL; }
+    void pressButton(unsigned nr);
+    void releaseButton(unsigned nr);
 };
 
 #endif

@@ -31,7 +31,6 @@ Expert::Expert(C64 *c64) : Cartridge(c64)
     
     active = false;
     setSwitch(0);
-    newSwitchPos = 1;
     
     // Allocate 8KB bytes persistant RAM
     setRamCapacity(0x2000);
@@ -64,7 +63,7 @@ Expert::dump()
 size_t
 Expert::stateSize()
 {
-    return Cartridge::stateSize() + 2;
+    return Cartridge::stateSize() + 1;
 }
 
 void
@@ -72,7 +71,6 @@ Expert::didLoadFromBuffer(uint8_t **buffer)
 {
     Cartridge::didLoadFromBuffer(buffer);
     active = read8(buffer);
-    newSwitchPos = (int8_t)read8(buffer);
 }
 
 void
@@ -80,7 +78,6 @@ Expert::didSaveToBuffer(uint8_t **buffer)
 {
     Cartridge::didSaveToBuffer(buffer);
     write8(buffer, (uint8_t)active);
-    write8(buffer, (uint8_t)newSwitchPos);
 }
 
 void
@@ -104,63 +101,6 @@ Expert::loadChip(unsigned nr, CRTFile *c)
     }
 }
 
-void
-Expert::pressFreezeButton() {
-    
-    debug("Expert::pressFreezeButton\n");
-    
-    c64->suspend();
-    
-    if (switchInOnPosition()) {
-        debug("Switching on cartridge\n");
-        active = true;
-    }
-    
-    // The Expert cartridge uses two three-state buffers in parallel to force
-    // the NMI line high, even if a program leaves it low to protect itself
-    // against freezers. The following code is surely not accurate, but it
-    // forces an NMI a trigger, regardless of the current value of the NMI
-    // line.
-    
-    uint8_t oldLine = c64->cpu.nmiLine;
-    uint8_t newLine = oldLine | CPU::INTSRC_EXPANSION;
-    
-    c64->cpu.releaseNmiLine((CPU::IntSource)0xFF);
-    c64->cpu.pullDownNmiLine((CPU::IntSource)newLine);
-    c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
-    
-    /*
-    c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
-    c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
-    */
-    c64->resume();
-}
-
-void
-Expert::releaseFreezeButton()
-{
-    debug("Expert::releaseFreezeButton\n");
-}
-
-void
-Expert::pressResetButton()
-{
-    debug("Expert::pressResetButton\n");
-
-    c64->suspend();
-
-    dump();
-    
-    if (switchInOnPosition()) {
-        debug("Switching on cartridge\n");
-        active = true;
-    }
-    Cartridge::pressResetButton();
-    dump();
-    
-    c64->resume();
-}
-
 uint8_t
 Expert::peek(uint16_t addr)
 {
@@ -168,7 +108,7 @@ Expert::peek(uint16_t addr)
         
         // Get value from cartridge RAM
         return peekRAM(addr & 0x1FFF);
-        
+    
     } else {
         
         // Get value as if no cartridge was attached
@@ -179,8 +119,6 @@ Expert::peek(uint16_t addr)
 uint8_t
 Expert::peekIO1(uint16_t addr)
 {
-    assert(addr >= 0xDE00 && addr <= 0xDEFF);
-    
     // Any IO1 access disables the cartridge
     active = false;
     
@@ -194,7 +132,6 @@ Expert::poke(uint16_t addr, uint8_t value)
         
         // Write value into cartridge RAM if it is write enabled
         if (cartridgeRamIsWritable(addr)) {
-            // debug("Writing RAM cell %04X with %02X\n", addr & 0x1FFF, value);
             pokeRAM(addr & 0x1FFF, value);
         }
     
@@ -217,33 +154,55 @@ Expert::pokeIO1(uint16_t addr, uint8_t value)
 }
 
 const char *
+Expert::getButtonTitle(unsigned nr)
+{
+    return (nr == 1) ? "Reset" : (nr == 2) ? "ESM" : NULL;
+}
+
+void
+Expert::pressButton(unsigned nr)
+{
+    assert(nr <= numButtons());
+    debug("Pressing %s button.\n", getButtonTitle(nr));
+    
+    c64->suspend();
+    
+    switch (nr) {
+            
+        case 1: // Reset
+            
+            if (switchInOnPosition()) { active = true; }
+            resetWithoutDeletingRam();
+            break;
+            
+        case 2: // ESM (Freeze)
+            
+            if (switchInOnPosition()) { active = true; }
+            
+            // The Expert cartridge uses two three-state buffers in parallel to
+            // force the NMI line high, even if a program leaves it low to
+            // protect itself against freezers. The following code is surely
+            // not accurate, but it forces an NMI a trigger, regardless of the
+            // current value of the NMI line.
+            
+            uint8_t oldLine = c64->cpu.nmiLine;
+            uint8_t newLine = oldLine | CPU::INTSRC_EXPANSION;
+            
+            c64->cpu.releaseNmiLine((CPU::IntSource)0xFF);
+            c64->cpu.pullDownNmiLine((CPU::IntSource)newLine);
+            c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+            break;
+    }
+    
+    c64->resume();
+}
+
+
+
+const char *
 Expert::getSwitchDescription(int8_t pos)
 {
-    return (pos < 0) ? "Prg" : (pos > 0) ? "On" : "Off";
-}
-
-void
-Expert::setSwitch(int8_t pos)
-{
-    debug("Setting switch to %d\n", pos);
-
-    Cartridge::setSwitch(pos);
-}
-
-void
-Expert::toggleSwitch()
-{
-    if (newSwitchPos < 0) {
-        newSwitchPos = 0;
-        setSwitch(-1);
-    } else if (newSwitchPos > 0) {
-        newSwitchPos = 0;
-        setSwitch(1);
-    } else {
-        newSwitchPos = (getSwitch() < 0) ? 1 : -1;
-        setSwitch(0);
-    }
-    c64->putMessage(MSG_CART_SWITCH);
+    return (pos == -1) ? "Prg" : (pos == 0) ? "Off" : (pos == 1) ? "On" : NULL;
 }
 
 bool
