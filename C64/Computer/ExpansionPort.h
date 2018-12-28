@@ -181,6 +181,26 @@ public:
     //! @brief    Removes a cartridge from the expansion port and resets
     void detachCartridgeAndReset();
 
+    //
+    //! @functiongroup Operating cartridge buttons
+    //
+    
+    //! @brief    Returns the number of available cartridge buttons
+    virtual unsigned numButtons() { return cartridge ? cartridge->numButtons() : 0; }
+    
+    //! @brief    Returns a textual description for a button.
+    virtual const char *getButtonTitle(unsigned nr) {
+        return cartridge ? cartridge->getButtonTitle(nr) : NULL; }
+    
+    //! @brief    Presses a button
+    virtual void pressButton(unsigned nr) { if (cartridge) cartridge->pressButton(nr); }
+    
+    //! @brief    Releases a button
+    virtual void releaseButton(unsigned nr) { if (cartridge) cartridge->releaseButton(nr); }
+    
+    
+    
+    
     //! @brief    Returns true if a cartridge with a freeze button is attached
     bool hasFreezeButton() { return cartridge ? cartridge->hasFreezeButton() : false; }
     
@@ -208,7 +228,7 @@ public:
     bool switchIsLeft() { return cartridge ? cartridge->switchIsLeft() : false; }
     bool switchIsRight() { return cartridge ? cartridge->switchIsRight() : false; }
     const char *getSwitchDescription(int8_t pos) {
-        return cartridge ? cartridge->getSwitchDescription(pos) : ""; }
+        return cartridge ? cartridge->getSwitchDescription(pos) : NULL; }
     
     //! @brief    Puts the switch in the provided position
     void setSwitch(uint8_t pos) { if (cartridge) cartridge->setSwitch(pos); }

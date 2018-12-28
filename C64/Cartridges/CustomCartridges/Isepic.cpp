@@ -154,9 +154,7 @@ Isepic::pokeIO2(uint16_t addr, uint8_t value)
 const char *
 Isepic::getSwitchDescription(int8_t pos)
 {
-    if (pos < 0) return "Off";
-    if (pos > 0) return "On";
-    return "";
+    return (pos < 0) ? "Off" : (pos > 0) ? "On" : NULL;
 }
 
 void

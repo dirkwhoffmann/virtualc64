@@ -873,6 +873,25 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->expansionPort->detachCartridgeAndReset();
 }
+- (NSInteger) numButtons
+{
+    return wrapper->expansionPort->numButtons();
+}
+- (NSString *) getButtonTitle:(NSInteger)nr
+{
+    const char *str = wrapper->expansionPort->getButtonTitle((unsigned)nr);
+    return str ? [NSString stringWithUTF8String:str] : NULL;
+}
+- (void) pressButton:(NSInteger)nr
+{
+    wrapper->expansionPort->pressButton((unsigned)nr);
+}
+- (void) releaseButton:(NSInteger)nr
+{
+    wrapper->expansionPort->releaseButton((unsigned)nr);
+}
+
+
 - (BOOL) hasFreezeButton
 {
     return wrapper->expansionPort->hasFreezeButton();
@@ -907,8 +926,8 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (NSString *) switchDescription:(NSInteger)pos
 {
-    std::string s = wrapper->expansionPort->getSwitchDescription(pos);
-    return [NSString stringWithUTF8String:s.c_str()];
+    const char *str = wrapper->expansionPort->getSwitchDescription(pos);
+    return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (BOOL) switchIsNeutral
 {

@@ -219,9 +219,7 @@ Expert::pokeIO1(uint16_t addr, uint8_t value)
 const char *
 Expert::getSwitchDescription(int8_t pos)
 {
-    if (pos < 0) return "Prg";
-    if (pos > 0) return "On";
-    return "Off";
+    return (pos < 0) ? "Prg" : (pos > 0) ? "On" : "Off";
 }
 
 void
@@ -252,6 +250,7 @@ bool
 Expert::cartridgeRamIsVisible(uint16_t addr)
 {
     if (addr < 0x8000) {
+        assert(false); // Should never be called for this address space
         return false;
     }
     if (addr < 0xA000) {
@@ -272,17 +271,14 @@ Expert::cartridgeRamIsWritable(uint16_t addr)
 void
 Expert::updatePeekPokeLookupTables()
 {
-    // debug("Setting up faked Ultimax mode...\n");
+    // Setting up faked Ultimax mode. We let the Game and Exrom line as they
+    // are, but reroute all access to ROML and ROMH into the cartridge.
     
-    /*
-    for (unsigned i = 1; i < 16; i++) {
-        c64->mem.peekSrc[i] = c64->mem.pokeTarget[i] = M_CRTLO;
-    }
-     */
-    
+    // Reroute ROML
      c64->mem.peekSrc[0x8] = c64->mem.pokeTarget[0x8] = M_CRTLO;
      c64->mem.peekSrc[0x9] = c64->mem.pokeTarget[0x9] = M_CRTLO;
-     
+
+    // Reroute ROMH
      c64->mem.peekSrc[0xE] = c64->mem.pokeTarget[0xE] = M_CRTLO;
      c64->mem.peekSrc[0xF] = c64->mem.pokeTarget[0xF] = M_CRTLO;
 }
@@ -290,8 +286,6 @@ Expert::updatePeekPokeLookupTables()
 void
 Expert::nmiWillTrigger()
 {
-    // debug("NMI notification");
-    
     // Activate cartridge if switch is in 'ON' position
     if (switchInOnPosition()) { active = 1; }
 }

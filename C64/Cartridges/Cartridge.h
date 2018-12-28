@@ -374,33 +374,58 @@ public:
     // Operating buttons
     //
 
+    //! @brief    Returns the number of available cartridge buttons
+    virtual unsigned numButtons() { return 0; }
+
+    /*! @brief    Returns a textual description for a button.
+     *  @return   NULL, if there is no such button.
+     */
+    virtual const char *getButtonTitle(unsigned nr) { return NULL; }
+    
+    /*! @brief    Presses a button
+     *  @note     Make sure to call releaseButton() afterwards.
+     */
+    virtual void pressButton(unsigned nr) { }
+
+    /*! @brief    Releases a button
+     *  @note     Make sure to call pressButton() before.
+     */
+    virtual void releaseButton(unsigned nr) { }
+
+    
     //! @brief    Returns true if the cartridge has a freeze button.
+    //! @deprecated
     virtual bool hasFreezeButton() { return false; }
 
     //! @brief    Simulates pressing the freeze cartridge button.
     /*! @note     Make sure to call releaseFreezeButton() afterwards.
      *  @seealso  releaseFreezeButton, hasFreezeButton
+     *  @deprecated
      */
     virtual void pressFreezeButton() { };
 
     //! @brief    Simulates releasing the freeze cartridge button.
     /*! @note     Make sure to call pressFreezeButton() first.
      *  @seealso  pressFreezeButton, hasFreezeButton
+     *  @deprecated
      */
     virtual void releaseFreezeButton() { };
     
     //! @brief    Returns true if the cartridge has a reset button.
+    //! @deprecated
     virtual bool hasResetButton() { return false; }
     
     //! @brief    Simulates pressing the reset cartridge button.
     /*! @note     Make sure to call releaseResetButton() afterwards.
      *  @seealso  releaseResetButton
+     *  @deprecated
      */
     virtual void pressResetButton();
     
     //! @brief    Simulates releasing the reset cartridge button.
     /*! @note     Make sure to call pressResetButton() first.
      *  @seealso  pressSecondButton
+     *  @deprecated
      */
     virtual void releaseResetButton() { };
     
@@ -414,14 +439,16 @@ public:
 
     //! @brief    Returns the current position of the switch
     virtual int8_t getSwitch() { return switchPos; }
-    virtual bool switchIsNeutral() { return switchPos == 0; }
-    virtual bool switchIsLeft() { return switchPos < 0; }
-    virtual bool switchIsRight() { return switchPos > 0; }
+    
+    //! @brief    Convenience wrappers around getSwitch()
+    virtual bool switchIsNeutral() { return getSwitch() == 0; }
+    virtual bool switchIsLeft() { return getSwitch() < 0; }
+    virtual bool switchIsRight() { return getSwitch() > 0; }
     
     /*! @brief    Returns a textual description for a switch position.
-     *  @details  The description is used in the expansion port menu.
+     *  @return   NULL, if the switch cannot be positioned this way.
      */
-    virtual const char *getSwitchDescription(int8_t pos);
+    virtual const char *getSwitchDescription(int8_t pos) { return NULL; }
     
     //! @brief    Puts the switch in the provided position
     virtual void setSwitch(int8_t pos);

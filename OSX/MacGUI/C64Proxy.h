@@ -490,6 +490,14 @@ struct AnyC64FileWrapper;
 - (BOOL) attachGeoRamCartridge:(NSInteger)capacity;
 - (void) attachIsepicCartridge;
 - (void) detachCartridgeAndReset;
+
+- (NSInteger) numButtons;
+- (NSString *) getButtonTitle:(NSInteger)nr;
+- (void) pressButton:(NSInteger)nr;
+- (void) releaseButton:(NSInteger)nr;
+
+
+
 - (BOOL) hasFreezeButton;
 - (void) pressFreezeButton;
 - (void) releaseFreezeButton;

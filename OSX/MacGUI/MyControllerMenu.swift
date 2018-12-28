@@ -131,22 +131,25 @@ extension MyController : NSMenuItemValidation {
             return c64.expansionport.hasSwitch()
         }
         if item.action == #selector(MyController.setSwitchNeutralAction(_:)) {
-            item.title = c64.expansionport.switchDescription(0)
-            item.isHidden = item.title == ""
+            let title = c64.expansionport.switchDescription(0)
+            item.title = title ?? ""
+            item.isHidden = title == nil
             item.state = c64.expansionport.switchIsNeutral() ? .on : .off
-            return c64.expansionport.hasSwitch()
+            return title != nil
         }
         if item.action == #selector(MyController.setSwitchLeftAction(_:)) {
-            item.title = c64.expansionport.switchDescription(-1)
-            item.isHidden = item.title == ""
+            let title = c64.expansionport.switchDescription(-1)
+            item.title = title ?? ""
+            item.isHidden = title == nil
             item.state = c64.expansionport.switchIsLeft() ? .on : .off
-            return c64.expansionport.hasSwitch()
+            return title != nil
         }
         if item.action == #selector(MyController.setSwitchRightAction(_:)) {
-            item.title = c64.expansionport.switchDescription(1)
-            item.isHidden = item.title == ""
+            let title = c64.expansionport.switchDescription(1)
+            item.title = title ?? ""
+            item.isHidden = title == nil
             item.state = c64.expansionport.switchIsRight() ? .on : .off
-            return c64.expansionport.hasSwitch()
+            return title != nil
         }
         if item.action == #selector(MyController.geoRamBatteryAction(_:)) {
             item.state = c64.expansionport.hasBattery() ? .on : .off

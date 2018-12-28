@@ -62,6 +62,7 @@ public:
     void updatePeekPokeLookupTables();
     uint8_t peek(uint16_t addr);
     uint8_t peekIO1(uint16_t addr);
+    uint8_t spypeekIO1(uint16_t addr) { return 0; }
     void poke(uint16_t addr, uint8_t value);
     void pokeIO1(uint16_t addr, uint8_t value);
     

@@ -500,14 +500,6 @@ Cartridge::pressResetButton()
     resume();
 }
 
-const char *
-Cartridge::getSwitchDescription(int8_t pos)
-{
-    if (pos < 0) return "Push left";
-    if (pos > 0) return "Push right";
-    return "Set neutral";
-}
-
 void
 Cartridge::setSwitch(int8_t pos)
 {
