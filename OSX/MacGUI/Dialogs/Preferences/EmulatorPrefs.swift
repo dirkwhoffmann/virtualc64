@@ -159,7 +159,7 @@ extension PreferencesController {
     
     @IBAction func emuSnapshotIntervalAction(_ sender: NSTextField!) {
         
-        let factor = emuAutoSnapshots.isEnabled ? 1 : -1
+        let factor = (emuAutoSnapshots.state == .on) ? 1 : -1
         proxy?.setSnapshotInterval(sender.integerValue * factor)
         refresh()
     }
