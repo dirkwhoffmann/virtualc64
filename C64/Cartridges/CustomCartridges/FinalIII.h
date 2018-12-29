@@ -87,6 +87,12 @@ public:
     //! @brief    Writes a new value into the control register.
     void setControlReg(uint8_t value);
 
+    bool hidden() { return (control & 0x80) != 0; }
+    bool nmi() { return (control & 0x40) != 0; }
+    bool game() { return (control & 0x20) != 0; }
+    bool exrom() { return (control & 0x10) != 0; }
+    uint8_t bank() { return (control & 0x03); }
+    
     /*! @brief    Indicates if the control register is write enabled.
      *  @note     Final Cartridge III enables and disables the control register
      *            by masking the clock signal.
@@ -104,12 +110,6 @@ public:
      *            output qD.
      */
     void updateGame();
-
-    /*! @brief    Updates the Exrom line
-     *  @note     The Exrom line is driven by the control register, only.
-     */
-    void updateExrom();
-
 };
 
 #endif

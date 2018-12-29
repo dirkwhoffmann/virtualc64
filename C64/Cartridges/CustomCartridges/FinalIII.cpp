@@ -39,24 +39,15 @@ FinalIII::resetCartConfig()
 uint8_t
 FinalIII::peekIO1(uint16_t addr)
 {
-    // debug("PEEKING FROM IO1\n");
-
     // I/O space 1 mirrors $1E00 to $1EFF from ROML
-    uint16_t offset = addr - 0xDE00;
-    assert(0x1E00 + offset == (addr & 0x1FFF));
-    return peekRomL(0x1E00 + offset);
+    return peekRomL(addr & 0x1FFF);
 }
 
 uint8_t
 FinalIII::peekIO2(uint16_t addr)
 {
     // I/O space 2 space mirrors $1F00 to $1FFF from ROML
-    if (addr == 0xDFFF) {
-        debug("PEEKING %04X FROM IO2\n", addr);
-    }
-    uint16_t offset = addr - 0xDF00;
-    assert(0x1F00 + offset == (addr & 0x1FFF));
-    return peekRomL(0x1F00 + offset);
+    return peekRomL(addr & 0x1FFF);
 }
 
 void
@@ -65,9 +56,9 @@ FinalIII::pokeIO2(uint16_t addr, uint8_t value) {
     // The control register is mapped to address 0xFF in I/O space 2.
     if (addr == 0xDFFF && writeEnabled()) {
         setControlReg(value);
-    } else {
-        debug("CONTROL IS HIDDEN\n");
     }
+    
+    // debug("hidden = %d nmi = %d game = %d exrom = %d qD = %d bank = %d\n", hidden(), nmi(), game(), exrom(), qD, bank());
         
 #if 0
         /*  "7      Hide this register (1 = hidden)
@@ -185,7 +176,7 @@ FinalIII::setControlReg(uint8_t value)
     // Update external lines
     updateNMI();
     updateGame();
-    updateExrom();
+    c64->expansionport.setExromLine(exrom());
     
     // Switch memory bank
     bankIn(control & 0x03);
@@ -195,14 +186,13 @@ FinalIII::setControlReg(uint8_t value)
 bool
 FinalIII::writeEnabled()
 {
-    return ((control & 0x80) == 0) || freeezeButtonIsPressed;
+    return !hidden() || freeezeButtonIsPressed;
 }
 
 void
 FinalIII::updateNMI()
 {
-    bool nmi = ((control & 0x40) != 0) && !freeezeButtonIsPressed;
-    if (nmi) {
+    if (nmi() && !freeezeButtonIsPressed) {
         c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
     } else {
         c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
@@ -212,13 +202,5 @@ FinalIII::updateNMI()
 void
 FinalIII::updateGame()
 {
-    bool game = ((control & 0x20) != 0) && qD;
-    c64->expansionport.setGameLine(game);
-}
-
-void
-FinalIII::updateExrom()
-{
-    bool exrom = ((control & 0x10) != 0);
-    c64->expansionport.setExromLine(exrom);
+    c64->expansionport.setGameLine(game() && qD);
 }
