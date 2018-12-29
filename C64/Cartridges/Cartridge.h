@@ -142,7 +142,7 @@ protected:
      *            They preserve these values in these general-purpose variables.
      *            Only a few cartridges make use of this variable.
      */
-    uint8_t val[16]; 
+    // uint8_t val[16]; 
     
 public:
     

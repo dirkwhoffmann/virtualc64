@@ -32,7 +32,7 @@ EasyFlash::EasyFlash(C64 *c64) : Cartridge(c64, "EasyFlash")
     setRamCapacity(256);
 
     // Start in Ultimax mode
-    setJumper(0);
+    jumper = false;
 }
 
 void
@@ -42,6 +42,7 @@ EasyFlash::reset()
     
     bank = 0;
     eraseRAM(0xFF);
+    jumper = false;
 }
 
 void
@@ -68,6 +69,7 @@ EasyFlash::stateSize()
 {
     return Cartridge::stateSize()
     + 1
+    + 1
     + flashRomL.stateSize()
     + flashRomH.stateSize();
 }
@@ -77,6 +79,7 @@ EasyFlash::didLoadFromBuffer(uint8_t **buffer)
 {
     Cartridge::didLoadFromBuffer(buffer);
     bank = read8(buffer);
+    jumper = (bool)read8(buffer);
     flashRomL.loadFromBuffer(buffer);
     flashRomH.loadFromBuffer(buffer);
 }
@@ -86,6 +89,7 @@ EasyFlash::didSaveToBuffer(uint8_t **buffer)
 {
     Cartridge::didSaveToBuffer(buffer);
     write8(buffer, bank);
+    write8(buffer, (uint8_t)jumper);
     flashRomL.saveToBuffer(buffer);
     flashRomH.saveToBuffer(buffer);
 }
@@ -230,42 +234,42 @@ EasyFlash::pokeIO1(uint16_t addr, uint8_t value)
         bool game;
         
         switch (MXG) {
-            
+                
             case 0b000:
             case 0b001:
-            game = getJumper();
-            exrom = 1;
-            break;
-            
+                game = jumper;
+                exrom = 1;
+                break;
+                
             case 0b010:
             case 0b011:
-            game = getJumper();
-            exrom = 0;
-            break;
-            
+                game = jumper;
+                exrom = 0;
+                break;
+                
             case 0b100:
-            game = 1;
-            exrom = 1;
-            break;
-            
+                game = 1;
+                exrom = 1;
+                break;
+                
             case 0b101:
-            game = 0;
-            exrom = 1;
-            break;
-            
+                game = 0;
+                exrom = 1;
+                break;
+                
             case 0b110:
-            game = 1;
-            exrom = 0;
-            break;
-            
+                game = 1;
+                exrom = 0;
+                break;
+                
             case 0b111:
-            game = 0;
-            exrom = 0;
-            break;
-            
+                game = 0;
+                exrom = 0;
+                break;
+                
             default:
-            assert(false);
-            return;
+                assert(false);
+                return;
         }
         
         c64->expansionport.setGameAndExrom(game, exrom);

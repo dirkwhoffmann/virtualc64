@@ -50,8 +50,6 @@ Cartridge::Cartridge(C64 *c64, const char *description)
 
         { &switchPos,          sizeof(switchPos),          KEEP_ON_RESET },
         { &led,                sizeof(led),                CLEAR_ON_RESET },
-
-        { &val[0],             sizeof(val),                CLEAR_ON_RESET },
      
         { NULL,                0,                          0 }};
     
@@ -93,10 +91,7 @@ Cartridge::reset()
     for (unsigned i = 0; i < numPackets; i++) {
         packet[i]->reset();
     }
-    
-    // Delete general-purpose variables
-    memset(val, 0, sizeof(val));
-    
+        
     // Bank in visibile chips (chips with low numbers show up first)
     for (int i = MAX_PACKETS - 1; i >= 0; i--) {
         bankIn(i);

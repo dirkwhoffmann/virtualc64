@@ -34,6 +34,9 @@ class EasyFlash : public Cartridge {
     
     //!@brief    Selected memory bank
     uint8_t bank;
+    
+    //!@brief    The jumper
+    bool jumper;
 
 public:
     
@@ -69,8 +72,6 @@ public:
     void pokeIO1(uint16_t addr, uint8_t value);
     void pokeIO2(uint16_t addr, uint8_t value);
     bool hasLED() { return true; }
-    bool getJumper() { return val[2]; }
-    void setJumper(bool value) { val[2] = value; }
 };
 
 #endif
