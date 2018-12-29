@@ -217,8 +217,9 @@ EasyFlash::pokeIO1(uint16_t addr, uint8_t value)
     
     if (addr == 0xDE02) { // Mode register
         
-        uint8_t MXG = value & 0x07;
+        setLED((value & 0x80) != 0);
         
+        uint8_t MXG = value & 0x07;
         /* MXG
          * 000 : GAME from jumper, EXROM high (i.e. Ultimax or Off)
          * 001 : Reserved, don’t use this
