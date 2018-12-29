@@ -46,49 +46,6 @@
 #include "Zaxxon.h"
 
 
-//! @brief    Type 7 cartridges
-class Funplay : public Cartridge {
-    
-public:
-    using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_FUNPLAY; }
-    void pokeIO1(uint16_t addr, uint8_t value);
-};
-
-
-//! @brief    Type 8 cartridges
-class Supergames : public Cartridge {
-    
-public:
-    using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_SUPER_GAMES; }
-    void pokeIO2(uint16_t addr, uint8_t value);
-};
-
-//! @brief    Type 12 cartridges
-class Rex : public Cartridge {
-    
-public:
-    using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_REX; }
-    uint8_t peekIO2(uint16_t addr);
-    uint8_t spypeekIO2(uint16_t addr);
-};
-
-//! @brief    Type 16 cartridges
-class WarpSpeed : public Cartridge {
-    
-public:
-    using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_WARPSPEED; }
-    void resetCartConfig();
-    bool hasResetButton() { return true; }
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t peekIO2(uint16_t addr);
-    void pokeIO1(uint16_t addr, uint8_t value);
-    void pokeIO2(uint16_t addr, uint8_t value);
-};
-
 //! @brief    Type 18 cartridges
 class Zaxxon : public Cartridge {
     

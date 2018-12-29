@@ -51,3 +51,12 @@ WarpSpeed::pokeIO2(uint16_t addr, uint8_t value)
     c64->expansionport.setCartridgeMode(CRT_OFF);
 }
 
+void
+WarpSpeed::pressButton(unsigned nr)
+{
+    assert(nr <= numButtons());
+
+    c64->suspend();
+    resetWithoutDeletingRam();
+    c64->resume();
+}

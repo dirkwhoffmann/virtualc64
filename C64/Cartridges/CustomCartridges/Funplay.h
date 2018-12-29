@@ -24,4 +24,13 @@
 
 #include "Cartridge.h"
 
+class Funplay : public Cartridge {
+    
+public:
+    using Cartridge::Cartridge;
+    CartridgeType getCartridgeType() { return CRT_FUNPLAY; }
+    
+    void pokeIO1(uint16_t addr, uint8_t value);
+};
+
 #endif

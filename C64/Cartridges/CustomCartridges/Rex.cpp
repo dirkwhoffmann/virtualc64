@@ -36,9 +36,3 @@ Rex::peekIO2(uint16_t addr)
     
     return 0;
 }
-
-uint8_t
-Rex::spypeekIO2(uint16_t addr)
-{
-    return 0;
-}

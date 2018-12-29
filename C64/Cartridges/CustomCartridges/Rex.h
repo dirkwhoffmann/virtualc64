@@ -24,4 +24,15 @@
 
 #include "Cartridge.h"
 
+class Rex : public Cartridge {
+    
+public:
+    
+    using Cartridge::Cartridge;
+    CartridgeType getCartridgeType() { return CRT_REX; }
+    
+    uint8_t peekIO2(uint16_t addr);
+    uint8_t spypeekIO2(uint16_t addr) { return 0; }
+};
+
 #endif

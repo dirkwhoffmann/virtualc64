@@ -24,4 +24,26 @@
 
 #include "Cartridge.h"
 
+class WarpSpeed : public Cartridge {
+    
+public:
+    using Cartridge::Cartridge;
+    CartridgeType getCartridgeType() { return CRT_WARPSPEED; }
+    
+    //
+    //! @functiongroup Methods from Cartridge
+    //
+    
+    void resetCartConfig();
+    bool hasResetButton() { return true; }
+    uint8_t peekIO1(uint16_t addr);
+    uint8_t peekIO2(uint16_t addr);
+    void pokeIO1(uint16_t addr, uint8_t value);
+    void pokeIO2(uint16_t addr, uint8_t value);
+    
+    unsigned numButtons() { return 1; }
+    const char *getButtonTitle(unsigned nr) { return (nr == 1) ? "Reset" : NULL; }
+    void pressButton(unsigned nr);
+};
+
 #endif
