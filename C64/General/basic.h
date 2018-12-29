@@ -301,14 +301,15 @@ bool checkFileHeader(const char *filename, const uint8_t *header);
 //! @functiongroup Managing time
 //
 
+
 /*! @brief    Application launch time in seconds
  *  @details  The value is read by function msec for computing the elapsed
  *            number of microseconds. 
  */
-extern long tv_base;
+// extern long tv_base;
 
 //! @brief    Return the number of elapsed microseconds since program launch.
-uint64_t usec();
+// uint64_t usec();
 
 //! @brief    Reads the real-time clock (1/10th seconds).
 uint8_t localTimeSecFrac();

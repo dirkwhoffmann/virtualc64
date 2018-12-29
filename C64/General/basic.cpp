@@ -22,7 +22,7 @@
 #include "basic.h"
 
 struct timeval t;
-long tv_base = ((void)gettimeofday(&t,NULL), t.tv_sec);
+// long tv_base = ((void)gettimeofday(&t,NULL), t.tv_sec);
 
 void translateToUnicode(const char *petscii, uint16_t *unichars, uint16_t base, size_t max)
 {
@@ -253,6 +253,7 @@ checkFileHeader(const char *filename, const uint8_t *header)
 	return result;
 }
 
+#if 0
 uint64_t 
 usec()
 {
@@ -260,6 +261,7 @@ usec()
 	gettimeofday(&t,NULL);	
 	return (uint64_t)1000000*(uint64_t)(t.tv_sec - tv_base) + (uint64_t)t.tv_usec;
 }
+#endif
 
 uint8_t 
 localTimeSec()

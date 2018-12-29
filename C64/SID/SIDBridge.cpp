@@ -67,6 +67,7 @@ SIDBridge::reset()
 void
 SIDBridge::setClockFrequency(uint32_t frequency)
 {
+    debug("Setting clock frequency to %d\n", frequency);
     resid.setClockFrequency(frequency);
     fastsid.setClockFrequency(frequency);
 }
@@ -301,6 +302,7 @@ SIDBridge::getSampleRate()
 void 
 SIDBridge::setSampleRate(uint32_t rate)
 {
+    debug("Setting sample rate to %d\n", rate);
     resid.setSampleRate(rate);
     fastsid.setSampleRate(rate);
 }
@@ -424,23 +426,44 @@ SIDBridge::writeData(short *data, size_t count)
 void
 SIDBridge::handleBufferUnderflow()
 {
-    bufferUnderflows++;
     debug(3, "SID RINGBUFFER UNDERFLOW (%ld)\n", readPtr);
+
+    alignWritePtr();
+    bufferUnderflows++;
+    
+    // Determine the number of elapsed seconds since the last underflow.
+    uint64_t now = mach_absolute_time();
+    float elapsedTime = (double)(now - lastUnderflow) / 1000000000.0;
+    lastUnderflow = now;
+    
+    // Only proceed if we're running under normal conditions.
+    if (elapsedTime < 10.0) { return; }
+    
+    // Adjust the sample rate to prevent further underflows.
+    long offPerSecond = samplesAhead / elapsedTime;
+    setSampleRate(getSampleRate() + (int)offPerSecond);
 }
 
 void
 SIDBridge::handleBufferOverflow()
 {
-    bufferOverflows++;
-    debug(3, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
+    // Ignore overflows in warp mode
+    if (c64->getWarp()) { return; }
     
-    if (!c64->getWarp()) {
-        // In real-time mode, we readjust the write pointer
-        alignWritePtr();
-    } else {
-        // In warp mode, we don't advance the write ptr to avoid crack noises
-        return;
-    }
+    debug(3, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
+
+    alignWritePtr();
+    bufferOverflows++;
+    
+    // Determine the number of elapsed seconds since the last underflow.
+    uint64_t now = mach_absolute_time();
+    float elapsedTime = (double)(now - lastOverflow) / 1000000000.0;
+    lastOverflow = now;
+    
+    // Only proceed if we're running under normal conditions.
+    if (elapsedTime < 10.0) { return; }
+    
+    // Adjust the sample rate to prevent further overflows.
+    long offPerSecond = samplesAhead / elapsedTime;
+    setSampleRate(getSampleRate() - (int)offPerSecond);
 }
-
-

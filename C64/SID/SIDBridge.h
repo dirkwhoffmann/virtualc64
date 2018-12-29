@@ -1,21 +1,21 @@
 /*!
  * @header      SIDBridge.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2011 - 2018 Dirk W. Hoffmann
+ * @copyright   Dirk W. Hoffmann. All rights reserved.
  */
-/*              This program is free software; you can redistribute it and/or modify
- *              it under the terms of the GNU General Public License as published by
- *              the Free Software Foundation; either version 2 of the License, or
- *              (at your option) any later version.
+/* This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *              This program is distributed in the hope that it will be useful,
- *              but WITHOUT ANY WARRANTY; without even the implied warranty of
- *              MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *              GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *              You should have received a copy of the GNU General Public License
- *              along with this program; if not, write to the Free Software
- *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 #ifndef _SIDBRIDGE_H
@@ -41,8 +41,14 @@ private:
     //! @brief    SID selector
     bool useReSID;
     
-    //! @brief    Current clock cycle since power up
+    //! @brief    CPU cycle at the last call to executeUntil()
     uint64_t cycles;
+    
+    //! @brief    Time stamp of the last buffer underflow
+    uint64_t lastUnderflow = 0;
+
+    //! @brief    Time stamp of the last buffer overflow
+    uint64_t lastOverflow = 0;
 
 public:
     
@@ -270,11 +276,13 @@ public:
     //! @brief   Returns the fill level as a percentage value
     double fillLevel() { return (double)samplesInBuffer() / (double)bufferSize; }
     
-    /*! @brief   Align write pointer
-     *  @details This function puts the write pointer somewhat ahead of the read pointer.
-     *           With a standard sample rate of 44100 Hz, 735 samples is 1/60 sec.
+    /*! @brief    Aligns the write pointer.
+     *  @details  This function puts the write pointer somewhat ahead of the
+     *            read pointer. With a standard sample rate of 44100 Hz, 735
+     *            samples is 1/60 sec.
      */
-    void alignWritePtr() { writePtr = (readPtr + (8 * 735)) % bufferSize; }
+    const uint32_t samplesAhead = 8 * 735;
+    void alignWritePtr() { writePtr = (readPtr  + samplesAhead) % bufferSize; }
     
 public:
     
