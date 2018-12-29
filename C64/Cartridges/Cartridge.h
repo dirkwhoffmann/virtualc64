@@ -439,12 +439,15 @@ public:
     //! @brief    Modifies the memory source lookup tables if required
     virtual void updatePeekPokeLookupTables() { };
     
-    //! @brief    Called when the C64 CPU triggers an NMI
+    //! @brief    Called when the C64 CPU is about to trigger an NMI
     virtual void nmiWillTrigger() { }
+    
+    //! @brief    Called after the C64 CPU has processed the NMI instruction
+    virtual void nmiDidTrigger() { }
     
     
     //
-    // Little helpers
+    // Helpers
     //
     
     void resetWithoutDeletingRam();
@@ -466,7 +469,7 @@ public:
     void reset() {
         Cartridge::reset();
         control = 0;
-    };
+    }
     size_t stateSize() {
         return Cartridge::stateSize() + 1;
     }
@@ -481,6 +484,5 @@ public:
         write8(buffer, control);
     }
 };
-
 
 #endif 

@@ -24,6 +24,9 @@
 void
 FinalIII::reset()
 {
+    CartridgeWithRegister::reset();
+    freeezeButtonIsPressed = false;
+    qD = true;
     bankIn(0);
 }
 
@@ -36,8 +39,11 @@ FinalIII::resetCartConfig()
 uint8_t
 FinalIII::peekIO1(uint16_t addr)
 {
+    // debug("PEEKING FROM IO1\n");
+
     // I/O space 1 mirrors $1E00 to $1EFF from ROML
     uint16_t offset = addr - 0xDE00;
+    assert(0x1E00 + offset == (addr & 0x1FFF));
     return peekRomL(0x1E00 + offset);
 }
 
@@ -45,16 +51,25 @@ uint8_t
 FinalIII::peekIO2(uint16_t addr)
 {
     // I/O space 2 space mirrors $1F00 to $1FFF from ROML
+    if (addr == 0xDFFF) {
+        debug("PEEKING %04X FROM IO2\n", addr);
+    }
     uint16_t offset = addr - 0xDF00;
+    assert(0x1F00 + offset == (addr & 0x1FFF));
     return peekRomL(0x1F00 + offset);
 }
 
 void
 FinalIII::pokeIO2(uint16_t addr, uint8_t value) {
     
-    // 0xDFFF is Final Cartridge's internal control register
-    if (addr == 0xDFFF) {
+    // The control register is mapped to address 0xFF in I/O space 2.
+    if (addr == 0xDFFF && writeEnabled()) {
+        setControlReg(value);
+    } else {
+        debug("CONTROL IS HIDDEN\n");
+    }
         
+#if 0
         /*  "7      Hide this register (1 = hidden)
          *   6      NMI line   (0 = low = active) *1)
          *   5      GAME line  (0 = low = active) *2)
@@ -89,7 +104,23 @@ FinalIII::pokeIO2(uint16_t addr, uint8_t value) {
         
         // Bit 1 and 0
         bankIn(bank);
-        // bankIn(bank+4);
+#endif
+}
+
+void
+FinalIII::nmiDidTrigger()
+{
+    if (freeezeButtonIsPressed) {
+        debug("NMI WHILE FREEZE BUTTON IS PRESSED\n");
+        
+        // After the NMI has been processed by the CPU, the cartridge's counter
+        // has reached a value that overflows qD to 0. This has two side
+        // effects. First, the Game line switches to 0. Second, because qD is
+        // also connectec to the counter's enable pin, the counter freezes. This
+        // keeps qD low until the freeze button is released by the user.
+        
+        qD = false;
+        updateGame();
     }
 }
 
@@ -111,15 +142,14 @@ FinalIII::pressButton(unsigned nr)
             
         case 1: // Freeze
             
-            // Selecting bank 0 in Ultimax mode and trigger an NMI
-            bankIn(0);
-            c64->expansionport.setCartridgeMode(CRT_ULTIMAX);
-            c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+            freeezeButtonIsPressed = true;
+            updateNMI();
             break;
             
         case 2: // Reset
             
             resetWithoutDeletingRam();
+            break;
     }
     
     c64->resume();
@@ -137,9 +167,58 @@ FinalIII::releaseButton(unsigned nr)
             
         case 1: // Freeze
             
-            c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+            freeezeButtonIsPressed = false;
+            qD = true;
+            updateNMI();
+            updateGame();
             break;
     }
     
     c64->resume();
+}
+
+void
+FinalIII::setControlReg(uint8_t value)
+{
+    control = value;
+    
+    // Update external lines
+    updateNMI();
+    updateGame();
+    updateExrom();
+    
+    // Switch memory bank
+    bankIn(control & 0x03);
+    
+}
+
+bool
+FinalIII::writeEnabled()
+{
+    return ((control & 0x80) == 0) || freeezeButtonIsPressed;
+}
+
+void
+FinalIII::updateNMI()
+{
+    bool nmi = ((control & 0x40) != 0) && !freeezeButtonIsPressed;
+    if (nmi) {
+        c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+    } else {
+        c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+    }
+}
+
+void
+FinalIII::updateGame()
+{
+    bool game = ((control & 0x20) != 0) && qD;
+    c64->expansionport.setGameLine(game);
+}
+
+void
+FinalIII::updateExrom()
+{
+    bool exrom = ((control & 0x10) != 0);
+    c64->expansionport.setExromLine(exrom);
 }

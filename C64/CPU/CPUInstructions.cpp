@@ -634,7 +634,10 @@ CPU::executeOneCycle()
 
             READ_FROM(0xFFFB)
             setPCH(regD);
-            // debug("NMI addr = %04X\n", regPC);
+            
+            if (isC64CPU()) {
+                c64->expansionport.nmiDidTrigger();
+            }
             DONE
 
         //

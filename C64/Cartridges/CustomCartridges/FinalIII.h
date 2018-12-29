@@ -24,11 +24,21 @@
 
 #include "Cartridge.h"
 
-class FinalIII : public Cartridge {
+class FinalIII : public CartridgeWithRegister {
     
+    //! @brief    Indicates if the freeze button is currenty pressed.
+    bool freeezeButtonIsPressed;
+    
+    /*! @brief    The QD pin of the Final Cartridge III's 4-bit counter.
+     *  @details  The counter's purpose is to delay grounding the Game line
+     *            when the freeze button is pressed. Doing so lets the
+     *            CPU read the NMI vector with the old Game/Exrom combination.
+     */
+    bool qD;
+
 public:
     
-    using Cartridge::Cartridge;
+    FinalIII(C64 *c64) : CartridgeWithRegister(c64, "FinalIII") { };
     CartridgeType getCartridgeType() { return CRT_FINAL_III; }
     
     //
@@ -36,6 +46,22 @@ public:
     //
     
     void reset();
+    
+    size_t stateSize() {
+        return CartridgeWithRegister::stateSize() + 2;
+    }
+    void didLoadFromBuffer(uint8_t **buffer)
+    {
+        CartridgeWithRegister::didLoadFromBuffer(buffer);
+        freeezeButtonIsPressed = (bool)read8(buffer);
+        qD = (bool)read8(buffer);
+    }
+    void didSaveToBuffer(uint8_t **buffer)
+    {
+        CartridgeWithRegister::didSaveToBuffer(buffer);
+        write8(buffer, (uint8_t)freeezeButtonIsPressed);
+        write8(buffer, (uint8_t)qD);
+    }
     
     //
     //! @functiongroup Methods from Cartridge
@@ -46,6 +72,8 @@ public:
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
     void pokeIO2(uint16_t addr, uint8_t value);
+    void nmiDidTrigger();
+    
     
     //
     //! @functiongroup Methods from Cartridge
@@ -55,6 +83,33 @@ public:
     const char *getButtonTitle(unsigned nr);
     void pressButton(unsigned nr);
     void releaseButton(unsigned nr);
+ 
+    //! @brief    Writes a new value into the control register.
+    void setControlReg(uint8_t value);
+
+    /*! @brief    Indicates if the control register is write enabled.
+     *  @note     Final Cartridge III enables and disables the control register
+     *            by masking the clock signal.
+     */
+    bool writeEnabled();
+
+    /*! @brief    Updates the NMI line
+     *  @note     The NMI line is driven by the control register and the
+     *            current position of the freeze button.
+     */
+    void updateNMI();
+    
+    /*! @brief    Updates the Game line
+     *  @note     The game line is driven by the control register and counter
+     *            output qD.
+     */
+    void updateGame();
+
+    /*! @brief    Updates the Exrom line
+     *  @note     The Exrom line is driven by the control register, only.
+     */
+    void updateExrom();
+
 };
 
 #endif

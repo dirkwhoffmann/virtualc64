@@ -234,8 +234,12 @@ public:
     // Notifications
     //
     
-    // @brief    Called when the C64 CPU triggers an NMI
+    //! @brief    Called when the C64 CPU is about to trigger an NMI
     void nmiWillTrigger() { if (cartridge) cartridge->nmiWillTrigger(); }
+
+    //! @brief    Called after the C64 CPU has processed the NMI instruction
+    void nmiDidTrigger() { if (cartridge) cartridge->nmiDidTrigger(); }
+
 };
     
 #endif
