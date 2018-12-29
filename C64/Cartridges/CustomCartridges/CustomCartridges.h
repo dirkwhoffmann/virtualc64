@@ -45,16 +45,4 @@
 #include "Westermann.h"
 #include "Zaxxon.h"
 
-
-//! @brief    Type 18 cartridges
-class Zaxxon : public Cartridge {
-    
-public:
-    using Cartridge::Cartridge;
-    void reset();
-    CartridgeType getCartridgeType() { return CRT_ZAXXON; }
-    uint8_t peekRomL(uint16_t addr);
-    uint8_t spypeekRomL(uint16_t addr);
-};
-
 #endif

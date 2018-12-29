@@ -24,4 +24,15 @@
 
 #include "Cartridge.h"
 
+class Zaxxon : public Cartridge {
+    
+public:
+    using Cartridge::Cartridge;
+    CartridgeType getCartridgeType() { return CRT_ZAXXON; }
+
+    void reset();
+    uint8_t peekRomL(uint16_t addr);
+    uint8_t spypeekRomL(uint16_t addr);
+};
+
 #endif
