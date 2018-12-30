@@ -608,7 +608,8 @@ extension VC64Keys {
     
     // Miscellaneous
     static let pauseInBackground    = "VC64PauseInBackground"
-    static let snapshotInterval     = "VC64SnapshotInterval"
+    static let autoSnapshots        = "VC64AutoSnapshots"
+    static let autoSnapshotInterval = "VC64SnapshotInterval"
     
     // Media files
     static let autoMountAction      = "VC64AutoMountAction"
@@ -632,7 +633,8 @@ extension Defaults {
     
     // Miscellaneous
     static let pauseInBackground    = false
-    static let snapshotInterval     = 3
+    static let autoSnapshots        = true
+    static let autoSnapshotInterval = 3
     
     // Media files
     static let autoMountAction      = [ "D64": AutoMountAction.openBrowser,
@@ -668,7 +670,8 @@ extension MyController {
             VC64Keys.ejectWithoutAsking: Defaults.ejectWithoutAsking,
 
             VC64Keys.pauseInBackground: Defaults.pauseInBackground,
-            VC64Keys.snapshotInterval: Defaults.snapshotInterval
+            VC64Keys.autoSnapshots: Defaults.autoSnapshots,
+            VC64Keys.autoSnapshotInterval: Defaults.autoSnapshotInterval
         ]
         
         let defaults = UserDefaults.standard
@@ -694,7 +697,8 @@ extension MyController {
                     VC64Keys.ejectWithoutAsking,
                     
                     VC64Keys.pauseInBackground,
-                    VC64Keys.snapshotInterval,
+                    VC64Keys.autoSnapshots,
+                    VC64Keys.autoSnapshotInterval,
                     
                     VC64Keys.autoMountAction,
                     VC64Keys.autoType,
@@ -724,7 +728,8 @@ extension MyController {
         ejectWithoutAsking = defaults.bool(forKey: VC64Keys.ejectWithoutAsking)
 
         pauseInBackground = defaults.bool(forKey: VC64Keys.pauseInBackground)
-        c64.setSnapshotInterval(defaults.integer(forKey: VC64Keys.snapshotInterval))
+        c64.setTakeAutoSnapshots(defaults.bool(forKey: VC64Keys.autoSnapshots))
+        c64.setSnapshotInterval(defaults.integer(forKey: VC64Keys.autoSnapshotInterval))
         
         defaults.decode(&autoMountAction, forKey: VC64Keys.autoMountAction)
         defaults.decode(&autoType, forKey: VC64Keys.autoType)
@@ -748,7 +753,8 @@ extension MyController {
         defaults.set(ejectWithoutAsking, forKey: VC64Keys.ejectWithoutAsking)
         
         defaults.set(pauseInBackground, forKey: VC64Keys.pauseInBackground)
-        defaults.set(c64.snapshotInterval(), forKey: VC64Keys.snapshotInterval)
+        defaults.set(c64.takeAutoSnapshots(), forKey: VC64Keys.autoSnapshots)
+        defaults.set(c64.snapshotInterval(), forKey: VC64Keys.autoSnapshotInterval)
         
         defaults.encode(autoMountAction, forKey: VC64Keys.autoMountAction)
         defaults.encode(autoType, forKey: VC64Keys.autoType)

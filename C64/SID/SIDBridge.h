@@ -45,7 +45,6 @@ private:
     uint64_t cycles;
     
     //! @brief    Time stamp of the last write pointer alignment
-    //! @seealso  alignWritePtr()
     uint64_t lastAligment = 0;
     
 public:

@@ -31,55 +31,27 @@ extension PreferencesController {
         
         // Miscellaneous
         emuPauseInBackground.state = controller.pauseInBackground ? .on : .off
-        emuAutoSnapshots.state = (c64.snapshotInterval() > 0) ? .on : .off
-        emuSnapshotInterval.integerValue = Int(c64.snapshotInterval().magnitude)
-        emuSnapshotInterval.isEnabled = (c64.snapshotInterval() > 0)
+        emuAutoSnapshots.state = c64.takeAutoSnapshots() ? .on : .off
+        emuSnapshotInterval.integerValue = c64.snapshotInterval()
+        emuSnapshotInterval.isEnabled = c64.takeAutoSnapshots()
         
         // Media files
-        let autoD64Action = controller.autoMountAction["D64"]?.rawValue ?? 0
-        emuD64Popup.selectItem(withTag: autoD64Action)
-        let autoPrgAction = controller.autoMountAction["PRG"]?.rawValue ?? 0
-        emuPrgPopup.selectItem(withTag: autoPrgAction)
-        let autoT64Action = controller.autoMountAction["T64"]?.rawValue ?? 0
-        emuT64Popup.selectItem(withTag: autoT64Action)
-        let autoTapAction = controller.autoMountAction["TAP"]?.rawValue ?? 0
-        emuTapPopup.selectItem(withTag: autoTapAction)
-        let autoCrtAction = controller.autoMountAction["CRT"]?.rawValue ?? 0
-        emuCrtPopup.selectItem(withTag: autoCrtAction)
-        
-        var autoType : Bool
-        autoType = controller.autoType["D64"] ?? false
-        emuD64AutoTypeButton.isEnabled = (autoD64Action != 0)
-        emuD64AutoTypeButton.intValue = autoType ? 1 : 0
-        autoType = controller.autoType["PRG"] ?? false
-        emuPrgAutoTypeButton.isEnabled = (autoPrgAction != 0)
-        emuPrgAutoTypeButton.intValue = autoType ? 1 : 0
-        autoType = controller.autoType["T64"] ?? false
-        emuT64AutoTypeButton.isEnabled = (autoT64Action != 0)
-        emuT64AutoTypeButton.intValue = autoType ? 1 : 0
-        autoType = controller.autoType["TAP"] ?? false
-        emuTapAutoTypeButton.isEnabled = (autoTapAction != 0)
-        emuTapAutoTypeButton.intValue = autoType ? 1 : 0
-        autoType = controller.autoType["CRT"] ?? false
-        emuCrtAutoTypeButton.isEnabled = (autoCrtAction != 0)
-        emuCrtAutoTypeButton.intValue = autoType ? 1 : 0
-
-        var autoTypeText : String
-        autoTypeText = controller.autoTypeText["D64"] ?? ""
-        emuD64AutoTypeText.isEnabled = (autoD64Action != 0)
-        emuD64AutoTypeText.stringValue = autoTypeText
-        autoTypeText = controller.autoTypeText["PRG"] ?? ""
-        emuPrgAutoTypeText.isEnabled = (autoPrgAction != 0)
-        emuPrgAutoTypeText.stringValue = autoTypeText
-        autoTypeText = controller.autoTypeText["T64"] ?? ""
-        emuT64AutoTypeText.isEnabled = (autoT64Action != 0)
-        emuT64AutoTypeText.stringValue = autoTypeText
-        autoTypeText = controller.autoTypeText["TAP"] ?? ""
-        emuTapAutoTypeText.isEnabled = (autoTapAction != 0)
-        emuTapAutoTypeText.stringValue = autoTypeText
-        autoTypeText = controller.autoTypeText["CRT"] ?? ""
-        emuCrtAutoTypeText.isEnabled = (autoCrtAction != 0)
-        emuCrtAutoTypeText.stringValue = autoTypeText
+        func refresh(_ s: String, _ p: NSPopUpButton, _ b: NSButton, _ t: NSTextField) {
+            
+            let autoAction = controller.autoMountAction[s]?.rawValue ?? 0
+            let autoType = controller.autoType[s] ?? false
+            let autoTypeText = controller.autoTypeText[s] ?? ""
+            p.selectItem(withTag: autoAction)
+            b.isEnabled = autoAction != 0
+            b.state = autoType ? .on : .off
+            t.isEnabled = autoAction != 0 && autoType
+            t.stringValue = autoTypeText
+        }
+        refresh("D64", emuD64Popup, emuD64AutoTypeButton, emuD64AutoTypeText)
+        refresh("PRG", emuPrgPopup, emuPrgAutoTypeButton, emuPrgAutoTypeText)
+        refresh("T64", emuT64Popup, emuT64AutoTypeButton, emuT64AutoTypeText)
+        refresh("TAP", emuTapPopup, emuTapAutoTypeButton, emuTapAutoTypeText)
+        refresh("CRT", emuCrtPopup, emuCrtAutoTypeButton, emuCrtAutoTypeText)
 
         // OK button
         emuOkButton.title = controller.c64.isRunnable() ? "OK" : "Quit"
@@ -149,18 +121,18 @@ extension PreferencesController {
     
     @IBAction func emuAutoSnapshotAction(_ sender: NSButton!) {
         
-        if sender.state == .on {
-            proxy?.enableAutoSnapshots()
-        } else {
-            proxy?.disableAutoSnapshots()
-        }
+        proxy?.setTakeAutoSnapshots(sender.state == .on)
         refresh()
     }
     
     @IBAction func emuSnapshotIntervalAction(_ sender: NSTextField!) {
         
-        let factor = (emuAutoSnapshots.state == .on) ? 1 : -1
-        proxy?.setSnapshotInterval(sender.integerValue * factor)
+        track("\(sender.integerValue)")
+        if sender.integerValue > 0 {
+            proxy?.setSnapshotInterval(sender.integerValue)
+        } else {
+            track("IGNORING")
+        }
         refresh()
     }
     
@@ -216,36 +188,3 @@ extension PreferencesController {
     }
 }
 
-extension PreferencesController : NSTextFieldDelegate {
-
-    func controlTextDidChange(_ obj: Notification) {
-        
-        if let view = obj.object as? NSTextField {
-            
-            let formatter = view.formatter as? NumberFormatter
-            
-            switch view {
-                
-            case emuSnapshotInterval:
-                
-                if let _ = formatter?.number(from: view.stringValue) {
-                    emuSnapshotIntervalAction(view)
-                }
-                
-            case emuD64AutoTypeText, emuPrgAutoTypeText, emuT64AutoTypeText,
-                 emuTapAutoTypeText, emuCrtAutoTypeText:
-                
-                emuAutoTypeTextAction(emuD64AutoTypeText)
-                
-            case devAutofireBullets:
-                
-                if let _ = formatter?.number(from: view.stringValue) {
-                    devAutofireBulletsAction(view)
-                }
-                
-            default:
-                break
-            }
-        }
-    }
-}

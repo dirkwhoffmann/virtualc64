@@ -244,18 +244,15 @@ class C64 : public VirtualComponent {
     // Snapshot storage
     //
     
-    public:
-    
-    //! @brief    Time in seconds between two auto-saved snapshots
-    /*! @note     Setting this variable to 0 or less disables auto-snapshots.
-     *            Using the sign to code the enabled / disabled status has
-     *            the advantage that we can preserve the value that was chosen
-     *            before disabling. Hence, when the feature is reenabled, we
-     *            can restore the old value by simply turning the sign.
-     */
-    long snapshotInterval;
-    
     private:
+
+    //! @brief    Indicates if snapshots should be taken automatically.
+    bool takeAutoSnapshots = true;
+    
+    /*! @brief    Time in seconds between two auto-saved snapshots
+     *  @note     This value only takes effect if takeAutoSnapshots equals true.
+     */
+    long autoSnapshotInterval = 3;
     
     //! @brief    Maximum number of stored snapshots
     static const size_t MAX_SNAPSHOTS = 32;
@@ -474,28 +471,28 @@ class C64 : public VirtualComponent {
     //
     
     public:
-    
-    //! @brief    Disables the auto-snapshot feature.
-    void disableAutoSnapshots() { if (snapshotInterval > 0) snapshotInterval *= -1; }
-    
-    //! @brief    Enables the auto-snapshot feature.
-    void enableAutoSnapshots() { if (snapshotInterval < 0) snapshotInterval *= -1; }
+
+    //! @brief    Indicates if the auto-snapshot feature is enabled.
+    bool getTakeAutoSnapshots() { return takeAutoSnapshots; }
+
+    //! @brief    Enables or disabled the auto-snapshot feature.
+    void setTakeAutoSnapshots(bool enable) { takeAutoSnapshots = enable; }
     
     /*! @brief    Disables the auto-snapshot feature temporarily.
      *  @details  This method is called when the snaphshot browser opens.
      */
-    void suspendAutoSnapshots() { snapshotInterval -= (LONG_MAX / 2); }
+    void suspendAutoSnapshots() { autoSnapshotInterval -= (LONG_MAX / 2); }
     
     /*! @brief    Heal a call to suspendAutoSnapshots()
      *  @details  This method is called when the snaphshot browser closes.
      */
-    void resumeAutoSnapshots() { snapshotInterval += (LONG_MAX / 2); }
+    void resumeAutoSnapshots() { autoSnapshotInterval += (LONG_MAX / 2); }
     
     //! @brief    Returns the time between two auto-snapshots in seconds.
-    long getSnapshotInterval() { return snapshotInterval; }
+    long getSnapshotInterval() { return autoSnapshotInterval; }
     
     //! @brief    Sets the time between two auto-snapshots in seconds.
-    void setSnapshotInterval(long value) { snapshotInterval = value; }
+    void setSnapshotInterval(long value) { autoSnapshotInterval = value; }
     
     /*! @brief    Loads the current state from a snapshot file
      *  @note     There is an thread-unsafe and thread-safe version of this

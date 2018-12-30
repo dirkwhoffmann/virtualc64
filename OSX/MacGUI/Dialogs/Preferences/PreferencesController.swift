@@ -275,14 +275,6 @@ class PreferencesController : UserDialogController {
         
         track()
         
-        // Make sure that all NSTextFields have been processed before quitting
-        emuSnapshotIntervalAction(emuSnapshotInterval)
-        emuAutoTypeTextAction(emuD64AutoTypeText)
-        emuAutoTypeTextAction(emuPrgAutoTypeText)
-        emuAutoTypeTextAction(emuT64AutoTypeText)
-        emuAutoTypeTextAction(emuTapAutoTypeText)
-        emuAutoTypeTextAction(emuCrtAutoTypeText)
-        
         hideSheet()
         myController?.saveUserDefaults()
         
@@ -297,5 +289,41 @@ extension PreferencesController : NSTabViewDelegate {
     func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
 
         refresh()
+    }
+}
+
+extension PreferencesController : NSTextFieldDelegate {
+    
+    func controlTextDidChange(_ obj: Notification) {
+        
+        track()
+        
+        if let view = obj.object as? NSTextField {
+            
+            let formatter = view.formatter as? NumberFormatter
+            
+            switch view {
+                
+            case emuSnapshotInterval:
+                
+                if let _ = formatter?.number(from: view.stringValue) {
+                    emuSnapshotIntervalAction(view)
+                }
+                
+            case emuD64AutoTypeText, emuPrgAutoTypeText, emuT64AutoTypeText,
+                 emuTapAutoTypeText, emuCrtAutoTypeText:
+                
+                emuAutoTypeTextAction(view)
+                
+            case devAutofireBullets:
+                
+                if let _ = formatter?.number(from: view.stringValue) {
+                    devAutofireBulletsAction(view)
+                }
+                
+            default:
+                break
+            }
+        }
     }
 }

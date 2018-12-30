@@ -130,8 +130,6 @@ C64::C64()
     // Initialize mach timer info
     mach_timebase_info(&timebase);
 
-    snapshotInterval = 3;
-
     reset();
 }
 
@@ -604,9 +602,11 @@ C64::endFrame()
     mouse.execute();
     
     // Take a snapshot once in a while
-    if (snapshotInterval > 0 &&
-        frame % ((unsigned)(vic.getFramesPerSecond() * snapshotInterval)) == 0) {
-        takeAutoSnapshot();
+    if (takeAutoSnapshots && autoSnapshotInterval > 0) {
+        unsigned fps = (unsigned)vic.getFramesPerSecond();
+        if (frame % (fps * autoSnapshotInterval) == 0) {
+            takeAutoSnapshot();
+        }
     }
     
     // Count some sheep (zzzzzz) ...
@@ -614,42 +614,6 @@ C64::endFrame()
             synchronizeTiming();
     }
 }
-
-/*
-void
-C64::setMouseModel(MouseModel value)
-{
-    suspend();
-    mouse.setModel(value);
-    mouse.reset();
-    resume();
-}
-
-void
-C64::connectMouse(unsigned port)
-{
-    assert(port <= 2);
-    mouse.connectMouse(port);
-}
-
-uint8_t
-C64::mouseBits(unsigned port)
-{
-    return mouse.readControlPort(port);
-}
-
-uint8_t
-C64::potXBits()
-{
-    return mouse.readPotX();
-}
-
-uint8_t
-C64::potYBits()
-{
-     return mouse.readPotY();
-}
-*/
 
 bool
 C64::getWarp()

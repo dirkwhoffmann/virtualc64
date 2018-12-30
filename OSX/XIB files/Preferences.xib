@@ -928,7 +928,7 @@ DQ
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Video" identifier="Video" id="bAS-eu-ehA">
-                                <view key="view" id="TZi-Ij-edC">
+                                <view key="view" ambiguous="YES" id="TZi-Ij-edC">
                                     <rect key="frame" x="10" y="33" width="600" height="502"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -1177,7 +1177,7 @@ DQ
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f3c-4e-uVF">
                                             <rect key="frame" x="394" y="192" width="200" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Aligned" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="Pvy-Rz-gkg" id="sBf-Op-lch">
+                                            <popUpButtonCell key="cell" type="push" title="Aligned" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="Pvy-Rz-gkg" id="sBf-Op-lch">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" autoenablesItems="NO" id="QoD-i2-9rR">
@@ -1195,12 +1195,12 @@ DQ
                                         <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KkN-hN-xfa">
                                             <rect key="frame" x="471" y="151" width="120" height="15"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="above" sliderType="linear" id="LLv-BX-2wL"/>
+                                            <sliderCell key="cell" controlSize="small" continuous="YES" enabled="NO" state="on" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="above" sliderType="linear" id="LLv-BX-2wL"/>
                                         </slider>
                                         <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F6O-Zb-pow">
                                             <rect key="frame" x="471" y="173" width="120" height="15"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1" doubleValue="0.12" tickMarkPosition="above" sliderType="linear" id="EOd-8a-Dd3"/>
+                                            <sliderCell key="cell" controlSize="small" continuous="YES" enabled="NO" state="on" alignment="left" maxValue="1" doubleValue="0.12" tickMarkPosition="above" sliderType="linear" id="EOd-8a-Dd3"/>
                                         </slider>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t2s-z7-2oL">
                                             <rect key="frame" x="377" y="151" width="83" height="14"/>
@@ -1555,7 +1555,7 @@ DQ
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Emulator" identifier="Emulator" id="7ox-IX-qy6">
-                                <view key="view" ambiguous="YES" id="2kg-AU-Yx9">
+                                <view key="view" id="2kg-AU-Yx9">
                                     <rect key="frame" x="10" y="33" width="600" height="502"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -1611,7 +1611,7 @@ DQ
                                             </connections>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EUl-ML-vxG">
-                                            <rect key="frame" x="13" y="201" width="161" height="25"/>
+                                            <rect key="frame" x="13" y="202" width="161" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Take a snapshot every " bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="HxX-GG-Bxo">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1644,7 +1644,7 @@ DQ
                                             </textFieldCell>
                                             <connections>
                                                 <action selector="emuSnapshotIntervalAction:" target="-2" id="0Rn-hs-N87"/>
-                                                <outlet property="delegate" destination="-2" id="MIP-eb-adC"/>
+                                                <outlet property="delegate" destination="-2" id="per-l1-3l9"/>
                                             </connections>
                                         </textField>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KGL-Xj-tLX">
@@ -1869,7 +1869,7 @@ DQ
                                             </textFieldCell>
                                             <connections>
                                                 <action selector="emuAutoTypeTextAction:" target="-2" id="pxG-14-Nuy"/>
-                                                <outlet property="delegate" destination="-2" id="2qZ-am-uTk"/>
+                                                <outlet property="delegate" destination="-2" id="3aa-lS-87W"/>
                                             </connections>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T2g-hq-OSh">
@@ -1935,7 +1935,7 @@ DQ
                                             </textFieldCell>
                                             <connections>
                                                 <action selector="emuAutoTypeTextAction:" target="-2" id="qWN-9J-P1k"/>
-                                                <outlet property="delegate" destination="-2" id="01w-Ub-D8h"/>
+                                                <outlet property="delegate" destination="-2" id="IDu-VS-J5d"/>
                                             </connections>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="0IA-WK-3xc">
@@ -2067,7 +2067,7 @@ DQ
                                             </textFieldCell>
                                             <connections>
                                                 <action selector="emuAutoTypeTextAction:" target="-2" id="c5L-o7-AA5"/>
-                                                <outlet property="delegate" destination="-2" id="Zbb-WS-pbo"/>
+                                                <outlet property="delegate" destination="-2" id="Ch5-0a-ldg"/>
                                             </connections>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="gSk-DU-rv0">
@@ -2133,7 +2133,7 @@ DQ
                                             </textFieldCell>
                                             <connections>
                                                 <action selector="emuAutoTypeTextAction:" target="-2" id="ODZ-cc-G3t"/>
-                                                <outlet property="delegate" destination="-2" id="czi-Hj-5fj"/>
+                                                <outlet property="delegate" destination="-2" id="UyE-dD-5Dr"/>
                                             </connections>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="tWL-Ra-haj">
@@ -2370,7 +2370,7 @@ DQ
                                             </textFieldCell>
                                             <connections>
                                                 <action selector="devAutofireBulletsAction:" target="-2" id="eIg-rc-jfN"/>
-                                                <outlet property="delegate" destination="-2" id="cIZ-H9-1ag"/>
+                                                <outlet property="delegate" destination="-2" id="Yo6-GN-KWa"/>
                                             </connections>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kNb-kD-wye">
