@@ -671,6 +671,7 @@ C64::getWarp()
         } else {
             // Smoothly fade in SID
             sid.rampUp();
+            sid.alignWritePtr();
             restartTimer();
         }
         

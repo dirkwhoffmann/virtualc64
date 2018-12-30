@@ -327,8 +327,7 @@ SIDBridge::clearRingbuffer()
         ringBuffer[i] = 0.0f;
     }
     
-    // Reset pointer positions
-    readPtr = 0;
+    // Put the write pointer ahead of the read pointer
     alignWritePtr();
 }
 
@@ -380,6 +379,8 @@ SIDBridge::readMonoSamples(float *target, size_t n)
 void
 SIDBridge::readStereoSamples(float *target1, float *target2, size_t n)
 {
+    // debug("read: %d write: %d Reading %d\n", readPtr, writePtr, n);
+
     // Check for buffer underflow
     if (samplesInBuffer() < n) {
         handleBufferUnderflow();
@@ -411,6 +412,8 @@ SIDBridge::readStereoSamplesInterleaved(float *target, size_t n)
 void
 SIDBridge::writeData(short *data, size_t count)
 {
+    // debug("  read: %d write: %d Writing %d (%d)\n", readPtr, writePtr, count, bufferCapacity());
+    
     // Check for buffer overflow
     if (bufferCapacity() < count) {
         handleBufferOverflow();
@@ -426,44 +429,57 @@ SIDBridge::writeData(short *data, size_t count)
 void
 SIDBridge::handleBufferUnderflow()
 {
-    debug(3, "SID RINGBUFFER UNDERFLOW (%ld)\n", readPtr);
+    // There are two common scenarios in which buffer underflows occur:
+    //
+    // (1) The consumer runs slightly faster than the producer.
+    // (2) The producer is halted or not startet yet.
+    
+    debug(1, "SID RINGBUFFER UNDERFLOW (r: %ld w: %ld)\n", readPtr, writePtr);
 
-    alignWritePtr();
-    bufferUnderflows++;
-    
-    // Determine the number of elapsed seconds since the last underflow.
+    // Determine the elapsed seconds since the last pointer adjustment.
     uint64_t now = mach_absolute_time();
-    float elapsedTime = (double)(now - lastUnderflow) / 1000000000.0;
-    lastUnderflow = now;
-    
-    // Only proceed if we're running under normal conditions.
-    if (elapsedTime < 10.0) { return; }
-    
-    // Adjust the sample rate to prevent further underflows.
-    long offPerSecond = samplesAhead / elapsedTime;
-    setSampleRate(getSampleRate() + (int)offPerSecond);
+    double elapsedTime = (double)(now - lastAligment) / 1000000000.0;
+    lastAligment = now;
+
+    // Adjust the sample rate, if condition (1) holds.
+    if (elapsedTime > 10.0) {
+        
+        bufferUnderflows++;
+        
+        // Increase the sample rate based on what we've measured.
+        long offPerSecond = samplesAhead / elapsedTime;
+        setSampleRate(getSampleRate() + (int)offPerSecond);
+    }
+
+    // Reset the write pointer
+    alignWritePtr();
 }
 
 void
 SIDBridge::handleBufferOverflow()
 {
-    // Ignore overflows in warp mode
-    if (c64->getWarp()) { return; }
+    // There are two common scenarios in which buffer overflows occur:
+    //
+    // (1) The consumer runs slightly slower than the producer.
+    // (2) The consumer is halted or not startet yet.
     
-    debug(3, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
-
-    alignWritePtr();
-    bufferOverflows++;
+    debug(1, "SID RINGBUFFER OVERFLOW (r: %ld w: %ld)\n", readPtr, writePtr);
     
-    // Determine the number of elapsed seconds since the last underflow.
+    // Determine the elapsed seconds since the last pointer adjustment.
     uint64_t now = mach_absolute_time();
-    float elapsedTime = (double)(now - lastOverflow) / 1000000000.0;
-    lastOverflow = now;
+    double elapsedTime = (double)(now - lastAligment) / 1000000000.0;
+    lastAligment = now;
     
-    // Only proceed if we're running under normal conditions.
-    if (elapsedTime < 10.0) { return; }
+    // Adjust the sample rate, if condition (1) holds.
+    if (elapsedTime > 10.0) {
+        
+        bufferOverflows++;
+        
+        // Decrease the sample rate based on what we've measured.
+        long offPerSecond = samplesAhead / elapsedTime;
+        setSampleRate(getSampleRate() - (int)offPerSecond);
+    }
     
-    // Adjust the sample rate to prevent further overflows.
-    long offPerSecond = samplesAhead / elapsedTime;
-    setSampleRate(getSampleRate() - (int)offPerSecond);
+    // Reset the write pointer
+    alignWritePtr();
 }

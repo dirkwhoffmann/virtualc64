@@ -44,12 +44,10 @@ private:
     //! @brief    CPU cycle at the last call to executeUntil()
     uint64_t cycles;
     
-    //! @brief    Time stamp of the last buffer underflow
-    uint64_t lastUnderflow = 0;
-
-    //! @brief    Time stamp of the last buffer overflow
-    uint64_t lastOverflow = 0;
-
+    //! @brief    Time stamp of the last write pointer alignment
+    //! @seealso  alignWritePtr()
+    uint64_t lastAligment = 0;
+    
 public:
     
     //! @brief    Number of buffer underflows since power up
@@ -194,13 +192,13 @@ public:
     /*! @brief   Triggers volume ramp up phase
      *  @details Configures volume and targetVolume to simulate a smooth audio fade in
      */
-    void rampUp() { targetVolume = maxVolume; volumeDelta = 3; }
-    void rampUpFromZero() { volume = 0; targetVolume = maxVolume; volumeDelta = 3; }
+    void rampUp() { targetVolume = maxVolume; volumeDelta = 3; ignoreNextUnderOrOverflow(); }
+    void rampUpFromZero() { volume = 0; rampUp(); }
     
     /*! @brief   Triggers volume ramp down phase
      *  @details Configures volume and targetVolume to simulate a quick audio fade out
      */
-    void rampDown() { targetVolume = 0; volumeDelta = 50; }
+    void rampDown() { targetVolume = 0; volumeDelta = 50; ignoreNextUnderOrOverflow(); }
     
     //
     // Ringbuffer handling
@@ -243,18 +241,21 @@ public:
      */
     void writeData(short *data, size_t count);
     
-    /*! @brief   Handles a buffer underflow condition
+    /*! @brief   Handles a buffer underflow condition.
      *  @details A buffer underflow occurs when the computer's audio device
-     *           needs sound samples than SID hasn't produced, yet!
+     *           needs sound samples than SID hasn't produced, yet.
      */
     void handleBufferUnderflow();
     
     /*! @brief   Handles a buffer overflow condition
      *  @details A buffer overflow occurs when SID is producing more samples
-     *           than the computer's audio device is able to consume
+     *           than the computer's audio device is able to consume.
      */
     void handleBufferOverflow();
     
+    //! @brief   Signals to ignore the next underflow or overflow condition.
+    void ignoreNextUnderOrOverflow() { lastAligment = mach_absolute_time(); }
+        
     //! @brief   Moves read pointer one position forward
     void advanceReadPtr() { readPtr = (readPtr + 1) % bufferSize; }
     

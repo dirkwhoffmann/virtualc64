@@ -673,10 +673,10 @@
 			children = (
 				50B171051EE6AB840019E8D4 /* VirtualC64-Bridging-Header.h */,
 				50E9B92C201F299500065A89 /* MyController.swift */,
-				50BF77D120309A2A006E000F /* WindowDelegate.swift */,
 				507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */,
 				503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */,
 				50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */,
+				50BF77D120309A2A006E000F /* WindowDelegate.swift */,
 				5038CA9820B6C2D8000D9193 /* Debugger */,
 				5018AF65202EDD2000B4C886 /* UserDefaults.swift */,
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
