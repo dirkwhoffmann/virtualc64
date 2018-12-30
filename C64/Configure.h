@@ -37,15 +37,19 @@
 
 // RELEASE NOTES (Version 3.3)
 //
-// The ReSID sound engine has been upgraded to the one used in VICE V3.3.
 // All emulator preferences have been merged into a unified preferences pane.
-// New options in the emulator settings allow the user to customize the behavior taken when a media file is opened.
-// The JiffyDOS Rom images have been added to the list of known images.
+// New options in the emulator settings allow the user to customize the actions that are taken when opening a media file.
 // The input device selection is now retained in the user default storage.
 // The user can now choose whether to save the emulator texture or the upscaled texture as a screenshot image.
 // If menu item "Save Snapshot..." is selected, emulation is paused until the screenshot has been saved.
-// The assignment of keystrokes to joystick events has been improved when multiple keys are pressed at the same time.
+// Added support for the Expert cartridge.
 // Cardridge buttons are now displayed in the bottom bar as small (clickable) icons.
+// Upgraded ReSID to the version used in VICE V3.3.
+// Added code to dynamically adjust the sampling rate to reduce buffer underflows and overflows.
+// Fixed a bug that made FastSID unusable on audio hardware with a sample rate other than 44.1khz.
+// The assignment of keystrokes to joystick events has been improved when multiple keys are pressed at the same time.
+// JiffyDOS Rom images have been added to the list of known images.
+
 //
 // TODOs for the next release:
 //
