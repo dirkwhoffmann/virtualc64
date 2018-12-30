@@ -231,7 +231,7 @@ C64::getModel()
             cia1.getModel() == configurations[i].cia &&
             cia1.getEmulateTimerBBug() == configurations[i].timerBBug &&
             sid.getModel() == configurations[i].sid &&
-            sid.getAudioFilter() == configurations[i].sidFilter &&
+            // sid.getAudioFilter() == configurations[i].sidFilter &&
             vic.getGlueLogic() == configurations[i].glue &&
             mem.getRamInitPattern() == configurations[i].pattern) {
             return (C64Model)i;

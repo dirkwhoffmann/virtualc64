@@ -45,25 +45,30 @@ typedef struct {
 } C64Configuration;
 
 //! @brief    Configurations of standard C64 models
+/*! @note     sidFilter should be true for all known configurations. We have
+ *            disabled them by default, because the filter emulation is broken
+ *            in the currently used reSID code. Once the reSID bug has been
+ *            fixed, it should be set to true again.
+ */
 static const C64Configuration configurations[] = {
     
     // C64 PAL
-    { PAL_6569_R3, false, MOS_6526, true, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 },
+    { PAL_6569_R3, false, MOS_6526, true, MOS_6581, false, GLUE_DISCRETE, INIT_PATTERN_C64 },
     
     // C64_II_PAL
-    { PAL_8565, true, MOS_8521, false, MOS_8580, true, GLUE_CUSTOM_IC, INIT_PATTERN_C64C },
+    { PAL_8565, true, MOS_8521, false, MOS_8580, false, GLUE_CUSTOM_IC, INIT_PATTERN_C64C },
     
     // C64_OLD_PAL
-    { PAL_6569_R1, false, MOS_6526, true, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 },
+    { PAL_6569_R1, false, MOS_6526, true, MOS_6581, false, GLUE_DISCRETE, INIT_PATTERN_C64 },
 
     // C64_NTSC
-    { NTSC_6567, false, MOS_6526, false, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 },
+    { NTSC_6567, false, MOS_6526, false, MOS_6581, false, GLUE_DISCRETE, INIT_PATTERN_C64 },
 
     // C64_II_NTSC
-    { NTSC_8562, true, MOS_8521, true, MOS_8580, true, GLUE_CUSTOM_IC, INIT_PATTERN_C64C },
+    { NTSC_8562, true, MOS_8521, true, MOS_8580, false, GLUE_CUSTOM_IC, INIT_PATTERN_C64C },
     
     // C64_OLD_NTSC
-    { NTSC_6567_R56A, false, MOS_6526, false, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 }
+    { NTSC_6567_R56A, false, MOS_6526, false, MOS_6581, false, GLUE_DISCRETE, INIT_PATTERN_C64 }
 };
 
 /*! @brief    Message types
