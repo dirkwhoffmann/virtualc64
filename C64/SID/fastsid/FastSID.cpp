@@ -32,7 +32,7 @@
 
 FastSID::FastSID()
 {
-	setDescription("SID");
+	setDescription("FastSID");
 	debug(3, "  Creating FastSID at address %p...\n", this);
     
     // Register sub components
@@ -44,12 +44,12 @@ FastSID::FastSID()
         { &sidreg,           sizeof(sidreg),           CLEAR_ON_RESET },
         { &speed1,           sizeof(speed1),           CLEAR_ON_RESET },
         { &model,            sizeof(model),            KEEP_ON_RESET },
-        { &cpuFrequency,     sizeof(cpuFrequency),     CLEAR_ON_RESET },
-        { &sampleRate,       sizeof(sampleRate),       CLEAR_ON_RESET },
+        { &cpuFrequency,     sizeof(cpuFrequency),     KEEP_ON_RESET },
+        { &sampleRate,       sizeof(sampleRate),       KEEP_ON_RESET },
         { &samplesPerCycle,  sizeof(samplesPerCycle),  CLEAR_ON_RESET },
         { &executedCycles,   sizeof(executedCycles),   CLEAR_ON_RESET },
         { &computedSamples,  sizeof(computedSamples),  CLEAR_ON_RESET },
-        { &emulateFilter,    sizeof(emulateFilter),    CLEAR_ON_RESET },
+        { &emulateFilter,    sizeof(emulateFilter),    KEEP_ON_RESET },
         { &latchedDataBus,   sizeof(latchedDataBus),   CLEAR_ON_RESET },
         { NULL,              0,                        0 }};
     registerSnapshotItems(items, sizeof(items));
@@ -61,13 +61,6 @@ FastSID::FastSID()
     voice[0].init(this, 0, &voice[3]);
     voice[1].init(this, 1, &voice[0]);
     voice[2].init(this, 2, &voice[1]);
-    
-    model = MOS_6581;
-    cpuFrequency = PAL_CLOCK_FREQUENCY;
-    sampleRate = 44100;
-    emulateFilter = true;
-    
-    // reset();
 }
 
 FastSID::~FastSID()
@@ -79,11 +72,6 @@ void
 FastSID::reset()
 {
     VirtualComponent::reset();
-    
-    cpuFrequency = PAL_CLOCK_FREQUENCY; 
-    sampleRate = 44100;
-    emulateFilter = true;
-    
     init(sampleRate, cpuFrequency);
 }
 
@@ -188,6 +176,8 @@ FastSID::setModel(SIDModel m)
 void
 FastSID::setSampleRate(uint32_t rate)
 {
+    debug("Setting sample rate to %d\n", rate);
+    
     sampleRate = rate;
     
     // Recompute sample rate dependent data structures

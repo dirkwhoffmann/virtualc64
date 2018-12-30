@@ -302,7 +302,7 @@ SIDBridge::getSampleRate()
 void 
 SIDBridge::setSampleRate(uint32_t rate)
 {
-    debug("Setting sample rate to %d\n", rate);
+    debug("Changing sample rate from %d to %d\n", getSampleRate(), rate);
     resid.setSampleRate(rate);
     fastsid.setSampleRate(rate);
 }
@@ -434,7 +434,7 @@ SIDBridge::handleBufferUnderflow()
     // (1) The consumer runs slightly faster than the producer.
     // (2) The producer is halted or not startet yet.
     
-    debug(1, "SID RINGBUFFER UNDERFLOW (r: %ld w: %ld)\n", readPtr, writePtr);
+    debug(2, "SID RINGBUFFER UNDERFLOW (r: %ld w: %ld)\n", readPtr, writePtr);
 
     // Determine the elapsed seconds since the last pointer adjustment.
     uint64_t now = mach_absolute_time();
@@ -463,7 +463,7 @@ SIDBridge::handleBufferOverflow()
     // (1) The consumer runs slightly slower than the producer.
     // (2) The consumer is halted or not startet yet.
     
-    debug(1, "SID RINGBUFFER OVERFLOW (r: %ld w: %ld)\n", readPtr, writePtr);
+    debug(2, "SID RINGBUFFER OVERFLOW (r: %ld w: %ld)\n", readPtr, writePtr);
     
     // Determine the elapsed seconds since the last pointer adjustment.
     uint64_t now = mach_absolute_time();

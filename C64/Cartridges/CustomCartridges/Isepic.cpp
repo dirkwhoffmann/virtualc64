@@ -90,6 +90,7 @@ Isepic::peek(uint16_t addr)
         }
     } else {
         assert(false);
+        return 0;
     }
 }
 

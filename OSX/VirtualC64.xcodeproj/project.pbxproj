@@ -1041,11 +1041,11 @@
 		50E8366720DC4A090017A5BB /* fastsid */ = {
 			isa = PBXGroup;
 			children = (
+				50E8366A20DC4A090017A5BB /* FastSID.h */,
 				50E8366820DC4A090017A5BB /* FastSID.cpp */,
 				50E8366920DC4A090017A5BB /* waves.h */,
-				50E8366A20DC4A090017A5BB /* FastSID.h */,
-				50E8366B20DC4A090017A5BB /* FastVoice.cpp */,
 				50E8366C20DC4A090017A5BB /* FastVoice.h */,
+				50E8366B20DC4A090017A5BB /* FastVoice.cpp */,
 			);
 			path = fastsid;
 			sourceTree = "<group>";

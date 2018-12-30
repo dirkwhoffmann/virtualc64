@@ -56,13 +56,13 @@ private:
     FastVoice voice[3];
         
     //! @brief   Chip model.
-    SIDModel model;
+    SIDModel model = MOS_6581;
     
     //! @brief   Current CPU frequency
-    uint32_t cpuFrequency;
+    uint32_t cpuFrequency = PAL_CLOCK_FREQUENCY;
     
     //! @brief   Sample rate (44.1 kHz per default)
-    uint32_t sampleRate;
+    uint32_t sampleRate = 44100;
     
     //! @brief    Ratio between sample rate and cpu frequency
     double   samplesPerCycle;
@@ -74,7 +74,7 @@ private:
     uint64_t computedSamples;
 
     //! @brief   Switches filter emulation on or off.
-    bool emulateFilter;
+    bool emulateFilter = true;
     
     //! @brief   Last value on the data bus
     uint8_t latchedDataBus;
