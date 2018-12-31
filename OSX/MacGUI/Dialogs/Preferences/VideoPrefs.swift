@@ -338,6 +338,7 @@ extension PreferencesController {
         
         myController?.resetVideoUserDefaults()
         myController?.metalScreen.shaderOptions = ShaderDefaultsCRT
+        myController?.metalScreen.buildDotMasks()
         updatePalettePreviewImages()
         refresh()
     }

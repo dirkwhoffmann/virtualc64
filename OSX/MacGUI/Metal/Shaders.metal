@@ -101,6 +101,24 @@ float4 scanlineWeight(uint2 pixel, uint height, float weight, float brightness, 
     return scanlineWeight * bloom;
 }
 
+float3 rgb2hsv(float3 c)
+{
+    float4 K = float4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+    float4 p = mix(float4(c.bg, K.wz), float4(c.gb, K.xy), step(c.b, c.g));
+    float4 q = mix(float4(p.xyw, c.r), float4(c.r, p.yzx), step(p.x, c.r));
+    
+    float d = q.x - min(q.w, q.y);
+    float e = 1.0e-10;
+    return float3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+}
+
+float3 hsv2rgb(float3 c)
+{
+    float4 K = float4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+    float3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+}
+
 fragment half4 fragment_main(ProjectedVertex vert [[ stage_in ]],
                              texture2d<float, access::sample> texture [[ texture(0) ]],
                              texture2d<float, access::sample> bloomTexture [[ texture(1) ]],
@@ -118,6 +136,16 @@ fragment half4 fragment_main(ProjectedVertex vert [[ stage_in ]],
     float4 color = texture.sample(texSampler, tc);
     // float luma = (0.2126 * color.r) + (0.7152 * color.g) + (0.0722 * color.b);
     
+    if (options.dotMask) {
+        
+        uint xoffset = x % uniforms.dotMaskWidth;
+        uint yoffset = y % uniforms.dotMaskHeight;
+        float4 dotColor = dotMask.read(uint2(xoffset, yoffset));
+        float4 gain = min(color, 1 - color) * dotColor;
+        float4 loose = min(color, 1 - color) * 0.5 * (1 - dotColor);
+        color += gain - loose;
+    }
+    
     // Apply bloom effect (if enabled)
     if (options.bloom) {
         float4 bColor = bloomTexture.sample(texSampler, tc);
@@ -134,14 +162,6 @@ fragment half4 fragment_main(ProjectedVertex vert [[ stage_in ]],
                                 options.scanlineWeight,
                                 options.scanlineBrightness,
                                 1.0);
-    }
-    
-    // Apply dot mask effect (if enabled)
-    if (options.dotMask) {
-        uint xoffset = x % uniforms.dotMaskWidth;
-        uint yoffset = y % uniforms.dotMaskHeight;
-        float4 dotColor = dotMask.read(uint2(xoffset, yoffset));
-        color *= dotColor;
     }
 
     // color = float4(options.scanlines, 0, 0, 1);

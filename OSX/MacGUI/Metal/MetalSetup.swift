@@ -156,14 +156,17 @@ public extension MetalView {
     func buildDotMasks() {
         
         let selected = shaderOptions.dotMask
-        let base = UInt8(shaderOptions.dotMaskBrightness * 0xFF)
+        let max  = UInt8(85 + shaderOptions.dotMaskBrightness * 170)
+        let base = UInt8((1 - shaderOptions.dotMaskBrightness) * 85)
+        let none = UInt8(30 + (1 - shaderOptions.dotMaskBrightness) * 55)
         
-        let R = UInt32.init(r: 0xFF, g: base, b: base)
-        let G = UInt32.init(r: base, g: 0xFF, b: base)
-        let B = UInt32.init(r: base, g: base, b: 0xFF)
-        let M = UInt32.init(r: 0xFF, g: base, b: 0xFF)
-        let W = UInt32.init(r: 0xFF, g: 0xFF, b: 0xFF)
-        
+        let R = UInt32.init(r: max,  g: base, b: base)
+        let G = UInt32.init(r: base, g: max,  b: base)
+        let B = UInt32.init(r: base, g: base, b: max)
+        let M = UInt32.init(r: max,  g: base, b: max)
+        let W = UInt32.init(r: max,  g: max,  b: max)
+        let N = UInt32.init(r: none, g: none, b: none)
+
         let maskSize = [
             CGSize.init(width: 1, height: 1),
             CGSize.init(width: 3, height: 1),
@@ -175,20 +178,20 @@ public extension MetalView {
         let maskData = [
             
             [ W ],
-            [ M, G, 0 ],
-            [ R, G, B, 0 ],
-            [ M, G, 0,
-              M, G, 0,
-              0, M, G,
-              0, M, G,
-              G, 0, M,
-              G, 0, M ],
-            [ R, G, B, 0,
-              R, G, B, 0,
-              R, G, B, 0,
-              B, 0, R, G,
-              B, 0, R, G,
-              B, 0, R, G ]
+            [ M, G, N ],
+            [ R, G, B, N ],
+            [ M, G, N,
+              M, G, N,
+              N, M, G,
+              N, M, G,
+              G, N, M,
+              G, N, M ],
+            [ R, G, B, N,
+              R, G, B, N,
+              R, G, B, N,
+              B, N, R, G,
+              B, N, R, G,
+              B, N, R, G ]
         ]
         
         for n in 0 ... 4 {

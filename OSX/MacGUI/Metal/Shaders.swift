@@ -66,7 +66,7 @@ var ShaderDefaultsCRT = ShaderOptions(blur: 1,
                                       bloomBrightness: 0.4,
                                       bloomWeight: 1.21,
                                       dotMask: 1,
-                                      dotMaskBrightness: 0.7,
+                                      dotMaskBrightness: 0.5,
                                       scanlines: 2,
                                       scanlineBrightness: 0.55,
                                       scanlineWeight: 0.11)
