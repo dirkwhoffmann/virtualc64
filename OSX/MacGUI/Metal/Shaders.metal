@@ -136,16 +136,6 @@ fragment half4 fragment_main(ProjectedVertex vert [[ stage_in ]],
     float4 color = texture.sample(texSampler, tc);
     // float luma = (0.2126 * color.r) + (0.7152 * color.g) + (0.0722 * color.b);
     
-    if (options.dotMask) {
-        
-        uint xoffset = x % uniforms.dotMaskWidth;
-        uint yoffset = y % uniforms.dotMaskHeight;
-        float4 dotColor = dotMask.read(uint2(xoffset, yoffset));
-        float4 gain = min(color, 1 - color) * dotColor;
-        float4 loose = min(color, 1 - color) * 0.5 * (1 - dotColor);
-        color += gain - loose;
-    }
-    
     // Apply bloom effect (if enabled)
     if (options.bloom) {
         float4 bColor = bloomTexture.sample(texSampler, tc);
@@ -164,6 +154,16 @@ fragment half4 fragment_main(ProjectedVertex vert [[ stage_in ]],
                                 1.0);
     }
 
+    if (options.dotMask) {
+        
+        uint xoffset = x % uniforms.dotMaskWidth;
+        uint yoffset = y % uniforms.dotMaskHeight;
+        float4 dotColor = dotMask.read(uint2(xoffset, yoffset));
+        float4 gain = min(color, 1 - color) * dotColor;
+        float4 loose = min(color, 1 - color) * 0.5 * (1 - dotColor);
+        color += gain - loose;
+    }
+    
     // color = float4(options.scanlines, 0, 0, 1);
     return half4(color.r, color.g, color.b, uniforms.alpha);
 }
