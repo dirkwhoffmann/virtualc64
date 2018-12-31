@@ -45,7 +45,7 @@ private:
     uint64_t cycles;
     
     //! @brief    Time stamp of the last write pointer alignment
-    uint64_t lastAligment = 0;
+    uint64_t lastAlignment = 0;
     
 public:
     
@@ -253,7 +253,7 @@ public:
     void handleBufferOverflow();
     
     //! @brief   Signals to ignore the next underflow or overflow condition.
-    void ignoreNextUnderOrOverflow() { lastAligment = mach_absolute_time(); }
+    void ignoreNextUnderOrOverflow() { lastAlignment = mach_absolute_time(); }
         
     //! @brief   Moves read pointer one position forward
     void advanceReadPtr() { readPtr = (readPtr + 1) % bufferSize; }

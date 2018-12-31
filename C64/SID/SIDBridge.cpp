@@ -438,8 +438,8 @@ SIDBridge::handleBufferUnderflow()
 
     // Determine the elapsed seconds since the last pointer adjustment.
     uint64_t now = mach_absolute_time();
-    double elapsedTime = (double)(now - lastAligment) / 1000000000.0;
-    lastAligment = now;
+    double elapsedTime = (double)(now - lastAlignment) / 1000000000.0;
+    lastAlignment = now;
 
     // Adjust the sample rate, if condition (1) holds.
     if (elapsedTime > 10.0) {
@@ -467,8 +467,8 @@ SIDBridge::handleBufferOverflow()
     
     // Determine the elapsed seconds since the last pointer adjustment.
     uint64_t now = mach_absolute_time();
-    double elapsedTime = (double)(now - lastAligment) / 1000000000.0;
-    lastAligment = now;
+    double elapsedTime = (double)(now - lastAlignment) / 1000000000.0;
+    lastAlignment = now;
     
     // Adjust the sample rate, if condition (1) holds.
     if (elapsedTime > 10.0) {
