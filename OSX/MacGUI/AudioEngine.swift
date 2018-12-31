@@ -14,7 +14,9 @@ public class AudioEngine: NSObject {
 
     var sid: SIDProxy!
     var audiounit : AUAudioUnit!
-
+    
+    var isRunning = false
+    
     override init()
     {
         super.init()
@@ -115,17 +117,23 @@ public class AudioEngine: NSObject {
     @discardableResult
     func startPlayback() -> Bool {
 
-        do { try audiounit.startHardware() } catch {
-            track("Failed to start audio hardware")
-            return false
+        if !isRunning {
+            do { try audiounit.startHardware() } catch {
+                track("Failed to start audio hardware")
+                return false
+            }
         }
         
+        isRunning = true
         return true
     }
     
     //! @brief  Stop playing sound
     func stopPlayback() {
         
-        audiounit.stopHardware()
+        if isRunning {
+            audiounit.stopHardware()
+            isRunning = false
+        }
     }
 }

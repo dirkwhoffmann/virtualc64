@@ -72,6 +72,12 @@ class MyDocument : NSDocument {
         self.addWindowController(controller)
     }
     
+    //
+    // Delegation methods
+    //
+    
+
+    
     
     //
     // Handling the lists of recently used URLs

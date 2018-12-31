@@ -100,3 +100,35 @@ var proxy: C64Proxy? {
         track()
     }
 }
+
+/// Personal delegation methods
+extension MyAppDelegate {
+    
+    func windowDidBecomeMain(_ window: NSWindow) {
+        
+        // Iterate through all controllers
+        for case let document as MyDocument in NSApplication.shared.orderedDocuments {
+            if let controller = document.windowControllers.first as? MyController {
+                
+                let audioEngine = controller.audioEngine!
+                if window == controller.window {
+                    
+                    // Turn on audio
+                    // track("Turning on audio for window \(controller.window)")
+                    if !audioEngine.isRunning {
+                        audioEngine.sid.rampUpFromZero()
+                        audioEngine.startPlayback()
+                    }
+
+                } else {
+                    
+                    // Turn off audio
+                    // track("Turning off audio for window \(controller.window)")
+                    if audioEngine.isRunning {
+                        audioEngine.stopPlayback()
+                    }
+                }
+            }
+        }
+    }
+}

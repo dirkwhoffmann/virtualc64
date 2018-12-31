@@ -31,7 +31,7 @@
 // #define NDEBUG
 
 // Default debug level for all components (Set to 1 in release build)
-#define DEBUG_LEVEL 2
+#define DEBUG_LEVEL 1
 
 #endif 
 
@@ -57,9 +57,6 @@
 //
 //
 // CLEANUP:
-// Don't use mount() for inserting disks. Use insertDisk instead
-// Replace Mouse* C64::mouse by (enum) MouseModel C64::mouse (use bridge pattern)
-// Remove prefix.pch from project
 //
 // OPTIMIZATION:
 //

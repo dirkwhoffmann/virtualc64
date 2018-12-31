@@ -649,6 +649,7 @@
 			isa = PBXGroup;
 			children = (
 				506D3DCF20224BF4009742CF /* MyDocument.swift */,
+				50B171051EE6AB840019E8D4 /* VirtualC64-Bridging-Header.h */,
 				50176C790A6F7357009E80BD /* C64Proxy.h */,
 				50176C7A0A6F7357009E80BD /* C64Proxy.mm */,
 			);
@@ -671,7 +672,6 @@
 		5000474112DCECBA0098D890 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				50B171051EE6AB840019E8D4 /* VirtualC64-Bridging-Header.h */,
 				50E9B92C201F299500065A89 /* MyController.swift */,
 				507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */,
 				503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */,

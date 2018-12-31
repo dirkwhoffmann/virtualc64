@@ -15,9 +15,12 @@ extension MyController : NSWindowDelegate {
         
         track()
         
+        // Inform the application delegate
+        myAppDelegate.windowDidBecomeMain(notification.object as! NSWindow)
+        
         // Enable audio
-        c64.sid.rampUpFromZero()
-        audioEngine.startPlayback()
+        // c64.sid.rampUpFromZero()
+        // audioEngine.startPlayback()
         
         // Start emulator if it was only paused while in background
         if pauseInBackground && pauseInBackgroundSavedState { c64.run() }
@@ -34,8 +37,8 @@ extension MyController : NSWindowDelegate {
         track()
         
         // Disable audio
-        c64.sid.rampDown()
-        audioEngine.stopPlayback()
+        // c64.sid.rampDown()
+        // audioEngine.stopPlayback()
         
         // Stop emulator if it is configured to pause in background
         pauseInBackgroundSavedState = c64.isRunning()
@@ -54,7 +57,7 @@ extension MyController : NSWindowDelegate {
         timer = nil
         
         // Stop audio playback
-        audioEngine.stopPlayback()
+        // audioEngine.stopPlayback()
         
         // Quit message queue
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
