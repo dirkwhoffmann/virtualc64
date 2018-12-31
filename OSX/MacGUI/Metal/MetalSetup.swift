@@ -171,8 +171,8 @@ public extension MetalView {
             CGSize.init(width: 1, height: 1),
             CGSize.init(width: 3, height: 1),
             CGSize.init(width: 4, height: 1),
-            CGSize.init(width: 3, height: 6),
-            CGSize.init(width: 4, height: 6),
+            CGSize.init(width: 3, height: 9),
+            CGSize.init(width: 4, height: 8),
             ]
         
         let maskData = [
@@ -182,16 +182,21 @@ public extension MetalView {
             [ R, G, B, N ],
             [ M, G, N,
               M, G, N,
+              N, N, N,
               N, M, G,
               N, M, G,
+              N, N, N,
               G, N, M,
-              G, N, M ],
+              G, N, M,
+              N, N, N],
             [ R, G, B, N,
               R, G, B, N,
               R, G, B, N,
+              N, N, N, N,
               B, N, R, G,
               B, N, R, G,
-              B, N, R, G ]
+              B, N, R, G,
+              N, N, N, N]
         ]
         
         for n in 0 ... 4 {
