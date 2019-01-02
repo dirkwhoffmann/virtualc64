@@ -43,7 +43,9 @@ struct ShaderOptions {
     float blurRadius;
 
     uint bloom;
-    float bloomRadius;
+    float bloomRadiusR;
+    float bloomRadiusG;
+    float bloomRadiusB;
     float bloomBrightness;
     float bloomWeight;
 
@@ -121,8 +123,10 @@ float3 hsv2rgb(float3 c)
 
 fragment half4 fragment_main(ProjectedVertex vert [[ stage_in ]],
                              texture2d<float, access::sample> texture [[ texture(0) ]],
-                             texture2d<float, access::sample> bloomTexture [[ texture(1) ]],
-                             texture2d<float, access::sample> dotMask [[ texture(2) ]],
+                             texture2d<float, access::sample> bloomTextureR [[ texture(1) ]],
+                             texture2d<float, access::sample> bloomTextureG [[ texture(2) ]],
+                             texture2d<float, access::sample> bloomTextureB [[ texture(3) ]],
+                             texture2d<float, access::sample> dotMask [[ texture(4) ]],
                              constant ShaderOptions &options [[ buffer(0) ]],
                              constant FragmentUniforms &uniforms [[ buffer(1) ]],
                              sampler texSampler [[ sampler(0) ]])
@@ -138,8 +142,10 @@ fragment half4 fragment_main(ProjectedVertex vert [[ stage_in ]],
     
     // Apply bloom effect (if enabled)
     if (options.bloom) {
-        float4 bColor = bloomTexture.sample(texSampler, tc);
-        // bColor = pow(bColor, 3 * (1.0 - uniforms.bloomWeight));
+        float4 bloom_r = bloomTextureR.sample(texSampler, tc);
+        float4 bloom_g = bloomTextureG.sample(texSampler, tc);
+        float4 bloom_b = bloomTextureB.sample(texSampler, tc);
+        float4 bColor = bloom_r + bloom_g + bloom_b;
         bColor = pow(bColor, options.bloomWeight) * options.bloomBrightness;
         // color = bColor;
         color = saturate(color + bColor);
@@ -164,7 +170,6 @@ fragment half4 fragment_main(ProjectedVertex vert [[ stage_in ]],
         color += gain - loose;
     }
     
-    // color = float4(options.scanlines, 0, 0, 1);
     return half4(color.r, color.g, color.b, uniforms.alpha);
 }
 
@@ -374,26 +379,29 @@ kernel void scanlines(texture2d<half, access::read>  inTexture   [[ texture(0) ]
 }
 
 //
-// Bloom filters
+// RGB splitter
 //
 
+/*
 struct BloomUniforms {
     float bloomBrightness;
     float bloomWeight;
 };
+*/
 
-kernel void bloom(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
-                  texture2d<half, access::write> outTexture  [[ texture(1) ]],
+kernel void split(texture2d<half, access::read>  t_in        [[ texture(0) ]],
+                  texture2d<half, access::write> t_out_r     [[ texture(1) ]],
+                  texture2d<half, access::write> t_out_g     [[ texture(2) ]],
+                  texture2d<half, access::write> t_out_b     [[ texture(3) ]],
                   constant ShaderOptions         &options    [[ buffer(0) ]],
                   uint2                          gid         [[ thread_position_in_grid ]])
 {
 
-    half4 color = inTexture.read(uint2(gid.x, gid.y));
-    // float luma = (0.2126 * color.r) + (0.7152 * color.g) + (0.0722 * color.b);
-    // color = color * luma * (3 * options.bloomWeight);
+    half4 color = t_in.read(uint2(gid.x, gid.y));
     
-    // color = pow(color, options.bloomWeight) * options.bloomBrightness;
-    outTexture.write(half4(color.r, color.g, color.b, 0), gid);
+    t_out_r.write(half4(color.r, 0, 0, 0), gid);
+    t_out_g.write(half4(0, color.g, 0, 0), gid);
+    t_out_b.write(half4(0, 0, color.b, 0), gid);
 }
 
 

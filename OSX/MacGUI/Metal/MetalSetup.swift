@@ -149,7 +149,8 @@ public extension MetalView {
         
         // Build bloom filters
         bloomFilterGallery[0] = BypassFilter.init(device: device!, library: library)
-        bloomFilterGallery[1] = BloomFilter.init(device: device!, library: library)
+        bloomFilterGallery[1] = SplitFilter.init(device: device!, library: library)
+        bloomFilterGallery[2] = SplitFilter.init(device: device!, library: library)
 
         // Build scanline filters
         scanlineFilterGallery[0] = BypassFilter.init(device: device!, library: library)

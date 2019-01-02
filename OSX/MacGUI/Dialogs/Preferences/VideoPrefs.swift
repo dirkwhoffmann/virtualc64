@@ -47,12 +47,12 @@ extension PreferencesController {
         vidBlurRadiusSlider.isEnabled = shaderOptions.blur > 0
         
         vidBloomPopup.selectItem(withTag: Int(shaderOptions.bloom))
-        vidBloomRadiusRSlider.floatValue = shaderOptions.bloomRadius
+        vidBloomRadiusRSlider.floatValue = shaderOptions.bloomRadiusR
         vidBloomRadiusRSlider.isEnabled = shaderOptions.bloom > 0
-        vidBloomRadiusGSlider.floatValue = shaderOptions.bloomRadius
-        vidBloomRadiusGSlider.isEnabled = shaderOptions.bloom > 0
-        vidBloomRadiusBSlider.floatValue = shaderOptions.bloomRadius
-        vidBloomRadiusBSlider.isEnabled = shaderOptions.bloom > 0
+        vidBloomRadiusGSlider.floatValue = shaderOptions.bloomRadiusG
+        vidBloomRadiusGSlider.isEnabled = shaderOptions.bloom > 1
+        vidBloomRadiusBSlider.floatValue = shaderOptions.bloomRadiusB
+        vidBloomRadiusBSlider.isEnabled = shaderOptions.bloom > 1
         vidBloomBrightnessSlider.floatValue = shaderOptions.bloomBrightness
         vidBloomBrightnessSlider.isEnabled = shaderOptions.bloom > 0
         vidBloomWeightSlider.floatValue = shaderOptions.bloomWeight
@@ -175,17 +175,24 @@ extension PreferencesController {
     @IBAction func vidBloomAction(_ sender: NSPopUpButton!) {
         
         if let metal = myController?.metalScreen {
-            track("\(sender.selectedTag())")
+
             metal.shaderOptions.bloom = Int32(sender.selectedTag())
-            refresh()
+            vidBloomRadiusRAction(vidBloomRadiusRSlider)
         }
     }
-
+    
     @IBAction func vidBloomRadiusRAction(_ sender: NSSlider!) {
         
         if let metal = myController?.metalScreen {
-            track("\(sender.floatValue)")
-            metal.shaderOptions.bloomRadius = sender.floatValue
+            
+            metal.shaderOptions.bloomRadiusR = sender.floatValue
+            
+            if vidBloomPopup.selectedTag() == 1 {
+                
+                // Use this value for the other channels, too
+                metal.shaderOptions.bloomRadiusG = sender.floatValue
+                metal.shaderOptions.bloomRadiusB = sender.floatValue
+            }
             refresh()
         }
     }
@@ -193,8 +200,15 @@ extension PreferencesController {
     @IBAction func vidBloomRadiusGAction(_ sender: NSSlider!) {
         
         if let metal = myController?.metalScreen {
-            track("\(sender.floatValue)")
-            metal.shaderOptions.bloomRadius = sender.floatValue
+            
+            metal.shaderOptions.bloomRadiusG = sender.floatValue
+            
+            if vidBloomPopup.selectedTag() == 1 {
+                
+                // Use this value for the other channels, too
+                metal.shaderOptions.bloomRadiusR = sender.floatValue
+                metal.shaderOptions.bloomRadiusB = sender.floatValue
+            }
             refresh()
         }
     }
@@ -202,12 +216,18 @@ extension PreferencesController {
     @IBAction func vidBloomRadiusBAction(_ sender: NSSlider!) {
         
         if let metal = myController?.metalScreen {
-            track("\(sender.floatValue)")
-            metal.shaderOptions.bloomRadius = sender.floatValue
+            
+            metal.shaderOptions.bloomRadiusB = sender.floatValue
+            
+            if vidBloomPopup.selectedTag() == 1 {
+                
+                // Use this value for the other channels, too
+                metal.shaderOptions.bloomRadiusR = sender.floatValue
+                metal.shaderOptions.bloomRadiusG = sender.floatValue
+            }
             refresh()
         }
     }
-    
     
     @IBAction func vidBloomBrightnessAction(_ sender: NSSlider!) {
         

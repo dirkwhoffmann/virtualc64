@@ -1313,7 +1313,10 @@ DQ
                                                         <menuItem title="Disabled" state="on" id="Ule-CZ-qly">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Enabled" tag="1" id="LPx-rF-B2W">
+                                                        <menuItem title="RGB combined" tag="1" id="LPx-rF-B2W">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                        <menuItem title="RGB separated" tag="2" id="vKh-tM-Ecp">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                     </items>

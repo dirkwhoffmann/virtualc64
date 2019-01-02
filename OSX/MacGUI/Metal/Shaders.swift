@@ -33,7 +33,9 @@ struct ShaderOptions : Codable {
     var blurRadius: Float
     
     var bloom: Int32
-    var bloomRadius: Float
+    var bloomRadiusR: Float
+    var bloomRadiusG: Float
+    var bloomRadiusB: Float
     var bloomBrightness: Float
     var bloomWeight: Float
     
@@ -49,7 +51,9 @@ struct ShaderOptions : Codable {
 var ShaderDefaultsTFT = ShaderOptions(blur: 1,
                                       blurRadius: 0,
                                       bloom: 0,
-                                      bloomRadius: 1.0,
+                                      bloomRadiusR: 1.0,
+                                      bloomRadiusG: 1.0,
+                                      bloomRadiusB: 1.0,
                                       bloomBrightness: 0.4,
                                       bloomWeight: 1.21,
                                       dotMask: 0,
@@ -62,7 +66,9 @@ var ShaderDefaultsTFT = ShaderOptions(blur: 1,
 var ShaderDefaultsCRT = ShaderOptions(blur: 1,
                                       blurRadius: 1.5,
                                       bloom: 1,
-                                      bloomRadius: 1.0,
+                                      bloomRadiusR: 1.0,
+                                      bloomRadiusG: 1.0,
+                                      bloomRadiusB: 1.0,
                                       bloomBrightness: 0.4,
                                       bloomWeight: 1.21,
                                       dotMask: 1,
@@ -143,49 +149,11 @@ class ComputeKernel : NSObject {
         }
     }
     
-    func apply(commandBuffer: MTLCommandBuffer,
-               source: MTLTexture,
-               target: MTLTexture,
-               options: ShaderOptions? = nil)
-    {
-        guard let encoder = commandBuffer.makeComputeCommandEncoder() else {
-            return
-        }
-        
-        // Bind pipeline and textures
-        encoder.setComputePipelineState(kernel)
-        encoder.setTexture(source, index: 0)
-        encoder.setTexture(target, index: 1)
-        
-        // Pass in shader options
-        if var _options = options {
-            encoder.setBytes(&_options,
-                             length: MemoryLayout<ShaderOptions>.stride,
-                             index: 0);
-        }
-        
-        // Determine thread group size and number of groups
-        let groupW = kernel.threadExecutionWidth
-        let groupH = kernel.maxTotalThreadsPerThreadgroup / groupW
-        let threadsPerGroup = MTLSizeMake(groupW, groupH, 1)
-        
-        let countW = (UPSCALED_TEXTURE.cutout_x + groupW - 1) / groupW;
-        let countH = (UPSCALED_TEXTURE.cutout_y + groupH - 1) / groupH;
-        let threadgroupCount = MTLSizeMake(countW, countH, 1)
-        
-        // Finally, we're ready to dispatch
-        encoder.dispatchThreadgroups(threadgroupCount,
-                                     threadsPerThreadgroup: threadsPerGroup)
-        encoder.endEncoding()
-    }
- 
-/*
     func apply(commandBuffer: MTLCommandBuffer, source: MTLTexture, target: MTLTexture,
                options: ShaderOptions? = nil) {
         
         apply(commandBuffer: commandBuffer, textures: [source, target], options: options)
     }
-*/
 
     func apply(commandBuffer: MTLCommandBuffer, textures: [MTLTexture],
                options: ShaderOptions? = nil) {
@@ -266,19 +234,19 @@ class XBRUpscaler : ComputeKernel {
 
 
 //
-// Bloom filters
+// Split filter
 //
 
-class BloomFilter : ComputeKernel {
+class SplitFilter : ComputeKernel {
 
     convenience init?(device: MTLDevice, library: MTLLibrary) {
-        self.init(name: "bloom", device: device, library: library)
+        self.init(name: "split", device: device, library: library)
     }
 }
 
     
 //
-// Scanline filters
+// Scanline filter
 //
 
 class SimpleScanlines : ComputeKernel {

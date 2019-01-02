@@ -101,7 +101,7 @@ public class MetalView: MTKView {
     var upscalerGallery = [ComputeKernel?](repeating: nil, count: 3)
 
     // Array holding all available bloom filters
-    var bloomFilterGallery = [ComputeKernel?](repeating: nil, count: 2)
+    var bloomFilterGallery = [ComputeKernel?](repeating: nil, count: 3)
 
     // Array holding all available scanline filters
     var scanlineFilterGallery = [ComputeKernel?](repeating: nil, count: 3)
@@ -310,25 +310,24 @@ public class MetalView: MTKView {
         fragmentUniforms.dotMaskWidth = Int32(dotMaskTexture.width)
         fragmentUniforms.scanlineDistance = Int32(layerHeight / 256);
        
-        // Compute the bloom texture
-        let bloomFilter = currentBloomFilter()
-        bloomFilter.apply(commandBuffer: commandBuffer,
-                          textures: [emulatorTexture, bloomTextureR, bloomTextureG, bloomTextureB],
-                          options: shaderOptions)
-        
-        // Blur the bloom texture
-        if #available(OSX 10.13, *) {
-            let gauss = MPSImageGaussianBlur(device: device!,
-                                             sigma: shaderOptions.bloomRadius)
-            gauss.encode(commandBuffer: commandBuffer,
-                         inPlaceTexture: &bloomTextureR,
-                         fallbackCopyAllocator: nil)
-            gauss.encode(commandBuffer: commandBuffer,
-                         inPlaceTexture: &bloomTextureG,
-                         fallbackCopyAllocator: nil)
-            gauss.encode(commandBuffer: commandBuffer,
-                         inPlaceTexture: &bloomTextureB,
-                         fallbackCopyAllocator: nil)
+        // Compute the bloom textures
+        if shaderOptions.bloom != 0 {
+            let bloomFilter = currentBloomFilter()
+            bloomFilter.apply(commandBuffer: commandBuffer,
+                              textures: [emulatorTexture, bloomTextureR, bloomTextureG, bloomTextureB],
+                              options: shaderOptions)
+            
+            func applyGauss(_ texture: inout MTLTexture, radius: Float) {
+                
+                if #available(OSX 10.13, *) {
+                    let gauss = MPSImageGaussianBlur(device: device!, sigma: radius)
+                    gauss.encode(commandBuffer: commandBuffer,
+                                 inPlaceTexture: &texture, fallbackCopyAllocator: nil)
+                }
+            }
+            applyGauss(&bloomTextureR, radius: shaderOptions.bloomRadiusR)
+            applyGauss(&bloomTextureG, radius: shaderOptions.bloomRadiusG)
+            applyGauss(&bloomTextureB, radius: shaderOptions.bloomRadiusB)
         }
         
         // Upscale the C64 texture
@@ -369,7 +368,7 @@ public class MetalView: MTKView {
         commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
         commandEncoder.setRenderPipelineState(pipeline)
         commandEncoder.setDepthStencilState(depthState)
-        commandEncoder.setFragmentTexture(dotMaskTexture, index: 2)
+        commandEncoder.setFragmentTexture(dotMaskTexture, index: 4)
         commandEncoder.setFragmentBytes(&shaderOptions,
                                         length: MemoryLayout<ShaderOptions>.stride,
                                         index: 0);
