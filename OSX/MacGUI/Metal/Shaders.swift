@@ -156,7 +156,54 @@ class ComputeKernel : NSObject {
         encoder.setComputePipelineState(kernel)
         encoder.setTexture(source, index: 0)
         encoder.setTexture(target, index: 1)
-     
+        
+        // Pass in shader options
+        if var _options = options {
+            encoder.setBytes(&_options,
+                             length: MemoryLayout<ShaderOptions>.stride,
+                             index: 0);
+        }
+        
+        // Determine thread group size and number of groups
+        let groupW = kernel.threadExecutionWidth
+        let groupH = kernel.maxTotalThreadsPerThreadgroup / groupW
+        let threadsPerGroup = MTLSizeMake(groupW, groupH, 1)
+        
+        let countW = (UPSCALED_TEXTURE.cutout_x + groupW - 1) / groupW;
+        let countH = (UPSCALED_TEXTURE.cutout_y + groupH - 1) / groupH;
+        let threadgroupCount = MTLSizeMake(countW, countH, 1)
+        
+        // Finally, we're ready to dispatch
+        encoder.dispatchThreadgroups(threadgroupCount,
+                                     threadsPerThreadgroup: threadsPerGroup)
+        encoder.endEncoding()
+    }
+ 
+/*
+    func apply(commandBuffer: MTLCommandBuffer, source: MTLTexture, target: MTLTexture,
+               options: ShaderOptions? = nil) {
+        
+        apply(commandBuffer: commandBuffer, textures: [source, target], options: options)
+    }
+*/
+
+    func apply(commandBuffer: MTLCommandBuffer, textures: [MTLTexture],
+               options: ShaderOptions? = nil) {
+        
+        if let encoder = commandBuffer.makeComputeCommandEncoder() {
+            
+            for (index, texture) in textures.enumerated() {
+                encoder.setTexture(texture, index: index)
+            }
+            apply(encoder: encoder, options: options)
+        }
+    }
+
+    func apply(encoder: MTLComputeCommandEncoder, options: ShaderOptions? = nil) {
+        
+        // Bind pipeline
+        encoder.setComputePipelineState(kernel)
+        
         // Pass in shader options
         if var _options = options {
             encoder.setBytes(&_options,
@@ -179,7 +226,6 @@ class ComputeKernel : NSObject {
         encoder.endEncoding()
     }
 }
-
 
 //
 // Bypass filter

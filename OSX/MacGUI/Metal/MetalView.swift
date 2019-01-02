@@ -70,13 +70,16 @@ public class MetalView: MTKView {
     /// updateTexture() which is called periodically in drawRect().
     var emulatorTexture: MTLTexture! = nil
 
-    /// Bloom texture to emulate scanline blooming (512 x 512)
-    /// To emulate a bloom effect, the C64 texture is run through a Gaussian
-    /// blur filter with a large radius. This blurred texture is later passed
-    /// into the fragment shader as a secondary texture where it is composed
+    /// Bloom textures to emulate blooming (512 x 512)
+    /// To emulate a bloom effect, the C64 texture is first split into it's
+    /// R, G, and B parts. Each texture is then run through a Gaussian blur
+    /// filter with a large radius. These blurred textures are passed into
+    /// the fragment shader as a secondary textures where they are recomposed
     /// with the upscaled primary texture.
-    var bloomTexture: MTLTexture! = nil
-    
+    var bloomTextureR: MTLTexture! = nil
+    var bloomTextureG: MTLTexture! = nil
+    var bloomTextureB: MTLTexture! = nil
+
     /// Upscaled emulator texture (2048 x 2048)
     /// In the first texture processing stage, the emulator texture is bumped up
     /// by a factor of 4. The user can choose between bypass upscaling which
@@ -310,8 +313,7 @@ public class MetalView: MTKView {
         // Compute the bloom texture
         let bloomFilter = currentBloomFilter()
         bloomFilter.apply(commandBuffer: commandBuffer,
-                          source: emulatorTexture,
-                          target: bloomTexture,
+                          textures: [emulatorTexture, bloomTextureR, bloomTextureG, bloomTextureB],
                           options: shaderOptions)
         
         // Blur the bloom texture
@@ -319,7 +321,13 @@ public class MetalView: MTKView {
             let gauss = MPSImageGaussianBlur(device: device!,
                                              sigma: shaderOptions.bloomRadius)
             gauss.encode(commandBuffer: commandBuffer,
-                         inPlaceTexture: &bloomTexture,
+                         inPlaceTexture: &bloomTextureR,
+                         fallbackCopyAllocator: nil)
+            gauss.encode(commandBuffer: commandBuffer,
+                         inPlaceTexture: &bloomTextureG,
+                         fallbackCopyAllocator: nil)
+            gauss.encode(commandBuffer: commandBuffer,
+                         inPlaceTexture: &bloomTextureB,
                          fallbackCopyAllocator: nil)
         }
         
@@ -445,7 +453,9 @@ public class MetalView: MTKView {
             // Configure fragment shader
             fragmentUniforms.alpha = controller.c64.isHalted() ? 0.5 : currentAlpha
             commandEncoder.setFragmentTexture(scanlineTexture, index: 0)
-            commandEncoder.setFragmentTexture(bloomTexture, index: 1)
+            commandEncoder.setFragmentTexture(bloomTextureR, index: 1)
+            commandEncoder.setFragmentTexture(bloomTextureG, index: 2)
+            commandEncoder.setFragmentTexture(bloomTextureB, index: 3)
             commandEncoder.setFragmentBytes(&fragmentUniforms,
                                             length: MemoryLayout<FragmentUniforms>.stride,
                                             index: 1);

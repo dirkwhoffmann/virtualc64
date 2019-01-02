@@ -93,11 +93,15 @@ public extension MetalView {
         emulatorTexture = device?.makeTexture(descriptor: descriptor)
         precondition(emulatorTexture != nil, "Failed to create emulator texture.")
         
-        // Build bloom texture
+        // Build bloom textures
         descriptor.usage = [ .shaderRead, .shaderWrite, .renderTarget ]
-        bloomTexture = device?.makeTexture(descriptor: descriptor)
-        precondition(bloomTexture != nil, "Failed to create bloom texture.")
-        
+        bloomTextureR = device?.makeTexture(descriptor: descriptor)
+        bloomTextureG = device?.makeTexture(descriptor: descriptor)
+        bloomTextureB = device?.makeTexture(descriptor: descriptor)
+        precondition(bloomTextureR != nil, "Failed to create bloom texture (R).")
+        precondition(bloomTextureG != nil, "Failed to create bloom texture (G).")
+        precondition(bloomTextureB != nil, "Failed to create bloom texture (B).")
+
         //
         // 2048 x 2048 textures
         //
