@@ -78,7 +78,7 @@ Mouse1350::execute(int64_t targetX, int64_t targetY)
     double absDeltaY = abs(deltaY);
     double max = (absDeltaX > absDeltaY) ? absDeltaX : absDeltaY;
     
-    if (max) {
+    if (max > 0) {
         deltaX /= max;
         deltaY /= max;
         if (deltaY < -0.5) { CLR_BIT(controlPort, 0); } // UP

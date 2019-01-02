@@ -415,7 +415,7 @@ VC1541::moveHeadUp()
 
         float position = (float)offset / (float)disk.lengthOfHalftrack(halftrack);
         halftrack++;
-        offset = position * disk.lengthOfHalftrack(halftrack);
+        offset = (HeadPosition)(position * disk.lengthOfHalftrack(halftrack));
         
         debug(2, "Moving head up to halftrack %d (track %2.1f) (offset %d)\n",
               halftrack, (halftrack + 1) / 2.0, offset);
@@ -437,7 +437,7 @@ VC1541::moveHeadDown()
     if (halftrack > 1) {
         float position = (float)offset / (float)disk.lengthOfHalftrack(halftrack);
         halftrack--;
-        offset = position * disk.lengthOfHalftrack(halftrack);
+        offset = (HeadPosition)(position * disk.lengthOfHalftrack(halftrack));
         
         debug(2, "Moving head down to halftrack %d (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);

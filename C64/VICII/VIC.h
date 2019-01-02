@@ -821,7 +821,7 @@ public:
     
     //! @brief    Returns the time interval between two frames in nanoseconds.
     uint64_t getFrameDelay() {
-        return 1000000000.0 / (uint64_t)getFramesPerSecond();
+        return uint64_t(1000000000.0 / getFramesPerSecond());
     }
     
     

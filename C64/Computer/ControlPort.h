@@ -77,7 +77,7 @@ public:
     void dump();
     
     //! @brief   Returns true if auto-fire mode is enabled.
-    float getAutofire() { return autofire; }
+    bool getAutofire() { return autofire; }
 
     //! @brief   Enables or disables autofire.
     void setAutofire(bool value);

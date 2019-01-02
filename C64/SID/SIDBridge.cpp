@@ -447,8 +447,8 @@ SIDBridge::handleBufferUnderflow()
         bufferUnderflows++;
         
         // Increase the sample rate based on what we've measured.
-        long offPerSecond = samplesAhead / elapsedTime;
-        setSampleRate(getSampleRate() + (int)offPerSecond);
+        int offPerSecond = (int)(samplesAhead / elapsedTime);
+        setSampleRate(getSampleRate() + offPerSecond);
     }
 
     // Reset the write pointer
@@ -476,8 +476,8 @@ SIDBridge::handleBufferOverflow()
         bufferOverflows++;
         
         // Decrease the sample rate based on what we've measured.
-        long offPerSecond = samplesAhead / elapsedTime;
-        setSampleRate(getSampleRate() - (int)offPerSecond);
+        int offPerSecond = (int)(samplesAhead / elapsedTime);
+        setSampleRate(getSampleRate() - offPerSecond);
     }
     
     // Reset the write pointer

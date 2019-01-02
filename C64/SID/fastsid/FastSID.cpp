@@ -284,7 +284,7 @@ FastSID::execute(uint64_t cycles)
     executedCycles += cycles;
 
     // Compute how many sound samples should have been computed
-    uint64_t shouldHave = executedCycles * samplesPerCycle;
+    uint64_t shouldHave = (uint64_t)(executedCycles * samplesPerCycle);
     
     // How many sound samples are missing?
     uint64_t numSamples = shouldHave - computedSamples;
