@@ -43,6 +43,8 @@
 // The user can now choose whether to save the emulator texture or the upscaled texture as a screenshot image.
 // If menu item "Save Snapshot..." is selected, emulation is paused until the screenshot has been saved.
 // Dot mask emulation has been modified to not darken the screen any more.
+// The bloom radius can be set individually for each color channels now. 
+// Cathode rays can be shifted relative to each other.
 // Added support for the Expert cartridge.
 // Cardridge buttons are now displayed in the bottom bar as small (clickable) icons.
 // Upgraded ReSID to the version used in VICE V3.3.

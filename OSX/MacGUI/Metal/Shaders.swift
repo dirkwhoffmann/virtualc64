@@ -45,6 +45,10 @@ struct ShaderOptions : Codable {
     var scanlines: Int32
     var scanlineBrightness: Float
     var scanlineWeight: Float
+    
+    var disalignment: Int32
+    var disalignmentH: Float
+    var disalignmentV: Float
 }
 
 // Default settings for TFT monitor emulation (retro effects off)
@@ -60,7 +64,10 @@ var ShaderDefaultsTFT = ShaderOptions(blur: 1,
                                       dotMaskBrightness: 0.7,
                                       scanlines: 0,
                                       scanlineBrightness: 0.55,
-                                      scanlineWeight: 0.11)
+                                      scanlineWeight: 0.11,
+                                      disalignment: 0,
+                                      disalignmentH: 0.001,
+                                      disalignmentV: 0.001)
 
 // Default settings for CRT monitor emulation (retro effects on)
 var ShaderDefaultsCRT = ShaderOptions(blur: 1,
@@ -75,7 +82,10 @@ var ShaderDefaultsCRT = ShaderOptions(blur: 1,
                                       dotMaskBrightness: 0.5,
                                       scanlines: 2,
                                       scanlineBrightness: 0.55,
-                                      scanlineWeight: 0.11)
+                                      scanlineWeight: 0.11,
+                                      disalignment: 0,
+                                      disalignmentH: 0.001,
+                                      disalignmentV: 0.001)
 
 
 //

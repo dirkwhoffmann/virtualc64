@@ -55,6 +55,10 @@ struct ShaderOptions {
     uint scanlines;
     float scanlineBrightness;
     float scanlineWeight;
+    
+    uint disalignment;
+    float disalignmentH;
+    float disalignmentV;
 };
 
 
@@ -134,10 +138,21 @@ fragment half4 fragment_main(ProjectedVertex vert [[ stage_in ]],
     uint x = uint(vert.position.x);
     uint y = uint(vert.position.y);
     uint2 pixel = uint2(x, y);
+    float4 color;
     
     // Read fragment from texture
     float2 tc = float2(vert.texCoords.x, vert.texCoords.y);
-    float4 color = texture.sample(texSampler, tc);
+    if (options.disalignment) {
+        float dx = options.disalignmentH;
+        float dy = options.disalignmentV;
+        float4 r = texture.sample(texSampler, tc + float2(dx,dy));
+        float4 g = texture.sample(texSampler, tc);
+        float4 b = texture.sample(texSampler, tc - float2(dx,dy));
+        color = float4(r.r, g.g, b.b,0);
+    } else {
+        color = texture.sample(texSampler, float2(vert.texCoords.x, vert.texCoords.y));
+    }
+
     // float luma = (0.2126 * color.r) + (0.7152 * color.g) + (0.0722 * color.b);
     
     // Apply bloom effect (if enabled)

@@ -71,6 +71,12 @@ extension PreferencesController {
         vidScanlineWeightSlider.floatValue = shaderOptions.scanlineWeight
         vidScanlineWeightSlider.isEnabled = shaderOptions.scanlines == 2
         
+        vidMisalignmentPopUp.selectItem(withTag: Int(shaderOptions.disalignment))
+        vidMisalignmentXSlider.floatValue = shaderOptions.disalignmentH
+        vidMisalignmentXSlider.isEnabled = shaderOptions.disalignment > 0
+        vidMisalignmentYSlider.floatValue = shaderOptions.disalignmentV
+        vidMisalignmentYSlider.isEnabled = shaderOptions.disalignment > 0
+
         // Geometry
         vidAspectRatioButton.state = metal.keepAspectRatio ? .on : .off
         vidEyeXSlider.floatValue = metal.eyeX()
@@ -293,6 +299,31 @@ extension PreferencesController {
         }
     }
     
+    @IBAction func vidDisalignmentAction(_ sender: NSPopUpButton!) {
+        
+        if let metal = myController?.metalScreen {
+            track("\(sender.selectedTag())")
+            metal.shaderOptions.disalignment = Int32(sender.selectedTag())
+            refresh()
+        }
+    }
+    @IBAction func vidDisalignmentHAction(_ sender: NSSlider!) {
+        
+        if let metal = myController?.metalScreen {
+            track("\(sender.floatValue)")
+            metal.shaderOptions.disalignmentH = sender.floatValue
+            refresh()
+        }
+    }
+    
+    @IBAction func vidDisalignmentVAction(_ sender: NSSlider!)
+    {
+        if let metal = myController?.metalScreen {
+            track("\(sender.floatValue)")
+            metal.shaderOptions.disalignmentV = sender.floatValue
+            refresh()
+        }
+    }
     
     //
     // Action methods (Geometry)

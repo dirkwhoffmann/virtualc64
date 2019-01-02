@@ -1177,7 +1177,7 @@ DQ
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f3c-4e-uVF">
                                             <rect key="frame" x="394" y="192" width="200" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Aligned" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="Pvy-Rz-gkg" id="sBf-Op-lch">
+                                            <popUpButtonCell key="cell" type="push" title="Aligned" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="Pvy-Rz-gkg" id="sBf-Op-lch">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" autoenablesItems="NO" id="QoD-i2-9rR">
@@ -1191,16 +1191,25 @@ DQ
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="vidDisalignmentAction:" target="-2" id="A3S-Qn-MRT"/>
+                                            </connections>
                                         </popUpButton>
                                         <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KkN-hN-xfa">
                                             <rect key="frame" x="471" y="151" width="120" height="15"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <sliderCell key="cell" controlSize="small" continuous="YES" enabled="NO" state="on" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="above" sliderType="linear" id="LLv-BX-2wL"/>
+                                            <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="-0.0040000000000000001" maxValue="0.0040000000000000001" doubleValue="0.002" tickMarkPosition="above" sliderType="linear" id="LLv-BX-2wL"/>
+                                            <connections>
+                                                <action selector="vidDisalignmentVAction:" target="-2" id="tUp-HI-lBz"/>
+                                            </connections>
                                         </slider>
                                         <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F6O-Zb-pow">
                                             <rect key="frame" x="471" y="173" width="120" height="15"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <sliderCell key="cell" controlSize="small" continuous="YES" enabled="NO" state="on" alignment="left" maxValue="1" doubleValue="0.12" tickMarkPosition="above" sliderType="linear" id="EOd-8a-Dd3"/>
+                                            <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="-0.0040000000000000001" maxValue="0.0040000000000000001" doubleValue="0.002" tickMarkPosition="above" sliderType="linear" id="EOd-8a-Dd3"/>
+                                            <connections>
+                                                <action selector="vidDisalignmentHAction:" target="-2" id="jmN-Wb-HeM"/>
+                                            </connections>
                                         </slider>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t2s-z7-2oL">
                                             <rect key="frame" x="377" y="151" width="83" height="14"/>
