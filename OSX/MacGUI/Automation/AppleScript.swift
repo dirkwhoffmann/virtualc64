@@ -35,13 +35,13 @@ class VC64ConfigureCommand: NSScriptCommand {
     }
 }
 
-class VC64DragInCommand: NSScriptCommand {
+class VC64MountCommand: NSScriptCommand {
     
     override func performDefaultImplementation() -> Any? {
         
         track()
         if let arguments = evaluatedArguments {
-            return dragInScriptCmd(arguments: arguments)
+            return mountScriptCmd(arguments: arguments)
         } else {
             return false
         }

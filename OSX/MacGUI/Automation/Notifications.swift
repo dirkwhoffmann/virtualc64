@@ -25,10 +25,10 @@ extension MyAppDelegate {
         }
     }
     
-    @objc func vc64DragInCommand(_ notification: Notification) {
+    @objc func vc64MountCommand(_ notification: Notification) {
         
-        if !dragInScriptCmd(arguments: notification.userInfo) {
-            track("Failed to execute 'dragIn' command.")
+        if !mountScriptCmd(arguments: notification.userInfo) {
+            track("Failed to execute 'mount' command.")
         }
     }
     

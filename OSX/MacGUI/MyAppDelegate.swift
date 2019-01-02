@@ -78,8 +78,8 @@ var proxy: C64Proxy? {
         dc.addObserver(self, selector: #selector(vc64ConfigureCommand(_:)),
                        name: Notification.Name("VC64Configure"),
                        object: nil)
-        dc.addObserver(self, selector: #selector(vc64DragInCommand(_:)),
-                       name: Notification.Name("VC64DragIn"),
+        dc.addObserver(self, selector: #selector(vc64MountCommand(_:)),
+                       name: Notification.Name("VC64Mount"),
                        object: nil)
         dc.addObserver(self, selector: #selector(vc64TypeTextCommand(_:)),
                        name: Notification.Name("VC64TypeText"),

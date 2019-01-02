@@ -57,15 +57,15 @@ func configureScriptCmd(arguments: [AnyHashable : Any]?) -> Bool {
     return true
 }
 
-func dragInScriptCmd(arguments: [AnyHashable : Any]?) -> Bool {
+func mountScriptCmd(arguments: [AnyHashable : Any]?) -> Bool {
     
     if let argument = arguments?["VC64Path"] as? String {
         let url = URL(fileURLWithPath: argument)
         do {
             try myDocument?.createAttachment(from: url)
-            return myDocument?.mountAttachment() ?? false
+            myDocument?.mountAttachment(action: .flashFirstFile, text: "RUN\n")
         } catch {
-            track("Remote control: Emulated drag operation failed.")
+            track("Remote control: Unable to mount \(url).")
         }
     }
     return false

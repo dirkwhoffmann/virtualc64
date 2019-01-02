@@ -294,8 +294,8 @@
             <result type="boolean" description="The result of the invocation. True if it succeeds, False if it does not"/>
         </command>
         
-        <command name="dragin" code="VCemDRag" description="Emulates a drag and drop event.">
-            <cocoa class="VirtualC64.VC64DragInCommand"/>
+        <command name="mount" code="VCemDRag" description="Reads and mounts a media file.">
+            <cocoa class="VirtualC64.VC64MountCommand"/>
             
             <parameter name="path" code="VCth" type="text"
                 description="a file URL.">
