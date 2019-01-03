@@ -1,22 +1,22 @@
 /*!
- * @header      C64.h
- * @brief       This file is part of VirtualC64.
+ * @header      Configure.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2018 Dirk W. Hoffmann
+ * @copyright   Dirk W. Hoffmann. All rights reserved.
  */
-/*              This program is free software; you can redistribute it and/or modify
- *              it under the terms of the GNU General Public License as published by
- *              the Free Software Foundation; either version 2 of the License, or
- *              (at your option) any later version.
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *              This program is distributed in the hope that it will be useful,
- *              but WITHOUT ANY WARRANTY; without even the implied warranty of
- *              MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *              GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *              You should have received a copy of the GNU General Public License
- *              along with this program; if not, write to the Free Software
- *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 #ifndef CONFIGURE_H
@@ -65,8 +65,6 @@
 //
 // Check, how -Ofast compares to -O3
 // Check how USE_OPTIMIZATION_PROFILE = true influences runtime
-// Try enable warning option "Pedantic Warning"
-// Try enable warning option "Implicit float conversions"
 //
 // 
 // Update IEC bus inside CIA and VIA. Use delay flags if neccessary
