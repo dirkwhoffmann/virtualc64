@@ -68,8 +68,10 @@ public:
     /*! @brief   Execution function
      *  @details Shifts mouseX and mouseY smoothly towards targetX and targetX.
      */
-    void execute(int64_t targetX, int64_t targetY);
-    
+    // void execute(int64_t targetX, int64_t targetY);
+    void executeX(int64_t targetX);
+    void executeY(int64_t targetY);
+
     //! @brief   Returns the mouse X bits as they show up in the SID register
     uint8_t mouseXBits() { return (mouseX & 0x3F) << 1; }
 

@@ -107,6 +107,7 @@ Mouse::readPotX()
             case MOUSE1350:
                 return mouse1350.readPotX();
             case MOUSE1351:
+                mouse1351.executeX(targetX);
                 return mouse1351.readPotX();
             case NEOSMOUSE:
                 return mouseNeos.readPotX();
@@ -125,6 +126,7 @@ Mouse::readPotY()
             case MOUSE1350:
                 return mouse1350.readPotY();
             case MOUSE1351:
+                mouse1351.executeY(targetY);
                 return mouse1351.readPotY();
             case NEOSMOUSE:
                 return mouseNeos.readPotY();
@@ -138,14 +140,17 @@ Mouse::readPotY()
 uint8_t
 Mouse::readControlPort(unsigned portNr)
 {
+    // debug("port = %d portNr = %d\n", port, portNr);
+    
     if (port == portNr) {
         switch(model) {
             case MOUSE1350:
+                mouse1350.execute(targetX, targetY);
                 return mouse1350.readControlPort();
             case MOUSE1351:
                 return mouse1351.readControlPort();
             case NEOSMOUSE:
-                return mouseNeos.readControlPort();
+                return mouseNeos.readControlPort(targetX, targetY);
             default:
                 assert(false);
         }
@@ -159,10 +164,10 @@ Mouse::execute()
     if (port) {
         switch(model) {
             case MOUSE1350:
-                mouse1350.execute(targetX, targetY);
+                // Coordinates are updated in readControlPort
                 break;
             case MOUSE1351:
-                mouse1351.execute(targetX, targetY);
+                // Coordinates are updated in readPotX and readPotY
                 break;
             case NEOSMOUSE:
                 mouseNeos.execute(targetX, targetY);
@@ -172,4 +177,3 @@ Mouse::execute()
         }
     }
 }
-

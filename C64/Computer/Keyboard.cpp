@@ -129,6 +129,8 @@ Keyboard::pressKey(uint8_t row, uint8_t col)
     assert(row < 8);
     assert(col < 8);
     
+    // debug("pressKey(%d,%d)\n", row, col);
+    
     kbMatrixRow[row] &= ~(1 << col);
     kbMatrixCol[col] &= ~(1 << row);
 

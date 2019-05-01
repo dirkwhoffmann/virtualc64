@@ -86,7 +86,7 @@ public:
     uint8_t readPotY();
     
     //! @brief   Returns the control port bits triggered by the mouse
-    uint8_t readControlPort();
+    uint8_t readControlPort(int64_t targetX, int64_t targetY);
     
     /*! @brief   Execution function
      *  @details Shifts mouseX and mouseY smoothly towards targetX and targetX.
@@ -94,15 +94,15 @@ public:
     void execute(int64_t targetX, int64_t targetY);
     
     //! @brief    Triggers a state change (rising edge on control port line)
-    void risingStrobe(int portNr);
+    void risingStrobe(int portNr, int64_t targetX, int64_t targetY);
     
     //! @brief    Triggers a state change (falling edge on control port line)
-    void fallingStrobe(int portNr);
+    void fallingStrobe(int portNr, int64_t targetX, int64_t targetY);
     
 private:
     
     //! @brief  Latches the current mouse position and computed deltas
-    void latchPosition();
+    void latchPosition(int64_t targetX, int64_t targetY);
 };
 
 #endif

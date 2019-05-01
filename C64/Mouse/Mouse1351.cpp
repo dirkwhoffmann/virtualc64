@@ -66,18 +66,27 @@ Mouse1351::readControlPort()
 }
 
 void
-Mouse1351::execute(int64_t targetX, int64_t targetY)
+Mouse1351::executeX(int64_t targetX)
 {
     targetX /= dividerX;
-    targetY /= dividerY;
     
     // Jump directly to target coordinates if they are more than 8 shifts away.
     if (abs(targetX - mouseX) / 8 > shiftX) mouseX = targetX;
-    if (abs(targetY - mouseY) / 8 > shiftY) mouseY = targetY;
     
     // Move mouse coordinates towards target coordinates
     if (targetX < mouseX) mouseX -= MIN(mouseX - targetX, shiftX);
     else if (targetX > mouseX) mouseX += MIN(targetX - mouseX, shiftX);
+}
+
+void
+Mouse1351::executeY(int64_t targetY)
+{
+    targetY /= dividerY;
+    
+    // Jump directly to target coordinates if they are more than 8 shifts away.
+    if (abs(targetY - mouseY) / 8 > shiftY) mouseY = targetY;
+    
+    // Move mouse coordinates towards target coordinates
     if (targetY < mouseY) mouseY -= MIN(mouseY - targetY, shiftY);
     else if (targetY > mouseY) mouseY += MIN(targetY - mouseY, shiftY);
 }

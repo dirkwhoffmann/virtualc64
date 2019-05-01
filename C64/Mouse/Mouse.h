@@ -86,10 +86,12 @@ public:
     void setRightButton(bool value);
     
     //! @brief    Triggers a state change (Neos mouse only).
-    void risingStrobe(int portNr) { mouseNeos.risingStrobe(portNr); }
+    void risingStrobe(int portNr) {
+        mouseNeos.risingStrobe(portNr, targetX, targetY); }
     
     //! @brief    Triggers a state change (Neos mouse only).
-    void fallingStrobe(int portNr) { mouseNeos.fallingStrobe(portNr); }
+    void fallingStrobe(int portNr) {
+        mouseNeos.fallingStrobe(portNr, targetX, targetY); }
     
     //! @brief   Returns the pot X bits as set by the mouse.
     uint8_t readPotX();

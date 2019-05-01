@@ -61,14 +61,14 @@ NeosMouse::readPotY()
 }
 
 uint8_t
-NeosMouse::readControlPort()
+NeosMouse::readControlPort(int64_t targetX, int64_t targetY)
 {
     uint8_t result = leftButton ? 0xE0 : 0xF0;
     
     // Check for time out
     if (state != 0 && c64->cpu.cycle > (triggerCycle + 232) /* from VICE */) {
         state = 0;
-        latchPosition();
+        latchPosition(targetX, targetY);
     }
     
     switch (state) {
@@ -114,7 +114,7 @@ NeosMouse::execute(int64_t targetX, int64_t targetY)
 }
 
 void
-NeosMouse::risingStrobe(int portNr)
+NeosMouse::risingStrobe(int portNr, int64_t targetX, int64_t targetY)
 {
     // Perform rising edge state changes
     switch (state) {
@@ -132,7 +132,7 @@ NeosMouse::risingStrobe(int portNr)
 }
 
 void
-NeosMouse::fallingStrobe(int portNr)
+NeosMouse::fallingStrobe(int portNr, int64_t targetX, int64_t targetY)
 {
     // Perform falling edge state changes
     switch (state) {
@@ -142,7 +142,7 @@ NeosMouse::fallingStrobe(int portNr)
             
         case 3: /* Y_LOW -> X_HIGH */
             state = 0;
-            latchPosition();
+            latchPosition(targetX, targetY);
             break;
     }
     
@@ -151,8 +151,10 @@ NeosMouse::fallingStrobe(int portNr)
 }
 
 void
-NeosMouse::latchPosition()
+NeosMouse::latchPosition(int64_t targetX, int64_t targetY)
 {
+    execute(targetX, targetY);
+    
     int64_t dx = MAX(MIN((latchedX - mouseX), 127), -128);
     int64_t dy = MAX(MIN((mouseY - latchedY), 127), -128);
     
