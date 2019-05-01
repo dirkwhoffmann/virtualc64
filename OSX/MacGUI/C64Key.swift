@@ -93,17 +93,19 @@ struct C64Key : Codable {
     }
 }
 
-extension C64Key: Equatable {
+extension C64Key: Equatable, Hashable {
     static func ==(lhs: C64Key, rhs: C64Key) -> Bool {
         return lhs.nr == rhs.nr
     }
 }
 
+/*
 extension C64Key: Hashable {
     var hashValue: Int {
         return nr
     }
 }
+*/
 
 extension C64Key {
     

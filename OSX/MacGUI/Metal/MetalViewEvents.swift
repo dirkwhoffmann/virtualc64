@@ -16,18 +16,18 @@ public extension MetalView {
     // Keyboard events
     //
     
-    override public func keyDown(with event: NSEvent)
+    override func keyDown(with event: NSEvent)
     {
         // track()
         controller.keyboardcontroller.keyDown(with: event)
     }
     
-    override public func keyUp(with event: NSEvent)
+    override func keyUp(with event: NSEvent)
     {
         controller.keyboardcontroller.keyUp(with: event)
     }
     
-    override public func flagsChanged(with event: NSEvent) {
+    override func flagsChanged(with event: NSEvent) {
         
         // Save modifier flags. They are needed in TouchBar code
         controller.modifierFlags = event.modifierFlags
@@ -66,27 +66,27 @@ public extension MetalView {
     }
     */
     
-    override public func mouseDown(with event: NSEvent)
+    override func mouseDown(with event: NSEvent)
     {
         controller.c64.mouse.setLeftButton(true)
     }
     
-    override public func mouseUp(with event: NSEvent)
+    override func mouseUp(with event: NSEvent)
     {
         controller.c64.mouse.setLeftButton(false)
     }
     
-    override public func rightMouseUp(with event: NSEvent)
+    override func rightMouseUp(with event: NSEvent)
     {
         controller.c64.mouse.setRightButton(false)
     }
     
-    override public func rightMouseDown(with event: NSEvent)
+    override func rightMouseDown(with event: NSEvent)
     {
         controller.c64.mouse.setRightButton(true)
     }
     
-    override public func mouseMoved(with event: NSEvent) {
+    override func mouseMoved(with event: NSEvent) {
         
         let dx = event.deltaX
         let dy = -event.deltaY
@@ -105,12 +105,12 @@ public extension MetalView {
         //track("\(dx) \(dy)\n");
     }
     
-    override public func mouseDragged(with event: NSEvent)
+    override func mouseDragged(with event: NSEvent)
     {
         mouseMoved(with: event)
     }
     
-    override public func rightMouseDragged(with event: NSEvent)
+    override func rightMouseDragged(with event: NSEvent)
     {
         mouseMoved(with: event)
     }

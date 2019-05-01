@@ -65,15 +65,9 @@ struct MacKey : Codable {
     }
 }
 
-extension MacKey: Equatable {
+extension MacKey: Equatable, Hashable {
     static func ==(lhs: MacKey, rhs: MacKey) -> Bool {
         return lhs.keyCode == rhs.keyCode
-    }
-}
-
-extension MacKey: Hashable {
-    var hashValue: Int {
-        return Int(self.keyCode)
     }
 }
 

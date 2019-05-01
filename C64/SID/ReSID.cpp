@@ -135,8 +135,8 @@ ReSID::setModel(SIDModel m)
     
     assert((SIDModel)sid->sid_model == model);
     debug("Emulating SID model %s.\n",
-          (model == reSID::MOS6581) ? "MOS6581" :
-          (model == reSID::MOS8580) ? "MOS8580" : "?");
+          (model == MOS_6581) ? "MOS6581" :
+          (model == MOS_8580) ? "MOS8580" : "?");
 }
 
 void
