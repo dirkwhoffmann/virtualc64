@@ -7,6 +7,8 @@
 // See https://www.gnu.org for license information
 //
 
+import IOKit.pwr_mgt
+
 //! @brief   Holds and manages an array of GamePad objects
 /*! @details Up to five devices are managed. The first three are always present
  *           and represent two keyset and an analog mouse. All other objects
@@ -285,6 +287,12 @@ class GamePadManager: NSObject {
     @discardableResult
     func joystickEvent(_ sender: GamePad!, events: [JoystickEvent]) -> Bool {
     
+        // Signal user activity to avoid the sreensaver to kick in
+        var assertionID : IOPMAssertionID = 0
+        _ = IOPMAssertionDeclareUserActivity("GamePadInput" as CFString,
+                                             kIOPMUserActiveLocal,
+                                             &assertionID)
+        
         // Find slot of connected GamePad
         let slot = lookupGamePad(sender)
         

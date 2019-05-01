@@ -28,9 +28,6 @@ class GamePad
     //! @brief    Name of the connected controller
     var name: String?
     
-    //! @brief    Image of the connected controller
-    // var image: NSImage?
-    
     //! @brief    Vendor ID of the managed device
     /*! @details  Value is only used for HID devices
      */
@@ -233,8 +230,6 @@ extension GamePad {
 //
 
 extension GamePad {
-    
- 
     
     // Based on http://docs.ros.org/hydro/api/oculus_sdk/html/OSX__Gamepad_8cpp_source.html#l00170
     func mapAnalogAxis(value: IOHIDValue, element: IOHIDElement) -> Int? {
