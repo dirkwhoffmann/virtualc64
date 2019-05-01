@@ -18,10 +18,6 @@ extension MyController : NSWindowDelegate {
         // Inform the application delegate
         myAppDelegate.windowDidBecomeMain(notification.object as! NSWindow)
         
-        // Enable audio
-        // c64.sid.rampUpFromZero()
-        // audioEngine.startPlayback()
-        
         // Start emulator if it was only paused while in background
         if pauseInBackground && pauseInBackgroundSavedState { c64.run() }
 
@@ -35,10 +31,6 @@ extension MyController : NSWindowDelegate {
     public func windowDidResignMain(_ notification: Notification) {
         
         track()
-        
-        // Disable audio
-        // c64.sid.rampDown()
-        // audioEngine.stopPlayback()
         
         // Stop emulator if it is configured to pause in background
         pauseInBackgroundSavedState = c64.isRunning()
@@ -56,8 +48,8 @@ extension MyController : NSWindowDelegate {
         timer?.invalidate()
         timer = nil
         
-        // Stop audio playback
-        // audioEngine.stopPlayback()
+        // Disconnect the audio engine from the emulator
+        audioEngine.shutDown()
         
         // Quit message queue
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())

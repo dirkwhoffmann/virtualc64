@@ -12,8 +12,8 @@ import AVFoundation
 
 public class AudioEngine: NSObject {
 
-    var sid: SIDProxy!
-    var audiounit : AUAudioUnit!
+    private var sid: SIDProxy?
+    private var audiounit : AUAudioUnit!
     
     var isRunning = false
     
@@ -58,7 +58,7 @@ public class AudioEngine: NSObject {
         }
         
         // Tell SID to use the correct sample rate
-        sid.setSampleRate(UInt32(sampleRate))
+        sid?.setSampleRate(UInt32(sampleRate))
         
         // Register render callback
         if (stereo) {
@@ -92,6 +92,12 @@ public class AudioEngine: NSObject {
         }
      }
     
+    func shutDown() {
+        
+        track()
+        sid = nil
+    }
+    
     private func renderMono(inputDataList : UnsafeMutablePointer<AudioBufferList>,
                             frameCount : UInt32)
     {
@@ -99,7 +105,7 @@ public class AudioEngine: NSObject {
         assert(bufferList.count == 1)
         
         let ptr = bufferList[0].mData!.assumingMemoryBound(to: Float.self)
-        sid.readMonoSamples(ptr, size: Int(frameCount))
+        sid?.readMonoSamples(ptr, size: Int(frameCount))
     }
   
     private func renderStereo(inputDataList : UnsafeMutablePointer<AudioBufferList>,
@@ -110,10 +116,10 @@ public class AudioEngine: NSObject {
         
         let ptr1 = bufferList[0].mData!.assumingMemoryBound(to: Float.self)
         let ptr2 = bufferList[1].mData!.assumingMemoryBound(to: Float.self)
-        sid.readStereoSamples(ptr1, buffer2: ptr2, size: Int(frameCount))
+        sid?.readStereoSamples(ptr1, buffer2: ptr2, size: Int(frameCount))
     }
     
-    //! @brief  Start playing sound
+    // Start playing sound
     @discardableResult
     func startPlayback() -> Bool {
 
@@ -128,7 +134,7 @@ public class AudioEngine: NSObject {
         return true
     }
     
-    //! @brief  Stop playing sound
+    // Stop playing sound
     func stopPlayback() {
         
         if isRunning {
@@ -136,4 +142,9 @@ public class AudioEngine: NSObject {
             isRunning = false
         }
     }
+    
+    // Volume control
+    func rampUp() { sid?.rampUp() }
+    func rampUpFromZero() { sid?.rampUpFromZero() }
+    func rampDown() { sid?.rampDown() }
 }

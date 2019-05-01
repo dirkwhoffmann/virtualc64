@@ -116,7 +116,7 @@ extension MyAppDelegate {
                     // Turn on audio
                     // track("Turning on audio for window \(controller.window)")
                     if !audioEngine.isRunning {
-                        audioEngine.sid.rampUpFromZero()
+                        audioEngine.rampUpFromZero()
                         audioEngine.startPlayback()
                     }
 
