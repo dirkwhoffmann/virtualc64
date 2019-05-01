@@ -96,6 +96,7 @@ NeosMouse::readControlPort(int64_t targetX, int64_t targetY)
     return result;
 }
 
+/*
 void
 NeosMouse::execute(int64_t targetX, int64_t targetY)
 {
@@ -112,6 +113,7 @@ NeosMouse::execute(int64_t targetX, int64_t targetY)
     if (targetY < mouseY) mouseY -= MIN(mouseY - targetY, shiftY);
     else if (targetY > mouseY) mouseY += MIN(targetY - mouseY, shiftY);
 }
+*/
 
 void
 NeosMouse::risingStrobe(int portNr, int64_t targetX, int64_t targetY)
@@ -153,7 +155,26 @@ NeosMouse::fallingStrobe(int portNr, int64_t targetX, int64_t targetY)
 void
 NeosMouse::latchPosition(int64_t targetX, int64_t targetY)
 {
-    execute(targetX, targetY);
+    //
+    // Shift mouseX and mouseY towards targetX and targetY
+    //
+    
+    targetX /= dividerX;
+    targetY /= dividerY;
+    
+    // Jump directly to target coordinates if they are more than 8 shifts away.
+    if (abs(targetX - mouseX) / 8 > shiftX) mouseX = targetX;
+    if (abs(targetY - mouseY) / 8 > shiftY) mouseY = targetY;
+    
+    // Move mouse coordinates towards target coordinates
+    if (targetX < mouseX) mouseX -= MIN(mouseX - targetX, shiftX);
+    else if (targetX > mouseX) mouseX += MIN(targetX - mouseX, shiftX);
+    if (targetY < mouseY) mouseY -= MIN(mouseY - targetY, shiftY);
+    else if (targetY > mouseY) mouseY += MIN(targetY - mouseY, shiftY);
+    
+    //
+    // Compute deltas and latch values
+    //
     
     int64_t dx = MAX(MIN((latchedX - mouseX), 127), -128);
     int64_t dy = MAX(MIN((mouseY - latchedY), 127), -128);

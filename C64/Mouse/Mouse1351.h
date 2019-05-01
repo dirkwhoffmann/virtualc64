@@ -68,7 +68,6 @@ public:
     /*! @brief   Execution function
      *  @details Shifts mouseX and mouseY smoothly towards targetX and targetX.
      */
-    // void execute(int64_t targetX, int64_t targetY);
     void executeX(int64_t targetX);
     void executeY(int64_t targetY);
 

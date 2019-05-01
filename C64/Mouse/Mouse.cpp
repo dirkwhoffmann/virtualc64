@@ -147,7 +147,6 @@ Mouse::readControlPort(unsigned portNr)
     if (port == portNr) {
         switch(model) {
             case MOUSE1350:
-                // mouse1350.execute(targetX, targetY);
                 return mouse1350.readControlPort();
             case MOUSE1351:
                 return mouse1351.readControlPort();
@@ -169,10 +168,10 @@ Mouse::execute()
                 mouse1350.execute(targetX, targetY);
                 break;
             case MOUSE1351:
-                // Coordinates are updated in readPotX and readPotY
+                // Coordinates are updated in readPotX() and readPotY()
                 break;
             case NEOSMOUSE:
-                // mouseNeos.execute(targetX, targetY);
+                // Coordinates are updated in latchPosition()
                 break;
             default:
                 assert(false);

@@ -91,7 +91,7 @@ public:
     /*! @brief   Execution function
      *  @details Shifts mouseX and mouseY smoothly towards targetX and targetX.
      */
-    void execute(int64_t targetX, int64_t targetY);
+    // void execute(int64_t targetX, int64_t targetY);
     
     //! @brief    Triggers a state change (rising edge on control port line)
     void risingStrobe(int portNr, int64_t targetX, int64_t targetY);
