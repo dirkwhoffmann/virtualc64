@@ -373,9 +373,10 @@ class MyDocument : NSDocument {
             
             if proceedWithUnexportedDisk(drive: nr) {
                 
-                let parent = windowForSheet!.windowController as! MyController
-                parent.changeDisk(archive, drive: nr)
-                return true
+                if let parent = windowForSheet?.windowController as? MyController {
+                    parent.changeDisk(archive, drive: nr)
+                    return true
+                }
             }
         }
         return false
@@ -386,8 +387,9 @@ class MyDocument : NSDocument {
         
         if let tape = attachment as? TAPFileProxy {
             
-            let parent = windowForSheet!.windowController as! MyController
-            return parent.c64.datasette.insertTape(tape)
+            if let parent = windowForSheet?.windowController as? MyController {
+                return parent.c64.datasette.insertTape(tape)
+            }
         }
         return false
     }
@@ -397,8 +399,9 @@ class MyDocument : NSDocument {
         
         if let archive = attachment as? AnyArchiveProxy {
             
-            let parent = windowForSheet!.windowController as! MyController
-            return parent.c64.flash(archive, item: 0)
+            if let parent = windowForSheet?.windowController as? MyController {
+                return parent.c64.flash(archive, item: 0)
+            }
         }
         return false
     }
@@ -408,9 +411,10 @@ class MyDocument : NSDocument {
         
         if let cartridge = attachment as? CRTFileProxy {
             
-            let parent = windowForSheet!.windowController as! MyController
-            parent.c64.expansionport.attachCartridgeAndReset(cartridge)
-            return true
+            if let parent = windowForSheet?.windowController as? MyController {
+                parent.c64.expansionport.attachCartridgeAndReset(cartridge)
+                return true
+            }
         }
         return false
     }
