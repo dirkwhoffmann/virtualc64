@@ -28,31 +28,19 @@
 #define V_SUBMINOR 0
 
 // Disable assertion checking (Uncomment in release build)
-#define NDEBUG
+// #define NDEBUG
 
 // Default debug level for all components (Set to 1 in release build)
 #define DEBUG_LEVEL 1
 
 #endif 
 
-// RELEASE NOTES (Version 3.3)
+// RELEASE NOTES (Version 3.3.1)
 //
-// All emulator preferences have been merged into a unified preferences pane.
-// New options in the emulator settings allow the user to customize the actions that are taken when opening a media file.
-// The input device selection is now retained in the user default storage.
-// The user can now choose whether to save the emulator texture or the upscaled texture as a screenshot image.
-// If menu item "Save Snapshot..." is selected, emulation is paused until the screenshot has been saved.
-// Dot mask emulation has been modified to not darken the screen any more.
-// The bloom radius can be set individually for each color channels now. 
-// Cathode rays can be shifted relative to each other.
-// Added support for the Expert cartridge.
-// Cardridge buttons are now displayed in the bottom bar as small (clickable) icons.
-// Upgraded ReSID to the version used in VICE V3.3.
-// Added code to dynamically adjust the sampling rate to reduce buffer underflows and overflows.
-// Fixed a bug that made FastSID unusable on audio hardware with a sample rate other than 44.1khz.
-// The assignment of keystrokes to joystick events has been improved when multiple keys are pressed at the same time.
-// JiffyDOS Rom images have been added to the list of known images.
-
+// Code base is now compatible with XCode 10.2.
+// Fixed a bug that caused random crashes when eclosing an emulator window.
+// Gamepad events now prevent the Mac from going into sleep mode.
+//
 //
 // TODOs for the next release:
 //
