@@ -72,6 +72,9 @@ public:
     //! @brief   Sets the emulated mouse model.
     void setModel(MouseModel model);
 
+    //! @brief   Returns the port the mouse is connected to (0 = unconnected).
+    unsigned getPort() { return port; }
+    
     //! @brief    Connects the mouse to the specified port.
     void connectMouse(unsigned port);
 

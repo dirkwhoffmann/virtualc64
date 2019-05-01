@@ -195,8 +195,11 @@ extension MyController {
         
         c64.suspend()
         
-        inputDevice1 = defaults.integer(forKey: VC64Keys.inputDevice1)
-        inputDevice2 = defaults.integer(forKey: VC64Keys.inputDevice2)
+        setPort1(defaults.integer(forKey: VC64Keys.inputDevice1))
+        setPort2(defaults.integer(forKey: VC64Keys.inputDevice2))
+        
+        // inputDevice1 = defaults.integer(forKey: VC64Keys.inputDevice1)
+        // inputDevice2 = defaults.integer(forKey: VC64Keys.inputDevice2)
         
         c64.resume()
     }

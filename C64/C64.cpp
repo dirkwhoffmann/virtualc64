@@ -599,7 +599,7 @@ C64::endFrame()
     port2.execute();
 
     // Update mouse coordinates
-    // mouse.execute();
+    mouse.execute();
     
     // Take a snapshot once in a while
     if (takeAutoSnapshots && autoSnapshotInterval > 0) {

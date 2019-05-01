@@ -688,6 +688,7 @@ struct AnyC64FileWrapper;
 
 - (NSInteger) model;
 - (void) setModel:(NSInteger)model;
+- (NSInteger) port;
 - (void) connect:(NSInteger)toPort;
 - (void) disconnect;
 - (void) setXY:(NSPoint)pos;

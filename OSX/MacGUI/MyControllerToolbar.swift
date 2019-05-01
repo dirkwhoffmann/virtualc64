@@ -71,6 +71,8 @@ extension MyController {
  
     func setPort1(_ value: Int) {
         
+        track("setPort1: \(value)")
+        
         // Remember selection
         inputDevice1 = value
         
@@ -78,7 +80,12 @@ extension MyController {
         inputDevice2 = (inputDevice1 == inputDevice2) ? InputDevice.none : inputDevice2
         
         // Connect or disconnect analog mouse
-        c64.mouse.connect(inputDevice1 == InputDevice.mouse ? 1 : 0);
+        if (c64.mouse.port() != 1 && inputDevice1 == InputDevice.mouse) {
+            c64.mouse.connect(1)
+        }
+        if (c64.mouse.port() == 1 && inputDevice1 != InputDevice.mouse) {
+            c64.mouse.disconnect()
+        }
         
         UserDefaults.standard.set(inputDevice1, forKey: VC64Keys.inputDevice1)
         UserDefaults.standard.set(inputDevice2, forKey: VC64Keys.inputDevice2)
@@ -99,7 +106,12 @@ extension MyController {
         inputDevice1 = (inputDevice1 == inputDevice2) ? InputDevice.none : inputDevice1
         
         // Connect or disconnect analog mouse
-        c64.mouse.connect(inputDevice2 == InputDevice.mouse ? 2 : 0)
+        if (c64.mouse.port() != 2 && inputDevice2 == InputDevice.mouse) {
+            c64.mouse.connect(2)
+        }
+        if (c64.mouse.port() == 2 && inputDevice2 != InputDevice.mouse) {
+            c64.mouse.disconnect()
+        }
         
         UserDefaults.standard.set(inputDevice1, forKey: VC64Keys.inputDevice1)
         UserDefaults.standard.set(inputDevice2, forKey: VC64Keys.inputDevice2)

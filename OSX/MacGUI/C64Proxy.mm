@@ -1345,6 +1345,10 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->mouse->setModel((MouseModel)model);
 }
+- (NSInteger) port
+{
+    return wrapper->mouse->getPort();
+}
 - (void) connect:(NSInteger)toPort
 {
     wrapper->mouse->connectMouse((unsigned)toPort);

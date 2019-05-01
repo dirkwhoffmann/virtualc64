@@ -70,6 +70,8 @@ Mouse1350::execute(int64_t targetX, int64_t targetY)
     mouseX = targetX / dividerX;
     mouseY = targetY / dividerY;
  
+    debug("targetX = %d targetY = %d\n", targetX, targetY);
+    
     controlPort = 0xFF;
     
     double deltaX = (mouseX - latchedX[0]);
