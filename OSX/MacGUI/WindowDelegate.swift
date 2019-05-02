@@ -45,8 +45,10 @@ extension MyController : NSWindowDelegate {
         // virtualKeyboard?.close()
         
         // Stop timer
+        timerLock.lock()
         timer?.invalidate()
         timer = nil
+        timerLock.unlock()
         
         // Disconnect the audio engine from the emulator
         audioEngine.shutDown()

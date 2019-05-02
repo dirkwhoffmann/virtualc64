@@ -51,8 +51,11 @@ class MyController : NSWindowController, MessageReceiver {
     //  done perdiodically (e.g., updating the speedometer and the debug panels)
     var timer: Timer?
     
-    // Timer lock
-    var timerLock: NSLock!
+    /// Lock to prevent reentrance into the timer function
+    var timerLock = NSLock()
+    
+    /// Lock for protecting the C64 proxy
+    var proxyLock = NSLock()
     
     /// Speedometer to measure clock frequence and frames per second
     var speedometer: Speedometer!
@@ -457,7 +460,7 @@ extension MyController {
         speedometer = Speedometer()
         
         // Create timer and speedometer
-        timerLock = NSLock()
+        assert(timer == nil)
         timer = Timer.scheduledTimer(timeInterval: 1.0/12, // 12 times a second
                                      target: self,
                                      selector: #selector(timerFunc),
@@ -474,7 +477,6 @@ extension MyController {
     
     @objc func timerFunc() {
 
-        precondition(timerLock != nil)
         timerLock.lock()
  
         animationCounter += 1
@@ -553,6 +555,8 @@ extension MyController {
             return msg.data == 1;
         }
 
+        proxyLock.lock()
+        
         switch (msg.type) {
     
         case MSG_READY_TO_RUN:
@@ -823,6 +827,8 @@ extension MyController {
             track("Unknown message: \(msg)")
             assert(false)
         }
+        
+        proxyLock.unlock()
     }
 
     //

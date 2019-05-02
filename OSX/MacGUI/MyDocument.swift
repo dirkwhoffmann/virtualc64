@@ -263,7 +263,7 @@ class MyDocument : NSDocument {
     
     @discardableResult
     func mountAttachment() -> Bool {
-
+        
         guard let controller = myController else { return false }
         
         // Determine action to perform and text to type
@@ -542,12 +542,19 @@ class MyDocument : NSDocument {
         
         track()
 
-        super.removeWindowController(windowController)
-        
         // Shut down the emulator.
         // Note that all GUI elements have to be inactive when the proxy is set
         // to nil. Hence, the emulator should be shut down as late as possible.
+        
+        let controller = myController!
+
+        controller.proxyLock.lock()
         c64.kill()
+        c64 = nil
+        controller.c64 = nil
+        controller.proxyLock.unlock()
+        
+        super.removeWindowController(windowController)
     }
 }
 
