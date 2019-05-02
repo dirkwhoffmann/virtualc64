@@ -106,7 +106,7 @@ class ArchiveMountController : UserDialogController {
         }
         
         // Flash file into memory
-        myController?.mydocument.flashAttachmentIntoMemory()
+        myController?.mydocument?.flashAttachmentIntoMemory()
         myController?.keyboardcontroller.type("RUN\n")
         
         /*
