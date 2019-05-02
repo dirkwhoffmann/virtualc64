@@ -62,6 +62,12 @@ class MyDocument : NSDocument {
         c64 = C64Proxy()
     }
  
+    deinit {
+        
+        track()
+        c64.kill()
+    }
+    
     override open func makeWindowControllers() {
         
         track()
@@ -546,13 +552,15 @@ class MyDocument : NSDocument {
         // Note that all GUI elements have to be inactive when the proxy is set
         // to nil. Hence, the emulator should be shut down as late as possible.
         
+        /*
         let controller = myController!
-
+        
         controller.proxyLock.lock()
         c64.kill()
         c64 = nil
         controller.c64 = nil
         controller.proxyLock.unlock()
+        */
         
         super.removeWindowController(windowController)
     }

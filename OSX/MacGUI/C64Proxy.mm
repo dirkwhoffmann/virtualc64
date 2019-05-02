@@ -1414,6 +1414,11 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     return self;
 }
 
+- (void) dealloc
+{
+    NSLog(@"dealloc");
+}
+
 - (void) kill
 {
     assert(wrapper->c64 != NULL);

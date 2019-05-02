@@ -2974,9 +2974,9 @@
         <image name="keyboardTemplate" width="24" height="24"/>
         <image name="mediaDiskSavedTemplate" width="241" height="241"/>
         <image name="mediaTapeTemplate" width="241" height="240"/>
-        <image name="pauseTemplate" width="240" height="241"/>
-        <image name="powerTemplate" width="241" height="240"/>
-        <image name="prefEmulatorTemplate" width="241" height="240"/>
+        <image name="pauseTemplate" width="24" height="24"/>
+        <image name="powerTemplate" width="24" height="24"/>
+        <image name="prefEmulatorTemplate" width="24" height="24"/>
         <image name="stepIntoTemplate" width="240" height="241"/>
         <image name="stepOverTemplate" width="241" height="241"/>
         <image name="ttBrowseTemplate" width="240" height="240"/>

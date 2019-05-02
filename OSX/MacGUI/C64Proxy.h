@@ -105,6 +105,7 @@ struct AnyC64FileWrapper;
 @property (readonly) DatasetteProxy *datasette;
 @property (readonly) MouseProxy *mouse;
 
+- (void) dealloc;
 - (void) kill;
 
 - (DriveProxy *)drive:(NSInteger)nr;
