@@ -15,6 +15,8 @@ extension MyController : NSMenuItemValidation {
 
         // track("validateMenuItem")
         
+        if mydocument == nil { return false }
+
         func firstDrive() -> Bool {
             precondition(item.tag == 1 || item.tag == 2)
             return item.tag == 1
@@ -24,7 +26,7 @@ extension MyController : NSMenuItemValidation {
             
             let pos = (item.tag < 10) ? item.tag : item.tag - 10
             
-            if let url = mydocument.getRecentlyUsedURL(pos, from: list) {
+            if let url = mydocument!.getRecentlyUsedURL(pos, from: list) {
                 item.title = url.lastPathComponent
                 item.isHidden = false
                 item.image = NSImage.init(named: image)
@@ -54,7 +56,7 @@ extension MyController : NSMenuItemValidation {
         
         // Drive menu
         if item.action == #selector(MyController.insertRecentDiskAction(_:)) {
-            return validateURLlist(mydocument.recentlyInsertedDiskURLs, image: "disk_small")
+            return validateURLlist(mydocument!.recentlyInsertedDiskURLs, image: "disk_small")
         }
         if item.action == #selector(MyController.ejectDiskAction(_:)) {
             return firstDrive() ? c64.drive1.hasDisk() : c64.drive2.hasDisk()
@@ -64,11 +66,11 @@ extension MyController : NSMenuItemValidation {
         }
         if item.action == #selector(MyController.exportRecentDiskAction(_:)) {
             if item.tag < 10 {
-                track("\(mydocument.recentlyExportedDisk1URLs)")
-                return validateURLlist(mydocument.recentlyExportedDisk1URLs, image: "disk_small")
+                track("\(mydocument!.recentlyExportedDisk1URLs)")
+                return validateURLlist(mydocument!.recentlyExportedDisk1URLs, image: "disk_small")
             } else {
-                track("\(mydocument.recentlyExportedDisk2URLs)")
-                return validateURLlist(mydocument.recentlyExportedDisk2URLs, image: "disk_small")
+                track("\(mydocument!.recentlyExportedDisk2URLs)")
+                return validateURLlist(mydocument!.recentlyExportedDisk2URLs, image: "disk_small")
             }
         }
         if item.action == #selector(MyController.writeProtectAction(_:)) {
@@ -91,7 +93,7 @@ extension MyController : NSMenuItemValidation {
 
         // Tape menu
         if item.action == #selector(MyController.insertRecentTapeAction(_:)) {
-            return validateURLlist(mydocument.recentlyInsertedTapeURLs, image: "tape_small")
+            return validateURLlist(mydocument!.recentlyInsertedTapeURLs, image: "tape_small")
         }
         if item.action == #selector(MyController.ejectTapeAction(_:)) {
             return c64.datasette.hasTape()
@@ -106,7 +108,7 @@ extension MyController : NSMenuItemValidation {
         
         // Cartridge menu
         if item.action == #selector(MyController.attachRecentCartridgeAction(_:)) {
-            return validateURLlist(mydocument.recentlyAttachedCartridgeURLs, image: "cartridge_small")
+            return validateURLlist(mydocument!.recentlyAttachedCartridgeURLs, image: "cartridge_small")
         }
         if item.action == #selector(MyController.attachGeoRamDummyAction(_:)) {
             item.state = (c64.expansionport.cartridgeType() == CRT_GEO_RAM) ? .on : .off
@@ -511,9 +513,9 @@ extension MyController : NSMenuItemValidation {
         let tag = (sender as! NSMenuItem).tag
         let emptyArchive = AnyArchiveProxy.make()
         
-        mydocument.attachment = D64FileProxy.make(withAnyArchive: emptyArchive)
-        mydocument.mountAttachmentAsDisk(drive: tag)
-        mydocument.clearRecentlyExportedDiskURLs(drive: tag)
+        mydocument?.attachment = D64FileProxy.make(withAnyArchive: emptyArchive)
+        mydocument?.mountAttachmentAsDisk(drive: tag)
+        mydocument?.clearRecentlyExportedDiskURLs(drive: tag)
     }
     
     @IBAction func insertDiskAction(_ sender: Any!) {
@@ -537,8 +539,8 @@ extension MyController : NSMenuItemValidation {
             if result == .OK {
                 if let url = openPanel.url {
                     do {
-                        try self.mydocument.createAttachment(from: url)
-                        self.mydocument.mountAttachmentAsDisk(drive: tag)
+                        try self.mydocument?.createAttachment(from: url)
+                        self.mydocument?.mountAttachmentAsDisk(drive: tag)
                     } catch {
                         NSApp.presentError(error)
                     }
@@ -557,11 +559,11 @@ extension MyController : NSMenuItemValidation {
         if tag < 10 { nr = 1 } else { nr = 2; tag -= 10 }
         
         // Get URL and insert
-        if let url = mydocument.getRecentlyInsertedDiskURL(tag) {
+        if let url = mydocument?.getRecentlyInsertedDiskURL(tag) {
             do {
-                try mydocument.createAttachment(from: url)
-                if (mydocument.proceedWithUnexportedDisk(drive: nr)) {
-                    mydocument.mountAttachmentAsDisk(drive: nr)
+                try mydocument!.createAttachment(from: url)
+                if (mydocument!.proceedWithUnexportedDisk(drive: nr)) {
+                    mydocument!.mountAttachmentAsDisk(drive: nr)
                 }
             } catch {
                 NSApp.presentError(error)
@@ -579,27 +581,27 @@ extension MyController : NSMenuItemValidation {
         tag = (tag < 10) ? tag : tag - 10
        
         // Get URL and export
-        if let url = mydocument.getRecentlyExportedDiskURL(tag, drive: nr) {
-            mydocument.export(drive: nr, to: url)
+        if let url = mydocument?.getRecentlyExportedDiskURL(tag, drive: nr) {
+            mydocument!.export(drive: nr, to: url)
         }
     }
     
     @IBAction func clearRecentlyInsertedDisksAction(_ sender: Any!) {
-        mydocument.recentlyInsertedDiskURLs = []
+        mydocument?.recentlyInsertedDiskURLs = []
     }
 
     @IBAction func clearRecentlyExportedDisksAction(_ sender: Any!) {
 
         let driveNr = (sender as! NSMenuItem).tag
-        mydocument.clearRecentlyExportedDiskURLs(drive: driveNr)
+        mydocument?.clearRecentlyExportedDiskURLs(drive: driveNr)
     }
 
     @IBAction func clearRecentlyInsertedTapesAction(_ sender: Any!) {
-        mydocument.recentlyInsertedTapeURLs = []
+        mydocument?.recentlyInsertedTapeURLs = []
     }
     
     @IBAction func clearRecentlyAttachedCartridgesAction(_ sender: Any!) {
-        mydocument.recentlyAttachedCartridgeURLs = []
+        mydocument?.recentlyAttachedCartridgeURLs = []
     }
     
     @IBAction func ejectDiskAction(_ sender: Any!) {
@@ -608,7 +610,7 @@ extension MyController : NSMenuItemValidation {
         
         if proceedWithUnexportedDisk(drive: tag) {
             changeDisk(nil, drive: tag)
-            mydocument.clearRecentlyExportedDiskURLs(drive: tag)
+            mydocument?.clearRecentlyExportedDiskURLs(drive: tag)
         }
     }
     
@@ -672,8 +674,8 @@ extension MyController : NSMenuItemValidation {
             if result == .OK {
                 if let url = openPanel.url {
                     do {
-                        try self.mydocument.createAttachment(from: url)
-                        self.mydocument.mountAttachmentAsTape()
+                        try self.mydocument?.createAttachment(from: url)
+                        self.mydocument?.mountAttachmentAsTape()
                     } catch {
                         NSApp.presentError(error)
                     }
@@ -688,10 +690,10 @@ extension MyController : NSMenuItemValidation {
         let sender = sender as! NSMenuItem
         let tag = sender.tag
         
-        if let url = mydocument.getRecentlyInsertedTapeURL(tag) {
+        if let url = mydocument?.getRecentlyInsertedTapeURL(tag) {
             do {
-                try mydocument.createAttachment(from: url)
-                mydocument.mountAttachmentAsTape()
+                try mydocument!.createAttachment(from: url)
+                mydocument!.mountAttachmentAsTape()
             } catch {
                 NSApp.presentError(error)
             }
@@ -736,8 +738,8 @@ extension MyController : NSMenuItemValidation {
             if result == .OK {
                 if let url = openPanel.url {
                     do {
-                        try self.mydocument.createAttachment(from: url)
-                        self.mydocument.mountAttachmentAsCartridge()
+                        try self.mydocument?.createAttachment(from: url)
+                        self.mydocument?.mountAttachmentAsCartridge()
                     } catch {
                         NSApp.presentError(error)
                     }
@@ -751,10 +753,10 @@ extension MyController : NSMenuItemValidation {
         track()
         let tag = sender.tag
         
-        if let url = mydocument.getRecentlyAtachedCartridgeURL(tag) {
+        if let url = mydocument?.getRecentlyAtachedCartridgeURL(tag) {
             do {
-                try mydocument.createAttachment(from: url)
-                mydocument.mountAttachmentAsCartridge()
+                try mydocument!.createAttachment(from: url)
+                mydocument!.mountAttachmentAsCartridge()
             } catch {
                 NSApp.presentError(error)
             }

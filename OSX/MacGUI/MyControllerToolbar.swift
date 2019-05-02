@@ -248,10 +248,10 @@ extension MyController {
     
     @IBAction func printDocument(_ sender: Any!) {
     
-        let window = mydocument.windowForSheet!
+        guard let window = mydocument?.windowForSheet else { return }
 
         // Printing properties
-        let printInfo = mydocument.printInfo
+        let printInfo = mydocument!.printInfo
         printInfo.horizontalPagination = .fit
         printInfo.isHorizontallyCentered = true
         printInfo.verticalPagination = .fit

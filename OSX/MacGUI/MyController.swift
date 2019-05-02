@@ -313,9 +313,9 @@ extension MyController {
     }
  
     // Provides the document casted to the correct type
-    var mydocument: MyDocument {
+    var mydocument: MyDocument? {
         get {
-            return document as! MyDocument
+            return document as? MyDocument
         }
     }
     
@@ -571,7 +571,7 @@ extension MyController {
             }
             
             // Process attachment (if any)
-            mydocument.mountAttachment()
+            mydocument?.mountAttachment()
     
         case MSG_RUN:
             

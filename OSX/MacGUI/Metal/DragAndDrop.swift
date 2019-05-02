@@ -67,10 +67,11 @@ public extension MetalView {
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         
-        let document = controller.mydocument
         let pasteBoard = sender.draggingPasteboard
-        guard let type = pasteBoard.availableType(from: acceptedTypes()) else {
-            return false
+        
+        guard let type = pasteBoard.availableType(from: acceptedTypes()),
+            let document = controller.mydocument else {
+                return false
         }
         
         switch (type) {
