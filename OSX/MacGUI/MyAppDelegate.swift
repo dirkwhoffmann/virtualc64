@@ -61,6 +61,22 @@ var proxy: C64Proxy? {
     /// Virtual C64 keyboard (opened as a separate window)
     var virtualKeyboard: VirtualKeyboardController? = nil
     
+    /// The list of recently inserted disk URLs.
+    var recentlyInsertedDiskURLs: [URL] = []
+    
+    /// The list of recently exported disk URLs for drive 1.
+    var recentlyExportedDisk1URLs: [URL] = []
+    
+    /// The list of recently exported disk URLs for drive 2.
+    var recentlyExportedDisk2URLs: [URL] = []
+    
+    /// The list of recently inserted tape URLs.
+    var recentlyInsertedTapeURLs: [URL] = []
+    
+    /// The list of recently atached cartridge URLs.
+    var recentlyAttachedCartridgeURLs: [URL] = []
+    
+    
     public func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         track()
@@ -99,9 +115,105 @@ var proxy: C64Proxy? {
         
         track()
     }
+    
+    //
+    // Handling the lists of recently used URLs
+    //
+    
+    func noteRecentlyUsedURL(_ url: URL, to list: inout [URL], size: Int) {
+        if !list.contains(url) {
+            if list.count == size {
+                list.remove(at: size - 1)
+            }
+            list.insert(url, at: 0)
+        }
+    }
+    
+    func getRecentlyUsedURL(_ pos: Int, from list: [URL]) -> URL? {
+        return (pos < list.count) ? list[pos] : nil
+    }
+    
+    func noteNewRecentlyInsertedDiskURL(_ url: URL) {
+        noteRecentlyUsedURL(url, to: &recentlyInsertedDiskURLs, size: 10)
+    }
+    
+    func getRecentlyInsertedDiskURL(_ pos: Int) -> URL? {
+        return getRecentlyUsedURL(pos, from: recentlyInsertedDiskURLs)
+    }
+    
+    func noteNewRecentlyExportedDiskURL(_ url: URL, drive nr: Int) {
+        
+        precondition(nr == 1 || nr == 2)
+        
+        if (nr == 1) {
+            noteRecentlyUsedURL(url, to: &recentlyExportedDisk1URLs, size: 1)
+        } else {
+            noteRecentlyUsedURL(url, to: &recentlyExportedDisk2URLs, size: 1)
+        }
+    }
+    
+    func getRecentlyExportedDiskURL(_ pos: Int, drive nr: Int) -> URL? {
+        
+        precondition(nr == 1 || nr == 2)
+        
+        if (nr == 1) {
+            return getRecentlyUsedURL(pos, from: recentlyExportedDisk1URLs)
+        } else {
+            return getRecentlyUsedURL(pos, from: recentlyExportedDisk2URLs)
+        }
+    }
+    
+    func clearRecentlyExportedDiskURLs(drive nr: Int) {
+        
+        precondition(nr == 1 || nr == 2)
+        
+        if (nr == 1) {
+            recentlyExportedDisk1URLs = []
+        } else {
+            recentlyExportedDisk2URLs = []
+        }
+    }
+    
+    func noteNewRecentlyInsertedTapeURL(_ url: URL) {
+        noteRecentlyUsedURL(url, to: &recentlyInsertedTapeURLs, size: 10)
+    }
+    
+    func getRecentlyInsertedTapeURL(_ pos: Int) -> URL? {
+        return getRecentlyUsedURL(pos, from: recentlyInsertedTapeURLs)
+    }
+    
+    func noteNewRecentlyAtachedCartridgeURL(_ url: URL) {
+        noteRecentlyUsedURL(url, to: &recentlyAttachedCartridgeURLs, size: 10)
+    }
+    
+    func getRecentlyAtachedCartridgeURL(_ pos: Int) -> URL? {
+        return getRecentlyUsedURL(pos, from: recentlyAttachedCartridgeURLs)
+    }
+    
+    func noteNewRecentlyUsedURL(_ url: URL) {
+        
+        switch (url.pathExtension.uppercased()) {
+            
+        case "D64", "T64", "G64", "PRG", "P00":
+            noteNewRecentlyInsertedDiskURL(url)
+            
+        case "TAP":
+            noteNewRecentlyInsertedTapeURL(url)
+            
+        case "CRT":
+            noteNewRecentlyAtachedCartridgeURL(url)
+            
+        default:
+            break
+        }
+    }
 }
 
-/// Personal delegation methods
+
+//
+// Personal delegation methods
+//
+
 extension MyAppDelegate {
     
     func windowDidBecomeMain(_ window: NSWindow) {

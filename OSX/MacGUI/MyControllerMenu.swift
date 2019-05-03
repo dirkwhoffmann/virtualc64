@@ -26,7 +26,7 @@ extension MyController : NSMenuItemValidation {
             
             let pos = (item.tag < 10) ? item.tag : item.tag - 10
             
-            if let url = mydocument!.getRecentlyUsedURL(pos, from: list) {
+            if let url = myAppDelegate.getRecentlyUsedURL(pos, from: list) {
                 item.title = url.lastPathComponent
                 item.isHidden = false
                 item.image = NSImage.init(named: image)
@@ -56,7 +56,7 @@ extension MyController : NSMenuItemValidation {
         
         // Drive menu
         if item.action == #selector(MyController.insertRecentDiskAction(_:)) {
-            return validateURLlist(mydocument!.recentlyInsertedDiskURLs, image: "disk_small")
+            return validateURLlist(myAppDelegate.recentlyInsertedDiskURLs, image: "disk_small")
         }
         if item.action == #selector(MyController.ejectDiskAction(_:)) {
             return firstDrive() ? c64.drive1.hasDisk() : c64.drive2.hasDisk()
@@ -66,11 +66,11 @@ extension MyController : NSMenuItemValidation {
         }
         if item.action == #selector(MyController.exportRecentDiskAction(_:)) {
             if item.tag < 10 {
-                track("\(mydocument!.recentlyExportedDisk1URLs)")
-                return validateURLlist(mydocument!.recentlyExportedDisk1URLs, image: "disk_small")
+                // track("\(myAppDelegate.recentlyExportedDisk1URLs)")
+                return validateURLlist(myAppDelegate.recentlyExportedDisk1URLs, image: "disk_small")
             } else {
-                track("\(mydocument!.recentlyExportedDisk2URLs)")
-                return validateURLlist(mydocument!.recentlyExportedDisk2URLs, image: "disk_small")
+                // track("\(myAppDelegate.recentlyExportedDisk2URLs)")
+                return validateURLlist(myAppDelegate.recentlyExportedDisk2URLs, image: "disk_small")
             }
         }
         if item.action == #selector(MyController.writeProtectAction(_:)) {
@@ -93,7 +93,7 @@ extension MyController : NSMenuItemValidation {
 
         // Tape menu
         if item.action == #selector(MyController.insertRecentTapeAction(_:)) {
-            return validateURLlist(mydocument!.recentlyInsertedTapeURLs, image: "tape_small")
+            return validateURLlist(myAppDelegate.recentlyInsertedTapeURLs, image: "tape_small")
         }
         if item.action == #selector(MyController.ejectTapeAction(_:)) {
             return c64.datasette.hasTape()
@@ -108,7 +108,7 @@ extension MyController : NSMenuItemValidation {
         
         // Cartridge menu
         if item.action == #selector(MyController.attachRecentCartridgeAction(_:)) {
-            return validateURLlist(mydocument!.recentlyAttachedCartridgeURLs, image: "cartridge_small")
+            return validateURLlist(myAppDelegate.recentlyAttachedCartridgeURLs, image: "cartridge_small")
         }
         if item.action == #selector(MyController.attachGeoRamDummyAction(_:)) {
             item.state = (c64.expansionport.cartridgeType() == CRT_GEO_RAM) ? .on : .off
@@ -515,7 +515,7 @@ extension MyController : NSMenuItemValidation {
         
         mydocument?.attachment = D64FileProxy.make(withAnyArchive: emptyArchive)
         mydocument?.mountAttachmentAsDisk(drive: tag)
-        mydocument?.clearRecentlyExportedDiskURLs(drive: tag)
+        myAppDelegate.clearRecentlyExportedDiskURLs(drive: tag)
     }
     
     @IBAction func insertDiskAction(_ sender: Any!) {
@@ -559,7 +559,7 @@ extension MyController : NSMenuItemValidation {
         if tag < 10 { nr = 1 } else { nr = 2; tag -= 10 }
         
         // Get URL and insert
-        if let url = mydocument?.getRecentlyInsertedDiskURL(tag) {
+        if let url = myAppDelegate.getRecentlyInsertedDiskURL(tag) {
             do {
                 try mydocument!.createAttachment(from: url)
                 if (mydocument!.proceedWithUnexportedDisk(drive: nr)) {
@@ -581,27 +581,27 @@ extension MyController : NSMenuItemValidation {
         tag = (tag < 10) ? tag : tag - 10
        
         // Get URL and export
-        if let url = mydocument?.getRecentlyExportedDiskURL(tag, drive: nr) {
+        if let url = myAppDelegate.getRecentlyExportedDiskURL(tag, drive: nr) {
             mydocument!.export(drive: nr, to: url)
         }
     }
     
     @IBAction func clearRecentlyInsertedDisksAction(_ sender: Any!) {
-        mydocument?.recentlyInsertedDiskURLs = []
+        myAppDelegate.recentlyInsertedDiskURLs = []
     }
 
     @IBAction func clearRecentlyExportedDisksAction(_ sender: Any!) {
 
         let driveNr = (sender as! NSMenuItem).tag
-        mydocument?.clearRecentlyExportedDiskURLs(drive: driveNr)
+        myAppDelegate.clearRecentlyExportedDiskURLs(drive: driveNr)
     }
 
     @IBAction func clearRecentlyInsertedTapesAction(_ sender: Any!) {
-        mydocument?.recentlyInsertedTapeURLs = []
+        myAppDelegate.recentlyInsertedTapeURLs = []
     }
     
     @IBAction func clearRecentlyAttachedCartridgesAction(_ sender: Any!) {
-        mydocument?.recentlyAttachedCartridgeURLs = []
+        myAppDelegate.recentlyAttachedCartridgeURLs = []
     }
     
     @IBAction func ejectDiskAction(_ sender: Any!) {
@@ -610,7 +610,7 @@ extension MyController : NSMenuItemValidation {
         
         if proceedWithUnexportedDisk(drive: tag) {
             changeDisk(nil, drive: tag)
-            mydocument?.clearRecentlyExportedDiskURLs(drive: tag)
+            myAppDelegate.clearRecentlyExportedDiskURLs(drive: tag)
         }
     }
     
@@ -690,7 +690,7 @@ extension MyController : NSMenuItemValidation {
         let sender = sender as! NSMenuItem
         let tag = sender.tag
         
-        if let url = mydocument?.getRecentlyInsertedTapeURL(tag) {
+        if let url = myAppDelegate.getRecentlyInsertedTapeURL(tag) {
             do {
                 try mydocument!.createAttachment(from: url)
                 mydocument!.mountAttachmentAsTape()
@@ -753,7 +753,7 @@ extension MyController : NSMenuItemValidation {
         track()
         let tag = sender.tag
         
-        if let url = mydocument?.getRecentlyAtachedCartridgeURL(tag) {
+        if let url = myAppDelegate.getRecentlyAtachedCartridgeURL(tag) {
             do {
                 try mydocument!.createAttachment(from: url)
                 mydocument!.mountAttachmentAsCartridge()
