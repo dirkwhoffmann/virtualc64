@@ -37,9 +37,10 @@
 
 // RELEASE NOTES (Version 3.3.1)
 //
-// Code base is now compatible with XCode 10.2.
-// Fixed a bug that caused random crashes when eclosing an emulator window.
-// Gamepad events now prevent the Mac from going into sleep mode.
+// New code base is compatible with XCode 10.2.
+// Fixed several bugs that caused random crashes when eclosing an emulator window.
+// Gamepad events prevent the Mac from going into sleep mode now.
+// The lists of recently inserted URLs are shared across multiple documents.
 //
 //
 // TODOs for the next release:

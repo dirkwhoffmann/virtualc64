@@ -82,9 +82,10 @@ extension MyDocument {
         
         precondition(nr == 1 || nr == 2)
         
-        let controller = windowForSheet!.windowController! as! MyController
-        if controller.ejectWithoutAsking {
-            return true
+        if let controller = windowForSheet?.windowController as? MyController {
+            if controller.ejectWithoutAsking {
+                return true
+            }
         }
         
         let modified = (nr == 1) ?
@@ -100,9 +101,10 @@ extension MyDocument {
     
     func proceedWithUnexportedDisk() -> Bool {
     
-        let controller = windowForSheet!.windowController! as! MyController
-        if controller.ejectWithoutAsking {
-            return true
+        if let controller = windowForSheet?.windowController as? MyController {
+            if controller.ejectWithoutAsking {
+                return true
+            }
         }
         
         let modified1 = c64.drive1.hasModifiedDisk()
