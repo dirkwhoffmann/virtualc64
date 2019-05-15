@@ -1,0 +1,11 @@
+disabled_rules: # rule identifiers to exclude from running
+  - ignores_empty_lines
+  - trailing_whitespace
+  - function_body_length
+  - identifier_name
+  - line_length
+  - file_length
+  - type_body_length
+  - cyclomatic_complexity
+  - large_tuple
+  - todo
