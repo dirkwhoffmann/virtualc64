@@ -132,14 +132,14 @@ extension CpuTableView : NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
         
-        let cell = cell as! NSTextFieldCell
+        let cell = cell as? NSTextFieldCell
         
         if  let instr = instructionAtRow[row] {
             
             if (c?.c64.cpu.breakpoint(instr.addr))! {
-                cell.textColor = NSColor.systemRed
+                cell?.textColor = NSColor.systemRed
             } else {
-                cell.textColor = NSColor.textColor
+                cell?.textColor = NSColor.textColor
             }
         }
     }
