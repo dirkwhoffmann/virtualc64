@@ -32,9 +32,8 @@ extension MyController {
         }
     }
     
-    @IBAction func pcAction(_ sender: Any!) {
+    @IBAction func pcAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _pcAction(UInt16(sender.intValue))
     }
     
@@ -52,9 +51,8 @@ extension MyController {
         }
     }
     
-    @IBAction func aAction(_ sender: Any!) {
+    @IBAction func aAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _aAction(UInt8(sender.intValue))
     }
     
@@ -72,9 +70,8 @@ extension MyController {
         }
     }
     
-    @IBAction func xAction(_ sender: Any!) {
+    @IBAction func xAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _xAction(UInt8(sender.intValue))
     }
     
@@ -92,9 +89,8 @@ extension MyController {
         }
     }
     
-    @IBAction func yAction(_ sender: Any!) {
+    @IBAction func yAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _yAction(UInt8(sender.intValue))
     }
     
@@ -112,9 +108,8 @@ extension MyController {
         }
     }
     
-    @IBAction func spAction(_ sender: Any!) {
+    @IBAction func spAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _spAction(UInt8(sender.intValue))
     }
     
@@ -134,9 +129,8 @@ extension MyController {
         }
     }
     
-    @IBAction func NAction(_ sender: Any!) {
+    @IBAction func NAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         _nAction(sender.intValue != 0)
     }
     
@@ -154,9 +148,8 @@ extension MyController {
         }
     }
     
-    @IBAction func ZAction(_ sender: Any!) {
+    @IBAction func ZAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         _zAction(sender.intValue != 0)
     }
     
@@ -174,9 +167,8 @@ extension MyController {
         }
     }
     
-    @IBAction func CAction(_ sender: Any!) {
+    @IBAction func CAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         _cAction(sender.intValue != 0)
     }
     
@@ -194,9 +186,8 @@ extension MyController {
         }
     }
     
-    @IBAction func IAction(_ sender: Any!) {
+    @IBAction func IAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         _iAction(sender.intValue != 0)
     }
     
@@ -214,9 +205,8 @@ extension MyController {
         }
     }
     
-    @IBAction func BAction(_ sender: Any!) {
+    @IBAction func BAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         _bAction(sender.intValue != 0)
     }
     
@@ -234,9 +224,8 @@ extension MyController {
         }
     }
     
-    @IBAction func DAction(_ sender: Any!) {
+    @IBAction func DAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         _dAction(sender.intValue != 0)
     }
     
@@ -254,9 +243,8 @@ extension MyController {
         }
     }
     
-    @IBAction func VAction(_ sender: Any!) {
+    @IBAction func VAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         _vAction(sender.intValue != 0)
     }
     
@@ -282,9 +270,8 @@ extension MyController {
         cpuTableView.reloadData()
     }
     
-    @IBAction func breakpointAction(_ sender: Any!) {
+    @IBAction func breakpointAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         let value = UInt16(sender.intValue)
         if !c64.cpu.breakpoint(value) {
             _setBreakpointAction(value)

@@ -30,9 +30,8 @@ class TapeMountController : UserDialogController {
     // Action methods
     //
 
-    @IBAction func autoLoadAction(_ sender: Any!) {
+    @IBAction func autoLoadAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         autoPress.isEnabled = (sender.integerValue == 1)
     }
     
@@ -57,4 +56,3 @@ class TapeMountController : UserDialogController {
         hideSheet()
     }
 }
-

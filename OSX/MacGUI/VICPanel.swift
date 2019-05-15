@@ -26,25 +26,25 @@ extension MyController {
             info.xCounter = UInt16((vicXCounter.intValue + 136) % 512)
         }
 
-        let borderColorCell = vicBorderColor.cell as! NSButtonCell
-        let bgColorCell0 = vicBackgroundColor0.cell as! NSButtonCell
-        let bgColorCell1 = vicBackgroundColor1.cell as! NSButtonCell
-        let bgColorCell2 = vicBackgroundColor2.cell as! NSButtonCell
-        let bgColorCell3 = vicBackgroundColor3.cell as! NSButtonCell
-        let spriteColorCell = spriteColor.cell as! NSButtonCell
-        let spriteExtraColorCell1 = spriteExtraColor1.cell as! NSButtonCell
-        let spriteExtraColorCell2 = spriteExtraColor2.cell as! NSButtonCell
+        let borderColorCell = vicBorderColor.cell as? NSButtonCell
+        let bgColorCell0 = vicBackgroundColor0.cell as? NSButtonCell
+        let bgColorCell1 = vicBackgroundColor1.cell as? NSButtonCell
+        let bgColorCell2 = vicBackgroundColor2.cell as? NSButtonCell
+        let bgColorCell3 = vicBackgroundColor3.cell as? NSButtonCell
+        let spriteColorCell = spriteColor.cell as? NSButtonCell
+        let spriteExtraColorCell1 = spriteExtraColor1.cell as? NSButtonCell
+        let spriteExtraColorCell2 = spriteExtraColor2.cell as? NSButtonCell
 
         vicRasterline.intValue = Int32(info.rasterline)
         vicCycle.intValue = Int32(info.cycle)
         vicXCounter.intValue = Int32(info.xCounter)
         vicBadLine.state = info.badLine ? .on : .off
         vicDisplayMode.selectItem(withTag: Int(info.displayMode.rawValue))
-        borderColorCell.backgroundColor = c64.vic.color(Int(info.borderColor))
-        bgColorCell0.backgroundColor = c64.vic.color(Int(info.backgroundColor0))
-        bgColorCell1.backgroundColor = c64.vic.color(Int(info.backgroundColor1))
-        bgColorCell2.backgroundColor = c64.vic.color(Int(info.backgroundColor2))
-        bgColorCell3.backgroundColor = c64.vic.color(Int(info.backgroundColor3))
+        borderColorCell?.backgroundColor = c64.vic.color(Int(info.borderColor))
+        bgColorCell0?.backgroundColor = c64.vic.color(Int(info.backgroundColor0))
+        bgColorCell1?.backgroundColor = c64.vic.color(Int(info.backgroundColor1))
+        bgColorCell2?.backgroundColor = c64.vic.color(Int(info.backgroundColor2))
+        bgColorCell3?.backgroundColor = c64.vic.color(Int(info.backgroundColor3))
         vicScreenGeometry.selectItem(withTag: Int(info.screenGeometry.rawValue))
         vicDx.intValue = Int32(info.dx)
         vicDXStepper.intValue = Int32(info.dx)
@@ -63,10 +63,10 @@ extension MyController {
         spriteYStepper.intValue = Int32(sinfo.y)
         spritePtr.intValue = Int32(sinfo.ptr)
         spritePtrStepper.intValue = Int32(sinfo.ptr)
-        spriteColorCell.backgroundColor = c64.vic.color(Int(sinfo.color))
+        spriteColorCell?.backgroundColor = c64.vic.color(Int(sinfo.color))
         spriteIsMulticolor.selectItem(withTag: sinfo.multicolor ? 1 : 0)
-        spriteExtraColorCell1.backgroundColor = c64.vic.color(Int(sinfo.extraColor1))
-        spriteExtraColorCell2.backgroundColor = c64.vic.color(Int(sinfo.extraColor2))
+        spriteExtraColorCell1?.backgroundColor = c64.vic.color(Int(sinfo.extraColor1))
+        spriteExtraColorCell2?.backgroundColor = c64.vic.color(Int(sinfo.extraColor2))
         spriteExpandX.state = sinfo.expandX ? .on : .off
         spriteExpandY.state = sinfo.expandY ? .on : .off
         spritePriority.selectItem(withTag: sinfo.priority ? 1 : 0)

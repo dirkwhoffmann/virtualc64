@@ -502,18 +502,18 @@ extension C64Key {
         let imageRect = CGRect(x: 0, y: 0, width: width, height: height)
         let textRect1 = CGRect(x: 7, y: -2, width: width-7, height: height-2)
         let textRect2 = CGRect(x: 14, y: -10, width: width-14, height: height-10)
-        let textStyle = NSMutableParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
+        let textStyle = NSMutableParagraphStyle.default.mutableCopy() as? NSMutableParagraphStyle
         let font1 = NSFont.systemFont(ofSize: 12)
         let font2 = NSFont.systemFont(ofSize: 16)
         let textFontAttributes1 = [
             NSAttributedString.Key.font: font1,
             NSAttributedString.Key.foregroundColor: NSColor.gray,
-            NSAttributedString.Key.paragraphStyle: textStyle
+            NSAttributedString.Key.paragraphStyle: textStyle!
         ]
         let textFontAttributes2 = [
             NSAttributedString.Key.font: font2,
             NSAttributedString.Key.foregroundColor: NSColor.black,
-            NSAttributedString.Key.paragraphStyle: textStyle
+            NSAttributedString.Key.paragraphStyle: textStyle!
         ]
         
         image.lockFocus()

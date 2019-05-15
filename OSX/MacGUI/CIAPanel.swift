@@ -89,9 +89,8 @@ extension MyController {
         }
     }
     
-    @IBAction func praAction(_ sender: Any!) {
+    @IBAction func praAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _praAction((selectedCia, UInt8(sender.intValue)))
     }
 
@@ -111,9 +110,8 @@ extension MyController {
         }
     }
     
-    @IBAction func prbAction(_ sender: Any!) {
+    @IBAction func prbAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _prbAction((selectedCia, UInt8(sender.intValue)))
     }
  
@@ -133,9 +131,8 @@ extension MyController {
         }
     }
     
-    @IBAction func ddraAction(_ sender: Any!) {
+    @IBAction func ddraAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _ddraAction((selectedCia, UInt8(sender.intValue)))
     }
     
@@ -155,9 +152,8 @@ extension MyController {
         }
     }
     
-    @IBAction func ddrbAction(_ sender: Any!) {
+    @IBAction func ddrbAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _ddrbAction((selectedCia, UInt8(sender.intValue)))
     }
     
@@ -178,9 +174,8 @@ extension MyController {
         }
     }
     
-    @IBAction func timerLatchAAction(_ sender: Any!) {
+    @IBAction func timerLatchAAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _timerLatchAAction((selectedCia, UInt16(sender.intValue)))
     }
     
@@ -201,13 +196,8 @@ extension MyController {
         }
     }
     
-    @IBAction func timerLatchBAction(_ sender: Any!) {
+    @IBAction func timerLatchBAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _timerLatchBAction((selectedCia, UInt16(sender.intValue)))
     }
 }
-
-
-
-

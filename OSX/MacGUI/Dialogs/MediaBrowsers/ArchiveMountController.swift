@@ -135,11 +135,11 @@ extension ArchiveMountController : NSTableViewDelegate {
     func tableView(_ tableView: NSTableView,
                    willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
         
-        let c = cell as! NSTextFieldCell
+        let cell = cell as? NSTextFieldCell
         
         archive.selectItem(row)
-        c.textColor = archive.typeOfItem() == "PRG" ? .textColor : .gray
-        c.font = cbmfont
+        cell?.textColor = archive.typeOfItem() == "PRG" ? .textColor : .gray
+        cell?.font = cbmfont
     }
     
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
@@ -176,4 +176,3 @@ extension ArchiveMountController : NSTableViewDataSource {
         }
     }
 }
-

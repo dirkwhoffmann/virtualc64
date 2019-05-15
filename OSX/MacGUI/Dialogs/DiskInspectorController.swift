@@ -200,7 +200,7 @@ class DiskInspectorController : UserDialogController {
     
     func removeHeadMarker() {
         
-        let storage = (gcrView.documentView as! NSTextView).textStorage
+        let storage = (gcrView.documentView as? NSTextView)?.textStorage
         if headPosition != nil {
             storage?.removeAttribute(.backgroundColor, range: headPosition!)
             headPosition = nil
@@ -210,7 +210,7 @@ class DiskInspectorController : UserDialogController {
     func setHeadMarker() {
         
         removeHeadMarker()
-        let storage = (gcrView.documentView as! NSTextView).textStorage
+        let storage = (gcrView.documentView as? NSTextView)?.textStorage
         headPosition = NSRange.init(location: Int(drive.offset()), length: 1)
         storage?.addAttribute(.backgroundColor, value: NSColor.red, range: headPosition!)
     }
@@ -218,13 +218,13 @@ class DiskInspectorController : UserDialogController {
     func scrollToHead() {
         
         let range = NSRange.init(location: offset, length: 1)
-        let view = gcrView.documentView as! NSTextView
-        view.scrollRangeToVisible(range)
+        let view = gcrView.documentView as? NSTextView
+        view?.scrollRangeToVisible(range)
     }
     
     func removeSectorMarkers() {
         
-        let storage = (gcrView.documentView as! NSTextView).textStorage
+        let storage = (gcrView.documentView as? NSTextView)?.textStorage
         if firstSectorRange != nil {
             storage?.removeAttribute(.foregroundColor, range: firstSectorRange!)
             firstSectorRange = nil
@@ -259,7 +259,7 @@ class DiskInspectorController : UserDialogController {
         }
     
         let color = NSColor.alternateSelectedControlColor
-        let storage = (gcrView.documentView as! NSTextView).textStorage
+        let storage = (gcrView.documentView as? NSTextView)?.textStorage
         if firstSectorRange != nil {
             storage?.addAttribute(.foregroundColor, value: color, range: firstSectorRange!)
         }
@@ -270,9 +270,9 @@ class DiskInspectorController : UserDialogController {
     
     func scrollToFirstSectorMarker() {
         
-        let view = gcrView.documentView as! NSTextView
+        let view = gcrView.documentView as? NSTextView
         if firstSectorRange != nil {
-            view.scrollRangeToVisible(firstSectorRange!)
+            view?.scrollRangeToVisible(firstSectorRange!)
         }
     }
     
@@ -281,10 +281,9 @@ class DiskInspectorController : UserDialogController {
     // Action methods
     //
 
-    @IBAction func selectDriveAction(_ sender: Any!) {
+    @IBAction func selectDriveAction(_ sender: NSButton!) {
     
-        driveNr = (sender as! NSButton).tag
-        drive = proxy!.drive(driveNr)
+        drive = proxy!.drive(sender.tag)
         diskInfoIsDirty = true
         trackDataIsDirty = true
         headPositionIsDirty = true
@@ -300,15 +299,15 @@ class DiskInspectorController : UserDialogController {
         scrollToFirstSectorMarker()
     }
     
-    @IBAction func trackAction(_ sender: Any!) {
+    @IBAction func trackAction(_ sender: NSTextField!) {
         
-        let ht = (sender as! NSTextField).doubleValue * 2 - 1
+        let ht = sender.doubleValue * 2 - 1
         _halftrackAction(Halftrack(ht))
     }
 
-    @IBAction func trackStepperAction(_ sender: Any!) {
+    @IBAction func trackStepperAction(_ sender: NSStepper!) {
         
-        let value = (sender as! NSStepper).integerValue
+        let value = sender.integerValue
         // let t = Int(c64.vc1541.halftrack() + 1 / 2) + (value == 1 ? 1 : -1)
         let t = (Int(drive.halftrack()) + (value == 1 ? 2 : -1) + 1) / 2
         _trackAction(Track(t))
@@ -323,22 +322,22 @@ class DiskInspectorController : UserDialogController {
         scrollToFirstSectorMarker()
     }
     
-    @IBAction func halftrackAction(_ sender: Any!) {
+    @IBAction func halftrackAction(_ sender: NSTextField!) {
         
-        let ht = (sender as! NSTextField).integerValue
+        let ht = sender.integerValue
         _halftrackAction(Halftrack(ht))
     }
     
-    @IBAction func halftrackStepperAction(_ sender: Any!) {
+    @IBAction func halftrackStepperAction(_ sender: NSStepper!) {
         
-        let value = (sender as! NSStepper).integerValue
+        let value = sender.integerValue
         let ht = Int(drive.halftrack()) + (value == 1 ? 1 : -1)
         _halftrackAction(Halftrack(ht))
     }
     
-    @IBAction func headAction(_ sender: Any!) {
+    @IBAction func headAction(_ sender: NSTextField!) {
         
-        var value = (sender as! NSTextField).integerValue
+        var value = sender.integerValue
         let maxValue = Int(drive.sizeOfCurrentHalftrack())
         if value >= maxValue { value = maxValue - 1 }
         if value < 0 { value = 0 }
@@ -348,9 +347,9 @@ class DiskInspectorController : UserDialogController {
         scrollToHead()
     }
     
-    @IBAction func headStepperAction(_ sender: Any!) {
+    @IBAction func headStepperAction(_ sender: NSStepper!) {
         
-        let value = (sender as! NSStepper).integerValue
+        let value = sender.integerValue
         if value == 1 {
             drive.rotateDisk()
         } else {
@@ -360,9 +359,9 @@ class DiskInspectorController : UserDialogController {
         scrollToHead()
     }
 
-    @IBAction func valueAction(_ sender: Any!) {
+    @IBAction func valueAction(_ sender: NSTextField!) {
         
-        let value = (sender as! NSTextField).integerValue
+        let value = sender.integerValue
         drive.writeBit(toHead: UInt8(value))
         trackDataIsDirty = true
         refresh()
@@ -376,9 +375,9 @@ class DiskInspectorController : UserDialogController {
         valueAction(valueField)
     }
     
-    @IBAction func markHeadAction(_ sender: Any!) {
+    @IBAction func markHeadAction(_ sender: NSButton!) {
         
-        if (sender as! NSButton).integerValue == 1 {
+        if sender.integerValue == 1 {
             setHeadMarker()
         } else {
             removeHeadMarker()
@@ -386,12 +385,11 @@ class DiskInspectorController : UserDialogController {
         scrollToHead()
     }
     
-    @IBAction func singleClickAction(_ sender: Any!) {
+    @IBAction func singleClickAction(_ sender: NSTableView!) {
         
         var begin = 0
         var end = 0
         
-        let sender = sender as! NSTableView
         let row = sender.selectedRow
         
         if (sender == sectorView) {
@@ -517,13 +515,10 @@ extension DiskInspectorController : NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
         
-        let cell = cell as! NSTextFieldCell
+        let cell = cell as? NSTextFieldCell
         
         if tableView == errorView {
-            cell.textColor = (row == 0) ? .textColor : .red
+            cell?.textColor = (row == 0) ? .textColor : .red
         }
     }
 }
-
-
-

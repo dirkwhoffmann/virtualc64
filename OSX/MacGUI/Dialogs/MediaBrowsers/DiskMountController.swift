@@ -87,9 +87,8 @@ class DiskMountController : UserDialogController {
     
     // Action methods
     
-    @IBAction func stepperAction(_ sender: Any!) {
+    @IBAction func stepperAction(_ sender: NSStepper!) {
         
-        let sender = sender as! NSStepper
         halftrack = sender.integerValue
         update()
     }
@@ -147,4 +146,3 @@ extension DiskMountController : NSTableViewDataSource {
         return "???"
     }
 }
-

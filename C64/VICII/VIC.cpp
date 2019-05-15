@@ -842,6 +842,7 @@ VIC::endRasterline()
         //
         // Experimental code for RF modulator effect
         //
+        /*
         int8_t oldR = (pixelBuffer[0] >> 0) & 0xFF;
         int8_t oldG = (pixelBuffer[0] >> 8) & 0xFF;
         int8_t oldB = (pixelBuffer[0] >> 16) & 0xFF;
@@ -866,6 +867,7 @@ VIC::endRasterline()
 
             pixelBuffer[i] = (oldR << 0) | (oldG << 8) | (oldB << 16);
         }
+        */
 
         // Advance pixelBuffer
         uint16_t nextline = c64->rasterLine - PAL_UPPER_VBLANK + 1;
