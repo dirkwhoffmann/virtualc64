@@ -54,7 +54,7 @@ var proxy: C64Proxy? {
 @objc public class MyAppDelegate: NSObject, NSApplicationDelegate {
     
     /// Virtual C64 keyboard (opened as a separate window)
-    var virtualKeyboard: VirtualKeyboardController? = nil
+    var virtualKeyboard: VirtualKeyboardController?
     
     /// The list of recently inserted disk URLs.
     var recentlyInsertedDiskURLs: [URL] = []
@@ -70,8 +70,7 @@ var proxy: C64Proxy? {
     
     /// The list of recently atached cartridge URLs.
     var recentlyAttachedCartridgeURLs: [URL] = []
-    
-    
+
     public func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         track()
@@ -140,7 +139,7 @@ var proxy: C64Proxy? {
         
         precondition(nr == 1 || nr == 2)
         
-        if (nr == 1) {
+        if nr == 1 {
             noteRecentlyUsedURL(url, to: &recentlyExportedDisk1URLs, size: 1)
         } else {
             noteRecentlyUsedURL(url, to: &recentlyExportedDisk2URLs, size: 1)
@@ -151,7 +150,7 @@ var proxy: C64Proxy? {
         
         precondition(nr == 1 || nr == 2)
         
-        if (nr == 1) {
+        if nr == 1 {
             return getRecentlyUsedURL(pos, from: recentlyExportedDisk1URLs)
         } else {
             return getRecentlyUsedURL(pos, from: recentlyExportedDisk2URLs)
@@ -162,7 +161,7 @@ var proxy: C64Proxy? {
         
         precondition(nr == 1 || nr == 2)
         
-        if (nr == 1) {
+        if nr == 1 {
             recentlyExportedDisk1URLs = []
         } else {
             recentlyExportedDisk2URLs = []
@@ -187,7 +186,7 @@ var proxy: C64Proxy? {
     
     func noteNewRecentlyUsedURL(_ url: URL) {
         
-        switch (url.pathExtension.uppercased()) {
+        switch url.pathExtension.uppercased() {
             
         case "D64", "T64", "G64", "PRG", "P00":
             noteNewRecentlyInsertedDiskURL(url)
@@ -203,7 +202,6 @@ var proxy: C64Proxy? {
         }
     }
 }
-
 
 //
 // Personal delegation methods

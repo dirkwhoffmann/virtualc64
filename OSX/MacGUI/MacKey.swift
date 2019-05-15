@@ -12,7 +12,7 @@ import Carbon.HIToolbox
 
 /// The C64Key structure represents a physical keys on the C64 keyboard.
 /// The key is specified by its row and coloumn position in the C64 keyboard matrix.
-struct MacKey : Codable {
+struct MacKey: Codable {
     
     /// Unique identifier for a key on the Mac keyboard
     var keyCode: UInt16 = 0
@@ -38,7 +38,7 @@ struct MacKey : Codable {
         
         keyCode = event.keyCode
         
-        let stdSymbols: [Int:String] = [
+        let stdSymbols: [Int: String] = [
             kVK_Return: "\u{21a9}",
             kVK_Tab: "\u{21e5}",
             kVK_Space: "\u{23b5}",
@@ -66,7 +66,7 @@ struct MacKey : Codable {
 }
 
 extension MacKey: Equatable {
-    static func ==(lhs: MacKey, rhs: MacKey) -> Bool {
+    static func == (lhs: MacKey, rhs: MacKey) -> Bool {
         return lhs.keyCode == rhs.keyCode
     }
 }
@@ -173,4 +173,3 @@ extension MacKey {
         static let hat = MacKey.init(keyCode: 0x0A, characters: "")
     }
 }
-

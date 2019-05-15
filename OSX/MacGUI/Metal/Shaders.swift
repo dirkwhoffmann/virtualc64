@@ -12,7 +12,6 @@ import Metal
 import MetalKit
 import MetalPerformanceShaders
 
-
 //
 // Additional uniforms needed by the vertex shader
 //
@@ -22,12 +21,11 @@ struct VertexUniforms {
     var mvp: simd_float4x4
 }
 
-
 //
 // Uniforms passed to all compute shaders and the fragment shader
 //
 
-struct ShaderOptions : Codable {
+struct ShaderOptions: Codable {
     
     var blur: Int32
     var blurRadius: Float
@@ -87,7 +85,6 @@ var ShaderDefaultsCRT = ShaderOptions(blur: 1,
                                       disalignmentH: 0.001,
                                       disalignmentV: 0.001)
 
-
 //
 // Additional uniforms needed by the fragment shader
 //
@@ -99,7 +96,6 @@ struct FragmentUniforms {
     var dotMaskHeight: Int32
     var scanlineDistance: Int32
 }
-
 
 //
 // Static texture parameters
@@ -121,15 +117,14 @@ struct UPSCALEDTEXTURE {
     static let cutout_y = C64TEXTURE.cutout_y * UPSCALEDTEXTURE.factor_y
 }
 
-
 //
 // Base class for all compute kernels
 //
 
-class ComputeKernel : NSObject {
+class ComputeKernel: NSObject {
 
-    var device : MTLDevice!
-    var kernel : MTLComputePipelineState!
+    var device: MTLDevice!
+    var kernel: MTLComputePipelineState!
 
     convenience init?(name: String, device: MTLDevice, library: MTLLibrary) {
         
@@ -186,7 +181,7 @@ class ComputeKernel : NSObject {
         if var _options = options {
             encoder.setBytes(&_options,
                              length: MemoryLayout<ShaderOptions>.stride,
-                             index: 0);
+                             index: 0)
         }
         
         // Determine thread group size and number of groups
@@ -194,8 +189,8 @@ class ComputeKernel : NSObject {
         let groupH = kernel.maxTotalThreadsPerThreadgroup / groupW
         let threadsPerGroup = MTLSizeMake(groupW, groupH, 1)
         
-        let countW = (UPSCALEDTEXTURE.cutout_x + groupW - 1) / groupW;
-        let countH = (UPSCALEDTEXTURE.cutout_y + groupH - 1) / groupH;
+        let countW = (UPSCALEDTEXTURE.cutout_x + groupW - 1) / groupW
+        let countH = (UPSCALEDTEXTURE.cutout_y + groupH - 1) / groupH
         let threadgroupCount = MTLSizeMake(countW, countH, 1)
         
         // Finally, we're ready to dispatch
@@ -209,60 +204,56 @@ class ComputeKernel : NSObject {
 // Bypass filter
 //
 
-class BypassFilter : ComputeKernel {
+class BypassFilter: ComputeKernel {
     
     convenience init?(device: MTLDevice, library: MTLLibrary) {
         self.init(name: "bypass", device: device, library: library)
     }
 }
 
-
 //
 // Upscalers
 //
 
-class BypassUpscaler : ComputeKernel {
+class BypassUpscaler: ComputeKernel {
     
     convenience init?(device: MTLDevice, library: MTLLibrary) {
         self.init(name: "bypassupscaler", device: device, library: library)
     }
 }
 
-class EPXUpscaler : ComputeKernel {
+class EPXUpscaler: ComputeKernel {
     
     convenience init?(device: MTLDevice, library: MTLLibrary) {
         self.init(name: "epxupscaler", device: device, library: library)
     }
 }
 
-class XBRUpscaler : ComputeKernel {
+class XBRUpscaler: ComputeKernel {
     
     convenience init?(device: MTLDevice, library: MTLLibrary) {
         self.init(name: "xbrupscaler", device: device, library: library)
     }
 }
 
-
 //
 // Split filter
 //
 
-class SplitFilter : ComputeKernel {
+class SplitFilter: ComputeKernel {
 
     convenience init?(device: MTLDevice, library: MTLLibrary) {
         self.init(name: "split", device: device, library: library)
     }
 }
 
-    
 //
 // Scanline filter
 //
 
-class SimpleScanlines : ComputeKernel {
+class SimpleScanlines: ComputeKernel {
     
     convenience init?(device: MTLDevice, library: MTLLibrary) {
         self.init(name: "scanlines", device: device, library: library)
     }
 }
-

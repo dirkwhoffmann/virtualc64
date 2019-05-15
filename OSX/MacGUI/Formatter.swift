@@ -9,11 +9,11 @@
 
 import Foundation
 
-class MyFormatter : Formatter {
+class MyFormatter: Formatter {
     
-    var radix : Int
+    var radix: Int
     var minValue: Int
-    var maxValue : Int
+    var maxValue: Int
     var format: String
     
     init(radix: Int, min: Int, max: Int) {
@@ -59,7 +59,7 @@ class MyFormatter : Formatter {
         }
         */
         let number = (partialString == "") ? 0 : Int(partialString, radix: radix)
-        if (number == nil || number! < minValue || number! > maxValue) {
+        if number == nil || number! < minValue || number! > maxValue {
             NSSound.beep()
             return false
         }

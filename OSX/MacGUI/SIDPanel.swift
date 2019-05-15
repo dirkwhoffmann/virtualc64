@@ -21,11 +21,17 @@ extension MyController {
         potX.intValue = Int32(info.potX)
         potY.intValue = Int32(info.potY)
         
-        if vinfo.waveform & 0x10 != 0 { waveform.selectItem(at: 1) }
-        else if vinfo.waveform & 0x20 != 0 { waveform.selectItem(at: 2) }
-        else if vinfo.waveform & 0x40 != 0 { waveform.selectItem(at: 3) }
-        else if vinfo.waveform & 0x80 != 0 { waveform.selectItem(at: 4) }
-        else { waveform.selectItem(at: 0) }
+        if vinfo.waveform & 0x10 != 0 {
+            waveform.selectItem(at: 1)
+        } else if vinfo.waveform & 0x20 != 0 {
+            waveform.selectItem(at: 2)
+        } else if vinfo.waveform & 0x40 != 0 {
+            waveform.selectItem(at: 3)
+        } else if vinfo.waveform & 0x80 != 0 {
+            waveform.selectItem(at: 4)
+        } else {
+            waveform.selectItem(at: 0)
+        }
         waveform.item(at: 0)?.state = (vinfo.waveform == 0) ? .on : .off
         waveform.item(at: 1)?.state = (vinfo.waveform & 0x10 != 0) ? .on : .off
         waveform.item(at: 2)?.state = (vinfo.waveform & 0x20 != 0) ? .on : .off
@@ -91,13 +97,13 @@ extension MyController {
         refreshSID()
     }
     
-    func _waveformAction(_ value: (Int,UInt8)) {
+    func _waveformAction(_ value: (Int, UInt8)) {
         
         let voice = value.0
         let info = c64.sid.getVoiceInfo(voice)
         let oldValue = info.waveform
         
-        if (value.1 != oldValue) {
+        if value.1 != oldValue {
             undoManager?.registerUndo(withTarget: self) {
                 me in me._waveformAction((voice, oldValue))
             }

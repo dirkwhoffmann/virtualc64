@@ -29,9 +29,9 @@ struct MemoryHighlighting {
     static let ioCia = 9
 }
 
-class MemTableView : NSTableView {
+class MemTableView: NSTableView {
     
-    var c : MyController? = nil
+    var c: MyController?
     var cbmfont = NSFont.init(name: "C64ProMono", size: 9)
     private var memView = MemoryView.cpuView
     private var highlighting = MemoryHighlighting.none
@@ -48,12 +48,12 @@ class MemTableView : NSTableView {
         reloadData()
     }
     
-    func setMemView(_ value : Int) {
+    func setMemView(_ value: Int) {
         memView = value
         refresh()
     }
     
-    func setHighlighting(_ value : Int) {
+    func setHighlighting(_ value: Int) {
         highlighting = value
         refresh()
     }
@@ -77,7 +77,7 @@ class MemTableView : NSTableView {
     func shouldDisplay(_ addr: UInt16) -> Bool {
         
         let src = source(addr)
-        switch (src) {
+        switch src {
         case M_IO:
             return addr >= 0xD000 && addr <= 0xDFFF
         case M_ROM:
@@ -116,11 +116,11 @@ class MemTableView : NSTableView {
     }
 }
 
-extension MemTableView : NSTableViewDataSource {
+extension MemTableView: NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         
-        return 0x10000 / 4;
+        return 0x10000 / 4
     }
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
@@ -128,7 +128,7 @@ extension MemTableView : NSTableViewDataSource {
         var addr = UInt16(4 * row)
         let src = source(addr)
         
-        switch(tableColumn?.identifier.rawValue) {
+        switch tableColumn?.identifier.rawValue {
             
         case "src":
             return (src == M_RAM || src == M_PP) ? "RAM" :
@@ -147,7 +147,7 @@ extension MemTableView : NSTableViewDataSource {
             let src = source(addr)
             for i in 0...3 {
                 var byte = Int(c!.c64.mem.spypeek(addr + UInt16(i), source: src))
-                if (byte < 32 || byte > 90) { byte = 46 }
+                if byte < 32 || byte > 90 { byte = 46 }
                 let scalar = UnicodeScalar(byte + 0xE000)
                 str.unicodeScalars.append(scalar!)
             }
@@ -176,24 +176,24 @@ extension MemTableView : NSTableViewDataSource {
             break
         }
         
-        return "";
+        return ""
     }
 }
 
-extension MemTableView : NSTableViewDelegate {
+extension MemTableView: NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
         
         let cell = cell as? NSTextFieldCell
 
-        if (tableColumn?.identifier.rawValue == "src") {
+        if tableColumn?.identifier.rawValue == "src" {
             cell?.font = NSFont.systemFont(ofSize: 9)
             cell?.textColor = .gray
         } else {
             cell?.textColor = NSColor.textColor
         }
         
-        if (tableColumn?.identifier.rawValue == "ascii") {
+        if tableColumn?.identifier.rawValue == "ascii" {
             cell?.font = cbmfont
         }
         
@@ -205,16 +205,16 @@ extension MemTableView : NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
         
         var addr = UInt16(4 * row)
-        switch(tableColumn?.identifier.rawValue) {
+        switch tableColumn?.identifier.rawValue {
         case "hex0": break
-        case "hex1": addr += 1; break
-        case "hex2": addr += 2; break
-        case "hex3": addr += 3; break
+        case "hex1": addr += 1
+        case "hex2": addr += 2
+        case "hex3": addr += 3
         default: return
         }
         
         let target = source(addr)
-        if (target == M_CRTLO || target == M_CRTHI) {
+        if target == M_CRTLO || target == M_CRTHI {
             NSSound.beep()
             return
         }
