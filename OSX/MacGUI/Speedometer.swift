@@ -9,7 +9,7 @@
 
 import Foundation
 
-class Speedometer : NSObject {
+class Speedometer: NSObject {
     
     /// Current emulation speed in Mhz
     private var mhz = 0.0
@@ -36,12 +36,12 @@ class Speedometer : NSObject {
     }
 
     func mhz(digits: Int) -> Double {
-        let factor = Double(truncating:pow(10,digits) as NSNumber)
+        let factor = Double(truncating: pow(10, digits) as NSNumber)
         return round(factor * mhz) / factor
     }
     
     func fps(digits: Int) -> Double {
-        let factor = Double(truncating:pow(10,digits) as NSNumber)
+        let factor = Double(truncating: pow(10, digits) as NSNumber)
         return round(factor * fps) / factor
     }
     

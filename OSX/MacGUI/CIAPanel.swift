@@ -64,24 +64,22 @@ extension MyController {
         ciaIntLineLow.state = info.intLine ? .off : .on
     }
     
-    private var selectedCia: Int {
-        get { return ciaSelector.indexOfSelectedItem }
-    }
+    private var selectedCia: Int { return ciaSelector.indexOfSelectedItem }
     
     @IBAction func selectCIAAction(_ sender: Any!) {
         
         refreshCIA()
     }
     
-    func _praAction(_ value: (Int,UInt8)) {
+    func _praAction(_ value: (Int, UInt8)) {
         
         let cia = (value.0 == 0) ? c64.cia1 : c64.cia2
         let info = cia!.getInfo()
         let oldValue = info.portA.reg
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._praAction((value.0, oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._praAction((value.0, oldValue))
             }
             undoManager?.setActionName("Set Port Register A")
             cia?.poke(0x0, value: value.1)
@@ -94,15 +92,15 @@ extension MyController {
         _praAction((selectedCia, UInt8(sender.intValue)))
     }
 
-    func _prbAction(_ value: (Int,UInt8)) {
+    func _prbAction(_ value: (Int, UInt8)) {
         
         let cia = (value.0 == 0) ? c64.cia1 : c64.cia2
         let info = cia!.getInfo()
         let oldValue = info.portB.reg
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._prbAction((value.0, oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._prbAction((value.0, oldValue))
             }
             undoManager?.setActionName("Set Port Register B")
             cia?.poke(0x1, value: value.1)
@@ -115,15 +113,15 @@ extension MyController {
         _prbAction((selectedCia, UInt8(sender.intValue)))
     }
  
-    func _ddraAction(_ value: (Int,UInt8)) {
+    func _ddraAction(_ value: (Int, UInt8)) {
         
         let cia = (value.0 == 0) ? c64.cia1 : c64.cia2
         let info = cia!.getInfo()
         let oldValue = info.portA.dir
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._ddraAction((value.0, oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._ddraAction((value.0, oldValue))
             }
             undoManager?.setActionName("Set Port Direction A")
             cia?.poke(0x2, value: value.1)
@@ -136,15 +134,15 @@ extension MyController {
         _ddraAction((selectedCia, UInt8(sender.intValue)))
     }
     
-    func _ddrbAction(_ value: (Int,UInt8)) {
+    func _ddrbAction(_ value: (Int, UInt8)) {
         
         let cia = (value.0 == 0) ? c64.cia1 : c64.cia2
         let info = cia!.getInfo()
         let oldValue = info.portB.dir
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._ddrbAction((value.0, oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._ddrbAction((value.0, oldValue))
             }
             undoManager?.setActionName("Set Port Direction B")
             cia?.poke(0x3, value: value.1)
@@ -157,15 +155,15 @@ extension MyController {
         _ddrbAction((selectedCia, UInt8(sender.intValue)))
     }
     
-    func _timerLatchAAction(_ value: (Int,UInt16)) {
+    func _timerLatchAAction(_ value: (Int, UInt16)) {
         
         let cia = (value.0 == 0) ? c64.cia1 : c64.cia2
         let info = cia!.getInfo()
         let oldValue = info.timerA.latch
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._timerLatchAAction((value.0, oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._timerLatchAAction((value.0, oldValue))
             }
             undoManager?.setActionName("Set Timer Latch A")
             cia!.poke(0x4, value: UInt8(value.1 & 0xFF))
@@ -179,15 +177,15 @@ extension MyController {
         _timerLatchAAction((selectedCia, UInt16(sender.intValue)))
     }
     
-    func _timerLatchBAction(_ value: (Int,UInt16)) {
+    func _timerLatchBAction(_ value: (Int, UInt16)) {
         
         let cia = (value.0 == 0) ? c64.cia1 : c64.cia2
         let info = cia!.getInfo()
         let oldValue = info.timerB.latch
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._timerLatchBAction((value.0, oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._timerLatchBAction((value.0, oldValue))
             }
             undoManager?.setActionName("Set Timer Latch B")
             cia!.poke(0x6, value: UInt8(value.1 & 0xFF))

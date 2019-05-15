@@ -9,17 +9,17 @@
 
 import Foundation
 
-class CpuTraceView : NSTableView {
+class CpuTraceView: NSTableView {
     
-    var c : MyController? = nil
+    var c: MyController?
 
-    var cycle : [Int:UInt64] = [:]
-    var pc : [Int:String] = [:]
-    var a : [Int:String] = [:]
-    var x : [Int:String] = [:]
-    var y : [Int:String] = [:]
-    var flags : [Int:String] = [:]
-    var instr : [Int:String] = [:]
+    var cycle: [Int: UInt64] = [:]
+    var pc: [Int: String] = [:]
+    var a: [Int: String] = [:]
+    var x: [Int: String] = [:]
+    var y: [Int: String] = [:]
+    var flags: [Int: String] = [:]
+    var instr: [Int: String] = [:]
     
     var hex = true
     
@@ -52,12 +52,12 @@ class CpuTraceView : NSTableView {
                     let rec = c!.c64.cpu.readRecordedInstruction(i)
                     var diss = c!.c64.cpu.disassembleRecordedInstr(rec, hex: hex)
                     
-                    let pcStr = String.init(utf8String:&diss.pc.0)!
-                    let aStr = String.init(utf8String:&diss.a.0)!
-                    let xStr = String.init(utf8String:&diss.x.0)!
-                    let yStr = String.init(utf8String:&diss.y.0)!
-                    let flagsStr = String.init(utf8String:&diss.flags.0)!
-                    let commandStr = String.init(utf8String:&diss.command.0)!
+                    let pcStr = String.init(utf8String: &diss.pc.0)!
+                    let aStr = String.init(utf8String: &diss.a.0)!
+                    let xStr = String.init(utf8String: &diss.x.0)!
+                    let yStr = String.init(utf8String: &diss.y.0)!
+                    let flagsStr = String.init(utf8String: &diss.flags.0)!
+                    let commandStr = String.init(utf8String: &diss.command.0)!
 
                     // let str = "\(pc): \(a) \(x) \(y) \(flags) \(command)"
                     /*
@@ -84,15 +84,16 @@ class CpuTraceView : NSTableView {
     }
 }
 
-extension CpuTraceView : NSTableViewDataSource {
+extension CpuTraceView: NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return 1023;
+        return 1023
     }
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
-        switch(tableColumn?.identifier.rawValue) {
+        switch tableColumn?.identifier.rawValue {
+
         case "cycle":
             return cycle[row]
         case "PC":
@@ -112,4 +113,3 @@ extension CpuTraceView : NSTableViewDataSource {
         }
     }
 }
-

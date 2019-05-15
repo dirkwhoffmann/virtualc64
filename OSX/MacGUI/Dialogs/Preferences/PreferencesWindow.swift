@@ -7,7 +7,7 @@
 
 import Foundation
 
-class PreferencesWindow : NSWindow {
+class PreferencesWindow: NSWindow {
     
     func respondToEvents() {
         DispatchQueue.main.async {
@@ -31,9 +31,9 @@ class PreferencesWindow : NSWindow {
         
         track()
         let controller = delegate as? UserDialogController
-        if event.modifierFlags.contains(.shift) && event.keyCode == 56  {
+        if event.modifierFlags.contains(.shift) && event.keyCode == 56 {
             controller?.keyDown(with: MacKey.leftShift)
-        } else if event.modifierFlags.contains(.shift) && event.keyCode == 60  {
+        } else if event.modifierFlags.contains(.shift) && event.keyCode == 60 {
             controller?.keyDown(with: MacKey.rightShift)
         } else if event.modifierFlags.contains(.control) {
             controller?.keyDown(with: MacKey.control)

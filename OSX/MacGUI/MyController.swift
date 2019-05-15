@@ -9,7 +9,7 @@
 
 import Foundation
 
-enum AutoMountAction : Int, Codable {
+enum AutoMountAction: Int, Codable {
     
     case openBrowser = 0
     case flashFirstFile = 1
@@ -23,7 +23,7 @@ protocol MessageReceiver {
     func processMessage(_ msg: Message)
 }
 
-class MyController : NSWindowController, MessageReceiver {
+class MyController: NSWindowController, MessageReceiver {
 
     /// Proxy object.
     /// Implements a bridge between the emulator written in C++ and the
@@ -41,7 +41,7 @@ class MyController : NSWindowController, MessageReceiver {
     var keyboardcontroller: KeyboardController!
 
     /// Virtual C64 keyboard (opened as a sheet)
-    var virtualKeyboardSheet: VirtualKeyboardController? = nil
+    var virtualKeyboardSheet: VirtualKeyboardController?
     
     /// Preferences controller
     var preferencesController: PreferencesController?
@@ -95,19 +95,19 @@ class MyController : NSWindowController, MessageReceiver {
     
     /// Screenshot image format
     var screenshotTarget = Defaults.screenshotTarget
-    var screenshotTargetIntValue : Int {
+    var screenshotTargetIntValue: Int {
         get { return Int(screenshotTarget.rawValue) }
         set { screenshotTarget = NSBitmapImageRep.FileType(rawValue: UInt(newValue))! }
     }
     
     /// Media file default actions
-    var autoMountAction : [String: AutoMountAction] = Defaults.autoMountAction
+    var autoMountAction: [String: AutoMountAction] = Defaults.autoMountAction
 
     /// Media file auto-type enable / disable
-    var autoType : [String: Bool] = Defaults.autoType
+    var autoType: [String: Bool] = Defaults.autoType
 
     /// Media file auto-type text
-    var autoTypeText : [String: String] = Defaults.autoTypeText
+    var autoTypeText: [String: String] = Defaults.autoTypeText
     
     /// Indicates if the user should be warned if an unsaved document is closed.
     var closeWithoutAsking = Defaults.closeWithoutAsking
@@ -121,8 +121,7 @@ class MyController : NSWindowController, MessageReceiver {
     /// Remembers if the emulator was running or paused when it lost focus.
     /// Needed to implement the pauseInBackground feature.
     var pauseInBackgroundSavedState = false
- 
-    
+
     //
     // Outlets
     //
@@ -306,18 +305,10 @@ class MyController : NSWindowController, MessageReceiver {
 extension MyController {
 
     // Provides the undo manager
-    override open var undoManager: UndoManager? {
-        get {
-            return metalScreen.undoManager
-        }
-    }
+    override open var undoManager: UndoManager? { return metalScreen.undoManager }
  
     // Provides the document casted to the correct type
-    var mydocument: MyDocument? {
-        get {
-            return document as? MyDocument
-        }
-    }
+    var mydocument: MyDocument? { return document as? MyDocument }
     
     /// Indicates if the emulator needs saving
     var needsSaving: Bool {
@@ -325,14 +316,13 @@ extension MyController {
             return document?.changeCount != 0
         }
         set {
-            if (newValue && !closeWithoutAsking) {
+            if newValue && !closeWithoutAsking {
                 document?.updateChangeCount(.changeDone)
             } else {
                 document?.updateChangeCount(.changeCleared)
             }
         }
     }
-    
     
     //
     // Initialization
@@ -349,26 +339,25 @@ extension MyController {
         // Create audio engine
         audioEngine = AudioEngine.init(withSID: c64.sid)
     }
-    
-    
+
     override open func windowDidLoad() {
  
         track()
         
         // Reset mouse coordinates
-        mouseXY = NSZeroPoint
+        mouseXY = NSPoint.zero
         hideMouse = false
         
         // Create keyboard controller
         keyboardcontroller = KeyboardController(controller: self)
-        if (keyboardcontroller == nil) {
+        if keyboardcontroller == nil {
             track("Failed to create keyboard controller")
             return
         }
 
         // Create game pad manager
         gamePadManager = GamePadManager(controller: self)
-        if (gamePadManager == nil) {
+        if gamePadManager == nil {
             track("Failed to create game pad manager")
             return
         }
@@ -418,7 +407,7 @@ extension MyController {
     func configureToolbar() {
         
         // Get and resize images
-        let cutout = NSMakeRect(2, 0, 28, 28)
+        let cutout = NSRect.init(x: 2, y: 0, width: 28, height: 28)
         
         var none = NSImage(named: "oxygen_none")
         none = none?.resizeImage(width: 32, height: 32, cutout: cutout)
@@ -469,8 +458,7 @@ extension MyController {
         
         track("GUI timer is up and running")
     }
- 
-    
+
     //
     // Timer and message processing
     //
@@ -510,23 +498,11 @@ extension MyController {
             // Note: The tape progress icon is not switched on or off by push
             // notification (message), because some games continously switch the
             // datasette motor on and off.
-            if (c64.datasette.motor() && c64.datasette.playKey()) {
+            if c64.datasette.motor() && c64.datasette.playKey() {
                 tapeProgress.startAnimation(self)
             } else {
                 tapeProgress.stopAnimation(self)
             }
-
-            /* Original code: Why so complicated???
-            if ([[c64 datasette] motor] != [c64 tapeBusIsBusy]) {
-                if ([[c64 datasette] motor] && [[c64 datasette] playKey]) {
-                    [tapeProgress startAnimation:nil];
-                    [c64 setTapeBusIsBusy:YES];
-                } else {
-                    [tapeProgress stopAnimation:nil];
-                    [c64 setTapeBusIsBusy:NO];
-                }
-            }
-            */
         }
         
         // Do 3 times a second ...
@@ -534,7 +510,7 @@ extension MyController {
             speedometer.updateWith(cycle: c64.cpu.cycle(), frame: metalScreen.frames)
             let mhz = speedometer.mhz(digits: 2)
             let fps = speedometer.fps(digits: 0)
-            clockSpeed.stringValue = String(format:"%.2f MHz %.0f fps", mhz, fps)
+            clockSpeed.stringValue = String(format: "%.2f MHz %.0f fps", mhz, fps)
             clockSpeedBar.doubleValue = 10 * mhz
         
             // Let the cursor disappear in fullscreen mode
@@ -552,12 +528,12 @@ extension MyController {
 
         func firstDrive() -> Bool {
             precondition(msg.data == 1 || msg.data == 2)
-            return msg.data == 1;
+            return msg.data == 1
         }
 
         proxyLock.lock()
         
-        switch (msg.type) {
+        switch msg.type {
     
         case MSG_READY_TO_RUN:
     
@@ -565,7 +541,7 @@ extension MyController {
             c64.run()
             
             // Blend in C64 screen
-            if (!metalScreen.drawC64texture) {
+            if !metalScreen.drawC64texture {
                 metalScreen.blendIn()
                 metalScreen.drawC64texture = true
             }
@@ -594,16 +570,7 @@ extension MyController {
             
         case MSG_ROM_MISSING:
             openPreferences()
-            
-            /*
-            if (romDialogController == nil) {
-                track("MSG_ROM_MISSING")
-                let nibName = NSNib.Name("RomPrefs")
-                romDialogController = RomPrefsController.init(windowNibName: nibName)
-                romDialogController!.showSheet(withParent: self)
-            }
-             */
-            
+
         case MSG_SNAPSHOT_TAKEN:
             break
     
@@ -624,7 +591,7 @@ extension MyController {
             if c64.alwaysWarp() {
                 let name = NSImage.Name("hourglass3Template")
                 warpIcon.image = NSImage.init(named: name)
-            } else if (c64.warp()) {
+            } else if c64.warp() {
                 let name = NSImage.Name("hourglass2Template")
                 warpIcon.image = NSImage.init(named: name)
             } else {
@@ -849,7 +816,7 @@ extension MyController {
     @discardableResult
     func loadRom(_ url: URL?) -> Bool {
         
-        if (url == nil) {
+        if url == nil {
             return false
         }
         
@@ -873,7 +840,6 @@ extension MyController {
         track("ROM file \(url!) not found")
         return false
     }
-    
 
     //
     // Keyboard events
@@ -881,8 +847,7 @@ extension MyController {
 
     // Keyboard events are handled by the emulator window.
     // If they are handled here, some keys such as 'TAB' don't trigger an event.
- 
-    
+
     //
     //  Game pad events
     //
@@ -892,12 +857,12 @@ extension MyController {
     @discardableResult
     func joystickEvent(slot: Int, events: [JoystickEvent]) -> Bool {
         
-        if (slot == inputDevice1) {
+        if slot == inputDevice1 {
             for event in events { c64.port1.trigger(event) }
             return true
         }
 
-        if (slot == inputDevice2) {
+        if slot == inputDevice2 {
             for event in events { c64.port2.trigger(event) }
             return true
         }
@@ -905,21 +870,19 @@ extension MyController {
         return false
     }    
 
-    
     //
     // Action methods (main screen)
     //
     
     @IBAction func alwaysWarpAction(_ sender: Any!) {
         
-        undoManager?.registerUndo(withTarget: self) {
-            targetSelf in targetSelf.alwaysWarpAction(sender)
+        undoManager?.registerUndo(withTarget: self) { targetSelf in
+            targetSelf.alwaysWarpAction(sender)
         }
     
         c64.setAlwaysWarp(!c64.alwaysWarp())
         refresh()
     }
-    
     
     //
     // Mounting media files
@@ -930,7 +893,7 @@ extension MyController {
 
         guard let type = item?.type() else { return false }
         
-        switch (type) {
+        switch type {
             
         case CRT_FILE:
             c64.expansionport.attachCartridgeAndReset(item as? CRTFileProxy)
@@ -983,7 +946,6 @@ extension MyController {
             }
         }
     }
-
     
     //
     // Misc

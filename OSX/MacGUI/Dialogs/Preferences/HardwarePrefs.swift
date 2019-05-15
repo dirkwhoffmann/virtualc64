@@ -22,7 +22,7 @@ extension PreferencesController {
         let model = c64.vic.model()
         hwVicModelPopup.selectItem(withTag: model)
         
-        switch (UInt32(model)) {
+        switch UInt32(model) {
             
         case PAL_6569_R1.rawValue,
              PAL_6569_R3.rawValue,
@@ -48,8 +48,8 @@ extension PreferencesController {
         hwVicGrayDotBug.state = c64.vic.emulateGrayDotBug() ? .on : .off
         
         // CIA
-        assert(c64.cia1.model() == c64.cia2.model());
-        assert(c64.cia1.emulateTimerBBug() == c64.cia2.emulateTimerBBug());
+        assert(c64.cia1.model() == c64.cia2.model())
+        assert(c64.cia1.emulateTimerBBug() == c64.cia2.emulateTimerBBug())
         hwCiaModelPopup.selectItem(withTag: c64.cia1.model())
         hwCiaTimerBBug.state = c64.cia1.emulateTimerBBug() ? .on : .off
         

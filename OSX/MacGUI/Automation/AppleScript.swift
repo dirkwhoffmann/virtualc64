@@ -9,7 +9,6 @@
 
 import Foundation
 
-
 //
 // Remote control commands
 //

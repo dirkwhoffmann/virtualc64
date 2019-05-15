@@ -59,14 +59,14 @@ extension PreferencesController {
         
         // Create labels
         var labels = Array(repeating: Array(repeating: "", count: 8), count: 8)
-        for (macKey,c64Key) in keyMap {
+        for (macKey, c64Key) in keyMap {
             labels[c64Key.row][c64Key.col] = String.init(format: "%02X", macKey.keyCode)
         }
         
         // Create labeled images
         for row in 0...7 {
             for col in 0...7 {
-                let c64key = C64Key.init( (row,col) )
+                let c64key = C64Key.init( (row, col) )
                 let selected = (c64key == selectedKey)
                 keyImage[row][col] = c64key.image(keyCode: labels[row][col], red: selected)
             }
@@ -87,10 +87,8 @@ extension PreferencesController {
         }
         
         // Remove old key assignment (if any)
-        for (macKey, key) in keyMap {
-            if key == selectedKey {
-                kbController.keyMap[macKey] = nil
-            }
+        for (macKey, key) in keyMap where key == selectedKey {
+            kbController.keyMap[macKey] = nil
         }
         
         // Assign new key
@@ -119,7 +117,7 @@ extension PreferencesController {
 // NSCollectionView data source and delegate
 //
 
-extension PreferencesController : NSCollectionViewDataSource {
+extension PreferencesController: NSCollectionViewDataSource {
     
     func numberOfSections(in collectionView: NSCollectionView) -> Int {
         
@@ -148,7 +146,7 @@ extension PreferencesController : NSCollectionViewDataSource {
     }
 }
 
-extension PreferencesController : NSCollectionViewDelegate {
+extension PreferencesController: NSCollectionViewDelegate {
     
     func collectionView(_ collectionView: NSCollectionView,
                         didSelectItemsAt indexPaths: Set<IndexPath>) {

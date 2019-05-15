@@ -9,8 +9,8 @@
 
 import Foundation
 
-class UserDialogController : NSWindowController
-{
+class UserDialogController: NSWindowController {
+
     func showSheet(completionHandler handler:(() -> Void)? = nil) {
         
         track()
@@ -55,4 +55,3 @@ class UserDialogController : NSWindowController
         hideSheet()
     }
 }
-

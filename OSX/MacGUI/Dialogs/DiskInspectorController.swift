@@ -9,7 +9,7 @@
 
 import Foundation
 
-class DiskInspectorController : UserDialogController {
+class DiskInspectorController: UserDialogController {
     
     let diskImage = NSImage.init(named: "inspect_disk")
     let noDiskImage = NSImage.init(named: "nodisk")
@@ -44,16 +44,16 @@ class DiskInspectorController : UserDialogController {
     var headPositionIsDirty = true
     
     // Highlighted head position in the GCR view
-    var headPosition : NSRange? // NSRange.init(location: 0, length: 0)
+    var headPosition: NSRange? // NSRange.init(location: 0, length: 0)
 
     // First highlighted bit sequence in the GCR view
-    var firstSectorRange : NSRange?
+    var firstSectorRange: NSRange?
 
     // Second highlighted bit sequence in the GCR view
-    var secondSectorRange : NSRange?
+    var secondSectorRange: NSRange?
 
     // Maps table row numbers to sector numbers
-    var sectorForRow: [Int:Int] = [:]
+    var sectorForRow: [Int: Int] = [:]
     
     // Outlets
     @IBOutlet weak var icon: NSImageView!
@@ -151,7 +151,7 @@ class DiskInspectorController : UserDialogController {
             var row = 0
             for i in 0 ... Int(maxNumberOfSectors - 1) {
                 let info = drive.disk.sectorInfo(Sector(i))
-                if (info.headerBegin != info.headerEnd) {
+                if info.headerBegin != info.headerEnd {
                     sectorForRow[row] = i
                     row += 1
                 }
@@ -176,7 +176,7 @@ class DiskInspectorController : UserDialogController {
     
     func refreshPhysicalView() {
         
-        var gcr : String
+        var gcr: String
         
         if hasDisk {
             gcrBox.title = "GCR Bitstream (\(drive.sizeOfCurrentHalftrack()) Bits)"
@@ -238,7 +238,7 @@ class DiskInspectorController : UserDialogController {
     func setSectorMarkers(begin: Int, end: Int) {
         
         let length = Int(drive.sizeOfCurrentHalftrack())
-        if (length == 0) { return }
+        if length == 0 { return }
         
         let left = begin % (length + 1)
         let right = end % (length + 1)
@@ -275,8 +275,7 @@ class DiskInspectorController : UserDialogController {
             view?.scrollRangeToVisible(firstSectorRange!)
         }
     }
-    
-    
+
     //
     // Action methods
     //
@@ -392,14 +391,14 @@ class DiskInspectorController : UserDialogController {
         
         let row = sender.selectedRow
         
-        if (sender == sectorView) {
+        if sender == sectorView {
             
             let sector = row / 2
             let info = drive.disk.sectorInfo(Sector(sector))
             begin = (row % 2 == 0) ? info.headerBegin : info.dataBegin
             end = (row % 2 == 0) ? info.headerEnd : info.dataEnd
             
-        } else if (sender == errorView) {
+        } else if sender == errorView {
             
             begin = (row > 0) ? drive.disk.firstErroneousBit(row - 1) : 0
             end = (row > 0) ? drive.disk.lastErroneousBit(row - 1) : 0
@@ -423,11 +422,11 @@ class DiskInspectorController : UserDialogController {
     }
 }
 
-extension DiskInspectorController : MessageReceiver {
+extension DiskInspectorController: MessageReceiver {
 
     func processMessage(_ msg: Message) {
         
-        switch (msg.type) {
+        switch msg.type {
             
         case MSG_VC1541_ATTACHED,
              MSG_VC1541_DETACHED,
@@ -447,7 +446,7 @@ extension DiskInspectorController : MessageReceiver {
     }
 }
 
-extension DiskInspectorController : NSTableViewDataSource {
+extension DiskInspectorController: NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         
@@ -468,7 +467,7 @@ extension DiskInspectorController : NSTableViewDataSource {
         guard let sectorNr = sectorForRow[row / 2] else { return nil }
         let headerRow = (row % 2) == 0
 
-            switch(tableColumn?.identifier.rawValue) {
+            switch tableColumn?.identifier.rawValue {
                 
             case "sector":
                 return headerRow ? sectorNr : ""
@@ -511,7 +510,7 @@ extension DiskInspectorController : NSTableViewDataSource {
     }
 }
 
-extension DiskInspectorController : NSTableViewDelegate {
+extension DiskInspectorController: NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
         

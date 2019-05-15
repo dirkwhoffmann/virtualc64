@@ -9,7 +9,7 @@
 
 import Foundation
 
-class ArchiveMountController : UserDialogController {
+class ArchiveMountController: UserDialogController {
     
     var archive: AnyArchiveProxy!
     
@@ -44,7 +44,7 @@ class ArchiveMountController : UserDialogController {
         contents.reloadData()
         
         // Set icon and title
-        if (archive.numberOfItems() == 1) {
+        if archive.numberOfItems() == 1 {
             subheader.stringValue = "This file contains the byte stream of a single C64 program."
         } else {
             subheader.stringValue = "This file contains the byte streams of multiple C64 programs."
@@ -57,30 +57,25 @@ class ArchiveMountController : UserDialogController {
             icon.image = NSImage.init(named: "IconT64")
             header.stringValue = "T64 File Archive"
             insertButton.title = "Insert as Disk"
-            break
             
         case PRG_FILE:
             icon.image = NSImage.init(named: "IconPRG")
             header.stringValue = "PRG File Container"
             insertButton.title = "Insert as Disk"
-            break
             
         case P00_FILE:
             icon.image = NSImage.init(named: "IconP00")
             header.stringValue = "P00 File Container"
             insertButton.title = "Insert as Disk"
-            break
             
         case D64_FILE:
             icon.image = NSImage.init(named: "IconD64")
             header.stringValue = "D64 File Archive"
             subheader.stringValue = "This file contains a byte-accurate image of a C64 diskette."
             subsubheader.stringValue = "Flushing files into memory is not recommended for this file type."
-            break
             
         default:
             assert(false)
-            break
         }
     }
     
@@ -130,7 +125,7 @@ class ArchiveMountController : UserDialogController {
 // NSTableView delegate and data source
 //
 
-extension ArchiveMountController : NSTableViewDelegate {
+extension ArchiveMountController: NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView,
                    willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
@@ -148,7 +143,7 @@ extension ArchiveMountController : NSTableViewDelegate {
     }
 }
 
-extension ArchiveMountController : NSTableViewDataSource {
+extension ArchiveMountController: NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
 
@@ -162,16 +157,16 @@ extension ArchiveMountController : NSTableViewDataSource {
         
         switch (tableColumn?.identifier)!.rawValue {
             
-            case "filename":
+        case "filename":
             return archive.unicodeNameOfItem()
             
-            case "filesize":
+        case "filesize":
             return archive.sizeOfItemInBlocks()
             
-            case "filetype":
+        case "filetype":
             return archive.typeOfItem()
             
-            default:
+        default:
             return "???"
         }
     }

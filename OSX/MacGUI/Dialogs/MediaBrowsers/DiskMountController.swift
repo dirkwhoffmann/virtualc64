@@ -9,7 +9,7 @@
 
 import Foundation
 
-class DiskMountController : UserDialogController {
+class DiskMountController: UserDialogController {
     
     var disk: AnyDiskProxy!
     
@@ -55,11 +55,9 @@ class DiskMountController : UserDialogController {
         case G64_FILE:
             icon.image = NSImage.init(named: "IconD64")
             header.stringValue = "G64 Format"
-            break;
 
         default:
             assert(false)
-            break;
         }
         
         update()
@@ -74,7 +72,7 @@ class DiskMountController : UserDialogController {
         sizeInBits = sizeInBytes * 8
         trackSizeinfo.stringValue = String(format: "%d Bytes", sizeInBytes)
         
-        if (halftrack % 2 == 0) {
+        if halftrack % 2 == 0 {
             let info = String(format: "Contents of halftrack %d:", halftrack)
             trackinfo.stringValue = String(info)
         } else {
@@ -108,7 +106,7 @@ class DiskMountController : UserDialogController {
 // NSTableView delegate and data source
 //
 
-extension DiskMountController : NSTableViewDelegate {
+extension DiskMountController: NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView,
                    willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
@@ -119,8 +117,7 @@ extension DiskMountController : NSTableViewDelegate {
     }
 }
 
-
-extension DiskMountController : NSTableViewDataSource {
+extension DiskMountController: NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         
@@ -132,7 +129,7 @@ extension DiskMountController : NSTableViewDataSource {
         
         if (tableColumn?.identifier)!.rawValue == "addr" {
             
-            let s = String(format:"$%04X", row * bytesPerRow)
+            let s = String(format: "$%04X", row * bytesPerRow)
             return s
         }
         

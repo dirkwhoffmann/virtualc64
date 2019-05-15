@@ -52,10 +52,15 @@ extension MyController {
         syncBit.intValue = vinfo.hardSync ? 1 : 0
         ringBit.intValue = vinfo.ringMod ? 1 : 0
         
-        if info.filterType & 0x10 != 0 { filterType.selectItem(at: 1) }
-        else if info.filterType & 0x20 != 0 { filterType.selectItem(at: 2) }
-        else if info.filterType & 0x40 != 0 { filterType.selectItem(at: 3) }
-        else { filterType.selectItem(at: 0) }
+        if info.filterType & 0x10 != 0 {
+            filterType.selectItem(at: 1)
+        } else if info.filterType & 0x20 != 0 {
+            filterType.selectItem(at: 2)
+        } else if info.filterType & 0x40 != 0 {
+            filterType.selectItem(at: 3)
+        } else {
+            filterType.selectItem(at: 0)
+        }
         filterType.item(at: 0)?.state = (info.filterType == 0) ? .on : .off
         filterType.item(at: 1)?.state = (info.filterType & 0x10 != 0) ? .on : .off
         filterType.item(at: 2)?.state = (info.filterType & 0x20 != 0) ? .on : .off
@@ -77,14 +82,14 @@ extension MyController {
     }
     
     private var selectedVoice: Int {
-        get { return voiceSelector.indexOfSelectedItem }
+        return voiceSelector.indexOfSelectedItem
     }
     
-    func pokeSidReg(_ register:(UInt16), _ value:(UInt8)) {
+    func pokeSidReg(_ register: (UInt16), _ value: (UInt8)) {
         c64.mem.pokeIO(0xD400 + register, value: value)
     }
     
-    func pokeSidReg(_ register:(UInt16), _ value:(UInt8), voice:(Int)) {
+    func pokeSidReg(_ register: (UInt16), _ value: (UInt8), voice: (Int)) {
         pokeSidReg(register + UInt16(7*voice), value)
     }
     
@@ -104,8 +109,8 @@ extension MyController {
         let oldValue = info.waveform
         
         if value.1 != oldValue {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._waveformAction((voice, oldValue))
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._waveformAction((voice, oldValue))
             }
             undoManager?.setActionName("Set Voice Waveform")
             pokeSidReg(4, value.1 | (info.reg.4 & 0x0F), voice: voice)
@@ -119,15 +124,15 @@ extension MyController {
         _waveformAction((selectedVoice, value))
     }
     
-    func _frequencyAction(_ value: (Int,UInt16)) {
+    func _frequencyAction(_ value: (Int, UInt16)) {
         
         let voice = value.0
         let info = c64.sid.getVoiceInfo(voice)
         let oldValue = info.frequency
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._frequencyAction((voice, oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._frequencyAction((voice, oldValue))
             }
             undoManager?.setActionName("Set Voice Frequency")
             let hi = UInt8(value.1 >> 8)
@@ -143,15 +148,15 @@ extension MyController {
         _frequencyAction((selectedVoice, UInt16(sender.intValue)))
     }
     
-    func _pulseWidthAction(_ value: (Int,UInt16)) {
+    func _pulseWidthAction(_ value: (Int, UInt16)) {
         
         let voice = value.0
         let info = c64.sid.getVoiceInfo(voice)
         let oldValue = info.pulseWidth
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._pulseWidthAction((voice, oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._pulseWidthAction((voice, oldValue))
             }
             undoManager?.setActionName("Set Pulse Width")
             let hi = UInt8(value.1 >> 8) & 0x0F
@@ -167,15 +172,15 @@ extension MyController {
         _pulseWidthAction((selectedVoice, UInt16(sender.intValue)))
     }
     
-    func _attackRateAction(_ value: (Int,UInt8)) {
+    func _attackRateAction(_ value: (Int, UInt8)) {
         
         let voice = value.0
         let info = c64.sid.getVoiceInfo(voice)
         let oldValue = info.attackRate
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._attackRateAction((voice, oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._attackRateAction((voice, oldValue))
             }
             undoManager?.setActionName("Set Attack Rate")
             track("\(value.1) \(value.1 << 4) \(info.reg.5 & 0x0F) \((value.1 << 4) | (info.reg.5 & 0x0F))")
@@ -189,15 +194,15 @@ extension MyController {
         _attackRateAction((selectedVoice, UInt8(sender.intValue)))
     }
     
-    func _decayRateAction(_ value: (Int,UInt8)) {
+    func _decayRateAction(_ value: (Int, UInt8)) {
         
         let voice = value.0
         let info = c64.sid.getVoiceInfo(voice)
         let oldValue = info.decayRate
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._decayRateAction((voice, oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._decayRateAction((voice, oldValue))
             }
             undoManager?.setActionName("Set Decay Rate")
             pokeSidReg(5, (info.reg.5 & 0xF0) | value.1, voice: voice)
@@ -210,15 +215,15 @@ extension MyController {
         _decayRateAction((selectedVoice, UInt8(sender.intValue)))
     }
     
-    func _sustainRateAction(_ value: (Int,UInt8)) {
+    func _sustainRateAction(_ value: (Int, UInt8)) {
         
         let voice = value.0
         let info = c64.sid.getVoiceInfo(voice)
         let oldValue = info.sustainRate
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._sustainRateAction((voice, oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._sustainRateAction((voice, oldValue))
             }
             undoManager?.setActionName("Set Sustain Rate")
             pokeSidReg(6, (value.1 << 4) | (info.reg.6 & 0x0F), voice: voice)
@@ -231,15 +236,15 @@ extension MyController {
         _sustainRateAction((selectedVoice, UInt8(sender.intValue)))
     }
     
-    func _releaseRateAction(_ value: (Int,UInt8)) {
+    func _releaseRateAction(_ value: (Int, UInt8)) {
         
         let voice = value.0
         let info = c64.sid.getVoiceInfo(voice)
         let oldValue = info.releaseRate
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._releaseRateAction((voice, oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._releaseRateAction((voice, oldValue))
             }
             undoManager?.setActionName("Set Release Rate")
             pokeSidReg(6, (info.reg.6 & 0xF0) | value.1, voice: voice)
@@ -252,15 +257,15 @@ extension MyController {
         _releaseRateAction((selectedVoice, UInt8(sender.intValue)))
     }
     
-    func _gateBitAction(_ value: (Int,Bool)) {
+    func _gateBitAction(_ value: (Int, Bool)) {
         
         let voice = value.0
         let info = c64.sid.getVoiceInfo(voice)
         let oldValue = info.gateBit
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._gateBitAction((voice, oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._gateBitAction((voice, oldValue))
             }
             undoManager?.setActionName("Toogle Gate Bit")
             pokeSidReg(4, (info.reg.4 & 0xFE) | (value.1 ? 0x01 : 0x00), voice: voice)
@@ -273,15 +278,15 @@ extension MyController {
         _gateBitAction((selectedVoice, sender.intValue != 0))
     }
     
-    func _hardSyncAction(_ value: (Int,Bool)) {
+    func _hardSyncAction(_ value: (Int, Bool)) {
         
         let voice = value.0
         let info = c64.sid.getVoiceInfo(voice)
         let oldValue = info.hardSync
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._hardSyncAction((voice, oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._hardSyncAction((voice, oldValue))
             }
             undoManager?.setActionName("Toogle Hard Sync Bit")
             pokeSidReg(4, (info.reg.4 & 0xFD) | (value.1 ? 0x02 : 0x00), voice: voice)
@@ -294,15 +299,15 @@ extension MyController {
         _hardSyncAction((selectedVoice, sender.intValue != 0))
     }
     
-    func _ringModAction(_ value: (Int,Bool)) {
+    func _ringModAction(_ value: (Int, Bool)) {
         
         let voice = value.0
         let info = c64.sid.getVoiceInfo(voice)
         let oldValue = info.ringMod
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._ringModAction((voice, oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._ringModAction((voice, oldValue))
             }
             undoManager?.setActionName("Toogle Ring Modulation Bit")
             pokeSidReg(4, (info.reg.4 & 0xFB) | (value.1 ? 0x04 : 0x00), voice: voice)
@@ -315,15 +320,15 @@ extension MyController {
         _ringModAction((selectedVoice, sender.intValue != 0))
     }
     
-    func _testBitAction(_ value: (Int,Bool)) {
+    func _testBitAction(_ value: (Int, Bool)) {
         
         let voice = value.0
         let info = c64.sid.getVoiceInfo(voice)
         let oldValue = info.testBit
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._testBitAction((voice, oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._testBitAction((voice, oldValue))
             }
             undoManager?.setActionName("Toogle Test Bit")
             pokeSidReg(4, (info.reg.4 & 0xF7) | (value.1 ? 0x08 : 0x00), voice: voice)
@@ -340,15 +345,15 @@ extension MyController {
     // Filter section
     //
     
-    func _filterAction(_ value: (Int,UInt8)) {
+    func _filterAction(_ value: (Int, UInt8)) {
         
         let voice = value.0
         let info = c64.sid.getInfo()
         let oldValue = info.filterType
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._filterAction((voice, oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._filterAction((voice, oldValue))
             }
             undoManager?.setActionName("Set Filter Type")
             let otherBits = (info.filterModeBits & 0x8F) | info.volume
@@ -363,15 +368,15 @@ extension MyController {
         _filterAction((selectedVoice, value))
     }
     
-    func _filterCutoffAction(_ value: (Int,UInt16)) {
+    func _filterCutoffAction(_ value: (Int, UInt16)) {
         
         let voice = value.0
         let info = c64.sid.getInfo()
         let oldValue = info.filterCutoff
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._filterCutoffAction((voice, oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._filterCutoffAction((voice, oldValue))
             }
             undoManager?.setActionName("Set Filter Cutoff")
             let hi = UInt8((value.1 >> 3) & 0xFF)
@@ -387,16 +392,16 @@ extension MyController {
         _filterCutoffAction((selectedVoice, UInt16(sender.intValue)))
     }
     
-    func _filterResonanceAction(_ value: (Int,UInt8)) {
+    func _filterResonanceAction(_ value: (Int, UInt8)) {
         
         let voice = value.0
         let info = c64.sid.getInfo()
         let oldValue = info.filterResonance
         let newValue = value.1 & 0x0F
         
-        if (newValue != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._filterResonanceAction((voice, oldValue))
+        if newValue != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._filterResonanceAction((voice, oldValue))
             }
             undoManager?.setActionName("Set Filter Resonance")
             // track("\(newValue << 4) \((newValue << 4) | info.filterEnableBits)")
@@ -410,7 +415,7 @@ extension MyController {
         _filterResonanceAction((selectedVoice, UInt8(sender.intValue)))
     }
     
-    func _filterEnableAction(_ value: (Int,Bool)) {
+    func _filterEnableAction(_ value: (Int, Bool)) {
         
         let voice = value.0
         let mask = UInt8(1 << value.0)
@@ -418,9 +423,9 @@ extension MyController {
         let oldValue = (info.filterEnableBits & mask) != 0
         let newValue = value.1
         
-        if (newValue != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._filterEnableAction((voice, oldValue))
+        if newValue != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._filterEnableAction((voice, oldValue))
             }
             undoManager?.setActionName("Toggle Filter Bit")
             let oldBits = (info.filterResonance << 4) | info.filterEnableBits
@@ -444,9 +449,9 @@ extension MyController {
         let oldValue = info.volume
         let newValue = value & 0x0F
         
-        if (newValue != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._volumeAction(oldValue)
+        if newValue != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._volumeAction(oldValue)
             }
             undoManager?.setActionName("Set Volume")
             pokeSidReg(0x18, (info.filterEnableBits & 0xF0) | newValue)
@@ -459,4 +464,3 @@ extension MyController {
         _volumeAction(UInt8(sender.intValue))
     }
 }
-

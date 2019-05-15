@@ -97,7 +97,7 @@ extension PreferencesController {
         let ptr = mask.bindMemory(to: UInt32.self, capacity: cap)
         
         // For all palettes ...
-        for palette : Int in 0 ... 5 {
+        for palette: Int in 0 ... 5 {
             
             // Create image data
             for n in 0 ... 15 {
@@ -112,8 +112,7 @@ extension PreferencesController {
             vidPalettePopup.item(at: palette)?.image = resizedImage
         }
     }
-    
-    
+
     //
     // Action methods (Colors)
     //
@@ -145,8 +144,7 @@ extension PreferencesController {
         updatePalettePreviewImages()
         refresh()
     }
-    
-    
+
     //
     // Action methods (Effects)
     //
@@ -290,8 +288,8 @@ extension PreferencesController {
         }
     }
     
-    @IBAction func vidScanlineWeightAction(_ sender: NSSlider!)
-    {
+    @IBAction func vidScanlineWeightAction(_ sender: NSSlider!) {
+
         if let metal = myController?.metalScreen {
             track("\(sender.floatValue)")
             metal.shaderOptions.scanlineWeight = sender.floatValue
@@ -316,8 +314,8 @@ extension PreferencesController {
         }
     }
     
-    @IBAction func vidDisalignmentVAction(_ sender: NSSlider!)
-    {
+    @IBAction func vidDisalignmentVAction(_ sender: NSSlider!) {
+
         if let metal = myController?.metalScreen {
             track("\(sender.floatValue)")
             metal.shaderOptions.disalignmentV = sender.floatValue
@@ -373,19 +371,15 @@ extension PreferencesController {
         refresh()
     }
     
-    @IBAction func vidFactorySettingsActionTFT(_ sender: Any!)
-    {
-        track()
-        
+    @IBAction func vidFactorySettingsActionTFT(_ sender: Any!) {
+
         myController?.resetVideoUserDefaults()
         myController?.metalScreen.shaderOptions = ShaderDefaultsTFT
         updatePalettePreviewImages()
         refresh()
     }
     
-    @IBAction func vidFactorySettingsActionCRT(_ sender: Any!)
-    {
-        track()
+    @IBAction func vidFactorySettingsActionCRT(_ sender: Any!) {
         
         myController?.resetVideoUserDefaults()
         myController?.metalScreen.shaderOptions = ShaderDefaultsCRT

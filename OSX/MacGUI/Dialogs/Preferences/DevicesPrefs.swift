@@ -64,20 +64,18 @@ extension PreferencesController {
         var macKey: MacKey?
         var macKeyCode: NSAttributedString = NSAttributedString.init()
         var macKeyDesc: String = ""
-        for (key, direction) in keyMap {
-            if direction == dir.rawValue {
-                let attr = [NSAttributedString.Key.foregroundColor: NSColor.black]
-                macKey = key
-                let myStr = NSString(format: "%02X", macKey!.keyCode) as String
-                macKeyCode = NSAttributedString(string: myStr, attributes: attr)
-                macKeyDesc = macKey?.description?.uppercased() ?? ""
-                break
-            }
+        for (key, direction) in keyMap where direction == dir.rawValue {
+            let attr = [NSAttributedString.Key.foregroundColor: NSColor.black]
+            macKey = key
+            let myStr = NSString(format: "%02X", macKey!.keyCode) as String
+            macKeyCode = NSAttributedString(string: myStr, attributes: attr)
+            macKeyDesc = macKey?.description?.uppercased() ?? ""
+            break
         }
         
         // Update text and button image
         let recordKey = (nr == 0) ? devRecordKey1 : devRecordKey2
-        if (recordKey == dir) {
+        if recordKey == dir {
             button.title = ""
             button.image = NSImage(named: "key_red")
             button.imageScaling = .scaleAxesIndependently
@@ -133,7 +131,7 @@ extension PreferencesController {
             devRecordKey1 = nil
             devRecordKey2 = JoystickDirection(rawValue: (tag - 10))
         } else {
-            assert(false);
+            assert(false)
         }
         
         refresh()

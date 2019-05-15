@@ -9,7 +9,7 @@
 
 import Foundation
 
-class PreferencesController : UserDialogController {
+class PreferencesController: UserDialogController {
 
     @IBOutlet weak var prefTabView: NSTabView!
     
@@ -91,7 +91,7 @@ class PreferencesController : UserDialogController {
     @IBOutlet weak var vidBlurPopUp: NSPopUpButton!
     @IBOutlet weak var vidBlurRadiusSlider: NSSlider!
     
-    @IBOutlet weak var vidBloomPopup:NSPopUpButton!
+    @IBOutlet weak var vidBloomPopup: NSPopUpButton!
     @IBOutlet weak var vidBloomRadiusRSlider: NSSlider!
     @IBOutlet weak var vidBloomRadiusGSlider: NSSlider!
     @IBOutlet weak var vidBloomRadiusBSlider: NSSlider!
@@ -162,7 +162,6 @@ class PreferencesController : UserDialogController {
     @IBOutlet weak var emuTapAutoTypeText: NSTextField!
     @IBOutlet weak var emuCrtAutoTypeText: NSTextField!
 
-
     //
     // Devices preferences
     //
@@ -223,7 +222,7 @@ class PreferencesController : UserDialogController {
     var keyImage = Array(repeating: Array(repeating: nil as NSImage?, count: 8), count: 8)
     
     // Selected C64 key
-    var selectedKey: C64Key? = nil
+    var selectedKey: C64Key?
     
     @IBOutlet weak var keyOkButton: NSButton!
     @IBOutlet weak var keyCancelButton: NSButton!
@@ -284,7 +283,7 @@ class PreferencesController : UserDialogController {
     }
 }
 
-extension PreferencesController : NSTabViewDelegate {
+extension PreferencesController: NSTabViewDelegate {
 
     func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
 
@@ -292,7 +291,7 @@ extension PreferencesController : NSTabViewDelegate {
     }
 }
 
-extension PreferencesController : NSTextFieldDelegate {
+extension PreferencesController: NSTextFieldDelegate {
     
     func controlTextDidChange(_ obj: Notification) {
         
@@ -306,7 +305,7 @@ extension PreferencesController : NSTextFieldDelegate {
                 
             case emuSnapshotInterval:
                 
-                if let _ = formatter?.number(from: view.stringValue) {
+                if formatter?.number(from: view.stringValue) != nil {
                     emuSnapshotIntervalAction(view)
                 }
                 
@@ -317,7 +316,7 @@ extension PreferencesController : NSTextFieldDelegate {
                 
             case devAutofireBullets:
                 
-                if let _ = formatter?.number(from: view.stringValue) {
+                if formatter?.number(from: view.stringValue) != nil {
                     devAutofireBulletsAction(view)
                 }
                 

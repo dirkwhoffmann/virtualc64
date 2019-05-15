@@ -17,7 +17,7 @@ class SnapshotTableCellView: NSTableCellView {
     @IBOutlet weak var delete: NSButton!
 }
 
-class SnapshotDialog : UserDialogController  {
+class SnapshotDialog: UserDialogController {
     
     // Outlets
     
@@ -28,17 +28,17 @@ class SnapshotDialog : UserDialogController  {
     
     // Auto-saved snapshot cache
     var numAutoSnapshots = -1
-    var autoSnapshotImage: [Int:NSImage] = [:]
-    var autoTimeStamp: [Int:String] = [:]
-    var autoTimeDiff: [Int:String] = [:]
-    var autoSlotForRow: [Int:Int] = [:]
+    var autoSnapshotImage: [Int: NSImage] = [:]
+    var autoTimeStamp: [Int: String] = [:]
+    var autoTimeDiff: [Int: String] = [:]
+    var autoSlotForRow: [Int: Int] = [:]
     
     // User-saved snapshot cache
     var numUserSnapshots = -1
-    var userSnapshotImage: [Int:NSImage] = [:]
-    var userTimeStamp: [Int:String] = [:]
-    var userTimeDiff: [Int:String] = [:]
-    var userSlotForRow: [Int:Int] = [:]
+    var userSnapshotImage: [Int: NSImage] = [:]
+    var userTimeStamp: [Int: String] = [:]
+    var userTimeDiff: [Int: String] = [:]
+    var userSlotForRow: [Int: Int] = [:]
     
     override public func awakeFromNib() {
         
@@ -65,8 +65,8 @@ class SnapshotDialog : UserDialogController  {
     func timeDiffInfo(timeStamp: TimeInterval) -> String {
         
         var diff = Int(round(now.timeIntervalSince1970 - Double(timeStamp)))
-        let min = diff / 60;
-        let hrs = diff / 3600;
+        let min = diff / 60
+        let hrs = diff / 3600
         if (diff) < 60 {
             let s = (diff == 1) ? "" : "s"
             return "\(diff) second\(s) ago"
@@ -143,22 +143,21 @@ class SnapshotDialog : UserDialogController  {
 // NSTableViewDataSource, NSTableViewDelegate
 //
 
-extension SnapshotDialog : NSTableViewDataSource, NSTableViewDelegate {
+extension SnapshotDialog: NSTableViewDataSource, NSTableViewDelegate {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
 
-        if (tableView == autoTableView) {
+        if tableView == autoTableView {
             return numAutoSnapshots
         }
-            
-        else if (tableView == userTableView) {
+        if tableView == userTableView {
             return numUserSnapshots
         }
         
-        fatalError();
+        fatalError()
     }
     
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView?{
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         
         let id = NSUserInterfaceItemIdentifier(rawValue: "defaultRow")
         let view = tableView.makeView(withIdentifier: id, owner: self)
@@ -166,27 +165,27 @@ extension SnapshotDialog : NSTableViewDataSource, NSTableViewDelegate {
         guard let result = view as? SnapshotTableCellView else { return nil }
         // let result = tableView.makeView(withIdentifier: id, owner: self) as! SnapshotTableCellView
         
-        if (tableView == autoTableView) {
+        if tableView == autoTableView {
             
             result.preview.image = autoSnapshotImage[row]
             result.text.stringValue = autoTimeStamp[row]!
             result.subText.stringValue = autoTimeDiff[row]!
             result.delete.isHidden = true
             result.delete.tag = row
-            return result;
+            return result
         }
         
-        else if (tableView == userTableView) {
+        if tableView == userTableView {
             
             result.preview.image = userSnapshotImage[row]
             result.text.stringValue = userTimeStamp[row]!
             result.subText.stringValue = userTimeDiff[row]!
             result.delete.isHidden = false
             result.delete.tag = row
-            return result;
+            return result
         }
     
-        fatalError();
+        fatalError()
     }
 }
 
@@ -212,11 +211,10 @@ extension SnapshotDialog {
         }
         
         // Get snapshot data
-        var data : Data
-        if (tableView == autoTableView) {
+        var data: Data
+        if tableView == autoTableView {
             data = c64.autoSnapshotData(index)
-        }
-        else {
+        } else {
             precondition(tableView == userTableView)
             data = c64.userSnapshotData(index)
         }
@@ -227,6 +225,6 @@ extension SnapshotDialog {
         fileWrapper.preferredFilename = "Snapshot.VC64"
         pboard.write(fileWrapper)
 
-        return true;
+        return true
     }
 }

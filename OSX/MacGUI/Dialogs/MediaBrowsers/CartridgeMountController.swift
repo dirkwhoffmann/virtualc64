@@ -9,7 +9,7 @@
 
 import Foundation
 
-class CartridgeMountController : UserDialogController {
+class CartridgeMountController: UserDialogController {
     
     var cartridge: CRTFileProxy!
     
@@ -71,7 +71,7 @@ class CartridgeMountController : UserDialogController {
 // NSTableView delegate and data source
 //
 
-extension CartridgeMountController : NSTableViewDelegate {
+extension CartridgeMountController: NSTableViewDelegate {
     
     /*
     func tableView(_ tableView: NSTableView,
@@ -86,7 +86,7 @@ extension CartridgeMountController : NSTableViewDelegate {
     
 }
 
-extension CartridgeMountController : NSTableViewDataSource {
+extension CartridgeMountController: NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         
@@ -127,4 +127,3 @@ extension CartridgeMountController : NSTableViewDataSource {
         return "???"
     }
 }
-

@@ -9,7 +9,6 @@
 
 import Foundation
 
-
 //
 // Logging / Debugging
 // 
@@ -18,14 +17,13 @@ public func track(_ message: String = "",
                   path: String = #file, function: String = #function, line: Int = #line ) {
     
     if let file = URL.init(string: path)?.deletingPathExtension().lastPathComponent {
-        if (message == "") {
+        if message == "" {
             print("\(file).\(line)::\(function)")
         } else {
             print("\(file).\(line)::\(function): \(message)")
         }
     }
 }
-
 
 //
 // Handling URLs
@@ -68,7 +66,6 @@ extension URL {
     }
 }
 
-
 //
 // Handling images
 //
@@ -91,13 +88,13 @@ extension NSImage {
                      cutout: NSRect,
                      interpolation: NSImageInterpolation = .high) -> NSImage {
         
-        let img = NSImage(size: CGSize(width:width, height:height))
+        let img = NSImage(size: CGSize(width: width, height: height))
         
         img.lockFocus()
         let ctx = NSGraphicsContext.current
         ctx?.imageInterpolation = interpolation // NSImageInterpolation.none // .high
         self.draw(in: cutout,
-                  from: NSMakeRect(0, 0, size.width, size.height),
+                  from: NSRect.init(x: 0, y: 0, width: size.width, height: size.height),
                   operation: .copy,
                   fraction: 1)
         img.unlockFocus()
@@ -107,14 +104,14 @@ extension NSImage {
     
     func resizeImage(width: CGFloat, height: CGFloat) -> NSImage {
         
-        let cutout = NSMakeRect(0, 0, width, height)
+        let cutout = NSRect.init(x: 0, y: 0, width: width, height: height)
         return resizeImage(width: width, height: height,
                            cutout: cutout)
     }
 
     func resizeImageSharp(width: CGFloat, height: CGFloat) -> NSImage {
         
-        let cutout = NSMakeRect(0, 0, width, height)
+        let cutout = NSRect.init(x: 0, y: 0, width: width, height: height)
         return resizeImage(width: width, height: height,
                            cutout: cutout,
                            interpolation: .none)
@@ -129,12 +126,11 @@ extension NSImage {
         
         lockFocus()
         let sourceOver = NSCompositingOperation.sourceOver
-        draw(in: rect, from: NSZeroRect, operation: sourceOver, fraction: 1.0)
-        glossy!.draw(in: rect, from: NSZeroRect, operation: sourceOver, fraction: 1.0)
+        draw(in: rect, from: NSRect.zero, operation: sourceOver, fraction: 1.0)
+        glossy!.draw(in: rect, from: NSRect.zero, operation: sourceOver, fraction: 1.0)
         unlockFocus()
     }
 }
-
 
 //
 // C64 Proxy extensions

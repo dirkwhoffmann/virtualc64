@@ -9,8 +9,8 @@
 
 import Foundation
 
-class VirtualKeyboardController : UserDialogController, NSWindowDelegate
-{
+class VirtualKeyboardController: UserDialogController, NSWindowDelegate {
+
     /// Array holding a reference to the view of each key
     var keyView = Array(repeating: nil as NSButton?, count: 66)
 
@@ -80,7 +80,7 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
         
         if let win = window, win.isVisible, let keyboard = proxy?.keyboard {
             
-            var needsUpdate = false;
+            var needsUpdate = false
             
             if lshift != keyboard.leftShiftIsPressed() {
                 lshift = keyboard.leftShiftIsPressed()
@@ -169,7 +169,7 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
             }
         }
         
-        switch (key.nr) {
+        switch key.nr {
             
         case 34: // Shift Lock
             shiftLock ? keyboard.unlockShift() : keyboard.lockShift()
@@ -193,12 +193,12 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
                 press()
                 usleep(useconds_t(20000))
                 release()
-                if (self.autoClose) {
+                if self.autoClose {
                     self.releaseSpecialKeys()
                 }
             }
             
-            if (autoClose) {
+            if autoClose {
                 cancelAction(self)
             }
         }
@@ -207,7 +207,7 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
     override func mouseDown(with event: NSEvent) {
         
         track()
-        if (autoClose) {
+        if autoClose {
             cancelAction(self)
         }
     }

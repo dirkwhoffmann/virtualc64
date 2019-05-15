@@ -9,7 +9,7 @@
 
 import Foundation
 
-class ExportDiskController : UserDialogController {
+class ExportDiskController: UserDialogController {
 
     @IBOutlet weak var button: NSPopUpButton!
     var type: C64FileType = D64_FILE

@@ -105,7 +105,7 @@ extension MyController {
         
         if let fileContents = NSDictionary(contentsOf: url) {
             
-            if let dict = fileContents as? Dictionary<String,Any> {
+            if let dict = fileContents as? [String: Any] {
                 
                 let filteredDict = dict.filter { $0.0.hasPrefix("VC64") }
                 
@@ -164,10 +164,10 @@ extension MyController {
 
     static func registerGeneralUserDefaults() {
         
-        let dictionary : [String:Any] = [
+        let dictionary: [String: Any] = [
             
             VC64Keys.inputDevice1: Defaults.inputDevice1,
-            VC64Keys.inputDevice2: Defaults.inputDevice2,
+            VC64Keys.inputDevice2: Defaults.inputDevice2
         ]
         
         let defaults = UserDefaults.standard
@@ -177,14 +177,14 @@ extension MyController {
     func resetGeneralUserDefaults() {
         
         let defaults = UserDefaults.standard
-        
-        for key in [ VC64Keys.inputDevice1,
+
+        let keys = [ VC64Keys.inputDevice1,
                      VC64Keys.inputDevice2,
                      
-                     VC64Keys.mapKeysByPosition]
-        {
-            defaults.removeObject(forKey: key)
-        }
+                     VC64Keys.mapKeysByPosition
+        ]
+
+        for key in keys { defaults.removeObject(forKey: key) }
         
         loadGeneralUserDefaults()
     }
@@ -237,13 +237,13 @@ extension MyController {
     
     static func registerRomUserDefaults() {
         
-        let dictionary : [String:Any] = [
+        let dictionary: [String: Any] = [
             
             VC64Keys.basicRom: Defaults.basicRom,
             VC64Keys.charRom: Defaults.charRom,
             VC64Keys.kernalRom: Defaults.kernalRom,
-            VC64Keys.vc1541Rom: Defaults.vc1541Rom,
-            ]
+            VC64Keys.vc1541Rom: Defaults.vc1541Rom
+        ]
         
         let defaults = UserDefaults.standard
         defaults.register(defaults: dictionary)
@@ -253,13 +253,13 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         
-        for key in [ VC64Keys.basicRom,
+        let keys = [ VC64Keys.basicRom,
                      VC64Keys.charRom,
                      VC64Keys.kernalRom,
-                     VC64Keys.vc1541Rom]
-        {
-            defaults.removeObject(forKey: key)
-        }
+                     VC64Keys.vc1541Rom
+        ]
+
+        for key in keys { defaults.removeObject(forKey: key) }
         
         loadRomUserDefaults()
     }
@@ -307,7 +307,7 @@ extension MyController {
     
     static func registerKeyMapUserDefaults() {
         
-        let dictionary : [String:Any] = [
+        let dictionary: [String: Any] = [
             
             VC64Keys.mapKeysByPosition: Defaults.mapKeysByPosition
         ]
@@ -321,11 +321,11 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         
-        for key in [ VC64Keys.mapKeysByPosition,
-                     VC64Keys.keyMap]
-        {
-            defaults.removeObject(forKey: key)
-        }
+        let keys = [ VC64Keys.mapKeysByPosition,
+                     VC64Keys.keyMap
+        ]
+
+        for key in keys { defaults.removeObject(forKey: key) }
         
         loadKeyMapUserDefaults()
     }
@@ -375,18 +375,18 @@ extension Defaults {
     static let autofireFrequency = Float(2.5)
     
     static let joyKeyMap1 = [
-        MacKey.curLeft:  JOYSTICK_LEFT.rawValue,
+        MacKey.curLeft: JOYSTICK_LEFT.rawValue,
         MacKey.curRight: JOYSTICK_RIGHT.rawValue,
-        MacKey.curUp:    JOYSTICK_UP.rawValue,
-        MacKey.curDown:  JOYSTICK_DOWN.rawValue,
-        MacKey.space:    JOYSTICK_FIRE.rawValue
+        MacKey.curUp: JOYSTICK_UP.rawValue,
+        MacKey.curDown: JOYSTICK_DOWN.rawValue,
+        MacKey.space: JOYSTICK_FIRE.rawValue
     ]
     static let joyKeyMap2 = [
-        MacKey.Ansi.s:   JOYSTICK_LEFT.rawValue,
-        MacKey.Ansi.d:   JOYSTICK_RIGHT.rawValue,
-        MacKey.Ansi.e:   JOYSTICK_UP.rawValue,
-        MacKey.Ansi.x:   JOYSTICK_DOWN.rawValue,
-        MacKey.Ansi.c:   JOYSTICK_FIRE.rawValue
+        MacKey.Ansi.s: JOYSTICK_LEFT.rawValue,
+        MacKey.Ansi.d: JOYSTICK_RIGHT.rawValue,
+        MacKey.Ansi.e: JOYSTICK_UP.rawValue,
+        MacKey.Ansi.x: JOYSTICK_DOWN.rawValue,
+        MacKey.Ansi.c: JOYSTICK_FIRE.rawValue
     ]
 }
     
@@ -394,7 +394,7 @@ extension MyController {
     
     static func registerDevicesUserDefaults() {
         
-        let dictionary : [String:Any] = [
+        let dictionary: [String: Any] = [
             VC64Keys.mouseModel: Int(Defaults.mouseModel.rawValue),
             VC64Keys.disconnectJoyKeys: Defaults.disconnectJoyKeys,
             VC64Keys.autofire: Defaults.autofire,
@@ -412,7 +412,7 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         
-        for key in [ VC64Keys.mouseModel,
+        let keys = [ VC64Keys.mouseModel,
                      VC64Keys.disconnectJoyKeys,
                      VC64Keys.autofire,
                      VC64Keys.autofireBullets,
@@ -420,10 +420,9 @@ extension MyController {
                      
                      VC64Keys.joyKeyMap1,
                      VC64Keys.joyKeyMap2
-                     ]
-        {
-            defaults.removeObject(forKey: key)
-        }
+        ]
+
+        for key in keys { defaults.removeObject(forKey: key) }
         
         loadDevicesUserDefaults()
     }
@@ -506,7 +505,7 @@ extension MyController {
     
     static func registerVideoUserDefaults() {
         
-        let dictionary : [String:Any] = [
+        let dictionary: [String: Any] = [
             
             VC64Keys.palette: Int(Defaults.palette.rawValue),
             VC64Keys.brightness: Defaults.brightness,
@@ -517,8 +516,8 @@ extension MyController {
             VC64Keys.keepAspectRatio: Defaults.keepAspectRatio,
             VC64Keys.eyeX: Defaults.eyeX,
             VC64Keys.eyeY: Defaults.eyeY,
-            VC64Keys.eyeZ: Defaults.eyeZ,
-            ]
+            VC64Keys.eyeZ: Defaults.eyeZ
+        ]
         
         let defaults = UserDefaults.standard
         defaults.register(defaults: dictionary)
@@ -529,7 +528,7 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         
-        for key in [ VC64Keys.palette,
+        let keys = [ VC64Keys.palette,
                      VC64Keys.brightness,
                      VC64Keys.contrast,
                      VC64Keys.saturation,
@@ -541,10 +540,9 @@ extension MyController {
                      VC64Keys.eyeZ,
                      
                      VC64Keys.shaderOptions
-            ]
-        {
-            defaults.removeObject(forKey: key)
-        }
+        ]
+
+        for key in keys { defaults.removeObject(forKey: key) }
         
         loadVideoUserDefaults()
     }
@@ -644,24 +642,24 @@ extension Defaults {
                                         "PRG": AutoMountAction.openBrowser,
                                         "T64": AutoMountAction.openBrowser,
                                         "TAP": AutoMountAction.openBrowser,
-                                        "CRT": AutoMountAction.openBrowser,]
+                                        "CRT": AutoMountAction.openBrowser ]
     static let autoType             = [ "D64": true,
                                         "PRG": true,
                                         "T64": true,
                                         "TAP": true,
-                                        "CRT": false]
+                                        "CRT": false ]
     static let autoTypeText         = [ "D64": "LOAD \"*\",8,1:",
                                         "PRG": "RUN",
                                         "T64": "RUN",
                                         "TAP": "LOAD",
-                                        "CRT": ""]
+                                        "CRT": "" ]
 }
 
 extension MyController {
     
     static func registerEmulatorUserDefaults() {
         
-        let dictionary : [String:Any] = [
+        let dictionary: [String: Any] = [
             
             VC64Keys.warpLoad: Defaults.warpLoad,
             VC64Keys.driveNoise: Defaults.driveNoise,
@@ -690,7 +688,7 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         
-        for key in [VC64Keys.warpLoad,
+        let keys = [VC64Keys.warpLoad,
                     VC64Keys.driveNoise,
                     
                     VC64Keys.screenshotSource,
@@ -706,10 +704,9 @@ extension MyController {
                     VC64Keys.autoMountAction,
                     VC64Keys.autoType,
                     VC64Keys.autoTypeText
-                    ]
-        {
-            defaults.removeObject(forKey: key)
-        }
+        ]
+
+        for key in keys { defaults.removeObject(forKey: key) }
         
         loadEmulatorUserDefaults()
     }
@@ -815,7 +812,7 @@ extension MyController {
     
     static func registerHardwareUserDefaults() {
         
-        let dictionary : [String:Any] = [
+        let dictionary: [String: Any] = [
         
             VC64Keys.vicChip: Int(Defaults.vicChip.rawValue),
             VC64Keys.grayDotBug: Defaults.grayDotBug,
@@ -840,7 +837,7 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         
-        for key in [VC64Keys.vicChip,
+        let keys = [VC64Keys.vicChip,
                     VC64Keys.grayDotBug,
                     
                     VC64Keys.ciaChip,
@@ -853,10 +850,9 @@ extension MyController {
                     
                     VC64Keys.glueLogic,
                     VC64Keys.initPattern
-            ]
-        {
-            defaults.removeObject(forKey: key)
-        }
+        ]
+
+        for key in keys { defaults.removeObject(forKey: key) }
         
         loadHardwareUserDefaults()
     }

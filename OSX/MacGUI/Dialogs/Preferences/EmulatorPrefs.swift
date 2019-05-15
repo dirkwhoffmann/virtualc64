@@ -73,8 +73,7 @@ extension PreferencesController {
         proxy?.drive2.setSendSoundMessages(sender.state == .on)
         refresh()
     }
-    
-    
+
     //
     // Action methods (Screenshots)
     //
@@ -90,8 +89,7 @@ extension PreferencesController {
         myController?.screenshotTargetIntValue = sender.selectedTag()
         refresh()
     }
-    
-    
+
     //
     // Action methods (User Dialogs)
     //
@@ -107,8 +105,7 @@ extension PreferencesController {
         myController?.ejectWithoutAsking = (sender.state == .on)
         refresh()
     }
-    
-    
+
     //
     // Action methods (Miscellaneous)
     //
@@ -135,8 +132,7 @@ extension PreferencesController {
         }
         refresh()
     }
-    
-    
+
     //
     // Action methods (Misc)
     //
@@ -152,7 +148,7 @@ extension PreferencesController {
     //
     
     private func mediaFileType(_ tag: Int) -> String? {
-        switch(tag) {
+        switch tag {
         case 0: return "D64"
         case 1: return "PRG"
         case 2: return "T64"
@@ -187,4 +183,3 @@ extension PreferencesController {
         }
     }
 }
-

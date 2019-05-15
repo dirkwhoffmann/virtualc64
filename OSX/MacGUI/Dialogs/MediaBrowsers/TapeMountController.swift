@@ -9,7 +9,7 @@
 
 import Foundation
 
-class TapeMountController : UserDialogController {
+class TapeMountController: UserDialogController {
     
     var tape: TAPFileProxy!
     
