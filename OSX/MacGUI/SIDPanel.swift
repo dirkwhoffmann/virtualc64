@@ -107,9 +107,8 @@ extension MyController {
         }
     }
     
-    @IBAction func waveformAction(_ sender: Any!) {
+    @IBAction func waveformAction(_ sender: NSPopUpButton!) {
         
-        let sender = sender as! NSPopUpButton
         let value = UInt8(sender.selectedTag())
         _waveformAction((selectedVoice, value))
     }
@@ -133,9 +132,8 @@ extension MyController {
         }
     }
     
-    @IBAction func frequencyAction(_ sender: Any!) {
+    @IBAction func frequencyAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _frequencyAction((selectedVoice, UInt16(sender.intValue)))
     }
     
@@ -158,9 +156,8 @@ extension MyController {
         }
     }
     
-    @IBAction func pulseWidthAction(_ sender: Any!) {
+    @IBAction func pulseWidthAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _pulseWidthAction((selectedVoice, UInt16(sender.intValue)))
     }
     
@@ -181,9 +178,8 @@ extension MyController {
         }
     }
     
-    @IBAction func attackRateAction(_ sender: Any!) {
+    @IBAction func attackRateAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _attackRateAction((selectedVoice, UInt8(sender.intValue)))
     }
     
@@ -203,9 +199,8 @@ extension MyController {
         }
     }
     
-    @IBAction func decayRateAction(_ sender: Any!) {
+    @IBAction func decayRateAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _decayRateAction((selectedVoice, UInt8(sender.intValue)))
     }
     
@@ -225,9 +220,8 @@ extension MyController {
         }
     }
     
-    @IBAction func sustainRateAction(_ sender: Any!) {
+    @IBAction func sustainRateAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _sustainRateAction((selectedVoice, UInt8(sender.intValue)))
     }
     
@@ -247,9 +241,8 @@ extension MyController {
         }
     }
     
-    @IBAction func releaseRateAction(_ sender: Any!) {
+    @IBAction func releaseRateAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _releaseRateAction((selectedVoice, UInt8(sender.intValue)))
     }
     
@@ -269,9 +262,8 @@ extension MyController {
         }
     }
     
-    @IBAction func gateBitAction(_ sender: Any!) {
+    @IBAction func gateBitAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         _gateBitAction((selectedVoice, sender.intValue != 0))
     }
     
@@ -291,9 +283,8 @@ extension MyController {
         }
     }
     
-    @IBAction func hardSyncAction(_ sender: Any!) {
+    @IBAction func hardSyncAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         _hardSyncAction((selectedVoice, sender.intValue != 0))
     }
     
@@ -313,9 +304,8 @@ extension MyController {
         }
     }
     
-    @IBAction func ringModAction(_ sender: Any!) {
+    @IBAction func ringModAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         _ringModAction((selectedVoice, sender.intValue != 0))
     }
     
@@ -335,9 +325,8 @@ extension MyController {
         }
     }
     
-    @IBAction func testBitAction(_ sender: Any!) {
+    @IBAction func testBitAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         _testBitAction((selectedVoice, sender.intValue != 0))
     }
     
@@ -362,9 +351,8 @@ extension MyController {
         }
     }
     
-    @IBAction func filterAction(_ sender: Any!) {
+    @IBAction func filterAction(_ sender: NSPopUpButton!) {
         
-        let sender = sender as! NSPopUpButton
         let value = UInt8(sender.selectedTag())
         _filterAction((selectedVoice, value))
     }
@@ -388,9 +376,8 @@ extension MyController {
         }
     }
     
-    @IBAction func filterCutoffAction(_ sender: Any!) {
+    @IBAction func filterCutoffAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _filterCutoffAction((selectedVoice, UInt16(sender.intValue)))
     }
     
@@ -412,9 +399,8 @@ extension MyController {
         }
     }
     
-    @IBAction func filterResonanceAction(_ sender: Any!) {
+    @IBAction func filterResonanceAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _filterResonanceAction((selectedVoice, UInt8(sender.intValue)))
     }
     
@@ -437,9 +423,8 @@ extension MyController {
         }
     }
     
-    @IBAction func filterEnableAction(_ sender: Any!) {
+    @IBAction func filterEnableAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         _filterEnableAction((sender.tag, sender.intValue != 0))
     }
     
@@ -463,9 +448,8 @@ extension MyController {
         }
     }
     
-    @IBAction func volumeAction(_ sender: Any!) {
+    @IBAction func volumeAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
         _volumeAction(UInt8(sender.intValue))
     }
 }

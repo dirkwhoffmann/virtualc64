@@ -258,10 +258,11 @@ public extension MetalView
     func createBackgroundTexture() -> MTLTexture? {
 
         // Grab the current wallpaper as an NSImage
-        let windows =
-            CGWindowListCopyWindowInfo(CGWindowListOption.optionOnScreenOnly,
-                                       CGWindowID(0))! as! [NSDictionary]
-        let screenBounds = NSScreen.main?.frame
+        let opt = CGWindowListOption.optionOnScreenOnly
+        let id = CGWindowID(0)
+        guard
+            let windows = CGWindowListCopyWindowInfo(opt, id)! as? [NSDictionary],
+            let screenBounds = NSScreen.main?.frame else { return nil }
         
         // Iterate through all windows
         var cgImage: CGImage?
@@ -276,10 +277,12 @@ public extension MetalView
             }
             
             // Skip all windows that do not have the same bounds as the main screen
-            let bounds = window["kCGWindowBounds"] as! NSDictionary
-            let width  = bounds["Width"] as! CGFloat
-            let height = bounds["Height"] as! CGFloat
-            if (width != screenBounds?.width || height != screenBounds?.height) {
+            guard
+                let bounds = window["kCGWindowBounds"] as? NSDictionary,
+                let width  = bounds["Width"] as? CGFloat,
+                let height = bounds["Height"] as? CGFloat  else { continue }
+
+            if (width != screenBounds.width || height != screenBounds.height) {
                 continue
             }
             
@@ -289,16 +292,21 @@ public extension MetalView
             }
                 
             // Skip all windows with a name other than "Desktop picture - ..."
-            if name.hasPrefix("Desktop Picture") {
-                
-                // Found it!
-                cgImage = CGWindowListCreateImage(
-                    CGRect.null,
-                    CGWindowListOption(arrayLiteral: CGWindowListOption.optionIncludingWindow),
-                    CGWindowID(window["kCGWindowNumber"] as! Int),
-                    [])!
-                break
+            if !name.hasPrefix("Desktop Picture") {
+                continue
             }
+                
+            // Found it!
+            guard let nr = window["kCGWindowNumber"] as? Int else {
+                continue
+            }
+
+            cgImage = CGWindowListCreateImage(
+                CGRect.null,
+                CGWindowListOption(arrayLiteral: CGWindowListOption.optionIncludingWindow),
+                CGWindowID(nr),
+                [])!
+            break
         }
         
         // Create image

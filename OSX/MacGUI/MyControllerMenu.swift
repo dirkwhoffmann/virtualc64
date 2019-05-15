@@ -508,9 +508,9 @@ extension MyController : NSMenuItemValidation {
         precondition(tag == 1 || tag == 2)
         return tag
     }
-    @IBAction func newDiskAction(_ sender: Any!) {
+    @IBAction func newDiskAction(_ sender: NSMenuItem!) {
         
-        let tag = (sender as! NSMenuItem).tag
+        let tag = sender.tag
         let emptyArchive = AnyArchiveProxy.make()
         
         mydocument?.attachment = D64FileProxy.make(withAnyArchive: emptyArchive)
@@ -518,9 +518,9 @@ extension MyController : NSMenuItemValidation {
         myAppDelegate.clearRecentlyExportedDiskURLs(drive: tag)
     }
     
-    @IBAction func insertDiskAction(_ sender: Any!) {
+    @IBAction func insertDiskAction(_ sender: NSMenuItem!) {
         
-        let tag = (sender as! NSMenuItem).tag
+        let tag = sender.tag
         
         // Ask user to continue if the current disk contains modified data
         if !proceedWithUnexportedDisk(drive: tag) {
@@ -549,10 +549,9 @@ extension MyController : NSMenuItemValidation {
         })
     }
     
-    @IBAction func insertRecentDiskAction(_ sender: Any!) {
-        
-        track()
-        var tag = (sender as! NSMenuItem).tag
+    @IBAction func insertRecentDiskAction(_ sender: NSMenuItem!) {
+
+        var tag = sender.tag
         
         // Extrace drive number from tag
         var nr: Int
@@ -571,10 +570,9 @@ extension MyController : NSMenuItemValidation {
         }
     }
     
-    @IBAction func exportRecentDiskAction(_ sender: Any!) {
+    @IBAction func exportRecentDiskAction(_ sender: NSMenuItem!) {
         
-        track()
-        var tag = (sender as! NSMenuItem).tag
+        var tag = sender.tag
         
         // Extract drive number from tag
         let nr = (tag < 10) ? 1 : 2
@@ -590,9 +588,9 @@ extension MyController : NSMenuItemValidation {
         myAppDelegate.recentlyInsertedDiskURLs = []
     }
 
-    @IBAction func clearRecentlyExportedDisksAction(_ sender: Any!) {
+    @IBAction func clearRecentlyExportedDisksAction(_ sender: NSMenuItem!) {
 
-        let driveNr = (sender as! NSMenuItem).tag
+        let driveNr = sender.tag
         myAppDelegate.clearRecentlyExportedDiskURLs(drive: driveNr)
     }
 
@@ -604,9 +602,9 @@ extension MyController : NSMenuItemValidation {
         myAppDelegate.recentlyAttachedCartridgeURLs = []
     }
     
-    @IBAction func ejectDiskAction(_ sender: Any!) {
+    @IBAction func ejectDiskAction(_ sender: NSMenuItem!) {
         
-        let tag = (sender as! NSMenuItem).tag
+        let tag = sender.tag
         
         if proceedWithUnexportedDisk(drive: tag) {
             changeDisk(nil, drive: tag)
@@ -614,17 +612,17 @@ extension MyController : NSMenuItemValidation {
         }
     }
     
-    @IBAction func exportDiskAction(_ sender: Any!) {
+    @IBAction func exportDiskAction(_ sender: NSMenuItem!) {
 
-        let nr = (sender as! NSMenuItem).tag
-        precondition(nr == 1 || nr == 2)
+        let tag = sender.tag
+        assert(tag == 1 || tag == 2)
         
         let nibName = NSNib.Name("ExportDiskDialog")
         let exportPanel = ExportDiskController.init(windowNibName: nibName)
-        exportPanel.showSheet(forDrive: nr)
+        exportPanel.showSheet(forDrive: tag)
     }
      
-    @IBAction func writeProtectAction(_ sender: Any!) {
+    @IBAction func writeProtectAction(_ sender: NSMenuItem!) {
         
         let nr = driveNr(fromTagOf: sender)
         if (nr == 1) {
@@ -634,21 +632,24 @@ extension MyController : NSMenuItemValidation {
         }
     }
     
-    @IBAction func drivePowerAction(_ sender: Any!) {
+    @IBAction func drivePowerAction(_ sender: NSMenuItem!) {
         
-        let sender = sender as! NSMenuItem
-        precondition(sender.tag == 1 || sender.tag == 2)
-        drivePowerAction(driveNr: sender.tag)
+        let tag = sender.tag
+        assert(tag == 1 || tag == 2)
+
+        drivePowerAction(driveNr: tag)
     }
 
-    @IBAction func drivePowerButtonAction(_ sender: Any!) {
+    @IBAction func drivePowerButtonAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
-        precondition(sender.tag == 1 || sender.tag == 2)
-        drivePowerAction(driveNr: sender.tag)
+        let tag = sender.tag
+        assert(tag == 1 || tag == 2)
+
+        drivePowerAction(driveNr: tag)
     }
     
     func drivePowerAction(driveNr: Int) {
+
         if (driveNr == 1) {
             c64.drive1.togglePowerSwitch()
         } else {
@@ -684,10 +685,8 @@ extension MyController : NSMenuItemValidation {
         })
     }
     
-    @IBAction func insertRecentTapeAction(_ sender: Any!) {
+    @IBAction func insertRecentTapeAction(_ sender: NSMenuItem!) {
         
-        track()
-        let sender = sender as! NSMenuItem
         let tag = sender.tag
         
         if let url = myAppDelegate.getRecentlyInsertedTapeURL(tag) {
@@ -772,8 +771,8 @@ extension MyController : NSMenuItemValidation {
         // Dummy action method to enable menu item validation
     }
 
-    @IBAction func attachGeoRamAction(_ sender: Any!) {
-        let sender = sender as! NSMenuItem
+    @IBAction func attachGeoRamAction(_ sender: NSMenuItem!) {
+
         let capacity = sender.tag
         track("RAM capacity = \(capacity)")
         c64.expansionport.attachGeoRamCartridge(capacity)

@@ -105,20 +105,20 @@ struct FragmentUniforms {
 // Static texture parameters
 // 
 
-struct C64_TEXTURE {
+struct C64TEXTURE {
     static let width = 512
     static let height = 512
     static let cutout_x = 428
     static let cutout_y = 284
 }
 
-struct UPSCALED_TEXTURE {
+struct UPSCALEDTEXTURE {
     static let factor_x = 4
     static let factor_y = 4
-    static let width = C64_TEXTURE.width * UPSCALED_TEXTURE.factor_x
-    static let height = C64_TEXTURE.height * UPSCALED_TEXTURE.factor_y
-    static let cutout_x = C64_TEXTURE.cutout_x * UPSCALED_TEXTURE.factor_x
-    static let cutout_y = C64_TEXTURE.cutout_y * UPSCALED_TEXTURE.factor_y
+    static let width = C64TEXTURE.width * UPSCALEDTEXTURE.factor_x
+    static let height = C64TEXTURE.height * UPSCALEDTEXTURE.factor_y
+    static let cutout_x = C64TEXTURE.cutout_x * UPSCALEDTEXTURE.factor_x
+    static let cutout_y = C64TEXTURE.cutout_y * UPSCALEDTEXTURE.factor_y
 }
 
 
@@ -194,8 +194,8 @@ class ComputeKernel : NSObject {
         let groupH = kernel.maxTotalThreadsPerThreadgroup / groupW
         let threadsPerGroup = MTLSizeMake(groupW, groupH, 1)
         
-        let countW = (UPSCALED_TEXTURE.cutout_x + groupW - 1) / groupW;
-        let countH = (UPSCALED_TEXTURE.cutout_y + groupH - 1) / groupH;
+        let countW = (UPSCALEDTEXTURE.cutout_x + groupW - 1) / groupW;
+        let countH = (UPSCALEDTEXTURE.cutout_y + groupH - 1) / groupH;
         let threadgroupCount = MTLSizeMake(countW, countH, 1)
         
         // Finally, we're ready to dispatch
