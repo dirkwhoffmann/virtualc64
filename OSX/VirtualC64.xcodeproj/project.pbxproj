@@ -95,6 +95,7 @@
 		5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5052AD0D202A5C1B005FDD88 /* CartridgeMountController.swift */; };
 		5054BF1120133BA2003D86D4 /* Cartridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5054BF0F20133BA2003D86D4 /* Cartridge.cpp */; };
 		5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5055A83E1BC7996900399A20 /* MetalKit.framework */; };
+		50576686228C66BA0065D9ED /* CpuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50576685228C66BA0065D9ED /* CpuTableView.swift */; };
 		5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */; };
 		5058F0EF20A77E90008BFA92 /* Mouse1351.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5058F0ED20A77E90008BFA92 /* Mouse1351.cpp */; };
 		5058F0F220A77EDC008BFA92 /* NeosMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5058F0F020A77EDC008BFA92 /* NeosMouse.cpp */; };
@@ -377,6 +378,7 @@
 		5054BF0F20133BA2003D86D4 /* Cartridge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Cartridge.cpp; sourceTree = "<group>"; };
 		5054BF1020133BA2003D86D4 /* Cartridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cartridge.h; sourceTree = "<group>"; };
 		5055A83E1BC7996900399A20 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		50576685228C66BA0065D9ED /* CpuTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CpuTableView.swift; sourceTree = "<group>"; };
 		5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExpansionPort.cpp; sourceTree = "<group>"; };
 		5058B17F1A6AD2D900A99F1C /* ExpansionPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpansionPort.h; sourceTree = "<group>"; };
 		5058F0ED20A77E90008BFA92 /* Mouse1351.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mouse1351.cpp; sourceTree = "<group>"; };
@@ -660,6 +662,7 @@
 				506CE96621998C4500B70A3A /* Metal */,
 				506D4D0C20B331A00093C5C6 /* Formatter.swift */,
 				50720F4120C853910010EBF2 /* CpuTraceView.swift */,
+				50576685228C66BA0065D9ED /* CpuTableView.swift */,
 				507887CB20B1858B00941F7E /* MemTableView.swift */,
 				5015F36520B546A30024B4AA /* WaveformView.swift */,
 			);
@@ -1498,6 +1501,7 @@
 				501DE30B20C9C41B00707130 /* dac.cc in Sources */,
 				506D39D6141788E700268AF6 /* ReSID.cpp in Sources */,
 				5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */,
+				50576686228C66BA0065D9ED /* CpuTableView.swift in Sources */,
 				5006087921256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp in Sources */,
 				5015F36620B546A30024B4AA /* WaveformView.swift in Sources */,
 				50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */,
