@@ -16,14 +16,13 @@ public extension MetalView {
     // Keyboard events
     //
     
-    override func keyDown(with event: NSEvent)
-    {
-        // track()
+    override func keyDown(with event: NSEvent) {
+
         controller.keyboardcontroller.keyDown(with: event)
     }
     
-    override func keyUp(with event: NSEvent)
-    {
+    override func keyUp(with event: NSEvent) {
+
         controller.keyboardcontroller.keyUp(with: event)
     }
     
@@ -38,8 +37,8 @@ public extension MetalView {
     // Mouse events
     //
     
-    func scaledMouseCoordinate(with event: NSEvent) -> NSPoint
-    {
+    func scaledMouseCoordinate(with event: NSEvent) -> NSPoint {
+        
         // Get coordinate relative to view
         let locationInView = convert(event.locationInWindow, from: nil)
         
@@ -51,38 +50,26 @@ public extension MetalView {
         x = (x < 0.0) ? 0.0 : (x > 1.0) ? 1.0 : x
         y = (y < 0.0) ? 0.0 : (y > 1.0) ? 1.0 : y
         
-        return NSMakePoint(x, y)
+        return NSPoint.init(x: x, y: y)
     }
-    
-    /*
-    override public func mouseEntered(with event: NSEvent)
-    {
-        NSCursor.hide();
-    }
-    
-    override public func mouseExited(with event: NSEvent)
-    {
-        NSCursor.unhide()
-    }
-    */
-    
-    override func mouseDown(with event: NSEvent)
-    {
+
+    override func mouseDown(with event: NSEvent) {
+
         controller.c64.mouse.setLeftButton(true)
     }
     
-    override func mouseUp(with event: NSEvent)
-    {
+    override func mouseUp(with event: NSEvent) {
+
         controller.c64.mouse.setLeftButton(false)
     }
     
-    override func rightMouseUp(with event: NSEvent)
-    {
+    override func rightMouseUp(with event: NSEvent) {
+
         controller.c64.mouse.setRightButton(false)
     }
     
-    override func rightMouseDown(with event: NSEvent)
-    {
+    override func rightMouseDown(with event: NSEvent) {
+
         controller.c64.mouse.setRightButton(true)
     }
     
@@ -100,18 +87,18 @@ public extension MetalView {
         let newX = controller.mouseXY.x * scaleX
         let newY = controller.mouseXY.y * scaleY
 
-        let newLocation = NSMakePoint(newX, newY)
+        let newLocation = NSPoint.init(x: newX, y: newY)
         controller.c64.mouse.setXY(newLocation)
         //track("\(dx) \(dy)\n");
     }
     
-    override func mouseDragged(with event: NSEvent)
-    {
+    override func mouseDragged(with event: NSEvent) {
+
         mouseMoved(with: event)
     }
     
-    override func rightMouseDragged(with event: NSEvent)
-    {
+    override func rightMouseDragged(with event: NSEvent) {
+        
         mouseMoved(with: event)
     }
 }

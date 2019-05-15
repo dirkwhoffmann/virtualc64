@@ -62,7 +62,7 @@ class WaveformView: NSView {
             let absvalue = abs(sample)
             highestAmplitude = (absvalue > highestAmplitude) ? absvalue : highestAmplitude
             var scaledSample = absvalue / normalizer * baseline
-            if (scaledSample == 0) { // just for effect
+            if scaledSample == 0 { // just for effect
                 scaledSample = drand48() > 0.5 ? 0.0 : 1.0
             }
             let from = CGPoint(x: x, y: Int(baseline + scaledSample + 1))

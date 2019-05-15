@@ -7,7 +7,6 @@
 // See https://www.gnu.org for license information
 //
 
-
 import Foundation
 import simd
 
@@ -15,7 +14,7 @@ public extension MetalView {
 
     func checkForMetal() {
         
-        guard let _ = MTLCreateSystemDefaultDevice() else {
+        if MTLCreateSystemDefaultDevice() == nil {
             
             showNoMetalSupportAlert()
             NSApp.terminate(self)
@@ -106,8 +105,8 @@ public extension MetalView {
         // 2048 x 2048 textures
         //
         
-        descriptor.width = 2048;
-        descriptor.height = 2048;
+        descriptor.width = 2048
+        descriptor.height = 2048
         
         // Build upscaled C64 texture
         descriptor.usage = [ .shaderRead, .shaderWrite, .pixelFormatView, .renderTarget ]
@@ -165,11 +164,11 @@ public extension MetalView {
         let base = UInt8((1 - shaderOptions.dotMaskBrightness) * 85)
         let none = UInt8(30 + (1 - shaderOptions.dotMaskBrightness) * 55)
         
-        let R = UInt32.init(r: max,  g: base, b: base)
-        let G = UInt32.init(r: base, g: max,  b: base)
+        let R = UInt32.init(r: max, g: base, b: base)
+        let G = UInt32.init(r: base, g: max, b: base)
         let B = UInt32.init(r: base, g: base, b: max)
-        let M = UInt32.init(r: max,  g: base, b: max)
-        let W = UInt32.init(r: max,  g: max,  b: max)
+        let M = UInt32.init(r: max, g: base, b: max)
+        let W = UInt32.init(r: max, g: max, b: max)
         let N = UInt32.init(r: none, g: none, b: none)
 
         let maskSize = [
@@ -177,7 +176,7 @@ public extension MetalView {
             CGSize.init(width: 3, height: 1),
             CGSize.init(width: 4, height: 1),
             CGSize.init(width: 3, height: 9),
-            CGSize.init(width: 4, height: 8),
+            CGSize.init(width: 4, height: 8)
             ]
         
         let maskData = [
@@ -262,9 +261,9 @@ public extension MetalView {
                                              farZ: 100.0)
     
         if animates() {
-            let xAngle: Float = -(currentXAngle / 180.0) * .pi;
-            let yAngle: Float =  (currentYAngle / 180.0) * .pi;
-            let zAngle: Float =  (currentZAngle / 180.0) * .pi;
+            let xAngle: Float = -(currentXAngle / 180.0) * .pi
+            let yAngle: Float =  (currentYAngle / 180.0) * .pi
+            let zAngle: Float =  (currentZAngle / 180.0) * .pi
     
             model = model *
                 matrix_from_rotation(radians: xAngle, x: 0.5, y: 0.0, z: 0.0) *
@@ -372,13 +371,13 @@ public extension MetalView {
         setVertex(41, float3(+dx, +dy, +dz), lowerRight)
     
         // 2D drawing quad
-        setVertex(42, float3(-1,  1,  0), lowerLeft)
-        setVertex(43, float3(-1, -1,  0), upperLeft)
-        setVertex(44, float3( 1, -1,  0), upperRight)
+        setVertex(42, float3(-1, 1, 0), lowerLeft)
+        setVertex(43, float3(-1, -1, 0), upperLeft)
+        setVertex(44, float3( 1, -1, 0), upperRight)
     
-        setVertex(45, float3(-1,  1,  0), lowerLeft)
-        setVertex(46, float3( 1,  1,  0), lowerRight)
-        setVertex(47, float3( 1, -1,  0), upperRight)
+        setVertex(45, float3(-1, 1, 0), lowerLeft)
+        setVertex(46, float3( 1, 1, 0), lowerRight)
+        setVertex(47, float3( 1, -1, 0), upperRight)
     
         let opt = MTLResourceOptions.cpuCacheModeWriteCombined
         let len = capacity * 4

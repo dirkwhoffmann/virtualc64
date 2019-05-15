@@ -25,9 +25,8 @@ class CpuTableView : NSTableView {
         doubleAction = #selector(doubleClickAction(_:))
     }
     
-    @IBAction func doubleClickAction(_ sender: Any!) {
+    @IBAction func doubleClickAction(_ sender: NSTableView!) {
     
-        let sender = sender as! NSTableView
         let row = sender.selectedRow
         
         if let instr = instructionAtRow[row] {

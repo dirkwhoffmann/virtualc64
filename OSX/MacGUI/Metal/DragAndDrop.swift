@@ -33,7 +33,7 @@ public extension MetalView {
             return NSDragOperation()
         }
         
-        switch (type) {
+        switch type {
             
         case .string:
             
@@ -74,7 +74,7 @@ public extension MetalView {
                 return false
         }
         
-        switch (type) {
+        switch type {
             
         case .string:
             

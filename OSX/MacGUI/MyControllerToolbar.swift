@@ -80,16 +80,16 @@ extension MyController {
         inputDevice2 = (inputDevice1 == inputDevice2) ? InputDevice.none : inputDevice2
         
         // Connect or disconnect analog mouse
-        if (c64.mouse.port() != 1 && inputDevice1 == InputDevice.mouse) {
+        if c64.mouse.port() != 1 && inputDevice1 == InputDevice.mouse {
             c64.mouse.connect(1)
         }
-        if (c64.mouse.port() == 1 && inputDevice1 != InputDevice.mouse) {
+        if c64.mouse.port() == 1 && inputDevice1 != InputDevice.mouse {
             c64.mouse.disconnect()
         }
         
         UserDefaults.standard.set(inputDevice1, forKey: VC64Keys.inputDevice1)
         UserDefaults.standard.set(inputDevice2, forKey: VC64Keys.inputDevice2)
-        validateJoystickToolbarItems();
+        validateJoystickToolbarItems()
     }
     
     @IBAction func port2Action(_ sender: NSPopUpButton) {
@@ -106,10 +106,10 @@ extension MyController {
         inputDevice1 = (inputDevice1 == inputDevice2) ? InputDevice.none : inputDevice1
         
         // Connect or disconnect analog mouse
-        if (c64.mouse.port() != 2 && inputDevice2 == InputDevice.mouse) {
+        if c64.mouse.port() != 2 && inputDevice2 == InputDevice.mouse {
             c64.mouse.connect(2)
         }
-        if (c64.mouse.port() == 2 && inputDevice2 != InputDevice.mouse) {
+        if c64.mouse.port() == 2 && inputDevice2 != InputDevice.mouse {
             c64.mouse.disconnect()
         }
         
@@ -157,7 +157,7 @@ extension MyController {
     
     @IBAction func inspectAction(_ sender: NSSegmentedControl) {
         
-        switch(sender.selectedSegment) {
+        switch sender.selectedSegment {
             
         case 0: // Debugger
             
@@ -181,12 +181,12 @@ extension MyController {
     
     @IBAction func snapshotAction(_ sender: NSSegmentedControl) {
         
-        switch(sender.selectedSegment) {
+        switch sender.selectedSegment {
         
         case 0: // Rewind
 
             track("Rewind")
-            if (c64.restoreLatestAutoSnapshot()) {
+            if c64.restoreLatestAutoSnapshot() {
                 metalScreen.snapToFront()
             }
         
@@ -198,7 +198,7 @@ extension MyController {
         case 2: // Restore
             
             track("Restore")
-            if (c64.restoreLatestUserSnapshot()) {
+            if c64.restoreLatestUserSnapshot() {
                 metalScreen.snapToFront()
             } else {
                 NSSound.beep()
@@ -233,7 +233,7 @@ extension MyController {
 
     @IBAction func restoreLatestAutoSnapshotAction(_ sender: Any!) {
         
-        if (c64.restoreLatestAutoSnapshot()) {
+        if c64.restoreLatestAutoSnapshot() {
             c64.deleteAutoSnapshot(0)
             metalScreen.snapToFront()
         }
@@ -241,7 +241,7 @@ extension MyController {
 
     @IBAction func restoreLatestUserSnapshotAction(_ sender: Any!) {
         
-        if (c64.restoreLatestUserSnapshot()) {
+        if c64.restoreLatestUserSnapshot() {
             metalScreen.snapToFront()
         }
     }
@@ -263,9 +263,9 @@ extension MyController {
         printInfo.bottomMargin = 32.0
 
         // Image view
-        let paperSize = printInfo.paperSize
+        let size = printInfo.paperSize
         let image = metalScreen.screenshot()
-        let printRect = NSMakeRect(0.0, 0.0, paperSize.width, paperSize.height)
+        let printRect = NSRect.init(x: 0, y: 0, width: size.width, height: size.height)
         let imageView = NSImageView.init(frame: printRect)
         imageView.image = image
         imageView.imageScaling = .scaleAxesIndependently

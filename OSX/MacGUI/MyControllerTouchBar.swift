@@ -23,10 +23,10 @@ extension NSTouchBarItem.Identifier {
 }
 
 @available(OSX 10.12.2, *)
-extension MyController : NSTouchBarDelegate
- {
+extension MyController: NSTouchBarDelegate {
+
     @objc func TouchBarHomeKeyAction() {
-        if (modifierFlags.contains(NSEvent.ModifierFlags.shift)) {
+        if modifierFlags.contains(NSEvent.ModifierFlags.shift) {
             clearKeyAction(self)
         } else {
             homeKeyAction(self)
@@ -34,7 +34,8 @@ extension MyController : NSTouchBarDelegate
     }
 
     @objc func TouchBarDelKeyAction() {
-        if (modifierFlags.contains(NSEvent.ModifierFlags.shift)) {
+
+        if modifierFlags.contains(NSEvent.ModifierFlags.shift) {
             insertKeyAction(self)
         } else {
             deleteKeyAction(self)
@@ -47,7 +48,7 @@ extension MyController : NSTouchBarDelegate
  
         track()
         
-        if (c64 == nil) {
+        if c64 == nil {
             track("Cannot create touch bar (no C64 proxy).")
             return nil
         }
@@ -98,7 +99,7 @@ extension MyController : NSTouchBarDelegate
         case NSTouchBarItem.Identifier.runstop:
             let item = NSCustomTouchBarItem(identifier: identifier)
             item.customizationLabel = "Runstop key"
-            item.view = NSButton(image:  NSImage(named: NSImage.Name("runstop"))!,
+            item.view = NSButton(image: NSImage(named: NSImage.Name("runstop"))!,
                                  target: self,
                                  action: #selector(runstopAction))
             
@@ -107,7 +108,7 @@ extension MyController : NSTouchBarDelegate
         case NSTouchBarItem.Identifier.home:
             let item = NSCustomTouchBarItem(identifier: identifier)
             item.customizationLabel = "Home and Clear key"
-            item.view = NSButton(image:  NSImage(named: NSImage.Name("home"))!,
+            item.view = NSButton(image: NSImage(named: NSImage.Name("home"))!,
                                  target: self,
                                  action: #selector(TouchBarHomeKeyAction))
             return item
@@ -117,7 +118,7 @@ extension MyController : NSTouchBarDelegate
             let icon = NSImage(named: NSImage.Name("del"))!
             // let resizedIcon = icon.resizeImage(width: 24, height: 24)
             item.customizationLabel = "Delete and Insert key"
-            item.view = NSButton(image:  icon,
+            item.view = NSButton(image: icon,
                                  target: self,
                                  action: #selector(TouchBarDelKeyAction))
             return item
@@ -127,7 +128,7 @@ extension MyController : NSTouchBarDelegate
             let icon = NSImage(named: NSImage.Name("restore"))!
             // let resizedIcon = icon.resizeImage(width: 24, height: 24)
             item.customizationLabel = "Restore key"
-            item.view = NSButton(image:  icon,
+            item.view = NSButton(image: icon,
                                  target: self,
                                  action: #selector(restoreAction))
             return item
@@ -167,4 +168,3 @@ extension MyController : NSTouchBarDelegate
         }
     }
 }
-

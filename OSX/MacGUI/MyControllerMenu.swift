@@ -9,7 +9,7 @@
 
 import Foundation
 
-extension MyController : NSMenuItemValidation {
+extension MyController: NSMenuItemValidation {
     
     open func validateMenuItem(_ item: NSMenuItem) -> Bool {
 
@@ -22,7 +22,7 @@ extension MyController : NSMenuItemValidation {
             return item.tag == 1
         }
     
-        func validateURLlist(_ list : [URL], image: String) -> Bool {
+        func validateURLlist(_ list: [URL], image: String) -> Bool {
             
             let pos = (item.tag < 10) ? item.tag : item.tag - 10
             
@@ -165,13 +165,13 @@ extension MyController : NSMenuItemValidation {
         
         // Debug menu
         if item.action == #selector(MyController.pauseAction(_:)) {
-            return c64.isRunning();
+            return c64.isRunning()
         }
         if item.action == #selector(MyController.continueAction(_:)) ||
             item.action == #selector(MyController.stepIntoAction(_:)) ||
             item.action == #selector(MyController.stepOverAction(_:)) ||
             item.action == #selector(MyController.stopAndGoAction(_:)) {
-            return c64.isHalted();
+            return c64.isHalted()
         }
         if item.action == #selector(MyController.markIRQLinesAction(_:)) {
             item.state = c64.vic.showIrqLines() ? .on : .off
@@ -184,7 +184,7 @@ extension MyController : NSMenuItemValidation {
         }
 
         if item.action == #selector(MyController.traceAction(_:)) {
-            return c64.developmentMode();
+            return c64.developmentMode()
         }
         if item.action == #selector(MyController.traceIecAction(_:)) {
             item.state = c64.iec.tracing() ? .on : .off
@@ -197,7 +197,7 @@ extension MyController : NSMenuItemValidation {
         }
         
         if item.action == #selector(MyController.dumpStateAction(_:)) {
-            return c64.developmentMode();
+            return c64.developmentMode()
         }
 
         return true
@@ -355,8 +355,8 @@ extension MyController : NSMenuItemValidation {
 
     @IBAction func toggleStatusBarAction(_ sender: Any!) {
         
-        undoManager?.registerUndo(withTarget: self) {
-            targetSelf in targetSelf.toggleStatusBarAction(sender)
+        undoManager?.registerUndo(withTarget: self) { targetSelf in
+            targetSelf.toggleStatusBarAction(sender)
         }
         
         showStatusBar(!statusBar)
@@ -364,7 +364,7 @@ extension MyController : NSMenuItemValidation {
     
     public func showStatusBar(_ value: Bool) {
         
-        let items: [NSView : Bool] = [
+        let items: [NSView: Bool] = [
             greenLED1: false,
             redLED1: false,
             progress1: false,
@@ -386,7 +386,7 @@ extension MyController : NSMenuItemValidation {
         
         if !statusBar && value {
         
-            for (item,hide) in items {
+            for (item, hide) in items {
                 item.isHidden = hide
             }
             metalScreen.shrink()
@@ -397,7 +397,7 @@ extension MyController : NSMenuItemValidation {
  
         if statusBar && !value {
             
-            for (item,_) in items {
+            for (item, _) in items {
                 item.isHidden = true
             }
             metalScreen.expand()
@@ -409,11 +409,11 @@ extension MyController : NSMenuItemValidation {
     
     @IBAction func hideMouseAction(_ sender: Any!) {
         
-        undoManager?.registerUndo(withTarget: self) {
-            targetSelf in targetSelf.hideMouseAction(sender)
+        undoManager?.registerUndo(withTarget: self) { targetSelf in
+            targetSelf.hideMouseAction(sender)
         }
         
-        if (hideMouse) {
+        if hideMouse {
             NSCursor.unhide()
             CGAssociateMouseAndMouseCursorPosition(boolean_t(truncating: true))
         } else {
@@ -468,8 +468,8 @@ extension MyController : NSMenuItemValidation {
     }
     @IBAction func shiftLockAction(_ sender: Any!) {
         
-        undoManager?.registerUndo(withTarget: self) {
-            targetSelf in targetSelf.shiftLockAction(sender)
+        undoManager?.registerUndo(withTarget: self) { targetSelf in
+            targetSelf.shiftLockAction(sender)
         }
         if c64.keyboard.shiftLockIsHoldDown() {
             c64.keyboard.unlockShift()
@@ -498,7 +498,6 @@ extension MyController : NSMenuItemValidation {
         keyboardcontroller.type(string: "OPEN 1,8,15,\"N:TEST, ID\": CLOSE 1", completion: nil)
     }
 
- 
     //
     // Action methods (Disk menu)
     //
@@ -556,7 +555,7 @@ extension MyController : NSMenuItemValidation {
         if let url = myAppDelegate.getRecentlyInsertedDiskURL(tag) {
             do {
                 try mydocument!.createAttachment(from: url)
-                if (mydocument!.proceedWithUnexportedDisk(drive: nr)) {
+                if mydocument!.proceedWithUnexportedDisk(drive: nr) {
                     mydocument!.mountAttachmentAsDisk(drive: nr)
                 }
             } catch {
@@ -622,7 +621,7 @@ extension MyController : NSMenuItemValidation {
         let tag = sender.tag
         assert(tag == 1 || tag == 2)
 
-        if (tag == 1) {
+        if tag == 1 {
             c64.drive1.disk.toggleWriteProtection()
         } else {
             c64.drive2.disk.toggleWriteProtection()
@@ -647,7 +646,7 @@ extension MyController : NSMenuItemValidation {
     
     func drivePowerAction(driveNr: Int) {
 
-        if (driveNr == 1) {
+        if driveNr == 1 {
             c64.drive1.togglePowerSwitch()
         } else {
             c64.drive2.togglePowerSwitch()
@@ -715,7 +714,6 @@ extension MyController : NSMenuItemValidation {
         c64.datasette.rewind()
     }
 
-    
     //
     // Action methods (Cartridge menu)
     //
@@ -862,8 +860,8 @@ extension MyController : NSMenuItemValidation {
 
     @IBAction func hideSpritesAction(_ sender: Any!) {
 
-        undoManager?.registerUndo(withTarget: self) {
-            targetSelf in targetSelf.hideSpritesAction(sender)
+        undoManager?.registerUndo(withTarget: self) { targetSelf in
+            targetSelf.hideSpritesAction(sender)
         }
         
         c64.vic.setHideSprites(!c64.vic.hideSprites())
@@ -871,8 +869,8 @@ extension MyController : NSMenuItemValidation {
   
     @IBAction func markIRQLinesAction(_ sender: Any!) {
     
-        undoManager?.registerUndo(withTarget: self) {
-            targetSelf in targetSelf.markIRQLinesAction(sender)
+        undoManager?.registerUndo(withTarget: self) { targetSelf in
+            targetSelf.markIRQLinesAction(sender)
         }
         
         c64.vic.setShowIrqLines(!c64.vic.showIrqLines())
@@ -880,8 +878,8 @@ extension MyController : NSMenuItemValidation {
     
     @IBAction func markDMALinesAction(_ sender: Any!) {
     
-        undoManager?.registerUndo(withTarget: self) {
-            targetSelf in targetSelf.markDMALinesAction(sender)
+        undoManager?.registerUndo(withTarget: self) { targetSelf in
+            targetSelf.markDMALinesAction(sender)
         }
         
         c64.vic.setShowDmaLines(!c64.vic.showDmaLines())
@@ -897,8 +895,8 @@ extension MyController : NSMenuItemValidation {
   
     @IBAction func traceIecAction(_ sender: Any!) {
         
-        undoManager?.registerUndo(withTarget: self) {
-            targetSelf in targetSelf.traceIecAction(sender)
+        undoManager?.registerUndo(withTarget: self) { targetSelf in
+            targetSelf.traceIecAction(sender)
         }
         
         c64.iec.setTracing(!c64.iec.tracing())
@@ -906,8 +904,8 @@ extension MyController : NSMenuItemValidation {
  
     @IBAction func traceVC1541CpuAction(_ sender: Any!) {
         
-        undoManager?.registerUndo(withTarget: self) {
-            targetSelf in targetSelf.traceVC1541CpuAction(sender)
+        undoManager?.registerUndo(withTarget: self) { targetSelf in
+            targetSelf.traceVC1541CpuAction(sender)
         }
         
         c64.drive1.cpu.setTracing(!c64.drive1.cpu.tracing())
@@ -915,8 +913,8 @@ extension MyController : NSMenuItemValidation {
   
     @IBAction func traceViaAction(_ sender: Any!) {
         
-        undoManager?.registerUndo(withTarget: self) {
-            targetSelf in targetSelf.traceViaAction(sender)
+        undoManager?.registerUndo(withTarget: self) { targetSelf in
+            targetSelf.traceViaAction(sender)
         }
         
         c64.drive1.via1.setTracing(!c64.drive1.via1.tracing())

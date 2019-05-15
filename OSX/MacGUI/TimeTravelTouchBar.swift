@@ -22,7 +22,7 @@ extension NSTouchBarItem.Identifier {
 class TimeTravelTouchBar: NSTouchBar {
     
     var parentItem: NSPopoverTouchBarItem?
-    var c : MyController?
+    var c: MyController?
     
     /*
     func rebuild()
@@ -30,26 +30,26 @@ class TimeTravelTouchBar: NSTouchBar {
     }
     */
     
-    func dismiss(_ sender: Any?)
-    {
+    func dismiss(_ sender: Any?) {
+
         guard let popover = parentItem else { return }
         popover.dismissPopover(sender)
     }
     
-    override init()
-    {
+    override init() {
+
         super.init()
         delegate = self
         defaultItemIdentifiers = [.ttscrubber]
     }
     
-    required init?(coder aDecoder: NSCoder)
-    {
+    required init?(coder aDecoder: NSCoder) {
+
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(parent: NSPopoverTouchBarItem?, controller: MyController?)
-    {
+    convenience init(parent: NSPopoverTouchBarItem?, controller: MyController?) {
+
         self.init()
         self.parentItem = parent
         self.c = controller
@@ -69,4 +69,3 @@ extension TimeTravelTouchBar: NSTouchBarDelegate {
         }
     }
 }
-

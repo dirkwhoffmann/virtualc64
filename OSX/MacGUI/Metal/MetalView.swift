@@ -109,16 +109,15 @@ public class MetalView: MTKView {
     // Array holding dotmask preview images
     var dotmaskImages = [NSImage?](repeating: nil, count: 5)
 
-    
     //
     // Texture samplers
     //
     
     // Nearest neighbor sampler
-    var samplerNearest : MTLSamplerState! = nil
+    var samplerNearest: MTLSamplerState! = nil
 
     // Linear interpolation sampler
-    var samplerLinear : MTLSamplerState! = nil
+    var samplerLinear: MTLSamplerState! = nil
     
     // Shader options
     var shaderOptions = Defaults.shaderOptions
@@ -186,7 +185,7 @@ public class MetalView: MTKView {
         track()
         
         // Create semaphore
-        semaphore = DispatchSemaphore(value: 1);
+        semaphore = DispatchSemaphore(value: 1)
         
         // Check if machine is capable to run the Metal graphics interface
         checkForMetal()
@@ -195,10 +194,7 @@ public class MetalView: MTKView {
         setupDragAndDrop()
     }
     
-    override public var acceptsFirstResponder: Bool
-    {
-        get { return true }
-    }
+    override public var acceptsFirstResponder: Bool { return true }
     
     //! Adjusts view height by a certain number of pixels
     func adjustHeight(_ height: CGFloat) {
@@ -261,7 +257,7 @@ public class MetalView: MTKView {
         let height = Int(PAL_RASTERLINES)
         let rowBytes = width * pixelSize
         let imageBytes = rowBytes * height
-        let region = MTLRegionMake2D(0,0,width,height)
+        let region = MTLRegionMake2D(0, 0, width, height)
             
         emulatorTexture.replace(region: region,
                                 mipmapLevel: 0,
@@ -308,7 +304,7 @@ public class MetalView: MTKView {
         fragmentUniforms.alpha = 1.0
         fragmentUniforms.dotMaskHeight = Int32(dotMaskTexture.height)
         fragmentUniforms.dotMaskWidth = Int32(dotMaskTexture.width)
-        fragmentUniforms.scanlineDistance = Int32(layerHeight / 256);
+        fragmentUniforms.scanlineDistance = Int32(layerHeight / 256)
        
         // Compute the bloom textures
         if shaderOptions.bloom != 0 {
@@ -371,7 +367,7 @@ public class MetalView: MTKView {
         commandEncoder.setFragmentTexture(dotMaskTexture, index: 4)
         commandEncoder.setFragmentBytes(&shaderOptions,
                                         length: MemoryLayout<ShaderOptions>.stride,
-                                        index: 0);
+                                        index: 0)
         
         commandEncoder.setVertexBuffer(positionBuffer, offset: 0, index: 0)
 
@@ -433,7 +429,7 @@ public class MetalView: MTKView {
             commandEncoder.setFragmentTexture(bgTexture, index: 1)
             commandEncoder.setFragmentBytes(&fragmentUniforms,
                                             length: MemoryLayout<FragmentUniforms>.stride,
-                                            index: 1);
+                                            index: 1)
             
             // Draw
             commandEncoder.drawPrimitives(type: MTLPrimitiveType.triangle,
@@ -457,7 +453,7 @@ public class MetalView: MTKView {
             commandEncoder.setFragmentTexture(bloomTextureB, index: 3)
             commandEncoder.setFragmentBytes(&fragmentUniforms,
                                             length: MemoryLayout<FragmentUniforms>.stride,
-                                            index: 1);
+                                            index: 1)
             
             // Draw
             commandEncoder.drawPrimitives(type: MTLPrimitiveType.triangle,
@@ -473,11 +469,11 @@ public class MetalView: MTKView {
     
         commandEncoder.endEncoding()
     
-        commandBuffer.addCompletedHandler { cb in
+        commandBuffer.addCompletedHandler { _ in
             self.semaphore.signal()
         }
         
-        if (drawable != nil) {
+        if drawable != nil {
             commandBuffer.present(drawable)
             commandBuffer.commit()
         }
@@ -534,7 +530,7 @@ public class MetalView: MTKView {
     
         // Draw scene
         drawable = metalLayer.nextDrawable()
-        if (drawable != nil) {
+        if drawable != nil {
             updateTexture()
             if fullscreen && !keepAspectRatio {
                 drawScene2D()
@@ -550,4 +546,3 @@ public class MetalView: MTKView {
     }
     
 }
-

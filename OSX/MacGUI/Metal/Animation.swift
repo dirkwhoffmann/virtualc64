@@ -243,7 +243,7 @@ public extension MetalView {
                                  y: Float,
                                  z: Float) -> matrix_float4x4 {
         
-        var m = matrix_identity_float4x4;
+        var m = matrix_identity_float4x4
         m.columns.3 = float4(x, y, z, 1.0)
     
         return m

@@ -36,9 +36,9 @@ public extension CGImage {
     
     static func dataProvider(data: UnsafeMutableRawPointer, size: CGSize) -> CGDataProvider? {
         
-        let dealloc : CGDataProviderReleaseDataCallback = {
+        let dealloc: CGDataProviderReleaseDataCallback = {
             
-            (info: UnsafeMutableRawPointer?, data: UnsafeRawPointer, size: Int) -> () in
+            (info: UnsafeMutableRawPointer?, data: UnsafeRawPointer, size: Int) -> Void in
             
             // Core Foundation objects are memory managed, aren't they?
             return
@@ -105,8 +105,6 @@ public extension CGImage {
     }
 }
 
-
-
 //
 // Extensions to MTLTexture
 //
@@ -114,7 +112,6 @@ public extension CGImage {
 extension MTLTexture {
     
 }
-
 
 //
 // Extensions to NSImage
@@ -151,8 +148,7 @@ public extension NSImage {
         let size = NSSize(width: cgImage.width, height: cgImage.height)
         return NSImage(cgImage: cgImage, size: size)
     }
-    
-    
+
     func expand(toSize size: NSSize) -> NSImage? {
  
         let newImage = NSImage.init(size: size)
@@ -165,15 +161,15 @@ public extension NSImage {
         t.scaleX(by: 1.0, yBy: -1.0)
         t.concat()
         
-        let inRect = NSMakeRect(0,0,size.width,size.height)
-        let fromRect = NSMakeRect(0,0,self.size.width, self.size.height)
+        let inRect = NSRect.init(x: 0, y: 0, width: size.width, height: size.height)
+        let fromRect = NSRect.init(x: 0, y: 0, width: self.size.width, height: self.size.height)
         let operation = NSCompositingOperation.copy
         self.draw(in: inRect, from: fromRect, operation: operation, fraction: 1.0)
         
         newImage.unlockFocus()
         NSGraphicsContext.restoreGraphicsState()
         
-        return newImage;
+        return newImage
     }
     
     func toTexture(device: MTLDevice) -> MTLTexture? {
@@ -185,10 +181,10 @@ public extension NSImage {
         let width = imageRef!.width
         let height = imageRef!.height
     
-        if (width == 0 || height == 0) { return nil; }
+        if width == 0 || height == 0 { return nil }
         
         // Allocate memory
-        guard let data = malloc(height * width * 4) else { return nil; }
+        guard let data = malloc(height * width * 4) else { return nil }
         let rawBitmapInfo =
             CGImageAlphaInfo.noneSkipLast.rawValue |
                 CGBitmapInfo.byteOrder32Big.rawValue
@@ -214,26 +210,23 @@ public extension NSImage {
         let region = MTLRegionMake2D(0, 0, width, height)
         texture?.replace(region: region, mipmapLevel: 0, withBytes: data, bytesPerRow: 4 * width)
 
-        free(data);
-        return texture;
+        free(data)
+        return texture
     }
 }
-
 
 //
 // Extensions to MetalView
 //
 
-
-public extension MetalView
-{
+public extension MetalView {
 
     //
     // Image handling
     //
 
-    func screenshot(texture: MTLTexture) -> NSImage?
-    {
+    func screenshot(texture: MTLTexture) -> NSImage? {
+
         // Use the blitter to copy the texture data back from the GPU
         let queue = texture.device.makeCommandQueue()!
         let commandBuffer = queue.makeCommandBuffer()!
@@ -246,8 +239,8 @@ public extension MetalView
         return NSImage.make(texture: texture, rect: textureRect)
     }
     
-    func screenshot(afterUpscaling: Bool = true) -> NSImage?
-    {
+    func screenshot(afterUpscaling: Bool = true) -> NSImage? {
+
         if afterUpscaling {
             return screenshot(texture: upscaledTexture)
         } else {
@@ -282,7 +275,7 @@ public extension MetalView
                 let width  = bounds["Width"] as? CGFloat,
                 let height = bounds["Height"] as? CGFloat  else { continue }
 
-            if (width != screenBounds.width || height != screenBounds.height) {
+            if width != screenBounds.width || height != screenBounds.height {
                 continue
             }
             
@@ -312,7 +305,7 @@ public extension MetalView
         // Create image
         var wallpaper: NSImage?
         if cgImage != nil {
-            wallpaper = NSImage.init(cgImage: cgImage!, size: NSZeroSize)
+            wallpaper = NSImage.init(cgImage: cgImage!, size: NSSize.zero)
             wallpaper = wallpaper?.expand(toSize: NSSize(width: 1024, height: 512))
         } else {
             // Fall back to an opaque gray background

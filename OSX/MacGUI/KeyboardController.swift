@@ -13,7 +13,7 @@ import Carbon.HIToolbox
 //!@ brief Keyboard event handler
 class KeyboardController: NSObject {
     
-    var controller : MyController!
+    var controller: MyController!
     
     /// Determines whether the joystick emulation keys should be uncoupled from
     // the keyboard.
@@ -31,7 +31,7 @@ class KeyboardController: NSObject {
     
     /// Used key map if keys are mapped by position
  
-    var keyMap: [MacKey:C64Key] = Defaults.keyMap
+    var keyMap: [MacKey: C64Key] = Defaults.keyMap
     
     // Delete when Objective-C code is gone
     func getDisconnectEmulationKeys() -> Bool { return disconnectJoyKeys }
@@ -52,7 +52,7 @@ class KeyboardController: NSObject {
      This variable is only used when keys are mapped symbolically. It's written
      in keyDown and picked up in keyUp.
      */
-    var pressedKeys: [MacKey:[C64Key]] = [:]
+    var pressedKeys: [MacKey: [C64Key]] = [:]
     
     /**
      Checks if the internal values are consistent with the provides flags.
@@ -91,12 +91,12 @@ class KeyboardController: NSObject {
         // track()
         
         // Ignore repeating keys
-        if (event.isARepeat) {
+        if event.isARepeat {
             return
         }
         
         // Exit fullscreen mode if escape key is pressed
-        if (event.keyCode == MacKey.escape.keyCode && controller.metalScreen.fullscreen) {
+        if event.keyCode == MacKey.escape.keyCode && controller.metalScreen.fullscreen {
             controller.window!.toggleFullScreen(nil)
         }
         
@@ -105,7 +105,7 @@ class KeyboardController: NSObject {
         let characters = event.charactersIgnoringModifiers
         
         // Ignore keys that are pressed in combination with the command key
-        if (flags.contains(NSEvent.ModifierFlags.command)) {
+        if flags.contains(NSEvent.ModifierFlags.command) {
             // track("Ignoring the command key")
             return
         }
@@ -116,8 +116,8 @@ class KeyboardController: NSObject {
         keyDown(with: macKey)
     }
     
-    func keyUp(with event: NSEvent)
-    {
+    func keyUp(with event: NSEvent) {
+
         let keyCode = event.keyCode
         let characters = event.charactersIgnoringModifiers
 
@@ -200,7 +200,7 @@ class KeyboardController: NSObject {
         }
     }
     
-    func keyDown(with macKey: MacKey, keyMap: [MacKey:C64Key]) {
+    func keyDown(with macKey: MacKey, keyMap: [MacKey: C64Key]) {
         
         if let key = keyMap[macKey] {
             controller.c64.keyboard.pressKey(atRow: key.row, col: key.col)
@@ -227,18 +227,17 @@ class KeyboardController: NSObject {
         }
     }
     
-    func keyUp(with macKey: MacKey, keyMap: [MacKey:C64Key]) {
+    func keyUp(with macKey: MacKey, keyMap: [MacKey: C64Key]) {
         
         if let key = keyMap[macKey] {
             // track("Releasing row: \(key.row) col: \(key.col)\n")
             controller.c64.keyboard.releaseKey(atRow: key.row, col: key.col)
         }
     }
-
     
     /// Standard physical key map
     /// Keys are matched based on their position on the keyboard
-    static let standardKeyMap: [MacKey:C64Key] = [
+    static let standardKeyMap: [MacKey: C64Key] = [
         
         // First row of C64 keyboard
         MacKey.Ansi.grave: C64Key.leftArrow,
@@ -256,7 +255,7 @@ class KeyboardController: NSObject {
         MacKey.Ansi.minus: C64Key.minus,
         MacKey.Ansi.equal: C64Key.plus,
         MacKey.delete: C64Key.delete,
-        MacKey.F1 : C64Key.F1F2,
+        MacKey.F1: C64Key.F1F2,
         
         // Second row of C64 keyboard
         MacKey.tab: C64Key.control,
@@ -272,7 +271,7 @@ class KeyboardController: NSObject {
         MacKey.Ansi.P: C64Key.P,
         MacKey.Ansi.leftBracket: C64Key.at,
         MacKey.Ansi.rightBracket: C64Key.asterisk,
-        MacKey.F3 : C64Key.F3F4,
+        MacKey.F3: C64Key.F3F4,
         
         // Third row of C64 keyboard
         MacKey.control: C64Key.runStop,
@@ -289,7 +288,7 @@ class KeyboardController: NSObject {
         MacKey.Ansi.quote: C64Key.colon,
         MacKey.Ansi.backSlash: C64Key.equal,
         MacKey.ret: C64Key.ret,
-        MacKey.F5 : C64Key.F5F6,
+        MacKey.F5: C64Key.F5F6,
         
         // Fourth row of C64 keyboard
         MacKey.option: C64Key.commodore,
@@ -305,21 +304,21 @@ class KeyboardController: NSObject {
         MacKey.Ansi.comma: C64Key.comma,
         MacKey.Ansi.period: C64Key.period,
         MacKey.Ansi.slash: C64Key.slash,
-        MacKey.curRight : C64Key.curLeftRight,
-        MacKey.curLeft : C64Key.curLeftRight,
-        MacKey.curDown : C64Key.curUpDown,
-        MacKey.curUp : C64Key.curUpDown,
-        MacKey.F7 : C64Key.F7F8,
+        MacKey.curRight: C64Key.curLeftRight,
+        MacKey.curLeft: C64Key.curLeftRight,
+        MacKey.curDown: C64Key.curUpDown,
+        MacKey.curUp: C64Key.curUpDown,
+        MacKey.F7: C64Key.F7F8,
 
         // Fifth row of C64 keyboard
-        MacKey.space : C64Key.space
+        MacKey.space: C64Key.space
     ]
     
     /// Logical key mapping
     /// Keys are mapped based on their meaning or the characters they represent
     func translate(macKey: MacKey) -> [C64Key] {
         
-        switch (macKey) {
+        switch macKey {
         
         // First row of C64 keyboard
         case MacKey.delete: return [C64Key.delete]
@@ -361,7 +360,7 @@ class KeyboardController: NSObject {
     func _type(keyList: [C64Key]) {
         
         for key in keyList {
-            if (key == .restore) {
+            if key == .restore {
                 controller.c64.keyboard.pressRestoreKey()
             } else {
                 controller.c64.keyboard.pressKey(atRow: key.row, col: key.col)
@@ -370,7 +369,7 @@ class KeyboardController: NSObject {
         usleep(useconds_t(50000))
         
         for key in keyList {
-            if (key == .restore) {
+            if key == .restore {
                 controller.c64.keyboard.releaseRestoreKey()
             } else {
             controller.c64.keyboard.releaseKey(atRow: key.row, col: key.col)
@@ -403,14 +402,14 @@ class KeyboardController: NSObject {
         if var truncated = string {
             
             // Shorten string if it is too large
-            if (truncated.count > 255) {
+            if truncated.count > 255 {
                 truncated = truncated.prefix(256) + "..."
             }
             
             // Type string ...
             DispatchQueue.global().async {
                 
-                usleep(initialDelay);
+                usleep(initialDelay)
                 for c in truncated.lowercased() {
                     let c64Keys = C64Key.translate(char: String(c))
                     self._type(keyList: c64Keys)
