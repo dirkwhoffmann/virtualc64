@@ -503,11 +503,6 @@ extension MyController : NSMenuItemValidation {
     // Action methods (Disk menu)
     //
 
-    func driveNr(fromTagOf menuItem: Any!) -> Int {
-        let tag = (menuItem as! NSMenuItem).tag
-        precondition(tag == 1 || tag == 2)
-        return tag
-    }
     @IBAction func newDiskAction(_ sender: NSMenuItem!) {
         
         let tag = sender.tag
@@ -624,8 +619,10 @@ extension MyController : NSMenuItemValidation {
      
     @IBAction func writeProtectAction(_ sender: NSMenuItem!) {
         
-        let nr = driveNr(fromTagOf: sender)
-        if (nr == 1) {
+        let tag = sender.tag
+        assert(tag == 1 || tag == 2)
+
+        if (tag == 1) {
             c64.drive1.disk.toggleWriteProtection()
         } else {
             c64.drive2.disk.toggleWriteProtection()

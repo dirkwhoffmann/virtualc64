@@ -23,23 +23,22 @@ class PreferencesWindow : NSWindow {
     
     override func keyDown(with event: NSEvent) {
         
-        track()
-        let controller = delegate as! UserDialogController
-        controller.keyDown(with: MacKey.init(with: event))
+        let controller = delegate as? UserDialogController
+        controller?.keyDown(with: MacKey.init(with: event))
     }
     
     override func flagsChanged(with event: NSEvent) {
         
         track()
-        let controller = delegate as! UserDialogController
+        let controller = delegate as? UserDialogController
         if event.modifierFlags.contains(.shift) && event.keyCode == 56  {
-            controller.keyDown(with: MacKey.leftShift)
+            controller?.keyDown(with: MacKey.leftShift)
         } else if event.modifierFlags.contains(.shift) && event.keyCode == 60  {
-            controller.keyDown(with: MacKey.rightShift)
+            controller?.keyDown(with: MacKey.rightShift)
         } else if event.modifierFlags.contains(.control) {
-            controller.keyDown(with: MacKey.control)
+            controller?.keyDown(with: MacKey.control)
         } else if event.modifierFlags.contains(.option) {
-            controller.keyDown(with: MacKey.option)
+            controller?.keyDown(with: MacKey.option)
         }
     }
 }

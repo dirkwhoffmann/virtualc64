@@ -113,9 +113,8 @@ class SnapshotDialog : UserDialogController  {
         }
     }
     
-    @IBAction func deleteAction(_ sender: Any!) {
+    @IBAction func deleteAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         proxy?.deleteUserSnapshot(sender.tag)
         reloadUserSnapshotCache()
     }
@@ -127,16 +126,14 @@ class SnapshotDialog : UserDialogController  {
         hideSheet()
     }
     
-    @IBAction func autoDoubleClick(_ sender: Any!) {
+    @IBAction func autoDoubleClick(_ sender: NSTableView!) {
         
-        let sender = sender as! NSTableView
         proxy?.restoreAutoSnapshot(sender.selectedRow)
         cancelAction(self)
     }
     
-    @IBAction func userDoubleClick(_ sender: Any!) {
+    @IBAction func userDoubleClick(_ sender: NSTableView!) {
         
-        let sender = sender as! NSTableView
         proxy?.restoreUserSnapshot(sender.selectedRow)
         cancelAction(self)
     }
@@ -164,7 +161,10 @@ extension SnapshotDialog : NSTableViewDataSource, NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView?{
         
         let id = NSUserInterfaceItemIdentifier(rawValue: "defaultRow")
-        let result = tableView.makeView(withIdentifier: id, owner: self) as! SnapshotTableCellView
+        let view = tableView.makeView(withIdentifier: id, owner: self)
+
+        guard let result = view as? SnapshotTableCellView else { return nil }
+        // let result = tableView.makeView(withIdentifier: id, owner: self) as! SnapshotTableCellView
         
         if (tableView == autoTableView) {
             
@@ -230,4 +230,3 @@ extension SnapshotDialog {
         return true;
     }
 }
-

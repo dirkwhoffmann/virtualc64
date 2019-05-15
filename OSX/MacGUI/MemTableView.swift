@@ -184,21 +184,21 @@ extension MemTableView : NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
         
-        let cell = cell as! NSTextFieldCell
+        let cell = cell as? NSTextFieldCell
 
         if (tableColumn?.identifier.rawValue == "src") {
-            cell.font = NSFont.systemFont(ofSize: 9)
-            cell.textColor = .gray
+            cell?.font = NSFont.systemFont(ofSize: 9)
+            cell?.textColor = .gray
         } else {
-            cell.textColor = NSColor.textColor
+            cell?.textColor = NSColor.textColor
         }
         
         if (tableColumn?.identifier.rawValue == "ascii") {
-            cell.font = cbmfont
+            cell?.font = cbmfont
         }
         
         if shouldHighlight(UInt16(4 * row)) {
-            cell.textColor = .systemRed
+            cell?.textColor = .systemRed
         } 
     }
     

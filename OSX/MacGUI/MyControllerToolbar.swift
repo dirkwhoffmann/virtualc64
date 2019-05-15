@@ -30,12 +30,12 @@ extension MyController {
     
     func validateToolbarItems() {
         
-        let button = pauseTbItem.view as! NSButton
+        let button = pauseTbItem.view as? NSButton
         if c64.isRunning() {
-            button.image = NSImage.init(named: "pauseTemplate")
+            button?.image = NSImage.init(named: "pauseTemplate")
             pauseTbItem.label = "Pause"
         } else {
-            button.image = NSImage.init(named: "continueTemplate")
+            button?.image = NSImage.init(named: "continueTemplate")
             pauseTbItem.label = "Run"
         }
         

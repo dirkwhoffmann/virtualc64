@@ -11,15 +11,13 @@ import Foundation
 
 extension MyController {
     
-    @IBAction func setMemSource(_ sender: Any!) {
+    @IBAction func setMemSource(_ sender: NSPopUpButton!) {
         
-        let sender = sender as! NSPopUpButton
         memTableView.setMemView(sender.selectedTag())
     }
     
-    @IBAction func setHighlighting(_ sender: Any!) {
+    @IBAction func setHighlighting(_ sender: NSPopUpButton!) {
         
-        let sender = sender as! NSPopUpButton
         memTableView.setHighlighting(sender.selectedTag())
     }
 }

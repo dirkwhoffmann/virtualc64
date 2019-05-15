@@ -12,17 +12,17 @@ import Foundation
 extension MyController : NSWindowDelegate {
         
     public func windowDidBecomeMain(_ notification: Notification) {
-        
-        track()
-        
+
+        guard let window = notification.object as? NSWindow else { return }
+
         // Inform the application delegate
-        myAppDelegate.windowDidBecomeMain(notification.object as! NSWindow)
+        myAppDelegate.windowDidBecomeMain(window)
         
         // Start emulator if it was only paused while in background
         if pauseInBackground && pauseInBackgroundSavedState { c64.run() }
 
         // Register for mouse move events
-        window?.acceptsMouseMovedEvents = true
+        window.acceptsMouseMovedEvents = true
         
         // Make sure the aspect ratio is correct
         adjustWindowSize()

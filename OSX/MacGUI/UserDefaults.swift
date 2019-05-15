@@ -382,11 +382,11 @@ extension Defaults {
         MacKey.space:    JOYSTICK_FIRE.rawValue
     ]
     static let joyKeyMap2 = [
-        MacKey.ansi.s:   JOYSTICK_LEFT.rawValue,
-        MacKey.ansi.d:   JOYSTICK_RIGHT.rawValue,
-        MacKey.ansi.e:   JOYSTICK_UP.rawValue,
-        MacKey.ansi.x:   JOYSTICK_DOWN.rawValue,
-        MacKey.ansi.c:   JOYSTICK_FIRE.rawValue
+        MacKey.Ansi.s:   JOYSTICK_LEFT.rawValue,
+        MacKey.Ansi.d:   JOYSTICK_RIGHT.rawValue,
+        MacKey.Ansi.e:   JOYSTICK_UP.rawValue,
+        MacKey.Ansi.x:   JOYSTICK_DOWN.rawValue,
+        MacKey.Ansi.c:   JOYSTICK_FIRE.rawValue
     ]
 }
     

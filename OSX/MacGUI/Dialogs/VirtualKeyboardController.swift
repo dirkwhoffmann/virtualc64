@@ -147,11 +147,11 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
         keyboard.releaseKey(atRow: C64Key.rightShift.row, col: C64Key.rightShift.col)
     }
     
-    @IBAction func pressVirtualC64Key(_ sender: Any!) {
+    @IBAction func pressVirtualC64Key(_ sender: NSButton!) {
         
         guard let keyboard = proxy?.keyboard else { return }
 
-        let tag = (sender as! NSButton).tag
+        let tag = sender.tag
         let key = C64Key(tag)
         
         func press() {

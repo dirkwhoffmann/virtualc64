@@ -159,7 +159,7 @@ extension PreferencesController : NSCollectionViewDelegate {
             refresh()
             
             // Make sure that we can receive keyboard events
-            (window as! PreferencesWindow).respondToEvents()
+            (window as? PreferencesWindow)?.respondToEvents()
         }
     }
 }

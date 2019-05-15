@@ -107,7 +107,7 @@ extension MacKey {
     static let curUp = MacKey.init(keyCode: kVK_UpArrow, characters: "\u{2191}")
     
     // Layout dependend keys. Keycodes refer to the keys on a standard ANSI US keyboard
-    struct ansi {
+    struct Ansi {
         static let grave = MacKey.init(keyCode: kVK_ANSI_Grave, characters: "")
         static let digit0 = MacKey.init(keyCode: kVK_ANSI_0, characters: "0")
         static let digit1 = MacKey.init(keyCode: kVK_ANSI_1, characters: "1")
@@ -169,7 +169,7 @@ extension MacKey {
     }
     
     // Layout dependend keys. Keycodes refer to the keys on a standard ANSI US keyboard
-    struct iso {
+    struct Iso {
         static let hat = MacKey.init(keyCode: 0x0A, characters: "")
     }
 }
