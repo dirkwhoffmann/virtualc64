@@ -13,17 +13,17 @@ import AVFoundation
 public class AudioEngine: NSObject {
 
     private var sid: SIDProxy?
-    private var audiounit : AUAudioUnit!
+    private var audiounit: AUAudioUnit!
     
     var isRunning = false
     
-    override init()
-    {
+    override init() {
+
         super.init()
     }
     
-    convenience init?(withSID proxy: SIDProxy)
-    {
+    convenience init?(withSID proxy: SIDProxy) {
+
         track()
     
         self.init()
@@ -61,7 +61,7 @@ public class AudioEngine: NSObject {
         sid?.setSampleRate(UInt32(sampleRate))
         
         // Register render callback
-        if (stereo) {
+        if stereo {
             audiounit.outputProvider = { ( // AURenderPullInputBlock
                 actionFlags,
                 timestamp,
@@ -98,9 +98,9 @@ public class AudioEngine: NSObject {
         sid = nil
     }
     
-    private func renderMono(inputDataList : UnsafeMutablePointer<AudioBufferList>,
-                            frameCount : UInt32)
-    {
+    private func renderMono(inputDataList: UnsafeMutablePointer<AudioBufferList>,
+                            frameCount: UInt32) {
+
         let bufferList = UnsafeMutableAudioBufferListPointer(inputDataList)
         assert(bufferList.count == 1)
         
@@ -108,9 +108,9 @@ public class AudioEngine: NSObject {
         sid?.readMonoSamples(ptr, size: Int(frameCount))
     }
   
-    private func renderStereo(inputDataList : UnsafeMutablePointer<AudioBufferList>,
-                            frameCount : UInt32)
-    {
+    private func renderStereo(inputDataList: UnsafeMutablePointer<AudioBufferList>,
+                              frameCount: UInt32) {
+        
         let bufferList = UnsafeMutableAudioBufferListPointer(inputDataList)
         assert(bufferList.count > 1)
         

@@ -11,9 +11,7 @@ import Foundation
 
 extension MyController {
     
-    private var cpuInfo: CPUInfo {
-        get { return c64.cpu.getInfo() }
-    }
+    private var cpuInfo: CPUInfo { return c64.cpu.getInfo() }
         
     // Registers
     
@@ -21,9 +19,9 @@ extension MyController {
         
         let oldValue = cpuInfo.pc
         
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._pcAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._pcAction(oldValue)
             }
             undoManager?.setActionName("Set Program Counter")
             
@@ -40,9 +38,9 @@ extension MyController {
     func _aAction(_ value: UInt8) {
         
         let oldValue = cpuInfo.a
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._aAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._aAction(oldValue)
             }
             undoManager?.setActionName("Set Accumulator")
             
@@ -59,9 +57,9 @@ extension MyController {
     func _xAction(_ value: UInt8) {
         
         let oldValue = cpuInfo.x
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._xAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._xAction(oldValue)
             }
             undoManager?.setActionName("Set X Register")
         
@@ -78,9 +76,9 @@ extension MyController {
     func _yAction(_ value: UInt8) {
         
         let oldValue = cpuInfo.y
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._yAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._yAction(oldValue)
             }
             undoManager?.setActionName("Set Y Register")
             
@@ -97,9 +95,9 @@ extension MyController {
     func _spAction(_ value: UInt8) {
         
         let oldValue = cpuInfo.sp
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._spAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._spAction(oldValue)
             }
             undoManager?.setActionName("Set Stack Pointer")
             
@@ -118,9 +116,9 @@ extension MyController {
     func _nAction(_ value: Bool) {
         
         let oldValue = cpuInfo.nFlag
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._nAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._nAction(oldValue)
             }
             undoManager?.setActionName("Toggle Negative Flag")
             
@@ -137,9 +135,9 @@ extension MyController {
     func _zAction(_ value: Bool) {
         
         let oldValue = cpuInfo.zFlag
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._zAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._zAction(oldValue)
             }
             undoManager?.setActionName("Toggle Zero Flag")
             
@@ -156,9 +154,9 @@ extension MyController {
     func _cAction(_ value: Bool) {
         
         let oldValue = cpuInfo.cFlag
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._cAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._cAction(oldValue)
             }
             undoManager?.setActionName("Toggle Carry Flag")
             
@@ -175,9 +173,9 @@ extension MyController {
     func _iAction(_ value: Bool) {
         
         let oldValue = cpuInfo.iFlag
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._iAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._iAction(oldValue)
             }
             undoManager?.setActionName("Toggle Interrupt Flag")
             
@@ -194,9 +192,9 @@ extension MyController {
     func _bAction(_ value: Bool) {
         
         let oldValue = cpuInfo.bFlag
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._bAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._bAction(oldValue)
             }
             undoManager?.setActionName("Toggle Break Flag")
             
@@ -213,9 +211,9 @@ extension MyController {
     func _dAction(_ value: Bool) {
         
         let oldValue = cpuInfo.dFlag
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._dAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._dAction(oldValue)
             }
             undoManager?.setActionName("Toggle Decimal Flag")
             
@@ -232,9 +230,9 @@ extension MyController {
     func _vAction(_ value: Bool) {
         
         let oldValue = cpuInfo.vFlag
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._vAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._vAction(oldValue)
             }
             undoManager?.setActionName("Toggle Overflow Flag")
             
@@ -250,8 +248,8 @@ extension MyController {
     
     func _setBreakpointAction(_ value: UInt16) {
         
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._deleteBreakpointAction(value)
+        undoManager?.registerUndo(withTarget: self) { me in
+            me._deleteBreakpointAction(value)
         }
         undoManager?.setActionName("Set Breakpoint")
         
@@ -261,8 +259,8 @@ extension MyController {
     
     func _deleteBreakpointAction(_ value: UInt16) {
         
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._setBreakpointAction(value)
+        undoManager?.registerUndo(withTarget: self) { me in
+            me._setBreakpointAction(value)
         }
         undoManager?.setActionName("Set Breakpoint")
         

@@ -13,13 +13,13 @@ import Foundation
 // Commands
 //
 
-func resetScriptCmd(arguments: [AnyHashable : Any]?) -> Bool {
+func resetScriptCmd(arguments: [AnyHashable: Any]?) -> Bool {
     
     proxy?.powerUp()
     return true
 }
 
-func configureScriptCmd(arguments: [AnyHashable : Any]?) -> Bool {
+func configureScriptCmd(arguments: [AnyHashable: Any]?) -> Bool {
     
     // Hardware model
     if let argument = arguments?["VC64HwModel"] as? String {
@@ -36,7 +36,7 @@ func configureScriptCmd(arguments: [AnyHashable : Any]?) -> Bool {
     
     // Auto warp
     if let argument = arguments?["VC64AutoWarp"] as? String {
-        track();
+
         switch argument {
         case "on": track(); proxy?.setWarpLoad(true)
         case "off": track(); proxy?.setWarpLoad(false)
@@ -46,7 +46,7 @@ func configureScriptCmd(arguments: [AnyHashable : Any]?) -> Bool {
     
     // Always warp
     if let argument = arguments?["VC64AlwaysWarp"] as? String {
-        track();
+
         switch argument {
         case "on": track(); proxy?.setAlwaysWarp(true)
         case "off": track(); proxy?.setAlwaysWarp(false)
@@ -57,7 +57,7 @@ func configureScriptCmd(arguments: [AnyHashable : Any]?) -> Bool {
     return true
 }
 
-func mountScriptCmd(arguments: [AnyHashable : Any]?) -> Bool {
+func mountScriptCmd(arguments: [AnyHashable: Any]?) -> Bool {
     
     if let argument = arguments?["VC64Path"] as? String {
         let url = URL(fileURLWithPath: argument)
@@ -71,7 +71,7 @@ func mountScriptCmd(arguments: [AnyHashable : Any]?) -> Bool {
     return false
 }
 
-func typeTextCmd(arguments: [AnyHashable : Any]?) -> Bool {
+func typeTextCmd(arguments: [AnyHashable: Any]?) -> Bool {
     
     if let text = arguments?[""] as? String {
         myController?.keyboardcontroller.type(text)
@@ -80,7 +80,7 @@ func typeTextCmd(arguments: [AnyHashable : Any]?) -> Bool {
     return false
 }
 
-func takeScreenshotCmd(arguments: [AnyHashable : Any]?) -> Bool {
+func takeScreenshotCmd(arguments: [AnyHashable: Any]?) -> Bool {
     
     guard let path = arguments?["VC64Path"] as? String else {
         return false
@@ -95,7 +95,7 @@ func takeScreenshotCmd(arguments: [AnyHashable : Any]?) -> Bool {
     }
 }
 
-func quitScriptCmd(arguments: [AnyHashable : Any]?) {
+func quitScriptCmd(arguments: [AnyHashable: Any]?) {
     
     myDocument?.updateChangeCount(.changeCleared)
     NSApplication.shared.terminate(nil)

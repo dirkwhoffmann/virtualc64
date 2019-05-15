@@ -86,11 +86,8 @@ extension MyController {
         spriteExtraColor2.isHidden = hidden
     }
     
-    private var sprite: Int {
-        get { return spriteSelector.indexOfSelectedItem }
-    }
-        
-    
+    private var sprite: Int { return spriteSelector.indexOfSelectedItem }
+
     //
     // Action methods
     //
@@ -107,9 +104,9 @@ extension MyController {
         let info = c64.vic.getInfo()
         let oldValue = info.displayMode
         
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._displayModeAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._displayModeAction(oldValue)
             }
             undoManager?.setActionName("Set Display Mode")
             c64.vic.setDisplayMode(value)
@@ -130,9 +127,9 @@ extension MyController {
         let info = c64.vic.getInfo()
         let oldValue = info.screenGeometry
         
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._screenGeometryAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._screenGeometryAction(oldValue)
             }
             undoManager?.setActionName("Set Screen Geometry")
             c64.vic.setScreenGeometry(value)
@@ -151,9 +148,9 @@ extension MyController {
         let info = c64.vic.getInfo()
         let oldValue = info.memoryBankAddr
         
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._memoryBankAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._memoryBankAction(oldValue)
             }
             undoManager?.setActionName("Set Memory Bank")
             c64.vic.setMemoryBankAddr(value)
@@ -172,9 +169,9 @@ extension MyController {
         let info = c64.vic.getInfo()
         let oldValue = info.screenMemoryAddr
         
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._screenMemoryAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._screenMemoryAction(oldValue)
             }
             undoManager?.setActionName("Set Screen Memory Address")
             c64.vic.setScreenMemoryAddr(value)
@@ -193,9 +190,9 @@ extension MyController {
         let info = c64.vic.getInfo()
         let oldValue = info.characterMemoryAddr
         
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._characterMemoryAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._characterMemoryAction(oldValue)
             }
             undoManager?.setActionName("Set Character Memory Address")
             c64.vic.setCharacterMemoryAddr(value)
@@ -214,9 +211,9 @@ extension MyController {
         let info = c64.vic.getInfo()
         let oldValue = info.dx
         
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._dxAction(value)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._dxAction(value)
             }
             undoManager?.setActionName("Set X Scroll")
             c64.vic.setHorizontalRasterScroll(value)
@@ -239,9 +236,9 @@ extension MyController {
         let info = c64.vic.getInfo()
         let oldValue = info.dy
         
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._dyAction(value)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._dyAction(value)
             }
             undoManager?.setActionName("Set Y Scroll")
             c64.vic.setVerticalRasterScroll(value)
@@ -266,16 +263,16 @@ extension MyController {
         refreshVIC()
     }
     
-    func _spriteEnableAction(_ value: (Int,Bool)) {
+    func _spriteEnableAction(_ value: (Int, Bool)) {
         
         let sprite = value.0
         let info = c64.vic.getSpriteInfo(sprite)
         let oldValue = info.enabled
         let newValue = value.1
 
-        if (newValue != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._spriteEnableAction((sprite, oldValue))
+        if newValue != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._spriteEnableAction((sprite, oldValue))
             }
             undoManager?.setActionName(newValue ? "Enable Sprite" : "Disable Sprite")
             c64.vic.setSpriteEnabled(sprite, value: newValue)
@@ -288,16 +285,16 @@ extension MyController {
         _spriteEnableAction((sprite, sender.intValue != 0))
     }
  
-    func _spriteXAction(_ value: (Int,UInt16)) {
+    func _spriteXAction(_ value: (Int, UInt16)) {
         
         let sprite = value.0
         let info = c64.vic.getSpriteInfo(sprite)
         let oldValue = info.x
         let newValue = value.1
         
-        if (newValue != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._spriteXAction(value)
+        if newValue != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._spriteXAction(value)
             }
             undoManager?.setActionName("Set Sprite X Coordinate")
             c64.vic.setSpriteX(sprite, value: Int(newValue))
@@ -315,16 +312,16 @@ extension MyController {
         _spriteXAction((sprite, UInt16(sender.intValue)))
     }
 
-    func _spriteYAction(_ value: (Int,UInt16)) {
+    func _spriteYAction(_ value: (Int, UInt16)) {
         
         let sprite = value.0
         let info = c64.vic.getSpriteInfo(sprite)
         let oldValue = info.y
         let newValue = value.1
         
-        if (newValue != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._spriteYAction(value)
+        if newValue != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._spriteYAction(value)
             }
             undoManager?.setActionName("Set Sprite Y Coordinate")
             c64.vic.setSpriteY(sprite, value: Int(newValue))
@@ -342,16 +339,16 @@ extension MyController {
         _spriteYAction((sprite, UInt16(sender.intValue)))
     }
     
-    func _spritePtrAction(_ value: (Int,UInt8)) {
+    func _spritePtrAction(_ value: (Int, UInt8)) {
         
         let sprite = value.0
         let info = c64.vic.getSpriteInfo(sprite)
         let oldValue = info.ptr
         let newValue = value.1
         
-        if (newValue != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._spritePtrAction(value)
+        if newValue != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._spritePtrAction(value)
             }
             undoManager?.setActionName("Set Sprite Data Pointer")
             c64.vic.setSpritePtr(sprite, value: Int(newValue))
@@ -370,16 +367,16 @@ extension MyController {
         _spritePtrAction((sprite, UInt8(sender.intValue)))
     }
     
-    func _spriteExpandXAction(_ value: (Int,Bool)) {
+    func _spriteExpandXAction(_ value: (Int, Bool)) {
         
         let sprite = value.0
         let info = c64.vic.getSpriteInfo(sprite)
         let oldValue = info.expandX
         let newValue = value.1
         
-        if (newValue != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._spriteExpandXAction((sprite, oldValue))
+        if newValue != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._spriteExpandXAction((sprite, oldValue))
             }
             undoManager?.setActionName(newValue ? "Expand Sprite" : "Shrink Sprite")
             c64.vic.setSpriteStretchX(sprite, value: newValue)
@@ -392,16 +389,16 @@ extension MyController {
         _spriteExpandXAction((sprite, sender.intValue != 0))
     }
     
-    func _spriteExpandYAction(_ value: (Int,Bool)) {
+    func _spriteExpandYAction(_ value: (Int, Bool)) {
         
         let sprite = value.0
         let info = c64.vic.getSpriteInfo(sprite)
         let oldValue = info.expandY
         let newValue = value.1
         
-        if (newValue != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._spriteExpandYAction((sprite, oldValue))
+        if newValue != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._spriteExpandYAction((sprite, oldValue))
             }
             undoManager?.setActionName(newValue ? "Expand Sprite" : "Shrink Sprite")
             c64.vic.setSpriteStretchY(sprite, value: newValue)
@@ -414,16 +411,15 @@ extension MyController {
         _spriteExpandYAction((sprite, sender.intValue != 0))
     }
     
-    func _spriteMulticolorAction(_ value: (Int,Bool)) {
+    func _spriteMulticolorAction(_ value: (Int, Bool)) {
         
-        // track("\(value.0) \(value.1)")
         let info = c64.vic.getSpriteInfo(value.0)
         let oldValue = info.multicolor
         let actionName = oldValue ? "Set Multicolor Bit" : "Clear Multicolor Bit"
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._spriteMulticolorAction((value.0,oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._spriteMulticolorAction((value.0, oldValue))
             }
             undoManager?.setActionName(actionName)
             c64.vic.setSpriteMulticolor(value.0, value: value.1)
@@ -437,15 +433,15 @@ extension MyController {
         _spriteMulticolorAction((sprite, value))
     }
  
-    func _spritePriorityAction(_ value: (Int,Bool)) {
+    func _spritePriorityAction(_ value: (Int, Bool)) {
         
         let info = c64.vic.getSpriteInfo(value.0)
         let oldValue = info.priority
         let actionName = oldValue ? "Set Priority Bit" : "Clear Priority Bit"
         
-        if (value.1 != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._spritePriorityAction((value.0,oldValue))
+        if value.1 != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._spritePriorityAction((value.0, oldValue))
             }
             undoManager?.setActionName(actionName)
             c64.vic.setSpritePriority(value.0, value: value.1)
@@ -466,9 +462,9 @@ extension MyController {
         let oldValue = info.spriteCollisionIrqEnabled
         let actionName = oldValue ? "Enable IRQ" : "Disable IRQ"
         
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._spriteSpriteCollisionIrqAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._spriteSpriteCollisionIrqAction(oldValue)
             }
             undoManager?.setActionName(actionName)
             c64.vic.setIrqOnSpriteSpriteCollision(value)
@@ -487,9 +483,9 @@ extension MyController {
         let oldValue = info.backgroundCollisionIrqEnabled
         let actionName = oldValue ? "Enable IRQ" : "Disable IRQ"
         
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._spriteBackgroundCollisionIrqAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._spriteBackgroundCollisionIrqAction(oldValue)
             }
             undoManager?.setActionName(actionName)
             c64.vic.setIrqOnSpriteBackgroundCollision(value)
@@ -508,9 +504,9 @@ extension MyController {
         let oldValue = info.rasterIrqEnabled
         let actionName = oldValue ? "Enable IRQ" : "Disable IRQ"
         
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._rasterIrqEnabledAction(oldValue)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._rasterIrqEnabledAction(oldValue)
             }
             undoManager?.setActionName(actionName)
             c64.vic.setRasterInterruptEnabled(value)
@@ -528,9 +524,9 @@ extension MyController {
         let info = c64.vic.getInfo()
         let oldValue = info.irqRasterline
         
-        if (value != oldValue) {
-            undoManager?.registerUndo(withTarget: self) {
-                me in me._irqRasterlineAction(value)
+        if value != oldValue {
+            undoManager?.registerUndo(withTarget: self) { me in
+                me._irqRasterlineAction(value)
             }
             undoManager?.setActionName("Set IRQ Rasterline")
             c64.vic.setRasterInterruptLine(value)
@@ -548,7 +544,7 @@ extension MyController {
         let info = c64.vic.getInfo()
         let sinfo = c64.vic.getSpriteInfo(spriteNr)
         
-        switch (colorTag) {
+        switch colorTag {
         case 0: return info.borderColor
         case 1: return info.backgroundColor0
         case 2: return info.backgroundColor1
@@ -561,28 +557,29 @@ extension MyController {
         }
     }
     
-    func _colorAction(_ value: (Int,Int,UInt8)) {
+    func _colorAction(_ value: (Int, Int, UInt8)) {
         
         let oldColor = color(colorTag: value.0, spriteNr: value.1)
-        if (oldColor == value.2) {
+        if oldColor == value.2 {
             return
         }
         
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._colorAction((value.0, value.1, oldColor))
+        undoManager?.registerUndo(withTarget: self) { me in
+            me._colorAction((value.0, value.1, oldColor))
         }
         undoManager?.setActionName("Set Color")
         
-        switch (value.0) {
-        case 0,1,2,3,4,5,6:
+        switch value.0 {
+
+        case 0, 1, 2, 3, 4, 5, 6:
             c64.mem.pokeIO(0xD020 + UInt16(value.0), value: value.2)
-            break
+
         case 7:
             c64.mem.pokeIO(0xD027 + UInt16(sprite), value: value.2)
-            break
+
         default:
             assert(false)
-            break
+            
         }
         
         refreshVIC()

@@ -7,6 +7,8 @@
 // See https://www.gnu.org for license information
 //
 
+// swiftlint:disable comma
+
 import Foundation
 
 /// The C64Key structure represents a physical keys on the C64 keyboard.
@@ -17,7 +19,7 @@ import Foundation
 /// down the left shift key until it is released and restore has no key matrix
 /// representation at all. Instead, it is directly connected to the NMI line.
 
-struct C64Key : Codable {
+struct C64Key: Codable {
     
     // A number that identifies this key uniquely
     var nr = -1
@@ -40,29 +42,30 @@ struct C64Key : Codable {
         
         let rowcol = [
             // First physical key row
-            (7,1), (7,0), (7,3), (1,0), (1,3), (2,0), (2,3), (3,0),
-            (3,3), (4,0), (4,3), (5,0), (5,3), (6,0), (6,3), (0,0), (0,4) /* f1 */,
+            (7, 1), (7, 0), (7, 3), (1, 0), (1, 3), (2, 0), (2, 3), (3, 0),
+            (3, 3), (4, 0), (4, 3), (5, 0), (5, 3), (6, 0), (6, 3), (0, 0),
+            (0, 4) /* f1 */,
             
             // Second physical key row
-            (7,2), (7,6), (1,1), (1,6), (2,1), (2,6), (3,1), (3,6),
-            (4,1), (4,6), (5,1), (5,6), (6,1), (6,6), (9,9), (0,5) /* f3 */,
+            (7, 2), (7, 6), (1, 1), (1, 6), (2, 1), (2, 6), (3, 1), (3, 6),
+            (4, 1), (4, 6), (5, 1), (5, 6), (6, 1), (6, 6), (9, 9), (0, 5) /* f3 */,
 
             // Third physical key row
-            (7,7), (9,9), (1,2), (1,5), (2,2), (2,5), (3,2), (3,5),
-            (4,2), (4,5), (5,2), (5,5), (6,2), (6,5), (0,1), (0,6) /* f5 */,
+            (7, 7), (9, 9), (1, 2), (1, 5), (2, 2), (2, 5), (3, 2), (3, 5),
+            (4, 2), (4, 5), (5, 2), (5, 5), (6, 2), (6, 5), (0, 1), (0, 6) /* f5 */,
             
             // Fourth physical key row
-            (7,5), (1,7), (1,4), (2,7), (2,4), (3,7), (3,4), (4,7),
-            (4,4), (5,7), (5,4), (6,7), (6,4), (0,7), (0,2), (0,3) /* f7 */,
+            (7, 5), (1, 7), (1, 4), (2, 7), (2, 4), (3, 7), (3, 4), (4, 7),
+            (4, 4), (5, 7), (5, 4), (6, 7), (6, 4), (0, 7), (0, 2), (0, 3) /* f7 */,
             
             // Fifth physical key row
-            (7,4) /* space */
+            (7, 4) /* space */
         ]
         
         precondition(rowcol.count == 66)
         
         self.nr = nr
-        if (nr != 31 /* RESTORE */ && nr != 34 /* SHIFT LOCK */) {
+        if nr != 31 /* RESTORE */ && nr != 34 /* SHIFT LOCK */ {
             self.row = rowcol[nr].0
             self.col = rowcol[nr].1
         } else {
@@ -70,19 +73,19 @@ struct C64Key : Codable {
         }
     }
     
-    init(_ rowcol : (Int, Int) ) {
+    init(_ rowcol: (Int, Int) ) {
         
         precondition(rowcol.0 >= 0 && rowcol.0 < 8)
         precondition(rowcol.1 >= 0 && rowcol.1 < 8)
         
         let nr = [ 15, 47, 63, 64, 16, 32, 48, 62,
-                    3, 19, 35,  4, 51, 36, 20, 50,
-                    5, 21, 37,  6, 53, 38, 22, 52,
-                    7, 23, 39,  8, 55, 40, 24, 54,
-                    9, 25, 41, 10, 57, 42, 26, 56,
+                   3, 19, 35, 4, 51, 36, 20, 50,
+                   5, 21, 37, 6, 53, 38, 22, 52,
+                   7, 23, 39, 8, 55, 40, 24, 54,
+                   9, 25, 41, 10, 57, 42, 26, 56,
                    11, 27, 43, 12, 59, 44, 28, 58,
                    13, 29, 45, 14, 61, 46, 30, 60,
-                    1,  0, 17,  2, 65, 49, 18, 33
+                   1, 0, 17, 2, 65, 49, 18, 33
         ]
         
         precondition(nr.count == 64)
@@ -94,7 +97,7 @@ struct C64Key : Codable {
 }
 
 extension C64Key: Equatable {
-    static func ==(lhs: C64Key, rhs: C64Key) -> Bool {
+    static func == (lhs: C64Key, rhs: C64Key) -> Bool {
         return lhs.nr == rhs.nr
     }
 }
@@ -178,8 +181,7 @@ extension C64Key {
     static let equal        = C64Key.init(46)
     static let upArrow      = C64Key.init(30)
     static let slash        = C64Key.init(60)
-    
-    
+
     // Eights row
     static let digit1       = C64Key.init(1)
     static let leftArrow    = C64Key.init(0)
@@ -193,14 +195,13 @@ extension C64Key {
     // Restore key
     static let restore      = C64Key.init(31)
 
-    
     // Translates a character to a list of corresponding C64 keys
     // This function is used for symbolically mapping Mac keys to C64 keys
     static func translate(char: String?) -> [C64Key] {
         
         if char == nil { return [] }
         
-        switch (char!) {
+        switch char! {
             
         // First row of C64 keyboard
         case "ü": return [C64Key.leftArrow]
@@ -338,28 +339,24 @@ extension NSImage.Name {
 extension C64Key {
 
     /// Return the physical layout parameters (width and height) for this key
-    var layout: (Int,Int) {
-        get {
-            switch nr {
-            case 47:
-                return (64,32) // Return key
-            case 17, 31, 50, 61:
-                return (48,32) // Ctrl, Restore, Left Shift, Right Shift
-            case 16, 32, 48, 64:
-                return (48,32) // F1, F3, F5, F7
-            default:
-                return (32,32) // All other keys
-            }
+    var layout: (Int, Int) {
+        switch nr {
+        case 47:
+            return (64, 32) // Return key
+        case 17, 31, 50, 61:
+            return (48, 32) // Ctrl, Restore, Left Shift, Right Shift
+        case 16, 32, 48, 64:
+            return (48, 32) // F1, F3, F5, F7
+        default:
+            return (32, 32) // All other keys
         }
     }
     
     /// Returns an empty background key image
     var background: NSImage {
-        get {
-            let imageName = (nr == 16 || nr == 32 || nr == 48 || nr == 64) ? "key_dark" : "key"
-            let background = NSImage(named: imageName)!
-            return background.resizeImage(width: CGFloat(layout.0), height: CGFloat(layout.1))
-        }
+        let imageName = (nr == 16 || nr == 32 || nr == 48 || nr == 64) ? "key_dark" : "key"
+        let background = NSImage(named: imageName)!
+        return background.resizeImage(width: CGFloat(layout.0), height: CGFloat(layout.1))
     }
     
     func plainKeyImage(width: Int, height: Int,
@@ -382,7 +379,7 @@ extension C64Key {
         if C64Key.map.isEmpty { initMap() }
         
         // Check for keys with a predrawn image
-        switch (nr) {
+        switch nr {
         case 17: return NSImage.init(named: pressed ? .key_ctrl_pressed : .key_ctrl)!
         case 31: return NSImage.init(named: .key_restore)!
         case 33: return NSImage.init(named: .key_runstop)!
@@ -422,7 +419,7 @@ extension C64Key {
             let border = CGFloat(3.0)
             let width = image.size.width - (2.0 * border)
             let height = image.size.height - (2.0 * border)
-            let rect = NSMakeRect(border, border, width, height)
+            let rect = NSRect.init(x: border, y: border, width: width, height: height)
             let cPath = NSBezierPath.init(roundedRect: rect, xRadius: 3.0, yRadius: 3.0)
             cPath.fill()
             image.unlockFocus()
@@ -453,7 +450,7 @@ extension C64Key {
         let textFontAttributes1 = [
             NSAttributedString.Key.font: font,
             NSAttributedString.Key.foregroundColor: NSColor.black,
-            NSAttributedString.Key.paragraphStyle: paragraphStyle,
+            NSAttributedString.Key.paragraphStyle: paragraphStyle
         ]
         let image = background
         image.lockFocus()
@@ -466,10 +463,10 @@ extension C64Key {
     /// user dialog for configuring the key mapping.
     func image(keyCode: String, red: Bool = false) -> NSImage {
         
-        precondition(nr != 31 /* RESTORE */);
-        precondition(nr != 34 /* SHIFT LOCK */);
-        precondition(row >= 0 && row < 8)
-        precondition(col >= 0 && col < 8)
+        assert(nr != 31 /* RESTORE */)
+        assert(nr != 34 /* SHIFT LOCK */)
+        assert(row >= 0 && row < 8)
+        assert(col >= 0 && col < 8)
         
         // Get textual description for this key
         let curUD = "CU \u{21c5}"
@@ -528,14 +525,12 @@ extension C64Key {
 
 extension C64Key {
 
-    static var map: [Int: (String,String)] = [:]
+    static var map: [Int: (String, String)] = [:]
     
     func assign(_ key: Int, _ flags: Int, _ label: String, _ font: String = "") {
         
-        for i in 0 ... 7 {
-            if i & flags == flags {
-                C64Key.map[8 * key + i] = (label, font)
-            }
+        for i in 0 ... 7 where i & flags == flags {
+            C64Key.map[8 * key + i] = (label, font)
         }
     }
     

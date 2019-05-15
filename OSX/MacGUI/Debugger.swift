@@ -33,21 +33,22 @@ extension MyController {
         
         if let id = debugPanel.selectedTabViewItem?.identifier as? String {
             switch id {
+
             case "CPU":
                 refreshCPU()
-                break
+
             case "MEM":
                 memTableView.refresh()
-                break
+
             case "CIA":
                 refreshCIA()
-                break
+
             case "VIC":
                 refreshVIC()
-                break
+
             case "SID":
                 refreshSID()
-                break
+
             default:
                 break
             }
@@ -107,14 +108,14 @@ extension MyController {
                          frequency])
         
         let columnFormatters = [
-            "addr" : fmt16,
-            "hex0" : fmt8,
-            "hex1" : fmt8,
-            "hex2" : fmt8,
-            "hex3" : fmt8
+            "addr": fmt16,
+            "hex0": fmt8,
+            "hex1": fmt8,
+            "hex2": fmt8,
+            "hex3": fmt8
         ]
 
-        for (column,formatter) in columnFormatters {
+        for (column, formatter) in columnFormatters {
             let columnId = NSUserInterfaceItemIdentifier(rawValue: column)
             if let tableColumn = memTableView.tableColumn(withIdentifier: columnId) {
                 if let cell = tableColumn.dataCell as? NSCell {
@@ -128,7 +129,7 @@ extension MyController {
     
     func setUserEditing(_ enabled: Bool) {
         
-        let controls:[NSControl] = [
+        let controls: [NSControl] = [
             // CPU panel
             pc, sp, a, x, y,
             nflag, zflag, cflag, iflag, bflag, dflag, vflag,
@@ -191,7 +192,7 @@ extension MyController {
     }
 }
 
-extension MyController : NSTabViewDelegate {
+extension MyController: NSTabViewDelegate {
 
     func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
         refresh()
@@ -263,11 +264,3 @@ extension MyController {
         refreshFormatters(hex: true)
     }
 }
-
-
-
-
-
-
-
-

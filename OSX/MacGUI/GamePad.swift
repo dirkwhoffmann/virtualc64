@@ -15,15 +15,15 @@ import IOKit.hid
 // Creation and destruction is done by the GamePadManager
 //
 
-class GamePad
-{
+class GamePad {
+
     /*! @brief    Keymap of the managed device
      *  @details  Only used for keyboard emulated devices
      */
-    var keyMap: [MacKey:UInt32]?
+    var keyMap: [MacKey: UInt32]?
     
     //! @brief    Indicates if a joystick emulation key is currently pressed
-    var keyUp = false, keyDown = false, keyLeft = false, keyRight = false;
+    var keyUp = false, keyDown = false, keyLeft = false, keyRight = false
     
     //! @brief    Name of the connected controller
     var name: String?
@@ -44,21 +44,21 @@ class GamePad
     var locationID: Int
 
     //! @brief    Minimum value of analog axis event
-    var min : Int?
+    var min: Int?
     
     //! @brief    Maximum value of analog axis event
-    var max : Int?
+    var max: Int?
     
     //! @brief    Rescued information from the last invocation of the action function
     /*! @details  Used to determine if a joystick event needs to be triggered.
      */
-    var oldEvents: [Int : [JoystickEvent]] = [:]
+    var oldEvents: [Int: [JoystickEvent]] = [:]
     
     //! @brief    Cotroller dependent usage IDs for left and right gamepad joysticks
-    var lThumbXUsageID = kHIDUsage_GD_X;
-    var lThumbYUsageID = kHIDUsage_GD_Y;
-    var rThumbXUsageID = kHIDUsage_GD_Rz;
-    var rThumbYUsageID = kHIDUsage_GD_Z;
+    var lThumbXUsageID = kHIDUsage_GD_X
+    var lThumbYUsageID = kHIDUsage_GD_Y
+    var rThumbXUsageID = kHIDUsage_GD_Rz
+    var rThumbYUsageID = kHIDUsage_GD_Z
 
     /// Reference to the GamePadManager
     var manager: GamePadManager
@@ -66,7 +66,7 @@ class GamePad
     init(manager: GamePadManager,
          vendorID: Int, productID: Int, locationID: Int) {
         
-        track();
+        track()
         
         self.manager = manager
         self.vendorID = vendorID
@@ -74,33 +74,33 @@ class GamePad
         self.locationID = locationID
     
         // Check for known devices
-        if (vendorID == 0x40B && productID == 0x6533) {
+        if vendorID == 0x40B && productID == 0x6533 {
             
             name = "Competition Pro SL-6602"
         
-        } else if (vendorID == 0x54C && productID == 0x268) {
+        } else if vendorID == 0x54C && productID == 0x268 {
 
             name = "Sony DualShock 3"
-            rThumbXUsageID = kHIDUsage_GD_Z;
-            rThumbYUsageID = kHIDUsage_GD_Rz;
+            rThumbXUsageID = kHIDUsage_GD_Z
+            rThumbYUsageID = kHIDUsage_GD_Rz
         
-        } else if (vendorID == 0x54C && productID == 0x5C4) {
+        } else if vendorID == 0x54C && productID == 0x5C4 {
             
             name = "Sony DualShock 4"
-            rThumbXUsageID = kHIDUsage_GD_Z;
-            rThumbYUsageID = kHIDUsage_GD_Rz;
+            rThumbXUsageID = kHIDUsage_GD_Z
+            rThumbYUsageID = kHIDUsage_GD_Rz
 
-        } else if (vendorID == 0x54C && productID == 0x9CC) {
+        } else if vendorID == 0x54C && productID == 0x9CC {
             
             name = "Sony Dualshock 4 (2nd Gen)"
-            rThumbXUsageID = kHIDUsage_GD_Z;
-            rThumbYUsageID = kHIDUsage_GD_Rz;
+            rThumbXUsageID = kHIDUsage_GD_Z
+            rThumbYUsageID = kHIDUsage_GD_Rz
         
-        } else if (vendorID == 0x483 && productID == 0x9005) {
+        } else if vendorID == 0x483 && productID == 0x9005 {
             
             name = "RetroFun! Joystick Adapter"
 
-        } else if (vendorID == 0x004 && productID == 0x0001) {
+        } else if vendorID == 0x004 && productID == 0x0001 {
             
             name = "aJoy Retro Adapter"
             
@@ -114,8 +114,8 @@ class GamePad
         self.init(manager: manager, vendorID: 0, productID: 0, locationID: 0)
     }
     
-    let actionCallback : IOHIDValueCallback = { inContext, inResult, inSender, value in
-        let this : GamePad = unsafeBitCast(inContext, to: GamePad.self)
+    let actionCallback: IOHIDValueCallback = { inContext, inResult, inSender, value in
+        let this: GamePad = unsafeBitCast(inContext, to: GamePad.self)
         this.hidDeviceAction(context: inContext, result: inResult, sender: inSender, value: value)
     }
 }
@@ -132,10 +132,8 @@ extension GamePad {
         precondition(keyMap != nil)
         
         // Avoid double mappings
-        for (k, dir) in keyMap! {
-            if dir == direction.rawValue {
-                keyMap![k] = nil
-            }
+        for (k, dir) in keyMap! where dir == direction.rawValue {
+            keyMap![k] = nil
         }
         keyMap![key] = direction.rawValue
     }
@@ -151,7 +149,7 @@ extension GamePad {
 
             var events: [JoystickEvent]
             
-            switch (JoystickDirection(direction)) {
+            switch JoystickDirection(direction) {
                 
             case JOYSTICK_UP:
                 keyUp = true
@@ -187,13 +185,13 @@ extension GamePad {
      *           and triggeres an event if a match has been found.
      *  @result  Returns true if a joystick event has been triggered.
      */
-    func keyUp(_ macKey: MacKey) -> Bool
-    {
+    func keyUp(_ macKey: MacKey) -> Bool {
+
         if let direction = keyMap?[macKey] {
             
             var events: [JoystickEvent]
             
-            switch (JoystickDirection(direction)) {
+            switch JoystickDirection(direction) {
             
             case JOYSTICK_UP:
                 keyUp = false
@@ -244,19 +242,18 @@ extension GamePad {
         }
         let val = IOHIDValueGetIntegerValue(value)
         
-        var v = (Double) (val - min!) / (Double) (max! - min!);
-        v = v * 2.0 - 1.0;
-        if v < -0.45 { return -2 };
-        if v < -0.1 { return nil };  // dead zone
-        if v <= 0.1 { return 0 };
-        if v <= 0.45 { return nil }; // dead zone
-        return 2;
+        var v = (Double) (val - min!) / (Double) (max! - min!)
+        v = v * 2.0 - 1.0
+        if v < -0.45 { return -2 }
+        if v < -0.1 { return nil }  // dead zone
+        if v <= 0.1 { return 0 }
+        if v <= 0.45 { return nil } // dead zone
+        return 2
     }
     
-    
-    func hidDeviceAction(context: Optional<UnsafeMutableRawPointer>,
+    func hidDeviceAction(context: UnsafeMutableRawPointer?,
                          result: IOReturn,
-                         sender: Optional<UnsafeMutableRawPointer>,
+                         sender: UnsafeMutableRawPointer?,
                          value: IOHIDValue) {
     
         let element   = IOHIDValueGetElement(value)
@@ -272,11 +269,11 @@ extension GamePad {
         }
         
         // Stick
-        if (usagePage == kHIDPage_GenericDesktop) {
+        if usagePage == kHIDPage_GenericDesktop {
             
             var events: [JoystickEvent]?
             
-            switch(usage) {
+            switch usage {
                 
             case lThumbXUsageID, rThumbXUsageID:
                 
@@ -284,7 +281,6 @@ extension GamePad {
                 if let v = mapAnalogAxis(value: value, element: element) {
                     events = (v == 2) ? [PULL_RIGHT] : (v == -2) ? [PULL_LEFT] : [RELEASE_X]
                 }
-                break
    
             case lThumbYUsageID, rThumbYUsageID:
                 
@@ -292,21 +288,20 @@ extension GamePad {
                 if let v = mapAnalogAxis(value: value, element: element) {
                     events = (v == 2) ? [PULL_DOWN] : (v == -2) ? [PULL_UP] : [RELEASE_Y]
                 }
-                break
                 
             case kHIDUsage_GD_Hatswitch:
                 
                 // track("kHIDUsage_GD_Hatswitch \(intValue)")
                 switch intValue {
-                case 0: events = [PULL_UP, RELEASE_X]; break
-                case 1: events = [PULL_UP, PULL_RIGHT]; break
-                case 2: events = [PULL_RIGHT, RELEASE_Y]; break
-                case 3: events = [PULL_RIGHT, PULL_DOWN]; break
-                case 4: events = [PULL_DOWN, RELEASE_X]; break
-                case 5: events = [PULL_DOWN, PULL_LEFT]; break
-                case 6: events = [PULL_LEFT, RELEASE_Y]; break
-                case 7: events = [PULL_LEFT, PULL_UP]; break
-                case 8: events = [RELEASE_XY]; break
+                case 0: events = [PULL_UP, RELEASE_X]
+                case 1: events = [PULL_UP, PULL_RIGHT]
+                case 2: events = [PULL_RIGHT, RELEASE_Y]
+                case 3: events = [PULL_RIGHT, PULL_DOWN]
+                case 4: events = [PULL_DOWN, RELEASE_X]
+                case 5: events = [PULL_DOWN, PULL_LEFT]
+                case 6: events = [PULL_LEFT, RELEASE_Y]
+                case 7: events = [PULL_LEFT, PULL_UP]
+                case 8: events = [RELEASE_XY]
                 default: break
                 }
                 
@@ -327,4 +322,3 @@ extension GamePad {
         }
     }
 }
-
