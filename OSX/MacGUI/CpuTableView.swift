@@ -9,12 +9,12 @@
 
 import Foundation
 
-class CpuTableView : NSTableView {
+class CpuTableView: NSTableView {
     
-    var c : MyController? = nil
+    var c: MyController?
     
-    var instructionAtRow : [Int:DisassembledInstruction] = [:]
-    var rowForAddress : [UInt16:Int] = [:]
+    var instructionAtRow: [Int: DisassembledInstruction] = [:]
+    var rowForAddress: [UInt16: Int] = [:]
     var hex = true
     
     override func awakeFromNib() {
@@ -50,12 +50,12 @@ class CpuTableView : NSTableView {
         rowForAddress = [:]
         
         for i in 0...255 {
-            if (addr <= 0xFFFF) {
+            if addr <= 0xFFFF {
                 instructionAtRow[i] = c!.c64.cpu.disassemble(UInt16(addr), hex: hex)
                 rowForAddress[UInt16(addr)] = i
                 addr += Int(instructionAtRow[i]!.size)
             } else {
-                instructionAtRow[i] = nil;
+                instructionAtRow[i] = nil
             }
         }
         
@@ -91,17 +91,17 @@ class CpuTableView : NSTableView {
     }
 }
 
-extension CpuTableView : NSTableViewDataSource {
+extension CpuTableView: NSTableViewDataSource {
    
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return 256;
+        return 256
     }
         
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
         if var instr = instructionAtRow[row] {
             
-            switch(tableColumn?.identifier.rawValue) {
+            switch tableColumn?.identifier.rawValue {
 
             case "break":
                 if (c?.c64.cpu.breakpoint(instr.addr))! {
@@ -110,15 +110,15 @@ extension CpuTableView : NSTableViewDataSource {
                     return " "
                 }
             case "addr":
-                return String.init(utf8String:&instr.pc.0)
+                return String.init(utf8String: &instr.pc.0)
             case "data01":
-                return String.init(utf8String:&instr.byte1.0)
+                return String.init(utf8String: &instr.byte1.0)
             case "data02":
-                return String.init(utf8String:&instr.byte2.0)
+                return String.init(utf8String: &instr.byte2.0)
             case "data03":
-                return String.init(utf8String:&instr.byte3.0)
+                return String.init(utf8String: &instr.byte3.0)
             case "ascii":
-                return String.init(utf8String:&instr.command.0)
+                return String.init(utf8String: &instr.command.0)
             default:
                 return "?"
             }
@@ -127,7 +127,7 @@ extension CpuTableView : NSTableViewDataSource {
     }
 }
 
-extension CpuTableView : NSTableViewDelegate {
+extension CpuTableView: NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
         

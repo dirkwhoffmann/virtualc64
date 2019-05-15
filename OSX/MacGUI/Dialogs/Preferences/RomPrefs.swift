@@ -9,14 +9,14 @@
 
 import Foundation
 
-let knownBasicRoms : [UInt64 : String] = [
+let knownBasicRoms: [UInt64: String] = [
     0x0000000000000000:
     "This 8 KB Rom contains Commodore's Basic interpreter.",
     0x20765FEA67A8762D:
     "Commodore 64 Basic V2"
 ]
 
-let knownCharacterRoms : [UInt64 : String] = [
+let knownCharacterRoms: [UInt64: String] = [
     0x0000000000000000:
     "This 4 KB Rom contains the C64's character set.",
     0x3CA9D37AA3DE0969:
@@ -31,7 +31,7 @@ let knownCharacterRoms : [UInt64 : String] = [
     "The Commodore 64 character set"
 ]
 
-let knownKernalRoms : [UInt64 : String] = [
+let knownKernalRoms: [UInt64: String] = [
     0x0000000000000000:
     "This 8 KB Rom contains the low-level operating system.",
     0xFB166E49AF709AB8:
@@ -52,7 +52,7 @@ let knownKernalRoms : [UInt64 : String] = [
     "Commodore SX-64 Kernal (JiffyDOS patch)"
 ]
 
-let knownVc1541Roms : [UInt64: String] = [
+let knownVc1541Roms: [UInt64: String] = [
     0x0000000000000000:
     "This 16 KB Rom contains the firmware of Commodore's floppy drive.",
     0x44BBA0EAC5898597:
@@ -187,32 +187,32 @@ extension PreferencesController {
     // Action methods
     //
     
-    @IBAction func romDeleteBasicAction(_ sender: Any!)
-    {
+    @IBAction func romDeleteBasicAction(_ sender: Any!) {
+
         myController?.basicRomURL = URL(fileURLWithPath: "/")
         proxy?.halt()
         proxy?.mem.deleteBasicRom()
         refresh()
     }
     
-    @IBAction func romDeleteCharAction(_ sender: Any!)
-    {
+    @IBAction func romDeleteCharAction(_ sender: Any!) {
+
         myController?.charRomURL = URL(fileURLWithPath: "/")
         proxy?.halt()
         proxy?.mem.deleteCharacterRom()
         refresh()
     }
     
-    @IBAction func romDeleteKernalAction(_ sender: Any!)
-    {
+    @IBAction func romDeleteKernalAction(_ sender: Any!) {
+
         myController?.kernalRomURL = URL(fileURLWithPath: "/")
         proxy?.halt()
         proxy?.mem.deleteKernalRom()
         refresh()
     }
     
-    @IBAction func romDeleteVC1541Action(_ sender: Any!)
-    {
+    @IBAction func romDeleteVC1541Action(_ sender: Any!) {
+
         myController?.vc1541RomURL = URL(fileURLWithPath: "/")
         proxy?.halt()
         proxy?.drive1.deleteRom()
@@ -220,8 +220,8 @@ extension PreferencesController {
         refresh()
     }
     
-    @IBAction func helpAction(_ sender: Any!)
-    {
+    @IBAction func helpAction(_ sender: Any!) {
+        
         if let url = URL.init(string: "http://www.dirkwhoffmann.de/virtualc64/ROMs.html") {
             NSWorkspace.shared.open(url)
         }

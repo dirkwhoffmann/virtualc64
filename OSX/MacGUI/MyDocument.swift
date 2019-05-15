@@ -7,10 +7,9 @@
 // See https://www.gnu.org for license information
 //
 
-
 import Foundation
 
-class MyDocument : NSDocument {
+class MyDocument: NSDocument {
     
     /**
      Emulator proxy object. This object is an Objective-C bridge between
@@ -32,7 +31,7 @@ class MyDocument : NSDocument {
      snapshots are flashed while T64 archives are converted to a disk and
      inserted into the disk drive.
      */
-    var attachment: AnyC64FileProxy? = nil
+    var attachment: AnyC64FileProxy?
     
     override init() {
         
@@ -61,7 +60,6 @@ class MyDocument : NSDocument {
         controller.c64 = c64
         self.addWindowController(controller)
     }
-    
 
     //
     // Creating attachments
@@ -98,7 +96,7 @@ class MyDocument : NSDocument {
         
         track("Read \(length) bytes from file \(filename).")
         
-        switch (typeName) {
+        switch typeName {
             
         case "VC64":
             // Check for outdated snapshot formats
@@ -146,8 +144,7 @@ class MyDocument : NSDocument {
         }
         attachment!.setPath(filename)
     }
-    
-    
+
     //
     // Processing attachments
     //
@@ -168,7 +165,7 @@ class MyDocument : NSDocument {
             }
         }
 
-        switch(attachment) {
+        switch attachment {
         case _ as SnapshotProxy: c64.flash(attachment); return true
         case _ as D64FileProxy, _ as G64FileProxy: getAction("D64")
         case _ as PRGFileProxy, _ as P00FileProxy: getAction("PRG")
@@ -309,8 +306,7 @@ class MyDocument : NSDocument {
         }
         return false
     }
-    
- 
+
     //
     // Loading
     //
@@ -319,8 +315,7 @@ class MyDocument : NSDocument {
         
         try createAttachment(from: url)
     }
-    
-    
+
     //
     // Saving
     //
@@ -344,7 +339,6 @@ class MyDocument : NSDocument {
         
         throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
     }
-    
     
     //
     // Exporting disks
@@ -380,14 +374,14 @@ class MyDocument : NSDocument {
             
         case "PRG":
             track("Exporting to PRG format")
-            if d64archive.numberOfItems() > 1  {
+            if d64archive.numberOfItems() > 1 {
                 showDiskHasMultipleFilesAlert(format: "PRG")
             }
             archive = PRGFileProxy.make(withAnyArchive: d64archive)
             
         case "P00":
             track("Exporting to P00 format")
-            if d64archive.numberOfItems() > 1  {
+            if d64archive.numberOfItems() > 1 {
                 showDiskHasMultipleFilesAlert(format: "P00")
             }
             archive = P00FileProxy.make(withAnyArchive: d64archive)
@@ -424,7 +418,6 @@ class MyDocument : NSDocument {
         }
     }
     
-    
     //
     // Shutting down
     //
@@ -450,4 +443,3 @@ class MyDocument : NSDocument {
         super.removeWindowController(windowController)
     }
 }
-
