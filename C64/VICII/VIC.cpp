@@ -838,7 +838,35 @@ VIC::endRasterline()
         
         // Make the border look nice (evetually, we should get rid of this)
         expandBorders();
-        
+
+        //
+        // Experimental code for RF modulator effect
+        //
+        int8_t oldR = (pixelBuffer[0] >> 0) & 0xFF;
+        int8_t oldG = (pixelBuffer[0] >> 8) & 0xFF;
+        int8_t oldB = (pixelBuffer[0] >> 16) & 0xFF;
+
+        for (unsigned i = 1; i < NTSC_PIXELS; i++) {
+
+            int8_t newR = (pixelBuffer[i] >> 0) & 0xFF;
+            int8_t newG = (pixelBuffer[i] >> 8) & 0xFF;
+            int8_t newB = (pixelBuffer[i] >> 16) & 0xFF;
+
+            int diffR = newR - oldR;
+            int diffG = newG - oldG;
+            int diffB = newB - oldB;
+
+            if (diffR > 0) diffR /= 2;
+            if (diffG > 0) diffG /= 2;
+            if (diffB > 0) diffB /= 2;
+
+            oldR = oldR + diffR;
+            oldG = oldG + diffG;
+            oldB = oldB + diffB;
+
+            pixelBuffer[i] = (oldR << 0) | (oldG << 8) | (oldB << 16);
+        }
+
         // Advance pixelBuffer
         uint16_t nextline = c64->rasterLine - PAL_UPPER_VBLANK + 1;
         if (nextline < PAL_RASTERLINES) {
