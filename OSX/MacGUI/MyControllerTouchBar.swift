@@ -134,9 +134,8 @@ extension MyController: NSTouchBarDelegate {
         case NSTouchBarItem.Identifier.rewind:
             let item = NSCustomTouchBarItem(identifier: identifier)
             let icon = NSImage(named: NSImage.Name("ttRewindTemplate"))!
-            let resizedIcon = icon.resizeImage(width: 24, height: 24)
             item.customizationLabel = "Rewind"
-            item.view = NSButton(image: resizedIcon,
+            item.view = NSButton(image: icon,
                                  target: self,
                                  action: #selector(restoreLatestAutoSnapshotAction(_:)))
             return item
@@ -144,9 +143,8 @@ extension MyController: NSTouchBarDelegate {
         case NSTouchBarItem.Identifier.snap:
             let item = NSCustomTouchBarItem(identifier: identifier)
             let icon = NSImage(named: NSImage.Name("ttStoreTemplate"))!
-            let resizedIcon = icon.resizeImage(width: 24, height: 24)
             item.customizationLabel = "Snap"
-            item.view = NSButton(image: resizedIcon,
+            item.view = NSButton(image: icon,
                                  target: self,
                                  action: #selector(takeSnapshot(_:)))
             return item
@@ -154,9 +152,8 @@ extension MyController: NSTouchBarDelegate {
         case NSTouchBarItem.Identifier.revert:
             let item = NSCustomTouchBarItem(identifier: identifier)
             let icon = NSImage(named: NSImage.Name("ttRestoreTemplate"))!
-            let resizedIcon = icon.resizeImage(width: 24, height: 24)
             item.customizationLabel = "Revert"
-            item.view = NSButton(image: resizedIcon,
+            item.view = NSButton(image: icon,
                                  target: self,
                                  action: #selector(restoreLatestUserSnapshotAction(_:)))
             return item
