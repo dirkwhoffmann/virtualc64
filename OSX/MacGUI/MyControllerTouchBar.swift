@@ -90,16 +90,18 @@ extension MyController: NSTouchBarDelegate {
             
         case NSTouchBarItem.Identifier.commodore:
             let item = NSCustomTouchBarItem(identifier: identifier)
+            let icon = NSImage(named: NSImage.Name("commodoreTemplate"))!
             item.customizationLabel = "Commodore key"
-            item.view = NSButton(image: NSImage(named: NSImage.Name("commodore"))!,
+            item.view = NSButton(image: icon,
                                  target: self,
                                  action: #selector(commodoreKeyAction))
             return item
 
         case NSTouchBarItem.Identifier.runstop:
             let item = NSCustomTouchBarItem(identifier: identifier)
+            let icon = NSImage(named: NSImage.Name("runStopTemplate"))!
             item.customizationLabel = "Runstop key"
-            item.view = NSButton(image: NSImage(named: NSImage.Name("runstop"))!,
+            item.view = NSButton(image: icon,
                                  target: self,
                                  action: #selector(runstopAction))
             
@@ -107,15 +109,16 @@ extension MyController: NSTouchBarDelegate {
 
         case NSTouchBarItem.Identifier.home:
             let item = NSCustomTouchBarItem(identifier: identifier)
+            let icon = NSImage(named: NSImage.Name("clrHomeTemplate"))!
             item.customizationLabel = "Home and Clear key"
-            item.view = NSButton(image: NSImage(named: NSImage.Name("home"))!,
+            item.view = NSButton(image: icon,
                                  target: self,
                                  action: #selector(touchBarHomeKeyAction))
             return item
 
         case NSTouchBarItem.Identifier.del:
             let item = NSCustomTouchBarItem(identifier: identifier)
-            let icon = NSImage(named: NSImage.Name("del"))!
+            let icon = NSImage(named: NSImage.Name("instDelTemplate"))!
             item.customizationLabel = "Delete and Insert key"
             item.view = NSButton(image: icon,
                                  target: self,
@@ -124,7 +127,7 @@ extension MyController: NSTouchBarDelegate {
 
         case NSTouchBarItem.Identifier.restore:
             let item = NSCustomTouchBarItem(identifier: identifier)
-            let icon = NSImage(named: NSImage.Name("restore"))!
+            let icon = NSImage(named: NSImage.Name("restoreTemplate"))!
             item.customizationLabel = "Restore key"
             item.view = NSButton(image: icon,
                                  target: self,
