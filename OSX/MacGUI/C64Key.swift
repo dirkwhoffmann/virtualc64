@@ -173,10 +173,10 @@ extension C64Key {
     static let comma        = C64Key.init(58)
     
     // Seventh row
-    static let pound        = C64Key.init(14)
+    static let pound        = C64Key.init(13)
     static let asterisk     = C64Key.init(29)
     static let semicolon    = C64Key.init(45)
-    static let home         = C64Key.init(15)
+    static let home         = C64Key.init(14)
     static let rightShift   = C64Key.init(61)
     static let equal        = C64Key.init(46)
     static let upArrow      = C64Key.init(30)
