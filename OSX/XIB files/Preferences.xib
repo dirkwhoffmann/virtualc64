@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -2786,12 +2786,12 @@ DQ
     </objects>
     <resources>
         <image name="NSCaution" width="32" height="32"/>
-        <image name="joystick2" width="569.45452880859375" height="654.54547119140625"/>
+        <image name="joystick2" width="261" height="300"/>
         <image name="key" width="198" height="187"/>
-        <image name="pref_cia" width="257" height="257"/>
-        <image name="pref_mem" width="257" height="257"/>
-        <image name="pref_sid" width="257" height="257"/>
-        <image name="pref_vicii_pal" width="257" height="258"/>
+        <image name="pref_cia" width="514" height="514"/>
+        <image name="pref_mem" width="514" height="514"/>
+        <image name="pref_sid" width="514" height="514"/>
+        <image name="pref_vicii_pal" width="514" height="516"/>
         <image name="rom_light" width="129" height="157"/>
         <image name="trashTemplate" width="512" height="512"/>
     </resources>
