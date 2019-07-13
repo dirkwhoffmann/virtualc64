@@ -160,7 +160,7 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Roms" identifier="Roms" id="VwS-fe-RFZ">
-                                <view key="view" id="4If-78-eR2">
+                                <view key="view" ambiguous="YES" id="4If-78-eR2">
                                     <rect key="frame" x="10" y="33" width="600" height="502"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -928,7 +928,7 @@ DQ
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Video" identifier="Video" id="bAS-eu-ehA">
-                                <view key="view" ambiguous="YES" id="TZi-Ij-edC">
+                                <view key="view" id="TZi-Ij-edC">
                                     <rect key="frame" x="10" y="33" width="600" height="502"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>

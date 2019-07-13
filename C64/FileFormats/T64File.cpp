@@ -24,7 +24,7 @@
 /* "Anmerkung: Der String muß nicht wortwörtlich so vorhanden sein. Man sollte nach den
  *  Substrings 'C64' und 'tape' suchen." [Power64 doc]
  */
-const uint8_t T64File::magicBytes[] = { 0x43, 0x36, 0x34, 0x00 };
+const uint8_t T64File::magicBytes[] = { 0x43, 0x36, 0x34 };
 
 bool
 T64File::isT64Buffer(const uint8_t *buffer, size_t length)
@@ -35,7 +35,7 @@ T64File::isT64Buffer(const uint8_t *buffer, size_t length)
     if (TAPFile::isTAPBuffer(buffer, length)) // Note: TAP files have a very similar header
         return false;
     
-    return checkBufferHeader(buffer, length, magicBytes);
+    return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
 }
 
 bool
@@ -52,7 +52,7 @@ T64File::isT64File(const char *path)
     if (!checkFileSize(path, 0x40, -1))
         return false;
     
-    if (!checkFileHeader(path, magicBytes))
+    if (!matchingFileHeader(path, magicBytes, sizeof(magicBytes)))
         return false;
     
     return true;

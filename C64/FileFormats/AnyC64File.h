@@ -75,9 +75,10 @@ protected:
      *  @param    header    Expected byte sequence, terminated by EOF
      *  @return   Returns   true iff magic bytes match.
      */
+    /*
     static bool checkBufferHeader(const uint8_t *buffer, size_t length,
                                   const uint8_t *header);
-
+     */
     
     //
     //! @functiongroup Creating and destructing objects

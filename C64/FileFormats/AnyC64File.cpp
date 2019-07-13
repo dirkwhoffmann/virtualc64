@@ -52,6 +52,7 @@ AnyC64File::dealloc()
     eof = -1;
 }
 
+/*
 bool
 AnyC64File::checkBufferHeader(const uint8_t *buffer, size_t length, const uint8_t *header)
 {
@@ -67,6 +68,7 @@ AnyC64File::checkBufferHeader(const uint8_t *buffer, size_t length, const uint8_
  
     return header[i] == 0;
 }
+*/
 
 void
 AnyC64File::setPath(const char *str)

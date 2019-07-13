@@ -22,13 +22,13 @@
 #include <new>
 
 const uint8_t
-P00File::magicBytes[] = { 0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65, 0x00 };
+P00File::magicBytes[] = { 0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65 };
 
 bool
 P00File::isP00Buffer(const uint8_t *buffer, size_t length)
 {
     if (length < 0x1A) return false;
-    return checkBufferHeader(buffer, length, magicBytes);
+    return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
 }
 
 bool
@@ -39,7 +39,7 @@ P00File::isP00File(const char *filename)
     if (!checkFileSize(filename, 0x1A, -1))
         return false;
     
-    if (!checkFileHeader(filename, magicBytes))
+    if (!matchingFileHeader(filename, magicBytes, sizeof(magicBytes)))
         return false;
     
     return true;

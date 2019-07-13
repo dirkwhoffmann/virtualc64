@@ -21,13 +21,13 @@
 #include "G64File.h"
 
 const uint8_t /* "GCR-1541" */
-G64File::magicBytes[] = { 0x47, 0x43, 0x52, 0x2D, 0x31, 0x35, 0x34, 0x31, 0x00 };
+G64File::magicBytes[] = { 0x47, 0x43, 0x52, 0x2D, 0x31, 0x35, 0x34, 0x31 };
 
 bool
 G64File::isG64Buffer(const uint8_t *buffer, size_t length)
 {
     if (length < 0x02AC) return false;
-    return checkBufferHeader(buffer, length, magicBytes);
+    return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
 }
 
 bool
@@ -41,7 +41,7 @@ G64File::isG64File(const char *filename)
     if (!checkFileSize(filename, 0x02AC, -1))
         return false;
     
-    if (!checkFileHeader(filename, magicBytes))
+    if (!matchingFileHeader(filename, magicBytes, sizeof(magicBytes)))
         return false;
     
     return true;

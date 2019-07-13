@@ -20,7 +20,7 @@
 
 #include "C64.h"
 
-const uint8_t Snapshot::magicBytes[] = { 'V', 'C', '6', '4', 0x00 };
+const uint8_t Snapshot::magicBytes[] = { 'V', 'C', '6', '4' };
 
 bool
 Snapshot::isSnapshot(const uint8_t *buffer, size_t length)
@@ -28,7 +28,7 @@ Snapshot::isSnapshot(const uint8_t *buffer, size_t length)
     assert(buffer != NULL);
     
     if (length < 0x15) return false;
-    return checkBufferHeader(buffer, length, magicBytes);
+    return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
 }
 
 bool
@@ -56,7 +56,7 @@ Snapshot::isSnapshotFile(const char *path)
 {
     assert(path != NULL);
     
-    if (!checkFileHeader(path, magicBytes))
+    if (!matchingFileHeader(path, magicBytes, sizeof(magicBytes)))
         return false;
     
     return true;
@@ -65,11 +65,11 @@ Snapshot::isSnapshotFile(const char *path)
 bool
 Snapshot::isSnapshotFile(const char *path, uint8_t major, uint8_t minor, uint8_t subminor)
 {
-    uint8_t signature[] = { 'V', 'C', '6', '4', major, minor, subminor, 0x00 };
+    uint8_t signature[] = { 'V', 'C', '6', '4', major, minor, subminor };
     
     assert(path != NULL);
     
-    if (!checkFileHeader(path, signature))
+    if (!matchingFileHeader(path, signature, sizeof(signature)))
         return false;
     
     return true;

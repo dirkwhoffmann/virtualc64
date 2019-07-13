@@ -30,15 +30,17 @@
 class ROMFile : public AnyC64File {
     
 private:
-    
+
     //! @brief    Header signatures
-    static const uint8_t magicBasicRomBytes[];
-    static const uint8_t magicCharRomBytes[];
-    static const uint8_t magicKernalRomBytes[];
-    static const uint8_t magicVC1541RomBytes1[];
-    static const uint8_t magicVC1541RomBytes2[];
-    static const uint8_t magicVC1541RomBytes3[];
-    static const uint8_t magicVC1541RomBytes4[];
+    static const size_t basicRomSignatureCnt  = 1;
+    static const size_t charRomSignatureCnt   = 10;
+    static const size_t kernalRomSignatureCnt = 1;
+    static const size_t vc1541RomSignatureCnt = 4;
+
+    static const uint8_t magicBasicRomBytes[basicRomSignatureCnt][3];
+    static const uint8_t magicCharRomBytes[charRomSignatureCnt][4];
+    static const uint8_t magicKernalRomBytes[kernalRomSignatureCnt][3];
+    static const uint8_t magicVC1541RomBytes[vc1541RomSignatureCnt][3];
 
     //! @brief    ROM type (Basic ROM, Kernal ROM, etc.)
     C64FileType romtype;

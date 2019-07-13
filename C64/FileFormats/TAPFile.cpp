@@ -21,7 +21,7 @@
 #include "TAPFile.h"
 
 const uint8_t TAPFile::magicBytes[] = {
-    0x43, 0x36, 0x34, 0x2D, 0x54, 0x41, 0x50, 0x45, 0x2D, 0x52, 0x41, 0x57, 0x00 };
+    0x43, 0x36, 0x34, 0x2D, 0x54, 0x41, 0x50, 0x45, 0x2D, 0x52, 0x41, 0x57 };
 
 TAPFile::TAPFile()
 {
@@ -60,7 +60,8 @@ bool
 TAPFile::isTAPBuffer(const uint8_t *buffer, size_t length)
 {
     if (length < 0x15) return false;
-    return checkBufferHeader(buffer, length, magicBytes);
+    return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
+    // return checkBufferHeader(buffer, length, magicBytes);
 }
 
 bool
@@ -75,7 +76,7 @@ TAPFile::isTAPFile(const char *filename)
     if (!checkFileSize(filename, 0x15, -1))
         return false;
     
-    if (!checkFileHeader(filename, magicBytes))
+    if (!matchingFileHeader(filename, magicBytes, sizeof(magicBytes)))
         return false;
     
     return true;

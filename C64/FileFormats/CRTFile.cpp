@@ -24,13 +24,13 @@
 #include "Cartridge.h"
 
 const uint8_t CRTFile::magicBytes[] = {
-    'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ', 0x00 };
+    'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ' };
 
 bool
 CRTFile::isCRTBuffer(const uint8_t *buffer, size_t length)
 {
     if (length < 0x40) return false;
-    return checkBufferHeader(buffer, length, magicBytes);
+    return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
 }
 
 CartridgeType
@@ -72,7 +72,7 @@ CRTFile::isCRTFile(const char *path)
     if (!checkFileSize(path, 0x40, -1))
         return false;
     
-    if (!checkFileHeader(path, magicBytes))
+    if (!matchingFileHeader(path, magicBytes, sizeof(magicBytes)))
         return false;
     
     return true;

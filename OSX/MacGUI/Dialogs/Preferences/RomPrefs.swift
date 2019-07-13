@@ -28,7 +28,25 @@ let knownCharacterRoms: [UInt64: String] = [
     0x79A236A3B3645231:
     "Character rom from a Danish C64",
     0xACC576F7B332AC15:
-    "The Commodore 64 character set"
+    "The Commodore 64 character set",
+    0x1130C1CE287876DD:
+    "Atari 800 character set",
+    0x975546A5B6168FFD:
+    "MSX character set",
+    0x7C74107C9365F735:
+    "ZX Spectrum character set",
+    0xAFFE8B0EE2176CBD:
+    "Amstrad CPC character set",
+    0xD14C5BE4FEE17705:
+    "Amiga 500 Topaz character set (broken)",
+    0xA2C6A6E2C0477981:
+    "Amiga 500 Topaz character set V2",
+    0x3BF55C821EE80365:
+    "Amiga 1200 Topaz character set (broken)",
+    0x19F0DD3F3F9C4FE9:
+    "Amiga 1200 Topaz character set V2",
+    0xE527AD3E0DDE930D:
+    "Teletext character set"    
 ]
 
 let knownKernalRoms: [UInt64: String] = [
@@ -49,7 +67,15 @@ let knownKernalRoms: [UInt64: String] = [
     0xDE7F07008B787040:
     "Commodore 64 Kernel (JiffyDOS patch)",
     0xA9D2AD1A4E5F782C:
-    "Commodore SX-64 Kernal (JiffyDOS patch)"
+    "Commodore SX-64 Kernal (JiffyDOS patch)",
+    0x750617B8DE6DBA82:
+    "Cockroach Turbo-ROM V1",
+    0x7E0A124C3F192818:
+    "Datel Electronics Turbo Rom II 3.2+",
+    0x211EAC45AB03A2CA:
+    "Exos Kernal ROM V3",
+    0xF2A39FF166D338AE:
+    "Turbo Tape ROM V0.1 (2007)"
 ]
 
 let knownVc1541Roms: [UInt64: String] = [
@@ -77,9 +103,10 @@ extension PreferencesController {
         
         guard let con = myController else { return }
         guard let c64 = proxy else { return }
-        
+
         track()
-        
+
+        let dragInfo = "To add a Rom, drag a Rom image file onto the icon on the left."
         let romImage = NSImage.init(named: "rom")
         let romImageLight = NSImage.init(named: "rom_light")
         
@@ -119,59 +146,89 @@ extension PreferencesController {
         }
         
         // Basic Rom
-        romBasicImage.image = hasBasicRom ? romImage : romImageLight
-        romBasicHashText.isHidden = !hasBasicRom
-        romBasicHashText.stringValue = String(format: "Hash: %llX", basicHash)
-        romBasicPathText.isHidden = !hasBasicRom
-        romBasicPathText.stringValue = basicURL.path
-        romBasicButton.isHidden = !hasBasicRom
+        if hasBasicRom {
+            romBasicImage.image = romImage
+            romBasicHashText.isHidden = false
+            romBasicHashText.stringValue = String(format: "Hash: %llX", basicHash)
+            romBasicPathText.textColor = .textColor
+            romBasicPathText.stringValue = basicURL.path
+            romBasicButton.isHidden = false
+        } else {
+            romBasicImage.image = romImageLight
+            romBasicHashText.isHidden = true
+            romBasicPathText.textColor = .red
+            romBasicPathText.stringValue = dragInfo
+            romBasicButton.isHidden = true
+        }
         if let description = knownBasicRoms[basicHash] {
             romBasicDescription.stringValue = description
-            romBasicDescription.textColor = NSColor.textColor
+            romBasicDescription.textColor = .textColor
         } else {
             romBasicDescription.stringValue = "An unknown, possibly patched Basic ROM."
             romBasicDescription.textColor = .red
         }
         
         // Kernal Rom
-        romKernalImage.image = hasKernalRom ? romImage : romImageLight
-        romKernalHashText.isHidden = !hasKernalRom
-        romKernalHashText.stringValue = String(format: "Hash: %llX", kernalHash)
-        romKernalPathText.isHidden = !hasKernalRom
-        romKernalPathText.stringValue = kernalURL.path
-        romKernelButton.isHidden = !hasKernalRom
+        if hasKernalRom {
+            romKernalImage.image = romImage
+            romKernalHashText.isHidden = false
+            romKernalHashText.stringValue = String(format: "Hash: %llX", kernalHash)
+            romKernalPathText.textColor = .textColor
+            romKernalPathText.stringValue = kernalURL.path
+            romKernelButton.isHidden = false
+        } else {
+            romKernalImage.image = romImageLight
+            romKernalHashText.isHidden = true
+            romKernalPathText.textColor = .red
+            romKernalPathText.stringValue = dragInfo
+            romKernelButton.isHidden = true
+        }
         if let description = knownKernalRoms[kernalHash] {
             romKernalDescription.stringValue = description
-            romKernalDescription.textColor = NSColor.textColor
+            romKernalDescription.textColor = .textColor
         } else {
             romKernalDescription.stringValue = "An unknown, possibly patched Kernal ROM."
             romKernalDescription.textColor = .red
         }
         
         // Character Rom
-        romCharImage.image = hasCharacterRom ? romImage : romImageLight
-        romCharHashText.isHidden = !hasCharacterRom
-        romCharHashText.stringValue = String(format: "Hash: %llX", characterHash)
-        romCharDescription.textColor = NSColor.textColor
-        romCharPathText.isHidden = !hasCharacterRom
-        romCharPathText.stringValue = characterURL.path
-        romCharButton.isHidden = !hasCharacterRom
+        if hasCharacterRom {
+            romCharImage.image = romImage
+            romCharHashText.isHidden = false
+            romCharHashText.stringValue = String(format: "Hash: %llX", characterHash)
+            romCharPathText.textColor = .textColor
+            romCharPathText.stringValue = characterURL.path
+            romCharButton.isHidden = false
+        } else {
+            romCharImage.image = romImageLight
+            romCharHashText.isHidden = true
+            romCharPathText.textColor = .red
+            romCharPathText.stringValue = dragInfo
+            romCharButton.isHidden = true
+        }
         if let description = knownCharacterRoms[characterHash] {
             romCharDescription.stringValue = description
-            romCharDescription.textColor = NSColor.textColor
+            romCharDescription.textColor = .textColor
         } else {
             romCharDescription.stringValue = "An unknown, possibly patched Character ROM."
             romCharDescription.textColor = .red
         }
         
         // VC1541 Rom
-        romVc1541Image.image = hasVc1541Rom ? romImage : romImageLight
-        romVc1541HashText.isHidden = !hasVc1541Rom
-        romVc1541HashText.stringValue = String(format: "Hash: %llX", vc1541Hash)
-        romVc1541Description.textColor = NSColor.textColor
-        romVc1541PathText.isHidden = !hasVc1541Rom
-        romVc1541PathText.stringValue = vc1541URL.path
-        romVc1541Button.isHidden = !hasVc1541Rom
+        if hasVc1541Rom {
+            romVc1541Image.image = romImage
+            romVc1541HashText.isHidden = false
+            romVc1541HashText.stringValue = String(format: "Hash: %llX", vc1541Hash)
+            romVc1541PathText.textColor = .textColor
+            romVc1541PathText.stringValue = vc1541URL.path
+            romVc1541Button.isHidden = false
+        } else {
+            romVc1541Image.image = romImageLight
+            romVc1541HashText.isHidden = true
+            romVc1541PathText.textColor = .red
+            romVc1541PathText.stringValue = dragInfo
+            romVc1541Button.isHidden = true
+        }
         if let description = knownVc1541Roms[vc1541Hash] {
             romVc1541Description.stringValue = description
             romVc1541Description.textColor = .textColor

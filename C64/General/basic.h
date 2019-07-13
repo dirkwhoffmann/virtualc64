@@ -289,18 +289,35 @@ long getSizeOfFile(const char *filename);
  */
 bool checkFileSize(const char *filename, long min, long max);
 
+/*! @brief    Checks the header signature (magic bytes) of a file.
+ *  @details  This function is used for determining the type of a file.
+ *  @param    File name, must not be Null
+ *  @param    Expected byte sequence
+ *  @param    Length of the expected byte sequence in bytes
+ */
+bool matchingFileHeader(const char *path, const uint8_t *header, size_t length);
+
+/*! @brief    Checks the header signature (magic bytes) of a buffer.
+ *  @details  This function is used for determining the type of a file.
+ *  @param    Pointer to buffer, must not be NULL
+ *  @param    Expected byte sequence
+ *  @param    Length of the expected byte sequence in bytes
+ */
+bool matchingBufferHeader(const uint8_t *buffer, const uint8_t *header, size_t length);
+
 /*! @brief    Checks the magic bytes of a file.
  *  @details  The function is used for determining the type of a file.
  *  @param    filename  Path and name of the file to investigate.
  *  @param    header    Expected byte sequence, terminated by 0x00.
  *  @return   Returns   true iff magic bytes match.
+ *  @deprecated Use matchingFileHeader() instead.
 */
-bool checkFileHeader(const char *filename, const uint8_t *header);
+// bool checkFileHeader(const char *filename, const uint8_t *header);
+
 
 //
 //! @functiongroup Managing time
 //
-
 
 /*! @brief    Application launch time in seconds
  *  @details  The value is read by function msec for computing the elapsed

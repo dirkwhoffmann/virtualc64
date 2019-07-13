@@ -228,6 +228,46 @@ checkFileSize(const char *filename, long min, long max)
 	return true;
 }
 
+bool
+matchingFileHeader(const char *path, const uint8_t *header, size_t length)
+{
+    assert(path != NULL);
+    assert(header != NULL);
+
+    bool result = true;
+    FILE *file;
+
+    if ((file = fopen(path, "r")) == NULL)
+    return false;
+
+    for (size_t i = 0; i < length; i++) {
+        int c = fgetc(file);
+        if (c != (int)header[i]) {
+            result = false;
+            break;
+        }
+    }
+
+    fclose(file);
+    return result;
+}
+
+
+bool
+matchingBufferHeader(const uint8_t *buffer, const uint8_t *header, size_t length)
+{
+    assert(buffer != NULL);
+    assert(header != NULL);
+
+    for (size_t i = 0; i < length; i++) {
+        if (header[i] != buffer[i])
+        return false;
+    }
+
+    return true;
+}
+
+#if 0
 bool 
 checkFileHeader(const char *filename, const uint8_t *header)
 {
@@ -251,15 +291,6 @@ checkFileHeader(const char *filename, const uint8_t *header)
 	    
 	fclose(file);
 	return result;
-}
-
-#if 0
-uint64_t 
-usec()
-{
-	struct timeval t;
-	gettimeofday(&t,NULL);	
-	return (uint64_t)1000000*(uint64_t)(t.tv_sec - tv_base) + (uint64_t)t.tv_usec;
 }
 #endif
 
