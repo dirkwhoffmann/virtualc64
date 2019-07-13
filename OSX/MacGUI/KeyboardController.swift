@@ -173,7 +173,7 @@ class KeyboardController: NSObject {
     
     func keyDown(with macKey: MacKey) {
         
-        // track("\(macKey)")
+        track("\(macKey)")
         
         // Check if this key is used for joystick emulation
         if controller.gamePadManager.keyDown(with: macKey) && disconnectJoyKeys {
@@ -321,8 +321,10 @@ class KeyboardController: NSObject {
         switch macKey {
         
         // First row of C64 keyboard
+        case MacKey.home: return [C64Key.home]
+        case MacKey.clear: return [C64Key.home, C64Key.shift]
         case MacKey.delete: return [C64Key.delete]
-
+            
         // Second row of C64 keyboard
         case MacKey.tab: return [C64Key.control]
 

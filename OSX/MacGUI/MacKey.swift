@@ -91,6 +91,8 @@ extension MacKey {
     static let rightShift = MacKey.init(keyCode: kVK_RightShift, characters: "\u{21e7}")
     static let option = MacKey.init(keyCode: kVK_Option, characters: "\u{2325}")
     static let control = MacKey.init(keyCode: kVK_Control, characters: "\u{2303}")
+    static let home = MacKey.init(keyCode: kVK_Home, characters: "\u{21f1}")
+    static let clear = MacKey.init(keyCode: kVK_ANSI_KeypadClear, characters: "\u{2327}")
     
     static let F1 = MacKey.init(keyCode: kVK_F1, characters: "F1")
     static let F2 = MacKey.init(keyCode: kVK_F2, characters: "F2")
