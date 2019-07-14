@@ -488,7 +488,10 @@ private:
     //! @brief   Decodes a single sector
     size_t decodeSector(size_t offset, uint8_t *dest);
 
-    
+     //! @brief   Decodes a single broken sector (results in all zeroes)
+    size_t decodeBrokenSector(uint8_t *dest);
+
+
     //
     //! @functiongroup Encoding disk data
     //

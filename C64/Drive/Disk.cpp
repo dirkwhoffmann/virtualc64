@@ -589,6 +589,8 @@ Disk::decodeTrack(Track t, uint8_t *dest)
         SectorInfo info = sectorLayout(s);
         if (info.dataBegin != info.dataEnd) {
             numBytes += decodeSector(info.dataBegin, dest + (dest ? numBytes : 0));
+        } else {
+            numBytes += decodeBrokenSector(dest + (dest ? numBytes : 0));
         }
     }
     
@@ -611,6 +613,19 @@ Disk::decodeSector(size_t offset, uint8_t *dest)
     
     return 256;
 }
+
+size_t
+Disk::decodeBrokenSector(uint8_t *dest)
+{
+    if (dest) {
+        for (unsigned i = 0; i < 256; i++) {
+            dest[i] = 0;
+        }
+    }
+
+    return 256;
+}
+
 
 //
 // Encoding disk data
