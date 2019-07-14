@@ -578,18 +578,20 @@ size_t
 Disk::decodeTrack(Track t, uint8_t *dest)
 {
     unsigned numBytes = 0;
-    
+    unsigned numSectors = numberOfSectorsInTrack(t);
+
     // Gather sector information
     analyzeTrack(t);
-    
+
     // For each sector ...
-    for (unsigned s = 0; s < 21; s++) {
+    for (unsigned s = 0; s < numSectors; s++) {
         
         debug(3, "   Decoding sector %d\n", s);
         SectorInfo info = sectorLayout(s);
         if (info.dataBegin != info.dataEnd) {
             numBytes += decodeSector(info.dataBegin, dest + (dest ? numBytes : 0));
         } else {
+            // The decoder failed to decode this sector. Write all zeroes.
             numBytes += decodeBrokenSector(dest + (dest ? numBytes : 0));
         }
     }

@@ -188,7 +188,7 @@ typedef struct {
         uint8_t bit[2 * maxBitsOnTrack];
         uint64_t byte[2 * maxBytesOnTrack];
     };
-    
+
     // Sector layout data
     SectorInfo sectorInfo[22];
     

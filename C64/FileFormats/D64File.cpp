@@ -189,7 +189,7 @@ D64File::makeWithDisk(Disk *disk)
     
     // Translate disk contents into a byte stream
     size_t length = disk->decodeDisk(buffer);
-    
+
     assert((length == D64_683_SECTORS) ||
            (length == D64_768_SECTORS) ||
            (length == D64_802_SECTORS));

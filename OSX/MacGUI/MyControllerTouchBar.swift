@@ -109,7 +109,7 @@ extension MyController: NSTouchBarDelegate {
 
         case NSTouchBarItem.Identifier.home:
             let item = NSCustomTouchBarItem(identifier: identifier)
-            let icon = NSImage(named: NSImage.Name("clrHomeTemplate"))!
+            let icon = NSImage(named: NSImage.Name("ClrHomeTemplate"))!
             item.customizationLabel = "Home and Clear key"
             item.view = NSButton(image: icon,
                                  target: self,
