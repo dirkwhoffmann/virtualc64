@@ -173,7 +173,7 @@ class KeyboardController: NSObject {
     
     func keyDown(with macKey: MacKey) {
         
-        track("\(macKey)")
+        // track("\(macKey)")
         
         // Check if this key is used for joystick emulation
         if controller.gamePadManager.keyDown(with: macKey) && disconnectJoyKeys {
