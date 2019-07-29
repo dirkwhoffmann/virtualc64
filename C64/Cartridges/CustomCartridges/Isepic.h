@@ -28,32 +28,38 @@ class Isepic : public Cartridge {
     
     //! @brief   Selected page inside the selected RAM bank.
     uint8_t page;
-    
+
+    //! @brief   Original page mappings to 0xD
+    MemoryType oldPeekSourceD;
+    MemoryType oldPeekSourceF;
+    MemoryType oldPokeTargetD;
+    MemoryType oldPokeTargetF;
+
 public:
     Isepic(C64 *c64);
-    CartridgeType getCartridgeType() { return CRT_ISEPIC; }
+    CartridgeType getCartridgeType() override { return CRT_ISEPIC; }
     
-    void reset();
-    size_t stateSize();
-    void didLoadFromBuffer(uint8_t **buffer);
-    void didSaveToBuffer(uint8_t **buffer);
+    void reset() override;
+    size_t stateSize() override;
+    void didLoadFromBuffer(uint8_t **buffer) override;
+    void didSaveToBuffer(uint8_t **buffer) override;
     
-    bool hasSwitch() { return true; }
-    const char *getSwitchDescription(int8_t pos);
-    void setSwitch(int8_t pos);
+    bool hasSwitch() override { return true; }
+    const char *getSwitchDescription(int8_t pos) override;
+    void setSwitch(int8_t pos) override;
     bool switchInOffPosition() { return switchIsLeft(); }
     bool switchInOnPosition() { return switchIsRight(); }
 
-    bool cartIsVisible() { return getSwitch() < 0; }
-    bool cartIsHidden() { return getSwitch() >= 0; }
+    bool cartIsVisible() { return switchInOnPosition(); }
+    bool cartIsHidden() { return !cartIsVisible(); }
 
-    void updatePeekPokeLookupTables();
-    uint8_t peek(uint16_t addr);
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t peekIO2(uint16_t addr);
-    void poke(uint16_t addr, uint8_t value);
-    void pokeIO1(uint16_t addr, uint8_t value);
-    void pokeIO2(uint16_t addr, uint8_t value);
+    void updatePeekPokeLookupTables() override;
+    uint8_t peek(uint16_t addr) override;
+    uint8_t peekIO1(uint16_t addr) override;
+    // uint8_t peekIO2(uint16_t addr) override;
+    void poke(uint16_t addr, uint8_t value) override;
+    void pokeIO1(uint16_t addr, uint8_t value) override;
+    // void pokeIO2(uint16_t addr, uint8_t value) override;
 };
 
 

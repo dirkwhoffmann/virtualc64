@@ -190,8 +190,6 @@ C64Memory::eraseWithPattern(RamInitPattern pattern)
 void 
 C64Memory::updatePeekPokeLookupTables()
 {
-    // debug("C64Memory::updatePeekPokeLookupTables\n");
-    
     // Read game line, exrom line, and processor port bits
     uint8_t game  = c64->expansionport.getGameLine() ? 0x08 : 0x00;
     uint8_t exrom = c64->expansionport.getExromLine() ? 0x10 : 0x00;
@@ -205,8 +203,7 @@ C64Memory::updatePeekPokeLookupTables()
         peekSrc[bank] = pokeTarget[bank] = bankMap[index][bank];
     }
     
-    // An attached cartridge may influence the settings. Let's give it a chance
-    // to modify the tables...
+    // Call the Cartridge's delegation method
     c64->expansionport.updatePeekPokeLookupTables();
 }
 

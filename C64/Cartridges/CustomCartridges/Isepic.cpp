@@ -28,9 +28,12 @@ Isepic::Isepic(C64 *c64) : Cartridge(c64)
     // Allocate 2KB bytes on-board RAM
     setRamCapacity(2048);
 
+    // Reset the page selector flipflops
     page = 0;
-    setSwitch(-1);
-   
+
+    // We start with an enabled cartridge (without triggering an NMI)
+    Cartridge::setSwitch(1);
+
     debug("Isepic cartridge created\n");
 }
 
@@ -65,31 +68,28 @@ Isepic::didSaveToBuffer(uint8_t **buffer)
 uint8_t
 Isepic::peek(uint16_t addr)
 {
-    if (cartIsHidden()) {
-        // assert(false);
-        return Cartridge::peek(addr);
-    }
-    
-    if (addr == 0xFFFA || addr == 0xFFFB) {
-        return peekRAM((page * 256) + (addr & 0xFF));
-    }
-    
-    if (isROMLaddr(addr)) {
-        return peekRAM((page * 256) + (addr & 0xFF));
-    } else if (isROMHaddr(addr)) {
-        
-        uint8_t exrom = 0x10;
-        uint8_t game  = 0x08;
-        uint8_t index = (c64->processorPort.read() & 0x07) | exrom | game;
-        MemoryType source = c64->mem.bankMap[index][addr >> 12];
-        switch (source) {
-            case M_KERNAL:
-                return c64->mem.rom[addr];
-            default:
-                return c64->mem.ram[addr];
+    switch (addr & 0xF000) {
+
+        case 0xD000:
+
+        // Intercept if IO2 is accessed
+        if (cartIsVisible() && oldPeekSourceD == M_IO && (addr & 0xDF00) == 0xDF00) {
+            return peekRAM((page * 256) + (addr & 0xFF));
         }
-    } else {
+        return c64->mem.peek(addr, oldPeekSourceD);
+
+        case 0xF000:
+
+        // Intercept if NMI vector is accessed
+        if (cartIsVisible() && (addr == 0xFFFA || addr == 0xFFFB)) {
+            return peekRAM((page * 256) + (addr & 0xFF));
+        }
+        return c64->mem.peek(addr, oldPeekSourceF);
+
+        default:
+
         assert(false);
+        // return Cartridge::peek(addr);
         return 0;
     }
 }
@@ -97,6 +97,7 @@ Isepic::peek(uint16_t addr)
 uint8_t
 Isepic::peekIO1(uint16_t addr)
 {
+    // debug("peekIO1(%X)\n", addr);
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
     
     if (cartIsVisible()) {
@@ -106,32 +107,48 @@ Isepic::peekIO1(uint16_t addr)
     return 0;
 }
 
-uint8_t
-Isepic::peekIO2(uint16_t addr)
-{
-    assert(addr >= 0xDF00 && addr <= 0xDFFF);
-    
-    if (cartIsVisible()) {
-        //  debug("Reading %02X from %d:%d\n", externalRam[(page * 256) + (addr & 0xFF)], page, addr & 0xFF);
-        return peekRAM((page * 256) + (addr & 0xFF));
-    }
-    
-    return 0;
-}
+/*
+ uint8_t
+ Isepic::peekIO2(uint16_t addr)
+ {
+ debug("peekIO2(%X)\n", addr);
+ assert(addr >= 0xDF00 && addr <= 0xDFFF);
+
+ // if (cartIsVisible()) {
+ {
+ debug("Reading %02X from %d:%d\n", peekRAM((page * 256) + (addr & 0xFF)), page, addr & 0xFF);
+ return peekRAM((page * 256) + (addr & 0xFF));
+ }
+ }
+ */
 
 void
 Isepic::poke(uint16_t addr, uint8_t value)
 {
-    if (cartIsHidden()) {
-        // Should never be called on a hidden cartridge
-        assert(false);
-    }
-    
-    if (isROMLaddr(addr)) {
-        pokeRAM((page * 256) + (addr & 0xFF), value);
-    } else if (isROMHaddr(addr)) {
-        c64->mem.ram[addr] = value;
-    } else {
+    switch (addr & 0xF000) {
+
+        case 0xD000:
+
+        // Intercept if IO2 is accessed
+        if (cartIsVisible() && oldPokeTargetD == M_IO && (addr & 0xDF00) == 0xDF00) {
+            pokeRAM((page * 256) + (addr & 0xFF), value);
+            return;
+        }
+        c64->mem.poke(addr, value, oldPokeTargetD);
+        break;
+
+        case 0xF000:
+
+        // Intercept if NMI vector is accessed
+        if (cartIsVisible() && (addr == 0xFFFA || addr == 0xFFFB)) {
+            pokeRAM((page * 256) + (addr & 0xFF), value);
+            return;
+        }
+        c64->mem.poke(addr, value, oldPokeTargetF);
+        break;
+
+        default:
+
         assert(false);
     }
 }
@@ -139,18 +156,23 @@ Isepic::poke(uint16_t addr, uint8_t value)
 void
 Isepic::pokeIO1(uint16_t addr, uint8_t value)
 {
+    debug("pokeIO1(%X)\n", addr);
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
     (void)peekIO1(addr);
 }
 
-void
-Isepic::pokeIO2(uint16_t addr, uint8_t value)
-{
-    if (cartIsVisible()) {
-        // debug("Writing %02X into %d:%d\n", value, page, addr & 0xFF);
-        pokeRAM((page * 256) + (addr & 0xFF), value);
-    }
-}
+/*
+ void
+ Isepic::pokeIO2(uint16_t addr, uint8_t value)
+ {
+ debug("pokeIO2(%X,%X)\n", addr, value);
+ // if (cartIsVisible()) {
+ {
+ debug("Writing %02X into %d:%d\n", value, page, addr & 0xFF);
+ pokeRAM((page * 256) + (addr & 0xFF), value);
+ }
+ }
+ */
 
 const char *
 Isepic::getSwitchDescription(int8_t pos)
@@ -161,81 +183,64 @@ Isepic::getSwitchDescription(int8_t pos)
 void
 Isepic::setSwitch(int8_t pos)
 {
-    debug("Setting switch to %d\n", pos);
-    
-    bool wasVisible = cartIsVisible();
-    Cartridge::setSwitch(pos);
-    
-    if (wasVisible == cartIsVisible()) {
-        return;
-    }
-    
     c64->suspend();
-    
-    if (cartIsVisible()) {
+
+    debug("Setting switch from %d to %d\n", getSwitch(), pos);
+
+    bool oldVisible = cartIsVisible();
+    Cartridge::setSwitch(pos);
+    bool newVisible = cartIsVisible();
+
+    if (!oldVisible && newVisible) {
         
         debug("Activating Ipsec cartridge\n");
+
+        // Force updatePeekPokeLookupTables()to be called
+        c64->expansionport.setCartridgeMode(CRT_OFF);
         
-        // Enable Ultimax mode
-        // c64->expansionport.setCartridgeMode(CRT_ULTIMAX);
-        
-        // Trigger an NMI
+        // Trigger NMI
         c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
-    
-    } else {
-        
-        debug("Hiding Ipsec cartridge\n");
-        
-        // c64->expansionport.setCartridgeMode(CRT_OFF);
-        
         c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
     }
-  
+
+    if (oldVisible && !newVisible) {
+
+        debug("Hiding Ipsec cartridge\n");
+        
+        // Force updatePeekPokeLookupTables()to be called
+        c64->expansionport.setCartridgeMode(CRT_OFF);
+    }
+
     c64->resume();
 }
 
 void
 Isepic::updatePeekPokeLookupTables()
 {
-    // Remap all memory locations that are unmapped in Ultimax mode.
-    if (cartIsVisible()) {
-        
-        uint8_t exrom = c64->expansionport.getExromLine() ? 0x10 : 0x00;
-        uint8_t game  = c64->expansionport.getGameLine() ? 0x08 : 0x00;
-        uint8_t index = (c64->processorPort.read() & 0x07) | exrom | game;
-        
-        debug("Exrom: %d Game: %d index: %X\n", exrom != 0, game != 0, index & 0x07);
+    /* The ISEPIC cartridge contains two 8-bit NANDs of type SN5430. The inputs
+     * of the left IC are connected to address lines A1,A3,-A4,A5,A6,A7 and the
+     * inputs of the right IC to address lines A8 - A15. With these two chips,
+     * the cartridge applies the bit mask 0b1111.1111.111-.101- to the address
+     * bus. The mask matches the NMI vector:
+     *
+     *   NMI:   $FFFA / $FFFB = 0b1111.1111.1111.1010 / 0b1111.1111.1111.1011
+     *
+     * If a match is found, ISEPIC switches into Ultimax mode. This is how
+     * it overwrites the NMI vector by keeping the rest of the system as
+     * unaltered as possible.
+     *
+     * To emulate this behaviour, we redirect the peekSource and pokeTarget
+     * for the uppermost memory page to the cartridge to take special action
+     * if the memory mask matches.
+     */
 
-        c64->mem.peekSrc[0x1] = M_RAM;
-        c64->mem.peekSrc[0x2] = M_RAM;
-        c64->mem.peekSrc[0x3] = M_RAM;
-        c64->mem.peekSrc[0x4] = M_RAM;
-        c64->mem.peekSrc[0x5] = M_RAM;
-        c64->mem.peekSrc[0x6] = M_RAM;
-        c64->mem.peekSrc[0x7] = M_RAM;
-        c64->mem.peekSrc[0x8] = M_CRTLO;
-        c64->mem.peekSrc[0x9] = M_CRTLO;
-        c64->mem.peekSrc[0xA] = M_RAM;
-        c64->mem.peekSrc[0xB] = M_RAM;
-        c64->mem.peekSrc[0xC] = M_RAM;
-        c64->mem.peekSrc[0xD] = M_IO;
-        c64->mem.peekSrc[0xE] = M_CRTHI;
-        c64->mem.peekSrc[0xF] = M_CRTHI;
-        
-        c64->mem.pokeTarget[0x1] = M_RAM;
-        c64->mem.pokeTarget[0x2] = M_RAM;
-        c64->mem.pokeTarget[0x3] = M_RAM;
-        c64->mem.pokeTarget[0x4] = M_RAM;
-        c64->mem.pokeTarget[0x5] = M_RAM;
-        c64->mem.pokeTarget[0x6] = M_RAM;
-        c64->mem.pokeTarget[0x7] = M_RAM;
-        c64->mem.pokeTarget[0x8] = M_CRTLO;
-        c64->mem.pokeTarget[0x9] = M_CRTLO;
-        c64->mem.pokeTarget[0xA] = M_RAM;
-        c64->mem.pokeTarget[0xB] = M_RAM;
-        c64->mem.pokeTarget[0xC] = M_RAM;
-        c64->mem.pokeTarget[0xD] = M_IO;
-        c64->mem.pokeTarget[0xE] = M_CRTHI;
-        c64->mem.pokeTarget[0xF] = M_CRTHI;
-    }
+    oldPeekSourceD = c64->mem.peekSrc[0xD];
+    oldPeekSourceF = c64->mem.peekSrc[0xF];
+    oldPokeTargetD = c64->mem.pokeTarget[0xD];
+    oldPokeTargetF = c64->mem.pokeTarget[0xF];
+
+    c64->mem.peekSrc[0xD] = M_CRTHI;
+    c64->mem.peekSrc[0xF] = M_CRTHI;
+    c64->mem.pokeTarget[0xD] = M_CRTHI;
+    c64->mem.pokeTarget[0xF] = M_CRTHI;
 }
