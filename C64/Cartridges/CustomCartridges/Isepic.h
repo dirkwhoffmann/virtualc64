@@ -29,11 +29,9 @@ class Isepic : public Cartridge {
     //! @brief   Selected page inside the selected RAM bank.
     uint8_t page;
 
-    //! @brief   Original page mappings to 0xD
-    MemoryType oldPeekSourceD;
-    MemoryType oldPeekSourceF;
-    MemoryType oldPokeTargetD;
-    MemoryType oldPokeTargetF;
+    //! @brief   Original mapping of the uppermost memory page
+    MemoryType oldPeekSource;
+    MemoryType oldPokeTarget;
 
 public:
     Isepic(C64 *c64);
@@ -56,10 +54,10 @@ public:
     void updatePeekPokeLookupTables() override;
     uint8_t peek(uint16_t addr) override;
     uint8_t peekIO1(uint16_t addr) override;
-    // uint8_t peekIO2(uint16_t addr) override;
+    uint8_t peekIO2(uint16_t addr) override;
     void poke(uint16_t addr, uint8_t value) override;
     void pokeIO1(uint16_t addr, uint8_t value) override;
-    // void pokeIO2(uint16_t addr, uint8_t value) override;
+    void pokeIO2(uint16_t addr, uint8_t value) override;
 };
 
 

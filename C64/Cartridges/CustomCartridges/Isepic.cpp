@@ -48,7 +48,7 @@ Isepic::reset()
 size_t
 Isepic::stateSize()
 {
-    return Cartridge::stateSize() + 1;
+    return Cartridge::stateSize() + 9;
 }
 
 void
@@ -56,6 +56,8 @@ Isepic::didLoadFromBuffer(uint8_t **buffer)
 {
     Cartridge::didLoadFromBuffer(buffer);
     page = read8(buffer);
+    oldPeekSource = (MemoryType)read32(buffer);
+    oldPokeTarget = (MemoryType)read32(buffer);
 }
 
 void
@@ -63,6 +65,8 @@ Isepic::didSaveToBuffer(uint8_t **buffer)
 {
     Cartridge::didSaveToBuffer(buffer);
     write8(buffer, page);
+    write32(buffer, (MemoryType)oldPeekSource);
+    write32(buffer, (MemoryType)oldPokeTarget);
 }
 
 uint8_t
@@ -72,11 +76,15 @@ Isepic::peek(uint16_t addr)
 
         case 0xD000:
 
+        assert(false);
         // Intercept if IO2 is accessed
+        /*
         if (cartIsVisible() && oldPeekSourceD == M_IO && (addr & 0xDF00) == 0xDF00) {
             return peekRAM((page * 256) + (addr & 0xFF));
         }
         return c64->mem.peek(addr, oldPeekSourceD);
+        */
+        return 0;
 
         case 0xF000:
 
@@ -84,7 +92,7 @@ Isepic::peek(uint16_t addr)
         if (cartIsVisible() && (addr == 0xFFFA || addr == 0xFFFB)) {
             return peekRAM((page * 256) + (addr & 0xFF));
         }
-        return c64->mem.peek(addr, oldPeekSourceF);
+        return c64->mem.peek(addr, oldPeekSource);
 
         default:
 
@@ -107,20 +115,17 @@ Isepic::peekIO1(uint16_t addr)
     return 0;
 }
 
-/*
- uint8_t
- Isepic::peekIO2(uint16_t addr)
- {
- debug("peekIO2(%X)\n", addr);
- assert(addr >= 0xDF00 && addr <= 0xDFFF);
+uint8_t
+Isepic::peekIO2(uint16_t addr)
+{
+    assert(addr >= 0xDF00 && addr <= 0xDFFF);
 
- // if (cartIsVisible()) {
- {
- debug("Reading %02X from %d:%d\n", peekRAM((page * 256) + (addr & 0xFF)), page, addr & 0xFF);
- return peekRAM((page * 256) + (addr & 0xFF));
- }
- }
- */
+    if (cartIsVisible()) {
+        return peekRAM((page * 256) + (addr & 0xFF));
+    } else {
+        return Cartridge::peekIO2(addr);
+    }
+}
 
 void
 Isepic::poke(uint16_t addr, uint8_t value)
@@ -129,12 +134,16 @@ Isepic::poke(uint16_t addr, uint8_t value)
 
         case 0xD000:
 
+        assert(false);
+
         // Intercept if IO2 is accessed
+        /*
         if (cartIsVisible() && oldPokeTargetD == M_IO && (addr & 0xDF00) == 0xDF00) {
             pokeRAM((page * 256) + (addr & 0xFF), value);
             return;
         }
         c64->mem.poke(addr, value, oldPokeTargetD);
+         */
         break;
 
         case 0xF000:
@@ -144,7 +153,7 @@ Isepic::poke(uint16_t addr, uint8_t value)
             pokeRAM((page * 256) + (addr & 0xFF), value);
             return;
         }
-        c64->mem.poke(addr, value, oldPokeTargetF);
+        c64->mem.poke(addr, value, oldPokeTarget);
         break;
 
         default:
@@ -161,18 +170,17 @@ Isepic::pokeIO1(uint16_t addr, uint8_t value)
     (void)peekIO1(addr);
 }
 
-/*
- void
- Isepic::pokeIO2(uint16_t addr, uint8_t value)
- {
- debug("pokeIO2(%X,%X)\n", addr, value);
- // if (cartIsVisible()) {
- {
- debug("Writing %02X into %d:%d\n", value, page, addr & 0xFF);
- pokeRAM((page * 256) + (addr & 0xFF), value);
- }
- }
- */
+void
+Isepic::pokeIO2(uint16_t addr, uint8_t value)
+{
+    assert(addr >= 0xDF00 && addr <= 0xDFFF);
+
+    if (cartIsVisible()) {
+        pokeRAM((page * 256) + (addr & 0xFF), value);
+    } else {
+        Cartridge::pokeIO2(addr, value);
+    }
+}
 
 const char *
 Isepic::getSwitchDescription(int8_t pos)
@@ -217,30 +225,19 @@ Isepic::setSwitch(int8_t pos)
 void
 Isepic::updatePeekPokeLookupTables()
 {
-    /* The ISEPIC cartridge contains two 8-bit NANDs of type SN5430. The inputs
-     * of the left IC are connected to address lines A1,A3,-A4,A5,A6,A7 and the
-     * inputs of the right IC to address lines A8 - A15. With these two chips,
-     * the cartridge applies the bit mask 0b1111.1111.111-.101- to the address
-     * bus. The mask matches the NMI vector:
+    /* If the ISEPIC cartridge is active, it intercepts memory accesses to the
+     * NMI vector at $FFFA / $FFFB. This is done by an inverter and two 8-bit
+     * NANDs of type SN5430 that compare the address lines with the bit pattern
+     * 1111.1111.1111.101x. If the pattern matches, it enables Ultimax mode by
+     * pulling down the GAME line.
      *
-     *   NMI:   $FFFA / $FFFB = 0b1111.1111.1111.1010 / 0b1111.1111.1111.1011
-     *
-     * If a match is found, ISEPIC switches into Ultimax mode. This is how
-     * it overwrites the NMI vector by keeping the rest of the system as
-     * unaltered as possible.
-     *
-     * To emulate this behaviour, we redirect the peekSource and pokeTarget
-     * for the uppermost memory page to the cartridge to take special action
-     * if the memory mask matches.
+     * To emulate this custom behaviour, we redirect the peekSource and
+     * pokeTarget for the uppermost memory page to the cartridge.
      */
 
-    oldPeekSourceD = c64->mem.peekSrc[0xD];
-    oldPeekSourceF = c64->mem.peekSrc[0xF];
-    oldPokeTargetD = c64->mem.pokeTarget[0xD];
-    oldPokeTargetF = c64->mem.pokeTarget[0xF];
+    oldPeekSource = c64->mem.peekSrc[0xF];
+    oldPokeTarget = c64->mem.pokeTarget[0xF];
 
-    c64->mem.peekSrc[0xD] = M_CRTHI;
     c64->mem.peekSrc[0xF] = M_CRTHI;
-    c64->mem.pokeTarget[0xD] = M_CRTHI;
     c64->mem.pokeTarget[0xF] = M_CRTHI;
 }
