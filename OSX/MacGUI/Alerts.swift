@@ -154,6 +154,17 @@ extension MyDocument {
         alert.addButton(withTitle: "OK")
         alert.runModal()
     }
+
+    func showCannotDecodeDiskAlert() {
+
+        let alert = NSAlert()
+        alert.alertStyle = .critical
+        alert.icon = NSImage.init(named: "diskette")
+        alert.messageText = "Failed to decode all sectors."
+        alert.informativeText = "The disk is either copy protected or corrupted."
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+    }
 }
 
 extension MyController {

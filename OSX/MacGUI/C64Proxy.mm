@@ -2239,7 +2239,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     Disk *d = (Disk *)([disk wrapper]->disk);
     D64File *archive = D64File::makeWithDisk(d);
-    return [self make: archive];
+    return archive ? [self make: archive] : NULL; 
 }
 
 @end

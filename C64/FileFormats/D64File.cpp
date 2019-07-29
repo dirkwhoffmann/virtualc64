@@ -188,14 +188,15 @@ D64File::makeWithDisk(Disk *disk)
     assert(disk != NULL);
     
     // Translate disk contents into a byte stream
-    size_t length = disk->decodeDisk(buffer);
+    size_t len = disk->decodeDisk(buffer);
 
-    assert((length == D64_683_SECTORS) ||
-           (length == D64_768_SECTORS) ||
-           (length == D64_802_SECTORS));
+    // Check if the disk has been fully decoded
+    if (len != D64_683_SECTORS && len != D64_768_SECTORS && len != D64_802_SECTORS) {
+        return NULL;
+    }
     
     // Create object from byte stream
-    return makeWithBuffer(buffer, length);
+    return makeWithBuffer(buffer, len);
 }
 
 const char *

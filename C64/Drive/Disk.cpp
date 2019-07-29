@@ -591,8 +591,11 @@ Disk::decodeTrack(Track t, uint8_t *dest)
         if (info.dataBegin != info.dataEnd) {
             numBytes += decodeSector(info.dataBegin, dest + (dest ? numBytes : 0));
         } else {
-            // The decoder failed to decode this sector. Write all zeroes.
-            numBytes += decodeBrokenSector(dest + (dest ? numBytes : 0));
+
+            // The decoder failed to decode this sector.
+            break;
+
+            // numBytes += decodeBrokenSector(dest + (dest ? numBytes : 0));
         }
     }
     
@@ -616,6 +619,7 @@ Disk::decodeSector(size_t offset, uint8_t *dest)
     return 256;
 }
 
+/*
 size_t
 Disk::decodeBrokenSector(uint8_t *dest)
 {
@@ -627,6 +631,7 @@ Disk::decodeBrokenSector(uint8_t *dest)
 
     return 256;
 }
+*/
 
 
 //

@@ -352,8 +352,8 @@ class MyDocument: NSDocument {
         let drive = c64.drive(nr)!
         
         // Convert disk to a D64 archive
-        // guard let d64archive = D64Proxy.make(withDrive: drive) else {
         guard let d64archive = D64FileProxy.make(withDisk: drive.disk) else {
+            showCannotDecodeDiskAlert()
             return false
         }
         

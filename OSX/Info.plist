@@ -184,9 +184,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.3.3b1</string>
+	<string>3.3.3b2</string>
 	<key>CFBundleVersion</key>
-	<string>3.3.3b1</string>
+	<string>3.3.3b2</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.entertainment</string>
 	<key>NSAppTransportSecurity</key>
