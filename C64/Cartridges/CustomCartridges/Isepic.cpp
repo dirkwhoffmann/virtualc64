@@ -72,40 +72,19 @@ Isepic::didSaveToBuffer(uint8_t **buffer)
 uint8_t
 Isepic::peek(uint16_t addr)
 {
-    switch (addr & 0xF000) {
+    assert((addr & 0xF000) == 0xF000);
 
-        case 0xD000:
-
-        assert(false);
-        // Intercept if IO2 is accessed
-        /*
-        if (cartIsVisible() && oldPeekSourceD == M_IO && (addr & 0xDF00) == 0xDF00) {
-            return peekRAM((page * 256) + (addr & 0xFF));
-        }
-        return c64->mem.peek(addr, oldPeekSourceD);
-        */
-        return 0;
-
-        case 0xF000:
-
-        // Intercept if NMI vector is accessed
-        if (cartIsVisible() && (addr == 0xFFFA || addr == 0xFFFB)) {
-            return peekRAM((page * 256) + (addr & 0xFF));
-        }
+    // Intercept if the NMI vector is accessed
+    if (cartIsVisible() && (addr == 0xFFFA || addr == 0xFFFB)) {
+        return peekRAM((page * 256) + (addr & 0xFF));
+    } else {
         return c64->mem.peek(addr, oldPeekSource);
-
-        default:
-
-        assert(false);
-        // return Cartridge::peek(addr);
-        return 0;
     }
 }
 
 uint8_t
 Isepic::peekIO1(uint16_t addr)
 {
-    // debug("peekIO1(%X)\n", addr);
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
     
     if (cartIsVisible()) {
@@ -130,43 +109,21 @@ Isepic::peekIO2(uint16_t addr)
 void
 Isepic::poke(uint16_t addr, uint8_t value)
 {
-    switch (addr & 0xF000) {
+    assert((addr & 0xF000) == 0xF000);
 
-        case 0xD000:
-
-        assert(false);
-
-        // Intercept if IO2 is accessed
-        /*
-        if (cartIsVisible() && oldPokeTargetD == M_IO && (addr & 0xDF00) == 0xDF00) {
-            pokeRAM((page * 256) + (addr & 0xFF), value);
-            return;
-        }
-        c64->mem.poke(addr, value, oldPokeTargetD);
-         */
-        break;
-
-        case 0xF000:
-
-        // Intercept if NMI vector is accessed
-        if (cartIsVisible() && (addr == 0xFFFA || addr == 0xFFFB)) {
-            pokeRAM((page * 256) + (addr & 0xFF), value);
-            return;
-        }
+    // Intercept if the NMI vector is accessed
+    if (cartIsVisible() && (addr == 0xFFFA || addr == 0xFFFB)) {
+        pokeRAM((page * 256) + (addr & 0xFF), value);
+    } else {
         c64->mem.poke(addr, value, oldPokeTarget);
-        break;
-
-        default:
-
-        assert(false);
     }
 }
 
 void
 Isepic::pokeIO1(uint16_t addr, uint8_t value)
 {
-    debug("pokeIO1(%X)\n", addr);
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
+
     (void)peekIO1(addr);
 }
 
@@ -193,30 +150,27 @@ Isepic::setSwitch(int8_t pos)
 {
     c64->suspend();
 
-    debug("Setting switch from %d to %d\n", getSwitch(), pos);
-
     bool oldVisible = cartIsVisible();
     Cartridge::setSwitch(pos);
     bool newVisible = cartIsVisible();
 
-    if (!oldVisible && newVisible) {
-        
-        debug("Activating Ipsec cartridge\n");
+    if (oldVisible != newVisible) {
 
-        // Force updatePeekPokeLookupTables()to be called
+        // Enforce a call to updatePeekPokeLookupTables()
         c64->expansionport.setCartridgeMode(CRT_OFF);
-        
-        // Trigger NMI
-        c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
-        c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
-    }
 
-    if (oldVisible && !newVisible) {
+        if (newVisible) {
 
-        debug("Hiding Ipsec cartridge\n");
-        
-        // Force updatePeekPokeLookupTables()to be called
-        c64->expansionport.setCartridgeMode(CRT_OFF);
+            debug("Activating Ipsec cartridge\n");
+
+            // Trigger NMI
+            c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+            c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+
+        } else {
+
+            debug("Hiding Ipsec cartridge\n");
+        }
     }
 
     c64->resume();
