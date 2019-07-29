@@ -255,7 +255,7 @@ CIA::peek(uint16_t addr)
             if (model == MOS_8521) {
                 delay |= CIAClearIcr0; // Uppermost bit
                 delay |= CIAAckIcr0;   // Other bits
-                icrAck = 0xFF;
+                icrAck = icr;
             } else {
                 delay |= CIAClearIcr0; // Uppermost bit
                 icr &= 0x80;           // Other bits
