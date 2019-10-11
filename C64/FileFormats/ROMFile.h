@@ -32,9 +32,9 @@ class ROMFile : public AnyC64File {
 private:
 
     //! @brief    Header signatures
-    static const size_t basicRomSignatureCnt  = 2;
+    static const size_t basicRomSignatureCnt  = 3;
     static const size_t charRomSignatureCnt   = 10;
-    static const size_t kernalRomSignatureCnt = 2;
+    static const size_t kernalRomSignatureCnt = 3;
     static const size_t vc1541RomSignatureCnt = 4;
 
     static const uint8_t magicBasicRomBytes[basicRomSignatureCnt][3];
