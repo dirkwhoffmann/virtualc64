@@ -122,6 +122,7 @@
 		507867FC21CD3BEE0015034B /* wave.cc in Sources */ = {isa = PBXBuildFile; fileRef = 507867FB21CD3BED0015034B /* wave.cc */; };
 		507887CC20B1858B00941F7E /* MemTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507887CB20B1858B00941F7E /* MemTableView.swift */; };
 		50790A2221BAF20300979B7A /* VirtualC64Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50790A2121BAF20300979B7A /* VirtualC64Tests.swift */; };
+		507B84A32350AA6800906094 /* Mach5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507B84A12350AA6800906094 /* Mach5.cpp */; };
 		507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */; };
 		5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* AudioEngine.swift */; };
 		5086296B217DD69A00F1C9CD /* AnyDisk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50862969217DD69A00F1C9CD /* AnyDisk.cpp */; };
@@ -417,6 +418,8 @@
 		50790A1F21BAF20300979B7A /* VirtualC64Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VirtualC64Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50790A2121BAF20300979B7A /* VirtualC64Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualC64Tests.swift; sourceTree = "<group>"; };
 		50790A2321BAF20300979B7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		507B84A12350AA6800906094 /* Mach5.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mach5.cpp; sourceTree = "<group>"; };
+		507B84A22350AA6800906094 /* Mach5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mach5.h; sourceTree = "<group>"; };
 		507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerCartridges.swift; sourceTree = "<group>"; };
 		5081AB621EF29E6400D6F616 /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		50862969217DD69A00F1C9CD /* AnyDisk.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AnyDisk.cpp; sourceTree = "<group>"; };
@@ -810,6 +813,8 @@
 				50C809F221D3AAA200B67033 /* Westermann.cpp */,
 				50C809FC21D3AB3B00B67033 /* Zaxxon.h */,
 				50C809FB21D3AB3B00B67033 /* Zaxxon.cpp */,
+				507B84A22350AA6800906094 /* Mach5.h */,
+				507B84A12350AA6800906094 /* Mach5.cpp */,
 			);
 			path = CustomCartridges;
 			sourceTree = "<group>";
@@ -1515,6 +1520,7 @@
 				50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */,
 				507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */,
 				5002FA7D21C2651B00DA4BBC /* VideoPrefs.swift in Sources */,
+				507B84A32350AA6800906094 /* Mach5.cpp in Sources */,
 				5003C1B4219807F8009AA08D /* StarDos.cpp in Sources */,
 				50F1752D2196C8820004E853 /* ActionReplay.cpp in Sources */,
 				5017B71D21873FD00014EDE4 /* EasyFlash.cpp in Sources */,

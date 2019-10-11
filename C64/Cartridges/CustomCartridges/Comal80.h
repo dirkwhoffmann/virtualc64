@@ -45,6 +45,4 @@ public:
     void pokeIO1(uint16_t addr, uint8_t value);
 };
 
-
-
 #endif

@@ -1,5 +1,5 @@
 /*!
- * @header      CustomCartridges.h
+ * @header      Mach5.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
  * @copyright   Dirk W. Hoffmann. All rights reserved.
  */
@@ -19,31 +19,27 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _CUSTOM_CARTRIDGES_INC
-#define _CUSTOM_CARTRIDGES_INC
+#ifndef _MACH5_INC
+#define _MACH5_INC
 
 #include "Cartridge.h"
-#include "ActionReplay.h"
-#include "Comal80.h"
-#include "EasyFlash.h"
-#include "Epyx.h"
-#include "Expert.h"
-#include "FinalIII.h"
-#include "FreezeFrame.h"
-#include "Funplay.h"
-#include "GeoRam.h"
-#include "Isepic.h"
-#include "Kcs.h"
-#include "Kingsoft.h"
-#include "Mach5.h"
-#include "MagicDesk.h"
-#include "Ocean.h"
-#include "Rex.h"
-#include "SimonsBasic.h"
-#include "StarDos.h"
-#include "SuperGames.h"
-#include "WarpSpeed.h"
-#include "Westermann.h"
-#include "Zaxxon.h"
+
+class Mach5 : public Cartridge {
+
+public:
+
+    Mach5(C64 *c64) : Cartridge(c64, "Mach5") { };
+    CartridgeType getCartridgeType() { return CRT_MACH5; }
+
+    //
+    //! @functiongroup Methods from Cartridge
+    //
+
+    void reset();
+    uint8_t peekIO1(uint16_t addr);
+    uint8_t peekIO2(uint16_t addr);
+    void pokeIO1(uint16_t addr, uint8_t value);
+    void pokeIO2(uint16_t addr, uint8_t value);
+};
 
 #endif
