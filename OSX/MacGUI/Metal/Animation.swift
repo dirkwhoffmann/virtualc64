@@ -231,10 +231,10 @@ public extension MetalView {
         // float q = farZ / (farZ - nearZ);
         
         var m = matrix_float4x4()
-        m.columns.0 = float4(xscale, 0.0, 0.0, 0.0)
-        m.columns.1 = float4(0.0, yscale, 0.0, 0.0)
-        m.columns.2 = float4(0.0, 0.0, q, 1.0)
-        m.columns.3 = float4(0.0, 0.0, q * -nearZ, 0.0)
+        m.columns.0 = SIMD4<Float>(xscale, 0.0, 0.0, 0.0)
+        m.columns.1 = SIMD4<Float>(0.0, yscale, 0.0, 0.0)
+        m.columns.2 = SIMD4<Float>(0.0, 0.0, q, 1.0)
+        m.columns.3 = SIMD4<Float>(0.0, 0.0, q * -nearZ, 0.0)
     
         return m
     }
@@ -244,7 +244,7 @@ public extension MetalView {
                                  z: Float) -> matrix_float4x4 {
         
         var m = matrix_identity_float4x4
-        m.columns.3 = float4(x, y, z, 1.0)
+        m.columns.3 = SIMD4<Float>(x, y, z, 1.0)
     
         return m
     }
@@ -261,22 +261,22 @@ public extension MetalView {
         let sin = sinf(radians)
     
         var m = matrix_float4x4()
-        m.columns.0 = float4(cos + cosp * v.x * v.x,
-                             cosp * v.x * v.y + v.z * sin,
-                             cosp * v.x * v.z - v.y * sin,
-                             0.0)
-        m.columns.1 = float4(cosp * v.x * v.y - v.z * sin,
-                             cos + cosp * v.y * v.y,
-                             cosp * v.y * v.z + v.x * sin,
-                             0.0)
-        m.columns.2 = float4(cosp * v.x * v.z + v.y * sin,
-                             cosp * v.y * v.z - v.x * sin,
-                             cos + cosp * v.z * v.z,
-                             0.0)
-        m.columns.3 = float4(0.0,
-                             0.0,
-                             0.0,
-                             1.0)
+        m.columns.0 = SIMD4<Float>(cos + cosp * v.x * v.x,
+                                   cosp * v.x * v.y + v.z * sin,
+                                   cosp * v.x * v.z - v.y * sin,
+                                   0.0)
+        m.columns.1 = SIMD4<Float>(cosp * v.x * v.y - v.z * sin,
+                                   cos + cosp * v.y * v.y,
+                                   cosp * v.y * v.z + v.x * sin,
+                                   0.0)
+        m.columns.2 = SIMD4<Float>(cosp * v.x * v.z + v.y * sin,
+                                   cosp * v.y * v.z - v.x * sin,
+                                   cos + cosp * v.z * v.z,
+                                   0.0)
+        m.columns.3 = SIMD4<Float>(0.0,
+                                   0.0,
+                                   0.0,
+                                   1.0)
         return m
     }
     

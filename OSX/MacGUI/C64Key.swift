@@ -478,7 +478,7 @@ extension C64Key {
         let upArr = "\u{2191}"
         let space = "\u{23b5}"
         let retrn = "\u{21b5}"
-        var name = [
+        let name = [
             ["DEL", retrn, curLR,  "F7",   "F1",  "F3", "F5",  curUD],
             ["3",   "W",   "A",    "4",    "Z",   "S",  "E",   shftL],
             ["5",   "R",   "D",    "6",    "C",   "F",  "T",   "X"],

@@ -79,7 +79,7 @@ struct FragmentUniforms {
 // Vertex shader
 //
 
-vertex ProjectedVertex vertex_main(device InVertex *vertices [[buffer(0)]],
+vertex ProjectedVertex vertex_main(const device InVertex *vertices [[buffer(0)]],
                                    constant Uniforms &uniforms [[buffer(1)]],
                                    ushort vid [[vertex_id]])
 {
