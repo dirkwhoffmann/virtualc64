@@ -123,6 +123,7 @@
 		507887CC20B1858B00941F7E /* MemTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507887CB20B1858B00941F7E /* MemTableView.swift */; };
 		50790A2221BAF20300979B7A /* VirtualC64Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50790A2121BAF20300979B7A /* VirtualC64Tests.swift */; };
 		507B84A32350AA6800906094 /* Mach5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507B84A12350AA6800906094 /* Mach5.cpp */; };
+		507B84A62350BBD900906094 /* MikroAss.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507B84A42350BBD900906094 /* MikroAss.cpp */; };
 		507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */; };
 		5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* AudioEngine.swift */; };
 		5086296B217DD69A00F1C9CD /* AnyDisk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50862969217DD69A00F1C9CD /* AnyDisk.cpp */; };
@@ -420,6 +421,8 @@
 		50790A2321BAF20300979B7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		507B84A12350AA6800906094 /* Mach5.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mach5.cpp; sourceTree = "<group>"; };
 		507B84A22350AA6800906094 /* Mach5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mach5.h; sourceTree = "<group>"; };
+		507B84A42350BBD900906094 /* MikroAss.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MikroAss.cpp; sourceTree = "<group>"; };
+		507B84A52350BBD900906094 /* MikroAss.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MikroAss.h; sourceTree = "<group>"; };
 		507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerCartridges.swift; sourceTree = "<group>"; };
 		5081AB621EF29E6400D6F616 /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		50862969217DD69A00F1C9CD /* AnyDisk.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AnyDisk.cpp; sourceTree = "<group>"; };
@@ -815,6 +818,8 @@
 				50C809FB21D3AB3B00B67033 /* Zaxxon.cpp */,
 				507B84A22350AA6800906094 /* Mach5.h */,
 				507B84A12350AA6800906094 /* Mach5.cpp */,
+				507B84A52350BBD900906094 /* MikroAss.h */,
+				507B84A42350BBD900906094 /* MikroAss.cpp */,
 			);
 			path = CustomCartridges;
 			sourceTree = "<group>";
@@ -1456,6 +1461,7 @@
 				5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */,
 				5000C8240D13CEE10011A2E9 /* Drive.cpp in Sources */,
 				5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */,
+				507B84A62350BBD900906094 /* MikroAss.cpp in Sources */,
 				50E8366D20DC4A090017A5BB /* FastSID.cpp in Sources */,
 				500FC6790D17D2190044131D /* VIA.cpp in Sources */,
 				501DE30E20C9C41B00707130 /* extfilt.cc in Sources */,

@@ -111,7 +111,7 @@ CRTFile::cartridgeTypeName(CartridgeType type)
         case CRT_DELA_EP7x8: return "Dela EP7x8";
         case CRT_DELA_EP256: return "Dela EP256";
         case CRT_REX_EP256: return "Rex EP256";
-        case CRT_MIKRO_ASSEMBLER: return "Mikro Assembler";
+        case CRT_MIKRO_ASS: return "Mikro Assembler";
         case CRT_FINAL_PLUS: return "Final Plus";
         case CRT_ACTION_REPLAY4: return "Action replay 4";
         case CRT_STARDOS: return "Stardos";

@@ -51,7 +51,7 @@ typedef enum {
     CRT_DELA_EP7x8 = 25,
     CRT_DELA_EP256 = 26,
     CRT_REX_EP256 = 27,
-    CRT_MIKRO_ASSEMBLER = 28,
+    CRT_MIKRO_ASS = 28,
     CRT_FINAL_PLUS = 29,
     CRT_ACTION_REPLAY4 = 30,
     CRT_STARDOS = 31,

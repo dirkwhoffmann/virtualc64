@@ -1,5 +1,5 @@
 /*!
- * @header      CustomCartridges.h
+ * @file        MikroAss.cpp
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
  * @copyright   Dirk W. Hoffmann. All rights reserved.
  */
@@ -19,32 +19,18 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _CUSTOM_CARTRIDGES_INC
-#define _CUSTOM_CARTRIDGES_INC
+#include "C64.h"
 
-#include "Cartridge.h"
-#include "ActionReplay.h"
-#include "Comal80.h"
-#include "EasyFlash.h"
-#include "Epyx.h"
-#include "Expert.h"
-#include "FinalIII.h"
-#include "FreezeFrame.h"
-#include "Funplay.h"
-#include "GeoRam.h"
-#include "Isepic.h"
-#include "Kcs.h"
-#include "Kingsoft.h"
-#include "Mach5.h"
-#include "MagicDesk.h"
-#include "MikroAss.h"
-#include "Ocean.h"
-#include "Rex.h"
-#include "SimonsBasic.h"
-#include "StarDos.h"
-#include "SuperGames.h"
-#include "WarpSpeed.h"
-#include "Westermann.h"
-#include "Zaxxon.h"
+uint8_t
+MikroAss::peekIO1(uint16_t addr)
+{
+    // debug("MikroAss::peekIO1(%x)", addr);
+    return peekRomL(0x1E00 | LO_BYTE(addr));
+}
 
-#endif
+uint8_t
+MikroAss::peekIO2(uint16_t addr)
+{
+    // debug("MikroAss::peekIO2(%x)", addr);
+    return peekRomL(0x1F00 | LO_BYTE(addr));
+}
