@@ -150,7 +150,23 @@ public:
     
     //! Returns start of chip rom in address space
     uint16_t chipAddr(unsigned nr) { return LO_HI(chips[nr][0xD], chips[nr][0xC]); }
-    
+
+
+    //
+    // @functiongroup Scanning and repairing a CRT file
+    //
+
+    /*! @brief    Checks the file for inconsistencies and tries to repair it
+     *  @details  This method can eliminate the following inconsistencies:
+     *            invalid cartridge IDs:
+     *                some non-standard cartridges (cartridges with custom
+     *                hardware on board) are marked as standard. If such a
+     *                cartridge is recognised, the ID is corrected.
+     * @result    true,  if archive was consistent or could be repaired.
+     *            false, if an inconsistency has been detected that could not
+     *                   be repaired.
+     */
+    bool repair();
 };
 
 #endif

@@ -352,11 +352,21 @@ void sleepMicrosec(unsigned usec);
  */
 int64_t sleepUntil(uint64_t kernelTargetTime, uint64_t kernelEarlyWakeup);
 
+
+//
+//! @functiongroup Computing checksums
+//
+
+//! @brief    Returns the FNV-1a seed value.
+inline uint32_t fnv_1a_init32() { return 0x811c9dc5; }
+inline uint64_t fnv_1a_init64() { return 0xcbf29ce484222325; }
+
+//! @brief    Performs a single iteration of the FNV-1a hash algorithm.
+inline uint32_t fnv_1a_it32(uint32_t prev, uint32_t value) { return (prev ^ value) * 0x1000193; }
+inline uint64_t fnv_1a_it64(uint64_t prev, uint64_t value) { return (prev ^ value) * 0x100000001b3; }
+
+//! @brief    Computes a FNV-1a for a given buffer
+uint32_t fnv_1a_32(uint8_t *addr, size_t size);
+uint64_t fnv_1a_64(uint8_t *addr, size_t size);
+
 #endif
-
-//
-//! @functiongroup Computing fingerprints
-//
-
-//! @brief    Computes a fingeprint based on the FNV-1a hash algorithm
-uint64_t fnv_1a(uint8_t *addr, size_t size);

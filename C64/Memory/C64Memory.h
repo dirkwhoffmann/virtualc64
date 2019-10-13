@@ -147,19 +147,19 @@ public:
      *  @return   fingerprint or 0, if no Basic ROM is installed.
      */
     uint64_t basicRomFingerprint() {
-        return basicRomIsLoaded() ? fnv_1a(rom + 0xA000, 0x2000) : 0; }
+        return basicRomIsLoaded() ? fnv_1a_64(rom + 0xA000, 0x2000) : 0; }
 
     /*! @brief    Computes a 64-bit fingerprint for the Character ROM.
      *  @return   fingerprint or 0, if no Basic ROM is installed.
      */
     uint64_t characterRomFingerprint() {
-        return characterRomIsLoaded() ? fnv_1a(rom + 0xD000, 0x1000) : 0; }
+        return characterRomIsLoaded() ? fnv_1a_64(rom + 0xD000, 0x1000) : 0; }
 
     /*! @brief    Computes a 64-bit fingerprint for the Kernal ROM.
      *  @return   fingerprint or 0, if no Basic ROM is installed.
      */
     uint64_t kernalRomFingerprint() {
-        return kernalRomIsLoaded() ? fnv_1a(rom + 0xE000, 0x2000) : 0; }
+        return kernalRomIsLoaded() ? fnv_1a_64(rom + 0xE000, 0x2000) : 0; }
     
 public:
     

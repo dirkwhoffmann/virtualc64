@@ -97,18 +97,22 @@ public:
     // @functiongroup Scanning and repairing a T64 file
     //
     
-    //! @brief Check if the file header contains information at the specific location
+    //! @brief Checks if the header contains information at the specified location
     bool directoryItemIsPresent(int n);
 
-    /*! @brief    Check archive consistency and repair inconsistent information
+    /*! @brief    Checks the file for inconsistencies and tries to repair it
      *  @details  This method can eliminate the following inconsistencies:
-     *            number of files: some archives state falsely in their header that zero
-     *            files are present. This value will be fixed.
-     *            end loading address: Archives that are created with CONVC64 often contain
-     *            a value of 0xC3C6, which is wrong (e.g., paradrd.t64). This value will be
-     *            changed such that getByte() will read until the end of the physical file.
-     * @result    true, if archive was consistent or could be repaired. false, if an inconsistency
-     *            has been detected that could not be repaired.
+     *            number of files:
+     *                some archives state falsely in their header that zero
+     *                files are present. This value will be fixed.
+     *            end loading address:
+     *                Archives that are created with CONVC64 often contain a
+     *                value of 0xC3C6, which is wrong (e.g., paradrd.t64). This
+     *                value will be changed such that getByte() will read until
+     *                the end of the physical file.
+     * @result    true,  if archive was consistent or could be repaired.
+     *            false, if an inconsistency has been detected that could not
+     *                   be repaired.
      */
     bool repair();
 };

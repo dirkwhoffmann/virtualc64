@@ -195,12 +195,18 @@ CRTFile::readFromBuffer(const uint8_t *buffer, size_t length)
     if (!AnyC64File::readFromBuffer(buffer, length))
         return false;
     
-    // Scan cartridge header
+    // Only proceed if the cartridge header matches
     if (memcmp("C64 CARTRIDGE   ", data, 16) != 0) {
         warn("Bad cartridge signature. Expected 'C64  CARTRIDGE  '\n");
         return false;
     }
-    
+
+    // Some CRT files contain incosistencies. We try to fix them here.
+    if (!repair()) {
+        debug("Failed to repair broken CRT file\n");
+        return false;
+    }
+
     // Cartridge header size
     uint32_t headerSize = HI_HI_LO_LO(data[0x10],data[0x11],data[0x12],data[0x13]);
     
@@ -249,5 +255,31 @@ const char *
 CRTFile::cartridgeTypeName()
 {
     return cartridgeTypeName(cartridgeType());
+}
+
+bool
+CRTFile::repair()
+{
+    if ((data == NULL) != (size == 0)) {
+        debug("CRT file inconsistency: data = %p size = %d\n", data, size);
+        return false;
+    }
+
+    // Compute a fingerprint for the CRT file
+    uint64_t fingerprint = fnv_1a_64(data, size);
+    debug("CRT fingerprint: %llx\n", fingerprint);
+
+    // Check for known inconsistencies
+    switch (fingerprint) {
+
+        case 0xb2a479a5a2ee6cd5: // Mikro Assembler (invalid CRT type)
+
+            // Replace invalid CRT type $00 by $1C
+            debug("Repairing broken Mikro Assembler cartridge\n");
+            data[0x17] = 0x1C;
+            break;
+    }
+
+    return true; 
 }
 

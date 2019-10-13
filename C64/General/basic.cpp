@@ -350,16 +350,30 @@ sleepUntil(uint64_t kernelTargetTime, uint64_t kernelEarlyWakeup)
     return jitter;
 }
 
-uint64_t
-fnv_1a(uint8_t *addr, size_t size)
+uint32_t
+fnv_1a_32(uint8_t *addr, size_t size)
 {
-    uint64_t basis = 0xcbf29ce484222325;
-    uint64_t prime = 0x100000001b3;
-    uint64_t hash = basis;
+    if (addr == NULL || size == 0) return 0;
+
+    uint32_t hash = fnv_1a_init32();
 
     for (size_t i = 0; i < size; i++) {
-        hash = (hash ^ (uint64_t)addr[i]) * prime;
+        hash = fnv_1a_it32(hash, (uint32_t)addr[i]);
     }
-    
+
+    return hash;
+}
+
+uint64_t
+fnv_1a_64(uint8_t *addr, size_t size)
+{
+    if (addr == NULL || size == 0) return 0;
+
+    uint64_t hash = fnv_1a_init64();
+
+    for (size_t i = 0; i < size; i++) {
+        hash = fnv_1a_it64(hash, (uint64_t)addr[i]);
+    }
+
     return hash;
 }
