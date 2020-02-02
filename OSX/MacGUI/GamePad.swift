@@ -78,6 +78,14 @@ class GamePad {
             
             name = "Competition Pro SL-6602"
         
+        } else if vendorID == 0xF0D && productID == 0xC1 {
+
+            name = "iNNEXT Retro (N64)"
+
+        } else if vendorID == 0x79 && productID == 0x11 {
+
+            name = "iNNEXT Retro (SNES)"
+
         } else if vendorID == 0x54C && productID == 0x268 {
 
             name = "Sony DualShock 3"
@@ -301,8 +309,7 @@ extension GamePad {
                 case 5: events = [PULL_DOWN, PULL_LEFT]
                 case 6: events = [PULL_LEFT, RELEASE_Y]
                 case 7: events = [PULL_LEFT, PULL_UP]
-                case 8: events = [RELEASE_XY]
-                default: break
+                default: events = [RELEASE_XY]
                 }
                 
             default:
