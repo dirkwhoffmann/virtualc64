@@ -167,13 +167,6 @@ public:
     
 private:
     
-    //! @brief    Information about a detected track error
-    typedef struct {
-        size_t begin;
-        size_t end;
-        std::string msg;
-    } TrackInfoError;
-    
     //! @brief    Track layout as determined by analyzeTrack
     TrackInfo trackInfo;
 
