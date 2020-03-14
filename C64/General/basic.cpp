@@ -216,16 +216,16 @@ checkFileSize(const char *filename, long min, long max)
 {
     long filesize = getSizeOfFile(filename);
     
-    if (filesize == -1)
+    if (filesize == -1) {
         return false;
-    
-	if (min > 0 && filesize < min)
-		return false;
-
-	if (max > 0 && filesize > max)
-		return false;
-
-	return true;
+    }
+    if (min > 0 && filesize < min) {
+        return false;
+    }
+    if (max > 0 && filesize > max) {
+        return false;
+    }
+    return true;
 }
 
 bool
@@ -233,13 +233,13 @@ matchingFileHeader(const char *path, const uint8_t *header, size_t length)
 {
     assert(path != NULL);
     assert(header != NULL);
-
+    
     bool result = true;
     FILE *file;
-
-    if ((file = fopen(path, "r")) == NULL)
-    return false;
-
+    
+    if ((file = fopen(path, "r")) == NULL) {
+        return false;
+    }
     for (size_t i = 0; i < length; i++) {
         int c = fgetc(file);
         if (c != (int)header[i]) {
@@ -251,7 +251,6 @@ matchingFileHeader(const char *path, const uint8_t *header, size_t length)
     fclose(file);
     return result;
 }
-
 
 bool
 matchingBufferHeader(const uint8_t *buffer, const uint8_t *header, size_t length)
