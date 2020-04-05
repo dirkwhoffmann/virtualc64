@@ -37,17 +37,17 @@ public extension MetalView {
             
         case .string:
             
-            print ("Dragged in string")
+            track("Dragged in string")
             return NSDragOperation.copy
         
         case .fileContents:
             
-            print ("Dragged in file contents")
+            track("Dragged in file contents")
             return NSDragOperation.copy
             
         case .compatibleFileURL:
             
-            print ("Dragged in filename")
+            track("Dragged in filename")
             return NSDragOperation.copy
             
         default:

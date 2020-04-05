@@ -206,7 +206,7 @@ public extension MetalView {
         for n in 0 ... 4 {
             
             // Create image representation in memory
-            let cap = Int(maskSize[n].width) * Int (maskSize[n].height)
+            let cap = Int(maskSize[n].width) * Int(maskSize[n].height)
             let mask = calloc(cap, MemoryLayout<UInt32>.size)!
             let ptr = mask.bindMemory(to: UInt32.self, capacity: cap)
             for i in 0 ... cap - 1 {
