@@ -61,13 +61,7 @@ void TimeDelayed<T>::writeWithDelay(T value, uint8_t waitCycles)
     
     // Shift pipeline
     int64_t diff = referenceTime - timeStamp;
-    for (int i = this->capacity; i >= 0; i--) {
-        /*
-        if (!((i - diff <= 0) || (i - diff <= this->capacity))) {
-            printf("i = %d diff = %lld capacity = %d reference = %lld timeStamp = %lld\n",
-                  i, diff, capacity, referenceTime, timeStamp);
-        }
-        */
+    for (int i = this->capacity - 1; i >= 0; i--) {
         assert((i - diff <= 0) || (i - diff <= this->capacity));
         pipeline[i] = (i - diff > 0) ? pipeline[i - diff] : pipeline[0];
     }
