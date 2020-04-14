@@ -390,8 +390,8 @@ extension C64Key {
         case 61: return NSImage.init(named: pressed ? .key_shift_pressed : .key_shift)!
         case 14: return NSImage.init(named: shift ? .key_clr : .key_home)!
         case 15: return NSImage.init(named: shift ? .key_inst : .key_del)!
-        case 62: return NSImage.init(named: shift ? .key_crsr_up : .key_crsr_down)!
-        case 63: return NSImage.init(named: shift ? .key_crsr_left : .key_crsr_right)!
+        case 62: return NSImage.init(named: shift  || commodore ? .key_crsr_up : .key_crsr_down)!
+        case 63: return NSImage.init(named: shift  || commodore ? .key_crsr_left : .key_crsr_right)!
         default: break
         }
     
