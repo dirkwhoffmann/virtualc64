@@ -28,23 +28,20 @@
 #define V_SUBMINOR 0
 
 // Disable assertion checking (Uncomment in release build)
-// #define NDEBUG
+#define NDEBUG
 
 // Default debug level for all components (Set to 1 in release build)
 #define DEBUG_LEVEL 1
 
 #endif 
 
-// RELEASE NOTES (Version 3.3.1)
+// RELEASE NOTES (Version 3.4)
 //
-// New code base is compatible with XCode 10.2.
-// Fixed several bugs that caused random crashes when eclosing an emulator window.
-// Gamepad events prevent the Mac from going into sleep mode now.
-// The lists of recently inserted URLs are shared across multiple documents.
-//
-//
-// TODOs for the next release:
-//
+// Added support for the MikroAss CRT
+// Added support for the ISEPIC CRT
+// Added more Rom fingerprints
+// Added support for iNNEXT gamepads
+// Merged in reSID code from VICE 3.4
 //
 //
 //
