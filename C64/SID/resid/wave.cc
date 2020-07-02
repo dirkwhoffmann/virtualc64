@@ -30,6 +30,17 @@ namespace reSID
 const cycle_count SHIFT_REGISTER_RESET_6581 = 0x8000;
 const cycle_count SHIFT_REGISTER_RESET_8580 = 0x950000;
 
+// Number of cycles after which the waveform output fades to 0 when setting
+// the waveform register to 0.
+//
+// We have two SOAS/C samplings showing that floating DAC
+// keeps its state for at least 0x14000 cycles.
+//
+// This can't be found via sampling OSC3, it seems that
+// the actual analog output must be sampled and timed.
+const cycle_count FLOATING_OUTPUT_TTL_6581 = 200000;  // ~200ms
+const cycle_count FLOATING_OUTPUT_TTL_8580 = 5000000; // ~5s
+
 // Waveform lookup tables.
 unsigned short WaveformGenerator::model_wave[2][8][1 << 12] = {
   {
@@ -238,13 +249,7 @@ void WaveformGenerator::writeCONTROL_REG(reg8 control)
   else if (waveform_prev) {
     // Change to floating DAC input.
     // Reset fading time for floating DAC input.
-    //
-    // We have two SOAS/C samplings showing that floating DAC
-    // keeps its state for at least 0x14000 cycles.
-    //
-    // This can't be found via sampling OSC3, it seems that
-    // the actual analog output must be sampled and timed.
-    floating_output_ttl = 0x14000;
+    floating_output_ttl = (sid_model == MOS6581) ? FLOATING_OUTPUT_TTL_6581 : FLOATING_OUTPUT_TTL_8580;
   }
 
   // The gate bit is handled by the EnvelopeGenerator.
@@ -292,3 +297,4 @@ void WaveformGenerator::reset()
 }
 
 } // namespace reSID
+
