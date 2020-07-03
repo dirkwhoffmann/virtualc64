@@ -38,9 +38,9 @@ u16 FastVoice::wavetable40[2][8192];
 u16 FastVoice::wavetable50[2][8192];
 u16 FastVoice::wavetable60[2][8192];
 u16 FastVoice::wavetable70[2][8192];
-uint8_t FastVoice::noiseMSB[256];
-uint8_t FastVoice::noiseMID[256];
-uint8_t FastVoice::noiseLSB[256];
+u8 FastVoice::noiseMSB[256];
+u8 FastVoice::noiseMID[256];
+u8 FastVoice::noiseLSB[256];
 
 
 // Table for pseudo-exponential ADSR calculations
@@ -114,11 +114,11 @@ FastVoice::initWaveTables()
     
     // Noise tables are the same for both SID models
     for (unsigned i = 0; i < 256; i++) {
-        noiseLSB[i] = (uint8_t)((((i >> (7 - 2)) & 0x04) | ((i >> (4 - 1)) & 0x02)
+        noiseLSB[i] = (u8)((((i >> (7 - 2)) & 0x04) | ((i >> (4 - 1)) & 0x02)
                                  | ((i >> (2 - 0)) & 0x01)));
-        noiseMID[i] = (uint8_t)((((i >> (13 - 8 - 4)) & 0x10)
+        noiseMID[i] = (u8)((((i >> (13 - 8 - 4)) & 0x10)
                                  | ((i << (3 - (11 - 8))) & 0x08)));
-        noiseMSB[i] = (uint8_t)((((i << (7 - (22 - 16))) & 0x80)
+        noiseMSB[i] = (u8)((((i << (7 - (22 - 16))) & 0x80)
                                  | ((i << (6 - (20 - 16))) & 0x40)
                                  | ((i << (5 - (16 - 16))) & 0x20)));
     }
@@ -258,7 +258,7 @@ FastVoice::updateInternals(bool gateBitFlipped)
             if (gateBit()) {
                 
                 // Initiate attack phase
-                set_adsr((uint8_t)(gateBitFlipped ? FASTSID_ATTACK : adsrm));
+                set_adsr((u8)(gateBitFlipped ? FASTSID_ATTACK : adsrm));
             } else {
                 
                 // Proceed immediately to release phase
@@ -279,7 +279,7 @@ FastVoice::updateInternals(bool gateBitFlipped)
 }
 
 void
-FastVoice::setFilterType(uint8_t type)
+FastVoice::setFilterType(u8 type)
 {
     if (filterType == type)
         return;
@@ -290,7 +290,7 @@ FastVoice::setFilterType(uint8_t type)
 }
 
 void
-FastVoice::set_adsr(uint8_t phase)
+FastVoice::set_adsr(u8 phase)
 {
     int i;
     

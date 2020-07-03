@@ -33,7 +33,7 @@ private:
     i64 latchedY[3];
     
     //! @brief    Control port bits
-    uint8_t controlPort;
+    u8 controlPort;
     
 public:
     
@@ -51,13 +51,13 @@ public:
     void setRightMouseButton(bool value) { rightButton = value; }
 
     //! @brief   Returns the pot X bits as set by the mouse
-    uint8_t readPotX();
+    u8 readPotX();
     
     //! @brief   Returns the pot Y bits as set by the mouse
-    uint8_t readPotY();
+    u8 readPotY();
     
     //! @brief   Returns the control port bits triggered by the mouse
-    uint8_t readControlPort();
+    u8 readControlPort();
     
     /*! @brief   Execution function
      *  @details Translates movement deltas into joystick events.

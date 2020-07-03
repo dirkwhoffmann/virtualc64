@@ -40,7 +40,7 @@ private:
     
 	/*! @brief   Error information stored in the D64 archive.
      */
-	uint8_t errors[802];
+	u8 errors[802];
 	
     /*! @brief    Number of the currently selected item
      *  @details  -1, if no item is selected
@@ -54,7 +54,7 @@ public:
     //
     
     //! @brief    Returns true iff buffer contains a D64 file
-    static bool isD64Buffer(const uint8_t *buffer, size_t length);
+    static bool isD64Buffer(const u8 *buffer, size_t length);
     
     //! @brief   Returns true iff the specified file is a D64 file.
     static bool isD64File(const char *filename);
@@ -71,7 +71,7 @@ public:
     D64File(unsigned tracks, bool ecc);
     
     //! @brief    Factory method
-    static D64File *makeWithBuffer(const uint8_t *buffer, size_t length);
+    static D64File *makeWithBuffer(const u8 *buffer, size_t length);
     
     //! @brief    Factory method
     static D64File *makeWithFile(const char *path);
@@ -91,7 +91,7 @@ public:
     const char *typeAsString() { return "D64"; }
     const char *getName();
     bool hasSameType(const char *filename) { return isD64File(filename); }
-    bool readFromBuffer(const uint8_t *buffer, size_t length);
+    bool readFromBuffer(const u8 *buffer, size_t length);
     
     
     //
@@ -126,10 +126,10 @@ public:
     //
     
     //! @brief    Returns the first disk ID character
-    uint8_t diskId1() { return data[offset(18, 0) + 0xA2]; }
+    u8 diskId1() { return data[offset(18, 0) + 0xA2]; }
     
     //! @brief    Returns the second disk ID character
-    uint8_t diskId2() { return data[offset(18, 0) + 0xA3]; }
+    u8 diskId2() { return data[offset(18, 0) + 0xA3]; }
 
     
     //
@@ -153,7 +153,7 @@ private:
      *  @param    extension  If this argument is provided, an extension string
      *            is returned (e.g. "PRG"). Invisible files return "".
      */
-    bool itemIsVisible(uint8_t typeChar, const char **extension = NULL);
+    bool itemIsVisible(u8 typeChar, const char **extension = NULL);
     
     
     //
@@ -166,7 +166,7 @@ public:
     /*! @note     Returns 01 (no error) if the D64 file does not contain
      *            error codes.
      */
-    uint8_t errorCode(Track t, Sector s);
+    u8 errorCode(Track t, Sector s);
     
 private:
         
@@ -206,7 +206,7 @@ private:
      *  @result  true if the byte was written successfully; false if there is
      *           no space left on disk.
      */
-    bool writeByteToSector(uint8_t byte, Track *track, Sector *sector);
+    bool writeByteToSector(u8 byte, Track *track, Sector *sector);
 
     
     //
@@ -253,12 +253,12 @@ private:
     
     //! Returns the track number of the first file block
     /*! Example usage: firstTrackOfFile(findDirectoryEntry(42)) */
-    uint8_t firstTrackOfFile(unsigned dirEntry) { return data[dirEntry + 1]; }
+    u8 firstTrackOfFile(unsigned dirEntry) { return data[dirEntry + 1]; }
 
     //! @brief    Returns the sector number of the first file block
     /*! @details  Example usage: firstSectorOfFile(findDirectoryEntry(42)) 
      */
-    uint8_t firstSectorOfFile(unsigned dirEntry) { return data[dirEntry + 2]; }
+    u8 firstSectorOfFile(unsigned dirEntry) { return data[dirEntry + 2]; }
     
     /*! @brief    Returns true iff offset points to the last byte of a file 
      */

@@ -114,10 +114,10 @@ VIC::updateBankAddr()
     updateBankAddr(~c64->cia2.getPA() & 0x03);
 }
     
-uint8_t
+u8
 VIC::peek(u16 addr)
 {
-    uint8_t result;
+    u8 result;
     
     assert(addr <= 0x3F);
     
@@ -294,7 +294,7 @@ VIC::peek(u16 addr)
     return result;
 }
 
-uint8_t
+u8
 VIC::spypeek(u16 addr)
 {
     assert(addr <= 0x3F);
@@ -442,7 +442,7 @@ VIC::spypeek(u16 addr)
 }
 
 void
-VIC::poke(u16 addr, uint8_t value)
+VIC::poke(u16 addr, u8 value)
 {
     assert(addr < 0x40);
  
@@ -620,7 +620,7 @@ VIC::poke(u16 addr, uint8_t value)
     delay |= VICUpdateRegisters;
 }
 
-uint8_t
+u8
 VIC::memAccess(u16 addr)
 {
     assert((addr & 0xC000) == 0); // 14 bit address
@@ -644,10 +644,10 @@ VIC::memAccess(u16 addr)
 }
 
 /*
- uint8_t
+ u8
  VIC::memAccess(u16 addr)
  {
- uint8_t result;
+ u8 result;
  
  assert((addr & 0xC000) == 0); // 14 bit address
  assert((bankAddr & 0x3FFF) == 0); // multiple of 16 KB
@@ -717,10 +717,10 @@ VIC::memAccess(u16 addr)
  }
  */
 
-uint8_t
+u8
 VIC::memSpyAccess(u16 addr)
 {
-    uint8_t result;
+    u8 result;
     
     assert((addr & 0xC000) == 0);
     assert((bankAddr & 0x3FFF) == 0);
@@ -860,8 +860,8 @@ VIC::gAccess()
 u16
 VIC::gAccessAddr85x()
 {
-    uint8_t oldBmm = GET_BIT(reg.delayed.ctrl1, 5);
-    uint8_t oldEcm = GET_BIT(reg.delayed.ctrl1, 6);
+    u8 oldBmm = GET_BIT(reg.delayed.ctrl1, 5);
+    u8 oldEcm = GET_BIT(reg.delayed.ctrl1, 6);
     
     return gAccessAddr(oldBmm, oldEcm);
 }
@@ -869,16 +869,16 @@ VIC::gAccessAddr85x()
 u16
 VIC::gAccessAddr65x()
 {
-    uint8_t oldBmm = GET_BIT(reg.delayed.ctrl1, 5);
-    uint8_t newBmm = GET_BIT(reg.current.ctrl1, 5);
-    uint8_t newEcm = GET_BIT(reg.current.ctrl1, 6);
+    u8 oldBmm = GET_BIT(reg.delayed.ctrl1, 5);
+    u8 newBmm = GET_BIT(reg.current.ctrl1, 5);
+    u8 newEcm = GET_BIT(reg.current.ctrl1, 6);
     
     u16 result = gAccessAddr(oldBmm | newBmm, newEcm);
 
     // Check if BMM bit has just changed
     if (oldBmm != newBmm) {
         
-        uint8_t oldEcm = GET_BIT(reg.delayed.ctrl1, 6);
+        u8 oldEcm = GET_BIT(reg.delayed.ctrl1, 6);
         u16 oldAddr = gAccessAddr(oldBmm, oldEcm);
         u16 newAddr = gAccessAddr(newBmm, newEcm);
 

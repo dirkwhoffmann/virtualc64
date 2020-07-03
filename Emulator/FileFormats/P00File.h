@@ -21,7 +21,7 @@ class P00File : public AnyArchive {
 private:
 
     //! @brief    Header signature
-    static const uint8_t magicBytes[];
+    static const u8 magicBytes[];
     
 public:
 
@@ -30,7 +30,7 @@ public:
     //
     
     //! @brief    Returns true iff buffer contains a P00 file.
-    static bool isP00Buffer(const uint8_t *buffer, size_t length);
+    static bool isP00Buffer(const u8 *buffer, size_t length);
     
     //! @brief    Returns true iff the specified file is a P00 file.
     static bool isP00File(const char *filename);
@@ -44,7 +44,7 @@ public:
     P00File();
     
     //! @brief    Factory method
-    static P00File *makeWithBuffer(const uint8_t *buffer, size_t length);
+    static P00File *makeWithBuffer(const u8 *buffer, size_t length);
     
     //! @brief    Factory method
     static P00File *makeWithFile(const char *path);

@@ -9,10 +9,10 @@
 
 #include "C64.h"
 
-const uint8_t Snapshot::magicBytes[] = { 'V', 'C', '6', '4' };
+const u8 Snapshot::magicBytes[] = { 'V', 'C', '6', '4' };
 
 bool
-Snapshot::isSnapshot(const uint8_t *buffer, size_t length)
+Snapshot::isSnapshot(const u8 *buffer, size_t length)
 {
     assert(buffer != NULL);
     
@@ -21,21 +21,21 @@ Snapshot::isSnapshot(const uint8_t *buffer, size_t length)
 }
 
 bool
-Snapshot::isSnapshot(const uint8_t *buffer, size_t length,
-                     uint8_t major, uint8_t minor, uint8_t subminor)
+Snapshot::isSnapshot(const u8 *buffer, size_t length,
+                     u8 major, u8 minor, u8 subminor)
 {
     if (!isSnapshot(buffer, length)) return false;
     return buffer[4] == major && buffer[5] == minor && buffer[6] == subminor;
 }
 
 bool
-Snapshot::isSupportedSnapshot(const uint8_t *buffer, size_t length)
+Snapshot::isSupportedSnapshot(const u8 *buffer, size_t length)
 {
     return isSnapshot(buffer, length, V_MAJOR, V_MINOR, V_SUBMINOR);
 }
 
 bool
-Snapshot::isUnsupportedSnapshot(const uint8_t *buffer, size_t length)
+Snapshot::isUnsupportedSnapshot(const u8 *buffer, size_t length)
 {
     return isSnapshot(buffer, length) && !isSupportedSnapshot(buffer, length);
 }
@@ -52,9 +52,9 @@ Snapshot::isSnapshotFile(const char *path)
 }
 
 bool
-Snapshot::isSnapshotFile(const char *path, uint8_t major, uint8_t minor, uint8_t subminor)
+Snapshot::isSnapshotFile(const char *path, u8 major, u8 minor, u8 subminor)
 {
-    uint8_t signature[] = { 'V', 'C', '6', '4', major, minor, subminor };
+    u8 signature[] = { 'V', 'C', '6', '4', major, minor, subminor };
     
     assert(path != NULL);
     
@@ -84,7 +84,7 @@ Snapshot::Snapshot()
 Snapshot::Snapshot(size_t capacity)
 {
     size = capacity + sizeof(SnapshotHeader);
-    data = new uint8_t[size];
+    data = new u8[size];
     
     SnapshotHeader *header = (SnapshotHeader *)data;
     header->magic[0] = magicBytes[0];
@@ -98,7 +98,7 @@ Snapshot::Snapshot(size_t capacity)
 }
 
 Snapshot *
-Snapshot::makeWithBuffer(const uint8_t *buffer, size_t length)
+Snapshot::makeWithBuffer(const u8 *buffer, size_t length)
 {
     Snapshot *snapshot;
     
@@ -130,7 +130,7 @@ Snapshot::makeWithC64(C64 *c64)
     
     snapshot = new Snapshot(c64->stateSize());
     snapshot->takeScreenshot(c64);
-    uint8_t *ptr = snapshot->getData();
+    u8 *ptr = snapshot->getData();
     c64->saveToBuffer(&ptr);
     
     return snapshot;

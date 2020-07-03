@@ -183,7 +183,7 @@ void
 IEC::updateIecLinesC64Side()
 {
     // Get bus signals from C64 side
-    uint8_t ciaBits = c64->cia2.getPA();
+    u8 ciaBits = c64->cia2.getPA();
     ciaAtn = !!(ciaBits & 0x08);
     ciaClock = !!(ciaBits & 0x10);
     ciaData = !!(ciaBits & 0x20);
@@ -196,13 +196,13 @@ void
 IEC::updateIecLinesDriveSide()
 {
     // Get bus signals from drive 1
-    uint8_t device1Bits = c64->drive1.via1.getPB();
+    u8 device1Bits = c64->drive1.via1.getPB();
     device1Atn = !!(device1Bits & 0x10);
     device1Clock = !!(device1Bits & 0x08);
     device1Data = !!(device1Bits & 0x02);
 
     // Get bus signals from drive 2
-    uint8_t device2Bits = c64->drive2.via1.getPB();
+    u8 device2Bits = c64->drive2.via1.getPB();
     device2Atn = !!(device2Bits & 0x10);
     device2Clock = !!(device2Bits & 0x08);
     device2Data = !!(device2Bits & 0x02);

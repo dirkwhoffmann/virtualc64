@@ -90,7 +90,7 @@ Mouse::setRightButton(bool value)
     }
 }
 
-uint8_t
+u8
 Mouse::readPotX()
 {
     if (port > 0) {
@@ -109,7 +109,7 @@ Mouse::readPotX()
     return 0xFF;
 }
 
-uint8_t
+u8
 Mouse::readPotY()
 {
     if (port > 0) {
@@ -128,7 +128,7 @@ Mouse::readPotY()
     return 0xFF;
 }
 
-uint8_t
+u8
 Mouse::readControlPort(unsigned portNr)
 {
     // debug("port = %d portNr = %d\n", port, portNr);

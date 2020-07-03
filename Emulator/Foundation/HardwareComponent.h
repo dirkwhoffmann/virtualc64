@@ -49,7 +49,7 @@ protected:
         
         void *data;
         size_t size;
-        uint8_t flags;
+        u8 flags;
         
     } SnapshotItem;
     
@@ -186,15 +186,15 @@ public:
      *  @param    buffer Pointer to next byte to read
      *  @seealso  WORD_ARRAY, DWORD_ARRAY, QWORD_ARRAY
      */
-    void loadFromBuffer(uint8_t **buffer);
+    void loadFromBuffer(u8 **buffer);
     
     /*! @brief    Delegation methods called inside loadFromBuffer()
      *  @details  Some components overwrite this method to add custom behavior
      *            such as loading items that cannot be handled by the default
      *            implementation.
      */
-    virtual void  willLoadFromBuffer(uint8_t **buffer) { };
-    virtual void  didLoadFromBuffer(uint8_t **buffer) { };
+    virtual void  willLoadFromBuffer(u8 **buffer) { };
+    virtual void  didLoadFromBuffer(u8 **buffer) { };
 
     /*! @brief    Save internal state to memory buffer
      *  @note     Snapshot items of size 2, 4, or 8 are converted to big endian
@@ -202,15 +202,15 @@ public:
      *  @param    buffer Pointer to next byte to read
      *  @seealso  WORD_ARRAY, DWORD_ARRAY, QWORD_ARRAY
      */
-    void saveToBuffer(uint8_t **buffer);
+    void saveToBuffer(u8 **buffer);
     
     /*! @brief    Delegation methods called inside saveToBuffer()
      *  @details  Some components overwrite this method to add custom behavior
      *            such as saving items that cannot be handled by the default
      *            implementation.
      */
-    virtual void  willSaveToBuffer(uint8_t **buffer) { };
-    virtual void  didSaveToBuffer(uint8_t **buffer) { };
+    virtual void  willSaveToBuffer(u8 **buffer) { };
+    virtual void  didSaveToBuffer(u8 **buffer) { };
 };
 
 #endif

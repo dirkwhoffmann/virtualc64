@@ -19,7 +19,7 @@ class CartridgeRom : public HardwareComponent {
     protected:
     
     //! @brief    Rom data
-    uint8_t *rom = NULL;
+    u8 *rom = NULL;
     
     public:
     
@@ -38,16 +38,16 @@ class CartridgeRom : public HardwareComponent {
     
     //! @brief    Constructor
     CartridgeRom();
-    // CartridgeRom(uint8_t **buffer);
-    CartridgeRom(u16 _size, u16 _loadAddress, const uint8_t *buffer = NULL);
+    // CartridgeRom(u8 **buffer);
+    CartridgeRom(u16 _size, u16 _loadAddress, const u8 *buffer = NULL);
     
     //! @brief    Destructor
     ~CartridgeRom();
     
     //! @brief    Methods from HardwareComponent
     size_t stateSize();
-    void didLoadFromBuffer(uint8_t **buffer);
-    void didSaveToBuffer(uint8_t **buffer);
+    void didLoadFromBuffer(u8 **buffer);
+    void didSaveToBuffer(u8 **buffer);
     
     //! @brief    Returns true if this Rom chip maps to ROML, only.
     bool mapsToL();
@@ -59,13 +59,13 @@ class CartridgeRom : public HardwareComponent {
     bool mapsToH();
     
     //! @brief    Reads a ROM cell
-    uint8_t peek(u16 addr);
+    u8 peek(u16 addr);
     
     //! @brief    Reads a ROM cell without side effects
-    uint8_t spypeek(u16 addr) { return peek(addr); }
+    u8 spypeek(u16 addr) { return peek(addr); }
     
     //! @brief    Writes a ROM cell
-    void poke(u16 addr, uint8_t value) { }
+    void poke(u16 addr, u8 value) { }
     
 };
 

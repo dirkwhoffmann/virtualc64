@@ -10,7 +10,7 @@
 #include "C64.h"
 
 void
-CPU::adc(uint8_t op)
+CPU::adc(u8 op)
 {
     if (getD())
         adc_bcd(op);
@@ -19,21 +19,21 @@ CPU::adc(uint8_t op)
 }
 
 void
-CPU::adc_binary(uint8_t op)
+CPU::adc_binary(u8 op)
 {
     u16 sum = regA + op + (getC() ? 1 : 0);
     
     setC(sum > 255);
     setV(!((regA ^ op) & 0x80) && ((regA ^ sum) & 0x80));
-    loadA((uint8_t)sum);
+    loadA((u8)sum);
 }
 
 void
-CPU::adc_bcd(uint8_t op)
+CPU::adc_bcd(u8 op)
 {
     u16 sum       = regA + op + (getC() ? 1 : 0);
-    uint8_t  highDigit = (regA >> 4) + (op >> 4);
-    uint8_t  lowDigit  = (regA & 0x0F) + (op & 0x0F) + (getC() ? 1 : 0);
+    u8  highDigit = (regA >> 4) + (op >> 4);
+    u8  lowDigit  = (regA & 0x0F) + (op & 0x0F) + (getC() ? 1 : 0);
     
     // Check for overflow conditions
     // If an overflow occurs on a BCD digit, it needs to be fixed by adding the pseudo-tetrade 0110 (=6)
@@ -58,13 +58,13 @@ CPU::adc_bcd(uint8_t op)
     }
     
     lowDigit &= 0x0F;
-    regA = (uint8_t)((highDigit << 4) | lowDigit);
+    regA = (u8)((highDigit << 4) | lowDigit);
 }
 
 void
-CPU::cmp(uint8_t op1, uint8_t op2)
+CPU::cmp(u8 op1, u8 op2)
 {
-    uint8_t tmp = op1 - op2;
+    u8 tmp = op1 - op2;
     
     setC(op1 >= op2);
     setN(tmp & 128);
@@ -72,7 +72,7 @@ CPU::cmp(uint8_t op1, uint8_t op2)
 }
 
 void
-CPU::sbc(uint8_t op)
+CPU::sbc(u8 op)
 {
     if (getD())
         sbc_bcd(op);
@@ -81,21 +81,21 @@ CPU::sbc(uint8_t op)
 }
 
 void
-CPU::sbc_binary(uint8_t op)
+CPU::sbc_binary(u8 op)
 {
     u16 sum = regA - op - (getC() ? 0 : 1);
     
     setC(sum <= 255);
     setV(((regA ^ sum) & 0x80) && ((regA ^ op) & 0x80));
-    loadA((uint8_t)sum);
+    loadA((u8)sum);
 }
 
 void
-CPU::sbc_bcd(uint8_t op)
+CPU::sbc_bcd(u8 op)
 {
     u16 sum       = regA - op - (getC() ? 0 : 1);
-    uint8_t  highDigit = (regA >> 4) - (op >> 4);
-    uint8_t  lowDigit  = (regA & 0x0F) - (op & 0x0F) - (getC() ? 0 : 1);
+    u8  highDigit = (regA >> 4) - (op >> 4);
+    u8  lowDigit  = (regA & 0x0F) - (op & 0x0F) - (getC() ? 0 : 1);
     
     // Check for underflow conditions
     // If an overflow occurs on a BCD digit, it needs to be fixed by subtracting the pseudo-tetrade 0110 (=6)
@@ -112,11 +112,11 @@ CPU::sbc_bcd(uint8_t op)
     setZ((sum & 0xFF) == 0);
     setN(sum & 0x80);
     
-    regA = (uint8_t)((highDigit << 4) | (lowDigit & 0x0f));
+    regA = (u8)((highDigit << 4) | (lowDigit & 0x0f));
 }
 
 void 
-CPU::registerCallback(uint8_t opcode, const char *mnc,
+CPU::registerCallback(u8 opcode, const char *mnc,
                       AddressingMode mode, MicroInstruction mInstr)
 {
     // Table is write once!
@@ -442,7 +442,7 @@ CPU::registerIllegalInstructions()
 bool
 CPU::executeOneCycle()
 {
-    uint8_t instr;
+    u8 instr;
     
     switch (next) {
             
@@ -451,7 +451,7 @@ CPU::executeOneCycle()
             /* DEBUG */
             /*
             if (PC == 0x08EB) {
-                uint8_t reg = c64->vic.spypeek(0x1E);
+                u8 reg = c64->vic.spypeek(0x1E);
                 debug("Writing result: %02X (%02X), rasterline: %d sprite0.y = %02X\n", c64->cpu.A, reg, c64->rasterline, c64->vic.spypeek(0x01));
                 // startTracing();
             }
@@ -915,7 +915,7 @@ CPU::executeOneCycle()
         case BNE_rel_2: case BPL_rel_2: case BVC_rel_2: case BVS_rel_2:
         {
             IDLE_READ_IMPLIED
-            uint8_t pc_hi = HI_BYTE(regPC);
+            u8 pc_hi = HI_BYTE(regPC);
             regPC += (int8_t)regD;
             
             if (unlikely(pc_hi != HI_BYTE(regPC))) {
@@ -2595,7 +2595,7 @@ CPU::executeOneCycle()
         {
             READ_IMMEDIATE
             
-            uint8_t tmp2 = regA & regD;
+            u8 tmp2 = regA & regD;
             
             // Taken from Frodo...
             regA = (getC() ? (tmp2 >> 1) | 0x80 : tmp2 >> 1);
@@ -2636,8 +2636,8 @@ CPU::executeOneCycle()
         {
             READ_IMMEDIATE
             
-            uint8_t op2  = regA & regX;
-            uint8_t tmp = op2 - regD;
+            u8 op2  = regA & regX;
+            u8 tmp = op2 - regD;
             
             setC(op2 >= regD);
             loadX(tmp);

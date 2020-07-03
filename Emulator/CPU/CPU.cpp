@@ -118,14 +118,14 @@ CPU::stateSize()
 }
 
 void
-CPU::didLoadFromBuffer(uint8_t **buffer)
+CPU::didLoadFromBuffer(u8 **buffer)
 {
     levelDetector.loadFromBuffer(buffer);
     edgeDetector.loadFromBuffer(buffer);
 }
 
 void
-CPU::didSaveToBuffer(uint8_t **buffer)
+CPU::didSaveToBuffer(u8 **buffer)
 {
     levelDetector.saveToBuffer(buffer);
     edgeDetector.saveToBuffer(buffer);
@@ -204,7 +204,7 @@ CPU::setRDY(bool value)
 }
 
 unsigned
-CPU::getLengthOfInstruction(uint8_t opcode)
+CPU::getLengthOfInstruction(u8 opcode)
 {
     switch(addressingMode[opcode]) {
 		case ADDR_IMPLIED:			
@@ -265,7 +265,7 @@ void
 CPU::recordInstruction()
 {
     RecordedInstruction i;
-    uint8_t opcode = mem->spypeek(pc);
+    u8 opcode = mem->spypeek(pc);
     unsigned length = getLengthOfInstruction(opcode);
     
     i.cycle = cycle;
@@ -315,8 +315,8 @@ CPU::disassemble(RecordedInstruction instr, bool hex)
 {
     DisassembledInstruction result;
     
-    uint8_t opcode = instr.byte1;
-    uint8_t length = getLengthOfInstruction(opcode);
+    u8 opcode = instr.byte1;
+    u8 length = getLengthOfInstruction(opcode);
     
     result.addr = instr.pc;
     result.size = length;
@@ -331,7 +331,7 @@ CPU::disassemble(RecordedInstruction instr, bool hex)
         case ADDR_ZERO_PAGE_Y:
         case ADDR_INDIRECT_X:
         case ADDR_INDIRECT_Y: {
-            uint8_t value = mem->spypeek(instr.pc + 1);
+            u8 value = mem->spypeek(instr.pc + 1);
             hex ? sprint8x(operand, value) : sprint8d(operand, value);
             break;
         }

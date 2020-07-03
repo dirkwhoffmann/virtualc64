@@ -14,7 +14,7 @@
 //
 
 //! @brief    An older generation Action Replay cartridge
-uint8_t
+u8
 ActionReplay3::peek(u16 addr)
 {
     if (addr >= 0x8000 && addr <= 0x9FFF) {
@@ -33,13 +33,13 @@ ActionReplay3::peek(u16 addr)
     return 0;
 }
 
-uint8_t
+u8
 ActionReplay3::peekIO1(u16 addr)
 {
     return 0;
 }
 
-uint8_t
+u8
 ActionReplay3::peekIO2(u16 addr)
 {
     u16 offset = addr - 0xDF00;
@@ -47,7 +47,7 @@ ActionReplay3::peekIO2(u16 addr)
 }
 
 void
-ActionReplay3::pokeIO1(u16 addr, uint8_t value)
+ActionReplay3::pokeIO1(u16 addr, u8 value)
 {
     if (!disabled())
         setControlReg(value);
@@ -110,7 +110,7 @@ ActionReplay3::releaseButton(unsigned nr)
 }
 
 void
-ActionReplay3::setControlReg(uint8_t value)
+ActionReplay3::setControlReg(u8 value)
 {
     control = value;
     c64->expansionport.setGameAndExrom(game(), exrom());
@@ -144,7 +144,7 @@ ActionReplay::resetCartConfig()
     c64->expansionport.setCartridgeMode(CRT_8K);
 }
 
-uint8_t
+u8
 ActionReplay::peek(u16 addr)
 {
     if (ramIsEnabled(addr)) {
@@ -154,20 +154,20 @@ ActionReplay::peek(u16 addr)
 }
  
 void
-ActionReplay::poke(u16 addr, uint8_t value)
+ActionReplay::poke(u16 addr, u8 value)
 {
     if (ramIsEnabled(addr)) {
         pokeRAM(addr & 0x1FFF, value);
     }
 }
 
-uint8_t
+u8
 ActionReplay::peekIO1(u16 addr)
 {
     return control;
 }
 
-uint8_t
+u8
 ActionReplay::peekIO2(u16 addr)
 {
     assert(addr >= 0xDF00 && addr <= 0xDFFF);
@@ -182,14 +182,14 @@ ActionReplay::peekIO2(u16 addr)
 }
 
 void
-ActionReplay::pokeIO1(u16 addr, uint8_t value)
+ActionReplay::pokeIO1(u16 addr, u8 value)
 {
     if (!disabled())
     setControlReg(value);
 }
 
 void
-ActionReplay::pokeIO2(u16 addr, uint8_t value)
+ActionReplay::pokeIO2(u16 addr, u8 value)
 {
     assert(addr >= 0xDF00 && addr <= 0xDFFF);
     u16 offset = addr & 0xFF;
@@ -255,7 +255,7 @@ ActionReplay::releaseButton(unsigned nr)
 }
 
 void
-ActionReplay::setControlReg(uint8_t value)
+ActionReplay::setControlReg(u8 value)
 {
     control = value;
     

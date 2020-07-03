@@ -11,7 +11,7 @@
 #include "TimeDelayed.h"
 
 template <class T>
-TimeDelayed<T>::TimeDelayed(uint8_t delay, uint8_t capacity, u64 *clock)
+TimeDelayed<T>::TimeDelayed(u8 delay, u8 capacity, u64 *clock)
 {
     assert(delay < capacity);
     
@@ -23,11 +23,11 @@ TimeDelayed<T>::TimeDelayed(uint8_t delay, uint8_t capacity, u64 *clock)
     clear();
 }
 
-template TimeDelayed<bool>::TimeDelayed(uint8_t, uint8_t, u64 *);
-template TimeDelayed<uint8_t>::TimeDelayed(uint8_t, uint8_t, u64 *);
-template TimeDelayed<u16>::TimeDelayed(uint8_t, uint8_t, u64 *);
-template TimeDelayed<u32>::TimeDelayed(uint8_t, uint8_t, u64 *);
-template TimeDelayed<u64>::TimeDelayed(uint8_t, uint8_t, u64 *);
+template TimeDelayed<bool>::TimeDelayed(u8, u8, u64 *);
+template TimeDelayed<u8>::TimeDelayed(u8, u8, u64 *);
+template TimeDelayed<u16>::TimeDelayed(u8, u8, u64 *);
+template TimeDelayed<u32>::TimeDelayed(u8, u8, u64 *);
+template TimeDelayed<u64>::TimeDelayed(u8, u8, u64 *);
 
 template <class T>
 TimeDelayed<T>::~TimeDelayed()
@@ -36,14 +36,14 @@ TimeDelayed<T>::~TimeDelayed()
     delete pipeline;
 }
 template TimeDelayed<bool>::~TimeDelayed();
-template TimeDelayed<uint8_t>::~TimeDelayed();
+template TimeDelayed<u8>::~TimeDelayed();
 template TimeDelayed<u16>::~TimeDelayed();
 template TimeDelayed<u32>::~TimeDelayed();
 template TimeDelayed<u64>::~TimeDelayed();
 
 
 template <class T>
-void TimeDelayed<T>::writeWithDelay(T value, uint8_t waitCycles)
+void TimeDelayed<T>::writeWithDelay(T value, u8 waitCycles)
 {
     i64 referenceTime = *clock + waitCycles;
     
@@ -58,11 +58,11 @@ void TimeDelayed<T>::writeWithDelay(T value, uint8_t waitCycles)
     timeStamp = referenceTime;
     pipeline[0] = value;
 }
-template void TimeDelayed<bool>::writeWithDelay(bool, uint8_t);
-template void TimeDelayed<uint8_t>::writeWithDelay(uint8_t, uint8_t);
-template void TimeDelayed<u16>::writeWithDelay(u16, uint8_t);
-template void TimeDelayed<u32>::writeWithDelay(u32, uint8_t);
-template void TimeDelayed<u64>::writeWithDelay(u64, uint8_t);
+template void TimeDelayed<bool>::writeWithDelay(bool, u8);
+template void TimeDelayed<u8>::writeWithDelay(u8, u8);
+template void TimeDelayed<u16>::writeWithDelay(u16, u8);
+template void TimeDelayed<u32>::writeWithDelay(u32, u8);
+template void TimeDelayed<u64>::writeWithDelay(u64, u8);
 
 template <class T>
 void TimeDelayed<T>::debug()
@@ -79,7 +79,7 @@ void TimeDelayed<T>::debug()
     printf("timeStamp = %lld clock = %lld delay = %d\n", timeStamp, *clock, delay);
 }
 template void TimeDelayed<bool>::debug();
-template void TimeDelayed<uint8_t>::debug();
+template void TimeDelayed<u8>::debug();
 template void TimeDelayed<u16>::debug();
 template void TimeDelayed<u32>::debug();
 template void TimeDelayed<u64>::debug();
@@ -91,16 +91,16 @@ size_t TimeDelayed<T>::stateSize()
     return capacity * sizeof(u64) + sizeof(timeStamp);
 }
 template size_t TimeDelayed<bool>::stateSize();
-template size_t TimeDelayed<uint8_t>::stateSize();
+template size_t TimeDelayed<u8>::stateSize();
 template size_t TimeDelayed<u16>::stateSize();
 template size_t TimeDelayed<u32>::stateSize();
 template size_t TimeDelayed<u64>::stateSize();
 
 
 template <class T>
-void TimeDelayed<T>::loadFromBuffer(uint8_t **buffer)
+void TimeDelayed<T>::loadFromBuffer(u8 **buffer)
 {
-    uint8_t *old = *buffer;
+    u8 *old = *buffer;
     
     for (unsigned i = 0; i < capacity; i++) {
         pipeline[i] = (T)read64(buffer);
@@ -109,17 +109,17 @@ void TimeDelayed<T>::loadFromBuffer(uint8_t **buffer)
  
     assert(*buffer - old == stateSize());
 }
-template void TimeDelayed<bool>::loadFromBuffer(uint8_t **);
-template void TimeDelayed<uint8_t>::loadFromBuffer(uint8_t **);
-template void TimeDelayed<u16>::loadFromBuffer(uint8_t **);
-template void TimeDelayed<u32>::loadFromBuffer(uint8_t **);
-template void TimeDelayed<u64>::loadFromBuffer(uint8_t **);
+template void TimeDelayed<bool>::loadFromBuffer(u8 **);
+template void TimeDelayed<u8>::loadFromBuffer(u8 **);
+template void TimeDelayed<u16>::loadFromBuffer(u8 **);
+template void TimeDelayed<u32>::loadFromBuffer(u8 **);
+template void TimeDelayed<u64>::loadFromBuffer(u8 **);
 
 
 template <class T>
-void TimeDelayed<T>::saveToBuffer(uint8_t **buffer)
+void TimeDelayed<T>::saveToBuffer(u8 **buffer)
 {
-    uint8_t *old = *buffer;
+    u8 *old = *buffer;
     
     for (unsigned i = 0; i < capacity; i++) {
         write64(buffer, (u64)pipeline[i]);
@@ -132,8 +132,8 @@ void TimeDelayed<T>::saveToBuffer(uint8_t **buffer)
     
     assert(*buffer - old == stateSize());
 }
-template void TimeDelayed<bool>::saveToBuffer(uint8_t **);
-template void TimeDelayed<uint8_t>::saveToBuffer(uint8_t **);
-template void TimeDelayed<u16>::saveToBuffer(uint8_t **);
-template void TimeDelayed<u32>::saveToBuffer(uint8_t **);
-template void TimeDelayed<u64>::saveToBuffer(uint8_t **);
+template void TimeDelayed<bool>::saveToBuffer(u8 **);
+template void TimeDelayed<u8>::saveToBuffer(u8 **);
+template void TimeDelayed<u16>::saveToBuffer(u8 **);
+template void TimeDelayed<u32>::saveToBuffer(u8 **);
+template void TimeDelayed<u64>::saveToBuffer(u8 **);

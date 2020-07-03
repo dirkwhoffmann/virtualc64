@@ -20,7 +20,7 @@ class TAPFile : public AnyC64File {
 private:
     
     //! @brief    Header signature
-    static const uint8_t magicBytes[];
+    static const u8 magicBytes[];
     
     /*! @brief    File pointer
      *  @details  An offset into the data array. 
@@ -34,7 +34,7 @@ public:
     //
     
     //! @brief    Returns true iff buffer contains a TAP file
-    static bool isTAPBuffer(const uint8_t *buffer, size_t length);
+    static bool isTAPBuffer(const u8 *buffer, size_t length);
     
     //! @brief    Returns true iff the specified file is a TAP file
     static bool isTAPFile(const char *filename);
@@ -48,7 +48,7 @@ public:
     TAPFile();
     
     //! @brief    Factory method
-    static TAPFile *makeWithBuffer(const uint8_t *buffer, size_t length);
+    static TAPFile *makeWithBuffer(const u8 *buffer, size_t length);
     
     //! @brief    Factory method
     static TAPFile *makeWithFile(const char *filename);
@@ -63,15 +63,15 @@ public:
     const char *typeAsString() { return "TAP"; }
     const char *getName();
     bool hasSameType(const char *filename) { return isTAPFile(filename); }
-    bool readFromBuffer(const uint8_t *buffer, size_t length);
+    bool readFromBuffer(const u8 *buffer, size_t length);
     
     
     //
     //! @functiongroup Retrieving tape information
     //
     
-    uint8_t TAPversion() { return data[0x000C]; }
-    uint8_t *getData() { return &data[0x0014]; }
+    u8 TAPversion() { return data[0x000C]; }
+    u8 *getData() { return &data[0x0014]; }
     size_t getSize() { return size - 0x14; }
 };
 

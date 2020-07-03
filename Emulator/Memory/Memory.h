@@ -25,7 +25,7 @@ protected:
     /*! @brief    Pointer to the first byte of the stack memory
      *  @details  This value is used by peekStack and pokeStack, only.
      */
-    uint8_t *stack = NULL;
+    u8 *stack = NULL;
     
 private:
     
@@ -34,31 +34,31 @@ private:
      *            The value is read is from the currently visible memory.
      *  @seealso  spypeek
      */
-	virtual uint8_t peek(u16 addr) = 0;
+	virtual u8 peek(u16 addr) = 0;
 
     //! @brief    Peeks a byte from the zero page.
-    virtual uint8_t peekZP(uint8_t addr) = 0;
+    virtual u8 peekZP(u8 addr) = 0;
 
     //! @brief    Peeks a byte from the stack.
-    virtual uint8_t peekStack(uint8_t sp) { return stack[sp]; }
+    virtual u8 peekStack(u8 sp) { return stack[sp]; }
     
 public:
     
     /*! @brief    Peeks a byte from memory without causing side effects.
      *  seealso   peek
      */
-    virtual uint8_t spypeek(u16 addr) = 0;
+    virtual u8 spypeek(u16 addr) = 0;
     
     /*! @brief    Pokes a byte into memory.
      *  @details  Emulates a native write access including all side effects.
      */
-    virtual void poke(u16 addr, uint8_t value) = 0;
+    virtual void poke(u16 addr, u8 value) = 0;
 
     //! @brief    Pokes a byte into the zero page.
-    virtual void pokeZP(uint8_t addr, uint8_t value) = 0;
+    virtual void pokeZP(u8 addr, u8 value) = 0;
 
     //! @brief    Pokes a byte onto the stack.
-    virtual void pokeStack(uint8_t sp, uint8_t value) { stack[sp] = value; }
+    virtual void pokeStack(u8 sp, u8 value) { stack[sp] = value; }
 };
 
 #endif

@@ -43,7 +43,7 @@ ProcessorPort::dump()
     msg("Bit 7 discharge cycle: %ld\n", dischargeCycleBit7);
 }
             
-uint8_t
+u8
 ProcessorPort::read()
 {
     // If the port bits are configured as inputs and no datasette is attached,
@@ -63,23 +63,23 @@ ProcessorPort::read()
     //     CPU temperature and how long the output was 1 befor the bit became
     //     an input.
     
-    uint8_t bit3 = (dischargeCycleBit3 > c64->cpu.cycle) ? 0x08 : 0x00;
-    uint8_t bit6 = (dischargeCycleBit6 > c64->cpu.cycle) ? 0x40 : 0x00;
-    uint8_t bit7 = (dischargeCycleBit7 > c64->cpu.cycle) ? 0x80 : 0x00;
-    uint8_t bit4 = c64->datasette.getPlayKey() ? 0x00 : 0x10;
-    uint8_t bits = bit7 | bit6 | bit4 | bit3 | 0x07;
+    u8 bit3 = (dischargeCycleBit3 > c64->cpu.cycle) ? 0x08 : 0x00;
+    u8 bit6 = (dischargeCycleBit6 > c64->cpu.cycle) ? 0x40 : 0x00;
+    u8 bit7 = (dischargeCycleBit7 > c64->cpu.cycle) ? 0x80 : 0x00;
+    u8 bit4 = c64->datasette.getPlayKey() ? 0x00 : 0x10;
+    u8 bits = bit7 | bit6 | bit4 | bit3 | 0x07;
 
     return (port & direction) | (bits & ~direction);
 }
 
-uint8_t
+u8
 ProcessorPort::readDirection()
 {
     return direction;
 }
 
 void
-ProcessorPort::write(uint8_t value)
+ProcessorPort::write(u8 value)
 {
     port = value;
     
@@ -96,7 +96,7 @@ ProcessorPort::write(uint8_t value)
 }
 
 void
-ProcessorPort::writeDirection(uint8_t value)
+ProcessorPort::writeDirection(u8 value)
 {
     u64 dischargeCycles = 350000; // VICE value
     // u64 dischargeCycles = 246312; // Hoxs64 value

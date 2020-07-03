@@ -86,13 +86,13 @@ public:
         mouseNeos.fallingStrobe(portNr, targetX, targetY); }
     
     //! @brief   Returns the pot X bits as set by the mouse.
-    uint8_t readPotX();
+    u8 readPotX();
 
     //! @brief   Returns the pot Y bits as set by the mouse.
-    uint8_t readPotY();
+    u8 readPotY();
 
     //! @brief   Returns the control port bits as set by the mouse.
-    uint8_t readControlPort(unsigned portNr);
+    u8 readControlPort(unsigned portNr);
 
     //! @brief   Performs periodic actions for this device.
     void execute();

@@ -52,14 +52,14 @@ protected:
     //
     
     //! @brief    Number of ROM packets
-    uint8_t numPackets = 0;
+    u8 numPackets = 0;
     
     //! @brief    ROM chips contained in this cartridge
     CartridgeRom *packet[MAX_PACKETS];
     
     //! @brief    The ROM packet that is currently mapped to ROMx
-    uint8_t chipL = 0;
-    uint8_t chipH = 0;
+    u8 chipL = 0;
+    u8 chipH = 0;
     
     //! @brief    Number of bytes that are mapped to ROMx
     /*! @details  For most cartridges, this value is equals packet[romX]->size
@@ -86,7 +86,7 @@ private:
      *  @details  Some cartridges such as ActionReplay contain additional RAM.
      *            By default, this variable is NULL.
      */
-    uint8_t *externalRam = NULL;
+    u8 *externalRam = NULL;
     
     /*! @brief    Capacity of the additional RAM in bytes
      *  @note     This value is 0 if and only if externaRam is NULL.
@@ -130,7 +130,7 @@ protected:
      *            They preserve these values in these general-purpose variables.
      *            Only a few cartridges make use of this variable.
      */
-    // uint8_t val[16]; 
+    // u8 val[16]; 
     
 public:
     
@@ -189,10 +189,10 @@ public:
     virtual size_t packetStateSize();
     
     //! @brief    Loads all chip packets from a buffer
-    virtual void loadPacketsFromBuffer(uint8_t **buffer);
+    virtual void loadPacketsFromBuffer(u8 **buffer);
     
     //! @brief    Saves all chip packets to a buffer
-    virtual void savePacketsToBuffer(uint8_t **buffer);
+    virtual void savePacketsToBuffer(u8 **buffer);
     
     
     //
@@ -202,9 +202,9 @@ public:
     void reset();
     void ping() { };
     size_t stateSize();
-    void willLoadFromBuffer(uint8_t **buffer) { dealloc(); }
-    void didLoadFromBuffer(uint8_t **buffer);
-    void didSaveToBuffer(uint8_t **buffer);
+    void willLoadFromBuffer(u8 **buffer) { dealloc(); }
+    void didLoadFromBuffer(u8 **buffer);
+    void didSaveToBuffer(u8 **buffer);
     void dump();
     
     
@@ -260,61 +260,61 @@ public:
      *            ROML range (0x8000 - 0x9FFF) or
      *            ROMH range (0xA000 - 0xBFFF, 0xE000 - 0xFFFF).
      */
-    virtual uint8_t peek(u16 addr);
+    virtual u8 peek(u16 addr);
 
     /*! @brief    Peek fallthrough for the ROML space
      *  @param    addr must be a value between 0x0000 - 0x1FFF.
      */
-    virtual uint8_t peekRomL(u16 addr);
+    virtual u8 peekRomL(u16 addr);
     
     /*! @brief    Peek fallthrough for the ROMH space
      *  @details  addr must be a value between 0x0000 - 0x1FFF.
      */
-    virtual uint8_t peekRomH(u16 addr);
+    virtual u8 peekRomH(u16 addr);
     
     /*! @brief    Poke fallthrough
      *  @param    addr must be a value in
      *            ROML range (0x8000 - 0x9FFF) or
      *            ROMH range (0xA000 - 0xBFFF, 0xE000 - 0xFFFF).
      */
-    virtual void poke(u16 addr, uint8_t value);
+    virtual void poke(u16 addr, u8 value);
 
     /*! @brief    Poke fallthrough for the ROML space
      *  @param    addr must be a value between 0x0000 - 0x1FFF.
      */
-    virtual void pokeRomL(u16 addr, uint8_t value) { return; }
+    virtual void pokeRomL(u16 addr, u8 value) { return; }
     
     /*! @brief    Poke fallthrough for the ROMH space
      *  @details  addr must be a value between 0x0000 - 0x1FFF.
      */
-    virtual void pokeRomH(u16 addr, uint8_t value) { return; }
+    virtual void pokeRomH(u16 addr, u8 value) { return; }
     
     //! @brief    Same as peek, but without side effects.
-    virtual uint8_t spypeek(u16 addr) { return peek(addr); }
+    virtual u8 spypeek(u16 addr) { return peek(addr); }
     
     //! @brief    Same as peekRomL, but without side effects
-    uint8_t spypeekRomL(u16 addr) { return peekRomL(addr); }
+    u8 spypeekRomL(u16 addr) { return peekRomL(addr); }
     
     //! @brief    Same as peekRomH, but without side effects
-    uint8_t spypeekRomH(u16 addr) { return peekRomH(addr); }
+    u8 spypeekRomH(u16 addr) { return peekRomH(addr); }
     
     //! @brief    Peek fallthrough for I/O space 1
-    virtual uint8_t peekIO1(u16 addr) { return 0; }
+    virtual u8 peekIO1(u16 addr) { return 0; }
 
     //! @brief    Same as peekIO1, but without side effects.
-    virtual uint8_t spypeekIO1(u16 addr) { return peekIO1(addr); }
+    virtual u8 spypeekIO1(u16 addr) { return peekIO1(addr); }
 
     //! @brief    Peek fallthrough for I/O space 2
-    virtual uint8_t peekIO2(u16 addr) { return 0; }
+    virtual u8 peekIO2(u16 addr) { return 0; }
 
     //! @brief    Same as peekIO2, but without side effects.
-    virtual uint8_t spypeekIO2(u16 addr) { return peekIO2(addr); }
+    virtual u8 spypeekIO2(u16 addr) { return peekIO2(addr); }
     
     //! @brief    Poke fallthrough for I/O space 1
-    virtual void pokeIO1(u16 addr, uint8_t value) { }
+    virtual void pokeIO1(u16 addr, u8 value) { }
 
     //! @brief    Poke fallthrough for I/O space 2
-    virtual void pokeIO2(u16 addr, uint8_t value) { }
+    virtual void pokeIO2(u16 addr, u8 value) { }
 
     
     //
@@ -338,15 +338,15 @@ public:
     void setPersistentRam(bool value) { persistentRam = value; }
 
     //! @brief    Reads a byte from the on-board RAM.
-    uint8_t peekRAM(u16 addr) {
+    u8 peekRAM(u16 addr) {
         assert(addr < ramCapacity); return externalRam[addr]; }
 
     //! @brief    Writes a byte into the on-board RAM.
-    void pokeRAM(u16 addr, uint8_t value) {
+    void pokeRAM(u16 addr, u8 value) {
         assert(addr < ramCapacity); externalRam[addr] = value; }
 
     //! @brief    Erase the on-board RAM.
-    void eraseRAM(uint8_t value) {
+    void eraseRAM(u8 value) {
         assert(externalRam != NULL); memset(externalRam, value, ramCapacity); }
     
 
@@ -449,7 +449,7 @@ public:
 class CartridgeWithRegister : public Cartridge {
 
 protected:
-    uint8_t control;
+    u8 control;
     
 public:
     using Cartridge::Cartridge;
@@ -461,12 +461,12 @@ public:
     size_t stateSize() {
         return Cartridge::stateSize() + 1;
     }
-    void didLoadFromBuffer(uint8_t **buffer)
+    void didLoadFromBuffer(u8 **buffer)
     {
         Cartridge::didLoadFromBuffer(buffer);
         control = read8(buffer);
     }
-    void didSaveToBuffer(uint8_t **buffer)
+    void didSaveToBuffer(u8 **buffer)
     {
         Cartridge::didSaveToBuffer(buffer);
         write8(buffer, control);

@@ -17,14 +17,14 @@ Mach5::reset()
     // bankIn(0);
 }
 
-uint8_t
+u8
 Mach5::peekIO1(u16 addr)
 {
     // debug("Mach5::peekIO1(%x)", addr);
     return peekRomL(0x1E00 | LO_BYTE(addr));
 }
 
-uint8_t
+u8
 Mach5::peekIO2(u16 addr)
 {
     // debug("Mach5::peekIO2(%x)", addr);
@@ -32,14 +32,14 @@ Mach5::peekIO2(u16 addr)
 }
 
 void
-Mach5::pokeIO1(u16 addr, uint8_t value)
+Mach5::pokeIO1(u16 addr, u8 value)
 {
     debug("Enabling Mach5 in 8K game mode\n");
     c64->expansionport.setCartridgeMode(CRT_8K);
 }
 
 void
-Mach5::pokeIO2(u16 addr, uint8_t value)
+Mach5::pokeIO2(u16 addr, u8 value)
 {
     debug("Switching Mach5 off\n");
     c64->expansionport.setCartridgeMode(CRT_OFF);

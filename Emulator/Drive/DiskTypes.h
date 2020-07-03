@@ -185,7 +185,7 @@ typedef struct {
     
     // Track data
     union {
-        uint8_t bit[2 * maxBitsOnTrack];
+        u8 bit[2 * maxBitsOnTrack];
         u64 byte[2 * maxBytesOnTrack];
     };
 

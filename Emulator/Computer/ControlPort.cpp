@@ -47,7 +47,7 @@ ControlPort::reset()
 }
 
 void
-ControlPort::didLoadFromBuffer(uint8_t **buffer)
+ControlPort::didLoadFromBuffer(u8 **buffer)
 {
     // Discard any active joystick movements
     button = false;
@@ -164,10 +164,10 @@ ControlPort::setAutofireBullets(int value)
     }
 }
 
-uint8_t
+u8
 ControlPort::bitmask() {
     
-    uint8_t result = 0xFF;
+    u8 result = 0xFF;
     
     if (axisY == -1) CLR_BIT(result, 0);
     if (axisY ==  1) CLR_BIT(result, 1);
@@ -175,7 +175,7 @@ ControlPort::bitmask() {
     if (axisX ==  1) CLR_BIT(result, 3);
     if (button)      CLR_BIT(result, 4);
     
-    uint8_t mouseBits = c64->mouse.readControlPort(nr);
+    u8 mouseBits = c64->mouse.readControlPort(nr);
     result &= mouseBits;
     
     return result;

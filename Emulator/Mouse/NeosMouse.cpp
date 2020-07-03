@@ -37,22 +37,22 @@ NeosMouse::reset()
     deltaY = 0;
 }
 
-uint8_t
+u8
 NeosMouse::readPotX()
 {
     return rightButton ? 0xFF : 0x00;
 }
 
-uint8_t
+u8
 NeosMouse::readPotY()
 {
     return 0xFF;
 }
 
-uint8_t
+u8
 NeosMouse::readControlPort(i64 targetX, i64 targetY)
 {
-    uint8_t result = leftButton ? 0xE0 : 0xF0;
+    u8 result = leftButton ? 0xE0 : 0xF0;
     
     // Check for time out
     if (state != 0 && c64->cpu.cycle > (triggerCycle + 232) /* from VICE */) {
@@ -63,19 +63,19 @@ NeosMouse::readControlPort(i64 targetX, i64 targetY)
     switch (state) {
             
         case 0: // Transmit X_HIGH
-            result |= (((uint8_t)deltaX >> 4) & 0x0F);
+            result |= (((u8)deltaX >> 4) & 0x0F);
             break;
             
         case 1: // Transmit X_LOW
-            result |= ((uint8_t)deltaX & 0x0F);
+            result |= ((u8)deltaX & 0x0F);
             break;
             
         case 2: // Transmit Y_HIGH
-            result |= (((uint8_t)deltaY >> 4) & 0x0F);
+            result |= (((u8)deltaY >> 4) & 0x0F);
             break;
             
         case 3: // Transmit Y_LOW
-            result |= ((uint8_t)deltaY & 0x0F);
+            result |= ((u8)deltaY & 0x0F);
             break;
             
         default:
@@ -168,8 +168,8 @@ NeosMouse::latchPosition(i64 targetX, i64 targetY)
     i64 dx = MAX(MIN((latchedX - mouseX), 127), -128);
     i64 dy = MAX(MIN((mouseY - latchedY), 127), -128);
     
-    deltaX = (uint8_t)dx;
-    deltaY = (uint8_t)dy;
+    deltaX = (u8)dx;
+    deltaY = (u8)dy;
     
     latchedX = mouseX;
     latchedY = mouseY;

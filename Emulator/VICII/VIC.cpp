@@ -170,8 +170,8 @@ VIC::ping()
 void 
 VIC::dump()
 {
-    uint8_t ctrl1 = reg.current.ctrl1;
-    uint8_t ctrl2 = reg.current.ctrl2; 
+    u8 ctrl1 = reg.current.ctrl1;
+    u8 ctrl2 = reg.current.ctrl2; 
     int yscroll = ctrl1 & 0x07;
     int xscroll = ctrl2 & 0x07;
     DisplayMode mode = (DisplayMode)((ctrl1 & 0x60) | (ctrl2 & 0x10));
@@ -239,14 +239,14 @@ VIC::stateSize()
 }
 
 void
-VIC::didLoadFromBuffer(uint8_t **buffer)
+VIC::didLoadFromBuffer(u8 **buffer)
 {
     baLine.loadFromBuffer(buffer);
     gAccessResult.loadFromBuffer(buffer);
 }
 
 void
-VIC::didSaveToBuffer(uint8_t **buffer)
+VIC::didSaveToBuffer(u8 **buffer)
 {
     baLine.saveToBuffer(buffer);
     gAccessResult.saveToBuffer(buffer);
@@ -418,7 +418,7 @@ VIC::rasterline()
     return c64->rasterLine;
 }
 
-uint8_t
+u8
 VIC::rastercycle()
 {
     return c64->rasterCycle;
@@ -511,7 +511,7 @@ VIC::badLineCondition() {
 }
 
 void
-VIC::updateBA(uint8_t value)
+VIC::updateBA(u8 value)
 {
     if (value != baLine.current()) {
        
@@ -526,7 +526,7 @@ VIC::updateBA(uint8_t value)
 }
 
 void 
-VIC::triggerIrq(uint8_t source)
+VIC::triggerIrq(u8 source)
 {
     assert(source == 1 || source == 2 || source == 4 || source == 8);
     
@@ -537,7 +537,7 @@ VIC::triggerIrq(uint8_t source)
 u16
 VIC::lightpenX()
 {
-    uint8_t cycle = c64->rasterCycle; 
+    u8 cycle = c64->rasterCycle; 
     
     switch (model) {
             
@@ -584,7 +584,7 @@ VIC::setLP(bool value)
 void
 VIC::checkForLightpenIrq()
 {
-    uint8_t vicCycle = c64->rasterCycle;
+    u8 vicCycle = c64->rasterCycle;
     // debug("Negative LP transition at rastercycle %d\n", vicCycle);
 
     // An interrupt is suppressed if ...
@@ -647,8 +647,8 @@ VIC::checkForLightpenIrqAtStartOfFrame()
 // Sprites
 //
 
-uint8_t
-VIC::spriteDepth(uint8_t nr)
+u8
+VIC::spriteDepth(u8 nr)
 {
     return
     GET_BIT(reg.delayed.sprPriority, nr) ?
@@ -656,10 +656,10 @@ VIC::spriteDepth(uint8_t nr)
     (SPRITE_LAYER_FG_DEPTH | nr);
 }
 
-uint8_t
+u8
 VIC::compareSpriteY()
 {
-    uint8_t result = 0;
+    u8 result = 0;
     
     for (unsigned i = 0; i < 8; i++) {
         result |= (reg.current.sprY[i] == (yCounter & 0xFF)) << i;
@@ -708,7 +708,7 @@ VIC::turnSpriteDmaOn()
      *  off, the DMA is switched on, MCBASE is cleared, and if the MxYE bit is
      *  set the expansion flip flip is reset." [C.B.]
      */
-    uint8_t risingEdges = ~spriteDmaOnOff & (reg.current.sprEnable & compareSpriteY());
+    u8 risingEdges = ~spriteDmaOnOff & (reg.current.sprEnable & compareSpriteY());
     
     for (unsigned i = 0; i < 8; i++) {
         if (GET_BIT(risingEdges,i))

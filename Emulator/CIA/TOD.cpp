@@ -96,8 +96,8 @@ TOD::increment()
                 tod.minutes = 0;
                 
                 // Hours
-                uint8_t pm = tod.hours & 0x80;
-                uint8_t hr = tod.hours & 0x1F;
+                u8 pm = tod.hours & 0x80;
+                u8 hr = tod.hours & 0x1F;
                 
                 if (hr == 0x11) {
                     pm ^= 0x80;
@@ -107,8 +107,8 @@ TOD::increment()
                 } else if (hr == 0x09) {
                     hr = 0x10;
                 } else {
-                    uint8_t hr_lo = hr & 0x0F;
-                    uint8_t hr_hi = hr & 0x10;
+                    u8 hr_lo = hr & 0x0F;
+                    u8 hr_hi = hr & 0x10;
                     hr = hr_hi | ((hr_lo + 1) & 0x0F);
                 }
                 

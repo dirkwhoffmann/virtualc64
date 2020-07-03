@@ -35,19 +35,19 @@ Mouse1350::reset()
         latchedX[i] = latchedY[i] = 0;
 }
 
-uint8_t
+u8
 Mouse1350::readPotX()
 {
     return rightButton ? 0x00 : 0xFF;
 }
 
-uint8_t
+u8
 Mouse1350::readPotY()
 {
     return 0xFF;
 }
 
-uint8_t
+u8
 Mouse1350::readControlPort()
 {
     return controlPort & (leftButton ? 0xEF : 0xFF);

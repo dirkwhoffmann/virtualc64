@@ -20,7 +20,7 @@ FreezeFrame::reset()
     bankInROMH(0, 0x2000, 0);
 }
 
-uint8_t
+u8
 FreezeFrame::peekIO1(u16 addr)
 {
     // Reading from IO1 switched to 8K game mode
@@ -28,7 +28,7 @@ FreezeFrame::peekIO1(u16 addr)
     return 0;
 }
 
-uint8_t
+u8
 FreezeFrame::peekIO2(u16 addr)
 {
     // Reading from IO2 disables the cartridge

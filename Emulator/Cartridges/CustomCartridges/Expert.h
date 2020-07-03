@@ -29,8 +29,8 @@ public:
     void reset();
     void dump();
     size_t stateSize();
-    void didLoadFromBuffer(uint8_t **buffer);
-    void didSaveToBuffer(uint8_t **buffer);
+    void didLoadFromBuffer(u8 **buffer);
+    void didSaveToBuffer(u8 **buffer);
     
     //
     //! @functiongroup Methods from Cartridge
@@ -49,11 +49,11 @@ public:
     bool switchInOnPosition() { return switchIsRight(); }
 
     void updatePeekPokeLookupTables();
-    uint8_t peek(u16 addr);
-    uint8_t peekIO1(u16 addr);
-    uint8_t spypeekIO1(u16 addr) { return 0; }
-    void poke(u16 addr, uint8_t value);
-    void pokeIO1(u16 addr, uint8_t value);
+    u8 peek(u16 addr);
+    u8 peekIO1(u16 addr);
+    u8 spypeekIO1(u16 addr) { return 0; }
+    void poke(u16 addr, u8 value);
+    void pokeIO1(u16 addr, u8 value);
     
     void nmiWillTrigger();
     

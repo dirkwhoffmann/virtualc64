@@ -226,7 +226,7 @@ VIC::getColor(unsigned nr, VICPalette palette)
         b = gammaCorrect(b, 2.8, 2.2);
     }
     
-    return LO_LO_HI_HI((uint8_t)r, (uint8_t)g, (uint8_t)b, 0xFF);
+    return LO_LO_HI_HI((u8)r, (u8)g, (u8)b, 0xFF);
 }
 
 void
@@ -441,7 +441,7 @@ VIC::updatePalette()
         }
         
         // Store result
-        u32 rgba = LO_LO_HI_HI((uint8_t)r, (uint8_t)g, (uint8_t)b, 0xFF);
+        u32 rgba = LO_LO_HI_HI((u8)r, (u8)g, (u8)b, 0xFF);
         rgbaTable[i] = rgba;
     }
 #endif

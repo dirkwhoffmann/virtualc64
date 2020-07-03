@@ -9,7 +9,7 @@
 
 #include "TAPFile.h"
 
-const uint8_t TAPFile::magicBytes[] = {
+const u8 TAPFile::magicBytes[] = {
     0x43, 0x36, 0x34, 0x2D, 0x54, 0x41, 0x50, 0x45, 0x2D, 0x52, 0x41, 0x57 };
 
 TAPFile::TAPFile()
@@ -20,7 +20,7 @@ TAPFile::TAPFile()
 }
 
 TAPFile *
-TAPFile::makeWithBuffer(const uint8_t *buffer, size_t length)
+TAPFile::makeWithBuffer(const u8 *buffer, size_t length)
 {
     TAPFile *tape = new TAPFile();
     
@@ -46,7 +46,7 @@ TAPFile::makeWithFile(const char *filename)
 }
 
 bool
-TAPFile::isTAPBuffer(const uint8_t *buffer, size_t length)
+TAPFile::isTAPBuffer(const u8 *buffer, size_t length)
 {
     if (length < 0x15) return false;
     return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
@@ -90,7 +90,7 @@ TAPFile::getName()
 }
 
 bool
-TAPFile::readFromBuffer(const uint8_t *buffer, size_t length)
+TAPFile::readFromBuffer(const u8 *buffer, size_t length)
 {
     if (!AnyC64File::readFromBuffer(buffer, length))
         return false;

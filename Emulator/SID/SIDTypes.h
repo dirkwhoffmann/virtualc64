@@ -34,18 +34,18 @@ typedef enum {
  *  @details  Part of SIDInfo
  */
 typedef struct {
-    uint8_t reg[7];
+    u8 reg[7];
     u16 frequency;
     u16 pulseWidth;
-    uint8_t waveform;
+    u8 waveform;
     bool ringMod;
     bool hardSync;
     bool gateBit;
     bool testBit;
-    uint8_t attackRate;
-    uint8_t decayRate;
-    uint8_t sustainRate;
-    uint8_t releaseRate;
+    u8 attackRate;
+    u8 decayRate;
+    u8 sustainRate;
+    u8 releaseRate;
     bool filterEnableBit;
 } VoiceInfo;
 
@@ -53,14 +53,14 @@ typedef struct {
  *  @details  Used by SIDBridge::getInfo() to collect debug information
  */
 typedef struct {
-    uint8_t volume;
+    u8 volume;
     u16 filterCutoff;
-    uint8_t filterResonance;
-    uint8_t filterModeBits;
-    uint8_t filterType;
-    uint8_t filterEnableBits;
-    uint8_t potX;
-    uint8_t potY;
+    u8 filterResonance;
+    u8 filterModeBits;
+    u8 filterType;
+    u8 filterEnableBits;
+    u8 potX;
+    u8 potY;
 } SIDInfo;
 
 #endif

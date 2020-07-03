@@ -26,10 +26,10 @@ class VC1541Memory : public Memory {
     public:
     
     //! @brief    Random Access Memory
-    uint8_t ram[0x0800];
+    u8 ram[0x0800];
     
     //! @brief    Read Only Memory
-    uint8_t rom[0x4000];
+    u8 rom[0x4000];
     
     
     //
@@ -73,15 +73,15 @@ class VC1541Memory : public Memory {
     //
 
     // Reading from memory
-    uint8_t peek(u16 addr);
-    uint8_t peekZP(uint8_t addr) { return ram[addr]; }
+    u8 peek(u16 addr);
+    u8 peekZP(u8 addr) { return ram[addr]; }
 
     // Reading from memory without side effects
-    uint8_t spypeek(u16 addr);
+    u8 spypeek(u16 addr);
     
     // Writing into memory
-    void poke(u16 addr, uint8_t value);
-    void pokeZP(uint8_t addr, uint8_t value) { ram[addr] = value; }
+    void poke(u16 addr, u8 value);
+    void pokeZP(u8 addr, u8 value) { ram[addr] = value; }
 };
 
 #endif

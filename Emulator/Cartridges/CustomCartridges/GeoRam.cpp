@@ -32,7 +32,7 @@ GeoRAM::stateSize()
 }
 
 void
-GeoRAM::didLoadFromBuffer(uint8_t **buffer)
+GeoRAM::didLoadFromBuffer(u8 **buffer)
 {
     Cartridge::didLoadFromBuffer(buffer);
     bank = read8(buffer);
@@ -40,7 +40,7 @@ GeoRAM::didLoadFromBuffer(uint8_t **buffer)
 }
 
 void
-GeoRAM::didSaveToBuffer(uint8_t **buffer)
+GeoRAM::didSaveToBuffer(u8 **buffer)
 {
     Cartridge::didSaveToBuffer(buffer);
     write8(buffer, bank);
@@ -48,7 +48,7 @@ GeoRAM::didSaveToBuffer(uint8_t **buffer)
 }
 
 unsigned
-GeoRAM::offset(uint8_t addr)
+GeoRAM::offset(u8 addr)
 {
     /* From VICE:
      * "The GeoRAM is a banked memory system. It uses the registers at
@@ -64,28 +64,28 @@ GeoRAM::offset(uint8_t addr)
     return bankOffset + pageOffset + addr;
 }
 
-uint8_t
+u8
 GeoRAM::peekIO1(u16 addr)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
     return peekRAM(offset(addr - 0xDE00));
 }
 
-uint8_t
+u8
 GeoRAM::peekIO2(u16 addr)
 {
     return 0;
 }
 
 void
-GeoRAM::pokeIO1(u16 addr, uint8_t value)
+GeoRAM::pokeIO1(u16 addr, u8 value)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
     pokeRAM(offset(addr - 0xDE00), value);
 }
 
 void
-GeoRAM::pokeIO2(u16 addr, uint8_t value)
+GeoRAM::pokeIO2(u16 addr, u8 value)
 {
     if (addr & 1) {
         bank = value; // Bank select

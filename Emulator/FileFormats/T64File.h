@@ -19,7 +19,7 @@
 class T64File : public AnyArchive {
     
     //! @brief    Header signature
-    static const uint8_t magicBytes[];
+    static const u8 magicBytes[];
     
     /*! @brief    Number of the currently selected item
      *  @details  -1, if no item is selected
@@ -33,7 +33,7 @@ public:
     //
     
     //! @brief    Returns true iff buffer contains a T64 file
-    static bool isT64Buffer(const uint8_t *buffer, size_t length);
+    static bool isT64Buffer(const u8 *buffer, size_t length);
     
     //! Returns true of filename points to a valid file of that type
     static bool isT64File(const char *filename);
@@ -47,7 +47,7 @@ public:
     T64File();
     
     //! @brief    Factory method
-    static T64File *makeWithBuffer(const uint8_t *buffer, size_t length);
+    static T64File *makeWithBuffer(const u8 *buffer, size_t length);
     
     //! @brief    Factory method
     static T64File *makeWithFile(const char *path);
@@ -66,7 +66,7 @@ public:
     const char *typeAsString() { return "T64"; }
     const char *getName();
     bool hasSameType(const char *filename) { return isT64File(filename); }
-    bool readFromBuffer(const uint8_t *buffer, size_t length);
+    bool readFromBuffer(const u8 *buffer, size_t length);
     
     
     //

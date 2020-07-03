@@ -10,11 +10,11 @@
 #include "P00File.h"
 #include <new>
 
-const uint8_t
+const u8
 P00File::magicBytes[] = { 0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65 };
 
 bool
-P00File::isP00Buffer(const uint8_t *buffer, size_t length)
+P00File::isP00Buffer(const u8 *buffer, size_t length)
 {
     if (length < 0x1A) return false;
     return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
@@ -40,7 +40,7 @@ P00File::P00File()
 }
 
 P00File *
-P00File::makeWithBuffer(const uint8_t *buffer, size_t length)
+P00File::makeWithBuffer(const u8 *buffer, size_t length)
 {
     P00File *archive = new P00File();
     
@@ -80,7 +80,7 @@ P00File::makeWithAnyArchive(AnyArchive *otherArchive)
     try {
         
         archive->size = 8 + 17 + 1 + 2 + otherArchive->getSizeOfItem();
-        archive->data = new uint8_t[archive->size];
+        archive->data = new u8[archive->size];
     }
     catch (std::bad_alloc&) {
         
@@ -90,7 +90,7 @@ P00File::makeWithAnyArchive(AnyArchive *otherArchive)
     }
     
     // Magic bytes (8 bytes)
-    uint8_t *ptr = archive->data;
+    u8 *ptr = archive->data;
     strcpy((char *)ptr, "C64File");
     ptr += 8;
     
@@ -110,7 +110,7 @@ P00File::makeWithAnyArchive(AnyArchive *otherArchive)
     int byte;
     otherArchive->selectItem(0);
     while ((byte = otherArchive->readItem()) != EOF) {
-        *ptr++ = (uint8_t)byte;
+        *ptr++ = (u8)byte;
     }
     
     return archive;

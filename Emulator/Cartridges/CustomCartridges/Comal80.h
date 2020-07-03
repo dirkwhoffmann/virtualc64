@@ -15,7 +15,7 @@
 class Comal80 : public CartridgeWithRegister {
     
     //! Control register
-    uint8_t control;
+    u8 control;
     
 public:
     
@@ -28,9 +28,9 @@ public:
     
     
     void reset();
-    uint8_t peekIO1(u16 addr) { return control; }
-    uint8_t peekIO2(u16 addr) { return 0; }
-    void pokeIO1(u16 addr, uint8_t value);
+    u8 peekIO1(u16 addr) { return control; }
+    u8 peekIO2(u16 addr) { return 0; }
+    void pokeIO1(u16 addr, u8 value);
 };
 
 #endif

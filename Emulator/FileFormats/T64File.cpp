@@ -13,10 +13,10 @@
 /* "Anmerkung: Der String muß nicht wortwörtlich so vorhanden sein. Man sollte nach den
  *  Substrings 'C64' und 'tape' suchen." [Power64 doc]
  */
-const uint8_t T64File::magicBytes[] = { 0x43, 0x36, 0x34 };
+const u8 T64File::magicBytes[] = { 0x43, 0x36, 0x34 };
 
 bool
-T64File::isT64Buffer(const uint8_t *buffer, size_t length)
+T64File::isT64Buffer(const u8 *buffer, size_t length)
 {
     if (length < 0x40)
         return false;
@@ -53,7 +53,7 @@ T64File::T64File()
 }
 
 T64File *
-T64File::makeWithBuffer(const uint8_t *buffer, size_t length)
+T64File::makeWithBuffer(const u8 *buffer, size_t length)
 {
     T64File *archive = new T64File();
     
@@ -96,14 +96,14 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
         archive->size += otherArchive->getSizeOfItem();
     }
 
-    if ((archive->data = new uint8_t[archive->size]) == NULL) {
+    if ((archive->data = new u8[archive->size]) == NULL) {
         archive->warn("Failed to allocate %d bytes of memory\n", archive->size);
         delete archive;
         return NULL;
     }
     
     // Magic bytes (32 bytes)
-    uint8_t *ptr = archive->data;
+    u8 *ptr = archive->data;
     strncpy((char *)ptr, "C64 tape image file", 32);
     ptr += 32;
     
@@ -182,7 +182,7 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
         int byte;
         otherArchive->selectItem(n);
         while ((byte = otherArchive->readItem()) != EOF) {
-            *ptr++ = (uint8_t)byte;
+            *ptr++ = (u8)byte;
         }
         
     }
@@ -211,7 +211,7 @@ T64File::getName()
 }
 
 bool
-T64File::readFromBuffer(const uint8_t *buffer, size_t length)
+T64File::readFromBuffer(const u8 *buffer, size_t length)
 {
     if (!AnyC64File::readFromBuffer(buffer, length))
         return false;

@@ -85,8 +85,8 @@ public:
     virtual const char *readTrackHex(size_t num) { return readHalftrackHex(num); }
     
     //! @brief    Copies the selected track into the specified buffer.
-    virtual void copyHalftrack(uint8_t *buffer, size_t offset = 0);
-    virtual void copyTrack(uint8_t *buffer, size_t offset = 0) { copyHalftrack(buffer, offset); }
+    virtual void copyHalftrack(u8 *buffer, size_t offset = 0);
+    virtual void copyTrack(u8 *buffer, size_t offset = 0) { copyHalftrack(buffer, offset); }
 };
 
 #endif

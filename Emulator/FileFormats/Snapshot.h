@@ -22,9 +22,9 @@ typedef struct {
     char magic[4];
     
     //! @brief    Version number (V major.minor.subminor)
-    uint8_t major;
-    uint8_t minor;
-    uint8_t subminor;
+    u8 major;
+    u8 minor;
+    u8 subminor;
     
     //! @brief    Screenshot
     struct {
@@ -52,7 +52,7 @@ class Snapshot : public AnyC64File {
     private:
     
     //! @brief    Header signature
-    static const uint8_t magicBytes[];
+    static const u8 magicBytes[];
     
     
     //
@@ -62,23 +62,23 @@ class Snapshot : public AnyC64File {
     public:
     
     //! @brief    Returns true iff buffer contains a snapshot.
-    static bool isSnapshot(const uint8_t *buffer, size_t length);
+    static bool isSnapshot(const u8 *buffer, size_t length);
     
     //! @brief    Returns true iff buffer contains a snapshot of a specific version.
-    static bool isSnapshot(const uint8_t *buffer, size_t length,
-                           uint8_t major, uint8_t minor, uint8_t subminor);
+    static bool isSnapshot(const u8 *buffer, size_t length,
+                           u8 major, u8 minor, u8 subminor);
     
     //! @brief    Returns true iff buffer contains a snapshot with a supported version number.
-    static bool isSupportedSnapshot(const uint8_t *buffer, size_t length);
+    static bool isSupportedSnapshot(const u8 *buffer, size_t length);
     
     //! @brief    Returns true iff buffer contains a snapshot with an outdated version number.
-    static bool isUnsupportedSnapshot(const uint8_t *buffer, size_t length);
+    static bool isUnsupportedSnapshot(const u8 *buffer, size_t length);
     
     //! @brief    Returns true if path points to a snapshot file.
     static bool isSnapshotFile(const char *path);
     
     //! @brief    Returns true if file points to a snapshot file of a specific version.
-    static bool isSnapshotFile(const char *path, uint8_t major, uint8_t minor, uint8_t subminor);
+    static bool isSnapshotFile(const char *path, u8 major, u8 minor, u8 subminor);
     
     //! @brief    Returns true if file is a snapshot with a supported version number.
     static bool isSupportedSnapshotFile(const char *path);
@@ -104,7 +104,7 @@ class Snapshot : public AnyC64File {
     static Snapshot *makeWithFile(const char *filename);
     
     //! @brief    Factory method
-    static Snapshot *makeWithBuffer(const uint8_t *buffer, size_t size);
+    static Snapshot *makeWithBuffer(const u8 *buffer, size_t size);
 
     //! @brief    Factory method
     static Snapshot *makeWithC64(C64 *c64);
@@ -129,7 +129,7 @@ class Snapshot : public AnyC64File {
     SnapshotHeader *getHeader() { return (SnapshotHeader *)data; }
     
     //! @brief    Returns pointer to core data
-    uint8_t *getData() { return data + sizeof(SnapshotHeader); }
+    u8 *getData() { return data + sizeof(SnapshotHeader); }
     
     //! @brief    Returns the timestamp
     time_t getTimestamp() { return getHeader()->timestamp; }

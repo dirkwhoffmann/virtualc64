@@ -82,12 +82,12 @@ private:
     static u16 wavetable70[2][8192];
     
     //! @brief   Noise tables
-    static uint8_t noiseMSB[256];
-    static uint8_t noiseMID[256];
-    static uint8_t noiseLSB[256];
+    static u8 noiseMSB[256];
+    static u8 noiseMID[256];
+    static u8 noiseLSB[256];
     
     //! @brief   The SID voice which is represented by this object (1,2, or 3)
-    uint8_t nr;
+    u8 nr;
 
     //! @brief   Pointer to parent SID object
     class FastSID *fastsid;
@@ -96,7 +96,7 @@ private:
     FastVoice *prev;
     
     //! @brief   Pointer to SID registers controlling this voice
-    uint8_t *sidreg;
+    u8 *sidreg;
     
 
     //
@@ -129,7 +129,7 @@ private:
     //
     
     //! @brief   Current envelope phase (ATTACK, DECAY, SUSTAIN, RELEASE, or IDLE)
-    uint8_t adsrm;
+    u8 adsrm;
     
     //! @brief   31-bit adsr counter
     u32 adsr;
@@ -156,7 +156,7 @@ private:
     
     //! @brief   Filter related variables
     signed char filterIO;
-    uint8_t filterType;
+    u8 filterType;
     float filterLow;
     float filterRef;
     float filterDy;
@@ -172,7 +172,7 @@ public:
     
     //! @functiongroup Methods from HardwareComponent
     void reset();
-    void didLoadFromBuffer(uint8_t **buffer) { updateWaveTablePtr(); }
+    void didLoadFromBuffer(u8 **buffer) { updateWaveTablePtr(); }
     
     //! @brief    Initializes the wave tables
     /*! @details  Needs to be called once prior to using this class
@@ -191,10 +191,10 @@ public:
     void updateInternals(bool gateBitFlipped);
 
     //! @brief  Sets the current filter type
-    void setFilterType(uint8_t type);
+    void setFilterType(u8 type);
 
     //! @brief  Change ADSR state and all related variables
-    void set_adsr(uint8_t fm);
+    void set_adsr(u8 fm);
     
     //! @brief ADSR counter triggered state change
     void trigger_adsr();
@@ -253,21 +253,21 @@ public:
     bool testBit() { return (sidreg[0x04] & 0x08) != 0; }
 
     //! @brief   Returns the waveform bits of the control register
-    uint8_t waveform() { return sidreg[0x04] & 0xF0; }
+    u8 waveform() { return sidreg[0x04] & 0xF0; }
     
     //! @brief   Returns the attack rate for the envelope generator
     /*! @details The attack rate is a 4 bit value which determines how rapidly
      *           the output of the voice rises from zero to peak amplitude when
      *           the envelope generator is gated.
      */
-    uint8_t attackRate() { return sidreg[0x05] >> 4; }
+    u8 attackRate() { return sidreg[0x05] >> 4; }
 
     //! @brief   Returns the decay rate for the envelope generator
     /*! @details The decay cycle follows the attack cycle and the decay rate
      *           determines how rapidly the output falls from the peak amplitude
      *           to the selected sustain level.
      */
-    uint8_t decayRate() { return sidreg[0x05] & 0x0F; }
+    u8 decayRate() { return sidreg[0x05] & 0x0F; }
 
     //! @brief   Returns the decay rate for the envelope generator
     /*! @details The sustain cycle follows the decay cycle and the output of
@@ -280,7 +280,7 @@ public:
      *           amplitude one-half the peak amplitude reached by the attack
      *           cycle.
      */
-    uint8_t sustainRate() { return sidreg[0x06] >> 4; }
+    u8 sustainRate() { return sidreg[0x06] >> 4; }
 
     //! @brief   Returns the release rate for the envelope generator
     /*! @details The release cycle follows the sustain cycle when the Gate bit is
@@ -289,7 +289,7 @@ public:
      *           release rate. The 16 release rates are identical to the decay
      *           rates.
      */
-    uint8_t releaseRate() { return sidreg[0x06] & 0x0F; }
+    u8 releaseRate() { return sidreg[0x06] & 0x0F; }
 };
 
 #endif

@@ -76,7 +76,7 @@ VIC::drawBorder55()
 void
 VIC::drawCanvas()
 {
-    uint8_t d011, d016, newD016, mode, oldMode, xscroll;
+    u8 d011, d016, newD016, mode, oldMode, xscroll;
     
     /* "The sequencer outputs the graphics data in every raster line in the area
      *  of the display column as long as the vertical border flip-flop is reset
@@ -154,9 +154,9 @@ VIC::drawCanvas()
 
 
 void
-VIC::drawCanvasPixel(uint8_t pixel,
-                             uint8_t mode,
-                             uint8_t d016,
+VIC::drawCanvasPixel(u8 pixel,
+                             u8 mode,
+                             u8 d016,
                              bool loadShiftReg,
                              bool updateColors)
 {
@@ -243,8 +243,8 @@ VIC::drawCanvasPixel(uint8_t pixel,
 void
 VIC::drawSprites()
 {
-    uint8_t firstDMA = isFirstDMAcycle;
-    uint8_t secondDMA = isSecondDMAcycle;
+    u8 firstDMA = isFirstDMAcycle;
+    u8 secondDMA = isSecondDMAcycle;
     
     // Pixel 0
     drawSpritePixel(0, spriteDisplayDelayed, secondDMA);
@@ -277,7 +277,7 @@ VIC::drawSprites()
     reg.delayed.sprPriority = reg.current.sprPriority;
 
     // Update multicolor bits if a new VICII is emulated
-    uint8_t toggle = reg.delayed.sprMC ^ reg.current.sprMC;
+    u8 toggle = reg.delayed.sprMC ^ reg.current.sprMC;
     if (toggle && is856x()) {
         
         // VICE:
@@ -340,8 +340,8 @@ VIC::drawSprites()
 
 void
 VIC::drawSpritePixel(unsigned pixel,
-                     uint8_t enableBits,
-                     uint8_t freezeBits)
+                     u8 enableBits,
+                     u8 freezeBits)
 {
     // Quick exit condition
     if (!enableBits && !spriteSrActive) {
@@ -436,10 +436,10 @@ VIC::drawSpritePixel(unsigned pixel,
 }
 
 void
-VIC::loadColors(uint8_t mode)
+VIC::loadColors(u8 mode)
 {
-    uint8_t character = sr.latchedCharacter;
-    uint8_t color = sr.latchedColor;
+    u8 character = sr.latchedCharacter;
+    u8 color = sr.latchedColor;
     
     switch (mode) {
             
@@ -509,10 +509,10 @@ VIC::loadColors(uint8_t mode)
 //
 
 void
-VIC::setSpritePixel(unsigned sprite, unsigned pixel, uint8_t color)
+VIC::setSpritePixel(unsigned sprite, unsigned pixel, u8 color)
 {
-    uint8_t depth = spriteDepth(sprite);
-    uint8_t source = (1 << sprite);
+    u8 depth = spriteDepth(sprite);
+    u8 source = (1 << sprite);
     
     if (depth <= zBuffer[pixel]) {
         
@@ -569,7 +569,7 @@ VIC::expandBorders()
 }
 
 void
-VIC::markLine(uint8_t color, unsigned start, unsigned end)
+VIC::markLine(u8 color, unsigned start, unsigned end)
 {
     assert (end <= NTSC_PIXELS);
     

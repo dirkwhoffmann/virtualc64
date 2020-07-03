@@ -96,7 +96,7 @@ FastSID::dump()
     msg(" CPU frequency: %d\n", cpuFrequency);
     msg("Emulate filter: %s\n", emulateFilter ? "yes" : "no");
 
-    uint8_t ft = info.filterType;
+    u8 ft = info.filterType;
     msg("        Volume: %d\n", info.volume);
     msg("   Filter type: %s\n",
         (ft == FASTSID_LOW_PASS) ? "LOW PASS" :
@@ -108,7 +108,7 @@ FastSID::dump()
 
     for (unsigned i = 0; i < 3; i++) {
         VoiceInfo vinfo = getVoiceInfo(i);
-        uint8_t wf = vinfo.waveform;
+        u8 wf = vinfo.waveform;
         msg("Voice %d:       Frequency: %d\n", i, vinfo.frequency);
         msg("             Pulse width: %d\n", vinfo.pulseWidth);
         msg("                Waveform: %s\n",
@@ -185,7 +185,7 @@ FastSID::setSampleRate(u32 rate)
 }
 
 //! Special peek function for the I/O memory range.
-uint8_t
+u8
 FastSID::peek(u16 addr)
 {
     switch (addr) {
@@ -200,15 +200,15 @@ FastSID::peek(u16 addr)
             // This register allows the microprocessor to read the
             // upper 8 output bits of oscillator 3.
             // debug("doosc = %d\n", voice[2].doosc());
-            // return (uint8_t)(voice[2].doosc() >> 7);
-            return (uint8_t)rand();
+            // return (u8)(voice[2].doosc() >> 7);
+            return (u8)rand();
 
         case 0x1C:
             
             // This register allows the microprocessor to read the
             // output of the voice 3 envelope generator.
-            // return (uint8_t)(voice[2].adsr >> 23);
-            return (uint8_t)rand();
+            // return (u8)(voice[2].adsr >> 23);
+            return (u8)rand();
             
         default:
             
@@ -218,7 +218,7 @@ FastSID::peek(u16 addr)
 
 //! Special poke function for the I/O memory range.
 void
-FastSID::poke(u16 addr, uint8_t value)
+FastSID::poke(u16 addr, u8 value)
 {
     bool gateBitFlipped = false;
     
@@ -396,8 +396,8 @@ FastSID::initFilter(int sampleRate)
 void
 FastSID::updateInternals()
 {
-    uint8_t type = filterType();
-    uint8_t res = filterResonance();
+    u8 type = filterType();
+    u8 res = filterResonance();
     u16 cutoff = filterCutoff();
     
     for (unsigned i = 0; i < 3; i++) {

@@ -24,14 +24,14 @@ FinalIII::resetCartConfig()
     c64->expansionport.setCartridgeMode(CRT_16K);
 }
 
-uint8_t
+u8
 FinalIII::peekIO1(u16 addr)
 {
     // I/O space 1 mirrors $1E00 to $1EFF from ROML
     return peekRomL(addr & 0x1FFF);
 }
 
-uint8_t
+u8
 FinalIII::peekIO2(u16 addr)
 {
     // I/O space 2 space mirrors $1F00 to $1FFF from ROML
@@ -39,7 +39,7 @@ FinalIII::peekIO2(u16 addr)
 }
 
 void
-FinalIII::pokeIO2(u16 addr, uint8_t value) {
+FinalIII::pokeIO2(u16 addr, u8 value) {
     
     // The control register is mapped to address 0xFF in I/O space 2.
     if (addr == 0xDFFF && writeEnabled()) {
@@ -63,11 +63,11 @@ FinalIII::pokeIO2(u16 addr, uint8_t value) {
          *      is also forced low" [VICE]
          */
         
-        uint8_t hide  = value & 0x80;
-        uint8_t nmi   = value & 0x40;
-        uint8_t game  = value & 0x20;
-        uint8_t exrom = value & 0x10;
-        uint8_t bank  = value & 0x03;
+        u8 hide  = value & 0x80;
+        u8 nmi   = value & 0x40;
+        u8 game  = value & 0x20;
+        u8 exrom = value & 0x10;
+        u8 bank  = value & 0x03;
                 
         // Bit 7
         if (hide) {
@@ -157,7 +157,7 @@ FinalIII::releaseButton(unsigned nr)
 }
 
 void
-FinalIII::setControlReg(uint8_t value)
+FinalIII::setControlReg(u8 value)
 {
     control = value;
     

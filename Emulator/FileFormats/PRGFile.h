@@ -29,7 +29,7 @@ public:
      *            function will return true unless you provide a buffer with
      *            less than two bytes.
      */
-    static bool isPRGBuffer(const uint8_t *buffer, size_t length);
+    static bool isPRGBuffer(const u8 *buffer, size_t length);
     
     //! @brief    Returns true iff the specified file is a PRG file.
     static bool isPRGFile(const char *filename);
@@ -43,7 +43,7 @@ public:
     PRGFile();
     
     //! @brief    Factory method
-    static PRGFile *makeWithBuffer(const uint8_t *buffer, size_t length);
+    static PRGFile *makeWithBuffer(const u8 *buffer, size_t length);
     
     //! @brief    Factory method
     static PRGFile *makeWithFile(const char *path);

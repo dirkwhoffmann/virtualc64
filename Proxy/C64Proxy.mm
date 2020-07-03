@@ -74,19 +74,19 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->cpu->jumpToAddress(addr);
 }
-- (void) setSP:(uint8_t)sp
+- (void) setSP:(u8)sp
 {
     wrapper->cpu->regSP = sp;
 }
-- (void) setA:(uint8_t)a
+- (void) setA:(u8)a
 {
     wrapper->cpu->regA = a;
 }
-- (void) setX:(uint8_t)x
+- (void) setX:(u8)x
 {
     wrapper->cpu->regX = x;
 }
-- (void) setY:(uint8_t)y
+- (void) setY:(u8)y
 {
     wrapper->cpu->regY = y;
 }
@@ -213,31 +213,31 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->mem->getPokeTarget(addr);
 }
-- (uint8_t) spypeek:(u16)addr source:(MemoryType)source
+- (u8) spypeek:(u16)addr source:(MemoryType)source
 {
     return wrapper->mem->spypeek(addr, source);
 }
-- (uint8_t) spypeek:(u16)addr
+- (u8) spypeek:(u16)addr
 {
     return wrapper->mem->spypeek(addr);
 }
-- (uint8_t) spypeekIO:(u16)addr
+- (u8) spypeekIO:(u16)addr
 {
     return wrapper->mem->spypeekIO(addr);
 }
-- (void) poke:(u16)addr value:(uint8_t)value target:(MemoryType)target
+- (void) poke:(u16)addr value:(u8)value target:(MemoryType)target
 {
     wrapper->mem->suspend();
     wrapper->mem->poke(addr, value, target);
     wrapper->mem->resume();
 }
-- (void) poke:(u16)addr value:(uint8_t)value
+- (void) poke:(u16)addr value:(u8)value
 {
     wrapper->mem->suspend();
     wrapper->mem->poke(addr, value);
     wrapper->mem->resume();
 }
-- (void) pokeIO:(u16)addr value:(uint8_t)value
+- (void) pokeIO:(u16)addr value:(u8)value
 {
     wrapper->mem->suspend();
     wrapper->mem->pokeIO(addr, value);
@@ -296,7 +296,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->cia->setEmulateTimerBBug(value);
 }
-- (void) poke:(u16)addr value:(uint8_t)value {
+- (void) poke:(u16)addr value:(u8)value {
     wrapper->cia->suspend();
     wrapper->cia->poke(addr, value);
     wrapper->cia->resume();
@@ -381,9 +381,9 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     assert (0 <= nr && nr < 16);
     
     u32 color = wrapper->vic->getColor((unsigned)nr);
-    uint8_t r = color & 0xFF;
-    uint8_t g = (color >> 8) & 0xFF;
-    uint8_t b = (color >> 16) & 0xFF;
+    u8 r = color & 0xFF;
+    u8 g = (color >> 8) & 0xFF;
+    u8 b = (color >> 16) & 0xFF;
     
 	return [NSColor colorWithCalibratedRed:(float)r/255.0
                                      green:(float)g/255.0
@@ -439,11 +439,11 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->vic->setScreenGeometry(mode);
 }
-- (void) setHorizontalRasterScroll:(uint8_t)offset
+- (void) setHorizontalRasterScroll:(u8)offset
 {
     wrapper->vic->setHorizontalRasterScroll(offset & 0x07);
 }
-- (void) setVerticalRasterScroll:(uint8_t)offset
+- (void) setVerticalRasterScroll:(u8)offset
 {
     wrapper->vic->setVerticalRasterScroll(offset & 0x07);
 }
@@ -461,11 +461,11 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (void) setSpriteY:(NSInteger)nr value:(NSInteger)y
 {
-    wrapper->vic->setSpriteY((unsigned)nr, (uint8_t)y);
+    wrapper->vic->setSpriteY((unsigned)nr, (u8)y);
 }
 - (void) setSpritePtr:(NSInteger)nr value:(NSInteger)ptr
 {
-    wrapper->vic->setSpritePtr((unsigned)nr, (uint8_t)ptr);
+    wrapper->vic->setSpritePtr((unsigned)nr, (u8)ptr);
 }
 - (void) setSpriteStretchX:(NSInteger)nr value:(BOOL)flag
 {
@@ -1207,11 +1207,11 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->drive->setOffset(value);
 }
-- (uint8_t) readBitFromHead
+- (u8) readBitFromHead
 {
     return wrapper->drive->readBitFromHead();
 }
-- (void) writeBitToHead:(uint8_t)value
+- (void) writeBitToHead:(u8)value
 {
     wrapper->drive->writeBitToHead(value);
 }
@@ -1785,11 +1785,11 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (void) readFromBuffer:(const void *)buffer length:(NSInteger)length
 {
-    wrapper->file->readFromBuffer((const uint8_t *)buffer, length);
+    wrapper->file->readFromBuffer((const u8 *)buffer, length);
 }
 - (NSInteger) writeToBuffer:(void *)buffer
 {
-    return wrapper->file->writeToBuffer((uint8_t *)buffer);
+    return wrapper->file->writeToBuffer((u8 *)buffer);
 }
 
 - (void) dealloc
@@ -1813,11 +1813,11 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 
 + (BOOL) isSupportedSnapshot:(const void *)buffer length:(NSInteger)length
 {
-    return Snapshot::isSupportedSnapshot((uint8_t *)buffer, length);
+    return Snapshot::isSupportedSnapshot((u8 *)buffer, length);
 }
 + (BOOL) isUnsupportedSnapshot:(const void *)buffer length:(NSInteger)length
 {
-    return Snapshot::isUnsupportedSnapshot((uint8_t *)buffer, length);
+    return Snapshot::isUnsupportedSnapshot((u8 *)buffer, length);
 }
 + (BOOL) isSupportedSnapshotFile:(NSString *)path
 {
@@ -1837,7 +1837,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    Snapshot *snapshot = Snapshot::makeWithBuffer((uint8_t *)buffer, length);
+    Snapshot *snapshot = Snapshot::makeWithBuffer((u8 *)buffer, length);
     return [self make:snapshot];
 }
 + (instancetype) makeWithFile:(NSString *)path
@@ -1865,20 +1865,20 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 
 + (CartridgeType) typeOfCRTBuffer:(const void *)buffer length:(NSInteger)length
 {
-    return CRTFile::typeOfCRTBuffer((uint8_t *)buffer, length);
+    return CRTFile::typeOfCRTBuffer((u8 *)buffer, length);
 }
 + (NSString *) typeNameOfCRTBuffer:(const void *)buffer length:(NSInteger)length
 {
-    const char *str = CRTFile::typeNameOfCRTBuffer((uint8_t *)buffer, length);
+    const char *str = CRTFile::typeNameOfCRTBuffer((u8 *)buffer, length);
     return [NSString stringWithUTF8String: str];
 }
 + (BOOL) isSupportedCRTBuffer:(const void *)buffer length:(NSInteger)length
 {
-    return CRTFile::isSupportedCRTBuffer((uint8_t *)buffer, length);
+    return CRTFile::isSupportedCRTBuffer((u8 *)buffer, length);
 }
 + (BOOL) isUnsupportedCRTBuffer:(const void *)buffer length:(NSInteger)length
 {
-    return CRTFile::isUnsupportedCRTBuffer((uint8_t *)buffer, length);
+    return CRTFile::isUnsupportedCRTBuffer((u8 *)buffer, length);
 }
 + (BOOL) isCRTFile:(NSString *)path
 {
@@ -1890,7 +1890,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    CRTFile *container = CRTFile::makeWithBuffer((const uint8_t *)buffer, length);
+    CRTFile *container = CRTFile::makeWithBuffer((const u8 *)buffer, length);
     return [self make: container];
 }
 + (instancetype) makeWithFile:(NSString *)path
@@ -1955,7 +1955,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    TAPFile *container = TAPFile::makeWithBuffer((const uint8_t *)buffer, length);
+    TAPFile *container = TAPFile::makeWithBuffer((const u8 *)buffer, length);
     return [self make: container];
 }
 + (instancetype) makeWithFile:(NSString *)path
@@ -2066,7 +2066,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    T64File *archive = T64File::makeWithBuffer((const uint8_t *)buffer, length);
+    T64File *archive = T64File::makeWithBuffer((const u8 *)buffer, length);
     return [self make: archive];
 }
 + (instancetype) makeWithFile:(NSString *)path
@@ -2101,7 +2101,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    PRGFile *archive = PRGFile::makeWithBuffer((const uint8_t *)buffer, length);
+    PRGFile *archive = PRGFile::makeWithBuffer((const u8 *)buffer, length);
     return [self make: archive];
 }
 + (instancetype) makeWithFile:(NSString *)path
@@ -2136,7 +2136,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    P00File *archive = P00File::makeWithBuffer((const uint8_t *)buffer, length);
+    P00File *archive = P00File::makeWithBuffer((const u8 *)buffer, length);
     return [self make: archive];
 }
 + (instancetype) makeWithFile:(NSString *)path
@@ -2221,7 +2221,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    D64File *archive = D64File::makeWithBuffer((const uint8_t *)buffer, length);
+    D64File *archive = D64File::makeWithBuffer((const u8 *)buffer, length);
     return [self make: archive];
 }
 + (instancetype) makeWithFile:(NSString *)path
@@ -2262,7 +2262,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    G64File *archive = G64File::makeWithBuffer((const uint8_t *)buffer, length);
+    G64File *archive = G64File::makeWithBuffer((const u8 *)buffer, length);
     return [self make: archive];
 }
 + (instancetype) makeWithFile:(NSString *)path

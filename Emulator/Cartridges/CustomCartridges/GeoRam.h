@@ -17,25 +17,25 @@ class GeoRAM : public Cartridge {
 private:
     
     //! @brief   Selected RAM bank
-    uint8_t bank;
+    u8 bank;
     
     //! @brief   Selected page inside the selected RAM bank.
-    uint8_t page;
+    u8 page;
     
     //! @brief   Computes the offset for accessing the cartridge RAM
-    unsigned offset(uint8_t addr);
+    unsigned offset(u8 addr);
     
 public:
     GeoRAM(C64 *c64);
     CartridgeType getCartridgeType() { return CRT_GEO_RAM; }
     void reset();
     size_t stateSize();
-    void didLoadFromBuffer(uint8_t **buffer);
-    void didSaveToBuffer(uint8_t **buffer);
-    uint8_t peekIO1(u16 addr);
-    uint8_t peekIO2(u16 addr);
-    void pokeIO1(u16 addr, uint8_t value);
-    void pokeIO2(u16 addr, uint8_t value);
+    void didLoadFromBuffer(u8 **buffer);
+    void didSaveToBuffer(u8 **buffer);
+    u8 peekIO1(u16 addr);
+    u8 peekIO2(u16 addr);
+    void pokeIO1(u16 addr, u8 value);
+    void pokeIO2(u16 addr, u8 value);
 };
 
 #endif

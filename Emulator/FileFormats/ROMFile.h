@@ -25,10 +25,10 @@ private:
     static const size_t kernalRomSignatureCnt = 3;
     static const size_t vc1541RomSignatureCnt = 4;
 
-    static const uint8_t magicBasicRomBytes[basicRomSignatureCnt][3];
-    static const uint8_t magicCharRomBytes[charRomSignatureCnt][4];
-    static const uint8_t magicKernalRomBytes[kernalRomSignatureCnt][3];
-    static const uint8_t magicVC1541RomBytes[vc1541RomSignatureCnt][3];
+    static const u8 magicBasicRomBytes[basicRomSignatureCnt][3];
+    static const u8 magicCharRomBytes[charRomSignatureCnt][4];
+    static const u8 magicKernalRomBytes[kernalRomSignatureCnt][3];
+    static const u8 magicVC1541RomBytes[vc1541RomSignatureCnt][3];
 
     //! @brief    ROM type (Basic ROM, Kernal ROM, etc.)
     C64FileType romtype;
@@ -40,19 +40,19 @@ public:
     //
     
     //! @brief    Returns true iff buffer contains a ROM image
-    static bool isRomBuffer(const uint8_t *buffer, size_t length);
+    static bool isRomBuffer(const u8 *buffer, size_t length);
     
     //! @brief    Returns true iff buffer contains a Basic ROM image
-    static bool isBasicRomBuffer(const uint8_t *buffer, size_t length);
+    static bool isBasicRomBuffer(const u8 *buffer, size_t length);
     
     //! @brief    Returns true iff buffer contains a Character ROM image
-    static bool isCharRomBuffer(const uint8_t *buffer, size_t length);
+    static bool isCharRomBuffer(const u8 *buffer, size_t length);
     
     //! @brief    Returns true iff buffer contains a Kernal ROM image
-    static bool isKernalRomBuffer(const uint8_t *buffer, size_t length);
+    static bool isKernalRomBuffer(const u8 *buffer, size_t length);
     
     //! @brief    Returns true iff buffer contains a VC1541 ROM image
-    static bool isVC1541RomBuffer(const uint8_t *buffer, size_t length);
+    static bool isVC1541RomBuffer(const u8 *buffer, size_t length);
     
     //! @brief    Returns true iff filename points to a ROM file
     static bool isRomFile(const char *filename);
@@ -78,7 +78,7 @@ public:
     ROMFile();
     
     //! @brief    Factory method
-    static ROMFile *makeWithBuffer(const uint8_t *buffer, size_t length);
+    static ROMFile *makeWithBuffer(const u8 *buffer, size_t length);
     
     //! @brief    Factory method
     static ROMFile *makeWithFile(const char *filename);
@@ -91,7 +91,7 @@ public:
     C64FileType type() { return romtype; }
     const char *typeAsString() { return "ROM"; }
     bool hasSameType(const char *filename) { return isRomFile(filename); }
-    bool readFromBuffer(const uint8_t *buffer, size_t length);
+    bool readFromBuffer(const u8 *buffer, size_t length);
     
 };
 #endif

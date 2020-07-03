@@ -66,10 +66,10 @@ public:
     size_t stateSize();
 
     //! @brief    Method from HardwareComponent
-    void didLoadFromBuffer(uint8_t **buffer);
+    void didLoadFromBuffer(u8 **buffer);
     
     //! @brief    Method from HardwareComponent
-    void didSaveToBuffer(uint8_t **buffer);
+    void didSaveToBuffer(u8 **buffer);
     
     //! @brief    Method from HardwareComponent
     void dump();	
@@ -80,31 +80,31 @@ public:
     void execute() { if (cartridge) cartridge->execute(); }
     
     //! @brief    Peek fallthrough
-    uint8_t peek(u16 addr);
+    u8 peek(u16 addr);
     
     //! @brief    Same as peek, but without side effects
-    uint8_t spypeek(u16 addr);
+    u8 spypeek(u16 addr);
     
     //! @brief    Peek fallthrough for I/O space 1
-    uint8_t peekIO1(u16 addr);
+    u8 peekIO1(u16 addr);
     
     //! @brief    Same as peekIO1, but without side effects
-    uint8_t spypeekIO1(u16 addr);
+    u8 spypeekIO1(u16 addr);
     
     //! @brief    Peek fallthrough for I/O space 2
-    uint8_t peekIO2(u16 addr);
+    u8 peekIO2(u16 addr);
 
     //! @brief    Same as peekIO2, but without side effects
-    uint8_t spypeekIO2(u16 addr);
+    u8 spypeekIO2(u16 addr);
     
     //! @brief    Poke fallthrough
-    void poke(u16 addr, uint8_t value);
+    void poke(u16 addr, u8 value);
     
     //! @brief    Poke fallthrough for I/O space 1
-    void pokeIO1(u16 addr, uint8_t value);
+    void pokeIO1(u16 addr, u8 value);
     
     //! @brief    Poke fallthrough for I/O space 2
-    void pokeIO2(u16 addr, uint8_t value);
+    void pokeIO2(u16 addr, u8 value);
     
     //! @brief    Returns the cartridge type
     CartridgeType getCartridgeType();
@@ -201,7 +201,7 @@ public:
         return cartridge ? cartridge->validSwitchPosition(pos) : false; }
     
     //! @brief    Puts the switch in the provided position
-    void setSwitch(uint8_t pos) { if (cartridge) cartridge->setSwitch(pos); }
+    void setSwitch(u8 pos) { if (cartridge) cartridge->setSwitch(pos); }
 
     //! @brief    Returns true if the cartridge has a LED.
     bool hasLED() { return cartridge ? cartridge->hasLED() : false; }

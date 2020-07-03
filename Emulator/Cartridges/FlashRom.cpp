@@ -43,7 +43,7 @@ FlashRom::FlashRom()
     sectorSize = 0x10000; // 64 KB
     size = 0x80000;       // 512 KB
     
-    rom = new uint8_t[size];
+    rom = new u8[size];
     memset(rom, 0xFF, size);
     
     // Register snapshot items
@@ -63,7 +63,7 @@ FlashRom::~FlashRom()
 }
 
 void
-FlashRom::loadBank(unsigned bank, uint8_t *data)
+FlashRom::loadBank(unsigned bank, u8 *data)
 {
     assert(data != NULL);
     memcpy(rom + bank * 0x2000, data, 0x2000);
@@ -90,12 +90,12 @@ FlashRom::dump()
     msg("       rom: %p\n\n", rom);
 }
 
-uint8_t
+u8
 FlashRom::peek(u32 addr)
 {
     assert(addr < size);
     
-    uint8_t result;
+    u8 result;
     
     switch (state) {
         
@@ -155,7 +155,7 @@ FlashRom::peek(u32 addr)
 }
 
 void
-FlashRom::poke(u32 addr, uint8_t value)
+FlashRom::poke(u32 addr, u8 value)
 {
     assert(addr < size);
     
@@ -291,7 +291,7 @@ FlashRom::poke(u32 addr, uint8_t value)
 }
 
 bool
-FlashRom::doByteProgram(u32 addr, uint8_t value)
+FlashRom::doByteProgram(u32 addr, u8 value)
 {
     assert(addr < size);
     

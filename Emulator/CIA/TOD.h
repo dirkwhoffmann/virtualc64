@@ -16,7 +16,7 @@
 class CIA;
 
 //! @brief    Increments a BCD number by one.
-inline uint8_t incBCD(uint8_t bcd) {
+inline u8 incBCD(u8 bcd) {
     return ((bcd & 0x0F) == 0x09) ? (bcd & 0xF0) + 0x10 : (bcd & 0xF0) + ((bcd + 0x01) & 0x0F);
 }
 
@@ -69,7 +69,7 @@ private:
     /*! @brief    Indicates if TOD is driven by a 50 Hz or 60 Hz signal
      *  @details  Valid values are 5 (50 Hz mode) and 6 (60 Hz mode)
      */
-    uint8_t hz;
+    u8 hz;
     
     /*! @brief    Frequency counter
      *  @details  This counter is driven by the A/C power frequency and
@@ -103,7 +103,7 @@ public:
     //
     
     //! @brief    Sets the frequency of the driving clock.
-    void setHz(uint8_t value) { assert(value == 5 || value == 6); hz = value; }
+    void setHz(u8 value) { assert(value == 5 || value == 6); hz = value; }
 
     //! @brief    Returns the current configuration.
     TODInfo getInfo();
@@ -128,59 +128,59 @@ private:
     void cont() { stopped = false; }
 
     //! @brief    Returns the hours digits of the time of day clock.
-    uint8_t getTodHours() { return (frozen ? latch.hours : tod.hours) & 0x9F; }
+    u8 getTodHours() { return (frozen ? latch.hours : tod.hours) & 0x9F; }
 
     //! @brief    Returns the minutes digits of the time of day clock.
-    uint8_t getTodMinutes() { return (frozen ? latch.minutes : tod.minutes) & 0x7F; }
+    u8 getTodMinutes() { return (frozen ? latch.minutes : tod.minutes) & 0x7F; }
 
     //! @brief    Returns the seconds digits of the time of day clock.
-    uint8_t getTodSeconds() { return (frozen ? latch.seconds : tod.seconds) & 0x7F; }
+    u8 getTodSeconds() { return (frozen ? latch.seconds : tod.seconds) & 0x7F; }
 
     //! @brief    Returns the tenth-of-a-second digits of the time of day clock.
-    uint8_t getTodTenth() { return (frozen ? latch.tenth : tod.tenth) & 0x0F; }
+    u8 getTodTenth() { return (frozen ? latch.tenth : tod.tenth) & 0x0F; }
 
     //! @brief    Returns the hours digits of the alarm time.
-    uint8_t getAlarmHours() { return alarm.hours & 0x9F; }
+    u8 getAlarmHours() { return alarm.hours & 0x9F; }
 
     //! @brief    Returns the minutes digits of the alarm time.
-    uint8_t getAlarmMinutes() { return alarm.minutes & 0x7F; }
+    u8 getAlarmMinutes() { return alarm.minutes & 0x7F; }
 
     //! @brief    Returns the seconds digits of the alarm time.
-    uint8_t getAlarmSeconds() { return alarm.seconds & 0x7F; }
+    u8 getAlarmSeconds() { return alarm.seconds & 0x7F; }
 
     //! @brief    Returns the tenth-of-a-second digits of the alarm time.
-    uint8_t getAlarmTenth() { return alarm.tenth & 0x0F; }
+    u8 getAlarmTenth() { return alarm.tenth & 0x0F; }
     
 
 	//! @brief    Sets the hours digits of the time of day clock.
-    void setTodHours(uint8_t value) { tod.hours = value & 0x9F; checkForInterrupt(); }
+    void setTodHours(u8 value) { tod.hours = value & 0x9F; checkForInterrupt(); }
 	
 	//! @brief    Sets the minutes digits of the time of day clock.
-    void setTodMinutes(uint8_t value) {
+    void setTodMinutes(u8 value) {
         tod.minutes = value & 0x7F; checkForInterrupt(); }
 	
 	//! @brief    Sets the seconds digits of the time of day clock.
-    void setTodSeconds(uint8_t value) {
+    void setTodSeconds(u8 value) {
         tod.seconds = value & 0x7F; checkForInterrupt(); }
 	
 	//! @brief    Sets the tenth-of-a-second digits of the time of day clock.
-	void setTodTenth(uint8_t value) {
+	void setTodTenth(u8 value) {
         tod.tenth = value & 0x0F; checkForInterrupt(); }
 	
 	//! @brief    Sets the hours digits of the alarm time.
-    void setAlarmHours(uint8_t value) {
+    void setAlarmHours(u8 value) {
         alarm.hours = value & 0x9F; checkForInterrupt(); }
 	
 	//! @brief    Sets the minutes digits of the alarm time.
-    void setAlarmMinutes(uint8_t value) {
+    void setAlarmMinutes(u8 value) {
         alarm.minutes = value & 0x7F; checkForInterrupt(); }
 	
 	//! @brief    Sets the seconds digits of the alarm time.
-    void setAlarmSeconds(uint8_t value) {
+    void setAlarmSeconds(u8 value) {
         alarm.seconds = value & 0x7F; checkForInterrupt(); }
 	
 	//! @brief    Sets the tenth-of-a-second digits of the time of day clock.
-    void setAlarmTenth(uint8_t value) {
+    void setAlarmTenth(u8 value) {
         alarm.tenth = value & 0x0F; checkForInterrupt(); }
 	
 	/*! @brief    Increments the TOD clock by one tenth of a second.

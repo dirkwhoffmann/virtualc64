@@ -214,7 +214,7 @@ Cartridge::packetStateSize()
 }
 
 void
-Cartridge::loadPacketsFromBuffer(uint8_t **buffer)
+Cartridge::loadPacketsFromBuffer(u8 **buffer)
 {
     for (unsigned i = 0; i < numPackets; i++) {
         assert(packet[i] == NULL);
@@ -224,7 +224,7 @@ Cartridge::loadPacketsFromBuffer(uint8_t **buffer)
 }
 
 void
-Cartridge::savePacketsToBuffer(uint8_t **buffer)
+Cartridge::savePacketsToBuffer(u8 **buffer)
 {
     for (unsigned i = 0; i < numPackets; i++) {
         assert(packet[i] != NULL);
@@ -241,7 +241,7 @@ Cartridge::stateSize()
 }
 
 void
-Cartridge::didLoadFromBuffer(uint8_t **buffer)
+Cartridge::didLoadFromBuffer(u8 **buffer)
 {
     setRamCapacity(ramCapacity);
     
@@ -250,7 +250,7 @@ Cartridge::didLoadFromBuffer(uint8_t **buffer)
 }
 
 void
-Cartridge::didSaveToBuffer(uint8_t **buffer)
+Cartridge::didSaveToBuffer(u8 **buffer)
 {
     savePacketsToBuffer(buffer);
     writeBlock(buffer, externalRam, ramCapacity);
@@ -275,7 +275,7 @@ Cartridge::dump()
     msg("\n");
 }
 
-uint8_t
+u8
 Cartridge::peek(u16 addr)
 {
     assert(isROMLaddr(addr) || isROMHaddr(addr));
@@ -290,7 +290,7 @@ Cartridge::peek(u16 addr)
     }
 }
 
-uint8_t
+u8
 Cartridge::peekRomL(u16 addr)
 {
     assert(addr <= 0x1FFF);
@@ -299,7 +299,7 @@ Cartridge::peekRomL(u16 addr)
     return packet[chipL]->peek(addr + offsetL);
 }
 
-uint8_t
+u8
 Cartridge::peekRomH(u16 addr)
 {
     assert(addr <= 0x1FFF);
@@ -309,7 +309,7 @@ Cartridge::peekRomH(u16 addr)
 }
 
 void
-Cartridge::poke(u16 addr, uint8_t value)
+Cartridge::poke(u16 addr, u8 value)
 {
     assert(isROMLaddr(addr) || isROMHaddr(addr));
     
@@ -352,7 +352,7 @@ Cartridge::setRamCapacity(u32 size)
     
     // Allocate
     if (size > 0) {
-        externalRam = (uint8_t *)malloc((size_t)size);
+        externalRam = (u8 *)malloc((size_t)size);
         ramCapacity = size;
         memset(externalRam, 0xFF, size);
     }
@@ -484,7 +484,7 @@ Cartridge::setSwitch(int8_t pos)
 void
 Cartridge::resetWithoutDeletingRam()
 {
-    uint8_t ram[0x10000];
+    u8 ram[0x10000];
     
     debug(1, "Resetting virtual C64 (preserving RAM)\n");
     

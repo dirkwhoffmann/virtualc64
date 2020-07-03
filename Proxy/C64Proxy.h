@@ -219,10 +219,10 @@ struct AnyC64FileWrapper;
 - (UInt64) cycle;
 - (u16) pc;
 - (void) setPC:(u16)pc;
-- (void) setSP:(uint8_t)sp;
-- (void) setA:(uint8_t)a;
-- (void) setX:(uint8_t)x;
-- (void) setY:(uint8_t)y;
+- (void) setSP:(u8)sp;
+- (void) setA:(u8)a;
+- (void) setX:(u8)x;
+- (void) setY:(u8)y;
 - (void) setNflag:(BOOL)b;
 - (void) setZflag:(BOOL)b;
 - (void) setCflag:(BOOL)b;
@@ -268,13 +268,13 @@ struct AnyC64FileWrapper;
 - (MemoryType) peekSource:(u16)addr;
 - (MemoryType) pokeTarget:(u16)addr;
 
-- (uint8_t) spypeek:(u16)addr source:(MemoryType)source;
-- (uint8_t) spypeek:(u16)addr;
-- (uint8_t) spypeekIO:(u16)addr;
+- (u8) spypeek:(u16)addr source:(MemoryType)source;
+- (u8) spypeek:(u16)addr;
+- (u8) spypeekIO:(u16)addr;
 
-- (void) poke:(u16)addr value:(uint8_t)value target:(MemoryType)target;
-- (void) poke:(u16)addr value:(uint8_t)value;
-- (void) pokeIO:(u16)addr value:(uint8_t)value;
+- (void) poke:(u16)addr value:(u8)value target:(MemoryType)target;
+- (void) poke:(u16)addr value:(u8)value;
+- (void) pokeIO:(u16)addr value:(u8)value;
 
 @end
 
@@ -298,7 +298,7 @@ struct AnyC64FileWrapper;
 - (BOOL) emulateTimerBBug;
 - (void) setEmulateTimerBBug:(BOOL)value;
 
-- (void) poke:(u16)addr value:(uint8_t)value;
+- (void) poke:(u16)addr value:(u8)value;
 
 @end
 
@@ -344,8 +344,8 @@ struct AnyC64FileWrapper;
 
 - (void) setDisplayMode:(DisplayMode)mode;
 - (void) setScreenGeometry:(ScreenGeometry)mode;
-- (void) setHorizontalRasterScroll:(uint8_t)offset;
-- (void) setVerticalRasterScroll:(uint8_t)offset;
+- (void) setHorizontalRasterScroll:(u8)offset;
+- (void) setVerticalRasterScroll:(u8)offset;
 
 - (void) setSpriteEnabled:(NSInteger)nr value:(BOOL)flag;
 - (void) toggleSpriteEnabled:(NSInteger)nr;
@@ -589,8 +589,8 @@ struct AnyC64FileWrapper;
 - (u16) sizeOfCurrentHalftrack;
 - (u16) offset;
 - (void) setOffset:(u16)value;
-- (uint8_t) readBitFromHead;
-- (void) writeBitToHead:(uint8_t)value;
+- (u8) readBitFromHead;
+- (void) writeBitToHead:(u8)value;
 
 - (void) moveHeadUp;
 - (void) moveHeadDown;

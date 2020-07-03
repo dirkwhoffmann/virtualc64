@@ -23,8 +23,8 @@ public:
     //! @functiongroup Methods from Cartridge
     //
 
-    uint8_t peekIO1(u16 addr);
-    uint8_t peekIO2(u16 addr);
+    u8 peekIO1(u16 addr);
+    u8 peekIO2(u16 addr);
 };
 
 #endif

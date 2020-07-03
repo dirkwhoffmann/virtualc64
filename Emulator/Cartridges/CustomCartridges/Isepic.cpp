@@ -40,7 +40,7 @@ Isepic::stateSize()
 }
 
 void
-Isepic::didLoadFromBuffer(uint8_t **buffer)
+Isepic::didLoadFromBuffer(u8 **buffer)
 {
     Cartridge::didLoadFromBuffer(buffer);
     page = read8(buffer);
@@ -49,7 +49,7 @@ Isepic::didLoadFromBuffer(uint8_t **buffer)
 }
 
 void
-Isepic::didSaveToBuffer(uint8_t **buffer)
+Isepic::didSaveToBuffer(u8 **buffer)
 {
     Cartridge::didSaveToBuffer(buffer);
     write8(buffer, page);
@@ -57,7 +57,7 @@ Isepic::didSaveToBuffer(uint8_t **buffer)
     write32(buffer, (MemoryType)oldPokeTarget);
 }
 
-uint8_t
+u8
 Isepic::peek(u16 addr)
 {
     assert((addr & 0xF000) == 0xF000);
@@ -70,7 +70,7 @@ Isepic::peek(u16 addr)
     }
 }
 
-uint8_t
+u8
 Isepic::peekIO1(u16 addr)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
@@ -82,7 +82,7 @@ Isepic::peekIO1(u16 addr)
     return 0;
 }
 
-uint8_t
+u8
 Isepic::peekIO2(u16 addr)
 {
     assert(addr >= 0xDF00 && addr <= 0xDFFF);
@@ -95,7 +95,7 @@ Isepic::peekIO2(u16 addr)
 }
 
 void
-Isepic::poke(u16 addr, uint8_t value)
+Isepic::poke(u16 addr, u8 value)
 {
     assert((addr & 0xF000) == 0xF000);
 
@@ -108,7 +108,7 @@ Isepic::poke(u16 addr, uint8_t value)
 }
 
 void
-Isepic::pokeIO1(u16 addr, uint8_t value)
+Isepic::pokeIO1(u16 addr, u8 value)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
 
@@ -116,7 +116,7 @@ Isepic::pokeIO1(u16 addr, uint8_t value)
 }
 
 void
-Isepic::pokeIO2(u16 addr, uint8_t value)
+Isepic::pokeIO2(u16 addr, u8 value)
 {
     assert(addr >= 0xDF00 && addr <= 0xDFFF);
 

@@ -16,7 +16,7 @@ SimonsBasic::reset()
     bankIn(1);
 }
 
-uint8_t
+u8
 SimonsBasic::peekIO1(u16 addr)
 {
     if (addr == 0xDE00) {
@@ -25,14 +25,14 @@ SimonsBasic::peekIO1(u16 addr)
     return Cartridge::peekIO1(addr);
 }
 
-uint8_t
+u8
 SimonsBasic::readIO1(u16 addr)
 {
     return Cartridge::peekIO1(addr);
 }
 
 void
-SimonsBasic::pokeIO1(u16 addr, uint8_t value)
+SimonsBasic::pokeIO1(u16 addr, u8 value)
 {
     if (addr == 0xDE00) {
         c64->expansionport.setCartridgeMode(CRT_16K);

@@ -9,11 +9,11 @@
 
 #include "G64File.h"
 
-const uint8_t /* "GCR-1541" */
+const u8 /* "GCR-1541" */
 G64File::magicBytes[] = { 0x47, 0x43, 0x52, 0x2D, 0x31, 0x35, 0x34, 0x31 };
 
 bool
-G64File::isG64Buffer(const uint8_t *buffer, size_t length)
+G64File::isG64Buffer(const u8 *buffer, size_t length)
 {
     if (length < 0x02AC) return false;
     return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
@@ -47,11 +47,11 @@ G64File::G64File(size_t capacity)
     assert(data == NULL);
     
     size = capacity; 
-    data = new uint8_t[capacity];
+    data = new u8[capacity];
 }
 
 G64File *
-G64File::makeWithBuffer(const uint8_t *buffer, size_t length)
+G64File::makeWithBuffer(const u8 *buffer, size_t length)
 {
     G64File *archive = new G64File();
     
@@ -101,7 +101,7 @@ G64File::makeWithDisk(Disk *disk)
     
     // Allocate memory
     size_t length = pos + 84 * 4; /* speed zones entries */
-    uint8_t *buffer = new uint8_t[length];
+    u8 *buffer = new u8[length];
     
     // Write header, number of tracks, and track length
     pos = 0;

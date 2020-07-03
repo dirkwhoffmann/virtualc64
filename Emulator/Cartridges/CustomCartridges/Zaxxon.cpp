@@ -18,7 +18,7 @@ Zaxxon::reset()
     mappedBytesL = 0x2000;
 }
 
-uint8_t
+u8
 Zaxxon::peekRomL(u16 addr)
 {
     /* "The (Super) Zaxxon carts use a 4Kb ($1000) ROM at $8000-$8FFF (mirrored
@@ -36,7 +36,7 @@ Zaxxon::peekRomL(u16 addr)
     }
 }
 
-uint8_t
+u8
 Zaxxon::spypeekRomL(u16 addr)
 {
     if (addr < 0x1000) {

@@ -180,9 +180,9 @@ void
 C64Memory::updatePeekPokeLookupTables()
 {
     // Read game line, exrom line, and processor port bits
-    uint8_t game  = c64->expansionport.getGameLine() ? 0x08 : 0x00;
-    uint8_t exrom = c64->expansionport.getExromLine() ? 0x10 : 0x00;
-    uint8_t index = (c64->processorPort.read() & 0x07) | exrom | game;
+    u8 game  = c64->expansionport.getGameLine() ? 0x08 : 0x00;
+    u8 exrom = c64->expansionport.getExromLine() ? 0x10 : 0x00;
+    u8 index = (c64->processorPort.read() & 0x07) | exrom | game;
 
     // Set ultimax flag
     c64->setUltimax(exrom && !game);
@@ -196,7 +196,7 @@ C64Memory::updatePeekPokeLookupTables()
     c64->expansionport.updatePeekPokeLookupTables();
 }
 
-uint8_t
+u8
 C64Memory::peek(u16 addr, MemoryType source)
 {
     switch(source) {
@@ -232,18 +232,18 @@ C64Memory::peek(u16 addr, MemoryType source)
     }
 }
 
-uint8_t
+u8
 C64Memory::peek(u16 addr, bool gameLine, bool exromLine)
 {
-    uint8_t game  = gameLine ? 0x08 : 0x00;
-    uint8_t exrom = exromLine ? 0x10 : 0x00;
-    uint8_t index = (c64->processorPort.read() & 0x07) | exrom | game;
+    u8 game  = gameLine ? 0x08 : 0x00;
+    u8 exrom = exromLine ? 0x10 : 0x00;
+    u8 index = (c64->processorPort.read() & 0x07) | exrom | game;
     
     return peek(addr, bankMap[index][addr >> 12]);
 }
 
-uint8_t
-C64Memory::peekZP(uint8_t addr)
+u8
+C64Memory::peekZP(u8 addr)
 {
     if (likely(addr >= 0x02)) {
         return ram[addr];
@@ -254,7 +254,7 @@ C64Memory::peekZP(uint8_t addr)
     }
 }
 
-uint8_t
+u8
 C64Memory::peekIO(u16 addr)
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
@@ -311,7 +311,7 @@ C64Memory::peekIO(u16 addr)
 	return 0;
 }
 
-uint8_t
+u8
 C64Memory::spypeek(u16 addr, MemoryType source)
 {
     switch(source) {
@@ -341,7 +341,7 @@ C64Memory::spypeek(u16 addr, MemoryType source)
     }
 }
 
-uint8_t
+u8
 C64Memory::spypeekIO(u16 addr)
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
@@ -387,7 +387,7 @@ C64Memory::spypeekIO(u16 addr)
 }
 
 void
-C64Memory::poke(u16 addr, uint8_t value, MemoryType target)
+C64Memory::poke(u16 addr, u8 value, MemoryType target)
 {
     switch(target) {
             
@@ -425,17 +425,17 @@ C64Memory::poke(u16 addr, uint8_t value, MemoryType target)
 }
 
 void
-C64Memory::poke(u16 addr, uint8_t value, bool gameLine, bool exromLine)
+C64Memory::poke(u16 addr, u8 value, bool gameLine, bool exromLine)
 {
-    uint8_t game  = gameLine ? 0x08 : 0x00;
-    uint8_t exrom = exromLine ? 0x10 : 0x00;
-    uint8_t index = (c64->processorPort.read() & 0x07) | exrom | game;
+    u8 game  = gameLine ? 0x08 : 0x00;
+    u8 exrom = exromLine ? 0x10 : 0x00;
+    u8 index = (c64->processorPort.read() & 0x07) | exrom | game;
     
     poke(addr, value, bankMap[index][addr >> 12]);
 }
 
 void
-C64Memory::pokeZP(uint8_t addr, uint8_t value)
+C64Memory::pokeZP(u8 addr, u8 value)
 {
     if (likely(addr >= 0x02)) {
         ram[addr] = value;
@@ -447,7 +447,7 @@ C64Memory::pokeZP(uint8_t addr, uint8_t value)
 }
 
 void
-C64Memory::pokeIO(u16 addr, uint8_t value)
+C64Memory::pokeIO(u16 addr, u8 value)
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
     

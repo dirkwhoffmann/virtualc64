@@ -56,7 +56,7 @@ class FlashRom : public HardwareComponent {
     size_t size; // 512 KB
     
     //! @brief    Flash Rom data
-    uint8_t *rom;
+    u8 *rom;
     
     public:
     
@@ -84,7 +84,7 @@ class FlashRom : public HardwareComponent {
     /*! @brief    Loads an 8 KB chunk of Rom data from a buffer.
      *  @details  This method is used when loading the contents from a CRT file.
      */
-    void loadBank(unsigned bank, uint8_t *data);
+    void loadBank(unsigned bank, u8 *data);
     
     
     //
@@ -99,24 +99,24 @@ class FlashRom : public HardwareComponent {
     //
     
     //! @brief    Reads a Rom cell
-    uint8_t peek(u32 addr);
+    u8 peek(u32 addr);
     
     //! @brief    Convenience wrapper with bank,offset addressing
-    uint8_t peek(unsigned bank, u16 addr) {
+    u8 peek(unsigned bank, u16 addr) {
         assert(isBankNumber(bank)); return peek(bank * 0x2000 + addr); }
     
     //! @brief    Reads a Rom cell without side effects
-    uint8_t spypeek(u32 addr) { return peek(addr); }
+    u8 spypeek(u32 addr) { return peek(addr); }
     
     //! @brief    Convenience wrapper with bank,offset addressing
-    uint8_t spypeek(unsigned bank, u16 addr) {
+    u8 spypeek(unsigned bank, u16 addr) {
         assert(isBankNumber(bank)); return peek(bank * 0x2000 + addr); }
     
     //! @brief    Writes a Rom cell
-    void poke(u32 addr, uint8_t value);
+    void poke(u32 addr, u8 value);
     
     //! @brief    Convenience wrapper with bank,offset addressing
-    void poke(unsigned bank, u16 addr, uint8_t value) {
+    void poke(unsigned bank, u16 addr, u8 value) {
         assert(isBankNumber(bank)); poke(bank * 0x2000 + addr, value); }
     
     
@@ -131,10 +131,10 @@ class FlashRom : public HardwareComponent {
     bool secondCommandAddr(u32 addr) { return (addr & 0x7FF) == 0x2AA; }
 
     //! @brief    Performs a "Byte Program" operation
-    bool doByteProgram(u32 addr, uint8_t value);
+    bool doByteProgram(u32 addr, u8 value);
     
     //! @brief    Convenience wrapper with bank,offset addressing
-    bool doByteProgram(unsigned bank, u16 addr, uint8_t value) {
+    bool doByteProgram(unsigned bank, u16 addr, u8 value) {
         assert(isBankNumber(bank)); return doByteProgram(bank * 0x2000 + addr, value); }
     
     //! @brief    Performs a "Sector Erase" operation

@@ -506,7 +506,7 @@ C64::executeOneCycle()
 bool
 C64::_executeOneCycle()
 {
-    uint8_t result = true;
+    u8 result = true;
     u64 cycle = ++cpu.cycle;
     
     //  <---------- o2 low phase ----------->|<- o2 high phase ->|
@@ -698,7 +698,7 @@ C64::synchronizeTiming()
 
 void C64::loadFromSnapshotUnsafe(Snapshot *snapshot)
 {    
-    uint8_t *ptr;
+    u8 *ptr;
     
     if (snapshot && (ptr = snapshot->getData())) {
         loadFromBuffer(&ptr);

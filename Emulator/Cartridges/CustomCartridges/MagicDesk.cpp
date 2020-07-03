@@ -9,14 +9,14 @@
 
 #include "C64.h"
 
-uint8_t
+u8
 MagicDesk::peekIO1(u16 addr)
 {
     return control;
 }
 
 void
-MagicDesk::pokeIO1(u16 addr, uint8_t value)
+MagicDesk::pokeIO1(u16 addr, u8 value)
 {
     control = value & 0x8F;
     

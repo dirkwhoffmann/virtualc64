@@ -24,10 +24,10 @@ public:
     
     void resetCartConfig();
     bool hasResetButton() { return true; }
-    uint8_t peekIO1(u16 addr);
-    uint8_t peekIO2(u16 addr);
-    void pokeIO1(u16 addr, uint8_t value);
-    void pokeIO2(u16 addr, uint8_t value);
+    u8 peekIO1(u16 addr);
+    u8 peekIO2(u16 addr);
+    void pokeIO1(u16 addr, u8 value);
+    void pokeIO2(u16 addr, u8 value);
     
     unsigned numButtons() { return 1; }
     const char *getButtonTitle(unsigned nr) { return (nr == 1) ? "Reset" : NULL; }

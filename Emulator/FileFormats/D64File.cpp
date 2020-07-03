@@ -13,7 +13,7 @@
 #include "P00File.h"
 
 bool
-D64File::isD64Buffer(const uint8_t *buffer, size_t length)
+D64File::isD64Buffer(const u8 *buffer, size_t length)
 {
     // Unfortunaltely, D64 containers do not contain magic bytes.
     // We can only check the buffer size
@@ -80,13 +80,13 @@ D64File::D64File(unsigned tracks, bool ecc) : D64File()
             assert(false);
     }
     
-    data = new uint8_t[size];
+    data = new u8[size];
     memset(data, 0, size);
     // numTracks = tracks;
 }
 
 D64File *
-D64File::makeWithBuffer(const uint8_t *buffer, size_t length)
+D64File::makeWithBuffer(const u8 *buffer, size_t length)
 {
     D64File *archive = new D64File();
     
@@ -172,7 +172,7 @@ D64File::makeWithAnyArchive(AnyArchive *otherArchive)
 D64File *
 D64File::makeWithDisk(Disk *disk)
 {
-    uint8_t buffer[D64_802_SECTORS];
+    u8 buffer[D64_802_SECTORS];
     
     assert(disk != NULL);
     
@@ -203,7 +203,7 @@ D64File::getName()
 }
 
 bool 
-D64File::readFromBuffer(const uint8_t *buffer, size_t length)
+D64File::readFromBuffer(const u8 *buffer, size_t length)
 {
     unsigned numSectors;
     bool errorCodes;
@@ -454,7 +454,7 @@ D64File::findItem(long item)
 
 
 bool
-D64File::itemIsVisible(uint8_t typeChar, const char **extension)
+D64File::itemIsVisible(u8 typeChar, const char **extension)
 {
     const char *result = NULL;
     
@@ -582,7 +582,7 @@ D64File::selectTrackAndSector(Track t, Sector s)
 //! @functiongroup Accessing tracks and sectors
 //
 
-uint8_t
+u8
 D64File::errorCode(Track t, Sector s)
 {
    assert(isValidTrackSectorPair(t, s));
@@ -675,7 +675,7 @@ D64File::jumpToNextSector(long *pos)
 }
 
 bool
-D64File::writeByteToSector(uint8_t byte, Track *t, Sector *s)
+D64File::writeByteToSector(u8 byte, Track *t, Sector *s)
 {
     Track track = *t;
     Sector sector = *s;
@@ -683,7 +683,7 @@ D64File::writeByteToSector(uint8_t byte, Track *t, Sector *s)
     assert(isValidTrackSectorPair(track, sector));
 
     int pos = offset(track, sector);
-    uint8_t positionOfLastDataByte = data[pos + 1];
+    u8 positionOfLastDataByte = data[pos + 1];
     
     if (positionOfLastDataByte == 0xFF) {
 
@@ -693,8 +693,8 @@ D64File::writeByteToSector(uint8_t byte, Track *t, Sector *s)
         }
 
         // link previous sector with the new one
-        data[pos++] = (uint8_t)track;
-        data[pos] = (uint8_t)sector;
+        data[pos++] = (u8)track;
+        data[pos] = (u8)sector;
         pos = offset(track, sector);
         positionOfLastDataByte = 0;
     }
@@ -738,7 +738,7 @@ D64File::markSectorAsUsed(Track track, Sector sector)
     assert(offset >= 1 && offset <= 3);
     
     // Select bit for this sector
-    uint8_t bitmask = 0x01 << (sector & 0x07);
+    u8 bitmask = 0x01 << (sector & 0x07);
     
     if (data[bam+offset] & bitmask) {
         // Clear bit
@@ -893,8 +893,8 @@ D64File::writeDirectoryEntry(unsigned nr, const char *name,
     }
 
     // Determine sector and relative sector position for this entry
-    uint8_t sector = secnr[1 + (nr / 8)];
-    uint8_t rel = (nr % 8) * 0x20;
+    u8 sector = secnr[1 + (nr / 8)];
+    u8 rel = (nr % 8) * 0x20;
     
     // Update BAM
     markSectorAsUsed(18, sector);
@@ -921,8 +921,8 @@ D64File::writeDirectoryEntry(unsigned nr, const char *name,
     data[pos++] = 0x82;
     
     // 03-04: Track/sector location of first sector of file
-    data[pos++] = (uint8_t)startTrack;
-    data[pos++] = (uint8_t)startSector;
+    data[pos++] = (u8)startTrack;
+    data[pos++] = (u8)startSector;
     
     // 05-14: 16 character filename (in PETASCII, padded with $A0)
     size_t len = strlen(name);

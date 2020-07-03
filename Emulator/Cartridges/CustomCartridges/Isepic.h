@@ -15,7 +15,7 @@
 class Isepic : public Cartridge {
     
     //! @brief   Selected page inside the selected RAM bank.
-    uint8_t page;
+    u8 page;
 
     //! @brief   Original mapping of the uppermost memory page
     MemoryType oldPeekSource;
@@ -27,8 +27,8 @@ public:
     
     void reset() override;
     size_t stateSize() override;
-    void didLoadFromBuffer(uint8_t **buffer) override;
-    void didSaveToBuffer(uint8_t **buffer) override;
+    void didLoadFromBuffer(u8 **buffer) override;
+    void didSaveToBuffer(u8 **buffer) override;
     
     bool hasSwitch() override { return true; }
     const char *getSwitchDescription(int8_t pos) override;
@@ -40,12 +40,12 @@ public:
     bool cartIsHidden() { return !cartIsVisible(); }
 
     void updatePeekPokeLookupTables() override;
-    uint8_t peek(u16 addr) override;
-    uint8_t peekIO1(u16 addr) override;
-    uint8_t peekIO2(u16 addr) override;
-    void poke(u16 addr, uint8_t value) override;
-    void pokeIO1(u16 addr, uint8_t value) override;
-    void pokeIO2(u16 addr, uint8_t value) override;
+    u8 peek(u16 addr) override;
+    u8 peekIO1(u16 addr) override;
+    u8 peekIO2(u16 addr) override;
+    void poke(u16 addr, u8 value) override;
+    void pokeIO1(u16 addr, u8 value) override;
+    void pokeIO2(u16 addr, u8 value) override;
 };
 
 

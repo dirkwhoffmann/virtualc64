@@ -45,7 +45,7 @@ public:
     class SIDBridge *bridge;
     
     //! @brief   SID registers
-    uint8_t sidreg[32];
+    u8 sidreg[32];
     
     //! @brief   Internal constant used for sample rate dependent calculations
     u32 speed1;
@@ -77,7 +77,7 @@ private:
     bool emulateFilter = true;
     
     //! @brief   Last value on the data bus
-    uint8_t latchedDataBus;
+    u8 latchedDataBus;
     
 public:
     
@@ -131,10 +131,10 @@ public:
     VoiceInfo getVoiceInfo(unsigned voice);
     
     // Special peek function for the I/O memory range
-    uint8_t peek(u16 addr);
+    u8 peek(u16 addr);
     
     // Special poke function for the I/O memory range.
-    void poke(u16 addr, uint8_t value);
+    void poke(u16 addr, u8 value);
     
     /* Execute SID
      * Runs reSID for the specified amount of CPU cycles and writes the
@@ -185,7 +185,7 @@ private:
     //
     
     // Returns the currently set SID volume
-    uint8_t sidVolume() { return sidreg[0x18] & 0x0F; }
+    u8 sidVolume() { return sidreg[0x18] & 0x0F; }
     
     // Returns true iff voice 3 is disconnected from the audio output
     /* Setting voice 3 to bypass the filter (FILT3 = 0) and setting bit 7 in
@@ -200,7 +200,7 @@ private:
     u16 filterCutoff() { return (sidreg[0x16] << 3) | (sidreg[0x15] & 0x07); }
 
     // Returns the filter resonance (4 bit value)
-    uint8_t filterResonance() { return sidreg[0x17] >> 4; }
+    u8 filterResonance() { return sidreg[0x17] >> 4; }
 
     // Returns true iff the specified voice schould be filtered
     bool filterOn(unsigned voice) { return GET_BIT(sidreg[0x17], voice) != 0; }
@@ -212,7 +212,7 @@ private:
     bool filterExtBit() { return GET_BIT(sidreg[0x17], 7) != 0; }
     
     // Returns the currently set filter type
-    uint8_t filterType() { return sidreg[0x18] & 0x70; }
+    u8 filterType() { return sidreg[0x18] & 0x70; }
     
     
     // Updates internal data structures

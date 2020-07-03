@@ -43,7 +43,7 @@ AnyC64File::dealloc()
 
 /*
 bool
-AnyC64File::checkBufferHeader(const uint8_t *buffer, size_t length, const uint8_t *header)
+AnyC64File::checkBufferHeader(const u8 *buffer, size_t length, const u8 *header)
 {
     assert(buffer != NULL);
     assert(header != NULL);
@@ -125,7 +125,7 @@ AnyC64File::readHex(size_t num)
 }
 
 void
-AnyC64File::flash(uint8_t *buffer, size_t offset)
+AnyC64File::flash(u8 *buffer, size_t offset)
 {
     int byte;
     assert(buffer != NULL);
@@ -134,7 +134,7 @@ AnyC64File::flash(uint8_t *buffer, size_t offset)
 
     while ((byte = read()) != EOF) {
         if (offset <= 0xFFFF) {
-            buffer[offset++] = (uint8_t)byte;
+            buffer[offset++] = (u8)byte;
         } else {
             break;
         }
@@ -142,12 +142,12 @@ AnyC64File::flash(uint8_t *buffer, size_t offset)
 }
 
 bool
-AnyC64File::readFromBuffer(const uint8_t *buffer, size_t length)
+AnyC64File::readFromBuffer(const u8 *buffer, size_t length)
 {
     assert (buffer != NULL);
     
     dealloc();
-    if ((data = new uint8_t[length]) == NULL)
+    if ((data = new u8[length]) == NULL)
         return false;
     
     memcpy(data, buffer, length);
@@ -163,7 +163,7 @@ AnyC64File::readFromFile(const char *filename)
     assert (filename != NULL);
     
     bool success = false;
-	uint8_t *buffer = NULL;
+	u8 *buffer = NULL;
 	FILE *file = NULL;
 	struct stat fileProperties;
 	
@@ -183,7 +183,7 @@ AnyC64File::readFromFile(const char *filename)
 	}
 
 	// Allocate memory
-	if (!(buffer = new uint8_t[fileProperties.st_size])) {
+	if (!(buffer = new u8[fileProperties.st_size])) {
 		goto exit;
 	}
 	
@@ -193,7 +193,7 @@ AnyC64File::readFromFile(const char *filename)
 		c = fgetc(file);
 		if (c == EOF)
 			break;
-		buffer[i] = (uint8_t)c;
+		buffer[i] = (u8)c;
 	}
 	
 	// Read from buffer (subclass specific behaviour)
@@ -218,7 +218,7 @@ exit:
 }
 
 size_t
-AnyC64File::writeToBuffer(uint8_t *buffer)
+AnyC64File::writeToBuffer(u8 *buffer)
 {
     assert(data != NULL);
     
@@ -232,7 +232,7 @@ bool
 AnyC64File::writeToFile(const char *filename)
 {
 	bool success = false;
-	uint8_t *data = NULL;
+	u8 *data = NULL;
 	FILE *file;
 	size_t filesize;
    
@@ -248,7 +248,7 @@ AnyC64File::writeToFile(const char *filename)
 	}
 		
 	// Allocate memory
-    if (!(data = new uint8_t[filesize])) {
+    if (!(data = new u8[filesize])) {
 		goto exit;
 	}
 	

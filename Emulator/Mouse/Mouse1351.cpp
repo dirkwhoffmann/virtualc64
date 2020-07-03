@@ -31,22 +31,22 @@ Mouse1351::reset()
     mouseY = 0;
 }
 
-uint8_t
+u8
 Mouse1351::readPotX()
 {
     return mouseXBits();
 }
 
-uint8_t
+u8
 Mouse1351::readPotY()
 {
     return mouseYBits();
 }
 
-uint8_t
+u8
 Mouse1351::readControlPort()
 {
-    uint8_t result = 0xFF;
+    u8 result = 0xFF;
     
     if (leftButton) CLR_BIT(result, 4);
     if (rightButton) CLR_BIT(result, 0);

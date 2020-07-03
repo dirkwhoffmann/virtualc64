@@ -36,25 +36,25 @@
 #include "C64Constants.h"
 
 //! @brief    Two bit binary value
-typedef uint8_t uint2_t;
+typedef u8 uint2_t;
 
 //! @brief    Integrity check
 inline bool is_uint2_t(uint2_t value) { return value < 4; }
 
 //! @brief    Three bit binary value
-typedef uint8_t uint3_t;
+typedef u8 uint3_t;
 
 //! @brief    Integrity check
 inline bool is_uint3_t(uint2_t value) { return value < 8; }
 
 //! @brief    Four bit binary value
-typedef uint8_t uint4_t;
+typedef u8 uint4_t;
 
 //! @brief    Integrity check
 inline bool is_uint4_t(uint4_t value) { return value < 16; }
 
 //! @brief    Five bit binary value
-typedef uint8_t uint5_t;
+typedef u8 uint5_t;
 
 //! @brief    Integrity check
 inline bool is_uint5_t(uint5_t value) { return value < 32; }
@@ -65,10 +65,10 @@ inline bool is_uint5_t(uint5_t value) { return value < 32; }
 //
 
 //! @brief    Returns the high byte of a u16 value.
-#define HI_BYTE(x) (uint8_t)((x) >> 8)
+#define HI_BYTE(x) (u8)((x) >> 8)
 
 //! @brief    Returns the low byte of a u16 value.
-#define LO_BYTE(x) (uint8_t)((x) & 0xFF)
+#define LO_BYTE(x) (u8)((x) & 0xFF)
 
 //! @brief    Specifies a larger integer in little endian byte format
 #define LO_HI(x,y) (u16)((y) << 8 | (x))
@@ -122,66 +122,66 @@ inline bool is_uint5_t(uint5_t value) { return value < 32; }
 //
 
 //! @brief    Writes a byte value into a buffer.
-inline void write8(uint8_t **ptr, uint8_t value) { *((*ptr)++) = value; }
+inline void write8(u8 **ptr, u8 value) { *((*ptr)++) = value; }
 
 //! @brief    Writes a word value into a buffer in big endian format.
-inline void write16(uint8_t **ptr, u16 value) {
-    write8(ptr, (uint8_t)(value >> 8)); write8(ptr, (uint8_t)value); }
+inline void write16(u8 **ptr, u16 value) {
+    write8(ptr, (u8)(value >> 8)); write8(ptr, (u8)value); }
 
 //! @brief    Writes a double byte value into a buffer in big endian format.
-inline void write32(uint8_t **ptr, u32 value) {
+inline void write32(u8 **ptr, u32 value) {
     write16(ptr, (u16)(value >> 16)); write16(ptr, (u16)value); }
 
 //! @brief    Writes a quad word value into a buffer in big endian format.
-inline void write64(uint8_t **ptr, u64 value) {
+inline void write64(u8 **ptr, u64 value) {
     write32(ptr, (u32)(value >> 32)); write32(ptr, (u32)value); }
 
 //! @brief    Writes a memory block into a buffer in big endian format.
-inline void writeBlock(uint8_t **ptr, uint8_t *values, size_t length) {
+inline void writeBlock(u8 **ptr, u8 *values, size_t length) {
     memcpy(*ptr, values, length); *ptr += length; }
 
 //! @brief    Writes a word memory block into a buffer in big endian format.
-inline void writeBlock16(uint8_t **ptr, u16 *values, size_t length) {
+inline void writeBlock16(u8 **ptr, u16 *values, size_t length) {
     for (unsigned i = 0; i < length / sizeof(u16); i++) write16(ptr, values[i]); }
 
 //! @brief    Writes a double word memory block into a buffer in big endian format.
-inline void writeBlock32(uint8_t **ptr, u32 *values, size_t length) {
+inline void writeBlock32(u8 **ptr, u32 *values, size_t length) {
     for (unsigned i = 0; i < length / sizeof(u32); i++) write32(ptr, values[i]); }
 
 //! @brief    Writes a quad word memory block into a buffer in big endian format.
-inline void writeBlock64(uint8_t **ptr, u64 *values, size_t length) {
+inline void writeBlock64(u8 **ptr, u64 *values, size_t length) {
     for (unsigned i = 0; i < length / sizeof(u64); i++) write64(ptr, values[i]); }
 
 
 //! @brief    Reads a byte value from a buffer.
-inline uint8_t read8(uint8_t **ptr) { return (uint8_t)(*((*ptr)++)); }
+inline u8 read8(u8 **ptr) { return (u8)(*((*ptr)++)); }
 
 //! @brief    Reads a word value from a buffer in big endian format.
-inline u16 read16(uint8_t **ptr) {
+inline u16 read16(u8 **ptr) {
     return ((u16)read8(ptr) << 8) | (u16)read8(ptr); }
 
 //! @brief    Reads a double word value from a buffer in big endian format.
-inline u32 read32(uint8_t **ptr) {
+inline u32 read32(u8 **ptr) {
     return ((u32)read16(ptr) << 16) | (u32)read16(ptr); }
 
 //! @brief    Reads a quad word value from a buffer in big endian format.
-inline u64 read64(uint8_t **ptr) {
+inline u64 read64(u8 **ptr) {
     return ((u64)read32(ptr) << 32) | (u64)read32(ptr); }
 
 //! @brief    Reads a memory block from a buffer.
-inline void readBlock(uint8_t **ptr, uint8_t *values, size_t length) {
+inline void readBlock(u8 **ptr, u8 *values, size_t length) {
     memcpy(values, *ptr, length); *ptr += length; }
 
 //! @brief    Reads a word block from a buffer in big endian format.
-inline void readBlock16(uint8_t **ptr, u16 *values, size_t length) {
+inline void readBlock16(u8 **ptr, u16 *values, size_t length) {
     for (unsigned i = 0; i < length / sizeof(u16); i++) values[i] = read16(ptr); }
 
 //! @brief    Reads a double word block from a buffer in big endian format.
-inline void readBlock32(uint8_t **ptr, u32 *values, size_t length) {
+inline void readBlock32(u8 **ptr, u32 *values, size_t length) {
     for (unsigned i = 0; i < length / sizeof(u32); i++) values[i] = read32(ptr); }
 
 //! @brief    Reads a quad word block from a buffer in big endian format.
-inline void readBlock64(uint8_t **ptr, u64 *values, size_t length) {
+inline void readBlock64(u8 **ptr, u64 *values, size_t length) {
     for (unsigned i = 0; i < length / sizeof(u64); i++) values[i] = read64(ptr); }
 
 
@@ -211,28 +211,28 @@ size_t strlen16(const u16 *unichars);
 /*! @brief    Converts a PETSCII character to a printable character.
  *  @details  Replaces all unprintable characters by subst.
  */
-uint8_t petscii2printable(uint8_t c, uint8_t subst);
+u8 petscii2printable(u8 c, u8 subst);
 
 /*! @brief    Converts an ASCII character to a PETSCII character.
  *  @details  This function translates into the unshifted PET character set.
  *            I.e., lower case characters are converted to uppercase characters.
  *  @result   Returns ' ' for ASCII characters with no PETSCII representation.
  */
-uint8_t ascii2pet(uint8_t asciichar);
+u8 ascii2pet(u8 asciichar);
 
 //! @brief    Converts an ASCII string into a PETSCII string.
 /*! @details  Applies function ascii2pet to all characters of a string.
  */
 void ascii2petStr(char *str);
 
-//! @brief    Writes an uint8_t value into a string in decimal format
-void sprint8d(char *s, uint8_t value);
+//! @brief    Writes an u8 value into a string in decimal format
+void sprint8d(char *s, u8 value);
 
-//! @brief    Writes an uint8_t value into a string in hexadecimal format
-void sprint8x(char *s, uint8_t value);
+//! @brief    Writes an u8 value into a string in hexadecimal format
+void sprint8x(char *s, u8 value);
 
-//! @brief    Writes an uint8_t value into a string in binary format
-void sprint8b(char *s, uint8_t value);
+//! @brief    Writes an u8 value into a string in binary format
+void sprint8b(char *s, u8 value);
 
 //! @brief    Writes an u16 value into a string in decimal format
 void sprint16d(char *s, u16 value);
@@ -285,7 +285,7 @@ bool checkFileSize(const char *filename, long min, long max);
  *  @param    Expected byte sequence
  *  @param    Length of the expected byte sequence in bytes
  */
-bool matchingFileHeader(const char *path, const uint8_t *header, size_t length);
+bool matchingFileHeader(const char *path, const u8 *header, size_t length);
 
 /*! @brief    Checks the header signature (magic bytes) of a buffer.
  *  @details  This function is used for determining the type of a file.
@@ -293,7 +293,7 @@ bool matchingFileHeader(const char *path, const uint8_t *header, size_t length);
  *  @param    Expected byte sequence
  *  @param    Length of the expected byte sequence in bytes
  */
-bool matchingBufferHeader(const uint8_t *buffer, const uint8_t *header, size_t length);
+bool matchingBufferHeader(const u8 *buffer, const u8 *header, size_t length);
 
 /*! @brief    Checks the magic bytes of a file.
  *  @details  The function is used for determining the type of a file.
@@ -302,7 +302,7 @@ bool matchingBufferHeader(const uint8_t *buffer, const uint8_t *header, size_t l
  *  @return   Returns   true iff magic bytes match.
  *  @deprecated Use matchingFileHeader() instead.
 */
-// bool checkFileHeader(const char *filename, const uint8_t *header);
+// bool checkFileHeader(const char *filename, const u8 *header);
 
 
 //
@@ -319,16 +319,16 @@ bool matchingBufferHeader(const uint8_t *buffer, const uint8_t *header, size_t l
 // u64 usec();
 
 //! @brief    Reads the real-time clock (1/10th seconds).
-uint8_t localTimeSecFrac();
+u8 localTimeSecFrac();
 
 //! @brief    Reads the real-time clock (seconds).
-uint8_t localTimeSec();
+u8 localTimeSec();
 
 //! @brief    Reads the real-time clock (minutes).
-uint8_t localTimeMin();
+u8 localTimeMin();
 
 //! @brief    Reads the real-time clock (hours).
-uint8_t localTimeHour();
+u8 localTimeHour();
 
 //! @brief    Put the current thread to sleep for a certain amount of time.
 void sleepMicrosec(unsigned usec);
@@ -356,7 +356,7 @@ inline u32 fnv_1a_it32(u32 prev, u32 value) { return (prev ^ value) * 0x1000193;
 inline u64 fnv_1a_it64(u64 prev, u64 value) { return (prev ^ value) * 0x100000001b3; }
 
 //! @brief    Computes a FNV-1a for a given buffer
-u32 fnv_1a_32(uint8_t *addr, size_t size);
-u64 fnv_1a_64(uint8_t *addr, size_t size);
+u32 fnv_1a_32(u8 *addr, size_t size);
+u64 fnv_1a_64(u8 *addr, size_t size);
 
 #endif

@@ -77,10 +77,10 @@ Keyboard::setShiftLock(bool value)
     }
 }
 
-uint8_t
-Keyboard::getRowValues(uint8_t columnMask)
+u8
+Keyboard::getRowValues(u8 columnMask)
 {
-	uint8_t result = 0xff;
+	u8 result = 0xff;
 		
 	for (unsigned i = 0; i < 8; i++) {
 		if (GET_BIT(columnMask, i)) {
@@ -95,10 +95,10 @@ Keyboard::getRowValues(uint8_t columnMask)
 	return result;
 }
 
-uint8_t
-Keyboard::getColumnValues(uint8_t rowMask)
+u8
+Keyboard::getColumnValues(u8 rowMask)
 {
-    uint8_t result = 0xff;
+    u8 result = 0xff;
     
     for (unsigned i = 0; i < 8; i++) {
         if (GET_BIT(rowMask, i)) {
@@ -115,7 +115,7 @@ Keyboard::getColumnValues(uint8_t rowMask)
 
 
 void
-Keyboard::pressKey(uint8_t row, uint8_t col)
+Keyboard::pressKey(u8 row, u8 col)
 {
     assert(row < 8);
     assert(col < 8);
@@ -135,7 +135,7 @@ Keyboard::pressRestoreKey()
 }
 
 void
-Keyboard::releaseKey(uint8_t row, uint8_t col)
+Keyboard::releaseKey(u8 row, u8 col)
 {
     assert(row < 8);
     assert(col < 8);
@@ -157,7 +157,7 @@ Keyboard::releaseRestoreKey()
 }
 
 bool
-Keyboard::keyIsPressed(uint8_t row, uint8_t col)
+Keyboard::keyIsPressed(u8 row, u8 col)
 {
     // We can either check the row or column matrix
     bool result1 = (kbMatrixRow[row] & (1 << col)) == 0;
@@ -168,7 +168,7 @@ Keyboard::keyIsPressed(uint8_t row, uint8_t col)
 }
 
 void
-Keyboard::toggleKey(uint8_t row, uint8_t col)
+Keyboard::toggleKey(u8 row, u8 col)
 {
     if (keyIsPressed(row, col)) {
         releaseKey(row, col);

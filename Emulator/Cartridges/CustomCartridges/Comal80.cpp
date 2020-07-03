@@ -18,7 +18,7 @@ Comal80::reset()
 }
 
 void
-Comal80::pokeIO1(u16 addr, uint8_t value)
+Comal80::pokeIO1(u16 addr, u8 value)
 {
     if (addr >= 0xDE00 && addr <= 0xDEFF) {
         

@@ -36,7 +36,7 @@ protected:
     unsigned short unicode[256];
     
     //! @brief    The raw data of this file.
-    uint8_t *data = NULL;
+    u8 *data = NULL;
     
     //! @brief    The size of this file in bytes.
     size_t size = 0;
@@ -64,8 +64,8 @@ protected:
      *  @return   Returns   true iff magic bytes match.
      */
     /*
-    static bool checkBufferHeader(const uint8_t *buffer, size_t length,
-                                  const uint8_t *header);
+    static bool checkBufferHeader(const u8 *buffer, size_t length,
+                                  const u8 *header);
      */
     
     //
@@ -139,7 +139,7 @@ public:
     /*! @brief    Uses getByte() to copy the file into the C64 memory.
      *  @param    buffer must be a pointer to RAM or ROM
      */
-    virtual void flash(uint8_t *buffer, size_t offset = 0);
+    virtual void flash(u8 *buffer, size_t offset = 0);
 
     
     //
@@ -158,7 +158,7 @@ public:
      *  @param    buffer The address of a binary representation in memory.
      *  @param    length The size of the binary representation.
      */
-    virtual bool readFromBuffer(const uint8_t *buffer, size_t length);
+    virtual bool readFromBuffer(const u8 *buffer, size_t length);
 	
     /*! @brief    Reads the file contents from a file.
      *  @details  This function requires no custom implementation. It first
@@ -173,7 +173,7 @@ public:
      *            runs are performed to determine the size of the file on disk.
      *   @param   buffer The address of the buffer in memory.
      */
-	virtual size_t writeToBuffer(uint8_t *buffer);
+	virtual size_t writeToBuffer(u8 *buffer);
 
     /*! @brief    Writes the file contents to a file.
      *  @details  This function requires no custom implementation. It invokes

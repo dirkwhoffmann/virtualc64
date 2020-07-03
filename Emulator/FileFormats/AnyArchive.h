@@ -116,7 +116,7 @@ public:
     /*! @brief    Flashes the selected item into memory.
      *  @param    buffer must be a pointer to the C64 RAM
      */
-    void flashItem(uint8_t *buffer);
+    void flashItem(u8 *buffer);
     
  
     //

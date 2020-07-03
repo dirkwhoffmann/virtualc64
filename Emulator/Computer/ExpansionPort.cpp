@@ -61,7 +61,7 @@ ExpansionPort::stateSize()
 }
 
 void
-ExpansionPort::didLoadFromBuffer(uint8_t **buffer)
+ExpansionPort::didLoadFromBuffer(u8 **buffer)
 {
     // Delete old cartridge (if any)
     if (cartridge != NULL) {
@@ -78,7 +78,7 @@ ExpansionPort::didLoadFromBuffer(uint8_t **buffer)
 }
 
 void
-ExpansionPort::didSaveToBuffer(uint8_t **buffer)
+ExpansionPort::didSaveToBuffer(u8 **buffer)
 {
     // Write cartridge type and data (if any)
     write16(buffer, cartridge ? cartridge->getCartridgeType() : CRT_NONE);
@@ -108,20 +108,20 @@ ExpansionPort::getCartridgeType()
     return cartridge ? cartridge->getCartridgeType() : CRT_NONE;
 }
 
-uint8_t
+u8
 ExpansionPort::peek(u16 addr)
 {
     return cartridge ? cartridge->peek(addr) : 0;
 }
 
-uint8_t
+u8
 ExpansionPort::spypeek(u16 addr)
 {
     return cartridge ? cartridge->spypeek(addr) : 0;
 }
 
 /*
-uint8_t
+u8
 ExpansionPort::peek(u16 addr)
 {
     assert((addr >= 0x8000 && addr <= 0x9FFF) ||
@@ -139,7 +139,7 @@ ExpansionPort::peek(u16 addr)
 }
 */
 
-uint8_t
+u8
 ExpansionPort::peekIO1(u16 addr)
 {
     /* "Die beiden mit "I/O 1" und "I/O 2" bezeichneten Bereiche
@@ -152,26 +152,26 @@ ExpansionPort::peekIO1(u16 addr)
     return cartridge ? cartridge->peekIO1(addr) : c64->vic.getDataBusPhi1();
 }
 
-uint8_t
+u8
 ExpansionPort::spypeekIO1(u16 addr)
 {
     return cartridge ? cartridge->spypeekIO1(addr) : c64->vic.getDataBusPhi1();
 }
 
-uint8_t
+u8
 ExpansionPort::peekIO2(u16 addr)
 {
     return cartridge ? cartridge->peekIO2(addr) : c64->vic.getDataBusPhi1();
 }
 
-uint8_t
+u8
 ExpansionPort::spypeekIO2(u16 addr)
 {
     return cartridge ? cartridge->spypeekIO2(addr) : c64->vic.getDataBusPhi1();
 }
 
 void
-ExpansionPort::poke(u16 addr, uint8_t value)
+ExpansionPort::poke(u16 addr, u8 value)
 {
     if (cartridge) {
         cartridge->poke(addr, value);
@@ -181,7 +181,7 @@ ExpansionPort::poke(u16 addr, uint8_t value)
 }
 
 void
-ExpansionPort::pokeIO1(u16 addr, uint8_t value)
+ExpansionPort::pokeIO1(u16 addr, u8 value)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
     
@@ -189,7 +189,7 @@ ExpansionPort::pokeIO1(u16 addr, uint8_t value)
 }
 
 void
-ExpansionPort::pokeIO2(u16 addr, uint8_t value)
+ExpansionPort::pokeIO2(u16 addr, u8 value)
 {
     assert(addr >= 0xDF00 && addr <= 0xDFFF);
     

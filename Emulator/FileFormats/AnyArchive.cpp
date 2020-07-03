@@ -92,7 +92,7 @@ AnyArchive::readItemHex(size_t num)
 }
 
 void
-AnyArchive::flashItem(uint8_t *buffer)
+AnyArchive::flashItem(u8 *buffer)
 {
     int byte;
     assert(buffer != NULL);
@@ -103,7 +103,7 @@ AnyArchive::flashItem(uint8_t *buffer)
     
     while ((byte = readItem()) != EOF) {
         if (offset <= 0xFFFF) {
-            buffer[offset++] = (uint8_t)byte;
+            buffer[offset++] = (u8)byte;
         } else {
             break;
         }

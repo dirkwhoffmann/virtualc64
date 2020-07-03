@@ -46,13 +46,13 @@ public:
     void setRightMouseButton(bool value) { rightButton = value; }
     
     //! @brief   Returns the pot X bits as set by the mouse
-    uint8_t readPotX();
+    u8 readPotX();
     
     //! @brief   Returns the pot Y bits as set by the mouse
-    uint8_t readPotY();
+    u8 readPotY();
     
     //! @brief   Returns the control port bits triggered by the mouse
-    uint8_t readControlPort();
+    u8 readControlPort();
     
     /*! @brief   Execution function
      *  @details Shifts mouseX and mouseY smoothly towards targetX and targetX.
@@ -61,10 +61,10 @@ public:
     void executeY(i64 targetY);
 
     //! @brief   Returns the mouse X bits as they show up in the SID register
-    uint8_t mouseXBits() { return (mouseX & 0x3F) << 1; }
+    u8 mouseXBits() { return (mouseX & 0x3F) << 1; }
 
     //! @brief   Returns the mouse Y bits as they show up in the SID register
-    uint8_t mouseYBits() { return (mouseY & 0x3F) << 1; }    
+    u8 mouseYBits() { return (mouseY & 0x3F) << 1; }    
 };
 
 #endif

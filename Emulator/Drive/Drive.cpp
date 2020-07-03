@@ -126,7 +126,7 @@ VC1541::powerUp()
 bool
 VC1541::execute(u64 duration)
 {
-    uint8_t result = true;
+    u8 result = true;
     
     elapsedTime += duration;
     while (nextClock < elapsedTime || nextCarry < elapsedTime) {
@@ -159,7 +159,7 @@ VC1541::execute(u64 duration)
 bool
 VC1541::execute(u64 duration)
 {
-    uint8_t result = true;
+    u8 result = true;
     
     elapsedTime += duration;
     

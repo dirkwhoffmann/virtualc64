@@ -27,11 +27,11 @@ public:
     //! @functiongroup Methods from Cartridge
     //
     
-    uint8_t peek(u16 addr);
-    uint8_t peekIO1(u16 addr);
-    uint8_t peekIO2(u16 addr);
+    u8 peek(u16 addr);
+    u8 peekIO1(u16 addr);
+    u8 peekIO2(u16 addr);
     
-    void pokeIO1(u16 addr, uint8_t value);
+    void pokeIO1(u16 addr, u8 value);
     
     unsigned numButtons() { return 2; }
     const char *getButtonTitle(unsigned nr);
@@ -42,7 +42,7 @@ public:
     /*! @details This function triggers all side effects that take place when
      *           the control register value changes.
      */
-    void setControlReg(uint8_t value);
+    void setControlReg(u8 value);
     
     unsigned bank() { return control & 0x01; }
     bool game() { return !!(control & 0x02); }
@@ -68,9 +68,9 @@ public:
     
     void reset();
     size_t stateSize() { return Cartridge::stateSize() + 1; }
-    void didLoadFromBuffer(uint8_t **buffer) {
+    void didLoadFromBuffer(u8 **buffer) {
         Cartridge::didLoadFromBuffer(buffer); control = read8(buffer); }
-    void didSaveToBuffer(uint8_t **buffer) {
+    void didSaveToBuffer(u8 **buffer) {
         Cartridge::didSaveToBuffer(buffer); write8(buffer, control); }
     
     //
@@ -79,13 +79,13 @@ public:
     
     void resetCartConfig();
     
-    uint8_t peek(u16 addr);
-    uint8_t peekIO1(u16 addr);
-    uint8_t peekIO2(u16 addr);
+    u8 peek(u16 addr);
+    u8 peekIO1(u16 addr);
+    u8 peekIO2(u16 addr);
     
-    void poke(u16 addr, uint8_t value);
-    void pokeIO1(u16 addr, uint8_t value);
-    void pokeIO2(u16 addr, uint8_t value);
+    void poke(u16 addr, u8 value);
+    void pokeIO1(u16 addr, u8 value);
+    void pokeIO2(u16 addr, u8 value);
     
     unsigned numButtons() { return 2; }
     const char *getButtonTitle(unsigned nr);
@@ -97,7 +97,7 @@ public:
     /*! @details This function triggers all side effects that take place when
      *           the control register value changes.
      */
-    void setControlReg(uint8_t value);
+    void setControlReg(u8 value);
     
     virtual unsigned bank() { return (control >> 3) & 0x03; }
     virtual bool game() { return (control & 0x01) == 0; }

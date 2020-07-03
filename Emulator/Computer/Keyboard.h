@@ -31,10 +31,10 @@ class Keyboard : public HardwareComponent {
 private:
     
 	//! @brief    The C64 keyboard matrix indexed by row
-	uint8_t kbMatrixRow[8];
+	u8 kbMatrixRow[8];
 
     //! @brief    The C64 keyboard matrix indexed by column
-    uint8_t kbMatrixCol[8];
+    u8 kbMatrixCol[8];
 
     //! @brief    True iff shift lock is pressed
     bool shiftLock;
@@ -54,7 +54,7 @@ public:
     /*! @brief    Checks if a certain key is currently pressed.
      *  @details  The key is identified by its native row and column index.
      */
-    bool keyIsPressed(uint8_t row, uint8_t col);
+    bool keyIsPressed(u8 row, u8 col);
 
     //! @brief    Checks if the shift lock key is held down.
     bool shiftLockIsHoldDown() { return shiftLock; }
@@ -78,7 +78,7 @@ public:
 	/*! @brief    Presses a key.
      *  @details  The key is identified by its native row and column index.
      */
-	void pressKey(uint8_t row, uint8_t col);
+	void pressKey(u8 row, u8 col);
     
 	//! @brief    Presses the left shift hey.
 	// void pressLeftShiftKey() { pressKey(1,7); }
@@ -99,7 +99,7 @@ public:
 	/*! @brief    Releases a pressed key.
      *  @details  The key is identified by its native row and column index.
      */
-	void releaseKey(uint8_t row, uint8_t col);
+	void releaseKey(u8 row, u8 col);
     
     //! @brief    Releases the left shift key.
 	// void releaseShiftKey() { releaseKey(1,7); }
@@ -122,7 +122,7 @@ public:
     /*! @brief    Toggles a certain key.
      *  @details  The key is identified by its native row and column index.
      */
-    void toggleKey(uint8_t row, uint8_t col);
+    void toggleKey(u8 row, u8 col);
     
     //! @brief    Toggles the shift key.
     void toggleShiftKey() { toggleKey(1,7); }
@@ -163,12 +163,12 @@ public:
 	/*! @brief    Reads a row from keyboard matrix
 	 *  @param    columnMask  Indicates the rows to read
      */
-	uint8_t getRowValues(uint8_t columnMask);
+	u8 getRowValues(u8 columnMask);
 
     /*! @brief    Reads a column from keyboard matrix.
      *  @param    rowMask  Indicates the rows to read
      */
-    uint8_t getColumnValues(uint8_t rowMask);
+    u8 getColumnValues(u8 rowMask);
     
     
     //! @brief    Returns true if the C64 is currently in upper case mode.

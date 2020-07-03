@@ -55,17 +55,17 @@ Expert::stateSize()
 }
 
 void
-Expert::didLoadFromBuffer(uint8_t **buffer)
+Expert::didLoadFromBuffer(u8 **buffer)
 {
     Cartridge::didLoadFromBuffer(buffer);
     active = read8(buffer);
 }
 
 void
-Expert::didSaveToBuffer(uint8_t **buffer)
+Expert::didSaveToBuffer(u8 **buffer)
 {
     Cartridge::didSaveToBuffer(buffer);
-    write8(buffer, (uint8_t)active);
+    write8(buffer, (u8)active);
 }
 
 void
@@ -73,7 +73,7 @@ Expert::loadChip(unsigned nr, CRTFile *c)
 {
     u16 chipSize = c->chipSize(nr);
     u16 chipAddr = c->chipAddr(nr);
-    uint8_t *chipData = c->chipData(nr);
+    u8 *chipData = c->chipData(nr);
     
     if (nr != 0 || chipSize != 0x2000 || chipAddr != 0x8000) {
         warn("Corrupted CRT file. Aborting.");
@@ -89,7 +89,7 @@ Expert::loadChip(unsigned nr, CRTFile *c)
     }
 }
 
-uint8_t
+u8
 Expert::peek(u16 addr)
 {
     if (cartridgeRamIsVisible(addr)) {
@@ -104,7 +104,7 @@ Expert::peek(u16 addr)
     }
 }
 
-uint8_t
+u8
 Expert::peekIO1(u16 addr)
 {
     // Any IO1 access disables the cartridge
@@ -114,7 +114,7 @@ Expert::peekIO1(u16 addr)
 }
 
 void
-Expert::poke(u16 addr, uint8_t value)
+Expert::poke(u16 addr, u8 value)
 {
     if (cartridgeRamIsVisible(addr)) {
         
@@ -131,7 +131,7 @@ Expert::poke(u16 addr, uint8_t value)
 }
 
 void
-Expert::pokeIO1(u16 addr, uint8_t value)
+Expert::pokeIO1(u16 addr, u8 value)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
     
@@ -173,8 +173,8 @@ Expert::pressButton(unsigned nr)
             // not accurate, but it forces an NMI a trigger, regardless of the
             // current value of the NMI line.
             
-            uint8_t oldLine = c64->cpu.nmiLine;
-            uint8_t newLine = oldLine | CPU::INTSRC_EXPANSION;
+            u8 oldLine = c64->cpu.nmiLine;
+            u8 newLine = oldLine | CPU::INTSRC_EXPANSION;
             
             c64->cpu.releaseNmiLine((CPU::IntSource)0xFF);
             c64->cpu.pullDownNmiLine((CPU::IntSource)newLine);

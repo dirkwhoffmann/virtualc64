@@ -26,18 +26,18 @@ CartridgeRom::CartridgeRom()
 }
 
 /*
-CartridgeRom::CartridgeRom(uint8_t **buffer) : CartridgeRom()
+CartridgeRom::CartridgeRom(u8 **buffer) : CartridgeRom()
 {
     assert(buffer != NULL);
     loadFromBuffer(buffer);
 }
 */
 
-CartridgeRom::CartridgeRom(u16 size, u16 loadAddress, const uint8_t *buffer) : CartridgeRom()
+CartridgeRom::CartridgeRom(u16 size, u16 loadAddress, const u8 *buffer) : CartridgeRom()
 {
     this->size = size;
     this->loadAddress = loadAddress;
-    rom = new uint8_t[size];
+    rom = new u8[size];
     if (buffer) {
         memcpy(rom, buffer, size);
     }
@@ -56,16 +56,16 @@ CartridgeRom::stateSize()
 }
 
 void
-CartridgeRom::didLoadFromBuffer(uint8_t **buffer)
+CartridgeRom::didLoadFromBuffer(u8 **buffer)
 {
     if (rom) delete[] rom;
-    rom = new uint8_t[size];
+    rom = new u8[size];
     
     readBlock(buffer, rom, size);
 }
 
 void
-CartridgeRom::didSaveToBuffer(uint8_t **buffer)
+CartridgeRom::didSaveToBuffer(u8 **buffer)
 {
     writeBlock(buffer, rom, size);
 }
@@ -88,7 +88,7 @@ CartridgeRom::mapsToH() {
     return loadAddress == 0xA000 || loadAddress == 0xE000;
 }
 
-uint8_t
+u8
 CartridgeRom::peek(u16 addr)
 {
     assert(addr < size);

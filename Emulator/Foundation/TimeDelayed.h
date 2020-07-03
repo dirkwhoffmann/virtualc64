@@ -22,13 +22,13 @@ template <class T> class TimeDelayed {
     T *pipeline = NULL;
     
     //! @brief   Number of elements hold in pipeline
-    uint8_t capacity = 0;
+    u8 capacity = 0;
     
     //! @brief  Remembers the time of the most recent call to write()
     i64 timeStamp = 0;
     
     //! @brief  Number of cycles to elapse until a written value shows up
-    uint8_t delay = 0;
+    u8 delay = 0;
     
     //! @brief   Pointer to reference clock
     i64 *clock = NULL;
@@ -36,10 +36,10 @@ template <class T> class TimeDelayed {
     public:
     
     //! @brief   Constructors
-    TimeDelayed(uint8_t delay, uint8_t capacity, u64 *clock);
-    TimeDelayed(uint8_t delay, uint8_t capacity) : TimeDelayed(delay, capacity, NULL) { };
-    TimeDelayed(uint8_t delay, u64 *clock) : TimeDelayed(delay, delay + 1, clock) { };
-    TimeDelayed(uint8_t delay) : TimeDelayed(delay, delay + 1, NULL) { };
+    TimeDelayed(u8 delay, u8 capacity, u64 *clock);
+    TimeDelayed(u8 delay, u8 capacity) : TimeDelayed(delay, capacity, NULL) { };
+    TimeDelayed(u8 delay, u64 *clock) : TimeDelayed(delay, delay + 1, clock) { };
+    TimeDelayed(u8 delay) : TimeDelayed(delay, delay + 1, NULL) { };
     
     //! @brief   Destructor
     ~TimeDelayed();
@@ -63,7 +63,7 @@ template <class T> class TimeDelayed {
     void write(T value) { writeWithDelay(value, 0); }
     
     //! @brief   Work horse for writing a value.
-    void writeWithDelay(T value, uint8_t waitCycles);
+    void writeWithDelay(T value, u8 waitCycles);
     
     //! @brief   Reads the most recent pipeline element.
     T current() { return pipeline[0]; }
@@ -80,14 +80,14 @@ template <class T> class TimeDelayed {
     }
     
     //! @brief   Reads a value from the pipeline with a custom delay.
-    T readWithDelay(uint8_t delay) {
+    T readWithDelay(u8 delay) {
         assert(delay <= this->capacity);
         return pipeline[MAX(0, timeStamp - *clock + delay)];
     }
     
     size_t stateSize();
-    void loadFromBuffer(uint8_t **buffer);
-    void saveToBuffer(uint8_t **buffer);
+    void loadFromBuffer(u8 **buffer);
+    void saveToBuffer(u8 **buffer);
     void debug();
 };
 

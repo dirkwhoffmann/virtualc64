@@ -22,7 +22,7 @@ class G64File : public AnyDisk {
 private:
 
     //! @brief    Header signature
-    static const uint8_t magicBytes[];
+    static const u8 magicBytes[];
     
     /*! @brief    Number of the currently selected halftrack
      *  @details  0, if no halftrack is selected
@@ -36,7 +36,7 @@ public:
     //
     
     //! @brief    Returns true iff buffer contains a G64 file
-    static bool isG64Buffer(const uint8_t *buffer, size_t length);
+    static bool isG64Buffer(const u8 *buffer, size_t length);
     
     //! @brief    Returns true iff the specified file is a G64 file
     static bool isG64File(const char *filename);
@@ -53,7 +53,7 @@ public:
     G64File(size_t capacity);
 
     //! @brief    Factory method
-    static G64File *makeWithBuffer(const uint8_t *buffer, size_t length);
+    static G64File *makeWithBuffer(const u8 *buffer, size_t length);
     
     //! @brief    Factory method
     static G64File *makeWithFile(const char *path);

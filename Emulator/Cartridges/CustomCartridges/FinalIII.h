@@ -38,17 +38,17 @@ public:
     size_t stateSize() {
         return CartridgeWithRegister::stateSize() + 2;
     }
-    void didLoadFromBuffer(uint8_t **buffer)
+    void didLoadFromBuffer(u8 **buffer)
     {
         CartridgeWithRegister::didLoadFromBuffer(buffer);
         freeezeButtonIsPressed = (bool)read8(buffer);
         qD = (bool)read8(buffer);
     }
-    void didSaveToBuffer(uint8_t **buffer)
+    void didSaveToBuffer(u8 **buffer)
     {
         CartridgeWithRegister::didSaveToBuffer(buffer);
-        write8(buffer, (uint8_t)freeezeButtonIsPressed);
-        write8(buffer, (uint8_t)qD);
+        write8(buffer, (u8)freeezeButtonIsPressed);
+        write8(buffer, (u8)qD);
     }
     
     //
@@ -57,9 +57,9 @@ public:
     
     void resetCartConfig();
     
-    uint8_t peekIO1(u16 addr);
-    uint8_t peekIO2(u16 addr);
-    void pokeIO2(u16 addr, uint8_t value);
+    u8 peekIO1(u16 addr);
+    u8 peekIO2(u16 addr);
+    void pokeIO2(u16 addr, u8 value);
     void nmiDidTrigger();
     
     
@@ -73,13 +73,13 @@ public:
     void releaseButton(unsigned nr);
  
     //! @brief    Writes a new value into the control register.
-    void setControlReg(uint8_t value);
+    void setControlReg(u8 value);
 
     bool hidden() { return (control & 0x80) != 0; }
     bool nmi() { return (control & 0x40) != 0; }
     bool game() { return (control & 0x20) != 0; }
     bool exrom() { return (control & 0x10) != 0; }
-    uint8_t bank() { return (control & 0x03); }
+    u8 bank() { return (control & 0x03); }
     
     /*! @brief    Indicates if the control register is write enabled.
      *  @note     Final Cartridge III enables and disables the control register

@@ -63,7 +63,7 @@ EasyFlash::stateSize()
 }
 
 void
-EasyFlash::didLoadFromBuffer(uint8_t **buffer)
+EasyFlash::didLoadFromBuffer(u8 **buffer)
 {
     Cartridge::didLoadFromBuffer(buffer);
     bank = read8(buffer);
@@ -73,11 +73,11 @@ EasyFlash::didLoadFromBuffer(uint8_t **buffer)
 }
 
 void
-EasyFlash::didSaveToBuffer(uint8_t **buffer)
+EasyFlash::didSaveToBuffer(u8 **buffer)
 {
     Cartridge::didSaveToBuffer(buffer);
     write8(buffer, bank);
-    write8(buffer, (uint8_t)jumper);
+    write8(buffer, (u8)jumper);
     flashRomL.saveToBuffer(buffer);
     flashRomH.saveToBuffer(buffer);
 }
@@ -95,7 +95,7 @@ EasyFlash::loadChip(unsigned nr, CRTFile *c)
     
     u16 chipSize = c->chipSize(nr);
     u16 chipAddr = c->chipAddr(nr);
-    uint8_t *chipData = c->chipData(nr);
+    u8 *chipData = c->chipData(nr);
 
     if (nr == 0) {
         bank = 0;
@@ -135,7 +135,7 @@ EasyFlash::loadChip(unsigned nr, CRTFile *c)
     }
 }
 
-uint8_t
+u8
 EasyFlash::peek(u16 addr)
 {
     if (isROMLaddr(addr)) {
@@ -151,7 +151,7 @@ EasyFlash::peek(u16 addr)
 }
 
 /*
-uint8_t
+u8
 EasyFlash::spypeek(u16 addr)
 {
     if (isROMLaddr(addr)) {
@@ -168,7 +168,7 @@ EasyFlash::spypeek(u16 addr)
 */
 
 void
-EasyFlash::poke(u16 addr, uint8_t value)
+EasyFlash::poke(u16 addr, u8 value)
 {
     if (isROMLaddr(addr)) {
         flashRomL.poke(bank, addr & 0x1FFF, value);
@@ -181,21 +181,21 @@ EasyFlash::poke(u16 addr, uint8_t value)
     }
 }
 
-uint8_t
+u8
 EasyFlash::peekIO1(u16 addr)
 {
     // debug("WARNING: peekIO1\n");
     return 0;
 }
 
-uint8_t
+u8
 EasyFlash::peekIO2(u16 addr)
 {
     return peekRAM(addr & 0xFF);
 }
 
 void
-EasyFlash::pokeIO1(u16 addr, uint8_t value)
+EasyFlash::pokeIO1(u16 addr, u8 value)
 {
     if (addr == 0xDE00) { // Bank register
         
@@ -207,7 +207,7 @@ EasyFlash::pokeIO1(u16 addr, uint8_t value)
         
         setLED((value & 0x80) != 0);
         
-        uint8_t MXG = value & 0x07;
+        u8 MXG = value & 0x07;
         /* MXG
          * 000 : GAME from jumper, EXROM high (i.e. Ultimax or Off)
          * 001 : Reserved, don’t use this
@@ -266,7 +266,7 @@ EasyFlash::pokeIO1(u16 addr, uint8_t value)
 }
 
 void
-EasyFlash::pokeIO2(u16 addr, uint8_t value)
+EasyFlash::pokeIO2(u16 addr, u8 value)
 {
     pokeRAM(addr & 0xFF, value);
 }

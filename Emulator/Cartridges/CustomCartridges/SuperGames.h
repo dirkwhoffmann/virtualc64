@@ -18,7 +18,7 @@ public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_SUPER_GAMES; }
     
-    void pokeIO2(u16 addr, uint8_t value);
+    void pokeIO2(u16 addr, u8 value);
 };
 
 #endif

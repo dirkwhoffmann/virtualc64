@@ -65,15 +65,15 @@ typedef struct {
 typedef struct {
     
     u16 sprX[8];     // D000, D002, ..., D00E, upper bits from D010
-    uint8_t  sprY[8];     // D001, D003, ..., D00F
-    uint8_t  ctrl1;       // D011
-    uint8_t  sprEnable;   // D015
-    uint8_t  ctrl2;       // D016
-    uint8_t  sprExpandY;  // D017
-    uint8_t  sprPriority; // D01B
-    uint8_t  sprMC;       // D01C
-    uint8_t  sprExpandX;  // D01D
-    uint8_t  colors[15];  // D020 - D02E
+    u8  sprY[8];     // D001, D003, ..., D00F
+    u8  ctrl1;       // D011
+    u8  sprEnable;   // D015
+    u8  ctrl2;       // D016
+    u8  sprExpandY;  // D017
+    u8  sprPriority; // D01B
+    u8  sprMC;       // D01C
+    u8  sprExpandX;  // D01D
+    u8  colors[15];  // D020 - D02E
     
 } VICIIRegisters;
 
@@ -293,26 +293,26 @@ typedef enum {
  */
 typedef struct {
     u16 rasterline;
-    uint8_t cycle;
+    u8 cycle;
     u16 xCounter;
     bool badLine;
     bool ba; 
     DisplayMode displayMode;
-    uint8_t borderColor;
-    uint8_t backgroundColor0;
-    uint8_t backgroundColor1;
-    uint8_t backgroundColor2;
-    uint8_t backgroundColor3;
+    u8 borderColor;
+    u8 backgroundColor0;
+    u8 backgroundColor1;
+    u8 backgroundColor2;
+    u8 backgroundColor3;
     ScreenGeometry screenGeometry;
-    uint8_t dx;
-    uint8_t dy;
+    u8 dx;
+    u8 dy;
     bool verticalFrameFlipflop;
     bool horizontalFrameFlipflop;
     u16 memoryBankAddr;
     u16 screenMemoryAddr;
     u16 characterMemoryAddr;
-    uint8_t imr;
-    uint8_t irr;
+    u8 imr;
+    u8 irr;
     bool spriteCollisionIrqEnabled;
     bool backgroundCollisionIrqEnabled;
     bool rasterIrqEnabled;
@@ -327,12 +327,12 @@ typedef struct {
   
     bool enabled; 
     u16 x;
-    uint8_t y;
-    uint8_t ptr; 
-    uint8_t color;
+    u8 y;
+    u8 ptr; 
+    u8 color;
     bool multicolor;
-    uint8_t extraColor1;
-    uint8_t extraColor2;
+    u8 extraColor1;
+    u8 extraColor2;
     bool expandX;
     bool expandY;
     bool priority;

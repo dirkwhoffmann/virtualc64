@@ -60,7 +60,7 @@ public:
     void reset();
 
     //! @brief    Method from HardwareComponent
-    void didLoadFromBuffer(uint8_t **buffer);
+    void didLoadFromBuffer(u8 **buffer);
     
     //! @brief    Method from HardwareComponent
     void dump();
@@ -103,13 +103,13 @@ public:
      *  @details The bits are in the same order as they show up in the
      *           CIA's data port registers
      */
-    uint8_t bitmask();
+    u8 bitmask();
 
     //! @brief   Returns the potentiometer X value (analog mouse)
-    uint8_t potX();
+    u8 potX();
 
     //! @brief   Returns the potentiometer Y value (analog mouse)
-    uint8_t potY();
+    u8 potY();
 };
 
 #endif

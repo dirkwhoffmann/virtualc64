@@ -22,27 +22,27 @@ KcsPower::reset()
     eraseRAM(0xFF);
 }
 
-uint8_t
+u8
 KcsPower::peekIO1(u16 addr)
 {
     c64->expansionport.setGameAndExrom(1, addr & 0x02 ? 1 : 0);
     return peekRomL(0x1E00 | (addr & 0xFF));
 }
 
-uint8_t
+u8
 KcsPower::spypeekIO1(u16 addr)
 {
     return peekRomL(0x1E00 | (addr & 0xFF));
 }
 
-uint8_t
+u8
 KcsPower::peekIO2(u16 addr)
 {
     if (addr & 0x80) {
         
         /*
-         uint8_t exrom = c64->expansionport.getExromLine() ? 0x80 : 0x00;
-         uint8_t game = c64->expansionport.getGameLine() ? 0x40 : 0x00;
+         u8 exrom = c64->expansionport.getExromLine() ? 0x80 : 0x00;
+         u8 game = c64->expansionport.getGameLine() ? 0x40 : 0x00;
          return exrom | game | (c64->vic.getDataBusPhi1() & 0x3F);
          */
         return peekRAM(addr & 0x7F);
@@ -55,13 +55,13 @@ KcsPower::peekIO2(u16 addr)
 }
 
 void
-KcsPower::pokeIO1(u16 addr, uint8_t value)
+KcsPower::pokeIO1(u16 addr, u8 value)
 {
     c64->expansionport.setGameAndExrom(0, (addr & 0b10) ? 1 : 0);
 }
 
 void
-KcsPower::pokeIO2(u16 addr, uint8_t value)
+KcsPower::pokeIO2(u16 addr, u8 value)
 {
     if (!(addr & 0x80)) {
         pokeRAM(addr & 0x7F, value);

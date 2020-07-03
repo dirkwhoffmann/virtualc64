@@ -116,30 +116,30 @@ private:
 	u64 feed;
     
     //! @brief    Control register A
-	uint8_t CRA;
+	u8 CRA;
 
     //! @brief    Control register B
-    uint8_t CRB;
+    u8 CRB;
     
     //! @brief    Interrupt control register
-	uint8_t icr;
+	u8 icr;
 
     //! @brief    ICR bits that need to deleted when CIAAckIcr1 hits
-    uint8_t icrAck;
+    u8 icrAck;
 
     //! @brief    Interrupt mask register
-	uint8_t imr;
+	u8 imr;
 
 protected:
     
     //! @brief    Bit mask for PB outputs: 0 = port register, 1 = timer
-    uint8_t PB67TimerMode;
+    u8 PB67TimerMode;
     
     //! @brief    PB outputs bits 6 and 7 in timer mode
-	uint8_t PB67TimerOut;
+	u8 PB67TimerOut;
     
     //! @brief    PB outputs bits 6 and 7 in toggle mode
-	uint8_t PB67Toggle;
+	u8 PB67Toggle;
 		
     
     //
@@ -149,22 +149,22 @@ protected:
 protected:
     
     //! @brief    Peripheral data register A
-    uint8_t PRA;
+    u8 PRA;
     
     //! @brief    Peripheral data register B
-    uint8_t PRB;
+    u8 PRB;
     
     //! @brief    Data directon register A (0 = input, 1 = output)
-    uint8_t DDRA;
+    u8 DDRA;
     
     //! @brief    Data directon register B (0 = input, 1 = output)
-    uint8_t DDRB;
+    u8 DDRB;
     
     //! @brief    Peripheral port A (pins PA0 to PA7)
-    uint8_t PA;
+    u8 PA;
     
     //! @brief    Peripheral port A (pins PB0 to PB7)
-    uint8_t PB;
+    u8 PB;
 	
     
     //
@@ -197,7 +197,7 @@ private:
      *             bit transmitted. SDR data is shifted out MSB first and serial input data
      *             should also appear in this format.
      */
-    uint8_t SDR;
+    u8 SDR;
     
     //! @brief   Clock signal for driving the serial register
     bool serClk;
@@ -206,7 +206,7 @@ private:
     /*! @details The counter is set to 8 when the shift register is loaded and decremented
      *           when a bit is shifted out.
      */
-    uint8_t serCounter;
+    u8 serCounter;
     
     //
 	// Chip interface (port pins)
@@ -226,7 +226,7 @@ private:
      *            variable is increased by one. If it exceeds a certain
      *            threshhold, the chip is put into idle state via sleep()
      */
-    uint8_t tiredness;
+    u8 tiredness;
 
 public:
     
@@ -274,12 +274,12 @@ public:
     void setEmulateTimerBBug(bool value) { emulateTimerBBug = value; }
     
     //! @brief    Getter for peripheral port A
-    uint8_t getPA() { return PA; }
-    uint8_t getDDRA() { return DDRA; }
+    u8 getPA() { return PA; }
+    u8 getDDRA() { return DDRA; }
 
     //! @brief    Getter for peripheral port B
-    uint8_t getPB() { return PB; }
-    uint8_t getDDRB() { return DDRB; }
+    u8 getPB() { return PB; }
+    u8 getDDRB() { return DDRB; }
 
     //! @brief    Collects all data to be shown in the GUI's debug panel
     CIAInfo getInfo();
@@ -342,10 +342,10 @@ private:
     //
     
     //! @brief   Values driving port A from inside the chip
-    virtual uint8_t portAinternal() = 0;
+    virtual u8 portAinternal() = 0;
     
     //! @brief   Values driving port A from outside the chip
-    virtual uint8_t portAexternal() = 0;
+    virtual u8 portAexternal() = 0;
     
 public:
     
@@ -355,10 +355,10 @@ public:
 private:
     
     //! @brief   Values driving port B from inside the chip
-    virtual uint8_t portBinternal() = 0;
+    virtual u8 portBinternal() = 0;
     
     //! @brief   Values driving port B from outside the chip
-    virtual uint8_t portBexternal() = 0;
+    virtual u8 portBexternal() = 0;
     
     //! @brief   Computes the values which we currently see at port B
     virtual void updatePB() = 0;
@@ -366,10 +366,10 @@ private:
 protected:
     
     //! @brief   Action method for poking the PA register
-    virtual void pokePA(uint8_t value) { PRA = value; updatePA(); }
+    virtual void pokePA(u8 value) { PRA = value; updatePA(); }
 
     //! @brief   Action method for poking the DDRA register
-    virtual void pokeDDRA(uint8_t value) { DDRA = value; updatePA(); }
+    virtual void pokeDDRA(u8 value) { DDRA = value; updatePA(); }
 
     
     //
@@ -379,13 +379,13 @@ protected:
 public:
 
     //! @brief    Peeks a value from a CIA register.
-    uint8_t peek(u16 addr);
+    u8 peek(u16 addr);
     
     //! @brief    Peeks a value from a CIA register without causing side effects.
-    uint8_t spypeek(u16 addr);
+    u8 spypeek(u16 addr);
     
     //! @brief    Pokes a value into a CIA register.
-    void poke(u16 addr, uint8_t value);
+    void poke(u16 addr, u8 value);
     
     
     //
@@ -442,11 +442,11 @@ private:
     void pullDownInterruptLine();
     void releaseInterruptLine();
     
-    uint8_t portAinternal();
-    uint8_t portAexternal();
+    u8 portAinternal();
+    u8 portAexternal();
     void updatePA();
-    uint8_t portBinternal();
-    uint8_t portBexternal();
+    u8 portBinternal();
+    u8 portBexternal();
     void updatePB();
 };
 	
@@ -470,8 +470,8 @@ private:
     void pullDownInterruptLine();
     void releaseInterruptLine();
     
-    uint8_t portAinternal();
-    uint8_t portAexternal();
+    u8 portAinternal();
+    u8 portAexternal();
     
 public:
     
@@ -479,11 +479,11 @@ public:
     
 private:
     
-    uint8_t portBinternal();
-    uint8_t portBexternal();
+    u8 portBinternal();
+    u8 portBexternal();
     void updatePB();
-    void pokePA(uint8_t value);
-    void pokeDDRA(uint8_t value);
+    void pokePA(u8 value);
+    void pokeDDRA(u8 value);
 };
 
 #endif

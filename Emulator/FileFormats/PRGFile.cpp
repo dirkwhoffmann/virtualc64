@@ -10,7 +10,7 @@
 #include "PRGFile.h"
 
 bool
-PRGFile::isPRGBuffer(const uint8_t *buffer, size_t length)
+PRGFile::isPRGBuffer(const u8 *buffer, size_t length)
 {
     return length >= 2;
 }
@@ -35,7 +35,7 @@ PRGFile::PRGFile()
 }
 
 PRGFile *
-PRGFile::makeWithBuffer(const uint8_t *buffer, size_t length)
+PRGFile::makeWithBuffer(const u8 *buffer, size_t length)
 {
     PRGFile *archive = new PRGFile();
     
@@ -78,14 +78,14 @@ PRGFile::makeWithAnyArchive(AnyArchive *otherArchive) {
     
     // Determine file size and allocate memory
     archive->size = 2 + otherArchive->getSizeOfItem();
-    if ((archive->data = new uint8_t[archive->size]) == NULL) {
+    if ((archive->data = new u8[archive->size]) == NULL) {
         archive->warn("Failed to allocate %d bytes of memory\n", archive->size);
         delete archive;
         return NULL;
     }
     
     // Load address
-    uint8_t* ptr = archive->data;
+    u8* ptr = archive->data;
     *ptr++ = LO_BYTE(otherArchive->getDestinationAddrOfItem());
     *ptr++ = HI_BYTE(otherArchive->getDestinationAddrOfItem());
     
@@ -93,7 +93,7 @@ PRGFile::makeWithAnyArchive(AnyArchive *otherArchive) {
     int byte;
     otherArchive->selectItem(exportItem);
     while ((byte = otherArchive->readItem()) != EOF) {
-        *ptr++ = (uint8_t)byte;
+        *ptr++ = (u8)byte;
     }
     
     return archive;

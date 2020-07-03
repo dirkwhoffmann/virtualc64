@@ -15,26 +15,26 @@ WarpSpeed::resetCartConfig()
     c64->expansionport.setCartridgeMode(CRT_16K);
 }
 
-uint8_t
+u8
 WarpSpeed::peekIO1(u16 addr)
 {
     return Cartridge::peekRomL(0x1E00 | (addr & 0xFF));
 }
 
-uint8_t
+u8
 WarpSpeed::peekIO2(u16 addr)
 {
     return Cartridge::peekRomL(0x1F00 | (addr & 0xFF));
 }
 
 void
-WarpSpeed::pokeIO1(u16 addr, uint8_t value)
+WarpSpeed::pokeIO1(u16 addr, u8 value)
 {
     c64->expansionport.setCartridgeMode(CRT_16K);
 }
 
 void
-WarpSpeed::pokeIO2(u16 addr, uint8_t value)
+WarpSpeed::pokeIO2(u16 addr, u8 value)
 {
     c64->expansionport.setCartridgeMode(CRT_OFF);
 }

@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-uint8_t
+u8
 Westermann::peekIO2(u16 addr)
 {
     // Reading from I/O 2 switched the cartridge on

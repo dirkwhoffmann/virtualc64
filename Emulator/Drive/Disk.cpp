@@ -134,12 +134,12 @@ Disk::setModified(bool b)
 
 
 void
-Disk::encodeGcr(uint8_t value, Track t, HeadPosition offset)
+Disk::encodeGcr(u8 value, Track t, HeadPosition offset)
 {
     assert(isTrackNumber(t));
     
-    uint8_t nibble1 = bin2gcr(value >> 4);
-    uint8_t nibble2 = bin2gcr(value & 0xF);
+    u8 nibble1 = bin2gcr(value >> 4);
+    u8 nibble2 = bin2gcr(value & 0xF);
     
     writeBitToTrack(t, offset++, nibble1 & 0x10);
     writeBitToTrack(t, offset++, nibble1 & 0x08);
@@ -155,7 +155,7 @@ Disk::encodeGcr(uint8_t value, Track t, HeadPosition offset)
 }
 
 void
-Disk::encodeGcr(uint8_t *values, size_t length, Track t, HeadPosition offset)
+Disk::encodeGcr(u8 *values, size_t length, Track t, HeadPosition offset)
 {
     for (size_t i = 0; i < length; i++, values++, offset += 10) {
         encodeGcr(*values, t, offset);
@@ -163,11 +163,11 @@ Disk::encodeGcr(uint8_t *values, size_t length, Track t, HeadPosition offset)
 }
 
 void
-Disk::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, Track t, unsigned offset)
+Disk::encodeGcr(u8 b1, u8 b2, u8 b3, u8 b4, Track t, unsigned offset)
 {
     assert(isTrackNumber(t));
     
-    uint8_t buffer[] = { b1, b2, b3, b4 };
+    u8 buffer[] = { b1, b2, b3, b4 };
     
     encodeGcr(buffer, 4, t, offset);
     /*
@@ -192,8 +192,8 @@ Disk::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, Track t, unsigne
     */
 }
 
-uint8_t
-Disk::decodeGcrNibble(uint8_t *gcr)
+u8
+Disk::decodeGcrNibble(u8 *gcr)
 {
     assert(gcr != NULL);
     
@@ -203,8 +203,8 @@ Disk::decodeGcrNibble(uint8_t *gcr)
     return invgcr[codeword];
 }
 
-uint8_t
-Disk::decodeGcr(uint8_t *gcr)
+u8
+Disk::decodeGcr(u8 *gcr)
 {
     assert(gcr != NULL);
     
@@ -311,7 +311,7 @@ Disk::analyzeHalftrack(Halftrack ht)
     memcpy(trackInfo.bit + len, trackInfo.bit, len);
     
     // Indicates where the sector headers blocks and the sectors data blocks start.
-    uint8_t sync[sizeof(trackInfo.bit)];
+    u8 sync[sizeof(trackInfo.bit)];
     memset(sync, 0, sizeof(sync));
     
     // Scan for SYNC sequences and decode the byte that follows.
@@ -350,7 +350,7 @@ Disk::analyzeHalftrack(Halftrack ht)
     }
     
     // Compute offsets for all sectors
-    uint8_t sector = UINT8_MAX;
+    u8 sector = UINT8_MAX;
     for (unsigned i = startOffset; i < startOffset + len; i++) {
         
         if (sync[i] == 0x08) {
@@ -412,11 +412,11 @@ Disk::analyzeSectorHeaderBlock(size_t offset)
     assert(decodeGcr(trackInfo.bit + offset) == 0x08);
     offset += 10;
     
-    uint8_t s = decodeGcr(trackInfo.bit + offset + 10);
-    uint8_t t = decodeGcr(trackInfo.bit + offset + 20);
-    uint8_t id2 = decodeGcr(trackInfo.bit + offset + 30);
-    uint8_t id1 = decodeGcr(trackInfo.bit + offset + 40);
-    uint8_t checksum = id1 ^ id2 ^ t ^ s;
+    u8 s = decodeGcr(trackInfo.bit + offset + 10);
+    u8 t = decodeGcr(trackInfo.bit + offset + 20);
+    u8 id2 = decodeGcr(trackInfo.bit + offset + 30);
+    u8 id1 = decodeGcr(trackInfo.bit + offset + 40);
+    u8 checksum = id1 ^ id2 ^ t ^ s;
 
     if (checksum != decodeGcr(trackInfo.bit + offset)) {
         log(offset, 10, "Header block at index %d contains an invalid checksum.\n", offset);
@@ -430,7 +430,7 @@ Disk::analyzeSectorDataBlock(size_t offset)
     assert(decodeGcr(trackInfo.bit + offset) == 0x07);
     offset += 10;
     
-    uint8_t checksum = 0;
+    u8 checksum = 0;
     for (unsigned i = 0; i < 256; i++, offset += 10) {
         checksum ^= decodeGcr(trackInfo.bit + offset);
     }
@@ -464,7 +464,7 @@ Disk::diskNameAsString()
     size_t offset = trackInfo.sectorInfo[0].dataBegin + (0x90 * 10);
     
     for (i = 0; i < 255; i++, offset += 10) {
-        uint8_t value = decodeGcr(trackInfo.bit + offset);
+        u8 value = decodeGcr(trackInfo.bit + offset);
         if (value == 0xA0)
             break;
         text[i] = value;
@@ -508,13 +508,13 @@ Disk::sectorDataAsString(Sector nr)
 }
 
 const char *
-Disk::sectorBytesAsString(uint8_t *buffer, size_t length)
+Disk::sectorBytesAsString(u8 *buffer, size_t length)
 {
     size_t gcr_offset = 0;
     size_t str_offset = 0;
     
     for (size_t i = 0; i < length; i++, gcr_offset += 10, str_offset += 3) {
-        uint8_t value = decodeGcr(buffer + gcr_offset);
+        u8 value = decodeGcr(buffer + gcr_offset);
         sprint8x(text + str_offset, value);
         text[str_offset + 2] = ' ';
     }
@@ -527,7 +527,7 @@ Disk::sectorBytesAsString(uint8_t *buffer, size_t length)
 //
 
 size_t
-Disk::decodeDisk(uint8_t *dest)
+Disk::decodeDisk(u8 *dest)
 {
     // Determine highest non-empty track
     Track t = 42;
@@ -544,7 +544,7 @@ Disk::decodeDisk(uint8_t *dest)
 }
 
 size_t
-Disk::decodeDisk(uint8_t *dest, unsigned numTracks)
+Disk::decodeDisk(u8 *dest, unsigned numTracks)
 {
     unsigned numBytes = 0;
 
@@ -564,7 +564,7 @@ Disk::decodeDisk(uint8_t *dest, unsigned numTracks)
 }
 
 size_t
-Disk::decodeTrack(Track t, uint8_t *dest)
+Disk::decodeTrack(Track t, u8 *dest)
 {
     unsigned numBytes = 0;
     unsigned numSectors = numberOfSectorsInTrack(t);
@@ -592,7 +592,7 @@ Disk::decodeTrack(Track t, uint8_t *dest)
 }
 
 size_t
-Disk::decodeSector(size_t offset, uint8_t *dest)
+Disk::decodeSector(size_t offset, u8 *dest)
 {
     // The first byte must be 0x07 (indicating a data block)
     assert(decodeGcr(trackInfo.bit + offset) == 0x07);
@@ -610,7 +610,7 @@ Disk::decodeSector(size_t offset, uint8_t *dest)
 
 /*
 size_t
-Disk::decodeBrokenSector(uint8_t *dest)
+Disk::decodeBrokenSector(u8 *dest)
 {
     if (dest) {
         for (unsigned i = 0; i < 256; i++) {
@@ -658,7 +658,7 @@ Disk::encodeArchive(G64File *a)
         for (unsigned i = 0; i < size; i++) {
             int b = a->readHalftrack();
             assert(b != -1);
-            data.halftrack[ht][i] = (uint8_t)b;
+            data.halftrack[ht][i] = (u8)b;
         }
         assert(a->readHalftrack() == -1 /* EOF */);
     }
@@ -737,7 +737,7 @@ Disk::encodeArchive(D64File *a, bool alignTracks)
 }
 
 size_t
-Disk::encodeTrack(D64File *a, Track t, uint8_t tailGap, HeadPosition start)
+Disk::encodeTrack(D64File *a, Track t, u8 tailGap, HeadPosition start)
 {
     assert(isTrackNumber(t));
     debug(3, "Encoding track %d\n", t);
@@ -762,16 +762,16 @@ Disk::encodeSector(D64File *a, Track t, Sector s, HeadPosition start, int tailGa
     assert(isValidTrackSectorPair(t, s));
     
     HeadPosition offset = start;
-    uint8_t errorCode = a->errorCode(t, s);
+    u8 errorCode = a->errorCode(t, s);
     
     a->selectTrackAndSector(t, s);
     
     debug(4, "  Encoding track/sector %d/%d\n", t, s);
     
     // Get disk id and compute checksum
-    uint8_t id1 = a->diskId1();
-    uint8_t id2 = a->diskId2();
-    uint8_t checksum = id1 ^ id2 ^ t ^ s; // Header checksum byte
+    u8 id1 = a->diskId1();
+    u8 id2 = a->diskId2();
+    u8 checksum = id1 ^ id2 ^ t ^ s; // Header checksum byte
     
     // SYNC (0xFF 0xFF 0xFF 0xFF 0xFF)
     if (errorCode == 0x3) {
@@ -851,7 +851,7 @@ Disk::encodeSector(D64File *a, Track t, Sector s, HeadPosition start, int tailGa
     // Data bytes
     checksum = 0;
     for (unsigned i = 0; i < 256; i++, offset += 10) {
-        uint8_t byte = (uint8_t)a->readTrack();
+        u8 byte = (u8)a->readTrack();
         checksum ^= byte;
         encodeGcr(byte, t, offset);
     }

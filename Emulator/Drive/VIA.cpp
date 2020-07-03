@@ -217,7 +217,7 @@ VIA6522::executeTimer2()
 // Peeking and poking
 //
 
-uint8_t 
+u8 
 VIA6522::peek(u16 addr)
 {
 	assert (addr <= 0xF);
@@ -307,12 +307,12 @@ VIA6522::peek(u16 addr)
     return 0;
 }
 
-uint8_t
+u8
 VIA6522::peekORA(bool handshake)
 {
     clearInterruptFlag_CA1();
 
-    uint8_t CA2control = (pcr >> 1) & 0x07; // ----xxx-
+    u8 CA2control = (pcr >> 1) & 0x07; // ----xxx-
     
     switch (CA2control) {
         case 0: // Input mode: Interrupt on negative edge
@@ -353,12 +353,12 @@ VIA6522::peekORA(bool handshake)
     return ira;
 }
 
-uint8_t
+u8
 VIA6522::peekORB()
 {
     clearInterruptFlag_CB1();
     
-    uint8_t CB2control = (pcr >> 5) & 0x07; // xxx-----
+    u8 CB2control = (pcr >> 5) & 0x07; // xxx-----
     
     switch (CB2control) {
         case 0: // Input mode: Interrupt on negative edge
@@ -393,7 +393,7 @@ VIA6522::peekORB()
     return irb;
 }
 
-uint8_t
+u8
 VIA6522::spypeek(u16 addr)
 {
     assert (addr <= 0xF);
@@ -421,8 +421,8 @@ VIA6522::spypeek(u16 addr)
             
         case 0xD: { // IFR - Interrupt Flag Register
             
-            uint8_t ioD = ifr & 0x7F;
-            uint8_t irq = (ifr & ier) ? 0x80 : 0x00;
+            u8 ioD = ifr & 0x7F;
+            u8 irq = (ifr & ier) ? 0x80 : 0x00;
             return ioD | irq;
         }
   
@@ -433,7 +433,7 @@ VIA6522::spypeek(u16 addr)
     return 0;
 }
 
-void VIA6522::poke(u16 addr, uint8_t value)
+void VIA6522::poke(u16 addr, u8 value)
 {
     assert (addr <= 0x0F);
     
@@ -604,7 +604,7 @@ void VIA6522::poke(u16 addr, uint8_t value)
 }
 
 void
-VIA6522::pokeORA(uint8_t value, bool handshake)
+VIA6522::pokeORA(u8 value, bool handshake)
 {
     clearInterruptFlag_CA1();
     
@@ -639,7 +639,7 @@ VIA6522::pokeORA(uint8_t value, bool handshake)
 }
 
 void
-VIA6522::pokeORB(uint8_t value)
+VIA6522::pokeORB(u8 value)
 {
     clearInterruptFlag_CB1();
         
@@ -674,7 +674,7 @@ VIA6522::pokeORB(uint8_t value)
 }
 
 void
-VIA6522::pokePCR(uint8_t value)
+VIA6522::pokePCR(u8 value)
 {
     pcr = value;
     
@@ -715,7 +715,7 @@ VIA6522::pokePCR(uint8_t value)
     }
 }
 
-uint8_t
+u8
 VIA6522::portAinternal()
 {
     return ora;
@@ -727,7 +727,7 @@ VIA6522::updatePA()
     pa = (portAinternal() & ddra) | (portAexternal() & ~ddra);
 }
 
-uint8_t
+u8
 VIA6522::portBinternal()
 {
     return orb;
@@ -752,7 +752,7 @@ void
 VIA6522::toggleCA1()
 {
     // Check for active transition (positive or negative edge)
-    uint8_t ctrl = ca1Control();
+    u8 ctrl = ca1Control();
     bool active = (ca1 && ctrl == 0) || (!ca1 && ctrl == 1);
     ca1 = !ca1;
     
@@ -793,7 +793,7 @@ VIA6522::setCA1(bool value)
     if (!value && isVia2()) drive->cpu.setV(1);
     
     // Check for active transition (can be positive or negative)
-    uint8_t ctrl = ca1Control();
+    u8 ctrl = ca1Control();
     bool active = (!ca1 && ctrl == 0) || (ca1 && ctrl == 1);
     if (!active) return;
     
@@ -901,13 +901,13 @@ VIA1::releaseIrqLine() {
     drive->cpu.releaseIrqLine(CPU::INTSRC_VIA1);
 }
 
-uint8_t
+u8
 VIA1::portAexternal()
 {
     return 0xFF;
 }
 
-uint8_t
+u8
 VIA1::portBexternal()
 {
     // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
@@ -915,7 +915,7 @@ VIA1::portBexternal()
     // |  ATN  | Device addr.  |  ATN  | Clock | Clock | Data  | Data  |
     // |  in   |               |  ack  |  out  |  in   |  out  |  in   |
     
-    uint8_t external =
+    u8 external =
     (c64->iec.atnLine ? 0x00 : 0x80) |
     (c64->iec.clockLine ? 0x00 : 0x04) |
     (c64->iec.dataLine ? 0x00 : 0x01);
@@ -952,14 +952,14 @@ VIA2::~VIA2()
 	debug(3, "  Releasing VIA2...\n");
 }
 
-uint8_t
+u8
 VIA2::portAexternal()
 {
     // TODO: Which value is returned in write mode?
     return drive->readShiftreg & 0xFF;
 }
 
-uint8_t
+u8
 VIA2::portBexternal()
 {
     bool sync     = drive->getSync();
@@ -971,9 +971,9 @@ VIA2::portBexternal()
 void
 VIA2::updatePB()
 {
-    uint8_t oldPb = pb;
+    u8 oldPb = pb;
     VIA6522::updatePB();
-    uint8_t newPb = pb;
+    u8 newPb = pb;
     
     // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
     // -----------------------------------------------------------------

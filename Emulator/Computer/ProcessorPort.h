@@ -23,10 +23,10 @@
 class ProcessorPort : public HardwareComponent {
    
     //! @brief    Processor port bits
-    uint8_t port;
+    u8 port;
     
     //! @brief    Processor port direction bits
-    uint8_t direction;
+    u8 direction;
 
     //! @brief    Clock cycle when floating bit values reach zero
     /*! @details  Bit 3, 6, and 7 of the processor need our special attention.
@@ -71,16 +71,16 @@ public:
     //
     
     //! @brief    Reads from the processor port register.
-    uint8_t read();
+    u8 read();
 
     //! @brief    Reads from the processor port direction register.
-    uint8_t readDirection();
+    u8 readDirection();
 
     //! @brief    Writes to the processor port register.
-    void write(uint8_t value);
+    void write(u8 value);
     
     //! @brief    Writes to the processor port direction register.
-    void writeDirection(uint8_t value);
+    void writeDirection(u8 value);
 };
 
 #endif 

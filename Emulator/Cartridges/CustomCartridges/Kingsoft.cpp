@@ -23,9 +23,9 @@ Kingsoft::updatePeekPokeLookupTables()
     if (c64->getUltimax()) {
         
         // $0000 - $7FFF and $C000 - $DFFF are usable the normal way
-        uint8_t exrom = 0x10;
-        uint8_t game  = 0x08;
-        uint8_t index = (c64->processorPort.read() & 0x07) | exrom | game;
+        u8 exrom = 0x10;
+        u8 game  = 0x08;
+        u8 index = (c64->processorPort.read() & 0x07) | exrom | game;
 
         for (unsigned bank = 0x1; bank <= 0x7; bank++) {
             MemoryType type = c64->mem.bankMap[index][bank];
@@ -38,7 +38,7 @@ Kingsoft::updatePeekPokeLookupTables()
     }
 }
 
-uint8_t
+u8
 Kingsoft::peekIO1(u16 addr)
 {
     // Switch to 16KB game mode
@@ -51,7 +51,7 @@ Kingsoft::peekIO1(u16 addr)
 }
 
 void
-Kingsoft::pokeIO1(u16 addr, uint8_t value)
+Kingsoft::pokeIO1(u16 addr, u8 value)
 {
     // Switch to (faked) Ultimax mode
     c64->expansionport.setCartridgeMode(CRT_ULTIMAX);

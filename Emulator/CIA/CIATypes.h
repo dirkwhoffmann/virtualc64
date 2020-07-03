@@ -23,14 +23,14 @@ inline bool isCIAModel(CIAModel model) {
  */
 typedef struct {
     struct {
-        uint8_t port;
-        uint8_t reg;
-        uint8_t dir;
+        u8 port;
+        u8 reg;
+        u8 dir;
     } portA;
     struct {
-        uint8_t port;
-        uint8_t reg;
-        uint8_t dir;
+        u8 port;
+        u8 reg;
+        u8 dir;
     } portB;
     struct {
         u16 count;
@@ -48,8 +48,8 @@ typedef struct {
         bool pbout;
         bool oneShot;
     } timerB;
-    uint8_t icr;
-    uint8_t imr;
+    u8 icr;
+    u8 imr;
     bool intLine;
     TODInfo tod;
     bool todIntEnable;

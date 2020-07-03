@@ -37,15 +37,15 @@ strlen16(const u16 *unichars)
     return count;
 }
 
-uint8_t
-petscii2printable(uint8_t c, uint8_t subst)
+u8
+petscii2printable(u8 c, u8 subst)
 {
     if (c >= 0x20 /*' '*/ && c <= 0x7E /* ~ */) return c;
     return subst;
 }
 
-uint8_t
-ascii2pet(uint8_t asciichar)
+u8
+ascii2pet(u8 asciichar)
 {
     if (asciichar == 0x00)
         return 0x00;
@@ -69,10 +69,10 @@ ascii2petStr(char *str)
 }
 
 void
-sprint8d(char *s, uint8_t value)
+sprint8d(char *s, u8 value)
 {
     for (int i = 2; i >= 0; i--) {
-        uint8_t digit = value % 10;
+        u8 digit = value % 10;
         s[i] = '0' + digit;
         value /= 10;
     }
@@ -80,10 +80,10 @@ sprint8d(char *s, uint8_t value)
 }
 
 void
-sprint8x(char *s, uint8_t value)
+sprint8x(char *s, u8 value)
 {
     for (int i = 1; i >= 0; i--) {
-        uint8_t digit = value % 16;
+        u8 digit = value % 16;
         s[i] = (digit <= 9) ? ('0' + digit) : ('A' + digit - 10);
         value /= 16;
     }
@@ -91,7 +91,7 @@ sprint8x(char *s, uint8_t value)
 }
 
 void
-sprint8b(char *s, uint8_t value)
+sprint8b(char *s, u8 value)
 {
     for (int i = 7; i >= 0; i--) {
         s[i] = (value & 0x01) ? '1' : '0';
@@ -104,7 +104,7 @@ void
 sprint16d(char *s, u16 value)
 {
     for (int i = 4; i >= 0; i--) {
-        uint8_t digit = value % 10;
+        u8 digit = value % 10;
         s[i] = '0' + digit;
         value /= 10;
     }
@@ -115,7 +115,7 @@ void
 sprint16x(char *s, u16 value)
 {
     for (int i = 3; i >= 0; i--) {
-        uint8_t digit = value % 16;
+        u8 digit = value % 16;
         s[i] = (digit <= 9) ? ('0' + digit) : ('A' + digit - 10);
         value /= 16;
     }
@@ -217,7 +217,7 @@ checkFileSize(const char *filename, long min, long max)
 }
 
 bool
-matchingFileHeader(const char *path, const uint8_t *header, size_t length)
+matchingFileHeader(const char *path, const u8 *header, size_t length)
 {
     assert(path != NULL);
     assert(header != NULL);
@@ -241,7 +241,7 @@ matchingFileHeader(const char *path, const uint8_t *header, size_t length)
 }
 
 bool
-matchingBufferHeader(const uint8_t *buffer, const uint8_t *header, size_t length)
+matchingBufferHeader(const u8 *buffer, const u8 *header, size_t length)
 {
     assert(buffer != NULL);
     assert(header != NULL);
@@ -256,7 +256,7 @@ matchingBufferHeader(const uint8_t *buffer, const uint8_t *header, size_t length
 
 #if 0
 bool 
-checkFileHeader(const char *filename, const uint8_t *header)
+checkFileHeader(const char *filename, const u8 *header)
 {
 	int i, c;
 	bool result = true;
@@ -281,28 +281,28 @@ checkFileHeader(const char *filename, const uint8_t *header)
 }
 #endif
 
-uint8_t 
+u8 
 localTimeSec()
 {
 	time_t t = time(NULL);
 	struct tm *loctime = localtime(&t);
-	return (uint8_t)loctime->tm_sec;
+	return (u8)loctime->tm_sec;
 }
 
-uint8_t 
+u8 
 localTimeMinute()
 {
 	time_t t = time(NULL);
 	struct tm *loctime = localtime(&t);
-	return (uint8_t)loctime->tm_min;
+	return (u8)loctime->tm_min;
 }
 
-uint8_t 
+u8 
 localTimeHour()
 {
 	time_t t = time(NULL);
 	struct tm *loctime = localtime(&t);
-	return (uint8_t)loctime->tm_hour;
+	return (u8)loctime->tm_hour;
 }
 
 	
@@ -338,7 +338,7 @@ sleepUntil(u64 kernelTargetTime, u64 kernelEarlyWakeup)
 }
 
 u32
-fnv_1a_32(uint8_t *addr, size_t size)
+fnv_1a_32(u8 *addr, size_t size)
 {
     if (addr == NULL || size == 0) return 0;
 
@@ -352,7 +352,7 @@ fnv_1a_32(uint8_t *addr, size_t size)
 }
 
 u64
-fnv_1a_64(uint8_t *addr, size_t size)
+fnv_1a_64(u8 *addr, size_t size)
 {
     if (addr == NULL || size == 0) return 0;
 

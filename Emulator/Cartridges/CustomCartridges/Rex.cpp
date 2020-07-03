@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-uint8_t
+u8
 Rex::peekIO2(u16 addr)
 {
     // Any read access to $DF00 - $DFBF disables the ROM

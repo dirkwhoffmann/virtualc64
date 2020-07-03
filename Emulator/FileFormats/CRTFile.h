@@ -31,13 +31,13 @@ private:
     static const unsigned MAX_PACKETS = 128;
     
     //! @brief    Header signature
-    static const uint8_t magicBytes[];
+    static const u8 magicBytes[];
         
     //! @brief    Number of chips contained in cartridge file
     unsigned int numberOfChips = 0;
     
     //! @brief    Indicates where each chip section starts
-    uint8_t *chips[MAX_PACKETS];
+    u8 *chips[MAX_PACKETS];
 
 public:
     
@@ -46,19 +46,19 @@ public:
     //
     
     //! @brief    Returns true if buffer contains a CRT file.
-    static bool isCRTBuffer(const uint8_t *buffer, size_t length);
+    static bool isCRTBuffer(const u8 *buffer, size_t length);
     
     //! @brief    Returns the cartridge type number stored in the CRT buffer.
-    static CartridgeType typeOfCRTBuffer(const uint8_t *buffer, size_t length);
+    static CartridgeType typeOfCRTBuffer(const u8 *buffer, size_t length);
     
     //! @brief    Returns the cartridge type name stored in the CRT buffer.
-    static const char *typeNameOfCRTBuffer(const uint8_t *buffer, size_t length);
+    static const char *typeNameOfCRTBuffer(const u8 *buffer, size_t length);
     
     //! @brief    Returns true if buffer contains a supported CRT file.
-    static bool isSupportedCRTBuffer(const uint8_t *buffer, size_t length);
+    static bool isSupportedCRTBuffer(const u8 *buffer, size_t length);
     
     //! @brief    Returns true if buffer contains a CRT file of unsupported type.
-    static bool isUnsupportedCRTBuffer(const uint8_t *buffer, size_t length);
+    static bool isUnsupportedCRTBuffer(const u8 *buffer, size_t length);
 
     //! @brief    Returns true if path points to a CRT file.
     static bool isCRTFile(const char *path);
@@ -75,7 +75,7 @@ public:
     CRTFile();
     
     //! @brief    Factory method
-    static CRTFile *makeWithBuffer(const uint8_t *buffer, size_t length);
+    static CRTFile *makeWithBuffer(const u8 *buffer, size_t length);
 
     //! @brief    Factory method
     static CRTFile *makeWithFile(const char *filename);
@@ -90,7 +90,7 @@ public:
     const char *typeAsString() { return "CRT"; }
     const char *getName() { return (char *)&data[0x20]; }
     bool hasSameType(const char *filename) { return CRTFile::isCRTFile(filename); }
-    bool readFromBuffer(const uint8_t *buffer, size_t length);
+    bool readFromBuffer(const u8 *buffer, size_t length);
     
     
     //
@@ -120,10 +120,10 @@ public:
     //
     
     //! @brief    Returns how many chips are contained in this cartridge
-    uint8_t chipCount() { return numberOfChips; }
+    u8 chipCount() { return numberOfChips; }
     
     //! @brief    Returns where the data of a certain chip can be found
-    uint8_t *chipData(unsigned nr) { return chips[nr]+0x10; }
+    u8 *chipData(unsigned nr) { return chips[nr]+0x10; }
     
     //! @brief    Returns the size of chip (8 KB or 16 KB)
     u16 chipSize(unsigned nr) { return LO_HI(chips[nr][0xF], chips[nr][0xE]); }

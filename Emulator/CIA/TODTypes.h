@@ -15,10 +15,10 @@
 //! @brief    Time of day information (TOD)
 typedef union {
     struct {
-        uint8_t tenth;
-        uint8_t seconds;
-        uint8_t minutes;
-        uint8_t hours;
+        u8 tenth;
+        u8 seconds;
+        u8 minutes;
+        u8 hours;
     };
     u32 value;
 } TimeOfDay;

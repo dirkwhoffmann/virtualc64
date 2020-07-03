@@ -14,8 +14,8 @@ VIC::getInfo()
 {
     VICInfo info;
     
-    uint8_t ctrl1 = reg.current.ctrl1;
-    uint8_t ctrl2 = reg.current.ctrl2;
+    u8 ctrl1 = reg.current.ctrl1;
+    u8 ctrl2 = reg.current.ctrl2;
 
     info.rasterline = c64->rasterLine;
     info.cycle = c64->rasterCycle;
@@ -117,7 +117,7 @@ VIC::setNumberOfRows(unsigned rs)
     assert(rs == 24 || rs == 25);
     
     suspend();
-    uint8_t cntrl = reg.current.ctrl1;
+    u8 cntrl = reg.current.ctrl1;
     WRITE_BIT(cntrl, 3, rs == 25);
     poke(0x11, cntrl);
     resume();
@@ -129,7 +129,7 @@ VIC::setNumberOfColumns(unsigned cs)
     assert(cs == 38 || cs == 40);
 
     suspend();
-    uint8_t cntrl = reg.current.ctrl2;
+    u8 cntrl = reg.current.ctrl2;
     WRITE_BIT(cntrl, 3, cs == 40);
     poke(0x16, cntrl);
     resume();
@@ -158,7 +158,7 @@ VIC::setScreenGeometry(ScreenGeometry mode)
 }
 
 void
-VIC::setVerticalRasterScroll(uint8_t offset)
+VIC::setVerticalRasterScroll(u8 offset)
 {
     assert(offset < 8);
     
@@ -169,7 +169,7 @@ VIC::setVerticalRasterScroll(uint8_t offset)
 }
 
 void
-VIC::setHorizontalRasterScroll(uint8_t offset)
+VIC::setHorizontalRasterScroll(u8 offset)
 {
     assert(offset < 8);
     
@@ -223,7 +223,7 @@ VIC::setSpriteX(unsigned nr, u16 x)
 }
 
 void
-VIC::setSpriteY(unsigned nr, uint8_t y)
+VIC::setSpriteY(unsigned nr, u8 y)
 {
     assert(nr < 8);
     
@@ -234,7 +234,7 @@ VIC::setSpriteY(unsigned nr, uint8_t y)
 }
 
 void
-VIC::setSpritePtr(unsigned nr, uint8_t ptr)
+VIC::setSpritePtr(unsigned nr, u8 ptr)
 {
     assert(nr < 8);
     
@@ -247,7 +247,7 @@ VIC::setSpritePtr(unsigned nr, uint8_t ptr)
 }
 
 void
-VIC::setSpriteColor(unsigned nr, uint8_t color)
+VIC::setSpriteColor(unsigned nr, u8 color)
 {
     assert(nr < 8);
     
@@ -258,7 +258,7 @@ VIC::setSpriteColor(unsigned nr, uint8_t color)
 }
 
 void
-VIC::setSpriteEnabled(uint8_t nr, bool b)
+VIC::setSpriteEnabled(u8 nr, bool b)
 {
     suspend();
     WRITE_BIT(reg.current.sprEnable, nr, b);
@@ -266,7 +266,7 @@ VIC::setSpriteEnabled(uint8_t nr, bool b)
 }
 
 void
-VIC::toggleSpriteEnabled(uint8_t nr)
+VIC::toggleSpriteEnabled(u8 nr)
 {
     suspend();
     TOGGLE_BIT(reg.current.sprEnable, nr);
