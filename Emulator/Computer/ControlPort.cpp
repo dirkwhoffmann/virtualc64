@@ -39,7 +39,7 @@ ControlPort::~ControlPort()
 void
 ControlPort::reset()
 {
-    VirtualComponent::reset();
+    HardwareComponent::reset();
 
     button = false;
     axisX = 0;

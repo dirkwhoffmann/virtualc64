@@ -29,7 +29,7 @@
 #include "Cartridge.h"
 #include "ExpansionPort_types.h"
 
-class ExpansionPort : public VirtualComponent {
+class ExpansionPort : public HardwareComponent {
  
 private:
     
@@ -56,22 +56,22 @@ public:
     //! @brief    Destructor
     ~ExpansionPort();
         
-    //! @brief    Method from VirtualComponent
+    //! @brief    Method from HardwareComponent
     void reset();
     
-    //! @brief    Method from VirtualComponent
+    //! @brief    Method from HardwareComponent
     void ping();
 
-    //! @brief    Method from VirtualComponent
+    //! @brief    Method from HardwareComponent
     size_t stateSize();
 
-    //! @brief    Method from VirtualComponent
+    //! @brief    Method from HardwareComponent
     void didLoadFromBuffer(uint8_t **buffer);
     
-    //! @brief    Method from VirtualComponent
+    //! @brief    Method from HardwareComponent
     void didSaveToBuffer(uint8_t **buffer);
     
-    //! @brief    Method from VirtualComponent
+    //! @brief    Method from HardwareComponent
     void dump();	
     
     //! @brief    Execution thread callback

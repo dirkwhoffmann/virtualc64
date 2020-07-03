@@ -11,12 +11,12 @@
 #define _MEMORY_INC
 
 #include "basic.h"
-#include "VirtualComponent.h"
+#include "HardwareComponent.h"
 #include "Memory_types.h"
 
 
 //! @brief    Common interface for C64 memory and VC1541 memory
-class Memory : public VirtualComponent {
+class Memory : public HardwareComponent {
 
     friend class CPU;
     

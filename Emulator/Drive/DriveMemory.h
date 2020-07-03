@@ -44,7 +44,7 @@ class VC1541Memory : public Memory {
 
     
     //
-    //! @functiongroup Methods from VirtualComponent
+    //! @functiongroup Methods from HardwareComponent
     //
 
 	void reset();

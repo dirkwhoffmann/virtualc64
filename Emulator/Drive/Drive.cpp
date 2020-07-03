@@ -19,7 +19,7 @@ VC1541::VC1541(unsigned nr)
     debug(3, "Creating %s at address %p\n", getDescription());
 	
     // Register sub components
-    VirtualComponent *subcomponents[] = { &mem, &cpu, &via1, &via2, &disk, NULL };
+    HardwareComponent *subcomponents[] = { &mem, &cpu, &via1, &via2, &disk, NULL };
     registerSubComponents(subcomponents, sizeof(subcomponents));
      
     // Register snapshot items
@@ -67,7 +67,7 @@ VC1541::~VC1541()
 void
 VC1541::reset()
 {
-    VirtualComponent::reset();
+    HardwareComponent::reset();
     
     cpu.regPC = 0xEAA0;
     halftrack = 41;
@@ -84,7 +84,7 @@ VC1541::resetDisk()
 void
 VC1541::ping()
 {
-    VirtualComponent::ping();
+    HardwareComponent::ping();
     
     c64->putMessage(poweredOn ? MSG_VC1541_ATTACHED : MSG_VC1541_DETACHED, deviceNr);
     c64->putMessage(redLED ? MSG_VC1541_RED_LED_ON : MSG_VC1541_RED_LED_OFF, deviceNr);

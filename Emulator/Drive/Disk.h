@@ -14,7 +14,7 @@
 #include <vector>
 #include <iostream>
 
-#include "VirtualComponent.h"
+#include "HardwareComponent.h"
 #include "Disk_types.h"
 
 class C64;
@@ -24,7 +24,7 @@ class G64File;
 
 
 //! @brief    A virtual floppy disk
-class Disk : public VirtualComponent {
+class Disk : public HardwareComponent {
     
 public:
     
@@ -186,7 +186,7 @@ public:
     
     
     //
-    //! @functiongroup Methods from VirtualComponent
+    //! @functiongroup Methods from HardwareComponent
     //
     
     void dump();

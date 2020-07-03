@@ -35,7 +35,7 @@ TOD::TOD(CIA *cia)
 void
 TOD::reset() 
 {
-    VirtualComponent::reset();
+    HardwareComponent::reset();
     tod.hours = 1;
     stopped = true;
     hz = 60;

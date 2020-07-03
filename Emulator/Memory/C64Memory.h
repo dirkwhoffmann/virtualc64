@@ -105,13 +105,13 @@ public:
 	//! @brief    Destructor
 	~C64Memory();
 	
-	//! @brief    Method from VirtualComponent
+	//! @brief    Method from HardwareComponent
 	void reset();
     
     //! @brief    Restors initial state, but keeps RAM alive
     // void resetWithoutRAM();
 
-	//! @brief    Method from VirtualComponent
+	//! @brief    Method from HardwareComponent
 	void dump();
 
 	//! @brief    Returns true, iff the Basic ROM has been loaded

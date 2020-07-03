@@ -23,7 +23,7 @@ Mouse1351::~Mouse1351()
 void
 Mouse1351::reset()
 {
-    VirtualComponent::reset();
+    HardwareComponent::reset();
     
     leftButton = false;
     rightButton = false;

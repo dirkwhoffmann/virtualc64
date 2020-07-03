@@ -29,7 +29,7 @@
 #ifndef _FASTSID_INC
 #define _FASTSID_INC
 
-#include "VirtualComponent.h"
+#include "HardwareComponent.h"
 #include "FastVoice.h"
 
 
@@ -37,7 +37,7 @@
 /*! SID is the sound chip of the Commodore 64.
 	The SID chip occupied the memory mapped I/O space from address 0xD400 to 0xD7FF. 
 */
-class FastSID : public VirtualComponent {
+class FastSID : public HardwareComponent {
 
 public:
     
@@ -109,114 +109,114 @@ private:
     
 public:
     
-	//! Constructor.
+	// Constructor
 	FastSID();
 	
-	//! Destructor.
+	// Destructor
 	~FastSID();
 	
-    //! Method from VirtualComponent
+    // Method from HardwareComponent
     void reset();
 
-    //! Sets the clock frequency
+    // Sets the clock frequency
     void setClockFrequency(uint32_t frequency);
 
-    //! Dump internal state to console
+    // Dump internal state to console
     void dump();
     
-    //! @brief    Gathers all values that are displayed in the debugger
+    // Gathers all values that are displayed in the debugger
     SIDInfo getInfo();
     
-    //! @brief    Gathers all debug information for a specific voice
+    // Gathers all debug information for a specific voice
     VoiceInfo getVoiceInfo(unsigned voice);
     
-    //! Special peek function for the I/O memory range.
+    // Special peek function for the I/O memory range
     uint8_t peek(uint16_t addr);
     
-    //! Special poke function for the I/O memory range.
+    // Special poke function for the I/O memory range.
     void poke(uint16_t addr, uint8_t value);
     
-    /*! @brief   Execute SID
-     *  @details Runs reSID for the specified amount of CPU cycles and writes
-     *           the generated sound samples into the internal ring buffer.
+    /* Execute SID
+     * Runs reSID for the specified amount of CPU cycles and writes the
+     * generated sound samples into the internal ring buffer.
      */
     void execute(uint64_t cycles);
     
-    //! @brief   Computes a single sound sample
+    // Computes a single sound sample
     int16_t calculateSingleSample();
     
     
     //
-    //! @functiongroup Configuring the device
+    // Configuring the device
     //
     
-    //! Returns the chip model
+    // Returns the chip model
     SIDModel getModel() { return model; }
     
-    //! Sets the chip model
+    // Sets the chip model
     void setModel(SIDModel m);
     
-    //! Returns the clock frequency
+    // Returns the clock frequency
     uint32_t getClockFrequency() { return cpuFrequency; }
     
-    //! Returns the sample rate
+    // Returns the sample rate
     uint32_t getSampleRate() { return sampleRate; }
     
-    //! Sets the sample rate
+    // Sets the sample rate
     void setSampleRate(uint32_t rate);
     
-    //! Returns true iff audio filters should be emulated.
+    // Returns true iff audio filters should be emulated.
     bool getAudioFilter() { return emulateFilter; }
     
-    //! Enable or disable audio filter emulation
+    // Enable or disable audio filter emulation
     void setAudioFilter(bool value) { emulateFilter = value; }
     
 private:
     
-    //! @brief   Initializes SID
+    // Initializes SID
     void init(int sampleRate, int cycles_per_sec);
     
-    //! @brief   Initializes filter lookup tables
+    // Initializes filter lookup tables
     void initFilter(int sampleRate);
     
     
     //
-    //! @functiongroup Accessing device properties
+    // Accessing device properties
     //
     
-    //! @brief   Returns the currently set SID volume
+    // Returns the currently set SID volume
     uint8_t sidVolume() { return sidreg[0x18] & 0x0F; }
     
-    //! @brief    Returns true iff voice 3 is disconnected from the audio output
-    /*! @details  Setting voice 3 to bypass the filter (FILT3 = 0) and setting
-     *            bit 7 in the Mod/Vol register to one prevents voice 3 from
-     *            reaching the audio output.
+    // Returns true iff voice 3 is disconnected from the audio output
+    /* Setting voice 3 to bypass the filter (FILT3 = 0) and setting bit 7 in
+     * the Mod/Vol register to one prevents voice 3 from reaching the audio
+     * output.
      */
     bool voiceThreeDisconnected() { return filterOff(2) && (sidreg[0x18] & 0x80); }
     
     // Filter related configuration items
     
-    //! @brief   Returns the filter cutoff frequency (11 bit value)
+    // Returns the filter cutoff frequency (11 bit value)
     uint16_t filterCutoff() { return (sidreg[0x16] << 3) | (sidreg[0x15] & 0x07); }
 
-    //! @brief    Returns the filter resonance (4 bit value)
+    // Returns the filter resonance (4 bit value)
     uint8_t filterResonance() { return sidreg[0x17] >> 4; }
 
-    //! @brief    Returns true iff the specified voice schould be filtered
+    // Returns true iff the specified voice schould be filtered
     bool filterOn(unsigned voice) { return GET_BIT(sidreg[0x17], voice) != 0; }
 
-    //! @brief    Returns true iff the specified voice schould not be filtered
+    // Returns true iff the specified voice schould not be filtered
     bool filterOff(unsigned voice) { return GET_BIT(sidreg[0x17], voice) == 0; }
 
-    //! @brief    Returns true iff the external filter bit is set
+    // Returns true iff the external filter bit is set
     bool filterExtBit() { return GET_BIT(sidreg[0x17], 7) != 0; }
     
-    //! @brief   Returns the currently set filter type
+    // Returns the currently set filter type
     uint8_t filterType() { return sidreg[0x18] & 0x70; }
     
     
-    //! @brief    Updates internal data structures
-    //! @details  This method is called on each filter related register change
+    // Updates internal data structures
+    // This method is called on each filter related register change
     void updateInternals();
 };
 

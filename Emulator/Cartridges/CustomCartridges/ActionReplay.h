@@ -63,7 +63,7 @@ public:
     CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY; }
     
     //
-    //! @functiongroup Methods from VirtualComponent
+    //! @functiongroup Methods from HardwareComponent
     //
     
     void reset();

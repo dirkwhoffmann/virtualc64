@@ -10,12 +10,12 @@
 #ifndef _SIDBRIDGE_H
 #define _SIDBRIDGE_H
 
-#include "VirtualComponent.h"
+#include "HardwareComponent.h"
 #include "FastSID.h"
 #include "ReSID.h"
 #include "SID_types.h"
 
-class SIDBridge : public VirtualComponent {
+class SIDBridge : public HardwareComponent {
 
     friend C64Memory;
 
@@ -106,7 +106,7 @@ public:
 	//! @brief    Destructor
 	~SIDBridge();
 			
-    //! @functiongroup    Methods from VirtualComponent
+    //! @functiongroup    Methods from HardwareComponent
     void reset();
     void dump();
     void setClockFrequency(uint32_t frequency);

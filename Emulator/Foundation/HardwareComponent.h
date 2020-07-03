@@ -10,7 +10,7 @@
 #ifndef _VIRTUAL_COMPONENT_INC
 #define _VIRTUAL_COMPONENT_INC
 
-#include "VC64Object.h"
+#include "C64Object.h"
 
 // Forward declarations
 class C64;
@@ -22,7 +22,7 @@ class C64;
  *            suspending and resuming the component, as well as functions for
  *            loading and saving snapshots.
  */
-class VirtualComponent : public VC64Object {
+class HardwareComponent : public C64Object {
 
 protected:
     
@@ -64,7 +64,7 @@ public:
 protected:
     
     //! @brief    Sub components of this component
-    VirtualComponent **subComponents = NULL;
+    HardwareComponent **subComponents = NULL;
     
     //! @brief    List of snapshot items of this component
     SnapshotItem *snapshotItems = NULL;
@@ -75,7 +75,7 @@ protected:
 public:
 
 	//! @brief    Destructor
-	virtual ~VirtualComponent();
+	virtual ~HardwareComponent();
 
 
     //
@@ -159,7 +159,7 @@ public:
      *            The end of the array is marked by a NULL pointer.
      *  @param    legth Size of the subComponent array in bytes.
      */
-    void registerSubComponents(VirtualComponent **subComponents, unsigned length);
+    void registerSubComponents(HardwareComponent **subComponents, unsigned length);
     
     /*! @brief    Registers all snapshot items for this component
      *  @abstract Snaphshot items are usually registered in the constructor of

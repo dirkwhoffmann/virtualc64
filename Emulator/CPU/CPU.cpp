@@ -71,7 +71,7 @@ CPU::~CPU()
 void
 CPU::reset()
 {
-    VirtualComponent::reset();
+    HardwareComponent::reset();
 
     setB(1);
 	rdyLine = true;
@@ -112,7 +112,7 @@ CPU::dump()
 size_t
 CPU::stateSize()
 {
-    return VirtualComponent::stateSize()
+    return HardwareComponent::stateSize()
     + levelDetector.stateSize()
     + edgeDetector.stateSize();
 }

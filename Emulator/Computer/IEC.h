@@ -10,9 +10,9 @@
 #ifndef _IEC_INC
 #define _IEC_INC
 
-#include "VirtualComponent.h"
+#include "HardwareComponent.h"
 
-class IEC : public VirtualComponent {
+class IEC : public HardwareComponent {
 
 public:
     
@@ -65,13 +65,13 @@ public:
 	//! @brief    Destructor
 	~IEC();
 			
-	//! @brief    Method from VirtualComponent
+	//! @brief    Method from HardwareComponent
 	void reset();
 
-    //! @brief    Method from VirtualComponent
+    //! @brief    Method from HardwareComponent
     void ping();
 	
-    //! @brief    Method from VirtualComponent
+    //! @brief    Method from HardwareComponent
 	void dump();
 	
 	//! @brief    Writes trace output to console.

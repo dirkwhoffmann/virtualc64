@@ -10,13 +10,13 @@
 #ifndef _ANYC64FILE_INC
 #define _ANYC64FILE_INC
 
-#include "VC64Object.h"
+#include "C64Object.h"
 
 /*! @class    AnyC64File
  *  @brief    Base class for all supported file types.
  *  @details  Provides the basic functionality for reading and writing files.
  */
-class AnyC64File : public VC64Object {
+class AnyC64File : public C64Object {
     
 protected:
 	     

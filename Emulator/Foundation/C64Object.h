@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _VC64OBJECT_INC
-#define _VC64OBJECT_INC
+#ifndef _C64OBJECT_INC
+#define _C64OBJECT_INC
 
 #include "basic.h"
 #include "C64Types.h"
@@ -17,7 +17,7 @@
  *  @details  This class stores a textual description of the object and offers
  *            various functions for printing debug messages and warnings.
  */
-class VC64Object {
+class C64Object {
 
 private:
     

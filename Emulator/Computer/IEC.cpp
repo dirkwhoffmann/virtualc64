@@ -50,7 +50,7 @@ IEC::~IEC()
 void 
 IEC::reset()
 {
-    VirtualComponent::reset();
+    HardwareComponent::reset();
 
     atnLine = 1;
     clockLine = 1;
@@ -72,7 +72,7 @@ IEC::reset()
 void
 IEC::ping()
 {
-    VirtualComponent::ping();
+    HardwareComponent::ping();
     
     c64->putMessage(busActivity > 0 ? MSG_IEC_BUS_BUSY : MSG_IEC_BUS_IDLE);
 }

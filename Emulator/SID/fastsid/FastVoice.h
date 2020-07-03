@@ -30,7 +30,7 @@
 #ifndef FASTSIDVOICE_H
 #define FASTSIDVOICE_H
 
-#include "VirtualComponent.h"
+#include "HardwareComponent.h"
 
 // Waveform types
 #define FASTSID_TRIANGLE 0x10
@@ -65,7 +65,7 @@
 #define NSEED 0x7ffff8
 
 
-class FastVoice : public VirtualComponent {
+class FastVoice : public HardwareComponent {
     
     friend class FastSID;
     
@@ -170,7 +170,7 @@ public:
     //! @brief    Destructor
     ~FastVoice();
     
-    //! @functiongroup Methods from VirtualComponent
+    //! @functiongroup Methods from HardwareComponent
     void reset();
     void didLoadFromBuffer(uint8_t **buffer) { updateWaveTablePtr(); }
     

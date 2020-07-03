@@ -235,7 +235,7 @@ Cartridge::savePacketsToBuffer(uint8_t **buffer)
 size_t
 Cartridge::stateSize()
 {
-    return VirtualComponent::stateSize()
+    return HardwareComponent::stateSize()
     + packetStateSize()
     + ramCapacity;
 }

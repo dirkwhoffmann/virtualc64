@@ -95,7 +95,7 @@ ReSID::~ReSID()
 void
 ReSID::reset()
 {
-    VirtualComponent::reset();
+    HardwareComponent::reset();
     
     // Create new reSID object
     // Note: We don't use reSID::reset() which only performs a soft reset

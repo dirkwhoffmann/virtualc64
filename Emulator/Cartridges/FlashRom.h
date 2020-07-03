@@ -10,7 +10,7 @@
 #ifndef _FLASHROM_INC
 #define _FLASHROM_INC
 
-#include "VirtualComponent.h"
+#include "HardwareComponent.h"
 
 /*! @brief    This class implements a Flash Rom module of type Am29F040B
  *  @details  Flash Rom modules of this type are used, e.g., by the EasyFlash
@@ -19,7 +19,7 @@
  *            29F040.pdf:     Data sheet published by AMD
  *            flash040core.c: Part of the VICE emulator
  */
-class FlashRom : public VirtualComponent {
+class FlashRom : public HardwareComponent {
     
     private:
     
@@ -88,7 +88,7 @@ class FlashRom : public VirtualComponent {
     
     
     //
-    //! @functiongroup Methods from VirtualComponent
+    //! @functiongroup Methods from HardwareComponent
     //
     
     void reset();

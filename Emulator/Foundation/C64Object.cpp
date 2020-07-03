@@ -7,10 +7,10 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "VC64Object.h"
+#include "C64Object.h"
 
 bool
-VC64Object::tracingEnabled()
+C64Object::tracingEnabled()
 {
     if (traceCounter == 0)
         return false;
@@ -29,14 +29,14 @@ VC64Object::tracingEnabled()
     va_end(ap); 
 
 void
-VC64Object::msg(const char *fmt, ...)
+C64Object::msg(const char *fmt, ...)
 {
     VC64OBJ_PARSE;
     fprintf(stderr, "%s", buf);
 }
 
 void
-VC64Object::msg(int level, const char *fmt, ...)
+C64Object::msg(int level, const char *fmt, ...)
 {
     if (level > debugLevel)
         return;
@@ -46,7 +46,7 @@ VC64Object::msg(int level, const char *fmt, ...)
 }
 
 void
-VC64Object::debug(const char *fmt, ...)
+C64Object::debug(const char *fmt, ...)
 {
     VC64OBJ_PARSE;
     if (description)
@@ -56,7 +56,7 @@ VC64Object::debug(const char *fmt, ...)
 }
 
 void
-VC64Object::debug(int level, const char *fmt, ...)
+C64Object::debug(int level, const char *fmt, ...)
 {
     if (level > debugLevel)
         return;
@@ -69,7 +69,7 @@ VC64Object::debug(int level, const char *fmt, ...)
 }
 
 void
-VC64Object::warn(const char *fmt, ...)
+C64Object::warn(const char *fmt, ...)
 {
     VC64OBJ_PARSE;
     if (description)
@@ -79,7 +79,7 @@ VC64Object::warn(const char *fmt, ...)
 }
 
 void
-VC64Object::panic(const char *fmt, ...)
+C64Object::panic(const char *fmt, ...)
 {
     VC64OBJ_PARSE;
     if (description)

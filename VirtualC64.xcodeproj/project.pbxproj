@@ -90,7 +90,7 @@
 		504C437F24AF29AC00E69CAE /* C64Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42E124AF29AB00E69CAE /* C64Memory.cpp */; };
 		504C438024AF29AC00E69CAE /* CPU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42E924AF29AB00E69CAE /* CPU.cpp */; };
 		504C438124AF29AC00E69CAE /* CPUInstructions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42EA24AF29AB00E69CAE /* CPUInstructions.cpp */; };
-		504C438224AF29AC00E69CAE /* VC64Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42ED24AF29AB00E69CAE /* VC64Object.cpp */; };
+		504C438224AF29AC00E69CAE /* C64Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42ED24AF29AB00E69CAE /* C64Object.cpp */; };
 		504C438324AF29AC00E69CAE /* VirtualComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42EE24AF29AB00E69CAE /* VirtualComponent.cpp */; };
 		504C438424AF29AC00E69CAE /* basic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42EF24AF29AB00E69CAE /* basic.cpp */; };
 		504C438524AF29AC00E69CAE /* MessageQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F124AF29AB00E69CAE /* MessageQueue.cpp */; };
@@ -341,8 +341,8 @@
 		504C42E824AF29AB00E69CAE /* CPU.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPU.h; sourceTree = "<group>"; };
 		504C42E924AF29AB00E69CAE /* CPU.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CPU.cpp; sourceTree = "<group>"; };
 		504C42EA24AF29AB00E69CAE /* CPUInstructions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CPUInstructions.cpp; sourceTree = "<group>"; };
-		504C42EC24AF29AB00E69CAE /* VC64Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC64Object.h; sourceTree = "<group>"; };
-		504C42ED24AF29AB00E69CAE /* VC64Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VC64Object.cpp; sourceTree = "<group>"; };
+		504C42EC24AF29AB00E69CAE /* C64Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64Object.h; sourceTree = "<group>"; };
+		504C42ED24AF29AB00E69CAE /* C64Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C64Object.cpp; sourceTree = "<group>"; };
 		504C42EE24AF29AB00E69CAE /* VirtualComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualComponent.cpp; sourceTree = "<group>"; };
 		504C42EF24AF29AB00E69CAE /* basic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = basic.cpp; sourceTree = "<group>"; };
 		504C42F024AF29AB00E69CAE /* TimeDelayed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeDelayed.h; sourceTree = "<group>"; };
@@ -350,7 +350,7 @@
 		504C42F224AF29AB00E69CAE /* basic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = basic.h; sourceTree = "<group>"; };
 		504C42F324AF29AB00E69CAE /* TimeDelayed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimeDelayed.cpp; sourceTree = "<group>"; };
 		504C42F424AF29AB00E69CAE /* MessageQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageQueue.h; sourceTree = "<group>"; };
-		504C42F524AF29AB00E69CAE /* VirtualComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualComponent.h; sourceTree = "<group>"; };
+		504C42F524AF29AB00E69CAE /* HardwareComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HardwareComponent.h; sourceTree = "<group>"; };
 		504C42F624AF29AB00E69CAE /* C64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64.h; sourceTree = "<group>"; };
 		504C42F724AF29AB00E69CAE /* C64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C64.cpp; sourceTree = "<group>"; };
 		504C42F824AF29AB00E69CAE /* C64Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64Config.h; sourceTree = "<group>"; };
@@ -470,11 +470,13 @@
 		509A26062027AA1100D28827 /* DiskMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskMountDialog.xib; sourceTree = "<group>"; };
 		50A0E0200A8F33120067714C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		50A0E0240A8F332A0067714C /* System.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = System.framework; path = /System/Library/Frameworks/System.framework; sourceTree = "<absolute>"; };
+		50A2D7AE24AF944500671F38 /* C64Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Constants.h; sourceTree = "<group>"; };
+		50A2D7B024AF94B400671F38 /* Aliases.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Aliases.h; sourceTree = "<group>"; };
 		50A519401B8DA230006771E2 /* drive_click.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = drive_click.aiff; sourceTree = "<group>"; };
 		50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = drive_snatch_uae.aiff; sourceTree = "<group>"; };
 		50B1644B202DD52500447D3E /* ExportDiskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportDiskController.swift; sourceTree = "<group>"; };
 		50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportDiskDialog.xib; sourceTree = "<group>"; };
-		50B171051EE6AB840019E8D4 /* VirtualC64-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VirtualC64-Bridging-Header.h"; sourceTree = "<group>"; };
+		50B171051EE6AB840019E8D4 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyControllerTouchBar.swift; sourceTree = "<group>"; };
 		50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
 		50BF77D120309A2A006E000F /* WindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDelegate.swift; sourceTree = "<group>"; };
@@ -689,13 +691,13 @@
 			children = (
 				504C42F824AF29AB00E69CAE /* C64Config.h */,
 				504C430324AF29AB00E69CAE /* C64Types.h */,
+				504C42F624AF29AB00E69CAE /* C64.h */,
+				504C42F724AF29AB00E69CAE /* C64.cpp */,
+				50A2D7AF24AF945200671F38 /* Foundation */,
 				504C428E24AF29AB00E69CAE /* Cartridges */,
 				504C42C624AF29AB00E69CAE /* FileFormats */,
 				504C42E024AF29AB00E69CAE /* Memory */,
 				504C42E524AF29AB00E69CAE /* CPU */,
-				504C42EB24AF29AB00E69CAE /* General */,
-				504C42F624AF29AB00E69CAE /* C64.h */,
-				504C42F724AF29AB00E69CAE /* C64.cpp */,
 				504C42F924AF29AB00E69CAE /* Mouse */,
 				504C430424AF29AB00E69CAE /* VICII */,
 				504C430E24AF29AC00E69CAE /* Datasette */,
@@ -829,23 +831,6 @@
 				504C42EA24AF29AB00E69CAE /* CPUInstructions.cpp */,
 			);
 			path = CPU;
-			sourceTree = "<group>";
-		};
-		504C42EB24AF29AB00E69CAE /* General */ = {
-			isa = PBXGroup;
-			children = (
-				504C42EC24AF29AB00E69CAE /* VC64Object.h */,
-				504C42ED24AF29AB00E69CAE /* VC64Object.cpp */,
-				504C42EE24AF29AB00E69CAE /* VirtualComponent.cpp */,
-				504C42EF24AF29AB00E69CAE /* basic.cpp */,
-				504C42F024AF29AB00E69CAE /* TimeDelayed.h */,
-				504C42F124AF29AB00E69CAE /* MessageQueue.cpp */,
-				504C42F224AF29AB00E69CAE /* basic.h */,
-				504C42F324AF29AB00E69CAE /* TimeDelayed.cpp */,
-				504C42F424AF29AB00E69CAE /* MessageQueue.h */,
-				504C42F524AF29AB00E69CAE /* VirtualComponent.h */,
-			);
-			path = General;
 			sourceTree = "<group>";
 		};
 		504C42F924AF29AB00E69CAE /* Mouse */ = {
@@ -1052,11 +1037,30 @@
 		5070D72224AF3330005862D0 /* Proxy */ = {
 			isa = PBXGroup;
 			children = (
-				50B171051EE6AB840019E8D4 /* VirtualC64-Bridging-Header.h */,
+				50B171051EE6AB840019E8D4 /* Bridging-Header.h */,
 				50176C790A6F7357009E80BD /* C64Proxy.h */,
 				50176C7A0A6F7357009E80BD /* C64Proxy.mm */,
 			);
 			path = Proxy;
+			sourceTree = "<group>";
+		};
+		50A2D7AF24AF945200671F38 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				50A2D7AE24AF944500671F38 /* C64Constants.h */,
+				504C42EC24AF29AB00E69CAE /* C64Object.h */,
+				504C42ED24AF29AB00E69CAE /* C64Object.cpp */,
+				50A2D7B024AF94B400671F38 /* Aliases.h */,
+				504C42F524AF29AB00E69CAE /* HardwareComponent.h */,
+				504C42EE24AF29AB00E69CAE /* VirtualComponent.cpp */,
+				504C42F024AF29AB00E69CAE /* TimeDelayed.h */,
+				504C42F324AF29AB00E69CAE /* TimeDelayed.cpp */,
+				504C42F424AF29AB00E69CAE /* MessageQueue.h */,
+				504C42F124AF29AB00E69CAE /* MessageQueue.cpp */,
+				504C42F224AF29AB00E69CAE /* basic.h */,
+				504C42EF24AF29AB00E69CAE /* basic.cpp */,
+			);
+			path = Foundation;
 			sourceTree = "<group>";
 		};
 		50B4B6071EEFE77400D56499 /* TouchBar */ = {
@@ -1361,7 +1365,7 @@
 				504C437C24AF29AC00E69CAE /* AnyArchive.cpp in Sources */,
 				504C437424AF29AC00E69CAE /* T64File.cpp in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
-				504C438224AF29AC00E69CAE /* VC64Object.cpp in Sources */,
+				504C438224AF29AC00E69CAE /* C64Object.cpp in Sources */,
 				5046C415202349EE000D9B1C /* ArchiveMountController.swift in Sources */,
 				504C437224AF29AC00E69CAE /* FlashRom.cpp in Sources */,
 				504C43A024AF29AC00E69CAE /* FastVoice.cpp in Sources */,
@@ -1452,7 +1456,7 @@
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.dirkwhoffmann.VirtualC64;
 				PRODUCT_NAME = VirtualC64;
-				SWIFT_OBJC_BRIDGING_HEADER = "Proxy/VirtualC64-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Proxy/Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -1480,7 +1484,7 @@
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.dirkwhoffmann.VirtualC64;
 				PRODUCT_NAME = VirtualC64;
-				SWIFT_OBJC_BRIDGING_HEADER = "Proxy/VirtualC64-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Proxy/Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;

@@ -34,7 +34,7 @@ ExpansionPort::~ExpansionPort()
 void
 ExpansionPort::reset()
 {
-    VirtualComponent::reset();
+    HardwareComponent::reset();
     
     if (cartridge) {
         cartridge->reset();
@@ -47,7 +47,7 @@ ExpansionPort::reset()
 void
 ExpansionPort::ping()
 {
-    VirtualComponent::ping();
+    HardwareComponent::ping();
     c64->putMessage(cartridge ? MSG_CARTRIDGE : MSG_NO_CARTRIDGE);
     c64->putMessage(MSG_CART_SWITCH);
 }
@@ -55,7 +55,7 @@ ExpansionPort::ping()
 size_t
 ExpansionPort::stateSize()
 {
-    return VirtualComponent::stateSize()
+    return HardwareComponent::stateSize()
     + 2
     + (cartridge ? cartridge->stateSize() : 0);
 }

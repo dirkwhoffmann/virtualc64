@@ -15,10 +15,10 @@
 #ifndef _RESID_INC
 #define _RESID_INC
 
-#include "VirtualComponent.h"
+#include "HardwareComponent.h"
 #include "resid/sid.h"
 
-class ReSID : public VirtualComponent {
+class ReSID : public HardwareComponent {
 
 public:
     
@@ -62,7 +62,7 @@ public:
 	//! Destructor.
 	~ReSID();
 	
-	//! @functiongroup Methods from VirtualComponent
+	//! @functiongroup Methods from HardwareComponent
 	void reset();
     void didLoadFromBuffer(uint8_t **buffer) { sid->write_state(st); }
     void willSaveToBuffer(uint8_t **buffer) { st = sid->read_state(); }

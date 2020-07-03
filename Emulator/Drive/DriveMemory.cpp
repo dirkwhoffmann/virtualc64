@@ -37,7 +37,7 @@ VC1541Memory::~VC1541Memory()
 void 
 VC1541Memory::reset()
 {
-    VirtualComponent::reset();
+    HardwareComponent::reset();
     
     // Initialize RAM with powerup pattern (pattern from Hoxs64)
     for (unsigned i = 0; i < sizeof(ram); i++) {

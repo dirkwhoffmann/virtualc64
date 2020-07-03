@@ -10,7 +10,7 @@
 #ifndef _TOD_INC
 #define _TOD_INC
 
-#include "VirtualComponent.h"
+#include "HardwareComponent.h"
 #include "TOD_types.h"
 
 class CIA;
@@ -26,7 +26,7 @@ inline uint8_t incBCD(uint8_t bcd) {
  *            an alarm mechanism. When the alarm time is reached, an interrupt
  *            is initiated.
  */
-class TOD : public VirtualComponent {
+class TOD : public HardwareComponent {
     
     friend CIA;
 
@@ -91,7 +91,7 @@ public:
 	
     
     //
-    //! @functiongroup Methods from VirtualComponent
+    //! @functiongroup Methods from HardwareComponent
     //
 
 	void reset();

@@ -65,7 +65,7 @@
  *            have their own public API. E.g., to query information from VICII,
  *            you need to invoke a public method on c64->vic.
  */
-class C64 : public VirtualComponent {
+class C64 : public HardwareComponent {
     
     public:
     
@@ -265,7 +265,7 @@ class C64 : public VirtualComponent {
     ~C64();
     
     //
-    //! @functiongroup Methods from VirtualComponent
+    //! @functiongroup Methods from HardwareComponent
     //
     
     void reset();

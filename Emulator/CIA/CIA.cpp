@@ -14,7 +14,7 @@ CIA::CIA()
 	setDescription("CIA");
     
     // Register sub components
-    VirtualComponent *subcomponents[] = { &tod, NULL };
+    HardwareComponent *subcomponents[] = { &tod, NULL };
     registerSubComponents(subcomponents, sizeof(subcomponents));
 
     // Register snapshot items
@@ -66,7 +66,7 @@ CIA::~CIA()
 void
 CIA::reset()
 {
-    VirtualComponent::reset();
+    HardwareComponent::reset();
     
 	CNT = true;
 	INT = 1;

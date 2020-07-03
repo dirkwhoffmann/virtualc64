@@ -15,7 +15,7 @@ Mouse::Mouse()
     debug(3, "Creating %s at address %p\n", getDescription());
     
     // Register sub components
-    VirtualComponent *subcomponents[] = { &mouse1350, &mouse1351, &mouseNeos, NULL };
+    HardwareComponent *subcomponents[] = { &mouse1350, &mouse1351, &mouseNeos, NULL };
     registerSubComponents(subcomponents, sizeof(subcomponents));
 }
 
@@ -25,7 +25,7 @@ Mouse::~Mouse()
 
 void Mouse::reset()
 {
-    VirtualComponent::reset();
+    HardwareComponent::reset();
     targetX = 0;
     targetY = 0;
 }

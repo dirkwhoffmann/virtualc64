@@ -110,7 +110,7 @@ VIC::~VIC()
 void
 VIC::setC64(C64 *c64)
 {
-    VirtualComponent::setC64(c64);
+    HardwareComponent::setC64(c64);
 
     // Assign reference clock to all time delayed variables
     baLine.setClock(&c64->cpu.cycle);
@@ -120,7 +120,7 @@ VIC::setC64(C64 *c64)
 void 
 VIC::reset()
 {
-    VirtualComponent::reset();
+    HardwareComponent::reset();
     
     yCounter = PAL_HEIGHT;
     
@@ -163,7 +163,7 @@ VIC::reset()
 void
 VIC::ping()
 {
-    VirtualComponent::ping();
+    HardwareComponent::ping();
     c64->putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
 }
 
@@ -233,7 +233,7 @@ VIC::dump()
 size_t
 VIC::stateSize()
 {
-    return VirtualComponent::stateSize()
+    return HardwareComponent::stateSize()
     + baLine.stateSize()
     + gAccessResult.stateSize();
 }

@@ -116,7 +116,7 @@ C64Memory::~C64Memory()
 void
 C64Memory::reset()
 {
-    VirtualComponent::reset();
+    HardwareComponent::reset();
     
     // Erase RAM
     eraseWithPattern(ramInitPattern);

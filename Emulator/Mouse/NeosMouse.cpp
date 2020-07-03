@@ -23,7 +23,7 @@ NeosMouse::~NeosMouse()
 void
 NeosMouse::reset()
 {
-    VirtualComponent::reset();
+    HardwareComponent::reset();
     
     leftButton = false;
     rightButton = false;

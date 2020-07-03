@@ -52,7 +52,7 @@ CartridgeRom::~CartridgeRom()
 size_t
 CartridgeRom::stateSize()
 {
-    return VirtualComponent::stateSize() + size;
+    return HardwareComponent::stateSize() + size;
 }
 
 void

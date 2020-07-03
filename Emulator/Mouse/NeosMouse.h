@@ -10,9 +10,9 @@
 #ifndef NEOSMOUSE_H
 #define NEOSMOUSE_H
 
-#include "VirtualComponent.h"
+#include "HardwareComponent.h"
 
-class NeosMouse : public VirtualComponent {
+class NeosMouse : public HardwareComponent {
     
     //! @brief    Mouse position
     int64_t mouseX;
@@ -61,7 +61,7 @@ public:
     //! @brief    Destructor
     ~NeosMouse();
     
-    //! @brief    Methods from VirtualComponent class
+    //! @brief    Methods from HardwareComponent class
     void reset();
     
     //! @brief   Updates the button state

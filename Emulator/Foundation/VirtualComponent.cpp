@@ -10,7 +10,7 @@
 #include "C64.h"
 #include <algorithm>
 
-VirtualComponent::~VirtualComponent()
+HardwareComponent::~HardwareComponent()
 {
 	debug(3, "Terminated\n");
     
@@ -22,7 +22,7 @@ VirtualComponent::~VirtualComponent()
 }
 
 void
-VirtualComponent::setC64(C64 *c64)
+HardwareComponent::setC64(C64 *c64)
 {
     assert(this->c64 == NULL);
     assert(c64 != NULL);
@@ -34,7 +34,7 @@ VirtualComponent::setC64(C64 *c64)
 }
 
 void
-VirtualComponent::reset()
+HardwareComponent::reset()
 {
     // Reset all sub components
     if (subComponents != NULL)
@@ -52,7 +52,7 @@ VirtualComponent::reset()
 }
 
 void
-VirtualComponent::ping()
+HardwareComponent::ping()
 {
     // Ping all sub components
     if (subComponents != NULL)
@@ -61,7 +61,7 @@ VirtualComponent::ping()
 }
 
 void
-VirtualComponent::setClockFrequency(uint32_t frequency)
+HardwareComponent::setClockFrequency(uint32_t frequency)
 {
     assert(frequency == PAL_CLOCK_FREQUENCY || frequency == NTSC_CLOCK_FREQUENCY);
     
@@ -72,32 +72,32 @@ VirtualComponent::setClockFrequency(uint32_t frequency)
 }
 
 void
-VirtualComponent::suspend()
+HardwareComponent::suspend()
 {
     c64->suspend();
 }
 
 void
-VirtualComponent::resume()
+HardwareComponent::resume()
 {
     c64->resume();
 }
 
 void
-VirtualComponent::registerSubComponents(VirtualComponent **components, unsigned length) {
+HardwareComponent::registerSubComponents(HardwareComponent **components, unsigned length) {
     
     assert(components != NULL);
-    assert(length % sizeof(VirtualComponent *) == 0);
+    assert(length % sizeof(HardwareComponent *) == 0);
     
-    unsigned numItems = length / sizeof(VirtualComponent *);
+    unsigned numItems = length / sizeof(HardwareComponent *);
     
     // Allocate new array on heap and copy array data
-    subComponents = new VirtualComponent*[numItems];
+    subComponents = new HardwareComponent*[numItems];
     std::copy(components, components + numItems, &subComponents[0]);
 }
 
 void
-VirtualComponent::registerSnapshotItems(SnapshotItem *items, unsigned length) {
+HardwareComponent::registerSnapshotItems(SnapshotItem *items, unsigned length) {
     
     assert(items != NULL);
     assert(length % sizeof(SnapshotItem) == 0);
@@ -114,7 +114,7 @@ VirtualComponent::registerSnapshotItems(SnapshotItem *items, unsigned length) {
 }
 
 size_t
-VirtualComponent::stateSize()
+HardwareComponent::stateSize()
 {
     uint32_t result = snapshotSize;
     
@@ -126,7 +126,7 @@ VirtualComponent::stateSize()
 }
 
 void
-VirtualComponent::loadFromBuffer(uint8_t **buffer)
+HardwareComponent::loadFromBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     
@@ -182,7 +182,7 @@ VirtualComponent::loadFromBuffer(uint8_t **buffer)
 }
 
 void
-VirtualComponent::saveToBuffer(uint8_t **buffer)
+HardwareComponent::saveToBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     

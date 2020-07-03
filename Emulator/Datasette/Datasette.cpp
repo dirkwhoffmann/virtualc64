@@ -47,14 +47,14 @@ Datasette::~Datasette()
 void
 Datasette::reset()
 {
-    VirtualComponent::reset();
+    HardwareComponent::reset();
     rewind();
 }
 
 void
 Datasette::ping()
 {
-    VirtualComponent::ping();
+    HardwareComponent::ping();
     c64->putMessage(hasTape() ? MSG_VC1530_TAPE : MSG_VC1530_NO_TAPE);
     c64->putMessage(MSG_VC1530_PROGRESS);
 }
@@ -62,7 +62,7 @@ Datasette::ping()
 size_t
 Datasette::stateSize()
 {
-    return VirtualComponent::stateSize() + size;
+    return HardwareComponent::stateSize() + size;
 }
 
 void

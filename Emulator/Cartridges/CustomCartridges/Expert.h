@@ -23,7 +23,7 @@ public:
     CartridgeType getCartridgeType() { return CRT_EXPERT; }
     
     //
-    //! @functiongroup Methods from VirtualComponent
+    //! @functiongroup Methods from HardwareComponent
     //
     
     void reset();

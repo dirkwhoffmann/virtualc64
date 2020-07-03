@@ -20,7 +20,7 @@ public:
     CartridgeType getCartridgeType() { return CRT_FREEZE_FRAME; }
 
     //
-    //! @functiongroup Methods from VirtualComponent
+    //! @functiongroup Methods from HardwareComponent
     //
 
     void reset();

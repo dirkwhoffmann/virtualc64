@@ -10,13 +10,13 @@
 #ifndef _MESSAGE_QUEUE_INC
 #define _MESSAGE_QUEUE_INC
 
-#include "VC64Object.h"
+#include "C64Object.h"
 #include "C64Types.h"
 #include <map>
 
 using namespace std;
 
-class MessageQueue : public VC64Object {
+class MessageQueue : public C64Object {
     
     private:
     

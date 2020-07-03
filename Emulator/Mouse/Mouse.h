@@ -16,7 +16,7 @@
 #include "NeosMouse.h"
 
 //! @brief An external mouse plugged into the control port
-class Mouse : public VirtualComponent {
+class Mouse : public HardwareComponent {
     
     //! @brief    A Commdore 1350 (digital) mouse
     Mouse1350 mouse1350;

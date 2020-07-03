@@ -17,7 +17,7 @@ SIDBridge::SIDBridge()
     resid.bridge = this;
     
     // Register sub components
-    VirtualComponent *subcomponents[] = { &resid, &fastsid, NULL };
+    HardwareComponent *subcomponents[] = { &resid, &fastsid, NULL };
     registerSubComponents(subcomponents, sizeof(subcomponents));
 
     // Register snapshot items
@@ -42,7 +42,7 @@ SIDBridge::~SIDBridge()
 void
 SIDBridge::reset()
 {
-    VirtualComponent::reset();
+    HardwareComponent::reset();
 
     clearRingbuffer();
     resid.reset();

@@ -10,11 +10,11 @@
 #ifndef _CARTRIDGEROM_INC
 #define _CARTRIDGEROM_INC
 
-#include "VirtualComponent.h"
+#include "HardwareComponent.h"
 
 /*! @brief    This class implements a cartridge Rom chip 
  */
-class CartridgeRom : public VirtualComponent {
+class CartridgeRom : public HardwareComponent {
     
     protected:
     
@@ -44,7 +44,7 @@ class CartridgeRom : public VirtualComponent {
     //! @brief    Destructor
     ~CartridgeRom();
     
-    //! @brief    Methods from VirtualComponent
+    //! @brief    Methods from HardwareComponent
     size_t stateSize();
     void didLoadFromBuffer(uint8_t **buffer);
     void didSaveToBuffer(uint8_t **buffer);

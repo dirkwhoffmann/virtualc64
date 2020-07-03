@@ -32,7 +32,7 @@ Keyboard::~Keyboard()
 void 
 Keyboard::reset() 
 {
-    VirtualComponent::reset();
+    HardwareComponent::reset();
 
 	// Release all keys (resets the keyboard matrix)
     releaseAll();

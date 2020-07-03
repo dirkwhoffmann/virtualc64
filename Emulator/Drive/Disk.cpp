@@ -119,7 +119,7 @@ Disk::dump()
 void
 Disk::ping()
 {
-    VirtualComponent::ping();
+    HardwareComponent::ping();
 }
 
 void

@@ -30,7 +30,7 @@ public:
     CartridgeType getCartridgeType() { return CRT_FINAL_III; }
     
     //
-    //! @functiongroup Methods from VirtualComponent
+    //! @functiongroup Methods from HardwareComponent
     //
     
     void reset();

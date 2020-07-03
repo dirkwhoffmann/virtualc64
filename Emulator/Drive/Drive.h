@@ -24,7 +24,7 @@
 /*!
  * @brief    A Commodore VC 1541 disk drive
  */
-class VC1541 : public VirtualComponent {
+class VC1541 : public HardwareComponent {
 
     //
     // Constants
@@ -226,7 +226,7 @@ public:
 
     
     //
-    //! @functiongroup Methods from VirtualComponent
+    //! @functiongroup Methods from HardwareComponent
     //
 
     void reset();

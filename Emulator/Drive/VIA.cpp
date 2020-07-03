@@ -59,7 +59,7 @@ VIA6522::~VIA6522()
 	
 void VIA6522::reset()
 {    
-    VirtualComponent::reset();
+    HardwareComponent::reset();
 
     t1 = 0x01AA;
     t2 = 0x01AA;

@@ -13,7 +13,7 @@
 class TAPFile;
 
 //! @brief    A Commodore 1530 (C2N) tape recorder (Datasette)
-class Datasette : public VirtualComponent {
+class Datasette : public HardwareComponent {
     
     //
     // Tape
@@ -90,7 +90,7 @@ public:
     ~Datasette();
     
     //
-    //! @functiongroup Methods from VirtualComponent
+    //! @functiongroup Methods from HardwareComponent
     //
     
     void reset();

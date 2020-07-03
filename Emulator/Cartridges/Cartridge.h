@@ -10,7 +10,7 @@
 #ifndef _CARTRIDGE_INC
 #define _CARTRIDGE_INC
 
-#include "VirtualComponent.h"
+#include "HardwareComponent.h"
 #include "Cartridge_types.h"
 #include "CRTFile.h"
 #include "CartridgeRom.h"
@@ -20,7 +20,7 @@ class ExpansionPort;
 /*!
  * @brief    Cartridge that can be plugged into the C64's expansion port
  */
-class Cartridge : public VirtualComponent {
+class Cartridge : public HardwareComponent {
     
 public:
     
@@ -196,7 +196,7 @@ public:
     
     
     //
-    //! @functiongroup Methods from VirtualComponent
+    //! @functiongroup Methods from HardwareComponent
     //
     
     void reset();

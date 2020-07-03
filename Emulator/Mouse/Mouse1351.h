@@ -10,9 +10,9 @@
 #ifndef MOUSE1351_H
 #define MOUSE1351_H
 
-#include "VirtualComponent.h"
+#include "HardwareComponent.h"
 
-class Mouse1351 : public VirtualComponent {
+class Mouse1351 : public HardwareComponent {
     
     //! @brief    Mouse position
     int64_t mouseX;
@@ -38,7 +38,7 @@ public:
     //! @brief   Destructor
     ~Mouse1351();
     
-    //! @brief   Methods from VirtualComponent class
+    //! @brief   Methods from HardwareComponent class
     void reset();
     
     //! @brief   Updates the button state

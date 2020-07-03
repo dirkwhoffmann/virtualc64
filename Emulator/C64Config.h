@@ -10,13 +10,15 @@
 #ifndef C64CONFIG_H
 #define C64CONFIG_H
 
-// Snapshot version number of this release
+// Snapshot version number
 #define V_MAJOR 3
 #define V_MINOR 3
 #define V_SUBMINOR 0
 
-// Disable assertion checking (Uncomment in release build)
-#define NDEBUG
+// Uncomment these settings in a release build
+// #define RELEASEBUILD
+// #define NDEBUG
+
 
 // Default debug level for all components (Set to 1 in release build)
 #define DEBUG_LEVEL 1

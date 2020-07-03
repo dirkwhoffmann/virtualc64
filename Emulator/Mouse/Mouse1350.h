@@ -10,9 +10,9 @@
 #ifndef MOUSE1350_H
 #define MOUSE1350_H
 
-#include "VirtualComponent.h"
+#include "HardwareComponent.h"
 
-class Mouse1350 : public VirtualComponent {
+class Mouse1350 : public HardwareComponent {
     
 private:
     
@@ -43,7 +43,7 @@ public:
     //! @brief   Destructor
     ~Mouse1350();
     
-    //! @brief   Methods from VirtualComponent class
+    //! @brief   Methods from HardwareComponent class
     void reset();
         
     //! @brief   Updates the button state

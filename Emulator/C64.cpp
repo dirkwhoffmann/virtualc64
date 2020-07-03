@@ -73,7 +73,7 @@ C64::C64()
     warpLoad = false;
     
     // Register sub components
-    VirtualComponent *subcomponents[] = {
+    HardwareComponent *subcomponents[] = {
         
         &mem,
         &cpu,
@@ -134,7 +134,7 @@ C64::reset()
     debug(1, "Resetting virtual C64[%p]\n", this);
     
     // Reset all sub components
-    VirtualComponent::reset();
+    HardwareComponent::reset();
     
     // Initialize processor port
     mem.poke(0x0000, 0x2F);  // Data direction
@@ -153,7 +153,7 @@ void C64::ping()
 {
     debug (2, "Pinging virtual C64[%p]\n", this);
 
-    VirtualComponent::ping();
+    HardwareComponent::ping();
     putMessage(warp ? MSG_WARP_ON : MSG_WARP_OFF);
     putMessage(alwaysWarp ? MSG_ALWAYS_WARP_ON : MSG_ALWAYS_WARP_OFF);
 }
@@ -161,7 +161,7 @@ void C64::ping()
 void
 C64::setClockFrequency(uint32_t value)
 {
-    VirtualComponent::setClockFrequency(value);
+    HardwareComponent::setClockFrequency(value);
     
     frequency = value;
     durationOfOneCycle = 10000000000 / value;

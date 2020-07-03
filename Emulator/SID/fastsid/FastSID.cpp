@@ -36,7 +36,7 @@ FastSID::FastSID()
 	debug(3, "  Creating FastSID at address %p...\n", this);
     
     // Register sub components
-    VirtualComponent *subcomponents[] = { &voice[0], &voice[1], &voice[2], NULL };
+    HardwareComponent *subcomponents[] = { &voice[0], &voice[1], &voice[2], NULL };
     registerSubComponents(subcomponents, sizeof(subcomponents));
     
     // Register snapshot items
@@ -71,7 +71,7 @@ FastSID::~FastSID()
 void
 FastSID::reset()
 {
-    VirtualComponent::reset();
+    HardwareComponent::reset();
     init(sampleRate, cpuFrequency);
 }
 

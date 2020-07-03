@@ -18,7 +18,7 @@
 #ifndef _VIA6522_INC
 #define _VIA6522_INC
 
-#include "VirtualComponent.h"
+#include "HardwareComponent.h"
 
 class VC1541;
 
@@ -57,7 +57,7 @@ class VC1541;
 /*! @brief    Virtual VIA6522 controller
     @details  The VC1541 drive contains two VIAs on its logic board.
  */
-class VIA6522 : public VirtualComponent {
+class VIA6522 : public HardwareComponent {
 	
     friend class VC1541;
     
@@ -244,7 +244,7 @@ public:
 	~VIA6522();
 		
     //
-    //! @functiongroup Methods from VirtualComponent
+    //! @functiongroup Methods from HardwareComponent
     //
     
 	void reset();

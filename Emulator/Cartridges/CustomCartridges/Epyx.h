@@ -33,7 +33,7 @@ public:
     CartridgeType getCartridgeType() { return CRT_EPYX_FASTLOAD; }
     
     //
-    //! @functiongroup Methods from VirtualComponent
+    //! @functiongroup Methods from HardwareComponent
     //
 
     void reset();

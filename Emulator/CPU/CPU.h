@@ -18,7 +18,7 @@ class Memory;
 
 /*! @class  The virtual 6502 / 6510 processor
  */
-class CPU : public VirtualComponent {
+class CPU : public HardwareComponent {
     
     //
     // Types
@@ -316,7 +316,7 @@ class CPU : public VirtualComponent {
     
     
     //
-	//! @functiongroup Methods from VirtualComponent
+	//! @functiongroup Methods from HardwareComponent
     //
     
     public:

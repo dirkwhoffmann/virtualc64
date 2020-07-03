@@ -10,7 +10,7 @@
 #ifndef _VIC_INC
 #define _VIC_INC
 
-#include "VirtualComponent.h"
+#include "HardwareComponent.h"
 #include "C64Types.h"
 #include "TimeDelayed.h"
 
@@ -50,7 +50,7 @@ class C64Memory;
 
 
 //! @brief    Virtual Video Controller (VICII)
-class VIC : public VirtualComponent {
+class VIC : public HardwareComponent {
 
     friend C64Memory;
     
@@ -731,7 +731,7 @@ public:
 	//! @brief    Destructor
 	~VIC();
 	
-	//! @brief    Methods from VirtualComponent
+	//! @brief    Methods from HardwareComponent
 	void reset();
     void setC64(C64 *c64);
     void ping();

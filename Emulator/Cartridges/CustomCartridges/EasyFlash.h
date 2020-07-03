@@ -37,7 +37,7 @@ public:
     
 
     //
-    //! @functiongroup Methods from VirtualComponent
+    //! @functiongroup Methods from HardwareComponent
     //
 
     void reset();

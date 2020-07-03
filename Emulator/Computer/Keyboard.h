@@ -10,7 +10,7 @@
 #ifndef _KEYBOARD_INC
 #define _KEYBOARD_INC
 
-#include "VirtualComponent.h"
+#include "HardwareComponent.h"
 
 /*! @class    The virtual keyboard of a C64
  *  @details  This class manages the keyboard matrix of the virtual C64.
@@ -26,7 +26,7 @@
  *            getRowValues is called which finally gets the contents of the
  *            keyboard matrix into the virtual C64.
  */
-class Keyboard : public VirtualComponent {
+class Keyboard : public HardwareComponent {
 
 private:
     
@@ -47,7 +47,7 @@ public:
 	//! @brief    Destructor
 	~Keyboard();
 
-	//! @brief    Methods from VirtualComponent
+	//! @brief    Methods from HardwareComponent
 	void reset();
 	void dump();	
 

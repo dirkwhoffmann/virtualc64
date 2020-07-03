@@ -10,10 +10,10 @@
 #ifndef CONTROLPORT_H
 #define CONTROLPORT_H
 
-#include "VirtualComponent.h"
+#include "HardwareComponent.h"
 #include "ControlPort_types.h"
 
-class ControlPort : public VirtualComponent {
+class ControlPort : public HardwareComponent {
 
 private:
     
@@ -56,13 +56,13 @@ public:
     //! @brief    Destructor
     ~ControlPort();
     
-    //! @brief    Method from VirtualComponent
+    //! @brief    Method from HardwareComponent
     void reset();
 
-    //! @brief    Method from VirtualComponent
+    //! @brief    Method from HardwareComponent
     void didLoadFromBuffer(uint8_t **buffer);
     
-    //! @brief    Method from VirtualComponent
+    //! @brief    Method from HardwareComponent
     void dump();
     
     //! @brief   Returns true if auto-fire mode is enabled.
