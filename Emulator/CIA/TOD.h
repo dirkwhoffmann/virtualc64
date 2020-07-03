@@ -78,7 +78,7 @@ private:
      *            endFrame(). Hence, frequencyCounter is a 50 Hz signal in PAL
      *            mode and a 60 Hz signal in NTSC mode.
      */
-    uint64_t frequencyCounter;
+    u64 frequencyCounter;
     
 public:
     

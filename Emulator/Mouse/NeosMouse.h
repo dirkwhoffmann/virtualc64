@@ -39,7 +39,7 @@ class NeosMouse : public HardwareComponent {
     uint8_t state;
 
     //! @brief    CPU cycle of the most recent trigger event
-    uint64_t triggerCycle;
+    u64 triggerCycle;
     
     //! @brief    Latched horizontal mouse position
     int64_t latchedX;

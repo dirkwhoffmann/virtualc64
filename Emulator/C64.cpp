@@ -507,7 +507,7 @@ bool
 C64::_executeOneCycle()
 {
     uint8_t result = true;
-    uint64_t cycle = ++cpu.cycle;
+    u64 cycle = ++cpu.cycle;
     
     //  <---------- o2 low phase ----------->|<- o2 high phase ->|
     //                                       |                   |
@@ -652,8 +652,8 @@ C64::setWarpLoad(bool b)
 void
 C64::restartTimer()
 {
-    uint64_t kernelNow = mach_absolute_time();
-    uint64_t nanoNow = abs_to_nanos(kernelNow);
+    u64 kernelNow = mach_absolute_time();
+    u64 nanoNow = abs_to_nanos(kernelNow);
     
     nanoTargetTime = nanoNow + vic.getFrameDelay();
 }
@@ -661,10 +661,10 @@ C64::restartTimer()
 void
 C64::synchronizeTiming()
 {
-    const uint64_t earlyWakeup = 1500000; /* 1.5 milliseconds */
+    const u64 earlyWakeup = 1500000; /* 1.5 milliseconds */
     
     // Get current time in nano seconds
-    uint64_t nanoAbsTime = abs_to_nanos(mach_absolute_time());
+    u64 nanoAbsTime = abs_to_nanos(mach_absolute_time());
     
     // Check how long we're supposed to sleep
     int64_t timediff = (int64_t)nanoTargetTime - (int64_t)nanoAbsTime;

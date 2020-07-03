@@ -32,6 +32,8 @@
 #include <ctype.h> 
 
 #include "C64Config.h"
+#include "C64Types.h"
+#include "C64Constants.h"
 
 //! @brief    Two bit binary value
 typedef uint8_t uint2_t;
@@ -131,7 +133,7 @@ inline void write32(uint8_t **ptr, uint32_t value) {
     write16(ptr, (uint16_t)(value >> 16)); write16(ptr, (uint16_t)value); }
 
 //! @brief    Writes a quad word value into a buffer in big endian format.
-inline void write64(uint8_t **ptr, uint64_t value) {
+inline void write64(uint8_t **ptr, u64 value) {
     write32(ptr, (uint32_t)(value >> 32)); write32(ptr, (uint32_t)value); }
 
 //! @brief    Writes a memory block into a buffer in big endian format.
@@ -147,8 +149,8 @@ inline void writeBlock32(uint8_t **ptr, uint32_t *values, size_t length) {
     for (unsigned i = 0; i < length / sizeof(uint32_t); i++) write32(ptr, values[i]); }
 
 //! @brief    Writes a quad word memory block into a buffer in big endian format.
-inline void writeBlock64(uint8_t **ptr, uint64_t *values, size_t length) {
-    for (unsigned i = 0; i < length / sizeof(uint64_t); i++) write64(ptr, values[i]); }
+inline void writeBlock64(uint8_t **ptr, u64 *values, size_t length) {
+    for (unsigned i = 0; i < length / sizeof(u64); i++) write64(ptr, values[i]); }
 
 
 //! @brief    Reads a byte value from a buffer.
@@ -163,8 +165,8 @@ inline uint32_t read32(uint8_t **ptr) {
     return ((uint32_t)read16(ptr) << 16) | (uint32_t)read16(ptr); }
 
 //! @brief    Reads a quad word value from a buffer in big endian format.
-inline uint64_t read64(uint8_t **ptr) {
-    return ((uint64_t)read32(ptr) << 32) | (uint64_t)read32(ptr); }
+inline u64 read64(uint8_t **ptr) {
+    return ((u64)read32(ptr) << 32) | (u64)read32(ptr); }
 
 //! @brief    Reads a memory block from a buffer.
 inline void readBlock(uint8_t **ptr, uint8_t *values, size_t length) {
@@ -179,8 +181,8 @@ inline void readBlock32(uint8_t **ptr, uint32_t *values, size_t length) {
     for (unsigned i = 0; i < length / sizeof(uint32_t); i++) values[i] = read32(ptr); }
 
 //! @brief    Reads a quad word block from a buffer in big endian format.
-inline void readBlock64(uint8_t **ptr, uint64_t *values, size_t length) {
-    for (unsigned i = 0; i < length / sizeof(uint64_t); i++) values[i] = read64(ptr); }
+inline void readBlock64(uint8_t **ptr, u64 *values, size_t length) {
+    for (unsigned i = 0; i < length / sizeof(u64); i++) values[i] = read64(ptr); }
 
 
 //
@@ -314,7 +316,7 @@ bool matchingBufferHeader(const uint8_t *buffer, const uint8_t *header, size_t l
 // extern long tv_base;
 
 //! @brief    Return the number of elapsed microseconds since program launch.
-// uint64_t usec();
+// u64 usec();
 
 //! @brief    Reads the real-time clock (1/10th seconds).
 uint8_t localTimeSecFrac();
@@ -338,7 +340,7 @@ void sleepMicrosec(unsigned usec);
  *  @return   Overshoot time (jitter), measured in kernel time. Smaller values
  *            are better, 0 is best.
  */
-int64_t sleepUntil(uint64_t kernelTargetTime, uint64_t kernelEarlyWakeup);
+int64_t sleepUntil(u64 kernelTargetTime, u64 kernelEarlyWakeup);
 
 
 //
@@ -347,14 +349,14 @@ int64_t sleepUntil(uint64_t kernelTargetTime, uint64_t kernelEarlyWakeup);
 
 //! @brief    Returns the FNV-1a seed value.
 inline uint32_t fnv_1a_init32() { return 0x811c9dc5; }
-inline uint64_t fnv_1a_init64() { return 0xcbf29ce484222325; }
+inline u64 fnv_1a_init64() { return 0xcbf29ce484222325; }
 
 //! @brief    Performs a single iteration of the FNV-1a hash algorithm.
 inline uint32_t fnv_1a_it32(uint32_t prev, uint32_t value) { return (prev ^ value) * 0x1000193; }
-inline uint64_t fnv_1a_it64(uint64_t prev, uint64_t value) { return (prev ^ value) * 0x100000001b3; }
+inline u64 fnv_1a_it64(u64 prev, u64 value) { return (prev ^ value) * 0x100000001b3; }
 
 //! @brief    Computes a FNV-1a for a given buffer
 uint32_t fnv_1a_32(uint8_t *addr, size_t size);
-uint64_t fnv_1a_64(uint8_t *addr, size_t size);
+u64 fnv_1a_64(uint8_t *addr, size_t size);
 
 #endif

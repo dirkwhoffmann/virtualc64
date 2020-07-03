@@ -31,18 +31,18 @@ private:
     bool useReSID;
     
     //! @brief    CPU cycle at the last call to executeUntil()
-    uint64_t cycles;
+    u64 cycles;
     
     //! @brief    Time stamp of the last write pointer alignment
-    uint64_t lastAlignment = 0;
+    u64 lastAlignment = 0;
     
 public:
     
     //! @brief    Number of buffer underflows since power up
-    uint64_t bufferUnderflows;
+    u64 bufferUnderflows;
 
     //! @brief    Number of buffer overflows since power up
-    uint64_t bufferOverflows;
+    u64 bufferOverflows;
 
 private:
     
@@ -278,12 +278,12 @@ public:
     /*! @brief    Executes SID until a certain cycle is reached
      *  @param    cycle The target cycle
      */
-    void executeUntil(uint64_t targetCycle);
+    void executeUntil(u64 targetCycle);
 
     /*! @brief    Executes SID for a certain number of cycles
      *  @param    cycles Number of cycles to execute
      */
-	void execute(uint64_t numCycles);
+	void execute(u64 numCycles);
 
      
 	//

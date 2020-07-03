@@ -315,9 +315,9 @@ sleepMicrosec(unsigned usec)
 }
 
 int64_t
-sleepUntil(uint64_t kernelTargetTime, uint64_t kernelEarlyWakeup)
+sleepUntil(u64 kernelTargetTime, u64 kernelEarlyWakeup)
 {
-    uint64_t now = mach_absolute_time();
+    u64 now = mach_absolute_time();
     int64_t jitter;
     
     if (now > kernelTargetTime)
@@ -351,15 +351,15 @@ fnv_1a_32(uint8_t *addr, size_t size)
     return hash;
 }
 
-uint64_t
+u64
 fnv_1a_64(uint8_t *addr, size_t size)
 {
     if (addr == NULL || size == 0) return 0;
 
-    uint64_t hash = fnv_1a_init64();
+    u64 hash = fnv_1a_init64();
 
     for (size_t i = 0; i < size; i++) {
-        hash = fnv_1a_it64(hash, (uint64_t)addr[i]);
+        hash = fnv_1a_it64(hash, (u64)addr[i]);
     }
 
     return hash;

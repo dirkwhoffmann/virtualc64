@@ -16,8 +16,8 @@ class StarDos : public Cartridge {
     
     private:
     
-    uint64_t voltage = 5000000;
-    uint64_t latestVoltageUpdate = 0;
+    u64 voltage = 5000000;
+    u64 latestVoltageUpdate = 0;
     
     public:
     

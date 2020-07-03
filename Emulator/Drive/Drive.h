@@ -40,7 +40,7 @@ class VC1541 : public HardwareComponent {
      *            cycles in the fastest zone and approx. 4 CPU cycles in the
      *            slowest zone.
      */
-    const uint64_t delayBetweenTwoCarryPulses[4] = {
+    const u64 delayBetweenTwoCarryPulses[4] = {
         10000, // Density bits = 00: Carry pulse every 16/16 * 10^4 1/10 nsec
         9375,  // Density bits = 01: Carry pulse every 15/16 * 10^4 1/10 nsec
         8750,  // Density bits = 10: Carry pulse every 14/16 * 10^4 1/10 nsec
@@ -106,10 +106,10 @@ private:
     //
     
     //! @brief    Elapsed time since power up in 1/10 nano seconds
-    uint64_t elapsedTime;
+    u64 elapsedTime;
     
     //! @brief    Duration of a single CPU clock cycle in 1/10 nano seconds
-    uint64_t durationOfOneCpuCycle;
+    u64 durationOfOneCpuCycle;
     
     /*! @brief    Indicates when the next drive clock cycle occurs.
      *  @details  The VC1541 drive is clocked by 16 MHz. The clock signal is
@@ -372,7 +372,7 @@ public:
     /*! @details  The number of cycles is determined by the target time
      *            which is elapsedTime + duration.
      */
-    bool execute(uint64_t duration);
+    bool execute(u64 duration);
 
 private:
     

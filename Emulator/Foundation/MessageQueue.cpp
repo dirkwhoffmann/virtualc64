@@ -64,7 +64,7 @@ MessageQueue::getMessage()
 }
 
 void
-MessageQueue::putMessage(MessageType type, uint64_t data)
+MessageQueue::putMessage(MessageType type, u64 data)
 {
 	pthread_mutex_lock(&lock);
 		

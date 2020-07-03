@@ -649,7 +649,7 @@ private:
      *            cycle.
      *  @see      processDelayedActions()
      */
-    uint64_t delay;
+    u64 delay;
     
     
 	//
@@ -811,8 +811,8 @@ public:
     }
     
     //! @brief    Returns the time interval between two frames in nanoseconds.
-    uint64_t getFrameDelay() {
-        return uint64_t(1000000000.0 / getFramesPerSecond());
+    u64 getFrameDelay() {
+        return u64(1000000000.0 / getFramesPerSecond());
     }
     
     

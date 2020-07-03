@@ -276,7 +276,7 @@ FastSID::poke(uint16_t addr, uint8_t value)
  *           the generated sound samples into the internal ring buffer.
  */
 void
-FastSID::execute(uint64_t cycles)
+FastSID::execute(u64 cycles)
 {
     int16_t buf[2049];
     int buflength = 2048;
@@ -284,10 +284,10 @@ FastSID::execute(uint64_t cycles)
     executedCycles += cycles;
 
     // Compute how many sound samples should have been computed
-    uint64_t shouldHave = (uint64_t)(executedCycles * samplesPerCycle);
+    u64 shouldHave = (u64)(executedCycles * samplesPerCycle);
     
     // How many sound samples are missing?
-    uint64_t numSamples = shouldHave - computedSamples;
+    u64 numSamples = shouldHave - computedSamples;
     computedSamples = shouldHave;
     
     // Do some consistency checking

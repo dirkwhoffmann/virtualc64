@@ -86,7 +86,7 @@ Datasette::didSaveToBuffer(uint8_t **buffer)
 }
 
 void
-Datasette::setHeadInCycles(uint64_t value)
+Datasette::setHeadInCycles(u64 value)
 {
     printf("Fast forwarding to cycle %lld (duration %lld)\n", value, durationInCycles);
     rewind();
@@ -201,7 +201,7 @@ Datasette::pressPlay()
     playKey = true;
 
     // Schedule first pulse
-    uint64_t length = pulseLength();
+    u64 length = pulseLength();
     nextRisingEdge = length / 2;
     nextFallingEdge = length;
 }
@@ -260,7 +260,7 @@ Datasette::_executeFalling()
     
     // Schedule next pulse
     advanceHead();
-    uint64_t length = pulseLength();
+    u64 length = pulseLength();
     nextRisingEdge = length / 2;
     nextFallingEdge = length;
 }

@@ -36,9 +36,9 @@ template <class T> class TimeDelayed {
     public:
     
     //! @brief   Constructors
-    TimeDelayed(uint8_t delay, uint8_t capacity, uint64_t *clock);
+    TimeDelayed(uint8_t delay, uint8_t capacity, u64 *clock);
     TimeDelayed(uint8_t delay, uint8_t capacity) : TimeDelayed(delay, capacity, NULL) { };
-    TimeDelayed(uint8_t delay, uint64_t *clock) : TimeDelayed(delay, delay + 1, clock) { };
+    TimeDelayed(uint8_t delay, u64 *clock) : TimeDelayed(delay, delay + 1, clock) { };
     TimeDelayed(uint8_t delay) : TimeDelayed(delay, delay + 1, NULL) { };
     
     //! @brief   Destructor
@@ -48,7 +48,7 @@ template <class T> class TimeDelayed {
      *  @param   clock is either the clock of the C64 CPU or the clock of the
      *           a drive CPU.
      */
-    void setClock(uint64_t *clock) { this->clock = (int64_t *)clock; }
+    void setClock(u64 *clock) { this->clock = (int64_t *)clock; }
     
     //! @brief   Overwrites all pipeline entries with a reset value.
     void reset(T value) {

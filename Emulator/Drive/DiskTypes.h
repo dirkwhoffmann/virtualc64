@@ -57,7 +57,7 @@ static const unsigned maxBitsOnTrack = maxBytesOnTrack * 8;
  *  @note     The exact value depends on the speed zone and the drive's
  *            rotation speed. We assume a rotation speed of 300 rpm.
  */
- static const uint64_t averageBitTimeSpan[] = {
+ static const u64 averageBitTimeSpan[] = {
      4 * 10000, // 4 * 16/16 * 10^4 1/10 nsec
      4 * 9375,  // 4 * 15/16 * 10^4 1/10 nsec
      4 * 8750,  // 4 * 14/16 * 10^4 1/10 nsec
@@ -186,7 +186,7 @@ typedef struct {
     // Track data
     union {
         uint8_t bit[2 * maxBitsOnTrack];
-        uint64_t byte[2 * maxBytesOnTrack];
+        u64 byte[2 * maxBytesOnTrack];
     };
 
     // Sector layout data

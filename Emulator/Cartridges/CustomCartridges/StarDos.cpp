@@ -23,7 +23,7 @@ StarDos::updateVoltage()
     // If the capacitor is untouched, it slowly raises to 2.0V
     
     if (voltage < 2000000 /* 2.0V */) {
-        uint64_t elapsedCycles = c64->cpu.cycle - latestVoltageUpdate;
+        u64 elapsedCycles = c64->cpu.cycle - latestVoltageUpdate;
         voltage += MIN(2000000 - voltage, elapsedCycles * 2);
     }
     latestVoltageUpdate = c64->cpu.cycle;

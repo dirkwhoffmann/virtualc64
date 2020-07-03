@@ -42,9 +42,9 @@ class ProcessorPort : public HardwareComponent {
      *            otherwise                         => bit reads as 0
      *                                                 (if configured as input)
      */
-    uint64_t dischargeCycleBit3;
-    uint64_t dischargeCycleBit6;
-    uint64_t dischargeCycleBit7;
+    u64 dischargeCycleBit3;
+    u64 dischargeCycleBit6;
+    u64 dischargeCycleBit7;
 
 public:
     

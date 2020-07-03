@@ -101,7 +101,7 @@ class CPU : public HardwareComponent {
     public:
     
     //! @brief    Elapsed C64 clock cycles since power up
-    uint64_t cycle;
+    u64 cycle;
     
     //! @brief    Current error state
     ErrorState errorState;
@@ -186,10 +186,10 @@ class CPU : public HardwareComponent {
     private:
     
     //! @brief    Cycle of the most recent rising edge of the rdyLine
-    uint64_t rdyLineUp;
+    u64 rdyLineUp;
     
     //! @brief    Cycle of the most recent falling edge of the rdyLine
-    uint64_t rdyLineDown;
+    u64 rdyLineDown;
     
     public:
     

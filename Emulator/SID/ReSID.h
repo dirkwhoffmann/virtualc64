@@ -83,7 +83,7 @@ public:
      *  @details Runs reSID for the specified amount of CPU cycles and writes
      *           the generated sound samples into the internal ring buffer. 
      */
-    void execute(uint64_t cycles);
+    void execute(u64 cycles);
 	
 
     // Configuring

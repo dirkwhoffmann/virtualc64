@@ -110,10 +110,10 @@ private:
     //
     
     //! @brief    Performs delay by shifting left at each clock
-	uint64_t delay;
+	u64 delay;
     
     //! @brief    New bits to feed into dwDelay
-	uint64_t feed;
+	u64 feed;
     
     //! @brief    Control register A
 	uint8_t CRA;
@@ -231,10 +231,10 @@ private:
 public:
     
     //! @brief    Wakeup cycle
-    uint64_t wakeUpCycle;
+    u64 wakeUpCycle;
     
     //! @brief    Number of skipped executions
-    uint64_t idleCounter;
+    u64 idleCounter;
     
 public:	
 	

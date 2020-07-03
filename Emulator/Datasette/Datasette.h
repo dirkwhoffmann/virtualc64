@@ -23,7 +23,7 @@ class Datasette : public HardwareComponent {
     uint8_t *data = NULL;
     
     //! @brief    Size of the attached data buffer
-    uint64_t size = 0;
+    u64 size = 0;
     
     /*! @brief    Data format (TAP type)
      *  @details  In TAP format 0, data byte 0 signals a long pulse without
@@ -37,7 +37,7 @@ class Datasette : public HardwareComponent {
      *  @details  The value is set when insertTape() is called. It is computed
      *            by iterating over all pulses in the data buffer.
      */
-    uint64_t durationInCycles = 0;
+    u64 durationInCycles = 0;
     
     
     //
@@ -48,12 +48,12 @@ class Datasette : public HardwareComponent {
      *  @details  Value must be between 0 and size.
      *  @note     head == size indicates EOT (End Of Tape)
      */
-    uint64_t head = 0;
+    u64 head = 0;
     
     /*! @brief    Read/Write head
      *  @details  Head position, measured in cycles
      */
-    uint64_t headInCycles = 0;
+    u64 headInCycles = 0;
     
     /*! @brief    Read/Write head
      *  @details  Head position, measured in seconds
@@ -119,10 +119,10 @@ public:
     uint8_t getType() { return type; }
 
     //! @brief    Returns the tape length in cycles.
-    uint64_t getDurationInCycles() { return durationInCycles; }
+    u64 getDurationInCycles() { return durationInCycles; }
     
     //! @brief    Returns the tape length in seconds.
-    uint32_t getDurationInSeconds() { return (uint32_t)(durationInCycles / (uint64_t)PAL_CLOCK_FREQUENCY); }
+    uint32_t getDurationInSeconds() { return (uint32_t)(durationInCycles / (u64)PAL_CLOCK_FREQUENCY); }
 
     
     //
@@ -139,16 +139,16 @@ public:
     void advanceHead(bool silent = false);
     
     //! @brief    Returns the head position
-    uint64_t getHead() { return head; }
+    u64 getHead() { return head; }
 
     //! @brief    Returns the head position in CPU cycles
-    uint64_t getHeadInCycles() { return headInCycles; }
+    u64 getHeadInCycles() { return headInCycles; }
 
     //! @brief    Returns the head position in seconds
     uint32_t getHeadInSeconds() { return headInSeconds; }
     
     //! @brief    Sets the current head position in cycles.
-    void setHeadInCycles(uint64_t value);
+    void setHeadInCycles(u64 value);
     
     //! @brief    Returns the pulse length at the current head position
     int pulseLength(int *skip);

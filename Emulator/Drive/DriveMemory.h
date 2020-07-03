@@ -64,7 +64,7 @@ class VC1541Memory : public Memory {
     /*! @brief    Computes a 64-bit fingerprint for the VC1541 ROM.
      *  @return   fingerprint or 0, if no Basic ROM is installed.
      */
-    uint64_t romFingerprint() {
+    u64 romFingerprint() {
         return romIsLoaded() ? fnv_1a_64(rom, sizeof(rom)) : 0; }
     
     

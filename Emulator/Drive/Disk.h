@@ -99,7 +99,7 @@ private:
      *            This method is used to quickly inflate a bit stream into a
      *            byte stream.
      */
-    uint64_t bitExpansion[256];
+    u64 bitExpansion[256];
     
     
     //
@@ -270,11 +270,11 @@ public:
      *           the density bits at the time the bit was written to disk.
      *  @note    The head position is expected to be inside the halftrack bounds.
      */
-    uint64_t _bitDelay(Halftrack ht, HeadPosition pos);
+    u64 _bitDelay(Halftrack ht, HeadPosition pos);
 
     /*! @brief   Returns the duration of a single bit in 1/10 nano seconds.
      */
-    uint64_t bitDelay(Halftrack ht, HeadPosition pos) {
+    u64 bitDelay(Halftrack ht, HeadPosition pos) {
         return _bitDelay(ht, fitToBounds(ht, pos));
     }
     

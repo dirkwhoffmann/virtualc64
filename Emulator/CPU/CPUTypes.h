@@ -69,7 +69,7 @@ typedef enum {
  *  @details  Used by getInfo() to collect debug information
  */
 typedef struct {
-    uint64_t cycle;
+    u64 cycle;
     uint16_t pc;
     uint8_t a;
     uint8_t x;
@@ -86,7 +86,7 @@ typedef struct {
 
 //! @brief    Recorded instruction
 typedef struct {
-    uint64_t cycle;
+    u64 cycle;
     uint16_t pc;
     uint8_t byte1;
     uint8_t byte2;
@@ -100,7 +100,7 @@ typedef struct {
 
 //! @brief    Disassembled instruction
 typedef struct {
-    uint64_t cycle;
+    u64 cycle;
     uint16_t addr; 
     uint8_t size;
     char byte1[4];

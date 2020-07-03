@@ -183,9 +183,9 @@ SIDBridge::poke(uint16_t addr, uint8_t value)
 }
 
 void
-SIDBridge::executeUntil(uint64_t targetCycle)
+SIDBridge::executeUntil(u64 targetCycle)
 {
-    uint64_t missingCycles = targetCycle - cycles;
+    u64 missingCycles = targetCycle - cycles;
     
     if (missingCycles > PAL_CYCLES_PER_SECOND) {
         debug("Far too many SID cycles are missing.\n");
@@ -197,7 +197,7 @@ SIDBridge::executeUntil(uint64_t targetCycle)
 }
 
 void
-SIDBridge::execute(uint64_t numCycles)
+SIDBridge::execute(u64 numCycles)
 {
     // debug("Execute SID for %lld cycles (%d samples in buffer)\n", numCycles, samplesInBuffer());
     if (numCycles == 0)
@@ -425,7 +425,7 @@ SIDBridge::handleBufferUnderflow()
     debug(2, "SID RINGBUFFER UNDERFLOW (r: %ld w: %ld)\n", readPtr, writePtr);
 
     // Determine the elapsed seconds since the last pointer adjustment.
-    uint64_t now = mach_absolute_time();
+    u64 now = mach_absolute_time();
     double elapsedTime = (double)(now - lastAlignment) / 1000000000.0;
     lastAlignment = now;
 
@@ -454,7 +454,7 @@ SIDBridge::handleBufferOverflow()
     debug(2, "SID RINGBUFFER OVERFLOW (r: %ld w: %ld)\n", readPtr, writePtr);
     
     // Determine the elapsed seconds since the last pointer adjustment.
-    uint64_t now = mach_absolute_time();
+    u64 now = mach_absolute_time();
     double elapsedTime = (double)(now - lastAlignment) / 1000000000.0;
     lastAlignment = now;
     

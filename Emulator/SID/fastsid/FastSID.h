@@ -68,10 +68,10 @@ private:
     double   samplesPerCycle;
     
     //! @brief   Stores for how many cycles FastSID was executed so far
-    uint64_t executedCycles;
+    u64 executedCycles;
 
     //! @brief   Stores how many sound samples were computed so far
-    uint64_t computedSamples;
+    u64 computedSamples;
 
     //! @brief   Switches filter emulation on or off.
     bool emulateFilter = true;
@@ -140,7 +140,7 @@ public:
      * Runs reSID for the specified amount of CPU cycles and writes the
      * generated sound samples into the internal ring buffer.
      */
-    void execute(uint64_t cycles);
+    void execute(u64 cycles);
     
     // Computes a single sound sample
     int16_t calculateSingleSample();

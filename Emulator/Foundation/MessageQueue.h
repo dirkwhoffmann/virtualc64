@@ -62,7 +62,7 @@ class MessageQueue : public C64Object {
      *            listeners.
      *  @see      propagateMessage
      */
-    void putMessage(MessageType type, uint64_t data = 0);
+    void putMessage(MessageType type, u64 data = 0);
     
     private:
     

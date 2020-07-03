@@ -766,8 +766,8 @@ CIA::executeOneCycle()
 {
     wakeUp();
     
-    uint64_t oldDelay = delay;
-    uint64_t oldFeed  = feed;
+    u64 oldDelay = delay;
+    u64 oldFeed  = feed;
     
     //
 	// Layout of timer (A and B)
@@ -1091,9 +1091,9 @@ CIA::sleep()
     assert(idleCounter == 0);
     
     // Determine maximum possible sleep cycles based on timer counts
-    uint64_t cycle = c64->cpu.cycle;
-    uint64_t sleepA = (counterA > 2) ? (cycle + counterA - 1) : 0;
-    uint64_t sleepB = (counterB > 2) ? (cycle + counterB - 1) : 0;
+    u64 cycle = c64->cpu.cycle;
+    u64 sleepA = (counterA > 2) ? (cycle + counterA - 1) : 0;
+    u64 sleepB = (counterB > 2) ? (cycle + counterB - 1) : 0;
     
     // CIAs with stopped timers can sleep forever
     if (!(feed & CIACountA0)) sleepA = UINT64_MAX;
@@ -1106,7 +1106,7 @@ CIA::sleep()
 void
 CIA::wakeUp()
 {
-    // uint64_t idleCycles = idleCounter;
+    // u64 idleCycles = idleCounter;
     
     // Make up for missed cycles
     if (idleCounter) {

@@ -124,7 +124,7 @@ VC1541::powerUp()
 }
 
 bool
-VC1541::execute(uint64_t duration)
+VC1541::execute(u64 duration)
 {
     uint8_t result = true;
     
@@ -134,7 +134,7 @@ VC1541::execute(uint64_t duration)
         if (nextClock <= nextCarry) {
             
             // Execute CPU and VIAs
-            uint64_t cycle = ++cpu.cycle;
+            u64 cycle = ++cpu.cycle;
             result = cpu.executeOneCycle();
             if (cycle >= via1.wakeUpCycle) via1.execute(); else via1.idleCounter++;
             if (cycle >= via2.wakeUpCycle) via2.execute(); else via2.idleCounter++;
@@ -157,7 +157,7 @@ VC1541::execute(uint64_t duration)
 
 /*
 bool
-VC1541::execute(uint64_t duration)
+VC1541::execute(u64 duration)
 {
     uint8_t result = true;
     
@@ -171,7 +171,7 @@ VC1541::execute(uint64_t duration)
     
     if (nextClock < elapsedTime) {
         // Execute CPU and VIAs
-        uint64_t cycle = ++cpu.cycle;
+        u64 cycle = ++cpu.cycle;
         if (cycle >= via1.wakeUpCycle) via1.execute(); else via1.idleCounter++;
         if (cycle >= via2.wakeUpCycle) via2.execute(); else via2.idleCounter++;
         result = cpu.executeOneCycle();

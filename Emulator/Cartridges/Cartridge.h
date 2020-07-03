@@ -123,7 +123,7 @@ protected:
      *            cycle in this variable. Only a few cartridges make use of this
      *            variable.
      */
-    // uint64_t cycle = 0;
+    // u64 cycle = 0;
     
     /*! @brief    Temporary storage
      *  @details  Some custom cartridges contain additonal registers or jumpers.

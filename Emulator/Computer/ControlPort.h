@@ -43,10 +43,10 @@ private:
     float autofireFrequency;
 
     //! @brief    Bullet counter used in multi-fire mode
-    uint64_t bulletCounter; 
+    u64 bulletCounter; 
 
     //! @brief    Next frame to auto-press or auto-release the fire button
-    uint64_t nextAutofireFrame;
+    u64 nextAutofireFrame;
 
 public:
     

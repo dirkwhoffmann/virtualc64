@@ -25,7 +25,7 @@ private:
      *            cartridge can either read from ROML or I/O space 1. Both
      *            operations discharge the capacitor and keep the ROM alive.
      */
-    uint64_t cycle = 0;
+    u64 cycle = 0;
     
 public:
     

@@ -207,11 +207,11 @@ class VIA6522 : public HardwareComponent {
     uint8_t sr;
     
     //! @brief    Event triggering queue
-    uint64_t delay;
+    u64 delay;
     
     //! @brief    New bits to feed in
     //! @details  Bits set in this variable makes a trigger event persistent.
-    uint64_t feed;
+    u64 feed;
     
     
     //
@@ -226,10 +226,10 @@ class VIA6522 : public HardwareComponent {
     uint8_t tiredness;
     
     //! @brief    Wakeup cycle
-    uint64_t wakeUpCycle;
+    u64 wakeUpCycle;
     
     //! @brief    Number of skipped executions
-    uint64_t idleCounter;
+    u64 idleCounter;
     
 public:
     

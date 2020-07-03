@@ -1663,7 +1663,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->c64->mem.basicRomIsLoaded();
 }
-- (uint64_t) basicRomFingerprint
+- (u64) basicRomFingerprint
 {
     return wrapper->c64->mem.basicRomFingerprint();
 }
@@ -1679,7 +1679,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->c64->mem.characterRomIsLoaded();
 }
-- (uint64_t) charRomFingerprint
+- (u64) charRomFingerprint
 {
     return wrapper->c64->mem.characterRomFingerprint();
 }
@@ -1695,7 +1695,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->c64->mem.kernalRomIsLoaded();
 }
-- (uint64_t) kernalRomFingerprint
+- (u64) kernalRomFingerprint
 {
     return wrapper->c64->mem.kernalRomFingerprint();
 }
@@ -1711,7 +1711,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->c64->drive1.mem.romIsLoaded() && wrapper->c64->drive2.mem.romIsLoaded();
 }
-- (uint64_t) vc1541RomFingerprint
+- (u64) vc1541RomFingerprint
 {
     return wrapper->c64->drive1.mem.romFingerprint();
 }

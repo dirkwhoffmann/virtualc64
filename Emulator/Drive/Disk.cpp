@@ -171,7 +171,7 @@ Disk::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, Track t, unsigne
     
     encodeGcr(buffer, 4, t, offset);
     /*
-    uint64_t shift_reg = 0;
+    u64 shift_reg = 0;
     
     // Shift in
     shift_reg = gcr[b1 >> 4];
@@ -217,7 +217,7 @@ Disk::decodeGcr(uint8_t *gcr)
     return (nibble1 << 4) | nibble2;
 }
 
-uint64_t
+u64
 Disk::_bitDelay(Halftrack ht, HeadPosition pos) {
     
     assert(isValidHeadPositon(ht, pos));

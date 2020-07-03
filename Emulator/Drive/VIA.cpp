@@ -114,8 +114,8 @@ VIA6522::execute()
 {
     wakeUp();
     
-    uint64_t oldDelay = delay;
-    uint64_t oldFeed  = feed;
+    u64 oldDelay = delay;
+    u64 oldFeed  = feed;
     
     // Execute timers
     executeTimer1();
@@ -835,8 +835,8 @@ VIA6522::sleep()
     assert(idleCounter == 0);
     
     // Determine maximum possible sleep cycles based on timer counts
-    uint64_t sleepA = (t1 > 2) ? (drive->cpu.cycle + t1 - 1) : 0;
-    uint64_t sleepB = (t2 > 2) ? (drive->cpu.cycle + t2 - 1) : 0;
+    u64 sleepA = (t1 > 2) ? (drive->cpu.cycle + t1 - 1) : 0;
+    u64 sleepB = (t2 > 2) ? (drive->cpu.cycle + t2 - 1) : 0;
     
     // VIAs with stopped timers can sleep forever
     if (!(delay & VIACountA1)) sleepA = UINT64_MAX;
@@ -848,7 +848,7 @@ VIA6522::sleep()
 void
 VIA6522::wakeUp()
 {
-    uint64_t idleCycles = idleCounter;
+    u64 idleCycles = idleCounter;
     
     // Make up for missed cycles
     if (idleCycles) {

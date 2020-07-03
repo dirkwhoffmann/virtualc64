@@ -127,7 +127,7 @@ class C64 : public HardwareComponent {
     //
     
     //! @brief    The total number of frames drawn since power up
-    uint64_t frame;
+    u64 frame;
     
     //! @brief    The currently drawn rasterline
     /*! @details  The first rasterline is numbered 0. The number of rasterlines
@@ -152,7 +152,7 @@ class C64 : public HardwareComponent {
     /*! @brief    Duration of a CPU cycle in 1/10 nano seconds
      *  @details  This value is set in setClockFrequency()
      */
-    uint64_t durationOfOneCycle;
+    u64 durationOfOneCycle;
     
     //! @brief    VICII function table.
     /*! @details  Stores a pointer to the VICII method that is executed
@@ -188,7 +188,7 @@ class C64 : public HardwareComponent {
      *  @details  This value is recomputed each time the emulator thread is
      *            put to sleep.
      */
-    uint64_t nanoTargetTime;
+    u64 nanoTargetTime;
     
     /*! @brief    Indicates if c64 is currently running at maximum speed
      *            (with timing synchronization disabled)
@@ -316,7 +316,7 @@ class C64 : public HardwareComponent {
     Message getMessage() { return queue.getMessage(); }
     
     //! @brief    Feeds a notification message into message queue
-    void putMessage(MessageType msg, uint64_t data = 0) { queue.putMessage(msg, data); }
+    void putMessage(MessageType msg, u64 data = 0) { queue.putMessage(msg, data); }
     
     
     //
@@ -412,10 +412,10 @@ class C64 : public HardwareComponent {
     private:
     
     //! @brief    Converts kernel time to nanoseconds.
-    uint64_t abs_to_nanos(uint64_t abs) { return abs * timebase.numer / timebase.denom; }
+    u64 abs_to_nanos(u64 abs) { return abs * timebase.numer / timebase.denom; }
     
     //! @brief    Converts nanoseconds to kernel time.
-    uint64_t nanos_to_abs(uint64_t nanos) { return nanos * timebase.denom / timebase.numer; }
+    u64 nanos_to_abs(u64 nanos) { return nanos * timebase.denom / timebase.numer; }
     
     public:
     

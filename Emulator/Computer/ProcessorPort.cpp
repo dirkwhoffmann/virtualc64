@@ -98,8 +98,8 @@ ProcessorPort::write(uint8_t value)
 void
 ProcessorPort::writeDirection(uint8_t value)
 {
-    uint64_t dischargeCycles = 350000; // VICE value
-    // uint64_t dischargeCycles = 246312; // Hoxs64 value
+    u64 dischargeCycles = 350000; // VICE value
+    // u64 dischargeCycles = 246312; // Hoxs64 value
 
     // Check floating status of bits 3, 6, and 7.
     
