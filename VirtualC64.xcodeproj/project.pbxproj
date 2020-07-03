@@ -45,7 +45,7 @@
 		5038CA9520B6C2AC000D9193 /* VICPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9420B6C2AC000D9193 /* VICPanel.swift */; };
 		5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9620B6C2BE000D9193 /* SIDPanel.swift */; };
 		503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */; };
-		503E199020C42C6D007E91F1 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 503E198F20C42C6D007E91F1 /* Media.xcassets */; };
+		503E199020C42C6D007E91F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 503E198F20C42C6D007E91F1 /* Assets.xcassets */; };
 		50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50412B0C2028F31800CC90A1 /* DiskMountController.swift */; };
 		5046C413202344F3000D9B1C /* ArchiveMountDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */; };
 		5046C415202349EE000D9B1C /* ArchiveMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5046C414202349EE000D9B1C /* ArchiveMountController.swift */; };
@@ -249,7 +249,7 @@
 		5038CA9420B6C2AC000D9193 /* VICPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VICPanel.swift; sourceTree = "<group>"; };
 		5038CA9620B6C2BE000D9193 /* SIDPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIDPanel.swift; sourceTree = "<group>"; };
 		503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerToolbar.swift; sourceTree = "<group>"; };
-		503E198F20C42C6D007E91F1 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		503E198F20C42C6D007E91F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		50412B0C2028F31800CC90A1 /* DiskMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskMountController.swift; sourceTree = "<group>"; };
 		5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArchiveMountDialog.xib; sourceTree = "<group>"; };
 		5046C414202349EE000D9B1C /* ArchiveMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveMountController.swift; sourceTree = "<group>"; };
@@ -555,9 +555,9 @@
 		2A37F4AAFDCFA73011CA2CEA /* V64 */ = {
 			isa = PBXGroup;
 			children = (
+				5070D72224AF3330005862D0 /* Proxy */,
 				504C428D24AF29AB00E69CAE /* Emulator */,
 				50176C6D0A6F7357009E80BD /* GUI */,
-				503E198F20C42C6D007E91F1 /* Media.xcassets */,
 				50C4F055202D8B37004C5F21 /* XIB files */,
 				5070D72124AF2EB1005862D0 /* Resources */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
@@ -586,9 +586,6 @@
 			isa = PBXGroup;
 			children = (
 				506D3DCF20224BF4009742CF /* MyDocument.swift */,
-				50B171051EE6AB840019E8D4 /* VirtualC64-Bridging-Header.h */,
-				50176C790A6F7357009E80BD /* C64Proxy.h */,
-				50176C7A0A6F7357009E80BD /* C64Proxy.mm */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1036,6 +1033,7 @@
 		5070D72124AF2EB1005862D0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				503E198F20C42C6D007E91F1 /* Assets.xcassets */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
 				5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */,
 				8D15AC360486D014006FF6A4 /* Info.plist */,
@@ -1049,6 +1047,16 @@
 				5051A1501B8842F100CBFB5A /* Sounds */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		5070D72224AF3330005862D0 /* Proxy */ = {
+			isa = PBXGroup;
+			children = (
+				50B171051EE6AB840019E8D4 /* VirtualC64-Bridging-Header.h */,
+				50176C790A6F7357009E80BD /* C64Proxy.h */,
+				50176C7A0A6F7357009E80BD /* C64Proxy.mm */,
+			);
+			path = Proxy;
 			sourceTree = "<group>";
 		};
 		50B4B6071EEFE77400D56499 /* TouchBar */ = {
@@ -1183,7 +1191,7 @@
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */,
 				501A4A5821AF1A6200DDE409 /* VirtualC64.sdef in Resources */,
-				503E199020C42C6D007E91F1 /* Media.xcassets in Resources */,
+				503E199020C42C6D007E91F1 /* Assets.xcassets in Resources */,
 				50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */,
 				5052AD0C202A57C4005FDD88 /* TapeMountDialog.xib in Resources */,
 				50D2A69E210F20CB00F13D43 /* VirtualKeyboard.xib in Resources */,
@@ -1444,7 +1452,7 @@
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.dirkwhoffmann.VirtualC64;
 				PRODUCT_NAME = VirtualC64;
-				SWIFT_OBJC_BRIDGING_HEADER = "GUI/VirtualC64-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Proxy/VirtualC64-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -1472,7 +1480,7 @@
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.dirkwhoffmann.VirtualC64;
 				PRODUCT_NAME = VirtualC64;
-				SWIFT_OBJC_BRIDGING_HEADER = "GUI/VirtualC64-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Proxy/VirtualC64-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
