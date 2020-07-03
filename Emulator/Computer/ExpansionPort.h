@@ -159,7 +159,7 @@ public:
     bool attachCartridgeAndReset(CRTFile *c);
     
     //! @brief    Creates and attaches a GeoRAM cartridge
-    bool attachGeoRamCartridge(uint32_t capacity);
+    bool attachGeoRamCartridge(u32 capacity);
 
     //! @brief    Creates and attaches an Isepic cartridge
     void attachIsepicCartridge();

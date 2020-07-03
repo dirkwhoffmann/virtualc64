@@ -159,7 +159,7 @@ void C64::ping()
 }
 
 void
-C64::setClockFrequency(uint32_t value)
+C64::setClockFrequency(u32 value)
 {
     HardwareComponent::setClockFrequency(value);
     

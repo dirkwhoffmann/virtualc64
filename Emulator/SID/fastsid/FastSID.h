@@ -48,7 +48,7 @@ public:
     uint8_t sidreg[32];
     
     //! @brief   Internal constant used for sample rate dependent calculations
-    uint32_t speed1;
+    u32 speed1;
     
 private:
     
@@ -59,10 +59,10 @@ private:
     SIDModel model = MOS_6581;
     
     //! @brief   Current CPU frequency
-    uint32_t cpuFrequency = PAL_CLOCK_FREQUENCY;
+    u32 cpuFrequency = PAL_CLOCK_FREQUENCY;
     
     //! @brief   Sample rate (44.1 kHz per default)
-    uint32_t sampleRate = 44100;
+    u32 sampleRate = 44100;
     
     //! @brief    Ratio between sample rate and cpu frequency
     double   samplesPerCycle;
@@ -85,7 +85,7 @@ public:
     int32_t adrs[16];
     
     //! @brief   Sustain comparison values loopup table
-    uint32_t sz[16];
+    u32 sz[16];
     
 private:
     
@@ -119,7 +119,7 @@ public:
     void reset();
 
     // Sets the clock frequency
-    void setClockFrequency(uint32_t frequency);
+    void setClockFrequency(u32 frequency);
 
     // Dump internal state to console
     void dump();
@@ -157,13 +157,13 @@ public:
     void setModel(SIDModel m);
     
     // Returns the clock frequency
-    uint32_t getClockFrequency() { return cpuFrequency; }
+    u32 getClockFrequency() { return cpuFrequency; }
     
     // Returns the sample rate
-    uint32_t getSampleRate() { return sampleRate; }
+    u32 getSampleRate() { return sampleRate; }
     
     // Sets the sample rate
-    void setSampleRate(uint32_t rate);
+    void setSampleRate(u32 rate);
     
     // Returns true iff audio filters should be emulated.
     bool getAudioFilter() { return emulateFilter; }

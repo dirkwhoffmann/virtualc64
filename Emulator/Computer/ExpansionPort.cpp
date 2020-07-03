@@ -289,7 +289,7 @@ ExpansionPort::attachCartridgeAndReset(CRTFile *file)
 }
 
 bool
-ExpansionPort::attachGeoRamCartridge(uint32_t capacity)
+ExpansionPort::attachGeoRamCartridge(u32 capacity)
 {
     switch (capacity) {
         case 64: case 128: case 256: case 512: case 1024: case 2048: case 4096:
@@ -300,7 +300,7 @@ ExpansionPort::attachGeoRamCartridge(uint32_t capacity)
     }
     
     Cartridge *geoRAM = Cartridge::makeWithType(c64, CRT_GEO_RAM);
-    uint32_t capacityInBytes = capacity * 1024;
+    u32 capacityInBytes = capacity * 1024;
     geoRAM->setRamCapacity(capacityInBytes);
     debug("Created GeoRAM cartridge (%d KB)\n", capacity);
     

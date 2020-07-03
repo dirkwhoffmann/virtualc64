@@ -76,7 +76,7 @@ FastSID::reset()
 }
 
 void
-FastSID::setClockFrequency(uint32_t frequency)
+FastSID::setClockFrequency(u32 frequency)
 {
     cpuFrequency = frequency;
     
@@ -174,7 +174,7 @@ FastSID::setModel(SIDModel m)
 }
 
 void
-FastSID::setSampleRate(uint32_t rate)
+FastSID::setSampleRate(u32 rate)
 {
     debug("Setting sample rate to %d\n", rate);
     
@@ -308,7 +308,7 @@ FastSID::execute(u64 cycles)
 void
 FastSID::init(int sampleRate, int cycles_per_sec)
 {
-    uint32_t i;
+    u32 i;
     
     // Recompute sample/cycle ratio and reset counters
     samplesPerCycle = (double)sampleRate / (double)cpuFrequency;
@@ -416,7 +416,7 @@ FastSID::updateInternals()
 int16_t
 FastSID::calculateSingleSample()
 {
-    uint32_t osc0, osc1, osc2;
+    u32 osc0, osc1, osc2;
     FastVoice *v0 = &voice[0];
     FastVoice *v1 = &voice[1];
     FastVoice *v2 = &voice[2];
@@ -487,15 +487,15 @@ FastSID::calculateSingleSample()
     if (emulateFilter) {
         v0->filterIO = ampMod1x8[(osc0 >> 22)];
         if (filterOn(0)) v0->applyFilter();
-        osc0 = ((uint32_t)(v0->filterIO) + 0x80) << (7 + 15);
+        osc0 = ((u32)(v0->filterIO) + 0x80) << (7 + 15);
         
         v1->filterIO = ampMod1x8[(osc1 >> 22)];
         if (filterOn(1)) v1->applyFilter();
-        osc1 = ((uint32_t)(v1->filterIO) + 0x80) << (7 + 15);
+        osc1 = ((u32)(v1->filterIO) + 0x80) << (7 + 15);
         
         v2->filterIO = ampMod1x8[(osc2 >> 22)];
         if (filterOn(2)) v2->applyFilter();
-        osc2 = ((uint32_t)(v2->filterIO) + 0x80) << (7 + 15);
+        osc2 = ((u32)(v2->filterIO) + 0x80) << (7 + 15);
     }
     
     return (int16_t)(((int32_t)((osc0 + osc1 + osc2) >> 20) - 0x600) * sidVolume() * 0.5);

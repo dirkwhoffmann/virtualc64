@@ -40,10 +40,10 @@ private:
     //! @brief   Clock frequency
     /*! @details Either PAL_CLOCK_FREQUENCY or NTSC_CLOCK_FREQUENCY
      */
-    uint32_t clockFrequency;
+    u32 clockFrequency;
     
     //! @brief   Sample rate (usually set to 44.1 kHz)
-    uint32_t sampleRate;
+    u32 sampleRate;
     
     //! @brief   Sampling method
     SamplingMethod samplingMethod;
@@ -98,19 +98,19 @@ public:
     void setModel(SIDModel m);
     
     //! Returns the clock frequency
-    uint32_t getClockFrequency() {
-        assert((uint32_t)sid->clock_frequency == clockFrequency);
-        return (uint32_t)sid->clock_frequency;
+    u32 getClockFrequency() {
+        assert((u32)sid->clock_frequency == clockFrequency);
+        return (u32)sid->clock_frequency;
     }
     
     //! Sets the clock frequency
-    void setClockFrequency(uint32_t frequency);
+    void setClockFrequency(u32 frequency);
     
     //! Returns the sample rate
-    uint32_t getSampleRate() { return sampleRate; }
+    u32 getSampleRate() { return sampleRate; }
     
     //! Sets the sample rate
-    void setSampleRate(uint32_t rate);
+    void setSampleRate(u32 rate);
     
     //! Returns true iff audio filters should be emulated.
     bool getAudioFilter() { return emulateFilter; }

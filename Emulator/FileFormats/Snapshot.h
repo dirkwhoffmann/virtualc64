@@ -33,7 +33,7 @@ typedef struct {
         uint16_t width, height;
         
         //! @brief    Screen buffer data
-        uint32_t screen[PAL_RASTERLINES * NTSC_PIXELS];
+        u32 screen[PAL_RASTERLINES * NTSC_PIXELS];
         
     } screenshot;
     

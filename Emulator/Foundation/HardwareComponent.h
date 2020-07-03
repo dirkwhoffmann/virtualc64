@@ -108,7 +108,7 @@ public:
      *  @param    frequency Frequency of the C64 CPU in Hz.
      *            Must be either PAL_CLOCK_FREQUENCY_PAL or NTSC_CLOCK_FREQUENCY.
      */
-    virtual void setClockFrequency(uint32_t frequency);
+    virtual void setClockFrequency(u32 frequency);
     
     
     //

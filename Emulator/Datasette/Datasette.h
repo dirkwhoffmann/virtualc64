@@ -58,7 +58,7 @@ class Datasette : public HardwareComponent {
     /*! @brief    Read/Write head
      *  @details  Head position, measured in seconds
      */
-    uint32_t headInSeconds = 0;
+    u32 headInSeconds = 0;
     
     /*! @brief    Next scheduled rising edge on data line
      */
@@ -122,7 +122,7 @@ public:
     u64 getDurationInCycles() { return durationInCycles; }
     
     //! @brief    Returns the tape length in seconds.
-    uint32_t getDurationInSeconds() { return (uint32_t)(durationInCycles / (u64)PAL_CLOCK_FREQUENCY); }
+    u32 getDurationInSeconds() { return (u32)(durationInCycles / (u64)PAL_CLOCK_FREQUENCY); }
 
     
     //
@@ -145,7 +145,7 @@ public:
     u64 getHeadInCycles() { return headInCycles; }
 
     //! @brief    Returns the head position in seconds
-    uint32_t getHeadInSeconds() { return headInSeconds; }
+    u32 getHeadInSeconds() { return headInSeconds; }
     
     //! @brief    Sets the current head position in cycles.
     void setHeadInCycles(u64 value);

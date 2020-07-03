@@ -396,8 +396,8 @@ struct AnyC64FileWrapper;
 
 - (BOOL) reSID;
 - (void) setReSID:(BOOL)b;
-- (uint32_t) sampleRate;
-- (void) setSampleRate:(uint32_t)rate;
+- (u32) sampleRate;
+- (void) setSampleRate:(u32)rate;
 - (BOOL) audioFilter;
 - (void) setAudioFilter:(BOOL)b;
 - (NSInteger) samplingMethod;

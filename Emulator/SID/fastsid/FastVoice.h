@@ -111,15 +111,15 @@ private:
      *           referencing the wavetable. It is used when other
      *           waveforms are combined with pulse
      */
-    uint32_t waveTableOffset;
+    u32 waveTableOffset;
     
     //! @brief   Counter value
-    uint32_t waveTableCounter;
+    u32 waveTableCounter;
     
     //! @brief   Counter steps
     /*! @details After each sample, the counter is incremented by this amount.
      */
-    uint32_t step;
+    u32 step;
     
     //! @brief   Set to true if the oscillator should ring modulate
     bool ringmod;
@@ -132,13 +132,13 @@ private:
     uint8_t adsrm;
     
     //! @brief   31-bit adsr counter
-    uint32_t adsr;
+    u32 adsr;
     
     //! @brief   adsr counter step per sample
     int32_t adsrInc;
     
     //! @brief   adsr sustain level comparision value
-    uint32_t adsrCmp;
+    u32 adsrCmp;
     
     //
     // Noise generator
@@ -148,7 +148,7 @@ private:
     /*! @details The Noise waveform is created using a 23-bit pseudo-random
      *           sequence generator (Linear Feedback Shift Register, LSFR)
      */
-    uint32_t lsfr;
+    u32 lsfr;
     
     //
     // Filter
@@ -200,7 +200,7 @@ public:
     void trigger_adsr();
     
     // 15-bit oscillator value
-    uint32_t doosc();
+    u32 doosc();
     
     //! @brief Apply filter effect
     void applyFilter();

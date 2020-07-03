@@ -20,7 +20,7 @@ typedef union {
         uint8_t minutes;
         uint8_t hours;
     };
-    uint32_t value;
+    u32 value;
 } TimeOfDay;
 
 /*! @brief    TOD info

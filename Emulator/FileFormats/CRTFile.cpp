@@ -195,7 +195,7 @@ CRTFile::readFromBuffer(const uint8_t *buffer, size_t length)
     }
 
     // Cartridge header size
-    uint32_t headerSize = HI_HI_LO_LO(data[0x10],data[0x11],data[0x12],data[0x13]);
+    u32 headerSize = HI_HI_LO_LO(data[0x10],data[0x11],data[0x12],data[0x13]);
     
     // Minimum header size is 0x40. Some cartridges show a value of 0x20 which is wrong.
     if (headerSize < 0x40) headerSize = 0x40;

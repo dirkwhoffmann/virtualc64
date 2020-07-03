@@ -169,7 +169,7 @@ VIC::drawCanvasPixel(uint8_t pixel,
      */
     if (loadShiftReg && sr.canLoad) {
         
-        uint32_t result = gAccessResult.delayed();
+        u32 result = gAccessResult.delayed();
      
         // Load shift register
         sr.data = BYTE0(result);

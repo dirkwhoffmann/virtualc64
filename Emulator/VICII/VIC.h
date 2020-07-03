@@ -188,7 +188,7 @@ private:
      *            only exception is the overflow condition which is handled in
      *            cycle 2.
      */
-    uint32_t yCounter;
+    u32 yCounter;
     
     /*! @brief    Video counter (14)
      *  @details  A 10 bit counter that can be loaded with the value from
@@ -299,7 +299,7 @@ private:
     struct {
         
         //! @brief    Shift register data (24 bit)
-        uint32_t data;
+        u32 data;
         
         //! @brief    The shift register data is read in three chunks
         uint8_t chunk1, chunk2, chunk3;
@@ -570,7 +570,7 @@ private:
     uint16_t bankAddr;
     
     //! @brief    Result of the lastest g-access
-    TimeDelayed<uint32_t>gAccessResult = TimeDelayed<uint32_t>(2);
+    TimeDelayed<u32>gAccessResult = TimeDelayed<u32>(2);
     
     
     //
@@ -661,7 +661,7 @@ private:
     /*! @brief    Currently used RGBA values for all sixteen C64 colors
      *  @see      updatePalette()
      */
-    uint32_t rgbaTable[16];
+    u32 rgbaTable[16];
     
     /*! @brief    First screen buffer
      *  @details  The VIC chip writes its output into this buffer. The contents
@@ -833,12 +833,12 @@ public:
      *  @return   Color in 32 bit big endian RGBA format.
      *  @seealso  updateColors
      */
-    uint32_t getColor(unsigned nr);
+    u32 getColor(unsigned nr);
     
     /*! @brief    Returns a C64 color from a specific color palette.
      *  @return   Color in 32 bit big endian RGBA format.
      */
-    uint32_t getColor(unsigned nr, VICPalette palette);
+    u32 getColor(unsigned nr, VICPalette palette);
     
     //! @brief    Returns the brightness monitor parameter
     double getBrightness() { return brightness; }

@@ -72,13 +72,13 @@ inline bool is_uint5_t(uint5_t value) { return value < 32; }
 
 //! @brief    Specifies a larger integer in little endian byte format
 #define LO_HI(x,y) (uint16_t)((y) << 8 | (x))
-#define LO_LO_HI(x,y,z) (uint32_t)((z) << 16 | (y) << 8 | (x))
-#define LO_LO_HI_HI(x,y,z,w) (uint32_t)((w) << 24 | (z) << 16 | (y) << 8 | (x))
+#define LO_LO_HI(x,y,z) (u32)((z) << 16 | (y) << 8 | (x))
+#define LO_LO_HI_HI(x,y,z,w) (u32)((w) << 24 | (z) << 16 | (y) << 8 | (x))
 
 //! @brief    Specifies a larger integer in big endian byte format
 #define HI_LO(x,y) (uint16_t)((x) << 8 | (y))
-#define HI_HI_LO(x,y,z) (uint32_t)((x) << 16 | (y) << 8 | (z))
-#define HI_HI_LO_LO(x,y,z,w) (uint32_t)((x) << 24 | (y) << 16 | (z) << 8 | (w))
+#define HI_HI_LO(x,y,z) (u32)((x) << 16 | (y) << 8 | (z))
+#define HI_HI_LO_LO(x,y,z,w) (u32)((x) << 24 | (y) << 16 | (z) << 8 | (w))
 
 //! @brief    Returns a certain byte of a larger integer
 #define BYTE0(x) LO_BYTE(x)
@@ -129,12 +129,12 @@ inline void write16(uint8_t **ptr, uint16_t value) {
     write8(ptr, (uint8_t)(value >> 8)); write8(ptr, (uint8_t)value); }
 
 //! @brief    Writes a double byte value into a buffer in big endian format.
-inline void write32(uint8_t **ptr, uint32_t value) {
+inline void write32(uint8_t **ptr, u32 value) {
     write16(ptr, (uint16_t)(value >> 16)); write16(ptr, (uint16_t)value); }
 
 //! @brief    Writes a quad word value into a buffer in big endian format.
 inline void write64(uint8_t **ptr, u64 value) {
-    write32(ptr, (uint32_t)(value >> 32)); write32(ptr, (uint32_t)value); }
+    write32(ptr, (u32)(value >> 32)); write32(ptr, (u32)value); }
 
 //! @brief    Writes a memory block into a buffer in big endian format.
 inline void writeBlock(uint8_t **ptr, uint8_t *values, size_t length) {
@@ -145,8 +145,8 @@ inline void writeBlock16(uint8_t **ptr, uint16_t *values, size_t length) {
     for (unsigned i = 0; i < length / sizeof(uint16_t); i++) write16(ptr, values[i]); }
 
 //! @brief    Writes a double word memory block into a buffer in big endian format.
-inline void writeBlock32(uint8_t **ptr, uint32_t *values, size_t length) {
-    for (unsigned i = 0; i < length / sizeof(uint32_t); i++) write32(ptr, values[i]); }
+inline void writeBlock32(uint8_t **ptr, u32 *values, size_t length) {
+    for (unsigned i = 0; i < length / sizeof(u32); i++) write32(ptr, values[i]); }
 
 //! @brief    Writes a quad word memory block into a buffer in big endian format.
 inline void writeBlock64(uint8_t **ptr, u64 *values, size_t length) {
@@ -161,8 +161,8 @@ inline uint16_t read16(uint8_t **ptr) {
     return ((uint16_t)read8(ptr) << 8) | (uint16_t)read8(ptr); }
 
 //! @brief    Reads a double word value from a buffer in big endian format.
-inline uint32_t read32(uint8_t **ptr) {
-    return ((uint32_t)read16(ptr) << 16) | (uint32_t)read16(ptr); }
+inline u32 read32(uint8_t **ptr) {
+    return ((u32)read16(ptr) << 16) | (u32)read16(ptr); }
 
 //! @brief    Reads a quad word value from a buffer in big endian format.
 inline u64 read64(uint8_t **ptr) {
@@ -177,8 +177,8 @@ inline void readBlock16(uint8_t **ptr, uint16_t *values, size_t length) {
     for (unsigned i = 0; i < length / sizeof(uint16_t); i++) values[i] = read16(ptr); }
 
 //! @brief    Reads a double word block from a buffer in big endian format.
-inline void readBlock32(uint8_t **ptr, uint32_t *values, size_t length) {
-    for (unsigned i = 0; i < length / sizeof(uint32_t); i++) values[i] = read32(ptr); }
+inline void readBlock32(uint8_t **ptr, u32 *values, size_t length) {
+    for (unsigned i = 0; i < length / sizeof(u32); i++) values[i] = read32(ptr); }
 
 //! @brief    Reads a quad word block from a buffer in big endian format.
 inline void readBlock64(uint8_t **ptr, u64 *values, size_t length) {
@@ -348,15 +348,15 @@ i64 sleepUntil(u64 kernelTargetTime, u64 kernelEarlyWakeup);
 //
 
 //! @brief    Returns the FNV-1a seed value.
-inline uint32_t fnv_1a_init32() { return 0x811c9dc5; }
+inline u32 fnv_1a_init32() { return 0x811c9dc5; }
 inline u64 fnv_1a_init64() { return 0xcbf29ce484222325; }
 
 //! @brief    Performs a single iteration of the FNV-1a hash algorithm.
-inline uint32_t fnv_1a_it32(uint32_t prev, uint32_t value) { return (prev ^ value) * 0x1000193; }
+inline u32 fnv_1a_it32(u32 prev, u32 value) { return (prev ^ value) * 0x1000193; }
 inline u64 fnv_1a_it64(u64 prev, u64 value) { return (prev ^ value) * 0x100000001b3; }
 
 //! @brief    Computes a FNV-1a for a given buffer
-uint32_t fnv_1a_32(uint8_t *addr, size_t size);
+u32 fnv_1a_32(uint8_t *addr, size_t size);
 u64 fnv_1a_64(uint8_t *addr, size_t size);
 
 #endif

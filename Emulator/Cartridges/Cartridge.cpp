@@ -328,7 +328,7 @@ Cartridge::poke(uint16_t addr, uint8_t value)
     }
 }
 
-uint32_t
+u32
 Cartridge::getRamCapacity()
 {
     if (ramCapacity == 0) {
@@ -340,7 +340,7 @@ Cartridge::getRamCapacity()
 }
 
 void
-Cartridge::setRamCapacity(uint32_t size)
+Cartridge::setRamCapacity(u32 size)
 {
     // Free
     if (ramCapacity != 0 || externalRam != NULL) {

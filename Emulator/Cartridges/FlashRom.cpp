@@ -91,7 +91,7 @@ FlashRom::dump()
 }
 
 uint8_t
-FlashRom::peek(uint32_t addr)
+FlashRom::peek(u32 addr)
 {
     assert(addr < size);
     
@@ -155,7 +155,7 @@ FlashRom::peek(uint32_t addr)
 }
 
 void
-FlashRom::poke(uint32_t addr, uint8_t value)
+FlashRom::poke(u32 addr, uint8_t value)
 {
     assert(addr < size);
     
@@ -291,7 +291,7 @@ FlashRom::poke(uint32_t addr, uint8_t value)
 }
 
 bool
-FlashRom::doByteProgram(uint32_t addr, uint8_t value)
+FlashRom::doByteProgram(u32 addr, uint8_t value)
 {
     assert(addr < size);
     
@@ -307,7 +307,7 @@ FlashRom::doChipErase() {
 }
 
 void
-FlashRom::doSectorErase(uint32_t addr)
+FlashRom::doSectorErase(u32 addr)
 {
     assert(addr < size);
     

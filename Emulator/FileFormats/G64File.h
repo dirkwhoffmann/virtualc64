@@ -81,7 +81,7 @@ public:
     const char *getTypeOfItem() { assert(false); return ""; }
     uint16_t getDestinationAddrOfItem() { assert(false); return 0; }
     void selectItem(unsigned n) { assert(false); }
-    uint32_t getStartOfItem(unsigned n) { assert(false); return 0; }
+    u32 getStartOfItem(unsigned n) { assert(false); return 0; }
 
     
     //

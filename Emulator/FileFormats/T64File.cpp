@@ -129,7 +129,7 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
         *ptr = ascii2pet(*ptr);
     
     // Tape entries
-    uint32_t tapePosition = 64 + maxFiles * 32; // data of item 0 starts here
+    u32 tapePosition = 64 + maxFiles * 32; // data of item 0 starts here
     memset(ptr, 0, 32 * maxFiles);
     for (unsigned n = 0; n < maxFiles; n++) {
         

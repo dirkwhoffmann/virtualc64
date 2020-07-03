@@ -380,7 +380,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     assert (0 <= nr && nr < 16);
     
-    uint32_t color = wrapper->vic->getColor((unsigned)nr);
+    u32 color = wrapper->vic->getColor((unsigned)nr);
     uint8_t r = color & 0xFF;
     uint8_t g = (color >> 8) & 0xFF;
     uint8_t b = (color >> 16) & 0xFF;
@@ -618,11 +618,11 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->sid->setModel((SIDModel)value);
 }
-- (uint32_t) sampleRate
+- (u32) sampleRate
 {
     return wrapper->sid->getSampleRate();
 }
-- (void) setSampleRate:(uint32_t)rate
+- (void) setSampleRate:(u32)rate
 {
     wrapper->sid->setSampleRate(rate);
 }
@@ -863,7 +863,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (BOOL) attachGeoRamCartridge:(NSInteger)capacity
 {
-    return wrapper->expansionPort->attachGeoRamCartridge((uint32_t)capacity);
+    return wrapper->expansionPort->attachGeoRamCartridge((u32)capacity);
 }
 - (void) attachIsepicCartridge
 {

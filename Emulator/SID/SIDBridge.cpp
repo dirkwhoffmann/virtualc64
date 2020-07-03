@@ -53,7 +53,7 @@ SIDBridge::reset()
 }
 
 void
-SIDBridge::setClockFrequency(uint32_t frequency)
+SIDBridge::setClockFrequency(u32 frequency)
 {
     debug("Setting clock frequency to %d\n", frequency);
     resid.setClockFrequency(frequency);
@@ -277,7 +277,7 @@ SIDBridge::setModel(SIDModel m)
     resume();
 }
 
-uint32_t
+u32
 SIDBridge::getSampleRate()
 {
     if (useReSID) {
@@ -288,14 +288,14 @@ SIDBridge::getSampleRate()
 }
 
 void 
-SIDBridge::setSampleRate(uint32_t rate)
+SIDBridge::setSampleRate(u32 rate)
 {
     debug("Changing sample rate from %d to %d\n", getSampleRate(), rate);
     resid.setSampleRate(rate);
     fastsid.setSampleRate(rate);
 }
 
-uint32_t
+u32
 SIDBridge::getClockFrequency()
 {
     if (useReSID) {

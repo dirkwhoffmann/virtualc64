@@ -95,7 +95,7 @@ VC1541::ping()
 }
 
 void
-VC1541::setClockFrequency(uint32_t frequency)
+VC1541::setClockFrequency(u32 frequency)
 {
     durationOfOneCpuCycle = 10000000000 / frequency;
     debug("Duration a CPU cycle is %lld 1/10 nsec.\n", durationOfOneCpuCycle);

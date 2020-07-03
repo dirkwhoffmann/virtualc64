@@ -67,11 +67,11 @@ private:
     
     /*! @brief   Ring buffer read pointer
      */
-    uint32_t readPtr;
+    u32 readPtr;
     
     /*! @brief   Ring buffer write pointer
      */
-    uint32_t writePtr;
+    u32 writePtr;
     
     /*! @brief   Current volume
      *  @note    A value of 0 or below silences the audio playback.
@@ -109,7 +109,7 @@ public:
     //! @functiongroup    Methods from HardwareComponent
     void reset();
     void dump();
-    void setClockFrequency(uint32_t frequency);
+    void setClockFrequency(u32 frequency);
     void didLoadFromBuffer(uint8_t **buffer) { clearRingbuffer(); }
     
 	//! @brief    Prints debug information
@@ -151,13 +151,13 @@ public:
     void setSamplingMethod(SamplingMethod value);
 
     //! @brief    Returns the sample rate.
-    uint32_t getSampleRate();
+    u32 getSampleRate();
     
 	//! @brief    Sets the samplerate of SID and it's 3 voices.
-	void setSampleRate(uint32_t sr);
+	void setSampleRate(u32 sr);
     
     //! @brief    Returns the clock frequency.
-    uint32_t getClockFrequency();
+    u32 getClockFrequency();
     
     //
     // Running the device
@@ -196,10 +196,10 @@ public:
     size_t ringbufferSize() { return bufferSize; }
     
     //! @brief  Returns the position of the read pointer
-    uint32_t getReadPtr() { return readPtr; }
+    u32 getReadPtr() { return readPtr; }
 
     //! @brief  Returns the position of the write pointer
-    uint32_t getWritePtr() { return writePtr; }
+    u32 getWritePtr() { return writePtr; }
 
     //! @brief  Clears the ringbuffer and resets the read and write pointer
     void clearRingbuffer();
@@ -270,7 +270,7 @@ public:
      *            read pointer. With a standard sample rate of 44100 Hz, 735
      *            samples is 1/60 sec.
      */
-    const uint32_t samplesAhead = 8 * 735;
+    const u32 samplesAhead = 8 * 735;
     void alignWritePtr() { writePtr = (readPtr  + samplesAhead) % bufferSize; }
     
 public:

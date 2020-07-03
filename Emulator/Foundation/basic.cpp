@@ -337,15 +337,15 @@ sleepUntil(u64 kernelTargetTime, u64 kernelEarlyWakeup)
     return jitter;
 }
 
-uint32_t
+u32
 fnv_1a_32(uint8_t *addr, size_t size)
 {
     if (addr == NULL || size == 0) return 0;
 
-    uint32_t hash = fnv_1a_init32();
+    u32 hash = fnv_1a_init32();
 
     for (size_t i = 0; i < size; i++) {
-        hash = fnv_1a_it32(hash, (uint32_t)addr[i]);
+        hash = fnv_1a_it32(hash, (u32)addr[i]);
     }
 
     return hash;

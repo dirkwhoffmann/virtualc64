@@ -147,7 +147,7 @@ class C64 : public HardwareComponent {
     /*! @brief    Current CPU frequency
      *  @details  This value is set in setClockFrequency()
      */
-    uint32_t frequency;
+    u32 frequency;
 
     /*! @brief    Duration of a CPU cycle in 1/10 nano seconds
      *  @details  This value is set in setClockFrequency()
@@ -270,7 +270,7 @@ class C64 : public HardwareComponent {
     
     void reset();
     void ping();
-    void setClockFrequency(uint32_t frequency);
+    void setClockFrequency(u32 frequency);
     void suspend();
     void resume();
     void dump();

@@ -44,7 +44,7 @@ uint8_t FastVoice::noiseLSB[256];
 
 
 // Table for pseudo-exponential ADSR calculations
-static uint32_t exptable[6] =
+static u32 exptable[6] =
 {
     0x30000000, 0x1c000000, 0x0e000000, 0x08000000, 0x04000000, 0x00000000
 };
@@ -363,15 +363,15 @@ FastVoice::trigger_adsr()
     }
 }
 
-uint32_t
+u32
 FastVoice::doosc()
 {
     if (waveform() == FASTSID_NOISE) {
-        return ((uint32_t)NVALUE(NSHIFT(lsfr, waveTableCounter >> 28))) << 7;
+        return ((u32)NVALUE(NSHIFT(lsfr, waveTableCounter >> 28))) << 7;
     }
     
     if (wavetable) {
-        uint32_t index = (waveTableCounter + waveTableOffset) >> 20; /* 12 bit value */
+        u32 index = (waveTableCounter + waveTableOffset) >> 20; /* 12 bit value */
         if (ringmod) {
             if ((prev->waveTableCounter >> 31) == 1) {
                 return wavetable[index] ^ 0x7FFF;

@@ -91,7 +91,7 @@ private:
     /*! @brief    Capacity of the additional RAM in bytes
      *  @note     This value is 0 if and only if externaRam is NULL.
      */
-    uint32_t ramCapacity = 0;
+    u32 ramCapacity = 0;
     
     //! @brief    Indicates if the RAM is kept alive during a reset.
     bool persistentRam = false;
@@ -322,14 +322,14 @@ public:
     //
     
     //! @brief    Returns the RAM size in bytes.
-    uint32_t getRamCapacity(); 
+    u32 getRamCapacity(); 
 
     //! @brief    Assigns external RAM to this cartridge.
     /*! @details  This functions frees any previously assigned RAM and allocates
      *            memory of the specified size. The size is stored in variable
      *            ramCapacity.
      */
-    void setRamCapacity(uint32_t size);
+    void setRamCapacity(u32 size);
 
     //! @brief    Returns true if RAM data is preserved during a reset.
     bool getPersistentRam() { return persistentRam; }

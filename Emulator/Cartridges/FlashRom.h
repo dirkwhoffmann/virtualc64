@@ -99,21 +99,21 @@ class FlashRom : public HardwareComponent {
     //
     
     //! @brief    Reads a Rom cell
-    uint8_t peek(uint32_t addr);
+    uint8_t peek(u32 addr);
     
     //! @brief    Convenience wrapper with bank,offset addressing
     uint8_t peek(unsigned bank, uint16_t addr) {
         assert(isBankNumber(bank)); return peek(bank * 0x2000 + addr); }
     
     //! @brief    Reads a Rom cell without side effects
-    uint8_t spypeek(uint32_t addr) { return peek(addr); }
+    uint8_t spypeek(u32 addr) { return peek(addr); }
     
     //! @brief    Convenience wrapper with bank,offset addressing
     uint8_t spypeek(unsigned bank, uint16_t addr) {
         assert(isBankNumber(bank)); return peek(bank * 0x2000 + addr); }
     
     //! @brief    Writes a Rom cell
-    void poke(uint32_t addr, uint8_t value);
+    void poke(u32 addr, uint8_t value);
     
     //! @brief    Convenience wrapper with bank,offset addressing
     void poke(unsigned bank, uint16_t addr, uint8_t value) {
@@ -125,20 +125,20 @@ class FlashRom : public HardwareComponent {
     //
     
     //! @brief    Checks if addr serves as the first command address.
-    bool firstCommandAddr(uint32_t addr) { return (addr & 0x7FF) == 0x555; }
+    bool firstCommandAddr(u32 addr) { return (addr & 0x7FF) == 0x555; }
 
     //! @brief    Checks if addr serves as the second command address.
-    bool secondCommandAddr(uint32_t addr) { return (addr & 0x7FF) == 0x2AA; }
+    bool secondCommandAddr(u32 addr) { return (addr & 0x7FF) == 0x2AA; }
 
     //! @brief    Performs a "Byte Program" operation
-    bool doByteProgram(uint32_t addr, uint8_t value);
+    bool doByteProgram(u32 addr, uint8_t value);
     
     //! @brief    Convenience wrapper with bank,offset addressing
     bool doByteProgram(unsigned bank, uint16_t addr, uint8_t value) {
         assert(isBankNumber(bank)); return doByteProgram(bank * 0x2000 + addr, value); }
     
     //! @brief    Performs a "Sector Erase" operation
-    void doSectorErase(uint32_t addr);
+    void doSectorErase(u32 addr);
     
     //! @brief    Convenience wrapper with bank,offset addressing
     void doSectorErase(unsigned bank, uint16_t addr) {

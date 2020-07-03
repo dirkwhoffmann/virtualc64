@@ -88,7 +88,7 @@ G64File::makeWithDisk(Disk *disk)
     }
     
     // Determine file offsets for all (half)tracks
-    uint32_t offset[85];
+    u32 offset[85];
     unsigned pos = 0x015C;
     for (Halftrack ht = 1; ht <= 84; ht++) {
         if (empty[ht]) {

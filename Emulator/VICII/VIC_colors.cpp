@@ -26,14 +26,14 @@ double gammaCorrect(double value, double source, double target)
     return round(value);
 }
 
-uint32_t
+u32
 VIC::getColor(unsigned nr)
 {
     assert(nr < 16);
     return rgbaTable[nr];
 }
 
-uint32_t
+u32
 VIC::getColor(unsigned nr, VICPalette palette)
 {
     double y, u, v;
@@ -441,7 +441,7 @@ VIC::updatePalette()
         }
         
         // Store result
-        uint32_t rgba = LO_LO_HI_HI((uint8_t)r, (uint8_t)g, (uint8_t)b, 0xFF);
+        u32 rgba = LO_LO_HI_HI((uint8_t)r, (uint8_t)g, (uint8_t)b, 0xFF);
         rgbaTable[i] = rgba;
     }
 #endif

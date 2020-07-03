@@ -232,7 +232,7 @@ public:
     void reset();
     void ping();
     void dump();
-    void setClockFrequency(uint32_t frequency);
+    void setClockFrequency(u32 frequency);
 
     /*! @brief    Resets all disk related properties
      *  @note     This method is needed, because reset() keeps the disk alive.

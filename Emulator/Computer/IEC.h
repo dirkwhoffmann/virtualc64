@@ -55,7 +55,7 @@ public:
 private:
     
 	//! @brief    Used to determine if the bus is idle or if data is transferred
-	uint32_t busActivity;
+	u32 busActivity;
 	
 public:
     

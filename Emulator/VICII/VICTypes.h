@@ -83,7 +83,7 @@ typedef struct {
 //
 
 //! @brief    NTSC clock frequency in Hz
-static const uint32_t NTSC_CLOCK_FREQUENCY = 1022727;
+static const u32 NTSC_CLOCK_FREQUENCY = 1022727;
 
 //! @brief    CPU cycles per second in NTSC mode
 static const unsigned NTSC_CYCLES_PER_SECOND = NTSC_CLOCK_FREQUENCY;
@@ -153,7 +153,7 @@ static const uint16_t NTSC_RASTERLINES = 235; // 10 + 200 + 25
 //
 
 //! @brief    PAL clock frequency in Hz
-static const uint32_t PAL_CLOCK_FREQUENCY = 985249;
+static const u32 PAL_CLOCK_FREQUENCY = 985249;
 
 //! @brief    CPU cycles per second in PAL mode
 static const unsigned PAL_CYCLES_PER_SECOND = PAL_CLOCK_FREQUENCY;
