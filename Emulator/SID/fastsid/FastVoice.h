@@ -135,7 +135,7 @@ private:
     u32 adsr;
     
     //! @brief   adsr counter step per sample
-    int32_t adsrInc;
+    i32 adsrInc;
     
     //! @brief   adsr sustain level comparision value
     u32 adsrCmp;

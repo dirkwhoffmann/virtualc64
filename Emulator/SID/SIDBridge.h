@@ -76,7 +76,7 @@ private:
     /*! @brief   Current volume
      *  @note    A value of 0 or below silences the audio playback.
      */
-    int32_t volume;
+    i32 volume;
     
     /*! @brief   Target volume
      *  @details Whenever an audio sample is written, the volume is
@@ -84,11 +84,11 @@ private:
      *           the target volume eventually. This feature simulates a
      *           fading effect.
      */
-    int32_t targetVolume;
+    i32 targetVolume;
     
     /*! @brief   Maximum volume
      */
-    const static int32_t maxVolume = 100000;
+    const static i32 maxVolume = 100000;
     
     /*! @brief   Volume offset
      *  @details If the current volume does not match the target volume,
@@ -96,7 +96,7 @@ private:
      *           increase or decrease takes place whenever an audio sample
      *           is generated.
      */
-    int32_t volumeDelta;
+    i32 volumeDelta;
     
 public:
 	
@@ -175,7 +175,7 @@ public:
     
     /*! @brief Sets the current volume
      */
-    void setVolume(int32_t vol) { volume = vol; }
+    void setVolume(i32 vol) { volume = vol; }
     
     /*! @brief   Triggers volume ramp up phase
      *  @details Configures volume and targetVolume to simulate a smooth audio fade in

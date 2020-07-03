@@ -82,7 +82,7 @@ private:
 public:
     
     //! @brief   ADSR counter step lookup table
-    int32_t adrs[16];
+    i32 adrs[16];
     
     //! @brief   Sustain comparison values loopup table
     u32 sz[16];

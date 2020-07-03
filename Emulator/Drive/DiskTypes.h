@@ -163,7 +163,7 @@ static inline bool isValidHalftrackSectorPair(Halftrack ht, Sector s) {
 }
 
 //! @brief    Data type for specifying the head position inside a track
-typedef int32_t HeadPosition;
+typedef i32 HeadPosition;
 
 //! @brief    Layout information of a single sector
 typedef struct {

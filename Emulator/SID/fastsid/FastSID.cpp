@@ -498,5 +498,5 @@ FastSID::calculateSingleSample()
         osc2 = ((u32)(v2->filterIO) + 0x80) << (7 + 15);
     }
     
-    return (int16_t)(((int32_t)((osc0 + osc1 + osc2) >> 20) - 0x600) * sidVolume() * 0.5);
+    return (int16_t)(((i32)((osc0 + osc1 + osc2) >> 20) - 0x600) * sidVolume() * 0.5);
 }
