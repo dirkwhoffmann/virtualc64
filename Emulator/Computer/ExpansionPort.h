@@ -27,7 +27,7 @@
 #define _EXPANSIONPORT_H
 
 #include "Cartridge.h"
-#include "ExpansionPort_types.h"
+#include "ExpansionPortTypes.h"
 
 class ExpansionPort : public HardwareComponent {
  

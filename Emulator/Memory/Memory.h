@@ -12,7 +12,7 @@
 
 #include "basic.h"
 #include "HardwareComponent.h"
-#include "Memory_types.h"
+#include "MemoryTypes.h"
 
 
 //! @brief    Common interface for C64 memory and VC1541 memory

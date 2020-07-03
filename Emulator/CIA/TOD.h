@@ -11,7 +11,7 @@
 #define _TOD_INC
 
 #include "HardwareComponent.h"
-#include "TOD_types.h"
+#include "TODTypes.h"
 
 class CIA;
 

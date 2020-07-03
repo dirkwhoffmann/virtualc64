@@ -13,7 +13,7 @@
 #include "HardwareComponent.h"
 #include "FastSID.h"
 #include "ReSID.h"
-#include "SID_types.h"
+#include "SIDTypes.h"
 
 class SIDBridge : public HardwareComponent {
 

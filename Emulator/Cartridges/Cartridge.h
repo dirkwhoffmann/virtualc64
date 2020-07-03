@@ -11,7 +11,7 @@
 #define _CARTRIDGE_INC
 
 #include "HardwareComponent.h"
-#include "Cartridge_types.h"
+#include "CartridgeTypes.h"
 #include "CRTFile.h"
 #include "CartridgeRom.h"
 

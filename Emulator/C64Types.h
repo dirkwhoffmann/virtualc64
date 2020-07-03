@@ -10,19 +10,21 @@
 #ifndef C64TYPES_H
 #define C64TYPES_H
 
-#include "CPU_types.h"
-#include "Memory_types.h"
-#include "TOD_types.h"
-#include "CIA_types.h"
-#include "VIC_types.h"
-#include "SID_types.h"
-#include "ControlPort_types.h"
-#include "ExpansionPort_types.h"
-#include "Cartridge_types.h"
-#include "Drive_types.h"
-#include "Disk_types.h"
-#include "Mouse_types.h"
-#include "File_types.h"
+#include "Aliases.h"
+
+#include "CPUTypes.h"
+#include "MemoryTypes.h"
+#include "TODTypes.h"
+#include "CIATypes.h"
+#include "VICTypes.h"
+#include "SIDTypes.h"
+#include "ControlPortTypes.h"
+#include "ExpansionPortTypes.h"
+#include "CartridgeTypes.h"
+#include "DriveTypes.h"
+#include "DiskTypes.h"
+#include "MouseTypes.h"
+#include "FileTypes.h"
 
 //! @brief    C64 model
 typedef enum {

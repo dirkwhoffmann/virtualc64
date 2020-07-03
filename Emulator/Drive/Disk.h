@@ -15,7 +15,7 @@
 #include <iostream>
 
 #include "HardwareComponent.h"
-#include "Disk_types.h"
+#include "DiskTypes.h"
 
 class C64;
 class VC1541;

@@ -11,7 +11,7 @@
 #define _CIA_H
 
 #include "TOD.h"
-#include "CIA_types.h"
+#include "CIATypes.h"
 
 // Forward declarations
 class VIC;

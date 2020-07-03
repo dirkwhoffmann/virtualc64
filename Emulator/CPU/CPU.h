@@ -10,7 +10,7 @@
 #ifndef _CPU_INC
 #define _CPU_INC
 
-#include "CPU_types.h"
+#include "CPUTypes.h"
 #include "CPUInstructions.h"
 #include "TimeDelayed.h"
 

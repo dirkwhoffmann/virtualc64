@@ -11,7 +11,7 @@
 #define CONTROLPORT_H
 
 #include "HardwareComponent.h"
-#include "ControlPort_types.h"
+#include "ControlPortTypes.h"
 
 class ControlPort : public HardwareComponent {
 
