@@ -527,7 +527,7 @@
 		50FE5B352039B3B7006CE7C7 /* MacKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacKey.swift; sourceTree = "<group>"; };
 		50FE5B372039B3C5006CE7C7 /* C64Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C64Key.swift; sourceTree = "<group>"; };
 		50FF818E1F88D9100004548A /* GamePad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePad.swift; sourceTree = "<group>"; };
-		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* VirtualC64.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualC64.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -600,7 +600,7 @@
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
 				503E198F20C42C6D007E91F1 /* Media.xcassets */,
 				50C4F055202D8B37004C5F21 /* XIB files */,
-				2A37F4B8FDCFA73011CA2CEA /* Resources */,
+				5070D72124AF2EB1005862D0 /* Resources */,
 				50790A2021BAF20300979B7A /* VirtualC64Tests */,
 				5043436421BBB6F0009749CA /* VirtualC64UITests */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
@@ -615,24 +615,6 @@
 				50176C6D0A6F7357009E80BD /* MacGUI */,
 			);
 			name = Classes;
-			sourceTree = "<group>";
-		};
-		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				501E427820D975AC000BB48D /* IconCRT.icns */,
-				501E427720D975AC000BB48D /* IconD64.icns */,
-				501E427A20D975AD000BB48D /* IconPRG.icns */,
-				501E427920D975AD000BB48D /* IconT64.icns */,
-				501E427B20D975AD000BB48D /* IconVirtualC64.icns */,
-				5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */,
-				5051A1501B8842F100CBFB5A /* Sounds */,
-				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
-				8D15AC360486D014006FF6A4 /* Info.plist */,
-				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
-				50D197DF21606DEC008BC551 /* dsa_pub.pem */,
-			);
-			name = Resources;
 			sourceTree = "<group>";
 		};
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
@@ -1109,6 +1091,24 @@
 				50C72DE51BC7F42100F1863B /* Shaders.metal */,
 			);
 			path = Metal;
+			sourceTree = "<group>";
+		};
+		5070D72124AF2EB1005862D0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
+				5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */,
+				8D15AC360486D014006FF6A4 /* Info.plist */,
+				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
+				50D197DF21606DEC008BC551 /* dsa_pub.pem */,
+				501E427B20D975AD000BB48D /* IconVirtualC64.icns */,
+				501E427820D975AC000BB48D /* IconCRT.icns */,
+				501E427720D975AC000BB48D /* IconD64.icns */,
+				501E427A20D975AD000BB48D /* IconPRG.icns */,
+				501E427920D975AD000BB48D /* IconT64.icns */,
+				5051A1501B8842F100CBFB5A /* Sounds */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		50790A2021BAF20300979B7A /* VirtualC64Tests */ = {
@@ -1645,7 +1645,7 @@
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -1673,7 +1673,7 @@
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SYSTEM_DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
