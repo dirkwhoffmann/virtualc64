@@ -20,7 +20,7 @@
 #define _VIC_INC
 
 #include "VirtualComponent.h"
-#include "C64_types.h"
+#include "C64Types.h"
 #include "TimeDelayed.h"
 
 // Sprite bit masks

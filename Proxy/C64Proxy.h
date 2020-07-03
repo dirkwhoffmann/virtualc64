@@ -1,15 +1,15 @@
-//
-// This file is part of VirtualC64 - A cycle accurate Commodore 64 emulator
+// -----------------------------------------------------------------------------
+// This file is part of VirtualC64
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
-// Licensed under the GNU General Public License v3
+// Licensed under the GNU General Public License v2
 //
 // See https://www.gnu.org for license information
-//
+// -----------------------------------------------------------------------------
 
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
-#import "C64_types.h"
+#import "C64Types.h"
 #import "basic.h"
 
 // Forward declarations of proxy classes

@@ -1,7 +1,14 @@
-//  Created by Dirk Hoffmann
+// -----------------------------------------------------------------------------
+// This file is part of VirtualC64
+//
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// Licensed under the GNU General Public License v2
+//
+// See https://www.gnu.org for license information
+// -----------------------------------------------------------------------------
 
-#ifndef C64_TYPES_H
-#define C64_TYPES_H
+#ifndef C64TYPES_H
+#define C64TYPES_H
 
 #include "CPU_types.h"
 #include "Memory_types.h"

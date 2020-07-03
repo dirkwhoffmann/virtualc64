@@ -353,7 +353,7 @@
 		504C42F524AF29AB00E69CAE /* VirtualComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualComponent.h; sourceTree = "<group>"; };
 		504C42F624AF29AB00E69CAE /* C64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64.h; sourceTree = "<group>"; };
 		504C42F724AF29AB00E69CAE /* C64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C64.cpp; sourceTree = "<group>"; };
-		504C42F824AF29AB00E69CAE /* Configure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Configure.h; sourceTree = "<group>"; };
+		504C42F824AF29AB00E69CAE /* C64Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64Config.h; sourceTree = "<group>"; };
 		504C42FA24AF29AB00E69CAE /* Mouse1350.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mouse1350.h; sourceTree = "<group>"; };
 		504C42FB24AF29AB00E69CAE /* NeosMouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NeosMouse.h; sourceTree = "<group>"; };
 		504C42FC24AF29AB00E69CAE /* Mouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mouse.cpp; sourceTree = "<group>"; };
@@ -363,7 +363,7 @@
 		504C430024AF29AB00E69CAE /* Mouse_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mouse_types.h; sourceTree = "<group>"; };
 		504C430124AF29AB00E69CAE /* Mouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mouse.h; sourceTree = "<group>"; };
 		504C430224AF29AB00E69CAE /* Mouse1351.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mouse1351.h; sourceTree = "<group>"; };
-		504C430324AF29AB00E69CAE /* C64_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64_types.h; sourceTree = "<group>"; };
+		504C430324AF29AB00E69CAE /* C64Types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64Types.h; sourceTree = "<group>"; };
 		504C430524AF29AB00E69CAE /* VIC_draw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_draw.cpp; sourceTree = "<group>"; };
 		504C430624AF29AC00E69CAE /* VIC_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIC_types.h; sourceTree = "<group>"; };
 		504C430724AF29AC00E69CAE /* VIC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC.cpp; sourceTree = "<group>"; };
@@ -555,8 +555,8 @@
 		2A37F4AAFDCFA73011CA2CEA /* V64 */ = {
 			isa = PBXGroup;
 			children = (
-				5070D72224AF3330005862D0 /* Proxy */,
 				504C428D24AF29AB00E69CAE /* Emulator */,
+				5070D72224AF3330005862D0 /* Proxy */,
 				50176C6D0A6F7357009E80BD /* GUI */,
 				50C4F055202D8B37004C5F21 /* XIB files */,
 				5070D72124AF2EB1005862D0 /* Resources */,
@@ -687,6 +687,8 @@
 		504C428D24AF29AB00E69CAE /* Emulator */ = {
 			isa = PBXGroup;
 			children = (
+				504C42F824AF29AB00E69CAE /* C64Config.h */,
+				504C430324AF29AB00E69CAE /* C64Types.h */,
 				504C428E24AF29AB00E69CAE /* Cartridges */,
 				504C42C624AF29AB00E69CAE /* FileFormats */,
 				504C42E024AF29AB00E69CAE /* Memory */,
@@ -694,9 +696,7 @@
 				504C42EB24AF29AB00E69CAE /* General */,
 				504C42F624AF29AB00E69CAE /* C64.h */,
 				504C42F724AF29AB00E69CAE /* C64.cpp */,
-				504C42F824AF29AB00E69CAE /* Configure.h */,
 				504C42F924AF29AB00E69CAE /* Mouse */,
-				504C430324AF29AB00E69CAE /* C64_types.h */,
 				504C430424AF29AB00E69CAE /* VICII */,
 				504C430E24AF29AC00E69CAE /* Datasette */,
 				504C431124AF29AC00E69CAE /* SID */,
