@@ -38,19 +38,19 @@ public:
 
     void reset();
     size_t stateSize();
-    void didLoadFromBuffer(uint8_t **buffer);
-    void didSaveToBuffer(uint8_t **buffer);
+    void didLoadFromBuffer(u8 **buffer);
+    void didSaveToBuffer(u8 **buffer);
     
     //
     //! @functiongroup Methods from Cartridge
     //
     
     void resetCartConfig();
-    uint8_t peekRomL(u16 addr);
-    uint8_t spypeekRomL(u16 addr) { return Cartridge::peekRomL(addr); }
-    uint8_t peekIO1(u16 addr);
-    uint8_t spypeekIO1(u16 addr) { return 0; }
-    uint8_t peekIO2(u16 addr);
+    u8 peekRomL(u16 addr);
+    u8 spypeekRomL(u16 addr) { return Cartridge::peekRomL(addr); }
+    u8 peekIO1(u16 addr);
+    u8 spypeekIO1(u16 addr) { return 0; }
+    u8 peekIO2(u16 addr);
     void execute();
 
 private:

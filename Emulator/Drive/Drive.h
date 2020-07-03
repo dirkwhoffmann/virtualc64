@@ -164,7 +164,7 @@ public:
      *            contents of the read shift register to be latched into the
      *            input register of VIA2.
      */
-    uint8_t byteReadyCounter;
+    u8 byteReadyCounter;
     
     //! @brief    Halftrack position of the read/write head
     Halftrack halftrack;
@@ -180,7 +180,7 @@ public:
      *            frequency. This mechanism is used to slow down the read/write
      *            process on inner tracks.
      */
-    uint8_t zone;
+    u8 zone;
     
     /*! @brief    The 74LS164 serial to parallel shift register
      *  @details  In read mode, this register is fed by the drive head with data.
@@ -190,7 +190,7 @@ public:
     /*! @brief    The 74LS165 parallel to serial shift register
      *  @details  In write mode, this register feeds the drive head with data.
      */
-    uint8_t writeShiftreg;
+    u8 writeShiftreg;
     
     /*! @brief    Current value of the SYNC line
      *  @details  The SYNC signal plays an important role for timing
@@ -442,10 +442,10 @@ public:
     /*! @brief    Reads a single bit from the disk head
      *  @result   0 or 1
      */
-    uint8_t readBitFromHead() { return disk.readBitFromHalftrack(halftrack, offset); }
+    u8 readBitFromHead() { return disk.readBitFromHalftrack(halftrack, offset); }
     
     //! @brief Writes a single bit to the disk head
-    void writeBitToHead(uint8_t bit) {
+    void writeBitToHead(u8 bit) {
         disk.writeBitToHalftrack(halftrack, offset, bit); }
     
     //! @brief  Advances drive head position by one bit

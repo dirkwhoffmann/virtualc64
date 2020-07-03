@@ -69,7 +69,7 @@ SIDBridge::setReSID(bool enable)
 void
 SIDBridge::dump(SIDInfo info)
 {
-    uint8_t ft = info.filterType;
+    u8 ft = info.filterType;
     msg("        Volume: %d\n", info.volume);
     msg("   Filter type: %s\n",
         (ft == FASTSID_LOW_PASS) ? "LOW PASS" :
@@ -81,7 +81,7 @@ SIDBridge::dump(SIDInfo info)
 
     for (unsigned i = 0; i < 3; i++) {
         VoiceInfo vinfo = getVoiceInfo(i);
-        uint8_t wf = vinfo.waveform;
+        u8 wf = vinfo.waveform;
         msg("Voice %d:       Frequency: %d\n", i, vinfo.frequency);
         msg("             Pulse width: %d\n", vinfo.pulseWidth);
         msg("                Waveform: %s\n",
@@ -139,7 +139,7 @@ SIDBridge::getVoiceInfo(unsigned voice)
     return useReSID ? resid.getVoiceInfo(voice) : fastsid.getVoiceInfo(voice);
 }
 
-uint8_t 
+u8 
 SIDBridge::peek(u16 addr)
 {
     assert(addr <= 0x1F);
@@ -161,7 +161,7 @@ SIDBridge::peek(u16 addr)
     }
 }
 
-uint8_t
+u8
 SIDBridge::spypeek(u16 addr)
 {
     assert(addr <= 0x1F);
@@ -169,7 +169,7 @@ SIDBridge::spypeek(u16 addr)
 }
 
 void 
-SIDBridge::poke(u16 addr, uint8_t value)
+SIDBridge::poke(u16 addr, u8 value)
 {
     // Get SID up to date
     executeUntil(c64->cpu.cycle);

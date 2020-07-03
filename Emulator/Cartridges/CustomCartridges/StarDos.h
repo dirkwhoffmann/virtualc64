@@ -32,10 +32,10 @@ class StarDos : public Cartridge {
     void disableROML();
 
     void updatePeekPokeLookupTables(); 
-    uint8_t peekIO1(u16 addr) { charge(); return 0; }
-    uint8_t peekIO2(u16 addr) { discharge(); return 0; }
-    void pokeIO1(u16 addr, uint8_t value) { charge(); }
-    void pokeIO2(u16 addr, uint8_t value) { discharge(); }
+    u8 peekIO1(u16 addr) { charge(); return 0; }
+    u8 peekIO2(u16 addr) { discharge(); return 0; }
+    void pokeIO1(u16 addr, u8 value) { charge(); }
+    void pokeIO2(u16 addr, u8 value) { discharge(); }
     
     bool hasResetButton() { return true; }
 };

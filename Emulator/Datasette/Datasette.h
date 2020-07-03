@@ -20,7 +20,7 @@ class Datasette : public HardwareComponent {
     //
     
     //! @brief    Data buffer (contains the raw data of the TAP archive)
-    uint8_t *data = NULL;
+    u8 *data = NULL;
     
     //! @brief    Size of the attached data buffer
     u64 size = 0;
@@ -31,7 +31,7 @@ class Datasette : public HardwareComponent {
      *            In TAP format 1, each 0 is followed by three bytes stating
      *            the precise length in LO_LO_HI_00 format.
      */
-    uint8_t type = 0;
+    u8 type = 0;
     
     /*! @brief    Tape length in cycles
      *  @details  The value is set when insertTape() is called. It is computed
@@ -96,8 +96,8 @@ public:
     void reset();
     void ping();
     size_t stateSize();
-    void didLoadFromBuffer(uint8_t **buffer);
-    void didSaveToBuffer(uint8_t **buffer);
+    void didLoadFromBuffer(u8 **buffer);
+    void didSaveToBuffer(u8 **buffer);
 
 
     //
@@ -116,7 +116,7 @@ public:
     void ejectTape();
 
     //! @brief    Returns the tape type (TAP format, 0 or 1).
-    uint8_t getType() { return type; }
+    u8 getType() { return type; }
 
     //! @brief    Returns the tape length in cycles.
     u64 getDurationInCycles() { return durationInCycles; }

@@ -147,10 +147,10 @@ CIA::triggerSerialIrq()
     delay |= CIASetIcr0;
 }
 
-uint8_t
+u8
 CIA::peek(u16 addr)
 {
-	uint8_t result;
+	u8 result;
 
     wakeUp();
 
@@ -258,12 +258,12 @@ CIA::peek(u16 addr)
 
         case 0x0E: // CIA_CONTROL_REG_A
 
-			result = (uint8_t)(CRA & ~0x10); // Bit 4 is always 0 when read
+			result = (u8)(CRA & ~0x10); // Bit 4 is always 0 when read
 			break;
 			
         case 0x0F: // CIA_CONTROL_REG_B
 			
-			result = (uint8_t)(CRB & ~0x10); // Bit 4 is always 0 when read
+			result = (u8)(CRB & ~0x10); // Bit 4 is always 0 when read
 			break;
 			
 		default:
@@ -275,7 +275,7 @@ CIA::peek(u16 addr)
 	return result;
 }
 
-uint8_t
+u8
 CIA::spypeek(u16 addr)
 {
     bool running;
@@ -342,7 +342,7 @@ CIA::spypeek(u16 addr)
 }
 
 void
-CIA::poke(u16 addr, uint8_t value)
+CIA::poke(u16 addr, u8 value)
 {
     wakeUp();
     
@@ -1172,13 +1172,13 @@ CIA1::releaseInterruptLine()
 //          COL  <--> | PA7 |
 //                    -------
 
-uint8_t
+u8
 CIA1::portAinternal()
 {
     return PRA;
 }
 
-uint8_t
+u8
 CIA1::portAexternal()
 {
     return 0xFF;
@@ -1188,12 +1188,12 @@ CIA1::portAexternal()
 void
 CIA1::updatePA()
 {
-    uint8_t oldPA = PA;
+    u8 oldPA = PA;
     
     PA = (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
 
     // Get lines which are driven actively low by port 2
-    uint8_t rowMask = ~PRB & DDRB & c64->port1.bitmask();
+    u8 rowMask = ~PRB & DDRB & c64->port1.bitmask();
     
     // Pull lines low that are connected by a pressed key
     PA &= c64->keyboard.getColumnValues(rowMask);
@@ -1219,13 +1219,13 @@ CIA1::updatePA()
 //          ROW  <--> | PB7 |
 //                    -------
 
-uint8_t
+u8
 CIA1::portBinternal()
 {
     return PRB;
 }
 
-uint8_t
+u8
 CIA1::portBexternal()
 {
     return 0xFF;
@@ -1235,12 +1235,12 @@ CIA1::portBexternal()
 void
 CIA1::updatePB()
 {
-    uint8_t oldPB = PB;
+    u8 oldPB = PB;
     
     PB = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
  
     // Get lines which are driven actively low by port 1
-    uint8_t columnMask = ~PRA & DDRA & c64->port2.bitmask();
+    u8 columnMask = ~PRA & DDRA & c64->port2.bitmask();
     
     // Pull lines low that are connected by a pressed key
     PB &= c64->keyboard.getRowValues(columnMask);
@@ -1322,16 +1322,16 @@ CIA2::releaseInterruptLine()
 //              DATA ---> | PA7 |
 //                        -------
 
-uint8_t
+u8
 CIA2::portAinternal()
 {
     return PRA;
 }
 
-uint8_t
+u8
 CIA2::portAexternal()
 {
-    uint8_t result = 0x3F;
+    u8 result = 0x3F;
     result |= (c64->iec.clockLine ? 0x40 : 0x00);
     result |= (c64->iec.dataLine ? 0x80 : 0x00);
     
@@ -1361,10 +1361,10 @@ CIA2::updatePA()
 // User port (pin L) <--> | PB7 |
 //                        -------
 
-uint8_t
+u8
 CIA2::portBinternal()
 {
-    uint8_t result = PRB;
+    u8 result = PRB;
     
     // Check if timer A underflow shows up on PB6
     if (GET_BIT(PB67TimerMode, 6))
@@ -1377,7 +1377,7 @@ CIA2::portBinternal()
     return result;
 }
 
-uint8_t
+u8
 CIA2::portBexternal()
 {
     // User port is not implemented. All pins are high if nothing is connected.
@@ -1391,7 +1391,7 @@ CIA2::updatePB()
 }
 
 void
-CIA2::pokePA(uint8_t value)
+CIA2::pokePA(u8 value)
 {
     CIA::pokePA(value);
     
@@ -1400,7 +1400,7 @@ CIA2::pokePA(uint8_t value)
 }
 
 void
-CIA2::pokeDDRA(uint8_t value)
+CIA2::pokeDDRA(u8 value)
 {
     CIA::pokeDDRA(value);
     

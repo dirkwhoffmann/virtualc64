@@ -128,13 +128,13 @@ Isepic::pokeIO2(u16 addr, u8 value)
 }
 
 const char *
-Isepic::getSwitchDescription(int8_t pos)
+Isepic::getSwitchDescription(i8 pos)
 {
     return (pos == -1) ? "Off" : (pos == 1) ? "On" : NULL;
 }
 
 void
-Isepic::setSwitch(int8_t pos)
+Isepic::setSwitch(i8 pos)
 {
     c64->suspend();
 

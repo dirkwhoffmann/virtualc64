@@ -71,10 +71,10 @@ typedef enum {
 typedef struct {
     u64 cycle;
     u16 pc;
-    uint8_t a;
-    uint8_t x;
-    uint8_t y;
-    uint8_t sp;
+    u8 a;
+    u8 x;
+    u8 y;
+    u8 sp;
     bool nFlag;
     bool vFlag;
     bool bFlag;
@@ -88,21 +88,21 @@ typedef struct {
 typedef struct {
     u64 cycle;
     u16 pc;
-    uint8_t byte1;
-    uint8_t byte2;
-    uint8_t byte3;
-    uint8_t a;
-    uint8_t x;
-    uint8_t y;
-    uint8_t sp;
-    uint8_t flags;
+    u8 byte1;
+    u8 byte2;
+    u8 byte3;
+    u8 a;
+    u8 x;
+    u8 y;
+    u8 sp;
+    u8 flags;
 } RecordedInstruction;
 
 //! @brief    Disassembled instruction
 typedef struct {
     u64 cycle;
     u16 addr; 
-    uint8_t size;
+    u8 size;
     char byte1[4];
     char byte2[4];
     char byte3[4];

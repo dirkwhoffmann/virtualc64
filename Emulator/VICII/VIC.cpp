@@ -829,15 +829,15 @@ VIC::endRasterline()
         // Experimental code for RF modulator effect
         //
         /*
-        int8_t oldR = (pixelBuffer[0] >> 0) & 0xFF;
-        int8_t oldG = (pixelBuffer[0] >> 8) & 0xFF;
-        int8_t oldB = (pixelBuffer[0] >> 16) & 0xFF;
+        i8 oldR = (pixelBuffer[0] >> 0) & 0xFF;
+        i8 oldG = (pixelBuffer[0] >> 8) & 0xFF;
+        i8 oldB = (pixelBuffer[0] >> 16) & 0xFF;
 
         for (unsigned i = 1; i < NTSC_PIXELS; i++) {
 
-            int8_t newR = (pixelBuffer[i] >> 0) & 0xFF;
-            int8_t newG = (pixelBuffer[i] >> 8) & 0xFF;
-            int8_t newB = (pixelBuffer[i] >> 16) & 0xFF;
+            i8 newR = (pixelBuffer[i] >> 0) & 0xFF;
+            i8 newG = (pixelBuffer[i] >> 8) & 0xFF;
+            i8 newB = (pixelBuffer[i] >> 16) & 0xFF;
 
             int diffR = newR - oldR;
             int diffG = newG - oldG;

@@ -110,7 +110,7 @@ public:
     void reset();
     void dump();
     void setClockFrequency(u32 frequency);
-    void didLoadFromBuffer(uint8_t **buffer) { clearRingbuffer(); }
+    void didLoadFromBuffer(u8 **buffer) { clearRingbuffer(); }
     
 	//! @brief    Prints debug information
     void dump(SIDInfo info);
@@ -293,13 +293,13 @@ public:
 public:
     
 	//! @brief    Special peek function for the I/O memory range.
-	uint8_t peek(u16 addr);
+	u8 peek(u16 addr);
 	
     //! @brief    Same as peek, but without side effects.
-    uint8_t spypeek(u16 addr);
+    u8 spypeek(u16 addr);
     
 	//! @brief    Special poke function for the I/O memory range.
-	void poke(u16 addr, uint8_t value);
+	void poke(u16 addr, u8 value);
 };
 
 #endif

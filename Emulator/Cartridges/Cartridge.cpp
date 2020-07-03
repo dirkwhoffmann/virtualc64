@@ -475,7 +475,7 @@ Cartridge::bankOut(unsigned nr)
 }
 
 void
-Cartridge::setSwitch(int8_t pos)
+Cartridge::setSwitch(i8 pos)
 {
     switchPos = pos;
     c64->putMessage(MSG_CART_SWITCH);

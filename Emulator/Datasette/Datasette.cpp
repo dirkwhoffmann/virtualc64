@@ -66,18 +66,18 @@ Datasette::stateSize()
 }
 
 void
-Datasette::didLoadFromBuffer(uint8_t **buffer)
+Datasette::didLoadFromBuffer(u8 **buffer)
 {
     if (data) delete[] data;
     
     if (size) {
-        data = new uint8_t[size];
+        data = new u8[size];
         readBlock(buffer, data, size);
     }
 }
 
 void
-Datasette::didSaveToBuffer(uint8_t **buffer)
+Datasette::didSaveToBuffer(u8 **buffer)
 {
     if (size) {
         assert(data != NULL);
@@ -106,7 +106,7 @@ Datasette::insertTape(TAPFile *a)
     debug(2, "Inserting tape (size = %d, type = %d)...\n", size, type);
     
     // Copy data
-    data = (uint8_t *)malloc(size);
+    data = (u8 *)malloc(size);
     memcpy(data, a->getData(), size);
 
     // Determine tape length (by fast forwarding)

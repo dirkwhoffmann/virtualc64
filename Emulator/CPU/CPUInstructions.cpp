@@ -916,7 +916,7 @@ CPU::executeOneCycle()
         {
             IDLE_READ_IMPLIED
             u8 pc_hi = HI_BYTE(regPC);
-            regPC += (int8_t)regD;
+            regPC += (i8)regD;
             
             if (unlikely(pc_hi != HI_BYTE(regPC))) {
                 next = (regD & 0x80) ? branch_3_underflow : branch_3_overflow;

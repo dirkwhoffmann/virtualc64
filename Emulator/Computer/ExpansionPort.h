@@ -191,13 +191,13 @@ public:
     bool hasSwitch() { return cartridge ? cartridge->hasSwitch() : false; }
     
     //! @brief    Returns the current position of the switch
-    int8_t getSwitch() { return cartridge ? cartridge->getSwitch() : 0; }
+    i8 getSwitch() { return cartridge ? cartridge->getSwitch() : 0; }
     bool switchIsNeutral() { return cartridge ? cartridge->switchIsNeutral() : false; }
     bool switchIsLeft() { return cartridge ? cartridge->switchIsLeft() : false; }
     bool switchIsRight() { return cartridge ? cartridge->switchIsRight() : false; }
-    const char *getSwitchDescription(int8_t pos) {
+    const char *getSwitchDescription(i8 pos) {
         return cartridge ? cartridge->getSwitchDescription(pos) : NULL; }
-    bool validSwitchPosition(int8_t pos) {
+    bool validSwitchPosition(i8 pos) {
         return cartridge ? cartridge->validSwitchPosition(pos) : false; }
     
     //! @brief    Puts the switch in the provided position

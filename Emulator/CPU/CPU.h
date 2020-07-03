@@ -27,7 +27,7 @@ class CPU : public HardwareComponent {
     public:
     
     //! @brief    Bit positions of all 7 CPU flags
-    typedef enum : uint8_t {
+    typedef enum : u8 {
         C_FLAG = 0x01,
         Z_FLAG = 0x02,
         I_FLAG = 0x04,
@@ -38,7 +38,7 @@ class CPU : public HardwareComponent {
     } Flag;
     
     //! @brief    Possible interrupt sources
-    typedef enum : uint8_t {
+    typedef enum : u8 {
         INTSRC_CIA = 0x01,
         INTSRC_VIC = 0x02,
         INTSRC_VIA1 = 0x04,
@@ -91,7 +91,7 @@ class CPU : public HardwareComponent {
     AddressingMode addressingMode[256];
     
     //! @brief    Breakpoint tag for each memory cell
-    uint8_t breakpoint[65536];
+    u8 breakpoint[65536];
 
     
     //
@@ -121,19 +121,19 @@ class CPU : public HardwareComponent {
     public:
     
 	//! @brief    Accumulator
-	uint8_t regA;
+	u8 regA;
     
 	//! @brief    X register
-	uint8_t regX;
+	u8 regX;
     
 	//! @brief    Y register
-	uint8_t regY;
+	u8 regY;
     
     //! @brief    Program counter
     u16 regPC;
 
     //! @brief    Stack pointer
-    uint8_t regSP;
+    u8 regSP;
 
     private:
     
@@ -141,19 +141,19 @@ class CPU : public HardwareComponent {
      *  @details   7 6 5 4 3 2 1 0
      *             N O - B D I Z C
      */
-    uint8_t regP;
+    u8 regP;
     
 	//! @brief    Address data (low byte)
-	uint8_t regADL;
+	u8 regADL;
     
 	//! @brief    Address data (high byte)
-	uint8_t regADH;
+	u8 regADH;
     
 	//! @brief    Input data latch (indirect addressing modes)
-	uint8_t regIDL;
+	u8 regIDL;
     
     //! @brief    Data buffer
-    uint8_t regD;
+    u8 regD;
     
 	/*! @brief    Address overflow indicater
 	 *  @details  Indicates when the page boundary has been crossed.
@@ -200,7 +200,7 @@ class CPU : public HardwareComponent {
      *            variable has a positive value and the set bits indicate the
      *            interrupt source.
      */
-    uint8_t nmiLine;
+    u8 nmiLine;
     
     
     /*! @brief    IRQ line (maskable interrupts)
@@ -210,7 +210,7 @@ class CPU : public HardwareComponent {
      *            variable has a positive value and the set bits indicate the
      *            interrupt source.
      */
-	uint8_t irqLine;
+	u8 irqLine;
 
     private:
     
@@ -225,7 +225,7 @@ class CPU : public HardwareComponent {
      *             where the edge is detected, and stays high until the NMI has
      *             been handled."
      */
-    TimeDelayed<uint8_t> edgeDetector = TimeDelayed<uint8_t>(1, &cycle);
+    TimeDelayed<u8> edgeDetector = TimeDelayed<u8>(1, &cycle);
     
     /*! @brief    Level detector of IRQ line
      *  @details  https://wiki.nesdev.com/w/index.php/CPU_interrupts
@@ -236,7 +236,7 @@ class CPU : public HardwareComponent {
      *             remaining high as long as the IRQ input is low during the
      *             preceding cycle's φ2).
      */
-    TimeDelayed<uint8_t> levelDetector = TimeDelayed<uint8_t>(1, &cycle);
+    TimeDelayed<u8> levelDetector = TimeDelayed<u8>(1, &cycle);
     
     //! @brief    Result of the edge detector polling operation
     /*! @details  https://wiki.nesdev.com/w/index.php/CPU_interrupts
@@ -302,7 +302,7 @@ class CPU : public HardwareComponent {
     //! @brief    Registers a single opcode
     /*! @details  Initializes all lookup table entries for this opcode.
      */
-    void registerCallback(uint8_t opcode, const char *mnemonic,
+    void registerCallback(u8 opcode, const char *mnemonic,
                           AddressingMode mode, MicroInstruction mInstr);
     
     //! @brief    Registers the complete instruction set.
@@ -324,8 +324,8 @@ class CPU : public HardwareComponent {
 	void reset();
 	void dump();	
     size_t stateSize();
-    void didLoadFromBuffer(uint8_t **buffer);
-    void didSaveToBuffer(uint8_t **buffer);
+    void didLoadFromBuffer(u8 **buffer);
+    void didSaveToBuffer(u8 **buffer);
     
     
     //
@@ -353,46 +353,46 @@ class CPU : public HardwareComponent {
     void jumpToAddress(u16 addr) { pc = regPC = addr; next = fetch; }
 
 	//! @brief    Returns N_FLAG, if Negative flag is set, 0 otherwise.
-    uint8_t getN() { return regP & N_FLAG; }
+    u8 getN() { return regP & N_FLAG; }
     
     //! @brief    0: Negative-flag is cleared, any other value: flag is set.
-    void setN(uint8_t bit) { bit ? regP |= N_FLAG : regP &= ~N_FLAG; }
+    void setN(u8 bit) { bit ? regP |= N_FLAG : regP &= ~N_FLAG; }
     
 	//! @brief    Returns V_FLAG, if Overflow flag is set, 0 otherwise.
-    uint8_t getV() { return regP & V_FLAG; }
+    u8 getV() { return regP & V_FLAG; }
     
     //! @brief    0: Overflow-flag is cleared, any other value: flag is set.
-    void setV(uint8_t bit) { bit ? regP |= V_FLAG : regP &= ~V_FLAG; }
+    void setV(u8 bit) { bit ? regP |= V_FLAG : regP &= ~V_FLAG; }
 
 	//! @brief    Returns B_FLAG, if Break flag is set, 0 otherwise.
-    uint8_t getB() { return regP & B_FLAG; }
+    u8 getB() { return regP & B_FLAG; }
     
     //! @brief    0: Break-flag is cleared, any other value: flag is set.
-    void setB(uint8_t bit) { bit ? regP |= B_FLAG : regP &= ~B_FLAG; }
+    void setB(u8 bit) { bit ? regP |= B_FLAG : regP &= ~B_FLAG; }
     
 	//! @brief    Returns D_FLAG, if Decimal flag is set, 0 otherwise.
-    uint8_t getD() { return regP & D_FLAG; }
+    u8 getD() { return regP & D_FLAG; }
     
     //! @brief    0: Decimal-flag is cleared, any other value: flag is set.
-    void setD(uint8_t bit) { bit ? regP |= D_FLAG : regP &= ~D_FLAG; }
+    void setD(u8 bit) { bit ? regP |= D_FLAG : regP &= ~D_FLAG; }
 
 	//! @brief    Returns I_FLAG, if Interrupt flag is set, 0 otherwise.
-    uint8_t getI() { return regP & I_FLAG; }
+    u8 getI() { return regP & I_FLAG; }
     
     //! @brief    0: Interrupt-flag is cleared, any other value: flag is set.
-    void setI(uint8_t bit) { bit ? regP |= I_FLAG : regP &= ~I_FLAG; }
+    void setI(u8 bit) { bit ? regP |= I_FLAG : regP &= ~I_FLAG; }
     
 	//! @brief    Returns Z_FLAG, if Zero flag is set, 0 otherwise.
-    uint8_t getZ() { return regP & Z_FLAG; }
+    u8 getZ() { return regP & Z_FLAG; }
     
     //! @brief    0: Zero-flag is cleared, any other value: flag is set.
-    void setZ(uint8_t bit) { bit ? regP |= Z_FLAG : regP &= ~Z_FLAG; }
+    void setZ(u8 bit) { bit ? regP |= Z_FLAG : regP &= ~Z_FLAG; }
     
 	//! @brief    Returns C_FLAG, if Carry flag is set, 0 otherwise.
-    uint8_t getC() { return regP & C_FLAG; }
+    u8 getC() { return regP & C_FLAG; }
     
     //! @brief    0: Carry-flag is cleared, any other value: flag is set.
-    void setC(uint8_t bit) { bit ? regP |= C_FLAG : regP &= ~C_FLAG; }
+    void setC(u8 bit) { bit ? regP |= C_FLAG : regP &= ~C_FLAG; }
 
     private:
     
@@ -400,7 +400,7 @@ class CPU : public HardwareComponent {
 	 *  @details  Each bit in the status register corresponds to the value of
      *            a single flag, except bit 5 which is always set.
      */
-    uint8_t getP() { return regP | 0b00100000; }
+    u8 getP() { return regP | 0b00100000; }
 
 	/*! @brief    Returns the status register without the B flag
 	 *  @details  The bit position of the B flag is always 0. This function is
@@ -408,57 +408,57 @@ class CPU : public HardwareComponent {
      *            triggered internally, the status register is pushed on the
      *            stack with the B-flag cleared.
      */
-    uint8_t getPWithClearedB() { return getP() & 0b11101111; }
+    u8 getPWithClearedB() { return getP() & 0b11101111; }
     
     //! @brief    Writes a value to the status register.
-    void setP(uint8_t p) { regP = p; }
+    void setP(u8 p) { regP = p; }
     
     //! @brief    Writes a value to the status register without overwriting B.
-    void setPWithoutB(uint8_t p) { regP = (p & 0b11101111) | (regP & 0b00010000); }
+    void setPWithoutB(u8 p) { regP = (p & 0b11101111) | (regP & 0b00010000); }
     
 	//! @brief    Changes low byte of the program counter only.
-    void setPCL(uint8_t lo) { regPC = (regPC & 0xff00) | lo; }
+    void setPCL(u8 lo) { regPC = (regPC & 0xff00) | lo; }
     
 	//! @brief    Changes high byte of the program counter only.
-    void setPCH(uint8_t hi) { regPC = (regPC & 0x00ff) | ((u16)hi << 8); }
+    void setPCH(u8 hi) { regPC = (regPC & 0x00ff) | ((u16)hi << 8); }
     
 	//! @brief    Increments the program counter by the specified amount.
-    void incPC(uint8_t offset = 1) { regPC += offset; }
+    void incPC(u8 offset = 1) { regPC += offset; }
     
 	/*! @brief    Increments the program counter's low byte.
      *  @note     The high byte does not change.
      */
-    void incPCL(uint8_t offset = 1) { setPCL(LO_BYTE(regPC) + offset); }
+    void incPCL(u8 offset = 1) { setPCL(LO_BYTE(regPC) + offset); }
     
 	/*! @brief    Increments the program counter's high byte.
      *  @note     The low byte does not change.
      */
-    void incPCH(uint8_t offset = 1) { setPCH(HI_BYTE(regPC) + offset); }
+    void incPCH(u8 offset = 1) { setPCH(HI_BYTE(regPC) + offset); }
 	
 	//! @brief    Loads the accumulator. The Z- and N-flag may change.
-    void loadA(uint8_t a) { regA = a; setN(a & 0x80); setZ(a == 0); }
+    void loadA(u8 a) { regA = a; setN(a & 0x80); setZ(a == 0); }
 
 	//! @brief    Loads the X register. The Z- and N-flag may change.
-    void loadX(uint8_t x) { regX = x; setN(x & 0x80); setZ(x == 0); }
+    void loadX(u8 x) { regX = x; setN(x & 0x80); setZ(x == 0); }
     
 	//! @brief    Loads the Y register. The Z- and N-flag may change.
-    void loadY(uint8_t y) { regY = y; setN(y & 0x80); setZ(y == 0); }
+    void loadY(u8 y) { regY = y; setN(y & 0x80); setZ(y == 0); }
     
     
     //
     //! @functiongroup Performing ALU operations (CPUInstructions.cpp)
     //
     
-    void adc(uint8_t op);
-    void adc_binary(uint8_t op);
-    void adc_bcd(uint8_t op);
-    void sbc(uint8_t op);
-    void sbc_binary(uint8_t op);
-    void sbc_bcd(uint8_t op);
-    void branch(int8_t offset);
-    void cmp(uint8_t op1, uint8_t op2);
-    uint8_t ror(uint8_t op);
-    uint8_t rol(uint8_t op);
+    void adc(u8 op);
+    void adc_binary(u8 op);
+    void adc_bcd(u8 op);
+    void sbc(u8 op);
+    void sbc_binary(u8 op);
+    void sbc_bcd(u8 op);
+    void branch(i8 offset);
+    void cmp(u8 op1, u8 op2);
+    u8 ror(u8 op);
+    u8 rol(u8 op);
     
     
     //
@@ -498,7 +498,7 @@ class CPU : public HardwareComponent {
 	/*! @brief    Returns the length of an instruction in bytes.
 	 *  @result   Integer value between 1 and 3.
      */
-	unsigned getLengthOfInstruction(uint8_t opcode);
+	unsigned getLengthOfInstruction(u8 opcode);
     
 	/*! @brief    Returns the length of instruction in bytes.
      *  @result   Integer value between 1 and 3.

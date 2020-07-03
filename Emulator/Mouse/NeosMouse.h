@@ -36,7 +36,7 @@ class NeosMouse : public HardwareComponent {
      *            After that, the mouse cycles through the other states and
      *            writes the delta values onto the control port, nibble by nibble.
      */
-    uint8_t state;
+    u8 state;
 
     //! @brief    CPU cycle of the most recent trigger event
     u64 triggerCycle;
@@ -48,10 +48,10 @@ class NeosMouse : public HardwareComponent {
     i64 latchedY;
     
     //! @brief    The least signifanct value is transmitted to the C64
-    int8_t deltaX;
+    i8 deltaX;
     
     //! @brief    The least signifanct value is transmitted to the C64
-    int8_t deltaY;
+    i8 deltaY;
     
 public:
     
@@ -69,13 +69,13 @@ public:
     void setRightMouseButton(bool value) { rightButton = value; }
     
     //! @brief   Returns the pot X bits as set by the mouse
-    uint8_t readPotX();
+    u8 readPotX();
     
     //! @brief   Returns the pot Y bits as set by the mouse
-    uint8_t readPotY();
+    u8 readPotY();
     
     //! @brief   Returns the control port bits triggered by the mouse
-    uint8_t readControlPort(i64 targetX, i64 targetY);
+    u8 readControlPort(i64 targetX, i64 targetY);
     
     /*! @brief   Execution function
      *  @details Shifts mouseX and mouseY smoothly towards targetX and targetX.

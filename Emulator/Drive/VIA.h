@@ -81,7 +81,7 @@ class VIA6522 : public HardwareComponent {
      *             input data can be latched into an internal register under
      *             control of the CA1 line."
      */
-    uint8_t pa;
+    u8 pa;
     
     //! @brief    Peripheral A control lines
     /*! @details  "The two peripheral A control lines act as interrupt inputs
@@ -103,7 +103,7 @@ class VIA6522 : public HardwareComponent {
      *             input data can be latched into an internal register under
      *             control of the CA1 line."
      */
-    uint8_t pb;
+    u8 pb;
     
     //! @brief
     /*! @details  "The Peripheral B control lines act as interrupt inputs or
@@ -127,8 +127,8 @@ class VIA6522 : public HardwareComponent {
      *             Register causes the corresponding peripheral pin to act
      *             as an input. A 1 causes the pin to act as an output."
      */
-    uint8_t ddra;
-    uint8_t ddrb;
+    u8 ddra;
+    u8 ddrb;
 
     //! @brief    Output registers
     /*! @details  "Each peripheral pin is also controlled by a bit in the
@@ -141,8 +141,8 @@ class VIA6522 : public HardwareComponent {
      *             which are programmed to act as inputs; however, the pin will
      *             be unaffected.
      */
-    uint8_t ora;
-    uint8_t orb;
+    u8 ora;
+    u8 orb;
 
     //! @brief    Input registers
     /*! @details  "Reading a peripheral port causes the contents of the Input
@@ -152,8 +152,8 @@ class VIA6522 : public HardwareComponent {
      *             reflect the contents of the Port A prior to setting the CA1
      *             Interrupt Flag (IFRl) by an active transition on CA1.
      */
-    uint8_t ira;
-    uint8_t irb;
+    u8 ira;
+    u8 irb;
 
     
     //
@@ -174,8 +174,8 @@ class VIA6522 : public HardwareComponent {
      *             "times-out."
      */
     u16 t1; // T1C
-    uint8_t t1_latch_lo; // T1L_L
-    uint8_t t1_latch_hi; // T1L_H
+    u8 t1_latch_lo; // T1L_L
+    u8 t1_latch_hi; // T1L_H
 
 	/*! @brief    VIA timer 2
 	 *  @details  "Timer 2 operates as an interval timer (in the "one-shot"
@@ -189,22 +189,22 @@ class VIA6522 : public HardwareComponent {
      *             02 rate."
      */
     u16 t2; // T1C
-    uint8_t t2_latch_lo; // T2L_L
+    u8 t2_latch_lo; // T2L_L
 	        
     //! @brief    Peripheral control register
-    uint8_t pcr;
+    u8 pcr;
 
     //! @brief    Auxiliary register
-    uint8_t acr;
+    u8 acr;
 
     //! @brief    Interrupt enable register
-    uint8_t ier;
+    u8 ier;
 
     //! @brief    Interrupt flag register
-    uint8_t ifr;
+    u8 ifr;
     
     //! @brief    Shift register
-    uint8_t sr;
+    u8 sr;
     
     //! @brief    Event triggering queue
     u64 delay;
@@ -223,7 +223,7 @@ class VIA6522 : public HardwareComponent {
      *            variable is increased by one. If it exceeds a certain
      *            threshhold, the chip is put into idle state via sleep()
      */
-    uint8_t tiredness;
+    u8 tiredness;
     
     //! @brief    Wakeup cycle
     u64 wakeUpCycle;
@@ -254,16 +254,16 @@ public:
     bool isVia2();
     
     //! @brief    Getter for data directon register A
-    uint8_t getDDRA() { return ddra; }
+    u8 getDDRA() { return ddra; }
 
     //! @brief    Getter for data directon register B
-    uint8_t getDDRB() { return ddrb; }
+    u8 getDDRB() { return ddrb; }
 
     //! @brief    Getter for peripheral A port
-    uint8_t getPA() { return pa; }
+    u8 getPA() { return pa; }
 
     //! @brief    Getter for peripheral B port
-    uint8_t getPB() { return pb; }
+    u8 getPB() { return pb; }
 
     //! @brief    Getter for peripheral A control pin 2
     bool getCA2() { return ca2; }
@@ -288,7 +288,7 @@ public:
 	 *  @details  The peek function only handles those registers that are
      *            treated similarly by both VIA chips
      */
-	virtual uint8_t peek(u16 addr);
+	virtual u8 peek(u16 addr);
 	
 private:
     
@@ -296,21 +296,21 @@ private:
     /*! @details  Variable handshake is needed to distiguish if ORA is read
      *            via address 0x1 (handshake enabled) or address 0xF (no handshake).
      */
-    uint8_t peekORA(bool handshake);
+    u8 peekORA(bool handshake);
 
     //! @brief    Special peek function for output register B
-    uint8_t peekORB();
+    u8 peekORB();
     
 public:
     
     //! @brief    Same as peek, but without side effects
-    uint8_t spypeek(u16 addr);
+    u8 spypeek(u16 addr);
     
 	/*! @brief    Special poke function for the I/O memory range
 	 *  @details  The poke function only handles those registers that are treated
      *            similarly by both VIA chips
      */
-    void poke(u16 addr, uint8_t value);
+    void poke(u16 addr, u8 value);
 
 private:
     
@@ -318,13 +318,13 @@ private:
     /*! @details  Variable handshake is needed to distiguish if ORA is written
      *            via address 0x1 (handshake enabled) or address 0xF (no handshake).
      */
-    void pokeORA(uint8_t value, bool handshake);
+    void pokeORA(u8 value, bool handshake);
     
     //! @brief    Special poke function for output register B
-    void pokeORB(uint8_t value);
+    void pokeORB(u8 value);
 
     //! @brief    Special poke function for the PCR register
-    void pokePCR(uint8_t value);
+    void pokePCR(u8 value);
     
     
     //
@@ -352,16 +352,16 @@ private:
     //
 
     //! @brief    Returns the CA1 control bit of the peripheral control register
-    uint8_t ca1Control() { return pcr & 0x01; }
+    u8 ca1Control() { return pcr & 0x01; }
     
     //! @brief    Returns the three CA2 control bits of the peripheral control register
-    uint8_t ca2Control() { return (pcr >> 1) & 0x07; }
+    u8 ca2Control() { return (pcr >> 1) & 0x07; }
 
     //! @brief    Returns the CB1 control bit of the peripheral control register
-    uint8_t cb1Control() { return (pcr >> 4) & 0x01; }
+    u8 cb1Control() { return (pcr >> 4) & 0x01; }
     
     //! @brief    Returns the three CB2 control bits of the peripheral control register
-    uint8_t cb2Control() { return (pcr >> 5) & 0x07; }
+    u8 cb2Control() { return (pcr >> 5) & 0x07; }
 
     
     //
@@ -371,10 +371,10 @@ private:
 protected:
     
     //! @brief   Bit values driving port A from inside the chip
-    uint8_t portAinternal();
+    u8 portAinternal();
 
     //! @brief   Bit values driving port A from outside the chip
-    virtual uint8_t portAexternal() = 0;
+    virtual u8 portAexternal() = 0;
 
     /*! @brief   Computes the current bit values visible at port A
      *  @details Value is stored in variable pa
@@ -382,10 +382,10 @@ protected:
     virtual void updatePA();
 
     //! @brief   Bit values driving port B from inside the chip
-    uint8_t portBinternal();
+    u8 portBinternal();
     
     //! @brief   Bit values driving port B from outside the chip
-    virtual uint8_t portBexternal() = 0;
+    virtual u8 portBexternal() = 0;
     
     /*! @brief   Computes the current bit values visible at port B
      *  @details Value is stored in variable pb
@@ -525,8 +525,8 @@ public:
 	VIA1(VC1541 *drive);
 	~VIA1();
     
-    uint8_t portAexternal();
-    uint8_t portBexternal();
+    u8 portAexternal();
+    u8 portBexternal();
     void updatePB();
     void pullDownIrqLine();
     void releaseIrqLine();
@@ -543,8 +543,8 @@ public:
 	VIA2(VC1541 *drive);
 	~VIA2();
  
-    uint8_t portAexternal();
-    uint8_t portBexternal();
+    u8 portAexternal();
+    u8 portBexternal();
     void updatePB();
     void pullDownIrqLine();
     void releaseIrqLine();

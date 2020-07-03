@@ -71,14 +71,14 @@ public:
     */
     
 	//! @brief    Random Access Memory
-	uint8_t ram[65536];
+	u8 ram[65536];
 
     /*! @brief    Color RAM
      *  @details  The color RAM is located in the I/O space, starting at $D800 and
      *            ending at $DBFF. Only the lower four bits are accessible, the upper
      *            four bits are open and can show any value.
      */
-    uint8_t colorRam[1024];
+    u8 colorRam[1024];
 
     //! @brief    Read Only Memory
 	/*! @details  Only specific memory cells are valid ROM locations. In total, the C64
@@ -86,7 +86,7 @@ public:
      *            Note, that the ROMs do not span over the whole 64KB range. Therefore,
      *            only some addresses are valid ROM addresses.
      */
-    uint8_t rom[65536];
+    u8 rom[65536];
     
     //! @brief    RAM init pattern type
     RamInitPattern ramInitPattern;
@@ -174,23 +174,23 @@ public:
     MemoryType getPokeTarget(u16 addr) { return pokeTarget[addr >> 12]; }
 
     // Reading from memory
-    uint8_t peek(u16 addr, MemoryType source);
-    uint8_t peek(u16 addr, bool gameLine, bool exromLine);
-    uint8_t peek(u16 addr) { return peek(addr, peekSrc[addr >> 12]); }
-    uint8_t peekZP(uint8_t addr);
-    uint8_t peekIO(u16 addr);
+    u8 peek(u16 addr, MemoryType source);
+    u8 peek(u16 addr, bool gameLine, bool exromLine);
+    u8 peek(u16 addr) { return peek(addr, peekSrc[addr >> 12]); }
+    u8 peekZP(u8 addr);
+    u8 peekIO(u16 addr);
     
     // Reading from memory without side effects
-    uint8_t spypeek(u16 addr, MemoryType source);
-    uint8_t spypeek(u16 addr) { return spypeek(addr, peekSrc[addr >> 12]); }
-    uint8_t spypeekIO(u16 addr);
+    u8 spypeek(u16 addr, MemoryType source);
+    u8 spypeek(u16 addr) { return spypeek(addr, peekSrc[addr >> 12]); }
+    u8 spypeekIO(u16 addr);
     
     // Writing into memory
-    void poke(u16 addr, uint8_t value, MemoryType target);
-    void poke(u16 addr, uint8_t value, bool gameLine, bool exromLine);
-    void poke(u16 addr, uint8_t value) { poke(addr, value, pokeTarget[addr >> 12]); }
-    void pokeZP(uint8_t addr, uint8_t value);
-    void pokeIO(u16 addr, uint8_t value);
+    void poke(u16 addr, u8 value, MemoryType target);
+    void poke(u16 addr, u8 value, bool gameLine, bool exromLine);
+    void poke(u16 addr, u8 value) { poke(addr, value, pokeTarget[addr >> 12]); }
+    void pokeZP(u8 addr, u8 value);
+    void pokeIO(u16 addr, u8 value);
     
     //! @brief    Reads the NMI vector from memory.
     u16 nmiVector();

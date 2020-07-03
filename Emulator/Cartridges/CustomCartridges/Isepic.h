@@ -31,8 +31,8 @@ public:
     void didSaveToBuffer(u8 **buffer) override;
     
     bool hasSwitch() override { return true; }
-    const char *getSwitchDescription(int8_t pos) override;
-    void setSwitch(int8_t pos) override;
+    const char *getSwitchDescription(i8 pos) override;
+    void setSwitch(i8 pos) override;
     bool switchInOffPosition() { return switchIsLeft(); }
     bool switchInOnPosition() { return switchIsRight(); }
 

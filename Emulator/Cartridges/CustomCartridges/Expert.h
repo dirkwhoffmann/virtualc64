@@ -43,7 +43,7 @@ public:
     void pressButton(unsigned nr);
     
     bool hasSwitch() { return true; }
-    const char *getSwitchDescription(int8_t pos);
+    const char *getSwitchDescription(i8 pos);
     bool switchInPrgPosition() { return switchIsLeft(); }
     bool switchInOffPosition() { return switchIsNeutral(); }
     bool switchInOnPosition() { return switchIsRight(); }

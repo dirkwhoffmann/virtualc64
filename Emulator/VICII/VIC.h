@@ -96,22 +96,22 @@ private:
     } reg;
     
     //! @brief    Raster interrupt line ($D012)
-    uint8_t rasterIrqLine;
+    u8 rasterIrqLine;
     
     //! @brief    Latched lightpen X coordinate ($D013)
-    uint8_t latchedLightPenX;
+    u8 latchedLightPenX;
     
     //! @brief    Latched lightpen Y coordinate ($D014)
-    uint8_t latchedLightPenY;
+    u8 latchedLightPenY;
     
     //! @brief    Memory address register ($D018)
-    uint8_t memSelect;
+    u8 memSelect;
     
     //! @brief    Interrupt Request Register ($D019)
-    uint8_t irr;
+    u8 irr;
     
     //! @brief    Interrupt Mask Register ($D01A)
-    uint8_t imr;
+    u8 imr;
 
     
     //
@@ -176,7 +176,7 @@ private:
      *             refresh access." [C.B.]
      *  @seealso   rAccess()
      */
-    uint8_t refreshCounter;
+    u8 refreshCounter;
     
     /*! @brief    Raster counter X (2)
      *  @details  Defines the sprite coordinate system.
@@ -205,19 +205,19 @@ private:
     /*! @brief    Row counter (15)
      *  @details  A 3 bit counter with reset input.
      */
-    uint8_t rc;
+    u8 rc;
     
     /*! @brief    Video matrix (6)
      *  @details  Every 8th rasterline, the VIC chips performs a c-access and
      *            fills this array with character information.
      */
-    uint8_t videoMatrix[40];
+    u8 videoMatrix[40];
     
     /*! @brief    Color line (7)
      *  @details  Every 8th rasterline, the VIC chips performs a c-access and
      *            fills the array with color information.
      */
-    uint8_t colorLine[40];
+    u8 colorLine[40];
     
     /*! @brief    Video matrix line index
      *  @details  "Besides this, there is a 6 bit counter with reset input that
@@ -226,7 +226,7 @@ private:
      *             stored resp. read again. I will call this 'VMLI' (video
      *             matrix line index) here.
      */
-    uint8_t vmli;
+    u8 vmli;
     
  
     /*! @brief    Graphics data sequencer (10)
@@ -235,7 +235,7 @@ private:
     struct {
         
         //! @brief    Shift register data
-        uint8_t data;
+        u8 data;
         
         /*! @brief    Indicates whether the shift register can load data
          *  @details  If true, the register is loaded when the current x scroll
@@ -256,20 +256,20 @@ private:
          *            latched. This value is used until the shift register loads
          *            again.
          */
-        uint8_t latchedCharacter;
+        u8 latchedCharacter;
         
         /*! @brief    Latched color info
          *  @details  Whenever the shift register is loaded, the current color
          *            value (which was once read during a gAccess) is latched.
          *            This value is used until the shift register loads again.
          */
-        uint8_t latchedColor;
+        u8 latchedColor;
         
         /*! @brief    Color bits
          *  @details  Every second pixel (as synchronized with mcFlop), the
          *            multi-color bits are remembered.
          */
-        uint8_t colorbits;
+        u8 colorbits;
         
         /*! @brief    Remaining bits to be pumped out
          *  @details  Makes sure no more than 8 pixels are outputted.
@@ -302,7 +302,7 @@ private:
         u32 data;
         
         //! @brief    The shift register data is read in three chunks
-        uint8_t chunk1, chunk2, chunk3;
+        u8 chunk1, chunk2, chunk3;
         
         /*! @brief    Multi-color synchronization flipflop
          *  @details  Whenever the shift register is loaded, the synchronization
@@ -319,7 +319,7 @@ private:
          *            In multi-color mode, these bits are updated every second
          *            cycle (synchronized with mcFlop).
          */
-        uint8_t colBits;
+        u8 colBits;
                 
     } spriteSr[8];
     
@@ -327,13 +327,13 @@ private:
      *  @details  Once the shift register is started, it runs as long
      *            it contains at least one '1' bit (data != 0).
      */
-    uint8_t spriteSrActive;
+    u8 spriteSrActive;
     
     //! @brief    Sprite-sprite collision register (12)
-    uint8_t spriteSpriteCollision;
+    u8 spriteSpriteCollision;
 
     //! @brief    Sprite-background collision register (12)
-    uint8_t spriteBackgroundColllision;
+    u8 spriteBackgroundColllision;
 
     
     //
@@ -435,12 +435,12 @@ private:
 	/*! @brief    MOB data counter (16).
 	 *  @details  A 6 bit counter, one for each sprite.
      */
-	uint8_t mc[8];
+	u8 mc[8];
 	
 	/*! @brief    MCBASE register.
 	 *  @details  A 6 bit counter, one register for each sprite.
      */
-	uint8_t mcbase[8];
+	u8 mcbase[8];
 		
 	/*! @brief    Sprite pointer fetched during a pAccess.
 	 *  @details  Determines where the sprite data comes from.
@@ -450,37 +450,37 @@ private:
     /*! @brief    Flags the first DMA access for each sprite.
      *  @details  Bit n corresponds to sprite n.
      */
-    uint8_t isFirstDMAcycle;
+    u8 isFirstDMAcycle;
     
     /*! @brief    Flags the second or third DMA access for each sprite.
      *  @details  Bit n corresponds to sprite n.
      */
-    uint8_t isSecondDMAcycle;
+    u8 isSecondDMAcycle;
         
     /*! @details  Sprite display
      *  @details  Determines if a sprite needs to be drawn in the current rasterline.
      *            Each bit represents a single sprite.
      */
-    uint8_t spriteDisplay;
+    u8 spriteDisplay;
 
     //! @details  Value of spriteDisplay, delayed by one cycle
-    uint8_t spriteDisplayDelayed;
+    u8 spriteDisplayDelayed;
 
 	/*! @brief    Sprite DMA on off register
 	 *  @details  Determines  if sprite dma access is enabled or disabled. 
      *            Each bit represents a single sprite.
      */
-	uint8_t spriteDmaOnOff;
+	u8 spriteDmaOnOff;
     
 	/*! @brief    Expansion flipflop
 	 *  @details  Used to handle Y sprite stretching, one bit for each sprite
      */
-	uint8_t expansionFF;
+	u8 expansionFF;
 
     /*! @brief    Remembers which bits the CPU has cleared in the expansion Y register (D017)
      *  @details  This value is set in pokeIO and cycle 15 and read in cycle 16 
      */
-    uint8_t cleared_bits_in_d017;
+    u8 cleared_bits_in_d017;
     
     
 	//
@@ -524,13 +524,13 @@ private:
     /*! @brief    Value on the data bus during the latest phi1 access
      *  @note     Only VICII performs a memory access during phi1.
      */
-    uint8_t dataBusPhi1;
+    u8 dataBusPhi1;
     
     /*! @brief    Value on the data bus during the latest phi2 access
      *  @note     VICII or the CPU can perform a memory access during phi2.
      *            If none of them does, 0xFF will be on the bus.
      */
-    uint8_t dataBusPhi2;
+    u8 dataBusPhi2;
     
     /*! @brief    Address bus
      *  @details  Whenever VIC performs a memory read, the generated memory
@@ -614,7 +614,7 @@ public:
      *            disabled for each sprite seperately. Each bit is dedicated to
      *            a single sprite.
      */
-	uint8_t spriteSpriteCollisionEnabled;
+	u8 spriteSpriteCollisionEnabled;
 	
 	/*! @brief    Enable sprite-background collision
 	 *  @details  If set to true, the virtual VIC chips checks for sprite-
@@ -624,7 +624,7 @@ public:
      *            enabled or disabled for each sprite seperately. Each bit is
      *            dedicated to a single sprite.
      */
-	uint8_t spriteBackgroundCollisionEnabled;
+	u8 spriteBackgroundCollisionEnabled;
 	
 	/*! @brief    Determines whether IRQ lines will be made visible.
 	 *  @details  Each rasterline that will potentially trigger a raster IRQ is
@@ -697,7 +697,7 @@ private:
      *            kept in the z buffer. The lower the value, the closer it is to
      *            the viewer.
      */
-    uint8_t zBuffer[8];
+    u8 zBuffer[8];
     
     /*! @brief    Indicates the source of a drawn pixel
      *  @details  Whenever a foreground pixel or sprite pixel is drawn, a
@@ -721,7 +721,7 @@ private:
      *            [2] : color for '10' pixels in multicolor mode
      *            [3] : color for '11' pixels in multicolor mode
      */
-    uint8_t col[4];
+    u8 col[4];
         
 public:
 	
@@ -737,8 +737,8 @@ public:
     void ping();
 	void dump();
     size_t stateSize();
-    void didLoadFromBuffer(uint8_t **buffer);
-    void didSaveToBuffer(uint8_t **buffer);
+    void didLoadFromBuffer(u8 **buffer);
+    void didSaveToBuffer(u8 **buffer);
     
 
     //
@@ -873,19 +873,19 @@ private:
 public:
     
     //! @brief    Peeks a value from a VIC register without side effects.
-    uint8_t spypeek(u16 addr);
+    u8 spypeek(u16 addr);
     
     //! @brief    Returns the ultimax flag
-    uint8_t getUltimax() { return ultimax; }
+    u8 getUltimax() { return ultimax; }
 
     //! @brief    Sets the ultimax flag
     void setUltimax(bool value);
     
     //! @brief    Returns the latest value of the VICII's data bus during phi1.
-    uint8_t getDataBusPhi1() { return dataBusPhi1; }
+    u8 getDataBusPhi1() { return dataBusPhi1; }
 
     //! @brief    Returns the latest value of the VICII's data bus during phi2.
-    uint8_t getDataBusPhi2() { return dataBusPhi2; }
+    u8 getDataBusPhi2() { return dataBusPhi2; }
 
     //! @brief    Schedules the VICII bank to to switched
     /*! @details  This method is called if the bank switch is triggered by a
@@ -912,16 +912,16 @@ private:
     void updateBankAddr();
     
     //! @brief    Peeks a value from a VIC register.
-	uint8_t peek(u16 addr);
+	u8 peek(u16 addr);
     
     //! @brief    Pokes a value into a VIC register.
-	void poke(u16 addr, uint8_t value);
+	void poke(u16 addr, u8 value);
     
     //! @brief    Simulates a memory access via the address and data bus.
-    uint8_t memAccess(u16 addr);
+    u8 memAccess(u16 addr);
 
     //! @brief    Same as memAccess without side effects.
-    uint8_t memSpyAccess(u16 addr);
+    u8 memSpyAccess(u16 addr);
 
     //! @brief    Returns true if memAccess will read from Character ROM
     bool isCharRomAddr(u16 addr);
@@ -991,7 +991,7 @@ private:
     u16 rasterline();
 
     //! @brief    Returns the current rasterline cycle
-    uint8_t rastercycle();
+    u8 rastercycle();
 
     /*! @brief    Indicates if yCounter needs to be reset in this rasterline.
      *  @details  PAL models reset the yCounter in cycle 2 in the first
@@ -1077,13 +1077,13 @@ public:
     }
     
     //! @brief    Returns the masked CB13 bit.
-    uint8_t CB13() { return memSelect & 0x08; }
+    u8 CB13() { return memSelect & 0x08; }
 
     //! @brief    Returns the masked CB13/CB12/CB11 bits.
-    uint8_t CB13CB12CB11() { return memSelect & 0x0E; }
+    u8 CB13CB12CB11() { return memSelect & 0x0E; }
 
     //! @brief    Returns the masked VM13/VM12/VM11/VM10 bits.
-    uint8_t VM13VM12VM11VM10() { return memSelect & 0xF0; }
+    u8 VM13VM12VM11VM10() { return memSelect & 0xF0; }
 
 	//! @brief    Returns the state of the CSEL bit.
 	bool isCSEL() { return GET_BIT(reg.current.ctrl2, 3); }
@@ -1111,7 +1111,7 @@ private:
     /*! @brief   Sets the value of the BA line
      * @details  The BA line is connected to the CPU's RDY pin.
      */
-    void updateBA(uint8_t value);
+    void updateBA(u8 value);
     
     /*! @brief    Indicates if a c-access can occur.
      *  @details  A c-access can only be performed if the BA line is down for
@@ -1126,7 +1126,7 @@ private:
      *            4 : Collision between two sprites.
      *            8 : Lightpen interrupt
      */
-	void triggerIrq(uint8_t source);
+	void triggerIrq(u8 source);
 	
     
     //
@@ -1180,12 +1180,12 @@ private:
     /*! @brief    Gets the depth of a sprite.
      *  @return   depth value that can be written into the z buffer.
      */
-    uint8_t spriteDepth(uint8_t nr);
+    u8 spriteDepth(u8 nr);
     
     /*! @brief    Compares the Y coordinates of all sprites with the yCounter
      *  @return   A bit pattern storing the result for each sprite.
      */
-    uint8_t compareSpriteY();
+    u8 compareSpriteY();
     
     /*! @brief    Turns off sprite dma if conditions are met.
      *  @details  In cycle 16, the mcbase pointer is advanced three bytes for
@@ -1389,9 +1389,9 @@ private:
      *            need to be reloaded.
      *  @seealso  drawCanvas()
      */
-    void drawCanvasPixel(uint8_t pixel,
-                         uint8_t mode,
-                         uint8_t d016,
+    void drawCanvasPixel(u8 pixel,
+                         u8 mode,
+                         u8 d016,
                          bool loadShiftReg,
                          bool updateColors);
     
@@ -1408,8 +1408,8 @@ private:
      *  @seealso  drawSprites()
      */
     void drawSpritePixel(unsigned pixel,
-                         uint8_t enableBits,
-                         uint8_t freezeBits);
+                         u8 enableBits,
+                         u8 freezeBits);
     
     
     //
@@ -1417,7 +1417,7 @@ private:
     //
     
     //! @brief    Determines pixel colors accordig to the provided display mode
-    void loadColors(uint8_t mode);
+    void loadColors(u8 mode);
     
     
     //
@@ -1451,7 +1451,7 @@ private:
         pixelSource[pixel] = 0x00; }
     
     //! @brief    Draw a single sprite pixel
-    void setSpritePixel(unsigned sprite, unsigned pixel, uint8_t color);
+    void setSpritePixel(unsigned sprite, unsigned pixel, u8 color);
     
     /*! @brief    Extend border to the left and right to look nice.
      *  @details  This functions replicates the color of the leftmost and
@@ -1462,7 +1462,7 @@ private:
     /*! @brief    Draw a horizontal colored line into the screen buffer
      *  @details  This method is utilized for debugging purposes, only.
      */
-    void markLine(uint8_t color, unsigned start = 0, unsigned end = NTSC_PIXELS);
+    void markLine(u8 color, unsigned start = 0, unsigned end = NTSC_PIXELS);
 
     
 	//
@@ -1511,10 +1511,10 @@ public:
     void setScreenGeometry(ScreenGeometry mode);
     
     //! @brief    Sets the vertical raster scroll offset.
-    void setVerticalRasterScroll(uint8_t offset);
+    void setVerticalRasterScroll(u8 offset);
     
     //! @brief    Sets the horizontan raster scroll offset.
-    void setHorizontalRasterScroll(uint8_t offset);
+    void setHorizontalRasterScroll(u8 offset);
     
     //! @brief    Set interrupt rasterline
     void setRasterInterruptLine(u16 line);
@@ -1526,22 +1526,22 @@ public:
     void toggleRasterInterruptFlag();
     
     //! @brief    Sets the color of a sprite.
-    void setSpriteColor(unsigned nr, uint8_t color);
+    void setSpriteColor(unsigned nr, u8 color);
     
     //! @brief    Set the X coordinate of a sprite.
     void setSpriteX(unsigned nr, u16 x);
     
     //! @brief    Sets the Y coordinate of sprite.
-    void setSpriteY(unsigned nr, uint8_t y);
+    void setSpriteY(unsigned nr, u8 y);
 
     //! @brief    Sets the data source pointer of sprite.
-    void setSpritePtr(unsigned nr, uint8_t ptr);
+    void setSpritePtr(unsigned nr, u8 ptr);
 
     //! @brief    Enables or disables a sprite.
-    void setSpriteEnabled(uint8_t nr, bool b);
+    void setSpriteEnabled(u8 nr, bool b);
     
     //! @brief    Enables or disables a sprite.
-    void toggleSpriteEnabled(uint8_t nr);
+    void toggleSpriteEnabled(u8 nr);
     
     //! @brief    Enables or disables IRQs on sprite/background collision
     void setIrqOnSpriteBackgroundCollision(bool b);

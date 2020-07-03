@@ -64,8 +64,8 @@ public:
 	
 	//! @functiongroup Methods from HardwareComponent
 	void reset();
-    void didLoadFromBuffer(uint8_t **buffer) { sid->write_state(st); }
-    void willSaveToBuffer(uint8_t **buffer) { st = sid->read_state(); }
+    void didLoadFromBuffer(u8 **buffer) { sid->write_state(st); }
+    void willSaveToBuffer(u8 **buffer) { st = sid->read_state(); }
 	
     //! @brief    Gathers all values that are displayed in the debugger
     SIDInfo getInfo();
@@ -74,10 +74,10 @@ public:
     VoiceInfo getVoiceInfo(unsigned voice);
 
 	//! Special peek function for the I/O memory range.
-	uint8_t peek(u16 addr);
+	u8 peek(u16 addr);
 	
 	//! Special poke function for the I/O memory range.
-	void poke(u16 addr, uint8_t value);
+	void poke(u16 addr, u8 value);
 	
 	/*! @brief   Execute SID
      *  @details Runs reSID for the specified amount of CPU cycles and writes

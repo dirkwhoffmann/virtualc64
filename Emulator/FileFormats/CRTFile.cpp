@@ -10,32 +10,32 @@
 #include "CRTFile.h"
 #include "Cartridge.h"
 
-const uint8_t CRTFile::magicBytes[] = {
+const u8 CRTFile::magicBytes[] = {
     'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ' };
 
 bool
-CRTFile::isCRTBuffer(const uint8_t *buffer, size_t length)
+CRTFile::isCRTBuffer(const u8 *buffer, size_t length)
 {
     if (length < 0x40) return false;
     return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
 }
 
 CartridgeType
-CRTFile::typeOfCRTBuffer(const uint8_t *buffer, size_t length)
+CRTFile::typeOfCRTBuffer(const u8 *buffer, size_t length)
 {
     assert(isCRTBuffer(buffer, length));
     return (CartridgeType)LO_HI(buffer[0x17], buffer[0x16]);
 }
 
 const char *
-CRTFile::typeNameOfCRTBuffer(const uint8_t *buffer, size_t length)
+CRTFile::typeNameOfCRTBuffer(const u8 *buffer, size_t length)
 {
     CartridgeType type = typeOfCRTBuffer(buffer, length);
     return CRTFile::cartridgeTypeName(type);
 }
 
 bool
-CRTFile::isSupportedCRTBuffer(const uint8_t *buffer, size_t length)
+CRTFile::isSupportedCRTBuffer(const u8 *buffer, size_t length)
 {
     if (!isCRTBuffer(buffer, length))
         return false;
@@ -43,7 +43,7 @@ CRTFile::isSupportedCRTBuffer(const uint8_t *buffer, size_t length)
 }
 
 bool
-CRTFile::isUnsupportedCRTBuffer(const uint8_t *buffer, size_t length)
+CRTFile::isUnsupportedCRTBuffer(const u8 *buffer, size_t length)
 {
     return isCRTBuffer(buffer, length) && !isSupportedCRTBuffer(buffer, length);
 }
@@ -143,7 +143,7 @@ CRTFile::CRTFile()
 }
 
 CRTFile *
-CRTFile::makeWithBuffer(const uint8_t *buffer, size_t length)
+CRTFile::makeWithBuffer(const u8 *buffer, size_t length)
 {
     CRTFile *cartridge = new CRTFile();
     
@@ -177,7 +177,7 @@ CRTFile::dealloc()
 }
         
 bool
-CRTFile::readFromBuffer(const uint8_t *buffer, size_t length)
+CRTFile::readFromBuffer(const u8 *buffer, size_t length)
 {
     if (!AnyC64File::readFromBuffer(buffer, length))
         return false;
@@ -207,7 +207,7 @@ CRTFile::readFromBuffer(const uint8_t *buffer, size_t length)
     msg("   Exrom:  %d\n", initialExromLine());
     
     // Load chip packets
-    uint8_t *ptr = &data[headerSize];
+    u8 *ptr = &data[headerSize];
     for (numberOfChips = 0; ptr < data + length; numberOfChips++) {
         
         if (numberOfChips == MAX_PACKETS) {

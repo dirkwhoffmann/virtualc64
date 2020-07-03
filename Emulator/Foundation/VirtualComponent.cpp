@@ -126,9 +126,9 @@ HardwareComponent::stateSize()
 }
 
 void
-HardwareComponent::loadFromBuffer(uint8_t **buffer)
+HardwareComponent::loadFromBuffer(u8 **buffer)
 {
-    uint8_t *old = *buffer;
+    u8 *old = *buffer;
     
     debug(3, "    Loading internal state ...\n");
     
@@ -151,17 +151,17 @@ HardwareComponent::loadFromBuffer(uint8_t **buffer)
         if (flags == 0) { // Auto detect size
 
             switch (snapshotItems[i].size) {
-                case 1:  *(uint8_t *)data  = read8(buffer); break;
+                case 1:  *(u8 *)data  = read8(buffer); break;
                 case 2:  *(u16 *)data = read16(buffer); break;
                 case 4:  *(u32 *)data = read32(buffer); break;
                 case 8:  *(u64 *)data = read64(buffer); break;
-                default: readBlock(buffer, (uint8_t *)data, size);
+                default: readBlock(buffer, (u8 *)data, size);
             }
 
         } else { // Format is specified manually
             
             switch (flags) {
-                case BYTE_ARRAY: readBlock(buffer, (uint8_t *)data, size); break;
+                case BYTE_ARRAY: readBlock(buffer, (u8 *)data, size); break;
                 case WORD_ARRAY: readBlock16(buffer, (u16 *)data, size); break;
                 case DWORD_ARRAY: readBlock32(buffer, (u32 *)data, size); break;
                 case QWORD_ARRAY: readBlock64(buffer, (u64 *)data, size); break;
@@ -182,9 +182,9 @@ HardwareComponent::loadFromBuffer(uint8_t **buffer)
 }
 
 void
-HardwareComponent::saveToBuffer(uint8_t **buffer)
+HardwareComponent::saveToBuffer(u8 **buffer)
 {
-    uint8_t *old = *buffer;
+    u8 *old = *buffer;
     
     debug(3, "    Saving internal state ...\n");
 
@@ -208,17 +208,17 @@ HardwareComponent::saveToBuffer(uint8_t **buffer)
         if (flags == 0) { // Auto detect size
             
             switch (snapshotItems[i].size) {
-                case 1:  write8(buffer, *(uint8_t *)data); break;
+                case 1:  write8(buffer, *(u8 *)data); break;
                 case 2:  write16(buffer, *(u16 *)data); break;
                 case 4:  write32(buffer, *(u32 *)data); break;
                 case 8:  write64(buffer, *(u64 *)data); break;
-                default: writeBlock(buffer, (uint8_t *)data, size);
+                default: writeBlock(buffer, (u8 *)data, size);
             }
             
         } else { // Format is specified manually
             
             switch (flags) {
-                case BYTE_ARRAY: writeBlock(buffer, (uint8_t *)data, size); break;
+                case BYTE_ARRAY: writeBlock(buffer, (u8 *)data, size); break;
                 case WORD_ARRAY: writeBlock16(buffer, (u16 *)data, size); break;
                 case DWORD_ARRAY: writeBlock32(buffer, (u32 *)data, size); break;
                 case QWORD_ARRAY: writeBlock64(buffer, (u64 *)data, size); break;

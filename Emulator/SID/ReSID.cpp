@@ -206,14 +206,14 @@ ReSID::setSamplingMethod(SamplingMethod value)
     assert((SamplingMethod)sid->sampling == samplingMethod);
 }
 
-uint8_t
+u8
 ReSID::peek(u16 addr)
 {	
     return sid->read(addr);
 }
 
 void 
-ReSID::poke(u16 addr, uint8_t value)
+ReSID::poke(u16 addr, u8 value)
 {
     sid->write(addr, value);
 }
@@ -248,7 +248,7 @@ ReSID::getInfo()
 {
     SIDInfo info;
     reSID::SID::State state = sid->read_state();
-    uint8_t *reg = (uint8_t *)state.sid_register;
+    u8 *reg = (u8 *)state.sid_register;
     
     info.volume = reg[0x18] & 0x0F;
     info.filterModeBits = reg[0x18] & 0xF0;
@@ -264,7 +264,7 @@ ReSID::getVoiceInfo(unsigned voice)
 {
     VoiceInfo info;
     reSID::SID::State state = sid->read_state();
-    uint8_t *sidreg = (uint8_t *)state.sid_register + (voice * 7);
+    u8 *sidreg = (u8 *)state.sid_register + (voice * 7);
     
     for (unsigned j = 0; j < 7; j++) info.reg[j] = sidreg[j];
     info.frequency = HI_LO(sidreg[0x01], sidreg[0x00]);

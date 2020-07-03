@@ -345,7 +345,7 @@ CPU::disassemble(RecordedInstruction instr, bool hex)
             break;
         }
         case ADDR_RELATIVE: {
-            u16 value = instr.pc + 2 + (int8_t)mem->spypeek(instr.pc + 1);
+            u16 value = instr.pc + 2 + (i8)mem->spypeek(instr.pc + 1);
             hex ? sprint16x(operand, value) : sprint16d(operand, value);
             break;
         }

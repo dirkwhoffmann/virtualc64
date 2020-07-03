@@ -105,7 +105,7 @@ private:
      *  @details  Only a cery few cartridges such as ISEPIC and EXPERT have
      *            a switch.
      */
-    int8_t switchPos = 0;
+    i8 switchPos = 0;
 
     //! @brief    Status of the cartridge LED (true = on)
     bool led = false;
@@ -381,7 +381,7 @@ public:
     virtual bool hasSwitch() { return false; }
 
     //! @brief    Returns the current position of the switch
-    virtual int8_t getSwitch() { return switchPos; }
+    virtual i8 getSwitch() { return switchPos; }
     
     //! @brief    Convenience wrappers around getSwitch()
     bool switchIsNeutral() { return getSwitch() == 0; }
@@ -391,13 +391,13 @@ public:
     /*! @brief    Returns a textual description for a switch position.
      *  @return   NULL, if the switch cannot be positioned this way.
      */
-    virtual const char *getSwitchDescription(int8_t pos) { return NULL; }
+    virtual const char *getSwitchDescription(i8 pos) { return NULL; }
     
     //! @brief    Convenience wrappers around getSwitchDescription()
-    bool validSwitchPosition(int8_t pos) { return getSwitchDescription(pos) != NULL; }
+    bool validSwitchPosition(i8 pos) { return getSwitchDescription(pos) != NULL; }
     
     //! @brief    Puts the switch in the provided position
-    virtual void setSwitch(int8_t pos);
+    virtual void setSwitch(i8 pos);
 
     
     //

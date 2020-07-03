@@ -35,8 +35,8 @@ public:
     //! @brief   Disk parameters of a standard floppy disk
     typedef struct {
         
-        uint8_t  sectors;       // Typical number of sectors in this track
-        uint8_t  speedZone;     // Default speed zone for this track
+        u8  sectors;       // Typical number of sectors in this track
+        u8  speedZone;     // Default speed zone for this track
         u16 lengthInBytes; // Typical track size in bits
         u16 lengthInBits;  // Typical track size in bits
         Sector   firstSectorNr; // Logical number of first sector in track
@@ -130,10 +130,10 @@ public:
      */
     union {
         struct {
-            uint8_t _pad[maxBytesOnTrack];
-            uint8_t halftrack[85][maxBytesOnTrack];
+            u8 _pad[maxBytesOnTrack];
+            u8 halftrack[85][maxBytesOnTrack];
         };
-        uint8_t track[43][2 * maxBytesOnTrack];
+        u8 track[43][2 * maxBytesOnTrack];
     } data;
     
     /*! @brief    Length of each halftrack in bits
@@ -228,27 +228,27 @@ public:
     //! @brief   Encodes a single byte as a GCR bitstream.
     /*! @details Writes 10 bits to the specified position on disk.
      */
-    void encodeGcr(uint8_t value, Track t, HeadPosition offset);
+    void encodeGcr(u8 value, Track t, HeadPosition offset);
 
     //! @brief   Encodes multiple bytes as a GCR bitstream.
     /*! @details Writes length * 10 bits to the specified position on disk.
      */
-    void encodeGcr(uint8_t *values, size_t length, Track t, HeadPosition offset);
+    void encodeGcr(u8 *values, size_t length, Track t, HeadPosition offset);
 
     /*! @brief   Translates four data bytes into five GCR encodes bytes
      *! @deprecated
      */
-    void encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, Track t, unsigned offset);
+    void encodeGcr(u8 b1, u8 b2, u8 b3, u8 b4, Track t, unsigned offset);
     
     //! @brief   Decodes a nibble (4 bit) from a previously encoded GCR bitstream.
     /*! @return  0xFF, if no valid GCR sequence is found.
      */
-    uint8_t decodeGcrNibble(uint8_t *gcrBits);
+    u8 decodeGcrNibble(u8 *gcrBits);
 
     //! @brief   Decodes a byte (8 bit) form a previously encoded GCR bitstream.
     /*! @note    Returns an unpredictable result if invalid GCR sequences are found.
      */
-    uint8_t decodeGcr(uint8_t *gcrBits);
+    u8 decodeGcr(u8 *gcrBits);
 
     
     //
@@ -282,7 +282,7 @@ public:
      *  @note    The head position is expected to be inside the halftrack bounds.
      *  @result  0x00 or 0x01
      */
-    uint8_t _readBitFromHalftrack(Halftrack ht, HeadPosition pos) {
+    u8 _readBitFromHalftrack(Halftrack ht, HeadPosition pos) {
         assert(isValidHeadPositon(ht, pos));
         return (data.halftrack[ht][pos / 8] & (0x80 >> (pos % 8))) != 0;
     }
@@ -290,7 +290,7 @@ public:
     /*! @brief   Reads a single bit from disk.
      *  @result	 0x00 or 0x01
      */
-    uint8_t readBitFromHalftrack(Halftrack ht, HeadPosition pos) {
+    u8 readBitFromHalftrack(Halftrack ht, HeadPosition pos) {
         return _readBitFromHalftrack(ht, fitToBounds(ht, pos));
     }
  
@@ -330,12 +330,12 @@ public:
     }
 
     //! @brief  Writes a single byte to disk.
-    void writeByteToHalftrack(Halftrack ht, HeadPosition pos, uint8_t byte) {
-        for (uint8_t mask = 0x80; mask != 0; mask >>= 1)
+    void writeByteToHalftrack(Halftrack ht, HeadPosition pos, u8 byte) {
+        for (u8 mask = 0x80; mask != 0; mask >>= 1)
             writeBitToHalftrack(ht, pos++, byte & mask);
     }
 
-    void writeByteToTrack(Track t, HeadPosition pos, uint8_t byte) {
+    void writeByteToTrack(Track t, HeadPosition pos, u8 byte) {
         writeByteToHalftrack(2 * t - 1, pos, byte);
     }
     
@@ -439,7 +439,7 @@ public:
 private:
     
     //! @brief    Returns a textual representation
-    const char *sectorBytesAsString(uint8_t *buffer, size_t length);
+    const char *sectorBytesAsString(u8 *buffer, size_t length);
     
     
     //
@@ -455,23 +455,23 @@ public:
      *           bytes will be written.
      *  @return  Number of bytes written.
      */
-    size_t decodeDisk(uint8_t *dest);
+    size_t decodeDisk(u8 *dest);
  
 private:
     
-    /*! @brief   Work horse for decodeDisk(uint8_t *)
+    /*! @brief   Work horse for decodeDisk(u8 *)
      *  @param   numTracks must be either 35, 40, or 42.
      */
-    size_t decodeDisk(uint8_t *dest, unsigned numTracks);
+    size_t decodeDisk(u8 *dest, unsigned numTracks);
     
     //! @brief   Decodes all sectors of a track
-    size_t decodeTrack(Track t, uint8_t *dest);
+    size_t decodeTrack(Track t, u8 *dest);
 
     //! @brief   Decodes a single sector
-    size_t decodeSector(size_t offset, uint8_t *dest);
+    size_t decodeSector(size_t offset, u8 *dest);
 
      //! @brief   Decodes a single broken sector (results in all zeroes)
-     // size_t decodeBrokenSector(uint8_t *dest);
+     // size_t decodeBrokenSector(u8 *dest);
 
 
     //
@@ -506,7 +506,7 @@ private:
      *           Number of tail bytes follwowing sectors with odd sector numbers.
      *  @return  Number of written bits.
      */
-    size_t encodeTrack(D64File *a, Track t, uint8_t tailGap, HeadPosition start);
+    size_t encodeTrack(D64File *a, Track t, u8 tailGap, HeadPosition start);
     
     /*! @brief   Encode a single sector
      *  @details This function translates the logical byte sequence of a single sector

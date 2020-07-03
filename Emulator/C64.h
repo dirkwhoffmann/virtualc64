@@ -142,7 +142,7 @@ class C64 : public HardwareComponent {
      *            VICII model.
      *  @see      VIC::getCyclesPerRasterline()
      */
-    uint8_t rasterCycle;
+    u8 rasterCycle;
 
     /*! @brief    Current CPU frequency
      *  @details  This value is set in setClockFrequency()
