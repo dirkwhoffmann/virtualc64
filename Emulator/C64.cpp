@@ -667,7 +667,7 @@ C64::synchronizeTiming()
     u64 nanoAbsTime = abs_to_nanos(mach_absolute_time());
     
     // Check how long we're supposed to sleep
-    int64_t timediff = (int64_t)nanoTargetTime - (int64_t)nanoAbsTime;
+    i64 timediff = (i64)nanoTargetTime - (i64)nanoAbsTime;
     if (timediff > 200000000 || timediff < -200000000 /* 0.2 sec */) {
         
         // The emulator seems to be out of sync, so we better reset the
@@ -678,11 +678,11 @@ C64::synchronizeTiming()
     }
     
     // Convert nanoTargetTime into kernel unit
-    int64_t kernelTargetTime = nanos_to_abs(nanoTargetTime);
+    i64 kernelTargetTime = nanos_to_abs(nanoTargetTime);
     
     // Sleep and update target timer
     // debug(2, "%p Sleeping for %lld\n", this, kernelTargetTime - mach_absolute_time());
-    int64_t jitter = sleepUntil(kernelTargetTime, earlyWakeup);
+    i64 jitter = sleepUntil(kernelTargetTime, earlyWakeup);
     nanoTargetTime += vic.getFrameDelay();
     
     // debug(2, "Jitter = %d", jitter);

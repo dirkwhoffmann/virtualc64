@@ -62,11 +62,11 @@ class Datasette : public HardwareComponent {
     
     /*! @brief    Next scheduled rising edge on data line
      */
-    int64_t nextRisingEdge = 0;
+    i64 nextRisingEdge = 0;
     
     /*! @brief    Next scheduled falling edge on data line
      */
-    int64_t nextFallingEdge = 0;
+    i64 nextFallingEdge = 0;
     
     /*! @brief    Indicates whether the play key is pressed
      */

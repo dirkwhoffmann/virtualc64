@@ -17,8 +17,8 @@ class Mouse1350 : public HardwareComponent {
 private:
     
     //! @brief    Mouse position
-    int64_t mouseX;
-    int64_t mouseY;
+    i64 mouseX;
+    i64 mouseY;
     
     //! @brief    Mouse button states
     bool leftButton;
@@ -29,8 +29,8 @@ private:
     int dividerY = 64;
     
     //! @brief    Latched mouse positions
-    int64_t latchedX[3];
-    int64_t latchedY[3];
+    i64 latchedX[3];
+    i64 latchedY[3];
     
     //! @brief    Control port bits
     uint8_t controlPort;
@@ -62,7 +62,7 @@ public:
     /*! @brief   Execution function
      *  @details Translates movement deltas into joystick events.
      */
-    void execute(int64_t targetX, int64_t targetY);
+    void execute(i64 targetX, i64 targetY);
 };
 
 #endif

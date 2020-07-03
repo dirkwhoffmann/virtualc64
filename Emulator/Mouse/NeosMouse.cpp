@@ -50,7 +50,7 @@ NeosMouse::readPotY()
 }
 
 uint8_t
-NeosMouse::readControlPort(int64_t targetX, int64_t targetY)
+NeosMouse::readControlPort(i64 targetX, i64 targetY)
 {
     uint8_t result = leftButton ? 0xE0 : 0xF0;
     
@@ -87,7 +87,7 @@ NeosMouse::readControlPort(int64_t targetX, int64_t targetY)
 
 /*
 void
-NeosMouse::execute(int64_t targetX, int64_t targetY)
+NeosMouse::execute(i64 targetX, i64 targetY)
 {
     targetX /= dividerX;
     targetY /= dividerY;
@@ -105,7 +105,7 @@ NeosMouse::execute(int64_t targetX, int64_t targetY)
 */
 
 void
-NeosMouse::risingStrobe(int portNr, int64_t targetX, int64_t targetY)
+NeosMouse::risingStrobe(int portNr, i64 targetX, i64 targetY)
 {
     // Perform rising edge state changes
     switch (state) {
@@ -123,7 +123,7 @@ NeosMouse::risingStrobe(int portNr, int64_t targetX, int64_t targetY)
 }
 
 void
-NeosMouse::fallingStrobe(int portNr, int64_t targetX, int64_t targetY)
+NeosMouse::fallingStrobe(int portNr, i64 targetX, i64 targetY)
 {
     // Perform falling edge state changes
     switch (state) {
@@ -142,7 +142,7 @@ NeosMouse::fallingStrobe(int portNr, int64_t targetX, int64_t targetY)
 }
 
 void
-NeosMouse::latchPosition(int64_t targetX, int64_t targetY)
+NeosMouse::latchPosition(i64 targetX, i64 targetY)
 {
     //
     // Shift mouseX and mouseY towards targetX and targetY
@@ -165,8 +165,8 @@ NeosMouse::latchPosition(int64_t targetX, int64_t targetY)
     // Compute deltas and latch values
     //
     
-    int64_t dx = MAX(MIN((latchedX - mouseX), 127), -128);
-    int64_t dy = MAX(MIN((mouseY - latchedY), 127), -128);
+    i64 dx = MAX(MIN((latchedX - mouseX), 127), -128);
+    i64 dy = MAX(MIN((mouseY - latchedY), 127), -128);
     
     deltaX = (uint8_t)dx;
     deltaY = (uint8_t)dy;

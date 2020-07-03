@@ -19,7 +19,7 @@ TimeDelayed<T>::TimeDelayed(uint8_t delay, uint8_t capacity, u64 *clock)
     timeStamp = 0;
     this->capacity = capacity;
     this->delay = delay;
-    this->clock = (int64_t *)clock;
+    this->clock = (i64 *)clock;
     clear();
 }
 
@@ -45,10 +45,10 @@ template TimeDelayed<u64>::~TimeDelayed();
 template <class T>
 void TimeDelayed<T>::writeWithDelay(T value, uint8_t waitCycles)
 {
-    int64_t referenceTime = *clock + waitCycles;
+    i64 referenceTime = *clock + waitCycles;
     
     // Shift pipeline
-    int64_t diff = referenceTime - timeStamp;
+    i64 diff = referenceTime - timeStamp;
     for (int i = this->capacity - 1; i >= 0; i--) {
         assert((i - diff <= 0) || (i - diff <= this->capacity));
         pipeline[i] = (i - diff > 0) ? pipeline[i - diff] : pipeline[0];

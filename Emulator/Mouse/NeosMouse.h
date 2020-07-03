@@ -15,8 +15,8 @@
 class NeosMouse : public HardwareComponent {
     
     //! @brief    Mouse position
-    int64_t mouseX;
-    int64_t mouseY;
+    i64 mouseX;
+    i64 mouseY;
     
     //! @brief    Mouse button states
     bool leftButton;
@@ -27,8 +27,8 @@ class NeosMouse : public HardwareComponent {
     int dividerY = 256;
     
     //! @brief    Mouse movement in pixels per execution step
-    int64_t shiftX = 127;
-    int64_t shiftY = 127;
+    i64 shiftX = 127;
+    i64 shiftY = 127;
     
     //! @brief    Mouse state
     /*! @details  When the mouse switches to state 0, the current mouse
@@ -42,10 +42,10 @@ class NeosMouse : public HardwareComponent {
     u64 triggerCycle;
     
     //! @brief    Latched horizontal mouse position
-    int64_t latchedX;
+    i64 latchedX;
     
     //! @brief    Latched vertical mouse position
-    int64_t latchedY;
+    i64 latchedY;
     
     //! @brief    The least signifanct value is transmitted to the C64
     int8_t deltaX;
@@ -75,23 +75,23 @@ public:
     uint8_t readPotY();
     
     //! @brief   Returns the control port bits triggered by the mouse
-    uint8_t readControlPort(int64_t targetX, int64_t targetY);
+    uint8_t readControlPort(i64 targetX, i64 targetY);
     
     /*! @brief   Execution function
      *  @details Shifts mouseX and mouseY smoothly towards targetX and targetX.
      */
-    // void execute(int64_t targetX, int64_t targetY);
+    // void execute(i64 targetX, i64 targetY);
     
     //! @brief    Triggers a state change (rising edge on control port line)
-    void risingStrobe(int portNr, int64_t targetX, int64_t targetY);
+    void risingStrobe(int portNr, i64 targetX, i64 targetY);
     
     //! @brief    Triggers a state change (falling edge on control port line)
-    void fallingStrobe(int portNr, int64_t targetX, int64_t targetY);
+    void fallingStrobe(int portNr, i64 targetX, i64 targetY);
     
 private:
     
     //! @brief  Latches the current mouse position and computed deltas
-    void latchPosition(int64_t targetX, int64_t targetY);
+    void latchPosition(i64 targetX, i64 targetY);
 };
 
 #endif

@@ -25,13 +25,13 @@ template <class T> class TimeDelayed {
     uint8_t capacity = 0;
     
     //! @brief  Remembers the time of the most recent call to write()
-    int64_t timeStamp = 0;
+    i64 timeStamp = 0;
     
     //! @brief  Number of cycles to elapse until a written value shows up
     uint8_t delay = 0;
     
     //! @brief   Pointer to reference clock
-    int64_t *clock = NULL;
+    i64 *clock = NULL;
     
     public:
     
@@ -48,7 +48,7 @@ template <class T> class TimeDelayed {
      *  @param   clock is either the clock of the C64 CPU or the clock of the
      *           a drive CPU.
      */
-    void setClock(u64 *clock) { this->clock = (int64_t *)clock; }
+    void setClock(u64 *clock) { this->clock = (i64 *)clock; }
     
     //! @brief   Overwrites all pipeline entries with a reset value.
     void reset(T value) {
@@ -71,7 +71,7 @@ template <class T> class TimeDelayed {
     //! @brief   Reads a value from the pipeline with the standard delay.
     // T delayed() { return pipeline[MAX(0, timeStamp - *clock + delay)]; }
     T delayed() {
-        int64_t offset = timeStamp - *clock + delay;
+        i64 offset = timeStamp - *clock + delay;
         if (__builtin_expect(offset <= 0, 1)) {
             return pipeline[0];
         } else {

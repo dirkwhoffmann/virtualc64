@@ -48,7 +48,7 @@ Mouse::connectMouse(unsigned portNr)
 }
 
 void
-Mouse::setXY(int64_t x, int64_t y)
+Mouse::setXY(i64 x, i64 y)
 {
     targetX = x;
     targetY = y;

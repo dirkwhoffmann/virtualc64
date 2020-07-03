@@ -41,8 +41,8 @@ class Mouse : public HardwareComponent {
      *            Instead, these variables are set. In execute(), mouseX and
      *            mouseY are shifted smoothly towards the target positions.
      */
-    int64_t targetX;
-    int64_t targetY;
+    i64 targetX;
+    i64 targetY;
     
 public:
     
@@ -71,7 +71,7 @@ public:
     void disconnectMouse() { connectMouse(0); }
 
     //! @brief   Emulates a mouse movement event.
-    void setXY(int64_t x, int64_t y);
+    void setXY(i64 x, i64 y);
 
     //! @brief   Emulates a mouse button event.
     void setLeftButton(bool value);

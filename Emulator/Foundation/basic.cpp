@@ -314,11 +314,11 @@ sleepMicrosec(unsigned usec)
 	}
 }
 
-int64_t
+i64
 sleepUntil(u64 kernelTargetTime, u64 kernelEarlyWakeup)
 {
     u64 now = mach_absolute_time();
-    int64_t jitter;
+    i64 jitter;
     
     if (now > kernelTargetTime)
         return 0;

@@ -15,8 +15,8 @@
 class Mouse1351 : public HardwareComponent {
     
     //! @brief    Mouse position
-    int64_t mouseX;
-    int64_t mouseY;
+    i64 mouseX;
+    i64 mouseY;
     
     //! @brief    Mouse button states
     bool leftButton;
@@ -27,8 +27,8 @@ class Mouse1351 : public HardwareComponent {
     int dividerY = 256;
         
     //! @brief    Mouse movement in pixels per execution step
-    int64_t shiftX = 31;
-    int64_t shiftY = 31;
+    i64 shiftX = 31;
+    i64 shiftY = 31;
     
 public:
     
@@ -57,8 +57,8 @@ public:
     /*! @brief   Execution function
      *  @details Shifts mouseX and mouseY smoothly towards targetX and targetX.
      */
-    void executeX(int64_t targetX);
-    void executeY(int64_t targetY);
+    void executeX(i64 targetX);
+    void executeY(i64 targetY);
 
     //! @brief   Returns the mouse X bits as they show up in the SID register
     uint8_t mouseXBits() { return (mouseX & 0x3F) << 1; }

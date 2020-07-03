@@ -1359,7 +1359,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (void) setXY:(NSPoint)pos
 {
-    wrapper->mouse->setXY((int64_t)pos.x, (int64_t)pos.y);
+    wrapper->mouse->setXY((i64)pos.x, (i64)pos.y);
 }
 - (void) setLeftButton:(BOOL)pressed
 {

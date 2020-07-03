@@ -55,7 +55,7 @@ Mouse1351::readControlPort()
 }
 
 void
-Mouse1351::executeX(int64_t targetX)
+Mouse1351::executeX(i64 targetX)
 {
     targetX /= dividerX;
     
@@ -68,7 +68,7 @@ Mouse1351::executeX(int64_t targetX)
 }
 
 void
-Mouse1351::executeY(int64_t targetY)
+Mouse1351::executeY(i64 targetY)
 {
     targetY /= dividerY;
     

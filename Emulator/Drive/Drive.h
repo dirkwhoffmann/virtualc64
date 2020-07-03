@@ -116,7 +116,7 @@ private:
      *            fed into a counter which serves as a frequency divider. It's
      *            output is used to clock the drive's CPU and the two VIA chips.
      */
-    int64_t nextClock;
+    i64 nextClock;
      
     /*! @brief    Indicates when the next carry output pulse occurs on UE7.
      *  @details  The 16 MHz signal is also fed into UE7, a 74SL193 4-bit
@@ -128,7 +128,7 @@ private:
      *            density bits are 1. The carry signal drives uf4, a counter of
      *            the same type.
      */
-    int64_t nextCarry;
+    i64 nextCarry;
     
 public:
     
@@ -136,7 +136,7 @@ public:
      *  @details  In a perfect setting, a new bit is read from or written to the
      *            drive after four carry pulses.
      */
-    int64_t carryCounter;
+    i64 carryCounter;
     
     /*! @brief    The second 74SL193 4-bit counter on the logic board.
      *  @details  This counter is driven by the carry output of UE7. It has
