@@ -168,38 +168,38 @@ public:
     void updatePeekPokeLookupTables();
 
     //! @brief    Returns the current peek source of the specified memory address
-    MemoryType getPeekSource(uint16_t addr) { return peekSrc[addr >> 12]; }
+    MemoryType getPeekSource(u16 addr) { return peekSrc[addr >> 12]; }
     
     //! @brief    Returns the current poke target of the specified memory address
-    MemoryType getPokeTarget(uint16_t addr) { return pokeTarget[addr >> 12]; }
+    MemoryType getPokeTarget(u16 addr) { return pokeTarget[addr >> 12]; }
 
     // Reading from memory
-    uint8_t peek(uint16_t addr, MemoryType source);
-    uint8_t peek(uint16_t addr, bool gameLine, bool exromLine);
-    uint8_t peek(uint16_t addr) { return peek(addr, peekSrc[addr >> 12]); }
+    uint8_t peek(u16 addr, MemoryType source);
+    uint8_t peek(u16 addr, bool gameLine, bool exromLine);
+    uint8_t peek(u16 addr) { return peek(addr, peekSrc[addr >> 12]); }
     uint8_t peekZP(uint8_t addr);
-    uint8_t peekIO(uint16_t addr);
+    uint8_t peekIO(u16 addr);
     
     // Reading from memory without side effects
-    uint8_t spypeek(uint16_t addr, MemoryType source);
-    uint8_t spypeek(uint16_t addr) { return spypeek(addr, peekSrc[addr >> 12]); }
-    uint8_t spypeekIO(uint16_t addr);
+    uint8_t spypeek(u16 addr, MemoryType source);
+    uint8_t spypeek(u16 addr) { return spypeek(addr, peekSrc[addr >> 12]); }
+    uint8_t spypeekIO(u16 addr);
     
     // Writing into memory
-    void poke(uint16_t addr, uint8_t value, MemoryType target);
-    void poke(uint16_t addr, uint8_t value, bool gameLine, bool exromLine);
-    void poke(uint16_t addr, uint8_t value) { poke(addr, value, pokeTarget[addr >> 12]); }
+    void poke(u16 addr, uint8_t value, MemoryType target);
+    void poke(u16 addr, uint8_t value, bool gameLine, bool exromLine);
+    void poke(u16 addr, uint8_t value) { poke(addr, value, pokeTarget[addr >> 12]); }
     void pokeZP(uint8_t addr, uint8_t value);
-    void pokeIO(uint16_t addr, uint8_t value);
+    void pokeIO(u16 addr, uint8_t value);
     
     //! @brief    Reads the NMI vector from memory.
-    uint16_t nmiVector();
+    u16 nmiVector();
     
     //! @brief    Reads the IRQ vector from memory.
-    uint16_t irqVector();
+    u16 irqVector();
     
     //! @brief    Reads the Reset vector from memory.
-    uint16_t resetVector();
+    u16 resetVector();
 };
 
 #endif

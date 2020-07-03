@@ -207,13 +207,13 @@ ReSID::setSamplingMethod(SamplingMethod value)
 }
 
 uint8_t
-ReSID::peek(uint16_t addr)
+ReSID::peek(u16 addr)
 {	
     return sid->read(addr);
 }
 
 void 
-ReSID::poke(uint16_t addr, uint8_t value)
+ReSID::poke(u16 addr, uint8_t value)
 {
     sid->write(addr, value);
 }

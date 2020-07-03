@@ -217,8 +217,8 @@ struct AnyC64FileWrapper;
 - (void) setTracing:(BOOL)b;
 
 - (UInt64) cycle;
-- (uint16_t) pc;
-- (void) setPC:(uint16_t)pc;
+- (u16) pc;
+- (void) setPC:(u16)pc;
 - (void) setSP:(uint8_t)sp;
 - (void) setA:(uint8_t)a;
 - (void) setX:(uint8_t)x;
@@ -231,16 +231,16 @@ struct AnyC64FileWrapper;
 - (void) setDflag:(BOOL)b;
 - (void) setVflag:(BOOL)b;
 
-- (BOOL) breakpoint:(uint16_t)addr;
-- (void) setBreakpoint:(uint16_t)addr;
-- (void) deleteBreakpoint:(uint16_t)addr;
-- (void) toggleBreakpoint:(uint16_t)addr;
+- (BOOL) breakpoint:(u16)addr;
+- (void) setBreakpoint:(u16)addr;
+- (void) deleteBreakpoint:(u16)addr;
+- (void) toggleBreakpoint:(u16)addr;
 
 - (NSInteger) recordedInstructions;
 - (RecordedInstruction) readRecordedInstruction;
 - (RecordedInstruction) readRecordedInstruction:(NSInteger)previous;
 
-- (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h;
+- (DisassembledInstruction) disassemble:(u16)addr hex:(BOOL)h;
 - (DisassembledInstruction) disassembleRecordedInstr:(RecordedInstruction)instr hex:(BOOL)h;
 
 @end
@@ -265,16 +265,16 @@ struct AnyC64FileWrapper;
 - (void) deleteCharacterRom;
 - (void) deleteKernalRom;
 
-- (MemoryType) peekSource:(uint16_t)addr;
-- (MemoryType) pokeTarget:(uint16_t)addr;
+- (MemoryType) peekSource:(u16)addr;
+- (MemoryType) pokeTarget:(u16)addr;
 
-- (uint8_t) spypeek:(uint16_t)addr source:(MemoryType)source;
-- (uint8_t) spypeek:(uint16_t)addr;
-- (uint8_t) spypeekIO:(uint16_t)addr;
+- (uint8_t) spypeek:(u16)addr source:(MemoryType)source;
+- (uint8_t) spypeek:(u16)addr;
+- (uint8_t) spypeekIO:(u16)addr;
 
-- (void) poke:(uint16_t)addr value:(uint8_t)value target:(MemoryType)target;
-- (void) poke:(uint16_t)addr value:(uint8_t)value;
-- (void) pokeIO:(uint16_t)addr value:(uint8_t)value;
+- (void) poke:(u16)addr value:(uint8_t)value target:(MemoryType)target;
+- (void) poke:(u16)addr value:(uint8_t)value;
+- (void) pokeIO:(u16)addr value:(uint8_t)value;
 
 @end
 
@@ -298,7 +298,7 @@ struct AnyC64FileWrapper;
 - (BOOL) emulateTimerBBug;
 - (void) setEmulateTimerBBug:(BOOL)value;
 
-- (void) poke:(uint16_t)addr value:(uint8_t)value;
+- (void) poke:(u16)addr value:(uint8_t)value;
 
 @end
 
@@ -338,9 +338,9 @@ struct AnyC64FileWrapper;
 - (SpriteInfo) getSpriteInfo:(NSInteger)sprite;
 - (void) dump;
 
-- (void) setMemoryBankAddr:(uint16_t)addr;
-- (void) setScreenMemoryAddr:(uint16_t)addr;
-- (void) setCharacterMemoryAddr:(uint16_t)addr;
+- (void) setMemoryBankAddr:(u16)addr;
+- (void) setScreenMemoryAddr:(u16)addr;
+- (void) setCharacterMemoryAddr:(u16)addr;
 
 - (void) setDisplayMode:(DisplayMode)mode;
 - (void) setScreenGeometry:(ScreenGeometry)mode;
@@ -367,7 +367,7 @@ struct AnyC64FileWrapper;
 - (void) setIrqOnSpriteBackgroundCollision:(BOOL)value;
 - (void) toggleIrqOnSpriteBackgroundCollision;
 
-- (void) setRasterInterruptLine:(uint16_t)line;
+- (void) setRasterInterruptLine:(u16)line;
 - (void) setRasterInterruptEnabled:(BOOL)b;
 - (void) toggleRasterInterruptFlag;
 
@@ -586,9 +586,9 @@ struct AnyC64FileWrapper;
 - (Halftrack) halftrack;
 - (void) setTrack:(Track)t;
 - (void) setHalftrack:(Halftrack)ht;
-- (uint16_t) sizeOfCurrentHalftrack;
-- (uint16_t) offset;
-- (void) setOffset:(uint16_t)value;
+- (u16) sizeOfCurrentHalftrack;
+- (u16) offset;
+- (void) setOffset:(u16)value;
 - (uint8_t) readBitFromHead;
 - (void) writeBitToHead:(uint8_t)value;
 

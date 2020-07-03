@@ -340,12 +340,12 @@ CPU::disassemble(RecordedInstruction instr, bool hex)
         case ADDR_ABSOLUTE:
         case ADDR_ABSOLUTE_X:
         case ADDR_ABSOLUTE_Y: {
-            uint16_t value = LO_HI(mem->spypeek(instr.pc + 1),mem->spypeek(instr.pc + 2));
+            u16 value = LO_HI(mem->spypeek(instr.pc + 1),mem->spypeek(instr.pc + 2));
             hex ? sprint16x(operand, value) : sprint16d(operand, value);
             break;
         }
         case ADDR_RELATIVE: {
-            uint16_t value = instr.pc + 2 + (int8_t)mem->spypeek(instr.pc + 1);
+            u16 value = instr.pc + 2 + (int8_t)mem->spypeek(instr.pc + 1);
             hex ? sprint16x(operand, value) : sprint16d(operand, value);
             break;
         }
@@ -449,7 +449,7 @@ CPU::disassemble(RecordedInstruction instr, bool hex)
 }
 
 DisassembledInstruction
-CPU::disassemble(uint16_t addr, bool hex)
+CPU::disassemble(u16 addr, bool hex)
 {
     RecordedInstruction instr;
 

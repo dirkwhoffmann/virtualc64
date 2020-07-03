@@ -32,10 +32,10 @@ public:
     size_t stateSize();
     void didLoadFromBuffer(uint8_t **buffer);
     void didSaveToBuffer(uint8_t **buffer);
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t peekIO2(uint16_t addr);
-    void pokeIO1(uint16_t addr, uint8_t value);
-    void pokeIO2(uint16_t addr, uint8_t value);
+    uint8_t peekIO1(u16 addr);
+    uint8_t peekIO2(u16 addr);
+    void pokeIO1(u16 addr, uint8_t value);
+    void pokeIO2(u16 addr, uint8_t value);
 };
 
 #endif

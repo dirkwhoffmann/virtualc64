@@ -64,19 +64,19 @@ inline bool is_uint5_t(uint5_t value) { return value < 32; }
 //! @functiongroup Handling low level data objects
 //
 
-//! @brief    Returns the high byte of a uint16_t value.
+//! @brief    Returns the high byte of a u16 value.
 #define HI_BYTE(x) (uint8_t)((x) >> 8)
 
-//! @brief    Returns the low byte of a uint16_t value.
+//! @brief    Returns the low byte of a u16 value.
 #define LO_BYTE(x) (uint8_t)((x) & 0xFF)
 
 //! @brief    Specifies a larger integer in little endian byte format
-#define LO_HI(x,y) (uint16_t)((y) << 8 | (x))
+#define LO_HI(x,y) (u16)((y) << 8 | (x))
 #define LO_LO_HI(x,y,z) (u32)((z) << 16 | (y) << 8 | (x))
 #define LO_LO_HI_HI(x,y,z,w) (u32)((w) << 24 | (z) << 16 | (y) << 8 | (x))
 
 //! @brief    Specifies a larger integer in big endian byte format
-#define HI_LO(x,y) (uint16_t)((x) << 8 | (y))
+#define HI_LO(x,y) (u16)((x) << 8 | (y))
 #define HI_HI_LO(x,y,z) (u32)((x) << 16 | (y) << 8 | (z))
 #define HI_HI_LO_LO(x,y,z,w) (u32)((x) << 24 | (y) << 16 | (z) << 8 | (w))
 
@@ -125,12 +125,12 @@ inline bool is_uint5_t(uint5_t value) { return value < 32; }
 inline void write8(uint8_t **ptr, uint8_t value) { *((*ptr)++) = value; }
 
 //! @brief    Writes a word value into a buffer in big endian format.
-inline void write16(uint8_t **ptr, uint16_t value) {
+inline void write16(uint8_t **ptr, u16 value) {
     write8(ptr, (uint8_t)(value >> 8)); write8(ptr, (uint8_t)value); }
 
 //! @brief    Writes a double byte value into a buffer in big endian format.
 inline void write32(uint8_t **ptr, u32 value) {
-    write16(ptr, (uint16_t)(value >> 16)); write16(ptr, (uint16_t)value); }
+    write16(ptr, (u16)(value >> 16)); write16(ptr, (u16)value); }
 
 //! @brief    Writes a quad word value into a buffer in big endian format.
 inline void write64(uint8_t **ptr, u64 value) {
@@ -141,8 +141,8 @@ inline void writeBlock(uint8_t **ptr, uint8_t *values, size_t length) {
     memcpy(*ptr, values, length); *ptr += length; }
 
 //! @brief    Writes a word memory block into a buffer in big endian format.
-inline void writeBlock16(uint8_t **ptr, uint16_t *values, size_t length) {
-    for (unsigned i = 0; i < length / sizeof(uint16_t); i++) write16(ptr, values[i]); }
+inline void writeBlock16(uint8_t **ptr, u16 *values, size_t length) {
+    for (unsigned i = 0; i < length / sizeof(u16); i++) write16(ptr, values[i]); }
 
 //! @brief    Writes a double word memory block into a buffer in big endian format.
 inline void writeBlock32(uint8_t **ptr, u32 *values, size_t length) {
@@ -157,8 +157,8 @@ inline void writeBlock64(uint8_t **ptr, u64 *values, size_t length) {
 inline uint8_t read8(uint8_t **ptr) { return (uint8_t)(*((*ptr)++)); }
 
 //! @brief    Reads a word value from a buffer in big endian format.
-inline uint16_t read16(uint8_t **ptr) {
-    return ((uint16_t)read8(ptr) << 8) | (uint16_t)read8(ptr); }
+inline u16 read16(uint8_t **ptr) {
+    return ((u16)read8(ptr) << 8) | (u16)read8(ptr); }
 
 //! @brief    Reads a double word value from a buffer in big endian format.
 inline u32 read32(uint8_t **ptr) {
@@ -173,8 +173,8 @@ inline void readBlock(uint8_t **ptr, uint8_t *values, size_t length) {
     memcpy(values, *ptr, length); *ptr += length; }
 
 //! @brief    Reads a word block from a buffer in big endian format.
-inline void readBlock16(uint8_t **ptr, uint16_t *values, size_t length) {
-    for (unsigned i = 0; i < length / sizeof(uint16_t); i++) values[i] = read16(ptr); }
+inline void readBlock16(uint8_t **ptr, u16 *values, size_t length) {
+    for (unsigned i = 0; i < length / sizeof(u16); i++) values[i] = read16(ptr); }
 
 //! @brief    Reads a double word block from a buffer in big endian format.
 inline void readBlock32(uint8_t **ptr, u32 *values, size_t length) {
@@ -202,11 +202,11 @@ inline void readBlock64(uint8_t **ptr, u64 *values, size_t length) {
  *  @note     A maximum of max characters are translated. 
  *            The unicode array will always be terminated by a NULL character.
  */
-void translateToUnicode(const char *petscii, uint16_t *unichars,
-                        uint16_t base, size_t max);
+void translateToUnicode(const char *petscii, u16 *unichars,
+                        u16 base, size_t max);
 
 //! @brief    Returns the number of characters in a null terminated unichar array
-size_t strlen16(const uint16_t *unichars);
+size_t strlen16(const u16 *unichars);
 
 /*! @brief    Converts a PETSCII character to a printable character.
  *  @details  Replaces all unprintable characters by subst.
@@ -234,14 +234,14 @@ void sprint8x(char *s, uint8_t value);
 //! @brief    Writes an uint8_t value into a string in binary format
 void sprint8b(char *s, uint8_t value);
 
-//! @brief    Writes an uint16_t value into a string in decimal format
-void sprint16d(char *s, uint16_t value);
+//! @brief    Writes an u16 value into a string in decimal format
+void sprint16d(char *s, u16 value);
 
-//! @brief    Writes an uint16_t value into a string in hexadecimal format
-void sprint16x(char *s, uint16_t value);
+//! @brief    Writes an u16 value into a string in hexadecimal format
+void sprint16x(char *s, u16 value);
 
-//! @brief    Writes an uint16_t value into a string in binary format
-void sprint16b(char *s, uint16_t value);
+//! @brief    Writes an u16 value into a string in binary format
+void sprint16b(char *s, u16 value);
 
 
 //

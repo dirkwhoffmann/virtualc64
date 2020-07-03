@@ -15,7 +15,7 @@
 
 //! @brief    An older generation Action Replay cartridge
 uint8_t
-ActionReplay3::peek(uint16_t addr)
+ActionReplay3::peek(u16 addr)
 {
     if (addr >= 0x8000 && addr <= 0x9FFF) {
         return packet[bank()]->peek(addr - 0x8000);
@@ -34,20 +34,20 @@ ActionReplay3::peek(uint16_t addr)
 }
 
 uint8_t
-ActionReplay3::peekIO1(uint16_t addr)
+ActionReplay3::peekIO1(u16 addr)
 {
     return 0;
 }
 
 uint8_t
-ActionReplay3::peekIO2(uint16_t addr)
+ActionReplay3::peekIO2(u16 addr)
 {
-    uint16_t offset = addr - 0xDF00;
+    u16 offset = addr - 0xDF00;
     return disabled() ? 0 : packet[bank()]->peek(0x1F00 + offset);
 }
 
 void
-ActionReplay3::pokeIO1(uint16_t addr, uint8_t value)
+ActionReplay3::pokeIO1(u16 addr, uint8_t value)
 {
     if (!disabled())
         setControlReg(value);
@@ -145,7 +145,7 @@ ActionReplay::resetCartConfig()
 }
 
 uint8_t
-ActionReplay::peek(uint16_t addr)
+ActionReplay::peek(u16 addr)
 {
     if (ramIsEnabled(addr)) {
         return peekRAM(addr & 0x1FFF);
@@ -154,7 +154,7 @@ ActionReplay::peek(uint16_t addr)
 }
  
 void
-ActionReplay::poke(uint16_t addr, uint8_t value)
+ActionReplay::poke(u16 addr, uint8_t value)
 {
     if (ramIsEnabled(addr)) {
         pokeRAM(addr & 0x1FFF, value);
@@ -162,16 +162,16 @@ ActionReplay::poke(uint16_t addr, uint8_t value)
 }
 
 uint8_t
-ActionReplay::peekIO1(uint16_t addr)
+ActionReplay::peekIO1(u16 addr)
 {
     return control;
 }
 
 uint8_t
-ActionReplay::peekIO2(uint16_t addr)
+ActionReplay::peekIO2(u16 addr)
 {
     assert(addr >= 0xDF00 && addr <= 0xDFFF);
-    uint16_t offset = addr & 0xFF;
+    u16 offset = addr & 0xFF;
     
     // I/O space 2 mirrors $1F00 to $1FFF from the selected ROM bank or RAM.
     if (ramIsEnabled(addr)) {
@@ -182,17 +182,17 @@ ActionReplay::peekIO2(uint16_t addr)
 }
 
 void
-ActionReplay::pokeIO1(uint16_t addr, uint8_t value)
+ActionReplay::pokeIO1(u16 addr, uint8_t value)
 {
     if (!disabled())
     setControlReg(value);
 }
 
 void
-ActionReplay::pokeIO2(uint16_t addr, uint8_t value)
+ActionReplay::pokeIO2(u16 addr, uint8_t value)
 {
     assert(addr >= 0xDF00 && addr <= 0xDFFF);
-    uint16_t offset = addr & 0xFF;
+    u16 offset = addr & 0xFF;
     
     if (ramIsEnabled(addr)) {
         pokeRAM(0x1F00 + offset, value);
@@ -289,7 +289,7 @@ ActionReplay::setControlReg(uint8_t value)
 }
 
 bool
-ActionReplay::ramIsEnabled(uint16_t addr)
+ActionReplay::ramIsEnabled(u16 addr)
 {
     if (control & 0x20) {
         
@@ -327,7 +327,7 @@ AtomicPower::exrom()
 }
 
 bool
-AtomicPower::ramIsEnabled(uint16_t addr)
+AtomicPower::ramIsEnabled(u16 addr)
 {
     if (control & 0x20) {
         

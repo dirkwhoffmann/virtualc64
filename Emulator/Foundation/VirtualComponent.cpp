@@ -152,7 +152,7 @@ HardwareComponent::loadFromBuffer(uint8_t **buffer)
 
             switch (snapshotItems[i].size) {
                 case 1:  *(uint8_t *)data  = read8(buffer); break;
-                case 2:  *(uint16_t *)data = read16(buffer); break;
+                case 2:  *(u16 *)data = read16(buffer); break;
                 case 4:  *(u32 *)data = read32(buffer); break;
                 case 8:  *(u64 *)data = read64(buffer); break;
                 default: readBlock(buffer, (uint8_t *)data, size);
@@ -162,7 +162,7 @@ HardwareComponent::loadFromBuffer(uint8_t **buffer)
             
             switch (flags) {
                 case BYTE_ARRAY: readBlock(buffer, (uint8_t *)data, size); break;
-                case WORD_ARRAY: readBlock16(buffer, (uint16_t *)data, size); break;
+                case WORD_ARRAY: readBlock16(buffer, (u16 *)data, size); break;
                 case DWORD_ARRAY: readBlock32(buffer, (u32 *)data, size); break;
                 case QWORD_ARRAY: readBlock64(buffer, (u64 *)data, size); break;
                 default: assert(0);
@@ -209,7 +209,7 @@ HardwareComponent::saveToBuffer(uint8_t **buffer)
             
             switch (snapshotItems[i].size) {
                 case 1:  write8(buffer, *(uint8_t *)data); break;
-                case 2:  write16(buffer, *(uint16_t *)data); break;
+                case 2:  write16(buffer, *(u16 *)data); break;
                 case 4:  write32(buffer, *(u32 *)data); break;
                 case 8:  write64(buffer, *(u64 *)data); break;
                 default: writeBlock(buffer, (uint8_t *)data, size);
@@ -219,7 +219,7 @@ HardwareComponent::saveToBuffer(uint8_t **buffer)
             
             switch (flags) {
                 case BYTE_ARRAY: writeBlock(buffer, (uint8_t *)data, size); break;
-                case WORD_ARRAY: writeBlock16(buffer, (uint16_t *)data, size); break;
+                case WORD_ARRAY: writeBlock16(buffer, (u16 *)data, size); break;
                 case DWORD_ARRAY: writeBlock32(buffer, (u32 *)data, size); break;
                 case QWORD_ARRAY: writeBlock64(buffer, (u64 *)data, size); break;
                 default: assert(0);

@@ -10,7 +10,7 @@
 #include "C64.h"
 
 void
-Funplay::pokeIO1(uint16_t addr, uint8_t value)
+Funplay::pokeIO1(u16 addr, uint8_t value)
 {
     /*
      * Bank switching is done by writing to $DE00.

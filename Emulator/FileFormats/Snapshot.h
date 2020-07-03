@@ -30,7 +30,7 @@ typedef struct {
     struct {
         
         //! @brief    Image width and height
-        uint16_t width, height;
+        u16 width, height;
         
         //! @brief    Screen buffer data
         u32 screen[PAL_RASTERLINES * NTSC_PIXELS];

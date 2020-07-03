@@ -19,7 +19,7 @@ Zaxxon::reset()
 }
 
 uint8_t
-Zaxxon::peekRomL(uint16_t addr)
+Zaxxon::peekRomL(u16 addr)
 {
     /* "The (Super) Zaxxon carts use a 4Kb ($1000) ROM at $8000-$8FFF (mirrored
      * in $9000-$9FFF) along with two 8Kb ($2000) cartridge banks  located  at
@@ -37,7 +37,7 @@ Zaxxon::peekRomL(uint16_t addr)
 }
 
 uint8_t
-Zaxxon::spypeekRomL(uint16_t addr)
+Zaxxon::spypeekRomL(u16 addr)
 {
     if (addr < 0x1000) {
         return Cartridge::peekRomL(addr);

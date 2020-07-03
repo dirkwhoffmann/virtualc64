@@ -73,14 +73,14 @@ class VC1541Memory : public Memory {
     //
 
     // Reading from memory
-    uint8_t peek(uint16_t addr);
+    uint8_t peek(u16 addr);
     uint8_t peekZP(uint8_t addr) { return ram[addr]; }
 
     // Reading from memory without side effects
-    uint8_t spypeek(uint16_t addr);
+    uint8_t spypeek(u16 addr);
     
     // Writing into memory
-    void poke(uint16_t addr, uint8_t value);
+    void poke(u16 addr, uint8_t value);
     void pokeZP(uint8_t addr, uint8_t value) { ram[addr] = value; }
 };
 

@@ -58,7 +58,7 @@ Isepic::didSaveToBuffer(uint8_t **buffer)
 }
 
 uint8_t
-Isepic::peek(uint16_t addr)
+Isepic::peek(u16 addr)
 {
     assert((addr & 0xF000) == 0xF000);
 
@@ -71,7 +71,7 @@ Isepic::peek(uint16_t addr)
 }
 
 uint8_t
-Isepic::peekIO1(uint16_t addr)
+Isepic::peekIO1(u16 addr)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
     
@@ -83,7 +83,7 @@ Isepic::peekIO1(uint16_t addr)
 }
 
 uint8_t
-Isepic::peekIO2(uint16_t addr)
+Isepic::peekIO2(u16 addr)
 {
     assert(addr >= 0xDF00 && addr <= 0xDFFF);
 
@@ -95,7 +95,7 @@ Isepic::peekIO2(uint16_t addr)
 }
 
 void
-Isepic::poke(uint16_t addr, uint8_t value)
+Isepic::poke(u16 addr, uint8_t value)
 {
     assert((addr & 0xF000) == 0xF000);
 
@@ -108,7 +108,7 @@ Isepic::poke(uint16_t addr, uint8_t value)
 }
 
 void
-Isepic::pokeIO1(uint16_t addr, uint8_t value)
+Isepic::pokeIO1(u16 addr, uint8_t value)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
 
@@ -116,7 +116,7 @@ Isepic::pokeIO1(uint16_t addr, uint8_t value)
 }
 
 void
-Isepic::pokeIO2(uint16_t addr, uint8_t value)
+Isepic::pokeIO2(u16 addr, uint8_t value)
 {
     assert(addr >= 0xDF00 && addr <= 0xDFFF);
 

@@ -276,11 +276,11 @@ Cartridge::dump()
 }
 
 uint8_t
-Cartridge::peek(uint16_t addr)
+Cartridge::peek(u16 addr)
 {
     assert(isROMLaddr(addr) || isROMHaddr(addr));
 
-    uint16_t relAddr = addr & 0x1FFF;
+    u16 relAddr = addr & 0x1FFF;
 
     // Question: Is it correct to return a value from RAM if no ROM is mapped?
     if (isROMLaddr(addr)) {
@@ -291,7 +291,7 @@ Cartridge::peek(uint16_t addr)
 }
 
 uint8_t
-Cartridge::peekRomL(uint16_t addr)
+Cartridge::peekRomL(u16 addr)
 {
     assert(addr <= 0x1FFF);
     assert(chipL >= 0 && chipL < numPackets);
@@ -300,7 +300,7 @@ Cartridge::peekRomL(uint16_t addr)
 }
 
 uint8_t
-Cartridge::peekRomH(uint16_t addr)
+Cartridge::peekRomH(u16 addr)
 {
     assert(addr <= 0x1FFF);
     assert(chipH >= 0 && chipH < numPackets);
@@ -309,11 +309,11 @@ Cartridge::peekRomH(uint16_t addr)
 }
 
 void
-Cartridge::poke(uint16_t addr, uint8_t value)
+Cartridge::poke(u16 addr, uint8_t value)
 {
     assert(isROMLaddr(addr) || isROMHaddr(addr));
     
-    uint16_t relAddr = addr & 0x1FFF;
+    u16 relAddr = addr & 0x1FFF;
     
     if (isROMLaddr(addr) && relAddr < mappedBytesL) {
         pokeRomL(relAddr, value);
@@ -364,9 +364,9 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
     assert(nr < MAX_PACKETS);
     assert(c != NULL);
     
-    uint16_t size = c->chipSize(nr);
-    uint16_t start = c->chipAddr(nr);
-    uint16_t type = c->chipType(nr);
+    u16 size = c->chipSize(nr);
+    u16 start = c->chipAddr(nr);
+    u16 type = c->chipType(nr);
     
     // Perform some consistency checks
     if (start < 0x8000) {
@@ -408,7 +408,7 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
 }
 
 void
-Cartridge::bankInROML(unsigned nr, uint16_t size, uint16_t offset)
+Cartridge::bankInROML(unsigned nr, u16 size, u16 offset)
 {
     chipL = nr;
     mappedBytesL = size;
@@ -416,7 +416,7 @@ Cartridge::bankInROML(unsigned nr, uint16_t size, uint16_t offset)
 }
 
 void
-Cartridge::bankInROMH(unsigned nr, uint16_t size, uint16_t offset)
+Cartridge::bankInROMH(unsigned nr, u16 size, u16 offset)
 {
     chipH = nr;
     mappedBytesH = size;

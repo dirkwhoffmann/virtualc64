@@ -66,11 +66,11 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->cpu->cycle;
 }
-- (uint16_t) pc
+- (u16) pc
 {
     return wrapper->cpu->getPC();
 }
-- (void) setPC:(uint16_t)addr
+- (void) setPC:(u16)addr
 {
     wrapper->cpu->jumpToAddress(addr);
 }
@@ -118,19 +118,19 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->cpu->setV(b);
 }
-- (BOOL) breakpoint:(uint16_t)addr
+- (BOOL) breakpoint:(u16)addr
 {
     return wrapper->cpu->hardBreakpoint(addr);
 }
-- (void) setBreakpoint:(uint16_t)addr
+- (void) setBreakpoint:(u16)addr
 {
     wrapper->cpu->setHardBreakpoint(addr);
 }
-- (void) deleteBreakpoint:(uint16_t)addr
+- (void) deleteBreakpoint:(u16)addr
 {
     wrapper->cpu->deleteHardBreakpoint(addr);
 }
-- (void) toggleBreakpoint:(uint16_t)addr
+- (void) toggleBreakpoint:(u16)addr
 {
     wrapper->cpu->toggleHardBreakpoint(addr);
 }
@@ -146,7 +146,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->cpu->readRecordedInstruction((unsigned)previous);
 }
-- (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h;
+- (DisassembledInstruction) disassemble:(u16)addr hex:(BOOL)h;
 {
     return wrapper->cpu->disassemble(addr, h);
 }
@@ -205,39 +205,39 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->mem->deleteKernalRom();
 }
-- (MemoryType) peekSource:(uint16_t)addr
+- (MemoryType) peekSource:(u16)addr
 {
     return wrapper->mem->getPeekSource(addr);
 }
-- (MemoryType) pokeTarget:(uint16_t)addr
+- (MemoryType) pokeTarget:(u16)addr
 {
     return wrapper->mem->getPokeTarget(addr);
 }
-- (uint8_t) spypeek:(uint16_t)addr source:(MemoryType)source
+- (uint8_t) spypeek:(u16)addr source:(MemoryType)source
 {
     return wrapper->mem->spypeek(addr, source);
 }
-- (uint8_t) spypeek:(uint16_t)addr
+- (uint8_t) spypeek:(u16)addr
 {
     return wrapper->mem->spypeek(addr);
 }
-- (uint8_t) spypeekIO:(uint16_t)addr
+- (uint8_t) spypeekIO:(u16)addr
 {
     return wrapper->mem->spypeekIO(addr);
 }
-- (void) poke:(uint16_t)addr value:(uint8_t)value target:(MemoryType)target
+- (void) poke:(u16)addr value:(uint8_t)value target:(MemoryType)target
 {
     wrapper->mem->suspend();
     wrapper->mem->poke(addr, value, target);
     wrapper->mem->resume();
 }
-- (void) poke:(uint16_t)addr value:(uint8_t)value
+- (void) poke:(u16)addr value:(uint8_t)value
 {
     wrapper->mem->suspend();
     wrapper->mem->poke(addr, value);
     wrapper->mem->resume();
 }
-- (void) pokeIO:(uint16_t)addr value:(uint8_t)value
+- (void) pokeIO:(u16)addr value:(uint8_t)value
 {
     wrapper->mem->suspend();
     wrapper->mem->pokeIO(addr, value);
@@ -296,7 +296,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->cia->setEmulateTimerBBug(value);
 }
-- (void) poke:(uint16_t)addr value:(uint8_t)value {
+- (void) poke:(u16)addr value:(uint8_t)value {
     wrapper->cia->suspend();
     wrapper->cia->poke(addr, value);
     wrapper->cia->resume();
@@ -419,15 +419,15 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->vic->setSaturation(value);
 }
-- (void) setMemoryBankAddr:(uint16_t)addr
+- (void) setMemoryBankAddr:(u16)addr
 {
     wrapper->vic->setMemoryBankAddr(addr);
 }
-- (void) setScreenMemoryAddr:(uint16_t)addr
+- (void) setScreenMemoryAddr:(u16)addr
 {
     wrapper->vic->setScreenMemoryAddr(addr);
 }
-- (void) setCharacterMemoryAddr:(uint16_t)addr
+- (void) setCharacterMemoryAddr:(u16)addr
 {
     wrapper->vic->setCharacterMemoryAddr(addr);
 }
@@ -457,7 +457,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (void) setSpriteX:(NSInteger)nr value:(NSInteger)x
 {
-    wrapper->vic->setSpriteX((unsigned)nr, (uint16_t)x);
+    wrapper->vic->setSpriteX((unsigned)nr, (u16)x);
 }
 - (void) setSpriteY:(NSInteger)nr value:(NSInteger)y
 {
@@ -519,7 +519,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->vic->toggleIrqOnSpriteBackgroundCollision();
 }
-- (void) setRasterInterruptLine:(uint16_t)line
+- (void) setRasterInterruptLine:(u16)line
 {
     wrapper->vic->setRasterInterruptLine(line);
 }
@@ -1195,15 +1195,15 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->drive->setHalftrack(ht);
 }
-- (uint16_t) sizeOfCurrentHalftrack
+- (u16) sizeOfCurrentHalftrack
 {
     return wrapper->drive->sizeOfCurrentHalftrack();
 }
-- (uint16_t) offset
+- (u16) offset
 {
     return wrapper->drive->getOffset();
 }
-- (void) setOffset:(uint16_t)value
+- (void) setOffset:(u16)value
 {
     wrapper->drive->setOffset(value);
 }

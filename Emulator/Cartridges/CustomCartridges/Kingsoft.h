@@ -25,9 +25,9 @@ public:
     
     void resetCartConfig();
 
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t spyPeek(uint16_t addr) { return 0; }
-    void pokeIO1(uint16_t addr, uint8_t value);
+    uint8_t peekIO1(u16 addr);
+    uint8_t spyPeek(u16 addr) { return 0; }
+    void pokeIO1(u16 addr, uint8_t value);
 
     void updatePeekPokeLookupTables();
 };

@@ -29,10 +29,10 @@ public:
     //! @functiongroup Methods from Cartridge
     //
     
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t spypeekIO1(uint16_t addr) { return 0; }
-    uint8_t peekIO2(uint16_t addr);
-    uint8_t spypeekIO2(uint16_t addr) { return 0; }
+    uint8_t peekIO1(u16 addr);
+    uint8_t spypeekIO1(u16 addr) { return 0; }
+    uint8_t peekIO2(u16 addr);
+    uint8_t spypeekIO2(u16 addr) { return 0; }
 
     unsigned numButtons() { return 1; }
     const char *getButtonTitle(unsigned nr) { return (nr == 1) ? "Freeze" : NULL; }

@@ -37,8 +37,8 @@ public:
         
         uint8_t  sectors;       // Typical number of sectors in this track
         uint8_t  speedZone;     // Default speed zone for this track
-        uint16_t lengthInBytes; // Typical track size in bits
-        uint16_t lengthInBits;  // Typical track size in bits
+        u16 lengthInBytes; // Typical track size in bits
+        u16 lengthInBits;  // Typical track size in bits
         Sector   firstSectorNr; // Logical number of first sector in track
         double   stagger;       // Relative position of the first bit (taken from Hoxs64)
 
@@ -143,10 +143,10 @@ public:
      */
     union {
         struct {
-            uint16_t _pad;
-            uint16_t halftrack[85];
+            u16 _pad;
+            u16 halftrack[85];
         };
-        uint16_t track[43][2];
+        u16 track[43][2];
     } length;
 
     
@@ -261,7 +261,7 @@ public:
     
     //! @brief    Fixes a wrapped over head position.
     HeadPosition fitToBounds(Halftrack ht, HeadPosition pos) {
-        uint16_t len = length.halftrack[ht];
+        u16 len = length.halftrack[ht];
         return pos < 0 ? pos + len : pos >= len ? pos - len : pos; }
     
     /*! @brief   Returns the duration of a single bit in 1/10 nano seconds.
@@ -380,11 +380,11 @@ public:
 public:
     
     //! @brief    Returns the length of a halftrack in bits
-    uint16_t lengthOfHalftrack(Halftrack ht) {
+    u16 lengthOfHalftrack(Halftrack ht) {
         assert(isHalftrackNumber(ht)); return length.halftrack[ht]; }
 
     //! @brief    Returns the length of a track in bits
-    uint16_t lengthOfTrack(Track t) {
+    u16 lengthOfTrack(Track t) {
         assert(isTrackNumber(t)); return length.track[t][0]; }
 
     //! @brief    Analyzes the sector layout

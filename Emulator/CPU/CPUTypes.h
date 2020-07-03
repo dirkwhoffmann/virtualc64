@@ -70,7 +70,7 @@ typedef enum {
  */
 typedef struct {
     u64 cycle;
-    uint16_t pc;
+    u16 pc;
     uint8_t a;
     uint8_t x;
     uint8_t y;
@@ -87,7 +87,7 @@ typedef struct {
 //! @brief    Recorded instruction
 typedef struct {
     u64 cycle;
-    uint16_t pc;
+    u16 pc;
     uint8_t byte1;
     uint8_t byte2;
     uint8_t byte3;
@@ -101,7 +101,7 @@ typedef struct {
 //! @brief    Disassembled instruction
 typedef struct {
     u64 cycle;
-    uint16_t addr; 
+    u16 addr; 
     uint8_t size;
     char byte1[4];
     char byte2[4];

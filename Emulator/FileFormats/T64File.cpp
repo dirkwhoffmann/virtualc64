@@ -148,12 +148,12 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
         *ptr++ = 0x82;
         
         // Start address (2 bytes)
-        uint16_t startAddr = otherArchive->getDestinationAddrOfItem();
+        u16 startAddr = otherArchive->getDestinationAddrOfItem();
         *ptr++ = LO_BYTE(startAddr);
         *ptr++ = HI_BYTE(startAddr);
         
         // Start address (2 bytes)
-        uint16_t endAddr = startAddr + otherArchive->getSizeOfItem();
+        u16 endAddr = startAddr + otherArchive->getSizeOfItem();
         *ptr++ = LO_BYTE(endAddr);
         *ptr++ = HI_BYTE(endAddr);
         
@@ -294,8 +294,8 @@ T64File::getSizeOfItem()
     
     // Compute start and end of the selected item in memory
     size_t offset = 0x42 + (selectedItem * 0x20);
-    uint16_t startAddrInMemory = LO_HI(data[offset], data[offset + 1]);
-    uint16_t endAddrInMemory = LO_HI(data[offset + 2], data[offset + 3]);
+    u16 startAddrInMemory = LO_HI(data[offset], data[offset + 1]);
+    u16 endAddrInMemory = LO_HI(data[offset + 2], data[offset + 3]);
     
     return endAddrInMemory - startAddrInMemory;
 }
@@ -318,11 +318,11 @@ T64File::seekItem(long offset)
 
 
 
-uint16_t
+u16
 T64File::getDestinationAddrOfItem()
 {
     long i = 0x42 + (selectedItem * 0x20);
-    uint16_t result = LO_HI(data[i], data[i+1]);
+    u16 result = LO_HI(data[i], data[i+1]);
     return result;
 }
 
@@ -348,7 +348,7 @@ bool
 T64File::repair()
 {
     unsigned i, n;
-    uint16_t noOfItems = numberOfItems();
+    u16 noOfItems = numberOfItems();
 
     //
     // 1. Repair number of items, if this value is zero
@@ -359,7 +359,7 @@ T64File::repair()
         while (directoryItemIsPresent(noOfItems))
             noOfItems++;
 
-        uint16_t noOfItemsStatedInHeader = numberOfItems();
+        u16 noOfItemsStatedInHeader = numberOfItems();
         if (noOfItems != noOfItemsStatedInHeader) {
         
             debug(1, "Repairing corrupted T64 archive: Changing number of items from %d to %d.\n",
@@ -380,7 +380,7 @@ T64File::repair()
 
         // Compute start address in file
         n = 0x48 + (i * 0x20);
-        uint16_t startAddrInContainer = LO_LO_HI_HI(data[n], data[n+1], data[n+2], data[n+3]);
+        u16 startAddrInContainer = LO_LO_HI_HI(data[n], data[n+1], data[n+2], data[n+3]);
 
         if (startAddrInContainer >= size) {
             warn("T64 archive is corrupt (offset mismatch). Sorry, can't repair.\n");
@@ -393,16 +393,16 @@ T64File::repair()
         
         // Compute start address in memory
         n = 0x42 + (i * 0x20);
-        uint16_t startAddrInMemory = LO_HI(data[n], data[n+1]);
+        u16 startAddrInMemory = LO_HI(data[n], data[n+1]);
     
         // Compute end address in memory
         n = 0x44 + (i * 0x20);
-        uint16_t endAddrInMemory = LO_HI(data[n], data[n+1]);
+        u16 endAddrInMemory = LO_HI(data[n], data[n+1]);
     
         if (endAddrInMemory == 0xC3C6) {
 
             // Let's assume that the rest of the file data belongs to this file ...
-            uint16_t fixedEndAddrInMemory = startAddrInMemory + (size - startAddrInContainer);
+            u16 fixedEndAddrInMemory = startAddrInMemory + (size - startAddrInContainer);
 
             debug(1, "Repairing corrupted T64 archive: Changing end address of item %d from %04X to %04X.\n",
                   i, endAddrInMemory, fixedEndAddrInMemory);

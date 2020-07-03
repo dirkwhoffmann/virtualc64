@@ -25,21 +25,21 @@ FinalIII::resetCartConfig()
 }
 
 uint8_t
-FinalIII::peekIO1(uint16_t addr)
+FinalIII::peekIO1(u16 addr)
 {
     // I/O space 1 mirrors $1E00 to $1EFF from ROML
     return peekRomL(addr & 0x1FFF);
 }
 
 uint8_t
-FinalIII::peekIO2(uint16_t addr)
+FinalIII::peekIO2(u16 addr)
 {
     // I/O space 2 space mirrors $1F00 to $1FFF from ROML
     return peekRomL(addr & 0x1FFF);
 }
 
 void
-FinalIII::pokeIO2(uint16_t addr, uint8_t value) {
+FinalIII::pokeIO2(u16 addr, uint8_t value) {
     
     // The control register is mapped to address 0xFF in I/O space 2.
     if (addr == 0xDFFF && writeEnabled()) {

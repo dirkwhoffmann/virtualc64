@@ -293,13 +293,13 @@ public:
 public:
     
 	//! @brief    Special peek function for the I/O memory range.
-	uint8_t peek(uint16_t addr);
+	uint8_t peek(u16 addr);
 	
     //! @brief    Same as peek, but without side effects.
-    uint8_t spypeek(uint16_t addr);
+    uint8_t spypeek(u16 addr);
     
 	//! @brief    Special poke function for the I/O memory range.
-	void poke(uint16_t addr, uint8_t value);
+	void poke(u16 addr, uint8_t value);
 };
 
 #endif

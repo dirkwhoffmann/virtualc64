@@ -186,7 +186,7 @@ FastSID::setSampleRate(u32 rate)
 
 //! Special peek function for the I/O memory range.
 uint8_t
-FastSID::peek(uint16_t addr)
+FastSID::peek(u16 addr)
 {
     switch (addr) {
             
@@ -218,7 +218,7 @@ FastSID::peek(uint16_t addr)
 
 //! Special poke function for the I/O memory range.
 void
-FastSID::poke(uint16_t addr, uint8_t value)
+FastSID::poke(u16 addr, uint8_t value)
 {
     bool gateBitFlipped = false;
     
@@ -278,7 +278,7 @@ FastSID::poke(uint16_t addr, uint8_t value)
 void
 FastSID::execute(u64 cycles)
 {
-    int16_t buf[2049];
+    i16 buf[2049];
     int buflength = 2048;
 
     executedCycles += cycles;
@@ -316,7 +316,7 @@ FastSID::init(int sampleRate, int cycles_per_sec)
     computedSamples = 0LL;
 
     // Table for internal ADSR counter step calculations
-    uint16_t adrtable[16] = {
+    u16 adrtable[16] = {
         1, 4, 8, 12, 19, 28, 34, 40, 50, 125, 250, 400, 500, 1500, 2500, 4000
     };
     
@@ -336,7 +336,7 @@ FastSID::init(int sampleRate, int cycles_per_sec)
 void
 FastSID::initFilter(int sampleRate)
 {
-    uint16_t uk;
+    u16 uk;
     float rk;
     long int si;
     
@@ -398,7 +398,7 @@ FastSID::updateInternals()
 {
     uint8_t type = filterType();
     uint8_t res = filterResonance();
-    uint16_t cutoff = filterCutoff();
+    u16 cutoff = filterCutoff();
     
     for (unsigned i = 0; i < 3; i++) {
     
@@ -413,7 +413,7 @@ FastSID::updateInternals()
     }
 }
     
-int16_t
+i16
 FastSID::calculateSingleSample()
 {
     u32 osc0, osc1, osc2;
@@ -498,5 +498,5 @@ FastSID::calculateSingleSample()
         osc2 = ((u32)(v2->filterIO) + 0x80) << (7 + 15);
     }
     
-    return (int16_t)(((i32)((osc0 + osc1 + osc2) >> 20) - 0x600) * sidVolume() * 0.5);
+    return (i16)(((i32)((osc0 + osc1 + osc2) >> 20) - 0x600) * sidVolume() * 0.5);
 }

@@ -109,20 +109,20 @@ ExpansionPort::getCartridgeType()
 }
 
 uint8_t
-ExpansionPort::peek(uint16_t addr)
+ExpansionPort::peek(u16 addr)
 {
     return cartridge ? cartridge->peek(addr) : 0;
 }
 
 uint8_t
-ExpansionPort::spypeek(uint16_t addr)
+ExpansionPort::spypeek(u16 addr)
 {
     return cartridge ? cartridge->spypeek(addr) : 0;
 }
 
 /*
 uint8_t
-ExpansionPort::peek(uint16_t addr)
+ExpansionPort::peek(u16 addr)
 {
     assert((addr >= 0x8000 && addr <= 0x9FFF) ||
            (addr >= 0xA000 && addr <= 0xBFFF) ||
@@ -140,7 +140,7 @@ ExpansionPort::peek(uint16_t addr)
 */
 
 uint8_t
-ExpansionPort::peekIO1(uint16_t addr)
+ExpansionPort::peekIO1(u16 addr)
 {
     /* "Die beiden mit "I/O 1" und "I/O 2" bezeichneten Bereiche
      *  sind für Erweiterungskarten reserviert und normalerweise ebenfalls offen,
@@ -153,25 +153,25 @@ ExpansionPort::peekIO1(uint16_t addr)
 }
 
 uint8_t
-ExpansionPort::spypeekIO1(uint16_t addr)
+ExpansionPort::spypeekIO1(u16 addr)
 {
     return cartridge ? cartridge->spypeekIO1(addr) : c64->vic.getDataBusPhi1();
 }
 
 uint8_t
-ExpansionPort::peekIO2(uint16_t addr)
+ExpansionPort::peekIO2(u16 addr)
 {
     return cartridge ? cartridge->peekIO2(addr) : c64->vic.getDataBusPhi1();
 }
 
 uint8_t
-ExpansionPort::spypeekIO2(uint16_t addr)
+ExpansionPort::spypeekIO2(u16 addr)
 {
     return cartridge ? cartridge->spypeekIO2(addr) : c64->vic.getDataBusPhi1();
 }
 
 void
-ExpansionPort::poke(uint16_t addr, uint8_t value)
+ExpansionPort::poke(u16 addr, uint8_t value)
 {
     if (cartridge) {
         cartridge->poke(addr, value);
@@ -181,7 +181,7 @@ ExpansionPort::poke(uint16_t addr, uint8_t value)
 }
 
 void
-ExpansionPort::pokeIO1(uint16_t addr, uint8_t value)
+ExpansionPort::pokeIO1(u16 addr, uint8_t value)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
     
@@ -189,7 +189,7 @@ ExpansionPort::pokeIO1(uint16_t addr, uint8_t value)
 }
 
 void
-ExpansionPort::pokeIO2(uint16_t addr, uint8_t value)
+ExpansionPort::pokeIO2(u16 addr, uint8_t value)
 {
     assert(addr >= 0xDF00 && addr <= 0xDFFF);
     

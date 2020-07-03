@@ -66,15 +66,15 @@ protected:
      *            which means that the ROM is completely mapped.
      *            A value of 0 indicates that no ROM is currently mapped.
      */
-    uint16_t mappedBytesL = 0;
-    uint16_t mappedBytesH = 0;
+    u16 mappedBytesL = 0;
+    u16 mappedBytesH = 0;
 
     //! @brief    Offset into the ROM chip's data array
     /*! @details  The first ROMx byte has index offsetx
      *            The last ROMx byte has index  offsetx + mappedBytesx - 1
      */
-    uint16_t offsetL = 0;
-    uint16_t offsetH = 0;
+    u16 offsetL = 0;
+    u16 offsetH = 0;
     
 private:
     
@@ -146,12 +146,12 @@ public:
     /*! @brief    Returns true if addr is located in the ROML address space.
      *  @details  If visible, ROML is always mapped to 0x8000 - 0x9FFF.
      */
-    static bool isROMLaddr (uint16_t addr) { return addr >= 0x8000 && addr <= 0x9FFF; }
+    static bool isROMLaddr (u16 addr) { return addr >= 0x8000 && addr <= 0x9FFF; }
     
     /*! @brief    Returns true if addr is located in the ROMH address space.
      *  @details  ROMH can appear in 0xA000 - 0xBFFF or 0xE000 - 0xFFFF.
      */
-    static bool isROMHaddr (uint16_t addr) {
+    static bool isROMHaddr (u16 addr) {
         return (addr >= 0xA000 && addr <= 0xBFFF) || (addr >= 0xE000 && addr <= 0xFFFF); }
 
     
@@ -234,10 +234,10 @@ public:
     virtual void loadChip(unsigned nr, CRTFile *c);
     
     //! @brief    Banks in a rom chip into the ROML space
-    void bankInROML(unsigned nr, uint16_t size, uint16_t offset);
+    void bankInROML(unsigned nr, u16 size, u16 offset);
     
     //! @brief    Banks in a rom chip into the ROMH space
-    void bankInROMH(unsigned nr, uint16_t size, uint16_t offset);
+    void bankInROMH(unsigned nr, u16 size, u16 offset);
     
     //! @brief    Banks in a rom chip
     /*! @details  This function calls bankInROML or bankInROMH with the default
@@ -260,61 +260,61 @@ public:
      *            ROML range (0x8000 - 0x9FFF) or
      *            ROMH range (0xA000 - 0xBFFF, 0xE000 - 0xFFFF).
      */
-    virtual uint8_t peek(uint16_t addr);
+    virtual uint8_t peek(u16 addr);
 
     /*! @brief    Peek fallthrough for the ROML space
      *  @param    addr must be a value between 0x0000 - 0x1FFF.
      */
-    virtual uint8_t peekRomL(uint16_t addr);
+    virtual uint8_t peekRomL(u16 addr);
     
     /*! @brief    Peek fallthrough for the ROMH space
      *  @details  addr must be a value between 0x0000 - 0x1FFF.
      */
-    virtual uint8_t peekRomH(uint16_t addr);
+    virtual uint8_t peekRomH(u16 addr);
     
     /*! @brief    Poke fallthrough
      *  @param    addr must be a value in
      *            ROML range (0x8000 - 0x9FFF) or
      *            ROMH range (0xA000 - 0xBFFF, 0xE000 - 0xFFFF).
      */
-    virtual void poke(uint16_t addr, uint8_t value);
+    virtual void poke(u16 addr, uint8_t value);
 
     /*! @brief    Poke fallthrough for the ROML space
      *  @param    addr must be a value between 0x0000 - 0x1FFF.
      */
-    virtual void pokeRomL(uint16_t addr, uint8_t value) { return; }
+    virtual void pokeRomL(u16 addr, uint8_t value) { return; }
     
     /*! @brief    Poke fallthrough for the ROMH space
      *  @details  addr must be a value between 0x0000 - 0x1FFF.
      */
-    virtual void pokeRomH(uint16_t addr, uint8_t value) { return; }
+    virtual void pokeRomH(u16 addr, uint8_t value) { return; }
     
     //! @brief    Same as peek, but without side effects.
-    virtual uint8_t spypeek(uint16_t addr) { return peek(addr); }
+    virtual uint8_t spypeek(u16 addr) { return peek(addr); }
     
     //! @brief    Same as peekRomL, but without side effects
-    uint8_t spypeekRomL(uint16_t addr) { return peekRomL(addr); }
+    uint8_t spypeekRomL(u16 addr) { return peekRomL(addr); }
     
     //! @brief    Same as peekRomH, but without side effects
-    uint8_t spypeekRomH(uint16_t addr) { return peekRomH(addr); }
+    uint8_t spypeekRomH(u16 addr) { return peekRomH(addr); }
     
     //! @brief    Peek fallthrough for I/O space 1
-    virtual uint8_t peekIO1(uint16_t addr) { return 0; }
+    virtual uint8_t peekIO1(u16 addr) { return 0; }
 
     //! @brief    Same as peekIO1, but without side effects.
-    virtual uint8_t spypeekIO1(uint16_t addr) { return peekIO1(addr); }
+    virtual uint8_t spypeekIO1(u16 addr) { return peekIO1(addr); }
 
     //! @brief    Peek fallthrough for I/O space 2
-    virtual uint8_t peekIO2(uint16_t addr) { return 0; }
+    virtual uint8_t peekIO2(u16 addr) { return 0; }
 
     //! @brief    Same as peekIO2, but without side effects.
-    virtual uint8_t spypeekIO2(uint16_t addr) { return peekIO2(addr); }
+    virtual uint8_t spypeekIO2(u16 addr) { return peekIO2(addr); }
     
     //! @brief    Poke fallthrough for I/O space 1
-    virtual void pokeIO1(uint16_t addr, uint8_t value) { }
+    virtual void pokeIO1(u16 addr, uint8_t value) { }
 
     //! @brief    Poke fallthrough for I/O space 2
-    virtual void pokeIO2(uint16_t addr, uint8_t value) { }
+    virtual void pokeIO2(u16 addr, uint8_t value) { }
 
     
     //
@@ -338,11 +338,11 @@ public:
     void setPersistentRam(bool value) { persistentRam = value; }
 
     //! @brief    Reads a byte from the on-board RAM.
-    uint8_t peekRAM(uint16_t addr) {
+    uint8_t peekRAM(u16 addr) {
         assert(addr < ramCapacity); return externalRam[addr]; }
 
     //! @brief    Writes a byte into the on-board RAM.
-    void pokeRAM(uint16_t addr, uint8_t value) {
+    void pokeRAM(u16 addr, uint8_t value) {
         assert(addr < ramCapacity); externalRam[addr] = value; }
 
     //! @brief    Erase the on-board RAM.

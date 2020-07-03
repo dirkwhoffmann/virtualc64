@@ -173,7 +173,7 @@ class VIA6522 : public HardwareComponent {
      *             output signal on a peripheral pin (PB7) each time it
      *             "times-out."
      */
-    uint16_t t1; // T1C
+    u16 t1; // T1C
     uint8_t t1_latch_lo; // T1L_L
     uint8_t t1_latch_hi; // T1L_H
 
@@ -188,7 +188,7 @@ class VIA6522 : public HardwareComponent {
      *             registers act as a 16-bit counter which decrements at
      *             02 rate."
      */
-    uint16_t t2; // T1C
+    u16 t2; // T1C
     uint8_t t2_latch_lo; // T2L_L
 	        
     //! @brief    Peripheral control register
@@ -288,7 +288,7 @@ public:
 	 *  @details  The peek function only handles those registers that are
      *            treated similarly by both VIA chips
      */
-	virtual uint8_t peek(uint16_t addr);
+	virtual uint8_t peek(u16 addr);
 	
 private:
     
@@ -304,13 +304,13 @@ private:
 public:
     
     //! @brief    Same as peek, but without side effects
-    uint8_t spypeek(uint16_t addr);
+    uint8_t spypeek(u16 addr);
     
 	/*! @brief    Special poke function for the I/O memory range
 	 *  @details  The poke function only handles those registers that are treated
      *            similarly by both VIA chips
      */
-    void poke(uint16_t addr, uint8_t value);
+    void poke(u16 addr, uint8_t value);
 
 private:
     

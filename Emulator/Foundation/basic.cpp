@@ -12,7 +12,7 @@
 struct timeval t;
 // long tv_base = ((void)gettimeofday(&t,NULL), t.tv_sec);
 
-void translateToUnicode(const char *petscii, uint16_t *unichars, uint16_t base, size_t max)
+void translateToUnicode(const char *petscii, u16 *unichars, u16 base, size_t max)
 {
     assert(petscii != NULL);
     assert(unichars != NULL);
@@ -21,13 +21,13 @@ void translateToUnicode(const char *petscii, uint16_t *unichars, uint16_t base, 
     size_t len = MIN(strlen(petscii), max);
     
     for (i = 0; i < len; i++) {
-        unichars[i] = base + (uint16_t)petscii[i];
+        unichars[i] = base + (u16)petscii[i];
     }
     unichars[i] = 0;
 }
 
 size_t
-strlen16(const uint16_t *unichars)
+strlen16(const u16 *unichars)
 {
     size_t count = 0;
     
@@ -101,7 +101,7 @@ sprint8b(char *s, uint8_t value)
 }
 
 void
-sprint16d(char *s, uint16_t value)
+sprint16d(char *s, u16 value)
 {
     for (int i = 4; i >= 0; i--) {
         uint8_t digit = value % 10;
@@ -112,7 +112,7 @@ sprint16d(char *s, uint16_t value)
 }
 
 void
-sprint16x(char *s, uint16_t value)
+sprint16x(char *s, u16 value)
 {
     for (int i = 3; i >= 0; i--) {
         uint8_t digit = value % 16;
@@ -123,7 +123,7 @@ sprint16x(char *s, uint16_t value)
 }
 
 void
-sprint16b(char *s, uint16_t value)
+sprint16b(char *s, u16 value)
 {
     for (int i = 15; i >= 0; i--) {
         s[i] = (value & 0x01) ? '1' : '0';

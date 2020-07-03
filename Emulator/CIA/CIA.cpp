@@ -148,7 +148,7 @@ CIA::triggerSerialIrq()
 }
 
 uint8_t
-CIA::peek(uint16_t addr)
+CIA::peek(u16 addr)
 {
 	uint8_t result;
 
@@ -276,7 +276,7 @@ CIA::peek(uint16_t addr)
 }
 
 uint8_t
-CIA::spypeek(uint16_t addr)
+CIA::spypeek(u16 addr)
 {
     bool running;
 
@@ -297,19 +297,19 @@ CIA::spypeek(uint16_t addr)
             
         case 0x04: // CIA_TIMER_A_LOW
             running = delay & CIACountA3;
-            return LO_BYTE(counterA - (running ? (uint16_t)idleCounter : 0));
+            return LO_BYTE(counterA - (running ? (u16)idleCounter : 0));
             
         case 0x05: // CIA_TIMER_A_HIGH
             running = delay & CIACountA3;
-            return HI_BYTE(counterA - (running ? (uint16_t)idleCounter : 0));
+            return HI_BYTE(counterA - (running ? (u16)idleCounter : 0));
             
         case 0x06: // CIA_TIMER_B_LOW
             running = delay & CIACountB3;
-            return LO_BYTE(counterB - (running ? (uint16_t)idleCounter : 0));
+            return LO_BYTE(counterB - (running ? (u16)idleCounter : 0));
             
         case 0x07: // CIA_TIMER_B_HIGH
             running = delay & CIACountB3;
-            return HI_BYTE(counterB - (running ? (uint16_t)idleCounter : 0));
+            return HI_BYTE(counterB - (running ? (u16)idleCounter : 0));
             
         case 0x08: // CIA_TIME_OF_DAY_SEC_FRAC
             return tod.getTodTenth();
@@ -342,7 +342,7 @@ CIA::spypeek(uint16_t addr)
 }
 
 void
-CIA::poke(uint16_t addr, uint8_t value)
+CIA::poke(u16 addr, uint8_t value)
 {
     wakeUp();
     

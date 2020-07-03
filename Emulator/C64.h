@@ -134,7 +134,7 @@ class C64 : public HardwareComponent {
      *            drawn in a single frame depends on the selected VICII model.
      *  @see      VIC::getRasterlinesPerFrame()
      */
-    uint16_t rasterLine;
+    u16 rasterLine;
     
     /*! @brief    The currently executed rasterline cycle
      *  @details  The first rasterline cycle is numbered 1. The number of cycles

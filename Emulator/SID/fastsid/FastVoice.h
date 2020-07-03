@@ -73,13 +73,13 @@ private:
     
     //! @brief   Wave tables
     //! @details The first index determines the chip model (0 = old, 1 = new).
-    static uint16_t wavetable10[2][4096];
-    static uint16_t wavetable20[2][4096];
-    static uint16_t wavetable30[2][4096];
-    static uint16_t wavetable40[2][8192];
-    static uint16_t wavetable50[2][8192];
-    static uint16_t wavetable60[2][8192];
-    static uint16_t wavetable70[2][8192];
+    static u16 wavetable10[2][4096];
+    static u16 wavetable20[2][4096];
+    static u16 wavetable30[2][4096];
+    static u16 wavetable40[2][8192];
+    static u16 wavetable50[2][8192];
+    static u16 wavetable60[2][8192];
+    static u16 wavetable70[2][8192];
     
     //! @brief   Noise tables
     static uint8_t noiseMSB[256];
@@ -104,7 +104,7 @@ private:
     //
     
     //! @brief   Pointer to the active wavetable
-    uint16_t *wavetable;
+    u16 *wavetable;
     
     //! @brief   Wavetable offset
     /*! @details This 32-bit offset is added to the counter before
@@ -210,13 +210,13 @@ public:
     //
         
     //! @brief   Returns the currently set oscillator frequency
-    uint16_t frequency() { return HI_LO(sidreg[0x01], sidreg[0x00]); }
+    u16 frequency() { return HI_LO(sidreg[0x01], sidreg[0x00]); }
 
     //! @brief   Returns the pulse width of the pulse waveform
     /*! @details The pulse width is a 12-bit number which linearly controls
      *           the pulse width (duty cycle) of the pulse waveform.
      */
-    uint16_t pulseWidth() { return ((sidreg[3] & 0x0F) << 8) | sidreg[0x02]; }
+    u16 pulseWidth() { return ((sidreg[3] & 0x0F) << 8) | sidreg[0x02]; }
 
     //! @brief   Returns the GATE bit for this voice
     /*! @details The gate bit controls the Envelope Generator. When this

@@ -110,7 +110,7 @@ Disk::dump()
     msg("-----------\n\n");
     
     for (Halftrack ht = 1; ht <= maxNumberOfHalftracks; ht++) {
-        uint16_t length = lengthOfHalftrack(ht);
+        u16 length = lengthOfHalftrack(ht);
         msg("Halftrack %2d: %d Bits (%d Bytes)\n", ht, length, length / 8);
     }
     msg("\n");
@@ -295,7 +295,7 @@ Disk::analyzeHalftrack(Halftrack ht)
 {
     assert(isHalftrackNumber(ht));
     
-    uint16_t len = length.halftrack[ht];
+    u16 len = length.halftrack[ht];
 
     errorLog.clear();
     errorStartIndex.clear();
@@ -638,7 +638,7 @@ Disk::encodeArchive(G64File *a)
     for (Halftrack ht = 1; ht <= 84; ht++) {
         
         a->selectHalftrack(ht);
-        uint16_t size = a->getSizeOfHalftrack();
+        u16 size = a->getSizeOfHalftrack();
         
         if (size == 0) {
             if (ht > 1) {
@@ -672,7 +672,7 @@ Disk::encodeArchive(D64File *a, bool alignTracks)
     // 64COPY (fails on VICE test drive/skew)
     /*
     int tailGap[4] = { 9, 9, 9, 9 };
-    uint16_t trackLength[4] =
+    u16 trackLength[4] =
     {
         6250 * 8, // Tracks 31 - 35..42 (inner tracks)
         6666 * 8, // Tracks 25 - 30
@@ -683,7 +683,7 @@ Disk::encodeArchive(D64File *a, bool alignTracks)
     
     // Hoxs64 (passes VICE test drive/skew)
     int tailGap[4] = { 9, 12, 17, 8 };
-    uint16_t trackLength[4] =
+    u16 trackLength[4] =
     {
         6250 * 8, // Tracks 31 - 35..42 (inner tracks)
         6667 * 8, // Tracks 25 - 30
@@ -694,12 +694,12 @@ Disk::encodeArchive(D64File *a, bool alignTracks)
     // VirtualC64 2.4
     /*
     const int tailGap[4] = { 13, 16, 21, 12 };
-    const uint16_t trackLength[4] =
+    const u16 trackLength[4] =
     {
-        (uint16_t)(8 * 17 * (354 + tailGap[0])), // Tracks 31 - 35..42 (inner tracks)
-        (uint16_t)(8 * 18 * (354 + tailGap[1])), // Tracks 25 - 30
-        (uint16_t)(8 * 19 * (354 + tailGap[2])), // Tracks 18 - 24
-        (uint16_t)(8 * 21 * (354 + tailGap[3]))  // Tracks  1 - 17     (outer tracks)
+        (u16)(8 * 17 * (354 + tailGap[0])), // Tracks 31 - 35..42 (inner tracks)
+        (u16)(8 * 18 * (354 + tailGap[1])), // Tracks 25 - 30
+        (u16)(8 * 19 * (354 + tailGap[2])), // Tracks 18 - 24
+        (u16)(8 * 21 * (354 + tailGap[3]))  // Tracks  1 - 17     (outer tracks)
     };
     */
     

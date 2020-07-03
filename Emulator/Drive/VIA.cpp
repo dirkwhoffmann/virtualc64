@@ -74,8 +74,8 @@ VIA6522::dump()
 {
     const char *latchingA = inputLatchingEnabledA() ? "enabled" : "disabled";
     const char *latchingB = inputLatchingEnabledB() ? "enabled" : "disabled";
-    uint16_t t1Latch = LO_HI(t1_latch_lo, t1_latch_hi);
-    uint16_t t2Latch = LO_HI(t2_latch_lo, 0);
+    u16 t1Latch = LO_HI(t1_latch_lo, t1_latch_hi);
+    u16 t2Latch = LO_HI(t2_latch_lo, 0);
 
 	msg("VIA:\n");
 	msg("----\n\n");
@@ -218,7 +218,7 @@ VIA6522::executeTimer2()
 //
 
 uint8_t 
-VIA6522::peek(uint16_t addr)
+VIA6522::peek(u16 addr)
 {
 	assert (addr <= 0xF);
 		
@@ -394,7 +394,7 @@ VIA6522::peekORB()
 }
 
 uint8_t
-VIA6522::spypeek(uint16_t addr)
+VIA6522::spypeek(u16 addr)
 {
     assert (addr <= 0xF);
     
@@ -433,7 +433,7 @@ VIA6522::spypeek(uint16_t addr)
     return 0;
 }
 
-void VIA6522::poke(uint16_t addr, uint8_t value)
+void VIA6522::poke(u16 addr, uint8_t value)
 {
     assert (addr <= 0x0F);
     

@@ -124,8 +124,8 @@ G64File::makeWithDisk(Disk *disk)
         
         if (!empty[ht]) {
 
-            uint16_t numDataBytes = disk->lengthOfHalftrack(ht) / 8;
-            uint16_t numFillBytes = maxBytesOnTrack - numDataBytes;
+            u16 numDataBytes = disk->lengthOfHalftrack(ht) / 8;
+            u16 numFillBytes = maxBytesOnTrack - numDataBytes;
 
             if (disk->lengthOfHalftrack(ht) % 8 != 0) {
                 printf("WARNING: Size of halftrack %d is not a multiple of 8\n", ht);

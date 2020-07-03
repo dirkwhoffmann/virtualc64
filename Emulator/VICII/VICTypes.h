@@ -64,7 +64,7 @@ typedef struct {
 //! @brief    Values of (piped) I/O registers
 typedef struct {
     
-    uint16_t sprX[8];     // D000, D002, ..., D00E, upper bits from D010
+    u16 sprX[8];     // D000, D002, ..., D00E, upper bits from D010
     uint8_t  sprY[8];     // D001, D003, ..., D00F
     uint8_t  ctrl1;       // D011
     uint8_t  sprEnable;   // D015
@@ -95,57 +95,57 @@ static const double NTSC_PIXEL_ASPECT_RATIO = 0.75;
 // Horizontal screen parameters
 
 //! @brief    Width of left VBLANK area in NTSC mode
-static const uint16_t NTSC_LEFT_VBLANK = 77;
+static const u16 NTSC_LEFT_VBLANK = 77;
 
 //! @brief    Width of left border in NTSC mode
-static const uint16_t NTSC_LEFT_BORDER_WIDTH = 55;
+static const u16 NTSC_LEFT_BORDER_WIDTH = 55;
 
 //! @brief    Width of canvas area in NTSC mode
-static const uint16_t NTSC_CANVAS_WIDTH = 320;
+static const u16 NTSC_CANVAS_WIDTH = 320;
 
 //! @brief    Width of right border in NTSC mode
-static const uint16_t NTSC_RIGHT_BORDER_WIDTH = 53;
+static const u16 NTSC_RIGHT_BORDER_WIDTH = 53;
 
 //! @brief    Width of right VBLANK area in NTSC mode
-static const uint16_t NTSC_RIGHT_VBLANK = 15;
+static const u16 NTSC_RIGHT_VBLANK = 15;
 
 //! @brief    Total width of a rasterline (including VBLANK) in NTSC mode
-static const uint16_t NTSC_WIDTH = 520; // 77 + 55 + 320 + 53 + 15
+static const u16 NTSC_WIDTH = 520; // 77 + 55 + 320 + 53 + 15
 
 //! @brief    Number of drawn pixels per rasterline in NTSC mode
-static const uint16_t NTSC_PIXELS = 428; // 55 + 320 + 53
+static const u16 NTSC_PIXELS = 428; // 55 + 320 + 53
 
 //! @brief    Number of viewable pixels per rasterline in NTSC mode
-static const uint16_t NTSC_VISIBLE_PIXELS = 418;
+static const u16 NTSC_VISIBLE_PIXELS = 418;
 
 
 // Vertical screen parameters
 
 //! @brief    Number of VBLANK lines at top in NTSC mode
-static const uint16_t NTSC_UPPER_VBLANK = 16;
+static const u16 NTSC_UPPER_VBLANK = 16;
 
 //! @brief    Heigt of upper boder in NTSC mode
-static const uint16_t NTSC_UPPER_BORDER_HEIGHT = 10;
+static const u16 NTSC_UPPER_BORDER_HEIGHT = 10;
 
 //! @brief    Height of canvas area in NTSC mode
-static const uint16_t NTSC_CANVAS_HEIGHT = 200;
+static const u16 NTSC_CANVAS_HEIGHT = 200;
 
 //! @brief    Lower border height in NTSC mode
-static const uint16_t NTSC_LOWER_BORDER_HEIGHT = 25;
+static const u16 NTSC_LOWER_BORDER_HEIGHT = 25;
 
 //! @brief    Number of VBLANK lines at bottom in NTSC mode
-static const uint16_t NTSC_LOWER_VBLANK = 12;
+static const u16 NTSC_LOWER_VBLANK = 12;
 
 //! @brief    Total height of a frame (including VBLANK) in NTSC mode
-static const uint16_t NTSC_HEIGHT = 263; // 16 + 10 + 200 + 25 + 12
+static const u16 NTSC_HEIGHT = 263; // 16 + 10 + 200 + 25 + 12
 
 //! @brief    Number of drawn rasterlines per frame in NTSC mode
 //! @deprecated because the value differes between NTSC models
-static const uint16_t NTSC_RASTERLINES = 235; // 10 + 200 + 25
+static const u16 NTSC_RASTERLINES = 235; // 10 + 200 + 25
 
 //! @brief    Number of viewable rasterlines per frame in NTSC mode
 //! @deprecated because the value differes between NTSC models
-// static const uint16_t NTSC_VISIBLE_RASTERLINES = 235;
+// static const u16 NTSC_VISIBLE_RASTERLINES = 235;
 
 
 //
@@ -165,55 +165,55 @@ static const double PAL_PIXEL_ASPECT_RATIO = 0.9365;
 // Horizontal screen parameters
 
 //! @brief    Width of left VBLANK area in PAL mode
-static const uint16_t PAL_LEFT_VBLANK = 76;
+static const u16 PAL_LEFT_VBLANK = 76;
 
 //! @brief    Width of left border in PAL mode
-static const uint16_t PAL_LEFT_BORDER_WIDTH = 48;
+static const u16 PAL_LEFT_BORDER_WIDTH = 48;
 
 //! @brief    Width of canvas area in PAL mode
-static const uint16_t PAL_CANVAS_WIDTH = 320;
+static const u16 PAL_CANVAS_WIDTH = 320;
 
 //! @brief    Width of right border in PAL mode
-static const uint16_t PAL_RIGHT_BORDER_WIDTH = 37;
+static const u16 PAL_RIGHT_BORDER_WIDTH = 37;
 
 //! @brief    Width of right VBLANK area in PAL mode
-static const uint16_t PAL_RIGHT_VBLANK = 23;
+static const u16 PAL_RIGHT_VBLANK = 23;
 
 //! @brief    Total width of a rasterline (including VBLANK) in PAL mode
-static const uint16_t PAL_WIDTH = 504; // 76 + 48 + 320 + 37 + 23
+static const u16 PAL_WIDTH = 504; // 76 + 48 + 320 + 37 + 23
 
 //! @brief    Number of drawn pixels per rasterline in PAL mode
-static const uint16_t PAL_PIXELS = 405; // 48 + 320 + 37
+static const u16 PAL_PIXELS = 405; // 48 + 320 + 37
 
 //! @brief    Number of viewable pixels per rasterline in PAL mode
-// static const uint16_t PAL_VISIBLE_PIXELS = 403;
+// static const u16 PAL_VISIBLE_PIXELS = 403;
 
 
 // Vertical screen parameters
 
 //! @brief    Number of VBLANK lines at top in PAL mode
-static const uint16_t PAL_UPPER_VBLANK = 16;
+static const u16 PAL_UPPER_VBLANK = 16;
 
 //! @brief    Heigt of upper boder in PAL mode
-static const uint16_t PAL_UPPER_BORDER_HEIGHT = 35;
+static const u16 PAL_UPPER_BORDER_HEIGHT = 35;
 
 //! @brief    Height of canvas area in PAL mode
-static const uint16_t PAL_CANVAS_HEIGHT = 200;
+static const u16 PAL_CANVAS_HEIGHT = 200;
 
 //! @brief    Lower border height in PAL mode
-static const uint16_t PAL_LOWER_BORDER_HEIGHT = 49;
+static const u16 PAL_LOWER_BORDER_HEIGHT = 49;
 
 //! @brief    Number of VBLANK lines at bottom in PAL mode
-static const uint16_t PAL_LOWER_VBLANK = 12;
+static const u16 PAL_LOWER_VBLANK = 12;
 
 //! @brief    Total height of a frame (including VBLANK) in PAL mode
-static const uint16_t PAL_HEIGHT = 312; // 16 + 35 + 200 + 49 + 12
+static const u16 PAL_HEIGHT = 312; // 16 + 35 + 200 + 49 + 12
 
 //! @brief    Number of drawn rasterlines per frame in PAL mode
-static const uint16_t PAL_RASTERLINES = 284; // 35 + 200 + 49
+static const u16 PAL_RASTERLINES = 284; // 35 + 200 + 49
 
 //! @brief    Number of viewable rasterlines per frame in PAL mode
-static const uint16_t PAL_VISIBLE_RASTERLINES = 284; // was 292
+static const u16 PAL_VISIBLE_RASTERLINES = 284; // was 292
 
 
 //
@@ -292,9 +292,9 @@ typedef enum {
  *  @details  Used by VIC::getInfo() to collect debug information
  */
 typedef struct {
-    uint16_t rasterline;
+    u16 rasterline;
     uint8_t cycle;
-    uint16_t xCounter;
+    u16 xCounter;
     bool badLine;
     bool ba; 
     DisplayMode displayMode;
@@ -308,15 +308,15 @@ typedef struct {
     uint8_t dy;
     bool verticalFrameFlipflop;
     bool horizontalFrameFlipflop;
-    uint16_t memoryBankAddr;
-    uint16_t screenMemoryAddr;
-    uint16_t characterMemoryAddr;
+    u16 memoryBankAddr;
+    u16 screenMemoryAddr;
+    u16 characterMemoryAddr;
     uint8_t imr;
     uint8_t irr;
     bool spriteCollisionIrqEnabled;
     bool backgroundCollisionIrqEnabled;
     bool rasterIrqEnabled;
-    uint16_t irqRasterline;
+    u16 irqRasterline;
     bool irqLine;
 } VICInfo;
 
@@ -326,7 +326,7 @@ typedef struct {
 typedef struct {
   
     bool enabled; 
-    uint16_t x;
+    u16 x;
     uint8_t y;
     uint8_t ptr; 
     uint8_t color;

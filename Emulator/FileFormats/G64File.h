@@ -79,7 +79,7 @@ public:
     size_t getSizeOfItem() { assert(false); return 0; }
     const char *getNameOfItem() { assert(false); return ""; }
     const char *getTypeOfItem() { assert(false); return ""; }
-    uint16_t getDestinationAddrOfItem() { assert(false); return 0; }
+    u16 getDestinationAddrOfItem() { assert(false); return 0; }
     void selectItem(unsigned n) { assert(false); }
     u32 getStartOfItem(unsigned n) { assert(false); return 0; }
 

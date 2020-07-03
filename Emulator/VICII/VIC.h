@@ -181,7 +181,7 @@ private:
     /*! @brief    Raster counter X (2)
      *  @details  Defines the sprite coordinate system.
      */
-    uint16_t xCounter;
+    u16 xCounter;
     
     /*! @brief    Y raster counter (3)
      *  @details  The rasterline counter is usually incremented in cycle 1. The
@@ -194,13 +194,13 @@ private:
      *  @details  A 10 bit counter that can be loaded with the value from
      *            vcBase.
      */
-    uint16_t vc;
+    u16 vc;
     
     /*! @brief    Video counter base
      *  @details  A 10 bit data register with reset input that can be loaded
      *            with the value from vc.
      */
-    uint16_t vcBase;
+    u16 vcBase;
     
     /*! @brief    Row counter (15)
      *  @details  A 3 bit counter with reset input.
@@ -361,22 +361,22 @@ private:
     /*! @brief    First coordinate where the main frame flipflop is checked.
      *  @details  Either 24 or 31, dependend on the CSEL bit.
      */
-    uint16_t leftComparisonVal;
+    u16 leftComparisonVal;
     
     /*! @brief    Second coordinate where the main frame flipflop is checked.
      *  @details  Either 344 or 335, dependend on the CSEL bit.
      */
-    uint16_t rightComparisonVal;
+    u16 rightComparisonVal;
     
     /*! @brief    First coordinate where the vertical frame flipflop is checked.
      *  @details  Either 51 or 55, dependend on the RSEL bit.
      */
-    uint16_t upperComparisonVal;
+    u16 upperComparisonVal;
     
     /*! @brief    Second coordinate where the vertical frame flipflop is checked.
      *  @details  Either 251 or 247, dependend on the RSEL bit.
      */
-    uint16_t lowerComparisonVal;
+    u16 lowerComparisonVal;
     
     
     //
@@ -445,7 +445,7 @@ private:
 	/*! @brief    Sprite pointer fetched during a pAccess.
 	 *  @details  Determines where the sprite data comes from.
      */
-	uint16_t spritePtr[8];
+	u16 spritePtr[8];
 
     /*! @brief    Flags the first DMA access for each sprite.
      *  @details  Bit n corresponds to sprite n.
@@ -536,7 +536,7 @@ private:
      *  @details  Whenever VIC performs a memory read, the generated memory
      *            address is stored in this variable.
      */
-    uint16_t addrBus;
+    u16 addrBus;
     
     /*! @brief    Current value of the BA line
      *  @details  Remember: Each CPU cycle is split into two phases:
@@ -548,7 +548,7 @@ private:
      *            this variable indicates which sources are holding the line
      *            low.
      */
-    TimeDelayed<uint16_t>baLine = TimeDelayed<uint16_t>(3);
+    TimeDelayed<u16>baLine = TimeDelayed<u16>(3);
     
     /*! @brief    Start address of the currently selected memory bank
      *  @details  There are four banks in total since the VIC chip can only
@@ -567,7 +567,7 @@ private:
      *            |   3   |  11  |   0   |       0  | ($0000-$3FFF) (DEFAULT) |
      *            +-------+------+-------+----------+-------------------------+
      */
-    uint16_t bankAddr;
+    u16 bankAddr;
     
     //! @brief    Result of the lastest g-access
     TimeDelayed<u32>gAccessResult = TimeDelayed<u32>(2);
@@ -705,7 +705,7 @@ private:
      *            is needed to detect sprite-sprite and sprite-background
      *            collisions.
      */
-    uint16_t pixelSource[8];
+    u16 pixelSource[8];
     
     /*! @brief    Offset into pixelBuffer
      *  @details  Variable points to the first pixel of the currently drawn 8
@@ -873,7 +873,7 @@ private:
 public:
     
     //! @brief    Peeks a value from a VIC register without side effects.
-    uint8_t spypeek(uint16_t addr);
+    uint8_t spypeek(u16 addr);
     
     //! @brief    Returns the ultimax flag
     uint8_t getUltimax() { return ultimax; }
@@ -891,7 +891,7 @@ public:
     /*! @details  This method is called if the bank switch is triggered by a
      *            change of register CIA2::PA or register CIA2::DDRA.
      */
-    void switchBank(uint16_t addr);
+    void switchBank(u16 addr);
 
     //! @brief    Schedules the VICII bank to to switched
     /*! @details  This method is called if the bank switch is triggered by a
@@ -912,19 +912,19 @@ private:
     void updateBankAddr();
     
     //! @brief    Peeks a value from a VIC register.
-	uint8_t peek(uint16_t addr);
+	uint8_t peek(u16 addr);
     
     //! @brief    Pokes a value into a VIC register.
-	void poke(uint16_t addr, uint8_t value);
+	void poke(u16 addr, uint8_t value);
     
     //! @brief    Simulates a memory access via the address and data bus.
-    uint8_t memAccess(uint16_t addr);
+    uint8_t memAccess(u16 addr);
 
     //! @brief    Same as memAccess without side effects.
-    uint8_t memSpyAccess(uint16_t addr);
+    uint8_t memSpyAccess(u16 addr);
 
     //! @brief    Returns true if memAccess will read from Character ROM
-    bool isCharRomAddr(uint16_t addr);
+    bool isCharRomAddr(u16 addr);
 
     /*! @brief    Performs a DRAM refresh (r-access).
      *  @details  r-accesses are performed in cycles 11 - 15 during phi1.
@@ -951,15 +951,15 @@ private:
     void gAccess();
 
     //! @brief    Computes the g-access fetch address for newer VICIIs
-    uint16_t gAccessAddr85x();
+    u16 gAccessAddr85x();
 
     //! @brief    Computes the g-access fetch address for older VICIIs
-    uint16_t gAccessAddr65x();
+    u16 gAccessAddr65x();
 
     /*! @brief    Computes the g-access fetch address
      *  @details  The fetch address is influences by both the BMM and ECM bit.
      */
-    uint16_t gAccessAddr(bool bmm, bool ecm);
+    u16 gAccessAddr(bool bmm, bool ecm);
     
     //! @brief    Performs a sprite pointer access (p-access).
     void pAccess(unsigned sprite);
@@ -988,7 +988,7 @@ private:
      *  @note     This value is not always identical to the yCounter, because
      *            the yCounter is incremented with a little delay.
      */
-    uint16_t rasterline();
+    u16 rasterline();
 
     //! @brief    Returns the current rasterline cycle
     uint8_t rastercycle();
@@ -1035,10 +1035,10 @@ private:
     void checkVerticalFrameFF();
     
     //! @brief    Checks frame fliplops at left border
-    void checkFrameFlipflopsLeft(uint16_t comparisonValue);
+    void checkFrameFlipflopsLeft(u16 comparisonValue);
     
     //! @brief    Checks frame fliplops at right border
-    void checkFrameFlipflopsRight(uint16_t comparisonValue);
+    void checkFrameFlipflopsRight(u16 comparisonValue);
     
     //! @brief    Sets the vertical frame flipflop with a delay of one cycle.
     void setVerticalFrameFF(bool value);
@@ -1047,16 +1047,16 @@ private:
     void setMainFrameFF(bool value);
     
     //! @brief    Returns where the frame flipflop is checked for the left border.
-    uint16_t leftComparisonValue() { return isCSEL() ? 24 : 31; }
+    u16 leftComparisonValue() { return isCSEL() ? 24 : 31; }
     
     //! @brief    Returns where the frame flipflop is checked for the right border.
-    uint16_t rightComparisonValue() { return isCSEL() ? 344 : 335; }
+    u16 rightComparisonValue() { return isCSEL() ? 344 : 335; }
     
     //! @brief    Returns where the frame flipflop is checked for the upper border.
-    uint16_t upperComparisonValue() { return isRSEL() ? 51 : 55; }
+    u16 upperComparisonValue() { return isRSEL() ? 51 : 55; }
     
     //! @brief    Returns where the frame flipflop is checked for the lower border.
-    uint16_t lowerComparisonValue() { return isRSEL() ? 251 : 247; }
+    u16 lowerComparisonValue() { return isRSEL() ? 251 : 247; }
     
   
     
@@ -1072,7 +1072,7 @@ public:
     bool DENbit() { return GET_BIT(reg.current.ctrl1, 4); }
     
     //! @brief    Returns the number of the next interrupt rasterline.
-    uint16_t rasterInterruptLine() {
+    u16 rasterInterruptLine() {
         return ((reg.current.ctrl1 & 0x80) << 1) | rasterIrqLine;
     }
     
@@ -1147,10 +1147,10 @@ private:
     /*! @details  The coordinate depends on the current rasterline cycle and
      *            differes slightly between the supported VICII models.
      */
-    uint16_t lightpenX();
+    u16 lightpenX();
     
     //! @brief    Returns the Y coordinate of a light pen event.
-    uint16_t lightpenY();
+    u16 lightpenY();
     
     /*! @brief    Trigger lightpen interrupt if conditions are met.
      *  @details  This function is called on each negative transition of the
@@ -1250,7 +1250,7 @@ public:
 	/*! @brief    Prepares VICII for drawing a new rasterline.
 	 *  @details  This function is called prior to the first cycle of each rasterline.
      */
-	void beginRasterline(uint16_t rasterline);
+	void beginRasterline(u16 rasterline);
 
 	/*! @brief    Finishes up a rasterline.
 	 *  @details  This function is called after the last cycle of each rasterline.
@@ -1487,13 +1487,13 @@ public:
     //
 
     //! @brief    Sets the memory bank start address
-    void setMemoryBankAddr(uint16_t addr);
+    void setMemoryBankAddr(u16 addr);
     
     //! @brief    Sets the screen memory address.
-    void setScreenMemoryAddr(uint16_t addr);
+    void setScreenMemoryAddr(u16 addr);
     
     //! @brief    Sets the character memory address.
-    void setCharacterMemoryAddr(uint16_t addr);
+    void setCharacterMemoryAddr(u16 addr);
     
     //! @brief    Sets the display mode.
     void setDisplayMode(DisplayMode m);
@@ -1517,7 +1517,7 @@ public:
     void setHorizontalRasterScroll(uint8_t offset);
     
     //! @brief    Set interrupt rasterline
-    void setRasterInterruptLine(uint16_t line);
+    void setRasterInterruptLine(u16 line);
     
     //! @brief    Enable or disable rasterline interrupts
     void setRasterInterruptEnable(bool b);
@@ -1529,7 +1529,7 @@ public:
     void setSpriteColor(unsigned nr, uint8_t color);
     
     //! @brief    Set the X coordinate of a sprite.
-    void setSpriteX(unsigned nr, uint16_t x);
+    void setSpriteX(unsigned nr, u16 x);
     
     //! @brief    Sets the Y coordinate of sprite.
     void setSpriteY(unsigned nr, uint8_t y);

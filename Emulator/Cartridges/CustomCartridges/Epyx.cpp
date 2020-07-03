@@ -42,21 +42,21 @@ EpyxFastLoad::resetCartConfig()
 }
 
 uint8_t
-EpyxFastLoad::peekRomL(uint16_t addr)
+EpyxFastLoad::peekRomL(u16 addr)
 {
     dischargeCapacitor();
     return Cartridge::peekRomL(addr);
 }
 
 uint8_t
-EpyxFastLoad::peekIO1(uint16_t addr)
+EpyxFastLoad::peekIO1(u16 addr)
 {
     dischargeCapacitor();
     return 0;
 }
 
 uint8_t
-EpyxFastLoad::peekIO2(uint16_t addr)
+EpyxFastLoad::peekIO2(u16 addr)
 {
     // I/O 2 mirrors the last 256 ROM bytes
     return packet[0]->peek(addr & 0x1FFF);

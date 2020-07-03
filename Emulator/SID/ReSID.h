@@ -74,10 +74,10 @@ public:
     VoiceInfo getVoiceInfo(unsigned voice);
 
 	//! Special peek function for the I/O memory range.
-	uint8_t peek(uint16_t addr);
+	uint8_t peek(u16 addr);
 	
 	//! Special poke function for the I/O memory range.
-	void poke(uint16_t addr, uint8_t value);
+	void poke(u16 addr, uint8_t value);
 	
 	/*! @brief   Execute SID
      *  @details Runs reSID for the specified amount of CPU cycles and writes

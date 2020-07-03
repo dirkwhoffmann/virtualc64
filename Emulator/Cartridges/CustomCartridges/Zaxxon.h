@@ -19,8 +19,8 @@ public:
     CartridgeType getCartridgeType() { return CRT_ZAXXON; }
 
     void reset();
-    uint8_t peekRomL(uint16_t addr);
-    uint8_t spypeekRomL(uint16_t addr);
+    uint8_t peekRomL(u16 addr);
+    uint8_t spypeekRomL(u16 addr);
 };
 
 #endif

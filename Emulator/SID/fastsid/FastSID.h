@@ -131,10 +131,10 @@ public:
     VoiceInfo getVoiceInfo(unsigned voice);
     
     // Special peek function for the I/O memory range
-    uint8_t peek(uint16_t addr);
+    uint8_t peek(u16 addr);
     
     // Special poke function for the I/O memory range.
-    void poke(uint16_t addr, uint8_t value);
+    void poke(u16 addr, uint8_t value);
     
     /* Execute SID
      * Runs reSID for the specified amount of CPU cycles and writes the
@@ -143,7 +143,7 @@ public:
     void execute(u64 cycles);
     
     // Computes a single sound sample
-    int16_t calculateSingleSample();
+    i16 calculateSingleSample();
     
     
     //
@@ -197,7 +197,7 @@ private:
     // Filter related configuration items
     
     // Returns the filter cutoff frequency (11 bit value)
-    uint16_t filterCutoff() { return (sidreg[0x16] << 3) | (sidreg[0x15] & 0x07); }
+    u16 filterCutoff() { return (sidreg[0x16] << 3) | (sidreg[0x15] & 0x07); }
 
     // Returns the filter resonance (4 bit value)
     uint8_t filterResonance() { return sidreg[0x17] >> 4; }

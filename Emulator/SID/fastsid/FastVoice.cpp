@@ -31,13 +31,13 @@
 #include "FastSID.h"
 #include "waves.h"
 
-uint16_t FastVoice::wavetable10[2][4096];
-uint16_t FastVoice::wavetable20[2][4096];
-uint16_t FastVoice::wavetable30[2][4096];
-uint16_t FastVoice::wavetable40[2][8192];
-uint16_t FastVoice::wavetable50[2][8192];
-uint16_t FastVoice::wavetable60[2][8192];
-uint16_t FastVoice::wavetable70[2][8192];
+u16 FastVoice::wavetable10[2][4096];
+u16 FastVoice::wavetable20[2][4096];
+u16 FastVoice::wavetable30[2][4096];
+u16 FastVoice::wavetable40[2][8192];
+u16 FastVoice::wavetable50[2][8192];
+u16 FastVoice::wavetable60[2][8192];
+u16 FastVoice::wavetable70[2][8192];
 uint8_t FastVoice::noiseMSB[256];
 uint8_t FastVoice::noiseMID[256];
 uint8_t FastVoice::noiseLSB[256];
@@ -95,8 +95,8 @@ FastVoice::initWaveTables()
     // Most tables are the same for SID6581 and SID8580, so let's initialize both.
     for (unsigned m = 0; m < 2; m++) {
         for (unsigned i = 0; i < 4096; i++) {
-            wavetable10[m][i] = (uint16_t)(i < 2048 ? i << 4 : 0xffff - (i << 4));
-            wavetable20[m][i] = (uint16_t)(i << 3);
+            wavetable10[m][i] = (u16)(i < 2048 ? i << 4 : 0xffff - (i << 4));
+            wavetable20[m][i] = (u16)(i << 3);
             wavetable30[m][i] = waveform30_8580[i] << 7;
             wavetable40[m][i + 4096] = 0x7fff;
             wavetable50[m][i + 4096] = waveform50_6581[i >> 3] << 7;

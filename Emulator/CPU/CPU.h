@@ -130,7 +130,7 @@ class CPU : public HardwareComponent {
 	uint8_t regY;
     
     //! @brief    Program counter
-    uint16_t regPC;
+    u16 regPC;
 
     //! @brief    Stack pointer
     uint8_t regSP;
@@ -167,7 +167,7 @@ class CPU : public HardwareComponent {
      *            address of the currently executed command, even if some
      *            microcycles of the command have already been computed.
      */
-    uint16_t pc;
+    u16 pc;
     
   
     //
@@ -347,10 +347,10 @@ class CPU : public HardwareComponent {
      *            command spans over multiple bytes in memory, the program
      *            counter (regPC) may already have been incremented.
      */
-    uint16_t getPC() { return pc; }
+    u16 getPC() { return pc; }
     
     //! @brief    Redirects the CPU to a new instruction in memory.
-    void jumpToAddress(uint16_t addr) { pc = regPC = addr; next = fetch; }
+    void jumpToAddress(u16 addr) { pc = regPC = addr; next = fetch; }
 
 	//! @brief    Returns N_FLAG, if Negative flag is set, 0 otherwise.
     uint8_t getN() { return regP & N_FLAG; }
@@ -420,7 +420,7 @@ class CPU : public HardwareComponent {
     void setPCL(uint8_t lo) { regPC = (regPC & 0xff00) | lo; }
     
 	//! @brief    Changes high byte of the program counter only.
-    void setPCH(uint8_t hi) { regPC = (regPC & 0x00ff) | ((uint16_t)hi << 8); }
+    void setPCH(uint8_t hi) { regPC = (regPC & 0x00ff) | ((u16)hi << 8); }
     
 	//! @brief    Increments the program counter by the specified amount.
     void incPC(uint8_t offset = 1) { regPC += offset; }
@@ -503,7 +503,7 @@ class CPU : public HardwareComponent {
 	/*! @brief    Returns the length of instruction in bytes.
      *  @result   Integer value between 1 and 3.
      */
-    unsigned getLengthOfInstructionAtAddress(uint16_t addr) {
+    unsigned getLengthOfInstructionAtAddress(u16 addr) {
         return getLengthOfInstruction(mem->spypeek(addr)); }
     
 	/*! @brief    Returns the length of the currently executed instruction.
@@ -515,7 +515,7 @@ class CPU : public HardwareComponent {
 	/*! @brief    Returns the address of the next instruction to execute.
      *  @result   Integer value between 1 and 3.
      */
-    uint16_t getAddressOfNextInstruction() {
+    u16 getAddressOfNextInstruction() {
         return pc + getLengthOfCurrentInstruction(); }
     
 	/*! @brief    Returns true if the next microcycle is the fetch cycle.
@@ -549,28 +549,28 @@ class CPU : public HardwareComponent {
     //
     
     //! @brief    Checks if a hard breakpoint is set at the provided address.
-    bool hardBreakpoint(uint16_t addr) { return (breakpoint[addr] & HARD_BREAKPOINT) != 0; }
+    bool hardBreakpoint(u16 addr) { return (breakpoint[addr] & HARD_BREAKPOINT) != 0; }
     
 	//! @brief    Sets a hard breakpoint at the provided address.
-    void setHardBreakpoint(uint16_t addr) { breakpoint[addr] |= HARD_BREAKPOINT; }
+    void setHardBreakpoint(u16 addr) { breakpoint[addr] |= HARD_BREAKPOINT; }
 	
 	//! @brief    Deletes a hard breakpoint at the provided address.
-	void deleteHardBreakpoint(uint16_t addr) { breakpoint[addr] &= ~HARD_BREAKPOINT; }
+	void deleteHardBreakpoint(u16 addr) { breakpoint[addr] &= ~HARD_BREAKPOINT; }
 	
 	//! @brief    Sets or deletes a hard breakpoint at the provided address.
-	void toggleHardBreakpoint(uint16_t addr) { breakpoint[addr] ^= HARD_BREAKPOINT; }
+	void toggleHardBreakpoint(u16 addr) { breakpoint[addr] ^= HARD_BREAKPOINT; }
     
     //! @brief    Checks if a soft breakpoint is set at the provided address.
-    bool softBreakpoint(uint16_t addr) { return (breakpoint[addr] & SOFT_BREAKPOINT) != 0; }
+    bool softBreakpoint(u16 addr) { return (breakpoint[addr] & SOFT_BREAKPOINT) != 0; }
 
 	//! @brief    Sets a soft breakpoint at the provided address.
-	void setSoftBreakpoint(uint16_t addr) { breakpoint[addr] |= SOFT_BREAKPOINT; }
+	void setSoftBreakpoint(u16 addr) { breakpoint[addr] |= SOFT_BREAKPOINT; }
     
 	//! @brief    Deletes a soft breakpoint at the specified address.
-	void deleteSoftBreakpoint(uint16_t addr) { breakpoint[addr] &= ~SOFT_BREAKPOINT; }
+	void deleteSoftBreakpoint(u16 addr) { breakpoint[addr] &= ~SOFT_BREAKPOINT; }
     
 	//! @brief    Sets or deletes a hard breakpoint at the specified address.
-	void toggleSoftBreakpoint(uint16_t addr) { breakpoint[addr] ^= SOFT_BREAKPOINT; }
+	void toggleSoftBreakpoint(u16 addr) { breakpoint[addr] ^= SOFT_BREAKPOINT; }
     
     
     //
@@ -606,7 +606,7 @@ class CPU : public HardwareComponent {
     DisassembledInstruction disassemble(RecordedInstruction instr, bool hex);
 
     //! @brief    Disassembles an instruction at the specified memory location
-    DisassembledInstruction disassemble(uint16_t addr, bool hex);
+    DisassembledInstruction disassemble(u16 addr, bool hex);
     
     //! @brief    Disassembles the current instruction.
     DisassembledInstruction disassemble(bool hex) { return disassemble(pc, hex); }

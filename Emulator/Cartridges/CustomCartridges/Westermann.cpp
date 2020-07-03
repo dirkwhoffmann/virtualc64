@@ -10,7 +10,7 @@
 #include "C64.h"
 
 uint8_t
-Westermann::peekIO2(uint16_t addr)
+Westermann::peekIO2(u16 addr)
 {
     // Reading from I/O 2 switched the cartridge on
     c64->expansionport.setCartridgeMode(CRT_8K);

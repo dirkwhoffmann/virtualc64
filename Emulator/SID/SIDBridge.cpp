@@ -140,7 +140,7 @@ SIDBridge::getVoiceInfo(unsigned voice)
 }
 
 uint8_t 
-SIDBridge::peek(uint16_t addr)
+SIDBridge::peek(u16 addr)
 {
     assert(addr <= 0x1F);
     
@@ -162,14 +162,14 @@ SIDBridge::peek(uint16_t addr)
 }
 
 uint8_t
-SIDBridge::spypeek(uint16_t addr)
+SIDBridge::spypeek(u16 addr)
 {
     assert(addr <= 0x1F);
     return peek(addr);
 }
 
 void 
-SIDBridge::poke(uint16_t addr, uint8_t value)
+SIDBridge::poke(u16 addr, uint8_t value)
 {
     // Get SID up to date
     executeUntil(c64->cpu.cycle);

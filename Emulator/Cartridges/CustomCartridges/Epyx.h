@@ -46,11 +46,11 @@ public:
     //
     
     void resetCartConfig();
-    uint8_t peekRomL(uint16_t addr);
-    uint8_t spypeekRomL(uint16_t addr) { return Cartridge::peekRomL(addr); }
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t spypeekIO1(uint16_t addr) { return 0; }
-    uint8_t peekIO2(uint16_t addr);
+    uint8_t peekRomL(u16 addr);
+    uint8_t spypeekRomL(u16 addr) { return Cartridge::peekRomL(addr); }
+    uint8_t peekIO1(u16 addr);
+    uint8_t spypeekIO1(u16 addr) { return 0; }
+    uint8_t peekIO2(u16 addr);
     void execute();
 
 private:

@@ -153,7 +153,7 @@ public:
     //
     
     //! @brief    The next bit will be ready after this number of cycles.
-    int16_t bitReadyTimer;
+    i16 bitReadyTimer;
     
     /*! @brief    Byte ready counter (UE3)
      *  @details  The VC1540 logic board contains a 4-bit-counter of type
@@ -185,7 +185,7 @@ public:
     /*! @brief    The 74LS164 serial to parallel shift register
      *  @details  In read mode, this register is fed by the drive head with data.
      */
-    uint16_t readShiftreg;
+    u16 readShiftreg;
     
     /*! @brief    The 74LS165 parallel to serial shift register
      *  @details  In write mode, this register feeds the drive head with data.
@@ -399,7 +399,7 @@ public:
     void setHalftrack(Halftrack ht) { assert(isHalftrackNumber(ht)); halftrack = ht; }
     
     //! @brief    Returns the number of bits in the current halftrack
-    uint16_t sizeOfCurrentHalftrack() {
+    u16 sizeOfCurrentHalftrack() {
         return hasDisk() ? disk.lengthOfHalftrack(halftrack) : 0; }
 
     //! @brief    Returns the position of the drive head inside the current track

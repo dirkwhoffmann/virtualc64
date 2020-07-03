@@ -84,18 +84,18 @@ class CIA : public HardwareComponent {
 protected:
 
 	//! @brief    Timer A counter
-	uint16_t counterA;
+	u16 counterA;
 	
     //! @brief    Timer B counter
-    uint16_t counterB;
+    u16 counterB;
     
 private:
     
 	//! @brief    Timer A latch
-	uint16_t latchA;
+	u16 latchA;
 	
 	//! @brief    Timer B latch
-	uint16_t latchB;
+	u16 latchB;
 	
 	//! @brief    Time of day clock
 	TOD tod = TOD(this);
@@ -379,13 +379,13 @@ protected:
 public:
 
     //! @brief    Peeks a value from a CIA register.
-    uint8_t peek(uint16_t addr);
+    uint8_t peek(u16 addr);
     
     //! @brief    Peeks a value from a CIA register without causing side effects.
-    uint8_t spypeek(uint16_t addr);
+    uint8_t spypeek(u16 addr);
     
     //! @brief    Pokes a value into a CIA register.
-    void poke(uint16_t addr, uint8_t value);
+    void poke(u16 addr, uint8_t value);
     
     
     //

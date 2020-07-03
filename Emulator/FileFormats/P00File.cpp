@@ -162,7 +162,7 @@ P00File::seekItem(long offset)
         iFp = -1;
 }
 
-uint16_t 
+u16 
 P00File::getDestinationAddrOfItem()
 {
     return LO_HI(data[0x1A], data[0x1B]);

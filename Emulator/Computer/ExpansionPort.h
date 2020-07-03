@@ -80,31 +80,31 @@ public:
     void execute() { if (cartridge) cartridge->execute(); }
     
     //! @brief    Peek fallthrough
-    uint8_t peek(uint16_t addr);
+    uint8_t peek(u16 addr);
     
     //! @brief    Same as peek, but without side effects
-    uint8_t spypeek(uint16_t addr);
+    uint8_t spypeek(u16 addr);
     
     //! @brief    Peek fallthrough for I/O space 1
-    uint8_t peekIO1(uint16_t addr);
+    uint8_t peekIO1(u16 addr);
     
     //! @brief    Same as peekIO1, but without side effects
-    uint8_t spypeekIO1(uint16_t addr);
+    uint8_t spypeekIO1(u16 addr);
     
     //! @brief    Peek fallthrough for I/O space 2
-    uint8_t peekIO2(uint16_t addr);
+    uint8_t peekIO2(u16 addr);
 
     //! @brief    Same as peekIO2, but without side effects
-    uint8_t spypeekIO2(uint16_t addr);
+    uint8_t spypeekIO2(u16 addr);
     
     //! @brief    Poke fallthrough
-    void poke(uint16_t addr, uint8_t value);
+    void poke(u16 addr, uint8_t value);
     
     //! @brief    Poke fallthrough for I/O space 1
-    void pokeIO1(uint16_t addr, uint8_t value);
+    void pokeIO1(u16 addr, uint8_t value);
     
     //! @brief    Poke fallthrough for I/O space 2
-    void pokeIO2(uint16_t addr, uint8_t value);
+    void pokeIO2(u16 addr, uint8_t value);
     
     //! @brief    Returns the cartridge type
     CartridgeType getCartridgeType();
