@@ -47,7 +47,6 @@
 		503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */; };
 		503E199020C42C6D007E91F1 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 503E198F20C42C6D007E91F1 /* Media.xcassets */; };
 		50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50412B0C2028F31800CC90A1 /* DiskMountController.swift */; };
-		5043436621BBB6F0009749CA /* VirtualC64UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043436521BBB6F0009749CA /* VirtualC64UITests.swift */; };
 		5046C413202344F3000D9B1C /* ArchiveMountDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */; };
 		5046C415202349EE000D9B1C /* ArchiveMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5046C414202349EE000D9B1C /* ArchiveMountController.swift */; };
 		504C435924AF29AC00E69CAE /* Ocean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C429124AF29AB00E69CAE /* Ocean.cpp */; };
@@ -155,7 +154,6 @@
 		50720F4220C853910010EBF2 /* CpuTraceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50720F4120C853910010EBF2 /* CpuTraceView.swift */; };
 		50763277202989D300575110 /* UserDialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* UserDialogController.swift */; };
 		507887CC20B1858B00941F7E /* MemTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507887CB20B1858B00941F7E /* MemTableView.swift */; };
-		50790A2221BAF20300979B7A /* VirtualC64Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50790A2121BAF20300979B7A /* VirtualC64Tests.swift */; };
 		507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */; };
 		5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* AudioEngine.swift */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
@@ -195,23 +193,6 @@
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		5043436821BBB6F0009749CA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D15AC270486D014006FF6A4;
-			remoteInfo = VirtualC64;
-		};
-		50790A2421BAF20300979B7A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D15AC270486D014006FF6A4;
-			remoteInfo = VirtualC64;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		503A5AC41222781A00EAA95E /* CopyFiles */ = {
@@ -270,9 +251,6 @@
 		503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerToolbar.swift; sourceTree = "<group>"; };
 		503E198F20C42C6D007E91F1 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		50412B0C2028F31800CC90A1 /* DiskMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskMountController.swift; sourceTree = "<group>"; };
-		5043436321BBB6F0009749CA /* VirtualC64UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VirtualC64UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5043436521BBB6F0009749CA /* VirtualC64UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualC64UITests.swift; sourceTree = "<group>"; };
-		5043436721BBB6F0009749CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArchiveMountDialog.xib; sourceTree = "<group>"; };
 		5046C414202349EE000D9B1C /* ArchiveMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveMountController.swift; sourceTree = "<group>"; };
 		504C429024AF29AB00E69CAE /* Epyx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Epyx.h; sourceTree = "<group>"; };
@@ -486,9 +464,6 @@
 		50720F4120C853910010EBF2 /* CpuTraceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CpuTraceView.swift; sourceTree = "<group>"; };
 		50763276202989D300575110 /* UserDialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDialogController.swift; sourceTree = "<group>"; };
 		507887CB20B1858B00941F7E /* MemTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemTableView.swift; sourceTree = "<group>"; };
-		50790A1F21BAF20300979B7A /* VirtualC64Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VirtualC64Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		50790A2121BAF20300979B7A /* VirtualC64Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualC64Tests.swift; sourceTree = "<group>"; };
-		50790A2321BAF20300979B7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerCartridges.swift; sourceTree = "<group>"; };
 		5081AB621EF29E6400D6F616 /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		5092A5B0200BC4B70037754D /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
@@ -532,20 +507,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		5043436021BBB6F0009749CA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		50790A1C21BAF20300979B7A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8D15AC330486D014006FF6A4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -587,8 +548,6 @@
 			isa = PBXGroup;
 			children = (
 				8D15AC370486D014006FF6A4 /* VirtualC64.app */,
-				50790A1F21BAF20300979B7A /* VirtualC64Tests.xctest */,
-				5043436321BBB6F0009749CA /* VirtualC64UITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -596,25 +555,15 @@
 		2A37F4AAFDCFA73011CA2CEA /* V64 */ = {
 			isa = PBXGroup;
 			children = (
-				504C428D24AF29AB00E69CAE /* C64 */,
-				2A37F4ABFDCFA73011CA2CEA /* Classes */,
+				504C428D24AF29AB00E69CAE /* Emulator */,
+				50176C6D0A6F7357009E80BD /* GUI */,
 				503E198F20C42C6D007E91F1 /* Media.xcassets */,
 				50C4F055202D8B37004C5F21 /* XIB files */,
 				5070D72124AF2EB1005862D0 /* Resources */,
-				50790A2021BAF20300979B7A /* VirtualC64Tests */,
-				5043436421BBB6F0009749CA /* VirtualC64UITests */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
 			);
 			name = V64;
-			sourceTree = "<group>";
-		};
-		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				50176C6D0A6F7357009E80BD /* MacGUI */,
-			);
-			name = Classes;
 			sourceTree = "<group>";
 		};
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
@@ -711,7 +660,7 @@
 			path = Automation;
 			sourceTree = "<group>";
 		};
-		50176C6D0A6F7357009E80BD /* MacGUI */ = {
+		50176C6D0A6F7357009E80BD /* GUI */ = {
 			isa = PBXGroup;
 			children = (
 				50DBB44A2025CE5700489271 /* Basics.swift */,
@@ -722,7 +671,7 @@
 				500E3A6B21B5C30F00935CB3 /* Automation */,
 				5000474312DCED190098D890 /* Misc */,
 			);
-			path = MacGUI;
+			path = GUI;
 			sourceTree = "<group>";
 		};
 		5038CA9820B6C2D8000D9193 /* Debugger */ = {
@@ -738,16 +687,7 @@
 			name = Debugger;
 			sourceTree = "<group>";
 		};
-		5043436421BBB6F0009749CA /* VirtualC64UITests */ = {
-			isa = PBXGroup;
-			children = (
-				5043436521BBB6F0009749CA /* VirtualC64UITests.swift */,
-				5043436721BBB6F0009749CA /* Info.plist */,
-			);
-			path = VirtualC64UITests;
-			sourceTree = "<group>";
-		};
-		504C428D24AF29AB00E69CAE /* C64 */ = {
+		504C428D24AF29AB00E69CAE /* Emulator */ = {
 			isa = PBXGroup;
 			children = (
 				504C428E24AF29AB00E69CAE /* Cartridges */,
@@ -767,7 +707,7 @@
 				504C434724AF29AC00E69CAE /* Drive */,
 				504C435224AF29AC00E69CAE /* CIA */,
 			);
-			path = C64;
+			path = Emulator;
 			sourceTree = "<group>";
 		};
 		504C428E24AF29AB00E69CAE /* Cartridges */ = {
@@ -1111,15 +1051,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		50790A2021BAF20300979B7A /* VirtualC64Tests */ = {
-			isa = PBXGroup;
-			children = (
-				50790A2121BAF20300979B7A /* VirtualC64Tests.swift */,
-				50790A2321BAF20300979B7A /* Info.plist */,
-			);
-			path = VirtualC64Tests;
-			sourceTree = "<group>";
-		};
 		50B4B6071EEFE77400D56499 /* TouchBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -1189,42 +1120,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5043436221BBB6F0009749CA /* VirtualC64UITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5043436D21BBB6F0009749CA /* Build configuration list for PBXNativeTarget "VirtualC64UITests" */;
-			buildPhases = (
-				5043435F21BBB6F0009749CA /* Sources */,
-				5043436021BBB6F0009749CA /* Frameworks */,
-				5043436121BBB6F0009749CA /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5043436921BBB6F0009749CA /* PBXTargetDependency */,
-			);
-			name = VirtualC64UITests;
-			productName = VirtualC64UITests;
-			productReference = 5043436321BBB6F0009749CA /* VirtualC64UITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
-		50790A1E21BAF20300979B7A /* VirtualC64Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 50790A2921BAF20300979B7A /* Build configuration list for PBXNativeTarget "VirtualC64Tests" */;
-			buildPhases = (
-				50790A1B21BAF20300979B7A /* Sources */,
-				50790A1C21BAF20300979B7A /* Frameworks */,
-				50790A1D21BAF20300979B7A /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				50790A2521BAF20300979B7A /* PBXTargetDependency */,
-			);
-			name = VirtualC64Tests;
-			productName = VirtualC64Tests;
-			productReference = 50790A1F21BAF20300979B7A /* VirtualC64Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		8D15AC270486D014006FF6A4 /* VirtualC64 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 504F83690A89E0D2009FA225 /* Build configuration list for PBXNativeTarget "VirtualC64" */;
@@ -1254,17 +1149,6 @@
 				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1100;
 				TargetAttributes = {
-					5043436221BBB6F0009749CA = {
-						CreatedOnToolsVersion = 10.1;
-						LastSwiftMigration = 1020;
-						TestTargetID = 8D15AC270486D014006FF6A4;
-					};
-					50790A1E21BAF20300979B7A = {
-						CreatedOnToolsVersion = 10.1;
-						LastSwiftMigration = 1020;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 8D15AC270486D014006FF6A4;
-					};
 					8D15AC270486D014006FF6A4 = {
 						LastSwiftMigration = 1020;
 					};
@@ -1283,27 +1167,11 @@
 			projectRoot = "";
 			targets = (
 				8D15AC270486D014006FF6A4 /* VirtualC64 */,
-				50790A1E21BAF20300979B7A /* VirtualC64Tests */,
-				5043436221BBB6F0009749CA /* VirtualC64UITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		5043436121BBB6F0009749CA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		50790A1D21BAF20300979B7A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8D15AC2B0486D014006FF6A4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1368,22 +1236,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		5043435F21BBB6F0009749CA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5043436621BBB6F0009749CA /* VirtualC64UITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		50790A1B21BAF20300979B7A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				50790A2221BAF20300979B7A /* VirtualC64Tests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8D15AC300486D014006FF6A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1536,19 +1388,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		5043436921BBB6F0009749CA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8D15AC270486D014006FF6A4 /* VirtualC64 */;
-			targetProxy = 5043436821BBB6F0009749CA /* PBXContainerItemProxy */;
-		};
-		50790A2521BAF20300979B7A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8D15AC270486D014006FF6A4 /* VirtualC64 */;
-			targetProxy = 50790A2421BAF20300979B7A /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
 		089C165FFE840EACC02AAC07 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -1585,53 +1424,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		5043436A21BBB6F0009749CA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				COPY_PHASE_STRIP = NO;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = VirtualC64UITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = dirkwhoffmann.VirtualC64UITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = VirtualC64;
-			};
-			name = Debug;
-		};
-		5043436B21BBB6F0009749CA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				COPY_PHASE_STRIP = NO;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = VirtualC64UITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = dirkwhoffmann.VirtualC64UITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = VirtualC64;
-			};
-			name = Release;
-		};
 		504F836A0A89E0D2009FA225 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1652,7 +1444,7 @@
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.dirkwhoffmann.VirtualC64;
 				PRODUCT_NAME = VirtualC64;
-				SWIFT_OBJC_BRIDGING_HEADER = "MacGUI/VirtualC64-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "GUI/VirtualC64-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -1680,7 +1472,7 @@
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.dirkwhoffmann.VirtualC64;
 				PRODUCT_NAME = VirtualC64;
-				SWIFT_OBJC_BRIDGING_HEADER = "MacGUI/VirtualC64-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "GUI/VirtualC64-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -1804,67 +1596,9 @@
 			};
 			name = Release;
 		};
-		50790A2621BAF20300979B7A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				COPY_PHASE_STRIP = NO;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = VirtualC64Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = dirkwhoffmann.VirtualC64Tests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VirtualC64.app/Contents/MacOS/VirtualC64";
-			};
-			name = Debug;
-		};
-		50790A2721BAF20300979B7A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				COPY_PHASE_STRIP = NO;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = VirtualC64Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = dirkwhoffmann.VirtualC64Tests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VirtualC64.app/Contents/MacOS/VirtualC64";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5043436D21BBB6F0009749CA /* Build configuration list for PBXNativeTarget "VirtualC64UITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5043436A21BBB6F0009749CA /* Debug */,
-				5043436B21BBB6F0009749CA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		504F83690A89E0D2009FA225 /* Build configuration list for PBXNativeTarget "VirtualC64" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1879,15 +1613,6 @@
 			buildConfigurations = (
 				504F836E0A89E0D2009FA225 /* Debug */,
 				504F836F0A89E0D2009FA225 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		50790A2921BAF20300979B7A /* Build configuration list for PBXNativeTarget "VirtualC64Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				50790A2621BAF20300979B7A /* Debug */,
-				50790A2721BAF20300979B7A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
