@@ -106,7 +106,7 @@ public:
     size_t getSizeOfItemInBlocks();
     void seekItem(long offset);
     int readItem();
-    uint16_t getDestinationAddrOfItem();
+    u16 getDestinationAddrOfItem();
     
  
     //

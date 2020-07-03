@@ -21,7 +21,7 @@ CPU::adc(uint8_t op)
 void
 CPU::adc_binary(uint8_t op)
 {
-    uint16_t sum = regA + op + (getC() ? 1 : 0);
+    u16 sum = regA + op + (getC() ? 1 : 0);
     
     setC(sum > 255);
     setV(!((regA ^ op) & 0x80) && ((regA ^ sum) & 0x80));
@@ -31,7 +31,7 @@ CPU::adc_binary(uint8_t op)
 void
 CPU::adc_bcd(uint8_t op)
 {
-    uint16_t sum       = regA + op + (getC() ? 1 : 0);
+    u16 sum       = regA + op + (getC() ? 1 : 0);
     uint8_t  highDigit = (regA >> 4) + (op >> 4);
     uint8_t  lowDigit  = (regA & 0x0F) + (op & 0x0F) + (getC() ? 1 : 0);
     
@@ -83,7 +83,7 @@ CPU::sbc(uint8_t op)
 void
 CPU::sbc_binary(uint8_t op)
 {
-    uint16_t sum = regA - op - (getC() ? 0 : 1);
+    u16 sum = regA - op - (getC() ? 0 : 1);
     
     setC(sum <= 255);
     setV(((regA ^ sum) & 0x80) && ((regA ^ op) & 0x80));
@@ -93,7 +93,7 @@ CPU::sbc_binary(uint8_t op)
 void
 CPU::sbc_bcd(uint8_t op)
 {
-    uint16_t sum       = regA - op - (getC() ? 0 : 1);
+    u16 sum       = regA - op - (getC() ? 0 : 1);
     uint8_t  highDigit = (regA >> 4) - (op >> 4);
     uint8_t  lowDigit  = (regA & 0x0F) - (op & 0x0F) - (getC() ? 0 : 1);
     

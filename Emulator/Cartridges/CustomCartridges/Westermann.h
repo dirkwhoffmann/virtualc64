@@ -18,8 +18,8 @@ public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_WESTERMANN; }
     
-    uint8_t peekIO2(uint16_t addr);
-    uint8_t spypeekIO2(uint16_t addr) { return 0; }
+    uint8_t peekIO2(u16 addr);
+    uint8_t spypeekIO2(u16 addr) { return 0; }
 };
 
 #endif

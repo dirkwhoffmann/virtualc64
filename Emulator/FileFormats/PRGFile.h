@@ -73,6 +73,6 @@ public:
     const char *getNameOfItem() { return "FILE"; }
     size_t getSizeOfItem() { return size - 2; }
     void seekItem(long offset);
-    uint16_t getDestinationAddrOfItem();
+    u16 getDestinationAddrOfItem();
 };
 #endif

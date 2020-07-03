@@ -24,11 +24,11 @@ public:
     //! @functiongroup Methods from Cartridge
     //
     
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t spypeekIO1(uint16_t addr);
-    uint8_t peekIO2(uint16_t addr);
-    void pokeIO1(uint16_t addr, uint8_t value);
-    void pokeIO2(uint16_t addr, uint8_t value);
+    uint8_t peekIO1(u16 addr);
+    uint8_t spypeekIO1(u16 addr);
+    uint8_t peekIO2(u16 addr);
+    void pokeIO1(u16 addr, uint8_t value);
+    void pokeIO2(u16 addr, uint8_t value);
     
     unsigned numButtons() { return 1; }
     const char *getButtonTitle(unsigned nr) { return (nr == 1) ? "Freeze" : NULL; }

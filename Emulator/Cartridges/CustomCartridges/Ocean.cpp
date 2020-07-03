@@ -22,7 +22,7 @@
  */
 
 void
-Ocean::pokeIO1(uint16_t addr, uint8_t value)
+Ocean::pokeIO1(u16 addr, uint8_t value)
 {
     if (addr == 0xDE00) {
         bankIn(value & 0x3F);

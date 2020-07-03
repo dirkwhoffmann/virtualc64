@@ -49,19 +49,19 @@ public:
     bool switchInOnPosition() { return switchIsRight(); }
 
     void updatePeekPokeLookupTables();
-    uint8_t peek(uint16_t addr);
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t spypeekIO1(uint16_t addr) { return 0; }
-    void poke(uint16_t addr, uint8_t value);
-    void pokeIO1(uint16_t addr, uint8_t value);
+    uint8_t peek(u16 addr);
+    uint8_t peekIO1(u16 addr);
+    uint8_t spypeekIO1(u16 addr) { return 0; }
+    void poke(u16 addr, uint8_t value);
+    void pokeIO1(u16 addr, uint8_t value);
     
     void nmiWillTrigger();
     
     //! @brief    Returns true if cartridge RAM is visible
-    bool cartridgeRamIsVisible(uint16_t addr);    
+    bool cartridgeRamIsVisible(u16 addr);    
 
     //! @brief    Returns true if cartridge RAM is write enabled
-    bool cartridgeRamIsWritable(uint16_t addr);
+    bool cartridgeRamIsWritable(u16 addr);
 };
 
 

@@ -58,7 +58,7 @@ VIC::setUltimax(bool value) {
 }
 
 void
-VIC::switchBank(uint16_t addr) {
+VIC::switchBank(u16 addr) {
 
      if (glueLogic == GLUE_DISCRETE) {
          
@@ -115,7 +115,7 @@ VIC::updateBankAddr()
 }
     
 uint8_t
-VIC::peek(uint16_t addr)
+VIC::peek(u16 addr)
 {
     uint8_t result;
     
@@ -295,7 +295,7 @@ VIC::peek(uint16_t addr)
 }
 
 uint8_t
-VIC::spypeek(uint16_t addr)
+VIC::spypeek(u16 addr)
 {
     assert(addr <= 0x3F);
     
@@ -442,7 +442,7 @@ VIC::spypeek(uint16_t addr)
 }
 
 void
-VIC::poke(uint16_t addr, uint8_t value)
+VIC::poke(u16 addr, uint8_t value)
 {
     assert(addr < 0x40);
  
@@ -621,7 +621,7 @@ VIC::poke(uint16_t addr, uint8_t value)
 }
 
 uint8_t
-VIC::memAccess(uint16_t addr)
+VIC::memAccess(u16 addr)
 {
     assert((addr & 0xC000) == 0); // 14 bit address
     assert((bankAddr & 0x3FFF) == 0); // multiple of 16 KB
@@ -645,7 +645,7 @@ VIC::memAccess(uint16_t addr)
 
 /*
  uint8_t
- VIC::memAccess(uint16_t addr)
+ VIC::memAccess(u16 addr)
  {
  uint8_t result;
  
@@ -718,14 +718,14 @@ VIC::memAccess(uint16_t addr)
  */
 
 uint8_t
-VIC::memSpyAccess(uint16_t addr)
+VIC::memSpyAccess(u16 addr)
 {
     uint8_t result;
     
     assert((addr & 0xC000) == 0);
     assert((bankAddr & 0x3FFF) == 0);
     
-    uint16_t addrBus = bankAddr | addr;
+    u16 addrBus = bankAddr | addr;
     
     if (getUltimax()) {
         
@@ -760,7 +760,7 @@ VIC::memSpyAccess(uint16_t addr)
 }
 
 bool
-VIC::isCharRomAddr(uint16_t addr)
+VIC::isCharRomAddr(u16 addr)
 {
     addr = (addr | bankAddr) >> 12;
     return addr == 1 || addr == 9;
@@ -773,7 +773,7 @@ VIC::cAccess()
     if (BApulledDownForAtLeastThreeCycles()) {
         
         // |VM13|VM12|VM11|VM10| VC9| VC8| VC7| VC6| VC5| VC4| VC3| VC2| VC1| VC0|
-        uint16_t addr = (VM13VM12VM11VM10() << 6) | vc;
+        u16 addr = (VM13VM12VM11VM10() << 6) | vc;
         
         dataBusPhi2 = memAccess(addr);
         videoMatrix[vmli] = dataBusPhi2;
@@ -808,7 +808,7 @@ VIC::cAccess()
 void
 VIC::gAccess()
 {
-    uint16_t addr;
+    u16 addr;
     
     if (displayState) {
         
@@ -857,7 +857,7 @@ VIC::gAccess()
     }
 }
 
-uint16_t
+u16
 VIC::gAccessAddr85x()
 {
     uint8_t oldBmm = GET_BIT(reg.delayed.ctrl1, 5);
@@ -866,21 +866,21 @@ VIC::gAccessAddr85x()
     return gAccessAddr(oldBmm, oldEcm);
 }
 
-uint16_t
+u16
 VIC::gAccessAddr65x()
 {
     uint8_t oldBmm = GET_BIT(reg.delayed.ctrl1, 5);
     uint8_t newBmm = GET_BIT(reg.current.ctrl1, 5);
     uint8_t newEcm = GET_BIT(reg.current.ctrl1, 6);
     
-    uint16_t result = gAccessAddr(oldBmm | newBmm, newEcm);
+    u16 result = gAccessAddr(oldBmm | newBmm, newEcm);
 
     // Check if BMM bit has just changed
     if (oldBmm != newBmm) {
         
         uint8_t oldEcm = GET_BIT(reg.delayed.ctrl1, 6);
-        uint16_t oldAddr = gAccessAddr(oldBmm, oldEcm);
-        uint16_t newAddr = gAccessAddr(newBmm, newEcm);
+        u16 oldAddr = gAccessAddr(oldBmm, oldEcm);
+        u16 newAddr = gAccessAddr(newBmm, newEcm);
 
         // Check if address changes to char ROM. In this case, the result
         // is a mixture of oldAddr and newAddr (seen in VICE)
@@ -893,10 +893,10 @@ VIC::gAccessAddr65x()
     return result;
 }
 
-uint16_t
+u16
 VIC::gAccessAddr(bool bmm, bool ecm)
 {
-    uint16_t addr;
+    u16 addr;
 
     /*  Address source:
      *  BMM=1: |CB13| VC9| VC8|VC7|VC6|VC5|VC4|VC3|VC2|VC1|VC0|RC2|RC1|RC0|

@@ -10,7 +10,7 @@
 #include "C64.h"
 
 void
-Supergames::pokeIO2(uint16_t addr, uint8_t value)
+Supergames::pokeIO2(u16 addr, uint8_t value)
 {
     /* Bits 0, 1: Bank bits 0 and 1
      * Bits 2:    Exrom / Game control

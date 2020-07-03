@@ -70,7 +70,7 @@ VIC::getSpriteInfo(unsigned i)
 }
 
 void
-VIC::setMemoryBankAddr(uint16_t addr)
+VIC::setMemoryBankAddr(u16 addr)
 {
     assert(addr % 0x4000 == 0);
     
@@ -80,7 +80,7 @@ VIC::setMemoryBankAddr(uint16_t addr)
 }
 
 void
-VIC::setScreenMemoryAddr(uint16_t addr)
+VIC::setScreenMemoryAddr(u16 addr)
 {
     assert((addr & ~0x3C00) == 0);
     
@@ -91,7 +91,7 @@ VIC::setScreenMemoryAddr(uint16_t addr)
 }
 
 void
-VIC::setCharacterMemoryAddr(uint16_t addr)
+VIC::setCharacterMemoryAddr(u16 addr)
 {
     assert((addr & ~0x3800) == 0);
     
@@ -180,7 +180,7 @@ VIC::setHorizontalRasterScroll(uint8_t offset)
 }
 
 void
-VIC::setRasterInterruptLine(uint16_t line)
+VIC::setRasterInterruptLine(u16 line)
 {
     suspend();
     rasterIrqLine = line & 0xFF;
@@ -211,7 +211,7 @@ VIC::toggleRasterInterruptFlag()
 //
 
 void
-VIC::setSpriteX(unsigned nr, uint16_t x)
+VIC::setSpriteX(unsigned nr, u16 x)
 {
     assert(nr < 8);
     x = MIN(x, 511);
@@ -241,7 +241,7 @@ VIC::setSpritePtr(unsigned nr, uint8_t ptr)
     debug("setSpritePtr(%d, %d)\n", nr, ptr);
     
     suspend();
-    uint16_t addr = (VM13VM12VM11VM10() << 6) | 0x03F8 | nr;
+    u16 addr = (VM13VM12VM11VM10() << 6) | 0x03F8 | nr;
     c64->mem.ram[addr] = ptr;
     resume();
 }

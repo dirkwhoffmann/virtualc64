@@ -33,7 +33,7 @@ CartridgeRom::CartridgeRom(uint8_t **buffer) : CartridgeRom()
 }
 */
 
-CartridgeRom::CartridgeRom(uint16_t size, uint16_t loadAddress, const uint8_t *buffer) : CartridgeRom()
+CartridgeRom::CartridgeRom(u16 size, u16 loadAddress, const uint8_t *buffer) : CartridgeRom()
 {
     this->size = size;
     this->loadAddress = loadAddress;
@@ -89,7 +89,7 @@ CartridgeRom::mapsToH() {
 }
 
 uint8_t
-CartridgeRom::peek(uint16_t addr)
+CartridgeRom::peek(u16 addr)
 {
     assert(addr < size);
     return rom[addr];

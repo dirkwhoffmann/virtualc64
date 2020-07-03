@@ -10,7 +10,7 @@
 #include "C64.h"
 
 uint8_t
-Rex::peekIO2(uint16_t addr)
+Rex::peekIO2(u16 addr)
 {
     // Any read access to $DF00 - $DFBF disables the ROM
     if (addr >= 0xDF00 && addr <= 0xDFBF) {

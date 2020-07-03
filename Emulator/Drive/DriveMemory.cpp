@@ -55,7 +55,7 @@ VC1541Memory::dump()
 }
 
 uint8_t 
-VC1541Memory::peek(uint16_t addr)
+VC1541Memory::peek(u16 addr)
 {
     if (addr >= 0x8000) {
         
@@ -82,7 +82,7 @@ VC1541Memory::peek(uint16_t addr)
 }
 
 uint8_t
-VC1541Memory::spypeek(uint16_t addr)
+VC1541Memory::spypeek(u16 addr)
 {
     if (addr >= 0x8000) {
         return rom[addr & 0x3FFF];
@@ -97,7 +97,7 @@ VC1541Memory::spypeek(uint16_t addr)
 }
 
 void 
-VC1541Memory::poke(uint16_t addr, uint8_t value)
+VC1541Memory::poke(u16 addr, uint8_t value)
 {
     if (addr >= 0x8000) { // ROM
         return;

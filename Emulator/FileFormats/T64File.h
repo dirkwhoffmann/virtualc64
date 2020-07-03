@@ -79,7 +79,7 @@ public:
     const char *getNameOfItem();
     size_t getSizeOfItem();
     void seekItem(long offset);
-    uint16_t getDestinationAddrOfItem();
+    u16 getDestinationAddrOfItem();
 
    
     //

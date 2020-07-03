@@ -40,12 +40,12 @@ public:
     bool cartIsHidden() { return !cartIsVisible(); }
 
     void updatePeekPokeLookupTables() override;
-    uint8_t peek(uint16_t addr) override;
-    uint8_t peekIO1(uint16_t addr) override;
-    uint8_t peekIO2(uint16_t addr) override;
-    void poke(uint16_t addr, uint8_t value) override;
-    void pokeIO1(uint16_t addr, uint8_t value) override;
-    void pokeIO2(uint16_t addr, uint8_t value) override;
+    uint8_t peek(u16 addr) override;
+    uint8_t peekIO1(u16 addr) override;
+    uint8_t peekIO2(u16 addr) override;
+    void poke(u16 addr, uint8_t value) override;
+    void pokeIO1(u16 addr, uint8_t value) override;
+    void pokeIO2(u16 addr, uint8_t value) override;
 };
 
 

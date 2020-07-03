@@ -93,8 +93,8 @@ EasyFlash::loadChip(unsigned nr, CRTFile *c)
 {
     static int bank;
     
-    uint16_t chipSize = c->chipSize(nr);
-    uint16_t chipAddr = c->chipAddr(nr);
+    u16 chipSize = c->chipSize(nr);
+    u16 chipAddr = c->chipAddr(nr);
     uint8_t *chipData = c->chipData(nr);
 
     if (nr == 0) {
@@ -136,7 +136,7 @@ EasyFlash::loadChip(unsigned nr, CRTFile *c)
 }
 
 uint8_t
-EasyFlash::peek(uint16_t addr)
+EasyFlash::peek(u16 addr)
 {
     if (isROMLaddr(addr)) {
         return flashRomL.peek(bank, addr & 0x1FFF);
@@ -152,7 +152,7 @@ EasyFlash::peek(uint16_t addr)
 
 /*
 uint8_t
-EasyFlash::spypeek(uint16_t addr)
+EasyFlash::spypeek(u16 addr)
 {
     if (isROMLaddr(addr)) {
         return flashRomL.spypeek(bank, addr & 0x1FFF);
@@ -168,7 +168,7 @@ EasyFlash::spypeek(uint16_t addr)
 */
 
 void
-EasyFlash::poke(uint16_t addr, uint8_t value)
+EasyFlash::poke(u16 addr, uint8_t value)
 {
     if (isROMLaddr(addr)) {
         flashRomL.poke(bank, addr & 0x1FFF, value);
@@ -182,20 +182,20 @@ EasyFlash::poke(uint16_t addr, uint8_t value)
 }
 
 uint8_t
-EasyFlash::peekIO1(uint16_t addr)
+EasyFlash::peekIO1(u16 addr)
 {
     // debug("WARNING: peekIO1\n");
     return 0;
 }
 
 uint8_t
-EasyFlash::peekIO2(uint16_t addr)
+EasyFlash::peekIO2(u16 addr)
 {
     return peekRAM(addr & 0xFF);
 }
 
 void
-EasyFlash::pokeIO1(uint16_t addr, uint8_t value)
+EasyFlash::pokeIO1(u16 addr, uint8_t value)
 {
     if (addr == 0xDE00) { // Bank register
         
@@ -266,7 +266,7 @@ EasyFlash::pokeIO1(uint16_t addr, uint8_t value)
 }
 
 void
-EasyFlash::pokeIO2(uint16_t addr, uint8_t value)
+EasyFlash::pokeIO2(u16 addr, uint8_t value)
 {
     pokeRAM(addr & 0xFF, value);
 }

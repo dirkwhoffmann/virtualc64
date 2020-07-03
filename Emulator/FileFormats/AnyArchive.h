@@ -111,7 +111,7 @@ public:
      *            to this location.
      *  @seealso  flashItem()
      */
-    virtual uint16_t getDestinationAddrOfItem() { return 0; }
+    virtual u16 getDestinationAddrOfItem() { return 0; }
     
     /*! @brief    Flashes the selected item into memory.
      *  @param    buffer must be a pointer to the C64 RAM

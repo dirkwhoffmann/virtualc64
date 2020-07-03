@@ -21,7 +21,7 @@ FreezeFrame::reset()
 }
 
 uint8_t
-FreezeFrame::peekIO1(uint16_t addr)
+FreezeFrame::peekIO1(u16 addr)
 {
     // Reading from IO1 switched to 8K game mode
     c64->expansionport.setCartridgeMode(CRT_8K);
@@ -29,7 +29,7 @@ FreezeFrame::peekIO1(uint16_t addr)
 }
 
 uint8_t
-FreezeFrame::peekIO2(uint16_t addr)
+FreezeFrame::peekIO2(u16 addr)
 {
     // Reading from IO2 disables the cartridge
     c64->expansionport.setCartridgeMode(CRT_OFF);

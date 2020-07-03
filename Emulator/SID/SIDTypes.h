@@ -35,8 +35,8 @@ typedef enum {
  */
 typedef struct {
     uint8_t reg[7];
-    uint16_t frequency;
-    uint16_t pulseWidth;
+    u16 frequency;
+    u16 pulseWidth;
     uint8_t waveform;
     bool ringMod;
     bool hardSync;
@@ -54,7 +54,7 @@ typedef struct {
  */
 typedef struct {
     uint8_t volume;
-    uint16_t filterCutoff;
+    u16 filterCutoff;
     uint8_t filterResonance;
     uint8_t filterModeBits;
     uint8_t filterType;

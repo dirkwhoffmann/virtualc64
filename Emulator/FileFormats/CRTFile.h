@@ -98,7 +98,7 @@ public:
     //
     
     //! @brief    Returns the version number of the cartridge.
-    uint16_t cartridgeVersion() { return LO_HI(data[0x15], data[0x14]); }
+    u16 cartridgeVersion() { return LO_HI(data[0x15], data[0x14]); }
     
     /*! @brief    Returns the cartridge type (e.g., SimonsBasic, FinalIII)
      *  @details  Don't confuse with ContainerType
@@ -126,18 +126,18 @@ public:
     uint8_t *chipData(unsigned nr) { return chips[nr]+0x10; }
     
     //! @brief    Returns the size of chip (8 KB or 16 KB)
-    uint16_t chipSize(unsigned nr) { return LO_HI(chips[nr][0xF], chips[nr][0xE]); }
+    u16 chipSize(unsigned nr) { return LO_HI(chips[nr][0xF], chips[nr][0xE]); }
     
     //! @brief    Returns the type of chip
     /*! @details  0 = ROM, 1 = RAM, 2 = Flash ROM
      */
-    uint16_t chipType(unsigned nr) { return LO_HI(chips[nr][0x9], chips[nr][0x8]); }
+    u16 chipType(unsigned nr) { return LO_HI(chips[nr][0x9], chips[nr][0x8]); }
     
     //! @brief    Return bank information (what is this exactly?)
-    uint16_t chipBank(unsigned nr) { return LO_HI(chips[nr][0xB], chips[nr][0xA]); }
+    u16 chipBank(unsigned nr) { return LO_HI(chips[nr][0xB], chips[nr][0xA]); }
     
     //! Returns start of chip rom in address space
-    uint16_t chipAddr(unsigned nr) { return LO_HI(chips[nr][0xD], chips[nr][0xC]); }
+    u16 chipAddr(unsigned nr) { return LO_HI(chips[nr][0xD], chips[nr][0xC]); }
 
 
     //

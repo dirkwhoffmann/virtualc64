@@ -34,7 +34,7 @@ private:
      *            The value is read is from the currently visible memory.
      *  @seealso  spypeek
      */
-	virtual uint8_t peek(uint16_t addr) = 0;
+	virtual uint8_t peek(u16 addr) = 0;
 
     //! @brief    Peeks a byte from the zero page.
     virtual uint8_t peekZP(uint8_t addr) = 0;
@@ -47,12 +47,12 @@ public:
     /*! @brief    Peeks a byte from memory without causing side effects.
      *  seealso   peek
      */
-    virtual uint8_t spypeek(uint16_t addr) = 0;
+    virtual uint8_t spypeek(u16 addr) = 0;
     
     /*! @brief    Pokes a byte into memory.
      *  @details  Emulates a native write access including all side effects.
      */
-    virtual void poke(uint16_t addr, uint8_t value) = 0;
+    virtual void poke(u16 addr, uint8_t value) = 0;
 
     //! @brief    Pokes a byte into the zero page.
     virtual void pokeZP(uint8_t addr, uint8_t value) = 0;

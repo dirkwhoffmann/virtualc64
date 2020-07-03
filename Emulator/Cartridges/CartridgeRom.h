@@ -24,7 +24,7 @@ class CartridgeRom : public HardwareComponent {
     public:
     
     //! @brief    Size in bytes
-    uint16_t size = 0;
+    u16 size = 0;
     
     /*! @brief    Load address
      *  @details  This value is taken from the .CRT file. Possible values are
@@ -32,14 +32,14 @@ class CartridgeRom : public HardwareComponent {
      *            mapping into the ROMH area in 16KB game mode, and $E000 for
      *            chips mapping into the ROMH area in ultimax mode.
      */
-    uint16_t loadAddress = 0;
+    u16 loadAddress = 0;
     
     public:
     
     //! @brief    Constructor
     CartridgeRom();
     // CartridgeRom(uint8_t **buffer);
-    CartridgeRom(uint16_t _size, uint16_t _loadAddress, const uint8_t *buffer = NULL);
+    CartridgeRom(u16 _size, u16 _loadAddress, const uint8_t *buffer = NULL);
     
     //! @brief    Destructor
     ~CartridgeRom();
@@ -59,13 +59,13 @@ class CartridgeRom : public HardwareComponent {
     bool mapsToH();
     
     //! @brief    Reads a ROM cell
-    uint8_t peek(uint16_t addr);
+    uint8_t peek(u16 addr);
     
     //! @brief    Reads a ROM cell without side effects
-    uint8_t spypeek(uint16_t addr) { return peek(addr); }
+    uint8_t spypeek(u16 addr) { return peek(addr); }
     
     //! @brief    Writes a ROM cell
-    void poke(uint16_t addr, uint8_t value) { }
+    void poke(u16 addr, uint8_t value) { }
     
 };
 

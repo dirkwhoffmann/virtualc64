@@ -65,27 +65,27 @@ GeoRAM::offset(uint8_t addr)
 }
 
 uint8_t
-GeoRAM::peekIO1(uint16_t addr)
+GeoRAM::peekIO1(u16 addr)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
     return peekRAM(offset(addr - 0xDE00));
 }
 
 uint8_t
-GeoRAM::peekIO2(uint16_t addr)
+GeoRAM::peekIO2(u16 addr)
 {
     return 0;
 }
 
 void
-GeoRAM::pokeIO1(uint16_t addr, uint8_t value)
+GeoRAM::pokeIO1(u16 addr, uint8_t value)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
     pokeRAM(offset(addr - 0xDE00), value);
 }
 
 void
-GeoRAM::pokeIO2(uint16_t addr, uint8_t value)
+GeoRAM::pokeIO2(u16 addr, uint8_t value)
 {
     if (addr & 1) {
         bank = value; // Bank select

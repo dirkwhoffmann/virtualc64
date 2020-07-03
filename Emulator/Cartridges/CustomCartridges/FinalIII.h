@@ -57,9 +57,9 @@ public:
     
     void resetCartConfig();
     
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t peekIO2(uint16_t addr);
-    void pokeIO2(uint16_t addr, uint8_t value);
+    uint8_t peekIO1(u16 addr);
+    uint8_t peekIO2(u16 addr);
+    void pokeIO2(u16 addr, uint8_t value);
     void nmiDidTrigger();
     
     

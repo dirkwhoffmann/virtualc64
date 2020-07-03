@@ -143,7 +143,7 @@ D64File::makeWithAnyArchive(AnyArchive *otherArchive)
                                      otherArchive->getSizeOfItem());
         
         // Every file is preceded with two bytes containing its load address
-        uint16_t loadAddr = otherArchive->getDestinationAddrOfItem();
+        u16 loadAddr = otherArchive->getDestinationAddrOfItem();
         archive->writeByteToSector(LO_BYTE(loadAddr), &track, &sector);
         archive->writeByteToSector(HI_BYTE(loadAddr), &track, &sector);
         
@@ -404,12 +404,12 @@ D64File::readItem()
     return result;
 }
 
-uint16_t
+u16
 D64File::getDestinationAddrOfItem()
 {
     int track;
     int sector;
-    uint16_t result;
+    u16 result;
     
     assert(selectedItem != -1);
     
@@ -934,7 +934,7 @@ D64File::writeDirectoryEntry(unsigned nr, const char *name,
     // 1E-1F: File size in sectors, low/high byte order
     pos = offset(18, sector) + rel + 0x1E;
     filesize += 2; // Each file stores 2 additional bytes containing the load address
-    uint16_t fileSizeInSectors = (filesize % 254 == 0) ? filesize / 254 : filesize / 254 + 1; 
+    u16 fileSizeInSectors = (filesize % 254 == 0) ? filesize / 254 : filesize / 254 + 1; 
     data[pos++] = LO_BYTE(fileSizeInSectors);
     data[pos++] = HI_BYTE(fileSizeInSectors);
 

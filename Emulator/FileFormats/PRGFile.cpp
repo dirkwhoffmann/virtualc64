@@ -121,7 +121,7 @@ PRGFile::seekItem(long offset)
         iFp = -1;
 }
 
-uint16_t 
+u16 
 PRGFile::getDestinationAddrOfItem()
 {
 	return LO_HI(data[0], data[1]);

@@ -27,11 +27,11 @@ public:
     //! @functiongroup Methods from Cartridge
     //
     
-    uint8_t peek(uint16_t addr);
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t peekIO2(uint16_t addr);
+    uint8_t peek(u16 addr);
+    uint8_t peekIO1(u16 addr);
+    uint8_t peekIO2(u16 addr);
     
-    void pokeIO1(uint16_t addr, uint8_t value);
+    void pokeIO1(u16 addr, uint8_t value);
     
     unsigned numButtons() { return 2; }
     const char *getButtonTitle(unsigned nr);
@@ -79,13 +79,13 @@ public:
     
     void resetCartConfig();
     
-    uint8_t peek(uint16_t addr);
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t peekIO2(uint16_t addr);
+    uint8_t peek(u16 addr);
+    uint8_t peekIO1(u16 addr);
+    uint8_t peekIO2(u16 addr);
     
-    void poke(uint16_t addr, uint8_t value);
-    void pokeIO1(uint16_t addr, uint8_t value);
-    void pokeIO2(uint16_t addr, uint8_t value);
+    void poke(u16 addr, uint8_t value);
+    void pokeIO1(u16 addr, uint8_t value);
+    void pokeIO2(u16 addr, uint8_t value);
     
     unsigned numButtons() { return 2; }
     const char *getButtonTitle(unsigned nr);
@@ -106,7 +106,7 @@ public:
     virtual bool resetFreezeMode() { return (control & 0x40) != 0; }
     
     //! @brief  Returns true if the cartridge RAM shows up at addr
-    virtual bool ramIsEnabled(uint16_t addr); 
+    virtual bool ramIsEnabled(u16 addr); 
 };
 
 
@@ -137,7 +137,7 @@ public:
     
     bool game();
     bool exrom();
-    bool ramIsEnabled(uint16_t addr);
+    bool ramIsEnabled(u16 addr);
 };
 
 #endif

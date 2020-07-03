@@ -412,7 +412,7 @@ VIC::resetScreenBuffers()
     }
 }
 
-uint16_t
+u16
 VIC::rasterline()
 {
     return c64->rasterLine;
@@ -450,7 +450,7 @@ VIC::checkVerticalFrameFF()
 }
 
 void
-VIC::checkFrameFlipflopsLeft(uint16_t comparisonValue)
+VIC::checkFrameFlipflopsLeft(u16 comparisonValue)
 {
     /* "6. If the X coordinate reaches the left comparison value and the
      *     vertical border flip flop is not set, the main flip flop is reset."
@@ -466,7 +466,7 @@ VIC::checkFrameFlipflopsLeft(uint16_t comparisonValue)
 }
 
 void
-VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
+VIC::checkFrameFlipflopsRight(u16 comparisonValue)
 {
     /* "1. If the X coordinate reaches the right comparison value, the main
      *     border flip flop is set." [C.B.]
@@ -534,7 +534,7 @@ VIC::triggerIrq(uint8_t source)
     delay |= VICUpdateIrqLine;
 }
 
-uint16_t
+u16
 VIC::lightpenX()
 {
     uint8_t cycle = c64->rasterCycle; 
@@ -564,7 +564,7 @@ VIC::lightpenX()
     }
 }
 
-uint16_t
+u16
 VIC::lightpenY()
 {
     return yCounter;
@@ -776,7 +776,7 @@ VIC::endFrame()
 }
 
 void 
-VIC::beginRasterline(uint16_t line)
+VIC::beginRasterline(u16 line)
 {
     verticalFrameFFsetCond = false;
 
@@ -856,7 +856,7 @@ VIC::endRasterline()
         */
 
         // Advance pixelBuffer
-        uint16_t nextline = c64->rasterLine - PAL_UPPER_VBLANK + 1;
+        u16 nextline = c64->rasterLine - PAL_UPPER_VBLANK + 1;
         if (nextline < PAL_RASTERLINES) {
             pixelBuffer = currentScreenBuffer + (nextline * NTSC_PIXELS);
         }

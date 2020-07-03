@@ -71,8 +71,8 @@ Expert::didSaveToBuffer(uint8_t **buffer)
 void
 Expert::loadChip(unsigned nr, CRTFile *c)
 {
-    uint16_t chipSize = c->chipSize(nr);
-    uint16_t chipAddr = c->chipAddr(nr);
+    u16 chipSize = c->chipSize(nr);
+    u16 chipAddr = c->chipAddr(nr);
     uint8_t *chipData = c->chipData(nr);
     
     if (nr != 0 || chipSize != 0x2000 || chipAddr != 0x8000) {
@@ -90,7 +90,7 @@ Expert::loadChip(unsigned nr, CRTFile *c)
 }
 
 uint8_t
-Expert::peek(uint16_t addr)
+Expert::peek(u16 addr)
 {
     if (cartridgeRamIsVisible(addr)) {
         
@@ -105,7 +105,7 @@ Expert::peek(uint16_t addr)
 }
 
 uint8_t
-Expert::peekIO1(uint16_t addr)
+Expert::peekIO1(u16 addr)
 {
     // Any IO1 access disables the cartridge
     active = false;
@@ -114,7 +114,7 @@ Expert::peekIO1(uint16_t addr)
 }
 
 void
-Expert::poke(uint16_t addr, uint8_t value)
+Expert::poke(u16 addr, uint8_t value)
 {
     if (cartridgeRamIsVisible(addr)) {
         
@@ -131,7 +131,7 @@ Expert::poke(uint16_t addr, uint8_t value)
 }
 
 void
-Expert::pokeIO1(uint16_t addr, uint8_t value)
+Expert::pokeIO1(u16 addr, uint8_t value)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
     
@@ -194,7 +194,7 @@ Expert::getSwitchDescription(int8_t pos)
 }
 
 bool
-Expert::cartridgeRamIsVisible(uint16_t addr)
+Expert::cartridgeRamIsVisible(u16 addr)
 {
     if (addr < 0x8000) {
         assert(false); // Should never be called for this address space
@@ -210,7 +210,7 @@ Expert::cartridgeRamIsVisible(uint16_t addr)
 }
 
 bool
-Expert::cartridgeRamIsWritable(uint16_t addr)
+Expert::cartridgeRamIsWritable(u16 addr)
 {
     return isROMLaddr(addr);
 }

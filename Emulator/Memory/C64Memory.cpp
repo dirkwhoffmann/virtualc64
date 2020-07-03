@@ -137,7 +137,7 @@ C64Memory::dump()
 	msg("Character ROM: %s loaded\n", characterRomIsLoaded() ? "" : " not");
     msg("   Kernal ROM: %s loaded\n", kernalRomIsLoaded() ? "" : " not");
 	
-    for (uint16_t addr = 0; addr < 0xFFFF; addr++) {
+    for (u16 addr = 0; addr < 0xFFFF; addr++) {
         if (c64->cpu.hardBreakpoint(addr))
 			msg("Hard breakpoint at %04X\n", addr);
         if (c64->cpu.softBreakpoint(addr))
@@ -146,7 +146,7 @@ C64Memory::dump()
 	msg("\n");
     
     /*
-    for (uint16_t addr = 0x1000; addr < 0xB000; addr += 0x400) {
+    for (u16 addr = 0x1000; addr < 0xB000; addr += 0x400) {
         msg("%04X: ", addr);
         for (unsigned i = 0; i < 30; i++) {
             msg("%02X ", ram[addr + i]);
@@ -197,7 +197,7 @@ C64Memory::updatePeekPokeLookupTables()
 }
 
 uint8_t
-C64Memory::peek(uint16_t addr, MemoryType source)
+C64Memory::peek(u16 addr, MemoryType source)
 {
     switch(source) {
         
@@ -233,7 +233,7 @@ C64Memory::peek(uint16_t addr, MemoryType source)
 }
 
 uint8_t
-C64Memory::peek(uint16_t addr, bool gameLine, bool exromLine)
+C64Memory::peek(u16 addr, bool gameLine, bool exromLine)
 {
     uint8_t game  = gameLine ? 0x08 : 0x00;
     uint8_t exrom = exromLine ? 0x10 : 0x00;
@@ -255,7 +255,7 @@ C64Memory::peekZP(uint8_t addr)
 }
 
 uint8_t
-C64Memory::peekIO(uint16_t addr)
+C64Memory::peekIO(u16 addr)
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
     
@@ -312,7 +312,7 @@ C64Memory::peekIO(uint16_t addr)
 }
 
 uint8_t
-C64Memory::spypeek(uint16_t addr, MemoryType source)
+C64Memory::spypeek(u16 addr, MemoryType source)
 {
     switch(source) {
             
@@ -342,7 +342,7 @@ C64Memory::spypeek(uint16_t addr, MemoryType source)
 }
 
 uint8_t
-C64Memory::spypeekIO(uint16_t addr)
+C64Memory::spypeekIO(u16 addr)
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
     
@@ -387,7 +387,7 @@ C64Memory::spypeekIO(uint16_t addr)
 }
 
 void
-C64Memory::poke(uint16_t addr, uint8_t value, MemoryType target)
+C64Memory::poke(u16 addr, uint8_t value, MemoryType target)
 {
     switch(target) {
             
@@ -425,7 +425,7 @@ C64Memory::poke(uint16_t addr, uint8_t value, MemoryType target)
 }
 
 void
-C64Memory::poke(uint16_t addr, uint8_t value, bool gameLine, bool exromLine)
+C64Memory::poke(u16 addr, uint8_t value, bool gameLine, bool exromLine)
 {
     uint8_t game  = gameLine ? 0x08 : 0x00;
     uint8_t exrom = exromLine ? 0x10 : 0x00;
@@ -447,7 +447,7 @@ C64Memory::pokeZP(uint8_t addr, uint8_t value)
 }
 
 void
-C64Memory::pokeIO(uint16_t addr, uint8_t value)
+C64Memory::pokeIO(u16 addr, uint8_t value)
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
     
@@ -507,7 +507,7 @@ C64Memory::pokeIO(uint16_t addr, uint8_t value)
     assert(false);
 }
 
-uint16_t
+u16
 C64Memory::nmiVector() {
     
     if (peekSrc[0xF] != M_ROM || kernalRomIsLoaded()) {
@@ -517,7 +517,7 @@ C64Memory::nmiVector() {
     }
 }
 
-uint16_t
+u16
 C64Memory::irqVector() {
     
     if (peekSrc[0xF] != M_ROM || kernalRomIsLoaded()) {
@@ -527,7 +527,7 @@ C64Memory::irqVector() {
     }
 }
 
-uint16_t
+u16
 C64Memory::resetVector() {
     
     if (peekSrc[0xF] != M_ROM || kernalRomIsLoaded()) {

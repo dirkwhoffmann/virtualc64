@@ -28,9 +28,9 @@ public:
     
     
     void reset();
-    uint8_t peekIO1(uint16_t addr) { return control; }
-    uint8_t peekIO2(uint16_t addr) { return 0; }
-    void pokeIO1(uint16_t addr, uint8_t value);
+    uint8_t peekIO1(u16 addr) { return control; }
+    uint8_t peekIO2(u16 addr) { return 0; }
+    void pokeIO1(u16 addr, uint8_t value);
 };
 
 #endif

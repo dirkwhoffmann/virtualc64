@@ -313,9 +313,9 @@ typedef enum {
 #define FETCH_POINTER_ADDR \
     if (likely(rdyLine)) regIDL = mem->peek(regPC++); else return true;
 #define FETCH_ADDR_LO_INDIRECT \
-    if (likely(rdyLine)) regADL = mem->peek((uint16_t)regIDL++); else return true;
+    if (likely(rdyLine)) regADL = mem->peek((u16)regIDL++); else return true;
 #define FETCH_ADDR_HI_INDIRECT \
-    if (likely(rdyLine)) regADH = mem->peek((uint16_t)regIDL++); else return true;
+    if (likely(rdyLine)) regADH = mem->peek((u16)regIDL++); else return true;
 #define IDLE_FETCH \
     if (likely(rdyLine)) (void)mem->peek(regPC); else return true;
 
