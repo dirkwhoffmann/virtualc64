@@ -34,9 +34,12 @@ FastSID::FastSID(C64 &ref) : C64Component(ref)
 {
 	setDescription("FastSID");
     
-    // Register sub components
-    HardwareComponent *subcomponents[] = { &voice[0], &voice[1], &voice[2], NULL };
-    registerSubComponents(subcomponents, sizeof(subcomponents));
+    subComponents = vector<HardwareComponent *> {
+        
+        &voice[0],
+        &voice[1],
+        &voice[2]
+    };
     
     // Register snapshot items
     SnapshotItem items[] = {

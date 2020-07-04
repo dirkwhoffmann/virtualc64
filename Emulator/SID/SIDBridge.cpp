@@ -16,10 +16,12 @@ SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
     fastsid.bridge = this;
     resid.bridge = this;
     
-    // Register sub components
-    HardwareComponent *subcomponents[] = { &resid, &fastsid, NULL };
-    registerSubComponents(subcomponents, sizeof(subcomponents));
-
+    subComponents = vector<HardwareComponent *> {
+        
+        &resid,
+        &fastsid
+    };
+    
     // Register snapshot items
     SnapshotItem items[] = {
         

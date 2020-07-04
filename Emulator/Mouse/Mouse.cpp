@@ -13,10 +13,13 @@ Mouse::Mouse(C64 &ref) : C64Component(ref)
 {
     setDescription("Mouse");
     
-    // Register sub components
-    HardwareComponent *subcomponents[] = { &mouse1350, &mouse1351, &mouseNeos, NULL };
-    registerSubComponents(subcomponents, sizeof(subcomponents));
-
+    subComponents = vector<HardwareComponent *> {
+        
+        &mouse1350,
+        &mouse1351,
+        &mouseNeos
+    };
+    
     config.model = MOUSE1350;
 }
 

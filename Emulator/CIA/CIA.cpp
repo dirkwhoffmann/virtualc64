@@ -13,10 +13,8 @@ CIA::CIA(C64 &ref) : C64Component(ref)
 {
 	setDescription("CIA");
     
-    // Register sub components
-    HardwareComponent *subcomponents[] = { &tod, NULL };
-    registerSubComponents(subcomponents, sizeof(subcomponents));
-
+    subComponents = vector<HardwareComponent *> { &tod };
+    
     // Register snapshot items
     SnapshotItem items[] = {
 

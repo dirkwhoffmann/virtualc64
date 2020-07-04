@@ -14,9 +14,6 @@ HardwareComponent::~HardwareComponent()
 {
 	debug(RUN_DEBUG, "Terminated\n");
     
-    if (subComponents)
-        delete [] subComponents;
-
     if (snapshotItems)
         delete [] snapshotItems;
 }
@@ -28,19 +25,18 @@ HardwareComponent::setC64(C64 *c64)
     assert(c64 != NULL);
     
     this->c64 = c64;
-    if (subComponents != NULL)
-        for (unsigned i = 0; subComponents[i] != NULL; i++)
-            subComponents[i]->setC64(c64);
+    for (HardwareComponent *c : subComponents) {
+        c->setC64(c64);
+    }
 }
 
 void
 HardwareComponent::reset()
 {
-    // Reset all sub components
-    if (subComponents != NULL)
-        for (unsigned i = 0; subComponents[i] != NULL; i++) {
-            subComponents[i]->reset();
-        }
+    // Reset all subcomponents
+    for (HardwareComponent *c : subComponents) {
+        c->reset();
+    }
     
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
     if (snapshotItems != NULL)
@@ -54,10 +50,10 @@ HardwareComponent::reset()
 void
 HardwareComponent::ping()
 {
-    // Ping all sub components
-    if (subComponents != NULL)
-        for (unsigned i = 0; subComponents[i] != NULL; i++)
-            subComponents[i]->ping();
+    // Ping all subcomponents
+    for (HardwareComponent *c : subComponents) {
+        c->ping();
+    }
 }
 
 void
@@ -65,10 +61,10 @@ HardwareComponent::setClockFrequency(u32 frequency)
 {
     assert(frequency == PAL_CLOCK_FREQUENCY || frequency == NTSC_CLOCK_FREQUENCY);
     
-    // Call method for all sub components
-    if (subComponents != NULL)
-        for (unsigned i = 0; subComponents[i] != NULL; i++)
-            subComponents[i]->setClockFrequency(frequency);
+    // Inform all subcomponents
+    for (HardwareComponent *c : subComponents) {
+        c->setClockFrequency(frequency);
+    }
 }
 
 void
@@ -81,19 +77,6 @@ void
 HardwareComponent::resume()
 {
     c64->resume();
-}
-
-void
-HardwareComponent::registerSubComponents(HardwareComponent **components, unsigned length) {
-    
-    assert(components != NULL);
-    assert(length % sizeof(HardwareComponent *) == 0);
-    
-    unsigned numItems = length / sizeof(HardwareComponent *);
-    
-    // Allocate new array on heap and copy array data
-    subComponents = new HardwareComponent*[numItems];
-    std::copy(components, components + numItems, &subComponents[0]);
 }
 
 void
@@ -118,10 +101,10 @@ HardwareComponent::stateSize()
 {
     u32 result = snapshotSize;
     
-    if (subComponents != NULL)
-        for (unsigned i = 0; subComponents[i] != NULL; i++)
-            result += subComponents[i]->stateSize();
-
+    for (HardwareComponent *c : subComponents) {
+        result += c->stateSize();
+    }
+        
     return result;
 }
 
@@ -135,11 +118,12 @@ HardwareComponent::loadFromBuffer(u8 **buffer)
     // Call delegation method
     willLoadFromBuffer(buffer);
     
+    
     // Load internal state of all sub components
-    if (subComponents != NULL)
-        for (unsigned i = 0; subComponents[i] != NULL; i++)
-            subComponents[i]->loadFromBuffer(buffer);
-
+    for (HardwareComponent *c : subComponents) {
+        c->loadFromBuffer(buffer);
+    }
+    
     // Load own internal state
     void *data; size_t size; int flags;
     for (unsigned i = 0; snapshotItems != NULL && snapshotItems[i].data != NULL; i++) {
@@ -192,9 +176,8 @@ HardwareComponent::saveToBuffer(u8 **buffer)
     willSaveToBuffer(buffer);
     
     // Save internal state of all sub components
-    if (subComponents != NULL) {
-        for (unsigned i = 0; subComponents[i] != NULL; i++)
-            subComponents[i]->saveToBuffer(buffer);
+    for (HardwareComponent *c : subComponents) {
+        c->saveToBuffer(buffer);
     }
     
     // Save own internal state

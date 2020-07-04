@@ -24,6 +24,12 @@ class C64;
  */
 class HardwareComponent : public C64Object {
 
+    public:
+
+    // The sub components of this component
+    vector<HardwareComponent *> subComponents;
+    
+    
 protected:
     
     /*! @brief   Type and behavior of a snapshot item
@@ -60,12 +66,9 @@ public:
      *            constructor of the C64 class.
      */
     C64 *c64 = NULL;
-    
+        
 protected:
-    
-    //! @brief    Sub components of this component
-    HardwareComponent **subComponents = NULL;
-    
+        
     //! @brief    List of snapshot items of this component
     SnapshotItem *snapshotItems = NULL;
     
@@ -151,16 +154,7 @@ public:
     //
     //! @functiongroup Registering snapshot items and sub components
     //
-    
-    /*! @brief    Registers all sub components for this component
-     *  @abstract Sub components are usually registered in the constructor of
-     *            a virtual component.
-     *  @param    items Pointer to the first element of a VirtualComponet* array.
-     *            The end of the array is marked by a NULL pointer.
-     *  @param    legth Size of the subComponent array in bytes.
-     */
-    void registerSubComponents(HardwareComponent **subComponents, unsigned length);
-    
+        
     /*! @brief    Registers all snapshot items for this component
      *  @abstract Snaphshot items are usually registered in the constructor of
      *            a virtual component.

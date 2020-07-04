@@ -14,12 +14,17 @@ VC1541::VC1541(unsigned nr, C64 &ref) : C64Component(ref)
     assert(nr == 1 || nr == 2);
     
     deviceNr = nr;
-    setDescription(deviceNr == 1 ? "Drive1" : "Drive2");
-    cpu.setDescription(deviceNr == 1 ? "Drive1CPU" : "Drive2CPU");
+    setDescription(nr == 1 ? "Drive1" : "Drive2");
+    cpu.setDescription(nr == 1 ? "Drive1CPU" : "Drive2CPU");
 	
-    // Register sub components
-    HardwareComponent *subcomponents[] = { &mem, &cpu, &via1, &via2, &disk, NULL };
-    registerSubComponents(subcomponents, sizeof(subcomponents));
+    subComponents = vector <HardwareComponent *> {
+        
+        &mem,
+        &cpu,
+        &via1,
+        &via2,
+        &disk
+    };
      
     // Register snapshot items
     SnapshotItem items[] = {

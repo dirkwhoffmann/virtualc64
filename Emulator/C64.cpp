@@ -66,8 +66,7 @@ C64::C64()
     alwaysWarp = false;
     warpLoad = false;
     
-    // Register sub components
-    HardwareComponent *subcomponents[] = {
+    subComponents = vector<HardwareComponent *> {
         
         &mem,
         &cpu,
@@ -83,10 +82,9 @@ C64::C64()
         &drive1,
         &drive2,
         &datasette,
-        &mouse,
-        NULL };
-    
-    registerSubComponents(subcomponents, sizeof(subcomponents));
+        &mouse
+    };
+
     setC64(this);
     
     // Register snapshot items
