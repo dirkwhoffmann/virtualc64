@@ -914,9 +914,9 @@ VIA1::portBexternal()
     // |  in   |               |  ack  |  out  |  in   |  out  |  in   |
     
     u8 external =
-    (c64->iec.atnLine ? 0x00 : 0x80) |
-    (c64->iec.clockLine ? 0x00 : 0x04) |
-    (c64->iec.dataLine ? 0x00 : 0x01);
+    (iec.atnLine ? 0x00 : 0x80) |
+    (iec.clockLine ? 0x00 : 0x04) |
+    (iec.dataLine ? 0x00 : 0x01);
     
     external |= 0x1A; // All "out" pins are read as 1
     
@@ -931,8 +931,7 @@ void
 VIA1::updatePB()
 {
     VIA6522::updatePB();
-    c64->iec.setNeedsUpdateDriveSide(); 
-    // c64->iec.updateIecLinesDriveSide();
+    iec.setNeedsUpdateDriveSide();
 }
 
 //

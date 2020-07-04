@@ -127,8 +127,8 @@ Disk::setModified(bool b)
 {
     if (b != modified) {
         modified = b;
-        c64->drive1.ping();
-        c64->drive2.ping();
+        drive1.ping();
+        drive2.ping();
     }
 }
 

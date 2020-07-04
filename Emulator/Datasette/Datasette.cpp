@@ -51,8 +51,8 @@ void
 Datasette::ping()
 {
     HardwareComponent::ping();
-    c64->putMessage(hasTape() ? MSG_VC1530_TAPE : MSG_VC1530_NO_TAPE);
-    c64->putMessage(MSG_VC1530_PROGRESS);
+    vc64.putMessage(hasTape() ? MSG_VC1530_TAPE : MSG_VC1530_NO_TAPE);
+    vc64.putMessage(MSG_VC1530_PROGRESS);
 }
 
 size_t
@@ -113,7 +113,7 @@ Datasette::insertTape(TAPFile *a)
     durationInCycles = headInCycles;
     rewind();
     
-    c64->putMessage(MSG_VC1530_TAPE);
+    vc64.putMessage(MSG_VC1530_TAPE);
     resume();
     
     return true;
@@ -139,7 +139,7 @@ Datasette::ejectTape()
     durationInCycles = 0;
     head = -1;
 
-    c64->putMessage(MSG_VC1530_NO_TAPE);
+    vc64.putMessage(MSG_VC1530_NO_TAPE);
     resume();
 }
 
@@ -157,9 +157,9 @@ Datasette::advanceHead(bool silent)
     headInCycles += length;
     
     // Send message if the tapeCounter (in seconds) changes
-    u32 newHeadInSeconds = (u32)(headInCycles / c64->frequency);
+    u32 newHeadInSeconds = (u32)(headInCycles / vc64.frequency);
     if (newHeadInSeconds != headInSeconds && !silent)
-        c64->putMessage(MSG_VC1530_PROGRESS);
+        vc64.putMessage(MSG_VC1530_PROGRESS);
 
     // Update headInSeconds
     headInSeconds = newHeadInSeconds;
@@ -246,13 +246,13 @@ Datasette::_execute()
 void
 Datasette::_executeRising()
 {
-    c64->cia1.triggerRisingEdgeOnFlagPin();
+    cia1.triggerRisingEdgeOnFlagPin();
 }
 
 void
 Datasette::_executeFalling()
 {
-    c64->cia1.triggerFallingEdgeOnFlagPin();
+    cia1.triggerFallingEdgeOnFlagPin();
     
     // Schedule next pulse
     advanceHead();

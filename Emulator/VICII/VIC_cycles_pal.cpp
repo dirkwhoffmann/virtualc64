@@ -26,9 +26,9 @@ VIC::processDelayedActions()
 {
     if (delay & VICUpdateIrqLine) {
         if (irr & imr) {
-            c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
+            cpu.pullDownIrqLine(CPU::INTSRC_VIC);
         } else {
-            c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
+            cpu.releaseIrqLine(CPU::INTSRC_VIC);
         }
     }
     if (delay & VICUpdateFlipflops) {
@@ -49,7 +49,7 @@ VIC::processDelayedActions()
         }
         if (delay & VICUpdateBankAddr) {
             updateBankAddr();
-            // bankAddr = (~c64->cia2.getPA() & 0x03) << 14;
+            // bankAddr = (~cia2.getPA() & 0x03) << 14;
         }
         if (delay & VICClrSprSprCollReg) {
             spriteSpriteCollision = 0;
@@ -82,7 +82,7 @@ VIC::cycle1pal()
     pAccess(3);
     
     // Phi2.1 Rasterline interrupt (edge triggered)
-    bool edgeOnYCounter = (c64->rasterLine != 0);
+    bool edgeOnYCounter = (vc64.rasterLine != 0);
     bool edgeOnIrqCond  = (yCounter == rasterInterruptLine() && !yCounterEqualsIrqRasterline);
     if (edgeOnYCounter && edgeOnIrqCond)
         triggerIrq(1);
@@ -98,7 +98,7 @@ void
 VIC::cycle2pal()
 {
     // Check for lightpen IRQ in first rasterline
-    if (!lpLine && c64->rasterLine == 0)
+    if (!lpLine && vc64.rasterLine == 0)
         checkForLightpenIrqAtStartOfFrame();
     
     // Phi2.5 Fetch (previous cycle)

@@ -72,7 +72,7 @@ Keyboard::setShiftLock(bool value)
 {
     if (value != shiftLock) {
         shiftLock = value;
-        c64->putMessage(MSG_KEYMATRIX);
+        vc64.putMessage(MSG_KEYMATRIX);
     }
 }
 
@@ -124,7 +124,7 @@ Keyboard::pressKey(u8 row, u8 col)
     kbMatrixRow[row] &= ~(1 << col);
     kbMatrixCol[col] &= ~(1 << row);
 
-    c64->putMessage(MSG_KEYMATRIX);
+    vc64.putMessage(MSG_KEYMATRIX);
 }
 
 void
@@ -132,7 +132,7 @@ Keyboard::pressRestoreKey()
 {
     debug(KBD_DEBUG, "pressRestoreKey()\n");
 
-    c64->cpu.pullDownNmiLine(CPU::INTSRC_KEYBOARD);
+    cpu.pullDownNmiLine(CPU::INTSRC_KEYBOARD);
 }
 
 void
@@ -150,7 +150,7 @@ Keyboard::releaseKey(u8 row, u8 col)
     kbMatrixRow[row] |= (1 << col);
     kbMatrixCol[col] |= (1 << row);
 
-     c64->putMessage(MSG_KEYMATRIX);
+    vc64.putMessage(MSG_KEYMATRIX);
 }
 
 void
@@ -158,7 +158,7 @@ Keyboard::releaseRestoreKey()
 {
     debug(KBD_DEBUG, "releaseRestoreKey()\n");
     
-    c64->cpu.releaseNmiLine(CPU::INTSRC_KEYBOARD);
+    cpu.releaseNmiLine(CPU::INTSRC_KEYBOARD);
 }
 
 bool
@@ -185,6 +185,6 @@ Keyboard::toggleKey(u8 row, u8 col)
 bool
 Keyboard::inUpperCaseMode()
 {
-    return (c64->vic.spypeek(0x18) & 0x02) == 0;
+    return (vic.spypeek(0x18) & 0x02) == 0;
 }
 
