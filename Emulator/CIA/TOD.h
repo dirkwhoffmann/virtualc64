@@ -10,7 +10,7 @@
 #ifndef _TOD_INC
 #define _TOD_INC
 
-#include "HardwareComponent.h"
+#include "C64Component.h"
 #include "TODTypes.h"
 
 class CIA;
@@ -26,7 +26,7 @@ inline u8 incBCD(u8 bcd) {
  *            an alarm mechanism. When the alarm time is reached, an interrupt
  *            is initiated.
  */
-class TOD : public HardwareComponent {
+class TOD : public C64Component {
     
     friend CIA;
 
@@ -87,7 +87,7 @@ public:
     //
     
 	//! @brief    Constructor
-	TOD(CIA *cia);
+	TOD(CIA *cia, C64 &ref);
 	
     
     //

@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-TOD::TOD(CIA *cia)
+TOD::TOD(CIA *cia, C64 &ref) : C64Component(ref)
 {
 	setDescription("TOD");
     

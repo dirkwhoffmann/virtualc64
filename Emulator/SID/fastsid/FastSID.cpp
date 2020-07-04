@@ -30,7 +30,7 @@
 
 #include "C64.h"
 
-FastSID::FastSID()
+FastSID::FastSID(C64 &ref) : C64Component(ref)
 {
 	setDescription("FastSID");
     

@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-ReSID::ReSID()
+ReSID::ReSID(C64 &ref) : C64Component(ref)
 {
 	setDescription("ReSID");
 

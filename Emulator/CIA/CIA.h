@@ -102,7 +102,7 @@ private:
 	u16 latchB;
 	
 	//! @brief    Time of day clock
-	TOD tod = TOD(this);
+	TOD tod = TOD(this, vc64);
     
 	
 	// 

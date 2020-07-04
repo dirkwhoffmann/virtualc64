@@ -64,7 +64,7 @@ public:
     VIA2 via2 = VIA2(this, vc64);
 
     //! @brief    A single sided 5,25" floppy disk
-    Disk disk;
+    Disk disk = Disk(vc64);
     
     
     //

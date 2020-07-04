@@ -22,10 +22,10 @@ class SIDBridge : public C64Component {
 private:
 
     //! @brief    FastSID (Adapted from VICE 3.1)
-    FastSID fastsid;
+    FastSID fastsid = FastSID(vc64);
 
     //! @brief    ReSID (Taken from VICE 3.1)
-    ReSID resid;
+    ReSID resid = ReSID(vc64);
    
     //! @brief    SID selector
     bool useReSID;

@@ -218,7 +218,7 @@ Cartridge::loadPacketsFromBuffer(u8 **buffer)
 {
     for (unsigned i = 0; i < numPackets; i++) {
         assert(packet[i] == NULL);
-        packet[i] = new CartridgeRom();
+        packet[i] = new CartridgeRom(vc64);
         packet[i]->loadFromBuffer(buffer);
     }
 }
@@ -387,7 +387,7 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
     switch (type) {
         
         case 0: // ROM
-        packet[nr] = new CartridgeRom(size, start, c->chipData(nr));
+        packet[nr] = new CartridgeRom(vc64, size, start, c->chipData(nr));
         break;
         
         case 1: // RAM
@@ -396,7 +396,7 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
         
         case 2: // Flash ROM
         warn("Chip %d is a Flash Rom. Creating a Rom instead.\n", nr);
-        packet[nr] = new CartridgeRom(size, start, c->chipData(nr));
+        packet[nr] = new CartridgeRom(vc64, size, start, c->chipData(nr));
         break;
         
         default:

@@ -67,7 +67,7 @@ const Disk::TrackDefaults Disk::trackDefaults[43] = {
 };
 
 
-Disk::Disk()
+Disk::Disk(C64 &ref) : C64Component(ref)
 {
     setDescription("Disk");
     

@@ -31,7 +31,7 @@ FlashRom::getStateAsString(FlashRomState state)
     }
 }
 
-FlashRom::FlashRom()
+FlashRom::FlashRom(C64 &ref) : C64Component(ref)
 {
     setDescription("FlashRom");
     

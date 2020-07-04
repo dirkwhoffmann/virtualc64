@@ -10,11 +10,11 @@
 #ifndef _CARTRIDGEROM_INC
 #define _CARTRIDGEROM_INC
 
-#include "HardwareComponent.h"
+#include "C64Component.h"
 
 /*! @brief    This class implements a cartridge Rom chip 
  */
-class CartridgeRom : public HardwareComponent {
+class CartridgeRom : public C64Component {
     
     protected:
     
@@ -37,9 +37,8 @@ class CartridgeRom : public HardwareComponent {
     public:
     
     //! @brief    Constructor
-    CartridgeRom();
-    // CartridgeRom(u8 **buffer);
-    CartridgeRom(u16 _size, u16 _loadAddress, const u8 *buffer = NULL);
+    CartridgeRom(C64 &ref);
+    CartridgeRom(C64 &ref, u16 _size, u16 _loadAddress, const u8 *buffer = NULL);
     
     //! @brief    Destructor
     ~CartridgeRom();

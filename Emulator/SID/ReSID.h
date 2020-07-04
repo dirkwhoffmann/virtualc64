@@ -15,10 +15,10 @@
 #ifndef _RESID_INC
 #define _RESID_INC
 
-#include "HardwareComponent.h"
+#include "C64Component.h"
 #include "resid/sid.h"
 
-class ReSID : public HardwareComponent {
+class ReSID : public C64Component {
 
 public:
     
@@ -57,7 +57,7 @@ public:
     SIDBridge *bridge;
     
 	//! Constructor.
-	ReSID();
+	ReSID(C64 &ref);
 	
 	//! Destructor.
 	~ReSID();

@@ -29,7 +29,7 @@
 #ifndef _FASTSID_INC
 #define _FASTSID_INC
 
-#include "HardwareComponent.h"
+#include "C64Component.h"
 #include "FastVoice.h"
 
 
@@ -37,7 +37,7 @@
 /*! SID is the sound chip of the Commodore 64.
 	The SID chip occupied the memory mapped I/O space from address 0xD400 to 0xD7FF. 
 */
-class FastSID : public HardwareComponent {
+class FastSID : public C64Component {
 
 public:
     
@@ -110,7 +110,7 @@ private:
 public:
     
 	// Constructor
-	FastSID();
+	FastSID(C64 &ref);
 	
 	// Destructor
 	~FastSID();

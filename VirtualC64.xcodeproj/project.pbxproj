@@ -929,11 +929,11 @@
 		504C433424AF29AC00E69CAE /* fastsid */ = {
 			isa = PBXGroup;
 			children = (
-				504C433524AF29AC00E69CAE /* FastSID.cpp */,
-				504C433624AF29AC00E69CAE /* waves.h */,
 				504C433724AF29AC00E69CAE /* FastSID.h */,
-				504C433824AF29AC00E69CAE /* FastVoice.cpp */,
+				504C433524AF29AC00E69CAE /* FastSID.cpp */,
 				504C433924AF29AC00E69CAE /* FastVoice.h */,
+				504C433824AF29AC00E69CAE /* FastVoice.cpp */,
+				504C433624AF29AC00E69CAE /* waves.h */,
 			);
 			path = fastsid;
 			sourceTree = "<group>";

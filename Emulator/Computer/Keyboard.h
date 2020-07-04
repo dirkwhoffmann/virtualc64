@@ -25,7 +25,7 @@
  * method getRowValues is called which finally gets the contents of the keyboard
  * matrix into the virtual C64.
  */
-class Keyboard : public HardwareComponent {
+class Keyboard : public C64Component {
 
 private:
     

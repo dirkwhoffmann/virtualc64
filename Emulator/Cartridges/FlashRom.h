@@ -10,7 +10,7 @@
 #ifndef _FLASHROM_INC
 #define _FLASHROM_INC
 
-#include "HardwareComponent.h"
+#include "C64Component.h"
 
 /*! @brief    This class implements a Flash Rom module of type Am29F040B
  *  @details  Flash Rom modules of this type are used, e.g., by the EasyFlash
@@ -19,7 +19,7 @@
  *            29F040.pdf:     Data sheet published by AMD
  *            flash040core.c: Part of the VICE emulator
  */
-class FlashRom : public HardwareComponent {
+class FlashRom : public C64Component {
     
     private:
     
@@ -76,7 +76,7 @@ class FlashRom : public HardwareComponent {
     //
     
     //! @brief    Constructor
-    FlashRom();
+    FlashRom(C64 &ref);
     
     //! @brief    Destructor
     ~FlashRom();
