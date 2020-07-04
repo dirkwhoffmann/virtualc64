@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-CPU::CPU(CPUModel model, Memory *mem)
+CPU::CPU(CPUModel model, Memory *mem, C64& ref) : C64Component(ref)
 {
     this->model = model;
     this->mem = mem;

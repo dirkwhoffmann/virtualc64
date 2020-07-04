@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-VC1541::VC1541(unsigned nr)
+VC1541::VC1541(unsigned nr, C64 &ref) : C64Component(ref)
 {
     assert(nr == 1 || nr == 2);
     

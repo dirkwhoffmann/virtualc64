@@ -21,10 +21,7 @@
 #include "VIA.h"
 #include "Disk.h"
 
-/*!
- * @brief    A Commodore VC 1541 disk drive
- */
-class VC1541 : public HardwareComponent {
+class VC1541 : public C64Component {
 
     //
     // Constants
@@ -58,7 +55,7 @@ public:
 	VC1541Memory mem = VC1541Memory(this);
 
     //! @brief    The drive's CPU
-    CPU cpu = CPU(MOS_6502, &mem);
+    CPU cpu = CPU(MOS_6502, &mem, vc64);
 
 	//! @brief    VIA6522 connecting the drive CPU with the IEC bus
     VIA1 via1 = VIA1(this);
@@ -219,7 +216,7 @@ public:
     //! @brief    Custom Constructor
     /*! @param    deviceNr must be 1 (first drive) or 2 (second drive).
      */
-    VC1541(unsigned deviceNr);
+    VC1541(unsigned deviceNr, C64 &ref);
     
     //! @brief    Standard destructor
     ~VC1541();

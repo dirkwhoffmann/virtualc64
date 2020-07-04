@@ -123,6 +123,12 @@ C64::~C64()
 }
 
 void
+C64::prefix()
+{
+    fprintf(stderr, "%04X ", cpu.getPC());
+}
+
+void
 C64::reset()
 {
     debug(RUN_DEBUG, "Resetting virtual C64[%p]\n", this);

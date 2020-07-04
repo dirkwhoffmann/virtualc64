@@ -7,10 +7,18 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _VIRTUAL_COMPONENT_INC
-#define _VIRTUAL_COMPONENT_INC
+#ifndef _HARDWARE_COMPONENT_INC
+#define _HARDWARE_COMPONENT_INC
 
 #include "C64Object.h"
+
+typedef enum
+{
+    STATE_OFF,
+    STATE_PAUSED,
+    STATE_RUNNING
+}
+EmulatorState;
 
 // Forward declarations
 class C64;

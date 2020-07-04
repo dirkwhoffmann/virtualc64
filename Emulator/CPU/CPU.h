@@ -10,6 +10,8 @@
 #ifndef _CPU_INC
 #define _CPU_INC
 
+#include "C64Component.h"
+
 #include "CPUTypes.h"
 #include "CPUInstructions.h"
 #include "TimeDelayed.h"
@@ -18,7 +20,7 @@ class Memory;
 
 /*! @class  The virtual 6502 / 6510 processor
  */
-class CPU : public HardwareComponent {
+class CPU : public C64Component {
     
     //
     // Types
@@ -289,7 +291,7 @@ class CPU : public HardwareComponent {
     public:
 
     //! @brief    Constructor
-    CPU(CPUModel model, Memory *mem);
+    CPU(CPUModel model, Memory *mem, C64& ref);
 
 	//! @brief    Destructor
 	~CPU();

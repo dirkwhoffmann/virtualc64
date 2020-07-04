@@ -77,7 +77,7 @@ class C64 : public HardwareComponent {
     C64Memory mem;
     
     //! @brief    The C64's virtual CPU
-    CPU cpu = CPU(MOS_6510, &mem);
+    CPU cpu = CPU(MOS_6510, &mem, *this);
     
     //! @brief    The C64's processor port
     ProcessorPort processorPort;
@@ -110,10 +110,10 @@ class C64 : public HardwareComponent {
     IEC iec;
 
     //! @brief    A VC1541 floppy drive (with device number 8)
-    VC1541 drive1 = VC1541(1);
+    VC1541 drive1 = VC1541(1, *this);
     
     //! @brief    A second VC1541 floppy drive (with device number 9)
-    VC1541 drive2 = VC1541(2);
+    VC1541 drive2 = VC1541(2, *this);
     
     //! @brief    A Commodore 1530 (C2N) Datasette
     Datasette datasette;
@@ -268,12 +268,13 @@ class C64 : public HardwareComponent {
     //! @functiongroup Methods from HardwareComponent
     //
     
-    void reset();
-    void ping();
-    void setClockFrequency(u32 frequency);
-    void suspend();
-    void resume();
-    void dump();
+    void prefix() override;
+    void reset() override;
+    void ping() override;
+    void setClockFrequency(u32 frequency) override;
+    void suspend() override;
+    void resume() override;
+    void dump() override;
     
  
     //
