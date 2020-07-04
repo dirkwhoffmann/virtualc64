@@ -15,10 +15,6 @@ NeosMouse::NeosMouse(C64 &ref) : C64Component(ref)
     setDescription("NeosMouse");
 }
 
-NeosMouse::~NeosMouse()
-{
-}
-
 void
 NeosMouse::reset()
 {

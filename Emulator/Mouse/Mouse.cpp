@@ -16,10 +16,8 @@ Mouse::Mouse(C64 &ref) : C64Component(ref)
     // Register sub components
     HardwareComponent *subcomponents[] = { &mouse1350, &mouse1351, &mouseNeos, NULL };
     registerSubComponents(subcomponents, sizeof(subcomponents));
-}
 
-Mouse::~Mouse()
-{
+    config.model = MOUSE1350;
 }
 
 void Mouse::reset()
@@ -32,8 +30,10 @@ void
 Mouse::setModel(MouseModel model)
 {
     c64->suspend();
-    this->model = model;
+
+    config.model = model;
     reset();
+
     c64->resume();
 }
 
@@ -54,7 +54,8 @@ Mouse::setXY(i64 x, i64 y)
 void
 Mouse::setLeftButton(bool value)
 {
-    switch(model) {
+    switch(config.model) {
+            
         case MOUSE1350:
             mouse1350.setLeftMouseButton(value);
             break;
@@ -72,7 +73,8 @@ Mouse::setLeftButton(bool value)
 void
 Mouse::setRightButton(bool value)
 {
-    switch(model) {
+    switch(config.model) {
+            
         case MOUSE1350:
             mouse1350.setRightMouseButton(value);
             break;
@@ -87,18 +89,34 @@ Mouse::setRightButton(bool value)
     }
 }
 
+void
+Mouse::risingStrobe(int portNr)
+{
+    mouseNeos.risingStrobe(portNr, targetX, targetY);
+}
+
+void
+Mouse::fallingStrobe(int portNr)
+{
+    mouseNeos.fallingStrobe(portNr, targetX, targetY);
+}
+
 u8
 Mouse::readPotX()
 {
     if (port > 0) {
-        switch(model) {
+        switch(config.model) {
+                
             case MOUSE1350:
                 return mouse1350.readPotX();
+                
             case MOUSE1351:
                 mouse1351.executeX(targetX);
                 return mouse1351.readPotX();
+                
             case NEOSMOUSE:
                 return mouseNeos.readPotX();
+                
             default:
                 assert(false);
         }
@@ -110,7 +128,7 @@ u8
 Mouse::readPotY()
 {
     if (port > 0) {
-        switch(model) {
+        switch(config.model) {
             case MOUSE1350:
                 return mouse1350.readPotY();
             case MOUSE1351:
@@ -129,7 +147,7 @@ u8
 Mouse::readControlPort(unsigned portNr)
 {    
     if (port == portNr) {
-        switch(model) {
+        switch(config.model) {
             case MOUSE1350:
                 return mouse1350.readControlPort();
             case MOUSE1351:
@@ -147,7 +165,8 @@ void
 Mouse::execute()
 {
     if (port) {
-        switch(model) {
+        switch(config.model) {
+                
             case MOUSE1350:
                 mouse1350.execute(targetX, targetY);
                 break;

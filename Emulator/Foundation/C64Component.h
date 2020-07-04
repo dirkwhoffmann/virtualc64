@@ -30,6 +30,9 @@ class IEC;
 class VC1541;
 class Datasette;
 class Mouse;
+class Mouse1350;
+class Mouse1351;
+class NeosMouse;
 
 //
 // Base class for all C64 components

@@ -7,15 +7,23 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+// This file must conform to standard ANSI-C to be compatible with Swift.
+
 #ifndef MOUSE_TYPES_H
 #define MOUSE_TYPES_H
 
-/*! @brief    Supportes mouse models
- */
-typedef enum {
+typedef enum
+{
     MOUSE1350 = 0,
     MOUSE1351,
     NEOSMOUSE
-} MouseModel;
+}
+MouseModel;
+
+typedef struct
+{
+    MouseModel model;
+}
+MouseConfig;
 
 #endif
