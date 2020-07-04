@@ -18,7 +18,7 @@
 #define SPR6 0x40
 #define SPR7 0x80
 
-VIC::VIC()
+VIC::VIC(C64 &ref) : C64Component(ref)
 {
 	setDescription("VIC");
     

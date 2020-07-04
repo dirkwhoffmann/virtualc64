@@ -100,7 +100,7 @@ public:
 public:
     
 	//! @brief    Constructor
-	C64Memory();
+	C64Memory(C64 &ref);
 	
 	//! @brief    Destructor
 	~C64Memory();

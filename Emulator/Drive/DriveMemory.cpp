@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-VC1541Memory::VC1541Memory(VC1541 *drive)
+VC1541Memory::VC1541Memory(VC1541 *drive, C64 &ref) : Memory(ref)
 {
     setDescription("1541MEM");
 

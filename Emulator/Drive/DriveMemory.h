@@ -37,7 +37,7 @@ class VC1541Memory : public Memory {
     //
     
 	//! @brief    Constructor
-	VC1541Memory(VC1541 *drive);
+	VC1541Memory(VC1541 *drive, C64 &ref);
 	
 	//! @brief    Destructor
 	~VC1541Memory();

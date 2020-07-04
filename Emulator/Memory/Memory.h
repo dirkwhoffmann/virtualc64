@@ -10,13 +10,12 @@
 #ifndef _MEMORY_INC
 #define _MEMORY_INC
 
-#include "basic.h"
-#include "HardwareComponent.h"
-#include "MemoryTypes.h"
+#include "C64Component.h"
+// #include "MemoryTypes.h"
 
 
 //! @brief    Common interface for C64 memory and VC1541 memory
-class Memory : public HardwareComponent {
+class Memory : public C64Component {
 
     friend class CPU;
     
@@ -26,6 +25,10 @@ protected:
      *  @details  This value is used by peekStack and pokeStack, only.
      */
     u8 *stack = NULL;
+    
+public:
+    
+    Memory(C64 &ref) : C64Component(ref) { };
     
 private:
     

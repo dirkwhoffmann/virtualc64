@@ -10,8 +10,8 @@
 #ifndef _VIC_INC
 #define _VIC_INC
 
-#include "HardwareComponent.h"
-#include "C64Types.h"
+#include "C64Component.h"
+// #include "C64Types.h"
 #include "TimeDelayed.h"
 
 // Sprite bit masks
@@ -48,9 +48,7 @@
 // Forward declarations
 class C64Memory;
 
-
-//! @brief    Virtual Video Controller (VICII)
-class VIC : public HardwareComponent {
+class VIC : public C64Component {
 
     friend C64Memory;
     
@@ -726,7 +724,7 @@ private:
 public:
 	
 	//! @brief    Constructor
-	VIC();
+	VIC(C64 &ref);
 	
 	//! @brief    Destructor
 	~VIC();

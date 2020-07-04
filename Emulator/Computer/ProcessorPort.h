@@ -10,7 +10,7 @@
 #ifndef _PROCESSORPORT_H
 #define _PROCESSORPORT_H
 
-#include "HardwareComponent.h"
+#include "C64Component.h"
 
 /*! @brief    Processor port
  *  @details  The C64 CPU contains a processor port register and a data
@@ -20,7 +20,7 @@
  *            certain memory regions if ROM or RAM is avaible. Secondly, it is
  *            used to communicate with the datasette.
  */
-class ProcessorPort : public HardwareComponent {
+class ProcessorPort : public C64Component {
    
     //! @brief    Processor port bits
     u8 port;
@@ -53,7 +53,7 @@ public:
     //
     
     //! @brief    Constructor
-    ProcessorPort();
+    ProcessorPort(C64 &ref);
     
     //! @brief    Destructor
     ~ProcessorPort();

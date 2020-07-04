@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-ProcessorPort::ProcessorPort()
+ProcessorPort::ProcessorPort(C64 &ref) : C64Component(ref)
 {
     setDescription("ProcessorPort");
     

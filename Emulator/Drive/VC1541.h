@@ -52,7 +52,7 @@ class VC1541 : public C64Component {
 public:
     
 	//! @brief    Memory of the virtual drive
-	VC1541Memory mem = VC1541Memory(this);
+	VC1541Memory mem = VC1541Memory(this, vc64);
 
     //! @brief    The drive's CPU
     CPU cpu = CPU(MOS_6502, &mem, vc64);

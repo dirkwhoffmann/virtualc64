@@ -74,16 +74,16 @@ class C64 : public HardwareComponent {
     //
     
     //! @brief    The C64's virtual memory (ROM, RAM, and color RAM)
-    C64Memory mem;
+    C64Memory mem = C64Memory(*this);
     
     //! @brief    The C64's virtual CPU
     CPU cpu = CPU(MOS_6510, &mem, *this);
     
     //! @brief    The C64's processor port
-    ProcessorPort processorPort;
+    ProcessorPort processorPort = ProcessorPort(*this);
     
     //! @brief    The C64's Video Interface Controller
-    VIC vic;
+    VIC vic = VIC(*this);
     
     //! @brief    The C64's first Complex Interface Adapter
     CIA1 cia1 = CIA1(*this);
