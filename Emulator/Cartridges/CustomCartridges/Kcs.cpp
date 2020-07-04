@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-KcsPower::KcsPower(C64 *c64) : Cartridge(c64)
+KcsPower::KcsPower(C64 *c64, C64 &ref) : Cartridge(c64, ref)
 {
     // Allocate 128 bytes on-board RAM
     setRamCapacity(0x80);

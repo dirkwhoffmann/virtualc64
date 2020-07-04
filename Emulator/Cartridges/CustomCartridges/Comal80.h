@@ -19,7 +19,7 @@ class Comal80 : public CartridgeWithRegister {
     
 public:
     
-    Comal80(C64 *c64) : CartridgeWithRegister(c64, "Comal80") { };
+    Comal80(C64 *c64, C64 &ref) : CartridgeWithRegister(c64, ref, "Comal80") { };
     CartridgeType getCartridgeType() { return CRT_COMAL80; }
     
     //

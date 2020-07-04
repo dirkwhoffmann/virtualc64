@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-Cartridge::Cartridge(C64 *c64, const char *description)
+Cartridge::Cartridge(C64 *c64, C64 &ref, const char *description) : C64Component(ref)
 {
     setDescription(description);
     debug(CRT_DEBUG, "Creating cartridge at address %p...\n", this);
@@ -146,32 +146,32 @@ Cartridge::makeWithType(C64 *c64, CartridgeType type)
     
     switch (type) {
         
-        case CRT_NORMAL:          return new Cartridge(c64);
-        case CRT_ACTION_REPLAY:   return new ActionReplay(c64);
-        case CRT_KCS_POWER:       return new KcsPower(c64);
-        case CRT_FINAL_III:       return new FinalIII(c64);
-        case CRT_SIMONS_BASIC:    return new SimonsBasic(c64);
-        case CRT_OCEAN:           return new Ocean(c64);
-        case CRT_EXPERT:          return new Expert(c64);
-        case CRT_FUNPLAY:         return new Funplay(c64);
-        case CRT_SUPER_GAMES:     return new Supergames(c64);
-        case CRT_ATOMIC_POWER:    return new AtomicPower(c64);
-        case CRT_EPYX_FASTLOAD:   return new EpyxFastLoad(c64);
-        case CRT_WESTERMANN:      return new Westermann(c64);
-        case CRT_REX:             return new Rex(c64);
-        case CRT_WARPSPEED:       return new WarpSpeed(c64);
-        case CRT_ZAXXON:          return new Zaxxon(c64);
-        case CRT_MAGIC_DESK:      return new MagicDesk(c64);
-        case CRT_COMAL80:         return new Comal80(c64);
-        case CRT_MIKRO_ASS:       return new MikroAss(c64);
-        case CRT_STARDOS:         return new StarDos(c64);
-        case CRT_EASYFLASH:       return new EasyFlash(c64);
-        case CRT_ACTION_REPLAY3:  return new ActionReplay3(c64);
-        case CRT_FREEZE_FRAME:    return new FreezeFrame(c64);
-        case CRT_MACH5:           return new Mach5(c64);
-        case CRT_KINGSOFT:        return new Kingsoft(c64);
-        case CRT_ISEPIC:          return new Isepic(c64);
-        case CRT_GEO_RAM:         return new GeoRAM(c64);
+        case CRT_NORMAL:          return new Cartridge(c64, *c64);
+        case CRT_ACTION_REPLAY:   return new ActionReplay(c64, *c64);
+        case CRT_KCS_POWER:       return new KcsPower(c64, *c64);
+        case CRT_FINAL_III:       return new FinalIII(c64, *c64);
+        case CRT_SIMONS_BASIC:    return new SimonsBasic(c64, *c64);
+        case CRT_OCEAN:           return new Ocean(c64, *c64);
+        case CRT_EXPERT:          return new Expert(c64, *c64);
+        case CRT_FUNPLAY:         return new Funplay(c64, *c64);
+        case CRT_SUPER_GAMES:     return new Supergames(c64, *c64);
+        case CRT_ATOMIC_POWER:    return new AtomicPower(c64, *c64);
+        case CRT_EPYX_FASTLOAD:   return new EpyxFastLoad(c64, *c64);
+        case CRT_WESTERMANN:      return new Westermann(c64, *c64);
+        case CRT_REX:             return new Rex(c64, *c64);
+        case CRT_WARPSPEED:       return new WarpSpeed(c64, *c64);
+        case CRT_ZAXXON:          return new Zaxxon(c64, *c64);
+        case CRT_MAGIC_DESK:      return new MagicDesk(c64, *c64);
+        case CRT_COMAL80:         return new Comal80(c64, *c64);
+        case CRT_MIKRO_ASS:       return new MikroAss(c64, *c64);
+        case CRT_STARDOS:         return new StarDos(c64, *c64);
+        case CRT_EASYFLASH:       return new EasyFlash(c64, *c64);
+        case CRT_ACTION_REPLAY3:  return new ActionReplay3(c64, *c64);
+        case CRT_FREEZE_FRAME:    return new FreezeFrame(c64, *c64);
+        case CRT_MACH5:           return new Mach5(c64, *c64);
+        case CRT_KINGSOFT:        return new Kingsoft(c64, *c64);
+        case CRT_ISEPIC:          return new Isepic(c64, *c64);
+        case CRT_GEO_RAM:         return new GeoRAM(c64, *c64);
         
         default:
         assert(false); // Should not reach

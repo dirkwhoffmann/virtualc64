@@ -16,7 +16,7 @@ class MagicDesk : public CartridgeWithRegister {
     
 public:
     
-    MagicDesk(C64 *c64) : CartridgeWithRegister(c64, "MagicDesk") { };
+    MagicDesk(C64 *c64, C64 &ref) : CartridgeWithRegister(c64, ref, "MagicDesk") { };
     CartridgeType getCartridgeType() { return CRT_MAGIC_DESK; }
     
     //

@@ -122,7 +122,7 @@ ActionReplay3::setControlReg(u8 value)
 //
 
 //! @brief    A newer generation Action Replay cartridge
-ActionReplay::ActionReplay(C64 *c64) : CartridgeWithRegister(c64, "AR")
+ActionReplay::ActionReplay(C64 *c64, C64 &ref) : CartridgeWithRegister(c64, ref, "AR")
 {
     debug(CRT_DEBUG, "ActionReplay constructor\n");
     
@@ -308,7 +308,7 @@ ActionReplay::ramIsEnabled(u16 addr)
 // Atomic Power 
 //
 
-AtomicPower::AtomicPower(C64 *c64) : ActionReplay(c64) {
+AtomicPower::AtomicPower(C64 *c64, C64 &ref) : ActionReplay(c64, ref) {
     
     setDescription("AtomicPower");
 };

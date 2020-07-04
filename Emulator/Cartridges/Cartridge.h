@@ -10,17 +10,14 @@
 #ifndef _CARTRIDGE_INC
 #define _CARTRIDGE_INC
 
-#include "HardwareComponent.h"
+#include "C64Component.h"
 #include "CartridgeTypes.h"
 #include "CRTFile.h"
 #include "CartridgeRom.h"
 
-class ExpansionPort;
+// class ExpansionPort;
 
-/*!
- * @brief    Cartridge that can be plugged into the C64's expansion port
- */
-class Cartridge : public HardwareComponent {
+class Cartridge : public C64Component {
     
 public:
     
@@ -110,28 +107,6 @@ private:
     //! @brief    Status of the cartridge LED (true = on)
     bool led = false;
     
-    
-protected:
-    
-    //
-    // Temporary storage (TODO: Move to custom cartridge classes)
-    //
-    
-    /*! @brief    Temporary storage for cycle information
-     *  @details  Some custom cartridges need to remember when certain event
-     *            took place. When such an event happens, they preserve the
-     *            cycle in this variable. Only a few cartridges make use of this
-     *            variable.
-     */
-    // u64 cycle = 0;
-    
-    /*! @brief    Temporary storage
-     *  @details  Some custom cartridges contain additonal registers or jumpers.
-     *            They preserve these values in these general-purpose variables.
-     *            Only a few cartridges make use of this variable.
-     */
-    // u8 val[16]; 
-    
 public:
     
     //
@@ -160,7 +135,7 @@ public:
     //
     
     //! @brief    Convenience constructor
-    Cartridge(C64 *c64, const char *description = "Cartridge");
+    Cartridge(C64 *c64, C64 &ref, const char *description = "Cartridge");
 
     //! @brief    Destructor
     ~Cartridge();

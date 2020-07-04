@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-GeoRAM::GeoRAM(C64 *c64) : Cartridge(c64)
+GeoRAM::GeoRAM(C64 *c64, C64 &ref) : Cartridge(c64, ref)
 {
     setDescription("GeoRAM");
 }

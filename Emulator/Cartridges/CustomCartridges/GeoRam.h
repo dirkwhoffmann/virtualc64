@@ -26,7 +26,7 @@ private:
     unsigned offset(u8 addr);
     
 public:
-    GeoRAM(C64 *c64);
+    GeoRAM(C64 *c64, C64 &ref);
     CartridgeType getCartridgeType() { return CRT_GEO_RAM; }
     void reset();
     size_t stateSize();

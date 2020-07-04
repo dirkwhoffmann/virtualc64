@@ -32,7 +32,7 @@ public:
     //! @functiongroup Creating and destructing
     //
     
-    EasyFlash(C64 *c64);
+    EasyFlash(C64 *c64, C64 &ref);
     CartridgeType getCartridgeType() { return CRT_EASYFLASH; }
     
 

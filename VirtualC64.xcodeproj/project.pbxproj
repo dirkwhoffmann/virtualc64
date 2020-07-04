@@ -716,13 +716,13 @@
 			isa = PBXGroup;
 			children = (
 				504C428F24AF29AB00E69CAE /* CustomCartridges */,
-				504C42BF24AF29AB00E69CAE /* FlashRom.h */,
+				504C42C524AF29AB00E69CAE /* CartridgeTypes.h */,
+				504C42C424AF29AB00E69CAE /* Cartridge.h */,
 				504C42C024AF29AB00E69CAE /* Cartridge.cpp */,
 				504C42C124AF29AB00E69CAE /* CartridgeRom.h */,
 				504C42C224AF29AB00E69CAE /* CartridgeRom.cpp */,
+				504C42BF24AF29AB00E69CAE /* FlashRom.h */,
 				504C42C324AF29AB00E69CAE /* FlashRom.cpp */,
-				504C42C424AF29AB00E69CAE /* Cartridge.h */,
-				504C42C524AF29AB00E69CAE /* CartridgeTypes.h */,
 			);
 			path = Cartridges;
 			sourceTree = "<group>";

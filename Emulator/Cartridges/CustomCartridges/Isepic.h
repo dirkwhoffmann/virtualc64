@@ -22,7 +22,7 @@ class Isepic : public Cartridge {
     MemoryType oldPokeTarget;
 
 public:
-    Isepic(C64 *c64);
+    Isepic(C64 *c64, C64 &ref);
     CartridgeType getCartridgeType() override { return CRT_ISEPIC; }
     
     void reset() override;

@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-Isepic::Isepic(C64 *c64) : Cartridge(c64)
+Isepic::Isepic(C64 *c64, C64 &ref) : Cartridge(c64, ref)
 {
     setDescription("Isepic");
     

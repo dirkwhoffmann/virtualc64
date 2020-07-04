@@ -19,7 +19,7 @@ class Expert : public Cartridge {
     
 public:
     
-    Expert(C64 *c64);
+    Expert(C64 *c64, C64 &ref);
     CartridgeType getCartridgeType() { return CRT_EXPERT; }
     
     //

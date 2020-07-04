@@ -26,7 +26,7 @@ class FinalIII : public CartridgeWithRegister {
 
 public:
     
-    FinalIII(C64 *c64) : CartridgeWithRegister(c64, "FinalIII") { };
+    FinalIII(C64 *c64, C64 &ref) : CartridgeWithRegister(c64, ref, "FinalIII") { };
     CartridgeType getCartridgeType() { return CRT_FINAL_III; }
     
     //

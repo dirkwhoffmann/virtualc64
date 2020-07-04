@@ -20,7 +20,7 @@ class ActionReplay3 : public CartridgeWithRegister {
     
 public:
     
-    ActionReplay3(C64 *c64) : CartridgeWithRegister(c64, "AR3") { };
+    ActionReplay3(C64 *c64, C64 &ref) : CartridgeWithRegister(c64, ref, "AR3") { };
     CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY3; }
     
     //
@@ -59,7 +59,7 @@ class ActionReplay : public CartridgeWithRegister {
     
 public:
     
-    ActionReplay(C64 *c64);
+    ActionReplay(C64 *c64, C64 &ref);
     CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY; }
     
     //
@@ -118,7 +118,7 @@ class AtomicPower : public ActionReplay {
     
 public:
     
-    AtomicPower(C64 *c64);
+    AtomicPower(C64 *c64, C64 &ref);
     CartridgeType getCartridgeType() { return CRT_ATOMIC_POWER; }
     
     /*! @brief    Indicates if special ROM / RAM config has to be used.
