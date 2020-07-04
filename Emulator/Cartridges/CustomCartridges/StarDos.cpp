@@ -23,10 +23,10 @@ StarDos::updateVoltage()
     // If the capacitor is untouched, it slowly raises to 2.0V
     
     if (voltage < 2000000 /* 2.0V */) {
-        u64 elapsedCycles = c64->cpu.cycle - latestVoltageUpdate;
+        u64 elapsedCycles = cpu.cycle - latestVoltageUpdate;
         voltage += MIN(2000000 - voltage, elapsedCycles * 2);
     }
-    latestVoltageUpdate = c64->cpu.cycle;
+    latestVoltageUpdate = cpu.cycle;
 }
 
 void
@@ -52,21 +52,21 @@ StarDos::discharge()
 void
 StarDos::enableROML()
 {
-    c64->expansionport.setExromLine(0);
+    expansionport.setExromLine(0);
 }
 
 void
 StarDos::disableROML()
 {
-    c64->expansionport.setExromLine(1);
+    expansionport.setExromLine(1);
 }
 
 void
 StarDos::updatePeekPokeLookupTables()
 {
     // Replace Kernel by the StarDos kernel
-    if (c64->mem.peekSrc[0xE] == M_KERNAL) {
-        c64->mem.peekSrc[0xE] = M_CRTHI;
-        c64->mem.peekSrc[0xF] = M_CRTHI;
+    if (mem.peekSrc[0xE] == M_KERNAL) {
+        mem.peekSrc[0xE] = M_CRTHI;
+        mem.peekSrc[0xF] = M_CRTHI;
     }
 }

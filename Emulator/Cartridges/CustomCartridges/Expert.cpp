@@ -100,7 +100,7 @@ Expert::peek(u16 addr)
     } else {
         
         // Get value as if no cartridge was attached
-        return c64->mem.peek(addr, 1, 1);
+        return mem.peek(addr, 1, 1);
     }
 }
 
@@ -126,7 +126,7 @@ Expert::poke(u16 addr, u8 value)
     } else {
     
         // Write value as if no cartridge was attached
-        c64->mem.poke(addr, value, 1, 1);
+        mem.poke(addr, value, 1, 1);
     }
 }
 
@@ -153,7 +153,7 @@ Expert::pressButton(unsigned nr)
     assert(nr <= numButtons());
     debug(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
     
-    c64->suspend();
+    vc64.suspend();
     
     switch (nr) {
             
@@ -173,16 +173,16 @@ Expert::pressButton(unsigned nr)
             // not accurate, but it forces an NMI a trigger, regardless of the
             // current value of the NMI line.
             
-            u8 oldLine = c64->cpu.nmiLine;
+            u8 oldLine = cpu.nmiLine;
             u8 newLine = oldLine | CPU::INTSRC_EXPANSION;
             
-            c64->cpu.releaseNmiLine((CPU::IntSource)0xFF);
-            c64->cpu.pullDownNmiLine((CPU::IntSource)newLine);
-            c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+            cpu.releaseNmiLine((CPU::IntSource)0xFF);
+            cpu.pullDownNmiLine((CPU::IntSource)newLine);
+            cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
             break;
     }
     
-    c64->resume();
+    vc64.resume();
 }
 
 
@@ -222,12 +222,12 @@ Expert::updatePeekPokeLookupTables()
     // are, but reroute all access to ROML and ROMH into the cartridge.
     
     // Reroute ROML
-     c64->mem.peekSrc[0x8] = c64->mem.pokeTarget[0x8] = M_CRTLO;
-     c64->mem.peekSrc[0x9] = c64->mem.pokeTarget[0x9] = M_CRTLO;
+     mem.peekSrc[0x8] = mem.pokeTarget[0x8] = M_CRTLO;
+     mem.peekSrc[0x9] = mem.pokeTarget[0x9] = M_CRTLO;
 
     // Reroute ROMH
-     c64->mem.peekSrc[0xE] = c64->mem.pokeTarget[0xE] = M_CRTLO;
-     c64->mem.peekSrc[0xF] = c64->mem.pokeTarget[0xF] = M_CRTLO;
+     mem.peekSrc[0xE] = mem.pokeTarget[0xE] = M_CRTLO;
+     mem.peekSrc[0xF] = mem.pokeTarget[0xF] = M_CRTLO;
 }
 
 void

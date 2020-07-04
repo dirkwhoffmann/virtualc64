@@ -20,9 +20,9 @@ Supergames::pokeIO2(u16 addr, u8 value)
     if (addr == 0xDF00) {
         
         if (value & 0x04) {
-            c64->expansionport.setCartridgeMode(CRT_8K);
+            expansionport.setCartridgeMode(CRT_8K);
         } else {
-            c64->expansionport.setCartridgeMode(CRT_16K);
+            expansionport.setCartridgeMode(CRT_16K);
         }
         
         bankIn(value & 0x03);

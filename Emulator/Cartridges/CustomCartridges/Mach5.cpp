@@ -31,12 +31,12 @@ void
 Mach5::pokeIO1(u16 addr, u8 value)
 {
     debug(CRT_DEBUG, "Enabling Mach5 in 8K game mode\n");
-    c64->expansionport.setCartridgeMode(CRT_8K);
+    expansionport.setCartridgeMode(CRT_8K);
 }
 
 void
 Mach5::pokeIO2(u16 addr, u8 value)
 {
     debug(CRT_DEBUG, "Switching Mach5 off\n");
-    c64->expansionport.setCartridgeMode(CRT_OFF);
+    expansionport.setCartridgeMode(CRT_OFF);
 }

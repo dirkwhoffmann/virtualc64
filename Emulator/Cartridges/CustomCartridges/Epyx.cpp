@@ -38,7 +38,7 @@ EpyxFastLoad::didSaveToBuffer(u8 **buffer)
 void
 EpyxFastLoad::resetCartConfig()
 {
-    c64->expansionport.setCartridgeMode(CRT_8K);
+    expansionport.setCartridgeMode(CRT_8K);
 }
 
 u8
@@ -66,8 +66,8 @@ void
 EpyxFastLoad::execute()
 {
     // Switch cartridge off when the capacitor is fully charged
-    if (c64->cpu.cycle > cycle) {
-        c64->expansionport.setCartridgeMode(CRT_OFF);
+    if (cpu.cycle > cycle) {
+        expansionport.setCartridgeMode(CRT_OFF);
     }
 }
 
@@ -75,8 +75,8 @@ void
 EpyxFastLoad::dischargeCapacitor()
 {
     // Switch on cartridge
-    c64->expansionport.setCartridgeMode(CRT_8K);
+    expansionport.setCartridgeMode(CRT_8K);
     
     // Schedule cartridge to be switched off in about 512 CPU cycles
-    cycle = c64->cpu.cycle + 512;
+    cycle = cpu.cycle + 512;
 }

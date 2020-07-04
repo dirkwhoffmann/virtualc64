@@ -88,7 +88,7 @@ Cartridge::reset()
 void
 Cartridge::resetCartConfig() {
 
-    c64->expansionport.setGameAndExrom(gameLineInCrtFile, exromLineInCrtFile);
+    expansionport.setGameAndExrom(gameLineInCrtFile, exromLineInCrtFile);
 }
 
 bool
@@ -284,9 +284,9 @@ Cartridge::peek(u16 addr)
 
     // Question: Is it correct to return a value from RAM if no ROM is mapped?
     if (isROMLaddr(addr)) {
-        return (relAddr < mappedBytesL) ? peekRomL(relAddr) : c64->mem.ram[addr];
+        return (relAddr < mappedBytesL) ? peekRomL(relAddr) : mem.ram[addr];
     } else {
-        return (relAddr < mappedBytesH) ? peekRomH(relAddr) : c64->mem.ram[addr];
+        return (relAddr < mappedBytesH) ? peekRomH(relAddr) : mem.ram[addr];
     }
 }
 
@@ -323,8 +323,8 @@ Cartridge::poke(u16 addr, u8 value)
     }
         
     // Write to RAM if we don't run in Ultimax mode
-    if (!c64->getUltimax()) {
-        c64->mem.ram[addr] = value;
+    if (!vc64.getUltimax()) {
+        mem.ram[addr] = value;
     }
 }
 
@@ -478,7 +478,7 @@ void
 Cartridge::setSwitch(i8 pos)
 {
     switchPos = pos;
-    c64->putMessage(MSG_CART_SWITCH);
+    vc64.putMessage(MSG_CART_SWITCH);
 }
 
 void
@@ -488,7 +488,7 @@ Cartridge::resetWithoutDeletingRam()
     
     debug(RUN_DEBUG, "Resetting virtual C64 (preserving RAM)\n");
     
-    memcpy(ram, c64->mem.ram, 0x10000);
-    c64->reset();
-    memcpy(c64->mem.ram, ram, 0x10000);
+    memcpy(ram, mem.ram, 0x10000);
+    vc64.reset();
+    memcpy(mem.ram, ram, 0x10000);
 }

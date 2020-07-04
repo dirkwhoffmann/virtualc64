@@ -65,14 +65,14 @@ ActionReplay3::pressButton(unsigned nr)
     assert(nr <= numButtons());
     debug(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
     
-    c64->suspend();
+    vc64.suspend();
     
     switch (nr) {
             
         case 1: // Freeze
             
-            c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
-            c64->cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);
+            cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+            cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);
             
             // By setting the control register to 0, exrom/game is set to 1/0
             // which activates ultimax mode. This mode is reset later, in the
@@ -86,7 +86,7 @@ ActionReplay3::pressButton(unsigned nr)
             break;
     }
     
-    c64->resume();
+    vc64.resume();
 }
 
 void
@@ -95,25 +95,25 @@ ActionReplay3::releaseButton(unsigned nr)
     assert(nr <= numButtons());
     debug(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr));
     
-    c64->suspend();
+    vc64.suspend();
     
     switch (nr) {
             
         case 1: // Freeze
             
-            c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
-            c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
+            cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+            cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
             break;
     }
     
-    c64->resume();
+    vc64.resume();
 }
 
 void
 ActionReplay3::setControlReg(u8 value)
 {
     control = value;
-    c64->expansionport.setGameAndExrom(game(), exrom());
+    expansionport.setGameAndExrom(game(), exrom());
 }
 
 
@@ -141,7 +141,7 @@ void
 ActionReplay::resetCartConfig()
 {
     debug(CRT_DEBUG, "Starting ActionReplay cartridge in 8K game mode.\n");
-    c64->expansionport.setCartridgeMode(CRT_8K);
+    expansionport.setCartridgeMode(CRT_8K);
 }
 
 u8
@@ -211,7 +211,7 @@ ActionReplay::pressButton(unsigned nr)
     assert(nr <= numButtons());
     debug(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
     
-    c64->suspend();
+    vc64.suspend();
     
     switch (nr) {
             
@@ -221,8 +221,8 @@ ActionReplay::pressButton(unsigned nr)
             setControlReg(0x23);
             
             // Pressing the freeze bottom pulls down both the NMI and the IRQ line
-            c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
-            c64->cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);
+            cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+            cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);
             break;
             
         case 2: // Reset
@@ -231,7 +231,7 @@ ActionReplay::pressButton(unsigned nr)
             break;
     }
     
-    c64->resume();
+    vc64.resume();
 }
 
 void
@@ -240,18 +240,18 @@ ActionReplay::releaseButton(unsigned nr)
     assert(nr <= numButtons());
     debug(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr));
     
-    c64->suspend();
+    vc64.suspend();
     
     switch (nr) {
             
         case 1: // Freeze
             
-            c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
-            c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
+            cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+            cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
             break;
     }
     
-    c64->resume();
+    vc64.resume();
 }
 
 void
@@ -259,7 +259,7 @@ ActionReplay::setControlReg(u8 value)
 {
     control = value;
     
-    debug(CRT_DEBUG, "PC: %04X setControlReg(%02X)\n", c64->cpu.getPC(), value);
+    debug(CRT_DEBUG, "PC: %04X setControlReg(%02X)\n", cpu.getPC(), value);
     
     assert((value & 0x80) == 0);
     /*  "7    extra ROM bank selector (A15) (unused)
@@ -273,7 +273,7 @@ ActionReplay::setControlReg(u8 value)
      *   0    1 = /GAME low" [VICE]
      */
     
-    c64->expansionport.setGameAndExrom(game(), exrom());
+    expansionport.setGameAndExrom(game(), exrom());
     
     bankInROML(bank(), 0x2000, 0);
     bankInROMH(bank(), 0x2000, 0);
@@ -283,8 +283,8 @@ ActionReplay::setControlReg(u8 value)
     }
     
     if (resetFreezeMode() || disabled()) {
-        c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
-        c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
+        cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+        cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
     }
 }
 

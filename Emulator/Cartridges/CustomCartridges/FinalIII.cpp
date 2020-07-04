@@ -21,7 +21,7 @@ FinalIII::reset()
 void
 FinalIII::resetCartConfig()
 {
-    c64->expansionport.setCartridgeMode(CRT_16K);
+    expansionport.setCartridgeMode(CRT_16K);
 }
 
 u8
@@ -76,7 +76,7 @@ FinalIII::pressButton(unsigned nr)
     assert(nr <= numButtons());
     debug(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
     
-    c64->suspend();
+    vc64.suspend();
     
     switch (nr) {
             
@@ -92,7 +92,7 @@ FinalIII::pressButton(unsigned nr)
             break;
     }
     
-    c64->resume();
+    vc64.resume();
 }
 
 void
@@ -101,7 +101,7 @@ FinalIII::releaseButton(unsigned nr)
     assert(nr <= numButtons());
     debug(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr));
     
-    c64->suspend();
+    vc64.suspend();
     
     switch (nr) {
             
@@ -114,7 +114,7 @@ FinalIII::releaseButton(unsigned nr)
             break;
     }
     
-    c64->resume();
+    vc64.resume();
 }
 
 void
@@ -125,7 +125,7 @@ FinalIII::setControlReg(u8 value)
     // Update external lines
     updateNMI();
     updateGame();
-    c64->expansionport.setExromLine(exrom());
+    expansionport.setExromLine(exrom());
     
     // Switch memory bank
     bankIn(control & 0x03);
@@ -142,14 +142,14 @@ void
 FinalIII::updateNMI()
 {
     if (nmi() && !freeezeButtonIsPressed) {
-        c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+        cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
     } else {
-        c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+        cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
     }
 }
 
 void
 FinalIII::updateGame()
 {
-    c64->expansionport.setGameLine(game() && qD);
+    expansionport.setGameLine(game() && qD);
 }

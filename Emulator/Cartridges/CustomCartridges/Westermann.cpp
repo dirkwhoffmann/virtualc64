@@ -13,6 +13,6 @@ u8
 Westermann::peekIO2(u16 addr)
 {
     // Reading from I/O 2 switched the cartridge on
-    c64->expansionport.setCartridgeMode(CRT_8K);
+    expansionport.setCartridgeMode(CRT_8K);
     return 0;
 }

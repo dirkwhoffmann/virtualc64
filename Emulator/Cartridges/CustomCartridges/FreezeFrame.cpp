@@ -24,7 +24,7 @@ u8
 FreezeFrame::peekIO1(u16 addr)
 {
     // Reading from IO1 switched to 8K game mode
-    c64->expansionport.setCartridgeMode(CRT_8K);
+    expansionport.setCartridgeMode(CRT_8K);
     return 0;
 }
 
@@ -32,7 +32,7 @@ u8
 FreezeFrame::peekIO2(u16 addr)
 {
     // Reading from IO2 disables the cartridge
-    c64->expansionport.setCartridgeMode(CRT_OFF);
+    expansionport.setCartridgeMode(CRT_OFF);
     return 0;
 }
 
@@ -43,8 +43,8 @@ FreezeFrame::pressButton(unsigned nr)
         
         // Pressing the freeze button triggers an NMI in Ultimax mode
         suspend();
-        c64->expansionport.setCartridgeMode(CRT_ULTIMAX);
-        c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+        expansionport.setCartridgeMode(CRT_ULTIMAX);
+        cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
         resume();
     }
 }
@@ -55,7 +55,7 @@ FreezeFrame::releaseButton(unsigned nr)
     if (nr == 1) {
         
         suspend();
-        c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+        cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
         resume();
     }
 }

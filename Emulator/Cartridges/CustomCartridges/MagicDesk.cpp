@@ -29,7 +29,7 @@ MagicDesk::pokeIO1(u16 addr, u8 value)
      */
     
     if (addr == 0xDE00) {
-        c64->expansionport.setExromLine(value & 0x80);
+        expansionport.setExromLine(value & 0x80);
         bankIn(value & 0x0F);
     }
 }

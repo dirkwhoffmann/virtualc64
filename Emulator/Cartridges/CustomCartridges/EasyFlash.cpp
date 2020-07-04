@@ -85,7 +85,7 @@ EasyFlash::didSaveToBuffer(u8 **buffer)
 void
 EasyFlash::resetCartConfig()
 {
-    c64->expansionport.setCartridgeMode(CRT_ULTIMAX);
+    expansionport.setCartridgeMode(CRT_ULTIMAX);
 }
 
 void
@@ -260,7 +260,7 @@ EasyFlash::pokeIO1(u16 addr, u8 value)
                 return;
         }
         
-        c64->expansionport.setGameAndExrom(game, exrom);
+        expansionport.setGameAndExrom(game, exrom);
     }
 }
 

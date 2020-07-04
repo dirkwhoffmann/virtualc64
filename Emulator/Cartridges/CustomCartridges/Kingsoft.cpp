@@ -20,20 +20,20 @@ void
 Kingsoft::updatePeekPokeLookupTables()
 {
     // Tweak lookup tables if we run in Ultimax mode
-    if (c64->getUltimax()) {
+    if (vc64.getUltimax()) {
         
         // $0000 - $7FFF and $C000 - $DFFF are usable the normal way
         u8 exrom = 0x10;
         u8 game  = 0x08;
-        u8 index = (c64->processorPort.read() & 0x07) | exrom | game;
+        u8 index = (pport.read() & 0x07) | exrom | game;
 
         for (unsigned bank = 0x1; bank <= 0x7; bank++) {
-            MemoryType type = c64->mem.bankMap[index][bank];
-            c64->mem.peekSrc[bank] = c64->mem.pokeTarget[bank] = type;
+            MemoryType type = mem.bankMap[index][bank];
+            mem.peekSrc[bank] = mem.pokeTarget[bank] = type;
         }
         for (unsigned bank = 0xC; bank <= 0xD; bank++) {
-            MemoryType type = c64->mem.bankMap[index][bank];
-            c64->mem.peekSrc[bank] = c64->mem.pokeTarget[bank] = type;
+            MemoryType type = mem.bankMap[index][bank];
+            mem.peekSrc[bank] = mem.pokeTarget[bank] = type;
         }
     }
 }
@@ -42,7 +42,7 @@ u8
 Kingsoft::peekIO1(u16 addr)
 {
     // Switch to 16KB game mode
-    c64->expansionport.setCartridgeMode(CRT_16K);
+    expansionport.setCartridgeMode(CRT_16K);
  
     // Bank in second packet to ROMH
     bankInROMH(1, 0x2000, 0);
@@ -54,7 +54,7 @@ void
 Kingsoft::pokeIO1(u16 addr, u8 value)
 {
     // Switch to (faked) Ultimax mode
-    c64->expansionport.setCartridgeMode(CRT_ULTIMAX);
+    expansionport.setCartridgeMode(CRT_ULTIMAX);
     
     // Bank in third packet to ROMH
     bankInROMH(2, 0x2000, 0);

@@ -25,7 +25,7 @@ KcsPower::reset()
 u8
 KcsPower::peekIO1(u16 addr)
 {
-    c64->expansionport.setGameAndExrom(1, addr & 0x02 ? 1 : 0);
+    expansionport.setGameAndExrom(1, addr & 0x02 ? 1 : 0);
     return peekRomL(0x1E00 | (addr & 0xFF));
 }
 
@@ -41,9 +41,9 @@ KcsPower::peekIO2(u16 addr)
     if (addr & 0x80) {
         
         /*
-         u8 exrom = c64->expansionport.getExromLine() ? 0x80 : 0x00;
-         u8 game = c64->expansionport.getGameLine() ? 0x40 : 0x00;
-         return exrom | game | (c64->vic.getDataBusPhi1() & 0x3F);
+         u8 exrom = expansionport.getExromLine() ? 0x80 : 0x00;
+         u8 game = expansionport.getGameLine() ? 0x40 : 0x00;
+         return exrom | game | (vic.getDataBusPhi1() & 0x3F);
          */
         return peekRAM(addr & 0x7F);
         
@@ -57,7 +57,7 @@ KcsPower::peekIO2(u16 addr)
 void
 KcsPower::pokeIO1(u16 addr, u8 value)
 {
-    c64->expansionport.setGameAndExrom(0, (addr & 0b10) ? 1 : 0);
+    expansionport.setGameAndExrom(0, (addr & 0b10) ? 1 : 0);
 }
 
 void
@@ -75,8 +75,8 @@ KcsPower::pressButton(unsigned nr)
  
         // Pressing the button triggers an NMI in Ultimax mode
         suspend();
-        c64->expansionport.setCartridgeMode(CRT_ULTIMAX);
-        c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+        expansionport.setCartridgeMode(CRT_ULTIMAX);
+        cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
         resume();
     }
 };
@@ -87,7 +87,7 @@ KcsPower::releaseButton(unsigned nr)
     if (nr == 1) {
     
         suspend();
-        c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+        cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
         resume();
     }
 };

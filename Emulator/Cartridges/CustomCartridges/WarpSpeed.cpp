@@ -12,7 +12,7 @@
 void
 WarpSpeed::resetCartConfig()
 {
-    c64->expansionport.setCartridgeMode(CRT_16K);
+    expansionport.setCartridgeMode(CRT_16K);
 }
 
 u8
@@ -30,13 +30,13 @@ WarpSpeed::peekIO2(u16 addr)
 void
 WarpSpeed::pokeIO1(u16 addr, u8 value)
 {
-    c64->expansionport.setCartridgeMode(CRT_16K);
+    expansionport.setCartridgeMode(CRT_16K);
 }
 
 void
 WarpSpeed::pokeIO2(u16 addr, u8 value)
 {
-    c64->expansionport.setCartridgeMode(CRT_OFF);
+    expansionport.setCartridgeMode(CRT_OFF);
 }
 
 void
@@ -44,7 +44,7 @@ WarpSpeed::pressButton(unsigned nr)
 {
     assert(nr <= numButtons());
 
-    c64->suspend();
+    vc64.suspend();
     resetWithoutDeletingRam();
-    c64->resume();
+    vc64.resume();
 }

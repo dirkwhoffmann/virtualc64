@@ -64,7 +64,7 @@ Isepic::peek(u16 addr)
     if (cartIsVisible() && (addr == 0xFFFA || addr == 0xFFFB)) {
         return peekRAM((page * 256) + (addr & 0xFF));
     } else {
-        return c64->mem.peek(addr, oldPeekSource);
+        return mem.peek(addr, oldPeekSource);
     }
 }
 
@@ -101,7 +101,7 @@ Isepic::poke(u16 addr, u8 value)
     if (cartIsVisible() && (addr == 0xFFFA || addr == 0xFFFB)) {
         pokeRAM((page * 256) + (addr & 0xFF), value);
     } else {
-        c64->mem.poke(addr, value, oldPokeTarget);
+        mem.poke(addr, value, oldPokeTarget);
     }
 }
 
@@ -134,7 +134,7 @@ Isepic::getSwitchDescription(i8 pos)
 void
 Isepic::setSwitch(i8 pos)
 {
-    c64->suspend();
+    vc64.suspend();
 
     bool oldVisible = cartIsVisible();
     Cartridge::setSwitch(pos);
@@ -143,15 +143,15 @@ Isepic::setSwitch(i8 pos)
     if (oldVisible != newVisible) {
 
         // Enforce a call to updatePeekPokeLookupTables()
-        c64->expansionport.setCartridgeMode(CRT_OFF);
+        expansionport.setCartridgeMode(CRT_OFF);
 
         if (newVisible) {
 
             debug(CRT_DEBUG, "Activating Ipsec cartridge\n");
 
             // Trigger NMI
-            c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
-            c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+            cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+            cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
 
         } else {
 
@@ -159,7 +159,7 @@ Isepic::setSwitch(i8 pos)
         }
     }
 
-    c64->resume();
+    vc64.resume();
 }
 
 void
@@ -175,9 +175,9 @@ Isepic::updatePeekPokeLookupTables()
      * pokeTarget for the uppermost memory page to the cartridge.
      */
 
-    oldPeekSource = c64->mem.peekSrc[0xF];
-    oldPokeTarget = c64->mem.pokeTarget[0xF];
+    oldPeekSource = mem.peekSrc[0xF];
+    oldPokeTarget = mem.pokeTarget[0xF];
 
-    c64->mem.peekSrc[0xF] = M_CRTHI;
-    c64->mem.pokeTarget[0xF] = M_CRTHI;
+    mem.peekSrc[0xF] = M_CRTHI;
+    mem.pokeTarget[0xF] = M_CRTHI;
 }
