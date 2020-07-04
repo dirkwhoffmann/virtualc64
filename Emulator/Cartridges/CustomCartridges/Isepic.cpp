@@ -134,7 +134,7 @@ Isepic::getSwitchDescription(i8 pos)
 void
 Isepic::setSwitch(i8 pos)
 {
-    vc64.suspend();
+    suspend();
 
     bool oldVisible = cartIsVisible();
     Cartridge::setSwitch(pos);
@@ -159,7 +159,7 @@ Isepic::setSwitch(i8 pos)
         }
     }
 
-    vc64.resume();
+    resume();
 }
 
 void

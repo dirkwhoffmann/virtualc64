@@ -32,6 +32,18 @@ mouse(ref.mouse)
 };
 
 void
+C64Component::suspend()
+{
+    vc64.suspend();
+}
+
+void
+C64Component::resume()
+{
+    vc64.resume();
+}
+
+void
 C64Component::prefix()
 {
     vc64.prefix();

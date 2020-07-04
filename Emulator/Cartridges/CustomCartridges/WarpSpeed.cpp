@@ -44,7 +44,7 @@ WarpSpeed::pressButton(unsigned nr)
 {
     assert(nr <= numButtons());
 
-    vc64.suspend();
+    suspend();
     resetWithoutDeletingRam();
-    vc64.resume();
+    resume();
 }

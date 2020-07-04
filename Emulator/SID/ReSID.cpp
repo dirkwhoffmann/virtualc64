@@ -149,11 +149,9 @@ ReSID::setSampleRate(u32 value)
 {
     sampleRate = value;
     
-    // suspend();
     sid->set_sampling_parameters((double)clockFrequency,
                                  (reSID::sampling_method)samplingMethod,
                                  (double)sampleRate);
-    // resume();
     
     debug(SID_DEBUG, "Setting sample rate to %d samples per second.\n", sampleRate);
 }
@@ -165,7 +163,6 @@ ReSID::setAudioFilter(bool value)
     
     suspend();
     sid->enable_filter(value);
-    // sid->filter._reset();
     resume();
     
     debug(SID_DEBUG, "%s audio filter emulation.\n", value ? "Enabling" : "Disabling");

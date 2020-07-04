@@ -273,8 +273,10 @@ SIDBridge::setModel(SIDModel m)
     }
     
     suspend();
+    
     resid.setModel(m);
     fastsid.setModel(m);
+
     resume();
 }
 

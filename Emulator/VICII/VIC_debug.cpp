@@ -17,8 +17,8 @@ VIC::getInfo()
     u8 ctrl1 = reg.current.ctrl1;
     u8 ctrl2 = reg.current.ctrl2;
 
-    info.rasterline = c64->rasterLine;
-    info.cycle = c64->rasterCycle;
+    info.rasterline = vc64.rasterLine;
+    info.cycle = vc64.rasterCycle;
     info.xCounter = xCounter;
     info.badLine = badLine;
     info.ba = (baLine.current() == 0);
@@ -242,7 +242,7 @@ VIC::setSpritePtr(unsigned nr, u8 ptr)
     
     suspend();
     u16 addr = (VM13VM12VM11VM10() << 6) | 0x03F8 | nr;
-    c64->mem.ram[addr] = ptr;
+    mem.ram[addr] = ptr;
     resume();
 }
 

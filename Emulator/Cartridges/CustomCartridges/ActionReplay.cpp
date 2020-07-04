@@ -65,7 +65,7 @@ ActionReplay3::pressButton(unsigned nr)
     assert(nr <= numButtons());
     debug(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
     
-    vc64.suspend();
+    suspend();
     
     switch (nr) {
             
@@ -86,7 +86,7 @@ ActionReplay3::pressButton(unsigned nr)
             break;
     }
     
-    vc64.resume();
+    resume();
 }
 
 void
@@ -95,7 +95,7 @@ ActionReplay3::releaseButton(unsigned nr)
     assert(nr <= numButtons());
     debug(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr));
     
-    vc64.suspend();
+    suspend();
     
     switch (nr) {
             
@@ -106,7 +106,7 @@ ActionReplay3::releaseButton(unsigned nr)
             break;
     }
     
-    vc64.resume();
+    resume();
 }
 
 void
@@ -211,7 +211,7 @@ ActionReplay::pressButton(unsigned nr)
     assert(nr <= numButtons());
     debug(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
     
-    vc64.suspend();
+    suspend();
     
     switch (nr) {
             
@@ -231,7 +231,7 @@ ActionReplay::pressButton(unsigned nr)
             break;
     }
     
-    vc64.resume();
+    resume();
 }
 
 void
@@ -240,7 +240,7 @@ ActionReplay::releaseButton(unsigned nr)
     assert(nr <= numButtons());
     debug(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr));
     
-    vc64.suspend();
+    suspend();
     
     switch (nr) {
             
@@ -251,7 +251,7 @@ ActionReplay::releaseButton(unsigned nr)
             break;
     }
     
-    vc64.resume();
+    resume();
 }
 
 void

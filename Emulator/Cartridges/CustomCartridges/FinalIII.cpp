@@ -76,7 +76,7 @@ FinalIII::pressButton(unsigned nr)
     assert(nr <= numButtons());
     debug(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
     
-    vc64.suspend();
+    suspend();
     
     switch (nr) {
             
@@ -92,7 +92,7 @@ FinalIII::pressButton(unsigned nr)
             break;
     }
     
-    vc64.resume();
+    resume();
 }
 
 void
@@ -101,7 +101,7 @@ FinalIII::releaseButton(unsigned nr)
     assert(nr <= numButtons());
     debug(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr));
     
-    vc64.suspend();
+    suspend();
     
     switch (nr) {
             
@@ -114,7 +114,7 @@ FinalIII::releaseButton(unsigned nr)
             break;
     }
     
-    vc64.resume();
+    resume();
 }
 
 void

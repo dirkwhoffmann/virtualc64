@@ -67,7 +67,7 @@
  */
 class C64 : public HardwareComponent {
     
-    public:
+public:
     
     //
     // Hardware components
@@ -108,7 +108,7 @@ class C64 : public HardwareComponent {
     
     //! @brief    The C64's serial bus connecting the VC1541 floppy drives
     IEC iec = IEC(*this);
-
+    
     //! @brief    A VC1541 floppy drive (with device number 8)
     VC1541 drive1 = VC1541(1, *this);
     
@@ -143,12 +143,12 @@ class C64 : public HardwareComponent {
      *  @see      VIC::getCyclesPerRasterline()
      */
     u8 rasterCycle;
-
+    
     /*! @brief    Current CPU frequency
      *  @details  This value is set in setClockFrequency()
      */
     u32 frequency;
-
+    
     /*! @brief    Duration of a CPU cycle in 1/10 nano seconds
      *  @details  This value is set in setClockFrequency()
      */
@@ -176,7 +176,7 @@ class C64 : public HardwareComponent {
      */
     pthread_t p;
     
-    private:
+private:
     
     /*! @brief    System timer information
      *  @details  Used to put the emulation thread to sleep for the proper
@@ -232,8 +232,8 @@ class C64 : public HardwareComponent {
     // Snapshot storage
     //
     
-    private:
-
+private:
+    
     //! @brief    Indicates if snapshots should be taken automatically.
     bool takeAutoSnapshots = true;
     
@@ -256,7 +256,7 @@ class C64 : public HardwareComponent {
     //! @functiongroup Constructing and destructing
     //
     
-    public:
+public:
     
     //! @brief    Standard constructor
     C64();
@@ -272,13 +272,11 @@ class C64 : public HardwareComponent {
     void reset() override;
     void ping() override;
     void setClockFrequency(u32 frequency) override;
-    void suspend() override;
-    void resume() override;
     void dump() override;
-    
- 
+        
+
     //
-    //! @functiongroup Configuring the emulator
+    // Configuring the emulator
     //
     
     /*! @brief    Returns the emulated C64 model
@@ -300,7 +298,7 @@ class C64 : public HardwareComponent {
     
     
     //
-    //! @functiongroup Accessing the message queue
+    // Accessing the message queue
     //
     
     //! @brief    Registers a listener callback function
@@ -321,7 +319,7 @@ class C64 : public HardwareComponent {
     
     
     //
-    //! @functiongroup Running the emulator
+    // Running the emulator
     //
     
     /*! @brief    Cold starts the virtual C64.
@@ -358,7 +356,7 @@ class C64 : public HardwareComponent {
      * has to be declared public to make it accessible by the emulator thread.
      */
     void threadDidTerminate();
-        
+    
     //! @brief    Returns true iff the virtual C64 is able to run.
     /*! @details  The emulator needs all four Roms to run. Hence, this method
      *            returns true if and only if all four Roms are installed.
@@ -394,7 +392,7 @@ class C64 : public HardwareComponent {
      */
     bool executeOneFrame();
     
-    private:
+private:
     
     //! @brief    Executes a single CPU cycle
     bool executeOneCycle();
@@ -413,10 +411,25 @@ class C64 : public HardwareComponent {
     
     
     //
-    //! @functiongroup Managing the execution thread
+    // Managing the emulator thread
     //
     
-    private:
+public:
+    
+    // Pauses the emulation thread temporarily. Because the emulator is running
+    // in a separate thread, the GUI has to pause the emulator before changing
+    // it's internal state. This is done by embedding the code inside a
+    // suspend / resume block:
+    //
+    //           suspend();
+    //           do something with the internal state;
+    //           resume();
+    //
+    // It it safe to nest multiple suspend() / resume() blocks.
+    void suspend();
+    void resume();
+    
+private:
     
     //! @brief    Converts kernel time to nanoseconds.
     u64 abs_to_nanos(u64 abs) { return abs * timebase.numer / timebase.denom; }
@@ -424,7 +437,7 @@ class C64 : public HardwareComponent {
     //! @brief    Converts nanoseconds to kernel time.
     u64 nanos_to_abs(u64 nanos) { return nanos * timebase.denom / timebase.numer; }
     
-    public:
+public:
     
     //! @brief    Updates variable warp and returns the new value.
     /*! @details  As a side effect, messages are sent to the GUI if the
@@ -450,7 +463,7 @@ class C64 : public HardwareComponent {
      */
     void restartTimer();
     
-    private:
+private:
     
     /*! @brief    Puts the emulation the thread to sleep for a while.
      *  @details  This function is called inside endFrame(). It makes the
@@ -460,16 +473,16 @@ class C64 : public HardwareComponent {
      */
     void synchronizeTiming();
     
- 
+    
     //
     //! @functiongroup Handling snapshots
     //
     
-    public:
-
+public:
+    
     //! @brief    Indicates if the auto-snapshot feature is enabled.
     bool getTakeAutoSnapshots() { return takeAutoSnapshots; }
-
+    
     //! @brief    Enables or disabled the auto-snapshot feature.
     void setTakeAutoSnapshots(bool enable) { takeAutoSnapshots = enable; }
     
@@ -502,7 +515,7 @@ class C64 : public HardwareComponent {
     bool restoreSnapshot(vector<Snapshot *> &storage, unsigned nr);
     bool restoreAutoSnapshot(unsigned nr) { return restoreSnapshot(autoSnapshots, nr); }
     bool restoreUserSnapshot(unsigned nr) { return restoreSnapshot(userSnapshots, nr); }
-
+    
     //! @brief    Restores the latest snapshot from the snapshot storage
     bool restoreLatestAutoSnapshot() { return restoreAutoSnapshot(0); }
     bool restoreLatestUserSnapshot() { return restoreUserSnapshot(0); }
@@ -537,14 +550,14 @@ class C64 : public HardwareComponent {
     void deleteAutoSnapshot(unsigned nr) { deleteSnapshot(autoSnapshots, nr); }
     void deleteUserSnapshot(unsigned nr) { deleteSnapshot(userSnapshots, nr); }
     
-
+    
     //
     //! @functiongroup Handling Roms
     //
     
     //! @brief    Loads a ROM image into memory
     bool loadRom(const char *filename);
-
+    
     
     //
     //! @functiongroup Flashing files
@@ -552,16 +565,16 @@ class C64 : public HardwareComponent {
     
     //! @brief    Flashes a single file into memory
     bool flash(AnyC64File *file);
-
+    
     //! @brief    Flashes a single item of an archive into memory
     bool flash(AnyArchive *file, unsigned item);
     
- 
+    
     //
     //! @functiongroup Set and query ultimax mode
     //
     
-    public:
+public:
     
     //! @brief    Returns the ultimax flag
     bool getUltimax() { return ultimax; }

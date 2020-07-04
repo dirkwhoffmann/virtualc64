@@ -153,7 +153,7 @@ Expert::pressButton(unsigned nr)
     assert(nr <= numButtons());
     debug(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
     
-    vc64.suspend();
+    suspend();
     
     switch (nr) {
             
@@ -182,7 +182,7 @@ Expert::pressButton(unsigned nr)
             break;
     }
     
-    vc64.resume();
+    resume();
 }
 
 

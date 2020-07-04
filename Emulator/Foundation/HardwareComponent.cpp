@@ -67,6 +67,7 @@ HardwareComponent::setClockFrequency(u32 frequency)
     }
 }
 
+/*
 void
 HardwareComponent::suspend()
 {
@@ -78,6 +79,7 @@ HardwareComponent::resume()
 {
     c64->resume();
 }
+*/
 
 void
 HardwareComponent::registerSnapshotItems(SnapshotItem *items, unsigned length) {

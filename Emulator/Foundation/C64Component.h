@@ -66,6 +66,9 @@ public:
 
     C64Component(C64& ref);
 
+    void suspend();
+    void resume();
+    
 private:
 
     void prefix() override;
