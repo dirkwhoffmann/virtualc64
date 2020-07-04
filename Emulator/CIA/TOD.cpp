@@ -12,7 +12,6 @@
 TOD::TOD(CIA *cia)
 {
 	setDescription("TOD");
-	debug(3, "    Creating TOD at address %p...\n", this);
     
     this->cia = cia;
     

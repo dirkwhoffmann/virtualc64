@@ -345,13 +345,19 @@ class C64 : public HardwareComponent {
      *            not running.
      */
     void halt();
-        
-    /*! @brief    The tread exit function.
-     *  @details  This method is invoked automatically when the emulator thread
-     *            terminates.
-     */
-    void threadCleanup();
     
+    /* The thread enter function.
+     * This (private) method is invoked when the emulator thread launches. It
+     * has to be declared public to make it accessible by the emulator thread.
+     */
+    void threadWillStart();
+    
+    /* The thread exit function.
+     * This (private) method is invoked when the emulator thread terminates. It
+     * has to be declared public to make it accessible by the emulator thread.
+     */
+    void threadDidTerminate();
+        
     //! @brief    Returns true iff the virtual C64 is able to run.
     /*! @details  The emulator needs all four Roms to run. Hence, this method
      *            returns true if and only if all four Roms are installed.

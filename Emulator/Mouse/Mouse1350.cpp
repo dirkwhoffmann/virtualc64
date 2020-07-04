@@ -13,7 +13,6 @@
 Mouse1350::Mouse1350() {
     
     setDescription("Mouse1350");
-    debug(3, "    Creating Mouse1350 at address %p...\n", this);
 }
 
 Mouse1350::~Mouse1350()
@@ -59,7 +58,7 @@ Mouse1350::execute(i64 targetX, i64 targetY)
     mouseX = targetX / dividerX;
     mouseY = targetY / dividerY;
  
-    debug("targetX = %d targetY = %d\n", targetX, targetY);
+    debug(MOUSE_DEBUG, "targetX = %d targetY = %d\n", targetX, targetY);
     
     controlPort = 0xFF;
     

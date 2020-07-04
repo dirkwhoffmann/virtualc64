@@ -108,23 +108,23 @@ EasyFlash::loadChip(unsigned nr, CRTFile *c)
 
     // Check for missing banks
     if (bank % 2 == 0 && isROMHaddr(chipAddr)) {
-        debug(1, "Skipping Rom bank %dL ...\n", bank / 2);
+        debug(CRT_DEBUG, "Skipping Rom bank %dL ...\n", bank / 2);
         bank++;
     }
     if (bank % 2 == 1 && isROMLaddr(chipAddr)) {
-        debug(1, "Skipping Rom bank %dH ...\n", bank / 2);
+        debug(CRT_DEBUG, "Skipping Rom bank %dH ...\n", bank / 2);
         bank++;
     }
 
     if (isROMLaddr(chipAddr)) {
             
-        debug(1, "Loading Rom bank %dL ...\n", bank / 2);
+        debug(CRT_DEBUG, "Loading Rom bank %dL ...\n", bank / 2);
         flashRomL.loadBank(bank / 2, chipData);
         bank++;
     
     } else if (isROMHaddr(chipAddr)) {
 
-        debug(1, "Loading Rom bank %dH ...\n", bank / 2);
+        debug(CRT_DEBUG, "Loading Rom bank %dH ...\n", bank / 2);
         flashRomH.loadBank(bank / 2, chipData);
         bank++;
         
@@ -184,7 +184,6 @@ EasyFlash::poke(u16 addr, u8 value)
 u8
 EasyFlash::peekIO1(u16 addr)
 {
-    // debug("WARNING: peekIO1\n");
     return 0;
 }
 

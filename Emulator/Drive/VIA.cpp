@@ -883,12 +883,10 @@ VIA6522::wakeUp()
 VIA1::VIA1(VC1541 *drive) : VIA6522(drive)
 {
     setDescription("VIA1");
-    debug(3, "  Creating VIA1 at address %p...\n", this);
 }
 
 VIA1::~VIA1()
 {
-    debug(3, "  Releasing VIA1...\n");
 }
 
 void
@@ -944,12 +942,10 @@ VIA1::updatePB()
 VIA2::VIA2(VC1541 *drive) : VIA6522(drive)
 {
     setDescription("VIA2");
-	debug(3, "  Creating VIA2 at address %p...\n", this);
 }
 	
 VIA2::~VIA2()
 {
-	debug(3, "  Releasing VIA2...\n");
 }
 
 u8
@@ -1029,7 +1025,7 @@ VIA2::updatePB()
                 drive->moveHeadDown();
                 // assert(newPos == ((drive->getHalftrack() - 1) & 0x03));
             } else {
-                debug(2, "Unexpected stepper motor control sequence\n");
+                debug(VIA_DEBUG, "Unexpected stepper motor control sequence\n");
             }
         }
     }

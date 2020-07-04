@@ -19,11 +19,7 @@ threadCleanup(void* thisC64)
     assert(thisC64 != NULL);
     
     C64 *c64 = (C64 *)thisC64;
-    c64->threadCleanup();
-    c64->sid.halt();
-    
-    c64->debug(2, "Execution thread terminated\n");
-    c64->putMessage(MSG_HALT);
+    c64->threadDidTerminate();
 }
 
 void 
@@ -32,11 +28,9 @@ void
     assert(thisC64 != NULL);
     
     C64 *c64 = (C64 *)thisC64;
+    c64->threadWillStart();
     bool success = true;
-    
-    c64->debug(2, "Execution thread started\n");
-    c64->putMessage(MSG_RUN);
-    
+        
     // Configure thread properties...
     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
     pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
@@ -65,7 +59,7 @@ void
 C64::C64()
 {
     setDescription("C64");
-    debug("Creating virtual C64[%p]\n", this);
+    debug(RUN_DEBUG, "Creating virtual C64 [%p]\n", this);
 
     p = NULL;
     warp = false;
@@ -123,7 +117,7 @@ C64::C64()
 
 C64::~C64()
 {
-    debug(1, "Destroying virtual C64[%p]\n", this);
+    debug(RUN_DEBUG, "Destroying virtual C64[%p]\n", this);
     
     halt();
 }
@@ -131,7 +125,7 @@ C64::~C64()
 void
 C64::reset()
 {
-    debug(1, "Resetting virtual C64[%p]\n", this);
+    debug(RUN_DEBUG, "Resetting virtual C64[%p]\n", this);
     
     // Reset all sub components
     HardwareComponent::reset();
@@ -142,7 +136,6 @@ C64::reset()
 
     // Initialize program counter
     cpu.regPC = mem.resetVector();
-    debug("Setting PC to %04X\n", cpu.regPC);
     
     rasterCycle = 1;
     nanoTargetTime = 0UL;
@@ -165,13 +158,12 @@ C64::setClockFrequency(u32 value)
     
     frequency = value;
     durationOfOneCycle = 10000000000 / value;
-    debug(2, "Duration of a C64 CPU cycle is %lld 1/10 nsec.\n", durationOfOneCycle);
 }
 
 void
 C64::suspend()
 {
-    debug(2, "Suspending...(%d)\n", suspendCounter);
+    debug(RUN_DEBUG, "Suspending...(%d)\n", suspendCounter);
     
     if (suspendCounter == 0 && isHalted())
     return;
@@ -183,7 +175,7 @@ C64::suspend()
 void
 C64::resume()
 {
-    debug(2, "Resuming (%d)...\n", suspendCounter);
+    debug(RUN_DEBUG, "Resuming (%d)...\n", suspendCounter);
     
     if (suspendCounter == 0)
     return;
@@ -397,10 +389,22 @@ C64::halt()
 }
 
 void
-C64::threadCleanup()
+C64::threadWillStart()
 {
+    debug(RUN_DEBUG, "Emulator thread started\n");
+    
+    putMessage(MSG_RUN);
+}
+
+void
+C64::threadDidTerminate()
+{
+    debug(RUN_DEBUG, "Emulator thread terminated\n");
+
     p = NULL;
-    debug(2, "Execution thread cleanup\n");
+        
+    sid.halt();
+    putMessage(MSG_HALT);
 }
 
 bool
@@ -673,7 +677,7 @@ C64::synchronizeTiming()
         // The emulator seems to be out of sync, so we better reset the
         // synchronization timer
         
-        debug(2, "Emulator lost synchronization (%lld). Restarting timer.\n", timediff);
+        debug(RUN_DEBUG, "Synchronization lost: (%lld)\n", timediff);
         restartTimer();
     }
     
@@ -681,17 +685,15 @@ C64::synchronizeTiming()
     i64 kernelTargetTime = nanos_to_abs(nanoTargetTime);
     
     // Sleep and update target timer
-    // debug(2, "%p Sleeping for %lld\n", this, kernelTargetTime - mach_absolute_time());
     i64 jitter = sleepUntil(kernelTargetTime, earlyWakeup);
     nanoTargetTime += vic.getFrameDelay();
     
-    // debug(2, "Jitter = %d", jitter);
     if (jitter > 1000000000 /* 1 sec */) {
         
         // The emulator did not keep up with the real time clock. Instead of
         // running behind for a long time, we reset the synchronization timer
         
-        debug(2, "Jitter exceeds limit (%lld). Restarting synchronization timer.\n", jitter);
+        debug(RUN_DEBUG, "Jitter exceeds limit: (%lld)\n", jitter);
         restartTimer();
     }
 }
@@ -710,7 +712,7 @@ void C64::loadFromSnapshotUnsafe(Snapshot *snapshot)
 void
 C64::loadFromSnapshotSafe(Snapshot *snapshot)
 {
-    debug(2, "C64::loadFromSnapshotSafe\n");
+    debug(SNP_DEBUG, "C64::loadFromSnapshotSafe\n");
 
     suspend();
     loadFromSnapshotUnsafe(snapshot);
@@ -845,9 +847,9 @@ C64::loadRom(const char *filename)
     resume();
     
     if (result) {
-        debug(2, "Loaded ROM image %s.\n", filename);
+        msg("Loaded ROM image %s\n", filename);
     } else {
-        debug(2, "Failed to flash ROM image %s.\n", filename);
+        warn("Failed to flash ROM image %s\n", filename);
     }
     
     if (!wasRunnable && isRunnable())

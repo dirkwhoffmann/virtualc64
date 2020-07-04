@@ -190,7 +190,7 @@ CRTFile::readFromBuffer(const u8 *buffer, size_t length)
 
     // Some CRT files contain incosistencies. We try to fix them here.
     if (!repair()) {
-        debug("Failed to repair broken CRT file\n");
+        warn("Failed to repair broken CRT file\n");
         return false;
     }
 
@@ -227,7 +227,7 @@ CRTFile::readFromBuffer(const u8 *buffer, size_t length)
         ptr += chipSize(numberOfChips);
     }
     
-    debug("CRT file imported successfully (%d chips)\n", numberOfChips);
+    msg("CRT file imported successfully (%d chips)\n", numberOfChips);
     return true;	
 }
 
@@ -248,13 +248,13 @@ bool
 CRTFile::repair()
 {
     if ((data == NULL) != (size == 0)) {
-        debug("CRT file inconsistency: data = %p size = %d\n", data, size);
+        warn("CRT file inconsistency: data = %p size = %d\n", data, size);
         return false;
     }
 
     // Compute a fingerprint for the CRT file
     u64 fingerprint = fnv_1a_64(data, size);
-    debug("CRT fingerprint: %llx\n", fingerprint);
+    debug(CRT_DEBUG, "CRT fingerprint: %llx\n", fingerprint);
 
     // Check for known inconsistencies
     switch (fingerprint) {
@@ -262,7 +262,7 @@ CRTFile::repair()
         case 0xb2a479a5a2ee6cd5: // Mikro Assembler (invalid CRT type)
 
             // Replace invalid CRT type $00 by $1C
-            debug("Repairing broken Mikro Assembler cartridge\n");
+            msg("Repairing broken Mikro Assembler cartridge\n");
             data[0x17] = 0x1C;
             break;
     }

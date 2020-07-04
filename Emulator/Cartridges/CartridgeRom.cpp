@@ -12,7 +12,6 @@
 CartridgeRom::CartridgeRom()
 {
     setDescription("CartridgeRom");
-    debug(3, "  Creating cartridge Rom at address %p...\n", this);
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -24,14 +23,6 @@ CartridgeRom::CartridgeRom()
     
     registerSnapshotItems(items, sizeof(items));
 }
-
-/*
-CartridgeRom::CartridgeRom(u8 **buffer) : CartridgeRom()
-{
-    assert(buffer != NULL);
-    loadFromBuffer(buffer);
-}
-*/
 
 CartridgeRom::CartridgeRom(u16 size, u16 loadAddress, const u8 *buffer) : CartridgeRom()
 {

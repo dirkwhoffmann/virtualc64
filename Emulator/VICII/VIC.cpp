@@ -21,7 +21,6 @@
 VIC::VIC()
 {
 	setDescription("VIC");
-	debug(3, "  Creating VIC at address %p...\n", this);
     
 	markIRQLines = false;
 	markDMALines = false;
@@ -255,7 +254,7 @@ VIC::didSaveToBuffer(u8 **buffer)
 void
 VIC::setModel(VICModel m)
 {
-    debug(2, "VIC::setModel(%d)\n", m);
+    debug(VIC_DEBUG, "VIC::setModel(%d)\n", m);
     
     if (!isVICChhipModel(m)) {
         warn("Unknown VICII model (%d). Assuming a MOS8565.\n", m);
@@ -307,7 +306,7 @@ VIC::setVideoPalette(VICPalette type)
 void
 VIC::setGlueLogic(GlueLogic type)
 {
-    debug(2, "VIC::setGlueLogic(%d)\n", type);
+    debug(VIC_DEBUG, "setGlueLogic(%d)\n", type);
     
     if (!isGlueLogic(type)) {
         warn("Unknown glue logic type (%d). Assuming discrete logic.\n", type);
@@ -585,7 +584,6 @@ void
 VIC::checkForLightpenIrq()
 {
     u8 vicCycle = c64->rasterCycle;
-    // debug("Negative LP transition at rastercycle %d\n", vicCycle);
 
     // An interrupt is suppressed if ...
     

@@ -12,7 +12,6 @@
 ProcessorPort::ProcessorPort()
 {
     setDescription("ProcessorPort");
-    debug(3, "Creating processor port at address %p...\n", this);
     
     // Register snapshot items
     SnapshotItem items[] = {

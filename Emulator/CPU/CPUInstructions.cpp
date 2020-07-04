@@ -466,7 +466,7 @@ CPU::executeOneCycle()
                     c64->expansionport.nmiWillTrigger();
                 }
                 
-                // debug("NMI (source = %02X)\n", nmiLine);
+                debug(IRQ_DEBUG, "NMI (source = %02X)\n", nmiLine);
                 // if (tracingEnabled()) debug("NMI (source = %02X)\n", nmiLine);
                 IDLE_FETCH
                 edgeDetector.clear();
@@ -477,7 +477,7 @@ CPU::executeOneCycle()
                 
             } else if (unlikely(doIrq)) {
                 
-                // if (tracingEnabled()) debug("IRQ (source = %02X)\n", irqLine);
+                debug(IRQ_DEBUG, "IRQ (source = %02X)\n", irqLine);
                 IDLE_FETCH
                 next = irq_2;
                 doIrq = false;
@@ -523,7 +523,7 @@ CPU::executeOneCycle()
                 } else {
                     setErrorState(CPU_HARD_BREAKPOINT_REACHED);
                 }
-                debug(1, "Breakpoint reached\n");
+                debug(CPU_DEBUG, "Breakpoint reached\n");
             }
             
             return errorState == CPU_OK;

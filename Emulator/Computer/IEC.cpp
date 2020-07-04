@@ -12,7 +12,6 @@
 IEC::IEC()
 {
   	setDescription("IEC");
-    debug(3, "  Creating IEC bus at address %p...\n", this);
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -44,7 +43,6 @@ IEC::IEC()
 
 IEC::~IEC()
 {
-	debug(3, "  Releasing IEC bus...\n");
 }
 
 void 
@@ -96,7 +94,7 @@ IEC::dump()
 void 
 IEC::dumpTrace()
 {
-    debug(1, "ATN: %d CLK: %d DATA: %d\n", atnLine, clockLine, dataLine);
+    debug(IEC_DEBUG, "ATN: %d CLK: %d DATA: %d\n", atnLine, clockLine, dataLine);
 }
 
 bool IEC::_updateIecLines()

@@ -12,13 +12,11 @@
 u8
 MikroAss::peekIO1(u16 addr)
 {
-    // debug("MikroAss::peekIO1(%x)", addr);
     return peekRomL(0x1E00 | LO_BYTE(addr));
 }
 
 u8
 MikroAss::peekIO2(u16 addr)
 {
-    // debug("MikroAss::peekIO2(%x)", addr);
     return peekRomL(0x1F00 | LO_BYTE(addr));
 }

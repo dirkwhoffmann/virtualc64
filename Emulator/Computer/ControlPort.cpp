@@ -20,16 +20,7 @@ ControlPort::ControlPort(int portNr)
     bulletCounter = 0;
     nextAutofireFrame = 0;
     
-    setDescription("ControlPort");
-    debug(3, "    Creating ControlPort %d at address %p...\n", nr, this);
-    
-    // Register snapshot items
-    /*
-    SnapshotItem items[] = {
-        { NULL,             0,                      0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
-     */
+    setDescription("ControlPort");    
 }
 
 ControlPort::~ControlPort()

@@ -13,7 +13,6 @@
 Mouse1351::Mouse1351() {
     
     setDescription("Mouse1351");
-    debug(3, "    Creating Mouse1351 at address %p...\n", this);
 }
 
 Mouse1351::~Mouse1351()

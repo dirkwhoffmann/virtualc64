@@ -205,7 +205,7 @@ AnyC64File::readFromFile(const char *filename)
     setPath(filename);
     success = true;
     
-    debug(1, "File %s read successfully\n", path);
+    debug(FILE_DEBUG, "File %s read successfully\n", path);
 	
 exit:
 	

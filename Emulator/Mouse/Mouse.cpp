@@ -12,7 +12,6 @@
 Mouse::Mouse()
 {
     setDescription("Mouse");
-    debug(3, "Creating %s at address %p\n", getDescription());
     
     // Register sub components
     HardwareComponent *subcomponents[] = { &mouse1350, &mouse1351, &mouseNeos, NULL };
@@ -41,8 +40,6 @@ Mouse::setModel(MouseModel model)
 void
 Mouse::connectMouse(unsigned portNr)
 {
-    // debug("Connecting mouse to port %d\n", portNr);
-    
     assert(portNr <= 2);
     port = portNr;
 }
@@ -130,9 +127,7 @@ Mouse::readPotY()
 
 u8
 Mouse::readControlPort(unsigned portNr)
-{
-    // debug("port = %d portNr = %d\n", port, portNr);
-    
+{    
     if (port == portNr) {
         switch(model) {
             case MOUSE1350:

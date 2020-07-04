@@ -21,8 +21,6 @@ Isepic::Isepic(C64 *c64) : Cartridge(c64)
 
     // We start with an enabled cartridge (without triggering an NMI)
     Cartridge::setSwitch(1);
-
-    debug("Isepic cartridge created\n");
 }
 
 void
@@ -149,7 +147,7 @@ Isepic::setSwitch(i8 pos)
 
         if (newVisible) {
 
-            debug("Activating Ipsec cartridge\n");
+            debug(CRT_DEBUG, "Activating Ipsec cartridge\n");
 
             // Trigger NMI
             c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
@@ -157,7 +155,7 @@ Isepic::setSwitch(i8 pos)
 
         } else {
 
-            debug("Hiding Ipsec cartridge\n");
+            debug(CRT_DEBUG, "Hiding Ipsec cartridge\n");
         }
     }
 

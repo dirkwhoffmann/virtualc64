@@ -12,9 +12,7 @@
 C64Memory::C64Memory()
 {	
 	setDescription("C64 memory");
-    
-	debug (3, "  Creating main memory at address %p...\n", this);
-		
+    		
     memset(rom, 0, sizeof(rom));
     stack = &ram[0x0100];
     
@@ -110,7 +108,6 @@ C64Memory::C64Memory()
 
 C64Memory::~C64Memory()
 {
-	debug(3, "  Releasing main memory at address %p...\n", this);
 }
 
 void
@@ -531,7 +528,6 @@ u16
 C64Memory::resetVector() {
     
     if (peekSrc[0xF] != M_ROM || kernalRomIsLoaded()) {
-        debug("Grabbing reset vector from source %d\n", peekSrc[0xF]);
         return LO_HI(peek(0xFFFC), peek(0xFFFD));
     } else {
         return 0xFCE2;

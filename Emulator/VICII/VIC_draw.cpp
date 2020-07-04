@@ -381,10 +381,6 @@ VIC::drawSpritePixel(unsigned pixel,
                     // In multi-color mode, get 2 bits every second pixel
                     if (spriteSr[sprite].mcFlop) {
                         spriteSr[sprite].colBits = (spriteSr[sprite].data >> 22) & 0x03;
-                        /*
-                         debug("f: %d l: %d c: %d Sprite %d loads mc colBits: %02X\n",
-                         c64->frame, c64->rasterLine, c64->rasterCycle - 1, sprite, spriteSr[sprite].colBits);
-                         */
                     }
                     spriteSr[sprite].mcFlop = !spriteSr[sprite].mcFlop;
                     

@@ -16,7 +16,6 @@ VC1541::VC1541(unsigned nr)
     deviceNr = nr;
     setDescription(deviceNr == 1 ? "Drive1" : "Drive2");
     cpu.setDescription(deviceNr == 1 ? "Drive1CPU" : "Drive2CPU");
-    debug(3, "Creating %s at address %p\n", getDescription());
 	
     // Register sub components
     HardwareComponent *subcomponents[] = { &mem, &cpu, &via1, &via2, &disk, NULL };
@@ -61,7 +60,6 @@ VC1541::VC1541(unsigned nr)
 
 VC1541::~VC1541()
 {
-	debug(3, "Releasing VC1541...\n");
 }
 
 void
@@ -98,7 +96,6 @@ void
 VC1541::setClockFrequency(u32 frequency)
 {
     durationOfOneCpuCycle = 10000000000 / frequency;
-    debug("Duration a CPU cycle is %lld 1/10 nsec.\n", durationOfOneCpuCycle);
 }
 
 void 
@@ -335,7 +332,7 @@ VC1541::setZone(uint2_t value)
     assert(is_uint2_t(value));
     
     if (value != zone) {
-        debug(2, "Switching from disk zone %d to disk zone %d\n", zone, value);
+        debug(DRV_DEBUG, "Switching from disk zone %d to disk zone %d\n", zone, value);
         zone = value;
     }
 }
@@ -405,9 +402,9 @@ VC1541::moveHeadUp()
         halftrack++;
         offset = (HeadPosition)(position * disk.lengthOfHalftrack(halftrack));
         
-        debug(2, "Moving head up to halftrack %d (track %2.1f) (offset %d)\n",
+        debug(DRV_DEBUG, "Moving head up to halftrack %d (track %2.1f) (offset %d)\n",
               halftrack, (halftrack + 1) / 2.0, offset);
-        debug(2, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
+        debug(DRV_DEBUG, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
     }
    
     assert(disk.isValidHeadPositon(halftrack, offset));
@@ -427,9 +424,9 @@ VC1541::moveHeadDown()
         halftrack--;
         offset = (HeadPosition)(position * disk.lengthOfHalftrack(halftrack));
         
-        debug(2, "Moving head down to halftrack %d (track %2.1f)\n",
+        debug(DRV_DEBUG, "Moving head down to halftrack %d (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
-        debug(2, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
+        debug(DRV_DEBUG, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
     }
     
     assert(disk.isValidHeadPositon(halftrack, offset));
@@ -452,7 +449,7 @@ VC1541::prepareToInsert()
 {
     suspend();
     
-    debug("prepareToInsert\n");
+    debug(DRV_DEBUG, "prepareToInsert\n");
     assert(insertionStatus == NOT_INSERTED);
     
     // Block the light barrier by taking the disk half out
@@ -466,7 +463,7 @@ VC1541::insertDisk(AnyArchive *a)
 {
     suspend();
 
-    debug("insertDisk\n");
+    debug(DRV_DEBUG, "insertDisk\n");
     assert(a != NULL);
     assert(insertionStatus == PARTIALLY_INSERTED);
     
@@ -509,7 +506,7 @@ VC1541::prepareToEject()
 {
     suspend();
     
-    debug("prepareToEject\n");
+    debug(DRV_DEBUG, "prepareToEject\n");
     assert(insertionStatus == FULLY_INSERTED);
     
     // Block the light barrier by taking the disk half out
@@ -526,7 +523,7 @@ VC1541::ejectDisk()
 {
     suspend();
  
-    debug("ejectDisk\n");
+    debug(DRV_DEBUG, "ejectDisk\n");
     assert(insertionStatus == PARTIALLY_INSERTED);
     
     // Unblock the light barrier by taking the disk out

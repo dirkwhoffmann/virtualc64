@@ -15,7 +15,6 @@ CPU::CPU(CPUModel model, Memory *mem)
     this->mem = mem;
 	
     setDescription(model == MOS_6502 ? "CPU(6502)" : "CPU");
-	debug(3, "  Creating %s at address %p...\n", getDescription(), this);
 	
     // Chip model
     model = MOS_6510;
@@ -65,7 +64,6 @@ CPU::CPU(CPUModel model, Memory *mem)
 
 CPU::~CPU()
 {
-	debug(3, "  Releasing CPU...\n");
 }
 
 void
@@ -286,7 +284,6 @@ CPU::recordInstruction()
     if (writePtr == readPtr) {
         readPtr = (readPtr + 1) % traceBufferSize;
     }
-    // debug("readPtr = %d writePtr = %d size = %d\n", readPtr, writePtr, recordedInstructions());
 }
 
 RecordedInstruction
@@ -304,8 +301,6 @@ CPU::readRecordedInstruction()
 RecordedInstruction
 CPU::readRecordedInstruction(unsigned previous)
 {
-    // debug("previous = %d recInstr = %d\n",previous, recordedInstructions());
-    // assert(previous < recordedInstructions());
     return traceBuffer[(writePtr + traceBufferSize - previous - 1) % traceBufferSize];
 }
 

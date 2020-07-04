@@ -13,93 +13,104 @@
 #include "basic.h"
 #include "C64Types.h"
 
-/*! @brief    Common functionality of all VirtualC64 objects.
- *  @details  This class stores a textual description of the object and offers
- *            various functions for printing debug messages and warnings.
+#include <vector>
+#include <map>
+#include <mutex>
+
+using std::vector;
+using std::map;
+using std::pair;
+using std::swap;
+
+#define synchronized \
+for(std::unique_lock<std::recursive_mutex> _l(mutex); _l; _l.unlock())
+
+/* Base class for all VC64 objects.
+ * This class contains a textual description of the object and offers various
+ * functions for printing debug messages and warnings.
  */
 class C64Object {
-
+    
+public:
+    
+    virtual ~C64Object() { };
+    
 private:
     
-    //! @brief    Debug level for this component
-    unsigned debugLevel = DEBUG_LEVEL;
-
-    /*! @brief    Stores how many trace messages are left to be printed
-     *  @details  If positive, this value is decremented in tracingEnabled().
-     *            A negative value indicates that tracing should continue
-     *            forever.
-     */
-    int traceCounter = 0;
-
-    /*! @brief    Textual description of this object
-     *  @details  Most debug output methods preceed their output with this string.
-     *  @note     The default value is NULL. In that case, no prefix is printed.
+    /* Textual description of this object.
+     * Most debug output methods preceed their output with this string.
+     * If set to NULL, no prefix is printed.
      */
     const char *description = NULL;
-
+     
+    /* Stores how many trace messages are left to be printed.
+     * If positive, this value is decremented in tracingEnabled(). A negative
+     * value indicates that tracing should continue forever.
+     */
+    int traceCounter = 0;
+    
+protected:
+    
+    /* Mutex for implementing the 'synchronized' macro.
+     * The macro can be used to prevent multiple threads to enter the
+     * same code block. It mimics the behaviour of the well known and very
+     * handy Java construct 'synchronized(this) { }'.
+     */
+    // std::recursive_mutex mutex;
+    
+    //
+    // Initializing the component
+    //
+    
 public:
-
-    //
-    //! @functiongroup Initializing the component
-    //
     
-    //! @brief    Changes the debug level for a specific object.
-    void setDebugLevel(unsigned level) { debugLevel = level; }
-
-    //! @brief    Returns the textual description.
-    const char *getDescription() { return description ? description : ""; }
-
-    //! @brief    Assigns a textual description.
+    const char *getDescription() const { return description ? description : ""; }
     void setDescription(const char *str) { description = strdup(str); }
-
+    
     
     //
-    //! @functiongroup Debugging the component
+    // Debugging the component
     //
     
-    //! @brief    Returns true iff trace mode is enabled.
+protected:
+    
+    /* There a four types of messages:
+     *
+     *   - msg     Debug messages   (Show up in debug and release builds)
+     *   - warn    Warning messages (Do not terminate the program)
+     *   - panic   Error messages   (Terminate the program)
+     *   - debug   Debug messages   (Show up in debug builds, only)
+     *
+     * Debug messages are prefixed by the string description produced by the
+     * prefix() function. To omit the prefix, use plaindebug(...).
+     * Some objects overwrite prefix() to output additional debug information.
+     */
+    virtual void prefix();
+    
+    void msg(const char *fmt, ...);
+    void warn(const char *fmt, ...);
+    void panic(const char *fmt, ...);
+    
+    void debug(const char *fmt, ...);
+    void debug(int verbose, const char *fmt, ...);
+    void plaindebug(const char *fmt, ...);
+    void plaindebug(int verbose, const char *fmt, ...);
+    
+    
+    //
+    // Tracing
+    //
+    
+public:
+    
+    // Returns true iff trace mode is enabled
     bool tracingEnabled();
         
-    //! @brief    Starts tracing.
+    // Starts tracing
     void startTracing(int counter = -1) { traceCounter = counter; }
 
-    //! @brief    Stops tracing.
+    // Stops tracing
     void stopTracing() { traceCounter = 0; }
-    
-    
-    //
-    //! @functiongroup Printing messages to the console
-    //
-    
-    //! @brief    Prints a message to console.
-    void msg(const char *fmt, ...);
-    
-    //! @brief    Prints a message to the console if debug level is high enough.
-    void msg(int level, const char *fmt, ...);
-    
-    /*! @brief    Prints a debug message to the console
-     *  @details  Debug messages are prefixed by a custom string naming the
-     *            component.
-     */
-    void debug(const char *fmt, ...);
-    
-    /*! @brief    Prints a debug message if debug level is high enough.
-     *  @details  Debug messages are prefixed by a custom string naming the
-     *            component.
-     */
-    void debug(int level, const char *fmt, ...);
-
-    /*! @brief    Prints a warning message to the console.
-     *  @details  Warning messages are prefixed by a custom string naming the
-     *            component.
-     */
-    void warn(const char *fmt, ...);
-    
-    /*! @brief    Prints a panic message to console or a log file.
-     *  @details  Panic messages are prefixed by a custom string naming the
-     *            component.
-     */
-    void panic(const char *fmt, ...);    
 };
 
 #endif

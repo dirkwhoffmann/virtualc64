@@ -13,7 +13,6 @@
 NeosMouse::NeosMouse() {
     
     setDescription("NeosMouse");
-    debug(3, "    Creating NeosMouse at address %p...\n", this);
 }
 
 NeosMouse::~NeosMouse()

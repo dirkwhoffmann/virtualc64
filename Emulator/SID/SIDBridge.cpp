@@ -55,7 +55,7 @@ SIDBridge::reset()
 void
 SIDBridge::setClockFrequency(u32 frequency)
 {
-    debug("Setting clock frequency to %d\n", frequency);
+    debug(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
     resid.setClockFrequency(frequency);
     fastsid.setClockFrequency(frequency);
 }
@@ -188,7 +188,7 @@ SIDBridge::executeUntil(u64 targetCycle)
     u64 missingCycles = targetCycle - cycles;
     
     if (missingCycles > PAL_CYCLES_PER_SECOND) {
-        debug("Far too many SID cycles are missing.\n");
+        debug(SID_DEBUG, "Far too many SID cycles are missing.\n");
         missingCycles = PAL_CYCLES_PER_SECOND;
     }
     
@@ -199,7 +199,6 @@ SIDBridge::executeUntil(u64 targetCycle)
 void
 SIDBridge::execute(u64 numCycles)
 {
-    // debug("Execute SID for %lld cycles (%d samples in buffer)\n", numCycles, samplesInBuffer());
     if (numCycles == 0)
         return;
     
@@ -290,7 +289,7 @@ SIDBridge::getSampleRate()
 void 
 SIDBridge::setSampleRate(u32 rate)
 {
-    debug("Changing sample rate from %d to %d\n", getSampleRate(), rate);
+    debug(SID_DEBUG, "Changing sample rate from %d to %d\n", getSampleRate(), rate);
     resid.setSampleRate(rate);
     fastsid.setSampleRate(rate);
 }
@@ -308,8 +307,6 @@ SIDBridge::getClockFrequency()
 void
 SIDBridge::clearRingbuffer()
 {
-    debug(4,"Clearing ringbuffer\n");
-    
     // Reset ringbuffer contents
     for (unsigned i = 0; i < bufferSize; i++) {
         ringBuffer[i] = 0.0f;
@@ -367,8 +364,6 @@ SIDBridge::readMonoSamples(float *target, size_t n)
 void
 SIDBridge::readStereoSamples(float *target1, float *target2, size_t n)
 {
-    // debug("read: %d write: %d Reading %d\n", readPtr, writePtr, n);
-
     // Check for buffer underflow
     if (samplesInBuffer() < n) {
         handleBufferUnderflow();
@@ -400,8 +395,6 @@ SIDBridge::readStereoSamplesInterleaved(float *target, size_t n)
 void
 SIDBridge::writeData(short *data, size_t count)
 {
-    // debug("  read: %d write: %d Writing %d (%d)\n", readPtr, writePtr, count, bufferCapacity());
-    
     // Check for buffer overflow
     if (bufferCapacity() < count) {
         handleBufferOverflow();
@@ -422,7 +415,7 @@ SIDBridge::handleBufferUnderflow()
     // (1) The consumer runs slightly faster than the producer.
     // (2) The producer is halted or not startet yet.
     
-    debug(2, "SID RINGBUFFER UNDERFLOW (r: %ld w: %ld)\n", readPtr, writePtr);
+    debug(SID_DEBUG, "RINGBUFFER UNDERFLOW (r: %ld w: %ld)\n", readPtr, writePtr);
 
     // Determine the elapsed seconds since the last pointer adjustment.
     u64 now = mach_absolute_time();
@@ -451,7 +444,7 @@ SIDBridge::handleBufferOverflow()
     // (1) The consumer runs slightly slower than the producer.
     // (2) The consumer is halted or not startet yet.
     
-    debug(2, "SID RINGBUFFER OVERFLOW (r: %ld w: %ld)\n", readPtr, writePtr);
+    debug(SID_DEBUG, "RINGBUFFER OVERFLOW (r: %ld w: %ld)\n", readPtr, writePtr);
     
     // Determine the elapsed seconds since the last pointer adjustment.
     u64 now = mach_absolute_time();

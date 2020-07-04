@@ -78,8 +78,6 @@ CIA::reset()
 void
 CIA::setModel(CIAModel m)
 {
-    debug(2, "setModel(%d)\n", m);
-    
     if (!isCIAModel(m)) {
         warn("Unknown CIA model (%d). Assuming first generation.\n", m);
         m = MOS_6526;
@@ -663,42 +661,37 @@ CIA::todInterrupt()
 void
 CIA::dumpTrace()
 {
-    const char *indent = "   "; //                                                                      ";
+    const char *indent = "   ";
 
-    /*
-	if (!tracingEnabled()) 
-		return;
-	*/
+    msg("%sICR: %02X IMR: %02X ", indent, icr, imr);
+    msg("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
+        delay & CIACountA0 ? "CntA0 " : "",
+        delay & CIACountA1 ? "CntA1 " : "",
+        delay & CIACountA2 ? "CntA2 " : "",
+        delay & CIACountA3 ? "CntA3 " : "",
+        delay & CIACountB0 ? "CntB0 " : "",
+        delay & CIACountB1 ? "CntB1 " : "",
+        delay & CIACountB2 ? "CntB2 " : "",
+        delay & CIACountB3 ? "CntB3 " : "",
+        delay & CIALoadA0 ? "LdA0 " : "",
+        delay & CIALoadA1 ? "LdA1 " : "",
+        delay & CIALoadA2 ? "LdA2 " : "",
+        delay & CIALoadB0 ? "LdB0 " : "",
+        delay & CIALoadB1 ? "LdB1 " : "",
+        delay & CIALoadB1 ? "LdB2 " : "",
+        delay & CIAPB6Low0 ? "PB6Lo0 " : "",
+        delay & CIAPB6Low1 ? "PB6Lo1 " : "",
+        delay & CIAPB7Low0 ? "PB7Lo0 " : "",
+        delay & CIAPB7Low1 ? "PB7Lo1 " : "",
+        delay & CIASetInt0 ? "Int0 " : "",
+        delay & CIASetInt1 ? "Int1 " : "",
+        delay & CIAOneShotA0 ? "1ShotA0 " : "",
+        delay & CIAOneShotB0 ? "1ShotB0 " : "");
     
-	debug(1, "%sICR: %02X IMR: %02X ", indent, icr, imr);
-	debug(1, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
-			delay & CIACountA0 ? "CntA0 " : "",
-			delay & CIACountA1 ? "CntA1 " : "",
-			delay & CIACountA2 ? "CntA2 " : "",
-			delay & CIACountA3 ? "CntA3 " : "",
-			delay & CIACountB0 ? "CntB0 " : "",
-			delay & CIACountB1 ? "CntB1 " : "",
-			delay & CIACountB2 ? "CntB2 " : "",
-			delay & CIACountB3 ? "CntB3 " : "",
-			delay & CIALoadA0 ? "LdA0 " : "",
-			delay & CIALoadA1 ? "LdA1 " : "",
-			delay & CIALoadA2 ? "LdA2 " : "",
-			delay & CIALoadB0 ? "LdB0 " : "",
-			delay & CIALoadB1 ? "LdB1 " : "",
-			delay & CIALoadB1 ? "LdB2 " : "",
-			delay & CIAPB6Low0 ? "PB6Lo0 " : "",
-			delay & CIAPB6Low1 ? "PB6Lo1 " : "",
-			delay & CIAPB7Low0 ? "PB7Lo0 " : "",
-			delay & CIAPB7Low1 ? "PB7Lo1 " : "",
-			delay & CIASetInt0 ? "Int0 " : "",
-			delay & CIASetInt1 ? "Int1 " : "",
-			delay & CIAOneShotA0 ? "1ShotA0 " : "",
-			delay & CIAOneShotB0 ? "1ShotB0 " : "");
-
-	debug(1, "%sA: %04X (%04X) PA: %02X (%02X) DDRA: %02X CRA: %02X\n",
-		  indent, counterA, latchA, PA, PRA, DDRA, CRA);
-	debug(1, "%sB: %04X (%04X) PB: %02X (%02X) DDRB: %02X CRB: %02X\n",
-		  indent, counterB, latchB, PB, PRB, DDRB, CRB);
+    msg("%sA: %04X (%04X) PA: %02X (%02X) DDRA: %02X CRA: %02X\n",
+        indent, counterA, latchA, PA, PRA, DDRA, CRA);
+    msg("%sB: %04X (%04X) PB: %02X (%02X) DDRB: %02X CRB: %02X\n",
+        indent, counterB, latchB, PB, PRB, DDRB, CRB);
 }
 
 void
@@ -849,7 +842,6 @@ CIA::executeOneCycle()
 	// Decrement counter
 	if (delay & CIACountB3) {
 		counterB--; // (1)
-        // debug("Counter B down to %04X \n", counterB);
 	}
 
 	// Check underflow condition
@@ -1133,12 +1125,10 @@ CIA::wakeUp()
 CIA1::CIA1()
 {
     setDescription("CIA1");
-	debug(3, "  Creating CIA1 at address %p...\n", this);
 }
 
 CIA1::~CIA1()
 {
-	debug(3, "  Releasing CIA1\n");
 }
 
 void 
@@ -1274,12 +1264,10 @@ CIA1::updatePB()
 CIA2::CIA2()
 {
     setDescription("CIA2");
-	debug(3, "  Creating CIA2 at address %p...\n", this);
 }
 
 CIA2::~CIA2()
 {
-	debug(3, "  Releasing CIA2...\n");
 }
 
 void

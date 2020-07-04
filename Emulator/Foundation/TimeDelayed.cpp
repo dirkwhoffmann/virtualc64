@@ -65,7 +65,7 @@ template void TimeDelayed<u32>::writeWithDelay(u32, u8);
 template void TimeDelayed<u64>::writeWithDelay(u64, u8);
 
 template <class T>
-void TimeDelayed<T>::debug()
+void TimeDelayed<T>::dump()
 {
     for (int i = delay; i >= 0; i--) {
         printf("%llX ", (u64)pipeline[i]);
@@ -78,11 +78,11 @@ void TimeDelayed<T>::debug()
     }
     printf("timeStamp = %lld clock = %lld delay = %d\n", timeStamp, *clock, delay);
 }
-template void TimeDelayed<bool>::debug();
-template void TimeDelayed<u8>::debug();
-template void TimeDelayed<u16>::debug();
-template void TimeDelayed<u32>::debug();
-template void TimeDelayed<u64>::debug();
+template void TimeDelayed<bool>::dump();
+template void TimeDelayed<u8>::dump();
+template void TimeDelayed<u16>::dump();
+template void TimeDelayed<u32>::dump();
+template void TimeDelayed<u64>::dump();
 
 
 template <class T>

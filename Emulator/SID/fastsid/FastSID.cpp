@@ -33,7 +33,6 @@
 FastSID::FastSID()
 {
 	setDescription("FastSID");
-	debug(3, "  Creating FastSID at address %p...\n", this);
     
     // Register sub components
     HardwareComponent *subcomponents[] = { &voice[0], &voice[1], &voice[2], NULL };
@@ -65,7 +64,6 @@ FastSID::FastSID()
 
 FastSID::~FastSID()
 {
-    debug(3, "  Releasing FastSID...\n");
 }
 
 void
@@ -176,7 +174,7 @@ FastSID::setModel(SIDModel m)
 void
 FastSID::setSampleRate(u32 rate)
 {
-    debug("Setting sample rate to %d\n", rate);
+    debug(SID_DEBUG, "Setting sample rate to %d\n", rate);
     
     sampleRate = rate;
     
@@ -199,7 +197,6 @@ FastSID::peek(u16 addr)
             
             // This register allows the microprocessor to read the
             // upper 8 output bits of oscillator 3.
-            // debug("doosc = %d\n", voice[2].doosc());
             // return (u8)(voice[2].doosc() >> 7);
             return (u8)rand();
 
@@ -292,7 +289,7 @@ FastSID::execute(u64 cycles)
     
     // Do some consistency checking
     if (numSamples > buflength) {
-        debug("Number of missing sound samples exceeds buffer size\n");
+        debug(SID_DEBUG, "Number of missing sound samples exceeds buffer size\n");
         numSamples = buflength;
     }
     

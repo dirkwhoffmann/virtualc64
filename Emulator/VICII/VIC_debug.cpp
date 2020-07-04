@@ -238,7 +238,7 @@ VIC::setSpritePtr(unsigned nr, u8 ptr)
 {
     assert(nr < 8);
     
-    debug("setSpritePtr(%d, %d)\n", nr, ptr);
+    debug(VIC_DEBUG, "setSpritePtr(%d, %d)\n", nr, ptr);
     
     suspend();
     u16 addr = (VM13VM12VM11VM10() << 6) | 0x03F8 | nr;

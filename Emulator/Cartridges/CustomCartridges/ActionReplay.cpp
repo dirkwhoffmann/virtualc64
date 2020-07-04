@@ -63,7 +63,7 @@ void
 ActionReplay3::pressButton(unsigned nr)
 {
     assert(nr <= numButtons());
-    debug("Pressing %s button.\n", getButtonTitle(nr));
+    debug(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
     
     c64->suspend();
     
@@ -93,7 +93,7 @@ void
 ActionReplay3::releaseButton(unsigned nr)
 {
     assert(nr <= numButtons());
-    debug("Releasing %s button.\n", getButtonTitle(nr));
+    debug(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr));
     
     c64->suspend();
     
@@ -124,7 +124,7 @@ ActionReplay3::setControlReg(u8 value)
 //! @brief    A newer generation Action Replay cartridge
 ActionReplay::ActionReplay(C64 *c64) : CartridgeWithRegister(c64, "AR")
 {
-    debug("ActionReplay constructor\n");
+    debug(CRT_DEBUG, "ActionReplay constructor\n");
     
     // Allocate 8KB on-board memory
     setRamCapacity(0x2000);
@@ -140,7 +140,7 @@ ActionReplay::reset()
 void
 ActionReplay::resetCartConfig()
 {
-    debug("Starting ActionReplay cartridge in 8K game mode.\n");
+    debug(CRT_DEBUG, "Starting ActionReplay cartridge in 8K game mode.\n");
     c64->expansionport.setCartridgeMode(CRT_8K);
 }
 
@@ -209,7 +209,7 @@ void
 ActionReplay::pressButton(unsigned nr)
 {
     assert(nr <= numButtons());
-    debug("Pressing %s button.\n", getButtonTitle(nr));
+    debug(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
     
     c64->suspend();
     
@@ -238,7 +238,7 @@ void
 ActionReplay::releaseButton(unsigned nr)
 {
     assert(nr <= numButtons());
-    debug("Releasing %s button.\n", getButtonTitle(nr));
+    debug(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr));
     
     c64->suspend();
     
@@ -259,7 +259,7 @@ ActionReplay::setControlReg(u8 value)
 {
     control = value;
     
-    debug(2, "PC: %04X setControlReg(%02X)\n", c64->cpu.getPC(), value);
+    debug(CRT_DEBUG, "PC: %04X setControlReg(%02X)\n", c64->cpu.getPC(), value);
     
     assert((value & 0x80) == 0);
     /*  "7    extra ROM bank selector (A15) (unused)
@@ -279,7 +279,7 @@ ActionReplay::setControlReg(u8 value)
     bankInROMH(bank(), 0x2000, 0);
     
     if (disabled()) {
-        debug(2, "Action Replay cartridge disabled.\n");
+        debug(CRT_DEBUG, "Action Replay cartridge disabled.\n");
     }
     
     if (resetFreezeMode() || disabled()) {
@@ -310,7 +310,6 @@ ActionReplay::ramIsEnabled(u16 addr)
 
 AtomicPower::AtomicPower(C64 *c64) : ActionReplay(c64) {
     
-    debug("AtomicPower constructor\n");
     setDescription("AtomicPower");
 };
 

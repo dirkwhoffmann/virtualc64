@@ -12,7 +12,7 @@
 Cartridge::Cartridge(C64 *c64, const char *description)
 {
     setDescription(description);
-    debug("Creating cartridge at address %p...\n", this);
+    debug(CRT_DEBUG, "Creating cartridge at address %p...\n", this);
 
     this->c64 = c64;
     
@@ -45,7 +45,7 @@ Cartridge::Cartridge(C64 *c64, const char *description)
 
 Cartridge::~Cartridge()
 {
-    debug("Releasing cartridge...\n");
+    debug(CRT_DEBUG, "Releasing cartridge...\n");
     
     // Deallocate RAM (if any)
     if (externalRam) {
@@ -437,17 +437,17 @@ Cartridge::bankIn(unsigned nr)
         
         bankInROML(nr, 0x2000, 0); // chip covers ROML and (part of) ROMH
         bankInROMH(nr, packet[nr]->size - 0x2000, 0x2000);
-        debug(2, "Banked in chip %d in ROML and ROMH\n", nr);
+        debug(CRT_DEBUG, "Banked in chip %d in ROML and ROMH\n", nr);
     
     } else if (packet[nr]->mapsToL()) {
         
         bankInROML(nr, packet[nr]->size, 0); // chip covers (part of) ROML
-        debug(2, "Banked in chip %d in ROML\n", nr);
+        debug(CRT_DEBUG, "Banked in chip %d in ROML\n", nr);
         
     } else if (packet[nr]->mapsToH()) {
         
         bankInROMH(nr, packet[nr]->size, 0); // chip covers (part of) ROMH
-        debug(2, "Banked in chip %d to ROMH\n", nr);
+        debug(CRT_DEBUG, "Banked in chip %d to ROMH\n", nr);
         
     } else {
 
@@ -486,7 +486,7 @@ Cartridge::resetWithoutDeletingRam()
 {
     u8 ram[0x10000];
     
-    debug(1, "Resetting virtual C64 (preserving RAM)\n");
+    debug(RUN_DEBUG, "Resetting virtual C64 (preserving RAM)\n");
     
     memcpy(ram, c64->mem.ram, 0x10000);
     c64->reset();

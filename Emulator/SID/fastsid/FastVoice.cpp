@@ -52,7 +52,6 @@ static u32 exptable[6] =
 FastVoice::FastVoice()
 {
     setDescription("Voice");
-    debug(3, "  Creating Voice at address %p...\n", this);
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -78,7 +77,6 @@ FastVoice::FastVoice()
 
 FastVoice::~FastVoice()
 {
-    debug(3, "  Releasing FastVoice %d...\n", nr);
 }
 
 void

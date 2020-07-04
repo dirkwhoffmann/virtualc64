@@ -12,7 +12,6 @@
 VC1541Memory::VC1541Memory(VC1541 *drive)
 {
     setDescription("1541MEM");
-	debug(3, "  Creating VC1541 memory at %p...\n", this);
 
     this->drive = drive;
     
@@ -31,7 +30,6 @@ VC1541Memory::VC1541Memory(VC1541 *drive)
 
 VC1541Memory::~VC1541Memory()
 {
-	debug(3, "  Releasing VC1541 memory at %p...\n", this);
 }
 
 void 

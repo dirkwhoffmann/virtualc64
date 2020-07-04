@@ -18,10 +18,10 @@ void
 GeoRAM::reset()
 {
     if (!getPersistentRam()) {
-        debug("Erasing GeoRAM\n");
+        debug(CRT_DEBUG, "Erasing GeoRAM\n");
         eraseRAM(0);
     } else {
-        debug("Preserving GeoRAM\n");
+        debug(CRT_DEBUG, "Preserving GeoRAM\n");
     }
 }
 

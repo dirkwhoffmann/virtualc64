@@ -12,7 +12,6 @@
 Keyboard::Keyboard()
 {
 	setDescription("Keyboard");
-	debug(3, "Creating keyboard at address %p...\n", this);
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -117,11 +116,11 @@ Keyboard::getColumnValues(u8 rowMask)
 void
 Keyboard::pressKey(u8 row, u8 col)
 {
+    debug(KBD_DEBUG, "pressKey(%d,%d)\n", row, col);
+
     assert(row < 8);
     assert(col < 8);
-    
-    // debug("pressKey(%d,%d)\n", row, col);
-    
+        
     kbMatrixRow[row] &= ~(1 << col);
     kbMatrixCol[col] &= ~(1 << row);
 
@@ -131,12 +130,16 @@ Keyboard::pressKey(u8 row, u8 col)
 void
 Keyboard::pressRestoreKey()
 {
+    debug(KBD_DEBUG, "pressRestoreKey()\n");
+
     c64->cpu.pullDownNmiLine(CPU::INTSRC_KEYBOARD);
 }
 
 void
 Keyboard::releaseKey(u8 row, u8 col)
 {
+    debug(KBD_DEBUG, "releaseKey(%d,%d)\n", row, col);
+
     assert(row < 8);
     assert(col < 8);
     
@@ -153,6 +156,8 @@ Keyboard::releaseKey(u8 row, u8 col)
 void
 Keyboard::releaseRestoreKey()
 {
+    debug(KBD_DEBUG, "releaseRestoreKey()\n");
+    
     c64->cpu.releaseNmiLine(CPU::INTSRC_KEYBOARD);
 }
 

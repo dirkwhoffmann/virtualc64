@@ -12,7 +12,6 @@
 Datasette::Datasette()
 {
     setDescription("Datasette");
-    debug(3, "Creating virtual datasette at address %p\n", this);
         
     // Register snapshot items
     SnapshotItem items[] = {
@@ -38,10 +37,7 @@ Datasette::Datasette()
 
 Datasette::~Datasette()
 {
-    debug(3, "Releasing Datasette...\n");
-
-    if (data)
-        delete[] data;
+    if (data) delete[] data;
 }
 
 void
@@ -103,7 +99,7 @@ Datasette::insertTape(TAPFile *a)
     size = a->getSize();
     type = a->TAPversion();
     
-    debug(2, "Inserting tape (size = %d, type = %d)...\n", size, type);
+    debug(TAP_DEBUG, "Inserting tape (size = %d, type = %d)...\n", size, type);
     
     // Copy data
     data = (u8 *)malloc(size);
@@ -128,7 +124,7 @@ Datasette::ejectTape()
 {
     suspend();
     
-    debug(2, "Ejecting tape\n");
+    debug(TAP_DEBUG, "Ejecting tape\n");
 
     if (!hasTape())
         return;
@@ -197,7 +193,7 @@ Datasette::pressPlay()
     if (!hasTape())
         return;
     
-    debug("Datasette::pressPlay\n");
+    debug(TAP_DEBUG, "pressPlay\n");
     playKey = true;
 
     // Schedule first pulse
@@ -209,7 +205,7 @@ Datasette::pressPlay()
 void
 Datasette::pressStop()
 {
-    debug("Datasette::pressStop\n");
+    debug(TAP_DEBUG, "pressStop\n");
     setMotor(false);
     playKey = false;
 }

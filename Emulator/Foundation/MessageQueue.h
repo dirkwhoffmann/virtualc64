@@ -44,7 +44,7 @@ class MessageQueue : public C64Object {
     MessageQueue();
     
     //! @brief    Destructor
-    ~MessageQueue();
+    virtual ~MessageQueue();
     
     //! @brief    Registers a listener together with it's callback function
     void addListener(const void *listener, Callback *func);

@@ -71,7 +71,7 @@ PRGFile::makeWithAnyArchive(AnyArchive *otherArchive) {
         return NULL;
     
     PRGFile *archive = new PRGFile();
-    archive->debug(1, "Creating PRG archive from %s archive...\n",
+    archive->debug(FILE_DEBUG, "Creating PRG archive from %s archive...\n",
                    otherArchive->typeAsString());
     
     otherArchive->selectItem(exportItem);

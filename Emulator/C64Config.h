@@ -10,6 +10,10 @@
 #ifndef C64CONFIG_H
 #define C64CONFIG_H
 
+//
+// Release settings
+//
+
 // Snapshot version number
 #define V_MAJOR 3
 #define V_MINOR 3
@@ -20,21 +24,52 @@
 // #define NDEBUG
 
 
+//
+// Debug settings
+//
+
+// General
+static const int RUN_DEBUG       = 0; // Run loop, component states, timing
+static const int SNP_DEBUG       = 0; // Serialization (snapshots)
+static const int MSG_DEBUG       = 0; // Message queue
+
+// CPU
+static const int CPU_DEBUG       = 0; // CPU
+static const int IRQ_DEBUG       = 0; // Interrupts
+
+// Custom chips
+static const int CIA_DEBUG       = 0; // Complex Interface Adapter
+static const int VIA_DEBUG       = 0; // Versatile Interface Adapter
+static const int VIC_DEBUG       = 0; // Video Interface Controller
+static const int SID_DEBUG       = 0; // Sound Interface Device
+static const int IEC_DEBUG       = 0; // IEC bus
+
+// Ports
+static const int PORT_DEBUG      = 0; // Control ports and connected devices
+static const int EXP_DEBUG       = 0; // Expansion port
+
+// Drive
+static const int DSK_DEBUG       = 0; // Disk controller execution
+static const int GCR_DEBUG       = 0; // Disk encoding / decoding
+
+// Media
+static const int CRT_DEBUG       = 0; // Cartridges
+static const int FILE_DEBUG      = 0; // Media files (D64,T64,...)
+
+// Peripherals
+static const int JOY_DEBUG       = 0; // Joystick
+static const int MOUSE_DEBUG     = 0; // Mouse
+static const int DRV_DEBUG       = 0; // Floppy drive
+static const int TAP_DEBUG       = 0; // Datasette
+static const int KBD_DEBUG       = 0; // Keyboard
+
+
 // Default debug level for all components (Set to 1 in release build)
 #define DEBUG_LEVEL 1
 
 #endif 
 
-// RELEASE NOTES (Version 3.4)
-//
-// Added support for the MikroAss CRT
-// Added support for the ISEPIC CRT
-// Added more Rom fingerprints
-// Added support for iNNEXT gamepads
-// Merged in reSID code from VICE 3.4
-//
-//
-//
+
 // CLEANUP:
 //
 // OPTIMIZATION:

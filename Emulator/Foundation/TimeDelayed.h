@@ -88,7 +88,7 @@ template <class T> class TimeDelayed {
     size_t stateSize();
     void loadFromBuffer(u8 **buffer);
     void saveToBuffer(u8 **buffer);
-    void debug();
+    void dump();
 };
 
 #endif

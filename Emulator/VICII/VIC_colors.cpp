@@ -162,9 +162,7 @@ VIC::getColor(unsigned nr, VICPalette palette)
     double brightness = this->brightness - 50.0;
     double contrast = this->contrast / 100.0 + 0.2;
     double saturation = this->saturation / 1.25;
-    
-    // debug("bri = %f con = %f sat = %f\n", brightness, contrast, saturation);
-    
+        
     // Compute Y, U, and V
     double ang = angle[nr];
     y = luma[nr];
@@ -176,7 +174,6 @@ VIC::getColor(unsigned nr, VICPalette palette)
     u *= contrast;
     v *= contrast;
     y += brightness;
-    // debug("%d: angle = %f y = %f u = %f v = %f\n", i, angle[i], y, u, v);
     
     // Translate to monochrome if applicable
     switch(palette) {
@@ -217,7 +214,6 @@ VIC::getColor(unsigned nr, VICPalette palette)
     r = MAX(MIN(r, 255), 0);
     g = MAX(MIN(g, 255), 0);
     b = MAX(MIN(b, 255), 0);
-    // debug("%d: r = %f g = %f b = %f\n", i, r, g, b);
     
     // Apply Gamma correction for PAL models
     if (isPAL()) {
@@ -367,9 +363,7 @@ VIC::updatePalette()
     double brightness = this->brightness - 50.0;
     double contrast = this->contrast / 100.0 + 0.2;
     double saturation = this->saturation / 1.25;
-    
-    // debug("bri = %f con = %f sat = %f\n", brightness, contrast, saturation);
-    
+        
     // Compute all sixteen colors
     for (unsigned i = 0; i < 16; i++) {
         
@@ -384,7 +378,6 @@ VIC::updatePalette()
         u[i] *= contrast;
         v[i] *= contrast;
         y[i] += brightness;
-        // debug("%d: angle = %f y = %f u = %f v = %f\n", i, angle[i], y, u, v);
     }
     
     // Translate to monochrome if applicable
@@ -431,7 +424,6 @@ VIC::updatePalette()
         r = MAX(MIN(r, 255), 0);
         g = MAX(MIN(g, 255), 0);
         b = MAX(MIN(b, 255), 0);
-        // debug("%d: r = %f g = %f b = %f\n", i, r, g, b);
         
         // Apply Gamma correction for PAL models
         if (isPAL()) {

@@ -182,10 +182,10 @@ public:
         return cartridge ? cartridge->getButtonTitle(nr) : NULL; }
     
     //! @brief    Presses a button
-    virtual void pressButton(unsigned nr) { debug("Pressing %d\n", nr); if (cartridge) cartridge->pressButton(nr); }
+    virtual void pressButton(unsigned nr) { if (cartridge) cartridge->pressButton(nr); }
     
     //! @brief    Releases a button
-    virtual void releaseButton(unsigned nr) { debug("Releasing %d\n", nr); if (cartridge) cartridge->releaseButton(nr); }
+    virtual void releaseButton(unsigned nr) { if (cartridge) cartridge->releaseButton(nr); }
    
     //! @brief    Returns true if a cartridge with a switch is attached
     bool hasSwitch() { return cartridge ? cartridge->hasSwitch() : false; }

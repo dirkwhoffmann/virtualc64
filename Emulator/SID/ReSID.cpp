@@ -12,7 +12,6 @@
 ReSID::ReSID()
 {
 	setDescription("ReSID");
-	debug(3, "  Creating ReSID at address %p...\n", this);
 
     model = MOS_6581;
     emulateFilter = true;
@@ -125,7 +124,7 @@ ReSID::setModel(SIDModel m)
     // TODO: Disable filters in combination with this chip
     
     assert((SIDModel)sid->sid_model == model);
-    debug("Emulating SID model %s.\n",
+    debug(SID_DEBUG, "Emulating SID model %s.\n",
           (model == MOS_6581) ? "MOS6581" :
           (model == MOS_8580) ? "MOS8580" : "?");
 }
@@ -142,7 +141,7 @@ ReSID::setClockFrequency(u32 value)
     resume();
     
     assert((u32)sid->clock_frequency == clockFrequency);
-    debug("Setting clock frequency to %d cycles per second.\n", clockFrequency);
+    debug(SID_DEBUG, "Setting clock frequency to %d cycles per second.\n", clockFrequency);
 }
 
 void
@@ -156,7 +155,7 @@ ReSID::setSampleRate(u32 value)
                                  (double)sampleRate);
     // resume();
     
-    debug("Setting sample rate to %d samples per second.\n", sampleRate);
+    debug(SID_DEBUG, "Setting sample rate to %d samples per second.\n", sampleRate);
 }
 
 void 
@@ -169,7 +168,7 @@ ReSID::setAudioFilter(bool value)
     // sid->filter._reset();
     resume();
     
-    debug("%s audio filter emulation.\n", value ? "Enabling" : "Disabling");
+    debug(SID_DEBUG, "%s audio filter emulation.\n", value ? "Enabling" : "Disabling");
 }
 
 void 
@@ -177,15 +176,13 @@ ReSID::setSamplingMethod(SamplingMethod value)
 {
     switch(value) {
         case SID_SAMPLE_FAST:
-            // warn("SID_SAMPLE_FAST not supported. Using SAMPLE_INTERPOLATE.\n");
-            // value = SID_SAMPLE_INTERPOLATE;
-            debug("Using sampling method SAMPLE_FAST.\n");
+            debug(SID_DEBUG, "Using sampling method SAMPLE_FAST.\n");
             break;
         case SID_SAMPLE_INTERPOLATE:
-            debug("Using sampling method SAMPLE_INTERPOLATE.\n");
+            debug(SID_DEBUG, "Using sampling method SAMPLE_INTERPOLATE.\n");
             break;
         case SID_SAMPLE_RESAMPLE:
-            debug("Using sampling method SAMPLE_RESAMPLE.\n");
+            debug(SID_DEBUG, "Using sampling method SAMPLE_RESAMPLE.\n");
             break;
         case SID_SAMPLE_RESAMPLE_FASTMEM:
             warn("SAMPLE_RESAMPLE_FASTMEM not supported. Using SAMPLE_INTERPOLATE.\n");

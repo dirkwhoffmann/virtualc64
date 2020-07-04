@@ -45,52 +45,13 @@ FinalIII::pokeIO2(u16 addr, u8 value) {
     if (addr == 0xDFFF && writeEnabled()) {
         setControlReg(value);
     }
-    
-    // debug("hidden = %d nmi = %d game = %d exrom = %d qD = %d bank = %d\n", hidden(), nmi(), game(), exrom(), qD, bank());
-        
-#if 0
-        /*  "7      Hide this register (1 = hidden)
-         *   6      NMI line   (0 = low = active) *1)
-         *   5      GAME line  (0 = low = active) *2)
-         *   4      EXROM line (0 = low = active)
-         *   2-3    unassigned (usually set to 0)
-         *   0-1    number of bank to show at $8000
-         *
-         *   1) if either the freezer button is pressed,
-         *      or bit 6 is 0, then an NMI is generated
-         *
-         *   2) if the freezer button is pressed, GAME
-         *      is also forced low" [VICE]
-         */
-        
-        u8 hide  = value & 0x80;
-        u8 nmi   = value & 0x40;
-        u8 game  = value & 0x20;
-        u8 exrom = value & 0x10;
-        u8 bank  = value & 0x03;
-                
-        // Bit 7
-        if (hide) {
-            c64->expansionport.setCartridgeMode(CRT_OFF);
-        }
-        
-        // Bit 6
-        nmi ? c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION) :
-        c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
-        
-        // Bit 5 and 4
-        c64->expansionport.setGameAndExrom(game, exrom);
-        
-        // Bit 1 and 0
-        bankIn(bank);
-#endif
 }
 
 void
 FinalIII::nmiDidTrigger()
 {
     if (freeezeButtonIsPressed) {
-        debug("NMI WHILE FREEZE BUTTON IS PRESSED\n");
+        debug(CRT_DEBUG, "NMI while freeze button is pressed.\n");
         
         // After the NMI has been processed by the CPU, the cartridge's counter
         // has reached a value that overflows qD to 0. This has two side
@@ -113,7 +74,7 @@ void
 FinalIII::pressButton(unsigned nr)
 {
     assert(nr <= numButtons());
-    debug("Pressing %s button.\n", getButtonTitle(nr));
+    debug(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
     
     c64->suspend();
     
@@ -138,7 +99,7 @@ void
 FinalIII::releaseButton(unsigned nr)
 {
     assert(nr <= numButtons());
-    debug("Releasing %s button.\n", getButtonTitle(nr));
+    debug(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr));
     
     c64->suspend();
     

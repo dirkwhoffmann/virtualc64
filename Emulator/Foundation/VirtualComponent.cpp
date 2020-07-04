@@ -12,7 +12,7 @@
 
 HardwareComponent::~HardwareComponent()
 {
-	debug(3, "Terminated\n");
+	debug(RUN_DEBUG, "Terminated\n");
     
     if (subComponents)
         delete [] subComponents;
@@ -48,7 +48,7 @@ HardwareComponent::reset()
             if (snapshotItems[i].flags & CLEAR_ON_RESET)
                 memset(snapshotItems[i].data, 0, snapshotItems[i].size);
     
-    debug(3, "Resetting...\n");
+    debug(RUN_DEBUG, "Resetting...\n");
 }
 
 void
@@ -130,7 +130,7 @@ HardwareComponent::loadFromBuffer(u8 **buffer)
 {
     u8 *old = *buffer;
     
-    debug(3, "    Loading internal state ...\n");
+    debug(SNP_DEBUG, "    Loading internal state ...\n");
     
     // Call delegation method
     willLoadFromBuffer(buffer);
@@ -186,7 +186,7 @@ HardwareComponent::saveToBuffer(u8 **buffer)
 {
     u8 *old = *buffer;
     
-    debug(3, "    Saving internal state ...\n");
+    debug(SNP_DEBUG, "    Saving internal state ...\n");
 
     // Call delegation method
     willSaveToBuffer(buffer);

@@ -9,6 +9,87 @@
 
 #include "C64Object.h"
 
+#define VC64OBJ_PARSE \
+char buf[256]; \
+va_list ap; \
+va_start(ap, fmt); \
+vsnprintf(buf, sizeof(buf), fmt, ap); \
+va_end(ap);
+
+#define VC64PRINTPLAIN(trailer) \
+fprintf(stderr, "%s%s", trailer, buf);
+
+#define VC64PRINT(trailer) \
+prefix(); \
+fprintf(stderr, "%s: %s%s", getDescription(), trailer, buf);
+
+void
+C64Object::prefix()
+{
+}
+
+void
+C64Object::msg(const char *fmt, ...)
+{
+    VC64OBJ_PARSE
+    VC64PRINTPLAIN("")
+}
+
+void
+C64Object::warn(const char *fmt, ...)
+{
+    VC64OBJ_PARSE;
+    VC64PRINT("WARNING: ")
+}
+
+void
+C64Object::panic(const char *fmt, ...)
+{
+    VC64OBJ_PARSE;
+    VC64PRINT("PANIC: ")
+    std::abort();
+}
+
+void
+C64Object::debug(const char *fmt, ...)
+{
+#ifndef NDEBUG
+    VC64OBJ_PARSE
+    VC64PRINT("")
+#endif
+}
+
+void
+C64Object::debug(int verbose, const char *fmt, ...)
+{
+#ifndef NDEBUG
+    if (verbose) {
+        VC64OBJ_PARSE
+        VC64PRINT("")
+    }
+#endif
+}
+
+void
+C64Object::plaindebug(const char *fmt, ...)
+{
+#ifndef NDEBUG
+    VC64OBJ_PARSE
+    VC64PRINTPLAIN("")
+#endif
+}
+
+void
+C64Object::plaindebug(int verbose, const char *fmt, ...)
+{
+#ifndef NDEBUG
+    if (verbose) {
+        VC64OBJ_PARSE
+        VC64PRINTPLAIN("")
+    }
+#endif
+}
+
 bool
 C64Object::tracingEnabled()
 {
@@ -19,73 +100,4 @@ C64Object::tracingEnabled()
         traceCounter--;
     
     return true;
-}
-
-#define VC64OBJ_PARSE \
-    char buf[256]; \
-    va_list ap; \
-    va_start(ap, fmt); \
-    vsnprintf(buf, sizeof(buf), fmt, ap); \
-    va_end(ap); 
-
-void
-C64Object::msg(const char *fmt, ...)
-{
-    VC64OBJ_PARSE;
-    fprintf(stderr, "%s", buf);
-}
-
-void
-C64Object::msg(int level, const char *fmt, ...)
-{
-    if (level > debugLevel)
-        return;
-    
-    VC64OBJ_PARSE;
-    fprintf(stderr, "%s", buf);
-}
-
-void
-C64Object::debug(const char *fmt, ...)
-{
-    VC64OBJ_PARSE;
-    if (description)
-        fprintf(stderr, "%s: %s", description, buf);
-    else
-        fprintf(stderr, "%s", buf);
-}
-
-void
-C64Object::debug(int level, const char *fmt, ...)
-{
-    if (level > debugLevel)
-        return;
-    
-    VC64OBJ_PARSE;
-    if (description)
-        fprintf(stderr, "%s: %s", description, buf);
-    else
-        fprintf(stderr, "%s", buf);
-}
-
-void
-C64Object::warn(const char *fmt, ...)
-{
-    VC64OBJ_PARSE;
-    if (description)
-        fprintf(stderr, "%s: WARNING: %s", description, buf);
-    else
-        fprintf(stderr, "WARNING: %s", buf);
-}
-
-void
-C64Object::panic(const char *fmt, ...)
-{
-    VC64OBJ_PARSE;
-    if (description)
-        fprintf(stderr, "%s: PANIC: %s", description, buf);
-    else
-        fprintf(stderr, "PANIC: %s", buf);
-
-    assert(0);
 }
