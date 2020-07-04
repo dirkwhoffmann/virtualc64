@@ -451,8 +451,8 @@ CPU::executeOneCycle()
             /* DEBUG */
             /*
             if (PC == 0x08EB) {
-                u8 reg = c64->vic.spypeek(0x1E);
-                debug("Writing result: %02X (%02X), rasterline: %d sprite0.y = %02X\n", c64->cpu.A, reg, c64->rasterline, c64->vic.spypeek(0x01));
+                u8 reg = vic.spypeek(0x1E);
+                debug("Writing result: %02X (%02X), rasterline: %d sprite0.y = %02X\n", cpu.A, reg, vc64.rasterline, vic.spypeek(0x01));
                 // startTracing();
             }
             */
@@ -463,7 +463,7 @@ CPU::executeOneCycle()
             if (unlikely(doNmi)) {
                 
                 if (isC64CPU()) {
-                    c64->expansionport.nmiWillTrigger();
+                    expansionport.nmiWillTrigger();
                 }
                 
                 debug(IRQ_DEBUG, "NMI (source = %02X)\n", nmiLine);
@@ -498,14 +498,14 @@ CPU::executeOneCycle()
                 DisassembledInstruction instr = disassemble(recorded, true);
                 
                 {
-                    // c64->cia1.dumpTrace();
-                    // c64->cia2.dumpTrace();
+                    // cia1.dumpTrace();
+                    // cia2.dumpTrace();
                 }
                 msg("%s %s: %d %d %s %s %s   %s %s %s %s %s %s\n",
-                    (this == &c64->drive1.cpu) ? " " : "",
+                    (this == &drive1.cpu) ? " " : "",
                         instr.pc,
-                        c64->rasterLine,
-                        c64->rasterCycle,
+                        vc64.rasterLine,
+                        vc64.rasterCycle,
                         instr.byte1, instr.byte2, instr.byte3,
                         instr.a, instr.x, instr.y, instr.sp,
                         instr.flags,
@@ -624,7 +624,7 @@ CPU::executeOneCycle()
             setPCH(regD);
             
             if (isC64CPU()) {
-                c64->expansionport.nmiDidTrigger();
+                expansionport.nmiDidTrigger();
             }
             DONE
 

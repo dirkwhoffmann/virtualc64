@@ -532,7 +532,7 @@ VIC::expandBorders()
     unsigned leftPixelPos;
     unsigned rightPixelPos;
     
-    if (c64->vic.isPAL()) {
+    if (isPAL()) {
         leftPixelPos = PAL_LEFT_BORDER_WIDTH - (4*8);
         rightPixelPos = PAL_LEFT_BORDER_WIDTH + PAL_CANVAS_WIDTH + (4*8) - 1;
         lastX = PAL_PIXELS;

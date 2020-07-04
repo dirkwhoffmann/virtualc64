@@ -104,7 +104,7 @@ CPU::dump()
 	msg("   NMI routine : %02X%02X\n", mem->spypeek(0xFFFB), mem->spypeek(0xFFFA));
 	msg("\n");
     
-    c64->processorPort.dump();
+    pport.dump();
 }
 
 size_t
@@ -237,16 +237,16 @@ CPU::setErrorState(ErrorState state)
     
     switch (errorState) {
         case CPU_OK:
-            c64->putMessage(MSG_CPU_OK);
+            vc64.putMessage(MSG_CPU_OK);
             return;
         case CPU_SOFT_BREAKPOINT_REACHED:
-            c64->putMessage(MSG_CPU_SOFT_BREAKPOINT_REACHED);
+            vc64.putMessage(MSG_CPU_SOFT_BREAKPOINT_REACHED);
             return; 
         case CPU_HARD_BREAKPOINT_REACHED:
-            c64->putMessage(MSG_CPU_HARD_BREAKPOINT_REACHED);
+            vc64.putMessage(MSG_CPU_HARD_BREAKPOINT_REACHED);
             return;
         case CPU_ILLEGAL_INSTRUCTION:
-            c64->putMessage(MSG_CPU_ILLEGAL_INSTRUCTION);
+            vc64.putMessage(MSG_CPU_ILLEGAL_INSTRUCTION);
             return;
         default:
             assert(false);

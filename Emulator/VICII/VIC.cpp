@@ -135,7 +135,6 @@ VIC::reset()
     
     // Preset some video parameters to show a blank blue sreen on power up
     memSelect = 0x10;
-    // memset(&c64->mem.ram[0x400], 32, 40*25);
     reg.delayed.ctrl1 = 0x10;
     reg.current.ctrl1 = 0x10;
     reg.delayed.colors[COLREG_BORDER] = VICII_LIGHT_BLUE;
@@ -163,7 +162,7 @@ void
 VIC::ping()
 {
     HardwareComponent::ping();
-    c64->putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
+    vc64.putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
 }
 
 void 
@@ -266,22 +265,22 @@ VIC::setModel(VICModel m)
     model = m;
     updatePalette();
     resetScreenBuffers();
-    c64->updateVicFunctionTable();
+    vc64.updateVicFunctionTable();
     
     switch(model) {
             
         case PAL_6569_R1:
         case PAL_6569_R3:
         case PAL_8565:
-            c64->setClockFrequency(PAL_CLOCK_FREQUENCY);
-            c64->putMessage(MSG_PAL);
+            vc64.setClockFrequency(PAL_CLOCK_FREQUENCY);
+            vc64.putMessage(MSG_PAL);
             break;
             
         case NTSC_6567:
         case NTSC_6567_R56A:
         case NTSC_8562:
-            c64->setClockFrequency(NTSC_CLOCK_FREQUENCY);
-            c64->putMessage(MSG_NTSC);
+            vc64.setClockFrequency(NTSC_CLOCK_FREQUENCY);
+            vc64.putMessage(MSG_NTSC);
             break;
             
         default:
@@ -414,13 +413,13 @@ VIC::resetScreenBuffers()
 u16
 VIC::rasterline()
 {
-    return c64->rasterLine;
+    return vc64.rasterLine;
 }
 
 u8
 VIC::rastercycle()
 {
-    return c64->rasterCycle;
+    return vc64.rasterCycle;
 }
 
 
@@ -520,7 +519,7 @@ VIC::updateBA(u8 value)
             baLine.clear();
         }
         
-        c64->cpu.setRDY(value == 0);
+        cpu.setRDY(value == 0);
     }
 }
 
@@ -536,7 +535,7 @@ VIC::triggerIrq(u8 source)
 u16
 VIC::lightpenX()
 {
-    u8 cycle = c64->rasterCycle; 
+    u8 cycle = vc64.rasterCycle;
     
     switch (model) {
             
@@ -583,7 +582,7 @@ VIC::setLP(bool value)
 void
 VIC::checkForLightpenIrq()
 {
-    u8 vicCycle = c64->rasterCycle;
+    u8 vicCycle = vc64.rasterCycle;
 
     // An interrupt is suppressed if ...
     
@@ -610,8 +609,8 @@ void
 VIC::checkForLightpenIrqAtStartOfFrame()
 {
     // This function is called at the beginning of a frame, only.
-    assert(c64->rasterLine == 0);
-    assert(c64->rasterCycle == 2);
+    assert(vc64.rasterLine == 0);
+    assert(vc64.rasterCycle == 2);
  
     // Latch coordinate (values according to VICE 3.1)
     switch (model) {
@@ -796,7 +795,7 @@ VIC::beginRasterline(u16 line)
     
     // We adjust the position of the first pixel in the pixel buffer to make
     // sure that the screen always appears centered.
-    if (c64->vic.isPAL()) {
+    if (vic.isPAL()) {
         bufferoffset = PAL_LEFT_BORDER_WIDTH - 32;
     } else {
         bufferoffset = NTSC_LEFT_BORDER_WIDTH - 32;
@@ -854,7 +853,7 @@ VIC::endRasterline()
         */
 
         // Advance pixelBuffer
-        u16 nextline = c64->rasterLine - PAL_UPPER_VBLANK + 1;
+        u16 nextline = vc64.rasterLine - PAL_UPPER_VBLANK + 1;
         if (nextline < PAL_RASTERLINES) {
             pixelBuffer = currentScreenBuffer + (nextline * NTSC_PIXELS);
         }

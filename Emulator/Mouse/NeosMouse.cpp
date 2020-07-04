@@ -50,7 +50,7 @@ NeosMouse::readControlPort(i64 targetX, i64 targetY)
     u8 result = leftButton ? 0xE0 : 0xF0;
     
     // Check for time out
-    if (state != 0 && c64->cpu.cycle > (triggerCycle + 232) /* from VICE */) {
+    if (state != 0 && cpu.cycle > (triggerCycle + 232) /* from VICE */) {
         state = 0;
         latchPosition(targetX, targetY);
     }
@@ -114,7 +114,7 @@ NeosMouse::risingStrobe(int portNr, i64 targetX, i64 targetY)
     }
     
     // Remember trigger cycle
-    triggerCycle = c64->cpu.cycle;
+    triggerCycle = cpu.cycle;
 }
 
 void
@@ -133,7 +133,7 @@ NeosMouse::fallingStrobe(int portNr, i64 targetX, i64 targetY)
     }
     
     // Remember trigger cycle
-    triggerCycle = c64->cpu.cycle;
+    triggerCycle = cpu.cycle;
 }
 
 void

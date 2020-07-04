@@ -123,7 +123,7 @@ C64::~C64()
 void
 C64::prefix()
 {
-    fprintf(stderr, "%04X ", cpu.getPC());
+    fprintf(stderr, "(%d,%d) %04X ", rasterLine, rasterCycle, cpu.getPC());
 }
 
 void

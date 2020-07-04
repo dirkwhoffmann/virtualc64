@@ -32,12 +32,12 @@ void Mouse::reset()
 void
 Mouse::setModel(MouseModel model)
 {
-    c64->suspend();
+    vc64.suspend();
 
     config.model = model;
     reset();
 
-    c64->resume();
+    vc64.resume();
 }
 
 void

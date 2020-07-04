@@ -83,7 +83,7 @@ VIC::switchBank(u16 addr) {
 
     // Determine old and new video bank
     uint2_t from = bankAddr >> 14;
-    uint2_t to = (~c64->cia2.getPA()) & 0x03;
+    uint2_t to = (~cia2.getPA()) & 0x03;
     
     // Switch to the bank given by the switch table
     switch (addr) {
@@ -111,7 +111,7 @@ VIC::switchBank(u16 addr) {
 void
 VIC::updateBankAddr()
 {
-    updateBankAddr(~c64->cia2.getPA() & 0x03);
+    updateBankAddr(~cia2.getPA() & 0x03);
 }
     
 u8
@@ -488,7 +488,7 @@ VIC::poke(u16 addr, u8 value)
             
             // Check the DEN bit. If it gets set somehwere in line 30, a bad
             // line conditions occurs.
-            if (c64->rasterLine == 0x30 && (value & 0x10))
+            if (vc64.rasterLine == 0x30 && (value & 0x10))
                 DENwasSetInRasterline30 = true;
             
             if ((badLine = badLineCondition())) {
@@ -537,7 +537,7 @@ VIC::poke(u16 addr, u8 value)
             // upper case or lower case mode.
             if ((value & 0x02) != (memSelect & 0x02)) {
                 memSelect = value;
-                c64->putMessage(MSG_CHARSET);
+                vc64.putMessage(MSG_CHARSET);
                 return;
             }
             
@@ -626,16 +626,16 @@ VIC::memAccess(u16 addr)
     switch (memSrc[addrBus >> 12]) {
             
         case M_RAM:
-            return c64->mem.ram[addrBus];
+            return mem.ram[addrBus];
             
         case M_CHAR:
-            return c64->mem.rom[0xC000 + addr];
+            return mem.rom[0xC000 + addr];
 
         case M_CRTHI:
-            return c64->expansionport.peek(addrBus | 0xF000);
+            return expansionport.peek(addrBus | 0xF000);
             
         default:
-            return c64->mem.ram[addrBus];
+            return mem.ram[addrBus];
     }
 }
 
@@ -683,7 +683,7 @@ VIC::memAccess(u16 addr)
  case 0x7:
  case 0x3:
  assert(memSrc[addrBus >> 12] == M_CRTHI);
- result = c64->expansionport.peek(addrBus | 0xF000);
+ result = expansionport.peek(addrBus | 0xF000);
  break;
  case 0xE:
  case 0xD:
@@ -691,21 +691,21 @@ VIC::memAccess(u16 addr)
  case 0x8:
  case 0x0:
  assert(memSrc[addrBus >> 12] == M_RAM);
- result = c64->mem.ram[addrBus];
+ result = mem.ram[addrBus];
  break;
  default:
  assert(memSrc[addrBus >> 12] == M_RAM);
- result = c64->mem.ram[addrBus];
+ result = mem.ram[addrBus];
  }
  
  } else {
  
  if (isCharRomAddr(addr)) {
  assert(memSrc[addrBus >> 12] == M_CHAR);
- result = c64->mem.rom[0xC000 + addr];
+ result = mem.rom[0xC000 + addr];
  } else {
  assert(memSrc[addrBus >> 12] == M_RAM);
- result = c64->mem.ram[addrBus];
+ result = mem.ram[addrBus];
  }
  }
  
@@ -730,25 +730,25 @@ VIC::memSpyAccess(u16 addr)
             case 0xB:
             case 0x7:
             case 0x3:
-                result = c64->expansionport.spypeek(addrBus | 0xF000);
+                result = expansionport.spypeek(addrBus | 0xF000);
                 break;
             case 0xE:
             case 0xD:
             case 0x9:
             case 0x8:
             case 0x0:
-                result = c64->mem.ram[addrBus];
+                result = mem.ram[addrBus];
                 break;
             default:
-                result = c64->mem.ram[addrBus];
+                result = mem.ram[addrBus];
         }
         
     } else {
         
         if (isCharRomAddr(addr)) {
-            result = c64->mem.rom[0xC000 + addr];
+            result = mem.rom[0xC000 + addr];
         } else {
-            result = c64->mem.ram[addrBus];
+            result = mem.ram[addrBus];
         }
     }
     
@@ -773,7 +773,7 @@ VIC::cAccess()
         
         dataBusPhi2 = memAccess(addr);
         videoMatrix[vmli] = dataBusPhi2;
-        colorLine[vmli] = c64->mem.colorRam[vc] & 0x0F;
+        colorLine[vmli] = mem.colorRam[vc] & 0x0F;
     }
     
     // VIC has no access, yet
@@ -797,7 +797,7 @@ VIC::cAccess()
          */
         dataBusPhi2 = 0xFF;
         videoMatrix[vmli] = dataBusPhi2;
-        colorLine[vmli] = c64->mem.ram[c64->cpu.regPC] & 0x0F;
+        colorLine[vmli] = mem.ram[cpu.regPC] & 0x0F;
     }
 }
 

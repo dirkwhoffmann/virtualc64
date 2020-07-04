@@ -72,7 +72,7 @@ IEC::ping()
 {
     HardwareComponent::ping();
     
-    c64->putMessage(busActivity > 0 ? MSG_IEC_BUS_BUSY : MSG_IEC_BUS_IDLE);
+    vc64.putMessage(busActivity > 0 ? MSG_IEC_BUS_BUSY : MSG_IEC_BUS_IDLE);
 }
 
 void 
@@ -83,9 +83,9 @@ IEC::dump()
 	msg("\n");
 	dumpTrace();
 	msg("\n");
-    msg("    DDRB (VIA1) : %02X (Drive 1)\n", c64->drive1.via1.getDDRB());
-    msg("    DDRB (VIA1) : %02X (Drive 2)\n", c64->drive2.via1.getDDRB());
-    msg("    DDRA (CIA2) : %02X\n\n", c64->cia2.getDDRA());
+    msg("    DDRB (VIA1) : %02X (Drive 1)\n", drive1.via1.getDDRB());
+    msg("    DDRB (VIA1) : %02X (Drive 2)\n", drive2.via1.getDDRB());
+    msg("    DDRA (CIA2) : %02X\n\n", cia2.getDDRA());
     msg("   Bus activity : %d\n", busActivity); 
 
     msg("\n");
@@ -133,8 +133,8 @@ bool IEC::_updateIecLines()
      *    dataLine &= ub1;
      * }
     */
-    dataLine &= c64->drive1.isPoweredOff() || (atnLine ^ device1Atn);
-    dataLine &= c64->drive2.isPoweredOff() || (atnLine ^ device2Atn);
+    dataLine &= drive1.isPoweredOff() || (atnLine ^ device1Atn);
+    dataLine &= drive2.isPoweredOff() || (atnLine ^ device2Atn);
 
     return (oldAtnLine != atnLine ||
             oldClockLine != clockLine ||
@@ -151,11 +151,11 @@ IEC::updateIecLines()
 
     if (signals_changed) {
         
-        c64->cia2.updatePA();
+        cia2.updatePA();
         
         // ATN signal is connected to CA1 pin of VIA 1
-        c64->drive1.via1.CA1action(!atnLine);
-        c64->drive2.via1.CA1action(!atnLine);
+        drive1.via1.CA1action(!atnLine);
+        drive2.via1.CA1action(!atnLine);
         
         if (tracingEnabled()) {
             dumpTrace();
@@ -167,7 +167,7 @@ IEC::updateIecLines()
             busActivity = 30;
             
 			// Bus has just been activated
-			c64->putMessage(MSG_IEC_BUS_BUSY);
+            vc64.putMessage(MSG_IEC_BUS_BUSY);
 
         } else {
             
@@ -181,7 +181,7 @@ void
 IEC::updateIecLinesC64Side()
 {
     // Get bus signals from C64 side
-    u8 ciaBits = c64->cia2.getPA();
+    u8 ciaBits = cia2.getPA();
     ciaAtn = !!(ciaBits & 0x08);
     ciaClock = !!(ciaBits & 0x10);
     ciaData = !!(ciaBits & 0x20);
@@ -194,13 +194,13 @@ void
 IEC::updateIecLinesDriveSide()
 {
     // Get bus signals from drive 1
-    u8 device1Bits = c64->drive1.via1.getPB();
+    u8 device1Bits = drive1.via1.getPB();
     device1Atn = !!(device1Bits & 0x10);
     device1Clock = !!(device1Bits & 0x08);
     device1Data = !!(device1Bits & 0x02);
 
     // Get bus signals from drive 2
-    u8 device2Bits = c64->drive2.via1.getPB();
+    u8 device2Bits = drive2.via1.getPB();
     device2Atn = !!(device2Bits & 0x10);
     device2Clock = !!(device2Bits & 0x08);
     device2Data = !!(device2Bits & 0x02);
@@ -217,7 +217,7 @@ IEC::execute()
 		if (--busActivity == 0) {
             
 			// Bus goes idle
-			c64->putMessage(MSG_IEC_BUS_IDLE);
+            vc64.putMessage(MSG_IEC_BUS_IDLE);
 		}
 	}
 }
