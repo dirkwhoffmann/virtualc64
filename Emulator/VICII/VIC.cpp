@@ -100,6 +100,10 @@ VIC::VIC(C64 &ref) : C64Component(ref)
         { NULL,                         0,                                      0 }};
 
     registerSnapshotItems(items, sizeof(items));
+    
+    // Assign reference clock to all time delayed variables
+    baLine.setClock(&cpu.cycle);
+    gAccessResult.setClock(&cpu.cycle);
 }
 
 VIC::~VIC()
@@ -110,10 +114,6 @@ void
 VIC::setC64(C64 *c64)
 {
     HardwareComponent::setC64(c64);
-
-    // Assign reference clock to all time delayed variables
-    baLine.setClock(&c64->cpu.cycle);
-    gAccessResult.setClock(&c64->cpu.cycle);
 }
 
 void 

@@ -89,11 +89,11 @@ VC1541::ping()
 {
     HardwareComponent::ping();
     
-    c64->putMessage(poweredOn ? MSG_VC1541_ATTACHED : MSG_VC1541_DETACHED, deviceNr);
-    c64->putMessage(redLED ? MSG_VC1541_RED_LED_ON : MSG_VC1541_RED_LED_OFF, deviceNr);
-    c64->putMessage(spinning ? MSG_VC1541_MOTOR_ON : MSG_VC1541_MOTOR_OFF, deviceNr);
-    c64->putMessage(hasDisk() ? MSG_VC1541_DISK : MSG_VC1541_NO_DISK, deviceNr);
-    c64->putMessage(hasModifiedDisk() ? MSG_DISK_UNSAVED : MSG_DISK_SAVED, deviceNr);
+    vc64.putMessage(poweredOn ? MSG_VC1541_ATTACHED : MSG_VC1541_DETACHED, deviceNr);
+    vc64.putMessage(redLED ? MSG_VC1541_RED_LED_ON : MSG_VC1541_RED_LED_OFF, deviceNr);
+    vc64.putMessage(spinning ? MSG_VC1541_MOTOR_ON : MSG_VC1541_MOTOR_OFF, deviceNr);
+    vc64.putMessage(hasDisk() ? MSG_VC1541_DISK : MSG_VC1541_NO_DISK, deviceNr);
+    vc64.putMessage(hasModifiedDisk() ? MSG_DISK_UNSAVED : MSG_DISK_SAVED, deviceNr);
 
 }
 
@@ -141,7 +141,7 @@ VC1541::execute(u64 duration)
             if (cycle >= via1.wakeUpCycle) via1.execute(); else via1.idleCounter++;
             if (cycle >= via2.wakeUpCycle) via2.execute(); else via2.idleCounter++;
             updateByteReady();
-            if (c64->iec.isDirtyDriveSide) c64->iec.updateIecLinesDriveSide();
+            if (iec.isDirtyDriveSide) iec.updateIecLinesDriveSide();
 
             nextClock += 10000;
 
@@ -351,7 +351,7 @@ VC1541::powerOn()
     
     poweredOn = true;
     if (soundMessagesEnabled())
-        c64->putMessage(MSG_VC1541_ATTACHED_SOUND, deviceNr);
+        vc64.putMessage(MSG_VC1541_ATTACHED_SOUND, deviceNr);
     ping();
     
     resume();
@@ -368,7 +368,7 @@ VC1541::powerOff()
     
     poweredOn = false;
     if (soundMessagesEnabled())
-        c64->putMessage(MSG_VC1541_DETACHED_SOUND, deviceNr);
+        vc64.putMessage(MSG_VC1541_DETACHED_SOUND, deviceNr);
     ping();
     
     resume();
@@ -379,10 +379,10 @@ VC1541::setRedLED(bool b)
 {
     if (!redLED && b) {
         redLED = true;
-        c64->putMessage(MSG_VC1541_RED_LED_ON, deviceNr);
+        vc64.putMessage(MSG_VC1541_RED_LED_ON, deviceNr);
     } else if (redLED && !b) {
         redLED = false;
-        c64->putMessage(MSG_VC1541_RED_LED_OFF, deviceNr);
+        vc64.putMessage(MSG_VC1541_RED_LED_OFF, deviceNr);
     }
 }
 
@@ -391,10 +391,10 @@ VC1541::setRotating(bool b)
 {
     if (!spinning && b) {
         spinning = true;
-        c64->putMessage(MSG_VC1541_MOTOR_ON, deviceNr);
+        vc64.putMessage(MSG_VC1541_MOTOR_ON, deviceNr);
     } else if (spinning && !b) {
         spinning = false;
-        c64->putMessage(MSG_VC1541_MOTOR_OFF, deviceNr);
+        vc64.putMessage(MSG_VC1541_MOTOR_OFF, deviceNr);
     }
 }
 
@@ -414,10 +414,10 @@ VC1541::moveHeadUp()
    
     assert(disk.isValidHeadPositon(halftrack, offset));
     
-    c64->putMessage(MSG_VC1541_HEAD_UP, deviceNr);
+    vc64.putMessage(MSG_VC1541_HEAD_UP, deviceNr);
     if (halftrack % 2 && sendSoundMessages) {
         // Play sound for full tracks, only
-        c64->putMessage(MSG_VC1541_HEAD_UP_SOUND, deviceNr);
+        vc64.putMessage(MSG_VC1541_HEAD_UP_SOUND, deviceNr);
     }
 }
 
@@ -436,17 +436,17 @@ VC1541::moveHeadDown()
     
     assert(disk.isValidHeadPositon(halftrack, offset));
     
-    c64->putMessage(MSG_VC1541_HEAD_DOWN, deviceNr);
+    vc64.putMessage(MSG_VC1541_HEAD_DOWN, deviceNr);
     if (halftrack % 2 && sendSoundMessages)
         // Play sound for full tracks, only
-        c64->putMessage(MSG_VC1541_HEAD_DOWN_SOUND, deviceNr);
+        vc64.putMessage(MSG_VC1541_HEAD_DOWN_SOUND, deviceNr);
 }
 
 void
 VC1541::setModifiedDisk(bool value)
 {
     disk.setModified(value);
-    c64->putMessage(value ? MSG_DISK_UNSAVED : MSG_DISK_SAVED, deviceNr);
+    vc64.putMessage(value ? MSG_DISK_UNSAVED : MSG_DISK_SAVED, deviceNr);
 }
 
 void
@@ -498,10 +498,10 @@ VC1541::insertDisk(AnyArchive *a)
     
     insertionStatus = FULLY_INSERTED;
     
-    c64->putMessage(MSG_VC1541_DISK, deviceNr);
-    c64->putMessage(MSG_DISK_SAVED, deviceNr);
+    vc64.putMessage(MSG_VC1541_DISK, deviceNr);
+    vc64.putMessage(MSG_DISK_SAVED, deviceNr);
     if (sendSoundMessages)
-        c64->putMessage(MSG_VC1541_DISK_SOUND, deviceNr);
+        vc64.putMessage(MSG_VC1541_DISK_SOUND, deviceNr);
     
     resume();
 }
@@ -535,9 +535,9 @@ VC1541::ejectDisk()
     insertionStatus = NOT_INSERTED;
     
     // Notify listener
-    c64->putMessage(MSG_VC1541_NO_DISK, deviceNr);
+    vc64.putMessage(MSG_VC1541_NO_DISK, deviceNr);
     if (sendSoundMessages)
-        c64->putMessage(MSG_VC1541_NO_DISK_SOUND, deviceNr);
+        vc64.putMessage(MSG_VC1541_NO_DISK_SOUND, deviceNr);
     
     resume();
 }

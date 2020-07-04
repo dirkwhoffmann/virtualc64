@@ -28,7 +28,7 @@ VIC::cycle1ntsc()
     sSecondAccess(3);
     
     // Phi2.1 Rasterline interrupt (edge triggered)
-    bool edgeOnYCounter = (c64->rasterLine != 0);
+    bool edgeOnYCounter = (vc64.rasterLine != 0);
     bool edgeOnIrqCond  = (yCounter == rasterInterruptLine() && !yCounterEqualsIrqRasterline);
     if (edgeOnYCounter && edgeOnIrqCond)
         triggerIrq(1);
@@ -44,7 +44,7 @@ void
 VIC::cycle2ntsc()
 {
     // Check for lightpen IRQ in first rasterline
-    if (!lpLine && c64->rasterLine == 0)
+    if (!lpLine && vc64.rasterLine == 0)
         checkForLightpenIrqAtStartOfFrame();
     
     // Phi2.5 Fetch (previous cycle)

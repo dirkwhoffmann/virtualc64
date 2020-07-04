@@ -62,10 +62,10 @@ ProcessorPort::read()
     //     CPU temperature and how long the output was 1 befor the bit became
     //     an input.
     
-    u8 bit3 = (dischargeCycleBit3 > c64->cpu.cycle) ? 0x08 : 0x00;
-    u8 bit6 = (dischargeCycleBit6 > c64->cpu.cycle) ? 0x40 : 0x00;
-    u8 bit7 = (dischargeCycleBit7 > c64->cpu.cycle) ? 0x80 : 0x00;
-    u8 bit4 = c64->datasette.getPlayKey() ? 0x00 : 0x10;
+    u8 bit3 = (dischargeCycleBit3 > cpu.cycle) ? 0x08 : 0x00;
+    u8 bit6 = (dischargeCycleBit6 > cpu.cycle) ? 0x40 : 0x00;
+    u8 bit7 = (dischargeCycleBit7 > cpu.cycle) ? 0x80 : 0x00;
+    u8 bit4 = datasette.getPlayKey() ? 0x00 : 0x10;
     u8 bits = bit7 | bit6 | bit4 | bit3 | 0x07;
 
     return (port & direction) | (bits & ~direction);
@@ -84,14 +84,14 @@ ProcessorPort::write(u8 value)
     
     // Check for datasette motor bit
     if (direction & 0x20) {
-        c64->datasette.setMotor((value & 0x20) == 0);
+        datasette.setMotor((value & 0x20) == 0);
     }
     
     // When writing to the port register, the last VIC byte appears in 0x0001
-    c64->mem.ram[0x0001] = c64->vic.getDataBusPhi1();
+    mem.ram[0x0001] = vic.getDataBusPhi1();
     
     // Switch memory banks
-    c64->mem.updatePeekPokeLookupTables();
+    mem.updatePeekPokeLookupTables();
 }
 
 void
@@ -111,17 +111,17 @@ ProcessorPort::writeDirection(u8 value)
     if (FALLING_EDGE_BIT(direction, value, 3) && GET_BIT(port, 3) != 0)
         dischargeCycleBit3 = UINT64_MAX;
     if (FALLING_EDGE_BIT(direction, value, 6) && GET_BIT(port, 6) != 0)
-        dischargeCycleBit6 = c64->cpu.cycle + dischargeCycles;
+        dischargeCycleBit6 = cpu.cycle + dischargeCycles;
     if (FALLING_EDGE_BIT(direction, value, 7) && GET_BIT(port, 7) != 0)
-        dischargeCycleBit7 = c64->cpu.cycle + dischargeCycles;
+        dischargeCycleBit7 = cpu.cycle + dischargeCycles;
     
     direction = value;
     
     // When writing to the direction register, the last VIC byte appears
-    c64->mem.ram[0x0000] = c64->vic.getDataBusPhi1();
+    mem.ram[0x0000] = vic.getDataBusPhi1();
     
     // Switch memory banks
-    c64->mem.updatePeekPokeLookupTables();
+    mem.updatePeekPokeLookupTables();
 }
 
 

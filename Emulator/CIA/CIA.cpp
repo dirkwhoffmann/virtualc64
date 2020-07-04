@@ -1081,7 +1081,7 @@ CIA::sleep()
     assert(idleCounter == 0);
     
     // Determine maximum possible sleep cycles based on timer counts
-    u64 cycle = c64->cpu.cycle;
+    u64 cycle = cpu.cycle;
     u64 sleepA = (counterA > 2) ? (cycle + counterA - 1) : 0;
     u64 sleepB = (counterB > 2) ? (cycle + counterB - 1) : 0;
     
@@ -1140,13 +1140,13 @@ CIA1::dump()
 void 
 CIA1::pullDownInterruptLine()
 {
-    c64->cpu.pullDownIrqLine(CPU::INTSRC_CIA);
+    cpu.pullDownIrqLine(CPU::INTSRC_CIA);
 }
 
 void 
 CIA1::releaseInterruptLine()
 {
-    c64->cpu.releaseIrqLine(CPU::INTSRC_CIA);
+    cpu.releaseIrqLine(CPU::INTSRC_CIA);
 }
 
 //                    -------
@@ -1170,7 +1170,7 @@ u8
 CIA1::portAexternal()
 {
     return 0xFF;
-    // return c64->keyboard.getColumnValues(PB);
+    // return keyboard.getColumnValues(PB);
 }
 
 void
@@ -1181,19 +1181,19 @@ CIA1::updatePA()
     PA = (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
 
     // Get lines which are driven actively low by port 2
-    u8 rowMask = ~PRB & DDRB & c64->port1.bitmask();
+    u8 rowMask = ~PRB & DDRB & port1.bitmask();
     
     // Pull lines low that are connected by a pressed key
-    PA &= c64->keyboard.getColumnValues(rowMask);
+    PA &= keyboard.getColumnValues(rowMask);
     
     // The control port can always bring the port lines low
-    PA &= c64->port2.bitmask();
+    PA &= port2.bitmask();
     
     // An edge on PA4 triggers the NeosMouse on port 2
     if (FALLING_EDGE_BIT(oldPA, PA, 4))
-        c64->mouse.fallingStrobe(2 /* Port */);
+        mouse.fallingStrobe(2 /* Port */);
     if (RISING_EDGE_BIT(oldPA, PA, 4))
-        c64->mouse.risingStrobe(2 /* Port */);
+        mouse.risingStrobe(2 /* Port */);
 }
 
 //                    -------
@@ -1217,7 +1217,7 @@ u8
 CIA1::portBexternal()
 {
     return 0xFF;
-    // return c64->keyboard.getRowValues(PA);
+    // return keyboard.getRowValues(PA);
 }
 
 void
@@ -1228,10 +1228,10 @@ CIA1::updatePB()
     PB = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
  
     // Get lines which are driven actively low by port 1
-    u8 columnMask = ~PRA & DDRA & c64->port2.bitmask();
+    u8 columnMask = ~PRA & DDRA & port2.bitmask();
     
     // Pull lines low that are connected by a pressed key
-    PB &= c64->keyboard.getRowValues(columnMask);
+    PB &= keyboard.getRowValues(columnMask);
     
     // Check if timer A underflow shows up on PB6
     if (GET_BIT(PB67TimerMode, 6))
@@ -1242,16 +1242,16 @@ CIA1::updatePB()
         COPY_BIT(PB67TimerOut, PB, 7);
     
     // The control port can always bring the port lines low
-    PB &= c64->port1.bitmask();
+    PB &= port1.bitmask();
     
     // PB4 is connected to the VIC (LP pin).
-    c64->vic.setLP(GET_BIT(PB, 4) != 0);
+    vic.setLP(GET_BIT(PB, 4) != 0);
     
     // An edge on PB4 triggers the NeosMouse on port 1
     if (FALLING_EDGE_BIT(oldPB, PB, 4))
-        c64->mouse.fallingStrobe(1 /* Port */);
+        mouse.fallingStrobe(1 /* Port */);
     if (RISING_EDGE_BIT(oldPB, PB, 4))
-        c64->mouse.risingStrobe(1 /* Port */);
+        mouse.risingStrobe(1 /* Port */);
 }
 
 
@@ -1288,13 +1288,13 @@ CIA2::dump()
 void 
 CIA2::pullDownInterruptLine()
 {
-    c64->cpu.pullDownNmiLine(CPU::INTSRC_CIA);
+    cpu.pullDownNmiLine(CPU::INTSRC_CIA);
 }
 
 void 
 CIA2::releaseInterruptLine()
 {
-    c64->cpu.releaseNmiLine(CPU::INTSRC_CIA);
+    cpu.releaseNmiLine(CPU::INTSRC_CIA);
 }
 
 //                        -------
@@ -1318,8 +1318,8 @@ u8
 CIA2::portAexternal()
 {
     u8 result = 0x3F;
-    result |= (c64->iec.clockLine ? 0x40 : 0x00);
-    result |= (c64->iec.dataLine ? 0x80 : 0x00);
+    result |= (iec.clockLine ? 0x40 : 0x00);
+    result |= (iec.dataLine ? 0x80 : 0x00);
     
     return result;
 }
@@ -1330,10 +1330,10 @@ CIA2::updatePA()
     PA = (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
     
     // PA0 (VA14) and PA1 (VA15) determine the memory bank seen by the VIC
-    // c64->vic.updateBankAddr();
+    // vic.updateBankAddr();
     
     // Mark IEC bus as dirty
-    c64->iec.setNeedsUpdateC64Side();
+    iec.setNeedsUpdateC64Side();
 }
 
 //                        -------
@@ -1382,7 +1382,7 @@ CIA2::pokePA(u8 value)
     CIA::pokePA(value);
     
     // PA0 (VA14) and PA1 (VA15) determine the memory bank seen by VICII
-    c64->vic.switchBank(0xDD00);
+    vic.switchBank(0xDD00);
 }
 
 void
@@ -1391,7 +1391,7 @@ CIA2::pokeDDRA(u8 value)
     CIA::pokeDDRA(value);
     
     // PA0 (VA14) and PA1 (VA15) determine the memory bank seen by VICII
-    c64->vic.switchBank(0xDD02);
+    vic.switchBank(0xDD02);
 
 }
 

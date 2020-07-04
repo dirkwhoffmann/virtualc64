@@ -130,8 +130,8 @@ SIDInfo
 SIDBridge::getInfo()
 {
     SIDInfo info = useReSID ? resid.getInfo() : fastsid.getInfo();
-    info.potX = c64->mouse.readPotX();
-    info.potY = c64->mouse.readPotY();
+    info.potX = mouse.readPotX();
+    info.potY = mouse.readPotY();
     return info;
 }
 
@@ -147,13 +147,13 @@ SIDBridge::peek(u16 addr)
     assert(addr <= 0x1F);
     
     // Get SID up to date
-    executeUntil(c64->cpu.cycle);
+    executeUntil(cpu.cycle);
     
     if (addr == 0x19) {
-        return c64->mouse.readPotX();
+        return mouse.readPotX();
     }
     if (addr == 0x1A) {
-        return c64->mouse.readPotY();
+        return mouse.readPotY();
     }
     
     if (useReSID) {
@@ -174,7 +174,7 @@ void
 SIDBridge::poke(u16 addr, u8 value)
 {
     // Get SID up to date
-    executeUntil(c64->cpu.cycle);
+    executeUntil(cpu.cycle);
 
     // Keep both SID implementations up to date
     resid.poke(addr, value);

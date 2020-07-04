@@ -58,8 +58,8 @@ ControlPort::dump()
 void
 ControlPort::scheduleNextShot()
 {
-    nextAutofireFrame = c64->frame +
-    (int)(c64->vic.getFramesPerSecond() / (2 * autofireFrequency));
+    nextAutofireFrame = vc64.frame +
+    (int)(vic.getFramesPerSecond() / (2 * autofireFrequency));
 }
 
 void
@@ -69,7 +69,7 @@ ControlPort::execute()
         return;
   
     // Wait until it's time to push or release fire
-    if (c64->frame != nextAutofireFrame)
+    if (vc64.frame != nextAutofireFrame)
         return;
     
     // Are there any bullets left?
@@ -166,7 +166,7 @@ ControlPort::bitmask() {
     if (axisX ==  1) CLR_BIT(result, 3);
     if (button)      CLR_BIT(result, 4);
     
-    u8 mouseBits = c64->mouse.readControlPort(nr);
+    u8 mouseBits = mouse.readControlPort(nr);
     result &= mouseBits;
     
     return result;
