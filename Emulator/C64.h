@@ -92,22 +92,22 @@ class C64 : public HardwareComponent {
     CIA2 cia2 = CIA2(*this);
     
     //! @brief    The C64's Sound Interface Device
-    SIDBridge sid;
+    SIDBridge sid = SIDBridge(*this);
     
     //! @brief    The C64's virtual keyboard
-    Keyboard keyboard;
+    Keyboard keyboard = Keyboard(*this);
     
     //! @brief    The C64's first control port
-    ControlPort port1 = ControlPort(1);
+    ControlPort port1 = ControlPort(1, *this);
     
     //! @brief    The C64's second control port
-    ControlPort port2 = ControlPort(2);
+    ControlPort port2 = ControlPort(2, *this);
     
     //! @brief    The C64's expansion port (cartdrige slot)
-    ExpansionPort expansionport;
+    ExpansionPort expansionport = ExpansionPort(*this);
     
     //! @brief    The C64's serial bus connecting the VC1541 floppy drives
-    IEC iec;
+    IEC iec = IEC(*this);
 
     //! @brief    A VC1541 floppy drive (with device number 8)
     VC1541 drive1 = VC1541(1, *this);
@@ -116,10 +116,10 @@ class C64 : public HardwareComponent {
     VC1541 drive2 = VC1541(2, *this);
     
     //! @brief    A Commodore 1530 (C2N) Datasette
-    Datasette datasette;
+    Datasette datasette = Datasette(*this);
     
     //! @brief    An external mouse
-    Mouse mouse;
+    Mouse mouse = Mouse(*this);
     
     
     //

@@ -10,22 +10,23 @@
 #ifndef MOUSE_H
 #define MOUSE_H
 
+#include "C64Component.h"
 #include "MouseTypes.h"
 #include "Mouse1350.h"
 #include "Mouse1351.h"
 #include "NeosMouse.h"
 
 //! @brief An external mouse plugged into the control port
-class Mouse : public HardwareComponent {
+class Mouse : public C64Component {
     
     //! @brief    A Commdore 1350 (digital) mouse
-    Mouse1350 mouse1350;
+    Mouse1350 mouse1350 = Mouse1350(vc64);
     
     //! @brief    A Commdore 1351 (analog) mouse
-    Mouse1351 mouse1351;
+    Mouse1351 mouse1351 = Mouse1351(vc64);
     
     //! @brief    A Neos (analog) mouse
-    NeosMouse mouseNeos;
+    NeosMouse mouseNeos = NeosMouse(vc64);
     
     //! @brief    Emulated mouse model
     MouseModel model = MOUSE1350;
@@ -47,7 +48,7 @@ class Mouse : public HardwareComponent {
 public:
     
     //! @brief   Constructor
-    Mouse();
+    Mouse(C64 &ref);
     
     //! @brief   Destructor
     ~Mouse();

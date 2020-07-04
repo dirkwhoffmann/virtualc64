@@ -10,21 +10,20 @@
 #ifndef _KEYBOARD_INC
 #define _KEYBOARD_INC
 
-#include "HardwareComponent.h"
+#include "C64Component.h"
 
-/*! @class    The virtual keyboard of a C64
- *  @details  This class manages the keyboard matrix of the virtual C64.
- *            Keyboard management works as follows: When the GUI recognizes a
- *            key press or a key release, it calls one of the functions in this
- *            class to tell the virtual keyboard about the event. The called
- *            functions do nothing more than clearing or setting a bit in the
- *            8x8 keyboard matrix.Each key corresponds to a specific bit in the
- *            matrix and is uniquely determined by a row and a column value.
+/* The virtual keyboard of a C64
+ * This class manages the keyboard matrix of the virtual C64. Keyboard
+ * management works as follows: When the GUI recognizes a key press or a key
+ * release, it calls one of the functions in this class to tell the virtual
+ * keyboard about the event. The called functions do nothing more than clearing
+ * or setting a bit in the 8x8 keyboard matrix.Each key corresponds to a
+ * specific bit in the matrix and is uniquely determined by a row and a column
+ * value.
  *
- *            Communication with the virtual computer is managed solely by the
- *            CIA chip. When a special CIA register is peeked, method
- *            getRowValues is called which finally gets the contents of the
- *            keyboard matrix into the virtual C64.
+ * Communication with the virtual computer is managed solely by the CIA. When a
+ * method getRowValues is called which finally gets the contents of the keyboard
+ * matrix into the virtual C64.
  */
 class Keyboard : public HardwareComponent {
 
@@ -42,7 +41,7 @@ private:
 public:
     
 	//! @brief    Constructor
-	Keyboard();
+	Keyboard(C64 &ref);
 
 	//! @brief    Destructor
 	~Keyboard();

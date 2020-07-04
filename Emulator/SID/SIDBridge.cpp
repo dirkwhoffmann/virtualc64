@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-SIDBridge::SIDBridge()
+SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
 {
 	setDescription("SIDBridge");
     

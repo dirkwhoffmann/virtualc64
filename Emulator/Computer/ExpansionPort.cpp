@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-ExpansionPort::ExpansionPort()
+ExpansionPort::ExpansionPort(C64 &ref) : C64Component(ref)
 {
     setDescription("Expansion port");
     

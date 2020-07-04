@@ -9,7 +9,7 @@
  
 #include "C64.h"
 
-ControlPort::ControlPort(int portNr)
+ControlPort::ControlPort(int portNr, C64 &ref) : C64Component(ref)
 {
     assert(portNr == 1 || portNr == 2);
     

@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-IEC::IEC()
+IEC::IEC(C64 &ref) : C64Component(ref)
 {
   	setDescription("IEC");
     

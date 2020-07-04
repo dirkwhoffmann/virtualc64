@@ -10,10 +10,10 @@
 #ifndef CONTROLPORT_H
 #define CONTROLPORT_H
 
-#include "HardwareComponent.h"
-#include "ControlPortTypes.h"
+#include "C64Component.h"
+// #include "ControlPortTypes.h"
 
-class ControlPort : public HardwareComponent {
+class ControlPort : public C64Component {
 
 private:
     
@@ -51,7 +51,7 @@ private:
 public:
     
     //! @brief    Constructor
-    ControlPort(int p);
+    ControlPort(int p, C64 &ref);
     
     //! @brief    Destructor
     ~ControlPort();

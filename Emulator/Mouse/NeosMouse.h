@@ -10,9 +10,9 @@
 #ifndef NEOSMOUSE_H
 #define NEOSMOUSE_H
 
-#include "HardwareComponent.h"
+#include "C64Component.h"
 
-class NeosMouse : public HardwareComponent {
+class NeosMouse : public C64Component {
     
     //! @brief    Mouse position
     i64 mouseX;
@@ -56,7 +56,7 @@ class NeosMouse : public HardwareComponent {
 public:
     
     //! @brief    Constructor
-    NeosMouse();
+    NeosMouse(C64 &ref);
     
     //! @brief    Destructor
     ~NeosMouse();

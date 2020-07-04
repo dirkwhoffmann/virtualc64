@@ -10,9 +10,9 @@
 #ifndef MOUSE1350_H
 #define MOUSE1350_H
 
-#include "HardwareComponent.h"
+#include "C64Component.h"
 
-class Mouse1350 : public HardwareComponent {
+class Mouse1350 : public C64Component {
     
 private:
     
@@ -38,7 +38,7 @@ private:
 public:
     
     //! @brief   Constructor
-    Mouse1350();
+    Mouse1350(C64 &ref);
     
     //! @brief   Destructor
     ~Mouse1350();

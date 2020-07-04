@@ -10,8 +10,8 @@
 #include "C64.h"
 #include "NeosMouse.h"
 
-NeosMouse::NeosMouse() {
-    
+NeosMouse::NeosMouse(C64 &ref) : C64Component(ref)
+{    
     setDescription("NeosMouse");
 }
 

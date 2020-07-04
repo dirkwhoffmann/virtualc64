@@ -10,10 +10,11 @@
 #ifndef _DATASETTE_INC
 #define _DATASETTE_INC
 
+#include "C64Component.h"
+
 class TAPFile;
 
-//! @brief    A Commodore 1530 (C2N) tape recorder (Datasette)
-class Datasette : public HardwareComponent {
+class Datasette : public C64Component {
     
     //
     // Tape
@@ -84,7 +85,7 @@ public:
     //
     
     //! @brief    Constructor
-    Datasette();
+    Datasette(C64 &ref);
     
     //! @brief    Destructor
     ~Datasette();

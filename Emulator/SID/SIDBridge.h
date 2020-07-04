@@ -10,12 +10,12 @@
 #ifndef _SIDBRIDGE_H
 #define _SIDBRIDGE_H
 
-#include "HardwareComponent.h"
+#include "C64Component.h"
 #include "FastSID.h"
 #include "ReSID.h"
 #include "SIDTypes.h"
 
-class SIDBridge : public HardwareComponent {
+class SIDBridge : public C64Component {
 
     friend C64Memory;
 
@@ -101,7 +101,7 @@ private:
 public:
 	
 	//! @brief    Constructor
-	SIDBridge();
+	SIDBridge(C64 &ref);
 	
 	//! @brief    Destructor
 	~SIDBridge();

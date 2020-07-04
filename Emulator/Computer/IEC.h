@@ -10,9 +10,9 @@
 #ifndef _IEC_INC
 #define _IEC_INC
 
-#include "HardwareComponent.h"
+#include "C64Component.h"
 
-class IEC : public HardwareComponent {
+class IEC : public C64Component {
 
 public:
     
@@ -60,7 +60,7 @@ private:
 public:
     
 	//! @brief    Constructor
-	IEC();
+	IEC(C64 &ref);
 	
 	//! @brief    Destructor
 	~IEC();

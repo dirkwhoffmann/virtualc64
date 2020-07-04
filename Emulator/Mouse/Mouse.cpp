@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-Mouse::Mouse()
+Mouse::Mouse(C64 &ref) : C64Component(ref)
 {
     setDescription("Mouse");
     

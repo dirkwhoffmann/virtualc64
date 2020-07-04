@@ -10,9 +10,9 @@
 #ifndef MOUSE1351_H
 #define MOUSE1351_H
 
-#include "HardwareComponent.h"
+#include "C64Component.h"
 
-class Mouse1351 : public HardwareComponent {
+class Mouse1351 : public C64Component {
     
     //! @brief    Mouse position
     i64 mouseX;
@@ -33,7 +33,7 @@ class Mouse1351 : public HardwareComponent {
 public:
     
     //! @brief    Constructor
-    Mouse1351();
+    Mouse1351(C64 &ref);
     
     //! @brief   Destructor
     ~Mouse1351();

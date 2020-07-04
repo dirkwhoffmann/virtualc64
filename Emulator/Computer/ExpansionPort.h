@@ -26,10 +26,11 @@
 #ifndef _EXPANSIONPORT_H
 #define _EXPANSIONPORT_H
 
+#include "C64Component.h"
 #include "Cartridge.h"
-#include "ExpansionPortTypes.h"
+// #include "ExpansionPortTypes.h"
 
-class ExpansionPort : public HardwareComponent {
+class ExpansionPort : public C64Component {
  
 private:
     
@@ -51,7 +52,7 @@ private:
 public:
     
     //! @brief    Constructor
-    ExpansionPort();
+    ExpansionPort(C64 &ref);
     
     //! @brief    Destructor
     ~ExpansionPort();

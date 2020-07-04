@@ -16,6 +16,7 @@
 // Forward declarations of all components
 //
 
+class C64Memory;
 class CPU;
 class ProcessorPort;
 class VIC;
@@ -39,6 +40,7 @@ class C64Component : public HardwareComponent {
 protected:
 
     C64 &vc64;
+    C64Memory &mem;
     CPU &cpu;
     ProcessorPort &pport;
     VIC &vic;

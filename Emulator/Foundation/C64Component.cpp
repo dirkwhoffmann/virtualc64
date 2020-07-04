@@ -12,6 +12,7 @@
 C64Component::C64Component(C64& ref) :
 
 vc64(ref),
+mem(ref.mem),
 cpu(ref.cpu),
 pport(ref.processorPort),
 vic(ref.vic),

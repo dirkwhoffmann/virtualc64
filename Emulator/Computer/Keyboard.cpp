@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-Keyboard::Keyboard()
+Keyboard::Keyboard(C64 &ref)
 {
 	setDescription("Keyboard");
     

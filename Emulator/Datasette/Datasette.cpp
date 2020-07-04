@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-Datasette::Datasette()
+Datasette::Datasette(C64 &ref) : C64Component(ref)
 {
     setDescription("Datasette");
         
