@@ -10,14 +10,18 @@
 #ifndef _CIA_H
 #define _CIA_H
 
-#include "TOD.h"
-#include "CIATypes.h"
+#include "C64Component.h"
+
+//#include "TOD.h"
+//#include "CIATypes.h"
 
 // Forward declarations
+/*
 class VIC;
 class IEC;
 class Keyboard;
 class Joystick;
+*/
 
 // Adapted from PC64WIN
 #define CIACountA0     (1ULL << 0) // Decrements timer A
@@ -73,7 +77,7 @@ class Joystick;
  *            peripheral devices such as joysticks, printers or the keyboard.
  *            The CIA class implements the common functionality of both CIAs.
  */
-class CIA : public HardwareComponent {
+class CIA : public C64Component {
     
     //! @brief    Selected chip model
     CIAModel model;
@@ -239,7 +243,7 @@ public:
 public:	
 	
 	//! @brief    Constructor
-	CIA();
+	CIA(C64 &ref);
 	
 	//! @brief    Destructor
 	~CIA();
@@ -433,7 +437,7 @@ class CIA1 : public CIA {
 	
 public:
 
-    CIA1();
+    CIA1(C64 &ref);
     ~CIA1();
     void dump();
     
@@ -460,7 +464,7 @@ class CIA2 : public CIA {
 
 public:
 
-    CIA2();
+    CIA2(C64 &ref);
     ~CIA2();
     void reset(); 
     void dump();

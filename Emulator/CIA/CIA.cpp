@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-CIA::CIA()
+CIA::CIA(C64 &ref) : C64Component(ref)
 {
 	setDescription("CIA");
     
@@ -1122,7 +1122,7 @@ CIA::wakeUp()
 // Complex Interface Adapter 1
 // -----------------------------------------------------------------------------------------
 
-CIA1::CIA1()
+CIA1::CIA1(C64 &ref) : CIA(ref)
 {
     setDescription("CIA1");
 }
@@ -1261,7 +1261,7 @@ CIA1::updatePB()
 // Complex Interface Adapter 2
 // -----------------------------------------------------------------------------------------
 
-CIA2::CIA2()
+CIA2::CIA2(C64 &ref) : CIA(ref)
 {
     setDescription("CIA2");
 }

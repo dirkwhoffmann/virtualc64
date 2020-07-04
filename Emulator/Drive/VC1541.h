@@ -58,10 +58,10 @@ public:
     CPU cpu = CPU(MOS_6502, &mem, vc64);
 
 	//! @brief    VIA6522 connecting the drive CPU with the IEC bus
-    VIA1 via1 = VIA1(this);
+    VIA1 via1 = VIA1(this, vc64);
 
     //! @brief    VIA6522 connecting the drive CPU with the read/write head
-    VIA2 via2 = VIA2(this);
+    VIA2 via2 = VIA2(this, vc64);
 
     //! @brief    A single sided 5,25" floppy disk
     Disk disk;

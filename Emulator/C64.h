@@ -51,7 +51,7 @@
 #include "CustomCartridges.h"
 
 // Peripherals
-#include "Drive.h"
+#include "VC1541.h"
 #include "Datasette.h"
 #include "Mouse.h"
 
@@ -86,10 +86,10 @@ class C64 : public HardwareComponent {
     VIC vic;
     
     //! @brief    The C64's first Complex Interface Adapter
-    CIA1 cia1;
+    CIA1 cia1 = CIA1(*this);
     
     //! @brief    The C64's second Complex Interface Adapter
-    CIA2 cia2;
+    CIA2 cia2 = CIA2(*this);
     
     //! @brief    The C64's Sound Interface Device
     SIDBridge sid;
