@@ -1,27 +1,30 @@
+// -----------------------------------------------------------------------------
+// This file is part of VirtualC64
 //
-//  CIA_types.h
-//  V64
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// Licensed under the GNU General Public License v2
 //
-//  Created by Dirk Hoffmann on 15.04.18.
-//
+// See https://www.gnu.org for license information
+// -----------------------------------------------------------------------------
 
-#ifndef CIA_TYPES_H
-#define CIA_TYPES_H
+#ifndef _CIA_T_H
+#define _CIA_T_H
 
-//! @brief    CIA model
-typedef enum {
+#include "TODTypes.h"
+
+typedef enum
+{
     MOS_6526,
     MOS_8521
-} CIAModel;
+}
+CIAModel;
 
 inline bool isCIAModel(CIAModel model) {
     return (model == MOS_6526) || (model == MOS_8521);
 }
 
-/*! @brief    TOD info
- *  @details  Used by CIA::getInfo() to collect debug information
- */
-typedef struct {
+typedef struct
+{
     struct {
         u8 port;
         u8 reg;
@@ -53,7 +56,7 @@ typedef struct {
     bool intLine;
     TODInfo tod;
     bool todIntEnable;
-} CIAInfo;
-
+}
+CIAInfo;
 
 #endif

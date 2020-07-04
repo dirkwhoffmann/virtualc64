@@ -12,14 +12,6 @@
 
 #include "C64Object.h"
 
-typedef enum
-{
-    STATE_OFF,
-    STATE_PAUSED,
-    STATE_RUNNING
-}
-EmulatorState;
-
 // Forward declarations
 class C64;
 

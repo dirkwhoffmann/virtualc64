@@ -482,6 +482,7 @@
 		50B171051EE6AB840019E8D4 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyControllerTouchBar.swift; sourceTree = "<group>"; };
 		50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
+		50B99CF024B0DA6B008BC9F8 /* MessageQueueTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageQueueTypes.h; sourceTree = "<group>"; };
 		50BF77D120309A2A006E000F /* WindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDelegate.swift; sourceTree = "<group>"; };
 		50C72DE31BC7BC8800F1863B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		50C72DE51BC7F42100F1863B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
@@ -1060,6 +1061,7 @@
 				500EA6C524B09037009AA7D7 /* C64Component.cpp */,
 				504C42F024AF29AB00E69CAE /* TimeDelayed.h */,
 				504C42F324AF29AB00E69CAE /* TimeDelayed.cpp */,
+				50B99CF024B0DA6B008BC9F8 /* MessageQueueTypes.h */,
 				504C42F424AF29AB00E69CAE /* MessageQueue.h */,
 				504C42F124AF29AB00E69CAE /* MessageQueue.cpp */,
 				504C42F224AF29AB00E69CAE /* basic.h */,

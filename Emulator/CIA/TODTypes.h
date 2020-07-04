@@ -7,13 +7,11 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef TOD_TYPES_H
-#define TOD_TYPES_H
+#ifndef _TOD_T_H
+#define _TOD_T_H
 
-#include <stdint.h>
-
-//! @brief    Time of day information (TOD)
-typedef union {
+typedef union
+{
     struct {
         u8 tenth;
         u8 seconds;
@@ -21,15 +19,15 @@ typedef union {
         u8 hours;
     };
     u32 value;
-} TimeOfDay;
+}
+TimeOfDay;
 
-/*! @brief    TOD info
- *  @details  Used by TOD::getInfo() to collect debug information
- */
-typedef struct {
+typedef struct
+{
     TimeOfDay time;
     TimeOfDay latch;
     TimeOfDay alarm;
-} TODInfo;
+}
+TODInfo;
 
 #endif
