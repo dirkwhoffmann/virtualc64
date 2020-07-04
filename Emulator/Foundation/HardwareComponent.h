@@ -58,15 +58,7 @@ protected:
         u8 flags;
         
     } SnapshotItem;
-    
-public: 
-
-    /*! @brief    Reference to the virtual C64 top-level object.
-     *  @details  This reference is setup for all hardware components in the
-     *            constructor of the C64 class.
-     */
-    C64 *c64 = NULL;
-        
+            
 protected:
         
     //! @brief    List of snapshot items of this component
@@ -85,12 +77,6 @@ public:
     //! @functiongroup Initializing the component
     //
 		
-    /*! @brief    Assign top-level C64 object.
-     *  @details  The provided reference is propagated automatically to all
-     *            sub components.
-     */
-    virtual void setC64(C64 *c64);
-
     /*! @brief    Reset component to its initial state.
      *  @details  By default, each component also resets its sub components.
      */

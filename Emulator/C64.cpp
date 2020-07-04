@@ -84,8 +84,6 @@ C64::C64()
         &datasette,
         &mouse
     };
-
-    setC64(this);
     
     // Register snapshot items
     SnapshotItem items[] = {

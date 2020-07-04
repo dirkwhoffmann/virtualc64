@@ -110,12 +110,6 @@ VIC::~VIC()
 {
 }
 
-void
-VIC::setC64(C64 *c64)
-{
-    HardwareComponent::setC64(c64);
-}
-
 void 
 VIC::reset()
 {

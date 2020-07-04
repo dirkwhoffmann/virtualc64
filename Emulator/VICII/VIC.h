@@ -731,7 +731,6 @@ public:
 	
 	//! @brief    Methods from HardwareComponent
 	void reset();
-    void setC64(C64 *c64);
     void ping();
 	void dump();
     size_t stateSize();

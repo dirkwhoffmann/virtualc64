@@ -19,18 +19,6 @@ HardwareComponent::~HardwareComponent()
 }
 
 void
-HardwareComponent::setC64(C64 *c64)
-{
-    assert(this->c64 == NULL);
-    assert(c64 != NULL);
-    
-    this->c64 = c64;
-    for (HardwareComponent *c : subComponents) {
-        c->setC64(c64);
-    }
-}
-
-void
 HardwareComponent::reset()
 {
     // Reset all subcomponents

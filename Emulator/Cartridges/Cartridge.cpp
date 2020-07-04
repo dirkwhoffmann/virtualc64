@@ -13,8 +13,6 @@ Cartridge::Cartridge(C64 *c64, C64 &ref, const char *description) : C64Component
 {
     setDescription(description);
     debug(CRT_DEBUG, "Creating cartridge at address %p...\n", this);
-
-    this->c64 = c64;
     
     memset(packet, 0, sizeof(packet));
     
