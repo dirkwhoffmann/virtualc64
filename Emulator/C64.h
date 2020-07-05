@@ -354,12 +354,11 @@ public:
      */
     void threadDidTerminate();
     
-    //! @brief    Returns true iff the virtual C64 is able to run.
-    /*! @details  The emulator needs all four Roms to run. Hence, this method
-     *            returns true if and only if all four Roms are installed.
-     *  @see      loadRom()
+    /* Returns true iff the virtual C64 is able to run. The emulator needs all
+     * four Roms to run. Hence, this method returns true if and only if all
+     * four Roms are installed.
      */
-    bool isRunnable();
+    bool isReady();
     
     //! @brief    Returns true if the emulator is running.
     bool isRunning();

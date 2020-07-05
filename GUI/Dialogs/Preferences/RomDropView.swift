@@ -64,7 +64,7 @@ class RomDropView: NSImageView {
         if !controller.loadRom(url) {
             return false
         }
-        if c64.isRunnable() {
+        if c64.isReady() {
             dialogController.okAction(self)
         }
         return true

@@ -162,7 +162,7 @@ extension PreferencesController {
         let kernalRomImage = hasMegaKernal ? romImageMega : romImage
 
         // Header image and description
-        if c64.isRunnable() {
+        if c64.isReady() {
             romHeaderImage.image = NSImage.init(named: "AppIcon")
             romHeaderText.stringValue = "All required ROMs are loaded. VirtualC64 is ready to run."
             romHeaderSubText.stringValue = ""
@@ -272,7 +272,7 @@ extension PreferencesController {
             romVc1541Description.textColor = .red
         }
         
-        romOkButton.title = c64.isRunnable() ? "OK" : "Quit"
+        romOkButton.title = c64.isReady() ? "OK" : "Quit"
     }
     
     //

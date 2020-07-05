@@ -1499,9 +1499,9 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->c64->resume();
 }
-- (BOOL) isRunnable
+- (BOOL) isReady
 {
-    return wrapper->c64->isRunnable();
+    return wrapper->c64->isReady();
 }
 - (BOOL) isRunning
 {

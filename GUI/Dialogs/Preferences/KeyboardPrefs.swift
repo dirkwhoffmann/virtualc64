@@ -49,7 +49,7 @@ extension PreferencesController {
             keyMatrixScrollView.isHidden = true
         }
         
-        keyOkButton.title = c64.isRunnable() ? "OK" : "Quit"
+        keyOkButton.title = c64.isReady() ? "OK" : "Quit"
     }
     
     func updateImages() {

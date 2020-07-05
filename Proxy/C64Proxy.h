@@ -129,7 +129,7 @@ struct AnyC64FileWrapper;
 - (void) halt;
 - (void) suspend;
 - (void) resume;
-- (BOOL) isRunnable;
+- (BOOL) isReady;
 - (BOOL) isRunning;
 - (BOOL) isHalted;
 - (void) step;

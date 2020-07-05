@@ -91,7 +91,7 @@ extension PreferencesController {
         }
         hwInfoText.stringValue = "This configuration \(descr)."
 
-        hwOkButton.title = c64.isRunnable() ? "OK" : "Quit"
+        hwOkButton.title = c64.isReady() ? "OK" : "Quit"
     }
     
     @IBAction func hwVicModelAction(_ sender: NSPopUpButton!) {

@@ -302,4 +302,26 @@ class GamePadManager: NSObject {
         gamePads[0]!.keyMap = Defaults.joyKeyMap1
         gamePads[1]!.keyMap = Defaults.joyKeyMap2
     }
+    
+    func refresh(popup: NSPopUpButton, hide: Bool = false) {
+        
+        /*
+        let slots = [
+            InputDevice.mouse,
+            InputDevice.keyset1,
+            InputDevice.keyset2,
+            InputDevice.joystick1,
+            InputDevice.joystick2
+        ]
+                
+        for s in slots {
+            if let item = popup.menu?.item(withTag: s) {
+                item.title = getName(slot: s)
+                item.image = getIcon(slot: s)
+                item.isEnabled = isUsed(slot: s)
+                item.isHidden = isEmpty(slot: s) && hide
+            }
+        }
+        */
+    }
 }

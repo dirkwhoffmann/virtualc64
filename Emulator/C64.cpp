@@ -358,7 +358,7 @@ C64::run()
     if (isHalted()) {
         
         // Check for ROM images
-        if (!isRunnable()) {
+        if (!isReady()) {
             putMessage(MSG_ROM_MISSING);
             return;
         }
@@ -405,7 +405,7 @@ C64::threadDidTerminate()
 }
 
 bool
-C64::isRunnable()
+C64::isReady()
 {
     return
     mem.basicRomIsLoaded() &&
@@ -831,7 +831,7 @@ bool
 C64::loadRom(const char *filename)
 {
     bool result;
-    bool wasRunnable = isRunnable();
+    bool wasRunnable = isReady();
     ROMFile *rom = ROMFile::makeWithFile(filename);
     
     if (!rom) {
@@ -849,7 +849,7 @@ C64::loadRom(const char *filename)
         warn("Failed to flash ROM image %s\n", filename);
     }
     
-    if (!wasRunnable && isRunnable())
+    if (!wasRunnable && isReady())
         putMessage(MSG_READY_TO_RUN);
     
     delete rom;

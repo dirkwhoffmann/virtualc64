@@ -277,7 +277,7 @@ class PreferencesController: UserDialogController {
         hideSheet()
         myController?.saveUserDefaults()
         
-        if proxy == nil || !proxy!.isRunnable() {
+        if proxy == nil || !proxy!.isReady() {
             NSApp.terminate(self)
         }
     }

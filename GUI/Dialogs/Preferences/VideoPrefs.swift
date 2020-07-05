@@ -83,7 +83,7 @@ extension PreferencesController {
         vidEyeYSlider.floatValue = metal.eyeY()
         vidEyeZSlider.floatValue = metal.eyeZ()
         
-        vidOkButton.title = c64.isRunnable() ? "OK" : "Quit"
+        vidOkButton.title = c64.isReady() ? "OK" : "Quit"
     }
     
     func updatePalettePreviewImages() {

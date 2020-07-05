@@ -54,7 +54,7 @@ extension PreferencesController {
         refresh("CRT", emuCrtPopup, emuCrtAutoTypeButton, emuCrtAutoTypeText)
 
         // OK button
-        emuOkButton.title = controller.c64.isRunnable() ? "OK" : "Quit"
+        emuOkButton.title = controller.c64.isReady() ? "OK" : "Quit"
     }
 
     //
