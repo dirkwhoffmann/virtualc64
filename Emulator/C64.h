@@ -246,20 +246,19 @@ private:
     
     
     //
-    //! @functiongroup Constructing and destructing
+    // Creating and destructing
     //
     
 public:
     
-    //! @brief    Standard constructor
     C64();
-    
-    //! @brief    Stabdard destructor
     ~C64();
     
     //
-    //! @functiongroup Methods from HardwareComponent
+    // Methods from HardwareComponent
     //
+
+public:
     
     void prefix() override;
     void reset() override;
@@ -271,6 +270,8 @@ public:
     //
     // Configuring the emulator
     //
+    
+public:
     
     /*! @brief    Returns the emulated C64 model
      *  @return   C64_CUSTOM, if the selected sub-components do not match any

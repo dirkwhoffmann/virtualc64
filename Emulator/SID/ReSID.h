@@ -56,17 +56,30 @@ public:
     //! Pointer to bridge object
     SIDBridge *bridge;
     
-	//! Constructor.
+    
+    //
+    // Constructing and serializing
+    //
+    
+public:
+    
 	ReSID(C64 &ref);
-	
-	//! Destructor.
 	~ReSID();
-	
-	//! @functiongroup Methods from HardwareComponent
-	void reset();
-    void didLoadFromBuffer(u8 **buffer) { sid->write_state(st); }
-    void willSaveToBuffer(u8 **buffer) { st = sid->read_state(); }
-	
+    
+    
+    //
+    // Methods from HardwareComponent
+    //
+    
+public:
+    
+    void reset() override;
+    void didLoadFromBuffer(u8 **buffer) override { sid->write_state(st); }
+    void willSaveToBuffer(u8 **buffer) override { st = sid->read_state(); }
+
+    
+public:
+    
     //! @brief    Gathers all values that are displayed in the debugger
     SIDInfo getInfo();
     
@@ -104,7 +117,7 @@ public:
     }
     
     //! Sets the clock frequency
-    void setClockFrequency(u32 frequency);
+    void setClockFrequency(u32 frequency) override;
     
     //! Returns the sample rate
     u32 getSampleRate() { return sampleRate; }

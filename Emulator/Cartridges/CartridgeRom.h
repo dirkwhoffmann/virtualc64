@@ -34,19 +34,30 @@ class CartridgeRom : public C64Component {
      */
     u16 loadAddress = 0;
     
-    public:
     
-    //! @brief    Constructor
+    //
+    // Constructing and serializing
+    //
+    
+public:
+    
     CartridgeRom(C64 &ref);
     CartridgeRom(C64 &ref, u16 _size, u16 _loadAddress, const u8 *buffer = NULL);
-    
-    //! @brief    Destructor
     ~CartridgeRom();
     
-    //! @brief    Methods from HardwareComponent
-    size_t stateSize();
-    void didLoadFromBuffer(u8 **buffer);
-    void didSaveToBuffer(u8 **buffer);
+    
+    //
+    // Methods from HardwareComponent
+    //
+    
+public:
+    
+    size_t stateSize() override;
+    void didLoadFromBuffer(u8 **buffer) override;
+    void didSaveToBuffer(u8 **buffer) override;
+    
+    
+public:
     
     //! @brief    Returns true if this Rom chip maps to ROML, only.
     bool mapsToL();

@@ -52,10 +52,6 @@ VIA6522::VIA6522(VC1541 *drive, C64 &ref) : C64Component(ref)
     
     registerSnapshotItems(items, sizeof(items));
 }
-
-VIA6522::~VIA6522()
-{
-}
 	
 void VIA6522::reset()
 {    

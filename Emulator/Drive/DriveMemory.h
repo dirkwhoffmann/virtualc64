@@ -33,23 +33,25 @@ class VC1541Memory : public Memory {
     
     
     //
-    //! @functiongroup Creating and destructing
+    // Constructing and serializing
     //
     
-	//! @brief    Constructor
-	VC1541Memory(VC1541 *drive, C64 &ref);
-	
-	//! @brief    Destructor
-	~VC1541Memory();
-
+public:
+    
+    VC1541Memory(VC1541 *drive, C64 &ref);
+    
     
     //
-    //! @functiongroup Methods from HardwareComponent
+    // Methods from HardwareComponent
     //
+    
+public:
+    
+	void reset() override;
+	void dump() override;
 
-	void reset();
-	void dump();
-
+    
+public:
     
     //
     //! @functiongroup Accessing ROM
@@ -73,15 +75,15 @@ class VC1541Memory : public Memory {
     //
 
     // Reading from memory
-    u8 peek(u16 addr);
-    u8 peekZP(u8 addr) { return ram[addr]; }
+    u8 peek(u16 addr) override;
+    u8 peekZP(u8 addr) override { return ram[addr]; }
 
     // Reading from memory without side effects
-    u8 spypeek(u16 addr);
+    u8 spypeek(u16 addr) override;
     
     // Writing into memory
-    void poke(u16 addr, u8 value);
-    void pokeZP(u8 addr, u8 value) { ram[addr] = value; }
+    void poke(u16 addr, u8 value) override;
+    void pokeZP(u8 addr, u8 value) override { ram[addr] = value; }
 };
 
 #endif

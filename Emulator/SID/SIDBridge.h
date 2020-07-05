@@ -143,10 +143,15 @@ public:
     // Methods from HardwareComponent
     //
     
+public:
+    
     void reset();
     void dump();
     void setClockFrequency(u32 frequency);
     void didLoadFromBuffer(u8 **buffer) { clearRingbuffer(); }
+    
+    
+public:
     
 	//! @brief    Prints debug information
     void dump(SIDInfo info);

@@ -114,13 +114,18 @@ public:
     // Methods from HardwareComponent
     //
 
+private:
+    
 	void reset() override;
 	void dump() override;
 
-    
+        
     //
     //! @functiongroup Configuring the component
     //
+    
+public:
+
     
     //! @brief    Sets the frequency of the driving clock.
     void setHz(u8 value) { assert(value == 5 || value == 6); hz = value; }

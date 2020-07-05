@@ -62,10 +62,6 @@ CPU::CPU(CPUModel model, Memory *mem, C64& ref) : C64Component(ref)
     registerSnapshotItems(items, sizeof(items));
 }
 
-CPU::~CPU()
-{
-}
-
 void
 CPU::reset()
 {

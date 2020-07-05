@@ -46,29 +46,30 @@ class ProcessorPort : public C64Component {
     u64 dischargeCycleBit6;
     u64 dischargeCycleBit7;
 
+    
+    //
+    // Constructing and serializing
+    //
+    
 public:
     
-    //
-    //! @functiongroup Creating and destructing
-    //
-    
-    //! @brief    Constructor
     ProcessorPort(C64 &ref);
     
-    //! @brief    Destructor
-    ~ProcessorPort();
-    
     
     //
-    //! @functiongroup Methods from HardwareComponent
+    // Methods from HardwareComponent
     //
 
-    void dump();
+public:
+    
+    void dump() override;
 
     
     //
     //! @functiongroup Accessing the port registers
     //
+    
+public:
     
     //! @brief    Reads from the processor port register.
     u8 read();

@@ -60,42 +60,47 @@ class ActionReplay : public CartridgeWithRegister {
 public:
     
     ActionReplay(C64 *c64, C64 &ref);
-    CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY; }
+    CartridgeType getCartridgeType() override { return CRT_ACTION_REPLAY; }
+    
     
     //
-    //! @functiongroup Methods from HardwareComponent
+    // Methods from HardwareComponent
     //
     
-    void reset();
-    size_t stateSize() { return Cartridge::stateSize() + 1; }
-    void didLoadFromBuffer(u8 **buffer) {
+private:
+    
+    void reset() override;
+    size_t stateSize() override {
+        return Cartridge::stateSize() + 1; }
+    void didLoadFromBuffer(u8 **buffer) override {
         Cartridge::didLoadFromBuffer(buffer); control = read8(buffer); }
-    void didSaveToBuffer(u8 **buffer) {
+    void didSaveToBuffer(u8 **buffer) override {
         Cartridge::didSaveToBuffer(buffer); write8(buffer, control); }
     
     //
-    //! @functiongroup Methods from Cartridge
+    // Methods from Cartridge
     //
     
-    void resetCartConfig();
+public:
     
-    u8 peek(u16 addr);
-    u8 peekIO1(u16 addr);
-    u8 peekIO2(u16 addr);
+    void resetCartConfig() override;
     
-    void poke(u16 addr, u8 value);
-    void pokeIO1(u16 addr, u8 value);
-    void pokeIO2(u16 addr, u8 value);
+    u8 peek(u16 addr) override;
+    u8 peekIO1(u16 addr) override;
+    u8 peekIO2(u16 addr) override;
     
-    unsigned numButtons() { return 2; }
-    const char *getButtonTitle(unsigned nr);
-    void pressButton(unsigned nr);
-    void releaseButton(unsigned nr);
+    void poke(u16 addr, u8 value) override;
+    void pokeIO1(u16 addr, u8 value) override;
+    void pokeIO2(u16 addr, u8 value) override;
+    
+    unsigned numButtons() override { return 2; }
+    const char *getButtonTitle(unsigned nr) override;
+    void pressButton(unsigned nr) override;
+    void releaseButton(unsigned nr) override;
     
     
-    //! @brief   Sets the cartridge's control register
-    /*! @details This function triggers all side effects that take place when
-     *           the control register value changes.
+    /* Sets the cartridge's control register. This function triggers all side
+     * effects that take place when the control register value changes.
      */
     void setControlReg(u8 value);
     
@@ -105,7 +110,7 @@ public:
     virtual bool disabled() { return (control & 0x04) != 0; }
     virtual bool resetFreezeMode() { return (control & 0x40) != 0; }
     
-    //! @brief  Returns true if the cartridge RAM shows up at addr
+    // Returns true if the cartridge RAM shows up at addr
     virtual bool ramIsEnabled(u16 addr); 
 };
 
@@ -121,11 +126,11 @@ public:
     AtomicPower(C64 *c64, C64 &ref);
     CartridgeType getCartridgeType() { return CRT_ATOMIC_POWER; }
     
-    /*! @brief    Indicates if special ROM / RAM config has to be used.
-     * @details   In contrast to the Action Replay cartridge, Atomic Power
-     *            has the ability to map the on-board RAM to the ROMH area
-     *            at $A000 - $BFFF. To enable this special configuration, the
-     *            control register has to be configured as follows:
+    /* Indicates if special ROM / RAM config has to be used. In contrast to
+     * the Action Replay cartridge, Atomic Power has the ability to map the
+     * on-board RAM to the ROMH area at $A000 - $BFFF. To enable this special
+     * configuration, the control register has to be configured as follows:
+     *
      *            Bit 0b10000000 (Extra ROM)    is 0.
      *            Bit 0b01000000 (Freeze clear) is 0.
      *            Bit 0b00100000 (RAM enable)   is 1.

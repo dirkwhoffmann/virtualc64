@@ -57,26 +57,30 @@ private:
 	//! @brief    Used to determine if the bus is idle or if data is transferred
 	u32 busActivity;
 	
-public:
     
-	//! @brief    Constructor
+    //
+    // Constructing and serializing
+    //
+    
+public:
+        
 	IEC(C64 &ref);
 	
-	//! @brief    Destructor
-	~IEC();
-			
-	//! @brief    Method from HardwareComponent
-	void reset();
+    
+    //
+    // Methods from HardwareComponent
+    //
+    
+public:
+    
+	void reset() override;
+    void ping() override;
+	void dump() override;
 
-    //! @brief    Method from HardwareComponent
-    void ping();
-	
-    //! @brief    Method from HardwareComponent
-	void dump();
-	
-	//! @brief    Writes trace output to console.
+    public:
+
 	void dumpTrace();
-	
+	    
     //! @brief    Returns true if the IEC currently transfers data.
     bool isBusy() { return busActivity > 0; }
     

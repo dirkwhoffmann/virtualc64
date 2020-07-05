@@ -24,10 +24,6 @@ Keyboard::Keyboard(C64 &ref) : C64Component(ref)
     registerSnapshotItems(items, sizeof(items));
 }
 
-Keyboard::~Keyboard()
-{
-}
-
 void 
 Keyboard::reset() 
 {

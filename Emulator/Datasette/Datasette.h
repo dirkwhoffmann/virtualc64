@@ -78,32 +78,34 @@ class Datasette : public C64Component {
     bool motor = false;
     
     
+    //
+    // Constructing and serializing
+    //
+    
 public:
-    
-    //
-    //! @functiongroup Creating and destructing
-    //
-    
-    //! @brief    Constructor
-    Datasette(C64 &ref);
-    
-    //! @brief    Destructor
+ 
+    Datasette(C64 &ref);    
     ~Datasette();
     
+    
     //
-    //! @functiongroup Methods from HardwareComponent
+    // Methods from HardwareComponent
     //
     
-    void reset();
-    void ping();
-    size_t stateSize();
-    void didLoadFromBuffer(u8 **buffer);
-    void didSaveToBuffer(u8 **buffer);
+private:
+    
+    void reset() override;
+    void ping() override;
+    size_t stateSize() override;
+    void didLoadFromBuffer(u8 **buffer) override;
+    void didSaveToBuffer(u8 **buffer) override;
 
 
     //
     //! @functiongroup Handling virtual tapes
     //
+    
+public:
     
     //! @brief    Returns true if a tape is inserted.
     bool hasTape() { return size != 0; }

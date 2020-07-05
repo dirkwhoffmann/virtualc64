@@ -47,23 +47,29 @@ private:
 
     //! @brief    Next frame to auto-press or auto-release the fire button
     u64 nextAutofireFrame;
+    
+    
+    //
+    // Constructing and serializing
+    //
+    
+public:
+ 
+    ControlPort(int p, C64 &ref);
 
+    
+    //
+    // Methods from HardwareComponent
+    //
+    
 public:
     
-    //! @brief    Constructor
-    ControlPort(int p, C64 &ref);
-    
-    //! @brief    Destructor
-    ~ControlPort();
-    
-    //! @brief    Method from HardwareComponent
-    void reset();
+    void reset() override;
+    void didLoadFromBuffer(u8 **buffer) override;
+    void dump() override;
 
-    //! @brief    Method from HardwareComponent
-    void didLoadFromBuffer(u8 **buffer);
     
-    //! @brief    Method from HardwareComponent
-    void dump();
+public:
     
     //! @brief   Returns true if auto-fire mode is enabled.
     bool getAutofire() { return autofire; }

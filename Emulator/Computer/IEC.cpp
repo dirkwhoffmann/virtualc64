@@ -41,10 +41,6 @@ IEC::IEC(C64 &ref) : C64Component(ref)
     registerSnapshotItems(items, sizeof(items));
 }
 
-IEC::~IEC()
-{
-}
-
 void 
 IEC::reset()
 {

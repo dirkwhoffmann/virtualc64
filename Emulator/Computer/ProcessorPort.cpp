@@ -26,10 +26,6 @@ ProcessorPort::ProcessorPort(C64 &ref) : C64Component(ref)
     registerSnapshotItems(items, sizeof(items));
 }
 
-ProcessorPort::~ProcessorPort()
-{
-}
-
 void
 ProcessorPort::dump()
 {

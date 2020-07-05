@@ -17,27 +17,32 @@ class FreezeFrame : public Cartridge {
 public:
     
     using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_FREEZE_FRAME; }
-
+    CartridgeType getCartridgeType() override { return CRT_FREEZE_FRAME; }
+    
     //
-    //! @functiongroup Methods from HardwareComponent
-    //
-
-    void reset();
-
-    //
-    //! @functiongroup Methods from Cartridge
+    // Methods from HardwareComponent
     //
     
-    u8 peekIO1(u16 addr);
-    u8 spypeekIO1(u16 addr) { return 0; }
-    u8 peekIO2(u16 addr);
-    u8 spypeekIO2(u16 addr) { return 0; }
+private:
 
-    unsigned numButtons() { return 1; }
-    const char *getButtonTitle(unsigned nr) { return (nr == 1) ? "Freeze" : NULL; }
-    void pressButton(unsigned nr);
-    void releaseButton(unsigned nr);
+    void reset() override;
+
+    
+    //
+    // Methods from Cartridge
+    //
+    
+public:
+    
+    u8 peekIO1(u16 addr) override;
+    u8 spypeekIO1(u16 addr) override { return 0; }
+    u8 peekIO2(u16 addr) override;
+    u8 spypeekIO2(u16 addr) override { return 0; }
+
+    unsigned numButtons() override { return 1; }
+    const char *getButtonTitle(unsigned nr) override { return (nr == 1) ? "Freeze" : NULL; }
+    void pressButton(unsigned nr) override;
+    void releaseButton(unsigned nr) override;
 };
 
 #endif

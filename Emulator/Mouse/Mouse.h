@@ -72,13 +72,17 @@ public:
     //
     // Methods from HardwareComponent
     //
-
+    
+private:
+    
     void reset() override;
 
     
     //
     // Using the device
     //
+    
+public:
     
     // Returns the port the mouse is connected to (0 = unconnected)
     unsigned getPort() { return port; }

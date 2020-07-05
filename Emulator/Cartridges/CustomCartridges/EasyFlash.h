@@ -33,33 +33,37 @@ public:
     //
     
     EasyFlash(C64 *c64, C64 &ref);
-    CartridgeType getCartridgeType() { return CRT_EASYFLASH; }
-    
-
-    //
-    //! @functiongroup Methods from HardwareComponent
-    //
-
-    void reset();
-    void dump();
-    size_t stateSize();
-    void didLoadFromBuffer(u8 **buffer);
-    void didSaveToBuffer(u8 **buffer);
+    CartridgeType getCartridgeType() override { return CRT_EASYFLASH; }
     
     
     //
-    //! @functiongroup Methods from Cartridge
+    // Methods from HardwareComponent
     //
     
-    void resetCartConfig();
-    void loadChip(unsigned nr, CRTFile *c);
-    u8 peek(u16 addr);
-    void poke(u16 addr, u8 value);
-    u8 peekIO1(u16 addr);
-    u8 peekIO2(u16 addr);
-    void pokeIO1(u16 addr, u8 value);
-    void pokeIO2(u16 addr, u8 value);
-    bool hasLED() { return true; }
+private:
+    
+    void reset() override;
+    void dump() override;
+    size_t stateSize() override;
+    void didLoadFromBuffer(u8 **buffer) override;
+    void didSaveToBuffer(u8 **buffer) override;
+    
+    
+    //
+    // Methods from Cartridge
+    //
+    
+public:
+    
+    void resetCartConfig() override;
+    void loadChip(unsigned nr, CRTFile *c) override;
+    u8 peek(u16 addr) override;
+    void poke(u16 addr, u8 value) override;
+    u8 peekIO1(u16 addr) override;
+    u8 peekIO2(u16 addr) override;
+    void pokeIO1(u16 addr, u8 value) override;
+    void pokeIO2(u16 addr, u8 value) override;
+    bool hasLED() override { return true; }
 };
 
 #endif

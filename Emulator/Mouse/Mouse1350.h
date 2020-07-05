@@ -35,6 +35,7 @@ private:
     // Control port bits
     u8 controlPort;
     
+    
     //
     // Constructing and serializing
     //

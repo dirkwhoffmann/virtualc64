@@ -37,19 +37,29 @@ private:
 
     //! @brief    True iff shift lock is pressed
     bool shiftLock;
-
+    
+    
+    //
+    // Constructing and serializing
+    //
+    
 public:
     
-	//! @brief    Constructor
-	Keyboard(C64 &ref);
+    Keyboard(C64 &ref);
+    
+    
+    //
+    // Methods from HardwareComponent
+    //
+    
+public:
+    
+	void reset() override;
+	void dump() override;
 
-	//! @brief    Destructor
-	~Keyboard();
-
-	//! @brief    Methods from HardwareComponent
-	void reset();
-	void dump();	
-
+    
+public:
+    
     /*! @brief    Checks if a certain key is currently pressed.
      *  @details  The key is identified by its native row and column index.
      */

@@ -169,28 +169,27 @@ private:
     //! @brief    Textual representation of track data
     char text[maxBitsOnTrack + 1];
     
-
+    
+    //
+    // Constructing and serializing
+    //
+    
 public:
     
-    //
-    //! @functiongroup Constructing and destructing
-    //
-    
-    //! @brief    Constructor
     Disk(C64 &ref);
-    
-    //! @brief    Destructor
-    ~Disk();
-    
+  
     
     //
-    //! @functiongroup Methods from HardwareComponent
+    // Methods from HardwareComponent
     //
     
-    void dump();
-    void ping();
+public:
+    
+    void dump() override;
+    void ping() override;
 
     
+public:
     
     //! @brief Returns write protection flag
     bool isWriteProtected() { return writeProtected; }

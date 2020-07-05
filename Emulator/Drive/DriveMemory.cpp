@@ -28,10 +28,6 @@ VC1541Memory::VC1541Memory(VC1541 *drive, C64 &ref) : Memory(ref)
     registerSnapshotItems(items, sizeof(items));
 }
 
-VC1541Memory::~VC1541Memory()
-{
-}
-
 void 
 VC1541Memory::reset()
 {

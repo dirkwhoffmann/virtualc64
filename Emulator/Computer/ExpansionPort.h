@@ -49,31 +49,32 @@ private:
      */
     bool exromLine = 1;
     
+    
+    //
+    // Constructing and serializing
+    //
+    
 public:
     
-    //! @brief    Constructor
     ExpansionPort(C64 &ref);
-    
-    //! @brief    Destructor
     ~ExpansionPort();
-        
-    //! @brief    Method from HardwareComponent
-    void reset();
     
-    //! @brief    Method from HardwareComponent
-    void ping();
-
-    //! @brief    Method from HardwareComponent
-    size_t stateSize();
-
-    //! @brief    Method from HardwareComponent
-    void didLoadFromBuffer(u8 **buffer);
     
-    //! @brief    Method from HardwareComponent
-    void didSaveToBuffer(u8 **buffer);
+    //
+    // Methods from HardwareComponent
+    //
     
-    //! @brief    Method from HardwareComponent
-    void dump();	
+public:
+    
+    void reset() override;
+    void ping() override;
+    size_t stateSize() override;
+    void didLoadFromBuffer(u8 **buffer) override;
+    void didSaveToBuffer(u8 **buffer) override;
+    void dump() override;
+    
+    
+public:
     
     //! @brief    Execution thread callback
     /*! @details  This method is invoked after each rasterline.

@@ -99,10 +99,6 @@ Disk::Disk(C64 &ref) : C64Component(ref)
     clearDisk();
 }
 
-Disk::~Disk()
-{
-}
-
 void
 Disk::dump()
 {

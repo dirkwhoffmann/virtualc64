@@ -282,19 +282,16 @@ class CPU : public C64Component {
     
     //! @brief  Trace buffer write pointer
     unsigned writePtr;
-
+    
     
     //
-    //! @functiongroup Constructing and destructing
+    // Constructing and serializing
     //
-
-    public:
-
-    //! @brief    Constructor
+    
+public:
+    
     CPU(CPUModel model, Memory *mem, C64& ref);
 
-	//! @brief    Destructor
-	~CPU();
 
     //! @brief    Returns true if this is the C64's CPU
     bool isC64CPU() { return model == MOS_6510; }
@@ -318,21 +315,23 @@ class CPU : public C64Component {
     
     
     //
-	//! @functiongroup Methods from HardwareComponent
+    // Methods from HardwareComponent
     //
     
-    public:
+public:
 
-	void reset();
-	void dump();	
-    size_t stateSize();
-    void didLoadFromBuffer(u8 **buffer);
-    void didSaveToBuffer(u8 **buffer);
+	void reset() override;
+	void dump() override;
+    size_t stateSize() override;
+    void didLoadFromBuffer(u8 **buffer) override;
+    void didSaveToBuffer(u8 **buffer) override;
     
     
     //
     //! @functiongroup Gathering debug information
     //
+    
+public:
     
     //! @brief    Returns the internal state.
     CPUInfo getInfo();

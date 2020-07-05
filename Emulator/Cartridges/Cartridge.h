@@ -131,16 +131,13 @@ public:
 
     
     //
-    //! @functiongroup Creating and destructing
+    // Constructing and serializing
     //
     
-    //! @brief    Convenience constructor
     Cartridge(C64 *c64, C64 &ref, const char *description = "Cartridge");
-
-    //! @brief    Destructor
     ~Cartridge();
 
-    //! @brief    Deletes all chip packages
+    // Deletes all chip packages
     void dealloc();
 
     //! @brief    Returns the cartridge type
@@ -171,21 +168,25 @@ public:
     
     
     //
-    //! @functiongroup Methods from HardwareComponent
+    // Methods from HardwareComponent
     //
     
-    void reset();
-    void ping() { };
-    size_t stateSize();
-    void willLoadFromBuffer(u8 **buffer) { dealloc(); }
-    void didLoadFromBuffer(u8 **buffer);
-    void didSaveToBuffer(u8 **buffer);
-    void dump();
+public:
+    
+    void reset() override;
+    void ping() override { };
+    size_t stateSize() override;
+    void willLoadFromBuffer(u8 **buffer) override { dealloc(); }
+    void didLoadFromBuffer(u8 **buffer) override;
+    void didSaveToBuffer(u8 **buffer) override;
+    void dump() override;
     
     
     //
     //! @functiongroup Managing the cartridge configuration
     //
+    
+public:
     
     //! @brief    Returns the initial state of the game line.
     bool getGameLineInCrtFile() { return gameLineInCrtFile; }

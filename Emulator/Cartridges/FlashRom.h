@@ -72,31 +72,34 @@ class FlashRom : public C64Component {
     
     
     //
-    //! @functiongroup Creating and destructing
+    // Constructing and serializing
     //
     
-    //! @brief    Constructor
-    FlashRom(C64 &ref);
+public:
     
-    //! @brief    Destructor
+    FlashRom(C64 &ref);
     ~FlashRom();
     
-    /*! @brief    Loads an 8 KB chunk of Rom data from a buffer.
-     *  @details  This method is used when loading the contents from a CRT file.
+    /* Loads an 8 KB chunk of Rom data from a buffer. This method is used when
+     * loading the contents from a CRT file.
      */
     void loadBank(unsigned bank, u8 *data);
     
     
     //
-    //! @functiongroup Methods from HardwareComponent
+    // Methods from HardwareComponent
     //
     
-    void reset();
-    void dump();
+public:
+    
+    void reset() override;
+    void dump() override;
     
     //
     //! @functiongroup Accessing Rom cells
     //
+    
+public:
     
     //! @brief    Reads a Rom cell
     u8 peek(u32 addr);

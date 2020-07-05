@@ -154,7 +154,7 @@ private:
     // Filter
     //
     
-    //! @brief   Filter related variables
+    // Filter related variables
     signed char filterIO;
     u8 filterType;
     float filterLow;
@@ -162,17 +162,27 @@ private:
     float filterDy;
     float filterResDy;
     
-public:
     
-    //! @brief    Constructor
+    //
+    // Constructing and serializing
+    //
+    
+public:
+ 
     FastVoice();
     
-    //! @brief    Destructor
-    ~FastVoice();
     
-    //! @functiongroup Methods from HardwareComponent
-    void reset();
-    void didLoadFromBuffer(u8 **buffer) { updateWaveTablePtr(); }
+    //
+    // Methods from HardwareComponent
+    //
+    
+private:
+    
+    void reset() override;
+    void didLoadFromBuffer(u8 **buffer) override { updateWaveTablePtr(); }
+
+    
+public:
     
     //! @brief    Initializes the wave tables
     /*! @details  Needs to be called once prior to using this class

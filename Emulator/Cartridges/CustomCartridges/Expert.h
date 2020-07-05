@@ -20,49 +20,52 @@ class Expert : public Cartridge {
 public:
     
     Expert(C64 *c64, C64 &ref);
-    CartridgeType getCartridgeType() { return CRT_EXPERT; }
+    CartridgeType getCartridgeType() override { return CRT_EXPERT; }
+    
     
     //
-    //! @functiongroup Methods from HardwareComponent
+    // Methods from HardwareComponent
     //
     
-    void reset();
-    void dump();
-    size_t stateSize();
-    void didLoadFromBuffer(u8 **buffer);
-    void didSaveToBuffer(u8 **buffer);
+private:
+        
+    void reset() override;
+    void dump() override;
+    size_t stateSize() override;
+    void didLoadFromBuffer(u8 **buffer) override;
+    void didSaveToBuffer(u8 **buffer) override;
+    
     
     //
-    //! @functiongroup Methods from Cartridge
+    // Methods from Cartridge
     //
     
-    void loadChip(unsigned nr, CRTFile *c);
+    void loadChip(unsigned nr, CRTFile *c) override;
     
-    unsigned numButtons() { return 2; }
-    const char *getButtonTitle(unsigned nr);
-    void pressButton(unsigned nr);
+    unsigned numButtons() override { return 2; }
+    const char *getButtonTitle(unsigned nr) override;
+    void pressButton(unsigned nr) override;
     
-    bool hasSwitch() { return true; }
-    const char *getSwitchDescription(i8 pos);
+    bool hasSwitch() override { return true; }
+    const char *getSwitchDescription(i8 pos) override;
     bool switchInPrgPosition() { return switchIsLeft(); }
     bool switchInOffPosition() { return switchIsNeutral(); }
     bool switchInOnPosition() { return switchIsRight(); }
 
-    void updatePeekPokeLookupTables();
-    u8 peek(u16 addr);
-    u8 peekIO1(u16 addr);
-    u8 spypeekIO1(u16 addr) { return 0; }
-    void poke(u16 addr, u8 value);
-    void pokeIO1(u16 addr, u8 value);
+    void updatePeekPokeLookupTables() override;
+    u8 peek(u16 addr) override;
+    u8 peekIO1(u16 addr) override;
+    u8 spypeekIO1(u16 addr) override { return 0; }
+    void poke(u16 addr, u8 value) override;
+    void pokeIO1(u16 addr, u8 value) override;
     
-    void nmiWillTrigger();
+    void nmiWillTrigger() override;
     
-    //! @brief    Returns true if cartridge RAM is visible
+    // Returns true if cartridge RAM is visible
     bool cartridgeRamIsVisible(u16 addr);    
 
-    //! @brief    Returns true if cartridge RAM is write enabled
+    // Returns true if cartridge RAM is write enabled
     bool cartridgeRamIsWritable(u16 addr);
 };
-
 
 #endif

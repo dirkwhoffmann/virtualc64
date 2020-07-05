@@ -23,10 +23,6 @@ ControlPort::ControlPort(int portNr, C64 &ref) : C64Component(ref)
     setDescription("ControlPort");    
 }
 
-ControlPort::~ControlPort()
-{
-}
-
 void
 ControlPort::reset()
 {

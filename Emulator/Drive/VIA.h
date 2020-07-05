@@ -231,25 +231,28 @@ class VIA6522 : public C64Component {
     //! @brief    Number of skipped executions
     u64 idleCounter;
     
+    
+    //
+    // Constructing and serializing
+    //
+    
+public:
+        
+	VIA6522(VC1541 *drive, C64 &ref);
+    
+    
+    //
+    // Methods from HardwareComponent
+    //
+    
 public:
     
-    //
-    //! @functiongroup Constructing and destructing
-    //
-    
-	//! @brief    Constructor
-	VIA6522(VC1541 *drive, C64 &ref);
-	
-	//! @brief    Destructor
-	~VIA6522();
-		
-    //
-    //! @functiongroup Methods from HardwareComponent
-    //
-    
-	void reset();
-    void dump();
+	void reset() override;
+    void dump() override;
 
+    
+public:
+    
     //! @brief    Returns true if this object emulates is VIA2
     bool isVia2();
     

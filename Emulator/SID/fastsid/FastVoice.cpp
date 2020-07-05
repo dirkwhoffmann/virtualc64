@@ -75,10 +75,6 @@ FastVoice::FastVoice()
     registerSnapshotItems(items, sizeof(items));
 }
 
-FastVoice::~FastVoice()
-{
-}
-
 void
 FastVoice::reset()
 {

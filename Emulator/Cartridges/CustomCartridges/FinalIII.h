@@ -14,37 +14,40 @@
 
 class FinalIII : public CartridgeWithRegister {
     
-    //! @brief    Indicates if the freeze button is currenty pressed.
+    // Indicates if the freeze button is currenty pressed
     bool freeezeButtonIsPressed;
     
-    /*! @brief    The QD pin of the Final Cartridge III's 4-bit counter.
-     *  @details  The counter's purpose is to delay grounding the Game line
-     *            when the freeze button is pressed. Doing so lets the
-     *            CPU read the NMI vector with the old Game/Exrom combination.
+    /* The QD pin of the Final Cartridge III's 4-bit counter.
+     * The counter's purpose is to delay grounding the Game line when the
+     * freeze button is pressed. Doing so lets the CPU read the NMI vector with
+     * the old Game/Exrom combination.
      */
     bool qD;
 
 public:
     
     FinalIII(C64 *c64, C64 &ref) : CartridgeWithRegister(c64, ref, "FinalIII") { };
-    CartridgeType getCartridgeType() { return CRT_FINAL_III; }
+    CartridgeType getCartridgeType() override { return CRT_FINAL_III; }
+    
     
     //
-    //! @functiongroup Methods from HardwareComponent
+    // Methods from HardwareComponent
     //
     
-    void reset();
+private:
     
-    size_t stateSize() {
+    void reset() override;
+    
+    size_t stateSize() override {
         return CartridgeWithRegister::stateSize() + 2;
     }
-    void didLoadFromBuffer(u8 **buffer)
+    void didLoadFromBuffer(u8 **buffer) override
     {
         CartridgeWithRegister::didLoadFromBuffer(buffer);
         freeezeButtonIsPressed = (bool)read8(buffer);
         qD = (bool)read8(buffer);
     }
-    void didSaveToBuffer(u8 **buffer)
+    void didSaveToBuffer(u8 **buffer) override
     {
         CartridgeWithRegister::didSaveToBuffer(buffer);
         write8(buffer, (u8)freeezeButtonIsPressed);
@@ -52,27 +55,24 @@ public:
     }
     
     //
-    //! @functiongroup Methods from Cartridge
+    // Methods from Cartridge
     //
     
-    void resetCartConfig();
+public:
     
-    u8 peekIO1(u16 addr);
-    u8 peekIO2(u16 addr);
-    void pokeIO2(u16 addr, u8 value);
-    void nmiDidTrigger();
+    void resetCartConfig() override;
     
+    u8 peekIO1(u16 addr) override;
+    u8 peekIO2(u16 addr) override;
+    void pokeIO2(u16 addr, u8 value) override;
+    void nmiDidTrigger() override;
     
-    //
-    //! @functiongroup Methods from Cartridge
-    //
-    
-    unsigned numButtons() { return 2; }
-    const char *getButtonTitle(unsigned nr);
-    void pressButton(unsigned nr);
-    void releaseButton(unsigned nr);
+    unsigned numButtons() override { return 2; }
+    const char *getButtonTitle(unsigned nr) override;
+    void pressButton(unsigned nr) override;
+    void releaseButton(unsigned nr) override;
  
-    //! @brief    Writes a new value into the control register.
+    // Writes a new value into the control register
     void setControlReg(u8 value);
 
     bool hidden() { return (control & 0x80) != 0; }
@@ -81,21 +81,20 @@ public:
     bool exrom() { return (control & 0x10) != 0; }
     u8 bank() { return (control & 0x03); }
     
-    /*! @brief    Indicates if the control register is write enabled.
-     *  @note     Final Cartridge III enables and disables the control register
-     *            by masking the clock signal.
+    /* Indicates if the control register is write enabled.
+     * Final Cartridge III enables and disables the control register by masking
+     * the clock signal.
      */
     bool writeEnabled();
 
-    /*! @brief    Updates the NMI line
-     *  @note     The NMI line is driven by the control register and the
-     *            current position of the freeze button.
+    /* Updates the NMI line.
+     * The NMI line is driven by the control register and the current position
+     * of the freeze button.
      */
     void updateNMI();
     
-    /*! @brief    Updates the Game line
-     *  @note     The game line is driven by the control register and counter
-     *            output qD.
+    /* Updates the Game line.
+     * The game line is driven by the control register and counter output qD.
      */
     void updateGame();
 };
