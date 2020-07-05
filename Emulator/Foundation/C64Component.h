@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _C64_COMPONENT_INC
-#define _C64_COMPONENT_INC
+#ifndef _C64_COMPONENT_H
+#define _C64_COMPONENT_H
 
 #include "HardwareComponent.h"
 
@@ -16,6 +16,7 @@
 // Forward declarations of all components
 //
 
+class C64;
 class C64Memory;
 class CPU;
 class ProcessorPort;

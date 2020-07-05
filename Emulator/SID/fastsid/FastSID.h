@@ -26,8 +26,8 @@
  *
  */
 
-#ifndef _FASTSID_INC
-#define _FASTSID_INC
+#ifndef _FASTSID_H
+#define _FASTSID_H
 
 #include "C64Component.h"
 #include "FastVoice.h"

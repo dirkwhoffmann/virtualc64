@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _MIKROASS_INC
-#define _MIKROASS_INC
+#ifndef _MIKROASS_H
+#define _MIKROASS_H
 
 #include "Cartridge.h"
 

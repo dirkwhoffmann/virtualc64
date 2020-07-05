@@ -15,8 +15,8 @@
  * Schematics:  http://www.baltissen.org/images/1540.gif
  */
  
-#ifndef _VC1541_INC
-#define _VC1541_INC
+#ifndef _VC1541_H
+#define _VC1541_H
 
 #include "VIA.h"
 #include "Disk.h"

@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _ALIASES_INC
-#define _ALIASES_INC
+#ifndef _ALIASES_H
+#define _ALIASES_H
 
 #include <stdint.h>
 

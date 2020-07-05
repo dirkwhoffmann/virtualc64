@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _EPYX_INC
-#define _EPYX_INC
+#ifndef _EPYX_H
+#define _EPYX_H
 
 #include "Cartridge.h"
 

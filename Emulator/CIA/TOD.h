@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _TOD_INC
-#define _TOD_INC
+#ifndef _TOD_H
+#define _TOD_H
 
 #include "C64Component.h"
 #include "TODTypes.h"

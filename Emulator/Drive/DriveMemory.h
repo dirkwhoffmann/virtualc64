@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _VC1541MEMORY_INC
-#define _VC1541MEMORY_INC
+#ifndef _VC1541MEMORY_H
+#define _VC1541MEMORY_H
 
 #include "Memory.h"
 

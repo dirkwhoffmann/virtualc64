@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _SNAPSHOT_INC
-#define _SNAPSHOT_INC
+#ifndef _SNAPSHOT_H
+#define _SNAPSHOT_H
 
 #include "AnyC64File.h"
 

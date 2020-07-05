@@ -7,10 +7,10 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _C64OBJECT_INC
-#define _C64OBJECT_INC
+#ifndef _C64OBJECT_H
+#define _C64OBJECT_H
 
-#include "basic.h"
+#include "Utils.h"
 #include "C64Types.h"
 
 #include <vector>

@@ -7,21 +7,16 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _HARDWARE_COMPONENT_INC
-#define _HARDWARE_COMPONENT_INC
+#ifndef _HARDWARE_COMPONENT_H
+#define _HARDWARE_COMPONENT_H
 
 #include "C64Object.h"
 
-// Forward declarations
-class C64;
 
+// Base class for all hardware components. This class defines the base
+// functionality of all hardware components. It comprises functions for
+// powering up, powering down, resetting, and serializing.
 
-/*! @brief    Base class for all virtual hardware components
- *  @details  This class defines the base functionality of all virtual
- *            components. The class comprises functions for resetting,
- *            suspending and resuming the component, as well as functions for
- *            loading and saving snapshots.
- */
 class HardwareComponent : public C64Object {
 
     public:

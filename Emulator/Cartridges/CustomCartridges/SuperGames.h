@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _SUPERGAMES_INC
-#define _SUPERGAMES_INC
+#ifndef _SUPERGAMES_H
+#define _SUPERGAMES_H
 
 #include "Cartridge.h"
 

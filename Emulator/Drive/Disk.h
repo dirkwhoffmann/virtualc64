@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _DISK_INC
-#define _DISK_INC
+#ifndef _DISK_H
+#define _DISK_H
 
 #include <string>
 #include <vector>

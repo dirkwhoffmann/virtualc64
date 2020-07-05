@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _ACTIONREPLAY_INC
-#define _ACTIONREPLAY_INC
+#ifndef _ACTIONREPLAY_H
+#define _ACTIONREPLAY_H
 
 #include "Cartridge.h"
 

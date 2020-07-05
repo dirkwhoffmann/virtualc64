@@ -10,7 +10,7 @@
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
 #import "C64Types.h"
-#import "basic.h"
+#import "Utils.h"
 
 // Forward declarations of proxy classes
 @class MyController;

@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _MESSAGE_QUEUE_INC
-#define _MESSAGE_QUEUE_INC
+#ifndef _MESSAGE_QUEUE_H
+#define _MESSAGE_QUEUE_H
 
 #include "C64Object.h"
 #include "C64Types.h"

@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _VIC_TYPES_INC
-#define _VIC_TYPES_INC
+#ifndef _VIC_TYPES_H
+#define _VIC_TYPES_H
 
 //
 // VICII colors

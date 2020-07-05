@@ -15,8 +15,8 @@
  * and the Hoxs64 implementation by David Horrocks.
  */
 
-#ifndef _VIA6522_INC
-#define _VIA6522_INC
+#ifndef _VIA6522_H
+#define _VIA6522_H
 
 #include "C64Component.h"
 

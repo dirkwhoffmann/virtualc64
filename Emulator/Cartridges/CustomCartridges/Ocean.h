@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _OCEAN_INC
-#define _OCEAN_INC
+#ifndef _OCEAN_H
+#define _OCEAN_H
 
 #include "Cartridge.h"
 

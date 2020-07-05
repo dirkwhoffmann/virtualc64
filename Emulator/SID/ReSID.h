@@ -12,8 +12,8 @@
 
 // Good candidate for testing sound emulation: INTERNAT.P00
 
-#ifndef _RESID_INC
-#define _RESID_INC
+#ifndef _RESID_H
+#define _RESID_H
 
 #include "C64Component.h"
 #include "resid/sid.h"

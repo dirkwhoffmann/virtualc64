@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _GEORAM_INC
-#define _GEORAM_INC
+#ifndef _GEORAM_H
+#define _GEORAM_H
 
 #include "Cartridge.h"
 

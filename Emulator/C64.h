@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _C64_INC
-#define _C64_INC
+#ifndef _C64_H
+#define _C64_H
 
 // Configuration items
 #include "C64Config.h"

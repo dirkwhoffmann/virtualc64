@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _DATASETTE_INC
-#define _DATASETTE_INC
+#ifndef _DATASETTE_H
+#define _DATASETTE_H
 
 #include "C64Component.h"
 

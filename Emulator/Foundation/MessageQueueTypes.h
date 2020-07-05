@@ -9,8 +9,8 @@
 
 // This file must conform to standard ANSI-C to be compatible with Swift.
 
-#ifndef _MESSAGE_QUEUE_T_INC
-#define _MESSAGE_QUEUE_T_INC
+#ifndef _MESSAGE_QUEUE_T_H
+#define _MESSAGE_QUEUE_T_H
 
 typedef enum
 {

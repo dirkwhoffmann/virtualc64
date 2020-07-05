@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _IEC_INC
-#define _IEC_INC
+#ifndef _IEC_H
+#define _IEC_H
 
 #include "C64Component.h"
 

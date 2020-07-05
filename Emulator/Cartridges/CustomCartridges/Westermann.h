@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _WESTERMANN_INC
-#define _WESTERMANN_INC
+#ifndef _WESTERMANN_H
+#define _WESTERMANN_H
 
 #include "Cartridge.h"
 

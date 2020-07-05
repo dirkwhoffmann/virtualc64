@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _COMAL80_INC
-#define _COMAL80_INC
+#ifndef _COMAL80_H
+#define _COMAL80_H
 
 #include "Cartridge.h"
 

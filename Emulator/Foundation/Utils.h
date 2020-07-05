@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _BASIC_INC
-#define _BASIC_INC
+#ifndef _UTILS_H
+#define _UTILS_H
 
 // General Includes
 #include <stdint.h>

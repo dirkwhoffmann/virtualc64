@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _KEYBOARD_INC
-#define _KEYBOARD_INC
+#ifndef _KEYBOARD_H
+#define _KEYBOARD_H
 
 #include "C64Component.h"
 

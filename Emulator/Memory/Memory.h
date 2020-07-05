@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _MEMORY_INC
-#define _MEMORY_INC
+#ifndef _MEMORY_H
+#define _MEMORY_H
 
 #include "C64Component.h"
 // #include "MemoryTypes.h"

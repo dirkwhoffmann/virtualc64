@@ -7,11 +7,10 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _VIC_INC
-#define _VIC_INC
+#ifndef _VIC_H
+#define _VIC_H
 
 #include "C64Component.h"
-// #include "C64Types.h"
 #include "TimeDelayed.h"
 
 // Sprite bit masks

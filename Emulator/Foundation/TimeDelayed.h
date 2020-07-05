@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _TIME_DELAYED_INC
-#define _TIME_DELAYED_INC
+#ifndef _TIME_DELAYED_H
+#define _TIME_DELAYED_H
 
 template <class T> class TimeDelayed {
     

@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _CPU_INC
-#define _CPU_INC
+#ifndef _CPU_H
+#define _CPU_H
 
 #include "C64Component.h"
 

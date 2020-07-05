@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _SIMONS_BASIC_INC
-#define _SIMONS_BASIC_INC
+#ifndef _SIMONS_BASIC_H
+#define _SIMONS_BASIC_H
 
 #include "Cartridge.h"
 
