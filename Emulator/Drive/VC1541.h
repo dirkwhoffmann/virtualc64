@@ -51,19 +51,19 @@ class VC1541 : public C64Component {
     
 public:
     
-	//! @brief    Memory of the virtual drive
+	// Memory
 	VC1541Memory mem = VC1541Memory(this, vc64);
 
-    //! @brief    The drive's CPU
+    // CPU
     CPU cpu = CPU(MOS_6502, &mem, vc64);
 
-	//! @brief    VIA6522 connecting the drive CPU with the IEC bus
+	// VIA6522 connecting the drive CPU with the IEC bus
     VIA1 via1 = VIA1(this, vc64);
 
-    //! @brief    VIA6522 connecting the drive CPU with the read/write head
+    // VIA6522 connecting the drive CPU with the read/write head
     VIA2 via2 = VIA2(this, vc64);
 
-    //! @brief    A single sided 5,25" floppy disk
+    // Floppy disk
     Disk disk = Disk(vc64);
     
     

@@ -21,7 +21,6 @@
 // Data types and constants
 #include "C64Types.h"
 
-
 // Loading and saving
 #include "Snapshot.h"
 #include "T64File.h"
@@ -59,69 +58,60 @@
 #include "Mouse.h"
 
 
-/*! @class    A complete virtual Commodore 64
- *  @brief    This class is the most prominent one of all. To run the emulator,
- *            it is sufficient to create a single object of this type. All
- *            sub-components are created automatically. The public API gives
- *            you control over the emulator's behaviour such as running and
- *            pausing the emulation. Please note that most sub-components
- *            have their own public API. E.g., to query information from VICII,
- *            you need to invoke a public method on c64->vic.
+/* A complete virtual C64
+ * This class is the most prominent one of all. To run the emulator, it is
+ * sufficient to create a single object of this type. All subcomponents are
+ * created automatically. The public API gives you control over the emulator's
+ * behaviour such as running and pausing the emulation. Please note that most
+ * subcomponents have their own public API. E.g., to query information from
+ * SID, you need to invoke a public method on c64.sid.
  */
 class C64 : public HardwareComponent {
     
+    //
+    // Sub components
+    //
+    
 public:
     
-    //
-    // Hardware components
-    //
-    
-    //! @brief    The C64's virtual memory (ROM, RAM, and color RAM)
+    // Memory (ROM, RAM, and color RAM)
     C64Memory mem = C64Memory(*this);
     
-    //! @brief    The C64's virtual CPU
+    // CPU
     CPU cpu = CPU(MOS_6510, &mem, *this);
     
-    //! @brief    The C64's processor port
+    // Processor Port
     ProcessorPort processorPort = ProcessorPort(*this);
     
-    //! @brief    The C64's Video Interface Controller
+    // Video Interface Controller
     VIC vic = VIC(*this);
     
-    //! @brief    The C64's first Complex Interface Adapter
+    // Complex Interface Adapters
     CIA1 cia1 = CIA1(*this);
-    
-    //! @brief    The C64's second Complex Interface Adapter
     CIA2 cia2 = CIA2(*this);
     
-    //! @brief    The C64's Sound Interface Device
+    // Sound Interface Device
     SIDBridge sid = SIDBridge(*this);
     
-    //! @brief    The C64's virtual keyboard
+    // Keyboard
     Keyboard keyboard = Keyboard(*this);
     
-    //! @brief    The C64's first control port
+    // Ports
     ControlPort port1 = ControlPort(1, *this);
-    
-    //! @brief    The C64's second control port
     ControlPort port2 = ControlPort(2, *this);
-    
-    //! @brief    The C64's expansion port (cartdrige slot)
     ExpansionPort expansionport = ExpansionPort(*this);
     
-    //! @brief    The C64's serial bus connecting the VC1541 floppy drives
+    // Bus connecting the VC1541 floppy drives
     IEC iec = IEC(*this);
     
-    //! @brief    A VC1541 floppy drive (with device number 8)
+    // Floppy drives
     VC1541 drive1 = VC1541(1, *this);
-    
-    //! @brief    A second VC1541 floppy drive (with device number 9)
     VC1541 drive2 = VC1541(2, *this);
     
-    //! @brief    A Commodore 1530 (C2N) Datasette
+    // Datasette
     Datasette datasette = Datasette(*this);
     
-    //! @brief    An external mouse
+    // Mouse
     Mouse mouse = Mouse(*this);
     
     

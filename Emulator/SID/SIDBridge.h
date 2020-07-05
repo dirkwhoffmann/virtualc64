@@ -19,112 +19,91 @@ class SIDBridge : public C64Component {
 
     friend C64Memory;
 
+    //
+    // Sub components
+    //
+        
 private:
 
-    //! @brief    FastSID (Adapted from VICE 3.1)
+    // FastSID (Adapted from VICE 3.1)
     FastSID fastsid = FastSID(vc64);
 
-    //! @brief    ReSID (Taken from VICE 3.1)
+    // ReSID (Taken from VICE 3.1)
     ReSID resid = ReSID(vc64);
    
-    //! @brief    SID selector
+    // SID selector
     bool useReSID;
     
-    //! @brief    CPU cycle at the last call to executeUntil()
+    // CPU cycle at the last call to executeUntil()
     u64 cycles;
     
-    //! @brief    Time stamp of the last write pointer alignment
+    // Time stamp of the last write pointer alignment
     u64 lastAlignment = 0;
     
 public:
     
-    //! @brief    Number of buffer underflows since power up
+    // Number of buffer underflows since power up
     u64 bufferUnderflows;
 
-    //! @brief    Number of buffer overflows since power up
+    // Number of buffer overflows since power up
     u64 bufferOverflows;
-
-private:
     
     //
     // Audio ringbuffer
     //
-    
-    //! @brief   Number of sound samples stored in ringbuffer
+
+private:
+
+    // Number of sound samples stored in ringbuffer
     static constexpr size_t bufferSize = 12288;
     
-    /*! @brief   The audio sample ringbuffer.
-     *  @details This ringbuffer serves as the data interface between the
-     *           emulation code and the audio API (CoreAudio on Mac OS X).
+    /* The audio sample ringbuffer.
+     * This ringbuffer serves as the data interface between the emulation code
+     * and the audio API (CoreAudio on Mac OS X).
      */
     float ringBuffer[bufferSize];
     
-    /*! @brief   Scaling value for sound samples
-     *  @details All sound samples produced by reSID are scaled by this
-     *           value before they are written into the ringBuffer.
+    /* Scaling value for sound samples.
+     * All sound samples produced by reSID are scaled by this value before they
+     * are written into the ringBuffer.
      */
     static constexpr float scale = 0.000005f;
     
-    /*! @brief   Ring buffer read pointer
-     */
+    // Ring buffer pointers
     u32 readPtr;
-    
-    /*! @brief   Ring buffer write pointer
-     */
     u32 writePtr;
     
-    /*! @brief   Current volume
-     *  @note    A value of 0 or below silences the audio playback.
-     */
+    // Current volume (0 = silent)
     i32 volume;
     
-    /*! @brief   Target volume
-     *  @details Whenever an audio sample is written, the volume is
-     *           increased or decreased by volumeDelta to make it reach
-     *           the target volume eventually. This feature simulates a
-     *           fading effect.
+    /* Target volume.
+     * Whenever an audio sample is written, the volume is increased or decreased
+     * by volumeDelta steps to make it reach the target volume eventually. This
+     * feature simulates a fading effect.
      */
     i32 targetVolume;
     
-    /*! @brief   Maximum volume
-     */
+    // Maximum volume
     const static i32 maxVolume = 100000;
     
-    /*! @brief   Volume offset
-     *  @details If the current volume does not match the target volume,
-     *           it is increased or decreased by the specified amount. The
-     *           increase or decrease takes place whenever an audio sample
-     *           is generated.
+    /* Volume offset
+     * If the current volume does not match the target volume, it is increased
+     * or decreased by the specified amount. The increase or decrease takes
+     * place whenever an audio sample is generated.
      */
     i32 volumeDelta;
     
+    //
+    // Constructing and serializing
+    //
+    
 public:
 	
-	//! @brief    Constructor
 	SIDBridge(C64 &ref);
 	
-	//! @brief    Destructor
-	~SIDBridge();
-			
-    //! @functiongroup    Methods from HardwareComponent
-    void reset();
-    void dump();
-    void setClockFrequency(u32 frequency);
-    void didLoadFromBuffer(u8 **buffer) { clearRingbuffer(); }
-    
-	//! @brief    Prints debug information
-    void dump(SIDInfo info);
-
-    //! @brief    Gathers all values that are displayed in the debugger
-    SIDInfo getInfo();
-
-    //! @brief    Gathers all debug information for a specific voice
-    VoiceInfo getVoiceInfo(unsigned voice);
-    
-    
     //
-	// Configuring the device
-	//
+    // Configuring
+    //
     
     //! @brief    Returns true, whether ReSID or the old implementation should be used.
     bool getReSID() { return useReSID; }
@@ -149,16 +128,36 @@ public:
     
     //! @brief    Sets the sampling method (ReSID only).
     void setSamplingMethod(SamplingMethod value);
-
+    
     //! @brief    Returns the sample rate.
     u32 getSampleRate();
     
-	//! @brief    Sets the samplerate of SID and it's 3 voices.
-	void setSampleRate(u32 sr);
+    //! @brief    Sets the samplerate of SID and it's 3 voices.
+    void setSampleRate(u32 sr);
     
     //! @brief    Returns the clock frequency.
     u32 getClockFrequency();
     
+    
+    //
+    // Methods from HardwareComponent
+    //
+    
+    void reset();
+    void dump();
+    void setClockFrequency(u32 frequency);
+    void didLoadFromBuffer(u8 **buffer) { clearRingbuffer(); }
+    
+	//! @brief    Prints debug information
+    void dump(SIDInfo info);
+
+    //! @brief    Gathers all values that are displayed in the debugger
+    SIDInfo getInfo();
+
+    //! @brief    Gathers all debug information for a specific voice
+    VoiceInfo getVoiceInfo(unsigned voice);
+    
+  
     //
     // Running the device
     //

@@ -37,10 +37,6 @@ SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
     useReSID = true;
 }
 
-SIDBridge::~SIDBridge()
-{
-}
-
 void
 SIDBridge::reset()
 {

@@ -20,6 +20,12 @@ class Mouse : public C64Component {
     // Current configuration
     MouseConfig config;
 
+    //
+    // Sub components
+    //
+    
+private:
+    
     // A Commdore 1350 (digital) mouse
     Mouse1350 mouse1350 = Mouse1350(vc64);
     

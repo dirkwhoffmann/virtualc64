@@ -18,6 +18,7 @@
 
 class C64;
 class C64Memory;
+class VC1541Memory;
 class CPU;
 class ProcessorPort;
 class VIC;

@@ -38,7 +38,17 @@
 	The SID chip occupied the memory mapped I/O space from address 0xD400 to 0xD7FF. 
 */
 class FastSID : public C64Component {
+    
+    //
+    // Sub components
+    //
+    
+private:
+    
+    // The three SID voices
+    FastVoice voice[3];
 
+    
 public:
     
     //! Pointer to bridge object
@@ -51,10 +61,7 @@ public:
     u32 speed1;
     
 private:
-    
-    //! @brief   The three SID voices
-    FastVoice voice[3];
-        
+            
     //! @brief   Chip model.
     SIDModel model = MOS_6581;
     
