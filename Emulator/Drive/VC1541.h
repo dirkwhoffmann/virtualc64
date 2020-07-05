@@ -273,7 +273,7 @@ public:
     void disconnect();
 
     //! @brief    Connects a disconnected drive or vice versa
-    void togglePowerSwitch() { isConnected() ? disconnect() : connect(); }
+    void toggleConnection() { isConnected() ? disconnect() : connect(); }
     
     //! @brief    Returns true iff the red drive LED is on.
     bool getRedLED() { return redLED; };

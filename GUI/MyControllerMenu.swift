@@ -699,9 +699,9 @@ extension MyController: NSMenuItemValidation {
     func drivePowerAction(driveNr: Int) {
 
         if driveNr == 1 {
-            c64.drive1.togglePowerSwitch()
+            c64.drive1.toggleConnection()
         } else {
-            c64.drive2.togglePowerSwitch()
+            c64.drive2.toggleConnection()
         }
     }
     

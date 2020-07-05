@@ -925,7 +925,7 @@ extension MyController {
             // For a better user experience, we switch on automatically
             // when a disk is inserted.
             if disk != nil {
-                self.c64.drive(nr).powerOn()
+                self.c64.drive(nr).connect()
             }
             
             // Remove old disk if present

@@ -1114,17 +1114,17 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->drive->isConnected();
 }
-- (void) powerOn
+- (void) connect
 {
     wrapper->drive->connect();
 }
-- (void) powerOff
+- (void) disconnect
 {
     wrapper->drive->disconnect();
 }
-- (void) togglePowerSwitch
+- (void) toggleConnection
 {
-    wrapper->drive->togglePowerSwitch();
+    wrapper->drive->toggleConnection();
 }
 - (void) deleteRom
 {

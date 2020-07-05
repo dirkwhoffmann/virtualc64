@@ -563,9 +563,9 @@ struct AnyC64FileWrapper;
 - (void) setTracing:(BOOL)b;
 
 - (BOOL) isConnected;
-- (void) powerOn;
-- (void) powerOff;
-- (void) togglePowerSwitch;
+- (void) connect;
+- (void) disconnect;
+- (void) toggleConnection;
 
 - (void) deleteRom;
 
