@@ -63,8 +63,13 @@ VC1541::VC1541(unsigned nr, C64 &ref) : C64Component(ref)
     resetDisk();
 }
 
-VC1541::~VC1541()
+void
+VC1541::_initialize()
 {
+    debug("VC1541 initialize");
+
+    // Start with a single drive powered on
+    deviceNr == 1 ? powerOn() : powerOff();
 }
 
 void

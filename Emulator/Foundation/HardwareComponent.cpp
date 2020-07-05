@@ -19,6 +19,18 @@ HardwareComponent::~HardwareComponent()
 }
 
 void
+HardwareComponent::initialize()
+{
+    // Initialize all subcomponents
+    for (HardwareComponent *c : subComponents) {
+        c->initialize();
+    }
+    
+    // Initialize this component
+    _initialize();
+}
+
+void
 HardwareComponent::reset()
 {
     // Reset all subcomponents

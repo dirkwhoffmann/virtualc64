@@ -22,7 +22,7 @@
 #include "Disk.h"
 
 class VC1541 : public C64Component {
-
+    
     //
     // Constants
     //
@@ -207,30 +207,30 @@ public:
      */
     bool byteReady;
     
-    public:
-
+    
     //
-    //! @functiongroup Creating and destructing
+    // Constructing and serializing
     //
     
-    //! @brief    Custom Constructor
-    /*! @param    deviceNr must be 1 (first drive) or 2 (second drive).
-     */
+public:
+    
     VC1541(unsigned deviceNr, C64 &ref);
     
-    //! @brief    Standard destructor
-    ~VC1541();
-
     
     //
-    //! @functiongroup Methods from HardwareComponent
+    // Methods from HardwareComponent
     //
+    
+public:
 
-    void reset();
-    void ping();
-    void dump();
-    void setClockFrequency(u32 frequency);
+    void _initialize() override;
+    void reset() override;
+    void ping() override;
+    void dump() override;
+    void setClockFrequency(u32 frequency) override;
 
+public:
+    
     /*! @brief    Resets all disk related properties
      *  @note     This method is needed, because reset() keeps the disk alive.
      */

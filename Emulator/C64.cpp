@@ -99,16 +99,13 @@ C64::C64()
         { NULL,             0,                       0 }};
     
     registerSnapshotItems(items, sizeof(items));
+        
+    // Set up the initial state
+    initialize();
+    reset();
 
-    // Set initial hardware configuration
-    vic.setModel(PAL_8565);
-    drive1.powerOn();
-    drive2.powerOff();
-    
     // Initialize mach timer info
     mach_timebase_info(&timebase);
-
-    reset();
 }
 
 C64::~C64()

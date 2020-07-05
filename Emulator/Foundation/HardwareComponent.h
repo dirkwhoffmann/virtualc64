@@ -18,14 +18,56 @@
 // powering up, powering down, resetting, and serializing.
 
 class HardwareComponent : public C64Object {
-
-    public:
+    
+public:
 
     // The sub components of this component
     vector<HardwareComponent *> subComponents;
     
-    
 protected:
+    
+    /* State model
+     * The virtual hardware components can be in three different states
+     * called 'Off', 'Paused', and 'Running'.
+     *
+     *        Off: The C64 is turned off
+     *     Paused: The C64 is turned on, but there is no emulator thread
+     *    Running: The C64 is turned on and the emulator thread running
+     */
+    EmulatorState state = STATE_OFF;
+    
+    /* Warp mode
+     * To speed up emulation (e.g., during disk accesses), the virtual hardware
+     * can be put into warp mode. In this mode, the emulation thread is no
+     * longer paused to match the target frequency and runs as fast as possible.
+     */
+    bool warp = false;
+    
+    
+    //
+    // Constructing and destroying
+    //
+    
+public:
+    
+    virtual ~HardwareComponent();
+    
+    
+    //
+    // Initializing
+    //
+    
+public:
+    
+    /* Initializes the component and it's sub-component.
+     * This function is called exactly once, in the constructor of the Amiga
+     * class. Sub-components can implement the delegation method _initialize()
+     * to finalize their initialization, e.g., by setting up referecens that
+     * did not exist when they were constructed.
+     */
+    void initialize();
+    virtual void _initialize() { };
+    
     
     /*! @brief   Type and behavior of a snapshot item
      *  @details The reset flags indicate whether the snapshot item should be
@@ -63,9 +105,6 @@ protected:
     unsigned snapshotSize = 0;
     
 public:
-
-	//! @brief    Destructor
-	virtual ~HardwareComponent();
 
 
     //

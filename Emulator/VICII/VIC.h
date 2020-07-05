@@ -719,27 +719,37 @@ private:
      *            [3] : color for '11' pixels in multicolor mode
      */
     u8 col[4];
-        
+    
+    
+    //
+    // Constructing and serializing
+    //
+    
 public:
 	
-	//! @brief    Constructor
 	VIC(C64 &ref);
-	
-	//! @brief    Destructor
-	~VIC();
-	
-	//! @brief    Methods from HardwareComponent
-	void reset();
-    void ping();
-	void dump();
-    size_t stateSize();
-    void didLoadFromBuffer(u8 **buffer);
-    void didSaveToBuffer(u8 **buffer);
+
+    
+    //
+    // Methods from HardwareComponent
+    //
+    
+public:
+    
+    void _initialize() override;
+    void reset() override;
+    void ping() override;
+    void dump() override;
+    size_t stateSize() override;
+    void didLoadFromBuffer(u8 **buffer) override;
+    void didSaveToBuffer(u8 **buffer) override;
     
 
     //
     //! @functiongroup Accessing chip model related properties
     //
+    
+public:
     
     //! @brief    Returns the currently plugged in chip model.
     VICModel getModel() { return model; }

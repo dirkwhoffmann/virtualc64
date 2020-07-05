@@ -106,8 +106,11 @@ VIC::VIC(C64 &ref) : C64Component(ref)
     gAccessResult.setClock(&cpu.cycle);
 }
 
-VIC::~VIC()
+void
+VIC::_initialize()
 {
+    debug("VIC initialize");
+    setModel(PAL_8565);
 }
 
 void 

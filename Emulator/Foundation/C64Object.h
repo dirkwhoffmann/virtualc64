@@ -58,7 +58,7 @@ protected:
     // std::recursive_mutex mutex;
     
     //
-    // Initializing the component
+    // Initializing
     //
     
 public:
