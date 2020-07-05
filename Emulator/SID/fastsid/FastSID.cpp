@@ -65,10 +65,6 @@ FastSID::FastSID(C64 &ref) : C64Component(ref)
     voice[2].init(this, 2, &voice[1]);
 }
 
-FastSID::~FastSID()
-{
-}
-
 void
 FastSID::reset()
 {
@@ -86,7 +82,7 @@ FastSID::setClockFrequency(u32 frequency)
 }
 
 void
-FastSID::dump()
+FastSID::_dump()
 {
     SIDInfo info = getInfo();
 

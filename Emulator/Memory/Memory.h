@@ -26,9 +26,15 @@ protected:
      */
     u8 *stack = NULL;
     
-public:
     
+    //
+    // Constructing and serializing
+    //
+    
+public:
+        
     Memory(C64 &ref) : C64Component(ref) { };
+    
     
 private:
     

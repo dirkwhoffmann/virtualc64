@@ -40,7 +40,7 @@ VC1541Memory::reset()
 }
 
 void 
-VC1541Memory::dump()
+VC1541Memory::_dump()
 {
 	msg("VC1541 Memory:\n");
 	msg("--------------\n\n");

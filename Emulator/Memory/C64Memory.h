@@ -97,23 +97,28 @@ public:
     //! @brief    Poke target lookup table
     MemoryType pokeTarget[16];
     
+    
+    //
+    // Constructing and serializing
+    //
+    
 public:
     
-	//! @brief    Constructor
 	C64Memory(C64 &ref);
-	
-	//! @brief    Destructor
-	~C64Memory();
-	
-	//! @brief    Method from HardwareComponent
-	void reset();
     
-    //! @brief    Restors initial state, but keeps RAM alive
-    // void resetWithoutRAM();
+    
+    //
+    // Methods from HardwareComponent
+    //
+    
+public:
+    
+	void reset() override;
+	void _dump() override;
 
-	//! @brief    Method from HardwareComponent
-	void dump();
-
+    
+public:
+    
 	//! @brief    Returns true, iff the Basic ROM has been loaded
 	bool basicRomIsLoaded() { return (rom[0xA000] | rom[0xA001]) != 0x00; }
     
@@ -176,20 +181,20 @@ public:
     // Reading from memory
     u8 peek(u16 addr, MemoryType source);
     u8 peek(u16 addr, bool gameLine, bool exromLine);
-    u8 peek(u16 addr) { return peek(addr, peekSrc[addr >> 12]); }
-    u8 peekZP(u8 addr);
+    u8 peek(u16 addr) override { return peek(addr, peekSrc[addr >> 12]); }
+    u8 peekZP(u8 addr) override;
     u8 peekIO(u16 addr);
     
     // Reading from memory without side effects
     u8 spypeek(u16 addr, MemoryType source);
-    u8 spypeek(u16 addr) { return spypeek(addr, peekSrc[addr >> 12]); }
+    u8 spypeek(u16 addr) override { return spypeek(addr, peekSrc[addr >> 12]); }
     u8 spypeekIO(u16 addr);
     
     // Writing into memory
     void poke(u16 addr, u8 value, MemoryType target);
     void poke(u16 addr, u8 value, bool gameLine, bool exromLine);
-    void poke(u16 addr, u8 value) { poke(addr, value, pokeTarget[addr >> 12]); }
-    void pokeZP(u8 addr, u8 value);
+    void poke(u16 addr, u8 value) override { poke(addr, value, pokeTarget[addr >> 12]); }
+    void pokeZP(u8 addr, u8 value) override;
     void pokeIO(u16 addr, u8 value);
     
     //! @brief    Reads the NMI vector from memory.

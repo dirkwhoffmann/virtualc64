@@ -43,7 +43,7 @@ public:
 private:
     
     void reset() override;
-    void dump() override;
+    void _dump() override;
     size_t stateSize() override;
     void didLoadFromBuffer(u8 **buffer) override;
     void didSaveToBuffer(u8 **buffer) override;

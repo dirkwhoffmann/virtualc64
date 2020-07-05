@@ -163,7 +163,7 @@ VIC::ping()
 }
 
 void 
-VIC::dump()
+VIC::_dump()
 {
     u8 ctrl1 = reg.current.ctrl1;
     u8 ctrl2 = reg.current.ctrl2; 

@@ -57,10 +57,6 @@ CIA::CIA(C64 &ref) : C64Component(ref)
     emulateTimerBBug = true;
 }
 
-CIA::~CIA()
-{
-}
-
 void
 CIA::reset()
 {
@@ -693,7 +689,7 @@ CIA::dumpTrace()
 }
 
 void
-CIA::dump()
+CIA::_dump()
 {
     CIAInfo info = getInfo();
     
@@ -712,7 +708,7 @@ CIA::dump()
 	msg("  Interrupt control reg : %02X\n", info.icr);
 	msg("     Interrupt mask reg : %02X\n", info.imr);
 	msg("\n");	
-	tod.dump();
+	tod._dump();
 }
 
 CIAInfo
@@ -1130,11 +1126,11 @@ CIA1::~CIA1()
 }
 
 void 
-CIA1::dump()
+CIA1::_dump()
 {
 	msg("CIA 1:\n");
 	msg("------\n\n");
-	CIA::dump();
+	CIA::_dump();
 }
 
 void 
@@ -1278,11 +1274,11 @@ CIA2::reset()
 }
 
 void 
-CIA2::dump()
+CIA2::_dump()
 {
 	msg("CIA 2:\n");
 	msg("------\n\n");
-	CIA::dump();
+	CIA::_dump();
 }
 
 void 

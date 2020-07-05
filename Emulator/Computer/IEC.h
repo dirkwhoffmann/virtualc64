@@ -75,7 +75,7 @@ public:
     
 	void reset() override;
     void ping() override;
-	void dump() override;
+	void _dump() override;
 
     public:
 

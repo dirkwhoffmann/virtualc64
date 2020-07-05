@@ -106,10 +106,6 @@ C64Memory::C64Memory(C64 &ref) : Memory(ref)
     }
 }
 
-C64Memory::~C64Memory()
-{
-}
-
 void
 C64Memory::reset()
 {
@@ -126,7 +122,7 @@ C64Memory::reset()
 }
 
 void 
-C64Memory::dump()
+C64Memory::_dump()
 {
 	msg("C64 Memory:\n");
 	msg("-----------\n");

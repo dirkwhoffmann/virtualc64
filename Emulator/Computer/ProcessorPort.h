@@ -62,7 +62,7 @@ public:
 
 public:
     
-    void dump() override;
+    void _dump() override;
 
     
     //

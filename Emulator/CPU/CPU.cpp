@@ -77,7 +77,7 @@ CPU::reset()
 }
 
 void 
-CPU::dump()
+CPU::_dump()
 {
     DisassembledInstruction instr = disassemble(true /* hex output */);
     
@@ -100,7 +100,7 @@ CPU::dump()
 	msg("   NMI routine : %02X%02X\n", mem->spypeek(0xFFFB), mem->spypeek(0xFFFA));
 	msg("\n");
     
-    pport.dump();
+    pport._dump();
 }
 
 size_t

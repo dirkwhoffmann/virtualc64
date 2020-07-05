@@ -109,7 +109,7 @@ VC1541::setClockFrequency(u32 frequency)
 }
 
 void 
-VC1541::dump()
+VC1541::_dump()
 {
 	msg("VC1541\n");
 	msg("------\n\n");
@@ -118,7 +118,7 @@ VC1541::dump()
 	msg("            SYNC : %d\n", sync);
     msg("       Read mode : %s\n", readMode() ? "YES" : "NO");
 	msg("\n");
-    mem.dump();
+    mem._dump();
     startTracing();
 }
 

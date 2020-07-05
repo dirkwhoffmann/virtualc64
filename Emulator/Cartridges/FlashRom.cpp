@@ -77,7 +77,7 @@ FlashRom::reset()
 }
 
 void
-FlashRom::dump()
+FlashRom::_dump()
 {
     msg("FlashRom\n");
     msg("--------\n\n");

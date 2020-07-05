@@ -114,22 +114,28 @@ private:
     //! @brief   Amplifier lookup table
     signed char ampMod1x8[256];
     
+    
+    //
+    // Constructing and serializing
+    //
+    
+public:
+        
+	FastSID(C64 &ref);
+    
+    
+    //
+    // Methods from HardwareComponent
+    //
+    
 public:
     
-	// Constructor
-	FastSID(C64 &ref);
-	
-	// Destructor
-	~FastSID();
-	
-    // Method from HardwareComponent
-    void reset();
+    void reset() override;
+    void setClockFrequency(u32 frequency) override;
+    void _dump() override;
 
-    // Sets the clock frequency
-    void setClockFrequency(u32 frequency);
-
-    // Dump internal state to console
-    void dump();
+    
+public:
     
     // Gathers all values that are displayed in the debugger
     SIDInfo getInfo();

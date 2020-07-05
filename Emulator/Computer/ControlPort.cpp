@@ -43,7 +43,7 @@ ControlPort::didLoadFromBuffer(u8 **buffer)
 }
 
 void
-ControlPort::dump()
+ControlPort::_dump()
 {
     msg("ControlPort port %d\n", nr);
     msg("------------------\n");

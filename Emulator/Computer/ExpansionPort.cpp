@@ -85,7 +85,7 @@ ExpansionPort::didSaveToBuffer(u8 **buffer)
 }
 
 void
-ExpansionPort::dump()
+ExpansionPort::_dump()
 {
     msg("Expansion port\n");
     msg("--------------\n");
@@ -96,7 +96,7 @@ ExpansionPort::dump()
     if (cartridge == NULL) {
         msg("No cartridge attached\n");
     } else {
-        cartridge->dump();
+        cartridge->_dump();
     }
 }
 
@@ -264,7 +264,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
     if (cartridge->hasSwitch()) vc64.putMessage(MSG_CART_SWITCH);
     
     debug(EXP_DEBUG, "Cartridge attached to expansion port");
-    cartridge->dump();
+    cartridge->_dump();
 }
 
 bool

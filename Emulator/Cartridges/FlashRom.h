@@ -93,7 +93,7 @@ public:
 public:
     
     void reset() override;
-    void dump() override;
+    void _dump() override;
     
     //
     //! @functiongroup Accessing Rom cells

@@ -27,7 +27,7 @@ ProcessorPort::ProcessorPort(C64 &ref) : C64Component(ref)
 }
 
 void
-ProcessorPort::dump()
+ProcessorPort::_dump()
 {
     msg("Processor port:\n");
     msg("---------------\n\n");

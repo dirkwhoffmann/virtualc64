@@ -97,7 +97,7 @@ SIDBridge::dump(SIDInfo info)
 }
 
 void 
-SIDBridge::dump()
+SIDBridge::_dump()
 {
     msg("ReSID:\n");
     msg("------\n");

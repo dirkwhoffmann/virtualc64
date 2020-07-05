@@ -68,6 +68,11 @@ public:
     void initialize();
     virtual void _initialize() { };
     
+
+    
+    
+    
+    
     
     /*! @brief   Type and behavior of a snapshot item
      *  @details The reset flags indicate whether the snapshot item should be
@@ -142,7 +147,7 @@ public:
      *            derived component should override this method and print out
      *            useful debugging information.
 	 */ 
-    virtual void dump() { };
+    virtual void _dump() { };
 	
     
     //

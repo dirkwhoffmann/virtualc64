@@ -226,7 +226,7 @@ public:
     void _initialize() override;
     void reset() override;
     void ping() override;
-    void dump() override;
+    void _dump() override;
     void setClockFrequency(u32 frequency) override;
 
 public:

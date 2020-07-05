@@ -240,20 +240,28 @@ public:
     //! @brief    Number of skipped executions
     u64 idleCounter;
     
-public:	
-	
-	//! @brief    Constructor
+    
+    //
+    // Constructing and serializing
+    //
+    
+public:
+    
 	CIA(C64 &ref);
-	
-	//! @brief    Destructor
-	~CIA();
-	
-	//! @brief    Bring the CIA back to its initial state
-	void reset();
-    	
-	//! @brief    Dump internal state
-	void dump();	
+    
+    
+    //
+    // Methods from HardwareComponent
+    //
+    
+public:
+    
+	void reset() override;
+	void _dump() override;
 
+    
+public:
+    
 	//! @brief    Dump trace line
 	void dumpTrace();	
 
@@ -439,7 +447,7 @@ public:
 
     CIA1(C64 &ref);
     ~CIA1();
-    void dump();
+    void _dump();
     
 private:
     
@@ -467,7 +475,7 @@ public:
     CIA2(C64 &ref);
     ~CIA2();
     void reset(); 
-    void dump();
+    void _dump();
     
 private:
 

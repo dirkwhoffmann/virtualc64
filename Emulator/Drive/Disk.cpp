@@ -100,7 +100,7 @@ Disk::Disk(C64 &ref) : C64Component(ref)
 }
 
 void
-Disk::dump()
+Disk::_dump()
 {
     msg("Floppy disk\n");
     msg("-----------\n\n");

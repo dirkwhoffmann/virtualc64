@@ -255,7 +255,7 @@ Cartridge::didSaveToBuffer(u8 **buffer)
 }
 
 void
-Cartridge::dump()
+Cartridge::_dump()
 {
     msg("\n");
     msg("Cartridge\n");

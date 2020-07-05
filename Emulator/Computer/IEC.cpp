@@ -72,7 +72,7 @@ IEC::ping()
 }
 
 void 
-IEC::dump()
+IEC::_dump()
 {
 	msg("IEC bus\n");
 	msg("-------\n");

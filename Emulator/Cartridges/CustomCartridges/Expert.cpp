@@ -34,9 +34,9 @@ Expert::reset()
 }
 
 void
-Expert::dump()
+Expert::_dump()
 {
-    Cartridge::dump();
+    Cartridge::_dump();
     
     msg("               active: %d\n", active);
     msg("             switch: %d ", getSwitch());

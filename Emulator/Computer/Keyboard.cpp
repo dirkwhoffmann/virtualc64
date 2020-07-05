@@ -34,7 +34,7 @@ Keyboard::reset()
 }
 
 void 
-Keyboard::dump()
+Keyboard::_dump()
 {
 	msg("Keyboard:\n");
 	msg("---------\n\n");

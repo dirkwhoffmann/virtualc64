@@ -41,7 +41,7 @@ TOD::reset()
 }
 
 void 
-TOD::dump()
+TOD::_dump()
 {
 	msg("            Time of day : %02X:%02X:%02X:%02X\n",
         tod.hours, tod.minutes, tod.seconds, tod.tenth);

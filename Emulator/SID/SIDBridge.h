@@ -145,10 +145,10 @@ public:
     
 public:
     
-    void reset();
-    void dump();
-    void setClockFrequency(u32 frequency);
-    void didLoadFromBuffer(u8 **buffer) { clearRingbuffer(); }
+    void reset() override;
+    void _dump() override;
+    void setClockFrequency(u32 frequency) override;
+    void didLoadFromBuffer(u8 **buffer) override { clearRingbuffer(); }
     
     
 public:
