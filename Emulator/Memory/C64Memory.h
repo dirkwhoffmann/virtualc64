@@ -114,6 +114,9 @@ public:
 public:
     
 	void reset() override;
+    
+private:
+    
 	void _dump() override;
 
     

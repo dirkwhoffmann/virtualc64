@@ -264,6 +264,9 @@ public:
     void reset() override;
     void ping() override;
     void setClockFrequency(u32 frequency) override;
+    
+private:
+    
     void _dump() override;
         
 

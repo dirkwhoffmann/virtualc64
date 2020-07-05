@@ -321,11 +321,14 @@ public:
 public:
 
 	void reset() override;
-	void _dump() override;
     size_t stateSize() override;
     void didLoadFromBuffer(u8 **buffer) override;
     void didSaveToBuffer(u8 **buffer) override;
     
+private:
+
+    void _dump() override;
+
     
     //
     //! @functiongroup Gathering debug information

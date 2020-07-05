@@ -71,8 +71,11 @@ public:
     size_t stateSize() override;
     void didLoadFromBuffer(u8 **buffer) override;
     void didSaveToBuffer(u8 **buffer) override;
-    void _dump() override;
+
+private:
     
+    void _dump() override;
+
     
 public:
     

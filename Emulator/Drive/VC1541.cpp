@@ -118,7 +118,7 @@ VC1541::_dump()
 	msg("            SYNC : %d\n", sync);
     msg("       Read mode : %s\n", readMode() ? "YES" : "NO");
 	msg("\n");
-    mem._dump();
+    mem.dump();
     startTracing();
 }
 

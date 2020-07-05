@@ -179,9 +179,12 @@ public:
     void willLoadFromBuffer(u8 **buffer) override { dealloc(); }
     void didLoadFromBuffer(u8 **buffer) override;
     void didSaveToBuffer(u8 **buffer) override;
+
+private:
+
     void _dump() override;
     
-    
+        
     //
     //! @functiongroup Managing the cartridge configuration
     //

@@ -226,9 +226,13 @@ public:
     void _initialize() override;
     void reset() override;
     void ping() override;
-    void _dump() override;
     void setClockFrequency(u32 frequency) override;
 
+private:
+    
+    void _dump() override;
+
+    
 public:
     
     /*! @brief    Resets all disk related properties

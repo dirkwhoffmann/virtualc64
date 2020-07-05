@@ -64,8 +64,34 @@ SIDBridge::setReSID(bool enable)
     useReSID = enable;
 }
 
+void 
+SIDBridge::_dump()
+{
+    msg("ReSID:\n");
+    msg("------\n");
+    _dump(resid.getInfo());
+
+    msg("FastSID:\n");
+    msg("--------\n");
+    msg("    Chip model: %s\n",
+        (fastsid.getModel() == MOS_6581) ? "6581" :
+        (fastsid.getModel() == MOS_8580) ? "8580" : "???");
+    msg(" Sampling rate: %d\n", fastsid.getSampleRate());
+    msg(" CPU frequency: %d\n", fastsid.getClockFrequency());
+    msg("Emulate filter: %s\n", fastsid.getAudioFilter() ? "yes" : "no");
+    msg("\n");
+    _dump(fastsid.getInfo());
+    
+    resid.sid->voice[0].wave.reset(); // reset_shift_register();
+    resid.sid->voice[1].wave.reset(); // reset_shift_register();
+    resid.sid->voice[2].wave.reset(); // reset_shift_register();
+    resid.sid->voice[0].envelope.reset();
+    resid.sid->voice[1].envelope.reset();
+    resid.sid->voice[2].envelope.reset();
+}
+
 void
-SIDBridge::dump(SIDInfo info)
+SIDBridge::_dump(SIDInfo info)
 {
     u8 ft = info.filterType;
     msg("        Volume: %d\n", info.volume);
@@ -94,32 +120,6 @@ SIDBridge::dump(SIDInfo info)
         msg("            Sustain rate: %d\n", vinfo.sustainRate);
         msg("            Release rate: %d\n", vinfo.releaseRate);
     }
-}
-
-void 
-SIDBridge::_dump()
-{
-    msg("ReSID:\n");
-    msg("------\n");
-    dump(resid.getInfo());
-
-    msg("FastSID:\n");
-    msg("--------\n");
-    msg("    Chip model: %s\n",
-        (fastsid.getModel() == MOS_6581) ? "6581" :
-        (fastsid.getModel() == MOS_8580) ? "8580" : "???");
-    msg(" Sampling rate: %d\n", fastsid.getSampleRate());
-    msg(" CPU frequency: %d\n", fastsid.getClockFrequency());
-    msg("Emulate filter: %s\n", fastsid.getAudioFilter() ? "yes" : "no");
-    msg("\n");
-    dump(fastsid.getInfo());
-    
-    resid.sid->voice[0].wave.reset(); // reset_shift_register();
-    resid.sid->voice[1].wave.reset(); // reset_shift_register();
-    resid.sid->voice[2].wave.reset(); // reset_shift_register();
-    resid.sid->voice[0].envelope.reset();
-    resid.sid->voice[1].envelope.reset();
-    resid.sid->voice[2].envelope.reset();
 }
 
 SIDInfo

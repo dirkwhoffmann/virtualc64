@@ -146,15 +146,17 @@ public:
 public:
     
     void reset() override;
-    void _dump() override;
     void setClockFrequency(u32 frequency) override;
     void didLoadFromBuffer(u8 **buffer) override { clearRingbuffer(); }
+
+private:
     
+    void _dump() override;
+    void _dump(SIDInfo info);
+
     
 public:
     
-	//! @brief    Prints debug information
-    void dump(SIDInfo info);
 
     //! @brief    Gathers all values that are displayed in the debugger
     SIDInfo getInfo();

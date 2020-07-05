@@ -36,7 +36,7 @@ EasyFlash::reset()
 void
 EasyFlash::_dump()
 {
-    Cartridge::_dump();
+    Cartridge::dump();
     
     msg("EasyFlash\n");
     msg("---------\n\n");
@@ -48,8 +48,8 @@ EasyFlash::_dump()
     }
     msg("\n");
     
-    flashRomL._dump();
-    flashRomH._dump();
+    flashRomL.dump();
+    flashRomH.dump();
 }
 
 size_t

@@ -75,9 +75,13 @@ public:
     
 	void reset() override;
     void ping() override;
+    
+private:
+    
 	void _dump() override;
 
-    public:
+    
+public:
 
 	void dumpTrace();
 	    

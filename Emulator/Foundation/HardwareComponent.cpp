@@ -31,6 +31,20 @@ HardwareComponent::initialize()
 }
 
 void
+HardwareComponent::dumpConfig()
+{
+    msg("%s (memory location: %p)\n\n", getDescription(), this);
+    _dumpConfig();
+}
+
+void
+HardwareComponent::dump()
+{
+    msg("%s (memory location: %p)\n\n", getDescription(), this);
+    _dump();
+}
+
+void
 HardwareComponent::reset()
 {
     // Reset all subcomponents

@@ -70,7 +70,16 @@ public:
     
 
     
-    
+    /* Dumps debug information about the current configuration to the console
+     */
+    void dumpConfig();
+    virtual void _dumpConfig() { }
+
+    /* Dumps debug information about the internal state to the console
+     */
+    void dump();
+    virtual void _dump() { }
+
     
     
     
@@ -138,18 +147,8 @@ public:
      */
     virtual void setClockFrequency(u32 frequency);
     
-    //
-    //! @functiongroup Debugging the component
-    //
+ 
 
-	//! @brief    Print info about the internal state.
-	/*! @details  This functions is intended for debugging purposes only. Any
-     *            derived component should override this method and print out
-     *            useful debugging information.
-	 */ 
-    virtual void _dump() { };
-	
-    
     //
     //! @functiongroup Registering snapshot items and sub components
     //

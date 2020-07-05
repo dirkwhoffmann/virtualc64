@@ -100,7 +100,7 @@ CPU::_dump()
 	msg("   NMI routine : %02X%02X\n", mem->spypeek(0xFFFB), mem->spypeek(0xFFFA));
 	msg("\n");
     
-    pport._dump();
+    pport.dump();
 }
 
 size_t

@@ -96,7 +96,7 @@ ExpansionPort::_dump()
     if (cartridge == NULL) {
         msg("No cartridge attached\n");
     } else {
-        cartridge->_dump();
+        cartridge->dump();
     }
 }
 
@@ -264,7 +264,6 @@ ExpansionPort::attachCartridge(Cartridge *c)
     if (cartridge->hasSwitch()) vc64.putMessage(MSG_CART_SWITCH);
     
     debug(EXP_DEBUG, "Cartridge attached to expansion port");
-    cartridge->_dump();
 }
 
 bool

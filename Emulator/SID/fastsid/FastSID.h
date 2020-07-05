@@ -132,6 +132,9 @@ public:
     
     void reset() override;
     void setClockFrequency(u32 frequency) override;
+
+private:
+    
     void _dump() override;
 
     

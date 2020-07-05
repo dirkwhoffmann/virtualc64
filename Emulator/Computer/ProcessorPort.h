@@ -60,7 +60,7 @@ public:
     // Methods from HardwareComponent
     //
 
-public:
+private:
     
     void _dump() override;
 

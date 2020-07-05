@@ -257,6 +257,9 @@ public:
 public:
     
 	void reset() override;
+    
+private:
+    
 	void _dump() override;
 
     
@@ -435,67 +438,64 @@ private:
 };
 
 
-/*! @class    The first virtual complex interface adapter (CIA 1)
- *  @details  The CIA 1 chips differs from the CIA 2 chip in several smaller
- *            aspects. For example, the CIA 1 interrupts the CPU via the
- *            IRQ line (maskable interrupts). Furthermore, the keyboard is
- *            connected to the the C64 via the CIA 1 chip.
+/* The first virtual complex interface adapter (CIA 1).
+ * The CIA 1 chips differs from the CIA 2 chip in several smaller aspects.
+ * For example, the CIA 1 interrupts the CPU via the IRQ line (maskable
+ * interrupts). Furthermore, the keyboard is connected to the the C64 via the
+ * CIA 1 chip.
  */
 class CIA1 : public CIA {
 	
 public:
 
     CIA1(C64 &ref);
-    ~CIA1();
-    void _dump();
-    
+
 private:
+        
+    void pullDownInterruptLine() override;
+    void releaseInterruptLine() override;
     
-    void pullDownInterruptLine();
-    void releaseInterruptLine();
-    
-    u8 portAinternal();
-    u8 portAexternal();
-    void updatePA();
-    u8 portBinternal();
-    u8 portBexternal();
-    void updatePB();
+    u8 portAinternal() override;
+    u8 portAexternal() override;
+    void updatePA() override;
+    u8 portBinternal() override;
+    u8 portBexternal() override;
+    void updatePB() override;
 };
 	
-/*! @brief    The second virtual complex interface adapter (CIA 2)
- *  @details  The CIA 2 chips differs from the CIA 1 chip in several smaller
- *            aspects. For example, the CIA 2 interrupts the CPU via the
- *            NMI line (non maskable interrupts). Furthermore, the CIA 2
- *            controlls the memory bank seen by the video controller. 
+/* The second virtual complex interface adapter (CIA 2).
+ * The CIA 2 chips differs from the CIA 1 chip in several smaller aspects.
+ * For example, the CIA 2 interrupts the CPU via the NMI line (non maskable
+ * interrupts). Furthermore, the CIA 2 controlls the memory bank seen by the
+ * video controller.
  */
 class CIA2 : public CIA {
 
 public:
 
     CIA2(C64 &ref);
-    ~CIA2();
-    void reset(); 
-    void _dump();
     
 private:
-
-    void pullDownInterruptLine();
-    void releaseInterruptLine();
     
-    u8 portAinternal();
-    u8 portAexternal();
+    void reset() override;
+    
+    void pullDownInterruptLine() override;
+    void releaseInterruptLine() override;
+    
+    u8 portAinternal() override;
+    u8 portAexternal() override;
     
 public:
     
-    void updatePA();
+    void updatePA() override;
     
 private:
     
-    u8 portBinternal();
-    u8 portBexternal();
-    void updatePB();
-    void pokePA(u8 value);
-    void pokeDDRA(u8 value);
+    u8 portBinternal() override;
+    u8 portBexternal() override;
+    void updatePB() override;
+    void pokePA(u8 value) override;
+    void pokeDDRA(u8 value) override;
 };
 
 #endif

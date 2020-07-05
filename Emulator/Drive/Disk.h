@@ -185,8 +185,11 @@ public:
     
 public:
     
-    void _dump() override;
     void ping() override;
+
+private:
+    
+    void _dump() override;
 
     
 public:
