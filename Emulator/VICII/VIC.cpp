@@ -109,7 +109,6 @@ VIC::VIC(C64 &ref) : C64Component(ref)
 void
 VIC::_initialize()
 {
-    debug("VIC initialize");
     setModel(PAL_8565);
 }
 

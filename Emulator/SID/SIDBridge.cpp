@@ -50,14 +50,6 @@ SIDBridge::reset()
     targetVolume = 100000;
 }
 
-void
-SIDBridge::setClockFrequency(u32 frequency)
-{
-    debug(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
-    resid.setClockFrequency(frequency);
-    fastsid.setClockFrequency(frequency);
-}
-
 void 
 SIDBridge::setReSID(bool enable)
 {

@@ -73,9 +73,11 @@ FastSID::reset()
 }
 
 void
-FastSID::setClockFrequency(u32 frequency)
+FastSID::_setClockFrequency(u32 value)
 {
-    cpuFrequency = frequency;
+    debug(SID_DEBUG, "Setting clock frequency to %d\n", value);
+
+    cpuFrequency = value;
     
     // Recompute frequency dependent data structures
     init(sampleRate, cpuFrequency);

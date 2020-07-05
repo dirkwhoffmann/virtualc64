@@ -148,10 +148,8 @@ void C64::_ping()
 }
 
 void
-C64::setClockFrequency(u32 value)
+C64::_setClockFrequency(u32 value)
 {
-    HardwareComponent::setClockFrequency(value);
-    
     frequency = value;
     durationOfOneCycle = 10000000000 / value;
 }

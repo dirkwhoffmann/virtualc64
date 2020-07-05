@@ -83,9 +83,7 @@ VC1541::reset()
 
 void
 VC1541::resetDisk()
-{
-    debug (3, "Resetting disk in VC1541...\n");
-    
+{    
     disk.clearDisk();
 }
 
@@ -101,9 +99,9 @@ VC1541::_ping()
 }
 
 void
-VC1541::setClockFrequency(u32 frequency)
+VC1541::_setClockFrequency(u32 value)
 {
-    durationOfOneCpuCycle = 10000000000 / frequency;
+    durationOfOneCpuCycle = 10000000000 / value;
 }
 
 void 

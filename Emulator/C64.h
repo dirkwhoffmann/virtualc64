@@ -262,13 +262,13 @@ public:
     
     void prefix() override;
     void reset() override;
-    void setClockFrequency(u32 frequency) override;
     
 private:
     
     void _ping() override;
     void _dump() override;
-        
+    void _setClockFrequency(u32 value) override;
+
 
     //
     // Configuring the emulator

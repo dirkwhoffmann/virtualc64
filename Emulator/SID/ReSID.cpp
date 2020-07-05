@@ -130,8 +130,10 @@ ReSID::setModel(SIDModel m)
 }
 
 void
-ReSID::setClockFrequency(u32 value)
+ReSID::_setClockFrequency(u32 value)
 {
+    debug(SID_DEBUG, "Setting clock frequency to %d\n", value);
+
     clockFrequency = value;
     
     suspend();
@@ -141,7 +143,6 @@ ReSID::setClockFrequency(u32 value)
     resume();
     
     assert((u32)sid->clock_frequency == clockFrequency);
-    debug(SID_DEBUG, "Setting clock frequency to %d cycles per second.\n", clockFrequency);
 }
 
 void

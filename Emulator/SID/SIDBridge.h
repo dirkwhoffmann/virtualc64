@@ -146,7 +146,6 @@ public:
 public:
     
     void reset() override;
-    void setClockFrequency(u32 frequency) override;
     void didLoadFromBuffer(u8 **buffer) override { clearRingbuffer(); }
 
 private:

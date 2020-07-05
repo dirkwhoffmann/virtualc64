@@ -77,6 +77,10 @@ public:
     void didLoadFromBuffer(u8 **buffer) override { sid->write_state(st); }
     void willSaveToBuffer(u8 **buffer) override { st = sid->read_state(); }
 
+private:
+
+    void _setClockFrequency(u32 value) override;
+
     
 public:
     
@@ -115,10 +119,7 @@ public:
         assert((u32)sid->clock_frequency == clockFrequency);
         return (u32)sid->clock_frequency;
     }
-    
-    //! Sets the clock frequency
-    void setClockFrequency(u32 frequency) override;
-    
+
     //! Returns the sample rate
     u32 getSampleRate() { return sampleRate; }
     

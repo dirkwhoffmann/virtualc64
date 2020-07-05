@@ -51,6 +51,21 @@ HardwareComponent::dump()
 }
 
 void
+HardwareComponent::setClockFrequency(u32 value)
+{
+    assert(value == PAL_CLOCK_FREQUENCY || value == NTSC_CLOCK_FREQUENCY);
+    
+    for (HardwareComponent *c : subComponents) {
+        c->setClockFrequency(value);
+    }
+    _setClockFrequency(value);
+}
+
+
+
+
+
+void
 HardwareComponent::reset()
 {
     // Reset all subcomponents
@@ -67,17 +82,6 @@ HardwareComponent::reset()
     debug(RUN_DEBUG, "Resetting...\n");
 }
 
-
-void
-HardwareComponent::setClockFrequency(u32 frequency)
-{
-    assert(frequency == PAL_CLOCK_FREQUENCY || frequency == NTSC_CLOCK_FREQUENCY);
-    
-    // Inform all subcomponents
-    for (HardwareComponent *c : subComponents) {
-        c->setClockFrequency(frequency);
-    }
-}
 
 /*
 void

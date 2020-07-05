@@ -74,10 +74,10 @@ public:
 public:
     
 	void reset() override;
-    void ping() override;
     
 private:
     
+    void _ping() override;
 	void _dump() override;
 
     

@@ -88,8 +88,17 @@ public:
     void dump();
     virtual void _dump() { }
 
+    /* Informs the component about a clock frequency change.
+     * This delegation method is called on startup and whenever the CPU clock
+     * frequency changes (i.e., when switching between PAL and NTSC). Some
+     * components overwrite this function to update clock dependent lookup
+     * tables.
+     */
+    void setClockFrequency(u32 value);
+    virtual void _setClockFrequency(u32 value) { }
+
     
-    
+
     
     /*! @brief   Type and behavior of a snapshot item
      *  @details The reset flags indicate whether the snapshot item should be
@@ -140,15 +149,6 @@ public:
 	
  
 
-    //! @brief    Informs the component about a clock frequency change.
-    /*! @details  This delegation method is called on startup and whenever the
-     *            CPU clock frequency changes (i.e., when switching between
-     *            PAL and NTSC). Some components overwrite this function to
-     *            update clock dependent lookup tables.
-     *  @param    frequency Frequency of the C64 CPU in Hz.
-     *            Must be either PAL_CLOCK_FREQUENCY_PAL or NTSC_CLOCK_FREQUENCY.
-     */
-    virtual void setClockFrequency(u32 frequency);
     
  
 
