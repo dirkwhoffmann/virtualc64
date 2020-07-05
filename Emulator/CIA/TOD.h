@@ -80,22 +80,42 @@ private:
      */
     u64 frequencyCounter;
     
+    
+    //
+    // Creating and destructing
+    //
+    
 public:
     
-    //
-    //! @functiongroup Creating and destructing
-    //
-    
-	//! @brief    Constructor
 	TOD(CIA *cia, C64 &ref);
-	
+    
+    template <class T>
+    void applyToPersistentItems(T& worker)
+    {
+    }
+    
+    template <class T>
+    void applyToResetItems(T& worker)
+    {
+        worker
+        
+        & tod.value
+        & latch.value
+        & alarm.value
+        & frozen
+        & stopped
+        & matching
+        & hz
+        & frequencyCounter;
+    }
+    
     
     //
-    //! @functiongroup Methods from HardwareComponent
+    // Methods from HardwareComponent
     //
 
-	void reset();
-	void dump();	
+	void reset() override;
+	void dump() override;
 
     
     //

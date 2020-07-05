@@ -160,6 +160,36 @@ public:
      */
     virtual void  willSaveToBuffer(u8 **buffer) { };
     virtual void  didSaveToBuffer(u8 **buffer) { };
+
+    
+    //
+    // Standard implementations for _reset, _load, and _save
+    //
+
+    #define COMPUTE_SNAPSHOT_SIZE \
+    SerCounter counter; \
+    applyToPersistentItems(counter); \
+    applyToResetItems(counter); \
+    return counter.count;
+
+    #define RESET_SNAPSHOT_ITEMS \
+    SerResetter resetter; \
+    applyToResetItems(resetter); \
+    debug(SNP_DEBUG, "Resetted\n");
+
+    #define LOAD_SNAPSHOT_ITEMS \
+    SerReader reader(buffer); \
+    applyToPersistentItems(reader); \
+    applyToResetItems(reader); \
+    debug(SNP_DEBUG, "Recreated from %d bytes\n", reader.ptr - buffer); \
+    return reader.ptr - buffer;
+
+    #define SAVE_SNAPSHOT_ITEMS \
+    SerWriter writer(buffer); \
+    applyToPersistentItems(writer); \
+    applyToResetItems(writer); \
+    debug(SNP_DEBUG, "Serialized to %d bytes\n", writer.ptr - buffer); \
+    return writer.ptr - buffer;
 };
 
 #endif
