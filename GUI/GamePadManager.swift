@@ -232,9 +232,8 @@ class GamePadManager: NSObject {
         let hidContext = unsafeBitCast(gamePads[slotNr], to: UnsafeMutableRawPointer.self)
         IOHIDDeviceRegisterInputValueCallback(device, gamePads[slotNr]!.actionCallback, hidContext)
 
-        // Inform controller
-        controller.validateJoystickToolbarItems()
-        
+        // Update to toolbar
+        controller.toolbar.validateVisibleItems()
         listDevices()
     }
     
@@ -259,19 +258,8 @@ class GamePadManager: NSObject {
             track("Clearing slot \(slotNr)")
         }
         
-        // Closing the HID device always fails.
-        // Think, we don't have to close it, because it's disconnected anyway. Am I right?
-        /* 
-        let optionBits = kIOHIDOptionsTypeNone // kIOHIDOptionsTypeSeizeDevice
-        let status = IOHIDDeviceClose(device, IOOptionBits(optionBits))
-        if (status != kIOReturnSuccess) {
-            track("WARNING: Cannot close HID device")
-        }
-        */
-        
-        // Inform controller
-        controller.validateJoystickToolbarItems()
-        
+        // Update to toolbar
+        controller.toolbar.validateVisibleItems()
         listDevices()
     }
     

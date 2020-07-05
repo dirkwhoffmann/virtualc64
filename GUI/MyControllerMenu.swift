@@ -348,6 +348,58 @@ extension MyController: NSMenuItemValidation {
         
         keyboardcontroller.type(string: text, completion: nil)
     }
+    
+    @IBAction func stopAndGoAction(_ sender: Any!) {
+        
+        needsSaving = true
+        if c64.isHalted() {
+            c64.run()
+        } else {
+            c64.halt()
+        }
+        refresh()
+    }
+    
+    @IBAction func stepIntoAction(_ sender: Any!) {
+        
+        needsSaving = true
+        c64.step()
+        refresh()
+    }
+    
+    @IBAction func stepOverAction(_ sender: Any!) {
+        
+        needsSaving = true
+        c64.stepOver()
+        refresh()
+    }
+    
+    @IBAction func resetAction(_ sender: Any!) {
+        
+        needsSaving = true
+        metalScreen.rotateBack()
+        c64.powerUp()
+        refresh()
+    }
+
+    @IBAction func powerAction(_ sender: Any!) {
+        
+        track()
+        /*
+        if c64.isPoweredOn() {
+            c64.powerOff()
+            return
+        }
+        
+        var error: ErrorCode = ERR_OK
+        if c64.isReady(&error) {
+            c64.run()
+        } else {
+            mydocument.showConfigurationAltert(error)
+        }
+        */
+    }
+    
 
     //
     // Action methods (View menu)
@@ -938,17 +990,4 @@ extension MyController: NSMenuItemValidation {
     @IBAction func dumpC64JoystickB(_ sender: Any!) { c64.port2.dump(); gamePadManager.listDevices()}
     @IBAction func dumpIEC(_ sender: Any!) { c64.iec.dump() }
     @IBAction func dumpC64ExpansionPort(_ sender: Any!) { c64.expansionport.dump() }
-    
-    //
-    // Action methods (Toolbar)
-    //
-    
-    @IBAction func resetAction(_ sender: Any!) {
-        
-        needsSaving = true
-        metalScreen.rotateBack()
-        c64.powerUp()
-        refresh()
-    }
-    
 }

@@ -9,59 +9,23 @@
 
 import Foundation
 
+struct InputDevice {
+    static let none = -1
+    static let keyset1 = 0
+    static let keyset2 = 1
+    static let mouse = 2
+    static let joystick1 = 3
+    static let joystick2 = 4
+}
+
 extension MyController {
- 
-    struct InputDevice {
-        static let none = -1
-        static let keyset1 = 0
-        static let keyset2 = 1
-        static let mouse = 2
-        static let joystick1 = 3
-        static let joystick2 = 4
-    }
-    
+     
     // NSDrawerState is deprected an not available natively in Swift
     struct NSDrawerState {
         static let closed = 0
         static let opening = 1
         static let open = 2
         static let closing = 3
-    }
-    
-    func validateToolbarItems() {
-        
-        let button = pauseTbItem.view as? NSButton
-        if c64.isRunning() {
-            button?.image = NSImage.init(named: "pauseTemplate")
-            pauseTbItem.label = "Pause"
-        } else {
-            button?.image = NSImage.init(named: "continueTemplate")
-            pauseTbItem.label = "Run"
-        }
-        
-        validateJoystickToolbarItems()
-    }
-    
-    func validateJoystickToolbarItem(_ popup: NSPopUpButton, selectedSlot: Int, port: ControlPortProxy!) {
-        
-        let menu =  popup.menu
-        let item3 = menu?.item(withTag: InputDevice.joystick1)
-        let item4 = menu?.item(withTag: InputDevice.joystick2)
-        
-        // USB joysticks
-        item3?.title = gamePadManager.gamePads[3]?.name ?? "USB Device 1"
-        item4?.title = gamePadManager.gamePads[4]?.name ?? "USB Device 2"
-        item3?.isEnabled = !gamePadManager.slotIsEmpty(InputDevice.joystick1)
-        item4?.isEnabled = !gamePadManager.slotIsEmpty(InputDevice.joystick2)
-        
-        // Mark game pad connected to port
-        popup.selectItem(withTag: selectedSlot)
-    }
-    
-    func validateJoystickToolbarItems() {
-    
-        validateJoystickToolbarItem(controlPort1, selectedSlot: inputDevice1, port: c64.port1)
-        validateJoystickToolbarItem(controlPort2, selectedSlot: inputDevice2, port: c64.port2)
     }
     
     @IBAction func port1Action(_ sender: NSPopUpButton) {
@@ -89,7 +53,8 @@ extension MyController {
         
         UserDefaults.standard.set(inputDevice1, forKey: VC64Keys.inputDevice1)
         UserDefaults.standard.set(inputDevice2, forKey: VC64Keys.inputDevice2)
-        validateJoystickToolbarItems()
+        
+        toolbar.validateVisibleItems()
     }
     
     @IBAction func port2Action(_ sender: NSPopUpButton) {
@@ -115,7 +80,8 @@ extension MyController {
         
         UserDefaults.standard.set(inputDevice1, forKey: VC64Keys.inputDevice1)
         UserDefaults.standard.set(inputDevice2, forKey: VC64Keys.inputDevice2)
-        validateJoystickToolbarItems()
+
+        toolbar.validateVisibleItems()
     }
         
     @IBAction func diskInspectorAction(_ sender: Any!) {

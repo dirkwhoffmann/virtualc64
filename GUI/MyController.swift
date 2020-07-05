@@ -150,10 +150,7 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var warpIcon: NSButton!
     
     // Toolbar
-    @IBOutlet weak var controlPort1: NSPopUpButton!
-    @IBOutlet weak var controlPort2: NSPopUpButton!
-    @IBOutlet weak var pauseTbItem: NSToolbarItem!
-    @IBOutlet weak var snapshotSegCtrl: NSSegmentedControl!
+    @IBOutlet weak var toolbar: NSToolbar!
 
     // Debug panel (commons)
     var hex = true
@@ -384,7 +381,7 @@ extension MyController {
         createTimer()
         
         // Update toolbar
-        validateToolbarItems()
+        toolbar.validateVisibleItems()
     }
     
     func configureWindow() {
@@ -418,7 +415,7 @@ extension MyController {
         var gamepad = NSImage(named: "crystal_gamepad")
         gamepad = gamepad?.resizeImage(width: 32, height: 32, cutout: cutout)
         
-        validateJoystickToolbarItems()
+        toolbar.validateVisibleItems()
     }
     
     func addListener() {
@@ -553,13 +550,13 @@ extension MyController {
             
             needsSaving = true
             disableUserEditing()
-            validateToolbarItems()
+            toolbar.validateVisibleItems()
             refresh()
     
         case MSG_HALT:
             
             enableUserEditing()
-            validateToolbarItems()
+            toolbar.validateVisibleItems()
             refresh()
     
         case MSG_BASIC_ROM_LOADED,
