@@ -64,10 +64,8 @@ IEC::reset()
 }
 
 void
-IEC::ping()
+IEC::_ping()
 {
-    HardwareComponent::ping();
-    
     vc64.putMessage(busActivity > 0 ? MSG_IEC_BUS_BUSY : MSG_IEC_BUS_IDLE);
 }
 

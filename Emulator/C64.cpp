@@ -141,11 +141,8 @@ C64::reset()
     ping();
 }
 
-void C64::ping()
+void C64::_ping()
 {
-    debug (2, "Pinging virtual C64[%p]\n", this);
-
-    HardwareComponent::ping();
     putMessage(warp ? MSG_WARP_ON : MSG_WARP_OFF);
     putMessage(alwaysWarp ? MSG_ALWAYS_WARP_ON : MSG_ALWAYS_WARP_OFF);
 }

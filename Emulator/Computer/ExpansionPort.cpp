@@ -43,9 +43,8 @@ ExpansionPort::reset()
 }
 
 void
-ExpansionPort::ping()
+ExpansionPort::_ping()
 {
-    HardwareComponent::ping();
     vc64.putMessage(cartridge ? MSG_CARTRIDGE : MSG_NO_CARTRIDGE);
     vc64.putMessage(MSG_CART_SWITCH);
 }

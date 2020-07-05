@@ -21,13 +21,19 @@ HardwareComponent::~HardwareComponent()
 void
 HardwareComponent::initialize()
 {
-    // Initialize all subcomponents
     for (HardwareComponent *c : subComponents) {
         c->initialize();
     }
-    
-    // Initialize this component
     _initialize();
+}
+
+void
+HardwareComponent::ping()
+{
+    for (HardwareComponent *c : subComponents) {
+        c->ping();
+    }
+    _ping();
 }
 
 void
@@ -61,14 +67,6 @@ HardwareComponent::reset()
     debug(RUN_DEBUG, "Resetting...\n");
 }
 
-void
-HardwareComponent::ping()
-{
-    // Ping all subcomponents
-    for (HardwareComponent *c : subComponents) {
-        c->ping();
-    }
-}
 
 void
 HardwareComponent::setClockFrequency(u32 frequency)

@@ -68,7 +68,15 @@ public:
     void initialize();
     virtual void _initialize() { };
     
-
+    /* Asks the component to inform the GUI about its current state.
+     * The GUI invokes this function when it needs to update all of its visual
+     * elements. This happens, e.g., when a snapshot file was loaded.
+     */
+    void ping();
+    virtual void _ping() { }
+    
+    
+    
     
     /* Dumps debug information about the current configuration to the console
      */
@@ -130,12 +138,7 @@ public:
      */
 	virtual void reset();
 	
-    //! @brief    Asks the component to inform the GUI about its current state.
-    /*! @details  The GUI invokes this function to update its visual elements,
-     *            e.g., after loading a snapshot file. Only some components
-     *            overwrite this function.
-     */
-    virtual void ping();
+ 
 
     //! @brief    Informs the component about a clock frequency change.
     /*! @details  This delegation method is called on startup and whenever the

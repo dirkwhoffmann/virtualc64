@@ -183,10 +183,6 @@ public:
     // Methods from HardwareComponent
     //
     
-public:
-    
-    void ping() override;
-
 private:
     
     void _dump() override;

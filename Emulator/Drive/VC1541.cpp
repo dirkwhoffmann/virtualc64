@@ -90,10 +90,8 @@ VC1541::resetDisk()
 }
 
 void
-VC1541::ping()
-{
-    HardwareComponent::ping();
-    
+VC1541::_ping()
+{    
     vc64.putMessage(poweredOn ? MSG_VC1541_ATTACHED : MSG_VC1541_DETACHED, deviceNr);
     vc64.putMessage(redLED ? MSG_VC1541_RED_LED_ON : MSG_VC1541_RED_LED_OFF, deviceNr);
     vc64.putMessage(spinning ? MSG_VC1541_MOTOR_ON : MSG_VC1541_MOTOR_OFF, deviceNr);

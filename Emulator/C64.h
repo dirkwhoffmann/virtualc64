@@ -262,11 +262,11 @@ public:
     
     void prefix() override;
     void reset() override;
-    void ping() override;
     void setClockFrequency(u32 frequency) override;
     
 private:
     
+    void _ping() override;
     void _dump() override;
         
 

@@ -156,9 +156,8 @@ VIC::reset()
 }
 
 void
-VIC::ping()
+VIC::_ping()
 {
-    HardwareComponent::ping();
     vc64.putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
 }
 

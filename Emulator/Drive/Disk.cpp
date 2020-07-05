@@ -113,12 +113,6 @@ Disk::_dump()
 }
 
 void
-Disk::ping()
-{
-    HardwareComponent::ping();
-}
-
-void
 Disk::setModified(bool b)
 {
     if (b != modified) {

@@ -67,13 +67,13 @@ public:
 public:
     
     void reset() override;
-    void ping() override;
     size_t stateSize() override;
     void didLoadFromBuffer(u8 **buffer) override;
     void didSaveToBuffer(u8 **buffer) override;
 
 private:
     
+    void _ping() override;
     void _dump() override;
 
     

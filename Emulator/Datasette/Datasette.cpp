@@ -48,9 +48,8 @@ Datasette::reset()
 }
 
 void
-Datasette::ping()
+Datasette::_ping()
 {
-    HardwareComponent::ping();
     vc64.putMessage(hasTape() ? MSG_VC1530_TAPE : MSG_VC1530_NO_TAPE);
     vc64.putMessage(MSG_VC1530_PROGRESS);
 }

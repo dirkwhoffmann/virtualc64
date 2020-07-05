@@ -174,7 +174,6 @@ public:
 public:
     
     void reset() override;
-    void ping() override { };
     size_t stateSize() override;
     void willLoadFromBuffer(u8 **buffer) override { dealloc(); }
     void didLoadFromBuffer(u8 **buffer) override;
