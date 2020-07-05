@@ -28,7 +28,7 @@ private:
 public:
     GeoRAM(C64 *c64, C64 &ref);
     CartridgeType getCartridgeType() { return CRT_GEO_RAM; }
-    void oldReset();
+    void _reset();
     size_t stateSize();
     void didLoadFromBuffer(u8 **buffer);
     void didSaveToBuffer(u8 **buffer);

@@ -23,7 +23,7 @@ Mouse::Mouse(C64 &ref) : C64Component(ref)
     config.model = MOUSE1350;
 }
 
-void Mouse::oldReset()
+void Mouse::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)
@@ -40,7 +40,7 @@ Mouse::setModel(MouseModel model)
     suspend();
 
     config.model = model;
-    oldReset();
+    _reset();
 
     resume();
 }

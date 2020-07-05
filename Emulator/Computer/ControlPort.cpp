@@ -24,7 +24,7 @@ ControlPort::ControlPort(int portNr, C64 &ref) : C64Component(ref)
 }
 
 void
-ControlPort::oldReset()
+ControlPort::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)

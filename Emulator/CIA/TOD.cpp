@@ -32,7 +32,7 @@ TOD::TOD(CIA *cia, C64 &ref) : C64Component(ref)
 }
 
 void
-TOD::oldReset() 
+TOD::_reset() 
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)

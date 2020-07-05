@@ -66,7 +66,7 @@ FastSID::FastSID(C64 &ref) : C64Component(ref)
 }
 
 void
-FastSID::oldReset()
+FastSID::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)

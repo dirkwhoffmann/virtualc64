@@ -38,7 +38,7 @@ SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
 }
 
 void
-SIDBridge::oldReset()
+SIDBridge::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)
@@ -47,8 +47,8 @@ SIDBridge::oldReset()
                  memset(snapshotItems[i].data, 0, snapshotItems[i].size);
 
     clearRingbuffer();
-    resid.oldReset();
-    fastsid.oldReset();
+    resid._reset();
+    fastsid._reset();
     
     volume = 100000;
     targetVolume = 100000;

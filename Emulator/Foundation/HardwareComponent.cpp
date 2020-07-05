@@ -33,9 +33,7 @@ HardwareComponent::reset()
     for (HardwareComponent *c : subComponents) {
         c->reset();
     }
-    
-    // _reset();
-    oldReset();
+    _reset();
 }
 
 void

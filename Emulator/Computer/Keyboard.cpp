@@ -25,7 +25,7 @@ Keyboard::Keyboard(C64 &ref) : C64Component(ref)
 }
 
 void 
-Keyboard::oldReset() 
+Keyboard::_reset() 
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)

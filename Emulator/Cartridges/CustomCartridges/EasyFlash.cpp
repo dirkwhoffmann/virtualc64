@@ -24,9 +24,9 @@ EasyFlash::EasyFlash(C64 *c64, C64 &ref) : Cartridge(c64, ref, "EasyFlash")
 }
 
 void
-EasyFlash::oldReset()
+EasyFlash::_reset()
 {
-    Cartridge::oldReset();
+    Cartridge::_reset();
     
     bank = 0;
     eraseRAM(0xFF);

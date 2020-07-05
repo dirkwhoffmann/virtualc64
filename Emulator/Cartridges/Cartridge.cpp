@@ -65,7 +65,7 @@ Cartridge::dealloc()
 }
 
 void
-Cartridge::oldReset()
+Cartridge::_reset()
 {
     // Reset external RAM
     if (externalRam && !persistentRam) {
@@ -487,6 +487,6 @@ Cartridge::resetWithoutDeletingRam()
     debug(RUN_DEBUG, "Resetting virtual C64 (preserving RAM)\n");
     
     memcpy(ram, mem.ram, 0x10000);
-    vc64.oldReset();
+    vc64.reset();
     memcpy(mem.ram, ram, 0x10000);
 }

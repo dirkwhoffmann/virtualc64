@@ -25,7 +25,7 @@ public:
     
 private:
 
-    void oldReset() override;
+    void _reset() override;
 
     
     //

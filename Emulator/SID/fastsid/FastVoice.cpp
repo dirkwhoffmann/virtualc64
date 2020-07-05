@@ -76,7 +76,7 @@ FastVoice::FastVoice()
 }
 
 void
-FastVoice::oldReset()
+FastVoice::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)

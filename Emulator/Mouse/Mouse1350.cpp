@@ -16,7 +16,7 @@ Mouse1350::Mouse1350(C64 &ref) : C64Component(ref) {
 }
 
 void
-Mouse1350::oldReset()
+Mouse1350::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)

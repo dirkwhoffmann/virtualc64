@@ -10,9 +10,9 @@
 #include "C64.h"
 
 void
-Comal80::oldReset()
+Comal80::_reset()
 {
-    CartridgeWithRegister::oldReset();
+    CartridgeWithRegister::_reset();
     expansionport.setCartridgeMode(CRT_16K);
     bankIn(0);
 }

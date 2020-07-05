@@ -41,7 +41,7 @@ Datasette::~Datasette()
 }
 
 void
-Datasette::oldReset()
+Datasette::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)

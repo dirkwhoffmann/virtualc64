@@ -29,7 +29,7 @@ VC1541Memory::VC1541Memory(VC1541 *drive, C64 &ref) : Memory(ref)
 }
 
 void 
-VC1541Memory::oldReset()
+VC1541Memory::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)

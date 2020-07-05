@@ -10,9 +10,9 @@
 #include "C64.h"
 
 void
-FinalIII::oldReset()
+FinalIII::_reset()
 {
-    CartridgeWithRegister::oldReset();
+    CartridgeWithRegister::_reset();
     freeezeButtonIsPressed = false;
     qD = true;
     bankIn(0);

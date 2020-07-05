@@ -64,7 +64,7 @@ public:
     
 public:
     
-    void oldReset() override;
+    void _reset() override;
     void didLoadFromBuffer(u8 **buffer) override;
 
 private:

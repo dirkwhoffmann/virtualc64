@@ -247,7 +247,7 @@ public:
     
 public:
     
-	void oldReset() override;
+	void _reset() override;
 
 private:
     

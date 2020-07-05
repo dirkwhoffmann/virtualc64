@@ -18,7 +18,7 @@ public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_ZAXXON; }
 
-    void oldReset();
+    void _reset();
     u8 peekRomL(u16 addr);
     u8 spypeekRomL(u16 addr);
 };

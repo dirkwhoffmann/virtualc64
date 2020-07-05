@@ -68,7 +68,7 @@ FlashRom::loadBank(unsigned bank, u8 *data)
 }
 
 void
-FlashRom::oldReset()
+FlashRom::_reset()
 {
     debug(CRT_DEBUG, "Resetting FlashRom\n");
     

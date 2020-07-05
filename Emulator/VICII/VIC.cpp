@@ -113,7 +113,7 @@ VIC::_initialize()
 }
 
 void 
-VIC::oldReset()
+VIC::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)

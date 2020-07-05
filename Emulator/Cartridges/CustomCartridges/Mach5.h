@@ -23,7 +23,7 @@ public:
     //! @functiongroup Methods from Cartridge
     //
 
-    void oldReset();
+    void _reset();
     u8 peekIO1(u16 addr);
     u8 peekIO2(u16 addr);
     void pokeIO1(u16 addr, u8 value);

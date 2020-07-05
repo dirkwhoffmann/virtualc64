@@ -53,7 +53,7 @@ VIA6522::VIA6522(VC1541 *drive, C64 &ref) : C64Component(ref)
     registerSnapshotItems(items, sizeof(items));
 }
 	
-void VIA6522::oldReset()
+void VIA6522::_reset()
 {    
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)

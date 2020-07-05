@@ -131,9 +131,9 @@ ActionReplay::ActionReplay(C64 *c64, C64 &ref) : CartridgeWithRegister(c64, ref,
 }
 
 void
-ActionReplay::oldReset()
+ActionReplay::_reset()
 {
-    Cartridge::oldReset();
+    Cartridge::_reset();
     setControlReg(0);
 }
 

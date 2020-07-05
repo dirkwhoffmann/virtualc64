@@ -107,7 +107,7 @@ C64Memory::C64Memory(C64 &ref) : Memory(ref)
 }
 
 void
-C64Memory::oldReset()
+C64Memory::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)

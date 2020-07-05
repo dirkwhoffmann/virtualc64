@@ -173,7 +173,7 @@ public:
     
 public:
     
-    void oldReset() override;
+    void _reset() override;
     size_t stateSize() override;
     void willLoadFromBuffer(u8 **buffer) override { dealloc(); }
     void didLoadFromBuffer(u8 **buffer) override;
@@ -432,8 +432,8 @@ protected:
 public:
     using Cartridge::Cartridge;
   
-    void oldReset() {
-        Cartridge::oldReset();
+    void _reset() {
+        Cartridge::_reset();
         control = 0;
     }
     size_t stateSize() {

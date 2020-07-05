@@ -92,7 +92,7 @@ ReSID::~ReSID()
 }
 
 void
-ReSID::oldReset()
+ReSID::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)

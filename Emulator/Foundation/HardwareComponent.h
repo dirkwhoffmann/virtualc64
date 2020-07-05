@@ -69,9 +69,10 @@ public:
     virtual void _initialize() { };
     
     /* Resets the component and its sub-component.
+     * Each component must implement this function.
      */
     void reset();
-    virtual void _reset() { }; // Replace by = 0;
+    virtual void _reset() = 0;
 
     /* Asks the component to inform the GUI about its current state.
      * The GUI invokes this function when it needs to update all of its visual
@@ -143,16 +144,6 @@ protected:
 public:
 
 
-    //
-    //! @functiongroup Initializing the component
-    //
-		
-    /*! @brief    Reset component to its initial state.
-     *  @details  By default, each component also resets its sub components.
-     */
-	virtual void oldReset() = 0;
-	
- 
 
     
  

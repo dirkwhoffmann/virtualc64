@@ -30,7 +30,7 @@ ExpansionPort::~ExpansionPort()
 }
 
 void
-ExpansionPort::oldReset()
+ExpansionPort::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)
@@ -39,7 +39,7 @@ ExpansionPort::oldReset()
                  memset(snapshotItems[i].data, 0, snapshotItems[i].size);
 
     if (cartridge) {
-        cartridge->oldReset();
+        cartridge->_reset();
         cartridge->resetCartConfig();
     } else {
         setCartridgeMode(CRT_OFF);
@@ -261,7 +261,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
     cartridge = c;
     
     // Reset cartridge to update exrom and game line on the expansion port
-    cartridge->oldReset();
+    cartridge->_reset();
     
     vc64.putMessage(MSG_CARTRIDGE);
     if (cartridge->hasSwitch()) vc64.putMessage(MSG_CART_SWITCH);
@@ -280,7 +280,7 @@ ExpansionPort::attachCartridgeAndReset(CRTFile *file)
         
         suspend();
         attachCartridge(cartridge);
-        vc64.oldReset();
+        vc64.reset();
         resume();
         return true;
     }
@@ -342,6 +342,6 @@ ExpansionPort::detachCartridgeAndReset()
 {
     suspend();
     detachCartridge();
-    vc64.oldReset();
+    vc64.reset();
     resume();
 }

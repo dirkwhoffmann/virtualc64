@@ -10,9 +10,9 @@
 #include "C64.h"
 
 void
-Mach5::oldReset()
+Mach5::_reset()
 {
-    Cartridge::oldReset();
+    Cartridge::_reset();
 }
 
 u8

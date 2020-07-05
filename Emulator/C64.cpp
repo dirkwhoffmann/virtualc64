@@ -102,7 +102,7 @@ C64::C64()
         
     // Set up the initial state
     initialize();
-    oldReset();
+    _reset();
 
     // Initialize mach timer info
     mach_timebase_info(&timebase);
@@ -122,7 +122,7 @@ C64::prefix()
 }
 
 void
-C64::oldReset()
+C64::_reset()
 {
     debug(RUN_DEBUG, "Resetting virtual C64[%p]\n", this);
     

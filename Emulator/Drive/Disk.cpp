@@ -100,7 +100,7 @@ Disk::Disk(C64 &ref) : C64Component(ref)
 }
 
 void
-Disk::oldReset()
+Disk::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
     if (snapshotItems != NULL)

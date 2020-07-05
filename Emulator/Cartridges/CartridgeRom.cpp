@@ -41,7 +41,7 @@ CartridgeRom::~CartridgeRom()
 }
 
 void
-CartridgeRom::oldReset()
+CartridgeRom::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
     if (snapshotItems != NULL)

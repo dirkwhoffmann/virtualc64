@@ -63,7 +63,7 @@ CPU::CPU(CPUModel model, Memory *mem, C64& ref) : C64Component(ref)
 }
 
 void
-CPU::oldReset()
+CPU::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)

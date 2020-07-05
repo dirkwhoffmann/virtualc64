@@ -320,7 +320,7 @@ public:
     
 public:
 
-	void oldReset() override;
+	void _reset() override;
     size_t stateSize() override;
     void didLoadFromBuffer(u8 **buffer) override;
     void didSaveToBuffer(u8 **buffer) override;

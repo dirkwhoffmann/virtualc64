@@ -58,7 +58,7 @@ CIA::CIA(C64 &ref) : C64Component(ref)
 }
 
 void
-CIA::oldReset()
+CIA::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)
@@ -1253,9 +1253,9 @@ CIA2::CIA2(C64 &ref) : CIA(ref)
 }
 
 void
-CIA2::oldReset()
+CIA2::_reset()
 {
-    CIA::oldReset();
+    CIA::_reset();
 
     counterA = 0xFFFF;
     counterB = 0xFFFF;

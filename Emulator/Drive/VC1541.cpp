@@ -73,7 +73,7 @@ VC1541::_initialize()
 }
 
 void
-VC1541::oldReset()
+VC1541::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)
@@ -126,7 +126,7 @@ void
 VC1541::powerUp()
 {
     suspend();
-    oldReset();
+    _reset();
     resume();
 }
 
@@ -369,7 +369,7 @@ VC1541::powerOff()
 
     suspend();
     
-    oldReset();
+    _reset();
     
     poweredOn = false;
     if (soundMessagesEnabled())

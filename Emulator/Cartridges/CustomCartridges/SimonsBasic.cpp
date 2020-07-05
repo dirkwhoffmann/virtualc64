@@ -10,7 +10,7 @@
 #include "C64.h"
 
 void
-SimonsBasic::oldReset()
+SimonsBasic::_reset()
 {
     bankIn(0);
     bankIn(1);

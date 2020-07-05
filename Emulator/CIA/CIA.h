@@ -256,7 +256,7 @@ public:
     
 public:
     
-	void oldReset() override;
+	void _reset() override;
     
 private:
     
@@ -477,7 +477,7 @@ public:
     
 private:
     
-    void oldReset() override;
+    void _reset() override;
     
     void pullDownInterruptLine() override;
     void releaseInterruptLine() override;

@@ -10,9 +10,9 @@
 #include "C64.h"
 
 void
-FreezeFrame::oldReset()
+FreezeFrame::_reset()
 {
-    Cartridge::oldReset();
+    Cartridge::_reset();
     
     // In Ultimax mode, the same ROM chip that appears in ROML also appears
     // in ROMH. By default, it it appears in ROML only, so let's bank it in

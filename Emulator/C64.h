@@ -259,12 +259,12 @@ public:
     //
 
 public:
-    
+
     void prefix() override;
-    void oldReset() override;
-    
+
 private:
-    
+
+    void _reset() override;
     void _ping() override;
     void _dump() override;
     void _setClockFrequency(u32 value) override;
