@@ -15,8 +15,8 @@
  * As well read the Commodore 64 Programmers Reference Guide pages 260-267.
  */
 
-#ifndef _CRTFILE_INC
-#define _CRTFILE_INC
+#ifndef _CRTFILE_H
+#define _CRTFILE_H
 
 #include "AnyC64File.h"
 

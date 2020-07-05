@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _WARPSPEED_INC
-#define _WARPSPEED_INC
+#ifndef _WARPSPEED_H
+#define _WARPSPEED_H
 
 #include "Cartridge.h"
 

@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _KINGSOFT_INC
-#define _KINGSOFT_INC
+#ifndef _KINGSOFT_H
+#define _KINGSOFT_H
 
 #include "Cartridge.h"
 

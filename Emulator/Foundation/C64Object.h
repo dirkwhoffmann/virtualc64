@@ -11,7 +11,6 @@
 #define _C64OBJECT_H
 
 #include "Utils.h"
-#include "C64Types.h"
 
 #include <vector>
 #include <map>

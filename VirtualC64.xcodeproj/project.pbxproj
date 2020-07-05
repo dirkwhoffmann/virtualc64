@@ -1054,6 +1054,9 @@
 			children = (
 				50A2D7AE24AF944500671F38 /* C64Constants.h */,
 				50A2D7B024AF94B400671F38 /* Aliases.h */,
+				504C42F224AF29AB00E69CAE /* Utils.h */,
+				504C42EF24AF29AB00E69CAE /* Utils.cpp */,
+				5093D6A824B19E9200BDF924 /* Serialization.h */,
 				504C42EC24AF29AB00E69CAE /* C64Object.h */,
 				504C42ED24AF29AB00E69CAE /* C64Object.cpp */,
 				504C42F524AF29AB00E69CAE /* HardwareComponent.h */,
@@ -1065,9 +1068,6 @@
 				50B99CF024B0DA6B008BC9F8 /* MessageQueueTypes.h */,
 				504C42F424AF29AB00E69CAE /* MessageQueue.h */,
 				504C42F124AF29AB00E69CAE /* MessageQueue.cpp */,
-				504C42F224AF29AB00E69CAE /* Utils.h */,
-				504C42EF24AF29AB00E69CAE /* Utils.cpp */,
-				5093D6A824B19E9200BDF924 /* Serialization.h */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";

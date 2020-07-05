@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _FREEZEFRAME_INC
-#define _FREEZEFRAME_INC
+#ifndef _FREEZEFRAME_H
+#define _FREEZEFRAME_H
 
 #include "Cartridge.h"
 

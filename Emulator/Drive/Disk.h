@@ -10,18 +10,17 @@
 #ifndef _DISK_H
 #define _DISK_H
 
-#include <string>
-#include <vector>
-#include <iostream>
+// #include <string>
+// #include <vector>
 
 #include "C64Component.h"
-// #include "DiskTypes.h"
 
+/*
 class C64;
 class VC1541;
 class D64File;
 class G64File;
-
+*/
 
 class Disk : public C64Component {
     

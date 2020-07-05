@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _CARTRIDGE_INC
-#define _CARTRIDGE_INC
+#ifndef _CARTRIDGE_H
+#define _CARTRIDGE_H
 
 #include "C64Component.h"
 #include "CartridgeTypes.h"

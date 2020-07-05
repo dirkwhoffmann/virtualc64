@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _EXPERT_INC
-#define _EXPERT_INC
+#ifndef _EXPERT_H
+#define _EXPERT_H
 
 #include "Cartridge.h"
 

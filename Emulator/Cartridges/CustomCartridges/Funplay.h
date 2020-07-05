@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _FUNPLAY_INC
-#define _FUNPLAY_INC
+#ifndef _FUNPLAY_H
+#define _FUNPLAY_H
 
 #include "Cartridge.h"
 

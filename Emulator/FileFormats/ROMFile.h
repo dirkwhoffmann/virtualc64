@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _ROMFILE_INC
-#define _ROMFILE_INC
+#ifndef _ROMFILE_H
+#define _ROMFILE_H
 
 #include "AnyC64File.h"
 

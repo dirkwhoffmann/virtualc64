@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _FINALIII_INC
-#define _FINALIII_INC
+#ifndef _FINALIII_H
+#define _FINALIII_H
 
 #include "Cartridge.h"
 

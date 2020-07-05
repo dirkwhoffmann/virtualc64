@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _ISEPIC_INC
-#define _ISEPIC_INC
+#ifndef _ISEPIC_H
+#define _ISEPIC_H
 
 #include "Cartridge.h"
 

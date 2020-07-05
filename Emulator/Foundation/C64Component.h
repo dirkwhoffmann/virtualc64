@@ -35,6 +35,17 @@ class Mouse1350;
 class Mouse1351;
 class NeosMouse;
 
+class File;
+class TAPFile;
+class T64File;
+class PRGFile;
+class P00File;
+class D64File;
+class G64File;
+class CRTFile;
+class ROMFile;
+class Snapshot;
+
 //
 // Base class for all C64 components
 //

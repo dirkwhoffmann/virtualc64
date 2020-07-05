@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _TAPFILE_INC
-#define _TAPFILE_INC
+#ifndef _TAPFILE_H
+#define _TAPFILE_H
 
 #include "AnyC64File.h"
 

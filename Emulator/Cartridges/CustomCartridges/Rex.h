@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _REX_INC
-#define _REX_INC
+#ifndef _REX_H
+#define _REX_H
 
 #include "Cartridge.h"
 

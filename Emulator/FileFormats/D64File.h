@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _D64FILE_INC
-#define _D64FILE_INC
+#ifndef _D64FILE_H
+#define _D64FILE_H
 
 #include "AnyDisk.h"
 #include "Disk.h"

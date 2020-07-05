@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _EASYFLASH_INC
-#define _EASYFLASH_INC
+#ifndef _EASYFLASH_H
+#define _EASYFLASH_H
 
 #include "Cartridge.h"
 

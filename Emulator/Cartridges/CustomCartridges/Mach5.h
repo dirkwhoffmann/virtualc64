@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _MACH5_INC
-#define _MACH5_INC
+#ifndef _MACH5_H
+#define _MACH5_H
 
 #include "Cartridge.h"
 

@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _ANYC64FILE_INC
-#define _ANYC64FILE_INC
+#ifndef _ANYC64FILE_H
+#define _ANYC64FILE_H
 
 #include "C64Object.h"
 

@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _CUSTOM_CARTRIDGES_INC
-#define _CUSTOM_CARTRIDGES_INC
+#ifndef _CUSTOM_CARTRIDGES_H
+#define _CUSTOM_CARTRIDGES_H
 
 #include "Cartridge.h"
 #include "ActionReplay.h"

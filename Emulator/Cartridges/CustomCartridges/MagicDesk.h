@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _MAGICDESK_INC
-#define _MAGICDESK_INC
+#ifndef _MAGICDESK_H
+#define _MAGICDESK_H
 
 #include "Cartridge.h"
 

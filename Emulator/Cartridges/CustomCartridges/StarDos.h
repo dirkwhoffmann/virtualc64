@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _STARDOS_INC
-#define _STARDOS_INC
+#ifndef _STARDOS_H
+#define _STARDOS_H
 
 #include "Cartridge.h"
 

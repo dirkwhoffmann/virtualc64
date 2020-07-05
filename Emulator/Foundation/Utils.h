@@ -10,26 +10,19 @@
 #ifndef _UTILS_H
 #define _UTILS_H
 
-// General Includes
+#include <assert.h>
+#include <limits.h>
+#include <mach/mach_time.h>
+#include <math.h>
+#include <pthread.h>
+#include <stdarg.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdarg.h>
-#include <limits.h>
-#include <sys/time.h>
-#include <sys/stat.h>
 #include <sys/param.h>
-#include <time.h>
-#include <mach/mach.h>
-#include <mach/mach_time.h>
+#include <sys/stat.h>
 #include <unistd.h>
-#include <pthread.h>
-#include <errno.h>
-#include <sched.h>
-#include <assert.h>
-#include <math.h>
-#include <ctype.h> 
 
 #include "C64Config.h"
 #include "C64Types.h"

@@ -10,14 +10,17 @@
 #ifndef _C64_H
 #define _C64_H
 
+// General
+#include "C64Component.h"
+#include "Serialization.h"
+#include "MessageQueue.h"
+
 // Configuration items
 #include "C64Config.h"
 
 // Data types and constants
 #include "C64Types.h"
 
-// General
-#include "MessageQueue.h"
 
 // Loading and saving
 #include "Snapshot.h"

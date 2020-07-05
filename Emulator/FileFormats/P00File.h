@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _P00FILE_INC
-#define _P00FILE_INC
+#ifndef _P00FILE_H
+#define _P00FILE_H
 
 #include "AnyArchive.h"
 

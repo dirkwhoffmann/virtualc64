@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _FLASHROM_INC
-#define _FLASHROM_INC
+#ifndef _FLASHROM_H
+#define _FLASHROM_H
 
 #include "C64Component.h"
 

@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _KCS_INC
-#define _KCS_INC
+#ifndef _KCS_H
+#define _KCS_H
 
 #include "Cartridge.h"
 

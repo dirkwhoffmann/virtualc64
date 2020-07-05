@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _ZAXXON_INC
-#define _ZAXXON_INC
+#ifndef _ZAXXON_H
+#define _ZAXXON_H
 
 #include "Cartridge.h"
 

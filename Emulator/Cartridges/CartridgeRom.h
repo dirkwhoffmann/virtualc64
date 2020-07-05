@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _CARTRIDGEROM_INC
-#define _CARTRIDGEROM_INC
+#ifndef _CARTRIDGEROM_H
+#define _CARTRIDGEROM_H
 
 #include "C64Component.h"
 
