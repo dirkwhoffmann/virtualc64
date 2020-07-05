@@ -63,7 +63,7 @@ public:
     
 private:
     
-    void reset() override;
+    void oldReset() override;
     
     
     //

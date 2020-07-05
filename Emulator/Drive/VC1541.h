@@ -224,7 +224,7 @@ public:
 public:
 
     void _initialize() override;
-    void reset() override;
+    void oldReset() override;
 
 private:
     

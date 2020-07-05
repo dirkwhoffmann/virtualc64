@@ -27,7 +27,7 @@ public:
     //
     
     
-    void reset();
+    void oldReset();
     u8 peekIO1(u16 addr) { return control; }
     u8 peekIO2(u16 addr) { return 0; }
     void pokeIO1(u16 addr, u8 value);

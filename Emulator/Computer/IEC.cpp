@@ -42,9 +42,9 @@ IEC::IEC(C64 &ref) : C64Component(ref)
 }
 
 void 
-IEC::reset()
+IEC::oldReset()
 {
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
 
     atnLine = 1;
     clockLine = 1;

@@ -261,7 +261,7 @@ public:
 public:
     
     void prefix() override;
-    void reset() override;
+    void oldReset() override;
     
 private:
     

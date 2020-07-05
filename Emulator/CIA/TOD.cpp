@@ -32,9 +32,9 @@ TOD::TOD(CIA *cia, C64 &ref) : C64Component(ref)
 }
 
 void
-TOD::reset() 
+TOD::oldReset() 
 {
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
     tod.hours = 1;
     stopped = true;
     hz = 60;

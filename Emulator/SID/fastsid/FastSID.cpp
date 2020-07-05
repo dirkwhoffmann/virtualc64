@@ -66,9 +66,9 @@ FastSID::FastSID(C64 &ref) : C64Component(ref)
 }
 
 void
-FastSID::reset()
+FastSID::oldReset()
 {
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
     init(sampleRate, cpuFrequency);
 }
 

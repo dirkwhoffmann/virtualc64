@@ -10,9 +10,9 @@
 #include "C64.h"
 
 void
-EpyxFastLoad::reset()
+EpyxFastLoad::oldReset()
 {
-    Cartridge::reset();
+    Cartridge::oldReset();
     dischargeCapacitor();
 }
 

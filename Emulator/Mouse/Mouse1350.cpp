@@ -16,9 +16,9 @@ Mouse1350::Mouse1350(C64 &ref) : C64Component(ref) {
 }
 
 void
-Mouse1350::reset()
+Mouse1350::oldReset()
 {
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
     
     leftButton = false;
     rightButton = false;

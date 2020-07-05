@@ -36,7 +36,7 @@ public:
     
 private:
     
-    void reset() override;
+    void oldReset() override;
     
     size_t stateSize() override {
         return CartridgeWithRegister::stateSize() + 2;

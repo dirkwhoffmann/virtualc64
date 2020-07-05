@@ -73,9 +73,9 @@ VC1541::_initialize()
 }
 
 void
-VC1541::reset()
+VC1541::oldReset()
 {
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
     
     cpu.regPC = 0xEAA0;
     halftrack = 41;
@@ -122,7 +122,7 @@ void
 VC1541::powerUp()
 {
     suspend();
-    reset();
+    oldReset();
     resume();
 }
 
@@ -365,7 +365,7 @@ VC1541::powerOff()
 
     suspend();
     
-    reset();
+    oldReset();
     
     poweredOn = false;
     if (soundMessagesEnabled())

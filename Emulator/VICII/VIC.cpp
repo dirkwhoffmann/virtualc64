@@ -113,9 +113,9 @@ VIC::_initialize()
 }
 
 void 
-VIC::reset()
+VIC::oldReset()
 {
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
     
     yCounter = PAL_HEIGHT;
     

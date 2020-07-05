@@ -15,7 +15,7 @@ GeoRAM::GeoRAM(C64 *c64, C64 &ref) : Cartridge(c64, ref)
 }
 
 void
-GeoRAM::reset()
+GeoRAM::oldReset()
 {
     if (!getPersistentRam()) {
         debug(CRT_DEBUG, "Erasing GeoRAM\n");

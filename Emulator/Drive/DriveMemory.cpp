@@ -29,9 +29,9 @@ VC1541Memory::VC1541Memory(VC1541 *drive, C64 &ref) : Memory(ref)
 }
 
 void 
-VC1541Memory::reset()
+VC1541Memory::oldReset()
 {
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
     
     // Initialize RAM with powerup pattern (pattern from Hoxs64)
     for (unsigned i = 0; i < sizeof(ram); i++) {

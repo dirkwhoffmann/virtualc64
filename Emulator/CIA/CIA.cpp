@@ -58,9 +58,9 @@ CIA::CIA(C64 &ref) : C64Component(ref)
 }
 
 void
-CIA::reset()
+CIA::oldReset()
 {
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
     
 	CNT = true;
 	INT = 1;
@@ -1249,9 +1249,9 @@ CIA2::CIA2(C64 &ref) : CIA(ref)
 }
 
 void
-CIA2::reset()
+CIA2::oldReset()
 {
-    CIA::reset();
+    CIA::oldReset();
 
     counterA = 0xFFFF;
     counterB = 0xFFFF;

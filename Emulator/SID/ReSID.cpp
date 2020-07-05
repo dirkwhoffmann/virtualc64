@@ -92,9 +92,9 @@ ReSID::~ReSID()
 }
 
 void
-ReSID::reset()
+ReSID::oldReset()
 {
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
     
     // Create new reSID object
     // Note: We don't use reSID::reset() which only performs a soft reset

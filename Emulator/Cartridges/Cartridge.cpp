@@ -65,7 +65,7 @@ Cartridge::dealloc()
 }
 
 void
-Cartridge::reset()
+Cartridge::oldReset()
 {
     // Reset external RAM
     if (externalRam && !persistentRam) {
@@ -74,7 +74,7 @@ Cartridge::reset()
  
     // Reset all chip packets
     for (unsigned i = 0; i < numPackets; i++) {
-        packet[i]->reset();
+        packet[i]->oldReset();
     }
         
     // Bank in visibile chips (chips with low numbers show up first)
@@ -487,6 +487,6 @@ Cartridge::resetWithoutDeletingRam()
     debug(RUN_DEBUG, "Resetting virtual C64 (preserving RAM)\n");
     
     memcpy(ram, mem.ram, 0x10000);
-    vc64.reset();
+    vc64.oldReset();
     memcpy(mem.ram, ram, 0x10000);
 }

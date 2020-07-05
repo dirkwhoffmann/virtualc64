@@ -145,7 +145,7 @@ public:
     /*! @brief    Reset component to its initial state.
      *  @details  By default, each component also resets its sub components.
      */
-	virtual void reset();
+	virtual void oldReset();
 	
  
 

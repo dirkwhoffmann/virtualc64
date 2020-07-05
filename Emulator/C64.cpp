@@ -102,7 +102,7 @@ C64::C64()
         
     // Set up the initial state
     initialize();
-    reset();
+    oldReset();
 
     // Initialize mach timer info
     mach_timebase_info(&timebase);
@@ -122,12 +122,12 @@ C64::prefix()
 }
 
 void
-C64::reset()
+C64::oldReset()
 {
     debug(RUN_DEBUG, "Resetting virtual C64[%p]\n", this);
     
     // Reset all sub components
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
     
     // Initialize processor port
     mem.poke(0x0000, 0x2F);  // Data direction
@@ -344,7 +344,7 @@ void
 C64::powerUp()
 {    
     suspend();
-    reset();
+    oldReset();
     resume();
     run();
 }

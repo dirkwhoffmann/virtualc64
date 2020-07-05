@@ -24,9 +24,9 @@ ControlPort::ControlPort(int portNr, C64 &ref) : C64Component(ref)
 }
 
 void
-ControlPort::reset()
+ControlPort::oldReset()
 {
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
 
     button = false;
     axisX = 0;

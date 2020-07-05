@@ -25,7 +25,7 @@ public:
     Isepic(C64 *c64, C64 &ref);
     CartridgeType getCartridgeType() override { return CRT_ISEPIC; }
     
-    void reset() override;
+    void oldReset() override;
     size_t stateSize() override;
     void didLoadFromBuffer(u8 **buffer) override;
     void didSaveToBuffer(u8 **buffer) override;

@@ -76,9 +76,9 @@ FastVoice::FastVoice()
 }
 
 void
-FastVoice::reset()
+FastVoice::oldReset()
 {
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
     updateWaveTablePtr(); 
     lsfr = NSEED;
 }

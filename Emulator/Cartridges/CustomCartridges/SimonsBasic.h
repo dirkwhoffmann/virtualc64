@@ -17,7 +17,7 @@ class SimonsBasic : public Cartridge {
 public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_SIMONS_BASIC; }
-    void reset();
+    void oldReset();
     u8 peekIO1(u16 addr);
     u8 readIO1(u16 addr);
     void pokeIO1(u16 addr, u8 value);

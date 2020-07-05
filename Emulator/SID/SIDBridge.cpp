@@ -38,13 +38,13 @@ SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
 }
 
 void
-SIDBridge::reset()
+SIDBridge::oldReset()
 {
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
 
     clearRingbuffer();
-    resid.reset();
-    fastsid.reset();
+    resid.oldReset();
+    fastsid.oldReset();
     
     volume = 100000;
     targetVolume = 100000;

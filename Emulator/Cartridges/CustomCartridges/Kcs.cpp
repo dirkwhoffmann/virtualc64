@@ -16,9 +16,9 @@ KcsPower::KcsPower(C64 *c64, C64 &ref) : Cartridge(c64, ref)
 }
 
 void
-KcsPower::reset()
+KcsPower::oldReset()
 {
-    Cartridge::reset();
+    Cartridge::oldReset();
     eraseRAM(0xFF);
 }
 

@@ -30,12 +30,12 @@ ExpansionPort::~ExpansionPort()
 }
 
 void
-ExpansionPort::reset()
+ExpansionPort::oldReset()
 {
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
     
     if (cartridge) {
-        cartridge->reset();
+        cartridge->oldReset();
         cartridge->resetCartConfig();
     } else {
         setCartridgeMode(CRT_OFF);
@@ -257,7 +257,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
     cartridge = c;
     
     // Reset cartridge to update exrom and game line on the expansion port
-    cartridge->reset();
+    cartridge->oldReset();
     
     vc64.putMessage(MSG_CARTRIDGE);
     if (cartridge->hasSwitch()) vc64.putMessage(MSG_CART_SWITCH);
@@ -276,7 +276,7 @@ ExpansionPort::attachCartridgeAndReset(CRTFile *file)
         
         suspend();
         attachCartridge(cartridge);
-        vc64.reset();
+        vc64.oldReset();
         resume();
         return true;
     }
@@ -338,6 +338,6 @@ ExpansionPort::detachCartridgeAndReset()
 {
     suspend();
     detachCartridge();
-    vc64.reset();
+    vc64.oldReset();
     resume();
 }

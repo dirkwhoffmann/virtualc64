@@ -69,7 +69,7 @@ public:
     
 private:
     
-    void reset() override;
+    void oldReset() override;
     size_t stateSize() override {
         return Cartridge::stateSize() + 1; }
     void didLoadFromBuffer(u8 **buffer) override {

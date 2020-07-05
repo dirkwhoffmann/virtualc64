@@ -94,7 +94,7 @@ public:
     
 private:
     
-    void reset() override;
+    void oldReset() override;
     void _ping() override;
     size_t stateSize() override;
     void didLoadFromBuffer(u8 **buffer) override;

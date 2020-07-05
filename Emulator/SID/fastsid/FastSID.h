@@ -130,7 +130,7 @@ public:
     
 public:
     
-    void reset() override;
+    void oldReset() override;
 
 private:
     

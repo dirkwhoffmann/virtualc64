@@ -116,7 +116,7 @@ public:
 
 private:
     
-	void reset() override;
+	void oldReset() override;
 	void _dump() override;
 
         

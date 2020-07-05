@@ -24,9 +24,9 @@ Isepic::Isepic(C64 *c64, C64 &ref) : Cartridge(c64, ref)
 }
 
 void
-Isepic::reset()
+Isepic::oldReset()
 {
-    Cartridge::reset();
+    Cartridge::oldReset();
     eraseRAM(0);
     page = 0;
 }

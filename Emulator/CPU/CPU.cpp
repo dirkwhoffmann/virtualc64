@@ -63,9 +63,9 @@ CPU::CPU(CPUModel model, Memory *mem, C64& ref) : C64Component(ref)
 }
 
 void
-CPU::reset()
+CPU::oldReset()
 {
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
 
     setB(1);
 	rdyLine = true;

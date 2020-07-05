@@ -41,9 +41,9 @@ Datasette::~Datasette()
 }
 
 void
-Datasette::reset()
+Datasette::oldReset()
 {
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
     rewind();
 }
 

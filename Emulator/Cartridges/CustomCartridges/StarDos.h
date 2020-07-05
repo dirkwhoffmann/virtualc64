@@ -23,7 +23,7 @@ class StarDos : public Cartridge {
     
     StarDos(C64 *c64, C64 &ref) : Cartridge(c64, ref, "StarDos") { };
     CartridgeType getCartridgeType() { return CRT_STARDOS; }
-    void reset();
+    void oldReset();
     
     void updateVoltage();
     void charge();

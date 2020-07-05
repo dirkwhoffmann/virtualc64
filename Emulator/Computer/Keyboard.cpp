@@ -25,9 +25,9 @@ Keyboard::Keyboard(C64 &ref) : C64Component(ref)
 }
 
 void 
-Keyboard::reset() 
+Keyboard::oldReset() 
 {
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
 
 	// Release all keys (resets the keyboard matrix)
     releaseAll();

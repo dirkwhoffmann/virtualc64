@@ -23,9 +23,9 @@ Mouse::Mouse(C64 &ref) : C64Component(ref)
     config.model = MOUSE1350;
 }
 
-void Mouse::reset()
+void Mouse::oldReset()
 {
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
     targetX = 0;
     targetY = 0;
 }
@@ -35,7 +35,7 @@ Mouse::setModel(MouseModel model)
     suspend();
 
     config.model = model;
-    reset();
+    oldReset();
 
     resume();
 }

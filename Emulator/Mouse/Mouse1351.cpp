@@ -16,9 +16,9 @@ Mouse1351::Mouse1351(C64 &ref) : C64Component(ref)
 }
 
 void
-Mouse1351::reset()
+Mouse1351::oldReset()
 {
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
     
     leftButton = false;
     rightButton = false;

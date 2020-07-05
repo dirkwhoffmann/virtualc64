@@ -18,7 +18,7 @@ public:
     KcsPower(C64 *c64, C64 &ref);
     CartridgeType getCartridgeType() { return CRT_KCS_POWER; }
     
-    void reset();
+    void oldReset();
     
     //
     //! @functiongroup Methods from Cartridge

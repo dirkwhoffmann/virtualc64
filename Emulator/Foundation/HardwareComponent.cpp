@@ -66,11 +66,11 @@ HardwareComponent::setClockFrequency(u32 value)
 
 
 void
-HardwareComponent::reset()
+HardwareComponent::oldReset()
 {
     // Reset all subcomponents
     for (HardwareComponent *c : subComponents) {
-        c->reset();
+        c->oldReset();
     }
     
     // Clear snapshot items marked with 'CLEAR_ON_RESET'

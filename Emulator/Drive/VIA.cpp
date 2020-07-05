@@ -53,9 +53,9 @@ VIA6522::VIA6522(VC1541 *drive, C64 &ref) : C64Component(ref)
     registerSnapshotItems(items, sizeof(items));
 }
 	
-void VIA6522::reset()
+void VIA6522::oldReset()
 {    
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
 
     t1 = 0x01AA;
     t2 = 0x01AA;

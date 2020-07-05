@@ -28,9 +28,9 @@ Expert::Expert(C64 *c64, C64 &ref) : Cartridge(c64, ref)
 }
 
 void
-Expert::reset()
+Expert::oldReset()
 {
-    Cartridge::reset();
+    Cartridge::oldReset();
 }
 
 void

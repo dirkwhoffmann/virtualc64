@@ -10,9 +10,9 @@
 #include "C64.h"
 
 void
-StarDos::reset()
+StarDos::oldReset()
 {
-    Cartridge::reset();
+    Cartridge::oldReset();
     voltage = 0;
     latestVoltageUpdate = 0;
 }

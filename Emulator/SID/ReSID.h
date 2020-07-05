@@ -73,7 +73,7 @@ public:
     
 public:
     
-    void reset() override;
+    void oldReset() override;
     void didLoadFromBuffer(u8 **buffer) override { sid->write_state(st); }
     void willSaveToBuffer(u8 **buffer) override { st = sid->read_state(); }
 

@@ -16,9 +16,9 @@ NeosMouse::NeosMouse(C64 &ref) : C64Component(ref)
 }
 
 void
-NeosMouse::reset()
+NeosMouse::oldReset()
 {
-    HardwareComponent::reset();
+    HardwareComponent::oldReset();
     
     leftButton = false;
     rightButton = false;
