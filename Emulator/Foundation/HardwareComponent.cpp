@@ -28,6 +28,17 @@ HardwareComponent::initialize()
 }
 
 void
+HardwareComponent::reset()
+{
+    for (HardwareComponent *c : subComponents) {
+        c->reset();
+    }
+    
+    // _reset();
+    oldReset();
+}
+
+void
 HardwareComponent::ping()
 {
     for (HardwareComponent *c : subComponents) {
@@ -63,39 +74,6 @@ HardwareComponent::setClockFrequency(u32 value)
 
 
 
-
-
-void
-HardwareComponent::oldReset()
-{
-    // Reset all subcomponents
-    for (HardwareComponent *c : subComponents) {
-        c->oldReset();
-    }
-    
-    // Clear snapshot items marked with 'CLEAR_ON_RESET'
-    if (snapshotItems != NULL)
-        for (unsigned i = 0; snapshotItems[i].data != NULL; i++)
-            if (snapshotItems[i].flags & CLEAR_ON_RESET)
-                memset(snapshotItems[i].data, 0, snapshotItems[i].size);
-    
-    debug(RUN_DEBUG, "Resetting...\n");
-}
-
-
-/*
-void
-HardwareComponent::suspend()
-{
-    c64->suspend();
-}
-
-void
-HardwareComponent::resume()
-{
-    c64->resume();
-}
-*/
 
 void
 HardwareComponent::registerSnapshotItems(SnapshotItem *items, unsigned length) {

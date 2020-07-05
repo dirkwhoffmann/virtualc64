@@ -40,6 +40,16 @@ CartridgeRom::~CartridgeRom()
     delete[] rom;
 }
 
+void
+CartridgeRom::oldReset()
+{
+    // Clear snapshot items marked with 'CLEAR_ON_RESET'
+    if (snapshotItems != NULL)
+        for (unsigned i = 0; snapshotItems[i].data != NULL; i++)
+            if (snapshotItems[i].flags & CLEAR_ON_RESET)
+                memset(snapshotItems[i].data, 0, snapshotItems[i].size);
+}
+
 size_t
 CartridgeRom::stateSize()
 {

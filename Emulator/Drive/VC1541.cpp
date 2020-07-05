@@ -75,8 +75,12 @@ VC1541::_initialize()
 void
 VC1541::oldReset()
 {
-    HardwareComponent::oldReset();
-    
+    // Clear snapshot items marked with 'CLEAR_ON_RESET'
+     if (snapshotItems != NULL)
+         for (unsigned i = 0; snapshotItems[i].data != NULL; i++)
+             if (snapshotItems[i].flags & CLEAR_ON_RESET)
+                 memset(snapshotItems[i].data, 0, snapshotItems[i].size);
+
     cpu.regPC = 0xEAA0;
     halftrack = 41;
 }

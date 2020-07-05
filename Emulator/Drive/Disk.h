@@ -185,6 +185,7 @@ public:
     
 private:
     
+    void oldReset() override;
     void _dump() override;
 
     

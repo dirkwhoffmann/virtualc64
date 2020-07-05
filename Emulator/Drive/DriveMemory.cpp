@@ -31,8 +31,12 @@ VC1541Memory::VC1541Memory(VC1541 *drive, C64 &ref) : Memory(ref)
 void 
 VC1541Memory::oldReset()
 {
-    HardwareComponent::oldReset();
-    
+    // Clear snapshot items marked with 'CLEAR_ON_RESET'
+     if (snapshotItems != NULL)
+         for (unsigned i = 0; snapshotItems[i].data != NULL; i++)
+             if (snapshotItems[i].flags & CLEAR_ON_RESET)
+                 memset(snapshotItems[i].data, 0, snapshotItems[i].size);
+
     // Initialize RAM with powerup pattern (pattern from Hoxs64)
     for (unsigned i = 0; i < sizeof(ram); i++) {
         ram[i] = (i & 64) ? 0xFF : 0x00;

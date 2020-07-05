@@ -74,7 +74,7 @@ Cartridge::oldReset()
  
     // Reset all chip packets
     for (unsigned i = 0; i < numPackets; i++) {
-        packet[i]->oldReset();
+        packet[i]->reset();
     }
         
     // Bank in visibile chips (chips with low numbers show up first)

@@ -32,8 +32,12 @@ ExpansionPort::~ExpansionPort()
 void
 ExpansionPort::oldReset()
 {
-    HardwareComponent::oldReset();
-    
+    // Clear snapshot items marked with 'CLEAR_ON_RESET'
+     if (snapshotItems != NULL)
+         for (unsigned i = 0; snapshotItems[i].data != NULL; i++)
+             if (snapshotItems[i].flags & CLEAR_ON_RESET)
+                 memset(snapshotItems[i].data, 0, snapshotItems[i].size);
+
     if (cartridge) {
         cartridge->oldReset();
         cartridge->resetCartConfig();

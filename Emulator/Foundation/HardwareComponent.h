@@ -59,7 +59,7 @@ public:
     
 public:
     
-    /* Initializes the component and it's sub-component.
+    /* Initializes the component and its sub-component.
      * This function is called exactly once, in the constructor of the Amiga
      * class. Sub-components can implement the delegation method _initialize()
      * to finalize their initialization, e.g., by setting up referecens that
@@ -68,6 +68,11 @@ public:
     void initialize();
     virtual void _initialize() { };
     
+    /* Resets the component and its sub-component.
+     */
+    void reset();
+    virtual void _reset() { }; // Replace by = 0;
+
     /* Asks the component to inform the GUI about its current state.
      * The GUI invokes this function when it needs to update all of its visual
      * elements. This happens, e.g., when a snapshot file was loaded.
@@ -145,7 +150,7 @@ public:
     /*! @brief    Reset component to its initial state.
      *  @details  By default, each component also resets its sub components.
      */
-	virtual void oldReset();
+	virtual void oldReset() = 0;
 	
  
 
