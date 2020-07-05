@@ -32,7 +32,7 @@ VC1541::VC1541(unsigned nr, C64 &ref) : C64Component(ref)
         // Life-time items
         { &sendSoundMessages,       sizeof(sendSoundMessages),      KEEP_ON_RESET },
         { &durationOfOneCpuCycle,   sizeof(durationOfOneCpuCycle),  KEEP_ON_RESET },
-        { &poweredOn,               sizeof(poweredOn),              KEEP_ON_RESET },
+        { &connected,               sizeof(connected),              KEEP_ON_RESET },
 
         // Internal state
         { &spinning,                sizeof(spinning),               CLEAR_ON_RESET },
@@ -69,7 +69,7 @@ VC1541::_initialize()
     debug("VC1541 initialize");
 
     // Start with a single drive powered on
-    deviceNr == 1 ? powerOn() : powerOff();
+    deviceNr == 1 ? connect() : disconnect();
 }
 
 void
@@ -94,7 +94,7 @@ VC1541::resetDisk()
 void
 VC1541::_ping()
 {    
-    vc64.putMessage(poweredOn ? MSG_VC1541_ATTACHED : MSG_VC1541_DETACHED, deviceNr);
+    vc64.putMessage(connected ? MSG_VC1541_ATTACHED : MSG_VC1541_DETACHED, deviceNr);
     vc64.putMessage(redLED ? MSG_VC1541_RED_LED_ON : MSG_VC1541_RED_LED_OFF, deviceNr);
     vc64.putMessage(spinning ? MSG_VC1541_MOTOR_ON : MSG_VC1541_MOTOR_OFF, deviceNr);
     vc64.putMessage(hasDisk() ? MSG_VC1541_DISK : MSG_VC1541_NO_DISK, deviceNr);
@@ -348,13 +348,13 @@ VC1541::setZone(uint2_t value)
 }
 
 void
-VC1541::powerOn()
+VC1541::connect()
 {
-    if (poweredOn) return;
+    if (connected) return;
     
     suspend();
     
-    poweredOn = true;
+    connected = true;
     if (soundMessagesEnabled())
         vc64.putMessage(MSG_VC1541_ATTACHED_SOUND, deviceNr);
     ping();
@@ -363,15 +363,15 @@ VC1541::powerOn()
 }
 
 void
-VC1541::powerOff()
+VC1541::disconnect()
 {
-    if (!poweredOn) return;
+    if (!connected) return;
 
     suspend();
     
     _reset();
     
-    poweredOn = false;
+    connected = false;
     if (soundMessagesEnabled())
         vc64.putMessage(MSG_VC1541_DETACHED_SOUND, deviceNr);
     ping();

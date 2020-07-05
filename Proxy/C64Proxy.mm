@@ -1110,17 +1110,17 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     b ? wrapper->drive->startTracing() : wrapper->drive->stopTracing();
 }
 
-- (BOOL) isPoweredOn
+- (BOOL) isConnected
 {
-    return wrapper->drive->isPoweredOn();
+    return wrapper->drive->isConnected();
 }
 - (void) powerOn
 {
-    wrapper->drive->powerOn();
+    wrapper->drive->connect();
 }
 - (void) powerOff
 {
-    wrapper->drive->powerOff();
+    wrapper->drive->disconnect();
 }
 - (void) togglePowerSwitch
 {
@@ -1503,9 +1503,9 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->c64->isReady();
 }
-- (BOOL) isRunning
+- (BOOL) oldIsRunning
 {
-    return wrapper->c64->isRunning();
+    return wrapper->c64->oldIsRunning();
 }
 - (BOOL) isHalted
 {

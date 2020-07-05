@@ -207,7 +207,7 @@ extension MyController {
     
     @IBAction func pauseAction(_ sender: Any!) {
         
-        if c64.isRunning() {
+        if c64.oldIsRunning() {
             c64.halt()
             debugger.open()
         }

@@ -361,7 +361,7 @@ public:
     bool isReady();
     
     //! @brief    Returns true if the emulator is running.
-    bool isRunning();
+    bool oldIsRunning();
     
     //! @brief    Returns true if the emulator is not running.
     bool isHalted();

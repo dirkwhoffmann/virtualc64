@@ -84,10 +84,10 @@ extension MyController: NSMenuItemValidation {
             return hasDisk
         }
         if item.action == #selector(MyController.drivePowerAction(_:)) {
-            let poweredOn = firstDrive() ?
-                c64.drive1.isPoweredOn() :
-                c64.drive2.isPoweredOn()
-            item.title = poweredOn ? "Disconnect" : "Connect"
+            let connected = firstDrive() ?
+                c64.drive1.isConnected() :
+                c64.drive2.isConnected()
+            item.title = connected ? "Disconnect" : "Connect"
             return true
         }
 
@@ -165,7 +165,7 @@ extension MyController: NSMenuItemValidation {
         
         // Debug menu
         if item.action == #selector(MyController.pauseAction(_:)) {
-            return c64.isRunning()
+            return c64.oldIsRunning()
         }
         if item.action == #selector(MyController.continueAction(_:)) ||
             item.action == #selector(MyController.stepIntoAction(_:)) ||

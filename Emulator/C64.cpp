@@ -374,7 +374,7 @@ C64::run()
 void
 C64::halt()
 {
-    if (isRunning()) {
+    if (oldIsRunning()) {
         
         // Cancel execution thread
         pthread_cancel(p);
@@ -416,7 +416,7 @@ C64::isReady()
 }
 
 bool
-C64::isRunning()
+C64::oldIsRunning()
 {
     return p != NULL;
 }
@@ -536,8 +536,8 @@ C64::_executeOneCycle()
     
     // Second clock phase (o2 high)
     result &= cpu.executeOneCycle();
-    if (drive1.isPoweredOn()) result &= drive1.execute(durationOfOneCycle);
-    if (drive2.isPoweredOn()) result &= drive2.execute(durationOfOneCycle);
+    if (drive1.isConnected()) result &= drive1.execute(durationOfOneCycle);
+    if (drive2.isConnected()) result &= drive2.execute(durationOfOneCycle);
     // if (iec.isDirtyDriveSide) iec.updateIecLinesDriveSide();
     datasette.execute();
     

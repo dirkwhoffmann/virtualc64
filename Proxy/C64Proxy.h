@@ -130,7 +130,7 @@ struct AnyC64FileWrapper;
 - (void) suspend;
 - (void) resume;
 - (BOOL) isReady;
-- (BOOL) isRunning;
+- (BOOL) oldIsRunning;
 - (BOOL) isHalted;
 - (void) step;
 - (void) stepOver;
@@ -562,7 +562,7 @@ struct AnyC64FileWrapper;
 - (BOOL) tracing;
 - (void) setTracing:(BOOL)b;
 
-- (BOOL) isPoweredOn;
+- (BOOL) isConnected;
 - (void) powerOn;
 - (void) powerOff;
 - (void) togglePowerSwitch;

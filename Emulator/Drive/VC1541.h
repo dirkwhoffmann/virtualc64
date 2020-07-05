@@ -82,8 +82,8 @@ private:
      */
     unsigned deviceNr;
     
-    //! @brief    Indicates whether the disk drive is powered on.
-    bool poweredOn;
+    //! @brief    Indicates whether the disk drive is connected to the C64
+    bool connected;
 
     //! @brief    Indicates whether the disk is rotating.
     bool spinning;
@@ -260,20 +260,20 @@ public:
      */
     unsigned getDeviceNr() { return deviceNr; }
     
-    //! @brief    Returns true iff the drive is powered on.
-    bool isPoweredOn() { return poweredOn; }
+    //! @brief    Returns true iff the drive is connected
+    bool isConnected() { return connected; }
 
-    //! @brief    Returns true iff the drive is powered off.
-    bool isPoweredOff() { return !poweredOn; }
+    //! @brief    Returns true iff the drive is not connected
+    bool isDisconnected() { return !connected; }
 
-    //! @brief    Powers the drive on
-    void powerOn();
+    //! @brief    Connects the drive to the C64
+    void connect();
     
-    //! @brief    Powers the drive off
-    void powerOff();
+    //! @brief    Disconnects the drive from the C64
+    void disconnect();
 
-    //! @brief    Toggle between power on and power off
-    void togglePowerSwitch() { isPoweredOn() ? powerOff() : powerOn(); }
+    //! @brief    Connects a disconnected drive or vice versa
+    void togglePowerSwitch() { isConnected() ? disconnect() : connect(); }
     
     //! @brief    Returns true iff the red drive LED is on.
     bool getRedLED() { return redLED; };

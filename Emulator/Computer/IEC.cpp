@@ -16,7 +16,6 @@ IEC::IEC(C64 &ref) : C64Component(ref)
     // Register snapshot items
     SnapshotItem items[] = {
         
-        // { &driveIsConnected,    sizeof(driveIsConnected),       CLEAR_ON_RESET },
         { &atnLine,             sizeof(atnLine),                CLEAR_ON_RESET },
         { &clockLine,           sizeof(clockLine),              CLEAR_ON_RESET },
         { &dataLine,            sizeof(dataLine),               CLEAR_ON_RESET },
@@ -131,8 +130,8 @@ bool IEC::_updateIecLines()
      *    dataLine &= ub1;
      * }
     */
-    dataLine &= drive1.isPoweredOff() || (atnLine ^ device1Atn);
-    dataLine &= drive2.isPoweredOff() || (atnLine ^ device2Atn);
+    dataLine &= drive1.isDisconnected() || (atnLine ^ device1Atn);
+    dataLine &= drive2.isDisconnected() || (atnLine ^ device2Atn);
 
     return (oldAtnLine != atnLine ||
             oldClockLine != clockLine ||

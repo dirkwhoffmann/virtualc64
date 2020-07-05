@@ -470,7 +470,7 @@ extension MyController {
         if (animationCounter % 1) == 0 {
             
             // Refresh debug panel if open
-            if c64.isRunning() {
+            if c64.oldIsRunning() {
                 let state = debugger.state
                 if state == NSDrawerState.open || state == NSDrawerState.opening {
                     refresh()
