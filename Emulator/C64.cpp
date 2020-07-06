@@ -247,42 +247,40 @@ C64::_dump() {
 void
 C64::suspend()
 {
-    // pthread_mutex_lock(&stateChangeLock);
-    
-    debug(RUN_DEBUG, "Suspending (%d)...\n", suspendCounter);
-    
-    if (suspendCounter || isRunning()) {
+    synchronized {
         
-        // Acquire the thread lock
-        requestThreadLock();
-        pthread_mutex_lock(&threadLock);
-                
-        // At this point, the emulator must be paused or powered off
-        assert(!isRunning());
+        debug(RUN_DEBUG, "Suspending (%d)...\n", suspendCounter);
         
-        suspendCounter++;
+        if (suspendCounter || isRunning()) {
+            
+            // Acquire the thread lock
+            requestThreadLock();
+            pthread_mutex_lock(&threadLock);
+            
+            // At this point, the emulator must be paused or powered off
+            assert(!isRunning());
+            
+            suspendCounter++;
+        }
     }
-        
-    // pthread_mutex_unlock(&stateChangeLock);
 }
 
 void
 C64::resume()
 {
-    // pthread_mutex_lock(&stateChangeLock);
-    
-    debug(RUN_DEBUG, "Resuming (%d)...\n", suspendCounter);
-    
-    if (suspendCounter && --suspendCounter == 0) {
+    synchronized {
         
-        // Acquire the thread lock
-        requestThreadLock();
-        pthread_mutex_lock(&threadLock);
+        debug(RUN_DEBUG, "Resuming (%d)...\n", suspendCounter);
         
-        run();
+        if (suspendCounter && --suspendCounter == 0) {
+            
+            // Acquire the thread lock
+            requestThreadLock();
+            pthread_mutex_lock(&threadLock);
+            
+            run();
+        }
     }
-    
-    // pthread_mutex_unlock(&stateChangeLock);
 }
 
 void
@@ -323,9 +321,10 @@ C64::requestThreadLock()
 void
 C64::powerOnEmulator()
 {
-    /*
-    #ifdef BOOT_DISK
-
+    synchronized {
+        
+#ifdef BOOT_DISK
+        
         ADFFile *adf = ADFFile::makeWithFile(BOOT_DISK);
         if (adf) {
             Disk *disk = Disk::makeWithFile(adf);
@@ -333,75 +332,68 @@ C64::powerOnEmulator()
             df0.insertDisk(disk);
             df0.setWriteProtection(false);
         }
-
-    #endif
-
-    #ifdef INITIAL_BREAKPOINT
-
+        
+#endif
+        
+#ifdef INITIAL_BREAKPOINT
+        
         debugMode = true;
         cpu.debugger.breakpoints.addAt(INITIAL_BREAKPOINT);
-
-    #endif
-    */
-    
-    // pthread_mutex_lock(&stateChangeLock);
-    
-    if (isReady()) {
-
-        // Acquire the thread lock
-        requestThreadLock();
-        pthread_mutex_lock(&threadLock);
-    
-        powerOn();
+        
+#endif
+        
+        if (isReady()) {
+            
+            // Acquire the thread lock
+            requestThreadLock();
+            pthread_mutex_lock(&threadLock);
+            
+            powerOn();
+        }
     }
-    
-    // pthread_mutex_unlock(&stateChangeLock);
 }
 
 void
 C64::powerOffEmulator()
 {
-    // pthread_mutex_lock(&stateChangeLock);
-    
-    // Acquire the thread lock
-    requestThreadLock();
-    pthread_mutex_lock(&threadLock);
-
-    powerOff();
-    
-    // pthread_mutex_unlock(&stateChangeLock);
-}
-
-void
-C64::runEmulator()
-{
-    // pthread_mutex_lock(&stateChangeLock);
-    
-    if (isReady()) {
+    synchronized {
         
         // Acquire the thread lock
         requestThreadLock();
         pthread_mutex_lock(&threadLock);
         
-        run();
+        powerOff();
     }
-    
-    // pthread_mutex_unlock(&stateChangeLock);
+}
+
+void
+C64::runEmulator()
+{
+    synchronized {
+        
+        if (isReady()) {
+            
+            // Acquire the thread lock
+            requestThreadLock();
+            pthread_mutex_lock(&threadLock);
+            
+            run();
+        }
+    }
 }
 
 void
 C64::pauseEmulator()
 {
-    // pthread_mutex_lock(&stateChangeLock);
-    
-    // Acquire the thread lock
-    requestThreadLock();
-    pthread_mutex_lock(&threadLock);
-
-    // At this point, the emulator is already paused or powered off
-    assert(!isRunning());
-    
-    // pthread_mutex_unlock(&stateChangeLock);
+    synchronized {
+        
+        // Acquire the thread lock
+        requestThreadLock();
+        pthread_mutex_lock(&threadLock);
+        
+        // At this point, the emulator is already paused or powered off
+        assert(!isRunning());
+    }
 }
 
 bool
@@ -631,20 +623,6 @@ C64::threadDidTerminate()
     // Release the thread lock
     pthread_mutex_unlock(&threadLock);
 }
-
-/*
-bool
-C64::oldIsRunning()
-{
-    return p != NULL;
-}
-
-bool
-C64::isHalted()
-{
-    return p == NULL;
-}
-*/
 
 void
 C64::stepInto()

@@ -55,7 +55,7 @@ protected:
      * same code block. It mimics the behaviour of the well known and very
      * handy Java construct 'synchronized(this) { }'.
      */
-    // std::recursive_mutex mutex;
+    std::recursive_mutex mutex;
     
     //
     // Initializing
