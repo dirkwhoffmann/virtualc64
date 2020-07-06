@@ -18,8 +18,11 @@ typedef enum
     
     // Running the emulator
     MSG_READY_TO_RUN,
+    MSG_POWER_ON,
+    MSG_POWER_OFF,
     MSG_RUN,
-    MSG_HALT,
+    MSG_PAUSE,
+    MSG_RESET,
 
     // ROM and snapshot handling
     MSG_BASIC_ROM_LOADED,

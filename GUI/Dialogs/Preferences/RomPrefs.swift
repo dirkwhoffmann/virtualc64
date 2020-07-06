@@ -282,7 +282,7 @@ extension PreferencesController {
     @IBAction func romDeleteBasicAction(_ sender: Any!) {
 
         myController?.basicRomURL = URL(fileURLWithPath: "/")
-        proxy?.halt()
+        proxy?.powerOff()
         proxy?.mem.deleteBasicRom()
         refresh()
     }
@@ -290,7 +290,7 @@ extension PreferencesController {
     @IBAction func romDeleteCharAction(_ sender: Any!) {
 
         myController?.charRomURL = URL(fileURLWithPath: "/")
-        proxy?.halt()
+        proxy?.powerOff()
         proxy?.mem.deleteCharacterRom()
         refresh()
     }
@@ -298,7 +298,7 @@ extension PreferencesController {
     @IBAction func romDeleteKernalAction(_ sender: Any!) {
 
         myController?.kernalRomURL = URL(fileURLWithPath: "/")
-        proxy?.halt()
+        proxy?.powerOff()
         proxy?.mem.deleteKernalRom()
         refresh()
     }
@@ -306,7 +306,7 @@ extension PreferencesController {
     @IBAction func romDeleteVC1541Action(_ sender: Any!) {
 
         myController?.vc1541RomURL = URL(fileURLWithPath: "/")
-        proxy?.halt()
+        proxy?.powerOff()
         proxy?.drive1.deleteRom()
         proxy?.drive2.deleteRom()
         refresh()

@@ -21,27 +21,102 @@ HardwareComponent::~HardwareComponent()
 void
 HardwareComponent::initialize()
 {
-    for (HardwareComponent *c : subComponents) {
-        c->initialize();
-    }
+    // Initialize all subcomponents
+    for (HardwareComponent *c : subComponents) c->initialize();
+    
+    // Initialize this component
     _initialize();
+}
+
+void
+HardwareComponent::powerOn()
+{
+    if (isPoweredOn()) return;
+    assert(!isRunning());
+    
+    // Power all subcomponents on
+    for (HardwareComponent *c : subComponents)  c->powerOn();
+    
+    // Reset all non-persistant snapshot items
+    _reset();
+    
+    // Power this component on
+    debug(RUN_DEBUG, "Powering on\n");
+    _powerOn();
+
+    state = STATE_PAUSED;
+}
+
+void
+HardwareComponent::powerOff()
+{
+    if (isPoweredOff()) return;
+    
+    // Pause if needed
+    pause();
+    
+    // Power off this component
+    debug(RUN_DEBUG, "Powering off\n");
+    _powerOff();
+    
+    // Power all subcomponents off
+    for (HardwareComponent *c : subComponents) c->powerOff();
+
+    state = STATE_OFF;
+}
+
+void
+HardwareComponent::run()
+{
+    if (isRunning()) return;
+    
+    // Power on if needed
+    powerOn();
+    
+    // Start all subcomponents
+    for (HardwareComponent *c : subComponents) {
+        c->run();
+    }
+    
+    // Start this component
+    debug(RUN_DEBUG, "Run\n");
+    _run();
+    
+    state = STATE_RUNNING;
+}
+
+void
+HardwareComponent::pause()
+{
+    if (!isRunning()) return;
+    
+    // Pause this component
+    debug(RUN_DEBUG, "Pause\n");
+    _pause();
+
+    // Pause all subcomponents
+    for (HardwareComponent *c : subComponents) c->pause();
+
+    state = STATE_PAUSED;
 }
 
 void
 HardwareComponent::reset()
 {
-    for (HardwareComponent *c : subComponents) {
-        c->reset();
-    }
+    // Reset all subcomponents
+    for (HardwareComponent *c : subComponents) c->reset();
+
+    // Reset this component
     _reset();
 }
 
 void
 HardwareComponent::ping()
 {
-    for (HardwareComponent *c : subComponents) {
-        c->ping();
-    }
+    // Ping all subcomponents
+    for (HardwareComponent *c : subComponents) c->ping();
+    
+    // Ping this component
     _ping();
 }
 

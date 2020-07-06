@@ -20,7 +20,7 @@ extension MyController {
         // emualtion thread is waiting. As a result, the displayed values for
         // cycle and rasterline do not seem randomly distributed. To make the
         // debugger output look realistic, we fake the output ...
-        if c64.oldIsRunning() {
+        if c64.isRunning() {
             info.rasterline = UInt16((vicRasterline.intValue + 173) % 263)
             info.cycle = UInt8((vicCycle.intValue + 17) % 64)
             info.xCounter = UInt16((vicXCounter.intValue + 136) % 512)

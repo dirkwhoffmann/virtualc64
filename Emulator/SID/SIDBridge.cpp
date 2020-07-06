@@ -38,6 +38,20 @@ SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
 }
 
 void
+SIDBridge::_run()
+{
+    debug("_run\n");
+    clearRingbuffer();
+}
+
+void
+SIDBridge::_pause()
+{
+    debug("_pause\n");
+    clearRingbuffer();
+}
+
+void
 SIDBridge::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
@@ -201,18 +215,6 @@ SIDBridge::execute(u64 numCycles)
     } else {
         fastsid.execute(numCycles);
     }
-}
-
-void 
-SIDBridge::run()
-{
-    clearRingbuffer();
-}
-
-void 
-SIDBridge::halt()
-{
-    clearRingbuffer();
 }
 
 bool

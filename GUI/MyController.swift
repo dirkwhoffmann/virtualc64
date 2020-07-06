@@ -372,11 +372,17 @@ extension MyController {
         
         // Enable message processing (register callback)
         addListener()
-
-        // Power up. If all Roms are in place, the emulator starts running.
-        // Otherwise, it sends a MISSING_ROM message.
-        c64.powerUp()
         
+        // Check if the C64 is ready to power on
+        if c64.isReady() {
+            
+            // Power on the C64
+            c64.powerOn()
+            
+            // Launch the emulator thread
+            c64.run()
+        }
+                
         // Create speed monitor and get the timer tunning
         createTimer()
         
@@ -470,7 +476,7 @@ extension MyController {
         if (animationCounter % 1) == 0 {
             
             // Refresh debug panel if open
-            if c64.oldIsRunning() {
+            if c64.isRunning() {
                 let state = debugger.state
                 if state == NSDrawerState.open || state == NSDrawerState.opening {
                     refresh()
@@ -546,19 +552,28 @@ extension MyController {
             // Process attachment (if any)
             mydocument?.mountAttachment()
     
-        case MSG_RUN:
+        case MSG_POWER_ON:
+            track("MSG_POWER_ON")
             
+        case MSG_POWER_OFF:
+            track("MSG_POWER_OFF")
+            
+        case MSG_RUN:
+            track("MSG_RUN")
             needsSaving = true
             disableUserEditing()
             toolbar.validateVisibleItems()
             refresh()
     
-        case MSG_HALT:
-            
+        case MSG_PAUSE:
+            track("MSG_PAUSE")
             enableUserEditing()
             toolbar.validateVisibleItems()
             refresh()
     
+        case MSG_RESET:
+            track("MSG_RESET")
+
         case MSG_BASIC_ROM_LOADED,
              MSG_CHAR_ROM_LOADED,
              MSG_KERNAL_ROM_LOADED,

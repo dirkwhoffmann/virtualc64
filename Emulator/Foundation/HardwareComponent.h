@@ -59,39 +59,112 @@ public:
     
 public:
     
-    /* Initializes the component and its sub-component.
+    /* Initializes the component and its subcomponent.
      * This function is called exactly once, in the constructor of the Amiga
-     * class. Sub-components can implement the delegation method _initialize()
+     * class. Subcomponents can implement the delegation method _initialize()
      * to finalize their initialization, e.g., by setting up referecens that
      * did not exist when they were constructed.
      */
     void initialize();
     virtual void _initialize() { };
     
-    /* Resets the component and its sub-component.
+    /* There are several functions for querying and changing state:
+     *
+     *          -----------------------------------------------
+     *         |                     run()                     |
+     *         |                                               V
+     *     ---------   powerOn()   ---------     run()     ---------
+     *    |   Off   |------------>| Paused  |------------>| Running |
+     *    |         |<------------|         |<------------|         |
+     *     ---------   powerOff()  ---------    pause()    ---------
+     *         ^                                               |
+     *         |                   powerOff()                  |
+     *          -----------------------------------------------
+     *
+     *     isPoweredOff()         isPaused()          isRunning()
+     * |-------------------||-------------------||-------------------|
+     *                      |----------------------------------------|
+     *                                     isPoweredOn()
+     */
+    
+    bool isPoweredOff() { return state == STATE_OFF; }
+    bool isPoweredOn() { return state != STATE_OFF; }
+    bool isPaused() { return state == STATE_PAUSED; }
+    bool isRunning() { return state == STATE_RUNNING; }
+    
+protected:
+    
+    /* powerOn() powers the component on.
+     *
+     * current   | next      | action
+     * -------------------------------------------------------------------------
+     * off       | paused    | _powerOn() on each subcomponent
+     * paused    | paused    | none
+     * running   | running   | none
+     */
+    virtual void powerOn();
+    virtual void _powerOn() { }
+    
+    /* powerOff() powers the component off.
+     *
+     * current   | next      | action
+     * -------------------------------------------------------------------------
+     * off       | off       | none
+     * paused    | off       | _powerOff() on each subcomponent
+     * running   | off       | pause(), _powerOff() on each subcomponent
+     */
+    virtual void powerOff();
+    virtual void _powerOff() { }
+    
+    /* run() puts the component in 'running' state.
+     *
+     * current   | next      | action
+     * -------------------------------------------------------------------------
+     * off       | running   | powerOn(), _run() on each subcomponent
+     * paused    | running   | _run() on each subcomponent
+     * running   | running   | none
+     */
+    virtual void run();
+    virtual void _run() { }
+    
+    /* pause() puts the component in 'paused' state.
+     *
+     * current   | next      | action
+     * -------------------------------------------------------------------------
+     * off       | off       | none
+     * paused    | paused    | none
+     * running   | paused    | _pause() on each subcomponent
+     */
+    virtual void pause();
+    virtual void _pause() { };
+    
+public:
+    
+    /* Resets the component and its subcomponent.
      * Each component must implement this function.
      */
-    void reset();
+    virtual void reset();
     virtual void _reset() = 0;
 
     /* Asks the component to inform the GUI about its current state.
      * The GUI invokes this function when it needs to update all of its visual
      * elements. This happens, e.g., when a snapshot file was loaded.
      */
-    void ping();
+    virtual void ping();
     virtual void _ping() { }
+    
     
     
     
     
     /* Dumps debug information about the current configuration to the console
      */
-    void dumpConfig();
+    virtual void dumpConfig();
     virtual void _dumpConfig() { }
 
     /* Dumps debug information about the internal state to the console
      */
-    void dump();
+    virtual void dump();
     virtual void _dump() { }
 
     /* Informs the component about a clock frequency change.
@@ -100,7 +173,7 @@ public:
      * components overwrite this function to update clock dependent lookup
      * tables.
      */
-    void setClockFrequency(u32 value);
+    virtual void setClockFrequency(u32 value);
     virtual void _setClockFrequency(u32 value) { }
 
     

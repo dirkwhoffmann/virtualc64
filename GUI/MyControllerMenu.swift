@@ -164,15 +164,17 @@ extension MyController: NSMenuItemValidation {
         }
         
         // Debug menu
+        /*
         if item.action == #selector(MyController.pauseAction(_:)) {
-            return c64.oldIsRunning()
+            return c64.isRunning()
         }
         if item.action == #selector(MyController.continueAction(_:)) ||
             item.action == #selector(MyController.stepIntoAction(_:)) ||
             item.action == #selector(MyController.stepOverAction(_:)) ||
             item.action == #selector(MyController.stopAndGoAction(_:)) {
-            return c64.isHalted()
+            return !c64.isRunning()
         }
+        */
         if item.action == #selector(MyController.markIRQLinesAction(_:)) {
             item.state = c64.vic.showIrqLines() ? .on : .off
         }
@@ -184,7 +186,7 @@ extension MyController: NSMenuItemValidation {
         }
 
         if item.action == #selector(MyController.traceAction(_:)) {
-            return c64.developmentMode()
+            return !c64.releaseBuild()
         }
         if item.action == #selector(MyController.traceIecAction(_:)) {
             item.state = c64.iec.tracing() ? .on : .off
@@ -197,7 +199,7 @@ extension MyController: NSMenuItemValidation {
         }
         
         if item.action == #selector(MyController.dumpStateAction(_:)) {
-            return c64.developmentMode()
+            return !c64.releaseBuild()
         }
 
         return true
@@ -253,10 +255,7 @@ extension MyController: NSMenuItemValidation {
     //
     
     @IBAction func saveScreenshotDialog(_ sender: Any!) {
-        
-        // Halt emulation to freeze the current texture
-        c64.halt()
-        
+                
         // Create save panel
         let savePanel = NSSavePanel()
         savePanel.prompt = "Export"
@@ -284,7 +283,6 @@ extension MyController: NSMenuItemValidation {
                     }
                 }
             }
-            self.c64.run()
         })
     }
     
@@ -351,19 +349,13 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func stopAndGoAction(_ sender: Any!) {
         
-        needsSaving = true
-        if c64.isHalted() {
-            c64.run()
-        } else {
-            c64.halt()
-        }
-        refresh()
+        c64.stopAndGo()
     }
     
     @IBAction func stepIntoAction(_ sender: Any!) {
         
         needsSaving = true
-        c64.step()
+        c64.stepInto()
         refresh()
     }
     
@@ -375,32 +367,22 @@ extension MyController: NSMenuItemValidation {
     }
     
     @IBAction func resetAction(_ sender: Any!) {
-        
+
+        track()
+
         needsSaving = true
         metalScreen.rotateBack()
-        c64.powerUp()
-        refresh()
+        c64.reset()
+        c64.run()
     }
 
     @IBAction func powerAction(_ sender: Any!) {
         
         track()
-        /*
-        if c64.isPoweredOn() {
-            c64.powerOff()
-            return
-        }
-        
-        var error: ErrorCode = ERR_OK
-        if c64.isReady(&error) {
-            c64.run()
-        } else {
-            mydocument.showConfigurationAltert(error)
-        }
-        */
-    }
-    
 
+        c64.isPoweredOn() ? c64.powerOff() : c64.run()
+    }
+     
     //
     // Action methods (View menu)
     //

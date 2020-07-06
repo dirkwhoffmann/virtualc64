@@ -22,7 +22,6 @@ class ReSID : public C64Component {
 
 public:
     
-    // ReSID object
     reSID::SID *sid;
     
 public:
@@ -96,9 +95,8 @@ public:
 	//! Special poke function for the I/O memory range.
 	void poke(u16 addr, u8 value);
 	
-	/*! @brief   Execute SID
-     *  @details Runs reSID for the specified amount of CPU cycles and writes
-     *           the generated sound samples into the internal ring buffer. 
+	/* Runs reSID for the specified amount of CPU cycles and writes the
+     * generated sound samples into the internal ring buffer.
      */
     void execute(u64 cycles);
 	

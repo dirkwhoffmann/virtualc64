@@ -28,6 +28,9 @@
 #include "C64Types.h"
 #include "C64Constants.h"
 
+// Returns true if this executable is a release build
+bool releaseBuild();
+
 //! @brief    Two bit binary value
 typedef u8 uint2_t;
 

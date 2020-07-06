@@ -9,6 +9,16 @@
 
 #include "Utils.h"
 
+bool
+releaseBuild()
+{
+#ifdef RELEASEBUILD
+    return true;
+#else
+    return false;
+#endif
+}
+
 struct timeval t;
 // long tv_base = ((void)gettimeofday(&t,NULL), t.tv_sec);
 

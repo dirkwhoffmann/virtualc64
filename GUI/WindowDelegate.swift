@@ -33,8 +33,8 @@ extension MyController: NSWindowDelegate {
         track()
         
         // Stop emulator if it is configured to pause in background
-        pauseInBackgroundSavedState = c64.oldIsRunning()
-        if pauseInBackground { c64.halt() }
+        pauseInBackgroundSavedState = c64.isRunning()
+        if pauseInBackground { c64.pause() }
     }
     
     public func windowWillClose(_ notification: Notification) {

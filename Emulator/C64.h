@@ -160,20 +160,24 @@ public:
     // Execution thread
     //
     
-    //! @brief    An invocation counter for implementing suspend() / resume()
+    // The invocation counter for implementing suspend() / resume()
     unsigned suspendCounter = 0;
     
-    /*! @brief    The emulators execution thread
-     *  @details  The thread is created when the emulator is started and
-     *            destroyed when the emulator is halted.
-     */
-    pthread_t p;
+    // The emulator thread
+    pthread_t p = NULL;
+    
+    // Mutexes to coordinate the order of execution
+    pthread_mutex_t threadLock;
+
+    
+    //
+    // Emulation speed
+    //
     
 private:
     
-    /*! @brief    System timer information
-     *  @details  Used to put the emulation thread to sleep for the proper
-     *            amount of time.
+    /* System timer information
+     * Used to match the emulation speed with the speed of a real C64.
      */
     mach_timebase_info_data_t timebase;
     
@@ -246,7 +250,7 @@ private:
     
     
     //
-    // Creating and destructing
+    // Constructing and serializing
     //
     
 public:
@@ -261,15 +265,41 @@ public:
 public:
 
     void prefix() override;
-
+    void reset() override;
+    
 private:
 
+    void _powerOn() override;
+    void _powerOff() override;
+    void _run() override;
+    void _pause() override;
     void _reset() override;
     void _ping() override;
     void _dump() override;
     void _setClockFrequency(u32 value) override;
-
-
+    
+    
+    //
+    // Controlling the emulation thread
+    //
+    
+public:
+    
+    // Thread-safe state control
+    void requestThreadLock();
+    void powerOnEmulator();
+    void powerOffEmulator();
+    void runEmulator();
+    void pauseEmulator();
+    
+    /* Returns true iff the virtual C64 is able to run. The emulator needs all
+     * four Roms to run. Hence, this method returns true if and only if all
+     * four Roms are installed.
+     */
+    bool isReady();
+    
+    
+    
     //
     // Configuring the emulator
     //
@@ -277,7 +307,7 @@ private:
 public:
     
     /*! @brief    Returns the emulated C64 model
-     *  @return   C64_CUSTOM, if the selected sub-components do not match any
+     *  @return   C64_CUSTOM, if the selected subcomponents do not match any
      *            of the supported C64 models.
      */
     C64Model getModel();
@@ -315,32 +345,7 @@ public:
     void putMessage(MessageType msg, u64 data = 0) { queue.putMessage(msg, data); }
     
     
-    //
-    // Running the emulator
-    //
-    
-    /*! @brief    Cold starts the virtual C64.
-     *  @details  The emulator and all of its sub components are reset and
-     *            the execution thread is started.
-     *  @note     It it safe to call this function on a running emulator.
-     */
-    void powerUp();
-    
-    /*! @brief    Starts the execution thread.
-     *  @details  This method launches the execution thread and is usually
-     *            called after emulation was stopped by a call to halt() or by
-     *            reaching a breakpoint. Calling this functions has no effect,
-     *            if the emulator is currently running.
-     */
-    void run();
-    
-    /*! @brief    Stops the emulation execution thread.
-     *  @details  The execution thread is canceled, but the internal state
-     *            remains intact. Emulation can be continued by a call to run().
-     *            Calling this functions has no effect, if the emulator is
-     *            not running.
-     */
-    void halt();
+ 
     
     /* The thread enter function.
      * This (private) method is invoked when the emulator thread launches. It
@@ -354,22 +359,21 @@ public:
      */
     void threadDidTerminate();
     
-    /* Returns true iff the virtual C64 is able to run. The emulator needs all
-     * four Roms to run. Hence, this method returns true if and only if all
-     * four Roms are installed.
-     */
-    bool isReady();
+ 
     
     //! @brief    Returns true if the emulator is running.
-    bool oldIsRunning();
+    // bool oldIsRunning();
     
     //! @brief    Returns true if the emulator is not running.
-    bool isHalted();
+    // bool isHalted();
+    
+    // Runs or pauses the emulator
+    void stopAndGo() { isRunning() ? pauseEmulator() : runEmulator(); }
     
     /*! @brief    Executes a single instruction.
      *  @details  This method implements the debugger's 'step' action.
      */
-    void step();
+    void stepInto();
     
     /*! @brief    Executes until the instruction is reached
      *  @details  This method implements the debugger's 'step over' action.
@@ -580,22 +584,6 @@ public:
      *            if a certain game / exrom line combination is provided.
      */
     void setUltimax(bool b) { ultimax = b; }
-    
-    
-    //
-    //! @functiongroup Debugging
-    //
-    
-    /*! @brief    Returns true if the executable was compiled for development
-     *  @details  In release mode, assertion checking should be switched off
-     */
-    inline bool developmentMode() {
-#ifndef NDEBUG
-        return true;
-#endif
-        return false;
-    }
 };
 
 #endif
-

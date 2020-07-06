@@ -19,26 +19,23 @@ class MyToolbar: NSToolbar {
     @IBOutlet weak var snapshotSegCtrl: NSSegmentedControl!
     
     override func validateVisibleItems() {
-
-        track()
-        
-        validateToolbarItems()
-        
-        /*
+                
         let c64 = parent.c64!
         let pause = pauseButton.view as? NSButton
         let reset = resetButton.view as? NSButton
-        let kb = keyboardButton.view as? NSButton
+        // let kb = keyboardButton.view as? NSButton
         
         // Disable the keyboard button, if the virtual keyboard is open
+        /*
         if let window = parent.virtualKeyboard?.window {
             kb?.isEnabled = !window.isVisible
         } else {
             kb?.isEnabled = true
         }
+        */
         
         // Disable the Pause and Reset button if the emulator if powered off
-        let poweredOn = true //  c64.isPoweredOn()
+        let poweredOn = c64.isPoweredOn()
         pause?.isEnabled = poweredOn
         reset?.isEnabled = poweredOn
 
@@ -57,28 +54,14 @@ class MyToolbar: NSToolbar {
         resetButton.label = "Reset"
 
         // Update input device selectors
+        /*
         parent.gamePadManager.refresh(popup: controlPort1)
         parent.gamePadManager.refresh(popup: controlPort2)
         controlPort1.selectItem(withTag: parent.config.gameDevice1)
         controlPort2.selectItem(withTag: parent.config.gameDevice2)
         */
+        validateJoystickToolbarItems()
     }
-    
-    func validateToolbarItems() {
-         
-        let isRunning = true // c64.isRunning()
-        
-         let button = pauseButton.view as? NSButton
-         if isRunning {
-             button?.image = NSImage.init(named: "pauseTemplate")
-             pauseButton.label = "Pause"
-         } else {
-             button?.image = NSImage.init(named: "continueTemplate")
-             pauseButton.label = "Run"
-         }
-         
-         validateJoystickToolbarItems()
-     }
     
     func validateJoystickToolbarItems() {
         

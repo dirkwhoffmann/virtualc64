@@ -15,7 +15,9 @@ import Foundation
 
 func resetScriptCmd(arguments: [AnyHashable: Any]?) -> Bool {
     
+    /*
     proxy?.powerUp()
+    */
     return true
 }
 

@@ -1429,6 +1429,28 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     wrapper->c64 = NULL;
 }
 
+- (BOOL) releaseBuild
+{
+    return releaseBuild();
+}
+- (BOOL) isReady
+{
+    return wrapper->c64->isReady();
+}
+- (void) powerOn
+{
+    wrapper->c64->powerOnEmulator();
+}
+- (void) powerOff
+{
+    wrapper->c64->powerOffEmulator();
+}
+- (void) reset
+{
+    wrapper->c64->reset();
+}
+
+
 - (DriveProxy *) drive:(NSInteger)num {
     switch (num) {
         case 1:
@@ -1449,9 +1471,37 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->c64->dump();
 }
-- (BOOL) developmentMode
+- (BOOL) isPoweredOn
 {
-    return wrapper->c64->developmentMode();
+    return wrapper->c64->isPoweredOn();
+}
+- (BOOL) isPoweredOff
+{
+    return wrapper->c64->isPoweredOff();
+}
+- (BOOL) isRunning
+{
+    return wrapper->c64->isRunning();
+}
+- (BOOL) isPaused
+{
+    return wrapper->c64->isPaused();
+}
+- (void) run
+{
+    wrapper->c64->runEmulator();
+}
+- (void) pause
+{
+    wrapper->c64->pauseEmulator();
+}
+- (void) suspend
+{
+    wrapper->c64->suspend();
+}
+- (void) resume
+{
+    wrapper->c64->resume();
 }
 
 // Configuring the emulator
@@ -1479,6 +1529,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 
 // Running the emulator
+/*
 - (void) powerUp
 {
     wrapper->c64->powerUp();
@@ -1490,14 +1541,6 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 - (void) halt
 {
     wrapper->c64->halt();
-}
-- (void) suspend
-{
-    wrapper->c64->suspend();
-}
-- (void) resume
-{
-    wrapper->c64->resume();
 }
 - (BOOL) isReady
 {
@@ -1511,9 +1554,15 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->c64->isHalted();
 }
-- (void) step
+*/
+
+- (void) stopAndGo
 {
-    wrapper->c64->step();
+    wrapper->c64->stopAndGo();
+}
+- (void) stepInto
+{
+    wrapper->c64->stepInto();
 }
 - (void) stepOver
 {

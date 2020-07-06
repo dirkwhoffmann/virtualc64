@@ -9,7 +9,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
-#import "C64Types.h"
+// #import "C64Types.h"
 #import "Utils.h"
 
 // Forward declarations of proxy classes
@@ -62,10 +62,9 @@ struct DatasetteWrapper;
 struct MouseWrapper;
 struct AnyC64FileWrapper;
 
-
-// -----------------------------------------------------------------------------
-//                                   C64 proxy
-// -----------------------------------------------------------------------------
+//
+// C64 proxy
+//
 
 @interface C64Proxy : NSObject {
     
@@ -108,11 +107,26 @@ struct AnyC64FileWrapper;
 - (void) dealloc;
 - (void) kill;
 
-- (DriveProxy *)drive:(NSInteger)nr;
+- (BOOL) releaseBuild;
 
+- (BOOL) isReady;
+- (void) powerOn;
+- (void) powerOff;
+- (void) reset;
 - (void) ping;
 - (void) dump;
-- (BOOL) developmentMode;
+
+- (BOOL) isPoweredOn;
+- (BOOL) isPoweredOff;
+- (BOOL) isRunning;
+- (BOOL) isPaused;
+- (void) run;
+- (void) pause;
+
+- (void) suspend;
+- (void) resume;
+
+- (DriveProxy *)drive:(NSInteger)nr;
 
 // Configuring the emulator
 - (NSInteger) model;
@@ -124,15 +138,17 @@ struct AnyC64FileWrapper;
 - (void) removeListener:(const void *)sender;
 
 // Running the emulator
+/*
 - (void) powerUp;
 - (void) run;
 - (void) halt;
-- (void) suspend;
-- (void) resume;
 - (BOOL) isReady;
 - (BOOL) oldIsRunning;
 - (BOOL) isHalted;
-- (void) step;
+*/
+ 
+- (void) stopAndGo;
+- (void) stepInto;
 - (void) stepOver;
 
 // Managing the execution thread

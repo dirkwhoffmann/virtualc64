@@ -14,7 +14,7 @@
 //
 
 void 
-threadCleanup(void* thisC64)
+threadTerminated(void* thisC64)
 {
     assert(thisC64 != NULL);
     
@@ -23,7 +23,7 @@ threadCleanup(void* thisC64)
 }
 
 void 
-*runThread(void *thisC64) {
+*threadMain(void *thisC64) {
         
     assert(thisC64 != NULL);
     
@@ -34,7 +34,7 @@ void
     // Configure thread properties...
     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
     pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
-    pthread_cleanup_push(threadCleanup, thisC64);
+    pthread_cleanup_push(threadTerminated, thisC64);
     
     // Prepare to run...
     c64->cpu.clearErrorState();
@@ -106,19 +106,38 @@ C64::C64()
 
     // Initialize mach timer info
     mach_timebase_info(&timebase);
+    
+    // Initialize mutexes
+    pthread_mutex_init(&threadLock, NULL);
 }
 
 C64::~C64()
 {
-    debug(RUN_DEBUG, "Destroying virtual C64[%p]\n", this);
+    debug(RUN_DEBUG, "Destroying C64[%p]\n", this);
+    powerOffEmulator();
     
-    halt();
+    pthread_mutex_destroy(&threadLock);
 }
 
 void
 C64::prefix()
 {
     fprintf(stderr, "[%lld] (%3d,%3d) %04X ", frame, rasterLine, rasterCycle, cpu.getPC());
+}
+
+void
+C64::reset()
+{
+    suspend();
+    assert(!isRunning());
+        
+    // Execute the standard reset routine
+    HardwareComponent::reset();
+    
+    // Inform the GUI
+    putMessage(MSG_RESET);
+    
+    resume();
 }
 
 void
@@ -144,6 +163,57 @@ C64::_reset()
     ping();
 }
 
+void
+C64::_powerOn()
+{
+    debug(RUN_DEBUG, "Power on\n");
+        
+    putMessage(MSG_POWER_ON);
+}
+
+void
+C64::_powerOff()
+{
+    debug("Power off\n");
+    
+    putMessage(MSG_POWER_OFF);
+}
+
+void
+C64::_run()
+{
+    debug("_run\n");
+    
+    // Start the emulator thread
+    pthread_create(&p, NULL, threadMain, (void *)this);
+    
+    // Inform the GUI
+    putMessage(MSG_RUN);
+}
+
+void
+C64::_pause()
+{
+    if (p) {
+        
+        // Cancel emulator thread
+        pthread_cancel(p);
+        
+        // Wait until thread terminates
+        pthread_join(p, NULL);
+        debug("Thread stopped\n");
+
+        // Finish the current command (to reach a clean state)
+        stepInto();
+    }
+    
+    // When we reach this line, the emulator thread is already gone
+    assert(p == NULL);
+    
+    // Inform the GUI
+    putMessage(MSG_PAUSE);
+}
+
 void C64::_ping()
 {
     putMessage(warp ? MSG_WARP_ON : MSG_WARP_OFF);
@@ -158,30 +228,6 @@ C64::_setClockFrequency(u32 value)
 }
 
 void
-C64::suspend()
-{
-    debug(RUN_DEBUG, "Suspending...(%d)\n", suspendCounter);
-    
-    if (suspendCounter == 0 && isHalted())
-    return;
-    
-    halt();
-    suspendCounter++;
-}
-
-void
-C64::resume()
-{
-    debug(RUN_DEBUG, "Resuming (%d)...\n", suspendCounter);
-    
-    if (suspendCounter == 0)
-    return;
-    
-    if (--suspendCounter == 0)
-    run();
-}
-
-void 
 C64::_dump() {
     msg("C64:\n");
     msg("----\n\n");
@@ -197,6 +243,184 @@ C64::_dump() {
     msg("warp, warpLoad, alwaysWarp : %d %d %d\n", warp, warpLoad, alwaysWarp);
     msg("\n");
 }
+
+void
+C64::suspend()
+{
+    // pthread_mutex_lock(&stateChangeLock);
+    
+    debug(RUN_DEBUG, "Suspending (%d)...\n", suspendCounter);
+    
+    if (suspendCounter || isRunning()) {
+        
+        // Acquire the thread lock
+        requestThreadLock();
+        pthread_mutex_lock(&threadLock);
+                
+        // At this point, the emulator must be paused or powered off
+        assert(!isRunning());
+        
+        suspendCounter++;
+    }
+        
+    // pthread_mutex_unlock(&stateChangeLock);
+}
+
+void
+C64::resume()
+{
+    // pthread_mutex_lock(&stateChangeLock);
+    
+    debug(RUN_DEBUG, "Resuming (%d)...\n", suspendCounter);
+    
+    if (suspendCounter && --suspendCounter == 0) {
+        
+        // Acquire the thread lock
+        requestThreadLock();
+        pthread_mutex_lock(&threadLock);
+        
+        run();
+    }
+    
+    // pthread_mutex_unlock(&stateChangeLock);
+}
+
+void
+C64::requestThreadLock()
+{
+    if (state == STATE_RUNNING) {
+
+        // The emulator thread is running
+        assert(p != NULL);
+        
+        // Free the thread lock by terminating the thread
+        // signalStop();
+        
+        // Cancel emulator thread
+        pthread_cancel(p);
+        
+        // Wait until thread terminates
+        pthread_join(p, NULL);
+        debug("Thread stopped\n");
+        assert(p == NULL);
+        
+        // Acquire the lock
+        
+        
+        // Finish the current command (to reach a clean state)
+        stepInto();
+        
+    } else {
+        
+        // There must be no emulator thread
+        assert(p == NULL);
+        
+        // It's save to free the lock immediately
+        pthread_mutex_unlock(&threadLock);
+    }
+}
+
+void
+C64::powerOnEmulator()
+{
+    /*
+    #ifdef BOOT_DISK
+
+        ADFFile *adf = ADFFile::makeWithFile(BOOT_DISK);
+        if (adf) {
+            Disk *disk = Disk::makeWithFile(adf);
+            df0.ejectDisk();
+            df0.insertDisk(disk);
+            df0.setWriteProtection(false);
+        }
+
+    #endif
+
+    #ifdef INITIAL_BREAKPOINT
+
+        debugMode = true;
+        cpu.debugger.breakpoints.addAt(INITIAL_BREAKPOINT);
+
+    #endif
+    */
+    
+    // pthread_mutex_lock(&stateChangeLock);
+    
+    if (isReady()) {
+
+        // Acquire the thread lock
+        requestThreadLock();
+        pthread_mutex_lock(&threadLock);
+    
+        powerOn();
+    }
+    
+    // pthread_mutex_unlock(&stateChangeLock);
+}
+
+void
+C64::powerOffEmulator()
+{
+    // pthread_mutex_lock(&stateChangeLock);
+    
+    // Acquire the thread lock
+    requestThreadLock();
+    pthread_mutex_lock(&threadLock);
+
+    powerOff();
+    
+    // pthread_mutex_unlock(&stateChangeLock);
+}
+
+void
+C64::runEmulator()
+{
+    // pthread_mutex_lock(&stateChangeLock);
+    
+    if (isReady()) {
+        
+        // Acquire the thread lock
+        requestThreadLock();
+        pthread_mutex_lock(&threadLock);
+        
+        run();
+    }
+    
+    // pthread_mutex_unlock(&stateChangeLock);
+}
+
+void
+C64::pauseEmulator()
+{
+    // pthread_mutex_lock(&stateChangeLock);
+    
+    // Acquire the thread lock
+    requestThreadLock();
+    pthread_mutex_lock(&threadLock);
+
+    // At this point, the emulator is already paused or powered off
+    assert(!isRunning());
+    
+    // pthread_mutex_unlock(&stateChangeLock);
+}
+
+bool
+C64::isReady()
+{
+    return
+    mem.basicRomIsLoaded() &&
+    mem.characterRomIsLoaded() &&
+    mem.kernalRomIsLoaded() &&
+    drive1.mem.romIsLoaded() &&
+    drive2.mem.romIsLoaded();
+}
+
+
+
+
+
+
+
 
 C64Model
 C64::getModel()
@@ -343,6 +567,7 @@ C64::updateVicFunctionTable()
     }
 }
 
+/*
 void
 C64::powerUp()
 {    
@@ -367,7 +592,7 @@ C64::run()
         sid.run();
         
         // Start execution thread
-        pthread_create(&p, NULL, runThread, (void *)this);
+        pthread_create(&p, NULL, threadMain, (void *)this);
     }
 }
 
@@ -381,16 +606,15 @@ C64::halt()
         // Wait until thread terminates
         pthread_join(p, NULL);
         // Finish the current command (to reach a clean state)
-        step();
+        stepInto();
     }
 }
+*/
 
 void
 C64::threadWillStart()
 {
     debug(RUN_DEBUG, "Emulator thread started\n");
-    
-    putMessage(MSG_RUN);
 }
 
 void
@@ -398,23 +622,17 @@ C64::threadDidTerminate()
 {
     debug(RUN_DEBUG, "Emulator thread terminated\n");
 
+    // Trash the thread pointer
     p = NULL;
         
-    sid.halt();
-    putMessage(MSG_HALT);
+    // Enter pause mode
+    pause();
+    
+    // Release the thread lock
+    pthread_mutex_unlock(&threadLock);
 }
 
-bool
-C64::isReady()
-{
-    return
-    mem.basicRomIsLoaded() &&
-    mem.characterRomIsLoaded() &&
-    mem.kernalRomIsLoaded() &&
-    drive1.mem.romIsLoaded() &&
-    drive2.mem.romIsLoaded();
-}
-
+/*
 bool
 C64::oldIsRunning()
 {
@@ -426,9 +644,10 @@ C64::isHalted()
 {
     return p == NULL;
 }
+*/
 
 void
-C64::step()
+C64::stepInto()
 {
     cpu.clearErrorState();
     drive1.cpu.clearErrorState();
@@ -459,8 +678,8 @@ C64::stepOver()
         return;
     }
 
-    // Otherwise, stepOver behaves like step
-    step();
+    // Otherwise, stepOver behaves like stepInto
+    stepInto();
 }
 
 bool

@@ -150,6 +150,8 @@ public:
 
 private:
     
+    void _run() override;
+    void _pause() override;
     void _dump() override;
     void _dump(SIDInfo info);
 
@@ -164,16 +166,6 @@ public:
     VoiceInfo getVoiceInfo(unsigned voice);
     
   
-    //
-    // Running the device
-    //
-    
-    //! Notifies the SID chip that the emulator has started
-    void run();
-    
-    //! Notifies the SID chip that the emulator has started
-    void halt();
-    
     //
     // Volume control
     //

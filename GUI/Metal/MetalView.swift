@@ -404,8 +404,11 @@ public class MetalView: MTKView {
     
     func drawScene3D() {
     
+        let poweredOff = controller.c64.isPoweredOff()
+
         let animates = self.animates()
-        let drawBackground = !fullscreen && (animates || !drawC64texture)
+        let renderBackground = poweredOff || fullscreen
+        // let drawBackground = !fullscreen && (animates || !drawC64texture)
         
         if animates {
             updateAngles()
@@ -415,7 +418,7 @@ public class MetalView: MTKView {
         startFrame()
             
         // Render background
-        if drawBackground {
+        if renderBackground {
             
             // Configure vertex shader
             // commandEncoder.setVertexBuffer(uniformBufferBg, offset: 0, index: 1)
@@ -439,14 +442,14 @@ public class MetalView: MTKView {
         }
         
         // Render cube
-        if drawC64texture {
+        if drawC64texture && !poweredOff {
             
             // Configure vertex shader
             commandEncoder.setVertexBytes(&vertexUniforms3D,
                                           length: MemoryLayout<VertexUniforms>.stride,
                                           index: 1)
             // Configure fragment shader
-            fragmentUniforms.alpha = controller.c64.isHalted() ? 0.5 : currentAlpha
+            fragmentUniforms.alpha = controller.c64.isRunning() ? currentAlpha : 0.5
             commandEncoder.setFragmentTexture(scanlineTexture, index: 0)
             commandEncoder.setFragmentTexture(bloomTextureR, index: 1)
             commandEncoder.setFragmentTexture(bloomTextureG, index: 2)
