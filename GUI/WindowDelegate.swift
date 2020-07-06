@@ -49,7 +49,7 @@ extension MyController: NSWindowDelegate {
         timerLock.unlock()
         
         // Disconnect the audio engine from the emulator
-        audioEngine.shutDown()
+        macAudio.shutDown()
         
         // Quit message queue
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())

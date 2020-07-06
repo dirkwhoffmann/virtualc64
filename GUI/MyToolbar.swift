@@ -25,17 +25,7 @@ class MyToolbar: NSToolbar {
         let c64 = parent.c64!
         let pause = pauseButton.view as? NSButton
         let reset = resetButton.view as? NSButton
-        // let kb = keyboardButton.view as? NSButton
-        
-        // Disable the keyboard button, if the virtual keyboard is open
-        /*
-        if let window = parent.virtualKeyboard?.window {
-            kb?.isEnabled = !window.isVisible
-        } else {
-            kb?.isEnabled = true
-        }
-        */
-        
+ 
         // Disable the Pause and Reset button if the emulator if powered off
         let poweredOn = c64.isPoweredOn()
         pause?.isEnabled = poweredOn

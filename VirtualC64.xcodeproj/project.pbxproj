@@ -156,7 +156,7 @@
 		50763277202989D300575110 /* UserDialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* UserDialogController.swift */; };
 		507887CC20B1858B00941F7E /* MemTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507887CB20B1858B00941F7E /* MemTableView.swift */; };
 		507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */; };
-		5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* AudioEngine.swift */; };
+		5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* MacAudio.swift */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		509A26072027AA1100D28827 /* DiskMountDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 509A26062027AA1100D28827 /* DiskMountDialog.xib */; };
 		50A0E0210A8F33120067714C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A0E0200A8F33120067714C /* IOKit.framework */; };
@@ -469,7 +469,7 @@
 		50763276202989D300575110 /* UserDialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDialogController.swift; sourceTree = "<group>"; };
 		507887CB20B1858B00941F7E /* MemTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemTableView.swift; sourceTree = "<group>"; };
 		507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerCartridges.swift; sourceTree = "<group>"; };
-		5081AB621EF29E6400D6F616 /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
+		5081AB621EF29E6400D6F616 /* MacAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacAudio.swift; sourceTree = "<group>"; };
 		5092A5B0200BC4B70037754D /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
 		5093D6A824B19E9200BDF924 /* Serialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Serialization.h; sourceTree = "<group>"; };
 		509A26062027AA1100D28827 /* DiskMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskMountDialog.xib; sourceTree = "<group>"; };
@@ -634,7 +634,7 @@
 		5000474312DCED190098D890 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
-				5081AB621EF29E6400D6F616 /* AudioEngine.swift */,
+				5081AB621EF29E6400D6F616 /* MacAudio.swift */,
 				50FF818E1F88D9100004548A /* GamePad.swift */,
 				50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */,
 				50ED5BF712DD99C000596417 /* Speedometer.swift */,
@@ -1274,7 +1274,7 @@
 				504C439924AF29AC00E69CAE /* filter.cc in Sources */,
 				504C439824AF29AC00E69CAE /* sid.cc in Sources */,
 				504C438424AF29AC00E69CAE /* Utils.cpp in Sources */,
-				5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */,
+				5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */,
 				504C437724AF29AC00E69CAE /* G64File.cpp in Sources */,
 				504C438924AF29AC00E69CAE /* NeosMouse.cpp in Sources */,
 				504C435924AF29AC00E69CAE /* Ocean.cpp in Sources */,

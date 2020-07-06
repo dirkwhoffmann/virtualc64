@@ -28,7 +28,7 @@ extension PreferencesController {
     func refreshKeyboardTab() {
     
         // guard let controller = myController else { return }
-        guard let kbController = myController?.keyboardcontroller else { return }
+        guard let kbController = myController?.keyboard else { return }
         guard let c64 = proxy else { return }
         
         keyMappingPopup.selectItem(withTag: kbController.mapKeysByPosition ? 1 : 0)
@@ -52,7 +52,7 @@ extension PreferencesController {
     
     func updateImages() {
         
-        guard let kbController = myController?.keyboardcontroller else { return }
+        guard let kbController = myController?.keyboard else { return }
         let keyMap = kbController.keyMap
         
         // Create labels
@@ -75,7 +75,7 @@ extension PreferencesController {
     
     func mapKeyDown(with macKey: MacKey) {
         
-        guard let kbController = myController?.keyboardcontroller else { return }
+        guard let kbController = myController?.keyboard else { return }
         let keyMap = kbController.keyMap
         
         // Check for ESC key
@@ -100,7 +100,7 @@ extension PreferencesController {
     @IBAction func mapKeyMappingAction(_ sender: NSPopUpButton!) {
         
         let value = (sender.selectedTag() == 1) ? true : false
-        myController?.keyboardcontroller.mapKeysByPosition = value
+        myController?.keyboard.mapKeysByPosition = value
         refresh()
     }
     

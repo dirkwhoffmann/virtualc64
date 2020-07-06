@@ -9,7 +9,7 @@
 
 import AVFoundation
 
-public class AudioEngine: NSObject {
+public class MacAudio: NSObject {
 
     private var sid: SIDProxy?
     private var audiounit: AUAudioUnit!

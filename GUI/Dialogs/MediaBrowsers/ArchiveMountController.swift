@@ -100,7 +100,7 @@ class ArchiveMountController: UserDialogController {
         
         // Flash file into memory
         myController?.mydocument?.flashAttachmentIntoMemory()
-        myController?.keyboardcontroller.type("RUN\n")
+        myController?.keyboard.type("RUN\n")
         
         /*
         // Get load address of the selected item

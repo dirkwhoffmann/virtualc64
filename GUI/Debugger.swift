@@ -214,7 +214,6 @@ extension MyController {
     
     @IBAction func continueAction(_ sender: Any!) {
         
-        needsSaving = true
         if !c64.isRunning() {
             c64.run()
         }

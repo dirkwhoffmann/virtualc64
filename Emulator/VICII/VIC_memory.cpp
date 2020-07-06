@@ -535,12 +535,13 @@ VIC::poke(u16 addr, u8 value)
             
             // Inform the GUI if the second bit changes. It switches between
             // upper case or lower case mode.
+            /*
             if ((value & 0x02) != (memSelect & 0x02)) {
                 memSelect = value;
                 vc64.putMessage(MSG_CHARSET);
                 return;
             }
-            
+            */
             memSelect = value;
             return;
     

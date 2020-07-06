@@ -42,7 +42,7 @@ class TapeMountController: UserDialogController {
         // Process options
         if autoLoad.integerValue == 1 {
             
-            let kbc = myController?.keyboardcontroller
+            let kbc = myController?.keyboard
             
             if autoPress.integerValue == 1 {
                 kbc?.type(string: "LOAD\n", completion: proxy?.datasette.pressPlay)

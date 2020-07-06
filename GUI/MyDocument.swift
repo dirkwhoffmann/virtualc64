@@ -202,7 +202,7 @@ class MyDocument: NSDocument {
         // Type text
         if text != nil {
             track("Auto typing: \(text!)")
-            myController?.keyboardcontroller.type(text! + "\n")
+            myController?.keyboard.type(text! + "\n")
         }
     }
     

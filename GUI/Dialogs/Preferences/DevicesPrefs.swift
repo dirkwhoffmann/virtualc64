@@ -27,7 +27,7 @@ extension PreferencesController {
         updateJoyKeyMap(1, dir: JOYSTICK_LEFT, button: devLeft2button, txt: devLeft2)
         updateJoyKeyMap(1, dir: JOYSTICK_RIGHT, button: devRight2button, txt: devRight2)
         updateJoyKeyMap(1, dir: JOYSTICK_FIRE, button: devFire2button, txt: devFire2)
-        devDisconnectKeys.state = con.keyboardcontroller.disconnectJoyKeys ? .on : .off
+        devDisconnectKeys.state = con.keyboard.disconnectJoyKeys ? .on : .off
         
         assert(c64.port1.autofire() == c64.port2.autofire())
         assert(c64.port1.autofireBullets() == c64.port2.autofireBullets())
@@ -137,7 +137,7 @@ extension PreferencesController {
     
     @IBAction func devDisconnectKeysAction(_ sender: NSButton!) {
         
-        myController?.keyboardcontroller.disconnectJoyKeys = (sender.state == .on)
+        myController?.keyboard.disconnectJoyKeys = (sender.state == .on)
         
         refresh()
     }

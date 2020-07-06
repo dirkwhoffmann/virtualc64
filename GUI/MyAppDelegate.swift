@@ -52,10 +52,7 @@ var proxy: C64Proxy? {
 
 @NSApplicationMain
 @objc public class MyAppDelegate: NSObject, NSApplicationDelegate {
-    
-    /// Virtual C64 keyboard (opened as a separate window)
-    var virtualKeyboard: VirtualKeyboardController?
-    
+        
     /// The list of recently inserted disk URLs.
     var recentlyInsertedDiskURLs: [URL] = []
     
@@ -103,9 +100,6 @@ var proxy: C64Proxy? {
     }
     
     public func applicationWillTerminate(_ aNotification: Notification) {
-
-        // Close virtual keyboard
-        virtualKeyboard?.close()
         
         track()
     }
@@ -215,7 +209,7 @@ extension MyAppDelegate {
         for case let document as MyDocument in NSApplication.shared.orderedDocuments {
             if let controller = document.windowControllers.first as? MyController {
                 
-                let audioEngine = controller.audioEngine!
+                let audioEngine = controller.macAudio!
                 if window == controller.window {
                     
                     // Turn on audio

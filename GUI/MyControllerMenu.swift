@@ -342,7 +342,7 @@ extension MyController: NSMenuItemValidation {
             return
         }
         
-        keyboardcontroller.type(string: text, completion: nil)
+        keyboard.type(string: text, completion: nil)
     }
     
     @IBAction func stopAndGoAction(_ sender: Any!) {
@@ -352,14 +352,12 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func stepIntoAction(_ sender: Any!) {
         
-        needsSaving = true
         c64.stepInto()
         refresh()
     }
     
     @IBAction func stepOverAction(_ sender: Any!) {
         
-        needsSaving = true
         c64.stepOver()
         refresh()
     }
@@ -368,7 +366,6 @@ extension MyController: NSMenuItemValidation {
 
         track()
 
-        needsSaving = true
         metalScreen.rotateBack()
         c64.reset()
         c64.run()
@@ -460,6 +457,7 @@ extension MyController: NSMenuItemValidation {
     // Action methods (Keyboard menu)
     //
 
+    /*
     @IBAction func stickyKeyboardAction(_ sender: Any!) {
         
         // Open the virtual keyboard as a window
@@ -469,34 +467,39 @@ extension MyController: NSMenuItemValidation {
         myAppDelegate.virtualKeyboard = VirtualKeyboardController.init(windowNibName: nibName)
         myAppDelegate.virtualKeyboard?.showWindow(withParent: self)
     }
+    */
     
+    @IBAction func clearKeyboardMatrixAction(_ sender: Any!) {
+        c64.keyboard.releaseAll()
+    }
+
     // -----------------------------------------------------------------
     @IBAction func runstopAction(_ sender: Any!) {
-        keyboardcontroller.type(key: C64Key.runStop)
+        keyboard.type(key: C64Key.runStop)
     }
     @IBAction func restoreAction(_ sender: Any!) {
-        keyboardcontroller.type(key: C64Key.restore)
+        keyboard.type(key: C64Key.restore)
     }
     @IBAction func runstopRestoreAction(_ sender: Any!) {
-        keyboardcontroller.type(keyList: [C64Key.runStop, C64Key.restore])
+        keyboard.type(keyList: [C64Key.runStop, C64Key.restore])
     }
     @IBAction func commodoreKeyAction(_ sender: Any!) {
-        keyboardcontroller.type(key: C64Key.commodore)
+        keyboard.type(key: C64Key.commodore)
     }
     @IBAction func clearKeyAction(_ sender: Any!) {
-        keyboardcontroller.type(keyList: [C64Key.home, C64Key.shift])
+        keyboard.type(keyList: [C64Key.home, C64Key.shift])
     }
     @IBAction func homeKeyAction(_ sender: Any!) {
-        keyboardcontroller.type(key: C64Key.home)
+        keyboard.type(key: C64Key.home)
     }
     @IBAction func insertKeyAction(_ sender: Any!) {
-        keyboardcontroller.type(keyList: [C64Key.delete, C64Key.shift])
+        keyboard.type(keyList: [C64Key.delete, C64Key.shift])
     }
     @IBAction func deleteKeyAction(_ sender: Any!) {
-        keyboardcontroller.type(key: C64Key.delete)
+        keyboard.type(key: C64Key.delete)
     }
     @IBAction func leftarrowKeyAction(_ sender: Any!) {
-        keyboardcontroller.type(key: C64Key.leftArrow)
+        keyboard.type(key: C64Key.leftArrow)
     }
     @IBAction func shiftLockAction(_ sender: Any!) {
         
@@ -509,25 +512,22 @@ extension MyController: NSMenuItemValidation {
             c64.keyboard.lockShift()
         }
     }
-    @IBAction func clearKeyboardMatrixAction(_ sender: Any!) {
-        c64.keyboard.releaseAll()
-    }
 
     // -----------------------------------------------------------------
     @IBAction func loadDirectoryAction(_ sender: Any!) {
-        keyboardcontroller.type(string: "LOAD \"$\",8", completion: nil)
+        keyboard.type(string: "LOAD \"$\",8", completion: nil)
     }
     @IBAction func listAction(_ sender: Any!) {
-        keyboardcontroller.type(string: "LIST", completion: nil)
+        keyboard.type(string: "LIST", completion: nil)
     }
     @IBAction func loadFirstFileAction(_ sender: Any!) {
-        keyboardcontroller.type(string: "LOAD \"*\",8,1", completion: nil)
+        keyboard.type(string: "LOAD \"*\",8,1", completion: nil)
     }
     @IBAction func runProgramAction(_ sender: Any!) {
-        keyboardcontroller.type(string: "RUN", completion: nil)
+        keyboard.type(string: "RUN", completion: nil)
     }
     @IBAction func formatDiskAction(_ sender: Any!) {
-        keyboardcontroller.type(string: "OPEN 1,8,15,\"N:TEST, ID\": CLOSE 1", completion: nil)
+        keyboard.type(string: "OPEN 1,8,15,\"N:TEST, ID\": CLOSE 1", completion: nil)
     }
 
     //

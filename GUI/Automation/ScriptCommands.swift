@@ -74,7 +74,7 @@ func mountScriptCmd(arguments: [AnyHashable: Any]?) -> Bool {
 func typeTextCmd(arguments: [AnyHashable: Any]?) -> Bool {
     
     if let text = arguments?[""] as? String {
-        myController?.keyboardcontroller.type(text)
+        myController?.keyboard.type(text)
         return true
     }
     return false

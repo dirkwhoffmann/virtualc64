@@ -331,15 +331,15 @@ extension MyController {
     func loadKeyMapUserDefaults() {
         
         let defaults = UserDefaults.standard
-        keyboardcontroller.mapKeysByPosition = defaults.bool(forKey: VC64Keys.mapKeysByPosition)
-        defaults.decode(&keyboardcontroller.keyMap, forKey: VC64Keys.keyMap)
+        keyboard.mapKeysByPosition = defaults.bool(forKey: VC64Keys.mapKeysByPosition)
+        defaults.decode(&keyboard.keyMap, forKey: VC64Keys.keyMap)
     }
     
     func saveKeyMapUserDefaults() {
         
         let defaults = UserDefaults.standard
-        defaults.encode(keyboardcontroller.keyMap, forKey: VC64Keys.keyMap)
-        defaults.set(keyboardcontroller.mapKeysByPosition, forKey: VC64Keys.mapKeysByPosition)
+        defaults.encode(keyboard.keyMap, forKey: VC64Keys.keyMap)
+        defaults.set(keyboard.mapKeysByPosition, forKey: VC64Keys.mapKeysByPosition)
     }
 }
 
@@ -432,7 +432,7 @@ extension MyController {
         c64.suspend()
         
         c64.mouse.setModel(defaults.integer(forKey: VC64Keys.mouseModel))
-        keyboardcontroller.disconnectJoyKeys = defaults.bool(forKey: VC64Keys.disconnectJoyKeys)
+        keyboard.disconnectJoyKeys = defaults.bool(forKey: VC64Keys.disconnectJoyKeys)
         c64.port1.setAutofire(defaults.bool(forKey: VC64Keys.autofire))
         c64.port2.setAutofire(defaults.bool(forKey: VC64Keys.autofire))
         c64.port1.setAutofireBullets(defaults.integer(forKey: VC64Keys.autofireBullets))
@@ -450,7 +450,7 @@ extension MyController {
         let defaults = UserDefaults.standard
         
         defaults.set(c64.mouse.model(), forKey: VC64Keys.mouseModel)
-        defaults.set(keyboardcontroller.disconnectJoyKeys, forKey: VC64Keys.disconnectJoyKeys)
+        defaults.set(keyboard.disconnectJoyKeys, forKey: VC64Keys.disconnectJoyKeys)
         defaults.set(c64.port1.autofire(), forKey: VC64Keys.autofire)
         defaults.set(c64.port1.autofireBullets(), forKey: VC64Keys.autofireBullets)
         defaults.set(c64.port1.autofireFrequency(), forKey: VC64Keys.autofireFrequency)

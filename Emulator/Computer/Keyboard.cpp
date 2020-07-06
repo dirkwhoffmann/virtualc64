@@ -72,7 +72,6 @@ Keyboard::setShiftLock(bool value)
 {
     if (value != shiftLock) {
         shiftLock = value;
-        vc64.putMessage(MSG_KEYMATRIX);
     }
 }
 
@@ -123,8 +122,6 @@ Keyboard::pressKey(u8 row, u8 col)
         
     kbMatrixRow[row] &= ~(1 << col);
     kbMatrixCol[col] &= ~(1 << row);
-
-    vc64.putMessage(MSG_KEYMATRIX);
 }
 
 void
@@ -149,8 +146,6 @@ Keyboard::releaseKey(u8 row, u8 col)
     
     kbMatrixRow[row] |= (1 << col);
     kbMatrixCol[col] |= (1 << row);
-
-    vc64.putMessage(MSG_KEYMATRIX);
 }
 
 void

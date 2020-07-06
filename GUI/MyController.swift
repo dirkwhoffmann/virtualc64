@@ -23,23 +23,32 @@ protocol MessageReceiver {
 
 class MyController: NSWindowController, MessageReceiver {
 
-    /// Proxy object.
-    /// Implements a bridge between the emulator written in C++ and the
-    /// GUI written in Swift. Because Swift cannot interact with C++ directly,
-    //  the proxy is written in Objective-C.
+    // Reference to the connected document
+    var mydocument: MyDocument!
+    
+    // Amiga proxy
+    // Implements a bridge between the emulator written in C++ and the
+    // GUI written in Swift. Because Swift cannot interact with C++ directly,
+    // the proxy is written in Objective-C.
     var c64: C64Proxy!
     
-    /// Audio Engine
-    var audioEngine: AudioEngine!
+    // Inspector of this emulator instance
+    // var inspector: Inspector?
     
-    /// Game pad manager
+    // Configuration panel of this emulator instance
+    // var configurator: ConfigController?
+    
+    // Audio Engine
+    var macAudio: MacAudio!
+    
+    // Game pad manager
     var gamePadManager: GamePadManager!
     
-    /// Keyboard controller
-    var keyboardcontroller: KeyboardController!
+    // Keyboard controller
+    var keyboard: KeyboardController!
 
-    /// Virtual C64 keyboard (opened as a sheet)
-    var virtualKeyboardSheet: VirtualKeyboardController?
+    // Virtual keyboard
+    var virtualKeyboard: VirtualKeyboardController?
     
     /// Preferences controller
     var preferencesController: PreferencesController?
@@ -301,11 +310,8 @@ extension MyController {
 
     // Provides the undo manager
     override open var undoManager: UndoManager? { return metalScreen.undoManager }
- 
-    // Provides the document casted to the correct type
-    var mydocument: MyDocument? { return document as? MyDocument }
-    
-    /// Indicates if the emulator needs saving
+     
+    // Indicates if the emulator needs saving
     var needsSaving: Bool {
         get {
             return document?.changeCount != 0
@@ -332,7 +338,9 @@ extension MyController {
         memTableView.c = self
         
         // Create audio engine
-        audioEngine = AudioEngine.init(withSID: c64.sid)
+        macAudio = MacAudio.init(withSID: c64.sid)
+        
+        mydocument = document as? MyDocument
     }
 
     override open func windowDidLoad() {
@@ -344,8 +352,8 @@ extension MyController {
         hideMouse = false
         
         // Create keyboard controller
-        keyboardcontroller = KeyboardController(controller: self)
-        if keyboardcontroller == nil {
+        keyboard = KeyboardController(controller: self)
+        if keyboard == nil {
             track("Failed to create keyboard controller")
             return
         }
@@ -552,21 +560,24 @@ extension MyController {
     
         case MSG_POWER_ON:
             track("MSG_POWER_ON")
-            
+            virtualKeyboard = nil
+            toolbar.validateVisibleItems()
+
         case MSG_POWER_OFF:
             track("MSG_POWER_OFF")
+            toolbar.validateVisibleItems()
             
         case MSG_RUN:
             track("MSG_RUN")
             needsSaving = true
-            disableUserEditing()
             toolbar.validateVisibleItems()
+            disableUserEditing()
             refresh()
     
         case MSG_PAUSE:
             track("MSG_PAUSE")
-            enableUserEditing()
             toolbar.validateVisibleItems()
+            enableUserEditing()
             refresh()
     
         case MSG_RESET:
@@ -614,15 +625,6 @@ extension MyController {
 
             metalScreen.updateScreenGeometry()
     
-        case MSG_KEYMATRIX,
-             MSG_CHARSET:
-            
-            let appDelegate = NSApp.delegate as? MyAppDelegate
-            appDelegate?.virtualKeyboard?.refresh()
-
-            // virtualKeyboard?.refresh()
-            virtualKeyboardSheet?.refresh()
-
         case MSG_VC1541_ATTACHED:
             
             let image = NSImage.init(named: "LEDgreen")
