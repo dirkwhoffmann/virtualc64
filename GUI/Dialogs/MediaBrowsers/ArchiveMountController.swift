@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-class ArchiveMountController: UserDialogController {
+class ArchiveMountController: DialogController {
     
     var archive: AnyArchiveProxy!
     

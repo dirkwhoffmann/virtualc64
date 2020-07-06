@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-class DiskInspectorController: UserDialogController {
+class DiskInspectorController: DialogController {
     
     let diskImage = NSImage.init(named: "inspect_disk")
     let noDiskImage = NSImage.init(named: "nodisk")
@@ -100,7 +100,7 @@ class DiskInspectorController: UserDialogController {
     }
     
     /// Updates dirty GUI elements
-    override func refresh() {
+    func refresh() {
         
         drive1.state = (driveNr == 1) ? .on : .off
         drive2.state = (driveNr == 2) ? .on : .off

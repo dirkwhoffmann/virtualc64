@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-class CartridgeMountController: UserDialogController {
+class CartridgeMountController: DialogController {
     
     var cartridge: CRTFileProxy!
     

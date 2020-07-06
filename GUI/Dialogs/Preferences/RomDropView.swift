@@ -21,7 +21,7 @@ extension NSDraggingInfo {
 
 class RomDropView: NSImageView {
 
-    @IBOutlet var dialogController: UserDialogController!
+    @IBOutlet var parent: PreferencesController!
 
     func acceptDragSource(url: URL) -> Bool {
         return proxy?.isRom(url) ?? false
@@ -45,7 +45,7 @@ class RomDropView: NSImageView {
     
     override func draggingExited(_ sender: NSDraggingInfo?) {
 
-        dialogController.refresh()
+        parent.refresh()
     }
     
     override func prepareForDragOperation(_ sender: NSDraggingInfo) -> Bool {
@@ -63,14 +63,14 @@ class RomDropView: NSImageView {
             return false
         }
         if c64.isReady() {
-            dialogController.okAction(self)
+            parent.okAction(self)
         }
         return true
     }
     
     override func concludeDragOperation(_ sender: NSDraggingInfo?) {
 
-        dialogController.refresh()
+        parent.refresh()
     }
 }
 

@@ -7,19 +7,21 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+// swiftlint:disable colon
+
 import Carbon.HIToolbox
 
-/// The C64Key structure represents a physical keys on the C64 keyboard.
-/// The key is specified by its row and coloumn position in the C64 keyboard matrix.
+/* This structure represents a physical key of the Mac keyboard.
+*/
 struct MacKey: Codable {
     
-    /// Unique identifier for a key on the Mac keyboard
+    // Unique identifier for a key on the Mac keyboard
     var keyCode: UInt16 = 0
     
-    /// Keycode in hex format as a string
+    // Keycode in hex format as a string
     var keyCodeStr: String { return String.init(format: "%02X", keyCode) }
     
-    /// Textual description of this key
+    // Textual description of this key
     var description: String?
 
     init(keyCode: UInt16, characters: String? = nil) {
@@ -38,26 +40,26 @@ struct MacKey: Codable {
         keyCode = event.keyCode
         
         let stdSymbols: [Int: String] = [
-            kVK_Return: "\u{21a9}",
-            kVK_Tab: "\u{21e5}",
-            kVK_Space: "\u{23b5}",
-            kVK_Delete: "\u{232b}",
-            kVK_Escape: "\u{238b}",
-            kVK_Shift: "\u{21e7}",
-            kVK_Option: "\u{2325}",
-            kVK_Control: "\u{2303}",
-            kVK_F1: "F1",
-            kVK_F2: "F2",
-            kVK_F3: "F3",
-            kVK_F4: "F4",
-            kVK_F5: "F5",
-            kVK_F6: "F6",
-            kVK_F7: "F7",
-            kVK_F8: "F8",
-            kVK_LeftArrow: "\u{2190}",
+            kVK_Return:     "\u{21a9}",
+            kVK_Tab:        "\u{21e5}",
+            kVK_Space:      "\u{23b5}",
+            kVK_Delete:     "\u{232b}",
+            kVK_Escape:     "\u{238b}",
+            kVK_Shift:      "\u{21e7}",
+            kVK_Option:     "\u{2325}",
+            kVK_Control:    "\u{2303}",
+            kVK_F1:         "F1",
+            kVK_F2:         "F2",
+            kVK_F3:         "F3",
+            kVK_F4:         "F4",
+            kVK_F5:         "F5",
+            kVK_F6:         "F6",
+            kVK_F7:         "F7",
+            kVK_F8:         "F8",
+            kVK_LeftArrow:  "\u{2190}",
             kVK_RightArrow: "\u{2192}",
-            kVK_DownArrow: "\u{2193}",
-            kVK_UpArrow: "\u{2191}"
+            kVK_DownArrow:  "\u{2193}",
+            kVK_UpArrow:    "\u{2191}"
         ]
         
         description = stdSymbols[Int(keyCode)] ?? event.charactersIgnoringModifiers
@@ -65,6 +67,7 @@ struct MacKey: Codable {
 }
 
 extension MacKey: Equatable {
+    
     static func == (lhs: MacKey, rhs: MacKey) -> Bool {
         return lhs.keyCode == rhs.keyCode
     }

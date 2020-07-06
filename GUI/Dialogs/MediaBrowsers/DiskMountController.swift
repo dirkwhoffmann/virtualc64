@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-class DiskMountController: UserDialogController {
+class DiskMountController: DialogController {
     
     var disk: AnyDiskProxy!
     

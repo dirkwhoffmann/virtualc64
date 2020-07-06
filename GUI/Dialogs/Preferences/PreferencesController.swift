@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-class PreferencesController: UserDialogController {
+class PreferencesController: DialogController {
 
     @IBOutlet weak var prefTabView: NSTabView!
     
@@ -231,7 +231,7 @@ class PreferencesController: UserDialogController {
         refresh()
     }
     
-    override func refresh() {
+    func refresh() {
         
         if let id = prefTabView.selectedTabViewItem?.identifier as? String {
             

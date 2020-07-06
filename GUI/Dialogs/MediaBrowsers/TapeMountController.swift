@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-class TapeMountController: UserDialogController {
+class TapeMountController: DialogController {
     
     var tape: TAPFileProxy!
     

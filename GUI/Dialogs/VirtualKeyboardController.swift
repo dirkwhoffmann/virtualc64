@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-class VirtualKeyboardController: UserDialogController, NSWindowDelegate {
+class VirtualKeyboardController: DialogController, NSWindowDelegate {
 
     /// Array holding a reference to the view of each key
     var keyView = Array(repeating: nil as NSButton?, count: 66)
@@ -74,7 +74,7 @@ class VirtualKeyboardController: UserDialogController, NSWindowDelegate {
         refresh()
     }
     
-    override func refresh() {
+    func refresh() {
         
         if let win = window, win.isVisible, let keyboard = proxy?.keyboard {
             
