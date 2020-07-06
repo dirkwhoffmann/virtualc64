@@ -1,15 +1,13 @@
-//
-// This file is part of VirtualC64 - A cycle accurate Commodore 64 emulator
+// -----------------------------------------------------------------------------
+// This file is part of VirtualC64
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
-// Licensed under the GNU General Public License v3
+// Licensed under the GNU General Public License v2
 //
 // See https://www.gnu.org for license information
-//
+// -----------------------------------------------------------------------------
 
 // swiftlint:disable comma
-
-import Foundation
 
 /// The C64Key structure represents a physical keys on the C64 keyboard.
 /// Each of the 66 keys is specified uniquely by it's number ranging from

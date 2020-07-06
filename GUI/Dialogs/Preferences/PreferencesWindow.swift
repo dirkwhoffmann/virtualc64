@@ -1,11 +1,11 @@
+// -----------------------------------------------------------------------------
+// This file is part of VirtualC64
 //
-//  PreferencesWindow.swift
-//  VirtualC64
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// Licensed under the GNU General Public License v2
 //
-//  Created by Dirk Hoffmann on 13.12.18.
-//
-
-import Foundation
+// See https://www.gnu.org for license information
+// -----------------------------------------------------------------------------
 
 class PreferencesWindow: NSWindow {
     

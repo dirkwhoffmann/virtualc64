@@ -1,9 +1,11 @@
+// -----------------------------------------------------------------------------
+// This file is part of VirtualC64
 //
-//  MyToolbar.swift
-//  VirtualC64
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// Licensed under the GNU General Public License v2
 //
-//  Created by Dirk Hoffmann on 05.07.20.
-//
+// See https://www.gnu.org for license information
+// -----------------------------------------------------------------------------
 
 class MyToolbar: NSToolbar {
     
