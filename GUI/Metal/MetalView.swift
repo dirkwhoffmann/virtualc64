@@ -18,7 +18,7 @@ struct C64Texture {
 
 public class MetalView: MTKView {
     
-    @IBOutlet weak var controller: MyController!
+    @IBOutlet weak var parent: MyController!
     
     /// Number of drawn frames since power up
     var frames: UInt64 = 0
@@ -212,7 +212,7 @@ public class MetalView: MTKView {
     
         var rect: CGRect
         
-        if controller.c64.vic.isPAL() {
+        if parent.c64.vic.isPAL() {
     
             // PAL border will be 36 pixels wide and 34 pixels heigh
             rect = CGRect.init(x: CGFloat(PAL_LEFT_BORDER_WIDTH - 36),
@@ -246,7 +246,7 @@ public class MetalView: MTKView {
     
     func updateTexture() {
         
-        let buf = controller.c64.vic.screenBuffer()
+        let buf = parent.c64.vic.screenBuffer()
         precondition(buf != nil)
         
         let pixelSize = 4
@@ -401,7 +401,7 @@ public class MetalView: MTKView {
     
     func drawScene3D() {
     
-        let poweredOff = controller.c64.isPoweredOff()
+        let poweredOff = parent.c64.isPoweredOff()
 
         let animates = self.animates()
         let renderBackground = poweredOff || fullscreen
@@ -446,7 +446,7 @@ public class MetalView: MTKView {
                                           length: MemoryLayout<VertexUniforms>.stride,
                                           index: 1)
             // Configure fragment shader
-            fragmentUniforms.alpha = controller.c64.isRunning() ? currentAlpha : 0.5
+            fragmentUniforms.alpha = parent.c64.isRunning() ? currentAlpha : 0.5
             commandEncoder.setFragmentTexture(scanlineTexture, index: 0)
             commandEncoder.setFragmentTexture(bloomTextureR, index: 1)
             commandEncoder.setFragmentTexture(bloomTextureG, index: 2)

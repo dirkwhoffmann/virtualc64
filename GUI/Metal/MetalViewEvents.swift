@@ -15,19 +15,19 @@ public extension MetalView {
     
     override func keyDown(with event: NSEvent) {
 
-        controller.keyboard.keyDown(with: event)
+        parent.keyboard.keyDown(with: event)
     }
     
     override func keyUp(with event: NSEvent) {
 
-        controller.keyboard.keyUp(with: event)
+        parent.keyboard.keyUp(with: event)
     }
     
     override func flagsChanged(with event: NSEvent) {
         
         // Save modifier flags. They are needed in TouchBar code
-        controller.modifierFlags = event.modifierFlags
-        controller.keyboard.flagsChanged(with: event)
+        parent.modifierFlags = event.modifierFlags
+        parent.keyboard.flagsChanged(with: event)
     }
     
     //
@@ -52,22 +52,22 @@ public extension MetalView {
 
     override func mouseDown(with event: NSEvent) {
 
-        controller.c64.mouse.setLeftButton(true)
+        parent.c64.mouse.setLeftButton(true)
     }
     
     override func mouseUp(with event: NSEvent) {
 
-        controller.c64.mouse.setLeftButton(false)
+        parent.c64.mouse.setLeftButton(false)
     }
     
     override func rightMouseUp(with event: NSEvent) {
 
-        controller.c64.mouse.setRightButton(false)
+        parent.c64.mouse.setRightButton(false)
     }
     
     override func rightMouseDown(with event: NSEvent) {
 
-        controller.c64.mouse.setRightButton(true)
+        parent.c64.mouse.setRightButton(true)
     }
     
     override func mouseMoved(with event: NSEvent) {
@@ -75,17 +75,17 @@ public extension MetalView {
         let dx = event.deltaX
         let dy = -event.deltaY
         
-        controller.mouseXY.x += dx
-        controller.mouseXY.y += dy
+        parent.mouseXY.x += dx
+        parent.mouseXY.y += dy
 
         // Make coordinate independent of window size
         let scaleX = (256.0 * 400.0) / frame.width
         let scaleY = (256.0 * 300.0) / frame.height
-        let newX = controller.mouseXY.x * scaleX
-        let newY = controller.mouseXY.y * scaleY
+        let newX = parent.mouseXY.x * scaleX
+        let newY = parent.mouseXY.y * scaleY
 
         let newLocation = NSPoint.init(x: newX, y: newY)
-        controller.c64.mouse.setXY(newLocation)
+        parent.c64.mouse.setXY(newLocation)
         //track("\(dx) \(dy)\n");
     }
     

@@ -68,7 +68,7 @@ public extension MetalView {
         let pasteBoard = sender.draggingPasteboard
         
         guard let type = pasteBoard.availableType(from: acceptedTypes()),
-            let document = controller.mydocument else {
+            let document = parent.mydocument else {
                 return false
         }
         
@@ -80,7 +80,7 @@ public extension MetalView {
             guard let text = pasteBoard.string(forType: .string) else {
                 return false
             }
-            controller.keyboard.type(string: text, completion: nil)
+            parent.keyboard.type(string: text, completion: nil)
             return true
             
         case .fileContents:
@@ -98,7 +98,7 @@ public extension MetalView {
             if document.proceedWithUnexportedDisk() {
                 DispatchQueue.main.async {
                     let snap = snapshot
-                    self.controller.c64.flash(snap)
+                    self.parent.c64.flash(snap)
                 }
                 return true
             } else {
