@@ -25,6 +25,9 @@
 		50186A20202E31B700EEAD72 /* ExportScreenshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */; };
 		5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */; };
 		5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018AF65202EDD2000B4C886 /* UserDefaults.swift */; };
+		5018BFAB24B4843200551848 /* Primitives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018BFAA24B4843200551848 /* Primitives.swift */; };
+		5018BFAD24B4846C00551848 /* ImageToolbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018BFAC24B4846C00551848 /* ImageToolbox.swift */; };
+		5018BFAF24B4847900551848 /* TextureToolbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018BFAE24B4847900551848 /* TextureToolbox.swift */; };
 		50195C2A20B007A1003844FB /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50195C2920B007A1003844FB /* Debugger.swift */; };
 		501A4A5821AF1A6200DDE409 /* VirtualC64.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 501A4A5721AF1A6200DDE409 /* VirtualC64.sdef */; };
 		501A4A5A21AF3BAF00DDE409 /* AppleScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501A4A5921AF3BAF00DDE409 /* AppleScript.swift */; };
@@ -234,6 +237,9 @@
 		50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportScreenshotDialog.xib; sourceTree = "<group>"; };
 		5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "C64_Pro_Mono-STYLE.ttf"; sourceTree = "<group>"; };
 		5018AF65202EDD2000B4C886 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		5018BFAA24B4843200551848 /* Primitives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Primitives.swift; sourceTree = "<group>"; };
+		5018BFAC24B4846C00551848 /* ImageToolbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageToolbox.swift; sourceTree = "<group>"; };
+		5018BFAE24B4847900551848 /* TextureToolbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureToolbox.swift; sourceTree = "<group>"; };
 		50195C2920B007A1003844FB /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
 		501A4A5721AF1A6200DDE409 /* VirtualC64.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = VirtualC64.sdef; sourceTree = "<group>"; };
 		501A4A5921AF3BAF00DDE409 /* AppleScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleScript.swift; sourceTree = "<group>"; };
@@ -1012,11 +1018,14 @@
 			isa = PBXGroup;
 			children = (
 				50133B96200D4EED00167227 /* MetalView.swift */,
+				5018BFAA24B4843200551848 /* Primitives.swift */,
+				5092A5B0200BC4B70037754D /* DragAndDrop.swift */,
+				5031D59B200B81D20088C802 /* Animation.swift */,
 				50D8421720A82CF500EB859A /* MetalViewEvents.swift */,
+				5018BFAC24B4846C00551848 /* ImageToolbox.swift */,
+				5018BFAE24B4847900551848 /* TextureToolbox.swift */,
 				5014D683200CD62C00044217 /* MetalSetup.swift */,
 				5031D599200B47B70088C802 /* ImageUtilities.swift */,
-				5031D59B200B81D20088C802 /* Animation.swift */,
-				5092A5B0200BC4B70037754D /* DragAndDrop.swift */,
 				50DEAD8E2008E615008A8761 /* Shaders.swift */,
 				50C72DE51BC7F42100F1863B /* Shaders.metal */,
 			);
@@ -1287,6 +1296,7 @@
 				504C439B24AF29AC00E69CAE /* extfilt.cc in Sources */,
 				504C437124AF29AC00E69CAE /* CartridgeRom.cpp in Sources */,
 				50763277202989D300575110 /* DialogController.swift in Sources */,
+				5018BFAB24B4843200551848 /* Primitives.swift in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
 				504C437624AF29AC00E69CAE /* P00File.cpp in Sources */,
 				5038CA9520B6C2AC000D9193 /* VICPanel.swift in Sources */,
@@ -1326,6 +1336,7 @@
 				5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */,
 				5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */,
 				50720F4220C853910010EBF2 /* CpuTraceView.swift in Sources */,
+				5018BFAF24B4847900551848 /* TextureToolbox.swift in Sources */,
 				504C438B24AF29AC00E69CAE /* Mouse1351.cpp in Sources */,
 				506D3DCE20223E5E009742CF /* MyAppDelegate.swift in Sources */,
 				504C439224AF29AC00E69CAE /* VIC_cycles_ntsc.cpp in Sources */,
@@ -1374,6 +1385,7 @@
 				504C439F24AF29AC00E69CAE /* FastSID.cpp in Sources */,
 				504C43A624AF29AC00E69CAE /* Disk.cpp in Sources */,
 				504C43A224AF29AC00E69CAE /* ControlPort.cpp in Sources */,
+				5018BFAD24B4846C00551848 /* ImageToolbox.swift in Sources */,
 				50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */,
 				504C437C24AF29AC00E69CAE /* AnyArchive.cpp in Sources */,
 				504C437424AF29AC00E69CAE /* T64File.cpp in Sources */,
