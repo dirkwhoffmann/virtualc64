@@ -9,46 +9,50 @@
 
 class VirtualKeyboardController: DialogController, NSWindowDelegate {
 
-    /// Array holding a reference to the view of each key
+    // Array holding a reference to the view of each key
     var keyView = Array(repeating: nil as NSButton?, count: 66)
 
-    /// Array holding a reference to the image of each key
+    // Array holding a reference to the image of each key
     var keyImage = Array(repeating: nil as NSImage?, count: 66)
 
-    /// Indicates if the left Shift key is pressed
+    // Remembers the state of some keys (true = currently pressed)
     var lshift = false
-
-    /// Indicates if the right Shift key is pressed
     var rshift = false
-
-    /// Indicates if the shift lock key is pressed
     var shiftLock = false
-
-    /// Indicates if the Control key is pressed
     var control = false
-    
-    /// Indicates if the Commodore key is pressed
     var commodore = false
     
-    /// Indicates if the lower case character set is currently in use
+    // Indicates if the lower case character set is currently in use
     var lowercase = false
     
-    /// Indicates if the window should close itself when a key has been pressed.
-    /// If the virtual keyboard is opened as a sheet, this variable is set to
-    /// true. If it is opened as a seperate window, it is set to false.
+    // Indicates if the window should close itself when a key has been pressed.
+    // If the virtual keyboard is opened as a sheet, this variable is set to
+    // true. If it is opened as a seperate window, it is set to false.
     var autoClose = true
     
-    func showWindow(withParent controller: MyController) {
+    var keyboard: KeyboardProxy { return c64.keyboard }
+    
+    static func make(parent: MyController) -> VirtualKeyboardController? {
         
-        track()
+        let name = "VirtualKeyboard"
+        let keyboard = VirtualKeyboardController.init(windowNibName: name)
+        keyboard.parent = parent
+        keyboard.c64 = parent.c64
         
-        // parent = controller
-        // parentWindow = parent.window
-        // c64 = parent.mydocument.c64
-        autoClose = false
-        
-        showWindow(self)
+        return keyboard
     }
+    
+    func showSheet(autoClose: Bool) {
+
+         self.autoClose = autoClose
+         showSheet()
+     }
+
+     func showWindow(autoClose: Bool) {
+         
+         self.autoClose = autoClose
+         showWindow(self)
+     }
     
     override func windowDidLoad() {
         
@@ -76,7 +80,7 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
     
     func refresh() {
         
-        if let win = window, win.isVisible, let keyboard = proxy?.keyboard {
+        if let win = window, win.isVisible {
             
             var needsUpdate = false
             
@@ -112,9 +116,7 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
     }
     
     func updateImages() {
-        
-        guard let keyboard = proxy?.keyboard else { return }
-        
+                
         for nr in 0 ... 65 {
             
             let shiftLock = keyboard.shiftLockIsHoldDown()
@@ -136,9 +138,7 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
     }
     
     func releaseSpecialKeys() {
-        
-        guard let keyboard = proxy?.keyboard else { return }
-        
+                
         keyboard.releaseKey(atRow: C64Key.control.row, col: C64Key.control.col)
         keyboard.releaseKey(atRow: C64Key.commodore.row, col: C64Key.commodore.col)
         keyboard.releaseKey(atRow: C64Key.shift.row, col: C64Key.shift.col)
@@ -147,8 +147,6 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
     
     @IBAction func pressVirtualC64Key(_ sender: NSButton!) {
         
-        guard let keyboard = proxy?.keyboard else { return }
-
         let tag = sender.tag
         let key = C64Key(tag)
         

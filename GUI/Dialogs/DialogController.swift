@@ -7,6 +7,17 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+class DialogWindow: NSWindow {
+
+    // Delegation method for ESC and Cmd+.
+    override func cancelOperation(_ sender: Any?) {
+                
+        if let controller = delegate as? DialogController {
+            controller.cancelAction(sender)
+        }
+    }
+}
+
 /* Base class for all auxiliary windows.
  * The class extends NSWindowController by a reference to the controller
  * of the connected emulator window (parent) and a reference to the parents
@@ -27,9 +38,21 @@ protocol DialogControllerDelegate: class {
 
 class DialogController: NSWindowController {
     
+    var parent: MyController!
+    var c64: C64Proxy!
+    
     // Remembers whether awakeFromNib has been called
     var awake = false
     
+    static func make(parent: MyController, nibName: NSNib.Name) -> Self? {
+        
+        let controller = Self.init(windowNibName: nibName)
+        controller.parent = parent
+        controller.c64 = parent.c64
+        
+        return controller
+    }
+
     override func windowWillLoad() {
         track()
     }

@@ -183,9 +183,11 @@ extension MyController {
     @IBAction func keyboardAction(_ sender: Any!) {
         
         // Open the virtual keyboard as a sheet
-        let xibName = "VirtualKeyboard"
-        virtualKeyboard = VirtualKeyboardController.init(windowNibName: xibName)
-        virtualKeyboard?.showSheet()
+        if virtualKeyboard == nil {
+            virtualKeyboard = VirtualKeyboardController.make(parent: self)
+        }
+        
+        virtualKeyboard?.showSheet(autoClose: true)        
     }
 
     @IBAction func snapshotsAction(_ sender: Any!) {
