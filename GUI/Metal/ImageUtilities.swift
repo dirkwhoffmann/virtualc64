@@ -131,7 +131,7 @@ public extension NSImage {
 // Extensions to MetalView
 //
 
-public extension MetalView {
+extension Renderer {
 
     //
     // Image handling
@@ -226,6 +226,6 @@ public extension MetalView {
         }
         
         // Return image as texture
-        return wallpaper?.toTexture(device: device!)
+        return wallpaper?.toTexture(device: device)
     }
 }

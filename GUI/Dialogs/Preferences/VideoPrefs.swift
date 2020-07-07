@@ -12,12 +12,12 @@ extension PreferencesController {
     func awakeVideoPrefsFromNib() {
         
         // Check for available upscalers
-        if let kernels = myController?.metalScreen.upscalerGallery {
+        if let kernels = myController?.renderer.upscalerGallery {
             
             for i in 0 ... kernels.count - 1 {
                 vidUpscalerPopup.menu!.item(withTag: i)?.isEnabled = (kernels[i] != nil)
             }
-            myController?.metalScreen.buildDotMasks()
+            myController?.renderer.buildDotMasks()
             updatePalettePreviewImages()
         }
     }
@@ -26,20 +26,20 @@ extension PreferencesController {
         
         // guard let doc = myDocument else { return }
         guard let con = myController else { return }
-        guard let metal = con.metalScreen else { return }
+        guard let renderer = con.renderer else { return }
         guard let c64 = proxy else { return }
 
         track()
         
         // Video
-        vidUpscalerPopup.selectItem(withTag: metal.upscaler)
+        vidUpscalerPopup.selectItem(withTag: renderer.upscaler)
         vidPalettePopup.selectItem(withTag: c64.vic.videoPalette())
         vidBrightnessSlider.doubleValue = c64.vic.brightness()
         vidContrastSlider.doubleValue = c64.vic.contrast()
         vidSaturationSlider.doubleValue = c64.vic.saturation()
         
         // Effects
-        let shaderOptions = metal.shaderOptions
+        let shaderOptions = renderer.shaderOptions
         vidBlurPopUp.selectItem(withTag: Int(shaderOptions.blur))
         vidBlurRadiusSlider.floatValue = shaderOptions.blurRadius
         vidBlurRadiusSlider.isEnabled = shaderOptions.blur > 0
@@ -58,7 +58,7 @@ extension PreferencesController {
         
         vidDotMaskPopUp.selectItem(withTag: Int(shaderOptions.dotMask))
         for i in 0 ... 4 {
-            vidDotMaskPopUp.item(at: i)?.image = metal.dotmaskImages[i]
+            vidDotMaskPopUp.item(at: i)?.image = renderer.dotmaskImages[i]
         }
         vidDotMaskBrightnessSlider.floatValue = shaderOptions.dotMaskBrightness
         vidDotMaskBrightnessSlider.isEnabled = shaderOptions.dotMask > 0
@@ -76,10 +76,10 @@ extension PreferencesController {
         vidMisalignmentYSlider.isEnabled = shaderOptions.disalignment > 0
 
         // Geometry
-        vidAspectRatioButton.state = metal.keepAspectRatio ? .on : .off
-        vidEyeXSlider.floatValue = metal.eyeX()
-        vidEyeYSlider.floatValue = metal.eyeY()
-        vidEyeZSlider.floatValue = metal.eyeZ()
+        vidAspectRatioButton.state = renderer.keepAspectRatio ? .on : .off
+        vidEyeXSlider.floatValue = renderer.eyeX()
+        vidEyeYSlider.floatValue = renderer.eyeY()
+        vidEyeZSlider.floatValue = renderer.eyeZ()
         
         vidOkButton.title = c64.isReady() ? "OK" : "Quit"
     }
@@ -149,51 +149,51 @@ extension PreferencesController {
     
     @IBAction func vidUpscalerAction(_ sender: NSPopUpButton!) {
 
-        if let metal = myController?.metalScreen {
+        if let renderer = myController?.renderer {
             track("\(sender.selectedTag())")
-            metal.upscaler = sender.selectedTag()
+            renderer.upscaler = sender.selectedTag()
             refresh()
         }
     }
     
     @IBAction func vidBlurAction(_ sender: NSPopUpButton!) {
         
-        if let metal = myController?.metalScreen {
+        if let renderer = myController?.renderer {
             track("\(sender.selectedTag())")
-            metal.shaderOptions.blur = Int32(sender.selectedTag())
+            renderer.shaderOptions.blur = Int32(sender.selectedTag())
             refresh()
         }
     }
     
     @IBAction func vidBlurRadiusAction(_ sender: NSSlider!) {
         
-        if let metal = myController?.metalScreen {
+        if let renderer = myController?.renderer {
             track("\(sender.floatValue)")
-            metal.shaderOptions.blurRadius = sender.floatValue
+            renderer.shaderOptions.blurRadius = sender.floatValue
             refresh()
         }
     }
     
     @IBAction func vidBloomAction(_ sender: NSPopUpButton!) {
         
-        if let metal = myController?.metalScreen {
+        if let renderer = myController?.renderer {
 
-            metal.shaderOptions.bloom = Int32(sender.selectedTag())
+            renderer.shaderOptions.bloom = Int32(sender.selectedTag())
             vidBloomRadiusRAction(vidBloomRadiusRSlider)
         }
     }
     
     @IBAction func vidBloomRadiusRAction(_ sender: NSSlider!) {
         
-        if let metal = myController?.metalScreen {
+        if let renderer = myController?.renderer {
             
-            metal.shaderOptions.bloomRadiusR = sender.floatValue
+            renderer.shaderOptions.bloomRadiusR = sender.floatValue
             
             if vidBloomPopup.selectedTag() == 1 {
                 
                 // Use this value for the other channels, too
-                metal.shaderOptions.bloomRadiusG = sender.floatValue
-                metal.shaderOptions.bloomRadiusB = sender.floatValue
+                renderer.shaderOptions.bloomRadiusG = sender.floatValue
+                renderer.shaderOptions.bloomRadiusB = sender.floatValue
             }
             refresh()
         }
@@ -201,15 +201,15 @@ extension PreferencesController {
 
     @IBAction func vidBloomRadiusGAction(_ sender: NSSlider!) {
         
-        if let metal = myController?.metalScreen {
+        if let renderer = myController?.renderer {
             
-            metal.shaderOptions.bloomRadiusG = sender.floatValue
+            renderer.shaderOptions.bloomRadiusG = sender.floatValue
             
             if vidBloomPopup.selectedTag() == 1 {
                 
                 // Use this value for the other channels, too
-                metal.shaderOptions.bloomRadiusR = sender.floatValue
-                metal.shaderOptions.bloomRadiusB = sender.floatValue
+                renderer.shaderOptions.bloomRadiusR = sender.floatValue
+                renderer.shaderOptions.bloomRadiusB = sender.floatValue
             }
             refresh()
         }
@@ -217,15 +217,15 @@ extension PreferencesController {
     
     @IBAction func vidBloomRadiusBAction(_ sender: NSSlider!) {
         
-        if let metal = myController?.metalScreen {
+        if let renderer = myController?.renderer {
             
-            metal.shaderOptions.bloomRadiusB = sender.floatValue
+            renderer.shaderOptions.bloomRadiusB = sender.floatValue
             
             if vidBloomPopup.selectedTag() == 1 {
                 
                 // Use this value for the other channels, too
-                metal.shaderOptions.bloomRadiusR = sender.floatValue
-                metal.shaderOptions.bloomRadiusG = sender.floatValue
+                renderer.shaderOptions.bloomRadiusR = sender.floatValue
+                renderer.shaderOptions.bloomRadiusG = sender.floatValue
             }
             refresh()
         }
@@ -233,90 +233,80 @@ extension PreferencesController {
     
     @IBAction func vidBloomBrightnessAction(_ sender: NSSlider!) {
         
-        if let metal = myController?.metalScreen {
-            track("\(sender.floatValue)")
-            metal.shaderOptions.bloomBrightness = sender.floatValue
+        if let renderer = myController?.renderer {
+            renderer.shaderOptions.bloomBrightness = sender.floatValue
             refresh()
         }
     }
     
     @IBAction func vidBloomWeightAction(_ sender: NSSlider!) {
         
-        if let metal = myController?.metalScreen {
-            track("\(sender.floatValue)")
-            metal.shaderOptions.bloomWeight = sender.floatValue
+        if let renderer = myController?.renderer {
+            renderer.shaderOptions.bloomWeight = sender.floatValue
             refresh()
         }
     }
     
     @IBAction func vidDotMaskAction(_ sender: NSPopUpButton!) {
         
-        if let metal = myController?.metalScreen {
-            track("\(sender.selectedTag())")
-            metal.shaderOptions.dotMask = Int32(sender.selectedTag())
-            metal.buildDotMasks()
+        if let renderer = myController?.renderer {
+            renderer.shaderOptions.dotMask = Int32(sender.selectedTag())
+            myController?.renderer.buildDotMasks()
             refresh()
         }
     }
     
     @IBAction func vidDotMaskBrightnessAction(_ sender: NSSlider!) {
         
-        if let metal = myController?.metalScreen {
-            track("\(sender.floatValue)")
-            metal.shaderOptions.dotMaskBrightness = sender.floatValue
-            metal.buildDotMasks()
+        if let renderer = myController?.renderer {
+            renderer.shaderOptions.dotMaskBrightness = sender.floatValue
+            myController?.renderer.buildDotMasks()
             refresh()
         }
     }
     
     @IBAction func vidScanlinesAction(_ sender: NSPopUpButton!) {
         
-        if let metal = myController?.metalScreen {
-            track("\(sender.selectedTag())")
-            metal.shaderOptions.scanlines = Int32(sender.selectedTag())
+        if let renderer = myController?.renderer {
+            renderer.shaderOptions.scanlines = Int32(sender.selectedTag())
             refresh()
         }
     }
     @IBAction func vidScanlineBrightnessAction(_ sender: NSSlider!) {
         
-        if let metal = myController?.metalScreen {
-            track("\(sender.floatValue)")
-            metal.shaderOptions.scanlineBrightness = sender.floatValue
+        if let renderer = myController?.renderer {
+            renderer.shaderOptions.scanlineBrightness = sender.floatValue
             refresh()
         }
     }
     
     @IBAction func vidScanlineWeightAction(_ sender: NSSlider!) {
 
-        if let metal = myController?.metalScreen {
-            track("\(sender.floatValue)")
-            metal.shaderOptions.scanlineWeight = sender.floatValue
+        if let renderer = myController?.renderer {
+            renderer.shaderOptions.scanlineWeight = sender.floatValue
             refresh()
         }
     }
     
     @IBAction func vidDisalignmentAction(_ sender: NSPopUpButton!) {
         
-        if let metal = myController?.metalScreen {
-            track("\(sender.selectedTag())")
-            metal.shaderOptions.disalignment = Int32(sender.selectedTag())
+        if let renderer = myController?.renderer {
+            renderer.shaderOptions.disalignment = Int32(sender.selectedTag())
             refresh()
         }
     }
     @IBAction func vidDisalignmentHAction(_ sender: NSSlider!) {
         
-        if let metal = myController?.metalScreen {
-            track("\(sender.floatValue)")
-            metal.shaderOptions.disalignmentH = sender.floatValue
+        if let renderer = myController?.renderer {
+            renderer.shaderOptions.disalignmentH = sender.floatValue
             refresh()
         }
     }
     
     @IBAction func vidDisalignmentVAction(_ sender: NSSlider!) {
 
-        if let metal = myController?.metalScreen {
-            track("\(sender.floatValue)")
-            metal.shaderOptions.disalignmentV = sender.floatValue
+        if let renderer = myController?.renderer {
+            renderer.shaderOptions.disalignmentV = sender.floatValue
             refresh()
         }
     }
@@ -327,16 +317,16 @@ extension PreferencesController {
     
     @IBAction func vidAspectRatioAction(_ sender: NSButton!) {
         
-        if let metal = myController?.metalScreen {
-            metal.keepAspectRatio = (sender.state == .on)
+        if let renderer = myController?.renderer {
+            renderer.keepAspectRatio = (sender.state == .on)
             refresh()
         }
     }
     
     @IBAction func vidEyeXAction(_ sender: NSSlider!) {
         
-        if let metal = myController?.metalScreen {
-            metal.setEyeX(sender.floatValue)
+        if let renderer = myController?.renderer {
+            renderer.setEyeX(sender.floatValue)
             refresh()
             
         }
@@ -344,16 +334,16 @@ extension PreferencesController {
     
     @IBAction func vidEyeYAction(_ sender: NSSlider!) {
         
-        if let metal = myController?.metalScreen {
-            metal.setEyeY(sender.floatValue)
+        if let renderer = myController?.renderer {
+            renderer.setEyeY(sender.floatValue)
             refresh()
         }
     }
     
     @IBAction func vidEyeZAction(_ sender: NSSlider!) {
         
-        if let metal = myController?.metalScreen {
-            metal.setEyeZ(sender.floatValue)
+        if let renderer = myController?.renderer {
+            renderer.setEyeZ(sender.floatValue)
             refresh()
         }
     }
@@ -372,7 +362,7 @@ extension PreferencesController {
     @IBAction func vidFactorySettingsActionTFT(_ sender: Any!) {
 
         myController?.resetVideoUserDefaults()
-        myController?.metalScreen.shaderOptions = ShaderDefaultsTFT
+        myController?.renderer.shaderOptions = ShaderDefaultsTFT
         updatePalettePreviewImages()
         refresh()
     }
@@ -380,8 +370,8 @@ extension PreferencesController {
     @IBAction func vidFactorySettingsActionCRT(_ sender: Any!) {
         
         myController?.resetVideoUserDefaults()
-        myController?.metalScreen.shaderOptions = ShaderDefaultsCRT
-        myController?.metalScreen.buildDotMasks()
+        myController?.renderer.shaderOptions = ShaderDefaultsCRT
+        myController?.renderer.buildDotMasks()
         updatePalettePreviewImages()
         refresh()
     }

@@ -135,6 +135,8 @@ class MyController: NSWindowController, MessageReceiver {
     
     // Main screen
     @IBOutlet weak var metalScreen: MetalView!
+    var renderer: Renderer!
+    
     @IBOutlet weak var debugger: NSDrawer!
     
     // Bottom bar
@@ -370,8 +372,13 @@ extension MyController {
         configureWindow()
         setupDebugger()
         
+        // Setup renderer
+        renderer = Renderer(view: metalScreen,
+                            device: MTLCreateSystemDefaultDevice()!,
+                            controller: self)
+        
         // Get metal running
-        metalScreen.setupMetal()
+        // metalScreen.setupMetal()
     
         // Load user defaults
         loadUserDefaults()
@@ -516,14 +523,14 @@ extension MyController {
         
         // Do 3 times a second ...
         if (animationCounter % 4) == 0 {
-            speedometer.updateWith(cycle: c64.cpu.cycle(), frame: metalScreen.frames)
+            speedometer.updateWith(cycle: c64.cpu.cycle(), frame: renderer.frames)
             let mhz = speedometer.mhz(digits: 2)
             let fps = speedometer.fps(digits: 0)
             clockSpeed.stringValue = String(format: "%.2f MHz %.0f fps", mhz, fps)
             clockSpeedBar.doubleValue = 10 * mhz
         
             // Let the cursor disappear in fullscreen mode
-            if metalScreen.fullscreen &&
+            if renderer.fullscreen &&
                 CGEventSource.secondsSinceLastEventType(.combinedSessionState,
                                                         eventType: .mouseMoved) > 1.0 {
                 NSCursor.setHiddenUntilMouseMoves(true)
@@ -550,9 +557,9 @@ extension MyController {
             c64.run()
             
             // Blend in C64 screen
-            if !metalScreen.drawC64texture {
-                metalScreen.blendIn()
-                metalScreen.drawC64texture = true
+            if !renderer.drawC64texture {
+                renderer.blendIn()
+                renderer.drawC64texture = true
             }
             
             // Process attachment (if any)
@@ -623,7 +630,7 @@ extension MyController {
         case MSG_PAL,
              MSG_NTSC:
 
-            metalScreen.updateScreenGeometry()
+            renderer.updateScreenGeometry()
     
         case MSG_VC1541_ATTACHED:
             

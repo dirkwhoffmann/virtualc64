@@ -314,7 +314,7 @@ extension MyController: NSMenuItemValidation {
     func saveScreenshot(url: URL) throws {
         
         // Take screenshot
-        let image = metalScreen.screenshot(afterUpscaling: screenshotSource > 0)
+        let image = renderer.screenshot(afterUpscaling: screenshotSource > 0)
         
         // Convert to target format
         let data = image?.representation(using: screenshotTarget)
@@ -366,7 +366,7 @@ extension MyController: NSMenuItemValidation {
 
         track()
 
-        metalScreen.rotateBack()
+        renderer.rotateBack()
         c64.reset()
         c64.run()
     }

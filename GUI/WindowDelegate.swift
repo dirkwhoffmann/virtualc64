@@ -67,13 +67,13 @@ extension MyController: NSWindowDelegate {
         memTableView.c = nil
 
         // Stop metal view
-        metalScreen.cleanup()
+        renderer.cleanup()
     }
     
     public func windowWillEnterFullScreen(_ notification: Notification) {
 
         track()
-        metalScreen.fullscreen = true
+        renderer.fullscreen = true
         showStatusBar(false)
     }
     
@@ -85,7 +85,7 @@ extension MyController: NSWindowDelegate {
     public func windowWillExitFullScreen(_ notification: Notification) {
 
         track()
-        metalScreen.fullscreen = false
+        renderer.fullscreen = false
         showStatusBar(true)
     }
     

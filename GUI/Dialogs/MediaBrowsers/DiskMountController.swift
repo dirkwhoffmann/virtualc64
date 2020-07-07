@@ -94,7 +94,7 @@ class DiskMountController: DialogController {
         let nr = (driveSelector.selectedItem!.tag == 1) ? 1 : 2
         
         myController?.changeDisk(disk, drive: nr)
-        myController?.metalScreen.rotateBack()
+        myController?.renderer.rotateBack()
         
         hideSheet()
     }

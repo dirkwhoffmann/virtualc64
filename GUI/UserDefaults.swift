@@ -551,19 +551,19 @@ extension MyController {
         
         c64.suspend()
         
-        metalScreen.upscaler = defaults.integer(forKey: VC64Keys.upscaler)
+        renderer.upscaler = defaults.integer(forKey: VC64Keys.upscaler)
         c64.vic.setVideoPalette(defaults.integer(forKey: VC64Keys.palette))
         c64.vic.setBrightness(defaults.double(forKey: VC64Keys.brightness))
         c64.vic.setContrast(defaults.double(forKey: VC64Keys.contrast))
         c64.vic.setSaturation(defaults.double(forKey: VC64Keys.saturation))
 
-        metalScreen.keepAspectRatio = defaults.bool(forKey: VC64Keys.keepAspectRatio)
-        metalScreen.setEyeX(defaults.float(forKey: VC64Keys.eyeX))
-        metalScreen.setEyeY(defaults.float(forKey: VC64Keys.eyeY))
-        metalScreen.setEyeZ(defaults.float(forKey: VC64Keys.eyeZ))
+        renderer.keepAspectRatio = defaults.bool(forKey: VC64Keys.keepAspectRatio)
+        renderer.setEyeX(defaults.float(forKey: VC64Keys.eyeX))
+        renderer.setEyeY(defaults.float(forKey: VC64Keys.eyeY))
+        renderer.setEyeZ(defaults.float(forKey: VC64Keys.eyeZ))
         
-        defaults.decode(&metalScreen.shaderOptions, forKey: VC64Keys.shaderOptions)
-        metalScreen.buildDotMasks()
+        defaults.decode(&renderer.shaderOptions, forKey: VC64Keys.shaderOptions)
+        renderer.buildDotMasks()
  
         c64.resume()
     }
@@ -572,18 +572,18 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         
-        defaults.set(metalScreen.upscaler, forKey: VC64Keys.upscaler)
+        defaults.set(renderer.upscaler, forKey: VC64Keys.upscaler)
         defaults.set(c64.vic.videoPalette(), forKey: VC64Keys.palette)
         defaults.set(c64.vic.brightness(), forKey: VC64Keys.brightness)
         defaults.set(c64.vic.contrast(), forKey: VC64Keys.contrast)
         defaults.set(c64.vic.saturation(), forKey: VC64Keys.saturation)
         
-        defaults.set(metalScreen.keepAspectRatio, forKey: VC64Keys.keepAspectRatio)
-        defaults.set(metalScreen.eyeX(), forKey: VC64Keys.eyeX)
-        defaults.set(metalScreen.eyeY(), forKey: VC64Keys.eyeY)
-        defaults.set(metalScreen.eyeZ(), forKey: VC64Keys.eyeZ)
+        defaults.set(renderer.keepAspectRatio, forKey: VC64Keys.keepAspectRatio)
+        defaults.set(renderer.eyeX(), forKey: VC64Keys.eyeX)
+        defaults.set(renderer.eyeY(), forKey: VC64Keys.eyeY)
+        defaults.set(renderer.eyeZ(), forKey: VC64Keys.eyeZ)
   
-        defaults.encode(metalScreen.shaderOptions, forKey: VC64Keys.shaderOptions)
+        defaults.encode(renderer.shaderOptions, forKey: VC64Keys.shaderOptions)
     }
 }
 

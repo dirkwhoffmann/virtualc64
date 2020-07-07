@@ -9,7 +9,7 @@
 
 import simd
 
-public extension MetalView {
+extension Renderer {
  
     //! Returns true iff an animation is in progress
     func animates() -> Bool {
