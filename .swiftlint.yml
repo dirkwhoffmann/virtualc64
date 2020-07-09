@@ -1,11 +1,12 @@
 disabled_rules: # rule identifiers to exclude from running
-  - ignores_empty_lines
-  - trailing_whitespace
-  - function_body_length
-  - identifier_name
-  - line_length
-  - file_length
-  - type_body_length
   - cyclomatic_complexity
+  - file_length
+  - function_body_length
+  - force_cast
+  - identifier_name
+  - ignores_empty_lines
   - large_tuple
+  - line_length
   - todo
+  - trailing_whitespace
+  - type_body_length
