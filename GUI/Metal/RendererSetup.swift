@@ -68,10 +68,7 @@ extension Renderer {
             width: 512,
             height: 512,
             mipmapped: false)
-
-        // Build background texture (drawn behind the cube)
-        // bgTexture = self.createBackgroundTexture()
-    
+        
         //
         // 512 x 512 textures
         //
