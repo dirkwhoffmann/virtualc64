@@ -20,11 +20,10 @@ extension Renderer {
         buildSamplers()
         buildKernels()
         buildDotMasks()
-        buildVertexBuffer()
         buildPipeline()
+        buildVertexBuffer()
         
         reshape()
-        enableMetal = true
     }
     
     internal func buildMetal() {
@@ -33,7 +32,7 @@ extension Renderer {
                 
         // Metal layer
         metalLayer = mtkView.layer as? CAMetalLayer
-        precondition(metalLayer != nil, "Metal layer must not be nil")
+        assert(metalLayer != nil, "Metal layer must not be nil")
         
         metalLayer.device = device
         metalLayer.pixelFormat = MTLPixelFormat.bgra8Unorm
@@ -42,20 +41,28 @@ extension Renderer {
     
         // Command queue
         queue = device.makeCommandQueue()
-        precondition(queue != nil, "Metal command queue must not be nil")
+        assert(queue != nil, "Metal command queue must not be nil")
     
         // Shader library
         library = device.makeDefaultLibrary()
-        precondition(library != nil, "Metal library must not be nil")
-    
-        // View parameters
-        parent.metalScreen.sampleCount = 1
+        assert(library != nil, "Metal library must not be nil")
     }
     
     internal func buildTextures() {
 
         track()
 
+        // Texture usages
+        /*
+        let r: MTLTextureUsage = [ .shaderRead ]
+        let rwt: MTLTextureUsage = [ .shaderRead, .shaderWrite, .renderTarget ]
+        let rwtp: MTLTextureUsage = [ .shaderRead, .shaderWrite, .renderTarget, .pixelFormatView ]
+        */
+        
+        // Background texture used in window mode
+        bgTexture = device.makeTexture(w: 512, h: 512)
+        assert(bgTexture != nil, "Failed to create bgTexture")
+        
         let descriptor = MTLTextureDescriptor.texture2DDescriptor(
             pixelFormat: MTLPixelFormat.rgba8Unorm,
             width: 512,
@@ -63,7 +70,7 @@ extension Renderer {
             mipmapped: false)
 
         // Build background texture (drawn behind the cube)
-        bgTexture = self.createBackgroundTexture()
+        // bgTexture = self.createBackgroundTexture()
     
         //
         // 512 x 512 textures

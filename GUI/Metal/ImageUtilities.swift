@@ -7,24 +7,6 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-extension UInt32 {
-    
-    init(r: UInt8, g: UInt8, b: UInt8) {
-        let red = UInt32(r) << 24
-        let green = UInt32(g) << 16
-        let blue = UInt32(b) << 8
-        self.init(bigEndian: red | green | blue)
-    }
-}
-
-//
-// Extensions to MTLTexture
-//
-
-extension MTLTexture {
-    
-}
-
 //
 // Extensions to NSImage
 //

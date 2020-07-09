@@ -660,6 +660,9 @@ private:
      */
     u32 rgbaTable[16];
     
+    // Buffer storing background noise (random black and white pixels)
+    u32 *noise;
+
     /*! @brief    First screen buffer
      *  @details  The VIC chip writes its output into this buffer. The contents
      *            of the array is later copied into to texture RAM of your
@@ -837,7 +840,10 @@ public:
      *            recognizable pattern into both buffers.
      */
     void resetScreenBuffers();
-
+    
+    // Returns a pointer to randon noise
+    u32 *getNoise();
+    
     /*! @brief    Returns a C64 color from the current color palette.
      *  @return   Color in 32 bit big endian RGBA format.
      *  @seealso  updateColors

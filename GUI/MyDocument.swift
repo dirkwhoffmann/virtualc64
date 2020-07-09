@@ -7,8 +7,6 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-// swiftlint:disable force_cast
-
 class MyDocument: NSDocument {
     
     // The window controller for this document

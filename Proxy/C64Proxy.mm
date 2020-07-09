@@ -555,6 +555,10 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->vic->setShowDmaLines(b);
 }
+- (u32 *) noise
+{
+    return wrapper->vic->getNoise();
+}
 
 @end
 

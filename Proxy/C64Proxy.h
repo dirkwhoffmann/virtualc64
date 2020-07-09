@@ -394,6 +394,8 @@ struct AnyC64FileWrapper;
 - (BOOL) showDmaLines;
 - (void) setShowDmaLines:(BOOL)b;
 
+- (u32 *) noise;
+
 @end
 
 

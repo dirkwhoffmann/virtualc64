@@ -167,10 +167,7 @@ class Renderer: NSObject, MTKViewDelegate {
             }
         }
     }
-    
-    //! If true, no GPU drawing is performed (for performance profiling olny)
-    var enableMetal = false
-    
+        
     //! Is set to true when fullscreen mode is entered (usually enables the 2D renderer)
     var fullscreen = false
     
@@ -198,48 +195,46 @@ class Renderer: NSObject, MTKViewDelegate {
         mtkView.device = device
     }
     
-    /*
-    required public init(coder: NSCoder) {
+    //
+    // Managing textures
+    //
     
-        super.init(coder: coder)
-    }
-    
-    required public override init(frame frameRect: CGRect, device: MTLDevice?) {
+    func clearBgTexture() {
         
-        super.init(frame: frameRect, device: device)
-    }
-    
-    override open func awakeFromNib() {
-
-        track()
+        let w = 512
+        let h = 512
         
-        // Create semaphore
-        semaphore = DispatchSemaphore(value: 1)
+        let bytes = UnsafeMutablePointer<UInt32>.allocate(capacity: w * h)
+        bytes.initialize(repeating: 0xFFFF0000, count: w * h)
         
-        // Check if machine is capable to run the Metal graphics interface
-        checkForMetal()
-    
-        // Register for drag and drop
-        setupDragAndDrop()
+        updateBgTexture(bytes: bytes)
+        bytes.deallocate()
     }
     
-    override public var acceptsFirstResponder: Bool { return true }
-    
-    //! Adjusts view height by a certain number of pixels
-    func adjustHeight(_ height: CGFloat) {
-    
-        var newFrame = frame
-        newFrame.origin.y -= height
-        newFrame.size.height += height
-        frame = newFrame
+    func updateBgTexture(bytes: UnsafeMutablePointer<UInt32>) {
+        
+        bgTexture.replace(w: 512, h: 512, buffer: bytes)
     }
     
-    //! Shrinks view vertically by the height of the status bar
-    public func shrink() { adjustHeight(-24.0) }
-    
-    //! Expand view vertically by the height of the status bar
-    public func expand() { adjustHeight(24.0) }
-     */
+    func updateTexture() {
+        
+        let buf = parent.c64.vic.screenBuffer()
+        precondition(buf != nil)
+        
+        let pixelSize = 4
+        let width = Int(NTSC_PIXELS)
+        let height = Int(PAL_RASTERLINES)
+        let rowBytes = width * pixelSize
+        let imageBytes = rowBytes * height
+        let region = MTLRegionMake2D(0, 0, width, height)
+        
+        emulatorTexture.replace(region: region,
+                                mipmapLevel: 0,
+                                slice: 0,
+                                withBytes: buf!,
+                                bytesPerRow: rowBytes,
+                                bytesPerImage: imageBytes)
+    }
     
     public func updateScreenGeometry() {
     
@@ -275,26 +270,6 @@ class Renderer: NSObject, MTKViewDelegate {
     
         // Update texture coordinates in vertex buffer
         buildVertexBuffer()
-    }
-    
-    func updateTexture() {
-        
-        let buf = parent.c64.vic.screenBuffer()
-        precondition(buf != nil)
-        
-        let pixelSize = 4
-        let width = Int(NTSC_PIXELS)
-        let height = Int(PAL_RASTERLINES)
-        let rowBytes = width * pixelSize
-        let imageBytes = rowBytes * height
-        let region = MTLRegionMake2D(0, 0, width, height)
-            
-        emulatorTexture.replace(region: region,
-                                mipmapLevel: 0,
-                                slice: 0,
-                                withBytes: buf!,
-                                bytesPerRow: rowBytes,
-                                bytesPerImage: imageBytes)
     }
     
     /// Returns the compute kernel of the currently selected pixel upscaler
@@ -446,12 +421,17 @@ class Renderer: NSObject, MTKViewDelegate {
         }
 
         startFrame()
-            
+        
         // Render background
         if renderBackground {
             
+            // Update background texture
+            if !fullscreen {
+                let buffer = parent.c64.vic.noise()
+                updateBgTexture(bytes: buffer!)
+            }
+            
             // Configure vertex shader
-            // commandEncoder.setVertexBuffer(uniformBufferBg, offset: 0, index: 1)
             commandEncoder.setVertexBytes(&vertexUniformsBg,
                                           length: MemoryLayout<VertexUniforms>.stride,
                                           index: 1)
@@ -562,34 +542,4 @@ class Renderer: NSObject, MTKViewDelegate {
             }
         }
     }
-    
-    /*
-    override public func draw(_ rect: NSRect) {
-         
-         if !enableMetal {
-             return
-         }
-
-         // Wait until it's save to go ...
-         // let result semaphore.wait (timeout: .distantFuture)
-         semaphore.wait()
-         
-         // Refresh size dependent items if needed
-         if layerIsDirty {
-             reshape(withFrame: frame)
-             layerIsDirty = false
-         }
-     
-         // Draw scene
-         drawable = metalLayer.nextDrawable()
-         if drawable != nil {
-             updateTexture()
-             if fullscreen && !keepAspectRatio {
-                 drawScene2D()
-             } else {
-                 drawScene3D()
-             }
-         }
-     }
-    */
 }

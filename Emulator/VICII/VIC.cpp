@@ -104,6 +104,13 @@ VIC::VIC(C64 &ref) : C64Component(ref)
     // Assign reference clock to all time delayed variables
     baLine.setClock(&cpu.cycle);
     gAccessResult.setClock(&cpu.cycle);
+    
+    // Create random background noise pattern
+    const size_t noiseSize = 2 * 512 * 512;
+    noise = new u32[noiseSize];
+    for (int i = 0; i < noiseSize; i++) {
+        noise[i] = rand() % 2 ? 0xFF000000 : 0xFFFFFFFF;
+    }
 }
 
 void
@@ -407,6 +414,13 @@ VIC::resetScreenBuffers()
             (line % 2) ? rgbaTable[8] : rgbaTable[9];
         }
     }
+}
+
+u32 *
+VIC::getNoise()
+{
+    int offset = rand() % (512 * 512);
+    return noise + offset;
 }
 
 u16
