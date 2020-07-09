@@ -11,16 +11,6 @@ import simd
 
 extension Renderer {
 
-    func checkForMetal() {
-        
-        if MTLCreateSystemDefaultDevice() == nil {
-            
-            parent.metalScreen.showNoMetalSupportAlert()
-            NSApp.terminate(self)
-            return
-        }
-    }
-  
     func setupMetal() {
 
         track()

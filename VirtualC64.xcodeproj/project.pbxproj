@@ -19,7 +19,6 @@
 		500E3A6921B5C2A700935CB3 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500E3A6821B5C2A700935CB3 /* Notifications.swift */; };
 		500EA6C724B09037009AA7D7 /* C64Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EA6C524B09037009AA7D7 /* C64Component.cpp */; };
 		50133B97200D4EED00167227 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50133B96200D4EED00167227 /* MetalView.swift */; };
-		5014D684200CD62C00044217 /* MetalSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014D683200CD62C00044217 /* MetalSetup.swift */; };
 		5015F36620B546A30024B4AA /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5015F36520B546A30024B4AA /* WaveformView.swift */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
 		50186A20202E31B700EEAD72 /* ExportScreenshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */; };
@@ -181,7 +180,7 @@
 		50D2A69E210F20CB00F13D43 /* VirtualKeyboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */; };
 		50D2A6A0210F20F700F13D43 /* VirtualKeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */; };
 		50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8421720A82CF500EB859A /* MetalViewEvents.swift */; };
-		50DBB44B2025CE5700489271 /* Basics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB44A2025CE5700489271 /* Basics.swift */; };
+		50DBB44B2025CE5700489271 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB44A2025CE5700489271 /* Utils.swift */; };
 		50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD8E2008E615008A8761 /* Shaders.swift */; };
 		50E9B92D201F299500065A89 /* MyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92C201F299500065A89 /* MyController.swift */; };
 		50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92E201FA92C00065A89 /* Alerts.swift */; };
@@ -232,7 +231,6 @@
 		500EA6C524B09037009AA7D7 /* C64Component.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64Component.cpp; sourceTree = "<group>"; };
 		500EA6C624B09037009AA7D7 /* C64Component.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Component.h; sourceTree = "<group>"; };
 		50133B96200D4EED00167227 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
-		5014D683200CD62C00044217 /* MetalSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalSetup.swift; sourceTree = "<group>"; };
 		5015F36520B546A30024B4AA /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		50176C790A6F7357009E80BD /* C64Proxy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = C64Proxy.h; sourceTree = "<group>"; };
 		50176C7A0A6F7357009E80BD /* C64Proxy.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = C64Proxy.mm; sourceTree = "<group>"; };
@@ -504,7 +502,7 @@
 		50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VirtualKeyboard.xib; sourceTree = "<group>"; };
 		50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualKeyboardController.swift; sourceTree = "<group>"; };
 		50D8421720A82CF500EB859A /* MetalViewEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalViewEvents.swift; sourceTree = "<group>"; };
-		50DBB44A2025CE5700489271 /* Basics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basics.swift; sourceTree = "<group>"; };
+		50DBB44A2025CE5700489271 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		50DEAD8E2008E615008A8761 /* Shaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
 		50E5FFAF227964F20025C73D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		50E5FFB0227964F20025C73D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -680,7 +678,7 @@
 		50176C6D0A6F7357009E80BD /* GUI */ = {
 			isa = PBXGroup;
 			children = (
-				50DBB44A2025CE5700489271 /* Basics.swift */,
+				50DBB44A2025CE5700489271 /* Utils.swift */,
 				506D3DCD20223E5E009742CF /* MyAppDelegate.swift */,
 				5000473F12DCEC9B0098D890 /* Model */,
 				5000474012DCECAB0098D890 /* View */,
@@ -1030,7 +1028,6 @@
 				50D8421720A82CF500EB859A /* MetalViewEvents.swift */,
 				5018BFAC24B4846C00551848 /* ImageToolbox.swift */,
 				5018BFAE24B4847900551848 /* TextureToolbox.swift */,
-				5014D683200CD62C00044217 /* MetalSetup.swift */,
 				5031D599200B47B70088C802 /* ImageUtilities.swift */,
 				50DEAD8E2008E615008A8761 /* Shaders.swift */,
 				50C72DE51BC7F42100F1863B /* Shaders.metal */,
@@ -1317,7 +1314,7 @@
 				504C438324AF29AC00E69CAE /* HardwareComponent.cpp in Sources */,
 				50E9B92D201F299500065A89 /* MyController.swift in Sources */,
 				500E3A6721B5C29100935CB3 /* ScriptCommands.swift in Sources */,
-				50DBB44B2025CE5700489271 /* Basics.swift in Sources */,
+				50DBB44B2025CE5700489271 /* Utils.swift in Sources */,
 				504C436F24AF29AC00E69CAE /* Comal80.cpp in Sources */,
 				50B929F221C2B5C90039E8F2 /* PreferencesWindow.swift in Sources */,
 				504C43A824AF29AC00E69CAE /* DriveMemory.cpp in Sources */,
@@ -1368,7 +1365,6 @@
 				50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */,
 				506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */,
 				505D492821C155DD00A7C575 /* RomPrefs.swift in Sources */,
-				5014D684200CD62C00044217 /* MetalSetup.swift in Sources */,
 				504C437924AF29AC00E69CAE /* Snapshot.cpp in Sources */,
 				50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */,
 				504C437F24AF29AC00E69CAE /* C64Memory.cpp in Sources */,

@@ -34,7 +34,7 @@ extension NSError {
     }
 }
 
-public extension MetalView {
+extension MyDocument {
     
     func showNoMetalSupportAlert() {
         
@@ -46,9 +46,6 @@ public extension MetalView {
         alert.addButton(withTitle: "Exit")
         alert.runModal()
     }
-}
-
-extension MyDocument {
     
     @discardableResult
     func showDiskIsUnexportedAlert(drive nr: Int) -> NSApplication.ModalResponse {

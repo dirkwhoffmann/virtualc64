@@ -7,34 +7,45 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+// swiftlint:disable force_cast
+
 class MyDocument: NSDocument {
     
-    /**
+    // The window controller for this document
+    var parent: MyController { return windowControllers.first as! MyController }
+
+    // The application delegate
+    var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
+    
+    /*
      Emulator proxy object. This object is an Objective-C bridge between
      the GUI (written in Swift) an the core emulator (written in C++).
      */
     var c64: C64Proxy!
     
-    /**
+    /*
      An otional media object attached to this document.
-     This variable is checked by the GUI, e.g., when the READY_TO_RUN message
-     is received. If an attachment is present, e.g., a T64 archive,
-     is displays a user dialog. The user can then choose to mount the archive
-     as a disk or to flash a single file into memory. If the attachment is a
-     snapshot, it is read into the emulator without asking the user.
-     This variable is also used when the user selects the "Insert Disk",
-     "Insert Tape" or "Attach Cartridge" menu items. In that case, the selected
-     URL is translated into an attachment and then processed. The actual
-     post-processing depends on the attachment type and user options. E.g.,
-     snapshots are flashed while T64 archives are converted to a disk and
-     inserted into the disk drive.
+     This variable is checked in mountAttachment() which is called in
+     windowDidLoad(). If an attachment is present, e.g., a D64 archive, it
+     is automatically attached to the emulator.
      */
     var attachment: AnyC64FileProxy?
+    
+    //
+    // Initialization
+    //
     
     override init() {
         
         track()
         super.init()
+        
+        // Check for Metal support
+        if MTLCreateSystemDefaultDevice() == nil {
+            showNoMetalSupportAlert()
+            NSApp.terminate(self)
+            return
+        }
         
         // Register standard user defaults
         MyController.registerUserDefaults()
@@ -259,10 +270,8 @@ class MyDocument: NSDocument {
             
             if proceedWithUnexportedDisk(drive: nr) {
                 
-                if let parent = windowForSheet?.windowController as? MyController {
-                    parent.changeDisk(archive, drive: nr)
-                    return true
-                }
+                parent.changeDisk(archive, drive: nr)
+                return true
             }
         }
         return false
@@ -273,9 +282,7 @@ class MyDocument: NSDocument {
         
         if let tape = attachment as? TAPFileProxy {
             
-            if let parent = windowForSheet?.windowController as? MyController {
-                return parent.c64.datasette.insertTape(tape)
-            }
+            return parent.c64.datasette.insertTape(tape)
         }
         return false
     }
@@ -285,9 +292,7 @@ class MyDocument: NSDocument {
         
         if let archive = attachment as? AnyArchiveProxy {
             
-            if let parent = windowForSheet?.windowController as? MyController {
-                return parent.c64.flash(archive, item: 0)
-            }
+            return parent.c64.flash(archive, item: 0)
         }
         return false
     }
@@ -297,10 +302,8 @@ class MyDocument: NSDocument {
         
         if let cartridge = attachment as? CRTFileProxy {
             
-            if let parent = windowForSheet?.windowController as? MyController {
-                parent.c64.expansionport.attachCartridgeAndReset(cartridge)
-                return true
-            }
+            parent.c64.expansionport.attachCartridgeAndReset(cartridge)
+            return true
         }
         return false
     }

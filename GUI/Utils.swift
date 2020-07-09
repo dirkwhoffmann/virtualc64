@@ -24,7 +24,7 @@ public func track(_ message: String = "",
 }
 
 //
-// Handling URLs
+// URL extensions
 //
 
 extension URL {
@@ -65,7 +65,7 @@ extension URL {
 }
 
 //
-// Handling images
+// Data extensions
 //
 
 extension Data {
@@ -73,6 +73,10 @@ extension Data {
         return NSBitmapImageRep(data: self)
     }
 }
+
+//
+// NSImage extensions
+//
 
 extension NSImage {
     
@@ -129,6 +133,10 @@ extension NSImage {
         unlockFocus()
     }
 }
+
+//
+// FileSystem extensions
+//
 
 //
 // C64 Proxy extensions
