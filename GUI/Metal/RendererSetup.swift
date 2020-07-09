@@ -52,56 +52,33 @@ extension Renderer {
 
         track()
 
-        // Texture usages
-        /*
+        let original = MTLSizeMake(512, 512, 0)
+        let upscaled = MTLSizeMake(4 * original.width, 4 * original.height, 0)
         let r: MTLTextureUsage = [ .shaderRead ]
         let rwt: MTLTextureUsage = [ .shaderRead, .shaderWrite, .renderTarget ]
         let rwtp: MTLTextureUsage = [ .shaderRead, .shaderWrite, .renderTarget, .pixelFormatView ]
-        */
         
         // Background texture used in window mode
         bgTexture = device.makeTexture(w: 512, h: 512)
         assert(bgTexture != nil, "Failed to create bgTexture")
-        
-        let descriptor = MTLTextureDescriptor.texture2DDescriptor(
-            pixelFormat: MTLPixelFormat.rgba8Unorm,
-            width: 512,
-            height: 512,
-            mipmapped: false)
-        
-        //
-        // 512 x 512 textures
-        //
-        
-        // Build C64 texture (as provided by the emulator)
-        descriptor.usage = [ .shaderRead ]
-        emulatorTexture = device.makeTexture(descriptor: descriptor)
-        precondition(emulatorTexture != nil, "Failed to create emulator texture.")
+                
+        // Emulator texture (long frames)
+        emulatorTexture = device.makeTexture(size: original, usage: r)
+        assert(emulatorTexture != nil, "Failed to create emulatorTexture")
         
         // Build bloom textures
-        descriptor.usage = [ .shaderRead, .shaderWrite, .renderTarget ]
-        bloomTextureR = device.makeTexture(descriptor: descriptor)
-        bloomTextureG = device.makeTexture(descriptor: descriptor)
-        bloomTextureB = device.makeTexture(descriptor: descriptor)
-        precondition(bloomTextureR != nil, "Failed to create bloom texture (R).")
-        precondition(bloomTextureG != nil, "Failed to create bloom texture (G).")
-        precondition(bloomTextureB != nil, "Failed to create bloom texture (B).")
+        bloomTextureR = device.makeTexture(size: original, usage: rwt)
+        bloomTextureG = device.makeTexture(size: original, usage: rwt)
+        bloomTextureB = device.makeTexture(size: original, usage: rwt)
+        assert(bloomTextureR != nil, "Failed to create bloomTextureR")
+        assert(bloomTextureG != nil, "Failed to create bloomTextureG")
+        assert(bloomTextureB != nil, "Failed to create bloomTextureB")
 
-        //
-        // 2048 x 2048 textures
-        //
-        
-        descriptor.width = 2048
-        descriptor.height = 2048
-        
-        // Build upscaled C64 texture
-        descriptor.usage = [ .shaderRead, .shaderWrite, .pixelFormatView, .renderTarget ]
-        upscaledTexture = device.makeTexture(descriptor: descriptor)
-        precondition(upscaledTexture != nil, "Failed to create upscaling texture.")
-        
-        // Build scanline texture
-        scanlineTexture = device.makeTexture(descriptor: descriptor)
-        precondition(scanlineTexture != nil, "Failed to create scanline texture.")
+        // Upscaled texture
+        upscaledTexture = device.makeTexture(size: upscaled, usage: rwtp)
+        scanlineTexture = device.makeTexture(size: upscaled, usage: rwtp)
+        assert(upscaledTexture != nil, "Failed to create upscaledTexture")
+        assert(scanlineTexture != nil, "Failed to create scanlineTexture")
     }
     
     internal func buildSamplers() {
