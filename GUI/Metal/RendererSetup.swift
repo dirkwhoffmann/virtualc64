@@ -193,6 +193,187 @@ extension Renderer {
         }
     }
     
+    func buildPipeline() {
+
+        track()
+        precondition(library != nil)
+        
+        // Get vertex and fragment shader from library
+        let vertexFunc = library.makeFunction(name: "vertex_main")
+        let fragmentFunc = library.makeFunction(name: "fragment_main")
+        assert(vertexFunc != nil)
+        assert(fragmentFunc != nil)
+
+        // Create depth stencil state
+        let stencilDescriptor = MTLDepthStencilDescriptor.init()
+        stencilDescriptor.depthCompareFunction = MTLCompareFunction.less
+        stencilDescriptor.isDepthWriteEnabled = true
+        depthState = device.makeDepthStencilState(descriptor: stencilDescriptor)
+        
+        // Setup vertex descriptor
+        let vertexDescriptor = MTLVertexDescriptor.init()
+        
+        // Positions
+        vertexDescriptor.attributes[0].format = MTLVertexFormat.float4
+        vertexDescriptor.attributes[0].offset = 0
+        vertexDescriptor.attributes[0].bufferIndex = 0
+    
+        // Texture coordinates
+        vertexDescriptor.attributes[1].format = MTLVertexFormat.half2
+        vertexDescriptor.attributes[1].offset = 16
+        vertexDescriptor.attributes[1].bufferIndex = 1
+    
+        // Single interleaved buffer
+        vertexDescriptor.layouts[0].stride = 24
+        vertexDescriptor.layouts[0].stepRate = 1
+        vertexDescriptor.layouts[0].stepFunction = MTLVertexStepFunction.perVertex
+    
+        // Render pipeline
+        let pipelineDescriptor = MTLRenderPipelineDescriptor.init()
+        pipelineDescriptor.label = "VirtualC64 Metal pipeline"
+        pipelineDescriptor.depthAttachmentPixelFormat = MTLPixelFormat.depth32Float
+        pipelineDescriptor.vertexFunction = vertexFunc
+        pipelineDescriptor.fragmentFunction = fragmentFunc
+        
+        // Color attachment
+        let colorAttachment = pipelineDescriptor.colorAttachments[0]!
+        colorAttachment.pixelFormat = MTLPixelFormat.bgra8Unorm
+        colorAttachment.isBlendingEnabled = true
+        colorAttachment.rgbBlendOperation = MTLBlendOperation.add
+        colorAttachment.alphaBlendOperation = MTLBlendOperation.add
+        colorAttachment.sourceRGBBlendFactor = MTLBlendFactor.sourceAlpha
+        colorAttachment.sourceAlphaBlendFactor = MTLBlendFactor.sourceAlpha
+        colorAttachment.destinationRGBBlendFactor = MTLBlendFactor.oneMinusSourceAlpha
+        colorAttachment.destinationAlphaBlendFactor = MTLBlendFactor.oneMinusSourceAlpha
+        do {
+            try pipeline = device.makeRenderPipelineState(descriptor: pipelineDescriptor)
+        } catch {
+            fatalError("Cannot create Metal graphics pipeline")
+        }
+    }
+    
+    func buildVertexBuffer() {
+        
+        bgRect = Node.init(device: device,
+                           x: -1.0, y: -1.0, z: 0.99, w: 2.0, h: 2.0,
+                           t: NSRect.init(x: 0.0, y: 0.0, width: 1.0, height: 1.0))
+        
+        quad2D = Node.init(device: device,
+                           x: -1.0, y: -1.0, z: 0.0, w: 2.0, h: 2.0,
+                           t: textureRect)
+        
+        quad3D = Quad.init(device: device,
+                           x1: -0.64, y1: -0.48, z1: -0.64,
+                           x2: 0.64, y2: 0.48, z2: 0.64,
+                           t: textureRect)
+        
+        // OLD CODE:
+        
+        let capacity = 16 * 3 * 8
+        let pos = UnsafeMutablePointer<Float>.allocate(capacity: capacity)
+        
+        func setVertex(_ i: Int, _ position: SIMD3<Float>, _ texture: SIMD2<Float>) {
+            
+            let first = i * 8
+            pos[first + 0] = position.x
+            pos[first + 1] = position.y
+            pos[first + 2] = position.z
+            pos[first + 3] = 1.0 /* alpha */
+            pos[first + 4] = texture.x
+            pos[first + 5] = texture.y
+            pos[first + 6] = 0.0 /* alignment byte (unused) */
+            pos[first + 7] = 0.0 /* alignment byte (unused) */
+        }
+        
+        let dx = Float(0.64)
+        let dy = Float(0.48)
+        let dz = Float(0.64)
+        let bgx = Float(6.4)
+        let bgy = Float(4.8)
+        let bgz = Float(-6.8)
+        let upperLeft = SIMD2<Float>(Float(textureRect.minX), Float(textureRect.maxY))
+        let upperRight = SIMD2<Float>(Float(textureRect.maxX), Float(textureRect.maxY))
+        let lowerLeft = SIMD2<Float>(Float(textureRect.minX), Float(textureRect.minY))
+        let lowerRight = SIMD2<Float>(Float(textureRect.maxX), Float(textureRect.minY))
+        
+        // Background
+        setVertex(0, SIMD3<Float>(-bgx, +bgy, -bgz), SIMD2<Float>(0.0, 0.0))
+        setVertex(1, SIMD3<Float>(-bgx, -bgy, -bgz), SIMD2<Float>(0.0, 1.0))
+        setVertex(2, SIMD3<Float>(+bgx, -bgy, -bgz), SIMD2<Float>(1.0, 1.0))
+        
+        setVertex(3, SIMD3<Float>(-bgx, +bgy, -bgz), SIMD2<Float>(0.0, 0.0))
+        setVertex(4, SIMD3<Float>(+bgx, +bgy, -bgz), SIMD2<Float>(1.0, 0.0))
+        setVertex(5, SIMD3<Float>(+bgx, -bgy, -bgz), SIMD2<Float>(1.0, 1.0))
+        
+        // -Z
+        setVertex(6, SIMD3<Float>(-dx, +dy, -dz), lowerLeft)
+        setVertex(7, SIMD3<Float>(-dx, -dy, -dz), upperLeft)
+        setVertex(8, SIMD3<Float>(+dx, -dy, -dz), upperRight)
+        
+        setVertex(9, SIMD3<Float>(-dx, +dy, -dz), lowerLeft)
+        setVertex(10, SIMD3<Float>(+dx, +dy, -dz), lowerRight)
+        setVertex(11, SIMD3<Float>(+dx, -dy, -dz), upperRight)
+        
+        // +Z
+        setVertex(12, SIMD3<Float>(-dx, +dy, +dz), lowerRight)
+        setVertex(13, SIMD3<Float>(-dx, -dy, +dz), upperRight)
+        setVertex(14, SIMD3<Float>(+dx, -dy, +dz), upperLeft)
+        
+        setVertex(15, SIMD3<Float>(-dx, +dy, +dz), lowerRight)
+        setVertex(16, SIMD3<Float>(+dx, +dy, +dz), lowerLeft)
+        setVertex(17, SIMD3<Float>(+dx, -dy, +dz), upperLeft)
+        
+        // -X
+        setVertex(18, SIMD3<Float>(-dx, +dy, -dz), lowerRight)
+        setVertex(19, SIMD3<Float>(-dx, -dy, -dz), upperRight)
+        setVertex(20, SIMD3<Float>(-dx, -dy, +dz), upperLeft)
+        
+        setVertex(21, SIMD3<Float>(-dx, +dy, -dz), lowerRight)
+        setVertex(22, SIMD3<Float>(-dx, +dy, +dz), lowerLeft)
+        setVertex(23, SIMD3<Float>(-dx, -dy, +dz), upperLeft)
+        
+        // +X
+        setVertex(24, SIMD3<Float>(+dx, +dy, -dz), lowerLeft)
+        setVertex(25, SIMD3<Float>(+dx, -dy, -dz), upperLeft)
+        setVertex(26, SIMD3<Float>(+dx, -dy, +dz), upperRight)
+        
+        setVertex(27, SIMD3<Float>(+dx, +dy, -dz), lowerLeft)
+        setVertex(28, SIMD3<Float>(+dx, +dy, +dz), lowerRight)
+        setVertex(29, SIMD3<Float>(+dx, -dy, +dz), upperRight)
+        
+        // -Y
+        setVertex(30, SIMD3<Float>(+dx, -dy, -dz), lowerLeft)
+        setVertex(31, SIMD3<Float>(-dx, -dy, -dz), upperLeft)
+        setVertex(32, SIMD3<Float>(-dx, -dy, +dz), upperRight)
+        
+        setVertex(33, SIMD3<Float>(+dx, -dy, -dz), lowerLeft)
+        setVertex(34, SIMD3<Float>(+dx, -dy, +dz), lowerRight)
+        setVertex(35, SIMD3<Float>(-dx, -dy, +dz), upperRight)
+        
+        // +Y
+        setVertex(36, SIMD3<Float>(+dx, +dy, -dz), lowerLeft)
+        setVertex(37, SIMD3<Float>(-dx, +dy, -dz), upperLeft)
+        setVertex(38, SIMD3<Float>(-dx, +dy, +dz), upperRight)
+        
+        setVertex(39, SIMD3<Float>(+dx, +dy, -dz), lowerLeft)
+        setVertex(40, SIMD3<Float>(-dx, +dy, +dz), upperRight)
+        setVertex(41, SIMD3<Float>(+dx, +dy, +dz), lowerRight)
+        
+        // 2D drawing quad
+        setVertex(42, SIMD3<Float>(-1, 1, 0), lowerLeft)
+        setVertex(43, SIMD3<Float>(-1, -1, 0), upperLeft)
+        setVertex(44, SIMD3<Float>( 1, -1, 0), upperRight)
+        
+        setVertex(45, SIMD3<Float>(-1, 1, 0), lowerLeft)
+        setVertex(46, SIMD3<Float>( 1, 1, 0), lowerRight)
+        setVertex(47, SIMD3<Float>( 1, -1, 0), upperRight)
+        
+        let opt = MTLResourceOptions.cpuCacheModeWriteCombined
+        let len = capacity * 4
+        positionBuffer = device.makeBuffer(bytes: pos, length: len, options: opt)
+        precondition(positionBuffer != nil, "positionBuffer must not be nil")
+    }
+    
     func buildMatricesBg() {
         
         let model  = matrix_identity_float4x4
@@ -241,113 +422,6 @@ extension Renderer {
         vertexUniforms3D.mvp = proj * view * model
     }
 
-    func buildVertexBuffer() {
-            
-        let capacity = 16 * 3 * 8
-        let pos = UnsafeMutablePointer<Float>.allocate(capacity: capacity)
-        
-        func setVertex(_ i: Int, _ position: SIMD3<Float>, _ texture: SIMD2<Float>) {
-            
-            let first = i * 8
-            pos[first + 0] = position.x
-            pos[first + 1] = position.y
-            pos[first + 2] = position.z
-            pos[first + 3] = 1.0 /* alpha */
-            pos[first + 4] = texture.x
-            pos[first + 5] = texture.y
-            pos[first + 6] = 0.0 /* alignment byte (unused) */
-            pos[first + 7] = 0.0 /* alignment byte (unused) */
-        }
-        
-        let dx = Float(0.64)
-        let dy = Float(0.48)
-        let dz = Float(0.64)
-        let bgx = Float(6.4)
-        let bgy = Float(4.8)
-        let bgz = Float(-6.8)
-        let upperLeft = SIMD2<Float>(Float(textureRect.minX), Float(textureRect.maxY))
-        let upperRight = SIMD2<Float>(Float(textureRect.maxX), Float(textureRect.maxY))
-        let lowerLeft = SIMD2<Float>(Float(textureRect.minX), Float(textureRect.minY))
-        let lowerRight = SIMD2<Float>(Float(textureRect.maxX), Float(textureRect.minY))
-
-        // Background
-        setVertex(0, SIMD3<Float>(-bgx, +bgy, -bgz), SIMD2<Float>(0.0, 0.0))
-        setVertex(1, SIMD3<Float>(-bgx, -bgy, -bgz), SIMD2<Float>(0.0, 1.0))
-        setVertex(2, SIMD3<Float>(+bgx, -bgy, -bgz), SIMD2<Float>(1.0, 1.0))
-    
-        setVertex(3, SIMD3<Float>(-bgx, +bgy, -bgz), SIMD2<Float>(0.0, 0.0))
-        setVertex(4, SIMD3<Float>(+bgx, +bgy, -bgz), SIMD2<Float>(1.0, 0.0))
-        setVertex(5, SIMD3<Float>(+bgx, -bgy, -bgz), SIMD2<Float>(1.0, 1.0))
-    
-        // -Z
-        setVertex(6, SIMD3<Float>(-dx, +dy, -dz), lowerLeft)
-        setVertex(7, SIMD3<Float>(-dx, -dy, -dz), upperLeft)
-        setVertex(8, SIMD3<Float>(+dx, -dy, -dz), upperRight)
-    
-        setVertex(9, SIMD3<Float>(-dx, +dy, -dz), lowerLeft)
-        setVertex(10, SIMD3<Float>(+dx, +dy, -dz), lowerRight)
-        setVertex(11, SIMD3<Float>(+dx, -dy, -dz), upperRight)
-    
-        // +Z
-        setVertex(12, SIMD3<Float>(-dx, +dy, +dz), lowerRight)
-        setVertex(13, SIMD3<Float>(-dx, -dy, +dz), upperRight)
-        setVertex(14, SIMD3<Float>(+dx, -dy, +dz), upperLeft)
-    
-        setVertex(15, SIMD3<Float>(-dx, +dy, +dz), lowerRight)
-        setVertex(16, SIMD3<Float>(+dx, +dy, +dz), lowerLeft)
-        setVertex(17, SIMD3<Float>(+dx, -dy, +dz), upperLeft)
-    
-        // -X
-        setVertex(18, SIMD3<Float>(-dx, +dy, -dz), lowerRight)
-        setVertex(19, SIMD3<Float>(-dx, -dy, -dz), upperRight)
-        setVertex(20, SIMD3<Float>(-dx, -dy, +dz), upperLeft)
-    
-        setVertex(21, SIMD3<Float>(-dx, +dy, -dz), lowerRight)
-        setVertex(22, SIMD3<Float>(-dx, +dy, +dz), lowerLeft)
-        setVertex(23, SIMD3<Float>(-dx, -dy, +dz), upperLeft)
-    
-        // +X
-        setVertex(24, SIMD3<Float>(+dx, +dy, -dz), lowerLeft)
-        setVertex(25, SIMD3<Float>(+dx, -dy, -dz), upperLeft)
-        setVertex(26, SIMD3<Float>(+dx, -dy, +dz), upperRight)
-    
-        setVertex(27, SIMD3<Float>(+dx, +dy, -dz), lowerLeft)
-        setVertex(28, SIMD3<Float>(+dx, +dy, +dz), lowerRight)
-        setVertex(29, SIMD3<Float>(+dx, -dy, +dz), upperRight)
-    
-        // -Y
-        setVertex(30, SIMD3<Float>(+dx, -dy, -dz), lowerLeft)
-        setVertex(31, SIMD3<Float>(-dx, -dy, -dz), upperLeft)
-        setVertex(32, SIMD3<Float>(-dx, -dy, +dz), upperRight)
-    
-        setVertex(33, SIMD3<Float>(+dx, -dy, -dz), lowerLeft)
-        setVertex(34, SIMD3<Float>(+dx, -dy, +dz), lowerRight)
-        setVertex(35, SIMD3<Float>(-dx, -dy, +dz), upperRight)
-    
-        // +Y
-        setVertex(36, SIMD3<Float>(+dx, +dy, -dz), lowerLeft)
-        setVertex(37, SIMD3<Float>(-dx, +dy, -dz), upperLeft)
-        setVertex(38, SIMD3<Float>(-dx, +dy, +dz), upperRight)
-    
-        setVertex(39, SIMD3<Float>(+dx, +dy, -dz), lowerLeft)
-        setVertex(40, SIMD3<Float>(-dx, +dy, +dz), upperRight)
-        setVertex(41, SIMD3<Float>(+dx, +dy, +dz), lowerRight)
-    
-        // 2D drawing quad
-        setVertex(42, SIMD3<Float>(-1, 1, 0), lowerLeft)
-        setVertex(43, SIMD3<Float>(-1, -1, 0), upperLeft)
-        setVertex(44, SIMD3<Float>( 1, -1, 0), upperRight)
-    
-        setVertex(45, SIMD3<Float>(-1, 1, 0), lowerLeft)
-        setVertex(46, SIMD3<Float>( 1, 1, 0), lowerRight)
-        setVertex(47, SIMD3<Float>( 1, -1, 0), upperRight)
-    
-        let opt = MTLResourceOptions.cpuCacheModeWriteCombined
-        let len = capacity * 4
-        positionBuffer = device.makeBuffer(bytes: pos, length: len, options: opt)
-        precondition(positionBuffer != nil, "positionBuffer must not be nil")
-    }
- 
     func buildDepthBuffer() {
         
         // track("buildDepthBuffer")
@@ -365,64 +439,5 @@ extension Renderer {
         
         depthTexture = device.makeTexture(descriptor: descriptor)
         precondition(depthTexture != nil, "Failed to create depth texture")
-    }
-    
-    func buildPipeline() {
-
-        track()
-        precondition(library != nil)
-        
-        // Get vertex and fragment shader from library
-        let vertexFunc = library.makeFunction(name: "vertex_main")
-        let fragmentFunc = library.makeFunction(name: "fragment_main")
-        precondition(vertexFunc != nil)
-        precondition(fragmentFunc != nil)
-
-        // Create depth stencil state
-        let stencilDescriptor = MTLDepthStencilDescriptor.init()
-        stencilDescriptor.depthCompareFunction = MTLCompareFunction.less
-        stencilDescriptor.isDepthWriteEnabled = true
-        depthState = device.makeDepthStencilState(descriptor: stencilDescriptor)
-        
-        // Setup vertex descriptor
-        let vertexDescriptor = MTLVertexDescriptor.init()
-        
-        // Positions
-        vertexDescriptor.attributes[0].format = MTLVertexFormat.float4
-        vertexDescriptor.attributes[0].offset = 0
-        vertexDescriptor.attributes[0].bufferIndex = 0
-    
-        // Texture coordinates
-        vertexDescriptor.attributes[1].format = MTLVertexFormat.half2
-        vertexDescriptor.attributes[1].offset = 16
-        vertexDescriptor.attributes[1].bufferIndex = 1
-    
-        // Single interleaved buffer
-        vertexDescriptor.layouts[0].stride = 24
-        vertexDescriptor.layouts[0].stepRate = 1
-        vertexDescriptor.layouts[0].stepFunction = MTLVertexStepFunction.perVertex
-    
-        // Render pipeline
-        let pipelineDescriptor = MTLRenderPipelineDescriptor.init()
-        pipelineDescriptor.label = "VirtualC64 Metal pipeline"
-        pipelineDescriptor.depthAttachmentPixelFormat = MTLPixelFormat.depth32Float
-        pipelineDescriptor.vertexFunction = vertexFunc
-        pipelineDescriptor.fragmentFunction = fragmentFunc
-        
-        // Color attachment
-        let colorAttachment = pipelineDescriptor.colorAttachments[0]!
-        colorAttachment.pixelFormat = MTLPixelFormat.bgra8Unorm
-        colorAttachment.isBlendingEnabled = true
-        colorAttachment.rgbBlendOperation = MTLBlendOperation.add
-        colorAttachment.alphaBlendOperation = MTLBlendOperation.add
-        colorAttachment.sourceRGBBlendFactor = MTLBlendFactor.sourceAlpha
-        colorAttachment.sourceAlphaBlendFactor = MTLBlendFactor.sourceAlpha
-        colorAttachment.destinationRGBBlendFactor = MTLBlendFactor.oneMinusSourceAlpha
-        colorAttachment.destinationAlphaBlendFactor = MTLBlendFactor.oneMinusSourceAlpha
-        do {
-            try pipeline = device.makeRenderPipelineState(descriptor: pipelineDescriptor)
-        } catch {
-            fatalError("Cannot create Metal graphics pipeline")
-        }
     }
 }

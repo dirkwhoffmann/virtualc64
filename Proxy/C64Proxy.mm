@@ -62,9 +62,9 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     b ? wrapper->cpu->startTracing() : wrapper->cpu->stopTracing();
 }
-- (UInt64) cycle
+- (i64) cycle
 {
-    return wrapper->cpu->cycle;
+    return (i64)wrapper->cpu->cycle;
 }
 - (u16) pc
 {

@@ -521,13 +521,10 @@ extension MyController {
             }
         }
         
-        // Do 3 times a second ...
+        // Do lesser time...
         if (animationCounter % 4) == 0 {
-            speedometer.updateWith(cycle: c64.cpu.cycle(), frame: renderer.frames)
-            let mhz = speedometer.mhz(digits: 2)
-            let fps = speedometer.fps(digits: 0)
-            clockSpeed.stringValue = String(format: "%.2f MHz %.0f fps", mhz, fps)
-            clockSpeedBar.doubleValue = 10 * mhz
+            
+            updateSpeedometer()
         
             // Let the cursor disappear in fullscreen mode
             if renderer.fullscreen &&
@@ -539,7 +536,16 @@ extension MyController {
         
         timerLock.unlock()
     }
- 
+    
+    func updateSpeedometer() {
+        
+        speedometer.updateWith(cycle: c64.cpu.cycle(), frame: renderer.frames)
+        let mhz = speedometer.mhz
+        let fps = speedometer.fps
+        clockSpeed.stringValue = String(format: "%.2f MHz %.0f fps", mhz, fps)
+        clockSpeedBar.doubleValue = 10 * mhz
+    }
+    
     func processMessage(_ msg: Message) {
 
         func firstDrive() -> Bool {

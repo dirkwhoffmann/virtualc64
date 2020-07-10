@@ -232,7 +232,7 @@ struct AnyC64FileWrapper;
 - (BOOL) tracing;
 - (void) setTracing:(BOOL)b;
 
-- (UInt64) cycle;
+- (i64) cycle;
 - (u16) pc;
 - (void) setPC:(u16)pc;
 - (void) setSP:(u8)sp;

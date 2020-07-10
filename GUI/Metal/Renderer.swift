@@ -11,10 +11,12 @@ import Metal
 import MetalKit
 import MetalPerformanceShaders
 
+/*
 struct C64Texture {
     static let orig = NSSize.init(width: 512, height: 512)
     static let upscaled = NSSize.init(width: 2048, height: 2048)
 }
+*/
 
 class Renderer: NSObject, MTKViewDelegate {
     
@@ -22,8 +24,8 @@ class Renderer: NSObject, MTKViewDelegate {
     let device: MTLDevice
     let parent: MyController
     
-    /// Number of drawn frames since power up
-    var frames: UInt64 = 0
+    // Number of drawn frames since power up
+    var frames: Int64 = 0
     
     /* Synchronization semaphore
      * The semaphore is locked in function draw() and released in function
@@ -32,7 +34,10 @@ class Renderer: NSObject, MTKViewDelegate {
      */
     var semaphore = DispatchSemaphore(value: 1)
     
+    //
     // Metal objects
+    //
+
     var library: MTLLibrary! = nil
     var queue: MTLCommandQueue! = nil
     var pipeline: MTLRenderPipelineState! = nil
@@ -41,7 +46,10 @@ class Renderer: NSObject, MTKViewDelegate {
     var commandEncoder: MTLRenderCommandEncoder! = nil
     var drawable: CAMetalDrawable! = nil
     
-    // Metal layer
+    //
+    // Metal layers
+    //
+    
     var metalLayer: CAMetalLayer! = nil
     
     // Current canvas size
@@ -54,9 +62,16 @@ class Renderer: NSObject, MTKViewDelegate {
                       height: frameSize.height * scale)
     }
     
-    // Buffers
-    var positionBuffer: MTLBuffer! = nil
+    //
+    // Buffers and uniforms
+    //
+    
+    var positionBuffer: MTLBuffer! = nil // DEPRECATED
 
+    var bgRect: Node?
+    var quad2D: Node?
+    var quad3D: Quad?
+    
     var vertexUniforms2D = VertexUniforms(mvp: matrix_identity_float4x4)
     var vertexUniforms3D = VertexUniforms(mvp: matrix_identity_float4x4)
     var vertexUniformsBg = VertexUniforms(mvp: matrix_identity_float4x4)
@@ -68,43 +83,43 @@ class Renderer: NSObject, MTKViewDelegate {
     
     // Textures
     
-    /// Background image behind the cube
+    // Background texture
     var bgTexture: MTLTexture! = nil
     
-    /// Texture to hold the pixel depth information
+    // Texture to hold the pixel depth information
     var depthTexture: MTLTexture! = nil
     
-    /// Emulator texture as provided by the emulator (512 x 512)
-    /// The C64 screen has size 428 x 284 and covers the upper left part of the
-    /// emulator texture. The emulator texture is updated in function
-    /// updateTexture() which is called periodically in drawRect().
+    // Emulator texture as provided by the emulator.
+    // The C64 screen has size 428 x 284 and covers the upper left part of the
+    // emulator texture. The emulator texture is updated in function
+    // updateTexture() which is called periodically in drawRect().
     var emulatorTexture: MTLTexture! = nil
 
-    /// Bloom textures to emulate blooming (512 x 512)
-    /// To emulate a bloom effect, the C64 texture is first split into it's
-    /// R, G, and B parts. Each texture is then run through a Gaussian blur
-    /// filter with a large radius. These blurred textures are passed into
-    /// the fragment shader as a secondary textures where they are recomposed
-    /// with the upscaled primary texture.
+    // Bloom textures to emulate blooming.
+    // To emulate a bloom effect, the C64 texture is first split into it's
+    // R, G, and B parts. Each texture is then run through a Gaussian blur
+    // filter with a large radius. These blurred textures are passed into
+    // the fragment shader as a secondary textures where they are recomposed
+    // with the upscaled primary texture.
     var bloomTextureR: MTLTexture! = nil
     var bloomTextureG: MTLTexture! = nil
     var bloomTextureB: MTLTexture! = nil
 
-    /// Upscaled emulator texture (2048 x 2048)
-    /// In the first texture processing stage, the emulator texture is bumped up
-    /// by a factor of 4. The user can choose between bypass upscaling which
-    /// simply replaces each pixel by a 4x4 quad or more sophisticated upscaling
-    /// algorithms such as xBr.
+    // Upscaled emulator texture.
+    // In the first texture processing stage, the emulator texture is bumped up
+    // by a factor of 4. The user can choose between bypass upscaling which
+    // simply replaces each pixel by a 4x4 quad or more sophisticated upscaling
+    // algorithms such as xBr.
     var upscaledTexture: MTLTexture! = nil
     
-    /// Upscaled texture with scanlines (2048 x 2048)
-    /// In the second texture processing stage, a scanline effect is applied to
-    /// the upscaled texture.
+    // Upscaled texture with scanlines.
+    // In the second texture processing stage, a scanline effect is applied to
+    // the upscaled texture.
     var scanlineTexture: MTLTexture! = nil
     
-    /// Dotmask texture (variable size)
-    /// This texture is used by the fragment shader to emulate a dotmask
-    /// effect.
+    // Dotmask texture (variable size).
+    // This texture is used by the fragment shader to emulate a dotmask
+    // effect.
     var dotMaskTexture: MTLTexture! = nil
     
     // Array holding all available upscalers
@@ -155,10 +170,10 @@ class Renderer: NSObject, MTKViewDelegate {
     var targetAlpha = Float(0.0)
     var deltaAlpha = Float(0.0)
         
-    /// Texture cut-out (normalized)
+    // Texture cut-out (normalized)
     var textureRect = CGRect.init(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
  
-    /// Currently selected texture upscaler
+    // Currently selected texture upscaler
     var upscaler = Defaults.upscaler {
         didSet {
             if upscaler >= upscalerGallery.count || upscalerGallery[upscaler] == nil {
@@ -168,13 +183,13 @@ class Renderer: NSObject, MTKViewDelegate {
         }
     }
         
-    //! Is set to true when fullscreen mode is entered (usually enables the 2D renderer)
+    // Is set to true when fullscreen mode is entered
     var fullscreen = false
     
-    //! If true, the 3D renderer is also used in fullscreen mode
+    // If true, the 3D renderer is used in fullscreen mode, too
     var keepAspectRatio = Defaults.keepAspectRatio
     
-    //! If false, the C64 screen is not drawn (background texture will be visible)
+    // If false, the C64 screen is not drawn (background texture will be visible)
     var drawC64texture = false
     
     //
@@ -257,10 +272,12 @@ class Renderer: NSObject, MTKViewDelegate {
                                       height: CGFloat(NTSC_CANVAS_HEIGHT + 2 * 9))
         }
         
-        textureRect = CGRect.init(x: rect.minX / C64Texture.orig.width,
-                                  y: rect.minY / C64Texture.orig.height,
-                                  width: rect.width / C64Texture.orig.width,
-                                  height: rect.height / C64Texture.orig.height)
+        let texW = CGFloat(TextureSize.original.width)
+        let texH = CGFloat(TextureSize.original.height)
+        textureRect = CGRect.init(x: rect.minX / texW,
+                                  y: rect.minY / texH,
+                                  width: rect.width / texW,
+                                  height: rect.height / texH)
         
         // Enable this for debugging (will display the whole texture)
         // textureXStart = 0.0;

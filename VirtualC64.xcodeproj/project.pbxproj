@@ -628,6 +628,7 @@
 				503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */,
 				50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */,
 				50EAFFE924B2600D00024CD2 /* MyToolbar.swift */,
+				50ED5BF712DD99C000596417 /* Speedometer.swift */,
 				50BF77D120309A2A006E000F /* WindowDelegate.swift */,
 				5018AF65202EDD2000B4C886 /* UserDefaults.swift */,
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
@@ -645,7 +646,6 @@
 				5081AB621EF29E6400D6F616 /* MacAudio.swift */,
 				50FF818E1F88D9100004548A /* GamePad.swift */,
 				50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */,
-				50ED5BF712DD99C000596417 /* Speedometer.swift */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
