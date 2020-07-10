@@ -9,6 +9,12 @@
 
 import simd
 
+struct TextureSize {
+    
+    static let original = MTLSizeMake(512, 512, 0)
+    static let upscaled = MTLSizeMake(2048, 2048, 0)
+}
+
 extension Renderer {
 
     func setupMetal() {
@@ -51,9 +57,8 @@ extension Renderer {
     internal func buildTextures() {
 
         track()
-
-        let original = MTLSizeMake(512, 512, 0)
-        let upscaled = MTLSizeMake(4 * original.width, 4 * original.height, 0)
+        
+        // Texture usages
         let r: MTLTextureUsage = [ .shaderRead ]
         let rwt: MTLTextureUsage = [ .shaderRead, .shaderWrite, .renderTarget ]
         let rwtp: MTLTextureUsage = [ .shaderRead, .shaderWrite, .renderTarget, .pixelFormatView ]
@@ -63,20 +68,20 @@ extension Renderer {
         assert(bgTexture != nil, "Failed to create bgTexture")
                 
         // Emulator texture (long frames)
-        emulatorTexture = device.makeTexture(size: original, usage: r)
+        emulatorTexture = device.makeTexture(size: TextureSize.original, usage: r)
         assert(emulatorTexture != nil, "Failed to create emulatorTexture")
         
         // Build bloom textures
-        bloomTextureR = device.makeTexture(size: original, usage: rwt)
-        bloomTextureG = device.makeTexture(size: original, usage: rwt)
-        bloomTextureB = device.makeTexture(size: original, usage: rwt)
+        bloomTextureR = device.makeTexture(size: TextureSize.original, usage: rwt)
+        bloomTextureG = device.makeTexture(size: TextureSize.original, usage: rwt)
+        bloomTextureB = device.makeTexture(size: TextureSize.original, usage: rwt)
         assert(bloomTextureR != nil, "Failed to create bloomTextureR")
         assert(bloomTextureG != nil, "Failed to create bloomTextureG")
         assert(bloomTextureB != nil, "Failed to create bloomTextureB")
 
         // Upscaled texture
-        upscaledTexture = device.makeTexture(size: upscaled, usage: rwtp)
-        scanlineTexture = device.makeTexture(size: upscaled, usage: rwtp)
+        upscaledTexture = device.makeTexture(size: TextureSize.upscaled, usage: rwtp)
+        scanlineTexture = device.makeTexture(size: TextureSize.upscaled, usage: rwtp)
         assert(upscaledTexture != nil, "Failed to create upscaledTexture")
         assert(scanlineTexture != nil, "Failed to create scanlineTexture")
     }
