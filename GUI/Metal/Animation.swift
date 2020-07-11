@@ -9,10 +9,122 @@
 
 import simd
 
+struct AnimationType {
+    
+    static let geometry = 1
+    static let alpha = 2
+    static let texture = 4
+}
+
+class AnimatedFloat {
+
+    var current: Float
+    var delta = Float(0.0)
+    var steps = 1 { didSet { delta = (target - current) / Float(steps) } }
+    var target: Float { didSet { delta = (target - current) / Float(steps) } }
+
+    init(current: Float = 0.0, target: Float = 0.0) {
+
+        self.current = current
+        self.target = target
+    }
+
+    convenience init(_ value: Float) {
+
+        self.init(current: value, target: value)
+    }
+
+    func set(_ value: Float) {
+
+        current = value
+        target = value
+    }
+
+    func animates() -> Bool {
+
+        return current != target
+    }
+
+    func move() {
+
+        if abs(current - target) < abs(delta) {
+            current = target
+        } else {
+            current += delta
+        }
+    }
+}
+
 extension Renderer {
  
+    func performAnimationStep() {
+
+         assert(animates != 0)
+
+         var cont: Bool
+
+         // Check for geometry animation
+         if (animates & AnimationType.geometry) != 0 {
+
+             angleX.move()
+             angleY.move()
+             angleZ.move()
+             cont = angleX.animates() || angleY.animates() || angleZ.animates()
+
+             shiftX.move()
+             shiftY.move()
+             shiftZ.move()
+             cont = cont || shiftX.animates() || shiftY.animates() || shiftZ.animates()
+
+             // Check if animation has terminated
+             if !cont {
+                 animates -= AnimationType.geometry
+                 angleX.set(0)
+                 angleY.set(0)
+                 angleZ.set(0)
+             }
+
+             buildMatrices3D()
+         }
+
+         // Check for alpha channel animation
+         if (animates & AnimationType.alpha) != 0 {
+
+             alpha.move()
+             noise.move()
+             cont = alpha.animates() || noise.animates()
+
+             // Check if animation has terminated
+             if !cont {
+                 animates -= AnimationType.alpha
+             }
+         }
+
+         // Check for texture animation
+         if (animates & AnimationType.texture) != 0 {
+
+             cutoutX1.move()
+             cutoutY1.move()
+             cutoutX2.move()
+             cutoutY2.move()
+             cont = cutoutX1.animates() || cutoutY1.animates() || cutoutX2.animates() || cutoutY2.animates()
+
+             // Update texture cutout
+             textureRect = CGRect.init(x: CGFloat(cutoutX1.current),
+                                       y: CGFloat(cutoutY1.current),
+                                       width: CGFloat(cutoutX2.current - cutoutX1.current),
+                                       height: CGFloat(cutoutY2.current - cutoutY1.current))
+             buildVertexBuffer()
+
+             // Check if animation has terminated
+             if !cont {
+                 animates -= AnimationType.texture
+             }
+         }
+     }
+    
     //! Returns true iff an animation is in progress
-    func animates() -> Bool {
+    func animatesDeprecated() -> Bool {
 
         return
             currentXAngle != targetXAngle ||

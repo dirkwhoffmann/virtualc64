@@ -302,7 +302,7 @@ extension Renderer {
                                              nearZ: 0.1,
                                              farZ: 100.0)
     
-        if animates() {
+        if animatesDeprecated() {
             let xAngle: Float = -(currentXAngle / 180.0) * .pi
             let yAngle: Float =  (currentYAngle / 180.0) * .pi
             let zAngle: Float =  (currentZAngle / 180.0) * .pi

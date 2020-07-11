@@ -145,7 +145,28 @@ class Renderer: NSObject, MTKViewDelegate {
     // Shader options
     var shaderOptions = Defaults.shaderOptions
     
+    // Indicates if an animation is currently performed
+     var animates = 0
+    
     // Animation parameters
+    var angleX = AnimatedFloat(0.0)
+    var angleY = AnimatedFloat(0.0)
+    var angleZ = AnimatedFloat(0.0)
+    
+    var shiftX = AnimatedFloat(0.0)
+    var shiftY = AnimatedFloat(0.0)
+    var shiftZ = AnimatedFloat(0.0)
+    
+    var alpha = AnimatedFloat(0.0)
+    var noise = AnimatedFloat(0.0)
+    
+    // Animation variables for smooth texture zooming
+    var cutoutX1 = AnimatedFloat.init()
+    var cutoutY1 = AnimatedFloat.init()
+    var cutoutX2 = AnimatedFloat.init()
+    var cutoutY2 = AnimatedFloat.init()
+    
+    // Animation parameters (DEPRECATED)
     var currentXAngle = Float(0.0)
     var targetXAngle = Float(0.0)
     var deltaXAngle = Float(0.0)
@@ -422,7 +443,7 @@ class Renderer: NSObject, MTKViewDelegate {
     
         let poweredOff = parent.c64.isPoweredOff()
 
-        let animates = self.animates()
+        let animates = self.animatesDeprecated()
         let renderBackground = poweredOff || fullscreen
         // let drawBackground = !fullscreen && (animates || !drawC64texture)
         
