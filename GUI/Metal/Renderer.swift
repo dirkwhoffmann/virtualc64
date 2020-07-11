@@ -66,8 +66,6 @@ class Renderer: NSObject, MTKViewDelegate {
     // Buffers and uniforms
     //
     
-    var positionBuffer: MTLBuffer! = nil // DEPRECATED
-
     var bgRect: Node?
     var quad2D: Node?
     var quad3D: Quad?
@@ -390,9 +388,7 @@ class Renderer: NSObject, MTKViewDelegate {
         commandEncoder.setFragmentBytes(&shaderOptions,
                                         length: MemoryLayout<ShaderOptions>.stride,
                                         index: 0)
-        
-        commandEncoder.setVertexBuffer(positionBuffer, offset: 0, index: 0)
-
+                
         // Finally, we have to decide for a texture sampler. We use a linear
         // interpolation sampler, if Gaussian blur is enabled, and a nearest
         // neighbor sampler if Gaussian blur is disabled.
@@ -417,10 +413,8 @@ class Renderer: NSObject, MTKViewDelegate {
                                         index: 1)
         
         // Draw
-        commandEncoder.drawPrimitives(type: MTLPrimitiveType.triangle,
-                                      vertexStart: 42,
-                                      vertexCount: 6,
-                                      instanceCount: 1)
+        quad2D!.drawPrimitives(commandEncoder)
+        
         endFrame()
     }
     
@@ -462,10 +456,7 @@ class Renderer: NSObject, MTKViewDelegate {
                                             index: 1)
             
             // Draw
-            commandEncoder.drawPrimitives(type: MTLPrimitiveType.triangle,
-                                          vertexStart: 0,
-                                          vertexCount: 6,
-                                          instanceCount: 1)
+            bgRect!.drawPrimitives(commandEncoder)
         }
         
         // Render cube
@@ -485,11 +476,8 @@ class Renderer: NSObject, MTKViewDelegate {
                                             length: MemoryLayout<FragmentUniforms>.stride,
                                             index: 1)
             
-            // Draw
-            commandEncoder.drawPrimitives(type: MTLPrimitiveType.triangle,
-                                          vertexStart: 6,
-                                          vertexCount: (animates ? 24 : 6),
-                                          instanceCount: 1)
+            // Draw (part of) cube
+              quad3D!.draw(commandEncoder, allSides: animates)
         }
                 
         endFrame()
