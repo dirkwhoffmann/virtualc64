@@ -76,27 +76,6 @@ var proxy: C64Proxy? {
         if #available(OSX 10.12.2, *) {
             NSApplication.shared.isAutomaticCustomizeTouchBarMenuItemEnabled = true
         }
-        
-        // Add observers
-        let dc = DistributedNotificationCenter.default
-        dc.addObserver(self, selector: #selector(vc64ResetCommand(_:)),
-                       name: Notification.Name("VC64Reset"),
-                       object: nil)
-        dc.addObserver(self, selector: #selector(vc64ConfigureCommand(_:)),
-                       name: Notification.Name("VC64Configure"),
-                       object: nil)
-        dc.addObserver(self, selector: #selector(vc64MountCommand(_:)),
-                       name: Notification.Name("VC64Mount"),
-                       object: nil)
-        dc.addObserver(self, selector: #selector(vc64TypeTextCommand(_:)),
-                       name: Notification.Name("VC64TypeText"),
-                       object: nil)
-        dc.addObserver(self, selector: #selector(vc64TakeScreenshotCommand(_:)),
-                       name: Notification.Name("VC64TakeScreenshot"),
-                       object: nil)
-        dc.addObserver(self, selector: #selector(vc64QuitCommand(_:)),
-                       name: Notification.Name("VC64Quit"),
-                       object: nil)
     }
     
     public func applicationWillTerminate(_ aNotification: Notification) {

@@ -15,8 +15,6 @@
 		5002FA8321C2655800DA4BBC /* KeyboardPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */; };
 		50031B34206FABA400A1969B /* SnapshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50031B33206FABA400A1969B /* SnapshotDialog.xib */; };
 		50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50031B39206FB0FC00A1969B /* SnapshotController.swift */; };
-		500E3A6721B5C29100935CB3 /* ScriptCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500E3A6621B5C29100935CB3 /* ScriptCommands.swift */; };
-		500E3A6921B5C2A700935CB3 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500E3A6821B5C2A700935CB3 /* Notifications.swift */; };
 		500EA6C724B09037009AA7D7 /* C64Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EA6C524B09037009AA7D7 /* C64Component.cpp */; };
 		50133B97200D4EED00167227 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50133B96200D4EED00167227 /* MetalView.swift */; };
 		5015F36620B546A30024B4AA /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5015F36520B546A30024B4AA /* WaveformView.swift */; };
@@ -30,8 +28,6 @@
 		5018BFB124B48DC400551848 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018BFB024B48DC400551848 /* Renderer.swift */; };
 		5018BFB324B48DD500551848 /* RendererSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018BFB224B48DD500551848 /* RendererSetup.swift */; };
 		50195C2A20B007A1003844FB /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50195C2920B007A1003844FB /* Debugger.swift */; };
-		501A4A5821AF1A6200DDE409 /* VirtualC64.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 501A4A5721AF1A6200DDE409 /* VirtualC64.sdef */; };
-		501A4A5A21AF3BAF00DDE409 /* AppleScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501A4A5921AF3BAF00DDE409 /* AppleScript.swift */; };
 		501B9755215D86B7000CFB1D /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501B9754215D86B7000CFB1D /* Sparkle.framework */; };
 		501B9756215D89C6000CFB1D /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 501B9754215D86B7000CFB1D /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		501E427C20D975AD000BB48D /* IconD64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427720D975AC000BB48D /* IconD64.icns */; };
@@ -226,8 +222,6 @@
 		5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardPrefs.swift; sourceTree = "<group>"; };
 		50031B33206FABA400A1969B /* SnapshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SnapshotDialog.xib; sourceTree = "<group>"; };
 		50031B39206FB0FC00A1969B /* SnapshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
-		500E3A6621B5C29100935CB3 /* ScriptCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptCommands.swift; sourceTree = "<group>"; };
-		500E3A6821B5C2A700935CB3 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		500EA6C524B09037009AA7D7 /* C64Component.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64Component.cpp; sourceTree = "<group>"; };
 		500EA6C624B09037009AA7D7 /* C64Component.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Component.h; sourceTree = "<group>"; };
 		50133B96200D4EED00167227 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
@@ -243,8 +237,6 @@
 		5018BFB024B48DC400551848 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		5018BFB224B48DD500551848 /* RendererSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererSetup.swift; sourceTree = "<group>"; };
 		50195C2920B007A1003844FB /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
-		501A4A5721AF1A6200DDE409 /* VirtualC64.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = VirtualC64.sdef; sourceTree = "<group>"; };
-		501A4A5921AF3BAF00DDE409 /* AppleScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleScript.swift; sourceTree = "<group>"; };
 		501B9754215D86B7000CFB1D /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		501E427720D975AC000BB48D /* IconD64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconD64.icns; sourceTree = "<group>"; };
 		501E427820D975AC000BB48D /* IconCRT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconCRT.icns; sourceTree = "<group>"; };
@@ -664,17 +656,6 @@
 			path = Dialogs;
 			sourceTree = "<group>";
 		};
-		500E3A6B21B5C30F00935CB3 /* Automation */ = {
-			isa = PBXGroup;
-			children = (
-				500E3A6621B5C29100935CB3 /* ScriptCommands.swift */,
-				500E3A6821B5C2A700935CB3 /* Notifications.swift */,
-				501A4A5921AF3BAF00DDE409 /* AppleScript.swift */,
-				501A4A5721AF1A6200DDE409 /* VirtualC64.sdef */,
-			);
-			path = Automation;
-			sourceTree = "<group>";
-		};
 		50176C6D0A6F7357009E80BD /* GUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -683,7 +664,6 @@
 				5000473F12DCEC9B0098D890 /* Model */,
 				5000474012DCECAB0098D890 /* View */,
 				5000474112DCECBA0098D890 /* Controller */,
-				500E3A6B21B5C30F00935CB3 /* Automation */,
 				5000474312DCED190098D890 /* Misc */,
 			);
 			path = GUI;
@@ -1218,7 +1198,6 @@
 				50B1644E202DDAA600447D3E /* ExportDiskDialog.xib in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */,
-				501A4A5821AF1A6200DDE409 /* VirtualC64.sdef in Resources */,
 				503E199020C42C6D007E91F1 /* Assets.xcassets in Resources */,
 				50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */,
 				5052AD0C202A57C4005FDD88 /* TapeMountDialog.xib in Resources */,
@@ -1313,7 +1292,6 @@
 				500EA6C724B09037009AA7D7 /* C64Component.cpp in Sources */,
 				504C438324AF29AC00E69CAE /* HardwareComponent.cpp in Sources */,
 				50E9B92D201F299500065A89 /* MyController.swift in Sources */,
-				500E3A6721B5C29100935CB3 /* ScriptCommands.swift in Sources */,
 				50DBB44B2025CE5700489271 /* Utils.swift in Sources */,
 				504C436F24AF29AC00E69CAE /* Comal80.cpp in Sources */,
 				50B929F221C2B5C90039E8F2 /* PreferencesWindow.swift in Sources */,
@@ -1332,7 +1310,6 @@
 				5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */,
 				503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */,
 				504C437524AF29AC00E69CAE /* PRGFile.cpp in Sources */,
-				500E3A6921B5C2A700935CB3 /* Notifications.swift in Sources */,
 				504C43A524AF29AC00E69CAE /* ExpansionPort.cpp in Sources */,
 				504C436524AF29AC00E69CAE /* Funplay.cpp in Sources */,
 				504C437B24AF29AC00E69CAE /* D64File.cpp in Sources */,
@@ -1348,7 +1325,6 @@
 				504C438D24AF29AC00E69CAE /* VIC.cpp in Sources */,
 				504C437824AF29AC00E69CAE /* AnyDisk.cpp in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
-				501A4A5A21AF3BAF00DDE409 /* AppleScript.swift in Sources */,
 				504C43AB24AF29AC00E69CAE /* CIA.cpp in Sources */,
 				504C436024AF29AC00E69CAE /* Mach5.cpp in Sources */,
 				504C43A724AF29AC00E69CAE /* VIA.cpp in Sources */,
