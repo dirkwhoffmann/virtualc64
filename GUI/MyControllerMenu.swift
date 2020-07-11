@@ -924,7 +924,25 @@ extension MyController: NSMenuItemValidation {
     @IBAction func dumpStateAction(_ sender: Any!) {
         // Dummy target to make menu item validatable
     }
-  
+
+    @IBAction func zoomTextureInAction(_ sender: Any!) {
+        
+        undoManager?.registerUndo(withTarget: self) { targetSelf in
+            targetSelf.zoomTextureOutAction(sender)
+        }
+        
+        renderer.zoomTextureIn()
+    }
+    
+    @IBAction func zoomTextureOutAction(_ sender: Any!) {
+        
+        undoManager?.registerUndo(withTarget: self) { targetSelf in
+            targetSelf.zoomTextureInAction(sender)
+        }
+        
+        renderer.zoomTextureOut()
+    }
+    
     @IBAction func traceIecAction(_ sender: Any!) {
         
         undoManager?.registerUndo(withTarget: self) { targetSelf in

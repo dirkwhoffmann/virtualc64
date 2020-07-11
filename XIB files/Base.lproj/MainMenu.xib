@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication"/>
@@ -268,32 +268,54 @@ CA
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="420"/>
-                                        <menuItem title="Trace" id="l45-bY-cgb">
+                                        <menuItem title="Texture" id="l45-bY-cgb">
                                             <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Trace" id="F5S-uB-hpC">
+                                            <menu key="submenu" title="Texture" id="F5S-uB-hpC">
                                                 <items>
-                                                    <menuItem title="Trace IEC Bus" id="417">
+                                                    <menuItem title="Zoom In" id="417">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
-                                                            <action selector="traceIecAction:" target="-1" id="497"/>
+                                                            <action selector="zoomTextureInAction:" target="-1" id="F5H-oX-6Jd"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Trace VC1541 CPU" id="418">
+                                                    <menuItem title="Zoom Out" id="418">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
-                                                            <action selector="traceVC1541CpuAction:" target="-1" id="482"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Trace VC1541 VIA" id="416">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="traceViaAction:" target="-1" id="495"/>
+                                                            <action selector="zoomTextureOutAction:" target="-1" id="ITJ-AY-sRJ"/>
                                                         </connections>
                                                     </menuItem>
                                                 </items>
                                             </menu>
                                             <connections>
                                                 <action selector="traceAction:" target="-1" id="U0J-eK-vGr"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Trace" id="Zxa-kw-ITs">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Trace" id="aZ5-aC-Bof">
+                                                <items>
+                                                    <menuItem title="Trace IEC Bus" id="4Wa-bL-OXJ">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="traceIecAction:" target="-1" id="x7s-QP-n8g"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Trace VC1541 CPU" id="Adf-zL-DBn">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="traceVC1541CpuAction:" target="-1" id="24L-9o-Cvb"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Trace VC1541 VIA" id="LiK-aB-bCq">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="traceViaAction:" target="-1" id="QPZ-Er-7Ml"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                            <connections>
+                                                <action selector="traceAction:" target="-1" id="O2N-vk-RVk"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Dump State" id="421">
@@ -1189,6 +1211,7 @@ CA
                     </menu>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="140" y="154"/>
         </menu>
     </objects>
     <resources>
