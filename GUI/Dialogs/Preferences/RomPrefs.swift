@@ -318,4 +318,10 @@ extension PreferencesController {
             NSWorkspace.shared.open(url)
         }
     }
+    
+    @IBAction func romDefaultsAction(_ sender: NSButton!) {
+        
+        track()
+        // config.saveRomUserDefaults()
+    }
 }

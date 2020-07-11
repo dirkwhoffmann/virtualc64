@@ -104,10 +104,18 @@ extension PreferencesController {
         refresh()
     }
     
-    @IBAction func mapFactorySettingsAction(_ sender: Any!) {
+    @IBAction func kbPresetAction(_ sender: NSPopUpButton!) {
         
+        track()
+        assert(sender.selectedTag() == 0)
+
         UserDefaults.resetKeyMapUserDefaults()
         refresh()
+    }
+    
+    @IBAction func kbDefaultsAction(_ sender: NSButton!) {
+        
+        track()
     }
 }
 

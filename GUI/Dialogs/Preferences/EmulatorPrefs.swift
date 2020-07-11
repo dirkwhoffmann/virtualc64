@@ -132,16 +132,6 @@ extension PreferencesController {
     }
 
     //
-    // Action methods (Misc)
-    //
-    
-    @IBAction func emuFactorySettingsAction(_ sender: Any!) {
-        
-        UserDefaults.resetEmulatorUserDefaults()
-        refresh()
-    }
-    
-    //
     // Action methods (Media files)
     //
     
@@ -179,5 +169,19 @@ extension PreferencesController {
             myController?.autoTypeText[fileType] = sender.stringValue
             refresh()
         }
+    }
+    
+    @IBAction func emuPresetAction(_ sender: NSPopUpButton!) {
+        
+        track()
+        assert(sender.selectedTag() == 0)
+        
+        UserDefaults.resetEmulatorUserDefaults()
+        refresh()
+     }
+    
+    @IBAction func emuDefaultsAction(_ sender: NSButton!) {
+        
+        track()
     }
 }

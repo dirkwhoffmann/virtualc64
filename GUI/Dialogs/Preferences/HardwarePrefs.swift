@@ -154,11 +154,17 @@ extension PreferencesController {
         refresh()
     }
 
-    @IBAction func hwFactorySettingsAction(_ sender: NSPopUpButton!) {
+    @IBAction func hwPresetAction(_ sender: NSPopUpButton!) {
         
         if sender.selectedTag() != C64_CUSTOM.rawValue {
             proxy?.setModel(sender.selectedTag())
         }
         refresh()
+    }
+    
+    @IBAction func hwDefaultsAction(_ sender: NSButton!) {
+        
+        track()
+        // config.saveHardwareUserDefaults()
     }
 }

@@ -358,13 +358,16 @@ extension PreferencesController {
     // Action methods (Misc)
     //
     
+    /*
     func vidFactorySettingsAction() {
         
         UserDefaults.resetVideoUserDefaults()
         updatePalettePreviewImages()
         refresh()
     }
+    */
     
+    /*
     @IBAction func vidFactorySettingsActionTFT(_ sender: Any!) {
 
         UserDefaults.resetVideoUserDefaults()
@@ -380,5 +383,26 @@ extension PreferencesController {
         myController?.renderer.buildDotMasks()
         updatePalettePreviewImages()
         refresh()
+    }
+    */
+    
+    @IBAction func vidPresetAction(_ sender: NSPopUpButton!) {
+        
+        UserDefaults.resetVideoUserDefaults()
+        
+        switch sender.selectedTag() {
+        case 0: myController?.renderer.shaderOptions = ShaderDefaultsTFT
+        case 1: myController?.renderer.shaderOptions = ShaderDefaultsCRT
+        default: fatalError()
+        }
+        
+        updatePalettePreviewImages()
+        refresh()
+    }
+    
+    @IBAction func vidDefaultsAction(_ sender: NSButton!) {
+        
+        track()
+        // config.saveVideoUserDefaults()
     }
 }

@@ -196,9 +196,17 @@ extension PreferencesController {
         }
     }
     
-    @IBAction func devFactorySettingsAction(_ sender: Any!) {
+    @IBAction func devPresetAction(_ sender: NSPopUpButton!) {
+        
+        track()
+        assert(sender.selectedTag() == 0)
         
         UserDefaults.resetDevicesUserDefaults()
         refresh()
+    }
+    
+    @IBAction func devDefaultsAction(_ sender: NSButton!) {
+        
+        track()
     }
 }
