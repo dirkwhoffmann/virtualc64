@@ -37,8 +37,9 @@ class TapeMountController: DialogController {
         
         // Insert tape
         proxy?.datasette.insertTape(tape)
-        myController?.renderer.rotateBack()
-        
+        myController?.renderer.oldRotateBack()
+        myController?.renderer.rotateLeft()
+
         // Process options
         if autoLoad.integerValue == 1 {
             

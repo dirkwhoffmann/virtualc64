@@ -86,7 +86,8 @@ class ArchiveMountController: DialogController {
         let nr = (driveSelector.selectedItem!.tag == 1) ? 1 : 2
         
         myController?.changeDisk(archive, drive: nr)
-        myController?.renderer.rotateBack()
+        myController?.renderer.oldRotateBack()
+        myController?.renderer.rotateLeft()
         
         hideSheet()
     }

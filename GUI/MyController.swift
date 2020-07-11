@@ -565,6 +565,7 @@ extension MyController {
             // Blend in C64 screen
             if !renderer.drawC64texture {
                 renderer.blendIn()
+                renderer.oldBlendIn()
                 renderer.drawC64texture = true
             }
             
