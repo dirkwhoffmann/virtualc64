@@ -166,6 +166,9 @@ class Renderer: NSObject, MTKViewDelegate {
     var cutoutX2 = AnimatedFloat.init()
     var cutoutY2 = AnimatedFloat.init()
     
+    // Part of the texture that is currently visible
+    var textureRect = CGRect.init()
+    
     // Animation parameters (DEPRECATED)
     var currentXAngle = Float(0.0)
     var targetXAngle = Float(0.0)
@@ -188,10 +191,7 @@ class Renderer: NSObject, MTKViewDelegate {
     var currentAlpha = Float(0.0)
     var targetAlpha = Float(0.0)
     var deltaAlpha = Float(0.0)
-        
-    // Texture cut-out (normalized)
-    var textureRect = CGRect.init(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
- 
+         
     // Currently selected texture upscaler
     var upscaler = Defaults.upscaler {
         didSet {
@@ -222,7 +222,7 @@ class Renderer: NSObject, MTKViewDelegate {
         self.parent = controller
         super.init()
         
-        // textureRect = computeTextureRect()
+        textureRect = computeTextureRect()
         setupMetal()
         
         mtkView.delegate = self
@@ -270,6 +270,79 @@ class Renderer: NSObject, MTKViewDelegate {
                                 bytesPerImage: imageBytes)
     }
     
+    func computeTextureRect() -> CGRect {
+        
+        var rect: CGRect
+        
+        if parent.c64.vic.isPAL() {
+            
+            // PAL border will be 36 pixels wide and 34 pixels heigh
+            rect = CGRect.init(x: CGFloat(PAL_LEFT_BORDER_WIDTH - 36),
+                               y: CGFloat(PAL_UPPER_BORDER_HEIGHT - 34),
+                               width: CGFloat(PAL_CANVAS_WIDTH + 2 * 36),
+                               height: CGFloat(PAL_CANVAS_HEIGHT + 2 * 34))
+            
+        } else {
+            
+            // NTSC border will be 42 pixels wide and 9 pixels heigh
+            rect = CGRect.init(x: CGFloat(NTSC_LEFT_BORDER_WIDTH - 42),
+                               y: CGFloat(NTSC_UPPER_BORDER_HEIGHT - 9),
+                               width: CGFloat(NTSC_CANVAS_WIDTH + 2 * 42),
+                               height: CGFloat(NTSC_CANVAS_HEIGHT + 2 * 9))
+        }
+        
+        
+        /*
+         *       aw <--------- maxWidth --------> dw
+         *    ah |-----|---------------------|-----|
+         *     ^ |     bw                   cw     |
+         *     | -  bh *<----- width  ------>*     -
+         *     | |     ^                     ^     |
+         *     | |     |                     |     |
+         *     | |   height                height  |
+         *     | |     |                     |     |
+         *     | |     v                     v     |
+         *     | -  ch *<----- width  ------>*     -
+         *     v |                                 |
+         *    dh |-----|---------------------|-----|
+         *
+         *      aw/ah - dw/dh = largest posible texture cutout
+         *      bw/bh - cw/ch = currently used texture cutout
+         */
+        let aw = rect.minX
+        let dw = rect.maxX
+        let ah = rect.minY
+        let dh = rect.maxY
+        
+        let maxWidth = dw - aw
+        let maxHeight = dh - ah
+        
+        let hZoom = CGFloat(0.0)   // TODO: Use config.hZoom
+        let vZoom = CGFloat(0.0)   // TODO: Use config.vZoom
+        let hCenter = CGFloat(0.5) // TODO: Use config.hCenter
+        let vCenter = CGFloat(0.5) // TODO: Use config.vCenter
+        
+        let width = (1 - hZoom) * maxWidth
+        let bw = aw + hCenter * (maxWidth - width)
+        let height = (1 - vZoom) * maxHeight
+        let bh = ah + vCenter * (maxHeight - height)
+                
+        let texW = CGFloat(TextureSize.original.width)
+        let texH = CGFloat(TextureSize.original.height)
+        
+        return CGRect.init(x: bw / texW,
+                           y: bh / texH,
+                           width: width / texW,
+                           height: height / texH)
+    }
+    
+    func updateTextureRect() {
+        
+        textureRect = computeTextureRect()
+        buildVertexBuffer()
+    }
+    
+    /*
     public func updateScreenGeometry() {
     
         var rect: CGRect
@@ -307,6 +380,7 @@ class Renderer: NSObject, MTKViewDelegate {
         // Update texture coordinates in vertex buffer
         buildVertexBuffer()
     }
+    */
     
     /// Returns the compute kernel of the currently selected pixel upscaler
     func currentUpscaler() -> ComputeKernel {

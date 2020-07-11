@@ -636,7 +636,7 @@ extension MyController {
         case MSG_PAL,
              MSG_NTSC:
 
-            renderer.updateScreenGeometry()
+            renderer.updateTextureRect()
     
         case MSG_VC1541_ATTACHED:
             

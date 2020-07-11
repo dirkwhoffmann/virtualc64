@@ -56,72 +56,121 @@ class AnimatedFloat {
 }
 
 extension Renderer {
- 
+    
     func performAnimationStep() {
-
-         assert(animates != 0)
-
-         var cont: Bool
-
-         // Check for geometry animation
-         if (animates & AnimationType.geometry) != 0 {
-
-             angleX.move()
-             angleY.move()
-             angleZ.move()
-             cont = angleX.animates() || angleY.animates() || angleZ.animates()
-
-             shiftX.move()
-             shiftY.move()
-             shiftZ.move()
-             cont = cont || shiftX.animates() || shiftY.animates() || shiftZ.animates()
-
-             // Check if animation has terminated
-             if !cont {
-                 animates -= AnimationType.geometry
-                 angleX.set(0)
-                 angleY.set(0)
-                 angleZ.set(0)
-             }
-
-             buildMatrices3D()
-         }
-
-         // Check for alpha channel animation
-         if (animates & AnimationType.alpha) != 0 {
-
-             alpha.move()
-             noise.move()
-             cont = alpha.animates() || noise.animates()
-
-             // Check if animation has terminated
-             if !cont {
-                 animates -= AnimationType.alpha
-             }
-         }
-
-         // Check for texture animation
-         if (animates & AnimationType.texture) != 0 {
-
-             cutoutX1.move()
-             cutoutY1.move()
-             cutoutX2.move()
-             cutoutY2.move()
-             cont = cutoutX1.animates() || cutoutY1.animates() || cutoutX2.animates() || cutoutY2.animates()
-
-             // Update texture cutout
-             textureRect = CGRect.init(x: CGFloat(cutoutX1.current),
-                                       y: CGFloat(cutoutY1.current),
-                                       width: CGFloat(cutoutX2.current - cutoutX1.current),
-                                       height: CGFloat(cutoutY2.current - cutoutY1.current))
-             buildVertexBuffer()
-
-             // Check if animation has terminated
-             if !cont {
-                 animates -= AnimationType.texture
-             }
-         }
-     }
+        
+        assert(animates != 0)
+        
+        var cont: Bool
+        
+        // Check for geometry animation
+        if (animates & AnimationType.geometry) != 0 {
+            
+            angleX.move()
+            angleY.move()
+            angleZ.move()
+            cont = angleX.animates() || angleY.animates() || angleZ.animates()
+            
+            shiftX.move()
+            shiftY.move()
+            shiftZ.move()
+            cont = cont || shiftX.animates() || shiftY.animates() || shiftZ.animates()
+            
+            // Check if animation has terminated
+            if !cont {
+                animates -= AnimationType.geometry
+                angleX.set(0)
+                angleY.set(0)
+                angleZ.set(0)
+            }
+            
+            buildMatrices3D()
+        }
+        
+        // Check for alpha channel animation
+        if (animates & AnimationType.alpha) != 0 {
+            
+            alpha.move()
+            noise.move()
+            cont = alpha.animates() || noise.animates()
+            
+            // Check if animation has terminated
+            if !cont {
+                animates -= AnimationType.alpha
+            }
+        }
+        
+        // Check for texture animation
+        if (animates & AnimationType.texture) != 0 {
+            
+            cutoutX1.move()
+            cutoutY1.move()
+            cutoutX2.move()
+            cutoutY2.move()
+            cont = cutoutX1.animates() || cutoutY1.animates() || cutoutX2.animates() || cutoutY2.animates()
+            
+            // Update texture cutout
+            textureRect = CGRect.init(x: CGFloat(cutoutX1.current),
+                                      y: CGFloat(cutoutY1.current),
+                                      width: CGFloat(cutoutX2.current - cutoutX1.current),
+                                      height: CGFloat(cutoutY2.current - cutoutY1.current))
+            buildVertexBuffer()
+            
+            // Check if animation has terminated
+            if !cont {
+                animates -= AnimationType.texture
+            }
+        }
+    }
+    
+    //
+    // Texture animations
+    //
+    
+    func zoomTextureIn(steps: Int = 30) {
+        
+        track("Zooming texture in...")
+        
+        let targetRect = computeTextureRect()
+        
+        cutoutX1.target = Float(targetRect.minX)
+        cutoutY1.target = Float(targetRect.minY)
+        cutoutX2.target = Float(targetRect.maxX)
+        cutoutY2.target = Float(targetRect.maxY)
+        
+        cutoutX1.steps = steps
+        cutoutY1.steps = steps
+        cutoutX2.steps = steps
+        cutoutY2.steps = steps
+        
+        animates |= AnimationType.texture
+    }
+    
+    func zoomTextureOut(steps: Int = 30) {
+        
+        track("Zooming texture out...")
+        
+        cutoutX1.current = Float(textureRect.minX)
+        cutoutY1.current = Float(textureRect.minY)
+        cutoutX2.current = Float(textureRect.maxX)
+        cutoutY2.current = Float(textureRect.maxY)
+        
+        cutoutX1.target = 0.0
+        cutoutY1.target = 0.0
+        cutoutX2.target = 1.0
+        cutoutY2.target = 1.0
+        
+        cutoutX1.steps = steps
+        cutoutY1.steps = steps
+        cutoutX2.steps = steps
+        cutoutY2.steps = steps
+        
+        animates |= AnimationType.texture
+    }
+    
+    
+    
+    
     
     //! Returns true iff an animation is in progress
     func animatesDeprecated() -> Bool {
