@@ -48,7 +48,7 @@ extension UserDefaults {
 // User defaults (all)
 //
 
-extension MyController {
+extension UserDefaults {
     
     static func registerUserDefaults() {
         
@@ -63,22 +63,21 @@ extension MyController {
         registerHardwareUserDefaults()
     }
     
-    func resetUserDefaults() {
+    static func resetUserDefaults() {
         
         track()
-        
-        c64.suspend()
-        
+                
         resetGeneralUserDefaults()
         resetRomUserDefaults()
         resetKeyMapUserDefaults()
         resetDevicesUserDefaults()
         resetVideoUserDefaults()
         resetEmulatorUserDefaults()
-        resetHardwareUserDefaults()
-        
-        c64.resume()
+        resetHardwareUserDefaults()        
     }
+}
+
+extension MyController {
     
     func loadUserDefaults() {
         
@@ -156,7 +155,7 @@ struct Defaults {
     static let inputDevice2 = -1
 }
 
-extension MyController {
+extension UserDefaults {
 
     static func registerGeneralUserDefaults() {
         
@@ -170,7 +169,7 @@ extension MyController {
         defaults.register(defaults: dictionary)
     }
     
-    func resetGeneralUserDefaults() {
+    static func resetGeneralUserDefaults() {
         
         let defaults = UserDefaults.standard
 
@@ -181,10 +180,11 @@ extension MyController {
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }
-        
-        loadGeneralUserDefaults()
     }
-    
+}
+
+extension MyController {
+        
     func loadGeneralUserDefaults() {
         
         let defaults = UserDefaults.standard
@@ -229,7 +229,7 @@ extension Defaults {
     static let vc1541Rom = URL(fileURLWithPath: "/")
 }
 
-extension MyController {
+extension UserDefaults {
     
     static func registerRomUserDefaults() {
         
@@ -245,7 +245,7 @@ extension MyController {
         defaults.register(defaults: dictionary)
     }
 
-    func resetRomUserDefaults() {
+    static func resetRomUserDefaults() {
         
         let defaults = UserDefaults.standard
         
@@ -256,9 +256,10 @@ extension MyController {
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }
-        
-        loadRomUserDefaults()
     }
+}
+
+extension MyController {
     
     func loadRomUserDefaults() {
         
@@ -299,7 +300,7 @@ extension Defaults {
     static let mapKeysByPosition = false
 }
 
-extension MyController {
+extension UserDefaults {
     
     static func registerKeyMapUserDefaults() {
         
@@ -313,7 +314,7 @@ extension MyController {
         defaults.register(encodableItem: Defaults.keyMap, forKey: Keys.keyMap)
     }
     
-    func resetKeyMapUserDefaults() {
+    static func resetKeyMapUserDefaults() {
         
         let defaults = UserDefaults.standard
         
@@ -322,10 +323,11 @@ extension MyController {
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }
-        
-        loadKeyMapUserDefaults()
     }
-    
+}
+
+extension MyController {
+        
     func loadKeyMapUserDefaults() {
         
         let defaults = UserDefaults.standard
@@ -386,7 +388,7 @@ extension Defaults {
     ]
 }
     
-extension MyController {
+extension UserDefaults {
     
     static func registerDevicesUserDefaults() {
         
@@ -404,7 +406,7 @@ extension MyController {
         defaults.register(encodableItem: Defaults.joyKeyMap2, forKey: Keys.joyKeyMap2)
     }
 
-    func resetDevicesUserDefaults() {
+    static func resetDevicesUserDefaults() {
         
         let defaults = UserDefaults.standard
         
@@ -419,9 +421,10 @@ extension MyController {
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }
-        
-        loadDevicesUserDefaults()
     }
+}
+ 
+extension MyController {
     
     func loadDevicesUserDefaults() {
         
@@ -497,7 +500,7 @@ extension Defaults {
     static let shaderOptions = ShaderDefaultsTFT
 }
 
-extension MyController {
+extension UserDefaults {
     
     static func registerVideoUserDefaults() {
         
@@ -519,8 +522,11 @@ extension MyController {
         defaults.register(defaults: dictionary)
         defaults.register(encodableItem: Defaults.shaderOptions, forKey: Keys.shaderOptions)
     }
+}
+
+extension UserDefaults {
     
-    func resetVideoUserDefaults() {
+    static func resetVideoUserDefaults() {
         
         let defaults = UserDefaults.standard
         
@@ -539,10 +545,11 @@ extension MyController {
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }
-        
-        loadVideoUserDefaults()
     }
-    
+}
+
+extension MyController {
+        
     func loadVideoUserDefaults() {
         
         let defaults = UserDefaults.standard
@@ -654,7 +661,7 @@ extension Defaults {
                                         "CRT": "" ]
 }
 
-extension MyController {
+extension UserDefaults {
     
     static func registerEmulatorUserDefaults() {
         
@@ -683,7 +690,7 @@ extension MyController {
         defaults.register(encodableItem: Defaults.autoTypeText, forKey: Keys.autoTypeText)
     }
 
-    func resetEmulatorUserDefaults() {
+    static func resetEmulatorUserDefaults() {
         
         let defaults = UserDefaults.standard
         
@@ -706,10 +713,11 @@ extension MyController {
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }
-        
-        loadEmulatorUserDefaults()
     }
-    
+}
+
+extension MyController {
+        
     func loadEmulatorUserDefaults() {
         
         let defaults = UserDefaults.standard
@@ -807,7 +815,7 @@ extension Defaults {
     static let initPattern    = INIT_PATTERN_C64
 }
 
-extension MyController {
+extension UserDefaults {
     
     static func registerHardwareUserDefaults() {
         
@@ -832,7 +840,7 @@ extension MyController {
         defaults.register(defaults: dictionary)
     }
     
-    func resetHardwareUserDefaults() {
+    static func resetHardwareUserDefaults() {
         
         let defaults = UserDefaults.standard
         
@@ -852,9 +860,10 @@ extension MyController {
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }
-        
-        loadHardwareUserDefaults()
     }
+}
+
+extension MyController {
     
     func loadHardwareUserDefaults() {
         

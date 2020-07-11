@@ -245,7 +245,7 @@ extension MyController: NSMenuItemValidation {
     @IBAction func factorySettingsAction(_ sender: Any!) {
         
         track()
-        resetUserDefaults()
+        UserDefaults.resetUserDefaults()
     }
     
     //

@@ -198,7 +198,7 @@ extension PreferencesController {
     
     @IBAction func devFactorySettingsAction(_ sender: Any!) {
         
-        myController?.resetDevicesUserDefaults()
+        UserDefaults.resetDevicesUserDefaults()
         refresh()
     }
 }

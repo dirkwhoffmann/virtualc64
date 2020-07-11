@@ -106,7 +106,7 @@ extension PreferencesController {
     
     @IBAction func mapFactorySettingsAction(_ sender: Any!) {
         
-        myController?.resetKeyMapUserDefaults()
+        UserDefaults.resetKeyMapUserDefaults()
         refresh()
     }
 }

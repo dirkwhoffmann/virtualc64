@@ -360,14 +360,14 @@ extension PreferencesController {
     
     func vidFactorySettingsAction() {
         
-        myController?.resetVideoUserDefaults()
+        UserDefaults.resetVideoUserDefaults()
         updatePalettePreviewImages()
         refresh()
     }
     
     @IBAction func vidFactorySettingsActionTFT(_ sender: Any!) {
 
-        myController?.resetVideoUserDefaults()
+        UserDefaults.resetVideoUserDefaults()
         myController?.renderer.shaderOptions = ShaderDefaultsTFT
         updatePalettePreviewImages()
         refresh()
@@ -375,7 +375,7 @@ extension PreferencesController {
     
     @IBAction func vidFactorySettingsActionCRT(_ sender: Any!) {
         
-        myController?.resetVideoUserDefaults()
+        UserDefaults.resetVideoUserDefaults()
         myController?.renderer.shaderOptions = ShaderDefaultsCRT
         myController?.renderer.buildDotMasks()
         updatePalettePreviewImages()

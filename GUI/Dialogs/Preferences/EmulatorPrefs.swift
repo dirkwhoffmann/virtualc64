@@ -137,7 +137,7 @@ extension PreferencesController {
     
     @IBAction func emuFactorySettingsAction(_ sender: Any!) {
         
-        myController?.resetEmulatorUserDefaults()
+        UserDefaults.resetEmulatorUserDefaults()
         refresh()
     }
     
