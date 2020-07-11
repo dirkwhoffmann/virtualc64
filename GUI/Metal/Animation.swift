@@ -214,6 +214,7 @@ extension Renderer {
     //                                Matrix utilities
     // -------------------------------------------------------------------------
     
+    /*
     func matrix_from_perspective(fovY: Float,
                                  aspect: Float,
                                  nearZ: Float,
@@ -224,7 +225,7 @@ extension Renderer {
         let xscale = yscale / aspect
         let q = farZ / (farZ - nearZ)
     
-        // Alternative: Adjust to window size */
+        // Alternative: Adjust to window size
         // float yscale = 1.0f / tanf(fovY * 0.5f);
         // float xscale = 0.75 * yscale;
         // float q = farZ / (farZ - nearZ);
@@ -278,5 +279,5 @@ extension Renderer {
                                    1.0)
         return m
     }
-    
+    */
 }

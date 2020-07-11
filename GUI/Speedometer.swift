@@ -7,16 +7,6 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-/*
-extension Double {
-    
-    func truncate(digits: Int) -> Double {
-        let factor = Double(truncating: pow(10, digits) as NSNumber)
-        return (self * factor).rounded() / factor
-    }
-}
-*/
-
 class Speedometer: NSObject {
     
     // Current emulation speed in MHz
@@ -49,18 +39,6 @@ class Speedometer: NSObject {
         return (value * factor).rounded() / factor
     }
 
-    /*
-    func mhz(digits: Int) -> Double {
-        let factor = Double(truncating: pow(10, digits) as NSNumber)
-        return round(factor * mhz) / factor
-    }
-    
-    func fps(digits: Int) -> Double {
-        let factor = Double(truncating: pow(10, digits) as NSNumber)
-        return round(factor * fps) / factor
-    }
-    */
-    
     // Updates speed, frame and jitter information. This function needs to be
     // invoked periodically to get meaningful results.
     //    - cycles  Elapsed CPU cycles since power up
@@ -80,11 +58,7 @@ class Speedometer: NSObject {
             
             // Measure frames per second
             let elapsedFrames = Double(frame - latchedFrame)
-            _fps = alpha * (elapsedFrames / elapsedTime) + (1 - alpha) * _fps
-            
-            // Assign zero if values are completely out of range
-            // mhz = (mhz >= 0.0 && mhz <= 100.0) ? mhz : 0.0
-            // fps = (fps >= 0.0 && fps <= 200.0) ? fps : 0.
+            _fps = alpha * (elapsedFrames / elapsedTime) + (1 - alpha) * _fps            
         }
         
         // Keep values
