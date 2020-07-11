@@ -11,13 +11,6 @@ import Metal
 import MetalKit
 import MetalPerformanceShaders
 
-/*
-struct C64Texture {
-    static let orig = NSSize.init(width: 512, height: 512)
-    static let upscaled = NSSize.init(width: 2048, height: 2048)
-}
-*/
-
 class Renderer: NSObject, MTKViewDelegate {
     
     let mtkView: MTKView
@@ -169,29 +162,6 @@ class Renderer: NSObject, MTKViewDelegate {
     // Part of the texture that is currently visible
     var textureRect = CGRect.init()
     
-    // Animation parameters (DEPRECATED)
-    var currentXAngle = Float(0.0)
-    var targetXAngle = Float(0.0)
-    var deltaXAngle = Float(0.0)
-    var currentYAngle = Float(0.0)
-    var targetYAngle = Float(0.0)
-    var deltaYAngle = Float(0.0)
-    var currentZAngle = Float(0.0)
-    var targetZAngle = Float(0.0)
-    var deltaZAngle = Float(0.0)
-    var currentEyeX = Defaults.eyeX
-    var targetEyeX = Defaults.eyeX
-    var deltaEyeX = Float(0.0)
-    var currentEyeY = Defaults.eyeY
-    var targetEyeY = Defaults.eyeY
-    var deltaEyeY = Float(0.0)
-    var currentEyeZ = Defaults.eyeZ
-    var targetEyeZ = Defaults.eyeZ
-    var deltaEyeZ = Float(0.0)
-    var currentAlpha = Float(0.0)
-    var targetAlpha = Float(0.0)
-    var deltaAlpha = Float(0.0)
-         
     // Currently selected texture upscaler
     var upscaler = Defaults.upscaler {
         didSet {
@@ -291,7 +261,6 @@ class Renderer: NSObject, MTKViewDelegate {
                                height: CGFloat(NTSC_CANVAS_HEIGHT + 2 * 9))
         }
         
-        
         /*
          *       aw <--------- maxWidth --------> dw
          *    ah |-----|---------------------|-----|
@@ -341,47 +310,7 @@ class Renderer: NSObject, MTKViewDelegate {
         textureRect = computeTextureRect()
         buildVertexBuffer()
     }
-    
-    /*
-    public func updateScreenGeometry() {
-    
-        var rect: CGRect
         
-        if parent.c64.vic.isPAL() {
-    
-            // PAL border will be 36 pixels wide and 34 pixels heigh
-            rect = CGRect.init(x: CGFloat(PAL_LEFT_BORDER_WIDTH - 36),
-                                      y: CGFloat(PAL_UPPER_BORDER_HEIGHT - 34),
-                                      width: CGFloat(PAL_CANVAS_WIDTH + 2 * 36),
-                                      height: CGFloat(PAL_CANVAS_HEIGHT + 2 * 34))
-            
-        } else {
-    
-            // NTSC border will be 42 pixels wide and 9 pixels heigh
-            rect = CGRect.init(x: CGFloat(NTSC_LEFT_BORDER_WIDTH - 42),
-                                      y: CGFloat(NTSC_UPPER_BORDER_HEIGHT - 9),
-                                      width: CGFloat(NTSC_CANVAS_WIDTH + 2 * 42),
-                                      height: CGFloat(NTSC_CANVAS_HEIGHT + 2 * 9))
-        }
-        
-        let texW = CGFloat(TextureSize.original.width)
-        let texH = CGFloat(TextureSize.original.height)
-        textureRect = CGRect.init(x: rect.minX / texW,
-                                  y: rect.minY / texH,
-                                  width: rect.width / texW,
-                                  height: rect.height / texH)
-        
-        // Enable this for debugging (will display the whole texture)
-        // textureXStart = 0.0;
-        // textureXEnd = 1.0;
-        // textureYStart = 0.0;
-        // textureYEnd = 1.0;
-    
-        // Update texture coordinates in vertex buffer
-        buildVertexBuffer()
-    }
-    */
-    
     /// Returns the compute kernel of the currently selected pixel upscaler
     func currentUpscaler() -> ComputeKernel {
     
@@ -515,17 +444,15 @@ class Renderer: NSObject, MTKViewDelegate {
     
     func drawScene3D() {
     
+        let paused = parent.c64.isPaused()
         let poweredOff = parent.c64.isPoweredOff()
-
-        let animates = self.animatesDeprecated()
         let renderBackground = poweredOff || fullscreen
-        // let drawBackground = !fullscreen && (animates || !drawC64texture)
-        
-        if animates {
-            updateAngles()
-            buildMatrices3D()
-        }
+        // let renderForeground = alpha.current > 0.0
+        let renderForeground = !poweredOff && alpha.current > 0.0
 
+        // Perform a single animation step
+        if animates != 0 { performAnimationStep() }
+        
         startFrame()
         
         // Render background
@@ -554,15 +481,14 @@ class Renderer: NSObject, MTKViewDelegate {
             bgRect!.drawPrimitives(commandEncoder)
         }
         
-        // Render cube
-        if drawC64texture && !poweredOff {
+        if renderForeground {
             
             // Configure vertex shader
             commandEncoder.setVertexBytes(&vertexUniforms3D,
                                           length: MemoryLayout<VertexUniforms>.stride,
                                           index: 1)
             // Configure fragment shader
-            fragmentUniforms.alpha = parent.c64.isRunning() ? currentAlpha : 0.5
+            fragmentUniforms.alpha = paused ? 0.5 : alpha.current
             commandEncoder.setFragmentTexture(scanlineTexture, index: 0)
             commandEncoder.setFragmentTexture(bloomTextureR, index: 1)
             commandEncoder.setFragmentTexture(bloomTextureG, index: 2)
@@ -572,7 +498,7 @@ class Renderer: NSObject, MTKViewDelegate {
                                             index: 1)
             
             // Draw (part of) cube
-              quad3D!.draw(commandEncoder, allSides: animates)
+            quad3D!.draw(commandEncoder, allSides: animates != 0)
         }
                 
         endFrame()

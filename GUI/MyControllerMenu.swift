@@ -367,7 +367,6 @@ extension MyController: NSMenuItemValidation {
         track()
 
         renderer.rotateLeft()
-        renderer.oldRotateBack()
         c64.reset()
         c64.run()
     }

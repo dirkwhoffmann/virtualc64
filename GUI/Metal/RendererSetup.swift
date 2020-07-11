@@ -16,9 +16,9 @@ struct TextureSize {
 }
 
 extension Renderer {
-
+    
     func setupMetal() {
-
+        
         track()
         
         buildMetal()
@@ -33,9 +33,9 @@ extension Renderer {
     }
     
     internal func buildMetal() {
-    
+        
         track()
-                
+        
         // Metal layer
         metalLayer = mtkView.layer as? CAMetalLayer
         assert(metalLayer != nil, "Metal layer must not be nil")
@@ -44,18 +44,18 @@ extension Renderer {
         metalLayer.pixelFormat = MTLPixelFormat.bgra8Unorm
         metalLayer.framebufferOnly = true
         metalLayer.frame = metalLayer.frame
-    
+        
         // Command queue
         queue = device.makeCommandQueue()
         assert(queue != nil, "Metal command queue must not be nil")
-    
+        
         // Shader library
         library = device.makeDefaultLibrary()
         assert(library != nil, "Metal library must not be nil")
     }
     
     internal func buildTextures() {
-
+        
         track()
         
         // Texture usages
@@ -66,7 +66,7 @@ extension Renderer {
         // Background texture used in window mode
         bgTexture = device.makeTexture(w: 512, h: 512)
         assert(bgTexture != nil, "Failed to create bgTexture")
-                
+        
         // Emulator texture (long frames)
         emulatorTexture = device.makeTexture(size: TextureSize.original, usage: r)
         assert(emulatorTexture != nil, "Failed to create emulatorTexture")
@@ -78,7 +78,7 @@ extension Renderer {
         assert(bloomTextureR != nil, "Failed to create bloomTextureR")
         assert(bloomTextureG != nil, "Failed to create bloomTextureG")
         assert(bloomTextureB != nil, "Failed to create bloomTextureB")
-
+        
         // Upscaled texture
         upscaledTexture = device.makeTexture(size: TextureSize.upscaled, usage: rwtp)
         scanlineTexture = device.makeTexture(size: TextureSize.upscaled, usage: rwtp)
@@ -87,12 +87,12 @@ extension Renderer {
     }
     
     internal func buildSamplers() {
-
+        
         let descriptor = MTLSamplerDescriptor()
         descriptor.sAddressMode = MTLSamplerAddressMode.clampToEdge
         descriptor.tAddressMode = MTLSamplerAddressMode.clampToEdge
         descriptor.mipFilter = MTLSamplerMipFilter.notMipmapped
-
+        
         // Nearest neighbor sampler
         descriptor.minFilter = MTLSamplerMinMagFilter.linear
         descriptor.magFilter = MTLSamplerMinMagFilter.linear
@@ -117,7 +117,7 @@ extension Renderer {
         bloomFilterGallery[0] = BypassFilter.init(device: device, library: library)
         bloomFilterGallery[1] = SplitFilter.init(device: device, library: library)
         bloomFilterGallery[2] = SplitFilter.init(device: device, library: library)
-
+        
         // Build scanline filters
         scanlineFilterGallery[0] = BypassFilter.init(device: device, library: library)
         scanlineFilterGallery[1] = SimpleScanlines(device: device, library: library)
@@ -137,14 +137,14 @@ extension Renderer {
         let M = UInt32.init(r: max, g: base, b: max)
         let W = UInt32.init(r: max, g: max, b: max)
         let N = UInt32.init(r: none, g: none, b: none)
-
+        
         let maskSize = [
             CGSize.init(width: 1, height: 1),
             CGSize.init(width: 3, height: 1),
             CGSize.init(width: 4, height: 1),
             CGSize.init(width: 3, height: 9),
             CGSize.init(width: 4, height: 8)
-            ]
+        ]
         
         let maskData = [
             
@@ -194,7 +194,7 @@ extension Renderer {
     }
     
     func buildPipeline() {
-
+        
         track()
         precondition(library != nil)
         
@@ -203,7 +203,7 @@ extension Renderer {
         let fragmentFunc = library.makeFunction(name: "fragment_main")
         assert(vertexFunc != nil)
         assert(fragmentFunc != nil)
-
+        
         // Create depth stencil state
         let stencilDescriptor = MTLDepthStencilDescriptor.init()
         stencilDescriptor.depthCompareFunction = MTLCompareFunction.less
@@ -217,17 +217,17 @@ extension Renderer {
         vertexDescriptor.attributes[0].format = MTLVertexFormat.float4
         vertexDescriptor.attributes[0].offset = 0
         vertexDescriptor.attributes[0].bufferIndex = 0
-    
+        
         // Texture coordinates
         vertexDescriptor.attributes[1].format = MTLVertexFormat.half2
         vertexDescriptor.attributes[1].offset = 16
         vertexDescriptor.attributes[1].bufferIndex = 1
-    
+        
         // Single interleaved buffer
         vertexDescriptor.layouts[0].stride = 24
         vertexDescriptor.layouts[0].stepRate = 1
         vertexDescriptor.layouts[0].stepFunction = MTLVertexStepFunction.perVertex
-    
+        
         // Render pipeline
         let pipelineDescriptor = MTLRenderPipelineDescriptor.init()
         pipelineDescriptor.label = "VirtualC64 Metal pipeline"
@@ -274,15 +274,15 @@ extension Renderer {
         let view   = matrix_identity_float4x4
         let aspect = Float(size.width) / Float(size.height)
         let proj   = Renderer.perspectiveMatrix(fovY: (Float(65.0 * (.pi / 180.0))),
-                                             aspect: aspect,
-                                             nearZ: 0.1,
-                                             farZ: 100.0)
+                                                aspect: aspect,
+                                                nearZ: 0.1,
+                                                farZ: 100.0)
         
         vertexUniformsBg.mvp = proj * view * model
     }
     
     func buildMatrices2D() {
-    
+        
         let model = matrix_identity_float4x4
         let view  = matrix_identity_float4x4
         let proj  = matrix_identity_float4x4
@@ -291,34 +291,42 @@ extension Renderer {
     }
     
     func buildMatrices3D() {
-    
-        var model  = Renderer.translationMatrix(x: -currentEyeX,
-                                             y: -currentEyeY,
-                                             z: currentEyeZ + 1.39)
-        let view   = matrix_identity_float4x4
+        
+        let xAngle = -angleX.current / 180.0 * .pi
+        let yAngle = angleY.current / 180.0 * .pi
+        let zAngle = angleZ.current / 180.0 * .pi
+        
+        let xShift = -shiftX.current
+        let yShift = -shiftY.current
+        let zShift = shiftZ.current
+        
         let aspect = Float(size.width) / Float(size.height)
-        let proj   = Renderer.perspectiveMatrix(fovY: (Float(65.0 * (.pi / 180.0))),
-                                             aspect: aspect,
-                                             nearZ: 0.1,
-                                             farZ: 100.0)
-    
-        if animatesDeprecated() {
-            let xAngle: Float = -(currentXAngle / 180.0) * .pi
-            let yAngle: Float =  (currentYAngle / 180.0) * .pi
-            let zAngle: Float =  (currentZAngle / 180.0) * .pi
-    
-            model = model *
-                Renderer.rotationMatrix(radians: xAngle, x: 0.5, y: 0.0, z: 0.0) *
-                Renderer.rotationMatrix(radians: yAngle, x: 0.0, y: 0.5, z: 0.0) *
-                Renderer.rotationMatrix(radians: zAngle, x: 0.0, y: 0.0, z: 0.5)
-        }
+        
+        let view = matrix_identity_float4x4
+        let proj = Renderer.perspectiveMatrix(fovY: Float(65.0 * (.pi / 180.0)),
+                                              aspect: aspect,
+                                              nearZ: 0.1,
+                                              farZ: 100.0)
+        
+        let transEye = Renderer.translationMatrix(x: xShift,
+                                                  y: yShift,
+                                                  z: zShift + 1.393 - 0.16)
+        
+        let transRotX = Renderer.translationMatrix(x: 0.0,
+                                                   y: 0.0,
+                                                   z: 0.16)
+        
+        let rotX = Renderer.rotationMatrix(radians: xAngle, x: 0.5, y: 0.0, z: 0.0)
+        let rotY = Renderer.rotationMatrix(radians: yAngle, x: 0.0, y: 0.5, z: 0.0)
+        let rotZ = Renderer.rotationMatrix(radians: zAngle, x: 0.0, y: 0.0, z: 0.5)
+        
+        // Chain all transformations
+        let model = transEye * rotX * transRotX * rotY * rotZ
         
         vertexUniforms3D.mvp = proj * view * model
     }
-
+    
     func buildDepthBuffer() {
-        
-        // track("buildDepthBuffer")
         
         let width = Int(size.width)
         let height = Int(size.height)

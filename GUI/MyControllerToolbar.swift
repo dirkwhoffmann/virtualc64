@@ -152,7 +152,6 @@ extension MyController {
             track("Rewind")
             if c64.restoreLatestAutoSnapshot() {
                 renderer.snapToFront()
-                renderer.oldSnapToFront()
             }
         
         case 1: // Take
@@ -165,7 +164,6 @@ extension MyController {
             track("Restore")
             if c64.restoreLatestUserSnapshot() {
                 renderer.snapToFront()
-                renderer.oldSnapToFront()
             } else {
                 NSSound.beep()
             }
@@ -204,7 +202,6 @@ extension MyController {
         if c64.restoreLatestAutoSnapshot() {
             c64.deleteAutoSnapshot(0)
             renderer.snapToFront()
-            renderer.oldSnapToFront()
         }
     }
 
@@ -212,7 +209,6 @@ extension MyController {
         
         if c64.restoreLatestUserSnapshot() {
             renderer.snapToFront()
-            renderer.oldSnapToFront()
         }
     }
     

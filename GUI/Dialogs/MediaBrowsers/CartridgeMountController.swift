@@ -59,7 +59,6 @@ class CartridgeMountController: DialogController {
         
         // Attach cartridge
         proxy?.expansionport.attachCartridgeAndReset(cartridge)
-        myController?.renderer.oldRotateBack()
         myController?.renderer.rotateLeft()
 
         hideSheet()

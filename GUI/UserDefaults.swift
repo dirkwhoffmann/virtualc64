@@ -558,9 +558,11 @@ extension MyController {
         c64.vic.setSaturation(defaults.double(forKey: VC64Keys.saturation))
 
         renderer.keepAspectRatio = defaults.bool(forKey: VC64Keys.keepAspectRatio)
+        /*
         renderer.setEyeX(defaults.float(forKey: VC64Keys.eyeX))
         renderer.setEyeY(defaults.float(forKey: VC64Keys.eyeY))
         renderer.setEyeZ(defaults.float(forKey: VC64Keys.eyeZ))
+        */
         
         defaults.decode(&renderer.shaderOptions, forKey: VC64Keys.shaderOptions)
         renderer.buildDotMasks()
@@ -579,10 +581,11 @@ extension MyController {
         defaults.set(c64.vic.saturation(), forKey: VC64Keys.saturation)
         
         defaults.set(renderer.keepAspectRatio, forKey: VC64Keys.keepAspectRatio)
+        /*
         defaults.set(renderer.eyeX(), forKey: VC64Keys.eyeX)
         defaults.set(renderer.eyeY(), forKey: VC64Keys.eyeY)
         defaults.set(renderer.eyeZ(), forKey: VC64Keys.eyeZ)
-  
+        */
         defaults.encode(renderer.shaderOptions, forKey: VC64Keys.shaderOptions)
     }
 }

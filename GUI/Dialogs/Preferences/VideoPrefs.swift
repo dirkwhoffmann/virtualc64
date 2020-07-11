@@ -77,9 +77,9 @@ extension PreferencesController {
 
         // Geometry
         vidAspectRatioButton.state = renderer.keepAspectRatio ? .on : .off
-        vidEyeXSlider.floatValue = renderer.eyeX()
-        vidEyeYSlider.floatValue = renderer.eyeY()
-        vidEyeZSlider.floatValue = renderer.eyeZ()
+        vidEyeXSlider.floatValue = renderer.shiftX.current
+        vidEyeYSlider.floatValue = renderer.shiftY.current
+        vidEyeZSlider.floatValue = renderer.shiftZ.current
         
         vidOkButton.title = c64.isReady() ? "OK" : "Quit"
     }
@@ -325,27 +325,33 @@ extension PreferencesController {
     
     @IBAction func vidEyeXAction(_ sender: NSSlider!) {
         
+        /*
         if let renderer = myController?.renderer {
             renderer.setEyeX(sender.floatValue)
             refresh()
             
         }
+        */
     }
     
     @IBAction func vidEyeYAction(_ sender: NSSlider!) {
         
+        /*
         if let renderer = myController?.renderer {
             renderer.setEyeY(sender.floatValue)
             refresh()
         }
+        */
     }
     
     @IBAction func vidEyeZAction(_ sender: NSSlider!) {
         
+        /*
         if let renderer = myController?.renderer {
             renderer.setEyeZ(sender.floatValue)
             refresh()
         }
+        */
     }
     
     //
