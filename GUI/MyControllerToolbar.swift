@@ -49,8 +49,8 @@ extension MyController {
             c64.mouse.disconnect()
         }
         
-        UserDefaults.standard.set(inputDevice1, forKey: VC64Keys.inputDevice1)
-        UserDefaults.standard.set(inputDevice2, forKey: VC64Keys.inputDevice2)
+        UserDefaults.standard.set(inputDevice1, forKey: Keys.inputDevice1)
+        UserDefaults.standard.set(inputDevice2, forKey: Keys.inputDevice2)
         
         toolbar.validateVisibleItems()
     }
@@ -76,8 +76,8 @@ extension MyController {
             c64.mouse.disconnect()
         }
         
-        UserDefaults.standard.set(inputDevice1, forKey: VC64Keys.inputDevice1)
-        UserDefaults.standard.set(inputDevice2, forKey: VC64Keys.inputDevice2)
+        UserDefaults.standard.set(inputDevice1, forKey: Keys.inputDevice1)
+        UserDefaults.standard.set(inputDevice2, forKey: Keys.inputDevice2)
 
         toolbar.validateVisibleItems()
     }

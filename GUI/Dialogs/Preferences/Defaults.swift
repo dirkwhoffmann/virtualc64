@@ -13,7 +13,7 @@
 
 extension UserDefaults {
     
-    /// Registers an item of generic type 'Encodable'
+    // Registers an item of generic type 'Encodable'
     func register<T: Encodable>(encodableItem item: T, forKey key: String) {
         
         if let data = try? PropertyListEncoder().encode(item) {
@@ -21,23 +21,21 @@ extension UserDefaults {
         }
     }
 
-    /// Encodes an item of generic type 'Encodable'
+    // Encodes an item of generic type 'Encodable'
     func encode<T: Encodable>(_ item: T, forKey key: String) {
         
         if let encoded = try? PropertyListEncoder().encode(item) {
-            track("Encoded \(key) successfully")
             set(encoded, forKey: key)
         } else {
             track("Failed to encode \(key)")
         }
     }
     
-    /// Encodes an item of generic type 'Decodable'
+    // Encodes an item of generic type 'Decodable'
     func decode<T: Decodable>(_ item: inout T, forKey key: String) {
         
         if let data = data(forKey: key) {
             if let decoded = try? PropertyListDecoder().decode(T.self, from: data) {
-                track("Decoded \(key) successfully")
                 item = decoded
             } else {
                 track("Failed to decode \(key)")
@@ -144,7 +142,7 @@ extension MyController {
 // User defaults (general)
 //
 
-struct VC64Keys {
+struct Keys {
     
     // Control ports
     static let inputDevice1      = "VC64InputDevice1"
@@ -164,8 +162,8 @@ extension MyController {
         
         let dictionary: [String: Any] = [
             
-            VC64Keys.inputDevice1: Defaults.inputDevice1,
-            VC64Keys.inputDevice2: Defaults.inputDevice2
+            Keys.inputDevice1: Defaults.inputDevice1,
+            Keys.inputDevice2: Defaults.inputDevice2
         ]
         
         let defaults = UserDefaults.standard
@@ -176,10 +174,10 @@ extension MyController {
         
         let defaults = UserDefaults.standard
 
-        let keys = [ VC64Keys.inputDevice1,
-                     VC64Keys.inputDevice2,
+        let keys = [ Keys.inputDevice1,
+                     Keys.inputDevice2,
                      
-                     VC64Keys.mapKeysByPosition
+                     Keys.mapKeysByPosition
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }
@@ -193,8 +191,8 @@ extension MyController {
         
         c64.suspend()
         
-        setPort1(defaults.integer(forKey: VC64Keys.inputDevice1))
-        setPort2(defaults.integer(forKey: VC64Keys.inputDevice2))
+        setPort1(defaults.integer(forKey: Keys.inputDevice1))
+        setPort2(defaults.integer(forKey: Keys.inputDevice2))
         
         // inputDevice1 = defaults.integer(forKey: VC64Keys.inputDevice1)
         // inputDevice2 = defaults.integer(forKey: VC64Keys.inputDevice2)
@@ -206,8 +204,8 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         
-        defaults.set(inputDevice1, forKey: VC64Keys.inputDevice1)
-        defaults.set(inputDevice2, forKey: VC64Keys.inputDevice2)
+        defaults.set(inputDevice1, forKey: Keys.inputDevice1)
+        defaults.set(inputDevice2, forKey: Keys.inputDevice2)
     }
 }
 
@@ -215,7 +213,7 @@ extension MyController {
 // User defaults (Roms)
 //
 
-extension VC64Keys {
+extension Keys {
     
     static let basicRom          = "VC64BasicRomFileKey"
     static let charRom           = "VC64CharRomFileKey"
@@ -237,10 +235,10 @@ extension MyController {
         
         let dictionary: [String: Any] = [
             
-            VC64Keys.basicRom: Defaults.basicRom,
-            VC64Keys.charRom: Defaults.charRom,
-            VC64Keys.kernalRom: Defaults.kernalRom,
-            VC64Keys.vc1541Rom: Defaults.vc1541Rom
+            Keys.basicRom: Defaults.basicRom,
+            Keys.charRom: Defaults.charRom,
+            Keys.kernalRom: Defaults.kernalRom,
+            Keys.vc1541Rom: Defaults.vc1541Rom
         ]
         
         let defaults = UserDefaults.standard
@@ -251,10 +249,10 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         
-        let keys = [ VC64Keys.basicRom,
-                     VC64Keys.charRom,
-                     VC64Keys.kernalRom,
-                     VC64Keys.vc1541Rom
+        let keys = [ Keys.basicRom,
+                     Keys.charRom,
+                     Keys.kernalRom,
+                     Keys.vc1541Rom
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }
@@ -268,10 +266,10 @@ extension MyController {
 
         c64.suspend()
         
-        loadRom(defaults.url(forKey: VC64Keys.basicRom))
-        loadRom(defaults.url(forKey: VC64Keys.charRom))
-        loadRom(defaults.url(forKey: VC64Keys.kernalRom))
-        loadRom(defaults.url(forKey: VC64Keys.vc1541Rom))
+        loadRom(defaults.url(forKey: Keys.basicRom))
+        loadRom(defaults.url(forKey: Keys.charRom))
+        loadRom(defaults.url(forKey: Keys.kernalRom))
+        loadRom(defaults.url(forKey: Keys.vc1541Rom))
         
         c64.resume()
     }
@@ -280,10 +278,10 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         
-        defaults.set(basicRomURL, forKey: VC64Keys.basicRom)
-        defaults.set(charRomURL, forKey: VC64Keys.charRom)
-        defaults.set(kernalRomURL, forKey: VC64Keys.kernalRom)
-        defaults.set(vc1541RomURL, forKey: VC64Keys.vc1541Rom)
+        defaults.set(basicRomURL, forKey: Keys.basicRom)
+        defaults.set(charRomURL, forKey: Keys.charRom)
+        defaults.set(kernalRomURL, forKey: Keys.kernalRom)
+        defaults.set(vc1541RomURL, forKey: Keys.vc1541Rom)
     }
 }
 
@@ -291,7 +289,7 @@ extension MyController {
 // User defaults (Keymap)
 //
 
-extension VC64Keys {
+extension Keys {
     static let keyMap = "VC64KeyMap"
     static let mapKeysByPosition = "VC64MapKeysByPosition"
 }
@@ -307,20 +305,20 @@ extension MyController {
         
         let dictionary: [String: Any] = [
             
-            VC64Keys.mapKeysByPosition: Defaults.mapKeysByPosition
+            Keys.mapKeysByPosition: Defaults.mapKeysByPosition
         ]
         
         let defaults = UserDefaults.standard
         defaults.register(defaults: dictionary)
-        defaults.register(encodableItem: Defaults.keyMap, forKey: VC64Keys.keyMap)
+        defaults.register(encodableItem: Defaults.keyMap, forKey: Keys.keyMap)
     }
     
     func resetKeyMapUserDefaults() {
         
         let defaults = UserDefaults.standard
         
-        let keys = [ VC64Keys.mapKeysByPosition,
-                     VC64Keys.keyMap
+        let keys = [ Keys.mapKeysByPosition,
+                     Keys.keyMap
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }
@@ -331,15 +329,15 @@ extension MyController {
     func loadKeyMapUserDefaults() {
         
         let defaults = UserDefaults.standard
-        keyboard.mapKeysByPosition = defaults.bool(forKey: VC64Keys.mapKeysByPosition)
-        defaults.decode(&keyboard.keyMap, forKey: VC64Keys.keyMap)
+        keyboard.mapKeysByPosition = defaults.bool(forKey: Keys.mapKeysByPosition)
+        defaults.decode(&keyboard.keyMap, forKey: Keys.keyMap)
     }
     
     func saveKeyMapUserDefaults() {
         
         let defaults = UserDefaults.standard
-        defaults.encode(keyboard.keyMap, forKey: VC64Keys.keyMap)
-        defaults.set(keyboard.mapKeysByPosition, forKey: VC64Keys.mapKeysByPosition)
+        defaults.encode(keyboard.keyMap, forKey: Keys.keyMap)
+        defaults.set(keyboard.mapKeysByPosition, forKey: Keys.mapKeysByPosition)
     }
 }
 
@@ -347,7 +345,7 @@ extension MyController {
 // User defaults (Devices)
 //
 
-extension VC64Keys {
+extension Keys {
     
     // Mouse
     static let mouseModel        = "VC64MouseModelKey"
@@ -393,31 +391,31 @@ extension MyController {
     static func registerDevicesUserDefaults() {
         
         let dictionary: [String: Any] = [
-            VC64Keys.mouseModel: Int(Defaults.mouseModel.rawValue),
-            VC64Keys.disconnectJoyKeys: Defaults.disconnectJoyKeys,
-            VC64Keys.autofire: Defaults.autofire,
-            VC64Keys.autofireBullets: Defaults.autofireBullets,
-            VC64Keys.autofireFrequency: Defaults.autofireFrequency
+            Keys.mouseModel: Int(Defaults.mouseModel.rawValue),
+            Keys.disconnectJoyKeys: Defaults.disconnectJoyKeys,
+            Keys.autofire: Defaults.autofire,
+            Keys.autofireBullets: Defaults.autofireBullets,
+            Keys.autofireFrequency: Defaults.autofireFrequency
         ]
         
         let defaults = UserDefaults.standard
         defaults.register(defaults: dictionary)
-        defaults.register(encodableItem: Defaults.joyKeyMap1, forKey: VC64Keys.joyKeyMap1)
-        defaults.register(encodableItem: Defaults.joyKeyMap2, forKey: VC64Keys.joyKeyMap2)
+        defaults.register(encodableItem: Defaults.joyKeyMap1, forKey: Keys.joyKeyMap1)
+        defaults.register(encodableItem: Defaults.joyKeyMap2, forKey: Keys.joyKeyMap2)
     }
 
     func resetDevicesUserDefaults() {
         
         let defaults = UserDefaults.standard
         
-        let keys = [ VC64Keys.mouseModel,
-                     VC64Keys.disconnectJoyKeys,
-                     VC64Keys.autofire,
-                     VC64Keys.autofireBullets,
-                     VC64Keys.autofireFrequency,
+        let keys = [ Keys.mouseModel,
+                     Keys.disconnectJoyKeys,
+                     Keys.autofire,
+                     Keys.autofireBullets,
+                     Keys.autofireFrequency,
                      
-                     VC64Keys.joyKeyMap1,
-                     VC64Keys.joyKeyMap2
+                     Keys.joyKeyMap1,
+                     Keys.joyKeyMap2
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }
@@ -431,16 +429,16 @@ extension MyController {
     
         c64.suspend()
         
-        c64.mouse.setModel(defaults.integer(forKey: VC64Keys.mouseModel))
-        keyboard.disconnectJoyKeys = defaults.bool(forKey: VC64Keys.disconnectJoyKeys)
-        c64.port1.setAutofire(defaults.bool(forKey: VC64Keys.autofire))
-        c64.port2.setAutofire(defaults.bool(forKey: VC64Keys.autofire))
-        c64.port1.setAutofireBullets(defaults.integer(forKey: VC64Keys.autofireBullets))
-        c64.port2.setAutofireBullets(defaults.integer(forKey: VC64Keys.autofireBullets))
-        c64.port1.setAutofireFrequency(defaults.float(forKey: VC64Keys.autofireFrequency))
-        c64.port2.setAutofireFrequency(defaults.float(forKey: VC64Keys.autofireFrequency))
-        defaults.decode(&gamePadManager.gamePads[0]!.keyMap, forKey: VC64Keys.joyKeyMap1)
-        defaults.decode(&gamePadManager.gamePads[1]!.keyMap, forKey: VC64Keys.joyKeyMap2)
+        c64.mouse.setModel(defaults.integer(forKey: Keys.mouseModel))
+        keyboard.disconnectJoyKeys = defaults.bool(forKey: Keys.disconnectJoyKeys)
+        c64.port1.setAutofire(defaults.bool(forKey: Keys.autofire))
+        c64.port2.setAutofire(defaults.bool(forKey: Keys.autofire))
+        c64.port1.setAutofireBullets(defaults.integer(forKey: Keys.autofireBullets))
+        c64.port2.setAutofireBullets(defaults.integer(forKey: Keys.autofireBullets))
+        c64.port1.setAutofireFrequency(defaults.float(forKey: Keys.autofireFrequency))
+        c64.port2.setAutofireFrequency(defaults.float(forKey: Keys.autofireFrequency))
+        defaults.decode(&gamePadManager.gamePads[0]!.keyMap, forKey: Keys.joyKeyMap1)
+        defaults.decode(&gamePadManager.gamePads[1]!.keyMap, forKey: Keys.joyKeyMap2)
  
         c64.resume()
     }
@@ -449,13 +447,13 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         
-        defaults.set(c64.mouse.model(), forKey: VC64Keys.mouseModel)
-        defaults.set(keyboard.disconnectJoyKeys, forKey: VC64Keys.disconnectJoyKeys)
-        defaults.set(c64.port1.autofire(), forKey: VC64Keys.autofire)
-        defaults.set(c64.port1.autofireBullets(), forKey: VC64Keys.autofireBullets)
-        defaults.set(c64.port1.autofireFrequency(), forKey: VC64Keys.autofireFrequency)
-        defaults.encode(gamePadManager.gamePads[0]!.keyMap, forKey: VC64Keys.joyKeyMap1)
-        defaults.encode(gamePadManager.gamePads[1]!.keyMap, forKey: VC64Keys.joyKeyMap2)
+        defaults.set(c64.mouse.model(), forKey: Keys.mouseModel)
+        defaults.set(keyboard.disconnectJoyKeys, forKey: Keys.disconnectJoyKeys)
+        defaults.set(c64.port1.autofire(), forKey: Keys.autofire)
+        defaults.set(c64.port1.autofireBullets(), forKey: Keys.autofireBullets)
+        defaults.set(c64.port1.autofireFrequency(), forKey: Keys.autofireFrequency)
+        defaults.encode(gamePadManager.gamePads[0]!.keyMap, forKey: Keys.joyKeyMap1)
+        defaults.encode(gamePadManager.gamePads[1]!.keyMap, forKey: Keys.joyKeyMap2)
     }
 }
 
@@ -463,7 +461,7 @@ extension MyController {
 // User defaults (Video)
 //
 
-extension VC64Keys {
+extension Keys {
     
     static let palette         = "VC64PaletteKey"
     static let brightness      = "VC64BrightnessKey"
@@ -505,39 +503,39 @@ extension MyController {
         
         let dictionary: [String: Any] = [
             
-            VC64Keys.palette: Int(Defaults.palette.rawValue),
-            VC64Keys.brightness: Defaults.brightness,
-            VC64Keys.contrast: Defaults.contrast,
-            VC64Keys.saturation: Defaults.saturation,
-            VC64Keys.upscaler: Defaults.upscaler,
+            Keys.palette: Int(Defaults.palette.rawValue),
+            Keys.brightness: Defaults.brightness,
+            Keys.contrast: Defaults.contrast,
+            Keys.saturation: Defaults.saturation,
+            Keys.upscaler: Defaults.upscaler,
 
-            VC64Keys.keepAspectRatio: Defaults.keepAspectRatio,
-            VC64Keys.eyeX: Defaults.eyeX,
-            VC64Keys.eyeY: Defaults.eyeY,
-            VC64Keys.eyeZ: Defaults.eyeZ
+            Keys.keepAspectRatio: Defaults.keepAspectRatio,
+            Keys.eyeX: Defaults.eyeX,
+            Keys.eyeY: Defaults.eyeY,
+            Keys.eyeZ: Defaults.eyeZ
         ]
         
         let defaults = UserDefaults.standard
         defaults.register(defaults: dictionary)
-        defaults.register(encodableItem: Defaults.shaderOptions, forKey: VC64Keys.shaderOptions)
+        defaults.register(encodableItem: Defaults.shaderOptions, forKey: Keys.shaderOptions)
     }
     
     func resetVideoUserDefaults() {
         
         let defaults = UserDefaults.standard
         
-        let keys = [ VC64Keys.palette,
-                     VC64Keys.brightness,
-                     VC64Keys.contrast,
-                     VC64Keys.saturation,
-                     VC64Keys.upscaler,
+        let keys = [ Keys.palette,
+                     Keys.brightness,
+                     Keys.contrast,
+                     Keys.saturation,
+                     Keys.upscaler,
                      
-                     VC64Keys.keepAspectRatio,
-                     VC64Keys.eyeX,
-                     VC64Keys.eyeY,
-                     VC64Keys.eyeZ,
+                     Keys.keepAspectRatio,
+                     Keys.eyeX,
+                     Keys.eyeY,
+                     Keys.eyeZ,
                      
-                     VC64Keys.shaderOptions
+                     Keys.shaderOptions
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }
@@ -551,20 +549,20 @@ extension MyController {
         
         c64.suspend()
         
-        renderer.upscaler = defaults.integer(forKey: VC64Keys.upscaler)
-        c64.vic.setVideoPalette(defaults.integer(forKey: VC64Keys.palette))
-        c64.vic.setBrightness(defaults.double(forKey: VC64Keys.brightness))
-        c64.vic.setContrast(defaults.double(forKey: VC64Keys.contrast))
-        c64.vic.setSaturation(defaults.double(forKey: VC64Keys.saturation))
+        renderer.upscaler = defaults.integer(forKey: Keys.upscaler)
+        c64.vic.setVideoPalette(defaults.integer(forKey: Keys.palette))
+        c64.vic.setBrightness(defaults.double(forKey: Keys.brightness))
+        c64.vic.setContrast(defaults.double(forKey: Keys.contrast))
+        c64.vic.setSaturation(defaults.double(forKey: Keys.saturation))
 
-        renderer.keepAspectRatio = defaults.bool(forKey: VC64Keys.keepAspectRatio)
+        renderer.keepAspectRatio = defaults.bool(forKey: Keys.keepAspectRatio)
         /*
         renderer.setEyeX(defaults.float(forKey: VC64Keys.eyeX))
         renderer.setEyeY(defaults.float(forKey: VC64Keys.eyeY))
         renderer.setEyeZ(defaults.float(forKey: VC64Keys.eyeZ))
         */
         
-        defaults.decode(&renderer.shaderOptions, forKey: VC64Keys.shaderOptions)
+        defaults.decode(&renderer.shaderOptions, forKey: Keys.shaderOptions)
         renderer.buildDotMasks()
  
         c64.resume()
@@ -574,19 +572,19 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         
-        defaults.set(renderer.upscaler, forKey: VC64Keys.upscaler)
-        defaults.set(c64.vic.videoPalette(), forKey: VC64Keys.palette)
-        defaults.set(c64.vic.brightness(), forKey: VC64Keys.brightness)
-        defaults.set(c64.vic.contrast(), forKey: VC64Keys.contrast)
-        defaults.set(c64.vic.saturation(), forKey: VC64Keys.saturation)
+        defaults.set(renderer.upscaler, forKey: Keys.upscaler)
+        defaults.set(c64.vic.videoPalette(), forKey: Keys.palette)
+        defaults.set(c64.vic.brightness(), forKey: Keys.brightness)
+        defaults.set(c64.vic.contrast(), forKey: Keys.contrast)
+        defaults.set(c64.vic.saturation(), forKey: Keys.saturation)
         
-        defaults.set(renderer.keepAspectRatio, forKey: VC64Keys.keepAspectRatio)
+        defaults.set(renderer.keepAspectRatio, forKey: Keys.keepAspectRatio)
         /*
         defaults.set(renderer.eyeX(), forKey: VC64Keys.eyeX)
         defaults.set(renderer.eyeY(), forKey: VC64Keys.eyeY)
         defaults.set(renderer.eyeZ(), forKey: VC64Keys.eyeZ)
         */
-        defaults.encode(renderer.shaderOptions, forKey: VC64Keys.shaderOptions)
+        defaults.encode(renderer.shaderOptions, forKey: Keys.shaderOptions)
     }
 }
 
@@ -594,7 +592,7 @@ extension MyController {
 // User defaults (Emulator)
 //
 
-extension VC64Keys {
+extension Keys {
     
     // Drives
     static let warpLoad             = "VC64WarpLoadKey"
@@ -662,49 +660,49 @@ extension MyController {
         
         let dictionary: [String: Any] = [
             
-            VC64Keys.warpLoad: Defaults.warpLoad,
-            VC64Keys.driveNoise: Defaults.driveNoise,
+            Keys.warpLoad: Defaults.warpLoad,
+            Keys.driveNoise: Defaults.driveNoise,
             
-            VC64Keys.screenshotSource: Defaults.screenshotSource,
-            VC64Keys.screenshotTarget: Int(Defaults.screenshotTarget.rawValue),
+            Keys.screenshotSource: Defaults.screenshotSource,
+            Keys.screenshotTarget: Int(Defaults.screenshotTarget.rawValue),
 
-            VC64Keys.closeWithoutAsking: Defaults.closeWithoutAsking,
-            VC64Keys.ejectWithoutAsking: Defaults.ejectWithoutAsking,
+            Keys.closeWithoutAsking: Defaults.closeWithoutAsking,
+            Keys.ejectWithoutAsking: Defaults.ejectWithoutAsking,
 
-            VC64Keys.pauseInBackground: Defaults.pauseInBackground,
-            VC64Keys.autoSnapshots: Defaults.autoSnapshots,
-            VC64Keys.autoSnapshotInterval: Defaults.autoSnapshotInterval
+            Keys.pauseInBackground: Defaults.pauseInBackground,
+            Keys.autoSnapshots: Defaults.autoSnapshots,
+            Keys.autoSnapshotInterval: Defaults.autoSnapshotInterval
         ]
         
         let defaults = UserDefaults.standard
         
         defaults.register(defaults: dictionary)
         
-        defaults.register(encodableItem: Defaults.autoMountAction, forKey: VC64Keys.autoMountAction)
-        defaults.register(encodableItem: Defaults.autoType, forKey: VC64Keys.autoType)
-        defaults.register(encodableItem: Defaults.autoTypeText, forKey: VC64Keys.autoTypeText)
+        defaults.register(encodableItem: Defaults.autoMountAction, forKey: Keys.autoMountAction)
+        defaults.register(encodableItem: Defaults.autoType, forKey: Keys.autoType)
+        defaults.register(encodableItem: Defaults.autoTypeText, forKey: Keys.autoTypeText)
     }
 
     func resetEmulatorUserDefaults() {
         
         let defaults = UserDefaults.standard
         
-        let keys = [VC64Keys.warpLoad,
-                    VC64Keys.driveNoise,
+        let keys = [Keys.warpLoad,
+                    Keys.driveNoise,
                     
-                    VC64Keys.screenshotSource,
-                    VC64Keys.screenshotTarget,
+                    Keys.screenshotSource,
+                    Keys.screenshotTarget,
                     
-                    VC64Keys.closeWithoutAsking,
-                    VC64Keys.ejectWithoutAsking,
+                    Keys.closeWithoutAsking,
+                    Keys.ejectWithoutAsking,
                     
-                    VC64Keys.pauseInBackground,
-                    VC64Keys.autoSnapshots,
-                    VC64Keys.autoSnapshotInterval,
+                    Keys.pauseInBackground,
+                    Keys.autoSnapshots,
+                    Keys.autoSnapshotInterval,
                     
-                    VC64Keys.autoMountAction,
-                    VC64Keys.autoType,
-                    VC64Keys.autoTypeText
+                    Keys.autoMountAction,
+                    Keys.autoType,
+                    Keys.autoTypeText
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }
@@ -718,23 +716,23 @@ extension MyController {
             
         c64.suspend()
         
-        c64.setWarpLoad(defaults.bool(forKey: VC64Keys.warpLoad))
-        c64.drive1.setSendSoundMessages(defaults.bool(forKey: VC64Keys.driveNoise))
-        c64.drive2.setSendSoundMessages(defaults.bool(forKey: VC64Keys.driveNoise))
+        c64.setWarpLoad(defaults.bool(forKey: Keys.warpLoad))
+        c64.drive1.setSendSoundMessages(defaults.bool(forKey: Keys.driveNoise))
+        c64.drive2.setSendSoundMessages(defaults.bool(forKey: Keys.driveNoise))
     
-        screenshotSource = defaults.integer(forKey: VC64Keys.screenshotSource)
-        screenshotTargetIntValue = defaults.integer(forKey: VC64Keys.screenshotTarget)
+        screenshotSource = defaults.integer(forKey: Keys.screenshotSource)
+        screenshotTargetIntValue = defaults.integer(forKey: Keys.screenshotTarget)
     
-        closeWithoutAsking = defaults.bool(forKey: VC64Keys.closeWithoutAsking)
-        ejectWithoutAsking = defaults.bool(forKey: VC64Keys.ejectWithoutAsking)
+        closeWithoutAsking = defaults.bool(forKey: Keys.closeWithoutAsking)
+        ejectWithoutAsking = defaults.bool(forKey: Keys.ejectWithoutAsking)
 
-        pauseInBackground = defaults.bool(forKey: VC64Keys.pauseInBackground)
-        c64.setTakeAutoSnapshots(defaults.bool(forKey: VC64Keys.autoSnapshots))
-        c64.setSnapshotInterval(defaults.integer(forKey: VC64Keys.autoSnapshotInterval))
+        pauseInBackground = defaults.bool(forKey: Keys.pauseInBackground)
+        c64.setTakeAutoSnapshots(defaults.bool(forKey: Keys.autoSnapshots))
+        c64.setSnapshotInterval(defaults.integer(forKey: Keys.autoSnapshotInterval))
         
-        defaults.decode(&autoMountAction, forKey: VC64Keys.autoMountAction)
-        defaults.decode(&autoType, forKey: VC64Keys.autoType)
-        defaults.decode(&autoTypeText, forKey: VC64Keys.autoTypeText)
+        defaults.decode(&autoMountAction, forKey: Keys.autoMountAction)
+        defaults.decode(&autoType, forKey: Keys.autoType)
+        defaults.decode(&autoTypeText, forKey: Keys.autoTypeText)
         
         c64.resume()
     }
@@ -743,23 +741,23 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         
-        defaults.set(c64.warpLoad(), forKey: VC64Keys.warpLoad)
-        defaults.set(c64.drive1.sendSoundMessages(), forKey: VC64Keys.driveNoise)
-        defaults.set(c64.drive2.sendSoundMessages(), forKey: VC64Keys.driveNoise)
+        defaults.set(c64.warpLoad(), forKey: Keys.warpLoad)
+        defaults.set(c64.drive1.sendSoundMessages(), forKey: Keys.driveNoise)
+        defaults.set(c64.drive2.sendSoundMessages(), forKey: Keys.driveNoise)
 
-        defaults.set(screenshotSource, forKey: VC64Keys.screenshotSource)
-        defaults.set(screenshotTargetIntValue, forKey: VC64Keys.screenshotTarget)
+        defaults.set(screenshotSource, forKey: Keys.screenshotSource)
+        defaults.set(screenshotTargetIntValue, forKey: Keys.screenshotTarget)
         
-        defaults.set(closeWithoutAsking, forKey: VC64Keys.closeWithoutAsking)
-        defaults.set(ejectWithoutAsking, forKey: VC64Keys.ejectWithoutAsking)
+        defaults.set(closeWithoutAsking, forKey: Keys.closeWithoutAsking)
+        defaults.set(ejectWithoutAsking, forKey: Keys.ejectWithoutAsking)
         
-        defaults.set(pauseInBackground, forKey: VC64Keys.pauseInBackground)
-        defaults.set(c64.takeAutoSnapshots(), forKey: VC64Keys.autoSnapshots)
-        defaults.set(c64.snapshotInterval(), forKey: VC64Keys.autoSnapshotInterval)
+        defaults.set(pauseInBackground, forKey: Keys.pauseInBackground)
+        defaults.set(c64.takeAutoSnapshots(), forKey: Keys.autoSnapshots)
+        defaults.set(c64.snapshotInterval(), forKey: Keys.autoSnapshotInterval)
         
-        defaults.encode(autoMountAction, forKey: VC64Keys.autoMountAction)
-        defaults.encode(autoType, forKey: VC64Keys.autoType)
-        defaults.encode(autoTypeText, forKey: VC64Keys.autoTypeText)
+        defaults.encode(autoMountAction, forKey: Keys.autoMountAction)
+        defaults.encode(autoType, forKey: Keys.autoType)
+        defaults.encode(autoTypeText, forKey: Keys.autoTypeText)
     }
 }
 
@@ -767,7 +765,7 @@ extension MyController {
 // User defaults (Hardware)
 //
 
-extension VC64Keys {
+extension Keys {
     
     //VICII
     static let vicChip        = "VC64VICChipModelKey"
@@ -815,19 +813,19 @@ extension MyController {
         
         let dictionary: [String: Any] = [
         
-            VC64Keys.vicChip: Int(Defaults.vicChip.rawValue),
-            VC64Keys.grayDotBug: Defaults.grayDotBug,
+            Keys.vicChip: Int(Defaults.vicChip.rawValue),
+            Keys.grayDotBug: Defaults.grayDotBug,
 
-            VC64Keys.ciaChip: Int(Defaults.ciaChip.rawValue),
-            VC64Keys.timerBBug: Defaults.timerBBug,
+            Keys.ciaChip: Int(Defaults.ciaChip.rawValue),
+            Keys.timerBBug: Defaults.timerBBug,
 
-            VC64Keys.reSID: Defaults.reSID,
-            VC64Keys.audioChip: Int(Defaults.audioChip.rawValue),
-            VC64Keys.audioFilter: false,
-            VC64Keys.samplingMethod: 0,
+            Keys.reSID: Defaults.reSID,
+            Keys.audioChip: Int(Defaults.audioChip.rawValue),
+            Keys.audioFilter: false,
+            Keys.samplingMethod: 0,
 
-            VC64Keys.glueLogic: Int(Defaults.glueLogic.rawValue),
-            VC64Keys.initPattern: Int(Defaults.initPattern.rawValue)
+            Keys.glueLogic: Int(Defaults.glueLogic.rawValue),
+            Keys.initPattern: Int(Defaults.initPattern.rawValue)
         ]
         
         let defaults = UserDefaults.standard
@@ -838,19 +836,19 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         
-        let keys = [VC64Keys.vicChip,
-                    VC64Keys.grayDotBug,
+        let keys = [Keys.vicChip,
+                    Keys.grayDotBug,
                     
-                    VC64Keys.ciaChip,
-                    VC64Keys.timerBBug,
+                    Keys.ciaChip,
+                    Keys.timerBBug,
                     
-                    VC64Keys.reSID,
-                    VC64Keys.audioChip,
-                    VC64Keys.audioFilter,
-                    VC64Keys.samplingMethod,
+                    Keys.reSID,
+                    Keys.audioChip,
+                    Keys.audioFilter,
+                    Keys.samplingMethod,
                     
-                    VC64Keys.glueLogic,
-                    VC64Keys.initPattern
+                    Keys.glueLogic,
+                    Keys.initPattern
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }
@@ -864,21 +862,21 @@ extension MyController {
         
         c64.suspend()
         
-        c64.vic.setModel(defaults.integer(forKey: VC64Keys.vicChip))
-        c64.vic.setEmulateGrayDotBug(defaults.bool(forKey: VC64Keys.grayDotBug))
+        c64.vic.setModel(defaults.integer(forKey: Keys.vicChip))
+        c64.vic.setEmulateGrayDotBug(defaults.bool(forKey: Keys.grayDotBug))
 
-        c64.cia1.setModel(defaults.integer(forKey: VC64Keys.ciaChip))
-        c64.cia2.setModel(defaults.integer(forKey: VC64Keys.ciaChip))
-        c64.cia1.setEmulateTimerBBug(defaults.bool(forKey: VC64Keys.timerBBug))
-        c64.cia2.setEmulateTimerBBug(defaults.bool(forKey: VC64Keys.timerBBug))
+        c64.cia1.setModel(defaults.integer(forKey: Keys.ciaChip))
+        c64.cia2.setModel(defaults.integer(forKey: Keys.ciaChip))
+        c64.cia1.setEmulateTimerBBug(defaults.bool(forKey: Keys.timerBBug))
+        c64.cia2.setEmulateTimerBBug(defaults.bool(forKey: Keys.timerBBug))
 
-        c64.sid.setReSID(defaults.bool(forKey: VC64Keys.reSID))
-        c64.sid.setModel(defaults.integer(forKey: VC64Keys.audioChip))
-        c64.sid.setAudioFilter(defaults.bool(forKey: VC64Keys.audioFilter))
-        c64.sid.setSamplingMethod(defaults.integer(forKey: VC64Keys.samplingMethod))
+        c64.sid.setReSID(defaults.bool(forKey: Keys.reSID))
+        c64.sid.setModel(defaults.integer(forKey: Keys.audioChip))
+        c64.sid.setAudioFilter(defaults.bool(forKey: Keys.audioFilter))
+        c64.sid.setSamplingMethod(defaults.integer(forKey: Keys.samplingMethod))
         
-        c64.vic.setGlueLogic(defaults.integer(forKey: VC64Keys.glueLogic))
-        c64.mem.setRamInitPattern(defaults.integer(forKey: VC64Keys.initPattern))
+        c64.vic.setGlueLogic(defaults.integer(forKey: Keys.glueLogic))
+        c64.mem.setRamInitPattern(defaults.integer(forKey: Keys.initPattern))
         
         c64.resume()
     }
@@ -887,18 +885,18 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         
-        defaults.set(c64.vic.model(), forKey: VC64Keys.vicChip)
-        defaults.set(c64.vic.emulateGrayDotBug(), forKey: VC64Keys.grayDotBug)
+        defaults.set(c64.vic.model(), forKey: Keys.vicChip)
+        defaults.set(c64.vic.emulateGrayDotBug(), forKey: Keys.grayDotBug)
 
-        defaults.set(c64.cia1.model(), forKey: VC64Keys.ciaChip)
-        defaults.set(c64.cia1.emulateTimerBBug(), forKey: VC64Keys.timerBBug)
+        defaults.set(c64.cia1.model(), forKey: Keys.ciaChip)
+        defaults.set(c64.cia1.emulateTimerBBug(), forKey: Keys.timerBBug)
 
-        defaults.set(c64.sid.reSID(), forKey: VC64Keys.reSID)
-        defaults.set(c64.sid.model(), forKey: VC64Keys.audioChip)
-        defaults.set(c64.sid.audioFilter(), forKey: VC64Keys.audioFilter)
-        defaults.set(c64.sid.samplingMethod(), forKey: VC64Keys.samplingMethod)
+        defaults.set(c64.sid.reSID(), forKey: Keys.reSID)
+        defaults.set(c64.sid.model(), forKey: Keys.audioChip)
+        defaults.set(c64.sid.audioFilter(), forKey: Keys.audioFilter)
+        defaults.set(c64.sid.samplingMethod(), forKey: Keys.samplingMethod)
         
-        defaults.set(c64.vic.glueLogic(), forKey: VC64Keys.glueLogic)
-        defaults.set(c64.mem.ramInitPattern(), forKey: VC64Keys.initPattern)
+        defaults.set(c64.vic.glueLogic(), forKey: Keys.glueLogic)
+        defaults.set(c64.mem.ramInitPattern(), forKey: Keys.initPattern)
     }
 }

@@ -21,7 +21,7 @@
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
 		50186A20202E31B700EEAD72 /* ExportScreenshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */; };
 		5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */; };
-		5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018AF65202EDD2000B4C886 /* UserDefaults.swift */; };
+		5018AF66202EDD2000B4C886 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018AF65202EDD2000B4C886 /* Defaults.swift */; };
 		5018BFAB24B4843200551848 /* Primitives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018BFAA24B4843200551848 /* Primitives.swift */; };
 		5018BFAD24B4846C00551848 /* ImageToolbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018BFAC24B4846C00551848 /* ImageToolbox.swift */; };
 		5018BFAF24B4847900551848 /* TextureToolbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018BFAE24B4847900551848 /* TextureToolbox.swift */; };
@@ -230,7 +230,7 @@
 		50176C7A0A6F7357009E80BD /* C64Proxy.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = C64Proxy.mm; sourceTree = "<group>"; };
 		50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportScreenshotDialog.xib; sourceTree = "<group>"; };
 		5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "C64_Pro_Mono-STYLE.ttf"; sourceTree = "<group>"; };
-		5018AF65202EDD2000B4C886 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		5018AF65202EDD2000B4C886 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		5018BFAA24B4843200551848 /* Primitives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Primitives.swift; sourceTree = "<group>"; };
 		5018BFAC24B4846C00551848 /* ImageToolbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageToolbox.swift; sourceTree = "<group>"; };
 		5018BFAE24B4847900551848 /* TextureToolbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureToolbox.swift; sourceTree = "<group>"; };
@@ -622,7 +622,6 @@
 				50EAFFE924B2600D00024CD2 /* MyToolbar.swift */,
 				50ED5BF712DD99C000596417 /* Speedometer.swift */,
 				50BF77D120309A2A006E000F /* WindowDelegate.swift */,
-				5018AF65202EDD2000B4C886 /* UserDefaults.swift */,
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
 				5038CA9820B6C2D8000D9193 /* Debugger */,
 				5002FA7921C264C100DA4BBC /* Dialogs */,
@@ -1079,6 +1078,7 @@
 		50C12A4221C6B634007EFAF6 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
+				5018AF65202EDD2000B4C886 /* Defaults.swift */,
 				50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */,
 				506A724921C0341900DA0AC3 /* PreferencesController.swift */,
 				505D492721C155DD00A7C575 /* RomPrefs.swift */,
@@ -1300,7 +1300,7 @@
 				507887CC20B1858B00941F7E /* MemTableView.swift in Sources */,
 				504C439A24AF29AC00E69CAE /* dac.cc in Sources */,
 				504C439024AF29AC00E69CAE /* VIC_cycles_pal.cpp in Sources */,
-				5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */,
+				5018AF66202EDD2000B4C886 /* Defaults.swift in Sources */,
 				504C436A24AF29AC00E69CAE /* FreezeFrame.cpp in Sources */,
 				504C439124AF29AC00E69CAE /* VIC_memory.cpp in Sources */,
 				50FF818F1F88D9100004548A /* GamePad.swift in Sources */,
