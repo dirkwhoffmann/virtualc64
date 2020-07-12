@@ -84,7 +84,7 @@ class DialogController: NSWindowController {
         
         if awake { sheetWillShow() }
         
-        myWindow?.beginSheet(window!, completionHandler: { result in
+        parent.window?.beginSheet(window!, completionHandler: { result in
             if result == NSApplication.ModalResponse.OK {
                 
                 handler?()
@@ -95,17 +95,16 @@ class DialogController: NSWindowController {
         sheetDidShow()
     }
     
-    // func refresh() { }
-    func keyDown(with key: MacKey) { }
-    
     func hideSheet() {
-    
+        
         if let win = window {
             win.orderOut(self)
-            myWindow?.endSheet(win, returnCode: .cancel)
+            parent.window?.endSheet(win, returnCode: .cancel)
         }
     }
  
+    func keyDown(with key: MacKey) { }
+
     // Default action method for OK
     @IBAction func okAction(_ sender: Any!) {
         

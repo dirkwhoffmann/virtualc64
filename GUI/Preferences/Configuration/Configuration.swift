@@ -23,5 +23,18 @@ class Configuration {
     var kernalRomURL: URL = URL(fileURLWithPath: "/")
     var vc1541RomURL: URL = URL(fileURLWithPath: "/")
 
+    //
+    // Hardware settings
+    //
+    
+    var vicModel: Int {
+        get { return c64.vic.model() }
+        set { c64.vic.setModel(newValue) }
+    }
+    
+    
+    
+    
+    
     init(with controller: MyController) { parent = controller }
 }

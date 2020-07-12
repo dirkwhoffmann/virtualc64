@@ -32,13 +32,13 @@ class MyController: NSWindowController, MessageReceiver {
     // the proxy is written in Objective-C.
     var c64: C64Proxy!
     
-    // Inspector of this emulator instance
+    // Inspector panel of this emulator instance
     // var inspector: Inspector?
     
     // Configuration panel of this emulator instance
-    // var configurator: ConfigController?
+    var configurator: ConfigurationController?
     
-    // Emulator configuration
+    // The current emulator configuration
     var config: Configuration!
 
     // Audio Engine
@@ -54,7 +54,7 @@ class MyController: NSWindowController, MessageReceiver {
     var virtualKeyboard: VirtualKeyboardController?
     
     /// Preferences controller
-    var preferencesController: ConfigurationController?
+    // var preferencesController: ConfigurationController?
 
     /// Loop timer
     /// The timer fires 60 times a second and executes all tasks that need to be
@@ -607,7 +607,7 @@ extension MyController {
             break
             
         case MSG_ROM_MISSING:
-            openPreferences()
+            openConfigurator()
 
         case MSG_SNAPSHOT_TAKEN:
             break
@@ -829,6 +829,7 @@ extension MyController {
     // Dialogs
     //
     
+    /*
     func openPreferences() {
         
         if preferencesController == nil {
@@ -837,6 +838,7 @@ extension MyController {
         }
         preferencesController!.showSheet()
     }
+    */
     
     //
     // Loading Roms

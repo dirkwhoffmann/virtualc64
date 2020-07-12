@@ -227,9 +227,25 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var keyOkButton: NSButton!
     @IBOutlet weak var keyCancelButton: NSButton!
     
+    // The tab to open first
+    var firstTab = ""
+    
+    func showSheet(tab: String) {
+        
+        firstTab = tab
+        showSheet()
+    }
+    
     override func awakeFromNib() {
     
         awakeVideoPrefsFromNib()
+        refresh()
+    }
+    
+    override func sheetWillShow() {
+        
+        track()
+        if firstTab != "" { prefTabView?.selectTabViewItem(withIdentifier: firstTab) }
         refresh()
     }
     

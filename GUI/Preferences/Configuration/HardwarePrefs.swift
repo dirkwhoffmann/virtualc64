@@ -10,17 +10,15 @@
 extension ConfigurationController {
     
     func refreshHardwareTab() {
-        
-        // guard let con = myController else { return }
-        guard let c64 = proxy else { return }
+                
+        let vicModel = config.vicModel
         
         track()
         
         // VIC
-        let model = c64.vic.model()
-        hwVicModelPopup.selectItem(withTag: model)
+        hwVicModelPopup.selectItem(withTag: vicModel)
         
-        switch UInt32(model) {
+        switch UInt32(vicModel) {
             
         case PAL_6569_R1.rawValue,
              PAL_6569_R3.rawValue,

@@ -252,6 +252,15 @@ extension MyController: NSMenuItemValidation {
     // Action methods (File menu)
     //
     
+    func openConfigurator(tab: String = "") {
+        
+        if configurator == nil {
+            let name = NSNib.Name("Configuration")
+            configurator = ConfigurationController.make(parent: self, nibName: name)
+        }
+        configurator?.showSheet(tab: tab)
+    }
+    
     @IBAction func saveScreenshotDialog(_ sender: Any!) {
                 
         // Create save panel
