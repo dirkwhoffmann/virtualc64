@@ -9,6 +9,8 @@
 
 class ConfigurationController: DialogController {
 
+    var config: Configuration { return parent.config }
+    
     @IBOutlet weak var prefTabView: NSTabView!
     
     //

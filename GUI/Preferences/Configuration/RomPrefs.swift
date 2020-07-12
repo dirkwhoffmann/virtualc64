@@ -127,7 +127,6 @@ extension ConfigurationController {
 
     func refreshRomTab() {
         
-        guard let con = myController else { return }
         guard let c64 = proxy else { return }
 
         track()
@@ -143,10 +142,10 @@ extension ConfigurationController {
         let hasCharacterRom = c64.isCharRomLoaded()
         let hasVc1541Rom = c64.isVC1541RomLoaded()
 
-        let basicURL = con.basicRomURL
-        let characterURL = con.charRomURL
-        let kernalURL = con.kernalRomURL
-        let vc1541URL = con.vc1541RomURL
+        let basicURL = config.basicRomURL
+        let characterURL = config.charRomURL
+        let kernalURL = config.kernalRomURL
+        let vc1541URL = config.vc1541RomURL
         
         let basicHash = c64.basicRomFingerprint()
         let kernalHash = c64.kernalRomFingerprint()
@@ -281,7 +280,7 @@ extension ConfigurationController {
     
     @IBAction func romDeleteBasicAction(_ sender: Any!) {
 
-        myController?.basicRomURL = URL(fileURLWithPath: "/")
+        config.basicRomURL = URL(fileURLWithPath: "/")
         proxy?.powerOff()
         proxy?.mem.deleteBasicRom()
         refresh()
@@ -289,7 +288,7 @@ extension ConfigurationController {
     
     @IBAction func romDeleteCharAction(_ sender: Any!) {
 
-        myController?.charRomURL = URL(fileURLWithPath: "/")
+        config.charRomURL = URL(fileURLWithPath: "/")
         proxy?.powerOff()
         proxy?.mem.deleteCharacterRom()
         refresh()
@@ -297,7 +296,7 @@ extension ConfigurationController {
     
     @IBAction func romDeleteKernalAction(_ sender: Any!) {
 
-        myController?.kernalRomURL = URL(fileURLWithPath: "/")
+        config.kernalRomURL = URL(fileURLWithPath: "/")
         proxy?.powerOff()
         proxy?.mem.deleteKernalRom()
         refresh()
@@ -305,7 +304,7 @@ extension ConfigurationController {
     
     @IBAction func romDeleteVC1541Action(_ sender: Any!) {
 
-        myController?.vc1541RomURL = URL(fileURLWithPath: "/")
+        config.vc1541RomURL = URL(fileURLWithPath: "/")
         proxy?.powerOff()
         proxy?.drive1.deleteRom()
         proxy?.drive2.deleteRom()

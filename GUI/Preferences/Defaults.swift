@@ -279,10 +279,10 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         
-        defaults.set(basicRomURL, forKey: Keys.basicRom)
-        defaults.set(charRomURL, forKey: Keys.charRom)
-        defaults.set(kernalRomURL, forKey: Keys.kernalRom)
-        defaults.set(vc1541RomURL, forKey: Keys.vc1541Rom)
+        defaults.set(config.basicRomURL, forKey: Keys.basicRom)
+        defaults.set(config.charRomURL, forKey: Keys.charRom)
+        defaults.set(config.kernalRomURL, forKey: Keys.kernalRom)
+        defaults.set(config.vc1541RomURL, forKey: Keys.vc1541Rom)
     }
 }
 
