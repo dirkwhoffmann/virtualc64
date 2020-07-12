@@ -16,7 +16,7 @@ class KeyViewItem: NSCollectionViewItem {
     }
 }
 
-extension PreferencesController {
+extension ConfigurationController {
     
     /*
     func awakeKeymapPrefsFromNib() {
@@ -123,7 +123,7 @@ extension PreferencesController {
 // NSCollectionView data source and delegate
 //
 
-extension PreferencesController: NSCollectionViewDataSource {
+extension ConfigurationController: NSCollectionViewDataSource {
     
     func numberOfSections(in collectionView: NSCollectionView) -> Int {
         
@@ -152,7 +152,7 @@ extension PreferencesController: NSCollectionViewDataSource {
     }
 }
 
-extension PreferencesController: NSCollectionViewDelegate {
+extension ConfigurationController: NSCollectionViewDelegate {
     
     func collectionView(_ collectionView: NSCollectionView,
                         didSelectItemsAt indexPaths: Set<IndexPath>) {

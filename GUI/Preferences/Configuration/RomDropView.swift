@@ -21,7 +21,7 @@ extension NSDraggingInfo {
 
 class RomDropView: NSImageView {
 
-    @IBOutlet var parent: PreferencesController!
+    @IBOutlet var parent: ConfigurationController!
 
     func acceptDragSource(url: URL) -> Bool {
         return proxy?.isRom(url) ?? false

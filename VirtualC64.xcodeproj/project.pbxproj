@@ -147,7 +147,7 @@
 		505D492821C155DD00A7C575 /* RomPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505D492721C155DD00A7C575 /* RomPrefs.swift */; };
 		50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */; };
 		506A724821C033EF00DA0AC3 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506A724721C033EF00DA0AC3 /* Preferences.xib */; };
-		506A724A21C0341900DA0AC3 /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A724921C0341900DA0AC3 /* PreferencesController.swift */; };
+		506A724A21C0341900DA0AC3 /* ConfigurationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A724921C0341900DA0AC3 /* ConfigurationController.swift */; };
 		506D3DCE20223E5E009742CF /* MyAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCD20223E5E009742CF /* MyAppDelegate.swift */; };
 		506D3DD020224BF4009742CF /* MyDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCF20224BF4009742CF /* MyDocument.swift */; };
 		506D4D0D20B331A00093C5C6 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D4D0C20B331A00093C5C6 /* Formatter.swift */; };
@@ -460,7 +460,7 @@
 		505D492721C155DD00A7C575 /* RomPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomPrefs.swift; sourceTree = "<group>"; };
 		50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
 		506A724721C033EF00DA0AC3 /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
-		506A724921C0341900DA0AC3 /* PreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesController.swift; sourceTree = "<group>"; };
+		506A724921C0341900DA0AC3 /* ConfigurationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationController.swift; sourceTree = "<group>"; };
 		506D3DCD20223E5E009742CF /* MyAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppDelegate.swift; sourceTree = "<group>"; };
 		506D3DCF20224BF4009742CF /* MyDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDocument.swift; sourceTree = "<group>"; };
 		506D4D0C20B331A00093C5C6 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
@@ -623,8 +623,9 @@
 				50ED5BF712DD99C000596417 /* Speedometer.swift */,
 				50BF77D120309A2A006E000F /* WindowDelegate.swift */,
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
-				5038CA9820B6C2D8000D9193 /* Debugger */,
+				50C12A4221C6B634007EFAF6 /* Preferences */,
 				5002FA7921C264C100DA4BBC /* Dialogs */,
+				5038CA9820B6C2D8000D9193 /* Inspector */,
 				50FE5B342039B392006CE7C7 /* Keyboard Controller */,
 				50B4B6071EEFE77400D56499 /* TouchBar */,
 			);
@@ -645,7 +646,6 @@
 			isa = PBXGroup;
 			children = (
 				50763276202989D300575110 /* DialogController.swift */,
-				50C12A4221C6B634007EFAF6 /* Preferences */,
 				50C12A4321C6B6A6007EFAF6 /* MediaBrowsers */,
 				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
 				50FB74A1203322C900E05051 /* DiskInspectorController.swift */,
@@ -668,7 +668,7 @@
 			path = GUI;
 			sourceTree = "<group>";
 		};
-		5038CA9820B6C2D8000D9193 /* Debugger */ = {
+		5038CA9820B6C2D8000D9193 /* Inspector */ = {
 			isa = PBXGroup;
 			children = (
 				50195C2920B007A1003844FB /* Debugger.swift */,
@@ -678,7 +678,7 @@
 				5038CA9420B6C2AC000D9193 /* VICPanel.swift */,
 				5038CA9620B6C2BE000D9193 /* SIDPanel.swift */,
 			);
-			name = Debugger;
+			name = Inspector;
 			sourceTree = "<group>";
 		};
 		504C428D24AF29AB00E69CAE /* Emulator */ = {
@@ -1043,6 +1043,29 @@
 			path = Proxy;
 			sourceTree = "<group>";
 		};
+		50769B8724BB1A7A006FE743 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */,
+				506A724921C0341900DA0AC3 /* ConfigurationController.swift */,
+				505D492721C155DD00A7C575 /* RomPrefs.swift */,
+				506D54CB2032255A0026D8B4 /* RomDropView.swift */,
+				5002FA7A21C2650600DA4BBC /* HardwarePrefs.swift */,
+				5002FA7C21C2651B00DA4BBC /* VideoPrefs.swift */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		50769B8824BB1B38006FE743 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				5002FA7E21C2653600DA4BBC /* EmulatorPrefs.swift */,
+				5002FA8021C2654B00DA4BBC /* DevicesPrefs.swift */,
+				5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
 		50A2D7AF24AF945200671F38 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1079,15 +1102,8 @@
 			isa = PBXGroup;
 			children = (
 				5018AF65202EDD2000B4C886 /* Defaults.swift */,
-				50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */,
-				506A724921C0341900DA0AC3 /* PreferencesController.swift */,
-				505D492721C155DD00A7C575 /* RomPrefs.swift */,
-				5002FA7A21C2650600DA4BBC /* HardwarePrefs.swift */,
-				5002FA7C21C2651B00DA4BBC /* VideoPrefs.swift */,
-				5002FA7E21C2653600DA4BBC /* EmulatorPrefs.swift */,
-				5002FA8021C2654B00DA4BBC /* DevicesPrefs.swift */,
-				5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */,
-				506D54CB2032255A0026D8B4 /* RomDropView.swift */,
+				50769B8724BB1A7A006FE743 /* Configuration */,
+				50769B8824BB1B38006FE743 /* Preferences */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -1270,7 +1286,7 @@
 				504C438924AF29AC00E69CAE /* NeosMouse.cpp in Sources */,
 				504C435924AF29AC00E69CAE /* Ocean.cpp in Sources */,
 				504C439424AF29AC00E69CAE /* SIDBridge.cpp in Sources */,
-				506A724A21C0341900DA0AC3 /* PreferencesController.swift in Sources */,
+				506A724A21C0341900DA0AC3 /* ConfigurationController.swift in Sources */,
 				504C438124AF29AC00E69CAE /* CPUInstructions.cpp in Sources */,
 				50D2A6A0210F20F700F13D43 /* VirtualKeyboardController.swift in Sources */,
 				504C439E24AF29AC00E69CAE /* ReSID.cpp in Sources */,

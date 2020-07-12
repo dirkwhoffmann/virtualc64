@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-class PreferencesController: DialogController {
+class ConfigurationController: DialogController {
 
     @IBOutlet weak var prefTabView: NSTabView!
     
@@ -281,7 +281,7 @@ class PreferencesController: DialogController {
     }
 }
 
-extension PreferencesController: NSTabViewDelegate {
+extension ConfigurationController: NSTabViewDelegate {
 
     func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
 
@@ -289,7 +289,7 @@ extension PreferencesController: NSTabViewDelegate {
     }
 }
 
-extension PreferencesController: NSTextFieldDelegate {
+extension ConfigurationController: NSTextFieldDelegate {
     
     func controlTextDidChange(_ obj: Notification) {
         

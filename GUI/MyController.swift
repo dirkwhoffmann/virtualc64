@@ -51,7 +51,7 @@ class MyController: NSWindowController, MessageReceiver {
     var virtualKeyboard: VirtualKeyboardController?
     
     /// Preferences controller
-    var preferencesController: PreferencesController?
+    var preferencesController: ConfigurationController?
 
     /// Loop timer
     /// The timer fires 60 times a second and executes all tasks that need to be
@@ -829,7 +829,7 @@ extension MyController {
         
         if preferencesController == nil {
             let nibName = NSNib.Name("Preferences")
-            preferencesController = PreferencesController.init(windowNibName: nibName)
+            preferencesController = ConfigurationController.init(windowNibName: nibName)
         }
         preferencesController!.showSheet()
     }

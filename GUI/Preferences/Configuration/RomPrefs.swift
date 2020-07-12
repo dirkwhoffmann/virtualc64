@@ -123,7 +123,7 @@ let megaRoms: [UInt64] = [
     Rom.kernal_mega65_generic
 ]
 
-extension PreferencesController {
+extension ConfigurationController {
 
     func refreshRomTab() {
         

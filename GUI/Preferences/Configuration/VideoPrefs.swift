@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-extension PreferencesController {
+extension ConfigurationController {
     
     func awakeVideoPrefsFromNib() {
         
