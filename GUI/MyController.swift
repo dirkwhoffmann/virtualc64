@@ -38,6 +38,9 @@ class MyController: NSWindowController, MessageReceiver {
     // Configuration panel of this emulator instance
     // var configurator: ConfigController?
     
+    // Emulator configuration
+    var config: Configuration!
+
     // Audio Engine
     var macAudio: MacAudio!
     
@@ -339,10 +342,9 @@ extension MyController {
         cpuTraceView.c = self
         memTableView.c = self
         
-        // Create audio engine
-        macAudio = MacAudio.init(withSID: c64.sid)
-        
         mydocument = document as? MyDocument
+        config = Configuration.init(with: self)
+        macAudio = MacAudio.init(withSID: c64.sid)
     }
 
     override open func windowDidLoad() {

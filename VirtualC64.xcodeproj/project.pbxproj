@@ -154,6 +154,7 @@
 		506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54CB2032255A0026D8B4 /* RomDropView.swift */; };
 		50720F4220C853910010EBF2 /* CpuTraceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50720F4120C853910010EBF2 /* CpuTraceView.swift */; };
 		50763277202989D300575110 /* DialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* DialogController.swift */; };
+		50769B8A24BB1B87006FE743 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50769B8924BB1B87006FE743 /* Configuration.swift */; };
 		507887CC20B1858B00941F7E /* MemTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507887CB20B1858B00941F7E /* MemTableView.swift */; };
 		507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */; };
 		5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* MacAudio.swift */; };
@@ -467,6 +468,7 @@
 		506D54CB2032255A0026D8B4 /* RomDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDropView.swift; sourceTree = "<group>"; };
 		50720F4120C853910010EBF2 /* CpuTraceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CpuTraceView.swift; sourceTree = "<group>"; };
 		50763276202989D300575110 /* DialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogController.swift; sourceTree = "<group>"; };
+		50769B8924BB1B87006FE743 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		507887CB20B1858B00941F7E /* MemTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemTableView.swift; sourceTree = "<group>"; };
 		507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerCartridges.swift; sourceTree = "<group>"; };
 		5081AB621EF29E6400D6F616 /* MacAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacAudio.swift; sourceTree = "<group>"; };
@@ -1046,6 +1048,7 @@
 		50769B8724BB1A7A006FE743 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				50769B8924BB1B87006FE743 /* Configuration.swift */,
 				50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */,
 				506A724921C0341900DA0AC3 /* ConfigurationController.swift */,
 				505D492721C155DD00A7C575 /* RomPrefs.swift */,
@@ -1102,8 +1105,8 @@
 			isa = PBXGroup;
 			children = (
 				5018AF65202EDD2000B4C886 /* Defaults.swift */,
-				50769B8724BB1A7A006FE743 /* Configuration */,
 				50769B8824BB1B38006FE743 /* Preferences */,
+				50769B8724BB1A7A006FE743 /* Configuration */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -1280,6 +1283,7 @@
 				504C43A424AF29AC00E69CAE /* Keyboard.cpp in Sources */,
 				504C439924AF29AC00E69CAE /* filter.cc in Sources */,
 				504C439824AF29AC00E69CAE /* sid.cc in Sources */,
+				50769B8A24BB1B87006FE743 /* Configuration.swift in Sources */,
 				504C438424AF29AC00E69CAE /* Utils.cpp in Sources */,
 				5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */,
 				504C437724AF29AC00E69CAE /* G64File.cpp in Sources */,
