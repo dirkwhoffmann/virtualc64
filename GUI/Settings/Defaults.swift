@@ -7,6 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+// swiftlint:disable colon
+
 //
 // Convenience extensions to UserDefaults
 //
@@ -86,12 +88,13 @@ extension MyController {
         c64.suspend()
         
         loadGeneralUserDefaults()
-        loadRomUserDefaults()
-        loadKeyMapUserDefaults()
         loadDevicesUserDefaults()
+        loadKeyMapUserDefaults()
+
+        loadRomUserDefaults()
+        config.loadHardwareUserDefaults()
         loadVideoUserDefaults()
         loadEmulatorUserDefaults()
-        loadHardwareUserDefaults()
         
         c64.resume()
     }
@@ -115,14 +118,15 @@ extension MyController {
     func saveUserDefaults() {
         
         track()
-        
+                
         saveGeneralUserDefaults()
-        saveRomUserDefaults()
-        saveKeyMapUserDefaults()
         saveDevicesUserDefaults()
+        saveKeyMapUserDefaults()
+
+        saveRomUserDefaults()
+        config.saveHardwareUserDefaults()
         saveVideoUserDefaults()
         saveEmulatorUserDefaults()
-        saveHardwareUserDefaults()
     }
 
     func saveUserDefaults(url: URL) {
@@ -776,84 +780,169 @@ extension MyController {
 extension Keys {
     
     //VICII
-    static let vicChip        = "VC64VICChipModelKey"
+    static let vicRevision    = "VC64VICChipModelKey"
     static let grayDotBug     = "VC64VICGrayDotBugKey"
     
     // CIAs
-    static let ciaChip        = "VC64CIAChipModelKey"
+    static let ciaRevision    = "VC64CIAChipModelKey"
     static let timerBBug      = "VC64CIATimerBBugKey"
     
     // SID
+    static let sidRevision    = "VC64SIDChipModelKey"
     static let reSID          = "VC64SIDReSIDKey"
-    static let audioChip      = "VC64SIDChipModelKey"
     static let audioFilter    = "VC64SIDFilterKey"
-    static let samplingMethod = "VC64SIDSamplingMethodKey"
+    static let sampling       = "VC64SIDSamplingMethodKey"
     
     // Logic board and RAM
     static let glueLogic      = "VC64GlueLogicKey"
     static let initPattern    = "VC64InitPatternKey"
 }
 
-extension Defaults {
- 
-    //VICII
-    static let vicChip        = PAL_8565
-    static let grayDotBug     = true
+struct HardwareDefaults {
     
-    // CIAs
-    static let ciaChip        = PAL_8565
-    static let timerBBug      = true
+    var vicRevision: VICRevision
+    var grayDotBug: Bool
     
-    // SID
-    static let reSID          = true
-    static let audioChip      = MOS_8580
-    static let audioFilter    = false
-    static let samplingMethod = 0
+    var ciaRevision: CIARevision
+    var timerBBug: Bool
     
-    // Logic board and RAM
-    static let glueLogic      = GLUE_DISCRETE
-    static let initPattern    = INIT_PATTERN_C64
+    var sidRevision: SIDRevision
+    var reSID: Bool
+    var audioFilter: Bool
+    var sampling: SamplingMethod
+    
+    var glueLogic: GlueLogic
+    var initPattern: RamInitPattern
+
+    //
+    // Schemes
+    //
+    
+    static let C64_PAL = HardwareDefaults.init(
+        
+        vicRevision: PAL_6569_R3,
+        grayDotBug:  false,
+        ciaRevision: MOS_6526,
+        timerBBug:   true,
+        sidRevision: MOS_6581,
+        reSID:       true,
+        audioFilter: true,
+        sampling:    SID_SAMPLE_INTERPOLATE,
+        glueLogic:   GLUE_DISCRETE,
+        initPattern: INIT_PATTERN_C64
+    )
+    
+    static let C64_II_PAL = HardwareDefaults.init(
+        
+        vicRevision: PAL_8565,
+        grayDotBug:  true,
+        ciaRevision: MOS_8521,
+        timerBBug:   false,
+        sidRevision: MOS_8580,
+        reSID:       true,
+        audioFilter: true,
+        sampling:    SID_SAMPLE_INTERPOLATE,
+        glueLogic:   GLUE_CUSTOM_IC,
+        initPattern: INIT_PATTERN_C64C
+    )
+    
+    static let C64_OLD_PAL = HardwareDefaults.init(
+        
+        vicRevision: PAL_6569_R1,
+        grayDotBug:  false,
+        ciaRevision: MOS_6526,
+        timerBBug:   true,
+        sidRevision: MOS_6581,
+        reSID:       true,
+        audioFilter: true,
+        sampling:    SID_SAMPLE_INTERPOLATE,
+        glueLogic:   GLUE_DISCRETE,
+        initPattern: INIT_PATTERN_C64
+    )
+
+    static let C64_NTSC = HardwareDefaults.init(
+        
+        vicRevision: NTSC_6567,
+        grayDotBug:  false,
+        ciaRevision: MOS_6526,
+        timerBBug:   false,
+        sidRevision: MOS_6581,
+        reSID:       true,
+        audioFilter: true,
+        sampling:    SID_SAMPLE_INTERPOLATE,
+        glueLogic:   GLUE_DISCRETE,
+        initPattern: INIT_PATTERN_C64
+    )
+    
+    static let C64_II_NTSC = HardwareDefaults.init(
+        
+        vicRevision: NTSC_8562,
+        grayDotBug:  true,
+        ciaRevision: MOS_8521,
+        timerBBug:   true,
+        sidRevision: MOS_8580,
+        reSID:       true,
+        audioFilter: true,
+        sampling:    SID_SAMPLE_INTERPOLATE,
+        glueLogic:   GLUE_CUSTOM_IC,
+        initPattern: INIT_PATTERN_C64C
+    )
+    
+    static let C64_OLD_NTSC = HardwareDefaults.init(
+        
+        vicRevision: NTSC_6567_R56A,
+        grayDotBug:  false,
+        ciaRevision: MOS_6526,
+        timerBBug:   false,
+        sidRevision: MOS_6581,
+        reSID:       true,
+        audioFilter: true,
+        sampling:    SID_SAMPLE_INTERPOLATE,
+        glueLogic:   GLUE_DISCRETE,
+        initPattern: INIT_PATTERN_C64
+    )
 }
 
 extension UserDefaults {
     
     static func registerHardwareUserDefaults() {
         
+        let defaults = HardwareDefaults.C64_PAL
         let dictionary: [String: Any] = [
-        
-            Keys.vicChip: Int(Defaults.vicChip.rawValue),
-            Keys.grayDotBug: Defaults.grayDotBug,
-
-            Keys.ciaChip: Int(Defaults.ciaChip.rawValue),
-            Keys.timerBBug: Defaults.timerBBug,
-
-            Keys.reSID: Defaults.reSID,
-            Keys.audioChip: Int(Defaults.audioChip.rawValue),
-            Keys.audioFilter: false,
-            Keys.samplingMethod: 0,
-
-            Keys.glueLogic: Int(Defaults.glueLogic.rawValue),
-            Keys.initPattern: Int(Defaults.initPattern.rawValue)
+            
+            Keys.vicRevision: defaults.vicRevision.rawValue,
+            Keys.grayDotBug:  defaults.grayDotBug,
+            
+            Keys.ciaRevision: defaults.ciaRevision.rawValue,
+            Keys.timerBBug:   defaults.timerBBug,
+            
+            Keys.sidRevision: defaults.sidRevision.rawValue,
+            Keys.reSID:       defaults.reSID,
+            Keys.audioFilter: defaults.audioFilter,
+            Keys.sampling:    defaults.sampling.rawValue,
+            
+            Keys.glueLogic:   defaults.glueLogic.rawValue,
+            Keys.initPattern: defaults.initPattern.rawValue
         ]
         
-        let defaults = UserDefaults.standard
-        defaults.register(defaults: dictionary)
+        let userDefaults = UserDefaults.standard
+        userDefaults.register(defaults: dictionary)
     }
     
     static func resetHardwareUserDefaults() {
         
         let defaults = UserDefaults.standard
         
-        let keys = [Keys.vicChip,
+        let keys = [Keys.vicRevision,
                     Keys.grayDotBug,
                     
-                    Keys.ciaChip,
+                    Keys.ciaRevision,
                     Keys.timerBBug,
                     
+                    Keys.sidRevision,
                     Keys.reSID,
-                    Keys.audioChip,
                     Keys.audioFilter,
-                    Keys.samplingMethod,
+                    Keys.sampling,
                     
                     Keys.glueLogic,
                     Keys.initPattern
@@ -863,6 +952,7 @@ extension UserDefaults {
     }
 }
 
+/*
 extension MyController {
     
     func loadHardwareUserDefaults() {
@@ -882,7 +972,7 @@ extension MyController {
         c64.sid.setReSID(defaults.bool(forKey: Keys.reSID))
         c64.sid.setModel(defaults.integer(forKey: Keys.audioChip))
         c64.sid.setAudioFilter(defaults.bool(forKey: Keys.audioFilter))
-        c64.sid.setSamplingMethod(defaults.integer(forKey: Keys.samplingMethod))
+        c64.sid.setSamplingMethod(defaults.integer(forKey: Keys.sampling))
         
         c64.vic.setGlueLogic(defaults.integer(forKey: Keys.glueLogic))
         c64.mem.setRamInitPattern(defaults.integer(forKey: Keys.initPattern))
@@ -903,9 +993,10 @@ extension MyController {
         defaults.set(c64.sid.reSID(), forKey: Keys.reSID)
         defaults.set(c64.sid.model(), forKey: Keys.audioChip)
         defaults.set(c64.sid.audioFilter(), forKey: Keys.audioFilter)
-        defaults.set(c64.sid.samplingMethod(), forKey: Keys.samplingMethod)
+        defaults.set(c64.sid.samplingMethod(), forKey: Keys.sampling)
         
         defaults.set(c64.vic.glueLogic(), forKey: Keys.glueLogic)
         defaults.set(c64.mem.ramInitPattern(), forKey: Keys.initPattern)
     }
 }
+*/

@@ -51,27 +51,31 @@ class VIC : public C64Component {
 
     friend C64Memory;
     
+    // Current configuration
+    VICConfig config;
+    
+    
     //
     // Configuration options
     //
     
 private:
     
-    //! @brief    Selected chip model
-    VICModel model;
+    //! @brief    Selected chip model TODO: MOVE TO CONFIG
+    // VICModel model;
 
-    //! @brief    Color palette type
+    //! @brief    Color palette type  TODO: MOVE TO CONFIG
     VICPalette palette;
 
-    //! @brief    Glue logic type
+    //! @brief    Glue logic type  TODO: MOVE TO CONFIG
     GlueLogic glueLogic;
 
 public:
     
-    /*! @brief    Indicates if the gray dot bug should be emulated
+    /*! @brief    Indicates if the gray dot bug should be emulated  TODO: MOVE TO CONFIG
      *  @note     The gray mode bug only affects the newer VICII models 856x
      */
-    bool emulateGrayDotBug;
+    // bool emulateGrayDotBug;
     
     
     //
@@ -730,8 +734,24 @@ private:
     
 public:
 	
-	VIC(C64 &ref);
-
+    VIC(C64 &ref);
+    
+    
+    //
+    // Configuring
+    //
+    
+    VICConfig getConfig() { return config; }
+    
+    VICRevision getRevision() { return config.revision; }
+    void setRevision(VICRevision revision);
+                   
+    bool getGrayDotBug() { return config.grayDotBug; }
+    void setGrayDotBug(bool value) { config.grayDotBug = value; }
+    
+    GlueLogic getGlueLogic() { return config.glueLogic; }
+    void setGlueLogic(GlueLogic type);
+    
     
     //
     // Methods from HardwareComponent
@@ -748,6 +768,7 @@ public:
 private:
     
     void _ping() override;
+    void _dumpConfig() override;
     void _dump() override;
 
 
@@ -757,11 +778,7 @@ private:
     
 public:
     
-    //! @brief    Returns the currently plugged in chip model.
-    VICModel getModel() { return model; }
-    
-    //! @brief    Sets the chip model.
-    void setModel(VICModel m);
+ 
 
     //! @brief    Returns the currently used palette type.
     VICPalette videoPalette() { return palette; }
@@ -769,29 +786,23 @@ public:
     //! @brief    Sets the palette type.
     void setVideoPalette(VICPalette type);
 
-    //! @brief    Returns the emulated glue logic type.
-    GlueLogic getGlueLogic() { return glueLogic; }
-
-    //! @brief    Sets the glue logic type.
-    void setGlueLogic(GlueLogic type);
-
     //! @brief    Returns true if a PAL chip is plugged in.
-    bool isPAL() { return model & (PAL_6569_R1 | PAL_6569_R3 | PAL_8565); }
+    bool isPAL() { return config.revision & (PAL_6569_R1 | PAL_6569_R3 | PAL_8565); }
     
     //! @brief    Returns true if a NTSC chip is plugged in.
-    bool isNTSC() { return model & (NTSC_6567 | NTSC_6567_R56A | NTSC_8562); }
+    bool isNTSC() { return config.revision & (NTSC_6567 | NTSC_6567_R56A | NTSC_8562); }
 
     //! @brief    Returns true if a newer MOS 856x chip is plugged in.
-    bool is856x() { return model & (PAL_8565 | NTSC_8562); }
+    bool is856x() { return config.revision & (PAL_8565 | NTSC_8562); }
     
     //! @brief    Returns true if an older MOS 656x chip is plugged in.
-    bool is656x() { return model & ~(PAL_8565 | NTSC_8562); }
+    bool is656x() { return config.revision & ~(PAL_8565 | NTSC_8562); }
 
     //! @brief    Returns true if the emulated chip has the gray dot bug.
-    bool hasGrayDotBug() { return is856x(); }
+    // bool hasGrayDotBug() { return is856x(); }
 
     //! @brief    Returns true if light pen interrupts are triggered with a delay.
-    bool delayedLightPenIrqs() { return model & (PAL_6569_R1 | NTSC_6567_R56A); }
+    bool delayedLightPenIrqs() { return config.revision & (PAL_6569_R1 | NTSC_6567_R56A); }
 
     //! @brief    Returns the clock frequencay of the selected VICII model.
     unsigned getClockFrequency();

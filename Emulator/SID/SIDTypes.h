@@ -10,24 +10,75 @@
 #ifndef SID_TYPES_H
 #define SID_TYPES_H
 
-/*! @brief    Sound chip models
- *  @details  This enum reflects enum "chip_model" used by reSID.
- */
-typedef enum {
+//
+// Enumerations
+//
+
+typedef enum : long
+{
     MOS_6581,
     MOS_8580
-} SIDModel;
+}
+SIDRevision;
 
-/*! @brief    Sampling method
- *  @details  This enum reflects enum "sampling_method" used by reSID.
- */
-typedef enum {
+inline bool
+isSIDRevision(long value)
+{
+    return value == MOS_6581 || value == MOS_8580;
+}
+
+inline const char *
+sidRevisionName(SIDRevision type)
+{
+    assert(isSIDRevision(type));
+    
+    switch (type) {
+        case MOS_6581: return "MOS_6581";
+        case MOS_8580: return "MOS_8580";
+        default:       return "???";
+    }
+}
+
+// This enum reflects enum "sampling_method" used by reSID.
+typedef enum : long
+{
     SID_SAMPLE_FAST,
     SID_SAMPLE_INTERPOLATE,
     SID_SAMPLE_RESAMPLE,
     SID_SAMPLE_RESAMPLE_FASTMEM
-} SamplingMethod;
+}
+SamplingMethod;
 
+inline bool
+isSamplingMethod(long value)
+{
+    return value >= SID_SAMPLE_FAST && value <= SID_SAMPLE_RESAMPLE_FASTMEM;
+}
+
+inline const char *
+sidSamplingMethodName(SamplingMethod method)
+{
+    assert(isSamplingMethod(method));
+    
+    switch (method) {
+        case SID_SAMPLE_FAST:             return "FAST";
+        case SID_SAMPLE_INTERPOLATE:      return "INTERPOLATE";
+        case SID_SAMPLE_RESAMPLE:         return "RESAMPLE";
+        case SID_SAMPLE_RESAMPLE_FASTMEM: return "RESAMPLE FASTMEM";
+        default:                          return "???";
+    }
+}
+
+
+//
+// Structures
+//
+
+typedef struct
+{
+    SIDRevision revision;
+}
+SIDConfig;
 
 
 /*! @brief    Voice info

@@ -280,13 +280,14 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     b ? wrapper->cia->startTracing() : wrapper->cia->stopTracing();
 }
+/*
 - (NSInteger) model
 {
     return (NSInteger)wrapper->cia->getModel();
 }
 - (void) setModel:(NSInteger)value
 {
-    wrapper->cia->setModel((CIAModel)value);
+    wrapper->cia->setModel((CIARevision)value);
 }
 - (BOOL) emulateTimerBBug
 {
@@ -296,6 +297,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->cia->setEmulateTimerBBug(value);
 }
+*/
 - (void) poke:(u16)addr value:(u8)value {
     wrapper->cia->suspend();
     wrapper->cia->poke(addr, value);
@@ -321,14 +323,6 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     return self;
 }
 
-- (NSInteger) model
-{
-    return (NSInteger)wrapper->vic->getModel();
-}
-- (void) setModel:(NSInteger)value
-{
-    wrapper->vic->setModel((VICModel)value);
-}
 - (NSInteger) videoPalette
 {
     return (NSInteger)wrapper->vic->videoPalette();
@@ -337,6 +331,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->vic->setVideoPalette((VICPalette)value);
 }
+/*
 - (NSInteger) glueLogic
 {
     return (NSInteger)wrapper->vic->getGlueLogic();
@@ -357,6 +352,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->vic->emulateGrayDotBug = value;
 }
+*/
 - (BOOL) isPAL
 {
     return wrapper->vic->isPAL();
@@ -614,6 +610,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->sid->setSamplingMethod((SamplingMethod)value);
 }
+/*
 - (NSInteger) model
 {
     return (int)(wrapper->sid->getModel());
@@ -622,6 +619,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->sid->setModel((SIDModel)value);
 }
+*/
 - (u32) sampleRate
 {
     return wrapper->sid->getSampleRate();
@@ -1507,15 +1505,32 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->c64->resume();
 }
+- (C64Configuration) config
+{
+    return wrapper->c64->getConfig();
+}
+- (NSInteger) getConfig:(ConfigOption)option
+{
+    return wrapper->c64->getConfig(option);
+}
+- (BOOL) configure:(ConfigOption)opt value:(NSInteger)val
+{
+    return wrapper->c64->configure(opt, val);
+}
+- (BOOL) configure:(ConfigOption)opt enable:(BOOL)val
+{
+    return wrapper->c64->configure(opt, val ? 1 : 0);
+}
+
 
 // Configuring the emulator
-- (NSInteger) model
+- (C64Model) model
 {
     return wrapper->c64->getModel();
 }
-- (void) setModel:(NSInteger)value
+- (void) setModel:(C64Model)model
 {
-    wrapper->c64->setModel((C64Model)value);
+    wrapper->c64->setModel(model);
 }
 
 // Accessing the message queue

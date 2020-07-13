@@ -31,7 +31,23 @@
 // Enumerations
 //
 
-typedef enum
+typedef enum : long
+{
+    OPT_VIC_REVISION,
+    OPT_GRAY_DOT_BUG,
+    OPT_GLUE_LOGIC,
+    OPT_CIA_REVISION,
+    OPT_TIMER_B_BUG,
+    OPT_SID_REVISION
+}
+ConfigOption;
+
+inline bool isConfigOption(long value)
+{
+    return value >= OPT_VIC_REVISION && value <= OPT_SID_REVISION;
+}
+
+typedef enum : long
 {
     C64_PAL,
     C64_II_PAL,
@@ -43,11 +59,11 @@ typedef enum
 }
 C64Model;
 
-inline bool isC64Model(C64Model model) {
-    return model >= C64_PAL && model <= C64_OLD_NTSC;
+inline bool isC64Model(long value) {
+    return value >= C64_PAL && value <= C64_OLD_NTSC;
 }
 
-typedef enum
+typedef enum : long
 {
     STATE_OFF,
     STATE_PAUSED,
@@ -55,21 +71,36 @@ typedef enum
 }
 EmulatorState;
 
+//
+// Structures
+//
+
 typedef struct
 {
-    VICModel vic;
-    bool grayDotBug;
-    CIAModel cia;
-    bool timerBBug;
-    SIDModel sid;
-    bool sidFilter;
+    VICConfig vic;
+    CIAConfig cia1;
+    CIAConfig cia2;
+    SIDConfig sid;
     GlueLogic glue;
     RamInitPattern pattern;
 }
 C64Configuration;
 
+typedef struct
+{
+    VICRevision vic;
+    bool grayDotBug;
+    CIARevision cia;
+    bool timerBBug;
+    SIDRevision sid;
+    bool sidFilter;
+    GlueLogic glue;
+    RamInitPattern pattern;
+}
+C64ConfigurationDeprecated;
+
 // Configurations of standard C64 models
-static const C64Configuration configurations[] = {
+static const C64ConfigurationDeprecated configurations[] = {
     
     // C64 PAL
     { PAL_6569_R3, false, MOS_6526, true, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 },

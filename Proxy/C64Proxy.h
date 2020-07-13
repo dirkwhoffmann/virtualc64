@@ -126,11 +126,16 @@ struct AnyC64FileWrapper;
 - (void) suspend;
 - (void) resume;
 
+- (C64Configuration) config;
+- (NSInteger) getConfig:(ConfigOption)option;
+- (BOOL) configure:(ConfigOption)opt value:(NSInteger)val;
+- (BOOL) configure:(ConfigOption)opt enable:(BOOL)val;
+
 - (DriveProxy *)drive:(NSInteger)nr;
 
 // Configuring the emulator
-- (NSInteger) model;
-- (void) setModel:(NSInteger)value;
+- (C64Model) model;
+- (void) setModel:(C64Model)value;
 
 // Accessing the message queue
 - (Message)message;
@@ -309,11 +314,6 @@ struct AnyC64FileWrapper;
 - (BOOL) tracing;
 - (void) setTracing:(BOOL)b;
 
-- (NSInteger) model;
-- (void) setModel:(NSInteger)value;
-- (BOOL) emulateTimerBBug;
-- (void) setEmulateTimerBBug:(BOOL)value;
-
 - (void) poke:(u16)addr value:(u8)value;
 
 @end
@@ -329,15 +329,8 @@ struct AnyC64FileWrapper;
 	struct VicWrapper *wrapper;
 }
 
-- (NSInteger) model;
-- (void) setModel:(NSInteger)value;
 - (NSInteger) videoPalette;
 - (void) setVideoPalette:(NSInteger)value;
-- (NSInteger) glueLogic;
-- (void) setGlueLogic:(NSInteger)value;
-- (BOOL) hasGrayDotBug;
-- (BOOL) emulateGrayDotBug;
-- (void) setEmulateGrayDotBug:(BOOL)value;
 - (BOOL) isPAL;
 
 - (void *) screenBuffer;
@@ -420,8 +413,10 @@ struct AnyC64FileWrapper;
 - (void) setAudioFilter:(BOOL)b;
 - (NSInteger) samplingMethod;
 - (void) setSamplingMethod:(NSInteger)value;
+/*
 - (NSInteger) model;
 - (void) setModel:(NSInteger)value;
+*/
 
 - (NSInteger) ringbufferSize;
 - (float) ringbufferData:(NSInteger)offset;

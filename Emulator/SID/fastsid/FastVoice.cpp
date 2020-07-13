@@ -137,42 +137,42 @@ FastVoice::init(FastSID *owner, unsigned voiceNr, FastVoice *prevVoice)
 void
 FastVoice::updateWaveTablePtr()
 {
-    SIDModel chipModel = fastsid->getModel(); 
-    assert(chipModel == MOS_6581 || chipModel == MOS_8580);
+    SIDRevision revision = fastsid->getRevision();
+    assert(revision == MOS_6581 || revision == MOS_8580);
     
     unsigned offset;
     switch (waveform()) {
             
         case FASTSID_TRIANGLE:
-            wavetable = wavetable10[chipModel];
+            wavetable = wavetable10[revision];
             break;
             
         case FASTSID_SAW:
-            wavetable = wavetable20[chipModel];
+            wavetable = wavetable20[revision];
             break;
             
         case FASTSID_SAW | FASTSID_TRIANGLE:
-            wavetable = wavetable30[chipModel];
+            wavetable = wavetable30[revision];
             break;
             
         case FASTSID_PULSE:
             offset = testBit() ? 0 : pulseWidth();
-            wavetable = wavetable40[chipModel] + (4096 - offset);
+            wavetable = wavetable40[revision] + (4096 - offset);
             break;
             
         case FASTSID_PULSE | FASTSID_TRIANGLE:
             offset = 4096 - pulseWidth();
-            wavetable = wavetable50[chipModel] + offset;
+            wavetable = wavetable50[revision] + offset;
             break;
             
         case FASTSID_PULSE | FASTSID_SAW:
             offset = 4096 - pulseWidth();
-            wavetable = wavetable60[chipModel] + offset;
+            wavetable = wavetable60[revision] + offset;
             break;
             
         case FASTSID_PULSE | FASTSID_SAW | FASTSID_TRIANGLE:
             offset = 4096 - pulseWidth();
-            wavetable = wavetable70[chipModel] + offset;
+            wavetable = wavetable70[revision] + offset;
             break;
             
         default:

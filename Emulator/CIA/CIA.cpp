@@ -74,16 +74,10 @@ CIA::_reset()
 }
 
 void
-CIA::setModel(CIAModel m)
+CIA::setRevision(CIARevision revision)
 {
-    if (!isCIAModel(m)) {
-        warn("Unknown CIA model (%d). Assuming first generation.\n", m);
-        m = MOS_6526;
-    }
-    
-    suspend();
-    model = m;
-    resume();
+    assert(isCIARevision(revision));
+    config.revision = revision;
 }
 
 void

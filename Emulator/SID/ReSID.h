@@ -34,7 +34,7 @@ private:
     reSID::SID::State st;
     
     //! @brief   The emulated chip model
-    SIDModel model;
+    SIDRevision model;
     
     //! @brief   Clock frequency
     /*! @details Either PAL_CLOCK_FREQUENCY or NTSC_CLOCK_FREQUENCY
@@ -104,13 +104,13 @@ public:
     // Configuring
     
     //! Returns the chip model
-    SIDModel getModel() {
-        assert((SIDModel)sid->sid_model == model);
+    SIDRevision getRevision() {
+        assert((SIDRevision)sid->sid_model == model);
         return model;
     }
     
     //! Sets the chip model
-    void setModel(SIDModel m);
+    void setRevision(SIDRevision m);
     
     //! Returns the clock frequency
     u32 getClockFrequency() {

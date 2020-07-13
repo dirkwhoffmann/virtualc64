@@ -12,17 +12,6 @@
 
 #include "C64Component.h"
 
-//#include "TOD.h"
-//#include "CIATypes.h"
-
-// Forward declarations
-/*
-class VIC;
-class IEC;
-class Keyboard;
-class Joystick;
-*/
-
 // Adapted from PC64WIN
 #define CIACountA0     (1ULL << 0) // Decrements timer A
 #define CIACountA1     (1ULL << 1)
@@ -72,10 +61,13 @@ class Joystick;
 // Virtual complex interface adapter (CIA)
 class CIA : public C64Component {
     
-    //! @brief    Selected chip model
-    CIAModel model;
+    // Current configuration
+    CIAConfig config;
     
-    //! @brief    Indicates if timer B bug should be emulated
+    //! @brief    Selected chip model DEPRECATED
+    CIARevision model;
+    
+    //! @brief    Indicates if timer B bug should be emulated DEPRECATED
     bool emulateTimerBBug;
     
     //
@@ -251,6 +243,19 @@ public:
     
     
     //
+    // Configuring
+    //
+
+    CIAConfig getConfig() { return config; }
+
+    CIARevision getRevision() { return config.revision; }
+    void setRevision(CIARevision revision);
+              
+    bool getTimerBBug() { return config.timerBBug; }
+    void setTimerBBug(bool value) { config.timerBBug = value; }
+    
+    
+    //
     // Methods from HardwareComponent
     //
     
@@ -274,19 +279,19 @@ public:
     //
     
     //! @brief    Returns the currently plugged in chip model.
-    CIAModel getModel() { return model; }
+    // CIARevision getModel() { return model; }
     
     //! @brief    Sets the chip model.
-    void setModel(CIAModel m);
+    // void setModel(CIARevision m);
     
     //! @brief    Determines if the emulated model is affected by the timer B bug.
-    bool hasTimerBBug() { return model == MOS_6526; }
+    // bool hasTimerBBug() { return model == MOS_6526; }
     
     //! @brief    Returns true if the timer B bug should be emulated.
-    bool getEmulateTimerBBug() { return emulateTimerBBug; }
+    // bool getEmulateTimerBBug() { return emulateTimerBBug; }
     
     //! @brief    Enables or disables emulation of the timer B bug.
-    void setEmulateTimerBBug(bool value) { emulateTimerBBug = value; }
+    // void setEmulateTimerBBug(bool value) { emulateTimerBBug = value; }
     
     //! @brief    Getter for peripheral port A
     u8 getPA() { return PA; }

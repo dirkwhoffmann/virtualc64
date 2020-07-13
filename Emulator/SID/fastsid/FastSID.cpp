@@ -167,9 +167,9 @@ FastSID::getVoiceInfo(unsigned i)
 }
 
 void
-FastSID::setModel(SIDModel m)
+FastSID::setRevision(SIDRevision rev)
 {
-    model = m;
+    model = rev;
     
     // Switch wave tables according to new model
     voice[0].updateWaveTablePtr();

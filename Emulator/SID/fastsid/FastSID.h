@@ -63,7 +63,7 @@ public:
 private:
             
     //! @brief   Chip model.
-    SIDModel model = MOS_6581;
+    SIDRevision model = MOS_6581;
     
     //! @brief   Current CPU frequency
     u32 cpuFrequency = PAL_CLOCK_FREQUENCY;
@@ -166,10 +166,10 @@ public:
     //
     
     // Returns the chip model
-    SIDModel getModel() { return model; }
+    SIDRevision getRevision() { return model; }
     
     // Sets the chip model
-    void setModel(SIDModel m);
+    void setRevision(SIDRevision m);
     
     // Returns the clock frequency
     u32 getClockFrequency() { return cpuFrequency; }

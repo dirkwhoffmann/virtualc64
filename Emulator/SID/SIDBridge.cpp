@@ -83,18 +83,16 @@ SIDBridge::_dump()
 
     msg("FastSID:\n");
     msg("--------\n");
-    msg("    Chip model: %s\n",
-        (fastsid.getModel() == MOS_6581) ? "6581" :
-        (fastsid.getModel() == MOS_8580) ? "8580" : "???");
+    msg("    Chip model: %d (%s)\n", sidRevisionName(fastsid.getRevision()));
     msg(" Sampling rate: %d\n", fastsid.getSampleRate());
     msg(" CPU frequency: %d\n", fastsid.getClockFrequency());
     msg("Emulate filter: %s\n", fastsid.getAudioFilter() ? "yes" : "no");
     msg("\n");
     _dump(fastsid.getInfo());
     
-    resid.sid->voice[0].wave.reset(); // reset_shift_register();
-    resid.sid->voice[1].wave.reset(); // reset_shift_register();
-    resid.sid->voice[2].wave.reset(); // reset_shift_register();
+    resid.sid->voice[0].wave.reset();
+    resid.sid->voice[1].wave.reset();
+    resid.sid->voice[2].wave.reset();
     resid.sid->voice[0].envelope.reset();
     resid.sid->voice[1].envelope.reset();
     resid.sid->voice[2].envelope.reset();
@@ -248,30 +246,23 @@ SIDBridge::setSamplingMethod(SamplingMethod value)
     resid.setSamplingMethod(value);
 }
 
-SIDModel
-SIDBridge::getModel()
+SIDRevision
+SIDBridge::getRevision()
 {
     if (useReSID) {
-        return resid.getModel();
+        return resid.getRevision();
     } else {
-        return fastsid.getModel();
+        return fastsid.getRevision();
     }
 }
 
 void 
-SIDBridge::setModel(SIDModel m)
+SIDBridge::setRevision(SIDRevision revision)
 {
-    if (m != MOS_6581 && m != MOS_8580) {
-        warn("Unknown SID model (%d). Using  MOS8580\n", m);
-        m = MOS_8580;
-    }
+    assert(isSIDRevision(revision));
     
-    suspend();
-    
-    resid.setModel(m);
-    fastsid.setModel(m);
-
-    resume();
+    resid.setRevision(revision);
+    fastsid.setRevision(revision);
 }
 
 u32

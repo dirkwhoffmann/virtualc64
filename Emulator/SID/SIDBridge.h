@@ -19,6 +19,9 @@ class SIDBridge : public C64Component {
 
     friend C64Memory;
 
+    // Current configuration
+    SIDConfig config;
+    
     //
     // Sub components
     //
@@ -105,18 +108,19 @@ public:
     // Configuring
     //
     
+    SIDConfig getConfig() { return config; }
+    
+    SIDRevision getRevision();
+    void setRevision(SIDRevision m);
+
+    
+    
     //! @brief    Returns true, whether ReSID or the old implementation should be used.
     bool getReSID() { return useReSID; }
     
     //! @brief    Enables or disables the ReSID library.
     void setReSID(bool enable);
-    
-    //! @brief    Returns the simulated chip model.
-    SIDModel getModel();
-    
-    //! @brief    Sets chip model
-    void setModel(SIDModel m);
-    
+        
     //! @brief    Returns true iff audio filters are enabled.
     bool getAudioFilter();
     

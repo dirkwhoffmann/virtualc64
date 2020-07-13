@@ -259,6 +259,17 @@ public:
     ~C64();
     
     //
+    // Configuring
+    //
+
+    // Returns the currently set configuration
+    C64Configuration getConfig();
+
+    // Get or sets a single configuration item
+    long getConfig(ConfigOption option);
+    bool configure(ConfigOption option, long value);
+    
+    //
     // Methods from HardwareComponent
     //
 

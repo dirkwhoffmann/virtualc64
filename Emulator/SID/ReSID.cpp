@@ -115,22 +115,20 @@ ReSID::_reset()
 }
 
 void
-ReSID::setModel(SIDModel m)
+ReSID::setRevision(SIDRevision revision)
 {
-    assert(m == 0 || m == 1);
-    model = m;
+    assert(revision == 0 || revision == 1);
+    model = revision;
     
     suspend();
-    sid->set_chip_model((reSID::chip_model)m);
+    sid->set_chip_model((reSID::chip_model)revision);
     resume();
     
     // MOS8580 emulation seems to be problematic when combined with filters.
     // TODO: Disable filters in combination with this chip
     
-    assert((SIDModel)sid->sid_model == model);
-    debug(SID_DEBUG, "Emulating SID model %s.\n",
-          (model == MOS_6581) ? "MOS6581" :
-          (model == MOS_8580) ? "MOS8580" : "?");
+    assert((SIDRevision)sid->sid_model == revision);
+    debug(SID_DEBUG, "Emulating SID revision %s.\n", sidRevisionName(revision));
 }
 
 void

@@ -119,6 +119,126 @@ C64::~C64()
     pthread_mutex_destroy(&threadLock);
 }
 
+C64Configuration
+C64::getConfig()
+{
+    C64Configuration config;
+
+    config.cia1 = cia1.getConfig();
+    config.cia2 = cia2.getConfig();
+    config.vic = vic.getConfig();
+
+    // Assure both CIAs are configured equally
+    assert(config.cia1.revision == config.cia1.revision);
+    assert(config.cia1.timerBBug == config.cia2.timerBBug);
+
+    return config;
+}
+
+long
+C64::getConfig(ConfigOption option)
+{
+    switch (option) {
+
+        case OPT_VIC_REVISION: return (long)vic.getRevision();
+        case OPT_GRAY_DOT_BUG: return (long)vic.getGrayDotBug();
+        case OPT_GLUE_LOGIC:   return (long)vic.getGlueLogic();
+        case OPT_CIA_REVISION: return (long)cia1.getRevision();
+        case OPT_TIMER_B_BUG:  return (long)cia1.getTimerBBug();
+        case OPT_SID_REVISION: return (long)sid.getRevision();
+            
+        default: assert(false); return 0;
+    }
+}
+
+bool
+C64::configure(ConfigOption option, long value)
+{
+    suspend();
+    
+    C64Configuration current = getConfig();
+    
+    switch (option) {
+
+        case OPT_VIC_REVISION:
+            
+            if (!isVICRevision(value)) {
+                warn("Invalid VIC revision: %d\n", value);
+                goto error;
+            }
+            
+            if (current.vic.revision == value) goto exit;
+            vic.setRevision((VICRevision)value);
+            goto success;
+
+        case OPT_GRAY_DOT_BUG:
+
+            if (current.vic.grayDotBug == value) goto exit;
+            vic.setGrayDotBug(value);
+            goto success;
+            
+        case OPT_GLUE_LOGIC:
+            
+            if (!isGlueLogic(value)) {
+                 warn("Invalid glue logic type: %d\n", value);
+                 goto error;
+             }
+             
+             if (current.vic.glueLogic == value) goto exit;
+             vic.setGlueLogic((GlueLogic)value);
+             goto success;
+            
+        case OPT_CIA_REVISION:
+            
+            if (!isCIARevision(value)) {
+                warn("Invalid CIA revision: %d\n", value);
+                goto error;
+            }
+                        
+            assert(cia1.getRevision() == cia2.getRevision());
+            if (current.cia1.revision == value) goto exit;
+            cia1.setRevision((CIARevision)value);
+            cia2.setRevision((CIARevision)value);
+            goto success;
+
+        case OPT_TIMER_B_BUG:
+            
+            assert(cia1.getTimerBBug() == cia2.getTimerBBug());
+            if (current.cia1.timerBBug == value) goto exit;
+            cia1.setTimerBBug(value);
+            cia2.setTimerBBug(value);
+            goto success;
+            
+        case OPT_SID_REVISION:
+            
+            if (!isSIDRevision(value)) {
+                warn("Invalid SID revision: %d\n", value);
+                goto error;
+            }
+
+            if (current.sid.revision == value) goto exit;
+            sid.setRevision((SIDRevision)value);
+            goto success;
+
+   
+            
+            
+            
+        default: assert(false);
+    }
+    
+    error:
+        resume();
+        return false;
+        
+    success:
+        // putMessage(MSG_CONFIG);
+        
+    exit:
+        resume();
+        return true;
+}
+
 void
 C64::prefix()
 {
@@ -418,13 +538,12 @@ C64Model
 C64::getModel()
 {
     // Look for known configurations
-    for (unsigned i = 0; i < sizeof(configurations) / sizeof(C64Configuration); i++) {
-        if (vic.getModel() == configurations[i].vic &&
-            vic.emulateGrayDotBug == configurations[i].grayDotBug &&
-            cia1.getModel() == configurations[i].cia &&
-            cia1.getEmulateTimerBBug() == configurations[i].timerBBug &&
-            sid.getModel() == configurations[i].sid &&
-            // sid.getAudioFilter() == configurations[i].sidFilter &&
+    for (unsigned i = 0; i < sizeof(configurations) / sizeof(C64ConfigurationDeprecated); i++) {
+        if (vic.getRevision() == configurations[i].vic &&
+            vic.getGrayDotBug() == configurations[i].grayDotBug &&
+            cia1.getRevision() == configurations[i].cia &&
+            cia1.getTimerBBug() == configurations[i].timerBBug &&
+            sid.getRevision() == configurations[i].sid &&
             vic.getGlueLogic() == configurations[i].glue &&
             mem.getRamInitPattern() == configurations[i].pattern) {
             return (C64Model)i;
@@ -441,13 +560,13 @@ C64::setModel(C64Model m)
     if (m != C64_CUSTOM) {
         
         suspend();
-        vic.setModel(configurations[m].vic);
-        vic.emulateGrayDotBug = configurations[m].grayDotBug;
-        cia1.setModel(configurations[m].cia);
-        cia2.setModel(configurations[m].cia);
-        cia1.setEmulateTimerBBug(configurations[m].timerBBug);
-        cia2.setEmulateTimerBBug(configurations[m].timerBBug);
-        sid.setModel(configurations[m].sid);
+        vic.setRevision(configurations[m].vic);
+        vic.setGrayDotBug(configurations[m].grayDotBug);
+        cia1.setRevision(configurations[m].cia);
+        cia2.setRevision(configurations[m].cia);
+        cia1.setTimerBBug(configurations[m].timerBBug);
+        cia2.setTimerBBug(configurations[m].timerBBug);
+        sid.setRevision(configurations[m].sid);
         sid.setAudioFilter(configurations[m].sidFilter);
         vic.setGlueLogic(configurations[m].glue);
         mem.setRamInitPattern(configurations[m].pattern);
@@ -474,7 +593,7 @@ C64::updateVicFunctionTable()
     vicfunc[56] = &VIC::cycle56;
     
     // Assign model specific execution functions
-    switch (vic.getModel()) {
+    switch (vic.getRevision()) {
             
         case PAL_6569_R1:
         case PAL_6569_R3:

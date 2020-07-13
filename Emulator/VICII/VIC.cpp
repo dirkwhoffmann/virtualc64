@@ -24,16 +24,16 @@ VIC::VIC(C64 &ref) : C64Component(ref)
     
 	markIRQLines = false;
 	markDMALines = false;
-    emulateGrayDotBug = true;
+    config.grayDotBug = true;
     palette = COLOR_PALETTE;
     
     // Register snapshot items
     SnapshotItem items[] = {
 
         // Configuration items
-        { &model,                       sizeof(model),                          KEEP_ON_RESET },
+        { &config.revision,             sizeof(config.revision),                KEEP_ON_RESET },
         { &glueLogic,                   sizeof(glueLogic),                      KEEP_ON_RESET },
-        { &emulateGrayDotBug,           sizeof(emulateGrayDotBug),              KEEP_ON_RESET },
+        { &config.grayDotBug,           sizeof(config.grayDotBug),              KEEP_ON_RESET },
 
         // Internal state
         { &reg,                         sizeof(reg),                            CLEAR_ON_RESET },
@@ -116,7 +116,7 @@ VIC::VIC(C64 &ref) : C64Component(ref)
 void
 VIC::_initialize()
 {
-    setModel(PAL_8565);
+    setRevision(PAL_8565);
 }
 
 void 
@@ -171,6 +171,17 @@ VIC::_ping()
     vc64.putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
 }
 
+void
+VIC::_dumpConfig()
+{
+    msg("    Chip model : %d (%s)\n", config.revision, vicRevisionName(config.revision));
+    msg("  Gray dot bug : %s\n", config.grayDotBug ? "yes" : "no");
+    msg("           PAL : %s\n", isPAL() ? "yes" : "no");
+    msg("          NTSC : %s\n", isNTSC() ? "yes" : "no");
+    msg("is656x, is856x : %d %d\n", is656x(), is856x());
+    msg("    Glue logic : %d (%s)\n", config.glueLogic, glueLogicName(config.glueLogic));
+}
+
 void 
 VIC::_dump()
 {
@@ -180,14 +191,7 @@ VIC::_dump()
     int xscroll = ctrl2 & 0x07;
     DisplayMode mode = (DisplayMode)((ctrl1 & 0x60) | (ctrl2 & 0x10));
     
-	msg("VIC\n");
-	msg("---\n\n");
-    msg("       Chip model : %d\n", model);
-    msg("              PAL : %s\n", isPAL() ? "yes" : "no");
-    msg("             NTSC : %s\n", isNTSC() ? "yes" : "no");
     msg("       Glue logic : %d\n", glueLogic);
-    msg("     Gray dot bug : %s\n", emulateGrayDotBug ? "yes" : "no");
-    msg("   is656x, is856x : %d %d\n", is656x(), is856x());
 	msg("     Bank address : %04X\n", bankAddr, bankAddr);
     msg("    Screen memory : %04X\n", VM13VM12VM11VM10() << 6);
 	msg(" Character memory : %04X\n", (CB13CB12CB11() << 10) % 0x4000);
@@ -257,23 +261,18 @@ VIC::didSaveToBuffer(u8 **buffer)
 }
 
 void
-VIC::setModel(VICModel m)
+VIC::setRevision(VICRevision revision)
 {
-    debug(VIC_DEBUG, "VIC::setModel(%d)\n", m);
+    debug(VIC_DEBUG, "setRevision(%d)\n", revision);
+
+    assert(isVICRevision(revision));
+    config.revision = revision;
     
-    if (!isVICChhipModel(m)) {
-        warn("Unknown VICII model (%d). Assuming a MOS8565.\n", m);
-        m = PAL_8565;
-    }
-    
-    suspend();
-    
-    model = m;
     updatePalette();
     resetScreenBuffers();
     vc64.updateVicFunctionTable();
     
-    switch(model) {
+    switch(revision) {
             
         case PAL_6569_R1:
         case PAL_6569_R3:
@@ -292,8 +291,15 @@ VIC::setModel(VICModel m)
         default:
             assert(false);
     }
+}
+
+void
+VIC::setGlueLogic(GlueLogic type)
+{
+    debug(VIC_DEBUG, "setGlueLogic(%d)\n", type);
     
-    resume();
+    assert(isGlueLogic(type));
+    config.glueLogic = type;
 }
 
 void
@@ -308,25 +314,10 @@ VIC::setVideoPalette(VICPalette type)
     updatePalette();
 }
 
-void
-VIC::setGlueLogic(GlueLogic type)
-{
-    debug(VIC_DEBUG, "setGlueLogic(%d)\n", type);
-    
-    if (!isGlueLogic(type)) {
-        warn("Unknown glue logic type (%d). Assuming discrete logic.\n", type);
-        type = GLUE_DISCRETE;
-    }
-    
-    suspend();
-    glueLogic = type;
-    resume();
-}
-
 unsigned
 VIC::getClockFrequency()
 {
-    switch (model) {
+    switch (config.revision) {
             
         case NTSC_6567:
         case NTSC_8562:
@@ -341,7 +332,7 @@ VIC::getClockFrequency()
 unsigned
 VIC::getCyclesPerRasterline()
 {
-    switch (model) {
+    switch (config.revision) {
             
         case NTSC_6567_R56A:
             return 64;
@@ -364,7 +355,7 @@ VIC::isLastCycleInRasterline(unsigned cycle)
 unsigned
 VIC::getRasterlinesPerFrame()
 {
-    switch (model) {
+    switch (config.revision) {
             
         case NTSC_6567_R56A:
             return 262;
@@ -381,7 +372,7 @@ VIC::getRasterlinesPerFrame()
 bool
 VIC::isVBlankLine(unsigned rasterline)
 {
-    switch (model) {
+    switch (config.revision) {
             
         case NTSC_6567_R56A:
             return rasterline < 16 || rasterline >= 16 + 234;
@@ -550,7 +541,7 @@ VIC::lightpenX()
 {
     u8 cycle = vc64.rasterCycle;
     
-    switch (model) {
+    switch (config.revision) {
             
         case PAL_6569_R1:
         case PAL_6569_R3:
@@ -626,7 +617,7 @@ VIC::checkForLightpenIrqAtStartOfFrame()
     assert(vc64.rasterCycle == 2);
  
     // Latch coordinate (values according to VICE 3.1)
-    switch (model) {
+    switch (config.revision) {
             
         case PAL_6569_R1:
         case PAL_6569_R3:

@@ -626,7 +626,7 @@
 				50BF77D120309A2A006E000F /* WindowDelegate.swift */,
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
 				5002FA7921C264C100DA4BBC /* Dialogs */,
-				50C12A4221C6B634007EFAF6 /* Preferences */,
+				50C12A4221C6B634007EFAF6 /* Settings */,
 				5038CA9820B6C2D8000D9193 /* Inspector */,
 				50FE5B342039B392006CE7C7 /* Keyboard Controller */,
 				50B4B6071EEFE77400D56499 /* TouchBar */,
@@ -1101,14 +1101,14 @@
 			name = TouchBar;
 			sourceTree = "<group>";
 		};
-		50C12A4221C6B634007EFAF6 /* Preferences */ = {
+		50C12A4221C6B634007EFAF6 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 				5018AF65202EDD2000B4C886 /* Defaults.swift */,
 				50769B8824BB1B38006FE743 /* Preferences */,
 				50769B8724BB1A7A006FE743 /* Configuration */,
 			);
-			path = Preferences;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		50C12A4321C6B6A6007EFAF6 /* MediaBrowsers */ = {

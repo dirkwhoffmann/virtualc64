@@ -11,14 +11,15 @@ extension ConfigurationController {
     
     func refreshHardwareTab() {
                 
-        let vicModel = config.vicModel
+        let c64Model = c64.model()
+        let vicRevision = config.vicRevision
         
         track()
         
         // VIC
-        hwVicModelPopup.selectItem(withTag: vicModel)
+        hwVicModelPopup.selectItem(withTag: vicRevision)
         
-        switch UInt32(vicModel) {
+        switch vicRevision {
             
         case PAL_6569_R1.rawValue,
              PAL_6569_R3.rawValue,
@@ -41,45 +42,42 @@ extension ConfigurationController {
         default:
             assert(false)
         }
-        hwVicGrayDotBug.state = c64.vic.emulateGrayDotBug() ? .on : .off
+        hwVicGrayDotBug.state = config.grayDotBug ? .on : .off
         
         // CIA
-        assert(c64.cia1.model() == c64.cia2.model())
-        assert(c64.cia1.emulateTimerBBug() == c64.cia2.emulateTimerBBug())
-        hwCiaModelPopup.selectItem(withTag: c64.cia1.model())
-        hwCiaTimerBBug.state = c64.cia1.emulateTimerBBug() ? .on : .off
+        hwCiaModelPopup.selectItem(withTag: config.ciaRevision)
+        hwCiaTimerBBug.state = config.timerBBug ? .on : .off
         
         // Audio
-        let sidModel = c64.sid.model()
-        hwSidModelPopup.selectItem(withTag: sidModel)
+        hwSidModelPopup.selectItem(withTag: config.sidRevision)
         hwSidFilter.state = c64.sid.audioFilter() ? .on : .off
         hwSidEnginePopup.selectItem(withTag: (c64.sid.reSID() ? 1 : 0))
         hwSidSamplingPopup.isEnabled = c64.sid.reSID()
         hwSidSamplingPopup.selectItem(withTag: c64.sid.samplingMethod())
         
         // Logic board
-        hwGlueLogicPopup.selectItem(withTag: c64.vic.glueLogic())
+        hwGlueLogicPopup.selectItem(withTag: config.glueLogic)
         hwRamInitPatternPopup.selectItem(withTag: c64.mem.ramInitPattern())
         
         // Configuration info text
-        var descr = "???"
-        switch UInt32(c64.model()) {
-        case C64_PAL.rawValue:
+        var descr: String
+        switch c64Model {
+        case C64_PAL:
             descr = "matches a C64 with brown casing (breadbox) and PAL video ouput"
             
-        case C64_II_PAL.rawValue:
+        case C64_II_PAL:
             descr = "matches a C64 II (white casing) with PAL video ouput"
             
-        case C64_OLD_PAL.rawValue:
+        case C64_OLD_PAL:
             descr = "matches an early C64 with brown casing (breadbox) and PAL video output"
             
-        case C64_NTSC.rawValue:
+        case C64_NTSC:
             descr = "matches a C64 with brown casing (breadbox) and NTSC video ouput"
             
-        case C64_II_NTSC.rawValue:
+        case C64_II_NTSC:
             descr = "matches a C64 II (white casing) with NTSC video ouput"
             
-        case C64_OLD_NTSC.rawValue:
+        case C64_OLD_NTSC:
             descr = "matches an early C64 with brown casing (breadbox) and NTSC video output"
             
         default:
@@ -92,27 +90,25 @@ extension ConfigurationController {
     
     @IBAction func hwVicModelAction(_ sender: NSPopUpButton!) {
         
-        proxy?.vic.setModel(sender.selectedTag())
+        config.vicRevision = sender.selectedTag()
         refresh()
     }
     
     @IBAction func hwVicGrayDotBugAction(_ sender: NSButton!) {
         
-        proxy?.vic.setEmulateGrayDotBug(sender.state == .on)
+        config.grayDotBug = sender.state == .on
         refresh()
     }
     
     @IBAction func hwCiaModelAction(_ sender: NSPopUpButton!) {
         
-        proxy?.cia1.setModel(sender.selectedTag())
-        proxy?.cia2.setModel(sender.selectedTag())
+        config.ciaRevision = sender.selectedTag()
         refresh()
     }
     
     @IBAction func hwCiaTimerBBugAction(_ sender: NSButton!) {
-        
-        proxy?.cia1.setEmulateTimerBBug(sender.state == .on)
-        proxy?.cia2.setEmulateTimerBBug(sender.state == .on)
+
+        config.timerBBug = sender.state == .on
         refresh()
     }
     
@@ -136,13 +132,13 @@ extension ConfigurationController {
     
     @IBAction func hwSidModelAction(_ sender: NSPopUpButton!) {
         
-        proxy?.sid.setModel(sender.selectedTag())
+        config.sidRevision = sender.selectedTag()
         refresh()
     }
     
     @IBAction func hwGlueLogicAction(_ sender: NSPopUpButton!) {
         
-        proxy?.vic.setGlueLogic(sender.selectedTag())
+        config.glueLogic = sender.selectedTag()
         refresh()
     }
     
@@ -155,7 +151,7 @@ extension ConfigurationController {
     @IBAction func hwPresetAction(_ sender: NSPopUpButton!) {
         
         if sender.selectedTag() != C64_CUSTOM.rawValue {
-            proxy?.setModel(sender.selectedTag())
+            proxy?.setModel((C64Model)(sender.selectedTag()))
         }
         refresh()
     }

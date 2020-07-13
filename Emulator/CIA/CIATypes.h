@@ -12,16 +12,37 @@
 
 #include "TODTypes.h"
 
-typedef enum
+typedef enum : long
 {
     MOS_6526,
     MOS_8521
 }
-CIAModel;
+CIARevision;
 
-inline bool isCIAModel(CIAModel model) {
-    return (model == MOS_6526) || (model == MOS_8521);
+inline bool
+isCIARevision(long value)
+{
+    return value == MOS_6526 || value == MOS_8521;
 }
+
+inline const char *
+ciaRevisionName(CIARevision type)
+{
+    assert(isCIARevision(type));
+    
+    switch (type) {
+        case MOS_6526: return "MOS_6526";
+        case MOS_8521: return "MOS_8521";
+        default:       return "???";
+    }
+}
+
+typedef struct
+{
+    CIARevision revision;
+    bool timerBBug;
+}
+CIAConfig;
 
 typedef struct
 {
