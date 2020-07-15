@@ -15,15 +15,6 @@ class Configuration {
     var gamePadManager: GamePadManager { return parent.gamePadManager }
     
     //
-    // Rom settings
-    //
-    
-    var basicRomURL: URL = URL(fileURLWithPath: "/")
-    var charRomURL: URL = URL(fileURLWithPath: "/")
-    var kernalRomURL: URL = URL(fileURLWithPath: "/")
-    var vc1541RomURL: URL = URL(fileURLWithPath: "/")
-
-    //
     // Hardware settings
     //
     

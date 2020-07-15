@@ -131,7 +131,6 @@ extension ConfigurationController {
 
         track()
 
-        let dragInfo = "To add a Rom, drag a Rom image file onto the icon on the left."
         let romImage = NSImage.init(named: "rom")
         let romImageMega = NSImage.init(named: "rom_mega65")
         let romImageLight = NSImage.init(named: "rom_light")
@@ -141,11 +140,6 @@ extension ConfigurationController {
         let hasKernalRom = c64.hasKernalRom()
         let hasCharacterRom = c64.hasCharRom()
         let hasVc1541Rom = c64.hasVC1541Rom()
-
-        let basicURL = config.basicRomURL
-        let characterURL = config.charRomURL
-        let kernalURL = config.kernalRomURL
-        let vc1541URL = config.vc1541RomURL
         
         let basicHash = c64.basicRomFingerprint()
         let kernalHash = c64.kernalRomFingerprint()
@@ -160,36 +154,15 @@ extension ConfigurationController {
         let charRomImage = hasMegaChar ? romImageMega : romImage
         let kernalRomImage = hasMegaKernal ? romImageMega : romImage
 
-        // Header image and description
-        if c64.isReady() {
-            romHeaderImage.image = NSImage.init(named: "AppIcon")
-            romHeaderText.stringValue = "All required ROMs are loaded. VirtualC64 is ready to run."
-            romHeaderSubText.stringValue = ""
-        } else {
-            let numMissing = (hasBasicRom ? 0 : 1)
-                + (hasKernalRom ? 0 : 1)
-                + (hasCharacterRom ? 0 : 1)
-                + (hasVc1541Rom ? 0 : 1)
-            let nrStr = [ "zero", "one", "two", "three", "four" ][numMissing]
-            let romStr = numMissing == 1 ? "ROM is" : "ROMs are"
-            romHeaderImage.image = NSImage.init(named: "NSCaution")
-            romHeaderText.stringValue = "VirtualC64 cannot run because \(nrStr) \(romStr) missing."
-            romHeaderSubText.stringValue = "Use drag and drop to add ROM images."
-        }
-        
         // Basic Rom
         if hasBasicRom {
             romBasicImage.image = basicRomImage
             romBasicHashText.isHidden = false
             romBasicHashText.stringValue = String(format: "Hash: %llX", basicHash)
-            romBasicPathText.textColor = .textColor
-            romBasicPathText.stringValue = basicURL.path
             romBasicButton.isHidden = false
         } else {
             romBasicImage.image = romImageLight
             romBasicHashText.isHidden = true
-            romBasicPathText.textColor = .red
-            romBasicPathText.stringValue = dragInfo
             romBasicButton.isHidden = true
         }
         if let description = knownBasicRoms[basicHash] {
@@ -205,14 +178,10 @@ extension ConfigurationController {
             romKernalImage.image = kernalRomImage
             romKernalHashText.isHidden = false
             romKernalHashText.stringValue = String(format: "Hash: %llX", kernalHash)
-            romKernalPathText.textColor = .textColor
-            romKernalPathText.stringValue = kernalURL.path
             romKernelButton.isHidden = false
         } else {
             romKernalImage.image = romImageLight
             romKernalHashText.isHidden = true
-            romKernalPathText.textColor = .red
-            romKernalPathText.stringValue = dragInfo
             romKernelButton.isHidden = true
         }
         if let description = knownKernalRoms[kernalHash] {
@@ -228,14 +197,10 @@ extension ConfigurationController {
             romCharImage.image = charRomImage
             romCharHashText.isHidden = false
             romCharHashText.stringValue = String(format: "Hash: %llX", characterHash)
-            romCharPathText.textColor = .textColor
-            romCharPathText.stringValue = characterURL.path
             romCharButton.isHidden = false
         } else {
             romCharImage.image = romImageLight
             romCharHashText.isHidden = true
-            romCharPathText.textColor = .red
-            romCharPathText.stringValue = dragInfo
             romCharButton.isHidden = true
         }
         if let description = knownCharacterRoms[characterHash] {
@@ -251,14 +216,10 @@ extension ConfigurationController {
             romVc1541Image.image = romImage
             romVc1541HashText.isHidden = false
             romVc1541HashText.stringValue = String(format: "Hash: %llX", vc1541Hash)
-            romVc1541PathText.textColor = .textColor
-            romVc1541PathText.stringValue = vc1541URL.path
             romVc1541Button.isHidden = false
         } else {
             romVc1541Image.image = romImageLight
             romVc1541HashText.isHidden = true
-            romVc1541PathText.textColor = .red
-            romVc1541PathText.stringValue = dragInfo
             romVc1541Button.isHidden = true
         }
         if let description = knownVc1541Roms[vc1541Hash] {
@@ -279,7 +240,6 @@ extension ConfigurationController {
     
     @IBAction func romDeleteBasicAction(_ sender: Any!) {
 
-        config.basicRomURL = URL(fileURLWithPath: "/")
         proxy?.powerOff()
         proxy?.deleteBasicRom()
         refresh()
@@ -287,7 +247,6 @@ extension ConfigurationController {
     
     @IBAction func romDeleteCharAction(_ sender: Any!) {
 
-        config.charRomURL = URL(fileURLWithPath: "/")
         proxy?.powerOff()
         proxy?.deleteCharRom()
         refresh()
@@ -295,7 +254,6 @@ extension ConfigurationController {
     
     @IBAction func romDeleteKernalAction(_ sender: Any!) {
 
-        config.kernalRomURL = URL(fileURLWithPath: "/")
         proxy?.powerOff()
         proxy?.deleteKernalRom()
         refresh()
@@ -303,7 +261,6 @@ extension ConfigurationController {
     
     @IBAction func romDeleteVC1541Action(_ sender: Any!) {
 
-        config.vc1541RomURL = URL(fileURLWithPath: "/")
         proxy?.powerOff()
         proxy?.deleteVC1541Rom()
         refresh()
