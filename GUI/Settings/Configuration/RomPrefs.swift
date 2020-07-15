@@ -127,111 +127,104 @@ extension ConfigurationController {
 
     func refreshRomTab() {
         
-        guard let c64 = proxy else { return }
-
         track()
 
-        let romImage = NSImage.init(named: "rom")
-        let romImageMega = NSImage.init(named: "rom_mega65")
-        let romImageLight = NSImage.init(named: "rom_light")
+        let poweredOff       = c64.isPoweredOff()
         
-        // Gather information about Roms
-        let hasBasicRom = c64.hasBasicRom()
-        let hasKernalRom = c64.hasKernalRom()
-        let hasCharacterRom = c64.hasCharRom()
-        let hasVc1541Rom = c64.hasVC1541Rom()
-        
-        let basicHash = c64.basicRomFingerprint()
-        let kernalHash = c64.kernalRomFingerprint()
-        let characterHash = c64.charRomFingerprint()
-        let vc1541Hash = c64.vc1541RomFingerprint()
+        let basicRev         = c64.basicRomRevision()
+        let hasBasic         = basicRev != ROM_MISSING
+        let hasOrigBasic     = c64.isOrigRom(basicRev)
+        let hasMegaBasic     = c64.isMegaRom(basicRev)
+        let hasPatchedBasic  = c64.isPatchedRom(basicRev)
 
-        let hasMegaBasic = megaRoms.contains(basicHash)
-        let hasMegaChar = megaRoms.contains(characterHash)
-        let hasMegaKernal = megaRoms.contains(kernalHash)
+        let charRev          = c64.charRomRevision()
+        let hasChar          = charRev != ROM_MISSING
+        let hasOrigChar      = c64.isOrigRom(charRev)
+        let hasMegaChar      = c64.isMegaRom(charRev)
+        let hasPatchedChar   = c64.isPatchedRom(charRev)
 
-        let basicRomImage = hasMegaBasic ? romImageMega : romImage
-        let charRomImage = hasMegaChar ? romImageMega : romImage
-        let kernalRomImage = hasMegaKernal ? romImageMega : romImage
+        let kernalRev        = c64.kernalRomRevision()
+        let hasKernal        = kernalRev != ROM_MISSING
+        let hasOrigKernal    = c64.isOrigRom(kernalRev)
+        let hasMegaKernal    = c64.isMegaRom(kernalRev)
+        let hasPatchedKernal = c64.isPatchedRom(kernalRev)
 
-        // Basic Rom
-        if hasBasicRom {
-            romBasicImage.image = basicRomImage
-            romBasicHashText.isHidden = false
-            romBasicHashText.stringValue = String(format: "Hash: %llX", basicHash)
-            romBasicButton.isHidden = false
-        } else {
-            romBasicImage.image = romImageLight
-            romBasicHashText.isHidden = true
-            romBasicButton.isHidden = true
-        }
-        if let description = knownBasicRoms[basicHash] {
-            romBasicDescription.stringValue = description
-            romBasicDescription.textColor = .textColor
-        } else {
-            romBasicDescription.stringValue = "An unknown, possibly patched Basic ROM."
-            romBasicDescription.textColor = .red
-        }
+        let vc1541Rev        = c64.vc1541RomRevision()
+        let hasVC1541        = vc1541Rev != ROM_MISSING
+        let hasOrigVC1541    = c64.isOrigRom(vc1541Rev)
+        let hasPatchedVC1541 = c64.isPatchedRom(vc1541Rev)
+
+        let romMissing = NSImage.init(named: "rom_missing")
+        let romOrig    = NSImage.init(named: "rom_original")
+        let romMega    = NSImage.init(named: "rom_mega65")
+        let romPatched = NSImage.init(named: "rom_unknown")
+        let romUnknown = NSImage.init(named: "rom_unknown")
         
-        // Kernal Rom
-        if hasKernalRom {
-            romKernalImage.image = kernalRomImage
-            romKernalHashText.isHidden = false
-            romKernalHashText.stringValue = String(format: "Hash: %llX", kernalHash)
-            romKernelButton.isHidden = false
-        } else {
-            romKernalImage.image = romImageLight
-            romKernalHashText.isHidden = true
-            romKernelButton.isHidden = true
-        }
-        if let description = knownKernalRoms[kernalHash] {
-            romKernalDescription.stringValue = description
-            romKernalDescription.textColor = .textColor
-        } else {
-            romKernalDescription.stringValue = "An unknown, possibly patched Kernal ROM."
-            romKernalDescription.textColor = .red
-        }
+        // Lock controls if emulator is powered on
+        basicDropView.isEnabled = poweredOff
+        basicDeleteButton.isEnabled = poweredOff
+        charDropView.isEnabled = poweredOff
+        charDeleteButton.isEnabled = poweredOff
+        kernalDropView.isEnabled = poweredOff
+        kernalDeleteButton.isEnabled = poweredOff
+        vc1541DropView.isEnabled = poweredOff
+        vc1541DeleteButton.isEnabled = poweredOff
+        romInstallButton.isEnabled = poweredOff
         
-        // Character Rom
-        if hasCharacterRom {
-            romCharImage.image = charRomImage
-            romCharHashText.isHidden = false
-            romCharHashText.stringValue = String(format: "Hash: %llX", characterHash)
-            romCharButton.isHidden = false
-        } else {
-            romCharImage.image = romImageLight
-            romCharHashText.isHidden = true
-            romCharButton.isHidden = true
-        }
-        if let description = knownCharacterRoms[characterHash] {
-            romCharDescription.stringValue = description
-            romCharDescription.textColor = .textColor
-        } else {
-            romCharDescription.stringValue = "An unknown, possibly patched Character ROM."
-            romCharDescription.textColor = .red
-        }
-        
-        // VC1541 Rom
-        if hasVc1541Rom {
-            romVc1541Image.image = romImage
-            romVc1541HashText.isHidden = false
-            romVc1541HashText.stringValue = String(format: "Hash: %llX", vc1541Hash)
-            romVc1541Button.isHidden = false
-        } else {
-            romVc1541Image.image = romImageLight
-            romVc1541HashText.isHidden = true
-            romVc1541Button.isHidden = true
-        }
-        if let description = knownVc1541Roms[vc1541Hash] {
-            romVc1541Description.stringValue = description
-            romVc1541Description.textColor = .textColor
-        } else {
-            romVc1541Description.stringValue = "An unknown, possibly patched 15xx ROM."
-            romVc1541Description.textColor = .red
-        }
-        
-        // Power button
-         romPowerButton.isHidden = !bootable
+        // Icons
+        basicDropView.image =
+            hasMegaBasic     ? romMega :
+            hasOrigBasic     ? romOrig :
+            hasPatchedBasic  ? romPatched :
+            hasBasic         ? romUnknown : romMissing
+
+        charDropView.image =
+            hasMegaChar      ? romMega :
+            hasOrigChar      ? romOrig :
+            hasPatchedChar   ? romPatched :
+            hasChar          ? romUnknown : romMissing
+
+        kernalDropView.image =
+            hasMegaKernal    ? romMega :
+            hasOrigKernal    ? romOrig :
+            hasPatchedKernal ? romPatched :
+            hasKernal        ? romUnknown : romMissing
+
+        vc1541DropView.image =
+            hasOrigVC1541    ? romOrig :
+            hasPatchedVC1541 ? romPatched :
+            hasVC1541        ? romUnknown : romMissing
+
+        // Titles and subtitles
+        basicTitle.stringValue = hasBasic ? c64.basicRomTitle() : "Basic Rom"
+        basicSubtitle.stringValue = hasBasic ? c64.basicRomVersion() : "Required"
+        basicSubsubtitle.stringValue = c64.basicRomReleased()
+
+        charTitle.stringValue = hasChar ? c64.charRomTitle() : "Character Rom"
+        charSubtitle.stringValue = hasChar ? c64.charRomVersion() : "Required"
+        charSubsubtitle.stringValue = c64.charRomReleased()
+
+        kernalTitle.stringValue = hasKernal ? c64.kernalRomTitle() : "Kernal Rom"
+        kernalSubtitle.stringValue = hasKernal ? c64.kernalRomVersion() : "Required"
+        kernalSubsubtitle.stringValue = c64.kernalRomReleased()
+
+        vc1541Title.stringValue = hasVC1541 ? c64.vc1541RomTitle() : "VC1541 Rom"
+        vc1541Subtitle.stringValue = hasVC1541 ? c64.vc1541RomVersion() : "Optional"
+        vc1541Subsubtitle.stringValue = c64.vc1541RomReleased()
+
+        // Hide some controls
+        basicDeleteButton.isHidden = !hasBasic
+        charDeleteButton.isHidden = !hasChar
+        kernalDeleteButton.isHidden = !hasKernal
+        vc1541DeleteButton.isHidden = !hasVC1541
+
+        // Lock symbol and explanation
+        romLockImage.isHidden = poweredOff
+        romLockText.isHidden = poweredOff
+        romLockSubText.isHidden = poweredOff
+
+        // Boot button
+        romPowerButton.isHidden = !bootable
     }
     
     //
@@ -266,6 +259,22 @@ extension ConfigurationController {
         refresh()
     }
         
+    @IBAction func romInstallAction(_ sender: NSButton!) {
+
+        track()
+        
+        let basicRom = NSDataAsset(name: "open-basic-rom")?.data
+        let charRom = NSDataAsset(name: "open-char-rom")?.data
+        let kernalRom = NSDataAsset(name: "open-kernal-rom")?.data
+
+        // Install OpenROMs
+        c64.loadBasicRom(fromBuffer: basicRom)
+        c64.loadCharRom(fromBuffer: charRom)
+        c64.loadKernalRom(fromBuffer: kernalRom)
+        
+        refresh()
+    }
+
     @IBAction func romDefaultsAction(_ sender: NSButton!) {
         
         track()

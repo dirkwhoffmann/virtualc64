@@ -17,26 +17,36 @@ class ConfigurationController: DialogController {
     // Rom preferences
     //
         
-    @IBOutlet weak var romBasicImage: RomDropView!
-    @IBOutlet weak var romBasicHashText: NSTextField!
-    @IBOutlet weak var romBasicDescription: NSTextField!
-    @IBOutlet weak var romBasicButton: NSButton!
+    @IBOutlet weak var basicDropView: RomDropView!
+    @IBOutlet weak var basicTitle: NSTextField!
+    @IBOutlet weak var basicSubtitle: NSTextField!
+    @IBOutlet weak var basicSubsubtitle: NSTextField!
+    @IBOutlet weak var basicDeleteButton: NSButton!
     
-    @IBOutlet weak var romKernalImage: RomDropView!
-    @IBOutlet weak var romKernalHashText: NSTextField!
-    @IBOutlet weak var romKernalDescription: NSTextField!
-    @IBOutlet weak var romKernelButton: NSButton!
+    @IBOutlet weak var kernalDropView: RomDropView!
+    @IBOutlet weak var kernalTitle: NSTextField!
+    @IBOutlet weak var kernalSubtitle: NSTextField!
+    @IBOutlet weak var kernalSubsubtitle: NSTextField!
+    @IBOutlet weak var kernalDeleteButton: NSButton!
     
-    @IBOutlet weak var romCharImage: RomDropView!
-    @IBOutlet weak var romCharHashText: NSTextField!
-    @IBOutlet weak var romCharDescription: NSTextField!
-    @IBOutlet weak var romCharButton: NSButton!
+    @IBOutlet weak var charDropView: RomDropView!
+    @IBOutlet weak var charTitle: NSTextField!
+    @IBOutlet weak var charSubtitle: NSTextField!
+    @IBOutlet weak var charSubsubtitle: NSTextField!
+    @IBOutlet weak var charDeleteButton: NSButton!
     
-    @IBOutlet weak var romVc1541Image: RomDropView!
-    @IBOutlet weak var romVc1541HashText: NSTextField!
-    @IBOutlet weak var romVc1541Description: NSTextField!
-    @IBOutlet weak var romVc1541Button: NSButton!
+    @IBOutlet weak var vc1541DropView: RomDropView!
+    @IBOutlet weak var vc1541Title: NSTextField!
+    @IBOutlet weak var vc1541Subtitle: NSTextField!
+    @IBOutlet weak var vc1541Subsubtitle: NSTextField!
+    @IBOutlet weak var vc1541DeleteButton: NSButton!
     
+    @IBOutlet weak var romInstallButton: NSButton!
+
+    @IBOutlet weak var romLockImage: NSButton!
+    @IBOutlet weak var romLockText: NSTextField!
+    @IBOutlet weak var romLockSubText: NSTextField!
+
     @IBOutlet weak var romOkButton: NSButton!
     @IBOutlet weak var romPowerButton: NSButton!
 
@@ -274,7 +284,15 @@ class ConfigurationController: DialogController {
             }
         }
     }
+    
+    @IBAction func unlockAction(_ sender: Any!) {
         
+        track()
+        
+        c64.powerOff()
+        refresh()
+    }
+    
     @IBAction override func okAction(_ sender: Any!) {
         
         hideSheet()

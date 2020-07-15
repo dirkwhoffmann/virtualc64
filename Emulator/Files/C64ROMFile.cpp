@@ -115,6 +115,8 @@ C64RomFile::isVC1541RomBuffer(const u8 *buffer, size_t length)
 RomRevision
 C64RomFile::revision(u64 fnv)
 {
+    printf("Translating fnv %llx\n", fnv);
+    
     switch(fnv) {
             
         case 0x0000000000000000: return ROM_MISSING;
@@ -136,7 +138,7 @@ C64RomFile::revision(u64 fnv)
         case 0x3BF55C821EE80365: return CHAR_A1200_TOPAZ_BROKEN;
         case 0x19F0DD3F3F9C4FE9: return CHAR_A1200_TOPAZ_V2;
         case 0xE527AD3E0DDE930D: return CHAR_TELETEXT;
-        case 0x4D31ECBF4F967DC3: return CHAR_MEGA65_GENERIC;
+        case 0x4D31ECBF4F967DC3: return CHAR_MEGA65;
             
         case 0xFB166E49AF709AB8: return KERNAL_1ST;
         case 0x4232D81CCD24FAAE: return KERNAL_2ST;
@@ -150,7 +152,7 @@ C64RomFile::revision(u64 fnv)
         case 0x7E0A124C3F192818: return KERNAL_DATEL_V32;
         case 0x211EAC45AB03A2CA: return KERNAL_EXOS_V3;
         case 0xF2A39FF166D338AE: return KERNAL_TURBO_TAPE;
-        case 0xCB54D7934B99ADAC: return KERNAL_MEGA65_GENERIC;
+        case 0xCB54D7934B99ADAC: return KERNAL_MEGA65;
             
         case 0x44BBA0EAC5898597: return VC1541_II_1987;
         case 0xA1D36980A17C8756: return VC1541_II_NEWTRONIC;
@@ -164,53 +166,128 @@ C64RomFile::revision(u64 fnv)
     }
 }
 
+bool
+C64RomFile::isOrigRom(RomRevision rev)
+{
+    switch (rev) {
+            
+        case BASIC_COMMODORE:
+        case CHAR_COMMODORE:
+        case CHAR_SWEDISH_C2D007:
+        case CHAR_SWEDISH:
+        case CHAR_SPANISH_C64C:
+        case CHAR_DANISH:
+        case KERNAL_1ST:
+        case KERNAL_2ST:
+        case KERNAL_3ST:
+        case KERNAL_DANISH_3RD:
+        case KERNAL_SX64:
+        case KERNAL_SX64_SCAND:
+        case VC1541_II_1987:
+        case VC1541_II_NEWTRONIC:
+        case VC1541_OLD_WHITE:
+        case VC1541_1541C:
+            return true;
+            
+        default:
+            return false;
+    }
+}
+
+bool
+C64RomFile::isMegaRom(RomRevision rev)
+{
+    switch (rev) {
+            
+        case BASIC_MEGA65:
+        case CHAR_MEGA65:
+        case KERNAL_MEGA65:
+            return true;
+            
+        default:
+            return false;
+     }
+}
+
+bool
+C64RomFile::isPatchedRom(RomRevision rev)
+{
+    switch (rev) {
+            
+        case CHAR_ATARI800:
+        case CHAR_MSX:
+        case CHAR_ZX_SPECTRUM:
+        case CHAR_AMSTRAD_CPC:
+        case CHAR_A500_TOPAZ_BROKEN:
+        case CHAR_A500_TOPAZ_V2:
+        case CHAR_A1200_TOPAZ_BROKEN:
+        case CHAR_A1200_TOPAZ_V2:
+        case CHAR_TELETEXT:
+            
+        case KERNAL_64_JIFFY:
+        case KERNAL_SX64_JIFFY:
+        case KERNAL_TURBO_ROM:
+        case KERNAL_DATEL_V32:
+        case KERNAL_EXOS_V3:
+        case KERNAL_TURBO_TAPE:
+            
+        case VC1541_II_RELOC_PATCH:
+        case VC1541_II_JIFFY:
+        case VC1541_II_JIFFY_V600:
+            return true;
+            
+        default:
+            return false;
+    }
+}
+
 const char *
 C64RomFile::title(RomRevision rev)
 {
     switch (rev) {
             
-        case ROM_UNKNOWN:             return "Unknown or patched Rom";
+        case ROM_UNKNOWN:             return "Unknown";
             
-        case BASIC_COMMODORE:         return "Commodore 64 Basic V2";
-        case BASIC_MEGA65:            return "M.E.G.A. C64 OpenROM";
+        case BASIC_COMMODORE:         return "Commodore 64 Basic";
+        case BASIC_MEGA65:            return "M.E.G.A. 65 OpenROM";
             
         case CHAR_COMMODORE:
         case CHAR_SWEDISH_C2D007:
         case CHAR_SWEDISH:
         case CHAR_SPANISH_C64C:
-        case CHAR_DANISH:             return "Commodore Character Set";
-        case CHAR_ATARI800:           return "Atari 800 character set";
-        case CHAR_MSX:                return "MSX Character Set";
-        case CHAR_ZX_SPECTRUM:        return "ZX Spectrum Character Set";
-        case CHAR_AMSTRAD_CPC:        return "Amstrad CPC Character Set";
+        case CHAR_DANISH:             return "C64 Character Set";
+        case CHAR_ATARI800:           return "Atari 800 Font";
+        case CHAR_MSX:                return "MSX Font";
+        case CHAR_ZX_SPECTRUM:        return "ZX Spectrum Font";
+        case CHAR_AMSTRAD_CPC:        return "Amstrad CPC Font";
         case CHAR_A500_TOPAZ_BROKEN:
-        case CHAR_A500_TOPAZ_V2:      return "Amiga 500 Character Set";
+        case CHAR_A500_TOPAZ_V2:      return "Amiga 500 Font";
         case CHAR_A1200_TOPAZ_BROKEN:
-        case CHAR_A1200_TOPAZ_V2:     return "Amiga 1200 Character Set";
-        case CHAR_TELETEXT:           return "Teletext Character Set";
-        case CHAR_MEGA65_GENERIC:     return "M.E.G.A. C64 OpenROM";
+        case CHAR_A1200_TOPAZ_V2:     return "Amiga 1200 Font";
+        case CHAR_TELETEXT:           return "Teletext Font";
+        case CHAR_MEGA65:             return "M.E.G.A. 65 OpenROM";
             
         case KERNAL_1ST:
         case KERNAL_2ST:
-        case KERNAL_3ST:              return "Commodore 64 Kernal";
-        case KERNAL_DANISH_3RD:       return "Commodore 64 Kernal (Danish)";
-        case KERNAL_SX64:             return "Commodore SX-64 Kernal";
-        case KERNAL_SX64_SCAND:       return "SX-64 Kernal (Scandinavian)";
-        case KERNAL_64_JIFFY:         return "C64 Kernel (JiffyDOS patch)";
-        case KERNAL_SX64_JIFFY:       return "SX-64 Kernal (JiffyDOS patch)";
+        case KERNAL_3ST:
+        case KERNAL_DANISH_3RD:       return "C64 Kernal";
+        case KERNAL_SX64:
+        case KERNAL_SX64_SCAND:       return "SX-64 Kernal";
+        case KERNAL_64_JIFFY:         return "C64 Kernel";
+        case KERNAL_SX64_JIFFY:       return "SX-64 Kernal";
         case KERNAL_TURBO_ROM:        return "Cockroach Turbo-ROM";
         case KERNAL_DATEL_V32:        return "Datel Turbo Rom II";
         case KERNAL_EXOS_V3:          return "Exos Kernal ROM";
         case KERNAL_TURBO_TAPE:       return "Turbo Tape ROM";
-        case KERNAL_MEGA65_GENERIC:   return "M.E.G.A. C64 OpenROM";
+        case KERNAL_MEGA65:           return "M.E.G.A. 65 OpenROM";
             
         case VC1541_II_1987:
-        case VC1541_II_NEWTRONIC:     return "VC1541-II firmware";
-        case VC1541_OLD_WHITE:        return "VC1541 firmware";
-        case VC1541_1541C:            return "VC1541C firmware";
+        case VC1541_II_NEWTRONIC:     return "VC1541-II Firmware";
+        case VC1541_OLD_WHITE:        return "VC1541 Firmware";
+        case VC1541_1541C:            return "VC1541C Firmware";
         case VC1541_II_RELOC_PATCH:
         case VC1541_II_JIFFY:
-        case VC1541_II_JIFFY_V600:    return "VC1541-II firmware";
+        case VC1541_II_JIFFY_V600:    return "VC1541-II Firmware";
             
         default:                      return "";
     }
@@ -225,7 +302,7 @@ C64RomFile::version(RomRevision rev)
         case BASIC_MEGA65:            return "";
             
         case CHAR_COMMODORE:
-        case CHAR_SWEDISH_C2D007:     return "Swedish C64 (C2D007)";
+        case CHAR_SWEDISH_C2D007:     return "Swedish C64 C2D007";
         case CHAR_SWEDISH:            return "Spanish C64";
         case CHAR_SPANISH_C64C:       return "Spanish C64C";
         case CHAR_DANISH:             return "Danish C64";
@@ -238,29 +315,29 @@ C64RomFile::version(RomRevision rev)
         case CHAR_A1200_TOPAZ_BROKEN: return "Topaz v1 (broken)";
         case CHAR_A1200_TOPAZ_V2:     return "Topaz v2";
         case CHAR_TELETEXT:
-        case CHAR_MEGA65_GENERIC:     return "";
+        case CHAR_MEGA65:             return "";
             
-        case KERNAL_1ST:              return "Rev. 1";
-        case KERNAL_2ST:              return "Rev. 2";
+        case KERNAL_1ST:              return "1st revision";
+        case KERNAL_2ST:              return "2nd revision";
         case KERNAL_3ST:
-        case KERNAL_DANISH_3RD:       return "Rev. 3";
-        case KERNAL_SX64:
-        case KERNAL_SX64_SCAND:
+        case KERNAL_DANISH_3RD:       return "3rd revision";
+        case KERNAL_SX64:             return "";
+        case KERNAL_SX64_SCAND:       return "Scandinavian";
         case KERNAL_64_JIFFY:
-        case KERNAL_SX64_JIFFY:       return "";
+        case KERNAL_SX64_JIFFY:       return "JiffyDOS Patch";
         case KERNAL_TURBO_ROM:        return "v1";
         case KERNAL_DATEL_V32:        return "v3.2+";
         case KERNAL_EXOS_V3:          return "v3";
         case KERNAL_TURBO_TAPE:       return "v0.1";
-        case KERNAL_MEGA65_GENERIC:   return "";
+        case KERNAL_MEGA65:           return "";
             
         case VC1541_II_1987:          return "";
-        case VC1541_II_NEWTRONIC:     return "Drives with Newtronic motor";
-        case VC1541_OLD_WHITE:        return "Drives with white chassis";
+        case VC1541_II_NEWTRONIC:     return "Newtronic Drive";
+        case VC1541_OLD_WHITE:        return "White Drive";
         case VC1541_1541C:            return "";
-        case VC1541_II_RELOC_PATCH:   return "Reloc patch";
-        case VC1541_II_JIFFY:         return "JiffyDOS patch";
-        case VC1541_II_JIFFY_V600:    return "JiffyDOS patch v6.0";
+        case VC1541_II_RELOC_PATCH:   return "Relocation Patch";
+        case VC1541_II_JIFFY:
+        case VC1541_II_JIFFY_V600:    return "JiffyDOS Patch";
             
         default:                      return "";
     }
@@ -288,7 +365,7 @@ C64RomFile::released(RomRevision rev)
         case CHAR_A1200_TOPAZ_BROKEN:
         case CHAR_A1200_TOPAZ_V2:
         case CHAR_TELETEXT:
-        case CHAR_MEGA65_GENERIC:     return "";
+        case CHAR_MEGA65:             return "";
             
         case KERNAL_1ST:
         case KERNAL_2ST:              return "1982";
@@ -302,15 +379,15 @@ C64RomFile::released(RomRevision rev)
         case KERNAL_DATEL_V32:
         case KERNAL_EXOS_V3:
         case KERNAL_TURBO_TAPE:
-        case KERNAL_MEGA65_GENERIC:
+        case KERNAL_MEGA65:
             
         case VC1541_II_1987:          return "1987";
         case VC1541_II_NEWTRONIC:
         case VC1541_OLD_WHITE:
         case VC1541_1541C:
         case VC1541_II_RELOC_PATCH:
-        case VC1541_II_JIFFY:
-        case VC1541_II_JIFFY_V600:    return "";
+        case VC1541_II_JIFFY:         return "";
+        case VC1541_II_JIFFY_V600:    return "v6.0";
             
         default:                      return "";
     }

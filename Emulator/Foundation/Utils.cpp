@@ -372,6 +372,7 @@ fnv_1a_64(u8 *addr, size_t size)
         hash = fnv_1a_it64(hash, (u64)addr[i]);
     }
 
+    printf("Computed %llx\n", hash);
     return hash;
 }
 

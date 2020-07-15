@@ -573,31 +573,34 @@ public:
     u32 vc1541RomCRC32();
 
     // Computes a FNV-1A checksum
-    u64 basicRomFingerprint();
-    u64 charRomFingerprint();
-    u64 kernalRomFingerprint();
-    u64 vc1541RomFingerprint();
+    u64 basicRomFNV64();
+    u64 charRomFNV64();
+    u64 kernalRomFNV64();
+    u64 vc1541RomFNV64();
 
-    // Returns the ROM revisions of the currently installed ROMs
-    RomRevision basicRomRevision() { return C64RomFile::revision(charRomCRC32()); }
-    RomRevision charRomRevision() { return C64RomFile::revision(charRomCRC32()); }
-    RomRevision kernalRomRevision() { return C64RomFile::revision(kernalRomCRC32()); }
-    RomRevision vc1541RomRevision() { return C64RomFile::revision(vc1541RomCRC32()); }
+    // Returns the revisions of the installed ROMs
+    RomRevision basicRomRevision() { return C64RomFile::revision(basicRomFNV64()); }
+    RomRevision charRomRevision() { return C64RomFile::revision(charRomFNV64()); }
+    RomRevision kernalRomRevision() { return C64RomFile::revision(kernalRomFNV64()); }
+    RomRevision vc1541RomRevision() { return C64RomFile::revision(vc1541RomFNV64()); }
     
-    const char *basicRomTitle() { return C64RomFile::title(basicRomRevision()); }
-    const char *basicRomVersion() { return "<MISSING>"; }
+    // Returns printable names for the  installed ROMs
+    const char *basicRomTitle();
+    const char *charRomTitle();
+    const char *kernalRomTitle();
+    const char *vc1541RomTitle();
+
+    // Returns printable version strings for the installed ROMs
+    const char *romVersion(u64 fnv);
+    const char *basicRomVersion() { return romVersion(basicRomFNV64()); }
+    const char *charRomVersion()  { return romVersion(charRomFNV64()); }
+    const char *kernalRomVersion() { return romVersion(kernalRomFNV64()); }
+    const char *vc1541RomVersion()  { return romVersion(vc1541RomFNV64()); }
+    
+    // Returns printable release dates or hash values for the installed ROMs
     const char *basicRomReleased()  { return C64RomFile::released(basicRomRevision()); }
-
-    const char *kernalRomTitle() { return C64RomFile::title(kernalRomRevision()); }
-    const char *kernalRomVersion() { return "<MISSING>"; }
-    const char *kernalRomReleased()  { return C64RomFile::released(kernalRomRevision()); }
-
-    const char *charRomTitle() { return C64RomFile::title(charRomRevision()); }
-    const char *charRomVersion() { return "<MISSING>"; }
     const char *charRomReleased()  { return C64RomFile::released(charRomRevision()); }
-
-    const char *vc1541RomTitle() { return C64RomFile::title(vc1541RomRevision()); }
-    const char *vc1541RomVersion() { return "<MISSING>"; }
+    const char *kernalRomReleased()  { return C64RomFile::released(kernalRomRevision()); }
     const char *vc1541RomReleased()  { return C64RomFile::released(vc1541RomRevision()); }
 
     // Checks if a certain Rom is present

@@ -53,6 +53,11 @@ public:
     // Translates a FNV1A checksum (64 bit) into a ROM identifier
     static RomRevision revision(u64 fnv);
 
+    // Classifies a ROM identifier by type
+    static bool isOrigRom(RomRevision rev);
+    static bool isMegaRom(RomRevision rev);
+    static bool isPatchedRom(RomRevision rev);
+
     // Provides information about known ROMs
     static const char *title(RomRevision rev);
     static const char *version(RomRevision rev);

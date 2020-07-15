@@ -1095,27 +1095,67 @@ C64::vc1541RomCRC32()
 }
 
 u64
-C64::basicRomFingerprint()
+C64::basicRomFNV64()
 {
     return hasBasicRom() ? fnv_1a_64(mem.rom + 0xA000, 0x2000) : 0;
 }
 
 u64
-C64::charRomFingerprint()
+C64::charRomFNV64()
 {
     return hasCharRom() ? fnv_1a_64(mem.rom + 0xD000, 0x1000) : 0;
 }
 
 u64
-C64::kernalRomFingerprint()
+C64::kernalRomFNV64()
 {
     return hasKernalRom() ? fnv_1a_64(mem.rom + 0xE000, 0x2000) : 0;
 }
 
 u64
-C64::vc1541RomFingerprint()
+C64::vc1541RomFNV64()
 {
     return hasVC1541Rom() ? fnv_1a_64(drive1.mem.rom, 0x4000) : 0;
+}
+
+const char *
+C64::basicRomTitle()
+{
+    RomRevision rev = basicRomRevision();
+    return rev == ROM_UNKNOWN ? "Unknown Basic Rom" : C64RomFile::title(rev);
+}
+
+const char *
+C64::charRomTitle()
+{
+    RomRevision rev = charRomRevision();
+    return rev == ROM_UNKNOWN ? "Unknown Character Rom" : C64RomFile::title(rev);
+}
+
+const char *
+C64::kernalRomTitle()
+{
+    RomRevision rev = kernalRomRevision();
+    return rev == ROM_UNKNOWN ? "Unknown Kernal Rom" : C64RomFile::title(rev);
+}
+
+const char *
+C64::vc1541RomTitle()
+{
+    RomRevision rev = vc1541RomRevision();
+    return rev == ROM_UNKNOWN ? "Unknown Kernal Rom" : C64RomFile::title(rev);
+}
+
+const char *
+C64::romVersion(u64 fnv)
+{
+    RomRevision rev = C64RomFile::revision(fnv);
+
+    if (rev != ROM_UNKNOWN) return C64RomFile::version(rev);
+    
+    static char str[32];
+    sprintf(str, "FNV %llx", fnv);
+    return str;
 }
 
 bool

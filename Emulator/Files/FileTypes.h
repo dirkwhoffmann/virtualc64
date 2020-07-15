@@ -57,7 +57,7 @@ typedef enum
     CHAR_A1200_TOPAZ_BROKEN,
     CHAR_A1200_TOPAZ_V2,
     CHAR_TELETEXT,
-    CHAR_MEGA65_GENERIC,
+    CHAR_MEGA65,
 
     // Kernal Roms
     KERNAL_1ST,
@@ -72,7 +72,7 @@ typedef enum
     KERNAL_DATEL_V32,
     KERNAL_EXOS_V3,
     KERNAL_TURBO_TAPE,
-    KERNAL_MEGA65_GENERIC,
+    KERNAL_MEGA65,
 
     // VC1541 Roms
     VC1541_II_1987,

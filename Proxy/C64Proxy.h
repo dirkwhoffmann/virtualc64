@@ -205,10 +205,15 @@ struct AnyC64FileWrapper;
 - (BOOL) isKernalRom:(NSURL *)url;
 - (BOOL) isVC1541Rom:(NSURL *)url;
 
-- (BOOL) loadBasicRom:(NSURL *)url;
-- (BOOL) loadCharRom:(NSURL *)url;
-- (BOOL) loadKernalRom:(NSURL *)url;
-- (BOOL) loadVC1541Rom:(NSURL *)url;
+- (BOOL) loadBasicRomFromFile:(NSURL *)url;
+- (BOOL) loadCharRomFromFile:(NSURL *)url;
+- (BOOL) loadKernalRomFromFile:(NSURL *)url;
+- (BOOL) loadVC1541RomFromFile:(NSURL *)url;
+
+- (BOOL) loadBasicRomFromBuffer:(NSData *)buffer;
+- (BOOL) loadCharRomFromBuffer:(NSData *)buffer;
+- (BOOL) loadKernalRomFromBuffer:(NSData *)buffer;
+- (BOOL) loadVC1541RomFromBuffer:(NSData *)buffer;
 
 - (BOOL) saveBasicRom:(NSURL *)url;
 - (BOOL) saveCharRom:(NSURL *)url;
@@ -224,6 +229,30 @@ struct AnyC64FileWrapper;
 - (u64) kernalRomFingerprint;
 - (u64) charRomFingerprint;
 - (u64) vc1541RomFingerprint;
+
+- (RomRevision) basicRomRevision;
+- (RomRevision) kernalRomRevision;
+- (RomRevision) charRomRevision;
+- (RomRevision) vc1541RomRevision;
+
+- (NSString *) basicRomTitle;
+- (NSString *) charRomTitle;
+- (NSString *) kernalRomTitle;
+- (NSString *) vc1541RomTitle;
+
+- (NSString *) basicRomVersion;
+- (NSString *) charRomVersion;
+- (NSString *) kernalRomVersion;
+- (NSString *) vc1541RomVersion;
+
+- (NSString *) basicRomReleased;
+- (NSString *) charRomReleased;
+- (NSString *) kernalRomReleased;
+- (NSString *) vc1541RomReleased;
+
+- (BOOL) isOrigRom:(RomRevision)rev;
+- (BOOL) isMegaRom:(RomRevision)rev;
+- (BOOL) isPatchedRom:(RomRevision)rev;
 
 - (BOOL) isRom:(NSURL *)url;
 - (BOOL) loadRom:(NSURL *)url;
