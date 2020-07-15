@@ -50,13 +50,13 @@ public:
     static bool isKernalRomFile(const char *path);
     static bool isVC1541RomFile(const char *path);
     
-    // Translates a CRC-32 checksum into a ROM identifier
-    static RomRevision revision(u32 crc);
+    // Translates a FNV1A checksum (64 bit) into a ROM identifier
+    static RomRevision revision(u64 fnv);
 
     // Provides information about known ROMs
-    static const char *title(RomRevision rev) { return "<MISSING>"; }
-    static const char *version(RomRevision rev) { return "<MISSING>"; }
-    static const char *released(RomRevision rev) { return "<MISSING>"; }
+    static const char *title(RomRevision rev);
+    static const char *version(RomRevision rev);
+    static const char *released(RomRevision rev);
 
     
     //
