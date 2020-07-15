@@ -174,31 +174,6 @@ DQ
                                                 <action selector="okAction:" target="-2" id="lds-Ow-Mkf"/>
                                             </connections>
                                         </button>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZhO-d6-muu">
-                                            <rect key="frame" x="6" y="5" width="128" height="32"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <buttonCell key="cell" type="push" title="Use as Default" bezelStyle="rounded" alignment="center" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VEd-ch-nsi">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                                <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="romDefaultsAction:" target="-2" id="NeD-fL-eyM"/>
-                                            </connections>
-                                        </button>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7kO-E0-VCD">
-                                            <rect key="frame" x="436" y="5" width="78" height="32"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="push" title="Power" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5fZ-wH-vg9">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="powerAction:" target="-2" id="bIb-az-MKX"/>
-                                            </connections>
-                                        </button>
                                         <box fixedFrame="YES" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="f2q-90-M1c">
                                             <rect key="frame" x="185" y="313" width="111" height="123"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -271,6 +246,17 @@ Gw
                                                 </subviews>
                                             </view>
                                         </box>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7kO-E0-VCD">
+                                            <rect key="frame" x="436" y="5" width="78" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="push" title="Power" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5fZ-wH-vg9">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="powerAction:" target="-2" id="bIb-az-MKX"/>
+                                            </connections>
+                                        </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mc6-g5-kfE">
                                             <rect key="frame" x="10" y="417" width="165" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -423,6 +409,58 @@ Gw
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Upv-e6-bJa">
+                                            <rect key="frame" x="71" y="115" width="530" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="The Rom settings cannot be changed because the emulator is running." id="jSs-Nz-9DT">
+                                                <font key="font" metaFont="systemBold"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="86M-pD-FbE">
+                                            <rect key="frame" x="71" y="98" width="417" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Click the lock to power down the emulator." id="d8u-WQ-UI2">
+                                                <font key="font" metaFont="label" size="12"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eyT-7E-Fac">
+                                            <rect key="frame" x="17" y="93" width="48" height="48"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="lock" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="qox-C1-uyr">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <box verticalHuggingPriority="750" boxType="separator" id="l1R-pN-bAZ">
+                                            <rect key="frame" x="12" y="51" width="576" height="5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        </box>
+                                        <button verticalHuggingPriority="750" id="UjG-e3-b19">
+                                            <rect key="frame" x="6" y="5" width="168" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="push" title="Install OpenRoms" bezelStyle="rounded" image="mega65" imagePosition="right" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="wDj-5V-jdw">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZhO-d6-muu">
+                                            <rect key="frame" x="174" y="5" width="128" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="push" title="Use as Default" bezelStyle="rounded" alignment="center" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VEd-ch-nsi">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                                <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="romDefaultsAction:" target="-2" id="NeD-fL-eyM"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                 </view>
                             </tabViewItem>
@@ -1035,7 +1073,7 @@ Gw
                                             <rect key="frame" x="506" y="74" width="36" height="11"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="ZOOM" id="voi-T6-2mw">
-                                                <font key="font" metaFont="label" size="9"/>
+                                                <font key="font" metaFont="toolTip" size="9"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -1044,7 +1082,7 @@ Gw
                                             <rect key="frame" x="417" y="74" width="67" height="11"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="V CENTERING" id="krS-0O-Z5q">
-                                                <font key="font" metaFont="label" size="9"/>
+                                                <font key="font" metaFont="toolTip" size="9"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -1053,7 +1091,7 @@ Gw
                                             <rect key="frame" x="344" y="74" width="67" height="11"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="H CENTERING" id="cd5-Gz-2y1">
-                                                <font key="font" metaFont="label" size="9"/>
+                                                <font key="font" metaFont="toolTip" size="9"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -1363,7 +1401,7 @@ Gw
                                             <rect key="frame" x="506" y="448" width="36" height="11"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="COLOR" id="4mY-7n-Kep">
-                                                <font key="font" metaFont="label" size="9"/>
+                                                <font key="font" metaFont="toolTip" size="9"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -1372,7 +1410,7 @@ Gw
                                             <rect key="frame" x="423" y="448" width="55" height="11"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="CONTRAST" id="EIV-OU-ZkR">
-                                                <font key="font" metaFont="label" size="9"/>
+                                                <font key="font" metaFont="toolTip" size="9"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -1381,7 +1419,7 @@ Gw
                                             <rect key="frame" x="346" y="448" width="63" height="11"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="BRIGHTNESS" id="07B-xR-EnH">
-                                                <font key="font" metaFont="label" size="9"/>
+                                                <font key="font" metaFont="toolTip" size="9"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -2786,6 +2824,8 @@ DQ
     <resources>
         <image name="joystick2" width="261" height="300"/>
         <image name="key" width="198" height="187"/>
+        <image name="lock" width="120" height="170"/>
+        <image name="mega65" width="452" height="403"/>
         <image name="pref_cia" width="514" height="514"/>
         <image name="pref_mem" width="514" height="514"/>
         <image name="pref_sid" width="514" height="514"/>
