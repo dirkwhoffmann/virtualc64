@@ -189,14 +189,7 @@ extension ConfigurationController {
         
         refresh()
     }
-    
-    @IBAction func devHelpAction(_ sender: Any!) {
         
-        if let url = URL.init(string: "http://www.dirkwhoffmann.de/virtualc64/ROMs.html") {
-            NSWorkspace.shared.open(url)
-        }
-    }
-    
     @IBAction func devPresetAction(_ sender: NSPopUpButton!) {
         
         track()

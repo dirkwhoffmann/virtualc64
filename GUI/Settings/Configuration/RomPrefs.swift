@@ -265,14 +265,7 @@ extension ConfigurationController {
         proxy?.deleteVC1541Rom()
         refresh()
     }
-    
-    @IBAction func helpAction(_ sender: Any!) {
         
-        if let url = URL.init(string: "http://www.dirkwhoffmann.de/virtualc64/ROMs.html") {
-            NSWorkspace.shared.open(url)
-        }
-    }
-    
     @IBAction func romDefaultsAction(_ sender: NSButton!) {
         
         track()
