@@ -10,8 +10,8 @@
 #ifndef FILE_TYPES_H
 #define FILE_TYPES_H
 
-typedef enum {
-    
+typedef enum
+{    
     UNKNOWN_FILE_FORMAT = 0,
     CRT_FILE,                     // Expansion port cartridge
     V64_FILE,                     // Snapshot
@@ -24,8 +24,27 @@ typedef enum {
     BASIC_ROM_FILE,               // Basic Rom
     CHAR_ROM_FILE,                // Character Rom
     KERNAL_ROM_FILE,              // Kernal Rom
-    VC1541_ROM_FILE,              // Floppy drive Rom
+    VC1541_ROM_FILE               // Floppy drive Rom
 }
 C64FileType;
+
+inline bool isFileType(long value)
+{
+    return value >= 0 && value <= VC1541_ROM_FILE;
+}
+
+typedef enum
+{
+    ROM_MISSING,
+    ROM_UNKNOWN,
+    ROM_CNT
+}
+RomRevision;
+
+inline bool isRomRevision(long value)
+{
+    return value >= 0 && value <= ROM_CNT;
+}
+
 
 #endif

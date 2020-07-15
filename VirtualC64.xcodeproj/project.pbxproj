@@ -328,7 +328,7 @@
 		504C42D424AF29AB00E69CAE /* AnyDisk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnyDisk.cpp; sourceTree = "<group>"; };
 		504C42D524AF29AB00E69CAE /* Snapshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Snapshot.cpp; sourceTree = "<group>"; };
 		504C42D624AF29AB00E69CAE /* AnyC64File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnyC64File.cpp; sourceTree = "<group>"; };
-		504C42D724AF29AB00E69CAE /* ROMFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROMFile.h; sourceTree = "<group>"; };
+		504C42D724AF29AB00E69CAE /* C64RomFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64RomFile.h; sourceTree = "<group>"; };
 		504C42D824AF29AB00E69CAE /* D64File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = D64File.cpp; sourceTree = "<group>"; };
 		504C42D924AF29AB00E69CAE /* AnyArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnyArchive.cpp; sourceTree = "<group>"; };
 		504C42DA24AF29AB00E69CAE /* CRTFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRTFile.cpp; sourceTree = "<group>"; };
@@ -692,7 +692,7 @@
 				504C42F724AF29AB00E69CAE /* C64.cpp */,
 				50A2D7AF24AF945200671F38 /* Foundation */,
 				504C428E24AF29AB00E69CAE /* Cartridges */,
-				504C42C624AF29AB00E69CAE /* FileFormats */,
+				504C42C624AF29AB00E69CAE /* Files */,
 				504C42E024AF29AB00E69CAE /* Memory */,
 				504C42E524AF29AB00E69CAE /* CPU */,
 				504C42F924AF29AB00E69CAE /* Mouse */,
@@ -775,36 +775,36 @@
 			path = CustomCartridges;
 			sourceTree = "<group>";
 		};
-		504C42C624AF29AB00E69CAE /* FileFormats */ = {
+		504C42C624AF29AB00E69CAE /* Files */ = {
 			isa = PBXGroup;
 			children = (
-				504C42C724AF29AB00E69CAE /* ROMFile.cpp */,
-				504C42C824AF29AB00E69CAE /* AnyDisk.h */,
-				504C42C924AF29AB00E69CAE /* D64File.h */,
 				504C42CA24AF29AB00E69CAE /* FileTypes.h */,
-				504C42CB24AF29AB00E69CAE /* TAPFile.h */,
-				504C42CC24AF29AB00E69CAE /* T64File.cpp */,
-				504C42CD24AF29AB00E69CAE /* PRGFile.cpp */,
 				504C42CE24AF29AB00E69CAE /* AnyC64File.h */,
-				504C42CF24AF29AB00E69CAE /* P00File.cpp */,
+				504C42D624AF29AB00E69CAE /* AnyC64File.cpp */,
+				504C42D724AF29AB00E69CAE /* C64RomFile.h */,
+				504C42C724AF29AB00E69CAE /* ROMFile.cpp */,
+				504C42DD24AF29AB00E69CAE /* Snapshot.h */,
+				504C42D524AF29AB00E69CAE /* Snapshot.cpp */,
+				504C42CB24AF29AB00E69CAE /* TAPFile.h */,
+				504C42DB24AF29AB00E69CAE /* TAPFile.cpp */,
+				504C42D324AF29AB00E69CAE /* CRTFile.h */,
+				504C42DA24AF29AB00E69CAE /* CRTFile.cpp */,
+				504C42DC24AF29AB00E69CAE /* AnyArchive.h */,
+				504C42D924AF29AB00E69CAE /* AnyArchive.cpp */,
+				504C42C924AF29AB00E69CAE /* D64File.h */,
+				504C42D824AF29AB00E69CAE /* D64File.cpp */,
+				504C42DF24AF29AB00E69CAE /* T64File.h */,
+				504C42CC24AF29AB00E69CAE /* T64File.cpp */,
+				504C42DE24AF29AB00E69CAE /* PRGFile.h */,
+				504C42CD24AF29AB00E69CAE /* PRGFile.cpp */,
 				504C42D024AF29AB00E69CAE /* P00File.h */,
+				504C42CF24AF29AB00E69CAE /* P00File.cpp */,
+				504C42C824AF29AB00E69CAE /* AnyDisk.h */,
+				504C42D424AF29AB00E69CAE /* AnyDisk.cpp */,
 				504C42D124AF29AB00E69CAE /* G64File.h */,
 				504C42D224AF29AB00E69CAE /* G64File.cpp */,
-				504C42D324AF29AB00E69CAE /* CRTFile.h */,
-				504C42D424AF29AB00E69CAE /* AnyDisk.cpp */,
-				504C42D524AF29AB00E69CAE /* Snapshot.cpp */,
-				504C42D624AF29AB00E69CAE /* AnyC64File.cpp */,
-				504C42D724AF29AB00E69CAE /* ROMFile.h */,
-				504C42D824AF29AB00E69CAE /* D64File.cpp */,
-				504C42D924AF29AB00E69CAE /* AnyArchive.cpp */,
-				504C42DA24AF29AB00E69CAE /* CRTFile.cpp */,
-				504C42DB24AF29AB00E69CAE /* TAPFile.cpp */,
-				504C42DC24AF29AB00E69CAE /* AnyArchive.h */,
-				504C42DD24AF29AB00E69CAE /* Snapshot.h */,
-				504C42DE24AF29AB00E69CAE /* PRGFile.h */,
-				504C42DF24AF29AB00E69CAE /* T64File.h */,
 			);
-			path = FileFormats;
+			path = Files;
 			sourceTree = "<group>";
 		};
 		504C42E024AF29AB00E69CAE /* Memory */ = {

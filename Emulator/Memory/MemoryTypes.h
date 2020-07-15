@@ -10,11 +10,10 @@
 #ifndef MEMORY_TYPES_H
 #define MEMORY_TYPES_H
 
-//! @brief    Memory source identifiers
-/*! @details  The identifiers are used inside the peek and poke lookup tables
- *            to indicate the source and target of a peek or poke operation.
- */
-typedef enum {
+// Memory source identifiers. The identifiers are used inside the peek and poke
+// lookup tables to indicate the source and target of a peek or poke operation.
+typedef enum
+{
     M_RAM = 1,
     M_ROM,
     M_CHAR = M_ROM,
@@ -25,16 +24,19 @@ typedef enum {
     M_CRTHI,
     M_PP,
     M_NONE
-} MemoryType;
+}
+MemoryType;
 
-//! @brief    RAM init pattern type
-typedef enum {
+typedef enum
+{
     INIT_PATTERN_C64 = 0,
     INIT_PATTERN_C64C = 1
-} RamInitPattern;
+}
+RamInitPattern;
 
-inline bool isRamInitPattern(RamInitPattern pattern) {
-    return (pattern == INIT_PATTERN_C64) || (pattern == INIT_PATTERN_C64C);
+inline bool isRamInitPattern(long value)
+{
+    return value == INIT_PATTERN_C64 || value == INIT_PATTERN_C64C;
 }
 
 #endif

@@ -24,10 +24,75 @@ public func track(_ message: String = "",
 }
 
 //
+// String class extensions
+//
+
+extension NSAttributedString {
+    
+    convenience init(_ text: String, size: CGFloat, color: NSColor) {
+        
+        let paraStyle = NSMutableParagraphStyle()
+        paraStyle.alignment = .center
+
+        let attr: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: size),
+            .foregroundColor: color,
+            .paragraphStyle: paraStyle
+        ]
+        
+        self.init(string: text, attributes: attr)
+    }
+}
+
+//
 // URL extensions
 //
 
 extension URL {
+    
+    static var appSupportFolder: URL? {
+        
+        let fm = FileManager.default
+        let path = FileManager.SearchPathDirectory.applicationSupportDirectory
+        let mask = FileManager.SearchPathDomainMask.userDomainMask
+        let url = fm.urls(for: path, in: mask).first
+        return url?.appendingPathComponent("vAmiga")
+    }
+    
+    static func appSupportFolder(_ name: String) -> URL? {
+    
+        guard let support = URL.appSupportFolder else { return nil }
+
+        let fm = FileManager.default
+        let folder = support.appendingPathComponent("\(name)")
+        var isDirectory: ObjCBool = false
+        let folderExists = fm.fileExists(atPath: folder.path,
+                                         isDirectory: &isDirectory)
+        
+        if !folderExists || !isDirectory.boolValue {
+            
+            do {
+                try fm.createDirectory(at: folder,
+                                       withIntermediateDirectories: true,
+                                       attributes: nil)
+            } catch {
+                return nil
+            }
+        }
+        
+        return folder
+    }
+    
+    func modificationDate() -> Date? {
+        
+        let attr = try? FileManager.default.attributesOfItem(atPath: self.path)
+        
+        if attr != nil {
+            return attr![.creationDate] as? Date
+        } else {
+            return nil
+        }
+    }
     
     func addTimeStamp() -> URL {
         

@@ -48,7 +48,8 @@ extension ConfigurationController {
         devMouseModel.selectItem(withTag: model)
         devMouseInfo.isHidden = (model == Int(MOUSE1350.rawValue))
         
-        devOkButton.title = c64.isReady() ? "OK" : "Quit"
+        // Power button
+        devPowerButton.isHidden = !bootable
     }
     
     func updateJoyKeyMap(_ nr: Int, dir: JoystickDirection, button: NSButton, txt: NSTextField) {

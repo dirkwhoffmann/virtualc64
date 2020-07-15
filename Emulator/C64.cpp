@@ -519,20 +519,8 @@ C64::pauseEmulator()
 bool
 C64::isReady()
 {
-    return
-    mem.basicRomIsLoaded() &&
-    mem.characterRomIsLoaded() &&
-    mem.kernalRomIsLoaded() &&
-    drive1.mem.romIsLoaded() &&
-    drive2.mem.romIsLoaded();
+    return hasBasicRom() && hasCharRom() && hasKernalRom() && hasVC1541Rom();
 }
-
-
-
-
-
-
-
 
 C64Model
 C64::getModel()
@@ -1082,6 +1070,298 @@ C64::deleteSnapshot(vector<Snapshot *> &storage, unsigned index)
     }
 }
 
+u32
+C64::basicRomCRC32()
+{
+    return hasBasicRom() ? crc32(mem.rom + 0xA000, 0x2000) : 0;
+}
+
+u32
+C64::charRomCRC32()
+{
+    return hasCharRom() ? crc32(mem.rom + 0xD000, 0x1000) : 0;
+}
+
+u32
+C64::kernalRomCRC32()
+{
+    return hasKernalRom() ? crc32(mem.rom + 0xE000, 0x2000) : 0;
+}
+
+u32
+C64::vc1541RomCRC32()
+{
+    return hasVC1541Rom() ? crc32(drive1.mem.rom, 0x4000) : 0;
+}
+
+u64
+C64::basicRomFingerprint()
+{
+    return hasBasicRom() ? fnv_1a_64(mem.rom + 0xA000, 0x2000) : 0;
+}
+
+u64
+C64::charRomFingerprint()
+{
+    return hasCharRom() ? fnv_1a_64(mem.rom + 0xD000, 0x1000) : 0;
+}
+
+u64
+C64::kernalRomFingerprint()
+{
+    return hasKernalRom() ? fnv_1a_64(mem.rom + 0xE000, 0x2000) : 0;
+}
+
+u64
+C64::vc1541RomFingerprint()
+{
+    return hasVC1541Rom() ? fnv_1a_64(drive1.mem.rom, 0x4000) : 0;
+}
+
+bool
+C64::hasBasicRom()
+{
+    return (mem.rom[0xA000] | mem.rom[0xA001]) != 0x00;
+}
+
+bool
+C64::hasCharRom()
+{
+    return (mem.rom[0xD000] | mem.rom[0xD001]) != 0x00;
+}
+
+bool
+C64::hasKernalRom()
+{
+    return (mem.rom[0xE000] | mem.rom[0xE001]) != 0x00;
+}
+
+bool
+C64::hasVC1541Rom()
+{
+    assert(drive1.mem.rom[0] == drive2.mem.rom[0]);
+    assert(drive1.mem.rom[1] == drive2.mem.rom[1]);
+    return (drive1.mem.rom[0] | drive1.mem.rom[1]) != 0x00;
+}
+
+bool
+C64::loadBasicRom(C64RomFile *file)
+{
+    assert(file != NULL);
+    
+    if (file->type() == BASIC_ROM_FILE) {
+        debug("Flashing Basic Rom\n");
+        file->flash(mem.rom, 0xA000);
+        return true;
+    }
+    return false;
+}
+
+bool
+C64::loadBasicRomFromBuffer(const u8 *buffer, size_t length)
+{
+    assert(buffer != NULL);
+    
+    if (C64RomFile *file = C64RomFile::makeWithBuffer(buffer, length)) {
+        return loadBasicRom(file);
+    }
+    
+    msg("Failed to read Basic Rom from buffer\n");
+    return false;
+}
+
+bool
+C64::loadBasicRomFromFile(const char *path)
+{
+    assert(path != NULL);
+    
+    if (C64RomFile *file = C64RomFile::makeWithFile(path)) {
+        return loadBasicRom(file);
+    }
+    
+    msg("Failed to read Basic Rom from %s\n", path);
+    return false;
+}
+
+bool
+C64::loadCharRom(C64RomFile *file)
+{
+    assert(file != NULL);
+    
+    if (file->type() == CHAR_ROM_FILE) {
+        debug("Flashing Character Rom\n");
+        file->flash(mem.rom, 0xD000);
+        return true;
+    }
+    return false;
+}
+
+bool
+C64::loadCharRomFromBuffer(const u8 *buffer, size_t length)
+{
+    assert(buffer != NULL);
+    
+    if (C64RomFile *file = C64RomFile::makeWithBuffer(buffer, length)) {
+        return loadCharRom(file);
+    }
+    
+    msg("Failed to read Character Rom from buffer\n");
+    return false;
+}
+
+bool
+C64::loadCharRomFromFile(const char *path)
+{
+    assert(path != NULL);
+    
+    if (C64RomFile *file = C64RomFile::makeWithFile(path)) {
+        return loadCharRom(file);
+    }
+    
+    msg("Failed to read Character Rom from %s\n", path);
+    return false;
+}
+
+bool
+C64::loadKernalRom(C64RomFile *file)
+{
+    assert(file != NULL);
+    
+    if (file->type() == KERNAL_ROM_FILE) {
+        debug("Flashing Kernal Rom\n");
+        file->flash(mem.rom, 0xE000);
+        return true;
+    }
+    return false;
+}
+
+bool
+C64::loadKernalRomFromBuffer(const u8 *buffer, size_t length)
+{
+    assert(buffer != NULL);
+    
+    if (C64RomFile *file = C64RomFile::makeWithBuffer(buffer, length)) {
+        return loadKernalRom(file);
+    }
+    
+    msg("Failed to read Kernal Rom from buffer\n");
+    return false;
+}
+
+bool
+C64::loadKernalRomFromFile(const char *path)
+{
+    assert(path != NULL);
+    
+    if (C64RomFile *file = C64RomFile::makeWithFile(path)) {
+        return loadKernalRom(file);
+    }
+    
+    msg("Failed to read Kernal Rom from %s\n", path);
+    return false;
+}
+
+bool
+C64::loadVC1541Rom(C64RomFile *file)
+{
+    assert(file != NULL);
+    
+    if (file->type() == VC1541_ROM_FILE) {
+        debug("Flashing VC1541 Rom\n");
+        file->flash(drive1.mem.rom);
+        file->flash(drive2.mem.rom);
+        return true;
+    }
+    return false;
+}
+
+bool
+C64::loadVC1541RomFromBuffer(const u8 *buffer, size_t length)
+{
+    assert(buffer != NULL);
+    
+    if (C64RomFile *file = C64RomFile::makeWithBuffer(buffer, length)) {
+        return loadVC1541Rom(file);
+    }
+    
+    msg("Failed to read VC1541 Rom from buffer\n");
+    return false;
+}
+
+bool
+C64::loadVC1541RomFromFile(const char *path)
+{
+    assert(path != NULL);
+    
+    if (C64RomFile *file = C64RomFile::makeWithFile(path)) {
+        return loadVC1541Rom(file);
+    }
+    
+    msg("Failed to read VC1541 Rom from %s\n", path);
+    return false;
+}
+
+void
+C64::deleteBasicRom()
+{
+    memset(mem.rom + 0xA000, 0, 0x2000);
+}
+
+void
+C64::deleteCharRom()
+{
+    memset(mem.rom + 0xD000, 0, 0x1000);
+}
+
+void
+C64::deleteKernalRom()
+{
+    memset(mem.rom + 0xE000, 0, 0x2000);
+}
+
+void 
+C64::deleteVC1541Rom()
+{
+    memset(drive1.mem.rom, 0, 0x4000);
+    memset(drive2.mem.rom, 0, 0x4000);
+}
+
+bool
+C64::saveBasicRom(const char *path)
+{
+    if (!hasBasicRom()) return false;
+
+    C64RomFile *file = C64RomFile::makeWithBuffer(mem.rom + 0xA000, 0x2000);
+    return file && file->writeToFile(path);
+}
+
+bool
+C64::saveCharRom(const char *path)
+{
+    if (!hasCharRom()) return false;
+    
+    C64RomFile *file = C64RomFile::makeWithBuffer(mem.rom + 0xD000, 0x1000);
+    return file && file->writeToFile(path);
+}
+
+bool
+C64::saveKernalRom(const char *path)
+{
+    if (!hasKernalRom()) return false;
+    
+    C64RomFile *file = C64RomFile::makeWithBuffer(mem.rom + 0xE000, 0x2000);
+    return file && file->writeToFile(path);
+}
+
+bool
+C64::saveVC1541Rom(const char *path)
+{
+    if (!hasVC1541Rom()) return false;
+    
+    C64RomFile *file = C64RomFile::makeWithBuffer(drive1.mem.rom, 0x4000);
+    return file && file->writeToFile(path);
+}
+
 bool
 C64::flash(AnyC64File *file)
 {
@@ -1148,7 +1428,7 @@ C64::loadRom(const char *filename)
 {
     bool result;
     bool wasRunnable = isReady();
-    ROMFile *rom = ROMFile::makeWithFile(filename);
+    C64RomFile *rom = C64RomFile::makeWithFile(filename);
     
     if (!rom) {
         warn("Failed to read ROM image file %s\n", filename);

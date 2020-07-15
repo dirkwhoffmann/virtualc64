@@ -93,14 +93,6 @@ class MyController: NSWindowController, MessageReceiver {
     
     /// Selected game pad slot for joystick in port B
     var inputDevice2 = Defaults.inputDevice2
-
-    /// Rom file URLs
-    /*
-    var basicRomURL: URL = Defaults.basicRom
-    var charRomURL: URL = Defaults.charRom
-    var kernalRomURL: URL = Defaults.kernalRom
-    var vc1541RomURL: URL = Defaults.vc1541Rom
-    */
     
     /// Screenshot resolution (0 = low, 1 = high)
     var screenshotSource = Defaults.screenshotSource
@@ -370,26 +362,26 @@ extension MyController {
             track("Failed to create game pad manager")
             return
         }
-        
-        // Setup toolbar, window, and debugger
-        configureToolbar()
-        configureWindow()
-        setupDebugger()
-        
+                
         // Setup renderer
         renderer = Renderer(view: metalScreen,
                             device: MTLCreateSystemDefaultDevice()!,
                             controller: self)
         
-        // Get metal running
-        // metalScreen.setupMetal()
-    
+        // Setup toolbar, window, and debugger
+        configureToolbar()
+        configureWindow()
+        setupDebugger()
+
         // Load user defaults
         loadUserDefaults()
         
         // Enable message processing (register callback)
         addListener()
         
+        // Process attachment (if any)
+        mydocument.mountAttachment()
+
         // Check if the C64 is ready to power on
         if c64.isReady() {
             
@@ -398,8 +390,14 @@ extension MyController {
             
             // Launch the emulator thread
             c64.run()
+
+        } else {
+            
+            // Open the Rom dialog
+            openConfigurator(tab: "Roms")
+            // renderer.zoomOut()
         }
-                
+
         // Create speed monitor and get the timer tunning
         createTimer()
         
@@ -578,10 +576,14 @@ extension MyController {
         case MSG_POWER_ON:
             track("MSG_POWER_ON")
             virtualKeyboard = nil
+            renderer.blendIn()
+            // renderer.zoomIn()
             toolbar.validateVisibleItems()
 
         case MSG_POWER_OFF:
             track("MSG_POWER_OFF")
+            renderer.blendOut()
+            // renderer.zoomOut(steps: 20)
             toolbar.validateVisibleItems()
             
         case MSG_RUN:
@@ -607,8 +609,9 @@ extension MyController {
             break
             
         case MSG_ROM_MISSING:
-            openConfigurator()
-
+            // openConfigurator()
+            break
+            
         case MSG_SNAPSHOT_TAKEN:
             break
     
@@ -844,6 +847,7 @@ extension MyController {
     // Loading Roms
     //
     
+    /*
     @discardableResult
     func loadRom(_ url: URL?) -> Bool {
         
@@ -871,7 +875,8 @@ extension MyController {
         track("ROM file \(url!) not found")
         return false
     }
-
+    */
+    
     //
     // Keyboard events
     //

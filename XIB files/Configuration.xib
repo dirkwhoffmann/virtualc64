@@ -30,6 +30,7 @@
                 <outlet property="devMouseInfo" destination="1eF-SX-7l0" id="K25-cx-sNa"/>
                 <outlet property="devMouseModel" destination="TBT-Uq-cep" id="BzN-V4-sCi"/>
                 <outlet property="devOkButton" destination="Qq8-DB-XvV" id="pjm-hI-T0A"/>
+                <outlet property="devPowerButton" destination="iV7-W5-7rO" id="UZW-st-rmr"/>
                 <outlet property="devRight1" destination="zAr-yb-dkS" id="dKb-4n-nv8"/>
                 <outlet property="devRight1button" destination="7NB-Mh-hbJ" id="TK3-Om-g7C"/>
                 <outlet property="devRight2" destination="4HA-Bt-zso" id="gne-YB-0Ry"/>
@@ -51,6 +52,7 @@
                 <outlet property="emuEjectWithoutAskingButton" destination="AJ6-dV-aBm" id="UUV-EB-6ZM"/>
                 <outlet property="emuOkButton" destination="zAR-Cw-JcH" id="nVJ-Qk-iGG"/>
                 <outlet property="emuPauseInBackground" destination="KGL-Xj-tLX" id="pmE-hC-l1q"/>
+                <outlet property="emuPowerButton" destination="lYX-gS-K4M" id="cUf-yO-Y1m"/>
                 <outlet property="emuPrgAutoTypeButton" destination="0IA-WK-3xc" id="oP5-94-8mp"/>
                 <outlet property="emuPrgAutoTypeText" destination="oSj-uP-peJ" id="XSB-Fj-ZNu"/>
                 <outlet property="emuPrgPopup" destination="cEf-nh-E7e" id="QXV-Wq-7o2"/>
@@ -64,12 +66,12 @@
                 <outlet property="emuTapAutoTypeText" destination="nFD-Hf-VAg" id="twr-4e-tmw"/>
                 <outlet property="emuTapPopup" destination="lgb-kz-IcQ" id="0OQ-4W-pRk"/>
                 <outlet property="emuWarpLoad" destination="jQ0-jt-CGq" id="m2W-9e-r5B"/>
-                <outlet property="hwCancelButton" destination="B3P-il-3nh" id="bC8-or-l9N"/>
                 <outlet property="hwCiaModelPopup" destination="MVI-Fh-OO6" id="coA-3a-xgT"/>
                 <outlet property="hwCiaTimerBBug" destination="4rD-qd-qGj" id="6Nf-wz-IRb"/>
                 <outlet property="hwGlueLogicPopup" destination="eOu-BN-YUt" id="H5c-VY-ROb"/>
                 <outlet property="hwInfoText" destination="nV7-HX-859" id="fGO-8O-4dt"/>
                 <outlet property="hwOkButton" destination="cMh-0b-Yb2" id="Baw-Q8-cGK"/>
+                <outlet property="hwPowerButton" destination="x83-RD-ne8" id="foW-6H-dGt"/>
                 <outlet property="hwRamInitPatternPopup" destination="N53-b0-EtR" id="fpe-DG-QfY"/>
                 <outlet property="hwSidEnginePopup" destination="BTz-kT-JtT" id="tcq-vb-6f3"/>
                 <outlet property="hwSidFilter" destination="ViO-fU-69W" id="gJN-wt-Ava"/>
@@ -84,13 +86,13 @@
                 <outlet property="keyMatrixCollectionView" destination="oJh-Cc-rn9" id="mw2-1T-eJS"/>
                 <outlet property="keyMatrixScrollView" destination="I3H-16-RH1" id="NNZ-ae-iqB"/>
                 <outlet property="keyOkButton" destination="qf2-f2-Cbn" id="rsO-Ta-9iX"/>
+                <outlet property="keyPowerButton" destination="QKO-Ms-Wnx" id="eka-Pc-9so"/>
                 <outlet property="prefTabView" destination="baz-eW-A74" id="fgy-dU-alU"/>
                 <outlet property="romBasicButton" destination="nSa-0I-2sF" id="LaM-hr-eDI"/>
                 <outlet property="romBasicDescription" destination="Val-uF-mCs" id="VL7-B6-3sn"/>
                 <outlet property="romBasicHashText" destination="10b-BC-y6b" id="XWk-c0-wYf"/>
                 <outlet property="romBasicImage" destination="rV9-BQ-AAx" id="gjn-vP-yXL"/>
                 <outlet property="romBasicPathText" destination="LBs-Al-1wH" id="lSF-pL-uSt"/>
-                <outlet property="romCancelButton" destination="ZhO-d6-muu" id="U1C-ne-iYK"/>
                 <outlet property="romCharButton" destination="wF6-vA-6xk" id="nXM-a7-0pH"/>
                 <outlet property="romCharDescription" destination="Pea-uJ-4G8" id="raO-PO-Cfy"/>
                 <outlet property="romCharHashText" destination="pJq-X4-x2y" id="dnt-HT-phH"/>
@@ -105,6 +107,7 @@
                 <outlet property="romKernalPathText" destination="1iD-sE-Iu0" id="Xjx-WF-D8f"/>
                 <outlet property="romKernelButton" destination="sT6-dg-rcI" id="FTx-AU-Gup"/>
                 <outlet property="romOkButton" destination="sYt-GY-XZQ" id="x48-u0-P2N"/>
+                <outlet property="romPowerButton" destination="7kO-E0-VCD" id="B6z-qV-8e8"/>
                 <outlet property="romVc1541Button" destination="5aa-kC-14X" id="M1r-50-IEw"/>
                 <outlet property="romVc1541Description" destination="hMS-xE-H7T" id="0k1-GI-MJa"/>
                 <outlet property="romVc1541HashText" destination="DMA-Yr-TF0" id="JyR-Rz-yQz"/>
@@ -132,6 +135,7 @@
                 <outlet property="vidMisalignmentYSlider" destination="KkN-hN-xfa" id="7Dv-3R-1xx"/>
                 <outlet property="vidOkButton" destination="QaY-Vj-eY6" id="KSd-Ma-zdy"/>
                 <outlet property="vidPalettePopup" destination="kQF-8P-rsa" id="vjk-in-uM2"/>
+                <outlet property="vidPowerButton" destination="Box-gS-uHN" id="fjO-gG-ZJ7"/>
                 <outlet property="vidSaturationSlider" destination="Kth-Hh-Zmk" id="Kcz-Ie-bo4"/>
                 <outlet property="vidScanlineBrightnessSlider" destination="91k-67-6iN" id="Ny4-2J-Tad"/>
                 <outlet property="vidScanlineWeightSlider" destination="nIa-kK-410" id="Wd7-gc-qEK"/>
@@ -215,7 +219,7 @@ DQ
                                                         <rect key="frame" x="380" y="60" width="188" height="18"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="right" title="Hash: 1020304050607080" id="hcZ-7l-wZp">
-                                                            <font key="font" metaFont="menu" size="11"/>
+                                                            <font key="font" metaFont="message" size="11"/>
                                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
@@ -483,6 +487,17 @@ Gw
                                             </buttonCell>
                                             <connections>
                                                 <action selector="romDefaultsAction:" target="-2" id="NeD-fL-eyM"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7kO-E0-VCD">
+                                            <rect key="frame" x="436" y="5" width="78" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="push" title="Power" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5fZ-wH-vg9">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="powerAction:" target="-2" id="bIb-az-MKX"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -922,6 +937,17 @@ Gw
                                             <connections>
                                                 <action selector="hwDefaultsAction:" target="-2" id="ixi-yn-Z2L"/>
                                             </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x83-RD-ne8">
+                                            <rect key="frame" x="437" y="5" width="78" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="push" title="Power" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1bh-V0-xs0">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                                <connections>
+                                                    <action selector="powerAction:" target="-2" id="w8M-xc-ip5"/>
+                                                </connections>
+                                            </buttonCell>
                                         </button>
                                     </subviews>
                                 </view>
@@ -1559,6 +1585,17 @@ Gw
                                                 <action selector="vidDefaultsAction:" target="-2" id="uIa-Y2-Yqo"/>
                                             </connections>
                                         </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Box-gS-uHN">
+                                            <rect key="frame" x="437" y="5" width="78" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="push" title="Power" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7Bl-tZ-Sim">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="powerAction:" target="-2" id="HgG-aN-C0E"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                 </view>
                             </tabViewItem>
@@ -2165,6 +2202,17 @@ Gw
                                                 <action selector="emuDefaultsAction:" target="-2" id="wdf-pf-ntn"/>
                                             </connections>
                                         </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lYX-gS-K4M">
+                                            <rect key="frame" x="437" y="5" width="78" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="push" title="Power" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Z5C-me-ScF">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="powerAction:" target="-2" id="MDo-kx-RtA"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                 </view>
                             </tabViewItem>
@@ -2660,6 +2708,17 @@ Gw
                                                 <action selector="devPresetAction:" target="-2" id="bY2-3u-9yM"/>
                                             </connections>
                                         </popUpButton>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iV7-W5-7rO">
+                                            <rect key="frame" x="437" y="5" width="78" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="push" title="Power" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="D2m-Rj-FFJ">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="powerAction:" target="-2" id="iFp-MV-qzU"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                 </view>
                             </tabViewItem>
@@ -2765,7 +2824,7 @@ DQ
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                             <clipView key="contentView" id="GxJ-gG-I1j">
                                                 <rect key="frame" x="1" y="1" width="456" height="336"/>
-                                                <autoresizingMask key="autoresizingMask"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <collectionView selectable="YES" id="oJh-Cc-rn9">
                                                         <rect key="frame" x="0.0" y="0.0" width="456" height="336"/>
@@ -2793,6 +2852,17 @@ DQ
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                         </scrollView>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QKO-Ms-Wnx">
+                                            <rect key="frame" x="437" y="5" width="78" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="push" title="Power" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="A0X-7c-9c1">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="powerAction:" target="-2" id="D2c-oH-yrE"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                 </view>
                             </tabViewItem>

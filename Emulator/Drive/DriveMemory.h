@@ -53,29 +53,12 @@ private:
     
 	void _dump() override;
 
-    
-public:
-    
-    //
-    //! @functiongroup Accessing ROM
-    //
-
-	//! @brief    Returns true iff the ROM image has been loaded.
-    bool romIsLoaded() { return (rom[0] | rom[1]) != 0x00; }
-
-    //! @brief    Removes the ROM image from memory
-    void deleteRom() { memset(rom, 0, sizeof(rom)); }
-
-    /*! @brief    Computes a 64-bit fingerprint for the VC1541 ROM.
-     *  @return   fingerprint or 0, if no Basic ROM is installed.
-     */
-    u64 romFingerprint() {
-        return romIsLoaded() ? fnv_1a_64(rom, sizeof(rom)) : 0; }
-    
-    
+        
     //
     //! @functiongroup Accessing RAM
     //
+
+public:
 
     // Reading from memory
     u8 peek(u16 addr) override;

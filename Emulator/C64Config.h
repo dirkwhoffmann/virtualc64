@@ -29,7 +29,7 @@
 //
 
 // General
-static const int RUN_DEBUG       = 1; // Run loop, component states, timing
+static const int RUN_DEBUG       = 0; // Run loop, component states, timing
 static const int SNP_DEBUG       = 0; // Serialization (snapshots)
 static const int MSG_DEBUG       = 0; // Message queue
 

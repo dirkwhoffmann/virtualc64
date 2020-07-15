@@ -122,44 +122,6 @@ private:
     
 public:
     
-	//! @brief    Returns true, iff the Basic ROM has been loaded
-	bool basicRomIsLoaded() { return (rom[0xA000] | rom[0xA001]) != 0x00; }
-    
-    //! @brief    Deletes the Basic ROM from memory
-    void deleteBasicRom() { memset(rom + 0xA000, 0, 0x2000); }
-    
-    //! @brief    Returns true, iff the Character ROM has been loaded
-    bool characterRomIsLoaded() { return (rom[0xD000] | rom[0xD001]) != 0x00; }
-
-    //! @brief    Deletes the Character ROM from memory
-    void deleteCharacterRom() { memset(rom + 0xD000, 0, 0x1000); }
-
-    //! @brief    Returns true, iff the Kernal ROM has been loaded
-	bool kernalRomIsLoaded() { return (rom[0xE000] | rom[0xE001]) != 0x00; }
-
-    //! @brief    Deletes the Kernal ROM from memory
-    void deleteKernalRom() { memset(rom + 0xE000, 0, 0x2000); }
-
-    /*! @brief    Computes a 64-bit fingerprint for the Basic ROM.
-     *  @return   fingerprint or 0, if no Basic ROM is installed.
-     */
-    u64 basicRomFingerprint() {
-        return basicRomIsLoaded() ? fnv_1a_64(rom + 0xA000, 0x2000) : 0; }
-
-    /*! @brief    Computes a 64-bit fingerprint for the Character ROM.
-     *  @return   fingerprint or 0, if no Basic ROM is installed.
-     */
-    u64 characterRomFingerprint() {
-        return characterRomIsLoaded() ? fnv_1a_64(rom + 0xD000, 0x1000) : 0; }
-
-    /*! @brief    Computes a 64-bit fingerprint for the Kernal ROM.
-     *  @return   fingerprint or 0, if no Basic ROM is installed.
-     */
-    u64 kernalRomFingerprint() {
-        return kernalRomIsLoaded() ? fnv_1a_64(rom + 0xE000, 0x2000) : 0; }
-    
-public:
-    
     //! @brief    Returns the currently used RAM init pattern.
     RamInitPattern getRamInitPattern() { return ramInitPattern; }
     

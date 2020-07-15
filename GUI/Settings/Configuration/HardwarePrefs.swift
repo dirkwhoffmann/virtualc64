@@ -84,8 +84,9 @@ extension ConfigurationController {
             descr = "is a custom configuration. It matches no known C64 model"
         }
         hwInfoText.stringValue = "This configuration \(descr)."
-
-        hwOkButton.title = c64.isReady() ? "OK" : "Quit"
+        
+        // Power button
+        hwPowerButton.isHidden = !bootable
     }
     
     @IBAction func hwVicModelAction(_ sender: NSPopUpButton!) {

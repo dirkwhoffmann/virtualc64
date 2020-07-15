@@ -193,18 +193,20 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->mem->eraseWithPattern((RamInitPattern)pattern);
 }
+/*
 - (void) deleteBasicRom
 {
     wrapper->mem->deleteBasicRom();
 }
 - (void) deleteCharacterRom
 {
-    wrapper->mem->deleteCharacterRom();
+    wrapper->mem->deleteCharRom();
 }
 - (void) deleteKernalRom
 {
     wrapper->mem->deleteKernalRom();
 }
+*/
 - (MemoryType) peekSource:(u16)addr
 {
     return wrapper->mem->getPeekSource(addr);
@@ -1128,10 +1130,6 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->drive->toggleConnection();
 }
-- (void) deleteRom
-{
-    wrapper->drive->mem.deleteRom();
-}
 - (BOOL) redLED
 {
     return wrapper->drive->getRedLED();
@@ -1719,77 +1717,121 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 
 // Handling ROMs
+- (BOOL) hasBasicRom
+{
+    return wrapper->c64->hasBasicRom();
+}
+- (BOOL) hasCharRom
+{
+    return wrapper->c64->hasCharRom();
+}
+- (BOOL) hasKernalRom
+{
+    return wrapper->c64->hasKernalRom();
+}
+- (BOOL) hasVC1541Rom
+{
+    return wrapper->c64->hasVC1541Rom();
+}
 - (BOOL) isBasicRom:(NSURL *)url
 {
-    return ROMFile::isBasicRomFile([[url path] UTF8String]);
-}
-- (BOOL) loadBasicRom:(NSURL *)url
-{
-    return [self isBasicRom:url] && wrapper->c64->loadRom([[url path] UTF8String]);
-}
-- (BOOL) isBasicRomLoaded
-{
-    return wrapper->c64->mem.basicRomIsLoaded();
-}
-- (u64) basicRomFingerprint
-{
-    return wrapper->c64->mem.basicRomFingerprint();
+    return C64RomFile::isBasicRomFile([[url path] UTF8String]);
 }
 - (BOOL) isCharRom:(NSURL *)url
 {
-    return ROMFile::isCharRomFile([[url path] UTF8String]);
-}
-- (BOOL) loadCharRom:(NSURL *)url
-{
-    return [self isCharRom:url] && wrapper->c64->loadRom([[url path] UTF8String]);
-}
-- (BOOL) isCharRomLoaded
-{
-    return wrapper->c64->mem.characterRomIsLoaded();
-}
-- (u64) charRomFingerprint
-{
-    return wrapper->c64->mem.characterRomFingerprint();
+    return C64RomFile::isCharRomFile([[url path] UTF8String]);
 }
 - (BOOL) isKernalRom:(NSURL *)url
 {
-    return ROMFile::isKernalRomFile([[url path] UTF8String]);
-}
-- (BOOL) loadKernalRom:(NSURL *)url
-{
-    return [self isKernalRom:url] && wrapper->c64->loadRom([[url path] UTF8String]);
-}
-- (BOOL) isKernalRomLoaded
-{
-    return wrapper->c64->mem.kernalRomIsLoaded();
-}
-- (u64) kernalRomFingerprint
-{
-    return wrapper->c64->mem.kernalRomFingerprint();
+    return C64RomFile::isKernalRomFile([[url path] UTF8String]);
 }
 - (BOOL) isVC1541Rom:(NSURL *)url
 {
-    return ROMFile::isVC1541RomFile([[url path] UTF8String]);
+    return C64RomFile::isVC1541RomFile([[url path] UTF8String]);
+}
+- (BOOL) loadBasicRom:(NSURL *)url
+{
+    return wrapper->c64->loadBasicRomFromFile([[url path] UTF8String]);
+}
+- (BOOL) loadCharRom:(NSURL *)url
+{
+    return wrapper->c64->loadCharRomFromFile([[url path] UTF8String]);
+}
+- (BOOL) loadKernalRom:(NSURL *)url
+{
+    return wrapper->c64->loadKernalRomFromFile([[url path] UTF8String]);
 }
 - (BOOL) loadVC1541Rom:(NSURL *)url
 {
-    return [self isVC1541Rom:url] && wrapper->c64->loadRom([[url path] UTF8String]);
+    return wrapper->c64->loadVC1541RomFromFile([[url path] UTF8String]);
 }
-- (BOOL) isVC1541RomLoaded
+- (BOOL) saveBasicRom:(NSURL *)url
 {
-    return wrapper->c64->drive1.mem.romIsLoaded() && wrapper->c64->drive2.mem.romIsLoaded();
+    return wrapper->c64->saveBasicRom([[url path] UTF8String]);
+}
+- (BOOL) saveCharRom:(NSURL *)url
+{
+    return wrapper->c64->saveCharRom([[url path] UTF8String]);
+}
+- (BOOL) saveKernalRom:(NSURL *)url
+{
+    return wrapper->c64->saveKernalRom([[url path] UTF8String]);
+}
+- (BOOL) saveVC1541Rom:(NSURL *)url
+{
+    return wrapper->c64->saveVC1541Rom([[url path] UTF8String]);
+}
+- (void) deleteBasicRom
+{
+    wrapper->c64->deleteBasicRom();
+}
+- (void) deleteKernalRom
+{
+    wrapper->c64->deleteKernalRom();
+}
+- (void) deleteCharRom
+{
+    wrapper->c64->deleteCharRom();
+}
+- (void) deleteVC1541Rom
+{
+    wrapper->c64->deleteVC1541Rom();
+}
+- (u64) basicRomFingerprint
+{
+    return wrapper->c64->basicRomFingerprint();
+}
+- (u64) charRomFingerprint
+{
+    return wrapper->c64->charRomFingerprint();
+}
+- (u64) kernalRomFingerprint
+{
+    return wrapper->c64->kernalRomFingerprint();
 }
 - (u64) vc1541RomFingerprint
 {
-    return wrapper->c64->drive1.mem.romFingerprint();
+    return wrapper->c64->vc1541RomFingerprint();
 }
+
+
+
 - (BOOL) isRom:(NSURL *)url
 {
-    return [self isBasicRom:url] || [self isCharRom:url] || [self isKernalRom:url] || [self isVC1541Rom:url];
+    return
+    [self isBasicRom:url] ||
+    [self isCharRom:url] ||
+    [self isKernalRom:url] ||
+    [self isVC1541Rom:url];
 }
+
 - (BOOL) loadRom:(NSURL *)url
 {
-    return [self loadBasicRom:url] || [self loadCharRom:url] || [self loadKernalRom:url] || [self loadVC1541Rom:url];
+    return
+    [self loadBasicRom:url] ||
+    [self loadCharRom:url] ||
+    [self loadKernalRom:url] ||
+    [self loadVC1541Rom:url];
 }
 
 // Flashing files

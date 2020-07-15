@@ -60,6 +60,64 @@ class Configuration {
     init(with controller: MyController) { parent = controller }
     
     //
+    // Roms
+    //
+    
+    func loadRomUserDefaults() {
+        
+        c64.suspend()
+        
+        if let url = UserDefaults.basicRomUrl {
+            track("Seeking Basic Rom")
+            c64.loadRom(url)
+        }
+        if let url = UserDefaults.kernalRomUrl {
+            track("Seeking Kernal Rom")
+            c64.loadRom(url)
+        }
+        if let url = UserDefaults.charRomUrl {
+            track("Seeking Character Rom")
+            c64.loadRom(url)
+        }
+        if let url = UserDefaults.vc1541RomUrl {
+            track("Seeking VC1541 Rom")
+            c64.loadRom(url)
+        }
+        
+        c64.resume()
+    }
+    
+    func saveRomUserDefaults() {
+        
+        let fm = FileManager.default
+        
+        c64.suspend()
+        
+        if let url = UserDefaults.basicRomUrl {
+            track("Saving Basic Rom")
+            try? fm.removeItem(at: url)
+            c64.saveBasicRom(url)
+        }
+        if let url = UserDefaults.charRomUrl {
+            track("Saving Character Rom")
+            try? fm.removeItem(at: url)
+            c64.saveCharRom(url)
+        }
+        if let url = UserDefaults.kernalRomUrl {
+            track("Saving Kernal Rom")
+            try? fm.removeItem(at: url)
+            c64.saveKernalRom(url)
+        }
+        if let url = UserDefaults.vc1541RomUrl {
+            track("Saving VC1541 Rom")
+            try? fm.removeItem(at: url)
+            c64.saveVC1541Rom(url)
+        }
+
+        c64.resume()
+    }
+    
+    //
     // Hardware
     //
     

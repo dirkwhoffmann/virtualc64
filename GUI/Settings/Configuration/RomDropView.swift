@@ -56,6 +56,11 @@ class RomDropView: NSImageView {
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
 
         guard let url = sender.url else { return false }
+
+        return parent.c64.loadRom(url)
+        
+        /*
+        guard let url = sender.url else { return false }
         guard let controller = myController else { return false }
         guard let c64 = proxy else { return false }
         
@@ -66,6 +71,7 @@ class RomDropView: NSImageView {
             parent.okAction(self)
         }
         return true
+        */
     }
     
     override func concludeDragOperation(_ sender: NSDraggingInfo?) {

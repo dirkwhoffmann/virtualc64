@@ -29,7 +29,6 @@ extension ConfigurationController {
     
         // guard let controller = myController else { return }
         guard let kbController = myController?.keyboard else { return }
-        guard let c64 = proxy else { return }
         
         keyMappingPopup.selectItem(withTag: kbController.mapKeysByPosition ? 1 : 0)
     
@@ -47,7 +46,8 @@ extension ConfigurationController {
             keyMatrixScrollView.isHidden = true
         }
         
-        keyOkButton.title = c64.isReady() ? "OK" : "Quit"
+        // Power button
+        keyPowerButton.isHidden = !bootable
     }
     
     func updateImages() {

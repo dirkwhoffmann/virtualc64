@@ -12,14 +12,11 @@
 
 #include "AnyC64File.h"
 
-/*! @class  ROMFile
- *  @brief  Represents a ROM image file.
- */
-class ROMFile : public AnyC64File {
+class C64RomFile : public AnyC64File {
     
 private:
 
-    //! @brief    Header signatures
+    // Accepted header signatures
     static const size_t basicRomSignatureCnt  = 3;
     static const size_t charRomSignatureCnt   = 10;
     static const size_t kernalRomSignatureCnt = 3;
@@ -30,62 +27,51 @@ private:
     static const u8 magicKernalRomBytes[kernalRomSignatureCnt][3];
     static const u8 magicVC1541RomBytes[vc1541RomSignatureCnt][3];
 
-    //! @brief    ROM type (Basic ROM, Kernal ROM, etc.)
+    // Rom type (Basic, Character, Kernal, or VC1541)
     C64FileType romtype;
         
 public:
     
     //
-    //! @functiongroup Class methods
+    // Class methods
     //
     
-    //! @brief    Returns true iff buffer contains a ROM image
+    // Returns true if buffer contains a ROM image
     static bool isRomBuffer(const u8 *buffer, size_t length);
-    
-    //! @brief    Returns true iff buffer contains a Basic ROM image
     static bool isBasicRomBuffer(const u8 *buffer, size_t length);
-    
-    //! @brief    Returns true iff buffer contains a Character ROM image
     static bool isCharRomBuffer(const u8 *buffer, size_t length);
-    
-    //! @brief    Returns true iff buffer contains a Kernal ROM image
     static bool isKernalRomBuffer(const u8 *buffer, size_t length);
-    
-    //! @brief    Returns true iff buffer contains a VC1541 ROM image
     static bool isVC1541RomBuffer(const u8 *buffer, size_t length);
+
+    // Returns true if path points to a ROM image
+    static bool isRomFile(const char *path);
+    static bool isBasicRomFile(const char *path);
+    static bool isCharRomFile(const char *path);
+    static bool isKernalRomFile(const char *path);
+    static bool isVC1541RomFile(const char *path);
     
-    //! @brief    Returns true iff filename points to a ROM file
-    static bool isRomFile(const char *filename);
+    // Translates a CRC-32 checksum into a ROM identifier
+    static RomRevision revision(u32 crc);
+
+    // Provides information about known ROMs
+    static const char *title(RomRevision rev) { return "<MISSING>"; }
+    static const char *version(RomRevision rev) { return "<MISSING>"; }
+    static const char *released(RomRevision rev) { return "<MISSING>"; }
+
     
-    //! @brief    Returns true iff filename points to a Basic ROM file
-    static bool isBasicRomFile(const char *filename);
+    //
+    // Creating and destructing
+    //
     
-    //! @brief    Returns true iff filename points to a Character ROM file
-    static bool isCharRomFile(const char *filename);
+    C64RomFile();
     
-    //! @brief    Returns true iff filename points to a Kernal ROM file
-    static bool isKernalRomFile(const char *filename);
-    
-    //! @brief    Returns true iff filename points to a VC1541 ROM file
-    static bool isVC1541RomFile(const char *filename);
+    // Factory methods
+    static C64RomFile *makeWithBuffer(const u8 *buffer, size_t length);
+    static C64RomFile *makeWithFile(const char *filename);
     
     
     //
-    //! @functiongroup Creating and destructing
-    //
-    
-    //! @brief    Standard constructor
-    ROMFile();
-    
-    //! @brief    Factory method
-    static ROMFile *makeWithBuffer(const u8 *buffer, size_t length);
-    
-    //! @brief    Factory method
-    static ROMFile *makeWithFile(const char *filename);
-    
-    
-    //
-    //! @functiongroup Methods from AnyC64File
+    // Methods from AnyC64File
     //
     
     C64FileType type() { return romtype; }

@@ -28,7 +28,7 @@
 #include "G64File.h"
 #include "PRGFile.h"
 #include "P00File.h"
-#include "ROMFile.h"
+#include "C64RomFile.h"
 #include "TAPFile.h"
 #include "CRTFile.h"
 
@@ -563,10 +563,81 @@ public:
     
     
     //
-    //! @functiongroup Handling Roms
+    // Handling Roms
     //
     
-    //! @brief    Loads a ROM image into memory
+    // Computes a CRC-32 checksum
+    u32 basicRomCRC32();
+    u32 charRomCRC32();
+    u32 kernalRomCRC32();
+    u32 vc1541RomCRC32();
+
+    // Computes a FNV-1A checksum
+    u64 basicRomFingerprint();
+    u64 charRomFingerprint();
+    u64 kernalRomFingerprint();
+    u64 vc1541RomFingerprint();
+
+    // Returns the ROM revisions of the currently installed ROMs
+    RomRevision basicRomRevision() { return C64RomFile::revision(charRomCRC32()); }
+    RomRevision charRomRevision() { return C64RomFile::revision(charRomCRC32()); }
+    RomRevision kernalRomRevision() { return C64RomFile::revision(kernalRomCRC32()); }
+    RomRevision vc1541RomRevision() { return C64RomFile::revision(vc1541RomCRC32()); }
+    
+    const char *basicRomTitle() { return C64RomFile::title(basicRomRevision()); }
+    const char *basicRomVersion() { return "<MISSING>"; }
+    const char *basicRomReleased()  { return C64RomFile::released(basicRomRevision()); }
+
+    const char *kernalRomTitle() { return C64RomFile::title(kernalRomRevision()); }
+    const char *kernalRomVersion() { return "<MISSING>"; }
+    const char *kernalRomReleased()  { return C64RomFile::released(kernalRomRevision()); }
+
+    const char *charRomTitle() { return C64RomFile::title(charRomRevision()); }
+    const char *charRomVersion() { return "<MISSING>"; }
+    const char *charRomReleased()  { return C64RomFile::released(charRomRevision()); }
+
+    const char *vc1541RomTitle() { return C64RomFile::title(vc1541RomRevision()); }
+    const char *vc1541RomVersion() { return "<MISSING>"; }
+    const char *vc1541RomReleased()  { return C64RomFile::released(vc1541RomRevision()); }
+
+    // Checks if a certain Rom is present
+    bool hasBasicRom();
+    bool hasCharRom();
+    bool hasKernalRom();
+    bool hasVC1541Rom();
+    
+    // Installs a Ron
+    bool loadBasicRom(C64RomFile *rom);
+    bool loadBasicRomFromBuffer(const u8 *buffer, size_t length);
+    bool loadBasicRomFromFile(const char *path);
+    
+    bool loadCharRom(C64RomFile *rom);
+    bool loadCharRomFromBuffer(const u8 *buffer, size_t length);
+    bool loadCharRomFromFile(const char *path);
+    
+    bool loadKernalRom(C64RomFile *rom);
+    bool loadKernalRomFromBuffer(const u8 *buffer, size_t length);
+    bool loadKernalRomFromFile(const char *path);
+
+    bool loadVC1541Rom(C64RomFile *rom);
+    bool loadVC1541RomFromBuffer(const u8 *buffer, size_t length);
+    bool loadVC1541RomFromFile(const char *path);
+
+    // Erases an installed Rom
+    void deleteBasicRom();
+    void deleteCharRom();
+    void deleteKernalRom();
+    void deleteVC1541Rom();
+
+    // Saves a Rom to disk
+    bool saveBasicRom(const char *path);
+    bool saveCharRom(const char *path);
+    bool saveKernalRom(const char *path);
+    bool saveVC1541Rom(const char *path);
+
+    
+    
+    //! @brief    Loads a ROM image into memory (DEPRECATED)
     bool loadRom(const char *filename);
     
     

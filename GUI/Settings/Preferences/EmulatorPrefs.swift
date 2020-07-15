@@ -51,8 +51,8 @@ extension ConfigurationController {
         refresh("TAP", emuTapPopup, emuTapAutoTypeButton, emuTapAutoTypeText)
         refresh("CRT", emuCrtPopup, emuCrtAutoTypeButton, emuCrtAutoTypeText)
 
-        // OK button
-        emuOkButton.title = controller.c64.isReady() ? "OK" : "Quit"
+        // Power button
+        emuPowerButton.isHidden = !bootable
     }
 
     //

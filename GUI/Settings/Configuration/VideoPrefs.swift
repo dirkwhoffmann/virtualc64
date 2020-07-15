@@ -81,7 +81,8 @@ extension ConfigurationController {
         vidEyeYSlider.floatValue = renderer.shiftY.current
         vidEyeZSlider.floatValue = renderer.shiftZ.current
         
-        vidOkButton.title = c64.isReady() ? "OK" : "Quit"
+        // Power button
+        romPowerButton.isHidden = !bootable
     }
     
     func updatePalettePreviewImages() {

@@ -374,3 +374,29 @@ fnv_1a_64(u8 *addr, size_t size)
 
     return hash;
 }
+
+u32
+crc32(const u8 *addr, size_t size)
+{
+    if (addr == NULL || size == 0) return 0;
+
+    u32 result = 0;
+
+    // Setup lookup table
+    u32 table[256];
+    for(int i = 0; i < 256; i++) table[i] = crc32forByte(i);
+
+    // Compute CRC-32 checksum
+     for(int i = 0; i < size; i++)
+       result = table[(u8)result ^ addr[i]] ^ result >> 8;
+
+    return result;
+}
+
+u32
+crc32forByte(u32 r)
+{
+    for(int j = 0; j < 8; ++j)
+        r = (r & 1? 0: (u32)0xEDB88320L) ^ r >> 1;
+    return r ^ (u32)0xFF000000L;
+}

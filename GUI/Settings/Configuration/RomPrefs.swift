@@ -137,10 +137,10 @@ extension ConfigurationController {
         let romImageLight = NSImage.init(named: "rom_light")
         
         // Gather information about Roms
-        let hasBasicRom = c64.isBasicRomLoaded()
-        let hasKernalRom = c64.isKernalRomLoaded()
-        let hasCharacterRom = c64.isCharRomLoaded()
-        let hasVc1541Rom = c64.isVC1541RomLoaded()
+        let hasBasicRom = c64.hasBasicRom()
+        let hasKernalRom = c64.hasKernalRom()
+        let hasCharacterRom = c64.hasCharRom()
+        let hasVc1541Rom = c64.hasVC1541Rom()
 
         let basicURL = config.basicRomURL
         let characterURL = config.charRomURL
@@ -165,7 +165,6 @@ extension ConfigurationController {
             romHeaderImage.image = NSImage.init(named: "AppIcon")
             romHeaderText.stringValue = "All required ROMs are loaded. VirtualC64 is ready to run."
             romHeaderSubText.stringValue = ""
-            romOkButton.title = "OK"
         } else {
             let numMissing = (hasBasicRom ? 0 : 1)
                 + (hasKernalRom ? 0 : 1)
@@ -176,7 +175,6 @@ extension ConfigurationController {
             romHeaderImage.image = NSImage.init(named: "NSCaution")
             romHeaderText.stringValue = "VirtualC64 cannot run because \(nrStr) \(romStr) missing."
             romHeaderSubText.stringValue = "Use drag and drop to add ROM images."
-            romOkButton.title = "Quit"
         }
         
         // Basic Rom
@@ -271,7 +269,8 @@ extension ConfigurationController {
             romVc1541Description.textColor = .red
         }
         
-        romOkButton.title = c64.isReady() ? "OK" : "Quit"
+        // Power button
+         romPowerButton.isHidden = !bootable
     }
     
     //
@@ -282,7 +281,7 @@ extension ConfigurationController {
 
         config.basicRomURL = URL(fileURLWithPath: "/")
         proxy?.powerOff()
-        proxy?.mem.deleteBasicRom()
+        proxy?.deleteBasicRom()
         refresh()
     }
     
@@ -290,7 +289,7 @@ extension ConfigurationController {
 
         config.charRomURL = URL(fileURLWithPath: "/")
         proxy?.powerOff()
-        proxy?.mem.deleteCharacterRom()
+        proxy?.deleteCharRom()
         refresh()
     }
     
@@ -298,7 +297,7 @@ extension ConfigurationController {
 
         config.kernalRomURL = URL(fileURLWithPath: "/")
         proxy?.powerOff()
-        proxy?.mem.deleteKernalRom()
+        proxy?.deleteKernalRom()
         refresh()
     }
     
@@ -306,8 +305,7 @@ extension ConfigurationController {
 
         config.vc1541RomURL = URL(fileURLWithPath: "/")
         proxy?.powerOff()
-        proxy?.drive1.deleteRom()
-        proxy?.drive2.deleteRom()
+        proxy?.deleteVC1541Rom()
         refresh()
     }
     
@@ -321,6 +319,6 @@ extension ConfigurationController {
     @IBAction func romDefaultsAction(_ sender: NSButton!) {
         
         track()
-        // config.saveRomUserDefaults()
+        config.saveRomUserDefaults()
     }
 }

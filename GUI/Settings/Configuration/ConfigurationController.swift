@@ -46,7 +46,7 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var romVc1541Button: NSButton!
     
     @IBOutlet weak var romOkButton: NSButton!
-    @IBOutlet weak var romCancelButton: NSButton!
+    @IBOutlet weak var romPowerButton: NSButton!
 
     //
     // Hardware preferences
@@ -74,8 +74,8 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var hwInfoText: NSTextField!
 
     @IBOutlet weak var hwOkButton: NSButton!
-    @IBOutlet weak var hwCancelButton: NSButton!
-    
+    @IBOutlet weak var hwPowerButton: NSButton!
+
     //
     // Video preferences
     //
@@ -116,7 +116,7 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var vidEyeZSlider: NSSlider!
     
     @IBOutlet weak var vidOkButton: NSButton!
-    @IBOutlet weak var vidCancelButton: NSButton!
+    @IBOutlet weak var vidPowerButton: NSButton!
     
     //
     // Emulator preferences
@@ -141,7 +141,7 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var emuSnapshotInterval: NSTextField!
     
     @IBOutlet weak var emuOkButton: NSButton!
-    @IBOutlet weak var emuCancelButton: NSButton!
+    @IBOutlet weak var emuPowerButton: NSButton!
     
     // Media files
     @IBOutlet weak var emuD64Popup: NSPopUpButton!
@@ -162,6 +162,12 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var emuTapAutoTypeText: NSTextField!
     @IBOutlet weak var emuCrtAutoTypeText: NSTextField!
 
+    var bootable: Bool {
+        let off   = c64.isPoweredOff()
+        let ready = c64.isReady()
+        return off && ready
+    }
+    
     //
     // Devices preferences
     //
@@ -207,7 +213,7 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var devMouseInfo: NSTextField!
 
     @IBOutlet weak var devOkButton: NSButton!
-    @IBOutlet weak var devCancelButton: NSButton!
+    @IBOutlet weak var devPowerButton: NSButton!
     
     //
     // Keymap preferences
@@ -225,7 +231,7 @@ class ConfigurationController: DialogController {
     var selectedKey: C64Key?
     
     @IBOutlet weak var keyOkButton: NSButton!
-    @IBOutlet weak var keyCancelButton: NSButton!
+    @IBOutlet weak var keyPowerButton: NSButton!
     
     // The tab to open first
     var firstTab = ""
@@ -276,26 +282,16 @@ class ConfigurationController: DialogController {
             }
         }
     }
-    
-    @IBAction override func cancelAction(_ sender: Any!) {
         
-        track()
-        
-        hideSheet()
-        myController?.loadUserDefaults()
-        
-    }
-    
     @IBAction override func okAction(_ sender: Any!) {
         
-        track()
+        hideSheet()
+    }
+    
+    @IBAction func powerAction(_ sender: Any!) {
         
         hideSheet()
-        myController?.saveUserDefaults()
-        
-        if proxy == nil || !proxy!.isReady() {
-            NSApp.terminate(self)
-        }
+        c64.run()
     }
 }
 

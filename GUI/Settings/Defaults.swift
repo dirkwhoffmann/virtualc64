@@ -91,7 +91,7 @@ extension MyController {
         loadDevicesUserDefaults()
         loadKeyMapUserDefaults()
 
-        loadRomUserDefaults()
+        config.loadRomUserDefaults()
         config.loadHardwareUserDefaults()
         loadVideoUserDefaults()
         loadEmulatorUserDefaults()
@@ -123,7 +123,7 @@ extension MyController {
         saveDevicesUserDefaults()
         saveKeyMapUserDefaults()
 
-        saveRomUserDefaults()
+        config.saveRomUserDefaults()
         config.saveHardwareUserDefaults()
         saveVideoUserDefaults()
         saveEmulatorUserDefaults()
@@ -217,76 +217,44 @@ extension MyController {
 // User defaults (Roms)
 //
 
-extension Keys {
-    
-    static let basicRom          = "VC64BasicRomFileKey"
-    static let charRom           = "VC64CharRomFileKey"
-    static let kernalRom         = "VC64KernelRomFileKey"
-    static let vc1541Rom         = "VC64VC1541RomFileKey"
-}
-
-extension Defaults {
-    
-    static let basicRom = URL(fileURLWithPath: "/")
-    static let charRom = URL(fileURLWithPath: "/")
-    static let kernalRom = URL(fileURLWithPath: "/")
-    static let vc1541Rom = URL(fileURLWithPath: "/")
-}
-
 extension UserDefaults {
+    
+    static func romUrl(name: String) -> URL? {
+        
+        let folder = URL.appSupportFolder("Roms")
+        return folder?.appendingPathComponent(name)
+    }
+    
+    static var basicRomUrl:  URL? { return romUrl(name: "basic.bin") }
+    static var charRomUrl:   URL? { return romUrl(name: "char.bin") }
+    static var kernalRomUrl: URL? { return romUrl(name: "kernal.bin") }
+    static var vc1541RomUrl: URL? { return romUrl(name: "vc1541.bin") }
     
     static func registerRomUserDefaults() {
         
-        let dictionary: [String: Any] = [
-            
-            Keys.basicRom: Defaults.basicRom,
-            Keys.charRom: Defaults.charRom,
-            Keys.kernalRom: Defaults.kernalRom,
-            Keys.vc1541Rom: Defaults.vc1541Rom
-        ]
-        
-        let defaults = UserDefaults.standard
-        defaults.register(defaults: dictionary)
     }
 
     static func resetRomUserDefaults() {
         
-        let defaults = UserDefaults.standard
+        // Delete previously saved Rom files
+        let fm = FileManager.default
         
-        let keys = [ Keys.basicRom,
-                     Keys.charRom,
-                     Keys.kernalRom,
-                     Keys.vc1541Rom
-        ]
-
-        for key in keys { defaults.removeObject(forKey: key) }
-    }
-}
-
-extension MyController {
-    
-    func loadRomUserDefaults() {
-        
-        let defaults = UserDefaults.standard
-
-        c64.suspend()
-        
-        loadRom(defaults.url(forKey: Keys.basicRom))
-        loadRom(defaults.url(forKey: Keys.charRom))
-        loadRom(defaults.url(forKey: Keys.kernalRom))
-        loadRom(defaults.url(forKey: Keys.vc1541Rom))
-        
-        c64.resume()
-    }
-    
-    func saveRomUserDefaults() {
-        
-        let defaults = UserDefaults.standard
-        
-        defaults.set(config.basicRomURL, forKey: Keys.basicRom)
-        defaults.set(config.charRomURL, forKey: Keys.charRom)
-        defaults.set(config.kernalRomURL, forKey: Keys.kernalRom)
-        defaults.set(config.vc1541RomURL, forKey: Keys.vc1541Rom)
+        if let url = basicRomUrl {
+            track("Deleting Basic Rom")
+            try? fm.removeItem(at: url)
+        }
+        if let url = charRomUrl {
+            track("Deleting Character Rom")
+            try? fm.removeItem(at: url)
+        }
+        if let url = kernalRomUrl {
+            track("Deleting Kernal Rom")
+            try? fm.removeItem(at: url)
+        }
+        if let url = vc1541RomUrl {
+            track("Deleting VC1541 Rom")
+            try? fm.removeItem(at: url)
+        }
     }
 }
 

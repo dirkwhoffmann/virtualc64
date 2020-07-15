@@ -195,21 +195,34 @@ struct AnyC64FileWrapper;
 - (void) deleteUserSnapshot:(NSInteger)nr;
 
 // Handling ROMs
+- (BOOL) hasBasicRom;
+- (BOOL) hasCharRom;
+- (BOOL) hasKernalRom;
+- (BOOL) hasVC1541Rom;
+
 - (BOOL) isBasicRom:(NSURL *)url;
-- (BOOL) loadBasicRom:(NSURL *)url;
-- (BOOL) isBasicRomLoaded;
-- (u64) basicRomFingerprint;
 - (BOOL) isCharRom:(NSURL *)url;
-- (BOOL) loadCharRom:(NSURL *)url;
-- (BOOL) isCharRomLoaded;
-- (u64) charRomFingerprint;
 - (BOOL) isKernalRom:(NSURL *)url;
-- (BOOL) loadKernalRom:(NSURL *)url;
-- (BOOL) isKernalRomLoaded;
-- (u64) kernalRomFingerprint;
 - (BOOL) isVC1541Rom:(NSURL *)url;
+
+- (BOOL) loadBasicRom:(NSURL *)url;
+- (BOOL) loadCharRom:(NSURL *)url;
+- (BOOL) loadKernalRom:(NSURL *)url;
 - (BOOL) loadVC1541Rom:(NSURL *)url;
-- (BOOL) isVC1541RomLoaded;
+
+- (BOOL) saveBasicRom:(NSURL *)url;
+- (BOOL) saveCharRom:(NSURL *)url;
+- (BOOL) saveKernalRom:(NSURL *)url;
+- (BOOL) saveVC1541Rom:(NSURL *)url;
+
+- (void) deleteBasicRom;
+- (void) deleteKernalRom;
+- (void) deleteCharRom;
+- (void) deleteVC1541Rom;
+
+- (u64) basicRomFingerprint;
+- (u64) kernalRomFingerprint;
+- (u64) charRomFingerprint;
 - (u64) vc1541RomFingerprint;
 
 - (BOOL) isRom:(NSURL *)url;
@@ -282,9 +295,11 @@ struct AnyC64FileWrapper;
 - (void) setRamInitPattern:(NSInteger)type;
 - (void) eraseWithPattern:(NSInteger)type;
 
+/*
 - (void) deleteBasicRom;
 - (void) deleteCharacterRom;
 - (void) deleteKernalRom;
+*/
 
 - (MemoryType) peekSource:(u16)addr;
 - (MemoryType) pokeTarget:(u16)addr;
@@ -580,7 +595,7 @@ struct AnyC64FileWrapper;
 - (void) disconnect;
 - (void) toggleConnection;
 
-- (void) deleteRom;
+// - (void) deleteRom;
 
 - (BOOL) redLED;
 - (BOOL) hasDisk;
