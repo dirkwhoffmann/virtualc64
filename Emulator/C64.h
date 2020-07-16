@@ -591,23 +591,29 @@ public:
 
     // Returns printable version strings for the installed ROMs
     const char *romVersion(u64 fnv);
-    const char *basicRomVersion() { return romVersion(basicRomFNV64()); }
-    const char *charRomVersion()  { return romVersion(charRomFNV64()); }
-    const char *kernalRomVersion() { return romVersion(kernalRomFNV64()); }
-    const char *vc1541RomVersion()  { return romVersion(vc1541RomFNV64()); }
+    const char *basicRomVersion();
+    const char *charRomVersion();
+    const char *kernalRomVersion();
+    const char *vc1541RomVersion();
     
     // Returns printable release dates or hash values for the installed ROMs
-    const char *basicRomReleased()  { return RomFile::released(basicRomRevision()); }
-    const char *charRomReleased()  { return RomFile::released(charRomRevision()); }
-    const char *kernalRomReleased()  { return RomFile::released(kernalRomRevision()); }
-    const char *vc1541RomReleased()  { return RomFile::released(vc1541RomRevision()); }
+    const char *basicRomReleased();
+    const char *charRomReleased();
+    const char *kernalRomReleased();
+    const char *vc1541RomReleased();
 
     // Checks if a certain Rom is present
     bool hasBasicRom();
     bool hasCharRom();
     bool hasKernalRom();
     bool hasVC1541Rom();
-    
+    bool hasMega65BasicRom();
+    bool hasMega65KernalRom();
+
+    // Returns a revision string if a Mega65 Rom is installed
+    char *mega65BasicRev();
+    char *mega65KernalRev();
+
     // Installs a Ron
     bool loadBasicRom(RomFile *rom);
     bool loadBasicRomFromBuffer(const u8 *buffer, size_t length);

@@ -1121,6 +1121,9 @@ C64::vc1541RomFNV64()
 const char *
 C64::basicRomTitle()
 {
+    // Intercept if a MEGA65 Rom is installed
+    if (hasMega65BasicRom()) return "M.E.G.A. C64 OpenROM";
+
     RomRevision rev = basicRomRevision();
     return rev == ROM_UNKNOWN ? "Unknown Basic Rom" : RomFile::title(rev);
 }
@@ -1135,6 +1138,9 @@ C64::charRomTitle()
 const char *
 C64::kernalRomTitle()
 {
+    // Intercept if a MEGA65 Rom is installed
+    if (hasMega65BasicRom()) return "M.E.G.A. C64 OpenROM";
+
     RomRevision rev = kernalRomRevision();
     return rev == ROM_UNKNOWN ? "Unknown Kernal Rom" : RomFile::title(rev);
 }
@@ -1156,6 +1162,66 @@ C64::romVersion(u64 fnv)
     static char str[32];
     sprintf(str, "FNV %llx", fnv);
     return str;
+}
+
+const char *
+C64::basicRomVersion()
+{
+    // Intercept if a MEGA65 Rom is installed
+    if (hasMega65BasicRom()) return "Free Basic replacement";
+
+    return romVersion(basicRomFNV64());
+}
+
+const char *
+C64::charRomVersion()
+{
+    return romVersion(charRomFNV64());
+}
+
+const char *
+C64::kernalRomVersion()
+{
+    // Intercept if a MEGA65 Rom is installed
+    if (hasMega65BasicRom()) return "Free Kernal replacement";
+
+    return romVersion(kernalRomFNV64());
+}
+
+const char *
+C64::vc1541RomVersion()
+{
+    return romVersion(vc1541RomFNV64());
+}
+
+const char *
+C64::basicRomReleased()
+{
+    // Intercept if a MEGA65 Rom is installed
+    if (hasMega65BasicRom()) return mega65BasicRev();
+    
+    return RomFile::released(basicRomRevision());
+}
+
+const char *
+C64::charRomReleased()
+{
+    return RomFile::released(charRomRevision());
+}
+
+const char *
+C64::kernalRomReleased()
+{
+    // Intercept if a MEGA65 Rom is installed
+    if (hasMega65KernalRom()) return mega65KernalRev();
+
+    return RomFile::released(kernalRomRevision());
+}
+
+const char *
+C64::vc1541RomReleased()
+{
+    return RomFile::released(vc1541RomRevision());
 }
 
 bool
@@ -1183,6 +1249,41 @@ C64::hasVC1541Rom()
     assert(drive1.mem.rom[1] == drive2.mem.rom[1]);
     return (drive1.mem.rom[0] | drive1.mem.rom[1]) != 0x00;
 }
+bool
+C64::hasMega65BasicRom()
+{
+    return mem.rom[0xBF52] == 'O' && mem.rom[0xBF53] == 'R';
+}
+
+bool
+C64::hasMega65KernalRom()
+{
+    return mem.rom[0xE4B9] == 'O' && mem.rom[0xE4BA] == 'R';
+}
+
+char *
+C64::mega65BasicRev()
+{
+    static char rev[17];
+    rev[0] = 0;
+
+    if (hasMega65BasicRom()) memcpy(rev, &mem.rom[0xBF55], 16);
+    rev[16] = 0;
+
+    return rev;
+}
+
+char *
+C64::mega65KernalRev()
+{
+    static char rev[17];
+    rev[0] = 0;
+
+    if (hasMega65BasicRom()) memcpy(rev, &mem.rom[0xE4BC], 16);
+    rev[16] = 0;
+
+    return rev;
+}
 
 bool
 C64::loadBasicRom(RomFile *file)
@@ -1192,6 +1293,10 @@ C64::loadBasicRom(RomFile *file)
     if (file->type() == BASIC_ROM_FILE) {
         debug("Flashing Basic Rom\n");
         file->flash(mem.rom, 0xA000);
+
+        debug("hasMega65BasicRom() = %d\n", hasMega65BasicRom());
+        debug("mega65BasicRev() = %s\n", mega65BasicRev());
+
         return true;
     }
     return false;
@@ -1270,6 +1375,10 @@ C64::loadKernalRom(RomFile *file)
     if (file->type() == KERNAL_ROM_FILE) {
         debug("Flashing Kernal Rom\n");
         file->flash(mem.rom, 0xE000);
+
+        debug("hasMega65KernalRom() = %d\n", hasMega65KernalRom());
+        debug("mega65KernalRev() = %s\n", mega65KernalRev());
+
         return true;
     }
     return false;

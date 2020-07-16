@@ -297,9 +297,9 @@ RomFile::version(RomRevision rev)
     switch (rev) {
             
         case BASIC_COMMODORE:         return "Version 2";
-        case BASIC_MEGA65:            return "Basic";
+        case BASIC_MEGA65:            return "";
             
-        case CHAR_COMMODORE:
+        case CHAR_COMMODORE:          return "Original Font";
         case CHAR_SWEDISH_C2D007:     return "Swedish C64 C2D007";
         case CHAR_SWEDISH:            return "Spanish C64";
         case CHAR_SPANISH_C64C:       return "Spanish C64C";

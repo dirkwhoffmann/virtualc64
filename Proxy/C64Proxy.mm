@@ -1906,7 +1906,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (NSString *) vc1541RomReleased
 {
-    const char *str = wrapper->c64->kernalRomReleased();
+    const char *str = wrapper->c64->vc1541RomReleased();
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (BOOL) isOrigRom:(RomRevision)rev
