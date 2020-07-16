@@ -18,7 +18,7 @@
 
 class C64;
 class C64Memory;
-class VC1541Memory;
+class DriveMemory;
 class CPU;
 class ProcessorPort;
 class VIC;
@@ -29,7 +29,7 @@ class Keyboard;
 class ControlPort;
 class ExpansionPort;
 class IEC;
-class VC1541;
+class Drive;
 class Datasette;
 class Mouse;
 class Mouse1350;
@@ -68,12 +68,12 @@ protected:
     ControlPort &port2;
     ExpansionPort &expansionport;
     IEC &iec;
-    VC1541 &drive1;
-    VC1541 &drive2;
+    Drive &drive1;
+    Drive &drive2;
     Datasette &datasette;
     Mouse &mouse;
     
-    VC1541 *drive[2] = { &drive1, &drive2 };
+    Drive *drive[2] = { &drive1, &drive2 };
 
 public:
 

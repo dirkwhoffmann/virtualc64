@@ -15,29 +15,28 @@
  * Schematics:  http://www.baltissen.org/images/1540.gif
  */
  
-#ifndef _VC1541_H
-#define _VC1541_H
+#ifndef _DRIVE_H
+#define _DRIVE_H
 
 #include "VIA.h"
 #include "Disk.h"
 
-class VC1541 : public C64Component {
+class Drive : public C64Component {
     
     //
     // Constants
     //
 
-    /*! @brief    Time between two carry pulses of UE7 in 1/10 nano seconds
-     *  @details  The VC1541 drive is clocked by 16 Mhz. The base frequency is
-     *            divided by N where N ranges from 13 (density bits = 11) to 16
-     *            (density bits = 00). On the logic board, this is done with
-     *            a 4-bit counter of type 74SL193 whose reset value bits are
-     *            connected to the two density bits (PB5 and PB6 of VIA2). It
-     *            follows that a single bit is ready after approx. 3.25 CPU
-     *            cycles in the fastest zone and approx. 4 CPU cycles in the
-     *            slowest zone.
-     */
+    // Time between two carry pulses of UE7 in 1/10 nano seconds. The VC1541
+    // drive is clocked by 16 Mhz. The base frequency is divided by N where N
+    // ranges from 13 (density bits = 11) to 16 (density bits = 00). On the
+    // logic board, this is done with a 4-bit counter of type 74SL193 whose
+    // reset value bits are connected to the two density bits (PB5 and PB6
+    // of VIA2). It follows that a single bit is ready after approx. 3.25 CPU
+    // cycles in the fastest zone and approx. 4 CPU cycles in the slowest zone.
+
     const u64 delayBetweenTwoCarryPulses[4] = {
+        
         10000, // Density bits = 00: Carry pulse every 16/16 * 10^4 1/10 nsec
         9375,  // Density bits = 01: Carry pulse every 15/16 * 10^4 1/10 nsec
         8750,  // Density bits = 10: Carry pulse every 14/16 * 10^4 1/10 nsec
@@ -51,19 +50,10 @@ class VC1541 : public C64Component {
     
 public:
     
-	// Memory
-	VC1541Memory mem = VC1541Memory(this, vc64);
-
-    // CPU
+	DriveMemory mem = DriveMemory(this, vc64);
     CPU cpu = CPU(MOS_6502, &mem, vc64);
-
-	// VIA6522 connecting the drive CPU with the IEC bus
     VIA1 via1 = VIA1(this, vc64);
-
-    // VIA6522 connecting the drive CPU with the read/write head
     VIA2 via2 = VIA2(this, vc64);
-
-    // Floppy disk
     Disk disk = Disk(vc64);
     
     
@@ -214,7 +204,7 @@ public:
     
 public:
     
-    VC1541(unsigned deviceNr, C64 &ref);
+    Drive(unsigned deviceNr, C64 &ref);
     
     
     //

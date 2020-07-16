@@ -13,7 +13,7 @@
 // VIA 6522 (Commons)
 //
 
-VIA6522::VIA6522(VC1541 *drive, C64 &ref) : C64Component(ref)
+VIA6522::VIA6522(Drive *drive, C64 &ref) : C64Component(ref)
 {
 	setDescription("VIA");
     
@@ -880,7 +880,7 @@ VIA6522::wakeUp()
 // VIA 1
 //
 
-VIA1::VIA1(VC1541 *drive, C64 &ref) : VIA6522(drive, ref)
+VIA1::VIA1(Drive *drive, C64 &ref) : VIA6522(drive, ref)
 {
     setDescription("VIA1");
 }
@@ -938,7 +938,7 @@ VIA1::updatePB()
 // VIA 2
 // 
 
-VIA2::VIA2(VC1541 *drive, C64 &ref) : VIA6522(drive, ref)
+VIA2::VIA2(Drive *drive, C64 &ref) : VIA6522(drive, ref)
 {
     setDescription("VIA2");
 }

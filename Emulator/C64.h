@@ -53,7 +53,7 @@
 #include "CustomCartridges.h"
 
 // Peripherals
-#include "VC1541.h"
+#include "Drive.h"
 #include "Datasette.h"
 #include "Mouse.h"
 
@@ -105,8 +105,8 @@ public:
     IEC iec = IEC(*this);
     
     // Floppy drives
-    VC1541 drive1 = VC1541(1, *this);
-    VC1541 drive2 = VC1541(2, *this);
+    Drive drive1 = Drive(1, *this);
+    Drive drive2 = Drive(2, *this);
     
     // Datasette
     Datasette datasette = Datasette(*this);

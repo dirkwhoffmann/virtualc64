@@ -24,7 +24,7 @@ struct IecWrapper { IEC *iec; };
 struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
 struct ViaWrapper { VIA6522 *via; };
 struct DiskWrapper { Disk *disk; };
-struct DriveWrapper { VC1541 *drive; };
+struct DriveWrapper { Drive *drive; };
 struct DatasetteWrapper { Datasette *datasette; };
 struct MouseWrapper { Mouse *mouse; };
 struct AnyC64FileWrapper { AnyC64File *file; };
@@ -1076,7 +1076,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 
 @synthesize wrapper, cpu, via1, via2, disk;
 
-- (instancetype) initWithVC1541:(VC1541 *)drive
+- (instancetype) initWithVC1541:(Drive *)drive
 {
     if (self = [super init]) {
         wrapper = new DriveWrapper();

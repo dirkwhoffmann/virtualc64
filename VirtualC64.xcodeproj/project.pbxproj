@@ -130,7 +130,7 @@
 		504C43A624AF29AC00E69CAE /* Disk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434824AF29AC00E69CAE /* Disk.cpp */; };
 		504C43A724AF29AC00E69CAE /* VIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434A24AF29AC00E69CAE /* VIA.cpp */; };
 		504C43A824AF29AC00E69CAE /* DriveMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434B24AF29AC00E69CAE /* DriveMemory.cpp */; };
-		504C43A924AF29AC00E69CAE /* VC1541.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434D24AF29AC00E69CAE /* VC1541.cpp */; };
+		504C43A924AF29AC00E69CAE /* Drive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434D24AF29AC00E69CAE /* Drive.cpp */; };
 		504C43AA24AF29AC00E69CAE /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C435524AF29AC00E69CAE /* TOD.cpp */; };
 		504C43AB24AF29AC00E69CAE /* CIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C435824AF29AC00E69CAE /* CIA.cpp */; };
 		5051A1521B88438800CBFB5A /* 1541_track_change_0.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1511B88438800CBFB5A /* 1541_track_change_0.aiff */; };
@@ -434,8 +434,8 @@
 		504C434924AF29AC00E69CAE /* VIA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIA.h; sourceTree = "<group>"; };
 		504C434A24AF29AC00E69CAE /* VIA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIA.cpp; sourceTree = "<group>"; };
 		504C434B24AF29AC00E69CAE /* DriveMemory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DriveMemory.cpp; sourceTree = "<group>"; };
-		504C434C24AF29AC00E69CAE /* VC1541.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC1541.h; sourceTree = "<group>"; };
-		504C434D24AF29AC00E69CAE /* VC1541.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VC1541.cpp; sourceTree = "<group>"; };
+		504C434C24AF29AC00E69CAE /* Drive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drive.h; sourceTree = "<group>"; };
+		504C434D24AF29AC00E69CAE /* Drive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Drive.cpp; sourceTree = "<group>"; };
 		504C434E24AF29AC00E69CAE /* Disk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Disk.h; sourceTree = "<group>"; };
 		504C434F24AF29AC00E69CAE /* DriveMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DriveMemory.h; sourceTree = "<group>"; };
 		504C435024AF29AC00E69CAE /* DiskTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiskTypes.h; sourceTree = "<group>"; };
@@ -954,16 +954,16 @@
 		504C434724AF29AC00E69CAE /* Drive */ = {
 			isa = PBXGroup;
 			children = (
-				504C434E24AF29AC00E69CAE /* Disk.h */,
-				504C434824AF29AC00E69CAE /* Disk.cpp */,
-				504C434924AF29AC00E69CAE /* VIA.h */,
-				504C434A24AF29AC00E69CAE /* VIA.cpp */,
-				504C434C24AF29AC00E69CAE /* VC1541.h */,
-				504C434D24AF29AC00E69CAE /* VC1541.cpp */,
+				504C435124AF29AC00E69CAE /* DriveTypes.h */,
+				504C434C24AF29AC00E69CAE /* Drive.h */,
+				504C434D24AF29AC00E69CAE /* Drive.cpp */,
 				504C434F24AF29AC00E69CAE /* DriveMemory.h */,
 				504C434B24AF29AC00E69CAE /* DriveMemory.cpp */,
+				504C434924AF29AC00E69CAE /* VIA.h */,
+				504C434A24AF29AC00E69CAE /* VIA.cpp */,
 				504C435024AF29AC00E69CAE /* DiskTypes.h */,
-				504C435124AF29AC00E69CAE /* DriveTypes.h */,
+				504C434E24AF29AC00E69CAE /* Disk.h */,
+				504C434824AF29AC00E69CAE /* Disk.cpp */,
 			);
 			path = Drive;
 			sourceTree = "<group>";
@@ -1368,7 +1368,7 @@
 				506D4D0D20B331A00093C5C6 /* Formatter.swift in Sources */,
 				5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */,
 				504C436E24AF29AC00E69CAE /* Epyx.cpp in Sources */,
-				504C43A924AF29AC00E69CAE /* VC1541.cpp in Sources */,
+				504C43A924AF29AC00E69CAE /* Drive.cpp in Sources */,
 				504C438F24AF29AC00E69CAE /* VIC_debug.cpp in Sources */,
 				50576686228C66BA0065D9ED /* CpuTableView.swift in Sources */,
 				504C438624AF29AC00E69CAE /* TimeDelayed.cpp in Sources */,

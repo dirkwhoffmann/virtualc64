@@ -12,23 +12,18 @@
 
 #include "Memory.h"
 
-class VC1541;
-
-/*! @brief    Represents RAM and ROM of a virtual VC1541 floopy disk drive.
- */
-class VC1541Memory : public Memory {
+// Represents the RAM and ROM of a VC1541 floopy disk drive
+class DriveMemory : public Memory {
     
-    private:
+private:
     
-	//! @brief    Reference to the connected disk drive
-	VC1541 *drive;
-	
-    public:
+    // Reference to the connected disk drive
+    class Drive *drive;
     
-    //! @brief    Random Access Memory
+public:
+    
+    // RAM (2 KB) and ROM (16 KB)
     u8 ram[0x0800];
-    
-    //! @brief    Read Only Memory
     u8 rom[0x4000];
     
     
@@ -38,7 +33,7 @@ class VC1541Memory : public Memory {
     
 public:
     
-    VC1541Memory(VC1541 *drive, C64 &ref);
+    DriveMemory(Drive *drive, C64 &ref);
     
     
     //
@@ -47,27 +42,27 @@ public:
     
 public:
     
-	void _reset() override;
+    void _reset() override;
     
 private:
     
-	void _dump() override;
-
-        
+    void _dump() override;
+    
+    
     //
-    //! @functiongroup Accessing RAM
+    // Accessing RAM
     //
-
+    
 public:
-
-    // Reading from memory
+    
+    // Reads a value from memory
     u8 peek(u16 addr) override;
     u8 peekZP(u8 addr) override { return ram[addr]; }
-
-    // Reading from memory without side effects
+    
+    // Reads a value from memory without side effects
     u8 spypeek(u16 addr) override;
     
-    // Writing into memory
+    // Writes a value into memory
     void poke(u16 addr, u8 value) override;
     void pokeZP(u8 addr, u8 value) override { ram[addr] = value; }
 };

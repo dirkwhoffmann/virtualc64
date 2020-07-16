@@ -20,7 +20,7 @@
 
 #include "C64Component.h"
 
-class VC1541;
+class Drive;
 
 #define VIACountA0       (1ULL << 0) // Forces timer 1 to decrement every cycle
 #define VIACountA1       (1ULL << 1)
@@ -59,14 +59,14 @@ class VC1541;
  */
 class VIA6522 : public C64Component {
 	
-    friend class VC1541;
+    friend class Drive;
     
     protected:
     
     //! @brief    Owner of this VIA
     /*! @details  Either a reference to the first or the second drive.
      */
-    VC1541 *drive;
+    Drive *drive;
     
     
     //
@@ -238,7 +238,7 @@ class VIA6522 : public C64Component {
     
 public:
         
-	VIA6522(VC1541 *drive, C64 &ref);
+	VIA6522(Drive *drive, C64 &ref);
     
     
     //
@@ -528,7 +528,7 @@ class VIA1 : public VIA6522 {
 	
 public:
 
-	VIA1(VC1541 *drive, C64 &ref);
+	VIA1(Drive *drive, C64 &ref);
 	~VIA1();
     
     u8 portAexternal();
@@ -546,7 +546,7 @@ class VIA2 : public VIA6522 {
 	
 public:
 
-	VIA2(VC1541 *drive, C64 &ref);
+	VIA2(Drive *drive, C64 &ref);
 	~VIA2();
  
     u8 portAexternal();

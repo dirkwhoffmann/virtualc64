@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-VC1541Memory::VC1541Memory(VC1541 *drive, C64 &ref) : Memory(ref)
+DriveMemory::DriveMemory(Drive *drive, C64 &ref) : Memory(ref)
 {
     setDescription("1541MEM");
 
@@ -29,7 +29,7 @@ VC1541Memory::VC1541Memory(VC1541 *drive, C64 &ref) : Memory(ref)
 }
 
 void 
-VC1541Memory::_reset()
+DriveMemory::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)
@@ -44,7 +44,7 @@ VC1541Memory::_reset()
 }
 
 void 
-VC1541Memory::_dump()
+DriveMemory::_dump()
 {
 	msg("VC1541 Memory:\n");
 	msg("--------------\n\n");
@@ -53,7 +53,7 @@ VC1541Memory::_dump()
 }
 
 u8 
-VC1541Memory::peek(u16 addr)
+DriveMemory::peek(u16 addr)
 {
     if (addr >= 0x8000) {
         
@@ -80,7 +80,7 @@ VC1541Memory::peek(u16 addr)
 }
 
 u8
-VC1541Memory::spypeek(u16 addr)
+DriveMemory::spypeek(u16 addr)
 {
     if (addr >= 0x8000) {
         return rom[addr & 0x3FFF];
@@ -95,7 +95,7 @@ VC1541Memory::spypeek(u16 addr)
 }
 
 void 
-VC1541Memory::poke(u16 addr, u8 value)
+DriveMemory::poke(u16 addr, u8 value)
 {
     if (addr >= 0x8000) { // ROM
         return;

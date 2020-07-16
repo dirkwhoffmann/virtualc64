@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-VC1541::VC1541(unsigned nr, C64 &ref) : C64Component(ref)
+Drive::Drive(unsigned nr, C64 &ref) : C64Component(ref)
 {
     assert(nr == 1 || nr == 2);
     
@@ -64,7 +64,7 @@ VC1541::VC1541(unsigned nr, C64 &ref) : C64Component(ref)
 }
 
 void
-VC1541::_initialize()
+Drive::_initialize()
 {
     debug("VC1541 initialize");
 
@@ -73,7 +73,7 @@ VC1541::_initialize()
 }
 
 void
-VC1541::_reset()
+Drive::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)
@@ -86,13 +86,13 @@ VC1541::_reset()
 }
 
 void
-VC1541::resetDisk()
+Drive::resetDisk()
 {    
     disk.clearDisk();
 }
 
 void
-VC1541::_ping()
+Drive::_ping()
 {    
     vc64.putMessage(connected ? MSG_VC1541_ATTACHED : MSG_VC1541_DETACHED, deviceNr);
     vc64.putMessage(redLED ? MSG_VC1541_RED_LED_ON : MSG_VC1541_RED_LED_OFF, deviceNr);
@@ -103,13 +103,13 @@ VC1541::_ping()
 }
 
 void
-VC1541::_setClockFrequency(u32 value)
+Drive::_setClockFrequency(u32 value)
 {
     durationOfOneCpuCycle = 10000000000 / value;
 }
 
 void 
-VC1541::_dump()
+Drive::_dump()
 {
 	msg("VC1541\n");
 	msg("------\n\n");
@@ -123,7 +123,7 @@ VC1541::_dump()
 }
 
 void
-VC1541::powerUp()
+Drive::powerUp()
 {
     suspend();
     _reset();
@@ -131,7 +131,7 @@ VC1541::powerUp()
 }
 
 bool
-VC1541::execute(u64 duration)
+Drive::execute(u64 duration)
 {
     u8 result = true;
     
@@ -197,7 +197,7 @@ VC1541::execute(u64 duration)
 */
 
 void
-VC1541::executeUF4()
+Drive::executeUF4()
 {
     // Increase counter
     counterUF4++;
@@ -291,7 +291,7 @@ VC1541::executeUF4()
 }
 
 void
-VC1541::updateByteReady()
+Drive::updateByteReady()
 {
     //
     //           74LS191                             ---
@@ -317,7 +317,7 @@ VC1541::updateByteReady()
 }
 
 void
-VC1541::raiseByteReady()
+Drive::raiseByteReady()
 {
     if (!byteReady) {
         byteReady = true;
@@ -326,7 +326,7 @@ VC1541::raiseByteReady()
 }
 
 void
-VC1541::setZone(uint2_t value)
+Drive::setZone(uint2_t value)
 {
     assert(is_uint2_t(value));
     
@@ -337,13 +337,13 @@ VC1541::setZone(uint2_t value)
 }
 
 bool
-VC1541::connectable()
+Drive::connectable()
 {
     return vc64.hasVC1541Rom();
 }
 
 void
-VC1541::connect()
+Drive::connect()
 {
     // Only proceed if the drive is unconnected
     if (connected) return;
@@ -362,7 +362,7 @@ VC1541::connect()
 }
 
 void
-VC1541::disconnect()
+Drive::disconnect()
 {
     if (!connected) return;
 
@@ -379,7 +379,7 @@ VC1541::disconnect()
 }
 
 void
-VC1541::setRedLED(bool b)
+Drive::setRedLED(bool b)
 {
     if (!redLED && b) {
         redLED = true;
@@ -391,7 +391,7 @@ VC1541::setRedLED(bool b)
 }
 
 void
-VC1541::setRotating(bool b)
+Drive::setRotating(bool b)
 {
     if (!spinning && b) {
         spinning = true;
@@ -403,7 +403,7 @@ VC1541::setRotating(bool b)
 }
 
 void
-VC1541::moveHeadUp()
+Drive::moveHeadUp()
 {
     if (halftrack < 84) {
 
@@ -426,7 +426,7 @@ VC1541::moveHeadUp()
 }
 
 void
-VC1541::moveHeadDown()
+Drive::moveHeadDown()
 {
     if (halftrack > 1) {
         float position = (float)offset / (float)disk.lengthOfHalftrack(halftrack);
@@ -447,14 +447,14 @@ VC1541::moveHeadDown()
 }
 
 void
-VC1541::setModifiedDisk(bool value)
+Drive::setModifiedDisk(bool value)
 {
     disk.setModified(value);
     vc64.putMessage(value ? MSG_DISK_UNSAVED : MSG_DISK_SAVED, deviceNr);
 }
 
 void
-VC1541::prepareToInsert()
+Drive::prepareToInsert()
 {
     suspend();
     
@@ -468,7 +468,7 @@ VC1541::prepareToInsert()
 }
 
 void
-VC1541::insertDisk(AnyArchive *a)
+Drive::insertDisk(AnyArchive *a)
 {
     suspend();
 
@@ -511,7 +511,7 @@ VC1541::insertDisk(AnyArchive *a)
 }
 
 void
-VC1541::prepareToEject()
+Drive::prepareToEject()
 {
     suspend();
     
@@ -528,7 +528,7 @@ VC1541::prepareToEject()
 }
 
 void 
-VC1541::ejectDisk()
+Drive::ejectDisk()
 {
     suspend();
  
