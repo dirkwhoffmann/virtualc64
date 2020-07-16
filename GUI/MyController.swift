@@ -23,6 +23,9 @@ protocol MessageReceiver {
 
 class MyController: NSWindowController, MessageReceiver {
 
+    var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
+    var prefs: Preferences { return myAppDelegate.prefs }
+
     // Reference to the connected document
     var mydocument: MyDocument!
     
@@ -633,6 +636,10 @@ extension MyController {
     
         case MSG_VC1541_ATTACHED:
             
+            if prefs.driveSounds && prefs.driveConnectSound {
+                playSound(name: "drive_click", volume: 1.0)
+            }
+            
             let image = NSImage.init(named: "LEDgreen")
             
             if firstDrive() {
@@ -643,6 +650,10 @@ extension MyController {
 
         case MSG_VC1541_DETACHED:
             
+            if prefs.driveSounds && prefs.driveConnectSound {
+                playSound(name: "drive_click", volume: 1.0)
+            }
+            
             let image = NSImage.init(named: "LEDgray")
             
             if firstDrive() {
@@ -650,61 +661,38 @@ extension MyController {
             } else {
                 greenLED2.image = image
             }
-
-        case MSG_VC1541_ATTACHED_SOUND:
+                        
+        case MSG_VC1541_HEAD_UP,
+             MSG_VC1541_HEAD_DOWN:
             
-            // Not sure about the copyright of the following sound:
-            // playSound:@"1541_power_on_0" volume:0.2];
-            // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
-            playSound(name: "drive_click", volume: 1.0)
-        
-        case MSG_VC1541_DETACHED_SOUND:
-            
-            // Not sure about the copyright of the following sound:
-            // playSound:@"1541_track_change_0" volume:0.6];
-            // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
-            playSound(name: "drive_click", volume: 1.0)
-    
-        case MSG_VC1541_DISK_SOUND:
-            
-            // playSound:@"1541_door_closed_2" volume:0.2];
-            playSound(name: "drive_snatch_uae", volume: 0.1)
-            
-        case MSG_VC1541_NO_DISK_SOUND:
-            
-            // playSound:@"1541_door_open_1" volume:0.2];
-            playSound(name: "drive_snatch_uae", volume: 0.1)
-            
-        case MSG_VC1541_HEAD_UP_SOUND:
-            
-            // Not sure about the copyright of the following sound:
-            // playSound:@"1541_track_change_0" volume:0.6];
-            // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
-            playSound(name: "drive_click", volume: 1.0)
-            
-        case MSG_VC1541_HEAD_DOWN_SOUND:
-            
-            // Not sure about the copyright of the following sound:
-            // playSound:@"1541_track_change_2" volume:1.0];
-            // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
-            playSound(name: "drive_click", volume: 1.0)
-            
+            if prefs.driveSounds && prefs.driveHeadSound {
+                playSound(name: "drive_click", volume: 1.0)
+            }
+                        
         case MSG_VC1541_DISK:
             
+            if prefs.driveSounds && prefs.driveInsertSound {
+                playSound(name: "drive_snatch_uae", volume: 0.1)
+            }
+
             if firstDrive() {
                 diskIcon1.isHidden = false
             } else {
                 diskIcon2.isHidden = false
             }
-  
+              
         case MSG_VC1541_NO_DISK:
             
+            if prefs.driveSounds && prefs.driveEjectSound {
+                playSound(name: "drive_snatch_uae", volume: 0.1)
+            }
+
             if firstDrive() {
                 diskIcon1.isHidden = true
             } else {
                 diskIcon2.isHidden = true
             }
-            
+                            
         case MSG_DISK_SAVED:
             
             let image = NSImage.init(named: "mediaDiskSavedTemplate")
@@ -761,9 +749,7 @@ extension MyController {
             progress2.stopAnimation(self)
             
         case MSG_VC1541_MOTOR_ON,
-             MSG_VC1541_MOTOR_OFF,
-             MSG_VC1541_HEAD_UP,
-             MSG_VC1541_HEAD_DOWN:
+             MSG_VC1541_MOTOR_OFF:
             break
     
         case MSG_VC1530_TAPE:

@@ -638,8 +638,6 @@ struct AnyC64FileWrapper;
 - (BOOL) writeProtected;
 - (void) setWriteProtection:(BOOL)b;
 - (BOOL) hasWriteProtectedDisk;
-- (BOOL) sendSoundMessages;
-- (void) setSendSoundMessages:(BOOL)b;
 
 - (Halftrack) halftrack;
 - (void) setTrack:(Track)t;

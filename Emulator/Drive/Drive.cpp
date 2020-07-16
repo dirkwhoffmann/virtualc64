@@ -30,7 +30,6 @@ Drive::Drive(unsigned nr, C64 &ref) : C64Component(ref)
     SnapshotItem items[] = {
 
         // Life-time items
-        { &sendSoundMessages,       sizeof(sendSoundMessages),      KEEP_ON_RESET },
         { &durationOfOneCpuCycle,   sizeof(durationOfOneCpuCycle),  KEEP_ON_RESET },
         { &connected,               sizeof(connected),              KEEP_ON_RESET },
 
@@ -59,7 +58,6 @@ Drive::Drive(unsigned nr, C64 &ref) : C64Component(ref)
     registerSnapshotItems(items, sizeof(items));
     
     insertionStatus = NOT_INSERTED;
-    sendSoundMessages = true;
     resetDisk();
 }
 
@@ -354,8 +352,6 @@ Drive::connect()
     suspend();
     
     connected = true;
-    if (soundMessagesEnabled())
-        vc64.putMessage(MSG_VC1541_ATTACHED_SOUND, deviceNr);
     ping();
     
     resume();
@@ -371,8 +367,6 @@ Drive::disconnect()
     _reset();
     
     connected = false;
-    if (soundMessagesEnabled())
-        vc64.putMessage(MSG_VC1541_DETACHED_SOUND, deviceNr);
     ping();
     
     resume();
@@ -419,10 +413,6 @@ Drive::moveHeadUp()
     assert(disk.isValidHeadPositon(halftrack, offset));
     
     vc64.putMessage(MSG_VC1541_HEAD_UP, deviceNr);
-    if (halftrack % 2 && sendSoundMessages) {
-        // Play sound for full tracks, only
-        vc64.putMessage(MSG_VC1541_HEAD_UP_SOUND, deviceNr);
-    }
 }
 
 void
@@ -441,9 +431,6 @@ Drive::moveHeadDown()
     assert(disk.isValidHeadPositon(halftrack, offset));
     
     vc64.putMessage(MSG_VC1541_HEAD_DOWN, deviceNr);
-    if (halftrack % 2 && sendSoundMessages)
-        // Play sound for full tracks, only
-        vc64.putMessage(MSG_VC1541_HEAD_DOWN_SOUND, deviceNr);
 }
 
 void
@@ -504,8 +491,6 @@ Drive::insertDisk(AnyArchive *a)
     
     vc64.putMessage(MSG_VC1541_DISK, deviceNr);
     vc64.putMessage(MSG_DISK_SAVED, deviceNr);
-    if (sendSoundMessages)
-        vc64.putMessage(MSG_VC1541_DISK_SOUND, deviceNr);
     
     resume();
 }
@@ -540,8 +525,6 @@ Drive::ejectDisk()
     
     // Notify listener
     vc64.putMessage(MSG_VC1541_NO_DISK, deviceNr);
-    if (sendSoundMessages)
-        vc64.putMessage(MSG_VC1541_NO_DISK_SOUND, deviceNr);
     
     resume();
 }

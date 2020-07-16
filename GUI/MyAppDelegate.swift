@@ -9,9 +9,6 @@
 
 import Cocoa
 
-/* The delegate object of this application.
- * This variable is global and can be accessed from anywhere in the Swift code.
- */
 var myAppDelegate: MyAppDelegate {
     let delegate = NSApp.delegate as? MyAppDelegate
     return delegate!
@@ -53,6 +50,10 @@ var proxy: C64Proxy? {
 @NSApplicationMain
 @objc public class MyAppDelegate: NSObject, NSApplicationDelegate {
         
+    // Preferences
+    var prefs: Preferences!
+    // var prefsController: PreferencesController?
+    
     /// The list of recently inserted disk URLs.
     var recentlyInsertedDiskURLs: [URL] = []
     
@@ -68,6 +69,12 @@ var proxy: C64Proxy? {
     /// The list of recently atached cartridge URLs.
     var recentlyAttachedCartridgeURLs: [URL] = []
 
+    override init() {
+        
+        super.init()
+        prefs = Preferences.init()
+    }
+    
     public func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         track()

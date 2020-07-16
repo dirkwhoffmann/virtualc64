@@ -83,10 +83,7 @@ private:
     
     //! @brief    Indicates if or how a disk is inserted.
     DiskInsertionStatus insertionStatus;
-    
-    //! @brief    Indicates whether the drive shall send sound notifications.
-    bool sendSoundMessages;
-    
+        
     
     //
     // Clocking logic
@@ -229,18 +226,7 @@ public:
      */
     void resetDisk();
     
-    
-    //
-    //! @functiongroup Configuring the device
-    //
-    
-    //! @brief    Returns true if sound messages are sent to the GUI.
-    bool soundMessagesEnabled() { return sendSoundMessages; }
 
-    //! @brief    Enables or disables sending of sound messages.
-    void setSendSoundMessages(bool b) { sendSoundMessages = b; }
-
-    
     //
     //! @functiongroup Working with the drive
     //

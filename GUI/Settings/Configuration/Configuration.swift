@@ -7,6 +7,15 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+/* Configuration
+ *
+ * This class stores all items that are specific to an individual emulator
+ * instance. Each instance keeps its own object of this class inside the
+ * document controller.
+ *
+ * See class "Preferences" for shared settings.
+ */
+
 class Configuration {
     
     var parent: MyController!

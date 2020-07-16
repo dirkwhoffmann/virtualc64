@@ -17,7 +17,7 @@ extension ConfigurationController {
         
         // VC1541
         emuWarpLoad.state = c64.warpLoad() ? .on : .off
-        emuDriveSounds.state = c64.drive1.sendSoundMessages() ? .on : .off
+        emuDriveSounds.state = myAppDelegate.prefs.driveSounds ? .on : .off
         
         // Screenshots
         emuScreenshotSourcePopup.selectItem(withTag: controller.screenshotSource)
@@ -67,8 +67,7 @@ extension ConfigurationController {
     
     @IBAction func emuDriveSoundsAction(_ sender: NSButton!) {
         
-        proxy?.drive1.setSendSoundMessages(sender.state == .on)
-        proxy?.drive2.setSendSoundMessages(sender.state == .on)
+        myAppDelegate.prefs.driveSounds = sender.state == .on
         refresh()
     }
 

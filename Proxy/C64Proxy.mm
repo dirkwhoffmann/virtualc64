@@ -1179,14 +1179,6 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->drive->hasWriteProtectedDisk();
 }
-- (BOOL) sendSoundMessages
-{
-    return wrapper->drive->soundMessagesEnabled();
-}
-- (void) setSendSoundMessages:(BOOL)b
-{
-    wrapper->drive->setSendSoundMessages(b);
-}
 - (Halftrack) halftrack
 {
     return wrapper->drive->getHalftrack();

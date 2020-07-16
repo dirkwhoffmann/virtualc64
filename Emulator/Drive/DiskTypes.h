@@ -10,6 +10,18 @@
 
 #include <ctype.h>
 
+typedef enum : long
+{
+    FS_NONE,
+    FS_COMMODORE
+}
+FileSystemType;
+
+inline bool isFileSystemType(long value)
+{
+    return value >= FS_NONE && value <= FS_COMMODORE;
+}
+
 /* Overview:
  *
  *                       -----------------------------------------------------------------

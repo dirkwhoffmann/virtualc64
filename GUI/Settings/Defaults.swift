@@ -147,6 +147,48 @@ extension MyController {
 
 struct Keys {
     
+    // Drives
+    static let driveBlankDiskFormat    = "VC64_GEN_DriveBlankDiskFormat"
+    static let driveEjectUnasked      = "VC64_GEN_EjectUnasked"
+    static let driveSounds            = "VC64_GEN_DriveSounds"
+    static let driveSoundPan          = "VC64_GEN_DriveSoundPan"
+    static let driveInsertSound       = "VC64_GEN_DriveInsertSound"
+    static let driveEjectSound        = "VC64_GEN_DriveEjectSound"
+    static let driveHeadSound         = "VC64_GEN_DriveHeadSound"
+    static let driveConnectSound      = "VC64_GEN_DriveConnectSound"
+}
+
+struct GeneralDefaults {
+    
+    // Drives
+     let driveBlankDiskFormat: FileSystemType
+     let driveEjectUnasked: Bool
+     let driveSounds: Bool
+     let driveSoundPan: Double
+     let driveInsertSound: Bool
+     let driveEjectSound: Bool
+     let driveHeadSound: Bool
+     let driveConnectSound: Bool
+    
+    //
+    // Schemes
+    //
+    
+    static let std = GeneralDefaults.init(
+        
+        driveBlankDiskFormat: FS_COMMODORE,
+        driveEjectUnasked: false,
+        driveSounds: true,
+        driveSoundPan: 1.0,
+        driveInsertSound: true,
+        driveEjectSound: true,
+        driveHeadSound: true,
+        driveConnectSound: true
+    )
+}
+
+extension Keys {
+    
     // Control ports
     static let inputDevice1      = "VC64InputDevice1"
     static let inputDevice2      = "VC64InputDevice2"
@@ -163,32 +205,65 @@ extension UserDefaults {
 
     static func registerGeneralUserDefaults() {
         
+        let defaults = GeneralDefaults.std
         let dictionary: [String: Any] = [
+            
+            Keys.driveBlankDiskFormat: Int(defaults.driveBlankDiskFormat.rawValue),
+            Keys.driveEjectUnasked: defaults.driveEjectUnasked,
+            Keys.driveSounds: defaults.driveSounds,
+            Keys.driveSoundPan: defaults.driveSoundPan,
+            Keys.driveInsertSound: defaults.driveInsertSound,
+            Keys.driveEjectSound: defaults.driveEjectSound,
+            Keys.driveHeadSound: defaults.driveHeadSound,
+            Keys.driveConnectSound: defaults.driveConnectSound
+        ]
+        
+        let userDefaults = UserDefaults.standard
+        
+        userDefaults.register(defaults: dictionary)
+        
+        // MOVE TO HARDWARE
+        let dictionary2: [String: Any] = [
             
             Keys.inputDevice1: Defaults.inputDevice1,
             Keys.inputDevice2: Defaults.inputDevice2
         ]
         
-        let defaults = UserDefaults.standard
-        defaults.register(defaults: dictionary)
+        // let userDefaults = UserDefaults.standard
+        userDefaults.register(defaults: dictionary2)
     }
     
     static func resetGeneralUserDefaults() {
         
         let defaults = UserDefaults.standard
-
-        let keys = [ Keys.inputDevice1,
-                     Keys.inputDevice2,
-                     
-                     Keys.mapKeysByPosition
+        
+        let keys = [ Keys.driveBlankDiskFormat,
+                     Keys.ejectWithoutAsking,
+                     Keys.driveSounds,
+                     Keys.driveSoundPan,
+                     Keys.driveInsertSound,
+                     Keys.driveEjectSound,
+                     Keys.driveHeadSound,
+                     Keys.driveConnectSound
         ]
-
+        
         for key in keys { defaults.removeObject(forKey: key) }
+        
+        // MOVE TO HARDWARE
+        // let defaults = UserDefaults.standard
+        
+        let keys2 = [ Keys.inputDevice1,
+                      Keys.inputDevice2,
+                      
+                      Keys.mapKeysByPosition
+        ]
+        
+        for key in keys2 { defaults.removeObject(forKey: key) }
     }
 }
-
+    
 extension MyController {
-        
+    
     func loadGeneralUserDefaults() {
         
         let defaults = UserDefaults.standard
@@ -697,8 +772,7 @@ extension MyController {
         c64.suspend()
         
         c64.setWarpLoad(defaults.bool(forKey: Keys.warpLoad))
-        c64.drive1.setSendSoundMessages(defaults.bool(forKey: Keys.driveNoise))
-        c64.drive2.setSendSoundMessages(defaults.bool(forKey: Keys.driveNoise))
+        prefs.driveSounds = defaults.bool(forKey: Keys.driveNoise)
     
         screenshotSource = defaults.integer(forKey: Keys.screenshotSource)
         screenshotTargetIntValue = defaults.integer(forKey: Keys.screenshotTarget)
@@ -722,8 +796,7 @@ extension MyController {
         let defaults = UserDefaults.standard
         
         defaults.set(c64.warpLoad(), forKey: Keys.warpLoad)
-        defaults.set(c64.drive1.sendSoundMessages(), forKey: Keys.driveNoise)
-        defaults.set(c64.drive2.sendSoundMessages(), forKey: Keys.driveNoise)
+        defaults.set(prefs.driveSounds, forKey: Keys.driveNoise)
 
         defaults.set(screenshotSource, forKey: Keys.screenshotSource)
         defaults.set(screenshotTargetIntValue, forKey: Keys.screenshotTarget)
