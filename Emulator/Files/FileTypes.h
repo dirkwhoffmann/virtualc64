@@ -58,6 +58,7 @@ typedef enum
     CHAR_A1200_TOPAZ_V2,
     CHAR_TELETEXT,
     CHAR_MEGA65,
+    CHAR_PXLFONT_V23,
 
     // Kernal Roms
     KERNAL_1ST,

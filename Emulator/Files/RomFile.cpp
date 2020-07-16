@@ -137,6 +137,7 @@ RomFile::revision(u64 fnv)
         case 0x19F0DD3F3F9C4FE9: return CHAR_A1200_TOPAZ_V2;
         case 0xE527AD3E0DDE930D: return CHAR_TELETEXT;
         case 0x4D31ECBF4F967DC3: return CHAR_MEGA65;
+        case 0x564e103e962682dd: return CHAR_PXLFONT_V23;
             
         case 0xFB166E49AF709AB8: return KERNAL_1ST;
         case 0x4232D81CCD24FAAE: return KERNAL_2ST;
@@ -199,6 +200,7 @@ RomFile::isMegaRom(RomRevision rev)
             
         case BASIC_MEGA65:
         case CHAR_MEGA65:
+        case CHAR_PXLFONT_V23:
         case KERNAL_MEGA65:
             return true;
             
@@ -264,6 +266,7 @@ RomFile::title(RomRevision rev)
         case CHAR_A1200_TOPAZ_V2:     return "Amiga 1200 Font";
         case CHAR_TELETEXT:           return "Teletext Font";
         case CHAR_MEGA65:             return "M.E.G.A. C64 OpenROM";
+        case CHAR_PXLFONT_V23:        return "M.E.G.A. C64 OpenROM";
             
         case KERNAL_1ST:
         case KERNAL_2ST:
@@ -314,7 +317,8 @@ RomFile::version(RomRevision rev)
         case CHAR_A1200_TOPAZ_V2:     return "Topaz v2";
         case CHAR_TELETEXT:           return "";
         case CHAR_MEGA65:             return "Character Set";
-            
+        case CHAR_PXLFONT_V23:        return "PXLfont v2.3";
+
         case KERNAL_1ST:              return "1st revision";
         case KERNAL_2ST:              return "2nd revision";
         case KERNAL_3ST:
