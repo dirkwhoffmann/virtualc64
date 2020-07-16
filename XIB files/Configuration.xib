@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097.2"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -473,9 +473,9 @@ Gw
                                             </connections>
                                         </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="byp-tc-HDS">
-                                            <rect key="frame" x="82" y="473" width="439" height="16"/>
+                                            <rect key="frame" x="91" y="473" width="422" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="To add a Rom, drag a Rom image file onto the corresponding Rom icon." id="5Aj-5m-lLa">
+                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="To add a Rom, drag a Rom image file onto one of the four chip icons." id="5Aj-5m-lLa">
                                                 <font key="font" usesAppearanceFont="YES"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -493,7 +493,7 @@ Gw
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AaV-br-CYk">
                                             <rect key="frame" x="81" y="451" width="439" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="center" title="A Basic Rom, Character, and Kernal Rom is required to run the emulator." id="pxg-yp-MSp">
+                                            <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="center" title="A Basic Rom, Character Rom, and Kernal Rom is required to run the emulator." id="pxg-yp-MSp">
                                                 <font key="font" metaFont="message" size="11"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2863,7 +2863,7 @@ DQ
         <image name="joystick2" width="261" height="300"/>
         <image name="key" width="198" height="187"/>
         <image name="lockIcon" width="121" height="171"/>
-        <image name="mega65" width="551" height="347"/>
+        <image name="mega65" width="399" height="347"/>
         <image name="pref_cia" width="514" height="514"/>
         <image name="pref_mem" width="514" height="514"/>
         <image name="pref_sid" width="514" height="514"/>

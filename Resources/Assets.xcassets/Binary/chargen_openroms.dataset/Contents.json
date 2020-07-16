@@ -1,0 +1,12 @@
+{
+  "data" : [
+    {
+      "filename" : "chargen_openroms.rom",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

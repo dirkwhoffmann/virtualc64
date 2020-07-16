@@ -263,10 +263,10 @@ extension ConfigurationController {
 
         track()
         
-        let basicRom = NSDataAsset(name: "open-basic-rom")?.data
-        let charRom = NSDataAsset(name: "open-char-rom")?.data
-        let kernalRom = NSDataAsset(name: "open-kernal-rom")?.data
-
+        let basicRom = NSDataAsset(name: "basic_generic")?.data
+        let charRom = NSDataAsset(name: "chargen_openroms")?.data
+        let kernalRom = NSDataAsset(name: "kernal_generic")?.data
+        
         // Install OpenROMs
         c64.loadBasicRom(fromBuffer: basicRom)
         c64.loadCharRom(fromBuffer: charRom)

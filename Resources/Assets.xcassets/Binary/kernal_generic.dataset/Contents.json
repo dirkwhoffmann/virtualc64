@@ -1,0 +1,12 @@
+{
+  "data" : [
+    {
+      "filename" : "kernal_generic.rom",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

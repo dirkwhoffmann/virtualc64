@@ -115,8 +115,6 @@ RomFile::isVC1541RomBuffer(const u8 *buffer, size_t length)
 RomRevision
 RomFile::revision(u64 fnv)
 {
-    printf("Translating fnv %llx\n", fnv);
-    
     switch(fnv) {
             
         case 0x0000000000000000: return ROM_MISSING;
@@ -249,7 +247,7 @@ RomFile::title(RomRevision rev)
         case ROM_UNKNOWN:             return "Unknown";
             
         case BASIC_COMMODORE:         return "Commodore 64 Basic";
-        case BASIC_MEGA65:            return "M.E.G.A. 65 OpenROM";
+        case BASIC_MEGA65:            return "M.E.G.A. C64 OpenROM";
             
         case CHAR_COMMODORE:
         case CHAR_SWEDISH_C2D007:
@@ -265,7 +263,7 @@ RomFile::title(RomRevision rev)
         case CHAR_A1200_TOPAZ_BROKEN:
         case CHAR_A1200_TOPAZ_V2:     return "Amiga 1200 Font";
         case CHAR_TELETEXT:           return "Teletext Font";
-        case CHAR_MEGA65:             return "M.E.G.A. 65 OpenROM";
+        case CHAR_MEGA65:             return "M.E.G.A. C64 OpenROM";
             
         case KERNAL_1ST:
         case KERNAL_2ST:
@@ -279,7 +277,7 @@ RomFile::title(RomRevision rev)
         case KERNAL_DATEL_V32:        return "Datel Turbo Rom II";
         case KERNAL_EXOS_V3:          return "Exos Kernal ROM";
         case KERNAL_TURBO_TAPE:       return "Turbo Tape ROM";
-        case KERNAL_MEGA65:           return "M.E.G.A. 65 OpenROM";
+        case KERNAL_MEGA65:           return "M.E.G.A. C64 OpenROM";
             
         case VC1541_II_1987:
         case VC1541_II_NEWTRONIC:     return "VC1541-II Firmware";
@@ -299,7 +297,7 @@ RomFile::version(RomRevision rev)
     switch (rev) {
             
         case BASIC_COMMODORE:         return "Version 2";
-        case BASIC_MEGA65:            return "";
+        case BASIC_MEGA65:            return "Basic";
             
         case CHAR_COMMODORE:
         case CHAR_SWEDISH_C2D007:     return "Swedish C64 C2D007";
@@ -314,8 +312,8 @@ RomFile::version(RomRevision rev)
         case CHAR_A500_TOPAZ_V2:      return "Topaz v2";
         case CHAR_A1200_TOPAZ_BROKEN: return "Topaz v1 (broken)";
         case CHAR_A1200_TOPAZ_V2:     return "Topaz v2";
-        case CHAR_TELETEXT:
-        case CHAR_MEGA65:             return "";
+        case CHAR_TELETEXT:           return "";
+        case CHAR_MEGA65:             return "Character Set";
             
         case KERNAL_1ST:              return "1st revision";
         case KERNAL_2ST:              return "2nd revision";
@@ -329,7 +327,7 @@ RomFile::version(RomRevision rev)
         case KERNAL_DATEL_V32:        return "v3.2+";
         case KERNAL_EXOS_V3:          return "v3";
         case KERNAL_TURBO_TAPE:       return "v0.1";
-        case KERNAL_MEGA65:           return "";
+        case KERNAL_MEGA65:           return "Kernal";
             
         case VC1541_II_1987:          return "";
         case VC1541_II_NEWTRONIC:     return "Newtronic Drive";
@@ -379,7 +377,7 @@ RomFile::released(RomRevision rev)
         case KERNAL_DATEL_V32:
         case KERNAL_EXOS_V3:
         case KERNAL_TURBO_TAPE:
-        case KERNAL_MEGA65:
+        case KERNAL_MEGA65:           return "";
             
         case VC1541_II_1987:          return "1987";
         case VC1541_II_NEWTRONIC:
