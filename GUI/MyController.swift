@@ -559,20 +559,6 @@ extension MyController {
         
         switch msg.type {
     
-        case MSG_READY_TO_RUN:
-    
-            // Start emulator
-            c64.run()
-            
-            // Blend in C64 screen
-            if !renderer.drawC64texture {
-                renderer.blendIn()
-                renderer.drawC64texture = true
-            }
-            
-            // Process attachment (if any)
-            mydocument?.mountAttachment()
-    
         case MSG_POWER_ON:
             track("MSG_POWER_ON")
             virtualKeyboard = nil

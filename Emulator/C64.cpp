@@ -519,7 +519,7 @@ C64::pauseEmulator()
 bool
 C64::isReady()
 {
-    return hasBasicRom() && hasCharRom() && hasKernalRom() && hasVC1541Rom();
+    return hasBasicRom() && hasCharRom() && hasKernalRom();
 }
 
 C64Model
@@ -1460,34 +1460,5 @@ C64::flash(AnyArchive *file, unsigned item)
         result = false;
     }
     resume();
-    return result;
-}
-
-bool
-C64::loadRom(const char *filename)
-{
-    bool result;
-    bool wasRunnable = isReady();
-    RomFile *rom = RomFile::makeWithFile(filename);
-    
-    if (!rom) {
-        warn("Failed to read ROM image file %s\n", filename);
-        return false;
-    }
-    
-    suspend();
-    result = flash(rom);
-    resume();
-    
-    if (result) {
-        msg("Loaded ROM image %s\n", filename);
-    } else {
-        warn("Failed to flash ROM image %s\n", filename);
-    }
-    
-    if (!wasRunnable && isReady())
-        putMessage(MSG_READY_TO_RUN);
-    
-    delete rom;
     return result;
 }

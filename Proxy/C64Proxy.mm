@@ -1118,6 +1118,10 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->drive->isConnected();
 }
+- (BOOL) connectable
+{
+    return wrapper->drive->connectable();
+}
 - (void) connect
 {
     wrapper->drive->connect();

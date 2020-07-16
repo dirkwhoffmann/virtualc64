@@ -325,17 +325,6 @@ VC1541::raiseByteReady()
     }
 }
 
-/*
-void
-VC1541::setByteReadyLine(bool value)
-{
-    if (byteReady != value) {
-        byteReady = value;
-        via2.CA1action(value);
-    }
-}
-*/
-
 void
 VC1541::setZone(uint2_t value)
 {
@@ -347,10 +336,20 @@ VC1541::setZone(uint2_t value)
     }
 }
 
+bool
+VC1541::connectable()
+{
+    return vc64.hasVC1541Rom();
+}
+
 void
 VC1541::connect()
 {
+    // Only proceed if the drive is unconnected
     if (connected) return;
+
+    // Only proceed if a drive ROM is present
+    if (!connectable()) return;
     
     suspend();
     

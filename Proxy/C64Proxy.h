@@ -620,6 +620,7 @@ struct AnyC64FileWrapper;
 - (void) setTracing:(BOOL)b;
 
 - (BOOL) isConnected;
+- (BOOL) connectable;
 - (void) connect;
 - (void) disconnect;
 - (void) toggleConnection;

@@ -310,7 +310,6 @@ public:
     bool isReady();
     
     
-    
     //
     // Configuring the emulator
     //
@@ -638,11 +637,6 @@ public:
     bool saveKernalRom(const char *path);
     bool saveVC1541Rom(const char *path);
 
-    
-    
-    //! @brief    Loads a ROM image into memory (DEPRECATED)
-    bool loadRom(const char *filename);
-    
     
     //
     //! @functiongroup Flashing files

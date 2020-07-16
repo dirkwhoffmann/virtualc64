@@ -266,10 +266,13 @@ public:
     //! @brief    Returns true iff the drive is not connected
     bool isDisconnected() { return !connected; }
 
-    //! @brief    Connects the drive to the C64
+    // Returns true if the drive can be connected (fails if no ROM is present)
+    bool connectable();
+    
+    // Connects the drive to the C64 (does nothing if no ROM is present)
     void connect();
     
-    //! @brief    Disconnects the drive from the C64
+    // Disconnects the drive from the C64
     void disconnect();
 
     //! @brief    Connects a disconnected drive or vice versa
