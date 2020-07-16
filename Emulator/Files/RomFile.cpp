@@ -12,8 +12,8 @@
 const u8 RomFile::magicBasicRomBytes[basicRomSignatureCnt][3] = {
 
     { 0x94, 0xE3, 0x7B },       // Commodore ROM
-    { 0xB9, 0xA7, 0xC1 },       // MEGA65 project
-    { 0x63, 0xA6, 0xC1 }        // MEGA65 project
+    { 0x63, 0xA6, 0xC1 },       // MEGA65 project
+    { 0x94, 0xE3, 0xB7 }        // MEGA65 project
 
 };
 
@@ -34,7 +34,7 @@ const u8 RomFile::magicCharRomBytes[charRomSignatureCnt][4] = {
 const u8 RomFile::magicKernalRomBytes[kernalRomSignatureCnt][3] = {
 
     { 0x85, 0x56, 0x20 },       // Commodore ROM
-    { 0x20, 0x70, 0xA8 },       // MEGA65 project
+    { 0xA9, 0x93, 0x20 },       // MEGA65 project
     { 0x20, 0x02, 0xBE }
 };
 
@@ -122,7 +122,7 @@ RomFile::revision(u64 fnv)
         case 0x0000000000000000: return ROM_MISSING;
             
         case 0x20765FEA67A8762D: return BASIC_COMMODORE;
-        case 0xF5E925DCABE2D3F0: return BASIC_MEGA65;
+        case 0x2e2a8ba6b516d316: return BASIC_MEGA65;
                         
         case 0xACC576F7B332AC15: return CHAR_COMMODORE;
         case 0x3CA9D37AA3DE0969: return CHAR_SWEDISH_C2D007;
@@ -152,7 +152,7 @@ RomFile::revision(u64 fnv)
         case 0x7E0A124C3F192818: return KERNAL_DATEL_V32;
         case 0x211EAC45AB03A2CA: return KERNAL_EXOS_V3;
         case 0xF2A39FF166D338AE: return KERNAL_TURBO_TAPE;
-        case 0xCB54D7934B99ADAC: return KERNAL_MEGA65;
+        case 0x921c11f1c5ad1544: return KERNAL_MEGA65;
             
         case 0x44BBA0EAC5898597: return VC1541_II_1987;
         case 0xA1D36980A17C8756: return VC1541_II_NEWTRONIC;
