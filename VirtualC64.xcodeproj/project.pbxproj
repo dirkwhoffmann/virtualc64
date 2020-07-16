@@ -76,7 +76,7 @@
 		504C437024AF29AC00E69CAE /* Cartridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42C024AF29AB00E69CAE /* Cartridge.cpp */; };
 		504C437124AF29AC00E69CAE /* CartridgeRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42C224AF29AB00E69CAE /* CartridgeRom.cpp */; };
 		504C437224AF29AC00E69CAE /* FlashRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42C324AF29AB00E69CAE /* FlashRom.cpp */; };
-		504C437324AF29AC00E69CAE /* C64ROMFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42C724AF29AB00E69CAE /* C64ROMFile.cpp */; };
+		504C437324AF29AC00E69CAE /* RomFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42C724AF29AB00E69CAE /* RomFile.cpp */; };
 		504C437424AF29AC00E69CAE /* T64File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42CC24AF29AB00E69CAE /* T64File.cpp */; };
 		504C437524AF29AC00E69CAE /* PRGFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42CD24AF29AB00E69CAE /* PRGFile.cpp */; };
 		504C437624AF29AC00E69CAE /* P00File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42CF24AF29AB00E69CAE /* P00File.cpp */; };
@@ -312,7 +312,7 @@
 		504C42C324AF29AB00E69CAE /* FlashRom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FlashRom.cpp; sourceTree = "<group>"; };
 		504C42C424AF29AB00E69CAE /* Cartridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cartridge.h; sourceTree = "<group>"; };
 		504C42C524AF29AB00E69CAE /* CartridgeTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartridgeTypes.h; sourceTree = "<group>"; };
-		504C42C724AF29AB00E69CAE /* C64ROMFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C64ROMFile.cpp; sourceTree = "<group>"; };
+		504C42C724AF29AB00E69CAE /* RomFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RomFile.cpp; sourceTree = "<group>"; };
 		504C42C824AF29AB00E69CAE /* AnyDisk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyDisk.h; sourceTree = "<group>"; };
 		504C42C924AF29AB00E69CAE /* D64File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = D64File.h; sourceTree = "<group>"; };
 		504C42CA24AF29AB00E69CAE /* FileTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileTypes.h; sourceTree = "<group>"; };
@@ -328,7 +328,7 @@
 		504C42D424AF29AB00E69CAE /* AnyDisk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnyDisk.cpp; sourceTree = "<group>"; };
 		504C42D524AF29AB00E69CAE /* Snapshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Snapshot.cpp; sourceTree = "<group>"; };
 		504C42D624AF29AB00E69CAE /* AnyC64File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnyC64File.cpp; sourceTree = "<group>"; };
-		504C42D724AF29AB00E69CAE /* C64RomFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64RomFile.h; sourceTree = "<group>"; };
+		504C42D724AF29AB00E69CAE /* RomFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomFile.h; sourceTree = "<group>"; };
 		504C42D824AF29AB00E69CAE /* D64File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = D64File.cpp; sourceTree = "<group>"; };
 		504C42D924AF29AB00E69CAE /* AnyArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnyArchive.cpp; sourceTree = "<group>"; };
 		504C42DA24AF29AB00E69CAE /* CRTFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRTFile.cpp; sourceTree = "<group>"; };
@@ -781,8 +781,8 @@
 				504C42CA24AF29AB00E69CAE /* FileTypes.h */,
 				504C42CE24AF29AB00E69CAE /* AnyC64File.h */,
 				504C42D624AF29AB00E69CAE /* AnyC64File.cpp */,
-				504C42D724AF29AB00E69CAE /* C64RomFile.h */,
-				504C42C724AF29AB00E69CAE /* C64ROMFile.cpp */,
+				504C42D724AF29AB00E69CAE /* RomFile.h */,
+				504C42C724AF29AB00E69CAE /* RomFile.cpp */,
 				504C42DD24AF29AB00E69CAE /* Snapshot.h */,
 				504C42D524AF29AB00E69CAE /* Snapshot.cpp */,
 				504C42CB24AF29AB00E69CAE /* TAPFile.h */,
@@ -1350,7 +1350,7 @@
 				504C43A724AF29AC00E69CAE /* VIA.cpp in Sources */,
 				504C435C24AF29AC00E69CAE /* Westermann.cpp in Sources */,
 				504C439524AF29AC00E69CAE /* envelope.cc in Sources */,
-				504C437324AF29AC00E69CAE /* C64ROMFile.cpp in Sources */,
+				504C437324AF29AC00E69CAE /* RomFile.cpp in Sources */,
 				504C437E24AF29AC00E69CAE /* TAPFile.cpp in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
 				504C436B24AF29AC00E69CAE /* MikroAss.cpp in Sources */,

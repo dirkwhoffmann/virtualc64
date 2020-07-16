@@ -1122,36 +1122,36 @@ const char *
 C64::basicRomTitle()
 {
     RomRevision rev = basicRomRevision();
-    return rev == ROM_UNKNOWN ? "Unknown Basic Rom" : C64RomFile::title(rev);
+    return rev == ROM_UNKNOWN ? "Unknown Basic Rom" : RomFile::title(rev);
 }
 
 const char *
 C64::charRomTitle()
 {
     RomRevision rev = charRomRevision();
-    return rev == ROM_UNKNOWN ? "Unknown Character Rom" : C64RomFile::title(rev);
+    return rev == ROM_UNKNOWN ? "Unknown Character Rom" : RomFile::title(rev);
 }
 
 const char *
 C64::kernalRomTitle()
 {
     RomRevision rev = kernalRomRevision();
-    return rev == ROM_UNKNOWN ? "Unknown Kernal Rom" : C64RomFile::title(rev);
+    return rev == ROM_UNKNOWN ? "Unknown Kernal Rom" : RomFile::title(rev);
 }
 
 const char *
 C64::vc1541RomTitle()
 {
     RomRevision rev = vc1541RomRevision();
-    return rev == ROM_UNKNOWN ? "Unknown Kernal Rom" : C64RomFile::title(rev);
+    return rev == ROM_UNKNOWN ? "Unknown Kernal Rom" : RomFile::title(rev);
 }
 
 const char *
 C64::romVersion(u64 fnv)
 {
-    RomRevision rev = C64RomFile::revision(fnv);
+    RomRevision rev = RomFile::revision(fnv);
 
-    if (rev != ROM_UNKNOWN) return C64RomFile::version(rev);
+    if (rev != ROM_UNKNOWN) return RomFile::version(rev);
     
     static char str[32];
     sprintf(str, "FNV %llx", fnv);
@@ -1185,7 +1185,7 @@ C64::hasVC1541Rom()
 }
 
 bool
-C64::loadBasicRom(C64RomFile *file)
+C64::loadBasicRom(RomFile *file)
 {
     assert(file != NULL);
     
@@ -1202,7 +1202,7 @@ C64::loadBasicRomFromBuffer(const u8 *buffer, size_t length)
 {
     assert(buffer != NULL);
     
-    if (C64RomFile *file = C64RomFile::makeWithBuffer(buffer, length)) {
+    if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
         return loadBasicRom(file);
     }
     
@@ -1215,7 +1215,7 @@ C64::loadBasicRomFromFile(const char *path)
 {
     assert(path != NULL);
     
-    if (C64RomFile *file = C64RomFile::makeWithFile(path)) {
+    if (RomFile *file = RomFile::makeWithFile(path)) {
         return loadBasicRom(file);
     }
     
@@ -1224,7 +1224,7 @@ C64::loadBasicRomFromFile(const char *path)
 }
 
 bool
-C64::loadCharRom(C64RomFile *file)
+C64::loadCharRom(RomFile *file)
 {
     assert(file != NULL);
     
@@ -1241,7 +1241,7 @@ C64::loadCharRomFromBuffer(const u8 *buffer, size_t length)
 {
     assert(buffer != NULL);
     
-    if (C64RomFile *file = C64RomFile::makeWithBuffer(buffer, length)) {
+    if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
         return loadCharRom(file);
     }
     
@@ -1254,7 +1254,7 @@ C64::loadCharRomFromFile(const char *path)
 {
     assert(path != NULL);
     
-    if (C64RomFile *file = C64RomFile::makeWithFile(path)) {
+    if (RomFile *file = RomFile::makeWithFile(path)) {
         return loadCharRom(file);
     }
     
@@ -1263,7 +1263,7 @@ C64::loadCharRomFromFile(const char *path)
 }
 
 bool
-C64::loadKernalRom(C64RomFile *file)
+C64::loadKernalRom(RomFile *file)
 {
     assert(file != NULL);
     
@@ -1280,7 +1280,7 @@ C64::loadKernalRomFromBuffer(const u8 *buffer, size_t length)
 {
     assert(buffer != NULL);
     
-    if (C64RomFile *file = C64RomFile::makeWithBuffer(buffer, length)) {
+    if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
         return loadKernalRom(file);
     }
     
@@ -1293,7 +1293,7 @@ C64::loadKernalRomFromFile(const char *path)
 {
     assert(path != NULL);
     
-    if (C64RomFile *file = C64RomFile::makeWithFile(path)) {
+    if (RomFile *file = RomFile::makeWithFile(path)) {
         return loadKernalRom(file);
     }
     
@@ -1302,7 +1302,7 @@ C64::loadKernalRomFromFile(const char *path)
 }
 
 bool
-C64::loadVC1541Rom(C64RomFile *file)
+C64::loadVC1541Rom(RomFile *file)
 {
     assert(file != NULL);
     
@@ -1320,7 +1320,7 @@ C64::loadVC1541RomFromBuffer(const u8 *buffer, size_t length)
 {
     assert(buffer != NULL);
     
-    if (C64RomFile *file = C64RomFile::makeWithBuffer(buffer, length)) {
+    if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
         return loadVC1541Rom(file);
     }
     
@@ -1333,7 +1333,7 @@ C64::loadVC1541RomFromFile(const char *path)
 {
     assert(path != NULL);
     
-    if (C64RomFile *file = C64RomFile::makeWithFile(path)) {
+    if (RomFile *file = RomFile::makeWithFile(path)) {
         return loadVC1541Rom(file);
     }
     
@@ -1371,7 +1371,7 @@ C64::saveBasicRom(const char *path)
 {
     if (!hasBasicRom()) return false;
 
-    C64RomFile *file = C64RomFile::makeWithBuffer(mem.rom + 0xA000, 0x2000);
+    RomFile *file = RomFile::makeWithBuffer(mem.rom + 0xA000, 0x2000);
     return file && file->writeToFile(path);
 }
 
@@ -1380,7 +1380,7 @@ C64::saveCharRom(const char *path)
 {
     if (!hasCharRom()) return false;
     
-    C64RomFile *file = C64RomFile::makeWithBuffer(mem.rom + 0xD000, 0x1000);
+    RomFile *file = RomFile::makeWithBuffer(mem.rom + 0xD000, 0x1000);
     return file && file->writeToFile(path);
 }
 
@@ -1389,7 +1389,7 @@ C64::saveKernalRom(const char *path)
 {
     if (!hasKernalRom()) return false;
     
-    C64RomFile *file = C64RomFile::makeWithBuffer(mem.rom + 0xE000, 0x2000);
+    RomFile *file = RomFile::makeWithBuffer(mem.rom + 0xE000, 0x2000);
     return file && file->writeToFile(path);
 }
 
@@ -1398,7 +1398,7 @@ C64::saveVC1541Rom(const char *path)
 {
     if (!hasVC1541Rom()) return false;
     
-    C64RomFile *file = C64RomFile::makeWithBuffer(drive1.mem.rom, 0x4000);
+    RomFile *file = RomFile::makeWithBuffer(drive1.mem.rom, 0x4000);
     return file && file->writeToFile(path);
 }
 
@@ -1468,7 +1468,7 @@ C64::loadRom(const char *filename)
 {
     bool result;
     bool wasRunnable = isReady();
-    C64RomFile *rom = C64RomFile::makeWithFile(filename);
+    RomFile *rom = RomFile::makeWithFile(filename);
     
     if (!rom) {
         warn("Failed to read ROM image file %s\n", filename);

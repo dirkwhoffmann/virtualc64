@@ -12,7 +12,7 @@
 
 #include "AnyC64File.h"
 
-class C64RomFile : public AnyC64File {
+class RomFile : public AnyC64File {
     
 private:
 
@@ -68,11 +68,11 @@ public:
     // Creating and destructing
     //
     
-    C64RomFile();
+    RomFile();
     
     // Factory methods
-    static C64RomFile *makeWithBuffer(const u8 *buffer, size_t length);
-    static C64RomFile *makeWithFile(const char *filename);
+    static RomFile *makeWithBuffer(const u8 *buffer, size_t length);
+    static RomFile *makeWithFile(const char *filename);
     
     
     //

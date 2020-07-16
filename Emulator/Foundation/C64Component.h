@@ -44,7 +44,7 @@ class P00File;
 class D64File;
 class G64File;
 class CRTFile;
-class C64RomFile;
+class RomFile;
 class Snapshot;
 
 //

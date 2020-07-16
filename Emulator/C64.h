@@ -28,7 +28,7 @@
 #include "G64File.h"
 #include "PRGFile.h"
 #include "P00File.h"
-#include "C64RomFile.h"
+#include "RomFile.h"
 #include "TAPFile.h"
 #include "CRTFile.h"
 
@@ -579,10 +579,10 @@ public:
     u64 vc1541RomFNV64();
 
     // Returns the revisions of the installed ROMs
-    RomRevision basicRomRevision() { return C64RomFile::revision(basicRomFNV64()); }
-    RomRevision charRomRevision() { return C64RomFile::revision(charRomFNV64()); }
-    RomRevision kernalRomRevision() { return C64RomFile::revision(kernalRomFNV64()); }
-    RomRevision vc1541RomRevision() { return C64RomFile::revision(vc1541RomFNV64()); }
+    RomRevision basicRomRevision() { return RomFile::revision(basicRomFNV64()); }
+    RomRevision charRomRevision() { return RomFile::revision(charRomFNV64()); }
+    RomRevision kernalRomRevision() { return RomFile::revision(kernalRomFNV64()); }
+    RomRevision vc1541RomRevision() { return RomFile::revision(vc1541RomFNV64()); }
     
     // Returns printable names for the  installed ROMs
     const char *basicRomTitle();
@@ -598,10 +598,10 @@ public:
     const char *vc1541RomVersion()  { return romVersion(vc1541RomFNV64()); }
     
     // Returns printable release dates or hash values for the installed ROMs
-    const char *basicRomReleased()  { return C64RomFile::released(basicRomRevision()); }
-    const char *charRomReleased()  { return C64RomFile::released(charRomRevision()); }
-    const char *kernalRomReleased()  { return C64RomFile::released(kernalRomRevision()); }
-    const char *vc1541RomReleased()  { return C64RomFile::released(vc1541RomRevision()); }
+    const char *basicRomReleased()  { return RomFile::released(basicRomRevision()); }
+    const char *charRomReleased()  { return RomFile::released(charRomRevision()); }
+    const char *kernalRomReleased()  { return RomFile::released(kernalRomRevision()); }
+    const char *vc1541RomReleased()  { return RomFile::released(vc1541RomRevision()); }
 
     // Checks if a certain Rom is present
     bool hasBasicRom();
@@ -610,19 +610,19 @@ public:
     bool hasVC1541Rom();
     
     // Installs a Ron
-    bool loadBasicRom(C64RomFile *rom);
+    bool loadBasicRom(RomFile *rom);
     bool loadBasicRomFromBuffer(const u8 *buffer, size_t length);
     bool loadBasicRomFromFile(const char *path);
     
-    bool loadCharRom(C64RomFile *rom);
+    bool loadCharRom(RomFile *rom);
     bool loadCharRomFromBuffer(const u8 *buffer, size_t length);
     bool loadCharRomFromFile(const char *path);
     
-    bool loadKernalRom(C64RomFile *rom);
+    bool loadKernalRom(RomFile *rom);
     bool loadKernalRomFromBuffer(const u8 *buffer, size_t length);
     bool loadKernalRomFromFile(const char *path);
 
-    bool loadVC1541Rom(C64RomFile *rom);
+    bool loadVC1541Rom(RomFile *rom);
     bool loadVC1541RomFromBuffer(const u8 *buffer, size_t length);
     bool loadVC1541RomFromFile(const char *path);
 

@@ -1735,19 +1735,19 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (BOOL) isBasicRom:(NSURL *)url
 {
-    return C64RomFile::isBasicRomFile([[url path] UTF8String]);
+    return RomFile::isBasicRomFile([[url path] UTF8String]);
 }
 - (BOOL) isCharRom:(NSURL *)url
 {
-    return C64RomFile::isCharRomFile([[url path] UTF8String]);
+    return RomFile::isCharRomFile([[url path] UTF8String]);
 }
 - (BOOL) isKernalRom:(NSURL *)url
 {
-    return C64RomFile::isKernalRomFile([[url path] UTF8String]);
+    return RomFile::isKernalRomFile([[url path] UTF8String]);
 }
 - (BOOL) isVC1541Rom:(NSURL *)url
 {
-    return C64RomFile::isVC1541RomFile([[url path] UTF8String]);
+    return RomFile::isVC1541RomFile([[url path] UTF8String]);
 }
 - (BOOL) loadBasicRomFromFile:(NSURL *)url
 {
@@ -1915,15 +1915,15 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (BOOL) isOrigRom:(RomRevision)rev
 {
-    return C64RomFile::isOrigRom(rev);
+    return RomFile::isOrigRom(rev);
 }
 - (BOOL) isMegaRom:(RomRevision)rev;
 {
-    return C64RomFile::isMegaRom(rev);
+    return RomFile::isMegaRom(rev);
 }
 - (BOOL) isPatchedRom:(RomRevision)rev;
 {
-    return C64RomFile::isPatchedRom(rev);
+    return RomFile::isPatchedRom(rev);
 }
 - (BOOL) isRom:(NSURL *)url
 {

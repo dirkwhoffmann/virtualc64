@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-const u8 C64RomFile::magicBasicRomBytes[basicRomSignatureCnt][3] = {
+const u8 RomFile::magicBasicRomBytes[basicRomSignatureCnt][3] = {
 
     { 0x94, 0xE3, 0x7B },       // Commodore ROM
     { 0xB9, 0xA7, 0xC1 },       // MEGA65 project
@@ -17,7 +17,7 @@ const u8 C64RomFile::magicBasicRomBytes[basicRomSignatureCnt][3] = {
 
 };
 
-const u8 C64RomFile::magicCharRomBytes[charRomSignatureCnt][4] = {
+const u8 RomFile::magicCharRomBytes[charRomSignatureCnt][4] = {
 
     { 0x3C, 0x66, 0x6E, 0x6E }, // Commodore ROM
     { 0x00, 0x3C, 0x66, 0x6E }, // chargen-atari800      (1130C1CE287876DD)
@@ -31,14 +31,14 @@ const u8 C64RomFile::magicCharRomBytes[charRomSignatureCnt][4] = {
     { 0x38, 0x44, 0x5C, 0x54 }, // Teletext              (E527AD3E0DDE930D)
 };
 
-const u8 C64RomFile::magicKernalRomBytes[kernalRomSignatureCnt][3] = {
+const u8 RomFile::magicKernalRomBytes[kernalRomSignatureCnt][3] = {
 
     { 0x85, 0x56, 0x20 },       // Commodore ROM
     { 0x20, 0x70, 0xA8 },       // MEGA65 project
     { 0x20, 0x02, 0xBE }
 };
 
-const u8 C64RomFile::magicVC1541RomBytes[vc1541RomSignatureCnt][3] = {
+const u8 RomFile::magicVC1541RomBytes[vc1541RomSignatureCnt][3] = {
 
     { 0x97, 0xAA, 0xAA },       // Commodore ROM
     { 0x97, 0xE0, 0x43 },       // Commodore ROM
@@ -47,7 +47,7 @@ const u8 C64RomFile::magicVC1541RomBytes[vc1541RomSignatureCnt][3] = {
 };
 
 bool
-C64RomFile::isRomBuffer(const u8 *buffer, size_t length)
+RomFile::isRomBuffer(const u8 *buffer, size_t length)
 {
     return
     isBasicRomBuffer(buffer, length) ||
@@ -57,7 +57,7 @@ C64RomFile::isRomBuffer(const u8 *buffer, size_t length)
 }
 
 bool
-C64RomFile::isBasicRomBuffer(const u8 *buffer, size_t length)
+RomFile::isBasicRomBuffer(const u8 *buffer, size_t length)
 {
     if (length != 0x2000) return false;
 
@@ -71,7 +71,7 @@ C64RomFile::isBasicRomBuffer(const u8 *buffer, size_t length)
 }
 
 bool
-C64RomFile::isCharRomBuffer(const u8 *buffer, size_t length)
+RomFile::isCharRomBuffer(const u8 *buffer, size_t length)
 {
     if (length != 0x1000) return false;
 
@@ -85,7 +85,7 @@ C64RomFile::isCharRomBuffer(const u8 *buffer, size_t length)
 }
 
 bool
-C64RomFile::isKernalRomBuffer(const u8 *buffer, size_t length)
+RomFile::isKernalRomBuffer(const u8 *buffer, size_t length)
 {
     if (length != 0x2000) return false;
 
@@ -99,7 +99,7 @@ C64RomFile::isKernalRomBuffer(const u8 *buffer, size_t length)
 }
 
 bool
-C64RomFile::isVC1541RomBuffer(const u8 *buffer, size_t length)
+RomFile::isVC1541RomBuffer(const u8 *buffer, size_t length)
 {
     if (length != 0x4000) return false;
 
@@ -113,7 +113,7 @@ C64RomFile::isVC1541RomBuffer(const u8 *buffer, size_t length)
 }
 
 RomRevision
-C64RomFile::revision(u64 fnv)
+RomFile::revision(u64 fnv)
 {
     printf("Translating fnv %llx\n", fnv);
     
@@ -167,7 +167,7 @@ C64RomFile::revision(u64 fnv)
 }
 
 bool
-C64RomFile::isOrigRom(RomRevision rev)
+RomFile::isOrigRom(RomRevision rev)
 {
     switch (rev) {
             
@@ -195,7 +195,7 @@ C64RomFile::isOrigRom(RomRevision rev)
 }
 
 bool
-C64RomFile::isMegaRom(RomRevision rev)
+RomFile::isMegaRom(RomRevision rev)
 {
     switch (rev) {
             
@@ -210,7 +210,7 @@ C64RomFile::isMegaRom(RomRevision rev)
 }
 
 bool
-C64RomFile::isPatchedRom(RomRevision rev)
+RomFile::isPatchedRom(RomRevision rev)
 {
     switch (rev) {
             
@@ -242,7 +242,7 @@ C64RomFile::isPatchedRom(RomRevision rev)
 }
 
 const char *
-C64RomFile::title(RomRevision rev)
+RomFile::title(RomRevision rev)
 {
     switch (rev) {
             
@@ -294,7 +294,7 @@ C64RomFile::title(RomRevision rev)
 }
 
 const char *
-C64RomFile::version(RomRevision rev)
+RomFile::version(RomRevision rev)
 {
     switch (rev) {
             
@@ -344,7 +344,7 @@ C64RomFile::version(RomRevision rev)
 }
 
 const char *
-C64RomFile::released(RomRevision rev)
+RomFile::released(RomRevision rev)
 {
     switch (rev) {
             
@@ -394,7 +394,7 @@ C64RomFile::released(RomRevision rev)
 }
 
 bool
-C64RomFile::isRomFile(const char *filename)
+RomFile::isRomFile(const char *filename)
 {
     return
     isBasicRomFile(filename) ||
@@ -404,7 +404,7 @@ C64RomFile::isRomFile(const char *filename)
 }
 
 bool
-C64RomFile::isBasicRomFile(const char *filename)
+RomFile::isBasicRomFile(const char *filename)
 {
     if (!checkFileSize(filename, 0x2000, 0x2000)) return false;
 
@@ -418,7 +418,7 @@ C64RomFile::isBasicRomFile(const char *filename)
 }
 
 bool
-C64RomFile::isCharRomFile(const char *filename)
+RomFile::isCharRomFile(const char *filename)
 {
     if (!checkFileSize(filename, 0x1000, 0x1000)) return false;
 
@@ -432,7 +432,7 @@ C64RomFile::isCharRomFile(const char *filename)
 }
 
 bool
-C64RomFile::isKernalRomFile(const char *filename)
+RomFile::isKernalRomFile(const char *filename)
 {
     if (!checkFileSize(filename, 0x2000, 0x2000)) return false;
 
@@ -446,7 +446,7 @@ C64RomFile::isKernalRomFile(const char *filename)
 }
 
 bool
-C64RomFile::isVC1541RomFile(const char *filename)
+RomFile::isVC1541RomFile(const char *filename)
 {
     if (!checkFileSize(filename, 0x4000, 0x4000)) return false;
 
@@ -459,10 +459,10 @@ C64RomFile::isVC1541RomFile(const char *filename)
     return false;
 }
 
-C64RomFile *
-C64RomFile::makeWithBuffer(const u8 *buffer, size_t length)
+RomFile *
+RomFile::makeWithBuffer(const u8 *buffer, size_t length)
 {
-    C64RomFile *rom = new C64RomFile();
+    RomFile *rom = new RomFile();
     
     if (!rom->readFromBuffer(buffer, length)) {
         delete rom;
@@ -472,10 +472,10 @@ C64RomFile::makeWithBuffer(const u8 *buffer, size_t length)
     return rom;
 }
 
-C64RomFile *
-C64RomFile::makeWithFile(const char *filename)
+RomFile *
+RomFile::makeWithFile(const char *filename)
 {
-    C64RomFile *rom = new C64RomFile();
+    RomFile *rom = new RomFile();
     
     if (!rom->readFromFile(filename)) {
         delete rom;
@@ -485,14 +485,14 @@ C64RomFile::makeWithFile(const char *filename)
     return rom;
 }
 
-C64RomFile::C64RomFile()
+RomFile::RomFile()
 {
     setDescription("RomFile");
     romtype = UNKNOWN_FILE_FORMAT;
 }
 
 bool
-C64RomFile::readFromBuffer(const u8 *buffer, size_t length)
+RomFile::readFromBuffer(const u8 *buffer, size_t length)
 {
     if (!AnyC64File::readFromBuffer(buffer, length))
         return false;
