@@ -71,6 +71,14 @@ typedef enum : long
 }
 EmulatorState;
 
+typedef enum
+{
+    ERR_OK,
+    ERR_ROM_MISSING,
+    ERR_ROM_MEGA65_MISMATCH
+}
+ErrorCode;
+
 //
 // Structures
 //

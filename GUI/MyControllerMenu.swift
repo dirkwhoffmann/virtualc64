@@ -382,9 +382,18 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func powerAction(_ sender: Any!) {
         
-        track()
+        var error: ErrorCode = ERR_OK
 
-        c64.isPoweredOn() ? c64.powerOff() : c64.run()
+        if c64.isPoweredOn() {
+            c64.powerOff()
+            return
+        }
+        
+        if c64.isReady(&error) {
+            c64.run()
+        } else {
+            mydocument.showConfigurationAltert(error)
+        }
     }
      
     //

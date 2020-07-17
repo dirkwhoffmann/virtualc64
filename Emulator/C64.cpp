@@ -517,9 +517,21 @@ C64::pauseEmulator()
 }
 
 bool
-C64::isReady()
+C64::isReady(ErrorCode *error)
 {
-    return hasBasicRom() && hasCharRom() && hasKernalRom();
+    if (!hasBasicRom() || !hasCharRom() || !hasKernalRom()) {
+        if (error) *error = ERR_ROM_MISSING;
+        return false;
+    }
+    
+    if (hasMega65BasicRom() && hasMega65KernalRom()) {
+        if (strcmp(mega65BasicRev(), mega65KernalRev()) == 0) {
+            if (error) *error = ERR_ROM_MEGA65_MISMATCH;
+            return false;
+        }
+    }
+    
+    return true;
 }
 
 C64Model

@@ -1429,6 +1429,10 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return releaseBuild();
 }
+- (BOOL) isReady:(ErrorCode *)error
+{
+    return wrapper->c64->isReady(error);
+}
 - (BOOL) isReady
 {
     return wrapper->c64->isReady();

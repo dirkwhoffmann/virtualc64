@@ -109,6 +109,7 @@ struct AnyC64FileWrapper;
 
 - (BOOL) releaseBuild;
 
+- (BOOL) isReady:(ErrorCode *)error;
 - (BOOL) isReady;
 - (void) powerOn;
 - (void) powerOff;

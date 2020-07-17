@@ -303,11 +303,10 @@ public:
     void runEmulator();
     void pauseEmulator();
     
-    /* Returns true iff the virtual C64 is able to run. The emulator needs all
-     * four Roms to run. Hence, this method returns true if and only if all
-     * four Roms are installed.
+    /* Returns true if a call to powerOn() will be successful.
+     * It returns false, e.g., if no Rom is installed.
      */
-    bool isReady();
+    bool isReady(ErrorCode *error = NULL);
     
     
     //
