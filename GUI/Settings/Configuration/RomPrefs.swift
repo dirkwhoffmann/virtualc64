@@ -129,30 +129,30 @@ extension ConfigurationController {
         
         track()
 
-        let poweredOff       = c64.isPoweredOff()
+        let poweredOff         = c64.isPoweredOff()
         
-        let basicRev         = c64.basicRomRevision()
-        let hasBasic         = basicRev != ROM_MISSING
-        let hasOrigBasic     = c64.isOrigRom(basicRev)
-        let hasMegaBasic     = c64.isMegaRom(basicRev)
-        let hasPatchedBasic  = c64.isPatchedRom(basicRev)
+        let basicRev           = c64.basicRomRevision()
+        let hasBasic           = basicRev != ROM_MISSING
+        let hasCommodoreBasic  = c64.isCommodoreRom(basicRev)
+        let hasMega65Basic     = c64.hasMega65BasicRom()
+        let hasPatchedBasic    = c64.isPatchedRom(basicRev)
 
-        let charRev          = c64.charRomRevision()
-        let hasChar          = charRev != ROM_MISSING
-        let hasOrigChar      = c64.isOrigRom(charRev)
-        let hasMegaChar      = c64.isMegaRom(charRev)
-        let hasPatchedChar   = c64.isPatchedRom(charRev)
+        let charRev            = c64.charRomRevision()
+        let hasChar            = charRev != ROM_MISSING
+        let hasCommodoreChar   = c64.isCommodoreRom(charRev)
+        let hasMega65Char      = c64.hasMega65CharRom()
+        let hasPatchedChar     = c64.isPatchedRom(charRev)
 
-        let kernalRev        = c64.kernalRomRevision()
-        let hasKernal        = kernalRev != ROM_MISSING
-        let hasOrigKernal    = c64.isOrigRom(kernalRev)
-        let hasMegaKernal    = c64.isMegaRom(kernalRev)
-        let hasPatchedKernal = c64.isPatchedRom(kernalRev)
+        let kernalRev          = c64.kernalRomRevision()
+        let hasKernal          = kernalRev != ROM_MISSING
+        let hasCommodoreKernal = c64.isCommodoreRom(kernalRev)
+        let hasMega65Kernal    = c64.hasMega65KernelRom()
+        let hasPatchedKernal   = c64.isPatchedRom(kernalRev)
 
-        let vc1541Rev        = c64.vc1541RomRevision()
-        let hasVC1541        = vc1541Rev != ROM_MISSING
-        let hasOrigVC1541    = c64.isOrigRom(vc1541Rev)
-        let hasPatchedVC1541 = c64.isPatchedRom(vc1541Rev)
+        let vc1541Rev          = c64.vc1541RomRevision()
+        let hasVC1541          = vc1541Rev != ROM_MISSING
+        let hasCommodoreVC1541 = c64.isCommodoreRom(vc1541Rev)
+        let hasPatchedVC1541   = c64.isPatchedRom(vc1541Rev)
 
         let romMissing = NSImage.init(named: "rom_missing")
         let romOrig    = NSImage.init(named: "rom_original")
@@ -173,27 +173,27 @@ extension ConfigurationController {
         
         // Icons
         basicDropView.image =
-            hasMegaBasic     ? romMega :
-            hasOrigBasic     ? romOrig :
-            hasPatchedBasic  ? romPatched :
-            hasBasic         ? romUnknown : romMissing
+            hasMega65Basic     ? romMega :
+            hasCommodoreBasic  ? romOrig :
+            hasPatchedBasic    ? romPatched :
+            hasBasic           ? romUnknown : romMissing
 
         charDropView.image =
-            hasMegaChar      ? romMega :
-            hasOrigChar      ? romOrig :
-            hasPatchedChar   ? romPatched :
-            hasChar          ? romUnknown : romMissing
+            hasMega65Char      ? romMega :
+            hasCommodoreChar   ? romOrig :
+            hasPatchedChar     ? romPatched :
+            hasChar            ? romUnknown : romMissing
 
         kernalDropView.image =
-            hasMegaKernal    ? romMega :
-            hasOrigKernal    ? romOrig :
-            hasPatchedKernal ? romPatched :
-            hasKernal        ? romUnknown : romMissing
+            hasMega65Kernal    ? romMega :
+            hasCommodoreKernal ? romOrig :
+            hasPatchedKernal   ? romPatched :
+            hasKernal          ? romUnknown : romMissing
 
         vc1541DropView.image =
-            hasOrigVC1541    ? romOrig :
-            hasPatchedVC1541 ? romPatched :
-            hasVC1541        ? romUnknown : romMissing
+            hasCommodoreVC1541 ? romOrig :
+            hasPatchedVC1541   ? romPatched :
+            hasVC1541          ? romUnknown : romMissing
 
         // Titles and subtitles
         basicTitle.stringValue = hasBasic ? c64.basicRomTitle() : "Basic Rom"

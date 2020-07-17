@@ -1729,6 +1729,18 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->c64->hasVC1541Rom();
 }
+- (BOOL) hasMega65BasicRom
+{
+    return wrapper->c64->hasMega65BasicRom();
+}
+- (BOOL) hasMega65CharRom
+{
+    return wrapper->c64->hasMega65CharRom();
+}
+- (BOOL) hasMega65KernelRom
+{
+    return wrapper->c64->hasMega65KernalRom();
+}
 - (BOOL) isBasicRom:(NSURL *)url
 {
     return RomFile::isBasicRomFile([[url path] UTF8String]);
@@ -1909,13 +1921,9 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     const char *str = wrapper->c64->vc1541RomReleased();
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (BOOL) isOrigRom:(RomRevision)rev
+- (BOOL) isCommodoreRom:(RomRevision)rev
 {
-    return RomFile::isOrigRom(rev);
-}
-- (BOOL) isMegaRom:(RomRevision)rev;
-{
-    return RomFile::isMegaRom(rev);
+    return RomFile::isCommodoreRom(rev);
 }
 - (BOOL) isPatchedRom:(RomRevision)rev;
 {

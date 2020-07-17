@@ -166,7 +166,7 @@ RomFile::revision(u64 fnv)
 }
 
 bool
-RomFile::isOrigRom(RomRevision rev)
+RomFile::isCommodoreRom(RomRevision rev)
 {
     switch (rev) {
             
@@ -194,7 +194,7 @@ RomFile::isOrigRom(RomRevision rev)
 }
 
 bool
-RomFile::isMegaRom(RomRevision rev)
+RomFile::isMega65Rom(RomRevision rev)
 {
     switch (rev) {
             

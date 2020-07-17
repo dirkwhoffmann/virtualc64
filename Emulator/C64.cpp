@@ -1256,6 +1256,12 @@ C64::hasMega65BasicRom()
 }
 
 bool
+C64::hasMega65CharRom()
+{
+    return RomFile::isMega65Rom(charRomRevision());
+}
+
+bool
 C64::hasMega65KernalRom()
 {
     return mem.rom[0xE4B9] == 'O' && mem.rom[0xE4BA] == 'R';

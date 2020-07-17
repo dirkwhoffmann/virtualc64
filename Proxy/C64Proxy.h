@@ -200,6 +200,10 @@ struct AnyC64FileWrapper;
 - (BOOL) hasKernalRom;
 - (BOOL) hasVC1541Rom;
 
+- (BOOL) hasMega65BasicRom;
+- (BOOL) hasMega65CharRom;
+- (BOOL) hasMega65KernelRom;
+
 - (BOOL) isBasicRom:(NSURL *)url;
 - (BOOL) isCharRom:(NSURL *)url;
 - (BOOL) isKernalRom:(NSURL *)url;
@@ -250,8 +254,7 @@ struct AnyC64FileWrapper;
 - (NSString *) kernalRomReleased;
 - (NSString *) vc1541RomReleased;
 
-- (BOOL) isOrigRom:(RomRevision)rev;
-- (BOOL) isMegaRom:(RomRevision)rev;
+- (BOOL) isCommodoreRom:(RomRevision)rev;
 - (BOOL) isPatchedRom:(RomRevision)rev;
 
 - (BOOL) isRom:(NSURL *)url;

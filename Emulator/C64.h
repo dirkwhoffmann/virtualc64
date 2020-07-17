@@ -608,6 +608,7 @@ public:
     bool hasKernalRom();
     bool hasVC1541Rom();
     bool hasMega65BasicRom();
+    bool hasMega65CharRom();
     bool hasMega65KernalRom();
 
     // Returns a revision string if a Mega65 Rom is installed

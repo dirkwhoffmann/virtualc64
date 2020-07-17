@@ -54,8 +54,8 @@ public:
     static RomRevision revision(u64 fnv);
 
     // Classifies a ROM identifier by type
-    static bool isOrigRom(RomRevision rev);
-    static bool isMegaRom(RomRevision rev);
+    static bool isCommodoreRom(RomRevision rev);
+    static bool isMega65Rom(RomRevision rev);
     static bool isPatchedRom(RomRevision rev);
 
     // Provides information about known ROMs
