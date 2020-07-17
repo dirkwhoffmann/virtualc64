@@ -61,7 +61,7 @@ public:
     // Provides information about known ROMs
     static const char *title(RomIdentifier rev);
     static const char *subTitle(RomIdentifier rev);
-    static const char *released(RomIdentifier rev);
+    static const char *revision(RomIdentifier rev);
 
     
     //

@@ -1131,6 +1131,9 @@ C64::basicRomTitle()
 const char *
 C64::charRomTitle()
 {
+    // Intercept if a MEGA65 Rom is installed
+    if (hasMega65CharRom()) return "M.E.G.A. C64 OpenROM";
+
     RomIdentifier rev = charRomIdentifier();
     return rev == ROM_UNKNOWN ? "Unknown Character Rom" : RomFile::title(rev);
 }
@@ -1168,7 +1171,7 @@ const char *
 C64::basicRomSubTitle()
 {
     // Intercept if a MEGA65 Rom is installed
-    if (hasMega65BasicRom()) return "Free Basic replacement";
+    if (hasMega65BasicRom()) return "Free Basic Replacement";
 
     return romSubTitle(basicRomFNV64());
 }
@@ -1176,6 +1179,9 @@ C64::basicRomSubTitle()
 const char *
 C64::charRomSubTitle()
 {
+    // Intercept if a MEGA65 Rom is installed
+    if (hasMega65CharRom()) return "Free Charset Replacement";
+    
     return romSubTitle(charRomFNV64());
 }
 
@@ -1183,7 +1189,7 @@ const char *
 C64::kernalRomSubtitle()
 {
     // Intercept if a MEGA65 Rom is installed
-    if (hasMega65BasicRom()) return "Free Kernal replacement";
+    if (hasMega65BasicRom()) return "Free Kernal Replacement";
 
     return romSubTitle(kernalRomFNV64());
 }
@@ -1200,13 +1206,13 @@ C64::basicRomRevision()
     // Intercept if a MEGA65 Rom is installed
     if (hasMega65BasicRom()) return mega65BasicRev();
     
-    return RomFile::released(basicRomIdentifier());
+    return RomFile::revision(basicRomIdentifier());
 }
 
 const char *
 C64::charRomRevision()
 {
-    return RomFile::released(charRomIdentifier());
+    return RomFile::revision(charRomIdentifier());
 }
 
 const char *
@@ -1215,13 +1221,13 @@ C64::kernalRomRevision()
     // Intercept if a MEGA65 Rom is installed
     if (hasMega65KernalRom()) return mega65KernalRev();
 
-    return RomFile::released(kernalRomIdentifier());
+    return RomFile::revision(kernalRomIdentifier());
 }
 
 const char *
 C64::vc1541RomRevision()
 {
-    return RomFile::released(vc1541RomIdentifier());
+    return RomFile::revision(vc1541RomIdentifier());
 }
 
 bool
