@@ -577,11 +577,11 @@ public:
     u64 kernalRomFNV64();
     u64 vc1541RomFNV64();
 
-    // Returns the revisions of the installed ROMs
-    RomRevision basicRomRevision() { return RomFile::revision(basicRomFNV64()); }
-    RomRevision charRomRevision() { return RomFile::revision(charRomFNV64()); }
-    RomRevision kernalRomRevision() { return RomFile::revision(kernalRomFNV64()); }
-    RomRevision vc1541RomRevision() { return RomFile::revision(vc1541RomFNV64()); }
+    // Returns a unique identifier for the installed ROMs
+    RomIdentifier basicRomIdentifier() { return RomFile::identifier(basicRomFNV64()); }
+    RomIdentifier charRomIdentifier() { return RomFile::identifier(charRomFNV64()); }
+    RomIdentifier kernalRomIdentifier() { return RomFile::identifier(kernalRomFNV64()); }
+    RomIdentifier vc1541RomIdentifier() { return RomFile::identifier(vc1541RomFNV64()); }
     
     // Returns printable names for the  installed ROMs
     const char *basicRomTitle();

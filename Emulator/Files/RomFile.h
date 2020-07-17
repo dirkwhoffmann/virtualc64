@@ -51,17 +51,17 @@ public:
     static bool isVC1541RomFile(const char *path);
     
     // Translates a FNV1A checksum (64 bit) into a ROM identifier
-    static RomRevision revision(u64 fnv);
+    static RomIdentifier identifier(u64 fnv);
 
     // Classifies a ROM identifier by type
-    static bool isCommodoreRom(RomRevision rev);
-    static bool isMega65Rom(RomRevision rev);
-    static bool isPatchedRom(RomRevision rev);
+    static bool isCommodoreRom(RomIdentifier rev);
+    static bool isMega65Rom(RomIdentifier rev);
+    static bool isPatchedRom(RomIdentifier rev);
 
     // Provides information about known ROMs
-    static const char *title(RomRevision rev);
-    static const char *subTitle(RomRevision rev);
-    static const char *released(RomRevision rev);
+    static const char *title(RomIdentifier rev);
+    static const char *subTitle(RomIdentifier rev);
+    static const char *released(RomIdentifier rev);
 
     
     //

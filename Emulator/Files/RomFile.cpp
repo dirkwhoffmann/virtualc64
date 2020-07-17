@@ -112,8 +112,8 @@ RomFile::isVC1541RomBuffer(const u8 *buffer, size_t length)
     return false;
 }
 
-RomRevision
-RomFile::revision(u64 fnv)
+RomIdentifier
+RomFile::identifier(u64 fnv)
 {
     switch(fnv) {
             
@@ -166,7 +166,7 @@ RomFile::revision(u64 fnv)
 }
 
 bool
-RomFile::isCommodoreRom(RomRevision rev)
+RomFile::isCommodoreRom(RomIdentifier rev)
 {
     switch (rev) {
             
@@ -194,7 +194,7 @@ RomFile::isCommodoreRom(RomRevision rev)
 }
 
 bool
-RomFile::isMega65Rom(RomRevision rev)
+RomFile::isMega65Rom(RomIdentifier rev)
 {
     switch (rev) {
             
@@ -210,7 +210,7 @@ RomFile::isMega65Rom(RomRevision rev)
 }
 
 bool
-RomFile::isPatchedRom(RomRevision rev)
+RomFile::isPatchedRom(RomIdentifier rev)
 {
     switch (rev) {
             
@@ -242,7 +242,7 @@ RomFile::isPatchedRom(RomRevision rev)
 }
 
 const char *
-RomFile::title(RomRevision rev)
+RomFile::title(RomIdentifier rev)
 {
     switch (rev) {
             
@@ -295,7 +295,7 @@ RomFile::title(RomRevision rev)
 }
 
 const char *
-RomFile::subTitle(RomRevision rev)
+RomFile::subTitle(RomIdentifier rev)
 {
     switch (rev) {
             
@@ -346,7 +346,7 @@ RomFile::subTitle(RomRevision rev)
 }
 
 const char *
-RomFile::released(RomRevision rev)
+RomFile::released(RomIdentifier rev)
 {
     switch (rev) {
             

@@ -234,10 +234,10 @@ struct AnyC64FileWrapper;
 - (u64) charRomFingerprint;
 - (u64) vc1541RomFingerprint;
 
-- (RomRevision) basicRomRevision;
-- (RomRevision) kernalRomRevision;
-- (RomRevision) charRomRevision;
-- (RomRevision) vc1541RomRevision;
+- (RomIdentifier) basicRomIdentifier;
+- (RomIdentifier) kernalRomIdentifier;
+- (RomIdentifier) charRomIdentifier;
+- (RomIdentifier) vc1541RomIdentifier;
 
 - (NSString *) basicRomTitle;
 - (NSString *) charRomTitle;
@@ -254,8 +254,8 @@ struct AnyC64FileWrapper;
 - (NSString *) kernalRomReleased;
 - (NSString *) vc1541RomReleased;
 
-- (BOOL) isCommodoreRom:(RomRevision)rev;
-- (BOOL) isPatchedRom:(RomRevision)rev;
+- (BOOL) isCommodoreRom:(RomIdentifier)rev;
+- (BOOL) isPatchedRom:(RomIdentifier)rev;
 
 - (BOOL) isRom:(NSURL *)url;
 - (BOOL) loadRom:(NSURL *)url;

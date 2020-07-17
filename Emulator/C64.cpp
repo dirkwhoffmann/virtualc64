@@ -1124,14 +1124,14 @@ C64::basicRomTitle()
     // Intercept if a MEGA65 Rom is installed
     if (hasMega65BasicRom()) return "M.E.G.A. C64 OpenROM";
 
-    RomRevision rev = basicRomRevision();
+    RomIdentifier rev = basicRomIdentifier();
     return rev == ROM_UNKNOWN ? "Unknown Basic Rom" : RomFile::title(rev);
 }
 
 const char *
 C64::charRomTitle()
 {
-    RomRevision rev = charRomRevision();
+    RomIdentifier rev = charRomIdentifier();
     return rev == ROM_UNKNOWN ? "Unknown Character Rom" : RomFile::title(rev);
 }
 
@@ -1141,21 +1141,21 @@ C64::kernalRomTitle()
     // Intercept if a MEGA65 Rom is installed
     if (hasMega65BasicRom()) return "M.E.G.A. C64 OpenROM";
 
-    RomRevision rev = kernalRomRevision();
+    RomIdentifier rev = kernalRomIdentifier();
     return rev == ROM_UNKNOWN ? "Unknown Kernal Rom" : RomFile::title(rev);
 }
 
 const char *
 C64::vc1541RomTitle()
 {
-    RomRevision rev = vc1541RomRevision();
+    RomIdentifier rev = vc1541RomIdentifier();
     return rev == ROM_UNKNOWN ? "Unknown Kernal Rom" : RomFile::title(rev);
 }
 
 const char *
 C64::romSubTitle(u64 fnv)
 {
-    RomRevision rev = RomFile::revision(fnv);
+    RomIdentifier rev = RomFile::identifier(fnv);
 
     if (rev != ROM_UNKNOWN) return RomFile::subTitle(rev);
     
@@ -1200,13 +1200,13 @@ C64::basicRomReleased()
     // Intercept if a MEGA65 Rom is installed
     if (hasMega65BasicRom()) return mega65BasicRev();
     
-    return RomFile::released(basicRomRevision());
+    return RomFile::released(basicRomIdentifier());
 }
 
 const char *
 C64::charRomReleased()
 {
-    return RomFile::released(charRomRevision());
+    return RomFile::released(charRomIdentifier());
 }
 
 const char *
@@ -1215,13 +1215,13 @@ C64::kernalRomReleased()
     // Intercept if a MEGA65 Rom is installed
     if (hasMega65KernalRom()) return mega65KernalRev();
 
-    return RomFile::released(kernalRomRevision());
+    return RomFile::released(kernalRomIdentifier());
 }
 
 const char *
 C64::vc1541RomReleased()
 {
-    return RomFile::released(vc1541RomRevision());
+    return RomFile::released(vc1541RomIdentifier());
 }
 
 bool
@@ -1258,7 +1258,7 @@ C64::hasMega65BasicRom()
 bool
 C64::hasMega65CharRom()
 {
-    return RomFile::isMega65Rom(charRomRevision());
+    return RomFile::isMega65Rom(charRomIdentifier());
 }
 
 bool

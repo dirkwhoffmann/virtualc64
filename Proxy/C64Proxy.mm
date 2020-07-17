@@ -1845,21 +1845,21 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->c64->vc1541RomFNV64();
 }
-- (RomRevision) basicRomRevision
+- (RomIdentifier) basicRomIdentifier
 {
-    return wrapper->c64->basicRomRevision();
+    return wrapper->c64->basicRomIdentifier();
 }
-- (RomRevision) kernalRomRevision
+- (RomIdentifier) kernalRomIdentifier
 {
-    return wrapper->c64->kernalRomRevision();
+    return wrapper->c64->kernalRomIdentifier();
 }
-- (RomRevision) charRomRevision
+- (RomIdentifier) charRomIdentifier
 {
-    return wrapper->c64->charRomRevision();
+    return wrapper->c64->charRomIdentifier();
 }
-- (RomRevision) vc1541RomRevision
+- (RomIdentifier) vc1541RomIdentifier
 {
-    return wrapper->c64->vc1541RomRevision();
+    return wrapper->c64->vc1541RomIdentifier();
 }
 - (NSString *) basicRomTitle
 {
@@ -1921,11 +1921,11 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     const char *str = wrapper->c64->vc1541RomReleased();
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (BOOL) isCommodoreRom:(RomRevision)rev
+- (BOOL) isCommodoreRom:(RomIdentifier)rev
 {
     return RomFile::isCommodoreRom(rev);
 }
-- (BOOL) isPatchedRom:(RomRevision)rev;
+- (BOOL) isPatchedRom:(RomIdentifier)rev;
 {
     return RomFile::isPatchedRom(rev);
 }
