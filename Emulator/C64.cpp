@@ -525,7 +525,7 @@ C64::isReady(ErrorCode *error)
     }
     
     if (hasMega65BasicRom() && hasMega65KernalRom()) {
-        if (strcmp(mega65BasicRev(), mega65KernalRev()) == 0) {
+        if (strcmp(mega65BasicRev(), mega65KernalRev()) != 0) {
             if (error) *error = ERR_ROM_MEGA65_MISMATCH;
             return false;
         }
