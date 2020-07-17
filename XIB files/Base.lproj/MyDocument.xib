@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097.2"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -197,7 +197,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="hourglass1Template" imagePosition="above" alignment="center" imageScaling="proportionallyDown" id="1707">
                             <behavior key="behavior" lightByContents="YES"/>
-                            <font key="font" metaFont="menu" size="10"/>
+                            <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                         <connections>
                             <action selector="alwaysWarpAction:" target="-2" id="qwQ-Ql-wzH"/>
@@ -220,7 +220,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="mediaTapeTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="Rze-Qf-HUV">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu" size="10"/>
+                            <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                     </button>
                     <button hidden="YES" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="1045">
@@ -228,7 +228,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="mediaDiskSavedTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="1706">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu" size="10"/>
+                            <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                     </button>
                     <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2003">
@@ -236,7 +236,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="2004">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu" size="10"/>
+                            <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                     </button>
                     <button hidden="YES" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="lFn-7a-MSQ">
@@ -244,7 +244,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtButtonOffTemplate" imagePosition="only" alignment="right" alternateImage="crtButtonOnTemplate" imageScaling="proportionallyUpOrDown" id="IJt-r3-Tyd">
                             <behavior key="behavior" lightByContents="YES"/>
-                            <font key="font" metaFont="menu" size="10"/>
+                            <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                         <connections>
                             <action selector="pressCartridgeButton1Action:" target="-2" id="G7M-GS-6Os"/>
@@ -282,7 +282,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="mediaDiskSavedTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="dWc-LE-E52">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu" size="10"/>
+                            <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                     </button>
                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DD4-5B-w9h" customClass="MetalView" customModule="VirtualC64" customModuleProvider="target">
@@ -297,7 +297,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtButtonOffTemplate" imagePosition="only" alignment="right" alternateImage="crtButtonOnTemplate" imageScaling="proportionallyUpOrDown" id="daD-pA-smb">
                             <behavior key="behavior" lightByContents="YES"/>
-                            <font key="font" metaFont="menu" size="10"/>
+                            <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                         <connections>
                             <action selector="pressCartridgeButton2Action:" target="-1" id="465-Oy-aeF"/>
@@ -308,7 +308,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtSwitchNeutralTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="0s7-pA-Q79">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu" size="10"/>
+                            <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                         <connections>
                             <action selector="toggleSwitchAction:" target="-1" id="MvY-UF-tSi"/>
@@ -361,7 +361,7 @@
                         <popUpButton key="view" tag="10" id="L2b-nG-yBo" userLabel="Port 1">
                             <rect key="frame" x="0.0" y="14" width="48" height="23"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" image="devNoneTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                                 <menu key="menu" autoenablesItems="NO" id="zHf-yH-YTM">
@@ -436,22 +436,6 @@
                             <action selector="keyboardAction:" target="-2" id="eA2-HY-f3N"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="5E0DDE07-6DF0-4D5D-B9C5-B03091FC9ACC" label="Preferences" paletteLabel="Preferences" image="prefEmulatorTemplate" id="z3f-Tz-HUC">
-                        <nil key="toolTip"/>
-                        <size key="minSize" width="38" height="25"/>
-                        <size key="maxSize" width="38" height="38"/>
-                        <button key="view" verticalHuggingPriority="750" id="KfB-pG-OPp">
-                            <rect key="frame" x="16" y="14" width="38" height="25"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="prefEmulatorTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tar-YG-CqC">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                        </button>
-                        <connections>
-                            <action selector="preferencesAction:" target="-2" id="FxD-8P-Rg6"/>
-                        </connections>
-                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="1850"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="1851"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarSeparatorItem" id="1848"/>
@@ -506,6 +490,23 @@
                             <action selector="powerAction:" target="-2" id="P9k-1C-ybb"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="0EA96B6A-DC7A-4937-8E51-B903053C331E" label="Preferences" paletteLabel="Preferences" sizingBehavior="auto" id="E7X-uf-vpw" userLabel="Preferences">
+                        <nil key="toolTip"/>
+                        <segmentedControl key="view" verticalHuggingPriority="750" id="Q4T-pS-2Ar">
+                            <rect key="frame" x="0.0" y="14" width="88" height="24"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="3pj-uk-QJp">
+                                <font key="font" metaFont="system"/>
+                                <segments>
+                                    <segment toolTip="Open Preferences" image="prefTemplate" width="40"/>
+                                    <segment toolTip="Configure Virtual Machine" image="confTemplate" width="40" tag="1"/>
+                                </segments>
+                            </segmentedCell>
+                            <connections>
+                                <action selector="toolbarPrefAction:" target="1845" id="9U2-Ut-IjO"/>
+                            </connections>
+                        </segmentedControl>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="GsP-C7-APh"/>
@@ -517,7 +518,7 @@
                     <toolbarItem reference="1851"/>
                     <toolbarItem reference="Ckl-d3-vFW"/>
                     <toolbarItem reference="1851"/>
-                    <toolbarItem reference="z3f-Tz-HUC"/>
+                    <toolbarItem reference="E7X-uf-vpw"/>
                     <toolbarItem reference="1851"/>
                     <toolbarItem reference="dOU-Sh-aV4"/>
                     <toolbarItem reference="wVB-PW-axj"/>
@@ -2965,6 +2966,7 @@
     </objects>
     <resources>
         <image name="LEDgray" width="128" height="128"/>
+        <image name="confTemplate" width="36" height="36"/>
         <image name="crtButtonOffTemplate" width="24" height="24"/>
         <image name="crtButtonOnTemplate" width="24" height="24"/>
         <image name="crtSwitchNeutralTemplate" width="24" height="24"/>
@@ -2983,7 +2985,7 @@
         <image name="mediaTapeTemplate" width="241" height="240"/>
         <image name="pauseTemplate" width="24" height="24"/>
         <image name="powerTemplate" width="24" height="24"/>
-        <image name="prefEmulatorTemplate" width="24" height="24"/>
+        <image name="prefTemplate" width="24" height="24"/>
         <image name="resetTemplate" width="241" height="240"/>
         <image name="stepIntoTemplate" width="240" height="241"/>
         <image name="stepOverTemplate" width="241" height="241"/>

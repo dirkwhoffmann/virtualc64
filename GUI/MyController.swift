@@ -24,7 +24,7 @@ protocol MessageReceiver {
 class MyController: NSWindowController, MessageReceiver {
 
     var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
-    var prefs: Preferences { return myAppDelegate.prefs }
+    var prefs: Preferences { return myAppDelegate.pref }
 
     // Reference to the connected document
     var mydocument: MyDocument!

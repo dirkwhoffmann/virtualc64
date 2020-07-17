@@ -51,8 +51,8 @@ var proxy: C64Proxy? {
 @objc public class MyAppDelegate: NSObject, NSApplicationDelegate {
         
     // Preferences
-    var prefs: Preferences!
-    // var prefsController: PreferencesController?
+    var pref: Preferences!
+    var prefController: PreferencesController?
     
     /// The list of recently inserted disk URLs.
     var recentlyInsertedDiskURLs: [URL] = []
@@ -72,7 +72,7 @@ var proxy: C64Proxy? {
     override init() {
         
         super.init()
-        prefs = Preferences.init()
+        pref = Preferences.init()
     }
     
     public func applicationDidFinishLaunching(_ aNotification: Notification) {

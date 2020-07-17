@@ -149,6 +149,7 @@
 		50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */; };
 		506A724821C033EF00DA0AC3 /* Configuration.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506A724721C033EF00DA0AC3 /* Configuration.xib */; };
 		506A724A21C0341900DA0AC3 /* ConfigurationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A724921C0341900DA0AC3 /* ConfigurationController.swift */; };
+		506B13C224C1C40600814BB0 /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506B13C124C1C40600814BB0 /* PreferencesController.swift */; };
 		506D3DCE20223E5E009742CF /* MyAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCD20223E5E009742CF /* MyAppDelegate.swift */; };
 		506D3DD020224BF4009742CF /* MyDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCF20224BF4009742CF /* MyDocument.swift */; };
 		506D4D0D20B331A00093C5C6 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D4D0C20B331A00093C5C6 /* Formatter.swift */; };
@@ -464,6 +465,7 @@
 		50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
 		506A724721C033EF00DA0AC3 /* Configuration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Configuration.xib; sourceTree = "<group>"; };
 		506A724921C0341900DA0AC3 /* ConfigurationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationController.swift; sourceTree = "<group>"; };
+		506B13C124C1C40600814BB0 /* PreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesController.swift; sourceTree = "<group>"; };
 		506D3DCD20223E5E009742CF /* MyAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppDelegate.swift; sourceTree = "<group>"; };
 		506D3DCF20224BF4009742CF /* MyDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDocument.swift; sourceTree = "<group>"; };
 		506D4D0C20B331A00093C5C6 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
@@ -1065,6 +1067,7 @@
 			isa = PBXGroup;
 			children = (
 				5009CF3224C0B8EF00F674FF /* Preferences.swift */,
+				506B13C124C1C40600814BB0 /* PreferencesController.swift */,
 				5002FA7E21C2653600DA4BBC /* EmulatorPrefs.swift */,
 				5002FA8021C2654B00DA4BBC /* DevicesPrefs.swift */,
 				5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */,
@@ -1401,6 +1404,7 @@
 				504C439324AF29AC00E69CAE /* Datasette.cpp in Sources */,
 				504C437024AF29AC00E69CAE /* Cartridge.cpp in Sources */,
 				5031D59C200B81D20088C802 /* Animation.swift in Sources */,
+				506B13C224C1C40600814BB0 /* PreferencesController.swift in Sources */,
 				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
 				504C439D24AF29AC00E69CAE /* version.cc in Sources */,
 				504C436324AF29AC00E69CAE /* Kingsoft.cpp in Sources */,

@@ -84,4 +84,17 @@ class MyToolbar: NSToolbar {
         // Mark game pad connected to port
         popup.selectItem(withTag: selectedSlot)
     }
+
+    @IBAction func toolbarPrefAction(_ sender: NSSegmentedControl) {
+
+        track()
+        
+        switch sender.selectedSegment {
+
+        case 0: parent.preferencesAction(sender)
+        case 1: parent.configureAction(sender)
+
+        default: assert(false)
+        }
+    }
 }

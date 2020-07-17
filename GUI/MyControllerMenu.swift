@@ -204,9 +204,19 @@ extension MyController: NSMenuItemValidation {
     }
 
     //
-    // Action methods (VirtualC64 menu)
+    // Action methods (App menu)
     //
-
+    
+    @IBAction func preferencesAction(_ sender: Any!) {
+        
+        if myAppDelegate.prefController == nil {
+            myAppDelegate.prefController =
+                PreferencesController.make(parent: self,
+                                           nibName: NSNib.Name("Preferences"))
+        }
+        myAppDelegate.prefController?.showWindow(self)
+    }
+    
     @IBAction func importPrefsAction(_ sender: Any!) {
         
         track()
@@ -260,6 +270,21 @@ extension MyController: NSMenuItemValidation {
         }
         configurator?.showSheet(tab: tab)
     }
+    
+    @IBAction func configureAction(_ sender: Any!) {
+        
+        openConfigurator()
+    }
+
+    /*
+    @IBAction func inspectorAction(_ sender: Any!) {
+        
+        if inspector == nil {
+            inspector = Inspector.make(parent: self, nibName: "Inspector")
+        }
+        inspector?.showWindow(self)
+    }
+    */
     
     @IBAction func saveScreenshotDialog(_ sender: Any!) {
                 

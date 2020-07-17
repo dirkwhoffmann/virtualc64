@@ -137,11 +137,6 @@ extension MyController {
             assert(false)
         }
     }
-
-    @IBAction func preferencesAction(_ sender: Any!) {
-        
-        openConfigurator()
-    }
     
     @IBAction func snapshotAction(_ sender: NSSegmentedControl) {
         
