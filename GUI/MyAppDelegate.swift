@@ -49,7 +49,17 @@ var proxy: C64Proxy? {
 
 @NSApplicationMain
 @objc public class MyAppDelegate: NSObject, NSApplicationDelegate {
-        
+       
+    var documents: [MyDocument] {
+        return NSDocumentController.shared.documents as? [MyDocument] ?? []
+    }
+    var windows: [NSWindow] {
+        return documents.compactMap({ $0.windowForSheet })
+    }
+    var controllers: [MyController] {
+        return documents.compactMap({ $0.windowForSheet?.windowController as? MyController })
+    }
+    
     // Preferences
     var pref: Preferences!
     var prefController: PreferencesController?

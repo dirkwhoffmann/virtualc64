@@ -142,13 +142,13 @@ extension MyController {
 }
 
 //
-// User defaults (general)
+// User defaults (General)
 //
 
 struct Keys {
     
     // Drives
-    static let driveBlankDiskFormat    = "VC64_GEN_DriveBlankDiskFormat"
+    static let driveBlankDiskFormat   = "VC64_GEN_DriveBlankDiskFormat"
     static let driveEjectUnasked      = "VC64_GEN_EjectUnasked"
     static let driveSounds            = "VC64_GEN_DriveSounds"
     static let driveSoundPan          = "VC64_GEN_DriveSoundPan"
@@ -156,19 +156,57 @@ struct Keys {
     static let driveEjectSound        = "VC64_GEN_DriveEjectSound"
     static let driveHeadSound         = "VC64_GEN_DriveHeadSound"
     static let driveConnectSound      = "VC64_GEN_DriveConnectSound"
+
+    // Snapshots and screenshots
+    static let autoSnapshots          = "VC64_GEN_AutoSnapshots"
+    static let autoSnapshotInterval   = "VC64_GEN_ScreenshotInterval"
+    static let autoScreenshots        = "VC64_GEN_AutoScreenshots"
+    static let screenshotSource       = "VC64_GEN_ScreenshotSource"
+    static let screenshotTarget       = "VC64_GEN_ScreenshotTarget"
+    
+    // Fullscreen
+    static let keepAspectRatio        = "VC64_GEN_FullscreenKeepAspectRatio"
+    static let exitOnEsc              = "VC64_GEN_FullscreenExitOnEsc"
+
+    // User dialogs
+    static let closeWithoutAsking     = "VC64_GEN_CloseWithoutAsking"
+    
+    // Warp mode
+    static let warpMode               = "VC64_GEN_WarpMode"
+
+    // Miscellaneous
+    static let pauseInBackground      = "VC64_GEN_PauseInBackground"
 }
 
 struct GeneralDefaults {
     
     // Drives
-     let driveBlankDiskFormat: FileSystemType
-     let driveEjectUnasked: Bool
-     let driveSounds: Bool
-     let driveSoundPan: Double
-     let driveInsertSound: Bool
-     let driveEjectSound: Bool
-     let driveHeadSound: Bool
-     let driveConnectSound: Bool
+    let driveBlankDiskFormat: FileSystemType
+    let driveEjectUnasked: Bool
+    let driveSounds: Bool
+    let driveSoundPan: Double
+    let driveInsertSound: Bool
+    let driveEjectSound: Bool
+    let driveHeadSound: Bool
+    let driveConnectSound: Bool
+    
+    // Snapshots and Screenshots
+    let autoSnapshots: Bool
+    let autoSnapshotInterval: Int
+    let autoScreenshots: Bool
+    let screenshotSource: Int
+    let screenshotTarget: NSBitmapImageRep.FileType
+    
+    // Fullscreen
+    let keepAspectRatio: Bool
+    let exitOnEsc: Bool
+    
+    // Warp mode
+    let warpMode: WarpMode
+    
+    // Miscellaneous
+    let pauseInBackground: Bool
+    let closeWithoutAsking: Bool
     
     //
     // Schemes
@@ -183,7 +221,21 @@ struct GeneralDefaults {
         driveInsertSound: true,
         driveEjectSound: true,
         driveHeadSound: true,
-        driveConnectSound: true
+        driveConnectSound: true,
+        
+        autoSnapshots: false,
+        autoSnapshotInterval: 20,
+        autoScreenshots: false,
+        screenshotSource: 0,
+        screenshotTarget: .png,
+        
+        keepAspectRatio: false,
+        exitOnEsc: true,
+        
+        warpMode: .auto,
+        
+        pauseInBackground: false,
+        closeWithoutAsking: false
     )
 }
 
@@ -215,7 +267,21 @@ extension UserDefaults {
             Keys.driveInsertSound: defaults.driveInsertSound,
             Keys.driveEjectSound: defaults.driveEjectSound,
             Keys.driveHeadSound: defaults.driveHeadSound,
-            Keys.driveConnectSound: defaults.driveConnectSound
+            Keys.driveConnectSound: defaults.driveConnectSound,
+            
+            Keys.autoSnapshots: defaults.autoSnapshots,
+            Keys.autoSnapshotInterval: defaults.autoSnapshotInterval,
+            Keys.autoScreenshots: defaults.autoScreenshots,
+            Keys.screenshotSource: defaults.screenshotSource,
+            Keys.screenshotTarget: Int(defaults.screenshotTarget.rawValue),
+            
+            Keys.keepAspectRatio: defaults.keepAspectRatio,
+            Keys.exitOnEsc: defaults.exitOnEsc,
+            
+            Keys.warpMode: Int(defaults.warpMode.rawValue),
+            
+            Keys.pauseInBackground: defaults.pauseInBackground,
+            Keys.closeWithoutAsking: defaults.closeWithoutAsking
         ]
         
         let userDefaults = UserDefaults.standard
@@ -238,13 +304,27 @@ extension UserDefaults {
         let defaults = UserDefaults.standard
         
         let keys = [ Keys.driveBlankDiskFormat,
-                     Keys.ejectWithoutAsking,
+                     Keys.driveEjectUnasked,
                      Keys.driveSounds,
                      Keys.driveSoundPan,
                      Keys.driveInsertSound,
                      Keys.driveEjectSound,
                      Keys.driveHeadSound,
-                     Keys.driveConnectSound
+                     Keys.driveConnectSound,
+                     
+                     Keys.autoSnapshots,
+                     Keys.autoSnapshotInterval,
+                     Keys.autoScreenshots,
+                     Keys.screenshotSource,
+                     Keys.screenshotTarget,
+                     
+                     Keys.keepAspectRatio,
+                     Keys.exitOnEsc,
+                     
+                     Keys.warpMode,
+                     
+                     Keys.pauseInBackground,
+                     Keys.closeWithoutAsking
         ]
         
         for key in keys { defaults.removeObject(forKey: key) }
@@ -285,108 +365,6 @@ extension MyController {
         
         defaults.set(inputDevice1, forKey: Keys.inputDevice1)
         defaults.set(inputDevice2, forKey: Keys.inputDevice2)
-    }
-}
-
-//
-// User defaults (Roms)
-//
-
-extension UserDefaults {
-    
-    static func romUrl(name: String) -> URL? {
-        
-        let folder = URL.appSupportFolder("Roms")
-        return folder?.appendingPathComponent(name)
-    }
-    
-    static var basicRomUrl:  URL? { return romUrl(name: "basic.bin") }
-    static var charRomUrl:   URL? { return romUrl(name: "char.bin") }
-    static var kernalRomUrl: URL? { return romUrl(name: "kernal.bin") }
-    static var vc1541RomUrl: URL? { return romUrl(name: "vc1541.bin") }
-    
-    static func registerRomUserDefaults() {
-        
-    }
-
-    static func resetRomUserDefaults() {
-        
-        // Delete previously saved Rom files
-        let fm = FileManager.default
-        
-        if let url = basicRomUrl {
-            track("Deleting Basic Rom")
-            try? fm.removeItem(at: url)
-        }
-        if let url = charRomUrl {
-            track("Deleting Character Rom")
-            try? fm.removeItem(at: url)
-        }
-        if let url = kernalRomUrl {
-            track("Deleting Kernal Rom")
-            try? fm.removeItem(at: url)
-        }
-        if let url = vc1541RomUrl {
-            track("Deleting VC1541 Rom")
-            try? fm.removeItem(at: url)
-        }
-    }
-}
-
-//
-// User defaults (Keymap)
-//
-
-extension Keys {
-    static let keyMap = "VC64KeyMap"
-    static let mapKeysByPosition = "VC64MapKeysByPosition"
-}
-
-extension Defaults {
-    static let keyMap = KeyboardController.standardKeyMap
-    static let mapKeysByPosition = false
-}
-
-extension UserDefaults {
-    
-    static func registerKeyMapUserDefaults() {
-        
-        let dictionary: [String: Any] = [
-            
-            Keys.mapKeysByPosition: Defaults.mapKeysByPosition
-        ]
-        
-        let defaults = UserDefaults.standard
-        defaults.register(defaults: dictionary)
-        defaults.register(encodableItem: Defaults.keyMap, forKey: Keys.keyMap)
-    }
-    
-    static func resetKeyMapUserDefaults() {
-        
-        let defaults = UserDefaults.standard
-        
-        let keys = [ Keys.mapKeysByPosition,
-                     Keys.keyMap
-        ]
-
-        for key in keys { defaults.removeObject(forKey: key) }
-    }
-}
-
-extension MyController {
-        
-    func loadKeyMapUserDefaults() {
-        
-        let defaults = UserDefaults.standard
-        keyboard.mapKeysByPosition = defaults.bool(forKey: Keys.mapKeysByPosition)
-        defaults.decode(&keyboard.keyMap, forKey: Keys.keyMap)
-    }
-    
-    func saveKeyMapUserDefaults() {
-        
-        let defaults = UserDefaults.standard
-        defaults.encode(keyboard.keyMap, forKey: Keys.keyMap)
-        defaults.set(keyboard.mapKeysByPosition, forKey: Keys.mapKeysByPosition)
     }
 }
 
@@ -508,87 +486,39 @@ extension MyController {
 }
 
 //
-// User defaults (Video)
+// User defaults (Keymap)
 //
 
 extension Keys {
-    
-    static let palette         = "VC64PaletteKey"
-    static let brightness      = "VC64BrightnessKey"
-    static let contrast        = "VC64ContrastKey"
-    static let saturation      = "VC64SaturationKey"
-    static let upscaler        = "VC64UpscalerKey"
-
-    // Geometry
-    static let keepAspectRatio = "VC64FullscreenKeepAspectRatioKey"
-    static let eyeX            = "VC64EyeX"
-    static let eyeY            = "VC64EyeY"
-    static let eyeZ            = "VC64EyeZ"
-    
-    // GPU options
-    static let shaderOptions   = "VC64ShaderOptionsKey"
+    static let keyMap = "VC64KeyMap"
+    static let mapKeysByPosition = "VC64MapKeysByPosition"
 }
 
 extension Defaults {
-    
-    static let palette = COLOR_PALETTE
-    static let brightness = Double(50.0)
-    static let contrast = Double(100.0)
-    static let saturation = Double(50.0)
-    static let upscaler = 0
-    
-    // Geometry
-    static let keepAspectRatio = false
-    static let eyeX = Float(0.0)
-    static let eyeY = Float(0.0)
-    static let eyeZ = Float(0.0)
-    
-    // GPU options
-    static let shaderOptions = ShaderDefaultsTFT
+    static let keyMap = KeyboardController.standardKeyMap
+    static let mapKeysByPosition = false
 }
 
 extension UserDefaults {
     
-    static func registerVideoUserDefaults() {
+    static func registerKeyMapUserDefaults() {
         
         let dictionary: [String: Any] = [
             
-            Keys.palette: Int(Defaults.palette.rawValue),
-            Keys.brightness: Defaults.brightness,
-            Keys.contrast: Defaults.contrast,
-            Keys.saturation: Defaults.saturation,
-            Keys.upscaler: Defaults.upscaler,
-
-            Keys.keepAspectRatio: Defaults.keepAspectRatio,
-            Keys.eyeX: Defaults.eyeX,
-            Keys.eyeY: Defaults.eyeY,
-            Keys.eyeZ: Defaults.eyeZ
+            Keys.mapKeysByPosition: Defaults.mapKeysByPosition
         ]
         
         let defaults = UserDefaults.standard
         defaults.register(defaults: dictionary)
-        defaults.register(encodableItem: Defaults.shaderOptions, forKey: Keys.shaderOptions)
+        defaults.register(encodableItem: Defaults.keyMap, forKey: Keys.keyMap)
     }
-}
-
-extension UserDefaults {
     
-    static func resetVideoUserDefaults() {
+    static func resetKeyMapUserDefaults() {
         
         let defaults = UserDefaults.standard
         
-        let keys = [ Keys.palette,
-                     Keys.brightness,
-                     Keys.contrast,
-                     Keys.saturation,
-                     Keys.upscaler,
-                     
-                     Keys.keepAspectRatio,
-                     Keys.eyeX,
-                     Keys.eyeY,
-                     Keys.eyeZ,
-                     
-                     Keys.shaderOptions
+        let keys = [ Keys.mapKeysByPosition,
+                     Keys.keyMap
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }
@@ -597,73 +527,26 @@ extension UserDefaults {
 
 extension MyController {
         
-    func loadVideoUserDefaults() {
+    func loadKeyMapUserDefaults() {
         
         let defaults = UserDefaults.standard
-        
-        c64.suspend()
-        
-        renderer.upscaler = defaults.integer(forKey: Keys.upscaler)
-        c64.vic.setVideoPalette(defaults.integer(forKey: Keys.palette))
-        c64.vic.setBrightness(defaults.double(forKey: Keys.brightness))
-        c64.vic.setContrast(defaults.double(forKey: Keys.contrast))
-        c64.vic.setSaturation(defaults.double(forKey: Keys.saturation))
-
-        renderer.keepAspectRatio = defaults.bool(forKey: Keys.keepAspectRatio)
-        /*
-        renderer.setEyeX(defaults.float(forKey: VC64Keys.eyeX))
-        renderer.setEyeY(defaults.float(forKey: VC64Keys.eyeY))
-        renderer.setEyeZ(defaults.float(forKey: VC64Keys.eyeZ))
-        */
-        
-        defaults.decode(&renderer.shaderOptions, forKey: Keys.shaderOptions)
-        renderer.buildDotMasks()
- 
-        c64.resume()
+        keyboard.mapKeysByPosition = defaults.bool(forKey: Keys.mapKeysByPosition)
+        defaults.decode(&keyboard.keyMap, forKey: Keys.keyMap)
     }
     
-    func saveVideoUserDefaults() {
+    func saveKeyMapUserDefaults() {
         
         let defaults = UserDefaults.standard
-        
-        defaults.set(renderer.upscaler, forKey: Keys.upscaler)
-        defaults.set(c64.vic.videoPalette(), forKey: Keys.palette)
-        defaults.set(c64.vic.brightness(), forKey: Keys.brightness)
-        defaults.set(c64.vic.contrast(), forKey: Keys.contrast)
-        defaults.set(c64.vic.saturation(), forKey: Keys.saturation)
-        
-        defaults.set(renderer.keepAspectRatio, forKey: Keys.keepAspectRatio)
-        /*
-        defaults.set(renderer.eyeX(), forKey: VC64Keys.eyeX)
-        defaults.set(renderer.eyeY(), forKey: VC64Keys.eyeY)
-        defaults.set(renderer.eyeZ(), forKey: VC64Keys.eyeZ)
-        */
-        defaults.encode(renderer.shaderOptions, forKey: Keys.shaderOptions)
+        defaults.encode(keyboard.keyMap, forKey: Keys.keyMap)
+        defaults.set(keyboard.mapKeysByPosition, forKey: Keys.mapKeysByPosition)
     }
 }
 
 //
-// User defaults (Emulator)
+// User defaults (Media)
 //
 
 extension Keys {
-    
-    // Drives
-    static let warpLoad             = "VC64WarpLoadKey"
-    static let driveNoise           = "VC64DriveNoiseKey"
-    
-    // Screenshots
-    static let screenshotSource     = "VC64ScreenshotSourceKey"
-    static let screenshotTarget     = "VC64ScreenshotTargetKey"
-    
-    // User dialogs
-    static let closeWithoutAsking   = "VC64CloseWithoutAsking"
-    static let ejectWithoutAsking   = "VC64EjectWithoutAsking"
-    
-    // Miscellaneous
-    static let pauseInBackground    = "VC64PauseInBackground"
-    static let autoSnapshots        = "VC64AutoSnapshots"
-    static let autoSnapshotInterval = "VC64SnapshotInterval"
     
     // Media files
     static let autoMountAction      = "VC64AutoMountAction"
@@ -673,23 +556,6 @@ extension Keys {
 
 extension Defaults {
    
-    // Drives
-    static let warpLoad             = true
-    static let driveNoise           = true
-    
-    // Screenshots
-    static let screenshotSource     = 0
-    static let screenshotTarget     = NSBitmapImageRep.FileType.png
-    
-    // User dialogs
-    static let closeWithoutAsking   = false
-    static let ejectWithoutAsking   = false
-    
-    // Miscellaneous
-    static let pauseInBackground    = false
-    static let autoSnapshots        = true
-    static let autoSnapshotInterval = 3
-    
     // Media files
     static let autoMountAction      = [ "D64": AutoMountAction.openBrowser,
                                         "PRG": AutoMountAction.openBrowser,
@@ -712,26 +578,8 @@ extension UserDefaults {
     
     static func registerEmulatorUserDefaults() {
         
-        let dictionary: [String: Any] = [
-            
-            Keys.warpLoad: Defaults.warpLoad,
-            Keys.driveNoise: Defaults.driveNoise,
-            
-            Keys.screenshotSource: Defaults.screenshotSource,
-            Keys.screenshotTarget: Int(Defaults.screenshotTarget.rawValue),
-
-            Keys.closeWithoutAsking: Defaults.closeWithoutAsking,
-            Keys.ejectWithoutAsking: Defaults.ejectWithoutAsking,
-
-            Keys.pauseInBackground: Defaults.pauseInBackground,
-            Keys.autoSnapshots: Defaults.autoSnapshots,
-            Keys.autoSnapshotInterval: Defaults.autoSnapshotInterval
-        ]
-        
         let defaults = UserDefaults.standard
-        
-        defaults.register(defaults: dictionary)
-        
+                
         defaults.register(encodableItem: Defaults.autoMountAction, forKey: Keys.autoMountAction)
         defaults.register(encodableItem: Defaults.autoType, forKey: Keys.autoType)
         defaults.register(encodableItem: Defaults.autoTypeText, forKey: Keys.autoTypeText)
@@ -741,20 +589,7 @@ extension UserDefaults {
         
         let defaults = UserDefaults.standard
         
-        let keys = [Keys.warpLoad,
-                    Keys.driveNoise,
-                    
-                    Keys.screenshotSource,
-                    Keys.screenshotTarget,
-                    
-                    Keys.closeWithoutAsking,
-                    Keys.ejectWithoutAsking,
-                    
-                    Keys.pauseInBackground,
-                    Keys.autoSnapshots,
-                    Keys.autoSnapshotInterval,
-                    
-                    Keys.autoMountAction,
+        let keys = [Keys.autoMountAction,
                     Keys.autoType,
                     Keys.autoTypeText
         ]
@@ -771,19 +606,6 @@ extension MyController {
             
         c64.suspend()
         
-        c64.setWarpLoad(defaults.bool(forKey: Keys.warpLoad))
-        prefs.driveSounds = defaults.bool(forKey: Keys.driveNoise)
-    
-        screenshotSource = defaults.integer(forKey: Keys.screenshotSource)
-        screenshotTargetIntValue = defaults.integer(forKey: Keys.screenshotTarget)
-    
-        closeWithoutAsking = defaults.bool(forKey: Keys.closeWithoutAsking)
-        ejectWithoutAsking = defaults.bool(forKey: Keys.ejectWithoutAsking)
-
-        pauseInBackground = defaults.bool(forKey: Keys.pauseInBackground)
-        c64.setTakeAutoSnapshots(defaults.bool(forKey: Keys.autoSnapshots))
-        c64.setSnapshotInterval(defaults.integer(forKey: Keys.autoSnapshotInterval))
-        
         defaults.decode(&autoMountAction, forKey: Keys.autoMountAction)
         defaults.decode(&autoType, forKey: Keys.autoType)
         defaults.decode(&autoTypeText, forKey: Keys.autoTypeText)
@@ -795,22 +617,54 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         
-        defaults.set(c64.warpLoad(), forKey: Keys.warpLoad)
-        defaults.set(prefs.driveSounds, forKey: Keys.driveNoise)
-
-        defaults.set(screenshotSource, forKey: Keys.screenshotSource)
-        defaults.set(screenshotTargetIntValue, forKey: Keys.screenshotTarget)
-        
-        defaults.set(closeWithoutAsking, forKey: Keys.closeWithoutAsking)
-        defaults.set(ejectWithoutAsking, forKey: Keys.ejectWithoutAsking)
-        
-        defaults.set(pauseInBackground, forKey: Keys.pauseInBackground)
-        defaults.set(c64.takeAutoSnapshots(), forKey: Keys.autoSnapshots)
-        defaults.set(c64.snapshotInterval(), forKey: Keys.autoSnapshotInterval)
-        
         defaults.encode(autoMountAction, forKey: Keys.autoMountAction)
         defaults.encode(autoType, forKey: Keys.autoType)
         defaults.encode(autoTypeText, forKey: Keys.autoTypeText)
+    }
+}
+
+//
+// User defaults (Roms)
+//
+
+extension UserDefaults {
+    
+    static func romUrl(name: String) -> URL? {
+        
+        let folder = URL.appSupportFolder("Roms")
+        return folder?.appendingPathComponent(name)
+    }
+    
+    static var basicRomUrl:  URL? { return romUrl(name: "basic.bin") }
+    static var charRomUrl:   URL? { return romUrl(name: "char.bin") }
+    static var kernalRomUrl: URL? { return romUrl(name: "kernal.bin") }
+    static var vc1541RomUrl: URL? { return romUrl(name: "vc1541.bin") }
+    
+    static func registerRomUserDefaults() {
+        
+    }
+
+    static func resetRomUserDefaults() {
+        
+        // Delete previously saved Rom files
+        let fm = FileManager.default
+        
+        if let url = basicRomUrl {
+            track("Deleting Basic Rom")
+            try? fm.removeItem(at: url)
+        }
+        if let url = charRomUrl {
+            track("Deleting Character Rom")
+            try? fm.removeItem(at: url)
+        }
+        if let url = kernalRomUrl {
+            track("Deleting Kernal Rom")
+            try? fm.removeItem(at: url)
+        }
+        if let url = vc1541RomUrl {
+            track("Deleting VC1541 Rom")
+            try? fm.removeItem(at: url)
+        }
     }
 }
 
@@ -993,51 +847,136 @@ extension UserDefaults {
     }
 }
 
-/*
-extension MyController {
+//
+// User defaults (Video)
+//
+
+extension Keys {
     
-    func loadHardwareUserDefaults() {
+    static let palette         = "VC64PaletteKey"
+    static let brightness      = "VC64BrightnessKey"
+    static let contrast        = "VC64ContrastKey"
+    static let saturation      = "VC64SaturationKey"
+    static let upscaler        = "VC64UpscalerKey"
+
+    // Geometry
+    static let eyeX            = "VC64EyeX"
+    static let eyeY            = "VC64EyeY"
+    static let eyeZ            = "VC64EyeZ"
+    
+    // GPU options
+    static let shaderOptions   = "VC64ShaderOptionsKey"
+}
+
+extension Defaults {
+    
+    static let palette = COLOR_PALETTE
+    static let brightness = Double(50.0)
+    static let contrast = Double(100.0)
+    static let saturation = Double(50.0)
+    static let upscaler = 0
+    
+    // Geometry
+    static let keepAspectRatio = false
+    static let eyeX = Float(0.0)
+    static let eyeY = Float(0.0)
+    static let eyeZ = Float(0.0)
+    
+    // GPU options
+    static let shaderOptions = ShaderDefaultsTFT
+}
+
+extension UserDefaults {
+    
+    static func registerVideoUserDefaults() {
+        
+        let dictionary: [String: Any] = [
+            
+            Keys.palette: Int(Defaults.palette.rawValue),
+            Keys.brightness: Defaults.brightness,
+            Keys.contrast: Defaults.contrast,
+            Keys.saturation: Defaults.saturation,
+            Keys.upscaler: Defaults.upscaler,
+
+            Keys.keepAspectRatio: Defaults.keepAspectRatio,
+            Keys.eyeX: Defaults.eyeX,
+            Keys.eyeY: Defaults.eyeY,
+            Keys.eyeZ: Defaults.eyeZ
+        ]
+        
+        let defaults = UserDefaults.standard
+        defaults.register(defaults: dictionary)
+        defaults.register(encodableItem: Defaults.shaderOptions, forKey: Keys.shaderOptions)
+    }
+}
+
+extension UserDefaults {
+    
+    static func resetVideoUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        
+        let keys = [ Keys.palette,
+                     Keys.brightness,
+                     Keys.contrast,
+                     Keys.saturation,
+                     Keys.upscaler,
+                     
+                     Keys.keepAspectRatio,
+                     Keys.eyeX,
+                     Keys.eyeY,
+                     Keys.eyeZ,
+                     
+                     Keys.shaderOptions
+        ]
+
+        for key in keys { defaults.removeObject(forKey: key) }
+    }
+}
+
+extension MyController {
+        
+    func loadVideoUserDefaults() {
         
         let defaults = UserDefaults.standard
         
         c64.suspend()
         
-        c64.vic.setModel(defaults.integer(forKey: Keys.vicChip))
-        c64.vic.setEmulateGrayDotBug(defaults.bool(forKey: Keys.grayDotBug))
+        renderer.upscaler = defaults.integer(forKey: Keys.upscaler)
+        c64.vic.setVideoPalette(defaults.integer(forKey: Keys.palette))
+        c64.vic.setBrightness(defaults.double(forKey: Keys.brightness))
+        c64.vic.setContrast(defaults.double(forKey: Keys.contrast))
+        c64.vic.setSaturation(defaults.double(forKey: Keys.saturation))
 
-        c64.cia1.setModel(defaults.integer(forKey: Keys.ciaChip))
-        c64.cia2.setModel(defaults.integer(forKey: Keys.ciaChip))
-        c64.cia1.setEmulateTimerBBug(defaults.bool(forKey: Keys.timerBBug))
-        c64.cia2.setEmulateTimerBBug(defaults.bool(forKey: Keys.timerBBug))
-
-        c64.sid.setReSID(defaults.bool(forKey: Keys.reSID))
-        c64.sid.setModel(defaults.integer(forKey: Keys.audioChip))
-        c64.sid.setAudioFilter(defaults.bool(forKey: Keys.audioFilter))
-        c64.sid.setSamplingMethod(defaults.integer(forKey: Keys.sampling))
+        renderer.keepAspectRatio = defaults.bool(forKey: Keys.keepAspectRatio)
+        /*
+        renderer.setEyeX(defaults.float(forKey: VC64Keys.eyeX))
+        renderer.setEyeY(defaults.float(forKey: VC64Keys.eyeY))
+        renderer.setEyeZ(defaults.float(forKey: VC64Keys.eyeZ))
+        */
         
-        c64.vic.setGlueLogic(defaults.integer(forKey: Keys.glueLogic))
-        c64.mem.setRamInitPattern(defaults.integer(forKey: Keys.initPattern))
-        
+        defaults.decode(&renderer.shaderOptions, forKey: Keys.shaderOptions)
+        renderer.buildDotMasks()
+ 
         c64.resume()
     }
-
-    func saveHardwareUserDefaults() {
+    
+    func saveVideoUserDefaults() {
         
         let defaults = UserDefaults.standard
         
-        defaults.set(c64.vic.model(), forKey: Keys.vicChip)
-        defaults.set(c64.vic.emulateGrayDotBug(), forKey: Keys.grayDotBug)
-
-        defaults.set(c64.cia1.model(), forKey: Keys.ciaChip)
-        defaults.set(c64.cia1.emulateTimerBBug(), forKey: Keys.timerBBug)
-
-        defaults.set(c64.sid.reSID(), forKey: Keys.reSID)
-        defaults.set(c64.sid.model(), forKey: Keys.audioChip)
-        defaults.set(c64.sid.audioFilter(), forKey: Keys.audioFilter)
-        defaults.set(c64.sid.samplingMethod(), forKey: Keys.sampling)
+        defaults.set(renderer.upscaler, forKey: Keys.upscaler)
+        defaults.set(c64.vic.videoPalette(), forKey: Keys.palette)
+        defaults.set(c64.vic.brightness(), forKey: Keys.brightness)
+        defaults.set(c64.vic.contrast(), forKey: Keys.contrast)
+        defaults.set(c64.vic.saturation(), forKey: Keys.saturation)
         
-        defaults.set(c64.vic.glueLogic(), forKey: Keys.glueLogic)
-        defaults.set(c64.mem.ramInitPattern(), forKey: Keys.initPattern)
+        defaults.set(renderer.keepAspectRatio, forKey: Keys.keepAspectRatio)
+        /*
+        defaults.set(renderer.eyeX(), forKey: VC64Keys.eyeX)
+        defaults.set(renderer.eyeY(), forKey: VC64Keys.eyeY)
+        defaults.set(renderer.eyeZ(), forKey: VC64Keys.eyeZ)
+        */
+        defaults.encode(renderer.shaderOptions, forKey: Keys.shaderOptions)
     }
 }
-*/

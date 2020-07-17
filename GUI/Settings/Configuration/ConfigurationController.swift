@@ -145,25 +145,6 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var emuOkButton: NSButton!
     @IBOutlet weak var emuPowerButton: NSButton!
     
-    // Media files
-    @IBOutlet weak var emuD64Popup: NSPopUpButton!
-    @IBOutlet weak var emuPrgPopup: NSPopUpButton!
-    @IBOutlet weak var emuT64Popup: NSPopUpButton!
-    @IBOutlet weak var emuTapPopup: NSPopUpButton!
-    @IBOutlet weak var emuCrtPopup: NSPopUpButton!
-
-    @IBOutlet weak var emuD64AutoTypeButton: NSButton!
-    @IBOutlet weak var emuPrgAutoTypeButton: NSButton!
-    @IBOutlet weak var emuT64AutoTypeButton: NSButton!
-    @IBOutlet weak var emuTapAutoTypeButton: NSButton!
-    @IBOutlet weak var emuCrtAutoTypeButton: NSButton!
-
-    @IBOutlet weak var emuD64AutoTypeText: NSTextField!
-    @IBOutlet weak var emuPrgAutoTypeText: NSTextField!
-    @IBOutlet weak var emuT64AutoTypeText: NSTextField!
-    @IBOutlet weak var emuTapAutoTypeText: NSTextField!
-    @IBOutlet weak var emuCrtAutoTypeText: NSTextField!
-
     var bootable: Bool {
         let off   = c64.isPoweredOff()
         let ready = c64.isReady()
@@ -265,21 +246,6 @@ class ConfigurationController: DialogController {
             case "Roms": refreshRomTab()
             case "Hardware": refreshHardwareTab()
             case "Video": refreshVideoTab()
-            case "Emulator": refreshEmulatorTab()
-            case "Devices": refreshDevicesTab()
-            case "Keyboard": refreshKeyboardTab()
-            default: break
-            }
-        }
-    }
-    
-    override func keyDown(with key: MacKey) {
-        
-        if let id = prefTabView.selectedTabViewItem?.identifier as? String {
-            
-            switch id {
-            case "Devices": devKeyDown(with: key)
-            case "Keyboard": mapKeyDown(with: key)
             default: break
             }
         }
@@ -310,41 +276,5 @@ extension ConfigurationController: NSTabViewDelegate {
     func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
 
         refresh()
-    }
-}
-
-extension ConfigurationController: NSTextFieldDelegate {
-    
-    func controlTextDidChange(_ obj: Notification) {
-        
-        track()
-        
-        if let view = obj.object as? NSTextField {
-            
-            let formatter = view.formatter as? NumberFormatter
-            
-            switch view {
-                
-            case emuSnapshotInterval:
-                
-                if formatter?.number(from: view.stringValue) != nil {
-                    emuSnapshotIntervalAction(view)
-                }
-                
-            case emuD64AutoTypeText, emuPrgAutoTypeText, emuT64AutoTypeText,
-                 emuTapAutoTypeText, emuCrtAutoTypeText:
-                
-                emuAutoTypeTextAction(view)
-                
-            case devAutofireBullets:
-                
-                if formatter?.number(from: view.stringValue) != nil {
-                    devAutofireBulletsAction(view)
-                }
-                
-            default:
-                break
-            }
-        }
     }
 }

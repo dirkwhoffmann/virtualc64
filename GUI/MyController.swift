@@ -7,6 +7,13 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+enum WarpMode: Int {
+
+    case auto
+    case off
+    case on
+}
+
 enum AutoMountAction: Int, Codable {
     
     case openBrowser = 0
@@ -24,7 +31,7 @@ protocol MessageReceiver {
 class MyController: NSWindowController, MessageReceiver {
 
     var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
-    var prefs: Preferences { return myAppDelegate.pref }
+    var pref: Preferences { return myAppDelegate.pref }
 
     // Reference to the connected document
     var mydocument: MyDocument!
@@ -67,6 +74,9 @@ class MyController: NSWindowController, MessageReceiver {
     /// Lock to prevent reentrance into the timer function
     var timerLock = NSLock()
     
+    // Snapshot timers
+    var snapshotTimer: Timer?
+
     /// Lock for protecting the C64 proxy
     var proxyLock = NSLock()
     
@@ -98,10 +108,10 @@ class MyController: NSWindowController, MessageReceiver {
     var inputDevice2 = Defaults.inputDevice2
     
     /// Screenshot resolution (0 = low, 1 = high)
-    var screenshotSource = Defaults.screenshotSource
+    var screenshotSource = GeneralDefaults.std.screenshotSource
     
     /// Screenshot image format
-    var screenshotTarget = Defaults.screenshotTarget
+    var screenshotTarget = GeneralDefaults.std.screenshotTarget
     var screenshotTargetIntValue: Int {
         get { return Int(screenshotTarget.rawValue) }
         set { screenshotTarget = NSBitmapImageRep.FileType(rawValue: UInt(newValue))! }
@@ -117,18 +127,59 @@ class MyController: NSWindowController, MessageReceiver {
     var autoTypeText: [String: String] = Defaults.autoTypeText
     
     /// Indicates if the user should be warned if an unsaved document is closed.
-    var closeWithoutAsking = Defaults.closeWithoutAsking
+    var closeWithoutAsking = GeneralDefaults.std.closeWithoutAsking
 
     /// Indicates if the user should be warned if an unsaved disk is ejected.
-    var ejectWithoutAsking = Defaults.ejectWithoutAsking
+    var ejectWithoutAsking = GeneralDefaults.std.driveEjectUnasked
 
     /// Indicates if the emulator should pause when it looses focus.
-    var pauseInBackground =  Defaults.pauseInBackground
+    var pauseInBackground =  GeneralDefaults.std.pauseInBackground
     
     /// Remembers if the emulator was running or paused when it lost focus.
     /// Needed to implement the pauseInBackground feature.
     var pauseInBackgroundSavedState = false
-
+    
+    //
+    // Timers
+    //
+    
+    func startSnapshotTimer() {
+        
+        if pref.snapshotInterval > 0 {
+            
+            snapshotTimer?.invalidate()
+            snapshotTimer =
+                Timer.scheduledTimer(timeInterval: TimeInterval(pref.snapshotInterval),
+                                     target: self,
+                                     selector: #selector(snapshotTimerFunc),
+                                     userInfo: nil,
+                                     repeats: true)
+        }
+    }
+    
+    func stopSnapshotTimer() {
+        
+        snapshotTimer?.invalidate()
+    }
+    
+    func updateWarp() { }
+    /*
+        
+        var warp: Bool
+        
+        switch pref.warpMode {
+        case .auto: warp = amiga.diskController.spinning()
+        case .off: warp = false
+        case .on: warp = true
+        }
+        
+        if warp != amiga.warp() {
+            warp ? amiga.warpOn() : amiga.warpOff()
+            refreshStatusBar()
+        }
+    }
+    */
+    
     //
     // Outlets
     //
@@ -551,6 +602,11 @@ extension MyController {
         clockSpeedBar.doubleValue = 10 * mhz
     }
     
+    @objc func snapshotTimerFunc() {
+        
+        if pref.autoSnapshots { } //  { takeAutoSnapshot() }
+    }
+    
     func processMessage(_ msg: Message) {
 
         func firstDrive() -> Bool {
@@ -636,7 +692,7 @@ extension MyController {
     
         case MSG_VC1541_ATTACHED:
             
-            if prefs.driveSounds && prefs.driveConnectSound {
+            if pref.driveSounds && pref.driveConnectSound {
                 playSound(name: "drive_click", volume: 1.0)
             }
             
@@ -650,7 +706,7 @@ extension MyController {
 
         case MSG_VC1541_DETACHED:
             
-            if prefs.driveSounds && prefs.driveConnectSound {
+            if pref.driveSounds && pref.driveConnectSound {
                 playSound(name: "drive_click", volume: 1.0)
             }
             
@@ -665,13 +721,13 @@ extension MyController {
         case MSG_VC1541_HEAD_UP,
              MSG_VC1541_HEAD_DOWN:
             
-            if prefs.driveSounds && prefs.driveHeadSound {
+            if pref.driveSounds && pref.driveHeadSound {
                 playSound(name: "drive_click", volume: 1.0)
             }
                         
         case MSG_VC1541_DISK:
             
-            if prefs.driveSounds && prefs.driveInsertSound {
+            if pref.driveSounds && pref.driveInsertSound {
                 playSound(name: "drive_snatch_uae", volume: 0.1)
             }
 
@@ -683,7 +739,7 @@ extension MyController {
               
         case MSG_VC1541_NO_DISK:
             
-            if prefs.driveSounds && prefs.driveEjectSound {
+            if pref.driveSounds && pref.driveEjectSound {
                 playSound(name: "drive_snatch_uae", volume: 0.1)
             }
 

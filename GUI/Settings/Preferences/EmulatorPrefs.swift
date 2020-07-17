@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-extension ConfigurationController {
+extension PreferencesController {
     
     func refreshEmulatorTab() {
         
@@ -32,27 +32,6 @@ extension ConfigurationController {
         emuAutoSnapshots.state = c64.takeAutoSnapshots() ? .on : .off
         emuSnapshotInterval.integerValue = c64.snapshotInterval()
         emuSnapshotInterval.isEnabled = c64.takeAutoSnapshots()
-        
-        // Media files
-        func refresh(_ s: String, _ p: NSPopUpButton, _ b: NSButton, _ t: NSTextField) {
-            
-            let autoAction = controller.autoMountAction[s]?.rawValue ?? 0
-            let autoType = controller.autoType[s] ?? false
-            let autoTypeText = controller.autoTypeText[s] ?? ""
-            p.selectItem(withTag: autoAction)
-            b.isEnabled = autoAction != 0
-            b.state = autoType ? .on : .off
-            t.isEnabled = autoAction != 0 && autoType
-            t.stringValue = autoTypeText
-        }
-        refresh("D64", emuD64Popup, emuD64AutoTypeButton, emuD64AutoTypeText)
-        refresh("PRG", emuPrgPopup, emuPrgAutoTypeButton, emuPrgAutoTypeText)
-        refresh("T64", emuT64Popup, emuT64AutoTypeButton, emuT64AutoTypeText)
-        refresh("TAP", emuTapPopup, emuTapAutoTypeButton, emuTapAutoTypeText)
-        refresh("CRT", emuCrtPopup, emuCrtAutoTypeButton, emuCrtAutoTypeText)
-
-        // Power button
-        emuPowerButton.isHidden = !bootable
     }
 
     //

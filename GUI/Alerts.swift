@@ -169,7 +169,7 @@ extension MyDocument {
         case ERR_ROM_MISSING:
             msg = "A Basic Rom, Character Rom, and Kernal Rom is required to power up."
         case ERR_ROM_MEGA65_MISMATCH:
-            msg = "A set of OpenROMs with mismatching version strings has been installed."
+            msg = "The emulator cannot launch because OpenROMs with mismatched version strings have been installed."
         default:
             msg = ""
         }

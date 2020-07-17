@@ -16,7 +16,7 @@ class KeyViewItem: NSCollectionViewItem {
     }
 }
 
-extension ConfigurationController {
+extension PreferencesController {
     
     /*
     func awakeKeymapPrefsFromNib() {
@@ -44,10 +44,7 @@ extension ConfigurationController {
             keyMappingPopup.selectItem(withTag: 0)
             info.stringValue = "In symbolic assignment mode, the Mac keys are assigned to C64 keys according to the symbols they represent."
             keyMatrixScrollView.isHidden = true
-        }
-        
-        // Power button
-        keyPowerButton.isHidden = !bootable
+        }        
     }
     
     func updateImages() {

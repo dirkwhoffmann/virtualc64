@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-extension ConfigurationController {
+extension PreferencesController {
     
     func refreshDevicesTab() {
 
@@ -47,9 +47,6 @@ extension ConfigurationController {
         let model = c64.mouse.model()
         devMouseModel.selectItem(withTag: model)
         devMouseInfo.isHidden = (model == Int(MOUSE1350.rawValue))
-        
-        // Power button
-        devPowerButton.isHidden = !bootable
     }
     
     func updateJoyKeyMap(_ nr: Int, dir: JoystickDirection, button: NSButton, txt: NSTextField) {
