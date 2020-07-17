@@ -87,14 +87,14 @@ extension MyController {
         
         c64.suspend()
         
-        loadGeneralUserDefaults()
+        pref.loadGeneralUserDefaults()
         loadDevicesUserDefaults()
         loadKeyMapUserDefaults()
-
+        pref.loadMediaUserDefaults()
+        
         config.loadRomUserDefaults()
         config.loadHardwareUserDefaults()
         loadVideoUserDefaults()
-        loadEmulatorUserDefaults()
         
         c64.resume()
     }
@@ -119,14 +119,13 @@ extension MyController {
         
         track()
                 
-        saveGeneralUserDefaults()
+        pref.saveGeneralUserDefaults()
         saveDevicesUserDefaults()
         saveKeyMapUserDefaults()
 
         config.saveRomUserDefaults()
         config.saveHardwareUserDefaults()
         saveVideoUserDefaults()
-        saveEmulatorUserDefaults()
     }
 
     func saveUserDefaults(url: URL) {
@@ -344,28 +343,6 @@ extension UserDefaults {
     
 extension MyController {
     
-    func loadGeneralUserDefaults() {
-        
-        let defaults = UserDefaults.standard
-        
-        c64.suspend()
-        
-        setPort1(defaults.integer(forKey: Keys.inputDevice1))
-        setPort2(defaults.integer(forKey: Keys.inputDevice2))
-        
-        // inputDevice1 = defaults.integer(forKey: VC64Keys.inputDevice1)
-        // inputDevice2 = defaults.integer(forKey: VC64Keys.inputDevice2)
-        
-        c64.resume()
-    }
-    
-    func saveGeneralUserDefaults() {
-        
-        let defaults = UserDefaults.standard
-        
-        defaults.set(inputDevice1, forKey: Keys.inputDevice1)
-        defaults.set(inputDevice2, forKey: Keys.inputDevice2)
-    }
 }
 
 //
@@ -598,6 +575,7 @@ extension UserDefaults {
     }
 }
 
+/*
 extension MyController {
         
     func loadEmulatorUserDefaults() {
@@ -622,6 +600,7 @@ extension MyController {
         defaults.encode(autoTypeText, forKey: Keys.autoTypeText)
     }
 }
+*/
 
 //
 // User defaults (Roms)

@@ -17,7 +17,7 @@ extension MyController: NSWindowDelegate {
         myAppDelegate.windowDidBecomeMain(window)
         
         // Start emulator if it was only paused while in background
-        if pauseInBackground && pauseInBackgroundSavedState { c64.run() }
+        if pref.pauseInBackground && pauseInBackgroundSavedState { c64.run() }
 
         // Register for mouse move events
         window.acceptsMouseMovedEvents = true
@@ -32,7 +32,7 @@ extension MyController: NSWindowDelegate {
         
         // Stop emulator if it is configured to pause in background
         pauseInBackgroundSavedState = c64.isRunning()
-        if pauseInBackground { c64.pause() }
+        if pref.pauseInBackground { c64.pause() }
     }
     
     public func windowWillClose(_ notification: Notification) {

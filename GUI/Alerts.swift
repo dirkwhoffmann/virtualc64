@@ -78,7 +78,7 @@ extension MyDocument {
         precondition(nr == 1 || nr == 2)
         
         if let controller = windowForSheet?.windowController as? MyController {
-            if controller.ejectWithoutAsking {
+            if controller.pref.driveEjectUnasked {
                 return true
             }
         }
@@ -97,7 +97,7 @@ extension MyDocument {
     func proceedWithUnexportedDisk() -> Bool {
     
         if let controller = windowForSheet?.windowController as? MyController {
-            if controller.ejectWithoutAsking {
+            if controller.pref.driveEjectUnasked {
                 return true
             }
         }

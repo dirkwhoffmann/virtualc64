@@ -56,6 +56,10 @@ class MyController: NSWindowController, MessageReceiver {
     
     // Game pad manager
     var gamePadManager: GamePadManager!
+    /*
+     var gamePad1: GamePad? { return gamePadManager.gamePads[config.gameDevice1] }
+     var gamePad2: GamePad? { return gamePadManager.gamePads[config.gameDevice2] }
+     */
     
     // Keyboard controller
     var keyboard: KeyboardController!
@@ -107,6 +111,7 @@ class MyController: NSWindowController, MessageReceiver {
     /// Selected game pad slot for joystick in port B
     var inputDevice2 = Defaults.inputDevice2
     
+    /*
     /// Screenshot resolution (0 = low, 1 = high)
     var screenshotSource = GeneralDefaults.std.screenshotSource
     
@@ -134,7 +139,8 @@ class MyController: NSWindowController, MessageReceiver {
 
     /// Indicates if the emulator should pause when it looses focus.
     var pauseInBackground =  GeneralDefaults.std.pauseInBackground
-    
+    */
+ 
     /// Remembers if the emulator was running or paused when it lost focus.
     /// Needed to implement the pauseInBackground feature.
     var pauseInBackgroundSavedState = false
@@ -370,7 +376,7 @@ extension MyController {
             return document?.changeCount != 0
         }
         set {
-            if newValue && !closeWithoutAsking {
+            if newValue && !pref.closeWithoutAsking {
                 document?.updateChangeCount(.changeDone)
             } else {
                 document?.updateChangeCount(.changeCleared)

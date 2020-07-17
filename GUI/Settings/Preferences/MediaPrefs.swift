@@ -15,9 +15,9 @@ extension PreferencesController {
         
         func refresh(_ s: String, _ p: NSPopUpButton, _ b: NSButton, _ t: NSTextField) {
             
-            let autoAction = parent.autoMountAction[s]?.rawValue ?? 0
-            let autoType = parent.autoType[s] ?? false
-            let autoTypeText = parent.autoTypeText[s] ?? ""
+            let autoAction = pref.autoMountAction[s]?.rawValue ?? 0
+            let autoType = pref.autoType[s] ?? false
+            let autoTypeText = pref.autoTypeText[s] ?? ""
             p.selectItem(withTag: autoAction)
             b.isEnabled = autoAction != 0
             b.state = autoType ? .on : .off

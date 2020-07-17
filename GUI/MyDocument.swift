@@ -160,15 +160,16 @@ class MyDocument: NSDocument {
     func mountAttachment() -> Bool {
         
         guard let controller = myController else { return false }
+        let pref = controller.pref
         
         // Determine action to perform and text to type
         var action = AutoMountAction.openBrowser
         var autoTypeText: String?
 
         func getAction(_ type: String) {
-            action = controller.autoMountAction[type] ?? action
-            if action != .openBrowser && (controller.autoType[type] ?? false) {
-                autoTypeText = controller.autoTypeText[type]
+            action = pref.autoMountAction[type] ?? action
+            if action != .openBrowser && (pref.autoType[type] ?? false) {
+                autoTypeText = pref.autoTypeText[type]
             }
         }
 

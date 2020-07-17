@@ -12,23 +12,21 @@ extension PreferencesController {
     func refreshEmulatorTab() {
         
         track()
-        
-        guard let c64 = proxy, let controller = myController else { return }
-        
+                
         // VC1541
         emuWarpLoad.state = c64.warpLoad() ? .on : .off
         emuDriveSounds.state = myAppDelegate.pref.driveSounds ? .on : .off
         
         // Screenshots
-        emuScreenshotSourcePopup.selectItem(withTag: controller.screenshotSource)
-        emuScreenshotTargetPopup.selectItem(withTag: controller.screenshotTargetIntValue)
+        emuScreenshotSourcePopup.selectItem(withTag: pref.screenshotSource)
+        emuScreenshotTargetPopup.selectItem(withTag: pref.screenshotTargetIntValue)
         
         // Documents
-        emuCloseWithoutAskingButton.state = controller.closeWithoutAsking ? .on : .off
-        emuEjectWithoutAskingButton.state = controller.ejectWithoutAsking ? .on : .off
+        emuCloseWithoutAskingButton.state = pref.closeWithoutAsking ? .on : .off
+        emuEjectWithoutAskingButton.state = pref.driveEjectUnasked ? .on : .off
         
         // Miscellaneous
-        emuPauseInBackground.state = controller.pauseInBackground ? .on : .off
+        emuPauseInBackground.state = pref.pauseInBackground ? .on : .off
         emuAutoSnapshots.state = c64.takeAutoSnapshots() ? .on : .off
         emuSnapshotInterval.integerValue = c64.snapshotInterval()
         emuSnapshotInterval.isEnabled = c64.takeAutoSnapshots()
@@ -56,13 +54,13 @@ extension PreferencesController {
     
     @IBAction func emuScreenshotSourceAction(_ sender: NSPopUpButton!) {
         
-        myController?.screenshotSource = sender.selectedTag()
+        pref.screenshotSource = sender.selectedTag()
         refresh()
     }
     
     @IBAction func emuScreenshotTargetAction(_ sender: NSPopUpButton!) {
         
-        myController?.screenshotTargetIntValue = sender.selectedTag()
+        pref.screenshotTargetIntValue = sender.selectedTag()
         refresh()
     }
 
@@ -72,13 +70,13 @@ extension PreferencesController {
     
     @IBAction func emuCloseWithoutAskingAction(_ sender: NSButton!) {
         
-        myController?.closeWithoutAsking = (sender.state == .on)
+        pref.closeWithoutAsking = (sender.state == .on)
         refresh()
     }
     
     @IBAction func emuEjectWithoutAskingAction(_ sender: NSButton!) {
         
-        myController?.ejectWithoutAsking = (sender.state == .on)
+        pref.driveEjectUnasked = (sender.state == .on)
         refresh()
     }
 
@@ -88,7 +86,7 @@ extension PreferencesController {
     
     @IBAction func emuPauseInBackgroundAction(_ sender: NSButton!) {
         
-        myController?.pauseInBackground = (sender.state == .on)
+        pref.pauseInBackground = (sender.state == .on)
         refresh()
     }
     
@@ -128,7 +126,7 @@ extension PreferencesController {
         
         if let fileType = mediaFileType(sender.tag) {
             let action = AutoMountAction(rawValue: sender.selectedTag())
-            myController?.autoMountAction[fileType] = action
+            pref.autoMountAction[fileType] = action
             refresh()
         }
     }
@@ -136,7 +134,7 @@ extension PreferencesController {
     @IBAction func emuAutoTypeAction(_ sender: NSButton!) {
         
         if let fileType = mediaFileType(sender.tag) {
-            myController?.autoType[fileType] = (sender.intValue == 0) ? false : true
+            pref.autoType[fileType] = (sender.intValue == 0) ? false : true
             refresh()
         }
     }
@@ -144,7 +142,7 @@ extension PreferencesController {
     @IBAction func emuAutoTypeTextAction(_ sender: NSTextField!) {
         
         if let fileType = mediaFileType(sender.tag) {
-            myController?.autoTypeText[fileType] = sender.stringValue
+            pref.autoTypeText[fileType] = sender.stringValue
             refresh()
         }
     }
