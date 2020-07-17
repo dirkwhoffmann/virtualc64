@@ -60,7 +60,7 @@ public:
 
     // Provides information about known ROMs
     static const char *title(RomRevision rev);
-    static const char *version(RomRevision rev);
+    static const char *subTitle(RomRevision rev);
     static const char *released(RomRevision rev);
 
     

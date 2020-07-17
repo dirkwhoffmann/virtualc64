@@ -1881,24 +1881,24 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     const char *str = wrapper->c64->vc1541RomTitle();
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) basicRomVersion
+- (NSString *) basicRomSubTitle
 {
-    const char *str = wrapper->c64->basicRomVersion();
+    const char *str = wrapper->c64->basicRomSubTitle();
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) charRomVersion
+- (NSString *) charRomSubTitle
 {
-    const char *str = wrapper->c64->charRomVersion();
+    const char *str = wrapper->c64->charRomSubTitle();
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) kernalRomVersion
+- (NSString *) kernalRomSubTitle
 {
-    const char *str = wrapper->c64->kernalRomVersion();
+    const char *str = wrapper->c64->kernalRomSubtitle();
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) vc1541RomVersion
+- (NSString *) vc1541RomSubTitle
 {
-    const char *str = wrapper->c64->vc1541RomVersion();
+    const char *str = wrapper->c64->vc1541RomSubtitle();
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) basicRomReleased

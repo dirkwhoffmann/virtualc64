@@ -295,7 +295,7 @@ RomFile::title(RomRevision rev)
 }
 
 const char *
-RomFile::version(RomRevision rev)
+RomFile::subTitle(RomRevision rev)
 {
     switch (rev) {
             

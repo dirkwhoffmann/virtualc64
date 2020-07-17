@@ -1153,11 +1153,11 @@ C64::vc1541RomTitle()
 }
 
 const char *
-C64::romVersion(u64 fnv)
+C64::romSubTitle(u64 fnv)
 {
     RomRevision rev = RomFile::revision(fnv);
 
-    if (rev != ROM_UNKNOWN) return RomFile::version(rev);
+    if (rev != ROM_UNKNOWN) return RomFile::subTitle(rev);
     
     static char str[32];
     sprintf(str, "FNV %llx", fnv);
@@ -1165,33 +1165,33 @@ C64::romVersion(u64 fnv)
 }
 
 const char *
-C64::basicRomVersion()
+C64::basicRomSubTitle()
 {
     // Intercept if a MEGA65 Rom is installed
     if (hasMega65BasicRom()) return "Free Basic replacement";
 
-    return romVersion(basicRomFNV64());
+    return romSubTitle(basicRomFNV64());
 }
 
 const char *
-C64::charRomVersion()
+C64::charRomSubTitle()
 {
-    return romVersion(charRomFNV64());
+    return romSubTitle(charRomFNV64());
 }
 
 const char *
-C64::kernalRomVersion()
+C64::kernalRomSubtitle()
 {
     // Intercept if a MEGA65 Rom is installed
     if (hasMega65BasicRom()) return "Free Kernal replacement";
 
-    return romVersion(kernalRomFNV64());
+    return romSubTitle(kernalRomFNV64());
 }
 
 const char *
-C64::vc1541RomVersion()
+C64::vc1541RomSubtitle()
 {
-    return romVersion(vc1541RomFNV64());
+    return romSubTitle(vc1541RomFNV64());
 }
 
 const char *

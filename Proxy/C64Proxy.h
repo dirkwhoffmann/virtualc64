@@ -244,10 +244,10 @@ struct AnyC64FileWrapper;
 - (NSString *) kernalRomTitle;
 - (NSString *) vc1541RomTitle;
 
-- (NSString *) basicRomVersion;
-- (NSString *) charRomVersion;
-- (NSString *) kernalRomVersion;
-- (NSString *) vc1541RomVersion;
+- (NSString *) basicRomSubTitle;
+- (NSString *) charRomSubTitle;
+- (NSString *) kernalRomSubTitle;
+- (NSString *) vc1541RomSubTitle;
 
 - (NSString *) basicRomReleased;
 - (NSString *) charRomReleased;

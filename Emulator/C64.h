@@ -590,11 +590,11 @@ public:
     const char *vc1541RomTitle();
 
     // Returns printable version strings for the installed ROMs
-    const char *romVersion(u64 fnv);
-    const char *basicRomVersion();
-    const char *charRomVersion();
-    const char *kernalRomVersion();
-    const char *vc1541RomVersion();
+    const char *romSubTitle(u64 fnv);
+    const char *basicRomSubTitle();
+    const char *charRomSubTitle();
+    const char *kernalRomSubtitle();
+    const char *vc1541RomSubtitle();
     
     // Returns printable release dates or hash values for the installed ROMs
     const char *basicRomReleased();
@@ -615,7 +615,7 @@ public:
     char *mega65BasicRev();
     char *mega65KernalRev();
 
-    // Installs a Ron
+    // Installs a Rom
     bool loadBasicRom(RomFile *rom);
     bool loadBasicRomFromBuffer(const u8 *buffer, size_t length);
     bool loadBasicRomFromFile(const char *path);

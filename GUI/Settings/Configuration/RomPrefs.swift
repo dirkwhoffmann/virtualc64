@@ -197,19 +197,19 @@ extension ConfigurationController {
 
         // Titles and subtitles
         basicTitle.stringValue = hasBasic ? c64.basicRomTitle() : "Basic Rom"
-        basicSubtitle.stringValue = hasBasic ? c64.basicRomVersion() : "Required"
+        basicSubtitle.stringValue = hasBasic ? c64.basicRomSubTitle() : "Required"
         basicSubsubtitle.stringValue = c64.basicRomReleased()
 
         charTitle.stringValue = hasChar ? c64.charRomTitle() : "Character Rom"
-        charSubtitle.stringValue = hasChar ? c64.charRomVersion() : "Required"
+        charSubtitle.stringValue = hasChar ? c64.charRomSubTitle() : "Required"
         charSubsubtitle.stringValue = c64.charRomReleased()
 
         kernalTitle.stringValue = hasKernal ? c64.kernalRomTitle() : "Kernal Rom"
-        kernalSubtitle.stringValue = hasKernal ? c64.kernalRomVersion() : "Required"
+        kernalSubtitle.stringValue = hasKernal ? c64.kernalRomSubTitle() : "Required"
         kernalSubsubtitle.stringValue = c64.kernalRomReleased()
 
         vc1541Title.stringValue = hasVC1541 ? c64.vc1541RomTitle() : "VC1541 Rom"
-        vc1541Subtitle.stringValue = hasVC1541 ? c64.vc1541RomVersion() : "Optional"
+        vc1541Subtitle.stringValue = hasVC1541 ? c64.vc1541RomSubTitle() : "Optional"
         vc1541Subsubtitle.stringValue = c64.vc1541RomReleased()
 
         // Hide some controls
