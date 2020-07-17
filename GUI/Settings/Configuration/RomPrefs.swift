@@ -95,7 +95,7 @@ let knownKernalRoms: [UInt64: String] = [
     Rom.kernal_danish_3rd:       "Commodore 64 Kernal (3rd revision, Danish)",
     Rom.kernal_sx64:             "Commodore SX-64 Kernal",
     Rom.kernal_sx64_scand:       "Commodore SX-64 Kernal (Scandinavian)",
-    Rom.kernal_64_jiffy:         "Commodore 64 Kernel (JiffyDOS patch)",
+    Rom.kernal_64_jiffy:         "Commodore 64 Kernal (JiffyDOS patch)",
     Rom.kernal_sx64_jiffy:       "Commodore SX-64 Kernal (JiffyDOS patch)",
     Rom.kernal_turbo_rom:        "Cockroach Turbo-ROM V1",
     Rom.kernal_datel_v32:        "Datel Electronics Turbo Rom II 3.2+",

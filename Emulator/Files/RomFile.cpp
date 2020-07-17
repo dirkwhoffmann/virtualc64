@@ -274,7 +274,7 @@ RomFile::title(RomRevision rev)
         case KERNAL_DANISH_3RD:       return "C64 Kernal";
         case KERNAL_SX64:
         case KERNAL_SX64_SCAND:       return "SX-64 Kernal";
-        case KERNAL_64_JIFFY:         return "C64 Kernel";
+        case KERNAL_64_JIFFY:         return "C64 Kernal";
         case KERNAL_SX64_JIFFY:       return "SX-64 Kernal";
         case KERNAL_TURBO_ROM:        return "Cockroach Turbo-ROM";
         case KERNAL_DATEL_V32:        return "Datel Turbo Rom II";

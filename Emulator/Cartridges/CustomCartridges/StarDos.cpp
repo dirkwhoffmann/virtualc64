@@ -64,7 +64,7 @@ StarDos::disableROML()
 void
 StarDos::updatePeekPokeLookupTables()
 {
-    // Replace Kernel by the StarDos kernel
+    // Replace Kernal by the StarDos kernal
     if (mem.peekSrc[0xE] == M_KERNAL) {
         mem.peekSrc[0xE] = M_CRTHI;
         mem.peekSrc[0xF] = M_CRTHI;

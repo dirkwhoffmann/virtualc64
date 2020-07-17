@@ -22,16 +22,15 @@ extension NSDraggingInfo {
 class RomDropView: NSImageView {
 
     @IBOutlet var parent: ConfigurationController!
-
-    func acceptDragSource(url: URL) -> Bool {
-        return proxy?.isRom(url) ?? false
-    }
-    
+    var c64: C64Proxy { return parent.c64 }
+        
     override func awakeFromNib() {
 
         registerForDraggedTypes([NSPasteboard.PasteboardType.compatibleFileURL])
     }
     
+    func acceptDragSource(url: URL) -> Bool { return false }
+
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
 
         if let url = sender.url {
@@ -58,20 +57,6 @@ class RomDropView: NSImageView {
         guard let url = sender.url else { return false }
 
         return parent.c64.loadRom(url)
-        
-        /*
-        guard let url = sender.url else { return false }
-        guard let controller = myController else { return false }
-        guard let c64 = proxy else { return false }
-        
-        if !controller.loadRom(url) {
-            return false
-        }
-        if c64.isReady() {
-            parent.okAction(self)
-        }
-        return true
-        */
     }
     
     override func concludeDragOperation(_ sender: NSDraggingInfo?) {
@@ -83,26 +68,30 @@ class RomDropView: NSImageView {
 class BasicRomDropView: RomDropView {
 
     override func acceptDragSource(url: URL) -> Bool {
-        return proxy?.isBasicRom(url) ?? false
+        
+        return c64.isPoweredOff() && c64.isBasicRom(url)
     }
 }
 
 class CharRomDropView: RomDropView {
     override func acceptDragSource(url: URL) -> Bool {
-        return proxy?.isCharRom(url) ?? false
+        
+        return c64.isPoweredOff() && c64.isCharRom(url)
     }
 }
 
 class KernalRomDropView: RomDropView {
 
     override func acceptDragSource(url: URL) -> Bool {
-        return proxy?.isKernalRom(url) ?? false
+
+        return c64.isPoweredOff() && c64.isKernalRom(url)
     }
 }
 
 class Vc1541RomDropView: RomDropView {
     
     override func acceptDragSource(url: URL) -> Bool {
-        return proxy?.isVC1541Rom(url) ?? false
+
+        return c64.isPoweredOff() && c64.isVC1541Rom(url)
     }
 }
