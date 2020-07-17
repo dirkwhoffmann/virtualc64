@@ -583,24 +583,24 @@ public:
     RomIdentifier kernalRomIdentifier() { return RomFile::identifier(kernalRomFNV64()); }
     RomIdentifier vc1541RomIdentifier() { return RomFile::identifier(vc1541RomFNV64()); }
     
-    // Returns printable names for the  installed ROMs
+    // Returns printable titles for the installed ROMs
     const char *basicRomTitle();
     const char *charRomTitle();
     const char *kernalRomTitle();
     const char *vc1541RomTitle();
 
-    // Returns printable version strings for the installed ROMs
+    // Returns printable sub titles for the installed ROMs
     const char *romSubTitle(u64 fnv);
     const char *basicRomSubTitle();
     const char *charRomSubTitle();
     const char *kernalRomSubtitle();
     const char *vc1541RomSubtitle();
     
-    // Returns printable release dates or hash values for the installed ROMs
-    const char *basicRomReleased();
-    const char *charRomReleased();
-    const char *kernalRomReleased();
-    const char *vc1541RomReleased();
+    // Returns printable revision strings or hash values for the installed ROMs
+    const char *basicRomRevision();
+    const char *charRomRevision();
+    const char *kernalRomRevision();
+    const char *vc1541RomRevision();
 
     // Checks if a certain Rom is present
     bool hasBasicRom();

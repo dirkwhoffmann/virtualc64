@@ -249,10 +249,10 @@ struct AnyC64FileWrapper;
 - (NSString *) kernalRomSubTitle;
 - (NSString *) vc1541RomSubTitle;
 
-- (NSString *) basicRomReleased;
-- (NSString *) charRomReleased;
-- (NSString *) kernalRomReleased;
-- (NSString *) vc1541RomReleased;
+- (NSString *) basicRomRevision;
+- (NSString *) charRomRevision;
+- (NSString *) kernalRomRevision;
+- (NSString *) vc1541RomRevision;
 
 - (BOOL) isCommodoreRom:(RomIdentifier)rev;
 - (BOOL) isPatchedRom:(RomIdentifier)rev;

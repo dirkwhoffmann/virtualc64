@@ -1195,7 +1195,7 @@ C64::vc1541RomSubtitle()
 }
 
 const char *
-C64::basicRomReleased()
+C64::basicRomRevision()
 {
     // Intercept if a MEGA65 Rom is installed
     if (hasMega65BasicRom()) return mega65BasicRev();
@@ -1204,13 +1204,13 @@ C64::basicRomReleased()
 }
 
 const char *
-C64::charRomReleased()
+C64::charRomRevision()
 {
     return RomFile::released(charRomIdentifier());
 }
 
 const char *
-C64::kernalRomReleased()
+C64::kernalRomRevision()
 {
     // Intercept if a MEGA65 Rom is installed
     if (hasMega65KernalRom()) return mega65KernalRev();
@@ -1219,7 +1219,7 @@ C64::kernalRomReleased()
 }
 
 const char *
-C64::vc1541RomReleased()
+C64::vc1541RomRevision()
 {
     return RomFile::released(vc1541RomIdentifier());
 }

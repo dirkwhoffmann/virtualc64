@@ -1901,24 +1901,24 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     const char *str = wrapper->c64->vc1541RomSubtitle();
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) basicRomReleased
+- (NSString *) basicRomRevision
 {
-    const char *str = wrapper->c64->basicRomReleased();
+    const char *str = wrapper->c64->basicRomRevision();
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) charRomReleased
+- (NSString *) charRomRevision
 {
-    const char *str = wrapper->c64->charRomReleased();
+    const char *str = wrapper->c64->charRomRevision();
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) kernalRomReleased
+- (NSString *) kernalRomRevision
 {
-    const char *str = wrapper->c64->kernalRomReleased();
+    const char *str = wrapper->c64->kernalRomRevision();
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) vc1541RomReleased
+- (NSString *) vc1541RomRevision
 {
-    const char *str = wrapper->c64->vc1541RomReleased();
+    const char *str = wrapper->c64->vc1541RomRevision();
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (BOOL) isCommodoreRom:(RomIdentifier)rev
