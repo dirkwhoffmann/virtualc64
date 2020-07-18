@@ -9,6 +9,8 @@
 
 // swiftlint:disable colon
 
+import Carbon.HIToolbox
+
 //
 // Convenience extensions to UserDefaults
 //
@@ -33,7 +35,7 @@ extension UserDefaults {
         }
     }
     
-    // Encodes an item of generic type 'Decodable'
+    // Decodes an item of generic type 'Decodable'
     func decode<T: Decodable>(_ item: inout T, forKey key: String) {
         
         if let data = data(forKey: key) {
@@ -57,25 +59,13 @@ extension UserDefaults {
         track()
         
         registerGeneralUserDefaults()
-        registerRomUserDefaults()
-        registerKeyMapUserDefaults()
         registerDevicesUserDefaults()
-        registerVideoUserDefaults()
-        registerEmulatorUserDefaults()
-        registerHardwareUserDefaults()
-    }
-    
-    static func resetUserDefaults() {
+        registerKeyboardUserDefaults()
+        registerMediaUserDefaults()
         
-        track()
-                
-        resetGeneralUserDefaults()
-        resetRomUserDefaults()
-        resetKeyMapUserDefaults()
-        resetDevicesUserDefaults()
-        resetVideoUserDefaults()
-        resetEmulatorUserDefaults()
-        resetHardwareUserDefaults()        
+        registerRomUserDefaults()
+        registerHardwareUserDefaults()
+        registerVideoUserDefaults()
     }
 }
 
@@ -88,24 +78,24 @@ extension MyController {
         c64.suspend()
         
         pref.loadGeneralUserDefaults()
-        loadDevicesUserDefaults()
-        loadKeyMapUserDefaults()
+        pref.loadDevicesUserDefaults()
+        pref.loadKeyboardUserDefaults()
         pref.loadMediaUserDefaults()
         
         config.loadRomUserDefaults()
         config.loadHardwareUserDefaults()
-        loadVideoUserDefaults()
+        config.loadVideoUserDefaults()
         
         c64.resume()
     }
     
-    func loadUserDefaults(url: URL) {
+    func loadUserDefaults(url: URL, prefixes: [String]) {
         
         if let fileContents = NSDictionary(contentsOf: url) {
             
             if let dict = fileContents as? [String: Any] {
                 
-                let filteredDict = dict.filter { $0.0.hasPrefix("VC64") }
+                let filteredDict = dict.filter { prefixes.contains(where: $0.0.hasPrefix) }
                 
                 let defaults = UserDefaults.standard
                 defaults.setValuesForKeys(filteredDict)
@@ -115,29 +105,15 @@ extension MyController {
         }
     }
     
-    func saveUserDefaults() {
-        
-        track()
-                
-        pref.saveGeneralUserDefaults()
-        saveDevicesUserDefaults()
-        saveKeyMapUserDefaults()
-
-        config.saveRomUserDefaults()
-        config.saveHardwareUserDefaults()
-        saveVideoUserDefaults()
-    }
-
-    func saveUserDefaults(url: URL) {
+    func saveUserDefaults(url: URL, prefixes: [String]) {
         
         track()
         
         let dict = UserDefaults.standard.dictionaryRepresentation()
-        let filteredDict = dict.filter { $0.0.hasPrefix("VC64") }
+        let filteredDict = dict.filter { prefixes.contains(where: $0.0.hasPrefix) }
         let nsDict = NSDictionary.init(dictionary: filteredDict)
         nsDict.write(to: url, atomically: true)
     }
-    
 }
 
 //
@@ -238,20 +214,6 @@ struct GeneralDefaults {
     )
 }
 
-extension Keys {
-    
-    // Control ports
-    static let inputDevice1      = "VC64InputDevice1"
-    static let inputDevice2      = "VC64InputDevice2"
-}
-
-struct Defaults {
-    
-    // Control ports
-    static let inputDevice1 = -1
-    static let inputDevice2 = -1
-}
-
 extension UserDefaults {
 
     static func registerGeneralUserDefaults() {
@@ -286,16 +248,6 @@ extension UserDefaults {
         let userDefaults = UserDefaults.standard
         
         userDefaults.register(defaults: dictionary)
-        
-        // MOVE TO HARDWARE
-        let dictionary2: [String: Any] = [
-            
-            Keys.inputDevice1: Defaults.inputDevice1,
-            Keys.inputDevice2: Defaults.inputDevice2
-        ]
-        
-        // let userDefaults = UserDefaults.standard
-        userDefaults.register(defaults: dictionary2)
     }
     
     static func resetGeneralUserDefaults() {
@@ -327,167 +279,161 @@ extension UserDefaults {
         ]
         
         for key in keys { defaults.removeObject(forKey: key) }
-        
-        // MOVE TO HARDWARE
-        // let defaults = UserDefaults.standard
-        
-        let keys2 = [ Keys.inputDevice1,
-                      Keys.inputDevice2,
-                      
-                      Keys.mapKeysByPosition
-        ]
-        
-        for key in keys2 { defaults.removeObject(forKey: key) }
     }
 }
     
-extension MyController {
-    
-}
-
 //
-// User defaults (Devices)
+// User defaults (Input Devices)
 //
 
 extension Keys {
     
-    // Mouse
-    static let mouseModel        = "VC64MouseModelKey"
-
     // Joysticks
-    static let disconnectJoyKeys = "VC64DisconnectKeys"
-    static let autofire          = "VC64Autofire"
-    static let autofireBullets   = "VC64AutofireBullets"
-    static let autofireFrequency = "VC64AutofireFrequency"
-    static let joyKeyMap1        = "VC64JoyKeyMap1"
-    static let joyKeyMap2        = "VC64JoyKeyMap2"
-}
-
-extension Defaults {
+    static let joyKeyMap1        = "VC64_DEV_JoyKeyMap1"
+    static let joyKeyMap2        = "VC64_DEV_JoyKeyMap2"
+    static let disconnectJoyKeys = "VC64_DEV_DisconnectKeys"
+    static let autofire          = "VC64_DEV_Autofire"
+    static let autofireBullets   = "VC64_DEV_AutofireBullets"
+    static let autofireFrequency = "VC64_DEV_AutofireFrequency"
     
     // Mouse
-    static let mouseModel        = MOUSE1350
+    static let mouseModel        = "VC64_DEV_MouseModel"
+}
+
+struct DevicesDefaults {
     
     // Joysticks
-    static let disconnectJoyKeys = true
-    static let autofire          = false
-    static let autofireBullets   = -3
-    static let autofireFrequency = Float(2.5)
+    let joyKeyMap1: [MacKey: UInt32]
+    let joyKeyMap2: [MacKey: UInt32]
+    let disconnectJoyKeys: Bool
+    let autofire: Bool
+    let autofireBullets: Int
+    let autofireFrequency: Float
     
-    static let joyKeyMap1 = [
-        MacKey.curLeft: JOYSTICK_LEFT.rawValue,
-        MacKey.curRight: JOYSTICK_RIGHT.rawValue,
-        MacKey.curUp: JOYSTICK_UP.rawValue,
-        MacKey.curDown: JOYSTICK_DOWN.rawValue,
-        MacKey.space: JOYSTICK_FIRE.rawValue
-    ]
-    static let joyKeyMap2 = [
-        MacKey.Ansi.s: JOYSTICK_LEFT.rawValue,
-        MacKey.Ansi.d: JOYSTICK_RIGHT.rawValue,
-        MacKey.Ansi.e: JOYSTICK_UP.rawValue,
-        MacKey.Ansi.x: JOYSTICK_DOWN.rawValue,
-        MacKey.Ansi.c: JOYSTICK_FIRE.rawValue
-    ]
+    // Mouse
+    let mouseModel: MouseModel
+    
+    //
+    // Schemes
+    //
+    
+    static let stdKeyMap1 = [
+         
+         MacKey.init(keyCode: kVK_LeftArrow): PULL_LEFT.rawValue,
+         MacKey.init(keyCode: kVK_RightArrow): PULL_RIGHT.rawValue,
+         MacKey.init(keyCode: kVK_UpArrow): PULL_UP.rawValue,
+         MacKey.init(keyCode: kVK_DownArrow): PULL_DOWN.rawValue,
+         MacKey.init(keyCode: kVK_Space): PRESS_FIRE.rawValue
+     ]
+     static let stdKeyMap2 = [
+         
+         MacKey.init(keyCode: kVK_ANSI_S): PULL_LEFT.rawValue,
+         MacKey.init(keyCode: kVK_ANSI_D): PULL_RIGHT.rawValue,
+         MacKey.init(keyCode: kVK_ANSI_E): PULL_UP.rawValue,
+         MacKey.init(keyCode: kVK_ANSI_X): PULL_DOWN.rawValue,
+         MacKey.init(keyCode: kVK_ANSI_C): PRESS_FIRE.rawValue
+     ]
+    
+    static let std = DevicesDefaults.init(
+        
+        joyKeyMap1: stdKeyMap1,
+        joyKeyMap2: stdKeyMap2,
+        disconnectJoyKeys: true,
+        autofire: false,
+        autofireBullets: -3,
+        autofireFrequency: 2.5,
+        
+        mouseModel: MOUSE1350
+    )
 }
-    
+
 extension UserDefaults {
     
     static func registerDevicesUserDefaults() {
         
+        let defaults = DevicesDefaults.std
         let dictionary: [String: Any] = [
-            Keys.mouseModel: Int(Defaults.mouseModel.rawValue),
-            Keys.disconnectJoyKeys: Defaults.disconnectJoyKeys,
-            Keys.autofire: Defaults.autofire,
-            Keys.autofireBullets: Defaults.autofireBullets,
-            Keys.autofireFrequency: Defaults.autofireFrequency
+
+            // Joysticks
+            Keys.disconnectJoyKeys: defaults.disconnectJoyKeys,
+            Keys.autofire: defaults.autofire,
+            Keys.autofireBullets: defaults.autofireBullets,
+            Keys.autofireFrequency: defaults.autofireFrequency,
+            
+            // Mouse
+            Keys.mouseModel: defaults.mouseModel.rawValue
         ]
         
-        let defaults = UserDefaults.standard
-        defaults.register(defaults: dictionary)
-        defaults.register(encodableItem: Defaults.joyKeyMap1, forKey: Keys.joyKeyMap1)
-        defaults.register(encodableItem: Defaults.joyKeyMap2, forKey: Keys.joyKeyMap2)
+        let userDefaults = UserDefaults.standard
+        userDefaults.register(defaults: dictionary)
+        userDefaults.register(encodableItem: defaults.joyKeyMap1, forKey: Keys.joyKeyMap1)
+        userDefaults.register(encodableItem: defaults.joyKeyMap2, forKey: Keys.joyKeyMap2)
     }
-
+    
     static func resetDevicesUserDefaults() {
         
         let defaults = UserDefaults.standard
         
-        let keys = [ Keys.mouseModel,
+        let keys = [ Keys.joyKeyMap1,
+                     Keys.joyKeyMap2,
                      Keys.disconnectJoyKeys,
                      Keys.autofire,
                      Keys.autofireBullets,
                      Keys.autofireFrequency,
                      
-                     Keys.joyKeyMap1,
-                     Keys.joyKeyMap2
-        ]
-
+                     Keys.mouseModel ]
+        
         for key in keys { defaults.removeObject(forKey: key) }
     }
 }
- 
-extension MyController {
-    
-    func loadDevicesUserDefaults() {
-        
-        let defaults = UserDefaults.standard
-    
-        c64.suspend()
-        
-        c64.mouse.setModel(defaults.integer(forKey: Keys.mouseModel))
-        keyboard.disconnectJoyKeys = defaults.bool(forKey: Keys.disconnectJoyKeys)
-        c64.port1.setAutofire(defaults.bool(forKey: Keys.autofire))
-        c64.port2.setAutofire(defaults.bool(forKey: Keys.autofire))
-        c64.port1.setAutofireBullets(defaults.integer(forKey: Keys.autofireBullets))
-        c64.port2.setAutofireBullets(defaults.integer(forKey: Keys.autofireBullets))
-        c64.port1.setAutofireFrequency(defaults.float(forKey: Keys.autofireFrequency))
-        c64.port2.setAutofireFrequency(defaults.float(forKey: Keys.autofireFrequency))
-        defaults.decode(&gamePadManager.gamePads[0]!.keyMap, forKey: Keys.joyKeyMap1)
-        defaults.decode(&gamePadManager.gamePads[1]!.keyMap, forKey: Keys.joyKeyMap2)
- 
-        c64.resume()
-    }
-    
-    func saveDevicesUserDefaults() {
-        
-        let defaults = UserDefaults.standard
-        
-        defaults.set(c64.mouse.model(), forKey: Keys.mouseModel)
-        defaults.set(keyboard.disconnectJoyKeys, forKey: Keys.disconnectJoyKeys)
-        defaults.set(c64.port1.autofire(), forKey: Keys.autofire)
-        defaults.set(c64.port1.autofireBullets(), forKey: Keys.autofireBullets)
-        defaults.set(c64.port1.autofireFrequency(), forKey: Keys.autofireFrequency)
-        defaults.encode(gamePadManager.gamePads[0]!.keyMap, forKey: Keys.joyKeyMap1)
-        defaults.encode(gamePadManager.gamePads[1]!.keyMap, forKey: Keys.joyKeyMap2)
-    }
-}
 
 //
-// User defaults (Keymap)
+// User defaults (Keyboard)
 //
 
 extension Keys {
-    static let keyMap = "VC64KeyMap"
+    
+    // Key map
+    static let keyMap            = "VC64KeyMap"
     static let mapKeysByPosition = "VC64MapKeysByPosition"
 }
 
-extension Defaults {
-    static let keyMap = KeyboardController.standardKeyMap
-    static let mapKeysByPosition = false
+struct KeyboardDefaults {
+    
+    // Key map
+    let keyMap: [MacKey: C64Key]
+    let mapKeysByPosition: Bool
+    
+    //
+    // Schemes
+    //
+    
+    static let symbolicMapping = KeyboardDefaults.init(
+        
+        keyMap: [:],
+        mapKeysByPosition: false
+    )
+
+    static let positionalMapping = KeyboardDefaults.init(
+        
+        keyMap: KeyboardController.standardKeyMap,
+        mapKeysByPosition: true
+    )
 }
 
 extension UserDefaults {
     
-    static func registerKeyMapUserDefaults() {
+    static func registerKeyboardUserDefaults() {
         
+        let defaults = KeyboardDefaults.symbolicMapping
         let dictionary: [String: Any] = [
             
-            Keys.mapKeysByPosition: Defaults.mapKeysByPosition
+            Keys.mapKeysByPosition: defaults.mapKeysByPosition
         ]
         
-        let defaults = UserDefaults.standard
-        defaults.register(defaults: dictionary)
-        defaults.register(encodableItem: Defaults.keyMap, forKey: Keys.keyMap)
+        let userDefaults = UserDefaults.standard
+        userDefaults.register(defaults: dictionary)
+        userDefaults.register(encodableItem: defaults.keyMap, forKey: Keys.keyMap)
     }
     
     static func resetKeyMapUserDefaults() {
@@ -497,11 +443,12 @@ extension UserDefaults {
         let keys = [ Keys.mapKeysByPosition,
                      Keys.keyMap
         ]
-
+        
         for key in keys { defaults.removeObject(forKey: key) }
     }
 }
 
+/*
 extension MyController {
         
     func loadKeyMapUserDefaults() {
@@ -518,6 +465,7 @@ extension MyController {
         defaults.set(keyboard.mapKeysByPosition, forKey: Keys.mapKeysByPosition)
     }
 }
+*/
 
 //
 // User defaults (Media)
@@ -526,81 +474,73 @@ extension MyController {
 extension Keys {
     
     // Media files
-    static let autoMountAction      = "VC64AutoMountAction"
-    static let autoType             = "VC64AutoType"
-    static let autoTypeText         = "VC64AutoTypeText"
+    static let mountAction          = "VC64_MED_AutoMountAction"
+    static let autoType             = "VC64_MED_AutoType"
+    static let autoText             = "VC64_MED_AutoText"
 }
 
-extension Defaults {
-   
+struct MediaDefaults {
+    
     // Media files
-    static let autoMountAction      = [ "D64": AutoMountAction.openBrowser,
-                                        "PRG": AutoMountAction.openBrowser,
-                                        "T64": AutoMountAction.openBrowser,
-                                        "TAP": AutoMountAction.openBrowser,
-                                        "CRT": AutoMountAction.openBrowser ]
-    static let autoType             = [ "D64": true,
-                                        "PRG": true,
-                                        "T64": true,
-                                        "TAP": true,
-                                        "CRT": false ]
-    static let autoTypeText         = [ "D64": "LOAD \"*\",8,1:",
-                                        "PRG": "RUN",
-                                        "T64": "RUN",
-                                        "TAP": "LOAD",
-                                        "CRT": "" ]
+    let mountAction: [String: AutoMountAction]
+    let autoType: [String: Bool]
+    let autoText: [String: String]
+   
+    //
+    // Schemes
+    //
+    
+    static let stdAutoMountAction = [ "D64": AutoMountAction.openBrowser,
+                                      "PRG": AutoMountAction.openBrowser,
+                                      "T64": AutoMountAction.openBrowser,
+                                      "TAP": AutoMountAction.openBrowser,
+                                      "CRT": AutoMountAction.openBrowser ]
+    
+    static let stdAutoType        = [ "D64": true,
+                                      "PRG": true,
+                                      "T64": true,
+                                      "TAP": true,
+                                      "CRT": false ]
+    
+    static let stdAutoText        = [ "D64": "LOAD \"*\",8,1:",
+                                      "PRG": "RUN",
+                                      "T64": "RUN",
+                                      "TAP": "LOAD",
+                                      "CRT": "" ]
+
+    
+    static let std = MediaDefaults.init(
+        
+        mountAction: stdAutoMountAction,
+        autoType: stdAutoType,
+        autoText: stdAutoText
+    )
 }
 
 extension UserDefaults {
     
-    static func registerEmulatorUserDefaults() {
+    static func registerMediaUserDefaults() {
         
-        let defaults = UserDefaults.standard
+        let defaults = MediaDefaults.std
                 
-        defaults.register(encodableItem: Defaults.autoMountAction, forKey: Keys.autoMountAction)
-        defaults.register(encodableItem: Defaults.autoType, forKey: Keys.autoType)
-        defaults.register(encodableItem: Defaults.autoTypeText, forKey: Keys.autoTypeText)
+        let userDefaults = UserDefaults.standard
+        userDefaults.register(encodableItem: defaults.mountAction, forKey: Keys.mountAction)
+        userDefaults.register(encodableItem: defaults.autoType, forKey: Keys.autoType)
+        userDefaults.register(encodableItem: defaults.autoText, forKey: Keys.autoText)
     }
 
-    static func resetEmulatorUserDefaults() {
+    static func resetMediaDefaults() {
         
         let defaults = UserDefaults.standard
         
-        let keys = [Keys.autoMountAction,
+        let keys = [Keys.mountAction,
                     Keys.autoType,
-                    Keys.autoTypeText
+                    Keys.autoText
         ]
-
+        
         for key in keys { defaults.removeObject(forKey: key) }
     }
 }
-
-/*
-extension MyController {
-        
-    func loadEmulatorUserDefaults() {
-        
-        let defaults = UserDefaults.standard
-            
-        c64.suspend()
-        
-        defaults.decode(&autoMountAction, forKey: Keys.autoMountAction)
-        defaults.decode(&autoType, forKey: Keys.autoType)
-        defaults.decode(&autoTypeText, forKey: Keys.autoTypeText)
-        
-        c64.resume()
-    }
-    
-    func saveEmulatorUserDefaults() {
-        
-        let defaults = UserDefaults.standard
-        
-        defaults.encode(autoMountAction, forKey: Keys.autoMountAction)
-        defaults.encode(autoType, forKey: Keys.autoType)
-        defaults.encode(autoTypeText, forKey: Keys.autoTypeText)
-    }
-}
-*/
 
 //
 // User defaults (Roms)
@@ -641,7 +581,7 @@ extension UserDefaults {
             try? fm.removeItem(at: url)
         }
         if let url = vc1541RomUrl {
-            track("Deleting VC1541 Rom")
+            track("Deleting Drive Rom")
             try? fm.removeItem(at: url)
         }
     }
@@ -654,33 +594,43 @@ extension UserDefaults {
 extension Keys {
     
     //VICII
-    static let vicRevision    = "VC64VICChipModelKey"
-    static let grayDotBug     = "VC64VICGrayDotBugKey"
+    static let vicRevision    = "VC64_HW_VicRev"
+    static let grayDotBug     = "VC64_HW_GrayDotBug"
     
     // CIAs
-    static let ciaRevision    = "VC64CIAChipModelKey"
-    static let timerBBug      = "VC64CIATimerBBugKey"
+    static let ciaRevision    = "VC64_HW_CiaRev"
+    static let timerBBug      = "VC64_HW_TimerBBug"
     
     // SID
-    static let sidRevision    = "VC64SIDChipModelKey"
-    static let reSID          = "VC64SIDReSIDKey"
-    static let audioFilter    = "VC64SIDFilterKey"
-    static let sampling       = "VC64SIDSamplingMethodKey"
+    static let sidRevision    = "VC64_HW_SidRev"
+    static let reSID          = "VC64_HW_ReSid"
+    static let audioFilter    = "VC64_HW_AudioFilter"
+    static let sampling       = "VC64_HW_Sampling"
     
     // Logic board and RAM
-    static let glueLogic      = "VC64GlueLogicKey"
-    static let initPattern    = "VC64InitPatternKey"
+    static let glueLogic      = "VC64_HW_GlueLogic"
+    static let initPattern    = "VC64_HW_RamPattern"
+    
+    // Drive
+    static let drive8Connect  = "VC64_HW_Drive8Connect"
+    static let drive8Type     = "VC64_HW_Drive8Type"
+    static let drive9Connect  = "VC64_HW_Drive9Connect"
+    static let drive9Type     = "VC64_HW_Drive9Type"
+    
+    // Ports
+    static let gameDevice1    = "VC64_HW_GameDevice1"
+    static let gameDevice2    = "VC64_HW_GameDevice2"
 }
 
 struct HardwareDefaults {
     
-    var vicRevision: VICRevision
+    var vicRev: VICRevision
     var grayDotBug: Bool
     
-    var ciaRevision: CIARevision
+    var ciaRev: CIARevision
     var timerBBug: Bool
     
-    var sidRevision: SIDRevision
+    var sidRev: SIDRevision
     var reSID: Bool
     var audioFilter: Bool
     var sampling: SamplingMethod
@@ -688,92 +638,146 @@ struct HardwareDefaults {
     var glueLogic: GlueLogic
     var initPattern: RamInitPattern
 
+    var driveConnect: [Bool]
+    var driveType: [DriveType]
+    
+    var gameDevice1: Int
+    var gameDevice2: Int
+    
     //
     // Schemes
     //
     
     static let C64_PAL = HardwareDefaults.init(
         
-        vicRevision: PAL_6569_R3,
-        grayDotBug:  false,
-        ciaRevision: MOS_6526,
-        timerBBug:   true,
-        sidRevision: MOS_6581,
-        reSID:       true,
-        audioFilter: true,
-        sampling:    SID_SAMPLE_INTERPOLATE,
-        glueLogic:   GLUE_DISCRETE,
-        initPattern: INIT_PATTERN_C64
+        vicRev:       PAL_6569_R3,
+        grayDotBug:   false,
+        
+        ciaRev:       MOS_6526,
+        timerBBug:    true,
+        
+        sidRev:       MOS_6581,
+        reSID:        true,
+        audioFilter:  true,
+        sampling:     SID_SAMPLE_INTERPOLATE,
+        
+        glueLogic:    GLUE_DISCRETE,
+        initPattern:  INIT_PATTERN_C64,
+        
+        driveConnect: [true, false],
+        driveType:    [DRIVE_VC1541II, DRIVE_VC1541II],
+        gameDevice1:  -1,
+        gameDevice2:  -1
     )
     
     static let C64_II_PAL = HardwareDefaults.init(
         
-        vicRevision: PAL_8565,
-        grayDotBug:  true,
-        ciaRevision: MOS_8521,
-        timerBBug:   false,
-        sidRevision: MOS_8580,
-        reSID:       true,
-        audioFilter: true,
-        sampling:    SID_SAMPLE_INTERPOLATE,
-        glueLogic:   GLUE_CUSTOM_IC,
-        initPattern: INIT_PATTERN_C64C
+        vicRev:       PAL_8565,
+        grayDotBug:   true,
+        
+        ciaRev:       MOS_8521,
+        timerBBug:    false,
+        
+        sidRev:       MOS_8580,
+        reSID:        true,
+        audioFilter:  true,
+        sampling:     SID_SAMPLE_INTERPOLATE,
+        
+        glueLogic:    GLUE_CUSTOM_IC,
+        initPattern:  INIT_PATTERN_C64C,
+        
+        driveConnect: [true, false],
+        driveType:    [DRIVE_VC1541II, DRIVE_VC1541II],
+        gameDevice1:  -1,
+        gameDevice2:  -1
     )
     
     static let C64_OLD_PAL = HardwareDefaults.init(
         
-        vicRevision: PAL_6569_R1,
-        grayDotBug:  false,
-        ciaRevision: MOS_6526,
-        timerBBug:   true,
-        sidRevision: MOS_6581,
-        reSID:       true,
-        audioFilter: true,
-        sampling:    SID_SAMPLE_INTERPOLATE,
-        glueLogic:   GLUE_DISCRETE,
-        initPattern: INIT_PATTERN_C64
+        vicRev:       PAL_6569_R1,
+        grayDotBug:   false,
+        
+        ciaRev:       MOS_6526,
+        timerBBug:    true,
+        
+        sidRev:       MOS_6581,
+        reSID:        true,
+        audioFilter:  true,
+        sampling:     SID_SAMPLE_INTERPOLATE,
+        
+        glueLogic:    GLUE_DISCRETE,
+        initPattern:  INIT_PATTERN_C64,
+        
+        driveConnect: [true, false],
+        driveType:    [DRIVE_VC1541II, DRIVE_VC1541II],
+        gameDevice1:  -1,
+        gameDevice2:  -1
     )
 
     static let C64_NTSC = HardwareDefaults.init(
         
-        vicRevision: NTSC_6567,
-        grayDotBug:  false,
-        ciaRevision: MOS_6526,
-        timerBBug:   false,
-        sidRevision: MOS_6581,
-        reSID:       true,
-        audioFilter: true,
-        sampling:    SID_SAMPLE_INTERPOLATE,
-        glueLogic:   GLUE_DISCRETE,
-        initPattern: INIT_PATTERN_C64
+        vicRev:       NTSC_6567,
+        grayDotBug:   false,
+        
+        ciaRev:       MOS_6526,
+        timerBBug:    false,
+        
+        sidRev:       MOS_6581,
+        reSID:        true,
+        audioFilter:  true,
+        sampling:     SID_SAMPLE_INTERPOLATE,
+        
+        glueLogic:    GLUE_DISCRETE,
+        initPattern:  INIT_PATTERN_C64,
+        
+        driveConnect: [true, false],
+        driveType:    [DRIVE_VC1541II, DRIVE_VC1541II],
+        gameDevice1:  -1,
+        gameDevice2:  -1
     )
     
     static let C64_II_NTSC = HardwareDefaults.init(
         
-        vicRevision: NTSC_8562,
-        grayDotBug:  true,
-        ciaRevision: MOS_8521,
-        timerBBug:   true,
-        sidRevision: MOS_8580,
-        reSID:       true,
-        audioFilter: true,
-        sampling:    SID_SAMPLE_INTERPOLATE,
-        glueLogic:   GLUE_CUSTOM_IC,
-        initPattern: INIT_PATTERN_C64C
+        vicRev:       NTSC_8562,
+        grayDotBug:   true,
+        
+        ciaRev:       MOS_8521,
+        timerBBug:    true,
+        
+        sidRev:       MOS_8580,
+        reSID:        true,
+        audioFilter:  true,
+        sampling:     SID_SAMPLE_INTERPOLATE,
+        
+        glueLogic:    GLUE_CUSTOM_IC,
+        initPattern:  INIT_PATTERN_C64C,
+        
+        driveConnect: [true, false],
+        driveType:    [DRIVE_VC1541II, DRIVE_VC1541II],
+        gameDevice1:  -1,
+        gameDevice2:  -1
     )
     
     static let C64_OLD_NTSC = HardwareDefaults.init(
         
-        vicRevision: NTSC_6567_R56A,
-        grayDotBug:  false,
-        ciaRevision: MOS_6526,
-        timerBBug:   false,
-        sidRevision: MOS_6581,
-        reSID:       true,
-        audioFilter: true,
-        sampling:    SID_SAMPLE_INTERPOLATE,
-        glueLogic:   GLUE_DISCRETE,
-        initPattern: INIT_PATTERN_C64
+        vicRev:       NTSC_6567_R56A,
+        grayDotBug:   false,
+        
+        ciaRev:       MOS_6526,
+        timerBBug:    false,
+        
+        sidRev:       MOS_6581,
+        reSID:        true,
+        audioFilter:  true,
+        sampling:     SID_SAMPLE_INTERPOLATE,
+        
+        glueLogic:    GLUE_DISCRETE,
+        initPattern:  INIT_PATTERN_C64,
+        
+        driveConnect: [true, false],
+        driveType:    [DRIVE_VC1541II, DRIVE_VC1541II],
+        gameDevice1:  -1,
+        gameDevice2:  -1
     )
 }
 
@@ -784,19 +788,27 @@ extension UserDefaults {
         let defaults = HardwareDefaults.C64_PAL
         let dictionary: [String: Any] = [
             
-            Keys.vicRevision: defaults.vicRevision.rawValue,
-            Keys.grayDotBug:  defaults.grayDotBug,
+            Keys.vicRevision:   defaults.vicRev.rawValue,
+            Keys.grayDotBug:    defaults.grayDotBug,
             
-            Keys.ciaRevision: defaults.ciaRevision.rawValue,
-            Keys.timerBBug:   defaults.timerBBug,
+            Keys.ciaRevision:   defaults.ciaRev.rawValue,
+            Keys.timerBBug:     defaults.timerBBug,
             
-            Keys.sidRevision: defaults.sidRevision.rawValue,
-            Keys.reSID:       defaults.reSID,
-            Keys.audioFilter: defaults.audioFilter,
-            Keys.sampling:    defaults.sampling.rawValue,
+            Keys.sidRevision:   defaults.sidRev.rawValue,
+            Keys.reSID:         defaults.reSID,
+            Keys.audioFilter:   defaults.audioFilter,
+            Keys.sampling:      defaults.sampling.rawValue,
             
-            Keys.glueLogic:   defaults.glueLogic.rawValue,
-            Keys.initPattern: defaults.initPattern.rawValue
+            Keys.glueLogic:     defaults.glueLogic.rawValue,
+            Keys.initPattern:   defaults.initPattern.rawValue,
+            
+            Keys.drive8Connect: defaults.driveConnect[0],
+            Keys.drive8Type:    defaults.driveType[0].rawValue,
+            Keys.drive9Connect: defaults.driveConnect[1],
+            Keys.drive9Type:    defaults.driveType[1].rawValue,
+            
+            Keys.gameDevice1:   defaults.gameDevice1,
+            Keys.gameDevice2:   defaults.gameDevice2
         ]
         
         let userDefaults = UserDefaults.standard
@@ -819,7 +831,15 @@ extension UserDefaults {
                     Keys.sampling,
                     
                     Keys.glueLogic,
-                    Keys.initPattern
+                    Keys.initPattern,
+                    
+                    Keys.drive8Connect,
+                    Keys.drive8Type,
+                    Keys.drive9Connect,
+                    Keys.drive9Type,
+                    
+                    Keys.gameDevice1,
+                    Keys.gameDevice2
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }
@@ -832,87 +852,226 @@ extension UserDefaults {
 
 extension Keys {
     
-    static let palette         = "VC64PaletteKey"
-    static let brightness      = "VC64BrightnessKey"
-    static let contrast        = "VC64ContrastKey"
-    static let saturation      = "VC64SaturationKey"
-    static let upscaler        = "VC64UpscalerKey"
+    // Colors
+    static let palette            = "VC64_VID_Palette"
+    static let brightness         = "VC64_VID_Brightness"
+    static let contrast           = "VC64_VID_Contrast"
+    static let saturation         = "VC64_VID_Saturation"
 
     // Geometry
-    static let eyeX            = "VC64EyeX"
-    static let eyeY            = "VC64EyeY"
-    static let eyeZ            = "VC64EyeZ"
-    
-    // GPU options
-    static let shaderOptions   = "VC64ShaderOptionsKey"
+    static let hCenter            = "VC64_VID_HCenter"
+    static let vCenter            = "VC64_VID_VCenter"
+    static let hZoom              = "VC64_VID_HZoom"
+    static let vZoom              = "VC64_VID_VZoom"
+
+    // Upscalers
+    static let upscaler           = "VC64_VID_Upscaler"
+
+    // Shader options
+    static let blur               = "VC64_VID_Blur"
+    static let blurRadius         = "VC64_VID_BlurRadius"
+    static let bloom              = "VC64_VID_Bloom"
+    static let bloomRadius        = "VC64_VID_BloonRadius"
+    static let bloomBrightness    = "VC64_VID_BloomBrightness"
+    static let bloomWeight        = "VC64_VID_BloomWeight"
+    static let flicker            = "VC64_VID_Flicker"
+    static let flickerWeight      = "VC64_VID_FlickerWeight"
+    static let dotMask            = "VC64_VID_DotMask"
+    static let dotMaskBrightness  = "VC64_VID_DotMaskBrightness"
+    static let scanlines          = "VC64_VID_Scanlines"
+    static let scanlineBrightness = "VC64_VID_ScanlineBrightness"
+    static let scanlineWeight     = "VC64_VID_ScanlineWeight"
+    static let disalignment       = "VC64_VID_Disalignment"
+    static let disalignmentH      = "VC64_VID_DisalignmentH"
+    static let disalignmentV      = "VC64_VID_DisalignmentV"
 }
 
-extension Defaults {
+struct VideoDefaults {
     
-    static let palette = COLOR_PALETTE
-    static let brightness = Double(50.0)
-    static let contrast = Double(100.0)
-    static let saturation = Double(50.0)
-    static let upscaler = 0
+    // Colors
+    let palette: Palette
+    let brightness: Double
+    let contrast: Double
+    let saturation: Double
     
     // Geometry
-    static let keepAspectRatio = false
-    static let eyeX = Float(0.0)
-    static let eyeY = Float(0.0)
-    static let eyeZ = Float(0.0)
+    let hCenter: Float
+    let vCenter: Float
+    let hZoom: Float
+    let vZoom: Float
     
-    // GPU options
-    static let shaderOptions = ShaderDefaultsTFT
+    // Upscalers
+    let upscaler: Int
+    
+    // Shader options
+    let blur: Int32
+    let blurRadius: Float
+    let bloom: Int32
+    let bloomRadius: Float
+    let bloomBrightness: Float
+    let bloomWeight: Float
+    let flicker: Int32
+    let flickerWeight: Float
+    let dotMask: Int32
+    let dotMaskBrightness: Float
+    let scanlines: Int32
+    let scanlineBrightness: Float
+    let scanlineWeight: Float
+    let disalignment: Int32
+    let disalignmentH: Float
+    let disalignmentV: Float
+    
+    //
+    // Schemes
+    //
+    
+    // TFT monitor appearance
+    static let tft = VideoDefaults.init(
+        
+        palette: COLOR_PALETTE,
+        brightness: 50.0,
+        contrast: 100.0,
+        saturation: 50.0,
+        
+        hCenter: 0,
+        vCenter: 0,
+        hZoom: 0,
+        vZoom: 0,
+        
+        upscaler: 0,
+        
+        blur: 1,
+        blurRadius: 0,
+        bloom: 0,
+        bloomRadius: 1.0,
+        bloomBrightness: 0.4,
+        bloomWeight: 1.21,
+        flicker: 1,
+        flickerWeight: 0.5,
+        dotMask: 0,
+        dotMaskBrightness: 0.7,
+        scanlines: 0,
+        scanlineBrightness: 0.55,
+        scanlineWeight: 0.11,
+        disalignment: 0,
+        disalignmentH: 0.001,
+        disalignmentV: 0.001
+    )
+    
+    // CRT monitor appearance
+    static let crt = VideoDefaults.init(
+        
+        palette: COLOR_PALETTE,
+        brightness: 50.0,
+        contrast: 100.0,
+        saturation: 50.0,
+        
+        hCenter: 0,
+        vCenter: 0,
+        hZoom: 0,
+        vZoom: 0,
+        
+        upscaler: 0,
+        
+        blur: 1,
+        blurRadius: 1.5,
+        bloom: 1,
+        bloomRadius: 1.0,
+        bloomBrightness: 0.4,
+        bloomWeight: 1.21,
+        flicker: 1,
+        flickerWeight: 0.5,
+        dotMask: 1,
+        dotMaskBrightness: 0.5,
+        scanlines: 2,
+        scanlineBrightness: 0.55,
+        scanlineWeight: 0.11,
+        disalignment: 0,
+        disalignmentH: 0.001,
+        disalignmentV: 0.001
+    )
 }
 
 extension UserDefaults {
     
     static func registerVideoUserDefaults() {
         
+        let defaults = VideoDefaults.tft
         let dictionary: [String: Any] = [
             
-            Keys.palette: Int(Defaults.palette.rawValue),
-            Keys.brightness: Defaults.brightness,
-            Keys.contrast: Defaults.contrast,
-            Keys.saturation: Defaults.saturation,
-            Keys.upscaler: Defaults.upscaler,
-
-            Keys.keepAspectRatio: Defaults.keepAspectRatio,
-            Keys.eyeX: Defaults.eyeX,
-            Keys.eyeY: Defaults.eyeY,
-            Keys.eyeZ: Defaults.eyeZ
+            Keys.palette: Int(defaults.palette.rawValue),
+            Keys.brightness: defaults.brightness,
+            Keys.contrast: defaults.contrast,
+            Keys.saturation: defaults.saturation,
+            
+            Keys.hCenter: defaults.hCenter,
+            Keys.vCenter: defaults.vCenter,
+            Keys.hZoom: defaults.hZoom,
+            Keys.vZoom: defaults.vZoom,
+            
+            Keys.upscaler: defaults.upscaler,
+            
+            Keys.blur: defaults.blur,
+            Keys.blurRadius: defaults.blurRadius,
+            Keys.bloom: defaults.bloom,
+            Keys.bloomRadius: defaults.bloomRadius,
+            Keys.bloomBrightness: defaults.bloomBrightness,
+            Keys.bloomWeight: defaults.bloomWeight,
+            Keys.flicker: defaults.flicker,
+            Keys.flickerWeight: defaults.flickerWeight,
+            Keys.dotMask: defaults.dotMask,
+            Keys.dotMaskBrightness: defaults.dotMaskBrightness,
+            Keys.scanlines: defaults.scanlines,
+            Keys.scanlineBrightness: defaults.scanlineBrightness,
+            Keys.scanlineWeight: defaults.scanlineWeight,
+            Keys.disalignment: defaults.disalignment,
+            Keys.disalignmentH: defaults.disalignmentH,
+            Keys.disalignmentV: defaults.disalignmentV
         ]
         
-        let defaults = UserDefaults.standard
-        defaults.register(defaults: dictionary)
-        defaults.register(encodableItem: Defaults.shaderOptions, forKey: Keys.shaderOptions)
+        let userDefaults = UserDefaults.standard
+        userDefaults.register(defaults: dictionary)
     }
-}
-
-extension UserDefaults {
     
     static func resetVideoUserDefaults() {
         
         let defaults = UserDefaults.standard
-        
+                
         let keys = [ Keys.palette,
                      Keys.brightness,
                      Keys.contrast,
                      Keys.saturation,
+                     
+                     Keys.hCenter,
+                     Keys.vCenter,
+                     Keys.hZoom,
+                     Keys.vZoom,
+                     
                      Keys.upscaler,
                      
-                     Keys.keepAspectRatio,
-                     Keys.eyeX,
-                     Keys.eyeY,
-                     Keys.eyeZ,
-                     
-                     Keys.shaderOptions
+                     Keys.blur,
+                     Keys.blurRadius,
+                     Keys.bloom,
+                     Keys.bloomRadius,
+                     Keys.bloomBrightness,
+                     Keys.bloomWeight,
+                     Keys.flicker,
+                     Keys.flickerWeight,
+                     Keys.dotMask,
+                     Keys.dotMaskBrightness,
+                     Keys.scanlines,
+                     Keys.scanlineBrightness,
+                     Keys.scanlineWeight,
+                     Keys.disalignment,
+                     Keys.disalignmentH,
+                     Keys.disalignmentV
         ]
-
+        
         for key in keys { defaults.removeObject(forKey: key) }
     }
 }
 
+/*
 extension MyController {
         
     func loadVideoUserDefaults() {
@@ -959,3 +1118,4 @@ extension MyController {
         defaults.encode(renderer.shaderOptions, forKey: Keys.shaderOptions)
     }
 }
+*/

@@ -383,7 +383,7 @@ struct AnyC64FileWrapper;
 
 - (void *) screenBuffer;
 - (NSColor *) color:(NSInteger)nr;
-- (UInt32) rgbaColor:(NSInteger)nr palette:(VICPalette)palette;
+- (UInt32) rgbaColor:(NSInteger)nr palette:(Palette)palette;
 - (double)brightness;
 - (void)setBrightness:(double)value;
 - (double)contrast;
@@ -525,14 +525,14 @@ struct AnyC64FileWrapper;
 }
 
 - (void) dump;
+
+- (void) trigger:(GamePadAction)event;
 - (BOOL) autofire;
 - (void) setAutofire:(BOOL)value;
 - (NSInteger) autofireBullets;
 - (void) setAutofireBullets:(NSInteger)value;
 - (float) autofireFrequency;
 - (void) setAutofireFrequency:(float)value;
-
-- (void) trigger:(JoystickEvent)event;
 
 @end
 

@@ -36,22 +36,19 @@ extension MyController {
         track("setPort1: \(value)")
         
         // Remember selection
-        inputDevice1 = value
+        config.gameDevice1 = value
         
         // Avoid double mappings
-        inputDevice2 = (inputDevice1 == inputDevice2) ? InputDevice.none : inputDevice2
+        config.gameDevice2 = (config.gameDevice1 == config.gameDevice2) ? InputDevice.none : config.gameDevice2
         
         // Connect or disconnect analog mouse
-        if c64.mouse.port() != 1 && inputDevice1 == InputDevice.mouse {
+        if c64.mouse.port() != 1 && config.gameDevice1 == InputDevice.mouse {
             c64.mouse.connect(1)
         }
-        if c64.mouse.port() == 1 && inputDevice1 != InputDevice.mouse {
+        if c64.mouse.port() == 1 && config.gameDevice1 != InputDevice.mouse {
             c64.mouse.disconnect()
         }
-        
-        UserDefaults.standard.set(inputDevice1, forKey: Keys.inputDevice1)
-        UserDefaults.standard.set(inputDevice2, forKey: Keys.inputDevice2)
-        
+                
         toolbar.validateVisibleItems()
     }
     
@@ -63,22 +60,19 @@ extension MyController {
     func setPort2(_ value: Int) {
         
         // Remember selection
-        inputDevice2 = value
+        config.gameDevice2 = value
         
         // Avoid double mappings
-        inputDevice1 = (inputDevice1 == inputDevice2) ? InputDevice.none : inputDevice1
+        config.gameDevice1 = (config.gameDevice1 == config.gameDevice2) ? InputDevice.none : config.gameDevice1
         
         // Connect or disconnect analog mouse
-        if c64.mouse.port() != 2 && inputDevice2 == InputDevice.mouse {
+        if c64.mouse.port() != 2 && config.gameDevice2 == InputDevice.mouse {
             c64.mouse.connect(2)
         }
-        if c64.mouse.port() == 2 && inputDevice2 != InputDevice.mouse {
+        if c64.mouse.port() == 2 && config.gameDevice2 != InputDevice.mouse {
             c64.mouse.disconnect()
         }
         
-        UserDefaults.standard.set(inputDevice1, forKey: Keys.inputDevice1)
-        UserDefaults.standard.set(inputDevice2, forKey: Keys.inputDevice2)
-
         toolbar.validateVisibleItems()
     }
         

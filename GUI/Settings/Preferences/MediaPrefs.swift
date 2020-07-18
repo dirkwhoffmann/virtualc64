@@ -15,14 +15,14 @@ extension PreferencesController {
         
         func refresh(_ s: String, _ p: NSPopUpButton, _ b: NSButton, _ t: NSTextField) {
             
-            let autoAction = pref.autoMountAction[s]?.rawValue ?? 0
+            let mountAction = pref.mountAction[s]?.rawValue ?? 0
             let autoType = pref.autoType[s] ?? false
-            let autoTypeText = pref.autoTypeText[s] ?? ""
-            p.selectItem(withTag: autoAction)
-            b.isEnabled = autoAction != 0
+            let autoText = pref.autoText[s] ?? ""
+            p.selectItem(withTag: mountAction)
+            b.isEnabled = mountAction != 0
             b.state = autoType ? .on : .off
-            t.isEnabled = autoAction != 0 && autoType
-            t.stringValue = autoTypeText
+            t.isEnabled = mountAction != 0 && autoType
+            t.stringValue = autoText
         }
         refresh("D64", medD64Popup, medD64AutoTypeButton, medD64AutoTypeText)
         refresh("PRG", medPrgPopup, medPrgAutoTypeButton, medPrgAutoTypeText)

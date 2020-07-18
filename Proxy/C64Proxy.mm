@@ -331,7 +331,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (void) setVideoPalette:(NSInteger)value
 {
-    wrapper->vic->setVideoPalette((VICPalette)value);
+    wrapper->vic->setVideoPalette((Palette)value);
 }
 /*
 - (NSInteger) glueLogic
@@ -388,7 +388,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
                                       blue:(float)b/255.0
                                      alpha:1.0];
 }
-- (UInt32) rgbaColor:(NSInteger)nr palette:(VICPalette)palette
+- (UInt32) rgbaColor:(NSInteger)nr palette:(Palette)palette
 {
     assert (0 <= nr && nr < 16);
     return wrapper->vic->getColor((unsigned)nr, palette);
@@ -801,6 +801,10 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->port->dump();
 }
+- (void) trigger:(GamePadAction)event
+{
+    wrapper->port->trigger(event);
+}
 - (BOOL) autofire
 {
     return wrapper->port->getAutofire();
@@ -824,10 +828,6 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 - (void) setAutofireFrequency:(float)value
 {
     wrapper->port->setAutofireFrequency(value);
-}
-- (void) trigger:(JoystickEvent)event
-{
-    wrapper->port->trigger(event);
 }
 
 @end

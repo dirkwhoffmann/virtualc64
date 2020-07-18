@@ -85,7 +85,7 @@ ControlPort::execute()
 }
 
 void
-ControlPort::trigger(JoystickEvent event)
+ControlPort::trigger(GamePadAction event)
 {
     switch (event) {
             

@@ -30,9 +30,7 @@ struct ShaderOptions: Codable {
     var blurRadius: Float
     
     var bloom: Int32
-    var bloomRadiusR: Float
-    var bloomRadiusG: Float
-    var bloomRadiusB: Float
+    var bloomRadius: Float
     var bloomBrightness: Float
     var bloomWeight: Float
     
@@ -52,9 +50,7 @@ struct ShaderOptions: Codable {
 var ShaderDefaultsTFT = ShaderOptions(blur: 1,
                                       blurRadius: 0,
                                       bloom: 0,
-                                      bloomRadiusR: 1.0,
-                                      bloomRadiusG: 1.0,
-                                      bloomRadiusB: 1.0,
+                                      bloomRadius: 1.0,
                                       bloomBrightness: 0.4,
                                       bloomWeight: 1.21,
                                       dotMask: 0,
@@ -70,9 +66,7 @@ var ShaderDefaultsTFT = ShaderOptions(blur: 1,
 var ShaderDefaultsCRT = ShaderOptions(blur: 1,
                                       blurRadius: 1.5,
                                       bloom: 1,
-                                      bloomRadiusR: 1.0,
-                                      bloomRadiusG: 1.0,
-                                      bloomRadiusB: 1.0,
+                                      bloomRadius: 1.0,
                                       bloomBrightness: 0.4,
                                       bloomWeight: 1.21,
                                       dotMask: 1,

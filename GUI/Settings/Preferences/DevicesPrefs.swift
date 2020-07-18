@@ -10,38 +10,68 @@
 extension PreferencesController {
     
     func refreshDevicesTab() {
-
-        guard let con = myController else { return }
-        guard let c64 = proxy else { return }
-
-        track()
-    
-        // Joystick emulation keys
-        updateJoyKeyMap(0, dir: JOYSTICK_UP, button: devUp1button, txt: devUp1)
-        updateJoyKeyMap(0, dir: JOYSTICK_DOWN, button: devDown1button, txt: devDown1)
-        updateJoyKeyMap(0, dir: JOYSTICK_LEFT, button: devLeft1button, txt: devLeft1)
-        updateJoyKeyMap(0, dir: JOYSTICK_RIGHT, button: devRight1button, txt: devRight1)
-        updateJoyKeyMap(0, dir: JOYSTICK_FIRE, button: devFire1button, txt: devFire1)
-        updateJoyKeyMap(1, dir: JOYSTICK_UP, button: devUp2button, txt: devUp2)
-        updateJoyKeyMap(1, dir: JOYSTICK_DOWN, button: devDown2button, txt: devDown2)
-        updateJoyKeyMap(1, dir: JOYSTICK_LEFT, button: devLeft2button, txt: devLeft2)
-        updateJoyKeyMap(1, dir: JOYSTICK_RIGHT, button: devRight2button, txt: devRight2)
-        updateJoyKeyMap(1, dir: JOYSTICK_FIRE, button: devFire2button, txt: devFire2)
-        devDisconnectKeys.state = con.keyboard.disconnectJoyKeys ? .on : .off
         
-        assert(c64.port1.autofire() == c64.port2.autofire())
-        assert(c64.port1.autofireBullets() == c64.port2.autofireBullets())
-        assert(c64.port1.autofireFrequency() == c64.port2.autofireFrequency())
+        let port1 = c64.port1!
+        let port2 = c64.port2!
+        
+        func refreshKey(map: Int, dir: GamePadAction, button: NSButton, txt: NSTextField) {
+            
+            var macKeyCode: NSAttributedString = NSAttributedString.init()
+            var macKeyDesc: String = ""
+            
+            // Which MacKey is assigned to this joystick action?
+            for (key, direction) in pref.keyMaps[map] where direction == dir.rawValue {
+                let attr = [NSAttributedString.Key.foregroundColor: NSColor.black]
+                let myStr = NSString(format: "%02X", key.keyCode) as String
+                macKeyCode = NSAttributedString(string: myStr, attributes: attr)
+                macKeyDesc = key.stringValue
+                break
+            }
+            
+            // Update text and button image
+            if button.tag == devRecordedKey {
+                button.title = ""
+                button.image = NSImage(named: "key_red")
+                button.imageScaling = .scaleAxesIndependently
+            } else {
+                button.image = NSImage(named: "key")
+                button.imageScaling = .scaleAxesIndependently
+            }
+            button.attributedTitle = macKeyCode
+            txt.stringValue = macKeyDesc
+        }
+        
+        // First joystick keyset
+        refreshKey(map: 0, dir: PULL_UP, button: devUp1button, txt: devUp1)
+        refreshKey(map: 0, dir: PULL_DOWN, button: devDown1button, txt: devDown1)
+        refreshKey(map: 0, dir: PULL_LEFT, button: devLeft1button, txt: devLeft1)
+        refreshKey(map: 0, dir: PULL_RIGHT, button: devRight1button, txt: devRight1)
+        refreshKey(map: 0, dir: PRESS_FIRE, button: devFire1button, txt: devFire1)
+        
+        // Second joystick keyset
+        refreshKey(map: 1, dir: PULL_UP, button: devUp2button, txt: devUp2)
+        refreshKey(map: 1, dir: PULL_DOWN, button: devDown2button, txt: devDown2)
+        refreshKey(map: 1, dir: PULL_LEFT, button: devLeft2button, txt: devLeft2)
+        refreshKey(map: 1, dir: PULL_RIGHT, button: devRight2button, txt: devRight2)
+        refreshKey(map: 1, dir: PRESS_FIRE, button: devFire2button, txt: devFire2)
+        
+        devDisconnectKeys.state = pref.disconnectJoyKeys ? .on : .off
         
         // Joystick buttons
-        devAutofire.state = c64.port1.autofire() ? .on : .off
-        devAutofireCease.state = c64.port1.autofireBullets() > 0 ? .on : .off
-        devAutofireBullets.integerValue = Int(c64.port1.autofireBullets().magnitude)
-        devAutofireFrequency.floatValue = c64.port1.autofireFrequency()
-        devAutofireCease.isEnabled = devAutofire.state == .on
-        devAutofireCeaseText.textColor = devAutofire.state == .on ? .controlTextColor : .disabledControlTextColor
-        devAutofireBullets.isEnabled = devAutofire.state == .on
-        devAutofireFrequency.isEnabled = devAutofire.state == .on
+         assert(pref.autofire == port2.autofire())
+         assert(pref.autofireBullets == port2.autofireBullets())
+         assert(pref.autofireFrequency == port2.autofireFrequency())
+         assert(port1.autofire() == port2.autofire())
+         assert(port1.autofireBullets() == port2.autofireBullets())
+         assert(port1.autofireFrequency() == port2.autofireFrequency())
+         devAutofire.state = pref.autofire ? .on : .off
+         devAutofireCease.state = pref.autofireBullets > 0 ? .on : .off
+         devAutofireBullets.integerValue = Int(pref.autofireBullets.magnitude)
+         devAutofireFrequency.floatValue = pref.autofireFrequency
+         devAutofireCease.isEnabled = devAutofire.state == .on
+         devAutofireCeaseText.textColor = devAutofire.state == .on ? .controlTextColor : .disabledControlTextColor
+         devAutofireBullets.isEnabled = devAutofire.state == .on
+         devAutofireFrequency.isEnabled = devAutofire.state == .on
         
         // Mouse
         let model = c64.mouse.model()
@@ -49,67 +79,38 @@ extension PreferencesController {
         devMouseInfo.isHidden = (model == Int(MOUSE1350.rawValue))
     }
     
-    func updateJoyKeyMap(_ nr: Int, dir: JoystickDirection, button: NSButton, txt: NSTextField) {
+    // Translates a button tag back to the related slot and gamepad action
+    func gamePadAction(for tag: Int) -> (Int, GamePadAction) {
         
-        precondition(nr == 0 || nr == 1)
-        
-        guard let manager = myController?.gamePadManager else { return }
-        guard let keyMap = manager.gamePads[nr]?.keyMap else { return }
-        
-        // Which MacKey is assigned to this joystick action?
-        var macKey: MacKey?
-        var macKeyCode: NSAttributedString = NSAttributedString.init()
-        var macKeyDesc: String = ""
-        for (key, direction) in keyMap where direction == dir.rawValue {
-            let attr = [NSAttributedString.Key.foregroundColor: NSColor.black]
-            macKey = key
-            let myStr = NSString(format: "%02X", macKey!.keyCode) as String
-            macKeyCode = NSAttributedString(string: myStr, attributes: attr)
-            macKeyDesc = macKey?.description?.uppercased() ?? ""
-            break
+        switch tag {
+        case 0...4:   return (1, GamePadAction(UInt32(tag)))      // Joy 1
+        case 10...14: return (2, GamePadAction(UInt32(tag - 10))) // Joy 2
+        default:      fatalError()
         }
-        
-        // Update text and button image
-        let recordKey = (nr == 0) ? devRecordKey1 : devRecordKey2
-        if recordKey == dir {
-            button.title = ""
-            button.image = NSImage(named: "key_red")
-            button.imageScaling = .scaleAxesIndependently
-        } else {
-            button.image = NSImage(named: "key")
-            button.imageScaling = .scaleAxesIndependently
-        }
-        button.attributedTitle = macKeyCode
-        txt.stringValue = macKeyDesc
     }
     
     //
     // Keyboard events
     //
     
-    func devKeyDown(with macKey: MacKey) {
+    // Handles a key press event.
+    // Returns true if the controller has responded to this key.
+    func devKeyDown(with macKey: MacKey) -> Bool {
         
-        guard let manager = myController?.gamePadManager else { return }
+        // Only proceed if a recording sessing is in progress
+        if devRecordedKey == nil { return false }
+        
         track()
         
-        // Check for ESC key
-        if macKey == MacKey.escape {
-            cancelAction(self)
-            return
+        // Record the key if it is not the ESC key
+        if macKey != MacKey.escape {
+            let (slot, action) = gamePadAction(for: devRecordedKey!)
+            gamePadManager.gamePads[slot]?.bind(key: macKey, action: action)
         }
         
-        if devRecordKey1 != nil {
-            
-            manager.gamePads[0]?.assign(key: macKey, direction: devRecordKey1!)
-            devRecordKey1 = nil
-        }
-        if devRecordKey2 != nil {
-            
-            manager.gamePads[1]?.assign(key: macKey, direction: devRecordKey2!)
-            devRecordKey2 = nil
-        }
-        
+        devRecordedKey = nil
         refresh()
+        return true
     }
     
     //
@@ -118,65 +119,47 @@ extension PreferencesController {
     
     @IBAction func devRecordKeyAction(_ sender: NSButton!) {
         
-        let tag = UInt32(sender.tag)
-        
-        if tag >= 0 && tag <= 5 {
-            devRecordKey1 = JoystickDirection(rawValue: tag)
-            devRecordKey2 = nil
-        } else if tag >= 10 && tag <= 15 {
-            devRecordKey1 = nil
-            devRecordKey2 = JoystickDirection(rawValue: (tag - 10))
-        } else {
-            assert(false)
-        }
-        
+        devRecordedKey = sender.tag
         refresh()
     }
     
     @IBAction func devDisconnectKeysAction(_ sender: NSButton!) {
         
-        myController?.keyboard.disconnectJoyKeys = (sender.state == .on)
-        
+        pref.disconnectJoyKeys = (sender.state == .on)
         refresh()
     }
     
+    @IBAction func devDeleteKeysetAction(_ sender: NSButton!) {
+
+        assert(sender.tag >= 0 && sender.tag <= 2)
+        
+        pref.keyMaps[sender.tag] = [:]
+        refresh()
+    }
+
     @IBAction func devAutofireAction(_ sender: NSButton!) {
         
-        proxy?.port1.setAutofire(sender.state == .on)
-        proxy?.port2.setAutofire(sender.state == .on)
-        
+        pref.autofire = (sender.state == .on)
         refresh()
     }
     
     @IBAction func devAutofireCeaseAction(_ sender: NSButton!) {
         
-        if let bullets = proxy?.port1.autofireBullets().magnitude {
-        
-            let sign = sender.state == .on ? 1 : -1
-            proxy?.port1.setAutofireBullets(Int(bullets) * sign)
-            proxy?.port2.setAutofireBullets(Int(bullets) * sign)
-            
-            refresh()
-        }
+        let sign = sender.state == .on ? 1 : -1
+        let bullets = pref.autofireBullets.magnitude
+        pref.autofireBullets = Int(bullets) * sign
+        refresh()
     }
     
     @IBAction func devAutofireBulletsAction(_ sender: NSTextField!) {
         
-        let value = sender.integerValue
-        
-        proxy?.port1.setAutofireBullets(value)
-        proxy?.port2.setAutofireBullets(value)
-        
+        pref.autofireBullets = sender.integerValue
         refresh()
     }
     
     @IBAction func devAutofireFrequencyAction(_ sender: NSSlider!) {
         
-        let value = sender.floatValue
-        
-        proxy?.port1.setAutofireFrequency(value)
-        proxy?.port2.setAutofireFrequency(value)
-        
+        pref.autofireFrequency = sender.floatValue
         refresh()
     }
     
@@ -187,6 +170,10 @@ extension PreferencesController {
         refresh()
     }
         
+    //
+    // Action methods (Misc)
+    //
+    
     @IBAction func devPresetAction(_ sender: NSPopUpButton!) {
         
         track()

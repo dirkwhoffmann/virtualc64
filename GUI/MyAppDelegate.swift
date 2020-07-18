@@ -59,6 +59,9 @@ var proxy: C64Proxy? {
     var controllers: [MyController] {
         return documents.compactMap({ $0.windowForSheet?.windowController as? MyController })
     }
+    var proxies: [C64Proxy] {
+        return documents.map({ $0.c64 })
+    }
     
     // Preferences
     var pref: Preferences!

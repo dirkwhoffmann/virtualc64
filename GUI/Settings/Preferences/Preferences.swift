@@ -7,8 +7,6 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-import Foundation
-
 /* Preferences
  *
  * This class stores all emulator settings that belong to the application level.
@@ -75,9 +73,55 @@ class Preferences {
     // Media
     //
     
-    var autoMountAction: [String: AutoMountAction] = Defaults.autoMountAction
-    var autoType: [String: Bool] = Defaults.autoType
-    var autoTypeText: [String: String] = Defaults.autoTypeText
+    var mountAction: [String: AutoMountAction] = MediaDefaults.std.mountAction
+    var autoType: [String: Bool] = MediaDefaults.std.autoType
+    var autoText: [String: String] = MediaDefaults.std.autoText
+    
+    //
+    // Devices
+    //
+    
+    // Emulation keys
+    var keyMaps = [ DevicesDefaults.std.joyKeyMap1,
+                    DevicesDefaults.std.joyKeyMap2 ]
+    
+    // Joystick
+    var disconnectJoyKeys = DevicesDefaults.std.disconnectJoyKeys
+    var autofire = DevicesDefaults.std.autofire {
+        didSet {
+            for c64 in myAppDelegate.proxies {
+                c64.port1.setAutofire(autofire)
+                c64.port2.setAutofire(autofire)
+            }
+        }
+    }
+    var autofireBullets = DevicesDefaults.std.autofireBullets {
+        didSet {
+            for c64 in myAppDelegate.proxies {
+                c64.port1.setAutofireBullets(autofireBullets)
+                c64.port2.setAutofireBullets(autofireBullets)
+            }
+        }
+    }
+    var autofireFrequency = DevicesDefaults.std.autofireFrequency {
+        didSet {
+            for c64 in myAppDelegate.proxies {
+                c64.port1.setAutofireFrequency(autofireFrequency)
+                c64.port2.setAutofireFrequency(autofireFrequency)
+            }
+        }
+    }
+    
+    // Mouse
+    var mouseModel = MOUSE1350 // : MouseModel
+    
+    //
+    // Keyboard
+    //
+    
+    // Mapping
+    var mapKeysByPosition = false // : Bool
+    var keyMap: [MacKey: C64Key] = [:] 
     
     //
     // General
@@ -150,6 +194,58 @@ class Preferences {
     }
     
     //
+    // Devices
+    //
+        
+    func loadDevicesUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        
+        // Emulation keys
+        defaults.decode(&keyMaps[0], forKey: Keys.joyKeyMap1)
+        defaults.decode(&keyMaps[1], forKey: Keys.joyKeyMap2)
+        disconnectJoyKeys = defaults.bool(forKey: Keys.disconnectJoyKeys)
+        
+        // Joysticks
+        autofire = defaults.bool(forKey: Keys.autofire)
+        autofireBullets = defaults.integer(forKey: Keys.autofireBullets)
+        autofireFrequency = defaults.float(forKey: Keys.autofireFrequency)
+    }
+    
+    func saveDevicesUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        
+        // Emulation keys
+        defaults.encode(keyMaps[0], forKey: Keys.joyKeyMap1)
+        defaults.encode(keyMaps[1], forKey: Keys.joyKeyMap2)
+        defaults.set(disconnectJoyKeys, forKey: Keys.disconnectJoyKeys)
+        
+        // Joysticks
+        defaults.set(autofire, forKey: Keys.autofire)
+        defaults.set(autofireBullets, forKey: Keys.autofireBullets)
+        defaults.set(autofireFrequency, forKey: Keys.autofireFrequency)
+    }
+    
+    //
+    // Keyboard
+    //
+
+    func loadKeyboardUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        mapKeysByPosition = defaults.bool(forKey: Keys.mapKeysByPosition)
+        defaults.decode(&keyMap, forKey: Keys.keyMap)
+    }
+    
+    func saveKeyboardUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        defaults.encode(keyMap, forKey: Keys.keyMap)
+        defaults.set(mapKeysByPosition, forKey: Keys.mapKeysByPosition)
+    }
+    
+    //
     // Media
     //
     
@@ -157,17 +253,17 @@ class Preferences {
         
         let defaults = UserDefaults.standard
         
-        defaults.decode(&autoMountAction, forKey: Keys.autoMountAction)
+        defaults.decode(&mountAction, forKey: Keys.mountAction)
         defaults.decode(&autoType, forKey: Keys.autoType)
-        defaults.decode(&autoTypeText, forKey: Keys.autoTypeText)
+        defaults.decode(&autoText, forKey: Keys.autoText)
     }
     
     func saveMediaUserDefaults() {
         
         let defaults = UserDefaults.standard
         
-        defaults.encode(autoMountAction, forKey: Keys.autoMountAction)
+        defaults.encode(mountAction, forKey: Keys.mountAction)
         defaults.encode(autoType, forKey: Keys.autoType)
-        defaults.encode(autoTypeText, forKey: Keys.autoTypeText)
+        defaults.encode(autoText, forKey: Keys.autoText)
     }
 }

@@ -106,7 +106,7 @@ public:
     void execute();
     
     //! @brief   Triggers a joystick event
-    void trigger(JoystickEvent event);
+    void trigger(GamePadAction event);
     
     /*! @brief   Returns the current joystick movement in form a bit mask
      *  @details The bits are in the same order as they show up in the

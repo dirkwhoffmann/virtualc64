@@ -106,7 +106,24 @@ extension Renderer {
     
     internal func buildKernels() {
         
-        precondition(library != nil)
+        assert(library != nil)
+        
+        shaderOptions = ShaderOptions.init(
+            blur: config.blur,
+            blurRadius: config.blurRadius,
+            bloom: config.bloom,
+            bloomRadius: config.bloomRadius,
+            bloomBrightness: config.bloomBrightness,
+            bloomWeight: config.bloomWeight,
+            dotMask: config.dotMask,
+            dotMaskBrightness: config.dotMaskBrightness,
+            scanlines: config.scanlines,
+            scanlineBrightness: config.scanlineBrightness,
+            scanlineWeight: config.scanlineWeight,
+            disalignment: config.disalignment,
+            disalignmentH: config.disalignmentH,
+            disalignmentV: config.disalignmentV
+        )
         
         // Build upscalers
         upscalerGallery[0] = BypassUpscaler.init(device: device, library: library)

@@ -9,121 +9,153 @@
 
 import IOKit.hid
 
-//
-// A GamePad object is created for each connected USB device
-// Creation and destruction is done by the GamePadManager
-//
+// An object representing an input device connected to the Game Port. The object
+// can either represent a connected HID device or a keyboard emulated device.
+// In the first case, the object serves as a callback handler for HID events.
+// In the latter case, it translates keyboard events to GamePadAction events by
+// utilizing a key map.
 
 class GamePad {
 
-    /*! @brief    Keymap of the managed device
-     *  @details  Only used for keyboard emulated devices
-     */
-    var keyMap: [MacKey: UInt32]?
+    // Reference to the game pad manager
+    var manager: GamePadManager
+    var prefs: Preferences { return manager.parent.pref }
     
-    //! @brief    Indicates if a joystick emulation key is currently pressed
+    // The C64 control port this device is connected to (0 = unconnected)
+    var port = 0
+
+    // Reference to the device object
+    var device: IOHIDDevice?
+    
+    // Vendor ID of the managed device (only set for HID devices)
+    var vendorID: Int
+    
+    // Product ID of the managed device (only set for HID devices)
+    var productID: Int
+    
+    // Location ID of the managed device (only set for HID devices)
+    var locationID: Int
+    
+    // Type of the managed device (joystick or mouse)
+    var type: ControlPortDevice
+    var isMouse: Bool { return type == CPD_MOUSE }
+    var isJoystick: Bool { return type == CPD_JOYSTICK }
+    
+    // Name of the managed device
+     var name: String?
+
+     // Icon of this device
+     var icon: NSImage?
+             
+     // Keymap of the managed device (only set for keyboard emulated devices)
+     var keyMap: Int?
+    
+     // Indicates if a joystick emulation key is currently pressed
     var keyUp = false, keyDown = false, keyLeft = false, keyRight = false
     
-    //! @brief    Name of the connected controller
-    var name: String?
+    // Minimum and maximum value of analog axis event
+    var min: Int?, max: Int?
     
-    //! @brief    Vendor ID of the managed device
-    /*! @details  Value is only used for HID devices
-     */
-    var vendorID: Int
-
-    //! @brief    Product ID of the managed device
-    /*! @details  Value is only used for HID devices
-     */
-    var productID: Int
-
-    //! @brief    Location ID of the managed device
-    /*! @details  Value is only used for HID devices
-     */
-    var locationID: Int
-
-    //! @brief    Minimum value of analog axis event
-    var min: Int?
-    
-    //! @brief    Maximum value of analog axis event
-    var max: Int?
-    
-    //! @brief    Rescued information from the last invocation of the action function
-    /*! @details  Used to determine if a joystick event needs to be triggered.
-     */
-    var oldEvents: [Int: [JoystickEvent]] = [:]
-    
-    //! @brief    Cotroller dependent usage IDs for left and right gamepad joysticks
+    // Cotroller specific usage IDs for left and right gamepad joysticks
     var lThumbXUsageID = kHIDUsage_GD_X
     var lThumbYUsageID = kHIDUsage_GD_Y
     var rThumbXUsageID = kHIDUsage_GD_Rz
     var rThumbYUsageID = kHIDUsage_GD_Z
-
-    /// Reference to the GamePadManager
-    var manager: GamePadManager
+    
+    /* Rescued information from the latest invocation of the action function.
+     * It is needed to determine whether a joystick event has to be triggered.
+     */
+    var oldEvents: [Int: [GamePadAction]] = [:]
+    
+    // Receivers for HID events
+    let inputValueCallback: IOHIDValueCallback = {
+        inContext, inResult, inSender, value in
+        let this: GamePad = unsafeBitCast(inContext, to: GamePad.self)
+        this.hidInputValueAction(context: inContext,
+                                 result: inResult,
+                                 sender: inSender,
+                                 value: value)
+    }
     
     init(manager: GamePadManager,
-         vendorID: Int, productID: Int, locationID: Int) {
+         device: IOHIDDevice? = nil, type: ControlPortDevice,
+         vendorID: Int = 0, productID: Int = 0, locationID: Int = 0) {
         
-        track()
+        // track("\(nr): \(vendorID) \(productID) \(locationID)")
         
         self.manager = manager
+        self.device = device
+        self.type = type
         self.vendorID = vendorID
         self.productID = productID
         self.locationID = locationID
-    
-        // Check for known devices
-        if vendorID == 0x40B && productID == 0x6533 {
-            
-            name = "Competition Pro SL-6602"
         
-        } else if vendorID == 0xF0D && productID == 0xC1 {
-
-            name = "iNNEXT Retro (N64)"
-
-        } else if vendorID == 0x79 && productID == 0x11 {
-
+        let joystick = "devJoystickTemplate"
+        let mouse = "devMouseTemplate"
+        
+        // Check for known devices
+        switch vendorID {
+            
+        case 0x40B where productID == 0x6533:
+            name = "Competition Pro SL-6602"
+            icon = NSImage.init(named: joystick)
+            
+        case 0x46D where type == CPD_MOUSE:
+            name = "Logitech Mouse"
+            icon = NSImage.init(named: mouse)
+            
+        case 0x738 where productID == 0x2217:
+            name = "Competition Pro SL-650212"
+            icon = NSImage.init(named: joystick)
+            
+        case 0x1C59 where productID == 0x24:
+            name = "The C64 Joystick"
+            icon = NSImage.init(named: joystick)
+            
+        case 0x79 where productID == 0x11:
             name = "iNNEXT Retro (SNES)"
-
-        } else if vendorID == 0x54C && productID == 0x268 {
-
+            
+        case 0x54C where productID == 0x268:
             name = "Sony DualShock 3"
             rThumbXUsageID = kHIDUsage_GD_Z
             rThumbYUsageID = kHIDUsage_GD_Rz
-        
-        } else if vendorID == 0x54C && productID == 0x5C4 {
             
+        case 0x54C where productID == 0x5C4:
             name = "Sony DualShock 4"
             rThumbXUsageID = kHIDUsage_GD_Z
             rThumbYUsageID = kHIDUsage_GD_Rz
-
-        } else if vendorID == 0x54C && productID == 0x9CC {
             
+        case 0x54C where productID == 0x9CC:
             name = "Sony Dualshock 4 (2nd Gen)"
             rThumbXUsageID = kHIDUsage_GD_Z
             rThumbYUsageID = kHIDUsage_GD_Rz
-        
-        } else if vendorID == 0x483 && productID == 0x9005 {
             
+        case 0x483 where productID == 0x9005:
             name = "RetroFun! Joystick Adapter"
-
-        } else if vendorID == 0x004 && productID == 0x0001 {
             
+        case 0x004 where productID == 0x0001:
             name = "aJoy Retro Adapter"
             
-        } else {
-        
-            // name = "Generic Gamepad"
+        default:
+            break  // name = "Generic Gamepad"
         }
     }
     
-    convenience init(manager: GamePadManager) {
-        self.init(manager: manager, vendorID: 0, productID: 0, locationID: 0)
+    func close() {
+        
+        if device == nil { return }
+        
+        let optionBits = IOOptionBits(kIOHIDOptionsTypeNone)
+        if IOHIDDeviceClose(device!, optionBits) == kIOReturnSuccess {
+            track("Closed HID device")
+        } else {
+            track("WARNING: Cannot close HID device")
+        }
     }
     
-    let actionCallback: IOHIDValueCallback = { inContext, inResult, inSender, value in
-        let this: GamePad = unsafeBitCast(inContext, to: GamePad.self)
-        this.hidDeviceAction(context: inContext, result: inResult, sender: inSender, value: value)
+    func setIcon(name: String) {
+        
+        icon = NSImage.init(named: name)
     }
 }
 
@@ -132,101 +164,100 @@ class GamePad {
 //
 
 extension GamePad {
-    
-    /// Assigns a keyboard emulation key
-    func assign(key: MacKey, direction: JoystickDirection) {
-        
-        precondition(keyMap != nil)
+
+    // Binds a key to a gamepad action
+    func bind(key: MacKey, action: GamePadAction) {
+
+        guard let n = keyMap else { return }
         
         // Avoid double mappings
-        for (k, dir) in keyMap! where dir == direction.rawValue {
-            keyMap![k] = nil
-        }
-        keyMap![key] = direction.rawValue
+        unbind(action: action)
+
+        prefs.keyMaps[n][key] = action.rawValue
     }
-    
-    //! @brief   Handles a keyboard down event
-    /*! @details Checks if the provided keycode matches a joystick emulation key
-     *           and triggeres an event if a match has been found.
-     *  @result  Returns true if a joystick event has been triggered.
-     */
-    func keyDown(_ macKey: MacKey) -> Bool {
+
+    // Removes a key binding to the specified gampad action (if any)
+    func unbind(action: GamePadAction) {
         
-        if let direction = keyMap?[macKey] {
-
-            var events: [JoystickEvent]
-            
-            switch JoystickDirection(direction) {
-                
-            case JOYSTICK_UP:
-                keyUp = true
-                events = [PULL_UP]
-                
-            case  JOYSTICK_DOWN:
-                keyDown = true
-                events = [PULL_DOWN]
-                
-            case JOYSTICK_LEFT:
-                keyLeft = true
-                events = [PULL_LEFT]
-                
-            case JOYSTICK_RIGHT:
-                keyRight = true
-                events = [PULL_RIGHT]
-                
-            case JOYSTICK_FIRE:
-                events = [PRESS_FIRE]
-
-            default:
-                fatalError()
-            }
-            
-            return manager.joystickEvent(self, events: events)
+        guard let n = keyMap else { return }
+        
+        for (k, dir) in prefs.keyMaps[n] where dir == action.rawValue {
+            prefs.keyMaps[n][k] = nil
         }
+     }
+
+    // Translates a key press event to a list of gamepad actions
+    func keyDownEvents(_ macKey: MacKey) -> [GamePadAction] {
         
-        return false
+        guard let n = keyMap, let direction = prefs.keyMaps[n][macKey] else { return [] }
+                    
+        switch GamePadAction(direction) {
+            
+        case PULL_UP:
+            keyUp = true
+            return [PULL_UP]
+            
+        case PULL_DOWN:
+            keyDown = true
+            return [PULL_DOWN]
+            
+        case PULL_LEFT:
+            keyLeft = true
+            return [PULL_LEFT]
+            
+        case PULL_RIGHT:
+            keyRight = true
+            return [PULL_RIGHT]
+            
+        case PRESS_FIRE:
+            return [PRESS_FIRE]
+            
+        case PRESS_LEFT:
+            return [PRESS_LEFT]
+            
+        case PRESS_RIGHT:
+            return [PRESS_RIGHT]
+            
+        default:
+            fatalError()
+        }
     }
-    
-    //! @brief   Handles a keyboard up event
-    /*! @details Checks if the provided keycode matches a joystick emulation key
-     *           and triggeres an event if a match has been found.
-     *  @result  Returns true if a joystick event has been triggered.
-     */
-    func keyUp(_ macKey: MacKey) -> Bool {
-
-        if let direction = keyMap?[macKey] {
+        
+    // Handles a key release event
+    func keyUpEvents(_ macKey: MacKey) -> [GamePadAction] {
+        
+        guard let n = keyMap, let direction = prefs.keyMaps[n][macKey] else { return [] }
+                
+        switch GamePadAction(direction) {
             
-            var events: [JoystickEvent]
+        case PULL_UP:
+            keyUp = false
+            return keyDown ? [PULL_DOWN] : [RELEASE_Y]
             
-            switch JoystickDirection(direction) {
+        case PULL_DOWN:
+            keyDown = false
+            return keyUp ? [PULL_UP] : [RELEASE_Y]
             
-            case JOYSTICK_UP:
-                keyUp = false
-                events = keyDown ? [PULL_DOWN] : [RELEASE_Y]
-                
-            case JOYSTICK_DOWN:
-                keyDown = false
-                events = keyUp ? [PULL_UP] : [RELEASE_Y]
-                
-            case JOYSTICK_LEFT:
-                keyLeft = false
-                events = keyRight ? [PULL_RIGHT] : [RELEASE_X]
-                
-            case JOYSTICK_RIGHT:
-                keyRight = false
-                events = keyLeft ? [PULL_LEFT] : [RELEASE_X]
-                
-            case JOYSTICK_FIRE:
-                events = [RELEASE_FIRE]
-                
-            default:
-                fatalError()
-            }
+        case PULL_LEFT:
+            keyLeft = false
+            return keyRight ? [PULL_RIGHT] : [RELEASE_X]
             
-            return manager.joystickEvent(self, events: events)
+        case PULL_RIGHT:
+            keyRight = false
+            return keyLeft ? [PULL_LEFT] : [RELEASE_X]
+            
+        case PRESS_FIRE:
+            return [RELEASE_FIRE]
+            
+        case PRESS_LEFT:
+            return [RELEASE_LEFT]
+            
+        case PRESS_RIGHT:
+            return [RELEASE_RIGHT]
+            
+        default:
+            fatalError()
         }
-    
-        return false
     }
 }
 
@@ -235,17 +266,19 @@ extension GamePad {
 //
 
 extension GamePad {
+
+    // Based on
+    // http://docs.ros.org/hydro/api/oculus_sdk/html/OSX__Gamepad_8cpp_source.html#l00170
     
-    // Based on http://docs.ros.org/hydro/api/oculus_sdk/html/OSX__Gamepad_8cpp_source.html#l00170
     func mapAnalogAxis(value: IOHIDValue, element: IOHIDElement) -> Int? {
         
         if min == nil {
             min = IOHIDElementGetLogicalMin(element)
-            track("Minumum axis value = \(min!)")
+            // track("Minumum axis value = \(min!)")
         }
         if max == nil {
             max = IOHIDElementGetLogicalMax(element)
-            track("Maximum axis value = \(max!)")
+            // track("Maximum axis value = \(max!)")
         }
         let val = IOHIDValueGetIntegerValue(value)
         
@@ -258,11 +291,11 @@ extension GamePad {
         return 2
     }
     
-    func hidDeviceAction(context: UnsafeMutableRawPointer?,
-                         result: IOReturn,
-                         sender: UnsafeMutableRawPointer?,
-                         value: IOHIDValue) {
-    
+    func hidInputValueAction(context: UnsafeMutableRawPointer?,
+                             result: IOReturn,
+                             sender: UnsafeMutableRawPointer?,
+                             value: IOHIDValue) {
+        
         let element   = IOHIDValueGetElement(value)
         let intValue  = Int(IOHIDValueGetIntegerValue(value))
         let usagePage = Int(IOHIDElementGetUsagePage(element))
@@ -270,25 +303,26 @@ extension GamePad {
         
         // Buttons
         if usagePage == kHIDPage_Button {
-            // track("BUTTON")
-            manager.joystickEvent(self, events: (intValue != 0) ? [PRESS_FIRE] : [RELEASE_FIRE])
+
+            let events = (intValue != 0) ? [PRESS_FIRE] : [RELEASE_FIRE]
+            processJoystickEvents(events: events)
             return
         }
         
         // Stick
         if usagePage == kHIDPage_GenericDesktop {
             
-            var events: [JoystickEvent]?
+            var events: [GamePadAction]?
             
             switch usage {
                 
             case lThumbXUsageID, rThumbXUsageID:
                 
-                // track("lThumbXUsageID, rThumbXUsageID: \(usage) \(intValue)")
+                // track("lThumbXUsageID, rThumbXUsageID: \(intValue)")
                 if let v = mapAnalogAxis(value: value, element: element) {
                     events = (v == 2) ? [PULL_RIGHT] : (v == -2) ? [PULL_LEFT] : [RELEASE_X]
                 }
-   
+                
             case lThumbYUsageID, rThumbYUsageID:
                 
                 // track("lThumbYUsageID, rThumbYUsageID: \(intValue)")
@@ -317,14 +351,94 @@ extension GamePad {
             }
             
             // Only proceed if the event is different than the previous one
-            if events == nil || oldEvents[usage] == events {
-                return
-            } else {
-                oldEvents[usage] = events!
-            }
+            if events == nil || oldEvents[usage] == events { return }
+            oldEvents[usage] = events!
             
-            // Trigger event
-            manager.joystickEvent(self, events: events!)
+            // Trigger events
+            // manager.parent.emulateEventsOnGamePort(slot: nr, events: events!)
+            processJoystickEvents(events: events!)
+        }
+    }
+}
+
+//
+// Emulate events on the C64 side
+//
+
+extension GamePad {
+    
+    @discardableResult
+    func processJoystickEvents(events: [GamePadAction]) -> Bool {
+        
+        let c64 = manager.parent.c64!
+        
+        if port == 1 { for event in events { c64.port1.trigger(event) } }
+        if port == 2 { for event in events { c64.port2.trigger(event) } }
+        
+        return events != []
+    }
+    
+    @discardableResult
+    func processMouseEvents(events: [GamePadAction]) -> Bool {
+        
+        let c64 = manager.parent.c64!
+        
+        if port == 1 { for event in events { c64.port1.trigger(event) } }
+        if port == 2 { for event in events { c64.port2.trigger(event) } }
+        
+        return events != []
+    }
+    
+    func processMouseEvents(delta: NSPoint) {
+        
+        /*
+        let c64 = manager.parent.c64!
+        
+        if port == 1 { c64.mouse1.setDeltaXY(delta) }
+        if port == 2 { c64.mouse2.setDeltaXY(delta) }
+        */
+    }
+    
+    func processKeyDownEvent(macKey: MacKey) -> Bool {
+
+        // Only proceed if a keymap is present
+         if keyMap == nil { return false }
+         
+         // Only proceed if this key is used for emulation
+         let events = keyDownEvents(macKey)
+         if events.isEmpty { return false }
+         
+         // Process the events
+         processKeyboardEvent(events: events)
+         return true
+    }
+
+    func processKeyUpEvent(macKey: MacKey) -> Bool {
+        
+        // Only proceed if a keymap is present
+        if keyMap == nil { return false }
+        
+        // Only proceed if this key is used for emulation
+        let events = keyUpEvents(macKey)
+        if events.isEmpty { return false }
+        
+        // Process the events
+        processKeyboardEvent(events: events)
+        return true
+    }
+
+    func processKeyboardEvent(events: [GamePadAction]) {
+
+        let c64 = manager.parent.c64!
+        
+        if isMouse {
+            /*
+            if port == 1 { for event in events { c64.mouse1.trigger(event) } }
+            if port == 2 { for event in events { c64.mouse2.trigger(event) } }
+            */
+        } else {
+            if port == 1 { for event in events { c64.port1.trigger(event) } }
+            if port == 2 { for event in events { c64.port2.trigger(event) } }
         }
     }
 }

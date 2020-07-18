@@ -24,7 +24,11 @@ class Configuration {
     var gamePadManager: GamePadManager { return parent.gamePadManager }
     
     //
-    // Hardware settings
+    // Roms
+    //
+    
+    //
+    // Hardware
     //
     
     var vicRevision: Int {
@@ -57,8 +61,148 @@ class Configuration {
         set { c64.configure(OPT_SID_REVISION, value: newValue) }
     }
 
-    init(with controller: MyController) { parent = controller }
+    // Floppy drives
+    var drive8Connected: Bool {
+        get { return true }
+        set { }
+    }
+    var drive8Type: Int {
+        get { return DRIVE_VC1541II.rawValue }
+        set { }
+    }
+    var drive9Connected: Bool {
+        get { return true }
+        set { }
+    }
+    var drive9Type: Int {
+        get { return DRIVE_VC1541II.rawValue }
+        set { }
+    }
     
+    // Ports
+    var gameDevice1 = -1
+    var gameDevice2 = -1
+    /*
+    var gameDevice1 = HardwareDefaults.A500.gameDevice1 {
+        didSet {
+            
+            // Try to connect the device
+            gamePadManager.connect(slot: gameDevice1, port: 1)
+            gamePadManager.listDevices()
+            
+            // Read back the real connection status
+            let device1 = gamePadManager.getSlot(port: 1)
+            let device2 = gamePadManager.getSlot(port: 2)
+            if gameDevice1 != device1 { gameDevice1 = device1 }
+            if gameDevice2 != device2 { gameDevice2 = device2 }
+            
+            parent.toolbar.validateVisibleItems()
+        }
+    }
+    var gameDevice2 = HardwareDefaults.A500.gameDevice2 {
+        didSet {
+            
+            // Try to connect the device
+            gamePadManager.connect(slot: gameDevice2, port: 2)
+            gamePadManager.listDevices()
+            
+            // Read back the real connection status
+            let device1 = gamePadManager.getSlot(port: 1)
+            let device2 = gamePadManager.getSlot(port: 2)
+            if gameDevice1 != device1 { gameDevice1 = device1 }
+            if gameDevice2 != device2 { gameDevice2 = device2 }
+            
+            parent.toolbar.validateVisibleItems()
+        }
+    }
+    */
+    
+    //
+    // Video settings
+    //
+    
+    var palette: Int {
+        get { return 0 } // Int(amiga.denise.palette()) }
+        set { } // amiga.denise.setPalette(Palette(newValue)) }
+    }
+    var brightness: Double {
+        get { return 1.0 } // amiga.denise.brightness() }
+        set { } // amiga.denise.setBrightness(newValue) }
+    }
+    var contrast: Double {
+        get { return 1.0 } // amiga.denise.contrast() }
+        set { } // amiga.denise.setContrast(newValue) }
+    }
+    var saturation: Double {
+        get { return 1.0 } // amiga.denise.saturation() }
+        set { } // amiga.denise.setSaturation(newValue) }
+    }
+    var hCenter = VideoDefaults.tft.hCenter {
+        didSet { renderer.updateTextureRect() }
+    }
+    var vCenter = VideoDefaults.tft.vCenter {
+        didSet { renderer.updateTextureRect() }
+    }
+    var hZoom = VideoDefaults.tft.hZoom {
+        didSet { renderer.updateTextureRect() }
+    }
+    var vZoom = VideoDefaults.tft.vZoom {
+        didSet { renderer.updateTextureRect() }
+    }
+    var upscaler = VideoDefaults.tft.upscaler {
+        didSet { if !renderer.selectUpscaler(upscaler) { upscaler = oldValue } }
+    }
+    var blur = VideoDefaults.tft.blur {
+        didSet { renderer.shaderOptions.blur = blur }
+    }
+    var blurRadius = VideoDefaults.tft.blurRadius {
+        didSet { renderer.shaderOptions.blurRadius = blurRadius }
+    }
+    var bloom = VideoDefaults.tft.bloom {
+        didSet { renderer.shaderOptions.bloom = bloom }
+    }
+    var bloomRadius = VideoDefaults.tft.bloomRadius {
+        didSet { renderer.shaderOptions.bloomRadius = bloomRadius }
+    }
+    var bloomBrightness = VideoDefaults.tft.bloomBrightness {
+        didSet { renderer.shaderOptions.bloomBrightness = bloomBrightness }
+    }
+    var bloomWeight = VideoDefaults.tft.bloomWeight {
+        didSet { renderer.shaderOptions.bloomWeight = bloomWeight }
+    }
+    var dotMask = VideoDefaults.tft.dotMask {
+        didSet {
+            renderer.shaderOptions.dotMask = dotMask
+            renderer.buildDotMasks()
+        }
+    }
+    var dotMaskBrightness = VideoDefaults.tft.dotMaskBrightness {
+        didSet {
+            renderer.shaderOptions.dotMaskBrightness = dotMaskBrightness
+            renderer.buildDotMasks()
+        }
+    }
+    var scanlines = VideoDefaults.tft.scanlines {
+        didSet { renderer.shaderOptions.scanlines = scanlines }
+    }
+    var scanlineBrightness = VideoDefaults.tft.scanlineBrightness {
+        didSet { renderer.shaderOptions.scanlineBrightness = scanlineBrightness }
+    }
+    var scanlineWeight = VideoDefaults.tft.scanlineWeight {
+        didSet { renderer.shaderOptions.scanlineWeight = scanlineWeight }
+    }
+    var disalignment = VideoDefaults.tft.disalignment {
+        didSet { renderer.shaderOptions.disalignment = disalignment }
+    }
+    var disalignmentH = VideoDefaults.tft.disalignmentH {
+        didSet { renderer.shaderOptions.disalignmentH = disalignmentH }
+    }
+    var disalignmentV = VideoDefaults.tft.disalignmentV {
+        didSet { renderer.shaderOptions.disalignmentV = disalignmentV }
+    }
+    
+    init(with controller: MyController) { parent = controller }
+
     //
     // Roms
     //
@@ -125,12 +269,12 @@ class Configuration {
         
         c64.suspend()
         
-        vicRevision = defaults.vicRevision.rawValue
+        vicRevision = defaults.vicRev.rawValue
         grayDotBug = defaults.grayDotBug
         glueLogic = defaults.glueLogic.rawValue
-        ciaRevision = defaults.ciaRevision.rawValue
+        ciaRevision = defaults.ciaRev.rawValue
         timerBBug = defaults.timerBBug
-        sidRevision = defaults.sidRevision.rawValue
+        sidRevision = defaults.sidRev.rawValue
     
         c64.resume()
     }
@@ -164,4 +308,129 @@ class Configuration {
         defaults.set(timerBBug, forKey: Keys.timerBBug)
         defaults.set(sidRevision, forKey: Keys.sidRevision)
     }
+    
+    //
+    // Video
+    //
+    
+    func loadColorDefaults(_ defaults: VideoDefaults) {
+        
+        c64.suspend()
+        
+        palette = defaults.palette.rawValue
+        brightness = defaults.brightness
+        contrast = defaults.contrast
+        saturation = defaults.saturation
+        
+        c64.resume()
+    }
+    
+    func loadGeometryDefaults(_ defaults: VideoDefaults) {
+        
+        hCenter = defaults.hCenter
+        vCenter = defaults.vCenter
+        hZoom = defaults.hZoom
+        vZoom = defaults.vZoom
+        
+        renderer.updateTextureRect()
+    }
+    
+    func loadShaderDefaults(_ defaults: VideoDefaults) {
+        
+        upscaler = defaults.upscaler
+        
+        blur = defaults.blur
+        blurRadius = defaults.blurRadius
+        
+        bloom = defaults.bloom
+        bloomRadius = defaults.bloomRadius
+        bloomBrightness = defaults.bloomBrightness
+        bloomWeight = defaults.bloomWeight
+        dotMask = defaults.dotMask
+        dotMaskBrightness = defaults.dotMaskBrightness
+        scanlines = defaults.scanlines
+        scanlineBrightness = defaults.scanlineBrightness
+        scanlineWeight = defaults.scanlineWeight
+        disalignment = defaults.disalignment
+        disalignmentH = defaults.disalignmentH
+        disalignment = defaults.disalignment
+        
+        renderer.buildDotMasks()
+    }
+    
+    func loadVideoDefaults(_ defaults: VideoDefaults) {
+         
+         loadColorDefaults(defaults)
+         loadGeometryDefaults(defaults)
+         loadColorDefaults(defaults)
+     }
+
+     func loadVideoUserDefaults() {
+         
+         let defaults = UserDefaults.standard
+         
+         c64.suspend()
+         
+         palette = defaults.integer(forKey: Keys.palette)
+         brightness = defaults.double(forKey: Keys.brightness)
+         contrast = defaults.double(forKey: Keys.contrast)
+         saturation = defaults.double(forKey: Keys.saturation)
+
+         hCenter = defaults.float(forKey: Keys.hCenter)
+         vCenter = defaults.float(forKey: Keys.vCenter)
+         hZoom = defaults.float(forKey: Keys.hZoom)
+         vZoom = defaults.float(forKey: Keys.vZoom)
+
+         upscaler = defaults.integer(forKey: Keys.upscaler)
+         
+         bloom = Int32(defaults.integer(forKey: Keys.bloom))
+         bloomRadius = defaults.float(forKey: Keys.bloomRadius)
+         bloomBrightness = defaults.float(forKey: Keys.bloomBrightness)
+         bloomWeight = defaults.float(forKey: Keys.bloomWeight)
+         dotMask = Int32(defaults.integer(forKey: Keys.dotMask))
+         dotMaskBrightness = defaults.float(forKey: Keys.dotMaskBrightness)
+         scanlines = Int32(defaults.integer(forKey: Keys.scanlines))
+         scanlineBrightness = defaults.float(forKey: Keys.scanlineBrightness)
+         scanlineWeight = defaults.float(forKey: Keys.scanlineWeight)
+         disalignment = Int32(defaults.integer(forKey: Keys.disalignment))
+         disalignmentH = defaults.float(forKey: Keys.disalignmentH)
+         disalignmentV = defaults.float(forKey: Keys.disalignmentV)
+         
+         renderer.updateTextureRect()
+         renderer.buildDotMasks()
+         
+         c64.resume()
+     }
+     
+     func saveVideoUserDefaults() {
+         
+         track()
+         
+         let defaults = UserDefaults.standard
+         
+         defaults.set(palette, forKey: Keys.palette)
+         defaults.set(brightness, forKey: Keys.brightness)
+         defaults.set(contrast, forKey: Keys.contrast)
+         defaults.set(saturation, forKey: Keys.saturation)
+
+         defaults.set(hCenter, forKey: Keys.hCenter)
+         defaults.set(vCenter, forKey: Keys.vCenter)
+         defaults.set(hZoom, forKey: Keys.hZoom)
+         defaults.set(vZoom, forKey: Keys.vZoom)
+
+         defaults.set(upscaler, forKey: Keys.upscaler)
+         
+         defaults.set(bloom, forKey: Keys.bloom)
+         defaults.set(bloomRadius, forKey: Keys.bloomRadius)
+         defaults.set(bloomBrightness, forKey: Keys.bloomBrightness)
+         defaults.set(bloomWeight, forKey: Keys.bloomWeight)
+         defaults.set(dotMask, forKey: Keys.dotMask)
+         defaults.set(dotMaskBrightness, forKey: Keys.dotMaskBrightness)
+         defaults.set(scanlines, forKey: Keys.scanlines)
+         defaults.set(scanlineBrightness, forKey: Keys.scanlineBrightness)
+         defaults.set(scanlineWeight, forKey: Keys.scanlineWeight)
+         defaults.set(disalignment, forKey: Keys.disalignment)
+         defaults.set(disalignmentH, forKey: Keys.disalignmentH)
+         defaults.set(disalignmentV, forKey: Keys.disalignmentV)
+     }
 }

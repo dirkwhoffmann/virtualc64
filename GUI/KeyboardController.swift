@@ -12,60 +12,35 @@ import Carbon.HIToolbox
 //!@ brief Keyboard event handler
 class KeyboardController: NSObject {
     
-    var controller: MyController!
+    var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
+    var parent: MyController!
+        
+    var keyboard: KeyboardProxy { return parent.c64.keyboard }
+    var renderer: Renderer { return parent.renderer }
+    var pref: Preferences { return parent.pref }
     
-    /// Determines whether the joystick emulation keys should be uncoupled from
-    // the keyboard.
-    var disconnectJoyKeys = Defaults.disconnectJoyKeys
-    
-    /**
-     Key mapping mode
-     
-     The user can choose between a symbolic and a positional key assignment.
-     Symbolic assignment tries to assign the keys according to their meaning
-     while positional assignment establishes a one-to-one mapping between Mac
-     keys and C64 keys.
-    */
-    var mapKeysByPosition = Defaults.mapKeysByPosition
-    
-    /// Used key map if keys are mapped by position
- 
-    var keyMap: [MacKey: C64Key] = Defaults.keyMap
-    
-    // Delete when Objective-C code is gone
-    func getDisconnectEmulationKeys() -> Bool { return disconnectJoyKeys }
-    func setDisconnectEmulationKeys(_ b: Bool) { disconnectJoyKeys = b }
-    func getMapKeysByPosition() -> Bool { return mapKeysByPosition }
-    func setMapKeysByPosition(_ b: Bool) { mapKeysByPosition = b }
+    // Remembers the state of some keys (true = currently pressed)
+    var leftShift   = false, rightShift   = false
+    var leftControl = false, rightControl = false
+    var leftOption  = false, rightOption  = false
+    var leftCommand = false, rightCommand = false
 
-    /// Remembers the currently pressed key modifiers
-    var leftShift: Bool = false
-    var rightShift: Bool = false
-    var control: Bool = false
-    var option: Bool = false
-    var command: Bool = false
-    
-    /**
-     Remembers the currently pressed keys and their assigned C64 key list
-
-     This variable is only used when keys are mapped symbolically. It's written
-     in keyDown and picked up in keyUp.
-     */
+    // Remembers the currently pressed keys and their assigned C64 key list.
+    // This variable is only used when keys are mapped symbolically. It it
+    // written in keyDown and picked up in keyUp.
     var pressedKeys: [MacKey: [C64Key]] = [:]
     
-    /**
-     Checks if the internal values are consistent with the provides flags.
-     
-     There should never be an insonsistency. But if there is, we release the
-     suspicous key. Otherwise, we risk to block the C64's keyboard matrix
-     for good.
-     */
+    // Checks if the internal values are consistent with the provides flags.
+    // There should never be an insonsistency. But if there is, we release the
+    // suspicous key. Otherwise, we risk to block the C64's keyboard matrix
+    // for good.
+    /*
     func checkConsistency(withEvent event: NSEvent) {
         
         let flags = event.modifierFlags
         
         if (leftShift || rightShift) != flags.contains(NSEvent.ModifierFlags.shift) {
-            keyUp(with: MacKey.leftShift)
+            keyUp(with: MacKey.shift)
             keyUp(with: MacKey.rightShift)
             Swift.print("*** SHIFT inconsistency detected *** \(leftShift) \(rightShift)")
         }
@@ -78,113 +53,91 @@ class KeyboardController: NSObject {
             Swift.print("*** SHIFT inconsistency *** \(option)")
         }
     }
+    */
     
-    init(controller c: MyController) {
+    init(parent: MyController) {
         
         super.init()
-        self.controller = c
+        self.parent = parent
     }
     
     func keyDown(with event: NSEvent) {
-        
-        // track()
-        
+                
         // Ignore repeating keys
         if event.isARepeat {
             return
         }
         
         // Exit fullscreen mode if escape key is pressed
-        if event.keyCode == MacKey.escape.keyCode && controller.renderer.fullscreen {
-            controller.window!.toggleFullScreen(nil)
-        }
-        
-        let keyCode = event.keyCode
-        let flags = event.modifierFlags
-        let characters = event.charactersIgnoringModifiers
-        
-        // Ignore keys that are pressed in combination with the command key
-        if flags.contains(NSEvent.ModifierFlags.command) {
-            // track("Ignoring the command key")
+        if event.keyCode == kVK_Escape && renderer.fullscreen && pref.exitOnEsc {
+            parent.window!.toggleFullScreen(nil)
             return
         }
         
-        // Create and press MacKey
-        let macKey = MacKey.init(keyCode: keyCode, characters: characters)
-        checkConsistency(withEvent: event)
-        keyDown(with: macKey)
+        // Ignore keys that are pressed in combination with the Command key
+        if event.modifierFlags.contains(NSEvent.ModifierFlags.command) {
+            return
+        }
+        
+        keyDown(with: MacKey.init(event: event))
     }
     
     func keyUp(with event: NSEvent) {
-
-        let keyCode = event.keyCode
-        let characters = event.charactersIgnoringModifiers
-
-        // Create and release macKey
-        let macKey = MacKey.init(keyCode: keyCode, characters: characters)
-        checkConsistency(withEvent: event)
-        keyUp(with: macKey)
+                
+        keyUp(with: MacKey.init(event: event))
     }
     
     func flagsChanged(with event: NSEvent) {
-        
-        // track("\(event)")
-        let mod = event.modifierFlags
-        let keyCode = event.keyCode
-        
-        if keyCode == kVK_Shift {
-            if !leftShift {
-                leftShift = true
-                keyDown(with: MacKey.leftShift)
-            } else {
-                leftShift = false
-                keyUp(with: MacKey.leftShift)
-            }
+                
+        // Determine the pressed or released key
+        switch Int(event.keyCode) {
+            
+        case kVK_Shift:
+            leftShift = event.modifierFlags.contains(.shift) ? !leftShift : false
+            leftShift ? keyDown(with: MacKey.shift) : keyUp(with: MacKey.shift)
+            
+        case kVK_RightShift:
+            rightShift = event.modifierFlags.contains(.shift) ? !rightShift : false
+            rightShift ? keyDown(with: MacKey.rightShift) : keyUp(with: MacKey.rightShift)
+            
+        case kVK_Control:
+            leftControl = event.modifierFlags.contains(.control) ? !leftControl : false
+            leftControl ? keyDown(with: MacKey.control) : keyUp(with: MacKey.control)
+            
+        case kVK_RightControl:
+            rightControl = event.modifierFlags.contains(.control) ? !rightControl : false
+            rightControl ? keyDown(with: MacKey.rightControl) : keyUp(with: MacKey.rightControl)
+            
+        case kVK_Option:
+            leftOption = event.modifierFlags.contains(.option) ? !leftOption : false
+            leftOption ? keyDown(with: MacKey.option) : keyUp(with: MacKey.option)
+            
+        case kVK_RightOption:
+            rightOption = event.modifierFlags.contains(.option) ? !rightOption : false
+            rightOption ? keyDown(with: MacKey.rightOption) : keyUp(with: MacKey.rightOption)
+                        
+        default:
+            break
         }
-        if keyCode == kVK_RightShift {
-            if !rightShift {
-                rightShift = true
-                keyDown(with: MacKey.rightShift)
-            } else {
-                rightShift = false
-                keyUp(with: MacKey.rightShift)
-            }
-        }
-        if mod.contains(.control) && !control {
-            control = true
-            keyDown(with: MacKey.control)
-        }
-        if !mod.contains(.control) && control {
-            control = false
-            keyUp(with: MacKey.control)
-        }
-        if mod.contains(.option) && !option {
-            option = true
-            keyDown(with: MacKey.option)
-        }
-        if !mod.contains(.option) && option {
-            option = false
-            keyUp(with: MacKey.option)
-        }
-        
-        command = mod.contains(.command)
     }
     
     func keyDown(with macKey: MacKey) {
         
-        // track("\(macKey)")
-        
         // Check if this key is used for joystick emulation
-        if controller.gamePadManager.keyDown(with: macKey) && disconnectJoyKeys {
-            return
+        if parent.gamePad1?.processKeyDownEvent(macKey: macKey) == true {
+            if pref.disconnectJoyKeys { return }
         }
-        
-        if mapKeysByPosition {
-            keyDown(with: macKey, keyMap: keyMap)
+        if parent.gamePad2?.processKeyDownEvent(macKey: macKey) == true {
+            if pref.disconnectJoyKeys { return }
+        }
+
+        // Positional key mapping
+        if pref.mapKeysByPosition {
+            keyDown(with: macKey, keyMap: pref.keyMap)
             return
         }
 
-        // Translate MacKey to a list of C64Keys
+        // Symbolic key mapping
         let c64Keys = translate(macKey: macKey)
         
         if c64Keys != [] {
@@ -194,7 +147,7 @@ class KeyboardController: NSObject {
         
             // Press all required keys
             for key in c64Keys {
-                controller.c64.keyboard.pressKey(atRow: key.row, col: key.col)
+                keyboard.pressKey(atRow: key.row, col: key.col)
             }
         }
     }
@@ -202,26 +155,30 @@ class KeyboardController: NSObject {
     func keyDown(with macKey: MacKey, keyMap: [MacKey: C64Key]) {
         
         if let key = keyMap[macKey] {
-            controller.c64.keyboard.pressKey(atRow: key.row, col: key.col)
+            keyboard.pressKey(atRow: key.row, col: key.col)
         }
     }
         
     func keyUp(with macKey: MacKey) {
         
         // Check if this key is used for joystick emulation
-        if controller.gamePadManager.keyUp(with: macKey) && disconnectJoyKeys {
+        if parent.gamePad1?.processKeyUpEvent(macKey: macKey) == true {
+            if pref.disconnectJoyKeys { return }
+        }
+        if parent.gamePad2?.processKeyUpEvent(macKey: macKey) == true {
+            if pref.disconnectJoyKeys { return }
+        }
+        
+        // Positional key mapping
+        if pref.mapKeysByPosition {
+            keyUp(with: macKey, keyMap: pref.keyMap)
             return
         }
         
-        if mapKeysByPosition {
-            keyUp(with: macKey, keyMap: keyMap)
-            return
-        }
-        
-        // Lookup keys to be released
+        // Symbolic key mapping
         if let c64Keys = pressedKeys[macKey] {
             for key in c64Keys {
-                controller.c64.keyboard.releaseKey(atRow: key.row, col: key.col)
+                keyboard.releaseKey(atRow: key.row, col: key.col)
             }
         }
     }
@@ -229,13 +186,11 @@ class KeyboardController: NSObject {
     func keyUp(with macKey: MacKey, keyMap: [MacKey: C64Key]) {
         
         if let key = keyMap[macKey] {
-            // track("Releasing row: \(key.row) col: \(key.col)\n")
-            controller.c64.keyboard.releaseKey(atRow: key.row, col: key.col)
+            keyboard.releaseKey(atRow: key.row, col: key.col)
         }
     }
     
-    /// Standard physical key map
-    /// Keys are matched based on their position on the keyboard
+    // Standard physical key map
     static let standardKeyMap: [MacKey: C64Key] = [
         
         // First row of C64 keyboard
@@ -291,7 +246,7 @@ class KeyboardController: NSObject {
         
         // Fourth row of C64 keyboard
         MacKey.option: C64Key.commodore,
-        MacKey.leftShift: C64Key.shift,
+        MacKey.shift: C64Key.shift,
         MacKey.rightShift: C64Key.rightShift,
         MacKey.Ansi.Z: C64Key.Z,
         MacKey.Ansi.X: C64Key.X,
@@ -354,7 +309,7 @@ class KeyboardController: NSObject {
         default:
             
             // Translate symbolically
-            return C64Key.translate(char: macKey.description)
+            return C64Key.translate(char: macKey.stringValue)
         }
     }
     
@@ -362,18 +317,18 @@ class KeyboardController: NSObject {
         
         for key in keyList {
             if key == .restore {
-                controller.c64.keyboard.pressRestoreKey()
+                keyboard.pressRestoreKey()
             } else {
-                controller.c64.keyboard.pressKey(atRow: key.row, col: key.col)
+                keyboard.pressKey(atRow: key.row, col: key.col)
             }
         }
         usleep(useconds_t(50000))
         
         for key in keyList {
             if key == .restore {
-                controller.c64.keyboard.releaseRestoreKey()
+                keyboard.releaseRestoreKey()
             } else {
-            controller.c64.keyboard.releaseKey(atRow: key.row, col: key.col)
+            keyboard.releaseKey(atRow: key.row, col: key.col)
             }
         }
     }
@@ -427,6 +382,6 @@ class KeyboardController: NSObject {
     }
     
     func typeOnKeyboardAndPressPlay(string: String?) {
-        type(string: string, completion: controller.c64.datasette.pressPlay)
+        type(string: string, completion: parent.c64.datasette.pressPlay)
     }
 }

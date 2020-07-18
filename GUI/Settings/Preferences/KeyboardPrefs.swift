@@ -26,13 +26,10 @@ extension PreferencesController {
     */
     
     func refreshKeyboardTab() {
+            
+        keyMappingPopup.selectItem(withTag: pref.mapKeysByPosition ? 1 : 0)
     
-        // guard let controller = myController else { return }
-        guard let kbController = myController?.keyboard else { return }
-        
-        keyMappingPopup.selectItem(withTag: kbController.mapKeysByPosition ? 1 : 0)
-    
-        if kbController.mapKeysByPosition {
+        if pref.mapKeysByPosition {
             
             keyMappingPopup.selectItem(withTag: 1)
             info.stringValue = "In positonal assignment mode, the Mac keys are assigned to the C64 keys according to the following mapping table:"
@@ -48,13 +45,10 @@ extension PreferencesController {
     }
     
     func updateImages() {
-        
-        guard let kbController = myController?.keyboard else { return }
-        let keyMap = kbController.keyMap
-        
+                
         // Create labels
         var labels = Array(repeating: Array(repeating: "", count: 8), count: 8)
-        for (macKey, c64Key) in keyMap {
+        for (macKey, c64Key) in pref.keyMap {
             labels[c64Key.row][c64Key.col] = String.init(format: "%02X", macKey.keyCode)
         }
         
@@ -70,34 +64,33 @@ extension PreferencesController {
         keyMatrixCollectionView.reloadData()
     }
     
-    func mapKeyDown(with macKey: MacKey) {
-        
-        guard let kbController = myController?.keyboard else { return }
-        let keyMap = kbController.keyMap
-        
+    func mapKeyDown(with macKey: MacKey) -> Bool {
+                
         // Check for ESC key
         if macKey == MacKey.escape {
             cancelAction(self)
-            return
+            return false
         }
         
         // Remove old key assignment (if any)
-        for (macKey, key) in keyMap where key == selectedKey {
-            kbController.keyMap[macKey] = nil
+        for (macKey, key) in pref.keyMap where key == selectedKey {
+            pref.keyMap[macKey] = nil
         }
         
         // Assign new key
-        kbController.keyMap[macKey] = selectedKey
+        pref.keyMap[macKey] = selectedKey
         
         // Update  view
         selectedKey = nil
         refresh()
+        
+        return true
     }
     
     @IBAction func mapKeyMappingAction(_ sender: NSPopUpButton!) {
         
         let value = (sender.selectedTag() == 1) ? true : false
-        myController?.keyboard.mapKeysByPosition = value
+        pref.mapKeysByPosition = value
         refresh()
     }
     
@@ -160,7 +153,7 @@ extension ConfigurationController: NSCollectionViewDelegate {
             refresh()
             
             // Make sure that we can receive keyboard events
-            (window as? PreferencesWindow)?.respondToEvents()
+            // (window as? PreferencesWindow)?.respondToEvents()
         }
     }
 }

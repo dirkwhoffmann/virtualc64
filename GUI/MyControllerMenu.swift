@@ -217,9 +217,9 @@ extension MyController: NSMenuItemValidation {
         myAppDelegate.prefController?.showWindow(self)
     }
     
-    @IBAction func importPrefsAction(_ sender: Any!) {
+    func importPrefs(_ prefixes: [String]) {
         
-        track()
+        track("Importing user defaults with prefixes \(prefixes)")
         
         let panel = NSOpenPanel()
         panel.prompt = "Import"
@@ -228,15 +228,15 @@ extension MyController: NSMenuItemValidation {
         panel.beginSheetModal(for: window!, completionHandler: { result in
             if result == .OK {
                 if let url = panel.url {
-                    self.loadUserDefaults(url: url)
+                    self.loadUserDefaults(url: url, prefixes: prefixes)
                 }
             }
         })
     }
-   
-    @IBAction func exportPrefsAction(_ sender: Any!) {
+    
+    func exportPrefs(_ prefixes: [String]) {
         
-        track()
+        track("Exporting user defaults with prefixes \(prefixes)")
         
         let panel = NSSavePanel()
         panel.prompt = "Export"
@@ -246,16 +246,35 @@ extension MyController: NSMenuItemValidation {
             if result == .OK {
                 if let url = panel.url {
                     track()
-                    self.saveUserDefaults(url: url)
+                    self.saveUserDefaults(url: url, prefixes: prefixes)
                 }
             }
         })
     }
     
-    @IBAction func factorySettingsAction(_ sender: Any!) {
+    @IBAction func importConfigAction(_ sender: Any!) {
+        
+        importPrefs(["VC64_ROM", "VC64_HW", "VC64_VID"])
+    }
+    
+    @IBAction func exportConfigAction(_ sender: Any!) {
+        
+        exportPrefs(["VC64_ROM", "VC64_HW", "VC64_VID"])
+    }
+    
+    @IBAction func resetConfigAction(_ sender: Any!) {
         
         track()
-        UserDefaults.resetUserDefaults()
+        
+        UserDefaults.resetRomUserDefaults()
+        UserDefaults.resetHardwareUserDefaults()
+        UserDefaults.resetVideoUserDefaults()
+        
+        c64.suspend()
+        config.loadRomUserDefaults()
+        config.loadHardwareUserDefaults()
+        config.loadVideoUserDefaults()
+        c64.resume()
     }
     
     //

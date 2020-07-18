@@ -44,13 +44,10 @@ class PreferencesController: DialogController {
     // Devices preferences
     //
     
-    /// Indicates if a keycode should be recorded for keyset 1
-    var devRecordKey1: JoystickDirection?
+    // Tag of the button that is currently being recorded
+    var devRecordedKey: Int?
     
-    /// Indicates if a keycode should be recorded for keyset 1
-    var devRecordKey2: JoystickDirection?
-    
-    /// Joystick emulation keys
+    // Joystick emulation keys
     @IBOutlet weak var devLeft1: NSTextField!
     @IBOutlet weak var devLeft1button: NSButton!
     @IBOutlet weak var devRight1: NSTextField!
@@ -162,23 +159,25 @@ class PreferencesController: DialogController {
             }
         }
     }
-        
-    override func keyDown(with key: MacKey) {
+    
+    @discardableResult
+    func keyDown(with key: MacKey) -> Bool {
         
         if let id = tabView.selectedTabViewItem?.identifier as? String {
             
             switch id {
-            case "Devices": devKeyDown(with: key)
-            case "Keyboard": mapKeyDown(with: key)
+            case "Devices": return devKeyDown(with: key)
+            case "Keyboard": return mapKeyDown(with: key)
             default: break
             }
         }
+        return false
     }
-        
+    
     @IBAction override func okAction(_ sender: Any!) {
         
-        // pref.saveGeneralUserDefaults()
-        // pref.saveDevicesUserDefaults()
+        pref.saveGeneralUserDefaults()
+        pref.saveDevicesUserDefaults()
         hideSheet()
     }
 }
@@ -212,7 +211,7 @@ extension PreferencesController: NSTextFieldDelegate {
             case medD64AutoTypeText, medPrgAutoTypeText, medT64AutoTypeText,
                  medTapAutoTypeText, medCrtAutoTypeText:
                 
-                emuAutoTypeTextAction(view)
+                medAutoTextAction(view)
                 
             case devAutofireBullets:
                 

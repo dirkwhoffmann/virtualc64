@@ -103,8 +103,6 @@ class DialogController: NSWindowController {
         }
     }
  
-    func keyDown(with key: MacKey) { }
-
     // Default action method for OK
     @IBAction func okAction(_ sender: Any!) {
         

@@ -163,13 +163,13 @@ class MyDocument: NSDocument {
         let pref = controller.pref
         
         // Determine action to perform and text to type
-        var action = AutoMountAction.openBrowser
-        var autoTypeText: String?
+        var mountAction = AutoMountAction.openBrowser
+        var autoText: String?
 
         func getAction(_ type: String) {
-            action = pref.autoMountAction[type] ?? action
-            if action != .openBrowser && (pref.autoType[type] ?? false) {
-                autoTypeText = pref.autoTypeText[type]
+            mountAction = pref.mountAction[type] ?? mountAction
+            if mountAction != .openBrowser && (pref.autoType[type] ?? false) {
+                autoText = pref.autoText[type]
             }
         }
 
@@ -190,7 +190,7 @@ class MyDocument: NSDocument {
 
         // Execute asynchronously ...
         DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
-            self.mountAttachment(action: action, text: autoTypeText)
+            self.mountAttachment(action: mountAction, text: autoText)
         })
         
         return true

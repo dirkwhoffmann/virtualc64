@@ -303,9 +303,9 @@ VIC::setGlueLogic(GlueLogic type)
 }
 
 void
-VIC::setVideoPalette(VICPalette type)
+VIC::setVideoPalette(Palette type)
 {
-    if (!isVICPalette(type)) {
+    if (!isPalette(type)) {
         warn("Unknown palette type (%d). Assuming color palette.\n", type);
         type = COLOR_PALETTE;
     }

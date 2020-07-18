@@ -56,10 +56,8 @@ class MyController: NSWindowController, MessageReceiver {
     
     // Game pad manager
     var gamePadManager: GamePadManager!
-    /*
-     var gamePad1: GamePad? { return gamePadManager.gamePads[config.gameDevice1] }
-     var gamePad2: GamePad? { return gamePadManager.gamePads[config.gameDevice2] }
-     */
+    var gamePad1: GamePad? { return gamePadManager.gamePads[config.gameDevice1] }
+    var gamePad2: GamePad? { return gamePadManager.gamePads[config.gameDevice2] }
     
     // Keyboard controller
     var keyboard: KeyboardController!
@@ -106,10 +104,10 @@ class MyController: NSWindowController, MessageReceiver {
     var statusBar = true
     
     /// Selected game pad slot for joystick in port A
-    var inputDevice1 = Defaults.inputDevice1
+    // var inputDevice1 = Defaults.inputDevice1
     
     /// Selected game pad slot for joystick in port B
-    var inputDevice2 = Defaults.inputDevice2
+    // var inputDevice2 = Defaults.inputDevice2
     
     /*
     /// Screenshot resolution (0 = low, 1 = high)
@@ -410,14 +408,14 @@ extension MyController {
         hideMouse = false
         
         // Create keyboard controller
-        keyboard = KeyboardController(controller: self)
+        keyboard = KeyboardController(parent: self)
         if keyboard == nil {
             track("Failed to create keyboard controller")
             return
         }
 
         // Create game pad manager
-        gamePadManager = GamePadManager(controller: self)
+        gamePadManager = GamePadManager(parent: self)
         if gamePadManager == nil {
             track("Failed to create game pad manager")
             return
@@ -924,22 +922,24 @@ extension MyController {
     
     /// GamePadManager delegation method
     /// - Returns: true, iff a joystick event has been triggered on port A or B
+    /*
     @discardableResult
     func joystickEvent(slot: Int, events: [JoystickEvent]) -> Bool {
         
-        if slot == inputDevice1 {
+        if slot == config.gameDevice1 {
             for event in events { c64.port1.trigger(event) }
             return true
         }
 
-        if slot == inputDevice2 {
+        if slot == config.gameDevice2 {
             for event in events { c64.port2.trigger(event) }
             return true
         }
         
         return false
     }    
-
+    */
+    
     //
     // Action methods (main screen)
     //

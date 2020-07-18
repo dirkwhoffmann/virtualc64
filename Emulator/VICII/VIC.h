@@ -65,7 +65,7 @@ private:
     // VICModel model;
 
     //! @brief    Color palette type  TODO: MOVE TO CONFIG
-    VICPalette palette;
+    Palette palette;
 
     //! @brief    Glue logic type  TODO: MOVE TO CONFIG
     GlueLogic glueLogic;
@@ -781,10 +781,10 @@ public:
  
 
     //! @brief    Returns the currently used palette type.
-    VICPalette videoPalette() { return palette; }
+    Palette videoPalette() { return palette; }
     
     //! @brief    Sets the palette type.
-    void setVideoPalette(VICPalette type);
+    void setVideoPalette(Palette type);
 
     //! @brief    Returns true if a PAL chip is plugged in.
     bool isPAL() { return config.revision & (PAL_6569_R1 | PAL_6569_R3 | PAL_8565); }
@@ -864,7 +864,7 @@ public:
     /*! @brief    Returns a C64 color from a specific color palette.
      *  @return   Color in 32 bit big endian RGBA format.
      */
-    u32 getColor(unsigned nr, VICPalette palette);
+    u32 getColor(unsigned nr, Palette palette);
     
     //! @brief    Returns the brightness monitor parameter
     double getBrightness() { return brightness; }

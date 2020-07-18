@@ -295,24 +295,22 @@ static const u16 PAL_VISIBLE_RASTERLINES = 284; // was 292
 
 
 //
-// Types
+// Enumerations
 //
 
-
-//! @brief    Color palette type
-/*! @details  Used to emulate monochrome displays
- */
-typedef enum {
+typedef enum : long
+{
     COLOR_PALETTE = 0,
     BLACK_WHITE_PALETTE,
     PAPER_WHITE_PALETTE,
     GREEN_PALETTE,
     AMBER_PALETTE,
     SEPIA_PALETTE
-} VICPalette;
+}
+Palette;
 
-inline bool isVICPalette(VICPalette model) {
-    return model >= COLOR_PALETTE && model <= SEPIA_PALETTE;
+inline bool isPalette(long value) {
+    return value >= COLOR_PALETTE && value <= SEPIA_PALETTE;
 }
 
 //! @brief    Screen geometries

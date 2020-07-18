@@ -10,8 +10,19 @@
 #ifndef CONTROLPORT_TYPES_H
 #define CONTROLPORT_TYPES_H
 
-/*! @brief    Joystick directions
- */
+typedef enum : long
+{
+    CPD_NONE,
+    CPD_MOUSE,
+    CPD_JOYSTICK
+}
+ControlPortDevice;
+
+inline bool isControlPortDevice(long value) {
+    return value >= 0 && value <= CPD_JOYSTICK;
+}
+
+// DEPRECATED
 typedef enum {
     
     JOYSTICK_UP,
@@ -22,20 +33,26 @@ typedef enum {
     
 } JoystickDirection;
 
-/*! @brief    Joystick events
- */
-typedef enum {
-    
-    PULL_UP,
-    PULL_DOWN,
-    PULL_LEFT,
-    PULL_RIGHT,
-    PRESS_FIRE,
-    RELEASE_X,
-    RELEASE_Y,
-    RELEASE_XY,
-    RELEASE_FIRE
-    
-} JoystickEvent;
+typedef enum
+{
+    PULL_UP = 0,   // Pull the joystick up
+    PULL_DOWN,     // Pull the joystick down
+    PULL_LEFT,     // Pull the joystick left
+    PULL_RIGHT,    // Pull the joystick right
+    PRESS_FIRE,    // Press the joystick button
+    PRESS_LEFT,    // Press the left mouse button
+    PRESS_RIGHT,   // Press the right mouse button
+    RELEASE_X,     // Move back to neutral horizontally
+    RELEASE_Y,     // Move back to neutral vertically
+    RELEASE_XY,    // Move back to neutral
+    RELEASE_FIRE,  // Release the joystick button
+    RELEASE_LEFT,  // Release the left mouse button
+    RELEASE_RIGHT  // Release the right mouse button
+}
+GamePadAction;
+
+inline bool isGamePadAction(long value) {
+    return value >= 0 && value <= RELEASE_RIGHT;
+}
 
 #endif 

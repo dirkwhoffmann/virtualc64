@@ -17,7 +17,12 @@ class Renderer: NSObject, MTKViewDelegate {
     let device: MTLDevice
     let parent: MyController
     
-    // Number of drawn frames since power up
+    var prefs: Preferences { return parent.pref }
+    var config: Configuration { return parent.config }
+
+    /* Number of drawn frames since power up.
+     * Used to determine the fps value shown in the emulator's bottom bar.
+     */
     var frames: Int64 = 0
     
     /* Synchronization semaphore
@@ -80,41 +85,49 @@ class Renderer: NSObject, MTKViewDelegate {
     // Texture to hold the pixel depth information
     var depthTexture: MTLTexture! = nil
     
-    // Emulator texture as provided by the emulator.
-    // The C64 screen has size 428 x 284 and covers the upper left part of the
-    // emulator texture. The emulator texture is updated in function
-    // updateTexture() which is called periodically in drawRect().
+    /* Emulator texture as provided by the emulator.
+     * The C64 screen has size 428 x 284 and covers the upper left part of the
+     * emulator texture. The emulator texture is updated in function
+     * updateTexture() which is called periodically in drawRect().
+     */
     var emulatorTexture: MTLTexture! = nil
 
-    // Bloom textures to emulate blooming.
-    // To emulate a bloom effect, the C64 texture is first split into it's
-    // R, G, and B parts. Each texture is then run through a Gaussian blur
-    // filter with a large radius. These blurred textures are passed into
-    // the fragment shader as a secondary textures where they are recomposed
-    // with the upscaled primary texture.
+    /* Bloom textures to emulate blooming.
+     * To emulate a bloom effect, the C64 texture is first split into it's
+     * R, G, and B parts. Each texture is then run through a Gaussian blur
+     * filter with a large radius. These blurred textures are passed into
+     * the fragment shader as a secondary textures where they are recomposed
+     * with the upscaled primary texture.
+     */
     var bloomTextureR: MTLTexture! = nil
     var bloomTextureG: MTLTexture! = nil
     var bloomTextureB: MTLTexture! = nil
 
-    // Upscaled emulator texture.
-    // In the first texture processing stage, the emulator texture is bumped up
-    // by a factor of 4. The user can choose between bypass upscaling which
-    // simply replaces each pixel by a 4x4 quad or more sophisticated upscaling
-    // algorithms such as xBr.
+    /* Upscaled emulator texture.
+     * In the first texture processing stage, the emulator texture is bumped up
+     * by a factor of 4. The user can choose between bypass upscaling which
+     * simply replaces each pixel by a 4x4 quad or more sophisticated upscaling
+     * algorithms such as xBr.
+     */
     var upscaledTexture: MTLTexture! = nil
     
-    // Upscaled texture with scanlines.
-    // In the second texture processing stage, a scanline effect is applied to
-    // the upscaled texture.
+    /* Upscaled texture with scanlines.
+     * In the second texture processing stage, a scanline effect is applied to
+     * the upscaled texture.
+     */
     var scanlineTexture: MTLTexture! = nil
     
-    // Dotmask texture (variable size).
-    // This texture is used by the fragment shader to emulate a dotmask
-    // effect.
+    /* Dotmask texture (variable size).
+     * This texture is used by the fragment shader to emulate a dotmask
+     * effect.
+     */
     var dotMaskTexture: MTLTexture! = nil
     
     // Array holding all available upscalers
     var upscalerGallery = [ComputeKernel?](repeating: nil, count: 3)
+
+    // The currently selected enhancer
+    var upscaler: ComputeKernel!
 
     // Array holding all available bloom filters
     var bloomFilterGallery = [ComputeKernel?](repeating: nil, count: 3)
@@ -136,7 +149,7 @@ class Renderer: NSObject, MTKViewDelegate {
     var samplerLinear: MTLSamplerState! = nil
     
     // Shader options
-    var shaderOptions = Defaults.shaderOptions
+    var shaderOptions: ShaderOptions!
     
     // Indicates if an animation is currently performed
      var animates = 0
@@ -162,25 +175,9 @@ class Renderer: NSObject, MTKViewDelegate {
     // Part of the texture that is currently visible
     var textureRect = CGRect.init()
     
-    // Currently selected texture upscaler
-    var upscaler = Defaults.upscaler {
-        didSet {
-            if upscaler >= upscalerGallery.count || upscalerGallery[upscaler] == nil {
-                track("Sorry, the selected GPU upscaler is unavailable.")
-                upscaler = 0
-            }
-        }
-    }
-        
     // Is set to true when fullscreen mode is entered
     var fullscreen = false
-    
-    // If true, the 3D renderer is used in fullscreen mode, too
-    var keepAspectRatio = Defaults.keepAspectRatio
-    
-    // If false, the C64 screen is not drawn (background texture will be visible)
-    var drawC64texture = false
-    
+        
     //
     // Initializing
     //
@@ -305,38 +302,42 @@ class Renderer: NSObject, MTKViewDelegate {
                            height: height / texH)
     }
     
+    // DEPRECATED (?)
     func updateTextureRect() {
         
         textureRect = computeTextureRect()
         buildVertexBuffer()
     }
         
-    /// Returns the compute kernel of the currently selected pixel upscaler
-    func currentUpscaler() -> ComputeKernel {
-    
-        precondition(upscaler < upscalerGallery.count)
-        precondition(upscalerGallery[0] != nil)
+    // Tries to select a new upscaler
+    func selectUpscaler(_ nr: Int) -> Bool {
         
-        return upscalerGallery[upscaler]!
+        if nr < upscalerGallery.count && upscalerGallery[nr] != nil {
+            upscaler = upscalerGallery[nr]!
+            return true
+        }
+        return false
     }
-
-    /// Returns the compute kernel of the currently selected bloom filter
+    
+    // Returns the compute kernel of the currently selected bloom filter
     func currentBloomFilter() -> ComputeKernel {
         
-        precondition(shaderOptions.bloom < bloomFilterGallery.count)
-        precondition(bloomFilterGallery[0] != nil)
-        
-        return bloomFilterGallery[Int(shaderOptions.bloom)]!
+        var nr = Int(shaderOptions.bloom)
+        if bloomFilterGallery.count <= nr || bloomFilterGallery[nr] == nil { nr = 0 }
+        return bloomFilterGallery[nr]!
     }
-
-    /// Returns the compute kernel of the currently selected scanline filter
+    
+    // Returns the compute kernel of the currently selected scanline filter
     func currentScanlineFilter() -> ComputeKernel {
         
-        precondition(shaderOptions.scanlines < scanlineFilterGallery.count)
-        precondition(scanlineFilterGallery[0] != nil)
-        
-        return scanlineFilterGallery[Int(shaderOptions.scanlines)]!
+        var nr = Int(shaderOptions.scanlines)
+        if scanlineFilterGallery.count <= nr || scanlineFilterGallery[nr] == nil { nr = 0 }
+        return scanlineFilterGallery[nr]!
     }
+    
+    //
+    //  Drawing
+    //
     
     func startFrame() {
     
@@ -344,7 +345,6 @@ class Renderer: NSObject, MTKViewDelegate {
         precondition(commandBuffer != nil, "Command buffer must not be nil")
     
         // Set uniforms for the fragment shader
-        // fillFragmentShaderUniforms(uniformFragment)
         fragmentUniforms.alpha = 1.0
         fragmentUniforms.dotMaskHeight = Int32(dotMaskTexture.height)
         fragmentUniforms.dotMaskWidth = Int32(dotMaskTexture.width)
@@ -365,13 +365,12 @@ class Renderer: NSObject, MTKViewDelegate {
                                  inPlaceTexture: &texture, fallbackCopyAllocator: nil)
                 }
             }
-            applyGauss(&bloomTextureR, radius: shaderOptions.bloomRadiusR)
-            applyGauss(&bloomTextureG, radius: shaderOptions.bloomRadiusG)
-            applyGauss(&bloomTextureB, radius: shaderOptions.bloomRadiusB)
+            applyGauss(&bloomTextureR, radius: shaderOptions.bloomRadius)
+            applyGauss(&bloomTextureG, radius: shaderOptions.bloomRadius)
+            applyGauss(&bloomTextureB, radius: shaderOptions.bloomRadius)
         }
         
         // Upscale the C64 texture
-        let upscaler = currentUpscaler()
         upscaler.apply(commandBuffer: commandBuffer,
                        source: emulatorTexture,
                        target: upscaledTexture)
@@ -455,7 +454,6 @@ class Renderer: NSObject, MTKViewDelegate {
         
         startFrame()
         
-        // Render background
         if renderBackground {
             
             // Update background texture
@@ -470,7 +468,7 @@ class Renderer: NSObject, MTKViewDelegate {
                                           index: 1)
             
             // Configure fragment shader
-            fragmentUniforms.alpha = 1
+            fragmentUniforms.alpha = 1.0
             commandEncoder.setFragmentTexture(bgTexture, index: 0)
             commandEncoder.setFragmentTexture(bgTexture, index: 1)
             commandEncoder.setFragmentBytes(&fragmentUniforms,
@@ -557,11 +555,13 @@ class Renderer: NSObject, MTKViewDelegate {
     func draw(in view: MTKView) {
         
         semaphore.wait()
-
         drawable = metalLayer.nextDrawable()
+        
         if drawable != nil {
+            
             updateTexture()
-            if fullscreen && !keepAspectRatio {
+            
+            if fullscreen && !parent.pref.keepAspectRatio {
                 drawScene2D()
             } else {
                 drawScene3D()

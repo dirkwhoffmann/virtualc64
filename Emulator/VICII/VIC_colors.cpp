@@ -34,7 +34,7 @@ VIC::getColor(unsigned nr)
 }
 
 u32
-VIC::getColor(unsigned nr, VICPalette palette)
+VIC::getColor(unsigned nr, Palette palette)
 {
     double y, u, v;
     

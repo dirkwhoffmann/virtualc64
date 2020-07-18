@@ -122,16 +122,16 @@ extension PreferencesController {
         }
     }
     
-    @IBAction func emuAutoMountAction(_ sender: NSPopUpButton!) {
+    @IBAction func medMountAction(_ sender: NSPopUpButton!) {
         
         if let fileType = mediaFileType(sender.tag) {
             let action = AutoMountAction(rawValue: sender.selectedTag())
-            pref.autoMountAction[fileType] = action
+            pref.mountAction[fileType] = action
             refresh()
         }
     }
     
-    @IBAction func emuAutoTypeAction(_ sender: NSButton!) {
+    @IBAction func medAutoTypeAction(_ sender: NSButton!) {
         
         if let fileType = mediaFileType(sender.tag) {
             pref.autoType[fileType] = (sender.intValue == 0) ? false : true
@@ -139,20 +139,21 @@ extension PreferencesController {
         }
     }
 
-    @IBAction func emuAutoTypeTextAction(_ sender: NSTextField!) {
+    @IBAction func medAutoTextAction(_ sender: NSTextField!) {
         
         if let fileType = mediaFileType(sender.tag) {
-            pref.autoTypeText[fileType] = sender.stringValue
+            pref.autoText[fileType] = sender.stringValue
             refresh()
         }
     }
     
-    @IBAction func emuPresetAction(_ sender: NSPopUpButton!) {
+    @IBAction func medPresetAction(_ sender: NSPopUpButton!) {
         
         track()
         assert(sender.selectedTag() == 0)
         
-        UserDefaults.resetEmulatorUserDefaults()
+        UserDefaults.resetMediaDefaults()
+        pref.loadMediaUserDefaults()
         refresh()
      }
     

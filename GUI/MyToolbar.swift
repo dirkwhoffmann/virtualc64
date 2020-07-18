@@ -46,45 +46,12 @@ class MyToolbar: NSToolbar {
         resetButton.label = "Reset"
 
         // Update input device selectors
-        /*
         parent.gamePadManager.refresh(popup: controlPort1)
         parent.gamePadManager.refresh(popup: controlPort2)
         controlPort1.selectItem(withTag: parent.config.gameDevice1)
         controlPort2.selectItem(withTag: parent.config.gameDevice2)
-        */
-        validateJoystickToolbarItems()
     }
     
-    func validateJoystickToolbarItems() {
-        
-        let c64 = parent.c64!
-
-        validateJoystickToolbarItem(controlPort1,
-                                    selectedSlot: parent.inputDevice1,
-                                    port: c64.port1)
-        validateJoystickToolbarItem(controlPort2,
-                                    selectedSlot: parent.inputDevice2,
-                                    port: c64.port2)
-    }
-    
-    func validateJoystickToolbarItem(_ popup: NSPopUpButton, selectedSlot: Int, port: ControlPortProxy!) {
-        
-        let manager = parent.gamePadManager!
-        
-        let menu =  popup.menu
-        let item3 = menu?.item(withTag: InputDevice.joystick1)
-        let item4 = menu?.item(withTag: InputDevice.joystick2)
-        
-        // USB joysticks
-        item3?.title = manager.gamePads[3]?.name ?? "USB Device 1"
-        item4?.title = manager.gamePads[4]?.name ?? "USB Device 2"
-        item3?.isEnabled = !manager.slotIsEmpty(InputDevice.joystick1)
-        item4?.isEnabled = !manager.slotIsEmpty(InputDevice.joystick2)
-        
-        // Mark game pad connected to port
-        popup.selectItem(withTag: selectedSlot)
-    }
-
     @IBAction func toolbarPrefAction(_ sender: NSSegmentedControl) {
 
         track()
