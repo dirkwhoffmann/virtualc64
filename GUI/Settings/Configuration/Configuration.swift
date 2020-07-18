@@ -161,8 +161,14 @@ class Configuration {
     var bloom = VideoDefaults.tft.bloom {
         didSet { renderer.shaderOptions.bloom = bloom }
     }
-    var bloomRadius = VideoDefaults.tft.bloomRadius {
-        didSet { renderer.shaderOptions.bloomRadius = bloomRadius }
+    var bloomRadiusR = VideoDefaults.tft.bloomRadiusR {
+        didSet { renderer.shaderOptions.bloomRadiusR = bloomRadiusR }
+    }
+    var bloomRadiusG = VideoDefaults.tft.bloomRadiusG {
+        didSet { renderer.shaderOptions.bloomRadiusG = bloomRadiusG }
+    }
+    var bloomRadiusB = VideoDefaults.tft.bloomRadiusB {
+        didSet { renderer.shaderOptions.bloomRadiusB = bloomRadiusB }
     }
     var bloomBrightness = VideoDefaults.tft.bloomBrightness {
         didSet { renderer.shaderOptions.bloomBrightness = bloomBrightness }
@@ -343,7 +349,9 @@ class Configuration {
         blurRadius = defaults.blurRadius
         
         bloom = defaults.bloom
-        bloomRadius = defaults.bloomRadius
+        bloomRadiusR = defaults.bloomRadiusR
+        bloomRadiusG = defaults.bloomRadiusG
+        bloomRadiusB = defaults.bloomRadiusB
         bloomBrightness = defaults.bloomBrightness
         bloomWeight = defaults.bloomWeight
         dotMask = defaults.dotMask
@@ -384,7 +392,9 @@ class Configuration {
          upscaler = defaults.integer(forKey: Keys.upscaler)
          
          bloom = Int32(defaults.integer(forKey: Keys.bloom))
-         bloomRadius = defaults.float(forKey: Keys.bloomRadius)
+         bloomRadiusR = defaults.float(forKey: Keys.bloomRadiusR)
+         bloomRadiusG = defaults.float(forKey: Keys.bloomRadiusG)
+         bloomRadiusB = defaults.float(forKey: Keys.bloomRadiusB)
          bloomBrightness = defaults.float(forKey: Keys.bloomBrightness)
          bloomWeight = defaults.float(forKey: Keys.bloomWeight)
          dotMask = Int32(defaults.integer(forKey: Keys.dotMask))
@@ -421,7 +431,9 @@ class Configuration {
          defaults.set(upscaler, forKey: Keys.upscaler)
          
          defaults.set(bloom, forKey: Keys.bloom)
-         defaults.set(bloomRadius, forKey: Keys.bloomRadius)
+         defaults.set(bloomRadiusR, forKey: Keys.bloomRadiusR)
+         defaults.set(bloomRadiusG, forKey: Keys.bloomRadiusG)
+         defaults.set(bloomRadiusB, forKey: Keys.bloomRadiusB)
          defaults.set(bloomBrightness, forKey: Keys.bloomBrightness)
          defaults.set(bloomWeight, forKey: Keys.bloomWeight)
          defaults.set(dotMask, forKey: Keys.dotMask)

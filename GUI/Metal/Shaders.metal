@@ -43,7 +43,9 @@ struct ShaderOptions {
     float blurRadius;
 
     uint bloom;
-    float bloomRadius;
+    float bloomRadiusR;
+    float bloomRadiusG;
+    float bloomRadiusB;
     float bloomBrightness;
     float bloomWeight;
 

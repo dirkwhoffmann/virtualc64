@@ -365,9 +365,9 @@ class Renderer: NSObject, MTKViewDelegate {
                                  inPlaceTexture: &texture, fallbackCopyAllocator: nil)
                 }
             }
-            applyGauss(&bloomTextureR, radius: shaderOptions.bloomRadius)
-            applyGauss(&bloomTextureG, radius: shaderOptions.bloomRadius)
-            applyGauss(&bloomTextureB, radius: shaderOptions.bloomRadius)
+            applyGauss(&bloomTextureR, radius: shaderOptions.bloomRadiusR)
+            applyGauss(&bloomTextureG, radius: shaderOptions.bloomRadiusG)
+            applyGauss(&bloomTextureB, radius: shaderOptions.bloomRadiusB)
         }
         
         // Upscale the C64 texture

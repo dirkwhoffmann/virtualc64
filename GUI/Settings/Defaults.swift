@@ -508,7 +508,6 @@ struct MediaDefaults {
                                       "TAP": "LOAD",
                                       "CRT": "" ]
 
-    
     static let std = MediaDefaults.init(
         
         mountAction: stdAutoMountAction,
@@ -871,7 +870,9 @@ extension Keys {
     static let blur               = "VC64_VID_Blur"
     static let blurRadius         = "VC64_VID_BlurRadius"
     static let bloom              = "VC64_VID_Bloom"
-    static let bloomRadius        = "VC64_VID_BloonRadius"
+    static let bloomRadiusR       = "VC64_VID_BloonRadiusR"
+    static let bloomRadiusG       = "VC64_VID_BloonRadiusG"
+    static let bloomRadiusB       = "VC64_VID_BloonRadiusB"
     static let bloomBrightness    = "VC64_VID_BloomBrightness"
     static let bloomWeight        = "VC64_VID_BloomWeight"
     static let flicker            = "VC64_VID_Flicker"
@@ -907,7 +908,9 @@ struct VideoDefaults {
     let blur: Int32
     let blurRadius: Float
     let bloom: Int32
-    let bloomRadius: Float
+    let bloomRadiusR: Float
+    let bloomRadiusG: Float
+    let bloomRadiusB: Float
     let bloomBrightness: Float
     let bloomWeight: Float
     let flicker: Int32
@@ -943,7 +946,9 @@ struct VideoDefaults {
         blur: 1,
         blurRadius: 0,
         bloom: 0,
-        bloomRadius: 1.0,
+        bloomRadiusR: 1.0,
+        bloomRadiusG: 1.0,
+        bloomRadiusB: 1.0,
         bloomBrightness: 0.4,
         bloomWeight: 1.21,
         flicker: 1,
@@ -976,7 +981,9 @@ struct VideoDefaults {
         blur: 1,
         blurRadius: 1.5,
         bloom: 1,
-        bloomRadius: 1.0,
+        bloomRadiusR: 1.0,
+        bloomRadiusG: 1.0,
+        bloomRadiusB: 1.0,
         bloomBrightness: 0.4,
         bloomWeight: 1.21,
         flicker: 1,
@@ -1014,7 +1021,9 @@ extension UserDefaults {
             Keys.blur: defaults.blur,
             Keys.blurRadius: defaults.blurRadius,
             Keys.bloom: defaults.bloom,
-            Keys.bloomRadius: defaults.bloomRadius,
+            Keys.bloomRadiusR: defaults.bloomRadiusR,
+            Keys.bloomRadiusG: defaults.bloomRadiusG,
+            Keys.bloomRadiusB: defaults.bloomRadiusB,
             Keys.bloomBrightness: defaults.bloomBrightness,
             Keys.bloomWeight: defaults.bloomWeight,
             Keys.flicker: defaults.flicker,
@@ -1052,7 +1061,9 @@ extension UserDefaults {
                      Keys.blur,
                      Keys.blurRadius,
                      Keys.bloom,
-                     Keys.bloomRadius,
+                     Keys.bloomRadiusR,
+                     Keys.bloomRadiusG,
+                     Keys.bloomRadiusB,
                      Keys.bloomBrightness,
                      Keys.bloomWeight,
                      Keys.flicker,

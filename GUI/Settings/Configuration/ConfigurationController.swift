@@ -94,7 +94,9 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var vidBlurRadiusSlider: NSSlider!
     
     @IBOutlet weak var vidBloomPopUp: NSPopUpButton!
-    @IBOutlet weak var vidBloomRadiusSlider: NSSlider!
+    @IBOutlet weak var vidBloomRadiusRSlider: NSSlider!
+    @IBOutlet weak var vidBloomRadiusGSlider: NSSlider!
+    @IBOutlet weak var vidBloomRadiusBSlider: NSSlider!
     @IBOutlet weak var vidBloomBrightnessSlider: NSSlider!
     @IBOutlet weak var vidBloomWeightSlider: NSSlider!
     
