@@ -43,10 +43,12 @@ class Drive : public C64Component {
         8125   // Density bits = 11: Carry pulse every 13/16 * 10^4 1/10 nsec
     };
     
-    
     //
     // Sub components
     //
+    
+    // Current configuration
+    DriveConfig config;
     
 public:
     
@@ -55,6 +57,7 @@ public:
     VIA1 via1 = VIA1(this, vc64);
     VIA2 via2 = VIA2(this, vc64);
     Disk disk = Disk(vc64);
+    
     
     
     //
@@ -72,9 +75,6 @@ private:
      */
     unsigned deviceNr;
     
-    //! @brief    Indicates whether the disk drive is connected to the C64
-    bool connected;
-
     //! @brief    Indicates whether the disk is rotating.
     bool spinning;
     
@@ -82,7 +82,7 @@ private:
     bool redLED;
     
     //! @brief    Indicates if or how a disk is inserted.
-    DiskInsertionStatus insertionStatus;
+    InsertionStatus insertionStatus;
         
     
     //
@@ -205,6 +205,24 @@ public:
     
     
     //
+    // Configuring
+    //
+    
+    DriveConfig getConfig() { return config; }
+    
+    DriveType getType() { return config.type; }
+    void setType(DriveType type) { config.type = type; }
+
+    bool isConnectable();
+    bool isConnected() { return config.connected; }
+    bool isDisconnected() { return !config.connected; }
+    
+    void setConnected(bool value);
+    void connect() { setConnected(true); }
+    void disconnect() { setConnected(false); }
+    void toggleConnection() { isConnected() ? disconnect() : connect(); }
+
+    //
     // Methods from HardwareComponent
     //
     
@@ -235,25 +253,7 @@ public:
     /*! @return   0 for the first drive, 1 for the second.
      */
     unsigned getDeviceNr() { return deviceNr; }
-    
-    //! @brief    Returns true iff the drive is connected
-    bool isConnected() { return connected; }
-
-    //! @brief    Returns true iff the drive is not connected
-    bool isDisconnected() { return !connected; }
-
-    // Returns true if the drive can be connected (fails if no ROM is present)
-    bool connectable();
-    
-    // Connects the drive to the C64 (does nothing if no ROM is present)
-    void connect();
-    
-    // Disconnects the drive from the C64
-    void disconnect();
-
-    //! @brief    Connects a disconnected drive or vice versa
-    void toggleConnection() { isConnected() ? disconnect() : connect(); }
-    
+        
     //! @brief    Returns true iff the red drive LED is on.
     bool getRedLED() { return redLED; };
 

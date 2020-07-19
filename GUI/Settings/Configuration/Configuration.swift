@@ -36,14 +36,9 @@ class Configuration {
         set { c64.configure(OPT_VIC_REVISION, value: newValue) }
     }
     
-    var grayDotBug: Bool {
+    var vicGrayDotBug: Bool {
         get { return c64.getConfig(OPT_GRAY_DOT_BUG) != 0}
         set { c64.configure(OPT_GRAY_DOT_BUG, enable: newValue) }
-    }
-
-    var glueLogic: Int {
-        get { return c64.getConfig(OPT_GLUE_LOGIC) }
-        set { c64.configure(OPT_GLUE_LOGIC, value: newValue) }
     }
 
     var ciaRevision: Int {
@@ -51,7 +46,7 @@ class Configuration {
         set { c64.configure(OPT_VIC_REVISION, value: newValue) }
     }
 
-    var timerBBug: Bool {
+    var ciaTimerBBug: Bool {
         get { return c64.getConfig(OPT_TIMER_B_BUG) != 0}
         set { c64.configure(OPT_TIMER_B_BUG, enable: newValue) }
     }
@@ -60,23 +55,50 @@ class Configuration {
         get { return c64.getConfig(OPT_SID_REVISION) }
         set { c64.configure(OPT_SID_REVISION, value: newValue) }
     }
+    
+    var sidFilter: Bool {
+        get { return c64.getConfig(OPT_SID_FILTER) != 0 }
+        set { c64.configure(OPT_SID_FILTER, enable: newValue) }
+    }
+    
+    var glueLogic: Int {
+        get { return c64.getConfig(OPT_GLUE_LOGIC) }
+        set { c64.configure(OPT_GLUE_LOGIC, value: newValue) }
+    }
 
-    // Floppy drives
+    var sidEngine: Int {
+        get { return c64.getConfig(OPT_SID_ENGINE) }
+        set { c64.configure(OPT_SID_ENGINE, value: newValue) }
+    }
+    
+    var sidSampling: Int {
+        get { return c64.getConfig(OPT_SID_SAMPLING) }
+        set { c64.configure(OPT_SID_SAMPLING, value: newValue) }
+    }
+    
+    var ramPattern: Int {
+        get { return c64.getConfig(OPT_RAM_PATTERN) }
+        set { c64.configure(OPT_RAM_PATTERN, value: newValue) }
+    }
+
     var drive8Connected: Bool {
-        get { return true }
-        set { }
+        get { return c64.getConfig(OPT_DRIVE_CONNECT, drive: DRIVE8) != 0 }
+        set { c64.configure(OPT_DRIVE_CONNECT, drive: DRIVE8, enable: newValue )}
     }
+    
     var drive8Type: Int {
-        get { return DRIVE_VC1541II.rawValue }
-        set { }
+        get { return c64.getConfig(OPT_DRIVE_TYPE, drive: DRIVE8) }
+        set { c64.configure(OPT_DRIVE_TYPE, drive: DRIVE8, value: newValue )}
     }
+    
     var drive9Connected: Bool {
-        get { return true }
-        set { }
+        get { return c64.getConfig(OPT_DRIVE_CONNECT, drive: DRIVE9) != 0 }
+        set { c64.configure(OPT_DRIVE_CONNECT, drive: DRIVE9, enable: newValue )}
     }
+    
     var drive9Type: Int {
-        get { return DRIVE_VC1541II.rawValue }
-        set { }
+        get { return c64.getConfig(OPT_DRIVE_TYPE, drive: DRIVE9) }
+        set { c64.configure(OPT_DRIVE_TYPE, drive: DRIVE9, value: newValue )}
     }
     
     // Ports
@@ -122,20 +144,20 @@ class Configuration {
     //
     
     var palette: Int {
-        get { return 0 } // Int(amiga.denise.palette()) }
-        set { } // amiga.denise.setPalette(Palette(newValue)) }
+        get { return c64.vic.videoPalette() }
+        set { c64.vic.setVideoPalette(newValue) }
     }
     var brightness: Double {
-        get { return 1.0 } // amiga.denise.brightness() }
-        set { } // amiga.denise.setBrightness(newValue) }
+        get { return c64.vic.brightness() }
+        set { c64.vic.setBrightness(newValue) }
     }
     var contrast: Double {
-        get { return 1.0 } // amiga.denise.contrast() }
-        set { } // amiga.denise.setContrast(newValue) }
+        get { return c64.vic.contrast() }
+        set { c64.vic.setContrast(newValue) }
     }
     var saturation: Double {
-        get { return 1.0 } // amiga.denise.saturation() }
-        set { } // amiga.denise.setSaturation(newValue) }
+        get { c64.vic.saturation() }
+        set { c64.vic.setSaturation(newValue) }
     }
     var hCenter = VideoDefaults.tft.hCenter {
         didSet { renderer.updateTextureRect() }
@@ -275,13 +297,21 @@ class Configuration {
         
         c64.suspend()
         
-        vicRevision = defaults.vicRev.rawValue
-        grayDotBug = defaults.grayDotBug
+        vicRevision = defaults.vicRevision.rawValue
+        vicGrayDotBug = defaults.vicGrayDotBug
+
+        ciaRevision = defaults.ciaRevision.rawValue
+        ciaTimerBBug = defaults.ciaTimerBBug
+
+        sidRevision = defaults.sidRevision.rawValue
+        sidFilter = defaults.sidFilter
+
+        sidEngine = defaults.sidEngine.rawValue
+        sidSampling = defaults.sampling.rawValue
+        
         glueLogic = defaults.glueLogic.rawValue
-        ciaRevision = defaults.ciaRev.rawValue
-        timerBBug = defaults.timerBBug
-        sidRevision = defaults.sidRev.rawValue
-    
+        ramPattern = defaults.ramPattern.rawValue
+        
         c64.resume()
     }
     
@@ -292,11 +322,16 @@ class Configuration {
         c64.suspend()
         
         vicRevision = defaults.integer(forKey: Keys.vicRevision)
-        grayDotBug = defaults.bool(forKey: Keys.grayDotBug)
-        glueLogic = defaults.integer(forKey: Keys.glueLogic)
+        vicGrayDotBug = defaults.bool(forKey: Keys.vicGrayDotBug)
+
         ciaRevision = defaults.integer(forKey: Keys.ciaRevision)
-        timerBBug = defaults.bool(forKey: Keys.timerBBug)
+        ciaTimerBBug = defaults.bool(forKey: Keys.ciaTimerBBug)
+
         sidRevision = defaults.integer(forKey: Keys.sidRevision)
+        sidSampling = defaults.integer(forKey: Keys.sidSampling)
+        
+        glueLogic = defaults.integer(forKey: Keys.glueLogic)
+        ramPattern = defaults.integer(forKey: Keys.ramPattern)
 
         c64.resume()
     }
@@ -308,11 +343,16 @@ class Configuration {
         let defaults = UserDefaults.standard
 
         defaults.set(vicRevision, forKey: Keys.vicRevision)
-        defaults.set(grayDotBug, forKey: Keys.grayDotBug)
-        defaults.set(glueLogic, forKey: Keys.glueLogic)
+        defaults.set(vicGrayDotBug, forKey: Keys.vicGrayDotBug)
+
         defaults.set(ciaRevision, forKey: Keys.ciaRevision)
-        defaults.set(timerBBug, forKey: Keys.timerBBug)
+        defaults.set(ciaTimerBBug, forKey: Keys.ciaTimerBBug)
+
         defaults.set(sidRevision, forKey: Keys.sidRevision)
+        defaults.set(sidSampling, forKey: Keys.sidSampling)
+        
+        defaults.set(glueLogic, forKey: Keys.glueLogic)
+        defaults.set(ramPattern, forKey: Keys.ramPattern)
     }
     
     //

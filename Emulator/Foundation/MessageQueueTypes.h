@@ -16,7 +16,8 @@ typedef enum
 {
     MSG_NONE = 0,
     
-    // Running the emulator
+    // Emulator state
+    MSG_CONFIG,
     MSG_POWER_ON,
     MSG_POWER_OFF,
     MSG_RUN,

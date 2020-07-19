@@ -124,9 +124,11 @@ C64::getConfig()
 {
     C64Configuration config;
 
+    config.vic = vic.getConfig();
     config.cia1 = cia1.getConfig();
     config.cia2 = cia2.getConfig();
-    config.vic = vic.getConfig();
+    config.sid = sid.getConfig();
+    config.mem = mem.getConfig();
 
     // Assure both CIAs are configured equally
     assert(config.cia1.revision == config.cia1.revision);
@@ -139,15 +141,42 @@ long
 C64::getConfig(ConfigOption option)
 {
     switch (option) {
-
+            
         case OPT_VIC_REVISION: return (long)vic.getRevision();
         case OPT_GRAY_DOT_BUG: return (long)vic.getGrayDotBug();
-        case OPT_GLUE_LOGIC:   return (long)vic.getGlueLogic();
+            
         case OPT_CIA_REVISION: return (long)cia1.getRevision();
         case OPT_TIMER_B_BUG:  return (long)cia1.getTimerBBug();
-        case OPT_SID_REVISION: return (long)sid.getRevision();
             
-        default: assert(false); return 0;
+        case OPT_SID_REVISION: return (long)sid.getRevision();
+        case OPT_SID_FILTER:   return (long)sid.getAudioFilter();
+            
+        case OPT_GLUE_LOGIC:   return (long)vic.getGlueLogic();
+            
+        case OPT_SID_ENGINE:   return (long)sid.getEngine();
+        case OPT_SID_SAMPLING: return (long)sid.getSamplingMethod();
+            
+        case OPT_RAM_PATTERN:  return (long)mem.getRamPattern();
+            
+        default:
+            assert(false);
+            return 0;
+    }
+}
+
+long
+C64::getDriveConfig(DriveID id, ConfigOption option)
+{
+    assert(isDriveID(id));
+    
+    switch (option) {
+            
+        case OPT_DRIVE_CONNECT: return id == DRIVE8; // TODO
+        case OPT_DRIVE_TYPE: return DRIVE_VC1541II; // TODO
+            
+        default:
+            assert(false);
+            return 0;
     }
 }
 
@@ -176,18 +205,7 @@ C64::configure(ConfigOption option, long value)
             if (current.vic.grayDotBug == value) goto exit;
             vic.setGrayDotBug(value);
             goto success;
-            
-        case OPT_GLUE_LOGIC:
-            
-            if (!isGlueLogic(value)) {
-                 warn("Invalid glue logic type: %d\n", value);
-                 goto error;
-             }
-             
-             if (current.vic.glueLogic == value) goto exit;
-             vic.setGlueLogic((GlueLogic)value);
-             goto success;
-            
+                        
         case OPT_CIA_REVISION:
             
             if (!isCIARevision(value)) {
@@ -219,10 +237,58 @@ C64::configure(ConfigOption option, long value)
             if (current.sid.revision == value) goto exit;
             sid.setRevision((SIDRevision)value);
             goto success;
+            
+        case OPT_SID_FILTER:
+                        
+            if (current.sid.filter == value) goto exit;
+            sid.setFilter(value);
+            goto success;
 
-   
             
+        case OPT_GLUE_LOGIC:
             
+            if (!isGlueLogic(value)) {
+                warn("Invalid glue logic type: %d\n", value);
+                goto error;
+            }
+            
+            if (current.vic.glueLogic == value) goto exit;
+            vic.setGlueLogic((GlueLogic)value);
+            goto success;
+
+        case OPT_SID_ENGINE:
+
+            debug("OPT_SID_ENGINE: %d\n", value); 
+            if (!isAudioEngine(value)) {
+                warn("Invalid audio engine: %d\n", value);
+                goto error;
+            }
+            
+            if (current.sid.engine == value) goto exit;
+            sid.setEngine((SIDEngine)value);
+            goto success;
+
+        case OPT_SID_SAMPLING:
+            
+            if (!isSamplingMethod(value)) {
+                warn("Invalid sampling method: %d\n", value);
+                goto error;
+            }
+            
+            if (current.sid.sampling == value) goto exit;
+            sid.setSamplingMethod((SamplingMethod)value);
+            goto success;
+            
+        case OPT_RAM_PATTERN:
+
+            if (!isRamPattern(value)) {
+                warn("Invalid RAM pattern: %d\n", value);
+                goto error;
+            }
+            
+            if (current.mem.ramPattern == value) goto exit;
+            mem.setRamPattern((RamPattern)value);
+            goto success;
             
         default: assert(false);
     }
@@ -232,11 +298,55 @@ C64::configure(ConfigOption option, long value)
         return false;
         
     success:
-        // putMessage(MSG_CONFIG);
+        putMessage(MSG_CONFIG);
         
     exit:
         resume();
         return true;
+}
+
+bool
+C64::configureDrive(DriveID id, ConfigOption option, long value)
+{
+    assert(isDriveID(id));
+
+    suspend();
+
+    Drive &drive = id == DRIVE8 ? drive1 : drive2;
+    DriveConfig current = drive.getConfig();
+        
+    switch (option) {
+            
+        case OPT_DRIVE_CONNECT:
+            
+            if (current.connected == value) goto exit;
+            drive.setConnected(value);
+            goto success;
+            
+        case OPT_DRIVE_TYPE:
+            
+            if (!isDriveType(value)) {
+                warn("Invalid drive type: %d\n", value);
+                goto error;
+            }
+                        
+            if (current.type == value) goto exit;
+            drive.setType((DriveType)value);
+            goto success;
+
+        default: assert(false);
+    }
+    
+error:
+    resume();
+    return false;
+    
+success:
+    putMessage(MSG_CONFIG);
+    
+exit:
+    resume();
+    return true;
 }
 
 void
@@ -545,7 +655,7 @@ C64::getModel()
             cia1.getTimerBBug() == configurations[i].timerBBug &&
             sid.getRevision() == configurations[i].sid &&
             vic.getGlueLogic() == configurations[i].glue &&
-            mem.getRamInitPattern() == configurations[i].pattern) {
+            mem.getRamPattern() == configurations[i].pattern) {
             return (C64Model)i;
         }
     }
@@ -567,9 +677,9 @@ C64::setModel(C64Model m)
         cia1.setTimerBBug(configurations[m].timerBBug);
         cia2.setTimerBBug(configurations[m].timerBBug);
         sid.setRevision(configurations[m].sid);
-        sid.setAudioFilter(configurations[m].sidFilter);
+        sid.setFilter(configurations[m].sidFilter);
         vic.setGlueLogic(configurations[m].glue);
-        mem.setRamInitPattern(configurations[m].pattern);
+        mem.setRamPattern(configurations[m].pattern);
         resume();
     }
 }

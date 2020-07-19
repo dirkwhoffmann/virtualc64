@@ -16,18 +16,49 @@
 
 typedef enum : long
 {
+    DRIVE8 = 8,
+    DRIVE9 = 9
+}
+DriveID;
+
+inline bool isDriveID(long value)
+{
+    return value >= DRIVE8 && value <= DRIVE9;
+}
+
+typedef enum : long
+{
     DRIVE_VC1541II
 }
 DriveType;
 
-inline bool isValidDriveNr(unsigned nr) { return nr == 1 || nr == 2; }
+inline bool isDriveType(long value)
+{
+    return value == DRIVE_VC1541II;
+}
 
-/*! @enum     Disk insertion status
- */
-typedef enum {
-    NOT_INSERTED = 0,
+typedef enum
+{
+    NOT_INSERTED,
     PARTIALLY_INSERTED,
     FULLY_INSERTED
-} DiskInsertionStatus;
+}
+InsertionStatus;
+
+inline bool isInsertionStatus(long value)
+{
+    return value >= NOT_INSERTED && value <= FULLY_INSERTED;
+}
+
+//
+// Structures
+//
+
+typedef struct
+{
+    DriveType type;
+    bool connected;
+}
+DriveConfig;
 
 #endif

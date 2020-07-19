@@ -267,7 +267,12 @@ public:
 
     // Get or sets a single configuration item
     long getConfig(ConfigOption option);
+    long getDriveConfig(DriveID id, ConfigOption option);
+
+    // Sets a single configuration item
     bool configure(ConfigOption option, long value);
+    bool configureDrive(DriveID id, ConfigOption option, long value);
+
     
     //
     // Methods from HardwareComponent

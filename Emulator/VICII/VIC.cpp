@@ -32,7 +32,7 @@ VIC::VIC(C64 &ref) : C64Component(ref)
 
         // Configuration items
         { &config.revision,             sizeof(config.revision),                KEEP_ON_RESET },
-        { &glueLogic,                   sizeof(glueLogic),                      KEEP_ON_RESET },
+        { &config.glueLogic,            sizeof(config.glueLogic),               KEEP_ON_RESET },
         { &config.grayDotBug,           sizeof(config.grayDotBug),              KEEP_ON_RESET },
 
         // Internal state
@@ -191,7 +191,6 @@ VIC::_dump()
     int xscroll = ctrl2 & 0x07;
     DisplayMode mode = (DisplayMode)((ctrl1 & 0x60) | (ctrl2 & 0x10));
     
-    msg("       Glue logic : %d\n", glueLogic);
 	msg("     Bank address : %04X\n", bankAddr, bankAddr);
     msg("    Screen memory : %04X\n", VM13VM12VM11VM10() << 6);
 	msg(" Character memory : %04X\n", (CB13CB12CB11() << 10) % 0x4000);

@@ -33,12 +33,31 @@
 
 typedef enum : long
 {
+    // VIC
     OPT_VIC_REVISION,
     OPT_GRAY_DOT_BUG,
-    OPT_GLUE_LOGIC,
+
+    // CIA
     OPT_CIA_REVISION,
     OPT_TIMER_B_BUG,
-    OPT_SID_REVISION
+    
+    // SID
+    OPT_SID_REVISION,
+    OPT_SID_FILTER,
+
+    // Logic board
+    OPT_GLUE_LOGIC,
+    
+    // Sound synthesis
+    OPT_SID_ENGINE,
+    OPT_SID_SAMPLING,
+    
+    // Memory
+    OPT_RAM_PATTERN,
+    
+    // Drive
+    OPT_DRIVE_CONNECT,
+    OPT_DRIVE_TYPE,
 }
 ConfigOption;
 
@@ -89,8 +108,7 @@ typedef struct
     CIAConfig cia1;
     CIAConfig cia2;
     SIDConfig sid;
-    GlueLogic glue;
-    RamInitPattern pattern;
+    MemConfig mem;
 }
 C64Configuration;
 
@@ -103,7 +121,7 @@ typedef struct
     SIDRevision sid;
     bool sidFilter;
     GlueLogic glue;
-    RamInitPattern pattern;
+    RamPattern pattern;
 }
 C64ConfigurationDeprecated;
 
@@ -111,22 +129,22 @@ C64ConfigurationDeprecated;
 static const C64ConfigurationDeprecated configurations[] = {
     
     // C64 PAL
-    { PAL_6569_R3, false, MOS_6526, true, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 },
+    { PAL_6569_R3, false, MOS_6526, true, MOS_6581, true, GLUE_DISCRETE, RAM_PATTERN_C64 },
     
     // C64_II_PAL
-    { PAL_8565, true, MOS_8521, false, MOS_8580, true, GLUE_CUSTOM_IC, INIT_PATTERN_C64C },
+    { PAL_8565, true, MOS_8521, false, MOS_8580, true, GLUE_CUSTOM_IC, RAM_PATTERN_C64C },
     
     // C64_OLD_PAL
-    { PAL_6569_R1, false, MOS_6526, true, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 },
+    { PAL_6569_R1, false, MOS_6526, true, MOS_6581, true, GLUE_DISCRETE, RAM_PATTERN_C64 },
 
     // C64_NTSC
-    { NTSC_6567, false, MOS_6526, false, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 },
+    { NTSC_6567, false, MOS_6526, false, MOS_6581, true, GLUE_DISCRETE, RAM_PATTERN_C64 },
 
     // C64_II_NTSC
-    { NTSC_8562, true, MOS_8521, true, MOS_8580, true, GLUE_CUSTOM_IC, INIT_PATTERN_C64C },
+    { NTSC_8562, true, MOS_8521, true, MOS_8580, true, GLUE_CUSTOM_IC, RAM_PATTERN_C64C },
     
     // C64_OLD_NTSC
-    { NTSC_6567_R56A, false, MOS_6526, false, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 }
+    { NTSC_6567_R56A, false, MOS_6526, false, MOS_6581, true, GLUE_DISCRETE, RAM_PATTERN_C64 }
 };
 
 #endif

@@ -128,9 +128,12 @@ struct AnyC64FileWrapper;
 - (void) resume;
 
 - (C64Configuration) config;
-- (NSInteger) getConfig:(ConfigOption)option;
+- (NSInteger) getConfig:(ConfigOption)opt;
+- (NSInteger) getConfig:(ConfigOption)opt drive:(DriveID)id;
 - (BOOL) configure:(ConfigOption)opt value:(NSInteger)val;
 - (BOOL) configure:(ConfigOption)opt enable:(BOOL)val;
+- (BOOL) configure:(ConfigOption)opt drive:(DriveID)id value:(NSInteger)val;
+- (BOOL) configure:(ConfigOption)opt drive:(DriveID)id enable:(BOOL)val;
 
 - (DriveProxy *)drive:(NSInteger)nr;
 
@@ -324,14 +327,10 @@ struct AnyC64FileWrapper;
 
 - (void) dump;
 
-- (NSInteger) ramInitPattern;
-- (void) setRamInitPattern:(NSInteger)type;
-- (void) eraseWithPattern:(NSInteger)type;
-
 /*
-- (void) deleteBasicRom;
-- (void) deleteCharacterRom;
-- (void) deleteKernalRom;
+- (NSInteger) ramPattern;
+- (void) setRamPattern:(NSInteger)type;
+- (void) eraseWithPattern:(NSInteger)type;
 */
 
 - (MemoryType) peekSource:(u16)addr;
@@ -453,15 +452,18 @@ struct AnyC64FileWrapper;
 - (VoiceInfo) getVoiceInfo:(NSInteger)voice;
 - (void) dump;
 
-- (BOOL) reSID;
-- (void) setReSID:(BOOL)b;
 - (u32) sampleRate;
 - (void) setSampleRate:(u32)rate;
+
+/*
+- (BOOL) reSID;
+- (void) setReSID:(BOOL)b;
 - (BOOL) audioFilter;
 - (void) setAudioFilter:(BOOL)b;
 - (NSInteger) samplingMethod;
 - (void) setSamplingMethod:(NSInteger)value;
-/*
+*/
+ /*
 - (NSInteger) model;
 - (void) setModel:(NSInteger)value;
 */
@@ -624,7 +626,7 @@ struct AnyC64FileWrapper;
 - (void) setTracing:(BOOL)b;
 
 - (BOOL) isConnected;
-- (BOOL) connectable;
+// - (BOOL) isConnectable;
 - (void) connect;
 - (void) disconnect;
 - (void) toggleConnection;

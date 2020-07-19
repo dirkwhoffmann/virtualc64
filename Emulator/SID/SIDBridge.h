@@ -33,10 +33,7 @@ private:
 
     // ReSID (Taken from VICE 3.1)
     ReSID resid = ReSID(vc64);
-   
-    // SID selector
-    bool useReSID;
-    
+       
     // CPU cycle at the last call to executeUntil()
     u64 cycles;
     
@@ -110,36 +107,20 @@ public:
     
     SIDConfig getConfig() { return config; }
     
-    SIDRevision getRevision();
-    void setRevision(SIDRevision m);
+    SIDRevision getRevision() { return config.revision; }
+    void setRevision(SIDRevision rev);
 
+    bool getAudioFilter() { return config.filter; }
+    void setFilter(bool enable);
     
-    
-    //! @brief    Returns true, whether ReSID or the old implementation should be used.
-    bool getReSID() { return useReSID; }
-    
-    //! @brief    Enables or disables the ReSID library.
-    void setReSID(bool enable);
+    SIDEngine getEngine() { return config.engine; }
+    void setEngine(SIDEngine engine);
         
-    //! @brief    Returns true iff audio filters are enabled.
-    bool getAudioFilter();
+    SamplingMethod getSamplingMethod() { return config.sampling; }
+    void setSamplingMethod(SamplingMethod method);
     
-    //! @brief    Enables or disables filters of SID.
-    void setAudioFilter(bool enable);
-    
-    //! @brief    Returns the sampling method.
-    SamplingMethod getSamplingMethod();
-    
-    //! @brief    Sets the sampling method (ReSID only).
-    void setSamplingMethod(SamplingMethod value);
-    
-    //! @brief    Returns the sample rate.
     u32 getSampleRate();
-    
-    //! @brief    Sets the samplerate of SID and it's 3 voices.
     void setSampleRate(u32 sr);
-    
-    //! @brief    Returns the clock frequency.
     u32 getClockFrequency();
     
     

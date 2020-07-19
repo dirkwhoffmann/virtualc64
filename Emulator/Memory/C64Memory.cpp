@@ -19,19 +19,20 @@ C64Memory::C64Memory(C64 &ref) : Memory(ref)
     // Register snapshot items
     SnapshotItem items[] = {
 
+        { &config.ramPattern, sizeof(config.ramPattern), KEEP_ON_RESET },
+
         { ram,             sizeof(ram),            KEEP_ON_RESET },
         { colorRam,        sizeof(colorRam),       KEEP_ON_RESET },
         { &rom[0xA000],    0x2000,                 KEEP_ON_RESET }, /* Basic ROM */
         { &rom[0xD000],    0x1000,                 KEEP_ON_RESET }, /* Character ROM */
         { &rom[0xE000],    0x2000,                 KEEP_ON_RESET }, /* Kernal ROM */
-        { &ramInitPattern, sizeof(ramInitPattern), KEEP_ON_RESET },
         { &peekSrc,        sizeof(peekSrc),        KEEP_ON_RESET },
         { &pokeTarget,     sizeof(pokeTarget),     KEEP_ON_RESET },
         { NULL,            0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));
     
-    ramInitPattern = INIT_PATTERN_C64;
+    config.ramPattern = RAM_PATTERN_C64;
     
     // Setup the C64's memory bank map
     
@@ -116,7 +117,7 @@ C64Memory::_reset()
                  memset(snapshotItems[i].data, 0, snapshotItems[i].size);
     
     // Erase RAM
-    eraseWithPattern(ramInitPattern);
+    eraseWithPattern(config.ramPattern);
         
     // Initialize color RAM with random numbers
     srand(1000);
@@ -154,14 +155,14 @@ C64Memory::_dump()
 }
 
 void
-C64Memory::eraseWithPattern(RamInitPattern pattern)
+C64Memory::eraseWithPattern(RamPattern pattern)
 {
-    if (!isRamInitPattern(pattern)) {
+    if (!isRamPattern(pattern)) {
         warn("Unknown RAM init pattern. Assuming INIT_PATTERN_C64\n");
-        pattern = INIT_PATTERN_C64;
+        pattern = RAM_PATTERN_C64;
     }
     
-    if (pattern == INIT_PATTERN_C64) {
+    if (pattern == RAM_PATTERN_C64) {
         for (unsigned i = 0; i < sizeof(ram); i++)
             ram[i] = (i & 0x40) ? 0xFF : 0x00;
     } else {

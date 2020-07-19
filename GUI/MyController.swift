@@ -622,6 +622,9 @@ extension MyController {
         
         switch msg.type {
     
+        case MSG_CONFIG:
+            track("MSG_CONFIG")
+            
         case MSG_POWER_ON:
             track("MSG_POWER_ON")
             virtualKeyboard = nil

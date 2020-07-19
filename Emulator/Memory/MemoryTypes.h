@@ -10,6 +10,10 @@
 #ifndef MEMORY_TYPES_H
 #define MEMORY_TYPES_H
 
+//
+// Enumerations
+//
+
 // Memory source identifiers. The identifiers are used inside the peek and poke
 // lookup tables to indicate the source and target of a peek or poke operation.
 typedef enum
@@ -27,16 +31,27 @@ typedef enum
 }
 MemoryType;
 
-typedef enum
+typedef enum : long
 {
-    INIT_PATTERN_C64 = 0,
-    INIT_PATTERN_C64C = 1
+    RAM_PATTERN_C64 = 0,
+    RAM_PATTERN_C64C = 1
 }
-RamInitPattern;
+RamPattern;
 
-inline bool isRamInitPattern(long value)
+inline bool isRamPattern(long value)
 {
-    return value == INIT_PATTERN_C64 || value == INIT_PATTERN_C64C;
+    return value == RAM_PATTERN_C64 || value == RAM_PATTERN_C64C;
 }
+
+//
+// Structures
+//
+
+typedef struct
+{
+    RamPattern ramPattern;
+}
+MemConfig;
+
 
 #endif

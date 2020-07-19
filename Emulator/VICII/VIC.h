@@ -12,44 +12,14 @@
 
 #include "C64Component.h"
 #include "TimeDelayed.h"
-
-// Sprite bit masks
-#define SPR0 0x01
-#define SPR1 0x02
-#define SPR2 0x04
-#define SPR3 0x08
-#define SPR4 0x10
-#define SPR5 0x20
-#define SPR6 0x40
-#define SPR7 0x80
-
-// Depth of different drawing layers
-#define BORDER_LAYER_DEPTH 0x10         // In front of everything
-#define SPRITE_LAYER_FG_DEPTH 0x20      // Behind border
-#define FOREGROUND_LAYER_DEPTH 0x30     // Behind sprite 1 layer
-#define SPRITE_LAYER_BG_DEPTH 0x40      // Behind foreground
-#define BACKGROUD_LAYER_DEPTH 0x50      // Behind sprite 2 layer
-#define BEHIND_BACKGROUND_DEPTH 0x60    // Behind background
-
-// Event flags
-#define VICUpdateIrqLine    (1ULL << 0) // Sets or releases the IRQ line
-#define VICLpTransition     (1ULL << 1) // Triggers a lightpen event
-#define VICUpdateFlipflops  (1ULL << 2) // Updates the flipflop value pipeline
-#define VICUpdateRegisters  (1ULL << 3) // Updates the register value pipeline
-#define VICUpdateBankAddr   (1ULL << 4) // Updates the bank address
-#define VICSetDisplayState  (1ULL << 5) // Flagged when control reg 1 changes
-#define VICClrSprSprCollReg (1ULL << 6) // Resets the sprite-sprite coll reg
-#define VICClrSprBgCollReg  (1ULL << 7) // Resets the sprite-background coll reg
-
-#define VICClearanceMask ~((1ULL << 8) | VICUpdateIrqLine | VICLpTransition | VICUpdateFlipflops | VICUpdateRegisters | VICUpdateBankAddr | VICSetDisplayState | VICClrSprSprCollReg | VICClrSprBgCollReg);
-
+#include "VICConstants.h"
 
 // Forward declarations
-class C64Memory;
+// class C64Memory;
 
 class VIC : public C64Component {
 
-    friend C64Memory;
+    friend class C64Memory;
     
     // Current configuration
     VICConfig config;
@@ -61,21 +31,11 @@ class VIC : public C64Component {
     
 private:
     
-    //! @brief    Selected chip model TODO: MOVE TO CONFIG
-    // VICModel model;
-
     //! @brief    Color palette type  TODO: MOVE TO CONFIG
     Palette palette;
 
-    //! @brief    Glue logic type  TODO: MOVE TO CONFIG
-    GlueLogic glueLogic;
 
 public:
-    
-    /*! @brief    Indicates if the gray dot bug should be emulated  TODO: MOVE TO CONFIG
-     *  @note     The gray mode bug only affects the newer VICII models 856x
-     */
-    // bool emulateGrayDotBug;
     
     
     //

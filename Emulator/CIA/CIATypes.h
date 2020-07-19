@@ -12,6 +12,10 @@
 
 #include "TODTypes.h"
 
+//
+// Enumerations
+//
+
 typedef enum : long
 {
     MOS_6526,
@@ -36,6 +40,10 @@ ciaRevisionName(CIARevision type)
         default:       return "???";
     }
 }
+
+//
+// Structures
+//
 
 typedef struct
 {

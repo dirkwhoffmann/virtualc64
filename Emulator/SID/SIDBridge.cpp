@@ -26,7 +26,8 @@ SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
     SnapshotItem items[] = {
         
         // Configuration items
-        { &useReSID,        sizeof(useReSID),       KEEP_ON_RESET },
+        { &config.engine,   sizeof(config.engine),  KEEP_ON_RESET },
+        { &config.filter,   sizeof(config.filter),  KEEP_ON_RESET },
 
         // Internal state
         { &cycles,          sizeof(cycles),         CLEAR_ON_RESET },
@@ -34,7 +35,79 @@ SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
     
     registerSnapshotItems(items, sizeof(items));
     
-    useReSID = true;
+    config.engine = ENGINE_RESID;
+}
+
+void
+SIDBridge::setRevision(SIDRevision rev)
+{
+    assert(isSIDRevision(rev));
+    
+    config.revision = rev;
+    
+    resid.setRevision(rev);
+    fastsid.setRevision(rev);
+}
+
+void
+SIDBridge::setFilter(bool value)
+{
+    config.filter = value;
+    
+    resid.setAudioFilter(value);
+    fastsid.setAudioFilter(value);
+}
+
+void
+SIDBridge::setEngine(SIDEngine value)
+{
+    config.engine = value;
+}
+
+void
+SIDBridge::setSamplingMethod(SamplingMethod method)
+{
+    config.sampling = method;
+    
+    // Option is ReSID only
+    resid.setSamplingMethod(method);
+}
+
+u32
+SIDBridge::getSampleRate()
+{
+    switch (config.engine) {
+            
+        case ENGINE_FASTSID: return fastsid.getSampleRate();
+        case ENGINE_RESID:   return resid.getSampleRate();
+            
+        default:
+            assert(false);
+            return 0;
+    }
+}
+
+void
+SIDBridge::setSampleRate(u32 rate)
+{
+    debug(SID_DEBUG, "Changing sample rate from %d to %d\n", getSampleRate(), rate);
+    
+    resid.setSampleRate(rate);
+    fastsid.setSampleRate(rate);
+}
+
+u32
+SIDBridge::getClockFrequency()
+{
+    switch (config.engine) {
+            
+        case ENGINE_FASTSID: return fastsid.getClockFrequency();
+        case ENGINE_RESID:   return resid.getClockFrequency();
+            
+        default:
+            assert(false);
+            return 0;
+    }
 }
 
 void
@@ -66,12 +139,6 @@ SIDBridge::_reset()
     
     volume = 100000;
     targetVolume = 100000;
-}
-
-void 
-SIDBridge::setReSID(bool enable)
-{
-    useReSID = enable;
 }
 
 void 
@@ -133,16 +200,32 @@ SIDBridge::_dump(SIDInfo info)
 SIDInfo
 SIDBridge::getInfo()
 {
-    SIDInfo info = useReSID ? resid.getInfo() : fastsid.getInfo();
+    SIDInfo info;
+    
+    switch (config.engine) {
+            
+        case ENGINE_FASTSID: info = fastsid.getInfo(); break;
+        case ENGINE_RESID:   info = resid.getInfo(); break;
+    }
+    
     info.potX = mouse.readPotX();
     info.potY = mouse.readPotY();
+    
     return info;
 }
 
 VoiceInfo
 SIDBridge::getVoiceInfo(unsigned voice)
 {
-    return useReSID ? resid.getVoiceInfo(voice) : fastsid.getVoiceInfo(voice);
+    VoiceInfo info;
+    
+    switch (config.engine) {
+            
+        case ENGINE_FASTSID: info = fastsid.getVoiceInfo(voice); break;
+        case ENGINE_RESID:   info = resid.getVoiceInfo(voice); break;
+    }
+    
+    return info;
 }
 
 u8 
@@ -160,10 +243,14 @@ SIDBridge::peek(u16 addr)
         return mouse.readPotY();
     }
     
-    if (useReSID) {
-        return resid.peek(addr);
-    } else {
-        return fastsid.peek(addr);
+    switch (config.engine) {
+            
+        case ENGINE_FASTSID: return fastsid.peek(addr);
+        case ENGINE_RESID:   return resid.peek(addr);
+            
+        default:
+            assert(false);
+            return 0;
     }
 }
 
@@ -185,7 +272,7 @@ SIDBridge::poke(u16 addr, u8 value)
     fastsid.poke(addr, value);
     
     // Run ReSID for at least one cycle to make pipelined writes work
-    if (!useReSID) resid.clock();
+    if (config.engine != ENGINE_RESID) resid.clock();
 }
 
 void
@@ -208,88 +295,13 @@ SIDBridge::execute(u64 numCycles)
     if (numCycles == 0)
         return;
     
-    if (useReSID) {
-        resid.execute(numCycles);
-    } else {
-        fastsid.execute(numCycles);
-    }
-}
-
-bool
-SIDBridge::getAudioFilter()
-{
-    if (useReSID) {
-        return resid.getAudioFilter();
-    } else {
-        return fastsid.getAudioFilter();
-    }
-}
-
-void 
-SIDBridge::setAudioFilter(bool value)
-{
-    resid.setAudioFilter(value);
-    fastsid.setAudioFilter(value);
-}
-
-SamplingMethod
-SIDBridge::getSamplingMethod()
-{
-    // Option is ReSID only
-    return resid.getSamplingMethod();
-}
-
-void
-SIDBridge::setSamplingMethod(SamplingMethod value)
-{
-    // Option is ReSID only
-    resid.setSamplingMethod(value);
-}
-
-SIDRevision
-SIDBridge::getRevision()
-{
-    if (useReSID) {
-        return resid.getRevision();
-    } else {
-        return fastsid.getRevision();
-    }
-}
-
-void 
-SIDBridge::setRevision(SIDRevision revision)
-{
-    assert(isSIDRevision(revision));
-    
-    resid.setRevision(revision);
-    fastsid.setRevision(revision);
-}
-
-u32
-SIDBridge::getSampleRate()
-{
-    if (useReSID) {
-        return resid.getSampleRate();
-    } else {
-        return fastsid.getSampleRate();
-    }
-}
-
-void 
-SIDBridge::setSampleRate(u32 rate)
-{
-    debug(SID_DEBUG, "Changing sample rate from %d to %d\n", getSampleRate(), rate);
-    resid.setSampleRate(rate);
-    fastsid.setSampleRate(rate);
-}
-
-u32
-SIDBridge::getClockFrequency()
-{
-    if (useReSID) {
-        return resid.getClockFrequency();
-    } else {
-        return fastsid.getClockFrequency();
+    switch (config.engine) {
+            
+        case ENGINE_FASTSID: fastsid.execute(numCycles); break;
+        case ENGINE_RESID:   resid.execute(numCycles); break;
+            
+        default:
+            assert(false);
     }
 }
 

@@ -57,7 +57,6 @@ class ConfigurationController: DialogController {
     // VIC
     @IBOutlet weak var hwVicModelPopup: NSPopUpButton!
     @IBOutlet weak var hwVicIcon: NSImageView!
-    @IBOutlet weak var hwVicDescription: NSTextField!
     @IBOutlet weak var hwVicGrayDotBug: NSButton!
     
     // CIA
@@ -72,8 +71,8 @@ class ConfigurationController: DialogController {
     
     // Board logic
     @IBOutlet weak var hwGlueLogicPopup: NSPopUpButton!
-    @IBOutlet weak var hwRamInitPatternPopup: NSPopUpButton!
-    @IBOutlet weak var hwInfoText: NSTextField!
+    @IBOutlet weak var hwRamPatternPopup: NSPopUpButton!
+    // @IBOutlet weak var hwInfoText: NSTextField!
 
     @IBOutlet weak var hwOkButton: NSButton!
     @IBOutlet weak var hwPowerButton: NSButton!

@@ -21,14 +21,12 @@ typedef enum : long
 }
 SIDRevision;
 
-inline bool
-isSIDRevision(long value)
+inline bool isSIDRevision(long value)
 {
     return value == MOS_6581 || value == MOS_8580;
 }
 
-inline const char *
-sidRevisionName(SIDRevision type)
+inline const char *sidRevisionName(SIDRevision type)
 {
     assert(isSIDRevision(type));
     
@@ -36,6 +34,29 @@ sidRevisionName(SIDRevision type)
         case MOS_6581: return "MOS_6581";
         case MOS_8580: return "MOS_8580";
         default:       return "???";
+    }
+}
+
+typedef enum : long
+{
+    ENGINE_FASTSID,
+    ENGINE_RESID
+}
+SIDEngine;
+
+inline bool isAudioEngine(long value)
+{
+    return value >= ENGINE_FASTSID && value <= ENGINE_RESID;
+}
+
+inline const char *sidEngineName(SIDEngine engine)
+{
+    assert(isAudioEngine(engine));
+    
+    switch (engine) {
+        case ENGINE_FASTSID: return "FASTSID";
+        case ENGINE_RESID:   return "RESID";
+        default:             return "???";
     }
 }
 
@@ -49,14 +70,12 @@ typedef enum : long
 }
 SamplingMethod;
 
-inline bool
-isSamplingMethod(long value)
+inline bool isSamplingMethod(long value)
 {
     return value >= SID_SAMPLE_FAST && value <= SID_SAMPLE_RESAMPLE_FASTMEM;
 }
 
-inline const char *
-sidSamplingMethodName(SamplingMethod method)
+inline const char *sidSamplingMethodName(SamplingMethod method)
 {
     assert(isSamplingMethod(method));
     
@@ -77,14 +96,15 @@ sidSamplingMethodName(SamplingMethod method)
 typedef struct
 {
     SIDRevision revision;
+    bool filter;
+    
+    SIDEngine engine;
+    SamplingMethod sampling;
 }
 SIDConfig;
 
-
-/*! @brief    Voice info
- *  @details  Part of SIDInfo
- */
-typedef struct {
+typedef struct
+{
     u8 reg[7];
     u16 frequency;
     u16 pulseWidth;
@@ -98,12 +118,11 @@ typedef struct {
     u8 sustainRate;
     u8 releaseRate;
     bool filterEnableBit;
-} VoiceInfo;
+}
+VoiceInfo;
 
-/*! @brief    SID info
- *  @details  Used by SIDBridge::getInfo() to collect debug information
- */
-typedef struct {
+typedef struct
+{
     u8 volume;
     u16 filterCutoff;
     u8 filterResonance;
@@ -112,6 +131,7 @@ typedef struct {
     u8 filterEnableBits;
     u8 potX;
     u8 potY;
-} SIDInfo;
+}
+SIDInfo;
 
 #endif

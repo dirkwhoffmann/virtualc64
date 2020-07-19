@@ -31,7 +31,8 @@ Drive::Drive(unsigned nr, C64 &ref) : C64Component(ref)
 
         // Life-time items
         { &durationOfOneCpuCycle,   sizeof(durationOfOneCpuCycle),  KEEP_ON_RESET },
-        { &connected,               sizeof(connected),              KEEP_ON_RESET },
+        { &config.type,             sizeof(config.type),            KEEP_ON_RESET },
+        { &config.connected,        sizeof(config.connected),       KEEP_ON_RESET },
 
         // Internal state
         { &spinning,                sizeof(spinning),               CLEAR_ON_RESET },
@@ -59,6 +60,30 @@ Drive::Drive(unsigned nr, C64 &ref) : C64Component(ref)
     
     insertionStatus = NOT_INSERTED;
     resetDisk();
+}
+
+bool
+Drive::isConnectable()
+{
+    return vc64.hasVC1541Rom();
+}
+
+void
+Drive::setConnected(bool value)
+{
+    // Only proceed if the connection status will change
+    if (config.connected == value) return;
+        
+    // Only drives with a Rom can be connected
+    if (value && !isConnectable()) return;
+    
+    suspend();
+
+    config.connected = value;
+    _reset();
+    ping();
+
+    resume();
 }
 
 void
@@ -92,7 +117,7 @@ Drive::resetDisk()
 void
 Drive::_ping()
 {    
-    vc64.putMessage(connected ? MSG_VC1541_ATTACHED : MSG_VC1541_DETACHED, deviceNr);
+    vc64.putMessage(config.connected ? MSG_VC1541_ATTACHED : MSG_VC1541_DETACHED, deviceNr);
     vc64.putMessage(redLED ? MSG_VC1541_RED_LED_ON : MSG_VC1541_RED_LED_OFF, deviceNr);
     vc64.putMessage(spinning ? MSG_VC1541_MOTOR_ON : MSG_VC1541_MOTOR_OFF, deviceNr);
     vc64.putMessage(hasDisk() ? MSG_VC1541_DISK : MSG_VC1541_NO_DISK, deviceNr);
@@ -332,44 +357,6 @@ Drive::setZone(uint2_t value)
         debug(DRV_DEBUG, "Switching from disk zone %d to disk zone %d\n", zone, value);
         zone = value;
     }
-}
-
-bool
-Drive::connectable()
-{
-    return vc64.hasVC1541Rom();
-}
-
-void
-Drive::connect()
-{
-    // Only proceed if the drive is unconnected
-    if (connected) return;
-
-    // Only proceed if a drive ROM is present
-    if (!connectable()) return;
-    
-    suspend();
-    
-    connected = true;
-    ping();
-    
-    resume();
-}
-
-void
-Drive::disconnect()
-{
-    if (!connected) return;
-
-    suspend();
-    
-    _reset();
-    
-    connected = false;
-    ping();
-    
-    resume();
 }
 
 void

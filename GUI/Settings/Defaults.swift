@@ -594,21 +594,22 @@ extension Keys {
     
     //VICII
     static let vicRevision    = "VC64_HW_VicRev"
-    static let grayDotBug     = "VC64_HW_GrayDotBug"
+    static let vicGrayDotBug  = "VC64_HW_VicGrayDotBug"
     
     // CIAs
     static let ciaRevision    = "VC64_HW_CiaRev"
-    static let timerBBug      = "VC64_HW_TimerBBug"
+    static let ciaTimerBBug   = "VC64_HW_CiaTimerBBug"
     
     // SID
     static let sidRevision    = "VC64_HW_SidRev"
-    static let reSID          = "VC64_HW_ReSid"
-    static let audioFilter    = "VC64_HW_AudioFilter"
-    static let sampling       = "VC64_HW_Sampling"
+    static let sidFilter      = "VC64_HW_SidFilter"
+
+    static let sidEngine      = "VC64_HW_SidEngine"
+    static let sidSampling    = "VC64_HW_Sampling"
     
     // Logic board and RAM
     static let glueLogic      = "VC64_HW_GlueLogic"
-    static let initPattern    = "VC64_HW_RamPattern"
+    static let ramPattern     = "VC64_HW_RamPattern"
     
     // Drive
     static let drive8Connect  = "VC64_HW_Drive8Connect"
@@ -623,19 +624,20 @@ extension Keys {
 
 struct HardwareDefaults {
     
-    var vicRev: VICRevision
-    var grayDotBug: Bool
+    var vicRevision: VICRevision
+    var vicGrayDotBug: Bool
     
-    var ciaRev: CIARevision
-    var timerBBug: Bool
+    var ciaRevision: CIARevision
+    var ciaTimerBBug: Bool
     
-    var sidRev: SIDRevision
-    var reSID: Bool
-    var audioFilter: Bool
+    var sidRevision: SIDRevision
+    var sidFilter: Bool
+
+    var sidEngine: SIDEngine
     var sampling: SamplingMethod
     
     var glueLogic: GlueLogic
-    var initPattern: RamInitPattern
+    var ramPattern: RamPattern
 
     var driveConnect: [Bool]
     var driveType: [DriveType]
@@ -649,134 +651,146 @@ struct HardwareDefaults {
     
     static let C64_PAL = HardwareDefaults.init(
         
-        vicRev:       PAL_6569_R3,
-        grayDotBug:   false,
+        vicRevision:   PAL_6569_R3,
+        vicGrayDotBug: false,
         
-        ciaRev:       MOS_6526,
-        timerBBug:    true,
+        ciaRevision:   MOS_6526,
+        ciaTimerBBug:  true,
         
-        sidRev:       MOS_6581,
-        reSID:        true,
-        audioFilter:  true,
-        sampling:     SID_SAMPLE_INTERPOLATE,
+        sidRevision:   MOS_6581,
+        sidFilter:     true,
+
+        sidEngine:     ENGINE_RESID,
+        sampling:      SID_SAMPLE_INTERPOLATE,
         
-        glueLogic:    GLUE_DISCRETE,
-        initPattern:  INIT_PATTERN_C64,
+        glueLogic:     GLUE_DISCRETE,
+        ramPattern:    RAM_PATTERN_C64,
         
-        driveConnect: [true, false],
-        driveType:    [DRIVE_VC1541II, DRIVE_VC1541II],
-        gameDevice1:  -1,
-        gameDevice2:  -1
+        driveConnect:  [true, false],
+        driveType:     [DRIVE_VC1541II, DRIVE_VC1541II],
+        
+        gameDevice1:   -1,
+        gameDevice2:   -1
     )
     
     static let C64_II_PAL = HardwareDefaults.init(
         
-        vicRev:       PAL_8565,
-        grayDotBug:   true,
+        vicRevision:   PAL_8565,
+        vicGrayDotBug: true,
         
-        ciaRev:       MOS_8521,
-        timerBBug:    false,
+        ciaRevision:   MOS_8521,
+        ciaTimerBBug:  false,
         
-        sidRev:       MOS_8580,
-        reSID:        true,
-        audioFilter:  true,
-        sampling:     SID_SAMPLE_INTERPOLATE,
+        sidRevision:   MOS_8580,
+        sidFilter:     true,
+
+        sidEngine:     ENGINE_RESID,
+        sampling:      SID_SAMPLE_INTERPOLATE,
         
-        glueLogic:    GLUE_CUSTOM_IC,
-        initPattern:  INIT_PATTERN_C64C,
+        glueLogic:     GLUE_CUSTOM_IC,
+        ramPattern:    RAM_PATTERN_C64C,
         
-        driveConnect: [true, false],
-        driveType:    [DRIVE_VC1541II, DRIVE_VC1541II],
-        gameDevice1:  -1,
-        gameDevice2:  -1
+        driveConnect:  [true, false],
+        driveType:     [DRIVE_VC1541II, DRIVE_VC1541II],
+        
+        gameDevice1:   -1,
+        gameDevice2:   -1
     )
     
     static let C64_OLD_PAL = HardwareDefaults.init(
         
-        vicRev:       PAL_6569_R1,
-        grayDotBug:   false,
+        vicRevision:   PAL_6569_R1,
+        vicGrayDotBug: false,
         
-        ciaRev:       MOS_6526,
-        timerBBug:    true,
+        ciaRevision:   MOS_6526,
+        ciaTimerBBug:  true,
         
-        sidRev:       MOS_6581,
-        reSID:        true,
-        audioFilter:  true,
-        sampling:     SID_SAMPLE_INTERPOLATE,
+        sidRevision:   MOS_6581,
+        sidFilter:     true,
+
+        sidEngine:     ENGINE_RESID,
+        sampling:      SID_SAMPLE_INTERPOLATE,
         
-        glueLogic:    GLUE_DISCRETE,
-        initPattern:  INIT_PATTERN_C64,
+        glueLogic:     GLUE_DISCRETE,
+        ramPattern:    RAM_PATTERN_C64,
         
-        driveConnect: [true, false],
-        driveType:    [DRIVE_VC1541II, DRIVE_VC1541II],
-        gameDevice1:  -1,
-        gameDevice2:  -1
+        driveConnect:  [true, false],
+        driveType:     [DRIVE_VC1541II, DRIVE_VC1541II],
+        
+        gameDevice1:   -1,
+        gameDevice2:   -1
     )
 
     static let C64_NTSC = HardwareDefaults.init(
         
-        vicRev:       NTSC_6567,
-        grayDotBug:   false,
+        vicRevision:   NTSC_6567,
+        vicGrayDotBug: false,
         
-        ciaRev:       MOS_6526,
-        timerBBug:    false,
+        ciaRevision:   MOS_6526,
+        ciaTimerBBug:  false,
         
-        sidRev:       MOS_6581,
-        reSID:        true,
-        audioFilter:  true,
-        sampling:     SID_SAMPLE_INTERPOLATE,
+        sidRevision:   MOS_6581,
+        sidFilter:     true,
+
+        sidEngine:     ENGINE_RESID,
+        sampling:      SID_SAMPLE_INTERPOLATE,
         
-        glueLogic:    GLUE_DISCRETE,
-        initPattern:  INIT_PATTERN_C64,
+        glueLogic:     GLUE_DISCRETE,
+        ramPattern:    RAM_PATTERN_C64,
         
-        driveConnect: [true, false],
-        driveType:    [DRIVE_VC1541II, DRIVE_VC1541II],
-        gameDevice1:  -1,
-        gameDevice2:  -1
+        driveConnect:  [true, false],
+        driveType:     [DRIVE_VC1541II, DRIVE_VC1541II],
+        
+        gameDevice1:   -1,
+        gameDevice2:   -1
     )
     
     static let C64_II_NTSC = HardwareDefaults.init(
         
-        vicRev:       NTSC_8562,
-        grayDotBug:   true,
+        vicRevision:   NTSC_8562,
+        vicGrayDotBug: true,
         
-        ciaRev:       MOS_8521,
-        timerBBug:    true,
+        ciaRevision:   MOS_8521,
+        ciaTimerBBug:  true,
         
-        sidRev:       MOS_8580,
-        reSID:        true,
-        audioFilter:  true,
-        sampling:     SID_SAMPLE_INTERPOLATE,
+        sidRevision:   MOS_8580,
+        sidFilter:     true,
+
+        sidEngine:     ENGINE_RESID,
+        sampling:      SID_SAMPLE_INTERPOLATE,
         
-        glueLogic:    GLUE_CUSTOM_IC,
-        initPattern:  INIT_PATTERN_C64C,
+        glueLogic:     GLUE_CUSTOM_IC,
+        ramPattern:    RAM_PATTERN_C64C,
         
-        driveConnect: [true, false],
-        driveType:    [DRIVE_VC1541II, DRIVE_VC1541II],
-        gameDevice1:  -1,
-        gameDevice2:  -1
+        driveConnect:  [true, false],
+        driveType:     [DRIVE_VC1541II, DRIVE_VC1541II],
+        
+        gameDevice1:   -1,
+        gameDevice2:   -1
     )
     
     static let C64_OLD_NTSC = HardwareDefaults.init(
         
-        vicRev:       NTSC_6567_R56A,
-        grayDotBug:   false,
+        vicRevision:   NTSC_6567_R56A,
+        vicGrayDotBug: false,
         
-        ciaRev:       MOS_6526,
-        timerBBug:    false,
+        ciaRevision:   MOS_6526,
+        ciaTimerBBug:  false,
         
-        sidRev:       MOS_6581,
-        reSID:        true,
-        audioFilter:  true,
-        sampling:     SID_SAMPLE_INTERPOLATE,
+        sidRevision:   MOS_6581,
+        sidFilter:     true,
+
+        sidEngine:     ENGINE_RESID,
+        sampling:      SID_SAMPLE_INTERPOLATE,
         
-        glueLogic:    GLUE_DISCRETE,
-        initPattern:  INIT_PATTERN_C64,
+        glueLogic:     GLUE_DISCRETE,
+        ramPattern:    RAM_PATTERN_C64,
         
-        driveConnect: [true, false],
-        driveType:    [DRIVE_VC1541II, DRIVE_VC1541II],
-        gameDevice1:  -1,
-        gameDevice2:  -1
+        driveConnect:  [true, false],
+        driveType:     [DRIVE_VC1541II, DRIVE_VC1541II],
+        
+        gameDevice1:   -1,
+        gameDevice2:   -1
     )
 }
 
@@ -787,19 +801,20 @@ extension UserDefaults {
         let defaults = HardwareDefaults.C64_PAL
         let dictionary: [String: Any] = [
             
-            Keys.vicRevision:   defaults.vicRev.rawValue,
-            Keys.grayDotBug:    defaults.grayDotBug,
+            Keys.vicRevision:   defaults.vicRevision.rawValue,
+            Keys.vicGrayDotBug: defaults.vicGrayDotBug,
             
-            Keys.ciaRevision:   defaults.ciaRev.rawValue,
-            Keys.timerBBug:     defaults.timerBBug,
+            Keys.ciaRevision:   defaults.ciaRevision.rawValue,
+            Keys.ciaTimerBBug:  defaults.ciaTimerBBug,
             
-            Keys.sidRevision:   defaults.sidRev.rawValue,
-            Keys.reSID:         defaults.reSID,
-            Keys.audioFilter:   defaults.audioFilter,
-            Keys.sampling:      defaults.sampling.rawValue,
+            Keys.sidRevision:   defaults.sidRevision.rawValue,
+            Keys.sidFilter:     defaults.sidFilter,
+
+            Keys.sidEngine:     defaults.sidEngine.rawValue,
+            Keys.sidSampling:   defaults.sampling.rawValue,
             
             Keys.glueLogic:     defaults.glueLogic.rawValue,
-            Keys.initPattern:   defaults.initPattern.rawValue,
+            Keys.ramPattern:    defaults.ramPattern.rawValue,
             
             Keys.drive8Connect: defaults.driveConnect[0],
             Keys.drive8Type:    defaults.driveType[0].rawValue,
@@ -819,18 +834,19 @@ extension UserDefaults {
         let defaults = UserDefaults.standard
         
         let keys = [Keys.vicRevision,
-                    Keys.grayDotBug,
+                    Keys.vicGrayDotBug,
                     
                     Keys.ciaRevision,
-                    Keys.timerBBug,
+                    Keys.ciaTimerBBug,
                     
                     Keys.sidRevision,
-                    Keys.reSID,
-                    Keys.audioFilter,
-                    Keys.sampling,
+                    Keys.sidFilter,
+
+                    Keys.sidEngine,
+                    Keys.sidSampling,
                     
                     Keys.glueLogic,
-                    Keys.initPattern,
+                    Keys.ramPattern,
                     
                     Keys.drive8Connect,
                     Keys.drive8Type,

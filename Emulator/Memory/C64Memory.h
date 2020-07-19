@@ -21,6 +21,9 @@
  */
 class C64Memory : public Memory {
 
+    // Current configuration
+    MemConfig config;
+    
 public:
     
     /*! @brief    C64 bank mapping
@@ -87,10 +90,7 @@ public:
      *            only some addresses are valid ROM addresses.
      */
     u8 rom[65536];
-    
-    //! @brief    RAM init pattern type
-    RamInitPattern ramInitPattern;
-    
+        
     //! @brief    Peek source lookup table
     MemoryType peekSrc[16];
     
@@ -106,7 +106,16 @@ public:
     
 	C64Memory(C64 &ref);
     
+    //
+    // Configuring
+    //
     
+    MemConfig getConfig() { return config; }
+    
+    RamPattern getRamPattern() { return config.ramPattern; }
+    void setRamPattern(RamPattern pattern) { config.ramPattern = pattern; }
+
+        
     //
     // Methods from HardwareComponent
     //
@@ -122,14 +131,8 @@ private:
     
 public:
     
-    //! @brief    Returns the currently used RAM init pattern.
-    RamInitPattern getRamInitPattern() { return ramInitPattern; }
-    
-    //! @brief    Sets the RAM init pattern type.
-    void setRamInitPattern(RamInitPattern pattern) { ramInitPattern = pattern; }
-
     //! @brief    Erases the memory with the provided init pattern
-    void eraseWithPattern(RamInitPattern pattern);
+    void eraseWithPattern(RamPattern pattern);
     
     /*! @brief    Updates the peek and poke lookup tables.
      *  @details  The lookup values depend on three processor port bits

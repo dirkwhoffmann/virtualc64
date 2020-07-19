@@ -181,30 +181,18 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     wrapper->mem->dump();
 }
 
-- (NSInteger) ramInitPattern
+/*
+- (NSInteger) ramPattern
 {
-    return wrapper->mem->getRamInitPattern();
+    return wrapper->mem->getRamPattern();
 }
-- (void) setRamInitPattern:(NSInteger)pattern
+- (void) setRamPattern:(NSInteger)pattern
 {
-    wrapper->mem->setRamInitPattern((RamInitPattern)pattern);
+    wrapper->mem->setRamPattern((RamPattern)pattern);
 }
 - (void) eraseWithPattern:(NSInteger)pattern
 {
-    wrapper->mem->eraseWithPattern((RamInitPattern)pattern);
-}
-/*
-- (void) deleteBasicRom
-{
-    wrapper->mem->deleteBasicRom();
-}
-- (void) deleteCharacterRom
-{
-    wrapper->mem->deleteCharRom();
-}
-- (void) deleteKernalRom
-{
-    wrapper->mem->deleteKernalRom();
+    wrapper->mem->eraseWithPattern((RamPattern)pattern);
 }
 */
 - (MemoryType) peekSource:(u16)addr
@@ -588,6 +576,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->sid->getVoiceInfo((unsigned)voice);
 }
+/*
 - (BOOL) reSID
 {
     return wrapper->sid->getReSID();
@@ -602,7 +591,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (void) setAudioFilter:(BOOL)b
 {
-    wrapper->sid->setAudioFilter(b);
+    wrapper->sid->setFilter(b);
 }
 - (NSInteger) samplingMethod
 {
@@ -612,6 +601,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->sid->setSamplingMethod((SamplingMethod)value);
 }
+ */
 /*
 - (NSInteger) model
 {
@@ -1118,10 +1108,12 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->drive->isConnected();
 }
+/*
 - (BOOL) connectable
 {
-    return wrapper->drive->connectable();
+    return wrapper->drive->isConnectable();
 }
+*/
 - (void) connect
 {
     wrapper->drive->connect();
@@ -1507,9 +1499,13 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->c64->getConfig();
 }
-- (NSInteger) getConfig:(ConfigOption)option
+- (NSInteger) getConfig:(ConfigOption)opt
 {
-    return wrapper->c64->getConfig(option);
+    return wrapper->c64->getConfig(opt);
+}
+- (NSInteger) getConfig:(ConfigOption)opt drive:(DriveID)id
+{
+    return wrapper->c64->getDriveConfig(id, opt);
 }
 - (BOOL) configure:(ConfigOption)opt value:(NSInteger)val
 {
@@ -1519,7 +1515,14 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->c64->configure(opt, val ? 1 : 0);
 }
-
+- (BOOL) configure:(ConfigOption)opt drive:(DriveID)id value:(NSInteger)val
+{
+    return wrapper->c64->configureDrive(id, opt, val);
+}
+- (BOOL) configure:(ConfigOption)opt drive:(DriveID)id enable:(BOOL)val
+{
+    return wrapper->c64->configureDrive(id, opt, val ? 1 : 0);
+}
 
 // Configuring the emulator
 - (C64Model) model

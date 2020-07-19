@@ -11,8 +11,8 @@ extension ConfigurationController {
     
     func refreshHardwareTab() {
                 
-        let c64Model = c64.model()
         let vicRevision = config.vicRevision
+        let resid = config.sidEngine == ENGINE_RESID.rawValue
         
         track()
         
@@ -26,40 +26,38 @@ extension ConfigurationController {
              PAL_8565.rawValue:
             
             hwVicIcon.image = NSImage(named: "pref_vicii_pal")
-            hwVicDescription.stringValue = "PAL 0.985 MHz 65 cycles"
             
         case NTSC_6567_R56A.rawValue:
             
             hwVicIcon.image = NSImage(named: "pref_vicii_ntsc")
-            hwVicDescription.stringValue = "NTSC 1.023 MHz 64 cycles"
             
         case NTSC_6567.rawValue,
              NTSC_8562.rawValue:
             
             hwVicIcon.image = NSImage(named: "pref_vicii_ntsc")
-            hwVicDescription.stringValue = "NTSC 1.023 MHz 63 cycles"
             
         default:
             assert(false)
         }
-        hwVicGrayDotBug.state = config.grayDotBug ? .on : .off
+        hwVicGrayDotBug.state = config.vicGrayDotBug ? .on : .off
         
         // CIA
         hwCiaModelPopup.selectItem(withTag: config.ciaRevision)
-        hwCiaTimerBBug.state = config.timerBBug ? .on : .off
+        hwCiaTimerBBug.state = config.ciaTimerBBug ? .on : .off
         
         // Audio
         hwSidModelPopup.selectItem(withTag: config.sidRevision)
-        hwSidFilter.state = c64.sid.audioFilter() ? .on : .off
-        hwSidEnginePopup.selectItem(withTag: (c64.sid.reSID() ? 1 : 0))
-        hwSidSamplingPopup.isEnabled = c64.sid.reSID()
-        hwSidSamplingPopup.selectItem(withTag: c64.sid.samplingMethod())
+        hwSidFilter.state = config.sidFilter ? .on : .off
+        hwSidEnginePopup.selectItem(withTag: config.sidEngine)
+        hwSidSamplingPopup.isEnabled = resid
+        hwSidSamplingPopup.selectItem(withTag: config.sidSampling)
         
         // Logic board
         hwGlueLogicPopup.selectItem(withTag: config.glueLogic)
-        hwRamInitPatternPopup.selectItem(withTag: c64.mem.ramInitPattern())
+        hwRamPatternPopup.selectItem(withTag: config.ramPattern)
         
         // Configuration info text
+        /*
         var descr: String
         switch c64Model {
         case C64_PAL:
@@ -84,24 +82,25 @@ extension ConfigurationController {
             descr = "is a custom configuration. It matches no known C64 model"
         }
         hwInfoText.stringValue = "This configuration \(descr)."
+        */
         
         // Power button
         hwPowerButton.isHidden = !bootable
     }
     
-    @IBAction func hwVicModelAction(_ sender: NSPopUpButton!) {
+    @IBAction func hwVicRevAction(_ sender: NSPopUpButton!) {
         
         config.vicRevision = sender.selectedTag()
         refresh()
     }
     
-    @IBAction func hwVicGrayDotBugAction(_ sender: NSButton!) {
+    @IBAction func hwGrayDotBugAction(_ sender: NSButton!) {
         
-        config.grayDotBug = sender.state == .on
+        config.vicGrayDotBug = sender.state == .on
         refresh()
     }
     
-    @IBAction func hwCiaModelAction(_ sender: NSPopUpButton!) {
+    @IBAction func hwCiaRevAction(_ sender: NSPopUpButton!) {
         
         config.ciaRevision = sender.selectedTag()
         refresh()
@@ -109,50 +108,89 @@ extension ConfigurationController {
     
     @IBAction func hwCiaTimerBBugAction(_ sender: NSButton!) {
 
-        config.timerBBug = sender.state == .on
+        config.ciaTimerBBug = sender.state == .on
         refresh()
     }
     
+    @IBAction func hwSidRevAction(_ sender: NSPopUpButton!) {
+        
+        config.sidRevision = sender.selectedTag()
+        refresh()
+    }
+
     @IBAction func hwSidFilterAction(_ sender: NSButton!) {
         
-        proxy?.sid.setAudioFilter(sender.state == .on)
+        config.sidFilter = sender.state == .on
         refresh()
     }
     
     @IBAction func hwSidEngineAction(_ sender: NSPopUpButton!) {
         
-        proxy?.sid.setReSID(sender.selectedTag() == 1)
+        config.sidEngine = sender.selectedTag()
         refresh()
     }
     
     @IBAction func hwSidSamplingAction(_ sender: NSPopUpButton!) {
         
-        proxy?.sid.setSamplingMethod(sender.selectedTag())
+        config.sidSampling = sender.selectedTag()
         refresh()
     }
-    
-    @IBAction func hwSidModelAction(_ sender: NSPopUpButton!) {
         
-        config.sidRevision = sender.selectedTag()
-        refresh()
-    }
-    
     @IBAction func hwGlueLogicAction(_ sender: NSPopUpButton!) {
         
         config.glueLogic = sender.selectedTag()
         refresh()
     }
-    
-    @IBAction func hwRamInitPatternAction(_ sender: NSPopUpButton!) {
         
-        proxy?.mem.setRamInitPattern(sender.selectedTag())
+    @IBAction func hwDriveConnectAction(_ sender: NSButton!) {
+        
+        switch sender.tag {
+        case 0: config.drive8Connected = sender.state == .on
+        case 1: config.drive9Connected = sender.state == .on
+        default: fatalError()
+        }
+        refresh()
+    }
+    
+    @IBAction func hwDriveTypeAction(_ sender: NSPopUpButton!) {
+        
+        switch sender.tag {
+        case 0: config.drive8Type = sender.tag
+        case 1: config.drive9Type = sender.tag
+        default: fatalError()
+        }
+        refresh()
+    }
+    
+    @IBAction func hwGameDeviceAction(_ sender: NSPopUpButton!) {
+        
+        track("port: \(sender.tag) device: \(sender.selectedTag())")
+        
+        switch sender.tag {
+        case 1: config.gameDevice1 = sender.selectedTag()
+        case 2: config.gameDevice2 = sender.selectedTag()
+        default: fatalError()
+        }
+        refresh()
+    }
+
+    @IBAction func hwRamPatternAction(_ sender: NSPopUpButton!) {
+        
+        track()
+        config.ramPattern = sender.selectedTag()
         refresh()
     }
 
     @IBAction func hwPresetAction(_ sender: NSPopUpButton!) {
         
-        if sender.selectedTag() != C64_CUSTOM.rawValue {
-            proxy?.setModel((C64Model)(sender.selectedTag()))
+        switch sender.selectedTag() {
+        case 0: config.loadHardwareDefaults(HardwareDefaults.C64_PAL)
+        case 1: config.loadHardwareDefaults(HardwareDefaults.C64_II_PAL)
+        case 2: config.loadHardwareDefaults(HardwareDefaults.C64_OLD_PAL)
+        case 3: config.loadHardwareDefaults(HardwareDefaults.C64_NTSC)
+        case 4: config.loadHardwareDefaults(HardwareDefaults.C64_II_NTSC)
+        case 5: config.loadHardwareDefaults(HardwareDefaults.C64_OLD_NTSC)
+        default: fatalError()
         }
         refresh()
     }
@@ -160,6 +198,6 @@ extension ConfigurationController {
     @IBAction func hwDefaultsAction(_ sender: NSButton!) {
         
         track()
-        // config.saveHardwareUserDefaults()
+        config.saveHardwareUserDefaults()
     }
 }

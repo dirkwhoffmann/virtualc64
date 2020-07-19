@@ -60,7 +60,7 @@ VIC::setUltimax(bool value) {
 void
 VIC::switchBank(u16 addr) {
 
-     if (glueLogic == GLUE_DISCRETE) {
+    if (config.glueLogic == GLUE_DISCRETE) {
          
          updateBankAddr(); // Switch immediately
          return;
