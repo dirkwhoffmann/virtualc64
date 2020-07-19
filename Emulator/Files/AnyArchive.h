@@ -15,13 +15,13 @@
 #ifndef _ANYARCHIVE_H
 #define _ANYARCHIVE_H
 
-#include "AnyC64File.h"
+#include "AnyFile.h"
 
 /*! @class    AnyArchive
  *  @brief    This class adds an API to AnyC64File for handling file formats
  *            that store a collection of multiple C64 files (archives).
  */
-class AnyArchive : public AnyC64File {
+class AnyArchive : public AnyFile {
     
 protected:
         

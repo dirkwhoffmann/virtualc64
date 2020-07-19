@@ -11,7 +11,6 @@
 #define CONTROLPORT_H
 
 #include "C64Component.h"
-// #include "ControlPortTypes.h"
 
 class ControlPort : public C64Component {
 

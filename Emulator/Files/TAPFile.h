@@ -10,12 +10,12 @@
 #ifndef _TAPFILE_H
 #define _TAPFILE_H
 
-#include "AnyC64File.h"
+#include "AnyFile.h"
 
 /*! @class  TAPFile
  *  @brief  Represents a file of the TAP format type (band tapes).
  */
-class TAPFile : public AnyC64File {
+class TAPFile : public AnyFile {
     
 private:
     

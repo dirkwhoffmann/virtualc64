@@ -1646,7 +1646,7 @@ C64::saveVC1541Rom(const char *path)
 }
 
 bool
-C64::flash(AnyC64File *file)
+C64::flash(AnyFile *file)
 {
     bool result = true;
     

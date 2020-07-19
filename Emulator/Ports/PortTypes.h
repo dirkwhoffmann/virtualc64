@@ -7,8 +7,12 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef CONTROLPORT_TYPES_H
-#define CONTROLPORT_TYPES_H
+#ifndef _PORT_TYPES_H
+#define _PORT_TYPES_H
+
+//
+// Enumerations
+//
 
 typedef enum : long
 {
@@ -55,4 +59,14 @@ inline bool isGamePadAction(long value) {
     return value >= 0 && value <= RELEASE_RIGHT;
 }
 
-#endif 
+typedef enum
+{
+    CRT_16K,
+    CRT_8K,
+    CRT_ULTIMAX,
+    CRT_OFF
+    
+}
+CartridgeMode;
+
+#endif

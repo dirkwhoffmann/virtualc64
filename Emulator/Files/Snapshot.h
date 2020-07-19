@@ -10,7 +10,7 @@
 #ifndef _SNAPSHOT_H
 #define _SNAPSHOT_H
 
-#include "AnyC64File.h"
+#include "AnyFile.h"
 
 // Forward declarations
 class C64;
@@ -47,7 +47,7 @@ typedef struct {
  *  @brief   The Snapshot class declares the programmatic interface for a file
  *           in V64 format (VirtualC64 snapshot files).
  */
-class Snapshot : public AnyC64File {
+class Snapshot : public AnyFile {
     
     private:
     

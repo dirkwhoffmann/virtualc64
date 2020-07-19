@@ -27,7 +27,7 @@ struct DiskWrapper { Disk *disk; };
 struct DriveWrapper { Drive *drive; };
 struct DatasetteWrapper { Datasette *datasette; };
 struct MouseWrapper { Mouse *mouse; };
-struct AnyC64FileWrapper { AnyC64File *file; };
+struct AnyC64FileWrapper { AnyFile *file; };
 
 //
 // CPU proxy
@@ -1973,7 +1973,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 
 @implementation AnyC64FileProxy
 
-- (instancetype) initWithFile:(AnyC64File *)file
+- (instancetype) initWithFile:(AnyFile *)file
 {
     if (file == nil) {
         return nil;
@@ -1984,7 +1984,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     }
     return self;
 }
-+ (AnyC64FileProxy *) makeWithFile:(AnyC64File *)file
++ (AnyC64FileProxy *) makeWithFile:(AnyFile *)file
 {
     if (file == nil) {
         return nil;
@@ -1994,7 +1994,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 
 - (void)setPath:(NSString *)path
 {
-    AnyC64File *file = (AnyC64File *)([self wrapper]->file);
+    AnyFile *file = (AnyFile *)([self wrapper]->file);
     file->setPath([path UTF8String]);
 }
 - (AnyC64FileWrapper *)wrapper

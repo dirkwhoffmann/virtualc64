@@ -497,7 +497,7 @@ RomFile::RomFile()
 bool
 RomFile::readFromBuffer(const u8 *buffer, size_t length)
 {
-    if (!AnyC64File::readFromBuffer(buffer, length))
+    if (!AnyFile::readFromBuffer(buffer, length))
         return false;
     
     romtype =

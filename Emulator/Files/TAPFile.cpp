@@ -92,7 +92,7 @@ TAPFile::getName()
 bool
 TAPFile::readFromBuffer(const u8 *buffer, size_t length)
 {
-    if (!AnyC64File::readFromBuffer(buffer, length))
+    if (!AnyFile::readFromBuffer(buffer, length))
         return false;
     
     int l = LO_LO_HI_HI(data[0x10], data[0x11], data[0x12], data[0x13]);

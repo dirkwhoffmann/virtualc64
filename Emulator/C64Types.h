@@ -14,11 +14,10 @@
 
 #include "CartridgeTypes.h"
 #include "CIATypes.h"
-#include "ControlPortTypes.h"
+#include "PortTypes.h"
 #include "CPUTypes.h"
 #include "DiskTypes.h"
 #include "DriveTypes.h"
-#include "ExpansionPortTypes.h"
 #include "FileTypes.h"
 #include "MemoryTypes.h"
 #include "MessageQueueTypes.h"

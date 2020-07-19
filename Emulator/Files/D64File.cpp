@@ -252,7 +252,7 @@ D64File::readFromBuffer(const u8 *buffer, size_t length)
             return false;
     }
     
-    AnyC64File::readFromBuffer(buffer, length);
+    AnyFile::readFromBuffer(buffer, length);
     
     // Copy error codes into seperate array
     if (errorCodes) {

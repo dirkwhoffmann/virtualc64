@@ -12,11 +12,8 @@
 
 #include "C64Object.h"
 
-/*! @class    AnyC64File
- *  @brief    Base class for all supported file types.
- *  @details  Provides the basic functionality for reading and writing files.
- */
-class AnyC64File : public C64Object {
+// Base class for all supported file types
+class AnyFile : public C64Object {
     
 protected:
 	     
@@ -75,10 +72,10 @@ protected:
 public:
     
     //! @brief    Constructor
-    AnyC64File();
+    AnyFile();
 
     //! @brief    Destructor
-    virtual ~AnyC64File();
+    virtual ~AnyFile();
     
     //! @brief    Frees the memory allocated by this object.
     virtual void dealloc();

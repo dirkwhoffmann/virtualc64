@@ -7,9 +7,9 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "AnyC64File.h"
+#include "AnyFile.h"
 
-AnyC64File::AnyC64File()
+AnyFile::AnyFile()
 {
     const char *defaultName = "HELLO VIRTUALC64";
     memcpy(name, defaultName, strlen(defaultName) + 1);
@@ -18,7 +18,7 @@ AnyC64File::AnyC64File()
     memset(unicode, 0, sizeof(unicode));
 }
 
-AnyC64File::~AnyC64File()
+AnyFile::~AnyFile()
 {
     dealloc();
 
@@ -27,7 +27,7 @@ AnyC64File::~AnyC64File()
 }
 
 void
-AnyC64File::dealloc()
+AnyFile::dealloc()
 {
     if (data == NULL) {
         assert(size == 0);
@@ -60,7 +60,7 @@ AnyC64File::checkBufferHeader(const u8 *buffer, size_t length, const u8 *header)
 */
 
 void
-AnyC64File::setPath(const char *str)
+AnyFile::setPath(const char *str)
 {
     assert(str != NULL);
     
@@ -77,20 +77,20 @@ AnyC64File::setPath(const char *str)
 }
 
 const unsigned short *
-AnyC64File::getUnicodeName()
+AnyFile::getUnicodeName()
 {
     translateToUnicode(getName(), unicode, 0xE000, sizeof(unicode) / 2);
     return unicode;
 }
 
 void
-AnyC64File::seek(long offset)
+AnyFile::seek(long offset)
 {
     fp = (offset < size) ? offset : -1;
 }
 
 int
-AnyC64File::read()
+AnyFile::read()
 {
     int result;
     
@@ -110,7 +110,7 @@ AnyC64File::read()
 }
 
 const char *
-AnyC64File::readHex(size_t num)
+AnyFile::readHex(size_t num)
 {
     assert(sizeof(name) > 3 * num);
     
@@ -125,7 +125,7 @@ AnyC64File::readHex(size_t num)
 }
 
 void
-AnyC64File::flash(u8 *buffer, size_t offset)
+AnyFile::flash(u8 *buffer, size_t offset)
 {
     int byte;
     assert(buffer != NULL);
@@ -142,7 +142,7 @@ AnyC64File::flash(u8 *buffer, size_t offset)
 }
 
 bool
-AnyC64File::readFromBuffer(const u8 *buffer, size_t length)
+AnyFile::readFromBuffer(const u8 *buffer, size_t length)
 {
     assert (buffer != NULL);
     
@@ -158,7 +158,7 @@ AnyC64File::readFromBuffer(const u8 *buffer, size_t length)
 }
 
 bool
-AnyC64File::readFromFile(const char *filename)
+AnyFile::readFromFile(const char *filename)
 {
     assert (filename != NULL);
     
@@ -218,7 +218,7 @@ exit:
 }
 
 size_t
-AnyC64File::writeToBuffer(u8 *buffer)
+AnyFile::writeToBuffer(u8 *buffer)
 {
     assert(data != NULL);
     
@@ -229,7 +229,7 @@ AnyC64File::writeToBuffer(u8 *buffer)
 }
 
 bool 
-AnyC64File::writeToFile(const char *filename)
+AnyFile::writeToFile(const char *filename)
 {
 	bool success = false;
 	u8 *data = NULL;

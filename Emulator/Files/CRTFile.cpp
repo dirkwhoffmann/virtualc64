@@ -171,7 +171,7 @@ CRTFile::makeWithFile(const char *filename)
 void
 CRTFile::dealloc()
 {
-    AnyC64File::dealloc();
+    AnyFile::dealloc();
     memset(chips, 0, sizeof(chips));
     numberOfChips = 0;
 }
@@ -179,7 +179,7 @@ CRTFile::dealloc()
 bool
 CRTFile::readFromBuffer(const u8 *buffer, size_t length)
 {
-    if (!AnyC64File::readFromBuffer(buffer, length))
+    if (!AnyFile::readFromBuffer(buffer, length))
         return false;
     
     // Only proceed if the cartridge header matches

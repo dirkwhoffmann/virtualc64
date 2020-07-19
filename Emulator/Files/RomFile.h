@@ -10,9 +10,9 @@
 #ifndef _ROMFILE_H
 #define _ROMFILE_H
 
-#include "AnyC64File.h"
+#include "AnyFile.h"
 
-class RomFile : public AnyC64File {
+class RomFile : public AnyFile {
     
 private:
 

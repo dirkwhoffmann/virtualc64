@@ -213,7 +213,7 @@ T64File::getName()
 bool
 T64File::readFromBuffer(const u8 *buffer, size_t length)
 {
-    if (!AnyC64File::readFromBuffer(buffer, length))
+    if (!AnyFile::readFromBuffer(buffer, length))
         return false;
     
     // Some T64 archives contain incosistencies. We fix them asap

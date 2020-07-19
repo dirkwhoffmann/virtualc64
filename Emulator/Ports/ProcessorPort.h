@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _PROCESSORPORT_H
-#define _PROCESSORPORT_H
+#ifndef _PROCESSOR_PORT_H
+#define _PROCESSOR_PORT_H
 
 #include "C64Component.h"
 

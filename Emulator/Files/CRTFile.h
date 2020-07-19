@@ -18,12 +18,12 @@
 #ifndef _CRTFILE_H
 #define _CRTFILE_H
 
-#include "AnyC64File.h"
+#include "AnyFile.h"
 
 /*! @class    CRTFile
  *  @brief    Represents a file of the CRT format type (cartridges).
  */
-class CRTFile : public AnyC64File {
+class CRTFile : public AnyFile {
     
 private:
     
