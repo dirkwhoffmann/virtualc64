@@ -666,6 +666,21 @@
 			path = Dialogs;
 			sourceTree = "<group>";
 		};
+		5014B35024C4B44F009EFA63 /* Ports */ = {
+			isa = PBXGroup;
+			children = (
+				504C433B24AF29AC00E69CAE /* ControlPortTypes.h */,
+				504C433D24AF29AC00E69CAE /* ProcessorPort.h */,
+				504C433F24AF29AC00E69CAE /* ProcessorPort.cpp */,
+				504C434024AF29AC00E69CAE /* ControlPort.h */,
+				504C433E24AF29AC00E69CAE /* ControlPort.cpp */,
+				504C434124AF29AC00E69CAE /* ExpansionPortTypes.h */,
+				504C434324AF29AC00E69CAE /* ExpansionPort.h */,
+				504C434524AF29AC00E69CAE /* ExpansionPort.cpp */,
+			);
+			path = Ports;
+			sourceTree = "<group>";
+		};
 		50176C6D0A6F7357009E80BD /* GUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -704,11 +719,11 @@
 				504C42C624AF29AB00E69CAE /* Files */,
 				504C42E024AF29AB00E69CAE /* Memory */,
 				504C42E524AF29AB00E69CAE /* CPU */,
-				504C42F924AF29AB00E69CAE /* Mouse */,
 				504C430424AF29AB00E69CAE /* VICII */,
 				504C430E24AF29AC00E69CAE /* Datasette */,
 				504C431124AF29AC00E69CAE /* SID */,
-				504C433A24AF29AC00E69CAE /* Computer */,
+				5014B35024C4B44F009EFA63 /* Ports */,
+				504C42F924AF29AB00E69CAE /* Peripherals */,
 				504C434724AF29AC00E69CAE /* Drive */,
 				504C435224AF29AC00E69CAE /* CIA */,
 			);
@@ -823,6 +838,8 @@
 				504C42E324AF29AB00E69CAE /* Memory.h */,
 				504C42E424AF29AB00E69CAE /* C64Memory.h */,
 				504C42E124AF29AB00E69CAE /* C64Memory.cpp */,
+				504C434F24AF29AC00E69CAE /* DriveMemory.h */,
+				504C434B24AF29AC00E69CAE /* DriveMemory.cpp */,
 			);
 			path = Memory;
 			sourceTree = "<group>";
@@ -839,7 +856,7 @@
 			path = CPU;
 			sourceTree = "<group>";
 		};
-		504C42F924AF29AB00E69CAE /* Mouse */ = {
+		504C42F924AF29AB00E69CAE /* Peripherals */ = {
 			isa = PBXGroup;
 			children = (
 				504C430024AF29AB00E69CAE /* MouseTypes.h */,
@@ -851,8 +868,10 @@
 				504C42FF24AF29AB00E69CAE /* Mouse1351.cpp */,
 				504C42FB24AF29AB00E69CAE /* NeosMouse.h */,
 				504C42FD24AF29AB00E69CAE /* NeosMouse.cpp */,
+				504C434224AF29AC00E69CAE /* Keyboard.h */,
+				504C434424AF29AC00E69CAE /* Keyboard.cpp */,
 			);
-			path = Mouse;
+			path = Peripherals;
 			sourceTree = "<group>";
 		};
 		504C430424AF29AB00E69CAE /* VICII */ = {
@@ -942,35 +961,16 @@
 			path = fastsid;
 			sourceTree = "<group>";
 		};
-		504C433A24AF29AC00E69CAE /* Computer */ = {
-			isa = PBXGroup;
-			children = (
-				504C433B24AF29AC00E69CAE /* ControlPortTypes.h */,
-				504C434624AF29AC00E69CAE /* IEC.h */,
-				504C433C24AF29AC00E69CAE /* IEC.cpp */,
-				504C433D24AF29AC00E69CAE /* ProcessorPort.h */,
-				504C433F24AF29AC00E69CAE /* ProcessorPort.cpp */,
-				504C434024AF29AC00E69CAE /* ControlPort.h */,
-				504C433E24AF29AC00E69CAE /* ControlPort.cpp */,
-				504C434124AF29AC00E69CAE /* ExpansionPortTypes.h */,
-				504C434324AF29AC00E69CAE /* ExpansionPort.h */,
-				504C434524AF29AC00E69CAE /* ExpansionPort.cpp */,
-				504C434224AF29AC00E69CAE /* Keyboard.h */,
-				504C434424AF29AC00E69CAE /* Keyboard.cpp */,
-			);
-			path = Computer;
-			sourceTree = "<group>";
-		};
 		504C434724AF29AC00E69CAE /* Drive */ = {
 			isa = PBXGroup;
 			children = (
 				504C435124AF29AC00E69CAE /* DriveTypes.h */,
 				504C434C24AF29AC00E69CAE /* Drive.h */,
 				504C434D24AF29AC00E69CAE /* Drive.cpp */,
-				504C434F24AF29AC00E69CAE /* DriveMemory.h */,
-				504C434B24AF29AC00E69CAE /* DriveMemory.cpp */,
 				504C434924AF29AC00E69CAE /* VIA.h */,
 				504C434A24AF29AC00E69CAE /* VIA.cpp */,
+				504C434624AF29AC00E69CAE /* IEC.h */,
+				504C433C24AF29AC00E69CAE /* IEC.cpp */,
 				504C435024AF29AC00E69CAE /* DiskTypes.h */,
 				504C434E24AF29AC00E69CAE /* Disk.h */,
 				504C434824AF29AC00E69CAE /* Disk.cpp */,
