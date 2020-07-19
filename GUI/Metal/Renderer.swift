@@ -283,16 +283,16 @@ class Renderer: NSObject, MTKViewDelegate {
         let maxWidth = dw - aw
         let maxHeight = dh - ah
         
-        let hZoom = CGFloat(0.0)   // TODO: Use config.hZoom
-        let vZoom = CGFloat(0.0)   // TODO: Use config.vZoom
-        let hCenter = CGFloat(0.5) // TODO: Use config.hCenter
-        let vCenter = CGFloat(0.5) // TODO: Use config.vCenter
+        let hZoom = CGFloat(config.hZoom)
+        let vZoom = CGFloat(config.vZoom)
+        let hCenter = CGFloat(config.hCenter)
+        let vCenter = CGFloat(config.vCenter)
         
         let width = (1 - hZoom) * maxWidth
         let bw = aw + hCenter * (maxWidth - width)
         let height = (1 - vZoom) * maxHeight
         let bh = ah + vCenter * (maxHeight - height)
-                
+        
         let texW = CGFloat(TextureSize.original.width)
         let texH = CGFloat(TextureSize.original.height)
         
@@ -302,7 +302,6 @@ class Renderer: NSObject, MTKViewDelegate {
                            height: height / texH)
     }
     
-    // DEPRECATED (?)
     func updateTextureRect() {
         
         textureRect = computeTextureRect()

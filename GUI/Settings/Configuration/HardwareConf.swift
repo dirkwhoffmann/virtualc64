@@ -54,7 +54,21 @@ extension ConfigurationController {
         
         // Logic board
         hwGlueLogicPopup.selectItem(withTag: config.glueLogic)
+
+        // Startup
         hwRamPatternPopup.selectItem(withTag: config.ramPattern)
+        
+        // Drive
+         hwDrive8Connect.state = config.drive8Connected ? .on : .off
+         hwDrive9Connect.state = config.drive9Connected ? .on : .off
+         hwDrive8Type.selectItem(withTag: config.drive8Type)
+         hwDrive9Type.selectItem(withTag: config.drive9Type)
+        
+        // Ports
+        parent.gamePadManager.refresh(popup: hwGameDevice1, hide: true)
+        parent.gamePadManager.refresh(popup: hwGameDevice2, hide: true)
+        hwGameDevice1.selectItem(withTag: config.gameDevice1)
+        hwGameDevice2.selectItem(withTag: config.gameDevice2)
         
         // Configuration info text
         /*
@@ -94,7 +108,7 @@ extension ConfigurationController {
         refresh()
     }
     
-    @IBAction func hwGrayDotBugAction(_ sender: NSButton!) {
+    @IBAction func hwVicGrayDotBugAction(_ sender: NSButton!) {
         
         config.vicGrayDotBug = sender.state == .on
         refresh()

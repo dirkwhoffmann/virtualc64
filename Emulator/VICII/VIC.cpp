@@ -263,7 +263,8 @@ void
 VIC::setRevision(VICRevision revision)
 {
     debug(VIC_DEBUG, "setRevision(%d)\n", revision);
-
+    debug("setRevision(%d)\n", revision);
+    
     assert(isVICRevision(revision));
     config.revision = revision;
     

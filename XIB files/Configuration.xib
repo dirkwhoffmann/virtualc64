@@ -20,6 +20,12 @@
                 <outlet property="charTitle" destination="m0b-3R-CyB" id="sy5-3M-2iP"/>
                 <outlet property="hwCiaModelPopup" destination="MVI-Fh-OO6" id="coA-3a-xgT"/>
                 <outlet property="hwCiaTimerBBug" destination="4rD-qd-qGj" id="6Nf-wz-IRb"/>
+                <outlet property="hwDrive8Connect" destination="348-5J-51B" id="aGm-LS-bcU"/>
+                <outlet property="hwDrive8Type" destination="Oam-kX-xvf" id="h4u-3T-gQy"/>
+                <outlet property="hwDrive9Connect" destination="sWJ-Wi-tlR" id="asm-rt-nzy"/>
+                <outlet property="hwDrive9Type" destination="2vu-2C-B7m" id="lf5-mF-Jxr"/>
+                <outlet property="hwGameDevice1" destination="WFw-GQ-60L" id="74O-Ss-voU"/>
+                <outlet property="hwGameDevice2" destination="H7z-bE-lw9" id="TTk-dZ-rbs"/>
                 <outlet property="hwGlueLogicPopup" destination="eOu-BN-YUt" id="H5c-VY-ROb"/>
                 <outlet property="hwOkButton" destination="cMh-0b-Yb2" id="Baw-Q8-cGK"/>
                 <outlet property="hwPowerButton" destination="x83-RD-ne8" id="foW-6H-dGt"/>
@@ -468,7 +474,7 @@ Gw
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="hwRamInitPatternAction:" target="-2" id="UWF-1H-6RY"/>
+                                                <action selector="hwRamPatternAction:" target="-2" id="3GX-AU-Gb8"/>
                                             </connections>
                                         </popUpButton>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Htk-aA-fCu">
@@ -489,7 +495,7 @@ Gw
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="hwSidModelAction:" target="-2" id="9Om-y6-M4f"/>
+                                                <action selector="hwSidRevAction:" target="-2" id="89L-8e-xh0"/>
                                             </connections>
                                         </popUpButton>
                                         <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jFL-A9-5jT">
@@ -500,7 +506,7 @@ Gw
                                         <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JsS-8H-gIQ">
                                             <rect key="frame" x="343" y="320" width="55" height="55"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="pref_glue" id="2Oo-5v-u1X"/>
+                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="pref_glue2" id="2Oo-5v-u1X"/>
                                         </imageView>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ViO-fU-69W">
                                             <rect key="frame" x="412" y="413" width="168" height="18"/>
@@ -616,13 +622,13 @@ Gw
                                                         <menuItem title="No device" state="on" image="devNoneTemplate" tag="-1" id="hdq-vw-9NL">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Mouse" image="devMouseTemplate" id="vnD-As-pAB">
+                                                        <menuItem title="Joystick Keyset 1" image="keyset1Template" id="vnD-As-pAB">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Joystick Keyset 1" image="devKeys1Template" tag="1" id="C6r-DA-7f3">
+                                                        <menuItem title="Joystick Keyset 1" image="keyset2Template" tag="1" id="C6r-DA-7f3">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Joystick Keyset 2" image="devKeys2Template" tag="2" id="MfT-RM-lFj">
+                                                        <menuItem title="Mouse" image="devMouseTemplate" tag="2" id="MfT-RM-lFj">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="USB Device" image="devGamepad1Template" tag="3" id="ux0-UX-wEa">
@@ -634,6 +640,9 @@ Gw
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="hwGameDeviceAction:" target="-2" id="eZc-aJ-zmA"/>
+                                            </connections>
                                         </popUpButton>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="WFw-GQ-60L">
                                             <rect key="frame" x="412" y="216" width="182" height="26"/>
@@ -646,13 +655,13 @@ Gw
                                                         <menuItem title="No device" state="on" image="devNoneTemplate" tag="-1" id="p5P-RL-uL5">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Mouse" image="devMouseTemplate" id="xcN-dx-68P">
+                                                        <menuItem title="Joystick Keyset 1" image="keyset1Template" id="xcN-dx-68P">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Joystick Keyset 1" image="devKeys1Template" tag="1" id="0Sb-js-mWF">
+                                                        <menuItem title="Joystick Keyset 2" image="keyset2Template" tag="1" id="0Sb-js-mWF">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Joystick Keyset 2" image="devKeys2Template" tag="2" id="fVF-88-S3P">
+                                                        <menuItem title="Mouse" image="devMouseTemplate" tag="2" id="fVF-88-S3P">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="USB Device 1" image="devGamepad1Template" tag="3" id="874-vK-Xku">
@@ -664,6 +673,9 @@ Gw
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="hwGameDeviceAction:" target="-2" id="Kny-QO-aHJ"/>
+                                            </connections>
                                         </popUpButton>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vu8-nX-sed">
                                             <rect key="frame" x="313" y="192" width="95" height="18"/>
@@ -706,7 +718,7 @@ Gw
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="hwVicModelAction:" target="-2" id="J2Q-wN-Xt4"/>
+                                                <action selector="hwVicRevAction:" target="-2" id="WbV-JS-dF9"/>
                                             </connections>
                                         </popUpButton>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tgn-hC-LhH">
@@ -779,7 +791,7 @@ Gw
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="Oam-kX-xvf">
+                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="Oam-kX-xvf">
                                             <rect key="frame" x="92" y="110" width="182" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="VC1541 II" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="had-Ae-aQq" id="rrx-na-Nkj">
@@ -793,16 +805,22 @@ Gw
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="hwDriveTypeAction:" target="-2" id="mDZ-xB-V3Q"/>
+                                            </connections>
                                         </popUpButton>
-                                        <button fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="348-5J-51B">
+                                        <button fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="348-5J-51B">
                                             <rect key="frame" x="19" y="115" width="70" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Drive 8:" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="QoF-sN-iDx">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="hwDriveConnectAction:" target="-2" id="bw1-97-jV3"/>
+                                            </connections>
                                         </button>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="2vu-2C-B7m">
+                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="2vu-2C-B7m">
                                             <rect key="frame" x="92" y="80" width="182" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="VC1541 II" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="oo2-iW-L2R" id="Ufb-Xa-vpw">
@@ -816,14 +834,20 @@ Gw
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="hwDriveTypeAction:" target="-2" id="TKa-9R-h1i"/>
+                                            </connections>
                                         </popUpButton>
-                                        <button fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="sWJ-Wi-tlR">
+                                        <button fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="sWJ-Wi-tlR">
                                             <rect key="frame" x="19" y="85" width="70" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Drive 9:" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="WiK-Cx-au8">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="hwDriveConnectAction:" target="-2" id="Zea-HA-cnA"/>
+                                            </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A86-4U-ixl">
                                             <rect key="frame" x="9" y="220" width="79" height="17"/>
@@ -943,7 +967,7 @@ Gw
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="hwCiaModelAction:" target="-2" id="GSX-cZ-Vun"/>
+                                                <action selector="hwCiaRevAction:" target="-2" id="wPH-sP-nmg"/>
                                             </connections>
                                         </popUpButton>
                                     </subviews>
@@ -1555,7 +1579,7 @@ Gw
                                         <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1dt-4x-dGf">
                                             <rect key="frame" x="182" y="87" width="28" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" alignment="left" maxValue="1000" doubleValue="807.33523878737788" sliderType="circular" id="0oH-i7-qjD"/>
+                                            <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" alignment="left" maxValue="1000" doubleValue="500" sliderType="circular" id="0oH-i7-qjD"/>
                                             <connections>
                                                 <action selector="vidHCenterAction:" target="-2" id="l9H-S5-MqR"/>
                                             </connections>
@@ -1589,14 +1613,14 @@ Gw
     <resources>
         <image name="devGamepad1Template" width="24" height="24"/>
         <image name="devGamepad2Template" width="24" height="24"/>
-        <image name="devKeys1Template" width="128" height="128"/>
-        <image name="devKeys2Template" width="128" height="128"/>
         <image name="devMouseTemplate" width="24" height="24"/>
         <image name="devNoneTemplate" width="24" height="24"/>
+        <image name="keyset1Template" width="24" height="24"/>
+        <image name="keyset2Template" width="24" height="24"/>
         <image name="lockIcon" width="121" height="171"/>
         <image name="mega65" width="399" height="347"/>
         <image name="pref_cia" width="514" height="514"/>
-        <image name="pref_glue" width="258" height="258"/>
+        <image name="pref_glue2" width="246" height="230"/>
         <image name="pref_sid" width="514" height="514"/>
         <image name="pref_vicii_pal" width="514" height="516"/>
         <image name="rom_missing" width="129" height="157"/>

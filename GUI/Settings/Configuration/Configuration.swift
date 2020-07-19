@@ -43,7 +43,7 @@ class Configuration {
 
     var ciaRevision: Int {
         get { return c64.getConfig(OPT_CIA_REVISION) }
-        set { c64.configure(OPT_VIC_REVISION, value: newValue) }
+        set { c64.configure(OPT_CIA_REVISION, value: newValue) }
     }
 
     var ciaTimerBBug: Bool {

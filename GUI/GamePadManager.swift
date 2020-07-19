@@ -43,12 +43,12 @@ class GamePadManager {
         // Add default devices
         gamePads[0] = GamePad(manager: self, type: CPD_JOYSTICK)
         gamePads[0]!.name = "Joystick Keyset 1"
-        gamePads[0]!.setIcon(name: "devKeys1Template")
+        gamePads[0]!.setIcon(name: "keyset1Template")
         gamePads[0]!.keyMap = 1
         
         gamePads[1] = GamePad(manager: self, type: CPD_JOYSTICK)
         gamePads[1]!.name = "Joystick Keyset 2"
-        gamePads[1]!.setIcon(name: "devKeys2Template")
+        gamePads[1]!.setIcon(name: "keyset2Template")
         gamePads[1]!.keyMap = 2
         
         gamePads[2] = GamePad(manager: self, type: CPD_MOUSE)

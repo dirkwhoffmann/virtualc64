@@ -71,9 +71,21 @@ class ConfigurationController: DialogController {
     
     // Board logic
     @IBOutlet weak var hwGlueLogicPopup: NSPopUpButton!
-    @IBOutlet weak var hwRamPatternPopup: NSPopUpButton!
-    // @IBOutlet weak var hwInfoText: NSTextField!
 
+    // Startup
+    @IBOutlet weak var hwRamPatternPopup: NSPopUpButton!
+
+    // Drive
+    @IBOutlet weak var hwDrive8Type: NSPopUpButton!
+    @IBOutlet weak var hwDrive8Connect: NSButton!
+    @IBOutlet weak var hwDrive9Type: NSPopUpButton!
+    @IBOutlet weak var hwDrive9Connect: NSButton!
+
+    // Ports
+    @IBOutlet weak var hwGameDevice1: NSPopUpButton!
+    @IBOutlet weak var hwGameDevice2: NSPopUpButton!
+    
+    // Buttons
     @IBOutlet weak var hwOkButton: NSButton!
     @IBOutlet weak var hwPowerButton: NSButton!
 
