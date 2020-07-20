@@ -59,10 +59,10 @@ extension ConfigurationController {
         hwRamPatternPopup.selectItem(withTag: config.ramPattern)
         
         // Drive
-         hwDrive8Connect.state = config.drive8Connected ? .on : .off
-         hwDrive9Connect.state = config.drive9Connected ? .on : .off
-         hwDrive8Type.selectItem(withTag: config.drive8Type)
-         hwDrive9Type.selectItem(withTag: config.drive9Type)
+        hwDrive8Connect.state = config.drive8Connected ? .on : .off
+        hwDrive9Connect.state = config.drive9Connected ? .on : .off
+        hwDrive8Type.selectItem(withTag: config.drive8Type)
+        hwDrive9Type.selectItem(withTag: config.drive9Type)
         
         // Ports
         parent.gamePadManager.refresh(popup: hwGameDevice1, hide: true)

@@ -739,6 +739,8 @@ extension MyController {
     
         case MSG_DRIVE_CONNECT:
             
+            track("MSG_DRIVE_CONNECT: \(msg.data)")
+                
             if pref.driveSounds && pref.driveConnectSound {
                 playSound(name: "drive_click", volume: 1.0)
             }
@@ -759,6 +761,8 @@ extension MyController {
             
         case MSG_DRIVE_DISCONNECT:
             
+            track("MSG_DRIVE_DISCONNECT: \(msg.data)")
+
             if pref.driveSounds && pref.driveConnectSound {
                 playSound(name: "drive_click", volume: 1.0)
             }

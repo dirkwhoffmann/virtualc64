@@ -61,11 +61,6 @@ class Configuration {
         set { c64.configure(OPT_SID_FILTER, enable: newValue) }
     }
     
-    var glueLogic: Int {
-        get { return c64.getConfig(OPT_GLUE_LOGIC) }
-        set { c64.configure(OPT_GLUE_LOGIC, value: newValue) }
-    }
-
     var sidEngine: Int {
         get { return c64.getConfig(OPT_SID_ENGINE) }
         set { c64.configure(OPT_SID_ENGINE, value: newValue) }
@@ -74,6 +69,11 @@ class Configuration {
     var sidSampling: Int {
         get { return c64.getConfig(OPT_SID_SAMPLING) }
         set { c64.configure(OPT_SID_SAMPLING, value: newValue) }
+    }
+
+    var glueLogic: Int {
+        get { return c64.getConfig(OPT_GLUE_LOGIC) }
+        set { c64.configure(OPT_GLUE_LOGIC, value: newValue) }
     }
     
     var ramPattern: Int {
@@ -312,6 +312,14 @@ class Configuration {
         glueLogic = defaults.glueLogic.rawValue
         ramPattern = defaults.ramPattern.rawValue
         
+        drive8Connected = defaults.driveConnect[0]
+        drive8Type = defaults.driveType[0].rawValue
+        drive9Connected = defaults.driveConnect[1]
+        drive9Type = defaults.driveType[1].rawValue
+        
+        gameDevice1 = defaults.gameDevice1
+        gameDevice2 = defaults.gameDevice2
+
         c64.resume()
     }
     
@@ -328,10 +336,21 @@ class Configuration {
         ciaTimerBBug = defaults.bool(forKey: Keys.ciaTimerBBug)
 
         sidRevision = defaults.integer(forKey: Keys.sidRevision)
+        sidFilter = defaults.bool(forKey: Keys.sidFilter)
+        
+        sidEngine = defaults.integer(forKey: Keys.sidEngine)
         sidSampling = defaults.integer(forKey: Keys.sidSampling)
         
         glueLogic = defaults.integer(forKey: Keys.glueLogic)
         ramPattern = defaults.integer(forKey: Keys.ramPattern)
+        
+        drive8Connected = defaults.bool(forKey: Keys.drive8Connect)
+        drive8Type = defaults.integer(forKey: Keys.drive8Type)
+        drive9Connected = defaults.bool(forKey: Keys.drive9Connect)
+        drive9Type = defaults.integer(forKey: Keys.drive9Type)
+        
+        gameDevice1 = defaults.integer(forKey: Keys.gameDevice1)
+        gameDevice2 = defaults.integer(forKey: Keys.gameDevice2)
 
         c64.resume()
     }
@@ -349,10 +368,21 @@ class Configuration {
         defaults.set(ciaTimerBBug, forKey: Keys.ciaTimerBBug)
 
         defaults.set(sidRevision, forKey: Keys.sidRevision)
+        defaults.set(sidFilter, forKey: Keys.sidFilter)
+        
+        defaults.set(sidEngine, forKey: Keys.sidEngine)
         defaults.set(sidSampling, forKey: Keys.sidSampling)
         
         defaults.set(glueLogic, forKey: Keys.glueLogic)
         defaults.set(ramPattern, forKey: Keys.ramPattern)
+
+        defaults.set(drive8Connected, forKey: Keys.drive8Connect)
+        defaults.set(drive8Type, forKey: Keys.drive8Type)
+        defaults.set(drive9Connected, forKey: Keys.drive9Connect)
+        defaults.set(drive9Type, forKey: Keys.drive9Type)
+
+        defaults.set(gameDevice1, forKey: Keys.gameDevice1)
+        defaults.set(gameDevice2, forKey: Keys.gameDevice2)
     }
     
     //
