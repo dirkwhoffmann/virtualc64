@@ -58,7 +58,7 @@ extension UserDefaults {
         
         track()
         
-        registerGeneralUserDefaults()
+        registerEmulatorUserDefaults()
         registerDevicesUserDefaults()
         registerKeyboardUserDefaults()
         registerMediaUserDefaults()
@@ -77,7 +77,7 @@ extension MyController {
         
         c64.suspend()
         
-        pref.loadGeneralUserDefaults()
+        pref.loadEmulatorUserDefaults()
         pref.loadDevicesUserDefaults()
         pref.loadKeyboardUserDefaults()
         pref.loadMediaUserDefaults()
@@ -117,43 +117,43 @@ extension MyController {
 }
 
 //
-// User defaults (General)
+// User defaults (Emulator)
 //
 
 struct Keys {
     
     // Drives
-    static let driveBlankDiskFormat   = "VC64_GEN_DriveBlankDiskFormat"
-    static let driveEjectUnasked      = "VC64_GEN_EjectUnasked"
-    static let driveSounds            = "VC64_GEN_DriveSounds"
-    static let driveSoundPan          = "VC64_GEN_DriveSoundPan"
-    static let driveInsertSound       = "VC64_GEN_DriveInsertSound"
-    static let driveEjectSound        = "VC64_GEN_DriveEjectSound"
-    static let driveHeadSound         = "VC64_GEN_DriveHeadSound"
-    static let driveConnectSound      = "VC64_GEN_DriveConnectSound"
+    static let driveBlankDiskFormat   = "VC64_EMU_DriveBlankDiskFormat"
+    static let driveEjectUnasked      = "VC64_EMU_EjectUnasked"
+    static let driveSounds            = "VC64_EMU_DriveSounds"
+    static let driveSoundPan          = "VC64_EMU_DriveSoundPan"
+    static let driveInsertSound       = "VC64_EMU_DriveInsertSound"
+    static let driveEjectSound        = "VC64_EMU_DriveEjectSound"
+    static let driveHeadSound         = "VC64_EMU_DriveHeadSound"
+    static let driveConnectSound      = "VC64_EMU_DriveConnectSound"
 
     // Snapshots and screenshots
-    static let autoSnapshots          = "VC64_GEN_AutoSnapshots"
-    static let autoSnapshotInterval   = "VC64_GEN_ScreenshotInterval"
-    static let autoScreenshots        = "VC64_GEN_AutoScreenshots"
-    static let screenshotSource       = "VC64_GEN_ScreenshotSource"
-    static let screenshotTarget       = "VC64_GEN_ScreenshotTarget"
+    static let autoSnapshots          = "VC64_EMU_AutoSnapshots"
+    static let autoSnapshotInterval   = "VC64_EMU_ScreenshotInterval"
+    static let autoScreenshots        = "VC64_EMU_AutoScreenshots"
+    static let screenshotSource       = "VC64_EMU_ScreenshotSource"
+    static let screenshotTarget       = "VC64_EMU_ScreenshotTarget"
     
     // Fullscreen
-    static let keepAspectRatio        = "VC64_GEN_FullscreenKeepAspectRatio"
-    static let exitOnEsc              = "VC64_GEN_FullscreenExitOnEsc"
+    static let keepAspectRatio        = "VC64_EMU_FullscreenKeepAspectRatio"
+    static let exitOnEsc              = "VC64_EMU_FullscreenExitOnEsc"
 
     // User dialogs
-    static let closeWithoutAsking     = "VC64_GEN_CloseWithoutAsking"
+    static let closeWithoutAsking     = "VC64_EMU_CloseWithoutAsking"
     
     // Warp mode
-    static let warpMode               = "VC64_GEN_WarpMode"
+    static let warpMode               = "VC64_EMU_WarpMode"
 
     // Miscellaneous
-    static let pauseInBackground      = "VC64_GEN_PauseInBackground"
+    static let pauseInBackground      = "VC64_EMU_PauseInBackground"
 }
 
-struct GeneralDefaults {
+struct EmulatorDefaults {
     
     // Drives
     let driveBlankDiskFormat: FileSystemType
@@ -187,7 +187,7 @@ struct GeneralDefaults {
     // Schemes
     //
     
-    static let std = GeneralDefaults.init(
+    static let std = EmulatorDefaults.init(
         
         driveBlankDiskFormat: FS_COMMODORE,
         driveEjectUnasked: false,
@@ -216,9 +216,9 @@ struct GeneralDefaults {
 
 extension UserDefaults {
 
-    static func registerGeneralUserDefaults() {
+    static func registerEmulatorUserDefaults() {
         
-        let defaults = GeneralDefaults.std
+        let defaults = EmulatorDefaults.std
         let dictionary: [String: Any] = [
             
             Keys.driveBlankDiskFormat: Int(defaults.driveBlankDiskFormat.rawValue),
@@ -250,7 +250,7 @@ extension UserDefaults {
         userDefaults.register(defaults: dictionary)
     }
     
-    static func resetGeneralUserDefaults() {
+    static func resetEmulatorUserDefaults() {
         
         let defaults = UserDefaults.standard
         

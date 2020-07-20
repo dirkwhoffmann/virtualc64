@@ -12,45 +12,122 @@ extension PreferencesController {
     func refreshEmulatorTab() {
         
         track()
-                
-        // VC1541
-        emuWarpLoad.state = c64.warpLoad() ? .on : .off
-        emuDriveSounds.state = myAppDelegate.pref.driveSounds ? .on : .off
         
-        // Screenshots
+        // Drive
+        emuDriveBlankDiskFormat.selectItem(withTag: pref.driveBlankDiskFormatIntValue)
+        emuEjectUnasked.state = pref.driveEjectUnasked ? .on : .off
+        emuDriveSounds.state = pref.driveSounds ? .on : .off
+        emuDriveSoundPan.selectItem(withTag: Int(pref.driveSoundPan))
+        emuDriveInsertSound.state = pref.driveInsertSound ? .on : .off
+        emuDriveEjectSound.state = pref.driveEjectSound ? .on : .off
+        emuDriveHeadSound.state = pref.driveHeadSound ? .on : .off
+        emuDriveConnectSound.state = pref.driveConnectSound ? .on : .off
+        emuDriveSoundPan.isEnabled = pref.driveSounds
+        emuDriveInsertSound.isEnabled = pref.driveSounds
+        emuDriveEjectSound.isEnabled = pref.driveSounds
+        emuDriveHeadSound.isEnabled = pref.driveSounds
+        emuDriveConnectSound.isEnabled = pref.driveSounds
+        
+        // Fullscreen
+        emuAspectRatioButton.state = pref.keepAspectRatio ? .on : .off
+        emuExitOnEscButton.state = pref.exitOnEsc ? .on : .off
+        
+        // Snapshots and Screenshots
+        emuAutoSnapshots.state = pref.autoSnapshots ? .on : .off
+        emuSnapshotInterval.integerValue = pref.snapshotInterval
+        emuSnapshotInterval.isEnabled = pref.autoSnapshots
         emuScreenshotSourcePopup.selectItem(withTag: pref.screenshotSource)
         emuScreenshotTargetPopup.selectItem(withTag: pref.screenshotTargetIntValue)
         
-        // Documents
-        emuCloseWithoutAskingButton.state = pref.closeWithoutAsking ? .on : .off
-        emuEjectWithoutAskingButton.state = pref.driveEjectUnasked ? .on : .off
+        // Drive
+        emuWarpMode.selectItem(withTag: pref.warpModeIntValue)
         
         // Miscellaneous
         emuPauseInBackground.state = pref.pauseInBackground ? .on : .off
-        emuAutoSnapshots.state = c64.takeAutoSnapshots() ? .on : .off
-        emuSnapshotInterval.integerValue = c64.snapshotInterval()
-        emuSnapshotInterval.isEnabled = c64.takeAutoSnapshots()
+        emuCloseWithoutAskingButton.state = pref.closeWithoutAsking ? .on : .off
     }
-
-    //
-    // Action methods (VC1541)
-    //
     
-    @IBAction func emuWarpLoadAction(_ sender: NSButton!) {
-        
-        proxy?.setWarpLoad(sender.state == .on)
-        refresh()
-    }
+    //
+    // Action methods (Drive)
+    //
     
     @IBAction func emuDriveSoundsAction(_ sender: NSButton!) {
         
-        myAppDelegate.pref.driveSounds = sender.state == .on
+        pref.driveSounds = sender.state == .on
         refresh()
     }
-
+    
+    @IBAction func emuDriveSoundPanAction(_ sender: NSPopUpButton!) {
+        
+        pref.driveSoundPan = Double(sender.selectedTag())
+        refresh()
+    }
+    
+    @IBAction func emuDriveInsertSoundAction(_ sender: NSButton!) {
+        
+        pref.driveInsertSound = sender.state == .on
+        refresh()
+    }
+    
+    @IBAction func emuDriveEjectSoundAction(_ sender: NSButton!) {
+        
+        pref.driveEjectSound = sender.state == .on
+        refresh()
+    }
+    
+    @IBAction func emuDriveHeadSoundAction(_ sender: NSButton!) {
+        
+        pref.driveHeadSound = sender.state == .on
+        refresh()
+    }
+    
+    @IBAction func emuDriveConnectSoundAction(_ sender: NSButton!) {
+        
+        track()
+        pref.driveConnectSound = sender.state == .on
+        refresh()
+    }
+    
+    @IBAction func emuBlankDiskFormatAction(_ sender: NSPopUpButton!) {
+        
+        let tag = sender.selectedTag()
+        pref.driveBlankDiskFormat = FileSystemType(rawValue: tag)
+        refresh()
+    }
+    
     //
-    // Action methods (Screenshots)
+    // Action methods (Fullscreen)
     //
+    
+    @IBAction func emuAspectRatioAction(_ sender: NSButton!) {
+        
+        pref.keepAspectRatio = (sender.state == .on)
+        refresh()
+    }
+    
+    @IBAction func emuExitOnEscAction(_ sender: NSButton!) {
+        
+        pref.exitOnEsc = (sender.state == .on)
+        refresh()
+    }
+    
+    //
+    // Action methods (Snapshots and screenshots)
+    //
+    
+    @IBAction func emuAutoSnapshotAction(_ sender: NSButton!) {
+        
+        pref.autoSnapshots = sender.state == .on
+        refresh()
+    }
+    
+    @IBAction func emuSnapshotIntervalAction(_ sender: NSTextField!) {
+        
+        if sender.integerValue > 0 {
+            pref.snapshotInterval = sender.integerValue
+        }
+        refresh()
+    }
     
     @IBAction func emuScreenshotSourceAction(_ sender: NSPopUpButton!) {
         
@@ -63,23 +140,17 @@ extension PreferencesController {
         pref.screenshotTargetIntValue = sender.selectedTag()
         refresh()
     }
-
+    
     //
-    // Action methods (User Dialogs)
+    // Action methods (Warp mode)
     //
     
-    @IBAction func emuCloseWithoutAskingAction(_ sender: NSButton!) {
+    @IBAction func emuWarpModeAction(_ sender: NSPopUpButton!) {
         
-        pref.closeWithoutAsking = (sender.state == .on)
+        pref.warpMode = WarpMode(rawValue: sender.selectedTag())!
         refresh()
     }
     
-    @IBAction func emuEjectWithoutAskingAction(_ sender: NSButton!) {
-        
-        pref.driveEjectUnasked = (sender.state == .on)
-        refresh()
-    }
-
     //
     // Action methods (Miscellaneous)
     //
@@ -90,75 +161,32 @@ extension PreferencesController {
         refresh()
     }
     
-    @IBAction func emuAutoSnapshotAction(_ sender: NSButton!) {
+    @IBAction func emuCloseWithoutAskingAction(_ sender: NSButton!) {
         
-        proxy?.setTakeAutoSnapshots(sender.state == .on)
-        refresh()
-    }
-    
-    @IBAction func emuSnapshotIntervalAction(_ sender: NSTextField!) {
-        
-        track("\(sender.integerValue)")
-        if sender.integerValue > 0 {
-            proxy?.setSnapshotInterval(sender.integerValue)
-        } else {
-            track("IGNORING")
+        pref.closeWithoutAsking = (sender.state == .on)
+        for c in myAppDelegate.controllers {
+            c.needsSaving = c.c64.isRunning()
         }
         refresh()
     }
-
+    
+    @IBAction func emuEjectWithoutAskingAction(_ sender: NSButton!) {
+        
+        pref.driveEjectUnasked = (sender.state == .on)
+        refresh()
+    }
+    
     //
-    // Action methods (Media files)
+    // Action methods (Misc)
     //
     
-    private func mediaFileType(_ tag: Int) -> String? {
-        switch tag {
-        case 0: return "D64"
-        case 1: return "PRG"
-        case 2: return "T64"
-        case 3: return "TAP"
-        case 4: return "CRT"
-        default: return nil
-        }
-    }
-    
-    @IBAction func medMountAction(_ sender: NSPopUpButton!) {
-        
-        if let fileType = mediaFileType(sender.tag) {
-            let action = AutoMountAction(rawValue: sender.selectedTag())
-            pref.mountAction[fileType] = action
-            refresh()
-        }
-    }
-    
-    @IBAction func medAutoTypeAction(_ sender: NSButton!) {
-        
-        if let fileType = mediaFileType(sender.tag) {
-            pref.autoType[fileType] = (sender.intValue == 0) ? false : true
-            refresh()
-        }
-    }
-
-    @IBAction func medAutoTextAction(_ sender: NSTextField!) {
-        
-        if let fileType = mediaFileType(sender.tag) {
-            pref.autoText[fileType] = sender.stringValue
-            refresh()
-        }
-    }
-    
-    @IBAction func medPresetAction(_ sender: NSPopUpButton!) {
+    @IBAction func emuPresetAction(_ sender: NSPopUpButton!) {
         
         track()
         assert(sender.selectedTag() == 0)
         
-        UserDefaults.resetMediaDefaults()
-        pref.loadMediaUserDefaults()
+        UserDefaults.resetEmulatorUserDefaults()
+        pref.loadEmulatorUserDefaults()
         refresh()
-     }
-    
-    @IBAction func emuDefaultsAction(_ sender: NSButton!) {
-        
-        track()
     }
 }

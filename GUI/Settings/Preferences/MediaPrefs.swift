@@ -30,4 +30,60 @@ extension PreferencesController {
         refresh("TAP", medTapPopup, medTapAutoTypeButton, medTapAutoTypeText)
         refresh("CRT", medCrtPopup, medCrtAutoTypeButton, medCrtAutoTypeText)
     }
+    
+    private func mediaFileType(_ tag: Int) -> String? {
+        switch tag {
+        case 0: return "D64"
+        case 1: return "PRG"
+        case 2: return "T64"
+        case 3: return "TAP"
+        case 4: return "CRT"
+        default: return nil
+        }
+    }
+    
+    @IBAction func medMountAction(_ sender: NSPopUpButton!) {
+        
+        if let fileType = mediaFileType(sender.tag) {
+            let action = AutoMountAction(rawValue: sender.selectedTag())
+            pref.mountAction[fileType] = action
+            refresh()
+        }
+    }
+    
+    @IBAction func medAutoTypeAction(_ sender: NSButton!) {
+        
+        if let fileType = mediaFileType(sender.tag) {
+            pref.autoType[fileType] = (sender.intValue == 0) ? false : true
+            refresh()
+        }
+    }
+    
+    @IBAction func medAutoTextAction(_ sender: NSTextField!) {
+        
+        if let fileType = mediaFileType(sender.tag) {
+            pref.autoText[fileType] = sender.stringValue
+            refresh()
+        }
+    }
+    
+    @IBAction func medPresetAction(_ sender: NSPopUpButton!) {
+        
+        track()
+        assert(sender.selectedTag() == 0)
+        
+        UserDefaults.resetMediaDefaults()
+        pref.loadMediaUserDefaults()
+        refresh()
+    }
+    
+    @IBAction func mediaPresetAction(_ sender: NSPopUpButton!) {
+        
+        track()
+        assert(sender.selectedTag() == 0)
+        
+        UserDefaults.resetMediaDefaults()
+        pref.loadMediaUserDefaults()
+        refresh()
+    }
 }

@@ -103,42 +103,6 @@ class MyController: NSWindowController, MessageReceiver {
     /// Indicates if a status bar is shown
     var statusBar = true
     
-    /// Selected game pad slot for joystick in port A
-    // var inputDevice1 = Defaults.inputDevice1
-    
-    /// Selected game pad slot for joystick in port B
-    // var inputDevice2 = Defaults.inputDevice2
-    
-    /*
-    /// Screenshot resolution (0 = low, 1 = high)
-    var screenshotSource = GeneralDefaults.std.screenshotSource
-    
-    /// Screenshot image format
-    var screenshotTarget = GeneralDefaults.std.screenshotTarget
-    var screenshotTargetIntValue: Int {
-        get { return Int(screenshotTarget.rawValue) }
-        set { screenshotTarget = NSBitmapImageRep.FileType(rawValue: UInt(newValue))! }
-    }
-    
-    /// Media file default actions
-    var autoMountAction: [String: AutoMountAction] = Defaults.autoMountAction
-
-    /// Media file auto-type enable / disable
-    var autoType: [String: Bool] = Defaults.autoType
-
-    /// Media file auto-type text
-    var autoTypeText: [String: String] = Defaults.autoTypeText
-    
-    /// Indicates if the user should be warned if an unsaved document is closed.
-    var closeWithoutAsking = GeneralDefaults.std.closeWithoutAsking
-
-    /// Indicates if the user should be warned if an unsaved disk is ejected.
-    var ejectWithoutAsking = GeneralDefaults.std.driveEjectUnasked
-
-    /// Indicates if the emulator should pause when it looses focus.
-    var pauseInBackground =  GeneralDefaults.std.pauseInBackground
-    */
- 
     /// Remembers if the emulator was running or paused when it lost focus.
     /// Needed to implement the pauseInBackground feature.
     var pauseInBackgroundSavedState = false

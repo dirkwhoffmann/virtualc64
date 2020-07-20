@@ -19,26 +19,32 @@ class PreferencesController: DialogController {
     // General preferences
     //
         
-    // VC1541
-    @IBOutlet weak var emuWarpLoad: NSButton!
+     // Drive
+    @IBOutlet weak var emuDriveBlankDiskFormat: NSPopUpButton!
+    @IBOutlet weak var emuEjectUnasked: NSButton!
     @IBOutlet weak var emuDriveSounds: NSButton!
-    
-    // Screenshots
-    @IBOutlet weak var emuScreenshotSourcePopup: NSPopUpButton!
-    @IBOutlet weak var emuScreenshotTargetPopup: NSPopUpButton!
-    
-    // User Dialogs
-    @IBOutlet weak var emuAutoMountButton: NSButton!
-    @IBOutlet weak var emuCloseWithoutAskingButton: NSButton!
-    @IBOutlet weak var emuEjectWithoutAskingButton: NSButton!
-    
-    // Misc
-    @IBOutlet weak var emuPauseInBackground: NSButton!
+    @IBOutlet weak var emuDriveSoundPan: NSPopUpButton!
+    @IBOutlet weak var emuDriveInsertSound: NSButton!
+    @IBOutlet weak var emuDriveEjectSound: NSButton!
+    @IBOutlet weak var emuDriveHeadSound: NSButton!
+    @IBOutlet weak var emuDriveConnectSound: NSButton!
+
+    // Fullscreen
+    @IBOutlet weak var emuAspectRatioButton: NSButton!
+    @IBOutlet weak var emuExitOnEscButton: NSButton!
+
+    // Snapshots and Screenshots
     @IBOutlet weak var emuAutoSnapshots: NSButton!
     @IBOutlet weak var emuSnapshotInterval: NSTextField!
-    
-    @IBOutlet weak var emuOkButton: NSButton!
-    @IBOutlet weak var emuPowerButton: NSButton!
+    @IBOutlet weak var emuScreenshotSourcePopup: NSPopUpButton!
+    @IBOutlet weak var emuScreenshotTargetPopup: NSPopUpButton!
+        
+    // Warp mode
+    @IBOutlet weak var emuWarpMode: NSPopUpButton!
+
+    // Misc
+    @IBOutlet weak var emuPauseInBackground: NSButton!
+    @IBOutlet weak var emuCloseWithoutAskingButton: NSButton!
     
     //
     // Devices preferences
@@ -176,7 +182,7 @@ class PreferencesController: DialogController {
     
     @IBAction override func okAction(_ sender: Any!) {
         
-        pref.saveGeneralUserDefaults()
+        pref.saveEmulatorUserDefaults()
         pref.saveDevicesUserDefaults()
         hideSheet()
     }

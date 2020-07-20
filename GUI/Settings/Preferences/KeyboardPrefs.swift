@@ -102,11 +102,6 @@ extension PreferencesController {
         UserDefaults.resetKeyMapUserDefaults()
         refresh()
     }
-    
-    @IBAction func kbDefaultsAction(_ sender: NSButton!) {
-        
-        track()
-    }
 }
 
 //
