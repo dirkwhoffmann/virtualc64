@@ -502,7 +502,7 @@ CPU::executeOneCycle()
                     // cia2.dumpTrace();
                 }
                 msg("%s %s: %d %d %s %s %s   %s %s %s %s %s %s\n",
-                    (this == &drive1.cpu) ? " " : "",
+                    (this == &drive8.cpu) ? " " : "",
                         instr.pc,
                         vc64.rasterLine,
                         vc64.rasterCycle,

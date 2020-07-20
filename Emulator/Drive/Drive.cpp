@@ -9,13 +9,13 @@
 
 #include "C64.h"
 
-Drive::Drive(unsigned nr, C64 &ref) : C64Component(ref)
+Drive::Drive(DriveID id, C64 &ref) : C64Component(ref)
 {
-    assert(nr == 1 || nr == 2);
+    assert(id == DRIVE8 || id == DRIVE9);
     
-    deviceNr = nr;
-    setDescription(nr == 1 ? "Drive1" : "Drive2");
-    cpu.setDescription(nr == 1 ? "Drive1CPU" : "Drive2CPU");
+    deviceNr = id;
+    setDescription(id == DRIVE8 ? "Drive1" : "Drive2");
+    cpu.setDescription(id == DRIVE8 ? "Drive1CPU" : "Drive2CPU");
 	
     subComponents = vector <HardwareComponent *> {
         
@@ -92,7 +92,7 @@ Drive::_initialize()
     debug("VC1541 initialize");
 
     // Start with a single drive powered on
-    deviceNr == 1 ? connect() : disconnect();
+    deviceNr == DRIVE8 ? connect() : disconnect();
 }
 
 void
@@ -117,10 +117,10 @@ Drive::resetDisk()
 void
 Drive::_ping()
 {    
-    vc64.putMessage(config.connected ? MSG_VC1541_ATTACHED : MSG_VC1541_DETACHED, deviceNr);
-    vc64.putMessage(redLED ? MSG_VC1541_RED_LED_ON : MSG_VC1541_RED_LED_OFF, deviceNr);
-    vc64.putMessage(spinning ? MSG_VC1541_MOTOR_ON : MSG_VC1541_MOTOR_OFF, deviceNr);
-    vc64.putMessage(hasDisk() ? MSG_VC1541_DISK : MSG_VC1541_NO_DISK, deviceNr);
+    vc64.putMessage(config.connected ? MSG_DRIVE_CONNECT : MSG_DRIVE_DISCONNECT, deviceNr);
+    vc64.putMessage(redLED ? MSG_DRIVE_LED_ON : MSG_DRIVE_LED_OFF, deviceNr);
+    vc64.putMessage(spinning ? MSG_DRIVE_MOTOR_ON : MSG_DRIVE_MOTOR_OFF, deviceNr);
+    vc64.putMessage(hasDisk() ? MSG_DRIVE_DISK : MSG_DRIVE_NO_DISK, deviceNr);
     vc64.putMessage(hasModifiedDisk() ? MSG_DISK_UNSAVED : MSG_DISK_SAVED, deviceNr);
 
 }
@@ -364,10 +364,10 @@ Drive::setRedLED(bool b)
 {
     if (!redLED && b) {
         redLED = true;
-        vc64.putMessage(MSG_VC1541_RED_LED_ON, deviceNr);
+        vc64.putMessage(MSG_DRIVE_LED_ON, deviceNr);
     } else if (redLED && !b) {
         redLED = false;
-        vc64.putMessage(MSG_VC1541_RED_LED_OFF, deviceNr);
+        vc64.putMessage(MSG_DRIVE_LED_OFF, deviceNr);
     }
 }
 
@@ -376,10 +376,10 @@ Drive::setRotating(bool b)
 {
     if (!spinning && b) {
         spinning = true;
-        vc64.putMessage(MSG_VC1541_MOTOR_ON, deviceNr);
+        vc64.putMessage(MSG_DRIVE_MOTOR_ON, deviceNr);
     } else if (spinning && !b) {
         spinning = false;
-        vc64.putMessage(MSG_VC1541_MOTOR_OFF, deviceNr);
+        vc64.putMessage(MSG_DRIVE_MOTOR_OFF, deviceNr);
     }
 }
 
@@ -399,7 +399,7 @@ Drive::moveHeadUp()
    
     assert(disk.isValidHeadPositon(halftrack, offset));
     
-    vc64.putMessage(MSG_VC1541_HEAD_UP, deviceNr);
+    vc64.putMessage(MSG_DRIVE_HEAD, deviceNr);
 }
 
 void
@@ -417,7 +417,7 @@ Drive::moveHeadDown()
     
     assert(disk.isValidHeadPositon(halftrack, offset));
     
-    vc64.putMessage(MSG_VC1541_HEAD_DOWN, deviceNr);
+    vc64.putMessage(MSG_DRIVE_HEAD, deviceNr);
 }
 
 void
@@ -476,7 +476,7 @@ Drive::insertDisk(AnyArchive *a)
     
     insertionStatus = FULLY_INSERTED;
     
-    vc64.putMessage(MSG_VC1541_DISK, deviceNr);
+    vc64.putMessage(MSG_DRIVE_DISK, deviceNr);
     vc64.putMessage(MSG_DISK_SAVED, deviceNr);
     
     resume();
@@ -511,7 +511,7 @@ Drive::ejectDisk()
     insertionStatus = NOT_INSERTED;
     
     // Notify listener
-    vc64.putMessage(MSG_VC1541_NO_DISK, deviceNr);
+    vc64.putMessage(MSG_DRIVE_NO_DISK, deviceNr);
     
     resume();
 }

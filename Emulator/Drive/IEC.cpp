@@ -80,8 +80,8 @@ IEC::_dump()
 	msg("\n");
 	dumpTrace();
 	msg("\n");
-    msg("    DDRB (VIA1) : %02X (Drive 1)\n", drive1.via1.getDDRB());
-    msg("    DDRB (VIA1) : %02X (Drive 2)\n", drive2.via1.getDDRB());
+    msg("    DDRB (VIA1) : %02X (Drive 1)\n", drive8.via1.getDDRB());
+    msg("    DDRB (VIA1) : %02X (Drive 2)\n", drive9.via1.getDDRB());
     msg("    DDRA (CIA2) : %02X\n\n", cia2.getDDRA());
     msg("   Bus activity : %d\n", busActivity); 
 
@@ -130,8 +130,8 @@ bool IEC::_updateIecLines()
      *    dataLine &= ub1;
      * }
     */
-    dataLine &= drive1.isDisconnected() || (atnLine ^ device1Atn);
-    dataLine &= drive2.isDisconnected() || (atnLine ^ device2Atn);
+    dataLine &= drive8.isDisconnected() || (atnLine ^ device1Atn);
+    dataLine &= drive9.isDisconnected() || (atnLine ^ device2Atn);
 
     return (oldAtnLine != atnLine ||
             oldClockLine != clockLine ||
@@ -151,8 +151,8 @@ IEC::updateIecLines()
         cia2.updatePA();
         
         // ATN signal is connected to CA1 pin of VIA 1
-        drive1.via1.CA1action(!atnLine);
-        drive2.via1.CA1action(!atnLine);
+        drive8.via1.CA1action(!atnLine);
+        drive9.via1.CA1action(!atnLine);
         
         if (tracingEnabled()) {
             dumpTrace();
@@ -191,13 +191,13 @@ void
 IEC::updateIecLinesDriveSide()
 {
     // Get bus signals from drive 1
-    u8 device1Bits = drive1.via1.getPB();
+    u8 device1Bits = drive8.via1.getPB();
     device1Atn = !!(device1Bits & 0x10);
     device1Clock = !!(device1Bits & 0x08);
     device1Data = !!(device1Bits & 0x02);
 
     // Get bus signals from drive 2
-    u8 device2Bits = drive2.via1.getPB();
+    u8 device2Bits = drive9.via1.getPB();
     device2Atn = !!(device2Bits & 0x10);
     device2Clock = !!(device2Bits & 0x08);
     device2Data = !!(device2Bits & 0x02);

@@ -38,8 +38,8 @@ void
     
     // Prepare to run...
     c64->cpu.clearErrorState();
-    c64->drive1.cpu.clearErrorState();
-    c64->drive2.cpu.clearErrorState();
+    c64->drive8.cpu.clearErrorState();
+    c64->drive9.cpu.clearErrorState();
     c64->restartTimer();
     
     while (likely(success)) {
@@ -79,8 +79,8 @@ C64::C64()
         &port2,
         &expansionport,
         &iec,
-        &drive1,
-        &drive2,
+        &drive8,
+        &drive9,
         &datasette,
         &mouse
     };
@@ -168,12 +168,14 @@ long
 C64::getDriveConfig(DriveID id, ConfigOption option)
 {
     assert(isDriveID(id));
+
+    Drive &drive = id == DRIVE8 ? drive8 : drive9;
     
     switch (option) {
             
-        case OPT_DRIVE_CONNECT: return id == DRIVE8; // TODO
-        case OPT_DRIVE_TYPE: return DRIVE_VC1541II; // TODO
-            
+        case OPT_DRIVE_CONNECT: return drive.isConnected();
+        case OPT_DRIVE_TYPE:    return drive.getType();
+        
         default:
             assert(false);
             return 0;
@@ -312,7 +314,7 @@ C64::configureDrive(DriveID id, ConfigOption option, long value)
 
     suspend();
 
-    Drive &drive = id == DRIVE8 ? drive1 : drive2;
+    Drive &drive = id == DRIVE8 ? drive8 : drive9;
     DriveConfig current = drive.getConfig();
         
     switch (option) {
@@ -857,8 +859,8 @@ void
 C64::stepInto()
 {
     cpu.clearErrorState();
-    drive1.cpu.clearErrorState();
-    drive2.cpu.clearErrorState();
+    drive8.cpu.clearErrorState();
+    drive9.cpu.clearErrorState();
 
     // Wait until the execution of the next command has begun
     while (cpu.inFetchPhase()) executeOneCycle();
@@ -874,8 +876,8 @@ void
 C64::stepOver()
 {
     cpu.clearErrorState();
-    drive1.cpu.clearErrorState();
-    drive2.cpu.clearErrorState();
+    drive8.cpu.clearErrorState();
+    drive9.cpu.clearErrorState();
     
     // If the next instruction is a JSR instruction, ...
     if (mem.spypeek(cpu.getPC()) == 0x20) {
@@ -962,8 +964,8 @@ C64::_executeOneCycle()
     
     // Second clock phase (o2 high)
     result &= cpu.executeOneCycle();
-    if (drive1.isConnected()) result &= drive1.execute(durationOfOneCycle);
-    if (drive2.isConnected()) result &= drive2.execute(durationOfOneCycle);
+    if (drive8.isConnected()) result &= drive8.execute(durationOfOneCycle);
+    if (drive9.isConnected()) result &= drive9.execute(durationOfOneCycle);
     // if (iec.isDirtyDriveSide) iec.updateIecLinesDriveSide();
     datasette.execute();
     
@@ -1213,7 +1215,7 @@ C64::kernalRomCRC32()
 u32
 C64::vc1541RomCRC32()
 {
-    return hasVC1541Rom() ? crc32(drive1.mem.rom, 0x4000) : 0;
+    return hasVC1541Rom() ? crc32(drive8.mem.rom, 0x4000) : 0;
 }
 
 u64
@@ -1237,7 +1239,7 @@ C64::kernalRomFNV64()
 u64
 C64::vc1541RomFNV64()
 {
-    return hasVC1541Rom() ? fnv_1a_64(drive1.mem.rom, 0x4000) : 0;
+    return hasVC1541Rom() ? fnv_1a_64(drive8.mem.rom, 0x4000) : 0;
 }
 
 const char *
@@ -1373,9 +1375,9 @@ C64::hasKernalRom()
 bool
 C64::hasVC1541Rom()
 {
-    assert(drive1.mem.rom[0] == drive2.mem.rom[0]);
-    assert(drive1.mem.rom[1] == drive2.mem.rom[1]);
-    return (drive1.mem.rom[0] | drive1.mem.rom[1]) != 0x00;
+    assert(drive8.mem.rom[0] == drive9.mem.rom[0]);
+    assert(drive8.mem.rom[1] == drive9.mem.rom[1]);
+    return (drive8.mem.rom[0] | drive8.mem.rom[1]) != 0x00;
 }
 bool
 C64::hasMega65BasicRom()
@@ -1551,8 +1553,8 @@ C64::loadVC1541Rom(RomFile *file)
     
     if (file->type() == VC1541_ROM_FILE) {
         debug("Flashing VC1541 Rom\n");
-        file->flash(drive1.mem.rom);
-        file->flash(drive2.mem.rom);
+        file->flash(drive8.mem.rom);
+        file->flash(drive9.mem.rom);
         return true;
     }
     return false;
@@ -1605,8 +1607,8 @@ C64::deleteKernalRom()
 void 
 C64::deleteVC1541Rom()
 {
-    memset(drive1.mem.rom, 0, 0x4000);
-    memset(drive2.mem.rom, 0, 0x4000);
+    memset(drive8.mem.rom, 0, 0x4000);
+    memset(drive9.mem.rom, 0, 0x4000);
 }
 
 bool
@@ -1641,7 +1643,7 @@ C64::saveVC1541Rom(const char *path)
 {
     if (!hasVC1541Rom()) return false;
     
-    RomFile *file = RomFile::makeWithBuffer(drive1.mem.rom, 0x4000);
+    RomFile *file = RomFile::makeWithBuffer(drive8.mem.rom, 0x4000);
     return file && file->writeToFile(path);
 }
 
@@ -1666,8 +1668,8 @@ C64::flash(AnyFile *file)
         break;
         
         case VC1541_ROM_FILE:
-        file->flash(drive1.mem.rom);
-        file->flash(drive2.mem.rom);
+        file->flash(drive8.mem.rom);
+        file->flash(drive9.mem.rom);
         break;
         
         case V64_FILE:

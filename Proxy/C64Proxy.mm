@@ -1363,7 +1363,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 @synthesize wrapper;
 @synthesize mem, cpu, vic, cia1, cia2, sid;
 @synthesize keyboard, port1, port2, iec;
-@synthesize expansionport, drive1, drive2, datasette, mouse;
+@synthesize expansionport, drive8, drive9, datasette, mouse;
 
 - (instancetype) init
 {
@@ -1388,8 +1388,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
     port2 = [[ControlPortProxy alloc] initWithJoystick:&c64->port2];
     iec = [[IECProxy alloc] initWithIEC:&c64->iec];
     expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:&c64->expansionport];
-	drive1 = [[DriveProxy alloc] initWithVC1541:&c64->drive1];
-    drive2 = [[DriveProxy alloc] initWithVC1541:&c64->drive2];
+	drive8 = [[DriveProxy alloc] initWithVC1541:&c64->drive8];
+    drive9 = [[DriveProxy alloc] initWithVC1541:&c64->drive9];
     datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
     mouse = [[MouseProxy alloc] initWithMouse:&c64->mouse];
 
@@ -1399,8 +1399,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
 - (DriveProxy *) drive:(DriveID)id
 {
     switch (id) {
-        case DRIVE8:  return drive1;
-        case DRIVE9:  return drive2;
+        case DRIVE8:  return drive8;
+        case DRIVE9:  return drive9;
         default:      return NULL;
     }
 }

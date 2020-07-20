@@ -24,8 +24,8 @@ port1(ref.port1),
 port2(ref.port2),
 expansionport(ref.expansionport),
 iec(ref.iec),
-drive1(ref.drive1),
-drive2(ref.drive2),
+drive8(ref.drive8),
+drive9(ref.drive9),
 datasette(ref.datasette),
 mouse(ref.mouse)
 {

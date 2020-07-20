@@ -105,8 +105,8 @@ public:
     IEC iec = IEC(*this);
     
     // Floppy drives
-    Drive drive1 = Drive(1, *this);
-    Drive drive2 = Drive(2, *this);
+    Drive drive8 = Drive(DRIVE8, *this);
+    Drive drive9 = Drive(DRIVE9, *this);
     
     // Datasette
     Datasette datasette = Datasette(*this);

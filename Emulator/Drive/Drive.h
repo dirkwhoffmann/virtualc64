@@ -66,14 +66,8 @@ public:
     
 private:
     
-    //! @brief    Internal number of this drive
-    /*! @details  The first drive has number 1, the second drive number 2, etc.
-     *            The number is set once and never changed afterwards.
-     *            When the drive writes a message into the message queue, the
-     *            drive number is provided in the data field to let the GUI
-     *            know about the sender.
-     */
-    unsigned deviceNr;
+    // Device number of this disk drive (8 = first drive, 9 = second drive)
+    DriveID deviceNr;
     
     //! @brief    Indicates whether the disk is rotating.
     bool spinning;
@@ -201,7 +195,7 @@ public:
     
 public:
     
-    Drive(unsigned deviceNr, C64 &ref);
+    Drive(DriveID id, C64 &ref);
     
     
     //
@@ -249,10 +243,8 @@ public:
     //! @functiongroup Working with the drive
     //
 
-    //! @brief    Returns the device number
-    /*! @return   0 for the first drive, 1 for the second.
-     */
-    unsigned getDeviceNr() { return deviceNr; }
+    // Returns the device number
+    DriveID getDeviceNr() { return deviceNr; }
         
     //! @brief    Returns true iff the red drive LED is on.
     bool getRedLED() { return redLED; };

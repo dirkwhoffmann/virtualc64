@@ -9,7 +9,6 @@
 
 extension MyController: NSMenuItemValidation {
     
-    
     open func validateMenuItem(_ item: NSMenuItem) -> Bool {
 
         let powered = c64.isPoweredOn()
@@ -75,10 +74,10 @@ extension MyController: NSMenuItemValidation {
             return drive.hasDisk()
             
         case #selector(MyController.exportRecentDiskDummyAction8(_:)):
-            return c64.drive1.hasDisk()
+            return c64.drive8.hasDisk()
             
         case #selector(MyController.exportRecentDiskDummyAction9(_:)):
-            return c64.drive2.hasDisk()
+            return c64.drive9.hasDisk()
                         
         case #selector(MyController.exportRecentDiskAction(_:)):
             switch item.tag {
@@ -178,10 +177,10 @@ extension MyController: NSMenuItemValidation {
             item.state = c64.iec.tracing() ? .on : .off
             
         case #selector(MyController.traceVC1541CpuAction(_:)):
-            item.state = c64.drive1.cpu.tracing() ? .on : .off
+            item.state = c64.drive8.cpu.tracing() ? .on : .off
             
         case #selector(MyController.traceViaAction(_:)):
-            item.state = c64.drive1.via1.tracing() ? .on : .off
+            item.state = c64.drive8.via1.tracing() ? .on : .off
             
         case #selector(MyController.dumpStateAction(_:)):
             return !c64.releaseBuild()
@@ -451,11 +450,11 @@ extension MyController: NSMenuItemValidation {
             greenLED1: false,
             redLED1: false,
             progress1: false,
-            diskIcon1: !c64.drive1.hasDisk(),
+            diskIcon1: !c64.drive8.hasDisk(),
             greenLED2: false,
             redLED2: false,
             progress2: false,
-            diskIcon2: !c64.drive2.hasDisk(),
+            diskIcon2: !c64.drive9.hasDisk(),
             crtIcon: !c64.expansionport.cartridgeAttached(),
             crtSwitch: !c64.expansionport.hasSwitch(),
             crtButton1: c64.expansionport.numButtons() < 1,
@@ -705,9 +704,9 @@ extension MyController: NSMenuItemValidation {
         let drive = DriveID(sender.tag)
 
         if drive == DRIVE8 {
-            c64.drive1.disk.toggleWriteProtection()
+            c64.drive8.disk.toggleWriteProtection()
         } else {
-            c64.drive2.disk.toggleWriteProtection()
+            c64.drive9.disk.toggleWriteProtection()
         }
     }
     
@@ -726,9 +725,9 @@ extension MyController: NSMenuItemValidation {
     func drivePowerAction(drive: DriveID) {
 
         if drive == DRIVE8 {
-            c64.drive1.toggleConnection()
+            c64.drive8.toggleConnection()
         } else {
-            c64.drive2.toggleConnection()
+            c64.drive9.toggleConnection()
         }
     }
     
@@ -1005,7 +1004,7 @@ extension MyController: NSMenuItemValidation {
             targetSelf.traceVC1541CpuAction(sender)
         }
         
-        c64.drive1.cpu.setTracing(!c64.drive1.cpu.tracing())
+        c64.drive8.cpu.setTracing(!c64.drive8.cpu.tracing())
     }
   
     @IBAction func traceViaAction(_ sender: Any!) {
@@ -1014,8 +1013,8 @@ extension MyController: NSMenuItemValidation {
             targetSelf.traceViaAction(sender)
         }
         
-        c64.drive1.via1.setTracing(!c64.drive1.via1.tracing())
-        c64.drive1.via2.setTracing(!c64.drive1.via2.tracing())
+        c64.drive8.via1.setTracing(!c64.drive8.via1.tracing())
+        c64.drive8.via2.setTracing(!c64.drive8.via2.tracing())
     }
     
     @IBAction func dumpC64(_ sender: Any!) { c64.dump() }
@@ -1025,11 +1024,11 @@ extension MyController: NSMenuItemValidation {
     @IBAction func dumpC64VIC(_ sender: Any!) { c64.vic.dump() }
     @IBAction func dumpC64SID(_ sender: Any!) { c64.sid.dump() }
     @IBAction func dumpC64Memory(_ sender: Any!) { c64.mem.dump() }
-    @IBAction func dumpVC1541(_ sender: Any!) { c64.drive1.dump() }
-    @IBAction func dumpVC1541CPU(_ sender: Any!) { c64.drive1.dump() }
-    @IBAction func dumpVC1541VIA1(_ sender: Any!) { c64.drive1.via1.dump() }
-    @IBAction func dumpVC1541VIA2(_ sender: Any!) { c64.drive1.via2.dump() }
-    @IBAction func dumpDisk(_ sender: Any!) { c64.drive1.disk.dump() }
+    @IBAction func dumpVC1541(_ sender: Any!) { c64.drive8.dump() }
+    @IBAction func dumpVC1541CPU(_ sender: Any!) { c64.drive8.dump() }
+    @IBAction func dumpVC1541VIA1(_ sender: Any!) { c64.drive8.via1.dump() }
+    @IBAction func dumpVC1541VIA2(_ sender: Any!) { c64.drive8.via2.dump() }
+    @IBAction func dumpDisk(_ sender: Any!) { c64.drive8.disk.dump() }
     @IBAction func dumpKeyboard(_ sender: Any!) { c64.keyboard.dump() }
     @IBAction func dumpC64JoystickA(_ sender: Any!) { c64.port1.dump() }
     @IBAction func dumpC64JoystickB(_ sender: Any!) { c64.port2.dump(); gamePadManager.listDevices()}

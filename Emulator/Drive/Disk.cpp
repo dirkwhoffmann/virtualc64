@@ -127,8 +127,8 @@ Disk::setModified(bool b)
 {
     if (b != modified) {
         modified = b;
-        drive1.ping();
-        drive2.ping();
+        drive8.ping();
+        drive9.ping();
     }
 }
 

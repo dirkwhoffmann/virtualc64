@@ -68,12 +68,12 @@ protected:
     ControlPort &port2;
     ExpansionPort &expansionport;
     IEC &iec;
-    Drive &drive1;
-    Drive &drive2;
+    Drive &drive8;
+    Drive &drive9;
     Datasette &datasette;
     Mouse &mouse;
     
-    Drive *drive[2] = { &drive1, &drive2 };
+    Drive *drive[2] = { &drive8, &drive9 };
 
 public:
 

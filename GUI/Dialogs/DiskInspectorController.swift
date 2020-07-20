@@ -63,13 +63,13 @@ class DiskInspectorController: DialogController {
     @IBOutlet weak var gcrView: NSScrollView!
     @IBOutlet weak var sectorView: NSTableView!
     @IBOutlet weak var errorView: NSTableView!
-    @IBOutlet weak var drive1: NSButton!
-    @IBOutlet weak var drive2: NSButton!
+    @IBOutlet weak var drive8: NSButton!
+    @IBOutlet weak var drive9: NSButton!
 
     override public func awakeFromNib() {
         
         driveNr = 1
-        drive = proxy!.drive1
+        drive = proxy!.drive8
     
         // Start receiving messages
         addListener()
@@ -102,8 +102,8 @@ class DiskInspectorController: DialogController {
     /// Updates dirty GUI elements
     func refresh() {
         
-        drive1.state = (driveNr == 1) ? .on : .off
-        drive2.state = (driveNr == 2) ? .on : .off
+        drive8.state = (driveNr == DRIVE8.rawValue) ? .on : .off
+        drive9.state = (driveNr == DRIVE9.rawValue) ? .on : .off
 
         // Enable or disable user edition
         if drive.hasDisk() {
@@ -426,16 +426,15 @@ extension DiskInspectorController: MessageReceiver {
         
         switch msg.type {
             
-        case MSG_VC1541_ATTACHED,
-             MSG_VC1541_DETACHED,
-             MSG_VC1541_DISK,
-             MSG_VC1541_NO_DISK,
+        case MSG_DRIVE_CONNECT,
+             MSG_DRIVE_DISCONNECT,
+             MSG_DRIVE_DISK,
+             MSG_DRIVE_NO_DISK,
              MSG_DISK_SAVED,
              MSG_DISK_UNSAVED,
-             MSG_VC1541_MOTOR_ON,
-             MSG_VC1541_MOTOR_OFF,
-             MSG_VC1541_HEAD_UP,
-             MSG_VC1541_HEAD_DOWN:
+             MSG_DRIVE_MOTOR_ON,
+             MSG_DRIVE_MOTOR_OFF,
+             MSG_DRIVE_HEAD:
             refresh()
             
         default:

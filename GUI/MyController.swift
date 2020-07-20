@@ -105,9 +105,9 @@ class MyController: NSWindowController, MessageReceiver {
     
     // Small disk icon to be shown in NSMenuItems
     static let iconSize = CGSize(width: 16, height: 16)
-    var smallDisk = NSImage.init(named: "diskTemplate")!.resize(size: iconSize)
-    var smallTape = NSImage.init(named: "tape_small")!.resize(size: iconSize)
-    var smallCart = NSImage.init(named: "cartridge_small")!.resize(size: iconSize)
+    var smallDisk = NSImage.init(named: "mediaDiskSavedTemplate")!.resize(size: iconSize)
+    var smallTape = NSImage.init(named: "mediaTapeTemplate")!.resize(size: iconSize)
+    var smallCart = NSImage.init(named: "crtTemplate")!.resize(size: iconSize)
     
     // Remembers the running state for the pauseInBackground feature
     var pauseInBackgroundSavedState = false
@@ -564,9 +564,9 @@ extension MyController {
     
     func processMessage(_ msg: Message) {
 
-        func firstDrive() -> Bool {
-            precondition(msg.data == 1 || msg.data == 2)
-            return msg.data == 1
+        func drive8() -> Bool {
+            precondition(msg.data == 8 || msg.data == 9)
+            return msg.data == 8
         }
 
         proxyLock.lock()
@@ -608,7 +608,7 @@ extension MyController {
         case MSG_BASIC_ROM_LOADED,
              MSG_CHAR_ROM_LOADED,
              MSG_KERNAL_ROM_LOADED,
-             MSG_VC1541_ROM_LOADED:
+             MSG_DRIVE_ROM_LOADED:
             break
             
         case MSG_ROM_MISSING:
@@ -648,60 +648,31 @@ extension MyController {
 
             renderer.updateTextureRect()
     
-        case MSG_VC1541_ATTACHED:
-            
-            if pref.driveSounds && pref.driveConnectSound {
-                playSound(name: "drive_click", volume: 1.0)
-            }
-            
-            let image = NSImage.init(named: "LEDgreen")
-            
-            if firstDrive() {
-                greenLED1.image = image
-            } else {
-                greenLED2.image = image
-            }
-
-        case MSG_VC1541_DETACHED:
-            
-            if pref.driveSounds && pref.driveConnectSound {
-                playSound(name: "drive_click", volume: 1.0)
-            }
-            
-            let image = NSImage.init(named: "LEDgray")
-            
-            if firstDrive() {
-                greenLED1.image = image
-            } else {
-                greenLED2.image = image
-            }
-                        
-        case MSG_VC1541_HEAD_UP,
-             MSG_VC1541_HEAD_DOWN:
+        case MSG_DRIVE_HEAD:
             
             if pref.driveSounds && pref.driveHeadSound {
                 playSound(name: "drive_click", volume: 1.0)
             }
                         
-        case MSG_VC1541_DISK:
+        case MSG_DRIVE_DISK:
             
             if pref.driveSounds && pref.driveInsertSound {
                 playSound(name: "drive_snatch_uae", volume: 0.1)
             }
 
-            if firstDrive() {
+            if drive8() {
                 diskIcon1.isHidden = false
             } else {
                 diskIcon2.isHidden = false
             }
               
-        case MSG_VC1541_NO_DISK:
+        case MSG_DRIVE_NO_DISK:
             
             if pref.driveSounds && pref.driveEjectSound {
                 playSound(name: "drive_snatch_uae", volume: 0.1)
             }
 
-            if firstDrive() {
+            if drive8() {
                 diskIcon1.isHidden = true
             } else {
                 diskIcon2.isHidden = true
@@ -710,7 +681,7 @@ extension MyController {
         case MSG_DISK_SAVED:
             
             let image = NSImage.init(named: "mediaDiskSavedTemplate")
-            if firstDrive() {
+            if drive8() {
                 diskIcon1.image = image
             } else {
                 diskIcon2.image = image
@@ -720,16 +691,16 @@ extension MyController {
             
             track("Disk is unsaved")
             let image = NSImage.init(named: "mediaDiskUnsavedTemplate")
-            if firstDrive() {
+            if drive8() {
                 diskIcon1.image = image
             } else {
                 diskIcon2.image = image
             }
             
-        case MSG_VC1541_RED_LED_ON:
+        case MSG_DRIVE_LED_ON:
             
             let image = NSImage.init(named: "LEDred")
-            if firstDrive() {
+            if drive8() {
                 redLED1.image = image
                 redLED1.setNeedsDisplay()
             } else {
@@ -737,10 +708,10 @@ extension MyController {
                 redLED2.setNeedsDisplay()
             }
             
-        case MSG_VC1541_RED_LED_OFF:
+        case MSG_DRIVE_LED_OFF:
             
             let image = NSImage.init(named: "LEDgray")
-            if firstDrive() {
+            if drive8() {
                 redLED1.image = image
                 redLED1.setNeedsDisplay()
             } else {
@@ -750,10 +721,10 @@ extension MyController {
     
         case MSG_IEC_BUS_BUSY:
             
-            if c64.drive1.isRotating() {
+            if c64.drive8.isRotating() {
                 progress1.startAnimation(self)
             }
-            if c64.drive2.isRotating() {
+            if c64.drive9.isRotating() {
                 progress2.startAnimation(self)
             }
     
@@ -762,10 +733,50 @@ extension MyController {
             progress1.stopAnimation(self)
             progress2.stopAnimation(self)
             
-        case MSG_VC1541_MOTOR_ON,
-             MSG_VC1541_MOTOR_OFF:
+        case MSG_DRIVE_MOTOR_ON,
+             MSG_DRIVE_MOTOR_OFF:
             break
     
+        case MSG_DRIVE_CONNECT:
+            
+            if pref.driveSounds && pref.driveConnectSound {
+                playSound(name: "drive_click", volume: 1.0)
+            }
+            
+            let image = NSImage.init(named: "LEDgreen")
+            
+            if drive8() {
+                greenLED1.image = image
+            } else {
+                greenLED2.image = image
+            }
+            
+            switch msg.data {
+            case 8: myAppDelegate.drive8Menu.isHidden = false
+            case 9: myAppDelegate.drive9Menu.isHidden = false
+            default: fatalError()
+            }
+            
+        case MSG_DRIVE_DISCONNECT:
+            
+            if pref.driveSounds && pref.driveConnectSound {
+                playSound(name: "drive_click", volume: 1.0)
+            }
+            
+            let image = NSImage.init(named: "LEDgray")
+            
+            if drive8() {
+                greenLED1.image = image
+            } else {
+                greenLED2.image = image
+            }
+            
+            switch msg.data {
+            case 8: myAppDelegate.drive8Menu.isHidden = true
+            case 9: myAppDelegate.drive9Menu.isHidden = true
+            default: fatalError()
+            }
+
         case MSG_VC1530_TAPE:
             
             tapeIcon.isHidden = false

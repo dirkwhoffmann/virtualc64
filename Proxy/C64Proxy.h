@@ -80,8 +80,8 @@ struct AnyC64FileWrapper;
     ControlPortProxy *port2;
     IECProxy *iec;
     ExpansionPortProxy *expansionport;
-    DriveProxy *drive1;
-    DriveProxy *drive2;
+    DriveProxy *drive8;
+    DriveProxy *drive9;
     DatasetteProxy *datasette;
     MouseProxy *mouse;
 }
@@ -98,8 +98,8 @@ struct AnyC64FileWrapper;
 @property (readonly) ControlPortProxy *port2;
 @property (readonly) IECProxy *iec;
 @property (readonly) ExpansionPortProxy *expansionport;
-@property (readonly) DriveProxy *drive1;
-@property (readonly) DriveProxy *drive2;
+@property (readonly) DriveProxy *drive8;
+@property (readonly) DriveProxy *drive9;
 @property (readonly) DatasetteProxy *datasette;
 @property (readonly) MouseProxy *mouse;
 
