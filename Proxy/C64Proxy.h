@@ -440,21 +440,8 @@ struct AnyC64FileWrapper;
 - (VoiceInfo) getVoiceInfo:(NSInteger)voice;
 - (void) dump;
 
-- (u32) sampleRate;
-- (void) setSampleRate:(u32)rate;
-
-/*
-- (BOOL) reSID;
-- (void) setReSID:(BOOL)b;
-- (BOOL) audioFilter;
-- (void) setAudioFilter:(BOOL)b;
-- (NSInteger) samplingMethod;
-- (void) setSamplingMethod:(NSInteger)value;
-*/
- /*
-- (NSInteger) model;
-- (void) setModel:(NSInteger)value;
-*/
+- (double) sampleRate;
+- (void) setSampleRate:(double)rate;
 
 - (NSInteger) ringbufferSize;
 - (float) ringbufferData:(NSInteger)offset;

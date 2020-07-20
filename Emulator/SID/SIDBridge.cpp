@@ -73,13 +73,13 @@ SIDBridge::setSamplingMethod(SamplingMethod method)
     resid.setSamplingMethod(method);
 }
 
-u32
+double
 SIDBridge::getSampleRate()
 {
     switch (config.engine) {
             
-        case ENGINE_FASTSID: return fastsid.getSampleRate();
-        case ENGINE_RESID:   return resid.getSampleRate();
+        case ENGINE_FASTSID: return (double)fastsid.getSampleRate();
+        case ENGINE_RESID:   return (double)resid.getSampleRate();
             
         default:
             assert(false);
@@ -88,12 +88,12 @@ SIDBridge::getSampleRate()
 }
 
 void
-SIDBridge::setSampleRate(u32 rate)
+SIDBridge::setSampleRate(double rate)
 {
-    debug(SID_DEBUG, "Changing sample rate from %d to %d\n", getSampleRate(), rate);
+    debug(SID_DEBUG, "Changing sample rate from %f to %f\n", getSampleRate(), rate);
     
-    resid.setSampleRate(rate);
-    fastsid.setSampleRate(rate);
+    resid.setSampleRate((u32)rate);
+    fastsid.setSampleRate((u32)rate);
 }
 
 u32

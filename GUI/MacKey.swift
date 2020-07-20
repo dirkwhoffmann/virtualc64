@@ -118,7 +118,7 @@ struct MacKey: Codable {
         
         // Return standard representation (keyboard dependent)
         if let s = String.init(keyCode: UInt16(keyCode), carbonFlags: carbonFlags) {
-            return s.uppercased()
+            return s
         }
         
         return ""

@@ -365,7 +365,7 @@ extension MyController {
         
         mydocument = document as? MyDocument
         config = Configuration.init(with: self)
-        macAudio = MacAudio.init(withSID: c64.sid)
+        macAudio = MacAudio.init(with: self)
     }
 
     override open func windowDidLoad() {

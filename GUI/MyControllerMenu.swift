@@ -523,6 +523,8 @@ extension MyController: NSMenuItemValidation {
     */
     
     @IBAction func clearKeyboardMatrixAction(_ sender: Any!) {
+        
+        track()
         c64.keyboard.releaseAll()
     }
 
@@ -710,13 +712,8 @@ extension MyController: NSMenuItemValidation {
         }
     }
     
+    /*
     @IBAction func drivePowerAction(_ sender: NSMenuItem!) {
-        
-        let drive = DriveID(sender.tag)
-        drivePowerAction(drive: drive)
-    }
-
-    @IBAction func drivePowerButtonAction(_ sender: NSButton!) {
         
         let drive = DriveID(sender.tag)
         drivePowerAction(drive: drive)
@@ -730,6 +727,7 @@ extension MyController: NSMenuItemValidation {
             c64.drive9.toggleConnection()
         }
     }
+    */
     
     //
     // Action methods (Datasette menu)

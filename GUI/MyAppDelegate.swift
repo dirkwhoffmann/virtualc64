@@ -201,27 +201,22 @@ extension MyAppDelegate {
     
     func windowDidBecomeMain(_ window: NSWindow) {
         
-        // Iterate through all controllers
-        for case let document as MyDocument in NSApplication.shared.orderedDocuments {
-            if let controller = document.windowControllers.first as? MyController {
+        for c in controllers {
+            
+            if c.window == window {
                 
-                let audioEngine = controller.macAudio!
-                if window == controller.window {
-                    
-                    // Turn on audio
-                    // track("Turning on audio for window \(controller.window)")
-                    if !audioEngine.isRunning {
-                        audioEngine.rampUpFromZero()
-                        audioEngine.startPlayback()
-                    }
-
-                } else {
-                    
-                    // Turn off audio
-                    // track("Turning off audio for window \(controller.window)")
-                    if audioEngine.isRunning {
-                        audioEngine.stopPlayback()
-                    }
+                // Start playback
+                if !c.macAudio!.isRunning {
+                    c.macAudio!.startPlayback()
+                    c.c64.sid.rampUpFromZero()
+                }
+                
+            } else {
+                
+                // Stop playback
+                if c.macAudio!.isRunning {
+                    c.macAudio!.stopPlayback()
+                    c.c64.sid.rampDown()
                 }
             }
         }

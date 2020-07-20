@@ -321,6 +321,8 @@ C64::configureDrive(DriveID id, ConfigOption option, long value)
             
         case OPT_DRIVE_CONNECT:
             
+            debug("OPT_DRIVE_CONNECT\n");
+            
             if (current.connected == value) goto exit;
             drive.setConnected(value);
             goto success;

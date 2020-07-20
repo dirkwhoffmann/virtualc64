@@ -119,8 +119,8 @@ public:
     SamplingMethod getSamplingMethod() { return config.sampling; }
     void setSamplingMethod(SamplingMethod method);
     
-    u32 getSampleRate();
-    void setSampleRate(u32 sr);
+    double getSampleRate();
+    void setSampleRate(double rate);
     u32 getClockFrequency();
     
     

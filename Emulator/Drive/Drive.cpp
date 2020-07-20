@@ -14,8 +14,8 @@ Drive::Drive(DriveID id, C64 &ref) : C64Component(ref)
     assert(id == DRIVE8 || id == DRIVE9);
     
     deviceNr = id;
-    setDescription(id == DRIVE8 ? "Drive1" : "Drive2");
-    cpu.setDescription(id == DRIVE8 ? "Drive1CPU" : "Drive2CPU");
+    setDescription(id == DRIVE8 ? "Drive8" : "Drive9");
+    cpu.setDescription(id == DRIVE8 ? "Drive8CPU" : "Drive9CPU");
 	
     subComponents = vector <HardwareComponent *> {
         

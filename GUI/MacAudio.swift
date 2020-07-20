@@ -11,23 +11,31 @@ import AVFoundation
 
 public class MacAudio: NSObject {
 
-    private var sid: SIDProxy?
-    private var audiounit: AUAudioUnit!
+    var parent: MyController!
+    var audiounit: AUAudioUnit!
+    var sid: SIDProxy!
+
+    var prefs: Preferences { return parent.pref }
     
+    // Indicates if the this emulator instance owns the audio unit
     var isRunning = false
     
+    // Cached audio players
+    var audioPlayers: [String: [AVAudioPlayer]] = [:]
+    
     override init() {
-
+        
         super.init()
     }
     
-    convenience init?(withSID proxy: SIDProxy) {
-
+    convenience init?(with controller: MyController) {
+        
         track()
-    
+        
         self.init()
-        sid = proxy
-
+        parent = controller
+        sid = controller.c64.sid
+        
         // Setup component description for AudioUnit
         let compDesc = AudioComponentDescription(
             componentType: kAudioUnitType_Output,
@@ -35,7 +43,7 @@ public class MacAudio: NSObject {
             componentManufacturer: kAudioUnitManufacturer_Apple,
             componentFlags: 0,
             componentFlagsMask: 0)
-
+        
         // Create AudioUnit
         do { try audiounit = AUAudioUnit(componentDescription: compDesc) } catch {
             track("Failed to create AUAudioUnit")
@@ -56,8 +64,8 @@ public class MacAudio: NSObject {
             return
         }
         
-        // Tell SID to use the correct sample rate
-        sid?.setSampleRate(UInt32(sampleRate))
+        // Inform SID about the sample rate
+        sid.setSampleRate(sampleRate)
         
         // Register render callback
         if stereo {
@@ -83,32 +91,33 @@ public class MacAudio: NSObject {
                 return 0
             }
         }
-
+        
         // Allocate render resources
         do { try audiounit.allocateRenderResources() } catch {
             track("Failed to allocate RenderResources")
             return nil
         }
-     }
-
+        
+        track("Success")
+    }
+    
     func shutDown() {
-
+        
         track()
         stopPlayback()
-        // rampDown()
         sid = nil
     }
-
+    
     private func renderMono(inputDataList: UnsafeMutablePointer<AudioBufferList>,
                             frameCount: UInt32) {
-
+        
         let bufferList = UnsafeMutableAudioBufferListPointer(inputDataList)
         assert(bufferList.count == 1)
         
         let ptr = bufferList[0].mData!.assumingMemoryBound(to: Float.self)
-        sid?.readMonoSamples(ptr, size: Int(frameCount))
+        sid.readMonoSamples(ptr, size: Int(frameCount))
     }
-  
+    
     private func renderStereo(inputDataList: UnsafeMutablePointer<AudioBufferList>,
                               frameCount: UInt32) {
         
@@ -117,13 +126,13 @@ public class MacAudio: NSObject {
         
         let ptr1 = bufferList[0].mData!.assumingMemoryBound(to: Float.self)
         let ptr2 = bufferList[1].mData!.assumingMemoryBound(to: Float.self)
-        sid?.readStereoSamples(ptr1, buffer2: ptr2, size: Int(frameCount))
+        sid.readStereoSamples(ptr1, buffer2: ptr2, size: Int(frameCount))
     }
     
-    // Start playing sound
+    // Connects SID to the audio backend
     @discardableResult
     func startPlayback() -> Bool {
-
+        
         if !isRunning {
             do { try audiounit.startHardware() } catch {
                 track("Failed to start audio hardware")
@@ -135,7 +144,7 @@ public class MacAudio: NSObject {
         return true
     }
     
-    // Stop playing sound
+    // Disconnects SID from the audio backend
     func stopPlayback() {
         
         if isRunning {
@@ -144,8 +153,36 @@ public class MacAudio: NSObject {
         }
     }
     
-    // Volume control
-    func rampUp() { sid?.rampUp() }
-    func rampUpFromZero() { sid?.rampUpFromZero() }
-    func rampDown() { sid?.rampDown() }
+    // Plays a sound file
+    func playSound(name: String, volume: Float = 1.0) {
+        
+        // Check for cached players for this sound file
+        if audioPlayers[name] == nil {
+            
+            // Lookup sound file in bundle
+            guard let url = Bundle.main.url(forResource: name, withExtension: "aiff") else {
+                track("Cannot open sound file \(name)")
+                return
+            }
+            
+            // Create a couple of player instances for this sound file
+            do {
+                audioPlayers[name] = []
+                try audioPlayers[name]!.append(AVAudioPlayer(contentsOf: url))
+                try audioPlayers[name]!.append(AVAudioPlayer(contentsOf: url))
+                try audioPlayers[name]!.append(AVAudioPlayer(contentsOf: url))
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
+        
+        // Play sound if a free is available
+        for player in audioPlayers[name]! where !player.isPlaying {
+            
+            player.volume = volume
+            player.pan = Float(prefs.driveSoundPan)
+            player.play()
+            return
+        }
+    }
 }

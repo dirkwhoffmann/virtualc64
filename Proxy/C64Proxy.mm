@@ -575,48 +575,12 @@ struct AnyC64FileWrapper { AnyFile *file; };
 - (VoiceInfo) getVoiceInfo:(NSInteger)voice
 {
     return wrapper->sid->getVoiceInfo((unsigned)voice);
-}
-/*
-- (BOOL) reSID
-{
-    return wrapper->sid->getReSID();
-}
-- (void) setReSID:(BOOL)b
-{
-    wrapper->sid->setReSID(b);
-}
-- (BOOL) audioFilter
-{
-    return wrapper->sid->getAudioFilter();
-}
-- (void) setAudioFilter:(BOOL)b
-{
-    wrapper->sid->setFilter(b);
-}
-- (NSInteger) samplingMethod
-{
-    return (NSInteger)(wrapper->sid->getSamplingMethod());
-}
-- (void) setSamplingMethod:(NSInteger)value
-{
-    wrapper->sid->setSamplingMethod((SamplingMethod)value);
-}
- */
-/*
-- (NSInteger) model
-{
-    return (int)(wrapper->sid->getModel());
-}
-- (void) setModel:(NSInteger)value
-{
-    wrapper->sid->setModel((SIDModel)value);
-}
-*/
-- (u32) sampleRate
+} 
+- (double) sampleRate
 {
     return wrapper->sid->getSampleRate();
 }
-- (void) setSampleRate:(u32)rate
+- (void) setSampleRate:(double)rate
 {
     wrapper->sid->setSampleRate(rate);
 }

@@ -239,27 +239,27 @@ class MyDocument: NSDocument {
     }
     
     func runArchiveMountDialog() {
-        let nibName = NSNib.Name("ArchiveMountDialog")
-        let controller = ArchiveMountController.init(windowNibName: nibName)
-        controller.showSheet()
+        let name = NSNib.Name("ArchiveMountDialog")
+        let controller = ArchiveMountController.make(parent: parent, nibName: name)
+        controller?.showSheet()
     }
     
     func runDiskMountDialog() {
-        let nibName = NSNib.Name("DiskMountDialog")
-        let controller = DiskMountController.init(windowNibName: nibName)
-        controller.showSheet()
+        let name = NSNib.Name("DiskMountDialog")
+        let controller = DiskMountController.make(parent: parent, nibName: name)
+        controller?.showSheet()
     }
     
     func runTapeMountDialog() {
-        let nibName = NSNib.Name("TapeMountDialog")
-        let controller = TapeMountController.init(windowNibName: nibName)
-        controller.showSheet()
+        let name = NSNib.Name("TapeMountDialog")
+        let controller = TapeMountController.make(parent: parent, nibName: name)
+        controller?.showSheet()
     }
     
     func runCartridgeMountDialog() {
-        let nibName = NSNib.Name("CartridgeMountDialog")
-        let controller = CartridgeMountController.init(windowNibName: nibName)
-        controller.showSheet()
+        let name = NSNib.Name("CartridgeMountDialog")
+        let controller = CartridgeMountController.make(parent: parent, nibName: name)
+        controller?.showSheet()
     }
     
     @discardableResult
