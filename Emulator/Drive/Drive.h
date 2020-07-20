@@ -268,49 +268,41 @@ public:
     
     
     //
-    //! @functiongroup Handling virtual disks
+    // Handling disks
     //
 
-    //! @brief    Returns true if a disk is partially inserted.
-    bool hasPartiallyInsertedDisk() { return insertionStatus == PARTIALLY_INSERTED; }
-    
-    //! @brief    Returns true if a disk is fully inserted.
+    // Checks if a disk is present
     bool hasDisk() { return insertionStatus == FULLY_INSERTED; }
-
-    //! @brief    Returns true if a modified disk is fully inserted.
-    bool hasModifiedDisk() { return hasDisk() && disk.isModified(); }
-
-    //! @brief    Sets or clears the modification flags of a disk
-    void setModifiedDisk(bool value);
-
-    //! @brief    Returns true if a write protected disk is fully inserted.
+    bool hasPartiallyInsertedDisk() { return insertionStatus == PARTIALLY_INSERTED; }
     bool hasWriteProtectedDisk() { return hasDisk() && disk.isWriteProtected(); }
 
-    /*! @brief    Prepares to insert a disk
-     *  @details  This functions puts a disk partially into the drive.
-     *            disk. As a result, the light barrier is blocked.
-     *  @warning  Only call this functions if no disk is inserted.
+    // Get or sets the modification status
+    bool hasModifiedDisk() { return hasDisk() && disk.isModified(); }
+    void setModifiedDisk(bool value);
+
+    /* Prepares to insert a disk. This functions puts a disk partially into
+     * the drive. As a result, the light barrier is blocked.
+     * Warning: Only call this functions if no disk is inserted.
      */
     void prepareToInsert();
     
-    /*! @brief    Inserts an archive as a virtual disk.
-     *  @warning  Make sure to eject a previously inserted disk before calling
-     *            this function.
-     *  @note     Inserting an archive as a disk is a time consuming task
-     *            because variouls conversion have to take place. E.g., if you
-     *            provide a T64 archive, it is first converted to a D64 archive.
-     *            After that, all tracks will be GCR-encoded and written to a
-     *            new disk.
+    /* Inserts an archive as a virtual disk.
+     * Warning: Make sure to eject a previously inserted disk before calling
+     *          this function.
+     * Note:    Inserting an archive as a disk is a time consuming task
+     *          because variouls conversion have to take place. E.g., if you
+     *          provide a T64 archive, it is first converted to a D64 archive.
+     *          After that, all tracks will be GCR-encoded and written to a
+     *          new disk.
      */
     void insertDisk(AnyArchive *a);
 
-    /*! @brief    Returns the current state of the write protection barrier
-     *  @details  If the light barrier is blocked, the drive head is unable to
-     *            modify bits on disk.
-     *  @note     We block the write barrier on power up for about 1.5 sec,
-     *            because the drive enters write mode during the power up phase.
-     *            I'm unsure if this is normal drive behavior or an emulator
-     *            bug. Any hint on this is very welcome!
+    /* Returns the current state of the write protection barrier. If the light
+     * barrier is blocked, the drive head is unable to modify bits on disk.
+     * Note:   We block the write barrier on power up for about 1.5 sec, because
+     *         the drive enters write mode during the power up phase. I'm unsure
+     *         if this is normal drive behavior or an emulator bug. Any hint on
+     *         this is very welcome!
      */
     bool getLightBarrier() {
         return
@@ -319,21 +311,20 @@ public:
         || disk.isWriteProtected();
     }
 
-    /*! @brief    Prepares to eject a disk
-     *  @details  This functions opens the drive lid and partially removes the
-     *            disk. As a result, no data can be read any more and the light
-     *            barrier is blocked.
-     *  @warning  Only call this functions if a disk is inserted.
+    /* Prepares to eject a disk. This functions opens the drive lid and
+     * partially removes the disk. As a result, no data can be read any more
+     * and the light barrier is blocked.
+     *  Warning: Only call this functions if a disk is inserted.
      */
     void prepareToEject();
     
-    /*! @brief    Finishes the ejection of a disk
-     *  @details  This function assumes that the drive lid is already open.
-     *            It fully removes the disk and frees the light barrier.
-     *  @note     To eject a disk in the right way, make sure that some time
-     *            elapsed between the two calls to prepareToEject() and
-     *            ejectDisk(). Otherwise, the VC1541 DOS does not recognize
-     *            the ejection.
+    /* Finishes the ejection of a disk. This function assumes that the drive
+     * lid is already open. It fully removes the disk and frees the light
+     * barrier.
+     * Note: To eject a disk in the right way, make sure that some time
+     *       elapsed between the two calls to prepareToEject() and
+     *       ejectDisk(). Otherwise, the VC1541 DOS does not recognize
+     *       the ejection.
      */
     void ejectDisk();
    

@@ -67,19 +67,13 @@ var proxy: C64Proxy? {
     var pref: Preferences!
     var prefController: PreferencesController?
     
-    /// The list of recently inserted disk URLs.
+    // The list of recently inserted media URLs
     var recentlyInsertedDiskURLs: [URL] = []
     
-    /// The list of recently exported disk URLs for drive 1.
-    var recentlyExportedDisk1URLs: [URL] = []
-    
-    /// The list of recently exported disk URLs for drive 2.
-    var recentlyExportedDisk2URLs: [URL] = []
-    
-    /// The list of recently inserted tape URLs.
+    // The list of recently exported media URLs
+    var recentlyExportedDisk8URLs: [URL] = []
+    var recentlyExportedDisk9URLs: [URL] = []
     var recentlyInsertedTapeURLs: [URL] = []
-    
-    /// The list of recently atached cartridge URLs.
     var recentlyAttachedCartridgeURLs: [URL] = []
 
     override init() {
@@ -128,36 +122,36 @@ var proxy: C64Proxy? {
         return getRecentlyUsedURL(pos, from: recentlyInsertedDiskURLs)
     }
     
-    func noteNewRecentlyExportedDiskURL(_ url: URL, drive nr: Int) {
+    func noteNewRecentlyExportedDiskURL(_ url: URL, drive: DriveID) {
         
-        precondition(nr == 1 || nr == 2)
+        precondition(drive == DRIVE8 || drive == DRIVE9)
         
-        if nr == 1 {
-            noteRecentlyUsedURL(url, to: &recentlyExportedDisk1URLs, size: 1)
+        if drive == DRIVE8 {
+            noteRecentlyUsedURL(url, to: &recentlyExportedDisk8URLs, size: 1)
         } else {
-            noteRecentlyUsedURL(url, to: &recentlyExportedDisk2URLs, size: 1)
+            noteRecentlyUsedURL(url, to: &recentlyExportedDisk9URLs, size: 1)
         }
     }
     
-    func getRecentlyExportedDiskURL(_ pos: Int, drive nr: Int) -> URL? {
+    func getRecentlyExportedDiskURL(_ pos: Int, drive: DriveID) -> URL? {
         
-        precondition(nr == 1 || nr == 2)
-        
-        if nr == 1 {
-            return getRecentlyUsedURL(pos, from: recentlyExportedDisk1URLs)
+        precondition(drive == DRIVE8 || drive == DRIVE9)
+
+        if drive == DRIVE8 {
+            return getRecentlyUsedURL(pos, from: recentlyExportedDisk8URLs)
         } else {
-            return getRecentlyUsedURL(pos, from: recentlyExportedDisk2URLs)
+            return getRecentlyUsedURL(pos, from: recentlyExportedDisk9URLs)
         }
     }
     
-    func clearRecentlyExportedDiskURLs(drive nr: Int) {
+    func clearRecentlyExportedDiskURLs(drive: DriveID) {
         
-        precondition(nr == 1 || nr == 2)
-        
-        if nr == 1 {
-            recentlyExportedDisk1URLs = []
+        precondition(drive == DRIVE8 || drive == DRIVE9)
+
+        if drive == DRIVE8 {
+            recentlyExportedDisk8URLs = []
         } else {
-            recentlyExportedDisk2URLs = []
+            recentlyExportedDisk9URLs = []
         }
     }
     

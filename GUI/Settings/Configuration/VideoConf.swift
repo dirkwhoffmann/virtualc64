@@ -103,7 +103,7 @@ extension ConfigurationController {
             
             // Create image
             let image = NSImage.make(data: mask, rect: size)
-            let resizedImage = image?.resizeImageSharp(width: 64, height: 12)
+            let resizedImage = image?.resizeSharp(width: 64, height: 12)
             vidPalettePopUp.item(at: palette)?.image = resizedImage
         }
     }

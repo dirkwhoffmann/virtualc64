@@ -506,7 +506,7 @@ Gw
                                         <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JsS-8H-gIQ">
                                             <rect key="frame" x="343" y="320" width="55" height="55"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="pref_glue2" id="2Oo-5v-u1X"/>
+                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="pref_glue3" id="2Oo-5v-u1X"/>
                                         </imageView>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ViO-fU-69W">
                                             <rect key="frame" x="412" y="413" width="168" height="18"/>
@@ -1620,7 +1620,7 @@ Gw
         <image name="lockIcon" width="121" height="171"/>
         <image name="mega65" width="399" height="347"/>
         <image name="pref_cia" width="514" height="514"/>
-        <image name="pref_glue2" width="246" height="230"/>
+        <image name="pref_glue3" width="258" height="258"/>
         <image name="pref_sid" width="514" height="514"/>
         <image name="pref_vicii_pal" width="514" height="516"/>
         <image name="rom_missing" width="129" height="157"/>

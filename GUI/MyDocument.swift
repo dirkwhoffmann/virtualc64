@@ -202,8 +202,8 @@ class MyDocument: NSDocument {
         track("Action = \(action)")
         switch action {
         case .openBrowser: runMountDialog()
-        case .insertIntoDrive8: mountAttachmentAsDisk(drive: 1)
-        case .insertIntoDrive9: mountAttachmentAsDisk(drive: 2)
+        case .insertIntoDrive8: mountAttachmentAsDisk(drive: DRIVE8)
+        case .insertIntoDrive9: mountAttachmentAsDisk(drive: DRIVE9)
         case .flashFirstFile: flashAttachmentIntoMemory()
         case .insertIntoDatasette: mountAttachmentAsTape()
         case .attachToExpansionPort: mountAttachmentAsCartridge()
@@ -263,13 +263,13 @@ class MyDocument: NSDocument {
     }
     
     @discardableResult
-    func mountAttachmentAsDisk(drive nr: Int) -> Bool {
+    func mountAttachmentAsDisk(drive: DriveID) -> Bool {
         
         if let archive = attachment as? AnyArchiveProxy {
             
-            if proceedWithUnexportedDisk(drive: nr) {
+            if proceedWithUnexportedDisk(drive: drive) {
                 
-                parent.changeDisk(archive, drive: nr)
+                parent.changeDisk(archive, drive: drive)
                 return true
             }
         }
@@ -344,15 +344,15 @@ class MyDocument: NSDocument {
     // Exporting disks
     //
     
-    func export(drive nr: Int, to url: URL, ofType typeName: String) -> Bool {
+    func export(drive: DriveID, to url: URL, ofType typeName: String) -> Bool {
         
         track("url = \(url) typeName = \(typeName)")
         precondition(["D64", "T64", "PRG", "P00", "G64"].contains(typeName))
         
-        let drive = c64.drive(nr)!
+        let proxy = c64.drive(drive)!
         
         // Convert disk to a D64 archive
-        guard let d64archive = D64FileProxy.make(withDisk: drive.disk) else {
+        guard let d64archive = D64FileProxy.make(withDisk: proxy.disk) else {
             showCannotDecodeDiskAlert()
             return false
         }
@@ -366,7 +366,7 @@ class MyDocument: NSDocument {
         
         case "G64":
             track("Exporting to G64 format")
-            archive = G64FileProxy.make(withDisk: drive.disk)
+            archive = G64FileProxy.make(withDisk: proxy.disk)
             
         case "T64":
             track("Exporting to T64 format")
@@ -401,18 +401,18 @@ class MyDocument: NSDocument {
         }
         
         // Mark disk as "not modified"
-        drive.setModifiedDisk(false)
+        proxy.setModifiedDisk(false)
         
         // Remember export URL
-        myAppDelegate.noteNewRecentlyExportedDiskURL(url, drive: nr)
+        myAppDelegate.noteNewRecentlyExportedDiskURL(url, drive: drive)
         return true
     }
     
     @discardableResult
-    func export(drive nr: Int, to url: URL?) -> Bool {
+    func export(drive: DriveID, to url: URL?) -> Bool {
         
         if let suffix = url?.pathExtension {
-            return export(drive: nr, to: url!, ofType: suffix.uppercased())
+            return export(drive: drive, to: url!, ofType: suffix.uppercased())
         } else {
             return false
         }

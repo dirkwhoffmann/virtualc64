@@ -14,9 +14,9 @@ class ExportDiskController: DialogController {
     var savePanel: NSSavePanel!
     var selectedURL: URL?
     
-    func showSheet(forDrive nr: Int) {
+    func showSheet(forDrive drive: DriveID) {
         
-        precondition(nr == 1 || nr == 2)
+        precondition(drive == DRIVE8 || drive == DRIVE9)
         
         // Create save panel
         savePanel = NSSavePanel()
@@ -30,7 +30,7 @@ class ExportDiskController: DialogController {
         if let win = myWindow {
             savePanel.beginSheetModal(for: win, completionHandler: { result in
                 if result == .OK {
-                    myDocument?.export(drive: nr, to: self.savePanel.url)
+                    myDocument?.export(drive: drive, to: self.savePanel.url)
                 }
             })
         }

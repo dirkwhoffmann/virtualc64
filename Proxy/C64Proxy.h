@@ -9,7 +9,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
-// #import "C64Types.h"
 #import "Utils.h"
 
 // Forward declarations of proxy classes
@@ -104,6 +103,8 @@ struct AnyC64FileWrapper;
 @property (readonly) DatasetteProxy *datasette;
 @property (readonly) MouseProxy *mouse;
 
+- (DriveProxy *) drive:(DriveID)id;
+
 - (void) dealloc;
 - (void) kill;
 
@@ -135,8 +136,6 @@ struct AnyC64FileWrapper;
 - (BOOL) configure:(ConfigOption)opt drive:(DriveID)id value:(NSInteger)val;
 - (BOOL) configure:(ConfigOption)opt drive:(DriveID)id enable:(BOOL)val;
 
-- (DriveProxy *)drive:(NSInteger)nr;
-
 // Configuring the emulator
 - (C64Model) model;
 - (void) setModel:(C64Model)value;
@@ -147,15 +146,6 @@ struct AnyC64FileWrapper;
 - (void) removeListener:(const void *)sender;
 
 // Running the emulator
-/*
-- (void) powerUp;
-- (void) run;
-- (void) halt;
-- (BOOL) isReady;
-- (BOOL) oldIsRunning;
-- (BOOL) isHalted;
-*/
- 
 - (void) stopAndGo;
 - (void) stepInto;
 - (void) stepOver;
@@ -170,8 +160,6 @@ struct AnyC64FileWrapper;
 // Handling snapshots
 - (BOOL) takeAutoSnapshots;
 - (void) setTakeAutoSnapshots:(BOOL)b;
-//- (void) disableAutoSnapshots;
-// - (void) enableAutoSnapshots;
 - (void) suspendAutoSnapshots;
 - (void) resumeAutoSnapshots;
 - (NSInteger) snapshotInterval;

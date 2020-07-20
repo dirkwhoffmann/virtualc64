@@ -208,7 +208,7 @@ extension Renderer {
             }
             
             // Store preview image
-            dotmaskImages[n] = image?.resizeImageSharp(width: 12, height: 12)
+            dotmaskImages[n] = image?.resizeSharp(width: 12, height: 12)
         }
     }
     

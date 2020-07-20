@@ -91,9 +91,9 @@ class DiskMountController: DialogController {
     
     @IBAction override func okAction(_ sender: Any!) {
         
-        let nr = (driveSelector.selectedItem!.tag == 1) ? 1 : 2
+        let drive = (driveSelector.selectedItem!.tag == 1) ? DRIVE8 : DRIVE9
         
-        myController?.changeDisk(disk, drive: nr)
+        myController?.changeDisk(disk, drive: drive)
         myController?.renderer.rotateLeft()
 
         hideSheet()

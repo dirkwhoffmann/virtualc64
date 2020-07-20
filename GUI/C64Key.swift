@@ -354,7 +354,7 @@ extension C64Key {
     var background: NSImage {
         let imageName = (nr == 16 || nr == 32 || nr == 48 || nr == 64) ? "key_dark" : "key"
         let background = NSImage(named: imageName)!
-        return background.resizeImage(width: CGFloat(layout.0), height: CGFloat(layout.1))
+        return background.resize(width: CGFloat(layout.0), height: CGFloat(layout.1))
     }
     
     func plainKeyImage(width: Int, height: Int,
@@ -362,7 +362,7 @@ extension C64Key {
 
         let name = NSImage.Name(red ? "key_red" : dark ? "key_dark" : "key")
         let background = NSImage(named: name)!
-        return background.resizeImage(width: CGFloat(width), height: CGFloat(height))
+        return background.resize(width: CGFloat(width), height: CGFloat(height))
     }
     
     /// Returns an image representation for this key that is used in the

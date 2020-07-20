@@ -9,197 +9,187 @@
 
 extension MyController: NSMenuItemValidation {
     
+    
     open func validateMenuItem(_ item: NSMenuItem) -> Bool {
 
-        // track("validateMenuItem")
+        let powered = c64.isPoweredOn()
+        let running = c64.isRunning()
+        // let paused = c64.isPaused()
         
-        if mydocument == nil { return false }
-
-        func firstDrive() -> Bool {
-            precondition(item.tag == 1 || item.tag == 2)
-            return item.tag == 1
-        }
-    
-        func validateURLlist(_ list: [URL], image: String) -> Bool {
+        var drive: DriveProxy { return c64.drive(DriveID(item.tag))! }
+        
+        func validateURLlist(_ list: [URL], image: NSImage) -> Bool {
             
-            let pos = (item.tag < 10) ? item.tag : item.tag - 10
+            let slot = item.tag % 10
             
-            if let url = myAppDelegate.getRecentlyUsedURL(pos, from: list) {
+            if let url = myAppDelegate.getRecentlyUsedURL(slot, from: list) {
                 item.title = url.lastPathComponent
                 item.isHidden = false
-                item.image = NSImage.init(named: image)
+                item.image = image
             } else {
+                item.title = ""
                 item.isHidden = true
                 item.image = nil
             }
+            
             return true
         }
         
+        switch item.action {
+            
+        // File menu
+        case #selector(MyController.importConfigAction(_:)),
+             #selector(MyController.exportConfigAction(_:)),
+             #selector(MyController.resetConfigAction(_:)):
+            return !powered
+            
+        // Edit menu
+        case #selector(MyController.stopAndGoAction(_:)):
+            item.title = running ? "Pause" : "Continue"
+            return true
+            
+        case #selector(MyController.powerAction(_:)):
+            item.title = powered ? "Power Off" : "Power On"
+            return true
+            
         // View menu
-        if item.action == #selector(MyController.toggleStatusBarAction(_:)) {
+        case #selector(MyController.toggleStatusBarAction(_:)):
             item.title = statusBar ? "Hide Status Bar" : "Show Status Bar"
             return true
-        }
-        
-        if item.action == #selector(MyController.hideMouseAction(_:)) {
+            
+        case #selector(MyController.hideMouseAction(_:)):
             item.title = hideMouse ? "Show Mouse Cursor" : "Hide Mouse Cursor"
             return true
-        }
-        
+            
         // Keyboard menu
-        if item.action == #selector(MyController.shiftLockAction(_:)) {
+        case #selector(MyController.shiftLockAction(_:)):
             item.state = c64.keyboard.shiftLockIsHoldDown() ? .on : .off
             return true
-        }
-        
+            
         // Drive menu
-        if item.action == #selector(MyController.insertRecentDiskAction(_:)) {
-            return validateURLlist(myAppDelegate.recentlyInsertedDiskURLs, image: "disk_small")
-        }
-        if item.action == #selector(MyController.ejectDiskAction(_:)) {
-            return firstDrive() ? c64.drive1.hasDisk() : c64.drive2.hasDisk()
-        }
-        if item.action == #selector(MyController.exportDiskAction(_:)) {
-            return firstDrive() ? c64.drive1.hasDisk() : c64.drive2.hasDisk()
-        }
-        if item.action == #selector(MyController.exportRecentDiskAction(_:)) {
-            if item.tag < 10 {
-                // track("\(myAppDelegate.recentlyExportedDisk1URLs)")
-                return validateURLlist(myAppDelegate.recentlyExportedDisk1URLs, image: "disk_small")
-            } else {
-                // track("\(myAppDelegate.recentlyExportedDisk2URLs)")
-                return validateURLlist(myAppDelegate.recentlyExportedDisk2URLs, image: "disk_small")
+        case #selector(MyController.insertRecentDiskAction(_:)):
+            return validateURLlist(myAppDelegate.recentlyInsertedDiskURLs, image: smallDisk)
+            
+        case  #selector(MyController.ejectDiskAction(_:)),
+              #selector(MyController.exportDiskAction(_:)):
+            return drive.hasDisk()
+            
+        case #selector(MyController.exportRecentDiskDummyAction8(_:)):
+            return c64.drive1.hasDisk()
+            
+        case #selector(MyController.exportRecentDiskDummyAction9(_:)):
+            return c64.drive2.hasDisk()
+                        
+        case #selector(MyController.exportRecentDiskAction(_:)):
+            switch item.tag {
+            case 8: return validateURLlist(myAppDelegate.recentlyExportedDisk8URLs, image: smallDisk)
+            case 9: return validateURLlist(myAppDelegate.recentlyExportedDisk9URLs, image: smallDisk)
+            default: fatalError()
             }
-        }
-        if item.action == #selector(MyController.writeProtectAction(_:)) {
-            let hasDisk = firstDrive() ?
-                c64.drive1.hasDisk() :
-                c64.drive2.hasDisk()
-            let hasWriteProtecteDisk = firstDrive() ?
-                c64.drive1.hasWriteProtectedDisk() :
-                c64.drive2.hasWriteProtectedDisk()
-            item.state = hasWriteProtecteDisk ? .on : .off
-            return hasDisk
-        }
-        if item.action == #selector(MyController.drivePowerAction(_:)) {
-            let connected = firstDrive() ?
-                c64.drive1.isConnected() :
-                c64.drive2.isConnected()
-            item.title = connected ? "Disconnect" : "Connect"
-            return true
-        }
-
+            
+        case #selector(MyController.writeProtectAction(_:)):
+            item.state = drive.hasWriteProtectedDisk() ? .on : .off
+            return drive.hasDisk()
+            
         // Tape menu
-        if item.action == #selector(MyController.insertRecentTapeAction(_:)) {
-            return validateURLlist(myAppDelegate.recentlyInsertedTapeURLs, image: "tape_small")
-        }
-        if item.action == #selector(MyController.ejectTapeAction(_:)) {
+        case #selector(MyController.insertRecentTapeAction(_:)):
+            return validateURLlist(myAppDelegate.recentlyInsertedTapeURLs, image: smallTape)
+            
+        case #selector(MyController.ejectTapeAction(_:)):
             return c64.datasette.hasTape()
-        }
-        if item.action == #selector(MyController.playOrStopAction(_:)) {
+            
+        case #selector(MyController.playOrStopAction(_:)):
             item.title = c64.datasette.playKey() ? "Press Stop Key" : "Press Play On Tape"
             return c64.datasette.hasTape()
-        }
-        if item.action == #selector(MyController.rewindAction(_:)) {
+            
+        case #selector(MyController.rewindAction(_:)):
             return c64.datasette.hasTape()
-        }
-        
+            
         // Cartridge menu
-        if item.action == #selector(MyController.attachRecentCartridgeAction(_:)) {
-            return validateURLlist(myAppDelegate.recentlyAttachedCartridgeURLs, image: "cartridge_small")
-        }
-        if item.action == #selector(MyController.attachGeoRamDummyAction(_:)) {
+        case #selector(MyController.attachRecentCartridgeAction(_:)):
+            return validateURLlist(myAppDelegate.recentlyAttachedCartridgeURLs, image: smallCart)
+            
+        case #selector(MyController.attachGeoRamDummyAction(_:)):
             item.state = (c64.expansionport.cartridgeType() == CRT_GEO_RAM) ? .on : .off
-        }
-        if item.action == #selector(MyController.attachIsepicAction(_:)) {
+            
+        case #selector(MyController.attachIsepicAction(_:)):
             item.state = (c64.expansionport.cartridgeType() == CRT_ISEPIC) ? .on : .off
-        }
-        if item.action == #selector(MyController.detachCartridgeAction(_:)) {
+            
+        case #selector(MyController.detachCartridgeAction(_:)):
             return c64.expansionport.cartridgeAttached()
-        }
-        if item.action == #selector(MyController.pressButtonDummyAction(_:)) {
+            
+        case #selector(MyController.pressButtonDummyAction(_:)):
             return c64.expansionport.numButtons() > 0
-        }
-        if item.action == #selector(MyController.pressCartridgeButton1Action(_:)) {
+            
+        case #selector(MyController.pressCartridgeButton1Action(_:)):
             let title = c64.expansionport.getButtonTitle(1)
             item.title = title ?? ""
             item.isHidden = title == nil
             return title != nil
-        }
-        if item.action == #selector(MyController.pressCartridgeButton2Action(_:)) {
+            
+        case #selector(MyController.pressCartridgeButton2Action(_:)):
             let title = c64.expansionport.getButtonTitle(2)
             item.title = title ?? ""
             item.isHidden = title == nil
             return title != nil
-        }
-        if item.action == #selector(MyController.setSwitchDummyAction(_:)) {
+            
+        case #selector(MyController.setSwitchDummyAction(_:)):
             return c64.expansionport.hasSwitch()
-        }
-        if item.action == #selector(MyController.setSwitchNeutralAction(_:)) {
+            
+        case #selector(MyController.setSwitchNeutralAction(_:)):
             let title = c64.expansionport.switchDescription(0)
             item.title = title ?? ""
             item.isHidden = title == nil
             item.state = c64.expansionport.switchIsNeutral() ? .on : .off
             return title != nil
-        }
-        if item.action == #selector(MyController.setSwitchLeftAction(_:)) {
+            
+        case #selector(MyController.setSwitchLeftAction(_:)):
             let title = c64.expansionport.switchDescription(-1)
             item.title = title ?? ""
             item.isHidden = title == nil
             item.state = c64.expansionport.switchIsLeft() ? .on : .off
             return title != nil
-        }
-        if item.action == #selector(MyController.setSwitchRightAction(_:)) {
+            
+        case #selector(MyController.setSwitchRightAction(_:)):
             let title = c64.expansionport.switchDescription(1)
             item.title = title ?? ""
             item.isHidden = title == nil
             item.state = c64.expansionport.switchIsRight() ? .on : .off
             return title != nil
-        }
-        if item.action == #selector(MyController.geoRamBatteryAction(_:)) {
+            
+        case #selector(MyController.geoRamBatteryAction(_:)):
             item.state = c64.expansionport.hasBattery() ? .on : .off
             return c64.expansionport.cartridgeType() == CRT_GEO_RAM
-        }
-        
+            
         // Debug menu
-        /*
-        if item.action == #selector(MyController.pauseAction(_:)) {
-            return c64.isRunning()
-        }
-        if item.action == #selector(MyController.continueAction(_:)) ||
-            item.action == #selector(MyController.stepIntoAction(_:)) ||
-            item.action == #selector(MyController.stepOverAction(_:)) ||
-            item.action == #selector(MyController.stopAndGoAction(_:)) {
-            return !c64.isRunning()
-        }
-        */
-        if item.action == #selector(MyController.markIRQLinesAction(_:)) {
+        case #selector(MyController.markIRQLinesAction(_:)):
             item.state = c64.vic.showIrqLines() ? .on : .off
-        }
-        if item.action == #selector(MyController.markDMALinesAction(_:)) {
+            
+        case #selector(MyController.markDMALinesAction(_:)):
             item.state = c64.vic.showDmaLines() ? .on : .off
-        }
-        if item.action == #selector(MyController.hideSpritesAction(_:)) {
+            
+        case #selector(MyController.hideSpritesAction(_:)):
             item.state = c64.vic.hideSprites() ? .on : .off
-        }
-
-        if item.action == #selector(MyController.traceAction(_:)) {
+            
+        case #selector(MyController.traceAction(_:)):
             return !c64.releaseBuild()
-        }
-        if item.action == #selector(MyController.traceIecAction(_:)) {
+            
+        case #selector(MyController.traceIecAction(_:)):
             item.state = c64.iec.tracing() ? .on : .off
-        }
-        if item.action == #selector(MyController.traceVC1541CpuAction(_:)) {
+            
+        case #selector(MyController.traceVC1541CpuAction(_:)):
             item.state = c64.drive1.cpu.tracing() ? .on : .off
-        }
-        if item.action == #selector(MyController.traceViaAction(_:)) {
+            
+        case #selector(MyController.traceViaAction(_:)):
             item.state = c64.drive1.via1.tracing() ? .on : .off
+            
+        case #selector(MyController.dumpStateAction(_:)):
+            return !c64.releaseBuild()
+            
+        default:
+            return true
         }
         
-        if item.action == #selector(MyController.dumpStateAction(_:)) {
-            return !c64.releaseBuild()
-        }
-
         return true
     }
 
@@ -295,15 +285,17 @@ extension MyController: NSMenuItemValidation {
         openConfigurator()
     }
 
-    /*
     @IBAction func inspectorAction(_ sender: Any!) {
         
+        track()
+        
+        /*
         if inspector == nil {
             inspector = Inspector.make(parent: self, nibName: "Inspector")
         }
         inspector?.showWindow(self)
+        */
     }
-    */
     
     @IBAction func saveScreenshotDialog(_ sender: Any!) {
                 
@@ -598,20 +590,20 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func newDiskAction(_ sender: NSMenuItem!) {
         
-        let tag = sender.tag
+        let drive = DriveID(sender.tag)
         let emptyArchive = AnyArchiveProxy.make()
         
         mydocument?.attachment = D64FileProxy.make(withAnyArchive: emptyArchive)
-        mydocument?.mountAttachmentAsDisk(drive: tag)
-        myAppDelegate.clearRecentlyExportedDiskURLs(drive: tag)
+        mydocument?.mountAttachmentAsDisk(drive: drive)
+        myAppDelegate.clearRecentlyExportedDiskURLs(drive: drive)
     }
     
     @IBAction func insertDiskAction(_ sender: NSMenuItem!) {
         
-        let tag = sender.tag
+        let drive = DriveID(sender.tag)
         
         // Ask user to continue if the current disk contains modified data
-        if !proceedWithUnexportedDisk(drive: tag) {
+        if !proceedWithUnexportedDisk(drive: drive) {
             return
         }
         
@@ -628,7 +620,7 @@ extension MyController: NSMenuItemValidation {
                 if let url = openPanel.url {
                     do {
                         try self.mydocument?.createAttachment(from: url)
-                        self.mydocument?.mountAttachmentAsDisk(drive: tag)
+                        self.mydocument?.mountAttachmentAsDisk(drive: drive)
                     } catch {
                         NSApp.presentError(error)
                     }
@@ -639,18 +631,16 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func insertRecentDiskAction(_ sender: NSMenuItem!) {
 
-        var tag = sender.tag
-        
-        // Extrace drive number from tag
-        var nr: Int
-        if tag < 10 { nr = 1 } else { nr = 2; tag -= 10 }
+        // Extrace drive number and slot from tag
+        let drive = sender.tag < 10 ? DRIVE8 : DRIVE9
+        let item = sender.tag < 10 ? sender.tag : sender.tag - 10
         
         // Get URL and insert
-        if let url = myAppDelegate.getRecentlyInsertedDiskURL(tag) {
+        if let url = myAppDelegate.getRecentlyInsertedDiskURL(item) {
             do {
                 try mydocument!.createAttachment(from: url)
-                if mydocument!.proceedWithUnexportedDisk(drive: nr) {
-                    mydocument!.mountAttachmentAsDisk(drive: nr)
+                if mydocument!.proceedWithUnexportedDisk(drive: drive) {
+                    mydocument!.mountAttachmentAsDisk(drive: drive)
                 }
             } catch {
                 NSApp.presentError(error)
@@ -658,17 +648,18 @@ extension MyController: NSMenuItemValidation {
         }
     }
     
+    @IBAction func exportRecentDiskDummyAction8(_ sender: NSMenuItem!) {}
+    @IBAction func exportRecentDiskDummyAction9(_ sender: NSMenuItem!) {}
+
     @IBAction func exportRecentDiskAction(_ sender: NSMenuItem!) {
+                
+        // Extrace drive number and slot from tag
+        let drive = sender.tag < 10 ? DRIVE8 : DRIVE9
+        let item = sender.tag < 10 ? sender.tag : sender.tag - 10
         
-        var tag = sender.tag
-        
-        // Extract drive number from tag
-        let nr = (tag < 10) ? 1 : 2
-        tag = (tag < 10) ? tag : tag - 10
-       
         // Get URL and export
-        if let url = myAppDelegate.getRecentlyExportedDiskURL(tag, drive: nr) {
-            mydocument!.export(drive: nr, to: url)
+        if let url = myAppDelegate.getRecentlyExportedDiskURL(item, drive: drive) {
+            mydocument!.export(drive: drive, to: url)
         }
     }
     
@@ -678,8 +669,8 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func clearRecentlyExportedDisksAction(_ sender: NSMenuItem!) {
 
-        let driveNr = sender.tag
-        myAppDelegate.clearRecentlyExportedDiskURLs(drive: driveNr)
+        let drive = DriveID(sender.tag)
+        myAppDelegate.clearRecentlyExportedDiskURLs(drive: drive)
     }
 
     @IBAction func clearRecentlyInsertedTapesAction(_ sender: Any!) {
@@ -692,30 +683,28 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func ejectDiskAction(_ sender: NSMenuItem!) {
         
-        let tag = sender.tag
+        let drive = DriveID(sender.tag)
         
-        if proceedWithUnexportedDisk(drive: tag) {
-            changeDisk(nil, drive: tag)
-            myAppDelegate.clearRecentlyExportedDiskURLs(drive: tag)
+        if proceedWithUnexportedDisk(drive: drive) {
+            changeDisk(nil, drive: drive)
+            myAppDelegate.clearRecentlyExportedDiskURLs(drive: drive)
         }
     }
     
     @IBAction func exportDiskAction(_ sender: NSMenuItem!) {
 
-        let tag = sender.tag
-        assert(tag == 1 || tag == 2)
+        let drive = DriveID(sender.tag)
         
         let nibName = NSNib.Name("ExportDiskDialog")
         let exportPanel = ExportDiskController.init(windowNibName: nibName)
-        exportPanel.showSheet(forDrive: tag)
+        exportPanel.showSheet(forDrive: drive)
     }
      
     @IBAction func writeProtectAction(_ sender: NSMenuItem!) {
         
-        let tag = sender.tag
-        assert(tag == 1 || tag == 2)
+        let drive = DriveID(sender.tag)
 
-        if tag == 1 {
+        if drive == DRIVE8 {
             c64.drive1.disk.toggleWriteProtection()
         } else {
             c64.drive2.disk.toggleWriteProtection()
@@ -724,23 +713,19 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func drivePowerAction(_ sender: NSMenuItem!) {
         
-        let tag = sender.tag
-        assert(tag == 1 || tag == 2)
-
-        drivePowerAction(driveNr: tag)
+        let drive = DriveID(sender.tag)
+        drivePowerAction(drive: drive)
     }
 
     @IBAction func drivePowerButtonAction(_ sender: NSButton!) {
         
-        let tag = sender.tag
-        assert(tag == 1 || tag == 2)
-
-        drivePowerAction(driveNr: tag)
+        let drive = DriveID(sender.tag)
+        drivePowerAction(drive: drive)
     }
     
-    func drivePowerAction(driveNr: Int) {
+    func drivePowerAction(drive: DriveID) {
 
-        if driveNr == 1 {
+        if drive == DRIVE8 {
             c64.drive1.toggleConnection()
         } else {
             c64.drive2.toggleConnection()

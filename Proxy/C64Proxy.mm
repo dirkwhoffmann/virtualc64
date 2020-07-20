@@ -1108,12 +1108,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->drive->isConnected();
 }
-/*
-- (BOOL) connectable
-{
-    return wrapper->drive->isConnectable();
-}
-*/
 - (void) connect
 {
     wrapper->drive->connect();
@@ -1402,6 +1396,15 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return self;
 }
 
+- (DriveProxy *) drive:(DriveID)id
+{
+    switch (id) {
+        case DRIVE8:  return drive1;
+        case DRIVE9:  return drive2;
+        default:      return NULL;
+    }
+}
+
 - (void) dealloc
 {
     NSLog(@"dealloc");
@@ -1441,20 +1444,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->c64->reset();
 }
-
-
-- (DriveProxy *) drive:(NSInteger)num {
-    switch (num) {
-        case 1:
-        return [self drive1];
-        case 2:
-        return [self drive2];
-        default:
-        assert(false);
-        return NULL;
-    }
-}
-
 - (void) ping
 {
     wrapper->c64->ping();
@@ -1523,7 +1512,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->c64->configureDrive(id, opt, val ? 1 : 0);
 }
-
 // Configuring the emulator
 - (C64Model) model
 {
@@ -1547,35 +1535,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->c64->removeListener(sender);
 }
-
-// Running the emulator
-/*
-- (void) powerUp
-{
-    wrapper->c64->powerUp();
-}
-- (void) run
-{
-    wrapper->c64->run();
-}
-- (void) halt
-{
-    wrapper->c64->halt();
-}
-- (BOOL) isReady
-{
-    return wrapper->c64->isReady();
-}
-- (BOOL) oldIsRunning
-{
-    return wrapper->c64->oldIsRunning();
-}
-- (BOOL) isHalted
-{
-    return wrapper->c64->isHalted();
-}
-*/
-
 - (void) stopAndGo
 {
     wrapper->c64->stopAndGo();
@@ -1620,16 +1579,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->c64->setTakeAutoSnapshots(b);
 }
-/*
-- (void) disableAutoSnapshots
-{
-    wrapper->c64->disableAutoSnapshots();
-}
-- (void) enableAutoSnapshots
-{
-    wrapper->c64->enableAutoSnapshots();
-}
-*/
 - (void) suspendAutoSnapshots
 {
     wrapper->c64->suspendAutoSnapshots();
@@ -1964,6 +1913,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
     AnyArchive *a = (AnyArchive *)([archive wrapper]->file);
     return wrapper->c64->flash(a, (unsigned)nr);
 }
+
 @end
 
 

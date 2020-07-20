@@ -103,8 +103,13 @@ class MyController: NSWindowController, MessageReceiver {
     /// Indicates if a status bar is shown
     var statusBar = true
     
-    /// Remembers if the emulator was running or paused when it lost focus.
-    /// Needed to implement the pauseInBackground feature.
+    // Small disk icon to be shown in NSMenuItems
+    static let iconSize = CGSize(width: 16, height: 16)
+    var smallDisk = NSImage.init(named: "diskTemplate")!.resize(size: iconSize)
+    var smallTape = NSImage.init(named: "tape_small")!.resize(size: iconSize)
+    var smallCart = NSImage.init(named: "cartridge_small")!.resize(size: iconSize)
+    
+    // Remembers the running state for the pauseInBackground feature
     var pauseInBackgroundSavedState = false
     
     //
@@ -390,8 +395,7 @@ extension MyController {
                             device: MTLCreateSystemDefaultDevice()!,
                             controller: self)
         
-        // Setup toolbar, window, and debugger
-        configureToolbar()
+        // Setup window and debugger
         configureWindow()
         setupDebugger()
 
@@ -442,23 +446,6 @@ extension MyController {
         
         // Enable fullscreen mode
         window?.collectionBehavior = .fullScreenPrimary
-    }
-    
-    func configureToolbar() {
-        
-        // Get and resize images
-        let cutout = NSRect.init(x: 2, y: 0, width: 28, height: 28)
-        
-        var none = NSImage(named: "oxygen_none")
-        none = none?.resizeImage(width: 32, height: 32, cutout: cutout)
-        var keyset = NSImage(named: "oxygen_keys")
-        keyset = keyset?.resizeImage(width: 32, height: 32, cutout: cutout)
-        var mouse = NSImage(named: "devMouseTemplate")
-        mouse = mouse?.resizeImage(width: 32, height: 32, cutout: cutout)
-        var gamepad = NSImage(named: "crystal_gamepad")
-        gamepad = gamepad?.resizeImage(width: 32, height: 32, cutout: cutout)
-        
-        toolbar.validateVisibleItems()
     }
     
     func addListener() {
@@ -945,7 +932,7 @@ extension MyController {
             // We need to take some special care for items that mount as a disk.
             // In that case, the light barrier has to be broken several times.
             // TODO: Use insertDisk for these attachments in future
-            changeDisk(item, drive: 1)
+            changeDisk(item, drive: DRIVE8)
             return true
                         
         default:
@@ -956,30 +943,33 @@ extension MyController {
     
     // Emulates changing a disk including the necessary light barrier breaks
     // If disk is nil, only the ejection is emulated.
-    func changeDisk(_ disk: AnyC64FileProxy?, drive nr: Int) {
+    func changeDisk(_ disk: AnyC64FileProxy?, drive: DriveID) {
         
-        let drive = c64.drive(nr)!
+        let proxy = c64.drive(drive)!
 
         DispatchQueue.global().async {
             
             // For a better user experience, we switch on automatically
             // when a disk is inserted.
+            /*
             if disk != nil {
-                self.c64.drive(nr).connect()
+                proxy.connect()
+                // self.c64.drive(drive).connect()
             }
+            */
             
             // Remove old disk if present
-            if drive.hasDisk() {
-                drive.prepareToEject()
+            if proxy.hasDisk() {
+                proxy.prepareToEject()
                 usleep(300000)
-                drive.ejectDisk()
+                proxy.ejectDisk()
             }
             
             // Insert new disk if provided
             if disk != nil {
-                drive.prepareToInsert()
+                proxy.prepareToInsert()
                 usleep(300000)
-                drive.insertDisk(disk as? AnyArchiveProxy)
+                proxy.insertDisk(disk as? AnyArchiveProxy)
             }
         }
     }

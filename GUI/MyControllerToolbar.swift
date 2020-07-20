@@ -200,37 +200,4 @@ extension MyController {
             renderer.snapToFront()
         }
     }
-    
-    @IBAction func printDocument(_ sender: Any!) {
-    
-        guard let window = mydocument?.windowForSheet else { return }
-
-        // Printing properties
-        let printInfo = mydocument!.printInfo
-        printInfo.horizontalPagination = .fit
-        printInfo.isHorizontallyCentered = true
-        printInfo.verticalPagination = .fit
-        printInfo.isVerticallyCentered = true
-        printInfo.orientation = .landscape
-        printInfo.leftMargin = 32.0
-        printInfo.rightMargin = 32.0
-        printInfo.topMargin = 32.0
-        printInfo.bottomMargin = 32.0
-
-        // Image view
-        let size = printInfo.paperSize
-        let image = renderer.screenshot()
-        let printRect = NSRect.init(x: 0, y: 0, width: size.width, height: size.height)
-        let imageView = NSImageView.init(frame: printRect)
-        imageView.image = image
-        imageView.imageScaling = .scaleAxesIndependently
-    
-        // Print image
-        let printOperation = NSPrintOperation.init(view: imageView, printInfo: printInfo)
-        printOperation.runModal(for: window,
-                                delegate: nil,
-                                didRun: nil,
-                                contextInfo: nil)
-    }
-    
 }

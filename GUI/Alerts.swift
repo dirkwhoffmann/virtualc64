@@ -48,12 +48,14 @@ extension MyDocument {
     }
     
     @discardableResult
-    func showDiskIsUnexportedAlert(drive nr: Int) -> NSApplication.ModalResponse {
+    func showDiskIsUnexportedAlert(drive: DriveID) -> NSApplication.ModalResponse {
        
+        let label = drive == DRIVE8 ? "8" : "9"
+
         let alert = NSAlert()
         alert.alertStyle = .warning
         alert.icon = NSImage.init(named: "diskette")
-        alert.messageText = "Drive \(nr) contains an unexported disk."
+        alert.messageText = "Drive \(label) contains an unexported disk."
         alert.informativeText = "Your changes will be lost if you proceed."
         alert.addButton(withTitle: "Proceed")
         alert.addButton(withTitle: "Cancel")
@@ -73,9 +75,9 @@ extension MyDocument {
         return alert.runModal()
     }
     
-    func proceedWithUnexportedDisk(drive nr: Int) -> Bool {
+    func proceedWithUnexportedDisk(drive: DriveID) -> Bool {
         
-        precondition(nr == 1 || nr == 2)
+        precondition(drive == DRIVE8 || drive == DRIVE9)
         
         if let controller = windowForSheet?.windowController as? MyController {
             if controller.pref.driveEjectUnasked {
@@ -83,12 +85,12 @@ extension MyDocument {
             }
         }
         
-        let modified = (nr == 1) ?
+        let modified = (drive == DRIVE8) ?
             c64.drive1.hasModifiedDisk() :
             c64.drive2.hasModifiedDisk()
 
         if modified {
-            return showDiskIsUnexportedAlert(drive: nr) == .alertFirstButtonReturn
+            return showDiskIsUnexportedAlert(drive: drive) == .alertFirstButtonReturn
         } else {
             return true
         }
@@ -108,9 +110,9 @@ extension MyDocument {
         if modified1 && modified2 {
             return showDiskIsUnexportedAlert() == .alertFirstButtonReturn
         } else if modified1 {
-            return showDiskIsUnexportedAlert(drive: 1) == .alertFirstButtonReturn
+            return showDiskIsUnexportedAlert(drive: DRIVE8) == .alertFirstButtonReturn
         } else if modified2 {
-            return showDiskIsUnexportedAlert(drive: 2) == .alertFirstButtonReturn
+            return showDiskIsUnexportedAlert(drive: DRIVE9) == .alertFirstButtonReturn
         } else {
             return true
         }
@@ -186,8 +188,8 @@ extension MyDocument {
 
 extension MyController {
             
-    func proceedWithUnexportedDisk(drive nr: Int) -> Bool {
-        return mydocument?.proceedWithUnexportedDisk(drive: nr) ?? false
+    func proceedWithUnexportedDisk(drive: DriveID) -> Bool {
+        return mydocument?.proceedWithUnexportedDisk(drive: drive) ?? false
     }
 
     func proceedWithUnexportedDisk() -> Bool {

@@ -163,6 +163,56 @@ extension URL {
         }
         return self
     }
+    
+    func addExtension(for format: NSBitmapImageRep.FileType) -> URL {
+        
+        let extensions: [NSBitmapImageRep.FileType: String] =
+            [ .tiff: "tiff", .bmp: "bmp", .gif: "gif", .jpeg: "jpeg", .png: "png" ]
+        
+        guard let ext = extensions[format] else {
+            track("Unsupported image format: \(format)")
+            return self
+        }
+        
+        return self.appendingPathExtension(ext)
+    }
+    
+    var imageFormat: NSBitmapImageRep.FileType? {
+        
+        switch pathExtension {
+        case "tiff": return .tiff
+        case "bmp": return .bmp
+        case "gif": return .gif
+        case "jpg", "jpeg": return .jpeg
+        case "png": return .png
+        default: return nil
+        }
+    }
+}
+
+//
+// FileManager
+//
+
+extension FileManager {
+    
+    static func exec(launchPath: String, arguments: [String]) -> String? {
+        
+        let task = Process()
+        task.launchPath = launchPath
+        task.arguments = arguments
+        
+        let pipe = Pipe()
+        task.standardOutput = pipe
+        task.standardError = pipe
+        task.launch()
+        
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        let result = String(data: data, encoding: .utf8)
+        task.waitUntilExit()
+        
+        return result
+    }
 }
 
 //
@@ -176,68 +226,30 @@ extension Data {
 }
 
 //
-// NSImage extensions
+// Time and date
 //
 
-extension NSImage {
-    
-    func representation(using: NSBitmapImageRep.FileType) -> Data? {
-        
-        let bitmap = tiffRepresentation?.bitmap
-        return bitmap?.representation(using: using, properties: [:])
-    }
-    
-    func resizeImage(width: CGFloat, height: CGFloat,
-                     cutout: NSRect,
-                     interpolation: NSImageInterpolation = .high) -> NSImage {
-        
-        let img = NSImage(size: CGSize(width: width, height: height))
-        
-        img.lockFocus()
-        let ctx = NSGraphicsContext.current
-        ctx?.imageInterpolation = interpolation // NSImageInterpolation.none // .high
-        self.draw(in: cutout,
-                  from: NSRect.init(x: 0, y: 0, width: size.width, height: size.height),
-                  operation: .copy,
-                  fraction: 1)
-        img.unlockFocus()
-        
-        return img
-    }
-    
-    func resizeImage(width: CGFloat, height: CGFloat) -> NSImage {
-        
-        let cutout = NSRect.init(x: 0, y: 0, width: width, height: height)
-        return resizeImage(width: width, height: height,
-                           cutout: cutout)
+extension DispatchTime {
+
+    static func diffNano(_ t: DispatchTime) -> UInt64 {
+        return DispatchTime.now().uptimeNanoseconds - t.uptimeNanoseconds
     }
 
-    func resizeImageSharp(width: CGFloat, height: CGFloat) -> NSImage {
-        
-        let cutout = NSRect.init(x: 0, y: 0, width: width, height: height)
-        return resizeImage(width: width, height: height,
-                           cutout: cutout,
-                           interpolation: .none)
-    }
-    
-    func makeGlossy() {
-        
-        let width  = size.width
-        let height = size.height
-        let glossy = NSImage(named: "glossy")
-        let rect   = NSRect(x: 0, y: 0, width: width, height: height)
-        
-        lockFocus()
-        let sourceOver = NSCompositingOperation.sourceOver
-        draw(in: rect, from: NSRect.zero, operation: sourceOver, fraction: 1.0)
-        glossy!.draw(in: rect, from: NSRect.zero, operation: sourceOver, fraction: 1.0)
-        unlockFocus()
-    }
+    static func diffMicroSec(_ t: DispatchTime) -> UInt64 { return diffNano(t) / 1_000 }
+    static func diffMilliSec(_ t: DispatchTime) -> UInt64 { return diffNano(t) / 1_000_000 }
+    static func diffSec(_ t: DispatchTime) -> UInt64 { return diffNano(t) / 1_000_000_000 }
 }
 
-//
-// FileSystem extensions
-//
+extension Date {
+
+    func diff(_ date: Date) -> TimeInterval {
+        
+        let interval1 = self.timeIntervalSinceReferenceDate
+        let interval2 = date.timeIntervalSinceReferenceDate
+
+        return interval2 - interval1
+    }
+}
 
 //
 // C64 Proxy extensions

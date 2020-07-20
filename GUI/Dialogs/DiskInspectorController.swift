@@ -280,7 +280,7 @@ class DiskInspectorController: DialogController {
 
     @IBAction func selectDriveAction(_ sender: NSButton!) {
     
-        drive = proxy!.drive(sender.tag)
+        drive = proxy!.drive(DriveID(sender.tag))
         diskInfoIsDirty = true
         trackDataIsDirty = true
         headPositionIsDirty = true
