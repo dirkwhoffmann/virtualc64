@@ -59,7 +59,7 @@ static const int FILE_DEBUG      = 0; // Media files (D64,T64,...)
 // Peripherals
 static const int JOY_DEBUG       = 0; // Joystick
 static const int MOUSE_DEBUG     = 0; // Mouse
-static const int DRV_DEBUG       = 0; // Floppy drive
+static const int DRV_DEBUG       = 1; // Floppy drive
 static const int TAP_DEBUG       = 0; // Datasette
 static const int KBD_DEBUG       = 0; // Keyboard
 

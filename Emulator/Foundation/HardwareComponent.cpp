@@ -135,6 +135,38 @@ HardwareComponent::dump()
 }
 
 void
+HardwareComponent::warpOn()
+{
+    if (warp) return;
+
+    warp = true;
+
+    // Enable warp mode for all subcomponents
+    for (HardwareComponent *c : subComponents) {
+        c->warpOn();
+    }
+
+    // Enable warp mode for this component
+    _warpOn();
+}
+
+void
+HardwareComponent::warpOff()
+{
+    if (!warp) return;
+
+    warp = false;
+
+    // Disable warp mode for all subcomponents
+    for (HardwareComponent *c : subComponents) {
+        c->warpOff();
+    }
+
+    // Disable warp mode for this component
+    _warpOff();
+}
+
+void
 HardwareComponent::setClockFrequency(u32 value)
 {
     assert(value == PAL_CLOCK_FREQUENCY || value == NTSC_CLOCK_FREQUENCY);

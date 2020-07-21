@@ -198,15 +198,15 @@ private:
     /*! @brief    Indicates if c64 is currently running at maximum speed
      *            (with timing synchronization disabled)
      */
-    bool warp;
+    // bool warp;
     
     //! @brief    Indicates that we should always run as possible.
-    bool alwaysWarp;
+    // bool alwaysWarp;
     
     /*! @brief    Indicates that we should run as fast as possible at least
      *            during disk operations.
      */
-    bool warpLoad;
+    // bool warpLoad;
     
     
     //
@@ -290,7 +290,9 @@ public:
 
     void prefix() override;
     void reset() override;
-    
+    void warpOn() override;
+    void warpOff() override;
+
 private:
 
     void _powerOn() override;
@@ -300,6 +302,8 @@ private:
     void _reset() override;
     void _ping() override;
     void _dump() override;
+    void _warpOn() override;
+    void _warpOff() override;
     void _setClockFrequency(u32 value) override;
     
     
@@ -480,19 +484,19 @@ public:
     /*! @details  As a side effect, messages are sent to the GUI if the
      *            variable has changed its value.
      */
-    bool getWarp();
+    // bool getWarp();
     
     //! @brief    Returns if the emulator should always run full speed.
-    bool getAlwaysWarp() { return alwaysWarp; }
+    // bool getAlwaysWarp() { return alwaysWarp; }
     
     //! @brief    Setter for alwaysWarp
-    void setAlwaysWarp(bool b);
+    // void setAlwaysWarp(bool b);
     
     //! @brief    Returns if warp mode should be activated during disk access.
-    bool getWarpLoad() { return warpLoad; }
+    // bool getWarpLoad() { return warpLoad; }
     
     //! @brief    Setter for warpLoad
-    void setWarpLoad(bool b);
+    // void setWarpLoad(bool b);
     
     /*! @brief    Restarts the synchronization timer.
      *  @details  The function is invoked at launch time to initialize the timer

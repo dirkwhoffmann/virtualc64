@@ -154,12 +154,9 @@ struct AnyC64FileWrapper;
 - (void) stepInto;
 - (void) stepOver;
 
-// Managing the execution thread
 - (BOOL) warp;
-- (BOOL) alwaysWarp;
-- (void) setAlwaysWarp:(BOOL)b;
-- (BOOL) warpLoad;
-- (void) setWarpLoad:(BOOL)b;
+- (void) warpOn;
+- (void) warpOff;
 
 // Handling snapshots
 - (BOOL) takeAutoSnapshots;
@@ -611,6 +608,7 @@ struct AnyC64FileWrapper;
 - (void) setTracing:(BOOL)b;
 
 - (BOOL) isConnected;
+- (BOOL) isDisconnected;
 - (void) connect;
 - (void) disconnect;
 - (void) toggleConnection;

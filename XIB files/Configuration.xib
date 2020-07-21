@@ -499,12 +499,12 @@ Gw
                                             </connections>
                                         </popUpButton>
                                         <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jFL-A9-5jT">
-                                            <rect key="frame" x="342" y="409" width="55" height="55"/>
+                                            <rect key="frame" x="342" y="408" width="55" height="55"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="pref_sid" id="w4L-8V-3bo"/>
                                         </imageView>
                                         <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JsS-8H-gIQ">
-                                            <rect key="frame" x="343" y="320" width="55" height="55"/>
+                                            <rect key="frame" x="342" y="322" width="55" height="55"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="pref_glue3" id="2Oo-5v-u1X"/>
                                         </imageView>
@@ -740,7 +740,7 @@ Gw
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MOj-h4-iSU">
                                             <rect key="frame" x="9" y="254" width="114" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Sound synthesis" id="Gp2-zR-n47">
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Sound Synthesis" id="Gp2-zR-n47">
                                                 <font key="font" metaFont="systemBold"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -776,7 +776,7 @@ Gw
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eZf-Rt-FB5">
                                             <rect key="frame" x="306" y="250" width="114" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Control ports" id="xz9-k9-91x">
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Control Ports" id="xz9-k9-91x">
                                                 <font key="font" metaFont="systemBold"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

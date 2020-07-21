@@ -62,9 +62,9 @@ C64::C64()
     debug(RUN_DEBUG, "Creating virtual C64 [%p]\n", this);
 
     p = NULL;
-    warp = false;
-    alwaysWarp = false;
-    warpLoad = false;
+    // warp = false;
+    // alwaysWarp = false;
+    // warpLoad = false;
     
     subComponents = vector<HardwareComponent *> {
         
@@ -413,6 +413,22 @@ C64::_reset()
 }
 
 void
+C64::warpOn()
+{
+    suspend();
+    HardwareComponent::warpOn();
+    resume();
+}
+
+void
+C64::warpOff()
+{
+    suspend();
+    HardwareComponent::warpOff();
+    resume();
+}
+
+void
 C64::_powerOn()
 {
     debug(RUN_DEBUG, "Power on\n");
@@ -466,7 +482,6 @@ C64::_pause()
 void C64::_ping()
 {
     putMessage(warp ? MSG_WARP_ON : MSG_WARP_OFF);
-    putMessage(alwaysWarp ? MSG_ALWAYS_WARP_ON : MSG_ALWAYS_WARP_OFF);
 }
 
 void
@@ -489,8 +504,20 @@ C64::_dump() {
     msg("        Current rasterline : %d\n", rasterLine);
     msg("  Current rasterline cycle : %d\n", rasterCycle);
     msg("              Ultimax mode : %s\n\n", getUltimax() ? "YES" : "NO");
-    msg("warp, warpLoad, alwaysWarp : %d %d %d\n", warp, warpLoad, alwaysWarp);
     msg("\n");
+}
+
+void
+C64::_warpOn()
+{
+    putMessage(MSG_WARP_ON);
+}
+
+void
+C64::_warpOff()
+{
+    restartTimer();
+    putMessage(MSG_WARP_OFF);
 }
 
 void
@@ -1047,52 +1074,6 @@ C64::endFrame()
     if (!getWarp()) {
             synchronizeTiming();
     }
-}
-
-bool
-C64::getWarp()
-{
-    bool newValue = (warpLoad && iec.isBusy()) || alwaysWarp;
-    
-    if (newValue != warp) {
-        warp = newValue;
-        
-        /* Warping has the unavoidable drawback that audio playback gets out of
-         * sync. To cope with this issue, we silence SID during warp mode and
-         * fade in smoothly after warping has ended.
-         */
-        
-        if (warp) {
-            // Quickly fade out SID
-            sid.rampDown();
-            
-        } else {
-            // Smoothly fade in SID
-            sid.rampUp();
-            sid.alignWritePtr();
-            restartTimer();
-        }
-        
-        putMessage(warp ? MSG_WARP_ON : MSG_WARP_OFF);
-    }
-    
-    return warp;
-}
-
-void
-C64::setAlwaysWarp(bool b)
-{
-    if (alwaysWarp != b) {
-        
-        alwaysWarp = b;
-        putMessage(b ? MSG_ALWAYS_WARP_ON : MSG_ALWAYS_WARP_OFF);
-    }
-}
-
-void
-C64::setWarpLoad(bool b)
-{
-    warpLoad = b;
 }
 
 void

@@ -191,6 +191,16 @@ var proxy: C64Proxy? {
             break
         }
     }
+    
+    //
+    // Showing or hiding menus
+    //
+    
+    func hideOrShowDriveMenus(proxy: C64Proxy) {
+            
+        drive8Menu.isHidden = proxy.drive8.isDisconnected()
+        drive9Menu.isHidden = proxy.drive9.isDisconnected()
+    }
 }
 
 //
@@ -210,6 +220,9 @@ extension MyAppDelegate {
                     c.macAudio!.startPlayback()
                     c.c64.sid.rampUpFromZero()
                 }
+                
+                // Update the drive menu visibility
+                hideOrShowDriveMenus(proxy: c.c64)
                 
             } else {
                 

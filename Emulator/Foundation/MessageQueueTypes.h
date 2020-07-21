@@ -39,8 +39,6 @@ typedef enum
     MSG_CPU_ILLEGAL_INSTRUCTION,
     MSG_WARP_ON,
     MSG_WARP_OFF,
-    MSG_ALWAYS_WARP_ON,
-    MSG_ALWAYS_WARP_OFF,
 
     // VIC related messages
     MSG_PAL,

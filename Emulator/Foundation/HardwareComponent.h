@@ -167,6 +167,17 @@ public:
     virtual void dump();
     virtual void _dump() { }
 
+    // Getter for warp mode
+    bool getWarp() { return warp; }
+
+    // Switches warp mode on
+    virtual void warpOn();
+    virtual void _warpOn() { }
+
+    // Switches warp mode off
+    virtual void warpOff();
+    virtual void _warpOff() { }
+
     /* Informs the component about a clock frequency change.
      * This delegation method is called on startup and whenever the CPU clock
      * frequency changes (i.e., when switching between PAL and NTSC). Some

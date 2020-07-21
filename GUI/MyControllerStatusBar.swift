@@ -41,6 +41,7 @@ extension MyController {
         let running = c64.isRunning()
         let debug = c64.debugMode()
         let halted = c64.cpu.isHalted()
+        let warp = c64.warp()
         
         let hasCrt = c64.expansionport.cartridgeAttached()
             
@@ -204,5 +205,18 @@ extension MyController {
             statusBar = value
             refreshStatusBar()
         }
+    }
+    
+    @IBAction func warpAction(_ sender: Any!) {
+        
+        track()
+        
+        switch pref.warpMode {
+        case .auto: pref.warpMode = .off
+        case .off: pref.warpMode = .on
+        case .on: pref.warpMode = .auto
+        }
+        
+        refreshStatusBar()
     }
 }

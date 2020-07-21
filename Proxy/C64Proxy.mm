@@ -1088,6 +1088,10 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->drive->isConnected();
 }
+- (BOOL) isDisconnected
+{
+    return wrapper->drive->isDisconnected();
+}
 - (void) connect
 {
     wrapper->drive->connect();
@@ -1551,30 +1555,18 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->c64->stepOver();
 }
-
-// Managing the execution thread
 - (BOOL) warp
 {
     return wrapper->c64->getWarp();
 }
-- (BOOL) alwaysWarp
+- (void) warpOn
 {
-    return wrapper->c64->getAlwaysWarp();
+    wrapper->c64->warpOn();
 }
-- (void) setAlwaysWarp:(BOOL)b
+- (void) warpOff
 {
-    wrapper->c64->setAlwaysWarp(b);
+    wrapper->c64->warpOff();
 }
-- (BOOL) warpLoad
-{
-    return wrapper->c64->getWarpLoad();
-}
-- (void) setWarpLoad:(BOOL)b
-{
-    wrapper->c64->setWarpLoad(b);
-}
-
-// Handling snapshots
 - (BOOL) takeAutoSnapshots
 {
     return wrapper->c64->getTakeAutoSnapshots();

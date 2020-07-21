@@ -101,7 +101,7 @@ class MyController: NSWindowController, MessageReceiver {
     var hideMouse = false
     
     // Remembers if we run in warp mode
-     var warp = false
+    // var warp = false
     
     // Indicates if a status bar is shown
     var statusBar = true
@@ -138,23 +138,20 @@ class MyController: NSWindowController, MessageReceiver {
         snapshotTimer?.invalidate()
     }
     
-    func updateWarp() { }
-    /*
+    func updateWarp() {
         
         var warp: Bool
         
         switch pref.warpMode {
-        case .auto: warp = amiga.diskController.spinning()
+        case .auto: warp = c64.iec.busy()
         case .off: warp = false
         case .on: warp = true
         }
         
-        if warp != amiga.warp() {
-            warp ? amiga.warpOn() : amiga.warpOff()
-            refreshStatusBar()
+        if warp != c64.warp() {
+            warp ? c64.warpOn() : c64.warpOff()
         }
     }
-    */
     
     //
     // Outlets
@@ -583,78 +580,74 @@ extension MyController {
         switch msg.type {
     
         case MSG_CONFIG:
+            
             track("MSG_CONFIG")
             
         case MSG_POWER_ON:
-            track("MSG_POWER_ON")
+            
             virtualKeyboard = nil
             renderer.blendIn()
             // renderer.zoomIn()
             toolbar.validateVisibleItems()
 
         case MSG_POWER_OFF:
-            track("MSG_POWER_OFF")
+            
             renderer.blendOut()
             // renderer.zoomOut(steps: 20)
             toolbar.validateVisibleItems()
             
         case MSG_RUN:
-            track("MSG_RUN")
+            
             needsSaving = true
             toolbar.validateVisibleItems()
             disableUserEditing()
             refresh()
     
         case MSG_PAUSE:
-            track("MSG_PAUSE")
+            
             toolbar.validateVisibleItems()
             enableUserEditing()
             refresh()
     
         case MSG_RESET:
-            track("MSG_RESET")
+
+            break
 
         case MSG_BASIC_ROM_LOADED,
              MSG_CHAR_ROM_LOADED,
              MSG_KERNAL_ROM_LOADED,
              MSG_DRIVE_ROM_LOADED:
+            
             break
             
         case MSG_ROM_MISSING:
+            
             // openConfigurator()
             break
             
         case MSG_SNAPSHOT_TAKEN:
+            
             break
     
         case MSG_CPU_OK,
              MSG_CPU_SOFT_BREAKPOINT_REACHED:
+            
             break
             
         case MSG_CPU_HARD_BREAKPOINT_REACHED,
              MSG_CPU_ILLEGAL_INSTRUCTION:
+            
             self.debugOpenAction(self)
             refresh()
             
         case MSG_WARP_ON,
-             MSG_WARP_OFF,
-             MSG_ALWAYS_WARP_ON,
-             MSG_ALWAYS_WARP_OFF:
+             MSG_WARP_OFF:
+            
+            refreshStatusBarWarpIcon()
 
-            if c64.alwaysWarp() {
-                let name = NSImage.Name("hourglass3Template")
-                warpIcon.image = NSImage.init(named: name)
-            } else if c64.warp() {
-                let name = NSImage.Name("hourglass2Template")
-                warpIcon.image = NSImage.init(named: name)
-            } else {
-                let name = NSImage.Name("hourglass1Template")
-                warpIcon.image = NSImage.init(named: name)
-            }
-    
         case MSG_PAL,
              MSG_NTSC:
-
+            
             renderer.updateTextureRect()
     
         case MSG_DRIVE_HEAD:
@@ -662,21 +655,22 @@ extension MyController {
             if pref.driveSounds && pref.driveHeadSound {
                 playSound(name: "drive_click", volume: 1.0)
             }
+            refreshStatusBarTracks(drive: DriveID(msg.data))
                         
         case MSG_DRIVE_DISK:
             
             if pref.driveSounds && pref.driveInsertSound {
                 playSound(name: "drive_snatch_uae", volume: 0.1)
             }
-            refreshStatusBar()
+            refreshStatusBarDiskIcons(drive: DriveID(msg.data))
 
         case MSG_DRIVE_NO_DISK:
             
             if pref.driveSounds && pref.driveEjectSound {
                 playSound(name: "drive_snatch_uae", volume: 0.1)
             }
-            refreshStatusBar()
-                        
+            refreshStatusBarDiskIcons(drive: DriveID(msg.data))
+
         case MSG_DISK_SAVED,
              MSG_DISK_UNSAVED,
              MSG_DRIVE_LED_ON,
@@ -687,6 +681,7 @@ extension MyController {
         case MSG_IEC_BUS_BUSY,
              MSG_IEC_BUS_IDLE:
 
+            updateWarp()
             refreshStatusBarDriveActivity()
             
         case MSG_DRIVE_MOTOR_ON,
@@ -700,20 +695,13 @@ extension MyController {
             if pref.driveSounds && pref.driveConnectSound {
                 playSound(name: "drive_click", volume: 1.0)
             }
+            myAppDelegate.hideOrShowDriveMenus(proxy: c64)
             refreshStatusBar()
             
-        case MSG_VC1530_TAPE:
-            
-            tapeIcon.isHidden = false
-
-        case MSG_VC1530_NO_TAPE:
-            
-            tapeIcon.isHidden = true
-    
-        case MSG_VC1530_PROGRESS:
-            break
-    
-        case MSG_CARTRIDGE,
+        case MSG_VC1530_TAPE,
+             MSG_VC1530_NO_TAPE,
+             MSG_VC1530_PROGRESS,
+             MSG_CARTRIDGE,
              MSG_NO_CARTRIDGE:
             
             refreshStatusBar()
@@ -786,44 +774,6 @@ extension MyController {
 
     // Keyboard events are handled by the emulator window.
     // If they are handled here, some keys such as 'TAB' don't trigger an event.
-
-    //
-    //  Game pad events
-    //
-    
-    /// GamePadManager delegation method
-    /// - Returns: true, iff a joystick event has been triggered on port A or B
-    /*
-    @discardableResult
-    func joystickEvent(slot: Int, events: [JoystickEvent]) -> Bool {
-        
-        if slot == config.gameDevice1 {
-            for event in events { c64.port1.trigger(event) }
-            return true
-        }
-
-        if slot == config.gameDevice2 {
-            for event in events { c64.port2.trigger(event) }
-            return true
-        }
-        
-        return false
-    }    
-    */
-    
-    //
-    // Action methods (main screen)
-    //
-    
-    @IBAction func alwaysWarpAction(_ sender: Any!) {
-        
-        undoManager?.registerUndo(withTarget: self) { targetSelf in
-            targetSelf.alwaysWarpAction(sender)
-        }
-    
-        c64.setAlwaysWarp(!c64.alwaysWarp())
-        refresh()
-    }
     
     //
     // Mounting media files
