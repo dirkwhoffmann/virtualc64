@@ -193,7 +193,7 @@ var proxy: C64Proxy? {
     }
     
     //
-    // Showing or hiding menus
+    // Hiding menus
     //
     
     func hideOrShowDriveMenus(proxy: C64Proxy) {
@@ -221,7 +221,7 @@ extension MyAppDelegate {
                     c.c64.sid.rampUpFromZero()
                 }
                 
-                // Update the drive menu visibility
+                // Update the visibility of all drive menus
                 hideOrShowDriveMenus(proxy: c.c64)
                 
             } else {

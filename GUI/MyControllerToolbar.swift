@@ -117,18 +117,10 @@ extension MyController {
         
         switch sender.selectedSegment {
             
-        case 0: // Debugger
+        case 0: inspectorAction(sender)
+        case 1: monitorAction(sender)
             
-            track("Debugger")
-            debugAction(sender)
-            
-        case 1: // Disk Inspector
-
-            track("Disk Inspector")
-            diskInspectorAction(sender)
-            
-        default:
-            assert(false)
+        default: assert(false)
         }
     }
     

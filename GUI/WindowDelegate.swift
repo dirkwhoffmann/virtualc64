@@ -42,6 +42,12 @@ extension MyController: NSWindowDelegate {
         
         track()
         
+        // Disconnect and close auxiliary windows
+        inspector?.c64 = nil
+        inspector?.close()
+        monitor?.c64 = nil
+        monitor?.close()
+        
         // Close virtual keyboard
         // virtualKeyboard?.close()
         

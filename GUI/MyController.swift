@@ -43,7 +43,10 @@ class MyController: NSWindowController, MessageReceiver {
     var c64: C64Proxy!
     
     // Inspector panel of this emulator instance
-    // var inspector: Inspector?
+    var inspector: Inspector?
+    
+    // Monitor panel of this emulator instance
+    var monitor: Monitor?
     
     // Configuration panel of this emulator instance
     var configurator: ConfigurationController?
@@ -502,6 +505,11 @@ extension MyController {
  
         animationCounter += 1
 
+        // Animate the inspector
+        if inspector?.window?.isVisible == true { inspector!.triggerRefresh() }
+        
+        // OLD CODE:
+        
         // Do 12 times a second ...
         if (animationCounter % 1) == 0 {
             
@@ -580,8 +588,9 @@ extension MyController {
         switch msg.type {
     
         case MSG_CONFIG:
-            
+
             track("MSG_CONFIG")
+            inspector?.fullRefresh()
             
         case MSG_POWER_ON:
             
@@ -589,29 +598,29 @@ extension MyController {
             renderer.blendIn()
             // renderer.zoomIn()
             toolbar.validateVisibleItems()
+            inspector?.fullRefresh()
 
         case MSG_POWER_OFF:
             
             renderer.blendOut()
             // renderer.zoomOut(steps: 20)
             toolbar.validateVisibleItems()
+            inspector?.fullRefresh()
             
         case MSG_RUN:
             
             needsSaving = true
             toolbar.validateVisibleItems()
-            disableUserEditing()
-            refresh()
+            inspector?.fullRefresh()
     
         case MSG_PAUSE:
             
             toolbar.validateVisibleItems()
-            enableUserEditing()
-            refresh()
-    
+            inspector?.fullRefresh()
+
         case MSG_RESET:
 
-            break
+            inspector?.fullRefresh()
 
         case MSG_BASIC_ROM_LOADED,
              MSG_CHAR_ROM_LOADED,

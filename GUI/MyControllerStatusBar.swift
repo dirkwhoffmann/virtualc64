@@ -10,6 +10,7 @@
 extension MyController {
     
     var hourglass: NSImage? {
+        
         switch pref.warpMode {
         case .auto where c64.warp():
             return NSImage.init(named: "hourglass3Template")

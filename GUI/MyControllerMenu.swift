@@ -286,14 +286,18 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func inspectorAction(_ sender: Any!) {
         
-        track()
-        
-        /*
         if inspector == nil {
             inspector = Inspector.make(parent: self, nibName: "Inspector")
         }
         inspector?.showWindow(self)
-        */
+    }
+    
+    @IBAction func monitorAction(_ sender: Any!) {
+        
+        if monitor == nil {
+            monitor = Monitor.make(parent: self, nibName: "Monitor")
+        }
+        monitor?.showWindow(self)
     }
     
     @IBAction func saveScreenshotDialog(_ sender: Any!) {
