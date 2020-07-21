@@ -370,6 +370,7 @@ public:
      *  @return   NULL, if the switch cannot be positioned this way.
      */
     virtual const char *getSwitchDescription(i8 pos) { return NULL; }
+    const char *getSwitchDescription() { return getSwitchDescription(getSwitch()); }
     
     //! @brief    Convenience wrappers around getSwitchDescription()
     bool validSwitchPosition(i8 pos) { return getSwitchDescription(pos) != NULL; }

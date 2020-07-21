@@ -54,6 +54,10 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->cpu->dump();
 }
+- (bool) isHalted
+{
+    return wrapper->cpu->isHalted();
+}
 - (BOOL) tracing
 {
     return wrapper->cpu->tracingEnabled();
@@ -651,6 +655,10 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->iec->dump();
 }
+- (BOOL) busy
+{
+    return wrapper->iec->isBusy();
+}
 - (BOOL) tracing
 {
     return wrapper->iec->tracingEnabled();
@@ -861,6 +869,11 @@ struct AnyC64FileWrapper { AnyFile *file; };
     const char *str = wrapper->expansionPort->getSwitchDescription(pos);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
+- (NSString *) currentSwitchDescription
+{
+    const char *str = wrapper->expansionPort->getSwitchDescription();
+    return str ? [NSString stringWithUTF8String:str] : NULL;
+}
 - (BOOL) validSwitchPosition:(NSInteger)pos
 {
     return wrapper->expansionPort->validSwitchPosition(pos);
@@ -1054,7 +1067,10 @@ struct AnyC64FileWrapper { AnyFile *file; };
 			return NULL;
 	}
 }
-
+- (DriveConfig) getConfig
+{
+    return wrapper->drive->getConfig();
+}
 - (void) dump
 {
     wrapper->drive->dump();
@@ -1083,6 +1099,14 @@ struct AnyC64FileWrapper { AnyFile *file; };
 - (void) toggleConnection
 {
     wrapper->drive->toggleConnection();
+}
+- (BOOL) readMode
+{
+    return wrapper->drive->readMode();
+}
+- (BOOL) writeMode
+{
+    return wrapper->drive->writeMode();
 }
 - (BOOL) redLED
 {
@@ -1128,6 +1152,10 @@ struct AnyC64FileWrapper { AnyFile *file; };
 - (BOOL) hasWriteProtectedDisk
 {
     return wrapper->drive->hasWriteProtectedDisk();
+}
+- (Track) track
+{
+    return wrapper->drive->getTrack();
 }
 - (Halftrack) halftrack
 {
@@ -1387,6 +1415,18 @@ struct AnyC64FileWrapper { AnyFile *file; };
 - (BOOL) releaseBuild
 {
     return releaseBuild();
+}
+- (BOOL) debugMode
+{
+    return wrapper->c64->getDebugMode();
+}
+- (void) enableDebugging
+{
+    wrapper->c64->enableDebugging();
+}
+- (void) disableDebugging
+{
+    wrapper->c64->disableDebugging();
 }
 - (BOOL) isReady:(ErrorCode *)error
 {

@@ -185,40 +185,6 @@ Drive::execute(u64 duration)
     return result;
 }
 
-/*
-bool
-VC1541::execute(u64 duration)
-{
-    u8 result = true;
-    
-    elapsedTime += duration;
-    
-    if (nextCarry < elapsedTime && nextCarry < nextClock) {
-        // Execute read/write logic
-        if (spinning) executeUF4();
-        nextCarry += delayBetweenTwoCarryPulses[zone];
-    }
-    
-    if (nextClock < elapsedTime) {
-        // Execute CPU and VIAs
-        u64 cycle = ++cpu.cycle;
-        if (cycle >= via1.wakeUpCycle) via1.execute(); else via1.idleCounter++;
-        if (cycle >= via2.wakeUpCycle) via2.execute(); else via2.idleCounter++;
-        result = cpu.executeOneCycle();
-        nextClock += 10000;
-    }
-    
-    if (nextCarry < elapsedTime) {
-        // Execute read/write logic
-        if (spinning) executeUF4();
-        nextCarry += delayBetweenTwoCarryPulses[zone];
-    }
-    
-    assert(nextClock >= elapsedTime && nextCarry >= elapsedTime);
-    return result;
-}
-*/
-
 void
 Drive::executeUF4()
 {

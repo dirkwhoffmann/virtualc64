@@ -202,6 +202,8 @@ public:
     bool switchIsRight() { return cartridge ? cartridge->switchIsRight() : false; }
     const char *getSwitchDescription(i8 pos) {
         return cartridge ? cartridge->getSwitchDescription(pos) : NULL; }
+    const char *getSwitchDescription() {
+        return getSwitchDescription(getSwitch()); }
     bool validSwitchPosition(i8 pos) {
         return cartridge ? cartridge->validSwitchPosition(pos) : false; }
     

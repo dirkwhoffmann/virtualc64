@@ -110,6 +110,10 @@ struct AnyC64FileWrapper;
 
 - (BOOL) releaseBuild;
 
+- (BOOL) debugMode;
+- (void) enableDebugging;
+- (void) disableDebugging;
+
 - (BOOL) isReady:(ErrorCode *)error;
 - (BOOL) isReady;
 - (void) powerOn;
@@ -270,6 +274,7 @@ struct AnyC64FileWrapper;
 
 - (CPUInfo) getInfo;
 - (void) dump;
+- (bool) isHalted;
 
 - (BOOL) tracing;
 - (void) setTracing:(BOOL)b;
@@ -540,6 +545,7 @@ struct AnyC64FileWrapper;
 - (BOOL) hasSwitch;
 - (NSInteger) switchPosition;
 - (NSString *) switchDescription:(NSInteger)pos;
+- (NSString *) currentSwitchDescription;
 - (BOOL) validSwitchPosition:(NSInteger)pos;
 - (BOOL) switchIsNeutral;
 - (BOOL) switchIsLeft;
@@ -566,6 +572,8 @@ struct AnyC64FileWrapper;
 }
 
 - (void) dump;
+
+- (BOOL) busy;
 
 - (BOOL) tracing;
 - (void) setTracing:(BOOL)b;
@@ -596,17 +604,19 @@ struct AnyC64FileWrapper;
 
 - (VIAProxy *) via:(NSInteger)num;
 
+- (DriveConfig) getConfig;
+
 - (void) dump;
 - (BOOL) tracing;
 - (void) setTracing:(BOOL)b;
 
 - (BOOL) isConnected;
-// - (BOOL) isConnectable;
 - (void) connect;
 - (void) disconnect;
 - (void) toggleConnection;
 
-// - (void) deleteRom;
+- (BOOL) readMode;
+- (BOOL) writeMode;
 
 - (BOOL) redLED;
 - (BOOL) hasDisk;
@@ -620,6 +630,7 @@ struct AnyC64FileWrapper;
 - (void) setWriteProtection:(BOOL)b;
 - (BOOL) hasWriteProtectedDisk;
 
+- (Track) track;
 - (Halftrack) halftrack;
 - (void) setTrack:(Track)t;
 - (void) setHalftrack:(Halftrack)ht;
@@ -631,6 +642,7 @@ struct AnyC64FileWrapper;
 
 - (void) moveHeadUp;
 - (void) moveHeadDown;
+
 - (BOOL) isRotating;
 - (void) rotateDisk;
 - (void) rotateBack;

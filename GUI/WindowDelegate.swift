@@ -16,14 +16,17 @@ extension MyController: NSWindowDelegate {
         // Inform the application delegate
         myAppDelegate.windowDidBecomeMain(window)
         
-        // Start emulator if it was only paused while in background
+        // Restart the emulator if it was paused when the window lost focus
         if pref.pauseInBackground && pauseInBackgroundSavedState { c64.run() }
 
-        // Register for mouse move events
+        // Register to receive mouse movement events
         window.acceptsMouseMovedEvents = true
         
         // Make sure the aspect ratio is correct
         adjustWindowSize()
+        
+        // Update the status bar
+        refreshStatusBar()
     }
     
     public func windowDidResignMain(_ notification: Notification) {
@@ -105,7 +108,7 @@ extension MyController: NSWindowDelegate {
     
     public func window(_ window: NSWindow, willUseFullScreenContentSize proposedSize: NSSize) -> NSSize {
 
-        var myRect = metalScreen.bounds
+        var myRect = metal.bounds
         myRect.size = proposedSize
         return proposedSize
     }
@@ -119,7 +122,7 @@ extension MyController: NSWindowDelegate {
         let deltaY = size.height - windowFrame.size.height
         
         // How big would the metal view become?
-        let metalFrame = metalScreen.frame
+        let metalFrame = metal.frame
         let metalX = metalFrame.size.width + deltaX
         let metalY = metalFrame.size.height + deltaY
         

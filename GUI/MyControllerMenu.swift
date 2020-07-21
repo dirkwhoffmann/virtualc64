@@ -444,6 +444,7 @@ extension MyController: NSMenuItemValidation {
         showStatusBar(!statusBar)
     }
     
+    /*
     public func showStatusBar(_ value: Bool) {
         
         let items: [NSView: Bool] = [
@@ -488,6 +489,7 @@ extension MyController: NSMenuItemValidation {
             statusBar = false
         }
     }
+    */
     
     @IBAction func hideMouseAction(_ sender: Any!) {
         

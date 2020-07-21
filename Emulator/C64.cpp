@@ -119,6 +119,21 @@ C64::~C64()
     pthread_mutex_destroy(&threadLock);
 }
 
+void
+C64::setDebugMode(bool enable)
+{
+    if ((debugMode = enable)) {
+        
+        msg("Enabling debug mode\n");
+        // cpu.debugger.enableLogging();
+
+    } else {
+
+        msg("Disabling debug mode\n");
+        // cpu.debugger.disableLogging();
+    }
+}
+
 C64Configuration
 C64::getConfig()
 {

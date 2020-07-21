@@ -180,6 +180,8 @@
 		50D197E021606DEC008BC551 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 50D197DF21606DEC008BC551 /* dsa_pub.pem */; };
 		50D2A69E210F20CB00F13D43 /* VirtualKeyboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */; };
 		50D2A6A0210F20F700F13D43 /* VirtualKeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */; };
+		50D3091E24C5CE1A00B92563 /* MyControllerStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3091D24C5CE1A00B92563 /* MyControllerStatusBar.swift */; };
+		50D3092024C625B200B92563 /* ProxyExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3091F24C625B200B92563 /* ProxyExtensions.swift */; };
 		50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8421720A82CF500EB859A /* MetalViewEvents.swift */; };
 		50DBB44B2025CE5700489271 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB44A2025CE5700489271 /* Utils.swift */; };
 		50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD8E2008E615008A8761 /* Shaders.swift */; };
@@ -503,6 +505,8 @@
 		50D197DF21606DEC008BC551 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VirtualKeyboard.xib; sourceTree = "<group>"; };
 		50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualKeyboardController.swift; sourceTree = "<group>"; };
+		50D3091D24C5CE1A00B92563 /* MyControllerStatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerStatusBar.swift; sourceTree = "<group>"; };
+		50D3091F24C625B200B92563 /* ProxyExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyExtensions.swift; sourceTree = "<group>"; };
 		50D8421720A82CF500EB859A /* MetalViewEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalViewEvents.swift; sourceTree = "<group>"; };
 		50DBB44A2025CE5700489271 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		50DEAD8E2008E615008A8761 /* Shaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
@@ -626,9 +630,10 @@
 			isa = PBXGroup;
 			children = (
 				50E9B92C201F299500065A89 /* MyController.swift */,
-				507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */,
-				503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */,
 				50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */,
+				503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */,
+				50D3091D24C5CE1A00B92563 /* MyControllerStatusBar.swift */,
+				507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */,
 				50EAFFE924B2600D00024CD2 /* MyToolbar.swift */,
 				50ED5BF712DD99C000596417 /* Speedometer.swift */,
 				50BF77D120309A2A006E000F /* WindowDelegate.swift */,
@@ -1049,6 +1054,7 @@
 				50B171051EE6AB840019E8D4 /* Bridging-Header.h */,
 				50176C790A6F7357009E80BD /* C64Proxy.h */,
 				50176C7A0A6F7357009E80BD /* C64Proxy.mm */,
+				50D3091F24C625B200B92563 /* ProxyExtensions.swift */,
 			);
 			path = Proxy;
 			sourceTree = "<group>";
@@ -1290,6 +1296,7 @@
 				504C438A24AF29AC00E69CAE /* Mouse1350.cpp in Sources */,
 				504C436824AF29AC00E69CAE /* ActionReplay.cpp in Sources */,
 				50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */,
+				50D3091E24C5CE1A00B92563 /* MyControllerStatusBar.swift in Sources */,
 				504C436624AF29AC00E69CAE /* Kcs.cpp in Sources */,
 				504C438724AF29AC00E69CAE /* C64.cpp in Sources */,
 				50FB74A2203322C900E05051 /* DiskInspectorController.swift in Sources */,
@@ -1392,6 +1399,7 @@
 				504C437D24AF29AC00E69CAE /* CRTFile.cpp in Sources */,
 				504C439624AF29AC00E69CAE /* pot.cc in Sources */,
 				504C43A124AF29AC00E69CAE /* IEC.cpp in Sources */,
+				50D3092024C625B200B92563 /* ProxyExtensions.swift in Sources */,
 				504C436D24AF29AC00E69CAE /* Rex.cpp in Sources */,
 				504C436424AF29AC00E69CAE /* Expert.cpp in Sources */,
 				5015F36620B546A30024B4AA /* WaveformView.swift in Sources */,

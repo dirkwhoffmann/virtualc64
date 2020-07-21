@@ -343,22 +343,17 @@ private:
     
 public:
 
-    /*! @brief    Returns true iff drive is in read mode
-     *  @details  The drive is in read mode iff port pin VIA2::CB2 equals 1.
-     */
+    // Returns the current access mode of this drive (read or write)
     bool readMode() { return via2.getCB2(); }
-    
-    //! @brief    Returns true iff drive is in write mode
     bool writeMode() { return !readMode(); }
     
-    //! @brief    Returns the halftrack under the drive head
+    // Returns the current halftrack or track number
     Halftrack getHalftrack() { return halftrack; }
-
-    //! @brief    Moves the drive head to the specified track
-    void setTrack(Track t) { assert(isTrackNumber(t)); halftrack = 2 * t - 1; }
-
-    //! @brief    Moves the drive head to the specified halftrack
+    Track getTrack() { return (halftrack + 1) / 2; }
+    
+    // Moves the drive head to the specified track
     void setHalftrack(Halftrack ht) { assert(isHalftrackNumber(ht)); halftrack = ht; }
+    void setTrack(Track t) { assert(isTrackNumber(t)); halftrack = 2 * t - 1; }
     
     //! @brief    Returns the number of bits in the current halftrack
     u16 sizeOfCurrentHalftrack() {

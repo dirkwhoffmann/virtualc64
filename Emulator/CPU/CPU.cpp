@@ -9,6 +9,12 @@
 
 #include "C64.h"
 
+//
+// Static class variables
+//
+
+bool C64::debugMode = false;
+
 CPU::CPU(CPUModel model, Memory *mem, C64& ref) : C64Component(ref)
 {
     this->model = model;

@@ -547,6 +547,8 @@ public:
 	//! @brief    Sets the error state back to normal.
     void clearErrorState() { setErrorState(CPU_OK); }
     
+    // Returns true if the CPU is halted
+     bool isHalted() { return errorState == CPU_ILLEGAL_INSTRUCTION; }
     
     //
     //! @functiongroup Handling breakpoints

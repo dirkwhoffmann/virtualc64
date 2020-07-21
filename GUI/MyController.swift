@@ -100,13 +100,16 @@ class MyController: NSWindowController, MessageReceiver {
     /// Indicates if mouse is currently hidden
     var hideMouse = false
     
-    /// Indicates if a status bar is shown
+    // Remembers if we run in warp mode
+     var warp = false
+    
+    // Indicates if a status bar is shown
     var statusBar = true
     
     // Small disk icon to be shown in NSMenuItems
     static let iconSize = CGSize(width: 16, height: 16)
-    var smallDisk = NSImage.init(named: "mediaDiskSavedTemplate")!.resize(size: iconSize)
-    var smallTape = NSImage.init(named: "mediaTapeTemplate")!.resize(size: iconSize)
+    var smallDisk = NSImage.init(named: "diskTemplate")!.resize(size: iconSize)
+    var smallTape = NSImage.init(named: "tapeTemplate")!.resize(size: iconSize)
     var smallCart = NSImage.init(named: "crtTemplate")!.resize(size: iconSize)
     
     // Remembers the running state for the pauseInBackground feature
@@ -158,20 +161,26 @@ class MyController: NSWindowController, MessageReceiver {
     //
     
     // Main screen
-    @IBOutlet weak var metalScreen: MetalView!
+    @IBOutlet weak var metal: MetalView!
+    
     var renderer: Renderer!
     
     @IBOutlet weak var debugger: NSDrawer!
     
     // Bottom bar
-    @IBOutlet weak var greenLED1: NSButton!
-    @IBOutlet weak var greenLED2: NSButton!
-    @IBOutlet weak var redLED1: NSButton!
-    @IBOutlet weak var redLED2: NSButton!
-    @IBOutlet weak var progress1: NSProgressIndicator!
-    @IBOutlet weak var progress2: NSProgressIndicator!
-    @IBOutlet weak var diskIcon1: NSButton!
-    @IBOutlet weak var diskIcon2: NSButton!
+    @IBOutlet weak var greenLED8: NSButton!
+    @IBOutlet weak var greenLED9: NSButton!
+    @IBOutlet weak var redLED8: NSButton!
+    @IBOutlet weak var redLED9: NSButton!
+    @IBOutlet weak var diskIcon8: NSButton!
+    @IBOutlet weak var diskIcon9: NSButton!
+    @IBOutlet weak var trackNumber8: NSTextField!
+    @IBOutlet weak var trackNumber9: NSTextField!
+    @IBOutlet weak var spinning8: NSProgressIndicator!
+    @IBOutlet weak var spinning9: NSProgressIndicator!
+    @IBOutlet weak var haltIcon: NSButton!
+    @IBOutlet weak var debugIcon: NSButton!
+    @IBOutlet weak var muteIcon: NSButton!
     @IBOutlet weak var tapeIcon: NSButton!
     @IBOutlet weak var tapeProgress: NSProgressIndicator!
     @IBOutlet weak var crtIcon: NSButton!
@@ -335,7 +344,7 @@ class MyController: NSWindowController, MessageReceiver {
 extension MyController {
 
     // Provides the undo manager
-    override open var undoManager: UndoManager? { return metalScreen.undoManager }
+    override open var undoManager: UndoManager? { return metal.undoManager }
      
     // Indicates if the emulator needs saving
     var needsSaving: Bool {
@@ -391,7 +400,7 @@ extension MyController {
         }
                 
         // Setup renderer
-        renderer = Renderer(view: metalScreen,
+        renderer = Renderer(view: metal,
                             device: MTLCreateSystemDefaultDevice()!,
                             controller: self)
         
@@ -659,128 +668,40 @@ extension MyController {
             if pref.driveSounds && pref.driveInsertSound {
                 playSound(name: "drive_snatch_uae", volume: 0.1)
             }
+            refreshStatusBar()
 
-            if drive8() {
-                diskIcon1.isHidden = false
-            } else {
-                diskIcon2.isHidden = false
-            }
-              
         case MSG_DRIVE_NO_DISK:
             
             if pref.driveSounds && pref.driveEjectSound {
                 playSound(name: "drive_snatch_uae", volume: 0.1)
             }
+            refreshStatusBar()
+                        
+        case MSG_DISK_SAVED,
+             MSG_DISK_UNSAVED,
+             MSG_DRIVE_LED_ON,
+             MSG_DRIVE_LED_OFF:
+            
+            refreshStatusBar()
+    
+        case MSG_IEC_BUS_BUSY,
+             MSG_IEC_BUS_IDLE:
 
-            if drive8() {
-                diskIcon1.isHidden = true
-            } else {
-                diskIcon2.isHidden = true
-            }
-                            
-        case MSG_DISK_SAVED:
-            
-            let image = NSImage.init(named: "mediaDiskSavedTemplate")
-            if drive8() {
-                diskIcon1.image = image
-            } else {
-                diskIcon2.image = image
-            }
-            
-        case MSG_DISK_UNSAVED:
-            
-            track("Disk is unsaved")
-            let image = NSImage.init(named: "mediaDiskUnsavedTemplate")
-            if drive8() {
-                diskIcon1.image = image
-            } else {
-                diskIcon2.image = image
-            }
-            
-        case MSG_DRIVE_LED_ON:
-            
-            let image = NSImage.init(named: "LEDred")
-            if drive8() {
-                redLED1.image = image
-                redLED1.setNeedsDisplay()
-            } else {
-                redLED2.image = image
-                redLED2.setNeedsDisplay()
-            }
-            
-        case MSG_DRIVE_LED_OFF:
-            
-            let image = NSImage.init(named: "LEDgray")
-            if drive8() {
-                redLED1.image = image
-                redLED1.setNeedsDisplay()
-            } else {
-                redLED2.image = image
-                redLED2.setNeedsDisplay()
-            }
-    
-        case MSG_IEC_BUS_BUSY:
-            
-            if c64.drive8.isRotating() {
-                progress1.startAnimation(self)
-            }
-            if c64.drive9.isRotating() {
-                progress2.startAnimation(self)
-            }
-    
-        case MSG_IEC_BUS_IDLE:
-            
-            progress1.stopAnimation(self)
-            progress2.stopAnimation(self)
+            refreshStatusBarDriveActivity()
             
         case MSG_DRIVE_MOTOR_ON,
              MSG_DRIVE_MOTOR_OFF:
-            break
-    
-        case MSG_DRIVE_CONNECT:
+
+            refreshStatusBarDriveActivity()
             
-            track("MSG_DRIVE_CONNECT: \(msg.data)")
-                
+        case MSG_DRIVE_CONNECT,
+             MSG_DRIVE_DISCONNECT:
+            
             if pref.driveSounds && pref.driveConnectSound {
                 playSound(name: "drive_click", volume: 1.0)
             }
+            refreshStatusBar()
             
-            let image = NSImage.init(named: "LEDgreen")
-            
-            if drive8() {
-                greenLED1.image = image
-            } else {
-                greenLED2.image = image
-            }
-            
-            switch msg.data {
-            case 8: myAppDelegate.drive8Menu.isHidden = false
-            case 9: myAppDelegate.drive9Menu.isHidden = false
-            default: fatalError()
-            }
-            
-        case MSG_DRIVE_DISCONNECT:
-            
-            track("MSG_DRIVE_DISCONNECT: \(msg.data)")
-
-            if pref.driveSounds && pref.driveConnectSound {
-                playSound(name: "drive_click", volume: 1.0)
-            }
-            
-            let image = NSImage.init(named: "LEDgray")
-            
-            if drive8() {
-                greenLED1.image = image
-            } else {
-                greenLED2.image = image
-            }
-            
-            switch msg.data {
-            case 8: myAppDelegate.drive8Menu.isHidden = true
-            case 9: myAppDelegate.drive9Menu.isHidden = true
-            default: fatalError()
-            }
-
         case MSG_VC1530_TAPE:
             
             tapeIcon.isHidden = false
@@ -788,37 +709,18 @@ extension MyController {
         case MSG_VC1530_NO_TAPE:
             
             tapeIcon.isHidden = true
-
-        //case MSG_VC1530_PLAY:
-        //    break
     
         case MSG_VC1530_PROGRESS:
             break
     
-        case MSG_CARTRIDGE:
+        case MSG_CARTRIDGE,
+             MSG_NO_CARTRIDGE:
             
-            crtIcon.isHidden = false
-            crtSwitch.isHidden = !c64.expansionport.hasSwitch()
-            crtButton1.isHidden = c64.expansionport.numButtons() < 1
-            crtButton2.isHidden = c64.expansionport.numButtons() < 2
-            crtButton1.toolTip = c64.expansionport.getButtonTitle(1)
-            crtButton2.toolTip = c64.expansionport.getButtonTitle(2)
-
-        case MSG_NO_CARTRIDGE:
-            
-            crtIcon.isHidden = true
-            crtSwitch.isHidden = true
-            crtButton1.isHidden = true
-            crtButton2.isHidden = true
+            refreshStatusBar()
             
         case MSG_CART_SWITCH:
             
-            let pos = c64.expansionport.switchPosition()
-            crtSwitch.image = NSImage(named:
-                (pos < 0) ? "crtSwitchLeftTemplate"
-                    : (pos > 0) ? "crtSwitchRightTemplate"
-                    : "crtSwitchNeutralTemplate")
-            crtSwitch.toolTip = c64.expansionport.switchDescription(pos)
+            refreshStatusBarCartridgeIcons()
             
         default:
             
