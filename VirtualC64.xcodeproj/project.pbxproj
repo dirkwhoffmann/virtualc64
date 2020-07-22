@@ -158,6 +158,10 @@
 		50763277202989D300575110 /* DialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* DialogController.swift */; };
 		50769B8A24BB1B87006FE743 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50769B8924BB1B87006FE743 /* Configuration.swift */; };
 		507887CC20B1858B00941F7E /* MemTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507887CB20B1858B00941F7E /* MemTableView.swift */; };
+		507A499C24C8D64700DBF984 /* InstrTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507A499B24C8D64700DBF984 /* InstrTableView.swift */; };
+		507A499E24C8D65700DBF984 /* TraceTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507A499D24C8D65700DBF984 /* TraceTableView.swift */; };
+		507A49A024C8D66A00DBF984 /* BreakTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507A499F24C8D66A00DBF984 /* BreakTableView.swift */; };
+		507A49A224C8D71400DBF984 /* BankTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507A49A124C8D71400DBF984 /* BankTableView.swift */; };
 		507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */; };
 		5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* MacAudio.swift */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
@@ -482,6 +486,10 @@
 		50763276202989D300575110 /* DialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogController.swift; sourceTree = "<group>"; };
 		50769B8924BB1B87006FE743 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		507887CB20B1858B00941F7E /* MemTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemTableView.swift; sourceTree = "<group>"; };
+		507A499B24C8D64700DBF984 /* InstrTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrTableView.swift; sourceTree = "<group>"; };
+		507A499D24C8D65700DBF984 /* TraceTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraceTableView.swift; sourceTree = "<group>"; };
+		507A499F24C8D66A00DBF984 /* BreakTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakTableView.swift; sourceTree = "<group>"; };
+		507A49A124C8D71400DBF984 /* BankTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankTableView.swift; sourceTree = "<group>"; };
 		507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerCartridges.swift; sourceTree = "<group>"; };
 		5081AB621EF29E6400D6F616 /* MacAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacAudio.swift; sourceTree = "<group>"; };
 		5092A5B0200BC4B70037754D /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
@@ -628,7 +636,6 @@
 				506D4D0C20B331A00093C5C6 /* Formatter.swift */,
 				50720F4120C853910010EBF2 /* CpuTraceView.swift */,
 				50576685228C66BA0065D9ED /* CpuTableView.swift */,
-				507887CB20B1858B00941F7E /* MemTableView.swift */,
 				5015F36520B546A30024B4AA /* WaveformView.swift */,
 			);
 			name = View;
@@ -682,8 +689,6 @@
 			isa = PBXGroup;
 			children = (
 				504C433B24AF29AC00E69CAE /* PortTypes.h */,
-				504C433D24AF29AC00E69CAE /* ProcessorPort.h */,
-				504C433F24AF29AC00E69CAE /* ProcessorPort.cpp */,
 				504C434024AF29AC00E69CAE /* ControlPort.h */,
 				504C433E24AF29AC00E69CAE /* ControlPort.cpp */,
 				504C434324AF29AC00E69CAE /* ExpansionPort.h */,
@@ -716,6 +721,11 @@
 				5038CA9220B6C298000D9193 /* CIAPanel.swift */,
 				5038CA9420B6C2AC000D9193 /* VICPanel.swift */,
 				5038CA9620B6C2BE000D9193 /* SIDPanel.swift */,
+				507A499B24C8D64700DBF984 /* InstrTableView.swift */,
+				507A499D24C8D65700DBF984 /* TraceTableView.swift */,
+				507A499F24C8D66A00DBF984 /* BreakTableView.swift */,
+				507A49A124C8D71400DBF984 /* BankTableView.swift */,
+				507887CB20B1858B00941F7E /* MemTableView.swift */,
 			);
 			name = Inspector;
 			sourceTree = "<group>";
@@ -865,6 +875,8 @@
 				504C42E924AF29AB00E69CAE /* CPU.cpp */,
 				504C42E724AF29AB00E69CAE /* CPUInstructions.h */,
 				504C42EA24AF29AB00E69CAE /* CPUInstructions.cpp */,
+				504C433D24AF29AC00E69CAE /* ProcessorPort.h */,
+				504C433F24AF29AC00E69CAE /* ProcessorPort.cpp */,
 			);
 			path = CPU;
 			sourceTree = "<group>";
@@ -1338,6 +1350,7 @@
 				504C437624AF29AC00E69CAE /* P00File.cpp in Sources */,
 				5038CA9520B6C2AC000D9193 /* VICPanel.swift in Sources */,
 				504C435F24AF29AC00E69CAE /* SuperGames.cpp in Sources */,
+				507A499C24C8D64700DBF984 /* InstrTableView.swift in Sources */,
 				5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */,
 				5009CF3324C0B8EF00F674FF /* Preferences.swift in Sources */,
 				5002FA7B21C2650600DA4BBC /* HardwareConf.swift in Sources */,
@@ -1371,6 +1384,7 @@
 				504C437B24AF29AC00E69CAE /* D64File.cpp in Sources */,
 				5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */,
 				5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */,
+				507A499E24C8D65700DBF984 /* TraceTableView.swift in Sources */,
 				50720F4220C853910010EBF2 /* CpuTraceView.swift in Sources */,
 				5018BFAF24B4847900551848 /* TextureToolbox.swift in Sources */,
 				504C438B24AF29AC00E69CAE /* Mouse1351.cpp in Sources */,
@@ -1424,6 +1438,7 @@
 				504C43A224AF29AC00E69CAE /* ControlPort.cpp in Sources */,
 				5018BFAD24B4846C00551848 /* ImageToolbox.swift in Sources */,
 				50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */,
+				507A49A224C8D71400DBF984 /* BankTableView.swift in Sources */,
 				504C437C24AF29AC00E69CAE /* AnyArchive.cpp in Sources */,
 				504C437424AF29AC00E69CAE /* T64File.cpp in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
@@ -1436,6 +1451,7 @@
 				504C437024AF29AC00E69CAE /* Cartridge.cpp in Sources */,
 				5031D59C200B81D20088C802 /* Animation.swift in Sources */,
 				506B13C224C1C40600814BB0 /* PreferencesController.swift in Sources */,
+				507A49A024C8D66A00DBF984 /* BreakTableView.swift in Sources */,
 				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
 				504C439D24AF29AC00E69CAE /* version.cc in Sources */,
 				504C436324AF29AC00E69CAE /* Kingsoft.cpp in Sources */,

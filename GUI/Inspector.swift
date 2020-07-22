@@ -18,6 +18,102 @@ class Inspector: DialogController {
     
     // Commons
     @IBOutlet weak var panel: NSTabView!
+    @IBOutlet weak var stopAndGoButton: NSButton!
+    @IBOutlet weak var stepIntoButton: NSButton!
+    @IBOutlet weak var stepOverButton: NSButton!
+    @IBOutlet weak var numberFormatSelector: NSMatrix!
+
+    // CPU panel
+    @IBOutlet weak var instrTableView: InstrTableView!
+    @IBOutlet weak var traceTableView: TraceTableView!
+    @IBOutlet weak var breakTableView: BreakTableView!
+    @IBOutlet weak var cpuPc: NSTextField!
+    @IBOutlet weak var cpuSp: NSTextField!
+    @IBOutlet weak var cpuA: NSTextField!
+    @IBOutlet weak var cpuX: NSTextField!
+    @IBOutlet weak var cpuY: NSTextField!
+    @IBOutlet weak var cpuN: NSButton!
+    @IBOutlet weak var cpuZ: NSButton!
+    @IBOutlet weak var cpuC: NSButton!
+    @IBOutlet weak var cpuI: NSButton!
+    @IBOutlet weak var cpuB: NSButton!
+    @IBOutlet weak var cpuD: NSButton!
+    @IBOutlet weak var cpuV: NSButton!
+    @IBOutlet weak var cpuPortReg: NSTextField!
+    @IBOutlet weak var cpuPortDir: NSTextField!
+    @IBOutlet weak var cpuIrq: NSButton!
+    @IBOutlet weak var cpuNmi: NSButton!
+    @IBOutlet weak var cpuRdy: NSButton!
+    
+    // Memory panel
+    @IBOutlet weak var memSearchField: NSSearchField!
+    @IBOutlet weak var memBankTableView: BankTableView!
+    @IBOutlet weak var memTableView: MemTableView!
+    @IBOutlet weak var memExrom: NSButton!
+    @IBOutlet weak var memGame: NSButton!
+    @IBOutlet weak var memCharen: NSButton!
+    @IBOutlet weak var memHiram: NSButton!
+    @IBOutlet weak var memLoram: NSButton!
+    @IBOutlet weak var memSource: NSPopUpButton!
+
+    // CIA panel
+    @IBOutlet weak var ciaSelector: NSSegmentedControl!
+    @IBOutlet weak var ciaPRA: NSTextField!
+    @IBOutlet weak var ciaPRAbinary: NSTextField!
+    @IBOutlet weak var ciaDDRA: NSTextField!
+    @IBOutlet weak var ciaDDRAbinary: NSTextField!
+    @IBOutlet weak var ciaPA7: NSButton!
+    @IBOutlet weak var ciaPA6: NSButton!
+    @IBOutlet weak var ciaPA5: NSButton!
+    @IBOutlet weak var ciaPA4: NSButton!
+    @IBOutlet weak var ciaPA3: NSButton!
+    @IBOutlet weak var ciaPA2: NSButton!
+    @IBOutlet weak var ciaPA1: NSButton!
+    @IBOutlet weak var ciaPA0: NSButton!
+    @IBOutlet weak var ciaPRB: NSTextField!
+    @IBOutlet weak var ciaPRBbinary: NSTextField!
+    @IBOutlet weak var ciaDDRB: NSTextField!
+    @IBOutlet weak var ciaDDRBbinary: NSTextField!
+    @IBOutlet weak var ciaPB7: NSButton!
+    @IBOutlet weak var ciaPB6: NSButton!
+    @IBOutlet weak var ciaPB5: NSButton!
+    @IBOutlet weak var ciaPB4: NSButton!
+    @IBOutlet weak var ciaPB3: NSButton!
+    @IBOutlet weak var ciaPB2: NSButton!
+    @IBOutlet weak var ciaPB1: NSButton!
+    @IBOutlet weak var ciaPB0: NSButton!
+    @IBOutlet weak var ciaTA: NSTextField!
+    @IBOutlet weak var ciaTAlatch: NSTextField!
+    @IBOutlet weak var ciaTArunning: NSButton!
+    @IBOutlet weak var ciaTAtoggle: NSButton!
+    @IBOutlet weak var ciaTApbout: NSButton!
+    @IBOutlet weak var ciaTAoneShot: NSButton!
+    @IBOutlet weak var ciaTB: NSTextField!
+    @IBOutlet weak var ciaTBlatch: NSTextField!
+    @IBOutlet weak var ciaTBrunning: NSButton!
+    @IBOutlet weak var ciaTBtoggle: NSButton!
+    @IBOutlet weak var ciaTBpbout: NSButton!
+    @IBOutlet weak var ciaTBoneShot: NSButton!
+    @IBOutlet weak var ciaICR: NSTextField!
+    @IBOutlet weak var ciaICRbinary: NSTextField!
+    @IBOutlet weak var ciaIMR: NSTextField!
+    @IBOutlet weak var ciaIMRbinary: NSTextField!
+    @IBOutlet weak var ciaIntLineLow: NSButton!
+    @IBOutlet weak var ciaTodHours: NSTextField!
+    @IBOutlet weak var ciaTodMinutes: NSTextField!
+    @IBOutlet weak var ciaTodSeconds: NSTextField!
+    @IBOutlet weak var ciaTodTenth: NSTextField!
+    @IBOutlet weak var ciaAlarmHours: NSTextField!
+    @IBOutlet weak var ciaAlarmMinutes: NSTextField!
+    @IBOutlet weak var ciaAlarmSeconds: NSTextField!
+    @IBOutlet weak var ciaTodIrqEnable: NSButton!
+    @IBOutlet weak var ciaAlarmTenth: NSTextField!
+    @IBOutlet weak var ciaSDR: NSTextField!
+    @IBOutlet weak var ciaSSR: NSTextField!
+    @IBOutlet weak var ciaSSRbinary: NSTextField!
+    @IBOutlet weak var ciaIdleCycles: NSTextField!
+    @IBOutlet weak var ciaIdleLevelText: NSTextField!
+    @IBOutlet weak var ciaIdleLevel: NSLevelIndicator!
     
     // Cached state of all Amiga components
     // var cpuInfo: CPUInfo?

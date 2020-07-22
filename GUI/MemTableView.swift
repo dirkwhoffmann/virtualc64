@@ -29,6 +29,9 @@ struct MemoryHighlighting {
 
 class MemTableView: NSTableView {
     
+    @IBOutlet weak var inspector: Inspector!
+    var c64: C64Proxy { return inspector.parent.c64 }
+    
     var c: MyController?
     var cbmfont = NSFont.init(name: "C64ProMono", size: 9)
     private var memView = MemoryView.cpuView

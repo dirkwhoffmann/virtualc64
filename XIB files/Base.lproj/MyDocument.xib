@@ -1192,7 +1192,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" id="vEY-WC-bMl">
                                             <rect key="frame" x="1" y="0.0" width="270" height="266"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <tableView focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="1841" id="67" customClass="MemTableView" customModule="VirtualC64" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="270" height="249"/>

@@ -7,15 +7,26 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-extension MyController {
+extension Inspector {
     
-    @IBAction func setMemSource(_ sender: NSPopUpButton!) {
+    @IBAction func memSourceAction(_ sender: NSPopUpButton!) {
         
-        memTableView.setMemView(sender.selectedTag())
+        track()
     }
     
-    @IBAction func setHighlighting(_ sender: NSPopUpButton!) {
+    @IBAction func memSearchAction(_ sender: NSTextField!) {
         
-        memTableView.setHighlighting(sender.selectedTag())
+        track()
+        /*
+        let input = sender.stringValue
+        if let addr = Int(input, radix: 16), input != "" {
+            sender.stringValue = String(format: "%06X", addr)
+            setSelected(addr)
+        } else {
+            sender.stringValue = ""
+            selected = -1
+        }
+        fullRefresh()
+        */
     }
 }
