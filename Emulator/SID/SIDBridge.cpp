@@ -113,14 +113,12 @@ SIDBridge::getClockFrequency()
 void
 SIDBridge::_run()
 {
-    debug("_run\n");
     clearRingbuffer();
 }
 
 void
 SIDBridge::_pause()
 {
-    debug("_pause\n");
     clearRingbuffer();
 }
 

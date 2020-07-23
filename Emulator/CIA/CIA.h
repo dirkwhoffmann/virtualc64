@@ -223,13 +223,23 @@ private:
      */
     u8 tiredness;
 
+    // Total number of skipped cycles (used by the debugger, only)
+    Cycle idleCycles;
+
 public:
     
-    //! @brief    Wakeup cycle
-    u64 wakeUpCycle;
+    // Indicates if the CIA is currently idle
+    bool sleeping;
     
-    //! @brief    Number of skipped executions
-    u64 idleCounter;
+    /* The last executed cycle before the chip went idle
+     * The variable is set in sleep()
+     */
+    Cycle sleepCycle;
+    
+    /* The first cycle to be executed after the chip went idle
+     * The variable is set in sleep()
+     */
+    Cycle wakeUpCycle;
     
     
     //
@@ -425,9 +435,22 @@ private:
     void sleep();
     
 public:
-    
+        
     // Emulates all previously skipped cycles
     void wakeUp();
+    void wakeUp(Cycle targetCycle);
+    
+    // Returns true if the CIA is in idle state
+    bool isSleeping() { return sleeping; }
+    
+    // Returns true if the CIA is awake
+    bool isAwake() { return !sleeping; }
+    
+    // The CIA is idle since this number of cycles
+    Cycle idle();
+    
+    // Total number of cycles the CIA was idle
+    Cycle idleTotal() { return idleCycles; }
 };
 
 

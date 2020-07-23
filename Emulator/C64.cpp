@@ -460,8 +460,6 @@ C64::_powerOff()
 void
 C64::_run()
 {
-    debug("_run\n");
-    
     // Start the emulator thread
     pthread_create(&p, NULL, threadMain, (void *)this);
     
@@ -1015,8 +1013,8 @@ C64::_executeOneCycle()
     
     // First clock phase (o2 low)
     (vic.*vicfunc[rasterCycle])();
-    if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle(); else cia1.idleCounter++;
-    if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle(); else cia2.idleCounter++;
+    if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle();
+    if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle();
     if (iec.isDirtyC64Side) iec.updateIecLinesC64Side();
     
     // Second clock phase (o2 high)

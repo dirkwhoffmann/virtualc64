@@ -47,9 +47,10 @@ CIA::CIA(C64 &ref) : C64Component(ref)
         { &serCounter,       sizeof(serCounter),       CLEAR_ON_RESET },
         { &CNT,              sizeof(CNT),              CLEAR_ON_RESET },
         { &INT,              sizeof(INT),              CLEAR_ON_RESET },
-        { &tiredness,        sizeof(tiredness),        CLEAR_ON_RESET },
+        { &tiredness,        sizeof(sleeping),         CLEAR_ON_RESET },
+        { &idleCycles,       sizeof(idleCycles),       CLEAR_ON_RESET },
+        { &sleepCycle,       sizeof(sleepCycle),       CLEAR_ON_RESET },
         { &wakeUpCycle,      sizeof(wakeUpCycle),      CLEAR_ON_RESET },
-        { &idleCounter,      sizeof(idleCounter),      CLEAR_ON_RESET },
         { NULL,              0,                        0 }};
 
     registerSnapshotItems(items, sizeof(items));
@@ -112,8 +113,8 @@ CIA::_inspect()
         info.tod = tod.info;
         info.todIntEnable= imr & 0x04;
         
-        info.idleCycles = idleCounter;
-        info.idlePercentage =  0; // cpu.cycle ? (double)idleCycles / (double)cpu.cycle : 100.0;
+        info.idleCycles = idleCycles;
+        info.idlePercentage =  cpu.cycle ? (double)idleCycles / (double)cpu.cycle : 100.0;
     }
 }
 
@@ -331,19 +332,19 @@ CIA::spypeek(u16 addr)
             
         case 0x04: // CIA_TIMER_A_LOW
             running = delay & CIACountA3;
-            return LO_BYTE(counterA - (running ? (u16)idleCounter : 0));
+            return LO_BYTE(counterA - (running ? (u16)idle() : 0));
             
         case 0x05: // CIA_TIMER_A_HIGH
             running = delay & CIACountA3;
-            return HI_BYTE(counterA - (running ? (u16)idleCounter : 0));
+            return HI_BYTE(counterA - (running ? (u16)idle() : 0));
             
         case 0x06: // CIA_TIMER_B_LOW
             running = delay & CIACountB3;
-            return LO_BYTE(counterB - (running ? (u16)idleCounter : 0));
+            return LO_BYTE(counterB - (running ? (u16)idle() : 0));
             
         case 0x07: // CIA_TIMER_B_HIGH
             running = delay & CIACountB3;
-            return HI_BYTE(counterB - (running ? (u16)idleCounter : 0));
+            return HI_BYTE(counterB - (running ? (u16)idle() : 0));
             
         case 0x08: // CIA_TIME_OF_DAY_SEC_FRAC
             return tod.getTodTenth();
@@ -735,8 +736,8 @@ CIA::_dump()
 void
 CIA::executeOneCycle()
 {
-    wakeUp();
-    
+    if (sleeping) wakeUp();
+        
     u64 oldDelay = delay;
     u64 oldFeed  = feed;
     
@@ -1041,58 +1042,70 @@ CIA::executeOneCycle()
         }
     }
 
-	// Move delay flags left and feed in new bits
-	delay = ((delay << 1) & DelayMask) | feed;
+    // Move delay flags left and feed in new bits
+    delay = ((delay << 1) & DelayMask) | feed;
     
-    // Go into idle state if possible
-    if (oldDelay == delay && oldFeed == feed) {
-        if (++tiredness > 8) {
-            sleep();
-            tiredness = 0;
-        }
-    } else {
-        tiredness = 0;
-    }
+    // Get tired if nothing has happened in this cycle
+    if (oldDelay == delay && oldFeed == feed) tiredness++; else tiredness = 0;
+    
+    // Sleep if threshold is reached
+    if (tiredness > 8 && !CIA_ON_STEROIDS) sleep();
 }
 
 void
 CIA::sleep()
 {
-    assert(idleCounter == 0);
+    // Don't call this method on a sleeping CIA
+    assert(!sleeping);
     
-    // Determine maximum possible sleep cycles based on timer counts
-    u64 cycle = cpu.cycle;
-    u64 sleepA = (counterA > 2) ? (cycle + counterA - 1) : 0;
-    u64 sleepB = (counterB > 2) ? (cycle + counterB - 1) : 0;
+    // Determine maximum possible sleep cycle based on timer counts
+    Cycle sleepA = cpu.cycle + ((counterA > 2) ? (counterA - 1) : 0);
+    Cycle sleepB = cpu.cycle + ((counterB > 2) ? (counterB - 1) : 0);
     
     // CIAs with stopped timers can sleep forever
-    if (!(feed & CIACountA0)) sleepA = UINT64_MAX;
-    if (!(feed & CIACountB0)) sleepB = UINT64_MAX;
+    if (!(feed & CIACountA0)) sleepA = INT64_MAX;
+    if (!(feed & CIACountB0)) sleepB = INT64_MAX;
     
+    // ZZzzz
+    sleepCycle = cpu.cycle;
     wakeUpCycle = MIN(sleepA, sleepB);
-    // setWakeUpCycle(MIN(sleepA, sleepB));
+    tiredness = 0;
+    sleeping = true;
 }
 
 void
 CIA::wakeUp()
 {
-    // u64 idleCycles = idleCounter;
+    // Don't call this method on an active CIA
+    // assert(sleeping);
+    if (!sleeping) return;
+        
+    // Calculate the number of missed cycles
+    wakeUpCycle = cpu.cycle;
+    Cycle missedCycles = wakeUpCycle - sleepCycle;
     
     // Make up for missed cycles
-    if (idleCounter) {
+    if (missedCycles > 0) {
+        
         if (feed & CIACountA0) {
-            assert(counterA >= idleCounter);
-            counterA -= idleCounter;
+            assert(counterA >= missedCycles);
+            counterA -= missedCycles;
         }
         if (feed & CIACountB0) {
-            assert(counterB >= idleCounter);
-            counterB -= idleCounter;
+            assert(counterB >= missedCycles);
+            counterB -= missedCycles;
         }
-        idleCounter = 0;
-        // resetIdleCounter();
+        
+        idleCycles += missedCycles;
     }
-    wakeUpCycle = 0;
-    // setWakeUpCycle(0);
+
+    sleeping = false;
+}
+
+Cycle
+CIA::idle()
+{
+    return isAwake() ? 0 : cpu.cycle - sleepCycle;
 }
 
 
