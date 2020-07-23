@@ -458,7 +458,6 @@
 		504C435424AF29AC00E69CAE /* TOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOD.h; sourceTree = "<group>"; };
 		504C435524AF29AC00E69CAE /* TOD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TOD.cpp; sourceTree = "<group>"; };
 		504C435624AF29AC00E69CAE /* CIATypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CIATypes.h; sourceTree = "<group>"; };
-		504C435724AF29AC00E69CAE /* TODTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TODTypes.h; sourceTree = "<group>"; };
 		504C435824AF29AC00E69CAE /* CIA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CIA.cpp; sourceTree = "<group>"; };
 		5051A1511B88438800CBFB5A /* 1541_track_change_0.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_0.aiff; sourceTree = "<group>"; };
 		5051A1551B884EBE00CBFB5A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -1009,7 +1008,6 @@
 				504C435624AF29AC00E69CAE /* CIATypes.h */,
 				504C435324AF29AC00E69CAE /* CIA.h */,
 				504C435824AF29AC00E69CAE /* CIA.cpp */,
-				504C435724AF29AC00E69CAE /* TODTypes.h */,
 				504C435424AF29AC00E69CAE /* TOD.h */,
 				504C435524AF29AC00E69CAE /* TOD.cpp */,
 			);

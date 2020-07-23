@@ -32,6 +32,17 @@ TOD::TOD(CIA *cia, C64 &ref) : C64Component(ref)
 }
 
 void
+TOD::_inspect()
+{
+    synchronized {
+        
+        info.time = tod;
+        info.latch = latch;
+        info.alarm = alarm;
+    }
+}
+
+void
 TOD::_reset() 
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
@@ -58,19 +69,6 @@ TOD::_dump()
 	msg("                Stopped : %s\n", stopped ? "yes" : "no");
 	msg("\n");
 }
-
-TODInfo
-TOD::getInfo()
-{
-    TODInfo info;
-    
-    info.time = tod;
-    info.latch = latch;
-    info.alarm = alarm;
-    
-    return info;
-}
-
 
 void
 TOD::increment()

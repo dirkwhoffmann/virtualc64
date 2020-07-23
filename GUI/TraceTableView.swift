@@ -13,4 +13,3 @@ class TraceTableView: NSTableView {
     var c64: C64Proxy { return inspector.parent.c64 }
     
 }
-

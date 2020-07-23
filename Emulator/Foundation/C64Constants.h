@@ -10,5 +10,4 @@
 #ifndef _C64_CONSTANTS_H
 #define _C64_CONSTANTS_H
 
-
 #endif

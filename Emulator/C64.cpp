@@ -134,6 +134,19 @@ C64::setDebugMode(bool enable)
     }
 }
 
+void
+C64::setInspectionTarget(InspectionTarget target)
+{
+    assert(isInspectionTarget(target));
+    inspectionTarget = target;
+}
+
+void
+C64::clearInspectionTarget()
+{
+    inspectionTarget = INSPECT_NONE;
+}
+
 C64Configuration
 C64::getConfig()
 {
@@ -1010,7 +1023,6 @@ C64::_executeOneCycle()
     result &= cpu.executeOneCycle();
     if (drive8.isConnected()) result &= drive8.execute(durationOfOneCycle);
     if (drive9.isConnected()) result &= drive9.execute(durationOfOneCycle);
-    // if (iec.isDirtyDriveSide) iec.updateIecLinesDriveSide();
     datasette.execute();
     
     rasterCycle++;
@@ -1067,6 +1079,16 @@ C64::endFrame()
         unsigned fps = (unsigned)vic.getFramesPerSecond();
         if (frame % (fps * autoSnapshotInterval) == 0) {
             takeAutoSnapshot();
+        }
+    }
+    
+    // Perform an inspection in debug mode
+    if (getDebugMode()) {
+        switch (inspectionTarget) {
+            case INSPECT_NONE: break;
+            case INSPECT_CPU: cpu.inspect(); break;
+            case INSPECT_CIA: cpu.inspect(); break;
+            default: assert(false);
         }
     }
     

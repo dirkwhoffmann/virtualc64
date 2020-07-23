@@ -64,37 +64,37 @@ class CIA : public C64Component {
     // Current configuration
     CIAConfig config;
     
-    //! @brief    Selected chip model DEPRECATED
-    CIARevision model;
+    // Result of the latest inspection
+    CIAInfo info;
     
-    //! @brief    Indicates if timer B bug should be emulated DEPRECATED
-    bool emulateTimerBBug;
     
     //
     // Sub components
     //
     
-private:
-    
-    // Time of day clock
     TOD tod = TOD(this, vc64);
     
     
+    //
+    // Internal state
+    //
+        
 protected:
 
-	//! @brief    Timer A counter
-	u16 counterA;
-	
-    //! @brief    Timer B counter
+    // Total number of skipped cycles (used by the debugger, only)
+    // Cycle idleCycles;
+    
+    // Timer A counter
+    u16 counterA;
+    
+    // Timer B counter
     u16 counterB;
+        
+    // Timer A latch
+    u16 latchA;
     
-private:
-    
-	//! @brief    Timer A latch
-	u16 latchA;
-	
-	//! @brief    Timer B latch
-	u16 latchB;
+    // Timer B latch
+    u16 latchB;
 	    
     
 	// 
@@ -214,13 +214,12 @@ private:
 
     
     //
-    // Speeding up emulation (CIA sleep logic)
+    // Speeding up emulation (sleep logic)
     //
     
-    //! @brief    Idle counter
-    /*! @details  When the VIA state does not change during execution, this
-     *            variable is increased by one. If it exceeds a certain
-     *            threshhold, the chip is put into idle state via sleep()
+    /* Idle counter. When the CIA's state does not change during execution,
+     * this variable is increased by one. If it exceeds a certain threshhold,
+     * the chip is put into idle state via sleep().
      */
     u8 tiredness;
 
@@ -259,40 +258,30 @@ public:
     // Methods from HardwareComponent
     //
     
-public:
+protected:
     
 	void _reset() override;
-    
-private:
-    
-	void _dump() override;
+    void _inspect() override;
+    void _dump() override;
+    // size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
+    // size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
+    // size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
 
     
 public:
-    
-	//! @brief    Dump trace line
-	void dumpTrace();	
-
-    
+        
     //
-    //! @functiongroup Accessing device properties
+    // Configuring
     //
     
-    //! @brief    Returns the currently plugged in chip model.
-    // CIARevision getModel() { return model; }
+    // Returns the result of the most recent call to inspect()
+    CIAInfo getInfo() { return HardwareComponent::getInfo(info); }
     
-    //! @brief    Sets the chip model.
-    // void setModel(CIARevision m);
     
-    //! @brief    Determines if the emulated model is affected by the timer B bug.
-    // bool hasTimerBBug() { return model == MOS_6526; }
-    
-    //! @brief    Returns true if the timer B bug should be emulated.
-    // bool getEmulateTimerBBug() { return emulateTimerBBug; }
-    
-    //! @brief    Enables or disables emulation of the timer B bug.
-    // void setEmulateTimerBBug(bool value) { emulateTimerBBug = value; }
-    
+    //
+    // Accessing properties
+    //
+       
     //! @brief    Getter for peripheral port A
     u8 getPA() { return PA; }
     u8 getDDRA() { return DDRA; }
@@ -300,9 +289,6 @@ public:
     //! @brief    Getter for peripheral port B
     u8 getPB() { return PB; }
     u8 getDDRB() { return DDRB; }
-
-    //! @brief    Collects all data to be shown in the GUI's debug panel
-    CIAInfo getInfo();
     
     //! @brief    Simulates a rising edge on the flag pin
     void triggerRisingEdgeOnFlagPin();
@@ -430,15 +416,17 @@ public:
 
     
     //
-    //! @functiongroup Speeding up emulation
+    // Speeding up emulation (sleep logic)
     //
     
 private:
     
-    //! @brief    Puts the CIA into idle state.
+    // Puts the CIA into idle state
     void sleep();
     
-    //! @brief    Emulates all previously skipped cycles.
+public:
+    
+    // Emulates all previously skipped cycles
     void wakeUp();
 };
 

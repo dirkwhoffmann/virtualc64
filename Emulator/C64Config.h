@@ -29,6 +29,9 @@
 //
 
 // General
+static const int XFILES          = 0; // Report paranormal activity
+
+// Runloop
 static const int RUN_DEBUG       = 0; // Run loop, component states, timing
 static const int SNP_DEBUG       = 0; // Serialization (snapshots)
 static const int MSG_DEBUG       = 0; // Message queue
@@ -37,8 +40,11 @@ static const int MSG_DEBUG       = 0; // Message queue
 static const int CPU_DEBUG       = 0; // CPU
 static const int IRQ_DEBUG       = 0; // Interrupts
 
-// Custom chips
+// CIAs
 static const int CIA_DEBUG       = 0; // Complex Interface Adapter
+static const int CIA_ON_STEROIDS = 0; // Keep the CIAs awake all the time
+
+// Custom chips
 static const int VIA_DEBUG       = 0; // Versatile Interface Adapter
 static const int VIC_DEBUG       = 0; // Video Interface Controller
 static const int SID_DEBUG       = 0; // Sound Interface Device

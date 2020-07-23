@@ -10,8 +10,6 @@
 #ifndef _CIA_T_H
 #define _CIA_T_H
 
-#include "TODTypes.h"
-
 //
 // Enumerations
 //
@@ -52,6 +50,26 @@ typedef struct
 }
 CIAConfig;
 
+typedef union
+{
+    struct {
+        u8 tenth;
+        u8 seconds;
+        u8 minutes;
+        u8 hours;
+    };
+    u32 value;
+}
+TimeOfDay;
+
+typedef struct
+{
+    TimeOfDay time;
+    TimeOfDay latch;
+    TimeOfDay alarm;
+}
+TODInfo;
+
 typedef struct
 {
     struct {
@@ -59,11 +77,13 @@ typedef struct
         u8 reg;
         u8 dir;
     } portA;
+
     struct {
         u8 port;
         u8 reg;
         u8 dir;
     } portB;
+
     struct {
         u16 count;
         u16 latch;
@@ -72,6 +92,7 @@ typedef struct
         bool pbout;
         bool oneShot;
     } timerA;
+
     struct {
         u16 count;
         u16 latch;
@@ -80,11 +101,18 @@ typedef struct
         bool pbout;
         bool oneShot;
     } timerB;
+
+    u8 sdr;
+    u8 ssr;
     u8 icr;
     u8 imr;
     bool intLine;
+    
     TODInfo tod;
     bool todIntEnable;
+    
+    Cycle idleCycles;
+    double idlePercentage;
 }
 CIAInfo;
 

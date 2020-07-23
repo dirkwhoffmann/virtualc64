@@ -23,7 +23,6 @@
 #include "MessageQueueTypes.h"
 #include "MouseTypes.h"
 #include "SIDTypes.h"
-#include "TODTypes.h"
 #include "VICTypes.h"
 
 //
@@ -89,6 +88,22 @@ typedef enum : long
 }
 EmulatorState;
 
+inline bool isEmulatorState(long value) {
+    return value >= STATE_OFF && value <= STATE_RUNNING;
+}
+
+typedef enum : long
+{
+    INSPECT_NONE,
+    INSPECT_CPU,
+    INSPECT_CIA
+}
+InspectionTarget;
+
+inline bool isInspectionTarget(long value) {
+    return value >= INSPECT_NONE && value <= INSPECT_CIA;
+}
+
 typedef enum
 {
     ERR_OK,
@@ -96,6 +111,10 @@ typedef enum
     ERR_ROM_MEGA65_MISMATCH
 }
 ErrorCode;
+
+inline bool isErrorCode(long value) {
+    return value >= ERR_OK && value <= ERR_ROM_MEGA65_MISMATCH;
+}
 
 //
 // Structures

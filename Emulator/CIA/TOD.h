@@ -11,7 +11,6 @@
 #define _TOD_H
 
 #include "C64Component.h"
-#include "TODTypes.h"
 
 class CIA;
 
@@ -29,19 +28,22 @@ inline u8 incBCD(u8 bcd) {
 class TOD : public C64Component {
     
     friend CIA;
-
+    
 private:
     
-    //! @brief    Reference to the connected CIA
+    // Result of the latest inspection
+    TODInfo info;
+    
+    // Reference to the connected CIA
     CIA *cia;
     
-    //! @brief    Time of day clock
+    // Time of day clock
 	TimeOfDay tod;
 
-    //! @brief    Time of day clock latch
+    // Time of day clock latch
     TimeOfDay latch;
 
-    //! @brief    Alarm time
+    // Alarm time
 	TimeOfDay alarm;
 	
 	/*! @brief    Indicates if the TOD registers are frozen
@@ -116,106 +118,106 @@ public:
 
 private:
     
+    void _inspect() override;
 	void _reset() override;
-	void _dump() override;
-
-        
+    void _dump() override;
+    
     //
-    //! @functiongroup Configuring the component
+    // Configuring
     //
     
 public:
-
     
-    //! @brief    Sets the frequency of the driving clock.
+    // Returns the result of the most recent call to inspect()
+    TODInfo getInfo() { return HardwareComponent::getInfo(info); }
+
+    // Sets the frequency of the driving clock
     void setHz(u8 value) { assert(value == 5 || value == 6); hz = value; }
 
-    //! @brief    Returns the current configuration.
-    TODInfo getInfo();
     
-
     //
-    //! @functiongroup Running the component
+    // Accessing properties
+    //
+
+    // Returns the hours digits of the time of day clock
+     u8 getTodHours() { return (frozen ? latch.hours : tod.hours) & 0x9F; }
+
+     // Returns the minutes digits of the time of day clock
+     u8 getTodMinutes() { return (frozen ? latch.minutes : tod.minutes) & 0x7F; }
+
+     // Returns the seconds digits of the time of day clock
+     u8 getTodSeconds() { return (frozen ? latch.seconds : tod.seconds) & 0x7F; }
+
+     // Returns the tenth-of-a-second digits of the time of day clock
+     u8 getTodTenth() { return (frozen ? latch.tenth : tod.tenth) & 0x0F; }
+
+     // Returns the hours digits of the alarm time
+     u8 getAlarmHours() { return alarm.hours & 0x9F; }
+
+     // Returns the minutes digits of the alarm time
+     u8 getAlarmMinutes() { return alarm.minutes & 0x7F; }
+
+     // Returns the seconds digits of the alarm time
+     u8 getAlarmSeconds() { return alarm.seconds & 0x7F; }
+
+     // Returns the tenth-of-a-second digits of the alarm time
+     u8 getAlarmTenth() { return alarm.tenth & 0x0F; }
+     
+     // Sets the hours digits of the time of day clock
+     void setTodHours(u8 value) { tod.hours = value & 0x9F; checkForInterrupt(); }
+     
+     // Sets the minutes digits of the time of day clock
+     void setTodMinutes(u8 value) {
+         tod.minutes = value & 0x7F; checkForInterrupt(); }
+     
+     // Sets the seconds digits of the time of day clock
+     void setTodSeconds(u8 value) {
+         tod.seconds = value & 0x7F; checkForInterrupt(); }
+     
+     // Sets the tenth-of-a-second digits of the time of day clock
+     void setTodTenth(u8 value) {
+         tod.tenth = value & 0x0F; checkForInterrupt(); }
+     
+     // Sets the hours digits of the alarm time
+     void setAlarmHours(u8 value) {
+         alarm.hours = value & 0x9F; checkForInterrupt(); }
+     
+     // Sets the minutes digits of the alarm time
+     void setAlarmMinutes(u8 value) {
+         alarm.minutes = value & 0x7F; checkForInterrupt(); }
+     
+     // Sets the seconds digits of the alarm time
+     void setAlarmSeconds(u8 value) {
+         alarm.seconds = value & 0x7F; checkForInterrupt(); }
+     
+     // Sets the tenth-of-a-second digits of the time of day clock
+     void setAlarmTenth(u8 value) {
+         alarm.tenth = value & 0x0F; checkForInterrupt(); }
+
+    
+    //
+    // Running the component
     //
     
 private:
     
-    //! @brief    Freezes the time of day clock.
+    // Freezes the time of day clock
     void freeze() { if (!frozen) { latch.value = tod.value; frozen = true; } }
     
-    //! @brief    Unfreezes the time of day clock.
+    // Unfreezes the time of day clock
     void defreeze() { frozen = false; }
     
-    //! @brief    Stops the time of day clock.
+    // Stops the time of day clock
     void stop() { frequencyCounter = 0; stopped = true; }
     
-    //! @brief    Starts the time of day clock.
+    // Starts the time of day clock
     void cont() { stopped = false; }
-
-    //! @brief    Returns the hours digits of the time of day clock.
-    u8 getTodHours() { return (frozen ? latch.hours : tod.hours) & 0x9F; }
-
-    //! @brief    Returns the minutes digits of the time of day clock.
-    u8 getTodMinutes() { return (frozen ? latch.minutes : tod.minutes) & 0x7F; }
-
-    //! @brief    Returns the seconds digits of the time of day clock.
-    u8 getTodSeconds() { return (frozen ? latch.seconds : tod.seconds) & 0x7F; }
-
-    //! @brief    Returns the tenth-of-a-second digits of the time of day clock.
-    u8 getTodTenth() { return (frozen ? latch.tenth : tod.tenth) & 0x0F; }
-
-    //! @brief    Returns the hours digits of the alarm time.
-    u8 getAlarmHours() { return alarm.hours & 0x9F; }
-
-    //! @brief    Returns the minutes digits of the alarm time.
-    u8 getAlarmMinutes() { return alarm.minutes & 0x7F; }
-
-    //! @brief    Returns the seconds digits of the alarm time.
-    u8 getAlarmSeconds() { return alarm.seconds & 0x7F; }
-
-    //! @brief    Returns the tenth-of-a-second digits of the alarm time.
-    u8 getAlarmTenth() { return alarm.tenth & 0x0F; }
-    
-
-	//! @brief    Sets the hours digits of the time of day clock.
-    void setTodHours(u8 value) { tod.hours = value & 0x9F; checkForInterrupt(); }
-	
-	//! @brief    Sets the minutes digits of the time of day clock.
-    void setTodMinutes(u8 value) {
-        tod.minutes = value & 0x7F; checkForInterrupt(); }
-	
-	//! @brief    Sets the seconds digits of the time of day clock.
-    void setTodSeconds(u8 value) {
-        tod.seconds = value & 0x7F; checkForInterrupt(); }
-	
-	//! @brief    Sets the tenth-of-a-second digits of the time of day clock.
-	void setTodTenth(u8 value) {
-        tod.tenth = value & 0x0F; checkForInterrupt(); }
-	
-	//! @brief    Sets the hours digits of the alarm time.
-    void setAlarmHours(u8 value) {
-        alarm.hours = value & 0x9F; checkForInterrupt(); }
-	
-	//! @brief    Sets the minutes digits of the alarm time.
-    void setAlarmMinutes(u8 value) {
-        alarm.minutes = value & 0x7F; checkForInterrupt(); }
-	
-	//! @brief    Sets the seconds digits of the alarm time.
-    void setAlarmSeconds(u8 value) {
-        alarm.seconds = value & 0x7F; checkForInterrupt(); }
-	
-	//! @brief    Sets the tenth-of-a-second digits of the time of day clock.
-    void setAlarmTenth(u8 value) {
-        alarm.tenth = value & 0x0F; checkForInterrupt(); }
-	
-	/*! @brief    Increments the TOD clock by one tenth of a second.
-     *  @see      C64::endFrame()
-     */
+ 	
+	// Increments the TOD clock by one tenth of a second
 	void increment();
 
-    /*! @brief    Updates variable 'matching'
-     *  @details  If a positive edge occurs, the connected CIA will be requested
-     *            to trigger an interrupt.
+    /* Updates variable 'matching'. If a positive edge occurs, the connected
+     * CIA will be requested to trigger an interrupt.
      */
     void checkForInterrupt();
 };

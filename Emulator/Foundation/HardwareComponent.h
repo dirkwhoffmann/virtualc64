@@ -153,9 +153,34 @@ public:
     virtual void ping();
     virtual void _ping() { }
     
+    /* Collects information about the component and it's subcomponents.
+     * Many components contains an info variable of a class specific type
+     * (e.g., CPUInfo, MemoryInfo, ...). These variables contain the
+     * information shown in the GUI's inspector window and are updated by
+     * calling this function. The function is called automatically when the
+     * emulator switches to pause state to keep the GUI inspector data up
+     * to date.
+     * Note: Because this function accesses the internal emulator state with
+     * many non-atomic operations, it must not be called on a running emulator.
+     * To query information while the emulator is running, set up an inspection
+     * target via setInspectionTarget()
+     */
+    void inspect();
+    virtual void _inspect() { }
     
-    
-    
+    /* Base method for building the class specific getInfo() methods
+     * If the emulator is running, the result of the most recent inspection is
+     * returned. If the emulator is not running, the function first updates the
+     * cached values in order to return up-to-date results.
+     */
+    template<class T> T getInfo(T &cachedValues) {
+        
+        if (!isRunning()) _inspect();
+        
+        T result;
+        synchronized { result = cachedValues; }
+        return result;
+    }
     
     /* Dumps debug information about the current configuration to the console
      */

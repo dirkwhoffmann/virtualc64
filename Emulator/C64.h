@@ -67,15 +67,20 @@
  * SID, you need to invoke a public method on c64.sid.
  */
 class C64 : public HardwareComponent {
-    
+        
+public:
+        
     /* Indicates if the emulator should be executed in debug mode.
      * Debug mode is enabled when the GUI debugger is opend and disabled when
      * the GUI debugger is closed. In debug mode, several time-consuming tasks
      * are performed that are usually left out. E.g., the CPU checks for
      * breakpoints and records the executed instruction in it's trace buffer.
      */
-    static bool debugMode;
+    bool debugMode;
     
+    // The currently set inspection target (only evaluated in debug mode)
+    InspectionTarget inspectionTarget;
+
     //
     // Sub components
     //
@@ -320,6 +325,15 @@ public:
     void setDebugMode(bool enable);
     void enableDebugging() { setDebugMode(true); }
     void disableDebugging() { setDebugMode(false); }
+    
+    /* Sets the inspection target.
+     * If an inspection target is set, the emulator periodically calls
+     * inspect().
+     */
+    void setInspectionTarget(InspectionTarget target);
+
+    // Removed the currently set inspection target
+    void clearInspectionTarget();
     
     
     //

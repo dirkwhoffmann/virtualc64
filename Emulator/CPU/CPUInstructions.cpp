@@ -492,27 +492,7 @@ CPU::executeOneCycle()
             if (unlikely(tracingEnabled())) {
   
                 recordInstruction();
-            
-                /*
-                RecordedInstruction recorded = readRecordedInstruction(0);
-                DisassembledInstruction instr = disassemble(recorded, true);
-                
-                {
-                    // cia1.dumpTrace();
-                    // cia2.dumpTrace();
-                }
-                msg("%s %s: %d %d %s %s %s   %s %s %s %s %s %s\n",
-                    (this == &drive8.cpu) ? " " : "",
-                        instr.pc,
-                        vc64.rasterLine,
-                        vc64.rasterCycle,
-                        instr.byte1, instr.byte2, instr.byte3,
-                        instr.a, instr.x, instr.y, instr.sp,
-                        instr.flags,
-                        instr.command);
-            */
             }
-            
             
             // Check breakpoint tag
             if (unlikely(breakpoint[pc] != NO_BREAKPOINT)) {

@@ -18,9 +18,10 @@ CIA::CIA(C64 &ref) : C64Component(ref)
     // Register snapshot items
     SnapshotItem items[] = {
 
-        { &model,            sizeof(model),            KEEP_ON_RESET },
-        { &emulateTimerBBug, sizeof(emulateTimerBBug), KEEP_ON_RESET },
+        { &config.revision,  sizeof(config.revision),  KEEP_ON_RESET },
+        { &config.timerBBug, sizeof(config.timerBBug), KEEP_ON_RESET },
 
+        // { &idleCycles,       sizeof(idleCycles),       CLEAR_ON_RESET },
         { &counterA,         sizeof(counterA),         CLEAR_ON_RESET },
         { &latchA,           sizeof(latchA),           CLEAR_ON_RESET },
         { &counterB,         sizeof(counterB),         CLEAR_ON_RESET },
@@ -53,8 +54,8 @@ CIA::CIA(C64 &ref) : C64Component(ref)
 
     registerSnapshotItems(items, sizeof(items));
     
-    model = MOS_6526;
-    emulateTimerBBug = true;
+    config.revision = MOS_6526;
+    config.timerBBug = true;
 }
 
 void
@@ -71,6 +72,49 @@ CIA::_reset()
 	
 	latchA = 0xFFFF;
 	latchB = 0xFFFF;
+}
+
+void
+CIA::_inspect()
+{
+    synchronized {
+        
+        updatePA();
+        info.portA.port = PA;
+        info.portA.reg = PRA;
+        info.portA.dir = DDRA;
+        
+        updatePB();
+        info.portB.port = PB;
+        info.portB.reg = PRB;
+        info.portB.dir = DDRB;
+        
+        info.timerA.count = LO_HI(spypeek(0x04), spypeek(0x05));
+        info.timerA.latch = latchA;
+        info.timerA.running = (delay & CIACountA3);
+        info.timerA.toggle = CRA & 0x04;
+        info.timerA.pbout = CRA & 0x02;
+        info.timerA.oneShot = CRA & 0x08;
+        
+        info.timerB.count = LO_HI(spypeek(0x06), spypeek(0x07));
+        info.timerB.latch = latchB;
+        info.timerB.running = (delay & CIACountB3);
+        info.timerB.toggle = CRB & 0x04;
+        info.timerB.pbout = CRB & 0x02;
+        info.timerB.oneShot = CRB & 0x08;
+        
+        // info.sdr = sdr;
+        // info.ssr = ssr;
+        info.icr = icr;
+        info.imr = imr;
+        info.intLine = INT;
+        
+        info.tod = tod.info;
+        info.todIntEnable= imr & 0x04;
+        
+        info.idleCycles = idleCounter;
+        info.idlePercentage =  0; // cpu.cycle ? (double)idleCycles / (double)cpu.cycle : 100.0;
+    }
 }
 
 void
@@ -103,7 +147,7 @@ CIA::triggerFallingEdgeOnFlagPin()
 void
 CIA::triggerTimerIrq()
 {
-    switch (model) {
+    switch (config.revision) {
             
         case MOS_6526:
             delay |= CIASetInt0;
@@ -217,7 +261,7 @@ CIA::peek(u16 addr)
         case 0x0D: // CIA_INTERRUPT_CONTROL
 		
             // For new CIAs, set upper bit if an IRQ is being triggered
-            if ((delay & CIASetInt1) && (icr & 0x1F) && model == MOS_8521) {
+            if ((delay & CIASetInt1) && (icr & 0x1F) && config.revision == MOS_8521) {
                 icr |= 0x80;
             }
             
@@ -233,7 +277,7 @@ CIA::peek(u16 addr)
             delay &= ~(CIASetInt0 | CIASetInt1);
         
             // Schedule the ICR bits to be cleared
-            if (model == MOS_8521) {
+            if (config.revision == MOS_8521) {
                 delay |= CIAClearIcr0; // Uppermost bit
                 delay |= CIAAckIcr0;   // Other bits
                 icrAck = icr;
@@ -466,7 +510,7 @@ CIA::poke(u16 addr, u8 value)
             
 			// Raise an interrupt in the next cycle if conditions match
 			if ((imr & icr & 0x1F) && INT) {
-                if (model == MOS_8521) {
+                if (config.revision == MOS_8521) {
                     if (!(delay & CIAReadIcr1)) {
                         delay |= (CIASetInt1 | CIASetIcr1);
                     }
@@ -478,7 +522,7 @@ CIA::poke(u16 addr, u8 value)
             // Clear pending interrupt if a write has occurred in the previous cycle
             // Solution is taken from Hoxs64. It fixes dd0dtest (11)
             else if (delay & CIAClearIcr2) {
-                if (model == MOS_6526) {
+                if (config.revision == MOS_6526) {
                      delay &= ~(CIASetInt1 | CIASetIcr1);
                  }
             }
@@ -651,99 +695,41 @@ CIA::todInterrupt()
 }
 
 void
-CIA::dumpTrace()
-{
-    const char *indent = "   ";
-
-    msg("%sICR: %02X IMR: %02X ", indent, icr, imr);
-    msg("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
-        delay & CIACountA0 ? "CntA0 " : "",
-        delay & CIACountA1 ? "CntA1 " : "",
-        delay & CIACountA2 ? "CntA2 " : "",
-        delay & CIACountA3 ? "CntA3 " : "",
-        delay & CIACountB0 ? "CntB0 " : "",
-        delay & CIACountB1 ? "CntB1 " : "",
-        delay & CIACountB2 ? "CntB2 " : "",
-        delay & CIACountB3 ? "CntB3 " : "",
-        delay & CIALoadA0 ? "LdA0 " : "",
-        delay & CIALoadA1 ? "LdA1 " : "",
-        delay & CIALoadA2 ? "LdA2 " : "",
-        delay & CIALoadB0 ? "LdB0 " : "",
-        delay & CIALoadB1 ? "LdB1 " : "",
-        delay & CIALoadB1 ? "LdB2 " : "",
-        delay & CIAPB6Low0 ? "PB6Lo0 " : "",
-        delay & CIAPB6Low1 ? "PB6Lo1 " : "",
-        delay & CIAPB7Low0 ? "PB7Lo0 " : "",
-        delay & CIAPB7Low1 ? "PB7Lo1 " : "",
-        delay & CIASetInt0 ? "Int0 " : "",
-        delay & CIASetInt1 ? "Int1 " : "",
-        delay & CIAOneShotA0 ? "1ShotA0 " : "",
-        delay & CIAOneShotB0 ? "1ShotB0 " : "");
-    
-    msg("%sA: %04X (%04X) PA: %02X (%02X) DDRA: %02X CRA: %02X\n",
-        indent, counterA, latchA, PA, PRA, DDRA, CRA);
-    msg("%sB: %04X (%04X) PB: %02X (%02X) DDRB: %02X CRB: %02X\n",
-        indent, counterB, latchB, PB, PRB, DDRB, CRB);
-}
-
-void
 CIA::_dump()
 {
-    CIAInfo info = getInfo();
-    
-	msg("              Counter A : %04X\n", info.timerA.count);
-    msg("                Latch A : %04X\n", info.timerA.latch);
-    msg("            Data port A : %02X\n", info.portA.reg);
-    msg("  Data port direction A : %02X\n", info.portA.dir);
-	msg("     Control register A : %02X\n", CRA);
-	msg("\n");
-	msg("              Counter B : %04X\n", info.timerB.count);
-	msg("                Latch B : %04X\n", info.timerB.latch);
-	msg("            Data port B : %02X\n", info.portB.reg);
-	msg("  Data port direction B : %02X\n", info.portB.dir);
-	msg("     Control register B : %02X\n", CRB);
-	msg("\n");
-	msg("  Interrupt control reg : %02X\n", info.icr);
-	msg("     Interrupt mask reg : %02X\n", info.imr);
-	msg("\n");	
-	tod.dump();
-}
+    _inspect();
 
-CIAInfo
-CIA::getInfo()
-{
-    CIAInfo info;
-    
-    info.portA.port = PA;
-    info.portA.reg = PRA;
-    info.portA.dir = DDRA;
-    
-    info.portB.port = PB;
-    info.portB.reg = PRB;
-    info.portB.dir = DDRB;
+    msg("                   Clock : %lld\n", clock);
+    // msg("                Sleeping : %s\n", sleeping ? "yes" : "no");
+    msg("               Tiredness : %d\n", tiredness);
+    // msg(" Most recent sleep cycle : %lld\n", sleepCycle);
+    msg("Most recent wakeup cycle : %lld\n", wakeUpCycle);
+    msg("\n");
+    msg("               Counter A : %04X\n", info.timerA.count);
+    msg("                 Latch A : %04X\n", info.timerA.latch);
+    msg("         Data register A : %02X\n", info.portA.reg);
+    msg("   Data port direction A : %02X\n", info.portA.dir);
+    msg("             Data port A : %02X\n", info.portA.port);
+    msg("      Control register A : %02X\n", CRA);
+    msg("\n");
+    msg("               Counter B : %04X\n", info.timerB.count);
+    msg("                 Latch B : %04X\n", info.timerB.latch);
+    msg("         Data register B : %02X\n", info.portB.reg);
+    msg("   Data port direction B : %02X\n", info.portB.dir);
+    msg("             Data port B : %02X\n", info.portB.port);
+    msg("      Control register B : %02X\n", CRB);
+    msg("\n");
+    msg("   Interrupt control reg : %02X\n", info.icr);
+    msg("      Interrupt mask reg : %02X\n", info.imr);
+    msg("\n");
+//    msg("                     SDR : %02X %02X\n", info.sdr, sdr);
+//     msg("              serCounter : %02X\n", serCounter);
+    msg("\n");
+    msg("                     CNT : %d\n", CNT);
+    msg("                     INT : %d\n", INT);
+    msg("\n");
 
-    info.timerA.count = LO_HI(spypeek(0x04), spypeek(0x05));
-    info.timerA.latch = latchA;
-    info.timerA.running = (delay & CIACountA3);
-    info.timerA.toggle = CRA & 0x04;
-    info.timerA.pbout = CRA & 0x02;
-    info.timerA.oneShot = CRA & 0x08;
-    
-    info.timerB.count = LO_HI(spypeek(0x06), spypeek(0x07));
-    info.timerB.latch = latchB;
-    info.timerB.running = (delay & CIACountB3);
-    info.timerB.toggle = CRB & 0x04;
-    info.timerB.pbout = CRB & 0x02;
-    info.timerB.oneShot = CRB & 0x08;
-
-    info.icr = icr;
-    info.imr = imr;
-    info.intLine = INT;
-    
-    info.tod = tod.getInfo();
-    info.todIntEnable = icr & 0x04;
-    
-    return info;
+    tod.dump();
 }
 
 void
@@ -1001,7 +987,7 @@ CIA::executeOneCycle()
 	// if (timerBOutput && !(delay & CIAReadIcr0)) { // (10)
     if (timerBOutput) { // (10)
         
-        if ((delay & CIAReadIcr0) && emulateTimerBBug) {
+        if ((delay & CIAReadIcr0) && config.timerBBug) {
             
             // The old CIA chips (NMOS technology) exhibit a race condition here
             // which is known as the "timer B bug". If ICR is currently read,
