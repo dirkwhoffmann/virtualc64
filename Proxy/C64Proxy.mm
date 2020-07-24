@@ -1432,6 +1432,14 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->c64->disableDebugging();
 }
+- (void) setInspectionTarget:(InspectionTarget)target
+{
+    wrapper->c64->setInspectionTarget(target);
+}
+- (void) clearInspectionTarget
+{
+    wrapper->c64->clearInspectionTarget();
+}
 - (BOOL) isReady:(ErrorCode *)error
 {
     return wrapper->c64->isReady(error);

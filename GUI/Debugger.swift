@@ -38,9 +38,6 @@ extension MyController {
             case "MEM":
                 memTableView.refresh()
 
-            case "CIA":
-                refreshCIA()
-
             case "VIC":
                 refreshVIC()
 

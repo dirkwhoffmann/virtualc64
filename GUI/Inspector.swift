@@ -18,6 +18,7 @@ class Inspector: DialogController {
     
     // Commons
     @IBOutlet weak var panel: NSTabView!
+    @IBOutlet weak var cpuTab: NSTabView!
     @IBOutlet weak var stopAndGoButton: NSButton!
     @IBOutlet weak var stepIntoButton: NSButton!
     @IBOutlet weak var stepOverButton: NSButton!
@@ -56,6 +57,9 @@ class Inspector: DialogController {
     @IBOutlet weak var memLoram: NSButton!
     @IBOutlet weak var memSource: NSPopUpButton!
 
+    var bank = 0
+    var memSrc = 0
+    
     // CIA panel
     @IBOutlet weak var ciaSelector: NSSegmentedControl!
     @IBOutlet weak var ciaPRA: NSTextField!
@@ -106,7 +110,7 @@ class Inspector: DialogController {
     @IBOutlet weak var ciaAlarmHours: NSTextField!
     @IBOutlet weak var ciaAlarmMinutes: NSTextField!
     @IBOutlet weak var ciaAlarmSeconds: NSTextField!
-    @IBOutlet weak var ciaTodIrqEnable: NSButton!
+    @IBOutlet weak var ciaTodIntEnable: NSButton!
     @IBOutlet weak var ciaAlarmTenth: NSTextField!
     @IBOutlet weak var ciaSDR: NSTextField!
     @IBOutlet weak var ciaSSR: NSTextField!
@@ -117,7 +121,7 @@ class Inspector: DialogController {
     
     // Cached state of all Amiga components
     // var cpuInfo: CPUInfo?
-    // var ciaInfo: CIAInfo?
+    var ciaInfo: CIAInfo?
     var isRunning = true
     
     // Used to determine the items to be refreshed
@@ -129,7 +133,7 @@ class Inspector: DialogController {
 
         super.showWindow(self)
         c64.enableDebugging()
-        // updateInspectionTarget()
+        updateInspectionTarget()
     }
     
     // Assigns a number formatter to a control
@@ -140,7 +144,12 @@ class Inspector: DialogController {
         control.needsDisplay = true
     }
     
-    func triggerRefresh() {
+    func fullRefresh() {
+        
+        refresh(full: true)
+    }
+    
+    func continousRefresh() {
         
         if isRunning { refresh(count: refreshCnt) }
         isRunning = c64.isRunning()
@@ -151,7 +160,6 @@ class Inspector: DialogController {
         
         if window?.isVisible == false { return }
 
-        /*
         if let id = panel.selectedTabViewItem?.label {
 
             switch id {
@@ -162,14 +170,7 @@ class Inspector: DialogController {
             default: break
             }
         }
-        */
     }
-    
-    func fullRefresh() {
-        
-        refresh(full: true)
-    }
-    
 }
 
 extension Inspector: NSWindowDelegate {
@@ -180,7 +181,7 @@ extension Inspector: NSWindowDelegate {
         
         // Leave debug mode
         c64?.disableDebugging()
-        // amiga?.clearInspectionTarget()
+        c64?.clearInspectionTarget()
     }
 }
 
@@ -188,26 +189,20 @@ extension Inspector: NSTabViewDelegate {
     
     func updateInspectionTarget() {
         
-        /*
-         if let id = panel.selectedTabViewItem?.label {
-         
-         switch id {
-         
-         case "CPU":     parent?.amiga.setInspectionTarget(INS_CPU)
-         case "CIA":     parent?.amiga.setInspectionTarget(INS_CIA)
-         case "Memory":  parent?.amiga.setInspectionTarget(INS_MEM)
-         case "Agnus":   parent?.amiga.setInspectionTarget(INS_AGNUS)
-         case "Copper and Blitter":  parent?.amiga.setInspectionTarget(INS_AGNUS)
-         case "Denise":  parent?.amiga.setInspectionTarget(INS_DENISE)
-         case "Paula":   parent?.amiga.setInspectionTarget(INS_PAULA)
-         case "Ports":   parent?.amiga.setInspectionTarget(INS_PORTS)
-         case "Events":  parent?.amiga.setInspectionTarget(INS_EVENTS)
-         default:        break
-         }
-         
-         fullRefresh()
-         }
-         */
+        if let id = panel.selectedTabViewItem?.label {
+            
+            switch id {
+                
+            case "CPU":     parent.c64.setInspectionTarget(INSPECT_CPU)
+            case "Memory":  parent.c64.setInspectionTarget(INSPECT_MEM)
+            case "CIA":     parent.c64.setInspectionTarget(INSPECT_CIA)
+            case "VIC":     parent.c64.setInspectionTarget(INSPECT_VIC)
+            case "SID":     parent.c64.setInspectionTarget(INSPECT_SID)
+            default:        break
+            }
+            
+            fullRefresh()
+        }
     }
     
     func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
@@ -215,11 +210,10 @@ extension Inspector: NSTabViewDelegate {
         if tabView === panel {
             updateInspectionTarget()
         }
-        /*
-         if tabView === cpuTab {
-         instrTableView.refresh(full: true)
-         traceTableView.refresh(full: true)
-         }
-         */
+        
+        if tabView === cpuTab {
+            instrTableView.refresh(full: true)
+            traceTableView.refresh(full: true)
+        }
     }
 }

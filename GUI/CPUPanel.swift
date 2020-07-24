@@ -7,6 +7,15 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+extension Inspector {
+    
+    func refreshCPU(count: Int = 0, full: Bool = false) {
+        
+        // if full { }
+        
+    }
+}
+
 extension MyController {
     
     private var cpuInfo: CPUInfo { return c64.cpu.getInfo() }

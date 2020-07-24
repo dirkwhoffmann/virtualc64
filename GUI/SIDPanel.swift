@@ -7,6 +7,17 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+extension Inspector {
+    
+    func refreshSID(count: Int = 0, full: Bool = false) {
+        
+        // if full { }
+        
+        // memTableView.refresh(count: count, full: full)
+        // memBankTableView.refresh(count: count, full: full)
+    }
+}
+
 extension MyController {
     
     func refreshSID() {

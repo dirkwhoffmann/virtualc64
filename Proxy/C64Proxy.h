@@ -110,6 +110,8 @@ struct AnyC64FileWrapper;
 
 - (BOOL) releaseBuild;
 
+- (void) setInspectionTarget:(InspectionTarget)target;
+- (void) clearInspectionTarget;
 - (BOOL) debugMode;
 - (void) enableDebugging;
 - (void) disableDebugging;

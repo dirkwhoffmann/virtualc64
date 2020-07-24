@@ -96,12 +96,15 @@ typedef enum : long
 {
     INSPECT_NONE,
     INSPECT_CPU,
-    INSPECT_CIA
+    INSPECT_MEM,
+    INSPECT_CIA,
+    INSPECT_VIC,
+    INSPECT_SID
 }
 InspectionTarget;
 
 inline bool isInspectionTarget(long value) {
-    return value >= INSPECT_NONE && value <= INSPECT_CIA;
+    return value >= INSPECT_NONE && value <= INSPECT_SID;
 }
 
 typedef enum

@@ -8,17 +8,10 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="Inspector" customModule="VirtualC64" customModuleProvider="target">
             <connections>
-                <outlet property="ciaAlarmHi" destination="g0i-MH-bN4" id="Ms5-87-Wfz"/>
                 <outlet property="ciaAlarmHours" destination="hYn-dP-0qI" id="wQ6-tt-KfH"/>
-                <outlet property="ciaAlarmLo" destination="Jwh-KS-LWA" id="ICR-Jk-rgS"/>
-                <outlet property="ciaAlarmMid" destination="unz-uI-Iu3" id="VrN-xi-HEH"/>
                 <outlet property="ciaAlarmMinutes" destination="g0i-MH-bN4" id="7tN-0u-GhI"/>
                 <outlet property="ciaAlarmSeconds" destination="unz-uI-Iu3" id="Pyj-Ns-wLd"/>
                 <outlet property="ciaAlarmTenth" destination="Jwh-KS-LWA" id="sHm-cx-UOb"/>
-                <outlet property="ciaCntHi" destination="i7r-XZ-qFC" id="k9g-EN-7pp"/>
-                <outlet property="ciaCntIntEnable" destination="kCt-ih-7Wp" id="hPe-ia-icE"/>
-                <outlet property="ciaCntLo" destination="rwN-NX-KLQ" id="kYf-aG-lGi"/>
-                <outlet property="ciaCntMid" destination="1p9-Jh-RQR" id="3OG-lQ-ScQ"/>
                 <outlet property="ciaDDRA" destination="XeH-7Q-MFC" id="7fm-sP-mHb"/>
                 <outlet property="ciaDDRAbinary" destination="LL4-pt-Zbg" id="00h-x5-hwe"/>
                 <outlet property="ciaDDRB" destination="WpW-XN-0I6" id="cup-BR-3eE"/>
@@ -54,6 +47,7 @@
                 <outlet property="ciaSDR" destination="tsf-e8-xkA" id="mkR-Gv-MMv"/>
                 <outlet property="ciaSSR" destination="xhy-cG-gRS" id="gyj-OE-WiO"/>
                 <outlet property="ciaSSRbinary" destination="3wJ-ND-2RN" id="ieb-W3-W5u"/>
+                <outlet property="ciaSelector" destination="uTQ-oI-jWT" id="mbB-4K-otR"/>
                 <outlet property="ciaTA" destination="MdX-75-KKK" id="lCL-JP-HY8"/>
                 <outlet property="ciaTAlatch" destination="jg7-xA-bU5" id="Yye-YH-6NU"/>
                 <outlet property="ciaTAoneShot" destination="Gbp-Rw-IhL" id="yu6-wd-qNE"/>
@@ -67,7 +61,7 @@
                 <outlet property="ciaTBrunning" destination="2xU-15-yxZ" id="ZU1-5T-bGS"/>
                 <outlet property="ciaTBtoggle" destination="B4g-Nx-6jT" id="o4p-Ed-OdV"/>
                 <outlet property="ciaTodHours" destination="0X4-8Z-rrF" id="BTU-gf-wnd"/>
-                <outlet property="ciaTodIrqEnable" destination="kCt-ih-7Wp" id="Qvt-wQ-Xl4"/>
+                <outlet property="ciaTodIntEnable" destination="kCt-ih-7Wp" id="Qvt-wQ-Xl4"/>
                 <outlet property="ciaTodMinutes" destination="i7r-XZ-qFC" id="EQe-l2-4uU"/>
                 <outlet property="ciaTodSeconds" destination="1p9-Jh-RQR" id="uHk-lb-KN3"/>
                 <outlet property="ciaTodTenth" destination="rwN-NX-KLQ" id="uh3-OO-Avu"/>
@@ -79,7 +73,11 @@
                 <outlet property="memLoram" destination="ciV-Kn-T6h" id="sT0-be-wEC"/>
                 <outlet property="memSource" destination="JGr-5C-bxz" id="zse-ng-d6z"/>
                 <outlet property="memTableView" destination="qr2-Bo-wI1" id="cjY-Mz-4EP"/>
+                <outlet property="numberFormatSelector" destination="I8k-0V-ELF" id="yN0-mY-F0B"/>
                 <outlet property="panel" destination="QhJ-8A-HRo" id="g4P-OI-piB"/>
+                <outlet property="stepIntoButton" destination="XcS-nk-XBp" id="WJQ-2Z-1F9"/>
+                <outlet property="stepOverButton" destination="EYA-b4-jd8" id="mJJ-RB-PNP"/>
+                <outlet property="stopAndGoButton" destination="DQ4-Ah-ce3" id="xer-Hv-eci"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="4y3-MY-rvW"/>
             </connections>
         </customObject>
@@ -639,7 +637,7 @@
                                                                             </textFieldCell>
                                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                         </tableColumn>
-                                                                        <tableColumn identifier="delete" width="104.73046875" minWidth="10" maxWidth="3.4028234663852886e+38" id="ao3-Di-49W">
+                                                                        <tableColumn identifier="delete" width="105.23046875" minWidth="10" maxWidth="3.4028234663852886e+38" id="ao3-Di-49W">
                                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -657,7 +655,7 @@
                                                             <nil key="backgroundColor"/>
                                                         </clipView>
                                                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="kEa-CE-ujH">
-                                                            <rect key="frame" x="1" y="120" width="239" height="16"/>
+                                                            <rect key="frame" x="1" y="97" width="229" height="16"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </scroller>
                                                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="TfN-eP-Ded">
@@ -1189,9 +1187,9 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kCt-ih-7Wp">
-                                                        <rect key="frame" x="59" y="11" width="74" height="18"/>
+                                                        <rect key="frame" x="59" y="11" width="87" height="18"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <buttonCell key="cell" type="check" title="Interrupts" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="7NL-K9-2Hn">
+                                                        <buttonCell key="cell" type="check" title="IRQ Enabled" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="7NL-K9-2Hn">
                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="message" size="11"/>
                                                         </buttonCell>
@@ -2672,57 +2670,6 @@
             </connections>
             <point key="canvasLocation" x="139" y="151"/>
         </window>
-        <box title="Bank selection" id="d8q-ZM-rGR">
-            <rect key="frame" x="0.0" y="0.0" width="159" height="62"/>
-            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-            <view key="contentView" id="uSD-c0-9yk">
-                <rect key="frame" x="3" y="3" width="153" height="44"/>
-                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                <subviews>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dd1-37-kEL">
-                        <rect key="frame" x="-3" y="2" width="43" height="38"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="EX" bezelStyle="regularSquare" imagePosition="above" alignment="center" controlSize="small" state="on" inset="2" id="loi-UC-HAf">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="message" size="11"/>
-                        </buttonCell>
-                    </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0y0-uL-aKO">
-                        <rect key="frame" x="26" y="4" width="42" height="36"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="GM" bezelStyle="regularSquare" imagePosition="above" alignment="center" controlSize="small" state="on" inset="2" id="LkY-YZ-BeJ">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="message" size="11"/>
-                        </buttonCell>
-                    </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gBg-3I-ZYm">
-                        <rect key="frame" x="54" y="4" width="42" height="36"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="CH" bezelStyle="regularSquare" imagePosition="above" alignment="center" controlSize="small" state="on" inset="2" id="LTL-io-E9f">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="message" size="11"/>
-                        </buttonCell>
-                    </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hon-F6-6iz">
-                        <rect key="frame" x="83" y="4" width="42" height="36"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="HI" bezelStyle="regularSquare" imagePosition="above" alignment="center" controlSize="small" state="on" inset="2" id="ZHo-c3-IDy">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="message" size="11"/>
-                        </buttonCell>
-                    </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zWT-Y4-uxD">
-                        <rect key="frame" x="113" y="4" width="42" height="36"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="LO" bezelStyle="regularSquare" imagePosition="above" alignment="center" controlSize="small" state="on" inset="2" id="KoE-ge-ifk">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="message" size="11"/>
-                        </buttonCell>
-                    </button>
-                </subviews>
-            </view>
-            <point key="canvasLocation" x="61" y="-208"/>
-        </box>
     </objects>
     <resources>
         <image name="pauseTemplate" width="24" height="24"/>
