@@ -71,8 +71,8 @@ ActionReplay3::pressButton(unsigned nr)
             
         case 1: // Freeze
             
-            cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
-            cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);
+            cpu.pullDownNmiLine(INTSRC_EXPANSION);
+            cpu.pullDownIrqLine(INTSRC_EXPANSION);
             
             // By setting the control register to 0, exrom/game is set to 1/0
             // which activates ultimax mode. This mode is reset later, in the
@@ -101,8 +101,8 @@ ActionReplay3::releaseButton(unsigned nr)
             
         case 1: // Freeze
             
-            cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
-            cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
+            cpu.releaseNmiLine(INTSRC_EXPANSION);
+            cpu.releaseIrqLine(INTSRC_EXPANSION);
             break;
     }
     
@@ -221,8 +221,8 @@ ActionReplay::pressButton(unsigned nr)
             setControlReg(0x23);
             
             // Pressing the freeze bottom pulls down both the NMI and the IRQ line
-            cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
-            cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);
+            cpu.pullDownNmiLine(INTSRC_EXPANSION);
+            cpu.pullDownIrqLine(INTSRC_EXPANSION);
             break;
             
         case 2: // Reset
@@ -246,8 +246,8 @@ ActionReplay::releaseButton(unsigned nr)
             
         case 1: // Freeze
             
-            cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
-            cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
+            cpu.releaseNmiLine(INTSRC_EXPANSION);
+            cpu.releaseIrqLine(INTSRC_EXPANSION);
             break;
     }
     
@@ -283,8 +283,8 @@ ActionReplay::setControlReg(u8 value)
     }
     
     if (resetFreezeMode() || disabled()) {
-        cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
-        cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
+        cpu.releaseNmiLine(INTSRC_EXPANSION);
+        cpu.releaseIrqLine(INTSRC_EXPANSION);
     }
 }
 

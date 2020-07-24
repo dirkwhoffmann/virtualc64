@@ -10,16 +10,21 @@
 #ifndef CPU_TYPES_H
 #define CPU_TYPES_H
 
-#include <stdint.h>
+#include "Aliases.h"
 
-//! @brief    Processor model
-typedef enum {
+//
+// Enumerations
+//
+
+typedef enum
+{
     MOS_6510 = 0,
     MOS_6502 = 1
-} CPUModel;
+}
+CPUModel;
 
-//! @brief    Addressing mode
-typedef enum {
+typedef enum
+{
     ADDR_IMPLIED,
     ADDR_ACCUMULATOR,
     ADDR_IMMEDIATE,
@@ -34,47 +39,64 @@ typedef enum {
     ADDR_RELATIVE,
     ADDR_DIRECT,
     ADDR_INDIRECT
-} AddressingMode;
+}
+AddressingMode;
 
-/*! @brief    Breakpoint type
- *  @details  Each memory call is marked with a breakpoint tag. Originally,
- *            each cell is tagged with NO_BREAKPOINT which has no effect. CPU
- *            execution will stop if the memory cell is tagged with one of the
- *            following breakpoint types:
- *            HARD_BREAKPOINT : Execution is halted.
- *            SOFT_BREAKPOINT : Execution is halted and the tag is deleted.
- */
-typedef enum {
+typedef enum
+{
     NO_BREAKPOINT   = 0x00,
     HARD_BREAKPOINT = 0x01,
     SOFT_BREAKPOINT = 0x02
-} Breakpoint;
+}
+Breakpoint;
 
-
-/*! @brief    Error state of the virtual CPU
- *  @details  CPU_OK indicates normal operation. When a (soft or hard)
- *            breakpoint is reached, state CPU_BREAKPOINT_REACHED is entered.
- *            CPU_ILLEGAL_INSTRUCTION is set when an opcode is not understood
- *            by the CPU. Once the CPU enters a different state than CPU_OK,
- *            the execution thread is terminated.
- */
-typedef enum {
+typedef enum
+{
     CPU_OK = 0,
     CPU_SOFT_BREAKPOINT_REACHED,
     CPU_HARD_BREAKPOINT_REACHED,
     CPU_ILLEGAL_INSTRUCTION
-} ErrorState;
+}
+ErrorState;
 
-/*! @brief    CPU info
- *  @details  Used by getInfo() to collect debug information
- */
-typedef struct {
+typedef enum : u8
+{
+    C_FLAG = 0x01,
+    Z_FLAG = 0x02,
+    I_FLAG = 0x04,
+    D_FLAG = 0x08,
+    B_FLAG = 0x10,
+    V_FLAG = 0x40,
+    N_FLAG = 0x80
+}
+Flag;
+
+typedef enum : u8
+{
+    INTSRC_CIA = 0x01,
+    INTSRC_VIC = 0x02,
+    INTSRC_VIA1 = 0x04,
+    INTSRC_VIA2 = 0x08,
+    INTSRC_EXPANSION = 0x10,
+    INTSRC_KEYBOARD = 0x20
+}
+IntSource;
+
+//
+// Structures
+//
+
+typedef struct
+{
     u64 cycle;
+
     u16 pc;
+    u8 sp;
+
     u8 a;
     u8 x;
     u8 y;
-    u8 sp;
+    
     bool nFlag;
     bool vFlag;
     bool bFlag;
@@ -82,10 +104,18 @@ typedef struct {
     bool iFlag;
     bool zFlag;
     bool cFlag;
-} CPUInfo;
 
-//! @brief    Recorded instruction
-typedef struct {
+    bool irq;
+    bool nmi;
+    bool rdy;
+
+    u8 processorPort;
+    u8 processorPortDir;
+}
+CPUInfo;
+
+typedef struct
+{
     u64 cycle;
     u16 pc;
     u8 byte1;
@@ -96,10 +126,11 @@ typedef struct {
     u8 y;
     u8 sp;
     u8 flags;
-} RecordedInstruction;
+}
+RecordedInstruction;
 
-//! @brief    Disassembled instruction
-typedef struct {
+typedef struct
+{
     u64 cycle;
     u16 addr; 
     u8 size;
@@ -113,6 +144,7 @@ typedef struct {
     char sp[4];
     char flags[9];
     char command[16];
-} DisassembledInstruction;
+}
+DisassembledInstruction;
 
 #endif

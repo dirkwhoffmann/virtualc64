@@ -26,9 +26,9 @@ VIC::processDelayedActions()
 {
     if (delay & VICUpdateIrqLine) {
         if (irr & imr) {
-            cpu.pullDownIrqLine(CPU::INTSRC_VIC);
+            cpu.pullDownIrqLine(INTSRC_VIC);
         } else {
-            cpu.releaseIrqLine(CPU::INTSRC_VIC);
+            cpu.releaseIrqLine(INTSRC_VIC);
         }
     }
     if (delay & VICUpdateFlipflops) {

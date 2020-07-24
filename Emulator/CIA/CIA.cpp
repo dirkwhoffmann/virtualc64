@@ -1121,13 +1121,13 @@ CIA1::CIA1(C64 &ref) : CIA(ref)
 void 
 CIA1::pullDownInterruptLine()
 {
-    cpu.pullDownIrqLine(CPU::INTSRC_CIA);
+    cpu.pullDownIrqLine(INTSRC_CIA);
 }
 
 void 
 CIA1::releaseInterruptLine()
 {
-    cpu.releaseIrqLine(CPU::INTSRC_CIA);
+    cpu.releaseIrqLine(INTSRC_CIA);
 }
 
 //                    -------
@@ -1257,13 +1257,13 @@ CIA2::_reset()
 void 
 CIA2::pullDownInterruptLine()
 {
-    cpu.pullDownNmiLine(CPU::INTSRC_CIA);
+    cpu.pullDownNmiLine(INTSRC_CIA);
 }
 
 void 
 CIA2::releaseInterruptLine()
 {
-    cpu.releaseNmiLine(CPU::INTSRC_CIA);
+    cpu.releaseNmiLine(INTSRC_CIA);
 }
 
 //                        -------

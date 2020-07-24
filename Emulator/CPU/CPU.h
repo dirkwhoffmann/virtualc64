@@ -18,45 +18,19 @@
 
 class Memory;
 
-/*! @class  The virtual 6502 / 6510 processor
- */
 class CPU : public C64Component {
     
-    //
-    // Types
-    //
-    
-    public:
-    
-    //! @brief    Bit positions of all 7 CPU flags
-    typedef enum : u8 {
-        C_FLAG = 0x01,
-        Z_FLAG = 0x02,
-        I_FLAG = 0x04,
-        D_FLAG = 0x08,
-        B_FLAG = 0x10,
-        V_FLAG = 0x40,
-        N_FLAG = 0x80
-    } Flag;
-    
-    //! @brief    Possible interrupt sources
-    typedef enum : u8 {
-        INTSRC_CIA = 0x01,
-        INTSRC_VIC = 0x02,
-        INTSRC_VIA1 = 0x04,
-        INTSRC_VIA2 = 0x08,
-        INTSRC_EXPANSION = 0x10,
-        INTSRC_KEYBOARD = 0x20
-    } IntSource;
+    // Result of the latest inspection
+    CPUInfo info;
     
     
     //
     // References to other components
     //
     
-    private:
+private:
     
-    //! @brief    Reference to the connected virtual memory
+    //! @brief    Reference to the connected  memory
     Memory *mem;
 
 
@@ -291,28 +265,40 @@ class CPU : public C64Component {
 public:
     
     CPU(CPUModel model, Memory *mem, C64& ref);
-
-
-    //! @brief    Returns true if this is the C64's CPU
-    bool isC64CPU() { return model == MOS_6510; }
     
-    private:
+private:
     
-    //! @brief    Registers a single opcode
-    /*! @details  Initializes all lookup table entries for this opcode.
-     */
+    // Registers a single opcode
     void registerCallback(u8 opcode, const char *mnemonic,
                           AddressingMode mode, MicroInstruction mInstr);
     
-    //! @brief    Registers the complete instruction set.
+    // Registers all instructions
     void registerInstructions();
     
-    //! @brief    Registers the legal instruction set, only.
+    // Registers all legal instructions
     void registerLegalInstructions();
     
-    //! @brief    Registers the illegal instructions set, only.
+    // Registers all illegal instructionss
     void registerIllegalInstructions();
     
+    
+    //
+    // Configuring
+    //
+    
+    // Returns true if this is the C64's CPU
+    bool isC64CPU() { return model == MOS_6510; }
+
+    
+    //
+    // Analyzing
+    //
+
+public:
+    
+    // Returns the result of the latest inspection
+    CPUInfo getInfo() { return HardwareComponent::getInfo(info); }
+
     
     //
     // Methods from HardwareComponent
@@ -321,6 +307,7 @@ public:
 public:
 
 	void _reset() override;
+    void _inspect() override;
     size_t stateSize() override;
     void didLoadFromBuffer(u8 **buffer) override;
     void didSaveToBuffer(u8 **buffer) override;
@@ -335,13 +322,9 @@ private:
     //
     
 public:
-    
-    //! @brief    Returns the internal state.
-    CPUInfo getInfo();
-    
-    
+        
     //
-    //! @functiongroup Handling registers and flags
+    // Handling registers and flags
     //
 
 	/*! @brief    Returns the frozen program counter.

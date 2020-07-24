@@ -506,7 +506,7 @@ extension MyController {
         animationCounter += 1
 
         // Animate the inspector
-        if inspector?.window?.isVisible == true { inspector!.continousRefresh() }
+        if inspector?.window?.isVisible == true { inspector!.continuousRefresh() }
         
         // OLD CODE:
         

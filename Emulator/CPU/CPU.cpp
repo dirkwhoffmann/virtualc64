@@ -80,6 +80,32 @@ CPU::_reset()
     clearTraceBuffer();
 }
 
+void
+CPU::_inspect()
+{
+    synchronized {
+        
+        info.cycle = cycle;
+
+        info.pc = pc;
+        info.sp = regSP;
+        info.a = regA;
+        info.x = regX;
+        info.y = regY;
+        
+        info.nFlag = getN();
+        info.vFlag = getV();
+        info.bFlag = getB();
+        info.dFlag = getD();
+        info.iFlag = getI();
+        info.zFlag = getZ();
+        info.cFlag = getC();
+        
+        info.processorPort = pport.read();
+        info.processorPortDir = pport.readDirection();
+    }
+}
+
 void 
 CPU::_dump()
 {
@@ -129,6 +155,7 @@ CPU::didSaveToBuffer(u8 **buffer)
     edgeDetector.saveToBuffer(buffer);
 }
 
+/*
 CPUInfo
 CPU::getInfo()
 {
@@ -150,6 +177,7 @@ CPU::getInfo()
   
     return info;
 }
+*/
 
 void
 CPU::pullDownNmiLine(IntSource bit)

@@ -120,8 +120,8 @@ class Inspector: DialogController {
     @IBOutlet weak var ciaIdleLevel: NSLevelIndicator!
     
     // Cached state of all Amiga components
-    // var cpuInfo: CPUInfo?
-    var ciaInfo: CIAInfo?
+    var cpuInfo: CPUInfo!
+    var ciaInfo: CIAInfo!
     var isRunning = true
     
     // Used to determine the items to be refreshed
@@ -149,7 +149,7 @@ class Inspector: DialogController {
         refresh(full: true)
     }
     
-    func continousRefresh() {
+    func continuousRefresh() {
         
         if isRunning { refresh(count: refreshCnt) }
         isRunning = c64.isRunning()
@@ -159,9 +159,22 @@ class Inspector: DialogController {
     func refresh(count: Int = 0, full: Bool = false) {
         
         if window?.isVisible == false { return }
-
+        
+        if full {
+            
+            if c64.isRunning() {
+                stopAndGoButton.image = NSImage.init(named: "pauseTemplate")
+                stepIntoButton.isEnabled = false
+                stepOverButton.isEnabled = false
+            } else {
+                stopAndGoButton.image = NSImage.init(named: "continueTemplate")
+                stepIntoButton.isEnabled = true
+                stepOverButton.isEnabled = true
+            }
+        }
+        
         if let id = panel.selectedTabViewItem?.label {
-
+            
             switch id {
                 
             case "CPU": refreshCPU(count: count, full: full)

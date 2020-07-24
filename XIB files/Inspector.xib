@@ -65,6 +65,23 @@
                 <outlet property="ciaTodMinutes" destination="i7r-XZ-qFC" id="EQe-l2-4uU"/>
                 <outlet property="ciaTodSeconds" destination="1p9-Jh-RQR" id="uHk-lb-KN3"/>
                 <outlet property="ciaTodTenth" destination="rwN-NX-KLQ" id="uh3-OO-Avu"/>
+                <outlet property="cpuA" destination="ylj-5h-OZB" id="Ohz-uZ-l88"/>
+                <outlet property="cpuB" destination="5mp-Na-BBE" id="ovc-vi-cjf"/>
+                <outlet property="cpuC" destination="WjT-6d-8pl" id="TWd-cH-hT1"/>
+                <outlet property="cpuD" destination="m5N-q3-sGM" id="frz-Kz-cHf"/>
+                <outlet property="cpuI" destination="yxw-Yf-EU4" id="te7-95-nKA"/>
+                <outlet property="cpuIrq" destination="BMu-XH-jK7" id="T2C-ab-9rD"/>
+                <outlet property="cpuN" destination="y3l-Bq-5DE" id="2rJ-Fr-L0I"/>
+                <outlet property="cpuNmi" destination="HlO-Zs-vWr" id="a7x-6y-cPD"/>
+                <outlet property="cpuPc" destination="WTx-hl-nUU" id="HbZ-w9-ee3"/>
+                <outlet property="cpuPortDir" destination="hEW-MZ-A1x" id="Yc1-he-10f"/>
+                <outlet property="cpuPortReg" destination="OMH-xo-xni" id="3pD-DJ-lPE"/>
+                <outlet property="cpuRdy" destination="yLl-nJ-aNB" id="rJ7-7G-Mtx"/>
+                <outlet property="cpuSp" destination="5Gp-OY-bTc" id="PLR-cc-4D6"/>
+                <outlet property="cpuV" destination="anF-rr-ErX" id="Q0D-Dx-mI2"/>
+                <outlet property="cpuX" destination="koA-eW-Jpr" id="n7i-s6-LPq"/>
+                <outlet property="cpuY" destination="GYy-Tv-mCA" id="hWs-di-r0R"/>
+                <outlet property="cpuZ" destination="FDg-Zv-NPQ" id="pHc-tL-3OQ"/>
                 <outlet property="memBankTableView" destination="7VI-wI-Pak" id="qu2-cR-eFg"/>
                 <outlet property="memCharen" destination="LhF-fe-Tqm" id="XcI-Pm-x7I"/>
                 <outlet property="memExrom" destination="ngt-bd-zqk" id="ibX-c0-Nvm"/>
@@ -78,6 +95,7 @@
                 <outlet property="stepIntoButton" destination="XcS-nk-XBp" id="WJQ-2Z-1F9"/>
                 <outlet property="stepOverButton" destination="EYA-b4-jd8" id="mJJ-RB-PNP"/>
                 <outlet property="stopAndGoButton" destination="DQ4-Ah-ce3" id="xer-Hv-eci"/>
+                <outlet property="traceTableView" destination="K0a-6q-Knn" id="NCD-6R-4cK"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="4y3-MY-rvW"/>
             </connections>
         </customObject>
@@ -1435,7 +1453,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <clipView key="contentView" drawsBackground="NO" id="q57-gL-PPA">
                                                 <rect key="frame" x="1" y="0.0" width="610" height="314"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tableView wantsLayer="YES" focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="bFa-w1-kCn" id="qr2-Bo-wI1" customClass="MemTableView" customModule="VirtualC64" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="614" height="289"/>
@@ -1590,7 +1608,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                             <clipView key="contentView" drawsBackground="NO" id="YHa-QP-tWy">
                                                 <rect key="frame" x="1" y="0.0" width="151" height="314"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tableView wantsLayer="YES" focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="15" headerView="hG1-9R-hJ1" id="7VI-wI-Pak" customClass="BankTableView" customModule="VirtualC64" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="151" height="289"/>

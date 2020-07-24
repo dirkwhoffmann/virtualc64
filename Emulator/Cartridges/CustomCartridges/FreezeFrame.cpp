@@ -44,7 +44,7 @@ FreezeFrame::pressButton(unsigned nr)
         // Pressing the freeze button triggers an NMI in Ultimax mode
         suspend();
         expansionport.setCartridgeMode(CRT_ULTIMAX);
-        cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+        cpu.pullDownNmiLine(INTSRC_EXPANSION);
         resume();
     }
 }
@@ -55,7 +55,7 @@ FreezeFrame::releaseButton(unsigned nr)
     if (nr == 1) {
         
         suspend();
-        cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+        cpu.releaseNmiLine(INTSRC_EXPANSION);
         resume();
     }
 }

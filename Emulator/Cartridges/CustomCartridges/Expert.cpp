@@ -174,11 +174,11 @@ Expert::pressButton(unsigned nr)
             // current value of the NMI line.
             
             u8 oldLine = cpu.nmiLine;
-            u8 newLine = oldLine | CPU::INTSRC_EXPANSION;
+            u8 newLine = oldLine | INTSRC_EXPANSION;
             
-            cpu.releaseNmiLine((CPU::IntSource)0xFF);
-            cpu.pullDownNmiLine((CPU::IntSource)newLine);
-            cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+            cpu.releaseNmiLine((IntSource)0xFF);
+            cpu.pullDownNmiLine((IntSource)newLine);
+            cpu.releaseNmiLine(INTSRC_EXPANSION);
             break;
     }
     

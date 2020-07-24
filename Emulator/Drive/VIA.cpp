@@ -891,12 +891,12 @@ VIA1::~VIA1()
 
 void
 VIA1::pullDownIrqLine() {
-    drive->cpu.pullDownIrqLine(CPU::INTSRC_VIA1);
+    drive->cpu.pullDownIrqLine(INTSRC_VIA1);
 }
 
 void
 VIA1::releaseIrqLine() {
-    drive->cpu.releaseIrqLine(CPU::INTSRC_VIA1);
+    drive->cpu.releaseIrqLine(INTSRC_VIA1);
 }
 
 u8
@@ -1033,13 +1033,13 @@ VIA2::updatePB()
 void
 VIA2::pullDownIrqLine()
 {
-    drive->cpu.pullDownIrqLine(CPU::INTSRC_VIA2);
+    drive->cpu.pullDownIrqLine(INTSRC_VIA2);
 }
 
 void
 VIA2::releaseIrqLine()
 {
-    drive->cpu.releaseIrqLine(CPU::INTSRC_VIA2);
+    drive->cpu.releaseIrqLine(INTSRC_VIA2);
 }
 
 

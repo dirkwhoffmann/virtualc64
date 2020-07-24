@@ -150,8 +150,8 @@ Isepic::setSwitch(i8 pos)
             debug(CRT_DEBUG, "Activating Ipsec cartridge\n");
 
             // Trigger NMI
-            cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
-            cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+            cpu.pullDownNmiLine(INTSRC_EXPANSION);
+            cpu.releaseNmiLine(INTSRC_EXPANSION);
 
         } else {
 
