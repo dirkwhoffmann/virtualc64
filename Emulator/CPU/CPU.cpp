@@ -155,30 +155,6 @@ CPU::didSaveToBuffer(u8 **buffer)
     edgeDetector.saveToBuffer(buffer);
 }
 
-/*
-CPUInfo
-CPU::getInfo()
-{
-    CPUInfo info;
-    
-    info.cycle = cycle;
-    info.pc = pc;
-    info.a = regA;
-    info.x = regX;
-    info.y = regY;
-    info.sp = regSP;
-    info.nFlag = getN();
-    info.vFlag = getV();
-    info.bFlag = getB();
-    info.dFlag = getD();
-    info.iFlag = getI();
-    info.zFlag = getZ();
-    info.cFlag = getC();
-  
-    return info;
-}
-*/
-
 void
 CPU::pullDownNmiLine(IntSource bit)
 {
@@ -441,6 +417,7 @@ CPU::disassemble(RecordedInstruction instr, bool hex)
     hex ? sprint8x(result.sp, instr.sp) : sprint8d(result.sp, instr.sp);
     
     // Convert memory contents to strings
+    /*
     if (length >= 1) {
         hex ? sprint8x(result.byte1, instr.byte1) : sprint8d(result.byte1, instr.byte1);
     } else {
@@ -456,7 +433,21 @@ CPU::disassemble(RecordedInstruction instr, bool hex)
     } else {
         hex ? strcpy(result.byte3, "  ") : strcpy(result.byte3, "   ");
     }
+    */
     
+    // Convert memory contents to strings
+    char *ptr = result.data;
+    if (hex) {
+        if (length >= 1) { sprint8x(ptr, instr.byte1); ptr[2] = ' '; ptr += 3; }
+        if (length >= 2) { sprint8x(ptr, instr.byte2); ptr[2] = ' '; ptr += 3; }
+        if (length >= 3) { sprint8x(ptr, instr.byte3); ptr[2] = ' '; ptr += 3; }
+    } else {
+        if (length >= 1) { sprint8d(ptr, instr.byte1); ptr[3] = ' '; ptr += 4; }
+        if (length >= 2) { sprint8d(ptr, instr.byte2); ptr[3] = ' '; ptr += 4; }
+        if (length >= 3) { sprint8d(ptr, instr.byte3); ptr[3] = ' '; ptr += 4; }
+    }
+    ptr[0] = 0;
+
     // Convert flags to a string
     result.flags[0] = (instr.flags & N_FLAG) ? 'N' : 'n';
     result.flags[1] = (instr.flags & V_FLAG) ? 'V' : 'v';

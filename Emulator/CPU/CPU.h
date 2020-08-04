@@ -591,13 +591,13 @@ public:
     //! @functiongroup Disassembling instructions
     //
     
-    //! @brief    Disassembles a previously recorded instruction
+    // Disassembles a previously recorded instruction
     DisassembledInstruction disassemble(RecordedInstruction instr, bool hex);
 
-    //! @brief    Disassembles an instruction at the specified memory location
+    // Disassembles an instruction at a specified memory location
     DisassembledInstruction disassemble(u16 addr, bool hex);
     
-    //! @brief    Disassembles the current instruction.
+    // Disassembles the currently executed instruction
     DisassembledInstruction disassemble(bool hex) { return disassemble(pc, hex); }
 
 };

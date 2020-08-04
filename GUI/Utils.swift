@@ -92,7 +92,7 @@ extension URL {
         let path = FileManager.SearchPathDirectory.applicationSupportDirectory
         let mask = FileManager.SearchPathDomainMask.userDomainMask
         let url = fm.urls(for: path, in: mask).first
-        return url?.appendingPathComponent("vAmiga")
+        return url?.appendingPathComponent("VirtualC64")
     }
     
     static func appSupportFolder(_ name: String) -> URL? {

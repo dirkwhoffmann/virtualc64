@@ -89,6 +89,42 @@ IntSource;
 typedef struct
 {
     u64 cycle;
+    u16 pc;
+    u8 byte1;
+    u8 byte2;
+    u8 byte3;
+    u8 a;
+    u8 x;
+    u8 y;
+    u8 sp;
+    u8 flags;
+}
+RecordedInstruction;
+
+typedef struct
+{
+    u64 cycle;
+    u16 addr; 
+    u8 size;
+    char byte1[4]; // DEPRECATED
+    char byte2[4]; // DEPRECATED
+    char byte3[4]; // DEPRECATED
+    char data[13];
+    char pc[6];
+    char a[4];
+    char x[4];
+    char y[4];
+    char sp[4];
+    char flags[9];
+    char command[16];
+}
+DisassembledInstruction;
+
+#define CPUINFO_INSTR_COUNT 256
+
+typedef struct
+{
+    u64 cycle;
 
     u16 pc;
     u8 sp;
@@ -110,41 +146,8 @@ typedef struct
     bool rdy;
 
     u8 processorPort;
-    u8 processorPortDir;
+    u8 processorPortDir;    
 }
 CPUInfo;
-
-typedef struct
-{
-    u64 cycle;
-    u16 pc;
-    u8 byte1;
-    u8 byte2;
-    u8 byte3;
-    u8 a;
-    u8 x;
-    u8 y;
-    u8 sp;
-    u8 flags;
-}
-RecordedInstruction;
-
-typedef struct
-{
-    u64 cycle;
-    u16 addr; 
-    u8 size;
-    char byte1[4];
-    char byte2[4];
-    char byte3[4];
-    char pc[6];
-    char a[4];
-    char x[4];
-    char y[4];
-    char sp[4];
-    char flags[9];
-    char command[16];
-}
-DisassembledInstruction;
 
 #endif

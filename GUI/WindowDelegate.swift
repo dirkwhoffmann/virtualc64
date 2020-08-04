@@ -51,7 +51,7 @@ extension MyController: NSWindowDelegate {
         // Close virtual keyboard
         // virtualKeyboard?.close()
         
-        // Stop timer
+        // Stop timers
         timerLock.lock()
         timer?.invalidate()
         timer = nil
@@ -64,10 +64,7 @@ extension MyController: NSWindowDelegate {
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
         c64.removeListener(myself)
   
-        // Disconnect emulator
-        cpuTableView.dataSource = nil
-        cpuTableView.delegate = nil
-        cpuTableView.c = nil
+        // Disconnect emulator (DEPRECATED)
         cpuTraceView.dataSource = nil
         cpuTraceView.delegate = nil
         cpuTraceView.c = nil

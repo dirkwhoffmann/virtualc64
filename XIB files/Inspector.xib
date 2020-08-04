@@ -70,6 +70,7 @@
                 <outlet property="cpuC" destination="WjT-6d-8pl" id="TWd-cH-hT1"/>
                 <outlet property="cpuD" destination="m5N-q3-sGM" id="frz-Kz-cHf"/>
                 <outlet property="cpuI" destination="yxw-Yf-EU4" id="te7-95-nKA"/>
+                <outlet property="cpuInstrView" destination="xEC-N2-WnB" id="P3b-Nu-cid"/>
                 <outlet property="cpuIrq" destination="BMu-XH-jK7" id="T2C-ab-9rD"/>
                 <outlet property="cpuN" destination="y3l-Bq-5DE" id="2rJ-Fr-L0I"/>
                 <outlet property="cpuNmi" destination="HlO-Zs-vWr" id="a7x-6y-cPD"/>
@@ -78,6 +79,7 @@
                 <outlet property="cpuPortReg" destination="OMH-xo-xni" id="3pD-DJ-lPE"/>
                 <outlet property="cpuRdy" destination="yLl-nJ-aNB" id="rJ7-7G-Mtx"/>
                 <outlet property="cpuSp" destination="5Gp-OY-bTc" id="PLR-cc-4D6"/>
+                <outlet property="cpuTraceView" destination="K0a-6q-Knn" id="NCD-6R-4cK"/>
                 <outlet property="cpuV" destination="anF-rr-ErX" id="Q0D-Dx-mI2"/>
                 <outlet property="cpuX" destination="koA-eW-Jpr" id="n7i-s6-LPq"/>
                 <outlet property="cpuY" destination="GYy-Tv-mCA" id="hWs-di-r0R"/>
@@ -95,7 +97,6 @@
                 <outlet property="stepIntoButton" destination="XcS-nk-XBp" id="WJQ-2Z-1F9"/>
                 <outlet property="stepOverButton" destination="EYA-b4-jd8" id="mJJ-RB-PNP"/>
                 <outlet property="stopAndGoButton" destination="DQ4-Ah-ce3" id="xer-Hv-eci"/>
-                <outlet property="traceTableView" destination="K0a-6q-Knn" id="NCD-6R-4cK"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="4y3-MY-rvW"/>
             </connections>
         </customObject>
@@ -420,7 +421,7 @@
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="ALr-f0-WIK" id="xEC-N2-WnB" customClass="InstrTableView" customModule="VirtualC64" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="239" height="292"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="238" height="292"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -439,55 +440,31 @@
                                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                         </tableColumn>
                                                                         <tableColumn identifier="addr" editable="NO" width="51" minWidth="51" maxWidth="1000" id="tcY-Nj-rgi">
-                                                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Addr">
+                                                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Addr">
                                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
                                                                             </tableHeaderCell>
-                                                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="center" title="Text Cell" id="CoW-sW-3fD">
+                                                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="CoW-sW-3fD">
                                                                                 <font key="font" size="11" name="CourierNewPS-BoldMT"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                             </textFieldCell>
                                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                         </tableColumn>
-                                                                        <tableColumn identifier="data01" editable="NO" width="28" minWidth="28" maxWidth="1000" id="8LR-Kv-9kY">
-                                                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="01">
+                                                                        <tableColumn identifier="data" editable="NO" width="73" minWidth="28" maxWidth="1000" id="8LR-Kv-9kY" userLabel="Data">
+                                                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Data">
                                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
                                                                             </tableHeaderCell>
-                                                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="center" title="Text Cell" id="2oE-uj-mus">
+                                                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="2oE-uj-mus">
                                                                                 <font key="font" size="11" name="CourierNewPS-BoldMT"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                             </textFieldCell>
                                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                         </tableColumn>
-                                                                        <tableColumn identifier="data02" editable="NO" width="28" minWidth="28" maxWidth="1000" id="0kO-kS-DgP">
-                                                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="02">
-                                                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                                                            </tableHeaderCell>
-                                                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="center" title="Text Cell" id="xQM-BP-HCS">
-                                                                                <font key="font" size="11" name="CourierNewPS-BoldMT"/>
-                                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                            </textFieldCell>
-                                                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                                        </tableColumn>
-                                                                        <tableColumn identifier="data03" editable="NO" width="28" minWidth="28" maxWidth="1000" id="Fc2-Sl-dYS">
-                                                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="03">
-                                                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                                                            </tableHeaderCell>
-                                                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="center" title="Text Cell" id="WSG-a9-QtQ">
-                                                                                <font key="font" size="11" name="CourierNewPS-BoldMT"/>
-                                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                            </textFieldCell>
-                                                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                                        </tableColumn>
-                                                                        <tableColumn identifier="ascii" editable="NO" width="64" minWidth="64" maxWidth="1000" id="xHZ-k6-Cbx">
-                                                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Instruction">
+                                                                        <tableColumn identifier="instr" editable="NO" width="80" minWidth="64" maxWidth="1000" id="xHZ-k6-Cbx">
+                                                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Instruction">
                                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                                             </tableHeaderCell>
@@ -505,7 +482,7 @@
                                                                 </tableView>
                                                             </subviews>
                                                         </clipView>
-                                                        <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="MZL-mS-DJS">
+                                                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="MZL-mS-DJS">
                                                             <rect key="frame" x="1" y="301" width="238" height="16"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </scroller>
@@ -514,7 +491,7 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </scroller>
                                                         <tableHeaderView key="headerView" id="ALr-f0-WIK">
-                                                            <rect key="frame" x="0.0" y="0.0" width="239" height="25"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="238" height="25"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </tableHeaderView>
                                                     </scrollView>

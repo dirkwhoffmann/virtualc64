@@ -9,31 +9,11 @@
 
 extension MyController {
 
-    func setupDebugger() {
-        
-        // Start with hexadecimal number format
-        setHexadecimalAction(self)
-        
-        // Create and assign binary number formatter
-        let bF = MyFormatter.init(radix: 2, min: 0, max: 255)
-        ciaPAbinary.formatter = bF
-        ciaPRA.formatter = bF
-        ciaDDRA.formatter = bF
-        ciaPBbinary.formatter = bF
-        ciaPRB.formatter = bF
-        ciaDDRB.formatter = bF
-        ciaIcrBinary.formatter = bF
-        ciaImrBinary.formatter = bF
-    }
-    
     // Updates all visible values in the debug panel
     func refresh() {
         
         if let id = debugPanel.selectedTabViewItem?.identifier as? String {
             switch id {
-
-            case "CPU":
-                refreshCPU()
 
             case "MEM":
                 memTableView.refresh()
@@ -217,6 +197,7 @@ extension MyController {
         refresh()
     }
     
+    /*
     @IBAction func setDecimalAction(_ sender: Any!) {
   
         hex = false
@@ -232,4 +213,5 @@ extension MyController {
         cpuTraceView.setHex(true)
         refreshFormatters(hex: true)
     }
+    */
 }

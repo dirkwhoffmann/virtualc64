@@ -11,9 +11,18 @@ class InstrTableView: NSTableView {
     
     @IBOutlet weak var inspector: Inspector!
     var c64: C64Proxy { return inspector.parent.c64 }
+    var cpu: CPUProxy { return c64.cpu }
     
-    var instructionAtRow: [Int: DisassembledInstruction] = [:]
-    var rowForAddress: [UInt16: Int] = [:]
+    // var instructionAtRow: [Int: DisassembledInstruction] = [:]
+    // var rowForAddress: [UInt16: Int] = [:]
+    
+    // Data caches
+    var addrInRow: [Int: Int] = [:]
+    var instrInRow: [Int: String] = [:]
+    var dataInRow: [Int: String] = [:]
+    // var bpInRow: [Int: BreakpointType] = [:]
+    var rowForAddr: [Int: Int] = [:]
+    
     var hex = true
     
     override func awakeFromNib() {
@@ -25,72 +34,143 @@ class InstrTableView: NSTableView {
     }
     
     private func cache() {
-         
+        
+        if let addr = addrInRow[0] {
+            cache(startAddr: addr)
+        }
     }
     
-    func refresh(count: Int = 0, full: Bool = false) {
+    private func cache(startAddr: Int) {
         
-        cache()
-        reloadData()
+        var addr = startAddr
+        
+        instrInRow = [:]
+        addrInRow = [:]
+        dataInRow = [:]
+        // bpInRow = [:]
+        rowForAddr = [:]
+        
+        for i in 0 ..< Int(CPUINFO_INSTR_COUNT) where addr <= 0xFFFF {
+            
+            var info = c64.cpu.disassemble(UInt16(addr), hex: hex)
+            
+            instrInRow[i] = String(cString: &info.command.0)
+            addrInRow[i] = addr
+            dataInRow[i] = String(cString: &info.data.0)
+            /*
+             if c64.cpu.breakpointIsSetAndDisabled(at: addr) {
+             bpInRow[i] = BreakpointType.disabled
+             } else if c64.cpu.breakpointIsSet(at: addr) {
+             bpInRow[i] = BreakpointType.enabled
+             } else {
+             bpInRow[i] = BreakpointType.none
+             }
+             */
+            rowForAddr[addr] = i
+            addr += Int(info.size)
+        }
+    }
+    
+    func refresh(count: Int = 0, full: Bool = false, addr: Int = 0) {
+        
+        if full {
+            for (c, f) in ["addr": fmt16] {
+                let columnId = NSUserInterfaceItemIdentifier(rawValue: c)
+                if let column = tableColumn(withIdentifier: columnId) {
+                    if let cell = column.dataCell as? NSCell {
+                        cell.formatter = f
+                    }
+                }
+            }
+            
+            cache()
+            reloadData()
+        }
+        
+        if count != 0 {
+            jumpTo(addr: addr)
+        }
+    }
+    
+    func jumpTo(addr: Int) {
+        
+        if let row = rowForAddr[addr] {
+            
+            // If the requested address is already displayed, we simply select
+            // the corresponding row.
+            reloadData()
+            jumpTo(row: row)
+            
+        } else {
+            
+            // If the requested address is not displayed, we update the data
+            // cache and display the address in row 0.
+            cache(startAddr: addr)
+            reloadData()
+            jumpTo(row: 0)
+        }
+    }
+    
+    func jumpTo(row: Int) {
+        
+        scrollRowToVisible(row)
+        selectRowIndexes([row], byExtendingSelection: false)
+    }
+    
+    @IBAction func clickAction(_ sender: NSTableView!) {
+        
+        if sender.clickedColumn == 0 {
+            
+            clickAction(row: sender.clickedRow)
+        }
+    }
+    
+    func clickAction(row: Int) {
+        
+        /*
+        if let addr = addrInRow[row] {
+            
+            if !cpu.breakpointIsSet(at: addr) {
+                cpu.addBreakpoint(at: addr)
+            } else if cpu.breakpointIsSetAndDisabled(at: addr) {
+                cpu.breakpointSetEnable(at: addr, value: true)
+            } else if cpu.breakpointIsSetAndEnabled(at: addr) {
+                cpu.breakpointSetEnable(at: addr, value: false)
+            }
+            
+            inspector.fullRefresh()
+        }
+        */
     }
     
     @IBAction func doubleClickAction(_ sender: NSTableView!) {
         
-        let row = sender.selectedRow
-        
-        if let instr = instructionAtRow[row] {
-            track("Toggling breakpoint at \(instr.addr)")
-            c64.cpu.toggleBreakpoint(instr.addr)
-            reloadData()
+        if sender.clickedColumn != 0 {
+            
+            doubleClickAction(row: sender.clickedRow)
         }
+    }
+    
+    func doubleClickAction(row: Int) {
+        
+        /*
+        if let addr = addrInRow[row] {
+            
+            if cpu.breakpointIsSet(at: addr) {
+                cpu.removeBreakpoint(at: addr)
+            } else {
+                cpu.addBreakpoint(at: addr)
+            }
+            
+            inspector.fullRefresh()
+        }
+        */
     }
     
     func setHex(_ value: Bool) {
         
         hex = value
-        updateDisplayedAddresses()
-    }
-    
-    func updateDisplayedAddresses(startAddr: UInt16) {
-                
-        var addr = Int(startAddr)
-        rowForAddress = [:]
-        
-        for i in 0...255 {
-            if addr <= 0xFFFF {
-                instructionAtRow[i] = c64.cpu.disassemble(UInt16(addr), hex: hex)
-                rowForAddress[UInt16(addr)] = i
-                addr += Int(instructionAtRow[i]!.size)
-            } else {
-                instructionAtRow[i] = nil
-            }
-        }
-        
-        reloadData()
-    }
-    
-    func updateDisplayedAddresses() {
-                
-        updateDisplayedAddresses(startAddr: c64.cpu.pc())
-    }
-    
-    func refresh() {
-                
-        if let row = rowForAddress[c64.cpu.pc()] {
-            
-            // If PC points to an address which is already displayed,
-            // we simply select the corresponding row.
-            scrollRowToVisible(row)
-            selectRowIndexes([row], byExtendingSelection: false)
-            
-        } else {
-            
-            // If PC points to an address that is not displayed,
-            // we update the whole view and display PC in the first row.
-            updateDisplayedAddresses()
-            scrollRowToVisible(0)
-            selectRowIndexes([0], byExtendingSelection: false)
-        }
+        refresh(full: true)
     }
 }
 
@@ -102,31 +182,23 @@ extension InstrTableView: NSTableViewDataSource {
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
-        if var instr = instructionAtRow[row] {
+        switch tableColumn?.identifier.rawValue {
             
-            switch tableColumn?.identifier.rawValue {
-                
-            case "break":
-                if c64.cpu.breakpoint(instr.addr) {
-                    return "⛔"
-                } else {
-                    return " "
-                }
-            case "addr":
-                return String.init(utf8String: &instr.pc.0)
-            case "data01":
-                return String.init(utf8String: &instr.byte1.0)
-            case "data02":
-                return String.init(utf8String: &instr.byte2.0)
-            case "data03":
-                return String.init(utf8String: &instr.byte3.0)
-            case "ascii":
-                return String.init(utf8String: &instr.command.0)
-            default:
-                return "?"
-            }
+            /*
+             case "break" where bpInRow[row] == .enabled:
+             return "\u{26D4}" // "⛔" ("\u{1F534}" // "🔴")
+             case "break" where bpInRow[row] == .disabled:
+             return "\u{26AA}" // "⚪" ("\u{2B55}" // "⭕")
+             */
+        case "addr":
+            return addrInRow[row]
+        case "data":
+            return dataInRow[row]
+        case "instr":
+            return instrInRow[row]
+        default:
+            return ""
         }
-        return ""
     }
 }
 
@@ -134,15 +206,16 @@ extension InstrTableView: NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
         
+        /*
         let cell = cell as? NSTextFieldCell
         
-        if  let instr = instructionAtRow[row] {
-            
-            if c64.cpu.breakpoint(instr.addr) {
-                cell?.textColor = NSColor.systemRed
-            } else {
-                cell?.textColor = NSColor.textColor
-            }
+        if bpInRow[row] == .enabled {
+            cell?.textColor = NSColor.systemRed
+        } else if bpInRow[row] == .disabled {
+            cell?.textColor = NSColor.disabledControlTextColor
+        } else {
+            cell?.textColor = NSColor.labelColor
         }
+        */
     }
 }

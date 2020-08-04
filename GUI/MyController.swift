@@ -203,7 +203,7 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var stepOverButton: NSButton!
     
     // Debug panel (CPU)
-    @IBOutlet weak var cpuTableView: CpuTableView!
+    @IBOutlet weak var cpuInstrView: InstrTableView!
     @IBOutlet weak var cpuTraceView: CpuTraceView!
     @IBOutlet weak var pc: NSTextField!
     @IBOutlet weak var sp: NSTextField!
@@ -368,7 +368,6 @@ extension MyController {
 
         track()
         
-        cpuTableView.c = self
         cpuTraceView.c = self
         memTableView.c = self
         
@@ -404,9 +403,8 @@ extension MyController {
                             device: MTLCreateSystemDefaultDevice()!,
                             controller: self)
         
-        // Setup window and debugger
+        // Setup window
         configureWindow()
-        setupDebugger()
 
         // Load user defaults
         loadUserDefaults()

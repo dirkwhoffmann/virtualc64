@@ -10,8 +10,6 @@
 let fmt4  = MyFormatter.init(radix: 16, min: 0, max: 0xF)
 let fmt8  = MyFormatter.init(radix: 16, min: 0, max: 0xFF)
 let fmt16 = MyFormatter.init(radix: 16, min: 0, max: 0xFFFF)
-let fmt24 = MyFormatter.init(radix: 16, min: 0, max: 0xFFFFFF)
-let fmt32 = MyFormatter.init(radix: 16, min: 0, max: 0xFFFFFFFF)
 let fmt8b = MyFormatter.init(radix: 2, min: 0, max: 255)
 
 class Inspector: DialogController {
@@ -25,9 +23,9 @@ class Inspector: DialogController {
     @IBOutlet weak var numberFormatSelector: NSMatrix!
 
     // CPU panel
-    @IBOutlet weak var instrTableView: InstrTableView!
-    @IBOutlet weak var traceTableView: TraceTableView!
-    @IBOutlet weak var breakTableView: BreakTableView!
+    @IBOutlet weak var cpuInstrView: InstrTableView!
+    @IBOutlet weak var cpuTraceView: TraceTableView!
+    @IBOutlet weak var cpuBreakView: BreakTableView!
     @IBOutlet weak var cpuPc: NSTextField!
     @IBOutlet weak var cpuSp: NSTextField!
     @IBOutlet weak var cpuA: NSTextField!
@@ -225,8 +223,8 @@ extension Inspector: NSTabViewDelegate {
         }
         
         if tabView === cpuTab {
-            instrTableView.refresh(full: true)
-            traceTableView.refresh(full: true)
+            cpuInstrView.refresh(full: true)
+            cpuTraceView.refresh(full: true)
         }
     }
 }
