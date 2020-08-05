@@ -13,7 +13,7 @@ class TraceTableView: NSTableView {
     var c64: C64Proxy { return inspector.parent.c64 }
     
     // Data caches
-    // var instrInRow: [Int: DisassembledInstr] = [:]
+    var instrInRow: [Int: DisassembledInstruction] = [:]
     var numRows = 0
     
     override func awakeFromNib() {
@@ -24,16 +24,25 @@ class TraceTableView: NSTableView {
     
     private func cache() {
         
-        /*
         numRows = c64.cpu.loggedInstructions()
         
         for i in 0 ..< numRows {
             instrInRow[i] = c64.cpu.getLoggedInstrInfo(i)
         }
-        */
     }
     
     func refresh(count: Int = 0, full: Bool = false) {
+        
+        if full {
+            for (c, f) in ["addr": fmt16] {
+                let columnId = NSUserInterfaceItemIdentifier(rawValue: c)
+                if let column = tableColumn(withIdentifier: columnId) {
+                    if let cell = column.dataCell as? NSCell {
+                        cell.formatter = f
+                    }
+                }
+            }
+        }
         
         cache()
         reloadData()
@@ -49,22 +58,21 @@ extension TraceTableView: NSTableViewDataSource {
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
-        /*
-         if var info = instrInRow[row] {
-         
-         switch tableColumn?.identifier.rawValue {
-         
-         case "addr":
-         return String(cString: &info.addr.0)
-         case "flags":
-         return String(cString: &info.sr.0)
-         case "instr":
-         return String(cString: &info.instr.0)
-         default:
-         return "???"
-         }
-         }
-         */
+        if var info = instrInRow[row] {
+            
+            switch tableColumn?.identifier.rawValue {
+                
+            case "addr":
+                return info.addr
+            case "flags":
+                return String(cString: &info.flags.0)
+            case "instr":
+                return String(cString: &info.command.0)
+            default:
+                return "???"
+            }
+        }
+    
         return "??"
     }
 }

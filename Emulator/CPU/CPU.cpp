@@ -62,6 +62,35 @@ CPU::CPU(CPUModel model, Memory *mem, C64& ref) : C64Component(ref)
     registerSnapshotItems(items, sizeof(items));
 }
 
+DisassembledInstruction
+CPU::getInstrInfo(long nr, u16 start)
+{
+    // Update the cache if necessary
+    if (info.start != start) _inspect(start);
+
+    return getInstrInfo(nr);
+}
+
+DisassembledInstruction
+CPU::getInstrInfo(long nr)
+{
+    assert(nr < CPUINFO_INSTR_COUNT);
+    
+    DisassembledInstruction result;
+    synchronized { result = info.instr[nr]; }
+    return result;
+}
+
+DisassembledInstruction
+CPU::getLoggedInstrInfo(long nr)
+{
+    assert(nr < CPUINFO_INSTR_COUNT);
+    
+    DisassembledInstruction result;
+    synchronized { result = info.loggedInstr[nr]; }
+    return result;
+}
+
 void
 CPU::_reset()
 {
@@ -83,6 +112,12 @@ CPU::_reset()
 void
 CPU::_inspect()
 {
+    _inspect(getPC());
+}
+
+void
+CPU::_inspect(u32 dasmStart)
+{
     synchronized {
         
         info.cycle = cycle;
@@ -103,6 +138,20 @@ CPU::_inspect()
         
         info.processorPort = pport.read();
         info.processorPortDir = pport.readDirection();
+        
+        // Disassemble the program starting at 'dasmStart'
+        info.start = dasmStart;
+        for (unsigned i = 0; i < CPUINFO_INSTR_COUNT; i++) {
+            info.instr[i] = disassemble(dasmStart, true);
+            dasmStart += info.instr[i].size;
+        }
+        
+        // Disassemble the most recent entries in the trace buffer
+        long count = recordedInstructions();
+        for (int i = 0; i < count; i++) {
+            RecordedInstruction rec = readRecordedInstruction(i);
+            info.loggedInstr[i] = disassemble(rec, true);
+        }
     }
 }
 

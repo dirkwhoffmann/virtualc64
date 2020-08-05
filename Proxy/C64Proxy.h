@@ -272,6 +272,9 @@ struct AnyC64FileWrapper;
 }
 
 - (CPUInfo) getInfo;
+- (DisassembledInstruction) getInstrInfo:(NSInteger)index start:(NSInteger)addr;
+- (NSInteger) loggedInstructions;
+- (DisassembledInstruction) getLoggedInstrInfo:(NSInteger)index;
 - (void) dump;
 - (bool) isHalted;
 

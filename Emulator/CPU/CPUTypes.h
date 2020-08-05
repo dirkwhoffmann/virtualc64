@@ -89,14 +89,16 @@ IntSource;
 typedef struct
 {
     u64 cycle;
-    u16 pc;
+    
     u8 byte1;
     u8 byte2;
     u8 byte3;
+    
+    u16 pc;
+    u8 sp;
     u8 a;
     u8 x;
     u8 y;
-    u8 sp;
     u8 flags;
 }
 RecordedInstruction;
@@ -106,9 +108,9 @@ typedef struct
     u64 cycle;
     u16 addr; 
     u8 size;
-    char byte1[4]; // DEPRECATED
-    char byte2[4]; // DEPRECATED
-    char byte3[4]; // DEPRECATED
+    char byte1[4]; // DEPRECATED, REPLACED BY data
+    char byte2[4]; // DEPRECATED, REPLACED BY data
+    char byte3[4]; // DEPRECATED, REPLACED BY data
     char data[13];
     char pc[6];
     char a[4];
@@ -128,7 +130,6 @@ typedef struct
 
     u16 pc;
     u8 sp;
-
     u8 a;
     u8 x;
     u8 y;
@@ -146,7 +147,16 @@ typedef struct
     bool rdy;
 
     u8 processorPort;
-    u8 processorPortDir;    
+    u8 processorPortDir;
+    
+    // Start address of the disassembled instructions
+    u16 start;
+
+    // Disassembled instructions, starting at 'start'
+    DisassembledInstruction instr[CPUINFO_INSTR_COUNT];
+
+    // Disassembled instructions from the log buffer
+    DisassembledInstruction loggedInstr[CPUINFO_INSTR_COUNT];
 }
 CPUInfo;
 

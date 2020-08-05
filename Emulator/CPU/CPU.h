@@ -242,11 +242,11 @@ private:
     
     
     //
-    // Trace buffer
+    // Trace buffer (DEPRECATED)
     //
     
     //! @brief  Trace buffer size
-    static const unsigned traceBufferSize = 1024;
+    static const unsigned traceBufferSize = 256;
     
     //! @brief  Ring buffer for storing the CPU state
     RecordedInstruction traceBuffer[traceBufferSize];
@@ -299,6 +299,10 @@ public:
     // Returns the result of the latest inspection
     CPUInfo getInfo() { return HardwareComponent::getInfo(info); }
 
+    DisassembledInstruction getInstrInfo(long nr, u16 startAddr);
+    DisassembledInstruction getInstrInfo(long nr);
+    DisassembledInstruction getLoggedInstrInfo(long nr);
+
     
     //
     // Methods from HardwareComponent
@@ -308,6 +312,7 @@ public:
 
 	void _reset() override;
     void _inspect() override;
+    void _inspect(u32 dasmStart);
     size_t stateSize() override;
     void didLoadFromBuffer(u8 **buffer) override;
     void didSaveToBuffer(u8 **buffer) override;

@@ -50,6 +50,18 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->cpu->getInfo();
 }
+- (DisassembledInstruction) getInstrInfo:(NSInteger)nr start:(NSInteger)addr
+{
+    return wrapper->cpu->getInstrInfo(nr, (u16)addr);
+}
+- (NSInteger) loggedInstructions
+{
+    return wrapper->cpu->recordedInstructions();
+}
+- (DisassembledInstruction) getLoggedInstrInfo:(NSInteger)nr
+{
+    return wrapper->cpu->getLoggedInstrInfo(nr);
+}
 - (void) dump
 {
     wrapper->cpu->dump();

@@ -489,7 +489,7 @@ CPU::executeOneCycle()
             next = actionFunc[instr];
             
             // Disassemble command if requested
-            if (unlikely(tracingEnabled())) {
+            if (vc64.debugMode) { // } unlikely(tracingEnabled())) {
   
                 recordInstruction();
             }
