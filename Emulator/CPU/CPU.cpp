@@ -146,6 +146,11 @@ CPU::_inspect(u32 dasmStart)
         info.zFlag = getZ();
         info.cFlag = getC();
         
+        info.irq = irqLine;
+        info.nmi = nmiLine;
+        info.rdy = rdyLine;
+        info.halted = isHalted();
+        
         info.processorPort = pport.read();
         info.processorPortDir = pport.readDirection();
         

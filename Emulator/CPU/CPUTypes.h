@@ -145,7 +145,8 @@ typedef struct
     bool irq;
     bool nmi;
     bool rdy;
-
+    bool halted;
+    
     u8 processorPort;
     u8 processorPortDir;
     

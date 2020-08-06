@@ -568,6 +568,7 @@ public:
     //! @functiongroup Handling breakpoints
     //
     
+    /*
     //! @brief    Checks if a hard breakpoint is set at the provided address.
     bool hardBreakpoint(u16 addr) { return (breakpoint[addr] & HARD_BREAKPOINT) != 0; }
     
@@ -591,7 +592,7 @@ public:
     
     //! @brief    Sets or deletes a hard breakpoint at the specified address.
     void toggleSoftBreakpoint(u16 addr) { breakpoint[addr] ^= SOFT_BREAKPOINT; }
-    
+    */
     
     //
     //! @functiongroup Tracing the program execution
