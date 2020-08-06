@@ -177,6 +177,13 @@ CPUDebugger::CPUDebugger(C64 &ref) : C64Component(ref)
 }
 
 void
+CPUDebugger::registerInstruction(u8 opcode, const char *mnemonic, AddressingMode mode)
+{
+    this->mnemonic[opcode] = mnemonic;
+    this->addressingMode[opcode] = mode;
+}
+
+void
 CPUDebugger::_reset()
 {
 
@@ -203,7 +210,7 @@ CPUDebugger::stepOver()
     // If the next instruction is a JSR instruction (0x20), we set a breakpoint
     // at the next memory location. Otherwise, stepOver behaves like stepInto.
     if (cpu.mem->spypeek(cpu.getPC()) == 0x20) {
-        softStop = cpu.getAddressOfNextInstruction();
+        softStop = getAddressOfNextInstruction();
     } else {
         softStop = UINT64_MAX;
     }
@@ -255,7 +262,7 @@ CPUDebugger::logInstruction()
 {
     u16 pc = cpu.getPC();
     u8 opcode = mem.spypeek(pc);
-    unsigned length = cpu.getLengthOfInstruction(opcode);
+    unsigned length = getLengthOfInstruction(opcode);
 
     int i = logCnt++ % logBufferCapacity;
     
@@ -291,20 +298,63 @@ CPUDebugger::logEntryAbs(int n)
     return logEntry(loggedInstructions() - n - 1);
 }
 
+unsigned
+CPUDebugger::getLengthOfInstruction(u8 opcode)
+{
+    switch(addressingMode[opcode]) {
+        case ADDR_IMPLIED:
+        case ADDR_ACCUMULATOR:
+            return 1;
+        case ADDR_IMMEDIATE:
+        case ADDR_ZERO_PAGE:
+        case ADDR_ZERO_PAGE_X:
+        case ADDR_ZERO_PAGE_Y:
+        case ADDR_INDIRECT_X:
+        case ADDR_INDIRECT_Y:
+        case ADDR_RELATIVE:
+            return 2;
+        case ADDR_ABSOLUTE:
+        case ADDR_ABSOLUTE_X:
+        case ADDR_ABSOLUTE_Y:
+        case ADDR_DIRECT:
+        case ADDR_INDIRECT:
+            return 3;
+    }
+    return 1;
+}
+
+unsigned
+CPUDebugger::getLengthOfInstructionAtAddress(u16 addr)
+{
+    return getLengthOfInstruction(cpu.mem->spypeek(addr));
+}
+
+unsigned
+CPUDebugger::getLengthOfCurrentInstruction()
+{
+    return getLengthOfInstructionAtAddress(cpu.getPC());
+}
+
+u16
+CPUDebugger::getAddressOfNextInstruction()
+{
+    return cpu.getPC() + getLengthOfCurrentInstruction();
+}
+
 DisassembledInstruction
 CPUDebugger::disassemble(RecordedInstruction instr)
 {
     DisassembledInstruction result;
     
     u8 opcode = instr.byte1;
-    u8 length = cpu.getLengthOfInstruction(opcode);
+    u8 length = getLengthOfInstruction(opcode);
     
     result.addr = instr.pc;
     result.size = length;
     
     // Convert command
     char operand[6];
-    switch (cpu.addressingMode[opcode]) {
+    switch (addressingMode[opcode]) {
             
         case ADDR_IMMEDIATE:
         case ADDR_ZERO_PAGE:
@@ -334,7 +384,8 @@ CPUDebugger::disassemble(RecordedInstruction instr)
             break;
     }
     
-    switch (cpu.addressingMode[opcode]) {
+    switch (addressingMode[opcode]) {
+            
         case ADDR_IMPLIED:
         case ADDR_ACCUMULATOR:
             strcpy(result.command, "xxx");
@@ -389,7 +440,7 @@ CPUDebugger::disassemble(RecordedInstruction instr)
     }
     
     // Copy mnemonic
-    strncpy(result.command, cpu.mnemonic[opcode], 3);
+    strncpy(result.command, mnemonic[opcode], 3);
     
     // Convert register contents to strings
     hex ? sprint16x(result.pc, instr.pc) : sprint16d(result.pc, instr.pc);

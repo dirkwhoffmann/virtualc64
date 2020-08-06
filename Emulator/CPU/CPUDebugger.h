@@ -138,6 +138,14 @@ public:
 
 class CPUDebugger : public C64Component {
     
+    friend class CPU;
+    
+    // Textual representation for each opcode (used by the disassembler)
+    const char *mnemonic[256];
+     
+    // Adressing mode of each opcode (used by the disassembler)
+     AddressingMode addressingMode[256];
+    
 public:
     
     // Breakpoint storage
@@ -178,7 +186,10 @@ public:
 public:
     
     CPUDebugger(C64 &ref);
-    
+
+    // Initializes an entry of the lookup tables
+    void registerInstruction(u8 opcode, const char *mnemonic, AddressingMode mode);
+
     
     //
     // Methods from HardwareComponent
@@ -232,11 +243,22 @@ public:
     // Clears the log buffer
     void clearLog() { logCnt = 0; }
     
+    //
+    // Examining instructions
+    //
+    
+    // Returns the length of an instruction in bytes
+    unsigned getLengthOfInstruction(u8 opcode);
+    unsigned getLengthOfInstructionAtAddress(u16 addr);
+    unsigned getLengthOfCurrentInstruction();
+
+    // Returns the address of the instruction following the current one
+    u16 getAddressOfNextInstruction();
     
     //
-    // Working with the disassembler
+    // Running the disassembler
     //
-        
+    
     // Disassembles a previously recorded instruction
     DisassembledInstruction disassemble(RecordedInstruction instr);
     

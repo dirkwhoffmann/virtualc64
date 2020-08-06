@@ -116,15 +116,13 @@ CPU::sbc_bcd(u8 op)
 }
 
 void 
-CPU::registerCallback(u8 opcode, const char *mnc,
+CPU::registerCallback(u8 opcode, const char *mnemonic,
                       AddressingMode mode, MicroInstruction mInstr)
 {
     // Table is write once!
     assert(mInstr == JAM || actionFunc[opcode] == JAM);
-    
-    mnemonic[opcode] = mnc;
-    addressingMode[opcode] = mode;
     actionFunc[opcode] = mInstr;
+    debugger.registerInstruction(opcode, mnemonic, mode);
 }
 
 void CPU::registerInstructions()

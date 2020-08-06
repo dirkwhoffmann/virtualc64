@@ -73,21 +73,8 @@ private:
      *            be executed after the fetch phase (second microcycle).
      */
     MicroInstruction actionFunc[256];
-    
-    /*! @brief    Textual representation for each opcode
-     *  @note     Used by the disassembler, only.
-     */
-    const char *mnemonic[256];
-    
-    /*! @brief    Adressing mode of each opcode
-     *  @note     Used by the disassembler, only.
-     */
-    AddressingMode addressingMode[256];
-    
-    //! @brief    Breakpoint tag for each memory cell (DEPRECATED)
-    // u8 breakpoint[65536];
-    
-    
+            
+
     //
     // Internal state
     //
@@ -510,35 +497,10 @@ public:
     
     
     //
-    //! @functiongroup Examining the currently executed instruction
+    // Examining the currently executed instruction
     //
     
-    /*! @brief    Returns the length of an instruction in bytes.
-     *  @result   Integer value between 1 and 3.
-     */
-    unsigned getLengthOfInstruction(u8 opcode);
-    
-    /*! @brief    Returns the length of instruction in bytes.
-     *  @result   Integer value between 1 and 3.
-     */
-    unsigned getLengthOfInstructionAtAddress(u16 addr) {
-        return getLengthOfInstruction(mem->spypeek(addr)); }
-    
-    /*! @brief    Returns the length of the currently executed instruction.
-     *  @result   Integer value between 1 and 3.
-     */
-    unsigned getLengthOfCurrentInstruction() {
-        return getLengthOfInstructionAtAddress(pc); }
-    
-    /*! @brief    Returns the address of the next instruction to execute.
-     *  @result   Integer value between 1 and 3.
-     */
-    u16 getAddressOfNextInstruction() {
-        return pc + getLengthOfCurrentInstruction(); }
-    
-    /*! @brief    Returns true if the next microcycle is the fetch cycle.
-     *  @details  The fetch cycle is the first microinstruction of each command.
-     */
+    // Returns true if the next cycle marks the beginning of an instruction
     bool inFetchPhase() { return next == fetch; }
     
     
