@@ -494,16 +494,11 @@ CPU::executeOneCycle()
                 recordInstruction();
             }
             
-            // Check breakpoint tag
-            if (unlikely(breakpoint[pc] != NO_BREAKPOINT)) {
-                if (breakpoint[pc] & SOFT_BREAKPOINT) {
-                    // Soft breakpoints get deleted when reached
-                    breakpoint[pc] &= ~SOFT_BREAKPOINT;
-                    setErrorState(CPU_SOFT_BREAKPOINT_REACHED);
-                } else {
-                    setErrorState(CPU_HARD_BREAKPOINT_REACHED);
-                }
+            // Check if a breakpoint has been reached
+            if (checkForBreakpoints && debugger.breakpointMatches(getPC())) {
+
                 debug(CPU_DEBUG, "Breakpoint reached\n");
+                setErrorState(CPU_BREAKPOINT_REACHED);
             }
             
             return errorState == CPU_OK;

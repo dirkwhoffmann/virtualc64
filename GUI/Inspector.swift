@@ -128,7 +128,7 @@ class Inspector: DialogController {
     @IBOutlet weak var ciaIdleLevelText: NSTextField!
     @IBOutlet weak var ciaIdleLevel: NSLevelIndicator!
     
-    // Cached state of all Amiga components
+    // Cached state of all C64 components
     var cpuInfo: CPUInfo!
     var ciaInfo: CIAInfo!
     var isRunning = true
@@ -148,17 +148,7 @@ class Inspector: DialogController {
         c64.enableDebugging()
         updateInspectionTarget()
     }
-    
-    // Assigns a number formatter to a control
-    /*
-    func assignFormatter(_ formatter: Formatter, _ control: NSControl) {
         
-        control.abortEditing()
-        control.formatter = formatter
-        control.needsDisplay = true
-    }
-    */
-    
     func fullRefresh() {
         
         refresh(full: true)
@@ -198,6 +188,26 @@ class Inspector: DialogController {
             default: break
             }
         }
+    }
+    
+    func scrollToPC() {
+
+        cpuInstrView.jumpTo(addr: Int(cpuInfo.pc))
+    }
+    
+    @IBAction func stopAndGoAction(_ sender: NSButton!) {
+
+        c64.stopAndGo()
+    }
+    
+    @IBAction func stepIntoAction(_ sender: NSButton!) {
+
+        c64.stepInto()
+    }
+    
+    @IBAction func stepOverAction(_ sender: NSButton!) {
+
+        c64.stepOver()
     }
     
     @IBAction func hexAction(_ sender: NSButtonCell!) {

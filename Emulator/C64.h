@@ -410,24 +410,27 @@ public:
      */
     void threadDidTerminate();
     
- 
-    
-    //! @brief    Returns true if the emulator is running.
-    // bool oldIsRunning();
-    
-    //! @brief    Returns true if the emulator is not running.
-    // bool isHalted();
-    
-    // Runs or pauses the emulator
+    /* Runs or pauses the emulator.
+     */
     void stopAndGo() { isRunning() ? pauseEmulator() : runEmulator(); }
     
-    /*! @brief    Executes a single instruction.
-     *  @details  This method implements the debugger's 'step' action.
+    /* Finishes the current command.
+     * When the emulator is stopped, this function is called to bring the
+     * CPU into a clean state.
+     */
+    void finishInstruction(); 
+    
+    /* Executes a single instruction.
+     * This function is used for single-stepping through the code inside the
+     * debugger. It starts the execution thread and terminates it after the
+     * next instruction has been executed.
      */
     void stepInto();
     
-    /*! @brief    Executes until the instruction is reached
-     *  @details  This method implements the debugger's 'step over' action.
+    /* Executes until the instruction following the current one is reached.
+     * This function is used for single-stepping through the code inside the
+     * debugger. It sets a soft breakpoint to PC+n where n is the length
+     * bytes of the current instruction and starts the emulator thread.
      */
     void stepOver();
     

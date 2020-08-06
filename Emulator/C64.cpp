@@ -589,10 +589,9 @@ C64::requestThreadLock()
         assert(p == NULL);
         
         // Acquire the lock
-        
-        
+                
         // Finish the current command (to reach a clean state)
-        stepInto();
+        finishInstruction();
         
     } else {
         
@@ -910,8 +909,32 @@ C64::threadDidTerminate()
 }
 
 void
+C64::finishInstruction()
+{
+    cpu.clearErrorState();
+    drive8.cpu.clearErrorState();
+    drive9.cpu.clearErrorState();
+    
+    // Wait until the execution of the next command has begun
+    while (cpu.inFetchPhase()) executeOneCycle();
+    
+    // Finish the command
+    while (!cpu.inFetchPhase()) executeOneCycle();
+    
+    // Execute the first microcycle (fetch phase) and stop there
+    executeOneCycle();
+}
+
+void
 C64::stepInto()
 {
+    assert(false);
+    if (isRunning()) return;
+    
+    cpu.debugger.stepInto();
+    run();
+
+    /*
     cpu.clearErrorState();
     drive8.cpu.clearErrorState();
     drive9.cpu.clearErrorState();
@@ -924,11 +947,18 @@ C64::stepInto()
     
     // Execute the first microcycle (fetch phase) and stop there
     executeOneCycle();
+    */
 }
 
 void
 C64::stepOver()
 {
+    assert(false);
+    if (isRunning()) return;
+    
+    cpu.debugger.stepOver();
+    run();
+    
     /*
     cpu.clearErrorState();
     drive8.cpu.clearErrorState();

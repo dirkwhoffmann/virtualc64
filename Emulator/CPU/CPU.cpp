@@ -27,12 +27,7 @@ CPU::CPU(CPUModel model, Memory *mem, C64& ref) : C64Component(ref)
 
 	// Establish callback for each instruction
 	registerInstructions();
-		
-	// Clear all breakpoint tags
-	for (int i = 0; i <  65536; i++) {
-		breakpoint[i] = NO_BREAKPOINT;	
-	}
-    
+		    
     // Register snapshot items
     SnapshotItem items[] = {
         
@@ -294,12 +289,10 @@ CPU::getLengthOfInstruction(u8 opcode)
 	return 1;
 }
 
-
 void 
 CPU::setErrorState(ErrorState state)
 {
-	if (errorState == state)
-        return;
+	if (errorState == state) return;
 
     errorState = state;
     
@@ -307,14 +300,11 @@ CPU::setErrorState(ErrorState state)
         case CPU_OK:
             vc64.putMessage(MSG_CPU_OK);
             return;
-        case CPU_SOFT_BREAKPOINT_REACHED:
-            vc64.putMessage(MSG_CPU_SOFT_BREAKPOINT_REACHED);
+        case CPU_BREAKPOINT_REACHED:
+            vc64.putMessage(MSG_BREAKPOINT_REACHED);
             return; 
-        case CPU_HARD_BREAKPOINT_REACHED:
-            vc64.putMessage(MSG_CPU_HARD_BREAKPOINT_REACHED);
-            return;
         case CPU_ILLEGAL_INSTRUCTION:
-            vc64.putMessage(MSG_CPU_ILLEGAL_INSTRUCTION);
+            vc64.putMessage(MSG_ILLEGAL_INSTRUCTION);
             return;
         default:
             assert(false);

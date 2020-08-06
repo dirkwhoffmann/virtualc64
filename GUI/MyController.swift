@@ -631,13 +631,17 @@ extension MyController {
             
             break
     
-        case MSG_CPU_OK,
-             MSG_CPU_SOFT_BREAKPOINT_REACHED:
+        case MSG_CPU_OK:
             
             break
             
-        case MSG_CPU_HARD_BREAKPOINT_REACHED,
-             MSG_CPU_ILLEGAL_INSTRUCTION:
+        case MSG_BREAKPOINT_REACHED,
+             MSG_WATCHPOINT_REACHED:
+            
+            inspector?.fullRefresh()
+            inspector?.scrollToPC()
+            
+        case MSG_ILLEGAL_INSTRUCTION:
             
             self.debugOpenAction(self)
             refresh()

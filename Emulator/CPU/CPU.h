@@ -85,7 +85,7 @@ private:
     AddressingMode addressingMode[256];
     
     //! @brief    Breakpoint tag for each memory cell (DEPRECATED)
-    u8 breakpoint[65536];
+    // u8 breakpoint[65536];
     
     
     //
