@@ -7,10 +7,14 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-let fmt4  = MyFormatter.init(radix: 16, min: 0, max: 0xF)
-let fmt8  = MyFormatter.init(radix: 16, min: 0, max: 0xFF)
-let fmt16 = MyFormatter.init(radix: 16, min: 0, max: 0xFFFF)
-let fmt8b = MyFormatter.init(radix: 2, min: 0, max: 255)
+// Number formatters
+let fmt8b  = MyFormatter.init(radix: 2, min: 0, max: 0xFF)
+let fmt4d  = MyFormatter.init(radix: 10, min: 0, max: 0xF)
+let fmt8d  = MyFormatter.init(radix: 10, min: 0, max: 0xFF)
+let fmt16d = MyFormatter.init(radix: 10, min: 0, max: 0xFFFF)
+let fmt4x  = MyFormatter.init(radix: 16, min: 0, max: 0xF)
+let fmt8x  = MyFormatter.init(radix: 16, min: 0, max: 0xFF)
+let fmt16x = MyFormatter.init(radix: 16, min: 0, max: 0xFFFF)
 
 class Inspector: DialogController {
     
@@ -20,7 +24,7 @@ class Inspector: DialogController {
     @IBOutlet weak var stopAndGoButton: NSButton!
     @IBOutlet weak var stepIntoButton: NSButton!
     @IBOutlet weak var stepOverButton: NSButton!
-    @IBOutlet weak var numberFormatSelector: NSMatrix!
+    @IBOutlet weak var hexDecSelector: NSMatrix!
 
     // CPU panel
     @IBOutlet weak var cpuInstrView: InstrTableView!
@@ -123,12 +127,16 @@ class Inspector: DialogController {
     var ciaInfo: CIAInfo!
     var isRunning = true
     
+    // Number format selection (hexadecimal or decimal)
+    var hex = true
+    var fmt4: MyFormatter { return hex ? fmt4x : fmt4d }
+    var fmt8: MyFormatter { return hex ? fmt8x : fmt8d }
+    var fmt16: MyFormatter { return hex ? fmt16x : fmt16d }
+
     // Used to determine the items to be refreshed
     var refreshCnt = 0
     
     override func showWindow(_ sender: Any?) {
-
-        track()
 
         super.showWindow(self)
         c64.enableDebugging()
@@ -136,12 +144,14 @@ class Inspector: DialogController {
     }
     
     // Assigns a number formatter to a control
+    /*
     func assignFormatter(_ formatter: Formatter, _ control: NSControl) {
         
         control.abortEditing()
         control.formatter = formatter
         control.needsDisplay = true
     }
+    */
     
     func fullRefresh() {
         
@@ -182,6 +192,18 @@ class Inspector: DialogController {
             default: break
             }
         }
+    }
+    
+    @IBAction func hexAction(_ sender: NSButtonCell!) {
+        
+        hex = true
+        refresh(full: true)
+    }
+
+    @IBAction func decAction(_ sender: NSButtonCell!) {
+        
+        hex = false
+        refresh(full: true)
     }
 }
 

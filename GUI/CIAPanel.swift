@@ -42,34 +42,32 @@ extension Inspector {
             ciaPB1.title = "PB1: " + (cia1 ? "R6"        : "User K")
             ciaPB0.title = "PB0: " + (cia1 ? "R7"        : "User L")
 
-            let elements = [ ciaPRAbinary: fmt8b,
-                             ciaDDRAbinary: fmt8b,
-                             ciaPRBbinary: fmt8b,
-                             ciaDDRBbinary: fmt8b,
-                             ciaICRbinary: fmt8b,
-                             ciaIMRbinary: fmt8b,
-                             ciaPRA: fmt8,
-                             ciaDDRA: fmt8,
-                             ciaPRB: fmt8,
-                             ciaDDRB: fmt8,
-                             ciaTodHours: fmt8,
-                             ciaTodMinutes: fmt8,
-                             ciaTodSeconds: fmt8,
-                             ciaTodTenth: fmt8,
-                             ciaAlarmHours: fmt8,
-                             ciaAlarmMinutes: fmt8,
-                             ciaAlarmSeconds: fmt8,
-                             ciaAlarmTenth: fmt8,
-                             ciaIMR: fmt8,
-                             ciaICR: fmt8,
-                             ciaSDR: fmt8,
-                             ciaSSR: fmt8b,
-                             ciaTA: fmt16,
-                             ciaTAlatch: fmt16,
-                             ciaTB: fmt16,
-                             ciaTBlatch: fmt16 ]
-
-            for (c, f) in elements { assignFormatter(f, c!) }
+            ciaPRAbinary.assignFormatter(fmt8b)
+            ciaDDRAbinary.assignFormatter(fmt8b)
+            ciaPRBbinary.assignFormatter(fmt8b)
+            ciaDDRBbinary.assignFormatter(fmt8b)
+            ciaICRbinary.assignFormatter(fmt8b)
+            ciaIMRbinary.assignFormatter(fmt8b)
+            ciaPRA.assignFormatter(fmt8)
+            ciaDDRA.assignFormatter(fmt8)
+            ciaPRB.assignFormatter(fmt8)
+            ciaDDRB.assignFormatter(fmt8)
+            ciaTodHours.assignFormatter(fmt8)
+            ciaTodMinutes.assignFormatter(fmt8)
+            ciaTodSeconds.assignFormatter(fmt8)
+            ciaTodTenth.assignFormatter(fmt8)
+            ciaAlarmHours.assignFormatter(fmt8)
+            ciaAlarmMinutes.assignFormatter(fmt8)
+            ciaAlarmSeconds.assignFormatter(fmt8)
+            ciaAlarmTenth.assignFormatter(fmt8)
+            ciaIMR.assignFormatter(fmt8)
+            ciaICR.assignFormatter(fmt8)
+            ciaICR.assignFormatter(fmt8)
+            ciaSSR.assignFormatter(fmt8b)
+            ciaTA.assignFormatter(fmt16)
+            ciaTAlatch.assignFormatter(fmt16)
+            ciaTB.assignFormatter(fmt16)
+            ciaTBlatch.assignFormatter(fmt16)
         }
 
         ciaTA.intValue = Int32(ciaInfo!.timerA.count)

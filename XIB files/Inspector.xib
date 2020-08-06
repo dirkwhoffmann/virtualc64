@@ -86,6 +86,7 @@
                 <outlet property="cpuX" destination="koA-eW-Jpr" id="n7i-s6-LPq"/>
                 <outlet property="cpuY" destination="GYy-Tv-mCA" id="hWs-di-r0R"/>
                 <outlet property="cpuZ" destination="FDg-Zv-NPQ" id="pHc-tL-3OQ"/>
+                <outlet property="hexDecSelector" destination="I8k-0V-ELF" id="yN0-mY-F0B"/>
                 <outlet property="memBankTableView" destination="7VI-wI-Pak" id="qu2-cR-eFg"/>
                 <outlet property="memCharen" destination="LhF-fe-Tqm" id="XcI-Pm-x7I"/>
                 <outlet property="memExrom" destination="ngt-bd-zqk" id="ibX-c0-Nvm"/>
@@ -94,7 +95,6 @@
                 <outlet property="memLoram" destination="ciV-Kn-T6h" id="sT0-be-wEC"/>
                 <outlet property="memSource" destination="JGr-5C-bxz" id="zse-ng-d6z"/>
                 <outlet property="memTableView" destination="qr2-Bo-wI1" id="cjY-Mz-4EP"/>
-                <outlet property="numberFormatSelector" destination="I8k-0V-ELF" id="yN0-mY-F0B"/>
                 <outlet property="panel" destination="QhJ-8A-HRo" id="g4P-OI-piB"/>
                 <outlet property="stepIntoButton" destination="XcS-nk-XBp" id="WJQ-2Z-1F9"/>
                 <outlet property="stepOverButton" destination="EYA-b4-jd8" id="mJJ-RB-PNP"/>
@@ -153,12 +153,18 @@
                                 <buttonCell type="radio" title="Hex" imagePosition="left" alignment="left" controlSize="small" lineBreakMode="charWrapping" state="on" inset="2" id="z5F-yg-azq">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="message" size="11"/>
+                                    <connections>
+                                        <action selector="hexAction:" target="-2" id="xYb-tw-vkA"/>
+                                    </connections>
                                 </buttonCell>
                             </column>
                             <column>
                                 <buttonCell type="radio" title="Dec" imagePosition="left" alignment="left" controlSize="small" inset="2" id="jcr-RG-rX5">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="message" size="11"/>
+                                    <connections>
+                                        <action selector="decAction:" target="-2" id="092-os-S0x"/>
+                                    </connections>
                                 </buttonCell>
                             </column>
                         </cells>

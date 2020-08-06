@@ -81,6 +81,41 @@ extension NSAttributedString {
 }
 
 //
+// NSControl
+//
+
+extension NSControl {
+    
+    func assignFormatter(_ formatter: Formatter) {
+        
+        abortEditing()
+        self.formatter = formatter
+        needsDisplay = true
+    }
+}
+    
+//
+// NSTableView
+//
+
+extension NSTableView {
+    
+    func assignFormatter(_ formatter: Formatter, column: String) {
+        
+        let columnId = NSUserInterfaceItemIdentifier(rawValue: column)
+        track()
+        if let column = tableColumn(withIdentifier: columnId) {
+            track()
+            if let cell = column.dataCell as? NSCell {
+                track()
+                cell.formatter = formatter
+                track()
+            }
+        }
+    }
+}
+
+//
 // URL extensions
 //
 

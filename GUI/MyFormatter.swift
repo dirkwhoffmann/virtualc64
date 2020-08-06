@@ -48,14 +48,6 @@ class MyFormatter: Formatter {
     
     override func isPartialStringValid(_ partialString: String, newEditingString newString: AutoreleasingUnsafeMutablePointer<NSString?>?, errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
         
-        /*
-        let range = partialString.range(of: inFormat, options: .regularExpression)
-        if range != partialString.startIndex..<partialString.endIndex {
-            // newString = nil
-            NSSound.beep()
-            return false
-        }
-        */
         let number = (partialString == "") ? 0 : Int(partialString, radix: radix)
         if number == nil || number! < minValue || number! > maxValue {
             NSSound.beep()
@@ -73,9 +65,13 @@ class MyFormatter: Formatter {
         
     override func string(for obj: Any?) -> String? {
     
-        guard let number = obj as? Int else {
-            return nil
-        }
+        if let number = obj as? Int { return string(for: number) }
+        if let text = obj as? String { return text }
+        
+        return nil
+    }
+    
+    func string(for number: Int) -> String? {
         
         switch radix {
         case 2:

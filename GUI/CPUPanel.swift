@@ -19,17 +19,15 @@ extension Inspector {
         cacheCPU()
         
         if full {
-            let elements = [ cpuPc: fmt16,
-                             cpuSp: fmt8,
-                             cpuA: fmt8,
-                             cpuX: fmt8,
-                             cpuY: fmt8,
-                             cpuPortReg: fmt8,
-                             cpuPortDir: fmt8 ]
-            
-            for (c, f) in elements { assignFormatter(f, c!) }
+            cpuPc.assignFormatter(fmt16)
+            cpuSp.assignFormatter(fmt8)
+            cpuA.assignFormatter(fmt8)
+            cpuX.assignFormatter(fmt8)
+            cpuY.assignFormatter(fmt8)
+            cpuPortReg.assignFormatter(fmt8)
+            cpuPortDir.assignFormatter(fmt8)
         }
-        
+
         cpuPc.integerValue = Int(cpuInfo.pc)
         cpuSp.integerValue = Int(cpuInfo.sp)
         cpuA.integerValue = Int(cpuInfo.a)

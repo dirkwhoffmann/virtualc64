@@ -34,14 +34,7 @@ class TraceTableView: NSTableView {
     func refresh(count: Int = 0, full: Bool = false) {
         
         if full {
-            for (c, f) in ["addr": fmt16] {
-                let columnId = NSUserInterfaceItemIdentifier(rawValue: c)
-                if let column = tableColumn(withIdentifier: columnId) {
-                    if let cell = column.dataCell as? NSCell {
-                        cell.formatter = f
-                    }
-                }
-            }
+            assignFormatter(inspector.fmt16, column: "addr")
         }
         
         cache()
