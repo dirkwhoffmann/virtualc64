@@ -15,7 +15,13 @@ CPU::CPU(CPUModel model, Memory *mem, C64& ref) : C64Component(ref)
     this->mem = mem;
 	
     setDescription(model == MOS_6502 ? "CPU(6502)" : "CPU");
-	
+    
+    subComponents = vector<HardwareComponent *> {
+        
+        &pport,
+        &debugger
+    };
+    
     // Chip model
     model = MOS_6510;
 

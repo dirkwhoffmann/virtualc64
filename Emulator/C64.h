@@ -33,7 +33,6 @@
 #include "CRTFile.h"
 
 // Sub components
-#include "ProcessorPort.h"
 #include "ExpansionPort.h"
 #include "IEC.h"
 #include "Keyboard.h"
@@ -92,10 +91,7 @@ public:
     
     // CPU
     CPU cpu = CPU(MOS_6510, &mem, *this);
-    
-    // Processor Port
-    ProcessorPort processorPort = ProcessorPort(*this);
-    
+        
     // Video Interface Controller
     VIC vic = VIC(*this);
     

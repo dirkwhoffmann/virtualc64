@@ -70,7 +70,6 @@ C64::C64()
         
         &mem,
         &cpu,
-        &processorPort,
         &cia1, &cia2,
         &vic,
         &sid,

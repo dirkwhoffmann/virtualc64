@@ -25,7 +25,7 @@ Kingsoft::updatePeekPokeLookupTables()
         // $0000 - $7FFF and $C000 - $DFFF are usable the normal way
         u8 exrom = 0x10;
         u8 game  = 0x08;
-        u8 index = (pport.read() & 0x07) | exrom | game;
+        u8 index = (cpu.pport.read() & 0x07) | exrom | game;
 
         for (unsigned bank = 0x1; bank <= 0x7; bank++) {
             MemoryType type = mem.bankMap[index][bank];

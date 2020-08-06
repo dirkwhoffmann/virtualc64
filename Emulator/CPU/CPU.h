@@ -11,6 +11,8 @@
 #define _CPU_H
 
 #include "C64Component.h"
+#include "ProcessorPort.h"
+#include "CPUDebugger.h"
 
 #include "CPUTypes.h"
 #include "CPUInstructions.h"
@@ -20,25 +22,39 @@ class Memory;
 
 class CPU : public C64Component {
     
+    // Reference to the connected memory
+    Memory *mem;
+
     // Result of the latest inspection
     CPUInfo info;
     
     
     //
-    // References to other components
+    // Sub components
+    //
+    
+public:
+    
+    // Processor Port
+    ProcessorPort pport = ProcessorPort(vc64);
+
+    // CPU debugger
+    CPUDebugger debugger = CPUDebugger(vc64);
+    
+    
+    //
+    // Internal state
     //
     
 private:
     
-    //! @brief    Reference to the connected  memory
-    Memory *mem;
 
 
     //
     // Chip properties
     //
 
-    /*! @brief    Selected model
+    /*! @brief    Selected model (DEPRECATED, USE CPUConfig)
      *  @details  Right now, this atrribute is only used to distinguish the
      *            C64 CPU (MOS6510) from the VC1541 CPU (MOS6502). Hardware
      *            differences between both models are not emulated.

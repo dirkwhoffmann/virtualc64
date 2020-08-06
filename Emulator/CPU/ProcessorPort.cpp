@@ -108,12 +108,12 @@ ProcessorPort::writeDirection(u8 value)
 
     // Check floating status of bits 3, 6, and 7.
     
-    // 1) If bits 3, 6, and 7 are configured as outputs, they are not floating
+    // If bits 3, 6, and 7 are configured as outputs, they are not floating
     if (GET_BIT(value, 3)) dischargeCycleBit3 = 0;
     if (GET_BIT(value, 6)) dischargeCycleBit6 = 0;
     if (GET_BIT(value, 7)) dischargeCycleBit7 = 0;
 
-    // 2) If bits 3, 6, and 7 change from output to input, they become floating
+    // If bits 3, 6, and 7 change from output to input, they become floating
     if (FALLING_EDGE_BIT(direction, value, 3) && GET_BIT(port, 3) != 0)
         dischargeCycleBit3 = UINT64_MAX;
     if (FALLING_EDGE_BIT(direction, value, 6) && GET_BIT(port, 6) != 0)
@@ -129,5 +129,3 @@ ProcessorPort::writeDirection(u8 value)
     // Switch memory banks
     mem.updatePeekPokeLookupTables();
 }
-
-

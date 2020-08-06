@@ -180,7 +180,7 @@ C64Memory::updatePeekPokeLookupTables()
     // Read game line, exrom line, and processor port bits
     u8 game  = expansionport.getGameLine() ? 0x08 : 0x00;
     u8 exrom = expansionport.getExromLine() ? 0x10 : 0x00;
-    u8 index = (pport.read() & 0x07) | exrom | game;
+    u8 index = (cpu.pport.read() & 0x07) | exrom | game;
 
     // Set ultimax flag
     vc64.setUltimax(exrom && !game);
@@ -216,9 +216,9 @@ C64Memory::peek(u16 addr, MemoryType source)
         if (likely(addr >= 0x02)) {
             return ram[addr];
         } else if (addr == 0x00) {
-            return pport.readDirection();
+            return cpu.pport.readDirection();
         } else {
-            return pport.read();
+            return cpu.pport.read();
         }
         
         case M_NONE:
@@ -235,7 +235,7 @@ C64Memory::peek(u16 addr, bool gameLine, bool exromLine)
 {
     u8 game  = gameLine ? 0x08 : 0x00;
     u8 exrom = exromLine ? 0x10 : 0x00;
-    u8 index = (pport.read() & 0x07) | exrom | game;
+    u8 index = (cpu.pport.read() & 0x07) | exrom | game;
     
     return peek(addr, bankMap[index][addr >> 12]);
 }
@@ -246,9 +246,9 @@ C64Memory::peekZP(u8 addr)
     if (likely(addr >= 0x02)) {
         return ram[addr];
     } else if (addr == 0x00) {
-        return pport.readDirection();
+        return cpu.pport.readDirection();
     } else {
-        return pport.read();
+        return cpu.pport.read();
     }
 }
 
@@ -405,9 +405,9 @@ C64Memory::poke(u16 addr, u8 value, MemoryType target)
             if (likely(addr >= 0x02)) {
                 ram[addr] = value;
             } else if (addr == 0x00) {
-                pport.writeDirection(value);
+                cpu.pport.writeDirection(value);
             } else {
-                pport.write(value);
+                cpu.pport.write(value);
             }
             return;
             
@@ -425,7 +425,7 @@ C64Memory::poke(u16 addr, u8 value, bool gameLine, bool exromLine)
 {
     u8 game  = gameLine ? 0x08 : 0x00;
     u8 exrom = exromLine ? 0x10 : 0x00;
-    u8 index = (pport.read() & 0x07) | exrom | game;
+    u8 index = (cpu.pport.read() & 0x07) | exrom | game;
     
     poke(addr, value, bankMap[index][addr >> 12]);
 }
@@ -436,9 +436,9 @@ C64Memory::pokeZP(u8 addr, u8 value)
     if (likely(addr >= 0x02)) {
         ram[addr] = value;
     } else if (addr == 0x00) {
-        pport.writeDirection(value);
+        cpu.pport.writeDirection(value);
     } else {
-        pport.write(value);
+        cpu.pport.write(value);
     }
 }
 

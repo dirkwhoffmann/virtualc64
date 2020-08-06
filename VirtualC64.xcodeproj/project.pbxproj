@@ -165,6 +165,7 @@
 		507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */; };
 		5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* MacAudio.swift */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
+		50995F2A24DBCDE400F40713 /* CPUDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50995F2824DBCDE400F40713 /* CPUDebugger.cpp */; };
 		509A26072027AA1100D28827 /* DiskMountDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 509A26062027AA1100D28827 /* DiskMountDialog.xib */; };
 		50A0B48D24C1CAEB00FF0B0B /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50A0B48C24C1CAEB00FF0B0B /* Preferences.xib */; };
 		50A0B48F24C1D15300FF0B0B /* MediaPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A0B48E24C1D15300FF0B0B /* MediaPrefs.swift */; };
@@ -493,6 +494,8 @@
 		5081AB621EF29E6400D6F616 /* MacAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacAudio.swift; sourceTree = "<group>"; };
 		5092A5B0200BC4B70037754D /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
 		5093D6A824B19E9200BDF924 /* Serialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Serialization.h; sourceTree = "<group>"; };
+		50995F2824DBCDE400F40713 /* CPUDebugger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPUDebugger.cpp; sourceTree = "<group>"; };
+		50995F2924DBCDE400F40713 /* CPUDebugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPUDebugger.h; sourceTree = "<group>"; };
 		509A26062027AA1100D28827 /* DiskMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskMountDialog.xib; sourceTree = "<group>"; };
 		50A0B48C24C1CAEB00FF0B0B /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		50A0B48E24C1D15300FF0B0B /* MediaPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPrefs.swift; sourceTree = "<group>"; };
@@ -876,6 +879,8 @@
 				504C42EA24AF29AB00E69CAE /* CPUInstructions.cpp */,
 				504C433D24AF29AC00E69CAE /* ProcessorPort.h */,
 				504C433F24AF29AC00E69CAE /* ProcessorPort.cpp */,
+				50995F2924DBCDE400F40713 /* CPUDebugger.h */,
+				50995F2824DBCDE400F40713 /* CPUDebugger.cpp */,
 			);
 			path = CPU;
 			sourceTree = "<group>";
@@ -1455,6 +1460,7 @@
 				504C436324AF29AC00E69CAE /* Kingsoft.cpp in Sources */,
 				50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */,
 				507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */,
+				50995F2A24DBCDE400F40713 /* CPUDebugger.cpp in Sources */,
 				504C439724AF29AC00E69CAE /* voice.cc in Sources */,
 				504C436224AF29AC00E69CAE /* GeoRam.cpp in Sources */,
 				5002FA7D21C2651B00DA4BBC /* VideoConf.swift in Sources */,

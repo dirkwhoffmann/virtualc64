@@ -58,7 +58,6 @@ protected:
     C64 &vc64;
     C64Memory &mem;
     CPU &cpu;
-    ProcessorPort &pport;
     VIC &vic;
     CIA1 &cia1;
     CIA2 &cia2;
