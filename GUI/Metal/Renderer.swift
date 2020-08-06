@@ -442,8 +442,8 @@ class Renderer: NSObject, MTKViewDelegate {
     
     func drawScene3D() {
     
-        let paused = parent.c64.isPaused()
-        let poweredOff = parent.c64.isPoweredOff()
+        let paused = parent.c64.isPaused
+        let poweredOff = parent.c64.isPoweredOff
         let renderBackground = poweredOff || animates != 0 || fullscreen
         // let renderForeground = alpha.current > 0.0
         let renderForeground = !poweredOff && alpha.current > 0.0

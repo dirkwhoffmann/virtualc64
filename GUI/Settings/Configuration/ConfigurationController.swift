@@ -158,7 +158,7 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var emuPowerButton: NSButton!
     
     var bootable: Bool {
-        let off   = c64.isPoweredOff()
+        let off   = c64.isPoweredOff
         let ready = c64.isReady()
         return off && ready
     }

@@ -14,6 +14,7 @@
 
 struct C64Wrapper { C64 *c64; };
 struct CpuWrapper { CPU *cpu; };
+struct GuardsWrapper { Guards *guards; };
 struct MemoryWrapper { C64Memory *mem; };
 struct VicWrapper { VIC *vic; };
 struct CiaWrapper { CIA *cia; };
@@ -30,7 +31,84 @@ struct MouseWrapper { Mouse *mouse; };
 struct AnyC64FileWrapper { AnyFile *file; };
 
 //
-// CPU proxy
+// Guards (Breakpoints, Watchpoints)
+//
+
+@implementation GuardsProxy
+
+- (instancetype) initWithGuards:(Guards *)guards
+{
+    if (self = [super init]) {
+        wrapper = new GuardsWrapper();
+        wrapper->guards = guards;
+    }
+    return self;
+}
+- (NSInteger) count
+{
+    return wrapper->guards->elements();
+}
+- (NSInteger) addr:(NSInteger)nr
+{
+    return wrapper->guards->guardAddr(nr);
+}
+- (BOOL) isEnabled:(NSInteger)nr
+{
+    return wrapper->guards->isEnabled(nr);
+}
+- (BOOL) isDisabled:(NSInteger)nr
+{
+    return wrapper->guards->isDisabled(nr);
+}
+- (void) enable:(NSInteger)nr
+{
+    wrapper->guards->enable(nr);
+}
+- (void) disable:(NSInteger)nr
+{
+    wrapper->guards->disable(nr);
+}
+- (void) remove:(NSInteger)nr
+{
+    return wrapper->guards->remove(nr);
+}
+- (void) replace:(NSInteger)nr addr:(NSInteger)addr
+{
+    wrapper->guards->replace(nr, (u32)addr);
+}
+- (BOOL) isSetAt:(NSInteger)addr
+{
+    return wrapper->guards->isSetAt((u32)addr);
+}
+- (BOOL) isSetAndEnabledAt:(NSInteger)addr
+{
+    return wrapper->guards->isSetAndEnabledAt((u32)addr);
+}
+- (BOOL) isSetAndDisabledAt:(NSInteger)addr
+{
+    return wrapper->guards->isSetAndDisabledAt((u32)addr);
+}
+- (void) enableAt:(NSInteger)addr
+{
+    wrapper->guards->enableAt((u32)addr);
+}
+- (void) disableAt:(NSInteger)addr
+{
+    wrapper->guards->disableAt((u32)addr);
+}
+- (void) addAt:(NSInteger)addr
+{
+    wrapper->guards->addAt((u32)addr);
+}
+- (void) removeAt:(NSInteger)addr
+{
+    wrapper->guards->removeAt((u32)addr);
+}
+
+@end
+
+//
+// CPU
 //
 
 @implementation CPUProxy
@@ -176,12 +254,11 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 
 //
-// Memory proxy
+// Memory
 //
 
 @implementation MemoryProxy
 
-// Constructing
 - (instancetype) initWithMemory:(C64Memory *)mem
 {
     if (self = [super init]) {
@@ -190,27 +267,10 @@ struct AnyC64FileWrapper { AnyFile *file; };
     }
     return self;
 }
-
-// Proxy methods
 - (void) dump
 {
     wrapper->mem->dump();
 }
-
-/*
-- (NSInteger) ramPattern
-{
-    return wrapper->mem->getRamPattern();
-}
-- (void) setRamPattern:(NSInteger)pattern
-{
-    wrapper->mem->setRamPattern((RamPattern)pattern);
-}
-- (void) eraseWithPattern:(NSInteger)pattern
-{
-    wrapper->mem->eraseWithPattern((RamPattern)pattern);
-}
-*/
 - (MemoryType) peekSource:(u16)addr
 {
     return wrapper->mem->getPeekSource(addr);
@@ -252,14 +312,12 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @end
 
-
 //
-// CIA proxy
+// CIA
 //
 
 @implementation CIAProxy
 
-// Constructing
 - (instancetype) initWithCIA:(CIA *)cia
 {
     if (self = [super init]) {
@@ -268,8 +326,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
     }
     return self;
 }
-
-// Proxy functions
 - (CIAInfo) getInfo
 {
     return wrapper->cia->getInfo();
@@ -312,12 +368,10 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @end
 
-
 //
-// VIC proxy
+// VIC
 //
 
-// Constructing
 @implementation VICProxy
 
 - (instancetype) initWithVIC:(VIC *)vic
@@ -328,7 +382,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
     }
     return self;
 }
-
 - (NSInteger) videoPalette
 {
     return (NSInteger)wrapper->vic->videoPalette();
@@ -337,28 +390,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->vic->setVideoPalette((Palette)value);
 }
-/*
-- (NSInteger) glueLogic
-{
-    return (NSInteger)wrapper->vic->getGlueLogic();
-}
-- (void) setGlueLogic:(NSInteger)value
-{
-    wrapper->vic->setGlueLogic((GlueLogic)value);
-}
-- (BOOL) hasGrayDotBug
-{
-    return wrapper->vic->hasGrayDotBug();
-}
-- (BOOL) emulateGrayDotBug
-{
-    return wrapper->vic->emulateGrayDotBug;
-}
-- (void) setEmulateGrayDotBug:(BOOL)value
-{
-    wrapper->vic->emulateGrayDotBug = value;
-}
-*/
 - (BOOL) isPAL
 {
     return wrapper->vic->isPAL();
@@ -564,9 +595,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @end
 
-
 //
-// SID proxy
+// SID
 //
 
 @implementation SIDProxy
@@ -579,7 +609,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
     }
     return self;
 }
-
 - (void) dump
 {
     wrapper->sid->dump();
@@ -647,9 +676,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @end
 
-
 //
-// IEC bus proxy
+// IEC bus
 //
 
 @implementation IECProxy
@@ -806,9 +834,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @end
 
-
 //
-// Expansion port proxy
+// Expansion port
 //
 
 @implementation ExpansionPortProxy
@@ -821,7 +848,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
     }
     return self;
 }
-
 - (void) dump
 {
     wrapper->expansionPort->dump();
@@ -929,9 +955,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @end
 
-
 //
-// Disk proxy
+// Disk
 //
 
 @implementation DiskProxy
@@ -946,7 +971,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
     }
     return self;
 }
-
 - (void) dump
 {
     wrapper->disk->dump();
@@ -1015,9 +1039,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @end
 
-
 //
-// VIA proxy
+// VIA
 //
 
 @implementation VIAProxy
@@ -1030,7 +1053,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
     }
     return self;
 }
-
 - (void) dump
 {
     wrapper->via->dump();
@@ -1046,9 +1068,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @end
 
-
 //
-// VC1541 proxy
+// VC1541
 //
 
 @implementation DriveProxy
@@ -1067,7 +1088,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
     }
     return self;
 }
-
 - (VIAProxy *) via:(NSInteger)num {
 	switch (num) {
 		case 1:
@@ -1369,7 +1389,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 @implementation C64Proxy
 
 @synthesize wrapper;
-@synthesize mem, cpu, vic, cia1, cia2, sid;
+@synthesize mem, cpu, breakpoints, watchpoints, vic, cia1, cia2, sid;
 @synthesize keyboard, port1, port2, iec;
 @synthesize expansionport, drive8, drive9, datasette, mouse;
 
@@ -1387,6 +1407,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
     // Create sub proxys
     mem = [[MemoryProxy alloc] initWithMemory:&c64->mem];
     cpu = [[CPUProxy alloc] initWithCPU:&c64->cpu];
+    breakpoints = [[GuardsProxy alloc] initWithGuards:&c64->cpu.debugger.breakpoints];
+    watchpoints = [[GuardsProxy alloc] initWithGuards:&c64->cpu.debugger.watchpoints];
     vic = [[VICProxy alloc] initWithVIC:&c64->vic];
 	cia1 = [[CIAProxy alloc] initWithCIA:&c64->cia1];
 	cia2 = [[CIAProxy alloc] initWithCIA:&c64->cia2];
@@ -1932,9 +1954,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @end
 
-
 //
-// AnyC64File proxy
+// AnyC64File
 //
 
 @implementation AnyC64FileProxy
@@ -2000,9 +2021,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @end
 
-
 //
-// Snapshot proxy
+// Snapshot
 //
 
 @implementation SnapshotProxy
@@ -2052,9 +2072,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @end
 
-
 //
-// CRT proxy
+// CRT
 //
 
 @implementation CRTFileProxy
@@ -2134,9 +2153,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @end
 
-
 //
-// TAP proxy
+// TAP
 //
 
 @implementation TAPFileProxy
@@ -2170,9 +2188,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @end
 
-
 //
-// AnyArchive proxy
+// AnyArchive
 //
 
 @implementation AnyArchiveProxy
@@ -2244,9 +2261,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @end
 
-
 //
-// T64 proxy
+// T64
 //
 
 @implementation T64FileProxy
@@ -2279,9 +2295,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @end
 
-
 //
-// PRG proxy
+// PRG
 //
 
 @implementation PRGFileProxy
@@ -2314,9 +2329,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @end
 
-
 //
-// P00 proxy
+// P00
 //
 
 @implementation P00FileProxy
@@ -2350,7 +2364,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 @end
 
 //
-// AnyDisk proxy
+// AnyDisk
 //
 
 @implementation AnyDiskProxy
@@ -2399,9 +2413,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @end
 
-
 //
-// D64 proxy
+// D64
 //
 
 @implementation D64FileProxy
@@ -2440,9 +2453,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @end
 
-
 //
-// G64 proxy
+// G64
 //
 
 @implementation G64FileProxy

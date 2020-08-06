@@ -39,8 +39,8 @@ extension MyController {
         let connected8 = c64.drive8.isConnected()
         let connected9 = c64.drive9.isConnected()
         
-        let running = c64.isRunning()
-        let debug = c64.debugMode()
+        let running = c64.isRunning
+        let debug = c64.debugMode
         let halted = c64.cpu.isHalted()
         let warp = c64.warp()
         

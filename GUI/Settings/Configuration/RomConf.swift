@@ -129,7 +129,7 @@ extension ConfigurationController {
         
         track()
 
-        let poweredOff         = c64.isPoweredOff()
+        let poweredOff         = c64.isPoweredOff
         
         let basicIdentifier    = c64.basicRomIdentifier()
         let hasBasic           = basicIdentifier != ROM_MISSING

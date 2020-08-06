@@ -160,7 +160,7 @@
 		507887CC20B1858B00941F7E /* MemTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507887CB20B1858B00941F7E /* MemTableView.swift */; };
 		507A499C24C8D64700DBF984 /* InstrTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507A499B24C8D64700DBF984 /* InstrTableView.swift */; };
 		507A499E24C8D65700DBF984 /* TraceTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507A499D24C8D65700DBF984 /* TraceTableView.swift */; };
-		507A49A024C8D66A00DBF984 /* BreakTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507A499F24C8D66A00DBF984 /* BreakTableView.swift */; };
+		507A49A024C8D66A00DBF984 /* GuardTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507A499F24C8D66A00DBF984 /* GuardTableView.swift */; };
 		507A49A224C8D71400DBF984 /* BankTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507A49A124C8D71400DBF984 /* BankTableView.swift */; };
 		507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */; };
 		5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* MacAudio.swift */; };
@@ -488,7 +488,7 @@
 		507887CB20B1858B00941F7E /* MemTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemTableView.swift; sourceTree = "<group>"; };
 		507A499B24C8D64700DBF984 /* InstrTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrTableView.swift; sourceTree = "<group>"; };
 		507A499D24C8D65700DBF984 /* TraceTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraceTableView.swift; sourceTree = "<group>"; };
-		507A499F24C8D66A00DBF984 /* BreakTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakTableView.swift; sourceTree = "<group>"; };
+		507A499F24C8D66A00DBF984 /* GuardTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardTableView.swift; sourceTree = "<group>"; };
 		507A49A124C8D71400DBF984 /* BankTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankTableView.swift; sourceTree = "<group>"; };
 		507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerCartridges.swift; sourceTree = "<group>"; };
 		5081AB621EF29E6400D6F616 /* MacAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacAudio.swift; sourceTree = "<group>"; };
@@ -725,7 +725,7 @@
 				5038CA9620B6C2BE000D9193 /* SIDPanel.swift */,
 				507A499B24C8D64700DBF984 /* InstrTableView.swift */,
 				507A499D24C8D65700DBF984 /* TraceTableView.swift */,
-				507A499F24C8D66A00DBF984 /* BreakTableView.swift */,
+				507A499F24C8D66A00DBF984 /* GuardTableView.swift */,
 				507A49A124C8D71400DBF984 /* BankTableView.swift */,
 				507887CB20B1858B00941F7E /* MemTableView.swift */,
 			);
@@ -1454,7 +1454,7 @@
 				504C437024AF29AC00E69CAE /* Cartridge.cpp in Sources */,
 				5031D59C200B81D20088C802 /* Animation.swift in Sources */,
 				506B13C224C1C40600814BB0 /* PreferencesController.swift in Sources */,
-				507A49A024C8D66A00DBF984 /* BreakTableView.swift in Sources */,
+				507A49A024C8D66A00DBF984 /* GuardTableView.swift in Sources */,
 				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
 				504C439D24AF29AC00E69CAE /* version.cc in Sources */,
 				504C436324AF29AC00E69CAE /* Kingsoft.cpp in Sources */,

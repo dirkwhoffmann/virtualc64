@@ -137,13 +137,13 @@ extension MyController {
         }
         
     // Change image and state of debugger control buttons
-        if c64.isPoweredOff() {
+        if c64.isPoweredOff {
             stopAndGoButton.image = NSImage.init(named: "continueTemplate")
             stopAndGoButton.toolTip = "Run"
             stopAndGoButton.isEnabled = false
             stepIntoButton.isEnabled = false
             stepOverButton.isEnabled = false
-        } else if c64.isPaused() {
+        } else if c64.isPaused {
             stopAndGoButton.image = NSImage.init(named: "continueTemplate")
             stopAndGoButton.toolTip = "Run"
             stopAndGoButton.isEnabled = true
@@ -182,7 +182,7 @@ extension MyController {
     
     @IBAction func pauseAction(_ sender: Any!) {
         
-        if c64.isRunning() {
+        if c64.isRunning {
             c64.pause()
             debugger.open()
         }
@@ -191,7 +191,7 @@ extension MyController {
     
     @IBAction func continueAction(_ sender: Any!) {
         
-        if !c64.isRunning() {
+        if !c64.isRunning {
             c64.run()
         }
         refresh()

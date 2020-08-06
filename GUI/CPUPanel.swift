@@ -53,6 +53,7 @@ extension Inspector {
 
         cpuInstrView.refresh(count: count, full: full, addr: Int(cpuInfo.pc))
         cpuTraceView.refresh(count: count, full: full)
-        // cpuBreakView.refresh(count: count, full: full)
+        cpuBreakView.refresh(count: count, full: full)
+        cpuWatchView.refresh(count: count, full: full)
     }
 }

@@ -11,10 +11,9 @@ extension MyController: NSMenuItemValidation {
     
     open func validateMenuItem(_ item: NSMenuItem) -> Bool {
 
-        let powered = c64.isPoweredOn()
-        let running = c64.isRunning()
-        // let paused = c64.isPaused()
-        
+        let powered = c64.isPoweredOn
+        let running = c64.isRunning
+ 
         var drive: DriveProxy { return c64.drive(DriveID(item.tag))! }
         
         func validateURLlist(_ list: [URL], image: NSImage) -> Bool {
@@ -171,7 +170,7 @@ extension MyController: NSMenuItemValidation {
             item.state = c64.vic.hideSprites() ? .on : .off
             
         case #selector(MyController.traceAction(_:)):
-            return !c64.releaseBuild()
+            return !c64.isReleaseBuild
             
         case #selector(MyController.traceIecAction(_:)):
             item.state = c64.iec.tracing() ? .on : .off
@@ -183,7 +182,7 @@ extension MyController: NSMenuItemValidation {
             item.state = c64.drive8.via1.tracing() ? .on : .off
             
         case #selector(MyController.dumpStateAction(_:)):
-            return !c64.releaseBuild()
+            return !c64.isReleaseBuild
             
         default:
             return true
@@ -423,7 +422,7 @@ extension MyController: NSMenuItemValidation {
         
         var error: ErrorCode = ERR_OK
 
-        if c64.isPoweredOn() {
+        if c64.isPoweredOn {
             c64.powerOff()
             return
         }

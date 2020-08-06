@@ -26,6 +26,7 @@ class Inspector: DialogController {
     @IBOutlet weak var cpuInstrView: InstrTableView!
     @IBOutlet weak var cpuTraceView: TraceTableView!
     @IBOutlet weak var cpuBreakView: BreakTableView!
+    @IBOutlet weak var cpuWatchView: BreakTableView!
     @IBOutlet weak var cpuPc: NSTextField!
     @IBOutlet weak var cpuSp: NSTextField!
     @IBOutlet weak var cpuA: NSTextField!
@@ -150,7 +151,7 @@ class Inspector: DialogController {
     func continuousRefresh() {
         
         if isRunning { refresh(count: refreshCnt) }
-        isRunning = c64.isRunning()
+        isRunning = c64.isRunning
         refreshCnt += 1
     }
     
@@ -160,7 +161,7 @@ class Inspector: DialogController {
         
         if full {
             
-            if c64.isRunning() {
+            if c64.isRunning {
                 stopAndGoButton.image = NSImage.init(named: "pauseTemplate")
                 stepIntoButton.isEnabled = false
                 stepOverButton.isEnabled = false

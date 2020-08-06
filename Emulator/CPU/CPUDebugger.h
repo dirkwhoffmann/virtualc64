@@ -217,7 +217,10 @@ public:
     // Logs an instruction
     void logInstruction();
     
-    // Reads an entry from the log buffer
+    /* Reads an entry from the log buffer
+     *    logEntry: n == 0 returns the most recently recorded entry
+     * logEntryAbs: n == 0 returns the oldest entry
+     */
     RecordedInstruction logEntry(int n);
     RecordedInstruction logEntryAbs(int n);
     

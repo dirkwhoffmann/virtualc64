@@ -12,7 +12,8 @@ class InstrTableView: NSTableView {
     @IBOutlet weak var inspector: Inspector!
     var c64: C64Proxy { return inspector.parent.c64 }
     var cpu: CPUProxy { return c64.cpu }
-    
+    var breakpoints: GuardsProxy { return c64.breakpoints }
+
     enum BreakpointType {
         case none
         case enabled
@@ -56,15 +57,15 @@ class InstrTableView: NSTableView {
         for i in 0 ..< numRows {
             
             instrInRow[i] = cpu.getInstrInfo(i, start: addrInFirstRow)
-            /*
-            if cpu.breakpointIsSetAndDisabled(at: addr) {
+            
+            if breakpoints.isSetAndDisabled(at: addr) {
                 bpInRow[i] = BreakpointType.disabled
-            } else if cpu.breakpointIsSet(at: addr) {
+            } else if breakpoints.isSet(at: addr) {
                 bpInRow[i] = BreakpointType.enabled
             } else {
                 bpInRow[i] = BreakpointType.none
             }
-            */
+            
             addrInRow[i] = addr
             rowForAddr[addr] = i
             addr += Int(instrInRow[i]!.size)
@@ -87,9 +88,8 @@ class InstrTableView: NSTableView {
             reloadData()
         }
         
-        if count != 0 {
-            jumpTo(addr: addr)
-        }
+        // In animation mode, jump to the currently executed instruction
+        if count != 0 { jumpTo(addr: addr) }
     }
     
     func jumpTo(addr: Int) {
@@ -127,20 +127,18 @@ class InstrTableView: NSTableView {
     
     func clickAction(row: Int) {
         
-        /*
         if let addr = addrInRow[row] {
             
-            if !cpu.breakpointIsSet(at: addr) {
-                cpu.addBreakpoint(at: addr)
-            } else if cpu.breakpointIsSetAndDisabled(at: addr) {
-                cpu.breakpointSetEnable(at: addr, value: true)
-            } else if cpu.breakpointIsSetAndEnabled(at: addr) {
-                cpu.breakpointSetEnable(at: addr, value: false)
+            if !breakpoints.isSet(at: addr) {
+                breakpoints.add(at: addr)
+            } else if breakpoints.isSetAndDisabled(at: addr) {
+                breakpoints.enable(at: addr)
+            } else if breakpoints.isSetAndEnabled(at: addr) {
+                breakpoints.disable(at: addr)
             }
             
             inspector.fullRefresh()
         }
-        */
     }
     
     @IBAction func doubleClickAction(_ sender: NSTableView!) {
@@ -153,18 +151,16 @@ class InstrTableView: NSTableView {
     
     func doubleClickAction(row: Int) {
         
-        /*
         if let addr = addrInRow[row] {
             
-            if cpu.breakpointIsSet(at: addr) {
-                cpu.removeBreakpoint(at: addr)
+            if breakpoints.isSet(at: addr) {
+                breakpoints.remove(at: addr)
             } else {
-                cpu.addBreakpoint(at: addr)
+                breakpoints.add(at: addr)
             }
             
             inspector.fullRefresh()
         }
-        */
     }
     
     func setHex(_ value: Bool) {
@@ -187,12 +183,10 @@ extension InstrTableView: NSTableViewDataSource {
             
             switch tableColumn?.identifier.rawValue {
                 
-                /*
-                 case "break" where bpInRow[row] == .enabled:
-                 return "\u{26D4}" // "⛔" ("\u{1F534}" // "🔴")
-                 case "break" where bpInRow[row] == .disabled:
-                 return "\u{26AA}" // "⚪" ("\u{2B55}" // "⭕")
-                 */
+            case "break" where bpInRow[row] == .enabled:
+                return "\u{26D4}" // "⛔" ("\u{1F534}" // "🔴")
+            case "break" where bpInRow[row] == .disabled:
+                return "\u{26AA}" // "⚪" ("\u{2B55}" // "⭕")
             case "addr":
                 return info.addr
             case "data":
@@ -200,7 +194,7 @@ extension InstrTableView: NSTableViewDataSource {
             case "instr":
                 return String(cString: &info.command.0)
             default:
-                return "???"
+                return ""
             }
         }
         return "??"
@@ -211,7 +205,6 @@ extension InstrTableView: NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
         
-        /*
         let cell = cell as? NSTextFieldCell
         
         if bpInRow[row] == .enabled {
@@ -221,6 +214,5 @@ extension InstrTableView: NSTableViewDelegate {
         } else {
             cell?.textColor = NSColor.labelColor
         }
-        */
     }
 }

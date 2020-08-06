@@ -15,6 +15,7 @@
 @class MyController;
 @class C64Proxy;
 @class CPUProxy;
+@class GuardsProxy;
 @class MemoryProxy;
 @class VICProxy;
 @class CIAProxy;
@@ -46,6 +47,7 @@
 
 struct C64Wrapper;
 struct CpuWrapper;
+struct GuardsWrapper;
 struct MemoryWrapper;
 struct VicWrapper;
 struct CiaWrapper;
@@ -70,6 +72,8 @@ struct AnyC64FileWrapper;
     struct C64Wrapper *wrapper;
     
     CPUProxy *cpu;
+    GuardsProxy *breakpoints;
+    GuardsProxy *watchpoints;
     MemoryProxy *mem;
     VICProxy *vic;
     CIAProxy *cia1;
@@ -87,34 +91,35 @@ struct AnyC64FileWrapper;
 }
 
 @property (readonly) struct C64Wrapper *wrapper;
-@property (readonly) CPUProxy *cpu;
-@property (readonly) MemoryProxy *mem;
-@property (readonly) VICProxy *vic;
-@property (readonly) CIAProxy *cia1;
-@property (readonly) CIAProxy *cia2;
-@property (readonly) SIDProxy *sid;
-@property (readonly) KeyboardProxy *keyboard;
-@property (readonly) ControlPortProxy *port1;
-@property (readonly) ControlPortProxy *port2;
-@property (readonly) IECProxy *iec;
-@property (readonly) ExpansionPortProxy *expansionport;
-@property (readonly) DriveProxy *drive8;
-@property (readonly) DriveProxy *drive9;
-@property (readonly) DatasetteProxy *datasette;
-@property (readonly) MouseProxy *mouse;
+@property (readonly, strong) CPUProxy *cpu;
+@property (readonly, strong) GuardsProxy *breakpoints;
+@property (readonly, strong) GuardsProxy *watchpoints;
+@property (readonly, strong) MemoryProxy *mem;
+@property (readonly, strong) VICProxy *vic;
+@property (readonly, strong) CIAProxy *cia1;
+@property (readonly, strong) CIAProxy *cia2;
+@property (readonly, strong) SIDProxy *sid;
+@property (readonly, strong) KeyboardProxy *keyboard;
+@property (readonly, strong) ControlPortProxy *port1;
+@property (readonly, strong) ControlPortProxy *port2;
+@property (readonly, strong) IECProxy *iec;
+@property (readonly, strong) ExpansionPortProxy *expansionport;
+@property (readonly, strong) DriveProxy *drive8;
+@property (readonly, strong) DriveProxy *drive9;
+@property (readonly, strong) DatasetteProxy *datasette;
+@property (readonly, strong) MouseProxy *mouse;
 
 - (DriveProxy *) drive:(DriveID)id;
 
 - (void) dealloc;
 - (void) kill;
 
-- (BOOL) releaseBuild;
-
-- (void) setInspectionTarget:(InspectionTarget)target;
-- (void) clearInspectionTarget;
-- (BOOL) debugMode;
+@property (readonly, getter=isReleaseBuild) BOOL releaseBuild;
 - (void) enableDebugging;
 - (void) disableDebugging;
+- (void) setInspectionTarget:(InspectionTarget)target;
+- (void) clearInspectionTarget;
+@property (readonly) BOOL debugMode;
 
 - (BOOL) isReady:(ErrorCode *)error;
 - (BOOL) isReady;
@@ -124,10 +129,10 @@ struct AnyC64FileWrapper;
 - (void) ping;
 - (void) dump;
 
-- (BOOL) isPoweredOn;
-- (BOOL) isPoweredOff;
-- (BOOL) isRunning;
-- (BOOL) isPaused;
+@property (readonly, getter=isPoweredOn) BOOL poweredOn;
+@property (readonly, getter=isPoweredOff) BOOL poweredOff;
+@property (readonly, getter=isRunning) BOOL running;
+@property (readonly, getter=isPaused) BOOL paused;
 - (void) run;
 - (void) pause;
 
@@ -262,9 +267,38 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                                 CPU proxy
-// -----------------------------------------------------------------------------
+//
+// Guards (Breakpoints, Watchpoints)
+//
+
+@interface GuardsProxy : NSObject {
+    
+    struct GuardsWrapper *wrapper;
+}
+
+@property (readonly) NSInteger count;
+- (NSInteger) addr:(NSInteger)nr;
+- (BOOL) isEnabled:(NSInteger)nr;
+- (BOOL) isDisabled:(NSInteger)nr;
+- (void) enable:(NSInteger)nr;
+- (void) disable:(NSInteger)nr;
+- (void) remove:(NSInteger)nr;
+- (void) replace:(NSInteger)nr addr:(NSInteger)addr;
+
+- (BOOL) isSetAt:(NSInteger)addr;
+- (BOOL) isSetAndEnabledAt:(NSInteger)addr;
+- (BOOL) isSetAndDisabledAt:(NSInteger)addr;
+- (void) enableAt:(NSInteger)addr;
+- (void) disableAt:(NSInteger)addr;
+- (void) addAt:(NSInteger)addr;
+- (void) removeAt:(NSInteger)addr;
+
+@end
+
+
+//
+// CPU proxy
+//
 
 @interface CPUProxy : NSObject {
     
@@ -311,9 +345,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                                 Memory proxy
-// -----------------------------------------------------------------------------
+//
+// Memory proxy
+//
 
 @interface MemoryProxy : NSObject {
     
@@ -342,9 +376,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                                 CIA proxy
-// -----------------------------------------------------------------------------
+//
+// CIA proxy
+//
 
 @interface CIAProxy : NSObject {
     
@@ -361,9 +395,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                                VICII proxy
-// -----------------------------------------------------------------------------
+//
+// VICII proxy
+//
 
 
 @interface VICProxy : NSObject {
@@ -434,9 +468,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                                 SID proxy
-// -----------------------------------------------------------------------------
+//
+// SID proxy
+//
 
 @interface SIDProxy : NSObject {
     
@@ -467,9 +501,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                               Keyboard proxy
-// -----------------------------------------------------------------------------
+//
+// Keyboard proxy
+//
 
 @interface KeyboardProxy : NSObject {
     
@@ -499,9 +533,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                             Control port proxy
-// -----------------------------------------------------------------------------
+//
+// Control port proxy
+//
 
 @interface ControlPortProxy : NSObject {
     
@@ -521,9 +555,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                             Expansion port proxy
-// -----------------------------------------------------------------------------
+//
+// Expansion port proxy
+//
 
 @interface ExpansionPortProxy : NSObject {
     
@@ -564,9 +598,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                               IEC bus proxy
-// -----------------------------------------------------------------------------
+//
+// IEC bus proxy
+//
 
 @interface IECProxy : NSObject {
     
@@ -583,9 +617,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                                Drive proxy
-// -----------------------------------------------------------------------------
+//
+// Drive proxy
+//
 
 @interface DriveProxy : NSObject {
     
@@ -653,9 +687,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                                VIA proxy
-// -----------------------------------------------------------------------------
+//
+// VIA proxy
+//
 
 @interface VIAProxy : NSObject {
     
@@ -669,9 +703,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                                Disk proxy
-// -----------------------------------------------------------------------------
+//
+// Disk proxy
+//
 
 @interface DiskProxy : NSObject {
     
@@ -699,9 +733,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                               Datasette proxy
-// -----------------------------------------------------------------------------
+//
+// Datasette proxy
+//
 
 @interface DatasetteProxy : NSObject {
     
@@ -730,9 +764,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                                 Mouse proxy
-// -----------------------------------------------------------------------------
+//
+// Mouse proxy
+//
 
 @interface MouseProxy : NSObject {
     
@@ -751,13 +785,13 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                        F I L E   T Y P E   P R O X Y S
-// -----------------------------------------------------------------------------
+//
+// F I L E   T Y P E   P R O X Y S
+//
 
-// -----------------------------------------------------------------------------
-//                               AnyC64File proxy
-// -----------------------------------------------------------------------------
+//
+// AnyC64File proxy
+//
 
 @interface AnyC64FileProxy : NSObject {
     
@@ -776,9 +810,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                               AnyArchive proxy
-// -----------------------------------------------------------------------------
+//
+// AnyArchive proxy
+//
 
 @interface AnyArchiveProxy : AnyC64FileProxy {
 }
@@ -800,9 +834,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                               Snapshot proxy
-// -----------------------------------------------------------------------------
+//
+// Snapshot proxy
+//
 
 @interface SnapshotProxy : AnyC64FileProxy {
 }
@@ -818,9 +852,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                               CRTFile proxy
-// -----------------------------------------------------------------------------
+//
+// CRTFile proxy
+//
 
 @interface CRTFileProxy : AnyC64FileProxy {
 }
@@ -845,9 +879,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                               TAPFile proxy
-// -----------------------------------------------------------------------------
+//
+// TAPFile proxy
+//
 
 @interface TAPFileProxy : AnyC64FileProxy {
 }
@@ -861,9 +895,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                               T64File proxy
-// -----------------------------------------------------------------------------
+//
+// T64File proxy
+//
 
 @interface T64FileProxy : AnyArchiveProxy
 {
@@ -876,9 +910,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                               PRGFile proxy
-// -----------------------------------------------------------------------------
+//
+// PRGFile proxy
+//
 
 @interface PRGFileProxy : AnyArchiveProxy
 {
@@ -891,9 +925,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                               P00File proxy
-// -----------------------------------------------------------------------------
+//
+// P00File proxy
+//
 
 @interface P00FileProxy : AnyArchiveProxy
 {
@@ -906,9 +940,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                               AnyDisk proxy
-// -----------------------------------------------------------------------------
+//
+// AnyDisk proxy
+//
 
 @interface AnyDiskProxy : AnyArchiveProxy {
 }
@@ -925,9 +959,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                               D64File proxy
-// -----------------------------------------------------------------------------
+//
+// D64File proxy
+//
 
 @interface D64FileProxy : AnyDiskProxy
 {
@@ -941,9 +975,9 @@ struct AnyC64FileWrapper;
 @end
 
 
-// -----------------------------------------------------------------------------
-//                               G64File proxy
-// -----------------------------------------------------------------------------
+//
+// G64File proxy
+//
 
 @interface G64FileProxy : AnyDiskProxy
 {
