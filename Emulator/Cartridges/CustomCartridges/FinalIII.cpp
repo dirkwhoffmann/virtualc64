@@ -142,9 +142,9 @@ void
 FinalIII::updateNMI()
 {
     if (nmi() && !freeezeButtonIsPressed) {
-        cpu.releaseNmiLine(INTSRC_EXPANSION);
+        cpu.releaseNmiLine(INTSRC_EXP);
     } else {
-        cpu.pullDownNmiLine(INTSRC_EXPANSION);
+        cpu.pullDownNmiLine(INTSRC_EXP);
     }
 }
 

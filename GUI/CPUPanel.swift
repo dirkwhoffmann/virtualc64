@@ -42,8 +42,14 @@ extension Inspector {
         cpuZ.state = cpuInfo.zFlag ? .on : .off
         cpuC.state = cpuInfo.cFlag ? .on : .off
 
-        cpuIrq.state = cpuInfo.irq ? .on : .off
-        cpuNmi.state = cpuInfo.nmi ? .on : .off
+        cpuIrq.state = (cpuInfo.irq != 0) ? .on : .off
+        cpuIrqCIA.state = (cpuInfo.irq & INTSRC_CIA.rawValue) != 0 ? .on : .off
+        cpuIrqVIC.state = (cpuInfo.irq & INTSRC_VIC.rawValue) != 0 ? .on : .off
+        cpuIrqEXP.state = (cpuInfo.irq & INTSRC_EXP.rawValue) != 0 ? .on : .off
+        cpuNmi.state = (cpuInfo.nmi != 0) ? .on : .off
+        cpuNmiCIA.state = (cpuInfo.irq & INTSRC_CIA.rawValue) != 0 ? .on : .off
+        cpuNmiKBD.state = (cpuInfo.irq & INTSRC_KBD.rawValue) != 0 ? .on : .off
+        cpuNmiEXP.state = (cpuInfo.irq & INTSRC_EXP.rawValue) != 0 ? .on : .off
         cpuRdy.state = cpuInfo.rdy ? .on : .off
         
         cpuPortReg.integerValue = Int(cpuInfo.processorPort)

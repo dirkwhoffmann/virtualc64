@@ -46,7 +46,13 @@ class Inspector: DialogController {
     @IBOutlet weak var cpuPortReg: NSTextField!
     @IBOutlet weak var cpuPortDir: NSTextField!
     @IBOutlet weak var cpuIrq: NSButton!
+    @IBOutlet weak var cpuIrqCIA: NSButton!
+    @IBOutlet weak var cpuIrqVIC: NSButton!
+    @IBOutlet weak var cpuIrqEXP: NSButton!
     @IBOutlet weak var cpuNmi: NSButton!
+    @IBOutlet weak var cpuNmiCIA: NSButton!
+    @IBOutlet weak var cpuNmiKBD: NSButton!
+    @IBOutlet weak var cpuNmiEXP: NSButton!
     @IBOutlet weak var cpuRdy: NSButton!
     
     // Memory panel

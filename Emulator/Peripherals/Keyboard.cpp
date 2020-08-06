@@ -129,7 +129,7 @@ Keyboard::pressRestoreKey()
 {
     debug(KBD_DEBUG, "pressRestoreKey()\n");
 
-    cpu.pullDownNmiLine(INTSRC_KEYBOARD);
+    cpu.pullDownNmiLine(INTSRC_KBD);
 }
 
 void
@@ -153,7 +153,7 @@ Keyboard::releaseRestoreKey()
 {
     debug(KBD_DEBUG, "releaseRestoreKey()\n");
     
-    cpu.releaseNmiLine(INTSRC_KEYBOARD);
+    cpu.releaseNmiLine(INTSRC_KBD);
 }
 
 bool

@@ -73,12 +73,12 @@ Flag;
 
 typedef enum : u8
 {
-    INTSRC_CIA = 0x01,
-    INTSRC_VIC = 0x02,
+    INTSRC_CIA  = 0x01,
+    INTSRC_VIC  = 0x02,
     INTSRC_VIA1 = 0x04,
     INTSRC_VIA2 = 0x08,
-    INTSRC_EXPANSION = 0x10,
-    INTSRC_KEYBOARD = 0x20
+    INTSRC_EXP  = 0x10,
+    INTSRC_KBD  = 0x20
 }
 IntSource;
 
@@ -142,8 +142,8 @@ typedef struct
     bool zFlag;
     bool cFlag;
 
-    bool irq;
-    bool nmi;
+    u8 irq;
+    u8 nmi;
     bool rdy;
     bool halted;
     

@@ -929,6 +929,7 @@ C64::stepInto()
 void
 C64::stepOver()
 {
+    /*
     cpu.clearErrorState();
     drive8.cpu.clearErrorState();
     drive9.cpu.clearErrorState();
@@ -943,6 +944,7 @@ C64::stepOver()
 
     // Otherwise, stepOver behaves like stepInto
     stepInto();
+    */
 }
 
 bool

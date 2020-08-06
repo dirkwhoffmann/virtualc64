@@ -134,13 +134,6 @@ C64Memory::_dump()
     msg("    Basic ROM: %s loaded\n", vc64.hasBasicRom() ? "" : " not");
 	msg("Character ROM: %s loaded\n", vc64.hasCharRom() ? "" : " not");
     msg("   Kernal ROM: %s loaded\n", vc64.hasKernalRom() ? "" : " not");
-	
-    for (u16 addr = 0; addr < 0xFFFF; addr++) {
-        if (cpu.hardBreakpoint(addr))
-			msg("Hard breakpoint at %04X\n", addr);
-        if (cpu.softBreakpoint(addr))
-            msg("Soft breakpoint at %04X\n", addr);
-	}
 	msg("\n");
     
     /*
