@@ -197,16 +197,19 @@ class Inspector: DialogController {
     
     @IBAction func stopAndGoAction(_ sender: NSButton!) {
 
+        track()
         c64.stopAndGo()
     }
     
     @IBAction func stepIntoAction(_ sender: NSButton!) {
 
+        track()
         c64.stepInto()
     }
     
     @IBAction func stepOverAction(_ sender: NSButton!) {
 
+        track()
         c64.stepOver()
     }
     

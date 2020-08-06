@@ -394,17 +394,20 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func stopAndGoAction(_ sender: Any!) {
         
+        track("MyControllerMenu")
         c64.stopAndGo()
     }
     
     @IBAction func stepIntoAction(_ sender: Any!) {
-        
+
+        track("MyControllerMenu")
         c64.stepInto()
         refresh()
     }
     
     @IBAction func stepOverAction(_ sender: Any!) {
         
+        track("MyControllerMenu")
         c64.stepOver()
         refresh()
     }

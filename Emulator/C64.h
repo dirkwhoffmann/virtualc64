@@ -409,17 +409,17 @@ public:
      * has to be declared public to make it accessible by the emulator thread.
      */
     void threadDidTerminate();
-    
-    /* Runs or pauses the emulator.
-     */
-    void stopAndGo() { isRunning() ? pauseEmulator() : runEmulator(); }
-    
+        
     /* Finishes the current command.
      * When the emulator is stopped, this function is called to bring the
      * CPU into a clean state.
      */
     void finishInstruction(); 
     
+    /* Runs or pauses the emulator.
+     */
+    void stopAndGo();
+
     /* Executes a single instruction.
      * This function is used for single-stepping through the code inside the
      * debugger. It starts the execution thread and terminates it after the

@@ -185,6 +185,10 @@ CPUDebugger::_reset()
 void
 CPUDebugger::stepInto()
 {
+    cpu.clearErrorState();
+    drive8.cpu.clearErrorState();
+    drive9.cpu.clearErrorState();
+    
     softStop = UINT64_MAX;
     breakpoints.setNeedsCheck(true);
 }
@@ -192,7 +196,17 @@ CPUDebugger::stepInto()
 void
 CPUDebugger::stepOver()
 {
-    softStop = cpu.getAddressOfNextInstruction();
+    cpu.clearErrorState();
+    drive8.cpu.clearErrorState();
+    drive9.cpu.clearErrorState();
+    
+    // If the next instruction is a JSR instruction (0x20), we set a breakpoint
+    // at the next memory location. Otherwise, stepOver behaves like stepInto.
+    if (cpu.mem->spypeek(cpu.getPC()) == 0x20) {
+        softStop = cpu.getAddressOfNextInstruction();
+    } else {
+        softStop = UINT64_MAX;
+    }
     breakpoints.setNeedsCheck(true);
 }
 

@@ -479,7 +479,7 @@ C64::_pause()
         debug("Thread stopped\n");
 
         // Finish the current command (to reach a clean state)
-        stepInto();
+        finishInstruction();
     }
     
     // When we reach this line, the emulator thread is already gone
@@ -843,50 +843,6 @@ C64::updateVicFunctionTable()
     }
 }
 
-/*
-void
-C64::powerUp()
-{    
-    suspend();
-    reset();
-    resume();
-    run();
-}
-
-void
-C64::run()
-{
-    if (isHalted()) {
-        
-        // Check for ROM images
-        if (!isReady()) {
-            putMessage(MSG_ROM_MISSING);
-            return;
-        }
-        
-        // Power up sub components
-        sid.run();
-        
-        // Start execution thread
-        pthread_create(&p, NULL, threadMain, (void *)this);
-    }
-}
-
-void
-C64::halt()
-{
-    if (oldIsRunning()) {
-        
-        // Cancel execution thread
-        pthread_cancel(p);
-        // Wait until thread terminates
-        pthread_join(p, NULL);
-        // Finish the current command (to reach a clean state)
-        stepInto();
-    }
-}
-*/
-
 void
 C64::threadWillStart()
 {
@@ -926,34 +882,26 @@ C64::finishInstruction()
 }
 
 void
+C64::stopAndGo()
+{
+    debug("stopAndGo()");
+    isRunning() ? pauseEmulator() : runEmulator();
+}
+
+void
 C64::stepInto()
 {
-    assert(false);
+    debug("stepInto()");
     if (isRunning()) return;
     
     cpu.debugger.stepInto();
     run();
-
-    /*
-    cpu.clearErrorState();
-    drive8.cpu.clearErrorState();
-    drive9.cpu.clearErrorState();
-
-    // Wait until the execution of the next command has begun
-    while (cpu.inFetchPhase()) executeOneCycle();
-
-    // Finish the command
-    while (!cpu.inFetchPhase()) executeOneCycle();
-    
-    // Execute the first microcycle (fetch phase) and stop there
-    executeOneCycle();
-    */
 }
 
 void
 C64::stepOver()
 {
-    assert(false);
+    debug("stepOver()");
     if (isRunning()) return;
     
     cpu.debugger.stepOver();

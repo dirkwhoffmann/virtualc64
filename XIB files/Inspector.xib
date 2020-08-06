@@ -104,7 +104,7 @@
                 <outlet property="panel" destination="QhJ-8A-HRo" id="g4P-OI-piB"/>
                 <outlet property="stepIntoButton" destination="XcS-nk-XBp" id="WJQ-2Z-1F9"/>
                 <outlet property="stepOverButton" destination="EYA-b4-jd8" id="mJJ-RB-PNP"/>
-                <outlet property="stopAndGoButton" destination="DQ4-Ah-ce3" id="xer-Hv-eci"/>
+                <outlet property="stopAndGoButton" destination="DQ4-Ah-ce3" id="hhb-ps-zLf"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="4y3-MY-rvW"/>
             </connections>
         </customObject>
@@ -127,6 +127,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="stepIntoAction:" target="-2" id="bOg-cT-04x"/>
+                        </connections>
                     </button>
                     <button toolTip="Run / Pause" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DQ4-Ah-ce3">
                         <rect key="frame" x="19" y="10" width="32" height="32"/>
@@ -135,6 +138,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="stopAndGoAction:" target="-2" id="oUg-06-RUz"/>
+                        </connections>
                     </button>
                     <button toolTip="Step Over" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XcS-nk-XBp">
                         <rect key="frame" x="82" y="10" width="32" height="32"/>
@@ -143,6 +149,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="stepOverAction:" target="-2" id="pzu-q5-a7c"/>
+                        </connections>
                     </button>
                     <matrix verticalHuggingPriority="750" fixedFrame="YES" allowsEmptySelection="NO" autosizesCells="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I8k-0V-ELF">
                         <rect key="frame" x="750" y="16" width="98" height="22"/>
@@ -641,7 +650,7 @@
                                                             <nil key="backgroundColor"/>
                                                         </clipView>
                                                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="kEa-CE-ujH">
-                                                            <rect key="frame" x="1" y="71" width="111" height="16"/>
+                                                            <rect key="frame" x="1" y="72" width="111" height="16"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </scroller>
                                                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="TfN-eP-Ded">
@@ -722,7 +731,7 @@
                                                             <nil key="backgroundColor"/>
                                                         </clipView>
                                                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="6DF-xO-b41">
-                                                            <rect key="frame" x="1" y="71" width="110" height="16"/>
+                                                            <rect key="frame" x="1" y="72" width="110" height="16"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </scroller>
                                                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="hxM-eR-XLc">
@@ -1584,7 +1593,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <clipView key="contentView" drawsBackground="NO" id="q57-gL-PPA">
                                                 <rect key="frame" x="1" y="0.0" width="610" height="314"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tableView wantsLayer="YES" focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="bFa-w1-kCn" id="qr2-Bo-wI1" customClass="MemTableView" customModule="VirtualC64" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="614" height="289"/>
@@ -1739,7 +1748,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                             <clipView key="contentView" drawsBackground="NO" id="YHa-QP-tWy">
                                                 <rect key="frame" x="1" y="0.0" width="151" height="314"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tableView wantsLayer="YES" focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="15" headerView="hG1-9R-hJ1" id="7VI-wI-Pak" customClass="BankTableView" customModule="VirtualC64" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="151" height="289"/>
