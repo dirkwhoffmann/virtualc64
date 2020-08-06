@@ -21,10 +21,10 @@
 class Memory;
 
 class CPU : public C64Component {
-    
+        
     // Reference to the connected memory
     Memory *mem;
-
+    
     // Result of the latest inspection
     CPUInfo info;
     
@@ -37,7 +37,7 @@ public:
     
     // Processor Port
     ProcessorPort pport = ProcessorPort(vc64);
-
+    
     // CPU debugger
     CPUDebugger debugger = CPUDebugger(vc64);
     
@@ -48,12 +48,12 @@ public:
     
 private:
     
-
-
+    
+    
     //
     // Chip properties
     //
-
+    
     /*! @brief    Selected model (DEPRECATED, USE CPUConfig)
      *  @details  Right now, this atrribute is only used to distinguish the
      *            C64 CPU (MOS6510) from the VC1541 CPU (MOS6502). Hardware
@@ -82,24 +82,32 @@ private:
      */
     AddressingMode addressingMode[256];
     
-    //! @brief    Breakpoint tag for each memory cell
+    //! @brief    Breakpoint tag for each memory cell (DEPRECATED)
     u8 breakpoint[65536];
-
+    
     
     //
     // Internal state
     //
     
-    public:
+public:
     
     //! @brief    Elapsed C64 clock cycles since power up
     u64 cycle;
     
     //! @brief    Current error state
     ErrorState errorState;
-    
-    private:
+        
+    // Switches guard checking on or off
+    bool checkForBreakpoints = false;
+    bool checkForWatchpoints = false;
 
+    // Switches instruction logging on or off
+    bool logInstructions = false;
+    
+private:
+
+    
     //! @brief    Next microinstruction to be executed
     /*! @see      executeOneCycle()
      */
@@ -110,24 +118,24 @@ private:
     // Registers
     //
     
-    public:
+public:
     
-	//! @brief    Accumulator
-	u8 regA;
+    //! @brief    Accumulator
+    u8 regA;
     
-	//! @brief    X register
-	u8 regX;
+    //! @brief    X register
+    u8 regX;
     
-	//! @brief    Y register
-	u8 regY;
+    //! @brief    Y register
+    u8 regY;
     
     //! @brief    Program counter
     u16 regPC;
-
+    
     //! @brief    Stack pointer
     u8 regSP;
-
-    private:
+    
+private:
     
     /*! @brief     Processor status register (flags)
      *  @details   7 6 5 4 3 2 1 0
@@ -135,22 +143,22 @@ private:
      */
     u8 regP;
     
-	//! @brief    Address data (low byte)
-	u8 regADL;
+    //! @brief    Address data (low byte)
+    u8 regADL;
     
-	//! @brief    Address data (high byte)
-	u8 regADH;
+    //! @brief    Address data (high byte)
+    u8 regADH;
     
-	//! @brief    Input data latch (indirect addressing modes)
-	u8 regIDL;
+    //! @brief    Input data latch (indirect addressing modes)
+    u8 regIDL;
     
     //! @brief    Data buffer
     u8 regD;
     
-	/*! @brief    Address overflow indicater
-	 *  @details  Indicates when the page boundary has been crossed.
+    /*! @brief    Address overflow indicater
+     *  @details  Indicates when the page boundary has been crossed.
      */
-	bool overflow;
+    bool overflow;
     
     /*! @brief    Memory location of the currently executed command.
      *  @details  This variable is overwritten with the current value of the
@@ -161,21 +169,21 @@ private:
      */
     u16 pc;
     
-  
+    
     //
     // Port lines
     //
     
-    public:
+public:
     
-	/*! @brief    Ready line (RDY)
-	 *  @details  If this line is low, the CPU freezes on the next read access.
+    /*! @brief    Ready line (RDY)
+     *  @details  If this line is low, the CPU freezes on the next read access.
      *            RDY is pulled down by VICII to perform longer lasting read
      *            operations.
      */
-	bool rdyLine;
+    bool rdyLine;
     
-    private:
+private:
     
     //! @brief    Cycle of the most recent rising edge of the rdyLine
     u64 rdyLineUp;
@@ -183,7 +191,7 @@ private:
     //! @brief    Cycle of the most recent falling edge of the rdyLine
     u64 rdyLineDown;
     
-    public:
+public:
     
     /*! @brief    NMI line (non maskable interrupts)
      *  @details  This variable is usually set to 0 which means that the NMI
@@ -202,11 +210,11 @@ private:
      *            variable has a positive value and the set bits indicate the
      *            interrupt source.
      */
-	u8 irqLine;
-
-    private:
+    u8 irqLine;
     
-	/*! @brief    Edge detector of NMI line
+private:
+    
+    /*! @brief    Edge detector of NMI line
      *  @details  https://wiki.nesdev.com/w/index.php/CPU_interrupts
      *            "The NMI input is connected to an edge detector. This edge
      *             detector polls the status of the NMI line during φ2 of each
@@ -304,29 +312,29 @@ private:
     
     // Returns true if this is the C64's CPU
     bool isC64CPU() { return model == MOS_6510; }
-
+    
     
     //
     // Analyzing
     //
-
+    
 public:
     
     // Returns the result of the latest inspection
     CPUInfo getInfo() { return HardwareComponent::getInfo(info); }
-
+    
     DisassembledInstruction getInstrInfo(long nr, u16 startAddr);
     DisassembledInstruction getInstrInfo(long nr);
     DisassembledInstruction getLoggedInstrInfo(long nr);
-
+    
     
     //
     // Methods from HardwareComponent
     //
     
 public:
-
-	void _reset() override;
+    
+    void _reset() override;
     void _inspect() override;
     void _inspect(u32 dasmStart);
     size_t stateSize() override;
@@ -334,21 +342,21 @@ public:
     void didSaveToBuffer(u8 **buffer) override;
     
 private:
-
+    
     void _dump() override;
-
+    
     
     //
     //! @functiongroup Gathering debug information
     //
     
 public:
-        
+    
     //
     // Handling registers and flags
     //
-
-	/*! @brief    Returns the frozen program counter.
+    
+    /*! @brief    Returns the frozen program counter.
      *  @note     This function returns variable pc that always points to the
      *            beginning of the currently executed command. If execution is
      *            not in microcycle 0 (fetch phase) and the currently executed
@@ -359,59 +367,57 @@ public:
     
     //! @brief    Redirects the CPU to a new instruction in memory.
     void jumpToAddress(u16 addr) { pc = regPC = addr; next = fetch; }
-
-	//! @brief    Returns N_FLAG, if Negative flag is set, 0 otherwise.
+    
+    //! @brief    Returns N_FLAG, if Negative flag is set, 0 otherwise.
     u8 getN() { return regP & N_FLAG; }
     
     //! @brief    0: Negative-flag is cleared, any other value: flag is set.
     void setN(u8 bit) { bit ? regP |= N_FLAG : regP &= ~N_FLAG; }
     
-	//! @brief    Returns V_FLAG, if Overflow flag is set, 0 otherwise.
+    //! @brief    Returns V_FLAG, if Overflow flag is set, 0 otherwise.
     u8 getV() { return regP & V_FLAG; }
     
     //! @brief    0: Overflow-flag is cleared, any other value: flag is set.
     void setV(u8 bit) { bit ? regP |= V_FLAG : regP &= ~V_FLAG; }
-
-	//! @brief    Returns B_FLAG, if Break flag is set, 0 otherwise.
+    
+    //! @brief    Returns B_FLAG, if Break flag is set, 0 otherwise.
     u8 getB() { return regP & B_FLAG; }
     
     //! @brief    0: Break-flag is cleared, any other value: flag is set.
     void setB(u8 bit) { bit ? regP |= B_FLAG : regP &= ~B_FLAG; }
     
-	//! @brief    Returns D_FLAG, if Decimal flag is set, 0 otherwise.
+    //! @brief    Returns D_FLAG, if Decimal flag is set, 0 otherwise.
     u8 getD() { return regP & D_FLAG; }
     
     //! @brief    0: Decimal-flag is cleared, any other value: flag is set.
     void setD(u8 bit) { bit ? regP |= D_FLAG : regP &= ~D_FLAG; }
-
-	//! @brief    Returns I_FLAG, if Interrupt flag is set, 0 otherwise.
+    
+    //! @brief    Returns I_FLAG, if Interrupt flag is set, 0 otherwise.
     u8 getI() { return regP & I_FLAG; }
     
     //! @brief    0: Interrupt-flag is cleared, any other value: flag is set.
     void setI(u8 bit) { bit ? regP |= I_FLAG : regP &= ~I_FLAG; }
     
-	//! @brief    Returns Z_FLAG, if Zero flag is set, 0 otherwise.
+    //! @brief    Returns Z_FLAG, if Zero flag is set, 0 otherwise.
     u8 getZ() { return regP & Z_FLAG; }
     
     //! @brief    0: Zero-flag is cleared, any other value: flag is set.
     void setZ(u8 bit) { bit ? regP |= Z_FLAG : regP &= ~Z_FLAG; }
     
-	//! @brief    Returns C_FLAG, if Carry flag is set, 0 otherwise.
+    //! @brief    Returns C_FLAG, if Carry flag is set, 0 otherwise.
     u8 getC() { return regP & C_FLAG; }
     
     //! @brief    0: Carry-flag is cleared, any other value: flag is set.
     void setC(u8 bit) { bit ? regP |= C_FLAG : regP &= ~C_FLAG; }
-
-    private:
-    
-	/*! @brief    Returns the contents of the status register
-	 *  @details  Each bit in the status register corresponds to the value of
+        
+    /*! @brief    Returns the contents of the status register
+     *  @details  Each bit in the status register corresponds to the value of
      *            a single flag, except bit 5 which is always set.
      */
     u8 getP() { return regP | 0b00100000; }
-
-	/*! @brief    Returns the status register without the B flag
-	 *  @details  The bit position of the B flag is always 0. This function is
+    
+    /*! @brief    Returns the status register without the B flag
+     *  @details  The bit position of the B flag is always 0. This function is
      *            needed for proper interrupt handling. When an IRQ or NMI is
      *            triggered internally, the status register is pushed on the
      *            stack with the B-flag cleared.
@@ -424,32 +430,34 @@ public:
     //! @brief    Writes a value to the status register without overwriting B.
     void setPWithoutB(u8 p) { regP = (p & 0b11101111) | (regP & 0b00010000); }
     
-	//! @brief    Changes low byte of the program counter only.
+private:
+    
+    //! @brief    Changes low byte of the program counter only.
     void setPCL(u8 lo) { regPC = (regPC & 0xff00) | lo; }
     
-	//! @brief    Changes high byte of the program counter only.
+    //! @brief    Changes high byte of the program counter only.
     void setPCH(u8 hi) { regPC = (regPC & 0x00ff) | ((u16)hi << 8); }
     
-	//! @brief    Increments the program counter by the specified amount.
+    //! @brief    Increments the program counter by the specified amount.
     void incPC(u8 offset = 1) { regPC += offset; }
     
-	/*! @brief    Increments the program counter's low byte.
+    /*! @brief    Increments the program counter's low byte.
      *  @note     The high byte does not change.
      */
     void incPCL(u8 offset = 1) { setPCL(LO_BYTE(regPC) + offset); }
     
-	/*! @brief    Increments the program counter's high byte.
+    /*! @brief    Increments the program counter's high byte.
      *  @note     The low byte does not change.
      */
     void incPCH(u8 offset = 1) { setPCH(HI_BYTE(regPC) + offset); }
-	
-	//! @brief    Loads the accumulator. The Z- and N-flag may change.
+    
+    //! @brief    Loads the accumulator. The Z- and N-flag may change.
     void loadA(u8 a) { regA = a; setN(a & 0x80); setZ(a == 0); }
-
-	//! @brief    Loads the X register. The Z- and N-flag may change.
+    
+    //! @brief    Loads the X register. The Z- and N-flag may change.
     void loadX(u8 x) { regX = x; setN(x & 0x80); setZ(x == 0); }
     
-	//! @brief    Loads the Y register. The Z- and N-flag may change.
+    //! @brief    Loads the Y register. The Z- and N-flag may change.
     void loadY(u8 y) { regY = y; setN(y & 0x80); setZ(y == 0); }
     
     
@@ -473,7 +481,7 @@ public:
     //! @functiongroup Handling interrupts
     //
     
-    public:
+public:
     
     /*! @brief    Pulls down the NMI line.
      *  @details  Pulling down the NMI line requests the CPU to interrupt.
@@ -495,64 +503,64 @@ public:
      */
     void releaseIrqLine(IntSource source);
     
-	//! @brief    Sets the RDY line.
+    //! @brief    Sets the RDY line.
     void setRDY(bool value);
-		
+    
     
     //
     //! @functiongroup Examining the currently executed instruction
     //
-        
-	/*! @brief    Returns the length of an instruction in bytes.
-	 *  @result   Integer value between 1 and 3.
-     */
-	unsigned getLengthOfInstruction(u8 opcode);
     
-	/*! @brief    Returns the length of instruction in bytes.
+    /*! @brief    Returns the length of an instruction in bytes.
+     *  @result   Integer value between 1 and 3.
+     */
+    unsigned getLengthOfInstruction(u8 opcode);
+    
+    /*! @brief    Returns the length of instruction in bytes.
      *  @result   Integer value between 1 and 3.
      */
     unsigned getLengthOfInstructionAtAddress(u16 addr) {
         return getLengthOfInstruction(mem->spypeek(addr)); }
     
-	/*! @brief    Returns the length of the currently executed instruction.
+    /*! @brief    Returns the length of the currently executed instruction.
      *  @result   Integer value between 1 and 3.
      */
     unsigned getLengthOfCurrentInstruction() {
         return getLengthOfInstructionAtAddress(pc); }
     
-	/*! @brief    Returns the address of the next instruction to execute.
+    /*! @brief    Returns the address of the next instruction to execute.
      *  @result   Integer value between 1 and 3.
      */
     u16 getAddressOfNextInstruction() {
         return pc + getLengthOfCurrentInstruction(); }
     
-	/*! @brief    Returns true if the next microcycle is the fetch cycle.
+    /*! @brief    Returns true if the next microcycle is the fetch cycle.
      *  @details  The fetch cycle is the first microinstruction of each command.
      */
     bool inFetchPhase() { return next == fetch; }
-	
+    
     
     //
     //! @functiongroup Executing the device
     //
     
-	/*! @brief    Executes the next micro instruction.
-	 *  @return   true, if the micro instruction was processed successfully.
+    /*! @brief    Executes the next micro instruction.
+     *  @return   true, if the micro instruction was processed successfully.
      *            false, if the CPU was halted, e.g., by reaching a breakpoint.
      */
     bool executeOneCycle();
     
-	//! @brief    Returns the current error state.
+    //! @brief    Returns the current error state.
     ErrorState getErrorState() { return errorState; }
     
-	//! @brief    Sets the error state.
+    //! @brief    Sets the error state.
     void setErrorState(ErrorState state);
     
-	//! @brief    Sets the error state back to normal.
+    //! @brief    Sets the error state back to normal.
     void clearErrorState() { setErrorState(CPU_OK); }
     
     // Returns true if the CPU is halted
-     bool isHalted() { return errorState == CPU_ILLEGAL_INSTRUCTION; }
+    bool isHalted() { return errorState == CPU_ILLEGAL_INSTRUCTION; }
     
     //
     //! @functiongroup Handling breakpoints
@@ -561,26 +569,26 @@ public:
     //! @brief    Checks if a hard breakpoint is set at the provided address.
     bool hardBreakpoint(u16 addr) { return (breakpoint[addr] & HARD_BREAKPOINT) != 0; }
     
-	//! @brief    Sets a hard breakpoint at the provided address.
+    //! @brief    Sets a hard breakpoint at the provided address.
     void setHardBreakpoint(u16 addr) { breakpoint[addr] |= HARD_BREAKPOINT; }
-	
-	//! @brief    Deletes a hard breakpoint at the provided address.
-	void deleteHardBreakpoint(u16 addr) { breakpoint[addr] &= ~HARD_BREAKPOINT; }
-	
-	//! @brief    Sets or deletes a hard breakpoint at the provided address.
-	void toggleHardBreakpoint(u16 addr) { breakpoint[addr] ^= HARD_BREAKPOINT; }
+    
+    //! @brief    Deletes a hard breakpoint at the provided address.
+    void deleteHardBreakpoint(u16 addr) { breakpoint[addr] &= ~HARD_BREAKPOINT; }
+    
+    //! @brief    Sets or deletes a hard breakpoint at the provided address.
+    void toggleHardBreakpoint(u16 addr) { breakpoint[addr] ^= HARD_BREAKPOINT; }
     
     //! @brief    Checks if a soft breakpoint is set at the provided address.
     bool softBreakpoint(u16 addr) { return (breakpoint[addr] & SOFT_BREAKPOINT) != 0; }
-
-	//! @brief    Sets a soft breakpoint at the provided address.
-	void setSoftBreakpoint(u16 addr) { breakpoint[addr] |= SOFT_BREAKPOINT; }
     
-	//! @brief    Deletes a soft breakpoint at the specified address.
-	void deleteSoftBreakpoint(u16 addr) { breakpoint[addr] &= ~SOFT_BREAKPOINT; }
+    //! @brief    Sets a soft breakpoint at the provided address.
+    void setSoftBreakpoint(u16 addr) { breakpoint[addr] |= SOFT_BREAKPOINT; }
     
-	//! @brief    Sets or deletes a hard breakpoint at the specified address.
-	void toggleSoftBreakpoint(u16 addr) { breakpoint[addr] ^= SOFT_BREAKPOINT; }
+    //! @brief    Deletes a soft breakpoint at the specified address.
+    void deleteSoftBreakpoint(u16 addr) { breakpoint[addr] &= ~SOFT_BREAKPOINT; }
+    
+    //! @brief    Sets or deletes a hard breakpoint at the specified address.
+    void toggleSoftBreakpoint(u16 addr) { breakpoint[addr] ^= SOFT_BREAKPOINT; }
     
     
     //
@@ -591,7 +599,7 @@ public:
     void clearTraceBuffer() { readPtr = writePtr = 0; }
     
     //! @brief   Returns the number of recorded instructions.
-    unsigned recordedInstructions(); 
+    unsigned recordedInstructions();
     
     //! @brief   Records an instruction.
     void recordInstruction();
@@ -600,13 +608,13 @@ public:
      *  @note    The trace buffer must not be empty.
      */
     RecordedInstruction readRecordedInstruction();
-
+    
     /*! @brief   Reads a recorded instruction from the trace buffer.
      *  @note    'previous' must be smaller than the number of recorded
      *           instructions.
      */
     RecordedInstruction readRecordedInstruction(unsigned previous);
-
+    
     
     //
     //! @functiongroup Disassembling instructions
@@ -614,13 +622,13 @@ public:
     
     // Disassembles a previously recorded instruction
     DisassembledInstruction disassemble(RecordedInstruction instr, bool hex);
-
+    
     // Disassembles an instruction at a specified memory location
     DisassembledInstruction disassemble(u16 addr, bool hex);
     
     // Disassembles the currently executed instruction
     DisassembledInstruction disassemble(bool hex) { return disassemble(pc, hex); }
-
+    
 };
 
 #endif

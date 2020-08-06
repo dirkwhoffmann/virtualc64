@@ -112,6 +112,10 @@ CPU::_reset()
     levelDetector.clear();
     edgeDetector.clear();
     
+    // Enable of disable guard checking
+    checkForBreakpoints = debugger.breakpoints.elements() != 0;
+    checkForWatchpoints = debugger.watchpoints.elements() != 0;
+    
     clearTraceBuffer();
 }
 
