@@ -156,6 +156,14 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     b ? wrapper->cpu->startTracing() : wrapper->cpu->stopTracing();
 }
+- (void) setHex
+{
+    wrapper->cpu->debugger.hex = true;
+}
+- (void) setDec
+{
+    wrapper->cpu->debugger.hex = false;
+}
 - (i64) cycle
 {
     return (i64)wrapper->cpu->cycle;
@@ -212,22 +220,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->cpu->setV(b);
 }
-- (BOOL) breakpoint:(u16)addr
-{
-    return wrapper->cpu->hardBreakpoint(addr);
-}
-- (void) setBreakpoint:(u16)addr
-{
-    wrapper->cpu->setHardBreakpoint(addr);
-}
-- (void) deleteBreakpoint:(u16)addr
-{
-    wrapper->cpu->deleteHardBreakpoint(addr);
-}
-- (void) toggleBreakpoint:(u16)addr
-{
-    wrapper->cpu->toggleHardBreakpoint(addr);
-}
 - (NSInteger) recordedInstructions
 {
     return wrapper->cpu->recordedInstructions();
@@ -240,6 +232,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->cpu->readRecordedInstruction((unsigned)previous);
 }
+/*
 - (DisassembledInstruction) disassemble:(u16)addr hex:(BOOL)h;
 {
     return wrapper->cpu->disassemble(addr, h);
@@ -249,6 +242,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->cpu->disassemble(instr, h);
 }
+*/
 
 @end
 
@@ -342,24 +336,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     b ? wrapper->cia->startTracing() : wrapper->cia->stopTracing();
 }
-/*
-- (NSInteger) model
-{
-    return (NSInteger)wrapper->cia->getModel();
-}
-- (void) setModel:(NSInteger)value
-{
-    wrapper->cia->setModel((CIARevision)value);
-}
-- (BOOL) emulateTimerBBug
-{
-    return wrapper->cia->getEmulateTimerBBug();
-}
-- (void) setEmulateTimerBBug:(BOOL)value
-{
-    wrapper->cia->setEmulateTimerBBug(value);
-}
-*/
 - (void) poke:(u16)addr value:(u8)value {
     wrapper->cia->suspend();
     wrapper->cia->poke(addr, value);

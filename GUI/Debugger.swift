@@ -196,22 +196,4 @@ extension MyController {
         }
         refresh()
     }
-    
-    /*
-    @IBAction func setDecimalAction(_ sender: Any!) {
-  
-        hex = false
-        cpuTableView.setHex(false)
-        cpuTraceView.setHex(false)
-        refreshFormatters(hex: false)
-    }
-    
-    @IBAction func setHexadecimalAction(_ sender: Any!) {
-        
-        hex = true
-        cpuTableView.setHex(true)
-        cpuTraceView.setHex(true)
-        refreshFormatters(hex: true)
-    }
-    */
 }

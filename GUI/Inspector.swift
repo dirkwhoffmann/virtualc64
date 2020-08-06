@@ -197,12 +197,14 @@ class Inspector: DialogController {
     @IBAction func hexAction(_ sender: NSButtonCell!) {
         
         hex = true
+        c64.cpu.setHex()
         refresh(full: true)
     }
 
     @IBAction func decAction(_ sender: NSButtonCell!) {
         
         hex = false
+        c64.cpu.setDec()
         refresh(full: true)
     }
 }

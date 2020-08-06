@@ -65,9 +65,6 @@ extension MyController: NSWindowDelegate {
         c64.removeListener(myself)
   
         // Disconnect emulator (DEPRECATED)
-        cpuTraceView.dataSource = nil
-        cpuTraceView.delegate = nil
-        cpuTraceView.c = nil
         memTableView.dataSource = nil
         memTableView.delegate = nil
         memTableView.c = nil

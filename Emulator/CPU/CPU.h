@@ -22,6 +22,8 @@ class Memory;
 
 class CPU : public C64Component {
         
+    friend class CPUDebugger;
+    
     // Reference to the connected memory
     Memory *mem;
     
@@ -614,21 +616,6 @@ public:
      *           instructions.
      */
     RecordedInstruction readRecordedInstruction(unsigned previous);
-    
-    
-    //
-    //! @functiongroup Disassembling instructions
-    //
-    
-    // Disassembles a previously recorded instruction
-    DisassembledInstruction disassemble(RecordedInstruction instr, bool hex);
-    
-    // Disassembles an instruction at a specified memory location
-    DisassembledInstruction disassemble(u16 addr, bool hex);
-    
-    // Disassembles the currently executed instruction
-    DisassembledInstruction disassemble(bool hex) { return disassemble(pc, hex); }
-    
 };
 
 #endif

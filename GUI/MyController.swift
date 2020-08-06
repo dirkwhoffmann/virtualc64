@@ -203,8 +203,6 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var stepOverButton: NSButton!
     
     // Debug panel (CPU)
-    @IBOutlet weak var cpuInstrView: InstrTableView!
-    @IBOutlet weak var cpuTraceView: CpuTraceView!
     @IBOutlet weak var pc: NSTextField!
     @IBOutlet weak var sp: NSTextField!
     @IBOutlet weak var a: NSTextField!
@@ -367,10 +365,7 @@ extension MyController {
     override open func awakeFromNib() {
 
         track()
-        
-        cpuTraceView.c = self
-        memTableView.c = self
-        
+                
         mydocument = document as? MyDocument
         config = Configuration.init(with: self)
         macAudio = MacAudio.init(with: self)

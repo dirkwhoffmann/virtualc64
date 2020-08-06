@@ -315,6 +315,9 @@ struct AnyC64FileWrapper;
 - (BOOL) tracing;
 - (void) setTracing:(BOOL)b;
 
+- (void) setHex;
+- (void) setDec;
+
 - (i64) cycle;
 - (u16) pc;
 - (void) setPC:(u16)pc;
@@ -330,17 +333,9 @@ struct AnyC64FileWrapper;
 - (void) setDflag:(BOOL)b;
 - (void) setVflag:(BOOL)b;
 
-- (BOOL) breakpoint:(u16)addr;
-- (void) setBreakpoint:(u16)addr;
-- (void) deleteBreakpoint:(u16)addr;
-- (void) toggleBreakpoint:(u16)addr;
-
 - (NSInteger) recordedInstructions;
 - (RecordedInstruction) readRecordedInstruction;
 - (RecordedInstruction) readRecordedInstruction:(NSInteger)previous;
-
-- (DisassembledInstruction) disassemble:(u16)addr hex:(BOOL)h;
-- (DisassembledInstruction) disassembleRecordedInstr:(RecordedInstruction)instr hex:(BOOL)h;
 
 @end
 
@@ -355,12 +350,6 @@ struct AnyC64FileWrapper;
 }
 
 - (void) dump;
-
-/*
-- (NSInteger) ramPattern;
-- (void) setRamPattern:(NSInteger)type;
-- (void) eraseWithPattern:(NSInteger)type;
-*/
 
 - (MemoryType) peekSource:(u16)addr;
 - (MemoryType) pokeTarget:(u16)addr;

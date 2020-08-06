@@ -165,7 +165,12 @@ private:
     // Logging counter
     long logCnt = 0;
 
+public:
+    
+    // Number format used by the disassembler
+    bool hex = true;
 
+    
     //
     // Constructing and serializing
     //
@@ -204,7 +209,7 @@ public:
     
     
     //
-    // Working with the log buffer
+    // Working with the instruction log
     //
     
     // Turns instruction logging on or off
@@ -226,6 +231,20 @@ public:
     
     // Clears the log buffer
     void clearLog() { logCnt = 0; }
+    
+    
+    //
+    // Working with the disassembler
+    //
+        
+    // Disassembles a previously recorded instruction
+    DisassembledInstruction disassemble(RecordedInstruction instr);
+    
+    // Disassembles an instruction at a specified memory location
+    DisassembledInstruction disassemble(u16 addr);
+    
+    // Disassembles the currently executed instruction
+    DisassembledInstruction disassemble();
 };
 
 #endif

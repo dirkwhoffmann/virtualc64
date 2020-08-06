@@ -152,7 +152,7 @@ CPU::_inspect(u32 dasmStart)
         // Disassemble the program starting at 'dasmStart'
         info.start = dasmStart;
         for (unsigned i = 0; i < CPUINFO_INSTR_COUNT; i++) {
-            info.instr[i] = disassemble(dasmStart, true);
+            info.instr[i] = debugger.disassemble(dasmStart);
             dasmStart += info.instr[i].size;
         }
         
@@ -160,7 +160,7 @@ CPU::_inspect(u32 dasmStart)
         long count = recordedInstructions();
         for (int i = 0; i < count; i++) {
             RecordedInstruction rec = readRecordedInstruction(i);
-            info.loggedInstr[i] = disassemble(rec, true);
+            info.loggedInstr[i] = debugger.disassemble(rec);
         }
     }
 }
@@ -168,7 +168,7 @@ CPU::_inspect(u32 dasmStart)
 void 
 CPU::_dump()
 {
-    DisassembledInstruction instr = disassemble(true /* hex output */);
+    DisassembledInstruction instr = debugger.disassemble();
     
 	msg("CPU:\n");
 	msg("----\n\n");
@@ -367,7 +367,7 @@ CPU::readRecordedInstruction(unsigned previous)
     return traceBuffer[(writePtr + traceBufferSize - previous - 1) % traceBufferSize];
 }
 
-
+/*
 DisassembledInstruction
 CPU::disassemble(RecordedInstruction instr, bool hex)
 {
@@ -476,25 +476,6 @@ CPU::disassemble(RecordedInstruction instr, bool hex)
     hex ? sprint8x(result.sp, instr.sp) : sprint8d(result.sp, instr.sp);
     
     // Convert memory contents to strings
-    /*
-    if (length >= 1) {
-        hex ? sprint8x(result.byte1, instr.byte1) : sprint8d(result.byte1, instr.byte1);
-    } else {
-        hex ? strcpy(result.byte1, "  ") : strcpy(result.byte1, "   ");
-    }
-    if (length >= 2) {
-        hex ? sprint8x(result.byte2, instr.byte2) : sprint8d(result.byte2, instr.byte2);
-    } else {
-        hex ? strcpy(result.byte2, "  ") : strcpy(result.byte2, "   ");
-    }
-    if (length >= 3) {
-        hex ? sprint8x(result.byte3, instr.byte3) : sprint8d(result.byte3, instr.byte3);
-    } else {
-        hex ? strcpy(result.byte3, "  ") : strcpy(result.byte3, "   ");
-    }
-    */
-    
-    // Convert memory contents to strings
     char *ptr = result.data;
     if (hex) {
         if (length >= 1) { sprint8x(ptr, instr.byte1); ptr[2] = ' '; ptr += 3; }
@@ -538,5 +519,4 @@ CPU::disassemble(u16 addr, bool hex)
     
     return disassemble(instr, hex);
 }
-
-
+*/
