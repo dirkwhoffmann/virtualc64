@@ -380,4 +380,4 @@ mem->poke(HI_LO(regADH, regADL), regD);
 #define POLL_INT_AGAIN doIrq |= (levelDetector.delayed() && !getI()); \
                        doNmi |= edgeDetector.delayed();
 #define CONTINUE next = (MicroInstruction)((int)next+1); return true;
-#define DONE     next = fetch; return true;
+#define DONE     pc = regPC; next = fetch; return true;

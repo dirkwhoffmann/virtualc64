@@ -449,15 +449,8 @@ CPU::executeOneCycle()
         case fetch:
             
             /* DEBUG */
-            /*
-            if (PC == 0x08EB) {
-                u8 reg = vic.spypeek(0x1E);
-                debug("Writing result: %02X (%02X), rasterline: %d sprite0.y = %02X\n", cpu.A, reg, vc64.rasterline, vic.spypeek(0x01));
-                // startTracing();
-            }
-            */
             
-            pc = regPC;
+            // pc = regPC;
             
             // Check interrupt lines
             if (unlikely(doNmi)) {
