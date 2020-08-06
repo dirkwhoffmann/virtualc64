@@ -172,54 +172,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->cpu->getPC();
 }
-- (void) setPC:(u16)addr
-{
-    wrapper->cpu->jumpToAddress(addr);
-}
-- (void) setSP:(u8)sp
-{
-    wrapper->cpu->regSP = sp;
-}
-- (void) setA:(u8)a
-{
-    wrapper->cpu->regA = a;
-}
-- (void) setX:(u8)x
-{
-    wrapper->cpu->regX = x;
-}
-- (void) setY:(u8)y
-{
-    wrapper->cpu->regY = y;
-}
-- (void) setNflag:(BOOL)b
-{
-    wrapper->cpu->setN(b);
-}
-- (void) setZflag:(BOOL)b
-{
-    wrapper->cpu->setZ(b);
-}
-- (void) setCflag:(BOOL)b
-{
-    wrapper->cpu->setC(b);
-}
-- (void) setIflag:(BOOL)b
-{
-    wrapper->cpu->setI(b);
-}
-- (void) setBflag:(BOOL)b
-{
-    wrapper->cpu->setB(b);
-}
-- (void) setDflag:(BOOL)b
-{
-    wrapper->cpu->setD(b);
-}
-- (void) setVflag:(BOOL)b
-{
-    wrapper->cpu->setV(b);
-}
 - (NSInteger) recordedInstructions
 {
     return wrapper->cpu->recordedInstructions();
@@ -232,17 +184,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->cpu->readRecordedInstruction((unsigned)previous);
 }
-/*
-- (DisassembledInstruction) disassemble:(u16)addr hex:(BOOL)h;
-{
-    return wrapper->cpu->disassemble(addr, h);
-}
-- (DisassembledInstruction) disassembleRecordedInstr:(RecordedInstruction)instr
-                                                 hex:(BOOL)h;
-{
-    return wrapper->cpu->disassemble(instr, h);
-}
-*/
 
 @end
 

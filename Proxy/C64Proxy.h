@@ -320,18 +320,6 @@ struct AnyC64FileWrapper;
 
 - (i64) cycle;
 - (u16) pc;
-- (void) setPC:(u16)pc;
-- (void) setSP:(u8)sp;
-- (void) setA:(u8)a;
-- (void) setX:(u8)x;
-- (void) setY:(u8)y;
-- (void) setNflag:(BOOL)b;
-- (void) setZflag:(BOOL)b;
-- (void) setCflag:(BOOL)b;
-- (void) setIflag:(BOOL)b;
-- (void) setBflag:(BOOL)b;
-- (void) setDflag:(BOOL)b;
-- (void) setVflag:(BOOL)b;
 
 - (NSInteger) recordedInstructions;
 - (RecordedInstruction) readRecordedInstruction;
