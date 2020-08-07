@@ -341,14 +341,12 @@ public:
     
 public:
     
-    // Thread-safe state control
-    void requestThreadLock();
-    /*
-    void powerOnEmulator();
-    void powerOffEmulator();
-    void runEmulator();
-    void pauseEmulator();
-    */
+    /* Requests the emulator thread to stop and locks the threadLock.
+     * The function is called in all state changing methods to obtain ownership
+     * of the emulator thread. After returning, the emulator is either powered
+     * off (if it was powered off before) or paused (if it was running before).
+     */
+    void acquireThreadLock();
     
     /* Returns true if a call to powerOn() will be successful.
      * It returns false, e.g., if no Rom is installed.
