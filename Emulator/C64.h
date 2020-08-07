@@ -520,6 +520,8 @@ public:
     // Convenience wrappers for controlling the run loop
     void signalAutoSnapshot() { setControlFlags(RL_AUTO_SNAPSHOT); }
     void signalUserSnapshot() { setControlFlags(RL_USER_SNAPSHOT); }
+    void signalBreakpoint() { setControlFlags(RL_BREAKPOINT_REACHED); }
+    void signalWatchpoint() { setControlFlags(RL_WATCHPOINT_REACHED); }
     void signalInspect() { setControlFlags(RL_INSPECT); }
     void signalStop() { setControlFlags(RL_STOP); }
     

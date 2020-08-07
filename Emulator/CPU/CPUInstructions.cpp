@@ -487,8 +487,7 @@ CPU::executeOneCycle()
             
             // Check if a breakpoint has been reached
             if (checkForBreakpoints && debugger.breakpointMatches(getPC())) {
-
-                debug(CPU_DEBUG, "Breakpoint reached\n");
+                vc64.signalBreakpoint();
                 setErrorState(CPU_BREAKPOINT_REACHED);
             }
             
