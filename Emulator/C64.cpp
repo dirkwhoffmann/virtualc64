@@ -889,7 +889,12 @@ C64::stepInto()
     debug("stepInto()");
     if (isRunning()) return;
     
-    cpu.debugger.stepInto();
+    // Execute the next instruction
+    executeOneCycle();
+    finishInstruction();
+
+    // Trigger a GUI refresh
+    putMessage(MSG_BREAKPOINT_REACHED);    
 }
 
 void
@@ -898,7 +903,14 @@ C64::stepOver()
     debug("stepOver()");
     if (isRunning()) return;
     
-    cpu.debugger.stepOver();
+    // If the next instruction is a JSR instruction (0x20), we set a breakpoint
+    // at the next memory location. Otherwise, stepOver behaves like stepInto.
+    if (mem.spypeek(cpu.getPC()) == 0x20) {
+        cpu.debugger.setSoftStopAtNextInstr();
+        run();
+    } else {
+        stepInto();
+    }
 }
 
 void

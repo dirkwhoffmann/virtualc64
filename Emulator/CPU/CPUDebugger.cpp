@@ -200,35 +200,10 @@ CPUDebugger::_reset()
 }
 
 void
-CPUDebugger::stepInto()
+CPUDebugger::setSoftStop(u64 addr)
 {
-    assert(cpu.inFetchPhase());
-    
-    // Execute the next instruction
-    c64.executeOneCycle();
-    c64.finishInstruction();
-
-    // Trigger a GUI refresh
-    c64.putMessage(MSG_BREAKPOINT_REACHED);
-
-    // OLD CODE (CAUSES SPORADIC FLICKERING)
-    // softStop = UINT64_MAX;
-    // breakpoints.setNeedsCheck(true);
-    // c64.run();
-}
-
-void
-CPUDebugger::stepOver()
-{
-    // If the next instruction is a JSR instruction (0x20), we set a breakpoint
-    // at the next memory location. Otherwise, stepOver behaves like stepInto.
-    if (cpu.mem.spypeek(cpu.getPC()) == 0x20) {
-        softStop = getAddressOfNextInstruction();
-        breakpoints.setNeedsCheck(true);
-        c64.run();
-    } else {
-        stepInto();
-    }
+    softStop = addr;
+    breakpoints.setNeedsCheck(true);
 }
 
 bool

@@ -210,12 +210,10 @@ private:
 
 public:
 
-    // Sets a soft breakpoint that will trigger immediately
-    void stepInto();
-
-    // Sets a soft breakpoint to the next instruction
-    void stepOver();
-
+    // Sets a soft breakpoint
+    void setSoftStop(u64 addr);
+    void setSoftStopAtNextInstr() { setSoftStop(getAddressOfNextInstruction()); }
+    
     // Returns true if a breakpoint hits at the provides address
     bool breakpointMatches(u32 addr);
 

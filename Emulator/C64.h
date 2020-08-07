@@ -466,13 +466,13 @@ public:
     
 private:
     
-    //! @brief    Invoked before executing the first cycle of a rasterline
+    // Invoked before executing the first cycle of a rasterline
     void beginRasterLine();
     
-    //! @brief    Invoked after executing the last cycle of a rasterline
+    // Invoked after executing the last cycle of a rasterline
     void endRasterLine();
     
-    //! @brief    Invoked after executing the last rasterline of a frame
+    // Invoked after executing the last rasterline of a frame
     void endFrame();
     
     
