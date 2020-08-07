@@ -301,6 +301,11 @@ public:
     void reset() override;
     void setWarp(bool enable) override;
 
+    void powerOn();
+    void powerOff();
+    void run() override;
+    void pause() override;
+
 private:
 
     void _powerOn() override;
@@ -338,10 +343,12 @@ public:
     
     // Thread-safe state control
     void requestThreadLock();
+    /*
     void powerOnEmulator();
     void powerOffEmulator();
     void runEmulator();
     void pauseEmulator();
+    */
     
     /* Returns true if a call to powerOn() will be successful.
      * It returns false, e.g., if no Rom is installed.

@@ -197,6 +197,7 @@ public:
     
 private:
     
+    void _powerOn() override;
     void _reset() override;
 
 

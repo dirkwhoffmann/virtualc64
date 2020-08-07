@@ -184,6 +184,14 @@ CPUDebugger::registerInstruction(u8 opcode, const char *mnemonic, AddressingMode
 }
 
 void
+CPUDebugger::_powerOn()
+{
+#ifdef INITIAL_BREAKPOINT
+    breakpoints.addAt(INITIAL_BREAKPOINT);
+#endif
+}
+
+void
 CPUDebugger::_reset()
 {
 

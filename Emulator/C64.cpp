@@ -108,7 +108,7 @@ C64::C64()
 C64::~C64()
 {
     debug(RUN_DEBUG, "Destroying C64[%p]\n", this);
-    powerOffEmulator();
+    powerOff();
     
     pthread_mutex_destroy(&threadLock);
     pthread_mutex_destroy(&stateChangeLock);
@@ -414,9 +414,28 @@ C64::setWarp(bool enable)
 }
 
 void
+C64::powerOn()
+{
+    debug(RUN_DEBUG, "powerOn()\n");
+    
+    pthread_mutex_lock(&stateChangeLock);
+        
+    if (!isPoweredOn() && isReady()) {
+        
+        // Acquire the thread lock
+        requestThreadLock();
+        pthread_mutex_lock(&threadLock);
+        
+        HardwareComponent::powerOn();
+    }
+    
+    pthread_mutex_unlock(&stateChangeLock);
+}
+
+void
 C64::_powerOn()
 {
-    debug(RUN_DEBUG, "Power on\n");
+    debug(RUN_DEBUG, "_powerOn()\n");
         
     // Clear all runloop flags
     runLoopCtrl = 0;
@@ -425,16 +444,56 @@ C64::_powerOn()
 }
 
 void
+C64::powerOff()
+{
+    debug(RUN_DEBUG, "powerOff()\n");
+
+    pthread_mutex_lock(&stateChangeLock);
+    
+    if (!isPoweredOff()) {
+        
+        // Acquire the thread lock
+        requestThreadLock();
+        pthread_mutex_lock(&threadLock);
+        
+        HardwareComponent::powerOff();
+    }
+    
+    pthread_mutex_unlock(&stateChangeLock);
+}
+
+void
 C64::_powerOff()
 {
-    debug("Power off\n");
+    debug(RUN_DEBUG, "_powerOff()\n");
     
     putMessage(MSG_POWER_OFF);
 }
 
 void
+C64::run()
+{
+    debug(RUN_DEBUG, "run()\n");
+        
+    pthread_mutex_lock(&stateChangeLock);
+    
+    if (!isRunning() && isReady()) {
+        
+        // Acquire the thread lock
+        requestThreadLock();
+        pthread_mutex_lock(&threadLock);
+        
+        HardwareComponent::run();
+    }
+    
+    pthread_mutex_unlock(&stateChangeLock);
+}
+
+void
 C64::_run()
 {
+    debug(RUN_DEBUG, "_run()\n");
+    
     // Start the emulator thread
     pthread_create(&p, NULL, threadMain, (void *)this);
     
@@ -443,24 +502,35 @@ C64::_run()
 }
 
 void
+C64::pause()
+{
+    debug(RUN_DEBUG, "pause()\n");
+
+    pthread_mutex_lock(&stateChangeLock);
+    
+    if (!isPaused()) {
+        
+        // Acquire the thread lock
+        requestThreadLock();
+        pthread_mutex_lock(&threadLock);
+
+        HardwareComponent::pause();
+    }
+    
+    pthread_mutex_unlock(&stateChangeLock);
+}
+
+void
 C64::_pause()
 {
-    if (p) {
-        
-        // Cancel emulator thread
-        pthread_cancel(p);
-        
-        // Wait until thread terminates
-        pthread_join(p, NULL);
-        debug("Thread stopped\n");
-
-        // Finish the current command (to reach a clean state)
-        finishInstruction();
-    }
+    debug(RUN_DEBUG, "_pause()\n");
     
     // When we reach this line, the emulator thread is already gone
     assert(p == NULL);
-    
+
+    // Update the recorded debug information
+    inspect();
+
     // Inform the GUI
     putMessage(MSG_PAUSE);
 }
@@ -542,7 +612,7 @@ C64::resume()
         requestThreadLock();
         pthread_mutex_lock(&threadLock);
         
-        run();
+        HardwareComponent::run();
     }
     
     pthread_mutex_unlock(&stateChangeLock);
@@ -569,6 +639,7 @@ C64::requestThreadLock()
     }
 }
 
+/*
 void
 C64::powerOnEmulator()
 {
@@ -638,6 +709,7 @@ C64::pauseEmulator()
     
     pthread_mutex_unlock(&stateChangeLock);
 }
+*/
 
 bool
 C64::isReady(ErrorCode *error)
@@ -815,8 +887,8 @@ C64::threadDidTerminate()
     // Trash the thread pointer
     p = NULL;
         
-    // Enter pause mode
-    pause();
+    // Pause all components
+    HardwareComponent::pause();
     
     // Release the thread lock
     pthread_mutex_unlock(&threadLock);
@@ -912,7 +984,7 @@ void
 C64::stopAndGo()
 {
     debug("stopAndGo()");
-    isRunning() ? pauseEmulator() : runEmulator();
+    isRunning() ? pause() : run();
 }
 
 void

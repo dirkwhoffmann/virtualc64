@@ -1401,11 +1401,11 @@ struct AnyC64FileWrapper { AnyFile *file; };
 }
 - (void) powerOn
 {
-    wrapper->c64->powerOnEmulator();
+    wrapper->c64->powerOn();
 }
 - (void) powerOff
 {
-    wrapper->c64->powerOffEmulator();
+    wrapper->c64->powerOff();
 }
 - (void) reset
 {
@@ -1437,11 +1437,11 @@ struct AnyC64FileWrapper { AnyFile *file; };
 }
 - (void) run
 {
-    wrapper->c64->runEmulator();
+    wrapper->c64->run();
 }
 - (void) pause
 {
-    wrapper->c64->pauseEmulator();
+    wrapper->c64->pause();
 }
 - (void) suspend
 {
