@@ -471,20 +471,9 @@ CPU::executeOneCycle()
                 return;
             }
             
-            // Execute the fetch phase
+            // Execute the Fetch phase
             FETCH_OPCODE
             next = actionFunc[instr];
-            
-            /*
-            // Record the instruction if requested
-            if (logInstructions) debugger.logInstruction();
-            
-            // Check if a breakpoint has been reached
-            if (checkForBreakpoints && debugger.breakpointMatches(getPC())) {
-                c64.signalBreakpoint();
-            }
-            */
-            
             return;
             
         //

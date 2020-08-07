@@ -224,11 +224,7 @@ public:
     //
     // Working with the instruction log
     //
-    
-    // Turns instruction logging on or off
-    void enableLogging();
-    void disableLogging();
-    
+        
     // Returns the number of logged instructions
     int loggedInstructions();
     

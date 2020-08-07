@@ -159,12 +159,21 @@ Guards::eval(u32 addr)
 void
 Breakpoints::setNeedsCheck(bool value)
 {
-    cpu.checkForBreakpoints = value;
+    if (value) {
+        cpu.flags |= CPU::CPU_CHECK_BP;
+    } else {
+        cpu.flags &= ~CPU::CPU_CHECK_BP;
+    }
 }
 
 void
 Watchpoints::setNeedsCheck(bool value)
 {
+    if (value) {
+         cpu.flags |= CPU::CPU_CHECK_WP;
+     } else {
+         cpu.flags &= ~CPU::CPU_CHECK_WP;
+     }
 }
 
 //
@@ -226,18 +235,6 @@ bool
 CPUDebugger::watchpointMatches(u32 addr)
 {
     return watchpoints.eval(addr);
-}
-
-void
-CPUDebugger::enableLogging()
-{
-    cpu.logInstructions = true;
-}
-
-void
-CPUDebugger::disableLogging()
-{
-    cpu.logInstructions = false;
 }
 
 int

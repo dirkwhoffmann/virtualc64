@@ -34,6 +34,7 @@ CPU::CPU(CPUModel model, C64& ref, Memory &memref) : C64Component(ref), mem(memr
         { &model,              sizeof(model),        KEEP_ON_RESET },
 
          // Internal state
+        { &flags,              sizeof(flags),        CLEAR_ON_RESET },
         { &cycle,              sizeof(cycle),        CLEAR_ON_RESET },
         { &halted,             sizeof(halted),       CLEAR_ON_RESET },
         { &next,               sizeof(next),         CLEAR_ON_RESET },
@@ -166,14 +167,9 @@ void
 CPU::_setDebug(bool enable)
 {
     if (enable && isC64CPU()) {
-        
-        debug("Enabling debug mode\n");
-        logInstructions = true;
-        
+        flags |= CPU::CPU_LOG_INSTRUCTION;
     } else {
-        
-        debug("Disabling debug mode\n");
-        logInstructions = false;
+        flags |= ~CPU::CPU_LOG_INSTRUCTION;
     }
 }
 
@@ -280,10 +276,12 @@ void
 CPU::processFlags()
 {
     // Record the instruction if requested
-    if (logInstructions) debugger.logInstruction();
+    if (flags & CPU_LOG_INSTRUCTION) {
+        debugger.logInstruction();
+    }
     
     // Check if a breakpoint has been reached
-    if (checkForBreakpoints && debugger.breakpointMatches(regPC)) {
+    if (flags & CPU_LOG_INSTRUCTION && debugger.breakpointMatches(regPC)) {
         c64.signalBreakpoint();
     }
 }

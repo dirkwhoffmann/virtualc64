@@ -380,4 +380,4 @@ mem.pokeZP(regADL, regD); setN(regD & 0x80); setZ(regD == 0);
 #define POLL_INT_AGAIN doIrq |= (levelDetector.delayed() && !getI()); \
                        doNmi |= edgeDetector.delayed();
 #define CONTINUE next = (MicroInstruction)((int)next+1); return;
-#define DONE     processFlags(); pc = regPC; next = fetch; return;
+#define DONE if (flags) { processFlags(); } pc = regPC; next = fetch; return;

@@ -23,7 +23,9 @@ class Memory;
 class CPU : public C64Component {
         
     friend class CPUDebugger;
-    
+    friend class Breakpoints;
+    friend class Watchpoints;
+
     // Reference to the connected memory
     Memory &mem;
     
@@ -79,6 +81,23 @@ private:
     // Internal state
     //
     
+    /* Flags
+     *
+     * CPU_LOG_INSTRUCTION:
+     *     This flag is set if instruction logging is enabled. If set, the
+     *     CPU records the current register contents in a log buffer.
+     *
+     * CPU_CHECK_BP:
+     *    This flag indicates whether the CPU should check for breakpoints.
+     *
+     * CPU_CHECK_WP:
+     *    This flag indicates whether the CPU should check fo watchpoints.
+     */
+    int flags;
+    static const int CPU_LOG_INSTRUCTION   = (1 << 0);
+    static const int CPU_CHECK_BP          = (1 << 1);
+    static const int CPU_CHECK_WP          = (1 << 2);
+    
 public:
     
     // Elapsed clock cycles since power up
@@ -86,12 +105,7 @@ public:
     
     // Indicates whether the CPU is jammed
     bool halted;
-            
-    // Enables or disables debug options
-    bool checkForBreakpoints = false;
-    bool checkForWatchpoints = false;
-    bool logInstructions = false;
-    
+                
 private:
 
     // The next microinstruction to be executed
