@@ -55,7 +55,7 @@ class C64Component : public HardwareComponent {
 
 protected:
 
-    C64 &vc64;
+    C64 &c64;
     C64Memory &mem;
     CPU &cpu;
     VIC &vic;

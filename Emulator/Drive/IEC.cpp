@@ -69,7 +69,7 @@ IEC::_reset()
 void
 IEC::_ping()
 {
-    vc64.putMessage(busActivity > 0 ? MSG_IEC_BUS_BUSY : MSG_IEC_BUS_IDLE);
+    c64.putMessage(busActivity > 0 ? MSG_IEC_BUS_BUSY : MSG_IEC_BUS_IDLE);
 }
 
 void 
@@ -164,7 +164,7 @@ IEC::updateIecLines()
             busActivity = 30;
             
 			// Bus has just been activated
-            vc64.putMessage(MSG_IEC_BUS_BUSY);
+            c64.putMessage(MSG_IEC_BUS_BUSY);
 
         } else {
             
@@ -214,7 +214,7 @@ IEC::execute()
 		if (--busActivity == 0) {
             
 			// Bus goes idle
-            vc64.putMessage(MSG_IEC_BUS_IDLE);
+            c64.putMessage(MSG_IEC_BUS_IDLE);
 		}
 	}
 }

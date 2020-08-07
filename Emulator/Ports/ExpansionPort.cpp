@@ -49,8 +49,8 @@ ExpansionPort::_reset()
 void
 ExpansionPort::_ping()
 {
-    vc64.putMessage(cartridge ? MSG_CARTRIDGE : MSG_NO_CARTRIDGE);
-    vc64.putMessage(MSG_CART_SWITCH);
+    c64.putMessage(cartridge ? MSG_CARTRIDGE : MSG_NO_CARTRIDGE);
+    c64.putMessage(MSG_CART_SWITCH);
 }
 
 size_t
@@ -73,7 +73,7 @@ ExpansionPort::didLoadFromBuffer(u8 **buffer)
     // Read cartridge type and cartridge (if any)
     CartridgeType cartridgeType = (CartridgeType)read16(buffer);
     if (cartridgeType != CRT_NONE) {
-        cartridge = Cartridge::makeWithType(&vc64, cartridgeType);
+        cartridge = Cartridge::makeWithType(&c64, cartridgeType);
         cartridge->loadFromBuffer(buffer);
     }
 }
@@ -176,7 +176,7 @@ ExpansionPort::poke(u16 addr, u8 value)
 {
     if (cartridge) {
         cartridge->poke(addr, value);
-    } else if (!vc64.getUltimax()) {
+    } else if (!c64.getUltimax()) {
         mem.ram[addr] = value;
     }
 }
@@ -263,8 +263,8 @@ ExpansionPort::attachCartridge(Cartridge *c)
     // Reset cartridge to update exrom and game line on the expansion port
     cartridge->_reset();
     
-    vc64.putMessage(MSG_CARTRIDGE);
-    if (cartridge->hasSwitch()) vc64.putMessage(MSG_CART_SWITCH);
+    c64.putMessage(MSG_CARTRIDGE);
+    if (cartridge->hasSwitch()) c64.putMessage(MSG_CART_SWITCH);
     
     debug(EXP_DEBUG, "Cartridge attached to expansion port");
 }
@@ -274,13 +274,13 @@ ExpansionPort::attachCartridgeAndReset(CRTFile *file)
 {
     assert(file != NULL);
     
-    Cartridge *cartridge = Cartridge::makeWithCRTFile(&vc64, file);
+    Cartridge *cartridge = Cartridge::makeWithCRTFile(&c64, file);
     
     if (cartridge) {
         
         suspend();
         attachCartridge(cartridge);
-        vc64.reset();
+        c64.reset();
         resume();
         return true;
     }
@@ -301,7 +301,7 @@ ExpansionPort::attachGeoRamCartridge(u32 capacity)
             return false;
     }
     
-    Cartridge *geoRAM = Cartridge::makeWithType(&vc64, CRT_GEO_RAM);
+    Cartridge *geoRAM = Cartridge::makeWithType(&c64, CRT_GEO_RAM);
     u32 capacityInBytes = capacity * 1024;
     geoRAM->setRamCapacity(capacityInBytes);
     
@@ -314,7 +314,7 @@ ExpansionPort::attachIsepicCartridge()
 {
     debug(EXP_DEBUG, "Attaching Isepic cartridge\n");
     
-    Cartridge *isepic = Cartridge::makeWithType(&vc64, CRT_ISEPIC);
+    Cartridge *isepic = Cartridge::makeWithType(&c64, CRT_ISEPIC);
     return attachCartridge(isepic);
 }
 
@@ -331,7 +331,7 @@ ExpansionPort::detachCartridge()
         setCartridgeMode(CRT_OFF);
         
         debug(EXP_DEBUG, "Cartridge detached from expansion port");
-        vc64.putMessage(MSG_NO_CARTRIDGE);
+        c64.putMessage(MSG_NO_CARTRIDGE);
        
         resume();
     }
@@ -342,6 +342,6 @@ ExpansionPort::detachCartridgeAndReset()
 {
     suspend();
     detachCartridge();
-    vc64.reset();
+    c64.reset();
     resume();
 }

@@ -38,10 +38,10 @@ class CPU : public C64Component {
 public:
     
     // Processor Port
-    ProcessorPort pport = ProcessorPort(vc64);
+    ProcessorPort pport = ProcessorPort(c64);
     
     // CPU debugger
-    CPUDebugger debugger = CPUDebugger(vc64);
+    CPUDebugger debugger = CPUDebugger(c64);
     
     
     //

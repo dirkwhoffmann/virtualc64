@@ -15,10 +15,10 @@
 class EasyFlash : public Cartridge {
     
     //!@brief    Flash Rom mapping to ROML ($8000 - $9FFF)
-    FlashRom flashRomL = FlashRom(vc64);
+    FlashRom flashRomL = FlashRom(c64);
 
     //!@brief    Flash Rom mapping to ROMH ($A000 - $B000 or $E000 - $FFFF)
-    FlashRom flashRomH = FlashRom(vc64);
+    FlashRom flashRomH = FlashRom(c64);
     
     //!@brief    Selected memory bank
     u8 bank;

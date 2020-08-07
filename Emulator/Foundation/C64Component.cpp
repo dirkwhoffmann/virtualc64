@@ -11,7 +11,7 @@
 
 C64Component::C64Component(C64& ref) :
 
-vc64(ref),
+c64(ref),
 mem(ref.mem),
 cpu(ref.cpu),
 vic(ref.vic),
@@ -33,17 +33,17 @@ mouse(ref.mouse)
 void
 C64Component::suspend()
 {
-    vc64.suspend();
+    c64.suspend();
 }
 
 void
 C64Component::resume()
 {
-    vc64.resume();
+    c64.resume();
 }
 
 void
 C64Component::prefix()
 {
-    vc64.prefix();
+    c64.prefix();
 }

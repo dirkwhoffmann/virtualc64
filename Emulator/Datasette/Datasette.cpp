@@ -55,8 +55,8 @@ Datasette::_reset()
 void
 Datasette::_ping()
 {
-    vc64.putMessage(hasTape() ? MSG_VC1530_TAPE : MSG_VC1530_NO_TAPE);
-    vc64.putMessage(MSG_VC1530_PROGRESS);
+    c64.putMessage(hasTape() ? MSG_VC1530_TAPE : MSG_VC1530_NO_TAPE);
+    c64.putMessage(MSG_VC1530_PROGRESS);
 }
 
 size_t
@@ -117,7 +117,7 @@ Datasette::insertTape(TAPFile *a)
     durationInCycles = headInCycles;
     rewind();
     
-    vc64.putMessage(MSG_VC1530_TAPE);
+    c64.putMessage(MSG_VC1530_TAPE);
     resume();
     
     return true;
@@ -143,7 +143,7 @@ Datasette::ejectTape()
     durationInCycles = 0;
     head = -1;
 
-    vc64.putMessage(MSG_VC1530_NO_TAPE);
+    c64.putMessage(MSG_VC1530_NO_TAPE);
     resume();
 }
 
@@ -161,9 +161,9 @@ Datasette::advanceHead(bool silent)
     headInCycles += length;
     
     // Send message if the tapeCounter (in seconds) changes
-    u32 newHeadInSeconds = (u32)(headInCycles / vc64.frequency);
+    u32 newHeadInSeconds = (u32)(headInCycles / c64.frequency);
     if (newHeadInSeconds != headInSeconds && !silent)
-        vc64.putMessage(MSG_VC1530_PROGRESS);
+        c64.putMessage(MSG_VC1530_PROGRESS);
 
     // Update headInSeconds
     headInSeconds = newHeadInSeconds;

@@ -20,7 +20,7 @@ void
 Kingsoft::updatePeekPokeLookupTables()
 {
     // Tweak lookup tables if we run in Ultimax mode
-    if (vc64.getUltimax()) {
+    if (c64.getUltimax()) {
         
         // $0000 - $7FFF and $C000 - $DFFF are usable the normal way
         u8 exrom = 0x10;

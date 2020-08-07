@@ -480,14 +480,14 @@ CPU::executeOneCycle()
             next = actionFunc[instr];
             
             // Disassemble command if requested
-            if (vc64.debugMode) { // } unlikely(tracingEnabled())) {
+            if (c64.debugMode) { // } unlikely(tracingEnabled())) {
   
                 recordInstruction();
             }
             
             // Check if a breakpoint has been reached
             if (checkForBreakpoints && debugger.breakpointMatches(getPC())) {
-                vc64.signalBreakpoint();
+                c64.signalBreakpoint();
                 setErrorState(CPU_BREAKPOINT_REACHED);
             }
             

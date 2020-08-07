@@ -27,13 +27,13 @@ class Mouse : public C64Component {
 private:
     
     // A Commdore 1350 (digital) mouse
-    Mouse1350 mouse1350 = Mouse1350(vc64);
+    Mouse1350 mouse1350 = Mouse1350(c64);
     
     // A Commdore 1351 (analog) mouse
-    Mouse1351 mouse1351 = Mouse1351(vc64);
+    Mouse1351 mouse1351 = Mouse1351(c64);
     
     // A Neos (analog) mouse
-    NeosMouse mouseNeos = NeosMouse(vc64);
+    NeosMouse mouseNeos = NeosMouse(c64);
     
     // Emulated mouse model
     // MouseModel model = MOUSE1350;

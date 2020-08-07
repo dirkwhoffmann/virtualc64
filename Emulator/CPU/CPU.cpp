@@ -272,13 +272,13 @@ CPU::setErrorState(ErrorState state)
     
     switch (errorState) {
         case CPU_OK:
-            vc64.putMessage(MSG_CPU_OK);
+            c64.putMessage(MSG_CPU_OK);
             return;
         case CPU_BREAKPOINT_REACHED:
-            vc64.putMessage(MSG_BREAKPOINT_REACHED);
+            c64.putMessage(MSG_BREAKPOINT_REACHED);
             return; 
         case CPU_ILLEGAL_INSTRUCTION:
-            vc64.putMessage(MSG_ILLEGAL_INSTRUCTION);
+            c64.putMessage(MSG_ILLEGAL_INSTRUCTION);
             return;
         default:
             assert(false);

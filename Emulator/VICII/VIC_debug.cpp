@@ -17,8 +17,8 @@ VIC::getInfo()
     u8 ctrl1 = reg.current.ctrl1;
     u8 ctrl2 = reg.current.ctrl2;
 
-    info.rasterline = vc64.rasterLine;
-    info.cycle = vc64.rasterCycle;
+    info.rasterline = c64.rasterLine;
+    info.cycle = c64.rasterCycle;
     info.xCounter = xCounter;
     info.badLine = badLine;
     info.ba = (baLine.current() == 0);

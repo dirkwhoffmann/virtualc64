@@ -29,10 +29,10 @@ class SIDBridge : public C64Component {
 private:
 
     // FastSID (Adapted from VICE 3.1)
-    FastSID fastsid = FastSID(vc64);
+    FastSID fastsid = FastSID(c64);
 
     // ReSID (Taken from VICE 3.1)
-    ReSID resid = ReSID(vc64);
+    ReSID resid = ReSID(c64);
        
     // CPU cycle at the last call to executeUntil()
     u64 cycles;

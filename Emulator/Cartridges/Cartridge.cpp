@@ -216,7 +216,7 @@ Cartridge::loadPacketsFromBuffer(u8 **buffer)
 {
     for (unsigned i = 0; i < numPackets; i++) {
         assert(packet[i] == NULL);
-        packet[i] = new CartridgeRom(vc64);
+        packet[i] = new CartridgeRom(c64);
         packet[i]->loadFromBuffer(buffer);
     }
 }
@@ -321,7 +321,7 @@ Cartridge::poke(u16 addr, u8 value)
     }
         
     // Write to RAM if we don't run in Ultimax mode
-    if (!vc64.getUltimax()) {
+    if (!c64.getUltimax()) {
         mem.ram[addr] = value;
     }
 }
@@ -385,7 +385,7 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
     switch (type) {
         
         case 0: // ROM
-        packet[nr] = new CartridgeRom(vc64, size, start, c->chipData(nr));
+        packet[nr] = new CartridgeRom(c64, size, start, c->chipData(nr));
         break;
         
         case 1: // RAM
@@ -394,7 +394,7 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
         
         case 2: // Flash ROM
         warn("Chip %d is a Flash Rom. Creating a Rom instead.\n", nr);
-        packet[nr] = new CartridgeRom(vc64, size, start, c->chipData(nr));
+        packet[nr] = new CartridgeRom(c64, size, start, c->chipData(nr));
         break;
         
         default:
@@ -476,7 +476,7 @@ void
 Cartridge::setSwitch(i8 pos)
 {
     switchPos = pos;
-    vc64.putMessage(MSG_CART_SWITCH);
+    c64.putMessage(MSG_CART_SWITCH);
 }
 
 void
@@ -487,6 +487,6 @@ Cartridge::resetWithoutDeletingRam()
     debug(RUN_DEBUG, "Resetting virtual C64 (preserving RAM)\n");
     
     memcpy(ram, mem.ram, 0x10000);
-    vc64.reset();
+    c64.reset();
     memcpy(mem.ram, ram, 0x10000);
 }

@@ -131,9 +131,9 @@ C64Memory::_dump()
 {
 	msg("C64 Memory:\n");
 	msg("-----------\n");
-    msg("    Basic ROM: %s loaded\n", vc64.hasBasicRom() ? "" : " not");
-	msg("Character ROM: %s loaded\n", vc64.hasCharRom() ? "" : " not");
-    msg("   Kernal ROM: %s loaded\n", vc64.hasKernalRom() ? "" : " not");
+    msg("    Basic ROM: %s loaded\n", c64.hasBasicRom() ? "" : " not");
+	msg("Character ROM: %s loaded\n", c64.hasCharRom() ? "" : " not");
+    msg("   Kernal ROM: %s loaded\n", c64.hasKernalRom() ? "" : " not");
 	msg("\n");
     
     /*
@@ -176,7 +176,7 @@ C64Memory::updatePeekPokeLookupTables()
     u8 index = (cpu.pport.read() & 0x07) | exrom | game;
 
     // Set ultimax flag
-    vc64.setUltimax(exrom && !game);
+    c64.setUltimax(exrom && !game);
 
     // Update table entries
     for (unsigned bank = 1; bank < 16; bank++) {
@@ -499,7 +499,7 @@ C64Memory::pokeIO(u16 addr, u8 value)
 u16
 C64Memory::nmiVector() {
     
-    if (peekSrc[0xF] != M_ROM || vc64.hasKernalRom()) {
+    if (peekSrc[0xF] != M_ROM || c64.hasKernalRom()) {
         return LO_HI(peek(0xFFFA), peek(0xFFFB));
     } else {
         return 0xFE43;
@@ -509,7 +509,7 @@ C64Memory::nmiVector() {
 u16
 C64Memory::irqVector() {
     
-    if (peekSrc[0xF] != M_ROM || vc64.hasKernalRom()) {
+    if (peekSrc[0xF] != M_ROM || c64.hasKernalRom()) {
         return LO_HI(peek(0xFFFE), peek(0xFFFF));
     } else {
         return 0xFF48;
@@ -519,7 +519,7 @@ C64Memory::irqVector() {
 u16
 C64Memory::resetVector() {
     
-    if (peekSrc[0xF] != M_ROM || vc64.hasKernalRom()) {
+    if (peekSrc[0xF] != M_ROM || c64.hasKernalRom()) {
         return LO_HI(peek(0xFFFC), peek(0xFFFD));
     } else {
         return 0xFCE2;

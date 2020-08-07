@@ -168,7 +168,7 @@ VIC::_reset()
 void
 VIC::_ping()
 {
-    vc64.putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
+    c64.putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
 }
 
 void
@@ -270,22 +270,22 @@ VIC::setRevision(VICRevision revision)
     
     updatePalette();
     resetScreenBuffers();
-    vc64.updateVicFunctionTable();
+    c64.updateVicFunctionTable();
     
     switch(revision) {
             
         case PAL_6569_R1:
         case PAL_6569_R3:
         case PAL_8565:
-            vc64.setClockFrequency(PAL_CLOCK_FREQUENCY);
-            vc64.putMessage(MSG_PAL);
+            c64.setClockFrequency(PAL_CLOCK_FREQUENCY);
+            c64.putMessage(MSG_PAL);
             break;
             
         case NTSC_6567:
         case NTSC_6567_R56A:
         case NTSC_8562:
-            vc64.setClockFrequency(NTSC_CLOCK_FREQUENCY);
-            vc64.putMessage(MSG_NTSC);
+            c64.setClockFrequency(NTSC_CLOCK_FREQUENCY);
+            c64.putMessage(MSG_NTSC);
             break;
             
         default:
@@ -417,13 +417,13 @@ VIC::getNoise()
 u16
 VIC::rasterline()
 {
-    return vc64.rasterLine;
+    return c64.rasterLine;
 }
 
 u8
 VIC::rastercycle()
 {
-    return vc64.rasterCycle;
+    return c64.rasterCycle;
 }
 
 
@@ -539,7 +539,7 @@ VIC::triggerIrq(u8 source)
 u16
 VIC::lightpenX()
 {
-    u8 cycle = vc64.rasterCycle;
+    u8 cycle = c64.rasterCycle;
     
     switch (config.revision) {
             
@@ -586,7 +586,7 @@ VIC::setLP(bool value)
 void
 VIC::checkForLightpenIrq()
 {
-    u8 vicCycle = vc64.rasterCycle;
+    u8 vicCycle = c64.rasterCycle;
 
     // An interrupt is suppressed if ...
     
@@ -613,8 +613,8 @@ void
 VIC::checkForLightpenIrqAtStartOfFrame()
 {
     // This function is called at the beginning of a frame, only.
-    assert(vc64.rasterLine == 0);
-    assert(vc64.rasterCycle == 2);
+    assert(c64.rasterLine == 0);
+    assert(c64.rasterCycle == 2);
  
     // Latch coordinate (values according to VICE 3.1)
     switch (config.revision) {
@@ -857,7 +857,7 @@ VIC::endRasterline()
         */
 
         // Advance pixelBuffer
-        u16 nextline = vc64.rasterLine - PAL_UPPER_VBLANK + 1;
+        u16 nextline = c64.rasterLine - PAL_UPPER_VBLANK + 1;
         if (nextline < PAL_RASTERLINES) {
             pixelBuffer = currentScreenBuffer + (nextline * NTSC_PIXELS);
         }
