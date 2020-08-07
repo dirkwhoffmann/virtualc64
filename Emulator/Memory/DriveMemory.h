@@ -18,7 +18,7 @@ class DriveMemory : public Memory {
 private:
     
     // Reference to the connected disk drive
-    class Drive *drive;
+    class Drive &drive;
     
 public:
     
@@ -33,7 +33,7 @@ public:
     
 public:
     
-    DriveMemory(Drive *drive, C64 &ref);
+    DriveMemory(C64 &ref, Drive &drive);
     
     
     //

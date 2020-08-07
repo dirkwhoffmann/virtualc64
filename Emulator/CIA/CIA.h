@@ -72,7 +72,7 @@ class CIA : public C64Component {
     // Sub components
     //
     
-    TOD tod = TOD(this, vc64);
+    TOD tod = TOD(vc64, *this);
     
     
     //

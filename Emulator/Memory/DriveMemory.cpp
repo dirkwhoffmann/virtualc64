@@ -9,11 +9,11 @@
 
 #include "C64.h"
 
-DriveMemory::DriveMemory(Drive *drive, C64 &ref) : Memory(ref)
+DriveMemory::DriveMemory(C64 &ref, Drive &dref) : Memory(ref), drive(dref)
 {
     setDescription("1541MEM");
 
-    this->drive = drive;
+    // this->drive = drive;
     
     memset(rom, 0, sizeof(rom));
     stack = &ram[0x0100];
@@ -74,8 +74,8 @@ DriveMemory::peek(u16 addr)
         return
         (addr < 0x0800) ? ram[addr] :
         (addr < 0x1800) ? addr >> 8 :
-        (addr < 0x1C00) ? drive->via1.peek(addr & 0xF) :
-        drive->via2.peek(addr & 0xF);
+        (addr < 0x1C00) ? drive.via1.peek(addr & 0xF) :
+        drive.via2.peek(addr & 0xF);
     }
 }
 
@@ -89,8 +89,8 @@ DriveMemory::spypeek(u16 addr)
         return
         (addr < 0x0800) ? ram[addr] :
         (addr < 0x1800) ? addr >> 8 :
-        (addr < 0x1C00) ? drive->via1.spypeek(addr & 0xF) :
-        drive->via2.spypeek(addr & 0xF);
+        (addr < 0x1C00) ? drive.via1.spypeek(addr & 0xF) :
+        drive.via2.spypeek(addr & 0xF);
     }
 }
 
@@ -110,12 +110,12 @@ DriveMemory::poke(u16 addr, u8 value)
     }
     
     if (addr >= 0x1C00) { // VIA 2
-        drive->via2.poke(addr & 0xF, value);
+        drive.via2.poke(addr & 0xF, value);
         return;
     }
     
     if (addr >= 0x1800) { // VIA 1
-        drive->via1.poke(addr & 0xF, value);
+        drive.via1.poke(addr & 0xF, value);
         return;
     }
 }

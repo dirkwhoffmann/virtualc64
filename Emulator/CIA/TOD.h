@@ -35,7 +35,7 @@ private:
     TODInfo info;
     
     // Reference to the connected CIA
-    CIA *cia;
+    CIA &cia;
     
     // Time of day clock
 	TimeOfDay tod;
@@ -89,7 +89,7 @@ private:
     
 public:
     
-	TOD(CIA *cia, C64 &ref);
+	TOD(C64 &ref, CIA &cia);
     
     template <class T>
     void applyToPersistentItems(T& worker)

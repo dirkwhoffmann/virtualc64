@@ -9,12 +9,10 @@
 
 #include "C64.h"
 
-TOD::TOD(CIA *cia, C64 &ref) : C64Component(ref)
+TOD::TOD(C64 &ref, CIA &ciaref) : C64Component(ref), cia(ciaref)
 {
 	setDescription("TOD");
-    
-    this->cia = cia;
-    
+        
     // Register snapshot items
     SnapshotItem items[] = {
                 
@@ -127,7 +125,7 @@ void
 TOD::checkForInterrupt()
 {
     if (!matching && tod.value == alarm.value) {
-        cia->todInterrupt();
+        cia.todInterrupt();
     }
     
     matching = (tod.value == alarm.value);
