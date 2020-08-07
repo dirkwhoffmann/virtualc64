@@ -209,7 +209,7 @@ CPUDebugger::stepOver()
     
     // If the next instruction is a JSR instruction (0x20), we set a breakpoint
     // at the next memory location. Otherwise, stepOver behaves like stepInto.
-    if (cpu.mem->spypeek(cpu.getPC()) == 0x20) {
+    if (cpu.mem.spypeek(cpu.getPC()) == 0x20) {
         softStop = getAddressOfNextInstruction();
     } else {
         softStop = UINT64_MAX;
@@ -326,7 +326,7 @@ CPUDebugger::getLengthOfInstruction(u8 opcode)
 unsigned
 CPUDebugger::getLengthOfInstructionAtAddress(u16 addr)
 {
-    return getLengthOfInstruction(cpu.mem->spypeek(addr));
+    return getLengthOfInstruction(cpu.mem.spypeek(addr));
 }
 
 unsigned
@@ -362,7 +362,7 @@ CPUDebugger::disassemble(RecordedInstruction instr)
         case ADDR_ZERO_PAGE_Y:
         case ADDR_INDIRECT_X:
         case ADDR_INDIRECT_Y: {
-            u8 value = cpu.mem->spypeek(instr.pc + 1);
+            u8 value = cpu.mem.spypeek(instr.pc + 1);
             hex ? sprint8x(operand, value) : sprint8d(operand, value);
             break;
         }
@@ -371,12 +371,12 @@ CPUDebugger::disassemble(RecordedInstruction instr)
         case ADDR_ABSOLUTE:
         case ADDR_ABSOLUTE_X:
         case ADDR_ABSOLUTE_Y: {
-            u16 value = LO_HI(cpu.mem->spypeek(instr.pc + 1),cpu.mem->spypeek(instr.pc + 2));
+            u16 value = LO_HI(cpu.mem.spypeek(instr.pc + 1),cpu.mem.spypeek(instr.pc + 2));
             hex ? sprint16x(operand, value) : sprint16d(operand, value);
             break;
         }
         case ADDR_RELATIVE: {
-            u16 value = instr.pc + 2 + (i8)cpu.mem->spypeek(instr.pc + 1);
+            u16 value = instr.pc + 2 + (i8)cpu.mem.spypeek(instr.pc + 1);
             hex ? sprint16x(operand, value) : sprint16d(operand, value);
             break;
         }
@@ -482,9 +482,9 @@ CPUDebugger::disassemble(u16 addr)
     RecordedInstruction instr;
 
     instr.pc = addr;
-    instr.byte1 = cpu.mem->spypeek(addr);
-    instr.byte2 = cpu.mem->spypeek(addr + 1);
-    instr.byte3 = cpu.mem->spypeek(addr + 2);
+    instr.byte1 = cpu.mem.spypeek(addr);
+    instr.byte2 = cpu.mem.spypeek(addr + 1);
+    instr.byte3 = cpu.mem.spypeek(addr + 2);
     instr.a = cpu.regA;
     instr.x = cpu.regX;
     instr.y = cpu.regY;

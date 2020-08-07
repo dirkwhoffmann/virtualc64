@@ -25,7 +25,7 @@ class CPU : public C64Component {
     friend class CPUDebugger;
     
     // Reference to the connected memory
-    Memory *mem;
+    Memory &mem;
     
     // Result of the latest inspection
     CPUInfo info;
@@ -277,7 +277,7 @@ private:
     
 public:
     
-    CPU(CPUModel model, Memory *mem, C64& ref);
+    CPU(CPUModel model, C64& ref, Memory &memref);
     
 private:
     

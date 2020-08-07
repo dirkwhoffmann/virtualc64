@@ -9,10 +9,9 @@
 
 #include "C64.h"
 
-CPU::CPU(CPUModel model, Memory *mem, C64& ref) : C64Component(ref)
+CPU::CPU(CPUModel model, C64& ref, Memory &memref) : C64Component(ref), mem(memref)
 {
     this->model = model;
-    this->mem = mem;
 	
     setDescription(model == MOS_6502 ? "CPU(6502)" : "CPU");
     
@@ -185,8 +184,8 @@ CPU::_dump()
     msg("      Irq line : %02X\n", irqLine);
     msg("Level detector : %02X\n", levelDetector.current());
     msg("         doIrq : %s\n", doIrq ? "yes" : "no");
-	msg("   IRQ routine : %02X%02X\n", mem->spypeek(0xFFFF), mem->spypeek(0xFFFE));
-	msg("   NMI routine : %02X%02X\n", mem->spypeek(0xFFFB), mem->spypeek(0xFFFA));
+    msg("   IRQ routine : %02X%02X\n", mem.spypeek(0xFFFF), mem.spypeek(0xFFFE));
+    msg("   NMI routine : %02X%02X\n", mem.spypeek(0xFFFB), mem.spypeek(0xFFFA));
 	msg("\n");
     
     pport.dump();
@@ -296,14 +295,14 @@ void
 CPU::recordInstruction()
 {
     RecordedInstruction i;
-    u8 opcode = mem->spypeek(pc);
+    u8 opcode = mem.spypeek(pc);
     unsigned length = debugger.getLengthOfInstruction(opcode);
     
     i.cycle = cycle;
     i.pc = pc;
     i.byte1 = opcode;
-    i.byte2 = length > 1 ? mem->spypeek(i.pc + 1) : 0;
-    i.byte3 = length > 2 ? mem->spypeek(i.pc + 2) : 0;
+    i.byte2 = length > 1 ? mem.spypeek(i.pc + 1) : 0;
+    i.byte3 = length > 2 ? mem.spypeek(i.pc + 2) : 0;
     i.a = regA;
     i.x = regX;
     i.y = regY;

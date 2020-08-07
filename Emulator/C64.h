@@ -90,7 +90,7 @@ public:
     C64Memory mem = C64Memory(*this);
     
     // CPU
-    CPU cpu = CPU(MOS_6510, &mem, *this);
+    CPU cpu = CPU(MOS_6510, *this, mem);
         
     // Video Interface Controller
     VIC vic = VIC(*this);
