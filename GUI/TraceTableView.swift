@@ -39,6 +39,9 @@ class TraceTableView: NSTableView {
         
         cache()
         reloadData()
+        
+        // In animation mode, jump to the currently executed instruction
+        if count != 0 { scrollRowToVisible(numRows - 1) }
     }
 }
 

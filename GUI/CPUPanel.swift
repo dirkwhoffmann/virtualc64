@@ -60,4 +60,21 @@ extension Inspector {
         cpuBreakView.refresh(count: count, full: full)
         cpuWatchView.refresh(count: count, full: full)
     }
+    
+    @IBAction func cpuClearTraceBufferAction(_ sender: NSButton!) {
+
+        c64.cpu.clearLog()
+        refreshCPU(full: true)
+    }
+    
+    @IBAction func cpuGotoAction(_ sender: NSSearchField!) {
+
+        if sender.stringValue == "" {
+            cpuInstrView.jumpTo(addr: Int(cpuInfo.pc))
+        } else if let addr = Int(sender.stringValue, radix: 16) {
+            cpuInstrView.jumpTo(addr: addr)
+        } else {
+            sender.stringValue = ""
+        }
+    }
 }

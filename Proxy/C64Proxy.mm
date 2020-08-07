@@ -140,6 +140,10 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->cpu->getLoggedInstrInfo(nr);
 }
+- (void) clearLog
+{
+    wrapper->cpu->debugger.clearLog();
+}
 - (void) dump
 {
     wrapper->cpu->dump();

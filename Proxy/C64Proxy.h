@@ -309,6 +309,7 @@ struct AnyC64FileWrapper;
 - (DisassembledInstruction) getInstrInfo:(NSInteger)index start:(NSInteger)addr;
 - (NSInteger) loggedInstructions;
 - (DisassembledInstruction) getLoggedInstrInfo:(NSInteger)index;
+- (void) clearLog;
 - (void) dump;
 - (bool) isHalted;
 
