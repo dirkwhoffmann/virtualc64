@@ -321,12 +321,7 @@ struct AnyC64FileWrapper;
 - (i64) cycle;
 - (u16) pc;
 
-- (NSInteger) recordedInstructions;
-- (RecordedInstruction) readRecordedInstruction;
-- (RecordedInstruction) readRecordedInstruction:(NSInteger)previous;
-
 @end
-
 
 //
 // Memory proxy

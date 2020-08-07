@@ -35,7 +35,7 @@ CPU::CPU(CPUModel model, C64& ref, Memory &memref) : C64Component(ref), mem(memr
 
          // Internal state
         { &cycle,              sizeof(cycle),        CLEAR_ON_RESET },
-        { &errorState,         sizeof(errorState),   CLEAR_ON_RESET },
+        { &halted,             sizeof(halted),       CLEAR_ON_RESET },
         { &next,               sizeof(next),         CLEAR_ON_RESET },
 
         { &regA,               sizeof(regA),         CLEAR_ON_RESET },
@@ -105,23 +105,21 @@ CPU::_reset()
 	next = fetch;
     levelDetector.clear();
     edgeDetector.clear();
-    
-    // Enable of disable guard checking
-    checkForBreakpoints = debugger.breakpoints.elements() != 0;
-    checkForWatchpoints = debugger.watchpoints.elements() != 0;
-    
-    clearTraceBuffer();
 }
 
 void
 CPU::_inspect()
 {
+    debug("CPU::_inspect ()\n");
+    
     _inspect(getPC());
 }
 
 void
 CPU::_inspect(u32 dasmStart)
 {
+    debug("CPU::_inspect (dasmStart = %x)\n", dasmStart);
+    
     synchronized {
         
         info.cycle = cycle;
@@ -156,9 +154,9 @@ CPU::_inspect(u32 dasmStart)
         }
         
         // Disassemble the most recent entries in the trace buffer
-        long count = recordedInstructions();
+        long count = debugger.loggedInstructions();
         for (int i = 0; i < count; i++) {
-            RecordedInstruction rec = readRecordedInstruction(i);
+            RecordedInstruction rec = debugger.logEntryAbs(i);
             info.loggedInstr[i] = debugger.disassemble(rec);
         }
     }
@@ -167,14 +165,14 @@ CPU::_inspect(u32 dasmStart)
 void
 CPU::_setDebug(bool enable)
 {
-    if (enable) {
+    if (enable && isC64CPU()) {
         
-        msg("Enabling debug mode\n");
+        debug("Enabling debug mode\n");
         logInstructions = true;
         
     } else {
         
-        msg("Disabling debug mode\n");
+        debug("Disabling debug mode\n");
         logInstructions = false;
     }
 }
@@ -278,75 +276,14 @@ CPU::setRDY(bool value)
     }
 }
 
-void 
-CPU::setErrorState(ErrorState state)
-{
-	if (errorState == state) return;
-
-    errorState = state;
-    
-    switch (errorState) {
-        case CPU_OK:
-            c64.putMessage(MSG_CPU_OK);
-            return;
-        case CPU_BREAKPOINT_REACHED:
-            c64.putMessage(MSG_BREAKPOINT_REACHED);
-            return; 
-        case CPU_ILLEGAL_INSTRUCTION:
-            c64.putMessage(MSG_ILLEGAL_INSTRUCTION);
-            return;
-        default:
-            assert(false);
-    }
-}
-
-unsigned
-CPU::recordedInstructions()
-{
-    return writePtr >= readPtr ? writePtr - readPtr : traceBufferSize + writePtr - readPtr;
-}
-
 void
-CPU::recordInstruction()
+CPU::processFlags()
 {
-    RecordedInstruction i;
-    u8 opcode = mem.spypeek(pc);
-    unsigned length = debugger.getLengthOfInstruction(opcode);
+    // Record the instruction if requested
+    if (logInstructions) debugger.logInstruction();
     
-    i.cycle = cycle;
-    i.pc = pc;
-    i.byte1 = opcode;
-    i.byte2 = length > 1 ? mem.spypeek(i.pc + 1) : 0;
-    i.byte3 = length > 2 ? mem.spypeek(i.pc + 2) : 0;
-    i.a = regA;
-    i.x = regX;
-    i.y = regY;
-    i.sp = regSP;
-    i.flags = getP();
-    
-    assert(writePtr < traceBufferSize);
-
-    traceBuffer[writePtr] = i;
-    writePtr = (writePtr + 1) % traceBufferSize;
-    if (writePtr == readPtr) {
-        readPtr = (readPtr + 1) % traceBufferSize;
+    // Check if a breakpoint has been reached
+    if (checkForBreakpoints && debugger.breakpointMatches(regPC)) {
+        c64.signalBreakpoint();
     }
-}
-
-RecordedInstruction
-CPU::readRecordedInstruction()
-{
-    assert(recordedInstructions() != 0);
-    assert(readPtr < traceBufferSize);
-    
-    RecordedInstruction result = traceBuffer[readPtr];
-    readPtr = (readPtr + 1) % traceBufferSize;
-    
-    return result;
-}
-
-RecordedInstruction
-CPU::readRecordedInstruction(unsigned previous)
-{
-    return traceBuffer[(writePtr + traceBufferSize - previous - 1) % traceBufferSize];
 }

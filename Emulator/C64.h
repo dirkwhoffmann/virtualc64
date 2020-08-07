@@ -420,12 +420,6 @@ public:
      * should be your starting point.
      */
     void runLoop();
-
-    /* Finishes the current command.
-     * When the emulator is stopped, this function is called to bring the
-     * CPU into a clean state.
-     */
-    void finishInstruction(); 
     
     /* Runs or pauses the emulator.
      */
@@ -445,12 +439,12 @@ public:
      */
     void stepOver();
     
-    /* Emulates the C64 until the end of the current frame. It is save to call
-     * the function in the middle of a frame. In this case, the C64 is emulated
-     * until the curent frame has been completed.
+    /* Emulates the C64 until the end of the current frame.
      * Under certain circumstances the function may terminate earlier, in the
      * middle of a frame. This happens, e.g., if the CPU jams or a breakpoint
-     * is reached.
+     * is reached. It is save to call the function in the middle of a frame.
+     * In this case, the C64 is emulated until the curent frame has been
+     * completed.
      */
     void executeOneFrame();
 
@@ -461,11 +455,23 @@ private:
      */
     void executeOneLine();
     
-    //! @brief    Executes a single CPU cycle
+    // Executes a single clock cycle
     void executeOneCycle();
-    
-    //! @brief    Work horse for executeOneCycle()
     void _executeOneCycle();
+
+    /* Finishes the current instruction.
+     * This function is called when the emulator threads terminates in order
+     * to reach a clean state. It emulates the CPU until the next fetch cycle
+     * is reached.
+     */
+    void finishInstruction();
+    
+    /* Executes a single instruction
+     * This function is used to implement single stepping in the debugger.
+     * It assumes the CPU is currently in the fetch phase and emulates the
+     * C64 until the fetch cycle is reached again.
+     */
+    // void executeInstruction();
     
     //! @brief    Invoked before executing the first cycle of a rasterline
     void beginRasterLine();

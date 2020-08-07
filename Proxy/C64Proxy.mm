@@ -134,7 +134,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 }
 - (NSInteger) loggedInstructions
 {
-    return wrapper->cpu->recordedInstructions();
+    return wrapper->cpu->debugger.loggedInstructions();
 }
 - (DisassembledInstruction) getLoggedInstrInfo:(NSInteger)nr
 {
@@ -172,6 +172,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->cpu->getPC();
 }
+/*
 - (NSInteger) recordedInstructions
 {
     return wrapper->cpu->recordedInstructions();
@@ -184,6 +185,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->cpu->readRecordedInstruction((unsigned)previous);
 }
+*/
 
 @end
 

@@ -194,16 +194,14 @@ CPUDebugger::_powerOn()
 void
 CPUDebugger::_reset()
 {
-
+    breakpoints.setNeedsCheck(breakpoints.elements() != 0);
+    watchpoints.setNeedsCheck(watchpoints.elements() != 0);
+    clearLog();
 }
 
 void
 CPUDebugger::stepInto()
 {
-    cpu.clearErrorState();
-    drive8.cpu.clearErrorState();
-    drive9.cpu.clearErrorState();
-    
     softStop = UINT64_MAX;
     breakpoints.setNeedsCheck(true);
 }
@@ -211,10 +209,6 @@ CPUDebugger::stepInto()
 void
 CPUDebugger::stepOver()
 {
-    cpu.clearErrorState();
-    drive8.cpu.clearErrorState();
-    drive9.cpu.clearErrorState();
-    
     // If the next instruction is a JSR instruction (0x20), we set a breakpoint
     // at the next memory location. Otherwise, stepOver behaves like stepInto.
     if (cpu.mem.spypeek(cpu.getPC()) == 0x20) {
@@ -262,7 +256,7 @@ CPUDebugger::disableLogging()
 int
 CPUDebugger::loggedInstructions()
 {
-    return logCnt < logBufferCapacity ? (int)logCnt : logBufferCapacity;
+    return logCnt < LOG_BUFFER_CAPACITY ? (int)logCnt : LOG_BUFFER_CAPACITY;
 }
 
 void
@@ -272,7 +266,7 @@ CPUDebugger::logInstruction()
     u8 opcode = mem.spypeek(pc);
     unsigned length = getLengthOfInstruction(opcode);
 
-    int i = logCnt++ % logBufferCapacity;
+    int i = logCnt++ % LOG_BUFFER_CAPACITY;
     
     logBuffer[i].cycle = cpu.cycle;
     logBuffer[i].pc = pc;
@@ -292,7 +286,7 @@ CPUDebugger::logEntry(int n)
     assert(n < loggedInstructions());
 
     // n == 0 returns the most recently recorded entry
-    int offset = (logCnt - 1 - n) % logBufferCapacity;
+    int offset = (logCnt - 1 - n) % LOG_BUFFER_CAPACITY;
 
     return logBuffer[offset];
 }

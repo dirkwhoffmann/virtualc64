@@ -12,6 +12,8 @@
 
 #include "Aliases.h"
 
+#define LOG_BUFFER_CAPACITY 256
+
 //
 // Enumerations
 //

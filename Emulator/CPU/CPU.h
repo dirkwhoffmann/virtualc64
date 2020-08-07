@@ -68,9 +68,9 @@ private:
     // Lookup tables
     //
     
-    //! @brief    Mapping from opcodes to microinstructions
-    /*! @details  The mapped microinstruction is the first microinstruction to
-     *            be executed after the fetch phase (second microcycle).
+    /* Mapping from opcodes to microinstructions.
+     * The array stores pointers to the handlers of the second microcycle which
+     * is microcycle cycle following the fetch phase.
      */
     MicroInstruction actionFunc[256];
             
@@ -81,12 +81,12 @@ private:
     
 public:
     
-    //! @brief    Elapsed C64 clock cycles since power up
+    // Elapsed clock cycles since power up
     u64 cycle;
     
-    //! @brief    Current error state
-    ErrorState errorState;
-        
+    // Indicates whether the CPU is jammed
+    bool halted;
+            
     // Enables or disables debug options
     bool checkForBreakpoints = false;
     bool checkForWatchpoints = false;
@@ -94,10 +94,7 @@ public:
     
 private:
 
-    
-    //! @brief    Next microinstruction to be executed
-    /*! @see      executeOneCycle()
-     */
+    // The next microinstruction to be executed
     MicroInstruction next;
     
     
@@ -107,19 +104,10 @@ private:
     
 public:
     
-    //! @brief    Accumulator
     u8 regA;
-    
-    //! @brief    X register
     u8 regX;
-    
-    //! @brief    Y register
     u8 regY;
-    
-    //! @brief    Program counter
     u16 regPC;
-    
-    //! @brief    Stack pointer
     u8 regSP;
     
 private:
@@ -172,31 +160,23 @@ public:
     
 private:
     
-    //! @brief    Cycle of the most recent rising edge of the rdyLine
+    // Cycle of the most recent rising edge of the RDY line
     u64 rdyLineUp;
     
-    //! @brief    Cycle of the most recent falling edge of the rdyLine
+    // Cycle of the most recent falling edge of the RDY line
     u64 rdyLineDown;
     
 public:
     
-    /*! @brief    NMI line (non maskable interrupts)
-     *  @details  This variable is usually set to 0 which means that the NMI
-     *            line is in high state. When an external component requests an
-     *            NMI nterrupt, this line is pulled low. In that case, this
-     *            variable has a positive value and the set bits indicate the
-     *            interrupt source.
+    /* Interrupt lines.
+     * Usally both variables equal 0 which means that the two interrupt lines
+     * are high. When an external component requests an interrupt, the NMI or
+     * the IRQ line is pulled low. In that case, the corresponding variable is
+     * set to a positive value which indicates the interrupt source. The
+     * variables are used in form of bit fields since both interrupt lines are
+     * driven by multiple sources.
      */
     u8 nmiLine;
-    
-    
-    /*! @brief    IRQ line (maskable interrupts)
-     *  @details  This variable is usually set to 0 which means that the IRQ
-     *            line is in high state. When an external component requests an
-     *            IRQ nterrupt, this line is pulled low. In that case, this
-     *            variable has a positive value and the set bits indicate the
-     *            interrupt source.
-     */
     u8 irqLine;
     
 private:
@@ -250,23 +230,6 @@ private:
      *            Variable is set in macro POLL_INTS (CPUInstructions.h)
      */
     bool doIrq;
-    
-    
-    //
-    // Trace buffer (DEPRECATED)
-    //
-    
-    //! @brief  Trace buffer size
-    static const unsigned traceBufferSize = 256;
-    
-    //! @brief  Ring buffer for storing the CPU state
-    RecordedInstruction traceBuffer[traceBufferSize];
-    
-    //! @brief  Trace buffer read pointer
-    unsigned readPtr;
-    
-    //! @brief  Trace buffer write pointer
-    unsigned writePtr;
     
     
     //
@@ -329,17 +292,14 @@ private:
     size_t stateSize() override;
     void didLoadFromBuffer(u8 **buffer) override;
     void didSaveToBuffer(u8 **buffer) override;
-    
-    
-    //
-    //! @functiongroup Gathering debug information
-    //
-    
-public:
+
     
     //
     // Handling registers and flags
     //
+
+public:
+    
     
     /*! @brief    Returns the frozen program counter.
      *  @note     This function returns variable pc that always points to the
@@ -447,7 +407,7 @@ private:
     
     
     //
-    //! @functiongroup Performing ALU operations (CPUInstructions.cpp)
+    // Operating the ALU (CPUInstructions.cpp)
     //
     
     void adc(u8 op);
@@ -463,118 +423,40 @@ private:
     
     
     //
-    //! @functiongroup Handling interrupts
+    // Handling interrupts
     //
     
 public:
     
-    /*! @brief    Pulls down the NMI line.
-     *  @details  Pulling down the NMI line requests the CPU to interrupt.
-     */
+    // Pulls down or releases an interrupt line
     void pullDownNmiLine(IntSource source);
-    
-    /*! @brief    Releases the NMI line.
-     *  @note     Other sources might still hold the line down.
-     */
     void releaseNmiLine(IntSource source);
-    
-    /*! @brief    Pulls down the IRQ line.
-     *  @details  Pulling down the IRQ line requests the CPU to interrupt.
-     */
     void pullDownIrqLine(IntSource source);
-    
-    /*! @brief    Releases the IRQ line.
-     *  @note     Other sources might still hold the line down.
-     */
     void releaseIrqLine(IntSource source);
     
-    //! @brief    Sets the RDY line.
+    // Sets the RDY line
     void setRDY(bool value);
     
+        
+    //
+    // Executing the device
+    //
     
-    //
-    // Examining the currently executed instruction
-    //
+public:
+    
+    // Executes the next micro instruction
+    void executeOneCycle();
+
+    // Returns true if the CPU is jammed
+    bool isHalted() { return halted; }
     
     // Returns true if the next cycle marks the beginning of an instruction
     bool inFetchPhase() { return next == fetch; }
-    
-    
-    //
-    //! @functiongroup Executing the device
-    //
-    
-    /*! @brief    Executes the next micro instruction.
-     *  @return   true, if the micro instruction was processed successfully.
-     *            false, if the CPU was halted, e.g., by reaching a breakpoint.
-     */
-    bool executeOneCycle();
-    
-    //! @brief    Returns the current error state.
-    ErrorState getErrorState() { return errorState; }
-    
-    //! @brief    Sets the error state.
-    void setErrorState(ErrorState state);
-    
-    //! @brief    Sets the error state back to normal.
-    void clearErrorState() { setErrorState(CPU_OK); }
-    
-    // Returns true if the CPU is halted
-    bool isHalted() { return errorState == CPU_ILLEGAL_INSTRUCTION; }
-    
-    //
-    //! @functiongroup Handling breakpoints
-    //
-    
-    /*
-    //! @brief    Checks if a hard breakpoint is set at the provided address.
-    bool hardBreakpoint(u16 addr) { return (breakpoint[addr] & HARD_BREAKPOINT) != 0; }
-    
-    //! @brief    Sets a hard breakpoint at the provided address.
-    void setHardBreakpoint(u16 addr) { breakpoint[addr] |= HARD_BREAKPOINT; }
-    
-    //! @brief    Deletes a hard breakpoint at the provided address.
-    void deleteHardBreakpoint(u16 addr) { breakpoint[addr] &= ~HARD_BREAKPOINT; }
-    
-    //! @brief    Sets or deletes a hard breakpoint at the provided address.
-    void toggleHardBreakpoint(u16 addr) { breakpoint[addr] ^= HARD_BREAKPOINT; }
-    
-    //! @brief    Checks if a soft breakpoint is set at the provided address.
-    bool softBreakpoint(u16 addr) { return (breakpoint[addr] & SOFT_BREAKPOINT) != 0; }
-    
-    //! @brief    Sets a soft breakpoint at the provided address.
-    void setSoftBreakpoint(u16 addr) { breakpoint[addr] |= SOFT_BREAKPOINT; }
-    
-    //! @brief    Deletes a soft breakpoint at the specified address.
-    void deleteSoftBreakpoint(u16 addr) { breakpoint[addr] &= ~SOFT_BREAKPOINT; }
-    
-    //! @brief    Sets or deletes a hard breakpoint at the specified address.
-    void toggleSoftBreakpoint(u16 addr) { breakpoint[addr] ^= SOFT_BREAKPOINT; }
-    */
-    
-    //
-    //! @functiongroup Tracing the program execution
-    //
-    
-    //! @brief  Clears the trace buffer.
-    void clearTraceBuffer() { readPtr = writePtr = 0; }
-    
-    //! @brief   Returns the number of recorded instructions.
-    unsigned recordedInstructions();
-    
-    //! @brief   Records an instruction.
-    void recordInstruction();
-    
-    /*! @brief   Reads and removes a recorded instruction from the trace buffer.
-     *  @note    The trace buffer must not be empty.
-     */
-    RecordedInstruction readRecordedInstruction();
-    
-    /*! @brief   Reads a recorded instruction from the trace buffer.
-     *  @note    'previous' must be smaller than the number of recorded
-     *           instructions.
-     */
-    RecordedInstruction readRecordedInstruction(unsigned previous);
+
+private:
+
+    // Processes debug flags
+    void processFlags();
 };
 
 #endif

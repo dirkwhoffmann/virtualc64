@@ -41,7 +41,6 @@ HardwareComponent::powerOn()
     _reset();
     
     // Power this component on
-    debug(RUN_DEBUG, "Powering on\n");
     _powerOn();
 
     state = STATE_PAUSED;
@@ -56,7 +55,6 @@ HardwareComponent::powerOff()
     pause();
     
     // Power off this component
-    debug(RUN_DEBUG, "Powering off\n");
     _powerOff();
     
     // Power all subcomponents off
@@ -79,7 +77,6 @@ HardwareComponent::run()
     }
     
     // Start this component
-    debug(RUN_DEBUG, "Run\n");
     _run();
     
     state = STATE_RUNNING;
@@ -91,7 +88,6 @@ HardwareComponent::pause()
     if (!isRunning()) return;
     
     // Pause this component
-    debug(RUN_DEBUG, "Pause\n");
     _pause();
 
     // Pause all subcomponents

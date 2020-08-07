@@ -437,7 +437,7 @@ CPU::registerIllegalInstructions()
     registerCallback(0x9B, "TAS*", ADDR_ABSOLUTE_Y, TAS_abs_y);
 }
 
-bool
+void
 CPU::executeOneCycle()
 {
     u8 instr;
@@ -445,11 +445,7 @@ CPU::executeOneCycle()
     switch (next) {
             
         case fetch:
-            
-            /* DEBUG */
-            
-            // pc = regPC;
-            
+                        
             // Check interrupt lines
             if (unlikely(doNmi)) {
                 
@@ -464,7 +460,7 @@ CPU::executeOneCycle()
                 next = nmi_2;
                 doNmi = false;
                 doIrq = false; // NMI wins
-                return true;
+                return;
                 
             } else if (unlikely(doIrq)) {
                 
@@ -472,23 +468,24 @@ CPU::executeOneCycle()
                 IDLE_FETCH
                 next = irq_2;
                 doIrq = false;
-                return true;
+                return;
             }
             
             // Execute the fetch phase
             FETCH_OPCODE
             next = actionFunc[instr];
             
+            /*
             // Record the instruction if requested
-            if (logInstructions) recordInstruction();
+            if (logInstructions) debugger.logInstruction();
             
             // Check if a breakpoint has been reached
             if (checkForBreakpoints && debugger.breakpointMatches(getPC())) {
                 c64.signalBreakpoint();
-                setErrorState(CPU_BREAKPOINT_REACHED);
             }
+            */
             
-            return errorState == CPU_OK;
+            return;
             
         //
         // Illegal instructions
@@ -496,7 +493,8 @@ CPU::executeOneCycle()
             
         case JAM:
             
-            setErrorState(CPU_ILLEGAL_INSTRUCTION);
+            if (!halted) c64.putMessage(MSG_ILLEGAL_INSTRUCTION);
+            halted = true;
             CONTINUE
 
         case JAM_2:
@@ -527,7 +525,7 @@ CPU::executeOneCycle()
                 // ... jump to the NMI vector instead of the IRQ vector.
                 edgeDetector.clear();
                 next = nmi_5;
-                return true;
+                return;
             }
             CONTINUE
             
@@ -882,7 +880,7 @@ CPU::executeOneCycle()
             
             if (unlikely(pc_hi != HI_BYTE(regPC))) {
                 next = (regD & 0x80) ? branch_3_underflow : branch_3_overflow;
-                return true;
+                return;
             }
             DONE
         }
@@ -1208,7 +1206,7 @@ CPU::executeOneCycle()
                 // ... jump to the NMI vector instead of the IRQ vector.
                 edgeDetector.clear();
                 next = BRK_nmi_4;
-                return true;
+                return;
                 
             } else {
                 CONTINUE

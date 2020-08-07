@@ -148,6 +148,9 @@ class CPUDebugger : public C64Component {
     
 public:
     
+    // Log buffer
+    RecordedInstruction logBuffer[LOG_BUFFER_CAPACITY];
+
     // Breakpoint storage
     Breakpoints breakpoints = Breakpoints(cpu);
 
@@ -156,7 +159,14 @@ public:
     
 private:
     
-     /* Soft breakpoint for implementing single-stepping.
+    /* Number of logged instructions.
+     * Note: This variable counts the total number of logged instructions and
+     * eventually exceeds the log buffer capacity. Use 'loggedInstruction()'
+     * to obtain the number of available instructions in the log buffer.
+     */
+    long logCnt = 0;
+
+    /* Soft breakpoint for implementing single-stepping.
      * In contrast to a standard (hard) breakpoint, a soft breakpoint is
      * deleted when reached. The CPU halts if softStop matches the CPU's
      * program counter (used to implement "step over") or if softStop equals
@@ -165,14 +175,7 @@ private:
      * UINT64_MAX - 1.
      */
     u64 softStop = UINT64_MAX - 1;
-    
-    // Buffer storing logged instructions
-    static const int logBufferCapacity = 256;
-    RecordedInstruction logBuffer[logBufferCapacity];
-    
-    // Logging counter
-    long logCnt = 0;
-
+        
 public:
     
     // Number format used by the disassembler

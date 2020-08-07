@@ -86,7 +86,7 @@ C64::C64()
         { &rasterCycle,        sizeof(rasterCycle),        CLEAR_ON_RESET },
         { &frequency,          sizeof(frequency),          KEEP_ON_RESET  },
         { &durationOfOneCycle, sizeof(durationOfOneCycle), KEEP_ON_RESET  },
-        { &warpMode,               sizeof(warpMode),               CLEAR_ON_RESET },
+        { &warpMode,           sizeof(warpMode),           CLEAR_ON_RESET },
         { &ultimax,            sizeof(ultimax),            CLEAR_ON_RESET },
         
         { NULL,             0,                       0 }};
@@ -803,6 +803,9 @@ C64::threadDidTerminate()
     // Pause all components
     HardwareComponent::pause();
     
+    // Finish the current instruction to reach a clean state
+    finishInstruction();
+    
     // Release the thread lock
     pthread_mutex_unlock(&threadLock);
 }
@@ -813,9 +816,6 @@ C64::runLoop()
     debug(RUN_DEBUG, "runLoop()\n");
     
     // Prepare to run
-    cpu.clearErrorState();
-    drive8.cpu.clearErrorState();
-    drive9.cpu.clearErrorState();
     restartTimer();
     
     // Enter the loop
@@ -877,23 +877,6 @@ C64::runLoop()
 }
 
 void
-C64::finishInstruction()
-{
-    cpu.clearErrorState();
-    drive8.cpu.clearErrorState();
-    drive9.cpu.clearErrorState();
-    
-    // Wait until the execution of the next command has begun
-    while (cpu.inFetchPhase()) executeOneCycle();
-    
-    // Finish the command
-    while (!cpu.inFetchPhase()) executeOneCycle();
-    
-    // Execute the first microcycle (fetch phase) and stop there
-    executeOneCycle();
-}
-
-void
 C64::stopAndGo()
 {
     debug("stopAndGo()");
@@ -906,8 +889,17 @@ C64::stepInto()
     debug("stepInto()");
     if (isRunning()) return;
     
-    cpu.debugger.stepInto();
-    run();
+    assert(cpu.inFetchPhase());
+
+    // Execute the next instruction
+    executeOneCycle();
+    finishInstruction();
+
+    // Trigger a GUI refresh
+    putMessage(MSG_BREAKPOINT_REACHED);
+
+    // cpu.debugger.stepInto();
+    // run();
 }
 
 void
@@ -918,23 +910,6 @@ C64::stepOver()
     
     cpu.debugger.stepOver();
     run();
-    
-    /*
-    cpu.clearErrorState();
-    drive8.cpu.clearErrorState();
-    drive9.cpu.clearErrorState();
-    
-    // If the next instruction is a JSR instruction, ...
-    if (mem.spypeek(cpu.getPC()) == 0x20) {
-        // set a soft breakpoint at the next memory location.
-        cpu.setSoftBreakpoint(cpu.getAddressOfNextInstruction());
-        run();
-        return;
-    }
-
-    // Otherwise, stepOver behaves like stepInto
-    stepInto();
-    */
 }
 
 void
@@ -1012,6 +987,23 @@ C64::_executeOneCycle()
     datasette.execute();
     
     rasterCycle++;
+}
+
+void
+C64::finishInstruction()
+{
+    while (!cpu.inFetchPhase()) executeOneCycle();
+
+    /*
+    // Wait until the execution of the next command has begun
+    while (cpu.inFetchPhase()) executeOneCycle();
+    
+    // Finish the command
+    while (!cpu.inFetchPhase()) executeOneCycle();
+    
+    // Execute the first microcycle (fetch phase) and stop there
+    executeOneCycle();
+    */
 }
 
 void

@@ -52,8 +52,11 @@ class InstrTableView: NSTableView {
     private func cache() {
         
         numRows = Int(CPUINFO_INSTR_COUNT)
-                        
+        rowForAddr = [:]
+
         var addr = addrInFirstRow
+        track("addrInFirstRow = \(addrInFirstRow)")
+        
         for i in 0 ..< numRows {
             
             instrInRow[i] = cpu.getInstrInfo(i, start: addrInFirstRow)
@@ -85,7 +88,7 @@ class InstrTableView: NSTableView {
     }
     
     func jumpTo(addr: Int) {
-        
+                
         if let row = rowForAddr[addr] {
             
             // If the requested address is already displayed, we simply select
