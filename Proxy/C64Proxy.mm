@@ -1373,15 +1373,15 @@ struct AnyC64FileWrapper { AnyFile *file; };
 }
 - (BOOL) debugMode
 {
-    return wrapper->c64->getDebugMode();
+    return wrapper->c64->inDebugMode();
 }
 - (void) enableDebugging
 {
-    wrapper->c64->enableDebugging();
+    wrapper->c64->enableDebugMode();
 }
 - (void) disableDebugging
 {
-    wrapper->c64->disableDebugging();
+    wrapper->c64->disableDebugMode();
 }
 - (void) setInspectionTarget:(InspectionTarget)target
 {
@@ -1516,15 +1516,15 @@ struct AnyC64FileWrapper { AnyFile *file; };
 }
 - (BOOL) warp
 {
-    return wrapper->c64->getWarp();
+    return wrapper->c64->inWarpMode();
 }
 - (void) warpOn
 {
-    wrapper->c64->warpOn();
+    wrapper->c64->enableWarpMode();
 }
 - (void) warpOff
 {
-    wrapper->c64->warpOff();
+    wrapper->c64->disableWarpMode();
 }
 - (BOOL) takeAutoSnapshots
 {

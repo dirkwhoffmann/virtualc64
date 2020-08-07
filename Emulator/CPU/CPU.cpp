@@ -164,6 +164,21 @@ CPU::_inspect(u32 dasmStart)
     }
 }
 
+void
+CPU::_setDebug(bool enable)
+{
+    if (enable) {
+        
+        msg("Enabling debug mode\n");
+        logInstructions = true;
+        
+    } else {
+        
+        msg("Disabling debug mode\n");
+        logInstructions = false;
+    }
+}
+
 void 
 CPU::_dump()
 {

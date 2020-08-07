@@ -475,15 +475,12 @@ CPU::executeOneCycle()
                 return true;
             }
             
-            // Execute fetch phase
+            // Execute the fetch phase
             FETCH_OPCODE
             next = actionFunc[instr];
             
-            // Disassemble command if requested
-            if (c64.debugMode) { // } unlikely(tracingEnabled())) {
-  
-                recordInstruction();
-            }
+            // Record the instruction if requested
+            if (logInstructions) recordInstruction();
             
             // Check if a breakpoint has been reached
             if (checkForBreakpoints && debugger.breakpointMatches(getPC())) {

@@ -69,14 +69,6 @@ class C64 : public HardwareComponent {
         
 public:
         
-    /* Indicates if the emulator should be executed in debug mode.
-     * Debug mode is enabled when the GUI debugger is opend and disabled when
-     * the GUI debugger is closed. In debug mode, several time-consuming tasks
-     * are performed that are usually left out. E.g., the CPU checks for
-     * breakpoints and records the executed instruction in it's trace buffer.
-     */
-    bool debugMode;
-    
     // The currently set inspection target (only evaluated in debug mode)
     InspectionTarget inspectionTarget;
 
@@ -307,8 +299,7 @@ public:
 
     void prefix() override;
     void reset() override;
-    void warpOn() override;
-    void warpOff() override;
+    void setWarp(bool enable) override;
 
 private:
 
@@ -319,8 +310,7 @@ private:
     void _reset() override;
     void _ping() override;
     void _dump() override;
-    void _warpOn() override;
-    void _warpOff() override;
+    void _setWarp(bool enable) override;
     void _setClockFrequency(u32 value) override;
     
     
@@ -329,15 +319,7 @@ private:
     //
     
 public:
-    
-    // Indicates if debug mode is enabled
-    bool getDebugMode() { return debugMode; }
-    
-    // Enabled or disabled debug mode
-    void setDebugMode(bool enable);
-    void enableDebugging() { setDebugMode(true); }
-    void disableDebugging() { setDebugMode(false); }
-    
+        
     /* Sets the inspection target.
      * If an inspection target is set, the emulator periodically calls
      * inspect().

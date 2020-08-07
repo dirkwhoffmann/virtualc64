@@ -139,8 +139,7 @@ private:
     void _pause() override;
     void _dump() override;
     void _dump(SIDInfo info);
-    void _warpOn() override;
-    void _warpOff() override;
+    void _setWarp(bool enable) override;
     
 public:
     

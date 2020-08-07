@@ -196,20 +196,20 @@ SIDBridge::_dump(SIDInfo info)
 }
 
 void
-SIDBridge::_warpOn()
+SIDBridge::_setWarp(bool enable)
 {
-    /* Warping has the unavoidable drawback that audio playback gets out of
-     * sync. To cope with this issue, we ramp down the volume when warping is
-     * switched on and fade in smoothly when it is switched off.
-     */
-    sid.rampDown();
-}
-
-void
-SIDBridge::_warpOff()
-{
-    sid.rampUp();
-    sid.alignWritePtr();
+    if (enable) {
+        
+        // Warping has the unavoidable drawback that audio playback gets out of
+        // sync. To cope with this issue, we ramp down the volume when warping
+        // is switched on and fade in smoothly when it is switched off.
+        sid.rampDown();
+        
+    } else {
+        
+        sid.rampUp();
+        sid.alignWritePtr();
+    }
 }
 
 SIDInfo

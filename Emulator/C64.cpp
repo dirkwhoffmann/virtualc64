@@ -86,7 +86,7 @@ C64::C64()
         { &rasterCycle,        sizeof(rasterCycle),        CLEAR_ON_RESET },
         { &frequency,          sizeof(frequency),          KEEP_ON_RESET  },
         { &durationOfOneCycle, sizeof(durationOfOneCycle), KEEP_ON_RESET  },
-        { &warp,               sizeof(warp),               CLEAR_ON_RESET },
+        { &warpMode,               sizeof(warpMode),               CLEAR_ON_RESET },
         { &ultimax,            sizeof(ultimax),            CLEAR_ON_RESET },
         
         { NULL,             0,                       0 }};
@@ -112,21 +112,6 @@ C64::~C64()
     
     pthread_mutex_destroy(&threadLock);
     pthread_mutex_destroy(&stateChangeLock);
-}
-
-void
-C64::setDebugMode(bool enable)
-{
-    if ((debugMode = enable)) {
-        
-        msg("Enabling debug mode\n");
-        // cpu.debugger.enableLogging();
-
-    } else {
-
-        msg("Disabling debug mode\n");
-        // cpu.debugger.disableLogging();
-    }
 }
 
 void
@@ -421,18 +406,10 @@ C64::_reset()
 }
 
 void
-C64::warpOn()
+C64::setWarp(bool enable)
 {
     suspend();
-    HardwareComponent::warpOn();
-    resume();
-}
-
-void
-C64::warpOff()
-{
-    suspend();
-    HardwareComponent::warpOff();
+    HardwareComponent::setWarp(enable);
     resume();
 }
 
@@ -490,7 +467,7 @@ C64::_pause()
 
 void C64::_ping()
 {
-    putMessage(warp ? MSG_WARP_ON : MSG_WARP_OFF);
+    putMessage(warpMode ? MSG_WARP_ON : MSG_WARP_OFF);
 }
 
 void
@@ -517,16 +494,17 @@ C64::_dump() {
 }
 
 void
-C64::_warpOn()
+C64::_setWarp(bool enable)
 {
-    putMessage(MSG_WARP_ON);
-}
-
-void
-C64::_warpOff()
-{
-    restartTimer();
-    putMessage(MSG_WARP_OFF);
+     if (enable) {
+        
+        putMessage(MSG_WARP_ON);
+        
+    } else {
+        
+        restartTimer();
+        putMessage(MSG_WARP_OFF);
+    }
 }
 
 void
@@ -1105,7 +1083,7 @@ C64::endFrame()
     }
     
     // Perform an inspection in debug mode
-    if (getDebugMode()) {
+    if (inDebugMode()) {
         switch (inspectionTarget) {
             case INSPECT_NONE: break;
             case INSPECT_CPU: cpu.inspect(); break;
@@ -1115,7 +1093,7 @@ C64::endFrame()
     }
     
     // Count some sheep (zzzzzz) ...
-    if (!getWarp()) {
+    if (!inWarpMode()) {
             synchronizeTiming();
     }
 }

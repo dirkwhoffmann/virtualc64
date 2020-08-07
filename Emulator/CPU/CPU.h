@@ -87,11 +87,9 @@ public:
     //! @brief    Current error state
     ErrorState errorState;
         
-    // Switches guard checking on or off
+    // Enables or disables debug options
     bool checkForBreakpoints = false;
     bool checkForWatchpoints = false;
-
-    // Switches instruction logging on or off
     bool logInstructions = false;
     
 private:
@@ -321,18 +319,16 @@ public:
     // Methods from HardwareComponent
     //
     
-public:
+private:
     
     void _reset() override;
     void _inspect() override;
     void _inspect(u32 dasmStart);
+    void _dump() override;
+    void _setDebug(bool enable) override;
     size_t stateSize() override;
     void didLoadFromBuffer(u8 **buffer) override;
     void didSaveToBuffer(u8 **buffer) override;
-    
-private:
-    
-    void _dump() override;
     
     
     //
