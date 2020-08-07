@@ -166,8 +166,19 @@ public:
     
     
     //
-    // Execution thread
+    // Emulator thread
     //
+    
+private:
+    
+    /* Run loop control
+     * This variable is checked at the end of each runloop iteration. Most of
+     * the time, the variable is 0 which causes the runloop to repeat. A value
+     * greater than 0 means that one or more runloop control flags are set.
+     * These flags are flags processed and the loop either repeats or
+     * terminates depending on the provided flags.
+     */
+    u32 runLoopCtrl = 0;
     
     // The invocation counter for implementing suspend() / resume()
     unsigned suspendCounter = 0;
@@ -175,9 +186,14 @@ public:
     // The emulator thread
     pthread_t p = NULL;
     
-    // Mutexes to coordinate the order of execution
+    // Mutex to coordinate the order of execution
     pthread_mutex_t threadLock;
-
+    
+    /* Mutex to synchronize the access to all state changing methods such as
+     * run(), pause(), etc.
+     */
+    pthread_mutex_t stateChangeLock;
+    
     
     //
     // Emulation speed
@@ -410,6 +426,14 @@ public:
      */
     void threadDidTerminate();
         
+    /* The C64 run loop.
+     * This function is one of the most prominent ones. It implements the
+     * outermost loop of the emulator and therefore the place where emulation
+     * starts. If you want to understand how the emulator works, this function
+     * should be your starting point.
+     */
+    void runLoop();
+
     /* Finishes the current command.
      * When the emulator is stopped, this function is called to bring the
      * CPU into a clean state.
@@ -427,32 +451,34 @@ public:
      */
     void stepInto();
     
-    /* Executes until the instruction following the current one is reached.
-     * This function is used for single-stepping through the code inside the
-     * debugger. It sets a soft breakpoint to PC+n where n is the length
-     * bytes of the current instruction and starts the emulator thread.
+    /* Emulates the C64 until the instruction following the current one is
+     * reached. This function is used for single-stepping through the code
+     * inside the debugger. It sets a soft breakpoint to PC+n where n is the
+     * length bytes of the current instruction and starts the emulator thread.
      */
     void stepOver();
     
-    /*! @brief    Executes until the end of the current rasterline is reached.
-     *  @details  This method can be called even if a certain portion of the
-     *            current rasterline has already been processed.
+    /* Emulates the C64 until the end of the current frame. It is save to call
+     * the function in the middle of a frame. In this case, the C64 is emulated
+     * until the curent frame has been completed.
+     * Under certain circumstances the function may terminate earlier, in the
+     * middle of a frame. This happens, e.g., if the CPU jams or a breakpoint
+     * is reached.
      */
-    bool executeOneLine();
-    
-    /*! @brief    Executes until the end of the current frame is reached.
-     *  @details  This method can be called even if a certain portion of the
-     *            current frame has already been processed.
-     */
-    bool executeOneFrame();
-    
+    void executeOneFrame();
+
 private:
     
+    /*  Emulates the C64 until the end of the current rasterline.
+     *  This function in called inside executeOneFrame().
+     */
+    void executeOneLine();
+    
     //! @brief    Executes a single CPU cycle
-    bool executeOneCycle();
+    void executeOneCycle();
     
     //! @brief    Work horse for executeOneCycle()
-    bool _executeOneCycle();
+    void _executeOneCycle();
     
     //! @brief    Invoked before executing the first cycle of a rasterline
     void beginRasterLine();
@@ -470,18 +496,32 @@ private:
     
 public:
     
-    // Pauses the emulation thread temporarily. Because the emulator is running
-    // in a separate thread, the GUI has to pause the emulator before changing
-    // it's internal state. This is done by embedding the code inside a
-    // suspend / resume block:
-    //
-    //           suspend();
-    //           do something with the internal state;
-    //           resume();
-    //
-    // It it safe to nest multiple suspend() / resume() blocks.
+    /* Pauses the emulation thread temporarily. Because the emulator is running
+     * in a separate thread, the GUI has to pause the emulator before changing
+     * it's internal state. This is done by embedding the code inside a
+     * suspend / resume block:
+     *
+     *           suspend();
+     *           do something with the internal state;
+     *           resume();
+     *
+     * It it safe to nest multiple suspend() / resume() blocks.
+     */
     void suspend();
     void resume();
+    
+    /* Sets or clears a run loop control flag
+     * The functions are thread-safe and can be called from inside or outside
+     * the emulator thread.
+     */
+    void setControlFlags(u32 flags);
+    void clearControlFlags(u32 flags);
+    
+    // Convenience wrappers for controlling the run loop
+    void signalAutoSnapshot() { setControlFlags(RL_AUTO_SNAPSHOT); }
+    void signalUserSnapshot() { setControlFlags(RL_USER_SNAPSHOT); }
+    void signalInspect() { setControlFlags(RL_INSPECT); }
+    void signalStop() { setControlFlags(RL_STOP); }
     
 private:
     
@@ -492,24 +532,6 @@ private:
     u64 nanos_to_abs(u64 nanos) { return nanos * timebase.denom / timebase.numer; }
     
 public:
-    
-    //! @brief    Updates variable warp and returns the new value.
-    /*! @details  As a side effect, messages are sent to the GUI if the
-     *            variable has changed its value.
-     */
-    // bool getWarp();
-    
-    //! @brief    Returns if the emulator should always run full speed.
-    // bool getAlwaysWarp() { return alwaysWarp; }
-    
-    //! @brief    Setter for alwaysWarp
-    // void setAlwaysWarp(bool b);
-    
-    //! @brief    Returns if warp mode should be activated during disk access.
-    // bool getWarpLoad() { return warpLoad; }
-    
-    //! @brief    Setter for warpLoad
-    // void setWarpLoad(bool b);
     
     /*! @brief    Restarts the synchronization timer.
      *  @details  The function is invoked at launch time to initialize the timer

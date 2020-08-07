@@ -17,7 +17,8 @@ void
 threadTerminated(void* thisC64)
 {
     assert(thisC64 != NULL);
-    
+ 
+    // Inform the C64 that the thread has been canceled
     C64 *c64 = (C64 *)thisC64;
     c64->threadDidTerminate();
 }
@@ -27,28 +28,21 @@ void
         
     assert(thisC64 != NULL);
     
+    // Inform the C64 that the thread is about to start
     C64 *c64 = (C64 *)thisC64;
     c64->threadWillStart();
-    bool success = true;
         
     // Configure thread properties...
     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
     pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
     pthread_cleanup_push(threadTerminated, thisC64);
     
-    // Prepare to run...
-    c64->cpu.clearErrorState();
-    c64->drive8.cpu.clearErrorState();
-    c64->drive9.cpu.clearErrorState();
-    c64->restartTimer();
+    // Enter the run loop
+    c64->runLoop();
     
-    while (likely(success)) {
-        pthread_testcancel();
-        success = c64->executeOneFrame();
-    }
-    
+    // Clean up and exit
     pthread_cleanup_pop(1);
-    pthread_exit(NULL);    
+    pthread_exit(NULL);
 }
 
 
@@ -108,6 +102,7 @@ C64::C64()
     
     // Initialize mutexes
     pthread_mutex_init(&threadLock, NULL);
+    pthread_mutex_init(&stateChangeLock, NULL);
 }
 
 C64::~C64()
@@ -116,6 +111,7 @@ C64::~C64()
     powerOffEmulator();
     
     pthread_mutex_destroy(&threadLock);
+    pthread_mutex_destroy(&stateChangeLock);
 }
 
 void
@@ -445,6 +441,9 @@ C64::_powerOn()
 {
     debug(RUN_DEBUG, "Power on\n");
         
+    // Clear all runloop flags
+    runLoopCtrl = 0;
+    
     putMessage(MSG_POWER_ON);
 }
 
@@ -533,40 +532,42 @@ C64::_warpOff()
 void
 C64::suspend()
 {
-    synchronized {
+    pthread_mutex_lock(&stateChangeLock);
+    
+    debug(RUN_DEBUG, "Suspending (%d)...\n", suspendCounter);
+    
+    if (suspendCounter || isRunning()) {
         
-        debug(RUN_DEBUG, "Suspending (%d)...\n", suspendCounter);
+        // Acquire the thread lock
+        requestThreadLock();
+        pthread_mutex_lock(&threadLock);
+
+        // At this point, the emulator must be paused or powered off
+        assert(!isRunning());
         
-        if (suspendCounter || isRunning()) {
-            
-            // Acquire the thread lock
-            requestThreadLock();
-            pthread_mutex_lock(&threadLock);
-            
-            // At this point, the emulator must be paused or powered off
-            assert(!isRunning());
-            
-            suspendCounter++;
-        }
+        suspendCounter++;
     }
+    
+    pthread_mutex_unlock(&stateChangeLock);
 }
 
 void
 C64::resume()
 {
-    synchronized {
+    pthread_mutex_lock(&stateChangeLock);
+    
+    debug(RUN_DEBUG, "Resuming (%d)...\n", suspendCounter);
+    
+    if (suspendCounter && --suspendCounter == 0) {
         
-        debug(RUN_DEBUG, "Resuming (%d)...\n", suspendCounter);
+        // Acquire the thread lock
+        requestThreadLock();
+        pthread_mutex_lock(&threadLock);
         
-        if (suspendCounter && --suspendCounter == 0) {
-            
-            // Acquire the thread lock
-            requestThreadLock();
-            pthread_mutex_lock(&threadLock);
-            
-            run();
-        }
+        run();
     }
+    
+    pthread_mutex_unlock(&stateChangeLock);
 }
 
 void
@@ -574,25 +575,12 @@ C64::requestThreadLock()
 {
     if (state == STATE_RUNNING) {
 
-        // The emulator thread is running
+        // Assure the emulator thread exists
         assert(p != NULL);
         
         // Free the thread lock by terminating the thread
-        // signalStop();
-        
-        // Cancel emulator thread
-        pthread_cancel(p);
-        
-        // Wait until thread terminates
-        pthread_join(p, NULL);
-        debug("Thread stopped\n");
-        assert(p == NULL);
-        
-        // Acquire the lock
-                
-        // Finish the current command (to reach a clean state)
-        finishInstruction();
-        
+        signalStop();
+    
     } else {
         
         // There must be no emulator thread
@@ -606,79 +594,71 @@ C64::requestThreadLock()
 void
 C64::powerOnEmulator()
 {
-    synchronized {
-        
-#ifdef BOOT_DISK
-        
-        ADFFile *adf = ADFFile::makeWithFile(BOOT_DISK);
-        if (adf) {
-            Disk *disk = Disk::makeWithFile(adf);
-            df0.ejectDisk();
-            df0.insertDisk(disk);
-            df0.setWriteProtection(false);
-        }
-        
-#endif
-        
+    pthread_mutex_lock(&stateChangeLock);
+     
 #ifdef INITIAL_BREAKPOINT
-        
-        debugMode = true;
-        cpu.debugger.breakpoints.addAt(INITIAL_BREAKPOINT);
-        
+    
+    debugMode = true;
+    cpu.debugger.breakpoints.addAt(INITIAL_BREAKPOINT);
+    
 #endif
+    
+    if (isReady()) {
         
-        if (isReady()) {
-            
-            // Acquire the thread lock
-            requestThreadLock();
-            pthread_mutex_lock(&threadLock);
-            
-            powerOn();
-        }
+        // Acquire the thread lock
+        requestThreadLock();
+        pthread_mutex_lock(&threadLock);
+        
+        powerOn();
     }
+    
+    pthread_mutex_unlock(&stateChangeLock);
 }
 
 void
 C64::powerOffEmulator()
 {
-    synchronized {
-        
-        // Acquire the thread lock
-        requestThreadLock();
-        pthread_mutex_lock(&threadLock);
-        
-        powerOff();
-    }
+    pthread_mutex_lock(&stateChangeLock);
+    
+    // Acquire the thread lock
+    requestThreadLock();
+    pthread_mutex_lock(&threadLock);
+    
+    powerOff();
+
+    pthread_mutex_unlock(&stateChangeLock);
 }
 
 void
 C64::runEmulator()
 {
-    synchronized {
-        
-        if (isReady()) {
-            
-            // Acquire the thread lock
-            requestThreadLock();
-            pthread_mutex_lock(&threadLock);
-            
-            run();
-        }
-    }
-}
-
-void
-C64::pauseEmulator()
-{
-    synchronized {
+    pthread_mutex_lock(&stateChangeLock);
+    
+    if (isReady()) {
         
         // Acquire the thread lock
         requestThreadLock();
         pthread_mutex_lock(&threadLock);
         
-        // At this point, the emulator is already paused or powered off
-        assert(!isRunning());
+        run();
     }
+    
+    pthread_mutex_unlock(&stateChangeLock);
+}
+
+void
+C64::pauseEmulator()
+{
+    pthread_mutex_lock(&stateChangeLock);
+    
+    // Acquire the thread lock
+    requestThreadLock();
+    pthread_mutex_lock(&threadLock);
+    
+    // At this point, the emulator is already paused or powered off
+    assert(!isRunning());
+    
+    pthread_mutex_unlock(&stateChangeLock);
 }
 
 bool
@@ -865,6 +845,75 @@ C64::threadDidTerminate()
 }
 
 void
+C64::runLoop()
+{
+    debug(RUN_DEBUG, "runLoop()\n");
+    
+    // Prepare to run
+    cpu.clearErrorState();
+    drive8.cpu.clearErrorState();
+    drive9.cpu.clearErrorState();
+    restartTimer();
+    
+    // Enter the loop
+    while(1) {
+        
+        // Run the emulator
+        executeOneFrame();
+        
+        // Check if special action needs to be taken
+        if (runLoopCtrl) {
+            
+            // Are we requested to take a snapshot?
+            if (runLoopCtrl & RL_AUTO_SNAPSHOT) {
+                debug(RUN_DEBUG, "RL_AUTO_SNAPSHOT\n");
+                // autoSnapshot = Snapshot::makeWithC64(this);
+                // putMessage(MSG_AUTO_SNAPSHOT_TAKEN);
+                clearControlFlags(RL_AUTO_SNAPSHOT);
+            }
+            if (runLoopCtrl & RL_USER_SNAPSHOT) {
+                debug(RUN_DEBUG, "RL_USER_SNAPSHOT\n");
+                // userSnapshot = Snapshot::makeWithC64(this);
+                // putMessage(MSG_USER_SNAPSHOT_TAKEN);
+                clearControlFlags(RL_USER_SNAPSHOT);
+            }
+            
+            // Are we requested to update the debugger info structs?
+            if (runLoopCtrl & RL_INSPECT) {
+                debug(RUN_DEBUG, "RL_INSPECT\n");
+                inspect();
+                clearControlFlags(RL_INSPECT);
+            }
+            
+            // Did we reach a breakpoint?
+            if (runLoopCtrl & RL_BREAKPOINT_REACHED) {
+                inspect();
+                putMessage(MSG_BREAKPOINT_REACHED);
+                debug(RUN_DEBUG, "BREAKPOINT_REACHED pc: %x\n", cpu.getPC());
+                clearControlFlags(RL_BREAKPOINT_REACHED);
+                break;
+            }
+            
+            // Did we reach a watchpoint?
+            if (runLoopCtrl & RL_WATCHPOINT_REACHED) {
+                inspect();
+                putMessage(MSG_WATCHPOINT_REACHED);
+                debug(RUN_DEBUG, "WATCHPOINT_REACHED pc: %x\n", cpu.getPC());
+                clearControlFlags(RL_WATCHPOINT_REACHED);
+                break;
+            }
+            
+            // Are we requested to terminate the run loop?
+            if (runLoopCtrl & RL_STOP) {
+                clearControlFlags(RL_STOP);
+                debug("RL_STOP\n");
+                break;
+            }
+        }
+    }    
+}
+
+void
 C64::finishInstruction()
 {
     cpu.clearErrorState();
@@ -925,51 +974,48 @@ C64::stepOver()
     */
 }
 
-bool
-C64::executeOneLine()
-{
-    if (rasterCycle == 1)
-    beginRasterLine();
-    
-    int lastCycle = vic.getCyclesPerRasterline();
-    for (unsigned i = rasterCycle; i <= lastCycle; i++) {
-        if (!_executeOneCycle()) {
-            if (i == lastCycle)
-            endRasterLine();
-            return false;
-        }
-    }
-    endRasterLine();
-    return true;
-}
-
-bool
+void
 C64::executeOneFrame()
 {
-    do {
-        if (!executeOneLine())
-        return false;
-    } while (rasterLine != 0);
-    return true;
+    do { executeOneLine(); } while (runLoopCtrl == 0 && rasterLine != 0);
 }
 
-bool
+void
+C64::executeOneLine()
+{
+    // Perform special action at the beginning of a rasterline
+    if (rasterCycle == 1) beginRasterLine();
+    
+    // Emulate all cycles of the rasterline
+    int lastCycle = vic.getCyclesPerRasterline();
+    for (unsigned i = rasterCycle; i <= lastCycle; i++) {
+        
+        _executeOneCycle();
+        
+        if (runLoopCtrl != 0) {
+            if (i == lastCycle) endRasterLine();
+            return;
+        }
+    }
+    
+    // Perform special action at the beginning of a rasterline
+    endRasterLine();
+}
+
+void
 C64::executeOneCycle()
 {
     bool isFirstCycle = rasterCycle == 1;
     bool isLastCycle = vic.isLastCycleInRasterline(rasterCycle);
     
     if (isFirstCycle) beginRasterLine();
-    bool result = _executeOneCycle();
+    _executeOneCycle();
     if (isLastCycle) endRasterLine();
-    
-    return result;
 }
 
-bool
+void
 C64::_executeOneCycle()
 {
-    u8 result = true;
     u64 cycle = ++cpu.cycle;
     
     //  <---------- o2 low phase ----------->|<- o2 high phase ->|
@@ -997,13 +1043,12 @@ C64::_executeOneCycle()
     if (iec.isDirtyC64Side) iec.updateIecLinesC64Side();
     
     // Second clock phase (o2 high)
-    result &= cpu.executeOneCycle();
-    if (drive8.isConnected()) result &= drive8.execute(durationOfOneCycle);
-    if (drive9.isConnected()) result &= drive9.execute(durationOfOneCycle);
+    cpu.executeOneCycle();
+    if (drive8.isConnected()) drive8.execute(durationOfOneCycle);
+    if (drive9.isConnected()) drive9.execute(durationOfOneCycle);
     datasette.execute();
     
     rasterCycle++;
-    return result;
 }
 
 void
@@ -1073,6 +1118,18 @@ C64::endFrame()
     if (!getWarp()) {
             synchronizeTiming();
     }
+}
+
+void
+C64::setControlFlags(u32 flags)
+{
+    synchronized { runLoopCtrl |= flags; }
+}
+
+void
+C64::clearControlFlags(u32 flags)
+{
+    synchronized { runLoopCtrl &= ~flags; }
 }
 
 void
