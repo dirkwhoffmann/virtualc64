@@ -889,17 +889,7 @@ C64::stepInto()
     debug("stepInto()");
     if (isRunning()) return;
     
-    assert(cpu.inFetchPhase());
-
-    // Execute the next instruction
-    executeOneCycle();
-    finishInstruction();
-
-    // Trigger a GUI refresh
-    putMessage(MSG_BREAKPOINT_REACHED);
-
-    // cpu.debugger.stepInto();
-    // run();
+    cpu.debugger.stepInto();
 }
 
 void
@@ -909,7 +899,6 @@ C64::stepOver()
     if (isRunning()) return;
     
     cpu.debugger.stepOver();
-    run();
 }
 
 void

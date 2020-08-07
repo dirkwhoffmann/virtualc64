@@ -447,8 +447,6 @@ public:
      * completed.
      */
     void executeOneFrame();
-
-private:
     
     /*  Emulates the C64 until the end of the current rasterline.
      *  This function in called inside executeOneFrame().
@@ -466,12 +464,7 @@ private:
      */
     void finishInstruction();
     
-    /* Executes a single instruction
-     * This function is used to implement single stepping in the debugger.
-     * It assumes the CPU is currently in the fetch phase and emulates the
-     * C64 until the fetch cycle is reached again.
-     */
-    // void executeInstruction();
+private:
     
     //! @brief    Invoked before executing the first cycle of a rasterline
     void beginRasterLine();
