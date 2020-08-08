@@ -53,7 +53,7 @@ class Drive : public C64Component {
 public:
     
 	DriveMemory mem = DriveMemory(c64, *this);
-    CPU cpu = CPU(MOS_6502, c64, mem);
+    DriveCPU cpu = DriveCPU(MOS_6502, c64, mem);
     VIA1 via1 = VIA1(this, c64);
     VIA2 via2 = VIA2(this, c64);
     Disk disk = Disk(c64);

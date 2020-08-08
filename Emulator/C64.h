@@ -45,7 +45,8 @@
 #include "SIDBridge.h"
 #include "TOD.h"
 #include "CIA.h"
-#include "CPU.h"
+#include "C64CPU.h"
+#include "DriveCPU.h"
 
 // Cartridges
 #include "Cartridge.h"
@@ -82,7 +83,7 @@ public:
     C64Memory mem = C64Memory(*this);
     
     // CPU
-    CPU cpu = CPU(MOS_6510, *this, mem);
+    C64CPU cpu = C64CPU(MOS_6510, *this, mem);
         
     // Video Interface Controller
     VIC vic = VIC(*this);

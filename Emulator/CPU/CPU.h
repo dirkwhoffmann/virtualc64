@@ -14,6 +14,7 @@
 #include "CPUDebugger.h"
 #include "CPUInstructions.h"
 #include "ProcessorPort.h"
+#include "TimeDelayed.h"
 
 class Memory;
 

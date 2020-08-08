@@ -11,11 +11,8 @@
 #define _VIC_H
 
 #include "C64Component.h"
-#include "TimeDelayed.h"
 #include "VICConstants.h"
-
-// Forward declarations
-// class C64Memory;
+#include "TimeDelayed.h"
 
 class VIC : public C64Component {
 
