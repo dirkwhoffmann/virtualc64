@@ -127,7 +127,7 @@ CPU::registerCallback(u8 opcode, const char *mnemonic,
 
 void CPU::registerInstructions()
 {
-    for (int i=0; i<256; i++) {
+    for (int i = 0; i < 256; i++) {
         registerCallback(i, "???", ADDR_IMPLIED, JAM);
     }
     registerLegalInstructions();

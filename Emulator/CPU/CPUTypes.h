@@ -44,14 +44,7 @@ typedef enum
 }
 AddressingMode;
 
-typedef enum
-{
-    NO_BREAKPOINT   = 0x00,
-    HARD_BREAKPOINT = 0x01,
-    SOFT_BREAKPOINT = 0x02
-}
-Breakpoint;
-
+/*
 typedef enum
 {
     CPU_OK = 0,
@@ -59,6 +52,7 @@ typedef enum
     CPU_ILLEGAL_INSTRUCTION
 }
 ErrorState;
+*/
 
 typedef enum : u8
 {
@@ -83,9 +77,34 @@ typedef enum : u8
 }
 IntSource;
 
+typedef enum
+{
+    NO_BREAKPOINT   = 0x00,
+    HARD_BREAKPOINT = 0x01,
+    SOFT_BREAKPOINT = 0x02
+}
+Breakpoint;
+
 //
 // Structures
 //
+
+typedef struct
+{    
+    u16 pc;    // Program counter
+    u8  sp;    // Stack pointer
+
+    u8 a;     // Accumulator
+    u8 x;     // First index register
+    u8 y;     // Second index register
+    u8 p;     // Processor flags
+
+    u8 adl;   // Address data (low byte)
+    u8 adh;   // Address data (high byte)
+    u8 idl;   // Input data latch (indirect addressing modes)
+    u8 d;     // Data buffer
+}
+Registers;
 
 typedef struct
 {

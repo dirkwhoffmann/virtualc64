@@ -11,12 +11,9 @@
 #define _CPU_H
 
 #include "C64Component.h"
-#include "ProcessorPort.h"
 #include "CPUDebugger.h"
-
-#include "CPUTypes.h"
 #include "CPUInstructions.h"
-#include "TimeDelayed.h"
+#include "ProcessorPort.h"
 
 class Memory;
 
@@ -26,10 +23,10 @@ class CPU : public C64Component {
     friend class Breakpoints;
     friend class Watchpoints;
 
-    // Reference to the connected memory
+    // Reference to the connected memory (MOVE TO SUBCLASS)
     Memory &mem;
     
-    // Result of the latest inspection
+    // Result of the latest inspection (MOVE TO C64CPU SUBCLASS ?!)
     CPUInfo info;
     
     
@@ -45,14 +42,7 @@ public:
     // CPU debugger
     CPUDebugger debugger = CPUDebugger(c64);
     
-    
-    //
-    // Internal state
-    //
-    
 private:
-    
-    
     
     //
     // Chip properties
@@ -70,13 +60,13 @@ private:
     // Lookup tables
     //
     
-    /* Mapping from opcodes to microinstructions.
-     * The array stores pointers to the handlers of the second microcycle which
-     * is microcycle cycle following the fetch phase.
+    /* Mapping from opcodes to microinstructions. This array stores the tags
+     * of the second microcycle which is microcycle cycle following the fetch
+     * phase.
      */
     MicroInstruction actionFunc[256];
-            
-
+                
+    
     //
     // Internal state
     //
@@ -110,11 +100,15 @@ private:
 
     // The next microinstruction to be executed
     MicroInstruction next;
-    
+        
     
     //
     // Registers
     //
+    
+private:
+    
+    Registers reg;
     
 public:
     
@@ -149,13 +143,15 @@ private:
      */
     bool overflow;
     
-    /*! @brief    Memory location of the currently executed command.
-     *  @details  This variable is overwritten with the current value of the
-     *            program counter (regPC) when the CPU executes the fetch phase
-     *            of an instruction. Hence, this value always contains the start
-     *            address of the currently executed command, even if some
-     *            microcycles of the command have already been computed.
+    /* Frozen program counter.
+     * This variable matches the value of the program counter when the CPU
+     * starts to execute an instruction. In contrast to the real program
+     * counter, the value isn't changed until the CPU starts to process the
+     * next instruction. In other words: This value always contains the start
+     * address of the currently executed command, even if some microcycles of
+     * the command have already been computed.
      */
+    // TODO: Rename to pc0
     u16 pc;
     
     
@@ -165,10 +161,9 @@ private:
     
 public:
     
-    /*! @brief    Ready line (RDY)
-     *  @details  If this line is low, the CPU freezes on the next read access.
-     *            RDY is pulled down by VICII to perform longer lasting read
-     *            operations.
+    /* Ready line (RDY)
+     * If this line is low, the CPU freezes on the next read access. RDY is
+     * pulled down by VICII to perform longer lasting read operations.
      */
     bool rdyLine;
     
@@ -195,53 +190,46 @@ public:
     
 private:
     
-    /*! @brief    Edge detector of NMI line
-     *  @details  https://wiki.nesdev.com/w/index.php/CPU_interrupts
-     *            "The NMI input is connected to an edge detector. This edge
-     *             detector polls the status of the NMI line during φ2 of each
-     *             CPU cycle (i.e., during the second half of each cycle) and
-     *             raises an internal signal if the input goes from being high
-     *             during one cycle to being low during the next. The internal
-     *             signal goes high during φ1 of the cycle that follows the one
-     *             where the edge is detected, and stays high until the NMI has
-     *             been handled."
+    /* Edge detector (NMI line)
+     * https://wiki.nesdev.com/w/index.php/CPU_interrupts
+     * "The NMI input is connected to an edge detector. This edge detector polls
+     *  the status of the NMI line during φ2 of each CPU cycle (i.e., during the
+     *  second half of each cycle) and raises an internal signal if the input
+     *  goes from being high during one cycle to being low during the next. The
+     *  internal signal goes high during φ1 of the cycle that follows the one
+     *  where the edge is detected, and stays high until the NMI has been
+     *  handled."
      */
     TimeDelayed<u8> edgeDetector = TimeDelayed<u8>(1, &cycle);
     
-    /*! @brief    Level detector of IRQ line
-     *  @details  https://wiki.nesdev.com/w/index.php/CPU_interrupts
-     *            "The IRQ input is connected to a level detector. If a low
-     *             level is detected on the IRQ input during φ2 of a cycle, an
-     *             internal signal is raised during φ1 the following cycle,
-     *             remaining high for that cycle only (or put another way,
-     *             remaining high as long as the IRQ input is low during the
-     *             preceding cycle's φ2).
+    /* Level detector of IRQ line.
+     * https://wiki.nesdev.com/w/index.php/CPU_interrupts
+     * "The IRQ input is connected to a level detector. If a low level is
+     *  detected on the IRQ input during φ2 of a cycle, an internal signal is
+     *  raised during φ1 the following cycle, remaining high for that cycle only
+     *  (or put another way, remaining high as long as the IRQ input is low
+     *  during the preceding cycle's φ2).
      */
     TimeDelayed<u8> levelDetector = TimeDelayed<u8>(1, &cycle);
     
-    //! @brief    Result of the edge detector polling operation
-    /*! @details  https://wiki.nesdev.com/w/index.php/CPU_interrupts
-     *            "The output from the edge detector and level detector are
-     *             polled at certain points to detect pending interrupts. For
-     *             most instructions, this polling happens during the final
-     *             cycle of the instruction, before the opcode fetch for the
-     *             next instruction. If the polling operation detects that an
-     *             interrupt has been asserted, the next "instruction" executed
-     *             is the interrupt sequence. Many references will claim that
-     *             interrupts are polled during the last cycle of an
-     *             instruction, but this is true only when talking about the
-     *             output from the edge and level detectors."
-     *            Variable is set in macro POLL_INTS (CPUInstructions.h)
+    /* Result of the edge detector polling operation.
+     * https://wiki.nesdev.com/w/index.php/CPU_interrupts
+     * "The output from the edge detector and level detector are polled at
+     *  certain points to detect pending interrupts. For most instructions, this
+     *  polling happens during the final cycle of the instruction, before the
+     *  opcode fetch for the next instruction. If the polling operation detects
+     *  that an interrupt has been asserted, the next "instruction" executed
+     *  is the interrupt sequence. Many references will claim that interrupts
+     *  are polled during the last cycle of an instruction, but this is true
+     *  only when talking about the output from the edge and level detectors."
      */
     bool doNmi;
     
-    //! @brief    Result of the level detector polling operation
-    /*! details   https://wiki.nesdev.com/w/index.php/CPU_interrupts
-     *  @note     "If both an NMI and an IRQ are pending at the end of an
-     *             instruction, the NMI will be handled and the pending status
-     *             of the IRQ forgotten (though it's likely to be detected again
-     *             during later polling)."
-     *            Variable is set in macro POLL_INTS (CPUInstructions.h)
+    /* Result of the level detector polling operation.
+     * https://wiki.nesdev.com/w/index.php/CPU_interrupts
+     * "If both an NMI and an IRQ are pending at the end of an instruction, the
+     *  NMI will be handled and the pending status of the IRQ forgotten (though
+     *  it's likely to be detected again during later polling)."
      */
     bool doIrq;
     
@@ -255,20 +243,17 @@ public:
     CPU(CPUModel model, C64& ref, Memory &memref);
     
 private:
-    
-    // Registers a single opcode
-    void registerCallback(u8 opcode, const char *mnemonic,
-                          AddressingMode mode, MicroInstruction mInstr);
-    
-    // Registers all instructions
+        
+    // Registers the instruction set
     void registerInstructions();
-    
-    // Registers all legal instructions
     void registerLegalInstructions();
-    
-    // Registers all illegal instructionss
     void registerIllegalInstructions();
     
+    // Registers a single instruction
+    void registerCallback(u8 opcode,
+                          const char *mnemonic,
+                          AddressingMode mode,
+                          MicroInstruction mInstr);
     
     //
     // Configuring
@@ -309,131 +294,77 @@ private:
 
     
     //
-    // Handling registers and flags
+    // Getter and setter
     //
 
 public:
     
     
-    /*! @brief    Returns the frozen program counter.
-     *  @note     This function returns variable pc that always points to the
-     *            beginning of the currently executed command. If execution is
-     *            not in microcycle 0 (fetch phase) and the currently executed
-     *            command spans over multiple bytes in memory, the program
-     *            counter (regPC) may already have been incremented.
-     */
     u16 getPC() { return pc; }
-    
-    //! @brief    Redirects the CPU to a new instruction in memory.
     void jumpToAddress(u16 addr) { pc = regPC = addr; next = fetch; }
-    
-    //! @brief    Returns N_FLAG, if Negative flag is set, 0 otherwise.
+    void setPCL(u8 lo) { regPC = (regPC & 0xff00) | lo; }
+    void setPCH(u8 hi) { regPC = (regPC & 0x00ff) | ((u16)hi << 8); }
+    void incPC(u8 offset = 1) { regPC += offset; }
+    void incPCL(u8 offset = 1) { setPCL(LO_BYTE(regPC) + offset); }
+    void incPCH(u8 offset = 1) { setPCH(HI_BYTE(regPC) + offset); }
+
     u8 getN() { return regP & N_FLAG; }
-    
-    //! @brief    0: Negative-flag is cleared, any other value: flag is set.
     void setN(u8 bit) { bit ? regP |= N_FLAG : regP &= ~N_FLAG; }
     
-    //! @brief    Returns V_FLAG, if Overflow flag is set, 0 otherwise.
     u8 getV() { return regP & V_FLAG; }
-    
-    //! @brief    0: Overflow-flag is cleared, any other value: flag is set.
     void setV(u8 bit) { bit ? regP |= V_FLAG : regP &= ~V_FLAG; }
     
-    //! @brief    Returns B_FLAG, if Break flag is set, 0 otherwise.
     u8 getB() { return regP & B_FLAG; }
-    
-    //! @brief    0: Break-flag is cleared, any other value: flag is set.
     void setB(u8 bit) { bit ? regP |= B_FLAG : regP &= ~B_FLAG; }
     
-    //! @brief    Returns D_FLAG, if Decimal flag is set, 0 otherwise.
     u8 getD() { return regP & D_FLAG; }
-    
-    //! @brief    0: Decimal-flag is cleared, any other value: flag is set.
     void setD(u8 bit) { bit ? regP |= D_FLAG : regP &= ~D_FLAG; }
     
-    //! @brief    Returns I_FLAG, if Interrupt flag is set, 0 otherwise.
     u8 getI() { return regP & I_FLAG; }
-    
-    //! @brief    0: Interrupt-flag is cleared, any other value: flag is set.
     void setI(u8 bit) { bit ? regP |= I_FLAG : regP &= ~I_FLAG; }
     
-    //! @brief    Returns Z_FLAG, if Zero flag is set, 0 otherwise.
     u8 getZ() { return regP & Z_FLAG; }
-    
-    //! @brief    0: Zero-flag is cleared, any other value: flag is set.
     void setZ(u8 bit) { bit ? regP |= Z_FLAG : regP &= ~Z_FLAG; }
     
-    //! @brief    Returns C_FLAG, if Carry flag is set, 0 otherwise.
     u8 getC() { return regP & C_FLAG; }
-    
-    //! @brief    0: Carry-flag is cleared, any other value: flag is set.
     void setC(u8 bit) { bit ? regP |= C_FLAG : regP &= ~C_FLAG; }
         
-    /*! @brief    Returns the contents of the status register
-     *  @details  Each bit in the status register corresponds to the value of
-     *            a single flag, except bit 5 which is always set.
-     */
     u8 getP() { return regP | 0b00100000; }
-    
-    /*! @brief    Returns the status register without the B flag
-     *  @details  The bit position of the B flag is always 0. This function is
-     *            needed for proper interrupt handling. When an IRQ or NMI is
-     *            triggered internally, the status register is pushed on the
-     *            stack with the B-flag cleared.
-     */
     u8 getPWithClearedB() { return getP() & 0b11101111; }
-    
-    //! @brief    Writes a value to the status register.
     void setP(u8 p) { regP = p; }
-    
-    //! @brief    Writes a value to the status register without overwriting B.
     void setPWithoutB(u8 p) { regP = (p & 0b11101111) | (regP & 0b00010000); }
     
 private:
     
-    //! @brief    Changes low byte of the program counter only.
-    void setPCL(u8 lo) { regPC = (regPC & 0xff00) | lo; }
-    
-    //! @brief    Changes high byte of the program counter only.
-    void setPCH(u8 hi) { regPC = (regPC & 0x00ff) | ((u16)hi << 8); }
-    
-    //! @brief    Increments the program counter by the specified amount.
-    void incPC(u8 offset = 1) { regPC += offset; }
-    
-    /*! @brief    Increments the program counter's low byte.
-     *  @note     The high byte does not change.
-     */
-    void incPCL(u8 offset = 1) { setPCL(LO_BYTE(regPC) + offset); }
-    
-    /*! @brief    Increments the program counter's high byte.
-     *  @note     The low byte does not change.
-     */
-    void incPCH(u8 offset = 1) { setPCH(HI_BYTE(regPC) + offset); }
-    
-    //! @brief    Loads the accumulator. The Z- and N-flag may change.
+    // Loads the accumulator. The Z- and N-flag may change.
     void loadA(u8 a) { regA = a; setN(a & 0x80); setZ(a == 0); }
     
-    //! @brief    Loads the X register. The Z- and N-flag may change.
+    // Loads the X register. The Z- and N-flag may change.
     void loadX(u8 x) { regX = x; setN(x & 0x80); setZ(x == 0); }
     
-    //! @brief    Loads the Y register. The Z- and N-flag may change.
+    // Loads the Y register. The Z- and N-flag may change.
     void loadY(u8 y) { regY = y; setN(y & 0x80); setZ(y == 0); }
     
     
     //
-    // Operating the ALU (CPUInstructions.cpp)
+    // Operating the ALU
     //
     
+    // Performs an arithmetic operation
     void adc(u8 op);
     void adc_binary(u8 op);
     void adc_bcd(u8 op);
     void sbc(u8 op);
     void sbc_binary(u8 op);
     void sbc_bcd(u8 op);
-    void branch(i8 offset);
+
+    // Performs a logical operation
     void cmp(u8 op1, u8 op2);
     u8 ror(u8 op);
     u8 rol(u8 op);
+
+    // Emulates a banching instruction
+    // void branch(i8 offset);
     
     
     //
@@ -457,15 +388,15 @@ public:
     //
     
 public:
-    
-    // Executes the next micro instruction
-    void executeOneCycle();
 
     // Returns true if the CPU is jammed
     bool isHalted() { return halted; }
     
     // Returns true if the next cycle marks the beginning of an instruction
     bool inFetchPhase() { return next == fetch; }
+
+    // Executes the next micro instruction
+    void executeOneCycle();
 
 private:
 
