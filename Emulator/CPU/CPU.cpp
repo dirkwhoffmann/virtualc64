@@ -34,7 +34,15 @@ CPU::CPU(C64& ref) : C64Component(ref)
         { &reg.y,              sizeof(reg.y),        CLEAR_ON_RESET },
         { &reg.pc,             sizeof(reg.pc),       CLEAR_ON_RESET },
         { &reg.sp,             sizeof(reg.sp),       CLEAR_ON_RESET },
-        { &reg.p,              sizeof(reg.p),        CLEAR_ON_RESET },
+        // { &reg.p,           sizeof(reg.p),        CLEAR_ON_RESET },
+        { &reg.sr.n,           sizeof(reg.sr.n),     CLEAR_ON_RESET },
+        { &reg.sr.v,           sizeof(reg.sr.v),     CLEAR_ON_RESET },
+        { &reg.sr.b,           sizeof(reg.sr.b),     CLEAR_ON_RESET },
+        { &reg.sr.d,           sizeof(reg.sr.d),     CLEAR_ON_RESET },
+        { &reg.sr.i,           sizeof(reg.sr.i),     CLEAR_ON_RESET },
+        { &reg.sr.z,           sizeof(reg.sr.z),     CLEAR_ON_RESET },
+        { &reg.sr.c,           sizeof(reg.sr.c),     CLEAR_ON_RESET },
+
         { &reg.adl,            sizeof(reg.adl),      CLEAR_ON_RESET },
         { &reg.adh,            sizeof(reg.adh),      CLEAR_ON_RESET },
         { &reg.idl,            sizeof(reg.idl),      CLEAR_ON_RESET },
@@ -210,6 +218,48 @@ CPU::didSaveToBuffer(u8 **buffer)
 {
     levelDetector.saveToBuffer(buffer);
     edgeDetector.saveToBuffer(buffer);
+}
+
+u8
+CPU::getP()
+{
+    u8 result = 0b00100000;
+    
+    if (reg.sr.n) result |= N_FLAG;
+    if (reg.sr.v) result |= V_FLAG;
+    
+    if (reg.sr.b) result |= B_FLAG;
+    if (reg.sr.d) result |= D_FLAG;
+    if (reg.sr.i) result |= I_FLAG;
+    if (reg.sr.z) result |= Z_FLAG;
+    if (reg.sr.c) result |= C_FLAG;
+
+    return result;
+}
+
+u8
+CPU::getPWithClearedB()
+{
+    return getP() & ~B_FLAG;
+}
+
+void
+CPU::setP(u8 p)
+{
+    setPWithoutB(p);
+    reg.sr.b = (p & B_FLAG);
+}
+
+void
+CPU::setPWithoutB(u8 p)
+{
+    reg.sr.n = (p & N_FLAG);
+    reg.sr.v = (p & V_FLAG);
+    
+    reg.sr.d = (p & D_FLAG);
+    reg.sr.i = (p & I_FLAG);
+    reg.sr.z = (p & Z_FLAG);
+    reg.sr.c = (p & C_FLAG);
 }
 
 void

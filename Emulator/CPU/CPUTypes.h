@@ -14,6 +14,14 @@
 
 #define LOG_BUFFER_CAPACITY 256
 
+#define C_FLAG 0x01
+#define Z_FLAG 0x02
+#define I_FLAG 0x04
+#define D_FLAG 0x08
+#define B_FLAG 0x10
+#define V_FLAG 0x40
+#define N_FLAG 0x80
+
 //
 // Enumerations
 //
@@ -54,6 +62,7 @@ typedef enum
 ErrorState;
 */
 
+/*
 typedef enum : u8
 {
     C_FLAG = 0x01,
@@ -65,6 +74,7 @@ typedef enum : u8
     N_FLAG = 0x80
 }
 Flag;
+*/
 
 typedef enum : u8
 {
@@ -90,14 +100,26 @@ Breakpoint;
 //
 
 typedef struct
+{
+    bool n;               // Negative flag
+    bool v;               // Overflow flag
+    bool b;               // Break flag
+    bool d;               // Decimal flag
+    bool i;               // Interrupt flag
+    bool z;               // Zero flag
+    bool c;               // Carry flag
+}
+StatusRegister;
+    
+typedef struct
 {    
-    u16 pc;    // Program counter
-    u8  sp;    // Stack pointer
+    u16 pc;   // Program counter
+    u8 sp;    // Stack pointer
 
     u8 a;     // Accumulator
     u8 x;     // First index register
     u8 y;     // Second index register
-    u8 p;     // Processor flags
+    // u8 p;     // Processor flags
 
     u8 adl;   // Address data (low byte)
     u8 adh;   // Address data (high byte)
@@ -105,6 +127,8 @@ typedef struct
     u8 d;     // Data buffer
     
     bool ovl; // Overflow indicator (page boundary crossings)
+
+    StatusRegister sr;
 }
 Registers;
 

@@ -270,6 +270,28 @@ public:
     void incPCL(u8 offset = 1) { setPCL(LO_BYTE(reg.pc) + offset); }
     void incPCH(u8 offset = 1) { setPCH(HI_BYTE(reg.pc) + offset); }
 
+    bool getN() { return reg.sr.n; }
+    void setN(bool value) { reg.sr.n = value; }
+    
+    bool getV() { return reg.sr.v; }
+    void setV(bool value) { reg.sr.v = value; }
+    
+    bool getB() { return reg.sr.b; }
+    void setB(bool value) { reg.sr.b = value; }
+    
+    bool getD() { return reg.sr.d; }
+    void setD(bool value) { reg.sr.d = value; }
+    
+    bool getI() { return reg.sr.i; }
+    void setI(bool value) { reg.sr.i = value; }
+    
+    bool getZ() { return reg.sr.z; }
+    void setZ(bool value) { reg.sr.z = value; }
+    
+    bool getC() { return reg.sr.c; }
+    void setC(bool value) { reg.sr.c = value; }
+    
+    /*
     u8 getN() { return reg.p & N_FLAG; }
     void setN(u8 bit) { bit ? reg.p |= N_FLAG : reg.p &= ~N_FLAG; }
     
@@ -290,11 +312,12 @@ public:
     
     u8 getC() { return reg.p & C_FLAG; }
     void setC(u8 bit) { bit ? reg.p |= C_FLAG : reg.p &= ~C_FLAG; }
-        
-    u8 getP() { return reg.p | 0b00100000; }
-    u8 getPWithClearedB() { return getP() & 0b11101111; }
-    void setP(u8 p) { reg.p = p; }
-    void setPWithoutB(u8 p) { reg.p = (p & 0b11101111) | (reg.p & 0b00010000); }
+    */
+    
+    u8 getP();
+    u8 getPWithClearedB();
+    void setP(u8 p);
+    void setPWithoutB(u8 p);
     
 private:
     
