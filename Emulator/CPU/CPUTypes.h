@@ -103,6 +103,8 @@ typedef struct
     u8 adh;   // Address data (high byte)
     u8 idl;   // Input data latch (indirect addressing modes)
     u8 d;     // Data buffer
+    
+    bool ovl; // Overflow indicator (page boundary crossings)
 }
 Registers;
 

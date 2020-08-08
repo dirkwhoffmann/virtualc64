@@ -254,13 +254,13 @@ CPUDebugger::logInstruction()
     
     logBuffer[i].cycle = cpu.cycle;
     logBuffer[i].pc = pc;
-    logBuffer[i].sp = cpu.regSP;
+    logBuffer[i].sp = cpu.reg.sp;
     logBuffer[i].byte1 = opcode;
     logBuffer[i].byte2 = length > 1 ? mem.spypeek(pc + 1) : 0;
     logBuffer[i].byte3 = length > 2 ? mem.spypeek(pc + 2) : 0;
-    logBuffer[i].a = cpu.regA;
-    logBuffer[i].x = cpu.regX;
-    logBuffer[i].y = cpu.regY;
+    logBuffer[i].a = cpu.reg.a;
+    logBuffer[i].x = cpu.reg.x;
+    logBuffer[i].y = cpu.reg.y;
     logBuffer[i].flags = cpu.getP();
 }
 
@@ -471,10 +471,10 @@ CPUDebugger::disassemble(u16 addr)
     instr.byte1 = cpu.mem.spypeek(addr);
     instr.byte2 = cpu.mem.spypeek(addr + 1);
     instr.byte3 = cpu.mem.spypeek(addr + 2);
-    instr.a = cpu.regA;
-    instr.x = cpu.regX;
-    instr.y = cpu.regY;
-    instr.sp = cpu.regSP;
+    instr.a = cpu.reg.a;
+    instr.x = cpu.reg.x;
+    instr.y = cpu.reg.y;
+    instr.sp = cpu.reg.sp;
     instr.flags = cpu.getP();
     
     return disassemble(instr);

@@ -106,42 +106,11 @@ private:
     // Registers
     //
     
-private:
-    
-    Registers reg;
-    
 public:
-    
-    u8 regA;
-    u8 regX;
-    u8 regY;
-    u16 regPC;
-    u8 regSP;
-    
+
+    Registers reg;
+            
 private:
-    
-    /*! @brief     Processor status register (flags)
-     *  @details   7 6 5 4 3 2 1 0
-     *             N O - B D I Z C
-     */
-    u8 regP;
-    
-    //! @brief    Address data (low byte)
-    u8 regADL;
-    
-    //! @brief    Address data (high byte)
-    u8 regADH;
-    
-    //! @brief    Input data latch (indirect addressing modes)
-    u8 regIDL;
-    
-    //! @brief    Data buffer
-    u8 regD;
-    
-    /*! @brief    Address overflow indicater
-     *  @details  Indicates when the page boundary has been crossed.
-     */
-    bool overflow;
     
     /* Frozen program counter.
      * This variable matches the value of the program counter when the CPU
@@ -301,49 +270,49 @@ public:
     
     
     u16 getPC() { return pc; }
-    void jumpToAddress(u16 addr) { pc = regPC = addr; next = fetch; }
-    void setPCL(u8 lo) { regPC = (regPC & 0xff00) | lo; }
-    void setPCH(u8 hi) { regPC = (regPC & 0x00ff) | ((u16)hi << 8); }
-    void incPC(u8 offset = 1) { regPC += offset; }
-    void incPCL(u8 offset = 1) { setPCL(LO_BYTE(regPC) + offset); }
-    void incPCH(u8 offset = 1) { setPCH(HI_BYTE(regPC) + offset); }
+    void jumpToAddress(u16 addr) { pc = reg.pc = addr; next = fetch; }
+    void setPCL(u8 lo) { reg.pc = (reg.pc & 0xff00) | lo; }
+    void setPCH(u8 hi) { reg.pc = (reg.pc & 0x00ff) | ((u16)hi << 8); }
+    void incPC(u8 offset = 1) { reg.pc += offset; }
+    void incPCL(u8 offset = 1) { setPCL(LO_BYTE(reg.pc) + offset); }
+    void incPCH(u8 offset = 1) { setPCH(HI_BYTE(reg.pc) + offset); }
 
-    u8 getN() { return regP & N_FLAG; }
-    void setN(u8 bit) { bit ? regP |= N_FLAG : regP &= ~N_FLAG; }
+    u8 getN() { return reg.p & N_FLAG; }
+    void setN(u8 bit) { bit ? reg.p |= N_FLAG : reg.p &= ~N_FLAG; }
     
-    u8 getV() { return regP & V_FLAG; }
-    void setV(u8 bit) { bit ? regP |= V_FLAG : regP &= ~V_FLAG; }
+    u8 getV() { return reg.p & V_FLAG; }
+    void setV(u8 bit) { bit ? reg.p |= V_FLAG : reg.p &= ~V_FLAG; }
     
-    u8 getB() { return regP & B_FLAG; }
-    void setB(u8 bit) { bit ? regP |= B_FLAG : regP &= ~B_FLAG; }
+    u8 getB() { return reg.p & B_FLAG; }
+    void setB(u8 bit) { bit ? reg.p |= B_FLAG : reg.p &= ~B_FLAG; }
     
-    u8 getD() { return regP & D_FLAG; }
-    void setD(u8 bit) { bit ? regP |= D_FLAG : regP &= ~D_FLAG; }
+    u8 getD() { return reg.p & D_FLAG; }
+    void setD(u8 bit) { bit ? reg.p |= D_FLAG : reg.p &= ~D_FLAG; }
     
-    u8 getI() { return regP & I_FLAG; }
-    void setI(u8 bit) { bit ? regP |= I_FLAG : regP &= ~I_FLAG; }
+    u8 getI() { return reg.p & I_FLAG; }
+    void setI(u8 bit) { bit ? reg.p |= I_FLAG : reg.p &= ~I_FLAG; }
     
-    u8 getZ() { return regP & Z_FLAG; }
-    void setZ(u8 bit) { bit ? regP |= Z_FLAG : regP &= ~Z_FLAG; }
+    u8 getZ() { return reg.p & Z_FLAG; }
+    void setZ(u8 bit) { bit ? reg.p |= Z_FLAG : reg.p &= ~Z_FLAG; }
     
-    u8 getC() { return regP & C_FLAG; }
-    void setC(u8 bit) { bit ? regP |= C_FLAG : regP &= ~C_FLAG; }
+    u8 getC() { return reg.p & C_FLAG; }
+    void setC(u8 bit) { bit ? reg.p |= C_FLAG : reg.p &= ~C_FLAG; }
         
-    u8 getP() { return regP | 0b00100000; }
+    u8 getP() { return reg.p | 0b00100000; }
     u8 getPWithClearedB() { return getP() & 0b11101111; }
-    void setP(u8 p) { regP = p; }
-    void setPWithoutB(u8 p) { regP = (p & 0b11101111) | (regP & 0b00010000); }
+    void setP(u8 p) { reg.p = p; }
+    void setPWithoutB(u8 p) { reg.p = (p & 0b11101111) | (reg.p & 0b00010000); }
     
 private:
     
     // Loads the accumulator. The Z- and N-flag may change.
-    void loadA(u8 a) { regA = a; setN(a & 0x80); setZ(a == 0); }
+    void loadA(u8 a) { reg.a = a; setN(a & 0x80); setZ(a == 0); }
     
     // Loads the X register. The Z- and N-flag may change.
-    void loadX(u8 x) { regX = x; setN(x & 0x80); setZ(x == 0); }
+    void loadX(u8 x) { reg.x = x; setN(x & 0x80); setZ(x == 0); }
     
     // Loads the Y register. The Z- and N-flag may change.
-    void loadY(u8 y) { regY = y; setN(y & 0x80); setZ(y == 0); }
+    void loadY(u8 y) { reg.y = y; setN(y & 0x80); setZ(y == 0); }
     
     
     //

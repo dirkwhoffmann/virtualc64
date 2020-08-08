@@ -104,7 +104,7 @@ Drive::_reset()
              if (snapshotItems[i].flags & CLEAR_ON_RESET)
                  memset(snapshotItems[i].data, 0, snapshotItems[i].size);
 
-    cpu.regPC = 0xEAA0;
+    cpu.reg.pc = 0xEAA0;
     halftrack = 41;
 }
 

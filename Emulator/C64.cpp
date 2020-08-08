@@ -398,7 +398,7 @@ C64::_reset()
     mem.poke(0x0001, 0x1F);  // IO port, set default memory layout
 
     // Initialize program counter
-    cpu.regPC = mem.resetVector();
+    cpu.reg.pc = mem.resetVector();
     
     rasterCycle = 1;
     nanoTargetTime = 0UL;

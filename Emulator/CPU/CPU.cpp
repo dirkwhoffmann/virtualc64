@@ -39,17 +39,17 @@ CPU::CPU(CPUModel model, C64& ref, Memory &memref) : C64Component(ref), mem(memr
         { &halted,             sizeof(halted),       CLEAR_ON_RESET },
         { &next,               sizeof(next),         CLEAR_ON_RESET },
 
-        { &regA,               sizeof(regA),         CLEAR_ON_RESET },
-        { &regX,               sizeof(regX),         CLEAR_ON_RESET },
-        { &regY,               sizeof(regY),         CLEAR_ON_RESET },
-        { &regPC,              sizeof(regPC),        CLEAR_ON_RESET },
-        { &regSP,              sizeof(regSP),        CLEAR_ON_RESET },
-        { &regP,               sizeof(regP),         CLEAR_ON_RESET },
-        { &regADL,             sizeof(regADL),       CLEAR_ON_RESET },
-        { &regADH,             sizeof(regADH),       CLEAR_ON_RESET },
-        { &regIDL,             sizeof(regIDL),       CLEAR_ON_RESET },
-        { &regD,               sizeof(regD),         CLEAR_ON_RESET },
-        { &overflow,           sizeof(overflow),     CLEAR_ON_RESET },
+        { &reg.a,              sizeof(reg.a),        CLEAR_ON_RESET },
+        { &reg.x,              sizeof(reg.x),        CLEAR_ON_RESET },
+        { &reg.y,              sizeof(reg.y),        CLEAR_ON_RESET },
+        { &reg.pc,             sizeof(reg.pc),       CLEAR_ON_RESET },
+        { &reg.sp,             sizeof(reg.sp),       CLEAR_ON_RESET },
+        { &reg.p,              sizeof(reg.p),        CLEAR_ON_RESET },
+        { &reg.adl,            sizeof(reg.adl),      CLEAR_ON_RESET },
+        { &reg.adh,            sizeof(reg.adh),      CLEAR_ON_RESET },
+        { &reg.idl,            sizeof(reg.idl),      CLEAR_ON_RESET },
+        { &reg.d,              sizeof(reg.d),        CLEAR_ON_RESET },
+        { &reg.ovl,            sizeof(reg.ovl),      CLEAR_ON_RESET },
         { &pc,                 sizeof(pc),           CLEAR_ON_RESET },
         { &rdyLine,            sizeof(rdyLine),      CLEAR_ON_RESET },
         { &rdyLineUp,          sizeof(rdyLineUp),    CLEAR_ON_RESET },
@@ -126,10 +126,10 @@ CPU::_inspect(u32 dasmStart)
         info.cycle = cycle;
 
         info.pc = pc;
-        info.sp = regSP;
-        info.a = regA;
-        info.x = regX;
-        info.y = regY;
+        info.sp = reg.sp;
+        info.a = reg.a;
+        info.x = reg.x;
+        info.y = reg.y;
         
         info.nFlag = getN();
         info.vFlag = getV();
@@ -281,7 +281,7 @@ CPU::processFlags()
     }
     
     // Check if a breakpoint has been reached
-    if (flags & CPU_LOG_INSTRUCTION && debugger.breakpointMatches(regPC)) {
+    if (flags & CPU_LOG_INSTRUCTION && debugger.breakpointMatches(reg.pc)) {
         c64.signalBreakpoint();
     }
 }
