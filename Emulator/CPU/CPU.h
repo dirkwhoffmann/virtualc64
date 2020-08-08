@@ -23,13 +23,15 @@ class CPU : public C64Component {
     friend class CPUDebugger;
     friend class Breakpoints;
     friend class Watchpoints;
-
-    // Reference to the connected memory (MOVE TO SUBCLASS)
-    Memory &mem;
     
     // Result of the latest inspection (MOVE TO C64CPU SUBCLASS ?!)
     CPUInfo info;
+
+public:
     
+    // Reference to the connected memory (MOVE TO SUBCLASS)
+    Memory &mem;
+
     
     //
     // Sub components
@@ -317,25 +319,29 @@ private:
     
     
     //
-    // Operating the ALU
+    // Operating the Arithmetical Logical Unit (ALU)
     //
     
-    // Performs an arithmetic operation
     void adc(u8 op);
     void adc_binary(u8 op);
     void adc_bcd(u8 op);
     void sbc(u8 op);
     void sbc_binary(u8 op);
     void sbc_bcd(u8 op);
-
-    // Performs a logical operation
     void cmp(u8 op1, u8 op2);
-    u8 ror(u8 op);
-    u8 rol(u8 op);
-
-    // Emulates a banching instruction
-    // void branch(i8 offset);
     
+    
+    //
+    // Accessing memory
+    //
+    
+    virtual u8 peek(u16 addr) = 0;
+    virtual u8 peekZP(u16 addr) = 0;
+    virtual u8 peekStack(u16 addr) = 0;
+    virtual void poke(u16 addr, u8 value) = 0;
+    virtual void pokeZP(u16 addr, u8 value) = 0;
+    virtual void pokeStack(u16 addr, u8 value) = 0;
+
     
     //
     // Handling interrupts

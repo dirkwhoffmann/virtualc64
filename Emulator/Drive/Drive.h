@@ -58,8 +58,7 @@ public:
     VIA2 via2 = VIA2(this, c64);
     Disk disk = Disk(c64);
     
-    
-    
+
     //
     // Drive status
     //

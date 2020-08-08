@@ -18,7 +18,9 @@
 class Memory : public C64Component {
 
     friend class CPU;
-    
+    friend class C64CPU;
+    friend class DriveCPU;
+
 protected:
     
     /*! @brief    Pointer to the first byte of the stack memory

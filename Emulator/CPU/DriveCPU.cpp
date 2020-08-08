@@ -9,8 +9,43 @@
 
 #include "C64.h"
 
-#include "DriveCPU.h"
-
 DriveCPU::DriveCPU(CPUModel model, C64& ref, Memory &memref) : CPU(model, ref, memref)
 {
+
+}
+
+u8
+DriveCPU::peek(u16 addr)
+{
+    return mem.peek(addr);
+}
+ 
+u8
+DriveCPU::peekZP(u16 addr)
+{
+    return mem.peekZP(addr);
+}
+
+u8
+DriveCPU::peekStack(u16 addr)
+{
+    return mem.peekStack(addr);
+}
+
+void
+DriveCPU::poke(u16 addr, u8 value)
+{
+    mem.poke(addr, value);
+}
+
+void
+DriveCPU::pokeZP(u16 addr, u8 value)
+{
+    mem.pokeZP(addr, value);
+}
+
+void
+DriveCPU::pokeStack(u16 addr, u8 value)
+{
+    mem.pokeStack(addr, value);
 }
