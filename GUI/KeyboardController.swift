@@ -28,7 +28,7 @@ class KeyboardController: NSObject {
     // Remembers the currently pressed keys and their assigned C64 key list.
     // This variable is only used when keys are mapped symbolically. It it
     // written in keyDown and picked up in keyUp.
-    var pressedKeys: [MacKey: [C64Key]] = [:]
+    var pressedKeys: [Int: [C64Key]] = [:]
     
     // Checks if the internal values are consistent with the provides flags.
     // There should never be an insonsistency. But if there is, we release the
@@ -143,7 +143,7 @@ class KeyboardController: NSObject {
         if c64Keys != [] {
 
             // Store key combination for later use in keyUp
-            pressedKeys[macKey] = c64Keys
+            pressedKeys[macKey.keyCode] = c64Keys
         
             // Press all required keys
             for key in c64Keys {
@@ -176,7 +176,7 @@ class KeyboardController: NSObject {
         }
         
         // Symbolic key mapping
-        if let c64Keys = pressedKeys[macKey] {
+        if let c64Keys = pressedKeys[macKey.keyCode] {
             for key in c64Keys {
                 keyboard.releaseKey(atRow: key.row, col: key.col)
             }
