@@ -16,7 +16,6 @@ DriveMemory::DriveMemory(C64 &ref, Drive &dref) : Memory(ref), drive(dref)
     // this->drive = drive;
     
     memset(rom, 0, sizeof(rom));
-    stack = &ram[0x0100];
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -82,7 +81,7 @@ DriveMemory::peek(u16 addr)
 u8
 DriveMemory::peekStack(u8 sp)
 {
-    return stack[sp];
+    return ram[0x100 + sp];
 }
 
 u8
@@ -129,5 +128,5 @@ DriveMemory::poke(u16 addr, u8 value)
 void
 DriveMemory::pokeStack(u8 sp, u8 value)
 {
-    stack[sp] = value;
+    ram[0x100 + sp] = value;
 }

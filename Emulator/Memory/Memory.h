@@ -23,12 +23,6 @@ class Memory : public C64Component {
 
 protected:
     
-    /*! @brief    Pointer to the first byte of the stack memory
-     *  @details  This value is used by peekStack and pokeStack, only.
-     */
-    u8 *stack = NULL;
-    
-    
     //
     // Constructing and serializing
     //

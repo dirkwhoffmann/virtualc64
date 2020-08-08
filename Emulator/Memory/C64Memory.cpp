@@ -14,7 +14,6 @@ C64Memory::C64Memory(C64 &ref) : Memory(ref)
 	setDescription("C64 memory");
     		
     memset(rom, 0, sizeof(rom));
-    stack = &ram[0x0100];
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -248,7 +247,7 @@ C64Memory::peekZP(u8 addr)
 u8
 C64Memory::peekStack(u8 sp)
 {
-    return stack[sp];
+    return ram[0x100 + sp];
 }
 
 u8
@@ -444,7 +443,7 @@ C64Memory::pokeZP(u8 addr, u8 value)
 void
 C64Memory::pokeStack(u8 sp, u8 value)
 {
-    stack[sp] = value;
+    ram[0x100 + sp] = value;
 }
 
 void
