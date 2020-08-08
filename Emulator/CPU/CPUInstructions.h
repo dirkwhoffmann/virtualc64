@@ -317,7 +317,7 @@ if (likely(rdyLine)) reg.adl = peek((u16)reg.idl++); else return;
 #define FETCH_ADDR_HI_INDIRECT \
 if (likely(rdyLine)) reg.adh = peek((u16)reg.idl++); else return;
 #define IDLE_FETCH \
-if (likely(rdyLine)) (void)peek(reg.pc); else return;
+if (likely(rdyLine)) (void)peekIdle(reg.pc); else return;
 
 
 #define READ_RELATIVE \
@@ -334,17 +334,17 @@ if (likely(rdyLine)) reg.d = peekZP(reg.adl); else return;
 if (likely(rdyLine)) reg.d = peekZP(reg.dl); else return;
 
 #define IDLE_READ_IMPLIED \
-if (likely(rdyLine)) (void)peek(reg.pc); else return;
+if (likely(rdyLine)) (void)peekIdle(reg.pc); else return;
 #define IDLE_READ_IMMEDIATE \
-if (likely(rdyLine)) (void)peek(reg.pc++); else return;
+if (likely(rdyLine)) (void)peekIdle(reg.pc++); else return;
 #define IDLE_READ_FROM(x) \
-if (likely(rdyLine)) (void)peek(x); else return;
+if (likely(rdyLine)) (void)peekIdle(x); else return;
 #define IDLE_READ_FROM_ADDRESS \
-if (likely(rdyLine)) (void)(peek(HI_LO(reg.adh, reg.adl))); else return;
+if (likely(rdyLine)) (void)(peekIdle(HI_LO(reg.adh, reg.adl))); else return;
 #define IDLE_READ_FROM_ZERO_PAGE \
-if (likely(rdyLine)) (void)peekZP(reg.adl); else return;
+if (likely(rdyLine)) (void)peekZPIdle(reg.adl); else return;
 #define IDLE_READ_FROM_ADDRESS_INDIRECT \
-if (likely(rdyLine)) (void)peekZP(reg.idl); else return;
+if (likely(rdyLine)) (void)peekZPIdle(reg.idl); else return;
 
 #define WRITE_TO_ADDRESS \
 poke(HI_LO(reg.adh, reg.adl), reg.d);
@@ -369,7 +369,7 @@ pokeZP(reg.adl, reg.d); setN(reg.d & 0x80); setZ(reg.d == 0);
 #define PULL_PCH if (likely(rdyLine)) setPCH(peekStack(reg.sp)); else return;
 #define PULL_P if (likely(rdyLine)) setPWithoutB(peekStack(reg.sp)); else return;
 #define PULL_A if (likely(rdyLine)) loadA(peekStack(reg.sp)); else return;
-#define IDLE_PULL if (likely(rdyLine)) (void)peekStack(reg.sp); else return;
+#define IDLE_PULL if (likely(rdyLine)) (void)peekStackIdle(reg.sp); else return;
 
 #define PAGE_BOUNDARY_CROSSED reg.ovl
 #define FIX_ADDR_HI reg.adh++;

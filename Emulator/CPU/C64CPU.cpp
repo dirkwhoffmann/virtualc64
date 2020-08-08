@@ -32,6 +32,24 @@ C64CPU::peekStack(u16 addr)
     return mem.peekStack(addr);
 }
 
+void
+C64CPU::peekIdle(u16 addr)
+{
+    (void)mem.peek(addr);
+}
+
+void
+C64CPU::peekZPIdle(u16 addr)
+{
+    (void)mem.peekZP(addr);
+}
+
+void
+C64CPU::peekStackIdle(u16 addr)
+{
+    (void)mem.peekStack(addr);
+}
+
 u8
 C64CPU::spypeek(u16 addr)
 {

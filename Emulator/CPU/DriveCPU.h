@@ -28,6 +28,9 @@ public:
     u8 peek(u16 addr) override;
     u8 peekZP(u16 addr) override;
     u8 peekStack(u16 addr) override;
+    void peekIdle(u16 addr) override;
+    void peekZPIdle(u16 addr) override;
+    void peekStackIdle(u16 addr) override;
     u8 spypeek(u16 addr) override;
     void poke(u16 addr, u8 value) override;
     void pokeZP(u16 addr, u8 value) override;

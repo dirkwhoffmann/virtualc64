@@ -338,6 +338,9 @@ private:
     virtual u8 peek(u16 addr) = 0;
     virtual u8 peekZP(u16 addr) = 0;
     virtual u8 peekStack(u16 addr) = 0;
+    virtual void peekIdle(u16 addr) = 0;
+    virtual void peekZPIdle(u16 addr) = 0;
+    virtual void peekStackIdle(u16 addr) = 0;
     virtual u8 spypeek(u16 addr) = 0;
     virtual void poke(u16 addr, u8 value) = 0;
     virtual void pokeZP(u16 addr, u8 value) = 0;

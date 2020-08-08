@@ -32,6 +32,24 @@ DriveCPU::peekStack(u16 addr)
     return mem.peekStack(addr);
 }
 
+void
+DriveCPU::peekIdle(u16 addr)
+{
+    (void)mem.peek(addr);
+}
+ 
+void
+DriveCPU::peekZPIdle(u16 addr)
+{
+    (void)mem.peekZP(addr);
+}
+
+void
+DriveCPU::peekStackIdle(u16 addr)
+{
+    (void)mem.peekStack(addr);
+}
+
 u8
 DriveCPU::spypeek(u16 addr)
 {
