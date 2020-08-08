@@ -58,6 +58,7 @@ public:
     // Reads a value from memory
     u8 peek(u16 addr) override;
     u8 peekZP(u8 addr) override { return ram[addr]; }
+    u8 peekStack(u8 addr) override;
     
     // Reads a value from memory without side effects
     u8 spypeek(u16 addr) override;
@@ -65,6 +66,7 @@ public:
     // Writes a value into memory
     void poke(u16 addr, u8 value) override;
     void pokeZP(u8 addr, u8 value) override { ram[addr] = value; }
+    void pokeStack(u8 sp, u8 value) override;
 };
 
 #endif

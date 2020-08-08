@@ -246,6 +246,12 @@ C64Memory::peekZP(u8 addr)
 }
 
 u8
+C64Memory::peekStack(u8 sp)
+{
+    return stack[sp];
+}
+
+u8
 C64Memory::peekIO(u16 addr)
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
@@ -433,6 +439,12 @@ C64Memory::pokeZP(u8 addr, u8 value)
     } else {
         cpu.pport.write(value);
     }
+}
+
+void
+C64Memory::pokeStack(u8 sp, u8 value)
+{
+    stack[sp] = value;
 }
 
 void

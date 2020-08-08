@@ -40,36 +40,16 @@ public:
     
 private:
     
-    /*! @brief    Peeks a byte from memory.
-     *  @details  Emulates a native read access including side effects.
-     *            The value is read is from the currently visible memory.
-     *  @seealso  spypeek
-     */
 	virtual u8 peek(u16 addr) = 0;
-
-    //! @brief    Peeks a byte from the zero page.
     virtual u8 peekZP(u8 addr) = 0;
-
-    //! @brief    Peeks a byte from the stack.
-    virtual u8 peekStack(u8 sp) { return stack[sp]; }
+    virtual u8 peekStack(u8 sp) = 0;
     
 public:
     
-    /*! @brief    Peeks a byte from memory without causing side effects.
-     *  seealso   peek
-     */
     virtual u8 spypeek(u16 addr) = 0;
-    
-    /*! @brief    Pokes a byte into memory.
-     *  @details  Emulates a native write access including all side effects.
-     */
     virtual void poke(u16 addr, u8 value) = 0;
-
-    //! @brief    Pokes a byte into the zero page.
     virtual void pokeZP(u8 addr, u8 value) = 0;
-
-    //! @brief    Pokes a byte onto the stack.
-    virtual void pokeStack(u8 sp, u8 value) { stack[sp] = value; }
+    virtual void pokeStack(u8 sp, u8 value) = 0;
 };
 
 #endif

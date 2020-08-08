@@ -80,6 +80,12 @@ DriveMemory::peek(u16 addr)
 }
 
 u8
+DriveMemory::peekStack(u8 sp)
+{
+    return stack[sp];
+}
+
+u8
 DriveMemory::spypeek(u16 addr)
 {
     if (addr >= 0x8000) {
@@ -120,3 +126,8 @@ DriveMemory::poke(u16 addr, u8 value)
     }
 }
 
+void
+DriveMemory::pokeStack(u8 sp, u8 value)
+{
+    stack[sp] = value;
+}

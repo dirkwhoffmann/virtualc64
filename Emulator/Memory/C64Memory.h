@@ -151,6 +151,7 @@ public:
     u8 peek(u16 addr, bool gameLine, bool exromLine);
     u8 peek(u16 addr) override { return peek(addr, peekSrc[addr >> 12]); }
     u8 peekZP(u8 addr) override;
+    u8 peekStack(u8 addr) override;
     u8 peekIO(u16 addr);
     
     // Reading from memory without side effects
@@ -163,6 +164,7 @@ public:
     void poke(u16 addr, u8 value, bool gameLine, bool exromLine);
     void poke(u16 addr, u8 value) override { poke(addr, value, pokeTarget[addr >> 12]); }
     void pokeZP(u8 addr, u8 value) override;
+    void pokeStack(u8 sp, u8 value) override;
     void pokeIO(u16 addr, u8 value);
     
     //! @brief    Reads the NMI vector from memory.
