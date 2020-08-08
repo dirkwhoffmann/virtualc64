@@ -965,9 +965,9 @@ C64::_executeOneCycle()
     // '-->| VIC | --> | CIA | --> | CIA | --|--> | CPU | -------|--'
     //     |     |     |  1  |     |  2  |   |    |     |        |
     //     '-----'     '-----'     '-----'   |    '-----'        |
-    //                                       v
-    //                                 IEC bus update      IEC bus update
-    //                                                           ^
+    //                                  ,---------,              |
+    //                                  | IEC bus |              |
+    //                                  '---------'              |
     //                                       |    ,--------,     |
     //                                       |    |        |     |
     // ,-- Drive ----------------------------|--> | VC1541 | ----|--,
@@ -994,17 +994,6 @@ void
 C64::finishInstruction()
 {
     while (!cpu.inFetchPhase()) executeOneCycle();
-
-    /*
-    // Wait until the execution of the next command has begun
-    while (cpu.inFetchPhase()) executeOneCycle();
-    
-    // Finish the command
-    while (!cpu.inFetchPhase()) executeOneCycle();
-    
-    // Execute the first microcycle (fetch phase) and stop there
-    executeOneCycle();
-    */
 }
 
 void
