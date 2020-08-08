@@ -225,7 +225,12 @@ private:
 
     // Total number of skipped cycles (used by the debugger, only)
     Cycle idleCycles;
-
+    
+public:
+    
+    // DEPRECATED
+    Cycle idleCounter = 0;
+    
 public:
     
     // Indicates if the CIA is currently idle

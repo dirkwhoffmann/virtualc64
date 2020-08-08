@@ -29,6 +29,6 @@ typedef uint64_t u64;
 // Cycle counts
 //
 
-typedef u64 Cycle;
+typedef i64 Cycle;
 
 #endif

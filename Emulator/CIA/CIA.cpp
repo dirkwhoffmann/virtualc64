@@ -736,8 +736,8 @@ CIA::_dump()
 void
 CIA::executeOneCycle()
 {
-    if (sleeping) wakeUp();
-        
+    if (sleeping) wakeUp(cpu.cycle - 1);
+    
     u64 oldDelay = delay;
     u64 oldFeed  = feed;
     
@@ -1061,6 +1061,7 @@ CIA::sleep()
     // Determine maximum possible sleep cycle based on timer counts
     Cycle sleepA = cpu.cycle + ((counterA > 2) ? (counterA - 1) : 0);
     Cycle sleepB = cpu.cycle + ((counterB > 2) ? (counterB - 1) : 0);
+    Cycle sleep = MIN(sleepA, sleepB);
     
     // CIAs with stopped timers can sleep forever
     if (!(feed & CIACountA0)) sleepA = INT64_MAX;
@@ -1068,7 +1069,7 @@ CIA::sleep()
     
     // ZZzzz
     sleepCycle = cpu.cycle;
-    wakeUpCycle = MIN(sleepA, sleepB);
+    wakeUpCycle = sleep;
     tiredness = 0;
     sleeping = true;
 }
@@ -1076,13 +1077,20 @@ CIA::sleep()
 void
 CIA::wakeUp()
 {
+    wakeUp(cpu.cycle);
+}
+
+void
+CIA::wakeUp(Cycle targetCycle)
+{
     // Don't call this method on an active CIA
     // assert(sleeping);
     if (!sleeping) return;
         
     // Calculate the number of missed cycles
-    wakeUpCycle = cpu.cycle;
+    wakeUpCycle = targetCycle;
     Cycle missedCycles = wakeUpCycle - sleepCycle;
+    assert(idleCounter == missedCycles);
     
     // Make up for missed cycles
     if (missedCycles > 0) {
@@ -1097,6 +1105,7 @@ CIA::wakeUp()
         }
         
         idleCycles += missedCycles;
+        idleCounter = 0;
     }
 
     sleeping = false;

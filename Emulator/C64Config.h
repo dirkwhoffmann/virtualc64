@@ -42,7 +42,7 @@ static const int IRQ_DEBUG       = 0; // Interrupts
 
 // CIAs
 static const int CIA_DEBUG       = 0; // Complex Interface Adapter
-static const int CIA_ON_STEROIDS = 1; // Keep the CIAs awake all the time
+static const int CIA_ON_STEROIDS = 0; // Keep the CIAs awake all the time
 
 // Custom chips
 static const int VIA_DEBUG       = 0; // Versatile Interface Adapter
