@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-CPU::CPU(CPUModel model, C64& ref, Memory &memref) : C64Component(ref), mem(memref)
+CPU::CPU(CPUModel model, C64& ref) : C64Component(ref)
 {
     this->model = model;
 	
@@ -193,8 +193,8 @@ CPU::_dump()
     msg("      Irq line : %02X\n", irqLine);
     msg("Level detector : %02X\n", levelDetector.current());
     msg("         doIrq : %s\n", doIrq ? "yes" : "no");
-    msg("   IRQ routine : %02X%02X\n", mem.spypeek(0xFFFF), mem.spypeek(0xFFFE));
-    msg("   NMI routine : %02X%02X\n", mem.spypeek(0xFFFB), mem.spypeek(0xFFFA));
+    msg("   IRQ routine : %02X%02X\n", spypeek(0xFFFF), spypeek(0xFFFE));
+    msg("   NMI routine : %02X%02X\n", spypeek(0xFFFB), spypeek(0xFFFA));
 	msg("\n");
     
     pport.dump();

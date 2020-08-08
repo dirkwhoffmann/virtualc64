@@ -247,7 +247,7 @@ void
 CPUDebugger::logInstruction()
 {
     u16 pc = cpu.getPC();
-    u8 opcode = mem.spypeek(pc);
+    u8 opcode = cpu.spypeek(pc);
     unsigned length = getLengthOfInstruction(opcode);
 
     int i = logCnt++ % LOG_BUFFER_CAPACITY;
@@ -256,8 +256,8 @@ CPUDebugger::logInstruction()
     logBuffer[i].pc = pc;
     logBuffer[i].sp = cpu.reg.sp;
     logBuffer[i].byte1 = opcode;
-    logBuffer[i].byte2 = length > 1 ? mem.spypeek(pc + 1) : 0;
-    logBuffer[i].byte3 = length > 2 ? mem.spypeek(pc + 2) : 0;
+    logBuffer[i].byte2 = length > 1 ? cpu.spypeek(pc + 1) : 0;
+    logBuffer[i].byte3 = length > 2 ? cpu.spypeek(pc + 2) : 0;
     logBuffer[i].a = cpu.reg.a;
     logBuffer[i].x = cpu.reg.x;
     logBuffer[i].y = cpu.reg.y;
@@ -312,7 +312,7 @@ CPUDebugger::getLengthOfInstruction(u8 opcode)
 unsigned
 CPUDebugger::getLengthOfInstructionAtAddress(u16 addr)
 {
-    return getLengthOfInstruction(cpu.mem.spypeek(addr));
+    return getLengthOfInstruction(cpu.spypeek(addr));
 }
 
 unsigned
@@ -348,7 +348,7 @@ CPUDebugger::disassemble(RecordedInstruction instr)
         case ADDR_ZERO_PAGE_Y:
         case ADDR_INDIRECT_X:
         case ADDR_INDIRECT_Y: {
-            u8 value = cpu.mem.spypeek(instr.pc + 1);
+            u8 value = cpu.spypeek(instr.pc + 1);
             hex ? sprint8x(operand, value) : sprint8d(operand, value);
             break;
         }
@@ -357,12 +357,12 @@ CPUDebugger::disassemble(RecordedInstruction instr)
         case ADDR_ABSOLUTE:
         case ADDR_ABSOLUTE_X:
         case ADDR_ABSOLUTE_Y: {
-            u16 value = LO_HI(cpu.mem.spypeek(instr.pc + 1),cpu.mem.spypeek(instr.pc + 2));
+            u16 value = LO_HI(cpu.spypeek(instr.pc + 1),cpu.spypeek(instr.pc + 2));
             hex ? sprint16x(operand, value) : sprint16d(operand, value);
             break;
         }
         case ADDR_RELATIVE: {
-            u16 value = instr.pc + 2 + (i8)cpu.mem.spypeek(instr.pc + 1);
+            u16 value = instr.pc + 2 + (i8)cpu.spypeek(instr.pc + 1);
             hex ? sprint16x(operand, value) : sprint16d(operand, value);
             break;
         }
@@ -468,9 +468,9 @@ CPUDebugger::disassemble(u16 addr)
     RecordedInstruction instr;
 
     instr.pc = addr;
-    instr.byte1 = cpu.mem.spypeek(addr);
-    instr.byte2 = cpu.mem.spypeek(addr + 1);
-    instr.byte3 = cpu.mem.spypeek(addr + 2);
+    instr.byte1 = cpu.spypeek(addr);
+    instr.byte2 = cpu.spypeek(addr + 1);
+    instr.byte3 = cpu.spypeek(addr + 2);
     instr.a = cpu.reg.a;
     instr.x = cpu.reg.x;
     instr.y = cpu.reg.y;

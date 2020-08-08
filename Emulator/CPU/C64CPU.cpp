@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-C64CPU::C64CPU(CPUModel model, C64& ref, Memory &memref) : CPU(model, ref, memref)
+C64CPU::C64CPU(CPUModel model, C64& ref) : CPU(model, ref)
 {
     
 }
@@ -30,6 +30,12 @@ u8
 C64CPU::peekStack(u16 addr)
 {
     return mem.peekStack(addr);
+}
+
+u8
+C64CPU::spypeek(u16 addr)
+{
+    return mem.spypeek(addr);
 }
 
 void

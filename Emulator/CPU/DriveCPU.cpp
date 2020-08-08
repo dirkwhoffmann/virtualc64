@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-DriveCPU::DriveCPU(CPUModel model, C64& ref, Memory &memref) : CPU(model, ref, memref)
+DriveCPU::DriveCPU(CPUModel model, C64& ref, Memory &memref) : CPU(model, ref), mem(memref)
 {
 
 }
@@ -30,6 +30,12 @@ u8
 DriveCPU::peekStack(u16 addr)
 {
     return mem.peekStack(addr);
+}
+
+u8
+DriveCPU::spypeek(u16 addr)
+{
+    return mem.spypeek(addr);
 }
 
 void
