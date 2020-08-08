@@ -40,11 +40,12 @@ public:
     // CPU debugger
     CPUDebugger debugger = CPUDebugger(c64);
     
-private:
-    
+
     //
     // Chip properties
     //
+    
+public:
     
     virtual CPUModel model() = 0;
     virtual bool isC64CPU() = 0;
@@ -55,6 +56,8 @@ private:
     // Lookup tables
     //
     
+protected:
+
     /* Mapping from opcodes to microinstructions. This array stores the tags
      * of the second microcycle which is microcycle cycle following the fetch
      * phase.

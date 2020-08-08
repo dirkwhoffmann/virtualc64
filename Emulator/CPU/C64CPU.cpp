@@ -9,6 +9,11 @@
 
 #include "C64.h"
 
+#define CHECK_FOR_WATCHPOINT \
+if (flags & CPU_CHECK_WP && debugger.watchpointMatches(addr)) { \
+    c64.signalWatchpoint(); \
+}
+
 C64CPU::C64CPU(C64& ref) : CPU(ref)
 {
     setDescription("CPU");
@@ -17,18 +22,21 @@ C64CPU::C64CPU(C64& ref) : CPU(ref)
 u8
 C64CPU::peek(u16 addr)
 {
+    CHECK_FOR_WATCHPOINT
     return mem.peek(addr);
 }
 
 u8
 C64CPU::peekZP(u16 addr)
 {
+    CHECK_FOR_WATCHPOINT
     return mem.peekZP(addr);
 }
 
 u8
 C64CPU::peekStack(u16 addr)
 {
+    CHECK_FOR_WATCHPOINT
     return mem.peekStack(addr);
 }
 
@@ -59,17 +67,20 @@ C64CPU::spypeek(u16 addr)
 void
 C64CPU::poke(u16 addr, u8 value)
 {
+    CHECK_FOR_WATCHPOINT
     return mem.poke(addr, value);
 }
 
 void
 C64CPU::pokeZP(u16 addr, u8 value)
 {
+    CHECK_FOR_WATCHPOINT
     return mem.pokeZP(addr, value);
 }
 
 void
 C64CPU::pokeStack(u16 addr, u8 value)
 {
+    CHECK_FOR_WATCHPOINT
     return mem.pokeStack(addr, value);
 }
