@@ -13,14 +13,14 @@
 #include "CPU.h"
 
 class C64CPU : public CPU {
-        
-    //
-    // Constructing and serializing
-    //
-    
+            
 public:
     
-    C64CPU(CPUModel model, C64& ref);
+    C64CPU(C64& ref);
+    
+    CPUModel model() override { return MOS_6510; }
+    bool isC64CPU() override { return true; }
+    bool isDriveCPU() override { return false; }
     
     u8 peek(u16 addr) override;
     u8 peekZP(u16 addr) override;

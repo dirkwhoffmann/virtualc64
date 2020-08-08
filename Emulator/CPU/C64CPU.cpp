@@ -9,9 +9,9 @@
 
 #include "C64.h"
 
-C64CPU::C64CPU(CPUModel model, C64& ref) : CPU(model, ref)
+C64CPU::C64CPU(C64& ref) : CPU(ref)
 {
-    
+    setDescription("CPU");
 }
 
 u8

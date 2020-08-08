@@ -9,30 +9,20 @@
 
 #include "C64.h"
 
-CPU::CPU(CPUModel model, C64& ref) : C64Component(ref)
+CPU::CPU(C64& ref) : C64Component(ref)
 {
-    this->model = model;
-	
-    setDescription(model == MOS_6502 ? "CPU(6502)" : "CPU");
-    
     subComponents = vector<HardwareComponent *> {
         
         &pport,
         &debugger
     };
     
-    // Chip model
-    model = MOS_6510;
-
 	// Establish callback for each instruction
 	registerInstructions();
 		    
     // Register snapshot items
     SnapshotItem items[] = {
         
-        // Lifetime items
-        { &model,              sizeof(model),        KEEP_ON_RESET },
-
          // Internal state
         { &flags,              sizeof(flags),        CLEAR_ON_RESET },
         { &cycle,              sizeof(cycle),        CLEAR_ON_RESET },

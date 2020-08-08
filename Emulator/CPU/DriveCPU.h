@@ -14,17 +14,16 @@
 
 class DriveCPU : public CPU {
     
-    // Reference to the connected memory
     DriveMemory &mem;
-
-    //
-    // Constructing and serializing
-    //
     
 public:
     
-    DriveCPU(CPUModel model, C64& ref, DriveMemory &memref);
+    DriveCPU(C64& ref, DriveMemory &memref);
     
+    CPUModel model() override { return MOS_6502; }
+    bool isC64CPU() override { return false; }
+    bool isDriveCPU() override { return true; }
+
     u8 peek(u16 addr) override;
     u8 peekZP(u16 addr) override;
     u8 peekStack(u16 addr) override;

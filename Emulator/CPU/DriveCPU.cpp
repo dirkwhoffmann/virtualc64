@@ -9,9 +9,9 @@
 
 #include "C64.h"
 
-DriveCPU::DriveCPU(CPUModel model, C64& ref, DriveMemory &memref) : CPU(model, ref), mem(memref)
+DriveCPU::DriveCPU(C64& ref, DriveMemory &memref) : CPU(ref), mem(memref)
 {
-
+    setDescription("DriveCPU");
 }
 
 u8

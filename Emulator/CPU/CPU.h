@@ -27,11 +27,6 @@ class CPU : public C64Component {
     // Result of the latest inspection (MOVE TO C64CPU SUBCLASS ?!)
     CPUInfo info;
 
-public:
-    
-    // Reference to the connected memory (MOVE TO SUBCLASS)
-    // Memory &mem;
-
     
     //
     // Sub components
@@ -51,13 +46,10 @@ private:
     // Chip properties
     //
     
-    /*! @brief    Selected model (DEPRECATED, USE CPUConfig)
-     *  @details  Right now, this atrribute is only used to distinguish the
-     *            C64 CPU (MOS6510) from the VC1541 CPU (MOS6502). Hardware
-     *            differences between both models are not emulated.
-     */
-    CPUModel model;
-    
+    virtual CPUModel model() = 0;
+    virtual bool isC64CPU() = 0;
+    virtual bool isDriveCPU() = 0;
+
     
     //
     // Lookup tables
@@ -212,7 +204,7 @@ private:
     
 public:
     
-    CPU(CPUModel model, C64& ref);
+    CPU(C64& ref);
     
 private:
         
@@ -231,8 +223,6 @@ private:
     // Configuring
     //
     
-    // Returns true if this is the C64's CPU
-    bool isC64CPU() { return model == MOS_6510; }
     
     
     //
