@@ -1090,7 +1090,6 @@ CIA::wakeUp(Cycle targetCycle)
     // Calculate the number of missed cycles
     wakeUpCycle = targetCycle;
     Cycle missedCycles = wakeUpCycle - sleepCycle;
-    assert(idleCounter == missedCycles);
     
     // Make up for missed cycles
     if (missedCycles > 0) {
@@ -1105,7 +1104,6 @@ CIA::wakeUp(Cycle targetCycle)
         }
         
         idleCycles += missedCycles;
-        idleCounter = 0;
     }
 
     sleeping = false;
