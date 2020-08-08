@@ -10,10 +10,9 @@
 #ifndef _VC1541MEMORY_H
 #define _VC1541MEMORY_H
 
-#include "Memory.h"
+#include "DriveMemory.h"
 
-// Represents the RAM and ROM of a VC1541 floopy disk drive
-class DriveMemory : public Memory {
+class DriveMemory : public C64Component {
     
 private:
     
@@ -56,17 +55,17 @@ private:
 public:
     
     // Reads a value from memory
-    u8 peek(u16 addr) override;
-    u8 peekZP(u8 addr) override { return ram[addr]; }
-    u8 peekStack(u8 addr) override;
+    u8 peek(u16 addr);
+    u8 peekZP(u8 addr) { return ram[addr]; }
+    u8 peekStack(u8 sp) { return ram[0x100 + sp]; }
     
     // Reads a value from memory without side effects
-    u8 spypeek(u16 addr) override;
+    u8 spypeek(u16 addr);
     
     // Writes a value into memory
-    void poke(u16 addr, u8 value) override;
-    void pokeZP(u8 addr, u8 value) override { ram[addr] = value; }
-    void pokeStack(u8 sp, u8 value) override;
+    void poke(u16 addr, u8 value);
+    void pokeZP(u8 addr, u8 value) { ram[addr] = value; }
+    void pokeStack(u8 sp, u8 value) { ram[0x100 + sp] = value; }
 };
 
 #endif

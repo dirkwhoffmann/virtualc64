@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-DriveMemory::DriveMemory(C64 &ref, Drive &dref) : Memory(ref), drive(dref)
+DriveMemory::DriveMemory(C64 &ref, Drive &dref) : C64Component(ref), drive(dref)
 {
     setDescription("1541MEM");
 
@@ -79,12 +79,6 @@ DriveMemory::peek(u16 addr)
 }
 
 u8
-DriveMemory::peekStack(u8 sp)
-{
-    return ram[0x100 + sp];
-}
-
-u8
 DriveMemory::spypeek(u16 addr)
 {
     if (addr >= 0x8000) {
@@ -123,10 +117,4 @@ DriveMemory::poke(u16 addr, u8 value)
         drive.via1.poke(addr & 0xF, value);
         return;
     }
-}
-
-void
-DriveMemory::pokeStack(u8 sp, u8 value)
-{
-    ram[0x100 + sp] = value;
 }

@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-C64Memory::C64Memory(C64 &ref) : Memory(ref)
+C64Memory::C64Memory(C64 &ref) : C64Component(ref)
 {	
 	setDescription("C64 memory");
     		

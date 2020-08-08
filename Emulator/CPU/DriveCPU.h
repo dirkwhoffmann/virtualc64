@@ -15,7 +15,7 @@
 class DriveCPU : public CPU {
     
     // Reference to the connected memory
-    Memory &mem;
+    DriveMemory &mem;
 
     //
     // Constructing and serializing
@@ -23,7 +23,7 @@ class DriveCPU : public CPU {
     
 public:
     
-    DriveCPU(CPUModel model, C64& ref, Memory &memref);
+    DriveCPU(CPUModel model, C64& ref, DriveMemory &memref);
     
     u8 peek(u16 addr) override;
     u8 peekZP(u16 addr) override;
