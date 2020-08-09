@@ -53,6 +53,7 @@ typedef enum
 }
 AddressingMode;
 
+/*
 typedef enum
 {
     CPU_OK = 0,
@@ -61,6 +62,7 @@ typedef enum
     CPU_HALTED_BY_WATCHPOINT
 }
 CPUState;
+*/
 
 typedef enum : u8
 {

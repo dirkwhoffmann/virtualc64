@@ -171,6 +171,12 @@ private:
      */
     u32 runLoopCtrl = 0;
     
+    /* Stop request
+     * This variable is used to signal a stop request coming from the GUI.
+     * The variable is checked after each frame.
+     */
+    bool stopFlag = false; 
+    
     // The invocation counter for implementing suspend() / resume()
     unsigned suspendCounter = 0;
     
@@ -480,6 +486,12 @@ private:
     //
     
 public:
+    
+    /* Requests the emulator to stop at the end of the current frame.
+     * This function sets a flag which is evaluated at the end of each frame.
+     * It it is set, the run loop is signalled to stop via signalStop().
+     */
+    void requestStop() { stopFlag = true; }
     
     /* Pauses the emulation thread temporarily. Because the emulator is running
      * in a separate thread, the GUI has to pause the emulator before changing

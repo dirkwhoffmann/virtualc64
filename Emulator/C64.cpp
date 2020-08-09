@@ -609,7 +609,7 @@ C64::acquireThreadLock()
         assert(p != NULL);
         
         // Free the lock by terminating the thread
-        signalStop();
+        requestStop();
     
     } else {
         
@@ -822,7 +822,7 @@ C64::runLoop()
     while (1) {
         
         // Run the emulator
-        do { executeOneFrame(); } while (runLoopCtrl == 0);
+        while (runLoopCtrl == 0) { executeOneFrame(); }
         
         // Check if special action needs to be taken
         if (runLoopCtrl) {
@@ -1067,6 +1067,9 @@ C64::endFrame()
             default: assert(false);
         }
     }
+    
+    // Check if the run loop is requested to stop
+    if (stopFlag) { stopFlag = false; signalStop(); }
     
     // Count some sheep (zzzzzz) ...
     if (!inWarpMode()) {
