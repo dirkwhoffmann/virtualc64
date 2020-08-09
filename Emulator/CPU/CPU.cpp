@@ -26,7 +26,7 @@ CPU::CPU(C64& ref) : C64Component(ref)
          // Internal state
         { &flags,              sizeof(flags),        CLEAR_ON_RESET },
         { &cycle,              sizeof(cycle),        CLEAR_ON_RESET },
-        { &halted,             sizeof(halted),       CLEAR_ON_RESET },
+        { &state,              sizeof(state),        CLEAR_ON_RESET },
         { &next,               sizeof(next),         CLEAR_ON_RESET },
 
         { &reg.a,              sizeof(reg.a),        CLEAR_ON_RESET },
@@ -101,7 +101,7 @@ CPU::_inspect()
         info.irq = irqLine;
         info.nmi = nmiLine;
         info.rdy = rdyLine;
-        info.halted = isHalted();
+        info.halted = isJammed();
         
         info.processorPort = pport.read();
         info.processorPortDir = pport.readDirection();

@@ -154,7 +154,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 }
 - (bool) isHalted
 {
-    return wrapper->cpu->isHalted();
+    return wrapper->cpu->isJammed();
 }
 - (BOOL) tracing
 {

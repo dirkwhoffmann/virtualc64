@@ -333,7 +333,7 @@ public:
     /*! @details  The number of cycles is determined by the target time
      *            which is elapsedTime + duration.
      */
-    void execute(u64 duration);
+    bool execute(u64 duration);
 
 private:
     

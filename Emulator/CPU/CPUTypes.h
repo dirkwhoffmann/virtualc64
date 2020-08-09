@@ -56,11 +56,11 @@ AddressingMode;
 typedef enum
 {
     CPU_OK = 0,
-    CPU_HALTED_BY_ILLEGAL_INSTR,
+    CPU_JAMMED,
     CPU_HALTED_BY_BREAKPOINT,
     CPU_HALTED_BY_WATCHPOINT
 }
-ErrorState;
+CPUState;
 
 typedef enum : u8
 {

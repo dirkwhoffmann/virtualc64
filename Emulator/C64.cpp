@@ -817,12 +817,14 @@ C64::runLoop()
     
     // Prepare to run
     restartTimer();
-    
+
     // Enter the loop
-    while(1) {
+    bool success;
+
+    while (1) {
         
         // Run the emulator
-        executeOneFrame();
+        do { success = executeOneFrame(); } while(likely(success));
         
         // Check if special action needs to be taken
         if (runLoopCtrl) {
@@ -873,7 +875,7 @@ C64::runLoop()
                 break;
             }
         }
-    }    
+    }
 }
 
 void
@@ -913,48 +915,54 @@ C64::stepOver()
     }
 }
 
-void
+bool
 C64::executeOneFrame()
 {
-    do { executeOneLine(); } while (runLoopCtrl == 0 && rasterLine != 0);
+    do {
+        if (!executeOneLine()) return false;
+    } while (rasterLine != 0);
+    
+    return true;
 }
 
-void
+bool
 C64::executeOneLine()
 {
-    // Perform special action at the beginning of a rasterline
+    // Emulate the beginning of a rasterline
     if (rasterCycle == 1) beginRasterLine();
     
-    // Emulate all cycles of the rasterline
+    // Emulate the middle of a rasterline
     int lastCycle = vic.getCyclesPerRasterline();
     for (unsigned i = rasterCycle; i <= lastCycle; i++) {
         
-        _executeOneCycle();
-        
-        if (runLoopCtrl != 0) {
+        if (!_executeOneCycle()) {
             if (i == lastCycle) endRasterLine();
-            return;
+            return false;
         }
     }
     
-    // Perform special action at the beginning of a rasterline
+    // Emulate the end of a rasterline
     endRasterLine();
+    return true;
 }
 
-void
+bool
 C64::executeOneCycle()
 {
     bool isFirstCycle = rasterCycle == 1;
     bool isLastCycle = vic.isLastCycleInRasterline(rasterCycle);
     
     if (isFirstCycle) beginRasterLine();
-    _executeOneCycle();
+    bool result = _executeOneCycle();
     if (isLastCycle) endRasterLine();
+    
+    return result;
 }
 
-void
+bool
 C64::_executeOneCycle()
 {
+    bool result = true;
     u64 cycle = ++cpu.cycle;
     
     //  <---------- o2 low phase ----------->|<- o2 high phase ->|
@@ -982,12 +990,13 @@ C64::_executeOneCycle()
     if (iec.isDirtyC64Side) iec.updateIecLinesC64Side();
     
     // Second clock phase (o2 high)
-    cpu.executeOneCycle();
-    if (drive8.isConnected()) drive8.execute(durationOfOneCycle);
-    if (drive9.isConnected()) { assert(false); drive9.execute(durationOfOneCycle); }
+    result &= cpu.executeOneCycle();
+    if (drive8.isConnected()) result &= drive8.execute(durationOfOneCycle);
+    if (drive9.isConnected()) result &= drive9.execute(durationOfOneCycle);
     datasette.execute();
     
     rasterCycle++;
+    return result;
 }
 
 void

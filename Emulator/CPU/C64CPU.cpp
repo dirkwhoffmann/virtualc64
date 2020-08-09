@@ -9,10 +9,14 @@
 
 #include "C64.h"
 
+/*
 #define CHECK_FOR_WATCHPOINT \
 if (flags & CPU_CHECK_WP && debugger.watchpointMatches(addr)) { \
     c64.signalWatchpoint(); \
 }
+*/
+
+#define CHECK_FOR_WATCHPOINT
 
 C64CPU::C64CPU(C64& ref) : CPU(ref)
 {

@@ -153,9 +153,11 @@ Drive::powerUp()
     resume();
 }
 
-void
+bool
 Drive::execute(u64 duration)
-{    
+{
+    bool result = true;
+    
     elapsedTime += duration;
     while (nextClock < elapsedTime || nextCarry < elapsedTime) {
 
@@ -163,7 +165,7 @@ Drive::execute(u64 duration)
             
             // Execute CPU and VIAs
             u64 cycle = ++cpu.cycle;
-            cpu.executeOneCycle();
+            result = cpu.executeOneCycle();
             if (cycle >= via1.wakeUpCycle) via1.execute(); else via1.idleCounter++;
             if (cycle >= via2.wakeUpCycle) via2.execute(); else via2.idleCounter++;
             updateByteReady();
@@ -179,6 +181,7 @@ Drive::execute(u64 duration)
         }
     }
     assert(nextClock >= elapsedTime && nextCarry >= elapsedTime);
+    return result;
 }
 
 void

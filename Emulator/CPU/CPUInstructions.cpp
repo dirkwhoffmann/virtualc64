@@ -437,7 +437,7 @@ CPU::registerIllegalInstructions()
     registerCallback(0x9B, "TAS*", ADDR_ABSOLUTE_Y, TAS_abs_y);
 }
 
-void
+bool
 CPU::executeOneCycle()
 {
     u8 instr;
@@ -460,7 +460,7 @@ CPU::executeOneCycle()
                 next = nmi_2;
                 doNmi = false;
                 doIrq = false; // NMI wins
-                return;
+                return true;
                 
             } else if (unlikely(doIrq)) {
                 
@@ -468,13 +468,13 @@ CPU::executeOneCycle()
                 IDLE_FETCH
                 next = irq_2;
                 doIrq = false;
-                return;
+                return true;
             }
             
             // Execute the Fetch phase
             FETCH_OPCODE
             next = actionFunc[instr];
-            return;
+            return true;
             
         //
         // Illegal instructions
@@ -482,8 +482,10 @@ CPU::executeOneCycle()
             
         case JAM:
             
-            if (!halted) c64.putMessage(MSG_ILLEGAL_INSTRUCTION);
-            halted = true;
+            if (state != CPU_JAMMED) {
+                state = CPU_JAMMED;
+                c64.putMessage(MSG_ILLEGAL_INSTRUCTION);
+            }
             CONTINUE
 
         case JAM_2:
@@ -514,7 +516,7 @@ CPU::executeOneCycle()
                 // ... jump to the NMI vector instead of the IRQ vector.
                 edgeDetector.clear();
                 next = nmi_5;
-                return;
+                return true;
             }
             CONTINUE
             
@@ -869,7 +871,7 @@ CPU::executeOneCycle()
             
             if (unlikely(pc_hi != HI_BYTE(reg.pc))) {
                 next = (reg.d & 0x80) ? branch_3_underflow : branch_3_overflow;
-                return;
+                return true;
             }
             DONE
         }
@@ -1195,7 +1197,7 @@ CPU::executeOneCycle()
                 // ... jump to the NMI vector instead of the IRQ vector.
                 edgeDetector.clear();
                 next = BRK_nmi_4;
-                return;
+                return true;
                 
             } else {
                 CONTINUE
