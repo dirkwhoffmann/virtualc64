@@ -159,14 +159,14 @@ public:
     /* Resets the component and its subcomponent.
      * Each component must implement this function.
      */
-    virtual void reset();
+    void reset();
     virtual void _reset() = 0;
 
     /* Asks the component to inform the GUI about its current state.
      * The GUI invokes this function when it needs to update all of its visual
      * elements. This happens, e.g., when a snapshot file was loaded.
      */
-    virtual void ping();
+    void ping();
     virtual void _ping() { }
     
     /* Collects information about the component and it's subcomponents.
@@ -200,23 +200,23 @@ public:
     
     /* Dumps debug information about the current configuration to the console
      */
-    virtual void dumpConfig();
+    void dumpConfig();
     virtual void _dumpConfig() { }
 
     /* Dumps debug information about the internal state to the console
      */
-    virtual void dump();
+    void dump();
     virtual void _dump() { }
 
 
      // Switches warp mode on or off
-    virtual void setWarp(bool enable);
+    void setWarp(bool enable);
     virtual void _setWarp(bool enable) { };
     void enableWarpMode() { setWarp(true); }
     void disableWarpMode() { setWarp(false); }
     
     // Switches debug mode on or off
-    virtual void setDebug(bool enable);
+    void setDebug(bool enable);
     virtual void _setDebug(bool enable) { };
     void enableDebugMode() { setDebug(true); }
     void disableDebugMode() { setDebug(false); }
@@ -227,7 +227,7 @@ public:
      * components overwrite this function to update clock dependent lookup
      * tables.
      */
-    virtual void setClockFrequency(u32 value);
+    void setClockFrequency(u32 value);
     virtual void _setClockFrequency(u32 value) { }
 
     

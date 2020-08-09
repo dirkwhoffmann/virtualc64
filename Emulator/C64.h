@@ -284,8 +284,8 @@ public:
 public:
 
     void prefix() override;
-    void reset() override;
-    void setWarp(bool enable) override;
+    void reset();
+    void setWarp(bool enable);
 
     void powerOn();
     void powerOff();
