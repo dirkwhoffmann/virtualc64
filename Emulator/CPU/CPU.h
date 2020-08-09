@@ -25,8 +25,12 @@ class CPU : public C64Component {
     friend class Breakpoints;
     friend class Watchpoints;
     
+protected:
+    
     // The memory this CPU is connected to
-    M memory;
+    M &mem;
+    
+private:
     
     //
     // Inspection results

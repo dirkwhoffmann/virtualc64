@@ -10,7 +10,7 @@
 #include "C64.h"
 
 template <typename M>
-CPU<M>::CPU(C64& ref, M& memref) : C64Component(ref), memory(memref)
+CPU<M>::CPU(C64& ref, M& memref) : C64Component(ref), mem(memref)
 {
     subComponents = vector<HardwareComponent *> {
         

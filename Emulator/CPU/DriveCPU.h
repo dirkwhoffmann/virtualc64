@@ -13,9 +13,7 @@
 #include "CPU.h"
 
 class DriveCPU : public CPU<DriveMemory> {
-    
-    DriveMemory &mem;
-    
+        
 public:
     
     DriveCPU(C64& ref, DriveMemory &memref);
