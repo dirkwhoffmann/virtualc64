@@ -289,8 +289,8 @@ public:
 
     void powerOn();
     void powerOff();
-    void run() override;
-    void pause() override;
+    void run();
+    void pause();
 
 private:
 
