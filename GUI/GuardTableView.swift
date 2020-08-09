@@ -185,7 +185,7 @@ class BreakTableView: GuardTableView {
 class WatchTableView: GuardTableView {
 
     override func cache() {
-
+        
         numRows = watchpoints.count
 
         for i in 0 ..< numRows {

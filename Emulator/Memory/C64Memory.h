@@ -52,6 +52,9 @@ public:
     // Poke target lookup table
     MemoryType pokeTarget[16];
     
+    // Indicates if watchpoints should be checked
+    bool checkWatchpoints = false;
+    
     
     //
     // Constructing and serializing

@@ -927,11 +927,9 @@ C64::stepOver()
 bool
 C64::executeOneFrame()
 {
-    do {
-        if (!executeOneLine()) return false;
-    } while (rasterLine != 0);
+    do { executeOneLine(); } while (rasterLine != 0 && runLoopCtrl == 0);
     
-    return true;
+    return runLoopCtrl == 0;
 }
 
 bool
@@ -944,7 +942,8 @@ C64::executeOneLine()
     int lastCycle = vic.getCyclesPerRasterline();
     for (unsigned i = rasterCycle; i <= lastCycle; i++) {
         
-        if (!_executeOneCycle()) {
+        _executeOneCycle();
+        if (runLoopCtrl != 0) {
             if (i == lastCycle) endRasterLine();
             return false;
         }
@@ -962,10 +961,10 @@ C64::executeOneCycle()
     bool isLastCycle = vic.isLastCycleInRasterline(rasterCycle);
     
     if (isFirstCycle) beginRasterLine();
-    bool result = _executeOneCycle();
+    _executeOneCycle();
     if (isLastCycle) endRasterLine();
     
-    return result;
+    return runLoopCtrl == 0;
 }
 
 bool

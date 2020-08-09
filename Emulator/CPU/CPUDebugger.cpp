@@ -169,7 +169,7 @@ Breakpoints::setNeedsCheck(bool value)
 void
 Watchpoints::setNeedsCheck(bool value)
 {
-    // TODO
+    cpu.c64.mem.checkWatchpoints = value;
 }
 
 //
