@@ -11,7 +11,7 @@
 // http://www.pepto.de/projects/colorvic/
 // http://unusedino.de/ec64/technical/misc/vic656x/colors/
 
-#include "VIC.h"
+#include "VICII.h"
 
 double gammaCorrect(double value, double source, double target)
 {
@@ -27,14 +27,14 @@ double gammaCorrect(double value, double source, double target)
 }
 
 u32
-VIC::getColor(unsigned nr)
+VICII::getColor(unsigned nr)
 {
     assert(nr < 16);
     return rgbaTable[nr];
 }
 
 u32
-VIC::getColor(unsigned nr, Palette palette)
+VICII::getColor(unsigned nr, Palette palette)
 {
     double y, u, v;
     
@@ -227,28 +227,28 @@ VIC::getColor(unsigned nr, Palette palette)
 }
 
 void
-VIC::setBrightness(double value)
+VICII::setBrightness(double value)
 {
     brightness = value;
     updatePalette();
 }
 
 void
-VIC::setContrast(double value)
+VICII::setContrast(double value)
 {
     contrast = value;
     updatePalette();
 }
 
 void
-VIC::setSaturation(double value)
+VICII::setSaturation(double value)
 {
     saturation = value;
     updatePalette();
 }
 
 void
-VIC::updatePalette()
+VICII::updatePalette()
 {
 #if 0
     double y[16], u[16], v[16];

@@ -11,10 +11,10 @@
 #define _VIC_H
 
 #include "C64Component.h"
-#include "VICConstants.h"
+#include "VICIIConstants.h"
 #include "TimeDelayed.h"
 
-class VIC : public C64Component {
+class VICII : public C64Component {
 
     friend class C64Memory;
     
@@ -127,7 +127,7 @@ private:
 
     
     /*! @brief    Refresh counter (1)
-     *  @details  "The VIC does five read accesses in every raster line for the
+     *  @details  "The VICII does five read accesses in every raster line for the
      *             refresh of the dynamic RAM. An 8 bit refresh counter (REF)
      *             is used to generate 256 DRAM row addresses. The counter is
      *             reset to $ff in raster line 0 and decremented by 1 after each
@@ -166,13 +166,13 @@ private:
     u8 rc;
     
     /*! @brief    Video matrix (6)
-     *  @details  Every 8th rasterline, the VIC chips performs a c-access and
+     *  @details  Every 8th rasterline, the VICII chips performs a c-access and
      *            fills this array with character information.
      */
     u8 videoMatrix[40];
     
     /*! @brief    Color line (7)
-     *  @details  Every 8th rasterline, the VIC chips performs a c-access and
+     *  @details  Every 8th rasterline, the VICII chips performs a c-access and
      *            fills the array with color information.
      */
     u8 colorLine[40];
@@ -240,7 +240,7 @@ private:
     
     
     /*! @brief    Sprite data sequencer (11)
-     *  @details  The VIC chip has a 24 bit (3 byte) shift register for each
+     *  @details  The VICII chip has a 24 bit (3 byte) shift register for each
      *            sprite. It stores the sprite for one rasterline. If a sprite
      *            is a display candidate in the current rasterline, its shift
      *            register is activated when the raster X coordinate matches
@@ -371,14 +371,14 @@ public: // REMOVE
     bool DENwasSetInRasterline30;
     
     /*! @brief    Display State
-     *  @details  "The text/bitmap display logic in the VIC is in one of two
+     *  @details  "The text/bitmap display logic in the VICII is in one of two
      *             states at any time: The idle state and the display state.
      *
      *              - In display state, c- and g-accesses take place, the
      *                addresses and interpretation of the data depend on the
      *                selected display mode.
      *
-     *              - In idle state, only g-accesses occur. The VIC is either in
+     *              - In idle state, only g-accesses occur. The VICII is either in
      *                idle or display state" [C.B.]
      */
     bool displayState;
@@ -491,7 +491,7 @@ private:
     u8 dataBusPhi2;
     
     /*! @brief    Address bus
-     *  @details  Whenever VIC performs a memory read, the generated memory
+     *  @details  Whenever VICII performs a memory read, the generated memory
      *            address is stored in this variable.
      */
     u16 addrBus;
@@ -500,7 +500,7 @@ private:
      *  @details  Remember: Each CPU cycle is split into two phases:
      *            phi1 (First phase, LOW):   VICII gets access to the bus
      *            phi2 (Second phase, HIGH): CPU gets access to the bus
-     *            In rare cases, VIC needs access in the HIGH phase, too. To
+     *            In rare cases, VICII needs access in the HIGH phase, too. To
      *            block the CPU, the BA line is pulled down.
      *  @note     BA can be pulled down by multiple sources (wired AND) and
      *            this variable indicates which sources are holding the line
@@ -509,7 +509,7 @@ private:
     TimeDelayed<u16>baLine = TimeDelayed<u16>(3);
     
     /*! @brief    Start address of the currently selected memory bank
-     *  @details  There are four banks in total since the VIC chip can only
+     *  @details  There are four banks in total since the VICII chip can only
      *            'see' 16 KB of memory at the same time. Two bank select bits
      *            in the CIA I/O space determine which quarter of memory is
      *            currently seen.
@@ -565,7 +565,7 @@ public:
 	bool hideSprites;
 	
 	/*! @brief    Enables sprite-sprite collision
-	 *  @details  If set to true, the virtual VIC chips checks for sprite-sprite
+	 *  @details  If set to true, the virtual VICII chips checks for sprite-sprite
      *            collision as the original C64 does. For debugging purposes and
      *            cheating, collision detection can be disabled by setting the
      *            variabel to false. Collision detection can be enabled or
@@ -575,7 +575,7 @@ public:
 	u8 spriteSpriteCollisionEnabled;
 	
 	/*! @brief    Enable sprite-background collision
-	 *  @details  If set to true, the virtual VIC chips checks for sprite-
+	 *  @details  If set to true, the virtual VICII chips checks for sprite-
      *            background collision as the original C64 does. For debugging
      *            purposes and cheating, collision detection can be disabled by
      *            setting the variabel to false. Collision detection can be
@@ -625,15 +625,15 @@ private:
     u32 *noise;
 
     /*! @brief    First screen buffer
-     *  @details  The VIC chip writes its output into this buffer. The contents
+     *  @details  The VICII chip writes its output into this buffer. The contents
      *            of the array is later copied into to texture RAM of your
      *            graphic card by the drawRect method in the GPU related code.
      */
     int *screenBuffer1 = new int[PAL_RASTERLINES * NTSC_PIXELS];
     
     /*! @brief    Second screen buffer
-     *  @details  The VIC chip uses double buffering. Once a frame is drawn, the
-     *            VIC chip writes the next frame to the second buffer.
+     *  @details  The VICII chip uses double buffering. Once a frame is drawn, the
+     *            VICII chip writes the next frame to the second buffer.
      */
     int *screenBuffer2 = new int [PAL_RASTERLINES * NTSC_PIXELS];
     
@@ -691,7 +691,7 @@ private:
     
 public:
 	
-    VIC(C64 &ref);
+    VICII(C64 &ref);
     
     
     //
@@ -855,7 +855,7 @@ private:
 
 public:
     
-    //! @brief    Peeks a value from a VIC register without side effects.
+    //! @brief    Peeks a value from a VICII register without side effects.
     u8 spypeek(u16 addr);
     
     //! @brief    Returns the ultimax flag
@@ -894,10 +894,10 @@ private:
      */
     void updateBankAddr();
     
-    //! @brief    Peeks a value from a VIC register.
+    //! @brief    Peeks a value from a VICII register.
 	u8 peek(u16 addr);
     
-    //! @brief    Pokes a value into a VIC register.
+    //! @brief    Pokes a value into a VICII register.
 	void poke(u16 addr, u8 value);
     
     //! @brief    Simulates a memory access via the address and data bus.
@@ -1013,7 +1013,7 @@ private:
      */
     
     /*! @brief    Takes care of the vertical frame flipflop value.
-     *  @details  Invoked in each VIC II cycle
+     *  @details  Invoked in each VICII II cycle
      */
     void checkVerticalFrameFF();
     
@@ -1102,7 +1102,7 @@ private:
      */
     bool BApulledDownForAtLeastThreeCycles() { return baLine.delayed(); }
     
-	/*! @brief    Triggers a VIC interrupt
+	/*! @brief    Triggers a VICII interrupt
      *  @param    source is the interrupt source
      *            1 : Rasterline interrupt
      *            2 : Collision of a sprite with background pixels
@@ -1220,7 +1220,7 @@ private:
     
     
 	//
-    //!  @functiongroup Running the device (VIC.cpp and VIC_cycles_xxx.cpp)
+    //!  @functiongroup Running the device (VICII.cpp and VIC_cycles_xxx.cpp)
 	//
 
 public:
@@ -1246,7 +1246,7 @@ public:
 	void endFrame();
     
     //! @brief    Processes all time delayed actions.
-    /*! @details  This function is called at the beginning of each VIC cycle.
+    /*! @details  This function is called at the beginning of each VICII cycle.
      */
     void processDelayedActions();
     

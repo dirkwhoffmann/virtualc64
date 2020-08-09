@@ -16,7 +16,7 @@ struct C64Wrapper { C64 *c64; };
 struct CpuWrapper { CPU<C64Memory> *cpu; };
 struct GuardsWrapper { Guards *guards; };
 struct MemoryWrapper { C64Memory *mem; };
-struct VicWrapper { VIC *vic; };
+struct VicWrapper { VICII *vic; };
 struct CiaWrapper { CIA *cia; };
 struct KeyboardWrapper { Keyboard *keyboard; };
 struct ControlPortWrapper { ControlPort *port; };
@@ -323,12 +323,12 @@ struct AnyC64FileWrapper { AnyFile *file; };
 @end
 
 //
-// VIC
+// VICII
 //
 
 @implementation VICProxy
 
-- (instancetype) initWithVIC:(VIC *)vic
+- (instancetype) initWithVIC:(VICII *)vic
 {
     if (self = [super init]) {
         wrapper = new VicWrapper();

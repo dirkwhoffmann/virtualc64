@@ -1189,7 +1189,7 @@ CIA1::updatePA()
 //   JOYA1, ROW1 <--> | PB1 |
 //   JOYA2, ROW2 <--> | PB2 |
 //   JOYA3, ROW3 <--> | PB3 |
-// BTNA/LP, ROW4 <--> | PB4 | --> LP (VIC)
+// BTNA/LP, ROW4 <--> | PB4 | --> LP (VICII)
 //          ROW5 <--> | PB5 |
 //          ROW6 <--> | PB6 |
 //          ROW  <--> | PB7 |
@@ -1232,7 +1232,7 @@ CIA1::updatePB()
     // The control port can always bring the port lines low
     PB &= port1.bitmask();
     
-    // PB4 is connected to the VIC (LP pin).
+    // PB4 is connected to the VICII (LP pin).
     vic.setLP(GET_BIT(PB, 4) != 0);
     
     // An edge on PB4 triggers the NeosMouse on port 1
@@ -1305,7 +1305,7 @@ CIA2::updatePA()
 {
     PA = (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
     
-    // PA0 (VA14) and PA1 (VA15) determine the memory bank seen by the VIC
+    // PA0 (VA14) and PA1 (VA15) determine the memory bank seen by the VICII
     // vic.updateBankAddr();
     
     // Mark IEC bus as dirty

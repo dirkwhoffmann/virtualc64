@@ -21,7 +21,7 @@ class C64Memory;
 class DriveMemory;
 template <typename M> class CPU;
 class ProcessorPort;
-class VIC;
+class VICII;
 class CIA1;
 class CIA2;
 class SIDBridge;
@@ -58,7 +58,7 @@ protected:
     C64 &c64;
     C64Memory &mem;
     CPU<C64Memory> &cpu;
-    VIC &vic;
+    VICII &vic;
     CIA1 &cia1;
     CIA2 &cia2;
     SIDBridge &sid;

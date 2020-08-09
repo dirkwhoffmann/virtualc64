@@ -23,7 +23,7 @@
 #include "MessageQueueTypes.h"
 #include "MouseTypes.h"
 #include "SIDTypes.h"
-#include "VICTypes.h"
+#include "VICIITypes.h"
 
 //
 // Enumerations
@@ -31,7 +31,7 @@
 
 typedef enum : long
 {
-    // VIC
+    // VICII
     OPT_VIC_REVISION,
     OPT_GRAY_DOT_BUG,
 

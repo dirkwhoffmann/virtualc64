@@ -18,7 +18,7 @@
 #define SPR6 0x40
 #define SPR7 0x80
 
-VIC::VIC(C64 &ref) : C64Component(ref)
+VICII::VICII(C64 &ref) : C64Component(ref)
 {
 	setDescription("VIC");
     
@@ -114,13 +114,13 @@ VIC::VIC(C64 &ref) : C64Component(ref)
 }
 
 void
-VIC::_initialize()
+VICII::_initialize()
 {
     setRevision(PAL_8565);
 }
 
 void 
-VIC::_reset()
+VICII::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)
@@ -166,13 +166,13 @@ VIC::_reset()
 }
 
 void
-VIC::_ping()
+VICII::_ping()
 {
     c64.putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
 }
 
 void
-VIC::_dumpConfig()
+VICII::_dumpConfig()
 {
     msg("    Chip model : %d (%s)\n", config.revision, vicRevisionName(config.revision));
     msg("  Gray dot bug : %s\n", config.grayDotBug ? "yes" : "no");
@@ -183,7 +183,7 @@ VIC::_dumpConfig()
 }
 
 void 
-VIC::_dump()
+VICII::_dump()
 {
     u8 ctrl1 = reg.current.ctrl1;
     u8 ctrl2 = reg.current.ctrl2; 
@@ -238,7 +238,7 @@ VIC::_dump()
 }
 
 size_t
-VIC::stateSize()
+VICII::stateSize()
 {
     return HardwareComponent::stateSize()
     + baLine.stateSize()
@@ -246,21 +246,21 @@ VIC::stateSize()
 }
 
 void
-VIC::didLoadFromBuffer(u8 **buffer)
+VICII::didLoadFromBuffer(u8 **buffer)
 {
     baLine.loadFromBuffer(buffer);
     gAccessResult.loadFromBuffer(buffer);
 }
 
 void
-VIC::didSaveToBuffer(u8 **buffer)
+VICII::didSaveToBuffer(u8 **buffer)
 {
     baLine.saveToBuffer(buffer);
     gAccessResult.saveToBuffer(buffer);
 }
 
 void
-VIC::setRevision(VICRevision revision)
+VICII::setRevision(VICRevision revision)
 {
     debug(VIC_DEBUG, "setRevision(%d)\n", revision);
     debug("setRevision(%d)\n", revision);
@@ -294,7 +294,7 @@ VIC::setRevision(VICRevision revision)
 }
 
 void
-VIC::setGlueLogic(GlueLogic type)
+VICII::setGlueLogic(GlueLogic type)
 {
     debug(VIC_DEBUG, "setGlueLogic(%d)\n", type);
     
@@ -303,7 +303,7 @@ VIC::setGlueLogic(GlueLogic type)
 }
 
 void
-VIC::setVideoPalette(Palette type)
+VICII::setVideoPalette(Palette type)
 {
     if (!isPalette(type)) {
         warn("Unknown palette type (%d). Assuming color palette.\n", type);
@@ -315,7 +315,7 @@ VIC::setVideoPalette(Palette type)
 }
 
 unsigned
-VIC::getClockFrequency()
+VICII::getClockFrequency()
 {
     switch (config.revision) {
             
@@ -330,7 +330,7 @@ VIC::getClockFrequency()
 }
 
 unsigned
-VIC::getCyclesPerRasterline()
+VICII::getCyclesPerRasterline()
 {
     switch (config.revision) {
             
@@ -347,13 +347,13 @@ VIC::getCyclesPerRasterline()
 }
 
 bool
-VIC::isLastCycleInRasterline(unsigned cycle)
+VICII::isLastCycleInRasterline(unsigned cycle)
 {
     return cycle >= getCyclesPerRasterline();
 }
 
 unsigned
-VIC::getRasterlinesPerFrame()
+VICII::getRasterlinesPerFrame()
 {
     switch (config.revision) {
             
@@ -370,7 +370,7 @@ VIC::getRasterlinesPerFrame()
 }
 
 bool
-VIC::isVBlankLine(unsigned rasterline)
+VICII::isVBlankLine(unsigned rasterline)
 {
     switch (config.revision) {
             
@@ -387,7 +387,7 @@ VIC::isVBlankLine(unsigned rasterline)
 }
 
 void *
-VIC::screenBuffer() {
+VICII::screenBuffer() {
     if (currentScreenBuffer == screenBuffer1) {
         return screenBuffer2;
     } else {
@@ -396,7 +396,7 @@ VIC::screenBuffer() {
 }
 
 void
-VIC::resetScreenBuffers()
+VICII::resetScreenBuffers()
 {
     for (unsigned line = 0; line < PAL_RASTERLINES; line++) {
         for (unsigned i = 0; i < NTSC_PIXELS; i++) {
@@ -408,20 +408,20 @@ VIC::resetScreenBuffers()
 }
 
 u32 *
-VIC::getNoise()
+VICII::getNoise()
 {
     int offset = rand() % (512 * 512);
     return noise + offset;
 }
 
 u16
-VIC::rasterline()
+VICII::rasterline()
 {
     return c64.rasterLine;
 }
 
 u8
-VIC::rastercycle()
+VICII::rastercycle()
 {
     return c64.rasterCycle;
 }
@@ -432,7 +432,7 @@ VIC::rastercycle()
 //
 
 void
-VIC::checkVerticalFrameFF()
+VICII::checkVerticalFrameFF()
 {
 
     // Check for upper border
@@ -452,7 +452,7 @@ VIC::checkVerticalFrameFF()
 }
 
 void
-VIC::checkFrameFlipflopsLeft(u16 comparisonValue)
+VICII::checkFrameFlipflopsLeft(u16 comparisonValue)
 {
     /* "6. If the X coordinate reaches the left comparison value and the
      *     vertical border flip flop is not set, the main flip flop is reset."
@@ -468,7 +468,7 @@ VIC::checkFrameFlipflopsLeft(u16 comparisonValue)
 }
 
 void
-VIC::checkFrameFlipflopsRight(u16 comparisonValue)
+VICII::checkFrameFlipflopsRight(u16 comparisonValue)
 {
     /* "1. If the X coordinate reaches the right comparison value, the main
      *     border flip flop is set." [C.B.]
@@ -479,7 +479,7 @@ VIC::checkFrameFlipflopsRight(u16 comparisonValue)
 }
 
 void
-VIC::setVerticalFrameFF(bool value)
+VICII::setVerticalFrameFF(bool value)
 {
     if (value != flipflops.delayed.vertical) {
         flipflops.current.vertical = value;
@@ -488,7 +488,7 @@ VIC::setVerticalFrameFF(bool value)
 }
 
 void
-VIC::setMainFrameFF(bool value)
+VICII::setMainFrameFF(bool value)
 {
     if (value != flipflops.delayed.main) {
         flipflops.current.main = value;
@@ -497,7 +497,7 @@ VIC::setMainFrameFF(bool value)
 }
 
 bool
-VIC::badLineCondition() {
+VICII::badLineCondition() {
     
     /* A Bad Line Condition is given at any arbitrary clock cycle, if at the
      * negative edge of ø0 at the beginning of the cycle
@@ -513,7 +513,7 @@ VIC::badLineCondition() {
 }
 
 void
-VIC::updateBA(u8 value)
+VICII::updateBA(u8 value)
 {
     if (value != baLine.current()) {
        
@@ -528,7 +528,7 @@ VIC::updateBA(u8 value)
 }
 
 void 
-VIC::triggerIrq(u8 source)
+VICII::triggerIrq(u8 source)
 {
     assert(source == 1 || source == 2 || source == 4 || source == 8);
     
@@ -537,7 +537,7 @@ VIC::triggerIrq(u8 source)
 }
 
 u16
-VIC::lightpenX()
+VICII::lightpenX()
 {
     u8 cycle = c64.rasterCycle;
     
@@ -567,13 +567,13 @@ VIC::lightpenX()
 }
 
 u16
-VIC::lightpenY()
+VICII::lightpenY()
 {
     return yCounter;
 }
 
 void
-VIC::setLP(bool value)
+VICII::setLP(bool value)
 {
     // A negative transition on LP triggers a lightpen event.
     if (FALLING_EDGE(lpLine, value)) {
@@ -584,7 +584,7 @@ VIC::setLP(bool value)
 }
 
 void
-VIC::checkForLightpenIrq()
+VICII::checkForLightpenIrq()
 {
     u8 vicCycle = c64.rasterCycle;
 
@@ -602,7 +602,7 @@ VIC::checkForLightpenIrq()
     latchedLightPenX = lightpenX() / 2;
     latchedLightPenY = lightpenY();
     
-    // Newer VIC models trigger an interrupt immediately
+    // Newer VICII models trigger an interrupt immediately
     if (!delayedLightPenIrqs()) triggerIrq(8);
     
     // Lightpen interrupts can only occur once per frame
@@ -610,7 +610,7 @@ VIC::checkForLightpenIrq()
 }
 
 void
-VIC::checkForLightpenIrqAtStartOfFrame()
+VICII::checkForLightpenIrqAtStartOfFrame()
 {
     // This function is called at the beginning of a frame, only.
     assert(c64.rasterLine == 0);
@@ -649,7 +649,7 @@ VIC::checkForLightpenIrqAtStartOfFrame()
 //
 
 u8
-VIC::spriteDepth(u8 nr)
+VICII::spriteDepth(u8 nr)
 {
     return
     GET_BIT(reg.delayed.sprPriority, nr) ?
@@ -658,7 +658,7 @@ VIC::spriteDepth(u8 nr)
 }
 
 u8
-VIC::compareSpriteY()
+VICII::compareSpriteY()
 {
     u8 result = 0;
     
@@ -670,7 +670,7 @@ VIC::compareSpriteY()
 }
 
 void
-VIC::turnSpriteDmaOff()
+VICII::turnSpriteDmaOff()
 {
     /* "7. In the first phase of cycle 16, [1] it is checked if the expansion
      *     flip flop is set. If so, [2] MCBASE load from MC (MC->MCBASE), [3]
@@ -700,7 +700,7 @@ VIC::turnSpriteDmaOff()
 }
 
 void
-VIC::turnSpriteDmaOn()
+VICII::turnSpriteDmaOn()
 {
     /* "In the first phases of cycle 55 and 56, the VIC checks for every sprite
      *  if the corresponding MxE bit in register $d015 is set and the Y
@@ -720,7 +720,7 @@ VIC::turnSpriteDmaOn()
 }
 
 void
-VIC::turnSpritesOnOrOff()
+VICII::turnSpritesOnOrOff()
 {
     /* "In the first phase of cycle 58, the MC of every sprite is loaded from
      *  its belonging MCBASE (MCBASE->MC) and it is checked [1] if the DMA for
@@ -737,7 +737,7 @@ VIC::turnSpritesOnOrOff()
 }
 
 void
-VIC::updateSpriteShiftRegisters() {
+VICII::updateSpriteShiftRegisters() {
     if (isSecondDMAcycle) {
         for (unsigned sprite = 0; sprite < 8; sprite++) {
             if (GET_BIT(isSecondDMAcycle, sprite)) {
@@ -748,7 +748,7 @@ VIC::updateSpriteShiftRegisters() {
 }
 
 void 
-VIC::beginFrame()
+VICII::beginFrame()
 {
 	lightpenIRQhasOccured = false;
 
@@ -768,7 +768,7 @@ VIC::beginFrame()
 }
 
 void
-VIC::endFrame()
+VICII::endFrame()
 {
     // Switch active screen buffer
     bool first = (currentScreenBuffer == screenBuffer1);
@@ -777,7 +777,7 @@ VIC::endFrame()
 }
 
 void 
-VIC::beginRasterline(u16 line)
+VICII::beginRasterline(u16 line)
 {
     verticalFrameFFsetCond = false;
 
@@ -807,7 +807,7 @@ VIC::beginRasterline(u16 line)
 }
 
 void 
-VIC::endRasterline()
+VICII::endRasterline()
 {
     // Set vertical flipflop if condition was hit
     // Do we need to do this here? It is handled in cycle 1 as well.

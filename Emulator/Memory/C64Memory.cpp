@@ -270,13 +270,13 @@ C64Memory::peekIO(u16 addr)
     
     switch ((addr >> 8) & 0xF) {
             
-        case 0x0: // VIC
-        case 0x1: // VIC
-        case 0x2: // VIC
-        case 0x3: // VIC
+        case 0x0: // VICII
+        case 0x1: // VICII
+        case 0x2: // VICII
+        case 0x3: // VICII
             
             // Only the lower 6 bits are used for adressing the VIC I/O space.
-            // As a result, VIC's I/O memory repeats every 64 bytes.
+            // As a result, VICII's I/O memory repeats every 64 bytes.
             return vic.peek(addr & 0x003F);
 
         case 0x4: // SID
@@ -355,10 +355,10 @@ C64Memory::spypeekIO(u16 addr)
     
     switch ((addr >> 8) & 0xF) {
             
-        case 0x0: // VIC
-        case 0x1: // VIC
-        case 0x2: // VIC
-        case 0x3: // VIC
+        case 0x0: // VICII
+        case 0x1: // VICII
+        case 0x2: // VICII
+        case 0x3: // VICII
             
             return vic.spypeek(addr & 0x003F);
             
@@ -474,13 +474,13 @@ C64Memory::pokeIO(u16 addr, u8 value)
     
     switch ((addr >> 8) & 0xF) {
             
-        case 0x0: // VIC
-        case 0x1: // VIC
-        case 0x2: // VIC
-        case 0x3: // VIC
+        case 0x0: // VICII
+        case 0x1: // VICII
+        case 0x2: // VICII
+        case 0x3: // VICII
             
-            // Only the lower 6 bits are used for adressing the VIC I/O space.
-            // As a result, VIC's I/O memory repeats every 64 bytes.
+            // Only the lower 6 bits are used for adressing the VICII I/O space.
+            // As a result, VICII's I/O memory repeats every 64 bytes.
             vic.poke(addr & 0x003F, value);
             return;
             

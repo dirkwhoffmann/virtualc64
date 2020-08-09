@@ -40,7 +40,7 @@
 #include "C64Memory.h"
 #include "DriveMemory.h"
 #include "FlashRom.h"
-#include "VIC.h"
+#include "VICII.h"
 #include "SIDBridge.h"
 #include "TOD.h"
 #include "CIA.h"
@@ -77,14 +77,14 @@ public:
     
 public:
     
-    // Memory (ROM, RAM, and color RAM)
+    // Memory (ROM, RAM and color RAM)
     C64Memory mem = C64Memory(*this);
     
     // CPU
     C64CPU cpu = C64CPU(*this, mem);
         
     // Video Interface Controller
-    VIC vic = VIC(*this);
+    VICII vic = VICII(*this);
     
     // Complex Interface Adapters
     CIA1 cia1 = CIA1(*this);
@@ -125,7 +125,7 @@ public:
     //! @brief    The currently drawn rasterline
     /*! @details  The first rasterline is numbered 0. The number of rasterlines
      *            drawn in a single frame depends on the selected VICII model.
-     *  @see      VIC::getRasterlinesPerFrame()
+     *  @see      VICII::getRasterlinesPerFrame()
      */
     u16 rasterLine;
     
@@ -133,7 +133,7 @@ public:
      *  @details  The first rasterline cycle is numbered 1. The number of cycles
      *            executed in a single rasterline depends on the selected
      *            VICII model.
-     *  @see      VIC::getCyclesPerRasterline()
+     *  @see      VICII::getCyclesPerRasterline()
      */
     u8 rasterCycle;
     
@@ -153,7 +153,7 @@ public:
      *  @note     vicfunc[0] is a stub. It is never called, because the first
      *            rasterline cycle is numbered 1.
      */
-    void (VIC::*vicfunc[66])(void);
+    void (VICII::*vicfunc[66])(void);
     
     
     //
@@ -209,20 +209,7 @@ private:
      */
     u64 nanoTargetTime;
     
-    /*! @brief    Indicates if c64 is currently running at maximum speed
-     *            (with timing synchronization disabled)
-     */
-    // bool warp;
-    
-    //! @brief    Indicates that we should always run as possible.
-    // bool alwaysWarp;
-    
-    /*! @brief    Indicates that we should run as fast as possible at least
-     *            during disk operations.
-     */
-    // bool warpLoad;
-    
-    
+
     //
     // Operation modes
     //
@@ -377,8 +364,8 @@ public:
      */
     void setModel(C64Model m);
     
-    //! @brief    Updates the VIC function table
-    /*! @details  This function is invoked by VIC::setModel(), only.
+    //! @brief    Updates the VICII function table
+    /*! @details  This function is invoked by VICII::setModel(), only.
      */
     void updateVicFunctionTable();
     

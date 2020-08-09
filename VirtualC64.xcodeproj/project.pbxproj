@@ -102,13 +102,13 @@
 		504C438924AF29AC00E69CAE /* NeosMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42FD24AF29AB00E69CAE /* NeosMouse.cpp */; };
 		504C438A24AF29AC00E69CAE /* Mouse1350.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42FE24AF29AB00E69CAE /* Mouse1350.cpp */; };
 		504C438B24AF29AC00E69CAE /* Mouse1351.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42FF24AF29AB00E69CAE /* Mouse1351.cpp */; };
-		504C438C24AF29AC00E69CAE /* VIC_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430524AF29AB00E69CAE /* VIC_draw.cpp */; };
-		504C438D24AF29AC00E69CAE /* VIC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430724AF29AC00E69CAE /* VIC.cpp */; };
-		504C438E24AF29AC00E69CAE /* VIC_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430824AF29AC00E69CAE /* VIC_colors.cpp */; };
-		504C438F24AF29AC00E69CAE /* VIC_debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430924AF29AC00E69CAE /* VIC_debug.cpp */; };
-		504C439024AF29AC00E69CAE /* VIC_cycles_pal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430A24AF29AC00E69CAE /* VIC_cycles_pal.cpp */; };
-		504C439124AF29AC00E69CAE /* VIC_memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430B24AF29AC00E69CAE /* VIC_memory.cpp */; };
-		504C439224AF29AC00E69CAE /* VIC_cycles_ntsc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430D24AF29AC00E69CAE /* VIC_cycles_ntsc.cpp */; };
+		504C438C24AF29AC00E69CAE /* VICII_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430524AF29AB00E69CAE /* VICII_draw.cpp */; };
+		504C438D24AF29AC00E69CAE /* VICII.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430724AF29AC00E69CAE /* VICII.cpp */; };
+		504C438E24AF29AC00E69CAE /* VICII_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430824AF29AC00E69CAE /* VICII_colors.cpp */; };
+		504C438F24AF29AC00E69CAE /* VICII_debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430924AF29AC00E69CAE /* VICII_debug.cpp */; };
+		504C439024AF29AC00E69CAE /* VICII_cycles_pal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430A24AF29AC00E69CAE /* VICII_cycles_pal.cpp */; };
+		504C439124AF29AC00E69CAE /* VICII_memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430B24AF29AC00E69CAE /* VICII_memory.cpp */; };
+		504C439224AF29AC00E69CAE /* VICII_cycles_ntsc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430D24AF29AC00E69CAE /* VICII_cycles_ntsc.cpp */; };
 		504C439324AF29AC00E69CAE /* Datasette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430F24AF29AC00E69CAE /* Datasette.cpp */; };
 		504C439424AF29AC00E69CAE /* SIDBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C431224AF29AC00E69CAE /* SIDBridge.cpp */; };
 		504C439524AF29AC00E69CAE /* envelope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431724AF29AC00E69CAE /* envelope.cc */; };
@@ -382,15 +382,15 @@
 		504C430124AF29AB00E69CAE /* Mouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mouse.h; sourceTree = "<group>"; };
 		504C430224AF29AB00E69CAE /* Mouse1351.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mouse1351.h; sourceTree = "<group>"; };
 		504C430324AF29AB00E69CAE /* C64Types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64Types.h; sourceTree = "<group>"; };
-		504C430524AF29AB00E69CAE /* VIC_draw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_draw.cpp; sourceTree = "<group>"; };
-		504C430624AF29AC00E69CAE /* VICTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VICTypes.h; sourceTree = "<group>"; };
-		504C430724AF29AC00E69CAE /* VIC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC.cpp; sourceTree = "<group>"; };
-		504C430824AF29AC00E69CAE /* VIC_colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_colors.cpp; sourceTree = "<group>"; };
-		504C430924AF29AC00E69CAE /* VIC_debug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_debug.cpp; sourceTree = "<group>"; };
-		504C430A24AF29AC00E69CAE /* VIC_cycles_pal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_cycles_pal.cpp; sourceTree = "<group>"; };
-		504C430B24AF29AC00E69CAE /* VIC_memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_memory.cpp; sourceTree = "<group>"; };
-		504C430C24AF29AC00E69CAE /* VIC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIC.h; sourceTree = "<group>"; };
-		504C430D24AF29AC00E69CAE /* VIC_cycles_ntsc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_cycles_ntsc.cpp; sourceTree = "<group>"; };
+		504C430524AF29AB00E69CAE /* VICII_draw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_draw.cpp; sourceTree = "<group>"; };
+		504C430624AF29AC00E69CAE /* VICIITypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VICIITypes.h; sourceTree = "<group>"; };
+		504C430724AF29AC00E69CAE /* VICII.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII.cpp; sourceTree = "<group>"; };
+		504C430824AF29AC00E69CAE /* VICII_colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_colors.cpp; sourceTree = "<group>"; };
+		504C430924AF29AC00E69CAE /* VICII_debug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_debug.cpp; sourceTree = "<group>"; };
+		504C430A24AF29AC00E69CAE /* VICII_cycles_pal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_cycles_pal.cpp; sourceTree = "<group>"; };
+		504C430B24AF29AC00E69CAE /* VICII_memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_memory.cpp; sourceTree = "<group>"; };
+		504C430C24AF29AC00E69CAE /* VICII.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VICII.h; sourceTree = "<group>"; };
+		504C430D24AF29AC00E69CAE /* VICII_cycles_ntsc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_cycles_ntsc.cpp; sourceTree = "<group>"; };
 		504C430F24AF29AC00E69CAE /* Datasette.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Datasette.cpp; sourceTree = "<group>"; };
 		504C431024AF29AC00E69CAE /* Datasette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Datasette.h; sourceTree = "<group>"; };
 		504C431224AF29AC00E69CAE /* SIDBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIDBridge.cpp; sourceTree = "<group>"; };
@@ -469,7 +469,7 @@
 		5052AD0D202A5C1B005FDD88 /* CartridgeMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartridgeMountController.swift; sourceTree = "<group>"; };
 		5055A83E1BC7996900399A20 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		505D492721C155DD00A7C575 /* RomConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomConf.swift; sourceTree = "<group>"; };
-		5060415824C41E6E0049FB9B /* VICConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VICConstants.h; sourceTree = "<group>"; };
+		5060415824C41E6E0049FB9B /* VICIIConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VICIIConstants.h; sourceTree = "<group>"; };
 		50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
 		506A724721C033EF00DA0AC3 /* Configuration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Configuration.xib; sourceTree = "<group>"; };
 		506A724921C0341900DA0AC3 /* ConfigurationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationController.swift; sourceTree = "<group>"; };
@@ -898,16 +898,16 @@
 		504C430424AF29AB00E69CAE /* VICII */ = {
 			isa = PBXGroup;
 			children = (
-				504C430624AF29AC00E69CAE /* VICTypes.h */,
-				5060415824C41E6E0049FB9B /* VICConstants.h */,
-				504C430C24AF29AC00E69CAE /* VIC.h */,
-				504C430724AF29AC00E69CAE /* VIC.cpp */,
-				504C430524AF29AB00E69CAE /* VIC_draw.cpp */,
-				504C430824AF29AC00E69CAE /* VIC_colors.cpp */,
-				504C430B24AF29AC00E69CAE /* VIC_memory.cpp */,
-				504C430A24AF29AC00E69CAE /* VIC_cycles_pal.cpp */,
-				504C430D24AF29AC00E69CAE /* VIC_cycles_ntsc.cpp */,
-				504C430924AF29AC00E69CAE /* VIC_debug.cpp */,
+				504C430624AF29AC00E69CAE /* VICIITypes.h */,
+				5060415824C41E6E0049FB9B /* VICIIConstants.h */,
+				504C430C24AF29AC00E69CAE /* VICII.h */,
+				504C430724AF29AC00E69CAE /* VICII.cpp */,
+				504C430524AF29AB00E69CAE /* VICII_draw.cpp */,
+				504C430824AF29AC00E69CAE /* VICII_colors.cpp */,
+				504C430B24AF29AC00E69CAE /* VICII_memory.cpp */,
+				504C430A24AF29AC00E69CAE /* VICII_cycles_pal.cpp */,
+				504C430D24AF29AC00E69CAE /* VICII_cycles_ntsc.cpp */,
+				504C430924AF29AC00E69CAE /* VICII_debug.cpp */,
 			);
 			path = VICII;
 			sourceTree = "<group>";
@@ -1363,10 +1363,10 @@
 				5002FA8321C2655800DA4BBC /* KeyboardPrefs.swift in Sources */,
 				507887CC20B1858B00941F7E /* MemTableView.swift in Sources */,
 				504C439A24AF29AC00E69CAE /* dac.cc in Sources */,
-				504C439024AF29AC00E69CAE /* VIC_cycles_pal.cpp in Sources */,
+				504C439024AF29AC00E69CAE /* VICII_cycles_pal.cpp in Sources */,
 				5018AF66202EDD2000B4C886 /* Defaults.swift in Sources */,
 				504C436A24AF29AC00E69CAE /* FreezeFrame.cpp in Sources */,
-				504C439124AF29AC00E69CAE /* VIC_memory.cpp in Sources */,
+				504C439124AF29AC00E69CAE /* VICII_memory.cpp in Sources */,
 				50FF818F1F88D9100004548A /* GamePad.swift in Sources */,
 				504C438024AF29AC00E69CAE /* CPU.cpp in Sources */,
 				504C439C24AF29AC00E69CAE /* wave.cc in Sources */,
@@ -1383,10 +1383,10 @@
 				5018BFAF24B4847900551848 /* TextureToolbox.swift in Sources */,
 				504C438B24AF29AC00E69CAE /* Mouse1351.cpp in Sources */,
 				506D3DCE20223E5E009742CF /* MyAppDelegate.swift in Sources */,
-				504C439224AF29AC00E69CAE /* VIC_cycles_ntsc.cpp in Sources */,
+				504C439224AF29AC00E69CAE /* VICII_cycles_ntsc.cpp in Sources */,
 				504C437A24AF29AC00E69CAE /* AnyFile.cpp in Sources */,
 				50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */,
-				504C438D24AF29AC00E69CAE /* VIC.cpp in Sources */,
+				504C438D24AF29AC00E69CAE /* VICII.cpp in Sources */,
 				504C437824AF29AC00E69CAE /* AnyDisk.cpp in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				504C43AB24AF29AC00E69CAE /* CIA.cpp in Sources */,
@@ -1413,7 +1413,7 @@
 				5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */,
 				504C436E24AF29AC00E69CAE /* Epyx.cpp in Sources */,
 				504C43A924AF29AC00E69CAE /* Drive.cpp in Sources */,
-				504C438F24AF29AC00E69CAE /* VIC_debug.cpp in Sources */,
+				504C438F24AF29AC00E69CAE /* VICII_debug.cpp in Sources */,
 				50D3092824C71B0A00B92563 /* Monitor.swift in Sources */,
 				504C438624AF29AC00E69CAE /* TimeDelayed.cpp in Sources */,
 				504C436C24AF29AC00E69CAE /* Isepic.cpp in Sources */,
@@ -1457,7 +1457,7 @@
 				504C43A324AF29AC00E69CAE /* ProcessorPort.cpp in Sources */,
 				5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */,
 				50EAFFEA24B2600D00024CD2 /* MyToolbar.swift in Sources */,
-				504C438E24AF29AC00E69CAE /* VIC_colors.cpp in Sources */,
+				504C438E24AF29AC00E69CAE /* VICII_colors.cpp in Sources */,
 				5018BFB124B48DC400551848 /* Renderer.swift in Sources */,
 				504C436124AF29AC00E69CAE /* SimonsBasic.cpp in Sources */,
 				504C438824AF29AC00E69CAE /* Mouse.cpp in Sources */,
@@ -1467,7 +1467,7 @@
 				50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */,
 				50195C2A20B007A1003844FB /* Debugger.swift in Sources */,
 				50D3092424C7152700B92563 /* Inspector.swift in Sources */,
-				504C438C24AF29AC00E69CAE /* VIC_draw.cpp in Sources */,
+				504C438C24AF29AC00E69CAE /* VICII_draw.cpp in Sources */,
 				50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */,
 				5031D59A200B47B70088C802 /* ImageUtilities.swift in Sources */,
 				504C436924AF29AC00E69CAE /* Zaxxon.cpp in Sources */,

@@ -10,10 +10,10 @@
 #include "C64.h"
 
 void
-VIC::setUltimax(bool value) {
+VICII::setUltimax(bool value) {
     
     // For details, see:
-    // VIC memory mapping (http://www.harries.dk/files/C64MemoryMaps.pdf)
+    // VICII memory mapping (http://www.harries.dk/files/C64MemoryMaps.pdf)
     
     ultimax = value;
     
@@ -58,7 +58,7 @@ VIC::setUltimax(bool value) {
 }
 
 void
-VIC::switchBank(u16 addr) {
+VICII::switchBank(u16 addr) {
 
     if (config.glueLogic == GLUE_DISCRETE) {
          
@@ -109,13 +109,13 @@ VIC::switchBank(u16 addr) {
 }
 
 void
-VIC::updateBankAddr()
+VICII::updateBankAddr()
 {
     updateBankAddr(~cia2.getPA() & 0x03);
 }
     
 u8
-VIC::peek(u16 addr)
+VICII::peek(u16 addr)
 {
     u8 result;
     
@@ -295,7 +295,7 @@ VIC::peek(u16 addr)
 }
 
 u8
-VIC::spypeek(u16 addr)
+VICII::spypeek(u16 addr)
 {
     assert(addr <= 0x3F);
     
@@ -442,7 +442,7 @@ VIC::spypeek(u16 addr)
 }
 
 void
-VIC::poke(u16 addr, u8 value)
+VICII::poke(u16 addr, u8 value)
 {
     assert(addr < 0x40);
  
@@ -618,7 +618,7 @@ VIC::poke(u16 addr, u8 value)
 }
 
 u8
-VIC::memAccess(u16 addr)
+VICII::memAccess(u16 addr)
 {
     assert((addr & 0xC000) == 0); // 14 bit address
     assert((bankAddr & 0x3FFF) == 0); // multiple of 16 KB
@@ -642,7 +642,7 @@ VIC::memAccess(u16 addr)
 
 /*
  u8
- VIC::memAccess(u16 addr)
+ VICII::memAccess(u16 addr)
  {
  u8 result;
  
@@ -651,7 +651,7 @@ VIC::memAccess(u16 addr)
  
  addrBus = bankAddr | addr;
  
- // VIC memory mapping (http://www.harries.dk/files/C64MemoryMaps.pdf)
+ // VICII memory mapping (http://www.harries.dk/files/C64MemoryMaps.pdf)
  // Note: Final Cartridge III (freezer mode) only works when BLANK is replaced
  //       by RAM. So this mapping might not be 100% correct.
  //
@@ -715,7 +715,7 @@ VIC::memAccess(u16 addr)
  */
 
 u8
-VIC::memSpyAccess(u16 addr)
+VICII::memSpyAccess(u16 addr)
 {
     u8 result;
     
@@ -757,14 +757,14 @@ VIC::memSpyAccess(u16 addr)
 }
 
 bool
-VIC::isCharRomAddr(u16 addr)
+VICII::isCharRomAddr(u16 addr)
 {
     addr = (addr | bankAddr) >> 12;
     return addr == 1 || addr == 9;
 }
 
 void
-VIC::cAccess()
+VICII::cAccess()
 {
     // If BA is pulled down for at least three cycles, perform memory access
     if (BApulledDownForAtLeastThreeCycles()) {
@@ -777,7 +777,7 @@ VIC::cAccess()
         colorLine[vmli] = mem.colorRam[vc] & 0x0F;
     }
     
-    // VIC has no access, yet
+    // VICII has no access, yet
     else {
         
         /* "Nevertheless, the VIC accesses the video matrix, or at least it
@@ -803,7 +803,7 @@ VIC::cAccess()
 }
 
 void
-VIC::gAccess()
+VICII::gAccess()
 {
     u16 addr;
     
@@ -855,7 +855,7 @@ VIC::gAccess()
 }
 
 u16
-VIC::gAccessAddr85x()
+VICII::gAccessAddr85x()
 {
     u8 oldBmm = GET_BIT(reg.delayed.ctrl1, 5);
     u8 oldEcm = GET_BIT(reg.delayed.ctrl1, 6);
@@ -864,7 +864,7 @@ VIC::gAccessAddr85x()
 }
 
 u16
-VIC::gAccessAddr65x()
+VICII::gAccessAddr65x()
 {
     u8 oldBmm = GET_BIT(reg.delayed.ctrl1, 5);
     u8 newBmm = GET_BIT(reg.current.ctrl1, 5);
@@ -891,7 +891,7 @@ VIC::gAccessAddr65x()
 }
 
 u16
-VIC::gAccessAddr(bool bmm, bool ecm)
+VICII::gAccessAddr(bool bmm, bool ecm)
 {
     u16 addr;
 
@@ -916,7 +916,7 @@ VIC::gAccessAddr(bool bmm, bool ecm)
 }
 
 void
-VIC::pAccess(unsigned sprite)
+VICII::pAccess(unsigned sprite)
 {
     assert(sprite < 8);
     
@@ -926,7 +926,7 @@ VIC::pAccess(unsigned sprite)
 }
 
 void
-VIC::sFirstAccess(unsigned sprite)
+VICII::sFirstAccess(unsigned sprite)
 {
     assert(sprite < 8);
     
@@ -945,7 +945,7 @@ VIC::sFirstAccess(unsigned sprite)
 }
 
 void
-VIC::sSecondAccess(unsigned sprite)
+VICII::sSecondAccess(unsigned sprite)
 {
     assert(sprite < 8);
     
@@ -967,7 +967,7 @@ VIC::sSecondAccess(unsigned sprite)
 }
 
 void
-VIC::sThirdAccess(unsigned sprite)
+VICII::sThirdAccess(unsigned sprite)
 {
     assert(sprite < 8);
     
@@ -981,7 +981,7 @@ VIC::sThirdAccess(unsigned sprite)
     spriteSr[sprite].chunk3 = dataBusPhi2;
 }
 
-void VIC::sFinalize(unsigned sprite)
+void VICII::sFinalize(unsigned sprite)
 {
     assert(sprite < 8);
     isSecondDMAcycle = 0;

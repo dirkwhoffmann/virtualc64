@@ -92,7 +92,7 @@ VICConfig;
 // VICII colors
 //
 
-//! @brief    VIC colors
+//! @brief    VICII colors
 enum VICIIColors {
     VICII_BLACK       = 0x0,
     VICII_WHITE       = 0x1,
@@ -112,7 +112,7 @@ enum VICIIColors {
     VICII_LIGHT_GREY  = 0xF
 };
 
-//! @brief    VIC color registers (D020 - D02E)
+//! @brief    VICII color registers (D020 - D02E)
 enum VICIIColorRegs {
     COLREG_BORDER     = 0x0,
     COLREG_BG0        = 0x1,
@@ -333,8 +333,8 @@ typedef enum {
     INVALID_MULTICOLOR_BITMAP = 0x70
 } DisplayMode;
 
-/*! @brief    VIC info
- *  @details  Used by VIC::getInfo() to collect debug information
+/*! @brief    VICII info
+ *  @details  Used by VICII::getInfo() to collect debug information
  */
 typedef struct {
     u16 rasterline;
@@ -366,7 +366,7 @@ typedef struct {
 } VICInfo;
 
 /*! @brief    Sprite info
- *  @details  Used by VIC::getSpriteInfo() to collect debug information
+ *  @details  Used by VICII::getSpriteInfo() to collect debug information
  */
 typedef struct {
   

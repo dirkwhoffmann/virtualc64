@@ -10,28 +10,28 @@
 #include "C64.h"
 
 void
-VIC::draw()
+VICII::draw()
 {
     drawCanvas();
     drawBorder();
 }
 
 void
-VIC::draw17()
+VICII::draw17()
 {
     drawCanvas();
     drawBorder17();
 }
 
 void
-VIC::draw55()
+VICII::draw55()
 {
     drawCanvas();
     drawBorder55();
 }
 
 void
-VIC::drawBorder()
+VICII::drawBorder()
 {
     if (flipflops.delayed.main) {
         SET_FRAME_PIXEL(0, reg.delayed.colors[COLREG_BORDER]);
@@ -42,7 +42,7 @@ VIC::drawBorder()
 }
 
 void
-VIC::drawBorder17()
+VICII::drawBorder17()
 {
     if (flipflops.delayed.main && !flipflops.current.main) {
         
@@ -60,7 +60,7 @@ VIC::drawBorder17()
 }
 
 void
-VIC::drawBorder55()
+VICII::drawBorder55()
 {
     if (!flipflops.delayed.main && flipflops.current.main) {
         
@@ -74,7 +74,7 @@ VIC::drawBorder55()
 }
 
 void
-VIC::drawCanvas()
+VICII::drawCanvas()
 {
     u8 d011, d016, newD016, mode, oldMode, xscroll;
     
@@ -154,7 +154,7 @@ VIC::drawCanvas()
 
 
 void
-VIC::drawCanvasPixel(u8 pixel,
+VICII::drawCanvasPixel(u8 pixel,
                              u8 mode,
                              u8 d016,
                              bool loadShiftReg,
@@ -241,7 +241,7 @@ VIC::drawCanvasPixel(u8 pixel,
 }
 
 void
-VIC::drawSprites()
+VICII::drawSprites()
 {
     u8 firstDMA = isFirstDMAcycle;
     u8 secondDMA = isSecondDMAcycle;
@@ -339,7 +339,7 @@ VIC::drawSprites()
 }
 
 void
-VIC::drawSpritePixel(unsigned pixel,
+VICII::drawSpritePixel(unsigned pixel,
                      u8 enableBits,
                      u8 freezeBits)
 {
@@ -432,7 +432,7 @@ VIC::drawSpritePixel(unsigned pixel,
 }
 
 void
-VIC::loadColors(u8 mode)
+VICII::loadColors(u8 mode)
 {
     u8 character = sr.latchedCharacter;
     u8 color = sr.latchedColor;
@@ -505,7 +505,7 @@ VIC::loadColors(u8 mode)
 //
 
 void
-VIC::setSpritePixel(unsigned sprite, unsigned pixel, u8 color)
+VICII::setSpritePixel(unsigned sprite, unsigned pixel, u8 color)
 {
     u8 depth = spriteDepth(sprite);
     u8 source = (1 << sprite);
@@ -526,7 +526,7 @@ VIC::setSpritePixel(unsigned sprite, unsigned pixel, u8 color)
 }
 
 void
-VIC::expandBorders()
+VICII::expandBorders()
 {
     int color, lastX;
     unsigned leftPixelPos;
@@ -565,7 +565,7 @@ VIC::expandBorders()
 }
 
 void
-VIC::markLine(u8 color, unsigned start, unsigned end)
+VICII::markLine(u8 color, unsigned start, unsigned end)
 {
     assert (end <= NTSC_PIXELS);
     

@@ -93,7 +93,7 @@ ProcessorPort::write(u8 value)
         datasette.setMotor((value & 0x20) == 0);
     }
     
-    // When writing to the port register, the last VIC byte appears in 0x0001
+    // When writing to the port register, the last VICII byte appears in 0x0001
     mem.ram[0x0001] = vic.getDataBusPhi1();
     
     // Switch memory banks
@@ -123,7 +123,7 @@ ProcessorPort::writeDirection(u8 value)
     
     direction = value;
     
-    // When writing to the direction register, the last VIC byte appears
+    // When writing to the direction register, the last VICII byte appears
     mem.ram[0x0000] = vic.getDataBusPhi1();
     
     // Switch memory banks

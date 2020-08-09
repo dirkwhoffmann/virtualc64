@@ -10,7 +10,7 @@
 #include "C64.h"
 
 VICInfo
-VIC::getInfo()
+VICII::getInfo()
 {
     VICInfo info;
     
@@ -48,7 +48,7 @@ VIC::getInfo()
 }
 
 SpriteInfo
-VIC::getSpriteInfo(unsigned i)
+VICII::getSpriteInfo(unsigned i)
 {
     SpriteInfo info;
     
@@ -70,7 +70,7 @@ VIC::getSpriteInfo(unsigned i)
 }
 
 void
-VIC::setMemoryBankAddr(u16 addr)
+VICII::setMemoryBankAddr(u16 addr)
 {
     assert(addr % 0x4000 == 0);
     
@@ -80,7 +80,7 @@ VIC::setMemoryBankAddr(u16 addr)
 }
 
 void
-VIC::setScreenMemoryAddr(u16 addr)
+VICII::setScreenMemoryAddr(u16 addr)
 {
     assert((addr & ~0x3C00) == 0);
     
@@ -91,7 +91,7 @@ VIC::setScreenMemoryAddr(u16 addr)
 }
 
 void
-VIC::setCharacterMemoryAddr(u16 addr)
+VICII::setCharacterMemoryAddr(u16 addr)
 {
     assert((addr & ~0x3800) == 0);
     
@@ -102,7 +102,7 @@ VIC::setCharacterMemoryAddr(u16 addr)
 }
 
 void
-VIC::setDisplayMode(DisplayMode m)
+VICII::setDisplayMode(DisplayMode m)
 {
     suspend();
     reg.current.ctrl1 = (reg.current.ctrl1 & ~0x60) | (m & 0x60);
@@ -112,7 +112,7 @@ VIC::setDisplayMode(DisplayMode m)
 }
 
 void
-VIC::setNumberOfRows(unsigned rs)
+VICII::setNumberOfRows(unsigned rs)
 {
     assert(rs == 24 || rs == 25);
     
@@ -124,7 +124,7 @@ VIC::setNumberOfRows(unsigned rs)
 }
 
 void
-VIC::setNumberOfColumns(unsigned cs)
+VICII::setNumberOfColumns(unsigned cs)
 {
     assert(cs == 38 || cs == 40);
 
@@ -136,7 +136,7 @@ VIC::setNumberOfColumns(unsigned cs)
 }
 
 ScreenGeometry
-VIC::getScreenGeometry(void)
+VICII::getScreenGeometry(void)
 {
     unsigned rows = GET_BIT(reg.current.ctrl1, 3) ? 25 : 24;
     unsigned cols = GET_BIT(reg.current.ctrl2, 3) ? 40 : 38;
@@ -149,7 +149,7 @@ VIC::getScreenGeometry(void)
 }
 
 void
-VIC::setScreenGeometry(ScreenGeometry mode)
+VICII::setScreenGeometry(ScreenGeometry mode)
 {
     suspend();
     setNumberOfRows((mode == COL_40_ROW_25 || mode == COL_38_ROW_25) ? 25 : 24);
@@ -158,7 +158,7 @@ VIC::setScreenGeometry(ScreenGeometry mode)
 }
 
 void
-VIC::setVerticalRasterScroll(u8 offset)
+VICII::setVerticalRasterScroll(u8 offset)
 {
     assert(offset < 8);
     
@@ -169,7 +169,7 @@ VIC::setVerticalRasterScroll(u8 offset)
 }
 
 void
-VIC::setHorizontalRasterScroll(u8 offset)
+VICII::setHorizontalRasterScroll(u8 offset)
 {
     assert(offset < 8);
     
@@ -180,7 +180,7 @@ VIC::setHorizontalRasterScroll(u8 offset)
 }
 
 void
-VIC::setRasterInterruptLine(u16 line)
+VICII::setRasterInterruptLine(u16 line)
 {
     suspend();
     rasterIrqLine = line & 0xFF;
@@ -190,7 +190,7 @@ VIC::setRasterInterruptLine(u16 line)
 }
 
 void
-VIC::setRasterInterruptEnable(bool b)
+VICII::setRasterInterruptEnable(bool b)
 {
     suspend();
     WRITE_BIT(imr, 1, b);
@@ -198,7 +198,7 @@ VIC::setRasterInterruptEnable(bool b)
 }
 
 void
-VIC::toggleRasterInterruptFlag()
+VICII::toggleRasterInterruptFlag()
 {
     suspend();
     TOGGLE_BIT(imr, 1);
@@ -211,7 +211,7 @@ VIC::toggleRasterInterruptFlag()
 //
 
 void
-VIC::setSpriteX(unsigned nr, u16 x)
+VICII::setSpriteX(unsigned nr, u16 x)
 {
     assert(nr < 8);
     x = MIN(x, 511);
@@ -223,7 +223,7 @@ VIC::setSpriteX(unsigned nr, u16 x)
 }
 
 void
-VIC::setSpriteY(unsigned nr, u8 y)
+VICII::setSpriteY(unsigned nr, u8 y)
 {
     assert(nr < 8);
     
@@ -234,7 +234,7 @@ VIC::setSpriteY(unsigned nr, u8 y)
 }
 
 void
-VIC::setSpritePtr(unsigned nr, u8 ptr)
+VICII::setSpritePtr(unsigned nr, u8 ptr)
 {
     assert(nr < 8);
     
@@ -247,7 +247,7 @@ VIC::setSpritePtr(unsigned nr, u8 ptr)
 }
 
 void
-VIC::setSpriteColor(unsigned nr, u8 color)
+VICII::setSpriteColor(unsigned nr, u8 color)
 {
     assert(nr < 8);
     
@@ -258,7 +258,7 @@ VIC::setSpriteColor(unsigned nr, u8 color)
 }
 
 void
-VIC::setSpriteEnabled(u8 nr, bool b)
+VICII::setSpriteEnabled(u8 nr, bool b)
 {
     suspend();
     WRITE_BIT(reg.current.sprEnable, nr, b);
@@ -266,7 +266,7 @@ VIC::setSpriteEnabled(u8 nr, bool b)
 }
 
 void
-VIC::toggleSpriteEnabled(u8 nr)
+VICII::toggleSpriteEnabled(u8 nr)
 {
     suspend();
     TOGGLE_BIT(reg.current.sprEnable, nr);
@@ -275,7 +275,7 @@ VIC::toggleSpriteEnabled(u8 nr)
 }
 
 void
-VIC::setIrqOnSpriteBackgroundCollision(bool b)
+VICII::setIrqOnSpriteBackgroundCollision(bool b)
 {
     suspend();
     WRITE_BIT(imr, 1, b);
@@ -283,7 +283,7 @@ VIC::setIrqOnSpriteBackgroundCollision(bool b)
 }
 
 void
-VIC::toggleIrqOnSpriteBackgroundCollision()
+VICII::toggleIrqOnSpriteBackgroundCollision()
 {
     suspend();
     TOGGLE_BIT(imr, 1);
@@ -291,7 +291,7 @@ VIC::toggleIrqOnSpriteBackgroundCollision()
 }
 
 void
-VIC::setIrqOnSpriteSpriteCollision(bool b)
+VICII::setIrqOnSpriteSpriteCollision(bool b)
 {
     suspend();
     WRITE_BIT(imr, 2, b);
@@ -299,7 +299,7 @@ VIC::setIrqOnSpriteSpriteCollision(bool b)
 }
 
 void
-VIC::toggleIrqOnSpriteSpriteCollision()
+VICII::toggleIrqOnSpriteSpriteCollision()
 {
     suspend();
     TOGGLE_BIT(imr, 2);
@@ -307,7 +307,7 @@ VIC::toggleIrqOnSpriteSpriteCollision()
 }
 
 void
-VIC::setSpritePriority(unsigned nr, bool b)
+VICII::setSpritePriority(unsigned nr, bool b)
 {
     assert(nr < 8);
     
@@ -318,7 +318,7 @@ VIC::setSpritePriority(unsigned nr, bool b)
 }
 
 void
-VIC::toggleSpritePriority(unsigned nr)
+VICII::toggleSpritePriority(unsigned nr)
 {
     assert(nr < 8);
     
@@ -329,7 +329,7 @@ VIC::toggleSpritePriority(unsigned nr)
 }
 
 void
-VIC::setSpriteMulticolor(unsigned nr, bool b)
+VICII::setSpriteMulticolor(unsigned nr, bool b)
 {
     assert(nr < 8);
     
@@ -340,7 +340,7 @@ VIC::setSpriteMulticolor(unsigned nr, bool b)
 }
 
 void
-VIC::toggleMulticolorFlag(unsigned nr)
+VICII::toggleMulticolorFlag(unsigned nr)
 {
     assert(nr < 8);
     
@@ -351,7 +351,7 @@ VIC::toggleMulticolorFlag(unsigned nr)
 }
 
 void
-VIC::setSpriteStretchY(unsigned nr, bool b)
+VICII::setSpriteStretchY(unsigned nr, bool b)
 {
     assert(nr < 8);
     
@@ -362,7 +362,7 @@ VIC::setSpriteStretchY(unsigned nr, bool b)
 }
 
 void
-VIC::spriteToggleStretchYFlag(unsigned nr)
+VICII::spriteToggleStretchYFlag(unsigned nr)
 {
     assert(nr < 8);
     
@@ -373,7 +373,7 @@ VIC::spriteToggleStretchYFlag(unsigned nr)
 }
 
 void
-VIC::setSpriteStretchX(unsigned nr, bool b)
+VICII::setSpriteStretchX(unsigned nr, bool b)
 {
     assert(nr < 8);
     
@@ -384,7 +384,7 @@ VIC::setSpriteStretchX(unsigned nr, bool b)
 }
 
 void
-VIC::spriteToggleStretchXFlag(unsigned nr)
+VICII::spriteToggleStretchXFlag(unsigned nr)
 {
     assert(nr < 8);
 
@@ -395,7 +395,7 @@ VIC::spriteToggleStretchXFlag(unsigned nr)
 }
 
 void
-VIC::setShowIrqLines(bool show)
+VICII::setShowIrqLines(bool show)
 {
     suspend();
     markIRQLines = show;
@@ -403,7 +403,7 @@ VIC::setShowIrqLines(bool show)
 }
 
 void
-VIC::setShowDmaLines(bool show)
+VICII::setShowDmaLines(bool show)
 {
     suspend();
     markDMALines = show;
@@ -411,7 +411,7 @@ VIC::setShowDmaLines(bool show)
 }
 
 void
-VIC::setHideSprites(bool hide)
+VICII::setHideSprites(bool hide)
 {
     suspend();
     hideSprites = hide;
@@ -419,7 +419,7 @@ VIC::setHideSprites(bool hide)
 }
 
 void
-VIC::setSpriteSpriteCollisionFlag(bool b)
+VICII::setSpriteSpriteCollisionFlag(bool b)
 {
     suspend();
     spriteSpriteCollisionEnabled = b;
@@ -427,7 +427,7 @@ VIC::setSpriteSpriteCollisionFlag(bool b)
 }
 
 void
-VIC::toggleSpriteSpriteCollisionFlag()
+VICII::toggleSpriteSpriteCollisionFlag()
 {
     suspend();
     spriteSpriteCollisionEnabled = !spriteSpriteCollisionEnabled;
@@ -435,7 +435,7 @@ VIC::toggleSpriteSpriteCollisionFlag()
 }
 
 void
-VIC::setSpriteBackgroundCollisionFlag(bool b)
+VICII::setSpriteBackgroundCollisionFlag(bool b)
 {
     suspend();
     spriteBackgroundCollisionEnabled = b;
@@ -443,7 +443,7 @@ VIC::setSpriteBackgroundCollisionFlag(bool b)
 }
 
 void
-VIC::toggleSpriteBackgroundCollisionFlag()
+VICII::toggleSpriteBackgroundCollisionFlag()
 {
     suspend();
     spriteBackgroundCollisionEnabled = !spriteBackgroundCollisionEnabled;

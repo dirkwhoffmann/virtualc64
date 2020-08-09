@@ -687,18 +687,18 @@ C64::updateVicFunctionTable()
 {
     // Assign model independent execution functions
     vicfunc[0] = NULL;
-    vicfunc[12] = &VIC::cycle12;
-    vicfunc[13] = &VIC::cycle13;
-    vicfunc[14] = &VIC::cycle14;
-    vicfunc[15] = &VIC::cycle15;
-    vicfunc[16] = &VIC::cycle16;
-    vicfunc[17] = &VIC::cycle17;
-    vicfunc[18] = &VIC::cycle18;
+    vicfunc[12] = &VICII::cycle12;
+    vicfunc[13] = &VICII::cycle13;
+    vicfunc[14] = &VICII::cycle14;
+    vicfunc[15] = &VICII::cycle15;
+    vicfunc[16] = &VICII::cycle16;
+    vicfunc[17] = &VICII::cycle17;
+    vicfunc[18] = &VICII::cycle18;
     
     for (unsigned cycle = 19; cycle <= 54; cycle++)
-        vicfunc[cycle] = &VIC::cycle19to54;
+        vicfunc[cycle] = &VICII::cycle19to54;
 
-    vicfunc[56] = &VIC::cycle56;
+    vicfunc[56] = &VICII::cycle56;
     
     // Assign model specific execution functions
     switch (vic.getRevision()) {
@@ -707,78 +707,78 @@ C64::updateVicFunctionTable()
         case PAL_6569_R3:
         case PAL_8565:
             
-            vicfunc[1] = &VIC::cycle1pal;
-            vicfunc[2] = &VIC::cycle2pal;
-            vicfunc[3] = &VIC::cycle3pal;
-            vicfunc[4] = &VIC::cycle4pal;
-            vicfunc[5] = &VIC::cycle5pal;
-            vicfunc[6] = &VIC::cycle6pal;
-            vicfunc[7] = &VIC::cycle7pal;
-            vicfunc[8] = &VIC::cycle8pal;
-            vicfunc[9] = &VIC::cycle9pal;
-            vicfunc[10] = &VIC::cycle10pal;
-            vicfunc[11] = &VIC::cycle11pal;
-            vicfunc[55] = &VIC::cycle55pal;
-            vicfunc[57] = &VIC::cycle57pal;
-            vicfunc[58] = &VIC::cycle58pal;
-            vicfunc[59] = &VIC::cycle59pal;
-            vicfunc[60] = &VIC::cycle60pal;
-            vicfunc[61] = &VIC::cycle61pal;
-            vicfunc[62] = &VIC::cycle62pal;
-            vicfunc[63] = &VIC::cycle63pal;
+            vicfunc[1] = &VICII::cycle1pal;
+            vicfunc[2] = &VICII::cycle2pal;
+            vicfunc[3] = &VICII::cycle3pal;
+            vicfunc[4] = &VICII::cycle4pal;
+            vicfunc[5] = &VICII::cycle5pal;
+            vicfunc[6] = &VICII::cycle6pal;
+            vicfunc[7] = &VICII::cycle7pal;
+            vicfunc[8] = &VICII::cycle8pal;
+            vicfunc[9] = &VICII::cycle9pal;
+            vicfunc[10] = &VICII::cycle10pal;
+            vicfunc[11] = &VICII::cycle11pal;
+            vicfunc[55] = &VICII::cycle55pal;
+            vicfunc[57] = &VICII::cycle57pal;
+            vicfunc[58] = &VICII::cycle58pal;
+            vicfunc[59] = &VICII::cycle59pal;
+            vicfunc[60] = &VICII::cycle60pal;
+            vicfunc[61] = &VICII::cycle61pal;
+            vicfunc[62] = &VICII::cycle62pal;
+            vicfunc[63] = &VICII::cycle63pal;
             vicfunc[64] = NULL;
             vicfunc[65] = NULL;
             break;
             
         case NTSC_6567_R56A:
             
-            vicfunc[1] = &VIC::cycle1pal;
-            vicfunc[2] = &VIC::cycle2pal;
-            vicfunc[3] = &VIC::cycle3pal;
-            vicfunc[4] = &VIC::cycle4pal;
-            vicfunc[5] = &VIC::cycle5pal;
-            vicfunc[6] = &VIC::cycle6pal;
-            vicfunc[7] = &VIC::cycle7pal;
-            vicfunc[8] = &VIC::cycle8pal;
-            vicfunc[9] = &VIC::cycle9pal;
-            vicfunc[10] = &VIC::cycle10pal;
-            vicfunc[11] = &VIC::cycle11pal;
-            vicfunc[55] = &VIC::cycle55ntsc;
-            vicfunc[57] = &VIC::cycle57ntsc;
-            vicfunc[58] = &VIC::cycle58ntsc;
-            vicfunc[59] = &VIC::cycle59ntsc;
-            vicfunc[60] = &VIC::cycle60ntsc;
-            vicfunc[61] = &VIC::cycle61ntsc;
-            vicfunc[62] = &VIC::cycle62ntsc;
-            vicfunc[63] = &VIC::cycle63ntsc;
-            vicfunc[64] = &VIC::cycle64ntsc;
+            vicfunc[1] = &VICII::cycle1pal;
+            vicfunc[2] = &VICII::cycle2pal;
+            vicfunc[3] = &VICII::cycle3pal;
+            vicfunc[4] = &VICII::cycle4pal;
+            vicfunc[5] = &VICII::cycle5pal;
+            vicfunc[6] = &VICII::cycle6pal;
+            vicfunc[7] = &VICII::cycle7pal;
+            vicfunc[8] = &VICII::cycle8pal;
+            vicfunc[9] = &VICII::cycle9pal;
+            vicfunc[10] = &VICII::cycle10pal;
+            vicfunc[11] = &VICII::cycle11pal;
+            vicfunc[55] = &VICII::cycle55ntsc;
+            vicfunc[57] = &VICII::cycle57ntsc;
+            vicfunc[58] = &VICII::cycle58ntsc;
+            vicfunc[59] = &VICII::cycle59ntsc;
+            vicfunc[60] = &VICII::cycle60ntsc;
+            vicfunc[61] = &VICII::cycle61ntsc;
+            vicfunc[62] = &VICII::cycle62ntsc;
+            vicfunc[63] = &VICII::cycle63ntsc;
+            vicfunc[64] = &VICII::cycle64ntsc;
             vicfunc[65] = NULL;
             break;
             
         case NTSC_6567:
         case NTSC_8562:
             
-            vicfunc[1] = &VIC::cycle1ntsc;
-            vicfunc[2] = &VIC::cycle2ntsc;
-            vicfunc[3] = &VIC::cycle3ntsc;
-            vicfunc[4] = &VIC::cycle4ntsc;
-            vicfunc[5] = &VIC::cycle5ntsc;
-            vicfunc[6] = &VIC::cycle6ntsc;
-            vicfunc[7] = &VIC::cycle7ntsc;
-            vicfunc[8] = &VIC::cycle8ntsc;
-            vicfunc[9] = &VIC::cycle9ntsc;
-            vicfunc[10] = &VIC::cycle10ntsc;
-            vicfunc[11] = &VIC::cycle11ntsc;
-            vicfunc[55] = &VIC::cycle55ntsc;
-            vicfunc[57] = &VIC::cycle57ntsc;
-            vicfunc[58] = &VIC::cycle58ntsc;
-            vicfunc[59] = &VIC::cycle59ntsc;
-            vicfunc[60] = &VIC::cycle60ntsc;
-            vicfunc[61] = &VIC::cycle61ntsc;
-            vicfunc[62] = &VIC::cycle62ntsc;
-            vicfunc[63] = &VIC::cycle63ntsc;
-            vicfunc[64] = &VIC::cycle64ntsc;
-            vicfunc[65] = &VIC::cycle65ntsc;
+            vicfunc[1] = &VICII::cycle1ntsc;
+            vicfunc[2] = &VICII::cycle2ntsc;
+            vicfunc[3] = &VICII::cycle3ntsc;
+            vicfunc[4] = &VICII::cycle4ntsc;
+            vicfunc[5] = &VICII::cycle5ntsc;
+            vicfunc[6] = &VICII::cycle6ntsc;
+            vicfunc[7] = &VICII::cycle7ntsc;
+            vicfunc[8] = &VICII::cycle8ntsc;
+            vicfunc[9] = &VICII::cycle9ntsc;
+            vicfunc[10] = &VICII::cycle10ntsc;
+            vicfunc[11] = &VICII::cycle11ntsc;
+            vicfunc[55] = &VICII::cycle55ntsc;
+            vicfunc[57] = &VICII::cycle57ntsc;
+            vicfunc[58] = &VICII::cycle58ntsc;
+            vicfunc[59] = &VICII::cycle59ntsc;
+            vicfunc[60] = &VICII::cycle60ntsc;
+            vicfunc[61] = &VICII::cycle61ntsc;
+            vicfunc[62] = &VICII::cycle62ntsc;
+            vicfunc[63] = &VICII::cycle63ntsc;
+            vicfunc[64] = &VICII::cycle64ntsc;
+            vicfunc[65] = &VICII::cycle65ntsc;
             break;
             
         default:
