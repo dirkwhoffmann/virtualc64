@@ -10,6 +10,7 @@
 class InstrTableView: NSTableView {
     
     @IBOutlet weak var inspector: Inspector!
+    
     var c64: C64Proxy { return inspector.parent.c64 }
     var cpu: CPUProxy { return c64.cpu }
     var breakpoints: GuardsProxy { return c64.breakpoints }
@@ -24,11 +25,12 @@ class InstrTableView: NSTableView {
     var addrInFirstRow: Int = 0
     
      // Data caches
-    var instrInRow: [Int: DisassembledInstruction] = [:]
+    var numRows = 0
     var bpInRow: [Int: BreakpointType] = [:]
     var addrInRow: [Int: Int] = [:]
+    var dataInRow: [Int: String] = [:]
+    var instrInRow: [Int: String] = [:]
     var rowForAddr: [Int: Int] = [:]
-    var numRows = 0
     
     // Number format
     var hex = true
@@ -59,8 +61,8 @@ class InstrTableView: NSTableView {
         
         for i in 0 ..< numRows {
             
-            instrInRow[i] = cpu.getInstrInfo(i, start: addrInFirstRow)
-            
+            instrInRow[i] = cpu.disassemble(atAddr: addr)
+                        
             if breakpoints.isSetAndDisabled(at: addr) {
                 bpInRow[i] = BreakpointType.disabled
             } else if breakpoints.isSet(at: addr) {
@@ -71,7 +73,7 @@ class InstrTableView: NSTableView {
             
             addrInRow[i] = addr
             rowForAddr[addr] = i
-            addr += Int(instrInRow[i]!.size)
+            addr += 2 // TODO
         }
     }
     
@@ -174,25 +176,21 @@ extension InstrTableView: NSTableViewDataSource {
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
-        if var info = instrInRow[row] {
+        switch tableColumn?.identifier.rawValue {
             
-            switch tableColumn?.identifier.rawValue {
-                
-            case "break" where bpInRow[row] == .enabled:
-                return "\u{26D4}" // "⛔" ("\u{1F534}" // "🔴")
-            case "break" where bpInRow[row] == .disabled:
-                return "\u{26AA}" // "⚪" ("\u{2B55}" // "⭕")
-            case "addr":
-                return info.addr
-            case "data":
-                return String(cString: &info.data.0)
-            case "instr":
-                return String(cString: &info.command.0)
-            default:
-                return ""
-            }
+        case "break" where bpInRow[row] == .enabled:
+            return "\u{26D4}" // "⛔" ("\u{1F534}" // "🔴")
+        case "break" where bpInRow[row] == .disabled:
+            return "\u{26AA}" // "⚪" ("\u{2B55}" // "⭕")
+        case "addr":
+            return addrInRow[row]
+        case "data":
+            return dataInRow[row]
+        case "instr":
+            return instrInRow[row]
+        default:
+            return ""
         }
-        return "??"
     }
 }
 

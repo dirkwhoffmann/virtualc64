@@ -35,10 +35,10 @@ class CPU : public C64Component {
     u16 instrStart;
     
     // Disassembled instructions, starting at 'start'
-    DisassembledInstruction instr[CPUINFO_INSTR_COUNT];
+    // DisassembledInstruction instr[CPUINFO_INSTR_COUNT];
     
     // Disassembled instructions from the log buffer
-    DisassembledInstruction loggedInstr[CPUINFO_INSTR_COUNT];
+    // DisassembledInstruction loggedInstr[CPUINFO_INSTR_COUNT];
     
     
     //
@@ -250,9 +250,11 @@ public:
     // Returns the result of the latest inspection
     CPUInfo getInfo() { return HardwareComponent::getInfo(info); }
     
+    /*
     DisassembledInstruction getInstrInfo(long nr, u16 startAddr);
     DisassembledInstruction getInstrInfo(long nr);
     DisassembledInstruction getLoggedInstrInfo(long nr);
+    */
     
     
     //
@@ -263,7 +265,6 @@ private:
     
     void _reset() override;
     void _inspect() override;
-    void _inspect(u32 dasmStart);
     void _dump() override;
     void _setDebug(bool enable) override;
     size_t stateSize() override;

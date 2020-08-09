@@ -237,6 +237,7 @@ public:
      */
     RecordedInstruction logEntry(int n);
     RecordedInstruction logEntryAbs(int n);
+
     
     // Clears the log buffer
     void clearLog() { logCnt = 0; }
@@ -256,15 +257,27 @@ public:
     //
     // Running the disassembler
     //
+        
+    // Returns a textual representation of an instruction
+    const char *disassemble(u16 addr);
+    const char *disassemble(RecordedInstruction &instr);
+    const char *disassembleLogEntry(int i);
     
+    // Returns a textual representation of the data bytes of an instruction
+    const char *disassembleDataBytes(RecordedInstruction &instr);
+    const char *disassembleDataBytes(u16 addr);
+
+    // Returns a textual representation of the status register
+    const char *disassembleFlags(RecordedInstruction &instr);
+
     // Disassembles a previously recorded instruction
-    DisassembledInstruction disassemble(RecordedInstruction instr);
+    // DisassembledInstruction disassemble(RecordedInstruction instr);
     
     // Disassembles an instruction at a specified memory location
-    DisassembledInstruction disassemble(u16 addr);
+    // DisassembledInstruction disassemble(u16 addr);
     
     // Disassembles the currently executed instruction
-    DisassembledInstruction disassemble();
+    // DisassembledInstruction disassemble();
 };
 
 #endif

@@ -10,10 +10,15 @@
 class TraceTableView: NSTableView {
     
     @IBOutlet weak var inspector: Inspector!
+    
     var c64: C64Proxy { return inspector.parent.c64 }
+    var cpu: CPUProxy { return c64.cpu }
     
     // Data caches
-    var instrInRow: [Int: DisassembledInstruction] = [:]
+    var addrInRow: [Int: Int] = [:]
+    var flagsInRow: [Int: String] = [:]
+    var instrInRow: [Int: String] = [:]
+    // var instrInRow: [Int: RecordedInstruction] = [:]
     var numRows = 0
     
     override func awakeFromNib() {
@@ -27,7 +32,10 @@ class TraceTableView: NSTableView {
         numRows = c64.cpu.loggedInstructions()
         
         for i in 0 ..< numRows {
-            instrInRow[i] = c64.cpu.getLoggedInstrInfo(i)
+            // instrInRow[i] = c64.cpu.getLoggedInstrInfo(i)
+            addrInRow[i] = 42
+            instrInRow[i] = "????"
+            flagsInRow[i] = "-----??"
         }
     }
     
@@ -54,19 +62,16 @@ extension TraceTableView: NSTableViewDataSource {
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
-        if var info = instrInRow[row] {
+        switch tableColumn?.identifier.rawValue {
             
-            switch tableColumn?.identifier.rawValue {
-                
-            case "addr":
-                return info.addr
-            case "flags":
-                return String(cString: &info.flags.0)
-            case "instr":
-                return String(cString: &info.command.0)
-            default:
-                return "???"
-            }
+        case "addr":
+            return addrInRow[row]
+        case "flags":
+            return flagsInRow[row]
+        case "instr":
+            return instrInRow[row]
+        default:
+            return "???"
         }
     
         return "??"

@@ -306,9 +306,10 @@ struct AnyC64FileWrapper;
 }
 
 - (CPUInfo) getInfo;
-- (DisassembledInstruction) getInstrInfo:(NSInteger)index start:(NSInteger)addr;
+// - (DisassembledInstruction) getInstrInfo:(NSInteger)index start:(NSInteger)addr;
 - (NSInteger) loggedInstructions;
-- (DisassembledInstruction) getLoggedInstrInfo:(NSInteger)index;
+// - (DisassembledInstruction) getLoggedInstrInfo:(NSInteger)index;
+- (RecordedInstruction) getRecordedInstruction:(NSInteger)index;
 - (void) clearLog;
 - (void) dump;
 - (bool) isHalted;
@@ -321,6 +322,14 @@ struct AnyC64FileWrapper;
 
 - (i64) cycle;
 - (u16) pc;
+
+- (NSString *) disassemble:(RecordedInstruction)instr;
+- (NSString *) disassembleAtAddr:(NSInteger)addr;
+  
+- (NSString *) disassembleDataBytes:(RecordedInstruction)instr;
+- (NSString *) disassembleDataBytesAtAddr:(NSInteger)addr;
+
+- (NSString *) disassembleFlags:(RecordedInstruction)instr;
 
 @end
 

@@ -61,6 +61,7 @@ CPU::CPU(C64& ref) : C64Component(ref)
     registerSnapshotItems(items, sizeof(items));
 }
 
+/*
 DisassembledInstruction
 CPU::getInstrInfo(long nr, u16 start)
 {
@@ -89,6 +90,7 @@ CPU::getLoggedInstrInfo(long nr)
     synchronized { result = loggedInstr[nr]; }
     return result;
 }
+*/
 
 void
 CPU::_reset()
@@ -110,14 +112,6 @@ void
 CPU::_inspect()
 {
     debug("CPU::_inspect ()\n");
-    
-    _inspect(getPC());
-}
-
-void
-CPU::_inspect(u32 dasmStart)
-{
-    debug("CPU::_inspect (dasmStart = %x)\n", dasmStart);
     
     synchronized {
         
@@ -146,6 +140,7 @@ CPU::_inspect(u32 dasmStart)
         info.processorPortDir = pport.readDirection();
         
         // Disassemble the program starting at 'dasmStart'
+        /*
         instrStart = dasmStart;
         for (unsigned i = 0; i < CPUINFO_INSTR_COUNT; i++) {
             instr[i] = debugger.disassemble(dasmStart);
@@ -158,6 +153,7 @@ CPU::_inspect(u32 dasmStart)
             RecordedInstruction rec = debugger.logEntryAbs(i);
             loggedInstr[i] = debugger.disassemble(rec);
         }
+        */
     }
 }
 
@@ -174,16 +170,18 @@ CPU::_setDebug(bool enable)
 void 
 CPU::_dump()
 {
-    DisassembledInstruction instr = debugger.disassemble();
+    // DisassembledInstruction instr = debugger.disassemble();
     
 	msg("CPU:\n");
 	msg("----\n\n");
+    /*
     msg("%s: %s %s %s   %s %s %s %s %s %s\n",
         instr.pc,
         instr.byte1, instr.byte2, instr.byte3,
         instr.a, instr.x, instr.y, instr.sp,
         instr.flags,
         instr.command);
+    */
 	msg("      Rdy line : %s\n", rdyLine ? "high" : "low");
     msg("      Nmi line : %02X\n", nmiLine);
     msg(" Edge detector : %02X\n", edgeDetector.current());

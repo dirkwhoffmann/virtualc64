@@ -12,7 +12,8 @@
 
 #include "Aliases.h"
 
-#define LOG_BUFFER_CAPACITY 256
+#define LOG_BUFFER_CAPACITY 256 // TODO: CLEAN THIS UP. STILL USED?
+#define CPUINFO_INSTR_COUNT 256 // TODO: CLEAN THIS UP. STILL USED? 
 
 #define C_FLAG 0x01
 #define Z_FLAG 0x02
@@ -134,6 +135,7 @@ typedef struct
 }
 RecordedInstruction;
 
+/*
 typedef struct
 {
     u64 cycle;
@@ -152,8 +154,7 @@ typedef struct
     char command[16];
 }
 DisassembledInstruction;
-
-#define CPUINFO_INSTR_COUNT 256
+*/
 
 typedef struct
 {
