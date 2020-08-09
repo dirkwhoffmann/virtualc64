@@ -376,4 +376,36 @@ private:
     void done();
 };
 
+
+//
+// C64 CPU
+//
+
+class C64CPU : public CPU<C64Memory> {
+            
+public:
+    
+    C64CPU(C64& ref, C64Memory& memref);
+    
+    CPUModel model() override { return MOS_6510; }
+    bool isC64CPU() override { return true; }
+    bool isDriveCPU() override { return false; }
+};
+
+
+//
+// Drive CPU
+//
+
+class DriveCPU : public CPU<DriveMemory> {
+        
+public:
+    
+    DriveCPU(C64& ref, DriveMemory &memref);
+    
+    CPUModel model() override { return MOS_6502; }
+    bool isC64CPU() override { return false; }
+    bool isDriveCPU() override { return true; }
+};
+
 #endif

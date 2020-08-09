@@ -44,8 +44,7 @@
 #include "SIDBridge.h"
 #include "TOD.h"
 #include "CIA.h"
-#include "C64CPU.h"
-#include "DriveCPU.h"
+#include "CPU.h"
 
 // Cartridges
 #include "Cartridge.h"

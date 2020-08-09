@@ -163,8 +163,6 @@
 		507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */; };
 		5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* MacAudio.swift */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
-		5098E73324DEB668008F6E78 /* C64CPU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5098E73124DEB668008F6E78 /* C64CPU.cpp */; };
-		5098E73624DEB67C008F6E78 /* DriveCPU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5098E73424DEB67C008F6E78 /* DriveCPU.cpp */; };
 		50995F2A24DBCDE400F40713 /* CPUDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50995F2824DBCDE400F40713 /* CPUDebugger.cpp */; };
 		509A26072027AA1100D28827 /* DiskMountDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 509A26062027AA1100D28827 /* DiskMountDialog.xib */; };
 		50A0B48D24C1CAEB00FF0B0B /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50A0B48C24C1CAEB00FF0B0B /* Preferences.xib */; };
@@ -491,10 +489,6 @@
 		5081AB621EF29E6400D6F616 /* MacAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacAudio.swift; sourceTree = "<group>"; };
 		5092A5B0200BC4B70037754D /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
 		5093D6A824B19E9200BDF924 /* Serialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Serialization.h; sourceTree = "<group>"; };
-		5098E73124DEB668008F6E78 /* C64CPU.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64CPU.cpp; sourceTree = "<group>"; };
-		5098E73224DEB668008F6E78 /* C64CPU.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64CPU.h; sourceTree = "<group>"; };
-		5098E73424DEB67C008F6E78 /* DriveCPU.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DriveCPU.cpp; sourceTree = "<group>"; };
-		5098E73524DEB67C008F6E78 /* DriveCPU.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DriveCPU.h; sourceTree = "<group>"; };
 		50995F2824DBCDE400F40713 /* CPUDebugger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPUDebugger.cpp; sourceTree = "<group>"; };
 		50995F2924DBCDE400F40713 /* CPUDebugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPUDebugger.h; sourceTree = "<group>"; };
 		509A26062027AA1100D28827 /* DiskMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskMountDialog.xib; sourceTree = "<group>"; };
@@ -873,10 +867,6 @@
 				504C42E624AF29AB00E69CAE /* CPUTypes.h */,
 				504C42E824AF29AB00E69CAE /* CPU.h */,
 				504C42E924AF29AB00E69CAE /* CPU.cpp */,
-				5098E73224DEB668008F6E78 /* C64CPU.h */,
-				5098E73124DEB668008F6E78 /* C64CPU.cpp */,
-				5098E73524DEB67C008F6E78 /* DriveCPU.h */,
-				5098E73424DEB67C008F6E78 /* DriveCPU.cpp */,
 				504C42E724AF29AB00E69CAE /* CPUInstructions.h */,
 				504C42EA24AF29AB00E69CAE /* CPUInstructions.cpp */,
 				504C433D24AF29AC00E69CAE /* ProcessorPort.h */,
@@ -1379,7 +1369,6 @@
 				504C439124AF29AC00E69CAE /* VIC_memory.cpp in Sources */,
 				50FF818F1F88D9100004548A /* GamePad.swift in Sources */,
 				504C438024AF29AC00E69CAE /* CPU.cpp in Sources */,
-				5098E73624DEB67C008F6E78 /* DriveCPU.cpp in Sources */,
 				504C439C24AF29AC00E69CAE /* wave.cc in Sources */,
 				50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */,
 				5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */,
@@ -1479,7 +1468,6 @@
 				50195C2A20B007A1003844FB /* Debugger.swift in Sources */,
 				50D3092424C7152700B92563 /* Inspector.swift in Sources */,
 				504C438C24AF29AC00E69CAE /* VIC_draw.cpp in Sources */,
-				5098E73324DEB668008F6E78 /* C64CPU.cpp in Sources */,
 				50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */,
 				5031D59A200B47B70088C802 /* ImageUtilities.swift in Sources */,
 				504C436924AF29AC00E69CAE /* Zaxxon.cpp in Sources */,
