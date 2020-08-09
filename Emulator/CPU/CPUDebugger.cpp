@@ -265,23 +265,31 @@ CPUDebugger::logInstruction()
 }
 
 RecordedInstruction &
-CPUDebugger::logEntry(int n)
+CPUDebugger::logEntryRel(int n)
 {
     assert(n < loggedInstructions());
-
-    // n == 0 returns the most recently recorded entry
-    int offset = (logCnt - 1 - n) % LOG_BUFFER_CAPACITY;
-
-    return logBuffer[offset];
+    return logBuffer[(logCnt - 1 - n) % LOG_BUFFER_CAPACITY];
 }
 
 RecordedInstruction &
 CPUDebugger::logEntryAbs(int n)
 {
     assert(n < loggedInstructions());
+    return logEntryRel(loggedInstructions() - n - 1);
+}
 
-    // n == 0 returns the oldest entry
-    return logEntry(loggedInstructions() - n - 1);
+u16
+CPUDebugger::loggedPCRel(int n)
+{
+    assert(n < loggedInstructions());
+    return logBuffer[(logCnt - 1 - n) % LOG_BUFFER_CAPACITY].pc;
+}
+
+u16
+CPUDebugger::loggedPCAbs(int n)
+{
+    assert(n < loggedInstructions());
+    return loggedPCRel(loggedInstructions() - n - 1);
 }
 
 unsigned
@@ -328,7 +336,25 @@ CPUDebugger::getAddressOfNextInstruction()
 }
 
 const char *
-CPUDebugger::disassemble(u16 addr, long *length)
+CPUDebugger::disassembleRecordedInstruction(int i, long *len)
+{
+    return disassembleInstruction(logEntryAbs(i), len);
+}
+
+const char *
+CPUDebugger::disassembleRecordedDataBytes(int i)
+{
+    return disassembleDataBytes(logEntryAbs(i));
+}
+
+const char *
+CPUDebugger::disassembleRecordedFlags(int i)
+{
+    return disassembleRecordedFlags(logEntryAbs(i));
+}
+
+const char *
+CPUDebugger::disassembleInstruction(u16 addr, long *len)
 {
     RecordedInstruction instr;
     
@@ -336,24 +362,42 @@ CPUDebugger::disassemble(u16 addr, long *length)
     instr.byte1 = cpu.spypeek(addr);
     instr.byte2 = cpu.spypeek(addr + 1);
     instr.byte3 = cpu.spypeek(addr + 2);
-    instr.a = cpu.reg.a;
-    instr.x = cpu.reg.x;
-    instr.y = cpu.reg.y;
-    instr.sp = cpu.reg.sp;
-    instr.flags = cpu.getP();
     
-    return disassemble(instr, length);
+    return disassembleInstruction(instr, len);
 }
 
 const char *
-CPUDebugger::disassemble(RecordedInstruction &instr, long *length)
+CPUDebugger::disassembleDataBytes(u16 addr)
+{
+    RecordedInstruction instr;
+     
+     instr.byte1 = cpu.spypeek(addr);
+     instr.byte2 = cpu.spypeek(addr + 1);
+     instr.byte3 = cpu.spypeek(addr + 2);
+     
+     return disassembleDataBytes(instr);
+}
+
+const char *
+CPUDebugger::disassembleInstruction(long *len)
+{
+    return disassembleInstruction(cpu.getPC(), len);
+}
+
+const char *
+CPUDebugger::disassembleDataBytes()
+{
+    return disassembleDataBytes(cpu.getPC());
+}
+
+const char *
+CPUDebugger::disassembleInstruction(RecordedInstruction &instr, long *len)
 {
     static char result[16];
         
     u8 opcode = instr.byte1;
-    if (length) *length = getLengthOfInstruction(opcode);
+    if (len) *len = getLengthOfInstruction(opcode);
         
-    
     // Convert command
     char operand[6];
     switch (addressingMode[opcode]) {
@@ -364,7 +408,7 @@ CPUDebugger::disassemble(RecordedInstruction &instr, long *length)
         case ADDR_ZERO_PAGE_Y:
         case ADDR_INDIRECT_X:
         case ADDR_INDIRECT_Y: {
-            u8 value = cpu.spypeek(instr.pc + 1);
+            u8 value = instr.byte2;
             hex ? sprint8x(operand, value) : sprint8d(operand, value);
             break;
         }
@@ -373,12 +417,12 @@ CPUDebugger::disassemble(RecordedInstruction &instr, long *length)
         case ADDR_ABSOLUTE:
         case ADDR_ABSOLUTE_X:
         case ADDR_ABSOLUTE_Y: {
-            u16 value = LO_HI(cpu.spypeek(instr.pc + 1),cpu.spypeek(instr.pc + 2));
+            u16 value = LO_HI(instr.byte2, instr.byte3);
             hex ? sprint16x(operand, value) : sprint16d(operand, value);
             break;
         }
         case ADDR_RELATIVE: {
-            u16 value = instr.pc + 2 + (i8)cpu.spypeek(instr.pc + 1);
+            u16 value = instr.pc + 2 + (i8)instr.byte2;
             hex ? sprint16x(operand, value) : sprint16d(operand, value);
             break;
         }
@@ -443,228 +487,44 @@ CPUDebugger::disassemble(RecordedInstruction &instr, long *length)
     
     // Copy mnemonic
     strncpy(result, mnemonic[opcode], 3);
-    
-    // Convert register contents to strings
-    /*
-    hex ? sprint16x(result.pc, instr.pc) : sprint16d(result.pc, instr.pc);
-    hex ? sprint8x(result.a, instr.a) : sprint8d(result.a, instr.a);
-    hex ? sprint8x(result.x, instr.x) : sprint8d(result.x, instr.x);
-    hex ? sprint8x(result.y, instr.y) : sprint8d(result.y, instr.y);
-    hex ? sprint8x(result.sp, instr.sp) : sprint8d(result.sp, instr.sp);
-    */
-    
-    // Convert memory contents to strings
-    /*
-    char *ptr = result.data;
-    if (hex) {
-        if (length >= 1) { sprint8x(ptr, instr.byte1); ptr[2] = ' '; ptr += 3; }
-        if (length >= 2) { sprint8x(ptr, instr.byte2); ptr[2] = ' '; ptr += 3; }
-        if (length >= 3) { sprint8x(ptr, instr.byte3); ptr[2] = ' '; ptr += 3; }
-    } else {
-        if (length >= 1) { sprint8d(ptr, instr.byte1); ptr[3] = ' '; ptr += 4; }
-        if (length >= 2) { sprint8d(ptr, instr.byte2); ptr[3] = ' '; ptr += 4; }
-        if (length >= 3) { sprint8d(ptr, instr.byte3); ptr[3] = ' '; ptr += 4; }
-    }
-    ptr[0] = 0;
-    */
-    
-    // Convert flags to a string
-    /*
-    result.flags[0] = (instr.flags & N_FLAG) ? 'N' : 'n';
-    result.flags[1] = (instr.flags & V_FLAG) ? 'V' : 'v';
-    result.flags[2] = '-';
-    result.flags[3] = (instr.flags & B_FLAG) ? 'B' : 'b';
-    result.flags[4] = (instr.flags & D_FLAG) ? 'D' : 'd';
-    result.flags[5] = (instr.flags & I_FLAG) ? 'I' : 'i';
-    result.flags[6] = (instr.flags & Z_FLAG) ? 'Z' : 'z';
-    result.flags[7] = (instr.flags & C_FLAG) ? 'C' : 'c';
-    result.flags[8] = 0;
-    */
-    
     return result;
-}
-
-const char *
-CPUDebugger::disassembleLogEntry(int i, long *length)
-{
-    return disassemble(logEntryAbs(i), length);
 }
 
 const char *
 CPUDebugger::disassembleDataBytes(RecordedInstruction &instr)
 {
-    return "LDA something";
-}
-
-const char *
-CPUDebugger::disassembleDataBytes(u16 addr)
-{
-    return "XXX XXX XXX";
-}
-
-const char *
-CPUDebugger::disassembleFlags(RecordedInstruction &instr)
-{
-    return "--- Flags ---";
-}
-
-/*
-DisassembledInstruction
-CPUDebugger::disassemble(RecordedInstruction instr)
-{
-    DisassembledInstruction result;
+    static char result[13]; char *ptr = result;
     
-    u8 opcode = instr.byte1;
-    u8 length = getLengthOfInstruction(opcode);
+    int len = getLengthOfInstruction(instr.byte1);
     
-    result.addr = instr.pc;
-    result.size = length;
-    
-    // Convert command
-    char operand[6];
-    switch (addressingMode[opcode]) {
-            
-        case ADDR_IMMEDIATE:
-        case ADDR_ZERO_PAGE:
-        case ADDR_ZERO_PAGE_X:
-        case ADDR_ZERO_PAGE_Y:
-        case ADDR_INDIRECT_X:
-        case ADDR_INDIRECT_Y: {
-            u8 value = cpu.spypeek(instr.pc + 1);
-            hex ? sprint8x(operand, value) : sprint8d(operand, value);
-            break;
-        }
-        case ADDR_DIRECT:
-        case ADDR_INDIRECT:
-        case ADDR_ABSOLUTE:
-        case ADDR_ABSOLUTE_X:
-        case ADDR_ABSOLUTE_Y: {
-            u16 value = LO_HI(cpu.spypeek(instr.pc + 1),cpu.spypeek(instr.pc + 2));
-            hex ? sprint16x(operand, value) : sprint16d(operand, value);
-            break;
-        }
-        case ADDR_RELATIVE: {
-            u16 value = instr.pc + 2 + (i8)cpu.spypeek(instr.pc + 1);
-            hex ? sprint16x(operand, value) : sprint16d(operand, value);
-            break;
-        }
-        default:
-            break;
-    }
-    
-    switch (addressingMode[opcode]) {
-            
-        case ADDR_IMPLIED:
-        case ADDR_ACCUMULATOR:
-            strcpy(result.command, "xxx");
-            break;
-        case ADDR_IMMEDIATE:
-            strcpy(result.command, hex ? "xxx #hh" : "xxx #ddd");
-            memcpy(&result.command[5], operand, hex ? 2 : 3);
-            break;
-        case ADDR_ZERO_PAGE:
-            strcpy(result.command, hex ? "xxx hh" : "xxx ddd");
-            memcpy(&result.command[4], operand, hex ? 2 : 3);
-            break;
-        case ADDR_ZERO_PAGE_X:
-            strcpy(result.command, hex ? "xxx hh,X" : "xxx ddd,X");
-            memcpy(&result.command[4], operand, hex ? 2 : 3);
-            break;
-        case ADDR_ZERO_PAGE_Y:
-            strcpy(result.command, hex ? "xxx hh,Y" : "xxx ddd,Y");
-            memcpy(&result.command[4], operand, hex ? 2 : 3);
-            break;
-        case ADDR_ABSOLUTE:
-        case ADDR_DIRECT:
-            strcpy(result.command, hex ? "xxx hhhh" : "xxx ddddd");
-            memcpy(&result.command[4], operand, hex ? 4 : 5);
-            break;
-        case ADDR_ABSOLUTE_X:
-            strcpy(result.command, hex ? "xxx hhhh,X" : "xxx ddddd,X");
-            memcpy(&result.command[4], operand, hex ? 4 : 5);
-            break;
-        case ADDR_ABSOLUTE_Y:
-            strcpy(result.command, hex ? "xxx hhhh,Y" : "xxx ddddd,Y");
-            memcpy(&result.command[4], operand, hex ? 4 : 5);
-            break;
-        case ADDR_INDIRECT:
-            strcpy(result.command, hex ? "xxx (hhhh)" : "xxx (ddddd)");
-            memcpy(&result.command[5], operand, hex ? 4 : 5);
-            break;
-        case ADDR_INDIRECT_X:
-            strcpy(result.command, hex ? "xxx (hh,X)" : "xxx (ddd,X)");
-            memcpy(&result.command[5], operand, hex ? 2 : 3);
-            break;
-        case ADDR_INDIRECT_Y:
-            strcpy(result.command, hex ? "xxx (hh),Y" : "xxx (ddd),Y");
-            memcpy(&result.command[5], operand, hex ? 2 : 3);
-            break;
-        case ADDR_RELATIVE:
-            strcpy(result.command, hex ? "xxx hhhh" : "xxx ddddd");
-            memcpy(&result.command[4], operand, hex ? 4 : 5);
-            break;
-        default:
-            strcpy(result.command, "???");
-    }
-    
-    // Copy mnemonic
-    strncpy(result.command, mnemonic[opcode], 3);
-    
-    // Convert register contents to strings
-    hex ? sprint16x(result.pc, instr.pc) : sprint16d(result.pc, instr.pc);
-    hex ? sprint8x(result.a, instr.a) : sprint8d(result.a, instr.a);
-    hex ? sprint8x(result.x, instr.x) : sprint8d(result.x, instr.x);
-    hex ? sprint8x(result.y, instr.y) : sprint8d(result.y, instr.y);
-    hex ? sprint8x(result.sp, instr.sp) : sprint8d(result.sp, instr.sp);
-    
-    // Convert memory contents to strings
-    char *ptr = result.data;
     if (hex) {
-        if (length >= 1) { sprint8x(ptr, instr.byte1); ptr[2] = ' '; ptr += 3; }
-        if (length >= 2) { sprint8x(ptr, instr.byte2); ptr[2] = ' '; ptr += 3; }
-        if (length >= 3) { sprint8x(ptr, instr.byte3); ptr[2] = ' '; ptr += 3; }
+        if (len >= 1) { sprint8x(ptr, instr.byte1); ptr[2] = ' '; ptr += 3; }
+        if (len >= 2) { sprint8x(ptr, instr.byte2); ptr[2] = ' '; ptr += 3; }
+        if (len >= 3) { sprint8x(ptr, instr.byte3); ptr[2] = ' '; ptr += 3; }
     } else {
-        if (length >= 1) { sprint8d(ptr, instr.byte1); ptr[3] = ' '; ptr += 4; }
-        if (length >= 2) { sprint8d(ptr, instr.byte2); ptr[3] = ' '; ptr += 4; }
-        if (length >= 3) { sprint8d(ptr, instr.byte3); ptr[3] = ' '; ptr += 4; }
+        if (len >= 1) { sprint8d(ptr, instr.byte1); ptr[3] = ' '; ptr += 4; }
+        if (len >= 2) { sprint8d(ptr, instr.byte2); ptr[3] = ' '; ptr += 4; }
+        if (len >= 3) { sprint8d(ptr, instr.byte3); ptr[3] = ' '; ptr += 4; }
     }
     ptr[0] = 0;
-
-    // Convert flags to a string
-    result.flags[0] = (instr.flags & N_FLAG) ? 'N' : 'n';
-    result.flags[1] = (instr.flags & V_FLAG) ? 'V' : 'v';
-    result.flags[2] = '-';
-    result.flags[3] = (instr.flags & B_FLAG) ? 'B' : 'b';
-    result.flags[4] = (instr.flags & D_FLAG) ? 'D' : 'd';
-    result.flags[5] = (instr.flags & I_FLAG) ? 'I' : 'i';
-    result.flags[6] = (instr.flags & Z_FLAG) ? 'Z' : 'z';
-    result.flags[7] = (instr.flags & C_FLAG) ? 'C' : 'c';
-    result.flags[8] = 0;
     
     return result;
 }
 
-DisassembledInstruction
-CPUDebugger::disassemble(u16 addr)
+const char *
+CPUDebugger::disassembleRecordedFlags(RecordedInstruction &instr)
 {
-    RecordedInstruction instr;
-
-    instr.pc = addr;
-    instr.byte1 = cpu.spypeek(addr);
-    instr.byte2 = cpu.spypeek(addr + 1);
-    instr.byte3 = cpu.spypeek(addr + 2);
-    instr.a = cpu.reg.a;
-    instr.x = cpu.reg.x;
-    instr.y = cpu.reg.y;
-    instr.sp = cpu.reg.sp;
-    instr.flags = cpu.getP();
+    static char result[9];
     
-    return disassemble(instr);
+    result[0] = (instr.flags & N_FLAG) ? 'N' : 'n';
+    result[1] = (instr.flags & V_FLAG) ? 'V' : 'v';
+    result[2] = '-';
+    result[3] = (instr.flags & B_FLAG) ? 'B' : 'b';
+    result[4] = (instr.flags & D_FLAG) ? 'D' : 'd';
+    result[5] = (instr.flags & I_FLAG) ? 'I' : 'i';
+    result[6] = (instr.flags & Z_FLAG) ? 'Z' : 'z';
+    result[7] = (instr.flags & C_FLAG) ? 'C' : 'c';
+    result[8] = 0;
+    
+    return result;
 }
-
-DisassembledInstruction
-CPUDebugger::disassemble()
-{
-    return disassemble(cpu.pc);
-}
-*/

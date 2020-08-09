@@ -231,14 +231,16 @@ public:
     // Logs an instruction
     void logInstruction();
     
-    /* Reads an entry from the log buffer
-     *    logEntry: n == 0 returns the most recently recorded entry
-     * logEntryAbs: n == 0 returns the oldest entry
+    /* Reads an item from the log buffer
+     *
+     *    xxxRel: n == 0 returns the most recently recorded entry
+     *    xxxAbs: n == 0 returns the oldest entry
      */
-    RecordedInstruction &logEntry(int n);
+    RecordedInstruction &logEntryRel(int n);
     RecordedInstruction &logEntryAbs(int n);
+    u16 loggedPCRel(int n);
+    u16 loggedPCAbs(int n);
 
-    
     // Clears the log buffer
     void clearLog() { logCnt = 0; }
     
@@ -258,26 +260,24 @@ public:
     // Running the disassembler
     //
         
-    // Returns a textual representation of an instruction
-    const char *disassemble(u16 addr, long *length);
-    const char *disassemble(RecordedInstruction &instr, long *length);
-    const char *disassembleLogEntry(int i, long *length);
-    
-    // Returns a textual representation of the data bytes of an instruction
-    const char *disassembleDataBytes(RecordedInstruction &instr);
+    // Disassembles a previously recorded instruction
+    const char *disassembleRecordedInstruction(int i, long *len);
+    const char *disassembleRecordedDataBytes(int i);
+    const char *disassembleRecordedFlags(int i);
+
+    // Disassembles the instruction at the specified address
+    const char *disassembleInstruction(u16 addr, long *len);
     const char *disassembleDataBytes(u16 addr);
 
-    // Returns a textual representation of the status register
-    const char *disassembleFlags(RecordedInstruction &instr);
-
-    // Disassembles a previously recorded instruction
-    // DisassembledInstruction disassemble(RecordedInstruction instr);
-    
-    // Disassembles an instruction at a specified memory location
-    // DisassembledInstruction disassemble(u16 addr);
-    
     // Disassembles the currently executed instruction
-    // DisassembledInstruction disassemble();
+    const char *disassembleInstruction(long *len);
+    const char *disassembleDataBytes();
+
+private:
+    
+    const char *disassembleInstruction(RecordedInstruction &instr, long *len);
+    const char *disassembleDataBytes(RecordedInstruction &instr);
+    const char *disassembleRecordedFlags(RecordedInstruction &instr);
 };
 
 #endif

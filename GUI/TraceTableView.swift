@@ -18,7 +18,6 @@ class TraceTableView: NSTableView {
     var addrInRow: [Int: Int] = [:]
     var flagsInRow: [Int: String] = [:]
     var instrInRow: [Int: String] = [:]
-    // var instrInRow: [Int: RecordedInstruction] = [:]
     var numRows = 0
     
     override func awakeFromNib() {
@@ -32,10 +31,13 @@ class TraceTableView: NSTableView {
         numRows = c64.cpu.loggedInstructions()
         
         for i in 0 ..< numRows {
+
             // instrInRow[i] = c64.cpu.getLoggedInstrInfo(i)
+            var length = 0
             addrInRow[i] = 42
-            instrInRow[i] = "????"
-            flagsInRow[i] = "-----??"
+            instrInRow[i] = c64.cpu.disassembleRecordedDataBytes(i)
+            instrInRow[i] = c64.cpu.disassembleRecordedInstruction(i, length: &length)
+            flagsInRow[i] = c64.cpu.disassembleRecordedFlags(i)
         }
     }
     

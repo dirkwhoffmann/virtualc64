@@ -135,27 +135,6 @@ typedef struct
 }
 RecordedInstruction;
 
-/*
-typedef struct
-{
-    u64 cycle;
-    u16 addr; 
-    u8 size;
-    char byte1[4]; // DEPRECATED, REPLACED BY data
-    char byte2[4]; // DEPRECATED, REPLACED BY data
-    char byte3[4]; // DEPRECATED, REPLACED BY data
-    char data[13];
-    char pc[6];
-    char a[4];
-    char x[4];
-    char y[4];
-    char sp[4];
-    char flags[9];
-    char command[16];
-}
-DisassembledInstruction;
-*/
-
 typedef struct
 {
     u64 cycle;

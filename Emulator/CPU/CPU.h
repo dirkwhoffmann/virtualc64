@@ -34,13 +34,7 @@ class CPU : public C64Component {
     // Address of the first disassembled instruction in memory
     u16 instrStart;
     
-    // Disassembled instructions, starting at 'start'
-    // DisassembledInstruction instr[CPUINFO_INSTR_COUNT];
-    
-    // Disassembled instructions from the log buffer
-    // DisassembledInstruction loggedInstr[CPUINFO_INSTR_COUNT];
-    
-    
+
     //
     // Sub components
     //
@@ -249,13 +243,7 @@ public:
     
     // Returns the result of the latest inspection
     CPUInfo getInfo() { return HardwareComponent::getInfo(info); }
-    
-    /*
-    DisassembledInstruction getInstrInfo(long nr, u16 startAddr);
-    DisassembledInstruction getInstrInfo(long nr);
-    DisassembledInstruction getLoggedInstrInfo(long nr);
-    */
-    
+        
     
     //
     // Methods from HardwareComponent

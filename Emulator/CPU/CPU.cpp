@@ -61,37 +61,6 @@ CPU::CPU(C64& ref) : C64Component(ref)
     registerSnapshotItems(items, sizeof(items));
 }
 
-/*
-DisassembledInstruction
-CPU::getInstrInfo(long nr, u16 start)
-{
-    // Update the cache if necessary
-    if (instrStart != start) _inspect(start);
-
-    return getInstrInfo(nr);
-}
-
-DisassembledInstruction
-CPU::getInstrInfo(long nr)
-{
-    assert(nr < CPUINFO_INSTR_COUNT);
-    
-    DisassembledInstruction result;
-    synchronized { result = instr[nr]; }
-    return result;
-}
-
-DisassembledInstruction
-CPU::getLoggedInstrInfo(long nr)
-{
-    assert(nr < CPUINFO_INSTR_COUNT);
-    
-    DisassembledInstruction result;
-    synchronized { result = loggedInstr[nr]; }
-    return result;
-}
-*/
-
 void
 CPU::_reset()
 {
@@ -168,18 +137,9 @@ CPU::_setDebug(bool enable)
 void 
 CPU::_dump()
 {
-    // DisassembledInstruction instr = debugger.disassemble();
-    
 	msg("CPU:\n");
 	msg("----\n\n");
-    /*
-    msg("%s: %s %s %s   %s %s %s %s %s %s\n",
-        instr.pc,
-        instr.byte1, instr.byte2, instr.byte3,
-        instr.a, instr.x, instr.y, instr.sp,
-        instr.flags,
-        instr.command);
-    */
+
 	msg("      Rdy line : %s\n", rdyLine ? "high" : "low");
     msg("      Nmi line : %02X\n", nmiLine);
     msg(" Edge detector : %02X\n", edgeDetector.current());

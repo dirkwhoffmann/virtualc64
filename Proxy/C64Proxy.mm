@@ -128,22 +128,18 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->cpu->getInfo();
 }
-/*
-- (DisassembledInstruction) getInstrInfo:(NSInteger)nr start:(NSInteger)addr
-{
-    return wrapper->cpu->getInstrInfo(nr, (u16)addr);
-}
-*/
 - (NSInteger) loggedInstructions
 {
     return wrapper->cpu->debugger.loggedInstructions();
 }
-/*
-- (DisassembledInstruction) getLoggedInstrInfo:(NSInteger)nr
+- (NSInteger) loggedPCRel:(NSInteger)nr
 {
-    return wrapper->cpu->getLoggedInstrInfo(nr);
+    return wrapper->cpu->debugger.loggedPCRel((int)nr);
 }
-*/
+- (NSInteger) loggedPCAbs:(NSInteger)nr
+{
+    return wrapper->cpu->debugger.loggedPCAbs((int)nr);
+}
 - (RecordedInstruction) getRecordedInstruction:(NSInteger)index
 {
     return wrapper->cpu->debugger.logEntryAbs((int)index);
@@ -184,31 +180,33 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->cpu->getPC();
 }
-- (NSString *) disassemble:(RecordedInstruction)instr length:(NSInteger *)length
+- (NSString *) disassembleRecordedInstruction:(NSInteger)i length:(NSInteger *)len
 {
-    const char *str = wrapper->cpu->debugger.disassemble(instr, length);
+    const char *str = wrapper->cpu->debugger.disassembleRecordedInstruction((int)i, len);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) disassembleAtAddr:(NSInteger)addr length:(NSInteger *)length
+- (NSString *) disassembleRecordedDataBytes:(NSInteger)i
 {
-    const char *str = wrapper->cpu->debugger.disassemble(addr, length);
+    const char *str = wrapper->cpu->debugger.disassembleRecordedDataBytes((int)i);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) disassembleDataBytes:(RecordedInstruction)instr
+- (NSString *) disassembleRecordedFlags:(NSInteger)i
 {
-    const char *str = wrapper->cpu->debugger.disassembleDataBytes(instr);
+    const char *str = wrapper->cpu->debugger.disassembleRecordedFlags((int)i);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) disassembleDataBytesAtAddr:(NSInteger)addr
+- (NSString *) disassembleInstruction:(NSInteger)addr length:(NSInteger *)len
+{
+    const char *str = wrapper->cpu->debugger.disassembleInstruction(addr, len);
+    return str ? [NSString stringWithUTF8String:str] : NULL;
+}
+- (NSString *) disassembleDataBytes:(NSInteger)addr
 {
     const char *str = wrapper->cpu->debugger.disassembleDataBytes(addr);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) disassembleFlags:(RecordedInstruction)instr
-{
-    const char *str = wrapper->cpu->debugger.disassembleFlags(instr);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
-}
+
+
 /*
 - (NSInteger) recordedInstructions
 {
