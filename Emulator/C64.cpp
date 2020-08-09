@@ -984,7 +984,7 @@ C64::_executeOneCycle()
     // Second clock phase (o2 high)
     cpu.executeOneCycle();
     if (drive8.isConnected()) drive8.execute(durationOfOneCycle);
-    if (drive9.isConnected()) drive9.execute(durationOfOneCycle);
+    if (drive9.isConnected()) { assert(false); drive9.execute(durationOfOneCycle); }
     datasette.execute();
     
     rasterCycle++;

@@ -24,9 +24,22 @@ class CPU : public C64Component {
     friend class Breakpoints;
     friend class Watchpoints;
     
-    // Result of the latest inspection (MOVE TO C64CPU SUBCLASS ?!)
+    //
+    // Inspection results
+    //
+    
+    // Registers
     CPUInfo info;
-
+    
+    // Address of the first disassembled instruction in memory
+    u16 instrStart;
+    
+    // Disassembled instructions, starting at 'start'
+    DisassembledInstruction instr[CPUINFO_INSTR_COUNT];
+    
+    // Disassembled instructions from the log buffer
+    DisassembledInstruction loggedInstr[CPUINFO_INSTR_COUNT];
+    
     
     //
     // Sub components

@@ -52,29 +52,14 @@ typedef enum
 }
 AddressingMode;
 
-/*
 typedef enum
 {
     CPU_OK = 0,
-    CPU_BREAKPOINT_REACHED,
-    CPU_ILLEGAL_INSTRUCTION
+    CPU_HALTED_BY_ILLEGAL_INSTR,
+    CPU_HALTED_BY_BREAKPOINT,
+    CPU_HALTED_BY_WATCHPOINT
 }
 ErrorState;
-*/
-
-/*
-typedef enum : u8
-{
-    C_FLAG = 0x01,
-    Z_FLAG = 0x02,
-    I_FLAG = 0x04,
-    D_FLAG = 0x08,
-    B_FLAG = 0x10,
-    V_FLAG = 0x40,
-    N_FLAG = 0x80
-}
-Flag;
-*/
 
 typedef enum : u8
 {
@@ -195,15 +180,6 @@ typedef struct
     
     u8 processorPort;
     u8 processorPortDir;
-    
-    // Start address of the disassembled instructions
-    u16 start;
-
-    // Disassembled instructions, starting at 'start'
-    DisassembledInstruction instr[CPUINFO_INSTR_COUNT];
-
-    // Disassembled instructions from the log buffer
-    DisassembledInstruction loggedInstr[CPUINFO_INSTR_COUNT];
 }
 CPUInfo;
 
