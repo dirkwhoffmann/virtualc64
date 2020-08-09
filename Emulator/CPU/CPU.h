@@ -90,25 +90,6 @@ protected:
      */
     bool debugMode;
     
-    /* Flags (DEPRECATED)
-     *
-     * CPU_LOG_INSTRUCTION:
-     *     This flag is set if instruction logging is enabled. If set, the
-     *     CPU records the current register contents in a log buffer.
-     *
-     * CPU_CHECK_BP:
-     *    This flag indicates whether the CPU should check for breakpoints.
-     *
-     * CPU_CHECK_WP:
-     *    This flag indicates whether the CPU should check fo watchpoints.
-     */
-    /*
-    int flags;
-    static const int CPU_LOG_INSTRUCTION   = (1 << 0);
-    static const int CPU_CHECK_BP          = (1 << 1);
-    static const int CPU_CHECK_WP          = (1 << 2);
-    */
-    
 public:
     
     // Elapsed clock cycles since power up
@@ -135,19 +116,7 @@ public:
     Registers reg;
             
 private:
-    
-    /* Frozen program counter.
-     * This variable matches the value of the program counter when the CPU
-     * starts to execute an instruction. In contrast to the real program
-     * counter, the value isn't changed until the CPU starts to process the
-     * next instruction. In other words: This value always contains the start
-     * address of the currently executed command, even if some microcycles of
-     * the command have already been computed.
-     */
-    // TODO: Rename to pc0
-    // u16 pc;
-    
-    
+        
     //
     // Port lines
     //
@@ -285,8 +254,16 @@ private:
 
 public:
     
-    
+    /* Returns the frozen program counter.
+     * Variable pc0 matches the value of the program counter when the CPU
+     * starts to execute an instruction. In contrast to the real program
+     * counter, the value isn't changed until the CPU starts to process the
+     * next instruction. In other words: This value always contains the start
+     * address of the currently executed command, even if some microcycles of
+     * the command have already been computed.
+     */
     u16 getPC0() { return reg.pc0; }
+    
     void jumpToAddress(u16 addr) { reg.pc0 = reg.pc = addr; next = fetch; }
     void setPCL(u8 lo) { reg.pc = (reg.pc & 0xff00) | lo; }
     void setPCH(u8 hi) { reg.pc = (reg.pc & 0x00ff) | ((u16)hi << 8); }
@@ -402,7 +379,7 @@ public:
 private:
 
     // Called after the last microcycle has been completed
-    bool done();
+    void done();
 };
 
 #endif

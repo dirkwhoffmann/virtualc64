@@ -121,9 +121,6 @@ class InstrTableView: NSTableView {
         if sender.clickedColumn == 0 {
             
             clickAction(row: sender.clickedRow)
-
-            let b = c64.breakpoints.count
-            let c = c64.watchpoints.count
         }
     }
     

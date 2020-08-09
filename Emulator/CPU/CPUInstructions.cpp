@@ -3180,7 +3180,7 @@ CPU<M>::executeOneCycle()
     }
 }
 
-template <> bool CPU<C64Memory>::done() {
+template <> void CPU<C64Memory>::done() {
 
     if (debugMode) {
 
@@ -3193,14 +3193,12 @@ template <> bool CPU<C64Memory>::done() {
     
     reg.pc0 = reg.pc;
     next = fetch;
-    return state == CPU_OK;
 }
 
-template <> bool CPU<DriveMemory>::done() {
+template <> void CPU<DriveMemory>::done() {
     
     reg.pc0 = reg.pc;
     next = fetch;
-    return state == CPU_OK;
 }
 
 
