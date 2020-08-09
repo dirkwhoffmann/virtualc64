@@ -73,7 +73,5 @@ extension TraceTableView: NSTableViewDataSource {
         default:
             return "???"
         }
-    
-        return "??"
     }
 }

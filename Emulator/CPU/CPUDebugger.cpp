@@ -264,7 +264,7 @@ CPUDebugger::logInstruction()
     logBuffer[i].flags = cpu.getP();
 }
 
-RecordedInstruction
+RecordedInstruction &
 CPUDebugger::logEntry(int n)
 {
     assert(n < loggedInstructions());
@@ -275,7 +275,7 @@ CPUDebugger::logEntry(int n)
     return logBuffer[offset];
 }
 
-RecordedInstruction
+RecordedInstruction &
 CPUDebugger::logEntryAbs(int n)
 {
     assert(n < loggedInstructions());
@@ -328,7 +328,7 @@ CPUDebugger::getAddressOfNextInstruction()
 }
 
 const char *
-CPUDebugger::disassemble(u16 addr)
+CPUDebugger::disassemble(u16 addr, long *length)
 {
     RecordedInstruction instr;
     
@@ -342,17 +342,18 @@ CPUDebugger::disassemble(u16 addr)
     instr.sp = cpu.reg.sp;
     instr.flags = cpu.getP();
     
-    return disassemble(instr);
+    return disassemble(instr, length);
 }
 
 const char *
-CPUDebugger::disassemble(RecordedInstruction &instr)
+CPUDebugger::disassemble(RecordedInstruction &instr, long *length)
 {
     static char result[16];
         
     u8 opcode = instr.byte1;
-    u8 length = getLengthOfInstruction(opcode);
+    if (length) *length = getLengthOfInstruction(opcode);
         
+    
     // Convert command
     char operand[6];
     switch (addressingMode[opcode]) {
@@ -484,10 +485,9 @@ CPUDebugger::disassemble(RecordedInstruction &instr)
 }
 
 const char *
-CPUDebugger::disassembleLogEntry(int i)
+CPUDebugger::disassembleLogEntry(int i, long *length)
 {
-    RecordedInstruction instr = logEntryAbs(i);
-    return disassemble(instr);
+    return disassemble(logEntryAbs(i), length);
 }
 
 const char *

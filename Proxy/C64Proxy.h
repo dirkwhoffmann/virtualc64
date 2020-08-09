@@ -323,8 +323,8 @@ struct AnyC64FileWrapper;
 - (i64) cycle;
 - (u16) pc;
 
-- (NSString *) disassemble:(RecordedInstruction)instr;
-- (NSString *) disassembleAtAddr:(NSInteger)addr;
+- (NSString *) disassemble:(RecordedInstruction)instr length:(NSInteger *)length;
+- (NSString *) disassembleAtAddr:(NSInteger)addr length:(NSInteger *)length;
   
 - (NSString *) disassembleDataBytes:(RecordedInstruction)instr;
 - (NSString *) disassembleDataBytesAtAddr:(NSInteger)addr;

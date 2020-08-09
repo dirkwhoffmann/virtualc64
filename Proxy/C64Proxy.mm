@@ -184,14 +184,14 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->cpu->getPC();
 }
-- (NSString *) disassemble:(RecordedInstruction)instr
+- (NSString *) disassemble:(RecordedInstruction)instr length:(NSInteger *)length
 {
-    const char *str = wrapper->cpu->debugger.disassemble(instr);
+    const char *str = wrapper->cpu->debugger.disassemble(instr, length);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) disassembleAtAddr:(NSInteger)addr
+- (NSString *) disassembleAtAddr:(NSInteger)addr length:(NSInteger *)length
 {
-    const char *str = wrapper->cpu->debugger.disassemble(addr);
+    const char *str = wrapper->cpu->debugger.disassemble(addr, length);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) disassembleDataBytes:(RecordedInstruction)instr

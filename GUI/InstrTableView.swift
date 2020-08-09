@@ -61,8 +61,11 @@ class InstrTableView: NSTableView {
         
         for i in 0 ..< numRows {
             
-            instrInRow[i] = cpu.disassemble(atAddr: addr)
+            var length = 0
+            instrInRow[i] = cpu.disassemble(atAddr: addr, length: &length)
                         
+            track("length = \(length)")
+            
             if breakpoints.isSetAndDisabled(at: addr) {
                 bpInRow[i] = BreakpointType.disabled
             } else if breakpoints.isSet(at: addr) {
@@ -73,7 +76,7 @@ class InstrTableView: NSTableView {
             
             addrInRow[i] = addr
             rowForAddr[addr] = i
-            addr += 2 // TODO
+            addr += length
         }
     }
     

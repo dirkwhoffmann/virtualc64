@@ -235,8 +235,8 @@ public:
      *    logEntry: n == 0 returns the most recently recorded entry
      * logEntryAbs: n == 0 returns the oldest entry
      */
-    RecordedInstruction logEntry(int n);
-    RecordedInstruction logEntryAbs(int n);
+    RecordedInstruction &logEntry(int n);
+    RecordedInstruction &logEntryAbs(int n);
 
     
     // Clears the log buffer
@@ -259,9 +259,9 @@ public:
     //
         
     // Returns a textual representation of an instruction
-    const char *disassemble(u16 addr);
-    const char *disassemble(RecordedInstruction &instr);
-    const char *disassembleLogEntry(int i);
+    const char *disassemble(u16 addr, long *length);
+    const char *disassemble(RecordedInstruction &instr, long *length);
+    const char *disassembleLogEntry(int i, long *length);
     
     // Returns a textual representation of the data bytes of an instruction
     const char *disassembleDataBytes(RecordedInstruction &instr);

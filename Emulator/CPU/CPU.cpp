@@ -110,9 +110,7 @@ CPU::_reset()
 
 void
 CPU::_inspect()
-{
-    debug("CPU::_inspect ()\n");
-    
+{    
     synchronized {
         
         info.cycle = cycle;
