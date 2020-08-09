@@ -25,7 +25,6 @@ CPU<M>::CPU(C64& ref, M& memref) : C64Component(ref), mem(memref)
     SnapshotItem items[] = {
         
          // Internal state
-        { &flags,              sizeof(flags),        CLEAR_ON_RESET },
         { &cycle,              sizeof(cycle),        CLEAR_ON_RESET },
         { &state,              sizeof(state),        CLEAR_ON_RESET },
         { &next,               sizeof(next),         CLEAR_ON_RESET },
@@ -128,11 +127,8 @@ CPU<M>::_inspect()
 template <typename M> void
 CPU<M>::_setDebug(bool enable)
 {
-    if (enable && isC64CPU()) {
-        flags |= CPU<M>::CPU_LOG_INSTRUCTION;
-    } else {
-        flags |= ~CPU<M>::CPU_LOG_INSTRUCTION;
-    }
+    // We only allow the C64 CPU to run in debug mode
+    if (isC64CPU()) { debugMode = enable; }
 }
 
 template <typename M> void
@@ -269,20 +265,6 @@ CPU<M>::setRDY(bool value)
     }
 }
 
-template <typename M> void
-CPU<M>::processFlags()
-{
-    // Record the instruction if requested
-    if (flags & CPU_LOG_INSTRUCTION) {
-        debugger.logInstruction();
-    }
-    
-    // Check if a breakpoint has been reached
-    if (flags & CPU_LOG_INSTRUCTION && debugger.breakpointMatches(reg.pc)) {
-        c64.signalBreakpoint();
-    }
-}
-
 template         CPU<C64Memory>::CPU(C64& ref, C64Memory& memref);
 template CPUInfo CPU<C64Memory>::getInfo();
 template void    CPU<C64Memory>::_dump();
@@ -301,7 +283,6 @@ template void    CPU<C64Memory>::releaseNmiLine(IntSource source);
 template void    CPU<C64Memory>::pullDownIrqLine(IntSource source);
 template void    CPU<C64Memory>::releaseIrqLine(IntSource source);
 template void    CPU<C64Memory>::setRDY(bool value);
-template void    CPU<C64Memory>::processFlags();
 
 template         CPU<DriveMemory>::CPU(C64& ref, DriveMemory& memref);
 template CPUInfo CPU<DriveMemory>::getInfo();
@@ -321,4 +302,3 @@ template void    CPU<DriveMemory>::releaseNmiLine(IntSource source);
 template void    CPU<DriveMemory>::pullDownIrqLine(IntSource source);
 template void    CPU<DriveMemory>::releaseIrqLine(IntSource source);
 template void    CPU<DriveMemory>::setRDY(bool value);
-template void    CPU<DriveMemory>::processFlags();

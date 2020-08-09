@@ -159,21 +159,17 @@ Guards::eval(u32 addr)
 void
 Breakpoints::setNeedsCheck(bool value)
 {
-    if (value) {
-        cpu.flags |= CPU<C64Memory>::CPU_CHECK_BP;
+    if (value || cpu.c64.inDebugMode()) {
+        cpu.debugMode = true;
     } else {
-        cpu.flags &= ~CPU<C64Memory>::CPU_CHECK_BP;
+        cpu.debugMode = false;
     }
 }
 
 void
 Watchpoints::setNeedsCheck(bool value)
 {
-    if (value) {
-         cpu.flags |= CPU<C64Memory>::CPU_CHECK_WP;
-     } else {
-         cpu.flags &= ~CPU<C64Memory>::CPU_CHECK_WP;
-     }
+    // TODO
 }
 
 //

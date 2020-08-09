@@ -3180,6 +3180,32 @@ CPU<M>::executeOneCycle()
     }
 }
 
+template <> bool CPU<C64Memory>::done() {
+
+    if (debugMode) {
+
+        // Record the instruction
+        debugger.logInstruction();
+    
+        // Check if a breakpoint has been reached
+        if (debugger.breakpointMatches(reg.pc)) c64.signalBreakpoint();
+    }
+    
+    pc = reg.pc;
+    next = fetch;
+    return state == CPU_OK;
+}
+
+template <> bool CPU<DriveMemory>::done() {
+    
+    pc = reg.pc;
+    next = fetch;
+    return state == CPU_OK;
+}
+
+
+void done();
+
 template void CPU<C64Memory>::registerInstructions();
 template bool CPU<C64Memory>::executeOneCycle();
 template void CPU<DriveMemory>::registerInstructions();

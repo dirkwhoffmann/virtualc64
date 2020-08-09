@@ -84,7 +84,13 @@ protected:
     // Internal state
     //
     
-    /* Flags
+    /* Debug mode
+     * In debug mode, the CPU checks for breakpoints and records executed
+     * instruction in the log buffer.
+     */
+    bool debugMode;
+    
+    /* Flags (DEPRECATED)
      *
      * CPU_LOG_INSTRUCTION:
      *     This flag is set if instruction logging is enabled. If set, the
@@ -96,10 +102,12 @@ protected:
      * CPU_CHECK_WP:
      *    This flag indicates whether the CPU should check fo watchpoints.
      */
+    /*
     int flags;
     static const int CPU_LOG_INSTRUCTION   = (1 << 0);
     static const int CPU_CHECK_BP          = (1 << 1);
     static const int CPU_CHECK_WP          = (1 << 2);
+    */
     
 public:
     
@@ -359,24 +367,7 @@ private:
     void sbc_bcd(u8 op);
     void cmp(u8 op1, u8 op2);
     
-    
-    //
-    // Accessing memory
-    //
-    
-    /*
-    virtual u8 peek(u16 addr) = 0;
-    virtual u8 peekZP(u16 addr) = 0;
-    virtual u8 peekStack(u16 addr) = 0;
-    virtual void peekIdle(u16 addr) = 0;
-    virtual void peekZPIdle(u16 addr) = 0;
-    virtual void peekStackIdle(u16 addr) = 0;
-    virtual u8 spypeek(u16 addr) = 0;
-    virtual void poke(u16 addr, u8 value) = 0;
-    virtual void pokeZP(u16 addr, u8 value) = 0;
-    virtual void pokeStack(u16 addr, u8 value) = 0;
-    */
-    
+
     //
     // Handling interrupts
     //
@@ -410,8 +401,8 @@ public:
 
 private:
 
-    // Processes debug flags
-    void processFlags();
+    // Called after the last microcycle has been completed
+    bool done();
 };
 
 #endif

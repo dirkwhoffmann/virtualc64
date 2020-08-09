@@ -380,6 +380,4 @@ mem.pokeZP(reg.adl, reg.d); setN(reg.d & 0x80); setZ(reg.d == 0);
 #define POLL_INT_AGAIN doIrq |= (levelDetector.delayed() && !getI()); \
                        doNmi |= edgeDetector.delayed();
 #define CONTINUE next = (MicroInstruction)((int)next+1); return true;
-#define DONE \
-if (flags) { processFlags(); } \
-pc = reg.pc; next = fetch; return state == CPU_OK;
+#define DONE     done(); return state == CPU_OK;
