@@ -34,9 +34,9 @@ typedef enum
 
     // CPU related messages
     MSG_CPU_OK,
+    MSG_CPU_JAMMED,
     MSG_BREAKPOINT_REACHED,
     MSG_WATCHPOINT_REACHED,
-    MSG_ILLEGAL_INSTRUCTION,
     MSG_WARP_ON,
     MSG_WARP_OFF,
 

@@ -41,7 +41,7 @@ extension MyController {
         
         let running = c64.isRunning
         let debug = c64.debugMode
-        let halted = c64.cpu.isHalted()
+        let jammed = c64.cpu.isJammed()
         let warp = c64.warp()
         
         let hasCrt = c64.expansionport.cartridgeAttached()
@@ -66,7 +66,7 @@ extension MyController {
             trackNumber8: connected8,
             trackNumber9: connected9,
             
-            haltIcon: halted,
+            haltIcon: jammed,
             debugIcon: debug,
             muteIcon: warp,
             

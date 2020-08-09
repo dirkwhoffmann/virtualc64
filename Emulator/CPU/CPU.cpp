@@ -26,7 +26,6 @@ CPU<M>::CPU(C64& ref, M& memref) : C64Component(ref), mem(memref)
         
          // Internal state
         { &cycle,              sizeof(cycle),        CLEAR_ON_RESET },
-        { &state,              sizeof(state),        CLEAR_ON_RESET },
         { &next,               sizeof(next),         CLEAR_ON_RESET },
 
         { &reg.a,              sizeof(reg.a),        CLEAR_ON_RESET },

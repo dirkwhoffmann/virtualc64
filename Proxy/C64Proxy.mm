@@ -152,7 +152,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->cpu->dump();
 }
-- (bool) isHalted
+- (bool) isJammed
 {
     return wrapper->cpu->isJammed();
 }

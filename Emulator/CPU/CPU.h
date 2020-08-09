@@ -94,13 +94,7 @@ public:
     
     // Elapsed clock cycles since power up
     u64 cycle;
-    
-    // Current state of the CPU
-    CPUState state;
-    
-    // Indicates whether the CPU is jammed (DEPRECATED)
-    // bool halted;
-                
+                        
 private:
 
     // The next microinstruction to be executed
@@ -368,7 +362,7 @@ public:
 public:
 
     // Returns true if the CPU is jammed
-    bool isJammed() { return state = CPU_JAMMED; }
+    bool isJammed() { return next == JAM || next == JAM_2; }
     
     // Returns true if the next cycle marks the beginning of an instruction
     bool inFetchPhase() { return next == fetch; }

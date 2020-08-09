@@ -642,7 +642,7 @@ extension MyController {
             inspector?.fullRefresh()
             inspector?.scrollToPC()
             
-        case MSG_ILLEGAL_INSTRUCTION:
+        case MSG_CPU_JAMMED:
             
             self.debugOpenAction(self)
             refresh()

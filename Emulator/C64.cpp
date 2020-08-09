@@ -875,8 +875,9 @@ C64::runLoop()
 
             // Is the CPU jammed due the execution of an illegal instruction?
             if (runLoopCtrl & RL_CPU_JAMMED) {
-                clearControlFlags(RL_CPU_JAMMED);
+                putMessage(MSG_CPU_JAMMED);
                 debug("RL_CPU_JAMMED\n");
+                clearControlFlags(RL_CPU_JAMMED);
                 break;
             }
 
@@ -925,7 +926,7 @@ C64::stepOver()
 void
 C64::executeOneFrame()
 {
-    do { executeOneLine(); } while (rasterLine != 0 && runLoopCtrl == 0);    
+    do { executeOneLine(); } while (rasterLine != 0 && runLoopCtrl == 0);
 }
 
 void

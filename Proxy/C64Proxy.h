@@ -311,7 +311,7 @@ struct AnyC64FileWrapper;
 - (NSInteger) loggedPCAbs:(NSInteger)nr;
 - (void) clearLog;
 - (void) dump;
-- (bool) isHalted;
+- (bool) isJammed;
 
 - (BOOL) tracing;
 - (void) setTracing:(BOOL)b;

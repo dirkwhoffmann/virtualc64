@@ -484,10 +484,7 @@ CPU<M>::executeOneCycle()
             
         case JAM:
             
-            if (state != CPU_JAMMED) {
-                state = CPU_JAMMED;
-                c64.putMessage(MSG_ILLEGAL_INSTRUCTION);
-            }
+            c64.signalJammed();
             CONTINUE
 
         case JAM_2:
