@@ -446,16 +446,16 @@ public:
      * In this case, the C64 is emulated until the curent frame has been
      * completed.
      */
-    bool executeOneFrame();
+    void executeOneFrame();
     
     /*  Emulates the C64 until the end of the current rasterline.
      *  This function in called inside executeOneFrame().
      */
-    bool executeOneLine();
+    void executeOneLine();
     
     // Executes a single clock cycle
-    bool executeOneCycle();
-    bool _executeOneCycle();
+    void executeOneCycle();
+    void _executeOneCycle();
 
     /* Finishes the current instruction.
      * This function is called when the emulator threads terminates in order

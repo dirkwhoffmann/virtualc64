@@ -819,12 +819,10 @@ C64::runLoop()
     restartTimer();
 
     // Enter the loop
-    bool success;
-
     while (1) {
         
         // Run the emulator
-        do { success = executeOneFrame(); } while(likely(success));
+        do { executeOneFrame(); } while (runLoopCtrl == 0);
         
         // Check if special action needs to be taken
         if (runLoopCtrl) {
@@ -924,15 +922,13 @@ C64::stepOver()
     }
 }
 
-bool
+void
 C64::executeOneFrame()
 {
-    do { executeOneLine(); } while (rasterLine != 0 && runLoopCtrl == 0);
-    
-    return runLoopCtrl == 0;
+    do { executeOneLine(); } while (rasterLine != 0 && runLoopCtrl == 0);    
 }
 
-bool
+void
 C64::executeOneLine()
 {
     // Emulate the beginning of a rasterline
@@ -945,16 +941,15 @@ C64::executeOneLine()
         _executeOneCycle();
         if (runLoopCtrl != 0) {
             if (i == lastCycle) endRasterLine();
-            return false;
+            return;
         }
     }
     
     // Emulate the end of a rasterline
     endRasterLine();
-    return true;
 }
 
-bool
+void
 C64::executeOneCycle()
 {
     bool isFirstCycle = rasterCycle == 1;
@@ -963,14 +958,11 @@ C64::executeOneCycle()
     if (isFirstCycle) beginRasterLine();
     _executeOneCycle();
     if (isLastCycle) endRasterLine();
-    
-    return runLoopCtrl == 0;
 }
 
-bool
+void
 C64::_executeOneCycle()
 {
-    bool result = true;
     u64 cycle = ++cpu.cycle;
     
     //  <---------- o2 low phase ----------->|<- o2 high phase ->|
@@ -998,13 +990,12 @@ C64::_executeOneCycle()
     if (iec.isDirtyC64Side) iec.updateIecLinesC64Side();
     
     // Second clock phase (o2 high)
-    result &= cpu.executeOneCycle();
-    if (drive8.isConnected()) result &= drive8.execute(durationOfOneCycle);
-    if (drive9.isConnected()) result &= drive9.execute(durationOfOneCycle);
+    cpu.executeOneCycle();
+    if (drive8.isConnected()) drive8.execute(durationOfOneCycle);
+    if (drive9.isConnected()) drive9.execute(durationOfOneCycle);
     datasette.execute();
     
     rasterCycle++;
-    return result;
 }
 
 void

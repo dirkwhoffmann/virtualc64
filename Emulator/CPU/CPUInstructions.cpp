@@ -439,7 +439,7 @@ CPU<M>::registerIllegalInstructions()
     registerCallback(0x9B, "TAS*", ADDR_ABSOLUTE_Y, TAS_abs_y);
 }
 
-template <typename M> bool
+template <typename M> void
 CPU<M>::executeOneCycle()
 {
     u8 instr;
@@ -462,7 +462,7 @@ CPU<M>::executeOneCycle()
                 next = nmi_2;
                 doNmi = false;
                 doIrq = false; // NMI wins
-                return true;
+                return;
                 
             } else if (unlikely(doIrq)) {
                 
@@ -470,13 +470,13 @@ CPU<M>::executeOneCycle()
                 IDLE_FETCH
                 next = irq_2;
                 doIrq = false;
-                return true;
+                return;
             }
             
             // Execute the Fetch phase
             FETCH_OPCODE
             next = actionFunc[instr];
-            return true;
+            return;
             
         //
         // Illegal instructions
@@ -518,7 +518,7 @@ CPU<M>::executeOneCycle()
                 // ... jump to the NMI vector instead of the IRQ vector.
                 edgeDetector.clear();
                 next = nmi_5;
-                return true;
+                return;
             }
             CONTINUE
             
@@ -873,7 +873,7 @@ CPU<M>::executeOneCycle()
             
             if (unlikely(pc_hi != HI_BYTE(reg.pc))) {
                 next = (reg.d & 0x80) ? branch_3_underflow : branch_3_overflow;
-                return true;
+                return;
             }
             DONE
         }
@@ -1199,7 +1199,7 @@ CPU<M>::executeOneCycle()
                 // ... jump to the NMI vector instead of the IRQ vector.
                 edgeDetector.clear();
                 next = BRK_nmi_4;
-                return true;
+                return;
                 
             } else {
                 CONTINUE
@@ -3207,6 +3207,6 @@ template <> bool CPU<DriveMemory>::done() {
 void done();
 
 template void CPU<C64Memory>::registerInstructions();
-template bool CPU<C64Memory>::executeOneCycle();
+template void CPU<C64Memory>::executeOneCycle();
 template void CPU<DriveMemory>::registerInstructions();
-template bool CPU<DriveMemory>::executeOneCycle();
+template void CPU<DriveMemory>::executeOneCycle();

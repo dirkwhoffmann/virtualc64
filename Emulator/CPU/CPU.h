@@ -397,7 +397,7 @@ public:
     bool inFetchPhase() { return next == fetch; }
 
     // Executes the next micro instruction
-    bool executeOneCycle();
+    void executeOneCycle();
 
 private:
 
