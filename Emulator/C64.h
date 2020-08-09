@@ -119,39 +119,33 @@ public:
     // Frame, rasterline, and rasterline cycle information
     //
     
-    //! @brief    The total number of frames drawn since power up
+    // The total number of frames drawn since power up
     u64 frame;
     
-    //! @brief    The currently drawn rasterline
-    /*! @details  The first rasterline is numbered 0. The number of rasterlines
-     *            drawn in a single frame depends on the selected VICII model.
-     *  @see      VICII::getRasterlinesPerFrame()
+    /* The currently drawn rasterline.
+     * The first rasterline is numbered 0. The number of the last rasterline
+     * varies between PAL and NTSC models.
      */
     u16 rasterLine;
     
-    /*! @brief    The currently executed rasterline cycle
-     *  @details  The first rasterline cycle is numbered 1. The number of cycles
-     *            executed in a single rasterline depends on the selected
-     *            VICII model.
-     *  @see      VICII::getCyclesPerRasterline()
+    /* The currently executed rasterline cycle.
+     * The first rasterline cycle is numbered 1. The number of the last cycle
+     * varies between PAL and NTSC models.
      */
     u8 rasterCycle;
     
-    /*! @brief    Current CPU frequency
-     *  @details  This value is set in setClockFrequency()
+    /* Clock frequency
      */
     u32 frequency;
     
-    /*! @brief    Duration of a CPU cycle in 1/10 nano seconds
-     *  @details  This value is set in setClockFrequency()
+    /* Duration of a CPU cycle in 1/10 nano seconds.
      */
     u64 durationOfOneCycle;
     
-    //! @brief    VICII function table.
-    /*! @details  Stores a pointer to the VICII method that is executed
-     *            in a certain rasterline cycle.
-     *  @note     vicfunc[0] is a stub. It is never called, because the first
-     *            rasterline cycle is numbered 1.
+    /* The VICII function table.
+     * Each entry in this table is a pointer to a VICII method executed in a
+     * certain rasterline cycle. vicfunc[0] is a stub. It is never called,
+     * because the first rasterline cycle is numbered 1.
      */
     void (VICII::*vicfunc[66])(void);
     

@@ -194,7 +194,13 @@ class Inspector: DialogController {
 
         cpuInstrView.jumpTo(addr: Int(cpuInfo.pc0))
     }
-    
+
+    @IBAction func refreshAction(_ sender: NSButton!) {
+
+        track()
+        refresh()
+    }
+
     @IBAction func stopAndGoAction(_ sender: NSButton!) {
 
         track()
