@@ -509,6 +509,7 @@ public:
     void signalBreakpoint() { setControlFlags(RL_BREAKPOINT_REACHED); }
     void signalWatchpoint() { setControlFlags(RL_WATCHPOINT_REACHED); }
     void signalInspect() { setControlFlags(RL_INSPECT); }
+    void signalJammed() { setControlFlags(RL_CPU_JAMMED); }
     void signalStop() { setControlFlags(RL_STOP); }
     
 private:

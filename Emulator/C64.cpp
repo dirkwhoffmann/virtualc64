@@ -874,6 +874,15 @@ C64::runLoop()
                 debug("RL_STOP\n");
                 break;
             }
+
+            // Is the CPU jammed due the execution of an illegal instruction?
+            if (runLoopCtrl & RL_CPU_JAMMED) {
+                clearControlFlags(RL_CPU_JAMMED);
+                debug("RL_CPU_JAMMED\n");
+                break;
+            }
+
+            assert(runLoopCntrl == 0);
         }
     }
 }
