@@ -105,8 +105,14 @@ public:
     u8 peek(u16 addr, bool gameLine, bool exromLine);
     u8 peek(u16 addr) { return peek(addr, peekSrc[addr >> 12]); }
     u8 peekZP(u8 addr);
-    u8 peekStack(u8 addr);
+    u8 peekStack(u8 sp);
     u8 peekIO(u16 addr);
+
+    // Reads a value from memory and discards the result (idle access)
+    void peekIdle(u16 addr) { (void)peek(addr); }
+    void peekZPIdle(u8 addr) { (void)peekZP(addr); }
+    void peekStackIdle(u8 sp) { (void)peekStack(sp); }
+    void peekIOIdle(u16 addr) { (void)peekIO(addr); }
     
     // Reads a value from memory without side effects
     u8 spypeek(u16 addr, MemoryType source);

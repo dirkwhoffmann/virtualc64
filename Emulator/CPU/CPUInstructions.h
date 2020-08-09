@@ -305,71 +305,71 @@ typedef enum {
 
 // Atomic CPU tasks
 #define FETCH_OPCODE \
-if (likely(rdyLine)) instr = peek(reg.pc++); else return true;
+if (likely(rdyLine)) instr = mem.peek(reg.pc++); else return true;
 #define FETCH_ADDR_LO \
-if (likely(rdyLine)) reg.adl = peek(reg.pc++); else return true;
+if (likely(rdyLine)) reg.adl = mem.peek(reg.pc++); else return true;
 #define FETCH_ADDR_HI \
-if (likely(rdyLine)) reg.adh = peek(reg.pc++); else return true;
+if (likely(rdyLine)) reg.adh = mem.peek(reg.pc++); else return true;
 #define FETCH_POINTER_ADDR \
-if (likely(rdyLine)) reg.idl = peek(reg.pc++); else return true;
+if (likely(rdyLine)) reg.idl = mem.peek(reg.pc++); else return true;
 #define FETCH_ADDR_LO_INDIRECT \
-if (likely(rdyLine)) reg.adl = peek((u16)reg.idl++); else return true;
+if (likely(rdyLine)) reg.adl = mem.peek((u16)reg.idl++); else return true;
 #define FETCH_ADDR_HI_INDIRECT \
-if (likely(rdyLine)) reg.adh = peek((u16)reg.idl++); else return true;
+if (likely(rdyLine)) reg.adh = mem.peek((u16)reg.idl++); else return true;
 #define IDLE_FETCH \
-if (likely(rdyLine)) (void)peekIdle(reg.pc); else return true;
+if (likely(rdyLine)) mem.peekIdle(reg.pc); else return true;
 
 
 #define READ_RELATIVE \
-if (likely(rdyLine)) reg.d = peek(reg.pc); else return true;
+if (likely(rdyLine)) reg.d = mem.peek(reg.pc); else return true;
 #define READ_IMMEDIATE \
-if (likely(rdyLine)) reg.d = peek(reg.pc++); else return true;
+if (likely(rdyLine)) reg.d = mem.peek(reg.pc++); else return true;
 #define READ_FROM(x) \
-if (likely(rdyLine)) reg.d = peek(x); else return true;
+if (likely(rdyLine)) reg.d = mem.peek(x); else return true;
 #define READ_FROM_ADDRESS \
-if (likely(rdyLine)) reg.d = peek(HI_LO(reg.adh, reg.adl)); else return true;
+if (likely(rdyLine)) reg.d = mem.peek(HI_LO(reg.adh, reg.adl)); else return true;
 #define READ_FROM_ZERO_PAGE \
-if (likely(rdyLine)) reg.d = peekZP(reg.adl); else return true;
+if (likely(rdyLine)) reg.d = mem.peekZP(reg.adl); else return true;
 #define READ_FROM_ADDRESS_INDIRECT \
-if (likely(rdyLine)) reg.d = peekZP(reg.dl); else return true;
+if (likely(rdyLine)) reg.d = mem.peekZP(reg.dl); else return true;
 
 #define IDLE_READ_IMPLIED \
-if (likely(rdyLine)) (void)peekIdle(reg.pc); else return true;
+if (likely(rdyLine)) mem.peekIdle(reg.pc); else return true;
 #define IDLE_READ_IMMEDIATE \
-if (likely(rdyLine)) (void)peekIdle(reg.pc++); else return true;
+if (likely(rdyLine)) mem.peekIdle(reg.pc++); else return true;
 #define IDLE_READ_FROM(x) \
-if (likely(rdyLine)) (void)peekIdle(x); else return true;
+if (likely(rdyLine)) mem.peekIdle(x); else return true;
 #define IDLE_READ_FROM_ADDRESS \
-if (likely(rdyLine)) (void)(peekIdle(HI_LO(reg.adh, reg.adl))); else return true;
+if (likely(rdyLine)) mem.peekIdle(HI_LO(reg.adh, reg.adl)); else return true;
 #define IDLE_READ_FROM_ZERO_PAGE \
-if (likely(rdyLine)) (void)peekZPIdle(reg.adl); else return true;
+if (likely(rdyLine)) mem.peekZPIdle(reg.adl); else return true;
 #define IDLE_READ_FROM_ADDRESS_INDIRECT \
-if (likely(rdyLine)) (void)peekZPIdle(reg.idl); else return true;
+if (likely(rdyLine)) mem.peekZPIdle(reg.idl); else return true;
 
 #define WRITE_TO_ADDRESS \
-poke(HI_LO(reg.adh, reg.adl), reg.d);
+mem.poke(HI_LO(reg.adh, reg.adl), reg.d);
 #define WRITE_TO_ADDRESS_AND_SET_FLAGS \
-poke(HI_LO(reg.adh, reg.adl), reg.d); setN(reg.d & 0x80); setZ(reg.d == 0);
+mem.poke(HI_LO(reg.adh, reg.adl), reg.d); setN(reg.d & 0x80); setZ(reg.d == 0);
 #define WRITE_TO_ZERO_PAGE \
-pokeZP(reg.adl, reg.d);
+mem.pokeZP(reg.adl, reg.d);
 #define WRITE_TO_ZERO_PAGE_AND_SET_FLAGS \
-pokeZP(reg.adl, reg.d); setN(reg.d & 0x80); setZ(reg.d == 0);
+mem.pokeZP(reg.adl, reg.d); setN(reg.d & 0x80); setZ(reg.d == 0);
 
 #define ADD_INDEX_X reg.ovl = ((int)reg.adl + (int)reg.x > 0xFF); reg.adl += reg.x;
 #define ADD_INDEX_Y reg.ovl = ((int)reg.adl + (int)reg.y > 0xFF); reg.adl += reg.y;
 #define ADD_INDEX_X_INDIRECT reg.idl += reg.x;
 #define ADD_INDEX_Y_INDIRECT reg.idl += reg.y;
 
-#define PUSH_PCL pokeStack(reg.sp--, LO_BYTE(reg.pc));
-#define PUSH_PCH pokeStack(reg.sp--, HI_BYTE(reg.pc));
-#define PUSH_P pokeStack(reg.sp--, getP());
-#define PUSH_P_WITH_B_SET pokeStack(reg.sp--, getP() | B_FLAG);
-#define PUSH_A pokeStack(reg.sp--, reg.a);
-#define PULL_PCL if (likely(rdyLine)) setPCL(peekStack(reg.sp)); else return true;
-#define PULL_PCH if (likely(rdyLine)) setPCH(peekStack(reg.sp)); else return true;
-#define PULL_P if (likely(rdyLine)) setPWithoutB(peekStack(reg.sp)); else return true;
-#define PULL_A if (likely(rdyLine)) loadA(peekStack(reg.sp)); else return true;
-#define IDLE_PULL if (likely(rdyLine)) (void)peekStackIdle(reg.sp); else return true;
+#define PUSH_PCL mem.pokeStack(reg.sp--, LO_BYTE(reg.pc));
+#define PUSH_PCH mem.pokeStack(reg.sp--, HI_BYTE(reg.pc));
+#define PUSH_P mem.pokeStack(reg.sp--, getP());
+#define PUSH_P_WITH_B_SET mem.pokeStack(reg.sp--, getP() | B_FLAG);
+#define PUSH_A mem.pokeStack(reg.sp--, reg.a);
+#define PULL_PCL if (likely(rdyLine)) setPCL(mem.peekStack(reg.sp)); else return true;
+#define PULL_PCH if (likely(rdyLine)) setPCH(mem.peekStack(reg.sp)); else return true;
+#define PULL_P if (likely(rdyLine)) setPWithoutB(mem.peekStack(reg.sp)); else return true;
+#define PULL_A if (likely(rdyLine)) loadA(mem.peekStack(reg.sp)); else return true;
+#define IDLE_PULL if (likely(rdyLine)) mem.peekStackIdle(reg.sp); else return true;
 
 #define PAGE_BOUNDARY_CROSSED reg.ovl
 #define FIX_ADDR_HI reg.adh++;

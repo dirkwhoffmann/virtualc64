@@ -148,8 +148,8 @@ CPU<M>::_dump()
     msg("      Irq line : %02X\n", irqLine);
     msg("Level detector : %02X\n", levelDetector.current());
     msg("         doIrq : %s\n", doIrq ? "yes" : "no");
-    msg("   IRQ routine : %02X%02X\n", spypeek(0xFFFF), spypeek(0xFFFE));
-    msg("   NMI routine : %02X%02X\n", spypeek(0xFFFB), spypeek(0xFFFA));
+    msg("   IRQ routine : %02X%02X\n", mem.spypeek(0xFFFF), mem.spypeek(0xFFFE));
+    msg("   NMI routine : %02X%02X\n", mem.spypeek(0xFFFB), mem.spypeek(0xFFFA));
 	msg("\n");
     
     pport.dump();

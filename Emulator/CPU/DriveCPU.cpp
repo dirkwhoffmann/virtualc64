@@ -14,6 +14,7 @@ DriveCPU::DriveCPU(C64& ref, DriveMemory &memref) : CPU(ref, memref)
     setDescription("DriveCPU");
 }
 
+/*
 u8
 DriveCPU::peek(u16 addr)
 {
@@ -73,3 +74,4 @@ DriveCPU::pokeStack(u16 addr, u8 value)
 {
     mem.pokeStack(addr, value);
 }
+*/

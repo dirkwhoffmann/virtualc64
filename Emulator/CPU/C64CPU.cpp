@@ -23,6 +23,7 @@ C64CPU::C64CPU(C64& ref, C64Memory& memref) : CPU(ref, memref)
     setDescription("CPU");
 }
 
+/*
 u8
 C64CPU::peek(u16 addr)
 {
@@ -88,3 +89,4 @@ C64CPU::pokeStack(u16 addr, u8 value)
     CHECK_FOR_WATCHPOINT
     return mem.pokeStack(addr, value);
 }
+*/

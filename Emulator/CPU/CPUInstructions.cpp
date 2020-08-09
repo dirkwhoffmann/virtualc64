@@ -524,7 +524,7 @@ CPU<M>::executeOneCycle()
             
         case irq_5:
             
-            poke(0x100+(reg.sp--), getPWithClearedB());
+            mem.poke(0x100+(reg.sp--), getPWithClearedB());
             CONTINUE
             
         case irq_6:
@@ -561,7 +561,7 @@ CPU<M>::executeOneCycle()
             
         case nmi_5:
             
-            poke(0x100+(reg.sp--), getPWithClearedB());
+            mem.poke(0x100+(reg.sp--), getPWithClearedB());
             CONTINUE
             
         case nmi_6:

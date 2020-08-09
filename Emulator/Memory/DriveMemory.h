@@ -59,6 +59,12 @@ public:
     u8 peekZP(u8 addr) { return ram[addr]; }
     u8 peekStack(u8 sp) { return ram[0x100 + sp]; }
     
+    // Emulates an idle read access
+    void peekIdle(u16 addr) { }
+    void peekZPIdle(u8 addr) { }
+    void peekStackIdle(u8 sp) { }
+    void peekIOIdle(u16 addr) { }
+    
     // Reads a value from memory without side effects
     u8 spypeek(u16 addr);
     

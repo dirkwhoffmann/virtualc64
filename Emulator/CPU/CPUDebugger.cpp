@@ -247,7 +247,7 @@ void
 CPUDebugger::logInstruction()
 {
     u16 pc = cpu.getPC();
-    u8 opcode = cpu.spypeek(pc);
+    u8 opcode = cpu.mem.spypeek(pc);
     unsigned length = getLengthOfInstruction(opcode);
 
     int i = logCnt++ % LOG_BUFFER_CAPACITY;
@@ -256,8 +256,8 @@ CPUDebugger::logInstruction()
     logBuffer[i].pc = pc;
     logBuffer[i].sp = cpu.reg.sp;
     logBuffer[i].byte1 = opcode;
-    logBuffer[i].byte2 = length > 1 ? cpu.spypeek(pc + 1) : 0;
-    logBuffer[i].byte3 = length > 2 ? cpu.spypeek(pc + 2) : 0;
+    logBuffer[i].byte2 = length > 1 ? cpu.mem.spypeek(pc + 1) : 0;
+    logBuffer[i].byte3 = length > 2 ? cpu.mem.spypeek(pc + 2) : 0;
     logBuffer[i].a = cpu.reg.a;
     logBuffer[i].x = cpu.reg.x;
     logBuffer[i].y = cpu.reg.y;
@@ -320,7 +320,7 @@ CPUDebugger::getLengthOfInstruction(u8 opcode)
 unsigned
 CPUDebugger::getLengthOfInstructionAtAddress(u16 addr)
 {
-    return getLengthOfInstruction(cpu.spypeek(addr));
+    return getLengthOfInstruction(cpu.mem.spypeek(addr));
 }
 
 unsigned
@@ -359,9 +359,9 @@ CPUDebugger::disassembleInstruction(u16 addr, long *len)
     RecordedInstruction instr;
     
     instr.pc = addr;
-    instr.byte1 = cpu.spypeek(addr);
-    instr.byte2 = cpu.spypeek(addr + 1);
-    instr.byte3 = cpu.spypeek(addr + 2);
+    instr.byte1 = cpu.mem.spypeek(addr);
+    instr.byte2 = cpu.mem.spypeek(addr + 1);
+    instr.byte3 = cpu.mem.spypeek(addr + 2);
     
     return disassembleInstruction(instr, len);
 }
@@ -371,9 +371,9 @@ CPUDebugger::disassembleDataBytes(u16 addr)
 {
     RecordedInstruction instr;
      
-     instr.byte1 = cpu.spypeek(addr);
-     instr.byte2 = cpu.spypeek(addr + 1);
-     instr.byte3 = cpu.spypeek(addr + 2);
+     instr.byte1 = cpu.mem.spypeek(addr);
+     instr.byte2 = cpu.mem.spypeek(addr + 1);
+     instr.byte3 = cpu.mem.spypeek(addr + 2);
      
      return disassembleDataBytes(instr);
 }
