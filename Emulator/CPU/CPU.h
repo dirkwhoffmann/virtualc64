@@ -145,7 +145,7 @@ private:
      * the command have already been computed.
      */
     // TODO: Rename to pc0
-    u16 pc;
+    // u16 pc;
     
     
     //
@@ -286,8 +286,8 @@ private:
 public:
     
     
-    u16 getPC() { return pc; }
-    void jumpToAddress(u16 addr) { pc = reg.pc = addr; next = fetch; }
+    u16 getPC0() { return reg.pc0; }
+    void jumpToAddress(u16 addr) { reg.pc0 = reg.pc = addr; next = fetch; }
     void setPCL(u8 lo) { reg.pc = (reg.pc & 0xff00) | lo; }
     void setPCH(u8 hi) { reg.pc = (reg.pc & 0x00ff) | ((u16)hi << 8); }
     void incPC(u8 offset = 1) { reg.pc += offset; }

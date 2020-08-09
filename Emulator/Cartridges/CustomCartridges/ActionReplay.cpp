@@ -259,7 +259,7 @@ ActionReplay::setControlReg(u8 value)
 {
     control = value;
     
-    debug(CRT_DEBUG, "PC: %04X setControlReg(%02X)\n", cpu.getPC(), value);
+    debug(CRT_DEBUG, "PC: %04X setControlReg(%02X)\n", cpu.getPC0(), value);
     
     assert((value & 0x80) == 0);
     /*  "7    extra ROM bank selector (A15) (unused)

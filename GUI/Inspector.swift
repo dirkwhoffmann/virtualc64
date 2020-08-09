@@ -192,7 +192,7 @@ class Inspector: DialogController {
     
     func scrollToPC() {
 
-        cpuInstrView.jumpTo(addr: Int(cpuInfo.pc))
+        cpuInstrView.jumpTo(addr: Int(cpuInfo.pc0))
     }
     
     @IBAction func stopAndGoAction(_ sender: NSButton!) {

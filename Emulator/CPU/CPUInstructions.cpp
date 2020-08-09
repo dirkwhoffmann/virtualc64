@@ -3191,14 +3191,14 @@ template <> bool CPU<C64Memory>::done() {
         if (debugger.breakpointMatches(reg.pc)) c64.signalBreakpoint();
     }
     
-    pc = reg.pc;
+    reg.pc0 = reg.pc;
     next = fetch;
     return state == CPU_OK;
 }
 
 template <> bool CPU<DriveMemory>::done() {
     
-    pc = reg.pc;
+    reg.pc0 = reg.pc;
     next = fetch;
     return state == CPU_OK;
 }

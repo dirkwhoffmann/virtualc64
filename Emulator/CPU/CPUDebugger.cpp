@@ -242,7 +242,7 @@ CPUDebugger::loggedInstructions()
 void
 CPUDebugger::logInstruction()
 {
-    u16 pc = cpu.getPC();
+    u16 pc = cpu.getPC0();
     u8 opcode = cpu.mem.spypeek(pc);
     unsigned length = getLengthOfInstruction(opcode);
 
@@ -322,13 +322,13 @@ CPUDebugger::getLengthOfInstructionAtAddress(u16 addr)
 unsigned
 CPUDebugger::getLengthOfCurrentInstruction()
 {
-    return getLengthOfInstructionAtAddress(cpu.getPC());
+    return getLengthOfInstructionAtAddress(cpu.getPC0());
 }
 
 u16
 CPUDebugger::getAddressOfNextInstruction()
 {
-    return cpu.getPC() + getLengthOfCurrentInstruction();
+    return cpu.getPC0() + getLengthOfCurrentInstruction();
 }
 
 const char *
@@ -377,13 +377,13 @@ CPUDebugger::disassembleDataBytes(u16 addr)
 const char *
 CPUDebugger::disassembleInstruction(long *len)
 {
-    return disassembleInstruction(cpu.getPC(), len);
+    return disassembleInstruction(cpu.getPC0(), len);
 }
 
 const char *
 CPUDebugger::disassembleDataBytes()
 {
-    return disassembleDataBytes(cpu.getPC());
+    return disassembleDataBytes(cpu.getPC0());
 }
 
 const char *

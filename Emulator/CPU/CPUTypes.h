@@ -100,12 +100,13 @@ StatusRegister;
 typedef struct
 {    
     u16 pc;   // Program counter
+    u16 pc0;  // Frozen program counter (beginning of current instruction)
+    
     u8 sp;    // Stack pointer
 
     u8 a;     // Accumulator
     u8 x;     // First index register
     u8 y;     // Second index register
-    // u8 p;     // Processor flags
 
     u8 adl;   // Address data (low byte)
     u8 adh;   // Address data (high byte)
@@ -139,7 +140,7 @@ typedef struct
 {
     u64 cycle;
 
-    u16 pc;
+    u16 pc0;
     u8 sp;
     u8 a;
     u8 x;

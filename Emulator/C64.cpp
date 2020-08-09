@@ -364,7 +364,7 @@ exit:
 void
 C64::prefix()
 {
-    fprintf(stderr, "[%lld] (%3d,%3d) %04X ", frame, rasterLine, rasterCycle, cpu.getPC());
+    fprintf(stderr, "[%lld] (%3d,%3d) %04X ", frame, rasterLine, rasterCycle, cpu.getPC0());
 }
 
 void
@@ -854,7 +854,7 @@ C64::runLoop()
             if (runLoopCtrl & RL_BREAKPOINT_REACHED) {
                 inspect();
                 putMessage(MSG_BREAKPOINT_REACHED);
-                debug(RUN_DEBUG, "BREAKPOINT_REACHED pc: %x\n", cpu.getPC());
+                debug(RUN_DEBUG, "BREAKPOINT_REACHED pc: %x\n", cpu.getPC0());
                 clearControlFlags(RL_BREAKPOINT_REACHED);
                 break;
             }
@@ -863,7 +863,7 @@ C64::runLoop()
             if (runLoopCtrl & RL_WATCHPOINT_REACHED) {
                 inspect();
                 putMessage(MSG_WATCHPOINT_REACHED);
-                debug(RUN_DEBUG, "WATCHPOINT_REACHED pc: %x\n", cpu.getPC());
+                debug(RUN_DEBUG, "WATCHPOINT_REACHED pc: %x\n", cpu.getPC0());
                 clearControlFlags(RL_WATCHPOINT_REACHED);
                 break;
             }
@@ -907,7 +907,7 @@ C64::stepOver()
     
     // If the next instruction is a JSR instruction (0x20), we set a breakpoint
     // at the next memory location. Otherwise, stepOver behaves like stepInto.
-    if (mem.spypeek(cpu.getPC()) == 0x20) {
+    if (mem.spypeek(cpu.getPC0()) == 0x20) {
         cpu.debugger.setSoftStopAtNextInstr();
         run();
     } else {

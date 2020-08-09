@@ -178,7 +178,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 }
 - (u16) pc
 {
-    return wrapper->cpu->getPC();
+    return wrapper->cpu->getPC0();
 }
 - (NSString *) disassembleRecordedInstruction:(NSInteger)i length:(NSInteger *)len
 {

@@ -33,6 +33,7 @@ CPU<M>::CPU(C64& ref, M& memref) : C64Component(ref), mem(memref)
         { &reg.x,              sizeof(reg.x),        CLEAR_ON_RESET },
         { &reg.y,              sizeof(reg.y),        CLEAR_ON_RESET },
         { &reg.pc,             sizeof(reg.pc),       CLEAR_ON_RESET },
+        { &reg.pc0,            sizeof(reg.pc0),      CLEAR_ON_RESET },
         { &reg.sp,             sizeof(reg.sp),       CLEAR_ON_RESET },
         // { &reg.p,           sizeof(reg.p),        CLEAR_ON_RESET },
         { &reg.sr.n,           sizeof(reg.sr.n),     CLEAR_ON_RESET },
@@ -48,7 +49,6 @@ CPU<M>::CPU(C64& ref, M& memref) : C64Component(ref), mem(memref)
         { &reg.idl,            sizeof(reg.idl),      CLEAR_ON_RESET },
         { &reg.d,              sizeof(reg.d),        CLEAR_ON_RESET },
         { &reg.ovl,            sizeof(reg.ovl),      CLEAR_ON_RESET },
-        { &pc,                 sizeof(pc),           CLEAR_ON_RESET },
         { &rdyLine,            sizeof(rdyLine),      CLEAR_ON_RESET },
         { &rdyLineUp,          sizeof(rdyLineUp),    CLEAR_ON_RESET },
         { &rdyLineDown,        sizeof(rdyLineDown),  CLEAR_ON_RESET },
@@ -84,7 +84,7 @@ CPU<M>::_inspect()
         
         info.cycle = cycle;
 
-        info.pc = pc;
+        info.pc0 = reg.pc0;
         info.sp = reg.sp;
         info.a = reg.a;
         info.x = reg.x;

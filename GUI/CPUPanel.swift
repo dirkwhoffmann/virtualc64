@@ -28,7 +28,7 @@ extension Inspector {
             cpuPortDir.assignFormatter(fmt8)
         }
 
-        cpuPc.integerValue = Int(cpuInfo.pc)
+        cpuPc.integerValue = Int(cpuInfo.pc0)
         cpuSp.integerValue = Int(cpuInfo.sp)
         cpuA.integerValue = Int(cpuInfo.a)
         cpuX.integerValue = Int(cpuInfo.x)
@@ -55,7 +55,7 @@ extension Inspector {
         cpuPortReg.integerValue = Int(cpuInfo.processorPort)
         cpuPortDir.integerValue = Int(cpuInfo.processorPortDir)
 
-        cpuInstrView.refresh(count: count, full: full, addr: Int(cpuInfo.pc))
+        cpuInstrView.refresh(count: count, full: full, addr: Int(cpuInfo.pc0))
         cpuTraceView.refresh(count: count, full: full)
         cpuBreakView.refresh(count: count, full: full)
         cpuWatchView.refresh(count: count, full: full)
@@ -70,7 +70,7 @@ extension Inspector {
     @IBAction func cpuGotoAction(_ sender: NSSearchField!) {
 
         if sender.stringValue == "" {
-            cpuInstrView.jumpTo(addr: Int(cpuInfo.pc))
+            cpuInstrView.jumpTo(addr: Int(cpuInfo.pc0))
         } else if let addr = Int(sender.stringValue, radix: 16) {
             cpuInstrView.jumpTo(addr: addr)
         } else {
