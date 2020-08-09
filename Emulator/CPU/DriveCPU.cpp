@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-DriveCPU::DriveCPU(C64& ref, DriveMemory &memref) : CPU(ref), mem(memref)
+DriveCPU::DriveCPU(C64& ref, DriveMemory &memref) : CPU(ref, memref), mem(memref)
 {
     setDescription("DriveCPU");
 }

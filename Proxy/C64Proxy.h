@@ -606,14 +606,12 @@ struct AnyC64FileWrapper;
     struct DriveWrapper *wrapper;
     
     // Sub proxys
-    CPUProxy *cpu;
     VIAProxy *via1;
     VIAProxy *via2;
     DiskProxy *disk;
 }
 
 @property (readonly) struct DriveWrapper *wrapper;
-@property (readonly) CPUProxy *cpu;
 @property (readonly) VIAProxy *via1;
 @property (readonly) VIAProxy *via2;
 @property (readonly) DiskProxy *disk;

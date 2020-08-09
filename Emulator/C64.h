@@ -82,7 +82,7 @@ public:
     C64Memory mem = C64Memory(*this);
     
     // CPU
-    C64CPU cpu = C64CPU(*this);
+    C64CPU cpu = C64CPU(*this, mem);
         
     // Video Interface Controller
     VIC vic = VIC(*this);

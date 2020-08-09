@@ -13,7 +13,7 @@
 #import "VirtualC64-Swift.h"
 
 struct C64Wrapper { C64 *c64; };
-struct CpuWrapper { CPU *cpu; };
+struct CpuWrapper { CPU<C64Memory> *cpu; };
 struct GuardsWrapper { Guards *guards; };
 struct MemoryWrapper { C64Memory *mem; };
 struct VicWrapper { VIC *vic; };
@@ -114,7 +114,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 @implementation CPUProxy
 
 // Constructing
-- (instancetype) initWithCPU:(CPU *)cpu
+- (instancetype) initWithCPU:(CPU<C64Memory> *)cpu
 {
     if (self = [super init]) {
         wrapper = new CpuWrapper();
@@ -1028,14 +1028,13 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @implementation DriveProxy
 
-@synthesize wrapper, cpu, via1, via2, disk;
+@synthesize wrapper, via1, via2, disk;
 
 - (instancetype) initWithVC1541:(Drive *)drive
 {
     if (self = [super init]) {
         wrapper = new DriveWrapper();
         wrapper->drive = drive;
-        cpu = [[CPUProxy alloc] initWithCPU:&drive->cpu];
         via1 = [[VIAProxy alloc] initWithVIA:&drive->via1];
         via2 = [[VIAProxy alloc] initWithVIA:&drive->via2];
         disk = [[DiskProxy alloc] initWithDisk525:&drive->disk];

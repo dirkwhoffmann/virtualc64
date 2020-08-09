@@ -12,7 +12,7 @@
 
 #include "CPU.h"
 
-class DriveCPU : public CPU {
+class DriveCPU : public CPU<DriveMemory> {
     
     DriveMemory &mem;
     

@@ -18,11 +18,15 @@
 
 class Memory;
 
+template <typename M>
 class CPU : public C64Component {
         
     friend class CPUDebugger;
     friend class Breakpoints;
     friend class Watchpoints;
+    
+    // The memory this CPU is connected to
+    M memory;
     
     //
     // Inspection results
@@ -217,7 +221,7 @@ private:
     
 public:
     
-    CPU(C64& ref);
+    CPU(C64& ref, M& memref);
     
 private:
         

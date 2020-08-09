@@ -21,8 +21,12 @@ using std::map;
 using std::pair;
 using std::swap;
 
+
+/*
 #define synchronized \
 for(std::unique_lock<std::recursive_mutex> _l(mutex); _l; _l.unlock())
+*/
+ #define synchronized
 
 /* Base class for all VC64 objects.
  * This class contains a textual description of the object and offers various
@@ -55,7 +59,7 @@ protected:
      * same code block. It mimics the behaviour of the well known and very
      * handy Java construct 'synchronized(this) { }'.
      */
-    std::recursive_mutex mutex;
+    // std::recursive_mutex mutex;
     
     //
     // Initializing

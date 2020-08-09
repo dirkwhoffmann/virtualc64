@@ -19,7 +19,7 @@
 class C64;
 class C64Memory;
 class DriveMemory;
-class CPU;
+template <typename M> class CPU;
 class ProcessorPort;
 class VIC;
 class CIA1;
@@ -57,7 +57,7 @@ protected:
 
     C64 &c64;
     C64Memory &mem;
-    CPU &cpu;
+    CPU<C64Memory> &cpu;
     VIC &vic;
     CIA1 &cia1;
     CIA2 &cia2;

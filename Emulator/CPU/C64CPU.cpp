@@ -18,7 +18,7 @@ if (flags & CPU_CHECK_WP && debugger.watchpointMatches(addr)) { \
 
 #define CHECK_FOR_WATCHPOINT
 
-C64CPU::C64CPU(C64& ref) : CPU(ref)
+C64CPU::C64CPU(C64& ref, C64Memory& memref) : CPU(ref, memref)
 {
     setDescription("CPU");
 }

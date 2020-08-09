@@ -12,11 +12,11 @@
 
 #include "CPU.h"
 
-class C64CPU : public CPU {
+class C64CPU : public CPU<C64Memory> {
             
 public:
     
-    C64CPU(C64& ref);
+    C64CPU(C64& ref, C64Memory& memref);
     
     CPUModel model() override { return MOS_6510; }
     bool isC64CPU() override { return true; }

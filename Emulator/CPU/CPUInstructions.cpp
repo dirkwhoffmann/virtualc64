@@ -9,8 +9,8 @@
 
 #include "C64.h"
 
-void
-CPU::adc(u8 op)
+template <typename M> void
+CPU<M>::adc(u8 op)
 {
     if (getD())
         adc_bcd(op);
@@ -18,8 +18,8 @@ CPU::adc(u8 op)
         adc_binary(op);
 }
 
-void
-CPU::adc_binary(u8 op)
+template <typename M> void
+CPU<M>::adc_binary(u8 op)
 {
     u16 sum = reg.a + op + (getC() ? 1 : 0);
     
@@ -28,8 +28,8 @@ CPU::adc_binary(u8 op)
     loadA((u8)sum);
 }
 
-void
-CPU::adc_bcd(u8 op)
+template <typename M> void
+CPU<M>::adc_bcd(u8 op)
 {
     u16 sum       = reg.a + op + (getC() ? 1 : 0);
     u8  highDigit = (reg.a >> 4) + (op >> 4);
@@ -61,8 +61,8 @@ CPU::adc_bcd(u8 op)
     reg.a = (u8)((highDigit << 4) | lowDigit);
 }
 
-void
-CPU::cmp(u8 op1, u8 op2)
+template <typename M> void
+CPU<M>::cmp(u8 op1, u8 op2)
 {
     u8 tmp = op1 - op2;
     
@@ -71,8 +71,8 @@ CPU::cmp(u8 op1, u8 op2)
     setZ(tmp == 0);
 }
 
-void
-CPU::sbc(u8 op)
+template <typename M> void
+CPU<M>::sbc(u8 op)
 {
     if (getD())
         sbc_bcd(op);
@@ -80,8 +80,8 @@ CPU::sbc(u8 op)
         sbc_binary(op);
 }
 
-void
-CPU::sbc_binary(u8 op)
+template <typename M> void
+CPU<M>::sbc_binary(u8 op)
 {
     u16 sum = reg.a - op - (getC() ? 0 : 1);
     
@@ -90,8 +90,8 @@ CPU::sbc_binary(u8 op)
     loadA((u8)sum);
 }
 
-void
-CPU::sbc_bcd(u8 op)
+template <typename M> void
+CPU<M>::sbc_bcd(u8 op)
 {
     u16 sum       = reg.a - op - (getC() ? 0 : 1);
     u8  highDigit = (reg.a >> 4) - (op >> 4);
@@ -115,8 +115,8 @@ CPU::sbc_bcd(u8 op)
     reg.a = (u8)((highDigit << 4) | (lowDigit & 0x0f));
 }
 
-void 
-CPU::registerCallback(u8 opcode, const char *mnemonic,
+template <typename M> void
+CPU<M>::registerCallback(u8 opcode, const char *mnemonic,
                       AddressingMode mode, MicroInstruction mInstr)
 {
     // Table is write once!
@@ -125,7 +125,8 @@ CPU::registerCallback(u8 opcode, const char *mnemonic,
     debugger.registerInstruction(opcode, mnemonic, mode);
 }
 
-void CPU::registerInstructions()
+template <typename M> void
+CPU<M>::registerInstructions()
 {
     for (int i = 0; i < 256; i++) {
         registerCallback(i, "???", ADDR_IMPLIED, JAM);
@@ -134,7 +135,8 @@ void CPU::registerInstructions()
     registerIllegalInstructions();
 }
 
-void CPU::registerLegalInstructions()
+template <typename M> void
+CPU<M>::registerLegalInstructions()
 {
     registerCallback(0x69, "ADC", ADDR_IMMEDIATE, ADC_imm);
     registerCallback(0x65, "ADC", ADDR_ZERO_PAGE, ADC_zpg);
@@ -321,8 +323,8 @@ void CPU::registerLegalInstructions()
     registerCallback(0x98, "TYA", ADDR_IMPLIED, TYA);
 }
 
-void
-CPU::registerIllegalInstructions()
+template <typename M> void
+CPU<M>::registerIllegalInstructions()
 {
     registerCallback(0x93, "SHA*", ADDR_INDIRECT_Y, SHA_ind_y);
     registerCallback(0x9F, "SHA*", ADDR_ABSOLUTE_Y, SHA_abs_y);
@@ -437,8 +439,8 @@ CPU::registerIllegalInstructions()
     registerCallback(0x9B, "TAS*", ADDR_ABSOLUTE_Y, TAS_abs_y);
 }
 
-bool
-CPU::executeOneCycle()
+template <typename M> bool
+CPU<M>::executeOneCycle()
 {
     u8 instr;
     
@@ -3178,3 +3180,7 @@ CPU::executeOneCycle()
     }
 }
 
+template void CPU<C64Memory>::registerInstructions();
+template bool CPU<C64Memory>::executeOneCycle();
+template void CPU<DriveMemory>::registerInstructions();
+template bool CPU<DriveMemory>::executeOneCycle();

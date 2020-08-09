@@ -160,9 +160,9 @@ void
 Breakpoints::setNeedsCheck(bool value)
 {
     if (value) {
-        cpu.flags |= CPU::CPU_CHECK_BP;
+        cpu.flags |= CPU<C64Memory>::CPU_CHECK_BP;
     } else {
-        cpu.flags &= ~CPU::CPU_CHECK_BP;
+        cpu.flags &= ~CPU<C64Memory>::CPU_CHECK_BP;
     }
 }
 
@@ -170,9 +170,9 @@ void
 Watchpoints::setNeedsCheck(bool value)
 {
     if (value) {
-         cpu.flags |= CPU::CPU_CHECK_WP;
+         cpu.flags |= CPU<C64Memory>::CPU_CHECK_WP;
      } else {
-         cpu.flags &= ~CPU::CPU_CHECK_WP;
+         cpu.flags &= ~CPU<C64Memory>::CPU_CHECK_WP;
      }
 }
 

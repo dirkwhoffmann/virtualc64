@@ -9,7 +9,8 @@
 
 #include "C64.h"
 
-CPU::CPU(C64& ref) : C64Component(ref)
+template <typename M>
+CPU<M>::CPU(C64& ref, M& memref) : C64Component(ref), memory(memref)
 {
     subComponents = vector<HardwareComponent *> {
         
@@ -61,8 +62,8 @@ CPU::CPU(C64& ref) : C64Component(ref)
     registerSnapshotItems(items, sizeof(items));
 }
 
-void
-CPU::_reset()
+template <typename M> void
+CPU<M>::_reset()
 {
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)
@@ -77,8 +78,8 @@ CPU::_reset()
     edgeDetector.clear();
 }
 
-void
-CPU::_inspect()
+template <typename M> void
+CPU<M>::_inspect()
 {    
     synchronized {
         
@@ -124,18 +125,18 @@ CPU::_inspect()
     }
 }
 
-void
-CPU::_setDebug(bool enable)
+template <typename M> void
+CPU<M>::_setDebug(bool enable)
 {
     if (enable && isC64CPU()) {
-        flags |= CPU::CPU_LOG_INSTRUCTION;
+        flags |= CPU<M>::CPU_LOG_INSTRUCTION;
     } else {
-        flags |= ~CPU::CPU_LOG_INSTRUCTION;
+        flags |= ~CPU<M>::CPU_LOG_INSTRUCTION;
     }
 }
 
-void 
-CPU::_dump()
+template <typename M> void
+CPU<M>::_dump()
 {
 	msg("CPU:\n");
 	msg("----\n\n");
@@ -154,30 +155,30 @@ CPU::_dump()
     pport.dump();
 }
 
-size_t
-CPU::stateSize()
+template <typename M> size_t
+CPU<M>::stateSize()
 {
     return HardwareComponent::stateSize()
     + levelDetector.stateSize()
     + edgeDetector.stateSize();
 }
 
-void
-CPU::didLoadFromBuffer(u8 **buffer)
+template <typename M> void
+CPU<M>::didLoadFromBuffer(u8 **buffer)
 {
     levelDetector.loadFromBuffer(buffer);
     edgeDetector.loadFromBuffer(buffer);
 }
 
-void
-CPU::didSaveToBuffer(u8 **buffer)
+template <typename M> void
+CPU<M>::didSaveToBuffer(u8 **buffer)
 {
     levelDetector.saveToBuffer(buffer);
     edgeDetector.saveToBuffer(buffer);
 }
 
-u8
-CPU::getP()
+template <typename M> u8
+CPU<M>::getP()
 {
     u8 result = 0b00100000;
     
@@ -193,21 +194,21 @@ CPU::getP()
     return result;
 }
 
-u8
-CPU::getPWithClearedB()
+template <typename M> u8
+CPU<M>::getPWithClearedB()
 {
     return getP() & ~B_FLAG;
 }
 
-void
-CPU::setP(u8 p)
+template <typename M> void
+CPU<M>::setP(u8 p)
 {
     setPWithoutB(p);
     reg.sr.b = (p & B_FLAG);
 }
 
-void
-CPU::setPWithoutB(u8 p)
+template <typename M> void
+CPU<M>::setPWithoutB(u8 p)
 {
     reg.sr.n = (p & N_FLAG);
     reg.sr.v = (p & V_FLAG);
@@ -218,8 +219,8 @@ CPU::setPWithoutB(u8 p)
     reg.sr.c = (p & C_FLAG);
 }
 
-void
-CPU::pullDownNmiLine(IntSource bit)
+template <typename M> void
+CPU<M>::pullDownNmiLine(IntSource bit)
 {
     assert(bit != 0);
     
@@ -231,14 +232,14 @@ CPU::pullDownNmiLine(IntSource bit)
     nmiLine |= bit;
 }
 
-void
-CPU::releaseNmiLine(IntSource source)
+template <typename M> void
+CPU<M>::releaseNmiLine(IntSource source)
 {
     nmiLine &= ~source;
 }
 
-void
-CPU::pullDownIrqLine(IntSource source)
+template <typename M> void
+CPU<M>::pullDownIrqLine(IntSource source)
 {
 	assert(source != 0);
     
@@ -246,15 +247,15 @@ CPU::pullDownIrqLine(IntSource source)
     levelDetector.write(irqLine);
 }
 
-void
-CPU::releaseIrqLine(IntSource source)
+template <typename M> void
+CPU<M>::releaseIrqLine(IntSource source)
 {
     irqLine &= ~source;
     levelDetector.write(irqLine);
 }
 
-void
-CPU::setRDY(bool value)
+template <typename M> void
+CPU<M>::setRDY(bool value)
 {
     if (rdyLine)
     {
@@ -268,8 +269,8 @@ CPU::setRDY(bool value)
     }
 }
 
-void
-CPU::processFlags()
+template <typename M> void
+CPU<M>::processFlags()
 {
     // Record the instruction if requested
     if (flags & CPU_LOG_INSTRUCTION) {
@@ -281,3 +282,43 @@ CPU::processFlags()
         c64.signalBreakpoint();
     }
 }
+
+template         CPU<C64Memory>::CPU(C64& ref, C64Memory& memref);
+template CPUInfo CPU<C64Memory>::getInfo();
+template void    CPU<C64Memory>::_dump();
+template void    CPU<C64Memory>::_setDebug(bool enable);
+template void    CPU<C64Memory>::_reset();
+template void    CPU<C64Memory>::_inspect();
+template size_t  CPU<C64Memory>::stateSize();
+template void    CPU<C64Memory>::didLoadFromBuffer(u8 **buffer);
+template void    CPU<C64Memory>::didSaveToBuffer(u8 **buffer);
+template u8      CPU<C64Memory>::getP();
+template u8      CPU<C64Memory>::getPWithClearedB();
+template void    CPU<C64Memory>::setP(u8 p);
+template void    CPU<C64Memory>::setPWithoutB(u8 p);
+template void    CPU<C64Memory>::pullDownNmiLine(IntSource source);
+template void    CPU<C64Memory>::releaseNmiLine(IntSource source);
+template void    CPU<C64Memory>::pullDownIrqLine(IntSource source);
+template void    CPU<C64Memory>::releaseIrqLine(IntSource source);
+template void    CPU<C64Memory>::setRDY(bool value);
+template void    CPU<C64Memory>::processFlags();
+
+template         CPU<DriveMemory>::CPU(C64& ref, DriveMemory& memref);
+template CPUInfo CPU<DriveMemory>::getInfo();
+template void    CPU<DriveMemory>::_dump();
+template void    CPU<DriveMemory>::_setDebug(bool enable);
+template void    CPU<DriveMemory>::_reset();
+template void    CPU<DriveMemory>::_inspect();
+template size_t  CPU<DriveMemory>::stateSize();
+template void    CPU<DriveMemory>::didLoadFromBuffer(u8 **buffer);
+template void    CPU<DriveMemory>::didSaveToBuffer(u8 **buffer);
+template u8      CPU<DriveMemory>::getP();
+template u8      CPU<DriveMemory>::getPWithClearedB();
+template void    CPU<DriveMemory>::setP(u8 p);
+template void    CPU<DriveMemory>::setPWithoutB(u8 p);
+template void    CPU<DriveMemory>::pullDownNmiLine(IntSource source);
+template void    CPU<DriveMemory>::releaseNmiLine(IntSource source);
+template void    CPU<DriveMemory>::pullDownIrqLine(IntSource source);
+template void    CPU<DriveMemory>::releaseIrqLine(IntSource source);
+template void    CPU<DriveMemory>::setRDY(bool value);
+template void    CPU<DriveMemory>::processFlags();

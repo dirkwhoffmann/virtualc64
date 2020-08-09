@@ -174,9 +174,11 @@ extension MyController: NSMenuItemValidation {
             
         case #selector(MyController.traceIecAction(_:)):
             item.state = c64.iec.tracing() ? .on : .off
-            
+
+        /*
         case #selector(MyController.traceVC1541CpuAction(_:)):
             item.state = c64.drive8.cpu.tracing() ? .on : .off
+        */
             
         case #selector(MyController.traceViaAction(_:)):
             item.state = c64.drive8.via1.tracing() ? .on : .off
@@ -1010,7 +1012,7 @@ extension MyController: NSMenuItemValidation {
             targetSelf.traceVC1541CpuAction(sender)
         }
         
-        c64.drive8.cpu.setTracing(!c64.drive8.cpu.tracing())
+        // c64.drive8.cpu.setTracing(!c64.drive8.cpu.tracing())
     }
   
     @IBAction func traceViaAction(_ sender: Any!) {
