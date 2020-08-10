@@ -1437,6 +1437,10 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->c64->powerOff();
 }
+- (void) inspect
+{
+    wrapper->c64->inspect();
+}
 - (void) reset
 {
     wrapper->c64->reset();

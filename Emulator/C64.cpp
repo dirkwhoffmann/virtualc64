@@ -509,6 +509,35 @@ C64::pause()
 }
 
 void
+C64::inspect()
+{
+    if (!isRunning()) {
+
+        // If the emulator isn't running, inspect immediately
+        inspect(inspectionTarget);
+
+    } else {
+        
+        // Otherwise, schedule an inspection to be carried out later
+        signalInspect();
+    }
+}
+
+void
+C64::inspect(InspectionTarget target)
+{    
+    switch(target) {
+            
+        case INSPECT_CPU: cpu.inspect(); break;
+        case INSPECT_MEM: mem.inspect(); break;
+        case INSPECT_CIA: cia1.inspect(); cia2.inspect(); break;
+        case INSPECT_VIC: vic.inspect(); break;
+        case INSPECT_SID: sid.inspect(); break;
+        default: break;
+    }
+}
+
+void
 C64::_pause()
 {
     debug(RUN_DEBUG, "_pause()\n");
@@ -844,13 +873,12 @@ C64::runLoop()
             // Are we requested to update the debugger info structs?
             if (runLoopCtrl & RL_INSPECT) {
                 debug(RUN_DEBUG, "RL_INSPECT\n");
-                inspect();
+                inspect(inspectionTarget);
                 clearControlFlags(RL_INSPECT);
             }
             
             // Did we reach a breakpoint?
             if (runLoopCtrl & RL_BREAKPOINT_REACHED) {
-                inspect();
                 putMessage(MSG_BREAKPOINT_REACHED);
                 debug(RUN_DEBUG, "BREAKPOINT_REACHED pc: %x\n", cpu.getPC0());
                 clearControlFlags(RL_BREAKPOINT_REACHED);
@@ -859,7 +887,6 @@ C64::runLoop()
             
             // Did we reach a watchpoint?
             if (runLoopCtrl & RL_WATCHPOINT_REACHED) {
-                inspect();
                 putMessage(MSG_WATCHPOINT_REACHED);
                 debug(RUN_DEBUG, "WATCHPOINT_REACHED pc: %x\n", cpu.getPC0());
                 clearControlFlags(RL_WATCHPOINT_REACHED);
@@ -881,7 +908,7 @@ C64::runLoop()
                 break;
             }
 
-            assert(runLoopCntrl == 0);
+            assert(runLoopCtrl == 0);
         }
     }
 }
@@ -1057,17 +1084,7 @@ C64::endFrame()
             takeAutoSnapshot();
         }
     }
-    
-    // Perform an inspection in debug mode
-    if (inDebugMode()) {
-        switch (inspectionTarget) {
-            case INSPECT_NONE: break;
-            case INSPECT_CPU: cpu.inspect(); break;
-            case INSPECT_CIA: cpu.inspect(); break;
-            default: assert(false);
-        }
-    }
-    
+        
     // Check if the run loop is requested to stop
     if (stopFlag) { stopFlag = false; signalStop(); }
     

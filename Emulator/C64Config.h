@@ -20,8 +20,8 @@
 #define V_SUBMINOR 0
 
 // Uncomment these settings in a release build
-#define RELEASEBUILD
-#define NDEBUG
+// #define RELEASEBUILD
+// #define NDEBUG
 
 
 //

@@ -125,6 +125,7 @@ struct AnyC64FileWrapper;
 - (BOOL) isReady;
 - (void) powerOn;
 - (void) powerOff;
+- (void) inspect;
 - (void) reset;
 - (void) ping;
 - (void) dump;

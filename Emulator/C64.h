@@ -291,7 +291,9 @@ public:
     void powerOff();
     void run();
     void pause();
-
+    void inspect();
+    void inspect(InspectionTarget target);
+    
 private:
 
     void _powerOn() override;

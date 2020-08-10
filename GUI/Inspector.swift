@@ -178,6 +178,8 @@ class Inspector: DialogController {
             }
         }
         
+        c64.inspect()
+        
         if let id = panel.selectedTabViewItem?.label {
             
             switch id {
@@ -267,7 +269,7 @@ extension Inspector: NSTabViewDelegate {
     }
     
     func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
-        
+                
         if tabView === panel {
             updateInspectionTarget()
         }
