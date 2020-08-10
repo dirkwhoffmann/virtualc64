@@ -1061,12 +1061,12 @@ CIA::sleep()
     // Determine maximum possible sleep cycle based on timer counts
     Cycle sleepA = cpu.cycle + ((counterA > 2) ? (counterA - 1) : 0);
     Cycle sleepB = cpu.cycle + ((counterB > 2) ? (counterB - 1) : 0);
-    Cycle sleep = MIN(sleepA, sleepB);
     
     // CIAs with stopped timers can sleep forever
     if (!(feed & CIACountA0)) sleepA = INT64_MAX;
     if (!(feed & CIACountB0)) sleepB = INT64_MAX;
-    
+    Cycle sleep = MIN(sleepA, sleepB);
+
     // ZZzzz
     sleepCycle = cpu.cycle;
     wakeUpCycle = sleep;
