@@ -30,9 +30,11 @@ struct MemoryHighlighting {
 class MemTableView: NSTableView {
     
     @IBOutlet weak var inspector: Inspector!
+
     var c64: C64Proxy { return inspector.parent.c64 }
-    
-    var c: MyController?
+    var mem: MemoryProxy { return c64.mem }
+
+    // var c: MyController?
     var cbmfont = NSFont.init(name: "C64ProMono", size: 9)
     private var memView = MemoryView.cpuView
     private var highlighting = MemoryHighlighting.none
@@ -70,7 +72,7 @@ class MemTableView: NSTableView {
         case MemoryView.ioView:
             return M_IO
         default:
-            return c?.c64.mem.peekSource(addr) ?? M_RAM
+            return mem.peekSource(addr) ?? M_RAM
         }
     }
 
@@ -147,7 +149,7 @@ extension MemTableView: NSTableViewDataSource {
             var str = ""
             let src = source(addr)
             for i in 0...3 {
-                var byte = Int(c!.c64.mem.spypeek(addr + UInt16(i), source: src))
+                var byte = Int(mem.spypeek(addr + UInt16(i), source: src))
                 if byte < 32 || byte > 90 { byte = 46 }
                 let scalar = UnicodeScalar(byte + 0xE000)
                 str.unicodeScalars.append(scalar!)
@@ -171,7 +173,7 @@ extension MemTableView: NSTableViewDataSource {
                 break
             }
             let src = source(addr)
-            return c?.c64.mem.spypeek(addr, source: src) ?? ""
+            return mem.spypeek(addr, source: src) 
             
         default:
             break
@@ -221,7 +223,7 @@ extension MemTableView: NSTableViewDelegate {
         }
         if let value = object as? UInt8 {
             track("Poking \(value) to \(addr) (target = \(target))")
-            c?.c64.mem.poke(addr, value: value, target: target)
+            mem.poke(addr, value: value, target: target)
         }
     }
 }

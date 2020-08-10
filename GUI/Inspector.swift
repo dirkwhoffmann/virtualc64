@@ -56,6 +56,16 @@ class Inspector: DialogController {
     @IBOutlet weak var cpuRdy: NSButton!
     
     // Memory panel
+    @IBOutlet weak var memLayoutButton: NSButton!
+    @IBOutlet weak var memLayoutSlider: NSSlider!
+    @IBOutlet weak var memRamButton: NSButton!
+    @IBOutlet weak var memKernalButton: NSButton!
+    @IBOutlet weak var memBasicButton: NSButton!
+    @IBOutlet weak var memCharacterButton: NSButton!
+    @IBOutlet weak var memPPButton: NSButton!
+    @IBOutlet weak var memIOButton: NSButton!
+    @IBOutlet weak var memCartLoButton: NSButton!
+    @IBOutlet weak var memCartHiButton: NSButton!
     @IBOutlet weak var memSearchField: NSSearchField!
     @IBOutlet weak var memBankTableView: BankTableView!
     @IBOutlet weak var memTableView: MemTableView!

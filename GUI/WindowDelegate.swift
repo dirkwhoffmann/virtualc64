@@ -67,7 +67,6 @@ extension MyController: NSWindowDelegate {
         // Disconnect emulator (DEPRECATED)
         memTableView.dataSource = nil
         memTableView.delegate = nil
-        memTableView.c = nil
 
         // Stop metal view
         renderer.cleanup()
