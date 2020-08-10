@@ -21,7 +21,6 @@ CIA::CIA(C64 &ref) : C64Component(ref)
         { &config.revision,  sizeof(config.revision),  KEEP_ON_RESET },
         { &config.timerBBug, sizeof(config.timerBBug), KEEP_ON_RESET },
 
-        // { &idleCycles,       sizeof(idleCycles),       CLEAR_ON_RESET },
         { &counterA,         sizeof(counterA),         CLEAR_ON_RESET },
         { &latchA,           sizeof(latchA),           CLEAR_ON_RESET },
         { &counterB,         sizeof(counterB),         CLEAR_ON_RESET },
@@ -104,8 +103,8 @@ CIA::_inspect()
         info.timerB.pbout = CRB & 0x02;
         info.timerB.oneShot = CRB & 0x08;
         
-        // info.sdr = sdr;
-        // info.ssr = ssr;
+        info.sdr = SDR;
+        info.ssr = SDR;  // ssr not yet implemented
         info.icr = icr;
         info.imr = imr;
         info.intLine = INT;
@@ -113,7 +112,8 @@ CIA::_inspect()
         info.tod = tod.info;
         info.todIntEnable= imr & 0x04;
         
-        info.idleCycles = idleCycles;
+        info.idleSince = idleSince();
+        info.idleTotal = idleTotal();
         info.idlePercentage =  cpu.cycle ? (double)idleCycles / (double)cpu.cycle : 100.0;
     }
 }
@@ -332,19 +332,19 @@ CIA::spypeek(u16 addr)
             
         case 0x04: // CIA_TIMER_A_LOW
             running = delay & CIACountA3;
-            return LO_BYTE(counterA - (running ? (u16)idle() : 0));
+            return LO_BYTE(counterA - (running ? (u16)idleSince() : 0));
             
         case 0x05: // CIA_TIMER_A_HIGH
             running = delay & CIACountA3;
-            return HI_BYTE(counterA - (running ? (u16)idle() : 0));
+            return HI_BYTE(counterA - (running ? (u16)idleSince() : 0));
             
         case 0x06: // CIA_TIMER_B_LOW
             running = delay & CIACountB3;
-            return LO_BYTE(counterB - (running ? (u16)idle() : 0));
+            return LO_BYTE(counterB - (running ? (u16)idleSince() : 0));
             
         case 0x07: // CIA_TIMER_B_HIGH
             running = delay & CIACountB3;
-            return HI_BYTE(counterB - (running ? (u16)idle() : 0));
+            return HI_BYTE(counterB - (running ? (u16)idleSince() : 0));
             
         case 0x08: // CIA_TIME_OF_DAY_SEC_FRAC
             return tod.getTodTenth();
@@ -1110,7 +1110,7 @@ CIA::wakeUp(Cycle targetCycle)
 }
 
 Cycle
-CIA::idle()
+CIA::idleSince()
 {
     return isAwake() ? 0 : cpu.cycle - sleepCycle;
 }

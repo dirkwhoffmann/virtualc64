@@ -10,11 +10,11 @@
 extension Inspector {
     
     private var selectedCia: Int { return ciaSelector.indexOfSelectedItem }
-    private var ciaProxy: CIAProxy { return selectedCia == 0 ? c64.cia1 : c64.cia2 }
-
+    private var cia1: Bool { return selectedCia == 0 }
+    
     private func cacheCIA() {
 
-        ciaInfo = ciaProxy.getInfo()
+        ciaInfo = cia1 ? c64.cia1.getInfo() : c64.cia1.getInfo()
     }
 
     func refreshCIA(count: Int = 0, full: Bool = false) {
@@ -22,25 +22,24 @@ extension Inspector {
         cacheCIA()
 
         if full {
-            let cia1 = selectedCia == 0
+            
+            ciaPA7.title = (cia1 ? "C0,JB0"    : "VA14")
+            ciaPA6.title = (cia1 ? "C1,JB1"    : "VA15")
+            ciaPA5.title = (cia1 ? "C2,JB2"    : "User M")
+            ciaPA4.title = (cia1 ? "C3,JB4"    : "ATN")
+            ciaPA3.title = (cia1 ? "C4,BTNB"   : "CLK")
+            ciaPA2.title = (cia1 ? "C5"        : "DATA")
+            ciaPA1.title = (cia1 ? "C6"        : "CLK")
+            ciaPA0.title = (cia1 ? "C7"        : "DATA")
 
-            ciaPA7.title = "PA7: " + (cia1 ? "C0,JB0"    : "VA14")
-            ciaPA6.title = "PA6: " + (cia1 ? "C1,JB1"    : "VA15")
-            ciaPA5.title = "PA5: " + (cia1 ? "C2,JB2"    : "User M")
-            ciaPA4.title = "PA4: " + (cia1 ? "C3,JB4"    : "ATN")
-            ciaPA3.title = "PA3: " + (cia1 ? "C4,BTNB"   : "CLK")
-            ciaPA2.title = "PA2: " + (cia1 ? "C5"        : "DATA")
-            ciaPA1.title = "PA1: " + (cia1 ? "C6"        : "CLK")
-            ciaPA0.title = "PA0: " + (cia1 ? "C"         : "DATA")
-
-            ciaPB7.title = "PB7: " + (cia1 ? "R0, JOYA0" : "User C")
-            ciaPB6.title = "PB6: " + (cia1 ? "R1, JOYA1" : "User D")
-            ciaPB5.title = "PB5: " + (cia1 ? "R2, JOYA2" : "User E")
-            ciaPB4.title = "PB4: " + (cia1 ? "R3, JOYA3" : "User F")
-            ciaPB3.title = "PB3: " + (cia1 ? "R4, BTNA"  : "User H")
-            ciaPB2.title = "PB2: " + (cia1 ? "R5"        : "User J")
-            ciaPB1.title = "PB1: " + (cia1 ? "R6"        : "User K")
-            ciaPB0.title = "PB0: " + (cia1 ? "R7"        : "User L")
+            ciaPB7.title = (cia1 ? "R0, JOYA0" : "User C")
+            ciaPB6.title = (cia1 ? "R1, JOYA1" : "User D")
+            ciaPB5.title = (cia1 ? "R2, JOYA2" : "User E")
+            ciaPB4.title = (cia1 ? "R3, JOYA3" : "User F")
+            ciaPB3.title = (cia1 ? "R4, BTNA"  : "User H")
+            ciaPB2.title = (cia1 ? "R5"        : "User J")
+            ciaPB1.title = (cia1 ? "R6"        : "User K")
+            ciaPB0.title = (cia1 ? "R7"        : "User L")
 
             ciaPRAbinary.assignFormatter(fmt8b)
             ciaDDRAbinary.assignFormatter(fmt8b)
@@ -63,11 +62,15 @@ extension Inspector {
             ciaIMR.assignFormatter(fmt8)
             ciaICR.assignFormatter(fmt8)
             ciaICR.assignFormatter(fmt8)
-            ciaSSR.assignFormatter(fmt8b)
+            ciaSDR.assignFormatter(fmt8)
+            ciaSSR.assignFormatter(fmt8)
+            ciaSSRbinary.assignFormatter(fmt8b)
             ciaTA.assignFormatter(fmt16)
             ciaTAlatch.assignFormatter(fmt16)
             ciaTB.assignFormatter(fmt16)
             ciaTBlatch.assignFormatter(fmt16)
+            
+            ciaIntLineLow.title = (cia1 ? "IRQ" : "NMI") + " line grounded"
         }
 
         ciaTA.intValue = Int32(ciaInfo!.timerA.count)
@@ -119,22 +122,22 @@ extension Inspector {
         ciaIMR.intValue = Int32(ciaInfo!.imr)
         ciaIMRbinary.intValue = Int32(ciaInfo!.imr)
         ciaIntLineLow.state = ciaInfo!.intLine ? .off : .on
-
+        
         ciaTodHours.intValue = Int32(ciaInfo!.tod.time.hours)
         ciaTodMinutes.intValue = Int32(ciaInfo!.tod.time.minutes)
         ciaTodSeconds.intValue = Int32(ciaInfo!.tod.time.seconds)
         ciaTodTenth.intValue = Int32(ciaInfo!.tod.time.tenth)
-        ciaTodIntEnable.state = ciaInfo!.todIntEnable ? .on : .off
         ciaAlarmHours.intValue = Int32(ciaInfo!.tod.alarm.hours)
         ciaAlarmMinutes.intValue = Int32(ciaInfo!.tod.alarm.minutes)
         ciaAlarmSeconds.intValue = Int32(ciaInfo!.tod.alarm.seconds)
         ciaAlarmTenth.intValue = Int32(ciaInfo!.tod.alarm.tenth)
+        ciaTodIntEnable.state = ciaInfo!.todIntEnable ? .on : .off
 
         ciaSDR.intValue = Int32(ciaInfo!.sdr)
         ciaSSR.intValue = Int32(ciaInfo!.ssr)
 
         let idlePercentage = Int(ciaInfo!.idlePercentage * 100)
-        ciaIdleCycles.stringValue = "\(ciaInfo!.idleCycles) cycles"
+        ciaIdleCycles.stringValue = "\(ciaInfo!.idleSince) cycles"
         ciaIdleLevel.integerValue = idlePercentage
         ciaIdleLevelText.stringValue = "\(idlePercentage) %"
     }
@@ -144,69 +147,3 @@ extension Inspector {
         fullRefresh()
     }
 }
-
-/*
-extension MyController {
-    
-    func refreshCIA() {
-        
-        var info: CIAInfo
-        
-        if selectedCia == 0 {
-            info = c64.cia1.getInfo()
-            ciaIntLineLow.title = "IRQ line active"
-        } else {
-            info = c64.cia2.getInfo()
-            ciaIntLineLow.title = "NMI line active"
-        }
-
-        ciaPA.intValue = Int32(info.portA.port)
-        ciaPAbinary.intValue = Int32(info.portA.port)
-        ciaPRA.intValue = Int32(info.portA.reg)
-        ciaDDRA.intValue = Int32(info.portA.dir)
-        
-        ciaPB.intValue = Int32(info.portB.port)
-        ciaPBbinary.intValue = Int32(info.portB.port)
-        ciaPRB.intValue = Int32(info.portB.reg)
-        ciaDDRB.intValue = Int32(info.portB.dir)
-        
-        ciaTimerA.intValue = Int32(info.timerA.count)
-        ciaLatchA.intValue = Int32(info.timerA.latch)
-        ciaRunningA.state = info.timerA.running ? .on : .off
-        ciaToggleA.state = info.timerA.toggle ? .on : .off
-        ciaPBoutA.state = info.timerA.pbout ? .on : .off
-        ciaOneShotA.state = info.timerA.oneShot ? .on : .off
-        
-        ciaTimerB.intValue = Int32(info.timerB.count)
-        ciaLatchB.intValue = Int32(info.timerB.latch)
-        ciaRunningB.state = info.timerB.running ? .on : .off
-        ciaToggleB.state = info.timerB.toggle ? .on : .off
-        ciaPBoutB.state = info.timerB.pbout ? .on : .off
-        ciaOneShotB.state = info.timerB.oneShot ? .on : .off
-        
-        todHours.intValue = Int32(info.tod.time.hours)
-        todMinutes.intValue = Int32(info.tod.time.minutes)
-        todSeconds.intValue = Int32(info.tod.time.seconds)
-        todTenth.intValue = Int32(info.tod.time.tenth)
-        todIntEnable.state = info.todIntEnable ? .on : .off
-        alarmHours.intValue = Int32(info.tod.alarm.hours)
-        alarmMinutes.intValue = Int32(info.tod.alarm.minutes)
-        alarmSeconds.intValue = Int32(info.tod.alarm.seconds)
-        alarmTenth.intValue = Int32(info.tod.alarm.tenth)
-        
-        ciaIcr.intValue = Int32(info.icr)
-        ciaIcrBinary.intValue = Int32(info.icr)
-        ciaImr.intValue = Int32(info.imr)
-        ciaImrBinary.intValue = Int32(info.imr)
-        ciaIntLineLow.state = info.intLine ? .off : .on
-    }
-
-    private var selectedCia: Int { return ciaSelector.indexOfSelectedItem }
-    
-    @IBAction func selectCIAAction(_ sender: Any!) {
-        
-        refreshCIA()
-    }
-    
-}
- */

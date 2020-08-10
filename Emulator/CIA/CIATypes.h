@@ -111,7 +111,8 @@ typedef struct
     TODInfo tod;
     bool todIntEnable;
     
-    Cycle idleCycles;
+    Cycle idleSince;
+    Cycle idleTotal;
     double idlePercentage;
 }
 CIAInfo;

@@ -167,7 +167,7 @@
                             <column>
                                 <buttonCell type="radio" title="Hex" imagePosition="left" alignment="left" controlSize="small" lineBreakMode="charWrapping" state="on" inset="2" id="z5F-yg-azq">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="message" size="11"/>
+                                    <font key="font" metaFont="controlContent" size="11"/>
                                     <connections>
                                         <action selector="hexAction:" target="-2" id="xYb-tw-vkA"/>
                                     </connections>
@@ -176,7 +176,7 @@
                             <column>
                                 <buttonCell type="radio" title="Dec" imagePosition="left" alignment="left" controlSize="small" inset="2" id="jcr-RG-rX5">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="message" size="11"/>
+                                    <font key="font" metaFont="controlContent" size="11"/>
                                     <connections>
                                         <action selector="decAction:" target="-2" id="092-os-S0x"/>
                                     </connections>
@@ -1300,6 +1300,9 @@
                                                     <segment label="CIA B" tag="1"/>
                                                 </segments>
                                             </segmentedCell>
+                                            <connections>
+                                                <action selector="selectCIAAction:" target="-2" id="zde-8e-aU3"/>
+                                            </connections>
                                         </segmentedControl>
                                         <box autoresizesSubviews="NO" fixedFrame="YES" borderType="line" title="Time of Day Clock" translatesAutoresizingMaskIntoConstraints="NO" id="nip-v8-6cW">
                                             <rect key="frame" x="284" y="7" width="253" height="116"/>

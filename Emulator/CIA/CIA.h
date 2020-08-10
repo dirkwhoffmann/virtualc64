@@ -80,9 +80,6 @@ class CIA : public C64Component {
     //
         
 protected:
-
-    // Total number of skipped cycles (used by the debugger, only)
-    // Cycle idleCycles;
     
     // Timer A counter
     u16 counterA;
@@ -447,7 +444,7 @@ public:
     bool isAwake() { return !sleeping; }
     
     // The CIA is idle since this number of cycles
-    Cycle idle();
+    Cycle idleSince();
     
     // Total number of cycles the CIA was idle
     Cycle idleTotal() { return idleCycles; }
