@@ -100,26 +100,10 @@ CPU<M>::_inspect()
         info.irq = irqLine;
         info.nmi = nmiLine;
         info.rdy = rdyLine;
-        info.halted = isJammed();
+        info.jammed = isJammed();
         
         info.processorPort = pport.read();
         info.processorPortDir = pport.readDirection();
-        
-        // Disassemble the program starting at 'dasmStart'
-        /*
-        instrStart = dasmStart;
-        for (unsigned i = 0; i < CPUINFO_INSTR_COUNT; i++) {
-            instr[i] = debugger.disassemble(dasmStart);
-            dasmStart += instr[i].size;
-        }
-        
-        // Disassemble the most recent entries in the trace buffer
-        long count = debugger.loggedInstructions();
-        for (int i = 0; i < count; i++) {
-            RecordedInstruction rec = debugger.logEntryAbs(i);
-            loggedInstr[i] = debugger.disassemble(rec);
-        }
-        */
     }
 }
 

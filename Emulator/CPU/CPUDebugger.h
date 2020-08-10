@@ -238,8 +238,8 @@ public:
      */
     RecordedInstruction &logEntryRel(int n);
     RecordedInstruction &logEntryAbs(int n);
-    u16 loggedPCRel(int n);
-    u16 loggedPCAbs(int n);
+    u16 loggedPC0Rel(int n);
+    u16 loggedPC0Abs(int n);
 
     // Clears the log buffer
     void clearLog() { logCnt = 0; }
@@ -261,22 +261,25 @@ public:
     //
         
     // Disassembles a previously recorded instruction
-    const char *disassembleRecordedInstruction(int i, long *len);
-    const char *disassembleRecordedDataBytes(int i);
+    const char *disassembleRecordedInstr(int i, long *len);
+    const char *disassembleRecordedBytes(int i);
     const char *disassembleRecordedFlags(int i);
+    const char *disassembleRecordedPC(int i);
 
     // Disassembles the instruction at the specified address
-    const char *disassembleInstruction(u16 addr, long *len);
-    const char *disassembleDataBytes(u16 addr);
+    const char *disassembleInstr(u16 addr, long *len);
+    const char *disassembleBytes(u16 addr);
+    const char *disassembleAddr(u16 addr);
 
     // Disassembles the currently executed instruction
     const char *disassembleInstruction(long *len);
     const char *disassembleDataBytes();
+    const char *disassemblePC();
 
 private:
     
-    const char *disassembleInstruction(RecordedInstruction &instr, long *len);
-    const char *disassembleDataBytes(RecordedInstruction &instr);
+    const char *disassembleInstr(RecordedInstruction &instr, long *len);
+    const char *disassembleBytes(RecordedInstruction &instr);
     const char *disassembleRecordedFlags(RecordedInstruction &instr);
 };
 

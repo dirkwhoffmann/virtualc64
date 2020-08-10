@@ -15,10 +15,10 @@ class TraceTableView: NSTableView {
     var cpu: CPUProxy { return c64.cpu }
     
     // Data caches
-    var addrInRow: [Int: Int] = [:]
+    var numRows = 0
+    var addrInRow: [Int: String] = [:]
     var flagsInRow: [Int: String] = [:]
     var instrInRow: [Int: String] = [:]
-    var numRows = 0
     
     override func awakeFromNib() {
         
@@ -32,11 +32,10 @@ class TraceTableView: NSTableView {
         
         for i in 0 ..< numRows {
 
-            // instrInRow[i] = c64.cpu.getLoggedInstrInfo(i)
             var length = 0
-            addrInRow[i] = 42
-            instrInRow[i] = c64.cpu.disassembleRecordedDataBytes(i)
-            instrInRow[i] = c64.cpu.disassembleRecordedInstruction(i, length: &length)
+            addrInRow[i] = c64.cpu.disassembleRecordedPC(i)
+            instrInRow[i] = c64.cpu.disassembleRecordedBytes(i)
+            instrInRow[i] = c64.cpu.disassembleRecordedInstr(i, length: &length)
             flagsInRow[i] = c64.cpu.disassembleRecordedFlags(i)
         }
     }

@@ -134,11 +134,11 @@ struct AnyC64FileWrapper { AnyFile *file; };
 }
 - (NSInteger) loggedPCRel:(NSInteger)nr
 {
-    return wrapper->cpu->debugger.loggedPCRel((int)nr);
+    return wrapper->cpu->debugger.loggedPC0Rel((int)nr);
 }
 - (NSInteger) loggedPCAbs:(NSInteger)nr
 {
-    return wrapper->cpu->debugger.loggedPCAbs((int)nr);
+    return wrapper->cpu->debugger.loggedPC0Abs((int)nr);
 }
 - (RecordedInstruction) getRecordedInstruction:(NSInteger)index
 {
@@ -180,14 +180,14 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->cpu->getPC0();
 }
-- (NSString *) disassembleRecordedInstruction:(NSInteger)i length:(NSInteger *)len
+- (NSString *) disassembleRecordedInstr:(NSInteger)i length:(NSInteger *)len
 {
-    const char *str = wrapper->cpu->debugger.disassembleRecordedInstruction((int)i, len);
+    const char *str = wrapper->cpu->debugger.disassembleRecordedInstr((int)i, len);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) disassembleRecordedDataBytes:(NSInteger)i
+- (NSString *) disassembleRecordedBytes:(NSInteger)i
 {
-    const char *str = wrapper->cpu->debugger.disassembleRecordedDataBytes((int)i);
+    const char *str = wrapper->cpu->debugger.disassembleRecordedBytes((int)i);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) disassembleRecordedFlags:(NSInteger)i
@@ -195,32 +195,26 @@ struct AnyC64FileWrapper { AnyFile *file; };
     const char *str = wrapper->cpu->debugger.disassembleRecordedFlags((int)i);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) disassembleInstruction:(NSInteger)addr length:(NSInteger *)len
+- (NSString *) disassembleRecordedPC:(NSInteger)i
 {
-    const char *str = wrapper->cpu->debugger.disassembleInstruction(addr, len);
+    const char *str = wrapper->cpu->debugger.disassembleRecordedPC((int)i);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) disassembleDataBytes:(NSInteger)addr
+- (NSString *) disassembleInstr:(NSInteger)addr length:(NSInteger *)len
 {
-    const char *str = wrapper->cpu->debugger.disassembleDataBytes(addr);
+    const char *str = wrapper->cpu->debugger.disassembleInstr(addr, len);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-
-
-/*
-- (NSInteger) recordedInstructions
+- (NSString *) disassembleBytes:(NSInteger)addr
 {
-    return wrapper->cpu->recordedInstructions();
+    const char *str = wrapper->cpu->debugger.disassembleBytes(addr);
+    return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (RecordedInstruction) readRecordedInstruction
+- (NSString *) disassembleAddr:(NSInteger)addr
 {
-    return wrapper->cpu->readRecordedInstruction();
+    const char *str = wrapper->cpu->debugger.disassembleAddr(addr);
+    return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (RecordedInstruction) readRecordedInstruction:(NSInteger)previous
-{
-    return wrapper->cpu->readRecordedInstruction((unsigned)previous);
-}
-*/
 
 @end
 

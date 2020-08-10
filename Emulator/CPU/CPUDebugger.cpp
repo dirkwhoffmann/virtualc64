@@ -275,17 +275,17 @@ CPUDebugger::logEntryAbs(int n)
 }
 
 u16
-CPUDebugger::loggedPCRel(int n)
+CPUDebugger::loggedPC0Rel(int n)
 {
     assert(n < loggedInstructions());
     return logBuffer[(logCnt - 1 - n) % LOG_BUFFER_CAPACITY].pc;
 }
 
 u16
-CPUDebugger::loggedPCAbs(int n)
+CPUDebugger::loggedPC0Abs(int n)
 {
     assert(n < loggedInstructions());
-    return loggedPCRel(loggedInstructions() - n - 1);
+    return loggedPC0Rel(loggedInstructions() - n - 1);
 }
 
 unsigned
@@ -332,15 +332,15 @@ CPUDebugger::getAddressOfNextInstruction()
 }
 
 const char *
-CPUDebugger::disassembleRecordedInstruction(int i, long *len)
+CPUDebugger::disassembleRecordedInstr(int i, long *len)
 {
-    return disassembleInstruction(logEntryAbs(i), len);
+    return disassembleInstr(logEntryAbs(i), len);
 }
 
 const char *
-CPUDebugger::disassembleRecordedDataBytes(int i)
+CPUDebugger::disassembleRecordedBytes(int i)
 {
-    return disassembleDataBytes(logEntryAbs(i));
+    return disassembleBytes(logEntryAbs(i));
 }
 
 const char *
@@ -350,7 +350,13 @@ CPUDebugger::disassembleRecordedFlags(int i)
 }
 
 const char *
-CPUDebugger::disassembleInstruction(u16 addr, long *len)
+CPUDebugger::disassembleRecordedPC(int i)
+{
+    return disassembleAddr(logEntryAbs(i).pc);
+}
+
+const char *
+CPUDebugger::disassembleInstr(u16 addr, long *len)
 {
     RecordedInstruction instr;
     
@@ -359,11 +365,11 @@ CPUDebugger::disassembleInstruction(u16 addr, long *len)
     instr.byte2 = cpu.mem.spypeek(addr + 1);
     instr.byte3 = cpu.mem.spypeek(addr + 2);
     
-    return disassembleInstruction(instr, len);
+    return disassembleInstr(instr, len);
 }
 
 const char *
-CPUDebugger::disassembleDataBytes(u16 addr)
+CPUDebugger::disassembleBytes(u16 addr)
 {
     RecordedInstruction instr;
      
@@ -371,23 +377,38 @@ CPUDebugger::disassembleDataBytes(u16 addr)
      instr.byte2 = cpu.mem.spypeek(addr + 1);
      instr.byte3 = cpu.mem.spypeek(addr + 2);
      
-     return disassembleDataBytes(instr);
+     return disassembleBytes(instr);
+}
+
+const char *
+CPUDebugger::disassembleAddr(u16 addr)
+{
+    static char result[6];
+
+    hex ? sprint16x(result, addr) : sprint16d(result, addr);
+    return result;
 }
 
 const char *
 CPUDebugger::disassembleInstruction(long *len)
 {
-    return disassembleInstruction(cpu.getPC0(), len);
+    return disassembleInstr(cpu.getPC0(), len);
 }
 
 const char *
 CPUDebugger::disassembleDataBytes()
 {
-    return disassembleDataBytes(cpu.getPC0());
+    return disassembleBytes(cpu.getPC0());
 }
 
 const char *
-CPUDebugger::disassembleInstruction(RecordedInstruction &instr, long *len)
+CPUDebugger::disassemblePC()
+{
+    return disassembleAddr(cpu.getPC0());
+}
+
+const char *
+CPUDebugger::disassembleInstr(RecordedInstruction &instr, long *len)
 {
     static char result[16];
         
@@ -487,7 +508,7 @@ CPUDebugger::disassembleInstruction(RecordedInstruction &instr, long *len)
 }
 
 const char *
-CPUDebugger::disassembleDataBytes(RecordedInstruction &instr)
+CPUDebugger::disassembleBytes(RecordedInstruction &instr)
 {
     static char result[13]; char *ptr = result;
     
