@@ -359,6 +359,9 @@ struct AnyC64FileWrapper;
 - (void) poke:(u16)addr value:(u8)value;
 - (void) pokeIO:(u16)addr value:(u8)value;
 
+- (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src;
+- (NSString *)txtdump:(NSInteger)addr num:(NSInteger)num src:(MemoryType)src;
+
 @end
 
 

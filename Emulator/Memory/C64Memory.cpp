@@ -146,6 +146,7 @@ C64Memory::_inspect()
         if (expansionport.getExromLine()) info.bankMap |= 0x10;
         
         for (int i = 0; i < 16; i++) info.peekSrc[i] = peekSrc[i];
+        for (int i = 0; i < 16; i++) info.vicPeekSrc[i] = vic.memSrc[i];
     }
 }
 
@@ -362,7 +363,7 @@ C64Memory::spypeek(u16 addr, MemoryType source)
             return ram[addr];
             
         default:
-            assert(0);
+            // assert(0);
             return 0;
     }
 }
@@ -584,3 +585,66 @@ C64Memory::resetVector() {
     }
 }
 
+char *
+C64Memory::memdump(u16 addr, long num, bool hex, MemoryType src)
+{
+    static char result[128];
+    char *p = result;
+    
+    assert(num <= 16);
+
+    if (src == M_NONE) {
+        
+        for (int i = 0; i < num; i++) {
+            if (hex) {
+                *p++ = ' '; *p++ = ' '; *p++ = '-'; *p++ = '-';
+            } else {
+                *p++ = ' '; *p++ = '-'; *p++ = '-'; *p++ = '-';
+            }
+        }
+        *p = 0;
+
+    } else {
+        
+        for (int i = 0; i < num; i++) {
+            if (hex) {
+                *p++ = ' ';
+                *p++ = ' ';
+                sprint8x(p, spypeek(addr++, src));
+                p += 2;
+            } else {
+                *p++ = ' ';
+                sprint8d(p, spypeek(addr++, src));
+                p += 1;
+            }
+        }
+    }
+    
+    return result;
+}
+
+char *
+C64Memory::txtdump(u16 addr, long num, MemoryType src)
+{
+    static char result[17];
+    char *p = result;
+    
+    assert(num <= 16);
+    
+    if (src != M_NONE) {
+        
+        for (int i = 0; i < num; i++) {
+            
+            u8 byte = spypeek(addr++, src);
+            
+            // if (byte >=  1 && byte <= 26) { *p++ = (byte - 1) + 'A'; continue; }
+            // if (byte >= 48 && byte <= 57) { *p++ = (byte - 48) + '0'; continue; }
+            if (byte >= 65 && byte <= 90) { *p++ = byte; continue; }
+            if (byte >= 32 && byte <= 57) { *p++ = byte; continue; }
+            *p++ = '.';
+        }
+    }
+    *p = 0;
+
+    return result;
+}

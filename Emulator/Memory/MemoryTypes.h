@@ -63,6 +63,7 @@ typedef struct
     u8   bankMap;
     
     MemoryType peekSrc[16];
+    MemoryType vicPeekSrc[16];
 }
 MemInfo;
 

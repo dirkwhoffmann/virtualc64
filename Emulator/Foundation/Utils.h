@@ -182,61 +182,61 @@ inline void readBlock64(u8 **ptr, u64 *values, size_t length) {
 
 
 //
-//! @functiongroup Converting low level data objects
+// Converting low level data objects
 //
 
-/*! @brief    Translates a PETSCII string to a unichar array.
- *  @details  This functions creates unicode characters compatible with the
- *            C64ProMono font. The target font supports four different mapping
- *            tables starting at different base addresses:
+/* Translates a PETSCII string to a unichar array.
+ * This functions creates unicode characters compatible with the C64ProMono
+ * font. The target font supports four different mapping tables starting at
+ * different base addresses:
  *
- *            0xE000 : Unshifted (only upper case characters)  
- *            0xE100 : Shifted   (upper and lower case characters)
- *            0xE200 : Unshifted, reversed 
- *            0xE300 : Shifted, reversed
+ *     0xE000 : Unshifted (only upper case characters)
+ *     0xE100 : Shifted   (upper and lower case characters)
+ *     0xE200 : Unshifted, reversed
+ *     0xE300 : Shifted, reversed
  *
- *  @note     A maximum of max characters are translated. 
- *            The unicode array will always be terminated by a NULL character.
+ *  A maximum of max characters are translated. The unicode array will always
+ * be terminated by a NULL character.
  */
 void translateToUnicode(const char *petscii, u16 *unichars,
                         u16 base, size_t max);
 
-//! @brief    Returns the number of characters in a null terminated unichar array
+// Returns the number of characters in a null terminated unichar array
 size_t strlen16(const u16 *unichars);
 
-/*! @brief    Converts a PETSCII character to a printable character.
- *  @details  Replaces all unprintable characters by subst.
+/* Converts a PETSCII character to a printable character.
+ * Replaces all unprintable characters by subst.
  */
 u8 petscii2printable(u8 c, u8 subst);
 
-/*! @brief    Converts an ASCII character to a PETSCII character.
- *  @details  This function translates into the unshifted PET character set.
- *            I.e., lower case characters are converted to uppercase characters.
- *  @result   Returns ' ' for ASCII characters with no PETSCII representation.
+/* Converts an ASCII character to a PETSCII character.
+ * This function translates into the unshifted PET character set.
+ * I.e., lower case characters are converted to uppercase characters.
+ * Returns ' ' for ASCII characters with no PETSCII representation.
  */
 u8 ascii2pet(u8 asciichar);
 
-//! @brief    Converts an ASCII string into a PETSCII string.
-/*! @details  Applies function ascii2pet to all characters of a string.
+/* Converts an ASCII string into a PETSCII string.
+ * Applies function ascii2pet to all characters of a string.
  */
 void ascii2petStr(char *str);
 
-//! @brief    Writes an u8 value into a string in decimal format
+// Writes an u8 value into a string in decimal format
 void sprint8d(char *s, u8 value);
 
-//! @brief    Writes an u8 value into a string in hexadecimal format
+// Writes an u8 value into a string in hexadecimal format
 void sprint8x(char *s, u8 value);
 
-//! @brief    Writes an u8 value into a string in binary format
+// Writes an u8 value into a string in binary format
 void sprint8b(char *s, u8 value);
 
-//! @brief    Writes an u16 value into a string in decimal format
+// Writes an u16 value into a string in decimal format
 void sprint16d(char *s, u16 value);
 
-//! @brief    Writes an u16 value into a string in hexadecimal format
+// Writes an u16 value into a string in hexadecimal format
 void sprint16x(char *s, u16 value);
 
-//! @brief    Writes an u16 value into a string in binary format
+// Writes an u16 value into a string in binary format
 void sprint16b(char *s, u16 value);
 
 

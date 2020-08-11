@@ -142,8 +142,11 @@ class Inspector: DialogController {
     var cpuInfo: CPUInfo!
     var ciaInfo: CIAInfo!
     var memInfo: MemInfo!
+    var memBank: [Int: MemoryType] = [:]
     var bankMap: UInt8 = 0
-    var memoryLayoutIsDirty = true
+    var bankMapScheme = 0
+    var layoutIsDirty = true
+    var nextLayoutRefresh = 0
 
     var isRunning = true
     

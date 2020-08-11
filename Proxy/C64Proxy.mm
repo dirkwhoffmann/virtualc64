@@ -283,6 +283,16 @@ struct AnyC64FileWrapper { AnyFile *file; };
     wrapper->mem->pokeIO(addr, value);
     wrapper->mem->resume();
 }
+- (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src
+{
+    const char *str = wrapper->mem->memdump(addr, num, hex, src);
+    return str ? [NSString stringWithUTF8String:str] : NULL;
+}
+- (NSString *)txtdump:(NSInteger)addr num:(NSInteger)num src:(MemoryType)src
+{
+    const char *str = wrapper->mem->txtdump(addr, num, src);
+    return str ? [NSString stringWithUTF8String:str] : NULL;
+}
 
 @end
 
