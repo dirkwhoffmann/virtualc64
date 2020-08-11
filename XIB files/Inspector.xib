@@ -2040,9 +2040,9 @@
                                                         </buttonCell>
                                                     </button>
                                                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KId-J0-ozd">
-                                                        <rect key="frame" x="42" y="37" width="707" height="24"/>
+                                                        <rect key="frame" x="23" y="37" width="745" height="24"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <sliderCell key="cell" refusesFirstResponder="YES" alignment="left" maxValue="15" doubleValue="7" tickMarkPosition="above" numberOfTickMarks="16" allowsTickMarkValuesOnly="YES" sliderType="linear" id="W6P-w9-5Ty"/>
+                                                        <sliderCell key="cell" refusesFirstResponder="YES" alignment="left" maxValue="16" doubleValue="6" tickMarkPosition="above" numberOfTickMarks="17" allowsTickMarkValuesOnly="YES" sliderType="linear" id="W6P-w9-5Ty"/>
                                                         <connections>
                                                             <action selector="memSliderAction:" target="-2" id="Krd-dN-KMX"/>
                                                         </connections>
@@ -2097,7 +2097,7 @@
                                                 <rect key="frame" x="1" y="0.0" width="140" height="195"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <tableView wantsLayer="YES" focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="15" headerView="oYx-eh-0z5" id="Dol-9l-TFV" customClass="BankTableView" customModule="vAmiga" customModuleProvider="target">
+                                                    <tableView wantsLayer="YES" focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="15" headerView="oYx-eh-0z5" id="Dol-9l-TFV" customClass="BankTableView" customModule="VirtualC64" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="140" height="170"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>

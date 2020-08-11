@@ -220,7 +220,7 @@ extension Inspector {
     
     @IBAction func memSliderAction(_ sender: NSSlider!) {
 
-        jumpTo(bank: sender.integerValue)
+        jumpTo(bank: min(sender.integerValue, 15))
     }
 
     @IBAction func memSearchAction(_ sender: NSTextField!) {
