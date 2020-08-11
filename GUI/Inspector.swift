@@ -75,9 +75,6 @@ class Inspector: DialogController {
     @IBOutlet weak var memHiram: NSButton!
     @IBOutlet weak var memLoram: NSButton!
     @IBOutlet weak var memSource: NSPopUpButton!
-
-    var bank = 0
-    var memSrc = 0
     
     // CIA panel
     @IBOutlet weak var ciaSelector: NSSegmentedControl!
@@ -142,7 +139,11 @@ class Inspector: DialogController {
     var cpuInfo: CPUInfo!
     var ciaInfo: CIAInfo!
     var memInfo: MemInfo!
+    
+    // Memory panel
+    var memSrc = 0
     var memBank: [Int: MemoryType] = [:]
+    var selectedBank = 0
     var bankMap: UInt8 = 0
     var bankMapScheme = 0
     var layoutIsDirty = true

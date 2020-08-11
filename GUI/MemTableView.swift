@@ -56,43 +56,19 @@ class MemTableView: NSTableView {
         reloadData()
     }
     
-    func setMemView(_ value: Int) {
-        memView = value
-        refresh()
-    }
-    
-    func setHighlighting(_ value: Int) {
-        highlighting = value
-        refresh()
-    }
-    
-    // Returns the memory source for the specified address
-    func source(_ addr: UInt16) -> MemoryType {
-        
-        switch memView {
-        case MemoryView.ramView:
-            return M_RAM
-        case MemoryView.romView:
-            return M_ROM
-        case MemoryView.ioView:
-            return M_IO
-        default:
-            return mem.peekSource(addr)
-        }
+    /*
+    func addr(row: Int) -> Int {
+        return inspector.selectedBank * 4096 + 16 * row
     }
 
+    func bank(addr: Int) -> MemoryType {
+        return inspector.memBank[addr >> 12]!
+    }
+    */
+    
     // Return true if the specified memory address should be displayed
-    func shouldDisplay(_ addr: UInt16) -> Bool {
-        
-        let src = source(addr)
-        switch src {
-        case M_IO:
-            return addr >= 0xD000 && addr <= 0xDFFF
-        case M_ROM:
-            return (addr >= 0xA000 && addr <= 0xBFFF) || (addr >= 0xD000)
-        default:
-            return true
-        }
+    var bankType: MemoryType {
+        return inspector.memBank[inspector.selectedBank]!
     }
 }
 
@@ -100,49 +76,28 @@ extension MemTableView: NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         
-        return 0x10000 / 16
+        return 4096 / 16 // Bank size divided by bytes per row
     }
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
-        let addr = UInt16(16 * row)
-        let bank = inspector.memBank[(16 * row) >> 12]!
+        let base = inspector.selectedBank * 4096
+        let addr = UInt16(base + 16 * row)
         
-        func value(_ addr: UInt16) -> Any? {
-            
-            if !shouldDisplay(addr) { return "" }
-            let src = source(addr)
-            return mem.spypeek(addr, source: src)
-        }
-                
         switch tableColumn?.identifier.rawValue {
             
-        case "bank":
-            
-            switch bank {
-            case M_RAM:   return "RAM"
-            case M_PP:    return row == 0 ? "RAM+PP" : "RAM"
-            case M_ROM:   return "ROM"
-            case M_IO:    return "IO"
-            case M_CRTLO: return "CRTLO"
-            case M_CRTHI: return "CRTHI"
-            default:      return ""
-            }
-
         case "addr":
             return addr
             
         case "ascii":
-            return mem.txtdump(Int(addr), num: 16, src: bank)
+            return mem.txtdump(Int(addr), num: 16, src: bankType)
                     
         case "hex0":
-            return mem.memdump(Int(addr), num: 16, hex: inspector.hex, src: bank)
+            return mem.memdump(Int(addr), num: 16, hex: inspector.hex, src: bankType)
             
         default:
             return "???"
-        }
-        
-        return ""
+        }        
     }
 }
 

@@ -23,62 +23,7 @@ struct MemColors {
 extension Inspector {
     
     var mem: MemoryProxy { return c64.mem }
-    
-    var memLayoutImage: NSImage? {
-                
-        // Create image representation in memory
-        let size = CGSize.init(width: 256, height: 16)
-        let cap = Int(size.width) * Int(size.height)
-        let mask = calloc(cap, MemoryLayout<UInt32>.size)!
-        let ptr = mask.bindMemory(to: UInt32.self, capacity: cap)
         
-        // Create image data
-        for bank in 0...15 {
-            
-            var color: NSColor
-            switch memBank[bank]!.rawValue {
-            case M_NONE.rawValue: color = MemColors.unmapped
-            case M_PP.rawValue: color = MemColors.ram
-            case M_RAM.rawValue: color = MemColors.ram
-            case M_ROM.rawValue where bank <= 0xB: color = MemColors.basic
-            case M_ROM.rawValue where bank == 0xD: color = MemColors.char
-            case M_ROM.rawValue where bank >= 0xE: color = MemColors.kernal
-            case M_IO.rawValue: color = MemColors.io
-            case M_CRTLO.rawValue: color = MemColors.cartlo
-            case M_CRTHI.rawValue: color = MemColors.carthi
-            default: color = MemColors.unmapped
-            }
-            
-            let ciColor = CIColor(color: color)!
-            for y in 0...15 {
-                for i in 0...15 {
-                    let r = Int(ciColor.red * CGFloat(255 - y*2))
-                    let g = Int(ciColor.green * CGFloat(255 - y*2))
-                    let b = Int(ciColor.blue * CGFloat(255 - y*2))
-                    let a = Int(ciColor.alpha)
-                    ptr[256*y+16*bank+i] = UInt32(r | g << 8 | b << 16 | a << 24)
-                }
-            }
-        }
-
-        // Mark the processor port area
-        if memBank[0]!.rawValue == M_PP.rawValue {
-            let ciColor = CIColor(color: MemColors.pp)!
-            for y in 0...15 {
-                let r = Int(ciColor.red * CGFloat(255 - y*2))
-                let g = Int(ciColor.green * CGFloat(255 - y*2))
-                let b = Int(ciColor.blue * CGFloat(255 - y*2))
-                let a = Int(ciColor.alpha)
-                ptr[256*y] = UInt32(r | g << 8 | b << 16 | a << 24)
-            }
-        }
-        
-        // Create image
-        let image = NSImage.make(data: mask, rect: size)
-        let resizedImage = image?.resizeSharp(width: 512, height: 16)
-        return resizedImage
-    }
-    
     private func updateBankMap() {
     
         switch bankMapScheme {
@@ -160,6 +105,7 @@ extension Inspector {
             
             updateBankMap()
             refreshMemoryLayout()
+            memBankTableView.reloadData()
             memTableView.reloadData()
             layoutIsDirty = false
             nextLayoutRefresh = count + 10
@@ -171,6 +117,7 @@ extension Inspector {
         memHiram.state = memInfo.hiram ? .on : .off
         memLoram.state = memInfo.loram ? .on : .off
         
+        memBankTableView.refresh(count: count, full: full)
         memTableView.refresh(count: count, full: full)
     }
     
@@ -198,19 +145,167 @@ extension Inspector {
         refreshMemory()
     }
     
+    func jumpTo(addr: Int) {
+        
+        if addr >= 0 && addr <= 0xFFFF {
+            
+            // selected = addr
+            jumpTo(bank: addr >> 12)
+            let row = (addr / 16) % 4096
+            memTableView.scrollRowToVisible(row)
+            memTableView.selectRowIndexes([row], byExtendingSelection: false)
+        }
+    }
+    
+    func jumpTo(type: [MemoryType]) {
+
+        for i in 0...15 {
+
+            if type.contains(memBank[i]!) {
+                jumpTo(bank: i)
+                return
+            }
+        }
+    }
+    
+    func jumpTo(bank nr: Int) {
+        
+        track("jump to bank \(nr)")
+        
+        if nr >= 0 && nr <= 15 {
+            
+            selectedBank = nr
+            memLayoutSlider.integerValue = nr
+            memTableView.scrollRowToVisible(0)
+            memBankTableView.scrollRowToVisible(nr)
+            memBankTableView.selectRowIndexes([nr], byExtendingSelection: false)
+            fullRefresh()
+        }
+    }
+    
+    // TODO: The following action functions have no effect, yet, because we
+    // cannot distinguish different Rom types. Once M_ROM has been eliminated
+    // and M_BASIC, M_KERNAL, M_CHAR have different values, the functions can
+    // be uncommented.
+    
+    @IBAction func memPPAction(_ sender: NSButton!) {
+
+        // jumpTo(bank: [M_PP])
+    }
+
+    @IBAction func memRamAction(_ sender: NSButton!) {
+
+        // jumpTo(bank: [M_PP, M_RAM])
+    }
+
+    @IBAction func memBasicAction(_ sender: NSButton!) {
+
+        // jumpTo(bank: [M_BASIC])
+    }
+
+    @IBAction func memCharAction(_ sender: NSButton!) {
+
+        // jumpTo(bank: [M_CHAR])
+    }
+
+    @IBAction func memKernalAction(_ sender: NSButton!) {
+
+        // jumpTo(type: [M_KERNAL])
+    }
+
+    @IBAction func memIOAction(_ sender: NSButton!) {
+
+        // jumpTo(type: [M_IO])
+    }
+
+    @IBAction func memCrtLoAction(_ sender: NSButton!) {
+
+        // jumpTo(type: [M_CRTLO])
+    }
+
+    @IBAction func memCrtHiAction(_ sender: NSButton!) {
+
+        // jumpTo(type: [M_CRTHI])
+    }
+    
+    @IBAction func memSliderAction(_ sender: NSSlider!) {
+
+        jumpTo(bank: sender.integerValue)
+    }
+
     @IBAction func memSearchAction(_ sender: NSTextField!) {
         
         track()
-        /*
+        
         let input = sender.stringValue
-        if let addr = Int(input, radix: 16), input != "" {
-            sender.stringValue = String(format: "%06X", addr)
-            setSelected(addr)
-        } else {
-            sender.stringValue = ""
-            selected = -1
+        let radix = hex ? 16 : 10
+        let format = hex ? "%04X" : "%05d"
+        
+         if let addr = Int(input, radix: radix), input != "" {
+             sender.stringValue = String(format: format, addr)
+             jumpTo(addr: addr)
+         } else {
+             sender.stringValue = ""
+             // selected = -1
+         }
+         fullRefresh()
+    }
+}
+
+extension Inspector {
+    
+    var memLayoutImage: NSImage? {
+                
+        // Create image representation in memory
+        let size = CGSize.init(width: 256, height: 16)
+        let cap = Int(size.width) * Int(size.height)
+        let mask = calloc(cap, MemoryLayout<UInt32>.size)!
+        let ptr = mask.bindMemory(to: UInt32.self, capacity: cap)
+        
+        // Create image data
+        for bank in 0...15 {
+            
+            var color: NSColor
+            switch memBank[bank]!.rawValue {
+            case M_NONE.rawValue: color = MemColors.unmapped
+            case M_PP.rawValue: color = MemColors.ram
+            case M_RAM.rawValue: color = MemColors.ram
+            case M_ROM.rawValue where bank <= 0xB: color = MemColors.basic
+            case M_ROM.rawValue where bank == 0xD: color = MemColors.char
+            case M_ROM.rawValue where bank >= 0xE: color = MemColors.kernal
+            case M_IO.rawValue: color = MemColors.io
+            case M_CRTLO.rawValue: color = MemColors.cartlo
+            case M_CRTHI.rawValue: color = MemColors.carthi
+            default: color = MemColors.unmapped
+            }
+            
+            let ciColor = CIColor(color: color)!
+            for y in 0...15 {
+                for i in 0...15 {
+                    let r = Int(ciColor.red * CGFloat(255 - y*2))
+                    let g = Int(ciColor.green * CGFloat(255 - y*2))
+                    let b = Int(ciColor.blue * CGFloat(255 - y*2))
+                    let a = Int(ciColor.alpha)
+                    ptr[256*y+16*bank+i] = UInt32(r | g << 8 | b << 16 | a << 24)
+                }
+            }
         }
-        fullRefresh()
-        */
+
+        // Mark the processor port area
+        if memBank[0]!.rawValue == M_PP.rawValue {
+            let ciColor = CIColor(color: MemColors.pp)!
+            for y in 0...15 {
+                let r = Int(ciColor.red * CGFloat(255 - y*2))
+                let g = Int(ciColor.green * CGFloat(255 - y*2))
+                let b = Int(ciColor.blue * CGFloat(255 - y*2))
+                let a = Int(ciColor.alpha)
+                ptr[256*y] = UInt32(r | g << 8 | b << 16 | a << 24)
+            }
+        }
+        
+        // Create image
+        let image = NSImage.make(data: mask, rect: size)
+        let resizedImage = image?.resizeSharp(width: 512, height: 16)
+        return resizedImage
     }
 }

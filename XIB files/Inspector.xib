@@ -93,6 +93,7 @@
                 <outlet property="cpuY" destination="GYy-Tv-mCA" id="hWs-di-r0R"/>
                 <outlet property="cpuZ" destination="FDg-Zv-NPQ" id="pHc-tL-3OQ"/>
                 <outlet property="hexDecSelector" destination="I8k-0V-ELF" id="yN0-mY-F0B"/>
+                <outlet property="memBankTableView" destination="Dol-9l-TFV" id="mIl-bO-l2b"/>
                 <outlet property="memBasicButton" destination="Gjg-Kg-9ZH" id="dqV-It-zrv"/>
                 <outlet property="memCartHiButton" destination="IIK-CN-eDK" id="nNX-tJ-CDU"/>
                 <outlet property="memCartLoButton" destination="chu-C8-KgA" id="KWj-7Z-ebA"/>
@@ -1737,7 +1738,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rhO-da-CDW">
-                                            <rect key="frame" x="15" y="348" width="115" height="16"/>
+                                            <rect key="frame" x="17" y="348" width="115" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Show values from:" id="FxT-oK-St5">
                                                 <font key="font" metaFont="system"/>
@@ -1746,7 +1747,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JGr-5C-bxz">
-                                            <rect key="frame" x="134" y="342" width="168" height="25"/>
+                                            <rect key="frame" x="136" y="342" width="168" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Visible Banks (CPU)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="AXp-S4-jbp" id="lQU-85-fyW">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1766,14 +1767,14 @@
                                             </connections>
                                         </popUpButton>
                                         <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yat-0e-sd6">
-                                            <rect key="frame" x="17" y="17" width="788" height="196"/>
+                                            <rect key="frame" x="175" y="17" width="630" height="196"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <clipView key="contentView" drawsBackground="NO" id="uN2-KZ-pod">
-                                                <rect key="frame" x="1" y="0.0" width="786" height="195"/>
+                                                <rect key="frame" x="1" y="0.0" width="628" height="195"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="Yjj-no-34g" id="9cm-34-eYe" customClass="MemTableView" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="786" height="170"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="628" height="170"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1791,19 +1792,7 @@
                                                                 </textFieldCell>
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             </tableColumn>
-                                                            <tableColumn identifier="bank" editable="NO" width="48" minWidth="48" maxWidth="1000" id="3C7-Hy-oNd">
-                                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Bank">
-                                                                    <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
-                                                                </tableHeaderCell>
-                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="center" title="Text Cell" id="iCX-DM-Uq1">
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                </textFieldCell>
-                                                                <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                            </tableColumn>
-                                                            <tableColumn identifier="hex0" width="503" minWidth="28" maxWidth="1000" id="MZP-8C-3MB">
+                                                            <tableColumn identifier="hex0" width="450" minWidth="28" maxWidth="1000" id="MZP-8C-3MB">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Data">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
@@ -1815,7 +1804,7 @@
                                                                 </textFieldCell>
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             </tableColumn>
-                                                            <tableColumn identifier="ascii" editable="NO" width="173" minWidth="58" maxWidth="1000" id="QLQ-TX-Hxs">
+                                                            <tableColumn identifier="ascii" editable="NO" width="120" minWidth="120" maxWidth="120" id="QLQ-TX-Hxs">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="ASCII">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -1836,7 +1825,7 @@
                                                 <nil key="backgroundColor"/>
                                             </clipView>
                                             <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="J5z-hy-zmV">
-                                                <rect key="frame" x="1" y="179" width="693" height="16"/>
+                                                <rect key="frame" x="1" y="179" width="628" height="16"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                             <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="Mv8-Mj-2md">
@@ -1844,7 +1833,7 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                             <tableHeaderView key="headerView" id="Yjj-no-34g">
-                                                <rect key="frame" x="0.0" y="0.0" width="786" height="25"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="628" height="25"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </tableHeaderView>
                                         </scrollView>
@@ -1918,6 +1907,9 @@
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="message" size="11"/>
                                                         </buttonCell>
+                                                        <connections>
+                                                            <action selector="memRamAction:" target="-2" id="Ppx-5K-jrQ"/>
+                                                        </connections>
                                                     </button>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1HO-g1-rQE">
                                                         <rect key="frame" x="186" y="15" width="29" height="14"/>
@@ -1935,6 +1927,9 @@
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="message" size="11"/>
                                                         </buttonCell>
+                                                        <connections>
+                                                            <action selector="memPPAction:" target="-2" id="hPg-W9-SRS"/>
+                                                        </connections>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="clj-p9-gla">
                                                         <rect key="frame" x="405" y="14" width="16" height="16"/>
@@ -1943,6 +1938,9 @@
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="message" size="11"/>
                                                         </buttonCell>
+                                                        <connections>
+                                                            <action selector="memKernalAction:" target="-2" id="CXc-fb-Dw4"/>
+                                                        </connections>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="chu-C8-KgA">
                                                         <rect key="frame" x="565" y="14" width="16" height="16"/>
@@ -1951,6 +1949,9 @@
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="message" size="11"/>
                                                         </buttonCell>
+                                                        <connections>
+                                                            <action selector="memCrtLoAction:" target="-2" id="2kA-YG-1oI"/>
+                                                        </connections>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gjg-Kg-9ZH">
                                                         <rect key="frame" x="245" y="14" width="16" height="16"/>
@@ -1959,6 +1960,9 @@
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="message" size="11"/>
                                                         </buttonCell>
+                                                        <connections>
+                                                            <action selector="memBasicAction:" target="-2" id="Bzb-03-n7t"/>
+                                                        </connections>
                                                     </button>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="es0-Rj-oC7">
                                                         <rect key="frame" x="266" y="15" width="37" height="14"/>
@@ -1976,6 +1980,9 @@
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
+                                                        <connections>
+                                                            <action selector="memIOAction:" target="-2" id="Eyg-Fd-TFY"/>
+                                                        </connections>
                                                     </button>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sha-yK-cdO">
                                                         <rect key="frame" x="106" y="15" width="41" height="14"/>
@@ -2020,6 +2027,9 @@
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="message" size="11"/>
                                                         </buttonCell>
+                                                        <connections>
+                                                            <action selector="memCharAction:" target="-2" id="cht-vY-bdH"/>
+                                                        </connections>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6tr-9n-qjd">
                                                         <rect key="frame" x="29" y="64" width="732" height="22"/>
@@ -2032,7 +2042,10 @@
                                                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KId-J0-ozd">
                                                         <rect key="frame" x="42" y="37" width="707" height="24"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <sliderCell key="cell" refusesFirstResponder="YES" state="on" alignment="left" maxValue="15" doubleValue="7" tickMarkPosition="above" numberOfTickMarks="16" sliderType="linear" id="W6P-w9-5Ty"/>
+                                                        <sliderCell key="cell" refusesFirstResponder="YES" alignment="left" maxValue="15" doubleValue="7" tickMarkPosition="above" numberOfTickMarks="16" allowsTickMarkValuesOnly="YES" sliderType="linear" id="W6P-w9-5Ty"/>
+                                                        <connections>
+                                                            <action selector="memSliderAction:" target="-2" id="Krd-dN-KMX"/>
+                                                        </connections>
                                                     </slider>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IIK-CN-eDK">
                                                         <rect key="frame" x="645" y="14" width="16" height="16"/>
@@ -2041,6 +2054,9 @@
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="message" size="11"/>
                                                         </buttonCell>
+                                                        <connections>
+                                                            <action selector="memCrtHiAction:" target="-2" id="dCD-s3-Xlz"/>
+                                                        </connections>
                                                     </button>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GOu-b8-YFe">
                                                         <rect key="frame" x="666" y="15" width="38" height="14"/>
@@ -2074,6 +2090,65 @@
                                                 <action selector="refreshAction:" target="-2" id="01z-CZ-zZA"/>
                                             </connections>
                                         </button>
+                                        <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xdC-d1-1qw">
+                                            <rect key="frame" x="17" y="17" width="142" height="196"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                                            <clipView key="contentView" drawsBackground="NO" id="EqP-5S-dIY">
+                                                <rect key="frame" x="1" y="0.0" width="140" height="195"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <tableView wantsLayer="YES" focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="15" headerView="oYx-eh-0z5" id="Dol-9l-TFV" customClass="BankTableView" customModule="vAmiga" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="140" height="170"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <size key="intercellSpacing" width="3" height="2"/>
+                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                                        <tableColumns>
+                                                            <tableColumn identifier="bank" width="38" minWidth="31" maxWidth="3.4028234663852886e+38" id="ma4-Ko-b4j" userLabel="Src">
+                                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Bank">
+                                                                    <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </tableHeaderCell>
+                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="right" title="Text Cell" id="HZY-uU-X3c">
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                                <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                            </tableColumn>
+                                                            <tableColumn identifier="source" editable="NO" width="96" minWidth="64" maxWidth="1000" id="cQo-K4-DWa">
+                                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Source">
+                                                                    <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
+                                                                </tableHeaderCell>
+                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="okQ-lZ-6cH">
+                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                                <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                            </tableColumn>
+                                                        </tableColumns>
+                                                        <connections>
+                                                            <outlet property="inspector" destination="-2" id="JiM-Wf-mih"/>
+                                                        </connections>
+                                                    </tableView>
+                                                </subviews>
+                                                <nil key="backgroundColor"/>
+                                            </clipView>
+                                            <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="MEi-U3-Ptz">
+                                                <rect key="frame" x="1" y="205" width="140" height="16"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                            </scroller>
+                                            <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="91b-gx-4gg">
+                                                <rect key="frame" x="84" y="17" width="15" height="67"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                            </scroller>
+                                            <tableHeaderView key="headerView" wantsLayer="YES" id="oYx-eh-0z5">
+                                                <rect key="frame" x="0.0" y="0.0" width="140" height="25"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                            </tableHeaderView>
+                                        </scrollView>
                                     </subviews>
                                 </view>
                             </tabViewItem>
