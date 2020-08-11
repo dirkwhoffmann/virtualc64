@@ -58,7 +58,7 @@ extension BankTableView: NSTableViewDataSource {
 
         case "source":
 
-            switch inspector.memBank[row]?.rawValue {
+            switch inspector.bankType[row]?.rawValue {
                 
             case M_NONE.rawValue:   return "Unmapped"
             case M_RAM.rawValue:    return "Ram"

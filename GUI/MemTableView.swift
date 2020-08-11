@@ -56,19 +56,9 @@ class MemTableView: NSTableView {
         reloadData()
     }
     
-    /*
-    func addr(row: Int) -> Int {
-        return inspector.selectedBank * 4096 + 16 * row
-    }
-
-    func bank(addr: Int) -> MemoryType {
-        return inspector.memBank[addr >> 12]!
-    }
-    */
-    
     // Return true if the specified memory address should be displayed
     var bankType: MemoryType {
-        return inspector.memBank[inspector.selectedBank]!
+        return inspector.bankType[inspector.displayedBank]!
     }
 }
 
@@ -81,7 +71,7 @@ extension MemTableView: NSTableViewDataSource {
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
-        let base = inspector.selectedBank * 4096
+        let base = inspector.displayedBank * 4096
         let addr = UInt16(base + 16 * row)
         
         switch tableColumn?.identifier.rawValue {

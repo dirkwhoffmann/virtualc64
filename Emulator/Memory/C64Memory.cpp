@@ -621,7 +621,7 @@ C64Memory::memdump(u16 addr, long num, bool hex, MemoryType src)
             } else {
                 *p++ = ' ';
                 sprint8d(p, spypeek(addr++, src));
-                p += 1;
+                p += 3;
             }
         }
     }

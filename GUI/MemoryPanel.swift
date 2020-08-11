@@ -26,63 +26,63 @@ extension Inspector {
         
     private func updateBankMap() {
     
-        switch bankMapScheme {
+        switch memSource.selectedTag() {
             
         case 0: // Visible bank (CPU)
             
-            memBank[0x0] = memInfo.peekSrc.0
-            memBank[0x1] = memInfo.peekSrc.1
-            memBank[0x2] = memInfo.peekSrc.2
-            memBank[0x3] = memInfo.peekSrc.3
-            memBank[0x4] = memInfo.peekSrc.4
-            memBank[0x5] = memInfo.peekSrc.5
-            memBank[0x6] = memInfo.peekSrc.6
-            memBank[0x7] = memInfo.peekSrc.7
-            memBank[0x8] = memInfo.peekSrc.8
-            memBank[0x9] = memInfo.peekSrc.9
-            memBank[0xA] = memInfo.peekSrc.10
-            memBank[0xB] = memInfo.peekSrc.11
-            memBank[0xC] = memInfo.peekSrc.12
-            memBank[0xD] = memInfo.peekSrc.13
-            memBank[0xE] = memInfo.peekSrc.14
-            memBank[0xF] = memInfo.peekSrc.15
+            bankType[0x0] = memInfo.peekSrc.0
+            bankType[0x1] = memInfo.peekSrc.1
+            bankType[0x2] = memInfo.peekSrc.2
+            bankType[0x3] = memInfo.peekSrc.3
+            bankType[0x4] = memInfo.peekSrc.4
+            bankType[0x5] = memInfo.peekSrc.5
+            bankType[0x6] = memInfo.peekSrc.6
+            bankType[0x7] = memInfo.peekSrc.7
+            bankType[0x8] = memInfo.peekSrc.8
+            bankType[0x9] = memInfo.peekSrc.9
+            bankType[0xA] = memInfo.peekSrc.10
+            bankType[0xB] = memInfo.peekSrc.11
+            bankType[0xC] = memInfo.peekSrc.12
+            bankType[0xD] = memInfo.peekSrc.13
+            bankType[0xE] = memInfo.peekSrc.14
+            bankType[0xF] = memInfo.peekSrc.15
             
         case 1: // Visible bank (VIC)
             
-            memBank[0x0] = memInfo.vicPeekSrc.0
-            memBank[0x1] = memInfo.vicPeekSrc.1
-            memBank[0x2] = memInfo.vicPeekSrc.2
-            memBank[0x3] = memInfo.vicPeekSrc.3
-            memBank[0x4] = memInfo.vicPeekSrc.4
-            memBank[0x5] = memInfo.vicPeekSrc.5
-            memBank[0x6] = memInfo.vicPeekSrc.6
-            memBank[0x7] = memInfo.vicPeekSrc.7
-            memBank[0x8] = memInfo.vicPeekSrc.8
-            memBank[0x9] = memInfo.vicPeekSrc.9
-            memBank[0xA] = memInfo.vicPeekSrc.10
-            memBank[0xB] = memInfo.vicPeekSrc.11
-            memBank[0xC] = memInfo.vicPeekSrc.12
-            memBank[0xD] = memInfo.vicPeekSrc.13
-            memBank[0xE] = memInfo.vicPeekSrc.14
-            memBank[0xF] = memInfo.vicPeekSrc.15
+            bankType[0x0] = memInfo.vicPeekSrc.0
+            bankType[0x1] = memInfo.vicPeekSrc.1
+            bankType[0x2] = memInfo.vicPeekSrc.2
+            bankType[0x3] = memInfo.vicPeekSrc.3
+            bankType[0x4] = memInfo.vicPeekSrc.4
+            bankType[0x5] = memInfo.vicPeekSrc.5
+            bankType[0x6] = memInfo.vicPeekSrc.6
+            bankType[0x7] = memInfo.vicPeekSrc.7
+            bankType[0x8] = memInfo.vicPeekSrc.8
+            bankType[0x9] = memInfo.vicPeekSrc.9
+            bankType[0xA] = memInfo.vicPeekSrc.10
+            bankType[0xB] = memInfo.vicPeekSrc.11
+            bankType[0xC] = memInfo.vicPeekSrc.12
+            bankType[0xD] = memInfo.vicPeekSrc.13
+            bankType[0xE] = memInfo.vicPeekSrc.14
+            bankType[0xF] = memInfo.vicPeekSrc.15
             
         case 2: // RAM
             
-            for i in 0...15 { memBank[i] = M_RAM }
+            for i in 0...15 { bankType[i] = M_RAM }
             
         case 3: // ROM
             
-            for i in 0...15 { memBank[i] = M_NONE }
-            memBank[0xA] = M_BASIC
-            memBank[0xB] = M_BASIC
-            memBank[0xD] = M_CHAR
-            memBank[0xE] = M_BASIC
-            memBank[0xF] = M_KERNAL
+            for i in 0...15 { bankType[i] = M_NONE }
+            bankType[0xA] = M_BASIC
+            bankType[0xB] = M_BASIC
+            bankType[0xD] = M_CHAR
+            bankType[0xE] = M_BASIC
+            bankType[0xF] = M_KERNAL
             
         case 4: // IO
 
-            for i in 0...15 { memBank[i] = M_NONE }
-            memBank[0xD] = M_IO
+            for i in 0...15 { bankType[i] = M_NONE }
+            bankType[0xD] = M_IO
             
         default:
             fatalError()
@@ -91,9 +91,9 @@ extension Inspector {
     
     private func cacheMemory() {
         
+        let oldBankMap = memInfo?.bankMap
         memInfo = c64.mem.getInfo()
-        if bankMap != memInfo.bankMap { layoutIsDirty = true }
-        bankMap = memInfo.bankMap
+        if oldBankMap != memInfo.bankMap { layoutIsDirty = true }
     }
     
     func refreshMemory(count: Int = 0, full: Bool = false) {
@@ -139,19 +139,19 @@ extension Inspector {
     @IBAction func memSourceAction(_ sender: NSPopUpButton!) {
         
         track()
-        bankMapScheme = sender.selectedTag()
-        track("bankMapScheme = \(bankMapScheme)")
         layoutIsDirty = true
         refreshMemory()
     }
     
     func jumpTo(addr: Int) {
         
+        track("jumpTo: \(addr)")
+        
         if addr >= 0 && addr <= 0xFFFF {
             
-            // selected = addr
             jumpTo(bank: addr >> 12)
-            let row = (addr / 16) % 4096
+            let row = (addr % 4096) / 16
+            track("jumpTo row \(row)")
             memTableView.scrollRowToVisible(row)
             memTableView.selectRowIndexes([row], byExtendingSelection: false)
         }
@@ -161,7 +161,7 @@ extension Inspector {
 
         for i in 0...15 {
 
-            if type.contains(memBank[i]!) {
+            if type.contains(bankType[i]!) {
                 jumpTo(bank: i)
                 return
             }
@@ -169,12 +169,10 @@ extension Inspector {
     }
     
     func jumpTo(bank nr: Int) {
-        
-        track("jump to bank \(nr)")
-        
+                
         if nr >= 0 && nr <= 15 {
             
-            selectedBank = nr
+            displayedBank = nr
             memLayoutSlider.integerValue = nr
             memTableView.scrollRowToVisible(0)
             memBankTableView.scrollRowToVisible(nr)
@@ -241,7 +239,6 @@ extension Inspector {
              jumpTo(addr: addr)
          } else {
              sender.stringValue = ""
-             // selected = -1
          }
          fullRefresh()
     }
@@ -261,7 +258,7 @@ extension Inspector {
         for bank in 0...15 {
             
             var color: NSColor
-            switch memBank[bank]!.rawValue {
+            switch bankType[bank]!.rawValue {
             case M_NONE.rawValue: color = MemColors.unmapped
             case M_PP.rawValue: color = MemColors.ram
             case M_RAM.rawValue: color = MemColors.ram
@@ -287,7 +284,7 @@ extension Inspector {
         }
 
         // Mark the processor port area
-        if memBank[0]!.rawValue == M_PP.rawValue {
+        if bankType[0]!.rawValue == M_PP.rawValue {
             let ciColor = CIColor(color: MemColors.pp)!
             for y in 0...15 {
                 let r = Int(ciColor.red * CGFloat(255 - y*2))

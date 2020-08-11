@@ -76,6 +76,11 @@ class Inspector: DialogController {
     @IBOutlet weak var memLoram: NSButton!
     @IBOutlet weak var memSource: NSPopUpButton!
     
+    var bankType: [Int: MemoryType] = [:]
+    var displayedBank = 0
+    var layoutIsDirty = true
+    var nextLayoutRefresh = 0
+
     // CIA panel
     @IBOutlet weak var ciaSelector: NSSegmentedControl!
     @IBOutlet weak var ciaPRA: NSTextField!
@@ -140,15 +145,6 @@ class Inspector: DialogController {
     var ciaInfo: CIAInfo!
     var memInfo: MemInfo!
     
-    // Memory panel
-    var memSrc = 0
-    var memBank: [Int: MemoryType] = [:]
-    var selectedBank = 0
-    var bankMap: UInt8 = 0
-    var bankMapScheme = 0
-    var layoutIsDirty = true
-    var nextLayoutRefresh = 0
-
     var isRunning = true
     
     // Number format selection (hexadecimal or decimal)
