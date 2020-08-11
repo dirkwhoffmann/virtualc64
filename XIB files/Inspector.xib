@@ -1738,34 +1738,14 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rhO-da-CDW">
-                                            <rect key="frame" x="17" y="348" width="115" height="16"/>
+                                            <rect key="frame" x="17" y="348" width="49" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Show values from:" id="FxT-oK-St5">
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Inspect" id="FxT-oK-St5">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JGr-5C-bxz">
-                                            <rect key="frame" x="136" y="342" width="168" height="25"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Visible Banks (CPU)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="AXp-S4-jbp" id="lQU-85-fyW">
-                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                                <menu key="menu" id="8yH-ul-5K6">
-                                                    <items>
-                                                        <menuItem title="Visible Banks (CPU)" state="on" id="AXp-S4-jbp"/>
-                                                        <menuItem title="Visible Banks (VICII)" tag="1" id="3zF-UJ-4ML"/>
-                                                        <menuItem title="RAM" tag="2" id="XDS-jQ-ViX"/>
-                                                        <menuItem title="ROM" tag="3" id="nvb-tG-hte"/>
-                                                        <menuItem title="IO" tag="4" id="Ydu-qL-zde"/>
-                                                    </items>
-                                                </menu>
-                                            </popUpButtonCell>
-                                            <connections>
-                                                <action selector="memSourceAction:" target="-2" id="sgO-jf-dtl"/>
-                                            </connections>
-                                        </popUpButton>
                                         <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yat-0e-sd6">
                                             <rect key="frame" x="175" y="17" width="630" height="196"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1850,7 +1830,7 @@
                                             </connections>
                                         </searchField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TrT-jl-oSZ">
-                                            <rect key="frame" x="618" y="346" width="58" height="18"/>
+                                            <rect key="frame" x="590" y="346" width="58" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="HIRAM" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="LDs-3H-5qD">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1861,7 +1841,7 @@
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Brr-uN-fQ7">
-                                            <rect key="frame" x="460" y="346" width="68" height="18"/>
+                                            <rect key="frame" x="432" y="346" width="68" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="CHAREN" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="4tb-e4-Ufj">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1872,7 +1852,7 @@
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fIJ-UE-OYw">
-                                            <rect key="frame" x="320" y="346" width="62" height="18"/>
+                                            <rect key="frame" x="292" y="346" width="62" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="EXROM" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="nSo-0K-d54">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1883,7 +1863,7 @@
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2UE-Dq-Yb4">
-                                            <rect key="frame" x="393" y="346" width="54" height="18"/>
+                                            <rect key="frame" x="365" y="346" width="54" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="GAME" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="SJS-E2-RM2">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2080,7 +2060,7 @@
                                             </view>
                                         </box>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MQr-JL-q2l">
-                                            <rect key="frame" x="542" y="346" width="61" height="18"/>
+                                            <rect key="frame" x="514" y="346" width="61" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="LORAM" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="Jc5-29-QDS">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2149,6 +2129,26 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </tableHeaderView>
                                         </scrollView>
+                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JGr-5C-bxz">
+                                            <rect key="frame" x="70" y="342" width="178" height="25"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <popUpButtonCell key="cell" type="push" title="Visible Banks (CPU)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="AXp-S4-jbp" id="lQU-85-fyW">
+                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                                <menu key="menu" id="8yH-ul-5K6">
+                                                    <items>
+                                                        <menuItem title="Visible Banks (CPU)" state="on" id="AXp-S4-jbp"/>
+                                                        <menuItem title="Visible Banks (VICII)" tag="1" id="3zF-UJ-4ML"/>
+                                                        <menuItem title="RAM" tag="2" id="XDS-jQ-ViX"/>
+                                                        <menuItem title="ROM" tag="3" id="nvb-tG-hte"/>
+                                                        <menuItem title="IO" tag="4" id="Ydu-qL-zde"/>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="memSourceAction:" target="-2" id="sgO-jf-dtl"/>
+                                            </connections>
+                                        </popUpButton>
                                     </subviews>
                                 </view>
                             </tabViewItem>
