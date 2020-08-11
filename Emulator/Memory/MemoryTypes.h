@@ -19,10 +19,9 @@
 typedef enum
 {
     M_RAM = 1,
-    M_ROM,
-    M_CHAR = M_ROM,
-    M_KERNAL = M_ROM,
-    M_BASIC = M_ROM,
+    M_CHAR,
+    M_KERNAL,
+    M_BASIC,
     M_IO,
     M_CRTLO,
     M_CRTHI,

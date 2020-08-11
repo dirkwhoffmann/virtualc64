@@ -221,7 +221,9 @@ C64Memory::peek(u16 addr, MemoryType source)
         case M_RAM:
         return ram[addr];
         
-        case M_ROM:
+        case M_BASIC:
+        case M_CHAR:
+        case M_KERNAL:
         return rom[addr];
         
         case M_IO:
@@ -346,7 +348,9 @@ C64Memory::spypeek(u16 addr, MemoryType source)
         case M_RAM:
             return ram[addr];
             
-        case M_ROM:
+        case M_BASIC:
+        case M_CHAR:
+        case M_KERNAL:
             return rom[addr];
             
         case M_IO:
@@ -428,7 +432,9 @@ C64Memory::poke(u16 addr, u8 value, MemoryType target)
     switch(target) {
             
         case M_RAM:
-        case M_ROM:
+        case M_BASIC:
+        case M_CHAR:
+        case M_KERNAL:
             ram[addr] = value;
             return;
             
@@ -558,7 +564,7 @@ C64Memory::pokeIO(u16 addr, u8 value)
 u16
 C64Memory::nmiVector() {
     
-    if (peekSrc[0xF] != M_ROM || c64.hasKernalRom()) {
+    if (peekSrc[0xF] != M_KERNAL || c64.hasKernalRom()) {
         return LO_HI(peek(0xFFFA), peek(0xFFFB));
     } else {
         return 0xFE43;
@@ -568,7 +574,7 @@ C64Memory::nmiVector() {
 u16
 C64Memory::irqVector() {
     
-    if (peekSrc[0xF] != M_ROM || c64.hasKernalRom()) {
+    if (peekSrc[0xF] != M_KERNAL || c64.hasKernalRom()) {
         return LO_HI(peek(0xFFFE), peek(0xFFFF));
     } else {
         return 0xFF48;
@@ -578,7 +584,7 @@ C64Memory::irqVector() {
 u16
 C64Memory::resetVector() {
     
-    if (peekSrc[0xF] != M_ROM || c64.hasKernalRom()) {
+    if (peekSrc[0xF] != M_KERNAL || c64.hasKernalRom()) {
         return LO_HI(peek(0xFFFC), peek(0xFFFD));
     } else {
         return 0xFCE2;

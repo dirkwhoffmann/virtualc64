@@ -182,50 +182,45 @@ extension Inspector {
             fullRefresh()
         }
     }
-    
-    // TODO: The following action functions have no effect, yet, because we
-    // cannot distinguish different Rom types. Once M_ROM has been eliminated
-    // and M_BASIC, M_KERNAL, M_CHAR have different values, the functions can
-    // be uncommented.
-    
+        
     @IBAction func memPPAction(_ sender: NSButton!) {
 
-        // jumpTo(bank: [M_PP])
+        jumpTo(type: [M_PP])
     }
 
     @IBAction func memRamAction(_ sender: NSButton!) {
 
-        // jumpTo(bank: [M_PP, M_RAM])
+        jumpTo(type: [M_PP, M_RAM])
     }
 
     @IBAction func memBasicAction(_ sender: NSButton!) {
 
-        // jumpTo(bank: [M_BASIC])
+        jumpTo(type: [M_BASIC])
     }
 
     @IBAction func memCharAction(_ sender: NSButton!) {
 
-        // jumpTo(bank: [M_CHAR])
+        jumpTo(type: [M_CHAR])
     }
 
     @IBAction func memKernalAction(_ sender: NSButton!) {
 
-        // jumpTo(type: [M_KERNAL])
+        jumpTo(type: [M_KERNAL])
     }
 
     @IBAction func memIOAction(_ sender: NSButton!) {
 
-        // jumpTo(type: [M_IO])
+        jumpTo(type: [M_IO])
     }
 
     @IBAction func memCrtLoAction(_ sender: NSButton!) {
 
-        // jumpTo(type: [M_CRTLO])
+        jumpTo(type: [M_CRTLO])
     }
 
     @IBAction func memCrtHiAction(_ sender: NSButton!) {
 
-        // jumpTo(type: [M_CRTHI])
+        jumpTo(type: [M_CRTHI])
     }
     
     @IBAction func memSliderAction(_ sender: NSSlider!) {
@@ -270,9 +265,9 @@ extension Inspector {
             case M_NONE.rawValue: color = MemColors.unmapped
             case M_PP.rawValue: color = MemColors.ram
             case M_RAM.rawValue: color = MemColors.ram
-            case M_ROM.rawValue where bank <= 0xB: color = MemColors.basic
-            case M_ROM.rawValue where bank == 0xD: color = MemColors.char
-            case M_ROM.rawValue where bank >= 0xE: color = MemColors.kernal
+            case M_BASIC.rawValue: color = MemColors.basic
+            case M_CHAR.rawValue: color = MemColors.char
+            case M_KERNAL.rawValue: color = MemColors.kernal
             case M_IO.rawValue: color = MemColors.io
             case M_CRTLO.rawValue: color = MemColors.cartlo
             case M_CRTHI.rawValue: color = MemColors.carthi
