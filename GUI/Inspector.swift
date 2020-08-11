@@ -61,7 +61,7 @@ class Inspector: DialogController {
     @IBOutlet weak var memRamButton: NSButton!
     @IBOutlet weak var memKernalButton: NSButton!
     @IBOutlet weak var memBasicButton: NSButton!
-    @IBOutlet weak var memCharacterButton: NSButton!
+    @IBOutlet weak var memCharButton: NSButton!
     @IBOutlet weak var memPPButton: NSButton!
     @IBOutlet weak var memIOButton: NSButton!
     @IBOutlet weak var memCartLoButton: NSButton!
@@ -141,6 +141,10 @@ class Inspector: DialogController {
     // Cached state of all C64 components
     var cpuInfo: CPUInfo!
     var ciaInfo: CIAInfo!
+    var memInfo: MemInfo!
+    var bankMap: UInt8 = 0
+    var memoryLayoutIsDirty = true
+
     var isRunning = true
     
     // Number format selection (hexadecimal or decimal)
@@ -204,7 +208,7 @@ class Inspector: DialogController {
     
     func scrollToPC() {
 
-        cpuInstrView.jumpTo(addr: Int(cpuInfo.pc0))
+        cpuInstrView.jumpTo(addr: Int(cpuInfo.reg.pc0))
     }
 
     @IBAction func refreshAction(_ sender: NSButton!) {

@@ -46,7 +46,17 @@ class MemTableView: NSTableView {
         target = self
     }
     
-    func refresh() {
+    func refresh(count: Int = 0, full: Bool = false) {
+        
+        if full {
+            
+            assignFormatter(inspector.fmt16, column: "addr")
+            assignFormatter(inspector.fmt8, column: "hex0")
+            assignFormatter(inspector.fmt8, column: "hex1")
+            assignFormatter(inspector.fmt8, column: "hex2")
+            assignFormatter(inspector.fmt8, column: "hex3")
+            assignFormatter(inspector.fmt8, column: "hex4")
+        }
         
         reloadData()
     }
@@ -72,7 +82,7 @@ class MemTableView: NSTableView {
         case MemoryView.ioView:
             return M_IO
         default:
-            return mem.peekSource(addr) ?? M_RAM
+            return mem.peekSource(addr)
         }
     }
 
@@ -89,60 +99,46 @@ class MemTableView: NSTableView {
             return true
         }
     }
-        
-    // Return true if the specified memory address should be highlighted
-    func shouldHighlight(_ addr: UInt16) -> Bool {
-        
-        let src = source(addr)
-        switch highlighting {
-        case MemoryHighlighting.rom:
-            return src == M_ROM || src == M_CRTLO || src == M_CRTHI
-        case MemoryHighlighting.romBasic:
-            return src == M_ROM && addr >= 0xA000 && addr <= 0xBFFF
-        case MemoryHighlighting.romChar:
-            return src == M_ROM && addr >= 0xD000 && addr <= 0xDFFF
-        case MemoryHighlighting.romKernal:
-            return src == M_ROM && addr >= 0xE000 && addr <= 0xFFFF
-        case MemoryHighlighting.crt:
-            return src == M_CRTLO || src == M_CRTHI
-        case MemoryHighlighting.io:
-            return src == M_IO
-        case MemoryHighlighting.ioVic:
-            return src == M_IO && addr >= 0xD000 && addr <= 0xD3FF
-        case MemoryHighlighting.ioSid:
-            return src == M_IO && addr >= 0xD400 && addr <= 0xD7FF
-        case MemoryHighlighting.ioCia:
-            return src == M_IO && addr >= 0xDC00 && addr <= 0xDDFF
-        default:
-            return false
-        }
-    }
 }
 
 extension MemTableView: NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         
-        return 0x10000 / 4
+        return 0x10000 / 16
     }
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
         var addr = UInt16(4 * row)
         let src = source(addr)
-        
+
+        func value(_ addr: UInt16) -> Any? {
+            
+            if !shouldDisplay(addr) { return "" }
+            let src = source(addr)
+            return mem.spypeek(addr, source: src)
+        }
+                
         switch tableColumn?.identifier.rawValue {
             
-        case "src":
-            return (src == M_RAM || src == M_PP) ? "RAM" :
-                (src == M_ROM) ? "ROM" :
-                (src == M_IO) ? "IO" :
-                (src == M_CRTLO || src == M_CRTHI) ? "CRT" : ""
+        case "bank":
             
+            switch src {
+            case M_RAM:   return "RAM"
+            case M_PP:    return "RAM+PP"
+            case M_ROM:   return "ROM"
+            case M_IO:    return "IO"
+            case M_CRTLO: return "CRTLO"
+            case M_CRTHI: return "CRTHI"
+            default:      return ""
+            }
+
         case "addr":
             return addr
             
         case "ascii":
+            /*
             if !shouldDisplay(addr) {
                 break
             }
@@ -155,31 +151,29 @@ extension MemTableView: NSTableViewDataSource {
                 str.unicodeScalars.append(scalar!)
             }
             return str
-            
-        case "hex3":
-            addr += 1
-            fallthrough
-            
-        case "hex2":
-            addr += 1
-            fallthrough
-            
-        case "hex1":
-            addr += 1
-            fallthrough
-            
-        case "hex0":
-            if !shouldDisplay(addr) {
-                break
-            }
-            let src = source(addr)
-            return mem.spypeek(addr, source: src) 
+            */
+            return "0123456789ABCDEF"
+        
+        case "hex0": return value(addr)
+        case "hex1": return value(addr + 0x1)
+        case "hex2": return value(addr + 0x2)
+        case "hex3": return value(addr + 0x3)
+        case "hex4": return value(addr + 0x4)
+        case "hex5": return value(addr + 0x5)
+        case "hex6": return value(addr + 0x6)
+        case "hex7": return value(addr + 0x7)
+        case "hex8": return value(addr + 0x8)
+        case "hex9": return value(addr + 0x9)
+        case "hexA": return value(addr + 0xA)
+        case "hexB": return value(addr + 0xB)
+        case "hexC": return value(addr + 0xC)
+        case "hexD": return value(addr + 0xD)
+        case "hexE": return value(addr + 0xE)
+        case "hexF": return value(addr + 0xF)
             
         default:
-            break
+            return "???"
         }
-        
-        return ""
     }
 }
 
@@ -199,10 +193,6 @@ extension MemTableView: NSTableViewDelegate {
         if tableColumn?.identifier.rawValue == "ascii" {
             cell?.font = cbmfont
         }
-        
-        if shouldHighlight(UInt16(4 * row)) {
-            cell?.textColor = .systemRed
-        } 
     }
     
     func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {

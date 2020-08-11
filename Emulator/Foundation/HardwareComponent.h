@@ -171,7 +171,7 @@ public:
     
     /* Collects information about the component and it's subcomponents.
      * Many components contains an info variable of a class specific type
-     * (e.g., CPUInfo, MemoryInfo, ...). These variables contain the
+     * (e.g., CPUInfo, CIAInfo, ...). These variables contain the
      * information shown in the GUI's inspector window and are updated by
      * calling this function. The function is called automatically when the
      * emulator switches to pause state to keep the GUI inspector data up

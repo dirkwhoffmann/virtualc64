@@ -82,7 +82,9 @@ CPU<M>::_inspect()
     synchronized {
         
         info.cycle = cycle;
-
+        info.reg = reg;
+        
+        /*
         info.pc0 = reg.pc0;
         info.sp = reg.sp;
         info.a = reg.a;
@@ -96,6 +98,7 @@ CPU<M>::_inspect()
         info.iFlag = getI();
         info.zFlag = getZ();
         info.cFlag = getC();
+        */
         
         info.irq = irqLine;
         info.nmi = nmiLine;

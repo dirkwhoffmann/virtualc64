@@ -53,5 +53,18 @@ typedef struct
 }
 MemConfig;
 
+typedef struct
+{
+    bool exrom;
+    bool game;
+    bool loram;
+    bool hiram;
+    bool charen;
+    u8   bankMap;
+    
+    MemoryType peekSrc[16];
+}
+MemInfo;
+
 
 #endif

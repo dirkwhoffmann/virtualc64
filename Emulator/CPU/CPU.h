@@ -18,37 +18,33 @@
 
 class Memory;
 
-template <typename M>
+template <typename MEMTYPE>
 class CPU : public C64Component {
         
     friend class CPUDebugger;
     friend class Breakpoints;
     friend class Watchpoints;
-    
-protected:
-    
-    // The memory this CPU is connected to
-    M &mem;
-    
+        
 private:
     
-    //
-    // Inspection results
-    //
-    
-    // Registers
+    // Result of the latest inspection
     CPUInfo info;
     
     // Address of the first disassembled instruction in memory
-    u16 instrStart;
+    // u16 instrStart;
     
 
     //
     // Sub components
     //
+        
+protected:
     
+    // Reference to the connected memory
+    MEMTYPE &mem;
+
 public:
-    
+
     // Processor Port
     ProcessorPort pport = ProcessorPort(c64);
     
@@ -196,7 +192,7 @@ private:
     
 public:
     
-    CPU(C64& ref, M& memref);
+    CPU(C64& ref, MEMTYPE& memref);
     
 private:
         

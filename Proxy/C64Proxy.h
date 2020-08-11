@@ -343,6 +343,8 @@ struct AnyC64FileWrapper;
     struct MemoryWrapper *wrapper;
 }
 
+- (MemInfo) getInfo;
+
 - (void) dump;
 
 - (MemoryType) peekSource:(u16)addr;
@@ -351,6 +353,7 @@ struct AnyC64FileWrapper;
 - (u8) spypeek:(u16)addr source:(MemoryType)source;
 - (u8) spypeek:(u16)addr;
 - (u8) spypeekIO:(u16)addr;
+- (u8) spypeekColor:(u16)addr;
 
 - (void) poke:(u16)addr value:(u8)value target:(MemoryType)target;
 - (void) poke:(u16)addr value:(u8)value;

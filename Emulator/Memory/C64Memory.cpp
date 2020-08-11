@@ -130,6 +130,25 @@ C64Memory::_reset()
     }
 }
 
+void
+C64Memory::_inspect()
+{
+    synchronized {
+        
+        info.exrom = expansionport.getExromLine();
+        info.game = expansionport.getGameLine();
+        info.loram = cpu.pport.getLoram();
+        info.hiram = cpu.pport.getHiram();
+        info.charen = cpu.pport.getCharen();
+        
+        info.bankMap = cpu.pport.read();
+        if (expansionport.getGameLine()) info.bankMap |= 0x08;
+        if (expansionport.getExromLine()) info.bankMap |= 0x10;
+        
+        for (int i = 0; i < 16; i++) info.peekSrc[i] = peekSrc[i];
+    }
+}
+
 void 
 C64Memory::_dump()
 {
@@ -391,6 +410,13 @@ C64Memory::spypeekIO(u16 addr)
             
             return peek(addr);
     }
+}
+
+u8
+C64Memory::spypeekColor(u16 addr)
+{
+    assert(addr <= 0x400);
+    return colorRam[addr];
 }
 
 void

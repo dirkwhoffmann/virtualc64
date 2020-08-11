@@ -233,6 +233,10 @@ struct AnyC64FileWrapper { AnyFile *file; };
     }
     return self;
 }
+- (MemInfo) getInfo
+{
+    return wrapper->mem->getInfo();
+}
 - (void) dump
 {
     wrapper->mem->dump();
@@ -256,6 +260,10 @@ struct AnyC64FileWrapper { AnyFile *file; };
 - (u8) spypeekIO:(u16)addr
 {
     return wrapper->mem->spypeekIO(addr);
+}
+- (u8) spypeekColor:(u16)addr
+{
+    return wrapper->mem->spypeekColor(addr);
 }
 - (void) poke:(u16)addr value:(u8)value target:(MemoryType)target
 {

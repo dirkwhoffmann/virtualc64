@@ -142,6 +142,7 @@ typedef struct
 {
     u64 cycle;
 
+    /*
     u16 pc0;
     u8 sp;
     u8 a;
@@ -155,7 +156,10 @@ typedef struct
     bool iFlag;
     bool zFlag;
     bool cFlag;
-
+    */
+    
+    Registers reg;
+    
     u8 irq;
     u8 nmi;
     bool rdy;

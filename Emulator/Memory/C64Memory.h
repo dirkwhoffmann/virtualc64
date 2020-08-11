@@ -17,6 +17,9 @@ class C64Memory : public C64Component {
     // Current configuration
     MemConfig config;
     
+    // Result of the latest inspection
+    MemInfo info;
+    
 public:
     
     /* C64 bank mapping
@@ -72,21 +75,27 @@ public:
     
     RamPattern getRamPattern() { return config.ramPattern; }
     void setRamPattern(RamPattern pattern) { config.ramPattern = pattern; }
-
+    
+    
+    //
+    // Analyzing
+    //
+    
+public:
+    
+    // Returns the result of the latest inspection
+    MemInfo getInfo() { return HardwareComponent::getInfo(info); }
         
     //
     // Methods from HardwareComponent
     //
     
-public:
-    
-	void _reset() override;
-    
 private:
     
+	void _reset() override;
+    void _inspect() override;
 	void _dump() override;
 
-    
 public:
     
     // Erases the RAM with the provided init pattern
@@ -121,7 +130,8 @@ public:
     u8 spypeek(u16 addr, MemoryType source);
     u8 spypeek(u16 addr) { return spypeek(addr, peekSrc[addr >> 12]); }
     u8 spypeekIO(u16 addr);
-    
+    u8 spypeekColor(u16 addr);
+
     // Writing a value into memory
     void poke(u16 addr, u8 value, MemoryType target);
     void poke(u16 addr, u8 value, bool gameLine, bool exromLine);

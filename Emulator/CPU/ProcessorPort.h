@@ -76,6 +76,10 @@ public:
 
     void write(u8 value);
     void writeDirection(u8 value);
+
+    bool getLoram() { return read() & 0x1; }
+    bool getHiram() { return read() & 0x2; }
+    bool getCharen() { return read() & 0x4; }
 };
 
 #endif 

@@ -15,9 +15,6 @@ extension MyController {
         if let id = debugPanel.selectedTabViewItem?.identifier as? String {
             switch id {
 
-            case "MEM":
-                memTableView.refresh()
-
             case "VIC":
                 refreshVIC()
 
