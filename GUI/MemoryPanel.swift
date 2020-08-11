@@ -10,14 +10,14 @@
 struct MemColors {
 
     static let unmapped = NSColor.gray
-    static let pp       = NSColor.init(r: 0xFF, g: 0xFF, b: 0x33, a: 0xFF)
-    static let ram      = NSColor.init(r: 0x33, g: 0xFF, b: 0x33, a: 0xFF)
-    static let cartlo   = NSColor.init(r: 0x99, g: 0x33, b: 0xFF, a: 0xFF)
-    static let carthi   = NSColor.init(r: 0xFF, g: 0x33, b: 0xFF, a: 0xFF)
-    static let kernal   = NSColor.init(r: 0x33, g: 0xFF, b: 0xFF, a: 0xFF)
-    static let basic    = NSColor.init(r: 0x33, g: 0x99, b: 0xFF, a: 0xFF)
-    static let char     = NSColor.init(r: 0x33, g: 0x33, b: 0xFF, a: 0xFF)
-    static let io       = NSColor.init(r: 0xFF, g: 0x33, b: 0x99, a: 0xFF)
+    static let pp       = NSColor.init(r: 0xFF, g: 0xFF, b: 0xFF, a: 0xFF)
+    static let ram      = NSColor.init(r: 0x99, g: 0xFF, b: 0x99, a: 0xFF)
+    static let cartlo   = NSColor.init(r: 0xCC, g: 0x99, b: 0xFF, a: 0xFF)
+    static let carthi   = NSColor.init(r: 0xFF, g: 0x99, b: 0xFF, a: 0xFF)
+    static let kernal   = NSColor.init(r: 0x99, g: 0xCC, b: 0xFF, a: 0xFF)
+    static let basic    = NSColor.init(r: 0xFF, g: 0x99, b: 0x99, a: 0xFF)
+    static let char     = NSColor.init(r: 0xFF, g: 0xFF, b: 0x99, a: 0xFF)
+    static let io       = NSColor.init(r: 0x99, g: 0xFF, b: 0xFF, a: 0xFF)
 }
 
 extension Inspector {
@@ -76,7 +76,7 @@ extension Inspector {
             bankType[0xA] = M_BASIC
             bankType[0xB] = M_BASIC
             bankType[0xD] = M_CHAR
-            bankType[0xE] = M_BASIC
+            bankType[0xE] = M_KERNAL
             bankType[0xF] = M_KERNAL
             
         case 4: // IO
@@ -144,14 +144,11 @@ extension Inspector {
     }
     
     func jumpTo(addr: Int) {
-        
-        track("jumpTo: \(addr)")
-        
+                
         if addr >= 0 && addr <= 0xFFFF {
             
             jumpTo(bank: addr >> 12)
-            let row = (addr % 4096) / 16
-            track("jumpTo row \(row)")
+            let row = (addr & 0xFFF) / 16
             memTableView.scrollRowToVisible(row)
             memTableView.selectRowIndexes([row], byExtendingSelection: false)
         }
@@ -253,7 +250,8 @@ extension Inspector {
         let cap = Int(size.width) * Int(size.height)
         let mask = calloc(cap, MemoryLayout<UInt32>.size)!
         let ptr = mask.bindMemory(to: UInt32.self, capacity: cap)
-        
+        let c = 3
+
         // Create image data
         for bank in 0...15 {
             
@@ -274,9 +272,9 @@ extension Inspector {
             let ciColor = CIColor(color: color)!
             for y in 0...15 {
                 for i in 0...15 {
-                    let r = Int(ciColor.red * CGFloat(255 - y*2))
-                    let g = Int(ciColor.green * CGFloat(255 - y*2))
-                    let b = Int(ciColor.blue * CGFloat(255 - y*2))
+                    let r = Int(ciColor.red * CGFloat(255 - y*c))
+                    let g = Int(ciColor.green * CGFloat(255 - y*c))
+                    let b = Int(ciColor.blue * CGFloat(255 - y*c))
                     let a = Int(ciColor.alpha)
                     ptr[256*y+16*bank+i] = UInt32(r | g << 8 | b << 16 | a << 24)
                 }
@@ -287,9 +285,9 @@ extension Inspector {
         if bankType[0]!.rawValue == M_PP.rawValue {
             let ciColor = CIColor(color: MemColors.pp)!
             for y in 0...15 {
-                let r = Int(ciColor.red * CGFloat(255 - y*2))
-                let g = Int(ciColor.green * CGFloat(255 - y*2))
-                let b = Int(ciColor.blue * CGFloat(255 - y*2))
+                let r = Int(ciColor.red * CGFloat(255 - y*c))
+                let g = Int(ciColor.green * CGFloat(255 - y*c))
+                let b = Int(ciColor.blue * CGFloat(255 - y*c))
                 let a = Int(ciColor.alpha)
                 ptr[256*y] = UInt32(r | g << 8 | b << 16 | a << 24)
             }

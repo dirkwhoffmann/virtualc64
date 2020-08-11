@@ -7,38 +7,13 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-struct MemoryView {
-    static let cpuView = 0
-    static let ramView = 1
-    static let romView = 2
-    static let ioView = 3
-}
-
-struct MemoryHighlighting {
-    static let none = 0
-    static let rom = 1
-    static let romBasic = 2
-    static let romChar = 3
-    static let romKernal = 4
-    static let crt = 5
-    static let io = 6
-    static let ioVic = 7
-    static let ioSid = 8
-    static let ioCia = 9
-}
-
 class MemTableView: NSTableView {
     
     @IBOutlet weak var inspector: Inspector!
 
     var c64: C64Proxy { return inspector.parent.c64 }
     var mem: MemoryProxy { return c64.mem }
-    
-    // var c: MyController?
-    var cbmfont = NSFont.init(name: "C64ProMono", size: 9)
-    private var memView = MemoryView.cpuView
-    private var highlighting = MemoryHighlighting.none
-    
+        
     override func awakeFromNib() {
         
         delegate = self
@@ -56,7 +31,6 @@ class MemTableView: NSTableView {
         reloadData()
     }
     
-    // Return true if the specified memory address should be displayed
     var bankType: MemoryType {
         return inspector.bankType[inspector.displayedBank]!
     }
