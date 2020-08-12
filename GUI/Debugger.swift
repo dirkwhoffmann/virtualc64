@@ -14,10 +14,7 @@ extension MyController {
         
         if let id = debugPanel.selectedTabViewItem?.identifier as? String {
             switch id {
-
-            case "VICII":
-                refreshVIC()
-
+                
             case "SID":
                 refreshSID()
 

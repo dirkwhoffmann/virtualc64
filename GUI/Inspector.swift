@@ -157,7 +157,7 @@ class Inspector: DialogController {
     @IBOutlet weak var vicBadLine: NSButton!
     @IBOutlet weak var vicDisplayState: NSButton!
     @IBOutlet weak var vicVBlank: NSButton!
-    @IBOutlet weak var vicScreenGeometr: NSPopUpButton!
+    @IBOutlet weak var vicScreenGeometry: NSPopUpButton!
     @IBOutlet weak var vicVFlop: NSButton!
     @IBOutlet weak var vicHFlop: NSButton!
     @IBOutlet weak var vicDisplayMode: NSPopUpButton!

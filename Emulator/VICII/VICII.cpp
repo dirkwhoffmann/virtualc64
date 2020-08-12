@@ -166,6 +166,57 @@ VICII::_reset()
 }
 
 void
+VICII::_inspect()
+{
+    synchronized {
+        
+        u8 ctrl1 = reg.current.ctrl1;
+        u8 ctrl2 = reg.current.ctrl2;
+        
+        info.rasterLine = c64.rasterLine;
+        info.rasterCycle = c64.rasterCycle;
+        info.yCounter = yCounter;
+        info.xCounter = xCounter;
+        info.vc = vc;
+        info.vcBase = vcBase;
+        info.rc = rc;
+        info.vmli = vmli;
+        
+        info.ctrl1 = ctrl1;
+        info.ctrl2 = ctrl2;
+        info.dy = ctrl1 & 0x07;
+        info.dx = ctrl2 & 0x07;
+        info.denBit = DENbit();
+        info.badLine = badLine;
+        info.displayState = displayState;
+        info.vblank = vblank;
+        info.screenGeometry = getScreenGeometry();
+        info.frameFF = flipflops.current;
+        info.displayMode = (DisplayMode)((ctrl1 & 0x60) | (ctrl2 & 0x10));
+        info.borderColor = reg.current.colors[COLREG_BORDER];
+        info.bgColor0 = reg.current.colors[COLREG_BG0];
+        info.bgColor1 = reg.current.colors[COLREG_BG1];
+        info.bgColor2 = reg.current.colors[COLREG_BG2];
+        info.bgColor3 = reg.current.colors[COLREG_BG3];
+        
+        info.memSelect = memSelect;
+        info.ultimax = ultimax;
+        info.memoryBankAddr = bankAddr;
+        info.screenMemoryAddr = VM13VM12VM11VM10() << 6;
+        info.charMemoryAddr = (CB13CB12CB11() << 10) % 0x4000;
+        
+        info.irqRasterline = rasterInterruptLine();
+        info.imr = imr;
+        info.irr = irr;
+        
+        info.latchedLPX = latchedLPX;
+        info.latchedLPY = latchedLPY;
+        info.lpLine = lpLine;
+        info.lpIrqHasOccurred = lpIrqHasOccurred;
+    }
+}
+
+void
 VICII::_ping()
 {
     c64.putMessage(isPAL() ? MSG_PAL : MSG_NTSC);

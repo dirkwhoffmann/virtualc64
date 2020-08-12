@@ -274,13 +274,13 @@ protected:
     // size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     // size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
 
+            
+    //
+    // Analyzing
+    //
     
 public:
-        
-    //
-    // Configuring
-    //
-    
+
     // Returns the result of the most recent call to inspect()
     CIAInfo getInfo() { return HardwareComponent::getInfo(info); }
     

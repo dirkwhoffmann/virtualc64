@@ -21,6 +21,10 @@ class VICII : public C64Component {
     // Current configuration
     VICConfig config;
     
+    // Result of the latest inspection
+    VICIIInfo info;
+    SpriteInfo spriteInfo;
+    
     
     //
     // Configuration options
@@ -704,6 +708,7 @@ public:
     
     void _initialize() override;
     void _reset() override;
+    void _inspect() override;
     size_t stateSize() override;
     void didLoadFromBuffer(u8 **buffer) override;
     void didSaveToBuffer(u8 **buffer) override;
@@ -714,7 +719,19 @@ private:
     void _dumpConfig() override;
     void _dump() override;
 
+    
+    //
+    // Analyzing
+    //
+    
+public:
+    
+    // Returns the result of the most recent call to inspect()
+    VICIIInfo getInfo() { return HardwareComponent::getInfo(info); }
+    // SpriteInfo getSpriteInfo() { return HardwareComponent::getInfo(spriteInfo); }
 
+    
+    
     //
     //! @functiongroup Accessing chip model related properties
     //
@@ -1403,10 +1420,7 @@ public:
     //! @functiongroup Querying information (VIC_debug.cpp)
     //
 
-    //! @brief    Gathers debug information.
-    VICIIInfo getInfo();
-    
-    //! @brief    Gathers debug information about a certain sprite.
+    // VICIIInfo getInfo();
     SpriteInfo getSpriteInfo(unsigned i);
 
     

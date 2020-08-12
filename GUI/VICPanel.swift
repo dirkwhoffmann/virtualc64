@@ -26,6 +26,83 @@ extension Inspector {
         if full {
             
         }
+                
+        if c64.isRunning {
+
+            // If the emulator is running, it is likely that the VIC state has
+            // been captured while the emualtion thread is waiting. As a result,
+            // the displayed values for rasterlines and rasterline cycles do not
+            // seem distributed randomly. To make the debugger output look
+            // realistic, we fake the output...
+            
+            vicRasterLine.integerValue = (vicRasterLine.integerValue + 173) % 263
+            vicRasterCycle.integerValue = (vicRasterCycle.integerValue + 17) % 64
+            vicYCounter.integerValue = (vicYCounter.integerValue + 173) % 263
+            vicXCounter.integerValue = (vicXCounter.integerValue + 136) % 512
+
+        } else {
+
+            vicRasterLine.integerValue = Int(vicInfo.rasterLine)
+            vicRasterCycle.integerValue = Int(vicInfo.rasterCycle)
+            vicYCounter.integerValue = Int(vicInfo.yCounter)
+            vicXCounter.integerValue = Int(vicInfo.xCounter)
+        }
+        
+        vicVC.integerValue = Int(vicInfo.vc)
+        vicVCBase.integerValue = Int(vicInfo.vcBase)
+        vicRC.integerValue = Int(vicInfo.rc)
+        vicVMLI.integerValue = Int(vicInfo.vmli)
+        vicCtrl1.integerValue = Int(vicInfo.ctrl1)
+        vicCtrl2.integerValue = Int(vicInfo.ctrl2)
+        vicDy.integerValue = Int(vicInfo.dx)
+        vicDx.integerValue = Int(vicInfo.dy)
+        vicDenBit.state = vicInfo.denBit ? .on : .off
+        vicBadLine.state = vicInfo.badLine ? .on : .off
+        vicDisplayState.state = vicInfo.displayState ? .on : .off
+        vicVBlank.state = vicInfo.vblank ? .on : .off
+        vicScreenGeometry.selectItem(withTag: Int(vicInfo.screenGeometry.rawValue))
+        vicVFlop.state = vicInfo.frameFF.vertical ? .on : .off
+        vicHFlop.state = vicInfo.frameFF.main ? .on : .off
+        vicDisplayMode.selectItem(withTag: Int(vicInfo.displayMode.rawValue))
+        vicBorderColor.color = c64.vic.color(Int(vicInfo.borderColor))
+        vicBgColor0.color = c64.vic.color(Int(vicInfo.bgColor0))
+        vicBgColor1.color = c64.vic.color(Int(vicInfo.bgColor1))
+        vicBgColor2.color = c64.vic.color(Int(vicInfo.bgColor2))
+        vicBgColor3.color = c64.vic.color(Int(vicInfo.bgColor3))
+        vicMemSelect.integerValue = Int(vicInfo.memSelect)
+        vicUltimax.state = vicInfo.ultimax ? .on : .off
+        vicMemoryBankAddr.selectItem(withTag: Int(vicInfo.memoryBankAddr))
+        vicScreenMemoryAddr.selectItem(withTag: Int(vicInfo.screenMemoryAddr))
+        vicCharMemoryAddr.selectItem(withTag: Int(vicInfo.charMemoryAddr))
+        vicIrqRasterline.integerValue = Int(vicInfo.irqRasterline)
+        vicImr.integerValue = Int(vicInfo.imr)
+        vicImrLP.state = (vicInfo.imr & 0b1000) != 0 ? .on : .off
+        vicImrSS.state = (vicInfo.imr & 0b0100) != 0 ? .on : .off
+        vicImrSB.state = (vicInfo.imr & 0b0010) != 0 ? .on : .off
+        vicImrRaster.state = (vicInfo.imr & 0b0001) != 0 ? .on : .off
+        vicIrr.integerValue = Int(vicInfo.irr)
+        vicIrrIrq.state = (vicInfo.irr & 0b10000000) != 0 ? .on : .off
+        vicIrrLP.state = (vicInfo.irr & 0b1000) != 0 ? .on : .off
+        vicIrrSS.state = (vicInfo.irr & 0b0100) != 0 ? .on : .off
+        vicIrrSB.state = (vicInfo.irr & 0b0010) != 0 ? .on : .off
+        vicIrrRaster.state = (vicInfo.irr & 0b0001) != 0 ? .on : .off
+        latchedLPX.integerValue = Int(vicInfo.latchedLPX)
+        latchedLPY.integerValue = Int(vicInfo.latchedLPY)
+        vicLpLine.state = vicInfo.lpLine ? .on : .off
+        vicLpIrqHasOccurred.state = vicInfo.lpIrqHasOccurred ? .on : .off
+
+        sprX.integerValue = Int(sprInfo.x)
+        sprY.integerValue = Int(sprInfo.y)
+        sprEnabled.state = sprInfo.enabled ? .on : .off
+        sprExpandX.state = sprInfo.expandX ? .on : .off
+        sprExpandY.state = sprInfo.expandY ? .on : .off
+        sprPriority.state = sprInfo.priority ? .on : .off
+        sprMulticolor.state = sprInfo.multicolor ? .on : .off
+        sprSSCollision.state = sprInfo.ssCollision ? .on : .off
+        sprSBCollision.state = sprInfo.sbCollision ? .on : .off
+        sprColor.color = c64.vic.color(Int(sprInfo.color))
+        sprExtra1.color = c64.vic.color(Int(sprInfo.extraColor1))
+        sprExtra2.color = c64.vic.color(Int(sprInfo.extraColor2))
     }
     
     @IBAction func selectSpriteAction(_ sender: Any!) {
@@ -34,7 +111,7 @@ extension Inspector {
     }
 }
 
-// OLD (DEPRECATED)
+/*
 extension MyController {
     
     func refreshVIC() {
@@ -46,13 +123,12 @@ extension MyController {
         // emualtion thread is waiting. As a result, the displayed values for
         // cycle and rasterline do not seem randomly distributed. To make the
         // debugger output look realistic, we fake the output ...
-        /*
+ 
         if c64.isRunning {
             info.rasterline = UInt16((vicRasterline.intValue + 173) % 263)
             info.cycle = UInt8((vicCycle.intValue + 17) % 64)
             info.xCounter = UInt16((vicXCounter.intValue + 136) % 512)
         }
-        */
         
         let borderColorCell = vicBorderColor.cell as? NSButtonCell
         let bgColorCell0 = vicBackgroundColor0.cell as? NSButtonCell
@@ -122,3 +198,4 @@ extension MyController {
     
     // Sprites
 }
+*/

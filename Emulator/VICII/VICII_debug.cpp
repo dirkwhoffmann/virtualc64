@@ -9,6 +9,7 @@
 
 #include "C64.h"
 
+/*
 VICIIInfo
 VICII::getInfo()
 {
@@ -60,6 +61,7 @@ VICII::getInfo()
     
     return info;
 }
+*/
 
 SpriteInfo
 VICII::getSpriteInfo(unsigned i)
