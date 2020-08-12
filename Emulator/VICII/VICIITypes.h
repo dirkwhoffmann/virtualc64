@@ -336,7 +336,8 @@ typedef enum {
 /*! @brief    VICII info
  *  @details  Used by VICII::getInfo() to collect debug information
  */
-typedef struct {
+typedef struct
+{
     u16 rasterline;
     u8 cycle;
     u16 xCounter;
