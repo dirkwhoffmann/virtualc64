@@ -166,6 +166,7 @@ typedef struct
     bool denBit;
     bool badLine;
     bool displayState;
+    bool vblank;
     ScreenGeometry screenGeometry;
     FrameFlipflops frameFF;
     DisplayMode displayMode;
@@ -188,8 +189,8 @@ typedef struct
     u8 imr;
 
     // Lightpen
-    u8 latchedLightPenX;
-    u8 latchedLightPenY;
+    u8 latchedLPX;
+    u8 latchedLPY;
     bool lpLine;
     bool lpIrqHasOccurred;
 }
@@ -197,18 +198,18 @@ VICIIInfo;
 
 typedef struct
 {
-    bool enabled; 
     u16 x;
     u8 y;
-    u8 color;
-    bool multicolor;
-    u8 extraColor1;
-    u8 extraColor2;
+    bool enabled;
     bool expandX;
     bool expandY;
     bool priority;
-    bool collidesWithSprite;
-    bool collidesWithBackground;
+    bool multicolor;
+    bool ssCollision;
+    bool sbCollision;
+    u8 color;
+    u8 extraColor1;
+    u8 extraColor2;
 }
 SpriteInfo;
     

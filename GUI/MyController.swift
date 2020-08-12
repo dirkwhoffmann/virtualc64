@@ -68,9 +68,6 @@ class MyController: NSWindowController, MessageReceiver {
     // Virtual keyboard
     var virtualKeyboard: VirtualKeyboardController?
     
-    /// Preferences controller
-    // var preferencesController: ConfigurationController?
-
     /// Loop timer
     /// The timer fires 60 times a second and executes all tasks that need to be
     //  done perdiodically (e.g., updating the speedometer and the debug panels)

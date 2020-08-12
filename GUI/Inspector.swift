@@ -141,8 +141,66 @@ class Inspector: DialogController {
     @IBOutlet weak var ciaIdleLevel: NSLevelIndicator!
     
     // VICII panel
-    
+    @IBOutlet weak var vicRasterLine: NSTextField!
+    @IBOutlet weak var vicRasterCycle: NSTextField!
+    @IBOutlet weak var vicYCounter: NSTextField!
+    @IBOutlet weak var vicXCounter: NSTextField!
+    @IBOutlet weak var vicVC: NSTextField!
+    @IBOutlet weak var vicVCBase: NSTextField!
+    @IBOutlet weak var vicRC: NSTextField!
+    @IBOutlet weak var vicVMLI: NSTextField!
+    @IBOutlet weak var vicCtrl1: NSTextField!
+    @IBOutlet weak var vicCtrl2: NSTextField!
+    @IBOutlet weak var vicDy: NSTextField!
+    @IBOutlet weak var vicDx: NSTextField!
+    @IBOutlet weak var vicDenBit: NSButton!
+    @IBOutlet weak var vicBadLine: NSButton!
+    @IBOutlet weak var vicDisplayState: NSButton!
+    @IBOutlet weak var vicVBlank: NSButton!
+    @IBOutlet weak var vicScreenGeometr: NSPopUpButton!
+    @IBOutlet weak var vicVFlop: NSButton!
+    @IBOutlet weak var vicHFlop: NSButton!
+    @IBOutlet weak var vicDisplayMode: NSPopUpButton!
+    @IBOutlet weak var vicBorderColor: NSColorWell!
+    @IBOutlet weak var vicBgColor0: NSColorWell!
+    @IBOutlet weak var vicBgColor1: NSColorWell!
+    @IBOutlet weak var vicBgColor2: NSColorWell!
+    @IBOutlet weak var vicBgColor3: NSColorWell!
+    @IBOutlet weak var vicMemSelect: NSTextField!
+    @IBOutlet weak var vicUltimax: NSButton!
+    @IBOutlet weak var vicMemoryBankAddr: NSPopUpButton!
+    @IBOutlet weak var vicScreenMemoryAddr: NSPopUpButton!
+    @IBOutlet weak var vicCharMemoryAddr: NSPopUpButton!
+    @IBOutlet weak var vicIrqRasterline: NSTextField!
+    @IBOutlet weak var vicImr: NSTextField!
+    @IBOutlet weak var vicImrLP: NSButton!
+    @IBOutlet weak var vicImrSS: NSButton!
+    @IBOutlet weak var vicImrSB: NSButton!
+    @IBOutlet weak var vicImrRaster: NSButton!
+    @IBOutlet weak var vicIrr: NSTextField!
+    @IBOutlet weak var vicIrrIrq: NSButton!
+    @IBOutlet weak var vicIrrLP: NSButton!
+    @IBOutlet weak var vicIrrSS: NSButton!
+    @IBOutlet weak var vicIrrSB: NSButton!
+    @IBOutlet weak var vicIrrRaster: NSButton!
+    @IBOutlet weak var latchedLPX: NSTextField!
+    @IBOutlet weak var latchedLPY: NSTextField!
+    @IBOutlet weak var vicLpLine: NSButton!
+    @IBOutlet weak var vicLpIrqHasOccurred: NSButton!
+
     @IBOutlet weak var sprSelector: NSSegmentedControl!
+    @IBOutlet weak var sprX: NSTextField!
+    @IBOutlet weak var sprY: NSTextField!
+    @IBOutlet weak var sprEnabled: NSButton!
+    @IBOutlet weak var sprExpandX: NSButton!
+    @IBOutlet weak var sprExpandY: NSButton!
+    @IBOutlet weak var sprPriority: NSButton!
+    @IBOutlet weak var sprMulticolor: NSButton!
+    @IBOutlet weak var sprSSCollision: NSButton!
+    @IBOutlet weak var sprSBCollision: NSButton!
+    @IBOutlet weak var sprColor: NSColorWell!
+    @IBOutlet weak var sprExtra1: NSColorWell!
+    @IBOutlet weak var sprExtra2: NSColorWell!
 
     // Cached state of all C64 components
     var cpuInfo: CPUInfo!

@@ -38,8 +38,8 @@ VICII::VICII(C64 &ref) : C64Component(ref)
         // Internal state
         { &reg,                         sizeof(reg),                            CLEAR_ON_RESET },
         { &rasterIrqLine,               sizeof(rasterIrqLine),                  CLEAR_ON_RESET },
-        { &latchedLightPenX,            sizeof(latchedLightPenX),               CLEAR_ON_RESET },
-        { &latchedLightPenY,            sizeof(latchedLightPenY),               CLEAR_ON_RESET },
+        { &latchedLPX,            sizeof(latchedLPX),               CLEAR_ON_RESET },
+        { &latchedLPY,            sizeof(latchedLPY),               CLEAR_ON_RESET },
         { &memSelect,                   sizeof(memSelect),                      CLEAR_ON_RESET },
         { &irr,                         sizeof(irr),                            CLEAR_ON_RESET },
         { &imr,                         sizeof(imr),                            CLEAR_ON_RESET },
@@ -599,8 +599,8 @@ VICII::checkForLightpenIrq()
         return;
     
     // Latch coordinates
-    latchedLightPenX = lightpenX() / 2;
-    latchedLightPenY = lightpenY();
+    latchedLPX = lightpenX() / 2;
+    latchedLPY = lightpenY();
     
     // Newer VICII models trigger an interrupt immediately
     if (!delayedLightPenIrqs()) triggerIrq(8);
@@ -623,16 +623,16 @@ VICII::checkForLightpenIrqAtStartOfFrame()
         case PAL_6569_R3:
         case PAL_8565:
             
-            latchedLightPenX = 209;
-            latchedLightPenY = 0;
+            latchedLPX = 209;
+            latchedLPY = 0;
             break;
             
         case NTSC_6567:
         case NTSC_6567_R56A:
         case NTSC_8562:
             
-            latchedLightPenX = 213;
-            latchedLightPenY = 0;
+            latchedLPX = 213;
+            latchedLPY = 0;
             break;
     }
     

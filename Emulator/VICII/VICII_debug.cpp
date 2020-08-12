@@ -33,6 +33,7 @@ VICII::getInfo()
     info.denBit = DENbit();
     info.badLine = badLine;
     info.displayState = displayState;
+    info.vblank = vblank;
     info.screenGeometry = getScreenGeometry();
     info.frameFF = flipflops.current;
     info.displayMode = (DisplayMode)((ctrl1 & 0x60) | (ctrl2 & 0x10));
@@ -52,8 +53,8 @@ VICII::getInfo()
     info.imr = imr;
     info.irr = irr;
     
-    info.latchedLightPenX = latchedLightPenX;
-    info.latchedLightPenY = latchedLightPenY;
+    info.latchedLPX = latchedLPX;
+    info.latchedLPY = latchedLPY;
     info.lpLine = lpLine;
     info.lpIrqHasOccurred = lpIrqHasOccurred;
     
@@ -75,8 +76,8 @@ VICII::getSpriteInfo(unsigned i)
     info.expandX = GET_BIT(reg.current.sprExpandX, i);
     info.expandY = GET_BIT(reg.current.sprExpandY, i);
     info.priority = GET_BIT(reg.current.sprPriority, i);
-    info.collidesWithSprite = GET_BIT(spriteSpriteCollision, i);
-    info.collidesWithBackground = GET_BIT(spriteBackgroundColllision, i);
+    info.ssCollision = GET_BIT(spriteSpriteCollision, i);
+    info.sbCollision = GET_BIT(spriteBackgroundColllision, i);
     
     return info;
 }

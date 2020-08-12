@@ -57,10 +57,10 @@ private:
     u8 rasterIrqLine;
     
     // Latched lightpen X coordinate ($D013)
-    u8 latchedLightPenX;
+    u8 latchedLPX;
     
     // Latched lightpen Y coordinate ($D014)
-    u8 latchedLightPenY;
+    u8 latchedLPY;
     
     // Memory address register ($D018)
     u8 memSelect;

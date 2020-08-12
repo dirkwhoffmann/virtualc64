@@ -27,6 +27,11 @@ extension Inspector {
             
         }
     }
+    
+    @IBAction func selectSpriteAction(_ sender: Any!) {
+
+        fullRefresh()
+    }
 }
 
 // OLD (DEPRECATED)
@@ -93,9 +98,9 @@ extension MyController {
         spriteExpandX.state = sinfo.expandX ? .on : .off
         spriteExpandY.state = sinfo.expandY ? .on : .off
         spritePriority.selectItem(withTag: sinfo.priority ? 1 : 0)
-        spriteCollidesWithSprite.state = sinfo.collidesWithSprite ? .on : .off
+        spriteCollidesWithSprite.state = sinfo.ssCollision ? .on : .off
         // spriteSpriteIrqEnabled.state = info.spriteCollisionIrqEnabled ? .on : .off
-        spriteCollidesWithBackground.state = sinfo.collidesWithBackground ? .on : .off
+        spriteCollidesWithBackground.state = sinfo.sbCollision ? .on : .off
         // spriteBackgroundIrqEnabled.state  = info.backgroundCollisionIrqEnabled ? .on : .off
         
         // Unhide some color cells in multicolor modes
@@ -116,9 +121,4 @@ extension MyController {
     //
     
     // Sprites
-    
-    func spriteSelectAction(_ sender: Any!) {
-        
-        refreshVIC()
-    }
 }

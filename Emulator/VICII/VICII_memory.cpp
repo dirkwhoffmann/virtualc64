@@ -171,12 +171,12 @@ VICII::peek(u16 addr)
             
         case 0x13: // LIGHTPEN X
             
-            result = latchedLightPenX;
+            result = latchedLPX;
             break;
             
         case 0x14: // LIGHTPEN Y
             
-            result = latchedLightPenY;
+            result = latchedLPY;
             break;
             
         case 0x15:
@@ -344,11 +344,11 @@ VICII::spypeek(u16 addr)
             
         case 0x13: // LIGHTPEN X
             
-            return latchedLightPenX;
+            return latchedLPX;
             
         case 0x14: // LIGHTPEN Y
             
-            return latchedLightPenY;
+            return latchedLPY;
             
         case 0x15:
             
