@@ -41,34 +41,34 @@ public:
     
 private:
     
-    /*! @brief    Piped I/O register state.
-     *  @details  When an I/O register is written to, the corresponding value
-     *            in variable current is changed and a flag is set in variable
-     *            delay. Function processDelayedActions() reads the flag and, if
-     *            set to true, updates the delayed values.
-     *  @see      processDelayedActions()
+    /* Piped I/O register state.
+     * When an I/O register is written to, the corresponding value in variable
+     * current is changed and a flag is set in variable delay. Function
+     * processDelayedActions() reads the flag and, if set to true, updates the
+     * delayed values.
+     * See processDelayedActions()
      */
     struct {
         VICIIRegisters current;
         VICIIRegisters delayed;
     } reg;
     
-    //! @brief    Raster interrupt line ($D012)
+    // Raster interrupt line ($D012)
     u8 rasterIrqLine;
     
-    //! @brief    Latched lightpen X coordinate ($D013)
+    // Latched lightpen X coordinate ($D013)
     u8 latchedLightPenX;
     
-    //! @brief    Latched lightpen Y coordinate ($D014)
+    // Latched lightpen Y coordinate ($D014)
     u8 latchedLightPenY;
     
-    //! @brief    Memory address register ($D018)
+    // Memory address register ($D018)
     u8 memSelect;
     
-    //! @brief    Interrupt Request Register ($D019)
+    // Interrupt Request Register ($D019)
     u8 irr;
     
-    //! @brief    Interrupt Mask Register ($D01A)
+    // Interrupt Mask Register ($D01A)
     u8 imr;
 
     
