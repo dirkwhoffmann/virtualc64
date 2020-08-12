@@ -10,6 +10,7 @@
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
 #import "Utils.h"
+#import "VICIIConstants.h"
 
 // Forward declarations of proxy classes
 @class MyController;
@@ -408,7 +409,7 @@ struct AnyC64FileWrapper;
 - (double)saturation;
 - (void)setSaturation:(double)value;
 
-- (VICInfo) getInfo;
+- (VICIIInfo) getInfo;
 - (SpriteInfo) getSpriteInfo:(NSInteger)sprite;
 - (void) dump;
 

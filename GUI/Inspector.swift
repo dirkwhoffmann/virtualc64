@@ -140,10 +140,16 @@ class Inspector: DialogController {
     @IBOutlet weak var ciaIdleLevelText: NSTextField!
     @IBOutlet weak var ciaIdleLevel: NSLevelIndicator!
     
+    // VICII panel
+    
+    @IBOutlet weak var sprSelector: NSSegmentedControl!
+
     // Cached state of all C64 components
     var cpuInfo: CPUInfo!
     var ciaInfo: CIAInfo!
     var memInfo: MemInfo!
+    var vicInfo: VICIIInfo!
+    var sprInfo: SpriteInfo!
     
     var isRunning = true
     
@@ -273,7 +279,7 @@ extension Inspector: NSTabViewDelegate {
             case "CPU":     parent.c64.setInspectionTarget(INSPECT_CPU)
             case "Memory":  parent.c64.setInspectionTarget(INSPECT_MEM)
             case "CIA":     parent.c64.setInspectionTarget(INSPECT_CIA)
-            case "VIC":     parent.c64.setInspectionTarget(INSPECT_VIC)
+            case "VICII":   parent.c64.setInspectionTarget(INSPECT_VIC)
             case "SID":     parent.c64.setInspectionTarget(INSPECT_SID)
             default:        break
             }

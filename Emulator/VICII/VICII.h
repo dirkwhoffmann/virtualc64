@@ -126,111 +126,105 @@ private:
     //                                (S/LUM and COLOR)              [C.B.]
 
     
-    /*! @brief    Refresh counter (1)
-     *  @details  "The VICII does five read accesses in every raster line for the
-     *             refresh of the dynamic RAM. An 8 bit refresh counter (REF)
-     *             is used to generate 256 DRAM row addresses. The counter is
-     *             reset to $ff in raster line 0 and decremented by 1 after each
-     *             refresh access." [C.B.]
-     *  @seealso   rAccess()
+    /* Refresh counter (1)
+     * "The VICII does five read accesses in every raster line for the refresh
+     *  of the dynamic RAM. An 8 bit refresh counter (REF) is used to generate
+     *  256 DRAM row addresses. The counter is reset to $ff in raster line 0
+     *  and decremented by 1 after each refresh access." [C.B.]
+     *  See also: rAccess()
      */
     u8 refreshCounter;
     
-    /*! @brief    Raster counter X (2)
-     *  @details  Defines the sprite coordinate system.
+    /* Raster counter X (2)
+     * Defines the sprite coordinate system.
      */
     u16 xCounter;
     
-    /*! @brief    Y raster counter (3)
-     *  @details  The rasterline counter is usually incremented in cycle 1. The
-     *            only exception is the overflow condition which is handled in
-     *            cycle 2.
+    /* Y raster counter (3)
+     * The rasterline counter is usually incremented in cycle 1. The only
+     * exception is the overflow condition which is handled in cycle 2.
      */
     u32 yCounter;
     
-    /*! @brief    Video counter (14)
-     *  @details  A 10 bit counter that can be loaded with the value from
-     *            vcBase.
+    /* Video counter (14)
+     * A 10 bit counter that can be loaded with the value from vcBase.
      */
     u16 vc;
     
-    /*! @brief    Video counter base
-     *  @details  A 10 bit data register with reset input that can be loaded
-     *            with the value from vc.
+    /* Video counter base
+     * A 10 bit data register that can be loaded with the value from vc.
      */
     u16 vcBase;
     
-    /*! @brief    Row counter (15)
-     *  @details  A 3 bit counter with reset input.
+    /* Row counter (15)
+     * A 3 bit counter with reset input.
      */
     u8 rc;
     
-    /*! @brief    Video matrix (6)
-     *  @details  Every 8th rasterline, the VICII chips performs a c-access and
-     *            fills this array with character information.
+    /* Video matrix (6)
+     * Every 8th rasterline, the VICII chips performs a c-access and fills
+     * this array with character information.
      */
     u8 videoMatrix[40];
     
-    /*! @brief    Color line (7)
-     *  @details  Every 8th rasterline, the VICII chips performs a c-access and
-     *            fills the array with color information.
+    /* Color line (7)
+     * Every 8th rasterline, the VICII chips performs a c-access and fills the
+     * array with color information.
      */
     u8 colorLine[40];
     
-    /*! @brief    Video matrix line index
-     *  @details  "Besides this, there is a 6 bit counter with reset input that
-     *             keeps track of the position within the internal 40×12 bit
-     *             video matrix/color line where read character pointers are
-     *             stored resp. read again. I will call this 'VMLI' (video
-     *             matrix line index) here.
+    /* Video matrix line index
+     * "Besides this, there is a 6 bit counter with reset input that keeps
+     *  track of the position within the internal 40×12 bit video matrix/color
+     *  line where read character pointers are stored resp. read again. I will
+     *  call this 'VMLI' (video matrix line index) here.
      */
     u8 vmli;
     
  
-    /*! @brief    Graphics data sequencer (10)
-     *  @details  An 8 bit shift register to synthesize canvas pixels.
+    /* Graphics data sequencer (10)
+     * An 8 bit shift register to synthesize canvas pixels.
      */
     struct {
         
-        //! @brief    Shift register data
+        // Shift register data
         u8 data;
         
-        /*! @brief    Indicates whether the shift register can load data
-         *  @details  If true, the register is loaded when the current x scroll
-         *            offset matches the current pixel number.
+        /* Indicates whether the shift register can load data
+         * If true, the register is loaded when the current x scroll offset
+         * matches the current pixel number.
          */
         bool canLoad;
         
-        /*! @brief    Multi-color synchronization flipflop
-         *  @details  Whenever the shift register is loaded, the synchronization
-         *            flipflop is also set. It is toggled with each pixel and
-         *            used to synchronize the synthesis of multi-color pixels.
+        /* Multi-color synchronization flipflop
+         * Whenever the shift register is loaded, the synchronization flipflop
+         * is also set. It is toggled with each pixel and used to synchronize
+         * the synthesis of multi-color pixels.
          */
         bool mcFlop;
         
-        /*! @brief    Latched character info
-         *  @details  Whenever the shift register is loaded, the current
-         *            character value (which was once read during a gAccess) is
-         *            latched. This value is used until the shift register loads
-         *            again.
+        /* Latched character info
+         * Whenever the shift register is loaded, the current character value
+         * (which was once read during a gAccess) is latched. This value is
+         * used until the shift register loads again.
          */
         u8 latchedCharacter;
         
-        /*! @brief    Latched color info
-         *  @details  Whenever the shift register is loaded, the current color
-         *            value (which was once read during a gAccess) is latched.
-         *            This value is used until the shift register loads again.
+        /* Latched color info
+         * Whenever the shift register is loaded, the current color value
+         * (which was once read during a gAccess) is latched. This value is
+         * used until the shift register loads again.
          */
         u8 latchedColor;
         
-        /*! @brief    Color bits
-         *  @details  Every second pixel (as synchronized with mcFlop), the
-         *            multi-color bits are remembered.
+        /* Color bits
+         * Every second pixel (as synchronized with mcFlop), the multi-color
+         * bits are remembered.
          */
         u8 colorbits;
         
-        /*! @brief    Remaining bits to be pumped out
-         *  @details  Makes sure no more than 8 pixels are outputted.
+        /* Remaining bits to be pumped out
+         * Makes sure no more than 8 pixels are outputted.
          */
         int remainingBits;
         
@@ -239,58 +233,56 @@ private:
     
     
     
-    /*! @brief    Sprite data sequencer (11)
-     *  @details  The VICII chip has a 24 bit (3 byte) shift register for each
-     *            sprite. It stores the sprite for one rasterline. If a sprite
-     *            is a display candidate in the current rasterline, its shift
-     *            register is activated when the raster X coordinate matches
-     *            the sprites X coordinate. The comparison is done in method
-     *            drawSprite(). Once a shift register is activated, it remains
-     *            activated until the beginning of the next rasterline. However,
-     *            after an activated shift register has dumped out its 24 pixels,
-     *            it can't draw anything else than transparent pixels (which is
-     *            the same as not to draw anything). An exception is during DMA
-     *            cycles. When a shift register is activated during such a cycle,
-     *            it freezes a short period of time in which it repeats the
-     *            previous drawn pixel.
+    /* Sprite data sequencer (11)
+     * The VICII chip has a 24 bit (3 byte) shift register for each sprite. It
+     * stores the sprite for one rasterline. If a sprite is a display candidate
+     * in the current rasterline, its shift register is activated when the
+     * raster X coordinate matches the sprites X coordinate. The comparison is
+     * done in method drawSprite(). Once a shift register is activated, it
+     * remains activated until the beginning of the next rasterline. However,
+     * after an activated shift register has dumped out its 24 pixels, it can't
+     * draw anything else than transparent pixels (which is the same as not to
+     * draw anything). An exception is during DMA cycles. When a shift register
+     * is activated during such a cycle, it freezes a short period of time in
+     * which it repeats the previous drawn pixel.
      */
     struct {
         
-        //! @brief    Shift register data (24 bit)
+        // Shift register data (24 bit)
         u32 data;
         
-        //! @brief    The shift register data is read in three chunks
+        // The shift register data is read in three chunks
         u8 chunk1, chunk2, chunk3;
         
-        /*! @brief    Multi-color synchronization flipflop
-         *  @details  Whenever the shift register is loaded, the synchronization
-         *            flipflop is also set. It is toggled with each pixel and
-         *            used to synchronize the synthesis of multi-color pixels.
+        /* Multi-color synchronization flipflop
+         * Whenever the shift register is loaded, the synchronization flipflop
+         * is also set. It is toggled with each pixel and used to synchronize
+         * the synthesis of multi-color pixels.
          */
         bool mcFlop;
         
-        //! @brief    x expansion synchronization flipflop
+        // X expansion synchronization flipflop
         bool expFlop;
         
-        /*! @brief    Color bits of the currently processed pixel
-         *  @details  In single-color mode, these bits are updated every cycle
-         *            In multi-color mode, these bits are updated every second
-         *            cycle (synchronized with mcFlop).
+        /* Color bits of the currently processed pixel
+         * In single-color mode, these bits are updated every cycle. In
+         * multi-color mode, these bits are updated every second cycle
+         * (synchronized with mcFlop).
          */
         u8 colBits;
                 
     } spriteSr[8];
     
-    /*! @brief    Indicates for each sprite if the shift register is active.
-     *  @details  Once the shift register is started, it runs as long
-     *            it contains at least one '1' bit (data != 0).
+    /* Indicates for each sprite if the shift register is active.
+     * Once the shift register is started, it runs as long it contains at least
+     * one '1' bit (data != 0).
      */
     u8 spriteSrActive;
     
-    //! @brief    Sprite-sprite collision register (12)
+    // Sprite-sprite collision register (12)
     u8 spriteSpriteCollision;
 
-    //! @brief    Sprite-background collision register (12)
+    // Sprite-background collision register (12)
     u8 spriteBackgroundColllision;
 
     
@@ -445,18 +437,17 @@ private:
 	// Lightpen
 	//
 	
-    /*! @brief    Current value of the LP pin
-     *  @details  A negative transition on this pin triggers a lightpen
-     *            interrupt.
+    /* Current value of the LP pin
+     * A negative transition on this pin triggers a lightpen interrupt.
      */
     bool lpLine;
     
-	/*! @brief    Indicates whether the lightpen has triggered
-	 *  @details  This variable indicates whether a lightpen interrupt has
-     *            occurred within the current frame. The variable is needed,
-     *            because a lightpen interrupt can only occur once per frame.
+	/* Indicates whether the lightpen has triggered
+	 * This variable indicates whether a lightpen interrupt has occurred within
+     * the current frame. The variable is needed, because a lightpen interrupt
+     * can only occur once per frame.
      */
-	bool lightpenIRQhasOccured;
+	bool lpIrqHasOccurred;
 	
     
     //
@@ -527,7 +518,7 @@ private:
      */
     u16 bankAddr;
     
-    //! @brief    Result of the lastest g-access
+    // Result of the lastest g-access
     TimeDelayed<u32>gAccessResult = TimeDelayed<u32>(2);
     
     
@@ -557,55 +548,50 @@ private:
 	
 public:
     
-	/*! @brief    Determines whether sprites are drawn or not
-	 *  @details  During normal emulation, the value is always false. For
-     *            debugging purposes, the value can be set to true. In this
-     *            case, sprites are no longer drawn.
+	/* Determines whether sprites are drawn or not
+	 *During normal emulation, the value is always false. For debugging
+     * purposes, the value can be set to true. In this case, sprites are no
+     * longer drawn.
 	 */
 	bool hideSprites;
 	
-	/*! @brief    Enables sprite-sprite collision
-	 *  @details  If set to true, the virtual VICII chips checks for sprite-sprite
-     *            collision as the original C64 does. For debugging purposes and
-     *            cheating, collision detection can be disabled by setting the
-     *            variabel to false. Collision detection can be enabled or
-     *            disabled for each sprite seperately. Each bit is dedicated to
-     *            a single sprite.
+	/* Enables sprite-sprite collision
+	 * If set to true, the virtual VICII chips checks for sprite-sprite
+     * collision as the original C64 does. For debugging purposes and cheating,
+     * collision detection can be disabled by setting the variabel to false.
+     * Collision detection can be enabled or disabled for each sprite
+     * seperately. Each bit is dedicated to a single sprite.
      */
 	u8 spriteSpriteCollisionEnabled;
 	
-	/*! @brief    Enable sprite-background collision
-	 *  @details  If set to true, the virtual VICII chips checks for sprite-
-     *            background collision as the original C64 does. For debugging
-     *            purposes and cheating, collision detection can be disabled by
-     *            setting the variabel to false. Collision detection can be
-     *            enabled or disabled for each sprite seperately. Each bit is
-     *            dedicated to a single sprite.
+	/* Enable sprite-background collision
+	 * If set to true, the virtual VICII chips checks for sprite-background
+     * collision as the original C64 does. For debugging purposes and cheating,
+     * collision detection can be disabled by setting the variabel to false.
+     * Collision detection can be enabled or disabled for each sprite
+     * seperately. Each bit is dedicated to a single sprite.
      */
 	u8 spriteBackgroundCollisionEnabled;
 	
-	/*! @brief    Determines whether IRQ lines will be made visible.
-	 *  @details  Each rasterline that will potentially trigger a raster IRQ is
-     *            highlighted. This feature is useful for debugging purposes as
-     *            it visualizes how the screen is divided into multiple parts.
+	/* Determines whether IRQ lines will be made visible.
+	 * Each rasterline that will potentially trigger a raster IRQ is
+     * highlighted. This feature is useful for debugging purposes as it
+     * visualizes how the screen is divided into multiple parts.
      */
 	bool markIRQLines;
 	
-	/*! @brief    Determines whether DMA lines will be made visible.
-	 *  @details  Each rasterline in which the vic will read additional data
-     *            from the memory and stun the CPU is made visible. Note that
-     *            partial DMA lines may not appear. 
+	/* Determines whether DMA lines will be made visible.
+	 * Note that partial DMA lines may not appear.
      */
 	bool markDMALines;
 
     
 private:
     
-    /*! @brief    Event pipeline
-     *  @details  If a time delayed event needs to be performed, a flag is set
-     *            inside this variable and executed at the beginning of the next
-     *            cycle.
-     *  @see      processDelayedActions()
+    /* Event pipeline
+     * If a time delayed event needs to be performed, a flag is set inside this
+     * variable and executed at the beginning of the next cycle.
+     * See processDelayedActions()
      */
     u64 delay;
     
@@ -797,195 +783,164 @@ public:
     
     
     //
-    //! @functiongroup Accessing the screen buffer and display properties
+    // Accessing the screen buffer and display properties
     //
     
-    //! @brief    Returns the currently stabel screen buffer.
+    // Returns the currently stabel screen buffer
     void *screenBuffer();
 
-    //! @brief    Initializes both screenBuffers
-    /*! @details  This function is needed for debugging, only. It write some
-     *            recognizable pattern into both buffers.
+    /* Initializes both screenBuffers
+     * This function is needed for debugging, only. It write some recognizable
+     * pattern into both buffers.
      */
     void resetScreenBuffers();
     
     // Returns a pointer to randon noise
     u32 *getNoise();
     
-    /*! @brief    Returns a C64 color from the current color palette.
-     *  @return   Color in 32 bit big endian RGBA format.
-     *  @seealso  updateColors
-     */
+    // Returns a C64 color in 32 bit big endian RGBA format
     u32 getColor(unsigned nr);
-    
-    /*! @brief    Returns a C64 color from a specific color palette.
-     *  @return   Color in 32 bit big endian RGBA format.
-     */
     u32 getColor(unsigned nr, Palette palette);
     
-    //! @brief    Returns the brightness monitor parameter
+    // Gets or sets a monitor parameter
     double getBrightness() { return brightness; }
-    
-    //! @brief    Sets the brightness monitor parameter
     void setBrightness(double value);
-    
-    //! @brief    Returns the contrast monitor parameter
     double getContrast() { return contrast; }
-    
-    //! @brief    Sets the contrast monitor parameter
     void setContrast(double value);
-    
-    //! @brief    Returns the saturation monitor parameter
     double getSaturation() { return saturation; }
-    
-    //! @brief    Sets the saturation monitor parameter
     void setSaturation(double value);
     
 private:
     
-    /*! @brief    Updates the RGBA values for all sixteen C64 colors.
-     *! @details  The base palette is determined by the selected VICII model.
+    /* Updates the RGBA values for all sixteen C64 colors
+     * The base palette is determined by the selected VICII model.
      */
     void updatePalette();
 
     
     //
-    //! @functiongroup Accessing memory (VIC_memory.cpp)
+    // Accessing memory (VIC_memory.cpp)
     //
 
 public:
     
-    //! @brief    Peeks a value from a VICII register without side effects.
+    // Peeks a value from a VICII register without side effects
     u8 spypeek(u16 addr);
     
-    //! @brief    Returns the ultimax flag
+    // Returns the ultimax flag
     u8 getUltimax() { return ultimax; }
 
-    //! @brief    Sets the ultimax flag
+    // Sets the ultimax flag
     void setUltimax(bool value);
     
-    //! @brief    Returns the latest value of the VICII's data bus during phi1.
+    // Returns the latest value of the VICII's data bus during phi1
     u8 getDataBusPhi1() { return dataBusPhi1; }
 
-    //! @brief    Returns the latest value of the VICII's data bus during phi2.
+    // Returns the latest value of the VICII's data bus during phi2
     u8 getDataBusPhi2() { return dataBusPhi2; }
 
-    //! @brief    Schedules the VICII bank to to switched
-    /*! @details  This method is called if the bank switch is triggered by a
-     *            change of register CIA2::PA or register CIA2::DDRA.
+    /* Schedules the VICII bank to to switched
+     * This method is called if the bank switch is triggered by a change of
+     * register CIA2::PA or register CIA2::DDRA.
      */
     void switchBank(u16 addr);
 
-    //! @brief    Schedules the VICII bank to to switched
-    /*! @details  This method is called if the bank switch is triggered by a
-     *            change of register CIA2::DDRA.
-     */
-    // void switchBankDDRA();
-
 private:
 
-    //! @brief    Updates the VICII bank address
-    /*! @details  The new address is computed from the provided bank number
+    /* Updates the VICII bank address
+     * The new address is computed from the provided bank number.
      */
     void updateBankAddr(uint2_t bank) { assert(is_uint2_t(bank)); bankAddr = bank << 14; }
 
-    //! @brief    Updates the VICII bank address
-    /*! @details  The new address is computed from the bits in CIA2::PA.
+    /* Updates the VICII bank address
+     * The new address is computed from the bits in CIA2::PA.
      */
     void updateBankAddr();
     
-    //! @brief    Peeks a value from a VICII register.
+    // Reads a value from a VICII register
 	u8 peek(u16 addr);
     
-    //! @brief    Pokes a value into a VICII register.
+    // Writes a value into a VICII register
 	void poke(u16 addr, u8 value);
     
-    //! @brief    Simulates a memory access via the address and data bus.
+    // Simulates a memory access via the address and data bus
     u8 memAccess(u16 addr);
 
-    //! @brief    Same as memAccess without side effects.
+    // Same as memAccess without side effects
     u8 memSpyAccess(u16 addr);
 
-    //! @brief    Returns true if memAccess will read from Character ROM
+    // Returns true if memAccess will read from Character ROM
     bool isCharRomAddr(u16 addr);
 
-    /*! @brief    Performs a DRAM refresh (r-access).
-     *  @details  r-accesses are performed in cycles 11 - 15 during phi1.
+    /* Performs a DRAM refresh (r-access).
+     * r-accesses are performed in cycles 11 - 15 during phi1.
      */
     void rAccess() { dataBusPhi1 = memAccess(0x3F00 | refreshCounter--); }
     
-    /*! @brief    Performs an idle access (i-access).
-     *  @details  Idle accesses are performed during phi1 if VICII needs no
-     *            data.
-     *            During an idle access, VICII reads from $3FFF, $7FFF, $BFFF,
-     *            or $FFFF, depending on the selected memory bank.
+    /* Performs an idle access (i-access).
+     * Idle accesses are performed during phi1 if VICII needs no data.
+     * During an idle access, VICII reads from $3FFF, $7FFF, $BFFF, or $FFFF,
+     * depending on the selected memory bank.
      */
     void iAccess() { dataBusPhi1 = memAccess(0x3FFF); }
     
-    /*! @brief    Performs a character access (c-access).
-     *  @details  During a c-access, the video matrix is read.
+    /* Performs a character access (c-access)
+     * During a c-access, the video matrix is read.
      */
     void cAccess();
     
-    /*! @brief    Performs a graphics access (g-access).
-     *  @details  During a g-access, graphics data (character or bitmap
-     *            patterns) is read.
+    /* Performs a graphics access (g-access).
+     * During a g-access, graphics data (character or bitmap patterns) is read.
      */
     void gAccess();
 
-    //! @brief    Computes the g-access fetch address for newer VICIIs
+    // Computes the g-access fetch address for different VICII models
     u16 gAccessAddr85x();
-
-    //! @brief    Computes the g-access fetch address for older VICIIs
     u16 gAccessAddr65x();
 
-    /*! @brief    Computes the g-access fetch address
-     *  @details  The fetch address is influences by both the BMM and ECM bit.
+    /* Computes the g-access fetch address
+     * The fetch address is influences by both the BMM and ECM bit.
      */
     u16 gAccessAddr(bool bmm, bool ecm);
     
-    //! @brief    Performs a sprite pointer access (p-access).
+    // Performs a sprite pointer access (p-access)
     void pAccess(unsigned sprite);
     
-    //! @brief    Performs the first sprite data access.
+    // Performs one of the three sprite data accesses
     void sFirstAccess(unsigned sprite);
-    
-    //! @brief    Performs the second sprite data access.
     void sSecondAccess(unsigned sprite);
-    
-    //! @brief    Performs the third sprite data access.
     void sThirdAccess(unsigned sprite);
     
-    /*! @brief    Finalizes the sprite data access
-     *  @details  This method is invoked one cycle after the second and third
-     *            sprite DMA has occured.
+    /* Finalizes the sprite data access
+     * This method is invoked one cycle after the second and third sprite DMA
+     * has occurred.
      */
     void sFinalize(unsigned sprite);
     
 
     //
-    //! @functiongroup Handling the x and y counters
+    // Handling the x and y counters
     //
     
-    /*! @brief    Returns the current rasterline
-     *  @note     This value is not always identical to the yCounter, because
-     *            the yCounter is incremented with a little delay.
+    /* Returns the current rasterline
+     * This value is not always identical to the yCounter, because the yCounter
+     * is incremented with a little delay.
      */
     u16 rasterline();
 
-    //! @brief    Returns the current rasterline cycle
+    // Returns the current rasterline cycle
     u8 rastercycle();
 
-    /*! @brief    Indicates if yCounter needs to be reset in this rasterline.
-     *  @details  PAL models reset the yCounter in cycle 2 in the first
-     *            rasterline wheras NTSC models reset the yCounter in cycle 2
-     *            in the middle of the lower border area.
+    /* Indicates if yCounter needs to be reset in this rasterline.
+     * PAL models reset the yCounter in cycle 2 in the first rasterline wheras
+     * NTSC models reset the yCounter in cycle 2 in the middle of the lower
+     * border area.
      */
     bool yCounterOverflow() { return rasterline() == (isPAL() ? 0 : 238); }
 
 
     //
-    //! @functiongroup Handling the border flip flops
+    // Handling the border flip flops
     //
     
     /* "Der VIC benutzt zwei Flipflops, um den Rahmen um das Anzeigefenster
@@ -1012,38 +967,28 @@ private:
      * [C.B.]
      */
     
-    /*! @brief    Takes care of the vertical frame flipflop value.
-     *  @details  Invoked in each VICII II cycle
-     */
+    // Takes care of the vertical frame flipflop value (invoked in each cycle)
     void checkVerticalFrameFF();
     
-    //! @brief    Checks frame fliplops at left border
+    // Checks the frame fliplops at left border
     void checkFrameFlipflopsLeft(u16 comparisonValue);
     
-    //! @brief    Checks frame fliplops at right border
+    // Checks the frame fliplops at right border
     void checkFrameFlipflopsRight(u16 comparisonValue);
     
-    //! @brief    Sets the vertical frame flipflop with a delay of one cycle.
+    // Sets the vertical frame flipflop with a delay of one cycle
     void setVerticalFrameFF(bool value);
     
-    //! @brief    Sets the main frame flipflop with a delay of one cycle.
+    // Sets the main frame flipflop with a delay of one cycle
     void setMainFrameFF(bool value);
     
-    //! @brief    Returns where the frame flipflop is checked for the left border.
+    // Returns a comparison value for the border flipflops
     u16 leftComparisonValue() { return isCSEL() ? 24 : 31; }
-    
-    //! @brief    Returns where the frame flipflop is checked for the right border.
     u16 rightComparisonValue() { return isCSEL() ? 344 : 335; }
-    
-    //! @brief    Returns where the frame flipflop is checked for the upper border.
     u16 upperComparisonValue() { return isRSEL() ? 51 : 55; }
-    
-    //! @brief    Returns where the frame flipflop is checked for the lower border.
     u16 lowerComparisonValue() { return isRSEL() ? 251 : 247; }
     
   
-    
-    
 	//
 	//! @functiongroup Querying the VICII registers
 	//
@@ -1459,7 +1404,7 @@ public:
     //
 
     //! @brief    Gathers debug information.
-    VICInfo getInfo();
+    VICIIInfo getInfo();
     
     //! @brief    Gathers debug information about a certain sprite.
     SpriteInfo getSpriteInfo(unsigned i);

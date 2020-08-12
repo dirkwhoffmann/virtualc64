@@ -20,7 +20,7 @@
 
 VICII::VICII(C64 &ref) : C64Component(ref)
 {
-	setDescription("VIC");
+	setDescription("VICII");
     
 	markIRQLines = false;
 	markDMALines = false;
@@ -85,7 +85,7 @@ VICII::VICII(C64 &ref) : C64Component(ref)
         { &cleared_bits_in_d017,        sizeof(cleared_bits_in_d017),           CLEAR_ON_RESET },
 
         { &lpLine,                      sizeof(lpLine),                         CLEAR_ON_RESET },
-        { &lightpenIRQhasOccured,       sizeof(lightpenIRQhasOccured),          CLEAR_ON_RESET },
+        { &lpIrqHasOccurred,       sizeof(lpIrqHasOccurred),          CLEAR_ON_RESET },
 
         { &memSrc,                      sizeof(memSrc),                         KEEP_ON_RESET },
         { &ultimax,                     sizeof(ultimax),                        CLEAR_ON_RESET },
@@ -590,8 +590,8 @@ VICII::checkForLightpenIrq()
 
     // An interrupt is suppressed if ...
     
-    // ... a previous interrupt has occured in the current frame.
-    if (lightpenIRQhasOccured)
+    // ... a previous interrupt has occurred in the current frame.
+    if (lpIrqHasOccurred)
         return;
 
     // ... we are in the last PAL rasterline and not in cycle 1.
@@ -606,7 +606,7 @@ VICII::checkForLightpenIrq()
     if (!delayedLightPenIrqs()) triggerIrq(8);
     
     // Lightpen interrupts can only occur once per frame
-    lightpenIRQhasOccured = true;
+    lpIrqHasOccurred = true;
 }
 
 void
@@ -640,7 +640,7 @@ VICII::checkForLightpenIrqAtStartOfFrame()
     triggerIrq(8);
 
     // Lightpen interrupts can only occur once per frame
-    lightpenIRQhasOccured = true;
+    lpIrqHasOccurred = true;
 }
 
 
@@ -750,7 +750,7 @@ VICII::updateSpriteShiftRegisters() {
 void 
 VICII::beginFrame()
 {
-	lightpenIRQhasOccured = false;
+	lpIrqHasOccurred = false;
 
     /* "The VIC does five read accesses in every raster line for the refresh of
      *  the dynamic RAM. An 8 bit refresh counter (REF) is used to generate 256

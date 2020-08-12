@@ -31,12 +31,8 @@
 
 #include "C64Component.h"
 #include "FastVoice.h"
+#include "VICIIConstants.h"
 
-
-//! The virtual sound interface device (SID)
-/*! SID is the sound chip of the Commodore 64.
-	The SID chip occupied the memory mapped I/O space from address 0xD400 to 0xD7FF. 
-*/
 class FastSID : public C64Component {
     
     //

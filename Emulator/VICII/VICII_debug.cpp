@@ -9,40 +9,53 @@
 
 #include "C64.h"
 
-VICInfo
+VICIIInfo
 VICII::getInfo()
 {
-    VICInfo info;
+    VICIIInfo info;
     
     u8 ctrl1 = reg.current.ctrl1;
     u8 ctrl2 = reg.current.ctrl2;
 
-    info.rasterline = c64.rasterLine;
-    info.cycle = c64.rasterCycle;
+    info.rasterLine = c64.rasterLine;
+    info.rasterCycle = c64.rasterCycle;
+    info.yCounter = yCounter;
     info.xCounter = xCounter;
+    info.vc = vc;
+    info.vcBase = vcBase;
+    info.rc = rc;
+    info.vmli = vmli;
+    
+    info.ctrl1 = ctrl1;
+    info.ctrl2 = ctrl2;
+    info.dy = ctrl1 & 0x07;
+    info.dx = ctrl2 & 0x07;
+    info.denBit = DENbit();
     info.badLine = badLine;
-    info.ba = (baLine.current() == 0);
+    info.displayState = displayState;
+    info.screenGeometry = getScreenGeometry();
+    info.frameFF = flipflops.current;
     info.displayMode = (DisplayMode)((ctrl1 & 0x60) | (ctrl2 & 0x10));
     info.borderColor = reg.current.colors[COLREG_BORDER];
-    info.backgroundColor0 = reg.current.colors[COLREG_BG0];
-    info.backgroundColor1 = reg.current.colors[COLREG_BG1];
-    info.backgroundColor2 = reg.current.colors[COLREG_BG2];
-    info.backgroundColor3 = reg.current.colors[COLREG_BG3];
-    info.screenGeometry = getScreenGeometry();
-    info.dx = ctrl2 & 0x07;
-    info.dy = ctrl1 & 0x07;
-    info.verticalFrameFlipflop = flipflops.current.vertical;
-    info.horizontalFrameFlipflop = flipflops.current.main;
+    info.bgColor0 = reg.current.colors[COLREG_BG0];
+    info.bgColor1 = reg.current.colors[COLREG_BG1];
+    info.bgColor2 = reg.current.colors[COLREG_BG2];
+    info.bgColor3 = reg.current.colors[COLREG_BG3];
+         
+    info.memSelect = memSelect;
+    info.ultimax = ultimax;
     info.memoryBankAddr = bankAddr;
     info.screenMemoryAddr = VM13VM12VM11VM10() << 6;
-    info.characterMemoryAddr = (CB13CB12CB11() << 10) % 0x4000;
+    info.charMemoryAddr = (CB13CB12CB11() << 10) % 0x4000;
+
+    info.irqRasterline = rasterInterruptLine();
     info.imr = imr;
     info.irr = irr;
-    info.spriteCollisionIrqEnabled =  GET_BIT(imr, 2);
-    info.backgroundCollisionIrqEnabled = GET_BIT(imr, 1);
-    info.rasterIrqEnabled = GET_BIT(imr, 1);
-    info.irqRasterline = rasterInterruptLine();
-    info.irqLine = (imr & irr) != 0;
+    
+    info.latchedLightPenX = latchedLightPenX;
+    info.latchedLightPenY = latchedLightPenY;
+    info.lpLine = lpLine;
+    info.lpIrqHasOccurred = lpIrqHasOccurred;
     
     return info;
 }
@@ -55,7 +68,6 @@ VICII::getSpriteInfo(unsigned i)
     info.enabled = GET_BIT(reg.current.sprEnable, i);
     info.x = reg.current.sprX[i];
     info.y = reg.current.sprY[i];
-    info.ptr = memSpyAccess((VM13VM12VM11VM10() << 6) | 0x03F8 | i);
     info.color = reg.current.colors[COLREG_SPR0 + i];
     info.extraColor1 = reg.current.colors[COLREG_SPR_EX1];
     info.extraColor2 = reg.current.colors[COLREG_SPR_EX2];

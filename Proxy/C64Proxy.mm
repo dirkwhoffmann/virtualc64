@@ -360,7 +360,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->vic->isPAL();
 }
-- (VICInfo) getInfo {
+- (VICIIInfo) getInfo {
     return wrapper->vic->getInfo();
 }
 - (void) dump

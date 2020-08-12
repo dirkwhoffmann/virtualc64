@@ -11,6 +11,7 @@
 #define _SNAPSHOT_H
 
 #include "AnyFile.h"
+#include "VICIIConstants.h"
 
 // Forward declarations
 class C64;
