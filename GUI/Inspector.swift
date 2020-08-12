@@ -197,7 +197,7 @@ class Inspector: DialogController {
     @IBOutlet weak var latchedLPY: NSTextField!
     @IBOutlet weak var vicLpLine: NSButton!
     @IBOutlet weak var vicLpIrqHasOccurred: NSButton!
-
+    
     @IBOutlet weak var sprSelector: NSSegmentedControl!
     @IBOutlet weak var sprX: NSTextField!
     @IBOutlet weak var sprY: NSTextField!
@@ -212,6 +212,63 @@ class Inspector: DialogController {
     @IBOutlet weak var sprExtra1: NSColorWell!
     @IBOutlet weak var sprExtra2: NSColorWell!
 
+    // SID
+    @IBOutlet weak var sidWaveform1: NSPopUpButton!
+    @IBOutlet weak var sidFrequency1: NSTextField!
+    @IBOutlet weak var sidPulseWidth1: NSTextField!
+    @IBOutlet weak var sidPulseWidthText1: NSTextField!
+    @IBOutlet weak var siaAttackRate1: NSTextField!
+    @IBOutlet weak var sidDecayRate1: NSTextField!
+    @IBOutlet weak var sidSustainRate1: NSTextField!
+    @IBOutlet weak var sidReleaseRate1: NSTextField!
+    @IBOutlet weak var sidGateBit1: NSButton!
+    @IBOutlet weak var sidTestBit1: NSButton!
+    @IBOutlet weak var sidSyncBit1: NSButton!
+    @IBOutlet weak var sidRingBit1: NSButton!
+    
+    @IBOutlet weak var sidWaveform2: NSPopUpButton!
+    @IBOutlet weak var sidFrequency2: NSTextField!
+    @IBOutlet weak var sidPulseWidth2: NSTextField!
+    @IBOutlet weak var sidPulseWidthText2: NSTextField!
+    @IBOutlet weak var siaAttackRate2: NSTextField!
+    @IBOutlet weak var sidDecayRate2: NSTextField!
+    @IBOutlet weak var sidSustainRate2: NSTextField!
+    @IBOutlet weak var sidReleaseRate2: NSTextField!
+    @IBOutlet weak var sidGateBit2: NSButton!
+    @IBOutlet weak var sidTestBit2: NSButton!
+    @IBOutlet weak var sidSyncBit2: NSButton!
+    @IBOutlet weak var sidRingBit2: NSButton!
+    
+    @IBOutlet weak var sidWaveform3: NSPopUpButton!
+    @IBOutlet weak var sidFrequency3: NSTextField!
+    @IBOutlet weak var sidPulseWidth3: NSTextField!
+    @IBOutlet weak var sidPulseWidthText3: NSTextField!
+    @IBOutlet weak var siaAttackRate3: NSTextField!
+    @IBOutlet weak var sidDecayRate3: NSTextField!
+    @IBOutlet weak var sidSustainRate3: NSTextField!
+    @IBOutlet weak var sidReleaseRate3: NSTextField!
+    @IBOutlet weak var sidGateBit3: NSButton!
+    @IBOutlet weak var sidTestBit3: NSButton!
+    @IBOutlet weak var sidSyncBit3: NSButton!
+    @IBOutlet weak var sidRingBit3: NSButton!
+    
+    @IBOutlet weak var sidVolume: NSTextField!
+    @IBOutlet weak var sidPotX: NSTextField!
+    @IBOutlet weak var sidPotY: NSTextField!
+
+    @IBOutlet weak var sidFilterType: NSPopUpButton!
+    @IBOutlet weak var sidFilterCutoff: NSTextField!
+    @IBOutlet weak var sidFilterResonance: NSTextField!
+    @IBOutlet weak var sidFilter1: NSButton!
+    @IBOutlet weak var sidFilter2: NSButton!
+    @IBOutlet weak var sidFilter3: NSButton!
+    
+    @IBOutlet weak var sidWaveformView: WaveformView!
+    @IBOutlet weak var sidAudioBufferLevel: NSLevelIndicator!
+    @IBOutlet weak var sidAudioBufferLevelText: NSTextField!
+    @IBOutlet weak var sidBufferUnderflows: NSTextField!
+    @IBOutlet weak var sidBufferOverflows: NSTextField!
+    
     // Cached state of all C64 components
     var cpuInfo: CPUInfo!
     var ciaInfo: CIAInfo!
