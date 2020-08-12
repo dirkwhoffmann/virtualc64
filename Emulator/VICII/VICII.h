@@ -23,7 +23,7 @@ class VICII : public C64Component {
     
     // Result of the latest inspection
     VICIIInfo info;
-    SpriteInfo spriteInfo;
+    SpriteInfo spriteInfo[8];
     
     
     //
@@ -728,8 +728,7 @@ public:
     
     // Returns the result of the most recent call to inspect()
     VICIIInfo getInfo() { return HardwareComponent::getInfo(info); }
-    // SpriteInfo getSpriteInfo() { return HardwareComponent::getInfo(spriteInfo); }
-
+    SpriteInfo getSpriteInfo(int nr);
     
     
     //
@@ -1421,7 +1420,7 @@ public:
     //
 
     // VICIIInfo getInfo();
-    SpriteInfo getSpriteInfo(unsigned i);
+    // SpriteInfo getSpriteInfo(unsigned i);
 
     
     //

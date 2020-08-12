@@ -9,11 +9,21 @@
 
 // Number formatters
 let fmt8b  = MyFormatter.init(radix: 2, min: 0, max: 0xFF)
+
+let fmt3d  = MyFormatter.init(radix: 10, min: 0, max: 0x7)
 let fmt4d  = MyFormatter.init(radix: 10, min: 0, max: 0xF)
+let fmt6d  = MyFormatter.init(radix: 10, min: 0, max: 0x3F)
 let fmt8d  = MyFormatter.init(radix: 10, min: 0, max: 0xFF)
+let fmt9d  = MyFormatter.init(radix: 10, min: 0, max: 0x1FF)
+let fmt10d = MyFormatter.init(radix: 10, min: 0, max: 0x3FF)
 let fmt16d = MyFormatter.init(radix: 10, min: 0, max: 0xFFFF)
+
+let fmt3x  = MyFormatter.init(radix: 16, min: 0, max: 0x7)
 let fmt4x  = MyFormatter.init(radix: 16, min: 0, max: 0xF)
+let fmt6x  = MyFormatter.init(radix: 16, min: 0, max: 0x3F)
 let fmt8x  = MyFormatter.init(radix: 16, min: 0, max: 0xFF)
+let fmt9x  = MyFormatter.init(radix: 16, min: 0, max: 0x1FF)
+let fmt10x = MyFormatter.init(radix: 16, min: 0, max: 0x3FF)
 let fmt16x = MyFormatter.init(radix: 16, min: 0, max: 0xFFFF)
 
 class Inspector: DialogController {
@@ -213,8 +223,12 @@ class Inspector: DialogController {
     
     // Number format selection (hexadecimal or decimal)
     var hex = true
+    var fmt3: MyFormatter { return hex ? fmt3x : fmt3d }
     var fmt4: MyFormatter { return hex ? fmt4x : fmt4d }
+    var fmt6: MyFormatter { return hex ? fmt6x : fmt6d }
     var fmt8: MyFormatter { return hex ? fmt8x : fmt8d }
+    var fmt9: MyFormatter { return hex ? fmt9x : fmt9d }
+    var fmt10: MyFormatter { return hex ? fmt10x : fmt10d }
     var fmt16: MyFormatter { return hex ? fmt16x : fmt16d }
 
     // Used to determine the items to be refreshed
@@ -265,6 +279,7 @@ class Inspector: DialogController {
             case "CPU": refreshCPU(count: count, full: full)
             case "CIA": refreshCIA(count: count, full: full)
             case "Memory": refreshMemory(count: count, full: full)
+            case "VICII": refreshVIC(count: count, full: full)
             default: break
             }
         }

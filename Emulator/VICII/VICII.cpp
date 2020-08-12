@@ -213,6 +213,22 @@ VICII::_inspect()
         info.latchedLPY = latchedLPY;
         info.lpLine = lpLine;
         info.lpIrqHasOccurred = lpIrqHasOccurred;
+        
+        for (int i = 0; i < 8; i++) {
+            
+            spriteInfo[i].enabled = GET_BIT(reg.current.sprEnable, i);
+            spriteInfo[i].x = reg.current.sprX[i];
+            spriteInfo[i].y = reg.current.sprY[i];
+            spriteInfo[i].color = reg.current.colors[COLREG_SPR0 + i];
+            spriteInfo[i].extraColor1 = reg.current.colors[COLREG_SPR_EX1];
+            spriteInfo[i].extraColor2 = reg.current.colors[COLREG_SPR_EX2];
+            spriteInfo[i].multicolor = GET_BIT(reg.current.sprMC, i);
+            spriteInfo[i].expandX = GET_BIT(reg.current.sprExpandX, i);
+            spriteInfo[i].expandY = GET_BIT(reg.current.sprExpandY, i);
+            spriteInfo[i].priority = GET_BIT(reg.current.sprPriority, i);
+            spriteInfo[i].ssCollision = GET_BIT(spriteSpriteCollision, i);
+            spriteInfo[i].sbCollision = GET_BIT(spriteBackgroundColllision, i);
+        }
     }
 }
 
@@ -286,6 +302,14 @@ VICII::_dump()
 	for (int i = 0; i < 8; i++) 
 		msg("%d ", (expansionFF & (1 << i)) != 0);
 	msg(")\n");
+}
+
+SpriteInfo
+VICII::getSpriteInfo(int nr)
+{
+    SpriteInfo result;
+    synchronized { result = spriteInfo[nr]; }
+    return result;
 }
 
 size_t

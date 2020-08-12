@@ -24,7 +24,27 @@ extension Inspector {
         cacheVIC()
         
         if full {
-            
+         
+            vicRasterLine.assignFormatter(fmt9)
+            vicRasterCycle.assignFormatter(fmt9)
+            vicYCounter.assignFormatter(fmt9)
+            vicXCounter.assignFormatter(fmt9)
+            vicVC.assignFormatter(fmt10)
+            vicVCBase.assignFormatter(fmt10)
+            vicRC.assignFormatter(fmt3)
+            vicVMLI.assignFormatter(fmt6)
+            vicCtrl1.assignFormatter(fmt8)
+            vicCtrl2.assignFormatter(fmt8)
+            vicDy.assignFormatter(fmt3)
+            vicDx.assignFormatter(fmt3)
+            vicMemSelect.assignFormatter(fmt8)
+            vicIrqRasterline.assignFormatter(fmt8)
+            vicImr.assignFormatter(fmt8)
+            vicIrr.assignFormatter(fmt8)
+            latchedLPX.assignFormatter(fmt8)
+            latchedLPY.assignFormatter(fmt8)
+            sprX.assignFormatter(fmt9)
+            sprY.assignFormatter(fmt8)
         }
                 
         if c64.isRunning {

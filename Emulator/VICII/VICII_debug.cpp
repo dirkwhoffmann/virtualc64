@@ -63,6 +63,7 @@ VICII::getInfo()
 }
 */
 
+/*
 SpriteInfo
 VICII::getSpriteInfo(unsigned i)
 {
@@ -83,6 +84,7 @@ VICII::getSpriteInfo(unsigned i)
     
     return info;
 }
+*/
 
 void
 VICII::setMemoryBankAddr(u16 addr)
