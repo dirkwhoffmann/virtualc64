@@ -22,6 +22,9 @@
 
 class ReSID : public C64Component {
 
+    // Reference to the connected bridge object
+     SIDBridge &bridge;
+    
     // Entry point to the reSID backend
     reSID::SID *sid;
     
@@ -34,27 +37,20 @@ private:
     // ReSID state
     reSID::SID::State st;
     
-    //! @brief   The emulated chip model
+    // The emulated chip model
     SIDRevision model;
     
-    //! @brief   Clock frequency
-    /*! @details Either PAL_CLOCK_FREQUENCY or NTSC_CLOCK_FREQUENCY
-     */
+    // Clock frequency
     u32 clockFrequency;
     
-    //! @brief   Sample rate (usually set to 44.1 kHz)
+    // Sample rate (usually set to 44.1 kHz)
     double sampleRate;
     
-    //! @brief   Sampling method
+    // Sampling method
     SamplingMethod samplingMethod;
     
-    //! @brief   Switches filter emulation on or off.
+    // Switches filter emulation on or off
     bool emulateFilter;
-    
-public:
-		
-    //! Pointer to bridge object
-    SIDBridge *bridge;
     
     
     //
@@ -63,7 +59,7 @@ public:
     
 public:
     
-	ReSID(C64 &ref);
+	ReSID(C64 &ref, SIDBridge &bridgeref);
 	~ReSID();
     
     

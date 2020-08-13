@@ -35,6 +35,9 @@
 
 class FastSID : public C64Component {
     
+    // Reference to the connected bridge object
+    SIDBridge &bridge;
+
     //
     // Sub components
     //
@@ -46,68 +49,65 @@ private:
 
     
 public:
-    
-    //! Pointer to bridge object
-    class SIDBridge *bridge;
-    
-    //! @brief   SID registers
+        
+    // SID registers
     u8 sidreg[32];
     
-    //! @brief   Internal constant used for sample rate dependent calculations
+    // Internal constant used for sample rate dependent calculations
     u32 speed1;
     
 private:
             
-    //! @brief   Chip model.
+    // Chip model
     SIDRevision model = MOS_6581;
     
-    //! @brief   Current CPU frequency
+    // Current CPU frequency
     u32 cpuFrequency = PAL_CLOCK_FREQUENCY;
     
-    //! @brief   Sample rate (44.1 kHz per default)
+    // Sample rate (44.1 kHz per default)
     u32 sampleRate = 44100;
     
-    //! @brief    Ratio between sample rate and cpu frequency
+    // Ratio between sample rate and cpu frequency
     double   samplesPerCycle;
     
-    //! @brief   Stores for how many cycles FastSID was executed so far
+    // Stores for how many cycles FastSID was executed so far
     u64 executedCycles;
 
-    //! @brief   Stores how many sound samples were computed so far
+    // Stores how many sound samples were computed so far
     u64 computedSamples;
 
-    //! @brief   Switches filter emulation on or off.
+    // Switches filter emulation on or off
     bool emulateFilter = true;
     
-    //! @brief   Last value on the data bus
+    // Last value on the data bus
     u8 latchedDataBus;
     
 public:
     
-    //! @brief   ADSR counter step lookup table
+    // ADSR counter step lookup table
     i32 adrs[16];
     
-    //! @brief   Sustain comparison values loopup table
+    // Sustain comparison values loopup table
     u32 sz[16];
     
 private:
     
-    //! @brief   Low pass filter lookup table
-    /*! @details Needs to be updated when the sample rate changes
+    /* Low pass filter lookup table
+     * Needs to be updated when the sample rate changes.
      */
     float lowPassParam[0x800];
 
-    //! @brief   Band pass filter lookup table
-    /*! @details Needs to be updated when the sample rate changes
+    /* Band pass filter lookup table
+     * Needs to be updated when the sample rate changes.
      */
     float bandPassParam[0x800];
     
-    //! @brief   Filter resonance lookup table
-    /*! @details Needs to be updated when the sample rate changes
+    /* Filter resonance lookup table
+     * Needs to be updated when the sample rate changes.
      */
     float filterResTable[16];
     
-    //! @brief   Amplifier lookup table
+    // Amplifier lookup table
     signed char ampMod1x8[256];
     
     
@@ -117,7 +117,7 @@ private:
     
 public:
         
-	FastSID(C64 &ref);
+	FastSID(C64 &ref, SIDBridge &bridgeref);
     
     
     //

@@ -12,10 +12,7 @@
 SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
 {
 	setDescription("SIDBridge");
-    
-    fastsid.bridge = this;
-    resid.bridge = this;
-    
+        
     subComponents = vector<HardwareComponent *> {
         
         &resid,
