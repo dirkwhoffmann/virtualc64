@@ -11,8 +11,9 @@ class WaveformView: NSView {
  
     @IBOutlet weak var inspector: Inspector!
     
-    var sid: SIDProxy { return  inspector.c64.sid }
-
+    var sid: SIDProxy { return inspector.c64.sid }
+    var running: Bool { return inspector.c64.isRunning }
+    
     // Remembers the highest amplitude (used for auto scaling)
     var highestAmplitude: Float = 0.001
     
@@ -56,7 +57,7 @@ class WaveformView: NSView {
             highestAmplitude = (absvalue > highestAmplitude) ? absvalue : highestAmplitude
             var scaledSample = absvalue / normalizer * baseline
             if scaledSample == 0 { // just for effect
-                scaledSample = drand48() > 0.5 ? 0.0 : 1.0
+                scaledSample = (running && drand48() > 0.5) ? 1.0 : 0.0
             }
             let from = CGPoint(x: x, y: Int(baseline + scaledSample + 1))
             let to = CGPoint(x: x, y: Int(baseline - scaledSample))

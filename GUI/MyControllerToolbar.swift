@@ -17,15 +17,7 @@ struct InputDevice {
 }
 
 extension MyController {
-     
-    // NSDrawerState is deprected an not available natively in Swift
-    struct NSDrawerState {
-        static let closed = 0
-        static let opening = 1
-        static let open = 2
-        static let closing = 3
-    }
-    
+         
     @IBAction func port1Action(_ sender: NSPopUpButton) {
         
         setPort1(sender.selectedTag())
