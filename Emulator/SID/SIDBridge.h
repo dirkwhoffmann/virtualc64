@@ -124,7 +124,7 @@ public:
     
     u32 getClockFrequency();
     
-    
+
     //
     // Methods from HardwareComponent
     //

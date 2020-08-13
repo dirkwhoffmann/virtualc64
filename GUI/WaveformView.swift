@@ -9,8 +9,10 @@
 
 class WaveformView: NSView {
  
-    @IBOutlet weak var controller: MyController!
+    @IBOutlet weak var inspector: Inspector!
     
+    var sid: SIDProxy { return  inspector.c64.sid }
+
     // Remembers the highest amplitude (used for auto scaling)
     var highestAmplitude: Float = 0.001
     
@@ -27,17 +29,10 @@ class WaveformView: NSView {
   
     // Restarts the auto scaling mechanism
     func initAutoScaler() {
-        // track()
         highestAmplitude = 0.001
     }
     
     func update() {
-        /*
-        delayCounter += 1
-        if delayCounter % 2 == 0 {
-            return
-        }
-        */
         needsDisplay = true
     }
     
@@ -56,7 +51,7 @@ class WaveformView: NSView {
         highestAmplitude = 0.001
         
         for x in 0...w {
-            let sample = controller!.c64.sid.ringbufferData(40 * x)
+            let sample = sid.ringbufferData(40 * x)
             let absvalue = abs(sample)
             highestAmplitude = (absvalue > highestAmplitude) ? absvalue : highestAmplitude
             var scaledSample = absvalue / normalizer * baseline

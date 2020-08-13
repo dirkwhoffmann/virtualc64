@@ -115,6 +115,39 @@ ReSID::_reset()
 }
 
 void
+ReSID::_inspect()
+{
+    synchronized {
+        
+        reSID::SID::State state = sid->read_state();
+        u8 *reg = (u8 *)state.sid_register;
+        
+        info.volume = reg[0x18] & 0x0F;
+        info.filterModeBits = reg[0x18] & 0xF0;
+        info.filterType = reg[0x18] & 0x70;
+        info.filterCutoff = (reg[0x16] << 3) | (reg[0x15] & 0x07);
+        info.filterResonance = reg[0x17] >> 4;
+        info.filterEnableBits = reg[0x17] & 0x0F;
+        
+        for (unsigned i = 0; i < 3; i++, reg += 7) {
+            
+            for (unsigned j = 0; j < 7; j++) voiceInfo[i].reg[j] = reg[j];
+            voiceInfo[i].frequency = HI_LO(reg[0x01], reg[0x00]);
+            voiceInfo[i].pulseWidth = ((reg[3] & 0x0F) << 8) | reg[0x02];
+            voiceInfo[i].waveform = reg[0x04] & 0xF0;
+            voiceInfo[i].ringMod = (reg[0x04] & 0x04) != 0;
+            voiceInfo[i].hardSync = (reg[0x04] & 0x02) != 0;
+            voiceInfo[i].gateBit = (reg[0x04] & 0x01) != 0;
+            voiceInfo[i].testBit = (reg[0x04] & 0x08) != 0;
+            voiceInfo[i].attackRate = reg[0x05] >> 4;
+            voiceInfo[i].decayRate = reg[0x05] & 0x0F;
+            voiceInfo[i].sustainRate = reg[0x06] >> 4;
+            voiceInfo[i].releaseRate = reg[0x06] & 0x0F;
+        }
+    }
+}
+
+void
 ReSID::setRevision(SIDRevision revision)
 {
     assert(revision == 0 || revision == 1);
@@ -123,10 +156,7 @@ ReSID::setRevision(SIDRevision revision)
     suspend();
     sid->set_chip_model((reSID::chip_model)revision);
     resume();
-    
-    // MOS8580 emulation seems to be problematic when combined with filters.
-    // TODO: Disable filters in combination with this chip
-    
+        
     assert((SIDRevision)sid->sid_model == revision);
     debug(SID_DEBUG, "Emulating SID revision %s.\n", sidRevisionName(revision));
 }
@@ -239,45 +269,3 @@ ReSID::execute(u64 elapsedCycles)
         bridge.writeData(buf, bufindex);
     }
 }
-
-SIDInfo
-ReSID::getInfo()
-{
-    SIDInfo info;
-    reSID::SID::State state = sid->read_state();
-    u8 *reg = (u8 *)state.sid_register;
-    
-    info.volume = reg[0x18] & 0x0F;
-    info.filterModeBits = reg[0x18] & 0xF0;
-    info.filterType = reg[0x18] & 0x70;
-    info.filterCutoff = (reg[0x16] << 3) | (reg[0x15] & 0x07);
-    info.filterResonance = reg[0x17] >> 4;
-    info.filterEnableBits = reg[0x17] & 0x0F;
-    return info;
-}
-
-VoiceInfo
-ReSID::getVoiceInfo(unsigned voice)
-{
-    VoiceInfo info;
-    reSID::SID::State state = sid->read_state();
-    u8 *sidreg = (u8 *)state.sid_register + (voice * 7);
-    
-    for (unsigned j = 0; j < 7; j++) info.reg[j] = sidreg[j];
-    info.frequency = HI_LO(sidreg[0x01], sidreg[0x00]);
-    info.pulseWidth = ((sidreg[3] & 0x0F) << 8) | sidreg[0x02];
-    info.waveform = sidreg[0x04] & 0xF0;
-    info.ringMod = (sidreg[0x04] & 0x04) != 0;
-    info.hardSync = (sidreg[0x04] & 0x02) != 0;
-    info.gateBit = (sidreg[0x04] & 0x01) != 0;
-    info.testBit = (sidreg[0x04] & 0x08) != 0;
-    info.attackRate = sidreg[0x05] >> 4;
-    info.decayRate = sidreg[0x05] & 0x0F;
-    info.sustainRate = sidreg[0x06] >> 4;
-    info.releaseRate = sidreg[0x06] & 0x0F;
-    // info.filterOn = GET_BIT(state->sid_register[0x17], voice) != 0;
-    
-    return info;
-}
-
-

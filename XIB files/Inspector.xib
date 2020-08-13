@@ -115,9 +115,9 @@
                 <outlet property="memSource" destination="JGr-5C-bxz" id="zse-ng-d6z"/>
                 <outlet property="memTableView" destination="9cm-34-eYe" id="iCO-ae-FMN"/>
                 <outlet property="panel" destination="QhJ-8A-HRo" id="g4P-OI-piB"/>
-                <outlet property="siaAttackRate1" destination="4Be-zt-a2X" id="mqD-Ti-DTA"/>
-                <outlet property="siaAttackRate2" destination="IYc-bd-Leo" id="6NQ-pp-S6y"/>
-                <outlet property="siaAttackRate3" destination="QDe-kd-2Wh" id="IRy-wD-baB"/>
+                <outlet property="sidAttackRate1" destination="4Be-zt-a2X" id="mqD-Ti-DTA"/>
+                <outlet property="sidAttackRate2" destination="IYc-bd-Leo" id="6NQ-pp-S6y"/>
+                <outlet property="sidAttackRate3" destination="QDe-kd-2Wh" id="IRy-wD-baB"/>
                 <outlet property="sidAudioBufferLevel" destination="p02-yc-FTP" id="4hG-a6-ZMp"/>
                 <outlet property="sidAudioBufferLevelText" destination="sBI-B2-mQb" id="gew-Q2-ExV"/>
                 <outlet property="sidBufferOverflows" destination="PDk-1i-ITc" id="TCA-ka-1ZE"/>
@@ -3380,11 +3380,14 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B0D-dJ-qqW" customClass="WaveformView" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="20" y="10" width="324" height="117"/>
+                                                        <rect key="frame" x="11" y="10" width="354" height="117"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <connections>
+                                                            <outlet property="inspector" destination="-2" id="BsR-Gy-ejT"/>
+                                                        </connections>
                                                     </customView>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UW9-AU-zSF">
-                                                        <rect key="frame" x="378" y="106" width="50" height="14"/>
+                                                        <rect key="frame" x="390" y="98" width="50" height="14"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Fill level:" id="VKH-43-zwP">
                                                             <font key="font" metaFont="message" size="11"/>
@@ -3393,7 +3396,7 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="euG-WO-Cqs">
-                                                        <rect key="frame" x="417" y="53" width="63" height="14"/>
+                                                        <rect key="frame" x="429" y="44" width="63" height="14"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="underflows" id="uKv-H0-tZQ">
                                                             <font key="font" metaFont="message" size="11"/>
@@ -3402,13 +3405,13 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <levelIndicator verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p02-yc-FTP">
-                                                        <rect key="frame" x="378" y="81" width="122" height="16"/>
+                                                        <rect key="frame" x="390" y="75" width="122" height="16"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <levelIndicatorCell key="cell" alignment="left" doubleValue="50" maxValue="100" levelIndicatorStyle="continuousCapacity" id="eFQ-Sn-l6W"/>
                                                         <color key="fillColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
                                                     </levelIndicator>
                                                     <textField verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x0I-Ob-qBC">
-                                                        <rect key="frame" x="376" y="53" width="45" height="14"/>
+                                                        <rect key="frame" x="388" y="44" width="45" height="14"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" alignment="left" title="65536" id="aiH-bQ-Ie5">
                                                             <font key="font" metaFont="message" size="11"/>
@@ -3417,7 +3420,7 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <textField verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDk-1i-ITc">
-                                                        <rect key="frame" x="376" y="31" width="45" height="14"/>
+                                                        <rect key="frame" x="388" y="25" width="45" height="14"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" alignment="left" title="65536" id="gbj-M4-baH">
                                                             <font key="font" metaFont="message" size="11"/>
@@ -3426,7 +3429,7 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sBI-B2-mQb">
-                                                        <rect key="frame" x="428" y="106" width="31" height="14"/>
+                                                        <rect key="frame" x="440" y="98" width="31" height="14"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="50 %" id="e5U-Re-dkl">
                                                             <font key="font" metaFont="message" size="11"/>
@@ -3435,7 +3438,7 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2QA-5l-GJ2">
-                                                        <rect key="frame" x="417" y="31" width="55" height="14"/>
+                                                        <rect key="frame" x="429" y="25" width="55" height="14"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="overflows" id="trV-DQ-qDv">
                                                             <font key="font" metaFont="message" size="11"/>

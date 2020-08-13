@@ -630,7 +630,6 @@
 			isa = PBXGroup;
 			children = (
 				506CE96621998C4500B70A3A /* Metal */,
-				5015F36520B546A30024B4AA /* WaveformView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -720,6 +719,7 @@
 				507A499F24C8D66A00DBF984 /* GuardTableView.swift */,
 				507A49A124C8D71400DBF984 /* BankTableView.swift */,
 				507887CB20B1858B00941F7E /* MemTableView.swift */,
+				5015F36520B546A30024B4AA /* WaveformView.swift */,
 				506D4D0C20B331A00093C5C6 /* MyFormatter.swift */,
 			);
 			name = Inspector;

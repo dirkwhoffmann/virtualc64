@@ -69,10 +69,12 @@ class FastVoice : public HardwareComponent {
     
     friend class FastSID;
     
-private:
+    // Result of the latest inspection
+    SIDInfo info;
+    VoiceInfo voiceInfo[3];
     
-    //! @brief   Wave tables
-    //! @details The first index determines the chip model (0 = old, 1 = new).
+    // Wave tables
+    // The first index determines the chip model (0 = old, 1 = new).
     static u16 wavetable10[2][4096];
     static u16 wavetable20[2][4096];
     static u16 wavetable30[2][4096];
@@ -81,21 +83,21 @@ private:
     static u16 wavetable60[2][8192];
     static u16 wavetable70[2][8192];
     
-    //! @brief   Noise tables
+    // Noise tables
     static u8 noiseMSB[256];
     static u8 noiseMID[256];
     static u8 noiseLSB[256];
     
-    //! @brief   The SID voice which is represented by this object (1,2, or 3)
+    // The SID voice which is represented by this object (1,2, or 3)
     u8 nr;
 
-    //! @brief   Pointer to parent SID object
+    // Pointer to parent SID object
     class FastSID *fastsid;
     
-    //! @brief   Pointer to previous voice
+    // Pointer to previous voice
     FastVoice *prev;
     
-    //! @brief   Pointer to SID registers controlling this voice
+    // Pointer to SID registers controlling this voice
     u8 *sidreg;
     
 
@@ -103,52 +105,53 @@ private:
     // Wave tables
     //
     
-    //! @brief   Pointer to the active wavetable
+    // Pointer to the active wavetable
     u16 *wavetable;
     
-    //! @brief   Wavetable offset
-    /*! @details This 32-bit offset is added to the counter before
-     *           referencing the wavetable. It is used when other
-     *           waveforms are combined with pulse
+    // Wavetable offset
+    /* This 32-bit offset is added to the counter before referencing the
+     * wavetable. It is used when other waveforms are combined with pulse
      */
     u32 waveTableOffset;
     
-    //! @brief   Counter value
+    // Counter value
     u32 waveTableCounter;
     
-    //! @brief   Counter steps
-    /*! @details After each sample, the counter is incremented by this amount.
+    // Counter steps
+    /* After each sample, the counter is incremented by this amount.
      */
     u32 step;
     
-    //! @brief   Set to true if the oscillator should ring modulate
+    // Set to true if the oscillator should ring modulate
     bool ringmod;
     
     //
     // Waveform generator
     //
     
-    //! @brief   Current envelope phase (ATTACK, DECAY, SUSTAIN, RELEASE, or IDLE)
+    // Current envelope phase (ATTACK, DECAY, SUSTAIN, RELEASE, or IDLE)
     u8 adsrm;
     
-    //! @brief   31-bit adsr counter
+    // 31-bit adsr counter
     u32 adsr;
     
-    //! @brief   adsr counter step per sample
+    // adsr counter step per sample
     i32 adsrInc;
     
-    //! @brief   adsr sustain level comparision value
+    // adsr sustain level comparision value
     u32 adsrCmp;
+    
     
     //
     // Noise generator
     //
     
-    //! @brief   Noise shift register
-    /*! @details The Noise waveform is created using a 23-bit pseudo-random
-     *           sequence generator (Linear Feedback Shift Register, LSFR)
+    /* Noise shift register
+     * The Noise waveform is created using a 23-bit pseudo-random sequence
+     * generator (Linear Feedback Shift Register, LSFR).
      */
     u32 lsfr;
+    
     
     //
     // Filter
@@ -171,6 +174,9 @@ public:
  
     FastVoice();
     
+    static void initWaveTables();
+    void init(FastSID *owner, unsigned voiceNr, FastVoice *prevVoice);
+    
     
     //
     // Methods from HardwareComponent
@@ -182,122 +188,116 @@ private:
     void didLoadFromBuffer(u8 **buffer) override { updateWaveTablePtr(); }
 
     
+    //
+    // Analyzing
+    //
+    
 public:
     
-    //! @brief    Initializes the wave tables
-    /*! @details  Needs to be called once prior to using this class
-     */
-    static void initWaveTables();
+    // Returns the result of the most recent call to inspect()
+    SIDInfo getInfo() { return HardwareComponent::getInfo(info); }
+    VoiceInfo getVoiceInfo(unsigned nr) { return HardwareComponent::getInfo(voiceInfo[nr]); }
     
-    //! @brief    Initialize
-    //! @details  Needs to be called once for each voice object
-    void init(FastSID *owner, unsigned voiceNr, FastVoice *prevVoice);
-
-    //! @brief    Updates the wavetable pointer
+    // Updates the wavetable pointer
     void updateWaveTablePtr();
 
-    //! @brief    Updates internal data structures
-    //! @details  This method is called on each voice related register change
+    // Updates internal data structures
+    // This method is called on each voice related register change
     void updateInternals(bool gateBitFlipped);
 
-    //! @brief  Sets the current filter type
+    // Sets the current filter type
     void setFilterType(u8 type);
 
-    //! @brief  Change ADSR state and all related variables
+    // Change ADSR state and all related variables
     void set_adsr(u8 fm);
     
-    //! @brief ADSR counter triggered state change
+    // ADSR counter triggered state change
     void trigger_adsr();
     
     // 15-bit oscillator value
     u32 doosc();
     
-    //! @brief Apply filter effect
+    // Apply filter effect
     void applyFilter();
     
     //
     // Querying configuration items
     //
         
-    //! @brief   Returns the currently set oscillator frequency
+    // Returns the currently set oscillator frequency
     u16 frequency() { return HI_LO(sidreg[0x01], sidreg[0x00]); }
 
-    //! @brief   Returns the pulse width of the pulse waveform
-    /*! @details The pulse width is a 12-bit number which linearly controls
-     *           the pulse width (duty cycle) of the pulse waveform.
+    /* Returns the pulse width of the pulse waveform
+     * The pulse width is a 12-bit number which linearly controls the pulse
+     * width (duty cycle) of the pulse waveform.
      */
     u16 pulseWidth() { return ((sidreg[3] & 0x0F) << 8) | sidreg[0x02]; }
 
-    //! @brief   Returns the GATE bit for this voice
-    /*! @details The gate bit controls the Envelope Generator. When this
-     *           bit is set to a one, the Envelope Generator is Gated
-     *           (triggered) and the attack/decay/sustain cycle is initiated.
-     *           When the bit is reset to a zero, the release cycle begins.
+    /* Returns the GATE bit for this voice
+     * The gate bit controls the Envelope Generator. When this bit is set to a
+     * one, the Envelope Generator is Gated (triggered) and the
+     * attack/decay/sustain cycle is initiated.  When the bit is reset to a
+     * zero, the release cycle begins.
      */
     bool gateBit() { return sidreg[0x04] & 0x01; }
     
-    //! @brief   Returns the SYNC bit for this voice
-    /*! @details If this bit is set, hard sync effects are produced.
-     *           Hard sync is where one waveform plays at its own frequency,
-     *           but gets reset back to its start every time the second waveform
-     *           loops. It is responsible for the rising modulating sound in
-     *           Ben Daglish's Wilderness music from The Last Ninja and the
-     *           ludicrous intro noise in Martin Galway's Roland's Rat Race music.
+    /* Returns the SYNC bit for this voice
+     * If this bit is set, hard sync effects are produced. Hard sync is where
+     * one waveform plays at its own frequency, but gets reset back to its
+     * start every time the second waveform loops. It is responsible for the
+     * rising modulating sound in Ben Daglish's Wilderness music from The Last
+     * Ninja and the ludicrous intro noise in Martin Galway's Roland's Rat Race
+     * music.
      */
     bool syncBit() { return (sidreg[0x04] & 0x02) != 0; }
     
-    //! @brief   Returns the RING MOD bit of the control register
-    /*! @details The RING MOD bit, when set to a one, replaces the
-     *           Triangle waveform output of Oscillator 1 with a
-     *           “Ring Modulated” combination of Oscillators 1 and 3.
+    /* Returns the RING MOD bit of the control register
+     * The RING MOD bit, when set to a one, replaces the Triangle waveform
+     * output of Oscillator 1 with a “Ring Modulated” combination of
+     * Oscillators 1 and 3.
      */
     bool ringModBit() { return (sidreg[0x04] & 0x04) != 0; }
     
-    //! @brief   Returns the TEST bit of the control register
-    /*! @details The TEST bit, when set to a one, resets and
-     *           locks Oscillator 1 at zero until the TEST bit
-     *           is cleared. The Noise waveform output of
-     *           Oscillator 1 is also reset and the Pulse waveform
-     *           output is held at a DC level.
+    /* Returns the TEST bit of the control register
+     * The TEST bit, when set to a one, resets and locks Oscillator 1 at zero
+     * until the TEST bit is cleared. The Noise waveform output of Oscillator 1
+     * is also reset and the Pulse waveform output is held at a DC level.
      */
     bool testBit() { return (sidreg[0x04] & 0x08) != 0; }
 
-    //! @brief   Returns the waveform bits of the control register
+    // Returns the waveform bits of the control register
     u8 waveform() { return sidreg[0x04] & 0xF0; }
     
-    //! @brief   Returns the attack rate for the envelope generator
-    /*! @details The attack rate is a 4 bit value which determines how rapidly
-     *           the output of the voice rises from zero to peak amplitude when
-     *           the envelope generator is gated.
+    /* Returns the attack rate for the envelope generator
+     * The attack rate is a 4 bit value which determines how rapidly the output
+     * of the voice rises from zero to peak amplitude when the envelope
+     * generator is gated.
      */
     u8 attackRate() { return sidreg[0x05] >> 4; }
 
-    //! @brief   Returns the decay rate for the envelope generator
-    /*! @details The decay cycle follows the attack cycle and the decay rate
-     *           determines how rapidly the output falls from the peak amplitude
-     *           to the selected sustain level.
+    /* Returns the decay rate for the envelope generator
+     * The decay cycle follows the attack cycle and the decay rate determines
+     * how rapidly the output falls from the peak amplitude to the selected
+     * sustain level.
      */
     u8 decayRate() { return sidreg[0x05] & 0x0F; }
 
-    //! @brief   Returns the decay rate for the envelope generator
-    /*! @details The sustain cycle follows the decay cycle and the output of
-     *           the voice will remain at the selected sustain amplitude as
-     *           long as the gate bit remains set. The sustain levels range
-     *           from zero to peak amplitude in 16 linear steps, with a sustain
-     *           value of 0 selecting zero amplitude and a sustain value of 15
-     *           selecting the peak amplitude.
-     *           A sustain value of 8 would cause the voice to sustain at an
-     *           amplitude one-half the peak amplitude reached by the attack
-     *           cycle.
+    /* Returns the decay rate for the envelope generator
+     * The sustain cycle follows the decay cycle and the output of the voice
+     * will remain at the selected sustain amplitude as long as the gate bit
+     * remains set. The sustain levels range from zero to peak amplitude in 16
+     * linear steps, with a sustain value of 0 selecting zero amplitude and a
+     * sustain value of 15 selecting the peak amplitude. A sustain value of 8
+     * would cause the voice to sustain at an amplitude one-half the peak
+     * amplitude reached by the attack cycle.
      */
     u8 sustainRate() { return sidreg[0x06] >> 4; }
 
-    //! @brief   Returns the release rate for the envelope generator
-    /*! @details The release cycle follows the sustain cycle when the Gate bit is
-     *           reset to zero. At this time, the output of Voice 1 will fall
-     *           from the sustain amplitude to zero amplitude at the selected
-     *           release rate. The 16 release rates are identical to the decay
-     *           rates.
+    /* Returns the release rate for the envelope generator
+     * The release cycle follows the sustain cycle when the Gate bit is reset
+     * to zero. At this time, the output of Voice 1 will fall from the sustain
+     * amplitude to zero amplitude at the selected release rate. The 16 release
+     * rates are identical to the decay rates.
      */
     u8 releaseRate() { return sidreg[0x06] & 0x0F; }
 };

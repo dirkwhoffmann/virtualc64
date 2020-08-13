@@ -16,6 +16,7 @@ let fmt6d  = MyFormatter.init(radix: 10, min: 0, max: 0x3F)
 let fmt8d  = MyFormatter.init(radix: 10, min: 0, max: 0xFF)
 let fmt9d  = MyFormatter.init(radix: 10, min: 0, max: 0x1FF)
 let fmt10d = MyFormatter.init(radix: 10, min: 0, max: 0x3FF)
+let fmt12d = MyFormatter.init(radix: 10, min: 0, max: 0xFFF)
 let fmt16d = MyFormatter.init(radix: 10, min: 0, max: 0xFFFF)
 
 let fmt3x  = MyFormatter.init(radix: 16, min: 0, max: 0x7)
@@ -24,6 +25,7 @@ let fmt6x  = MyFormatter.init(radix: 16, min: 0, max: 0x3F)
 let fmt8x  = MyFormatter.init(radix: 16, min: 0, max: 0xFF)
 let fmt9x  = MyFormatter.init(radix: 16, min: 0, max: 0x1FF)
 let fmt10x = MyFormatter.init(radix: 16, min: 0, max: 0x3FF)
+let fmt12x = MyFormatter.init(radix: 16, min: 0, max: 0xFFF)
 let fmt16x = MyFormatter.init(radix: 16, min: 0, max: 0xFFFF)
 
 class Inspector: DialogController {
@@ -217,7 +219,7 @@ class Inspector: DialogController {
     @IBOutlet weak var sidFrequency1: NSTextField!
     @IBOutlet weak var sidPulseWidth1: NSTextField!
     @IBOutlet weak var sidPulseWidthText1: NSTextField!
-    @IBOutlet weak var siaAttackRate1: NSTextField!
+    @IBOutlet weak var sidAttackRate1: NSTextField!
     @IBOutlet weak var sidDecayRate1: NSTextField!
     @IBOutlet weak var sidSustainRate1: NSTextField!
     @IBOutlet weak var sidReleaseRate1: NSTextField!
@@ -230,7 +232,7 @@ class Inspector: DialogController {
     @IBOutlet weak var sidFrequency2: NSTextField!
     @IBOutlet weak var sidPulseWidth2: NSTextField!
     @IBOutlet weak var sidPulseWidthText2: NSTextField!
-    @IBOutlet weak var siaAttackRate2: NSTextField!
+    @IBOutlet weak var sidAttackRate2: NSTextField!
     @IBOutlet weak var sidDecayRate2: NSTextField!
     @IBOutlet weak var sidSustainRate2: NSTextField!
     @IBOutlet weak var sidReleaseRate2: NSTextField!
@@ -243,7 +245,7 @@ class Inspector: DialogController {
     @IBOutlet weak var sidFrequency3: NSTextField!
     @IBOutlet weak var sidPulseWidth3: NSTextField!
     @IBOutlet weak var sidPulseWidthText3: NSTextField!
-    @IBOutlet weak var siaAttackRate3: NSTextField!
+    @IBOutlet weak var sidAttackRate3: NSTextField!
     @IBOutlet weak var sidDecayRate3: NSTextField!
     @IBOutlet weak var sidSustainRate3: NSTextField!
     @IBOutlet weak var sidReleaseRate3: NSTextField!
@@ -286,6 +288,7 @@ class Inspector: DialogController {
     var fmt8: MyFormatter { return hex ? fmt8x : fmt8d }
     var fmt9: MyFormatter { return hex ? fmt9x : fmt9d }
     var fmt10: MyFormatter { return hex ? fmt10x : fmt10d }
+    var fmt12: MyFormatter { return hex ? fmt12x : fmt12d }
     var fmt16: MyFormatter { return hex ? fmt16x : fmt16d }
 
     // Used to determine the items to be refreshed
@@ -337,6 +340,7 @@ class Inspector: DialogController {
             case "CIA": refreshCIA(count: count, full: full)
             case "Memory": refreshMemory(count: count, full: full)
             case "VICII": refreshVIC(count: count, full: full)
+            case "SID": refreshSID(count: count, full: full)
             default: break
             }
         }

@@ -28,6 +28,10 @@ class ReSID : public C64Component {
     // Entry point to the reSID backend
     reSID::SID *sid;
     
+    // Result of the latest inspection
+    SIDInfo info;
+    VoiceInfo voiceInfo[3];
+    
 public:
     
     void clock() { sid->clock(); }
@@ -70,22 +74,28 @@ public:
 public:
     
     void _reset() override;
+    void _inspect() override;
     void didLoadFromBuffer(u8 **buffer) override { sid->write_state(st); }
     void willSaveToBuffer(u8 **buffer) override { st = sid->read_state(); }
 
 private:
 
     void _setClockFrequency(u32 value) override;
-
+    
+    
+    //
+    // Analyzing
+    //
     
 public:
     
-    //! @brief    Gathers all values that are displayed in the debugger
-    SIDInfo getInfo();
+    // Returns the result of the most recent call to inspect()
+    SIDInfo getInfo() { return HardwareComponent::getInfo(info); }
+    VoiceInfo getVoiceInfo(unsigned nr) { return HardwareComponent::getInfo(voiceInfo[nr]); }
     
-    //! @brief    Gathers all debug information for a specific voice
-    VoiceInfo getVoiceInfo(unsigned voice);
-
+    
+public:
+    
 	//! Special peek function for the I/O memory range.
 	u8 peek(u16 addr);
 	
