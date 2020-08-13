@@ -171,10 +171,10 @@ public:
     u32 getClockFrequency() { return cpuFrequency; }
     
     // Returns the sample rate
-    u32 getSampleRate() { return sampleRate; }
+    double getSampleRate() { return (double)sampleRate; }
     
     // Sets the sample rate
-    void setSampleRate(u32 rate);
+    void setSampleRate(double rate);
     
     // Returns true iff audio filters should be emulated.
     bool getAudioFilter() { return emulateFilter; }

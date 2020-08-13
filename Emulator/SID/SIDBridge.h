@@ -76,7 +76,7 @@ private:
     // Current volume (0 = silent)
     i32 volume;
     
-    /* Target volume.
+    /* Target volume
      * Whenever an audio sample is written, the volume is increased or decreased
      * by volumeDelta steps to make it reach the target volume eventually. This
      * feature simulates a fading effect.
@@ -121,6 +121,7 @@ public:
     
     double getSampleRate();
     void setSampleRate(double rate);
+    
     u32 getClockFrequency();
     
     
@@ -141,13 +142,15 @@ private:
     void _dump(SIDInfo info);
     void _setWarp(bool enable) override;
     
+    
+    //
+    // Analyzing
+    //
+    
 public:
     
-
-    //! @brief    Gathers all values that are displayed in the debugger
+    // Returns the result of the most recent call to inspect()
     SIDInfo getInfo();
-
-    //! @brief    Gathers all debug information for a specific voice
     VoiceInfo getVoiceInfo(unsigned voice);
     
   
@@ -155,116 +158,105 @@ public:
     // Volume control
     //
     
-    /*! @brief Sets the current volume
-     */
+public:
+    
+    // Sets the current volume
     void setVolume(i32 vol) { volume = vol; }
     
-    /*! @brief   Triggers volume ramp up phase
-     *  @details Configures volume and targetVolume to simulate a smooth audio fade in
+    /* Ramps the volume up
+     * Configures volume and targetVolume to simulate a smooth audio fade in
      */
     void rampUp() { targetVolume = maxVolume; volumeDelta = 3; ignoreNextUnderOrOverflow(); }
     void rampUpFromZero() { volume = 0; rampUp(); }
     
-    /*! @brief   Triggers volume ramp down phase
-     *  @details Configures volume and targetVolume to simulate a quick audio fade out
+    /* Ramps the volume down
+     * Configures volume and targetVolume to simulate a quick audio fade out
      */
     void rampDown() { targetVolume = 0; volumeDelta = 50; ignoreNextUnderOrOverflow(); }
     
+    
     //
-    // Ringbuffer handling
+    // Managing the ringbuffer
     //
     
-    //! @brief  Returns the size of the ringbuffer
+public:
+    
+    // Returns the size of the ringbuffer (constant value)
     size_t ringbufferSize() { return bufferSize; }
     
-    //! @brief  Returns the position of the read pointer
+    // Returns the position of the read or write pointer
     u32 getReadPtr() { return readPtr; }
-
-    //! @brief  Returns the position of the write pointer
     u32 getWritePtr() { return writePtr; }
 
-    //! @brief  Clears the ringbuffer and resets the read and write pointer
+    // Clears the ringbuffer and resets the read and write pointer
     void clearRingbuffer();
     
-    //! @brief  Reads a single audio sample from the ringbuffer
+    // Reads a single audio sample from the ringbuffer
     float readData();
     
-    //! @brief  Reads a single audio sample without moving the read pointer
+    // Reads a single audio sample without moving the read pointer
     float ringbufferData(size_t offset);
     
-    /*! @brief   Reads a certain amount of samples from ringbuffer
-     *  @details Samples are stored in a single mono stream
+    /* Reads a number of sound samples from ringbuffer.
+     * Samples are stored in a single mono stream.
      */
     void readMonoSamples(float *target, size_t n);
     
-    /*! @brief   Reads a certain amount of samples from ringbuffer
-     *  @details Samples are stored in two seperate mono streams
+    /* Reads a number of sound samples from ringbuffer.
+     * Samples are stored in two seperate mono streams
      */
     void readStereoSamples(float *target1, float *target2, size_t n);
     
-    /*! @brief   Reads a certain amount of samples from ringbuffer
-     *  @details Samples are stored in an interleaved stereo stream
+    /* Reads a certain amount of samples from ringbuffer.
+     * Samples are stored in an interleaved stereo stream.
      */
     void readStereoSamplesInterleaved(float *target, size_t n);
     
-    /*! @brief  Writes a certain number of audio samples into ringbuffer
+    /* Writes a certain number of audio samples into ringbuffer
      */
     void writeData(short *data, size_t count);
     
-    /*! @brief   Handles a buffer underflow condition.
-     *  @details A buffer underflow occurs when the computer's audio device
-     *           needs sound samples than SID hasn't produced, yet.
+    /* Handles a buffer underflow condition.
+     * A buffer underflow occurs when the computer's audio device needs sound
+     * samples than SID hasn't produced, yet.
      */
     void handleBufferUnderflow();
     
-    /*! @brief   Handles a buffer overflow condition
-     *  @details A buffer overflow occurs when SID is producing more samples
-     *           than the computer's audio device is able to consume.
+    /* Handles a buffer overflow condition.
+     * A buffer overflow occurs when SID is producing more samples than the
+     * computer's audio device is able to consume.
      */
     void handleBufferOverflow();
     
-    //! @brief   Signals to ignore the next underflow or overflow condition.
+    // Signals to ignore the next underflow or overflow condition.
     void ignoreNextUnderOrOverflow() { lastAlignment = mach_absolute_time(); }
         
-    //! @brief   Moves read pointer one position forward
+    // Moves read or write pointer forwards or backwards
     void advanceReadPtr() { readPtr = (readPtr + 1) % bufferSize; }
-    
-    //! @brief   Moves read pointer forward or backward
     void advanceReadPtr(int steps) { readPtr = (readPtr + bufferSize + steps) % bufferSize; }
-    
-    //! @brief   Moves write pointer one position forward
     void advanceWritePtr() { writePtr = (writePtr + 1) % bufferSize; }
-    
-    //! @brief   Moves write pointer forward or backward
     void advanceWritePtr(int steps) { writePtr = (writePtr + bufferSize + steps) % bufferSize; }
     
-    //! @brief   Returns number of stored samples in ringbuffer
+    // Returns number of stored samples in ringbuffer
     unsigned samplesInBuffer() { return (writePtr + bufferSize - readPtr) % bufferSize; }
     
-    //! @brief   Returns remaining storage capacity of ringbuffer
+    // Returns remaining storage capacity of ringbuffer
     unsigned bufferCapacity() { return (readPtr + bufferSize - writePtr) % bufferSize; }
     
-    //! @brief   Returns the fill level as a percentage value
+    // Returns the fill level as a percentage value
     double fillLevel() { return (double)samplesInBuffer() / (double)bufferSize; }
     
-    /*! @brief    Aligns the write pointer.
-     *  @details  This function puts the write pointer somewhat ahead of the
-     *            read pointer. With a standard sample rate of 44100 Hz, 735
-     *            samples is 1/60 sec.
+    /* Aligns the write pointer.
+     * This function puts the write pointer somewhat ahead of the read pointer.
+     * With a standard sample rate of 44100 Hz, 735 samples is 1/60 sec.
      */
     const u32 samplesAhead = 8 * 735;
     void alignWritePtr() { writePtr = (readPtr  + samplesAhead) % bufferSize; }
     
-public:
-    
-    /*! @brief    Executes SID until a certain cycle is reached
-     *  @param    cycle The target cycle
-     */
+    // Executes SID until a certain cycle is reached
     void executeUntil(u64 targetCycle);
 
-    /*! @brief    Executes SID for a certain number of cycles
-     *  @param    cycles Number of cycles to execute
-     */
+    // Executes SID for a certain number of cycles
 	void execute(u64 numCycles);
 
      
@@ -274,13 +266,13 @@ public:
     
 public:
     
-	//! @brief    Special peek function for the I/O memory range.
+	// Special peek function for the I/O memory range
 	u8 peek(u16 addr);
 	
-    //! @brief    Same as peek, but without side effects.
+    // Same as peek without side effects
     u8 spypeek(u16 addr);
     
-	//! @brief    Special poke function for the I/O memory range.
+	// Special poke function for the I/O memory range
 	void poke(u16 addr, u8 value);
 };
 

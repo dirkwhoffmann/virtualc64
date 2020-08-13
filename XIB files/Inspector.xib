@@ -3380,7 +3380,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B0D-dJ-qqW" customClass="WaveformView" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="20" y="10" width="324" height="109"/>
+                                                        <rect key="frame" x="20" y="10" width="324" height="117"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     </customView>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UW9-AU-zSF">

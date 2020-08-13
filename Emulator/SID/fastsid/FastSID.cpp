@@ -178,11 +178,11 @@ FastSID::setRevision(SIDRevision rev)
 }
 
 void
-FastSID::setSampleRate(u32 rate)
+FastSID::setSampleRate(double rate)
 {
-    debug(SID_DEBUG, "Setting sample rate to %d\n", rate);
+    debug(SID_DEBUG, "Setting sample rate to %d\n", (u32)rate);
     
-    sampleRate = rate;
+    sampleRate = (u32)rate;
     
     // Recompute sample rate dependent data structures
     init(sampleRate, cpuFrequency);

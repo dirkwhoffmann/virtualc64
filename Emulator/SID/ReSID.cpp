@@ -148,13 +148,13 @@ ReSID::_setClockFrequency(u32 value)
 }
 
 void
-ReSID::setSampleRate(u32 value)
+ReSID::setSampleRate(double value)
 {
     sampleRate = value;
     
     sid->set_sampling_parameters((double)clockFrequency,
                                  (reSID::sampling_method)samplingMethod,
-                                 (double)sampleRate);
+                                 sampleRate);
     
     debug(SID_DEBUG, "Setting sample rate to %d samples per second.\n", sampleRate);
 }

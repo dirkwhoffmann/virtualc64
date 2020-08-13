@@ -79,7 +79,7 @@ SIDBridge::getSampleRate()
     switch (config.engine) {
             
         case ENGINE_FASTSID: return (double)fastsid.getSampleRate();
-        case ENGINE_RESID:   return (double)resid.getSampleRate();
+        case ENGINE_RESID:   return resid.getSampleRate();
             
         default:
             assert(false);
@@ -92,7 +92,7 @@ SIDBridge::setSampleRate(double rate)
 {
     debug(SID_DEBUG, "Changing sample rate from %f to %f\n", getSampleRate(), rate);
     
-    resid.setSampleRate((u32)rate);
+    resid.setSampleRate(rate);
     fastsid.setSampleRate((u32)rate);
 }
 
@@ -154,13 +154,6 @@ SIDBridge::_dump()
     msg("Emulate filter: %s\n", fastsid.getAudioFilter() ? "yes" : "no");
     msg("\n");
     _dump(fastsid.getInfo());
-    
-    resid.sid->voice[0].wave.reset();
-    resid.sid->voice[1].wave.reset();
-    resid.sid->voice[2].wave.reset();
-    resid.sid->voice[0].envelope.reset();
-    resid.sid->voice[1].envelope.reset();
-    resid.sid->voice[2].envelope.reset();
 }
 
 void

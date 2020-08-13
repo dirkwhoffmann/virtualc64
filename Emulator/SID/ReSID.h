@@ -7,9 +7,11 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-// List of modifications applied to reSID
+// This class is a wrapper around the third-party reSID library.
+//
+// List of modifications applied to reSID:
 // 1. Changed visibility of some objects from protected to public
-
+//
 // Good candidate for testing sound emulation: INTERNAT.P00
 
 #ifndef _RESID_H
@@ -20,8 +22,7 @@
 
 class ReSID : public C64Component {
 
-public:
-    
+    // Entry point to the reSID backend
     reSID::SID *sid;
     
 public:
@@ -30,7 +31,7 @@ public:
     
 private:
     
-    //! ReSID state
+    // ReSID state
     reSID::SID::State st;
     
     //! @brief   The emulated chip model
@@ -42,7 +43,7 @@ private:
     u32 clockFrequency;
     
     //! @brief   Sample rate (usually set to 44.1 kHz)
-    u32 sampleRate;
+    double sampleRate;
     
     //! @brief   Sampling method
     SamplingMethod samplingMethod;
@@ -119,10 +120,10 @@ public:
     }
 
     //! Returns the sample rate
-    u32 getSampleRate() { return sampleRate; }
+    double getSampleRate() { return sampleRate; }
     
     //! Sets the sample rate
-    void setSampleRate(u32 rate);
+    void setSampleRate(double rate);
     
     //! Returns true iff audio filters should be emulated.
     bool getAudioFilter() { return emulateFilter; }
