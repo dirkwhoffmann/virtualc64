@@ -161,10 +161,8 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var metal: MetalView!
     
     var renderer: Renderer!
-    
-    @IBOutlet weak var debugger: NSDrawer!
-    
-    // Bottom bar
+        
+    // Status bar
     @IBOutlet weak var greenLED8: NSButton!
     @IBOutlet weak var greenLED9: NSButton!
     @IBOutlet weak var redLED8: NSButton!
@@ -502,15 +500,7 @@ extension MyController {
         
         // Do 12 times a second ...
         if (animationCounter % 1) == 0 {
-            
-            // Refresh debug panel if open
-            if c64.isRunning {
-                let state = debugger.state
-                if state == NSDrawerState.open || state == NSDrawerState.opening {
-                    refresh()
-                }
-            }
-            
+                        
             // Update cartridge LED
             if c64.expansionport.hasLed() {
                 let led = c64.expansionport.led() ? 1 : 0
@@ -641,8 +631,7 @@ extension MyController {
             
         case MSG_CPU_JAMMED:
             
-            self.debugOpenAction(self)
-            refresh()
+            refreshStatusBar()
             
         case MSG_WARP_ON,
              MSG_WARP_OFF:

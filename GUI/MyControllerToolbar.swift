@@ -82,36 +82,6 @@ extension MyController {
         let controller = DiskInspectorController.init(windowNibName: nibName)
         controller.showSheet()
     }
-
-    public func debugOpenAction(_ sender: Any!) {
-        
-        let state = debugger.state
-        if state == NSDrawerState.closed || state == NSDrawerState.closing {
-            c64.cpu.setTracing(true)
-            debugger.open()
-        }
-    }
-    
-    public func debugCloseAction(_ sender: Any!) {
-        
-        let state = debugger.state
-        if state == NSDrawerState.open || state == NSDrawerState.opening {
-            c64.cpu.setTracing(false)
-            debugger.close()
-        }
-    }
-    
-    @IBAction func debugAction(_ sender: Any!) {
-        
-        let state = debugger.state
-        if state == NSDrawerState.closed || state == NSDrawerState.closing {
-            debugOpenAction(self)
-        } else {
-            debugCloseAction(self)
-        }
-        
-        refresh()
-    }
     
     @IBAction func inspectAction(_ sender: NSSegmentedControl) {
         

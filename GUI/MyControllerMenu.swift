@@ -404,14 +404,14 @@ extension MyController: NSMenuItemValidation {
 
         track("MyControllerMenu")
         c64.stepInto()
-        refresh()
+        // inspector.refresh()
     }
     
     @IBAction func stepOverAction(_ sender: Any!) {
         
         track("MyControllerMenu")
         c64.stepOver()
-        refresh()
+        // inspector.refresh()
     }
     
     @IBAction func resetAction(_ sender: Any!) {
