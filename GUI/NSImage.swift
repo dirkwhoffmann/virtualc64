@@ -7,136 +7,37 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-//
-// Extensions to CGImage
-//
-
-public extension CGImage {
+extension NSImage {
     
-    static func bitmapInfo() -> CGBitmapInfo {
+    convenience init(color: NSColor, size: NSSize) {
         
-        let noAlpha = CGImageAlphaInfo.noneSkipLast.rawValue
-        let bigEn32 = CGBitmapInfo.byteOrder32Big.rawValue
-    
-        return CGBitmapInfo(rawValue: noAlpha | bigEn32)
+        self.init(size: size)
+        lockFocus()
+        color.drawSwatch(in: NSRect(origin: .zero, size: size))
+        unlockFocus()
     }
-    
-    static func dataProvider(data: UnsafeMutableRawPointer, size: CGSize) -> CGDataProvider? {
+
+    static func make(texture: MTLTexture, rect: CGRect) -> NSImage? {
         
-        let dealloc: CGDataProviderReleaseDataCallback = {
-            
-            (info: UnsafeMutableRawPointer?, data: UnsafeRawPointer, size: Int) -> Void in
-            
-            // Core Foundation objects are memory managed, aren't they?
-            return
+        guard let cgImage = CGImage.make(texture: texture, rect: rect) else {
+            track("Failed to create CGImage.")
+            return nil
         }
         
-        return CGDataProvider(dataInfo: nil,
-                              data: data,
-                              size: 4 * Int(size.width) * Int(size.height),
-                              releaseData: dealloc)
-    }
-    
-    // Creates a CGImage from a raw data stream in 32 bit big endian format
-    static func make(data: UnsafeMutableRawPointer, size: CGSize) -> CGImage? {
-        
-        let w = Int(size.width)
-        let h = Int(size.height)
-        
-        return CGImage(width: w, height: h,
-                       bitsPerComponent: 8,
-                       bitsPerPixel: 32,
-                       bytesPerRow: 4 * w,
-                       space: CGColorSpaceCreateDeviceRGB(),
-                       bitmapInfo: bitmapInfo(),
-                       provider: dataProvider(data: data, size: size)!,
-                       decode: nil,
-                       shouldInterpolate: false,
-                       intent: CGColorRenderingIntent.defaultIntent)
-    }
-    
-    // Creates a CGImage from a MTLTexture
-    static func make(texture: MTLTexture, rect: CGRect) -> CGImage? {
-        
-        // Compute texture cutout
-        //   (x,y) : upper left corner
-        //   (w,h) : width and height
-        let x = Int(CGFloat(texture.width) * rect.minX)
-        let y = Int(CGFloat(texture.height) * rect.minY)
-        let w = Int(CGFloat(texture.width) * rect.width)
-        let h = Int(CGFloat(texture.height) * rect.height)
-        
-        // Get texture data as a byte stream
-        guard let data = malloc(4 * w * h) else { return nil; }
-        texture.getBytes(data,
-                         bytesPerRow: 4 * w,
-                         from: MTLRegionMake2D(x, y, w, h),
-                         mipmapLevel: 0)
-        
-        return make(data: data, size: CGSize.init(width: w, height: h))
-    }
-}
-
-//
-// Extensions to NSColor
-//
-
-extension NSColor {
-    
-    convenience init(r: Int, g: Int, b: Int, a: Int = 255) {
-        
-        self.init(red: CGFloat(r) / 255,
-                  green: CGFloat(g) / 255,
-                  blue: CGFloat(b) / 255,
-                  alpha: CGFloat(a) / 255)
-    }
-    
-    convenience init(r: Double, g: Double, b: Double, a: Double = 1.0) {
-
-        self.init(red: CGFloat(r),
-                  green: CGFloat(g),
-                  blue: CGFloat(b),
-                  alpha: CGFloat(a))
+        let size = NSSize(width: cgImage.width, height: cgImage.height)
+        return NSImage(cgImage: cgImage, size: size)
     }
 
-    convenience init(_ rgb: (Double, Double, Double)) {
+    static func make(data: UnsafeMutableRawPointer, rect: CGSize) -> NSImage? {
         
-        self.init(r: rgb.0, g: rgb.1, b: rgb.2)
+        guard let cgImage = CGImage.make(data: data, size: rect) else {
+            track("Failed to create CGImage.")
+            return nil
+        }
+        
+        let size = NSSize(width: cgImage.width, height: cgImage.height)
+        return NSImage(cgImage: cgImage, size: size)
     }
-    
-    convenience init(rgba: UInt32) {
-
-        let r = CGFloat(rgba & 0xFF)
-        let g = CGFloat((rgba >> 8) & 0xFF)
-        let b = CGFloat((rgba >> 16) & 0xFF)
-
-        self.init(red: r / 255.0, green: g / 255.0, blue: b / 255.0, alpha: 1.0)
-    }
-    
-    func rgb() -> (Int, Int, Int) {
-        
-        let r = Int(redComponent * 255)
-        let g = Int(greenComponent * 255)
-        let b = Int(blueComponent * 255)
-        
-        return (r, g, b)
-    }
-    
-    func rgba() -> (Int, Int, Int, Int) {
-        
-        let r = Int(redComponent * 255)
-        let g = Int(greenComponent * 255)
-        let b = Int(blueComponent * 255)
-        
-        return (r, g, b, 255)
-    }
-}
-
-//
-// Extensions to NSImage
-//
-
-extension NSImage {
     
     var cgImage: CGImage? {
         var rect = CGRect.init(origin: .zero, size: self.size)
@@ -148,7 +49,30 @@ extension NSImage {
         let bitmap = tiffRepresentation?.bitmap
         return bitmap?.representation(using: using, properties: [:])
     }
+    
+    func expand(toSize size: NSSize) -> NSImage? {
         
+        let newImage = NSImage.init(size: size)
+        
+        NSGraphicsContext.saveGraphicsState()
+        newImage.lockFocus()
+        
+        let t = NSAffineTransform()
+        t.translateX(by: 0.0, yBy: size.height)
+        t.scaleX(by: 1.0, yBy: -1.0)
+        t.concat()
+        
+        let inRect = NSRect.init(x: 0, y: 0, width: size.width, height: size.height)
+        let fromRect = NSRect.init(x: 0, y: 0, width: self.size.width, height: self.size.height)
+        let operation = NSCompositingOperation.copy
+        self.draw(in: inRect, from: fromRect, operation: operation, fraction: 1.0)
+        
+        newImage.unlockFocus()
+        NSGraphicsContext.restoreGraphicsState()
+        
+        return newImage
+    }
+    
     func resizeImage(width: CGFloat, height: CGFloat,
                      cutout: NSRect,
                      interpolation: NSImageInterpolation = .high) -> NSImage {
@@ -261,5 +185,47 @@ extension NSImage {
     func red() {
         
         tint(NSColor.init(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.5))
+    }
+        
+    func toTexture(device: MTLDevice) -> MTLTexture? {
+        
+        // let imageRect = NSMakeRect(0, 0, self.size.width, self.size.height);
+        let imageRef = self.cgImage(forProposedRect: nil, context: nil, hints: nil)
+        
+        // Create a suitable bitmap context for extracting the bits of the image
+        let width = imageRef!.width
+        let height = imageRef!.height
+        
+        if width == 0 || height == 0 { return nil }
+        
+        // Allocate memory
+        guard let data = malloc(height * width * 4) else { return nil }
+        let rawBitmapInfo =
+            CGImageAlphaInfo.noneSkipLast.rawValue |
+                CGBitmapInfo.byteOrder32Big.rawValue
+        let bitmapContext = CGContext(data: data,
+                                      width: width,
+                                      height: height,
+                                      bitsPerComponent: 8,
+                                      bytesPerRow: 4 * width,
+                                      space: CGColorSpaceCreateDeviceRGB(),
+                                      bitmapInfo: rawBitmapInfo)
+        
+        bitmapContext?.translateBy(x: 0.0, y: CGFloat(height))
+        bitmapContext?.scaleBy(x: 1.0, y: -1.0)
+        bitmapContext?.draw(imageRef!, in: CGRect.init(x: 0, y: 0, width: width, height: height))
+        // CGContextDrawImage(bitmapContext!, CGRectMake(0, 0, CGFloat(width), CGFloat(height)), imageRef)
+        
+        let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(
+            pixelFormat: MTLPixelFormat.rgba8Unorm,
+            width: width,
+            height: height,
+            mipmapped: false)
+        let texture = device.makeTexture(descriptor: textureDescriptor)
+        let region = MTLRegionMake2D(0, 0, width, height)
+        texture?.replace(region: region, mipmapLevel: 0, withBytes: data, bytesPerRow: 4 * width)
+        
+        free(data)
+        return texture
     }
 }

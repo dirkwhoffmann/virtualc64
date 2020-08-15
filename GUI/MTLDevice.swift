@@ -7,62 +7,6 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-//
-// Extensions to UInt32
-//
-
-extension UInt32 {
-
-    init(rgba: (UInt8, UInt8, UInt8, UInt8)) {
-        
-        let r = UInt32(rgba.0)
-        let g = UInt32(rgba.1)
-        let b = UInt32(rgba.2)
-        let a = UInt32(rgba.3)
-        
-        self.init(bigEndian: r << 24 | g << 16 | b << 8 | a)
-    }
-
-    init(rgba: (UInt8, UInt8, UInt8)) {
-        
-        self.init(rgba: (rgba.0, rgba.1, rgba.2, 0xFF))
-     }
-    
-    init(r: UInt8, g: UInt8, b: UInt8, a: UInt8) { self.init(rgba: (r, g, b, a)) }
-    init(r: UInt8, g: UInt8, b: UInt8) { self.init(rgba: (r, g, b)) }
-}
-
-//
-// Extensions to MTLTexture
-//
-
-extension MTLTexture {
-    
-    func replace(region: MTLRegion, buffer: UnsafeMutablePointer<UInt32>?) {
-        
-        if buffer != nil {
-            let bpr = 4 * region.size.width
-            replace(region: region, mipmapLevel: 0, withBytes: buffer!, bytesPerRow: bpr)
-        }
-    }
-    
-    func replace(size: MTLSize, buffer: UnsafeMutablePointer<UInt32>?) {
-        
-        let region = MTLRegionMake2D(0, 0, size.width, size.height)
-        replace(region: region, buffer: buffer)
-    }
-    
-    func replace(w: Int, h: Int, buffer: UnsafeMutablePointer<UInt32>?) {
-        
-        let region = MTLRegionMake2D(0, 0, w, h)
-        replace(region: region, buffer: buffer)
-    }
-}
-
-//
-// Extensions to MTLDevice
-//
-
 extension MTLDevice {
     
     func makeTexture(size: MTLSize,

@@ -24,8 +24,6 @@
 		5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */; };
 		5018AF66202EDD2000B4C886 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018AF65202EDD2000B4C886 /* Defaults.swift */; };
 		5018BFAB24B4843200551848 /* Primitives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018BFAA24B4843200551848 /* Primitives.swift */; };
-		5018BFAD24B4846C00551848 /* ImageToolbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018BFAC24B4846C00551848 /* ImageToolbox.swift */; };
-		5018BFAF24B4847900551848 /* TextureToolbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018BFAE24B4847900551848 /* TextureToolbox.swift */; };
 		5018BFB124B48DC400551848 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018BFB024B48DC400551848 /* Renderer.swift */; };
 		5018BFB324B48DD500551848 /* RendererSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018BFB224B48DD500551848 /* RendererSetup.swift */; };
 		501B9755215D86B7000CFB1D /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501B9754215D86B7000CFB1D /* Sparkle.framework */; };
@@ -38,7 +36,6 @@
 		5020434C1EE71B47006C3FD3 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */; };
 		50265F57202D00940041C315 /* TapeMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50265F56202D00940041C315 /* TapeMountController.swift */; };
-		5031D59A200B47B70088C802 /* ImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D599200B47B70088C802 /* ImageUtilities.swift */; };
 		5031D59C200B81D20088C802 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D59B200B81D20088C802 /* Animation.swift */; };
 		5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA8E20B6C263000D9193 /* CPUPanel.swift */; };
 		5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9020B6C281000D9193 /* MemoryPanel.swift */; };
@@ -174,6 +171,20 @@
 		50B1644E202DDAA600447D3E /* ExportDiskDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */; };
 		50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */; };
 		50B929F221C2B5C90039E8F2 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */; };
+		50BE4B5524E7F77F008F39C9 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5424E7F77F008F39C9 /* URL.swift */; };
+		50BE4B5824E7F80C008F39C9 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5724E7F80C008F39C9 /* FileManager.swift */; };
+		50BE4B5A24E7F81B008F39C9 /* NSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5924E7F81B008F39C9 /* NSColor.swift */; };
+		50BE4B5C24E7F857008F39C9 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5B24E7F857008F39C9 /* Data.swift */; };
+		50BE4B5E24E7F864008F39C9 /* DispatchTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5D24E7F864008F39C9 /* DispatchTime.swift */; };
+		50BE4B6024E7F8A1008F39C9 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5F24E7F8A1008F39C9 /* Date.swift */; };
+		50BE4B6224E7F8DE008F39C9 /* NSTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B6124E7F8DE008F39C9 /* NSTableView.swift */; };
+		50BE4B6424E7F941008F39C9 /* NSControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B6324E7F941008F39C9 /* NSControl.swift */; };
+		50BE4B6624E7F965008F39C9 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B6524E7F965008F39C9 /* String.swift */; };
+		50BE4B6824E7FB28008F39C9 /* MTLTexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B6724E7FB28008F39C9 /* MTLTexture.swift */; };
+		50BE4B6A24E7FB6C008F39C9 /* NSImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B6924E7FB6C008F39C9 /* NSImage.swift */; };
+		50BE4B6C24E7FB9E008F39C9 /* CGImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B6B24E7FB9E008F39C9 /* CGImage.swift */; };
+		50BE4B6E24E7FBE1008F39C9 /* UInt32.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B6D24E7FBE1008F39C9 /* UInt32.swift */; };
+		50BE4B7024E7FC21008F39C9 /* MTLDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B6F24E7FC21008F39C9 /* MTLDevice.swift */; };
 		50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF77D120309A2A006E000F /* WindowDelegate.swift */; };
 		50C72DE41BC7BC8800F1863B /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C72DE31BC7BC8800F1863B /* Metal.framework */; };
 		50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* Shaders.metal */; };
@@ -246,8 +257,6 @@
 		5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "C64_Pro_Mono-STYLE.ttf"; sourceTree = "<group>"; };
 		5018AF65202EDD2000B4C886 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		5018BFAA24B4843200551848 /* Primitives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Primitives.swift; sourceTree = "<group>"; };
-		5018BFAC24B4846C00551848 /* ImageToolbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageToolbox.swift; sourceTree = "<group>"; };
-		5018BFAE24B4847900551848 /* TextureToolbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureToolbox.swift; sourceTree = "<group>"; };
 		5018BFB024B48DC400551848 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		5018BFB224B48DD500551848 /* RendererSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererSetup.swift; sourceTree = "<group>"; };
 		501B9754215D86B7000CFB1D /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
@@ -258,7 +267,6 @@
 		501E427B20D975AD000BB48D /* IconVirtualC64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconVirtualC64.icns; sourceTree = "<group>"; };
 		5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTravelTouchBar.swift; sourceTree = "<group>"; };
 		50265F56202D00940041C315 /* TapeMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapeMountController.swift; sourceTree = "<group>"; };
-		5031D599200B47B70088C802 /* ImageUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtilities.swift; sourceTree = "<group>"; };
 		5031D59B200B81D20088C802 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		5038CA8E20B6C263000D9193 /* CPUPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUPanel.swift; sourceTree = "<group>"; };
 		5038CA9020B6C281000D9193 /* MemoryPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryPanel.swift; sourceTree = "<group>"; };
@@ -504,6 +512,20 @@
 		50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyControllerTouchBar.swift; sourceTree = "<group>"; };
 		50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
 		50B99CF024B0DA6B008BC9F8 /* MessageQueueTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageQueueTypes.h; sourceTree = "<group>"; };
+		50BE4B5424E7F77F008F39C9 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
+		50BE4B5724E7F80C008F39C9 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		50BE4B5924E7F81B008F39C9 /* NSColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColor.swift; sourceTree = "<group>"; };
+		50BE4B5B24E7F857008F39C9 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		50BE4B5D24E7F864008F39C9 /* DispatchTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchTime.swift; sourceTree = "<group>"; };
+		50BE4B5F24E7F8A1008F39C9 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		50BE4B6124E7F8DE008F39C9 /* NSTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTableView.swift; sourceTree = "<group>"; };
+		50BE4B6324E7F941008F39C9 /* NSControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSControl.swift; sourceTree = "<group>"; };
+		50BE4B6524E7F965008F39C9 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		50BE4B6724E7FB28008F39C9 /* MTLTexture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLTexture.swift; sourceTree = "<group>"; };
+		50BE4B6924E7FB6C008F39C9 /* NSImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSImage.swift; sourceTree = "<group>"; };
+		50BE4B6B24E7FB9E008F39C9 /* CGImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGImage.swift; sourceTree = "<group>"; };
+		50BE4B6D24E7FBE1008F39C9 /* UInt32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UInt32.swift; sourceTree = "<group>"; };
+		50BE4B6F24E7FC21008F39C9 /* MTLDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLDevice.swift; sourceTree = "<group>"; };
 		50BF77D120309A2A006E000F /* WindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDelegate.swift; sourceTree = "<group>"; };
 		50C72DE31BC7BC8800F1863B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		50C72DE51BC7F42100F1863B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
@@ -697,6 +719,7 @@
 				5000474012DCECAB0098D890 /* View */,
 				5000474112DCECBA0098D890 /* Controller */,
 				5000474312DCED190098D890 /* Misc */,
+				50BE4B5624E7F786008F39C9 /* Extensions */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -1034,9 +1057,6 @@
 				5018BFB224B48DD500551848 /* RendererSetup.swift */,
 				5031D59B200B81D20088C802 /* Animation.swift */,
 				50D8421720A82CF500EB859A /* MetalViewEvents.swift */,
-				5018BFAC24B4846C00551848 /* ImageToolbox.swift */,
-				5018BFAE24B4847900551848 /* TextureToolbox.swift */,
-				5031D599200B47B70088C802 /* ImageUtilities.swift */,
 				50DEAD8E2008E615008A8761 /* Shaders.swift */,
 				50C72DE51BC7F42100F1863B /* Shaders.metal */,
 			);
@@ -1130,6 +1150,27 @@
 				5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */,
 			);
 			name = TouchBar;
+			sourceTree = "<group>";
+		};
+		50BE4B5624E7F786008F39C9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				50BE4B6B24E7FB9E008F39C9 /* CGImage.swift */,
+				50BE4B5F24E7F8A1008F39C9 /* Date.swift */,
+				50BE4B5B24E7F857008F39C9 /* Data.swift */,
+				50BE4B5D24E7F864008F39C9 /* DispatchTime.swift */,
+				50BE4B5724E7F80C008F39C9 /* FileManager.swift */,
+				50BE4B6724E7FB28008F39C9 /* MTLTexture.swift */,
+				50BE4B5924E7F81B008F39C9 /* NSColor.swift */,
+				50BE4B6324E7F941008F39C9 /* NSControl.swift */,
+				50BE4B6924E7FB6C008F39C9 /* NSImage.swift */,
+				50BE4B6124E7F8DE008F39C9 /* NSTableView.swift */,
+				50BE4B6524E7F965008F39C9 /* String.swift */,
+				50BE4B6D24E7FBE1008F39C9 /* UInt32.swift */,
+				50BE4B5424E7F77F008F39C9 /* URL.swift */,
+				50BE4B6F24E7FC21008F39C9 /* MTLDevice.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		50C12A4221C6B634007EFAF6 /* Settings */ = {
@@ -1323,6 +1364,7 @@
 				504C439824AF29AC00E69CAE /* sid.cc in Sources */,
 				50769B8A24BB1B87006FE743 /* Configuration.swift in Sources */,
 				504C438424AF29AC00E69CAE /* Utils.cpp in Sources */,
+				50BE4B6624E7F965008F39C9 /* String.swift in Sources */,
 				5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */,
 				504C437724AF29AC00E69CAE /* G64File.cpp in Sources */,
 				504C438924AF29AC00E69CAE /* NeosMouse.cpp in Sources */,
@@ -1342,8 +1384,11 @@
 				504C437624AF29AC00E69CAE /* P00File.cpp in Sources */,
 				5038CA9520B6C2AC000D9193 /* VICPanel.swift in Sources */,
 				504C435F24AF29AC00E69CAE /* SuperGames.cpp in Sources */,
+				50BE4B5C24E7F857008F39C9 /* Data.swift in Sources */,
+				50BE4B6424E7F941008F39C9 /* NSControl.swift in Sources */,
 				507A499C24C8D64700DBF984 /* InstrTableView.swift in Sources */,
 				5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */,
+				50BE4B6E24E7FBE1008F39C9 /* UInt32.swift in Sources */,
 				5009CF3324C0B8EF00F674FF /* Preferences.swift in Sources */,
 				5002FA7B21C2650600DA4BBC /* HardwareConf.swift in Sources */,
 				504C435B24AF29AC00E69CAE /* StarDos.cpp in Sources */,
@@ -1369,6 +1414,7 @@
 				504C439C24AF29AC00E69CAE /* wave.cc in Sources */,
 				50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */,
 				5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */,
+				50BE4B6224E7F8DE008F39C9 /* NSTableView.swift in Sources */,
 				503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */,
 				504C437524AF29AC00E69CAE /* PRGFile.cpp in Sources */,
 				504C43A524AF29AC00E69CAE /* ExpansionPort.cpp in Sources */,
@@ -1377,7 +1423,7 @@
 				5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */,
 				5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */,
 				507A499E24C8D65700DBF984 /* TraceTableView.swift in Sources */,
-				5018BFAF24B4847900551848 /* TextureToolbox.swift in Sources */,
+				50BE4B6A24E7FB6C008F39C9 /* NSImage.swift in Sources */,
 				504C438B24AF29AC00E69CAE /* Mouse1351.cpp in Sources */,
 				506D3DCE20223E5E009742CF /* MyAppDelegate.swift in Sources */,
 				504C439224AF29AC00E69CAE /* VICII_cycles_ntsc.cpp in Sources */,
@@ -1389,6 +1435,7 @@
 				504C43AB24AF29AC00E69CAE /* CIA.cpp in Sources */,
 				504C436024AF29AC00E69CAE /* Mach5.cpp in Sources */,
 				504C43A724AF29AC00E69CAE /* VIA.cpp in Sources */,
+				50BE4B6024E7F8A1008F39C9 /* Date.swift in Sources */,
 				504C435C24AF29AC00E69CAE /* Westermann.cpp in Sources */,
 				504C439524AF29AC00E69CAE /* envelope.cc in Sources */,
 				504C437324AF29AC00E69CAE /* RomFile.cpp in Sources */,
@@ -1402,6 +1449,8 @@
 				50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */,
 				506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */,
 				505D492821C155DD00A7C575 /* RomConf.swift in Sources */,
+				50BE4B5A24E7F81B008F39C9 /* NSColor.swift in Sources */,
+				50BE4B5524E7F77F008F39C9 /* URL.swift in Sources */,
 				504C437924AF29AC00E69CAE /* Snapshot.cpp in Sources */,
 				50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */,
 				504C437F24AF29AC00E69CAE /* C64Memory.cpp in Sources */,
@@ -1419,14 +1468,15 @@
 				504C439624AF29AC00E69CAE /* pot.cc in Sources */,
 				504C43A124AF29AC00E69CAE /* IEC.cpp in Sources */,
 				50D3092024C625B200B92563 /* ProxyExtensions.swift in Sources */,
+				50BE4B5824E7F80C008F39C9 /* FileManager.swift in Sources */,
 				504C436D24AF29AC00E69CAE /* Rex.cpp in Sources */,
 				504C436424AF29AC00E69CAE /* Expert.cpp in Sources */,
 				5015F36620B546A30024B4AA /* WaveformView.swift in Sources */,
 				504C436724AF29AC00E69CAE /* MagicDesk.cpp in Sources */,
+				50BE4B7024E7FC21008F39C9 /* MTLDevice.swift in Sources */,
 				504C439F24AF29AC00E69CAE /* FastSID.cpp in Sources */,
 				504C43A624AF29AC00E69CAE /* Disk.cpp in Sources */,
 				504C43A224AF29AC00E69CAE /* ControlPort.cpp in Sources */,
-				5018BFAD24B4846C00551848 /* ImageToolbox.swift in Sources */,
 				50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */,
 				507A49A224C8D71400DBF984 /* BankTableView.swift in Sources */,
 				504C437C24AF29AC00E69CAE /* AnyArchive.cpp in Sources */,
@@ -1439,6 +1489,7 @@
 				50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */,
 				504C439324AF29AC00E69CAE /* Datasette.cpp in Sources */,
 				504C437024AF29AC00E69CAE /* Cartridge.cpp in Sources */,
+				50BE4B6824E7FB28008F39C9 /* MTLTexture.swift in Sources */,
 				5031D59C200B81D20088C802 /* Animation.swift in Sources */,
 				506B13C224C1C40600814BB0 /* PreferencesController.swift in Sources */,
 				507A49A024C8D66A00DBF984 /* GuardTableView.swift in Sources */,
@@ -1452,6 +1503,7 @@
 				504C436224AF29AC00E69CAE /* GeoRam.cpp in Sources */,
 				5002FA7D21C2651B00DA4BBC /* VideoConf.swift in Sources */,
 				504C43A324AF29AC00E69CAE /* ProcessorPort.cpp in Sources */,
+				50BE4B5E24E7F864008F39C9 /* DispatchTime.swift in Sources */,
 				5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */,
 				50EAFFEA24B2600D00024CD2 /* MyToolbar.swift in Sources */,
 				504C438E24AF29AC00E69CAE /* VICII_colors.cpp in Sources */,
@@ -1465,7 +1517,7 @@
 				50D3092424C7152700B92563 /* Inspector.swift in Sources */,
 				504C438C24AF29AC00E69CAE /* VICII_draw.cpp in Sources */,
 				50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */,
-				5031D59A200B47B70088C802 /* ImageUtilities.swift in Sources */,
+				50BE4B6C24E7FB9E008F39C9 /* CGImage.swift in Sources */,
 				504C436924AF29AC00E69CAE /* Zaxxon.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
