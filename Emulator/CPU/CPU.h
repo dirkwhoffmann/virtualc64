@@ -108,7 +108,7 @@ public:
 private:
         
     //
-    // Port lines
+    // Ports
     //
     
 public:
@@ -129,7 +129,7 @@ private:
     
 public:
     
-    /* Interrupt lines.
+    /* Interrupt lines
      * Usally both variables equal 0 which means that the two interrupt lines
      * are high. When an external component requests an interrupt, the NMI or
      * the IRQ line is pulled low. In that case, the corresponding variable is
@@ -207,10 +207,10 @@ private:
                           AddressingMode mode,
                           MicroInstruction mInstr);
     
+    
     //
     // Configuring
     //
-    
     
     
     //
@@ -239,7 +239,7 @@ private:
 
     
     //
-    // Getter and setter
+    // Accessing properties
     //
 
 public:
@@ -281,29 +281,6 @@ public:
     
     bool getC() { return reg.sr.c; }
     void setC(bool value) { reg.sr.c = value; }
-    
-    /*
-    u8 getN() { return reg.p & N_FLAG; }
-    void setN(u8 bit) { bit ? reg.p |= N_FLAG : reg.p &= ~N_FLAG; }
-    
-    u8 getV() { return reg.p & V_FLAG; }
-    void setV(u8 bit) { bit ? reg.p |= V_FLAG : reg.p &= ~V_FLAG; }
-    
-    u8 getB() { return reg.p & B_FLAG; }
-    void setB(u8 bit) { bit ? reg.p |= B_FLAG : reg.p &= ~B_FLAG; }
-    
-    u8 getD() { return reg.p & D_FLAG; }
-    void setD(u8 bit) { bit ? reg.p |= D_FLAG : reg.p &= ~D_FLAG; }
-    
-    u8 getI() { return reg.p & I_FLAG; }
-    void setI(u8 bit) { bit ? reg.p |= I_FLAG : reg.p &= ~I_FLAG; }
-    
-    u8 getZ() { return reg.p & Z_FLAG; }
-    void setZ(u8 bit) { bit ? reg.p |= Z_FLAG : reg.p &= ~Z_FLAG; }
-    
-    u8 getC() { return reg.p & C_FLAG; }
-    void setC(u8 bit) { bit ? reg.p |= C_FLAG : reg.p &= ~C_FLAG; }
-    */
     
     u8 getP();
     u8 getPWithClearedB();
