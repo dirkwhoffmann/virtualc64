@@ -41,7 +41,7 @@ CIA::CIA(C64 &ref) : C64Component(ref)
         { &DDRB,             sizeof(DDRB),             CLEAR_ON_RESET },
         { &PA,               sizeof(PA),               CLEAR_ON_RESET },
         { &PB,               sizeof(PB),               CLEAR_ON_RESET },
-        { &SDR,              sizeof(SDR),              CLEAR_ON_RESET },
+        { &sdr,              sizeof(sdr),              CLEAR_ON_RESET },
         { &serClk,           sizeof(serClk),           CLEAR_ON_RESET },
         { &serCounter,       sizeof(serCounter),       CLEAR_ON_RESET },
         { &CNT,              sizeof(CNT),              CLEAR_ON_RESET },
@@ -103,8 +103,8 @@ CIA::_inspect()
         info.timerB.pbout = CRB & 0x02;
         info.timerB.oneShot = CRB & 0x08;
         
-        info.sdr = SDR;
-        info.ssr = SDR;  // ssr not yet implemented
+        info.sdr = sdr;
+        info.ssr = sdr;  // ssr not yet implemented
         info.icr = icr;
         info.imr = imr;
         info.intLine = INT;
@@ -256,7 +256,7 @@ CIA::peek(u16 addr)
 			
         case 0x0C: // CIA_SERIAL_DATA_REGISTER
 			
-			result = SDR;
+			result = sdr;
 			break;
 			
         case 0x0D: // CIA_INTERRUPT_CONTROL
@@ -359,7 +359,7 @@ CIA::spypeek(u16 addr)
             return tod.getTodHours();
             
         case 0x0C: // CIA_SERIAL_DATA_REGISTER
-            return SDR;
+            return sdr;
             
         case 0x0D: // CIA_INTERRUPT_CONTROL
             return icr;
@@ -494,7 +494,7 @@ CIA::poke(u16 addr, u8 value)
 			
         case 0x0C: // CIA_DATA_REGISTER
             
-            SDR = value;
+            sdr = value;
             delay |= CIASerLoad0;
             feed |= CIASerLoad0;
             // delay &= ~SerLoad1;

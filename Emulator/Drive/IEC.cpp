@@ -82,7 +82,6 @@ IEC::_dump()
 	msg("\n");
     msg("    DDRB (VIA1) : %02X (Drive 1)\n", drive8.via1.getDDRB());
     msg("    DDRB (VIA1) : %02X (Drive 2)\n", drive9.via1.getDDRB());
-    msg("    DDRA (CIA2) : %02X\n\n", cia2.getDDRA());
     msg("   Bus activity : %d\n", busActivity); 
 
     msg("\n");

@@ -10,9 +10,9 @@
 #ifndef _CIA_H
 #define _CIA_H
 
-#include "C64Component.h"
+#include "TOD.h"
 
-// Adapted from PC64WIN
+// Action flags
 #define CIACountA0     (1ULL << 0) // Decrements timer A
 #define CIACountA1     (1ULL << 1)
 #define CIACountA2     (1ULL << 2)
@@ -58,9 +58,8 @@
 
 #define DelayMask ~((1ULL << 42) | CIACountA0 | CIACountB0 | CIALoadA0 | CIALoadB0 | CIAPB6Low0 | CIAPB7Low0 | CIASetInt0 | CIAClearInt0 | CIAOneShotA0 | CIAOneShotB0 | CIAReadIcr0 | CIAClearIcr0 | CIAAckIcr0 | CIASetIcr0 | CIATODInt0 | CIASerInt0 | CIASerLoad0 | CIASerClk0)
 
-// Virtual complex interface adapter (CIA)
 class CIA : public C64Component {
-    
+        
     // Current configuration
     CIAConfig config;
     
@@ -76,7 +75,7 @@ class CIA : public C64Component {
     
     
     //
-    // Internal state
+    // Internals
     //
         
 protected:
@@ -93,45 +92,37 @@ protected:
     // Timer B latch
     u16 latchB;
 	    
-    
-	// 
-	// Adapted from PC64Win by Wolfgang Lorenz
-	//
-		
+    		
     //
 	// Control
     //
     
-    //! @brief    Performs delay by shifting left at each clock
+    // Action flags
 	u64 delay;
-    
-    //! @brief    New bits to feed into dwDelay
 	u64 feed;
     
-    //! @brief    Control register A
+    // Control registers
 	u8 CRA;
-
-    //! @brief    Control register B
     u8 CRB;
     
-    //! @brief    Interrupt control register
+    // Interrupt control register
 	u8 icr;
 
-    //! @brief    ICR bits that need to deleted when CIAAckIcr1 hits
+    // ICR bits that need to deleted when CIAAckIcr1 hits
     u8 icrAck;
 
-    //! @brief    Interrupt mask register
+    // Interrupt mask register
 	u8 imr;
 
 protected:
     
-    //! @brief    Bit mask for PB outputs: 0 = port register, 1 = timer
+    // Bit mask for PB outputs (0 = port register, 1 = timer)
     u8 PB67TimerMode;
     
-    //! @brief    PB outputs bits 6 and 7 in timer mode
+    // PB outputs bits 6 and 7 in timer mode
 	u8 PB67TimerOut;
     
-    //! @brief    PB outputs bits 6 and 7 in toggle mode
+    // PB outputs bits 6 and 7 in toggle mode
 	u8 PB67Toggle;
 		
     
@@ -141,22 +132,16 @@ protected:
     
 protected:
     
-    //! @brief    Peripheral data register A
+    // Peripheral data registers
     u8 PRA;
-    
-    //! @brief    Peripheral data register B
     u8 PRB;
     
-    //! @brief    Data directon register A (0 = input, 1 = output)
+    // Data directon registers
     u8 DDRA;
-    
-    //! @brief    Data directon register B (0 = input, 1 = output)
     u8 DDRB;
     
-    //! @brief    Peripheral port A (pins PA0 to PA7)
+    // Peripheral ports
     u8 PA;
-    
-    //! @brief    Peripheral port A (pins PB0 to PB7)
     u8 PB;
 	
     
@@ -166,47 +151,48 @@ protected:
     
 private:
     
-    //! @brief    Serial data register
-    /*! @details  http://unusedino.de/ec64/technical/misc/cia6526/serial.html
-     *            "The serial port is a buffered, 8-bit synchronous shift register system.
-     *             A control bit selects input or output mode. In input mode, data on the SP pin
-     *             is shifted into the shift register on the rising edge of the signal applied
-     *             to the CNT pin. After 8 CNT pulses, the data in the shift register is dumped
-     *             into the Serial Data Register and an interrupt is generated. In the output
-     *             mode, TIMER A is used for the baud rate generator. Data is shifted out on the
-     *             SP pin at 1/2 the underflow rate of TIMER A. [...] Transmission will start
-     *             following a write to the Serial Data Register (provided TIMER A is running
-     *             and in continuous mode). The clock signal derived from TIMER A appears as an
-     *             output on the CNT pin. The data in the Serial Data Register will be loaded
-     *             into the shift register then shift out to the SP pin when a CNT pulse occurs.
-     *             Data shifted out becomes valid on the falling edge of CNT and remains valid
-     *             until the next falling edge. After 8 CNT pulses, an interrupt is generated to
-     *             indicate more data can be sent. If the Serial Data Register was loaded with
-     *             new information prior to this interrupt, the new data will automatically be
-     *             loaded into the shift register and transmission will continue. If the
-     *             microprocessor stays one byte ahead of the shift register, transmission will
-     *             be continuous. If no further data is to be transmitted, after the 8th CNT
-     *             pulse, CNT will return high and SP will remain at the level of the last data
-     *             bit transmitted. SDR data is shifted out MSB first and serial input data
-     *             should also appear in this format.
+    /* Serial data register
+     * http://unusedino.de/ec64/technical/misc/cia6526/serial.html
+     * "The serial port is a buffered, 8-bit synchronous shift register system.
+     *  A control bit selects input or output mode. In input mode, data on the
+     *  SP pin is shifted into the shift register on the rising edge of the
+     *  signal applied to the CNT pin. After 8 CNT pulses, the data in the shift
+     *  register is dumped into the Serial Data Register and an interrupt is
+     *  generated. In the output mode, TIMER A is used for the baud rate
+     *  generator. Data is shifted out on the SP pin at 1/2 the underflow rate
+     *  of TIMER A. [...] Transmission will start following a write to the
+     *  Serial Data Register (provided TIMER A is running and in continuous
+     *  mode). The clock signal derived from TIMER A appears as an output on the
+     *  CNT pin. The data in the Serial Data Register will be loaded into the
+     *  shift register then shift out to the SP pin when a CNT pulse occurs.
+     *  Data shifted out becomes valid on the falling edge of CNT and remains
+     *  valid until the next falling edge. After 8 CNT pulses, an interrupt is
+     *  generated to indicate more data can be sent. If the Serial Data Register
+     *  was loaded with new information prior to this interrupt, the new data
+     *  will automatically be loaded into the shift register and transmission
+     *  will continue. If the microprocessor stays one byte ahead of the shift
+     *  register, transmission will be continuous. If no further data is to be
+     *  transmitted, after the 8th CNT pulse, CNT will return high and SP will
+     *  remain at the level of the last data bit transmitted. SDR data is
+     *  shifted out MSB first and serial input data should also appear in this
+     *  format.
      */
-    u8 SDR;
+    u8 sdr;
     
-    //! @brief   Clock signal for driving the serial register
+    // Clock signal for driving the serial register
     bool serClk;
     
-    //! @brief   Shift register counter
-    /*! @details The counter is set to 8 when the shift register is loaded and decremented
-     *           when a bit is shifted out.
+    /* Shift register counter
+     * The counter is set to 8 when the shift register is loaded and decremented
+     * when a bit is shifted out.
      */
     u8 serCounter;
     
     //
-	// Chip interface (port pins)
+	// Port pins
     //
         
-    //! @brief    Serial clock or input timer clock or timer gate
-	bool CNT;
+    bool CNT;
 	bool INT;
 
     
@@ -249,9 +235,11 @@ public:
     
     
     //
-    // Configuring
+    // Configuring and analyzing
     //
 
+public:
+    
     CIAConfig getConfig() { return config; }
 
     CIARevision getRevision() { return config.revision; }
@@ -260,9 +248,11 @@ public:
     bool getTimerBBug() { return config.timerBBug; }
     void setTimerBBug(bool value) { config.timerBBug = value; }
     
+    CIAInfo getInfo() { return HardwareComponent::getInfo(info); }
+    
     
     //
-    // Methods from HardwareComponent
+    // Managing the component state
     //
     
 protected:
@@ -274,156 +264,118 @@ protected:
     // size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     // size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
 
-            
+        
     //
-    // Analyzing
-    //
-    
-public:
-
-    // Returns the result of the most recent call to inspect()
-    CIAInfo getInfo() { return HardwareComponent::getInfo(info); }
-    
-    
-    //
-    // Accessing properties
+    // Accessing the I/O register space
     //
        
-    //! @brief    Getter for peripheral port A
-    u8 getPA() { return PA; }
-    u8 getDDRA() { return DDRA; }
-
-    //! @brief    Getter for peripheral port B
-    u8 getPB() { return PB; }
-    u8 getDDRB() { return DDRB; }
+public:
     
-    //! @brief    Simulates a rising edge on the flag pin
-    void triggerRisingEdgeOnFlagPin();
-
-    //! @brief    Simulates a falling edge on the flag pin
-    void triggerFallingEdgeOnFlagPin();
+    // Reads a value from a CIA register
+    u8 peek(u16 addr);
     
-private:
-
-    //
-	// Interrupt control
-	//
+    // Reads a value from a CIA register without causing side effects
+    u8 spypeek(u16 addr);
     
-    /*! @brief    Requests the CPU to interrupt
-     *  @details  This function is abstract and implemented differently by CIA1 and CIA2.
-     *            CIA 1 activates the IRQ line and CIA 2 the NMI line.
-     */
-    virtual void pullDownInterruptLine() = 0;
-    
-    /*! @brief    Removes the interrupt requests
-     *  @details  This function is abstract and implemented differently by CIA1 and CIA2.
-     *            CIA 1 clears the IRQ line and CIA 2 the NMI line.
-     */
-    virtual void releaseInterruptLine() = 0;
-    
-	/*! @brief    Load latched value into timer.
-	 *  @details  As a side effect, CountA2 is cleared. This causes the timer to wait
-     *            for one cycle before it continues to count.
-     */
-    void reloadTimerA() { counterA = latchA; delay &= ~CIACountA2; }
-	
-	/*! @brief    Loads latched value into timer.
-	 *  @details  As a side effect, CountB2 is cleared. This causes the timer to wait for
-     *            one cycle before it continues to count.
-     */
-    void reloadTimerB() { counterB = latchB; delay &= ~CIACountB2; }
-
-    /*! @brief    Triggers a timer interrupt
-     *  @details  Invoked inside executeOneCycle() if IRQ conditions are met.
-     */
-    void triggerTimerIrq();
-
-    /*! @brief    Triggers a TOD interrupt
-     *  @details  Invoked inside executeOneCycle() if IRQ conditions are met.
-     */
-    void triggerTodIrq();
-
-    /*! @brief    Triggers a serial interrupt
-     *  @details  Invoked inside executeOneCycle() if IRQ conditions are met.
-     */
-    void triggerSerialIrq();
-
-private:
+    // Writes a value into a CIA register
+    void poke(u16 addr, u8 value);
     
     //
-    // Port registers
+    // Accessing the port registers
     //
-    
-    //! @brief   Values driving port A from inside the chip
-    virtual u8 portAinternal() = 0;
-    
-    //! @brief   Values driving port A from outside the chip
-    virtual u8 portAexternal() = 0;
     
 public:
     
-    //! @brief   Computes the values which we currently see at port A
-    virtual void updatePA() = 0;
-    
+    // Returns the data registers (call updatePA() or updatePB() first)
+    u8 getPA() { return PA; }
+    u8 getPB() { return PB; }
+
 private:
     
-    //! @brief   Values driving port B from inside the chip
+    // Returns the data direction register
+    u8 getDDRA() { return DDRA; }
+    u8 getDDRB() { return DDRB; }
+    
+    // Computes the value we currently see at port A
+    virtual void updatePA() = 0;
+    
+    // Returns the value driving port A from inside the chip
+    virtual u8 portAinternal() = 0;
+    
+    // Returns the value driving port A from outside the chip
+    virtual u8 portAexternal() = 0;
+    
+    // Computes the value we currently see at port B
+    virtual void updatePB() = 0;
+    
+    // Returns the value driving port B from inside the chip
     virtual u8 portBinternal() = 0;
     
-    //! @brief   Values driving port B from outside the chip
+    // Returns the value  driving port B from outside the chip
     virtual u8 portBexternal() = 0;
     
-    //! @brief   Computes the values which we currently see at port B
-    virtual void updatePB() = 0;
-
 protected:
     
-    //! @brief   Action method for poking the PA register
+    // Action method for poking the PA register
     virtual void pokePA(u8 value) { PRA = value; updatePA(); }
 
-    //! @brief   Action method for poking the DDRA register
+    // Action method for poking the DDRA register
     virtual void pokeDDRA(u8 value) { DDRA = value; updatePA(); }
 
     
     //
-    //! @functiongroup Accessing the I/O address space
+    // Accessing the port pins
     //
     
 public:
+    
+    // Simulates an edge on the flag pin
+    void triggerRisingEdgeOnFlagPin();
+    void triggerFallingEdgeOnFlagPin();
+    
+    
+    //
+    // Handling interrupts
+    //
+    
+private:
 
-    //! @brief    Peeks a value from a CIA register.
-    u8 peek(u16 addr);
+    // Requests the CPU to interrupt
+    virtual void pullDownInterruptLine() = 0;
     
-    //! @brief    Peeks a value from a CIA register without causing side effects.
-    u8 spypeek(u16 addr);
+    // Removes the interrupt requests
+    virtual void releaseInterruptLine() = 0;
     
-    //! @brief    Pokes a value into a CIA register.
-    void poke(u16 addr, u8 value);
+    // Loads a latched value into timer
+    void reloadTimerA() { counterA = latchA; delay &= ~CIACountA2; }
+    void reloadTimerB() { counterB = latchB; delay &= ~CIACountB2; }
     
+    // Triggers an interrupt (invoked inside executeOneCycle())
+    void triggerTimerIrq();
+    void triggerTodIrq();
+    void triggerSerialIrq();
     
+public:
+    
+    // Handles an interrupt request from TOD
+    void todInterrupt();
+    
+ 
     //
-    //! @functiongroup Running the device
+    // Executing
     //
     
 public:
     
-	//! @brief    Executes the CIA for one cycle
+	// Executes the CIA for one cycle
 	void executeOneCycle();
     
-	//! @brief    Increments the TOD clock by one tenth of a second
+	// Increments the TOD clock by one tenth of a second
 	void incrementTOD();
 
-    
+ 
     //
-    //! @functiongroup Handling interrupt requests
-    //
-    
-    //! @brief    Handles an interrupt request from TOD
-    void todInterrupt(); 
-
-    
-    //
-    // Speeding up emulation (sleep logic)
+    // Speeding up (sleep logic)
     //
     
 private:
@@ -451,12 +403,10 @@ public:
 };
 
 
-/* The first virtual complex interface adapter (CIA 1).
- * The CIA 1 chips differs from the CIA 2 chip in several smaller aspects.
- * For example, the CIA 1 interrupts the CPU via the IRQ line (maskable
- * interrupts). Furthermore, the keyboard is connected to the the C64 via the
- * CIA 1 chip.
- */
+//
+// CIA1
+//
+
 class CIA1 : public CIA {
 	
 public:
@@ -476,12 +426,11 @@ private:
     void updatePB() override;
 };
 	
-/* The second virtual complex interface adapter (CIA 2).
- * The CIA 2 chips differs from the CIA 1 chip in several smaller aspects.
- * For example, the CIA 2 interrupts the CPU via the NMI line (non maskable
- * interrupts). Furthermore, the CIA 2 controlls the memory bank seen by the
- * video controller.
- */
+
+//
+// CIA2
+//
+
 class CIA2 : public CIA {
 
 public:
