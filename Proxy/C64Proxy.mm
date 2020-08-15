@@ -1060,7 +1060,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 		case 2:
 			return [self via2];
 		default:
-			assert(0);
+			assert(false);
 			return NULL;
 	}
 }

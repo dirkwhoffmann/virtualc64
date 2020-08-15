@@ -185,6 +185,7 @@
 		50BE4B6C24E7FB9E008F39C9 /* CGImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B6B24E7FB9E008F39C9 /* CGImage.swift */; };
 		50BE4B6E24E7FBE1008F39C9 /* UInt32.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B6D24E7FBE1008F39C9 /* UInt32.swift */; };
 		50BE4B7024E7FC21008F39C9 /* MTLDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B6F24E7FC21008F39C9 /* MTLDevice.swift */; };
+		50BE4B7224E81266008F39C9 /* CIARegisters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B7124E81266008F39C9 /* CIARegisters.cpp */; };
 		50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF77D120309A2A006E000F /* WindowDelegate.swift */; };
 		50C72DE41BC7BC8800F1863B /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C72DE31BC7BC8800F1863B /* Metal.framework */; };
 		50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* Shaders.metal */; };
@@ -526,6 +527,7 @@
 		50BE4B6B24E7FB9E008F39C9 /* CGImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGImage.swift; sourceTree = "<group>"; };
 		50BE4B6D24E7FBE1008F39C9 /* UInt32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UInt32.swift; sourceTree = "<group>"; };
 		50BE4B6F24E7FC21008F39C9 /* MTLDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLDevice.swift; sourceTree = "<group>"; };
+		50BE4B7124E81266008F39C9 /* CIARegisters.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CIARegisters.cpp; sourceTree = "<group>"; };
 		50BF77D120309A2A006E000F /* WindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDelegate.swift; sourceTree = "<group>"; };
 		50C72DE31BC7BC8800F1863B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		50C72DE51BC7F42100F1863B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
@@ -1025,6 +1027,7 @@
 				504C435624AF29AC00E69CAE /* CIATypes.h */,
 				504C435324AF29AC00E69CAE /* CIA.h */,
 				504C435824AF29AC00E69CAE /* CIA.cpp */,
+				50BE4B7124E81266008F39C9 /* CIARegisters.cpp */,
 				504C435424AF29AC00E69CAE /* TOD.h */,
 				504C435524AF29AC00E69CAE /* TOD.cpp */,
 			);
@@ -1486,6 +1489,7 @@
 				5046C415202349EE000D9B1C /* ArchiveMountController.swift in Sources */,
 				504C437224AF29AC00E69CAE /* FlashRom.cpp in Sources */,
 				504C43A024AF29AC00E69CAE /* FastVoice.cpp in Sources */,
+				50BE4B7224E81266008F39C9 /* CIARegisters.cpp in Sources */,
 				50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */,
 				504C439324AF29AC00E69CAE /* Datasette.cpp in Sources */,
 				504C437024AF29AC00E69CAE /* Cartridge.cpp in Sources */,

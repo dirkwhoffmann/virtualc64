@@ -134,7 +134,7 @@ ControlPort::trigger(GamePadAction event)
             break;
   
         default:
-            assert(0);
+            assert(false);
     }
 }
 

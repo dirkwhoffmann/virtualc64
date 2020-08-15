@@ -246,7 +246,7 @@ C64Memory::peek(u16 addr, MemoryType source)
         return vic.getDataBusPhi1();
         
         default:
-        assert(0);
+        assert(false);
         return 0;
     }
 }
@@ -367,7 +367,7 @@ C64Memory::spypeek(u16 addr, MemoryType source)
             return ram[addr];
             
         default:
-            // assert(0);
+            assert(false);
             return 0;
     }
 }
@@ -461,7 +461,7 @@ C64Memory::poke(u16 addr, u8 value, MemoryType target)
             return;
             
         default:
-            assert(0);
+            assert(false);
             return;
     }
 }

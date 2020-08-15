@@ -494,7 +494,7 @@ VICII::loadColors(u8 mode)
             
         default:
             
-            assert(0);
+            assert(false);
             break;
     }
 }

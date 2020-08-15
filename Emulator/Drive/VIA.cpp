@@ -301,9 +301,11 @@ VIA6522::peek(u16 addr)
 
         case 0xF: // ORA - Output register A (no handshake)
             return peekORA(false);
+            
+        default:
+            assert(false);
     }
 
-    assert(0);
     return 0;
 }
 

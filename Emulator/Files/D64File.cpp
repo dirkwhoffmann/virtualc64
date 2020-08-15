@@ -778,7 +778,7 @@ D64File::writeBAM(const char *name)
             else if (sectors == 19) data[pos++] = 0x07;
             else if (sectors == 18) data[pos++] = 0x03;
             else if (sectors == 17) data[pos++] = 0x01;
-            else assert(0);
+            else assert(false);
         }
     }
     assert(pos == offset(18, 0) + 0x90);

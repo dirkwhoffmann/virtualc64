@@ -258,7 +258,7 @@ HardwareComponent::loadFromBuffer(u8 **buffer)
                 case WORD_ARRAY: readBlock16(buffer, (u16 *)data, size); break;
                 case DWORD_ARRAY: readBlock32(buffer, (u32 *)data, size); break;
                 case QWORD_ARRAY: readBlock64(buffer, (u64 *)data, size); break;
-                default: assert(0);
+                default: assert(false);
             }
         }
     }
@@ -314,7 +314,7 @@ HardwareComponent::saveToBuffer(u8 **buffer)
                 case WORD_ARRAY: writeBlock16(buffer, (u16 *)data, size); break;
                 case DWORD_ARRAY: writeBlock32(buffer, (u32 *)data, size); break;
                 case QWORD_ARRAY: writeBlock64(buffer, (u64 *)data, size); break;
-                default: assert(0);
+                default: assert(false);
             }
         }
     }
