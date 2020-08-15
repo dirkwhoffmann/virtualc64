@@ -289,6 +289,7 @@ public:
     
 private:
     
+    /*
     // Loads the accumulator. The Z- and N-flag may change.
     void loadA(u8 a) { reg.a = a; setN(a & 0x80); setZ(a == 0); }
     
@@ -297,6 +298,7 @@ private:
     
     // Loads the Y register. The Z- and N-flag may change.
     void loadY(u8 y) { reg.y = y; setN(y & 0x80); setZ(y == 0); }
+    */
     
     
     //

@@ -303,6 +303,15 @@ typedef enum {
     
 } MicroInstruction;
 
+// Loads a register and sets the Z and V flag
+#define loadA(v) { u8 u = (v); reg.a = u; reg.sr.n = u & 0x80; reg.sr.z = u == 0; }
+#define loadX(v) { u8 u = (v); reg.x = u; reg.sr.n = u & 0x80; reg.sr.z = u == 0; }
+#define loadY(v) { u8 u = (v); reg.y = u; reg.sr.n = u & 0x80; reg.sr.z = u == 0; }
+
+// void loadA(u8 a) { reg.a = a; setN(a & 0x80); setZ(a == 0); }
+// void loadX(u8 x) { reg.x = x; setN(x & 0x80); setZ(x == 0); }
+// void loadY(u8 y) { reg.y = y; setN(y & 0x80); setZ(y == 0); }
+
 // Atomic CPU tasks
 #define FETCH_OPCODE \
 if (likely(rdyLine)) instr = mem.peek(reg.pc++); else return;
@@ -365,11 +374,11 @@ mem.pokeZP(reg.adl, reg.d); setN(reg.d & 0x80); setZ(reg.d == 0);
 #define PUSH_P mem.pokeStack(reg.sp--, getP());
 #define PUSH_P_WITH_B_SET mem.pokeStack(reg.sp--, getP() | B_FLAG);
 #define PUSH_A mem.pokeStack(reg.sp--, reg.a);
-#define PULL_PCL if (likely(rdyLine)) setPCL(mem.peekStack(reg.sp)); else return;
-#define PULL_PCH if (likely(rdyLine)) setPCH(mem.peekStack(reg.sp)); else return;
-#define PULL_P if (likely(rdyLine)) setPWithoutB(mem.peekStack(reg.sp)); else return;
-#define PULL_A if (likely(rdyLine)) loadA(mem.peekStack(reg.sp)); else return;
-#define IDLE_PULL if (likely(rdyLine)) mem.peekStackIdle(reg.sp); else return;
+#define PULL_PCL if (likely(rdyLine)) { setPCL(mem.peekStack(reg.sp)); } else return;
+#define PULL_PCH if (likely(rdyLine)) { setPCH(mem.peekStack(reg.sp)); } else return;
+#define PULL_P if (likely(rdyLine)) { setPWithoutB(mem.peekStack(reg.sp)); } else return;
+#define PULL_A if (likely(rdyLine)) { loadA(mem.peekStack(reg.sp)); } else return;
+#define IDLE_PULL if (likely(rdyLine)) { mem.peekStackIdle(reg.sp); } else return;
 
 #define PAGE_BOUNDARY_CROSSED reg.ovl
 #define FIX_ADDR_HI reg.adh++;
