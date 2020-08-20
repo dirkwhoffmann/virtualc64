@@ -164,7 +164,7 @@ public:
     bool getMotor() { return motor; }
 
     // Switches the motor on or off
-    void setMotor(bool value);
+    void setMotor(bool value) { motor = value; }
 
     // Emulates the datasette
     void execute() { if (playKey && motor) _execute(); }
@@ -173,13 +173,6 @@ private:
 
     // Internal execution function
     void _execute();
-
-    // Simulates the falling edge of a pulse
-    void _executeFalling();
-
-    // Simulates the rising edge of a pulse
-    void _executeRising();
-
 };
 
 #endif
