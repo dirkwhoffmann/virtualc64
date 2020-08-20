@@ -503,22 +503,20 @@ private:
      */
     TimeDelayed<u16>baLine = TimeDelayed<u16>(3);
     
-    /*! @brief    Start address of the currently selected memory bank
-     *  @details  There are four banks in total since the VICII chip can only
-     *            'see' 16 KB of memory at the same time. Two bank select bits
-     *            in the CIA I/O space determine which quarter of memory is
-     *            currently seen.
-     */
-    /*
-     *            +-------+------+-------+----------+-------------------------+
-     *            | VALUE | BITS |  BANK | STARTING |  VIC-II CHIP RANGE      |
-     *            |  OF A |      |       | LOCATION |                         |
-     *            +-------+------+-------+----------+-------------------------+
-     *            |   0   |  00  |   3   |   49152  | ($C000-$FFFF)           |
-     *            |   1   |  01  |   2   |   32768  | ($8000-$BFFF)           |
-     *            |   2   |  10  |   1   |   16384  | ($4000-$7FFF)           |
-     *            |   3   |  11  |   0   |       0  | ($0000-$3FFF) (DEFAULT) |
-     *            +-------+------+-------+----------+-------------------------+
+    /* Start address of the currently selected memory bank. There are four
+     * banks in total since the VICII chip can only 'see' 16 KB of memory at
+     * the same time. Two bank select bits in the CIA I/O space determine which
+     * quarter of memory is currently seen.
+     *
+     * +-------+------+-------+----------+-------------------------+
+     * | VALUE | BITS |  BANK | STARTING |  VIC-II CHIP RANGE      |
+     * |  OF A |      |       | LOCATION |                         |
+     * +-------+------+-------+----------+-------------------------+
+     * |   0   |  00  |   3   |   49152  | ($C000-$FFFF)           |
+     * |   1   |  01  |   2   |   32768  | ($8000-$BFFF)           |
+     * |   2   |  10  |   1   |   16384  | ($4000-$7FFF)           |
+     * |   3   |  11  |   0   |       0  | ($0000-$3FFF) (DEFAULT) |
+     * +-------+------+-------+----------+-------------------------+
      */
     u16 bankAddr;
     
@@ -530,19 +528,11 @@ private:
     // Color management (TODO: MOVE TO PIXEL ENGINE)
     //
     
-    //! @brief    User adjustable brightness value used in palette computation
-    /*! @details  Value may range from 0.0 to 100.0
+    /* The brightness, contrast, and saturation parameters used for computing
+     * the color palette. Valid values: 0.0 - 100.0
      */
     double brightness = 50.0;
-
-    //! @brief    User adjustable contrast value used in palette computation
-    /*! @details  Value may range from 0.0 to 100.0
-     */
     double contrast = 100.0;
-
-    //! @brief    User adjustable saturation value used in palette computation
-    /*! @details  Value may range from 0.0 to 100.0
-     */
     double saturation = 50.0;
 
     
@@ -552,49 +542,36 @@ private:
 	
 public:
     
-	/* Determines whether sprites are drawn or not
-	 *During normal emulation, the value is always false. For debugging
-     * purposes, the value can be set to true. In this case, sprites are no
-     * longer drawn.
+	/* Determines whether sprites are drawn or not. By default, this variable
+     * is set to false. It can be set to true for debugging purposes.
 	 */
 	bool hideSprites;
 	
-	/* Enables sprite-sprite collision
-	 * If set to true, the virtual VICII chips checks for sprite-sprite
-     * collision as the original C64 does. For debugging purposes and cheating,
-     * collision detection can be disabled by setting the variabel to false.
-     * Collision detection can be enabled or disabled for each sprite
+	/* Enables sprite-sprite or sprite-background collisions checks. If set to
+     * true, VICII checks for collisions the same ways as the original C64
+     * does. Collision detection can be enabled or disabled for each sprite
      * seperately. Each bit is dedicated to a single sprite.
      */
 	u8 spriteSpriteCollisionEnabled;
-	
-	/* Enable sprite-background collision
-	 * If set to true, the virtual VICII chips checks for sprite-background
-     * collision as the original C64 does. For debugging purposes and cheating,
-     * collision detection can be disabled by setting the variabel to false.
-     * Collision detection can be enabled or disabled for each sprite
-     * seperately. Each bit is dedicated to a single sprite.
-     */
 	u8 spriteBackgroundCollisionEnabled;
 	
-	/* Determines whether IRQ lines will be made visible.
-	 * Each rasterline that will potentially trigger a raster IRQ is
-     * highlighted. This feature is useful for debugging purposes as it
-     * visualizes how the screen is divided into multiple parts.
+	/* Determines whether IRQ lines will be made visible. Each rasterline that
+     * will potentially trigger a raster IRQ is highlighted. This feature is
+     * useful for debugging purposes as it visualizes how the screen is divided
+     * into multiple parts.
      */
 	bool markIRQLines;
 	
-	/* Determines whether DMA lines will be made visible.
-	 * Note that partial DMA lines may not appear.
+	/* Determines whether DMA lines will be made visible. Note that partial DMA
+     * lines may not appear.
      */
 	bool markDMALines;
 
     
 private:
     
-    /* Event pipeline
-     * If a time delayed event needs to be performed, a flag is set inside this
-     * variable and executed at the beginning of the next cycle.
+    /* Event pipeline. If a time delayed event needs to be performed, a flag is
+     * set inside this variable and executed at the beginning of the next cycle.
      * See processDelayedActions()
      */
     u64 delay;
@@ -606,71 +583,62 @@ private:
     
 private:
     
-    /*! @brief    Currently used RGBA values for all sixteen C64 colors
-     *  @see      updatePalette()
-     */
+    // C64 colors in RGBA format (updated in updatePalette())
     u32 rgbaTable[16];
     
     // Buffer storing background noise (random black and white pixels)
     u32 *noise;
 
-    /*! @brief    First screen buffer
-     *  @details  The VICII chip writes its output into this buffer. The contents
-     *            of the array is later copied into to texture RAM of your
-     *            graphic card by the drawRect method in the GPU related code.
+    /* Screen buffers. VICII output the emulator texture into these buffers.
+     * At any time, one buffer is the working buffer and the other one is the
+     * stable buffer. While VICII always writes into the working buffer, the
+     * GUI accesses the stable buffer at a constant frame rate and copies it
+     * into the texture RAM of the graphics card.
      */
     int *screenBuffer1 = new int[PAL_RASTERLINES * NTSC_PIXELS];
-    
-    /*! @brief    Second screen buffer
-     *  @details  The VICII chip uses double buffering. Once a frame is drawn, the
-     *            VICII chip writes the next frame to the second buffer.
-     */
     int *screenBuffer2 = new int [PAL_RASTERLINES * NTSC_PIXELS];
-    
-    /*! @brief    Target screen buffer for all rendering methods
-     *  @details  The variable points either to screenBuffer1 or screenBuffer2
+
+    /* Pointer to the current working buffer. This variable either points to
+     * screenBuffer1 or screenBuffer2. After a frame has been finished, the
+     * pointer is redirected to the other buffer.
      */
     int *currentScreenBuffer;
     
-    /*! @brief    Pointer to the beginning of the current rasterline
-     *  @details  This pointer is used by all rendering methods to write pixels.
-     *            It always points to the beginning of a rasterline, either in
-     *            screenBuffer1 or screenBuffer2. It is reset at the beginning
-     *            of each frame and incremented at the beginning of each
-     *            rasterline.
+    /* Pointer to the beginning of the current rasterline. This pointer is used
+     * by all rendering methods to write pixels. It always points to the
+     * beginning of a rasterline, either in screenBuffer1 or screenBuffer2. It
+     * is reset at the beginning of each frame and incremented at the beginning
+     * of each rasterline.
      */
     int *pixelBuffer;
     
-    /*! @brief    Z buffer
-     *  @details  Depth buffering is used to determine pixel priority. In the
-     *            various render routines, a color value is only retained, if it
-     *            is closer to the view point. The depth of the closest pixel is
-     *            kept in the z buffer. The lower the value, the closer it is to
-     *            the viewer.
+    /* VICII utilizes a depth buffer to determine pixel priority. The render
+     * routines only write a color value, if it is closer to the view point.
+     * The depth of the closest pixel is kept in this buffer. The lower the
+     * value, the closer it is to the viewer.
      */
     u8 zBuffer[8];
     
-    /*! @brief    Indicates the source of a drawn pixel
-     *  @details  Whenever a foreground pixel or sprite pixel is drawn, a
-     *            distinct bit in the pixelSource array is set. The information
-     *            is needed to detect sprite-sprite and sprite-background
-     *            collisions.
+    /* Indicates the source of a drawn pixel. Whenever a foreground pixel or
+     * sprite pixel is drawn, a distinct bit in the pixelSource array is set.
+     * The information is needed to detect sprite-sprite and sprite-background
+     * collisions.
      */
     u16 pixelSource[8];
     
-    /*! @brief    Offset into pixelBuffer
-     *  @details  Variable points to the first pixel of the currently drawn 8
-     *            pixel chunk.
+    /* Offset into to pixelBuffer. This variable points to the first pixel of
+     * the currently drawn 8 pixel chunk.
      */
     short bufferoffset;
     
-    /*! @brief    This is where loadColors() stores all retrieved colors
-     *  @details  [0] : color for '0'  pixels in single color mode
-     *                         or '00' pixels in multicolor mode
-     *            [1] : color for '1'  pixels in single color mode
-     *                         or '01' pixels in multicolor mode
-     *            [2] : color for '10' pixels in multicolor mode
-     *            [3] : color for '11' pixels in multicolor mode
+    /* Color storage filled by loadColors()
+     *
+     *     [0] : color for '0'  pixels in single color mode
+     *                  or '00' pixels in multicolor mode
+     *     [1] : color for '1'  pixels in single color mode
+     *                  or '01' pixels in multicolor mode
+     *     [2] : color for '10' pixels in multicolor mode
+     *     [3] : color for '11' pixels in multicolor mode
      */
     u8 col[4];
     
