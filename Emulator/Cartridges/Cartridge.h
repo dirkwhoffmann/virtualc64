@@ -17,56 +17,53 @@
 
 class Cartridge : public C64Component {
     
+    //
+    // Constants
+    //
+    
 public:
     
-    //! @brief    Maximum number of chip packets on a single cartridge.
+    // Maximum number of chip packets on a single cartridge
     static const unsigned MAX_PACKETS = 128;
     
-private:
     
     //
     // Cartridge configuration
     //
-    
-    /*! @brief    Initial value of the game line
-     *  @details  The value is read from the CRT filt and the game line is set
-     *            to it when the cartridge is plugged into the expansion port.
+
+private:
+
+    /* Initial values of the game and exrom lines. The values are read from the
+     * CRT file and the game line is set to it when the cartridge is plugged
+     * into the expansion port.
      */
     bool gameLineInCrtFile = 1;
-    
-    /*! @brief    Initial value of the exrom line
-     *  @details  The value is read from the CRT filt and the exrom line is set
-     *            to it when the cartridge is plugged into the expansion port.
-     */
     bool exromLineInCrtFile = 1;
     
+    
+    //
+    // Rom packets
+    //
+    
 protected:
-    
-    //
-    // ROM packets
-    //
-    
-    //! @brief    Number of ROM packets
+
     u8 numPackets = 0;
-    
-    //! @brief    ROM chips contained in this cartridge
     CartridgeRom *packet[MAX_PACKETS];
     
-    //! @brief    The ROM packet that is currently mapped to ROMx
+    // Indicates which packets are currently mapped to ROML and ROMH
     u8 chipL = 0;
     u8 chipH = 0;
     
-    //! @brief    Number of bytes that are mapped to ROMx
-    /*! @details  For most cartridges, this value is equals packet[romX]->size
-     *            which means that the ROM is completely mapped.
-     *            A value of 0 indicates that no ROM is currently mapped.
+    /* Number of bytes that are mapped to ROML and ROMH. For most cartridges,
+     * this value is equals packet[romX]->size which means that the ROM is
+     * completely mapped. A value of 0 indicates that no ROM is currently
+     * mapped.
      */
     u16 mappedBytesL = 0;
     u16 mappedBytesH = 0;
 
-    //! @brief    Offset into the ROM chip's data array
-    /*! @details  The first ROMx byte has index offsetx
-     *            The last ROMx byte has index  offsetx + mappedBytesx - 1
+    /* Offset into the ROM chip's data array. The first ROMx byte has index
+     * offsetx. The last ROMx byte has index offsetx + mappedBytesx - 1.
      */
     u16 offsetL = 0;
     u16 offsetH = 0;
@@ -77,41 +74,54 @@ private:
     // On-board RAM
     //
     
-    /*! @brief    Additional RAM
-     *  @details  Some cartridges such as ActionReplay contain additional RAM.
-     *            By default, this variable is NULL.
+    /* Additional RAM. Some cartridges such as ActionReplay contain additional
+     * RAM. By default, this variable is NULL.
      */
     u8 *externalRam = NULL;
     
-    /*! @brief    Capacity of the additional RAM in bytes
-     *  @note     This value is 0 if and only if externaRam is NULL.
+    /* Capacity of the additional RAM in bytes. This value is 0 if and only if
+     * externaRam is NULL.
      */
     u32 ramCapacity = 0;
     
-    //! @brief    Indicates if the RAM is kept alive during a reset.
+    // Indicates if the RAM contents is preserved during a reset
     bool persistentRam = false;
 
+    
+    //
+    // On-board registers
+    //
+    
+protected:
+    
+    /* Auxililary control register. Many non-standard cartridges carry an
+     * additional register on board.
+     */
+    u8 control = 0;
+        
     
     //
     // Hardware switches
     //
     
-    /*! @brief    Current position of the cartridge switch (if any)
-     *  @details  Only a cery few cartridges such as ISEPIC and EXPERT have
-     *            a switch.
+protected:
+    
+    /* Current position of the cartridge switch (if any). Only a few cartridges
+     * have a switch such as ISEPIC and EXPERT.
      */
     i8 switchPos = 0;
 
-    //! @brief    Status of the cartridge LED (true = on)
+    // Status of the cartridge LED (true = on)
     bool led = false;
     
-public:
-    
+
     //
     // Class methods
     //
-    
-    // Checks whether this cartridge is a supported cartridge.
+
+public:
+        
+    // Checks whether this cartridge is a supported by the emulator
     static bool isSupportedType(CartridgeType type);
     
     /* Returns true if addr is located in the ROML or the ROMH address space.
@@ -171,6 +181,7 @@ private:
         & numPackets
         & ramCapacity
         & persistentRam
+        & control
         & switchPos;
     }
     
@@ -451,10 +462,7 @@ public:
 };
 
 
-/*!
- * @brief    Cartridge with an auxililary control register
- * @details  Many non-standard cartridges carry an addition register on board.
- */
+/*
 class CartridgeWithRegister : public Cartridge {
 
 protected:
@@ -481,5 +489,6 @@ public:
         write8(buffer, control);
     }
 };
+*/
 
 #endif 

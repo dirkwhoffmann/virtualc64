@@ -12,7 +12,7 @@
 void
 Comal80::_reset()
 {
-    CartridgeWithRegister::_reset();
+    Cartridge::_reset();
     expansionport.setCartridgeMode(CRT_16K);
     bankIn(0);
 }

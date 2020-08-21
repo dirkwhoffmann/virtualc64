@@ -12,7 +12,7 @@
 
 #include "Cartridge.h"
 
-class FinalIII : public CartridgeWithRegister {
+class FinalIII : public Cartridge {
     
     // Indicates if the freeze button is currenty pressed
     bool freeezeButtonIsPressed;
@@ -26,7 +26,7 @@ class FinalIII : public CartridgeWithRegister {
 
 public:
     
-    FinalIII(C64 *c64, C64 &ref) : CartridgeWithRegister(c64, ref, "FinalIII") { };
+    FinalIII(C64 *c64, C64 &ref) : Cartridge(c64, ref, "FinalIII") { };
     CartridgeType getCartridgeType() override { return CRT_FINAL_III; }
     
     
@@ -39,17 +39,17 @@ private:
     void _reset() override;
     
     size_t oldStateSize() override {
-        return CartridgeWithRegister::oldStateSize() + 2;
+        return Cartridge::oldStateSize() + 2;
     }
     void oldDidLoadFromBuffer(u8 **buffer) override
     {
-        CartridgeWithRegister::oldDidLoadFromBuffer(buffer);
+        Cartridge::oldDidLoadFromBuffer(buffer);
         freeezeButtonIsPressed = (bool)read8(buffer);
         qD = (bool)read8(buffer);
     }
     void oldDidSaveToBuffer(u8 **buffer) override
     {
-        CartridgeWithRegister::oldDidSaveToBuffer(buffer);
+        Cartridge::oldDidSaveToBuffer(buffer);
         write8(buffer, (u8)freeezeButtonIsPressed);
         write8(buffer, (u8)qD);
     }

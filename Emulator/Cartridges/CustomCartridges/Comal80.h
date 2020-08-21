@@ -12,14 +12,11 @@
 
 #include "Cartridge.h"
 
-class Comal80 : public CartridgeWithRegister {
-    
-    //! Control register
-    u8 control;
-    
+class Comal80 : public Cartridge {
+        
 public:
     
-    Comal80(C64 *c64, C64 &ref) : CartridgeWithRegister(c64, ref, "Comal80") { };
+    Comal80(C64 *c64, C64 &ref) : Cartridge(c64, ref, "Comal80") { };
     CartridgeType getCartridgeType() { return CRT_COMAL80; }
     
     //

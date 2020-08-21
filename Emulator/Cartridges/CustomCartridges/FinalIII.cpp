@@ -12,7 +12,7 @@
 void
 FinalIII::_reset()
 {
-    CartridgeWithRegister::_reset();
+    Cartridge::_reset();
     freeezeButtonIsPressed = false;
     qD = true;
     bankIn(0);

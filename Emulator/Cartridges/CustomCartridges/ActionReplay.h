@@ -16,11 +16,11 @@
 // Action Replay (hardware version 3)
 //
 
-class ActionReplay3 : public CartridgeWithRegister {
+class ActionReplay3 : public Cartridge {
     
 public:
     
-    ActionReplay3(C64 *c64, C64 &ref) : CartridgeWithRegister(c64, ref, "AR3") { };
+    ActionReplay3(C64 *c64, C64 &ref) : Cartridge(c64, ref, "AR3") { };
     CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY3; }
     
     //
@@ -55,7 +55,7 @@ public:
 // Action Replay (hardware version 4 and above)
 //
 
-class ActionReplay : public CartridgeWithRegister {
+class ActionReplay : public Cartridge {
     
 public:
     

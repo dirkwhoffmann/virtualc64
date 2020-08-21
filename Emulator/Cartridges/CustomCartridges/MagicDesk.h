@@ -12,11 +12,11 @@
 
 #include "Cartridge.h"
 
-class MagicDesk : public CartridgeWithRegister {
+class MagicDesk : public Cartridge {
     
 public:
     
-    MagicDesk(C64 *c64, C64 &ref) : CartridgeWithRegister(c64, ref, "MagicDesk") { };
+    MagicDesk(C64 *c64, C64 &ref) : Cartridge(c64, ref, "MagicDesk") { };
     CartridgeType getCartridgeType() { return CRT_MAGIC_DESK; }
     
     //

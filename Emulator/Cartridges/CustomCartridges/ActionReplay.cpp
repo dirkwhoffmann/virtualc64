@@ -122,7 +122,7 @@ ActionReplay3::setControlReg(u8 value)
 //
 
 //! @brief    A newer generation Action Replay cartridge
-ActionReplay::ActionReplay(C64 *c64, C64 &ref) : CartridgeWithRegister(c64, ref, "AR")
+ActionReplay::ActionReplay(C64 *c64, C64 &ref) : Cartridge(c64, ref, "AR")
 {
     debug(CRT_DEBUG, "ActionReplay constructor\n");
     
