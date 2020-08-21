@@ -70,12 +70,12 @@ public:
 private:
     
     void _reset() override;
-    size_t stateSize() override {
-        return Cartridge::stateSize() + 1; }
-    void didLoadFromBuffer(u8 **buffer) override {
-        Cartridge::didLoadFromBuffer(buffer); control = read8(buffer); }
-    void didSaveToBuffer(u8 **buffer) override {
-        Cartridge::didSaveToBuffer(buffer); write8(buffer, control); }
+    size_t oldStateSize() override {
+        return Cartridge::oldStateSize() + 1; }
+    void oldDidLoadFromBuffer(u8 **buffer) override {
+        Cartridge::oldDidLoadFromBuffer(buffer); control = read8(buffer); }
+    void oldDidSaveToBuffer(u8 **buffer) override {
+        Cartridge::oldDidSaveToBuffer(buffer); write8(buffer, control); }
     
     //
     // Methods from Cartridge

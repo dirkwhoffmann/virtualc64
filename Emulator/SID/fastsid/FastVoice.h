@@ -185,7 +185,7 @@ public:
 private:
     
     void _reset() override;
-    void didLoadFromBuffer(u8 **buffer) override { updateWaveTablePtr(); }
+    void oldDidLoadFromBuffer(u8 **buffer) override { updateWaveTablePtr(); }
 
     
     //

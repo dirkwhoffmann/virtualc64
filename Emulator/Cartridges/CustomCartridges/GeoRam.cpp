@@ -26,23 +26,23 @@ GeoRAM::_reset()
 }
 
 size_t
-GeoRAM::stateSize()
+GeoRAM::oldStateSize()
 {
-    return Cartridge::stateSize() + 2;
+    return Cartridge::oldStateSize() + 2;
 }
 
 void
-GeoRAM::didLoadFromBuffer(u8 **buffer)
+GeoRAM::oldDidLoadFromBuffer(u8 **buffer)
 {
-    Cartridge::didLoadFromBuffer(buffer);
+    Cartridge::oldDidLoadFromBuffer(buffer);
     bank = read8(buffer);
     page = read8(buffer);
 }
 
 void
-GeoRAM::didSaveToBuffer(u8 **buffer)
+GeoRAM::oldDidSaveToBuffer(u8 **buffer)
 {
-    Cartridge::didSaveToBuffer(buffer);
+    Cartridge::oldDidSaveToBuffer(buffer);
     write8(buffer, bank);
     write8(buffer, page);
 }

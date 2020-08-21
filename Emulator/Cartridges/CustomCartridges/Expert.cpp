@@ -49,22 +49,22 @@ Expert::_dump()
 }
 
 size_t
-Expert::stateSize()
+Expert::oldStateSize()
 {
-    return Cartridge::stateSize() + 1;
+    return Cartridge::oldStateSize() + 1;
 }
 
 void
-Expert::didLoadFromBuffer(u8 **buffer)
+Expert::oldDidLoadFromBuffer(u8 **buffer)
 {
-    Cartridge::didLoadFromBuffer(buffer);
+    Cartridge::oldDidLoadFromBuffer(buffer);
     active = read8(buffer);
 }
 
 void
-Expert::didSaveToBuffer(u8 **buffer)
+Expert::oldDidSaveToBuffer(u8 **buffer)
 {
-    Cartridge::didSaveToBuffer(buffer);
+    Cartridge::oldDidSaveToBuffer(buffer);
     write8(buffer, (u8)active);
 }
 

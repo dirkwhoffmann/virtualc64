@@ -53,33 +53,33 @@ EasyFlash::_dump()
 }
 
 size_t
-EasyFlash::stateSize()
+EasyFlash::oldStateSize()
 {
-    return Cartridge::stateSize()
+    return Cartridge::oldStateSize()
     + 1
     + 1
-    + flashRomL.stateSize()
-    + flashRomH.stateSize();
+    + flashRomL.oldStateSize()
+    + flashRomH.oldStateSize();
 }
 
 void
-EasyFlash::didLoadFromBuffer(u8 **buffer)
+EasyFlash::oldDidLoadFromBuffer(u8 **buffer)
 {
-    Cartridge::didLoadFromBuffer(buffer);
+    Cartridge::oldDidLoadFromBuffer(buffer);
     bank = read8(buffer);
     jumper = (bool)read8(buffer);
-    flashRomL.loadFromBuffer(buffer);
-    flashRomH.loadFromBuffer(buffer);
+    flashRomL.oldLoadFromBuffer(buffer);
+    flashRomH.oldLoadFromBuffer(buffer);
 }
 
 void
-EasyFlash::didSaveToBuffer(u8 **buffer)
+EasyFlash::oldDidSaveToBuffer(u8 **buffer)
 {
-    Cartridge::didSaveToBuffer(buffer);
+    Cartridge::oldDidSaveToBuffer(buffer);
     write8(buffer, bank);
     write8(buffer, (u8)jumper);
-    flashRomL.saveToBuffer(buffer);
-    flashRomH.saveToBuffer(buffer);
+    flashRomL.oldSaveToBuffer(buffer);
+    flashRomH.oldSaveToBuffer(buffer);
 }
 
 void

@@ -38,18 +38,18 @@ private:
     
     void _reset() override;
     
-    size_t stateSize() override {
-        return CartridgeWithRegister::stateSize() + 2;
+    size_t oldStateSize() override {
+        return CartridgeWithRegister::oldStateSize() + 2;
     }
-    void didLoadFromBuffer(u8 **buffer) override
+    void oldDidLoadFromBuffer(u8 **buffer) override
     {
-        CartridgeWithRegister::didLoadFromBuffer(buffer);
+        CartridgeWithRegister::oldDidLoadFromBuffer(buffer);
         freeezeButtonIsPressed = (bool)read8(buffer);
         qD = (bool)read8(buffer);
     }
-    void didSaveToBuffer(u8 **buffer) override
+    void oldDidSaveToBuffer(u8 **buffer) override
     {
-        CartridgeWithRegister::didSaveToBuffer(buffer);
+        CartridgeWithRegister::oldDidSaveToBuffer(buffer);
         write8(buffer, (u8)freeezeButtonIsPressed);
         write8(buffer, (u8)qD);
     }

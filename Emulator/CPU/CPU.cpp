@@ -138,22 +138,22 @@ CPU<M>::_dump()
 }
 
 template <typename M> size_t
-CPU<M>::stateSize()
+CPU<M>::oldStateSize()
 {
-    return HardwareComponent::stateSize()
+    return HardwareComponent::oldStateSize()
     + levelDetector.stateSize()
     + edgeDetector.stateSize();
 }
 
 template <typename M> void
-CPU<M>::didLoadFromBuffer(u8 **buffer)
+CPU<M>::oldDidLoadFromBuffer(u8 **buffer)
 {
     levelDetector.loadFromBuffer(buffer);
     edgeDetector.loadFromBuffer(buffer);
 }
 
 template <typename M> void
-CPU<M>::didSaveToBuffer(u8 **buffer)
+CPU<M>::oldDidSaveToBuffer(u8 **buffer)
 {
     levelDetector.saveToBuffer(buffer);
     edgeDetector.saveToBuffer(buffer);
@@ -277,9 +277,9 @@ template void    CPU<C64Memory>::_dump();
 template void    CPU<C64Memory>::_setDebug(bool enable);
 template void    CPU<C64Memory>::_reset();
 template void    CPU<C64Memory>::_inspect();
-template size_t  CPU<C64Memory>::stateSize();
-template void    CPU<C64Memory>::didLoadFromBuffer(u8 **buffer);
-template void    CPU<C64Memory>::didSaveToBuffer(u8 **buffer);
+template size_t  CPU<C64Memory>::oldStateSize();
+template void    CPU<C64Memory>::oldDidLoadFromBuffer(u8 **buffer);
+template void    CPU<C64Memory>::oldDidSaveToBuffer(u8 **buffer);
 template u8      CPU<C64Memory>::getP();
 template u8      CPU<C64Memory>::getPWithClearedB();
 template void    CPU<C64Memory>::setP(u8 p);
@@ -296,9 +296,9 @@ template void    CPU<DriveMemory>::_dump();
 template void    CPU<DriveMemory>::_setDebug(bool enable);
 template void    CPU<DriveMemory>::_reset();
 template void    CPU<DriveMemory>::_inspect();
-template size_t  CPU<DriveMemory>::stateSize();
-template void    CPU<DriveMemory>::didLoadFromBuffer(u8 **buffer);
-template void    CPU<DriveMemory>::didSaveToBuffer(u8 **buffer);
+template size_t  CPU<DriveMemory>::oldStateSize();
+template void    CPU<DriveMemory>::oldDidLoadFromBuffer(u8 **buffer);
+template void    CPU<DriveMemory>::oldDidSaveToBuffer(u8 **buffer);
 template u8      CPU<DriveMemory>::getP();
 template u8      CPU<DriveMemory>::getPWithClearedB();
 template void    CPU<DriveMemory>::setP(u8 p);

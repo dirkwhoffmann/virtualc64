@@ -38,7 +38,7 @@ ControlPort::_reset()
 }
 
 void
-ControlPort::didLoadFromBuffer(u8 **buffer)
+ControlPort::oldDidLoadFromBuffer(u8 **buffer)
 {
     // Discard any active joystick movements
     button = false;

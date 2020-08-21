@@ -205,7 +205,7 @@ Cartridge::packetStateSize()
     
     for (unsigned i = 0; i < numPackets; i++) {
         assert(packet[i] != NULL);
-        result += packet[i]->stateSize();
+        result += packet[i]->oldStateSize();
     }
     
     return result;
@@ -217,7 +217,7 @@ Cartridge::loadPacketsFromBuffer(u8 **buffer)
     for (unsigned i = 0; i < numPackets; i++) {
         assert(packet[i] == NULL);
         packet[i] = new CartridgeRom(c64);
-        packet[i]->loadFromBuffer(buffer);
+        packet[i]->oldLoadFromBuffer(buffer);
     }
 }
 
@@ -226,20 +226,20 @@ Cartridge::savePacketsToBuffer(u8 **buffer)
 {
     for (unsigned i = 0; i < numPackets; i++) {
         assert(packet[i] != NULL);
-        packet[i]->saveToBuffer(buffer);
+        packet[i]->oldSaveToBuffer(buffer);
     }
 }
 
 size_t
-Cartridge::stateSize()
+Cartridge::oldStateSize()
 {
-    return HardwareComponent::stateSize()
+    return HardwareComponent::oldStateSize()
     + packetStateSize()
     + ramCapacity;
 }
 
 void
-Cartridge::didLoadFromBuffer(u8 **buffer)
+Cartridge::oldDidLoadFromBuffer(u8 **buffer)
 {
     setRamCapacity(ramCapacity);
     
@@ -248,7 +248,7 @@ Cartridge::didLoadFromBuffer(u8 **buffer)
 }
 
 void
-Cartridge::didSaveToBuffer(u8 **buffer)
+Cartridge::oldDidSaveToBuffer(u8 **buffer)
 {
     savePacketsToBuffer(buffer);
     writeBlock(buffer, externalRam, ramCapacity);

@@ -75,8 +75,8 @@ public:
     
     void _reset() override;
     void _inspect() override;
-    void didLoadFromBuffer(u8 **buffer) override { sid->write_state(st); }
-    void willSaveToBuffer(u8 **buffer) override { st = sid->read_state(); }
+    void oldDidLoadFromBuffer(u8 **buffer) override { sid->write_state(st); }
+    void oldWillSaveToBuffer(u8 **buffer) override { st = sid->read_state(); }
 
 private:
 

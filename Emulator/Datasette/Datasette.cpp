@@ -60,13 +60,13 @@ Datasette::_ping()
 }
 
 size_t
-Datasette::stateSize()
+Datasette::oldStateSize()
 {
-    return HardwareComponent::stateSize() + size;
+    return HardwareComponent::oldStateSize() + size;
 }
 
 void
-Datasette::didLoadFromBuffer(u8 **buffer)
+Datasette::oldDidLoadFromBuffer(u8 **buffer)
 {
     if (data) delete[] data;
     
@@ -77,7 +77,7 @@ Datasette::didLoadFromBuffer(u8 **buffer)
 }
 
 void
-Datasette::didSaveToBuffer(u8 **buffer)
+Datasette::oldDidSaveToBuffer(u8 **buffer)
 {
     if (size) {
         assert(data != NULL);

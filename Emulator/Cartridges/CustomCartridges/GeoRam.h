@@ -29,9 +29,9 @@ public:
     GeoRAM(C64 *c64, C64 &ref);
     CartridgeType getCartridgeType() { return CRT_GEO_RAM; }
     void _reset();
-    size_t stateSize();
-    void didLoadFromBuffer(u8 **buffer);
-    void didSaveToBuffer(u8 **buffer);
+    size_t oldStateSize();
+    void oldDidLoadFromBuffer(u8 **buffer);
+    void oldDidSaveToBuffer(u8 **buffer);
     u8 peekIO1(u16 addr);
     u8 peekIO2(u16 addr);
     void pokeIO1(u16 addr, u8 value);

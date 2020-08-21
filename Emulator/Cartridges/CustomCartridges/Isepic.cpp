@@ -32,24 +32,24 @@ Isepic::_reset()
 }
 
 size_t
-Isepic::stateSize()
+Isepic::oldStateSize()
 {
-    return Cartridge::stateSize() + 9;
+    return Cartridge::oldStateSize() + 9;
 }
 
 void
-Isepic::didLoadFromBuffer(u8 **buffer)
+Isepic::oldDidLoadFromBuffer(u8 **buffer)
 {
-    Cartridge::didLoadFromBuffer(buffer);
+    Cartridge::oldDidLoadFromBuffer(buffer);
     page = read8(buffer);
     oldPeekSource = (MemoryType)read32(buffer);
     oldPokeTarget = (MemoryType)read32(buffer);
 }
 
 void
-Isepic::didSaveToBuffer(u8 **buffer)
+Isepic::oldDidSaveToBuffer(u8 **buffer)
 {
-    Cartridge::didSaveToBuffer(buffer);
+    Cartridge::oldDidSaveToBuffer(buffer);
     write8(buffer, page);
     write32(buffer, (MemoryType)oldPeekSource);
     write32(buffer, (MemoryType)oldPokeTarget);

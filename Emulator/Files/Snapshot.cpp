@@ -128,10 +128,10 @@ Snapshot::makeWithC64(C64 *c64)
 {
     Snapshot *snapshot;
     
-    snapshot = new Snapshot(c64->stateSize());
+    snapshot = new Snapshot(c64->oldStateSize());
     snapshot->takeScreenshot(c64);
     u8 *ptr = snapshot->getData();
-    c64->saveToBuffer(&ptr);
+    c64->oldSaveToBuffer(&ptr);
     
     return snapshot;
 }

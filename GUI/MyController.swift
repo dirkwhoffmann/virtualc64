@@ -211,10 +211,7 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var dflag: NSButton!
     @IBOutlet weak var vflag: NSButton!
     @IBOutlet weak var breakAt: NSTextField!
-    
-    // Debug panel (Memory)
-    @IBOutlet weak var memTableView: MemTableView!
-    
+        
     // Debug panel (CIA)
     @IBOutlet weak var ciaSelector: NSSegmentedControl!
     

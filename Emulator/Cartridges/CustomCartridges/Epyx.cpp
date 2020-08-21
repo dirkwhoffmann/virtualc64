@@ -17,21 +17,21 @@ EpyxFastLoad::_reset()
 }
 
 size_t
-EpyxFastLoad::stateSize()
+EpyxFastLoad::oldStateSize()
 {
-    return Cartridge::stateSize() + 8;
+    return Cartridge::oldStateSize() + 8;
 }
 void
-EpyxFastLoad::didLoadFromBuffer(u8 **buffer)
+EpyxFastLoad::oldDidLoadFromBuffer(u8 **buffer)
 {
-    Cartridge::didLoadFromBuffer(buffer);
+    Cartridge::oldDidLoadFromBuffer(buffer);
     cycle = read64(buffer);
 }
 
 void
-EpyxFastLoad::didSaveToBuffer(u8 **buffer)
+EpyxFastLoad::oldDidSaveToBuffer(u8 **buffer)
 {
-    Cartridge::didSaveToBuffer(buffer);
+    Cartridge::oldDidSaveToBuffer(buffer);
     write64(buffer, cycle);
 }
 

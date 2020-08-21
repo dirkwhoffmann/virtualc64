@@ -206,31 +206,31 @@ HardwareComponent::registerSnapshotItems(SnapshotItem *items, unsigned length) {
 }
 
 size_t
-HardwareComponent::stateSize()
+HardwareComponent::oldStateSize()
 {
     u32 result = snapshotSize;
     
     for (HardwareComponent *c : subComponents) {
-        result += c->stateSize();
+        result += c->oldStateSize();
     }
         
     return result;
 }
 
 void
-HardwareComponent::loadFromBuffer(u8 **buffer)
+HardwareComponent::oldLoadFromBuffer(u8 **buffer)
 {
     u8 *old = *buffer;
     
     debug(SNP_DEBUG, "    Loading internal state ...\n");
     
     // Call delegation method
-    willLoadFromBuffer(buffer);
+    oldWillLoadFromBuffer(buffer);
     
     
     // Load internal state of all sub components
     for (HardwareComponent *c : subComponents) {
-        c->loadFromBuffer(buffer);
+        c->oldLoadFromBuffer(buffer);
     }
     
     // Load own internal state
@@ -264,29 +264,29 @@ HardwareComponent::loadFromBuffer(u8 **buffer)
     }
     
     // Call delegation method
-    didLoadFromBuffer(buffer);
+    oldDidLoadFromBuffer(buffer);
     
     // Verify that the number of read bytes matches the state size
-    if (*buffer - old != stateSize()) {
+    if (*buffer - old != oldStateSize()) {
         panic("loadFromBuffer: Snapshot size is wrong. Got %d, expected %d.",
-              *buffer - old, stateSize());
+              *buffer - old, oldStateSize());
         assert(false);
     }
 }
 
 void
-HardwareComponent::saveToBuffer(u8 **buffer)
+HardwareComponent::oldSaveToBuffer(u8 **buffer)
 {
     u8 *old = *buffer;
     
     debug(SNP_DEBUG, "    Saving internal state ...\n");
 
     // Call delegation method
-    willSaveToBuffer(buffer);
+    oldWillSaveToBuffer(buffer);
     
     // Save internal state of all sub components
     for (HardwareComponent *c : subComponents) {
-        c->saveToBuffer(buffer);
+        c->oldSaveToBuffer(buffer);
     }
     
     // Save own internal state
@@ -320,12 +320,12 @@ HardwareComponent::saveToBuffer(u8 **buffer)
     }
     
     // Call delegation method
-    didSaveToBuffer(buffer);
+    oldDidSaveToBuffer(buffer);
     
     // Verify that the number of written bytes matches the state size
-    if (*buffer - old != stateSize()) {
+    if (*buffer - old != oldStateSize()) {
         panic("saveToBuffer: Snapshot size is wrong. Got %d, expected %d.",
-              *buffer - old, stateSize());
+              *buffer - old, oldStateSize());
         assert(false);
     }
 }

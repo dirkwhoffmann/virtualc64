@@ -313,22 +313,22 @@ VICII::getSpriteInfo(int nr)
 }
 
 size_t
-VICII::stateSize()
+VICII::oldStateSize()
 {
-    return HardwareComponent::stateSize()
+    return HardwareComponent::oldStateSize()
     + baLine.stateSize()
     + gAccessResult.stateSize();
 }
 
 void
-VICII::didLoadFromBuffer(u8 **buffer)
+VICII::oldDidLoadFromBuffer(u8 **buffer)
 {
     baLine.loadFromBuffer(buffer);
     gAccessResult.loadFromBuffer(buffer);
 }
 
 void
-VICII::didSaveToBuffer(u8 **buffer)
+VICII::oldDidSaveToBuffer(u8 **buffer)
 {
     baLine.saveToBuffer(buffer);
     gAccessResult.saveToBuffer(buffer);

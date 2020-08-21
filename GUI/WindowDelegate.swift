@@ -64,10 +64,6 @@ extension MyController: NSWindowDelegate {
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
         c64.removeListener(myself)
   
-        // Disconnect emulator (DEPRECATED)
-        memTableView.dataSource = nil
-        memTableView.delegate = nil
-
         // Stop metal view
         renderer.cleanup()
     }

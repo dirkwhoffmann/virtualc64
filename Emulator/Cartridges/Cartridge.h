@@ -174,10 +174,10 @@ public:
 public:
     
     void _reset() override;
-    size_t stateSize() override;
-    void willLoadFromBuffer(u8 **buffer) override { dealloc(); }
-    void didLoadFromBuffer(u8 **buffer) override;
-    void didSaveToBuffer(u8 **buffer) override;
+    size_t oldStateSize() override;
+    void oldWillLoadFromBuffer(u8 **buffer) override { dealloc(); }
+    void oldDidLoadFromBuffer(u8 **buffer) override;
+    void oldDidSaveToBuffer(u8 **buffer) override;
 
 private:
 
@@ -437,17 +437,17 @@ public:
         Cartridge::_reset();
         control = 0;
     }
-    size_t stateSize() {
-        return Cartridge::stateSize() + 1;
+    size_t oldStateSize() {
+        return Cartridge::oldStateSize() + 1;
     }
-    void didLoadFromBuffer(u8 **buffer)
+    void oldDidLoadFromBuffer(u8 **buffer)
     {
-        Cartridge::didLoadFromBuffer(buffer);
+        Cartridge::oldDidLoadFromBuffer(buffer);
         control = read8(buffer);
     }
-    void didSaveToBuffer(u8 **buffer)
+    void oldDidSaveToBuffer(u8 **buffer)
     {
-        Cartridge::didSaveToBuffer(buffer);
+        Cartridge::oldDidSaveToBuffer(buffer);
         write8(buffer, control);
     }
 };
