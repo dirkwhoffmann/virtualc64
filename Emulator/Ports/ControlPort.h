@@ -49,7 +49,7 @@ private:
     
     
     //
-    // Constructing and serializing
+    // Initializing
     //
     
 public:
@@ -62,7 +62,32 @@ private:
     
     
     //
-    // Serialization
+    // Configuring
+    //
+    
+public:
+    
+    bool getAutofire() { return autofire; }
+    void setAutofire(bool value);
+
+    int getAutofireBullets() { return autofireBullets; }
+    void setAutofireBullets(int value);
+
+    float getAutofireFrequency() { return autofireFrequency; }
+    void setAutofireFrequency(float value) { autofireFrequency = value; }
+    
+    
+    //
+    // Analyzing
+    //
+    
+private:
+    
+    void _dump() override;
+    
+    
+    //
+    // Serializing
     //
     
 private:
@@ -83,57 +108,33 @@ private:
     
     void oldDidLoadFromBuffer(u8 **buffer) override;
 
-private:
     
-    void _dump() override;
-
+    //
+    // Emulating
+    //
     
 public:
     
-    //! @brief   Returns true if auto-fire mode is enabled.
-    bool getAutofire() { return autofire; }
 
-    //! @brief   Enables or disables autofire.
-    void setAutofire(bool value);
 
-    /*! @brief   Returns the number of bullets per gun volley.
-     *  @details A negative value represents infinity.
-     */
-    int getAutofireBullets() { return autofireBullets; }
-
-    /*! @brief   Sets the number of bullets per gun volley.
-     *  @details A negative value represents infinity.
-     */
-    void setAutofireBullets(int value);
-
-    //! @brief   Returns the autofire frequency.
-    float getAutofireFrequency() { return autofireFrequency; }
-
-    //! @brief   Sets the autofire frequency.
-    void setAutofireFrequency(float value) { autofireFrequency = value; }
-
-    //! @brief   Updates variable nextAutofireFrame
+    // Updates variable nextAutofireFrame
     void scheduleNextShot();
     
-    //! @brief    Execution function for this control port
-    /*! @details  This method is invoked at the end of each frame. It is needed
-     *            needed to implement the autofire functionality, only.
+    /* This method is invoked at the end of each frame. It is needed to
+     * implement the autofire functionality, only.
      */
     void execute();
     
-    //! @brief   Triggers a joystick event
+    // Triggers a joystick event
     void trigger(GamePadAction event);
     
-    /*! @brief   Returns the current joystick movement in form a bit mask
-     *  @details The bits are in the same order as they show up in the
-     *           CIA's data port registers
+    /* Returns the current joystick movement in form a bit mask. The bits are
+     * in the same order as they show up in the CIA's data port registers.
      */
     u8 bitmask();
 
-    //! @brief   Returns the potentiometer X value (analog mouse)
+    // Returns the potentiometer values (analog mouse)
     u8 potX();
-
-    //! @brief   Returns the potentiometer Y value (analog mouse)
     u8 potY();
 };
 

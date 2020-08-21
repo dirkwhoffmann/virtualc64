@@ -84,16 +84,43 @@ private:
     
     
     //
-    // Initialization
+    // Initializing
     //
     
 public:
     
 	TOD(C64 &ref, CIA &cia);
     
+private:
+    
+    void _reset() override;
+
     
     //
-    // Serialization
+    // Configuring
+    //
+    
+public:
+    
+    // Returns the result of the most recent call to inspect()
+    TODInfo getInfo() { return HardwareComponent::getInfo(info); }
+    
+    // Sets the frequency of the driving clock
+    void setHz(u8 value) { assert(value == 5 || value == 6); hz = value; }
+
+    
+    //
+    // Analyzing
+    //
+    
+private:
+    
+    void _inspect() override;
+    void _dump() override;
+    
+    
+    //
+    // Serializing
     //
     
 private:
@@ -114,30 +141,7 @@ private:
     
     
     //
-    // Methods from HardwareComponent
-    //
-
-private:
-    
-    void _inspect() override;
-	void _reset() override;
-    void _dump() override;
-    
-    //
-    // Configuring
-    //
-    
-public:
-    
-    // Returns the result of the most recent call to inspect()
-    TODInfo getInfo() { return HardwareComponent::getInfo(info); }
-
-    // Sets the frequency of the driving clock
-    void setHz(u8 value) { assert(value == 5 || value == 6); hz = value; }
-
-    
-    //
-    // Accessing properties
+    // Accessing
     //
 
     // Returns the hours digits of the time of day clock

@@ -233,7 +233,7 @@ class VIA6522 : public C64Component {
     
     
     //
-    // Constructing and serializing
+    // Initializing
     //
     
 public:
@@ -244,9 +244,17 @@ private:
     
 	void _reset() override;
 
+    //
+    // Analyzing
+    //
+    
+private:
+    
+    void _dump() override;
+    
     
     //
-    // Serialization
+    // Serializing
     //
     
 private:
@@ -265,12 +273,6 @@ private:
     size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
-    
-    
-    
-private:
-    
-    void _dump() override;
 
     
 public:

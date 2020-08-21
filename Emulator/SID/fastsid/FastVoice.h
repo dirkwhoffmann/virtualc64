@@ -177,9 +177,23 @@ public:
     static void initWaveTables();
     void init(FastSID *owner, unsigned voiceNr, FastVoice *prevVoice);
     
+private:
+    
+    void _reset() override;
+    
     
     //
-    // Serialization
+    // Analyzing
+    //
+    
+public:
+    
+    SIDInfo getInfo() { return HardwareComponent::getInfo(info); }
+    VoiceInfo getVoiceInfo(unsigned nr) { return HardwareComponent::getInfo(voiceInfo[nr]); }
+    
+    
+    //
+    // Serializing
     //
     
 private:
@@ -205,20 +219,15 @@ private:
     
 private:
     
-    void _reset() override;
     void oldDidLoadFromBuffer(u8 **buffer) override { updateWaveTablePtr(); }
 
     
     //
-    // Analyzing
+    // Accessing
     //
     
 public:
-    
-    // Returns the result of the most recent call to inspect()
-    SIDInfo getInfo() { return HardwareComponent::getInfo(info); }
-    VoiceInfo getVoiceInfo(unsigned nr) { return HardwareComponent::getInfo(voiceInfo[nr]); }
-    
+        
     // Updates the wavetable pointer
     void updateWaveTablePtr();
 

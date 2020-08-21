@@ -644,17 +644,24 @@ private:
     
     
     //
-    // Constructing and serializing
+    // Initializing
     //
     
 public:
 	
     VICII(C64 &ref);
     
+private:
+    
+    void _initialize() override;
+    void _reset() override;
+
     
     //
     // Configuring
     //
+    
+public:
     
     VICConfig getConfig() { return config; }
     
@@ -667,9 +674,29 @@ public:
     GlueLogic getGlueLogic() { return config.glueLogic; }
     void setGlueLogic(GlueLogic type);
     
+private:
+    
+    void _dumpConfig() override;
+
+
+    //
+    // Analyzing
+    //
+    
+public:
+    
+    VICIIInfo getInfo() { return HardwareComponent::getInfo(info); }
+    SpriteInfo getSpriteInfo(int nr);
+
+private:
+    
+    void _inspect() override;
+    void _dump() override;
+    void _ping() override;
+
     
     //
-    // Serialization
+    // Serializing
     //
     
 private:
@@ -689,100 +716,73 @@ private:
     size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
     
-    
     //
-    // Methods from HardwareComponent
+    // DEPRECATED
     //
     
 public:
     
-    void _initialize() override;
-    void _reset() override;
-    void _inspect() override;
     size_t oldStateSize() override;
     void oldDidLoadFromBuffer(u8 **buffer) override;
     void oldDidSaveToBuffer(u8 **buffer) override;
     
-private:
-    
-    void _ping() override;
-    void _dumpConfig() override;
-    void _dump() override;
-
     
     //
-    // Analyzing
+    // Accessing
     //
     
 public:
     
-    // Returns the result of the most recent call to inspect()
-    VICIIInfo getInfo() { return HardwareComponent::getInfo(info); }
-    SpriteInfo getSpriteInfo(int nr);
-    
-    
-    //
-    //! @functiongroup Accessing chip model related properties
-    //
-    
-public:
-    
- 
-
-    //! @brief    Returns the currently used palette type.
+    // Returns the currently used palette type
     Palette videoPalette() { return palette; }
     
-    //! @brief    Sets the palette type.
+    // Sets the palette type
     void setVideoPalette(Palette type);
 
-    //! @brief    Returns true if a PAL chip is plugged in.
+    // Returns true if a PAL chip is plugged in
     bool isPAL() { return config.revision & (PAL_6569_R1 | PAL_6569_R3 | PAL_8565); }
     
-    //! @brief    Returns true if a NTSC chip is plugged in.
+    // Returns true if a NTSC chip is plugged in
     bool isNTSC() { return config.revision & (NTSC_6567 | NTSC_6567_R56A | NTSC_8562); }
 
-    //! @brief    Returns true if a newer MOS 856x chip is plugged in.
+    // Returns true if a newer MOS 856x chip is plugged in
     bool is856x() { return config.revision & (PAL_8565 | NTSC_8562); }
     
-    //! @brief    Returns true if an older MOS 656x chip is plugged in.
+    // Returns true if an older MOS 656x chip is plugged in
     bool is656x() { return config.revision & ~(PAL_8565 | NTSC_8562); }
 
-    //! @brief    Returns true if the emulated chip has the gray dot bug.
-    // bool hasGrayDotBug() { return is856x(); }
-
-    //! @brief    Returns true if light pen interrupts are triggered with a delay.
+    // Returns true if light pen interrupts are triggered with a delay
     bool delayedLightPenIrqs() { return config.revision & (PAL_6569_R1 | NTSC_6567_R56A); }
 
-    //! @brief    Returns the clock frequencay of the selected VICII model.
+    // Returns the clock frequencay of the selected VICII model
     unsigned getClockFrequency();
     
-    //! @brief    Returns the number of CPU cycles performed per rasterline.
+    // Returns the number of CPU cycles performed per rasterline
     unsigned getCyclesPerRasterline();
     
-    //! @brief    Returns true if the end of the rasterline has been reached.
+    // Returns true if the end of the rasterline has been reached
     bool isLastCycleInRasterline(unsigned cycle);
     
-    //! @brief    Returns the number of rasterlines drawn per frame.
+    // Returns the number of rasterlines drawn per frame
     unsigned getRasterlinesPerFrame();
     
-    //! @brief    Returns true if rasterline belongs to the VBLANK area.
+    // Returns true if rasterline belongs to the VBLANK area
     bool isVBlankLine(unsigned rasterline);
     
-    //! @brief    Returns the number of CPU cycles executed in one frame.
+    // Returns the number of CPU cycles executed in one frame
     unsigned getCyclesPerFrame() {
         return getRasterlinesPerFrame() * getCyclesPerRasterline(); }
     
-    /*! @brief    Returns the number of frames drawn per second.
-     *  @note     The result is returned as a floating point value, because
-     *            Commodore did not manage to match the expected values exactly
-     *            (50 Hz for PAL and 60 Hz for NTSC). E.g., a PAL C64 outputs
-     *            50.125 Hz.
+    /* Returns the number of frames drawn per second. The result is returned as
+     * a floating point value, because Commodore did not manage to match the
+     * expected values exactly (50 Hz for PAL and 60 Hz for NTSC). E.g., a PAL
+     * C64 outputs 50.125 Hz.
      */
     double getFramesPerSecond() {
         return (double)getClockFrequency() / (double)getCyclesPerFrame();
     }
     
-    //! @brief    Returns the time interval between two frames in nanoseconds.
+    // Returns the time interval between two frames in nanoseconds
     u64 getFrameDelay() {
         return u64(1000000000.0 / getFramesPerSecond());
     }

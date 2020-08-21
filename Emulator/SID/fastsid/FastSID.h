@@ -112,16 +112,34 @@ private:
     
     
     //
-    // Initialization
+    // Initializing
     //
     
 public:
         
 	FastSID(C64 &ref, SIDBridge &bridgeref);
 
+private:
+    
+    void _reset() override;
+
     
     //
-    // Serialization
+    // Analyzing
+    //
+    
+public:
+    
+    SIDInfo getInfo();
+    VoiceInfo getVoiceInfo(unsigned voice);
+
+private:
+    
+    void _dump() override;
+
+    
+    //
+    // Serializing
     //
     
 private:
@@ -145,23 +163,12 @@ private:
     // Methods from HardwareComponent
     //
     
-public:
-    
-    void _reset() override;
-
 private:
     
-    void _dump() override;
     void _setClockFrequency(u32 value) override;
     
 public:
-    
-    // Gathers all values that are displayed in the debugger
-    SIDInfo getInfo();
-    
-    // Gathers all debug information for a specific voice
-    VoiceInfo getVoiceInfo(unsigned voice);
-    
+        
     // Special peek function for the I/O memory range
     u8 peek(u16 addr);
     

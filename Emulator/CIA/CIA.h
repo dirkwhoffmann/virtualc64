@@ -226,16 +226,49 @@ public:
     
     
     //
-    // Initialization
+    // Initializing
     //
     
 public:
     
 	CIA(C64 &ref);
+
+protected:
+    
+    void _reset() override;
     
     
     //
-    // Serialization
+    // Configuring
+    //
+    
+public:
+    
+    CIAConfig getConfig() { return config; }
+    
+    CIARevision getRevision() { return config.revision; }
+    void setRevision(CIARevision revision);
+    
+    bool getTimerBBug() { return config.timerBBug; }
+    void setTimerBBug(bool value) { config.timerBBug = value; }
+
+    
+    //
+    // Analyzing
+    //
+
+public:
+    
+    CIAInfo getInfo() { return HardwareComponent::getInfo(info); }
+    
+protected:
+    
+    void _inspect() override;
+    void _dump() override;
+
+    
+    //
+    // Serializing
     //
     
 private:
@@ -254,37 +287,6 @@ private:
     size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
-    
-    //
-    // Configuring and analyzing
-    //
-
-public:
-    
-    CIAConfig getConfig() { return config; }
-
-    CIARevision getRevision() { return config.revision; }
-    void setRevision(CIARevision revision);
-              
-    bool getTimerBBug() { return config.timerBBug; }
-    void setTimerBBug(bool value) { config.timerBBug = value; }
-    
-    CIAInfo getInfo() { return HardwareComponent::getInfo(info); }
-    
-    
-    //
-    // Managing the component state
-    //
-    
-protected:
-    
-	void _reset() override;
-    void _inspect() override;
-    void _dump() override;
-    // size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
-    // size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    // size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-
         
     //
     // Accessing the I/O register space

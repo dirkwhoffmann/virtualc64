@@ -77,11 +77,22 @@ public:
     Datasette(C64 &ref);    
     ~Datasette();
     
+private:
+    
     void _reset() override;
     
+
+    //
+    // Analyzing
+    //
+
+private:
+    
+    void _ping() override;
+
     
     //
-    // Serialization
+    // Serializing
     //
     
 private:
@@ -103,7 +114,6 @@ private:
     
 private:
     
-    void _ping() override;
     size_t oldStateSize() override;
     void oldDidLoadFromBuffer(u8 **buffer) override;
     void oldDidSaveToBuffer(u8 **buffer) override;

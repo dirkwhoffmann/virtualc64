@@ -30,7 +30,7 @@ class GamePadManager {
     var gamePads: [Int: GamePad] = [:]
     
     //
-    // Initialization
+    // Initializing
     //
     
     init(parent: MyController) {

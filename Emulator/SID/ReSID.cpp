@@ -94,6 +94,8 @@ ReSID::~ReSID()
 void
 ReSID::_reset()
 {
+    debug("ReSID::_reset");
+    
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)
          for (unsigned i = 0; snapshotItems[i].data != NULL; i++)

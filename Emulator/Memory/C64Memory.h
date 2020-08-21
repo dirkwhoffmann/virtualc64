@@ -60,16 +60,23 @@ public:
     
     
     //
-    // Constructing and serializing
+    // Initializing
     //
     
 public:
     
 	C64Memory(C64 &ref);
     
+private:
+    
+    void _reset() override;
+
+    
     //
     // Configuring
     //
+    
+public:
     
     MemConfig getConfig() { return config; }
     
@@ -83,12 +90,16 @@ public:
     
 public:
     
-    // Returns the result of the latest inspection
     MemInfo getInfo() { return HardwareComponent::getInfo(info); }
     
+private:
+    
+    void _inspect() override;
+    void _dump() override;
+
     
     //
-    // Serialization
+    // Serializing
     //
     
 private:
@@ -109,14 +120,8 @@ private:
     
     
     //
-    // Methods from HardwareComponent
+    //Accessing
     //
-    
-private:
-    
-	void _reset() override;
-    void _inspect() override;
-	void _dump() override;
 
 public:
     

@@ -187,7 +187,7 @@ private:
     
     
     //
-    // Constructing and serializing
+    // Initializing
     //
     
 public:
@@ -195,7 +195,7 @@ public:
     CPU(C64& ref, MEMTYPE& memref);
     
 private:
-        
+    
     // Registers the instruction set
     void registerInstructions();
     void registerLegalInstructions();
@@ -207,9 +207,14 @@ private:
                           AddressingMode mode,
                           MicroInstruction mInstr);
     
+    void _reset() override;
+
+    
     //
     // Configuring
     //
+    
+public:
     
     
     //
@@ -221,9 +226,14 @@ public:
     // Returns the result of the latest inspection
     CPUInfo getInfo() { return HardwareComponent::getInfo(info); }
     
+private:
+    
+    void _inspect() override;
+    void _dump() override;
+
     
     //
-    // Serialization
+    // Serializing
     //
     
 private:
@@ -244,15 +254,14 @@ private:
     
     
     //
-    // Methods from HardwareComponent
+    // Controlling
     //
     
 private:
     
-    void _reset() override;
-    void _inspect() override;
-    void _dump() override;
     void _setDebug(bool enable) override;
+    
+    
     size_t oldStateSize() override;
     void oldDidLoadFromBuffer(u8 **buffer) override;
     void oldDidSaveToBuffer(u8 **buffer) override;

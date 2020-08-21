@@ -68,6 +68,8 @@ FastSID::FastSID(C64 &ref, SIDBridge &bridgeref) : C64Component(ref), bridge(bri
 void
 FastSID::_reset()
 {
+    debug("FastSID::_reset");
+    
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
      if (snapshotItems != NULL)
          for (unsigned i = 0; snapshotItems[i].data != NULL; i++)

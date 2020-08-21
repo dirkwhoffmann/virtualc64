@@ -27,16 +27,29 @@ public:
     
     
     //
-    // Constructing and serializing
+    // Initializing
     //
     
 public:
     
     DriveMemory(C64 &ref, Drive &drive);
     
+private:
+    
+    void _reset() override;
+
     
     //
-    // Serialization
+    // Analyzing
+    //
+    
+private:
+    
+    void _dump() override;
+    
+    
+    //
+    // Serializing
     //
     
 private:
@@ -54,19 +67,6 @@ private:
     size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
     size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-    
-    
-    //
-    // Methods from HardwareComponent
-    //
-    
-public:
-    
-    void _reset() override;
-    
-private:
-    
-    void _dump() override;
     
     
     //

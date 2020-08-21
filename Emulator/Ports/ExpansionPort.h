@@ -51,17 +51,31 @@ private:
     
     
     //
-    // Constructing and serializing
+    // Initializing
     //
     
 public:
     
     ExpansionPort(C64 &ref);
     ~ExpansionPort();
+
+private:
     
+    void _reset() override;
+
     
     //
-    // Serialization
+    // Analyzing
+    //
+    
+private:
+    
+    void _ping() override;
+    void _dump() override;
+
+    
+    //
+    // Serializing
     //
     
 private:
@@ -89,16 +103,9 @@ private:
     
 public:
     
-    void _reset() override;
     size_t oldStateSize() override;
     void oldDidLoadFromBuffer(u8 **buffer) override;
     void oldDidSaveToBuffer(u8 **buffer) override;
-
-private:
-    
-    void _ping() override;
-    void _dump() override;
-
     
 public:
     

@@ -161,16 +161,29 @@ private:
     
     
     //
-    // Constructing and serializing
+    //Initializing
     //
     
 public:
     
     Disk(C64 &ref);
     
+private:
+    
+    void _reset() override;
+
     
     //
-    // Serialization
+    // Analyzing
+    //
+    
+private:
+    
+    void _dump() override;
+
+    
+    //
+    // Serializing
     //
     
 private:
@@ -191,15 +204,9 @@ private:
     
     
     //
-    // Methods from HardwareComponent
+    // Accessing
     //
-    
-private:
-    
-    void _reset() override;
-    void _dump() override;
 
-    
 public:
     
     //! @brief Returns write protection flag

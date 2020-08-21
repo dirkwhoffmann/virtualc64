@@ -66,9 +66,27 @@ public:
 	ReSID(C64 &ref, SIDBridge &bridgeref);
 	~ReSID();
     
+private:
+    
+    void _reset() override;
+
     
     //
-    // Serialization
+    // Analyzing
+    //
+    
+public:
+    
+    SIDInfo getInfo() { return HardwareComponent::getInfo(info); }
+    VoiceInfo getVoiceInfo(unsigned nr) { return HardwareComponent::getInfo(voiceInfo[nr]); }
+    
+private:
+    
+    void _inspect() override;
+    
+    
+    //
+    // Serializing
     //
     
 private:
@@ -95,8 +113,6 @@ private:
     
 public:
     
-    void _reset() override;
-    void _inspect() override;
     void oldDidLoadFromBuffer(u8 **buffer) override { sid->write_state(st); }
     void oldWillSaveToBuffer(u8 **buffer) override { st = sid->read_state(); }
 
@@ -104,16 +120,6 @@ private:
 
     void _setClockFrequency(u32 value) override;
     
-    
-    //
-    // Analyzing
-    //
-    
-public:
-    
-    // Returns the result of the most recent call to inspect()
-    SIDInfo getInfo() { return HardwareComponent::getInfo(info); }
-    VoiceInfo getVoiceInfo(unsigned nr) { return HardwareComponent::getInfo(voiceInfo[nr]); }
     
     
 public:

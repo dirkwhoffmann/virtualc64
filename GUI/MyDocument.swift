@@ -30,7 +30,7 @@ class MyDocument: NSDocument {
     var attachment: AnyC64FileProxy?
     
     //
-    // Initialization
+    // Initializing
     //
     
     override init() {

@@ -12,31 +12,28 @@
 
 #include "C64Component.h"
 
-/*! @brief    This class implements a cartridge Rom chip 
- */
 class CartridgeRom : public C64Component {
     
-    protected:
+protected:
     
-    //! @brief    Rom data
+    // Rom data
     u8 *rom = NULL;
     
-    public:
+public:
     
-    //! @brief    Size in bytes
+    // Size of the Rom data in bytes
     u16 size = 0;
     
-    /*! @brief    Load address
-     *  @details  This value is taken from the .CRT file. Possible values are
-     *            $8000 for chips mapping into the ROML area, $A000 for chips
-     *            mapping into the ROMH area in 16KB game mode, and $E000 for
-     *            chips mapping into the ROMH area in ultimax mode.
+    /* Load address. This value is taken from the .CRT file. Possible values
+     * are $8000 for chips mapping into the ROML area, $A000 for chips mapping
+     * into the ROMH area in 16KB game mode, and $E000 for chips mapping into
+     * the ROMH area in ultimax mode.
      */
     u16 loadAddress = 0;
     
     
     //
-    // Constructing and serializing
+    // Initializing
     //
     
 public:
@@ -45,9 +42,13 @@ public:
     CartridgeRom(C64 &ref, u16 _size, u16 _loadAddress, const u8 *buffer = NULL);
     ~CartridgeRom();
     
+private:
+    
+    void _reset() override;
+
     
     //
-    // Serialization
+    // Serializing
     //
     
 private:
@@ -66,42 +67,31 @@ private:
     size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
-    
-    //
-    // Methods from HardwareComponent
-    //
-    
-private:
-
-    void _reset() override;
-
 public:
     
     size_t oldStateSize() override;
     void oldDidLoadFromBuffer(u8 **buffer) override;
     void oldDidSaveToBuffer(u8 **buffer) override;
 
+    //
+    // Accessing
+    //
     
 public:
     
-    //! @brief    Returns true if this Rom chip maps to ROML, only.
+    // Returns true if this Rom chip maps to ROML
     bool mapsToL();
     
-    //! @brief    Returns true if this Rom chip maps to ROML and ROMH.
+    // Returns true if this Rom chip maps to ROMH
+    bool mapsToH();
+
+    // Returns true if this Rom chip maps to both ROML and ROMH
     bool mapsToLH();
     
-    //! @brief    Returns true if this Rom chip maps to ROMH, only.
-    bool mapsToH();
-    
-    //! @brief    Reads a ROM cell
+    // Reads or writes a byte
     u8 peek(u16 addr);
-    
-    //! @brief    Reads a ROM cell without side effects
     u8 spypeek(u16 addr) { return peek(addr); }
-    
-    //! @brief    Writes a ROM cell
     void poke(u16 addr, u8 value) { }
-    
 };
 
 #endif

@@ -189,17 +189,24 @@ public:
     
     
     //
-    // Constructing and serializing
+    // Initializing
     //
     
 public:
     
     Drive(DriveID id, C64 &ref);
     
+private:
+
+    void _initialize() override;
+    void _reset() override;
+
     
     //
     // Configuring
     //
+    
+public:
     
     DriveConfig getConfig() { return config; }
     
@@ -217,7 +224,17 @@ public:
     
     
     //
-    // Serialization
+    // Analyzing
+    //
+    
+private:
+    
+    void _ping() override;
+    void _dump() override;
+
+    
+    //
+    // Serializing
     //
     
 private:
@@ -242,15 +259,9 @@ private:
     // Methods from HardwareComponent
     //
     
-public:
-
-    void _initialize() override;
-    void _reset() override;
 
 private:
     
-    void _ping() override;
-    void _dump() override;
     void _setClockFrequency(u32 value) override;
     
 public:

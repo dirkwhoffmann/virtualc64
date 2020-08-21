@@ -52,16 +52,23 @@ private:
   
     
     //
-    // Constructing and serializing
+    // Initializing
     //
     
 public:
     
     Mouse(C64 &ref);
     
+private:
+    
+    void _reset() override;
+
+    
     //
     // Configuring
     //
+    
+public:
     
     MouseConfig getConfig() { return config; }
     
@@ -70,7 +77,7 @@ public:
 
     
     //
-    // Serialization
+    // Serializing
     //
     
 private:
@@ -90,19 +97,8 @@ private:
     size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
     
-    
-    
     //
-    // Methods from HardwareComponent
-    //
-    
-private:
-    
-    void _reset() override;
-
-    
-    //
-    // Using the device
+    // Accessing
     //
     
 public:

@@ -15,8 +15,6 @@
 #include "CRTFile.h"
 #include "CartridgeRom.h"
 
-// class ExpansionPort;
-
 class Cartridge : public C64Component {
     
 public:
@@ -110,65 +108,55 @@ private:
 public:
     
     //
-    //! @functiongroup Class methods
+    // Class methods
     //
     
-    /*! @brief    Checks the cartridge type.
-     *  @details  Returns true iff the cartridge type is supported.
-     */
+    // Checks whether this cartridge is a supported cartridge.
     static bool isSupportedType(CartridgeType type);
     
-    /*! @brief    Returns true if addr is located in the ROML address space.
-     *  @details  If visible, ROML is always mapped to 0x8000 - 0x9FFF.
+    /* Returns true if addr is located in the ROML or the ROMH address space.
+     * If visible, ROML is always mapped to 0x8000 - 0x9FFF. ROMH can be mapped
+     * to 0xA000 - 0xBFFF or 0xE000 - 0xFFFF.
      */
-    static bool isROMLaddr (u16 addr) { return addr >= 0x8000 && addr <= 0x9FFF; }
-    
-    /*! @brief    Returns true if addr is located in the ROMH address space.
-     *  @details  ROMH can appear in 0xA000 - 0xBFFF or 0xE000 - 0xFFFF.
-     */
+    static bool isROMLaddr (u16 addr) {
+        return addr >= 0x8000 && addr <= 0x9FFF; }
     static bool isROMHaddr (u16 addr) {
         return (addr >= 0xA000 && addr <= 0xBFFF) || (addr >= 0xE000 && addr <= 0xFFFF); }
 
     
     //
-    // Constructing and serializing
+    // Initializing
     //
+    
+public:
     
     Cartridge(C64 *c64, C64 &ref, const char *description = "Cartridge");
     ~Cartridge();
 
-    // Deletes all chip packages
-    void dealloc();
-
-    //! @brief    Returns the cartridge type
-    virtual CartridgeType getCartridgeType() { return CRT_NORMAL; }
-    
-    //! @brief    Factory method
-    /*! @details  Creates a cartridge with the specified type. Make sure to pass
-     *            containers of the supported cartridge type, only.
-     *  @seealso  isSupportedType
-     */
     static Cartridge *makeWithType(C64 *c64, CartridgeType type);
-    
-    //! @brief    Factory method
-    /*! @details  Creates a cartridge from a CRT file. Make sure to pass
-     *            containers of the supported cartridge type, only.
-     *  @seealso  isSupportedType
-     */
     static Cartridge *makeWithCRTFile(C64 *c64, CRTFile *file);
+
+protected:
     
-    //! @brief    State size function for chip packet data
-    virtual size_t packetStateSize();
-    
-    //! @brief    Loads all chip packets from a buffer
-    virtual void loadPacketsFromBuffer(u8 **buffer);
-    
-    //! @brief    Saves all chip packets to a buffer
-    virtual void savePacketsToBuffer(u8 **buffer);
-    
+    void dealloc();
+    void _reset() override;
+
     
     //
-    // Serialization
+    // Analyzing
+    //
+
+public:
+    
+    virtual CartridgeType getCartridgeType() { return CRT_NORMAL; }
+
+private:
+    
+    void _dump() override;
+        
+    
+    //
+    // Serializing
     //
     
 private:
@@ -187,22 +175,21 @@ private:
     size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
+    // State size function for chip packet data
+    virtual size_t packetStateSize();
     
-    //
-    // Methods from HardwareComponent
-    //
+    // Loads all chip packets from a buffer
+    virtual void loadPacketsFromBuffer(u8 **buffer);
+    
+    // Saves all chip packets to a buffer
+    virtual void savePacketsToBuffer(u8 **buffer);
     
 public:
     
-    void _reset() override;
     size_t oldStateSize() override;
     void oldWillLoadFromBuffer(u8 **buffer) override { dealloc(); }
     void oldDidLoadFromBuffer(u8 **buffer) override;
     void oldDidSaveToBuffer(u8 **buffer) override;
-
-private:
-
-    void _dump() override;
     
         
     //

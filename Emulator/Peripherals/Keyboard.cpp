@@ -156,6 +156,14 @@ Keyboard::releaseRestoreKey()
     cpu.releaseNmiLine(INTSRC_KBD);
 }
 
+void
+Keyboard::releaseAll()
+{
+    for (unsigned i = 0; i < 8; i++) {
+        kbMatrixRow[i] = kbMatrixCol[i] = 0xFF;
+    }
+}
+
 bool
 Keyboard::keyIsPressed(u8 row, u8 col)
 {

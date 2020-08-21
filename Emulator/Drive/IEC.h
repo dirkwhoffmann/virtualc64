@@ -16,59 +16,70 @@ class IEC : public C64Component {
 
 public:
     
-	//! @brief    Current value of the IEC bus atn line
+	// Current values of the IEC bus lines
 	bool atnLine;
-
-	//! @brief    Current value of the IEC bus clock line
 	bool clockLine;
-
-	//! @brief    Current value of the IEC bus data line
 	bool dataLine;
 	 	
-    /*! @brief    Indicates if the bus lines variables need an undate,
-     *            because the values coming from the C64 side have changed.
-     *  @deprecated
+    /* Indicates if the bus lines variables need an undate, because the values
+     * coming from the C64 side have changed.
+     * DEPRECATED
      */
     bool isDirtyC64Side;
 
-    /*! @brief    Indicates if the bus lines variables need an undate,
-     *            because the values coming from the drive side have changed.
-     *  @deprecated
+    /* Indicates if the bus lines variables need an undate, because the values
+     * coming from the drive side have changed.
+     * DEPRECATED
      */
     bool isDirtyDriveSide;
 
-    //! @brief    Bus driving values from drive 1 side
+    // Bus driving values from drive 1
     bool device1Atn;
     bool device1Clock;
     bool device1Data;
     
-    //! @brief    Bus driving values from drive 2 side
+    // Bus driving values from drive 2
     bool device2Atn;
     bool device2Clock;
     bool device2Data;
     
-    //! @brief    Bus driving values from CIA side
+    // Bus driving values from the CIA
     bool ciaAtn;
     bool ciaClock;
     bool ciaData;
     
 private:
     
-	//! @brief    Used to determine if the bus is idle or if data is transferred
+	// Used to determine if the bus is idle or if data is transferred
 	u32 busActivity;
 	
     
     //
-    // Constructing and serializing
+    // Initializing
     //
     
 public:
         
 	IEC(C64 &ref);
     
+private:
+    
+    void _reset() override;
+
     
     //
-    // Serialization
+    // Analyzing
+    //
+    
+private:
+    
+    void _ping() override;
+    void _dump() override;
+    void dumpTrace();
+
+    
+    //
+    // Serializing
     //
     
 private:
@@ -88,46 +99,32 @@ private:
     size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
     
-    
     //
-    // Methods from HardwareComponent
+    // Accessing
     //
     
 public:
-    
-	void _reset() override;
-    
-private:
-    
-    void _ping() override;
-	void _dump() override;
 
-    
-public:
-
-	void dumpTrace();
-	    
-    //! @brief    Returns true if the IEC currently transfers data.
+    // Returns true if the IEC is transfering data
     bool isBusy() { return busActivity > 0; }
     
-    //! @brief    Requensts an update of the bus lines from the C64 side.
-    //! @deprecated
+    // Requensts an update of the bus lines from the C64 side
+    // DEPRECATED
     void setNeedsUpdateC64Side() { isDirtyC64Side = true; }
 
-    //! @brief    Requensts an update of the bus lines from the drive side.
-    //! @deprecated
+    // Requensts an update of the bus lines from the drive side
+    // DEPRECATED
     void setNeedsUpdateDriveSide() { isDirtyDriveSide = true; }
 
-    //! @brief    Updates all three bus lines.
-    /*! @details  The new values are determined by VIA1 (drive side) and
-     *            CIA2 (C64 side).
+    /* Updates all three bus lines. The new values are determined by VIA1
+     * (drive side) and CIA2 (C64 side).
      */
     void updateIecLinesC64Side();
     void updateIecLinesDriveSide();
 
-	//! @brief    Execution function for observing the bus activity.
-    /*! @details  This method is invoked periodically. It's only purpose is to
-     *            determines if data is transmitted on the bus.
+	/* Execution function for observing the bus activity. This method is
+     * invoked periodically. It's purpose is to determines if data is
+     * transmitted on the bus.
      */
 	void execute();
     
@@ -135,8 +132,8 @@ private:
     
     void updateIecLines();
     
-    //! @brief    Work horse for method updateIecLines
-    /*! @details  Returns true if at least one line changed it's value.
+    /* Work horse for method updateIecLines. It returns true if at least one
+     * line changed it's value.
      */
     bool _updateIecLines();
 };

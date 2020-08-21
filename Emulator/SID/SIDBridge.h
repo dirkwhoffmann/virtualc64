@@ -93,17 +93,25 @@ private:
      */
     i32 volumeDelta;
     
+    
     //
-    // Constructing and serializing
+    // Initializing
     //
     
 public:
 	
 	SIDBridge(C64 &ref);
 	
+private:
+    
+    void _reset() override;
+
+    
     //
     // Configuring
     //
+    
+public:
     
     SIDConfig getConfig() { return config; }
     
@@ -126,7 +134,22 @@ public:
     
     
     //
-    // Serialization
+    // Analyzing
+    //
+
+public:
+    
+    SIDInfo getInfo();
+    VoiceInfo getVoiceInfo(unsigned voice);
+    
+private:
+    
+    void _dump() override;
+    void _dump(SIDInfo info);
+
+    
+    //
+    // Serializing
     //
     
 private:
@@ -152,27 +175,13 @@ private:
     
 public:
     
-    void _reset() override;
     void oldDidLoadFromBuffer(u8 **buffer) override { clearRingbuffer(); }
 
 private:
     
     void _run() override;
     void _pause() override;
-    void _dump() override;
-    void _dump(SIDInfo info);
     void _setWarp(bool enable) override;
-    
-    
-    //
-    // Analyzing
-    //
-    
-public:
-    
-    // Returns the result of the most recent call to inspect()
-    SIDInfo getInfo();
-    VoiceInfo getVoiceInfo(unsigned voice);
     
   
     //

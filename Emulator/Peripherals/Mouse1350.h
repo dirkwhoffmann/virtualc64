@@ -37,7 +37,7 @@ private:
     
     
     //
-    // Constructing and serializing
+    // Initializing
     //
     
 public:
@@ -50,7 +50,7 @@ private:
     
     
     //
-    // Serialization
+    // Serializing
     //
     
 private:
@@ -71,7 +71,7 @@ private:
     
     
     //
-    // Using the device
+    // Accessing
     //
     
 public:

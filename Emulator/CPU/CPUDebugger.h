@@ -61,7 +61,7 @@ protected:
     
     
     //
-    // Constructing and destructing
+    // Initializing
     //
     
 public:
@@ -183,7 +183,7 @@ public:
 
     
     //
-    // Constructing and serializing
+    // Initializing
     //
     
 public:
@@ -192,10 +192,14 @@ public:
 
     // Initializes an entry of the lookup tables
     void registerInstruction(u8 opcode, const char *mnemonic, AddressingMode mode);
+
+private:
     
+    void _reset() override;
+
     
     //
-    // Serialization
+    // Serializing
     //
     
 private:
@@ -216,13 +220,12 @@ private:
     
     
     //
-    // Methods from HardwareComponent
+    // Controlling
     //
     
 private:
     
     void _powerOn() override;
-    void _reset() override;
 
 
     //

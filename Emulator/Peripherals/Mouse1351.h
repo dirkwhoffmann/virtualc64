@@ -31,7 +31,7 @@ class Mouse1351 : public C64Component {
     i64 shiftY = 31;
     
     //
-    // Constructing and serializing
+    // Initializing
     //
     
 public:
@@ -44,7 +44,7 @@ private:
     
     
     //
-    // Serialization
+    // Serializing
     //
     
 private:
@@ -65,7 +65,7 @@ private:
     
     
     //
-    // Using the device
+    // Accessing
     //
     
 public:

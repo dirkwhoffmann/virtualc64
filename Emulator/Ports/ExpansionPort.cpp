@@ -39,7 +39,7 @@ ExpansionPort::_reset()
                  memset(snapshotItems[i].data, 0, snapshotItems[i].size);
 
     if (cartridge) {
-        cartridge->_reset();
+        cartridge->reset();
         cartridge->resetCartConfig();
     } else {
         setCartridgeMode(CRT_OFF);
@@ -261,7 +261,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
     cartridge = c;
     
     // Reset cartridge to update exrom and game line on the expansion port
-    cartridge->_reset();
+    cartridge->reset();
     
     c64.putMessage(MSG_CARTRIDGE);
     if (cartridge->hasSwitch()) c64.putMessage(MSG_CART_SWITCH);

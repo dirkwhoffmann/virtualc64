@@ -253,7 +253,7 @@ private:
     
     
     //
-    // Constructing and serializing
+    // Initializing
     //
     
 public:
@@ -261,10 +261,19 @@ public:
     C64();
     ~C64();
     
+    void reset();
+
+private:
+    
+    void _reset() override;
+
+    
     //
     // Configuring
     //
 
+public:
+    
     // Returns the currently set configuration
     C64Configuration getConfig();
 
@@ -278,7 +287,7 @@ public:
 
     
     //
-    // Serialization
+    // Serializing
     //
     
 private:
@@ -305,7 +314,6 @@ private:
 public:
 
     void prefix() override;
-    void reset();
     void setWarp(bool enable);
     bool inWarpMode() { return warpMode; }
     void enableWarpMode() { setWarp(true); }
@@ -328,7 +336,6 @@ private:
     void _powerOff() override;
     void _run() override;
     void _pause() override;
-    void _reset() override;
     void _ping() override;
     void _dump() override;
     void _setWarp(bool enable) override;

@@ -47,16 +47,29 @@ class ProcessorPort : public C64Component {
 
     
     //
-    // Constructing and serializing
+    // Initializing
     //
     
 public:
     
     ProcessorPort(C64 &ref);
     
+private:
+    
+    void _reset() override;
+
     
     //
-    // Serialization
+    // Analyzing
+    //
+    
+private:
+    
+    void _dump() override;
+
+    
+    //
+    // Serializing
     //
     
 private:
@@ -75,16 +88,6 @@ private:
     size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
-    
-    //
-    // Methods from HardwareComponent
-    //
-
-private:
-
-    void _reset() override; 
-    void _dump() override;
-
     
     //
     // Accessing the port registers

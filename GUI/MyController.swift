@@ -351,7 +351,7 @@ extension MyController {
     }
     
     //
-    // Initialization
+    // Initializing
     //
 
     override open func awakeFromNib() {
