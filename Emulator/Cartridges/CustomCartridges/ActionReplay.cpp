@@ -144,20 +144,6 @@ ActionReplay::resetCartConfig()
     expansionport.setCartridgeMode(CRT_8K);
 }
 
-size_t
-ActionReplay::didLoadFromBuffer(u8 *buffer)
-{
-    control = read8(buffer);
-    return 1 + Cartridge::didLoadFromBuffer(buffer + 1);
-}
-
-size_t
-ActionReplay::didSaveToBuffer(u8 *buffer)
-{
-    write8(buffer, control);
-    return 1 + Cartridge::didSaveToBuffer(buffer + 1);
-}
-
 u8
 ActionReplay::peek(u16 addr)
 {

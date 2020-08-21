@@ -21,33 +21,35 @@ class ActionReplay3 : public Cartridge {
 public:
     
     ActionReplay3(C64 *c64, C64 &ref) : Cartridge(c64, ref, "AR3") { };
-    CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY3; }
+    CartridgeType getCartridgeType() override { return CRT_ACTION_REPLAY3; }
+
     
     //
-    //! @functiongroup Methods from Cartridge
+    // Accessing registers
     //
     
-    u8 peek(u16 addr);
-    u8 peekIO1(u16 addr);
-    u8 peekIO2(u16 addr);
-    
-    void pokeIO1(u16 addr, u8 value);
-    
-    unsigned numButtons() { return 2; }
-    const char *getButtonTitle(unsigned nr);
-    void pressButton(unsigned nr);
-    void releaseButton(unsigned nr);
-    
-    //! @brief   Sets the cartridge's control register
-    /*! @details This function triggers all side effects that take place when
-     *           the control register value changes.
-     */
+    u8 peek(u16 addr) override;
+    u8 peekIO1(u16 addr) override;
+    u8 peekIO2(u16 addr) override;
+    void pokeIO1(u16 addr, u8 value) override;
+
+    // Sets the control register and triggers side effects
     void setControlReg(u8 value);
     
     unsigned bank() { return control & 0x01; }
     bool game() { return !!(control & 0x02); }
     bool exrom() { return !(control & 0x08); }
     bool disabled() { return !!(control & 0x04); }
+    
+    
+    //
+    // Handling buttons
+    //
+
+    unsigned numButtons() override { return 2; }
+    const char *getButtonTitle(unsigned nr) override;
+    void pressButton(unsigned nr) override;
+    void releaseButton(unsigned nr) override;
 };
 
 
@@ -56,42 +58,19 @@ public:
 //
 
 class ActionReplay : public Cartridge {
-    
+        
 public:
-    
+        
     ActionReplay(C64 *c64, C64 &ref);
     CartridgeType getCartridgeType() override { return CRT_ACTION_REPLAY; }
-    
-    
-    //
-    // Serializing
-    //
-    
-    size_t didLoadFromBuffer(u8 *buffer) override;
-    size_t didSaveToBuffer(u8 *buffer) override;
+
+    void _reset() override;
+    void resetCartConfig() override;
 
     
     //
-    // Methods from HardwareComponent
+    // Accessing registers
     //
-    
-private:
-    
-    void _reset() override;
-    size_t oldStateSize() override {
-        return Cartridge::oldStateSize() + 1; }
-    void oldDidLoadFromBuffer(u8 **buffer) override {
-        Cartridge::oldDidLoadFromBuffer(buffer); control = read8(buffer); }
-    void oldDidSaveToBuffer(u8 **buffer) override {
-        Cartridge::oldDidSaveToBuffer(buffer); write8(buffer, control); }
-    
-    //
-    // Methods from Cartridge
-    //
-    
-public:
-    
-    void resetCartConfig() override;
     
     u8 peek(u16 addr) override;
     u8 peekIO1(u16 addr) override;
@@ -101,15 +80,7 @@ public:
     void pokeIO1(u16 addr, u8 value) override;
     void pokeIO2(u16 addr, u8 value) override;
     
-    unsigned numButtons() override { return 2; }
-    const char *getButtonTitle(unsigned nr) override;
-    void pressButton(unsigned nr) override;
-    void releaseButton(unsigned nr) override;
-    
-    
-    /* Sets the cartridge's control register. This function triggers all side
-     * effects that take place when the control register value changes.
-     */
+    // Sets the control register and triggers side effects
     void setControlReg(u8 value);
     
     virtual unsigned bank() { return (control >> 3) & 0x03; }
@@ -118,8 +89,18 @@ public:
     virtual bool disabled() { return (control & 0x04) != 0; }
     virtual bool resetFreezeMode() { return (control & 0x40) != 0; }
     
-    // Returns true if the cartridge RAM shows up at addr
-    virtual bool ramIsEnabled(u16 addr); 
+    // Returns true if the cartridge RAM shows up at the provided address
+    virtual bool ramIsEnabled(u16 addr);
+
+    
+    //
+    // Handling buttons
+    //
+    
+    unsigned numButtons() override { return 2; }
+    const char *getButtonTitle(unsigned nr) override;
+    void pressButton(unsigned nr) override;
+    void releaseButton(unsigned nr) override;
 };
 
 
