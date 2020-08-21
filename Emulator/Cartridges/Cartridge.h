@@ -146,6 +146,8 @@ public:
     static Cartridge *makeWithType(C64 *c64, CartridgeType type);
     static Cartridge *makeWithCRTFile(C64 *c64, CRTFile *file);
 
+    void resetWithoutDeletingRam();
+
 protected:
     
     void dealloc();
@@ -208,17 +210,16 @@ protected:
     size_t didLoadFromBuffer(u8 *buffer) override;
     size_t didSaveToBuffer(u8 *buffer) override;
     
-    // State size function for chip packet data
-    virtual size_t packetStateSize();
     
-    // Loads all chip packets from a buffer
-    virtual void loadPacketsFromBuffer(u8 **buffer);
-    
-    // Saves all chip packets to a buffer
-    virtual void savePacketsToBuffer(u8 **buffer);
-    
+    // DEPRECATED FUNCTIONS
 public:
-    
+
+    // State size function for chip packet data
+    virtual size_t oldPacketStateSize();
+    // Loads all chip packets from a buffer
+    virtual void oldLoadPacketsFromBuffer(u8 **buffer);
+    // Saves all chip packets to a buffer
+    virtual void oldSavePacketsToBuffer(u8 **buffer);
     size_t oldStateSize() override;
     void oldWillLoadFromBuffer(u8 **buffer) override { dealloc(); }
     void oldDidLoadFromBuffer(u8 **buffer) override;
@@ -226,145 +227,102 @@ public:
     
         
     //
-    //! @functiongroup Managing the cartridge configuration
+    // Accessing
     //
     
 public:
     
-    //! @brief    Returns the initial state of the game line.
+    // Returns the initial value of the Game or the Exrom line
     bool getGameLineInCrtFile() { return gameLineInCrtFile; }
-    
-    //! @brief    Returns the initial state of the exrom line.
     bool getExromLineInCrtFile() { return exromLineInCrtFile; }
     
-    /*! @brief    Resets the Game and Exrom line.
-     *  @details  The default implementation resets the values to those found
-     *            in the CRT file. Some custom cartridges need other start
-     *            configurations and overwrite this function.
+    /* Resets the Game and the Exrom line. The default implementation resets
+     * the values to ones found in the CRT file. A few custom cartridges need
+     * other start configurations and overwrite this function.
      */
     virtual void resetCartConfig();
     
     
     //
-    //! @functiongroup Handling ROM packets
+    // Handling ROM packets
     //
     
-    //! @brief    Reads in a chip packet from a CRT file
+    // Reads in a chip packet from a CRT file
     virtual void loadChip(unsigned nr, CRTFile *c);
     
-    //! @brief    Banks in a rom chip into the ROML space
+    // Banks in a rom chip into the ROML or the ROMH space
     void bankInROML(unsigned nr, u16 size, u16 offset);
-    
-    //! @brief    Banks in a rom chip into the ROMH space
     void bankInROMH(unsigned nr, u16 size, u16 offset);
     
-    //! @brief    Banks in a rom chip
-    /*! @details  This function calls bankInROML or bankInROMH with the default
-     *            parameters for this chip as provided in the CRT file.
+    /* Banks in a rom chip. This function calls bankInROML or bankInROMH with
+     * the default parameters for this chip as provided in the CRT file.
      */
     void bankIn(unsigned nr);
     
-    //! @brief    Banks out a chip
-    /*! @details  RAM contents will show in memory
-     */
+    //  Banks out a chip (RAM will be visible again)
     void bankOut(unsigned nr);
 
     
     //
-    //! @functiongroup Peeking and poking
+    // Accessing cartridge memory
     //
     
-    /*! @brief    Peek fallthrough
-     *  @param    addr must be a value in
-     *            ROML range (0x8000 - 0x9FFF) or
-     *            ROMH range (0xA000 - 0xBFFF, 0xE000 - 0xFFFF).
+    /* Fallthroughs for the cartridge memory
+     *
+     *     ROML range: 0x8000 - 0x9FFF
+     *     ROMH range: 0xA000 - 0xBFFF and 0xE000 - 0xFFFF
      */
     virtual u8 peek(u16 addr);
-
-    /*! @brief    Peek fallthrough for the ROML space
-     *  @param    addr must be a value between 0x0000 - 0x1FFF.
-     */
     virtual u8 peekRomL(u16 addr);
-    
-    /*! @brief    Peek fallthrough for the ROMH space
-     *  @details  addr must be a value between 0x0000 - 0x1FFF.
-     */
     virtual u8 peekRomH(u16 addr);
-    
-    /*! @brief    Poke fallthrough
-     *  @param    addr must be a value in
-     *            ROML range (0x8000 - 0x9FFF) or
-     *            ROMH range (0xA000 - 0xBFFF, 0xE000 - 0xFFFF).
-     */
-    virtual void poke(u16 addr, u8 value);
 
-    /*! @brief    Poke fallthrough for the ROML space
-     *  @param    addr must be a value between 0x0000 - 0x1FFF.
-     */
+    virtual u8 spypeek(u16 addr) { return peek(addr); }
+    virtual u8 spypeekRomL(u16 addr) { return peekRomL(addr); }
+    virtual u8 spypeekRomH(u16 addr) { return peekRomH(addr); }
+
+    virtual void poke(u16 addr, u8 value);
     virtual void pokeRomL(u16 addr, u8 value) { return; }
-    
-    /*! @brief    Poke fallthrough for the ROMH space
-     *  @details  addr must be a value between 0x0000 - 0x1FFF.
-     */
     virtual void pokeRomH(u16 addr, u8 value) { return; }
     
-    //! @brief    Same as peek, but without side effects.
-    virtual u8 spypeek(u16 addr) { return peek(addr); }
-    
-    //! @brief    Same as peekRomL, but without side effects
-    u8 spypeekRomL(u16 addr) { return peekRomL(addr); }
-    
-    //! @brief    Same as peekRomH, but without side effects
-    u8 spypeekRomH(u16 addr) { return peekRomH(addr); }
-    
-    //! @brief    Peek fallthrough for I/O space 1
+    // Fallthroughs for the I/O spaces
     virtual u8 peekIO1(u16 addr) { return 0; }
-
-    //! @brief    Same as peekIO1, but without side effects.
-    virtual u8 spypeekIO1(u16 addr) { return peekIO1(addr); }
-
-    //! @brief    Peek fallthrough for I/O space 2
     virtual u8 peekIO2(u16 addr) { return 0; }
 
-    //! @brief    Same as peekIO2, but without side effects.
+    virtual u8 spypeekIO1(u16 addr) { return peekIO1(addr); }
     virtual u8 spypeekIO2(u16 addr) { return peekIO2(addr); }
     
-    //! @brief    Poke fallthrough for I/O space 1
     virtual void pokeIO1(u16 addr, u8 value) { }
-
-    //! @brief    Poke fallthrough for I/O space 2
     virtual void pokeIO2(u16 addr, u8 value) { }
 
     
     //
-    //! @functiongroup Managing on-board RAM
+    // Managing on-board RAM
     //
     
-    //! @brief    Returns the RAM size in bytes.
+    // Returns the RAM size in bytes
     u32 getRamCapacity(); 
 
-    //! @brief    Assigns external RAM to this cartridge.
-    /*! @details  This functions frees any previously assigned RAM and allocates
-     *            memory of the specified size. The size is stored in variable
-     *            ramCapacity.
+    /* Assigns external RAM to this cartridge. This functions frees any
+     * previously assigned RAM and allocates memory of the specified size. The
+     * size is stored in variable ramCapacity.
      */
     void setRamCapacity(u32 size);
 
-    //! @brief    Returns true if RAM data is preserved during a reset.
+    // Returns true if RAM data is preserved during a reset
     bool getPersistentRam() { return persistentRam; }
 
-    //! @brief    Enables or disables persistent RAM.
+    //Enables or disables persistent RAM
     void setPersistentRam(bool value) { persistentRam = value; }
 
-    //! @brief    Reads a byte from the on-board RAM.
+    // Reads a byte from the on-board RAM
     u8 peekRAM(u16 addr) {
         assert(addr < ramCapacity); return externalRam[addr]; }
 
-    //! @brief    Writes a byte into the on-board RAM.
+    // Writes a byte into the on-board RAM
     void pokeRAM(u16 addr, u8 value) {
         assert(addr < ramCapacity); externalRam[addr] = value; }
 
-    //! @brief    Erase the on-board RAM.
+    // Initializes the on-board RAM with a reset value
     void eraseRAM(u8 value) {
         assert(externalRam != NULL); memset(externalRam, value, ramCapacity); }
     
@@ -373,22 +331,18 @@ public:
     // Operating buttons
     //
 
-    //! @brief    Returns the number of available cartridge buttons
+    // Returns the number of available cartridge buttons
     virtual unsigned numButtons() { return 0; }
     
-    /*! @brief    Returns a textual description for a button.
-     *  @return   NULL, if there is no such button.
+    /* Returns a textual description for a button or NULL, if there is no
+     * button with the specified number.
      */
     virtual const char *getButtonTitle(unsigned nr) { return NULL; }
     
-    /*! @brief    Presses a button
-     *  @note     Make sure to call releaseButton() afterwards.
-     */
+    // Presses a button (make sure to call releaseButton() afterwards)
     virtual void pressButton(unsigned nr) { }
 
-    /*! @brief    Releases a button
-     *  @note     Make sure to call pressButton() before.
-     */
+    // Releases a button (make sure to call pressButton() before)
     virtual void releaseButton(unsigned nr) { }
 
 
@@ -396,27 +350,23 @@ public:
     // Operating switches
     //
     
-    //! @brief    Returns true if the cartridge has a switch
+    // Returns true if the cartridge has a switch
     virtual bool hasSwitch() { return false; }
 
-    //! @brief    Returns the current position of the switch
+    // Returns the current switch position
     virtual i8 getSwitch() { return switchPos; }
-    
-    //! @brief    Convenience wrappers around getSwitch()
     bool switchIsNeutral() { return getSwitch() == 0; }
     bool switchIsLeft() { return getSwitch() < 0; }
     bool switchIsRight() { return getSwitch() > 0; }
     
-    /*! @brief    Returns a textual description for a switch position.
-     *  @return   NULL, if the switch cannot be positioned this way.
+    /* Returns a textual description for a switch position or NULL if the
+     * switch cannot be positioned this way.
      */
     virtual const char *getSwitchDescription(i8 pos) { return NULL; }
     const char *getSwitchDescription() { return getSwitchDescription(getSwitch()); }
-    
-    //! @brief    Convenience wrappers around getSwitchDescription()
     bool validSwitchPosition(i8 pos) { return getSwitchDescription(pos) != NULL; }
     
-    //! @brief    Puts the switch in the provided position
+    // Puts the switch in a certain position
     virtual void setSwitch(i8 pos);
 
     
@@ -424,13 +374,13 @@ public:
     // Operating LEDs
     //
     
-    //! @brief    Returns true if the cartridge has a LED.
+    // Returns true if the cartridge has a LED
     virtual bool hasLED() { return false; }
     
-    //! @brief    Returns true if the LED is switched on.
+    // Returns true if the LED is switched on
     virtual bool getLED() { return led; }
     
-    //! @brief    Switches the LED on or off.
+    // Switches the LED on or off
     virtual void setLED(bool value) { led = value; }
     
     
@@ -438,57 +388,19 @@ public:
     // Delegation methods
     //
     
-    //! @brief    Execution thread callback
-    /*! @details  This function is invoked by the expansion port. Only a few
-     *            cartridges such as EpyxFastLoader will do some action here.
+    /* Emulator thread callback. This function is invoked by the expansion port.
+     * Only a few cartridges such as EpyxFastLoader will do some action here.
      */
     virtual void execute() { };
     
-    //! @brief    Modifies the memory source lookup tables if required
+    // Modifies the memory source lookup tables if required
     virtual void updatePeekPokeLookupTables() { };
     
-    //! @brief    Called when the C64 CPU is about to trigger an NMI
+    // Called when the C64 CPU is about to trigger an NMI
     virtual void nmiWillTrigger() { }
     
-    //! @brief    Called after the C64 CPU has processed the NMI instruction
+    // Called after the C64 CPU has processed the NMI instruction
     virtual void nmiDidTrigger() { }
-    
-    
-    //
-    // Helpers
-    //
-    
-    void resetWithoutDeletingRam();
 };
-
-
-/*
-class CartridgeWithRegister : public Cartridge {
-
-protected:
-    u8 control;
-    
-public:
-    using Cartridge::Cartridge;
-  
-    void _reset() {
-        Cartridge::_reset();
-        control = 0;
-    }
-    size_t oldStateSize() {
-        return Cartridge::oldStateSize() + 1;
-    }
-    void oldDidLoadFromBuffer(u8 **buffer)
-    {
-        Cartridge::oldDidLoadFromBuffer(buffer);
-        control = read8(buffer);
-    }
-    void oldDidSaveToBuffer(u8 **buffer)
-    {
-        Cartridge::oldDidSaveToBuffer(buffer);
-        write8(buffer, control);
-    }
-};
-*/
 
 #endif 

@@ -199,7 +199,7 @@ Cartridge::makeWithCRTFile(C64 *c64, CRTFile *file)
 }
 
 size_t
-Cartridge::packetStateSize()
+Cartridge::oldPacketStateSize()
 {
     size_t result = 0;
     
@@ -212,7 +212,7 @@ Cartridge::packetStateSize()
 }
 
 void
-Cartridge::loadPacketsFromBuffer(u8 **buffer)
+Cartridge::oldLoadPacketsFromBuffer(u8 **buffer)
 {
     for (unsigned i = 0; i < numPackets; i++) {
         assert(packet[i] == NULL);
@@ -222,7 +222,7 @@ Cartridge::loadPacketsFromBuffer(u8 **buffer)
 }
 
 void
-Cartridge::savePacketsToBuffer(u8 **buffer)
+Cartridge::oldSavePacketsToBuffer(u8 **buffer)
 {
     for (unsigned i = 0; i < numPackets; i++) {
         assert(packet[i] != NULL);
@@ -244,7 +244,7 @@ Cartridge::didLoadFromBuffer(u8 *buffer)
     
     setRamCapacity(ramCapacity);
     
-    loadPacketsFromBuffer(bufptr);
+    oldLoadPacketsFromBuffer(bufptr);
     readBlock(bufptr, externalRam, ramCapacity);
 
     return *bufptr - buffer;
@@ -255,7 +255,7 @@ Cartridge::didSaveToBuffer(u8 *buffer)
 {
     u8 **bufptr = &buffer;
     
-    savePacketsToBuffer(bufptr);
+    oldSavePacketsToBuffer(bufptr);
     writeBlock(bufptr, externalRam, ramCapacity);
     
     return *bufptr - buffer;
@@ -265,7 +265,7 @@ size_t
 Cartridge::oldStateSize()
 {
     return HardwareComponent::oldStateSize()
-    + packetStateSize()
+    + oldPacketStateSize()
     + ramCapacity;
 }
 
@@ -274,14 +274,14 @@ Cartridge::oldDidLoadFromBuffer(u8 **buffer)
 {
     setRamCapacity(ramCapacity);
     
-    loadPacketsFromBuffer(buffer);
+    oldLoadPacketsFromBuffer(buffer);
     readBlock(buffer, externalRam, ramCapacity);
 }
 
 void
 Cartridge::oldDidSaveToBuffer(u8 **buffer)
 {
-    savePacketsToBuffer(buffer);
+    oldSavePacketsToBuffer(buffer);
     writeBlock(buffer, externalRam, ramCapacity);
 }
 
