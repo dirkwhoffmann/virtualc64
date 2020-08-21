@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _VIC_H
-#define _VIC_H
+#ifndef _VICII_H
+#define _VICII_H
 
 #include "C64Component.h"
 #include "VICIIConstants.h"
@@ -666,6 +666,28 @@ public:
     
     GlueLogic getGlueLogic() { return config.glueLogic; }
     void setGlueLogic(GlueLogic type);
+    
+    
+    //
+    // Serialization
+    //
+    
+private:
+    
+    template <class T>
+    void applyToPersistentItems(T& worker)
+    {
+    }
+    
+    template <class T>
+    void applyToResetItems(T& worker)
+    {
+    }
+    
+    size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
+    size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
+    size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
+    
     
     
     //

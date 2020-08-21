@@ -11,24 +11,23 @@
 #define _HARDWARE_COMPONENT_H
 
 #include "C64Object.h"
+#include "Serialization.h"
 
-
-// Base class for all hardware components. This class defines the base
-// functionality of all hardware components. It comprises functions for
-// powering up, powering down, resetting, and serializing.
-
+/* This class defines the base functionality of all hardware components. It
+ * comprises functions for initializing, configuring, and serializing the
+ * emulator, as well as functions for powering up and down, running and pausing.
+ */
 class HardwareComponent : public C64Object {
     
 public:
 
-    // The sub components of this component
+    // Sub components
     vector<HardwareComponent *> subComponents;
     
 protected:
     
-    /* State model
-     * The virtual hardware components can be in three different states
-     * called 'Off', 'Paused', and 'Running'.
+    /* State model. The virtual hardware components can be in three different
+     * states called 'Off', 'Paused', and 'Running':
      *
      *        Off: The C64 is turned off
      *     Paused: The C64 is turned on, but there is no emulator thread
@@ -36,55 +35,149 @@ protected:
      */
     EmulatorState state = STATE_OFF;
     
-    /* Indicates if the emulator should be executed in warp mode.
-     * To speed up emulation (e.g., during disk accesses), the virtual hardware
-     * can be put into warp mode. In this mode, the emulation thread is no
-     * longer paused to match the target frequency and runs as fast as possible.
+    /* Indicates if the emulator should be executed in warp mode. To speed up
+     * emulation (e.g., during disk accesses), the virtual hardware may be put
+     * into warp mode. In this mode, the emulation thread is no longer paused
+     * to match the target frequency and runs as fast as possible.
      */
     bool warpMode = false;
     
-    /* Indicates if the emulator should be executed in debug mode.
-     * Debug mode is enabled when the GUI debugger is opend and disabled when
-     * the GUI debugger is closed. In debug mode, several time-consuming tasks
-     * are performed that are usually left out. E.g., the CPU checks for
+    /* Indicates if the emulator should be executed in debug mode. Debug mode
+     * is enabled when the GUI debugger is opend and disabled when the GUI
+     * debugger is closed. In debug mode, several time-consuming tasks are
+     * performed that are usually left out. E.g., the CPU checks for
      * breakpoints and records the executed instruction in it's trace buffer.
      */
     bool debugMode = false;
     
     
     //
-    // Constructing and destroying
+    // Initializing
     //
     
 public:
     
     virtual ~HardwareComponent();
     
-    
-    //
-    // Acccessing properties
-    //
-    
-    bool inWarpMode() { return warpMode; }
-    bool inDebugMode() { return debugMode; }
-    
-    
-    //
-    // Managing the component
-    //
-    
-public:
-    
-    /* Initializes the component and its subcomponent.
-     * This function is called exactly once, in the constructor of the Amiga
-     * class. Subcomponents can implement the delegation method _initialize()
+    /* Initializes the component and it's subcomponents. The initialization
+     * procedure is initiated exactly once, in the constructor of the C64
+     * class. Some subcomponents implement the delegation method _initialize()
      * to finalize their initialization, e.g., by setting up referecens that
      * did not exist when they were constructed.
      */
     void initialize();
     virtual void _initialize() { };
     
-    /* There are several functions for querying and changing state:
+    /* Resets the component and its subcomponent. It is mandatory for each
+     * component to implement this function.
+     */
+    void reset();
+    virtual void _reset() = 0;
+    
+    
+    //
+    // Configuring
+    //
+    
+    /* Configures the component and it's subcomponents. This function
+     * distributes a configuration request to all subcomponents by calling
+     * setConfigItem(). The function returns true iff the current configuration
+     * has changed.
+     */
+    bool configure(ConfigOption option, long value);
+    bool configure(unsigned dfn, ConfigOption option, long value);
+    
+    /* Requests the change of a single configuration item. Each sub-component
+     * checks if it is responsible for the requested configuration item. If
+     * yes, it changes the internal state. If no, it ignores the request.
+     * The function returns true iff the current configuration has changed.
+     */
+    virtual bool setConfigItem(ConfigOption option, long value) { return false; }
+    virtual bool setConfigItem(unsigned dfn, ConfigOption option, long value) { return false; }
+    
+    // Dumps debug information about the current configuration to the console
+    void dumpConfig();
+    virtual void _dumpConfig() { }
+    
+    
+    //
+    // Analyzing
+    //
+    
+    /* Collects information about the component and it's subcomponents. Many
+     * components contain an info variable of a class specific type (e.g.,
+     * CPUInfo, MemoryInfo, ...). These variables contain the information shown
+     * in the GUI's inspector window and are updated by calling this function.
+     * Note: Because this function accesses the internal emulator state with
+     * many non-atomic operations, it must not be called on a running emulator.
+     * To carry out inspections while the emulator is running, set up an
+     * inspection target via Amiga::setInspectionTarget().
+     */
+    void inspect();
+    virtual void _inspect() { }
+    
+    /* Base method for building the class specific getInfo() methods. When the
+     * emulator is running, the result of the most recent inspection is
+     * returned. If the emulator isn't running, the function first updates the
+     * cached values in order to return up-to-date results.
+     */
+    template<class T> T getInfo(T &cachedValues) {
+        
+        if (!isRunning()) inspect();
+        
+        T result;
+        synchronized { result = cachedValues; }
+        return result;
+    }
+    
+    // Dumps debug information about the internal state to the console
+    void dump();
+    virtual void _dump() { }
+    
+    /* Asks the component to inform the GUI about its current state.
+     * The GUI invokes this function when it needs to update all of its visual
+     * elements. This happens, e.g., when a snapshot file was loaded.
+     * This function is likely to go away because the approach didn't turn out
+     * to be as fruitful as expected. At many places, the component state is
+     * already obtained by polling and not by calling ping().
+     */
+    void ping();
+    virtual void _ping() { }
+    
+    
+    //
+    // Serializing
+    //
+    
+    // Returns the size of the internal state in bytes
+    size_t size();
+    virtual size_t _size() = 0;
+    
+    // Loads the internal state from a memory buffer
+    size_t load(u8 *buffer);
+    virtual size_t _load(u8 *buffer) = 0;
+    
+    // Saves the internal state to a memory buffer
+    size_t save(u8 *buffer);
+    virtual size_t _save(u8 *buffer) = 0;
+    
+    /* Delegation methods called inside load() or save(). Some components
+     * override these methods to add custom behavior if not all elements can be
+     * processed by the default implementation.
+     */
+    virtual size_t willLoadFromBuffer(u8 *buffer) { return 0; }
+    virtual size_t didLoadFromBuffer(u8 *buffer) { return 0; }
+    virtual size_t willSaveToBuffer(u8 *buffer) {return 0; }
+    virtual size_t didSaveToBuffer(u8 *buffer) { return 0; }
+    
+    
+    //
+    // Controlling
+    //
+    
+public:
+    
+    /* State model. At any time, a component is in one of three states:
      *
      *          -----------------------------------------------
      *         |                     run()                     |
@@ -101,6 +194,8 @@ public:
      * |-------------------||-------------------||-------------------|
      *                      |----------------------------------------|
      *                                     isPoweredOn()
+     *
+     * Additional component flags: warp (on / off), debug (on / off)
      */
     
     bool isPoweredOff() { return state == STATE_OFF; }
@@ -113,7 +208,7 @@ protected:
     /* powerOn() powers the component on.
      *
      * current   | next      | action
-     * -------------------------------------------------------------------------
+     * ------------------------------------------------------------------------
      * off       | paused    | _powerOn() on each subcomponent
      * paused    | paused    | none
      * running   | running   | none
@@ -124,7 +219,7 @@ protected:
     /* powerOff() powers the component off.
      *
      * current   | next      | action
-     * -------------------------------------------------------------------------
+     * ------------------------------------------------------------------------
      * off       | off       | none
      * paused    | off       | _powerOff() on each subcomponent
      * running   | off       | pause(), _powerOff() on each subcomponent
@@ -135,7 +230,7 @@ protected:
     /* run() puts the component in 'running' state.
      *
      * current   | next      | action
-     * -------------------------------------------------------------------------
+     * ------------------------------------------------------------------------
      * off       | running   | powerOn(), _run() on each subcomponent
      * paused    | running   | _run() on each subcomponent
      * running   | running   | none
@@ -146,7 +241,7 @@ protected:
     /* pause() puts the component in 'paused' state.
      *
      * current   | next      | action
-     * -------------------------------------------------------------------------
+     * ------------------------------------------------------------------------
      * off       | off       | none
      * paused    | paused    | none
      * running   | paused    | _pause() on each subcomponent
@@ -154,78 +249,62 @@ protected:
     void pause();
     virtual void _pause() { };
     
-public:
-    
-    /* Resets the component and its subcomponent.
-     * Each component must implement this function.
-     */
-    void reset();
-    virtual void _reset() = 0;
-
-    /* Asks the component to inform the GUI about its current state.
-     * The GUI invokes this function when it needs to update all of its visual
-     * elements. This happens, e.g., when a snapshot file was loaded.
-     */
-    void ping();
-    virtual void _ping() { }
-    
-    /* Collects information about the component and it's subcomponents.
-     * Many components contains an info variable of a class specific type
-     * (e.g., CPUInfo, CIAInfo, ...). These variables contain the
-     * information shown in the GUI's inspector window and are updated by
-     * calling this function. The function is called automatically when the
-     * emulator switches to pause state to keep the GUI inspector data up
-     * to date.
-     * Note: Because this function accesses the internal emulator state with
-     * many non-atomic operations, it must not be called on a running emulator.
-     * To query information while the emulator is running, set up an inspection
-     * target via setInspectionTarget()
-     */
-    void inspect();
-    virtual void _inspect() { }
-    
-    /* Base method for building the class specific getInfo() methods
-     * If the emulator is running, the result of the most recent inspection is
-     * returned. If the emulator is not running, the function first updates the
-     * cached values in order to return up-to-date results.
-     */
-    template<class T> T getInfo(T &cachedValues) {
-        
-        if (!isRunning()) _inspect();
-        
-        T result;
-        synchronized { result = cachedValues; }
-        return result;
-    }
-    
-    /* Dumps debug information about the current configuration to the console
-     */
-    void dumpConfig();
-    virtual void _dumpConfig() { }
-
-    /* Dumps debug information about the internal state to the console
-     */
-    void dump();
-    virtual void _dump() { }
-
-
-     // Switches warp mode on or off
+    // Switches warp mode on or off
     void setWarp(bool enable);
     virtual void _setWarp(bool enable) { };
-    void enableWarpMode() { setWarp(true); }
-    void disableWarpMode() { setWarp(false); }
     
     // Switches debug mode on or off
     void setDebug(bool enable);
     virtual void _setDebug(bool enable) { };
-    void enableDebugMode() { setDebug(true); }
-    void disableDebugMode() { setDebug(false); }
 
+//
+// Standard implementations of _reset, _load, and _save
+//
+
+#define COMPUTE_SNAPSHOT_SIZE \
+SerCounter counter; \
+applyToPersistentItems(counter); \
+applyToResetItems(counter); \
+return counter.count;
+
+#define RESET_SNAPSHOT_ITEMS \
+SerResetter resetter; \
+applyToResetItems(resetter); \
+debug(SNP_DEBUG, "Resetted\n");
+
+#define LOAD_SNAPSHOT_ITEMS \
+SerReader reader(buffer); \
+applyToPersistentItems(reader); \
+applyToResetItems(reader); \
+debug(SNP_DEBUG, "Recreated from %d bytes\n", reader.ptr - buffer); \
+return reader.ptr - buffer;
+
+#define SAVE_SNAPSHOT_ITEMS \
+SerWriter writer(buffer); \
+applyToPersistentItems(writer); \
+applyToResetItems(writer); \
+debug(SNP_DEBUG, "Serialized to %d bytes\n", writer.ptr - buffer); \
+return writer.ptr - buffer;
+
+
+/*
+bool inWarpMode() { return warpMode; }
+bool inDebugMode() { return debugMode; }
+*/
+
+//
+// Managing the component
+//
+    
+public:
+    
+ 
     /* Informs the component about a clock frequency change.
      * This delegation method is called on startup and whenever the CPU clock
      * frequency changes (i.e., when switching between PAL and NTSC). Some
      * components overwrite this function to update clock dependent lookup
      * tables.
+     * DEPRECATED. USE THE NEW CONFIG DISTRIBUTION SCHEME FOR THIS.
      */
     void setClockFrequency(u32 value);
     virtual void _setClockFrequency(u32 value) { }
@@ -233,7 +312,7 @@ public:
     
 
     
-    /*! @brief   Type and behavior of a snapshot item
+    /*! @brief   Type and behavior of a snapshot item. DEPRECATED
      *  @details The reset flags indicate whether the snapshot item should be
      *           set to 0 automatically during a reset. The format flags are
      *           important when big chunks of data are specified. They are
@@ -250,7 +329,7 @@ public:
         QWORD_ARRAY    = 0x08  //! Data chunk is an array of quad words
     };
     
-    /*! @brief Fingerprint of a snapshot item
+    /*! @brief Fingerprint of a snapshot item. DEPRECATED
      */
     typedef struct {
         
@@ -262,24 +341,19 @@ public:
             
 protected:
         
-    //! @brief    List of snapshot items of this component
+    //! @brief    List of snapshot items of this component. DEPRECATED
     SnapshotItem *snapshotItems = NULL;
     
-    //! @brief    Snapshot size on disk (in bytes)
+    //! @brief    Snapshot size on disk (in bytes). DEPRECATED
     unsigned snapshotSize = 0;
     
 public:
-
-
-
-    
- 
 
     //
     //! @functiongroup Registering snapshot items and sub components
     //
         
-    /*! @brief    Registers all snapshot items for this component
+    /*! @brief    Registers all snapshot items for this component. DEPRECATED
      *  @abstract Snaphshot items are usually registered in the constructor of
      *            a virtual component.
      *  @param    items Pointer to the first element of a SnapshotItem* array.
@@ -292,7 +366,7 @@ public:
 public:
     
     //
-    //! @functiongroup Loading and saving snapshots
+    //! @functiongroup Loading and saving snapshots. DEPRECATED
     //
 
     //! @brief    Returns the size of the internal state in bytes
@@ -329,36 +403,6 @@ public:
      */
     virtual void  oldWillSaveToBuffer(u8 **buffer) { };
     virtual void  oldDidSaveToBuffer(u8 **buffer) { };
-
-    
-    //
-    // Standard implementations for _reset, _load, and _save
-    //
-
-    #define COMPUTE_SNAPSHOT_SIZE \
-    SerCounter counter; \
-    applyToPersistentItems(counter); \
-    applyToResetItems(counter); \
-    return counter.count;
-
-    #define RESET_SNAPSHOT_ITEMS \
-    SerResetter resetter; \
-    applyToResetItems(resetter); \
-    debug(SNP_DEBUG, "Resetted\n");
-
-    #define LOAD_SNAPSHOT_ITEMS \
-    SerReader reader(buffer); \
-    applyToPersistentItems(reader); \
-    applyToResetItems(reader); \
-    debug(SNP_DEBUG, "Recreated from %d bytes\n", reader.ptr - buffer); \
-    return reader.ptr - buffer;
-
-    #define SAVE_SNAPSHOT_ITEMS \
-    SerWriter writer(buffer); \
-    applyToPersistentItems(writer); \
-    applyToResetItems(writer); \
-    debug(SNP_DEBUG, "Serialized to %d bytes\n", writer.ptr - buffer); \
-    return writer.ptr - buffer;
 };
 
 #endif

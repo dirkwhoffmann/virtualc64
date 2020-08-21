@@ -278,6 +278,27 @@ public:
 
     
     //
+    // Serialization
+    //
+    
+private:
+    
+    template <class T>
+    void applyToPersistentItems(T& worker)
+    {
+    }
+    
+    template <class T>
+    void applyToResetItems(T& worker)
+    {
+    }
+    
+    size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
+    size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
+    size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
+    
+    
+    //
     // Methods from HardwareComponent
     //
 
@@ -286,6 +307,13 @@ public:
     void prefix() override;
     void reset();
     void setWarp(bool enable);
+    bool inWarpMode() { return warpMode; }
+    void enableWarpMode() { setWarp(true); }
+    void disableWarpMode() { setWarp(false); }
+
+    void enableDebugMode() { setDebug(true); }
+    void disableDebugMode() { setDebug(false); }
+    bool inDebugMode() { return debugMode; }
 
     void powerOn();
     void powerOff();

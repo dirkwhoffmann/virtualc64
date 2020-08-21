@@ -226,12 +226,33 @@ public:
     
     
     //
-    // Constructing and serializing
+    // Initialization
     //
     
 public:
     
 	CIA(C64 &ref);
+    
+    
+    //
+    // Serialization
+    //
+    
+private:
+    
+    template <class T>
+    void applyToPersistentItems(T& worker)
+    {
+    }
+    
+    template <class T>
+    void applyToResetItems(T& worker)
+    {
+    }
+    
+    size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
+    size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
+    size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
     
     //
