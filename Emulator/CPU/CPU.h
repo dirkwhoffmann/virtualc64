@@ -246,11 +246,40 @@ private:
     template <class T>
     void applyToResetItems(T& worker)
     {
+        worker
+        
+        & cycle
+        & next
+        & reg.a
+        & reg.x
+        & reg.y
+        & reg.pc
+        & reg.pc0
+        & reg.sp
+        & reg.sr.n
+        & reg.sr.v
+        & reg.sr.b
+        & reg.sr.d
+        & reg.sr.i
+        & reg.sr.z
+        & reg.sr.c
+        & reg.adl
+        & reg.adh
+        & reg.idl
+        & reg.d
+        & reg.ovl
+        & rdyLine
+        & rdyLineUp
+        & rdyLineDown
+        & nmiLine
+        & irqLine
+        & doNmi
+        & doIrq;
     }
     
     size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
     size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    size_t _save(u8 *buffer) override { assert(false); SAVE_SNAPSHOT_ITEMS }
+    size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
     
     //

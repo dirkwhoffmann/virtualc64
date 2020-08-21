@@ -11,6 +11,8 @@
 #define _SERIALIZATION_H
 
 #include "C64Types.h"
+#include "VICIIInternalTypes.h"
+#include "CPUInstructions.h"
 
 //
 // Basic memory buffer I/O
@@ -122,11 +124,16 @@ public:
     COUNT(const unsigned long long)
     COUNT(const double)
 
+    COUNT(const MemoryType)
+    COUNT(const MicroInstruction)
+    COUNT(const CIARevision)
+    COUNT(const VICRevision)
+    COUNT(const SIDRevision)
+    COUNT(const GlueLogic)
     COUNT(const FlashRomState)
-    // COUNT(const DeniseRevision)
 
-    // STRUCT(Beam)
-    // STRUCT(DDF<true>)
+    STRUCT(VICIIRegisters)
+    STRUCT(SpriteSR)
 
     template <class T, size_t N>
     SerCounter& operator&(T (&v)[N])
@@ -180,11 +187,16 @@ public:
     DESERIALIZE64(unsigned long long)
     DESERIALIZED(double)
  
+    DESERIALIZE32(MemoryType)
+    DESERIALIZE32(MicroInstruction)
+    DESERIALIZE64(CIARevision)
+    DESERIALIZE64(VICRevision)
+    DESERIALIZE64(SIDRevision)
+    DESERIALIZE64(GlueLogic)
     DESERIALIZE64(FlashRomState)
-    // DESERIALIZE64(DeniseRevision)
 
-    // STRUCT(Beam)
-    // STRUCT(DDF<true>)
+    STRUCT(VICIIRegisters)
+    STRUCT(SpriteSR)
 
     template <class T, size_t N>
     SerReader& operator&(T (&v)[N])
@@ -244,11 +256,16 @@ public:
     SERIALIZE64(const unsigned long long)
     SERIALIZED(const double)
  
+    SERIALIZE32(const MemoryType)
+    SERIALIZE32(const MicroInstruction)
+    SERIALIZE64(const CIARevision)
+    SERIALIZE64(const VICRevision)
+    SERIALIZE64(const SIDRevision)
+    SERIALIZE64(const GlueLogic)
     SERIALIZE64(const FlashRomState)
-    // SERIALIZE64(const DeniseRevision)
 
-    // STRUCT(Beam)
-    // STRUCT(DDF<true>)
+    STRUCT(VICIIRegisters)
+    STRUCT(SpriteSR)
 
     template <class T, size_t N>
     SerWriter& operator&(T (&v)[N])
@@ -304,8 +321,8 @@ public:
     // RESET(DriveState)
     // RESET(RTCModel)
 
-    // STRUCT(Beam)
-    // STRUCT(DDF<true>)
+    STRUCT(VICIIRegisters)
+    STRUCT(SpriteSR)
 
     template <class T, size_t N>
     SerResetter& operator&(T (&v)[N])

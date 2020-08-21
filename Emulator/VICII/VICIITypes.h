@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _VIC_TYPES_H
-#define _VIC_TYPES_H
+#ifndef _VICII_TYPES_H
+#define _VICII_TYPES_H
 
 //
 // Enumerations
@@ -130,21 +130,6 @@ typedef struct
     bool main;
 }
 FrameFlipflops;
-
-typedef struct
-{
-    u16 sprX[8];     // D000, D002, ..., D00E, upper bits from D010
-    u8  sprY[8];     // D001, D003, ..., D00F
-    u8  ctrl1;       // D011
-    u8  sprEnable;   // D015
-    u8  ctrl2;       // D016
-    u8  sprExpandY;  // D017
-    u8  sprPriority; // D01B
-    u8  sprMC;       // D01C
-    u8  sprExpandX;  // D01D
-    u8  colors[15];  // D020 - D02E
-}
-VICIIRegisters;
 
 typedef struct
 {

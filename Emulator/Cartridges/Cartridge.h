@@ -164,11 +164,28 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
+        worker
+        
+        & gameLineInCrtFile
+        & exromLineInCrtFile
+        & numPackets
+        & ramCapacity
+        & persistentRam
+        & switchPos;
     }
     
     template <class T>
     void applyToResetItems(T& worker)
     {
+        worker
+        
+        & chipL
+        & chipH
+        & mappedBytesL
+        & mappedBytesH
+        & offsetL
+        & offsetH
+        & led;
     }
     
     size_t _size() override { COMPUTE_SNAPSHOT_SIZE }

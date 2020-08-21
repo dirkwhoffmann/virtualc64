@@ -56,6 +56,10 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
+        worker
+        
+        & size
+        & loadAddress;
     }
     
     template <class T>
@@ -65,7 +69,7 @@ private:
     
     size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
     size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    size_t _save(u8 *buffer) override { assert(false); SAVE_SNAPSHOT_ITEMS }
+    size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
 public:
     

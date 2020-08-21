@@ -133,11 +133,21 @@ private:
     template <class T>
     void applyToResetItems(T& worker)
     {
+        worker
+        
+        & tod.value
+        & latch.value
+        & alarm.value
+        & frozen
+        & stopped
+        & matching
+        & hz
+        & frequencyCounter;
     }
     
     size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
     size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    size_t _save(u8 *buffer) override { assert(false); SAVE_SNAPSHOT_ITEMS }
+    size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
     
     //

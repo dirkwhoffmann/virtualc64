@@ -34,7 +34,6 @@ CPU<M>::CPU(C64& ref, M& memref) : C64Component(ref), mem(memref)
         { &reg.pc,             sizeof(reg.pc),       CLEAR_ON_RESET },
         { &reg.pc0,            sizeof(reg.pc0),      CLEAR_ON_RESET },
         { &reg.sp,             sizeof(reg.sp),       CLEAR_ON_RESET },
-        // { &reg.p,           sizeof(reg.p),        CLEAR_ON_RESET },
         { &reg.sr.n,           sizeof(reg.sr.n),     CLEAR_ON_RESET },
         { &reg.sr.v,           sizeof(reg.sr.v),     CLEAR_ON_RESET },
         { &reg.sr.b,           sizeof(reg.sr.b),     CLEAR_ON_RESET },

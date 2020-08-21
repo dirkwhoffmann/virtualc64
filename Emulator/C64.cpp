@@ -56,9 +56,6 @@ C64::C64()
     debug(RUN_DEBUG, "Creating virtual C64 [%p]\n", this);
 
     p = NULL;
-    // warp = false;
-    // alwaysWarp = false;
-    // warpLoad = false;
     
     subComponents = vector<HardwareComponent *> {
         

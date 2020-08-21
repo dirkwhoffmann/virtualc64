@@ -7,7 +7,9 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-// Microinstructions
+#ifndef _CPU_INSTRUCTIONS_H
+#define _CPU_INSTRUCTIONS_H
+
 typedef enum {
     
     fetch,
@@ -390,3 +392,5 @@ mem.pokeZP(reg.adl, reg.d); setN(reg.d & 0x80); setZ(reg.d == 0);
                        doNmi |= edgeDetector.delayed();
 #define CONTINUE next = (MicroInstruction)((int)next+1); return;
 #define DONE     done(); return;
+
+#endif

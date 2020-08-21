@@ -250,6 +250,9 @@ private:
      * is activated during such a cycle, it freezes a short period of time in
      * which it repeats the previous drawn pixel.
      */
+    SpriteSR spriteSr[8];
+    
+#if 0
     struct {
         
         // Shift register data (24 bit)
@@ -276,6 +279,7 @@ private:
         u8 colBits;
                 
     } spriteSr[8];
+#endif
     
     /* Indicates for each sprite if the shift register is active.
      * Once the shift register is started, it runs as long it contains at least
@@ -704,16 +708,86 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
+        worker
+        
+        & config.revision
+        & config.glueLogic
+        & config.grayDotBug;
     }
     
     template <class T>
     void applyToResetItems(T& worker)
     {
+        worker
+        
+        & reg.current
+        & reg.delayed
+        & rasterIrqLine
+        & latchedLPX
+        & latchedLPY
+        & memSelect
+        & irr
+        & imr
+        & refreshCounter
+        & xCounter
+        & yCounter
+        & vc
+        & vcBase
+        & rc
+        & videoMatrix
+        & colorLine
+        & vmli
+        & sr.data
+        & sr.canLoad
+        & sr.mcFlop
+        & sr.latchedCharacter
+        & sr.latchedColor
+        & sr.colorbits
+        & sr.remainingBits
+        & spriteSr
+        & spriteSrActive
+        & spriteSpriteCollision
+        & spriteBackgroundColllision
+        & flipflops.current.vertical
+        & flipflops.current.main
+        & flipflops.delayed.vertical
+        & flipflops.delayed.main
+        & verticalFrameFFsetCond
+        & leftComparisonVal
+        & rightComparisonVal
+        & upperComparisonVal
+        & lowerComparisonVal
+        & isVisibleColumn
+        & yCounterEqualsIrqRasterline
+        & vblank
+        & badLine
+        & DENwasSetInRasterline30
+        & displayState
+        & mc
+        & mcbase
+        & spritePtr
+        & isFirstDMAcycle
+        & isSecondDMAcycle
+        & spriteDisplay
+        & spriteDisplayDelayed
+        & spriteDmaOnOff
+        & expansionFF
+        & cleared_bits_in_d017
+        & lpLine
+        & lpIrqHasOccurred
+        & memSrc
+        & ultimax
+        & dataBusPhi1
+        & dataBusPhi2
+        & addrBus
+        & bankAddr
+        & delay
+        & bufferoffset;
     }
     
     size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
     size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    size_t _save(u8 *buffer) override { assert(false); SAVE_SNAPSHOT_ITEMS }
+    size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
     
     //
