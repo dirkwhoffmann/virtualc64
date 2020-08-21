@@ -10,6 +10,8 @@
 #ifndef _SERIALIZATION_H
 #define _SERIALIZATION_H
 
+#include "C64Types.h"
+
 //
 // Basic memory buffer I/O
 //
@@ -120,7 +122,7 @@ public:
     COUNT(const unsigned long long)
     COUNT(const double)
 
-    // COUNT(const AgnusRevision)
+    COUNT(const FlashRomState)
     // COUNT(const DeniseRevision)
 
     // STRUCT(Beam)
@@ -178,7 +180,7 @@ public:
     DESERIALIZE64(unsigned long long)
     DESERIALIZED(double)
  
-    // DESERIALIZE64(AgnusRevision)
+    DESERIALIZE64(FlashRomState)
     // DESERIALIZE64(DeniseRevision)
 
     // STRUCT(Beam)
@@ -242,7 +244,7 @@ public:
     SERIALIZE64(const unsigned long long)
     SERIALIZED(const double)
  
-    // SERIALIZE64(const AgnusRevision)
+    SERIALIZE64(const FlashRomState)
     // SERIALIZE64(const DeniseRevision)
 
     // STRUCT(Beam)

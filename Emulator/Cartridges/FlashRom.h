@@ -11,6 +11,7 @@
 #define _FLASHROM_H
 
 #include "C64Component.h"
+#include "CartridgeTypes.h"
 
 /* This class implements a Flash Rom module of type Am29F040B. Flash Rom modules
  * of this type are used, e.g., by the EasyFlash cartridge. The implementation
@@ -20,43 +21,24 @@
  *   flash040core.c : Part of the VICE emulator
  */
 class FlashRom : public C64Component {
-        
-    // Flash Rom states (taken from VICE)
-    typedef enum
-    {
-        FLASH_READ = 0,
-        FLASH_MAGIC_1,
-        FLASH_MAGIC_2,
-        FLASH_AUTOSELECT,
-        FLASH_BYTE_PROGRAM,
-        FLASH_BYTE_PROGRAM_ERROR,
-        FLASH_ERASE_MAGIC_1,
-        FLASH_ERASE_MAGIC_2,
-        FLASH_ERASE_SELECT,
-        FLASH_CHIP_ERASE,
-        FLASH_SECTOR_ERASE,
-        FLASH_SECTOR_ERASE_TIMEOUT,
-        FLASH_SECTOR_ERASE_SUSPEND
-    }
-    FlashRomState;
+            
+    // Number of sectors in this Flash Rom
+    static const size_t numSectors = 8;
     
+    // Size of a single sector in bytes (64 KB)
+    static const size_t sectorSize = 0x10000;
+    
+    // Total size of the Flash Rom in bytes (512 KB)
+    static const size_t size = 0x80000;
+
     // Current Flash Rom state
     FlashRomState state;
 
     // State taken after an operations has been completed
     FlashRomState baseState;
-
-    // Number of sectors in this Flash Rom
-    size_t numSectors;
-    
-    // Size of a single sector in bytes
-    size_t sectorSize; // 64 KB
-    
-    // Total size of the Flash Rom in bytes
-    size_t size;       // 512 KB
     
     // Flash Rom data
-    u8 *rom;
+    u8 rom[size];
     
     
     //
@@ -109,6 +91,11 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
+        worker
+        
+        & state
+        & baseState
+        & rom;
     }
     
     template <class T>
@@ -118,7 +105,7 @@ private:
     
     size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
     size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    size_t _save(u8 *buffer) override { assert(false); SAVE_SNAPSHOT_ITEMS }
+    size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
     
     //

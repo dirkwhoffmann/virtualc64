@@ -10,7 +10,8 @@
 #ifndef CARTRIDGE_TYPES_H
 #define CARTRIDGE_TYPES_H
 
-typedef enum {
+typedef enum
+{
     CRT_NORMAL = 0,
     CRT_ACTION_REPLAY = 1,
     CRT_KCS_POWER = 2,
@@ -78,5 +79,23 @@ typedef enum {
     CRT_NONE = 255
     
 } CartridgeType;
+
+typedef enum : long
+{
+    FLASH_READ = 0,
+    FLASH_MAGIC_1,
+    FLASH_MAGIC_2,
+    FLASH_AUTOSELECT,
+    FLASH_BYTE_PROGRAM,
+    FLASH_BYTE_PROGRAM_ERROR,
+    FLASH_ERASE_MAGIC_1,
+    FLASH_ERASE_MAGIC_2,
+    FLASH_ERASE_SELECT,
+    FLASH_CHIP_ERASE,
+    FLASH_SECTOR_ERASE,
+    FLASH_SECTOR_ERASE_TIMEOUT,
+    FLASH_SECTOR_ERASE_SUSPEND
+}
+FlashRomState;
 
 #endif

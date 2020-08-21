@@ -38,11 +38,6 @@ FlashRom::FlashRom(C64 &ref) : C64Component(ref)
     state = FLASH_READ;
     baseState = FLASH_READ;
     
-    numSectors = 8;
-    sectorSize = 0x10000; // 64 KB
-    size = 0x80000;       // 512 KB
-    
-    rom = new u8[size];
     memset(rom, 0xFF, size);
     
     // Register snapshot items
@@ -57,7 +52,6 @@ FlashRom::FlashRom(C64 &ref) : C64Component(ref)
 
 FlashRom::~FlashRom()
 {
-    delete[] rom;
 }
 
 void
