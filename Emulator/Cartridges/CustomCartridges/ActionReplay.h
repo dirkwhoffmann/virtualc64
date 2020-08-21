@@ -64,6 +64,14 @@ public:
     
     
     //
+    // Serializing
+    //
+    
+    size_t didLoadFromBuffer(u8 *buffer) override;
+    size_t didSaveToBuffer(u8 *buffer) override;
+
+    
+    //
     // Methods from HardwareComponent
     //
     

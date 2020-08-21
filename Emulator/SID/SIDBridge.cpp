@@ -107,6 +107,13 @@ SIDBridge::getClockFrequency()
     }
 }
 
+size_t
+SIDBridge::didLoadFromBuffer(u8 *buffer)
+{
+    clearRingbuffer();
+    return 0;
+}
+
 void
 SIDBridge::_run()
 {

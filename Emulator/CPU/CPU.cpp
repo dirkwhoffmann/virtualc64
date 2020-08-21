@@ -83,22 +83,6 @@ CPU<M>::_inspect()
         info.cycle = cycle;
         info.reg = reg;
         
-        /*
-        info.pc0 = reg.pc0;
-        info.sp = reg.sp;
-        info.a = reg.a;
-        info.x = reg.x;
-        info.y = reg.y;
-        
-        info.nFlag = getN();
-        info.vFlag = getV();
-        info.bFlag = getB();
-        info.dFlag = getD();
-        info.iFlag = getI();
-        info.zFlag = getZ();
-        info.cFlag = getC();
-        */
-        
         info.irq = irqLine;
         info.nmi = nmiLine;
         info.rdy = rdyLine;
@@ -134,6 +118,30 @@ CPU<M>::_dump()
 	msg("\n");
     
     pport.dump();
+}
+
+template <typename M> size_t
+CPU<M>::didLoadFromBuffer(u8 *buffer)
+{
+    u8 **bufptr = &buffer;
+
+    levelDetector.loadFromBuffer(bufptr);
+    edgeDetector.loadFromBuffer(bufptr);
+    
+    assert(*bufptr - buffer == levelDetector.stateSize() + edgeDetector.stateSize());
+    return *bufptr - buffer;
+}
+
+template <typename M> size_t
+CPU<M>::didSaveToBuffer(u8 *buffer)
+{
+    u8 **bufptr = &buffer;
+    
+    levelDetector.saveToBuffer(bufptr);
+    edgeDetector.saveToBuffer(bufptr);
+    
+    assert(*bufptr - buffer == levelDetector.stateSize() + edgeDetector.stateSize());
+    return *bufptr - buffer;
 }
 
 template <typename M> size_t

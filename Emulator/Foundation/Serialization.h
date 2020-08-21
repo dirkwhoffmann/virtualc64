@@ -129,6 +129,7 @@ public:
     COUNT(const CIARevision)
     COUNT(const VICRevision)
     COUNT(const SIDRevision)
+    COUNT(const SIDEngine)
     COUNT(const GlueLogic)
     COUNT(const FlashRomState)
 
@@ -192,6 +193,7 @@ public:
     DESERIALIZE64(CIARevision)
     DESERIALIZE64(VICRevision)
     DESERIALIZE64(SIDRevision)
+    DESERIALIZE64(SIDEngine)
     DESERIALIZE64(GlueLogic)
     DESERIALIZE64(FlashRomState)
 
@@ -261,6 +263,7 @@ public:
     SERIALIZE64(const CIARevision)
     SERIALIZE64(const VICRevision)
     SERIALIZE64(const SIDRevision)
+    SERIALIZE64(const SIDEngine)
     SERIALIZE64(const GlueLogic)
     SERIALIZE64(const FlashRomState)
 

@@ -160,10 +160,10 @@ class FastVoice : public HardwareComponent {
     // Filter related variables
     signed char filterIO;
     u8 filterType;
-    float filterLow;
-    float filterRef;
-    float filterDy;
-    float filterResDy;
+    double filterLow;
+    double filterRef;
+    double filterDy;
+    double filterResDy;
     
     
     //
@@ -206,11 +206,29 @@ private:
     template <class T>
     void applyToResetItems(T& worker)
     {
+        worker
+        
+        & waveTableOffset
+        & waveTableCounter
+        & step
+        & ringmod
+        & adsrm
+        & adsr
+        & adsrInc
+        & adsrCmp
+        & lsfr
+        & filterIO
+        & filterType
+        & filterLow
+        & filterRef
+        & filterDy
+        & filterResDy;
     }
     
     size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
     size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    size_t _save(u8 *buffer) override { assert(false); SAVE_SNAPSHOT_ITEMS }
+    size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
+    size_t didLoadFromBuffer(u8 *buffer) override;
     
     
     //

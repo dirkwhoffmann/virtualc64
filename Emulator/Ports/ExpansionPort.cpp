@@ -54,6 +54,40 @@ ExpansionPort::_ping()
 }
 
 size_t
+ExpansionPort::didLoadFromBuffer(u8 *buffer)
+{
+    u8 **bufptr = &buffer;
+    
+    // Delete old cartridge
+    if (cartridge != NULL) {
+        delete cartridge;
+        cartridge = NULL;
+    }
+    
+    // Read cartridge type and cartridge (if any)
+    CartridgeType cartridgeType = (CartridgeType)read16(bufptr);
+    if (cartridgeType != CRT_NONE) {
+        cartridge = Cartridge::makeWithType(&c64, cartridgeType);
+        cartridge->oldLoadFromBuffer(bufptr);
+    }
+    
+    return *bufptr - buffer;
+}
+
+size_t
+ExpansionPort::didSaveToBuffer(u8 *buffer)
+{
+    u8 **bufptr = &buffer;
+    
+    // Write cartridge type and data (if any)
+    write16(bufptr, cartridge ? cartridge->getCartridgeType() : CRT_NONE);
+    if (cartridge != NULL)
+        cartridge->oldSaveToBuffer(bufptr);
+    
+    return *bufptr - buffer;
+}
+
+size_t
 ExpansionPort::oldStateSize()
 {
     return HardwareComponent::oldStateSize()

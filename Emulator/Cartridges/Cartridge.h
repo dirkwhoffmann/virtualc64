@@ -188,9 +188,14 @@ private:
         & led;
     }
     
+protected:
+    
     size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
     size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     size_t _save(u8 *buffer) override { assert(false); SAVE_SNAPSHOT_ITEMS }
+    size_t willLoadFromBuffer(u8 *buffer) override;
+    size_t didLoadFromBuffer(u8 *buffer) override;
+    size_t didSaveToBuffer(u8 *buffer) override;
     
     // State size function for chip packet data
     virtual size_t packetStateSize();

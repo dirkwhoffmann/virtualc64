@@ -51,6 +51,28 @@ CartridgeRom::_reset()
 }
 
 size_t
+CartridgeRom::didLoadFromBuffer(u8 *buffer)
+{
+    u8 **bufptr = &buffer;
+    
+    if (rom) delete[] rom;
+    rom = new u8[size];
+    
+    readBlock(bufptr, rom, size);
+    return *bufptr - buffer;
+}
+
+size_t
+CartridgeRom::didSaveToBuffer(u8 *buffer)
+{
+    u8 **bufptr = &buffer;
+    
+    writeBlock(bufptr, rom, size);
+    
+    return *bufptr - buffer;
+}
+
+size_t
 CartridgeRom::oldStateSize()
 {
     return HardwareComponent::oldStateSize() + size;

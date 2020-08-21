@@ -12,63 +12,86 @@
 
 template <class T> class TimeDelayed {
     
-    private:
-    
-    /*! @brief    Value pipeline (history buffer)
-     *  @details  Semantics:
-     *            pipeline[0]: Value that was written at time timeStamp
-     *            pipeline[n]: Value that was written at time timeStamp - n
+    /* Value pipeline (history buffer)
+     *
+     *    pipeline[0] : Value that was written at time timeStamp
+     *    pipeline[n] : Value that was written at time timeStamp - n
      */
     T *pipeline = NULL;
     
-    //! @brief   Number of elements hold in pipeline
+    // Number of elements hold in pipeline
     u8 capacity = 0;
     
-    //! @brief  Remembers the time of the most recent call to write()
+    // Remembers the time of the most recent call to write()
     i64 timeStamp = 0;
     
-    //! @brief  Number of cycles to elapse until a written value shows up
+    // Number of cycles to elapse until a written value shows up
     u8 delay = 0;
     
-    //! @brief   Pointer to reference clock
+    /// @brief Pointer to reference clock
+    /// @todo  Change it to a reference
     i64 *clock = NULL;
+
     
-    public:
+    //
+    // Initializing
+    //
     
-    //! @brief   Constructors
+public:
+    
     TimeDelayed(u8 delay, u8 capacity, u64 *clock);
     TimeDelayed(u8 delay, u8 capacity) : TimeDelayed(delay, capacity, NULL) { };
     TimeDelayed(u8 delay, u64 *clock) : TimeDelayed(delay, delay + 1, clock) { };
     TimeDelayed(u8 delay) : TimeDelayed(delay, delay + 1, NULL) { };
     
-    //! @brief   Destructor
     ~TimeDelayed();
-    
-    /*! @brief   Sets the reference clock
-     *  @param   clock is either the clock of the C64 CPU or the clock of the
-     *           a drive CPU.
-     */
+      
+    // Sets the reference clock (either the C64 clock or a drive clock)
     void setClock(u64 *clock) { this->clock = (i64 *)clock; }
-    
-    //! @brief   Overwrites all pipeline entries with a reset value.
+
+    // Overwrites all pipeline entries with a reset value
     void reset(T value) {
         for (unsigned i = 0; i < capacity; i++) pipeline[i] = value;
         timeStamp = 0;
     }
     
-    //! @brief   Zeroes out all pipeline entries.
+    // Zeroes out all pipeline entries
     void clear() { reset((T)0); }
     
-    //! @brief   Write a value into the pipeline.
+    
+    //
+    // Analyzing
+    //
+    
+public:
+    
+    void dump();
+
+    //
+    // Serializing
+    //
+    
+public:
+        
+    size_t stateSize();
+    void loadFromBuffer(u8 **buffer);
+    void saveToBuffer(u8 **buffer);
+
+    
+    //
+    // Accessing
+    //
+    
+    // Write a value into the pipeline
     void write(T value) { writeWithDelay(value, 0); }
     
-    //! @brief   Work horse for writing a value.
+    // Work horse for writing a value
     void writeWithDelay(T value, u8 waitCycles);
     
-    //! @brief   Reads the most recent pipeline element.
+    // Reads the most recent pipeline element
     T current() { return pipeline[0]; }
     
-    //! @brief   Reads a value from the pipeline with the standard delay.
+    // Reads a value from the pipeline with the standard delay
     // T delayed() { return pipeline[MAX(0, timeStamp - *clock + delay)]; }
     T delayed() {
         i64 offset = timeStamp - *clock + delay;
@@ -79,16 +102,11 @@ template <class T> class TimeDelayed {
         }
     }
     
-    //! @brief   Reads a value from the pipeline with a custom delay.
+    // Reads a value from the pipeline with a custom delay
     T readWithDelay(u8 delay) {
         assert(delay <= this->capacity);
         return pipeline[MAX(0, timeStamp - *clock + delay)];
     }
-    
-    size_t stateSize();
-    void loadFromBuffer(u8 **buffer);
-    void saveToBuffer(u8 **buffer);
-    void dump();
 };
 
 #endif

@@ -231,6 +231,37 @@ Cartridge::savePacketsToBuffer(u8 **buffer)
 }
 
 size_t
+Cartridge::willLoadFromBuffer(u8 *buffer)
+{
+    dealloc();
+    return 0;
+}
+
+size_t
+Cartridge::didLoadFromBuffer(u8 *buffer)
+{
+    u8 **bufptr = &buffer;
+    
+    setRamCapacity(ramCapacity);
+    
+    loadPacketsFromBuffer(bufptr);
+    readBlock(bufptr, externalRam, ramCapacity);
+
+    return *bufptr - buffer;
+}
+
+size_t
+Cartridge::didSaveToBuffer(u8 *buffer)
+{
+    u8 **bufptr = &buffer;
+    
+    savePacketsToBuffer(bufptr);
+    writeBlock(bufptr, externalRam, ramCapacity);
+    
+    return *bufptr - buffer;
+}
+
+size_t
 Cartridge::oldStateSize()
 {
     return HardwareComponent::oldStateSize()
