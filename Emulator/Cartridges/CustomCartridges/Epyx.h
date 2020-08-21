@@ -12,7 +12,7 @@
 
 #include "Cartridge.h"
 
-class EpyxFastLoad : public Cartridge {
+class Epyx : public Cartridge {
     
 private:
     
@@ -26,11 +26,48 @@ private:
     
     u64 cycle = 0;
     
+    
+    //
+    // Initializing
+    //
+    
 public:
     
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() override { return CRT_EPYX_FASTLOAD; }
     
+private:
+    
+    void _reset() override;
+
+    
+    //
+    // Serializing
+    //
+    
+private:
+    
+    template <class T>
+    void applyToPersistentItems(T& worker)
+    {
+    }
+    
+    template <class T>
+    void applyToResetItems(T& worker)
+    {
+        worker
+        
+        & cycle;
+    }
+    
+    size_t __size() { COMPUTE_SNAPSHOT_SIZE }
+    size_t __load(u8 *buffer) { LOAD_SNAPSHOT_ITEMS }
+    size_t __save(u8 *buffer) { SAVE_SNAPSHOT_ITEMS }
+    
+    size_t _size() override { return Cartridge::_size() + __size(); }
+    size_t _load(u8 *buf) override { return Cartridge::_load(buf) + __load(buf); }
+    size_t _save(u8 *buf) override { return Cartridge::_save(buf) + __save(buf); }
+
     
     //
     // Methods from HardwareComponent
@@ -38,7 +75,6 @@ public:
     
 private:
 
-    void _reset() override;
     size_t oldStateSize() override;
     void oldDidLoadFromBuffer(u8 **buffer) override;
     void oldDidSaveToBuffer(u8 **buffer) override;

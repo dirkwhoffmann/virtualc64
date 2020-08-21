@@ -154,7 +154,7 @@ Cartridge::makeWithType(C64 *c64, CartridgeType type)
         case CRT_FUNPLAY:         return new Funplay(c64, *c64);
         case CRT_SUPER_GAMES:     return new Supergames(c64, *c64);
         case CRT_ATOMIC_POWER:    return new AtomicPower(c64, *c64);
-        case CRT_EPYX_FASTLOAD:   return new EpyxFastLoad(c64, *c64);
+        case CRT_EPYX_FASTLOAD:   return new Epyx(c64, *c64);
         case CRT_WESTERMANN:      return new Westermann(c64, *c64);
         case CRT_REX:             return new Rex(c64, *c64);
         case CRT_WARPSPEED:       return new WarpSpeed(c64, *c64);
