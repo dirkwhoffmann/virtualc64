@@ -440,7 +440,7 @@ VICII::updatePalette()
 #endif
     
     for (unsigned i = 0; i < 16; i++) {
-        rgbaTable[i] = getColor(i, palette);
+        rgbaTable[i] = getColor(i, config.palette);
     }
 }
 

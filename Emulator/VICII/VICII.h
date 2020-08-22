@@ -24,32 +24,17 @@ class VICII : public C64Component {
     VICIIInfo info;
     SpriteInfo spriteInfo[8];
     
-    
-    //
-    // Configuration options
-    //
-    
-private:
-    
-    //! @brief    Color palette type  TODO: MOVE TO CONFIG
-    Palette palette;
 
-
-public:
-    
-    
     //
     // I/O space (CPU accessible)
     //
     
 private:
     
-    /* Piped I/O register state.
-     * When an I/O register is written to, the corresponding value in variable
-     * current is changed and a flag is set in variable delay. Function
-     * processDelayedActions() reads the flag and, if set to true, updates the
-     * delayed values.
-     * See processDelayedActions()
+    /* Piped I/O register state. When an I/O register is written to, the
+     * corresponding value in variable current is changed and a flag is set in
+     * variable delay. Function processDelayedActions() reads the flag and, if
+     * set to true, updates the delayed values.
      */
     struct {
         VICIIRegisters current;
@@ -59,19 +44,15 @@ private:
     // Raster interrupt line ($D012)
     u8 rasterIrqLine;
     
-    // Latched lightpen X coordinate ($D013)
+    // Latched lightpen coordinates ($D013 and $D014)
     u8 latchedLPX;
-    
-    // Latched lightpen Y coordinate ($D014)
     u8 latchedLPY;
     
     // Memory address register ($D018)
     u8 memSelect;
     
-    // Interrupt Request Register ($D019)
+    // Interrupt Request and Mask Register ($D019 and $D01A)
     u8 irr;
-    
-    // Interrupt Mask Register ($D01A)
     u8 imr;
 
     
@@ -193,48 +174,42 @@ private:
         // Shift register data
         u8 data;
         
-        /* Indicates whether the shift register can load data
-         * If true, the register is loaded when the current x scroll offset
-         * matches the current pixel number.
+        /* Indicates whether the shift register can load data. If true, the
+         * register is loaded when the current x scroll offset matches the
+         * current pixel number.
          */
         bool canLoad;
         
-        /* Multi-color synchronization flipflop
-         * Whenever the shift register is loaded, the synchronization flipflop
-         * is also set. It is toggled with each pixel and used to synchronize
-         * the synthesis of multi-color pixels.
+        /* Multi-color synchronization flipflop. Whenever the shift register is
+         * loaded, the synchronization flipflop is also set. It is toggled with
+         * each pixel and used to synchronize the synthesis of multi-color
+         * pixels.
          */
         bool mcFlop;
         
-        /* Latched character info
-         * Whenever the shift register is loaded, the current character value
-         * (which was once read during a gAccess) is latched. This value is
-         * used until the shift register loads again.
+        /* Latched character info. Whenever the shift register is loaded, the
+         * current character value (which was once read during a gAccess) is
+         * latched. This value is used until the shift register loads again.
          */
         u8 latchedCharacter;
         
-        /* Latched color info
-         * Whenever the shift register is loaded, the current color value
-         * (which was once read during a gAccess) is latched. This value is
-         * used until the shift register loads again.
+        /* Latched color info. Whenever the shift register is loaded, the
+         * current color value (which was once read during a gAccess) is
+         * latched. This value is used until the shift register loads again.
          */
         u8 latchedColor;
         
-        /* Color bits
-         * Every second pixel (as synchronized with mcFlop), the multi-color
-         * bits are remembered.
+        /* Color bits. Every second pixel (as synchronized with mcFlop), the
+         * multi-color bits are remembered.
          */
         u8 colorbits;
         
-        /* Remaining bits to be pumped out
-         * Makes sure no more than 8 pixels are outputted.
+        /* Remaining bits to be pumped out. Makes sure no more than 8 pixels
+         * are outputted.
          */
         int remainingBits;
         
     } sr;
-    
-    
-    
     
     /* Sprite data sequencer (11)
      * The VICII chip has a 24 bit (3 byte) shift register for each sprite. It
@@ -260,29 +235,28 @@ private:
         // The shift register data is read in three chunks
         u8 chunk1, chunk2, chunk3;
         
-        /* Multi-color synchronization flipflop
-         * Whenever the shift register is loaded, the synchronization flipflop
-         * is also set. It is toggled with each pixel and used to synchronize
-         * the synthesis of multi-color pixels.
+        /* Multi-color synchronization flipflop. Whenever the shift register is
+         * loaded, the synchronization flipflop is also set. It is toggled with
+         * each pixel and used to synchronize the synthesis of multi-color
+         * pixels.
          */
         bool mcFlop;
         
         // X expansion synchronization flipflop
         bool expFlop;
         
-        /* Color bits of the currently processed pixel
-         * In single-color mode, these bits are updated every cycle. In
-         * multi-color mode, these bits are updated every second cycle
-         * (synchronized with mcFlop).
+        /* Color bits of the currently processed pixel. In single-color mode,
+         * these bits are updated every cycle. In multi-color mode, these bits
+         * are updated every second cycle (synchronized with mcFlop).
          */
         u8 colBits;
                 
     } spriteSr[8];
 #endif
     
-    /* Indicates for each sprite if the shift register is active.
-     * Once the shift register is started, it runs as long it contains at least
-     * one '1' bit (data != 0).
+    /* Indicates for each sprite if the shift register is active. Once the
+     * shift register is started, it runs as long it contains at least one '1'
+     * bit (data != 0).
      */
     u8 spriteSrActive;
     
@@ -297,41 +271,39 @@ private:
     // Border flipflops
     //
     
-    /*! @brief    Piped frame flipflops state (13)
-     *  @details  When a flipflop toggles, the corresponding value
-     *            in variable current is changed and a flag is set in variable
-     *            delay. Function processDelayedActions() reads the flag and if
-     *            set to true, updates the delayed values with the current ones.
-     *  @see      processDelayedActions()
+    /* Piped frame flipflops state (13)
+     * When a flipflop toggles, the corresponding value in variable current is
+     * changed and a flag is set in variable delay. Function
+     * processDelayedActions() reads the flag and if set to true, updates the
+     * delayed values with the current ones.
      */
     struct {
         FrameFlipflops current;
         FrameFlipflops delayed;
     } flipflops;
     
-    /*! @brief    Vertical frame flipflop set condition
-     *  @details  Indicates whether the vertical frame flipflop needs to be set
-     *            in the current rasterline.
+    /* Vertical frame flipflop set condition. Indicates whether the vertical
+     * frame flipflop needs to be set in the current rasterline.
      */
     bool verticalFrameFFsetCond;
     
-    /*! @brief    First coordinate where the main frame flipflop is checked.
-     *  @details  Either 24 or 31, dependend on the CSEL bit.
+    /* First coordinate where the main frame flipflop is checked. Either 24 or
+     * 31, dependend on the CSEL bit.
      */
     u16 leftComparisonVal;
     
-    /*! @brief    Second coordinate where the main frame flipflop is checked.
-     *  @details  Either 344 or 335, dependend on the CSEL bit.
+    /* Second coordinate where the main frame flipflop is checked. Either 344
+     * or 335, dependend on the CSEL bit.
      */
     u16 rightComparisonVal;
     
-    /*! @brief    First coordinate where the vertical frame flipflop is checked.
-     *  @details  Either 51 or 55, dependend on the RSEL bit.
+    /* First coordinate where the vertical frame flipflop is checked. Either 51
+     * or 55, dependend on the RSEL bit.
      */
     u16 upperComparisonVal;
     
-    /*! @brief    Second coordinate where the vertical frame flipflop is checked.
-     *  @details  Either 251 or 247, dependend on the RSEL bit.
+    /* Second coordinate where the vertical frame flipflop is checked. Either
+     * 251 or 247, dependend on the RSEL bit.
      */
     u16 lowerComparisonVal;
     
@@ -340,45 +312,42 @@ private:
     // Housekeeping information
     //
     
-    /*! @brief    Indicates wether we are in a visible display column or not
-     *  @details  The visible columns comprise canvas columns and border
-     *            columns. The first visible column is drawn in cycle 14 (first
-     *            left border column) and the last in cycle 61 (fourth right
-     *            border column).
+    /* Indicates wether we are in a visible display column or not. The visible
+     * columns comprise canvas columns and border columns. The first visible
+     * column is drawn in cycle 14 (first left border column) and the last in
+     * cycle 61 (fourth right border column).
      */
     bool isVisibleColumn;
     
-    /*! @brief    Set to true in cycle 1, cycle 63 (65) iff yCounter matches D012
-     *  @details  Variable is needed to determine if a rasterline should be
-     *            issued in cycle 1 or 2.
-     *  @deprecated Will be replaced by rasterlineMatchesIrqLine
+    /* Set to true in cycle 1, cycle 63 (65) iff yCounter matches D012. This
+     * variable is needed to determine if a rasterline interrupt should be
+     * triggered in cycle 1 or 2.
+     * DEPRECATED: Will be replaced by rasterlineMatchesIrqLine
      */
     bool yCounterEqualsIrqRasterline;
     
-    //! @brief    True if the current rasterline belongs to the VBLANK area.
+    // True if the current rasterline belongs to the VBLANK area
     bool vblank;
     
-public: // REMOVE 
-    //! @brief    Indicates if the current rasterline is a DMA line (bad line).
+    // Indicates if the current rasterline is a DMA line (bad line)
     bool badLine;
     
-    /*! @brief    True, if DMA lines can occurr within the current frame.
-     *  @details  Bad lines can occur only if the DEN bit was set during an
-     *            arbitary cycle in rasterline 30. The DEN bit is located in
-     *            control register 1 (0x11).
+    /* True, if DMA lines can occurr within the current frame. Bad lines can
+     * occur only if the DEN bit was set during an arbitary cycle in rasterline
+     * 30. The DEN bit is located in control register 1 (0x11).
      */
     bool DENwasSetInRasterline30;
     
-    /*! @brief    Display State
-     *  @details  "The text/bitmap display logic in the VICII is in one of two
-     *             states at any time: The idle state and the display state.
+    /* Current display State
      *
-     *              - In display state, c- and g-accesses take place, the
-     *                addresses and interpretation of the data depend on the
-     *                selected display mode.
+     * "The text/bitmap display logic in the VICII is in one of two states at
+     *  any time: The idle state and the display state.
      *
-     *              - In idle state, only g-accesses occur. The VICII is either in
-     *                idle or display state" [C.B.]
+     *  - In display state, c- and g-accesses take place, the addresses and
+     *    interpretation of the data depend on the selected display mode.
+     *
+     *  - In idle state, only g-accesses occur. The VICII is either in idle or
+     *    display state" [C.B.]
      */
     bool displayState;
 
@@ -389,53 +358,35 @@ public: // REMOVE
 
 private:
 
-	/*! @brief    MOB data counter (16).
-	 *  @details  A 6 bit counter, one for each sprite.
-     */
+	// MOB data counter (16)
 	u8 mc[8];
 	
-	/*! @brief    MCBASE register.
-	 *  @details  A 6 bit counter, one register for each sprite.
-     */
+	// MCBASE register
 	u8 mcbase[8];
 		
-	/*! @brief    Sprite pointer fetched during a pAccess.
-	 *  @details  Determines where the sprite data comes from.
-     */
+	// Sprite pointer fetched during a pAccess
 	u16 spritePtr[8];
 
-    /*! @brief    Flags the first DMA access for each sprite.
-     *  @details  Bit n corresponds to sprite n.
-     */
+    // Flags the first DMA access for each sprite
     u8 isFirstDMAcycle;
     
-    /*! @brief    Flags the second or third DMA access for each sprite.
-     *  @details  Bit n corresponds to sprite n.
-     */
+    // Flags the second or third DMA access for each sprite
     u8 isSecondDMAcycle;
         
-    /*! @details  Sprite display
-     *  @details  Determines if a sprite needs to be drawn in the current rasterline.
-     *            Each bit represents a single sprite.
-     */
+    // Determines if a sprite needs to be drawn in the current rasterline
     u8 spriteDisplay;
 
-    //! @details  Value of spriteDisplay, delayed by one cycle
+    // Value of spriteDisplay, delayed by one cycle
     u8 spriteDisplayDelayed;
 
-	/*! @brief    Sprite DMA on off register
-	 *  @details  Determines  if sprite dma access is enabled or disabled. 
-     *            Each bit represents a single sprite.
-     */
+	// Sprite DMA on off register
 	u8 spriteDmaOnOff;
     
-	/*! @brief    Expansion flipflop
-	 *  @details  Used to handle Y sprite stretching, one bit for each sprite
-     */
+	// Expansion flipflop (used to handle Y sprite stretching)
 	u8 expansionFF;
 
-    /*! @brief    Remembers which bits the CPU has cleared in the expansion Y register (D017)
-     *  @details  This value is set in pokeIO and cycle 15 and read in cycle 16 
+    /* Remembers which bits the CPU has cleared in the expansion Y register
+     * (D017). This value is set in pokeIO and cycle 15 and read in cycle 16
      */
     u8 cleared_bits_in_d017;
     
@@ -444,15 +395,15 @@ private:
 	// Lightpen
 	//
 	
-    /* Current value of the LP pin
-     * A negative transition on this pin triggers a lightpen interrupt.
+    /* Current value of the LP pin. A negative transition on this pin triggers
+     * a lightpen interrupt.
      */
     bool lpLine;
     
-	/* Indicates whether the lightpen has triggered
-	 * This variable indicates whether a lightpen interrupt has occurred within
-     * the current frame. The variable is needed, because a lightpen interrupt
-     * can only occur once per frame.
+	/* Indicates whether the lightpen has triggered. This variable indicates
+     * whether a lightpen interrupt has occurred within the current frame. The
+     * variable is needed, because a lightpen interrupt can only occur once per
+     * frame.
      */
 	bool lpIrqHasOccurred;
 	
@@ -463,46 +414,45 @@ private:
     
 private:
     
-    /*! @brief    Memory source lookup table
-     *  @details  If VICII is not running in Ultimax mode, it has access to RAM
-     *            and the character Rom. In ultimax mode, VICII has access to
-     *            ROMH and some portions of RAM.
+    /* Memory source lookup table. If VICII is not running in Ultimax mode, it
+     * has access to RAM and the character Rom. In ultimax mode, VICII has
+     * access to ROMH and some portions of RAM.
      */
     MemoryType memSrc[16];
     
-    /*! @brief    Indicates whether VICII is running in ultimax mode.
-     *  @details  Ultimax mode can be enabled by external cartridges by pulling
-     *            game line low and keeping exrom line high. In ultimax mode,
-     *            VICII has access to ROMH and some portions of RAM.
+    /* Indicates whether VICII is running in ultimax mode. Ultimax mode can be
+     * enabled by external cartridges by pulling the game line low and keeping
+     * the exrom line high. In ultimax mode, VICII has access to ROMH and some
+     * portions of RAM.
      */
     bool ultimax;
     
-    /*! @brief    Value on the data bus during the latest phi1 access
-     *  @note     Only VICII performs a memory access during phi1.
+    /* Value on the data bus during the latest phi1 access. Only VICII performs
+     * a memory access during phi1.
      */
     u8 dataBusPhi1;
     
-    /*! @brief    Value on the data bus during the latest phi2 access
-     *  @note     VICII or the CPU can perform a memory access during phi2.
-     *            If none of them does, 0xFF will be on the bus.
+    /* Value on the data bus during the latest phi2 access. VICII or the CPU
+     * can perform a memory access during phi2. If none of them does, 0xFF will
+     * be on the bus.
      */
     u8 dataBusPhi2;
     
-    /*! @brief    Address bus
-     *  @details  Whenever VICII performs a memory read, the generated memory
-     *            address is stored in this variable.
+    /* Address bus. Whenever VICII performs a memory read, the generated memory
+     * address is stored in this variable.
      */
     u16 addrBus;
     
-    /*! @brief    Current value of the BA line
-     *  @details  Remember: Each CPU cycle is split into two phases:
-     *            phi1 (First phase, LOW):   VICII gets access to the bus
-     *            phi2 (Second phase, HIGH): CPU gets access to the bus
-     *            In rare cases, VICII needs access in the HIGH phase, too. To
-     *            block the CPU, the BA line is pulled down.
-     *  @note     BA can be pulled down by multiple sources (wired AND) and
-     *            this variable indicates which sources are holding the line
-     *            low.
+    /* Current value of the BA line. Remember: Each CPU cycle is split into two
+     * phases:
+     *
+     *     - phi1 (First phase, LOW): VICII gets access to the bus
+     *     - phi2 (Second phase, HIGH): CPU gets access to the bus
+     *
+     * In rare cases, VICII needs access in the HIGH phase, too. To block the
+     * CPU, the BA line is pulled down. Note that BA can be pulled down by
+     * multiple sources (wired AND) and this variable indicates which sources
+     * are holding the line low.
      */
     TimeDelayed<u16>baLine = TimeDelayed<u16>(3);
     
@@ -528,7 +478,7 @@ private:
     
     
     //
-    // Color management (TODO: MOVE TO PIXEL ENGINE)
+    // Color management
     //
     
     /* The brightness, contrast, and saturation parameters used for computing
@@ -809,7 +759,7 @@ public:
 public:
     
     // Returns the currently used palette type
-    Palette videoPalette() { return palette; }
+    Palette videoPalette() { return config.palette; }
     
     // Sets the palette type
     void setVideoPalette(Palette type);
@@ -870,9 +820,8 @@ public:
     // Returns the currently stabel screen buffer
     void *screenBuffer();
 
-    /* Initializes both screenBuffers
-     * This function is needed for debugging, only. It write some recognizable
-     * pattern into both buffers.
+    /* Initializes both screenBuffers. This function is needed for debugging,
+     * only. It write some recognizable pattern into both buffers.
      */
     void resetScreenBuffers();
     
@@ -893,8 +842,8 @@ public:
     
 private:
     
-    /* Updates the RGBA values for all sixteen C64 colors
-     * The base palette is determined by the selected VICII model.
+    /* Updates the RGBA values for all sixteen C64 colors. The base palette is
+     * determined by the selected VICII model.
      */
     void updatePalette();
 
@@ -920,21 +869,20 @@ public:
     // Returns the latest value of the VICII's data bus during phi2
     u8 getDataBusPhi2() { return dataBusPhi2; }
 
-    /* Schedules the VICII bank to to switched
-     * This method is called if the bank switch is triggered by a change of
-     * register CIA2::PA or register CIA2::DDRA.
+    /* Schedules the VICII bank to to switched. This method is called if the
+     * bank switch is triggered by a change of CIA2::PA or CIA2::DDRA.
      */
     void switchBank(u16 addr);
 
 private:
 
-    /* Updates the VICII bank address
-     * The new address is computed from the provided bank number.
+    /* Updates the VICII bank address. The new address is computed from the
+     * provided bank number.
      */
     void updateBankAddr(uint2_t bank) { assert(is_uint2_t(bank)); bankAddr = bank << 14; }
 
-    /* Updates the VICII bank address
-     * The new address is computed from the bits in CIA2::PA.
+    /* Updates the VICII bank address. The new address is computed from the
+     * bits in CIA2::PA.
      */
     void updateBankAddr();
     
@@ -953,34 +901,24 @@ private:
     // Returns true if memAccess will read from Character ROM
     bool isCharRomAddr(u16 addr);
 
-    /* Performs a DRAM refresh (r-access).
-     * r-accesses are performed in cycles 11 - 15 during phi1.
-     */
+    // Performs a DRAM refresh (r-access)
     void rAccess() { dataBusPhi1 = memAccess(0x3F00 | refreshCounter--); }
     
-    /* Performs an idle access (i-access).
-     * Idle accesses are performed during phi1 if VICII needs no data.
-     * During an idle access, VICII reads from $3FFF, $7FFF, $BFFF, or $FFFF,
-     * depending on the selected memory bank.
-     */
+    // Performs an idle access (i-access)
     void iAccess() { dataBusPhi1 = memAccess(0x3FFF); }
     
-    /* Performs a character access (c-access)
-     * During a c-access, the video matrix is read.
-     */
+    // Performs a character access (c-access)
     void cAccess();
     
-    /* Performs a graphics access (g-access).
-     * During a g-access, graphics data (character or bitmap patterns) is read.
-     */
+    // Performs a graphics access (g-access)
     void gAccess();
 
     // Computes the g-access fetch address for different VICII models
     u16 gAccessAddr85x();
     u16 gAccessAddr65x();
 
-    /* Computes the g-access fetch address
-     * The fetch address is influences by both the BMM and ECM bit.
+    /* Computes the g-access fetch address. The fetch address is influences by
+     * both the BMM and ECM bit.
      */
     u16 gAccessAddr(bool bmm, bool ecm);
     
@@ -992,9 +930,8 @@ private:
     void sSecondAccess(unsigned sprite);
     void sThirdAccess(unsigned sprite);
     
-    /* Finalizes the sprite data access
-     * This method is invoked one cycle after the second and third sprite DMA
-     * has occurred.
+    /* Finalizes the sprite data access. This method is invoked one cycle after
+     * the second and third sprite DMA has occurred.
      */
     void sFinalize(unsigned sprite);
     
@@ -1003,19 +940,17 @@ private:
     // Handling the x and y counters
     //
     
-    /* Returns the current rasterline
-     * This value is not always identical to the yCounter, because the yCounter
-     * is incremented with a little delay.
+    /* Returns the current rasterline. This value is not always identical to
+     * the yCounter, because the yCounter is incremented with a little delay.
      */
     u16 rasterline();
 
     // Returns the current rasterline cycle
     u8 rastercycle();
 
-    /* Indicates if yCounter needs to be reset in this rasterline.
-     * PAL models reset the yCounter in cycle 2 in the first rasterline wheras
-     * NTSC models reset the yCounter in cycle 2 in the middle of the lower
-     * border area.
+    /* Indicates if yCounter needs to be reset in this rasterline. PAL models
+     * reset the yCounter in cycle 2 in the first rasterline wheras NTSC models
+     * reset the yCounter in cycle 2 in the middle of the lower border area.
      */
     bool yCounterOverflow() { return rasterline() == (isPAL() ? 0 : 238); }
 
@@ -1071,111 +1006,90 @@ private:
     
   
 	//
-	//! @functiongroup Querying the VICII registers
+	// Accessing registers
 	//
 	
 public:
 		
-    /*! @brief    Returns the current value of the DEN (Display ENabled) bit.
-     */
+    // Returns the current value of the DEN (Display ENabled) bit
     bool DENbit() { return GET_BIT(reg.current.ctrl1, 4); }
     
-    //! @brief    Returns the number of the next interrupt rasterline.
+    // Returns the number of the next interrupt rasterline
     u16 rasterInterruptLine() {
         return ((reg.current.ctrl1 & 0x80) << 1) | rasterIrqLine;
     }
     
-    //! @brief    Returns the masked CB13 bit.
+    // Returns the masked CB13 bit
     u8 CB13() { return memSelect & 0x08; }
 
-    //! @brief    Returns the masked CB13/CB12/CB11 bits.
+    // Returns the masked CB13/CB12/CB11 bits
     u8 CB13CB12CB11() { return memSelect & 0x0E; }
 
-    //! @brief    Returns the masked VM13/VM12/VM11/VM10 bits.
+    // Returns the masked VM13/VM12/VM11/VM10 bits
     u8 VM13VM12VM11VM10() { return memSelect & 0xF0; }
 
-	//! @brief    Returns the state of the CSEL bit.
+	// Returns the state of the CSEL bit
 	bool isCSEL() { return GET_BIT(reg.current.ctrl2, 3); }
     
-	//! @brief    Returns the state of the RSEL bit.
+	// Returns the state of the RSEL bit
     bool isRSEL() { return GET_BIT(reg.current.ctrl1, 3); }
 
 
     //
-    //! @functiongroup Handling DMA lines and the display state
+    // Handling DMA lines and the display state
     //
 
 private:
     
-    //! @brief    Returns true if the bad line condition holds.
+    // Returns true if the bad line condition holds
     bool badLineCondition();
     
     
     //
-    //! @functiongroup Interacting with the C64's CPU
+    // Interacting with the CPU
     //
     
 private:
     
-    /*! @brief   Sets the value of the BA line
-     * @details  The BA line is connected to the CPU's RDY pin.
-     */
+    // Sets the value of the BA line which is connected to the CPU's RDY pin.
     void updateBA(u8 value);
     
-    /*! @brief    Indicates if a c-access can occur.
-     *  @details  A c-access can only be performed if the BA line is down for
-     *            more than 2 cycles.
+    /* Indicates if a c-access can occur. A c-access can only be performed if
+     * the BA line is down for more than 2 cycles.
      */
     bool BApulledDownForAtLeastThreeCycles() { return baLine.delayed(); }
     
-	/*! @brief    Triggers a VICII interrupt
-     *  @param    source is the interrupt source
-     *            1 : Rasterline interrupt
-     *            2 : Collision of a sprite with background pixels
-     *            4 : Collision between two sprites.
-     *            8 : Lightpen interrupt
-     */
+	// Triggers a VICII interrupt
 	void triggerIrq(u8 source);
 	
     
     //
-    //! @functiongroup Handling lightpen events
+    // Handling lightpen events
     //
     
 public:
     
-    /*! @brief    Sets the value of the LP pin
-     *  @details  The LP pin is connected to bit 4 of control port A.
-     *  @seealso  checkForLightpenIrq()
-     */
+    // Sets the value of the LP pin
     void setLP(bool value);
     
 private:
 
-    //! @brief    Returns the X coordinate of a light pen event.
-    /*! @details  The coordinate depends on the current rasterline cycle and
-     *            differes slightly between the supported VICII models.
-     */
+    // Returns the coordinate of a light pen event
     u16 lightpenX();
-    
-    //! @brief    Returns the Y coordinate of a light pen event.
     u16 lightpenY();
     
-    /*! @brief    Trigger lightpen interrupt if conditions are met.
-     *  @details  This function is called on each negative transition of the
-     *            LP pin. It latches the x and y coordinates and immediately
-     *            triggers an interrupt if a newer VICII model is emulated.
-     *            Older models trigger the interrupt later, at the beginning of
-     *            a new frame.
-     *  @seealso  checkForLightpenIrqAtStartOfFrame()
+    /* Trigger a lightpen interrupt if conditions are met. This function is
+     * called on each negative transition of the LP pin. It latches the x and
+     * y coordinates and immediately triggers an interrupt if a newer VICII
+     * model is emulated. Older models trigger the interrupt later, at the
+     * beginning of a new frame.
      */
     void checkForLightpenIrq();
 
-    /*! @brief    Retriggers a lightpen interrupt if conditions are met.
-     *  @details  This function is called at the beginning of each frame.
-     *            If the lp line is still low at this point of time, a lightpen
-     *            interrupt is retriggered. Note that older VICII models trigger
-     *            interrupts only at this point in time.
+    /* Retriggers a lightpen interrupt if conditions are met. This function is
+     * called at the beginning of each frame. If the lp line is still low at
+     * this point of time, a lightpen interrupt is retriggered. Note that older
+     * VICII models trigger interrupts only at this point in time.
      */
     void checkForLightpenIrqAtStartOfFrame();
     
@@ -1186,42 +1100,35 @@ private:
 
 private:
 
-    /*! @brief    Gets the depth of a sprite.
-     *  @return   depth value that can be written into the z buffer.
-     */
+    // Gets the depth of a sprite (will be written into the z buffer)
     u8 spriteDepth(u8 nr);
     
-    /*! @brief    Compares the Y coordinates of all sprites with the yCounter
-     *  @return   A bit pattern storing the result for each sprite.
-     */
+    // Compares the Y coordinates of all sprites with the yCounter
     u8 compareSpriteY();
     
-    /*! @brief    Turns off sprite dma if conditions are met.
-     *  @details  In cycle 16, the mcbase pointer is advanced three bytes for
-     *            all dma enabled sprites. Advancing three bytes means that
-     *            mcbase will then point to the next sprite line. When mcbase
-     *            reached 63, all 21 sprite lines have been drawn and sprite dma
-     *            is switched off. The whole operation is skipped when the y
-     *            expansion flipflop is 0. This never happens for normal sprites
-     *            (there is no skipping then), but happens every other cycle for
-     *            vertically expanded sprites. Thus, mcbase advances for those
-     *            sprites at half speed which actually causes the expansion.
+    /* Turns off sprite dma if conditions are met. In cycle 16, the mcbase
+     * pointer is advanced three bytes for all dma enabled sprites. Advancing
+     * three bytes means that mcbase will then point to the next sprite line.
+     * When mcbase reached 63, all 21 sprite lines have been drawn and sprite
+     * dma is switched off. The whole operation is skipped when the y expansion
+     * flipflop is 0. This never happens for normal sprites (there is no
+     * skipping then), but happens every other cycle for vertically expanded
+     * sprites. Thus, mcbase advances for those sprites at half speed which
+     * actually causes the expansion.
      */
     void turnSpriteDmaOff();
 
-    /*! @brief    Turns on sprite dma accesses if conditions are met.
-     *  @details  This function is called in cycle 55 and cycle 56.
+    /* Turns on sprite dma accesses if conditions are met. This function is
+     * called in cycle 55 and cycle 56.
      */
     void turnSpriteDmaOn();
 
-    /*! @brief    Turns sprite display on or off.
-     *  @details  This function is called in cycle 58.
+    /* Turns sprite display on or off. This function is called in cycle 58.
      */
     void turnSpritesOnOrOff();
     
-    /*! @brief    Loads a sprite shift register.
-     *  @details  The shift register is loaded with the three data bytes fetched
-     *            in the previous sAccesses.
+    /* Loads a sprite shift register. The shift register is loaded with the
+     * three data bytes fetched in the previous sAccesses.
      */
     void loadShiftRegister(unsigned nr) {
         spriteSr[nr].data = LO_LO_HI(spriteSr[nr].chunk3,
@@ -1229,56 +1136,53 @@ private:
                                      spriteSr[nr].chunk1);
     }
     
-    /*! @brief    Updates the sprite shift registers.
-     *  @details  Checks if a sprite has completed it's last DMA fetch and
-     *            calls loadShiftRegister accordingly.
+    /* Updates the sprite shift registers. Checks if a sprite has completed
+     * it's last DMA fetch and calls loadShiftRegister() accordingly.
      */
     void updateSpriteShiftRegisters();
     
-    /*! @brief    Toggles expansion flipflop for vertically stretched sprites.
-     *  @details  In cycle 56, register D017 is read and the flipflop gets
-     *            inverted for all sprites with vertical stretching enabled.
-     *            When the flipflop goes down, advanceMCBase() will have no
-     *            effect in the next rasterline. This causes each sprite line
-     *            to be drawn twice.
+    /* Toggles expansion flipflop for vertically stretched sprites. In cycle 56,
+     * register D017 is read and the flipflop gets inverted for all sprites with
+     * vertical stretching enabled. When the flipflop goes down, advanceMCBase()
+     * will have no effect in the next rasterline. This causes each sprite line
+     * to be drawn twice.
      */
     void toggleExpansionFlipflop() { expansionFF ^= reg.current.sprExpandY; }
     
     
 	//
-    //!  @functiongroup Running the device (VICII.cpp and VIC_cycles_xxx.cpp)
+    // Running the device (VICII.cpp and VIC_cycles_xxx.cpp)
 	//
 
 public:
 	
-	/*! @brief    Prepares VICII for drawing a new frame.
-	 *  @details  This function is called prior to the first cycle of each frame.
+	/* Prepares VICII for drawing a new frame. This function is called prior to
+     * the first cycle of each frame.
      */
 	void beginFrame();
 	
-	/*! @brief    Prepares VICII for drawing a new rasterline.
-	 *  @details  This function is called prior to the first cycle of each rasterline.
+	/* Prepares VICII for drawing a new rasterline. This function is called
+     * prior to the first cycle of each rasterline.
      */
 	void beginRasterline(u16 rasterline);
 
-	/*! @brief    Finishes up a rasterline.
-	 *  @details  This function is called after the last cycle of each rasterline.
+	/* Finishes up a rasterline. This function is called after the last cycle
+     * of each rasterline.
      */
 	void endRasterline();
 	
-	/*! @brief    Finishes up a frame.
-	 *  @details  This function is called after the last cycle of each frame.
+	/* Finishes up a frame. This function is called after the last cycle of
+     * each frame.
      */
 	void endFrame();
     
-    //! @brief    Processes all time delayed actions.
-    /*! @details  This function is called at the beginning of each VICII cycle.
+    /* Processes all time delayed actions. This function is called at the
+     * beginning of each VICII cycle.
      */
     void processDelayedActions();
     
-	/*! @brief    Executes a specific rasterline cycle
-     *  @note     The cycle specific actions differ depending on the selected
-     *            chip model.
+	/* Executes a specific rasterline cycle. The cycle specific actions differ
+     * depending on the selected chip model.
      */
     void cycle1pal();   void cycle1ntsc();
     void cycle2pal();   void cycle2ntsc();
@@ -1319,11 +1223,6 @@ public:
     #define DRAW55 if (!vblank) draw55(); DRAW_SPRITES; bufferoffset += 8;
     #define DRAW59 if (!vblank) draw(); DRAW_SPRITES59; bufferoffset += 8;
     #define DRAW_IDLE DRAW_SPRITES;
-/*
-    #define DRAW_IDLE
-    for (unsigned i = 0; i < 8; i++) { zBuffer[i] = pixelSource[i] = 0; } \
-    DRAW_SPRITES;
-*/
     
     #define C_ACCESS if (badLine) cAccess();
     
@@ -1335,14 +1234,9 @@ public:
 
     #define END_VISIBLE_CYCLE \
     END_CYCLE
-
-    /*
-    #define END_VISIBLE_CYCLE \
-    // visibleColumnCnt++; \
-    END_CYCLE
-    */
     
     #define BA_LINE(x) updateBA(x);
+    
     
     //
     // Drawing routines (VIC_draw.cpp)
@@ -1350,17 +1244,16 @@ public:
     
 private:
     
-    /*! @brief    Draws 8 pixels
-     *  @details  This is the main entry point to the VICII code and invoked in
-     *            each drawing cycle. An exception are cycle 17 and cycle 55
-     *            which are handled seperately for speedup reasons.
+    /* Draws 8 pixels. This is the main entry point to the VICII code and
+     * invoked in each drawing cycle. An exception are cycle 17 and cycle 55
+     * which are handled seperately for speedup reasons.
      */
     void draw();
     
-    //! @brief    Special draw routine for cycle 17
+    // Special draw routine for cycle 17
     void draw17();
     
-    //! @brief    Special draw routine for cycle 55
+    // Special draw routine for cycle 55
     void draw55();
         
     
@@ -1368,35 +1261,25 @@ private:
     // Internal drawing routines (called by draw(), draw17(), and drae55())
     //
     
-    /*! @brief    Draws 8 border pixels
-     *  @details  Invoked inside draw()
-     */
+    // Draws 8 border pixels. Invoked inside draw().
     void drawBorder();
     
-    /*! @brief    Draws the border pixels in cycle 17
-     *  @seealso draw17()
-     */
+    // Draws the border pixels in cycle 17 (see draw17())
     void drawBorder17();
     
-    /*! @brief    Draws the border pixels in cycle 55
-     *  @seealso  draw55()
-     */
+    // Draws the border pixels in cycle 55 (see draw55())
     void drawBorder55();
     
-    /*! @brief    Draws 8 canvas pixels
-     *  @seealso  draw()
-     */
+    // Draws 8 canvas pixels (see draw())
     void drawCanvas();
     
-    /*! @brief    Draws a single canvas pixel
-     *  @param    pixel is the pixel number and must be in the range 0 to 7
-     *  @param    mode is the display mode for this pixel
-     *  @param    d016 is the current value of register D016
-     *  @param    loadShiftReg is true when the shift register needs to be
-     *            reloaded
-     *  @param    updateColors is true when the four selectable colors
-     *            need to be reloaded.
-     *  @seealso  drawCanvas()
+    /* Draws a single canvas pixel
+     *
+     *         pixel : pixel number (0 ... 7)
+     *          mode : display mode for this pixel
+     *          d016 : current value of register D016
+     *  loadShiftReg : forces the shift register to be reloaded
+     *  updateColors : forces the four selectable colors to be reloaded
      */
     void drawCanvasPixel(u8 pixel,
                          u8 mode,
@@ -1404,17 +1287,14 @@ private:
                          bool loadShiftReg,
                          bool updateColors);
     
-    /*! @brief    Draws 8 sprite pixels
-     *  @seealso  draw()
-     */
+    // Draws 8 sprite pixels (see draw())
     void drawSprites();
     
-    /*! @brief    Draws a single sprite pixel for all sprites
-     *  @param    pixel    Pixel number (0 to 7)
-     *  @param    enableBits are the spriteDisplay bits
-     *  @param    freezeBits If set to true, the sprites shift register will
-     *                     freeze temporarily
-     *  @seealso  drawSprites()
+    /* Draws a single sprite pixel for all sprites
+     *
+     *         pixel : pixel number (0 ... 7)
+     *    enableBits : the spriteDisplay bits
+     *    freezeBits : forces the sprites shift register to freeze temporarily
      */
     void drawSpritePixel(unsigned pixel,
                          u8 enableBits,
@@ -1425,7 +1305,7 @@ private:
     // Mid level drawing (semantic pixel rendering)
     //
     
-    //! @brief    Determines pixel colors accordig to the provided display mode
+    // Determines pixel colors accordig to the provided display mode
     void loadColors(u8 mode);
     
     
@@ -1433,43 +1313,41 @@ private:
     // Low level drawing (pixel buffer access)
     //
     
-    //! @brief    Writes a single color value into the screenbuffer
+    // Writes a single color value into the screenbuffer
     #define COLORIZE(pixel,color) \
         assert(bufferoffset + pixel < NTSC_PIXELS); \
         pixelBuffer[bufferoffset + pixel] = rgbaTable[color];
     
-    /*! @brief    Sets a single frame pixel
-     *! @note     The upper bit in pixelSource is cleared to prevent
-     *            sprite/foreground collision detection in border area.
+    /* Sets a single frame pixel. The upper bit in pixelSource is cleared to
+     * prevent sprite/foreground collision detection in border area.
      */
     #define SET_FRAME_PIXEL(pixel,color) { \
         COLORIZE(pixel, color); \
         zBuffer[pixel] = BORDER_LAYER_DEPTH; \
         pixelSource[pixel] &= (~0x100); }
     
-    //! @brief    Sets a single foreground pixel
+    // Sets a single foreground pixel
     #define SET_FOREGROUND_PIXEL(pixel,color) { \
         COLORIZE(pixel,color) \
         zBuffer[pixel] = FOREGROUND_LAYER_DEPTH; \
         pixelSource[pixel] = 0x100; }
 
-    //! @brief    Sets a single background pixel
+    // Sets a single background pixel
     #define SET_BACKGROUND_PIXEL(pixel,color) { \
         COLORIZE(pixel,color) \
         zBuffer[pixel] = BACKGROUD_LAYER_DEPTH; \
         pixelSource[pixel] = 0x00; }
     
-    //! @brief    Draw a single sprite pixel
+    // Draw a single sprite pixel
     void setSpritePixel(unsigned sprite, unsigned pixel, u8 color);
     
-    /*! @brief    Extend border to the left and right to look nice.
-     *  @details  This functions replicates the color of the leftmost and
-     *            rightmost pixel
+    /* Extend border to the left and right to look nice. This functions
+     * replicates the color of the leftmost and rightmost pixel
      */
     void expandBorders();
     
-    /*! @brief    Draw a horizontal colored line into the screen buffer
-     *  @details  This method is utilized for debugging purposes, only.
+    /* Draw a horizontal colored line into the screen buffer. This method is
+     * utilized for debugging purposes, only.
      */
     void markLine(u8 color, unsigned start = 0, unsigned end = NTSC_PIXELS);
 
@@ -1481,109 +1359,12 @@ private:
 public: 
 
     //
-    //! @functiongroup Querying information (VIC_debug.cpp)
-    //
-
-    // VICIIInfo getInfo();
-    // SpriteInfo getSpriteInfo(unsigned i);
-
-    
-    //
     //! @functiongroup Thread-safe manipulation of the VICII state (VIC_debug.cpp)
     //
 
-    //! @brief    Sets the memory bank start address
-    void setMemoryBankAddr(u16 addr);
-    
-    //! @brief    Sets the screen memory address.
-    void setScreenMemoryAddr(u16 addr);
-    
-    //! @brief    Sets the character memory address.
-    void setCharacterMemoryAddr(u16 addr);
-    
-    //! @brief    Sets the display mode.
-    void setDisplayMode(DisplayMode m);
-    
-    //! @brief    Sets the number of canvas rows.
-    void setNumberOfRows(unsigned rs);
-    
-    //! @brief    Sets the number of canvas columns.
-    void setNumberOfColumns(unsigned cs);
-    
     //! @brief    Returns the current screen geometry.
     ScreenGeometry getScreenGeometry(void);
     
-    //! @brief    Sets the current screen geometry.
-    void setScreenGeometry(ScreenGeometry mode);
-    
-    //! @brief    Sets the vertical raster scroll offset.
-    void setVerticalRasterScroll(u8 offset);
-    
-    //! @brief    Sets the horizontan raster scroll offset.
-    void setHorizontalRasterScroll(u8 offset);
-    
-    //! @brief    Set interrupt rasterline
-    void setRasterInterruptLine(u16 line);
-    
-    //! @brief    Enable or disable rasterline interrupts
-    void setRasterInterruptEnable(bool b);
-    
-    //! @brief    Enable or disable rasterline interrupts
-    void toggleRasterInterruptFlag();
-    
-    //! @brief    Sets the color of a sprite.
-    void setSpriteColor(unsigned nr, u8 color);
-    
-    //! @brief    Set the X coordinate of a sprite.
-    void setSpriteX(unsigned nr, u16 x);
-    
-    //! @brief    Sets the Y coordinate of sprite.
-    void setSpriteY(unsigned nr, u8 y);
-
-    //! @brief    Sets the data source pointer of sprite.
-    void setSpritePtr(unsigned nr, u8 ptr);
-
-    //! @brief    Enables or disables a sprite.
-    void setSpriteEnabled(u8 nr, bool b);
-    
-    //! @brief    Enables or disables a sprite.
-    void toggleSpriteEnabled(u8 nr);
-    
-    //! @brief    Enables or disables IRQs on sprite/background collision
-    void setIrqOnSpriteBackgroundCollision(bool b);
-    
-    //! @brief    Enables or disables IRQs on sprite/background collision
-    void toggleIrqOnSpriteBackgroundCollision();
-    
-    //! @brief    Enables or disables IRQs on sprite/sprite collision
-    void setIrqOnSpriteSpriteCollision(bool b);
-    
-    //! @brief    Enables or disables IRQs on sprite/sprite collision
-    void toggleIrqOnSpriteSpriteCollision();
-    
-    //! @brief    Determines whether a sprite is drawn before or behind the scenary.
-    void setSpritePriority(unsigned nr, bool b);
-    
-    //! @brief    Determines whether a sprite is drawn before or behind the scenary.
-    void toggleSpritePriority(unsigned nr);
-    
-    //! @brief    Sets single color or multi color mode for sprite.
-    void setSpriteMulticolor(unsigned nr, bool b);
-    
-    //! @brief    Switches between single color or multi color mode.
-    void toggleMulticolorFlag(unsigned nr);
-    
-    //! @brief    Stretches or shrinks a sprite vertically.
-    void setSpriteStretchY(unsigned nr, bool b);
-    
-    //! @brief    Stretches or shrinks a sprite vertically.
-    void spriteToggleStretchYFlag(unsigned nr);
-    
-    //! @brief    Stretches or shrinks sprite horizontally.
-    void setSpriteStretchX(unsigned nr, bool b);
-    
-    //! @brief    Stretches or shrinks sprite horizontally.
-    void spriteToggleStretchXFlag(unsigned nr);
 
     
     //

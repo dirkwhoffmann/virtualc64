@@ -25,7 +25,7 @@ VICII::VICII(C64 &ref) : C64Component(ref)
 	markIRQLines = false;
 	markDMALines = false;
     config.grayDotBug = true;
-    palette = COLOR_PALETTE;
+    config.palette = COLOR_PALETTE;
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -409,7 +409,7 @@ VICII::setVideoPalette(Palette type)
         type = COLOR_PALETTE;
     }
     
-    palette = type;
+    config.palette = type;
     updatePalette();
 }
 

@@ -121,6 +121,7 @@ typedef struct
     VICRevision revision;
     bool grayDotBug;
     GlueLogic glueLogic;
+    Palette palette;
 }
 VICConfig;
 
