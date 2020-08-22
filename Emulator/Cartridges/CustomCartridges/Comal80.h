@@ -17,17 +17,13 @@ class Comal80 : public Cartridge {
 public:
     
     Comal80(C64 *c64, C64 &ref) : Cartridge(c64, ref, "Comal80") { };
-    CartridgeType getCartridgeType() { return CRT_COMAL80; }
+    CartridgeType getCartridgeType() override { return CRT_COMAL80; }
     
-    //
-    //! @functiongroup Methods from Cartridge
-    //
-    
-    
-    void _reset();
-    u8 peekIO1(u16 addr) { return control; }
-    u8 peekIO2(u16 addr) { return 0; }
-    void pokeIO1(u16 addr, u8 value);
+    void _reset() override;
+
+    u8 peekIO1(u16 addr) override { return control; }
+    u8 peekIO2(u16 addr) override { return 0; }
+    void pokeIO1(u16 addr, u8 value) override;
 };
 
 #endif

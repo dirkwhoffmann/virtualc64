@@ -201,7 +201,7 @@ Cartridge::_reset()
     if (externalRam && !persistentRam) memset(externalRam, 0xFF, ramCapacity);
  
     // Reset all chip packets
-    for (unsigned i = 0; i < numPackets; i++) packet[i]->reset();
+    for (unsigned i = 0; i < numPackets; i++) packet[i]->_reset();
         
     // Bank in visibile chips (chips with low numbers show up first)
     for (int i = MAX_PACKETS - 1; i >= 0; i--) bankIn(i);

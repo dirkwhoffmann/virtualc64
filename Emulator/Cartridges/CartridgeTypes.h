@@ -10,7 +10,7 @@
 #ifndef CARTRIDGE_TYPES_H
 #define CARTRIDGE_TYPES_H
 
-typedef enum
+typedef enum : long
 {
     CRT_NORMAL = 0,
     CRT_ACTION_REPLAY = 1,

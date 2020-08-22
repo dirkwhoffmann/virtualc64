@@ -25,7 +25,7 @@ public:
 
     
     //
-    // Accessing registers
+    // Accessing cartridge data
     //
     
     u8 peek(u16 addr) override;
@@ -69,7 +69,7 @@ public:
 
     
     //
-    // Accessing registers
+    // Accessing cartridge data
     //
     
     u8 peek(u16 addr) override;

@@ -28,6 +28,70 @@ HardwareComponent::initialize()
     _initialize();
 }
 
+size_t
+HardwareComponent::size()
+{
+    size_t result = _size();
+
+    for (HardwareComponent *c : subComponents) {
+        result += c->size();
+    }
+
+    return result;
+}
+
+size_t
+HardwareComponent::load(u8 *buffer)
+{
+    u8 *ptr = buffer;
+
+    // Call delegation method
+    ptr += willLoadFromBuffer(ptr);
+
+    // Load internal state of all subcomponents
+    for (HardwareComponent *c : subComponents) {
+        ptr += c->load(ptr);
+    }
+
+    // Load internal state of this component
+    ptr += _load(ptr);
+
+    // Call delegation method
+    ptr += didLoadFromBuffer(ptr);
+
+    // Verify that the number of written bytes matches the snapshot size
+    debug(SNP_DEBUG, "Loaded %d bytes (expected %d)\n", ptr - buffer, size());
+    assert(ptr - buffer == size());
+
+    return ptr - buffer;
+}
+
+size_t
+HardwareComponent::save(u8 *buffer)
+{
+    u8 *ptr = buffer;
+
+    // Call delegation method
+    ptr += willSaveToBuffer(ptr);
+
+    // Save internal state of all subcomponents
+    for (HardwareComponent *c : subComponents) {
+        ptr += c->save(ptr);
+    }
+
+    // Save internal state of this component
+    ptr += _save(ptr);
+
+    // Call delegation method
+    ptr += didSaveToBuffer(ptr);
+
+    // Verify that the number of written bytes matches the snapshot size
+    debug(SNP_DEBUG, "Saved %d bytes (expected %d)\n", ptr - buffer, size());
+    assert(ptr - buffer == size());
+
+    return ptr - buffer;
+}
+
 void
 HardwareComponent::powerOn()
 {
@@ -115,6 +179,8 @@ HardwareComponent::ping()
     // Ping this component
     _ping();
 }
+
+
 
 void
 HardwareComponent::inspect()

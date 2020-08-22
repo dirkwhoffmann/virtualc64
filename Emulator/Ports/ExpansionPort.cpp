@@ -54,37 +54,49 @@ ExpansionPort::_ping()
 }
 
 size_t
-ExpansionPort::didLoadFromBuffer(u8 *buffer)
+ExpansionPort::_size()
 {
-    u8 **bufptr = &buffer;
+    SerCounter counter;
+    applyToPersistentItems(counter);
+    applyToResetItems(counter);
     
-    // Delete old cartridge
-    if (cartridge != NULL) {
-        delete cartridge;
-        cartridge = NULL;
-    }
-    
-    // Read cartridge type and cartridge (if any)
-    CartridgeType cartridgeType = (CartridgeType)read16(bufptr);
-    if (cartridgeType != CRT_NONE) {
-        cartridge = Cartridge::makeWithType(&c64, cartridgeType);
-        cartridge->oldLoadFromBuffer(bufptr);
-    }
-    
-    return *bufptr - buffer;
+    if (cartridge) counter.count += cartridge->size();
+    return counter.count;
 }
 
 size_t
-ExpansionPort::didSaveToBuffer(u8 *buffer)
+ExpansionPort::_load(u8 *buffer)
 {
-    u8 **bufptr = &buffer;
+    SerReader reader(buffer);
+    applyToPersistentItems(reader);
+    applyToResetItems(reader);
     
-    // Write cartridge type and data (if any)
-    write16(bufptr, cartridge ? cartridge->getCartridgeType() : CRT_NONE);
-    if (cartridge != NULL)
-        cartridge->oldSaveToBuffer(bufptr);
+    // Load cartridge (if any)
+    if (crtType != CRT_NONE) {
+        assert(cartridge != NULL);
+        delete cartridge;
+        cartridge = Cartridge::makeWithType(&c64, crtType);
+        reader.ptr += cartridge->load(reader.ptr);
+    }
     
-    return *bufptr - buffer;
+    debug(SNP_DEBUG, "Recreated from %d bytes\n", reader.ptr - buffer);
+    return reader.ptr - buffer;
+}
+
+size_t
+ExpansionPort::_save(u8 *buffer)
+{
+    SerWriter writer(buffer);
+    applyToPersistentItems(writer);
+    applyToResetItems(writer);
+    
+    // Save cartridge (if any)
+    if (crtType != CRT_NONE) {
+        writer.ptr += cartridge->save(writer.ptr);
+    }
+    
+    debug(SNP_DEBUG, "Serialized to %d bytes\n", writer.ptr - buffer); \
+    return writer.ptr - buffer;
 }
 
 size_t
@@ -293,6 +305,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
     // Remove old cartridge (if any) and assign new one
     detachCartridge();
     cartridge = c;
+    crtType = c->getCartridgeType();
     
     // Reset cartridge to update exrom and game line on the expansion port
     cartridge->reset();
@@ -361,6 +374,7 @@ ExpansionPort::detachCartridge()
         
         delete cartridge;
         cartridge = NULL;
+        crtType = CRT_NONE;
         
         setCartridgeMode(CRT_OFF);
         

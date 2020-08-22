@@ -28,25 +28,19 @@
 
 #include "C64Component.h"
 #include "Cartridge.h"
-// #include "ExpansionPortTypes.h"
 
 class ExpansionPort : public C64Component {
  
 private:
     
-    /*! @brief    Attached cartridge
-     *  @details  NULL, if no cartridge is plugged in.
-     */
+    // Attached cartridge (NULL if no cartridge is plugged in)
     Cartridge *cartridge = NULL;
     
-    /*! @brief    Current value of the Game line.
-     *  @details  Equals 1, if no cartridge if attached.
-     */
-    bool gameLine = 1;
+    // Type of the attached cartridge
+    CartridgeType crtType = CRT_NONE;
     
-    /*! @brief    Current value of the Exrom line.
-     *  @details  Equals 1, if no cartridge if attached.
-     */
+    // Values of the Game and the Exrom line (true if no cartridge is attached)
+    bool gameLine = 1;
     bool exromLine = 1;
     
     
@@ -83,6 +77,11 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
+        worker
+        
+        & crtType
+        & gameLine
+        & exromLine;
     }
     
     template <class T>
@@ -90,11 +89,9 @@ private:
     {
     }
     
-    size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
-    size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    size_t _save(u8 *buffer) override { assert(false); SAVE_SNAPSHOT_ITEMS }
-    size_t didLoadFromBuffer(u8 *buffer) override;
-    size_t didSaveToBuffer(u8 *buffer) override;
+    size_t _size() override;
+    size_t _load(u8 *buffer) override;
+    size_t _save(u8 *buffer) override;
 
     
     //
