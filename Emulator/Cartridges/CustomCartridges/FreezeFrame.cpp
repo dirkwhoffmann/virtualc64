@@ -36,6 +36,12 @@ FreezeFrame::peekIO2(u16 addr)
     return 0;
 }
 
+const char *
+FreezeFrame::getButtonTitle(unsigned nr)
+{
+    return (nr == 1) ? "Freeze" : NULL;
+}
+
 void
 FreezeFrame::pressButton(unsigned nr)
 {

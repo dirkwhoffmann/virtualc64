@@ -115,7 +115,7 @@ private:
     
     
     //
-    // Delegation methods
+    // Handling delegation calls
     //
     
     void nmiWillTrigger() override;

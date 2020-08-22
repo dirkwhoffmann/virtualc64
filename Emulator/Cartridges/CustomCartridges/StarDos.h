@@ -19,25 +19,49 @@ class StarDos : public Cartridge {
     u64 voltage = 5000000;
     u64 latestVoltageUpdate = 0;
     
-    public:
+    
+    //
+    // Initializing
+    //
+    
+public:
     
     StarDos(C64 *c64, C64 &ref) : Cartridge(c64, ref, "StarDos") { };
-    CartridgeType getCartridgeType() { return CRT_STARDOS; }
-    void _reset();
+    CartridgeType getCartridgeType() override { return CRT_STARDOS; }
+
+private:
+    
+    void _reset() override;
+    
+    //
+    // Accessing cartridge memory
+    //
+    
+    u8 peekIO1(u16 addr) override { charge(); return 0; }
+    u8 peekIO2(u16 addr) override { discharge(); return 0; }
+    void pokeIO1(u16 addr, u8 value) override { charge(); }
+    void pokeIO2(u16 addr, u8 value) override { discharge(); }
+
+    //
+    // Handling delegation calls
+    //
+
+public:
+    
+    void updatePeekPokeLookupTables() override;
+
+    
+    //
+    // Working with the capacitor
+    //
+    
+private:
     
     void updateVoltage();
     void charge();
     void discharge();
     void enableROML();
     void disableROML();
-
-    void updatePeekPokeLookupTables(); 
-    u8 peekIO1(u16 addr) { charge(); return 0; }
-    u8 peekIO2(u16 addr) { discharge(); return 0; }
-    void pokeIO1(u16 addr, u8 value) { charge(); }
-    void pokeIO2(u16 addr, u8 value) { discharge(); }
-    
-    bool hasResetButton() { return true; }
 };
 
 #endif

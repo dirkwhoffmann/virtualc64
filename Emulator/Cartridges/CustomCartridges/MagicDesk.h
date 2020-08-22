@@ -17,15 +17,17 @@ class MagicDesk : public Cartridge {
 public:
     
     MagicDesk(C64 *c64, C64 &ref) : Cartridge(c64, ref, "MagicDesk") { };
-    CartridgeType getCartridgeType() { return CRT_MAGIC_DESK; }
+    CartridgeType getCartridgeType() override { return CRT_MAGIC_DESK; }
+    
     
     //
-    //! @functiongroup Methods from Cartridge
+    // Accessing cartridge memory
     //
     
-    u8 peekIO1(u16 addr);
-    void pokeIO1(u16 addr, u8 value);
+public:
+    
+    u8 peekIO1(u16 addr) override;
+    void pokeIO1(u16 addr, u8 value) override;
 };
-
 
 #endif

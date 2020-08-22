@@ -17,14 +17,17 @@ class MikroAss : public Cartridge {
 public:
 
     MikroAss(C64 *c64, C64 &ref) : Cartridge(c64, ref, "Mikro Assembler") { };
-    CartridgeType getCartridgeType() { return CRT_MIKRO_ASS; }
+    CartridgeType getCartridgeType() override { return CRT_MIKRO_ASS; }
 
+    
     //
-    //! @functiongroup Methods from Cartridge
+    // Accessing cartridge memory
     //
 
-    u8 peekIO1(u16 addr);
-    u8 peekIO2(u16 addr);
+public:
+    
+    u8 peekIO1(u16 addr) override;
+    u8 peekIO2(u16 addr) override;
 };
 
 #endif

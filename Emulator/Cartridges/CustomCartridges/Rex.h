@@ -16,11 +16,18 @@ class Rex : public Cartridge {
     
 public:
     
-    using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_REX; }
+    Rex(C64 *c64, C64 &ref) : Cartridge(c64, ref, "Rex") { };
+    CartridgeType getCartridgeType() override { return CRT_REX; }
     
-    u8 peekIO2(u16 addr);
-    u8 spypeekIO2(u16 addr) { return 0; }
+    
+    //
+    // Accessing cartridge memory
+    //
+    
+public:
+    
+    u8 peekIO2(u16 addr) override;
+    u8 spypeekIO2(u16 addr) override { return 0; }
 };
 
 #endif

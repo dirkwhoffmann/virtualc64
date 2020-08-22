@@ -376,7 +376,7 @@ public:
     
     
     //
-    // Delegation methods
+    // Handling delegation calls
     //
     
     /* Emulator thread callback. This function is invoked by the expansion port.

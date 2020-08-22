@@ -96,10 +96,6 @@ public:
     void pokeIO2(u16 addr, u8 value) override;
     void nmiDidTrigger() override;
     
-    unsigned numButtons() override { return 2; }
-    const char *getButtonTitle(unsigned nr) override;
-    void pressButton(unsigned nr) override;
-    void releaseButton(unsigned nr) override;
  
     //
     // Accessing the control register
@@ -128,6 +124,16 @@ private:
      * and counter output qD.
      */
     void updateGame();
+    
+    
+    //
+    // Operating buttons
+    //
+    
+    unsigned numButtons() override { return 2; }
+    const char *getButtonTitle(unsigned nr) override;
+    void pressButton(unsigned nr) override;
+    void releaseButton(unsigned nr) override;
 };
 
 #endif

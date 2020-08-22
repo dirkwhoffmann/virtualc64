@@ -15,9 +15,18 @@
 class Ocean : public Cartridge {
     
 public:
-    using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_OCEAN; }
-    void pokeIO1(u16 addr, u8 value);
+    
+    Ocean(C64 *c64, C64 &ref) : Cartridge(c64, ref, "Ocean") { };
+    CartridgeType getCartridgeType() override { return CRT_OCEAN; }
+
+    
+    //
+    // Accessing cartridge memory
+    //
+    
+public:
+    
+    void pokeIO1(u16 addr, u8 value) override;
 };
 
 #endif

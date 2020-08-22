@@ -113,7 +113,7 @@ class AtomicPower : public ActionReplay {
 public:
     
     AtomicPower(C64 *c64, C64 &ref);
-    CartridgeType getCartridgeType() { return CRT_ATOMIC_POWER; }
+    CartridgeType getCartridgeType() override { return CRT_ATOMIC_POWER; }
     
     /* Indicates if special ROM / RAM config has to be used. In contrast to
      * the Action Replay cartridge, Atomic Power has the ability to map the
@@ -129,9 +129,9 @@ public:
      */
     bool specialMapping() { return (control & 0b11100111) == 0b00100010; }
     
-    bool game();
-    bool exrom();
-    bool ramIsEnabled(u16 addr);
+    bool game() override;
+    bool exrom() override;
+    bool ramIsEnabled(u16 addr) override;
 };
 
 #endif

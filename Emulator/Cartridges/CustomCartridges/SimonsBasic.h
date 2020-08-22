@@ -15,12 +15,23 @@
 class SimonsBasic : public Cartridge {
     
 public:
-    using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_SIMONS_BASIC; }
-    void _reset();
-    u8 peekIO1(u16 addr);
-    u8 readIO1(u16 addr);
-    void pokeIO1(u16 addr, u8 value);
+
+    SimonsBasic(C64 *c64, C64 &ref) : Cartridge(c64, ref, "SimonsBasic") { };
+    CartridgeType getCartridgeType() override { return CRT_SIMONS_BASIC; }
+
+private:
+    
+    void _reset() override;
+
+    
+    //
+    // Accessing cartridge memory
+    //
+    
+public:
+
+    u8 peekIO1(u16 addr) override;
+    void pokeIO1(u16 addr, u8 value) override;
 };
 
 #endif

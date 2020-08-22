@@ -15,25 +15,36 @@
 class KcsPower : public Cartridge {
     
 public:
+    
     KcsPower(C64 *c64, C64 &ref);
-    CartridgeType getCartridgeType() { return CRT_KCS_POWER; }
+    CartridgeType getCartridgeType() override { return CRT_KCS_POWER; }
     
-    void _reset();
+private:
+    
+    void _reset() override;
+
     
     //
-    //! @functiongroup Methods from Cartridge
+    // Accessing cartridge memory
     //
     
-    u8 peekIO1(u16 addr);
-    u8 spypeekIO1(u16 addr);
-    u8 peekIO2(u16 addr);
-    void pokeIO1(u16 addr, u8 value);
-    void pokeIO2(u16 addr, u8 value);
+public:
     
-    unsigned numButtons() { return 1; }
-    const char *getButtonTitle(unsigned nr) { return (nr == 1) ? "Freeze" : NULL; }
-    void pressButton(unsigned nr);
-    void releaseButton(unsigned nr);
+    u8 peekIO1(u16 addr) override;
+    u8 spypeekIO1(u16 addr) override;
+    u8 peekIO2(u16 addr) override;
+    void pokeIO1(u16 addr, u8 value) override;
+    void pokeIO2(u16 addr, u8 value) override;
+    
+    
+    //
+    // Operating buttons
+    //
+    
+    unsigned numButtons() override { return 1; }
+    const char *getButtonTitle(unsigned nr) override;
+    void pressButton(unsigned nr) override;
+    void releaseButton(unsigned nr) override;
 };
 
 #endif

@@ -15,10 +15,18 @@
 class Funplay : public Cartridge {
     
 public:
-    using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_FUNPLAY; }
+
+    Funplay(C64 *c64, C64 &ref) : Cartridge(c64, ref, "Funplay") { };
+    CartridgeType getCartridgeType() override { return CRT_FUNPLAY; }
     
-    void pokeIO1(u16 addr, u8 value);
+    
+    //
+    // Accessing cartridge memory
+    //
+    
+public:
+    
+    void pokeIO1(u16 addr, u8 value) override;
 };
 
 #endif

@@ -68,6 +68,12 @@ KcsPower::pokeIO2(u16 addr, u8 value)
     }
 }
 
+const char *
+KcsPower::getButtonTitle(unsigned nr)
+{
+    return (nr == 1) ? "Freeze" : NULL;
+}
+
 void
 KcsPower::pressButton(unsigned nr)
 {

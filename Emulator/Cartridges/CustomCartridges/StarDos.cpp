@@ -18,6 +18,16 @@ StarDos::_reset()
 }
 
 void
+StarDos::updatePeekPokeLookupTables()
+{
+    // Replace Kernal by the StarDos kernal
+    if (mem.peekSrc[0xE] == M_KERNAL) {
+        mem.peekSrc[0xE] = M_CRTHI;
+        mem.peekSrc[0xF] = M_CRTHI;
+    }
+}
+
+void
 StarDos::updateVoltage()
 {
     // If the capacitor is untouched, it slowly raises to 2.0V
@@ -61,12 +71,3 @@ StarDos::disableROML()
     expansionport.setExromLine(1);
 }
 
-void
-StarDos::updatePeekPokeLookupTables()
-{
-    // Replace Kernal by the StarDos kernal
-    if (mem.peekSrc[0xE] == M_KERNAL) {
-        mem.peekSrc[0xE] = M_CRTHI;
-        mem.peekSrc[0xF] = M_CRTHI;
-    }
-}

@@ -63,6 +63,43 @@ FinalIII::nmiDidTrigger()
     }
 }
 
+void
+FinalIII::setControlReg(u8 value)
+{
+    control = value;
+    
+    // Update external lines
+    updateNMI();
+    updateGame();
+    expansionport.setExromLine(exrom());
+    
+    // Switch memory bank
+    bankIn(control & 0x03);
+    
+}
+
+bool
+FinalIII::writeEnabled()
+{
+    return !hidden() || freeezeButtonIsPressed;
+}
+
+void
+FinalIII::updateNMI()
+{
+    if (nmi() && !freeezeButtonIsPressed) {
+        cpu.releaseNmiLine(INTSRC_EXP);
+    } else {
+        cpu.pullDownNmiLine(INTSRC_EXP);
+    }
+}
+
+void
+FinalIII::updateGame()
+{
+    expansionport.setGameLine(game() && qD);
+}
+
 const char *
 FinalIII::getButtonTitle(unsigned nr)
 {
@@ -114,41 +151,4 @@ FinalIII::releaseButton(unsigned nr)
     }
     
     resume();
-}
-
-void
-FinalIII::setControlReg(u8 value)
-{
-    control = value;
-    
-    // Update external lines
-    updateNMI();
-    updateGame();
-    expansionport.setExromLine(exrom());
-    
-    // Switch memory bank
-    bankIn(control & 0x03);
-    
-}
-
-bool
-FinalIII::writeEnabled()
-{
-    return !hidden() || freeezeButtonIsPressed;
-}
-
-void
-FinalIII::updateNMI()
-{
-    if (nmi() && !freeezeButtonIsPressed) {
-        cpu.releaseNmiLine(INTSRC_EXP);
-    } else {
-        cpu.pullDownNmiLine(INTSRC_EXP);
-    }
-}
-
-void
-FinalIII::updateGame()
-{
-    expansionport.setGameLine(game() && qD);
 }

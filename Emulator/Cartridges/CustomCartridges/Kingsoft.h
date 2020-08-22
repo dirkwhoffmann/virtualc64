@@ -17,19 +17,28 @@ class Kingsoft : public Cartridge {
 public:
     
     Kingsoft(C64 *c64, C64 &ref) : Cartridge(c64, ref, "Kingsoft") { };
-    CartridgeType getCartridgeType() { return CRT_KINGSOFT; }
+    CartridgeType getCartridgeType() override { return CRT_KINGSOFT; }
+
+    void resetCartConfig() override;
+
     
     //
-    //! @functiongroup Methods from Cartridge
+    // Accessing cartridge memory
     //
     
-    void resetCartConfig();
+public:
+    
+    u8 peekIO1(u16 addr) override;
+    void pokeIO1(u16 addr, u8 value) override;
 
-    u8 peekIO1(u16 addr);
-    u8 spyPeek(u16 addr) { return 0; }
-    void pokeIO1(u16 addr, u8 value);
-
-    void updatePeekPokeLookupTables();
+    
+    //
+    // Handling delegation calls
+    //
+    
+public:
+    
+    void updatePeekPokeLookupTables() override;
 };
 
 

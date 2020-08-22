@@ -15,11 +15,19 @@
 class Westermann : public Cartridge {
     
 public:
-    using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_WESTERMANN; }
     
-    u8 peekIO2(u16 addr);
-    u8 spypeekIO2(u16 addr) { return 0; }
+    Westermann(C64 *c64, C64 &ref) : Cartridge(c64, ref, "Westermann") { };
+    CartridgeType getCartridgeType() override { return CRT_WESTERMANN; }
+    
+    
+    //
+    // Accessing cartridge memory
+    //
+    
+public:
+    
+    u8 peekIO2(u16 addr) override;
+    u8 spypeekIO2(u16 addr) override { return 0; }
 };
 
 #endif

@@ -16,12 +16,8 @@ class FreezeFrame : public Cartridge {
     
 public:
     
-    using Cartridge::Cartridge;
+    FreezeFrame(C64 *c64, C64 &ref) : Cartridge(c64, ref, "FreezeFrame") { };
     CartridgeType getCartridgeType() override { return CRT_FREEZE_FRAME; }
-    
-    //
-    // Methods from HardwareComponent
-    //
     
 private:
 
@@ -29,7 +25,7 @@ private:
 
     
     //
-    // Methods from Cartridge
+    // Accessing cartridge memory
     //
     
 public:
@@ -39,8 +35,13 @@ public:
     u8 peekIO2(u16 addr) override;
     u8 spypeekIO2(u16 addr) override { return 0; }
 
+    
+    //
+    // Operating buttons
+    //
+    
     unsigned numButtons() override { return 1; }
-    const char *getButtonTitle(unsigned nr) override { return (nr == 1) ? "Freeze" : NULL; }
+    const char *getButtonTitle(unsigned nr) override;
     void pressButton(unsigned nr) override;
     void releaseButton(unsigned nr) override;
 };

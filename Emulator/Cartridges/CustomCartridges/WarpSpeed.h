@@ -15,23 +15,34 @@
 class WarpSpeed : public Cartridge {
     
 public:
-    using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_WARPSPEED; }
+    
+    WarpSpeed(C64 *c64, C64 &ref) : Cartridge(c64, ref, "WarpSpeed") { };
+    CartridgeType getCartridgeType() override { return CRT_WARPSPEED; }
+
+    void resetCartConfig() override;
+
     
     //
-    //! @functiongroup Methods from Cartridge
+    // Accessing cartridge memory
     //
     
-    void resetCartConfig();
-    bool hasResetButton() { return true; }
-    u8 peekIO1(u16 addr);
-    u8 peekIO2(u16 addr);
-    void pokeIO1(u16 addr, u8 value);
-    void pokeIO2(u16 addr, u8 value);
+public:
     
-    unsigned numButtons() { return 1; }
-    const char *getButtonTitle(unsigned nr) { return (nr == 1) ? "Reset" : NULL; }
-    void pressButton(unsigned nr);
+    u8 peekIO1(u16 addr) override;
+    u8 peekIO2(u16 addr) override;
+    void pokeIO1(u16 addr, u8 value) override;
+    void pokeIO2(u16 addr, u8 value) override;
+
+    
+    //
+    // Operating buttons
+    //
+    
+public:
+    
+    unsigned numButtons() override { return 1; }
+    const char *getButtonTitle(unsigned nr) override;
+    void pressButton(unsigned nr) override;
 };
 
 #endif

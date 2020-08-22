@@ -16,26 +16,76 @@ class GeoRAM : public Cartridge {
     
 private:
     
-    //! @brief   Selected RAM bank
-    u8 bank;
+    // Selected RAM bank
+    u8 bank = 0;
     
-    //! @brief   Selected page inside the selected RAM bank.
-    u8 page;
+    // Selected page inside the selected RAM bank
+    u8 page = 0;
     
-    //! @brief   Computes the offset for accessing the cartridge RAM
-    unsigned offset(u8 addr);
+    
+    //
+    // Initializing
+    //
+
+public:
+    
+    GeoRAM(C64 *c64, C64 &ref);
+    CartridgeType getCartridgeType() override { return CRT_GEO_RAM; }
+    
+private:
+    
+    void _reset() override;
+    
+    
+    //
+    // Serializing
+    //
+    
+private:
+    
+    template <class T>
+    void applyToPersistentItems(T& worker)
+    {
+        worker
+        
+        & bank
+        & page;
+    }
+    
+    template <class T>
+    void applyToResetItems(T& worker)
+    {
+    }
+    
+    size_t __size() { COMPUTE_SNAPSHOT_SIZE }
+    size_t __load(u8 *buffer) { LOAD_SNAPSHOT_ITEMS }
+    size_t __save(u8 *buffer) { SAVE_SNAPSHOT_ITEMS }
+    
+    size_t _size() override { return Cartridge::_size() + __size(); }
+    size_t _load(u8 *buf) override { return Cartridge::_load(buf) + __load(buf); }
+    size_t _save(u8 *buf) override { return Cartridge::_save(buf) + __save(buf); }
+    
+    
+    size_t oldStateSize() override;
+    void oldDidLoadFromBuffer(u8 **buffer) override;
+    void oldDidSaveToBuffer(u8 **buffer) override;
+
+    
+    //
+    // Accessing cartridge memory
+    //
     
 public:
-    GeoRAM(C64 *c64, C64 &ref);
-    CartridgeType getCartridgeType() { return CRT_GEO_RAM; }
-    void _reset();
-    size_t oldStateSize();
-    void oldDidLoadFromBuffer(u8 **buffer);
-    void oldDidSaveToBuffer(u8 **buffer);
-    u8 peekIO1(u16 addr);
-    u8 peekIO2(u16 addr);
-    void pokeIO1(u16 addr, u8 value);
-    void pokeIO2(u16 addr, u8 value);
+
+    u8 peekIO1(u16 addr) override;
+    u8 peekIO2(u16 addr) override;
+    void pokeIO1(u16 addr, u8 value) override;
+    void pokeIO2(u16 addr, u8 value) override;
+    
+private:
+    
+    // Maps an address to the proper position in cartridge RAM
+    unsigned offset(u8 addr);
 };
 
 #endif

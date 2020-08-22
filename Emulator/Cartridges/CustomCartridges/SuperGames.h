@@ -15,10 +15,18 @@
 class Supergames : public Cartridge {
     
 public:
-    using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_SUPER_GAMES; }
     
-    void pokeIO2(u16 addr, u8 value);
+    Supergames(C64 *c64, C64 &ref) : Cartridge(c64, ref, "Supergames") { };
+    CartridgeType getCartridgeType() override { return CRT_SUPER_GAMES; }
+    
+    
+    //
+    // Accessing cartridge memory
+    //
+    
+public:
+    
+    void pokeIO2(u16 addr, u8 value) override;
 };
 
 #endif

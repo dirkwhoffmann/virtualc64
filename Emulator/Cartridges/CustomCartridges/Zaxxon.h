@@ -15,12 +15,23 @@
 class Zaxxon : public Cartridge {
     
 public:
-    using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_ZAXXON; }
+    
+    Zaxxon(C64 *c64, C64 &ref) : Cartridge(c64, ref, "Zaxxon") { };
+    CartridgeType getCartridgeType() override { return CRT_ZAXXON; }
 
-    void _reset();
-    u8 peekRomL(u16 addr);
-    u8 spypeekRomL(u16 addr);
+private:
+    
+    void _reset() override;
+
+    
+    //
+    // Accessing cartridge memory
+    //
+    
+public:
+        
+    u8 peekRomL(u16 addr) override;
+    u8 spypeekRomL(u16 addr) override;
 };
 
 #endif

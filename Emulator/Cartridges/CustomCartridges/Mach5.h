@@ -17,17 +17,23 @@ class Mach5 : public Cartridge {
 public:
 
     Mach5(C64 *c64, C64 &ref) : Cartridge(c64, ref, "Mach5") { };
-    CartridgeType getCartridgeType() { return CRT_MACH5; }
+    CartridgeType getCartridgeType() override { return CRT_MACH5; }
 
+private:
+    
+    void _reset() override;
+
+    
     //
-    //! @functiongroup Methods from Cartridge
+    // Accessing cartridge memory
     //
 
-    void _reset();
-    u8 peekIO1(u16 addr);
-    u8 peekIO2(u16 addr);
-    void pokeIO1(u16 addr, u8 value);
-    void pokeIO2(u16 addr, u8 value);
+public:
+    
+    u8 peekIO1(u16 addr) override;
+    u8 peekIO2(u16 addr) override;
+    void pokeIO1(u16 addr, u8 value) override;
+    void pokeIO2(u16 addr, u8 value) override;
 };
 
 #endif
