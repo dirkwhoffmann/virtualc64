@@ -24,7 +24,7 @@ class Expert : public Cartridge {
     
 public:
     
-    Expert(C64 *c64, C64 &ref);
+    Expert(C64 &ref);
     CartridgeType getCartridgeType() override { return CRT_EXPERT; }
 
 private:

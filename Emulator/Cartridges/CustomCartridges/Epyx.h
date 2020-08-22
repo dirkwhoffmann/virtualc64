@@ -33,7 +33,7 @@ private:
     
 public:
     
-    Epyx(C64 *c64, C64 &ref) : Cartridge(c64, ref, "Epyx") { };
+    Epyx(C64 &ref) : Cartridge(ref, "Epyx") { };
     CartridgeType getCartridgeType() override { return CRT_EPYX_FASTLOAD; }
     
 private:

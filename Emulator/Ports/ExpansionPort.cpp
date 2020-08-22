@@ -75,7 +75,7 @@ ExpansionPort::_load(u8 *buffer)
     if (crtType != CRT_NONE) {
         assert(cartridge != NULL);
         delete cartridge;
-        cartridge = Cartridge::makeWithType(&c64, crtType);
+        cartridge = Cartridge::makeWithType(c64, crtType);
         reader.ptr += cartridge->load(reader.ptr);
     }
     
@@ -119,7 +119,7 @@ ExpansionPort::oldDidLoadFromBuffer(u8 **buffer)
     // Read cartridge type and cartridge (if any)
     CartridgeType cartridgeType = (CartridgeType)read16(buffer);
     if (cartridgeType != CRT_NONE) {
-        cartridge = Cartridge::makeWithType(&c64, cartridgeType);
+        cartridge = Cartridge::makeWithType(c64, cartridgeType);
         cartridge->oldLoadFromBuffer(buffer);
     }
 }
@@ -321,7 +321,7 @@ ExpansionPort::attachCartridgeAndReset(CRTFile *file)
 {
     assert(file != NULL);
     
-    Cartridge *cartridge = Cartridge::makeWithCRTFile(&c64, file);
+    Cartridge *cartridge = Cartridge::makeWithCRTFile(c64, file);
     
     if (cartridge) {
         
@@ -348,7 +348,7 @@ ExpansionPort::attachGeoRamCartridge(u32 capacity)
             return false;
     }
     
-    Cartridge *geoRAM = Cartridge::makeWithType(&c64, CRT_GEO_RAM);
+    Cartridge *geoRAM = Cartridge::makeWithType(c64, CRT_GEO_RAM);
     u32 capacityInBytes = capacity * 1024;
     geoRAM->setRamCapacity(capacityInBytes);
     
@@ -361,7 +361,7 @@ ExpansionPort::attachIsepicCartridge()
 {
     debug(EXP_DEBUG, "Attaching Isepic cartridge\n");
     
-    Cartridge *isepic = Cartridge::makeWithType(&c64, CRT_ISEPIC);
+    Cartridge *isepic = Cartridge::makeWithType(c64, CRT_ISEPIC);
     return attachCartridge(isepic);
 }
 

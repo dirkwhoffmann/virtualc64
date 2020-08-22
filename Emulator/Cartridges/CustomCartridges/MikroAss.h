@@ -16,7 +16,7 @@ class MikroAss : public Cartridge {
 
 public:
 
-    MikroAss(C64 *c64, C64 &ref) : Cartridge(c64, ref, "Mikro Assembler") { };
+    MikroAss(C64 &ref) : Cartridge(ref, "Mikro Assembler") { };
     CartridgeType getCartridgeType() override { return CRT_MIKRO_ASS; }
 
     

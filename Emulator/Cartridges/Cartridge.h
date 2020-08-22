@@ -129,8 +129,8 @@ public:
     static bool isROMHaddr (u16 addr);
 
     // Factory methods
-    static Cartridge *makeWithType(C64 *c64, CartridgeType type);
-    static Cartridge *makeWithCRTFile(C64 *c64, CRTFile *file);
+    static Cartridge *makeWithType(C64 &c64, CartridgeType type);
+    static Cartridge *makeWithCRTFile(C64 &c64, CRTFile *file);
 
     
     //
@@ -139,7 +139,7 @@ public:
     
 public:
     
-    Cartridge(C64 *c64, C64 &ref, const char *description = "Cartridge");
+    Cartridge(C64 &ref, const char *description = "Cartridge");
     ~Cartridge();
     
     /* Resets the Game and the Exrom line. The default implementation resets

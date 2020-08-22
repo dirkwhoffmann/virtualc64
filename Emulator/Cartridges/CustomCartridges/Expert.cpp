@@ -13,10 +13,8 @@
 
 #include "C64.h"
 
-Expert::Expert(C64 *c64, C64 &ref) : Cartridge(c64, ref)
-{
-    setDescription("Expert");
-    
+Expert::Expert(C64 &ref) : Cartridge(ref, "Expert")
+{    
     setSwitch(0);
     
     // Allocate 8KB bytes persistant RAM

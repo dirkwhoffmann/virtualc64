@@ -16,7 +16,7 @@ class Kingsoft : public Cartridge {
     
 public:
     
-    Kingsoft(C64 *c64, C64 &ref) : Cartridge(c64, ref, "Kingsoft") { };
+    Kingsoft(C64 &ref) : Cartridge(ref, "Kingsoft") { };
     CartridgeType getCartridgeType() override { return CRT_KINGSOFT; }
 
     void resetCartConfig() override;

@@ -26,7 +26,7 @@ class StarDos : public Cartridge {
     
 public:
     
-    StarDos(C64 *c64, C64 &ref) : Cartridge(c64, ref, "StarDos") { };
+    StarDos(C64 &ref) : Cartridge(ref, "StarDos") { };
     CartridgeType getCartridgeType() override { return CRT_STARDOS; }
 
 private:

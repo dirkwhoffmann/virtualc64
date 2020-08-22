@@ -16,7 +16,7 @@ class MagicDesk : public Cartridge {
     
 public:
     
-    MagicDesk(C64 *c64, C64 &ref) : Cartridge(c64, ref, "MagicDesk") { };
+    MagicDesk(C64 &ref) : Cartridge(ref, "MagicDesk") { };
     CartridgeType getCartridgeType() override { return CRT_MAGIC_DESK; }
     
     

@@ -29,7 +29,7 @@ private:
 
 public:
     
-    GeoRAM(C64 *c64, C64 &ref);
+    GeoRAM(C64 &ref) : Cartridge(ref, "GeoRam") { };
     CartridgeType getCartridgeType() override { return CRT_GEO_RAM; }
     
 private:

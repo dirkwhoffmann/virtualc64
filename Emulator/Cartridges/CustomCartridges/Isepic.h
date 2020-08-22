@@ -28,7 +28,7 @@ class Isepic : public Cartridge {
     
 public:
     
-    Isepic(C64 *c64, C64 &ref);
+    Isepic(C64 &ref);
     CartridgeType getCartridgeType() override { return CRT_ISEPIC; }
     
 private:

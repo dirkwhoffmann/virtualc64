@@ -9,10 +9,8 @@
 
 #include "C64.h"
 
-Isepic::Isepic(C64 *c64, C64 &ref) : Cartridge(c64, ref)
-{
-    setDescription("Isepic");
-    
+Isepic::Isepic(C64 &ref) : Cartridge(ref, "Isepic")
+{    
     // Allocate 2KB bytes on-board RAM
     setRamCapacity(2048);
 

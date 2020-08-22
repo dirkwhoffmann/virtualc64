@@ -16,7 +16,7 @@ class Mach5 : public Cartridge {
 
 public:
 
-    Mach5(C64 *c64, C64 &ref) : Cartridge(c64, ref, "Mach5") { };
+    Mach5(C64 &ref) : Cartridge(ref, "Mach5") { };
     CartridgeType getCartridgeType() override { return CRT_MACH5; }
 
 private:

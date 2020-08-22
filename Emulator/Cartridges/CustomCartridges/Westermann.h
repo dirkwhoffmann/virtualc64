@@ -16,7 +16,7 @@ class Westermann : public Cartridge {
     
 public:
     
-    Westermann(C64 *c64, C64 &ref) : Cartridge(c64, ref, "Westermann") { };
+    Westermann(C64 &ref) : Cartridge(ref, "Westermann") { };
     CartridgeType getCartridgeType() override { return CRT_WESTERMANN; }
     
     

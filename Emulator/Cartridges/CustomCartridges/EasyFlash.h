@@ -32,7 +32,7 @@ public:
     // Initializing
     //
     
-    EasyFlash(C64 *c64, C64 &ref);
+    EasyFlash(C64 &ref);
     CartridgeType getCartridgeType() override { return CRT_EASYFLASH; }
     
     void resetCartConfig() override;

@@ -31,7 +31,7 @@ class FinalIII : public Cartridge {
 
 public:
     
-    FinalIII(C64 *c64, C64 &ref) : Cartridge(c64, ref, "FinalIII") { };
+    FinalIII(C64 &ref) : Cartridge(ref, "FinalIII") { };
     CartridgeType getCartridgeType() override { return CRT_FINAL_III; }
     
     void resetCartConfig() override;

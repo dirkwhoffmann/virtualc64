@@ -16,7 +16,7 @@ class KcsPower : public Cartridge {
     
 public:
     
-    KcsPower(C64 *c64, C64 &ref);
+    KcsPower(C64 &ref);
     CartridgeType getCartridgeType() override { return CRT_KCS_POWER; }
     
 private:

@@ -16,7 +16,7 @@ class Supergames : public Cartridge {
     
 public:
     
-    Supergames(C64 *c64, C64 &ref) : Cartridge(c64, ref, "Supergames") { };
+    Supergames(C64 &ref) : Cartridge(ref, "Supergames") { };
     CartridgeType getCartridgeType() override { return CRT_SUPER_GAMES; }
     
     

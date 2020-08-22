@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-EasyFlash::EasyFlash(C64 *c64, C64 &ref) : Cartridge(c64, ref, "EasyFlash")
+EasyFlash::EasyFlash(C64 &ref) : Cartridge(ref, "EasyFlash")
 {
     subComponents = vector <HardwareComponent *> {
         

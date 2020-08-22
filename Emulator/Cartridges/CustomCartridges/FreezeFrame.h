@@ -16,7 +16,7 @@ class FreezeFrame : public Cartridge {
     
 public:
     
-    FreezeFrame(C64 *c64, C64 &ref) : Cartridge(c64, ref, "FreezeFrame") { };
+    FreezeFrame(C64 &ref) : Cartridge(ref, "FreezeFrame") { };
     CartridgeType getCartridgeType() override { return CRT_FREEZE_FRAME; }
     
 private:

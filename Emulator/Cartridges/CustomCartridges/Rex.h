@@ -16,7 +16,7 @@ class Rex : public Cartridge {
     
 public:
     
-    Rex(C64 *c64, C64 &ref) : Cartridge(c64, ref, "Rex") { };
+    Rex(C64 &ref) : Cartridge(ref, "Rex") { };
     CartridgeType getCartridgeType() override { return CRT_REX; }
     
     
