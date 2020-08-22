@@ -11,16 +11,23 @@
 
 EasyFlash::EasyFlash(C64 *c64, C64 &ref) : Cartridge(c64, ref, "EasyFlash")
 {
+    subComponents = vector <HardwareComponent *> {
+        
+        &flashRomL,
+        &flashRomH
+    };
+    
     flashRomL.setDescription("FlashRom_L");
     flashRomH.setDescription("FlashRom_H");
 
-    bank = 0;
-
     // Allocate 256 bytes on-board RAM
     setRamCapacity(256);
+}
 
-    // Start in Ultimax mode
-    jumper = false;
+void
+EasyFlash::resetCartConfig()
+{
+    expansionport.setCartridgeMode(CRT_ULTIMAX);
 }
 
 void
@@ -28,9 +35,7 @@ EasyFlash::_reset()
 {
     Cartridge::_reset();
     
-    bank = 0;
     eraseRAM(0xFF);
-    jumper = false;
 }
 
 void
@@ -80,12 +85,6 @@ EasyFlash::oldDidSaveToBuffer(u8 **buffer)
     write8(buffer, (u8)jumper);
     flashRomL.oldSaveToBuffer(buffer);
     flashRomH.oldSaveToBuffer(buffer);
-}
-
-void
-EasyFlash::resetCartConfig()
-{
-    expansionport.setCartridgeMode(CRT_ULTIMAX);
 }
 
 void
@@ -149,23 +148,6 @@ EasyFlash::peek(u16 addr)
         return 0;
     }
 }
-
-/*
-u8
-EasyFlash::spypeek(u16 addr)
-{
-    if (isROMLaddr(addr)) {
-        return flashRomL.spypeek(bank, addr & 0x1FFF);
-        
-    } else if (isROMHaddr(addr)) {
-        return flashRomH.spypeek(bank, addr & 0x1FFF);
-        
-    } else {
-        assert(false);
-        return 0;
-    }
-}
-*/
 
 void
 EasyFlash::poke(u16 addr, u8 value)

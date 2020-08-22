@@ -14,49 +14,91 @@
 
 class EasyFlash : public Cartridge {
     
-    //!@brief    Flash Rom mapping to ROML ($8000 - $9FFF)
+    // Flash Rom mapping to ROML ($8000 - $9FFF)
     FlashRom flashRomL = FlashRom(c64);
 
-    //!@brief    Flash Rom mapping to ROMH ($A000 - $B000 or $E000 - $FFFF)
+    // Flash Rom mapping to ROMH ($A000 - $B000 or $E000 - $FFFF)
     FlashRom flashRomH = FlashRom(c64);
     
-    //!@brief    Selected memory bank
-    u8 bank;
+    // Selected memory bank
+    u8 bank = 0;
     
-    //!@brief    The jumper
-    bool jumper;
+    // Jumper for controlling the Game line
+    bool jumper = false;
 
 public:
     
     //
-    //! @functiongroup Creating and destructing
+    // Initializing
     //
     
     EasyFlash(C64 *c64, C64 &ref);
     CartridgeType getCartridgeType() override { return CRT_EASYFLASH; }
     
+    void resetCartConfig() override;
+
+private:
+    
+    void _reset() override;
+
     
     //
-    // Methods from HardwareComponent
+    // Analyzing
     //
     
 private:
     
-    void _reset() override;
     void _dump() override;
+    
+    
+    //
+    // Serialization
+    //
+    
+private:
+    
+    template <class T>
+    void applyToPersistentItems(T& worker)
+    {
+        worker
+        
+        & jumper;
+    }
+    
+    template <class T>
+    void applyToResetItems(T& worker)
+    {
+        worker
+        
+        & bank;
+    }
+    
+    size_t __size() { COMPUTE_SNAPSHOT_SIZE }
+    size_t __load(u8 *buffer) { LOAD_SNAPSHOT_ITEMS }
+    size_t __save(u8 *buffer) { SAVE_SNAPSHOT_ITEMS }
+    
+    size_t _size() override { return Cartridge::_size() + __size(); }
+    size_t _load(u8 *buf) override { return Cartridge::_load(buf) + __load(buf); }
+    size_t _save(u8 *buf) override { return Cartridge::_save(buf) + __save(buf); }
+    
     size_t oldStateSize() override;
     void oldDidLoadFromBuffer(u8 **buffer) override;
     void oldDidSaveToBuffer(u8 **buffer) override;
     
     
     //
-    // Methods from Cartridge
+    // Handling ROM packets
+    //
+    
+    void loadChip(unsigned nr, CRTFile *c) override;
+
+    
+    //
+    // Accessing cartridge memory
     //
     
 public:
     
-    void resetCartConfig() override;
-    void loadChip(unsigned nr, CRTFile *c) override;
     u8 peek(u16 addr) override;
     void poke(u16 addr, u8 value) override;
     u8 peekIO1(u16 addr) override;

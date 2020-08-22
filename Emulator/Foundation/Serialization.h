@@ -299,7 +299,6 @@ public:
         memcpy((void *)ptr, src, n);
         ptr += n;
     }
-
 };
 
 
