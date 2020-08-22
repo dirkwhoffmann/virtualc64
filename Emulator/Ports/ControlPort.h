@@ -16,35 +16,35 @@ class ControlPort : public C64Component {
 
 private:
     
-    //! @brief    Represented control port (1 or 2)
+    // Represented control port (1 or 2)
     int nr;
     
-    //! @brief    True, if button is pressed.
+    // True, if button is pressed
     bool button;
 
-    /*! @brief    Horizontal joystick position
-     *  @details  Valid valued are -1 (LEFT), 1 (RIGHT), or 0 (RELEASED)
+    /* Horizontal joystick position
+     * Valid valued are -1 (LEFT), 1 (RIGHT), or 0 (RELEASED)
      */
     int axisX;
 
-    /*! @brief    Vertical joystick position
-     *  @details   Valid valued are -1 (UP), 1 (DOWN), or 0 (RELEASED)
+    /* Vertical joystick position
+     * Valid valued are -1 (UP), 1 (DOWN), or 0 (RELEASED)
      */
     int axisY;
     
-    //! @brief    True if multi-shot mode in enabled
+    // True if multi-shot mode in enabled
     bool autofire;
 
-    //! @brief    Number of bullets per gun volley
+    // Number of bullets per gun volley
     int autofireBullets;
 
-    //! @brief    Autofire frequency in Hz
+    // Autofire frequency in Hz
     float autofireFrequency;
 
-    //! @brief    Bullet counter used in multi-fire mode
+    // Bullet counter used in multi-fire mode
     u64 bulletCounter; 
 
-    //! @brief    Next frame to auto-press or auto-release the fire button
+    // Next frame to auto-press or auto-release the fire button
     u64 nextAutofireFrame;
     
     

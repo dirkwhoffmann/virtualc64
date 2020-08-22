@@ -62,6 +62,10 @@ private:
     // Analyzing
     //
     
+public:
+    
+    CartridgeType getCartridgeType();
+
 private:
     
     void _ping() override;
@@ -93,176 +97,157 @@ private:
     size_t _load(u8 *buffer) override;
     size_t _save(u8 *buffer) override;
 
-    
-    //
-    // Methods from HardwareComponent
-    //
-    
-public:
+        
+public: // DEPRECATED
     
     size_t oldStateSize() override;
     void oldDidLoadFromBuffer(u8 **buffer) override;
     void oldDidSaveToBuffer(u8 **buffer) override;
     
+        
+    //
+    // Accessing cartrige memory
+    //
+    
 public:
     
-    //! @brief    Execution thread callback
-    /*! @details  This method is invoked after each rasterline.
-     */
-    void execute() { if (cartridge) cartridge->execute(); }
-    
-    //! @brief    Peek fallthrough
     u8 peek(u16 addr);
-    
-    //! @brief    Same as peek, but without side effects
     u8 spypeek(u16 addr);
-    
-    //! @brief    Peek fallthrough for I/O space 1
     u8 peekIO1(u16 addr);
-    
-    //! @brief    Same as peekIO1, but without side effects
     u8 spypeekIO1(u16 addr);
-    
-    //! @brief    Peek fallthrough for I/O space 2
     u8 peekIO2(u16 addr);
-
-    //! @brief    Same as peekIO2, but without side effects
     u8 spypeekIO2(u16 addr);
     
-    //! @brief    Poke fallthrough
     void poke(u16 addr, u8 value);
-    
-    //! @brief    Poke fallthrough for I/O space 1
     void pokeIO1(u16 addr, u8 value);
-    
-    //! @brief    Poke fallthrough for I/O space 2
     void pokeIO2(u16 addr, u8 value);
     
-    //! @brief    Returns the cartridge type
-    CartridgeType getCartridgeType();
     
-    //! @brief    Returns the state of the Game line
+    //
+    // Controlling the Game and Exrom lines
+    //
+    
+public:
+    
     bool getGameLine() { return gameLine; }
-
-    /*! @brief    Sets the state of the Game line
-     *  @note     This value affects the C64's and VICII's mem source table.
-     */
     void setGameLine(bool value);
     
-    //! @brief    Returns the state of the Exrom line
     bool getExromLine() { return exromLine; }
-
-    /*! @brief    Sets the state of the Exrom line
-     *  @note     This value affects the C64's and VICII's mem source table.
-     */
     void setExromLine(bool value);
     
-    /*! @brief    Returns the current cartridge mode.
-     *  @details  The cartridge mode is determined by the current values of the
-     *            Game and Exrom line.
-     */
-    CartridgeMode getCartridgeMode();
-    
-    //! @brief    Sets the state of the Game and Exrom line
     void setGameAndExrom(bool game, bool exrom);
-
-    //! @brief    Convenience wrapper for setGame(), setExrom()
+    
+    CartridgeMode getCartridgeMode();
     void setCartridgeMode(CartridgeMode mode);
 
     
-    /*! @brief    Modifies the memory source lookup tables if required
-     *  @details  This function is called in C64::updatePeekPokeLookupTables()
-     *            to allow cartridges to manipulate the lookup tables after the
-     *            default values have been set.
-     *            Background: Some cartridges such as StarDos change the game
-     *            and exrom line on-the-fly to achieve very special memory
-     *            mappings.
-     *            For most cartridges, this function does nothing.
+    //
+    // Attaching and detaching
+    //
+    
+    // Returns true if a cartridge is attached to the expansion port
+    bool getCartridgeAttached() { return cartridge != NULL; }
+
+    // Attaches a cartridge to the expansion port
+    void attachCartridge(Cartridge *c);
+    bool attachCartridgeAndReset(CRTFile *c);
+    bool attachGeoRamCartridge(u32 capacity);
+    void attachIsepicCartridge();
+
+    // Removes a cartridge from the expansion port (if any)
+    void detachCartridge();
+    void detachCartridgeAndReset();
+
+    
+    //
+    // Managing on-board RAM
+    //
+    
+    // Returns true if the attached cartridge has a RAM backing battery
+    bool hasBattery();
+
+    // Enables or disables RAM backing during a reset.
+    void setBattery(bool value);
+    
+    
+    //
+    // Operating buttons
+    //
+    
+    // Returns the number of available cartridge buttons
+    unsigned numButtons();
+    
+    // Returns a textual description for a button
+    const char *getButtonTitle(unsigned nr);
+    
+    // Presses a button (make sure to call releaseButton() afterwards)
+    void pressButton(unsigned nr);
+    
+    // Releases a button (make sure to call pressButton() before)
+    void releaseButton(unsigned nr);
+   
+    
+    //
+    // Operating switches
+    //
+    
+    // Returns true if the cartridge has a switch
+    bool hasSwitch();
+    
+    // Returns the current switch position
+    i8 getSwitch();
+    bool switchIsNeutral();
+    bool switchIsLeft();
+    bool switchIsRight();
+    
+    /* Returns a textual description for a switch position or NULL if the
+     * switch cannot be positioned this way.
+     */
+    const char *getSwitchDescription(i8 pos);
+    const char *getSwitchDescription();
+    bool validSwitchPosition(i8 pos);
+    
+    // Puts the switch in the provided position
+    void setSwitch(u8 pos) { if (cartridge) cartridge->setSwitch(pos); }
+
+    
+    //
+    // Operating LEDs
+    //
+    
+    // Returns true if the cartridge has a LED
+    bool hasLED();
+    
+    // Returns true if the LED is switched on
+    bool getLED();
+    
+    // Switches the LED on or off
+    void setLED(bool value);
+    
+    
+    //
+    // Handling delegation calls
+    //
+    
+    /* Emulator thread callback. This function is invoked by the expansion port.
+     * Only a few cartridges such as EpyxFastLoader will do some action here.
+     */
+    void execute();
+    
+    /* Modifies the memory source lookup tables if required. This function is
+     * called in C64::updatePeekPokeLookupTables() to allow cartridges to
+     * manipulate the lookup tables after the default values have been set.
+     * Background: Some cartridges such as StarDos change the game and exrom
+     * line on-the-fly to achieve very special memory mappings. For most
+     * cartridges, this function does nothing.
      */
     void updatePeekPokeLookupTables();
     
-    //! @brief    Returns true if a cartridge is attached to the expansion port
-    bool getCartridgeAttached() { return cartridge != NULL; }
+    // Called when the C64 CPU is about to trigger an NMI
+    void nmiWillTrigger();
 
-    //! @brief    Attaches a cartridge to the expansion port.
-    void attachCartridge(Cartridge *c);
-
-    //! @brief    Attaches a cartridge from a file and resets.
-    bool attachCartridgeAndReset(CRTFile *c);
-    
-    //! @brief    Creates and attaches a GeoRAM cartridge
-    bool attachGeoRamCartridge(u32 capacity);
-
-    //! @brief    Creates and attaches an Isepic cartridge
-    void attachIsepicCartridge();
-
-    //! @brief    Removes a cartridge from the expansion port (if any)
-    void detachCartridge();
-
-    //! @brief    Removes a cartridge from the expansion port and resets
-    void detachCartridgeAndReset();
-
-    //
-    //! @functiongroup Operating cartridge buttons
-    //
-    
-    //! @brief    Returns the number of available cartridge buttons
-    virtual unsigned numButtons() { return cartridge ? cartridge->numButtons() : 0; }
-    
-    //! @brief    Returns a textual description for a button.
-    virtual const char *getButtonTitle(unsigned nr) {
-        return cartridge ? cartridge->getButtonTitle(nr) : NULL; }
-    
-    //! @brief    Presses a button
-    virtual void pressButton(unsigned nr) { if (cartridge) cartridge->pressButton(nr); }
-    
-    //! @brief    Releases a button
-    virtual void releaseButton(unsigned nr) { if (cartridge) cartridge->releaseButton(nr); }
-   
-    //! @brief    Returns true if a cartridge with a switch is attached
-    bool hasSwitch() { return cartridge ? cartridge->hasSwitch() : false; }
-    
-    //! @brief    Returns the current position of the switch
-    i8 getSwitch() { return cartridge ? cartridge->getSwitch() : 0; }
-    bool switchIsNeutral() { return cartridge ? cartridge->switchIsNeutral() : false; }
-    bool switchIsLeft() { return cartridge ? cartridge->switchIsLeft() : false; }
-    bool switchIsRight() { return cartridge ? cartridge->switchIsRight() : false; }
-    const char *getSwitchDescription(i8 pos) {
-        return cartridge ? cartridge->getSwitchDescription(pos) : NULL; }
-    const char *getSwitchDescription() {
-        return getSwitchDescription(getSwitch()); }
-    bool validSwitchPosition(i8 pos) {
-        return cartridge ? cartridge->validSwitchPosition(pos) : false; }
-    
-    //! @brief    Puts the switch in the provided position
-    void setSwitch(u8 pos) { if (cartridge) cartridge->setSwitch(pos); }
-
-    //! @brief    Returns true if the cartridge has a LED.
-    bool hasLED() { return cartridge ? cartridge->hasLED() : false; }
-    
-    //! @brief    Returns true if the LED is switched on.
-    bool getLED() { return cartridge ? cartridge->getLED() : false; }
-    
-    //! @brief    Switches the LED on or off.
-    void setLED(bool value) { if (cartridge) cartridge->setLED(value); }
-    
-    //! @brief    Returns true if the attached cartridge has a RAM backing battery.
-    bool hasBattery() { return cartridge ? cartridge->getPersistentRam() : false; }
-
-    //! @brief    Enables or disables RAM backing during a reset.
-    void setBattery(bool value) { if (cartridge) cartridge->setPersistentRam(value); }
-    
-    
-    //
-    // Notifications
-    //
-    
-    //! @brief    Called when the C64 CPU is about to trigger an NMI
-    void nmiWillTrigger() { if (cartridge) cartridge->nmiWillTrigger(); }
-
-    //! @brief    Called after the C64 CPU has processed the NMI instruction
-    void nmiDidTrigger() { if (cartridge) cartridge->nmiDidTrigger(); }
-
+    // Called after the C64 CPU has processed the NMI instruction
+    void nmiDidTrigger();
 };
     
 #endif

@@ -154,7 +154,7 @@ Cartridge::Cartridge(C64 &ref, const char *description) : C64Component(ref)
         { &offsetH,            sizeof(offsetH),            CLEAR_ON_RESET },
 
         { &ramCapacity,        sizeof(ramCapacity),        KEEP_ON_RESET },
-        { &persistentRam,      sizeof(persistentRam),      KEEP_ON_RESET },
+        { &battery,      sizeof(battery),      KEEP_ON_RESET },
 
         { &switchPos,          sizeof(switchPos),          KEEP_ON_RESET },
         { &led,                sizeof(led),                CLEAR_ON_RESET },
@@ -198,7 +198,7 @@ void
 Cartridge::_reset()
 {
     // Reset external RAM
-    if (externalRam && !persistentRam) memset(externalRam, 0xFF, ramCapacity);
+    if (externalRam && !battery) memset(externalRam, 0xFF, ramCapacity);
  
     // Reset all chip packets
     for (unsigned i = 0; i < numPackets; i++) packet[i]->_reset();
@@ -441,6 +441,27 @@ Cartridge::setRamCapacity(u32 size)
         ramCapacity = size;
         memset(externalRam, 0xFF, size);
     }
+}
+
+u8
+Cartridge::peekRAM(u16 addr)
+{
+    assert(addr < ramCapacity);
+    return externalRam[addr];
+}
+
+void
+Cartridge::pokeRAM(u16 addr, u8 value)
+{
+    assert(addr < ramCapacity);
+    externalRam[addr] = value;
+}
+
+void
+Cartridge::eraseRAM(u8 value)
+{
+    assert(externalRam != NULL);
+    memset(externalRam, value, ramCapacity);
 }
 
 void

@@ -19,7 +19,7 @@ Expert::Expert(C64 &ref) : Cartridge(ref, "Expert")
     
     // Allocate 8KB bytes persistant RAM
     setRamCapacity(0x2000);
-    setPersistentRam(true);
+    setBattery(true);
     
     debug(CRT_DEBUG, "Expert cartridge created\n");
 }

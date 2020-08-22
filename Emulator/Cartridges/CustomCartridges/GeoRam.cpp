@@ -12,7 +12,7 @@
 void
 GeoRAM::_reset()
 {
-    if (!getPersistentRam()) {
+    if (!getBattery()) {
         debug(CRT_DEBUG, "Erasing GeoRAM\n");
         eraseRAM(0);
     } else {

@@ -292,12 +292,6 @@ ExpansionPort::setCartridgeMode(CartridgeMode mode)
 }
 
 void
-ExpansionPort::updatePeekPokeLookupTables()
-{
-    if (cartridge) cartridge->updatePeekPokeLookupTables();
-}
-
-void
 ExpansionPort::attachCartridge(Cartridge *c)
 {
     assert(c != NULL);
@@ -392,4 +386,130 @@ ExpansionPort::detachCartridgeAndReset()
     detachCartridge();
     c64.reset();
     resume();
+}
+
+bool
+ExpansionPort::hasBattery()
+{
+    return cartridge ? cartridge->getBattery() : false;
+}
+
+void
+ExpansionPort::setBattery(bool value)
+{
+    if (cartridge) cartridge->setBattery(value);
+}
+
+unsigned
+ExpansionPort::numButtons()
+{
+    return cartridge ? cartridge->numButtons() : 0;
+}
+
+const char *
+ExpansionPort::getButtonTitle(unsigned nr)
+{
+     return cartridge ? cartridge->getButtonTitle(nr) : NULL;
+}
+ 
+void
+ExpansionPort::pressButton(unsigned nr)
+{
+    if (cartridge) cartridge->pressButton(nr);
+}
+
+void
+ExpansionPort::releaseButton(unsigned nr)
+{
+    if (cartridge) cartridge->releaseButton(nr);
+}
+
+bool
+ExpansionPort::hasSwitch()
+{
+    return cartridge ? cartridge->hasSwitch() : false;
+}
+
+i8
+ExpansionPort::getSwitch()
+{
+    return cartridge ? cartridge->getSwitch() : 0;
+}
+
+bool
+ExpansionPort::switchIsNeutral()
+{
+    return cartridge ? cartridge->switchIsNeutral() : false;
+}
+   
+bool
+ExpansionPort::switchIsLeft()
+{
+    return cartridge ? cartridge->switchIsLeft() : false;
+}
+   
+bool
+ExpansionPort::switchIsRight()
+{
+    return cartridge ? cartridge->switchIsRight() : false;
+}
+
+const char *
+ExpansionPort::getSwitchDescription(i8 pos)
+{
+    return cartridge ? cartridge->getSwitchDescription(pos) : NULL;
+}
+
+const char *
+ExpansionPort::getSwitchDescription()
+{
+    return getSwitchDescription(getSwitch());
+}
+
+bool
+ExpansionPort::validSwitchPosition(i8 pos)
+{
+    return cartridge ? cartridge->validSwitchPosition(pos) : false;    
+}
+
+bool
+ExpansionPort::hasLED()
+{
+    return cartridge ? cartridge->hasLED() : false;
+}
+ 
+bool
+ExpansionPort::getLED()
+{
+    return cartridge ? cartridge->getLED() : false;
+}
+ 
+void
+ExpansionPort::setLED(bool value)
+{
+    if (cartridge) cartridge->setLED(value);
+}
+
+void
+ExpansionPort::execute()
+{
+    if (cartridge) cartridge->execute();
+}
+
+void
+ExpansionPort::updatePeekPokeLookupTables()
+{
+    if (cartridge) cartridge->updatePeekPokeLookupTables();
+}
+
+void
+ExpansionPort::nmiWillTrigger()
+{
+    if (cartridge) cartridge->nmiWillTrigger();
+}
+
+void
+ExpansionPort::nmiDidTrigger()
+{
+    if (cartridge) cartridge->nmiDidTrigger();    
 }

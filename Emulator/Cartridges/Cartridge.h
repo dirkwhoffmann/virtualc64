@@ -85,7 +85,7 @@ private:
     u32 ramCapacity = 0;
     
     // Indicates if the RAM contents is preserved during a reset
-    bool persistentRam = false;
+    bool battery = false;
 
     
     //
@@ -183,7 +183,7 @@ private:
         & exromLineInCrtFile
         & numPackets
         & ramCapacity
-        & persistentRam
+        & battery
         & control
         & switchPos;
     }
@@ -208,8 +208,8 @@ protected:
     size_t _load(u8 *buffer) override;
     size_t _save(u8 *buffer) override;
         
-    // DEPRECATED FUNCTIONS
-public:
+   
+public: // DEPRECATED
 
     // State size function for chip packet data
     virtual size_t oldPacketStateSize();
@@ -300,24 +300,17 @@ public:
     void setRamCapacity(u32 size);
 
     // Returns true if RAM data is preserved during a reset
-    bool getPersistentRam() { return persistentRam; }
+    bool getBattery() { return battery; }
 
-    //Enables or disables persistent RAM
-    void setPersistentRam(bool value) { persistentRam = value; }
+    // Enables or disables persistent RAM
+    void setBattery(bool value) { battery = value; }
 
-    // Reads a byte from the on-board RAM
-    u8 peekRAM(u16 addr) {
-        assert(addr < ramCapacity); return externalRam[addr]; }
+    // Reads or write RAM cells
+    u8 peekRAM(u16 addr);
+    void pokeRAM(u16 addr, u8 value);
+    void eraseRAM(u8 value);
 
-    // Writes a byte into the on-board RAM
-    void pokeRAM(u16 addr, u8 value) {
-        assert(addr < ramCapacity); externalRam[addr] = value; }
-
-    // Initializes the on-board RAM with a reset value
-    void eraseRAM(u8 value) {
-        assert(externalRam != NULL); memset(externalRam, value, ramCapacity); }
     
-
     //
     // Operating buttons
     //
