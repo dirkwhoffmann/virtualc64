@@ -9,89 +9,9 @@
 
 #include "C64.h"
 
-Cartridge::Cartridge(C64 *c64, C64 &ref, const char *description) : C64Component(ref)
-{
-    setDescription(description);
-    debug(CRT_DEBUG, "Creating cartridge at address %p...\n", this);
-    
-    memset(packet, 0, sizeof(packet));
-    
-    SnapshotItem items[] = {
-        
-        // Configuration items
-        { &gameLineInCrtFile,  sizeof(gameLineInCrtFile),  KEEP_ON_RESET },
-        { &exromLineInCrtFile, sizeof(exromLineInCrtFile), KEEP_ON_RESET },
-        { &numPackets,         sizeof(numPackets),         KEEP_ON_RESET },
-        
-        { &chipL,              sizeof(chipL),              CLEAR_ON_RESET },
-        { &chipH,              sizeof(chipH),              CLEAR_ON_RESET },
-        { &mappedBytesL,       sizeof(mappedBytesL),       CLEAR_ON_RESET },
-        { &mappedBytesH,       sizeof(mappedBytesH),       CLEAR_ON_RESET },
-        { &offsetL,            sizeof(offsetL),            CLEAR_ON_RESET },
-        { &offsetH,            sizeof(offsetH),            CLEAR_ON_RESET },
-
-        { &ramCapacity,        sizeof(ramCapacity),        KEEP_ON_RESET },
-        { &persistentRam,      sizeof(persistentRam),      KEEP_ON_RESET },
-
-        { &switchPos,          sizeof(switchPos),          KEEP_ON_RESET },
-        { &led,                sizeof(led),                CLEAR_ON_RESET },
-     
-        { NULL,                0,                          0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
-}
-
-Cartridge::~Cartridge()
-{
-    debug(CRT_DEBUG, "Releasing cartridge...\n");
-    
-    // Deallocate RAM (if any)
-    if (externalRam) {
-        assert(ramCapacity > 0);
-        free(externalRam);
-    }
-}
-
-void
-Cartridge::dealloc()
-{
-    for (unsigned i = 0; i < numPackets; i++) {
-        assert(packet[i] != NULL);
-        delete packet[i];
-        packet[i] = NULL;
-    }
-    
-    numPackets = 0;
-}
-
-void
-Cartridge::_reset()
-{
-    // Reset external RAM
-    if (externalRam && !persistentRam) {
-        memset(externalRam, 0xFF, ramCapacity);
-    }
- 
-    // Reset all chip packets
-    for (unsigned i = 0; i < numPackets; i++) {
-        packet[i]->reset();
-    }
-        
-    // Bank in visibile chips (chips with low numbers show up first)
-    for (int i = MAX_PACKETS - 1; i >= 0; i--) {
-        bankIn(i);
-    }
-}
-
-void
-Cartridge::resetCartConfig() {
-
-    expansionport.setGameAndExrom(gameLineInCrtFile, exromLineInCrtFile);
-}
-
 bool
 Cartridge::isSupportedType(CartridgeType type)
-{    
+{
     switch (type) {
         
         case CRT_NORMAL:
@@ -135,6 +55,20 @@ Cartridge::isSupportedType(CartridgeType type)
         default:
             return false;
     }
+}
+
+bool
+Cartridge::isROMLaddr (u16 addr)
+{
+    // ROML is mapped to 0x8000 - 0x9FFF
+    return addr >= 0x8000 && addr <= 0x9FFF;
+}
+
+bool
+Cartridge::isROMHaddr (u16 addr)
+{
+    // ROMH is mapped to 0xA000 - 0xBFFF or 0xE000 - 0xFFFF
+    return (addr >= 0xA000 && addr <= 0xBFFF) || (addr >= 0xE000 && addr <= 0xFFFF);
 }
 
 Cartridge *
@@ -198,6 +132,179 @@ Cartridge::makeWithCRTFile(C64 *c64, CRTFile *file)
     return cart;
 }
 
+Cartridge::Cartridge(C64 *c64, C64 &ref, const char *description) : C64Component(ref)
+{
+    setDescription(description);
+    debug(CRT_DEBUG, "Creating cartridge at address %p...\n", this);
+    
+    memset(packet, 0, sizeof(packet));
+    
+    SnapshotItem items[] = {
+        
+        // Configuration items
+        { &gameLineInCrtFile,  sizeof(gameLineInCrtFile),  KEEP_ON_RESET },
+        { &exromLineInCrtFile, sizeof(exromLineInCrtFile), KEEP_ON_RESET },
+        { &numPackets,         sizeof(numPackets),         KEEP_ON_RESET },
+        
+        { &chipL,              sizeof(chipL),              CLEAR_ON_RESET },
+        { &chipH,              sizeof(chipH),              CLEAR_ON_RESET },
+        { &mappedBytesL,       sizeof(mappedBytesL),       CLEAR_ON_RESET },
+        { &mappedBytesH,       sizeof(mappedBytesH),       CLEAR_ON_RESET },
+        { &offsetL,            sizeof(offsetL),            CLEAR_ON_RESET },
+        { &offsetH,            sizeof(offsetH),            CLEAR_ON_RESET },
+
+        { &ramCapacity,        sizeof(ramCapacity),        KEEP_ON_RESET },
+        { &persistentRam,      sizeof(persistentRam),      KEEP_ON_RESET },
+
+        { &switchPos,          sizeof(switchPos),          KEEP_ON_RESET },
+        { &led,                sizeof(led),                CLEAR_ON_RESET },
+     
+        { NULL,                0,                          0 }};
+    
+    registerSnapshotItems(items, sizeof(items));
+}
+
+Cartridge::~Cartridge()
+{
+    debug(CRT_DEBUG, "Releasing cartridge...\n");
+    dealloc();
+}
+
+void
+Cartridge::resetCartConfig() {
+
+    expansionport.setGameAndExrom(gameLineInCrtFile, exromLineInCrtFile);
+}
+
+void
+Cartridge::dealloc()
+{
+    for (unsigned i = 0; i < numPackets; i++) {
+        assert(packet[i] != NULL);
+        delete packet[i];
+        packet[i] = NULL;
+    }
+    
+    if (externalRam) {
+        assert(ramCapacity > 0);
+        delete [] externalRam;
+        externalRam = NULL;
+    }
+
+    numPackets = 0;
+}
+
+void
+Cartridge::_reset()
+{
+    // Reset external RAM
+    if (externalRam && !persistentRam) memset(externalRam, 0xFF, ramCapacity);
+ 
+    // Reset all chip packets
+    for (unsigned i = 0; i < numPackets; i++) packet[i]->reset();
+        
+    // Bank in visibile chips (chips with low numbers show up first)
+    for (int i = MAX_PACKETS - 1; i >= 0; i--) bankIn(i);
+}
+
+void
+Cartridge::resetWithoutDeletingRam()
+{
+    u8 ram[0x10000];
+    
+    debug(RUN_DEBUG, "Resetting virtual C64 (preserving RAM)\n");
+    
+    memcpy(ram, mem.ram, 0x10000);
+    c64.reset();
+    memcpy(mem.ram, ram, 0x10000);
+}
+
+void
+Cartridge::_dump()
+{
+    msg("\n");
+    msg("Cartridge\n");
+    msg("---------\n");
+    
+    msg("        Cartridge type: %d\n", getCartridgeType());
+    msg(" Game line in CRT file: %d\n", gameLineInCrtFile);
+    msg("Exrom line in CRT file: %d\n", exromLineInCrtFile);
+    msg(" Number of Rom packets: %d\n", numPackets);
+    
+    for (unsigned i = 0; i < numPackets; i++) {
+        msg("              Chip %3d: %d KB starting at $%04X\n",
+            i, packet[i]->size / 1024, packet[i]->loadAddress);
+    }
+    msg("\n");
+}
+
+size_t
+Cartridge::_size()
+{
+    SerCounter counter;
+    applyToPersistentItems(counter);
+    applyToResetItems(counter);
+ 
+    // Determine size of all packets
+    size_t packetSize = 0;
+    for (unsigned i = 0; i < numPackets; i++) {
+        assert(packet[i] != NULL);
+        packetSize += packet[i]->_size();
+    }
+    
+    return ramCapacity + packetSize + counter.count;
+}
+
+size_t
+Cartridge::_load(u8 *buffer)
+{
+    dealloc();
+    
+    SerReader reader(buffer);
+    applyToPersistentItems(reader);
+    applyToResetItems(reader);
+    
+    // Load ROM packets
+    for (unsigned i = 0; i < numPackets; i++) {
+        assert(packet[i] == NULL);
+        packet[i] = new CartridgeRom(c64);
+        reader.ptr += packet[i]->_load(reader.ptr);
+    }
+
+    // Load on-board RAM
+    if (ramCapacity) {
+        assert(externalRam == NULL);
+        externalRam = new u8[ramCapacity];
+        for (int i = 0; i < ramCapacity; i++) externalRam[i] = read8(reader.ptr);
+    }
+
+    debug(SNP_DEBUG, "Recreated from %d bytes\n", reader.ptr - buffer);
+    return reader.ptr - buffer;
+}
+
+size_t
+Cartridge::_save(u8 *buffer)
+{
+    SerWriter writer(buffer);
+    applyToPersistentItems(writer);
+    applyToResetItems(writer);
+    
+    // Save ROM packets
+    for (unsigned i = 0; i < numPackets; i++) {
+        assert(packet[i] != NULL);
+        writer.ptr += packet[i]->_save(writer.ptr);
+    }
+    
+    // Save on-board RAM
+    if (ramCapacity) {
+        assert(externalRam != NULL);
+        for (int i = 0; i < ramCapacity; i++) write8(writer.ptr, externalRam[i]);
+    }
+    
+    debug(SNP_DEBUG, "Serialized %d bytes\n", writer.ptr - buffer);
+    return writer.ptr - buffer;
+}
+
 size_t
 Cartridge::oldPacketStateSize()
 {
@@ -231,37 +338,6 @@ Cartridge::oldSavePacketsToBuffer(u8 **buffer)
 }
 
 size_t
-Cartridge::willLoadFromBuffer(u8 *buffer)
-{
-    dealloc();
-    return 0;
-}
-
-size_t
-Cartridge::didLoadFromBuffer(u8 *buffer)
-{
-    u8 **bufptr = &buffer;
-    
-    setRamCapacity(ramCapacity);
-    
-    oldLoadPacketsFromBuffer(bufptr);
-    readBlock(bufptr, externalRam, ramCapacity);
-
-    return *bufptr - buffer;
-}
-
-size_t
-Cartridge::didSaveToBuffer(u8 *buffer)
-{
-    u8 **bufptr = &buffer;
-    
-    oldSavePacketsToBuffer(bufptr);
-    writeBlock(bufptr, externalRam, ramCapacity);
-    
-    return *bufptr - buffer;
-}
-
-size_t
 Cartridge::oldStateSize()
 {
     return HardwareComponent::oldStateSize()
@@ -283,25 +359,6 @@ Cartridge::oldDidSaveToBuffer(u8 **buffer)
 {
     oldSavePacketsToBuffer(buffer);
     writeBlock(buffer, externalRam, ramCapacity);
-}
-
-void
-Cartridge::_dump()
-{
-    msg("\n");
-    msg("Cartridge\n");
-    msg("---------\n");
-    
-    msg("        Cartridge type: %d\n", getCartridgeType());
-    msg(" Game line in CRT file: %d\n", gameLineInCrtFile);
-    msg("Exrom line in CRT file: %d\n", exromLineInCrtFile);
-    msg(" Number of Rom packets: %d\n", numPackets);
-    
-    for (unsigned i = 0; i < numPackets; i++) {
-        msg("              Chip %3d: %d KB starting at $%04X\n",
-            i, packet[i]->size / 1024, packet[i]->loadAddress);
-    }
-    msg("\n");
 }
 
 u8
@@ -372,16 +429,15 @@ void
 Cartridge::setRamCapacity(u32 size)
 {
     // Free
-    if (ramCapacity != 0 || externalRam != NULL) {
-        assert(ramCapacity > 0 && externalRam != NULL);
-        free(externalRam);
-        externalRam = NULL;
+    if (getRamCapacity() > 0) {
+        delete [] externalRam;
         ramCapacity = 0;
+        externalRam = NULL;
     }
     
     // Allocate
     if (size > 0) {
-        externalRam = (u8 *)malloc((size_t)size);
+        externalRam = new u8[size];
         ramCapacity = size;
         memset(externalRam, 0xFF, size);
     }
@@ -510,14 +566,3 @@ Cartridge::setSwitch(i8 pos)
     c64.putMessage(MSG_CART_SWITCH);
 }
 
-void
-Cartridge::resetWithoutDeletingRam()
-{
-    u8 ram[0x10000];
-    
-    debug(RUN_DEBUG, "Resetting virtual C64 (preserving RAM)\n");
-    
-    memcpy(ram, mem.ram, 0x10000);
-    c64.reset();
-    memcpy(mem.ram, ram, 0x10000);
-}

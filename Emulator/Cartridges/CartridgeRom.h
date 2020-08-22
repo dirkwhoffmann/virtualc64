@@ -14,6 +14,8 @@
 
 class CartridgeRom : public C64Component {
     
+    friend class Cartridge;
+    
 protected:
     
     // Rom data
@@ -67,11 +69,9 @@ private:
     {
     }
     
-    size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
-    size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-    size_t didLoadFromBuffer(u8 *buffer) override;
-    size_t didSaveToBuffer(u8 *buffer) override;
+    size_t _size() override;
+    size_t _load(u8 *buffer) override;
+    size_t _save(u8 *buffer) override;
 
 public:
     
@@ -79,6 +79,7 @@ public:
     void oldDidLoadFromBuffer(u8 **buffer) override;
     void oldDidSaveToBuffer(u8 **buffer) override;
 
+    
     //
     // Accessing
     //

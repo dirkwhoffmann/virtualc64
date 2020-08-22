@@ -51,26 +51,47 @@ CartridgeRom::_reset()
 }
 
 size_t
-CartridgeRom::didLoadFromBuffer(u8 *buffer)
+CartridgeRom::_size()
 {
-    u8 **bufptr = &buffer;
+    SerCounter counter;
+    applyToPersistentItems(counter);
+    applyToResetItems(counter);
     
-    if (rom) delete[] rom;
-    rom = new u8[size];
-    
-    readBlock(bufptr, rom, size);
-    return *bufptr - buffer;
+    return size + counter.count;
 }
 
 size_t
-CartridgeRom::didSaveToBuffer(u8 *buffer)
+CartridgeRom::_load(u8 *buffer)
 {
-    u8 **bufptr = &buffer;
+    SerReader reader(buffer);
+    applyToPersistentItems(reader);
+    applyToResetItems(reader);
     
-    writeBlock(bufptr, rom, size);
+    // Delete the old packet and create a new one with the proper size
+    if (rom) delete[] rom;
+    rom = new u8[size];
     
-    return *bufptr - buffer;
+    // Read packet data
+    for (int i = 0; i < size; i++) rom[i] = read8(reader.ptr);
+
+    debug(SNP_DEBUG, "Recreated from %d bytes\n", reader.ptr - buffer); \
+    return reader.ptr - buffer;
 }
+
+size_t
+CartridgeRom::_save(u8 *buffer)
+{
+    SerWriter writer(buffer);
+    applyToPersistentItems(writer);
+    applyToResetItems(writer);
+
+    // Write packet data
+    for (int i = 0; i < size; i++) write8(writer.ptr, rom[i]);
+
+    debug(SNP_DEBUG, "Serialized to %d bytes\n", writer.ptr - buffer);
+    return writer.ptr - buffer;
+}
+
 
 size_t
 CartridgeRom::oldStateSize()

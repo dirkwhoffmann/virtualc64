@@ -124,14 +124,13 @@ public:
     // Checks whether this cartridge is a supported by the emulator
     static bool isSupportedType(CartridgeType type);
     
-    /* Returns true if addr is located in the ROML or the ROMH address space.
-     * If visible, ROML is always mapped to 0x8000 - 0x9FFF. ROMH can be mapped
-     * to 0xA000 - 0xBFFF or 0xE000 - 0xFFFF.
-     */
-    static bool isROMLaddr (u16 addr) {
-        return addr >= 0x8000 && addr <= 0x9FFF; }
-    static bool isROMHaddr (u16 addr) {
-        return (addr >= 0xA000 && addr <= 0xBFFF) || (addr >= 0xE000 && addr <= 0xFFFF); }
+    // Returns true if addr is located in the ROML or the ROMH address space
+    static bool isROMLaddr (u16 addr);
+    static bool isROMHaddr (u16 addr);
+
+    // Factory methods
+    static Cartridge *makeWithType(C64 *c64, CartridgeType type);
+    static Cartridge *makeWithCRTFile(C64 *c64, CRTFile *file);
 
     
     //
@@ -142,17 +141,19 @@ public:
     
     Cartridge(C64 *c64, C64 &ref, const char *description = "Cartridge");
     ~Cartridge();
-
-    static Cartridge *makeWithType(C64 *c64, CartridgeType type);
-    static Cartridge *makeWithCRTFile(C64 *c64, CRTFile *file);
-
-    void resetWithoutDeletingRam();
+    
+    /* Resets the Game and the Exrom line. The default implementation resets
+     * the values to ones found in the CRT file. A few custom cartridges need
+     * other start configurations and overwrite this function.
+     */
+    virtual void resetCartConfig();
 
 protected:
     
     void dealloc();
     void _reset() override;
-
+    void resetWithoutDeletingRam();
+        
     
     //
     // Analyzing
@@ -203,14 +204,10 @@ private:
     
 protected:
     
-    size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
-    size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    size_t _save(u8 *buffer) override { assert(false); SAVE_SNAPSHOT_ITEMS }
-    size_t willLoadFromBuffer(u8 *buffer) override;
-    size_t didLoadFromBuffer(u8 *buffer) override;
-    size_t didSaveToBuffer(u8 *buffer) override;
-    
-    
+    size_t _size() override;
+    size_t _load(u8 *buffer) override;
+    size_t _save(u8 *buffer) override;
+        
     // DEPRECATED FUNCTIONS
 public:
 
@@ -235,13 +232,7 @@ public:
     // Returns the initial value of the Game or the Exrom line
     bool getGameLineInCrtFile() { return gameLineInCrtFile; }
     bool getExromLineInCrtFile() { return exromLineInCrtFile; }
-    
-    /* Resets the Game and the Exrom line. The default implementation resets
-     * the values to ones found in the CRT file. A few custom cartridges need
-     * other start configurations and overwrite this function.
-     */
-    virtual void resetCartConfig();
-    
+        
     
     //
     // Handling ROM packets
