@@ -277,6 +277,7 @@
 		503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerToolbar.swift; sourceTree = "<group>"; };
 		503E198F20C42C6D007E91F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		50412B0C2028F31800CC90A1 /* DiskMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskMountController.swift; sourceTree = "<group>"; };
+		504268AC24F0F76F006BB841 /* C64PrivateTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64PrivateTypes.h; sourceTree = "<group>"; };
 		5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArchiveMountDialog.xib; sourceTree = "<group>"; };
 		5046C414202349EE000D9B1C /* ArchiveMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveMountController.swift; sourceTree = "<group>"; };
 		504C429024AF29AB00E69CAE /* Epyx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Epyx.h; sourceTree = "<group>"; };
@@ -476,7 +477,6 @@
 		5052AD0D202A5C1B005FDD88 /* CartridgeMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartridgeMountController.swift; sourceTree = "<group>"; };
 		5055A83E1BC7996900399A20 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		505D492721C155DD00A7C575 /* RomConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomConf.swift; sourceTree = "<group>"; };
-		5060415824C41E6E0049FB9B /* VICIIConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VICIIConstants.h; sourceTree = "<group>"; };
 		50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
 		506A724721C033EF00DA0AC3 /* Configuration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Configuration.xib; sourceTree = "<group>"; };
 		506A724921C0341900DA0AC3 /* ConfigurationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationController.swift; sourceTree = "<group>"; };
@@ -543,7 +543,7 @@
 		50D3092524C71AD300B92563 /* Monitor.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Monitor.xib; sourceTree = "<group>"; };
 		50D3092724C71B0A00B92563 /* Monitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Monitor.swift; sourceTree = "<group>"; };
 		50D8421720A82CF500EB859A /* MetalViewEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalViewEvents.swift; sourceTree = "<group>"; };
-		50DAABD824F0108A005D426F /* VICIIInternalTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VICIIInternalTypes.h; sourceTree = "<group>"; };
+		50DAABD824F0108A005D426F /* VICIIPrivateTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VICIIPrivateTypes.h; sourceTree = "<group>"; };
 		50DBB44A2025CE5700489271 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		50DEAD8E2008E615008A8761 /* Shaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
 		50E5FFAF227964F20025C73D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
@@ -753,6 +753,7 @@
 			children = (
 				504C42F824AF29AB00E69CAE /* C64Config.h */,
 				504C430324AF29AB00E69CAE /* C64Types.h */,
+				504268AC24F0F76F006BB841 /* C64PrivateTypes.h */,
 				504C42F624AF29AB00E69CAE /* C64.h */,
 				504C42F724AF29AB00E69CAE /* C64.cpp */,
 				50A2D7AF24AF945200671F38 /* Foundation */,
@@ -922,8 +923,7 @@
 			isa = PBXGroup;
 			children = (
 				504C430624AF29AC00E69CAE /* VICIITypes.h */,
-				50DAABD824F0108A005D426F /* VICIIInternalTypes.h */,
-				5060415824C41E6E0049FB9B /* VICIIConstants.h */,
+				50DAABD824F0108A005D426F /* VICIIPrivateTypes.h */,
 				504C430C24AF29AC00E69CAE /* VICII.h */,
 				504C430724AF29AC00E69CAE /* VICII.cpp */,
 				504C430524AF29AB00E69CAE /* VICII_draw.cpp */,

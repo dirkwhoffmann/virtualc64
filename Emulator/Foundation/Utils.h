@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _UTILS_H
-#define _UTILS_H
+#ifndef C64_UTILS_H
+#define C64_UTILS_H
 
 #include <assert.h>
 #include <limits.h>
@@ -25,8 +25,9 @@
 #include <unistd.h>
 
 #include "C64Config.h"
-#include "C64Types.h"
 #include "C64Constants.h"
+#include "C64Types.h"
+#include "C64PrivateTypes.h"
 
 // Returns true if this executable is a release build
 bool releaseBuild();

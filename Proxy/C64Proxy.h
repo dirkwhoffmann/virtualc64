@@ -9,8 +9,9 @@
 
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
-#import "Utils.h"
-#import "VICIIConstants.h"
+
+#include "C64Constants.h"
+#include "C64Types.h"
 
 // Forward declarations of proxy classes
 @class MyController;

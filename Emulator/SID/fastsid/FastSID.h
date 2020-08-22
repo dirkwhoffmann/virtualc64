@@ -31,7 +31,6 @@
 
 #include "C64Component.h"
 #include "FastVoice.h"
-#include "VICIIConstants.h"
 
 class FastSID : public C64Component {
     

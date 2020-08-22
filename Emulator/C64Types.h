@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef C64TYPES_H
-#define C64TYPES_H
+#ifndef C64_TYPES_H
+#define C64_TYPES_H
 
 #include "Aliases.h"
 

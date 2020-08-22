@@ -11,7 +11,7 @@
 #define _SERIALIZATION_H
 
 #include "C64Types.h"
-#include "VICIIInternalTypes.h"
+#include "C64PrivateTypes.h"
 #include "CPUInstructions.h"
 
 //

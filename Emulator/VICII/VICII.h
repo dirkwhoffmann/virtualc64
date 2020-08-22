@@ -11,7 +11,6 @@
 #define _VICII_H
 
 #include "C64Component.h"
-#include "VICIIConstants.h"
 #include "TimeDelayed.h"
 
 class VICII : public C64Component {
