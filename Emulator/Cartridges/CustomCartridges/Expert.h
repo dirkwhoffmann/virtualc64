@@ -14,44 +14,75 @@
 
 class Expert : public Cartridge {
     
-    // On-board flipflop
-    bool active;
+    // Flipflop deciding whether the cartridge is enabled or disabled
+    bool active = false;
+
+    
+    //
+    // Initializing
+    //
     
 public:
     
     Expert(C64 *c64, C64 &ref);
     CartridgeType getCartridgeType() override { return CRT_EXPERT; }
+
+private:
     
+    void _reset() override;
+
     
     //
-    // Methods from HardwareComponent
+    // Initializing
+    //
+
+    void _dump() override;
+
+    
+    //
+    // Serializing
     //
     
 private:
+    
+    template <class T>
+    void applyToPersistentItems(T& worker)
+    {
+        worker
         
-    void _reset() override;
-    void _dump() override;
+        & active;
+    }
+    
+    template <class T>
+    void applyToResetItems(T& worker)
+    {
+    }
+    
+    size_t __size() { COMPUTE_SNAPSHOT_SIZE }
+    size_t __load(u8 *buffer) { LOAD_SNAPSHOT_ITEMS }
+    size_t __save(u8 *buffer) { SAVE_SNAPSHOT_ITEMS }
+    
+    size_t _size() override { return Cartridge::_size() + __size(); }
+    size_t _load(u8 *buf) override { return Cartridge::_load(buf) + __load(buf); }
+    size_t _save(u8 *buf) override { return Cartridge::_save(buf) + __save(buf); }
+
+        
     size_t oldStateSize() override;
     void oldDidLoadFromBuffer(u8 **buffer) override;
     void oldDidSaveToBuffer(u8 **buffer) override;
     
     
     //
-    // Methods from Cartridge
+    // Handling ROM packets
     //
     
     void loadChip(unsigned nr, CRTFile *c) override;
-    
-    unsigned numButtons() override { return 2; }
-    const char *getButtonTitle(unsigned nr) override;
-    void pressButton(unsigned nr) override;
-    
-    bool hasSwitch() override { return true; }
-    const char *getSwitchDescription(i8 pos) override;
-    bool switchInPrgPosition() { return switchIsLeft(); }
-    bool switchInOffPosition() { return switchIsNeutral(); }
-    bool switchInOnPosition() { return switchIsRight(); }
 
+    
+    //
+    // Accessing cartridge memory
+    //
+          
     void updatePeekPokeLookupTables() override;
     u8 peek(u16 addr) override;
     u8 peekIO1(u16 addr) override;
@@ -59,13 +90,35 @@ private:
     void poke(u16 addr, u8 value) override;
     void pokeIO1(u16 addr, u8 value) override;
     
-    void nmiWillTrigger() override;
-    
-    // Returns true if cartridge RAM is visible
-    bool cartridgeRamIsVisible(u16 addr);    
-
-    // Returns true if cartridge RAM is write enabled
+    bool cartridgeRamIsVisible(u16 addr);
     bool cartridgeRamIsWritable(u16 addr);
+
+    
+    //
+    // Operating buttons
+    //
+    
+    unsigned numButtons() override { return 2; }
+    const char *getButtonTitle(unsigned nr) override;
+    void pressButton(unsigned nr) override;
+    
+    
+    //
+    // Operating switches
+    //
+    
+    bool hasSwitch() override { return true; }
+    const char *getSwitchDescription(i8 pos) override;
+    bool switchInPrgPosition() { return switchIsLeft(); }
+    bool switchInOffPosition() { return switchIsNeutral(); }
+    bool switchInOnPosition() { return switchIsRight(); }
+    
+    
+    //
+    // Delegation methods
+    //
+    
+    void nmiWillTrigger() override;
 };
 
 #endif

@@ -17,7 +17,6 @@ Expert::Expert(C64 *c64, C64 &ref) : Cartridge(c64, ref)
 {
     setDescription("Expert");
     
-    active = false;
     setSwitch(0);
     
     // Allocate 8KB bytes persistant RAM
@@ -38,7 +37,7 @@ Expert::_dump()
 {
     Cartridge::dump();
     
-    msg("               active: %d\n", active);
+    msg("             active: %d\n", active);
     msg("             switch: %d ", getSwitch());
     if (switchInPrgPosition()) msg("(PRG)\n");
     if (switchInOffPosition()) msg("(OFF)\n");
@@ -167,12 +166,12 @@ Expert::pressButton(unsigned nr)
             
             if (switchInOnPosition()) { active = true; }
             
-            // The Expert cartridge uses two three-state buffers in parallel to
-            // force the NMI line high, even if a program leaves it low to
-            // protect itself against freezers. The following code is surely
-            // not accurate, but it forces an NMI a trigger, regardless of the
-            // current value of the NMI line.
-            
+            /* The Expert cartridge uses two three-state buffers in parallel to
+             * force the NMI line high, even if a program leaves it low to
+             * protect itself against freezers. The following code is surely
+             * not accurate, but it forces an NMI a trigger, regardless of the
+             * current value of the NMI line.
+             */
             u8 oldLine = cpu.nmiLine;
             u8 newLine = oldLine | INTSRC_EXP;
             
@@ -218,8 +217,9 @@ Expert::cartridgeRamIsWritable(u16 addr)
 void
 Expert::updatePeekPokeLookupTables()
 {
-    // Setting up faked Ultimax mode. We let the Game and Exrom line as they
-    // are, but reroute all access to ROML and ROMH into the cartridge.
+    /* Setting up faked Ultimax mode. We let the Game and Exrom line as they
+     * are, but reroute all access to ROML and ROMH into the cartridge.
+     */
     
     // Reroute ROML
      mem.peekSrc[0x8] = mem.pokeTarget[0x8] = M_CRTLO;
