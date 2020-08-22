@@ -11,5 +11,6 @@
 #define C64_PRIVATE_TYPES_H
 
 #include "VICIIPrivateTypes.h"
+#include "DiskPrivateTypes.h"
 
 #endif

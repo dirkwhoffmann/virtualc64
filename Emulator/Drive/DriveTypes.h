@@ -37,7 +37,7 @@ inline bool isDriveType(long value)
     return value == DRIVE_VC1541II;
 }
 
-typedef enum
+typedef enum : long
 {
     NOT_INSERTED,
     PARTIALLY_INSERTED,

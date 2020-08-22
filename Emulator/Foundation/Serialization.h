@@ -125,17 +125,21 @@ public:
     COUNT(const double)
 
     COUNT(const MemoryType)
+    COUNT(const CartridgeType)
+    COUNT(const DriveType)
+    COUNT(const InsertionStatus)
     COUNT(const MicroInstruction)
     COUNT(const CIARevision)
     COUNT(const VICRevision)
     COUNT(const SIDRevision)
     COUNT(const SIDEngine)
     COUNT(const GlueLogic)
-    COUNT(const CartridgeType)
     COUNT(const FlashRomState)
 
     STRUCT(VICIIRegisters)
     STRUCT(SpriteSR)
+    STRUCT(DiskData)
+    STRUCT(DiskLength)
 
     template <class T, size_t N>
     SerCounter& operator&(T (&v)[N])
@@ -190,17 +194,21 @@ public:
     DESERIALIZED(double)
  
     DESERIALIZE32(MemoryType)
+    DESERIALIZE64(CartridgeType)
+    DESERIALIZE64(DriveType)
+    DESERIALIZE64(InsertionStatus)
     DESERIALIZE32(MicroInstruction)
     DESERIALIZE64(CIARevision)
     DESERIALIZE64(VICRevision)
     DESERIALIZE64(SIDRevision)
     DESERIALIZE64(SIDEngine)
     DESERIALIZE64(GlueLogic)
-    DESERIALIZE64(CartridgeType)
     DESERIALIZE64(FlashRomState)
 
     STRUCT(VICIIRegisters)
     STRUCT(SpriteSR)
+    STRUCT(DiskData)
+    STRUCT(DiskLength)
 
     template <class T, size_t N>
     SerReader& operator&(T (&v)[N])
@@ -261,17 +269,21 @@ public:
     SERIALIZED(const double)
  
     SERIALIZE32(const MemoryType)
+    SERIALIZE64(const CartridgeType)
+    SERIALIZE64(const DriveType)
+    SERIALIZE64(const InsertionStatus)
     SERIALIZE32(const MicroInstruction)
     SERIALIZE64(const CIARevision)
     SERIALIZE64(const VICRevision)
     SERIALIZE64(const SIDRevision)
     SERIALIZE64(const SIDEngine)
     SERIALIZE64(const GlueLogic)
-    SERIALIZE64(const CartridgeType)
     SERIALIZE64(const FlashRomState)
 
     STRUCT(VICIIRegisters)
     STRUCT(SpriteSR)
+    STRUCT(DiskData)
+    STRUCT(DiskLength)
 
     template <class T, size_t N>
     SerWriter& operator&(T (&v)[N])
@@ -324,11 +336,10 @@ public:
     RESET(unsigned long long)
     RESET(double)
 
-    // RESET(DriveState)
-    // RESET(RTCModel)
-
     STRUCT(VICIIRegisters)
     STRUCT(SpriteSR)
+    STRUCT(DiskData)
+    STRUCT(DiskLength)
 
     template <class T, size_t N>
     SerResetter& operator&(T (&v)[N])

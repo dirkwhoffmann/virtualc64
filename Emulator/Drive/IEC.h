@@ -92,11 +92,28 @@ private:
     template <class T>
     void applyToResetItems(T& worker)
     {
+        worker
+        
+        & atnLine
+        & clockLine
+        & dataLine
+        & isDirtyC64Side
+        & isDirtyDriveSide
+        & device1Atn
+        & device1Clock
+        & device1Data
+        & device2Atn
+        & device2Clock
+        & device2Data
+        & ciaAtn
+        & ciaClock
+        & ciaData
+        & busActivity;
     }
     
     size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
     size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    size_t _save(u8 *buffer) override { assert(false); SAVE_SNAPSHOT_ITEMS }
+    size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
     
     //

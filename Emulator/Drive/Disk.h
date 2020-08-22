@@ -111,31 +111,11 @@ private:
 
 public:
     
-    /*! @brief    Disk data
-     *  @details  The first valid track and halftrack number is 1.
-     *            data.halftack[i] points to the first byte of halftrack i,
-     *            data.track[i] points to the first byte of track i
-     */
-    union {
-        struct {
-            u8 _pad[maxBytesOnTrack];
-            u8 halftrack[85][maxBytesOnTrack];
-        };
-        u8 track[43][2 * maxBytesOnTrack];
-    } data;
-    
-    /*! @brief    Length of each halftrack in bits
-     *  @details  length.halftack[i] is the length of halftrack i,
-     *            length.track[i][0] is the length of track i,
-     *            length.track[i][1] is the length of halftrack above track i
-     */
-    union {
-        struct {
-            u16 _pad;
-            u16 halftrack[85];
-        };
-        u16 track[43][2];
-    } length;
+    // Data information for each halftrack on this disk
+    DiskData data;
+
+    // Length information for each halftrack on this disk
+    DiskLength length;
 
     
     //
@@ -191,6 +171,12 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
+        worker
+        
+        & writeProtected
+        & modified
+        & data
+        & length;
     }
     
     template <class T>
@@ -200,7 +186,7 @@ private:
     
     size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
     size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    size_t _save(u8 *buffer) override { assert(false); SAVE_SNAPSHOT_ITEMS }
+    size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
     
     //
