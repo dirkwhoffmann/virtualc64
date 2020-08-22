@@ -68,44 +68,37 @@ class VIA6522 : public C64Component {
     // Peripheral interface
     //
     
-    //! @brief    Peripheral port A
-    /*! @details  "The Peripheral A port consists of 8 lines which can be
-     *             individually programmed to act as an input or an output
-     *             under control of a Data Direction Register. The polarity
-     *             of output pins is controlled by an Output Register and
-     *             input data can be latched into an internal register under
-     *             control of the CA1 line."
+    /* Peripheral port A: "The Peripheral A port consists of 8 lines which can
+     * be individually programmed to act as an input or an output under control
+     * of a Data Direction Register. The polarity of output pins is controlled
+     * by an Output Register and input data can be latched into an internal
+     * register under control of the CA1 line."
      */
     u8 pa;
     
-    //! @brief    Peripheral A control lines
-    /*! @details  "The two peripheral A control lines act as interrupt inputs
-     *             or as handshake outputs. Each line controls an internal
-     *             interrupt flag with a corresponding interrupt enable bit.
-     *             In addition, CA1controls the latching of data on
-     *             Peripheral A Port input lines. The various modes of
-     *             operation are controlled by the system processor through
-     *             the internal control registers."
+    /* Peripheral A control lines: "The two peripheral A control lines act as
+     * interrupt inputs or as handshake outputs. Each line controls an internal
+     * interrupt flag with a corresponding interrupt enable bit. In addition,
+     * CA1controls the latching of data on Peripheral A Port input lines. The
+     * various modes of operation are controlled by the system processor
+     * through the internal control registers."
      */
     bool ca1;
     bool ca2;
     
-    //! @brief    Peripheral port B
-    /*! @details  "The Peripheral B port consists of 8 lines which can be
-     *             individually programmed to act as an input or an output
-     *             under control of a Data Direction Register. The polarity
-     *             of output pins is controlled by an Output Register and
-     *             input data can be latched into an internal register under
-     *             control of the CA1 line."
+    /* Peripheral port B: "The Peripheral B port consists of 8 lines which can
+     * be individually programmed to act as an input or an output under control
+     * of a Data Direction Register. The polarity of output pins is controlled
+     * by an Output Register and input data can be latched into an internal
+     * register under control of the CA1 line."
      */
     u8 pb;
     
-    //! @brief
-    /*! @details  "The Peripheral B control lines act as interrupt inputs or
-     *             as handshake outputs. As with CA1 and CA2, each line
-     *             controls an interrupt flag with a corresponding interrupt
-     *             enable bit. In addition, these lines act as a serial port
-     *             under control of the Shift Register."
+    /* Peripheral A control lines: "The Peripheral B control lines act as
+     * interrupt inputs or as handshake outputs. As with CA1 and CA2, each line
+     * controls an interrupt flag with a corresponding interrupt enable bit. In
+     * addition, these lines act as a serial port under control of the Shift
+     * Register."
      */
     bool cb1;
     bool cb2;
@@ -115,37 +108,33 @@ class VIA6522 : public C64Component {
     // Port registers
     //
     
-    //! @brief    Data direction registers
-    /*! @details  "Each port has a Data Direction Register (DDRA, DDRB) for
-     *             specifying whether the peripheral pins are to act as
-     *             inputs or outputs. A 0 in a bit of the Data Direction
-     *             Register causes the corresponding peripheral pin to act
-     *             as an input. A 1 causes the pin to act as an output."
+    /* Data direction registers: "Each port has a Data Direction Register
+     * (DDRA, DDRB) for specifying whether the peripheral pins are to act as
+     * inputs or outputs. A 0 in a bit of the Data Direction Register causes
+     * the corresponding peripheral pin to act as an input. A 1 causes the pin
+     * to act as an output."
      */
     u8 ddra;
     u8 ddrb;
 
-    //! @brief    Output registers
-    /*! @details  "Each peripheral pin is also controlled by a bit in the
-     *             Output Register (ORA, ORB) and an Input Register (IRA, IRB).
-     *             When the pin is programmed to act as an output, the voltage
-     *             on the pin is controlled by the corre­sponding bit of the
-     *             Output Register. A 1 in the Output Register causes the pin
-     *             to go high, and a 0 causes the pin to go low. Data can be
-     *             written into Output Register bits corresponding to pins
-     *             which are programmed to act as inputs; however, the pin will
-     *             be unaffected.
+    /* Output registers: "Each peripheral pin is also controlled by a bit in
+     * the Output Register (ORA, ORB) and an Input Register (IRA, IRB). When
+     * the pin is programmed to act as an output, the voltage on the pin is
+     * controlled by the corre­sponding bit of the Output Register. A 1 in the
+     * Output Register causes the pin to go high, and a 0 causes the pin to go
+     * low. Data can be written into Output Register bits corresponding to pins
+     * which are programmed to act as inputs; however, the pin will be
+     * unaffected.
      */
     u8 ora;
     u8 orb;
 
-    //! @brief    Input registers
-    /*! @details  "Reading a peripheral port causes the contents of the Input
-     *             Register (IRA, IRB) to be transferred onto the Data Bus.
-     *             With input latching disabled, IRA will always reflect the
-     *             data on the PA pins. With input latching enabled, IRA will
-     *             reflect the contents of the Port A prior to setting the CA1
-     *             Interrupt Flag (IFRl) by an active transition on CA1.
+    /* Input registers: "Reading a peripheral port causes the contents of the
+     * Input Register (IRA, IRB) to be transferred onto the Data Bus. With
+     * input latching disabled, IRA will always reflect the data on the PA pins.
+     * With input latching enabled, IRA will reflect the contents of the Port A
+     * prior to setting the CA1 Interrupt Flag (IFRl) by an active transition
+     * on CA1.
      */
     u8 ira;
     u8 irb;
@@ -155,57 +144,52 @@ class VIA6522 : public C64Component {
     // Timers
     //
     
-	/*! @brief    VIA timer 1
-	 *  @details  "Interval Timer T1 consists of two 8-bit latches and a
-     *             16-bit counter. The latches store data which is to be
-     *             loaded into the counter. After loading, the counter
-     *             decrements at 02 clock rate. Upon reaching zero, an
-     *             interrupt flag is set, and IRQ goes low if the T1
-     *             interrupt is enabled. Timer 1 then disables any further
-     *             interrupts or automatically transfers the contents of
-     *             the latches into the counter and continues to decrement.
-     *             In addition, the timer may be programmed to invert the
-     *             output signal on a peripheral pin (PB7) each time it
-     *             "times-out."
+	/* VIA timer 1: "Interval Timer T1 consists of two 8-bit latches and a
+     * 16-bit counter. The latches store data which is to be loaded into the
+     * counter. After loading, the counter decrements at 02 clock rate. Upon
+     * reaching zero, an interrupt flag is set, and IRQ goes low if the T1
+     * interrupt is enabled. Timer 1 then disables any further interrupts or
+     * automatically transfers the contents of the latches into the counter and
+     * continues to decrement. In addition, the timer may be programmed to
+     * invert the output signal on a peripheral pin (PB7) each time it
+     * times-out."
      */
-    u16 t1; // T1C
-    u8 t1_latch_lo; // T1L_L
-    u8 t1_latch_hi; // T1L_H
+    u16 t1;          // T1C
+    u8 t1_latch_lo;  // T1L_L
+    u8 t1_latch_hi;  // T1L_H
 
-	/*! @brief    VIA timer 2
-	 *  @details  "Timer 2 operates as an interval timer (in the "one-shot"
-     *             mode only), or as a counter for counting negative pulses
-     *             on the PB6 peripheral pin. A single control bit in the
-     *             Auxiliary Control Register selects between these two
-     *             modes. This timer is comprised of a "write-only" low-order
-     *             latch (T2L-L), a "read-only" low-order counter (T2C-L) and
-     *             a read/write high order counter (T2C-H). The counter
-     *             registers act as a 16-bit counter which decrements at
-     *             02 rate."
+	/* VIA timer 2: "Timer 2 operates as an interval timer (in the 'one-shot'
+     * mode only), or as a counter for counting negative pulses on the PB6
+     * peripheral pin. A single control bit in the Auxiliary Control Register
+     * selects between these two modes. This timer is comprised of a
+     * 'write-only' low-order latch (T2L-L), a 'read-only' low-order counter
+     * (T2C-L) and a read/write high order counter (T2C-H). The counter
+     * registers act as a 16-bit counter which decrements at 02 rate."
      */
-    u16 t2; // T1C
-    u8 t2_latch_lo; // T2L_L
+    u16 t2;          // T1C
+    u8 t2_latch_lo;  // T2L_L
 	        
-    //! @brief    Peripheral control register
+    // Peripheral control register
     u8 pcr;
 
-    //! @brief    Auxiliary register
+    // Auxiliary register
     u8 acr;
 
-    //! @brief    Interrupt enable register
+    // Interrupt enable register
     u8 ier;
 
-    //! @brief    Interrupt flag register
+    // Interrupt flag register
     u8 ifr;
     
-    //! @brief    Shift register
+    // Shift register
     u8 sr;
     
-    //! @brief    Event triggering queue
+    // Event triggering queue
     u64 delay;
     
-    //! @brief    New bits to feed in
-    //! @details  Bits set in this variable makes a trigger event persistent.
+    /* New bits to feed in. Bits set in this variable makes a trigger event
+     * persistent.
+     */
     u64 feed;
     
     
@@ -213,17 +197,16 @@ class VIA6522 : public C64Component {
     // Speeding up emulation (sleep logic)
     //
     
-    //! @brief    Idle counter
-    /*! @details  When the VIA state does not change during execution, this
-     *            variable is increased by one. If it exceeds a certain
-     *            threshhold, the chip is put into idle state via sleep()
+    /* Idle counter. When the VIA state does not change during execution, this
+     * variable is increased by one. If it exceeds a certain threshhold, the
+     * chip is put into idle state via sleep().
      */
     u8 tiredness;
     
-    //! @brief    Wakeup cycle
+    // Wakeup cycle
     u64 wakeUpCycle;
     
-    //! @brief    Number of skipped executions
+    // Number of skipped executions
     u64 idleCounter;
     
     
@@ -301,80 +284,70 @@ private:
     
 public:
     
-    //! @brief    Returns true if this object emulates is VIA2
+    // Returns true if this object emulates is VIA2
     bool isVia2();
     
-    //! @brief    Getter for data directon register A
+    // Getters for the data directon registers
     u8 getDDRA() { return ddra; }
-
-    //! @brief    Getter for data directon register B
     u8 getDDRB() { return ddrb; }
 
-    //! @brief    Getter for peripheral A port
+    // Getters for peripheral ports
     u8 getPA() { return pa; }
-
-    //! @brief    Getter for peripheral B port
     u8 getPB() { return pb; }
 
-    //! @brief    Getter for peripheral A control pin 2
+    // Getter for the peripheral control pins
     bool getCA2() { return ca2; }
-
-    //! @brief    Getter for peripheral B control pin 2
     bool getCB2() { return cb2; }
 
-    //! @brief    Executes the virtual VIA for one cycle.
+    // Emulates the virtual VIA for one cycle
     void execute(); 
 
 private:
     
-    //! @brief    Executes timer 1 for one cycle.
+    // Emulates a timer for one cycle
     void executeTimer1();
-
-    //! @brief    Executes timer 2 for one cycle.
     void executeTimer2();
 	
 public:
     
-	/*! @brief    Special peek function for the I/O memory range
-	 *  @details  The peek function only handles those registers that are
-     *            treated similarly by both VIA chips
+	/* Special peek function for the I/O memory range. The peek function only
+     * handles those registers that are treated similarly by both VIA chips.
      */
 	virtual u8 peek(u16 addr);
 	
 private:
     
-    //! @brief    Special peek function for output register A
-    /*! @details  Variable handshake is needed to distiguish if ORA is read
-     *            via address 0x1 (handshake enabled) or address 0xF (no handshake).
+    /* Special peek function for output register A. Variable handshake is
+     * needed to distiguish if ORA is read via address 0x1 (handshake enabled)
+     * or address 0xF (no handshake).
      */
     u8 peekORA(bool handshake);
 
-    //! @brief    Special peek function for output register B
+    // Special peek function for output register B
     u8 peekORB();
     
 public:
     
-    //! @brief    Same as peek, but without side effects
+    // Same as peek, but without side effects
     u8 spypeek(u16 addr);
     
-	/*! @brief    Special poke function for the I/O memory range
-	 *  @details  The poke function only handles those registers that are treated
-     *            similarly by both VIA chips
+	/* Special poke function for the I/O memory range. The poke function only
+     * handles those registers that are treated similarly by both VIA chips.
      */
     void poke(u16 addr, u8 value);
 
 private:
     
-    //! @brief    Special poke function for output register A
-    /*! @details  Variable handshake is needed to distiguish if ORA is written
-     *            via address 0x1 (handshake enabled) or address 0xF (no handshake).
+    /* Special poke function for output register A. Variable handshake is
+     * needed to distiguish if ORA is written via address 0x1 (handshake
+     * enabled) or address 0xF (no handshake).
      */
     void pokeORA(u8 value, bool handshake);
     
-    //! @brief    Special poke function for output register B
+    // Special poke function for output register B
     void pokeORB(u8 value);
 
-    //! @brief    Special poke function for the PCR register
+    // Special poke function for the PCR register
     void pokePCR(u8 value);
     
     
@@ -382,19 +355,17 @@ private:
     // Internal Configuration
     // 
 
-    //! @brief    Returns true iff timer 1 is in free-run mode (continous interrupts)
+    // Returns true iff timer 1 is in free-run mode (continous interrupts)
     bool freeRun() { return (acr & 0x40) != 0; }
 
-    //! @brief    Returns true iff timer 2 counts pulses on pin PB6
+    // Returns true iff timer 2 counts pulses on pin PB6
     bool countPulses() { return (acr & 0x20) != 0; }
     
-    //! @brief    Returns true iff an output pulse is generated on each T1 load operation
+    // Returns true iff an output pulse is generated on each T1 load operation
     bool PB7OutputEnabled() { return (acr & 0x80) != 0; }
     
-    //! @brief    Checks if input latching is enabled
+    // Checks if input latching is enabled
     bool inputLatchingEnabledA() { return (GET_BIT(acr,0)); }
-
-    //! @brief    Checks if input latching is enabled
     bool inputLatchingEnabledB() { return (GET_BIT(acr,1)); }
 
     
@@ -402,16 +373,10 @@ private:
     // Peripheral Control Register (PCR)
     //
 
-    //! @brief    Returns the CA1 control bit of the peripheral control register
+    // Reads the control bits from the peripheral control register
     u8 ca1Control() { return pcr & 0x01; }
-    
-    //! @brief    Returns the three CA2 control bits of the peripheral control register
     u8 ca2Control() { return (pcr >> 1) & 0x07; }
-
-    //! @brief    Returns the CB1 control bit of the peripheral control register
     u8 cb1Control() { return (pcr >> 4) & 0x01; }
-    
-    //! @brief    Returns the three CB2 control bits of the peripheral control register
     u8 cb2Control() { return (pcr >> 5) & 0x07; }
 
     
@@ -421,26 +386,22 @@ private:
 
 protected:
     
-    //! @brief   Bit values driving port A from inside the chip
+    // Bit values driving port A from inside the chip
     u8 portAinternal();
 
-    //! @brief   Bit values driving port A from outside the chip
+    // Bit values driving port A from outside the chip
     virtual u8 portAexternal() = 0;
 
-    /*! @brief   Computes the current bit values visible at port A
-     *  @details Value is stored in variable pa
-     */
+    // Updates variable pa with bit values visible at port A
     virtual void updatePA();
 
-    //! @brief   Bit values driving port B from inside the chip
+    // Bit values driving port B from inside the chip
     u8 portBinternal();
     
-    //! @brief   Bit values driving port B from outside the chip
+    // Bit values driving port B from outside the chip
     virtual u8 portBexternal() = 0;
     
-    /*! @brief   Computes the current bit values visible at port B
-     *  @details Value is stored in variable pb
-     */
+    // Updates variable pa with bit values visible at port B
     virtual void updatePB();
     
  
@@ -450,12 +411,12 @@ protected:
     
 public:
     
-    //! @brief   Schedules a transition on the CA1 pin for the next cycle
+    // Schedules a transition on the CA1 pin for the next cycle
     void CA1action(bool value);
     
 private:
     
-    //! @brief   Performs a transition on the CA1 pin
+    // Performs a transition on the CA1 pin
     void setCA1(bool value);
     
     
@@ -465,15 +426,12 @@ private:
 
 public:
     
-    //! @brief    Pulls down the IRQ line
+    // Pulls down or releases the IRQ line
     virtual void pullDownIrqLine() = 0;
-
-    //! @brief    Releases the IRQ line
     virtual void releaseIrqLine() = 0;
 
-    /*! @brief    Releases the IRQ line if IFR and IER have no matching bits.
-     *  @details  This method is invoked whenever a bit in the IFR or IER is
-     *            is cleared.
+    /* Releases the IRQ line if IFR and IER have no matching bits. This method
+     * is invoked whenever a bit in the IFR or IER is is cleared.
      */
     void releaseIrqLineIfNeeded() { if ((ifr & ier) == 0) delay |= VIAClrInterrupt0; }
 
@@ -499,75 +457,59 @@ public:
      *                             if CA2 is not selected as "INDEPENDENT".
      */
     
-    /*! @brief    Sets the Timer 1 interrupt flag
-     *  @details  If the bit was 0, an interrupt is triggered if enabled.
+    /* Sets the Timer 1 interrupt flag. If the bit was 0, an interrupt is
+     * triggered if enabled.
      */
      void setInterruptFlag_T1() {
         if (!GET_BIT(ifr, 6) && GET_BIT(ier, 6)) delay |= VIAInterrupt0;
         SET_BIT(ifr, 6);
     }
-    /*! @brief    Clears the Timer 1 interrupt flag
-     *  @details  The interrupt line may be cleared as a side effect.
+    /* Clears the Timer 1 interrupt flag. The interrupt line may be cleared as
+     * a side effect.
      */
     void clearInterruptFlag_T1() { CLR_BIT(ifr, 6); releaseIrqLineIfNeeded(); }
 
-    /*! @brief    Sets the Timer 2 interrupt flag
-     *  @details  If the bit was 0, an interrupt is triggered if enabled.
+    /* Sets the Timer 2 interrupt flag. If the bit was 0, an interrupt is
+     * triggered if enabled.
      */
     void setInterruptFlag_T2() {
         if (!GET_BIT(ifr, 5) && GET_BIT(ier, 5)) delay |= VIAInterrupt0;
         SET_BIT(ifr, 5);
     }
     
-    /*! @brief    Clears the Timer 2 interrupt flag
-     *  @details  The interrupt line may be cleared as a side effect.
-     */
+    // Clears the Timer 2 interrupt flag
     void clearInterruptFlag_T2() { CLR_BIT(ifr, 5); releaseIrqLineIfNeeded(); }
 
-    /*! @brief    Clears the CB1 interrupt flag
-     *  @details  The interrupt line may be cleared as a side effect.
-     */
+    // Clears the CB1 interrupt flag
     void clearInterruptFlag_CB1() { CLR_BIT(ifr, 4); releaseIrqLineIfNeeded(); }
 
-    /*! @brief    Clears the CB2 interrupt flag
-     *  @details  The interrupt line may be cleared as a side effect.
-     */
+    // Clears the CB2 interrupt flag
     void clearInterruptFlag_CB2() { CLR_BIT(ifr, 3); releaseIrqLineIfNeeded(); }
 
-    /*! @brief    Clears the Shift Register interrupt flag
-     *  @details  The interrupt line may be cleared as a side effect.
-     */
+    // Clears the Shift Register interrupt flag
     void clearInterruptFlag_SR() { CLR_BIT(ifr, 2); releaseIrqLineIfNeeded(); }
-
-    //! @brief    Sets the CB1 interrupt flag
-    // void setInterruptFlag_CA1() { SET_BIT(ifr, 1); }
     
-    /*! @brief    Clears the CB1 interrupt flag
-     *  @details  The interrupt line may be cleared as a side effect.
-     */
+    // Clears the CB1 interrupt flag
     void clearInterruptFlag_CA1() { CLR_BIT(ifr, 1); releaseIrqLineIfNeeded(); }
 
-    /*! @brief    Clears the CA2 interrupt flag
-     *  @details  The interrupt line may be cleared as a side effect.
-     */
+    // Clears the CA2 interrupt flag
     void clearInterruptFlag_CA2() { CLR_BIT(ifr, 0); releaseIrqLineIfNeeded(); }
 
     
     //
-    //! @functiongroup Speeding up emulation
+    // Speeding up emulation
     //
     
-    //! @brief    Puts the VIA into idle state.
+    // Puts the VIA into idle state
     void sleep();
     
-    //! @brief    Emulates all previously skipped cycles.
+    // Emulates all previously skipped cycles
     void wakeUp();
 };
 
 
-/*! @brief   First virtual VIA6522 controller
- *  @details VIA1 serves as hardware interface between the VC1541 CPU
- *           and the IEC bus.
+/* First virtual VIA6522 controller. VIA1 serves as hardware interface between
+ * the VC1541 CPU and the IEC bus.
  */
 class VIA1 : public VIA6522 {
 	
@@ -583,9 +525,8 @@ public:
     void releaseIrqLine();
 };
 
-/*! @brief   Second virtual VIA6522 controller
- *  @details VIA2 serves as hardware interface between the VC1541 CPU
- *           and the drive logic.
+/* Second virtual VIA6522 controller. VIA2 serves as hardware interface between
+ * the VC1541 CPU and the drive logic.
  */
 class VIA2 : public VIA6522 {
 	

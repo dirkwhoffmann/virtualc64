@@ -28,8 +28,7 @@ template <class T> class TimeDelayed {
     // Number of cycles to elapse until a written value shows up
     u8 delay = 0;
     
-    /// @brief Pointer to reference clock
-    /// @todo  Change it to a reference
+    // Pointer to reference clock
     i64 *clock = NULL;
 
     

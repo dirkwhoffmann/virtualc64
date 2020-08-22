@@ -56,13 +56,12 @@
 #include "Mouse.h"
 
 
-/* A complete virtual C64
- * This class is the most prominent one of all. To run the emulator, it is
- * sufficient to create a single object of this type. All subcomponents are
- * created automatically. The public API gives you control over the emulator's
- * behaviour such as running and pausing the emulation. Please note that most
- * subcomponents have their own public API. E.g., to query information from
- * SID, you need to invoke a public method on c64.sid.
+/* A complete virtual C64. This class is the most prominent one of all. To run
+ * the emulator, it is sufficient to create a single object of this type. All
+ * subcomponents are created automatically. The public API gives you control
+ * over the emulator's behaviour such as running and pausing the emulation.
+ * Please note that most subcomponents have their own public API. E.g., to
+ * query information from VICII, you need to invoke a method on c64.vicii.
  */
 class C64 : public HardwareComponent {
         
@@ -122,30 +121,26 @@ public:
     // The total number of frames drawn since power up
     u64 frame;
     
-    /* The currently drawn rasterline.
-     * The first rasterline is numbered 0. The number of the last rasterline
-     * varies between PAL and NTSC models.
+    /* The currently drawn rasterline. The first rasterline is numbered 0. The
+     * number of the last rasterline varies between PAL and NTSC models.
      */
     u16 rasterLine;
     
-    /* The currently executed rasterline cycle.
-     * The first rasterline cycle is numbered 1. The number of the last cycle
-     * varies between PAL and NTSC models.
+    /* The currently executed rasterline cycle. The first rasterline cycle is
+     * numbered 1. The number of the last cycle varies between PAL and NTSC
+     * models.
      */
     u8 rasterCycle;
     
-    /* Clock frequency
-     */
+    // Clock frequency
     u32 frequency;
     
-    /* Duration of a CPU cycle in 1/10 nano seconds.
-     */
+    // Duration of a CPU cycle in 1/10 nano seconds
     u64 durationOfOneCycle;
     
-    /* The VICII function table.
-     * Each entry in this table is a pointer to a VICII method executed in a
-     * certain rasterline cycle. vicfunc[0] is a stub. It is never called,
-     * because the first rasterline cycle is numbered 1.
+    /* The VICII function table. Each entry in this table is a pointer to a
+     * VICII method executed in a certain rasterline cycle. vicfunc[0] is a
+     * stub. It is never called, because the first cycle is numbered 1.
      */
     void (VICII::*vicfunc[66])(void);
     
@@ -156,18 +151,16 @@ public:
     
 private:
     
-    /* Run loop control
-     * This variable is checked at the end of each runloop iteration. Most of
-     * the time, the variable is 0 which causes the runloop to repeat. A value
-     * greater than 0 means that one or more runloop control flags are set.
-     * These flags are flags processed and the loop either repeats or
-     * terminates depending on the provided flags.
+    /* Run loop control. This variable is checked at the end of each runloop
+     * iteration. Most of the time, the variable is 0 which causes the runloop
+     * to repeat. A value greater than 0 means that one or more runloop control
+     * flags are set. These flags are flags processed and the loop either
+     * repeats or terminates depending on the provided flags.
      */
     u32 runLoopCtrl = 0;
     
-    /* Stop request
-     * This variable is used to signal a stop request coming from the GUI.
-     * The variable is checked after each frame.
+    /* Stop request. This variable is used to signal a stop request coming from
+     * the GUI. The variable is checked after each frame.
      */
     bool stopFlag = false; 
     
@@ -192,14 +185,13 @@ private:
     
 private:
     
-    /* System timer information
-     * Used to match the emulation speed with the speed of a real C64.
+    /* System timer information. Used to match the emulation speed with the
+     * speed of a real C64.
      */
     mach_timebase_info_data_t timebase;
     
-    /*! @brief    Wake-up time of the synchronization timer in nanoseconds
-     *  @details  This value is recomputed each time the emulator thread is
-     *            put to sleep.
+    /* Wake-up time of the synchronization timer in nanoseconds. This value is
+     * recomputed each time the emulator thread is put to sleep.
      */
     u64 nanoTargetTime;
     
@@ -208,10 +200,10 @@ private:
     // Operation modes
     //
     
-    /*! @brief    Indicates whether C64 is running in ultimax mode.
-     *  @details  Ultimax mode can be enabled by external cartridges by pulling
-     *            game line low and keeping exrom line high. In ultimax mode,
-     *            most of the C64's RAM and ROM is invisible.
+    /* Indicates whether C64 is running in ultimax mode. Ultimax mode can be
+     * enabled by external cartridges by pulling game line low and keeping
+     * exrom line high. In ultimax mode, most of the C64's RAM and ROM is
+     * invisible.
      */
     bool ultimax;
     
@@ -220,10 +212,9 @@ private:
     // Message queue
     //
     
-    /*! @brief    Message queue.
-     *  @details  Used to communicate with the graphical user interface. The
-     *            GUI registers a listener and a callback function to retrieve
-     *            messages.
+    /* Message queue. Used to communicate with the graphical user interface.
+     * The GUI registers a listener and a callback function to retrieve
+     * messages.
      */
     MessageQueue queue;
     
@@ -234,21 +225,21 @@ private:
     
 private:
     
-    //! @brief    Indicates if snapshots should be taken automatically.
+    // Indicates if snapshots should be taken automatically
     bool takeAutoSnapshots = true;
     
-    /*! @brief    Time in seconds between two auto-saved snapshots
-     *  @note     This value only takes effect if takeAutoSnapshots equals true.
+    /* Time in seconds between two auto-saved snapshots. This value only takes
+     * effect if takeAutoSnapshots equals true.
      */
     long autoSnapshotInterval = 3;
     
-    //! @brief    Maximum number of stored snapshots
+    // Maximum number of stored snapshots
     static const size_t MAX_SNAPSHOTS = 32;
     
-    //! @brief    Storage for auto-taken snapshots
+    // Storage for auto-taken snapshots
     vector<Snapshot *> autoSnapshots;
     
-    //! @brief    Storage for user-taken snapshots
+    // Storage for user-taken snapshots
     vector<Snapshot *> userSnapshots;
     
     
@@ -406,9 +397,7 @@ public:
      */
     void setModel(C64Model m);
     
-    //! @brief    Updates the VICII function table
-    /*! @details  This function is invoked by VICII::setModel(), only.
-     */
+    // Updates the VICII function table (invoked by VICII::setModel())
     void updateVicFunctionTable();
     
     
@@ -416,34 +405,34 @@ public:
     // Accessing the message queue
     //
     
-    //! @brief    Registers a listener callback function
+    // Registers a listener callback function
     void addListener(const void *sender, void(*func)(const void *, int, long) ) {
         queue.addListener(sender, func);
     }
     
-    //! @brief    Removes a listener callback function
+    // Removes a listener callback function
     void removeListener(const void *sender) {
         queue.removeListener(sender);
     }
     
-    //! @brief    Gets a notification message from message queue
+    // Gets a notification message from message queue
     Message getMessage() { return queue.getMessage(); }
     
-    //! @brief    Feeds a notification message into message queue
+    // Feeds a notification message into message queue
     void putMessage(MessageType msg, u64 data = 0) { queue.putMessage(msg, data); }
     
     
  
     
-    /* The thread enter function.
-     * This (private) method is invoked when the emulator thread launches. It
-     * has to be declared public to make it accessible by the emulator thread.
+    /* The thread enter function. This (private) method is invoked when the
+     * emulator thread launches. It has to be declared public to make it
+     * accessible by the emulator thread.
      */
     void threadWillStart();
     
-    /* The thread exit function.
-     * This (private) method is invoked when the emulator thread terminates. It
-     * has to be declared public to make it accessible by the emulator thread.
+    /* The thread exit function. This (private) method is invoked when the
+     * emulator thread terminates. It has to be declared public to make it
+     * accessible by the emulator thread.
      */
     void threadDidTerminate();
         
@@ -473,17 +462,16 @@ public:
      */
     void stepOver();
     
-    /* Emulates the C64 until the end of the current frame.
-     * Under certain circumstances the function may terminate earlier, in the
-     * middle of a frame. This happens, e.g., if the CPU jams or a breakpoint
-     * is reached. It is save to call the function in the middle of a frame.
-     * In this case, the C64 is emulated until the curent frame has been
-     * completed.
+    /* Emulates the C64 until the end of the current frame. Under certain
+     * circumstances the function may terminate earlier, in the middle of a
+     * frame. This happens, e.g., if the CPU jams or a breakpoint is reached.
+     * It is save to call the function in the middle of a frame. In this case,
+     * the C64 is emulated until the curent frame has been completed.
      */
     void executeOneFrame();
     
-    /*  Emulates the C64 until the end of the current rasterline.
-     *  This function in called inside executeOneFrame().
+    /* Emulates the C64 until the end of the current rasterline. This function
+     * is called inside executeOneFrame().
      */
     void executeOneLine();
     
@@ -491,10 +479,9 @@ public:
     void executeOneCycle();
     void _executeOneCycle();
 
-    /* Finishes the current instruction.
-     * This function is called when the emulator threads terminates in order
-     * to reach a clean state. It emulates the CPU until the next fetch cycle
-     * is reached.
+    /* Finishes the current instruction. This function is called when the
+     * emulator threads terminates in order to reach a clean state. It emulates
+     * the CPU until the next fetch cycle is reached.
      */
     void finishInstruction();
     
@@ -516,9 +503,9 @@ private:
     
 public:
     
-    /* Requests the emulator to stop at the end of the current frame.
-     * This function sets a flag which is evaluated at the end of each frame.
-     * It it is set, the run loop is signalled to stop via signalStop().
+    /* Requests the emulator to stop at the end of the current frame. This
+     * function sets a flag which is evaluated at the end of each frame. It it
+     * is set, the run loop is signalled to stop via signalStop().
      */
     void requestStop() { stopFlag = true; }
     
@@ -536,9 +523,8 @@ public:
     void suspend();
     void resume();
     
-    /* Sets or clears a run loop control flag
-     * The functions are thread-safe and can be called from inside or outside
-     * the emulator thread.
+    /* Sets or clears a run loop control flag. The functions are thread-safe
+     * and can be called from inside or outside the emulator thread.
      */
     void setControlFlags(u32 flags);
     void clearControlFlags(u32 flags);
@@ -555,92 +541,90 @@ public:
 private:
     
     //! @brief    Converts kernel time to nanoseconds.
+    //! @todo     Move to utils
     u64 abs_to_nanos(u64 abs) { return abs * timebase.numer / timebase.denom; }
     
     //! @brief    Converts nanoseconds to kernel time.
+    //! @todo     Move to utils
     u64 nanos_to_abs(u64 nanos) { return nanos * timebase.denom / timebase.numer; }
     
 public:
     
-    /*! @brief    Restarts the synchronization timer.
-     *  @details  The function is invoked at launch time to initialize the timer
-     *            and reinvoked when the synchronization timer gets out of sync.
+    /* Restarts the synchronization timer. The function is invoked at launch
+     * time to initialize the timer and reinvoked when the synchronization
+     * timer gets out of sync.
      */
     void restartTimer();
     
 private:
     
-    /*! @brief    Puts the emulation the thread to sleep for a while.
-     *  @details  This function is called inside endFrame(). It makes the
-     *            emulation thread wait until nanoTargetTime has been reached.
-     *            Before returning, nanoTargetTime is assigned with a new target
-     *            value.
+    /* Puts the emulation the thread to sleep. This function is called inside
+     * endFrame(). It makes the emulation thread wait until nanoTargetTime has
+     * been reached. Before returning, nanoTargetTime is assigned with a new
+     * target value.
      */
     void synchronizeTiming();
     
     
     //
-    //! @functiongroup Handling snapshots
+    // Handling snapshots
     //
     
 public:
     
-    //! @brief    Indicates if the auto-snapshot feature is enabled.
+    // Indicates if the auto-snapshot feature is enabled
     bool getTakeAutoSnapshots() { return takeAutoSnapshots; }
     
-    //! @brief    Enables or disabled the auto-snapshot feature.
+    // Enables or disabled the auto-snapshot feature
     void setTakeAutoSnapshots(bool enable) { takeAutoSnapshots = enable; }
     
-    /*! @brief    Disables the auto-snapshot feature temporarily.
-     *  @details  This method is called when the snaphshot browser opens.
+    /* Disables the auto-snapshot feature temporarily. This method is called
+     * when the snaphshot browser opens.
      */
     void suspendAutoSnapshots() { autoSnapshotInterval -= (LONG_MAX / 2); }
     
-    /*! @brief    Heal a call to suspendAutoSnapshots()
-     *  @details  This method is called when the snaphshot browser closes.
+    /* Heal a call to suspendAutoSnapshots(). This method is called when the
+     * snaphshot browser closes.
      */
     void resumeAutoSnapshots() { autoSnapshotInterval += (LONG_MAX / 2); }
     
-    //! @brief    Returns the time between two auto-snapshots in seconds.
+    //Returns the time between two auto-snapshots in seconds
     long getSnapshotInterval() { return autoSnapshotInterval; }
     
-    //! @brief    Sets the time between two auto-snapshots in seconds.
+    // Sets the time between two auto-snapshots in seconds
     void setSnapshotInterval(long value) { autoSnapshotInterval = value; }
     
-    /*! @brief    Loads the current state from a snapshot file
-     *  @note     There is an thread-unsafe and thread-safe version of this
-     *            function. The first one can be unsed inside the emulator
-     *            thread or from outside if the emulator is halted. The second
-     *            one can be called any time.
+    /* Loads the current state from a snapshot file. There is an thread-unsafe
+     * and thread-safe version of this function. The first one can be unsed
+     * inside the emulator thread or from outside if the emulator is halted.
+     * The second one can be called any time.
      */
     void loadFromSnapshotUnsafe(Snapshot *snapshot);
     void loadFromSnapshotSafe(Snapshot *snapshot);
     
-    //! @brief    Restores a certain snapshot from the snapshot storage
+    // Restores a certain snapshot from the snapshot storage
     bool restoreSnapshot(vector<Snapshot *> &storage, unsigned nr);
     bool restoreAutoSnapshot(unsigned nr) { return restoreSnapshot(autoSnapshots, nr); }
     bool restoreUserSnapshot(unsigned nr) { return restoreSnapshot(userSnapshots, nr); }
     
-    //! @brief    Restores the latest snapshot from the snapshot storage
+    // Restores the latest snapshot from the snapshot storage
     bool restoreLatestAutoSnapshot() { return restoreAutoSnapshot(0); }
     bool restoreLatestUserSnapshot() { return restoreUserSnapshot(0); }
     
-    //! @brief    Returns the number of stored snapshots
+    // Returns the number of stored snapshots
     size_t numSnapshots(vector<Snapshot *> &storage);
     size_t numAutoSnapshots() { return numSnapshots(autoSnapshots); }
     size_t numUserSnapshots() { return numSnapshots(userSnapshots); }
     
-    //! @brief    Returns an snapshot from the snapshot storage
+    // Returns an snapshot from the snapshot storage
     Snapshot *getSnapshot(vector<Snapshot *> &storage, unsigned nr);
     Snapshot *autoSnapshot(unsigned nr) { return getSnapshot(autoSnapshots, nr); }
     Snapshot *userSnapshot(unsigned nr) { return getSnapshot(userSnapshots, nr); }
     
-    /*! @brief    Takes a snapshot and inserts it into the snapshot storage
-     *  @details  The new snapshot is inserted at position 0 and all others are
-     *            moved one position up. If the buffer is full, the oldest
-     *            snapshot is deleted.
-     *  @note     Make sure to call the 'Safe' version outside the emulator
-     *            thread.
+    /* Takes a snapshot and inserts it into the snapshot storage. The new
+     * snapshot is inserted at position 0 and all others are moved one position
+     * up. If the buffer is full, the oldest snapshot is deleted. Make sure to
+     * call the 'Safe' version outside the emulator thread.
      */
     void takeSnapshot(vector<Snapshot *> &storage);
     void takeAutoSnapshot() { takeSnapshot(autoSnapshots); }
@@ -648,8 +632,8 @@ public:
     void takeAutoSnapshotSafe() { suspend(); takeSnapshot(autoSnapshots); resume(); }
     void takeUserSnapshotSafe() { suspend(); takeSnapshot(userSnapshots); resume(); }
     
-    /*! @brief    Deletes a snapshot from the snapshot storage
-     *  @details  All remaining snapshots are moved one position down.
+    /* Deletes a snapshot from the snapshot storage. All remaining snapshots
+     * are moved one position down.
      */
     void deleteSnapshot(vector<Snapshot *> &storage, unsigned nr);
     void deleteAutoSnapshot(unsigned nr) { deleteSnapshot(autoSnapshots, nr); }
@@ -741,28 +725,28 @@ public:
 
     
     //
-    //! @functiongroup Flashing files
+    // Flashing files
     //
     
-    //! @brief    Flashes a single file into memory
+    // Flashes a single file into memory
     bool flash(AnyFile *file);
     
-    //! @brief    Flashes a single item of an archive into memory
+    // Flashes a single item of an archive into memory
     bool flash(AnyArchive *file, unsigned item);
     
     
     //
-    //! @functiongroup Set and query ultimax mode
+    // Set and query ultimax mode
     //
     
 public:
     
-    //! @brief    Returns the ultimax flag
+    // Returns the ultimax flag
     bool getUltimax() { return ultimax; }
     
-    /*! @brief    Setter for ultimax
-     *  @details  This method is called in function updatePeekPokeLookupTables()
-     *            if a certain game / exrom line combination is provided.
+    /* Setter for ultimax mode. When the peek / poke lookup table is updated,
+     * this function is called if a certain combination is present on the Game
+     * and Exrom lines.
      */
     void setUltimax(bool b) { ultimax = b; }
 };
