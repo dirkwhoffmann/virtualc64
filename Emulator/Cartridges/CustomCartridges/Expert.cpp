@@ -74,18 +74,16 @@ Expert::loadChip(unsigned nr, CRTFile *c)
     u16 chipAddr = c->chipAddr(nr);
     u8 *chipData = c->chipData(nr);
     
+    // Check file integrity
     if (nr != 0 || chipSize != 0x2000 || chipAddr != 0x8000) {
         warn("Corrupted CRT file. Aborting.");
         return;
     }
 
-    assert(getRamCapacity() == chipSize);
-
     // Initialize RAM with data from CRT file
     debug(CRT_DEBUG, "Copying file contents into Expert RAM\n");
-    for (unsigned i = 0; i < chipSize; i++) {
-        pokeRAM(i, chipData[i]);
-    }
+    assert(getRamCapacity() == chipSize);
+    for (unsigned i = 0; i < chipSize; i++) pokeRAM(i, chipData[i]);
 }
 
 u8

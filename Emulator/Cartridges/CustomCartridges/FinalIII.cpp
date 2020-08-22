@@ -10,18 +10,17 @@
 #include "C64.h"
 
 void
-FinalIII::_reset()
-{
-    Cartridge::_reset();
-    freeezeButtonIsPressed = false;
-    qD = true;
-    bankIn(0);
-}
-
-void
 FinalIII::resetCartConfig()
 {
     expansionport.setCartridgeMode(CRT_16K);
+}
+
+void
+FinalIII::_reset()
+{
+    Cartridge::_reset();
+    qD = true;
+    bankIn(0);
 }
 
 u8
@@ -53,12 +52,12 @@ FinalIII::nmiDidTrigger()
     if (freeezeButtonIsPressed) {
         debug(CRT_DEBUG, "NMI while freeze button is pressed.\n");
         
-        // After the NMI has been processed by the CPU, the cartridge's counter
-        // has reached a value that overflows qD to 0. This has two side
-        // effects. First, the Game line switches to 0. Second, because qD is
-        // also connectec to the counter's enable pin, the counter freezes. This
-        // keeps qD low until the freeze button is released by the user.
-        
+        /* After the NMI has been processed by the CPU, the cartridge's counter
+         * has reached a value that overflows qD to 0. This has two side
+         * effects. First, the Game line switches to 0. Second, because qD is
+         * also connectec to the counter's enable pin, the counter freezes. This
+         * keeps qD low until the freeze button is released by the user.
+         */
         qD = false;
         updateGame();
     }
