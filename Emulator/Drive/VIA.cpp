@@ -13,12 +13,10 @@
 // VIA 6522 (Commons)
 //
 
-VIA6522::VIA6522(Drive *drive, C64 &ref) : C64Component(ref)
+VIA6522::VIA6522(C64 &ref, Drive &drvref) : C64Component(ref), drive(drvref)
 {
 	setDescription("VIA");
-    
-    this->drive = drive;
-    
+        
     // Register snapshot items
     SnapshotItem items[] = {
         { &pa,              sizeof(pa),             CLEAR_ON_RESET },
@@ -101,7 +99,7 @@ VIA6522::_dump()
 bool
 VIA6522::isVia2()
 {
-    return this == &drive->via2;
+    return this == &drive.via2;
 }
 
 
@@ -792,7 +790,7 @@ VIA6522::setCA1(bool value)
     ca1 = value;
 
     // VIA2 sets the V flag on a negative transition
-    if (!value && isVia2()) drive->cpu.setV(1);
+    if (!value && isVia2()) drive.cpu.setV(1);
     
     // Check for active transition (can be positive or negative)
     u8 ctrl = ca1Control();
@@ -837,8 +835,8 @@ VIA6522::sleep()
     assert(idleCounter == 0);
     
     // Determine maximum possible sleep cycles based on timer counts
-    u64 sleepA = (t1 > 2) ? (drive->cpu.cycle + t1 - 1) : 0;
-    u64 sleepB = (t2 > 2) ? (drive->cpu.cycle + t2 - 1) : 0;
+    u64 sleepA = (t1 > 2) ? (drive.cpu.cycle + t1 - 1) : 0;
+    u64 sleepB = (t2 > 2) ? (drive.cpu.cycle + t2 - 1) : 0;
     
     // VIAs with stopped timers can sleep forever
     if (!(delay & VIACountA1)) sleepA = UINT64_MAX;
@@ -882,7 +880,7 @@ VIA6522::wakeUp()
 // VIA 1
 //
 
-VIA1::VIA1(Drive *drive, C64 &ref) : VIA6522(drive, ref)
+VIA1::VIA1(C64 &ref, Drive &drvref) : VIA6522(ref, drvref)
 {
     setDescription("VIA1");
 }
@@ -893,12 +891,12 @@ VIA1::~VIA1()
 
 void
 VIA1::pullDownIrqLine() {
-    drive->cpu.pullDownIrqLine(INTSRC_VIA1);
+    drive.cpu.pullDownIrqLine(INTSRC_VIA1);
 }
 
 void
 VIA1::releaseIrqLine() {
-    drive->cpu.releaseIrqLine(INTSRC_VIA1);
+    drive.cpu.releaseIrqLine(INTSRC_VIA1);
 }
 
 u8
@@ -922,7 +920,7 @@ VIA1::portBexternal()
     
     external |= 0x1A; // All "out" pins are read as 1
     
-    if (drive->getDeviceNr() == 2) {
+    if (drive.getDeviceNr() == 2) {
         external |= 0x20; /* device number 9 */
     }
     
@@ -940,7 +938,7 @@ VIA1::updatePB()
 // VIA 2
 // 
 
-VIA2::VIA2(Drive *drive, C64 &ref) : VIA6522(drive, ref)
+VIA2::VIA2(C64 &ref, Drive &drvref) : VIA6522(ref, drvref)
 {
     setDescription("VIA2");
 }
@@ -953,14 +951,14 @@ u8
 VIA2::portAexternal()
 {
     // TODO: Which value is returned in write mode?
-    return drive->readShiftreg & 0xFF;
+    return drive.readShiftreg & 0xFF;
 }
 
 u8
 VIA2::portBexternal()
 {
-    bool sync     = drive->getSync();
-    bool barrier  = drive->getLightBarrier();
+    bool sync     = drive.getSync();
+    bool barrier  = drive.getLightBarrier();
 
     return (sync ? 0x80 : 0x00) | (barrier ? 0x00 : 0x10) | 0x6F;
 }
@@ -979,15 +977,15 @@ VIA2::updatePB()
     
     // Bits 6 and 5
     if ((newPb & 0x60) != (oldPb & 0x60))
-        drive->setZone((newPb >> 5) & 0x03);
+        drive.setZone((newPb >> 5) & 0x03);
     
     // Bit 3
     if (GET_BIT(newPb, 3) != GET_BIT(oldPb, 3))
-        drive->setRedLED(GET_BIT(newPb, 3));
+        drive.setRedLED(GET_BIT(newPb, 3));
     
     // Bit 2
     if (GET_BIT(newPb, 2) != GET_BIT(oldPb, 2))
-        drive->setRotating(GET_BIT(newPb, 2));
+        drive.setRotating(GET_BIT(newPb, 2));
     
     // Head stepper motor
     
@@ -1015,15 +1013,15 @@ VIA2::updatePB()
         // Halftrack number: 01  02  03  04  05  06  07  08 ...
         // Stepper position:  0   1   2   3   0   1   2   3 ...
         
-        int oldPos = (int)((drive->getHalftrack() - 1) & 0x03);
+        int oldPos = (int)((drive.getHalftrack() - 1) & 0x03);
         int newPos = (int)(newPb & 0x03);
         
         if (newPos != oldPos) {
             if (newPos == ((oldPos + 1) & 0x03)) {
-                drive->moveHeadUp();
+                drive.moveHeadUp();
                 // assert(newPos == ((drive->getHalftrack() - 1) & 0x03));
             } else if (newPos == ((oldPos - 1) & 0x03)) {
-                drive->moveHeadDown();
+                drive.moveHeadDown();
                 // assert(newPos == ((drive->getHalftrack() - 1) & 0x03));
             } else {
                 debug(VIA_DEBUG, "Unexpected stepper motor control sequence\n");
@@ -1035,13 +1033,13 @@ VIA2::updatePB()
 void
 VIA2::pullDownIrqLine()
 {
-    drive->cpu.pullDownIrqLine(INTSRC_VIA2);
+    drive.cpu.pullDownIrqLine(INTSRC_VIA2);
 }
 
 void
 VIA2::releaseIrqLine()
 {
-    drive->cpu.releaseIrqLine(INTSRC_VIA2);
+    drive.cpu.releaseIrqLine(INTSRC_VIA2);
 }
 
 

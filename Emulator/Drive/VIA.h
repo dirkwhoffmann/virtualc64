@@ -22,18 +22,18 @@
 
 class Drive;
 
-#define VIACountA0       (1ULL << 0) // Forces timer 1 to decrement every cycle
+#define VIACountA0       (1ULL << 0)  // Forces timer 1 to decrement every cycle
 #define VIACountA1       (1ULL << 1)
-#define VIACountB0       (1ULL << 2) // Forces timer 2 to decrement every cycle
+#define VIACountB0       (1ULL << 2)  // Forces timer 2 to decrement every cycle
 #define VIACountB1       (1ULL << 3)
-#define VIAReloadA0      (1ULL << 4) // Forces timer 1 to reload
+#define VIAReloadA0      (1ULL << 4)  // Forces timer 1 to reload
 #define VIAReloadA1      (1ULL << 5)
 #define VIAReloadA2      (1ULL << 6)
-#define VIAReloadB0      (1ULL << 7) // Forces timer 2 to reload
+#define VIAReloadB0      (1ULL << 7)  // Forces timer 2 to reload
 #define VIAReloadB1      (1ULL << 8)
 #define VIAReloadB2      (1ULL << 9)
-#define VIAPostOneShotA0 (1ULL << 10) // Indicates that timer 1 has fired in one shot mode
-#define VIAPostOneShotB0 (1ULL << 11) // Indicates that timer 2 has fired in one shot mode
+#define VIAPostOneShotA0 (1ULL << 10) // Timer 1 fired in one shot mode
+#define VIAPostOneShotB0 (1ULL << 11) // Ttimer 2 fired in one shot mode
 #define VIAInterrupt0    (1ULL << 12) // Holds down the interrupt line
 #define VIAInterrupt1    (1ULL << 13)
 #define VIASetCA1out0    (1ULL << 14) // Sets CA2 pin high
@@ -48,25 +48,20 @@ class Drive;
 #define VIASetCB2out1    (1ULL << 23)
 #define VIAClearCB2out0  (1ULL << 24) // Sets CB2 pin low
 #define VIAClearCB2out1  (1ULL << 25)
-#define VIAPB7out0       (1ULL << 26) // Current value of PB7 pin (if output is enabled)
+#define VIAPB7out0       (1ULL << 26) // Value of PB7 pin (if output is enabled)
 #define VIAClrInterrupt0 (1ULL << 27) // Releases the interrupt line
 #define VIAClrInterrupt1 (1ULL << 28)
 
 #define VIAClearBits ~((1ULL << 29) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAReloadB0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0 | VIASetCA1out0 | VIAClearCA1out0 | VIASetCA2out0 | VIAClearCA2out0 | VIASetCB2out0 | VIAClearCB2out0 | VIAPB7out0 | VIAClrInterrupt0)
 
-/*! @brief    Virtual VIA6522 controller
-    @details  The VC1541 drive contains two VIAs on its logic board.
- */
 class VIA6522 : public C64Component {
 	
     friend class Drive;
     
     protected:
     
-    //! @brief    Owner of this VIA
-    /*! @details  Either a reference to the first or the second drive.
-     */
-    Drive *drive;
+    // Owner of this VIA
+    Drive &drive;
     
     
     //
@@ -238,7 +233,7 @@ class VIA6522 : public C64Component {
     
 public:
         
-	VIA6522(Drive *drive, C64 &ref);
+	VIA6522(C64 &ref, Drive &drvref);
     
 private:
     
@@ -578,7 +573,7 @@ class VIA1 : public VIA6522 {
 	
 public:
 
-	VIA1(Drive *drive, C64 &ref);
+	VIA1(C64 &ref, Drive &drvref);
 	~VIA1();
     
     u8 portAexternal();
@@ -596,7 +591,7 @@ class VIA2 : public VIA6522 {
 	
 public:
 
-	VIA2(Drive *drive, C64 &ref);
+	VIA2(C64 &ref, Drive &drvref);
 	~VIA2();
  
     u8 portAexternal();

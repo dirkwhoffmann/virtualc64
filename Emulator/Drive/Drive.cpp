@@ -71,7 +71,7 @@ Drive::isConnectable()
 void
 Drive::setConnected(bool value)
 {
-    // Only proceed if the connection status will change
+    // Only proceed if the configuration will change
     if (config.connected == value) return;
         
     // Only drives with a Rom can be connected
@@ -80,7 +80,25 @@ Drive::setConnected(bool value)
     suspend();
 
     config.connected = value;
+    needsEmulation = config.connected && config.switchedOn;
     _reset();
+    ping();
+
+    resume();    
+}
+
+void
+Drive::setPowerSwitch(bool value)
+{
+    // Only proceed if the configuration will change
+    if (config.switchedOn == value) return;
+            
+    suspend();
+    
+    config.switchedOn = value;
+    needsEmulation = config.connected && config.switchedOn;
+    _reset();
+    
     ping();
 
     resume();
@@ -143,14 +161,6 @@ Drive::_dump()
 	msg("\n");
     mem.dump();
     startTracing();
-}
-
-void
-Drive::powerUp()
-{
-    suspend();
-    _reset();
-    resume();
 }
 
 void

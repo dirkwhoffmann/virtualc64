@@ -58,6 +58,7 @@ typedef struct
 {
     DriveType type;
     bool connected;
+    bool switchedOn;
 }
 DriveConfig;
 
