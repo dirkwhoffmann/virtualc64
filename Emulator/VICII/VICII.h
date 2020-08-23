@@ -661,7 +661,9 @@ private:
         
         & config.revision
         & config.glueLogic
-        & config.grayDotBug;
+        & config.grayDotBug
+        
+        & memSrc;
     }
     
     template <class T>
@@ -724,7 +726,6 @@ private:
         & cleared_bits_in_d017
         & lpLine
         & lpIrqHasOccurred
-        & memSrc
         & ultimax
         & dataBusPhi1
         & dataBusPhi2

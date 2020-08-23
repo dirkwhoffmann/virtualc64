@@ -12,28 +12,6 @@
 ProcessorPort::ProcessorPort(C64 &ref) : C64Component(ref)
 {
     setDescription("ProcessorPort");
-    
-    // Register snapshot items
-    SnapshotItem items[] = {
-        
-        { &port,               sizeof(port),               CLEAR_ON_RESET },
-        { &direction,          sizeof(direction),          CLEAR_ON_RESET },
-        { &dischargeCycleBit3, sizeof(dischargeCycleBit3), CLEAR_ON_RESET },
-        { &dischargeCycleBit6, sizeof(dischargeCycleBit6), CLEAR_ON_RESET },
-        { &dischargeCycleBit7, sizeof(dischargeCycleBit7), CLEAR_ON_RESET },
-        { NULL,                0,                          0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
-}
-
-void
-ProcessorPort::_reset()
-{
-    // Clear snapshot items marked with 'CLEAR_ON_RESET'
-    if (snapshotItems != NULL)
-        for (unsigned i = 0; snapshotItems[i].data != NULL; i++)
-            if (snapshotItems[i].flags & CLEAR_ON_RESET)
-                memset(snapshotItems[i].data, 0, snapshotItems[i].size);
 }
 
 void

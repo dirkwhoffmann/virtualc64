@@ -122,22 +122,15 @@ VICII::_initialize()
 void 
 VICII::_reset()
 {
-    // Clear snapshot items marked with 'CLEAR_ON_RESET'
-     if (snapshotItems != NULL)
-         for (unsigned i = 0; snapshotItems[i].data != NULL; i++)
-             if (snapshotItems[i].flags & CLEAR_ON_RESET)
-                 memset(snapshotItems[i].data, 0, snapshotItems[i].size);
-
+    RESET_SNAPSHOT_ITEMS
+    
+    // Reset counters
     yCounter = PAL_HEIGHT;
-    
-    // Reset timed delay variables
-    baLine.clear();
-    gAccessResult.clear();
-    
+        
     // Reset the memory source lookup table
     setUltimax(false);
 
-    // Reset sprite logic
+    // Reset the sprite logic
     expansionFF = 0xFF;
     
     // Preset some video parameters to show a blank blue sreen on power up
@@ -149,7 +142,7 @@ VICII::_reset()
     reg.delayed.colors[COLREG_BG0] = VICII_BLUE;
     reg.current.colors[COLREG_BG0] = VICII_BLUE;
     
-    // Frame flipflops
+    // Reset the drame flipflops
     leftComparisonVal = leftComparisonValue();
     rightComparisonVal = rightComparisonValue();
     upperComparisonVal = upperComparisonValue();
@@ -160,9 +153,11 @@ VICII::_reset()
 	spriteSpriteCollisionEnabled = 0xFF;
 	spriteBackgroundCollisionEnabled = 0xFF;
     
-    // Screen buffer
+    // Reset the screen buffer pointers
     currentScreenBuffer = screenBuffer1;
     pixelBuffer = currentScreenBuffer;
+    
+    debug("VICII Reset: %x %x (%x %x)\n", reg.current.ctrl1, reg.current.ctrl2, reg.delayed.ctrl1, reg.delayed.ctrl2);
 }
 
 void

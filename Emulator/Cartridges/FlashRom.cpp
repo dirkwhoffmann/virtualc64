@@ -65,7 +65,9 @@ void
 FlashRom::_reset()
 {
     debug(CRT_DEBUG, "Resetting FlashRom\n");
-    
+
+    RESET_SNAPSHOT_ITEMS
+
     state = FLASH_READ;
     baseState = FLASH_READ;
 }

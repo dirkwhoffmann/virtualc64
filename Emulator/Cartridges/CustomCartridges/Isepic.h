@@ -40,7 +40,7 @@ private:
     // Serializing
     //
 
-    private:
+private:
     
     template <class T>
     void applyToPersistentItems(T& worker)

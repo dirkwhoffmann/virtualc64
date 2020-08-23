@@ -56,7 +56,7 @@ public:
     
 private:
     
-    void _reset() override;
+    void _reset() override { RESET_SNAPSHOT_ITEMS };
 
     
     //

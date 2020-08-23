@@ -12,7 +12,9 @@
 void
 Epyx::_reset()
 {
+    RESET_SNAPSHOT_ITEMS
     Cartridge::_reset();
+    
     dischargeCapacitor();
 }
 

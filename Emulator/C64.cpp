@@ -368,7 +368,6 @@ void
 C64::reset()
 {
     suspend();
-    assert(!isRunning());
     
     // Execute the standard reset routine
     HardwareComponent::reset();
@@ -382,24 +381,17 @@ C64::reset()
 void
 C64::_reset()
 {
-    debug(RUN_DEBUG, "Resetting virtual C64[%p]\n", this);
-    
-    // Clear snapshot items marked with 'CLEAR_ON_RESET'
-    if (snapshotItems != NULL)
-        for (unsigned i = 0; snapshotItems[i].data != NULL; i++)
-            if (snapshotItems[i].flags & CLEAR_ON_RESET)
-                memset(snapshotItems[i].data, 0, snapshotItems[i].size);
-    
+    RESET_SNAPSHOT_ITEMS
+            
     // Initialize processor port
-    mem.poke(0x0000, 0x2F);  // Data direction
-    mem.poke(0x0001, 0x1F);  // IO port, set default memory layout
+    mem.poke(0x0000, 0x2F);
+    mem.poke(0x0001, 0x1F);
     
-    // Initialize program counter
+    // Initialize program counter (MOVE TO CPU)
     cpu.reg.pc = mem.resetVector();
     
     rasterCycle = 1;
     nanoTargetTime = 0UL;
-    ping();
 }
 
 void

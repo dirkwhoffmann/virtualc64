@@ -12,9 +12,8 @@
 void
 StarDos::_reset()
 {
-    Cartridge::_reset();
-    voltage = 0;
-    latestVoltageUpdate = 0;
+    RESET_SNAPSHOT_ITEMS
+    Cartridge::_reset();    
 }
 
 void

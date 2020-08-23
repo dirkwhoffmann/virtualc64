@@ -103,7 +103,7 @@ struct VICIIRegisters
     
     template <class T>
     void applyToItems(T& worker)
-    {
+    {        
         worker
         
         & sprX

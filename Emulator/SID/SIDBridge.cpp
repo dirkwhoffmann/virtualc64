@@ -129,14 +129,8 @@ SIDBridge::_pause()
 void
 SIDBridge::_reset()
 {
-    debug("SIDBridge::_reset");
+    RESET_SNAPSHOT_ITEMS
     
-    // Clear snapshot items marked with 'CLEAR_ON_RESET'
-     if (snapshotItems != NULL)
-         for (unsigned i = 0; snapshotItems[i].data != NULL; i++)
-             if (snapshotItems[i].flags & CLEAR_ON_RESET)
-                 memset(snapshotItems[i].data, 0, snapshotItems[i].size);
-
     clearRingbuffer();
     
     volume = 100000;

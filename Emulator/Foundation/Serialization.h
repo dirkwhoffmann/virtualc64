@@ -343,6 +343,9 @@ public:
     RESET(unsigned long long)
     RESET(double)
 
+    RESET(MemoryType)
+    RESET(MicroInstruction)
+
     STRUCT(VICIIRegisters)
     STRUCT(SpriteSR)
     STRUCT(DiskData)

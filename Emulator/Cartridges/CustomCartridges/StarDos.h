@@ -13,9 +13,7 @@
 #include "Cartridge.h"
 
 class StarDos : public Cartridge {
-    
-    private:
-    
+        
     u64 voltage = 5000000;
     u64 latestVoltageUpdate = 0;
     
@@ -33,6 +31,36 @@ private:
     
     void _reset() override;
     
+    
+    //
+    // Serializing
+    //
+    
+private:
+    
+    template <class T>
+    void applyToPersistentItems(T& worker)
+    {
+    }
+    
+    template <class T>
+    void applyToResetItems(T& worker)
+    {
+        worker
+        
+        & voltage
+        & latestVoltageUpdate;
+    }
+    
+    size_t __size() { COMPUTE_SNAPSHOT_SIZE }
+    size_t __load(u8 *buffer) { LOAD_SNAPSHOT_ITEMS }
+    size_t __save(u8 *buffer) { SAVE_SNAPSHOT_ITEMS }
+    
+    size_t _size() override { return Cartridge::_size() + __size(); }
+    size_t _load(u8 *buf) override { return Cartridge::_load(buf) + __load(buf); }
+    size_t _save(u8 *buf) override { return Cartridge::_save(buf) + __save(buf); }
+    
+    
     //
     // Accessing cartridge memory
     //
@@ -41,15 +69,15 @@ private:
     u8 peekIO2(u16 addr) override { discharge(); return 0; }
     void pokeIO1(u16 addr, u8 value) override { charge(); }
     void pokeIO2(u16 addr, u8 value) override { discharge(); }
-
+    
     //
     // Handling delegation calls
     //
-
+    
 public:
     
     void updatePeekPokeLookupTables() override;
-
+    
     
     //
     // Working with the capacitor

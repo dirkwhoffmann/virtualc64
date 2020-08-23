@@ -12,6 +12,8 @@
 void
 GeoRAM::_reset()
 {
+    RESET_SNAPSHOT_ITEMS
+
     if (!getBattery()) {
         debug(CRT_DEBUG, "Erasing GeoRAM\n");
         eraseRAM(0);

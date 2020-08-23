@@ -94,14 +94,8 @@ ReSID::~ReSID()
 void
 ReSID::_reset()
 {
-    debug("ReSID::_reset");
+    RESET_SNAPSHOT_ITEMS
     
-    // Clear snapshot items marked with 'CLEAR_ON_RESET'
-     if (snapshotItems != NULL)
-         for (unsigned i = 0; snapshotItems[i].data != NULL; i++)
-             if (snapshotItems[i].flags & CLEAR_ON_RESET)
-                 memset(snapshotItems[i].data, 0, snapshotItems[i].size);
-
     // Create new reSID object
     // Note: We don't use reSID::reset() which only performs a soft reset
     assert(sid != NULL);

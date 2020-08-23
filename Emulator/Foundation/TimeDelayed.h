@@ -77,16 +77,10 @@ public:
     template <class W>
     void applyToItems(W& worker)
     {
-        worker & pipeline & timeStamp & delay;
+        worker & pipeline & timeStamp;
     }
     
-    
-    /*
-    size_t stateSize() { return 0; } // DEPRECATED
-    void loadFromBuffer(u8 **buffer) { }; // DEPRECATED
-    void saveToBuffer(u8 **buffer) { }; // DEPRECATED
-    */
-    
+
     //
     // Accessing
     //

@@ -199,6 +199,8 @@ CPUDebugger::_powerOn()
 void
 CPUDebugger::_reset()
 {
+    RESET_SNAPSHOT_ITEMS
+    
     breakpoints.setNeedsCheck(breakpoints.elements() != 0);
     watchpoints.setNeedsCheck(watchpoints.elements() != 0);
     clearLog();

@@ -197,6 +197,8 @@ Cartridge::dealloc()
 void
 Cartridge::_reset()
 {
+    RESET_SNAPSHOT_ITEMS
+    
     // Reset external RAM
     if (externalRam && !battery) memset(externalRam, 0xFF, ramCapacity);
  
