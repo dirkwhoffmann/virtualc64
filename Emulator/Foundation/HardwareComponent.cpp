@@ -13,9 +13,6 @@
 HardwareComponent::~HardwareComponent()
 {
 	debug(RUN_DEBUG, "Terminated\n");
-    
-    if (snapshotItems)
-        delete [] snapshotItems;
 }
 
 void
@@ -249,24 +246,4 @@ HardwareComponent::setClockFrequency(u32 value)
         c->setClockFrequency(value);
     }
     _setClockFrequency(value);
-}
-
-
-
-
-void
-HardwareComponent::registerSnapshotItems(SnapshotItem *items, unsigned length) {
-    
-    assert(items != NULL);
-    assert(length % sizeof(SnapshotItem) == 0);
-    
-    unsigned i, numItems = length / sizeof(SnapshotItem);
-    
-    // Allocate new array on heap and copy array data
-    snapshotItems = new SnapshotItem[numItems];
-    std::copy(items, items + numItems, &snapshotItems[0]);
-    
-    // Determine size of snapshot on disk
-    for (i = snapshotSize = 0; snapshotItems[i].data != NULL; i++)
-        snapshotSize += snapshotItems[i].size;
 }

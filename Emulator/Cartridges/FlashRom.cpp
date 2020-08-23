@@ -39,15 +39,6 @@ FlashRom::FlashRom(C64 &ref) : C64Component(ref)
     baseState = FLASH_READ;
     
     memset(rom, 0xFF, size);
-    
-    // Register snapshot items
-    SnapshotItem items[] = {
-        { &state,             sizeof(state),                KEEP_ON_RESET },
-        { &baseState,         sizeof(baseState),            KEEP_ON_RESET },
-        { rom,                size,                         KEEP_ON_RESET },
-        { NULL,               0,                            0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
 }
 
 FlashRom::~FlashRom()

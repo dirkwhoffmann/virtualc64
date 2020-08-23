@@ -52,27 +52,6 @@ static u32 exptable[6] =
 FastVoice::FastVoice()
 {
     setDescription("Voice");
-    
-    // Register snapshot items
-    SnapshotItem items[] = {
-        { &waveTableOffset,  sizeof(waveTableOffset),  CLEAR_ON_RESET },
-        { &waveTableCounter, sizeof(waveTableCounter), CLEAR_ON_RESET },
-        { &step,             sizeof(step),             CLEAR_ON_RESET },
-        { &ringmod,          sizeof(ringmod),          CLEAR_ON_RESET },
-        { &adsrm,            sizeof(adsrm),            CLEAR_ON_RESET },
-        { &adsr,             sizeof(adsr),             CLEAR_ON_RESET },
-        { &adsrInc,          sizeof(adsrInc),          CLEAR_ON_RESET },
-        { &adsrCmp,          sizeof(adsrCmp),          CLEAR_ON_RESET },
-        { &lsfr,             sizeof(lsfr),             CLEAR_ON_RESET },
-        { &filterIO,         sizeof(filterIO),         CLEAR_ON_RESET },
-        { &filterType,       sizeof(filterType),       CLEAR_ON_RESET },
-        { &filterLow,        sizeof(filterLow),        CLEAR_ON_RESET },
-        { &filterRef,        sizeof(filterRef),        CLEAR_ON_RESET },
-        { &filterDy,         sizeof(filterDy),         CLEAR_ON_RESET },
-        { &filterResDy,      sizeof(filterResDy),      CLEAR_ON_RESET },
-        { NULL,              0,                        0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
 }
 
 void

@@ -138,30 +138,6 @@ Cartridge::Cartridge(C64 &ref, const char *description) : C64Component(ref)
     debug(CRT_DEBUG, "Creating cartridge at address %p...\n", this);
     
     memset(packet, 0, sizeof(packet));
-    
-    SnapshotItem items[] = {
-        
-        // Configuration items
-        { &gameLineInCrtFile,  sizeof(gameLineInCrtFile),  KEEP_ON_RESET },
-        { &exromLineInCrtFile, sizeof(exromLineInCrtFile), KEEP_ON_RESET },
-        { &numPackets,         sizeof(numPackets),         KEEP_ON_RESET },
-        
-        { &chipL,              sizeof(chipL),              CLEAR_ON_RESET },
-        { &chipH,              sizeof(chipH),              CLEAR_ON_RESET },
-        { &mappedBytesL,       sizeof(mappedBytesL),       CLEAR_ON_RESET },
-        { &mappedBytesH,       sizeof(mappedBytesH),       CLEAR_ON_RESET },
-        { &offsetL,            sizeof(offsetL),            CLEAR_ON_RESET },
-        { &offsetH,            sizeof(offsetH),            CLEAR_ON_RESET },
-
-        { &ramCapacity,        sizeof(ramCapacity),        KEEP_ON_RESET },
-        { &battery,      sizeof(battery),      KEEP_ON_RESET },
-
-        { &switchPos,          sizeof(switchPos),          KEEP_ON_RESET },
-        { &led,                sizeof(led),                CLEAR_ON_RESET },
-     
-        { NULL,                0,                          0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
 }
 
 Cartridge::~Cartridge()

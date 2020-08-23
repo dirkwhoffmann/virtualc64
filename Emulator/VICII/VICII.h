@@ -513,12 +513,12 @@ public:
      * useful for debugging purposes as it visualizes how the screen is divided
      * into multiple parts.
      */
-	bool markIRQLines;
+	bool markIRQLines = false;
 	
 	/* Determines whether DMA lines will be made visible. Note that partial DMA
      * lines may not appear.
      */
-	bool markDMALines;
+	bool markDMALines = false;
 
     
 private:

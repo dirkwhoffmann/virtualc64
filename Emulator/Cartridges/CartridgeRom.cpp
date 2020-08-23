@@ -12,16 +12,6 @@
 CartridgeRom::CartridgeRom(C64 &ref) : C64Component(ref)
 {
     setDescription("CartridgeRom");
-    
-    // Register snapshot items
-    SnapshotItem items[] = {
-        
-        // Internal state
-        { &size,        sizeof(size),        KEEP_ON_RESET },
-        { &loadAddress, sizeof(loadAddress), KEEP_ON_RESET },
-        { NULL,         0,                   0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
 }
 
 CartridgeRom::CartridgeRom(C64 &ref, u16 size, u16 loadAddress, const u8 *buffer) : CartridgeRom(ref)

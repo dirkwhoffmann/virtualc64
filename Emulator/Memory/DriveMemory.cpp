@@ -11,20 +11,8 @@
 
 DriveMemory::DriveMemory(C64 &ref, Drive &dref) : C64Component(ref), drive(dref)
 {
-    setDescription("1541MEM");
-
-    // this->drive = drive;
-    
+    setDescription("1541MEM");    
     memset(rom, 0, sizeof(rom));
-    
-    // Register snapshot items
-    SnapshotItem items[] = {
-
-    { ram,  sizeof(ram), KEEP_ON_RESET },
-    { rom,  sizeof(rom), KEEP_ON_RESET },
-    { NULL, 0,           0 }};
-
-    registerSnapshotItems(items, sizeof(items));
 }
 
 void 

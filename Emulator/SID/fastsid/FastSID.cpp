@@ -41,21 +41,6 @@ FastSID::FastSID(C64 &ref, SIDBridge &bridgeref) : C64Component(ref), bridge(bri
         &voice[2]
     };
     
-    // Register snapshot items
-    SnapshotItem items[] = {
-        { &sidreg,           sizeof(sidreg),           CLEAR_ON_RESET },
-        { &speed1,           sizeof(speed1),           CLEAR_ON_RESET },
-        { &model,            sizeof(model),            KEEP_ON_RESET },
-        { &cpuFrequency,     sizeof(cpuFrequency),     KEEP_ON_RESET },
-        { &sampleRate,       sizeof(sampleRate),       KEEP_ON_RESET },
-        { &samplesPerCycle,  sizeof(samplesPerCycle),  CLEAR_ON_RESET },
-        { &executedCycles,   sizeof(executedCycles),   CLEAR_ON_RESET },
-        { &computedSamples,  sizeof(computedSamples),  CLEAR_ON_RESET },
-        { &emulateFilter,    sizeof(emulateFilter),    KEEP_ON_RESET },
-        { &latchedDataBus,   sizeof(latchedDataBus),   CLEAR_ON_RESET },
-        { NULL,              0,                        0 }};
-    registerSnapshotItems(items, sizeof(items));
-    
     // Initialize wave and noise tables
     FastVoice::initWaveTables();
     

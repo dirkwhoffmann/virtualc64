@@ -298,7 +298,6 @@ bool inDebugMode() { return debugMode; }
     
 public:
     
- 
     /* Informs the component about a clock frequency change.
      * This delegation method is called on startup and whenever the CPU clock
      * frequency changes (i.e., when switching between PAL and NTSC). Some
@@ -308,64 +307,6 @@ public:
      */
     void setClockFrequency(u32 value);
     virtual void _setClockFrequency(u32 value) { }
-
-    
-
-    
-    /*! @brief   Type and behavior of a snapshot item. DEPRECATED
-     *  @details The reset flags indicate whether the snapshot item should be
-     *           set to 0 automatically during a reset. The format flags are
-     *           important when big chunks of data are specified. They are
-     *           needed loadBuffer and saveBuffer to correctly converting little
-     *           endian to big endian format.
-     */
-    enum {
-        KEEP_ON_RESET  = 0x00, //! Don't touch item during a reset
-        CLEAR_ON_RESET = 0x10, //! Reset to zero during a reset
-        
-        BYTE_ARRAY     = 0x01, //! Data chunk is an array of bytes
-        WORD_ARRAY     = 0x02, //! Data chunk is an array of words
-        DWORD_ARRAY    = 0x04, //! Data chunk is an array of double words
-        QWORD_ARRAY    = 0x08  //! Data chunk is an array of quad words
-    };
-    
-    /*! @brief Fingerprint of a snapshot item. DEPRECATED
-     */
-    typedef struct {
-        
-        void *data;
-        size_t size;
-        u8 flags;
-        
-    } SnapshotItem;
-            
-protected:
-        
-    //! @brief    List of snapshot items of this component. DEPRECATED
-    SnapshotItem *snapshotItems = NULL;
-    
-    //! @brief    Snapshot size on disk (in bytes). DEPRECATED
-    unsigned snapshotSize = 0;
-    
-public:
-
-    //
-    //! @functiongroup Registering snapshot items and sub components
-    //
-        
-    /*! @brief    Registers all snapshot items for this component. DEPRECATED
-     *  @abstract Snaphshot items are usually registered in the constructor of
-     *            a virtual component.
-     *  @param    items Pointer to the first element of a SnapshotItem* array.
-     *            The end of the array is marked by a NULL pointer.
-     *  @param    legth Size of the SnapshotItem array in bytes.
-     */
-    void registerSnapshotItems(SnapshotItem *items, unsigned length);
-    
-
-public:
-    
- 
 };
 
 #endif

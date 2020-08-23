@@ -22,84 +22,8 @@ VICII::VICII(C64 &ref) : C64Component(ref)
 {
 	setDescription("VICII");
     
-	markIRQLines = false;
-	markDMALines = false;
     config.grayDotBug = true;
     config.palette = COLOR_PALETTE;
-    
-    // Register snapshot items
-    SnapshotItem items[] = {
-
-        // Configuration items
-        { &config.revision,             sizeof(config.revision),                KEEP_ON_RESET },
-        { &config.glueLogic,            sizeof(config.glueLogic),               KEEP_ON_RESET },
-        { &config.grayDotBug,           sizeof(config.grayDotBug),              KEEP_ON_RESET },
-
-        // Internal state
-        { &reg,                         sizeof(reg),                            CLEAR_ON_RESET },
-        { &rasterIrqLine,               sizeof(rasterIrqLine),                  CLEAR_ON_RESET },
-        { &latchedLPX,            sizeof(latchedLPX),               CLEAR_ON_RESET },
-        { &latchedLPY,            sizeof(latchedLPY),               CLEAR_ON_RESET },
-        { &memSelect,                   sizeof(memSelect),                      CLEAR_ON_RESET },
-        { &irr,                         sizeof(irr),                            CLEAR_ON_RESET },
-        { &imr,                         sizeof(imr),                            CLEAR_ON_RESET },
-
-        { &refreshCounter,              sizeof(refreshCounter),                 CLEAR_ON_RESET },
-        { &xCounter,                    sizeof(xCounter),                       CLEAR_ON_RESET },
-        { &yCounter,                    sizeof(yCounter),                       CLEAR_ON_RESET },
-        { &vc,                          sizeof(vc),                             CLEAR_ON_RESET },
-        { &vcBase,                      sizeof(vcBase),                         CLEAR_ON_RESET },
-        { &rc,                          sizeof(rc),                             CLEAR_ON_RESET },
-        { &videoMatrix,                 sizeof(videoMatrix),                    CLEAR_ON_RESET },
-        { &colorLine,                   sizeof(colorLine),                      CLEAR_ON_RESET },
-        { &vmli,                        sizeof(vmli),                           CLEAR_ON_RESET },
-        { &sr,                          sizeof(sr),                             CLEAR_ON_RESET },
-        { &spriteSr,                    sizeof(spriteSr),                       CLEAR_ON_RESET },
-        { &spriteSrActive,              sizeof(spriteSrActive),                 CLEAR_ON_RESET },
-        { &spriteSpriteCollision,       sizeof(spriteSpriteCollision),          CLEAR_ON_RESET },
-        { &spriteBackgroundColllision,  sizeof(spriteBackgroundColllision),     CLEAR_ON_RESET },
-
-        { &flipflops,                   sizeof(flipflops),                      CLEAR_ON_RESET },
-        { &verticalFrameFFsetCond,      sizeof(verticalFrameFFsetCond),         CLEAR_ON_RESET },
-        { &leftComparisonVal,           sizeof(leftComparisonVal),              CLEAR_ON_RESET },
-        { &rightComparisonVal,          sizeof(rightComparisonVal),             CLEAR_ON_RESET },
-        { &upperComparisonVal,          sizeof(upperComparisonVal),             CLEAR_ON_RESET },
-        { &lowerComparisonVal,          sizeof(lowerComparisonVal),             CLEAR_ON_RESET },
-
-        { &isVisibleColumn,             sizeof(isVisibleColumn),                CLEAR_ON_RESET },
-        { &yCounterEqualsIrqRasterline, sizeof(yCounterEqualsIrqRasterline),    CLEAR_ON_RESET },
-        { &vblank,                      sizeof(vblank),                         CLEAR_ON_RESET },
-        { &badLine,                     sizeof(badLine),                        CLEAR_ON_RESET },
-        { &DENwasSetInRasterline30,     sizeof(DENwasSetInRasterline30),        CLEAR_ON_RESET },
-        { &displayState,                sizeof(displayState),                   CLEAR_ON_RESET },
-        
-        { &mc,                          sizeof(mc),                             CLEAR_ON_RESET },
-        { &mcbase,                      sizeof(mcbase),                         CLEAR_ON_RESET },
-        { spritePtr,                    sizeof(spritePtr),                      CLEAR_ON_RESET },
-        { &isFirstDMAcycle,             sizeof(isFirstDMAcycle),                CLEAR_ON_RESET },
-        { &isSecondDMAcycle,            sizeof(isSecondDMAcycle),               CLEAR_ON_RESET },
-        { &spriteDisplay,               sizeof(spriteDisplay),                  CLEAR_ON_RESET },
-        { &spriteDisplayDelayed,        sizeof(spriteDisplayDelayed),           CLEAR_ON_RESET },
-        { &spriteDmaOnOff,              sizeof(spriteDmaOnOff),                 CLEAR_ON_RESET },
-        { &expansionFF,                 sizeof(expansionFF),                    CLEAR_ON_RESET },
-        { &cleared_bits_in_d017,        sizeof(cleared_bits_in_d017),           CLEAR_ON_RESET },
-
-        { &lpLine,                      sizeof(lpLine),                         CLEAR_ON_RESET },
-        { &lpIrqHasOccurred,       sizeof(lpIrqHasOccurred),          CLEAR_ON_RESET },
-
-        { &memSrc,                      sizeof(memSrc),                         KEEP_ON_RESET },
-        { &ultimax,                     sizeof(ultimax),                        CLEAR_ON_RESET },
-        { &dataBusPhi1,                 sizeof(dataBusPhi1),                    CLEAR_ON_RESET },
-        { &dataBusPhi2,                 sizeof(dataBusPhi2),                    CLEAR_ON_RESET },
-        { &addrBus,                     sizeof(addrBus),                        CLEAR_ON_RESET },
-        { &bankAddr,                    sizeof(bankAddr),                       CLEAR_ON_RESET },
-      
-        { &delay,                       sizeof(delay),                          CLEAR_ON_RESET },
-        { &bufferoffset,                sizeof(bufferoffset),                   CLEAR_ON_RESET },
-
-        { NULL,                         0,                                      0 }};
-
-    registerSnapshotItems(items, sizeof(items));
     
     // Assign reference clock to all time delayed variables
     baLine.setClock(&cpu.cycle);
@@ -155,9 +79,7 @@ VICII::_reset()
     
     // Reset the screen buffer pointers
     currentScreenBuffer = screenBuffer1;
-    pixelBuffer = currentScreenBuffer;
-    
-    debug("VICII Reset: %x %x (%x %x)\n", reg.current.ctrl1, reg.current.ctrl2, reg.delayed.ctrl1, reg.delayed.ctrl2);
+    pixelBuffer = currentScreenBuffer;    
 }
 
 void

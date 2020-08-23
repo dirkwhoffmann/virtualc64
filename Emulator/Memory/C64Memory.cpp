@@ -19,23 +19,6 @@ C64Memory::C64Memory(C64 &ref) : C64Component(ref)
 	setDescription("C64 memory");
     		
     memset(rom, 0, sizeof(rom));
-    
-    // Register snapshot items
-    SnapshotItem items[] = {
-
-        { &config.ramPattern, sizeof(config.ramPattern), KEEP_ON_RESET },
-
-        { ram,             sizeof(ram),            KEEP_ON_RESET },
-        { colorRam,        sizeof(colorRam),       KEEP_ON_RESET },
-        { &rom[0xA000],    0x2000,                 KEEP_ON_RESET }, /* Basic ROM */
-        { &rom[0xD000],    0x1000,                 KEEP_ON_RESET }, /* Character ROM */
-        { &rom[0xE000],    0x2000,                 KEEP_ON_RESET }, /* Kernal ROM */
-        { &peekSrc,        sizeof(peekSrc),        KEEP_ON_RESET },
-        { &pokeTarget,     sizeof(pokeTarget),     KEEP_ON_RESET },
-        { NULL,            0,                      0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
-    
     config.ramPattern = RAM_PATTERN_C64;
     
     // Setup the C64's memory bank map

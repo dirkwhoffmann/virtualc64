@@ -9,13 +9,14 @@
 
 #include "C64.h"
 
-Drive::Drive(DriveID id, C64 &ref) : C64Component(ref)
+Drive::Drive(DriveID id, C64 &ref) : C64Component(ref), deviceNr(id)
 {
-    assert(id == DRIVE8 || id == DRIVE9);
-    
-    deviceNr = id;
-    setDescription(id == DRIVE8 ? "Drive8" : "Drive9");
-    cpu.setDescription(id == DRIVE8 ? "Drive8CPU" : "Drive9CPU");
+    // assert(id == DRIVE8 || id == DRIVE9);
+    assert(deviceNr == DRIVE8 || deviceNr == DRIVE9);
+
+    // deviceNr = id;
+    setDescription(deviceNr == DRIVE8 ? "Drive8" : "Drive9");
+    cpu.setDescription(deviceNr == DRIVE8 ? "Drive8CPU" : "Drive9CPU");
 	
     subComponents = vector <HardwareComponent *> {
         
@@ -26,38 +27,6 @@ Drive::Drive(DriveID id, C64 &ref) : C64Component(ref)
         &disk
     };
      
-    // Register snapshot items
-    SnapshotItem items[] = {
-
-        // Life-time items
-        { &durationOfOneCpuCycle,   sizeof(durationOfOneCpuCycle),  KEEP_ON_RESET },
-        { &config.type,             sizeof(config.type),            KEEP_ON_RESET },
-        { &config.connected,        sizeof(config.connected),       KEEP_ON_RESET },
-
-        // Internal state
-        { &spinning,                sizeof(spinning),               CLEAR_ON_RESET },
-        { &redLED,                  sizeof(redLED),                 CLEAR_ON_RESET },
-        { &elapsedTime,             sizeof(elapsedTime),            CLEAR_ON_RESET },
-        { &nextClock,               sizeof(nextClock),              CLEAR_ON_RESET },
-        { &nextCarry,               sizeof(nextCarry),              CLEAR_ON_RESET },
-        { &carryCounter,            sizeof(carryCounter),           CLEAR_ON_RESET },
-        { &counterUF4,              sizeof(counterUF4),             CLEAR_ON_RESET },
-        { &bitReadyTimer,           sizeof(bitReadyTimer),          CLEAR_ON_RESET },
-        { &byteReadyCounter,        sizeof(byteReadyCounter),       CLEAR_ON_RESET },
-        { &halftrack,               sizeof(halftrack),              CLEAR_ON_RESET },
-        { &offset,                  sizeof(offset),                 CLEAR_ON_RESET },
-        { &zone,                    sizeof(zone),                   CLEAR_ON_RESET },
-        { &readShiftreg,            sizeof(readShiftreg),           CLEAR_ON_RESET },
-        { &writeShiftreg,           sizeof(writeShiftreg),          CLEAR_ON_RESET },
-        { &sync,                    sizeof(sync),                   CLEAR_ON_RESET },
-        { &byteReady,               sizeof(byteReady),              CLEAR_ON_RESET },
-
-        // Disk properties (will survive reset)
-        { &insertionStatus,         sizeof(insertionStatus),        KEEP_ON_RESET },
-        { NULL,                     0,                              0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
-    
     insertionStatus = NOT_INSERTED;
     resetDisk();
 }

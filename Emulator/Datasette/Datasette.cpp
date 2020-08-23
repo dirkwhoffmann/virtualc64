@@ -12,27 +12,6 @@
 Datasette::Datasette(C64 &ref) : C64Component(ref)
 {
     setDescription("Datasette");
-        
-    // Register snapshot items
-    SnapshotItem items[] = {
-        
-        // Tape properties (will survive reset)
-        { &size,               sizeof(size),              KEEP_ON_RESET },
-        { &type,               sizeof(type),              KEEP_ON_RESET },
-        { &durationInCycles,   sizeof(durationInCycles),  KEEP_ON_RESET },
-        
-        // Internal state (will be cleared on reset)
-        { &head,               sizeof(head),              CLEAR_ON_RESET },
-        { &headInCycles,       sizeof(headInCycles),      CLEAR_ON_RESET },
-        { &headInSeconds,      sizeof(headInSeconds),     CLEAR_ON_RESET },
-        { &nextRisingEdge,     sizeof(nextRisingEdge),    CLEAR_ON_RESET },
-        { &nextFallingEdge,    sizeof(nextFallingEdge),   CLEAR_ON_RESET },
-        { &playKey,            sizeof(playKey),           CLEAR_ON_RESET },
-        { &motor,              sizeof(motor),             CLEAR_ON_RESET },
-        
-        { NULL,                0,                         0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
 }
 
 Datasette::~Datasette()

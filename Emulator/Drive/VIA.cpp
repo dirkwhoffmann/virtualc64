@@ -16,39 +16,6 @@
 VIA6522::VIA6522(C64 &ref, Drive &drvref) : C64Component(ref), drive(drvref)
 {
 	setDescription("VIA");
-        
-    // Register snapshot items
-    SnapshotItem items[] = {
-        { &pa,              sizeof(pa),             CLEAR_ON_RESET },
-        { &ca1,             sizeof(ca1),            CLEAR_ON_RESET },
-        { &ca2,             sizeof(ca2),            CLEAR_ON_RESET },
-        { &pb,              sizeof(pb),             CLEAR_ON_RESET },
-        { &cb1,             sizeof(cb1),            CLEAR_ON_RESET },
-        { &cb2,             sizeof(cb2),            CLEAR_ON_RESET },
-        { &ddra,            sizeof(ddra),           CLEAR_ON_RESET },
-        { &ddrb,            sizeof(ddrb),           CLEAR_ON_RESET },
-        { &ora,             sizeof(ora),            CLEAR_ON_RESET },
-        { &orb,             sizeof(orb),            CLEAR_ON_RESET },
-        { &ira,             sizeof(ira),            CLEAR_ON_RESET },
-        { &irb,             sizeof(irb),            CLEAR_ON_RESET },
-        { &t1,              sizeof(t1),             CLEAR_ON_RESET },
-        { &t1_latch_lo,     sizeof(t1_latch_lo),    CLEAR_ON_RESET },
-        { &t1_latch_hi,     sizeof(t1_latch_hi),    CLEAR_ON_RESET },
-        { &t2,              sizeof(t2),             CLEAR_ON_RESET },
-        { &t2_latch_lo,     sizeof(t2_latch_lo),    CLEAR_ON_RESET },
-        { &pcr,             sizeof(pcr),            CLEAR_ON_RESET },
-        { &acr,             sizeof(acr),            CLEAR_ON_RESET },
-        { &ier,             sizeof(ier),            CLEAR_ON_RESET },
-        { &ifr,             sizeof(ifr),            CLEAR_ON_RESET },
-        { &sr,              sizeof(sr),             CLEAR_ON_RESET },
-        { &delay,           sizeof(delay),          CLEAR_ON_RESET },
-        { &feed,            sizeof(feed),           CLEAR_ON_RESET },
-        { &tiredness,       sizeof(tiredness),      CLEAR_ON_RESET },
-        { &wakeUpCycle,     sizeof(wakeUpCycle),    CLEAR_ON_RESET },
-        { &idleCounter,     sizeof(idleCounter),    CLEAR_ON_RESET },
-        { NULL,             0,                      0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
 }
 	
 void VIA6522::_reset()

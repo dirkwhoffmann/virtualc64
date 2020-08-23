@@ -12,16 +12,6 @@
 ExpansionPort::ExpansionPort(C64 &ref) : C64Component(ref)
 {
     setDescription("Expansion port");
-    
-    // Register snapshot items
-    SnapshotItem items[] = {
-        
-        // Internal state
-        { &gameLine,          sizeof(gameLine),        KEEP_ON_RESET },
-        { &exromLine,         sizeof(exromLine),       KEEP_ON_RESET },
-        { NULL,               0,                       0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
 }
 
 ExpansionPort::~ExpansionPort()

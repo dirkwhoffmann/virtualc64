@@ -12,16 +12,6 @@
 Keyboard::Keyboard(C64 &ref) : C64Component(ref)
 {
 	setDescription("Keyboard");
-    
-    // Register snapshot items
-    SnapshotItem items[] = {
-
-        { &kbMatrixRow, sizeof(kbMatrixRow), CLEAR_ON_RESET | BYTE_ARRAY },
-        { &kbMatrixCol, sizeof(kbMatrixCol), CLEAR_ON_RESET | BYTE_ARRAY },
-        { &shiftLock,   sizeof(shiftLock),   CLEAR_ON_RESET },
-        { NULL,         0,                   0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
 }
 
 void 

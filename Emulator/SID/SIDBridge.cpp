@@ -19,19 +19,6 @@ SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
         &fastsid
     };
     
-    // Register snapshot items
-    SnapshotItem items[] = {
-        
-        // Configuration items
-        { &config.engine,   sizeof(config.engine),  KEEP_ON_RESET },
-        { &config.filter,   sizeof(config.filter),  KEEP_ON_RESET },
-
-        // Internal state
-        { &cycles,          sizeof(cycles),         CLEAR_ON_RESET },
-        { NULL,             0,                      0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
-    
     config.engine = ENGINE_RESID;
 }
 

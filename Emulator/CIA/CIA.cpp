@@ -15,45 +15,6 @@ CIA::CIA(C64 &ref) : C64Component(ref)
     
     subComponents = vector<HardwareComponent *> { &tod };
     
-    // Register snapshot items
-    SnapshotItem items[] = {
-
-        { &config.revision,  sizeof(config.revision),  KEEP_ON_RESET },
-        { &config.timerBBug, sizeof(config.timerBBug), KEEP_ON_RESET },
-
-        { &counterA,         sizeof(counterA),         CLEAR_ON_RESET },
-        { &latchA,           sizeof(latchA),           CLEAR_ON_RESET },
-        { &counterB,         sizeof(counterB),         CLEAR_ON_RESET },
-        { &latchB,           sizeof(latchB),           CLEAR_ON_RESET },
-        { &delay,            sizeof(delay),            CLEAR_ON_RESET },
-        { &feed,             sizeof(feed),             CLEAR_ON_RESET },
-        { &CRA,              sizeof(CRA),              CLEAR_ON_RESET },
-        { &CRB,              sizeof(CRB),              CLEAR_ON_RESET },
-        { &icr,              sizeof(icr),              CLEAR_ON_RESET },
-        { &icrAck,           sizeof(icrAck),           CLEAR_ON_RESET },
-        { &imr,              sizeof(imr),              CLEAR_ON_RESET },
-        { &PB67TimerMode,    sizeof(PB67TimerMode),    CLEAR_ON_RESET },
-        { &PB67TimerOut,     sizeof(PB67TimerOut),     CLEAR_ON_RESET },
-        { &PB67Toggle,       sizeof(PB67Toggle),       CLEAR_ON_RESET },
-        { &PRA,              sizeof(PRA),              CLEAR_ON_RESET },
-        { &PRB,              sizeof(PRB),              CLEAR_ON_RESET },
-        { &DDRA,             sizeof(DDRA),             CLEAR_ON_RESET },
-        { &DDRB,             sizeof(DDRB),             CLEAR_ON_RESET },
-        { &PA,               sizeof(PA),               CLEAR_ON_RESET },
-        { &PB,               sizeof(PB),               CLEAR_ON_RESET },
-        { &sdr,              sizeof(sdr),              CLEAR_ON_RESET },
-        { &serClk,           sizeof(serClk),           CLEAR_ON_RESET },
-        { &serCounter,       sizeof(serCounter),       CLEAR_ON_RESET },
-        { &CNT,              sizeof(CNT),              CLEAR_ON_RESET },
-        { &INT,              sizeof(INT),              CLEAR_ON_RESET },
-        { &tiredness,        sizeof(sleeping),         CLEAR_ON_RESET },
-        { &idleCycles,       sizeof(idleCycles),       CLEAR_ON_RESET },
-        { &sleepCycle,       sizeof(sleepCycle),       CLEAR_ON_RESET },
-        { &wakeUpCycle,      sizeof(wakeUpCycle),      CLEAR_ON_RESET },
-        { NULL,              0,                        0 }};
-
-    registerSnapshotItems(items, sizeof(items));
-    
     config.revision = MOS_6526;
     config.timerBBug = true;
 }

@@ -20,43 +20,6 @@ CPU<M>::CPU(C64& ref, M& memref) : C64Component(ref), mem(memref)
     
 	// Establish callback for each instruction
 	registerInstructions();
-		    
-    // Register snapshot items
-    SnapshotItem items[] = {
-        
-         // Internal state
-        { &cycle,              sizeof(cycle),        CLEAR_ON_RESET },
-        { &next,               sizeof(next),         CLEAR_ON_RESET },
-
-        { &reg.a,              sizeof(reg.a),        CLEAR_ON_RESET },
-        { &reg.x,              sizeof(reg.x),        CLEAR_ON_RESET },
-        { &reg.y,              sizeof(reg.y),        CLEAR_ON_RESET },
-        { &reg.pc,             sizeof(reg.pc),       CLEAR_ON_RESET },
-        { &reg.pc0,            sizeof(reg.pc0),      CLEAR_ON_RESET },
-        { &reg.sp,             sizeof(reg.sp),       CLEAR_ON_RESET },
-        { &reg.sr.n,           sizeof(reg.sr.n),     CLEAR_ON_RESET },
-        { &reg.sr.v,           sizeof(reg.sr.v),     CLEAR_ON_RESET },
-        { &reg.sr.b,           sizeof(reg.sr.b),     CLEAR_ON_RESET },
-        { &reg.sr.d,           sizeof(reg.sr.d),     CLEAR_ON_RESET },
-        { &reg.sr.i,           sizeof(reg.sr.i),     CLEAR_ON_RESET },
-        { &reg.sr.z,           sizeof(reg.sr.z),     CLEAR_ON_RESET },
-        { &reg.sr.c,           sizeof(reg.sr.c),     CLEAR_ON_RESET },
-
-        { &reg.adl,            sizeof(reg.adl),      CLEAR_ON_RESET },
-        { &reg.adh,            sizeof(reg.adh),      CLEAR_ON_RESET },
-        { &reg.idl,            sizeof(reg.idl),      CLEAR_ON_RESET },
-        { &reg.d,              sizeof(reg.d),        CLEAR_ON_RESET },
-        { &reg.ovl,            sizeof(reg.ovl),      CLEAR_ON_RESET },
-        { &rdyLine,            sizeof(rdyLine),      CLEAR_ON_RESET },
-        { &rdyLineUp,          sizeof(rdyLineUp),    CLEAR_ON_RESET },
-        { &rdyLineDown,        sizeof(rdyLineDown),  CLEAR_ON_RESET },
-        { &nmiLine,            sizeof(nmiLine),      CLEAR_ON_RESET },
-        { &irqLine,            sizeof(irqLine),      CLEAR_ON_RESET },
-        { &doNmi,              sizeof(doNmi),        CLEAR_ON_RESET },
-        { &doIrq,              sizeof(doIrq),        CLEAR_ON_RESET },
-        { NULL,                0,                    0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
 }
 
 template <typename M> void

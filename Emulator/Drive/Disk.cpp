@@ -71,19 +71,10 @@ Disk::Disk(C64 &ref) : C64Component(ref)
 {
     setDescription("Disk");
     
-    // Register snapshot items
-    SnapshotItem items[] = {        
-        { &writeProtected,  sizeof(writeProtected), KEEP_ON_RESET },
-        { &modified,        sizeof(modified),       KEEP_ON_RESET },
-        { &data,            sizeof(data),           KEEP_ON_RESET },
-        { &length,          sizeof(length),         KEEP_ON_RESET | WORD_ARRAY },
-        { NULL,             0,                      0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
-
-    // Create bit expansion table
-    // Note that this table expects a LITTLE ENDIAN architecture to work. If you compile
-    // the emulator on a BIG ENDIAN architecture, the byte order needs to be reversed.
+    /* Create the bit expansion table. Note that this table expects a Little
+     * Endian architecture to work. If you compile the emulator on a Big Endian
+     * architecture, the byte order needs to be reversed.
+     */
     for (unsigned i = 0; i < 256; i++) {
         bitExpansion[i] = 0;
         if (i & 0x80) bitExpansion[i] |= 0x0000000000000001;

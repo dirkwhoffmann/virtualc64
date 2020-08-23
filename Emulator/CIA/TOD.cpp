@@ -12,21 +12,6 @@
 TOD::TOD(C64 &ref, CIA &ciaref) : C64Component(ref), cia(ciaref)
 {
 	setDescription("TOD");
-        
-    // Register snapshot items
-    SnapshotItem items[] = {
-                
-        { &tod.value,        sizeof(tod.value),        CLEAR_ON_RESET },
-        { &latch.value,      sizeof(latch.value),      CLEAR_ON_RESET },
-        { &alarm.value,      sizeof(alarm.value),      CLEAR_ON_RESET },
-        { &frozen,           sizeof(frozen),           CLEAR_ON_RESET },
-        { &stopped,          sizeof(stopped),          CLEAR_ON_RESET },
-        { &matching,         sizeof(matching),         CLEAR_ON_RESET },
-        { &hz,               sizeof(hz),               CLEAR_ON_RESET },
-        { &frequencyCounter, sizeof(frequencyCounter), CLEAR_ON_RESET },
-        { NULL,              0,                        0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
 }
 
 void

@@ -75,21 +75,6 @@ C64::C64()
         &mouse
     };
     
-    // Register snapshot items
-    SnapshotItem items[] = {
-        
-        { &frame,              sizeof(frame),              CLEAR_ON_RESET },
-        { &rasterLine,         sizeof(rasterLine),         CLEAR_ON_RESET },
-        { &rasterCycle,        sizeof(rasterCycle),        CLEAR_ON_RESET },
-        { &frequency,          sizeof(frequency),          KEEP_ON_RESET  },
-        { &durationOfOneCycle, sizeof(durationOfOneCycle), KEEP_ON_RESET  },
-        { &warpMode,           sizeof(warpMode),           CLEAR_ON_RESET },
-        { &ultimax,            sizeof(ultimax),            CLEAR_ON_RESET },
-        
-        { NULL,             0,                       0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
-    
     // Set up the initial state
     initialize();
     _reset();

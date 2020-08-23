@@ -12,32 +12,6 @@
 IEC::IEC(C64 &ref) : C64Component(ref)
 {
   	setDescription("IEC");
-    
-    // Register snapshot items
-    SnapshotItem items[] = {
-        
-        { &atnLine,             sizeof(atnLine),                CLEAR_ON_RESET },
-        { &clockLine,           sizeof(clockLine),              CLEAR_ON_RESET },
-        { &dataLine,            sizeof(dataLine),               CLEAR_ON_RESET },
-        { &isDirtyC64Side,      sizeof(isDirtyC64Side),         CLEAR_ON_RESET },
-        { &isDirtyDriveSide,    sizeof(isDirtyDriveSide),       CLEAR_ON_RESET },
-
-        { &device1Atn,          sizeof(device1Atn),             CLEAR_ON_RESET },
-        { &device1Clock,        sizeof(device1Clock),           CLEAR_ON_RESET },
-        { &device1Data,         sizeof(device1Data),            CLEAR_ON_RESET },
-
-        { &device2Atn,          sizeof(device2Atn),             CLEAR_ON_RESET },
-        { &device2Clock,        sizeof(device2Clock),           CLEAR_ON_RESET },
-        { &device2Data,         sizeof(device2Data),            CLEAR_ON_RESET },
-
-        { &ciaAtn,              sizeof(ciaAtn),                 CLEAR_ON_RESET },
-        { &ciaClock,            sizeof(ciaClock),               CLEAR_ON_RESET },
-        { &ciaData,             sizeof(ciaData),                CLEAR_ON_RESET },
-
-        { &busActivity,         sizeof(busActivity),            CLEAR_ON_RESET },
-        { NULL,                 0,                              0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
 }
 
 void 
