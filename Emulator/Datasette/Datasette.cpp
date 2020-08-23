@@ -59,32 +59,6 @@ Datasette::_ping()
     c64.putMessage(MSG_VC1530_PROGRESS);
 }
 
-size_t
-Datasette::oldStateSize()
-{
-    return HardwareComponent::oldStateSize() + size;
-}
-
-void
-Datasette::oldDidLoadFromBuffer(u8 **buffer)
-{
-    if (data) delete[] data;
-    
-    if (size) {
-        data = new u8[size];
-        readBlock(buffer, data, size);
-    }
-}
-
-void
-Datasette::oldDidSaveToBuffer(u8 **buffer)
-{
-    if (size) {
-        assert(data != NULL);
-        writeBlock(buffer, data, size);
-    }
-}
-
 void
 Datasette::setHeadInCycles(u64 value)
 {

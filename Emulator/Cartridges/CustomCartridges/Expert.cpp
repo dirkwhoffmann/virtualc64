@@ -45,26 +45,6 @@ Expert::_dump()
     msg("       Reset vector: %04X\n", LO_HI(peekRAM(0x1FFC), peekRAM(0x1FFD)));
 }
 
-size_t
-Expert::oldStateSize()
-{
-    return Cartridge::oldStateSize() + 1;
-}
-
-void
-Expert::oldDidLoadFromBuffer(u8 **buffer)
-{
-    Cartridge::oldDidLoadFromBuffer(buffer);
-    active = read8(buffer);
-}
-
-void
-Expert::oldDidSaveToBuffer(u8 **buffer)
-{
-    Cartridge::oldDidSaveToBuffer(buffer);
-    write8(buffer, (u8)active);
-}
-
 void
 Expert::loadChip(unsigned nr, CRTFile *c)
 {

@@ -73,12 +73,6 @@ private:
     size_t _load(u8 *buffer) override;
     size_t _save(u8 *buffer) override;
 
-public:
-    
-    size_t oldStateSize() override;
-    void oldDidLoadFromBuffer(u8 **buffer) override;
-    void oldDidSaveToBuffer(u8 **buffer) override;
-
     
     //
     // Accessing

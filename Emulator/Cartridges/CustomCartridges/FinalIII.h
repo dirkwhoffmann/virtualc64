@@ -67,24 +67,7 @@ private:
     size_t _load(u8 *buf) override { return Cartridge::_load(buf) + __load(buf); }
     size_t _save(u8 *buf) override { return Cartridge::_save(buf) + __save(buf); }
     
-    
-    
-    size_t oldStateSize() override {
-        return Cartridge::oldStateSize() + 2;
-    }
-    void oldDidLoadFromBuffer(u8 **buffer) override
-    {
-        Cartridge::oldDidLoadFromBuffer(buffer);
-        freeezeButtonIsPressed = (bool)read8(buffer);
-        qD = (bool)read8(buffer);
-    }
-    void oldDidSaveToBuffer(u8 **buffer) override
-    {
-        Cartridge::oldDidSaveToBuffer(buffer);
-        write8(buffer, (u8)freeezeButtonIsPressed);
-        write8(buffer, (u8)qD);
-    }
-    
+
     //
     // Accessing cartridge memory
     //

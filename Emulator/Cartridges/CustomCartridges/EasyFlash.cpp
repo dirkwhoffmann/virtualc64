@@ -57,36 +57,6 @@ EasyFlash::_dump()
     flashRomH.dump();
 }
 
-size_t
-EasyFlash::oldStateSize()
-{
-    return Cartridge::oldStateSize()
-    + 1
-    + 1
-    + flashRomL.oldStateSize()
-    + flashRomH.oldStateSize();
-}
-
-void
-EasyFlash::oldDidLoadFromBuffer(u8 **buffer)
-{
-    Cartridge::oldDidLoadFromBuffer(buffer);
-    bank = read8(buffer);
-    jumper = (bool)read8(buffer);
-    flashRomL.oldLoadFromBuffer(buffer);
-    flashRomH.oldLoadFromBuffer(buffer);
-}
-
-void
-EasyFlash::oldDidSaveToBuffer(u8 **buffer)
-{
-    Cartridge::oldDidSaveToBuffer(buffer);
-    write8(buffer, bank);
-    write8(buffer, (u8)jumper);
-    flashRomL.oldSaveToBuffer(buffer);
-    flashRomH.oldSaveToBuffer(buffer);
-}
-
 void
 EasyFlash::loadChip(unsigned nr, CRTFile *c)
 {

@@ -107,8 +107,6 @@ private:
     size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     size_t didLoadFromBuffer(u8 *buffer) override;
     
-    void oldDidLoadFromBuffer(u8 **buffer) override;
-
     
     //
     // Emulating

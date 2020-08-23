@@ -68,18 +68,7 @@ private:
     size_t _load(u8 *buf) override { return Cartridge::_load(buf) + __load(buf); }
     size_t _save(u8 *buf) override { return Cartridge::_save(buf) + __save(buf); }
 
-    
-    //
-    // Methods from HardwareComponent
-    //
-    
-private:
-
-    size_t oldStateSize() override;
-    void oldDidLoadFromBuffer(u8 **buffer) override;
-    void oldDidSaveToBuffer(u8 **buffer) override;
-    
-    
+ 
     //
     // Methods from Cartridge
     //

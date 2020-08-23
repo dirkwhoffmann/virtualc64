@@ -49,15 +49,6 @@ ControlPort::didLoadFromBuffer(u8 *buffer)
 }
 
 void
-ControlPort::oldDidLoadFromBuffer(u8 **buffer)
-{
-    // Discard any active joystick movements
-    button = false;
-    axisX = 0;
-    axisY = 0;
-}
-
-void
 ControlPort::_dump()
 {
     msg("ControlPort port %d\n", nr);

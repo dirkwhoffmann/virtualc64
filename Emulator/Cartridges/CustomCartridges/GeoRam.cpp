@@ -20,28 +20,6 @@ GeoRAM::_reset()
     }
 }
 
-size_t
-GeoRAM::oldStateSize()
-{
-    return Cartridge::oldStateSize() + 2;
-}
-
-void
-GeoRAM::oldDidLoadFromBuffer(u8 **buffer)
-{
-    Cartridge::oldDidLoadFromBuffer(buffer);
-    bank = read8(buffer);
-    page = read8(buffer);
-}
-
-void
-GeoRAM::oldDidSaveToBuffer(u8 **buffer)
-{
-    Cartridge::oldDidSaveToBuffer(buffer);
-    write8(buffer, bank);
-    write8(buffer, page);
-}
-
 u8
 GeoRAM::peekIO1(u16 addr)
 {

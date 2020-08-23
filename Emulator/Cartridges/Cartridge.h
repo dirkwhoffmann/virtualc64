@@ -208,20 +208,6 @@ protected:
     size_t _load(u8 *buffer) override;
     size_t _save(u8 *buffer) override;
         
-   
-public: // DEPRECATED
-
-    // State size function for chip packet data
-    virtual size_t oldPacketStateSize();
-    // Loads all chip packets from a buffer
-    virtual void oldLoadPacketsFromBuffer(u8 **buffer);
-    // Saves all chip packets to a buffer
-    virtual void oldSavePacketsToBuffer(u8 **buffer);
-    size_t oldStateSize() override;
-    void oldWillLoadFromBuffer(u8 **buffer) override { dealloc(); }
-    void oldDidLoadFromBuffer(u8 **buffer) override;
-    void oldDidSaveToBuffer(u8 **buffer) override;
-    
         
     //
     // Accessing

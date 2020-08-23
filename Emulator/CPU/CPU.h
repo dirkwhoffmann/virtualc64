@@ -294,11 +294,6 @@ private:
     void _setDebug(bool enable) override;
     
     
-    size_t oldStateSize() override;
-    void oldDidLoadFromBuffer(u8 **buffer) override;
-    void oldDidSaveToBuffer(u8 **buffer) override;
-
-    
     //
     // Accessing properties
     //

@@ -305,62 +305,6 @@ Cartridge::_save(u8 *buffer)
     return writer.ptr - buffer;
 }
 
-size_t
-Cartridge::oldPacketStateSize()
-{
-    size_t result = 0;
-    
-    for (unsigned i = 0; i < numPackets; i++) {
-        assert(packet[i] != NULL);
-        result += packet[i]->oldStateSize();
-    }
-    
-    return result;
-}
-
-void
-Cartridge::oldLoadPacketsFromBuffer(u8 **buffer)
-{
-    for (unsigned i = 0; i < numPackets; i++) {
-        assert(packet[i] == NULL);
-        packet[i] = new CartridgeRom(c64);
-        packet[i]->oldLoadFromBuffer(buffer);
-    }
-}
-
-void
-Cartridge::oldSavePacketsToBuffer(u8 **buffer)
-{
-    for (unsigned i = 0; i < numPackets; i++) {
-        assert(packet[i] != NULL);
-        packet[i]->oldSaveToBuffer(buffer);
-    }
-}
-
-size_t
-Cartridge::oldStateSize()
-{
-    return HardwareComponent::oldStateSize()
-    + oldPacketStateSize()
-    + ramCapacity;
-}
-
-void
-Cartridge::oldDidLoadFromBuffer(u8 **buffer)
-{
-    setRamCapacity(ramCapacity);
-    
-    oldLoadPacketsFromBuffer(buffer);
-    readBlock(buffer, externalRam, ramCapacity);
-}
-
-void
-Cartridge::oldDidSaveToBuffer(u8 **buffer)
-{
-    oldSavePacketsToBuffer(buffer);
-    writeBlock(buffer, externalRam, ramCapacity);
-}
-
 u8
 Cartridge::peek(u16 addr)
 {

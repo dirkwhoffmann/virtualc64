@@ -365,44 +365,7 @@ public:
 
 public:
     
-    //
-    //! @functiongroup Loading and saving snapshots. DEPRECATED
-    //
-
-    //! @brief    Returns the size of the internal state in bytes
-    virtual size_t oldStateSize();
-
-    /*! @brief    Load internal state from memory buffer
-     *  @note     Snapshot items of size 2, 4, or 8 are converted to big endian
-     *            format automatically. Otherwise, a byte array is assumed.
-     *  @param    buffer Pointer to next byte to read
-     *  @seealso  WORD_ARRAY, DWORD_ARRAY, QWORD_ARRAY
-     */
-    void oldLoadFromBuffer(u8 **buffer);
-    
-    /*! @brief    Delegation methods called inside oldLoadFromBuffer()
-     *  @details  Some components overwrite this method to add custom behavior
-     *            such as loading items that cannot be handled by the default
-     *            implementation.
-     */
-    virtual void  oldWillLoadFromBuffer(u8 **buffer) { };
-    virtual void  oldDidLoadFromBuffer(u8 **buffer) { };
-
-    /*! @brief    Save internal state to memory buffer
-     *  @note     Snapshot items of size 2, 4, or 8 are converted to big endian
-     *            format automatically. Otherwise, a byte array is assumed.
-     *  @param    buffer Pointer to next byte to read
-     *  @seealso  WORD_ARRAY, DWORD_ARRAY, QWORD_ARRAY
-     */
-    void oldSaveToBuffer(u8 **buffer);
-    
-    /*! @brief    Delegation methods called inside saveToBuffer()
-     *  @details  Some components overwrite this method to add custom behavior
-     *            such as saving items that cannot be handled by the default
-     *            implementation.
-     */
-    virtual void  oldWillSaveToBuffer(u8 **buffer) { };
-    virtual void  oldDidSaveToBuffer(u8 **buffer) { };
+ 
 };
 
 #endif

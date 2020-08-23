@@ -230,16 +230,7 @@ private:
     size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     size_t didLoadFromBuffer(u8 *buffer) override;
     
-    
-    //
-    // Methods from HardwareComponent
-    //
-    
-private:
-    
-    void oldDidLoadFromBuffer(u8 **buffer) override { updateWaveTablePtr(); }
-
-    
+ 
     //
     // Accessing
     //

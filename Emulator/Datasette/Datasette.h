@@ -125,13 +125,6 @@ private:
     size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
-    
-private:
-    
-    size_t oldStateSize() override;
-    void oldDidLoadFromBuffer(u8 **buffer) override;
-    void oldDidSaveToBuffer(u8 **buffer) override;
-
 
     //
     // Handling tapes

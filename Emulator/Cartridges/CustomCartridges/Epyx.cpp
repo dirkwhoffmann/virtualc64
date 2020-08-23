@@ -16,25 +16,6 @@ Epyx::_reset()
     dischargeCapacitor();
 }
 
-size_t
-Epyx::oldStateSize()
-{
-    return Cartridge::oldStateSize() + 8;
-}
-void
-Epyx::oldDidLoadFromBuffer(u8 **buffer)
-{
-    Cartridge::oldDidLoadFromBuffer(buffer);
-    cycle = read64(buffer);
-}
-
-void
-Epyx::oldDidSaveToBuffer(u8 **buffer)
-{
-    Cartridge::oldDidSaveToBuffer(buffer);
-    write64(buffer, cycle);
-}
-
 void
 Epyx::resetCartConfig()
 {

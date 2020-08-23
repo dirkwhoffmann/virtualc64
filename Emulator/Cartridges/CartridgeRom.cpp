@@ -92,28 +92,6 @@ CartridgeRom::_save(u8 *buffer)
     return writer.ptr - buffer;
 }
 
-
-size_t
-CartridgeRom::oldStateSize()
-{
-    return HardwareComponent::oldStateSize() + size;
-}
-
-void
-CartridgeRom::oldDidLoadFromBuffer(u8 **buffer)
-{
-    if (rom) delete[] rom;
-    rom = new u8[size];
-    
-    readBlock(buffer, rom, size);
-}
-
-void
-CartridgeRom::oldDidSaveToBuffer(u8 **buffer)
-{
-    writeBlock(buffer, rom, size);
-}
-
 bool
 CartridgeRom::mapsToL() {
     assert(rom != NULL);

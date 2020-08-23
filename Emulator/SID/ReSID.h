@@ -160,15 +160,7 @@ private:
     size_t didLoadFromBuffer(u8 *buffer) override;
     size_t willSaveToBuffer(u8 *buffer) override;
 
-    
-    //
-    // Methods from HardwareComponent
-    //
-    
-public:
-    
-    void oldDidLoadFromBuffer(u8 **buffer) override { sid->write_state(st); }
-    void oldWillSaveToBuffer(u8 **buffer) override { st = sid->read_state(); }
+ 
 
 private:
 
