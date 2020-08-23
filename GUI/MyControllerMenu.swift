@@ -301,6 +301,34 @@ extension MyController: NSMenuItemValidation {
         monitor?.showWindow(self)
     }
     
+    @IBAction func takeSnapshotAction(_ sender: Any!) {
+        
+        takeSnapshot()
+        renderer.blendIn(steps: 20)
+    }
+    
+    @IBAction func restoreSnapshotAction(_ sender: Any!) {
+        
+        if !restoreLatestSnapshot() {
+            NSSound.beep()
+            return
+        }
+        
+        renderer.blendIn(steps: 20)
+    }
+    
+    @IBAction func browseSnapshotsAction(_ sender: Any!) {
+        
+        track()
+        /*
+        if snapshotBrowser == nil {
+            let name = NSNib.Name("SnapshotDialog")
+            snapshotBrowser = SnapshotDialog.make(parent: self, nibName: name)
+        }
+        snapshotBrowser?.showSheet()
+        */
+    }
+    
     @IBAction func saveScreenshotDialog(_ sender: Any!) {
                 
         // Create save panel
@@ -370,11 +398,6 @@ extension MyController: NSMenuItemValidation {
         
         // Save to file
         try data?.write(to: url, options: .atomic)
-    }
-    
-    @IBAction func takeSnapshot(_ sender: Any!) {
-        
-        c64.takeUserSnapshot()
     }
     
     //

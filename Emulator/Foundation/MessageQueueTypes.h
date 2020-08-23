@@ -24,13 +24,12 @@ typedef enum
     MSG_PAUSE,
     MSG_RESET,
 
-    // ROM and snapshot handling
+    // ROMs
     MSG_BASIC_ROM_LOADED,
     MSG_CHAR_ROM_LOADED,
     MSG_KERNAL_ROM_LOADED,
     MSG_DRIVE_ROM_LOADED,
     MSG_ROM_MISSING,
-    MSG_SNAPSHOT_TAKEN,
 
     // CPU related messages
     MSG_CPU_OK,
@@ -73,7 +72,10 @@ typedef enum
     // Peripherals (Expansion port)
     MSG_CARTRIDGE,
     MSG_NO_CARTRIDGE,
-    MSG_CART_SWITCH
+    MSG_CART_SWITCH,
+    
+    // Snapshots
+    MSG_SNAPSHOT_TAKEN
 }
 MessageType;
 

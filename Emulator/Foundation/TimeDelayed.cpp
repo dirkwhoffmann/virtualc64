@@ -10,38 +10,28 @@
 #include "Utils.h"
 #include "TimeDelayed.h"
 
+/*
 template <class T>
 TimeDelayed<T>::TimeDelayed(u8 delay, u8 capacity, u64 *clock)
 {
     assert(delay < capacity);
     
-    pipeline = new T[capacity];
     timeStamp = 0;
-    this->capacity = capacity;
     this->delay = delay;
     this->clock = (i64 *)clock;
     clear();
 }
+*/
 
+/*
 template TimeDelayed<bool>::TimeDelayed(u8, u8, u64 *);
 template TimeDelayed<u8>::TimeDelayed(u8, u8, u64 *);
 template TimeDelayed<u16>::TimeDelayed(u8, u8, u64 *);
 template TimeDelayed<u32>::TimeDelayed(u8, u8, u64 *);
 template TimeDelayed<u64>::TimeDelayed(u8, u8, u64 *);
+*/
 
-template <class T>
-TimeDelayed<T>::~TimeDelayed()
-{
-    assert(pipeline != NULL);
-    delete pipeline;
-}
-template TimeDelayed<bool>::~TimeDelayed();
-template TimeDelayed<u8>::~TimeDelayed();
-template TimeDelayed<u16>::~TimeDelayed();
-template TimeDelayed<u32>::~TimeDelayed();
-template TimeDelayed<u64>::~TimeDelayed();
-
-
+/*
 template <class T>
 void TimeDelayed<T>::writeWithDelay(T value, u8 waitCycles)
 {
@@ -63,7 +53,9 @@ template void TimeDelayed<u8>::writeWithDelay(u8, u8);
 template void TimeDelayed<u16>::writeWithDelay(u16, u8);
 template void TimeDelayed<u32>::writeWithDelay(u32, u8);
 template void TimeDelayed<u64>::writeWithDelay(u64, u8);
+*/
 
+/*
 template <class T>
 void TimeDelayed<T>::dump()
 {
@@ -83,8 +75,9 @@ template void TimeDelayed<u8>::dump();
 template void TimeDelayed<u16>::dump();
 template void TimeDelayed<u32>::dump();
 template void TimeDelayed<u64>::dump();
+*/
 
-
+/*
 template <class T>
 size_t TimeDelayed<T>::stateSize()
 {
@@ -125,10 +118,6 @@ void TimeDelayed<T>::saveToBuffer(u8 **buffer)
         write64(buffer, (u64)pipeline[i]);
     }
     write64(buffer, timeStamp);
-    /*
-    printf("SAVING: capacity = %d reference = %lld timeStamp = %lld\n",
-           capacity, *clock, timeStamp);
-    */
     
     assert(*buffer - old == stateSize());
 }
@@ -137,3 +126,4 @@ template void TimeDelayed<u8>::saveToBuffer(u8 **);
 template void TimeDelayed<u16>::saveToBuffer(u8 **);
 template void TimeDelayed<u32>::saveToBuffer(u8 **);
 template void TimeDelayed<u64>::saveToBuffer(u8 **);
+*/

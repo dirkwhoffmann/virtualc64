@@ -138,9 +138,9 @@ private:
         & st.envelope_counter[0]
         & st.envelope_counter[1]
         & st.envelope_counter[2]
-        // & st.envelope_state[0]  LOADED AND SAVED MANUALLY
-        // & st.envelope_state[1]  LOADED AND SAVED MANUALLY
-        // & st.envelope_state[2]  LOADED AND SAVED MANUALLY
+        & st.envelope_state[0]
+        & st.envelope_state[1]
+        & st.envelope_state[2]
         & st.hold_zero[0]
         & st.hold_zero[1]
         & st.hold_zero[2]
@@ -159,7 +159,6 @@ private:
     size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     size_t didLoadFromBuffer(u8 *buffer) override;
     size_t willSaveToBuffer(u8 *buffer) override;
-    size_t didSaveToBuffer(u8 *buffer) override;
 
     
     //

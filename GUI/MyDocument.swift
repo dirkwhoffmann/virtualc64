@@ -15,19 +15,20 @@ class MyDocument: NSDocument {
     // The application delegate
     var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
     
-    /*
-     Emulator proxy object. This object is an Objective-C bridge between
+    /* Emulator proxy object. This object is an Objective-C bridge between
      the GUI (written in Swift) an the core emulator (written in C++).
      */
     var c64: C64Proxy!
     
-    /*
-     An otional media object attached to this document.
-     This variable is checked in mountAttachment() which is called in
-     windowDidLoad(). If an attachment is present, e.g., a D64 archive, it
-     is automatically attached to the emulator.
+    /* An otional media object attached to this document. This variable is
+     * checked in mountAttachment() which is called in windowDidLoad(). If an
+     * attachment is present, e.g., a D64 archive, it is automatically attached
+     * to the emulator.
      */
     var attachment: AnyC64FileProxy?
+    
+    // Snapshots
+    private(set) var snapshots = ManagedArray<SnapshotProxy>.init(capacity: 32)
     
     //
     // Initializing

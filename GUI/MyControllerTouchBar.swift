@@ -10,19 +10,19 @@
 @available(OSX 10.12.2, *)
 extension NSTouchBarItem.Identifier {
     
-    static let commodore  = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.commodore")
-    static let runstop    = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.runstop")
-    static let home       = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.home")
-    static let del        = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.del")
-    static let restore    = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.restore")
-    static let rewind     = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.rewind")
-    static let snap       = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.snap")
-    static let revert     = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.revert")
+    static let commodore = NSTouchBarItem.Identifier("com.vc64.TouchBarItem.commodore")
+    static let runstop   = NSTouchBarItem.Identifier("com.vc64.TouchBarItem.runstop")
+    static let home      = NSTouchBarItem.Identifier("com.vc64.TouchBarItem.home")
+    static let del       = NSTouchBarItem.Identifier("com.vc64.TouchBarItem.del")
+    static let restore   = NSTouchBarItem.Identifier("com.vc64.TouchBarItem.restore")
+    
+    static let save      = NSTouchBarItem.Identifier("com.vc64.TouchBarItem.save")
+    static let load      = NSTouchBarItem.Identifier("com.vc64.TouchBarItem.load")
+    static let browse    = NSTouchBarItem.Identifier("com.vc64.TouchBarItem.browse")
 }
 
-@available(OSX 10.12.2, *)
-extension MyController: NSTouchBarDelegate {
-
+extension MyController {
+    
     @objc func touchBarHomeKeyAction() {
         if modifierFlags.contains(NSEvent.ModifierFlags.shift) {
             clearKeyAction(self)
@@ -30,53 +30,38 @@ extension MyController: NSTouchBarDelegate {
             homeKeyAction(self)
         }
     }
-
+    
     @objc func touchBarDelKeyAction() {
-
+        
         if modifierFlags.contains(NSEvent.ModifierFlags.shift) {
             insertKeyAction(self)
         } else {
             deleteKeyAction(self)
         }
     }
-    
-    // NSTouchBarDelegate
+}
 
+@available(OSX 10.12.2, *)
+extension MyController: NSTouchBarDelegate {
+    
     override open func makeTouchBar() -> NSTouchBar? {
- 
+        
         track()
         
-        if c64 == nil {
-            track("Cannot create touch bar (no C64 proxy).")
-            return nil
-        }
-
         let touchBar = NSTouchBar()
         touchBar.delegate = self
-
+        
         // Configure items
         touchBar.defaultItemIdentifiers = [
-            .commodore,
-            .runstop,
-            .home,
-            .del,
-            // .restore,
-            .rewind,
-            .snap,
-            .revert
+            .commodore, .runstop, .home, .del,
+            .save, .load, .browse
         ]
         
         // Make touchbar customizable
         touchBar.customizationIdentifier = NSTouchBar.CustomizationIdentifier("com.virtualc64.touchbar")
         touchBar.customizationAllowedItemIdentifiers = [
-            .commodore,
-            .runstop,
-            .home,
-            .del,
-            .restore,
-            .rewind,
-            .snap,
-            .revert
+            .commodore, .runstop, .home, .del, .restore,
+            .save, .load, .browse
         ]
         
         return touchBar
@@ -94,7 +79,7 @@ extension MyController: NSTouchBarDelegate {
                                  target: self,
                                  action: #selector(commodoreKeyAction))
             return item
-
+            
         case NSTouchBarItem.Identifier.runstop:
             let item = NSCustomTouchBarItem(identifier: identifier)
             let icon = NSImage(named: NSImage.Name("runStopTemplate"))!
@@ -104,7 +89,7 @@ extension MyController: NSTouchBarDelegate {
                                  action: #selector(runstopAction))
             
             return item
-
+            
         case NSTouchBarItem.Identifier.home:
             let item = NSCustomTouchBarItem(identifier: identifier)
             let icon = NSImage(named: NSImage.Name("ClrHomeTemplate"))!
@@ -113,7 +98,7 @@ extension MyController: NSTouchBarDelegate {
                                  target: self,
                                  action: #selector(touchBarHomeKeyAction))
             return item
-
+            
         case NSTouchBarItem.Identifier.del:
             let item = NSCustomTouchBarItem(identifier: identifier)
             let icon = NSImage(named: NSImage.Name("instDelTemplate"))!
@@ -122,7 +107,7 @@ extension MyController: NSTouchBarDelegate {
                                  target: self,
                                  action: #selector(touchBarDelKeyAction))
             return item
-
+            
         case NSTouchBarItem.Identifier.restore:
             let item = NSCustomTouchBarItem(identifier: identifier)
             let icon = NSImage(named: NSImage.Name("restoreTemplate"))!
@@ -131,32 +116,32 @@ extension MyController: NSTouchBarDelegate {
                                  target: self,
                                  action: #selector(restoreAction))
             return item
-         
-        case NSTouchBarItem.Identifier.rewind:
+            
+        case NSTouchBarItem.Identifier.save:
             let item = NSCustomTouchBarItem(identifier: identifier)
-            let icon = NSImage(named: NSImage.Name("ttRewindTemplate"))!
-            item.customizationLabel = "Rewind"
+            let icon = NSImage(named: NSImage.Name("pushTemplate"))!
+            item.customizationLabel = "Save"
             item.view = NSButton(image: icon,
                                  target: self,
-                                 action: #selector(restoreLatestAutoSnapshotAction(_:)))
+                                 action: #selector(takeSnapshotAction(_:)))
             return item
             
-        case NSTouchBarItem.Identifier.snap:
+        case NSTouchBarItem.Identifier.load:
             let item = NSCustomTouchBarItem(identifier: identifier)
-            let icon = NSImage(named: NSImage.Name("ttStoreTemplate"))!
-            item.customizationLabel = "Snap"
+            let icon = NSImage(named: NSImage.Name("popTemplate"))!
+            item.customizationLabel = "Load"
             item.view = NSButton(image: icon,
                                  target: self,
-                                 action: #selector(takeSnapshot(_:)))
+                                 action: #selector(restoreSnapshotAction(_:)))
             return item
-        
-        case NSTouchBarItem.Identifier.revert:
+            
+        case NSTouchBarItem.Identifier.browse:
             let item = NSCustomTouchBarItem(identifier: identifier)
-            let icon = NSImage(named: NSImage.Name("ttRestoreTemplate"))!
-            item.customizationLabel = "Revert"
+            let icon = NSImage(named: NSImage.Name("timeMachineTemplate"))!
+            item.customizationLabel = "Browse"
             item.view = NSButton(image: icon,
                                  target: self,
-                                 action: #selector(restoreLatestUserSnapshotAction(_:)))
+                                 action: #selector(browseSnapshotsAction(_:)))
             return item
             
         default:

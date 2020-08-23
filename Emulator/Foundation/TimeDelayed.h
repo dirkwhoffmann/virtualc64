@@ -10,18 +10,15 @@
 #ifndef _TIME_DELAYED_H
 #define _TIME_DELAYED_H
 
-template <class T> class TimeDelayed {
+template <class T, int capacity> class TimeDelayed {
     
     /* Value pipeline (history buffer)
      *
      *    pipeline[0] : Value that was written at time timeStamp
      *    pipeline[n] : Value that was written at time timeStamp - n
      */
-    T *pipeline = NULL;
-    
-    // Number of elements hold in pipeline
-    u8 capacity = 0;
-    
+    T pipeline[capacity];
+        
     // Remembers the time of the most recent call to write()
     i64 timeStamp = 0;
     
@@ -38,13 +35,18 @@ template <class T> class TimeDelayed {
     
 public:
     
-    TimeDelayed(u8 delay, u8 capacity, u64 *clock);
-    TimeDelayed(u8 delay, u8 capacity) : TimeDelayed(delay, capacity, NULL) { };
-    TimeDelayed(u8 delay, u64 *clock) : TimeDelayed(delay, delay + 1, clock) { };
-    TimeDelayed(u8 delay) : TimeDelayed(delay, delay + 1, NULL) { };
+    TimeDelayed(u8 delay, u64 *clock) {
+
+        assert(delay < capacity);
+        
+        timeStamp = 0;
+        this->delay = delay;
+        this->clock = (i64 *)clock;
+        clear();
+    }
     
-    ~TimeDelayed();
-      
+    TimeDelayed(u8 delay) : TimeDelayed(delay, NULL) { };
+          
     // Sets the reference clock (either the C64 clock or a drive clock)
     void setClock(u64 *clock) { this->clock = (i64 *)clock; }
 
@@ -64,7 +66,7 @@ public:
     
 public:
     
-    void dump();
+    // void dump();
 
     //
     // Serializing
@@ -72,10 +74,18 @@ public:
     
 public:
         
-    size_t stateSize();
-    void loadFromBuffer(u8 **buffer);
-    void saveToBuffer(u8 **buffer);
-
+    template <class W>
+    void applyToItems(W& worker)
+    {
+        worker & pipeline & timeStamp & delay;
+    }
+    
+    
+    /*
+    size_t stateSize() { return 0; } // DEPRECATED
+    void loadFromBuffer(u8 **buffer) { }; // DEPRECATED
+    void saveToBuffer(u8 **buffer) { }; // DEPRECATED
+    */
     
     //
     // Accessing
@@ -85,7 +95,21 @@ public:
     void write(T value) { writeWithDelay(value, 0); }
     
     // Work horse for writing a value
-    void writeWithDelay(T value, u8 waitCycles);
+    void writeWithDelay(T value, u8 waitCycles) {
+        
+        i64 referenceTime = *clock + waitCycles;
+        
+        // Shift pipeline
+        i64 diff = referenceTime - timeStamp;
+        for (int i = capacity - 1; i >= 0; i--) {
+            assert((i - diff <= 0) || (i - diff <= capacity));
+            pipeline[i] = (i - diff > 0) ? pipeline[i - diff] : pipeline[0];
+        }
+        
+        // Assign new value
+        timeStamp = referenceTime;
+        pipeline[0] = value;
+    }
     
     // Reads the most recent pipeline element
     T current() { return pipeline[0]; }

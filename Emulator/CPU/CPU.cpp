@@ -120,6 +120,7 @@ CPU<M>::_dump()
     pport.dump();
 }
 
+/*
 template <typename M> size_t
 CPU<M>::didLoadFromBuffer(u8 *buffer)
 {
@@ -143,27 +144,28 @@ CPU<M>::didSaveToBuffer(u8 *buffer)
     assert(*bufptr - buffer == levelDetector.stateSize() + edgeDetector.stateSize());
     return *bufptr - buffer;
 }
+*/
 
 template <typename M> size_t
 CPU<M>::oldStateSize()
 {
-    return HardwareComponent::oldStateSize()
-    + levelDetector.stateSize()
-    + edgeDetector.stateSize();
+    return HardwareComponent::oldStateSize();
+//    + levelDetector.stateSize()
+//    + edgeDetector.stateSize();
 }
 
 template <typename M> void
 CPU<M>::oldDidLoadFromBuffer(u8 **buffer)
 {
-    levelDetector.loadFromBuffer(buffer);
-    edgeDetector.loadFromBuffer(buffer);
+//    levelDetector.loadFromBuffer(buffer);
+//    edgeDetector.loadFromBuffer(buffer);
 }
 
 template <typename M> void
 CPU<M>::oldDidSaveToBuffer(u8 **buffer)
 {
-    levelDetector.saveToBuffer(buffer);
-    edgeDetector.saveToBuffer(buffer);
+//    levelDetector.saveToBuffer(buffer);
+//    edgeDetector.saveToBuffer(buffer);
 }
 
 template <typename M> u8

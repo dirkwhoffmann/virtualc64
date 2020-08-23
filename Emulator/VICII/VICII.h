@@ -454,7 +454,7 @@ private:
      * multiple sources (wired AND) and this variable indicates which sources
      * are holding the line low.
      */
-    TimeDelayed<u16>baLine = TimeDelayed<u16>(3);
+    TimeDelayed <u16,4> baLine = TimeDelayed <u16,4> (3);
     
     /* Start address of the currently selected memory bank. There are four
      * banks in total since the VICII chip can only 'see' 16 KB of memory at
@@ -474,7 +474,7 @@ private:
     u16 bankAddr;
     
     // Result of the lastest g-access
-    TimeDelayed<u32>gAccessResult = TimeDelayed<u32>(2);
+    TimeDelayed <u32,3> gAccessResult = TimeDelayed <u32,3> (2);
     
     
     //
@@ -729,7 +729,9 @@ private:
         & dataBusPhi1
         & dataBusPhi2
         & addrBus
+        & baLine
         & bankAddr
+        & gAccessResult
         & delay
         & bufferoffset;
     }
@@ -737,8 +739,8 @@ private:
     size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
     size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-    size_t didLoadFromBuffer(u8 *buffer) override;
-    size_t didSaveToBuffer(u8 *buffer) override;
+    // size_t didLoadFromBuffer(u8 *buffer) override;
+    // size_t didSaveToBuffer(u8 *buffer) override;
 
     
     //

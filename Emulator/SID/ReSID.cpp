@@ -152,55 +152,15 @@ ReSID::_inspect()
 size_t
 ReSID::didLoadFromBuffer(u8 *buffer)
 {
-    u32 envelopState[3];
- 
-    // We load envelope state manually here, because the serializer has no
-    // access to type EnvelopeGenerator::State which is defined inside reSID.
-    
-    SerReader reader(buffer);
-    reader
-    & envelopState[0]
-    & envelopState[1]
-    & envelopState[2];
-    
-    st.envelope_state[0] = (reSID::EnvelopeGenerator::State)envelopState[0];
-    st.envelope_state[1] = (reSID::EnvelopeGenerator::State)envelopState[1];
-    st.envelope_state[2] = (reSID::EnvelopeGenerator::State)envelopState[2];
-    
-    // Push state to reSID
     sid->write_state(st);
-    
-    return reader.ptr - buffer;
+    return 0;
 }
  
 size_t
 ReSID::willSaveToBuffer(u8 *buffer)
 {
-    // Pop state from reSID
     st = sid->read_state();
-
     return 0;
-}
-
-size_t
-ReSID::didSaveToBuffer(u8 *buffer)
-{
-    u32 envelopState[3];
-    
-    // We save the envelope state manually here, because the serializer has no
-    // access to type EnvelopeGenerator::State which is defined inside reSID.
-
-    envelopState[0] = (u32)st.envelope_state[0];
-    envelopState[1] = (u32)st.envelope_state[1];
-    envelopState[2] = (u32)st.envelope_state[2];
-
-    SerWriter writer(buffer);
-    writer
-    & envelopState[0]
-    & envelopState[1]
-    & envelopState[2];
-        
-    return writer.ptr - buffer;
 }
 
 void

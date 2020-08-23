@@ -278,7 +278,7 @@
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="16" id="uHM-gs-9iG"/>
                         </constraints>
                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="00" id="reP-W9-Peb">
-                            <font key="font" metaFont="label" size="11"/>
+                            <font key="font" metaFont="message" size="11"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -290,7 +290,7 @@
                             <constraint firstAttribute="height" constant="14" id="YLY-sB-hcs"/>
                         </constraints>
                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="00" id="Ek0-5h-PCi">
-                            <font key="font" metaFont="label" size="11"/>
+                            <font key="font" metaFont="message" size="11"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -376,15 +376,14 @@
                     <toolbarItem implicitItemIdentifier="7DAEBD4B-8907-4E84-A084-72817DB74F35" label="Snapshots" paletteLabel="Snapshots" sizingBehavior="auto" id="nxb-IG-KLe">
                         <nil key="toolTip"/>
                         <segmentedControl key="view" verticalHuggingPriority="750" id="AHD-MB-nXC">
-                            <rect key="frame" x="0.0" y="14" width="169" height="23"/>
+                            <rect key="frame" x="0.0" y="14" width="129" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="yaX-4D-cAY">
                                 <font key="font" metaFont="system"/>
                                 <segments>
-                                    <segment toolTip="Rewind" image="ttRewindTemplate" width="40"/>
-                                    <segment toolTip="Take Snapshot" image="ttStoreTemplate" width="40" tag="1"/>
-                                    <segment toolTip="Revert To Most Recent Snapshot" image="ttRestoreTemplate" width="40"/>
-                                    <segment toolTip="Browse Snapshot Storage" image="ttBrowseTemplate" width="40"/>
+                                    <segment toolTip="Take Snapshot" image="pushTemplate" width="40"/>
+                                    <segment toolTip="Revert To Most Recent Snapshot" image="popTemplate" width="40" tag="1"/>
+                                    <segment toolTip="Open Snapshot Browser" image="timeMachineTemplate" width="40" tag="2"/>
                                 </segments>
                             </segmentedCell>
                             <connections>
@@ -570,6 +569,7 @@
                     <outlet property="pauseButton" destination="dOU-Sh-aV4" id="q6d-3q-dO6"/>
                     <outlet property="powerButton" destination="yw6-D4-XSX" id="RwM-RM-frJ"/>
                     <outlet property="resetButton" destination="wVB-PW-axj" id="BDe-gJ-zb6"/>
+                    <outlet property="snapshotSegCtrl" destination="AHD-MB-nXC" id="FJe-yy-eIY"/>
                 </connections>
             </toolbar>
             <connections>
@@ -602,13 +602,12 @@
         <image name="monitorTemplate" width="241" height="240"/>
         <image name="muteTemplate" width="240" height="241"/>
         <image name="pauseTemplate" width="24" height="24"/>
+        <image name="popTemplate" width="24" height="24"/>
         <image name="powerTemplate" width="24" height="24"/>
         <image name="prefTemplate" width="24" height="24"/>
+        <image name="pushTemplate" width="24" height="24"/>
         <image name="resetTemplate" width="241" height="240"/>
         <image name="tapeTemplate" width="241" height="240"/>
-        <image name="ttBrowseTemplate" width="24" height="24"/>
-        <image name="ttRestoreTemplate" width="24" height="24"/>
-        <image name="ttRewindTemplate" width="24" height="24"/>
-        <image name="ttStoreTemplate" width="24" height="24"/>
+        <image name="timeMachineTemplate" width="24" height="24"/>
     </resources>
 </document>

@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+/*
 class SnapshotTableCellView: NSTableCellView {
     
     @IBOutlet weak var preview: NSImageView!
@@ -226,3 +227,4 @@ extension SnapshotDialog {
         return true
     }
 }
+*/

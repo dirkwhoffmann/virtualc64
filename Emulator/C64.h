@@ -225,23 +225,8 @@ private:
     
 private:
     
-    // Indicates if snapshots should be taken automatically
-    bool takeAutoSnapshots = true;
-    
-    /* Time in seconds between two auto-saved snapshots. This value only takes
-     * effect if takeAutoSnapshots equals true.
-     */
-    long autoSnapshotInterval = 3;
-    
-    // Maximum number of stored snapshots
-    static const size_t MAX_SNAPSHOTS = 32;
-    
-    // Storage for auto-taken snapshots
-    vector<Snapshot *> autoSnapshots;
-    
-    // Storage for user-taken snapshots
-    vector<Snapshot *> userSnapshots;
-    
+    Snapshot *snapshot = NULL;
+
     
     //
     // Initializing
@@ -572,72 +557,19 @@ private:
     
 public:
     
-    // Indicates if the auto-snapshot feature is enabled
-    bool getTakeAutoSnapshots() { return takeAutoSnapshots; }
-    
-    // Enables or disabled the auto-snapshot feature
-    void setTakeAutoSnapshots(bool enable) { takeAutoSnapshots = enable; }
-    
-    /* Disables the auto-snapshot feature temporarily. This method is called
-     * when the snaphshot browser opens.
+    /* Requests a snapshot to be taken. Once the snapshot is ready, a message
+     * is written into the message queue. The snapshot can then be picked up by
+     * calling latestSnapshot().
      */
-    void suspendAutoSnapshots() { autoSnapshotInterval -= (LONG_MAX / 2); }
+    void requestSnapshot();
     
-    /* Heal a call to suspendAutoSnapshots(). This method is called when the
-     * snaphshot browser closes.
+    // Returns the most recent snapshot or NULL if none was taken
+    Snapshot *latestSnapshot();
+    
+    /* Loads the current state from a snapshot file. This function is not
+     * thread-safe and must not be called on a running emulator.
      */
-    void resumeAutoSnapshots() { autoSnapshotInterval += (LONG_MAX / 2); }
-    
-    //Returns the time between two auto-snapshots in seconds
-    long getSnapshotInterval() { return autoSnapshotInterval; }
-    
-    // Sets the time between two auto-snapshots in seconds
-    void setSnapshotInterval(long value) { autoSnapshotInterval = value; }
-    
-    /* Loads the current state from a snapshot file. There is an thread-unsafe
-     * and thread-safe version of this function. The first one can be unsed
-     * inside the emulator thread or from outside if the emulator is halted.
-     * The second one can be called any time.
-     */
-    void loadFromSnapshotUnsafe(Snapshot *snapshot);
-    void loadFromSnapshotSafe(Snapshot *snapshot);
-    
-    // Restores a certain snapshot from the snapshot storage
-    bool restoreSnapshot(vector<Snapshot *> &storage, unsigned nr);
-    bool restoreAutoSnapshot(unsigned nr) { return restoreSnapshot(autoSnapshots, nr); }
-    bool restoreUserSnapshot(unsigned nr) { return restoreSnapshot(userSnapshots, nr); }
-    
-    // Restores the latest snapshot from the snapshot storage
-    bool restoreLatestAutoSnapshot() { return restoreAutoSnapshot(0); }
-    bool restoreLatestUserSnapshot() { return restoreUserSnapshot(0); }
-    
-    // Returns the number of stored snapshots
-    size_t numSnapshots(vector<Snapshot *> &storage);
-    size_t numAutoSnapshots() { return numSnapshots(autoSnapshots); }
-    size_t numUserSnapshots() { return numSnapshots(userSnapshots); }
-    
-    // Returns an snapshot from the snapshot storage
-    Snapshot *getSnapshot(vector<Snapshot *> &storage, unsigned nr);
-    Snapshot *autoSnapshot(unsigned nr) { return getSnapshot(autoSnapshots, nr); }
-    Snapshot *userSnapshot(unsigned nr) { return getSnapshot(userSnapshots, nr); }
-    
-    /* Takes a snapshot and inserts it into the snapshot storage. The new
-     * snapshot is inserted at position 0 and all others are moved one position
-     * up. If the buffer is full, the oldest snapshot is deleted. Make sure to
-     * call the 'Safe' version outside the emulator thread.
-     */
-    void takeSnapshot(vector<Snapshot *> &storage);
-    void takeAutoSnapshot() { takeSnapshot(autoSnapshots); }
-    void takeUserSnapshot() { takeSnapshot(userSnapshots); }
-    void takeAutoSnapshotSafe() { suspend(); takeSnapshot(autoSnapshots); resume(); }
-    void takeUserSnapshotSafe() { suspend(); takeSnapshot(userSnapshots); resume(); }
-    
-    /* Deletes a snapshot from the snapshot storage. All remaining snapshots
-     * are moved one position down.
-     */
-    void deleteSnapshot(vector<Snapshot *> &storage, unsigned nr);
-    void deleteAutoSnapshot(unsigned nr) { deleteSnapshot(autoSnapshots, nr); }
-    void deleteUserSnapshot(unsigned nr) { deleteSnapshot(userSnapshots, nr); }
+    void loadFromSnapshot(Snapshot *snapshot);
     
     
     //

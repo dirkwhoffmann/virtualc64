@@ -86,38 +86,14 @@ extension MyController {
         }
     }
     
-    @IBAction func snapshotAction(_ sender: NSSegmentedControl) {
+     @IBAction func snapshotAction(_ sender: NSSegmentedControl) {
         
         switch sender.selectedSegment {
-        
-        case 0: // Rewind
-
-            track("Rewind")
-            if c64.restoreLatestAutoSnapshot() {
-                renderer.snapToFront()
-            }
-        
-        case 1: // Take
-
-            track("Snap")
-            c64.takeUserSnapshot()
             
-        case 2: // Restore
+        case 0: takeSnapshotAction(self)
+        case 1: restoreSnapshotAction(self)
+        case 2: browseSnapshotsAction(self)
             
-            track("Restore")
-            if c64.restoreLatestUserSnapshot() {
-                renderer.snapToFront()
-            } else {
-                NSSound.beep()
-            }
-
-        case 3: // Browse
-            
-            track("Browse")
-            let nibName = NSNib.Name("SnapshotDialog")
-            let controller = SnapshotDialog.init(windowNibName: nibName)
-            controller.showSheet()
-
         default:
             assert(false)
         }
@@ -131,27 +107,5 @@ extension MyController {
         }
         
         virtualKeyboard?.showSheet(autoClose: true)        
-    }
-
-    @IBAction func snapshotsAction(_ sender: Any!) {
-        
-        let nibName = NSNib.Name("SnapshotDialog")
-        let controller = SnapshotDialog.init(windowNibName: nibName)
-        controller.showSheet()
-    }
-
-    @IBAction func restoreLatestAutoSnapshotAction(_ sender: Any!) {
-        
-        if c64.restoreLatestAutoSnapshot() {
-            c64.deleteAutoSnapshot(0)
-            renderer.snapToFront()
-        }
-    }
-
-    @IBAction func restoreLatestUserSnapshotAction(_ sender: Any!) {
-        
-        if c64.restoreLatestUserSnapshot() {
-            renderer.snapToFront()
-        }
     }
 }

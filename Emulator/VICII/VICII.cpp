@@ -312,6 +312,7 @@ VICII::getSpriteInfo(int nr)
     return result;
 }
 
+/*
 size_t
 VICII::didLoadFromBuffer(u8 *buffer)
 {
@@ -335,27 +336,28 @@ VICII::didSaveToBuffer(u8 *buffer)
     assert(*bufptr - buffer == baLine.stateSize() + gAccessResult.stateSize());
     return *bufptr - buffer;
 }
+*/
 
 size_t
 VICII::oldStateSize()
 {
-    return HardwareComponent::oldStateSize()
-    + baLine.stateSize()
-    + gAccessResult.stateSize();
+    return HardwareComponent::oldStateSize();
+//    + baLine.stateSize()
+//    + gAccessResult.stateSize();
 }
 
 void
 VICII::oldDidLoadFromBuffer(u8 **buffer)
 {
-    baLine.loadFromBuffer(buffer);
-    gAccessResult.loadFromBuffer(buffer);
+//    baLine.loadFromBuffer(buffer);
+//    gAccessResult.loadFromBuffer(buffer);
 }
 
 void
 VICII::oldDidSaveToBuffer(u8 **buffer)
 {
-    baLine.saveToBuffer(buffer);
-    gAccessResult.saveToBuffer(buffer);
+//    baLine.saveToBuffer(buffer);
+//    gAccessResult.saveToBuffer(buffer);
 }
 
 void

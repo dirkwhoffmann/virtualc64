@@ -89,7 +89,7 @@ ExpansionPort::_save(u8 *buffer)
     SerWriter writer(buffer);
     applyToPersistentItems(writer);
     applyToResetItems(writer);
-    
+        
     // Save cartridge (if any)
     if (crtType != CRT_NONE) {
         writer.ptr += cartridge->save(writer.ptr);

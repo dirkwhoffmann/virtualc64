@@ -30,18 +30,6 @@ public extension C64Proxy {
         
         return image
     }
-    
-    func autoSnapshotImage(_ item: Int) -> NSImage {
-        
-        let data = autoSnapshotImageData(item)
-        return image(data: data, size: autoSnapshotImageSize(item))
-    }
-
-    func userSnapshotImage(_ item: Int) -> NSImage {
-        
-        let data = userSnapshotImageData(item)
-       return image(data: data, size: userSnapshotImageSize(item))
-    }
 }
 
 public extension DriveProxy {

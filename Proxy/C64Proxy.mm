@@ -1236,582 +1236,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 
 //
-// C64
-//
-
-@implementation C64Proxy
-
-@synthesize wrapper;
-@synthesize mem, cpu, breakpoints, watchpoints, vic, cia1, cia2, sid;
-@synthesize keyboard, port1, port2, iec;
-@synthesize expansionport, drive8, drive9, datasette, mouse;
-
-- (instancetype) init
-{
-	NSLog(@"C64Proxy::init");
-	
-    if (!(self = [super init]))
-        return self;
-    
-    C64 *c64 = new C64();
-    wrapper = new C64Wrapper();
-    wrapper->c64 = c64;
-	
-    // Create sub proxys
-    mem = [[MemoryProxy alloc] initWithMemory:&c64->mem];
-    cpu = [[CPUProxy alloc] initWithCPU:&c64->cpu];
-    breakpoints = [[GuardsProxy alloc] initWithGuards:&c64->cpu.debugger.breakpoints];
-    watchpoints = [[GuardsProxy alloc] initWithGuards:&c64->cpu.debugger.watchpoints];
-    vic = [[VICProxy alloc] initWithVIC:&c64->vic];
-	cia1 = [[CIAProxy alloc] initWithCIA:&c64->cia1];
-	cia2 = [[CIAProxy alloc] initWithCIA:&c64->cia2];
-	sid = [[SIDProxy alloc] initWithSID:&c64->sid];
-	keyboard = [[KeyboardProxy alloc] initWithKeyboard:&c64->keyboard];
-    port1 = [[ControlPortProxy alloc] initWithJoystick:&c64->port1];
-    port2 = [[ControlPortProxy alloc] initWithJoystick:&c64->port2];
-    iec = [[IECProxy alloc] initWithIEC:&c64->iec];
-    expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:&c64->expansionport];
-	drive8 = [[DriveProxy alloc] initWithVC1541:&c64->drive8];
-    drive9 = [[DriveProxy alloc] initWithVC1541:&c64->drive9];
-    datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
-    mouse = [[MouseProxy alloc] initWithMouse:&c64->mouse];
-
-    return self;
-}
-
-- (DriveProxy *) drive:(DriveID)id
-{
-    switch (id) {
-        case DRIVE8:  return drive8;
-        case DRIVE9:  return drive9;
-        default:      return NULL;
-    }
-}
-
-- (void) dealloc
-{
-    NSLog(@"dealloc");
-}
-
-- (void) kill
-{
-    assert(wrapper->c64 != NULL);
-    NSLog(@"C64Proxy::kill");
-    
-    // Kill the emulator
-    delete wrapper->c64;
-    wrapper->c64 = NULL;
-}
-
-- (BOOL) releaseBuild
-{
-    return releaseBuild();
-}
-- (BOOL) debugMode
-{
-    return wrapper->c64->inDebugMode();
-}
-- (void) enableDebugging
-{
-    wrapper->c64->enableDebugMode();
-}
-- (void) disableDebugging
-{
-    wrapper->c64->disableDebugMode();
-}
-- (void) setInspectionTarget:(InspectionTarget)target
-{
-    wrapper->c64->setInspectionTarget(target);
-}
-- (void) clearInspectionTarget
-{
-    wrapper->c64->clearInspectionTarget();
-}
-- (BOOL) isReady:(ErrorCode *)error
-{
-    return wrapper->c64->isReady(error);
-}
-- (BOOL) isReady
-{
-    return wrapper->c64->isReady();
-}
-- (void) powerOn
-{
-    wrapper->c64->powerOn();
-}
-- (void) powerOff
-{
-    wrapper->c64->powerOff();
-}
-- (void) inspect
-{
-    wrapper->c64->inspect();
-}
-- (void) reset
-{
-    wrapper->c64->reset();
-}
-- (void) ping
-{
-    wrapper->c64->ping();
-}
-- (void) dump
-{
-    wrapper->c64->dump();
-}
-- (BOOL) isPoweredOn
-{
-    return wrapper->c64->isPoweredOn();
-}
-- (BOOL) isPoweredOff
-{
-    return wrapper->c64->isPoweredOff();
-}
-- (BOOL) isRunning
-{
-    return wrapper->c64->isRunning();
-}
-- (BOOL) isPaused
-{
-    return wrapper->c64->isPaused();
-}
-- (void) run
-{
-    wrapper->c64->run();
-}
-- (void) pause
-{
-    wrapper->c64->pause();
-}
-- (void) suspend
-{
-    wrapper->c64->suspend();
-}
-- (void) resume
-{
-    wrapper->c64->resume();
-}
-- (C64Configuration) config
-{
-    return wrapper->c64->getConfig();
-}
-- (NSInteger) getConfig:(ConfigOption)opt
-{
-    return wrapper->c64->getConfig(opt);
-}
-- (NSInteger) getConfig:(ConfigOption)opt drive:(DriveID)id
-{
-    return wrapper->c64->getDriveConfig(id, opt);
-}
-- (BOOL) configure:(ConfigOption)opt value:(NSInteger)val
-{
-    return wrapper->c64->configure(opt, val);
-}
-- (BOOL) configure:(ConfigOption)opt enable:(BOOL)val
-{
-    return wrapper->c64->configure(opt, val ? 1 : 0);
-}
-- (BOOL) configure:(ConfigOption)opt drive:(DriveID)id value:(NSInteger)val
-{
-    return wrapper->c64->configureDrive(id, opt, val);
-}
-- (BOOL) configure:(ConfigOption)opt drive:(DriveID)id enable:(BOOL)val
-{
-    return wrapper->c64->configureDrive(id, opt, val ? 1 : 0);
-}
-// Configuring the emulator
-- (C64Model) model
-{
-    return wrapper->c64->getModel();
-}
-- (void) setModel:(C64Model)model
-{
-    wrapper->c64->setModel(model);
-}
-
-// Accessing the message queue
-- (Message)message
-{
-    return wrapper->c64->getMessage();
-}
-- (void) addListener:(const void *)sender function:(Callback *)func
-{
-    wrapper->c64->addListener(sender, func);
-}
-- (void) removeListener:(const void *)sender
-{
-    wrapper->c64->removeListener(sender);
-}
-- (void) stopAndGo
-{
-    wrapper->c64->stopAndGo();
-}
-- (void) stepInto
-{
-    wrapper->c64->stepInto();
-}
-- (void) stepOver
-{
-    wrapper->c64->stepOver();
-}
-- (BOOL) warp
-{
-    return wrapper->c64->inWarpMode();
-}
-- (void) warpOn
-{
-    wrapper->c64->enableWarpMode();
-}
-- (void) warpOff
-{
-    wrapper->c64->disableWarpMode();
-}
-- (BOOL) takeAutoSnapshots
-{
-    return wrapper->c64->getTakeAutoSnapshots();
-}
-- (void) setTakeAutoSnapshots:(BOOL)b
-{
-    wrapper->c64->setTakeAutoSnapshots(b);
-}
-- (void) suspendAutoSnapshots
-{
-    wrapper->c64->suspendAutoSnapshots();
-}
-- (void) resumeAutoSnapshots
-{
-    wrapper->c64->resumeAutoSnapshots();
-}
-- (NSInteger) snapshotInterval
-{
-    return wrapper->c64->getSnapshotInterval();
-}
-- (void) setSnapshotInterval:(NSInteger)value
-{
-    wrapper->c64->setSnapshotInterval(value);
-}
-- (BOOL)restoreAutoSnapshot:(NSInteger)nr
-{
-    return wrapper->c64->restoreAutoSnapshot((unsigned)nr);
-}
-- (BOOL)restoreUserSnapshot:(NSInteger)nr
-{
-    return wrapper->c64->restoreUserSnapshot((unsigned)nr);
-}
-- (BOOL)restoreLatestUserSnapshot
-{
-    return wrapper->c64->restoreLatestUserSnapshot();
-}
-- (BOOL)restoreLatestAutoSnapshot
-{
-    return wrapper->c64->restoreLatestAutoSnapshot();
-}
-- (NSInteger) numAutoSnapshots
-{
-    return wrapper->c64->numAutoSnapshots();
-}
-- (NSInteger) numUserSnapshots
-{
-    return wrapper->c64->numUserSnapshots();
-}
-- (NSData *)autoSnapshotData:(NSInteger)nr {
-    Snapshot *snapshot = wrapper->c64->autoSnapshot((unsigned)nr);
-    return [NSData dataWithBytes: (void *)snapshot->getHeader()
-                          length: snapshot->sizeOnDisk()];
-}
-- (NSData *)userSnapshotData:(NSInteger)nr {
-    Snapshot *snapshot = wrapper->c64->userSnapshot((unsigned)nr);
-    return [NSData dataWithBytes: (void *)snapshot->getHeader()
-                          length: snapshot->sizeOnDisk()];
-}
-- (unsigned char *)autoSnapshotImageData:(NSInteger)nr
-{
-    Snapshot *s = wrapper->c64->autoSnapshot((int)nr);
-    return s ? s->getImageData() : NULL;
-}
-- (unsigned char *)userSnapshotImageData:(NSInteger)nr
-{
-    Snapshot *s = wrapper->c64->userSnapshot((int)nr);
-    return s ? s->getImageData() : NULL;
-}
-- (NSSize) autoSnapshotImageSize:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->autoSnapshot((int)nr);
-    return s ? NSMakeSize(s->getImageWidth(), s->getImageHeight()) : NSMakeSize(0,0);
-}
-- (NSSize) userSnapshotImageSize:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->userSnapshot((int)nr);
-    return s ? NSMakeSize(s->getImageWidth(), s->getImageHeight()) : NSMakeSize(0,0);
-}
-- (time_t)autoSnapshotTimestamp:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->autoSnapshot((int)nr);
-    return s ? s->getTimestamp() : 0;
-}
-- (time_t)userSnapshotTimestamp:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->userSnapshot((int)nr);
-    return s ? s->getTimestamp() : 0;
-}
-- (void)takeUserSnapshot
-{
-    wrapper->c64->takeUserSnapshotSafe();
-}
-- (void)deleteAutoSnapshot:(NSInteger)nr
-{
-    wrapper->c64->deleteAutoSnapshot((unsigned)nr);
-}
-- (void)deleteUserSnapshot:(NSInteger)nr
-{
-    wrapper->c64->deleteUserSnapshot((unsigned)nr);
-}
-
-// Handling ROMs
-- (BOOL) hasBasicRom
-{
-    return wrapper->c64->hasBasicRom();
-}
-- (BOOL) hasCharRom
-{
-    return wrapper->c64->hasCharRom();
-}
-- (BOOL) hasKernalRom
-{
-    return wrapper->c64->hasKernalRom();
-}
-- (BOOL) hasVC1541Rom
-{
-    return wrapper->c64->hasVC1541Rom();
-}
-- (BOOL) hasMega65BasicRom
-{
-    return wrapper->c64->hasMega65BasicRom();
-}
-- (BOOL) hasMega65CharRom
-{
-    return wrapper->c64->hasMega65CharRom();
-}
-- (BOOL) hasMega65KernelRom
-{
-    return wrapper->c64->hasMega65KernalRom();
-}
-- (BOOL) isBasicRom:(NSURL *)url
-{
-    return RomFile::isBasicRomFile([[url path] UTF8String]);
-}
-- (BOOL) isCharRom:(NSURL *)url
-{
-    return RomFile::isCharRomFile([[url path] UTF8String]);
-}
-- (BOOL) isKernalRom:(NSURL *)url
-{
-    return RomFile::isKernalRomFile([[url path] UTF8String]);
-}
-- (BOOL) isVC1541Rom:(NSURL *)url
-{
-    return RomFile::isVC1541RomFile([[url path] UTF8String]);
-}
-- (BOOL) loadBasicRomFromFile:(NSURL *)url
-{
-    return wrapper->c64->loadBasicRomFromFile([[url path] UTF8String]);
-}
-- (BOOL) loadCharRomFromFile:(NSURL *)url
-{
-    return wrapper->c64->loadCharRomFromFile([[url path] UTF8String]);
-}
-- (BOOL) loadKernalRomFromFile:(NSURL *)url
-{
-    return wrapper->c64->loadKernalRomFromFile([[url path] UTF8String]);
-}
-- (BOOL) loadVC1541RomFromFile:(NSURL *)url
-{
-    return wrapper->c64->loadVC1541RomFromFile([[url path] UTF8String]);
-}
-- (BOOL) loadBasicRomFromBuffer:(NSData *)data
-{
-    if (data == NULL) return NO;
-    const u8 *bytes = (const u8 *)[data bytes];
-    return wrapper->c64->loadBasicRomFromBuffer(bytes, [data length]);
-}
-- (BOOL) loadCharRomFromBuffer:(NSData *)data
-{
-    if (data == NULL) return NO;
-    const u8 *bytes = (const u8 *)[data bytes];
-    return wrapper->c64->loadCharRomFromBuffer(bytes, [data length]);
-}
-- (BOOL) loadKernalRomFromBuffer:(NSData *)data
-{
-    if (data == NULL) return NO;
-    const u8 *bytes = (const u8 *)[data bytes];
-    return wrapper->c64->loadKernalRomFromBuffer(bytes, [data length]);
-}
-- (BOOL) loadVC1541RomFromBuffer:(NSData *)data
-{
-    if (data == NULL) return NO;
-    const u8 *bytes = (const u8 *)[data bytes];
-    return wrapper->c64->loadVC1541RomFromBuffer(bytes, [data length]);
-}
-- (BOOL) saveBasicRom:(NSURL *)url
-{
-    return wrapper->c64->saveBasicRom([[url path] UTF8String]);
-}
-- (BOOL) saveCharRom:(NSURL *)url
-{
-    return wrapper->c64->saveCharRom([[url path] UTF8String]);
-}
-- (BOOL) saveKernalRom:(NSURL *)url
-{
-    return wrapper->c64->saveKernalRom([[url path] UTF8String]);
-}
-- (BOOL) saveVC1541Rom:(NSURL *)url
-{
-    return wrapper->c64->saveVC1541Rom([[url path] UTF8String]);
-}
-- (void) deleteBasicRom
-{
-    wrapper->c64->deleteBasicRom();
-}
-- (void) deleteKernalRom
-{
-    wrapper->c64->deleteKernalRom();
-}
-- (void) deleteCharRom
-{
-    wrapper->c64->deleteCharRom();
-}
-- (void) deleteVC1541Rom
-{
-    wrapper->c64->deleteVC1541Rom();
-}
-- (u64) basicRomFingerprint
-{
-    return wrapper->c64->basicRomFNV64();
-}
-- (u64) charRomFingerprint
-{
-    return wrapper->c64->charRomFNV64();
-}
-- (u64) kernalRomFingerprint
-{
-    return wrapper->c64->kernalRomFNV64();
-}
-- (u64) vc1541RomFingerprint
-{
-    return wrapper->c64->vc1541RomFNV64();
-}
-- (RomIdentifier) basicRomIdentifier
-{
-    return wrapper->c64->basicRomIdentifier();
-}
-- (RomIdentifier) kernalRomIdentifier
-{
-    return wrapper->c64->kernalRomIdentifier();
-}
-- (RomIdentifier) charRomIdentifier
-{
-    return wrapper->c64->charRomIdentifier();
-}
-- (RomIdentifier) vc1541RomIdentifier
-{
-    return wrapper->c64->vc1541RomIdentifier();
-}
-- (NSString *) basicRomTitle
-{
-    const char *str = wrapper->c64->basicRomTitle();
-    return str ? [NSString stringWithUTF8String:str] : NULL;
-}
-- (NSString *) charRomTitle
-{
-    const char *str = wrapper->c64->charRomTitle();
-    return str ? [NSString stringWithUTF8String:str] : NULL;
-}
-- (NSString *) kernalRomTitle
-{
-    const char *str = wrapper->c64->kernalRomTitle();
-    return str ? [NSString stringWithUTF8String:str] : NULL;
-}
-- (NSString *) vc1541RomTitle
-{
-    const char *str = wrapper->c64->vc1541RomTitle();
-    return str ? [NSString stringWithUTF8String:str] : NULL;
-}
-- (NSString *) basicRomSubTitle
-{
-    const char *str = wrapper->c64->basicRomSubTitle();
-    return str ? [NSString stringWithUTF8String:str] : NULL;
-}
-- (NSString *) charRomSubTitle
-{
-    const char *str = wrapper->c64->charRomSubTitle();
-    return str ? [NSString stringWithUTF8String:str] : NULL;
-}
-- (NSString *) kernalRomSubTitle
-{
-    const char *str = wrapper->c64->kernalRomSubtitle();
-    return str ? [NSString stringWithUTF8String:str] : NULL;
-}
-- (NSString *) vc1541RomSubTitle
-{
-    const char *str = wrapper->c64->vc1541RomSubtitle();
-    return str ? [NSString stringWithUTF8String:str] : NULL;
-}
-- (NSString *) basicRomRevision
-{
-    const char *str = wrapper->c64->basicRomRevision();
-    return str ? [NSString stringWithUTF8String:str] : NULL;
-}
-- (NSString *) charRomRevision
-{
-    const char *str = wrapper->c64->charRomRevision();
-    return str ? [NSString stringWithUTF8String:str] : NULL;
-}
-- (NSString *) kernalRomRevision
-{
-    const char *str = wrapper->c64->kernalRomRevision();
-    return str ? [NSString stringWithUTF8String:str] : NULL;
-}
-- (NSString *) vc1541RomRevision
-{
-    const char *str = wrapper->c64->vc1541RomRevision();
-    return str ? [NSString stringWithUTF8String:str] : NULL;
-}
-- (BOOL) isCommodoreRom:(RomIdentifier)rev
-{
-    return RomFile::isCommodoreRom(rev);
-}
-- (BOOL) isPatchedRom:(RomIdentifier)rev;
-{
-    return RomFile::isPatchedRom(rev);
-}
-- (BOOL) isRom:(NSURL *)url
-{
-    return
-    [self isBasicRom:url] ||
-    [self isCharRom:url] ||
-    [self isKernalRom:url] ||
-    [self isVC1541Rom:url];
-}
-
-- (BOOL) loadRom:(NSURL *)url
-{
-    return
-    [self loadBasicRomFromFile:url] ||
-    [self loadCharRomFromFile:url] ||
-    [self loadKernalRomFromFile:url] ||
-    [self loadVC1541RomFromFile:url];
-}
-
-// Flashing files
-- (BOOL)flash:(AnyC64FileProxy *)file
-{
-    return wrapper->c64->flash([file wrapper]->file);
-}
-- (BOOL)flash:(AnyArchiveProxy *)archive item:(NSInteger)nr;
-{
-    AnyArchive *a = (AnyArchive *)([archive wrapper]->file);
-    return wrapper->c64->flash(a, (unsigned)nr);
-}
-
-@end
-
-//
 // AnyC64File
 //
 
@@ -1900,7 +1324,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return Snapshot::isUnsupportedSnapshotFile([path UTF8String]);
 }
-
 + (instancetype) make:(Snapshot *)snapshot
 {
     if (snapshot == NULL) {
@@ -2340,6 +1763,500 @@ struct AnyC64FileWrapper { AnyFile *file; };
     Disk *disk = [diskProxy wrapper]->disk;
     G64File *archive = G64File::makeWithDisk(disk);
     return [self make: archive];
+}
+
+@end
+
+//
+// C64
+//
+
+@implementation C64Proxy
+
+@synthesize wrapper;
+@synthesize mem, cpu, breakpoints, watchpoints, vic, cia1, cia2, sid;
+@synthesize keyboard, port1, port2, iec;
+@synthesize expansionport, drive8, drive9, datasette, mouse;
+
+- (instancetype) init
+{
+    NSLog(@"C64Proxy::init");
+    
+    if (!(self = [super init]))
+        return self;
+    
+    C64 *c64 = new C64();
+    wrapper = new C64Wrapper();
+    wrapper->c64 = c64;
+    
+    // Create sub proxys
+    mem = [[MemoryProxy alloc] initWithMemory:&c64->mem];
+    cpu = [[CPUProxy alloc] initWithCPU:&c64->cpu];
+    breakpoints = [[GuardsProxy alloc] initWithGuards:&c64->cpu.debugger.breakpoints];
+    watchpoints = [[GuardsProxy alloc] initWithGuards:&c64->cpu.debugger.watchpoints];
+    vic = [[VICProxy alloc] initWithVIC:&c64->vic];
+    cia1 = [[CIAProxy alloc] initWithCIA:&c64->cia1];
+    cia2 = [[CIAProxy alloc] initWithCIA:&c64->cia2];
+    sid = [[SIDProxy alloc] initWithSID:&c64->sid];
+    keyboard = [[KeyboardProxy alloc] initWithKeyboard:&c64->keyboard];
+    port1 = [[ControlPortProxy alloc] initWithJoystick:&c64->port1];
+    port2 = [[ControlPortProxy alloc] initWithJoystick:&c64->port2];
+    iec = [[IECProxy alloc] initWithIEC:&c64->iec];
+    expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:&c64->expansionport];
+    drive8 = [[DriveProxy alloc] initWithVC1541:&c64->drive8];
+    drive9 = [[DriveProxy alloc] initWithVC1541:&c64->drive9];
+    datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
+    mouse = [[MouseProxy alloc] initWithMouse:&c64->mouse];
+
+    return self;
+}
+
+- (DriveProxy *) drive:(DriveID)id
+{
+    switch (id) {
+        case DRIVE8:  return drive8;
+        case DRIVE9:  return drive9;
+        default:      return NULL;
+    }
+}
+
+- (void) dealloc
+{
+    NSLog(@"dealloc");
+}
+
+- (void) kill
+{
+    assert(wrapper->c64 != NULL);
+    NSLog(@"C64Proxy::kill");
+    
+    // Kill the emulator
+    delete wrapper->c64;
+    wrapper->c64 = NULL;
+}
+
+- (BOOL) releaseBuild
+{
+    return releaseBuild();
+}
+- (BOOL) debugMode
+{
+    return wrapper->c64->inDebugMode();
+}
+- (void) enableDebugging
+{
+    wrapper->c64->enableDebugMode();
+}
+- (void) disableDebugging
+{
+    wrapper->c64->disableDebugMode();
+}
+- (void) setInspectionTarget:(InspectionTarget)target
+{
+    wrapper->c64->setInspectionTarget(target);
+}
+- (void) clearInspectionTarget
+{
+    wrapper->c64->clearInspectionTarget();
+}
+- (BOOL) isReady:(ErrorCode *)error
+{
+    return wrapper->c64->isReady(error);
+}
+- (BOOL) isReady
+{
+    return wrapper->c64->isReady();
+}
+- (void) powerOn
+{
+    wrapper->c64->powerOn();
+}
+- (void) powerOff
+{
+    wrapper->c64->powerOff();
+}
+- (void) inspect
+{
+    wrapper->c64->inspect();
+}
+- (void) reset
+{
+    wrapper->c64->reset();
+}
+- (void) ping
+{
+    wrapper->c64->ping();
+}
+- (void) dump
+{
+    wrapper->c64->dump();
+}
+- (BOOL) isPoweredOn
+{
+    return wrapper->c64->isPoweredOn();
+}
+- (BOOL) isPoweredOff
+{
+    return wrapper->c64->isPoweredOff();
+}
+- (BOOL) isRunning
+{
+    return wrapper->c64->isRunning();
+}
+- (BOOL) isPaused
+{
+    return wrapper->c64->isPaused();
+}
+- (void) run
+{
+    wrapper->c64->run();
+}
+- (void) pause
+{
+    wrapper->c64->pause();
+}
+- (void) suspend
+{
+    wrapper->c64->suspend();
+}
+- (void) resume
+{
+    wrapper->c64->resume();
+}
+- (void) requestSnapshot
+{
+    wrapper->c64->requestSnapshot();
+}
+- (SnapshotProxy *) latestSnapshot
+{
+    Snapshot *snapshot = wrapper->c64->latestSnapshot();
+    return [SnapshotProxy make:snapshot];
+}
+- (void) loadFromSnapshot:(SnapshotProxy *)proxy
+{
+    Snapshot *snapshot = (Snapshot *)([proxy wrapper]->file);
+    wrapper->c64->loadFromSnapshot(snapshot);
+}
+- (C64Configuration) config
+{
+    return wrapper->c64->getConfig();
+}
+- (NSInteger) getConfig:(ConfigOption)opt
+{
+    return wrapper->c64->getConfig(opt);
+}
+- (NSInteger) getConfig:(ConfigOption)opt drive:(DriveID)id
+{
+    return wrapper->c64->getDriveConfig(id, opt);
+}
+- (BOOL) configure:(ConfigOption)opt value:(NSInteger)val
+{
+    return wrapper->c64->configure(opt, val);
+}
+- (BOOL) configure:(ConfigOption)opt enable:(BOOL)val
+{
+    return wrapper->c64->configure(opt, val ? 1 : 0);
+}
+- (BOOL) configure:(ConfigOption)opt drive:(DriveID)id value:(NSInteger)val
+{
+    return wrapper->c64->configureDrive(id, opt, val);
+}
+- (BOOL) configure:(ConfigOption)opt drive:(DriveID)id enable:(BOOL)val
+{
+    return wrapper->c64->configureDrive(id, opt, val ? 1 : 0);
+}
+// Configuring the emulator
+- (C64Model) model
+{
+    return wrapper->c64->getModel();
+}
+- (void) setModel:(C64Model)model
+{
+    wrapper->c64->setModel(model);
+}
+
+// Accessing the message queue
+- (Message)message
+{
+    return wrapper->c64->getMessage();
+}
+- (void) addListener:(const void *)sender function:(Callback *)func
+{
+    wrapper->c64->addListener(sender, func);
+}
+- (void) removeListener:(const void *)sender
+{
+    wrapper->c64->removeListener(sender);
+}
+- (void) stopAndGo
+{
+    wrapper->c64->stopAndGo();
+}
+- (void) stepInto
+{
+    wrapper->c64->stepInto();
+}
+- (void) stepOver
+{
+    wrapper->c64->stepOver();
+}
+- (BOOL) warp
+{
+    return wrapper->c64->inWarpMode();
+}
+- (void) warpOn
+{
+    wrapper->c64->enableWarpMode();
+}
+- (void) warpOff
+{
+    wrapper->c64->disableWarpMode();
+}
+
+// Handling ROMs
+- (BOOL) hasBasicRom
+{
+    return wrapper->c64->hasBasicRom();
+}
+- (BOOL) hasCharRom
+{
+    return wrapper->c64->hasCharRom();
+}
+- (BOOL) hasKernalRom
+{
+    return wrapper->c64->hasKernalRom();
+}
+- (BOOL) hasVC1541Rom
+{
+    return wrapper->c64->hasVC1541Rom();
+}
+- (BOOL) hasMega65BasicRom
+{
+    return wrapper->c64->hasMega65BasicRom();
+}
+- (BOOL) hasMega65CharRom
+{
+    return wrapper->c64->hasMega65CharRom();
+}
+- (BOOL) hasMega65KernelRom
+{
+    return wrapper->c64->hasMega65KernalRom();
+}
+- (BOOL) isBasicRom:(NSURL *)url
+{
+    return RomFile::isBasicRomFile([[url path] UTF8String]);
+}
+- (BOOL) isCharRom:(NSURL *)url
+{
+    return RomFile::isCharRomFile([[url path] UTF8String]);
+}
+- (BOOL) isKernalRom:(NSURL *)url
+{
+    return RomFile::isKernalRomFile([[url path] UTF8String]);
+}
+- (BOOL) isVC1541Rom:(NSURL *)url
+{
+    return RomFile::isVC1541RomFile([[url path] UTF8String]);
+}
+- (BOOL) loadBasicRomFromFile:(NSURL *)url
+{
+    return wrapper->c64->loadBasicRomFromFile([[url path] UTF8String]);
+}
+- (BOOL) loadCharRomFromFile:(NSURL *)url
+{
+    return wrapper->c64->loadCharRomFromFile([[url path] UTF8String]);
+}
+- (BOOL) loadKernalRomFromFile:(NSURL *)url
+{
+    return wrapper->c64->loadKernalRomFromFile([[url path] UTF8String]);
+}
+- (BOOL) loadVC1541RomFromFile:(NSURL *)url
+{
+    return wrapper->c64->loadVC1541RomFromFile([[url path] UTF8String]);
+}
+- (BOOL) loadBasicRomFromBuffer:(NSData *)data
+{
+    if (data == NULL) return NO;
+    const u8 *bytes = (const u8 *)[data bytes];
+    return wrapper->c64->loadBasicRomFromBuffer(bytes, [data length]);
+}
+- (BOOL) loadCharRomFromBuffer:(NSData *)data
+{
+    if (data == NULL) return NO;
+    const u8 *bytes = (const u8 *)[data bytes];
+    return wrapper->c64->loadCharRomFromBuffer(bytes, [data length]);
+}
+- (BOOL) loadKernalRomFromBuffer:(NSData *)data
+{
+    if (data == NULL) return NO;
+    const u8 *bytes = (const u8 *)[data bytes];
+    return wrapper->c64->loadKernalRomFromBuffer(bytes, [data length]);
+}
+- (BOOL) loadVC1541RomFromBuffer:(NSData *)data
+{
+    if (data == NULL) return NO;
+    const u8 *bytes = (const u8 *)[data bytes];
+    return wrapper->c64->loadVC1541RomFromBuffer(bytes, [data length]);
+}
+- (BOOL) saveBasicRom:(NSURL *)url
+{
+    return wrapper->c64->saveBasicRom([[url path] UTF8String]);
+}
+- (BOOL) saveCharRom:(NSURL *)url
+{
+    return wrapper->c64->saveCharRom([[url path] UTF8String]);
+}
+- (BOOL) saveKernalRom:(NSURL *)url
+{
+    return wrapper->c64->saveKernalRom([[url path] UTF8String]);
+}
+- (BOOL) saveVC1541Rom:(NSURL *)url
+{
+    return wrapper->c64->saveVC1541Rom([[url path] UTF8String]);
+}
+- (void) deleteBasicRom
+{
+    wrapper->c64->deleteBasicRom();
+}
+- (void) deleteKernalRom
+{
+    wrapper->c64->deleteKernalRom();
+}
+- (void) deleteCharRom
+{
+    wrapper->c64->deleteCharRom();
+}
+- (void) deleteVC1541Rom
+{
+    wrapper->c64->deleteVC1541Rom();
+}
+- (u64) basicRomFingerprint
+{
+    return wrapper->c64->basicRomFNV64();
+}
+- (u64) charRomFingerprint
+{
+    return wrapper->c64->charRomFNV64();
+}
+- (u64) kernalRomFingerprint
+{
+    return wrapper->c64->kernalRomFNV64();
+}
+- (u64) vc1541RomFingerprint
+{
+    return wrapper->c64->vc1541RomFNV64();
+}
+- (RomIdentifier) basicRomIdentifier
+{
+    return wrapper->c64->basicRomIdentifier();
+}
+- (RomIdentifier) kernalRomIdentifier
+{
+    return wrapper->c64->kernalRomIdentifier();
+}
+- (RomIdentifier) charRomIdentifier
+{
+    return wrapper->c64->charRomIdentifier();
+}
+- (RomIdentifier) vc1541RomIdentifier
+{
+    return wrapper->c64->vc1541RomIdentifier();
+}
+- (NSString *) basicRomTitle
+{
+    const char *str = wrapper->c64->basicRomTitle();
+    return str ? [NSString stringWithUTF8String:str] : NULL;
+}
+- (NSString *) charRomTitle
+{
+    const char *str = wrapper->c64->charRomTitle();
+    return str ? [NSString stringWithUTF8String:str] : NULL;
+}
+- (NSString *) kernalRomTitle
+{
+    const char *str = wrapper->c64->kernalRomTitle();
+    return str ? [NSString stringWithUTF8String:str] : NULL;
+}
+- (NSString *) vc1541RomTitle
+{
+    const char *str = wrapper->c64->vc1541RomTitle();
+    return str ? [NSString stringWithUTF8String:str] : NULL;
+}
+- (NSString *) basicRomSubTitle
+{
+    const char *str = wrapper->c64->basicRomSubTitle();
+    return str ? [NSString stringWithUTF8String:str] : NULL;
+}
+- (NSString *) charRomSubTitle
+{
+    const char *str = wrapper->c64->charRomSubTitle();
+    return str ? [NSString stringWithUTF8String:str] : NULL;
+}
+- (NSString *) kernalRomSubTitle
+{
+    const char *str = wrapper->c64->kernalRomSubtitle();
+    return str ? [NSString stringWithUTF8String:str] : NULL;
+}
+- (NSString *) vc1541RomSubTitle
+{
+    const char *str = wrapper->c64->vc1541RomSubtitle();
+    return str ? [NSString stringWithUTF8String:str] : NULL;
+}
+- (NSString *) basicRomRevision
+{
+    const char *str = wrapper->c64->basicRomRevision();
+    return str ? [NSString stringWithUTF8String:str] : NULL;
+}
+- (NSString *) charRomRevision
+{
+    const char *str = wrapper->c64->charRomRevision();
+    return str ? [NSString stringWithUTF8String:str] : NULL;
+}
+- (NSString *) kernalRomRevision
+{
+    const char *str = wrapper->c64->kernalRomRevision();
+    return str ? [NSString stringWithUTF8String:str] : NULL;
+}
+- (NSString *) vc1541RomRevision
+{
+    const char *str = wrapper->c64->vc1541RomRevision();
+    return str ? [NSString stringWithUTF8String:str] : NULL;
+}
+- (BOOL) isCommodoreRom:(RomIdentifier)rev
+{
+    return RomFile::isCommodoreRom(rev);
+}
+- (BOOL) isPatchedRom:(RomIdentifier)rev;
+{
+    return RomFile::isPatchedRom(rev);
+}
+- (BOOL) isRom:(NSURL *)url
+{
+    return
+    [self isBasicRom:url] ||
+    [self isCharRom:url] ||
+    [self isKernalRom:url] ||
+    [self isVC1541Rom:url];
+}
+
+- (BOOL) loadRom:(NSURL *)url
+{
+    return
+    [self loadBasicRomFromFile:url] ||
+    [self loadCharRomFromFile:url] ||
+    [self loadKernalRomFromFile:url] ||
+    [self loadVC1541RomFromFile:url];
+}
+
+// Flashing files
+- (BOOL)flash:(AnyC64FileProxy *)file
+{
+    return wrapper->c64->flash([file wrapper]->file);
+}
+- (BOOL)flash:(AnyArchiveProxy *)archive item:(NSInteger)nr;
+{
+    AnyArchive *a = (AnyArchive *)([archive wrapper]->file);
+    return wrapper->c64->flash(a, (unsigned)nr);
 }
 
 @end

@@ -136,11 +136,15 @@ struct AnyC64FileWrapper;
 @property (readonly, getter=isPoweredOff) BOOL poweredOff;
 @property (readonly, getter=isRunning) BOOL running;
 @property (readonly, getter=isPaused) BOOL paused;
+
 - (void) run;
 - (void) pause;
-
 - (void) suspend;
 - (void) resume;
+
+- (void) requestSnapshot;
+@property (readonly) SnapshotProxy *latestSnapshot;
+- (void) loadFromSnapshot:(SnapshotProxy *)proxy;
 
 - (C64Configuration) config;
 - (NSInteger) getConfig:(ConfigOption)opt;
@@ -167,35 +171,6 @@ struct AnyC64FileWrapper;
 - (BOOL) warp;
 - (void) warpOn;
 - (void) warpOff;
-
-// Handling snapshots
-- (BOOL) takeAutoSnapshots;
-- (void) setTakeAutoSnapshots:(BOOL)b;
-- (void) suspendAutoSnapshots;
-- (void) resumeAutoSnapshots;
-- (NSInteger) snapshotInterval;
-- (void) setSnapshotInterval:(NSInteger)value;
-
-- (BOOL) restoreAutoSnapshot:(NSInteger)nr;
-- (BOOL) restoreUserSnapshot:(NSInteger)nr;
-- (BOOL) restoreLatestAutoSnapshot;
-- (BOOL) restoreLatestUserSnapshot;
-- (NSInteger) numAutoSnapshots;
-- (NSInteger) numUserSnapshots;
-
-- (NSData *) autoSnapshotData:(NSInteger)nr;
-- (NSData *) userSnapshotData:(NSInteger)nr;
-- (unsigned char *) autoSnapshotImageData:(NSInteger)nr;
-- (unsigned char *) userSnapshotImageData:(NSInteger)nr;
-- (NSSize) autoSnapshotImageSize:(NSInteger)nr;
-- (NSSize) userSnapshotImageSize:(NSInteger)nr;
-- (time_t) autoSnapshotTimestamp:(NSInteger)nr;
-- (time_t) userSnapshotTimestamp:(NSInteger)nr;
-
-- (void) takeUserSnapshot;
-
-- (void) deleteAutoSnapshot:(NSInteger)nr;
-- (void) deleteUserSnapshot:(NSInteger)nr;
 
 // Handling ROMs
 - (BOOL) hasBasicRom;

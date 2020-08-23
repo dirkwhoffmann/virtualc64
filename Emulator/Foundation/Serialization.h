@@ -13,6 +13,8 @@
 #include "C64Types.h"
 #include "C64PrivateTypes.h"
 #include "CPUInstructions.h"
+#include "TimeDelayed.h"
+#include "envelope.h"
 
 //
 // Basic memory buffer I/O
@@ -135,11 +137,13 @@ public:
     COUNT(const SIDEngine)
     COUNT(const GlueLogic)
     COUNT(const FlashRomState)
-
+    COUNT(const reSID::EnvelopeGenerator::State)
+    
     STRUCT(VICIIRegisters)
     STRUCT(SpriteSR)
     STRUCT(DiskData)
     STRUCT(DiskLength)
+    template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
 
     template <class T, size_t N>
     SerCounter& operator&(T (&v)[N])
@@ -204,11 +208,13 @@ public:
     DESERIALIZE64(SIDEngine)
     DESERIALIZE64(GlueLogic)
     DESERIALIZE64(FlashRomState)
+    DESERIALIZE32(reSID::EnvelopeGenerator::State)
 
     STRUCT(VICIIRegisters)
     STRUCT(SpriteSR)
     STRUCT(DiskData)
     STRUCT(DiskLength)
+    template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
 
     template <class T, size_t N>
     SerReader& operator&(T (&v)[N])
@@ -279,11 +285,13 @@ public:
     SERIALIZE64(const SIDEngine)
     SERIALIZE64(const GlueLogic)
     SERIALIZE64(const FlashRomState)
+    SERIALIZE32(const reSID::EnvelopeGenerator::State)
 
     STRUCT(VICIIRegisters)
     STRUCT(SpriteSR)
     STRUCT(DiskData)
     STRUCT(DiskLength)
+    template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
 
     template <class T, size_t N>
     SerWriter& operator&(T (&v)[N])
@@ -339,6 +347,7 @@ public:
     STRUCT(SpriteSR)
     STRUCT(DiskData)
     STRUCT(DiskLength)
+    template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
 
     template <class T, size_t N>
     SerResetter& operator&(T (&v)[N])
