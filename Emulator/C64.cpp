@@ -128,7 +128,7 @@ C64::getConfig()
 }
 
 long
-C64::getConfig(ConfigOption option)
+C64::getConfigItem(ConfigOption option)
 {
     switch (option) {
             
@@ -155,7 +155,7 @@ C64::getConfig(ConfigOption option)
 }
 
 long
-C64::getDriveConfig(DriveID id, ConfigOption option)
+C64::getConfigItem(DriveID id, ConfigOption option)
 {
     assert(isDriveID(id));
     
@@ -298,7 +298,7 @@ exit:
 }
 
 bool
-C64::configureDrive(DriveID id, ConfigOption option, long value)
+C64::configure(DriveID id, ConfigOption option, long value)
 {
     assert(isDriveID(id));
     
@@ -485,22 +485,7 @@ C64::pause()
 void
 C64::inspect()
 {
-    if (!isRunning()) {
-        
-        // If the emulator isn't running, inspect immediately
-        inspect(inspectionTarget);
-        
-    } else {
-        
-        // Otherwise, schedule an inspection to be carried out later
-        signalInspect();
-    }
-}
-
-void
-C64::inspect(InspectionTarget target)
-{    
-    switch(target) {
+    switch(inspectionTarget) {
             
         case INSPECT_CPU: cpu.inspect(); break;
         case INSPECT_MEM: mem.inspect(); break;
@@ -847,7 +832,7 @@ C64::runLoop()
             // Are we requested to update the debugger info structs?
             if (runLoopCtrl & RL_INSPECT) {
                 debug(RUN_DEBUG, "RL_INSPECT\n");
-                inspect(inspectionTarget);
+                inspect();
                 clearControlFlags(RL_INSPECT);
             }
             

@@ -65,11 +65,10 @@
  */
 class C64 : public HardwareComponent {
         
-public:
-        
     // The currently set inspection target (only evaluated in debug mode)
     InspectionTarget inspectionTarget;
 
+    
     //
     // Sub components
     //
@@ -237,6 +236,8 @@ public:
     C64();
     ~C64();
     
+    void prefix() override;
+
     void reset();
 
 private:
@@ -253,14 +254,31 @@ public:
     // Returns the currently set configuration
     C64Configuration getConfig();
 
-    // Get or sets a single configuration item
-    long getConfig(ConfigOption option);
-    long getDriveConfig(DriveID id, ConfigOption option);
-
+    // Gets a single configuration item
+    long getConfigItem(ConfigOption option);
+    long getConfigItem(DriveID id, ConfigOption option);
+    
     // Sets a single configuration item
     bool configure(ConfigOption option, long value);
-    bool configureDrive(DriveID id, ConfigOption option, long value);
+    bool configure(DriveID id, ConfigOption option, long value);
+    
+    
+    //
+    // Analyzing
+    //
+    
+public:
+       
+    void inspect();
+    // void inspect(InspectionTarget target);
+    void setInspectionTarget(InspectionTarget target);
+    void clearInspectionTarget();
+    
+private:
+    
+    void _dump() override;
 
+    
     
     //
     // Serializing
@@ -295,12 +313,16 @@ private:
     
     
     //
-    // Methods from HardwareComponent
+    // Controlling
     //
-
+    
 public:
 
-    void prefix() override;
+    void powerOn();
+    void powerOff();
+    void run();
+    void pause();
+    
     void setWarp(bool enable);
     bool inWarpMode() { return warpMode; }
     void enableWarpMode() { setWarp(true); }
@@ -309,13 +331,6 @@ public:
     void enableDebugMode() { setDebug(true); }
     void disableDebugMode() { setDebug(false); }
     bool inDebugMode() { return debugMode; }
-
-    void powerOn();
-    void powerOff();
-    void run();
-    void pause();
-    void inspect();
-    void inspect(InspectionTarget target);
     
 private:
 
@@ -324,31 +339,14 @@ private:
     void _run() override;
     void _pause() override;
     void _ping() override;
-    void _dump() override;
     void _setWarp(bool enable) override;
     void _setClockFrequency(u32 value) override;
     
-    
-    //
-    // Managing debug mode
-    //
-    
-public:
-        
-    /* Sets the inspection target.
-     * If an inspection target is set, the emulator periodically calls
-     * inspect().
-     */
-    void setInspectionTarget(InspectionTarget target);
 
-    // Removed the currently set inspection target
-    void clearInspectionTarget();
-    
-    
     //
-    // Controlling the emulation thread
+    // Working with the emulator thread
     //
-    
+
 public:
     
     /* Requests the emulator thread to stop and locks the threadLock.

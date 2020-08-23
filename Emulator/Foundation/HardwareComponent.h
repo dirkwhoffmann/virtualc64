@@ -287,13 +287,8 @@ debug(SNP_DEBUG, "Serialized to %d bytes\n", writer.ptr - buffer); \
 return writer.ptr - buffer;
 
 
-/*
-bool inWarpMode() { return warpMode; }
-bool inDebugMode() { return debugMode; }
-*/
-
 //
-// Managing the component
+// DEPRECATED
 //
     
 public:

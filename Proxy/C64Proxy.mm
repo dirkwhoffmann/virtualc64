@@ -1943,11 +1943,11 @@ struct AnyC64FileWrapper { AnyFile *file; };
 }
 - (NSInteger) getConfig:(ConfigOption)opt
 {
-    return wrapper->c64->getConfig(opt);
+    return wrapper->c64->getConfigItem(opt);
 }
 - (NSInteger) getConfig:(ConfigOption)opt drive:(DriveID)id
 {
-    return wrapper->c64->getDriveConfig(id, opt);
+    return wrapper->c64->getConfigItem(id, opt);
 }
 - (BOOL) configure:(ConfigOption)opt value:(NSInteger)val
 {
@@ -1959,11 +1959,11 @@ struct AnyC64FileWrapper { AnyFile *file; };
 }
 - (BOOL) configure:(ConfigOption)opt drive:(DriveID)id value:(NSInteger)val
 {
-    return wrapper->c64->configureDrive(id, opt, val);
+    return wrapper->c64->configure(id, opt, val);
 }
 - (BOOL) configure:(ConfigOption)opt drive:(DriveID)id enable:(BOOL)val
 {
-    return wrapper->c64->configureDrive(id, opt, val ? 1 : 0);
+    return wrapper->c64->configure(id, opt, val ? 1 : 0);
 }
 // Configuring the emulator
 - (C64Model) model
