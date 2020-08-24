@@ -57,15 +57,13 @@ private:
     // Number of sound samples stored in ringbuffer
     static constexpr size_t bufferSize = 12288;
     
-    /* The audio sample ringbuffer.
-     * This ringbuffer serves as the data interface between the emulation code
-     * and the audio API (CoreAudio on Mac OS X).
+    /* The audio sample ringbuffer. This ringbuffer is used to transfer samples
+     * from the emulated SID to the native audio device (CoreAudio on macOS).
      */
     float ringBuffer[bufferSize];
     
-    /* Scaling value for sound samples.
-     * All sound samples produced by reSID are scaled by this value before they
-     * are written into the ringBuffer.
+    /* Scaling value for sound samples. All sound samples produced by reSID are
+     * scaled by this value before they are written into the ringBuffer.
      */
     static constexpr float scale = 0.000005f;
     
@@ -76,20 +74,18 @@ private:
     // Current volume (0 = silent)
     i32 volume;
     
-    /* Target volume
-     * Whenever an audio sample is written, the volume is increased or decreased
-     * by volumeDelta steps to make it reach the target volume eventually. This
-     * feature simulates a fading effect.
+    /* Target volume. Whenever an audio sample is written, the volume is
+     * increased or decreased by volumeDelta steps to make it reach the target
+     * volume eventually. This feature simulates a fading effect.
      */
     i32 targetVolume;
     
     // Maximum volume
     const static i32 maxVolume = 100000;
     
-    /* Volume offset
-     * If the current volume does not match the target volume, it is increased
-     * or decreased by the specified amount. The increase or decrease takes
-     * place whenever an audio sample is generated.
+    /* Volume offset. If the current volume does not match the target volume,
+     * it is increased or decreased by the specified amount. The increase or
+     * decrease takes place whenever an audio sample is generated.
      */
     i32 volumeDelta;
     
@@ -117,20 +113,6 @@ public:
     
     long getConfigItem(ConfigOption option);
     bool setConfigItem(ConfigOption option, long value) override;
-    
-    /*
-    SIDRevision getRevision() { return config.revision; }
-    void setRevision(SIDRevision rev);
-
-    bool getAudioFilter() { return config.filter; }
-    void setFilter(bool enable);
-    
-    SIDEngine getEngine() { return config.engine; }
-    void setEngine(SIDEngine engine);
-        
-    SamplingMethod getSamplingMethod() { return config.sampling; }
-    void setSamplingMethod(SamplingMethod method);
-    */
     
     double getSampleRate();
     void setSampleRate(double rate);
@@ -199,14 +181,14 @@ public:
     // Sets the current volume
     void setVolume(i32 vol) { volume = vol; }
     
-    /* Ramps the volume up
-     * Configures volume and targetVolume to simulate a smooth audio fade in
+    /* Ramps the volume up. Configures volume and targetVolume to simulate a
+     * smooth audio fade in
      */
     void rampUp() { targetVolume = maxVolume; volumeDelta = 3; ignoreNextUnderOrOverflow(); }
     void rampUpFromZero() { volume = 0; rampUp(); }
     
-    /* Ramps the volume down
-     * Configures volume and targetVolume to simulate a quick audio fade out
+    /* Ramps the volume down. Configures volume and targetVolume to simulate a
+     * quick audio fade out
      */
     void rampDown() { targetVolume = 0; volumeDelta = 50; ignoreNextUnderOrOverflow(); }
     

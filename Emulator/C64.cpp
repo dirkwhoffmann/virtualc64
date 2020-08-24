@@ -149,7 +149,8 @@ C64::getConfigItem(ConfigOption option)
         case OPT_SID_SAMPLING:
             return sid.getConfigItem(option);
 
-        case OPT_RAM_PATTERN:  return (long)mem.getRamPattern();
+        case OPT_RAM_PATTERN:
+            return mem.getConfigItem(option);
             
         default:
             assert(false);
@@ -178,46 +179,13 @@ C64::getConfigItem(DriveID id, ConfigOption option)
 bool
 C64::configure(ConfigOption option, long value)
 {
-    C64Configuration current = getConfig();
+    // Propagate configuration request to all components
+    bool changed = HardwareComponent::configure(option, value);
     
-    switch (option) {
-                    
-        case OPT_RAM_PATTERN:
-            
-            if (!isRamPattern(value)) {
-                warn("Invalid RAM pattern: %d\n", value);
-                goto error;
-            }
-            
-            if (current.mem.ramPattern == value) goto exit;
-            suspend();
-            mem.setRamPattern((RamPattern)value);
-            resume();
-            goto success;
-            
-        default:
-            
-            //
-            // NEW CODE (EVERYTHING ELSE WILL GO AWAY)
-            //
-            
-            // Propagate configuration request to all components
-            bool changed = HardwareComponent::configure(option, value);
-            
-            // Inform the GUI if the configuration has changed
-            if (changed) queue.putMessage(MSG_CONFIG);
-            
-            return changed;
-    }
+    // Inform the GUI if the configuration has changed
+    if (changed) queue.putMessage(MSG_CONFIG);
     
-error:
-    return false;
-    
-success:
-    putMessage(MSG_CONFIG);
-    
-exit:
-    return true;
+    return changed;
 }
 
 bool
@@ -559,11 +527,10 @@ C64::getModel()
     VICRevision vicref = (VICRevision)vic.getConfigItem(OPT_VIC_REVISION);
     bool grayDotBug = vic.getConfigItem(OPT_GRAY_DOT_BUG);
     bool glueLogic = vic.getConfigItem(OPT_GLUE_LOGIC);
-
     CIARevision ciaref = (CIARevision)cia1.getConfigItem(OPT_CIA_REVISION);
     bool timerBBug = cia1.getConfigItem(OPT_TIMER_B_BUG);
-
     SIDRevision sidref = (SIDRevision)sid.getConfigItem(OPT_SID_REVISION);
+    RamPattern pattern = (RamPattern)mem.getConfigItem(OPT_RAM_PATTERN);
     
     // Look for known configurations
     for (unsigned i = 0; i < sizeof(configurations) / sizeof(C64ConfigurationDeprecated); i++) {
@@ -573,7 +540,7 @@ C64::getModel()
             ciaref == configurations[i].cia &&
             timerBBug == configurations[i].timerBBug &&
             sidref == configurations[i].sid &&
-            mem.getRamPattern() == configurations[i].pattern) {
+            pattern == configurations[i].pattern) {
             return (C64Model)i;
         }
     }
@@ -596,9 +563,8 @@ C64::setModel(C64Model m)
         configure(OPT_TIMER_B_BUG,  configurations[m].timerBBug);
         configure(OPT_SID_REVISION, configurations[m].sid);
         configure(OPT_SID_FILTER,   configurations[m].sidFilter);
+        configure(OPT_RAM_PATTERN,  configurations[m].pattern);
 
-        mem.setRamPattern(configurations[m].pattern);
-        
         resume();
     }
 }

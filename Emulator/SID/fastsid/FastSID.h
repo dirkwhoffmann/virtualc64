@@ -91,19 +91,9 @@ public:
     
 private:
     
-    /* Low pass filter lookup table
-     * Needs to be updated when the sample rate changes.
-     */
+    // Filter lookup table
     float lowPassParam[0x800];
-
-    /* Band pass filter lookup table
-     * Needs to be updated when the sample rate changes.
-     */
     float bandPassParam[0x800];
-    
-    /* Filter resonance lookup table
-     * Needs to be updated when the sample rate changes.
-     */
     float filterResTable[16];
     
     // Amplifier lookup table
@@ -188,8 +178,7 @@ public:
     // Special poke function for the I/O memory range.
     void poke(u16 addr, u8 value);
     
-    /* Execute SID
-     * Runs reSID for the specified amount of CPU cycles and writes the
+    /* Emulates SID for the specified amount of CPU cycles and writes the
      * generated sound samples into the internal ring buffer.
      */
     void execute(u64 cycles);
@@ -239,10 +228,9 @@ private:
     // Returns the currently set SID volume
     u8 sidVolume() { return sidreg[0x18] & 0x0F; }
     
-    // Returns true iff voice 3 is disconnected from the audio output
-    /* Setting voice 3 to bypass the filter (FILT3 = 0) and setting bit 7 in
-     * the Mod/Vol register to one prevents voice 3 from reaching the audio
-     * output.
+    /* Returns true iff voice 3 is disconnected from the audio output. Setting
+     * voice 3 to bypass the filter (FILT3 = 0) and setting bit 7 in the Mod/Vol
+     * register to one prevents voice 3 from reaching the audio output.
      */
     bool voiceThreeDisconnected() { return filterOff(2) && (sidreg[0x18] & 0x80); }
     
@@ -267,8 +255,9 @@ private:
     u8 filterType() { return sidreg[0x18] & 0x70; }
     
     
-    // Updates internal data structures
-    // This method is called on each filter related register change
+    /* Updates internal data structures. This method is called on each filter
+     * related register change.
+     */
     void updateInternals();
 };
 

@@ -80,9 +80,13 @@ public:
     
     MemConfig getConfig() { return config; }
     
+    long getConfigItem(ConfigOption option);
+    bool setConfigItem(ConfigOption option, long value) override;
+    
+    /*
     RamPattern getRamPattern() { return config.ramPattern; }
     void setRamPattern(RamPattern pattern) { config.ramPattern = pattern; }
-    
+    */
     
     //
     // Analyzing

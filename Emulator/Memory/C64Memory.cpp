@@ -21,54 +21,58 @@ C64Memory::C64Memory(C64 &ref) : C64Component(ref)
     memset(rom, 0, sizeof(rom));
     config.ramPattern = RAM_PATTERN_C64;
     
-    // Setup the C64's memory bank map
-    
-    // If x = (EXROM, GAME, CHAREN, HIRAM, LORAM), then
-    //   map[x][0] = mapping for range $1000 - $7FFF
-    //   map[x][1] = mapping for range $8000 - $9FFF
-    //   map[x][2] = mapping for range $A000 - $BFFF
-    //   map[x][3] = mapping for range $C000 - $CFFF
-    //   map[x][4] = mapping for range $D000 - $DFFF
-    //   map[x][5] = mapping for range $E000 - $FFFF
+    /* Memory bank map
+     *
+     * If x == (EXROM, GAME, CHAREN, HIRAM, LORAM) then
+     *
+     *   map[x][0] == mapping for range $1000 - $7FFF
+     *   map[x][1] == mapping for range $8000 - $9FFF
+     *   map[x][2] == mapping for range $A000 - $BFFF
+     *   map[x][3] == mapping for range $C000 - $CFFF
+     *   map[x][4] == mapping for range $D000 - $DFFF
+     *   map[x][5] == mapping for range $E000 - $FFFF
+     */
     MemoryType map[32][6] = {
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
-        {M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_CHAR, M_KERNAL},
-        {M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_CHAR, M_KERNAL},
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM},
-        {M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_IO,   M_KERNAL},
-        {M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_IO,   M_KERNAL},
         
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_RAM},
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNAL},
-        {M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_CHAR, M_KERNAL},
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM},
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNAL},
-        {M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_IO,   M_KERNAL},
+        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM    },
+        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM    },
+        { M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_CHAR, M_KERNAL },
+        { M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_CHAR, M_KERNAL },
+        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM    },
+        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM    },
+        { M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_IO,   M_KERNAL },
+        { M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_IO,   M_KERNAL },
         
-        {M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI},
-        {M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI},
-        {M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI},
-        {M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI},
-        {M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI},
-        {M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI},
-        {M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI},
-        {M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI},
+        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM    },
+        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_RAM    },
+        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNAL },
+        { M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_CHAR, M_KERNAL },
+        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM    },
+        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM    },
+        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNAL },
+        { M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_IO,   M_KERNAL },
         
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_RAM},
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNAL},
-        {M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_CHAR, M_KERNAL},
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM},
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNAL},
-        {M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_IO,   M_KERNAL}
+        { M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI  },
+        { M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI  },
+        { M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI  },
+        { M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI  },
+        { M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI  },
+        { M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI  },
+        { M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI  },
+        { M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI  },
+        
+        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM    },
+        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_RAM    },
+        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNAL },
+        { M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_CHAR, M_KERNAL },
+        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM    },
+        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM    },
+        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNAL },
+        { M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_IO,   M_KERNAL }
     };
     
     for (unsigned i = 0; i < 32; i++) {
+        
         bankMap[i][0x0] = M_PP;
         bankMap[i][0x1] = map[i][0];
         bankMap[i][0x2] = map[i][0];
@@ -106,6 +110,40 @@ C64Memory::_reset()
     srand(1000);
     for (unsigned i = 0; i < sizeof(colorRam); i++) {
         colorRam[i] = (rand() & 0xFF);
+    }
+}
+
+long
+C64Memory::getConfigItem(ConfigOption option)
+{
+    switch (option) {
+            
+        case OPT_RAM_PATTERN:  return config.ramPattern;
+        
+        default: assert(false);
+    }
+}
+
+bool
+C64Memory::setConfigItem(ConfigOption option, long value)
+{
+    switch (option) {
+            
+        case OPT_RAM_PATTERN:
+            
+            if (!isRamPattern(value)) {
+                warn("Invalid RAM pattern: %d\n", value);
+                return false;
+            }
+            if (config.ramPattern == value) {
+                return false;
+            }
+            
+            config.ramPattern = (RamPattern)value;
+            return true;
+            
+        default:
+            return false;
     }
 }
 

@@ -120,43 +120,6 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
     }
 }
 
-/*
-void
-SIDBridge::setRevision(SIDRevision rev)
-{
-    assert(isSIDRevision(rev));
-    
-    config.revision = rev;
-    
-    resid.setRevision(rev);
-    fastsid.setRevision(rev);
-}
-
-void
-SIDBridge::setFilter(bool value)
-{
-    config.filter = value;
-    
-    resid.setAudioFilter(value);
-    fastsid.setAudioFilter(value);
-}
-
-void
-SIDBridge::setEngine(SIDEngine value)
-{
-    config.engine = value;
-}
-
-void
-SIDBridge::setSamplingMethod(SamplingMethod method)
-{
-    config.sampling = method;
-    
-    // Option is ReSID only
-    resid.setSamplingMethod(method);
-}
-*/
-
 double
 SIDBridge::getSampleRate()
 {
