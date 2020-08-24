@@ -25,6 +25,48 @@ HardwareComponent::initialize()
     _initialize();
 }
 
+void
+HardwareComponent::reset()
+{
+    // Reset all subcomponents
+    for (HardwareComponent *c : subComponents) c->reset();
+
+    // Reset this component
+    _reset();
+}
+
+bool
+HardwareComponent::configure(ConfigOption option, long value)
+{
+    bool result = false;
+    
+    // Configure all subcomponents
+    for (HardwareComponent *c : subComponents) {
+        result |= c->configure(option, value);
+    }
+    
+    // Configure this component
+    result |= setConfigItem(option, value);
+
+    return result;
+}
+
+bool
+HardwareComponent::configure(unsigned dfn, ConfigOption option, long value)
+{
+    bool result = false;
+    
+    // Configure all subcomponents
+    for (HardwareComponent *c : subComponents) {
+        result |= c->configure(dfn, option, value);
+    }
+    
+    // Configure this component
+    result |= setConfigItem(dfn, option, value);
+
+    return result;
+}
+
 size_t
 HardwareComponent::size()
 {
@@ -158,16 +200,6 @@ HardwareComponent::pause()
 }
 
 void
-HardwareComponent::reset()
-{
-    // Reset all subcomponents
-    for (HardwareComponent *c : subComponents) c->reset();
-
-    // Reset this component
-    _reset();
-}
-
-void
 HardwareComponent::ping()
 {
     // Ping all subcomponents
@@ -176,8 +208,6 @@ HardwareComponent::ping()
     // Ping this component
     _ping();
 }
-
-
 
 void
 HardwareComponent::inspect()

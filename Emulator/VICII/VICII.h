@@ -110,64 +110,59 @@ private:
     //                                (S/LUM and COLOR)              [C.B.]
 
     
-    /* Refresh counter (1)
-     * "The VICII does five read accesses in every raster line for the refresh
-     *  of the dynamic RAM. An 8 bit refresh counter (REF) is used to generate
-     *  256 DRAM row addresses. The counter is reset to $ff in raster line 0
-     *  and decremented by 1 after each refresh access." [C.B.]
-     *  See also: rAccess()
+    /* Refresh counter (1): "The VICII does five read accesses in every raster
+     * line for the refresh of the dynamic RAM. An 8 bit refresh counter (REF)
+     * is used to generate 256 DRAM row addresses. The counter is reset to $ff
+     * in raster line 0 and decremented by 1 after each refresh access." [C.B.]
+     * See also: rAccess()
      */
     u8 refreshCounter;
     
-    /* Raster counter X (2)
-     * Defines the sprite coordinate system.
+    /* Raster counter X (2): Defines the sprite coordinate system.
      */
     u16 xCounter;
     
-    /* Y raster counter (3)
-     * The rasterline counter is usually incremented in cycle 1. The only
-     * exception is the overflow condition which is handled in cycle 2.
+    /* Y raster counter (3): The rasterline counter is usually incremented in
+     * cycle 1. The only exception is the overflow condition which is handled
+     * in cycle 2.
      */
     u32 yCounter;
     
-    /* Video counter (14)
-     * A 10 bit counter that can be loaded with the value from vcBase.
+    /* Video counter (14): A 10 bit counter that can be loaded with the value
+     * from vcBase.
      */
     u16 vc;
     
-    /* Video counter base
-     * A 10 bit data register that can be loaded with the value from vc.
+    /* Video counter base: A 10 bit data register that can be loaded with the
+     * value from vc.
      */
     u16 vcBase;
     
-    /* Row counter (15)
-     * A 3 bit counter with reset input.
+    /* Row counter (15): A 3 bit counter with reset input.
      */
     u8 rc;
     
-    /* Video matrix (6)
-     * Every 8th rasterline, the VICII chips performs a c-access and fills
-     * this array with character information.
+    /* Video matrix (6): Every 8th rasterline, the VICII chips performs a
+     * c-access and fills this array with character information.
      */
     u8 videoMatrix[40];
     
-    /* Color line (7)
-     * Every 8th rasterline, the VICII chips performs a c-access and fills the
-     * array with color information.
+    /* Color line (7): Every 8th rasterline, the VICII chips performs a
+     * c-access and fills the array with color information.
      */
     u8 colorLine[40];
     
-    /* Video matrix line index
-     * "Besides this, there is a 6 bit counter with reset input that keeps
-     *  track of the position within the internal 40×12 bit video matrix/color
-     *  line where read character pointers are stored resp. read again. I will
-     *  call this 'VMLI' (video matrix line index) here.
+    /* Video matrix line index: "Besides this, there is a 6 bit counter with
+     * reset input that keeps track of the position within the internal 40×12
+     * bit video matrix/color line where read character pointers are stored
+     * resp. read again. I will call this 'VMLI' (video matrix line index)
+     * here." [C.B.]
      */
     u8 vmli;
     
  
-    /* Graphics data sequencer (10)
-     * An 8 bit shift register to synthesize canvas pixels.
+    /* Graphics data sequencer (10): An 8 bit shift register to synthesize
+     * canvas pixels.
      */
     struct {
         
@@ -211,18 +206,18 @@ private:
         
     } sr;
     
-    /* Sprite data sequencer (11)
-     * The VICII chip has a 24 bit (3 byte) shift register for each sprite. It
-     * stores the sprite for one rasterline. If a sprite is a display candidate
-     * in the current rasterline, its shift register is activated when the
-     * raster X coordinate matches the sprites X coordinate. The comparison is
-     * done in method drawSprite(). Once a shift register is activated, it
-     * remains activated until the beginning of the next rasterline. However,
-     * after an activated shift register has dumped out its 24 pixels, it can't
-     * draw anything else than transparent pixels (which is the same as not to
-     * draw anything). An exception is during DMA cycles. When a shift register
-     * is activated during such a cycle, it freezes a short period of time in
-     * which it repeats the previous drawn pixel.
+    /* Sprite data sequencer (11): The VICII chip has a 24 bit (3 byte) shift
+     * register for each sprite. It stores the sprite for one rasterline. If a
+     * sprite is a display candidate in the current rasterline, its shift
+     * register is activated when the raster X coordinate matches the sprites
+     * X coordinate. The comparison is done in method drawSprite(). Once a
+     * shift register is activated, it remains activated until the beginning of
+     * the next rasterline. However, after an activated shift register has
+     * dumped out its 24 pixels, it can't draw anything else than transparent
+     * pixels (which is the same as not to draw anything). An exception is
+     * during DMA cycles. When a shift register is activated during such a
+     * cycle, it freezes a short period of time in which it repeats the
+     * previous drawn pixel.
      */
     SpriteSR spriteSr[8];
     
@@ -271,11 +266,10 @@ private:
     // Border flipflops
     //
     
-    /* Piped frame flipflops state (13)
-     * When a flipflop toggles, the corresponding value in variable current is
-     * changed and a flag is set in variable delay. Function
-     * processDelayedActions() reads the flag and if set to true, updates the
-     * delayed values with the current ones.
+    /* Piped frame flipflops state (13): When a flipflop toggles, the value in
+     * variable 'current' is changed and a flag is set in variable 'delay'.
+     * Function processDelayedActions() reads the flag and if set to true,
+     * updates the delayed values with the current ones.
      */
     struct {
         FrameFlipflops current;
@@ -618,14 +612,19 @@ public:
     
     VICConfig getConfig() { return config; }
     
-    VICRevision getRevision() { return config.revision; }
+    long getConfigItem(ConfigOption option);
+    bool setConfigItem(ConfigOption option, long value) override;
+    
+    VICRevision getRevision() { return config.revision; }    
     void setRevision(VICRevision revision);
-                   
+    
+    /*
     bool getGrayDotBug() { return config.grayDotBug; }
     void setGrayDotBug(bool value) { config.grayDotBug = value; }
     
     GlueLogic getGlueLogic() { return config.glueLogic; }
     void setGlueLogic(GlueLogic type);
+    */
     
 private:
     

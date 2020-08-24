@@ -132,17 +132,17 @@ C64::getConfigItem(ConfigOption option)
 {
     switch (option) {
             
-        case OPT_VIC_REVISION: return (long)vic.getRevision();
-        case OPT_GRAY_DOT_BUG: return (long)vic.getGrayDotBug();
-            
+        case OPT_VIC_REVISION:
+        case OPT_GRAY_DOT_BUG:
+        case OPT_GLUE_LOGIC:
+            return vic.getConfigItem(option);
+                        
         case OPT_CIA_REVISION: return (long)cia1.getRevision();
         case OPT_TIMER_B_BUG:  return (long)cia1.getTimerBBug();
             
         case OPT_SID_REVISION: return (long)sid.getRevision();
         case OPT_SID_FILTER:   return (long)sid.getAudioFilter();
-            
-        case OPT_GLUE_LOGIC:   return (long)vic.getGlueLogic();
-            
+                        
         case OPT_SID_ENGINE:   return (long)sid.getEngine();
         case OPT_SID_SAMPLING: return (long)sid.getSamplingMethod();
             
@@ -175,29 +175,10 @@ C64::getConfigItem(DriveID id, ConfigOption option)
 bool
 C64::configure(ConfigOption option, long value)
 {
-    suspend();
-    
     C64Configuration current = getConfig();
     
     switch (option) {
-            
-        case OPT_VIC_REVISION:
-            
-            if (!isVICRevision(value)) {
-                warn("Invalid VIC revision: %d\n", value);
-                goto error;
-            }
-            
-            if (current.vic.revision == value) goto exit;
-            vic.setRevision((VICRevision)value);
-            goto success;
-            
-        case OPT_GRAY_DOT_BUG:
-            
-            if (current.vic.grayDotBug == value) goto exit;
-            vic.setGrayDotBug(value);
-            goto success;
-            
+                    
         case OPT_CIA_REVISION:
             
             if (!isCIARevision(value)) {
@@ -207,16 +188,20 @@ C64::configure(ConfigOption option, long value)
             
             assert(cia1.getRevision() == cia2.getRevision());
             if (current.cia1.revision == value) goto exit;
+            suspend();
             cia1.setRevision((CIARevision)value);
             cia2.setRevision((CIARevision)value);
+            resume();
             goto success;
             
         case OPT_TIMER_B_BUG:
             
             assert(cia1.getTimerBBug() == cia2.getTimerBBug());
             if (current.cia1.timerBBug == value) goto exit;
+            suspend();
             cia1.setTimerBBug(value);
             cia2.setTimerBBug(value);
+            resume();
             goto success;
             
         case OPT_SID_REVISION:
@@ -227,27 +212,19 @@ C64::configure(ConfigOption option, long value)
             }
             
             if (current.sid.revision == value) goto exit;
+            suspend();
             sid.setRevision((SIDRevision)value);
+            resume();
             goto success;
             
         case OPT_SID_FILTER:
             
             if (current.sid.filter == value) goto exit;
+            suspend();
             sid.setFilter(value);
+            resume();
             goto success;
-            
-            
-        case OPT_GLUE_LOGIC:
-            
-            if (!isGlueLogic(value)) {
-                warn("Invalid glue logic type: %d\n", value);
-                goto error;
-            }
-            
-            if (current.vic.glueLogic == value) goto exit;
-            vic.setGlueLogic((GlueLogic)value);
-            goto success;
-            
+        
         case OPT_SID_ENGINE:
             
             debug("OPT_SID_ENGINE: %d\n", value);
@@ -257,7 +234,9 @@ C64::configure(ConfigOption option, long value)
             }
             
             if (current.sid.engine == value) goto exit;
+            suspend();
             sid.setEngine((SIDEngine)value);
+            resume();
             goto success;
             
         case OPT_SID_SAMPLING:
@@ -268,7 +247,9 @@ C64::configure(ConfigOption option, long value)
             }
             
             if (current.sid.sampling == value) goto exit;
+            suspend();
             sid.setSamplingMethod((SamplingMethod)value);
+            resume();
             goto success;
             
         case OPT_RAM_PATTERN:
@@ -279,21 +260,33 @@ C64::configure(ConfigOption option, long value)
             }
             
             if (current.mem.ramPattern == value) goto exit;
+            suspend();
             mem.setRamPattern((RamPattern)value);
+            resume();
             goto success;
             
-        default: assert(false);
+        default:
+            
+            //
+            // NEW CODE (EVERYTHING ELSE WILL GO AWAY)
+            //
+            
+            // Propagate configuration request to all components
+            bool changed = HardwareComponent::configure(option, value);
+            
+            // Inform the GUI if the configuration has changed
+            if (changed) queue.putMessage(MSG_CONFIG);
+            
+            return changed;
     }
     
 error:
-    resume();
     return false;
     
 success:
     putMessage(MSG_CONFIG);
     
 exit:
-    resume();
     return true;
 }
 
@@ -633,14 +626,18 @@ C64::isReady(ErrorCode *error)
 C64Model
 C64::getModel()
 {
+    VICRevision vicref = vic.getRevision();
+    bool grayDotBug = vic.getConfigItem(OPT_GRAY_DOT_BUG);
+    bool glueLogic = vic.getConfigItem(OPT_GLUE_LOGIC);
+    
     // Look for known configurations
     for (unsigned i = 0; i < sizeof(configurations) / sizeof(C64ConfigurationDeprecated); i++) {
-        if (vic.getRevision() == configurations[i].vic &&
-            vic.getGrayDotBug() == configurations[i].grayDotBug &&
+        if (vicref == configurations[i].vic &&
+            grayDotBug == configurations[i].grayDotBug &&
             cia1.getRevision() == configurations[i].cia &&
             cia1.getTimerBBug() == configurations[i].timerBBug &&
             sid.getRevision() == configurations[i].sid &&
-            vic.getGlueLogic() == configurations[i].glue &&
+            glueLogic == configurations[i].glue &&
             mem.getRamPattern() == configurations[i].pattern) {
             return (C64Model)i;
         }
@@ -656,16 +653,18 @@ C64::setModel(C64Model m)
     if (m != C64_CUSTOM) {
         
         suspend();
-        vic.setRevision(configurations[m].vic);
-        vic.setGrayDotBug(configurations[m].grayDotBug);
+        
+        configure(OPT_VIC_REVISION, configurations[m].vic);
+        configure(OPT_GRAY_DOT_BUG, configurations[m].grayDotBug);
+        configure(OPT_GLUE_LOGIC, configurations[m].glue);
         cia1.setRevision(configurations[m].cia);
         cia2.setRevision(configurations[m].cia);
         cia1.setTimerBBug(configurations[m].timerBBug);
         cia2.setTimerBBug(configurations[m].timerBBug);
         sid.setRevision(configurations[m].sid);
         sid.setFilter(configurations[m].sidFilter);
-        vic.setGlueLogic(configurations[m].glue);
         mem.setRamPattern(configurations[m].pattern);
+        
         resume();
     }
 }

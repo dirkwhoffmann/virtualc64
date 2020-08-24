@@ -82,6 +82,90 @@ VICII::_reset()
     pixelBuffer = currentScreenBuffer;    
 }
 
+long
+VICII::getConfigItem(ConfigOption option)
+{
+    switch (option) {
+            
+        case OPT_VIC_REVISION:  return config.revision;
+        case OPT_GRAY_DOT_BUG:  return config.grayDotBug;
+        case OPT_GLUE_LOGIC:    return config.glueLogic;
+        
+        default: assert(false);
+    }
+}
+
+bool
+VICII::setConfigItem(ConfigOption option, long value)
+{
+    switch (option) {
+            
+        case OPT_VIC_REVISION:
+            
+            if (!isVICRevision(value)) {
+                warn("Invalid VIC revision: %d\n", value);
+                return false;
+            }
+            
+            if (config.revision == value) {
+                return false;
+            }
+            
+            suspend();
+            config.revision = (VICRevision)value;
+            setRevision(config.revision);
+            resume();
+            return true;
+            
+        case OPT_GRAY_DOT_BUG:
+            
+            config.grayDotBug = value;
+            return true;
+            
+        case OPT_GLUE_LOGIC:
+            
+            assert(isGlueLogic(value));
+            config.glueLogic = (GlueLogic)value;
+            return true;
+            
+        default:
+            return false;
+    }
+}
+
+void
+VICII::setRevision(VICRevision revision)
+{
+    debug(VIC_DEBUG, "setRevision(%d)\n", revision);
+    
+    assert(isVICRevision(revision));
+    config.revision = revision;
+    
+    updatePalette();
+    resetScreenBuffers();
+    c64.updateVicFunctionTable();
+    
+    switch(revision) {
+            
+        case PAL_6569_R1:
+        case PAL_6569_R3:
+        case PAL_8565:
+            c64.setClockFrequency(PAL_CLOCK_FREQUENCY);
+            c64.putMessage(MSG_PAL);
+            break;
+            
+        case NTSC_6567:
+        case NTSC_6567_R56A:
+        case NTSC_8562:
+            c64.setClockFrequency(NTSC_CLOCK_FREQUENCY);
+            c64.putMessage(MSG_NTSC);
+            break;
+            
+        default:
+            assert(false);
+    }
+}
+
 void
 VICII::_inspect()
 {
@@ -229,40 +313,7 @@ VICII::getSpriteInfo(int nr)
     return result;
 }
 
-void
-VICII::setRevision(VICRevision revision)
-{
-    debug(VIC_DEBUG, "setRevision(%d)\n", revision);
-    debug("setRevision(%d)\n", revision);
-    
-    assert(isVICRevision(revision));
-    config.revision = revision;
-    
-    updatePalette();
-    resetScreenBuffers();
-    c64.updateVicFunctionTable();
-    
-    switch(revision) {
-            
-        case PAL_6569_R1:
-        case PAL_6569_R3:
-        case PAL_8565:
-            c64.setClockFrequency(PAL_CLOCK_FREQUENCY);
-            c64.putMessage(MSG_PAL);
-            break;
-            
-        case NTSC_6567:
-        case NTSC_6567_R56A:
-        case NTSC_8562:
-            c64.setClockFrequency(NTSC_CLOCK_FREQUENCY);
-            c64.putMessage(MSG_NTSC);
-            break;
-            
-        default:
-            assert(false);
-    }
-}
-
+/*
 void
 VICII::setGlueLogic(GlueLogic type)
 {
@@ -271,6 +322,7 @@ VICII::setGlueLogic(GlueLogic type)
     assert(isGlueLogic(type));
     config.glueLogic = type;
 }
+*/
 
 void
 VICII::setVideoPalette(Palette type)
