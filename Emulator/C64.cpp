@@ -133,13 +133,16 @@ C64::getConfigItem(ConfigOption option)
     switch (option) {
             
         case OPT_VIC_REVISION:
+        case OPT_PALETTE:
         case OPT_GRAY_DOT_BUG:
         case OPT_GLUE_LOGIC:
             return vic.getConfigItem(option);
                         
-        case OPT_CIA_REVISION: return (long)cia1.getRevision();
-        case OPT_TIMER_B_BUG:  return (long)cia1.getTimerBBug();
-            
+        case OPT_CIA_REVISION:
+        case OPT_TIMER_B_BUG:
+            assert(cia1.getConfigItem(option) == cia2.getConfigItem(option));
+            return cia1.getConfigItem(option);
+
         case OPT_SID_REVISION: return (long)sid.getRevision();
         case OPT_SID_FILTER:   return (long)sid.getAudioFilter();
                         
@@ -179,31 +182,6 @@ C64::configure(ConfigOption option, long value)
     
     switch (option) {
                     
-        case OPT_CIA_REVISION:
-            
-            if (!isCIARevision(value)) {
-                warn("Invalid CIA revision: %d\n", value);
-                goto error;
-            }
-            
-            assert(cia1.getRevision() == cia2.getRevision());
-            if (current.cia1.revision == value) goto exit;
-            suspend();
-            cia1.setRevision((CIARevision)value);
-            cia2.setRevision((CIARevision)value);
-            resume();
-            goto success;
-            
-        case OPT_TIMER_B_BUG:
-            
-            assert(cia1.getTimerBBug() == cia2.getTimerBBug());
-            if (current.cia1.timerBBug == value) goto exit;
-            suspend();
-            cia1.setTimerBBug(value);
-            cia2.setTimerBBug(value);
-            resume();
-            goto success;
-            
         case OPT_SID_REVISION:
             
             if (!isSIDRevision(value)) {
@@ -626,16 +604,18 @@ C64::isReady(ErrorCode *error)
 C64Model
 C64::getModel()
 {
-    VICRevision vicref = vic.getRevision();
+    VICRevision vicref = (VICRevision)vic.getConfigItem(OPT_VIC_REVISION);
     bool grayDotBug = vic.getConfigItem(OPT_GRAY_DOT_BUG);
     bool glueLogic = vic.getConfigItem(OPT_GLUE_LOGIC);
+    CIARevision ciaref = (CIARevision)cia1.getConfigItem(OPT_CIA_REVISION);
+    bool timerBBug = cia1.getConfigItem(OPT_TIMER_B_BUG);
     
     // Look for known configurations
     for (unsigned i = 0; i < sizeof(configurations) / sizeof(C64ConfigurationDeprecated); i++) {
         if (vicref == configurations[i].vic &&
             grayDotBug == configurations[i].grayDotBug &&
-            cia1.getRevision() == configurations[i].cia &&
-            cia1.getTimerBBug() == configurations[i].timerBBug &&
+            ciaref == configurations[i].cia &&
+            timerBBug == configurations[i].timerBBug &&
             sid.getRevision() == configurations[i].sid &&
             glueLogic == configurations[i].glue &&
             mem.getRamPattern() == configurations[i].pattern) {
@@ -657,10 +637,9 @@ C64::setModel(C64Model m)
         configure(OPT_VIC_REVISION, configurations[m].vic);
         configure(OPT_GRAY_DOT_BUG, configurations[m].grayDotBug);
         configure(OPT_GLUE_LOGIC, configurations[m].glue);
-        cia1.setRevision(configurations[m].cia);
-        cia2.setRevision(configurations[m].cia);
-        cia1.setTimerBBug(configurations[m].timerBBug);
-        cia2.setTimerBBug(configurations[m].timerBBug);
+        configure(OPT_CIA_REVISION, configurations[m].cia);
+        configure(OPT_TIMER_B_BUG, configurations[m].timerBBug);
+
         sid.setRevision(configurations[m].sid);
         sid.setFilter(configurations[m].sidFilter);
         mem.setRamPattern(configurations[m].pattern);

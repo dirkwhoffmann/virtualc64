@@ -33,7 +33,11 @@ typedef enum : long
 {
     // VICII
     OPT_VIC_REVISION,
+    OPT_PALETTE,
     OPT_GRAY_DOT_BUG,
+    
+    // Logic board
+    OPT_GLUE_LOGIC,
 
     // CIA
     OPT_CIA_REVISION,
@@ -42,9 +46,6 @@ typedef enum : long
     // SID
     OPT_SID_REVISION,
     OPT_SID_FILTER,
-
-    // Logic board
-    OPT_GLUE_LOGIC,
     
     // Sound synthesis
     OPT_SID_ENGINE,

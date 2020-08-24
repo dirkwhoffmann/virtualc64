@@ -618,6 +618,13 @@ public:
     VICRevision getRevision() { return config.revision; }    
     void setRevision(VICRevision revision);
     
+    // Returns the currently used palette type
+    // Palette getPalette() { return config.palette; }
+     
+    // Sets the palette type
+    // void setPalette(Palette type);
+
+    
     /*
     bool getGrayDotBug() { return config.grayDotBug; }
     void setGrayDotBug(bool value) { config.grayDotBug = value; }
@@ -747,12 +754,6 @@ private:
     
 public:
     
-    // Returns the currently used palette type
-    Palette videoPalette() { return config.palette; }
-    
-    // Sets the palette type
-    void setVideoPalette(Palette type);
-
     // Returns true if a PAL chip is plugged in
     bool isPAL() { return config.revision & (PAL_6569_R1 | PAL_6569_R3 | PAL_8565); }
     

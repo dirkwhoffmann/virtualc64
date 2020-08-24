@@ -371,8 +371,8 @@ struct AnyC64FileWrapper;
 	struct VicWrapper *wrapper;
 }
 
-- (NSInteger) videoPalette;
-- (void) setVideoPalette:(NSInteger)value;
+// - (NSInteger) videoPalette;
+// - (void) setVideoPalette:(NSInteger)value;
 - (BOOL) isPAL;
 
 - (void *) screenBuffer;

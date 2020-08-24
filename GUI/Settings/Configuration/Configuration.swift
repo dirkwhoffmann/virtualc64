@@ -144,8 +144,8 @@ class Configuration {
     //
     
     var palette: Int {
-        get { return c64.vic.videoPalette() }
-        set { c64.vic.setVideoPalette(newValue) }
+        get { return c64.getConfig(OPT_PALETTE) }
+        set { c64.configure(OPT_PALETTE, value: newValue) }
     }
     var brightness: Double {
         get { return c64.vic.brightness() }

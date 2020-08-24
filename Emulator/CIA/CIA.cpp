@@ -20,13 +20,6 @@ CIA::CIA(C64 &ref) : C64Component(ref)
 }
 
 void
-CIA::setRevision(CIARevision revision)
-{
-    assert(isCIARevision(revision));
-    config.revision = revision;
-}
-
-void
 CIA::_reset()
 {
     RESET_SNAPSHOT_ITEMS
@@ -36,6 +29,50 @@ CIA::_reset()
 	
 	latchA = 0xFFFF;
 	latchB = 0xFFFF;
+}
+
+long
+CIA::getConfigItem(ConfigOption option)
+{
+    switch (option) {
+            
+        case OPT_CIA_REVISION:  return config.revision;
+        case OPT_TIMER_B_BUG:   return config.timerBBug;
+        
+        default: assert(false);
+    }
+}
+
+bool
+CIA::setConfigItem(ConfigOption option, long value)
+{
+    switch (option) {
+            
+        case OPT_CIA_REVISION:
+            
+            if (!isCIARevision(value)) {
+                warn("Invalid CIA revision: %d\n", value);
+                return false;
+            }
+            if (config.revision == value) {
+                return false;
+            }
+            
+            config.revision = (CIARevision)value;
+            return true;
+            
+        case OPT_TIMER_B_BUG:
+            
+            if (config.timerBBug == value) {
+                return false;
+            }
+
+            config.timerBBug = value;
+            return true;
+            
+        default:
+            return false;
+    }
 }
 
 void

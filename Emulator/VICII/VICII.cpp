@@ -88,6 +88,7 @@ VICII::getConfigItem(ConfigOption option)
     switch (option) {
             
         case OPT_VIC_REVISION:  return config.revision;
+        case OPT_PALETTE:       return config.palette;
         case OPT_GRAY_DOT_BUG:  return config.grayDotBug;
         case OPT_GLUE_LOGIC:    return config.glueLogic;
         
@@ -106,7 +107,6 @@ VICII::setConfigItem(ConfigOption option, long value)
                 warn("Invalid VIC revision: %d\n", value);
                 return false;
             }
-            
             if (config.revision == value) {
                 return false;
             }
@@ -117,6 +117,22 @@ VICII::setConfigItem(ConfigOption option, long value)
             resume();
             return true;
             
+        case OPT_PALETTE:
+            
+            if (!isPalette(value)) {
+                warn("Invalid color palette: %d\n", value);
+                return false;
+            }
+            if (config.palette == value) {
+                return false;
+            }
+            
+            suspend();
+            config.palette = (Palette)value;
+            updatePalette();
+            resume();
+            return true;
+            
         case OPT_GRAY_DOT_BUG:
             
             config.grayDotBug = value;
@@ -124,7 +140,14 @@ VICII::setConfigItem(ConfigOption option, long value)
             
         case OPT_GLUE_LOGIC:
             
-            assert(isGlueLogic(value));
+            if (!isGlueLogic(value)) {
+                warn("Invalid glue logic type: %d\n", value);
+                return false;
+            }
+            if (config.glueLogic == value) {
+                return false;
+            }
+            
             config.glueLogic = (GlueLogic)value;
             return true;
             
@@ -324,8 +347,9 @@ VICII::setGlueLogic(GlueLogic type)
 }
 */
 
+/*
 void
-VICII::setVideoPalette(Palette type)
+VICII::setPalette(Palette type)
 {
     if (!isPalette(type)) {
         warn("Unknown palette type (%d). Assuming color palette.\n", type);
@@ -335,6 +359,7 @@ VICII::setVideoPalette(Palette type)
     config.palette = type;
     updatePalette();
 }
+*/
 
 unsigned
 VICII::getClockFrequency()

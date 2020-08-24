@@ -348,14 +348,16 @@ struct AnyC64FileWrapper { AnyFile *file; };
     }
     return self;
 }
+/*
 - (NSInteger) videoPalette
 {
-    return (NSInteger)wrapper->vic->videoPalette();
+    return (NSInteger)wrapper->vic->getPalette();
 }
 - (void) setVideoPalette:(NSInteger)value
 {
-    wrapper->vic->setVideoPalette((Palette)value);
+    wrapper->vic->setPalette((Palette)value);
 }
+*/
 - (BOOL) isPAL
 {
     return wrapper->vic->isPAL();
