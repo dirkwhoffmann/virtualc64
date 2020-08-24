@@ -52,17 +52,17 @@ HardwareComponent::configure(ConfigOption option, long value)
 }
 
 bool
-HardwareComponent::configure(unsigned dfn, ConfigOption option, long value)
+HardwareComponent::configure(DriveID id, ConfigOption option, long value)
 {
     bool result = false;
     
     // Configure all subcomponents
     for (HardwareComponent *c : subComponents) {
-        result |= c->configure(dfn, option, value);
+        result |= c->configure(id, option, value);
     }
     
     // Configure this component
-    result |= setConfigItem(dfn, option, value);
+    result |= setConfigItem(id, option, value);
 
     return result;
 }

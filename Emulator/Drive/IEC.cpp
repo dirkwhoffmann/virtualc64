@@ -99,8 +99,8 @@ bool IEC::_updateIecLines()
      *    dataLine &= ub1;
      * }
     */
-    dataLine &= drive8.isDisconnected() || (atnLine ^ device1Atn);
-    dataLine &= drive9.isDisconnected() || (atnLine ^ device2Atn);
+    dataLine &= !drive8.isActive() || (atnLine ^ device1Atn);
+    dataLine &= !drive9.isActive() || (atnLine ^ device2Atn);
 
     return (oldAtnLine != atnLine ||
             oldClockLine != clockLine ||

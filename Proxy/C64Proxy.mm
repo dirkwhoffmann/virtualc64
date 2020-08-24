@@ -970,11 +970,15 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     b ? wrapper->drive->startTracing() : wrapper->drive->stopTracing();
 }
-
 - (BOOL) isConnected
 {
-    return wrapper->drive->isConnected();
+    return wrapper->drive->getConfigItem(OPT_DRIVE_CONNECT) != 0;
 }
+- (BOOL) isSwitchedOn
+{
+    return wrapper->drive->getConfigItem(OPT_DRIVE_POWER_SWITCH) != 0;
+}
+/*
 - (BOOL) isDisconnected
 {
     return wrapper->drive->isDisconnected();
@@ -991,6 +995,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->drive->toggleConnection();
 }
+*/
 - (BOOL) readMode
 {
     return wrapper->drive->readMode();

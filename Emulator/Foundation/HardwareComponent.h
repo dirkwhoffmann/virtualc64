@@ -85,7 +85,7 @@ public:
      * has changed.
      */
     bool configure(ConfigOption option, long value);
-    bool configure(unsigned dfn, ConfigOption option, long value);
+    bool configure(DriveID id, ConfigOption option, long value);
     
     /* Requests the change of a single configuration item. Each sub-component
      * checks if it is responsible for the requested configuration item. If
@@ -93,7 +93,7 @@ public:
      * The function returns true iff the current configuration has changed.
      */
     virtual bool setConfigItem(ConfigOption option, long value) { return false; }
-    virtual bool setConfigItem(unsigned dfn, ConfigOption option, long value) { return false; }
+    virtual bool setConfigItem(DriveID id, ConfigOption option, long value) { return false; }
     
     // Dumps debug information about the current configuration to the console
     void dumpConfig();

@@ -167,8 +167,10 @@ C64::getConfigItem(DriveID id, ConfigOption option)
     
     switch (option) {
             
-        case OPT_DRIVE_CONNECT: return drive.isConnected();
-        case OPT_DRIVE_TYPE:    return drive.getType();
+        case OPT_DRIVE_TYPE:
+        case OPT_DRIVE_CONNECT:
+        case OPT_DRIVE_POWER_SWITCH:
+            return drive.getConfigItem(option);
             
         default:
             assert(false);
@@ -191,47 +193,13 @@ C64::configure(ConfigOption option, long value)
 bool
 C64::configure(DriveID id, ConfigOption option, long value)
 {
-    assert(isDriveID(id));
+    // Propagate configuration request to all components
+    bool changed = HardwareComponent::configure(id, option, value);
     
-    suspend();
+    // Inform the GUI if the configuration has changed
+    if (changed) queue.putMessage(MSG_CONFIG);
     
-    Drive &drive = id == DRIVE8 ? drive8 : drive9;
-    DriveConfig current = drive.getConfig();
-    
-    switch (option) {
-            
-        case OPT_DRIVE_CONNECT:
-            
-            debug("OPT_DRIVE_CONNECT\n");
-            
-            if (current.connected == value) goto exit;
-            drive.setConnected(value);
-            goto success;
-            
-        case OPT_DRIVE_TYPE:
-            
-            if (!isDriveType(value)) {
-                warn("Invalid drive type: %d\n", value);
-                goto error;
-            }
-            
-            if (current.type == value) goto exit;
-            drive.setType((DriveType)value);
-            goto success;
-            
-        default: assert(false);
-    }
-    
-error:
-    resume();
-    return false;
-    
-success:
-    putMessage(MSG_CONFIG);
-    
-exit:
-    resume();
-    return true;
+    return changed;
 }
 
 void
@@ -877,8 +845,8 @@ C64::_executeOneCycle()
     
     // Second clock phase (o2 high)
     cpu.executeOneCycle();
-    if (drive8.isConnected()) drive8.execute(durationOfOneCycle);
-    if (drive9.isConnected()) drive9.execute(durationOfOneCycle);
+    if (drive8.isActive()) drive8.execute(durationOfOneCycle);
+    if (drive9.isActive()) drive9.execute(durationOfOneCycle);
     datasette.execute();
     
     rasterCycle++;

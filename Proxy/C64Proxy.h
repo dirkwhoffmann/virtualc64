@@ -578,10 +578,14 @@ struct AnyC64FileWrapper;
 - (void) setTracing:(BOOL)b;
 
 - (BOOL) isConnected;
+- (BOOL) isSwitchedOn;
+/*
+- (BOOL) isConnected;
 - (BOOL) isDisconnected;
 - (void) connect;
 - (void) disconnect;
 - (void) toggleConnection;
+*/
 
 - (BOOL) readMode;
 - (BOOL) writeMode;

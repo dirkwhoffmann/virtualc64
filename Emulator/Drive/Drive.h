@@ -69,8 +69,8 @@ public:
     
 private:
     
-    // Indicates whether the drive is connected and switched on
-    bool needsEmulation = false;
+    // Indicates whether the drive is active (connected and switched on)
+    bool active = false;
     
     // Indicates whether the disk is rotating
     bool spinning = false;
@@ -192,7 +192,7 @@ public:
     
 private:
 
-    void _initialize() override;
+    // void _initialize() override;
     void _reset() override;
 
     
@@ -204,6 +204,10 @@ public:
     
     DriveConfig getConfig() { return config; }
     
+    long getConfigItem(ConfigOption option);
+    bool setConfigItem(DriveID id, ConfigOption option, long value) override;
+    
+    /*
     DriveType getType() { return config.type; }
     void setType(DriveType type) { config.type = type; }
 
@@ -218,7 +222,8 @@ public:
 
     bool isSwitchedOn() { return config.switchedOn; }
     void setPowerSwitch(bool value);
-
+    */
+    
     
     //
     // Analyzing
@@ -295,6 +300,9 @@ public:
     // Working with the drive
     //
 
+    // Checks whether the drive is active (connected and switched on)
+    bool isActive() { return active; }
+    
     // Returns the device number
     DriveID getDeviceNr() { return deviceNr; }
         

@@ -11,7 +11,6 @@
 
 Drive::Drive(DriveID id, C64 &ref) : C64Component(ref), deviceNr(id)
 {
-    // assert(id == DRIVE8 || id == DRIVE9);
     assert(deviceNr == DRIVE8 || deviceNr == DRIVE9);
 
     // deviceNr = id;
@@ -26,17 +25,120 @@ Drive::Drive(DriveID id, C64 &ref) : C64Component(ref), deviceNr(id)
         &via2,
         &disk
     };
-     
+    
+    config.connected = false;
+    config.switchedOn = true;
+    config.type = DRIVE_VC1541II;
+    
     insertionStatus = NOT_INSERTED;
     resetDisk();
 }
 
+/*
+void
+Drive::_initialize()
+{
+    debug("VC1541 initialize");
+
+    // Start with a single drive powered on
+    // deviceNr == DRIVE8 ? connect() : disconnect();
+}
+*/
+
+void
+Drive::_reset()
+{
+    RESET_SNAPSHOT_ITEMS
+
+    cpu.reg.pc = 0xEAA0;
+    halftrack = 41;
+}
+
+void
+Drive::resetDisk()
+{
+    disk.clearDisk();
+}
+
+
+long
+Drive::getConfigItem(ConfigOption option)
+{
+    switch (option) {
+            
+        case OPT_DRIVE_TYPE:          return config.type;
+        case OPT_DRIVE_CONNECT:       return config.connected;
+        case OPT_DRIVE_POWER_SWITCH:  return config.switchedOn;
+            
+        default: assert(false);
+    }
+}
+
+bool
+Drive::setConfigItem(DriveID id, ConfigOption option, long value)
+{
+    if (id != deviceNr) return false;
+    
+    switch (option) {
+            
+        case OPT_DRIVE_TYPE:
+            
+            if (!isDriveType(value)) {
+                warn("Invalid drive type: %d\n", value);
+                return false;
+            }
+            if (config.type == value) {
+                return false;
+            }
+            
+            config.type = (DriveType)value;
+            return true;
+            
+        case OPT_DRIVE_CONNECT:
+            
+            if (config.connected == value) {
+                return false;
+            }
+            if (value && !c64.hasVC1541Rom()) {
+                warn("Can't connect drive (ROM missing).\n");
+                return false;
+            }
+            
+            suspend();
+            config.connected = value;
+            active = config.connected && config.switchedOn;
+            reset();
+            ping();
+            resume();
+            return true;
+            
+        case OPT_DRIVE_POWER_SWITCH:
+            
+            if (config.switchedOn == value) {
+                return false;
+            }
+            
+            suspend();
+            config.switchedOn = value;
+            active = config.connected && config.switchedOn;
+            reset();
+            ping();
+            resume();
+            return true;
+            
+        default:
+            return false;
+    }
+}
+
+/*
 bool
 Drive::isConnectable()
 {
     return c64.hasVC1541Rom();
 }
-
+*/
+/*
 void
 Drive::setConnected(bool value)
 {
@@ -49,7 +151,7 @@ Drive::setConnected(bool value)
     suspend();
 
     config.connected = value;
-    needsEmulation = config.connected && config.switchedOn;
+    active = config.connected && config.switchedOn;
     _reset();
     ping();
 
@@ -65,37 +167,14 @@ Drive::setPowerSwitch(bool value)
     suspend();
     
     config.switchedOn = value;
-    needsEmulation = config.connected && config.switchedOn;
+    active = config.connected && config.switchedOn;
     _reset();
     
     ping();
 
     resume();
 }
-
-void
-Drive::_initialize()
-{
-    debug("VC1541 initialize");
-
-    // Start with a single drive powered on
-    deviceNr == DRIVE8 ? connect() : disconnect();
-}
-
-void
-Drive::_reset()
-{
-    RESET_SNAPSHOT_ITEMS
-
-    cpu.reg.pc = 0xEAA0;
-    halftrack = 41;
-}
-
-void
-Drive::resetDisk()
-{    
-    disk.clearDisk();
-}
+*/
 
 void
 Drive::_ping()

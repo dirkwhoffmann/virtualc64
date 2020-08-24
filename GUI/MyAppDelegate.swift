@@ -197,9 +197,9 @@ var proxy: C64Proxy? {
     //
     
     func hideOrShowDriveMenus(proxy: C64Proxy) {
-            
-        drive8Menu.isHidden = proxy.drive8.isDisconnected()
-        drive9Menu.isHidden = proxy.drive9.isDisconnected()
+                    
+        drive8Menu.isHidden = !proxy.drive8.isConnected()
+        drive9Menu.isHidden = !proxy.drive9.isConnected()
     }
 }
 

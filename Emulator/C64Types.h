@@ -55,8 +55,9 @@ typedef enum : long
     OPT_RAM_PATTERN,
     
     // Drive
-    OPT_DRIVE_CONNECT,
     OPT_DRIVE_TYPE,
+    OPT_DRIVE_CONNECT,
+    OPT_DRIVE_POWER_SWITCH
 }
 ConfigOption;
 
