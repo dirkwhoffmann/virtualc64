@@ -555,6 +555,8 @@ extension MyController {
     
     func processMessage(_ msg: Message) {
 
+        // track("msg: \(msg)")
+        
         func drive8() -> Bool {
             precondition(msg.data == 8 || msg.data == 9)
             return msg.data == 8
@@ -566,7 +568,6 @@ extension MyController {
     
         case MSG_CONFIG:
 
-            track("MSG_CONFIG")
             inspector?.fullRefresh()
             refreshStatusBar()
             
@@ -667,10 +668,10 @@ extension MyController {
     
         case MSG_IEC_BUS_BUSY,
              MSG_IEC_BUS_IDLE:
-
+            
             updateWarp()
             refreshStatusBarDriveActivity()
-            
+
         case MSG_DRIVE_MOTOR_ON,
              MSG_DRIVE_MOTOR_OFF:
 

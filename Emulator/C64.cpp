@@ -181,6 +181,8 @@ C64::getConfigItem(DriveID id, ConfigOption option)
 bool
 C64::configure(ConfigOption option, long value)
 {
+    debug(CNF_DEBUG, "configure(option: %d, value: %d\n", option, value);
+
     // Propagate configuration request to all components
     bool changed = HardwareComponent::configure(option, value);
     
@@ -193,6 +195,8 @@ C64::configure(ConfigOption option, long value)
 bool
 C64::configure(DriveID id, ConfigOption option, long value)
 {
+    debug(CNF_DEBUG, "configure(id: %d, option: %d, value: %d\n", id, option, value);
+    
     // Propagate configuration request to all components
     bool changed = HardwareComponent::configure(id, option, value);
     
@@ -241,9 +245,9 @@ C64::_reset()
 void
 C64::setWarp(bool enable)
 {
-    suspend();
+    // suspend();
     HardwareComponent::setWarp(enable);
-    resume();
+    // resume();
 }
 
 void

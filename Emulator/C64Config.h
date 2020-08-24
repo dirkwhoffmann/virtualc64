@@ -33,7 +33,8 @@ static const int XFILES          = 0; // Report paranormal activity
 
 // Runloop
 static const int RUN_DEBUG       = 0; // Run loop, component states, timing
-static const int SNP_DEBUG       = 1; // Serializing (snapshots)
+static const int CNF_DEBUG       = 0; // Configuration
+static const int SNP_DEBUG       = 0; // Serializing (snapshots)
 static const int MSG_DEBUG       = 0; // Message queue
 
 // CPU

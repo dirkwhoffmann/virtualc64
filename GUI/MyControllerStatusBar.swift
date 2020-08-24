@@ -143,6 +143,12 @@ extension MyController {
         }
     }
     
+    func refreshStatusBarDriveActivity() {
+        
+        refreshStatusBarDriveActivity(drive: DRIVE8)
+        refreshStatusBarDriveActivity(drive: DRIVE9)
+    }
+
     func refreshStatusBarDriveActivity(drive: DriveID) {
         
         assert(drive == DRIVE8 || drive == DRIVE9)
@@ -168,13 +174,7 @@ extension MyController {
             }
         }
     }
-    
-    func refreshStatusBarDriveActivity() {
         
-        refreshStatusBarDriveActivity(drive: DRIVE8)
-        refreshStatusBarDriveActivity(drive: DRIVE9)
-    }
-    
     func refreshStatusBarCartridgeIcons() {
         
         crtSwitch.image = cartridgeSwitch
