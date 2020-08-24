@@ -23,6 +23,105 @@ SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
 }
 
 void
+SIDBridge::_reset()
+{
+    RESET_SNAPSHOT_ITEMS
+    
+    clearRingbuffer();
+    
+    volume = 100000;
+    targetVolume = 100000;
+}
+
+long
+SIDBridge::getConfigItem(ConfigOption option)
+{
+    switch (option) {
+            
+        case OPT_SID_REVISION:  return config.revision;
+        case OPT_SID_FILTER:    return config.filter;
+        case OPT_SID_ENGINE:    return config.engine;
+        case OPT_SID_SAMPLING:  return config.sampling;
+            
+        default: assert(false);
+    }
+}
+
+bool
+SIDBridge::setConfigItem(ConfigOption option, long value)
+{
+    switch (option) {
+            
+        case OPT_SID_REVISION:
+            
+            if (!isSIDRevision(value)) {
+                warn("Invalid SID revision: %d\n", value);
+                return false;
+            }
+            if (config.revision == value) {
+                return false;
+            }
+            
+            suspend();
+            config.revision = (SIDRevision)value;
+            resid.setRevision(config.revision);
+            fastsid.setRevision(config.revision);
+            resume();
+            
+            return true;
+            
+        case OPT_SID_FILTER:
+            
+            if (config.filter == value) {
+                return false;
+            }
+
+            suspend();
+            config.filter = value;
+            resid.setAudioFilter(config.filter);
+            fastsid.setAudioFilter(config.filter);
+            resume();
+            
+            return true;
+            
+        case OPT_SID_ENGINE:
+            
+            if (!isAudioEngine(value)) {
+                warn("Invalid SID engine: %d\n", value);
+                return false;
+            }
+            if (config.engine == value) {
+                return false;
+            }
+            suspend();
+            config.engine = (SIDEngine)value;
+            resume();
+            
+            return true;
+            
+        case OPT_SID_SAMPLING:
+            
+            if (!isSamplingMethod(value)) {
+                warn("Invalid sampling method: %d\n", value);
+                return false;
+            }
+            if (config.engine == value) {
+                return false;
+            }
+            suspend();
+            config.sampling = (SamplingMethod)value;
+            resid.setSamplingMethod(config.sampling); // reSID only
+            resume();
+            
+            return true;
+            
+        default:
+            return false;
+    }
+}
+
+/*
+void
 SIDBridge::setRevision(SIDRevision rev)
 {
     assert(isSIDRevision(rev));
@@ -56,6 +155,7 @@ SIDBridge::setSamplingMethod(SamplingMethod method)
     // Option is ReSID only
     resid.setSamplingMethod(method);
 }
+*/
 
 double
 SIDBridge::getSampleRate()
@@ -111,17 +211,6 @@ void
 SIDBridge::_pause()
 {
     clearRingbuffer();
-}
-
-void
-SIDBridge::_reset()
-{
-    RESET_SNAPSHOT_ITEMS
-    
-    clearRingbuffer();
-    
-    volume = 100000;
-    targetVolume = 100000;
 }
 
 void 

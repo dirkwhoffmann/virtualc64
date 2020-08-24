@@ -217,7 +217,7 @@ public:
     // Sets the sample rate
     void setSampleRate(double rate);
     
-    // Returns true iff audio filters should be emulated.
+    // Returns true iff audio filters should be emulated
     bool getAudioFilter() { return emulateFilter; }
     
     // Enable or disable audio filter emulation

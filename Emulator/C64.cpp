@@ -143,12 +143,12 @@ C64::getConfigItem(ConfigOption option)
             assert(cia1.getConfigItem(option) == cia2.getConfigItem(option));
             return cia1.getConfigItem(option);
 
-        case OPT_SID_REVISION: return (long)sid.getRevision();
-        case OPT_SID_FILTER:   return (long)sid.getAudioFilter();
-                        
-        case OPT_SID_ENGINE:   return (long)sid.getEngine();
-        case OPT_SID_SAMPLING: return (long)sid.getSamplingMethod();
-            
+        case OPT_SID_REVISION:
+        case OPT_SID_FILTER:
+        case OPT_SID_ENGINE:
+        case OPT_SID_SAMPLING:
+            return sid.getConfigItem(option);
+
         case OPT_RAM_PATTERN:  return (long)mem.getRamPattern();
             
         default:
@@ -182,54 +182,6 @@ C64::configure(ConfigOption option, long value)
     
     switch (option) {
                     
-        case OPT_SID_REVISION:
-            
-            if (!isSIDRevision(value)) {
-                warn("Invalid SID revision: %d\n", value);
-                goto error;
-            }
-            
-            if (current.sid.revision == value) goto exit;
-            suspend();
-            sid.setRevision((SIDRevision)value);
-            resume();
-            goto success;
-            
-        case OPT_SID_FILTER:
-            
-            if (current.sid.filter == value) goto exit;
-            suspend();
-            sid.setFilter(value);
-            resume();
-            goto success;
-        
-        case OPT_SID_ENGINE:
-            
-            debug("OPT_SID_ENGINE: %d\n", value);
-            if (!isAudioEngine(value)) {
-                warn("Invalid audio engine: %d\n", value);
-                goto error;
-            }
-            
-            if (current.sid.engine == value) goto exit;
-            suspend();
-            sid.setEngine((SIDEngine)value);
-            resume();
-            goto success;
-            
-        case OPT_SID_SAMPLING:
-            
-            if (!isSamplingMethod(value)) {
-                warn("Invalid sampling method: %d\n", value);
-                goto error;
-            }
-            
-            if (current.sid.sampling == value) goto exit;
-            suspend();
-            sid.setSamplingMethod((SamplingMethod)value);
-            resume();
-            goto success;
-            
         case OPT_RAM_PATTERN:
             
             if (!isRamPattern(value)) {
@@ -607,17 +559,20 @@ C64::getModel()
     VICRevision vicref = (VICRevision)vic.getConfigItem(OPT_VIC_REVISION);
     bool grayDotBug = vic.getConfigItem(OPT_GRAY_DOT_BUG);
     bool glueLogic = vic.getConfigItem(OPT_GLUE_LOGIC);
+
     CIARevision ciaref = (CIARevision)cia1.getConfigItem(OPT_CIA_REVISION);
     bool timerBBug = cia1.getConfigItem(OPT_TIMER_B_BUG);
+
+    SIDRevision sidref = (SIDRevision)sid.getConfigItem(OPT_SID_REVISION);
     
     // Look for known configurations
     for (unsigned i = 0; i < sizeof(configurations) / sizeof(C64ConfigurationDeprecated); i++) {
         if (vicref == configurations[i].vic &&
             grayDotBug == configurations[i].grayDotBug &&
+            glueLogic == configurations[i].glue &&
             ciaref == configurations[i].cia &&
             timerBBug == configurations[i].timerBBug &&
-            sid.getRevision() == configurations[i].sid &&
-            glueLogic == configurations[i].glue &&
+            sidref == configurations[i].sid &&
             mem.getRamPattern() == configurations[i].pattern) {
             return (C64Model)i;
         }
@@ -636,12 +591,12 @@ C64::setModel(C64Model m)
         
         configure(OPT_VIC_REVISION, configurations[m].vic);
         configure(OPT_GRAY_DOT_BUG, configurations[m].grayDotBug);
-        configure(OPT_GLUE_LOGIC, configurations[m].glue);
+        configure(OPT_GLUE_LOGIC,   configurations[m].glue);
         configure(OPT_CIA_REVISION, configurations[m].cia);
-        configure(OPT_TIMER_B_BUG, configurations[m].timerBBug);
+        configure(OPT_TIMER_B_BUG,  configurations[m].timerBBug);
+        configure(OPT_SID_REVISION, configurations[m].sid);
+        configure(OPT_SID_FILTER,   configurations[m].sidFilter);
 
-        sid.setRevision(configurations[m].sid);
-        sid.setFilter(configurations[m].sidFilter);
         mem.setRamPattern(configurations[m].pattern);
         
         resume();

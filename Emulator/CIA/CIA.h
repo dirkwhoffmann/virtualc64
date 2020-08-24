@@ -249,14 +249,7 @@ public:
     long getConfigItem(ConfigOption option);
     bool setConfigItem(ConfigOption option, long value) override;
     
-    /*
-    CIARevision getRevision() { return config.revision; }
-    void setRevision(CIARevision revision);
-    
-    bool getTimerBBug() { return config.timerBBug; }
-    void setTimerBBug(bool value) { config.timerBBug = value; }
-    */
-    
+
     //
     // Analyzing
     //

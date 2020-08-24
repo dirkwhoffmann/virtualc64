@@ -115,6 +115,10 @@ public:
     
     SIDConfig getConfig() { return config; }
     
+    long getConfigItem(ConfigOption option);
+    bool setConfigItem(ConfigOption option, long value) override;
+    
+    /*
     SIDRevision getRevision() { return config.revision; }
     void setRevision(SIDRevision rev);
 
@@ -126,6 +130,7 @@ public:
         
     SamplingMethod getSamplingMethod() { return config.sampling; }
     void setSamplingMethod(SamplingMethod method);
+    */
     
     double getSampleRate();
     void setSampleRate(double rate);
