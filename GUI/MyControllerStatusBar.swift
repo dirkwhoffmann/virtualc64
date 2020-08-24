@@ -38,7 +38,9 @@ extension MyController {
         
         let connected8 = c64.drive8.isConnected()
         let connected9 = c64.drive9.isConnected()
-        
+        let on8 = c64.drive8.isSwitchedOn()
+        let on9 = c64.drive9.isSwitchedOn()
+
         let running = c64.isRunning
         let debug = c64.debugMode
         let jammed = c64.cpu.isJammed()
@@ -63,8 +65,8 @@ extension MyController {
             redLED9: connected9,
             greenLED8: connected8,
             greenLED9: connected9,
-            trackNumber8: connected8,
-            trackNumber9: connected9,
+            trackNumber8: connected8 && on8,
+            trackNumber9: connected9 && on9,
             
             haltIcon: jammed,
             debugIcon: debug,
@@ -206,6 +208,19 @@ extension MyController {
             statusBar = value
             refreshStatusBar()
         }
+    }
+    
+    @IBAction func drivePowerSwitchAction(_ sender: NSButton!) {
+        
+        track()
+        
+        switch sender.tag {
+        case 8: config.drive8PowerSwitch = !config.drive8PowerSwitch
+        case 9: config.drive9PowerSwitch = !config.drive9PowerSwitch
+        default: fatalError()
+        }
+        
+        refreshStatusBar()
     }
     
     @IBAction func warpAction(_ sender: Any!) {

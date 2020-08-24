@@ -568,6 +568,7 @@ extension MyController {
 
             track("MSG_CONFIG")
             inspector?.fullRefresh()
+            refreshStatusBar()
             
         case MSG_POWER_ON:
             

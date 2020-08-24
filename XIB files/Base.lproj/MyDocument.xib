@@ -46,7 +46,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="804" height="645"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <button toolTip="Connect / Disconnect drive" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="1208">
+                    <button toolTip="Connect / Disconnect drive" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="1208">
                         <rect key="frame" x="8" y="4" width="17" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="RGX-9i-hc4"/>
@@ -56,6 +56,9 @@
                             <behavior key="behavior" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="drivePowerSwitchAction:" target="-2" id="czt-JS-P95"/>
+                        </connections>
                     </button>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="214">
                         <rect key="frame" x="625" y="7" width="68" height="11"/>
@@ -154,7 +157,7 @@
                             <constraint firstAttribute="height" constant="16" id="zNC-yf-fb0"/>
                         </constraints>
                     </progressIndicator>
-                    <button toolTip="Connect / Disconnect drive" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="FWS-Ng-oe6">
+                    <button toolTip="Connect / Disconnect drive" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="FWS-Ng-oe6">
                         <rect key="frame" x="130" y="3" width="17" height="17"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="17" id="aOb-5q-kGi"/>
@@ -164,6 +167,9 @@
                             <behavior key="behavior" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="drivePowerSwitchAction:" target="-2" id="ytW-Ej-ycD"/>
+                        </connections>
                     </button>
                     <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="xzf-hU-AKK">
                         <rect key="frame" x="228" y="4" width="16" height="16"/>
@@ -278,7 +284,7 @@
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="16" id="uHM-gs-9iG"/>
                         </constraints>
                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="00" id="reP-W9-Peb">
-                            <font key="font" metaFont="message" size="11"/>
+                            <font key="font" metaFont="label" size="11"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -290,7 +296,7 @@
                             <constraint firstAttribute="height" constant="14" id="YLY-sB-hcs"/>
                         </constraints>
                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="00" id="Ek0-5h-PCi">
-                            <font key="font" metaFont="message" size="11"/>
+                            <font key="font" metaFont="label" size="11"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>

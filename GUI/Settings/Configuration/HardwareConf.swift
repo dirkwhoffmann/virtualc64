@@ -155,22 +155,22 @@ extension ConfigurationController {
         config.glueLogic = sender.selectedTag()
         refresh()
     }
-        
-    @IBAction func hwDriveConnectAction(_ sender: NSButton!) {
-        
-        switch sender.tag {
-        case 8: config.drive8Connected = sender.state == .on
-        case 9: config.drive9Connected = sender.state == .on
-        default: fatalError()
-        }
-        refresh()
-    }
     
     @IBAction func hwDriveTypeAction(_ sender: NSPopUpButton!) {
         
         switch sender.tag {
         case 8: config.drive8Type = sender.tag
         case 9: config.drive9Type = sender.tag
+        default: fatalError()
+        }
+        refresh()
+    }
+    
+    @IBAction func hwDriveConnectAction(_ sender: NSButton!) {
+        
+        switch sender.tag {
+        case 8: config.drive8Connected = sender.state == .on
+        case 9: config.drive9Connected = sender.state == .on
         default: fatalError()
         }
         refresh()
