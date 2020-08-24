@@ -89,6 +89,11 @@ extension MyController: NSMenuItemValidation {
             item.state = drive.hasWriteProtectedDisk() ? .on : .off
             return drive.hasDisk()
             
+        case #selector(MyController.drivePowerAction(_:)):
+            track()
+            item.title = drive.isSwitchedOn() ? "Switch off" : "Switch on"
+            return true
+
         // Tape menu
         case #selector(MyController.insertRecentTapeAction(_:)):
             return validateURLlist(myAppDelegate.recentlyInsertedTapeURLs, image: smallTape)
@@ -475,53 +480,6 @@ extension MyController: NSMenuItemValidation {
         showStatusBar(!statusBar)
     }
     
-    /*
-    public func showStatusBar(_ value: Bool) {
-        
-        let items: [NSView: Bool] = [
-            greenLED1: false,
-            redLED1: false,
-            progress1: false,
-            diskIcon1: !c64.drive8.hasDisk(),
-            greenLED2: false,
-            redLED2: false,
-            progress2: false,
-            diskIcon2: !c64.drive9.hasDisk(),
-            crtIcon: !c64.expansionport.cartridgeAttached(),
-            crtSwitch: !c64.expansionport.hasSwitch(),
-            crtButton1: c64.expansionport.numButtons() < 1,
-            crtButton2: c64.expansionport.numButtons() < 2,
-            tapeIcon: !c64.datasette.hasTape(),
-            tapeProgress: false,
-            clockSpeed: false,
-            clockSpeedBar: false,
-            warpIcon: false
-        ]
-        
-        if !statusBar && value {
-        
-            for (item, hide) in items {
-                item.isHidden = hide
-            }
-            metalScreen.shrink()
-            window?.setContentBorderThickness(24, for: .minY)
-            adjustWindowSize()
-            statusBar = true
-        }
- 
-        if statusBar && !value {
-            
-            for (item, _) in items {
-                item.isHidden = true
-            }
-            metalScreen.expand()
-            window?.setContentBorderThickness(0, for: .minY)
-            adjustWindowSize()
-            statusBar = false
-        }
-    }
-    */
-    
     @IBAction func hideMouseAction(_ sender: Any!) {
         
         undoManager?.registerUndo(withTarget: self) { targetSelf in
@@ -619,7 +577,7 @@ extension MyController: NSMenuItemValidation {
     }
 
     //
-    // Action methods (Disk menu)
+    // Action methods (Drive menu)
     //
 
     @IBAction func newDiskAction(_ sender: NSMenuItem!) {
@@ -745,7 +703,6 @@ extension MyController: NSMenuItemValidation {
         }
     }
     
-    /*
     @IBAction func drivePowerAction(_ sender: NSMenuItem!) {
         
         let drive = DriveID(sender.tag)
@@ -753,14 +710,15 @@ extension MyController: NSMenuItemValidation {
     }
     
     func drivePowerAction(drive: DriveID) {
-
-        if drive == DRIVE8 {
-            c64.drive8.toggleConnection()
-        } else {
-            c64.drive9.toggleConnection()
-        }
+        
+        track()
+        
+        switch drive {
+        case DRIVE8: config.drive8PowerSwitch = !config.drive8PowerSwitch
+        case DRIVE9: config.drive9PowerSwitch = !config.drive9PowerSwitch
+        default: fatalError()
+        }         
     }
-    */
     
     //
     // Action methods (Datasette menu)

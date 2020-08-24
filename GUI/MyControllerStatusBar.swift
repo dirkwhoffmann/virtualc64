@@ -210,13 +210,13 @@ extension MyController {
         }
     }
     
-    @IBAction func drivePowerSwitchAction(_ sender: NSButton!) {
+    @IBAction func drivePowerButtonAction(_ sender: NSButton!) {
         
         track()
         
         switch sender.tag {
-        case 8: config.drive8PowerSwitch = !config.drive8PowerSwitch
-        case 9: config.drive9PowerSwitch = !config.drive9PowerSwitch
+        case 8: drivePowerAction(drive: DRIVE8)
+        case 9: drivePowerAction(drive: DRIVE9)
         default: fatalError()
         }
         
