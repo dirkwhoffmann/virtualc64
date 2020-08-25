@@ -16,6 +16,9 @@ extension Inspector {
             if !drive.hasDisk() {
                 selectedHalftrack = -1
                 selectedSector = -1
+                drvNoDiskText.isHidden = false
+            } else {
+                drvNoDiskText.isHidden = true
             }
 
             drvTrackTableView.refresh(count: count, full: full)
@@ -37,14 +40,16 @@ extension Inspector {
             drvWarningButton.isHidden = trackIsValid
             
             // Let the data view know about the change
-            drvDiskDataView.updateTrackData()
+            drvDiskDataView.reloadData()
         }
+        
+        fullRefresh()
     }
     
     func didSetSector() {
             
         // Let the data view know about the change
-        drvDiskDataView.updateTrackData()
+        drvDiskDataView.reloadData()
         
         // Blend GCR / Byte selector in or out
         drvGcrBytesSel.isHidden = selectedSector < 0
@@ -54,12 +59,16 @@ extension Inspector {
         
         track()
         selectedDrive = sender.selectedSegment == 0 ? DRIVE8 : DRIVE9
+        selectedHalftrack = -1
+        selectedSector = -1
+        fullRefresh()
+        drvDiskDataView.reloadData()
     }
 
     @IBAction func drvGcrBytesAction(_ sender: NSSegmentedControl!) {
         
         track(sender.selectedSegment == 0 ? "GCR" : "Bytes")
-        drvDiskDataView.updateTrackData()
+        drvDiskDataView.reloadData()
     }
 
     @IBAction func drvHeaderDataAction(_ sender: NSSegmentedControl!) {

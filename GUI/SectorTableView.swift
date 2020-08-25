@@ -13,10 +13,8 @@ class SectorTableView: NSTableView, NSTableViewDelegate {
    
     var c64: C64Proxy { return inspector.parent.c64 }
     var drive: DriveProxy { return inspector.drive }
-
-    // This view displays the sectors of the following drive and halftrack
-    var driveNr: DriveID = DRIVE8 { didSet { refresh(count: 0, full: true) } }
-    var halftrack: Halftrack = 1 { didSet { refresh(count: 0, full: true) } }
+    var halftrack: Int { return inspector.selectedHalftrack }
+    var sector: Int { return inspector.selectedSector }
     
     // Data caches
 
@@ -37,12 +35,15 @@ class SectorTableView: NSTableView, NSTableViewDelegate {
                 
         // Map row numbers to sector numbers
         sectorForRow = [:]
-        var row = 0
-        for i in 0 ... Int(maxNumberOfSectors - 1) {
-            let info = drive.disk.sectorInfo(Sector(i))
-            if info.headerBegin != info.headerEnd {
-                sectorForRow[row] = i
-                row += 1
+        
+        if halftrack >= 0 {
+            var row = 0
+            for i in 0 ... Int(maxNumberOfSectors - 1) {
+                let info = drive.disk.sectorInfo(Sector(i))
+                if info.headerBegin != info.headerEnd {
+                    sectorForRow[row] = i
+                    row += 1
+                }
             }
         }
     }
@@ -51,7 +52,7 @@ class SectorTableView: NSTableView, NSTableViewDelegate {
         
         if full {
             cache()
-            if inspector.selectedSector < 0 {
+            if sector < 0 {
                 selectRowIndexes([], byExtendingSelection: false)
             }
         }

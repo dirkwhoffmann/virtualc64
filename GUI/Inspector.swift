@@ -274,15 +274,14 @@ class Inspector: DialogController {
     // Drive panel
     @IBOutlet weak var drvDriveSel: NSSegmentedControl!
     @IBOutlet weak var drvGcrBytesSel: NSSegmentedControl!
-    @IBOutlet weak var drvHeaderDataSel: NSSegmentedControl!
     @IBOutlet weak var drvTrackTableView: TrackTableView!
     @IBOutlet weak var drvSectorTableView: SectorTableView!
     @IBOutlet weak var drvDiskDataView: DiskDataView!
     @IBOutlet weak var drvSeekButton: NSButton!
     @IBOutlet weak var drvHalftracksButton: NSButton!
+    @IBOutlet weak var drvNoDiskText: NSTextField!
     @IBOutlet weak var drvWarningText: NSTextField!
     @IBOutlet weak var drvWarningButton: NSButton!
-    @IBOutlet weak var drvLowerText: NSTextField!
 
     var selectedDrive: DriveID = DRIVE8
     var drive: DriveProxy { return selectedDrive == DRIVE8 ? c64.drive8 : c64.drive9 }

@@ -37,13 +37,13 @@ class DiskDataView: NSScrollView {
 
     }
      
-    func updateTrackData() {
+    func reloadData() {
      
         track("updateTrackData(\(inspector.selectedHalftrack))")
     
         var gcr = ""
 
-        // Read track data
+        // Update displayed data
         if halftrack >= 0 && drive.hasDisk() {
             
             if rawGcr || sector < 0 {
@@ -74,18 +74,7 @@ class DiskDataView: NSScrollView {
         textView?.layoutManager?.replaceTextStorage(textStorage)
         
         // Add new sector markers
-        updateSectorData()
-    }
-    
-    func updateSectorData() {
-        
-        track("updateSectorData(\(inspector.selectedSector))")
-
-        unmarkSectors()
-        
-        if sector >= 0 && rawGcr {
-            markSectors()
-        }
+        if sector >= 0 && rawGcr { markSectors() }
     }
 
     func cache() {

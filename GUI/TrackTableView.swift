@@ -13,7 +13,7 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
    
     var c64: C64Proxy { return inspector.parent.c64 }
     var drive: DriveProxy { return inspector.drive }
-    
+
     // Number of tracks of the displayed disk (0 if no disk is present)
     var numTracks = 0
     

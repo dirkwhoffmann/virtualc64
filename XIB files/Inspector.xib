@@ -96,7 +96,7 @@
                 <outlet property="drvDriveSel" destination="pSG-fR-aTJ" id="DQG-Sz-JSq"/>
                 <outlet property="drvGcrBytesSel" destination="GT6-r2-744" id="smB-KP-kPS"/>
                 <outlet property="drvHalftracksButton" destination="xOE-7f-oq0" id="zWK-dO-ocD"/>
-                <outlet property="drvLowerText" destination="XGn-MT-TJ1" id="oqZ-VK-9oZ"/>
+                <outlet property="drvNoDiskText" destination="Agy-9B-4nF" id="qbd-Ad-Pi7"/>
                 <outlet property="drvSectorTableView" destination="fpd-S5-ZTi" id="Cq7-pJ-m9W"/>
                 <outlet property="drvSeekButton" destination="PcX-yZ-FXg" id="STo-1T-CWm"/>
                 <outlet property="drvTrackTableView" destination="QHD-zl-BVw" id="cDv-q7-Nsy"/>
@@ -297,7 +297,7 @@
                             <column>
                                 <buttonCell type="radio" title="Hex" imagePosition="left" alignment="left" controlSize="small" lineBreakMode="charWrapping" state="on" inset="2" id="z5F-yg-azq">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="label" size="11"/>
+                                    <font key="font" metaFont="controlContent" size="11"/>
                                     <connections>
                                         <action selector="hexAction:" target="-2" id="xYb-tw-vkA"/>
                                     </connections>
@@ -306,7 +306,7 @@
                             <column>
                                 <buttonCell type="radio" title="Dec" imagePosition="left" alignment="left" controlSize="small" inset="2" id="jcr-RG-rX5">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="label" size="11"/>
+                                    <font key="font" metaFont="controlContent" size="11"/>
                                     <connections>
                                         <action selector="decAction:" target="-2" id="092-os-S0x"/>
                                     </connections>
@@ -4031,20 +4031,6 @@
                                     <rect key="frame" x="10" y="33" width="822" height="382"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GT6-r2-744">
-                                            <rect key="frame" x="274" y="345" width="133" height="20"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="vSt-C0-bvz">
-                                                <font key="font" metaFont="label" size="12"/>
-                                                <segments>
-                                                    <segment label="GCR" width="64" selected="YES"/>
-                                                    <segment label="Bytes" width="64" tag="1"/>
-                                                </segments>
-                                            </segmentedCell>
-                                            <connections>
-                                                <action selector="drvGcrBytesAction:" target="-2" id="mdc-gl-piK"/>
-                                            </connections>
-                                        </segmentedControl>
                                         <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="raT-oJ-cVx" customClass="DiskDataView" customModule="VirtualC64" customModuleProvider="target">
                                             <rect key="frame" x="275" y="41" width="530" height="296"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -4170,16 +4156,16 @@
                                             </tableHeaderView>
                                         </scrollView>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lgd-yC-XpT">
-                                            <rect key="frame" x="658" y="15" width="121" height="16"/>
+                                            <rect key="frame" x="677" y="15" width="102" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Drive head position" id="B8v-9M-F1t">
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Seek drive head" id="B8v-9M-F1t">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pSG-fR-aTJ">
-                                            <rect key="frame" x="18" y="346" width="130" height="20"/>
+                                            <rect key="frame" x="73" y="345" width="130" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="RnV-Re-f9Q">
                                                 <font key="font" metaFont="label" size="12"/>
@@ -4234,13 +4220,27 @@
                                                 <action selector="drvSeekAction:" target="-2" id="NG1-Y8-xGU"/>
                                             </connections>
                                         </button>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XGn-MT-TJ1">
-                                            <rect key="frame" x="532" y="345" width="275" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Ipsum lorem" id="VQ2-qk-BVD">
+                                        <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GT6-r2-744">
+                                            <rect key="frame" x="474" y="345" width="133" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="vSt-C0-bvz">
+                                                <font key="font" metaFont="label" size="12"/>
+                                                <segments>
+                                                    <segment label="GCR" width="64" selected="YES"/>
+                                                    <segment label="Bytes" width="64" tag="1"/>
+                                                </segments>
+                                            </segmentedCell>
+                                            <connections>
+                                                <action selector="drvGcrBytesAction:" target="-2" id="mdc-gl-piK"/>
+                                            </connections>
+                                        </segmentedControl>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Agy-9B-4nF">
+                                            <rect key="frame" x="277" y="346" width="98" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="No disk in drive" id="gIf-oZ-aEH">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                     </subviews>
