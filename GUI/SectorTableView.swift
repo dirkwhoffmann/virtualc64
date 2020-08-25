@@ -16,19 +16,14 @@ class SectorTableView: NSTableView, NSTableViewDelegate {
     var halftrack: Int { return inspector.selectedHalftrack }
     var sector: Int { return inspector.selectedSector }
     
-    // Data caches
-
     // Mapping from table rows to sector numbers
     var sectorForRow: [Int: Int] = [:]
-
-    // var bankCache: [Int: MemoryType] = [:]
 
     override func awakeFromNib() {
 
         delegate = self
         dataSource = self
         target = self
-        action = #selector(clickAction(_:))
     }
     
     func cache() {
@@ -58,14 +53,6 @@ class SectorTableView: NSTableView, NSTableViewDelegate {
         }
         reloadData()
     }
-
-    @IBAction func clickAction(_ sender: NSTableView!) {
-
-        track()
-        
-        inspector.selectedSector = sender.clickedRow
-        inspector.fullRefresh()
-    }
 }
 
 extension SectorTableView: NSTableViewDataSource {
@@ -79,5 +66,15 @@ extension SectorTableView: NSTableViewDataSource {
         
         let sector = sectorForRow[row]!
         return "Sector \(sector)"
+    }
+    
+    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+        
+        if let sector = sectorForRow[row] {
+            
+            inspector.selectedSector = sector
+            inspector.fullRefresh()
+        }
+        return true
     }
 }

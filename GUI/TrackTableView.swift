@@ -28,7 +28,6 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
         delegate = self
         dataSource = self
         target = self
-        action = #selector(clickAction(_:))
         
         scrollRowToVisible(0)
         selectRowIndexes([0], byExtendingSelection: false)
@@ -53,19 +52,6 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
         }
         reloadData()
     }
-
-    @IBAction func clickAction(_ sender: NSTableView!) {
-        
-        track()
-        
-        let row = sender.clickedRow
-        if row < 0 { return }
-        
-        let halftrack = Halftrack(showHalftracks ? row + 1 : 2 * row + 1)
-        inspector.selectedSector = -1
-        inspector.selectedHalftrack = Int(halftrack)
-        inspector.fullRefresh()
-    }
 }
 
 extension TrackTableView: NSTableViewDataSource {
@@ -83,5 +69,17 @@ extension TrackTableView: NSTableViewDataSource {
         // Display mode 2: Full tracks + half tracks
         let fulltrack = (row + 1) / 2
         return row % 2 == 0 ? "Track \(fulltrack)" : "Halftrack \(fulltrack).5"
+    }
+    
+    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+        
+        track("row = \(row)")
+        
+        let halftrack = Halftrack(showHalftracks ? row + 1 : 2 * row + 1)
+        inspector.selectedSector = -1
+        inspector.selectedHalftrack = Int(halftrack)
+        inspector.fullRefresh()
+        
+        return true
     }
 }
