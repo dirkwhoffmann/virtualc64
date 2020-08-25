@@ -214,7 +214,7 @@ class Inspector: DialogController {
     @IBOutlet weak var sprExtra1: NSColorWell!
     @IBOutlet weak var sprExtra2: NSColorWell!
 
-    // SID
+    // SID panel
     @IBOutlet weak var sidWaveform1: NSPopUpButton!
     @IBOutlet weak var sidFrequency1: NSTextField!
     @IBOutlet weak var sidPulseWidth1: NSTextField!
@@ -271,6 +271,18 @@ class Inspector: DialogController {
     @IBOutlet weak var sidBufferUnderflows: NSTextField!
     @IBOutlet weak var sidBufferOverflows: NSTextField!
     
+    // Drive panel
+    @IBOutlet weak var drvDriveSel: NSSegmentedControl!
+    @IBOutlet weak var drvTrackSectorSel: NSSegmentedControl!
+    @IBOutlet weak var drvGcrBytesSel: NSSegmentedControl!
+    @IBOutlet weak var drvHeaderDataSel: NSSegmentedControl!
+    @IBOutlet weak var diskTableView: DiskTableView!
+    @IBOutlet weak var diskDataView: NSScrollView!
+    @IBOutlet weak var drvSeekButton: NSButton!
+    @IBOutlet weak var drvAnalyzeButton: NSButton!
+    @IBOutlet weak var drvUpperText: NSTextField!
+    @IBOutlet weak var drvLowerText: NSTextField!
+
     // Cached state of all C64 components
     var cpuInfo: CPUInfo!
     var ciaInfo: CIAInfo!

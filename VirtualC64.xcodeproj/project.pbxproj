@@ -202,6 +202,8 @@
 		50D3092424C7152700B92563 /* Inspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3092324C7152700B92563 /* Inspector.swift */; };
 		50D3092624C71AD300B92563 /* Monitor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D3092524C71AD300B92563 /* Monitor.xib */; };
 		50D3092824C71B0A00B92563 /* Monitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3092724C71B0A00B92563 /* Monitor.swift */; };
+		50D5F88024F4F12F0062EF13 /* DiskTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D5F87F24F4F12F0062EF13 /* DiskTableView.swift */; };
+		50D5F88224F4F2E90062EF13 /* DiskPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D5F88124F4F2E90062EF13 /* DiskPanel.swift */; };
 		50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8421720A82CF500EB859A /* MetalViewEvents.swift */; };
 		50DBB44B2025CE5700489271 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB44A2025CE5700489271 /* Utils.swift */; };
 		50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD8E2008E615008A8761 /* Shaders.swift */; };
@@ -547,6 +549,8 @@
 		50D3092324C7152700B92563 /* Inspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inspector.swift; sourceTree = "<group>"; };
 		50D3092524C71AD300B92563 /* Monitor.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Monitor.xib; sourceTree = "<group>"; };
 		50D3092724C71B0A00B92563 /* Monitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Monitor.swift; sourceTree = "<group>"; };
+		50D5F87F24F4F12F0062EF13 /* DiskTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskTableView.swift; sourceTree = "<group>"; };
+		50D5F88124F4F2E90062EF13 /* DiskPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskPanel.swift; sourceTree = "<group>"; };
 		50D8421720A82CF500EB859A /* MetalViewEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalViewEvents.swift; sourceTree = "<group>"; };
 		50DAABD824F0108A005D426F /* VICIIPrivateTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VICIIPrivateTypes.h; sourceTree = "<group>"; };
 		50DBB44A2025CE5700489271 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -745,10 +749,12 @@
 				5038CA9220B6C298000D9193 /* CIAPanel.swift */,
 				5038CA9420B6C2AC000D9193 /* VICPanel.swift */,
 				5038CA9620B6C2BE000D9193 /* SIDPanel.swift */,
+				50D5F88124F4F2E90062EF13 /* DiskPanel.swift */,
 				507A499B24C8D64700DBF984 /* InstrTableView.swift */,
 				507A499D24C8D65700DBF984 /* TraceTableView.swift */,
 				507A499F24C8D66A00DBF984 /* GuardTableView.swift */,
 				507A49A124C8D71400DBF984 /* BankTableView.swift */,
+				50D5F87F24F4F12F0062EF13 /* DiskTableView.swift */,
 				507887CB20B1858B00941F7E /* MemTableView.swift */,
 				5015F36520B546A30024B4AA /* WaveformView.swift */,
 				506D4D0C20B331A00093C5C6 /* MyFormatter.swift */,
@@ -1458,6 +1464,7 @@
 				504C43AB24AF29AC00E69CAE /* CIA.cpp in Sources */,
 				504C436024AF29AC00E69CAE /* Mach5.cpp in Sources */,
 				504C43A724AF29AC00E69CAE /* VIA.cpp in Sources */,
+				50D5F88024F4F12F0062EF13 /* DiskTableView.swift in Sources */,
 				50BE4B6024E7F8A1008F39C9 /* Date.swift in Sources */,
 				504C435C24AF29AC00E69CAE /* Westermann.cpp in Sources */,
 				504C439524AF29AC00E69CAE /* envelope.cc in Sources */,
@@ -1533,6 +1540,7 @@
 				504C438E24AF29AC00E69CAE /* VICII_colors.cpp in Sources */,
 				5018BFB124B48DC400551848 /* Renderer.swift in Sources */,
 				504C436124AF29AC00E69CAE /* SimonsBasic.cpp in Sources */,
+				50D5F88224F4F2E90062EF13 /* DiskPanel.swift in Sources */,
 				504C438824AF29AC00E69CAE /* Mouse.cpp in Sources */,
 				504C438524AF29AC00E69CAE /* MessageQueue.cpp in Sources */,
 				504C435D24AF29AC00E69CAE /* EasyFlash.cpp in Sources */,
