@@ -324,7 +324,7 @@ Disk::analyzeHalftrack(Halftrack ht)
         }
     }
     if (startOffset == len) {
-        log(0, len, "Track contains no sector header block.");
+        log(0, len, "This track contains no sector header block.");
         return;
     }
     
@@ -366,7 +366,7 @@ Disk::analyzeHalftrack(Halftrack ht)
         bool hasData = info->dataBegin != info->dataEnd;
 
         if (!hasHeader && !hasData) {
-            log(0, 0, "Sector %d not found.\n", s);
+            log(0, 0, "Sector %d is missing.\n", s);
             continue;
         }
         

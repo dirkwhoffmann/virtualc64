@@ -321,6 +321,9 @@ class Inspector: DialogController {
         super.showWindow(self)
         c64.enableDebugging()
         updateInspectionTarget()
+        
+        drvWarningText.isHidden = true
+        drvWarningButton.isHidden = true
     }
         
     func fullRefresh() {

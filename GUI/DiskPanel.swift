@@ -74,9 +74,19 @@ extension Inspector {
         drvTrackTableView.showHalftracks = sender.state == .on
         fullRefresh()
     }
-
+    
     @IBAction func drvWarningAction(_ sender: NSButton!) {
         
         track("Warning")
+        
+        let nibName = NSNib.Name("DiskErrors")
+        let controller = DiskErrorController.init(windowNibName: nibName)
+        controller.parent = self
+        
+        window!.beginSheet(controller.window!, completionHandler: { result in
+            if result == NSApplication.ModalResponse.OK {
+                controller.cleanup()
+            }
+        })
     }    
 }

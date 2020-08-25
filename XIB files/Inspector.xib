@@ -588,7 +588,7 @@
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             </tableHeaderCell>
                                                                             <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="TXR-3c-irT">
-                                                                                <font key="font" metaFont="controlContent"/>
+                                                                                <font key="font" metaFont="label" size="12"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                             </textFieldCell>
@@ -772,7 +772,7 @@
                                                                                 <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
                                                                             </tableHeaderCell>
                                                                             <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="eXt-zA-XwP">
-                                                                                <font key="font" metaFont="controlContent"/>
+                                                                                <font key="font" metaFont="label" size="12"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                             </textFieldCell>
@@ -853,7 +853,7 @@
                                                                                 <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
                                                                             </tableHeaderCell>
                                                                             <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="3ui-ab-IKt">
-                                                                                <font key="font" metaFont="controlContent"/>
+                                                                                <font key="font" metaFont="label" size="12"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                             </textFieldCell>
@@ -1871,7 +1871,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <clipView key="contentView" drawsBackground="NO" id="uN2-KZ-pod">
                                                 <rect key="frame" x="1" y="0.0" width="628" height="195"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tableView focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="Yjj-no-34g" id="9cm-34-eYe" customClass="MemTableView" customModule="VirtualC64" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="628" height="170"/>
@@ -2195,7 +2195,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                             <clipView key="contentView" drawsBackground="NO" id="EqP-5S-dIY">
                                                 <rect key="frame" x="1" y="0.0" width="140" height="195"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tableView wantsLayer="YES" focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="15" headerView="oYx-eh-0z5" id="Dol-9l-TFV" customClass="BankTableView" customModule="VirtualC64" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="140" height="170"/>
@@ -4036,7 +4036,7 @@
                                             <rect key="frame" x="673" y="346" width="133" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="vSt-C0-bvz">
-                                                <font key="font" metaFont="controlContent"/>
+                                                <font key="font" metaFont="label" size="12"/>
                                                 <segments>
                                                     <segment label="GCR" width="64" selected="YES"/>
                                                     <segment label="Bytes" width="64" tag="1"/>
@@ -4050,7 +4050,7 @@
                                             <rect key="frame" x="524" y="346" width="133" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="Xax-Jn-BQG">
-                                                <font key="font" metaFont="controlContent"/>
+                                                <font key="font" metaFont="label" size="12"/>
                                                 <segments>
                                                     <segment label="Header" width="64" selected="YES"/>
                                                     <segment label="Data" width="64" tag="1"/>
@@ -4206,7 +4206,7 @@
                                             <rect key="frame" x="18" y="346" width="130" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="RnV-Re-f9Q">
-                                                <font key="font" metaFont="controlContent"/>
+                                                <font key="font" metaFont="label" size="12"/>
                                                 <segments>
                                                     <segment label="Drive 8" width="64" selected="YES"/>
                                                     <segment label="Drive 9" tag="1"/>
@@ -4216,7 +4216,7 @@
                                                 <action selector="drvDriveAction:" target="-2" id="hTt-Pk-kLu"/>
                                             </connections>
                                         </segmentedControl>
-                                        <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JUA-He-SQg">
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JUA-He-SQg">
                                             <rect key="frame" x="275" y="14" width="297" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Warning: The GCR data stream contains errors" id="3se-jR-ZYb">
@@ -4225,7 +4225,7 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="24y-UU-oAh">
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="24y-UU-oAh">
                                             <rect key="frame" x="564" y="12" width="20" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSInfo" imagePosition="overlaps" alignment="center" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="Lf3-zm-WX8">

@@ -206,6 +206,8 @@
 		50D5F88224F4F2E90062EF13 /* DiskPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D5F88124F4F2E90062EF13 /* DiskPanel.swift */; };
 		50D5F88424F4FE9C0062EF13 /* SectorTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D5F88324F4FE9C0062EF13 /* SectorTableView.swift */; };
 		50D5F88624F52A300062EF13 /* DiskDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D5F88524F52A300062EF13 /* DiskDataView.swift */; };
+		50D5F88824F556270062EF13 /* DiskErrors.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D5F88724F556270062EF13 /* DiskErrors.xib */; };
+		50D5F88A24F5573D0062EF13 /* DiskErrorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D5F88924F5573D0062EF13 /* DiskErrorController.swift */; };
 		50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8421720A82CF500EB859A /* MetalViewEvents.swift */; };
 		50DBB44B2025CE5700489271 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB44A2025CE5700489271 /* Utils.swift */; };
 		50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD8E2008E615008A8761 /* Shaders.swift */; };
@@ -555,6 +557,8 @@
 		50D5F88124F4F2E90062EF13 /* DiskPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskPanel.swift; sourceTree = "<group>"; };
 		50D5F88324F4FE9C0062EF13 /* SectorTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectorTableView.swift; sourceTree = "<group>"; };
 		50D5F88524F52A300062EF13 /* DiskDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskDataView.swift; sourceTree = "<group>"; };
+		50D5F88724F556270062EF13 /* DiskErrors.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskErrors.xib; sourceTree = "<group>"; };
+		50D5F88924F5573D0062EF13 /* DiskErrorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskErrorController.swift; sourceTree = "<group>"; };
 		50D8421720A82CF500EB859A /* MetalViewEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalViewEvents.swift; sourceTree = "<group>"; };
 		50DAABD824F0108A005D426F /* VICIIPrivateTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VICIIPrivateTypes.h; sourceTree = "<group>"; };
 		50DBB44A2025CE5700489271 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -754,6 +758,7 @@
 				5038CA9420B6C2AC000D9193 /* VICPanel.swift */,
 				5038CA9620B6C2BE000D9193 /* SIDPanel.swift */,
 				50D5F88124F4F2E90062EF13 /* DiskPanel.swift */,
+				50D5F88924F5573D0062EF13 /* DiskErrorController.swift */,
 				507A499B24C8D64700DBF984 /* InstrTableView.swift */,
 				507A499D24C8D65700DBF984 /* TraceTableView.swift */,
 				507A499F24C8D66A00DBF984 /* GuardTableView.swift */,
@@ -1233,6 +1238,7 @@
 				50F55DCB0F28EC010040592B /* MainMenu.xib */,
 				50F55DA30F28EADC0040592B /* MyDocument.xib */,
 				50D3092124C714A200B92563 /* Inspector.xib */,
+				50D5F88724F556270062EF13 /* DiskErrors.xib */,
 				50D3092524C71AD300B92563 /* Monitor.xib */,
 				50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */,
 				50A0B48C24C1CAEB00FF0B0B /* Preferences.xib */,
@@ -1342,6 +1348,7 @@
 				5051A1521B88438800CBFB5A /* 1541_track_change_0.aiff in Resources */,
 				501E427C20D975AD000BB48D /* IconD64.icns in Resources */,
 				5051A15F1B885FDD00CBFB5A /* 1541_power_on_0.aiff in Resources */,
+				50D5F88824F556270062EF13 /* DiskErrors.xib in Resources */,
 				5051A1601B885FDD00CBFB5A /* 1541_track_change_2.aiff in Resources */,
 				501E427D20D975AD000BB48D /* IconCRT.icns in Resources */,
 				50FB749C203306A700E05051 /* DiskInspector.xib in Resources */,
@@ -1464,6 +1471,7 @@
 				506D3DCE20223E5E009742CF /* MyAppDelegate.swift in Sources */,
 				504C439224AF29AC00E69CAE /* VICII_cycles_ntsc.cpp in Sources */,
 				504C437A24AF29AC00E69CAE /* AnyFile.cpp in Sources */,
+				50D5F88A24F5573D0062EF13 /* DiskErrorController.swift in Sources */,
 				50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */,
 				504C438D24AF29AC00E69CAE /* VICII.cpp in Sources */,
 				504C437824AF29AC00E69CAE /* AnyDisk.cpp in Sources */,
