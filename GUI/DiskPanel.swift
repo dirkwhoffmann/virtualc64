@@ -21,14 +21,6 @@ extension Inspector {
         track(sender.selectedSegment == 0 ? "Drive 8" : "Drive 9")
     }
 
-    @IBAction func drvTrackSectorAction(_ sender: NSSegmentedControl!) {
-        
-        track(sender.selectedSegment == 0 ? "Tracks" : "Sectors")
-
-        diskTableView.displayTracks = sender.selectedSegment == 0
-        diskTableView.refresh()
-    }
-
     @IBAction func drvGcrBytesAction(_ sender: NSSegmentedControl!) {
         
         track(sender.selectedSegment == 0 ? "GCR" : "Bytes")
@@ -44,8 +36,13 @@ extension Inspector {
         track("Seek")
     }
 
-    @IBAction func drvAnalyzeAction(_ sender: NSButton!) {
+    @IBAction func drvHalftracksAction(_ sender: NSButton!) {
         
-        track("Analyze")
+        track("Halftracks \(sender.state)")
+    }
+
+    @IBAction func drvWarningAction(_ sender: NSButton!) {
+        
+        track("Warning")
     }    
 }

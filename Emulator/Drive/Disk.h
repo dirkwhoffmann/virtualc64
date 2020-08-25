@@ -20,26 +20,27 @@ public:
     // Constants and lookup tables
     //
     
-    //! @brief   Disk parameters of a standard floppy disk
-    typedef struct {
+    // Disk parameters of a standard floppy disk
+    typedef struct
+    {
         
-        u8  sectors;       // Typical number of sectors in this track
-        u8  speedZone;     // Default speed zone for this track
-        u16 lengthInBytes; // Typical track size in bits
-        u16 lengthInBits;  // Typical track size in bits
-        Sector   firstSectorNr; // Logical number of first sector in track
-        double   stagger;       // Relative position of the first bit (taken from Hoxs64)
-
-    } TrackDefaults;
+        u8  sectors;          // Typical number of sectors in this track
+        u8  speedZone;        // Default speed zone for this track
+        u16 lengthInBytes;    // Typical track size in bits
+        u16 lengthInBits;     // Typical track size in bits
+        Sector firstSectorNr; // Logical number of first sector in track
+        double stagger;       // Relative position of first bit (from Hoxs64)
+    }
+    TrackDefaults;
     
     static const TrackDefaults trackDefaults[43];
  
     
-    //! @brief   Disk error codes
-    /*! @details Some D64 files contain an error code for each sector.
-     *           If possible, these errors are reproduced during disk encoding.
+    /* Disk error codes. Some D64 files contain an error code for each sector.
+     * If possible, these errors are reproduced during disk encoding.
      */
-    typedef enum {
+    typedef enum
+    {
         DISK_OK = 0x1,
         HEADER_BLOCK_NOT_FOUND_ERROR = 0x2,
         NO_SYNC_SEQUENCE_ERROR = 0x3,
@@ -52,12 +53,12 @@ public:
         WRITE_ERROR = 0xA,
         DISK_ID_MISMATCH_ERROR = 0xB,
         DRIVE_NOT_READY_ERRROR = 0xF
-    } DiskErrorCode;
+    }
+    DiskErrorCode;
 
 private:
     
-    /*! @brief   GCR encoding table
-     * @details  Maps 4 data bits to 5 GCR bits.
+    /* GCR encoding table. Maps 4 data bits to 5 GCR bits.
      */
     const uint5_t gcr[16] = {
         
@@ -67,8 +68,8 @@ private:
         0x0d, 0x1d, 0x1e, 0x15  /* 12 - 15 */
     };
     
-    /*! @brief    Inverse GCR encoding table
-     *  @detaiels  Maps 5 GCR bits to 4 data bits. Invalid patterns are marked with 255.
+    /* Inverse GCR encoding table. Maps 5 GCR bits to 4 data bits. Invalid
+     * patterns are marked with 255.
      */
     const uint4_t invgcr[32] = {
         
@@ -82,10 +83,10 @@ private:
         255,  13,  14, 255  /* 0x1C - 0x1F */
     };
 
-    /*! @brief    Maps a byte to an expanded 64 bit representation
-     *  @details  Example: 0110 ... -> 00000000 00000001 0000001 00000000 ...
-     *            This method is used to quickly inflate a bit stream into a
-     *            byte stream.
+    /* Maps a byte to an expanded 64 bit representation. This method is used to
+     * quickly inflate a bit stream into a byte stream.
+     *
+     *     Example: 0110 ... -> 00000000 00000001 0000001 00000000 ...
      */
     u64 bitExpansion[256];
     
@@ -94,13 +95,11 @@ private:
     // Disk properties
     //
     
-    /*! @brief   Write protection mark
-     */
+    // Write protection mark
     bool writeProtected;
     
-    /*! @brief   Indicates whether data has been written
-     *  @details Depending on this flag, the GUI shows a warning dialog
-     *           before a disk gets ejected.
+    /* Indicates whether data has been written. Depending on this flag, the GUI
+     * shows a warning dialog before a disk gets ejected.
      */
     bool modified;
     
@@ -124,24 +123,24 @@ public:
     
 private:
     
-    //! @brief    Track layout as determined by analyzeTrack
+    // Track layout as determined by analyzeTrack
     TrackInfo trackInfo;
 
-    //! @brief    Error log created by analyzeTrack
+    // Error log created by analyzeTrack
     std::vector<std::string> errorLog;
 
-    //! @brief    Stores the start offset of the erroneous bit sequence
+    // Stores the start offset of the erroneous bit sequence
     std::vector<size_t> errorStartIndex;
 
-    //! @brief    Stores the end offset of the erroneous bit sequence
+    // Stores the end offset of the erroneous bit sequence
     std::vector<size_t> errorEndIndex;
 
-    //! @brief    Textual representation of track data
+    // Textual representation of track data
     char text[maxBitsOnTrack + 1];
     
     
     //
-    //Initializing
+    // Initializing
     //
     
 public:

@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-class DiskTableView: NSTableView, NSTableViewDelegate {
+class TrackTableView: NSTableView, NSTableViewDelegate {
     
     @IBOutlet weak var inspector: Inspector!
    
@@ -47,7 +47,7 @@ class DiskTableView: NSTableView, NSTableViewDelegate {
     }
 }
 
-extension DiskTableView: NSTableViewDataSource {
+extension TrackTableView: NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         
@@ -60,10 +60,11 @@ extension DiskTableView: NSTableViewDataSource {
         
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
-        if displayTracks {
-            return "Halftrack \(row)"
+        let halftrack = row + 1
+        if halftrack % 2 == 1 {
+            return "Track \(halftrack)"
         } else {
-            return "Sector \(row)"
+            return "Track \(Double(halftrack) / 2 + 0.5)"
         }
     }
 }

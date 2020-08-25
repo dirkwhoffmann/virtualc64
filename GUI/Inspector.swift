@@ -273,14 +273,15 @@ class Inspector: DialogController {
     
     // Drive panel
     @IBOutlet weak var drvDriveSel: NSSegmentedControl!
-    @IBOutlet weak var drvTrackSectorSel: NSSegmentedControl!
     @IBOutlet weak var drvGcrBytesSel: NSSegmentedControl!
     @IBOutlet weak var drvHeaderDataSel: NSSegmentedControl!
-    @IBOutlet weak var diskTableView: DiskTableView!
+    @IBOutlet weak var drvTrackTableView: TrackTableView!
+    @IBOutlet weak var drvSectorTableView: SectorTableView!
     @IBOutlet weak var diskDataView: NSScrollView!
     @IBOutlet weak var drvSeekButton: NSButton!
-    @IBOutlet weak var drvAnalyzeButton: NSButton!
-    @IBOutlet weak var drvUpperText: NSTextField!
+    @IBOutlet weak var drvHalftracksButton: NSButton!
+    @IBOutlet weak var drvWarningText: NSTextField!
+    @IBOutlet weak var drvWarningButton: NSButton!
     @IBOutlet weak var drvLowerText: NSTextField!
 
     // Cached state of all C64 components
