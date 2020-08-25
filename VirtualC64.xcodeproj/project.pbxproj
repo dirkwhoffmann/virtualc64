@@ -205,6 +205,7 @@
 		50D5F88024F4F12F0062EF13 /* TrackTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D5F87F24F4F12F0062EF13 /* TrackTableView.swift */; };
 		50D5F88224F4F2E90062EF13 /* DiskPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D5F88124F4F2E90062EF13 /* DiskPanel.swift */; };
 		50D5F88424F4FE9C0062EF13 /* SectorTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D5F88324F4FE9C0062EF13 /* SectorTableView.swift */; };
+		50D5F88624F52A300062EF13 /* DiskDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D5F88524F52A300062EF13 /* DiskDataView.swift */; };
 		50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8421720A82CF500EB859A /* MetalViewEvents.swift */; };
 		50DBB44B2025CE5700489271 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB44A2025CE5700489271 /* Utils.swift */; };
 		50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD8E2008E615008A8761 /* Shaders.swift */; };
@@ -553,6 +554,7 @@
 		50D5F87F24F4F12F0062EF13 /* TrackTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackTableView.swift; sourceTree = "<group>"; };
 		50D5F88124F4F2E90062EF13 /* DiskPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskPanel.swift; sourceTree = "<group>"; };
 		50D5F88324F4FE9C0062EF13 /* SectorTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectorTableView.swift; sourceTree = "<group>"; };
+		50D5F88524F52A300062EF13 /* DiskDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskDataView.swift; sourceTree = "<group>"; };
 		50D8421720A82CF500EB859A /* MetalViewEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalViewEvents.swift; sourceTree = "<group>"; };
 		50DAABD824F0108A005D426F /* VICIIPrivateTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VICIIPrivateTypes.h; sourceTree = "<group>"; };
 		50DBB44A2025CE5700489271 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -758,6 +760,7 @@
 				507A49A124C8D71400DBF984 /* BankTableView.swift */,
 				50D5F87F24F4F12F0062EF13 /* TrackTableView.swift */,
 				50D5F88324F4FE9C0062EF13 /* SectorTableView.swift */,
+				50D5F88524F52A300062EF13 /* DiskDataView.swift */,
 				507887CB20B1858B00941F7E /* MemTableView.swift */,
 				5015F36520B546A30024B4AA /* WaveformView.swift */,
 				506D4D0C20B331A00093C5C6 /* MyFormatter.swift */,
@@ -1405,6 +1408,7 @@
 				50D2A6A0210F20F700F13D43 /* VirtualKeyboardController.swift in Sources */,
 				504C439E24AF29AC00E69CAE /* ReSID.cpp in Sources */,
 				50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */,
+				50D5F88624F52A300062EF13 /* DiskDataView.swift in Sources */,
 				50A0B48F24C1D15300FF0B0B /* MediaPrefs.swift in Sources */,
 				504C439B24AF29AC00E69CAE /* extfilt.cc in Sources */,
 				504C437124AF29AC00E69CAE /* CartridgeRom.cpp in Sources */,

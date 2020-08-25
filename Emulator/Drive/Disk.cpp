@@ -249,6 +249,20 @@ Disk::nonemptyHalftracks()
     return result;
 }
 
+u16
+Disk::lengthOfHalftrack(Halftrack ht)
+{
+    assert(isHalftrackNumber(ht));
+    return length.halftrack[ht];
+}
+
+u16
+Disk::lengthOfTrack(Track t)
+{
+    assert(isTrackNumber(t));
+    return length.track[t][0];
+}
+
 
 //
 // Analyzing the disk
@@ -257,6 +271,7 @@ Disk::nonemptyHalftracks()
 void
 Disk::analyzeHalftrack(Halftrack ht)
 {
+    debug("analyzeHalftrack(%d)\n", ht);
     assert(isHalftrackNumber(ht));
     
     u16 len = length.halftrack[ht];
@@ -367,6 +382,13 @@ Disk::analyzeHalftrack(Halftrack ht)
             log(0, 0, "Sector %d has no data block.\n", s);
         }
     }
+}
+
+void
+Disk::analyzeTrack(Track t)
+{
+    assert(isTrackNumber(t));
+    analyzeHalftrack(2 * t - 1);
 }
 
 void

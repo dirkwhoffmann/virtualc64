@@ -374,36 +374,28 @@ public:
 
     
     //
-    //! @functiongroup Analyzing the disk
+    // Analyzing the disk
     //
 
 public:
     
-    //! @brief    Returns the length of a halftrack in bits
-    u16 lengthOfHalftrack(Halftrack ht) {
-        assert(isHalftrackNumber(ht)); return length.halftrack[ht]; }
-
-    //! @brief    Returns the length of a track in bits
-    u16 lengthOfTrack(Track t) {
-        assert(isTrackNumber(t)); return length.track[t][0]; }
-
-    //! @brief    Analyzes the sector layout
-    /*! @details  The start and end offsets of all sectors are determined and writes
-     *            into variable trackLayout.
+    // Returns the length of a halftrack in bits
+    u16 lengthOfHalftrack(Halftrack ht);
+    u16 lengthOfTrack(Track t);
+    
+    /* Analyzes the sector layout. The functions determines the start and end
+     * offsets of all sectors and writes them into variable trackLayout.
      */
     void analyzeHalftrack(Halftrack ht);
-    
-    void analyzeTrack(Track t) { assert(isTrackNumber(t)); analyzeHalftrack(2 * t - 1); }
+    void analyzeTrack(Track t);
     
 private:
     
-    //! @brief   Checks the integrity of a sector header block
+    // Checks the integrity of a sector header or sector data block
     void analyzeSectorHeaderBlock(size_t offset);
-    
-    //! @brief   Checks the integrity of a sector data block
     void analyzeSectorDataBlock(size_t offset);
 
-    //! @brief    Writes an error message into the error log
+    // Writes an error message into the error log
     void log(size_t begin, size_t length, const char *fmt, ...);
     
 public:

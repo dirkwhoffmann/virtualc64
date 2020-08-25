@@ -8,17 +8,26 @@
 // -----------------------------------------------------------------------------
 
 extension Inspector {
-    
+        
     func refreshDisk(count: Int = 0, full: Bool = false) {
         
         if full {
-            
+                        
+            if !drive.hasDisk() {
+                selectedHalftrack = -1
+                selectedSector = -1
+            }
+
+            drvTrackTableView.refresh(count: count, full: full)
+            drvSectorTableView.refresh(count: count, full: full)
+            drvDiskDataView.refresh(count: count, full: full)
         }
     }
     
     @IBAction func drvDriveAction(_ sender: NSSegmentedControl!) {
         
-        track(sender.selectedSegment == 0 ? "Drive 8" : "Drive 9")
+        track()
+        selectedDrive = sender.selectedSegment == 0 ? DRIVE8 : DRIVE9
     }
 
     @IBAction func drvGcrBytesAction(_ sender: NSSegmentedControl!) {
@@ -39,6 +48,8 @@ extension Inspector {
     @IBAction func drvHalftracksAction(_ sender: NSButton!) {
         
         track("Halftracks \(sender.state)")
+        drvTrackTableView.showHalftracks = sender.state == .on
+        fullRefresh()
     }
 
     @IBAction func drvWarningAction(_ sender: NSButton!) {

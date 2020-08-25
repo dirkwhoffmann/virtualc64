@@ -405,9 +405,10 @@ public:
     void setHalftrack(Halftrack ht) { assert(isHalftrackNumber(ht)); halftrack = ht; }
     void setTrack(Track t) { assert(isTrackNumber(t)); halftrack = 2 * t - 1; }
     
-    // Returns the number of bits in the current halftrack
-    u16 sizeOfCurrentHalftrack() {
-        return hasDisk() ? disk.lengthOfHalftrack(halftrack) : 0; }
+    // Returns the number of bits in a halftrack
+    u16 sizeOfHalftrack(Halftrack ht) {
+        return hasDisk() ? disk.lengthOfHalftrack(ht) : 0; }
+    u16 sizeOfCurrentHalftrack() { return sizeOfHalftrack(halftrack); }
 
     // Returns the position of the drive head inside the current track
     HeadPosition getOffset() { return offset; }

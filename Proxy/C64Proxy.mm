@@ -1065,6 +1065,10 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->drive->setHalftrack(ht);
 }
+- (u16) sizeOfHalftrack:(Halftrack)ht
+{
+    return wrapper->drive->sizeOfHalftrack(ht);
+}
 - (u16) sizeOfCurrentHalftrack
 {
     return wrapper->drive->sizeOfCurrentHalftrack();

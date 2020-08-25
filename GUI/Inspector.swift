@@ -277,13 +277,22 @@ class Inspector: DialogController {
     @IBOutlet weak var drvHeaderDataSel: NSSegmentedControl!
     @IBOutlet weak var drvTrackTableView: TrackTableView!
     @IBOutlet weak var drvSectorTableView: SectorTableView!
-    @IBOutlet weak var diskDataView: NSScrollView!
+    @IBOutlet weak var drvDiskDataView: DiskDataView!
     @IBOutlet weak var drvSeekButton: NSButton!
     @IBOutlet weak var drvHalftracksButton: NSButton!
     @IBOutlet weak var drvWarningText: NSTextField!
     @IBOutlet weak var drvWarningButton: NSButton!
     @IBOutlet weak var drvLowerText: NSTextField!
 
+    var selectedDrive: DriveID = DRIVE8
+    var drive: DriveProxy { return selectedDrive == DRIVE8 ? c64.drive8 : c64.drive9 }
+    var selectedHalftrack = -1 {
+        didSet { if selectedHalftrack != oldValue { drvDiskDataView.updateTrackData() } }
+    }
+    var selectedSector = -1 {
+        didSet { if selectedSector != oldValue { drvDiskDataView.updateSectorData() } }
+    }
+    
     // Cached state of all C64 components
     var cpuInfo: CPUInfo!
     var ciaInfo: CIAInfo!
@@ -354,6 +363,7 @@ class Inspector: DialogController {
             case "Memory": refreshMemory(count: count, full: full)
             case "VICII": refreshVIC(count: count, full: full)
             case "SID": refreshSID(count: count, full: full)
+            case "Disk": refreshDisk(count: count, full: full)
             default: break
             }
         }

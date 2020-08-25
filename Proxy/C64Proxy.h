@@ -606,6 +606,7 @@ struct AnyC64FileWrapper;
 - (Halftrack) halftrack;
 - (void) setTrack:(Track)t;
 - (void) setHalftrack:(Halftrack)ht;
+- (u16) sizeOfHalftrack:(Halftrack)ht;
 - (u16) sizeOfCurrentHalftrack;
 - (u16) offset;
 - (void) setOffset:(u16)value;

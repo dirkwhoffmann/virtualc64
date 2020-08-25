@@ -651,6 +651,7 @@ extension MyController {
                 playSound(name: "drive_snatch_uae", volume: 0.1)
             }
             refreshStatusBarDiskIcons(drive: DriveID(msg.data))
+            inspector?.fullRefresh()
 
         case MSG_DRIVE_NO_DISK:
             
@@ -658,6 +659,7 @@ extension MyController {
                 playSound(name: "drive_snatch_uae", volume: 0.1)
             }
             refreshStatusBarDiskIcons(drive: DriveID(msg.data))
+            inspector?.fullRefresh()
 
         case MSG_DISK_SAVED,
              MSG_DISK_UNSAVED,
