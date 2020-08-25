@@ -24,6 +24,29 @@ extension Inspector {
         }
     }
     
+    func didSetHalftrack() {
+        
+        if selectedHalftrack >= 0 && drive.hasDisk() {
+            
+            // Read track data
+            drive.disk.analyzeHalftrack(Halftrack(selectedHalftrack))
+            
+            // Check for errors
+            let trackIsValid = drive.disk.numErrors() == 0
+            drvWarningText.isHidden = trackIsValid
+            drvWarningButton.isHidden = trackIsValid
+            
+            // Let the data view know about the change
+            drvDiskDataView.updateTrackData()
+        }
+    }
+    
+    func didSetSector() {
+            
+        // Let the data view know about the change
+        drvDiskDataView.updateSectorData()
+    }
+        
     @IBAction func drvDriveAction(_ sender: NSSegmentedControl!) {
         
         track()

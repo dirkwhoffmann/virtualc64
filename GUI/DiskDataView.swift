@@ -44,8 +44,6 @@ class DiskDataView: NSScrollView {
 
         // Read track data
         if inspector.selectedHalftrack >= 0 && drive.hasDisk() {
-        
-            drive.disk.analyzeHalftrack(Halftrack(inspector.selectedHalftrack))
             gcr = String(cString: drive.disk.trackDataAsString())
         }
                   

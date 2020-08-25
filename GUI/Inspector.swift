@@ -287,10 +287,10 @@ class Inspector: DialogController {
     var selectedDrive: DriveID = DRIVE8
     var drive: DriveProxy { return selectedDrive == DRIVE8 ? c64.drive8 : c64.drive9 }
     var selectedHalftrack = -1 {
-        didSet { if selectedHalftrack != oldValue { drvDiskDataView.updateTrackData() } }
+        didSet { if selectedHalftrack != oldValue { didSetHalftrack() } }
     }
     var selectedSector = -1 {
-        didSet { if selectedSector != oldValue { drvDiskDataView.updateSectorData() } }
+        didSet { if selectedSector != oldValue { didSetSector() } }
     }
     
     // Cached state of all C64 components
