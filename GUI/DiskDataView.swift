@@ -13,6 +13,8 @@ class DiskDataView: NSScrollView {
    
     var c64: C64Proxy { return inspector.parent.c64 }
     var drive: DriveProxy { return inspector.drive }
+    var halftrack: Int { return inspector.selectedHalftrack }
+    var sector: Int { return inspector.selectedSector }
     
     var textView: NSTextView? { return documentView as? NSTextView }
     var storage: NSTextStorage? { return textView?.textStorage }
@@ -28,10 +30,9 @@ class DiskDataView: NSScrollView {
     var firstDataSectorRange: NSRange?
     var secondDataSectorRange: NSRange?
 
-    // Data caches
-
-    // var bankCache: [Int: MemoryType] = [:]
-
+    // Indicates if the raw GCR stream should be displayed
+    var rawGcr: Bool { return inspector.drvGcrBytesSel.selectedSegment == 0 }
+    
     override func awakeFromNib() {
 
     }
@@ -39,21 +40,40 @@ class DiskDataView: NSScrollView {
     func updateTrackData() {
      
         track("updateTrackData(\(inspector.selectedHalftrack))")
-
+    
         var gcr = ""
 
         // Read track data
-        if inspector.selectedHalftrack >= 0 && drive.hasDisk() {
-            gcr = String(cString: drive.disk.trackDataAsString())
+        if halftrack >= 0 && drive.hasDisk() {
+            
+            if rawGcr || sector < 0 {
+
+                // Show the raw GCR stream
+                gcr = String(cString: drive.disk.trackBitsAsString())
+
+            } else {
+
+                // Show the decoded GCR data of the currently selected sector
+                gcr = String(cString: drive.disk.sectorHeaderBytes(asString: Sector(sector))!)
+                gcr.append("\n\n")
+                gcr.append(String(cString: drive.disk.sectorDataBytes(asString: Sector(sector))!))
+            }
         }
-                  
-        // Update text storage
+
+        // Remove old sector markers
         unmarkSectors()
+
+        // Update text storage
         let textStorage = NSTextStorage.init(string: gcr)
-        textStorage.font = NSFont.monospacedDigitSystemFont(ofSize: 10.0, weight: .medium)
+        if #available(OSX 10.15, *) {
+            textStorage.font = NSFont.monospacedSystemFont(ofSize: 10.0, weight: .semibold)
+        } else {
+            textStorage.font = NSFont.monospacedDigitSystemFont(ofSize: 10.0, weight: .semibold)
+        }
         textStorage.foregroundColor = .textColor
         textView?.layoutManager?.replaceTextStorage(textStorage)
         
+        // Add new sector markers
         updateSectorData()
     }
     
@@ -63,7 +83,7 @@ class DiskDataView: NSScrollView {
 
         unmarkSectors()
         
-        if inspector.selectedSector >= 0 {
+        if sector >= 0 && rawGcr {
             markSectors()
         }
     }

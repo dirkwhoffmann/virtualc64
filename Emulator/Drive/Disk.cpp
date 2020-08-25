@@ -461,7 +461,7 @@ Disk::diskNameAsString()
 
 
 const char *
-Disk::trackDataAsString()
+Disk::trackBitsAsString()
 {
     size_t i;
     for (i = 0; i < trackInfo.length; i++) {
@@ -476,7 +476,7 @@ Disk::trackDataAsString()
 }
 
 const char *
-Disk::sectorHeaderAsString(Sector nr)
+Disk::sectorHeaderBytesAsString(Sector nr)
 {
     assert(isSectorNumber(nr));
     size_t begin = trackInfo.sectorInfo[nr].headerBegin;
@@ -485,7 +485,7 @@ Disk::sectorHeaderAsString(Sector nr)
 }
 
 const char *
-Disk::sectorDataAsString(Sector nr)
+Disk::sectorDataBytesAsString(Sector nr)
 {
     assert(isSectorNumber(nr));
     size_t begin = trackInfo.sectorInfo[nr].dataBegin;

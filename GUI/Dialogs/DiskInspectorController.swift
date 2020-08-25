@@ -178,7 +178,7 @@ class DiskInspectorController: DialogController {
         
         if hasDisk {
             gcrBox.title = "GCR Bitstream (\(drive.sizeOfCurrentHalftrack()) Bits)"
-            gcr = String(cString: drive.disk.trackDataAsString())
+            gcr = String(cString: drive.disk.trackBitsAsString())
         } else {
             gcrBox.title = "GCR Bitstream"
             gcr = ""
@@ -474,11 +474,11 @@ extension DiskInspectorController: NSTableViewDataSource {
                 
             case "data":
                 if headerRow {
-                    let cStr = drive.disk.sectorHeader(asString: Sector(sectorNr))!
+                    let cStr = drive.disk.sectorHeaderBytes(asString: Sector(sectorNr))!
                     return String.init(cString: cStr)
                     
                 } else {
-                    let cStr = drive.disk.sectorData(asString: Sector(sectorNr))!
+                    let cStr = drive.disk.sectorDataBytes(asString: Sector(sectorNr))!
                     return String.init(cString: cStr)
                 }
                 

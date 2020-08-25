@@ -663,9 +663,9 @@ struct AnyC64FileWrapper;
 - (NSInteger)lastErroneousBit:(NSInteger)nr;
 - (SectorInfo)sectorInfo:(Sector)s;
 - (const char *)diskNameAsString;
-- (const char *)trackDataAsString;
-- (const char *)sectorHeaderAsString:(Sector)nr;
-- (const char *)sectorDataAsString:(Sector)nr;
+- (const char *)trackBitsAsString;
+- (const char *)sectorHeaderBytesAsString:(Sector)nr;
+- (const char *)sectorDataBytesAsString:(Sector)nr;
 @end
 
 

@@ -324,6 +324,7 @@ class Inspector: DialogController {
         
         drvWarningText.isHidden = true
         drvWarningButton.isHidden = true
+        drvGcrBytesSel.isHidden = true
     }
         
     func fullRefresh() {

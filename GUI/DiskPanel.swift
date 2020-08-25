@@ -44,7 +44,10 @@ extension Inspector {
     func didSetSector() {
             
         // Let the data view know about the change
-        drvDiskDataView.updateSectorData()
+        drvDiskDataView.updateTrackData()
+        
+        // Blend GCR / Byte selector in or out
+        drvGcrBytesSel.isHidden = selectedSector < 0
     }
         
     @IBAction func drvDriveAction(_ sender: NSSegmentedControl!) {
@@ -56,6 +59,7 @@ extension Inspector {
     @IBAction func drvGcrBytesAction(_ sender: NSSegmentedControl!) {
         
         track(sender.selectedSegment == 0 ? "GCR" : "Bytes")
+        drvDiskDataView.updateTrackData()
     }
 
     @IBAction func drvHeaderDataAction(_ sender: NSSegmentedControl!) {

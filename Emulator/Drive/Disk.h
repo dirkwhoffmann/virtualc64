@@ -420,13 +420,13 @@ public:
     const char *diskNameAsString();
     
     //! @brief    Returns a textual representation of the data stored in trackInfo
-    const char *trackDataAsString();
+    const char *trackBitsAsString();
 
     //! @brief    Returns a textual representation of the data stored in trackInfo
-    const char *sectorHeaderAsString(Sector nr);
+    const char *sectorHeaderBytesAsString(Sector nr);
 
     //! @brief    Returns a textual representation of the data stored in trackInfo
-    const char *sectorDataAsString(Sector nr);
+    const char *sectorDataBytesAsString(Sector nr);
 
 private:
     

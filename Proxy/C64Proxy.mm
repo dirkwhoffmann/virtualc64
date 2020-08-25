@@ -876,21 +876,21 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->disk->sectorLayout(s);
 }
-- (const char *)trackDataAsString
+- (const char *)trackBitsAsString
 {
-    return wrapper->disk->trackDataAsString();
+    return wrapper->disk->trackBitsAsString();
 }
 - (const char *)diskNameAsString
 {
     return wrapper->disk->diskNameAsString();
 }
-- (const char *)sectorHeaderAsString:(Sector)nr
+- (const char *)sectorHeaderBytesAsString:(Sector)nr
 {
-    return wrapper->disk->sectorHeaderAsString(nr);
+    return wrapper->disk->sectorHeaderBytesAsString(nr);
 }
-- (const char *)sectorDataAsString:(Sector)nr
+- (const char *)sectorDataBytesAsString:(Sector)nr
 {
-    return wrapper->disk->sectorDataAsString(nr);
+    return wrapper->disk->sectorDataBytesAsString(nr);
 }
 
 @end
