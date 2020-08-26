@@ -223,7 +223,7 @@ C64::configure(ConfigOption option, long value)
     bool changed = HardwareComponent::configure(option, value);
     
     // Inform the GUI if the configuration has changed
-    if (changed) queue.putMessage(MSG_CONFIG);
+    if (changed) messageQueue.put(MSG_CONFIG);
     
     return changed;
 }
@@ -237,7 +237,7 @@ C64::configure(DriveID id, ConfigOption option, long value)
     bool changed = HardwareComponent::configure(id, option, value);
     
     // Inform the GUI if the configuration has changed
-    if (changed) queue.putMessage(MSG_CONFIG);
+    if (changed) messageQueue.put(MSG_CONFIG);
     
     return changed;
 }

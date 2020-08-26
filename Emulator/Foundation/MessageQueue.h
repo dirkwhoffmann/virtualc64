@@ -17,16 +17,14 @@
 using namespace std;
 
 class MessageQueue : public C64Object {
-    
-    private:
-    
+        
     // Maximum number of queued messages
     const static size_t capacity = 64;
     
-    // Message ring buffer
+     // Ring buffer storing all pending messages
     Message queue[capacity];
     
-    // Read and write pointer
+    // The ring buffer's read and write pointers
     int r = 0;
     int w = 0;
     
@@ -37,33 +35,27 @@ class MessageQueue : public C64Object {
     // List of all registered listeners
     map <const void *, Callback *> listeners;
     
-    public:
+public:
     
     MessageQueue();
-    virtual ~MessageQueue();
+    ~MessageQueue();
     
-    //! @brief    Registers a listener together with it's callback function
+    // Registers a listener together with it's callback function
     void addListener(const void *listener, Callback *func);
     
-    //! @brief    Removes a listener
+    // Unregisters a listener
     void removeListener(const void *listener);
     
-    /*! @brief    Returns the next pending message
-     *  @return   NULL, if the queue is empty
-     */
-    Message getMessage();
+    // Returns the next pending message, or NULL if the queue is empty
+    Message get();
     
-    /*! @brief    Writes new message into the message queue
-     *  @details  Furthermore, the message is propaged to all registered
-     *            listeners.
-     *  @see      propagateMessage
-     */
-    void putMessage(MessageType type, u64 data = 0);
+    // Writes a message into the queue and propagates it to all listeners
+    void put(MessageType type, u64 data = 0);
     
-    private:
+private:
     
-    //! @brief    Propagates a single message to all registered listeners.
-    void propagateMessage(Message *msg);
+    // Propagates a single message to all registered listeners
+    void propagate(Message *msg);
 };
 
 #endif

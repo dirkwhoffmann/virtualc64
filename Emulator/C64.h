@@ -211,11 +211,10 @@ private:
     // Message queue
     //
     
-    /* Message queue. Used to communicate with the graphical user interface.
-     * The GUI registers a listener and a callback function to retrieve
-     * messages.
+    /* Communication channel to the GUI. The GUI registers a listener and a
+     * callback function to retrieve messages.
      */
-    MessageQueue queue;
+    MessageQueue messageQueue;
     
     
     //
@@ -381,19 +380,19 @@ public:
     
     // Registers a listener callback function
     void addListener(const void *sender, void(*func)(const void *, int, long) ) {
-        queue.addListener(sender, func);
+        messageQueue.addListener(sender, func);
     }
     
     // Removes a listener callback function
     void removeListener(const void *sender) {
-        queue.removeListener(sender);
+        messageQueue.removeListener(sender);
     }
     
     // Gets a notification message from message queue
-    Message getMessage() { return queue.getMessage(); }
+    Message getMessage() { return messageQueue.get(); }
     
     // Feeds a notification message into message queue
-    void putMessage(MessageType msg, u64 data = 0) { queue.putMessage(msg, data); }
+    void putMessage(MessageType msg, u64 data = 0) { messageQueue.put(msg, data); }
     
     
  
