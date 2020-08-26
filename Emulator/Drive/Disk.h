@@ -60,7 +60,7 @@ private:
     
     /* GCR encoding table. Maps 4 data bits to 5 GCR bits.
      */
-    const uint5_t gcr[16] = {
+    const u8 gcr[16] = {
         
         0x0a, 0x0b, 0x12, 0x13, /*  0 -  3 */
         0x0e, 0x0f, 0x16, 0x17, /*  4 -  7 */
@@ -71,7 +71,7 @@ private:
     /* Inverse GCR encoding table. Maps 5 GCR bits to 4 data bits. Invalid
      * patterns are marked with 255.
      */
-    const uint4_t invgcr[32] = {
+    const u8 invgcr[32] = {
         
         255, 255, 255, 255, /* 0x00 - 0x03 */
         255, 255, 255, 255, /* 0x04 - 0x07 */
@@ -217,13 +217,13 @@ public:
 public:
     
     //! @brief   Converts a 4 bit binary value to a 5 bit GCR codeword
-    uint5_t bin2gcr(uint4_t value) { assert(is_uint4_t(value)); return gcr[value]; }
+    u8 bin2gcr(u8 value) { assert(value < 16); return gcr[value]; }
 
     //! @brief   Converts a 5 bit GCR codeword to a 4 bit binary value
-    uint4_t gcr2bin(uint5_t value) { assert(is_uint5_t(value)); return invgcr[value]; }
+    u8 gcr2bin(u8 value) { assert(value < 32); return invgcr[value]; }
 
     //! @brief   Returns true if the provided 5 bit codeword is a valid GCR codeword
-    bool isGcr(uint5_t value) { assert(is_uint5_t(value)); return invgcr[value] != 0xFF; }
+    bool isGcr(u8 value) { assert(value < 32); return invgcr[value] != 0xFF; }
 
     //! @brief   Encodes a single byte as a GCR bitstream.
     /*! @details Writes 10 bits to the specified position on disk.

@@ -164,8 +164,8 @@ Disk::decodeGcrNibble(u8 *gcr)
 {
     assert(gcr != NULL);
     
-    uint5_t codeword = (gcr[0] << 4) | (gcr[1] << 3) | (gcr[2] << 2) | (gcr[3] << 1) | gcr[4];
-    assert(is_uint5_t(codeword));
+    u8 codeword = (gcr[0] << 4) | (gcr[1] << 3) | (gcr[2] << 2) | (gcr[3] << 1) | gcr[4];
+    assert(codeword < 32);
     
     return invgcr[codeword];
 }
@@ -175,8 +175,8 @@ Disk::decodeGcr(u8 *gcr)
 {
     assert(gcr != NULL);
     
-    uint4_t nibble1 = decodeGcrNibble(gcr);
-    uint4_t nibble2 = decodeGcrNibble(gcr + 5);
+    u8 nibble1 = decodeGcrNibble(gcr);
+    u8 nibble2 = decodeGcrNibble(gcr + 5);
 
     return (nibble1 << 4) | nibble2;
 }

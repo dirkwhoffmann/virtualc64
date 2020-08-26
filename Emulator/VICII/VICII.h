@@ -876,7 +876,7 @@ private:
     /* Updates the VICII bank address. The new address is computed from the
      * provided bank number.
      */
-    void updateBankAddr(uint2_t bank) { assert(is_uint2_t(bank)); bankAddr = bank << 14; }
+    void updateBankAddr(u8 bank) { assert(bank < 4); bankAddr = bank << 14; }
 
     /* Updates the VICII bank address. The new address is computed from the
      * bits in CIA2::PA.

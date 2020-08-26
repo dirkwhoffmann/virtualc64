@@ -327,9 +327,9 @@ Drive::raiseByteReady()
 }
 
 void
-Drive::setZone(uint2_t value)
+Drive::setZone(u8 value)
 {
-    assert(is_uint2_t(value));
+    assert(value < 4);
     
     if (value != zone) {
         debug(DRV_DEBUG, "Switching from disk zone %d to disk zone %d\n", zone, value);

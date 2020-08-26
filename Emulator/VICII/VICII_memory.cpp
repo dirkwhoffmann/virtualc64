@@ -68,13 +68,13 @@ VICII::switchBank(u16 addr) {
  
     // Switch table for custom IC glue logic and PA / DDRA register changes
     // The tables have been derived from VICE test case fetchsplit.prg
-    uint2_t switchTablePA[4][4] = {
+    u8 switchTablePA[4][4] = {
         { 0, 1, 2, 3 }, // From bank 0
         { 0, 1, 3, 3 }, // From bank 1
         { 0, 3, 2, 3 }, // From bank 2
         { 0, 1, 2, 3 }  // From bank 3
     };
-    uint2_t switchTableDDRA[4][4] = {
+    u8 switchTableDDRA[4][4] = {
         { 0, 1, 2, 3 }, // From bank 0
         { 1, 1, 3, 3 }, // From bank 1
         { 2, 3, 2, 3 }, // From bank 2
@@ -82,8 +82,8 @@ VICII::switchBank(u16 addr) {
     };
 
     // Determine old and new video bank
-    uint2_t from = bankAddr >> 14;
-    uint2_t to = (~cia2.getPA()) & 0x03;
+    u8 from = bankAddr >> 14;
+    u8 to = (~cia2.getPA()) & 0x03;
     
     // Switch to the bank given by the switch table
     switch (addr) {

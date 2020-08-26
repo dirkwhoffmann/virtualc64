@@ -122,7 +122,7 @@ public:
      * are fed into a NOR gate whose output is connected to the serial input
      * pin of the input shift register.
      */
-    uint4_t counterUF4 = 0;
+    u8 counterUF4 = 0;
     
     
     //
@@ -405,7 +405,7 @@ public:
     bool getZone() { return zone; }
 
     // Sets the current track zone (0 to 3)
-    void setZone(uint2_t value);
+    void setZone(u8 value);
 
     // Reads a single bit from the disk head (result is 0 or 1)
     u8 readBitFromHead() { return disk.readBitFromHalftrack(halftrack, offset); }
