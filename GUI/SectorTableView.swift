@@ -13,8 +13,8 @@ class SectorTableView: NSTableView, NSTableViewDelegate {
    
     var c64: C64Proxy { return inspector.parent.c64 }
     var drive: DriveProxy { return inspector.drive }
-    var halftrack: Int { return inspector.selectedHalftrack }
-    var sector: Int { return inspector.selectedSector }
+    var halftrack: Halftrack? { return inspector.halftrack }
+    // var sector: Sector? { return inspector.sec }
     
     //
     // Data cache
@@ -38,7 +38,7 @@ class SectorTableView: NSTableView, NSTableViewDelegate {
         // Map row numbers to sector numbers
         sectorForRow = [:]
         
-        if halftrack >= 0 {
+        if halftrack != 0 {
             var row = 0
             for i in 0 ... Int(maxNumberOfSectors - 1) {
                 let info = drive.disk.sectorInfo(Sector(i))

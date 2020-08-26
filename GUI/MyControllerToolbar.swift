@@ -67,14 +67,7 @@ extension MyController {
         
         toolbar.validateVisibleItems()
     }
-        
-    @IBAction func diskInspectorAction(_ sender: Any!) {
- 
-        let nibName = NSNib.Name("DiskInspector")
-        let controller = DiskInspectorController.init(windowNibName: nibName)
-        controller.showSheet()
-    }
-    
+            
     @IBAction func inspectAction(_ sender: NSSegmentedControl) {
         
         switch sender.selectedSegment {

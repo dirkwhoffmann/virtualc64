@@ -7,19 +7,6 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-/*
-extension NSAttributedString {
-    
-    func makeRange(start: Int, length: Int) -> NSRange? {
-        
-        let fullRange = NSRange.init(location: 0, length: self.length)
-        let newRange = NSRange.init(location: start, length: length)
-        
-        return fullRange.intersection(newRange)
-    }
-}
-*/
-
 extension NSTextStorage {
 
     var fullRange: NSRange { return NSRange.init(location: 0, length: self.length) }
@@ -40,7 +27,23 @@ extension NSTextStorage {
 }
 
 extension Inspector {
-        
+    
+    var halftrack: Halftrack? {
+        if selectedHalftrack >= 0 && isHalftrackNumber(UInt32(selectedHalftrack)) {
+            return Halftrack(selectedHalftrack)
+        } else {
+            return nil
+        }
+    }
+    
+    var sector: Sector? {
+        if selectedSector >= 0 && isSectorNumber(UInt32(selectedSector)) {
+            return Sector(selectedSector)
+        } else {
+            return nil
+        }
+    }
+    
     // Indicates if the raw GCR stream should be displayed
     var rawGcr: Bool { return drvGcrBytesSel.selectedSegment == 0 }
 

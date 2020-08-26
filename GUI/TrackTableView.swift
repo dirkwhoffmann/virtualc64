@@ -46,7 +46,6 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
             cache()
             
             // Select the correct row
-            track("Selecting track \(halftrack)")
             let rows: IndexSet = halftrack <= 0 ? [] : [Int(halftrack) - 1]
             selectRowIndexes(rows, byExtendingSelection: false)
         }

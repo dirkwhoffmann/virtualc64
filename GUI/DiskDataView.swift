@@ -11,11 +11,12 @@ class DiskDataView: NSScrollView {
     
     @IBOutlet weak var inspector: Inspector!
    
+    // Shortcuts
     var c64: C64Proxy { return inspector.parent.c64 }
     var drive: DriveProxy { return inspector.drive }
-    var halftrack: Int { return inspector.selectedHalftrack }
-    var sector: Int { return inspector.selectedSector }
-    
+    var disk: DiskProxy { return drive.disk }
+    var halftrack: Halftrack? { return inspector.halftrack }
+    var sector: Sector? { return inspector.sector }
     var textView: NSTextView? { return documentView as? NSTextView }
     var storage: NSTextStorage? { return textView?.textStorage }
     
@@ -23,8 +24,8 @@ class DiskDataView: NSScrollView {
     var headPosition: NSRange?
 
     // Highlighted bit sequences (sector header)
-    var firstHeaderSectorRange: NSRange?
-    var secondHeaderSectorRange: NSRange?
+    var firstHeaderRange: NSRange?
+    var secondHeaderRange: NSRange?
     
     // Highlighted bit sequences (sector data)
     var firstDataSectorRange: NSRange?
@@ -33,6 +34,15 @@ class DiskDataView: NSScrollView {
     // Indicates which elements needs an update
     var dataIsDirty = false
     var sectionMarksAreDirty = false
+    
+    // Display font
+    var font: NSFont {
+        if #available(OSX 10.15, *) {
+            return NSFont.monospacedSystemFont(ofSize: 10.0, weight: .semibold)
+        } else {
+            return NSFont.monospacedDigitSystemFont(ofSize: 10.0, weight: .semibold)
+        }
+    }
     
     override func awakeFromNib() {
 
@@ -45,19 +55,19 @@ class DiskDataView: NSScrollView {
             if dataIsDirty {
                 
                 var gcr = ""
-                if halftrack >= 0 && drive.hasDisk() {
+                if  halftrack != nil && drive.hasDisk() {
 
-                    if inspector.rawGcr || sector < 0 {
+                    if inspector.rawGcr || sector == nil {
                         
                         // Show the raw GCR stream
-                        gcr = String(cString: drive.disk.trackBitsAsString())
+                        gcr = String(cString: disk.trackBitsAsString())
                         
                     } else {
                         
                         // Show the decoded GCR data of the currently selected sector
-                        gcr = String(cString: drive.disk.sectorHeaderBytes(asString: Sector(sector))!)
+                        gcr = String(cString: disk.sectorHeaderBytes(asString: sector!))
                         gcr.append("\n\n")
-                        gcr.append(String(cString: drive.disk.sectorDataBytes(asString: Sector(sector))!))
+                        gcr.append(String(cString: disk.sectorDataBytes(asString: sector!)))
                     }
                 }
                 
@@ -66,11 +76,7 @@ class DiskDataView: NSScrollView {
                 
                 // Update text storage
                 let textStorage = NSTextStorage.init(string: gcr)
-                if #available(OSX 10.15, *) {
-                    textStorage.font = NSFont.monospacedSystemFont(ofSize: 10.0, weight: .semibold)
-                } else {
-                    textStorage.font = NSFont.monospacedDigitSystemFont(ofSize: 10.0, weight: .semibold)
-                }
+                textStorage.font = font
                 textStorage.foregroundColor = .textColor
                 textView?.layoutManager?.replaceTextStorage(textStorage)
                 
@@ -129,14 +135,14 @@ class DiskDataView: NSScrollView {
         let dRight = info.dataEnd % (length + 1)
                 
         if hLeft < hRight {
-            firstHeaderSectorRange = NSRange.init(location: hLeft, length: hRight - hLeft)
-            secondHeaderSectorRange = nil
+            firstHeaderRange = NSRange.init(location: hLeft, length: hRight - hLeft)
+            secondHeaderRange = nil
         } else if hLeft > hRight {
-            firstHeaderSectorRange = NSRange.init(location: 0, length: hRight + 1)
-            secondHeaderSectorRange = NSRange.init(location: hLeft, length: length - hLeft)
+            firstHeaderRange = NSRange.init(location: 0, length: hRight + 1)
+            secondHeaderRange = NSRange.init(location: hLeft, length: length - hLeft)
         } else {
-            firstHeaderSectorRange = nil
-            secondHeaderSectorRange = nil
+            firstHeaderRange = nil
+            secondHeaderRange = nil
         }
 
         if dLeft < dRight {
@@ -152,8 +158,8 @@ class DiskDataView: NSScrollView {
 
         // Colorize
         let color = NSColor.alternateSelectedControlColor
-        storage?.addAttr(.foregroundColor, value: color, range: firstHeaderSectorRange)
-        storage?.addAttr(.foregroundColor, value: color, range: secondHeaderSectorRange)
+        storage?.addAttr(.foregroundColor, value: color, range: firstHeaderRange)
+        storage?.addAttr(.foregroundColor, value: color, range: secondHeaderRange)
         storage?.addAttr(.foregroundColor, value: color, range: firstDataSectorRange)
         storage?.addAttr(.foregroundColor, value: color, range: secondDataSectorRange)
         
@@ -162,20 +168,20 @@ class DiskDataView: NSScrollView {
 
     func unmarkSectors() {
         
-        storage?.remAttr(.foregroundColor, range: firstHeaderSectorRange)
-        storage?.remAttr(.foregroundColor, range: secondHeaderSectorRange)
+        storage?.remAttr(.foregroundColor, range: firstHeaderRange)
+        storage?.remAttr(.foregroundColor, range: secondHeaderRange)
         storage?.remAttr(.foregroundColor, range: firstDataSectorRange)
         storage?.remAttr(.foregroundColor, range: secondDataSectorRange)
-        firstHeaderSectorRange = nil
-        secondHeaderSectorRange = nil
+        firstHeaderRange = nil
+        secondHeaderRange = nil
         firstDataSectorRange = nil
         secondDataSectorRange = nil
     }
     
     func scrollToFirstMarkedRange() {
         
-        if firstHeaderSectorRange != nil {
-            textView?.scrollRangeToVisible(firstHeaderSectorRange!)
+        if firstHeaderRange != nil {
+            textView?.scrollRangeToVisible(firstHeaderRange!)
         }
     }
 }
