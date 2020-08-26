@@ -56,7 +56,6 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
         
         if halftrack > 0 {
             let row = Int(halftrack) - 1
-            // let rows: IndexSet = [Int(halftrack) - 1]
             selectRowIndexes([row], byExtendingSelection: false)
             scrollRowToVisible(row)
         }
@@ -81,14 +80,10 @@ extension TrackTableView: NSTableViewDataSource {
     }
     
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-        
-        track("row = \(row)")
-        
-        let halftrack = Halftrack(showHalftracks ? row + 1 : 2 * row + 1)
-        inspector.selectedSector = -1
-        inspector.selectedHalftrack = Int(halftrack)
-        inspector.fullRefresh()
-        
+                
+        let halftrack = showHalftracks ? row + 1 : 2 * row + 1
+        inspector.setSelectedSector(-1)
+        inspector.setSelectedHalftrack(halftrack)
         return true
     }
 }

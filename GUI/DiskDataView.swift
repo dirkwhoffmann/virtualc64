@@ -111,8 +111,8 @@ class DiskDataView: NSScrollView {
         
         // Jump to current track
         let current = drive.halftrack()
-        inspector.selectedHalftrack = Int(current)
-        inspector.selectedSector = -1
+        inspector.setSelectedHalftrack(Int(current))
+        inspector.setSelectedSector(-1)
 
         // Highlight drive position inside the current track
         let range = NSRange.init(location: Int(drive.offset()), length: 1)
@@ -121,14 +121,12 @@ class DiskDataView: NSScrollView {
             
     func markSectors() {
         
-        let halftrack = inspector.selectedHalftrack
-        let sector = inspector.selectedSector
-        if !inspector.rawGcr || sector < 0 || halftrack < 0 { return }
+        if !inspector.rawGcr || sector == nil || halftrack == nil { return }
 
-        let length = Int(drive.size(ofHalftrack: Halftrack(halftrack)))
+        let length = Int(drive.size(ofHalftrack: halftrack!))
         if length == 0 { return }
 
-        let info = drive.disk.sectorInfo(Sector(sector))
+        let info = drive.disk.sectorInfo(sector!)
         let hLeft = info.headerBegin % (length + 1)
         let hRight = info.headerEnd % (length + 1)
         let dLeft = info.dataBegin % (length + 1)

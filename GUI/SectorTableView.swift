@@ -83,8 +83,7 @@ extension SectorTableView: NSTableViewDataSource {
         
         if let sector = sectorForRow[row] {
             
-            inspector.selectedSector = sector
-            inspector.fullRefresh()
+            inspector.setSelectedSector(sector)
         }
         return true
     }

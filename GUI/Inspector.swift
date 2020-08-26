@@ -283,16 +283,11 @@ class Inspector: DialogController {
     @IBOutlet weak var drvWarningText: NSTextField!
     @IBOutlet weak var drvWarningButton: NSButton!
 
-    var selectedDrive: DriveID = DRIVE8 {
-        didSet { if selectedDrive != oldValue { didSetDrive() } }
-    }
-    var selectedHalftrack = -1 {
-        didSet { if selectedHalftrack != oldValue { didSetHalftrack() } }
-    }
-    var selectedSector = -1 {
-        didSet { if selectedSector != oldValue { didSetSector() } }
-    }
+    var selectedDrive: DriveID = DRIVE8
     var drive: DriveProxy { return selectedDrive == DRIVE8 ? c64.drive8 : c64.drive9 }
+    var rawGcr = true
+    var selectedHalftrack = -1
+    var selectedSector = -1
 
     // Cached state of all C64 components
     var cpuInfo: CPUInfo!
