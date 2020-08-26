@@ -884,13 +884,13 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->disk->diskNameAsString();
 }
-- (const char *)sectorHeaderBytesAsString:(Sector)nr
+- (const char *)sectorHeaderBytesAsString:(Sector)nr hex:(BOOL)hex
 {
-    return wrapper->disk->sectorHeaderBytesAsString(nr);
+    return wrapper->disk->sectorHeaderBytesAsString(nr, hex);
 }
-- (const char *)sectorDataBytesAsString:(Sector)nr
+- (const char *)sectorDataBytesAsString:(Sector)nr hex:(BOOL)hex
 {
-    return wrapper->disk->sectorDataBytesAsString(nr);
+    return wrapper->disk->sectorDataBytesAsString(nr, hex);
 }
 
 @end

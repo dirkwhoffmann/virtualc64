@@ -657,8 +657,8 @@ struct AnyC64FileWrapper;
 - (SectorInfo)sectorInfo:(Sector)s;
 - (const char *)diskNameAsString;
 - (const char *)trackBitsAsString;
-- (const char *)sectorHeaderBytesAsString:(Sector)nr;
-- (const char *)sectorDataBytesAsString:(Sector)nr;
+- (const char *)sectorHeaderBytesAsString:(Sector)nr hex:(BOOL)hex;
+- (const char *)sectorDataBytesAsString:(Sector)nr hex:(BOOL)hex;
 @end
 
 

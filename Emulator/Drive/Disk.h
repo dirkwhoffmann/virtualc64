@@ -400,38 +400,38 @@ private:
     
 public:
     
-    //! @brief    Returns a sector layout from variable trackInfo
+    // Returns a sector layout from variable trackInfo
     SectorInfo sectorLayout(Sector nr) {
         assert(isSectorNumber(nr)); return trackInfo.sectorInfo[nr]; }
     
-    //! @brief    Returns the number of entries in the error log
+    // Returns the number of entries in the error log
     unsigned numErrors() { return (unsigned)errorLog.size(); }
     
-    //! @brief    Reads an error message from the error log
+    // Reads an error message from the error log
     std::string errorMessage(unsigned nr) { return errorLog.at(nr); }
     
-    //! @brief    Reads the error begin index from the error log
+    // Reads the error begin index from the error log
     size_t firstErroneousBit(unsigned nr) { return errorStartIndex.at(nr); }
     
-    //! @brief    Reads the error end index from the error log
+    // Reads the error end index from the error log
     size_t lastErroneousBit(unsigned nr) { return errorEndIndex.at(nr); }
     
-    //! @brief    Returns a textual representation of the disk name
+    // Returns a textual representation of the disk name
     const char *diskNameAsString();
     
-    //! @brief    Returns a textual representation of the data stored in trackInfo
+    // Returns a textual representation of the data stored in trackInfo
     const char *trackBitsAsString();
 
-    //! @brief    Returns a textual representation of the data stored in trackInfo
-    const char *sectorHeaderBytesAsString(Sector nr);
+    // Returns a textual representation of the data stored in trackInfo
+    const char *sectorHeaderBytesAsString(Sector nr, bool hex);
 
-    //! @brief    Returns a textual representation of the data stored in trackInfo
-    const char *sectorDataBytesAsString(Sector nr);
+    // Returns a textual representation of the data stored in trackInfo
+    const char *sectorDataBytesAsString(Sector nr, bool hex);
 
 private:
     
-    //! @brief    Returns a textual representation
-    const char *sectorBytesAsString(u8 *buffer, size_t length);
+    // Returns a textual representation
+    const char *sectorBytesAsString(u8 *buffer, size_t length, bool hex);
     
     
     //

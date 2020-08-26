@@ -35,6 +35,9 @@ class DiskDataView: NSScrollView {
     var dataIsDirty = false
     var sectionMarksAreDirty = false
     
+    // Display format in byte view
+    var hex = true { didSet { if hex != oldValue { dataIsDirty = true } } }
+
     // Display font
     var font: NSFont {
         if #available(OSX 10.15, *) {
@@ -65,9 +68,9 @@ class DiskDataView: NSScrollView {
                     } else {
                         
                         // Show the decoded GCR data of the currently selected sector
-                        gcr = String(cString: disk.sectorHeaderBytes(asString: sector!))
+                        gcr = String(cString: disk.sectorHeaderBytes(asString: sector!, hex: hex))
                         gcr.append("\n\n")
-                        gcr.append(String(cString: disk.sectorDataBytes(asString: sector!)))
+                        gcr.append(String(cString: disk.sectorDataBytes(asString: sector!, hex: hex)))
                     }
                 }
                 

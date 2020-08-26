@@ -55,7 +55,9 @@ extension Inspector {
             } else {
                 drvNoDiskText.isHidden = true
             }
-
+                
+            // Refresh sub views
+            drvDiskDataView.hex = hex
             drvTrackTableView.refresh(count: count, full: full)
             drvSectorTableView.refresh(count: count, full: full)
             drvDiskDataView.refresh(count: count, full: full)

@@ -476,37 +476,47 @@ Disk::trackBitsAsString()
 }
 
 const char *
-Disk::sectorHeaderBytesAsString(Sector nr)
+Disk::sectorHeaderBytesAsString(Sector nr, bool hex)
 {
     assert(isSectorNumber(nr));
     size_t begin = trackInfo.sectorInfo[nr].headerBegin;
     size_t end = trackInfo.sectorInfo[nr].headerEnd;
-    return (begin == end) ? "" : sectorBytesAsString(trackInfo.bit + begin, 10);
+    return (begin == end) ? "" : sectorBytesAsString(trackInfo.bit + begin, 10, hex);
 }
 
 const char *
-Disk::sectorDataBytesAsString(Sector nr)
+Disk::sectorDataBytesAsString(Sector nr, bool hex)
 {
     assert(isSectorNumber(nr));
     size_t begin = trackInfo.sectorInfo[nr].dataBegin;
     size_t end = trackInfo.sectorInfo[nr].dataEnd;
-    return (begin == end) ? "" : sectorBytesAsString(trackInfo.bit + begin, 256);
+    return (begin == end) ? "" : sectorBytesAsString(trackInfo.bit + begin, 256, hex);
 }
 
 const char *
-Disk::sectorBytesAsString(u8 *buffer, size_t length)
+Disk::sectorBytesAsString(u8 *buffer, size_t length, bool hex)
 {
-    size_t gcr_offset = 0;
-    size_t str_offset = 0;
+    size_t gcrOffset = 0;
+    size_t strOffset = 0;
     
-    for (size_t i = 0; i < length; i++, gcr_offset += 10, str_offset += 3) {
-        u8 value = decodeGcr(buffer + gcr_offset);
-        sprint8x(text + str_offset, value);
-        text[str_offset + 2] = ' ';
+    for (size_t i = 0; i < length; i++, gcrOffset += 10) {
+
+        u8 value = decodeGcr(buffer + gcrOffset);
+
+        if (hex) {
+            sprint8x(text + strOffset, value);
+            text[strOffset + 2] = ' ';
+            strOffset += 3;
+        } else {
+            sprint8d(text + strOffset, value);
+            text[strOffset + 3] = ' ';
+            strOffset += 4;
+        }
     }
-    text[str_offset] = 0;
+    text[strOffset] = 0;
     return text;
 }
+
 
 //
 // Decoding disk data
