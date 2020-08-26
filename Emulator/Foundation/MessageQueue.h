@@ -27,18 +27,13 @@ class MessageQueue : public C64Object {
     // The ring buffer's read and write pointers
     int r = 0;
     int w = 0;
-    
-    //! @brief Mutex for streamlining parallel read and write accesses
-    // TODO: Use synchronized
-    pthread_mutex_t lock;
-    
+        
     // List of all registered listeners
     map <const void *, Callback *> listeners;
     
 public:
     
     MessageQueue();
-    ~MessageQueue();
     
     // Registers a listener together with it's callback function
     void addListener(const void *listener, Callback *func);
