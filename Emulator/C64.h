@@ -511,27 +511,21 @@ public:
     void signalInspect() { setControlFlags(RL_INSPECT); }
     void signalJammed() { setControlFlags(RL_CPU_JAMMED); }
     void signalStop() { setControlFlags(RL_STOP); }
-    
+
 private:
-    
-    //! @brief    Converts kernel time to nanoseconds.
-    //! @todo     Move to utils
-    u64 abs_to_nanos(u64 abs) { return abs * timebase.numer / timebase.denom; }
-    
-    //! @brief    Converts nanoseconds to kernel time.
-    //! @todo     Move to utils
-    u64 nanos_to_abs(u64 nanos) { return nanos * timebase.denom / timebase.numer; }
-    
-public:
-    
+
     /* Restarts the synchronization timer. The function is invoked at launch
      * time to initialize the timer and reinvoked when the synchronization
      * timer gets out of sync.
      */
     void restartTimer();
     
-private:
+    // Converts kernel time to nanoseconds
+    u64 abs_to_nanos(u64 abs) { return abs * timebase.numer / timebase.denom; }
     
+    // Converts nanoseconds to kernel time
+    u64 nanos_to_abs(u64 nanos) { return nanos * timebase.denom / timebase.numer; }
+ 
     /* Puts the emulation the thread to sleep. This function is called inside
      * endFrame(). It makes the emulation thread wait until nanoTargetTime has
      * been reached. Before returning, nanoTargetTime is assigned with a new
