@@ -110,16 +110,29 @@ public:
 
 private:
     
+    void init(int sampleRate, int cycles_per_sec);
+    void initFilter(int sampleRate);
+
     void _reset() override;
 
-    
+
     //
     // Configuring
     //
     
 public:
     
+    u32 getClockFrequency() { return cpuFrequency; }
     void setClockFrequency(u32 frequency);
+    
+    SIDRevision getRevision() { return model; }
+    void setRevision(SIDRevision m);
+    
+    double getSampleRate() { return (double)sampleRate; }
+    void setSampleRate(double rate);
+    
+    bool getAudioFilter() { return emulateFilter; }
+    void setAudioFilter(bool value) { emulateFilter = value; }
     
     
     //
@@ -198,43 +211,7 @@ private:
     // Computes a single sound sample
     i16 calculateSingleSample();
     
-    
-    //
-    // Configuring the device
-    //
-    
-public:
-    
-    // Returns the chip model
-    SIDRevision getRevision() { return model; }
-    
-    // Sets the chip model
-    void setRevision(SIDRevision m);
-    
-    // Returns the clock frequency
-    u32 getClockFrequency() { return cpuFrequency; }
-    
-    // Returns the sample rate
-    double getSampleRate() { return (double)sampleRate; }
-    
-    // Sets the sample rate
-    void setSampleRate(double rate);
-    
-    // Returns true iff audio filters should be emulated
-    bool getAudioFilter() { return emulateFilter; }
-    
-    // Enable or disable audio filter emulation
-    void setAudioFilter(bool value) { emulateFilter = value; }
-    
-private:
-    
-    // Initializes SID
-    void init(int sampleRate, int cycles_per_sec);
-    
-    // Initializes filter lookup tables
-    void initFilter(int sampleRate);
-    
-    
+     
     //
     // Accessing device properties
     //

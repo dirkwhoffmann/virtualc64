@@ -58,7 +58,7 @@ private:
     
     
     //
-    // Constructing and serializing
+    // Initializing
     //
     
 public:
@@ -77,8 +77,21 @@ private:
     
 public:
     
+    u32 getClockFrequency();
     void setClockFrequency(u32 frequency);
-
+    
+    SIDRevision getRevision();
+    void setRevision(SIDRevision m);
+    
+    double getSampleRate() { return sampleRate; }
+    void setSampleRate(double rate);
+    
+    bool getAudioFilter() { return emulateFilter; }
+    void setAudioFilter(bool enable);
+    
+    SamplingMethod getSamplingMethod();
+    void setSamplingMethod(SamplingMethod value);
+    
     
     //
     // Analyzing
@@ -189,45 +202,6 @@ public:
      * samples are written into the internal ring buffer.
      */
     void execute(u64 cycles);
-	
-
-    // Configuring
-    
-    //! Returns the chip model
-    SIDRevision getRevision() {
-        assert((SIDRevision)sid->sid_model == model);
-        return model;
-    }
-    
-    //! Sets the chip model
-    void setRevision(SIDRevision m);
-    
-    //! Returns the clock frequency
-    u32 getClockFrequency() {
-        assert((u32)sid->clock_frequency == clockFrequency);
-        return (u32)sid->clock_frequency;
-    }
-
-    //! Returns the sample rate
-    double getSampleRate() { return sampleRate; }
-    
-    //! Sets the sample rate
-    void setSampleRate(double rate);
-    
-    //! Returns true iff audio filters should be emulated.
-    bool getAudioFilter() { return emulateFilter; }
-    
-    //! Enable or disable audio filter emulation
-	void setAudioFilter(bool enable);
-
-    //! Get sampling method
-    SamplingMethod getSamplingMethod() {
-        assert((SamplingMethod)sid->sampling == samplingMethod);
-        return samplingMethod;
-    }
-    
-    //! Set sampling method
-    void setSamplingMethod(SamplingMethod value);
 };
 
 #endif

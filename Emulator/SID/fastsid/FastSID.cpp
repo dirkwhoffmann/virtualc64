@@ -51,6 +51,94 @@ FastSID::FastSID(C64 &ref, SIDBridge &bridgeref) : C64Component(ref), bridge(bri
 }
 
 void
+FastSID::init(int sampleRate, int cycles_per_sec)
+{
+    u32 i;
+    
+    // Recompute sample/cycle ratio and reset counters
+    samplesPerCycle = (double)sampleRate / (double)cpuFrequency;
+    executedCycles = 0LL;
+    computedSamples = 0LL;
+
+    // Table for internal ADSR counter step calculations
+    u16 adrtable[16] = {
+        1, 4, 8, 12, 19, 28, 34, 40, 50, 125, 250, 400, 500, 1500, 2500, 4000
+    };
+    
+    speed1 = (cycles_per_sec << 8) / sampleRate;
+    for (i = 0; i < 16; i++) {
+        adrs[i] = 500 * 8 * speed1 / adrtable[i];
+        sz[i] = 0x8888888 * i;
+    }
+    
+    initFilter(sampleRate);
+    updateInternals();
+    voice[0].updateInternals(false);
+    voice[1].updateInternals(false);
+    voice[2].updateInternals(false);
+}
+
+void
+FastSID::initFilter(int sampleRate)
+{
+    u16 uk;
+    float rk;
+    long int si;
+    
+    const float filterRefFreq = 44100.0;
+    
+    float yMax = 1.0;
+    float yMin = (float)0.01;
+    float resDyMax = 1.0;
+    float resDyMin = 2.0;
+    float resDy = resDyMin;
+    
+    float yAdd, yTmp;
+    
+    float filterFs = 400.0;
+    float filterFm = 60.0;
+    float filterFt = (float)0.05;
+    float filterAmpl = 1.0;
+    
+    // Low pass lookup table
+    for (uk = 0, rk = 0; rk < 0x800; rk++, uk++) {
+        
+        float h = (float)((((exp(rk / 2048 * log(filterFs)) / filterFm) + filterFt) * filterRefFreq) / sampleRate);
+        if (h < yMin) {
+            h = yMin;
+        }
+        if (h > yMax) {
+            h = yMax;
+        }
+        lowPassParam[uk] = h;
+    }
+    
+    // Band pass lookup table
+    yMax = (float)0.22;
+    yMin = (float)0.002;
+    yAdd = (float)((yMax - yMin) / 2048.0);
+    yTmp = yMin;
+    for (uk = 0, rk = 0; rk < 0x800; rk++, uk++) {
+        bandPassParam[uk] = (yTmp * filterRefFreq) / sampleRate;
+        yTmp += yAdd;
+    }
+    
+    // Resonance lookup table
+    for (uk = 0; uk < 16; uk++) {
+        filterResTable[uk] = resDy;
+        resDy -= ((resDyMin - resDyMax ) / 15);
+    }
+    filterResTable[0] = resDyMin;
+    filterResTable[15] = resDyMax;
+    filterAmpl = emulateFilter ? 0.7 : 1.0;
+    
+    // Amplifier lookup table
+    for (uk = 0, si = 0; si < 256; si++, uk++) {
+        ampMod1x8[uk] = (signed char)((si - 0x80) * filterAmpl);
+    }
+}
+
+void
 FastSID::_reset()
 {
     RESET_SNAPSHOT_ITEMS
@@ -287,94 +375,6 @@ FastSID::execute(u64 cycles)
     
     // Write samples into ringbuffer
     bridge.writeData(buf, numSamples);
-}
-
-void
-FastSID::init(int sampleRate, int cycles_per_sec)
-{
-    u32 i;
-    
-    // Recompute sample/cycle ratio and reset counters
-    samplesPerCycle = (double)sampleRate / (double)cpuFrequency;
-    executedCycles = 0LL;
-    computedSamples = 0LL;
-
-    // Table for internal ADSR counter step calculations
-    u16 adrtable[16] = {
-        1, 4, 8, 12, 19, 28, 34, 40, 50, 125, 250, 400, 500, 1500, 2500, 4000
-    };
-    
-    speed1 = (cycles_per_sec << 8) / sampleRate;
-    for (i = 0; i < 16; i++) {
-        adrs[i] = 500 * 8 * speed1 / adrtable[i];
-        sz[i] = 0x8888888 * i;
-    }
-    
-    initFilter(sampleRate);
-    updateInternals();
-    voice[0].updateInternals(false);
-    voice[1].updateInternals(false);
-    voice[2].updateInternals(false);
-}
-
-void
-FastSID::initFilter(int sampleRate)
-{
-    u16 uk;
-    float rk;
-    long int si;
-    
-    const float filterRefFreq = 44100.0;
-    
-    float yMax = 1.0;
-    float yMin = (float)0.01;
-    float resDyMax = 1.0;
-    float resDyMin = 2.0;
-    float resDy = resDyMin;
-    
-    float yAdd, yTmp;
-    
-    float filterFs = 400.0;
-    float filterFm = 60.0;
-    float filterFt = (float)0.05;
-    float filterAmpl = 1.0;
-    
-    // Low pass lookup table
-    for (uk = 0, rk = 0; rk < 0x800; rk++, uk++) {
-        
-        float h = (float)((((exp(rk / 2048 * log(filterFs)) / filterFm) + filterFt) * filterRefFreq) / sampleRate);
-        if (h < yMin) {
-            h = yMin;
-        }
-        if (h > yMax) {
-            h = yMax;
-        }
-        lowPassParam[uk] = h;
-    }
-    
-    // Band pass lookup table
-    yMax = (float)0.22;
-    yMin = (float)0.002;
-    yAdd = (float)((yMax - yMin) / 2048.0);
-    yTmp = yMin;
-    for (uk = 0, rk = 0; rk < 0x800; rk++, uk++) {
-        bandPassParam[uk] = (yTmp * filterRefFreq) / sampleRate;
-        yTmp += yAdd;
-    }
-    
-    // Resonance lookup table
-    for (uk = 0; uk < 16; uk++) {
-        filterResTable[uk] = resDy;
-        resDy -= ((resDyMin - resDyMax ) / 15);
-    }
-    filterResTable[0] = resDyMin;
-    filterResTable[15] = resDyMax;
-    filterAmpl = emulateFilter ? 0.7 : 1.0;
-    
-    // Amplifier lookup table
-    for (uk = 0, si = 0; si < 256; si++, uk++) {
-        ampMod1x8[uk] = (signed char)((si - 0x80) * filterAmpl);
-    }
 }
 
 void

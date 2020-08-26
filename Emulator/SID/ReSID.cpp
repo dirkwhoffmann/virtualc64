@@ -49,6 +49,13 @@ ReSID::_reset()
     sid->enable_filter(emulateFilter);
 }
 
+u32
+ReSID::getClockFrequency()
+{
+    assert((u32)sid->clock_frequency == clockFrequency);
+    return (u32)sid->clock_frequency;
+}
+
 void
 ReSID::setClockFrequency(u32 frequency)
 {
@@ -109,6 +116,13 @@ ReSID::willSaveToBuffer(u8 *buffer)
     return 0;
 }
 
+SIDRevision
+ReSID::getRevision()
+{
+    assert((SIDRevision)sid->sid_model == model);
+    return model;
+}
+
 void
 ReSID::setRevision(SIDRevision revision)
 {
@@ -145,6 +159,12 @@ ReSID::setAudioFilter(bool value)
     resume();
     
     debug(SID_DEBUG, "%s audio filter emulation.\n", value ? "Enabling" : "Disabling");
+}
+
+SamplingMethod
+ReSID::getSamplingMethod() {
+    assert((SamplingMethod)sid->sampling == samplingMethod);
+    return samplingMethod;
 }
 
 void 
