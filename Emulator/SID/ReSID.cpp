@@ -141,26 +141,6 @@ ReSID::setRevision(SIDRevision revision)
     debug(SID_DEBUG, "Emulating SID revision %s.\n", sidRevisionName(revision));
 }
 
-/*
-void
-ReSID::_setClockFrequency(u32 value)
-{
-    debug("_setClockFrequency(%d)\n", value);
-
-    debug(SID_DEBUG, "Setting clock frequency to %d\n", value);
-
-    clockFrequency = value;
-    
-    suspend();
-    sid->set_sampling_parameters((double)clockFrequency,
-                                 (reSID::sampling_method)samplingMethod,
-                                 (double)sampleRate);
-    resume();
-    
-    assert((u32)sid->clock_frequency == clockFrequency);
-}
-*/
-
 void
 ReSID::setSampleRate(double value)
 {

@@ -85,21 +85,6 @@ FastSID::setConfigItem(ConfigOption option, long value)
     }
 }
 
-/*
-void
-FastSID::_setClockFrequency(u32 value)
-{
-    debug("_setClockFrequency(%d)\n", value);
-
-    debug(SID_DEBUG, "Setting clock frequency to %d\n", value);
-
-    cpuFrequency = value;
-    
-    // Recompute frequency dependent data structures
-    init(sampleRate, cpuFrequency);
-}
-*/
-
 void
 FastSID::_dump()
 {

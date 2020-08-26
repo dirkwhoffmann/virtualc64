@@ -167,24 +167,24 @@ private:
     size_t didLoadFromBuffer(u8 *buffer) override;
     size_t willSaveToBuffer(u8 *buffer) override;
 
- 
-/*
-private:
 
-    void _setClockFrequency(u32 value) override;
-    
-*/
+    //
+    // Accessing
+    //
     
 public:
-    
-	//! Special peek function for the I/O memory range.
+
+    // Reads or writes a SID register
 	u8 peek(u16 addr);
-	
-	//! Special poke function for the I/O memory range.
 	void poke(u16 addr, u8 value);
 	
-	/* Runs reSID for the specified amount of CPU cycles and writes the
-     * generated sound samples into the internal ring buffer.
+    
+    //
+    // Emulating
+    //
+    
+	/* Runs reSID for the specified amount of CPU cycles. The generated sound
+     * samples are written into the internal ring buffer.
      */
     void execute(u64 cycles);
 	

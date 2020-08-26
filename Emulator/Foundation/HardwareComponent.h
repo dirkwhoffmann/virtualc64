@@ -286,22 +286,6 @@ applyToResetItems(writer); \
 debug(SNP_DEBUG, "Serialized to %d bytes\n", writer.ptr - buffer); \
 return writer.ptr - buffer;
 
-
-//
-// DEPRECATED
-//
-    
-public:
-    
-    /* Informs the component about a clock frequency change.
-     * This delegation method is called on startup and whenever the CPU clock
-     * frequency changes (i.e., when switching between PAL and NTSC). Some
-     * components overwrite this function to update clock dependent lookup
-     * tables.
-     * DEPRECATED. USE THE NEW CONFIG DISTRIBUTION SCHEME FOR THIS.
-     */
-    // void setClockFrequency(u32 value);
-    // virtual void _setClockFrequency(u32 value) { }
 };
 
 #endif

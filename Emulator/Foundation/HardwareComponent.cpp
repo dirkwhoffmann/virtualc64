@@ -266,16 +266,3 @@ HardwareComponent::setDebug(bool enable)
      // Enable debug mode for this component
      _setDebug(enable);
 }
-
-/*
-void
-HardwareComponent::setClockFrequency(u32 value)
-{
-    assert(value == PAL_CLOCK_FREQUENCY || value == NTSC_CLOCK_FREQUENCY);
-    
-    for (HardwareComponent *c : subComponents) {
-        c->setClockFrequency(value);
-    }
-    _setClockFrequency(value);
-}
-*/

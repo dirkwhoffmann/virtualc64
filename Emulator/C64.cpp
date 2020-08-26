@@ -553,16 +553,6 @@ void C64::_ping()
     putMessage(warpMode ? MSG_WARP_ON : MSG_WARP_OFF);
 }
 
-/*
-void
-C64::_setClockFrequency(u32 value)
-{
-    debug("_setClockFrequency(%d)\n", value);
-    frequency = value;
-    durationOfOneCycle = 10000000000 / value;
-}
-*/
-
 void
 C64::_dump() {
     msg("C64:\n");

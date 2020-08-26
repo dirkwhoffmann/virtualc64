@@ -31,19 +31,8 @@ Drive::Drive(DriveID id, C64 &ref) : C64Component(ref), deviceNr(id)
     config.type = DRIVE_VC1541II;
     
     insertionStatus = NOT_INSERTED;
-    resetDisk();
+    disk.clearDisk();
 }
-
-/*
-void
-Drive::_initialize()
-{
-    debug("VC1541 initialize");
-
-    // Start with a single drive powered on
-    // deviceNr == DRIVE8 ? connect() : disconnect();
-}
-*/
 
 void
 Drive::_reset()
@@ -53,13 +42,6 @@ Drive::_reset()
     cpu.reg.pc = 0xEAA0;
     halftrack = 41;
 }
-
-void
-Drive::resetDisk()
-{
-    disk.clearDisk();
-}
-
 
 long
 Drive::getConfigItem(ConfigOption option)

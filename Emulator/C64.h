@@ -352,7 +352,6 @@ private:
     void _pause() override;
     void _ping() override;
     void _setWarp(bool enable) override;
-    // void _setClockFrequency(u32 value) override;
     
 
     //

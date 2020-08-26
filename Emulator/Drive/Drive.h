@@ -192,7 +192,6 @@ public:
     
 private:
 
-    // void _initialize() override;
     void _reset() override;
 
     
@@ -207,24 +206,7 @@ public:
     long getConfigItem(ConfigOption option);
     bool setConfigItem(ConfigOption option, long value) override;
     bool setConfigItem(DriveID id, ConfigOption option, long value) override;
-    
-    /*
-    DriveType getType() { return config.type; }
-    void setType(DriveType type) { config.type = type; }
-
-    bool isConnectable();
-    bool isConnected() { return config.connected; }
-    bool isDisconnected() { return !config.connected; }
-    
-    void setConnected(bool value);
-    void connect() { setConnected(true); }
-    void disconnect() { setConnected(false); }
-    void toggleConnection() { isConnected() ? disconnect() : connect(); }
-
-    bool isSwitchedOn() { return config.switchedOn; }
-    void setPowerSwitch(bool value);
-    */
-    
+        
     
     //
     // Analyzing
@@ -282,24 +264,10 @@ private:
     
     
     //
-    // Methods from HardwareComponent
-    //
-    
-private:
-    
-    // void _setClockFrequency(u32 value) override;
-    
-public:
-    
-    /* Resets all disk related properties. This method is needed, because
-     * reset() keeps the disk alive.
-     */
-    void resetDisk();
-    
-
-    //
     // Working with the drive
     //
+
+public:
 
     // Checks whether the drive is active (connected and switched on)
     bool isActive() { return active; }
@@ -324,6 +292,8 @@ public:
     // Handling disks
     //
 
+public:
+    
     // Checks if a disk is present
     bool hasDisk() { return insertionStatus == FULLY_INSERTED; }
     bool hasPartiallyInsertedDisk() { return insertionStatus == PARTIALLY_INSERTED; }
@@ -381,6 +351,8 @@ public:
     //
     // Emulating
     //
+    
+public:
     
     /* Executes all pending cycles of the virtual drive. The number of cycles
      * is determined by the target time which is elapsedTime + duration.

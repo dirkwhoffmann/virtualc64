@@ -170,25 +170,28 @@ private:
     
     
     //
-    // Methods from HardwareComponent
+    // Accessing
     //
-    
-private:
-    
-    // void _setClockFrequency(u32 value) override;
-    
+        
 public:
         
-    // Special peek function for the I/O memory range
+    // Reads or writes a SID register
     u8 peek(u16 addr);
-    
-    // Special poke function for the I/O memory range.
     void poke(u16 addr, u8 value);
     
-    /* Emulates SID for the specified amount of CPU cycles and writes the
-     * generated sound samples into the internal ring buffer.
+    
+    //
+    // Emulating
+    //
+    
+public:
+    
+    /* Runs SID for the specified amount of CPU cycles. The generated sound
+     * samples are written into the internal ring buffer.
      */
     void execute(u64 cycles);
+    
+private:
     
     // Computes a single sound sample
     i16 calculateSingleSample();
@@ -197,6 +200,8 @@ public:
     //
     // Configuring the device
     //
+    
+public:
     
     // Returns the chip model
     SIDRevision getRevision() { return model; }
