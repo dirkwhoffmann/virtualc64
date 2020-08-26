@@ -1057,14 +1057,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->drive->getHalftrack();
 }
-- (void) setTrack:(Track)t
-{
-    wrapper->drive->setTrack(t);
-}
-- (void) setHalftrack:(Halftrack)ht
-{
-    wrapper->drive->setHalftrack(ht);
-}
 - (u16) sizeOfHalftrack:(Halftrack)ht
 {
     return wrapper->drive->sizeOfHalftrack(ht);
@@ -1077,37 +1069,13 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->drive->getOffset();
 }
-- (void) setOffset:(u16)value
-{
-    wrapper->drive->setOffset(value);
-}
 - (u8) readBitFromHead
 {
     return wrapper->drive->readBitFromHead();
 }
-- (void) writeBitToHead:(u8)value
-{
-    wrapper->drive->writeBitToHead(value);
-}
-- (void) moveHeadUp
-{
-    wrapper->drive->moveHeadUp();
-}
-- (void) moveHeadDown
-{
-    wrapper->drive->moveHeadDown();
-}
 - (BOOL) isRotating
 {
     return wrapper->drive->isRotating();
-}
-- (void) rotateDisk
-{
-    wrapper->drive->rotateDisk();
-}
-- (void) rotateBack
-{
-    wrapper->drive->rotateBack();
 }
 
 @end

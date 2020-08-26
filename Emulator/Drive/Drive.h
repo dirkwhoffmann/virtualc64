@@ -400,11 +400,7 @@ public:
     // Returns the current halftrack or track number
     Halftrack getHalftrack() { return halftrack; }
     Track getTrack() { return (halftrack + 1) / 2; }
-    
-    // Moves the drive head to the specified track
-    void setHalftrack(Halftrack ht) { assert(isHalftrackNumber(ht)); halftrack = ht; }
-    void setTrack(Track t) { assert(isTrackNumber(t)); halftrack = 2 * t - 1; }
-    
+        
     // Returns the number of bits in a halftrack
     u16 sizeOfHalftrack(Halftrack ht) {
         return hasDisk() ? disk.lengthOfHalftrack(ht) : 0; }
@@ -412,11 +408,6 @@ public:
 
     // Returns the position of the drive head inside the current track
     HeadPosition getOffset() { return offset; }
-
-    // Sets the position of the drive head inside the current track
-    void setOffset(HeadPosition pos) {
-        if (hasDisk() && disk.isValidHeadPositon(halftrack, pos)) offset = pos;
-    }
 
     // Moves head one halftrack up
     void moveHeadUp();
@@ -447,22 +438,10 @@ public:
     u8 readBitFromHead() { return disk.readBitFromHalftrack(halftrack, offset); }
     
     // Writes a single bit to the disk head
-    void writeBitToHead(u8 bit) {
-        disk.writeBitToHalftrack(halftrack, offset, bit); }
+    void writeBitToHead(u8 bit) { disk.writeBitToHalftrack(halftrack, offset, bit); }
     
     // Advances drive head position by one bit
     void rotateDisk() { if (++offset >= disk.lengthOfHalftrack(halftrack)) offset = 0; }
-
-    // Moves drive head position back by one bit
-    void rotateBack() { if (--offset < 0) offset = disk.lengthOfHalftrack(halftrack) - 1; }
-
-private:
-    
-    // Advances drive head position by eight bits
-    void rotateDiskByOneByte() { for (unsigned i = 0; i < 8; i++) rotateDisk(); }
-
-    // Moves drive head position back by eight bits
-    void rotateBackByOneByte() { for (unsigned i = 0; i < 8; i++) rotateBack(); }
 };
 
 #endif

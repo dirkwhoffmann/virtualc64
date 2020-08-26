@@ -597,21 +597,12 @@ struct AnyC64FileWrapper;
 
 - (Track) track;
 - (Halftrack) halftrack;
-- (void) setTrack:(Track)t;
-- (void) setHalftrack:(Halftrack)ht;
 - (u16) sizeOfHalftrack:(Halftrack)ht;
 - (u16) sizeOfCurrentHalftrack;
 - (u16) offset;
-- (void) setOffset:(u16)value;
 - (u8) readBitFromHead;
-- (void) writeBitToHead:(u8)value;
-
-- (void) moveHeadUp;
-- (void) moveHeadDown;
 
 - (BOOL) isRotating;
-- (void) rotateDisk;
-- (void) rotateBack;
 
 @end
 
