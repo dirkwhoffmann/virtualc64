@@ -78,6 +78,15 @@ typedef enum : long
 }
 C64Model;
 
+typedef enum : long
+{
+    ROM_BASIC,
+    ROM_CHAR,
+    ROM_KERNAL,
+    ROM_VC1541
+}
+RomType;
+
 inline bool isC64Model(long value) {
     return value >= C64_PAL && value <= C64_OLD_NTSC;
 }

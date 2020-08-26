@@ -103,7 +103,7 @@ Drive::setConfigItem(DriveID id, ConfigOption option, long value)
             if (config.connected == value) {
                 return false;
             }
-            if (value && !c64.hasVC1541Rom()) {
+            if (value && !c64.hasRom(ROM_VC1541)) {
                 warn("Can't connect drive (ROM missing).\n");
                 return false;
             }

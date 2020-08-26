@@ -645,12 +645,12 @@ C64::acquireThreadLock()
 bool
 C64::isReady(ErrorCode *error)
 {
-    if (!hasBasicRom() || !hasCharRom() || !hasKernalRom()) {
+    if (!hasRom(ROM_BASIC) || !hasRom(ROM_CHAR) || !hasRom(ROM_KERNAL)) {
         if (error) *error = ERR_ROM_MISSING;
         return false;
     }
     
-    if (hasMega65BasicRom() && hasMega65KernalRom()) {
+    if (hasMega65Rom(ROM_BASIC) && hasMega65Rom(ROM_KERNAL)) {
         if (strcmp(mega65BasicRev(), mega65KernalRev()) != 0) {
             if (error) *error = ERR_ROM_MEGA65_MISMATCH;
             return false;
@@ -1032,6 +1032,25 @@ void C64::loadFromSnapshot(Snapshot *snapshot)
 }
 
 u32
+C64::romCRC32(RomType type)
+{
+    switch (type) {
+            
+        case ROM_BASIC:
+            return hasRom(ROM_BASIC)  ? crc32(mem.rom + 0xA000, 0x2000) : 0;
+        case ROM_CHAR:
+            return hasRom(ROM_CHAR)   ? crc32(mem.rom + 0xD000, 0x1000) : 0;
+        case ROM_KERNAL:
+            return hasRom(ROM_KERNAL) ? crc32(mem.rom + 0xE000, 0x2000) : 0;
+        case ROM_VC1541:
+            return hasRom(ROM_VC1541) ? crc32(drive8.mem.rom, 0x4000) : 0;
+        default:
+            assert(false);
+    }
+}
+
+/*
+u32
 C64::basicRomCRC32()
 {
     return hasBasicRom() ? crc32(mem.rom + 0xA000, 0x2000) : 0;
@@ -1054,66 +1073,69 @@ C64::vc1541RomCRC32()
 {
     return hasVC1541Rom() ? crc32(drive8.mem.rom, 0x4000) : 0;
 }
+*/
 
 u64
-C64::basicRomFNV64()
+C64::romFNV64(RomType type)
 {
-    return hasBasicRom() ? fnv_1a_64(mem.rom + 0xA000, 0x2000) : 0;
+    switch (type) {
+            
+        case ROM_BASIC:
+            return hasRom(ROM_BASIC)  ? fnv_1a_64(mem.rom + 0xA000, 0x2000) : 0;
+        case ROM_CHAR:
+            return hasRom(ROM_CHAR)   ? fnv_1a_64(mem.rom + 0xD000, 0x1000) : 0;
+        case ROM_KERNAL:
+            return hasRom(ROM_KERNAL) ? fnv_1a_64(mem.rom + 0xE000, 0x2000) : 0;
+        case ROM_VC1541:
+            return hasRom(ROM_VC1541) ? fnv_1a_64(drive8.mem.rom, 0x4000) : 0;
+        default:
+            assert(false);
+    }
 }
 
-u64
-C64::charRomFNV64()
+RomIdentifier
+C64::romIdentifier(RomType type)
 {
-    return hasCharRom() ? fnv_1a_64(mem.rom + 0xD000, 0x1000) : 0;
-}
-
-u64
-C64::kernalRomFNV64()
-{
-    return hasKernalRom() ? fnv_1a_64(mem.rom + 0xE000, 0x2000) : 0;
-}
-
-u64
-C64::vc1541RomFNV64()
-{
-    return hasVC1541Rom() ? fnv_1a_64(drive8.mem.rom, 0x4000) : 0;
+    return RomFile::identifier(romFNV64(type));
 }
 
 const char *
-C64::basicRomTitle()
+C64::romTitle(RomType type)
 {
-    // Intercept if a MEGA65 Rom is installed
-    if (hasMega65BasicRom()) return "M.E.G.A. C64 OpenROM";
-    
-    RomIdentifier rev = basicRomIdentifier();
-    return rev == ROM_UNKNOWN ? "Unknown Basic Rom" : RomFile::title(rev);
-}
-
-const char *
-C64::charRomTitle()
-{
-    // Intercept if a MEGA65 Rom is installed
-    if (hasMega65CharRom()) return "M.E.G.A. C64 OpenROM";
-    
-    RomIdentifier rev = charRomIdentifier();
-    return rev == ROM_UNKNOWN ? "Unknown Character Rom" : RomFile::title(rev);
-}
-
-const char *
-C64::kernalRomTitle()
-{
-    // Intercept if a MEGA65 Rom is installed
-    if (hasMega65BasicRom()) return "M.E.G.A. C64 OpenROM";
-    
-    RomIdentifier rev = kernalRomIdentifier();
-    return rev == ROM_UNKNOWN ? "Unknown Kernal Rom" : RomFile::title(rev);
-}
-
-const char *
-C64::vc1541RomTitle()
-{
-    RomIdentifier rev = vc1541RomIdentifier();
-    return rev == ROM_UNKNOWN ? "Unknown Kernal Rom" : RomFile::title(rev);
+    switch (type) {
+            
+        case ROM_BASIC:
+        {
+            // Intercept if a MEGA65 Rom is installed
+            if (hasMega65Rom(ROM_BASIC)) return "M.E.G.A. C64 OpenROM";
+            
+            RomIdentifier rev = romIdentifier(ROM_BASIC);
+            return rev == ROM_UNKNOWN ? "Unknown Basic Rom" : RomFile::title(rev);
+        }
+        case ROM_CHAR:
+        {
+            // Intercept if a MEGA65 Rom is installed
+            if (hasMega65Rom(ROM_CHAR)) return "M.E.G.A. C64 OpenROM";
+            
+            RomIdentifier rev = romIdentifier(ROM_CHAR);
+            return rev == ROM_UNKNOWN ? "Unknown Character Rom" : RomFile::title(rev);
+        }
+        case ROM_KERNAL:
+        {
+            // Intercept if a MEGA65 Rom is installed
+            if (hasMega65Rom(ROM_KERNAL)) return "M.E.G.A. C64 OpenROM";
+            
+            RomIdentifier rev = romIdentifier(ROM_KERNAL);
+            return rev == ROM_UNKNOWN ? "Unknown Kernal Rom" : RomFile::title(rev);
+        }
+        case ROM_VC1541:
+        {
+            RomIdentifier rev = romIdentifier(ROM_VC1541);
+            return rev == ROM_UNKNOWN ? "Unknown Kernal Rom" : RomFile::title(rev);
+        }
+        default: assert(false);
+    }
+    return NULL;
 }
 
 const char *
@@ -1129,109 +1151,124 @@ C64::romSubTitle(u64 fnv)
 }
 
 const char *
-C64::basicRomSubTitle()
+C64::romSubTitle(RomType type)
 {
-    // Intercept if a MEGA65 Rom is installed
-    if (hasMega65BasicRom()) return "Free Basic Replacement";
-    
-    return romSubTitle(basicRomFNV64());
+    switch (type) {
+            
+        case ROM_BASIC:
+        {
+            // Intercept if a MEGA65 Rom is installed
+            if (hasMega65Rom(ROM_BASIC)) return "Free Basic Replacement";
+            
+            return romSubTitle(romFNV64(ROM_BASIC));
+        }
+        case ROM_CHAR:
+        {
+            // Intercept if a MEGA65 Rom is installed
+            if (hasMega65Rom(ROM_CHAR)) return "Free Charset Replacement";
+            
+            return romSubTitle(romFNV64(ROM_CHAR));
+        }
+        case ROM_KERNAL:
+        {
+            // Intercept if a MEGA65 Rom is installed
+            if (hasMega65Rom(ROM_KERNAL)) return "Free Kernal Replacement";
+            
+            return romSubTitle(romFNV64(ROM_KERNAL));
+        }
+        case ROM_VC1541:
+        {
+            return romSubTitle(romFNV64(ROM_VC1541));
+        }
+        default: assert(false);
+    }
+    return NULL;
 }
 
 const char *
-C64::charRomSubTitle()
+C64::romRevision(RomType type)
 {
-    // Intercept if a MEGA65 Rom is installed
-    if (hasMega65CharRom()) return "Free Charset Replacement";
-    
-    return romSubTitle(charRomFNV64());
-}
-
-const char *
-C64::kernalRomSubtitle()
-{
-    // Intercept if a MEGA65 Rom is installed
-    if (hasMega65BasicRom()) return "Free Kernal Replacement";
-    
-    return romSubTitle(kernalRomFNV64());
-}
-
-const char *
-C64::vc1541RomSubtitle()
-{
-    return romSubTitle(vc1541RomFNV64());
-}
-
-const char *
-C64::basicRomRevision()
-{
-    // Intercept if a MEGA65 Rom is installed
-    if (hasMega65BasicRom()) return mega65BasicRev();
-    
-    return RomFile::revision(basicRomIdentifier());
-}
-
-const char *
-C64::charRomRevision()
-{
-    return RomFile::revision(charRomIdentifier());
-}
-
-const char *
-C64::kernalRomRevision()
-{
-    // Intercept if a MEGA65 Rom is installed
-    if (hasMega65KernalRom()) return mega65KernalRev();
-    
-    return RomFile::revision(kernalRomIdentifier());
-}
-
-const char *
-C64::vc1541RomRevision()
-{
-    return RomFile::revision(vc1541RomIdentifier());
+    switch (type) {
+             
+         case ROM_BASIC:
+         {
+             // Intercept if a MEGA65 Rom is installed
+             if (hasMega65Rom(ROM_BASIC)) return mega65BasicRev();
+             
+             return RomFile::revision(romIdentifier(ROM_BASIC));
+         }
+         case ROM_CHAR:
+         {
+             return RomFile::revision(romIdentifier(ROM_CHAR));
+         }
+         case ROM_KERNAL:
+         {
+             // Intercept if a MEGA65 Rom is installed
+             if (hasMega65Rom(ROM_KERNAL)) return mega65KernalRev();
+             
+             return RomFile::revision(romIdentifier(ROM_KERNAL));
+         }
+         case ROM_VC1541:
+         {
+             return RomFile::revision(romIdentifier(ROM_VC1541));
+         }
+         default: assert(false);
+     }
+     return NULL;
 }
 
 bool
-C64::hasBasicRom()
+C64::hasRom(RomType type)
 {
-    return (mem.rom[0xA000] | mem.rom[0xA001]) != 0x00;
+    switch (type) {
+            
+        case ROM_BASIC:
+        {
+            return (mem.rom[0xA000] | mem.rom[0xA001]) != 0x00;
+        }
+        case ROM_CHAR:
+        {
+            return (mem.rom[0xD000] | mem.rom[0xD001]) != 0x00;
+        }
+        case ROM_KERNAL:
+        {
+            return (mem.rom[0xE000] | mem.rom[0xE001]) != 0x00;
+        }
+        case ROM_VC1541:
+        {
+            assert(drive8.mem.rom[0] == drive9.mem.rom[0]);
+            assert(drive8.mem.rom[1] == drive9.mem.rom[1]);
+            return (drive8.mem.rom[0] | drive8.mem.rom[1]) != 0x00;
+        }
+        default: assert(false);
+    }
+    return false;
 }
 
 bool
-C64::hasCharRom()
+C64::hasMega65Rom(RomType type)
 {
-    return (mem.rom[0xD000] | mem.rom[0xD001]) != 0x00;
-}
-
-bool
-C64::hasKernalRom()
-{
-    return (mem.rom[0xE000] | mem.rom[0xE001]) != 0x00;
-}
-
-bool
-C64::hasVC1541Rom()
-{
-    assert(drive8.mem.rom[0] == drive9.mem.rom[0]);
-    assert(drive8.mem.rom[1] == drive9.mem.rom[1]);
-    return (drive8.mem.rom[0] | drive8.mem.rom[1]) != 0x00;
-}
-bool
-C64::hasMega65BasicRom()
-{
-    return mem.rom[0xBF52] == 'O' && mem.rom[0xBF53] == 'R';
-}
-
-bool
-C64::hasMega65CharRom()
-{
-    return RomFile::isMega65Rom(charRomIdentifier());
-}
-
-bool
-C64::hasMega65KernalRom()
-{
-    return mem.rom[0xE4B9] == 'O' && mem.rom[0xE4BA] == 'R';
+    switch (type) {
+            
+        case ROM_BASIC:
+        {
+            return mem.rom[0xBF52] == 'O' && mem.rom[0xBF53] == 'R';
+        }
+        case ROM_CHAR:
+        {
+            return RomFile::isMega65Rom(romIdentifier(ROM_CHAR));
+        }
+        case ROM_KERNAL:
+        {
+            return mem.rom[0xE4B9] == 'O' && mem.rom[0xE4BA] == 'R';
+        }
+        case ROM_VC1541:
+        {
+            return false;
+        }
+        default: assert(false);
+    }
+    return false;
 }
 
 char *
@@ -1240,7 +1277,7 @@ C64::mega65BasicRev()
     static char rev[17];
     rev[0] = 0;
     
-    if (hasMega65BasicRom()) memcpy(rev, &mem.rom[0xBF55], 16);
+    if (hasMega65Rom(ROM_BASIC)) memcpy(rev, &mem.rom[0xBF55], 16);
     rev[16] = 0;
     
     return rev;
@@ -1252,236 +1289,219 @@ C64::mega65KernalRev()
     static char rev[17];
     rev[0] = 0;
     
-    if (hasMega65BasicRom()) memcpy(rev, &mem.rom[0xE4BC], 16);
+    if (hasMega65Rom(ROM_KERNAL)) memcpy(rev, &mem.rom[0xE4BC], 16);
     rev[16] = 0;
     
     return rev;
 }
 
 bool
-C64::loadBasicRom(RomFile *file)
+C64::loadRom(RomType type, RomFile *file)
 {
     assert(file != NULL);
     
-    if (file->type() == BASIC_ROM_FILE) {
-        debug("Flashing Basic Rom\n");
-        file->flash(mem.rom, 0xA000);
-        
-        debug("hasMega65BasicRom() = %d\n", hasMega65BasicRom());
-        debug("mega65BasicRev() = %s\n", mega65BasicRev());
-        
-        return true;
+    switch (type) {
+            
+        case ROM_BASIC:
+        {
+            if (file->type() == BASIC_ROM_FILE) {
+                debug("Flashing Basic Rom\n");
+                file->flash(mem.rom, 0xA000);
+                
+                debug("hasMega65Rom() = %d\n", hasMega65Rom(ROM_BASIC));
+                debug("mega65BasicRev() = %s\n", mega65BasicRev());
+                
+                return true;
+            }
+            return false;
+        }
+        case ROM_CHAR:
+        {
+            if (file->type() == CHAR_ROM_FILE) {
+                debug("Flashing Character Rom\n");
+                file->flash(mem.rom, 0xD000);
+                return true;
+            }
+            return false;
+        }
+        case ROM_KERNAL:
+        {
+            if (file->type() == KERNAL_ROM_FILE) {
+                debug("Flashing Kernal Rom\n");
+                file->flash(mem.rom, 0xE000);
+                
+                debug("hasMega65Rom() = %d\n", hasMega65Rom(ROM_KERNAL));
+                debug("mega65KernalRev() = %s\n", mega65KernalRev());
+                
+                return true;
+            }
+            return false;
+        }
+        case ROM_VC1541:
+        {
+            if (file->type() == VC1541_ROM_FILE) {
+                debug("Flashing VC1541 Rom\n");
+                file->flash(drive8.mem.rom);
+                file->flash(drive9.mem.rom);
+                return true;
+            }
+            return false;
+        }
+        default: assert(false);
     }
     return false;
 }
 
 bool
-C64::loadBasicRomFromBuffer(const u8 *buffer, size_t length)
+C64::loadRomFromBuffer(RomType type, const u8 *buffer, size_t length)
 {
     assert(buffer != NULL);
-    
-    if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
-        return loadBasicRom(file);
+
+    switch (type) {
+            
+        case ROM_BASIC:
+        {
+            if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
+                return loadRom(ROM_BASIC, file);
+            }
+            msg("Failed to read Basic Rom from buffer\n");
+            return false;
+        }
+        case ROM_CHAR:
+        {
+            if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
+                return loadRom(ROM_CHAR, file);
+            }
+            msg("Failed to read Character Rom from buffer\n");
+            return false;
+        }
+        case ROM_KERNAL:
+        {
+            if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
+                return loadRom(ROM_KERNAL, file);
+            }
+            msg("Failed to read Kernal Rom from buffer\n");
+            return false;
+        }
+        case ROM_VC1541:
+        {
+            if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
+                return loadRom(ROM_VC1541, file);
+            }
+            msg("Failed to read VC1541 Rom from buffer\n");
+            return false;
+        }
+        default: assert(false);
     }
-    
-    msg("Failed to read Basic Rom from buffer\n");
     return false;
 }
 
 bool
-C64::loadBasicRomFromFile(const char *path)
+C64::loadRomFromFile(RomType type, const char *path)
 {
     assert(path != NULL);
-    
-    if (RomFile *file = RomFile::makeWithFile(path)) {
-        return loadBasicRom(file);
-    }
-    
-    msg("Failed to read Basic Rom from %s\n", path);
-    return false;
-}
 
-bool
-C64::loadCharRom(RomFile *file)
-{
-    assert(file != NULL);
-    
-    if (file->type() == CHAR_ROM_FILE) {
-        debug("Flashing Character Rom\n");
-        file->flash(mem.rom, 0xD000);
-        return true;
+    switch (type) {
+            
+        case ROM_BASIC:
+        {
+            if (RomFile *file = RomFile::makeWithFile(path)) {
+                return loadRom(ROM_BASIC, file);
+            }
+            msg("Failed to read Basic Rom from %s\n", path);
+            return false;
+        }
+        case ROM_CHAR:
+        {
+            if (RomFile *file = RomFile::makeWithFile(path)) {
+                return loadRom(ROM_CHAR, file);
+            }
+            msg("Failed to read Character Rom from %s\n", path);
+            return false;
+        }
+        case ROM_KERNAL:
+        {
+            if (RomFile *file = RomFile::makeWithFile(path)) {
+                return loadRom(ROM_KERNAL, file);
+            }
+            msg("Failed to read Kernal Rom from %s\n", path);
+            return false;
+        }
+        case ROM_VC1541:
+        {
+            if (RomFile *file = RomFile::makeWithFile(path)) {
+                return loadRom(ROM_VC1541, file);
+            }
+            msg("Failed to read VC1541 Rom from %s\n", path);
+            return false;
+        }
+        default: assert(false);
     }
-    return false;
-}
-
-bool
-C64::loadCharRomFromBuffer(const u8 *buffer, size_t length)
-{
-    assert(buffer != NULL);
-    
-    if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
-        return loadCharRom(file);
-    }
-    
-    msg("Failed to read Character Rom from buffer\n");
-    return false;
-}
-
-bool
-C64::loadCharRomFromFile(const char *path)
-{
-    assert(path != NULL);
-    
-    if (RomFile *file = RomFile::makeWithFile(path)) {
-        return loadCharRom(file);
-    }
-    
-    msg("Failed to read Character Rom from %s\n", path);
-    return false;
-}
-
-bool
-C64::loadKernalRom(RomFile *file)
-{
-    assert(file != NULL);
-    
-    if (file->type() == KERNAL_ROM_FILE) {
-        debug("Flashing Kernal Rom\n");
-        file->flash(mem.rom, 0xE000);
-        
-        debug("hasMega65KernalRom() = %d\n", hasMega65KernalRom());
-        debug("mega65KernalRev() = %s\n", mega65KernalRev());
-        
-        return true;
-    }
-    return false;
-}
-
-bool
-C64::loadKernalRomFromBuffer(const u8 *buffer, size_t length)
-{
-    assert(buffer != NULL);
-    
-    if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
-        return loadKernalRom(file);
-    }
-    
-    msg("Failed to read Kernal Rom from buffer\n");
-    return false;
-}
-
-bool
-C64::loadKernalRomFromFile(const char *path)
-{
-    assert(path != NULL);
-    
-    if (RomFile *file = RomFile::makeWithFile(path)) {
-        return loadKernalRom(file);
-    }
-    
-    msg("Failed to read Kernal Rom from %s\n", path);
-    return false;
-}
-
-bool
-C64::loadVC1541Rom(RomFile *file)
-{
-    assert(file != NULL);
-    
-    if (file->type() == VC1541_ROM_FILE) {
-        debug("Flashing VC1541 Rom\n");
-        file->flash(drive8.mem.rom);
-        file->flash(drive9.mem.rom);
-        return true;
-    }
-    return false;
-}
-
-bool
-C64::loadVC1541RomFromBuffer(const u8 *buffer, size_t length)
-{
-    assert(buffer != NULL);
-    
-    if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
-        return loadVC1541Rom(file);
-    }
-    
-    msg("Failed to read VC1541 Rom from buffer\n");
-    return false;
-}
-
-bool
-C64::loadVC1541RomFromFile(const char *path)
-{
-    assert(path != NULL);
-    
-    if (RomFile *file = RomFile::makeWithFile(path)) {
-        return loadVC1541Rom(file);
-    }
-    
-    msg("Failed to read VC1541 Rom from %s\n", path);
     return false;
 }
 
 void
-C64::deleteBasicRom()
+C64::deleteRom(RomType type)
 {
-    memset(mem.rom + 0xA000, 0, 0x2000);
-}
-
-void
-C64::deleteCharRom()
-{
-    memset(mem.rom + 0xD000, 0, 0x1000);
-}
-
-void
-C64::deleteKernalRom()
-{
-    memset(mem.rom + 0xE000, 0, 0x2000);
-}
-
-void 
-C64::deleteVC1541Rom()
-{
-    memset(drive8.mem.rom, 0, 0x4000);
-    memset(drive9.mem.rom, 0, 0x4000);
-}
-
-bool
-C64::saveBasicRom(const char *path)
-{
-    if (!hasBasicRom()) return false;
-    
-    RomFile *file = RomFile::makeWithBuffer(mem.rom + 0xA000, 0x2000);
-    return file && file->writeToFile(path);
+    switch (type) {
+            
+        case ROM_BASIC:
+        {
+            memset(mem.rom + 0xA000, 0, 0x2000);
+        }
+        case ROM_CHAR:
+        {
+            memset(mem.rom + 0xD000, 0, 0x1000);
+        }
+        case ROM_KERNAL:
+        {
+            memset(mem.rom + 0xE000, 0, 0x2000);
+        }
+        case ROM_VC1541:
+        {
+            memset(drive8.mem.rom, 0, 0x4000);
+            memset(drive9.mem.rom, 0, 0x4000);
+        }
+        default: assert(false);
+    }
 }
 
 bool
-C64::saveCharRom(const char *path)
+C64::saveRom(RomType type, const char *path)
 {
-    if (!hasCharRom()) return false;
-    
-    RomFile *file = RomFile::makeWithBuffer(mem.rom + 0xD000, 0x1000);
-    return file && file->writeToFile(path);
-}
-
-bool
-C64::saveKernalRom(const char *path)
-{
-    if (!hasKernalRom()) return false;
-    
-    RomFile *file = RomFile::makeWithBuffer(mem.rom + 0xE000, 0x2000);
-    return file && file->writeToFile(path);
-}
-
-bool
-C64::saveVC1541Rom(const char *path)
-{
-    if (!hasVC1541Rom()) return false;
-    
-    RomFile *file = RomFile::makeWithBuffer(drive8.mem.rom, 0x4000);
-    return file && file->writeToFile(path);
+    switch (type) {
+            
+        case ROM_BASIC:
+        {
+            if (!hasRom(ROM_BASIC)) return false;
+            
+            RomFile *file = RomFile::makeWithBuffer(mem.rom + 0xA000, 0x2000);
+            return file && file->writeToFile(path);
+        }
+        case ROM_CHAR:
+        {
+            if (!hasRom(ROM_CHAR)) return false;
+            
+            RomFile *file = RomFile::makeWithBuffer(mem.rom + 0xD000, 0x1000);
+            return file && file->writeToFile(path);
+        }
+        case ROM_KERNAL:
+        {
+            if (!hasRom(ROM_KERNAL)) return false;
+            
+            RomFile *file = RomFile::makeWithBuffer(mem.rom + 0xE000, 0x2000);
+            return file && file->writeToFile(path);
+        }
+        case ROM_VC1541:
+        {
+            if (!hasRom(ROM_VC1541)) return false;
+            
+            RomFile *file = RomFile::makeWithBuffer(drive8.mem.rom, 0x4000);
+            return file && file->writeToFile(path);
+        }
+        default: assert(false);
+    }
+    return false;
 }
 
 bool

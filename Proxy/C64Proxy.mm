@@ -1988,35 +1988,33 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->c64->disableWarpMode();
 }
-
-// Handling ROMs
 - (BOOL) hasBasicRom
 {
-    return wrapper->c64->hasBasicRom();
+    return wrapper->c64->hasRom(ROM_BASIC);
 }
 - (BOOL) hasCharRom
 {
-    return wrapper->c64->hasCharRom();
+    return wrapper->c64->hasRom(ROM_CHAR);
 }
 - (BOOL) hasKernalRom
 {
-    return wrapper->c64->hasKernalRom();
+    return wrapper->c64->hasRom(ROM_KERNAL);
 }
 - (BOOL) hasVC1541Rom
 {
-    return wrapper->c64->hasVC1541Rom();
+    return wrapper->c64->hasRom(ROM_VC1541);
 }
 - (BOOL) hasMega65BasicRom
 {
-    return wrapper->c64->hasMega65BasicRom();
+    return wrapper->c64->hasMega65Rom(ROM_BASIC);
 }
 - (BOOL) hasMega65CharRom
 {
-    return wrapper->c64->hasMega65CharRom();
+    return wrapper->c64->hasMega65Rom(ROM_CHAR);
 }
 - (BOOL) hasMega65KernelRom
 {
-    return wrapper->c64->hasMega65KernalRom();
+    return wrapper->c64->hasMega65Rom(ROM_KERNAL);
 }
 - (BOOL) isBasicRom:(NSURL *)url
 {
@@ -2036,166 +2034,150 @@ struct AnyC64FileWrapper { AnyFile *file; };
 }
 - (BOOL) loadBasicRomFromFile:(NSURL *)url
 {
-    return wrapper->c64->loadBasicRomFromFile([[url path] UTF8String]);
+    return wrapper->c64->loadRomFromFile(ROM_BASIC, [[url path] UTF8String]);
 }
 - (BOOL) loadCharRomFromFile:(NSURL *)url
 {
-    return wrapper->c64->loadCharRomFromFile([[url path] UTF8String]);
+    return wrapper->c64->loadRomFromFile(ROM_CHAR, [[url path] UTF8String]);
 }
 - (BOOL) loadKernalRomFromFile:(NSURL *)url
 {
-    return wrapper->c64->loadKernalRomFromFile([[url path] UTF8String]);
+    return wrapper->c64->loadRomFromFile(ROM_KERNAL, [[url path] UTF8String]);
 }
 - (BOOL) loadVC1541RomFromFile:(NSURL *)url
 {
-    return wrapper->c64->loadVC1541RomFromFile([[url path] UTF8String]);
+    return wrapper->c64->loadRomFromFile(ROM_VC1541, [[url path] UTF8String]);
 }
 - (BOOL) loadBasicRomFromBuffer:(NSData *)data
 {
     if (data == NULL) return NO;
     const u8 *bytes = (const u8 *)[data bytes];
-    return wrapper->c64->loadBasicRomFromBuffer(bytes, [data length]);
+    return wrapper->c64->loadRomFromBuffer(ROM_BASIC, bytes, [data length]);
 }
 - (BOOL) loadCharRomFromBuffer:(NSData *)data
 {
     if (data == NULL) return NO;
     const u8 *bytes = (const u8 *)[data bytes];
-    return wrapper->c64->loadCharRomFromBuffer(bytes, [data length]);
+    return wrapper->c64->loadRomFromBuffer(ROM_CHAR, bytes, [data length]);
 }
 - (BOOL) loadKernalRomFromBuffer:(NSData *)data
 {
     if (data == NULL) return NO;
     const u8 *bytes = (const u8 *)[data bytes];
-    return wrapper->c64->loadKernalRomFromBuffer(bytes, [data length]);
+    return wrapper->c64->loadRomFromBuffer(ROM_KERNAL, bytes, [data length]);
 }
 - (BOOL) loadVC1541RomFromBuffer:(NSData *)data
 {
     if (data == NULL) return NO;
     const u8 *bytes = (const u8 *)[data bytes];
-    return wrapper->c64->loadVC1541RomFromBuffer(bytes, [data length]);
+    return wrapper->c64->loadRomFromBuffer(ROM_VC1541, bytes, [data length]);
 }
 - (BOOL) saveBasicRom:(NSURL *)url
 {
-    return wrapper->c64->saveBasicRom([[url path] UTF8String]);
+    return wrapper->c64->saveRom(ROM_BASIC, [[url path] UTF8String]);
 }
 - (BOOL) saveCharRom:(NSURL *)url
 {
-    return wrapper->c64->saveCharRom([[url path] UTF8String]);
+    return wrapper->c64->saveRom(ROM_CHAR, [[url path] UTF8String]);
 }
 - (BOOL) saveKernalRom:(NSURL *)url
 {
-    return wrapper->c64->saveKernalRom([[url path] UTF8String]);
+    return wrapper->c64->saveRom(ROM_KERNAL, [[url path] UTF8String]);
 }
 - (BOOL) saveVC1541Rom:(NSURL *)url
 {
-    return wrapper->c64->saveVC1541Rom([[url path] UTF8String]);
+    return wrapper->c64->saveRom(ROM_VC1541, [[url path] UTF8String]);
 }
 - (void) deleteBasicRom
 {
-    wrapper->c64->deleteBasicRom();
+    wrapper->c64->deleteRom(ROM_BASIC);
 }
 - (void) deleteKernalRom
 {
-    wrapper->c64->deleteKernalRom();
+    wrapper->c64->deleteRom(ROM_KERNAL);
 }
 - (void) deleteCharRom
 {
-    wrapper->c64->deleteCharRom();
+    wrapper->c64->deleteRom(ROM_CHAR);
 }
 - (void) deleteVC1541Rom
 {
-    wrapper->c64->deleteVC1541Rom();
-}
-- (u64) basicRomFingerprint
-{
-    return wrapper->c64->basicRomFNV64();
-}
-- (u64) charRomFingerprint
-{
-    return wrapper->c64->charRomFNV64();
-}
-- (u64) kernalRomFingerprint
-{
-    return wrapper->c64->kernalRomFNV64();
-}
-- (u64) vc1541RomFingerprint
-{
-    return wrapper->c64->vc1541RomFNV64();
+    wrapper->c64->deleteRom(ROM_VC1541);
 }
 - (RomIdentifier) basicRomIdentifier
 {
-    return wrapper->c64->basicRomIdentifier();
+    return wrapper->c64->romIdentifier(ROM_BASIC);
 }
 - (RomIdentifier) kernalRomIdentifier
 {
-    return wrapper->c64->kernalRomIdentifier();
+    return wrapper->c64->romIdentifier(ROM_KERNAL);
 }
 - (RomIdentifier) charRomIdentifier
 {
-    return wrapper->c64->charRomIdentifier();
+    return wrapper->c64->romIdentifier(ROM_CHAR);
 }
 - (RomIdentifier) vc1541RomIdentifier
 {
-    return wrapper->c64->vc1541RomIdentifier();
+    return wrapper->c64->romIdentifier(ROM_VC1541);
 }
 - (NSString *) basicRomTitle
 {
-    const char *str = wrapper->c64->basicRomTitle();
+    const char *str = wrapper->c64->romTitle(ROM_BASIC);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) charRomTitle
 {
-    const char *str = wrapper->c64->charRomTitle();
+    const char *str = wrapper->c64->romTitle(ROM_CHAR);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) kernalRomTitle
 {
-    const char *str = wrapper->c64->kernalRomTitle();
+    const char *str = wrapper->c64->romTitle(ROM_KERNAL);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) vc1541RomTitle
 {
-    const char *str = wrapper->c64->vc1541RomTitle();
+    const char *str = wrapper->c64->romTitle(ROM_VC1541);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) basicRomSubTitle
 {
-    const char *str = wrapper->c64->basicRomSubTitle();
+    const char *str = wrapper->c64->romSubTitle(ROM_BASIC);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) charRomSubTitle
 {
-    const char *str = wrapper->c64->charRomSubTitle();
+    const char *str = wrapper->c64->romSubTitle(ROM_CHAR);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) kernalRomSubTitle
 {
-    const char *str = wrapper->c64->kernalRomSubtitle();
+    const char *str = wrapper->c64->romSubTitle(ROM_KERNAL);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) vc1541RomSubTitle
 {
-    const char *str = wrapper->c64->vc1541RomSubtitle();
+    const char *str = wrapper->c64->romSubTitle(ROM_VC1541);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) basicRomRevision
 {
-    const char *str = wrapper->c64->basicRomRevision();
+    const char *str = wrapper->c64->romRevision(ROM_BASIC);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) charRomRevision
 {
-    const char *str = wrapper->c64->charRomRevision();
+    const char *str = wrapper->c64->romRevision(ROM_CHAR);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) kernalRomRevision
 {
-    const char *str = wrapper->c64->kernalRomRevision();
+    const char *str = wrapper->c64->romRevision(ROM_KERNAL);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) vc1541RomRevision
 {
-    const char *str = wrapper->c64->vc1541RomRevision();
+    const char *str = wrapper->c64->romRevision(ROM_VC1541);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (BOOL) isCommodoreRom:(RomIdentifier)rev

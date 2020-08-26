@@ -205,10 +205,12 @@ struct AnyC64FileWrapper;
 - (void) deleteCharRom;
 - (void) deleteVC1541Rom;
 
+/*
 - (u64) basicRomFingerprint;
 - (u64) kernalRomFingerprint;
 - (u64) charRomFingerprint;
 - (u64) vc1541RomFingerprint;
+*/
 
 - (RomIdentifier) basicRomIdentifier;
 - (RomIdentifier) kernalRomIdentifier;

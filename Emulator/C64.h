@@ -559,85 +559,48 @@ public:
     // Handling Roms
     //
     
-    // Computes a CRC-32 checksum
-    u32 basicRomCRC32();
-    u32 charRomCRC32();
-    u32 kernalRomCRC32();
-    u32 vc1541RomCRC32();
-
-    // Computes a FNV-1A checksum
-    u64 basicRomFNV64();
-    u64 charRomFNV64();
-    u64 kernalRomFNV64();
-    u64 vc1541RomFNV64();
-
+public:
+    
+    // Computes a Rom checksum
+    u32 romCRC32(RomType type);
+    u64 romFNV64(RomType type);
+     
     // Returns a unique identifier for the installed ROMs
-    RomIdentifier basicRomIdentifier() { return RomFile::identifier(basicRomFNV64()); }
-    RomIdentifier charRomIdentifier() { return RomFile::identifier(charRomFNV64()); }
-    RomIdentifier kernalRomIdentifier() { return RomFile::identifier(kernalRomFNV64()); }
-    RomIdentifier vc1541RomIdentifier() { return RomFile::identifier(vc1541RomFNV64()); }
+    RomIdentifier romIdentifier(RomType type);
     
     // Returns printable titles for the installed ROMs
-    const char *basicRomTitle();
-    const char *charRomTitle();
-    const char *kernalRomTitle();
-    const char *vc1541RomTitle();
-
+    const char *romTitle(RomType type);
+    
     // Returns printable sub titles for the installed ROMs
     const char *romSubTitle(u64 fnv);
-    const char *basicRomSubTitle();
-    const char *charRomSubTitle();
-    const char *kernalRomSubtitle();
-    const char *vc1541RomSubtitle();
+    const char *romSubTitle(RomType type);
     
     // Returns printable revision strings or hash values for the installed ROMs
-    const char *basicRomRevision();
-    const char *charRomRevision();
-    const char *kernalRomRevision();
-    const char *vc1541RomRevision();
-
+    const char *romRevision(RomType type);
+    
     // Checks if a certain Rom is present
-    bool hasBasicRom();
-    bool hasCharRom();
-    bool hasKernalRom();
-    bool hasVC1541Rom();
-    bool hasMega65BasicRom();
-    bool hasMega65CharRom();
-    bool hasMega65KernalRom();
+    bool hasRom(RomType type);
+    bool hasMega65Rom(RomType type);
 
+private:
+    
     // Returns a revision string if a Mega65 Rom is installed
     char *mega65BasicRev();
     char *mega65KernalRev();
 
+public:
+    
     // Installs a Rom
-    bool loadBasicRom(RomFile *rom);
-    bool loadBasicRomFromBuffer(const u8 *buffer, size_t length);
-    bool loadBasicRomFromFile(const char *path);
+    bool loadRom(RomType type, RomFile *file);
+    bool loadRomFromBuffer(RomType type, const u8 *buffer, size_t length);
+    bool loadRomFromFile(RomType type, const char *path);
     
-    bool loadCharRom(RomFile *rom);
-    bool loadCharRomFromBuffer(const u8 *buffer, size_t length);
-    bool loadCharRomFromFile(const char *path);
-    
-    bool loadKernalRom(RomFile *rom);
-    bool loadKernalRomFromBuffer(const u8 *buffer, size_t length);
-    bool loadKernalRomFromFile(const char *path);
-
-    bool loadVC1541Rom(RomFile *rom);
-    bool loadVC1541RomFromBuffer(const u8 *buffer, size_t length);
-    bool loadVC1541RomFromFile(const char *path);
-
     // Erases an installed Rom
-    void deleteBasicRom();
-    void deleteCharRom();
-    void deleteKernalRom();
-    void deleteVC1541Rom();
-
+    void deleteRom(RomType type);
+    
     // Saves a Rom to disk
-    bool saveBasicRom(const char *path);
-    bool saveCharRom(const char *path);
-    bool saveKernalRom(const char *path);
-    bool saveVC1541Rom(const char *path);
-
+    bool saveRom(RomType rom, const char *path);
+    
     
     //
     // Flashing files
