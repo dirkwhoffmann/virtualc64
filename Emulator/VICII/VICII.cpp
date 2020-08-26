@@ -168,25 +168,7 @@ VICII::setRevision(VICRevision revision)
     resetScreenBuffers();
     c64.updateVicFunctionTable();
     
-    switch(revision) {
-            
-        case PAL_6569_R1:
-        case PAL_6569_R3:
-        case PAL_8565:
-            // c64.setClockFrequency(PAL_CLOCK_FREQUENCY);
-            c64.putMessage(MSG_PAL);
-            break;
-            
-        case NTSC_6567:
-        case NTSC_6567_R56A:
-        case NTSC_8562:
-            // c64.setClockFrequency(NTSC_CLOCK_FREQUENCY);
-            c64.putMessage(MSG_NTSC);
-            break;
-            
-        default:
-            assert(false);
-    }
+    c64.putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
 }
 
 void
