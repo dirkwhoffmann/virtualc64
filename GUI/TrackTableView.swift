@@ -14,15 +14,12 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
     var c64: C64Proxy { return inspector.parent.c64 }
     var drive: DriveProxy { return inspector.drive }
 
-    // Number of tracks of the displayed disk (0 if no disk is present)
-    var numTracks = 0
+    // Number of items in the table view (0 if no disk is present)
+    var numItems = 0
     
     // Indicates if halftracks should be shown, too
     var showHalftracks = false
     
-    // Data caches
-    // var bankCache: [Int: MemoryType] = [:]
-
     override func awakeFromNib() {
 
         delegate = self
@@ -35,14 +32,9 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
     }
     
     func cache() {
-
-        if drive.hasDisk() {
-            track("cache: hasDisk")
-            numTracks = Int(showHalftracks ? maxNumberOfHalftracks : maxNumberOfTracks)
-        } else {
-            track("cache: no disk")
-            numTracks = 0
-        }
+        
+        numItems = Int(showHalftracks ? maxNumberOfHalftracks : maxNumberOfTracks)
+        if !drive.hasDisk() { numItems = 0}
     }
     
     func refresh(count: Int = 0, full: Bool = false) {
@@ -58,7 +50,7 @@ extension TrackTableView: NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         
-        return numTracks
+        return numItems
     }
         
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {

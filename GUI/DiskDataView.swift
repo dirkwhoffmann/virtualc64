@@ -29,61 +29,60 @@ class DiskDataView: NSScrollView {
     // Highlighted bit sequences (sector data)
     var firstDataSectorRange: NSRange?
     var secondDataSectorRange: NSRange?
-
-    // Indicates if the raw GCR stream should be displayed
-    var rawGcr: Bool { return inspector.drvGcrBytesSel.selectedSegment == 0 }
+    
+    // Indicates which elements needs an update
+    var dataIsDirty = false
+    var sectionMarksAreDirty = false
     
     override func awakeFromNib() {
 
     }
      
-    func reloadData() {
-     
-        track("updateTrackData(\(inspector.selectedHalftrack))")
-    
-        var gcr = ""
-
-        // Update displayed data
-        if halftrack >= 0 && drive.hasDisk() {
-            
-            if rawGcr || sector < 0 {
-
-                // Show the raw GCR stream
-                gcr = String(cString: drive.disk.trackBitsAsString())
-
-            } else {
-
-                // Show the decoded GCR data of the currently selected sector
-                gcr = String(cString: drive.disk.sectorHeaderBytes(asString: Sector(sector))!)
-                gcr.append("\n\n")
-                gcr.append(String(cString: drive.disk.sectorDataBytes(asString: Sector(sector))!))
-            }
-        }
-
-        // Remove old sector markers
-        unmarkSectors()
-
-        // Update text storage
-        let textStorage = NSTextStorage.init(string: gcr)
-        if #available(OSX 10.15, *) {
-            textStorage.font = NSFont.monospacedSystemFont(ofSize: 10.0, weight: .semibold)
-        } else {
-            textStorage.font = NSFont.monospacedDigitSystemFont(ofSize: 10.0, weight: .semibold)
-        }
-        textStorage.foregroundColor = .textColor
-        textView?.layoutManager?.replaceTextStorage(textStorage)
-        
-        // Add new sector markers
-        if sector >= 0 && rawGcr { markSectors() }
-    }
-
-    func cache() {
-                
-    }
-    
     func refresh(count: Int = 0, full: Bool = false) {
         
         if full {
+            
+            if dataIsDirty {
+                
+                var gcr = ""
+                if halftrack >= 0 && drive.hasDisk() {
+
+                    if inspector.rawGcr || sector < 0 {
+                        
+                        // Show the raw GCR stream
+                        gcr = String(cString: drive.disk.trackBitsAsString())
+                        
+                    } else {
+                        
+                        // Show the decoded GCR data of the currently selected sector
+                        gcr = String(cString: drive.disk.sectorHeaderBytes(asString: Sector(sector))!)
+                        gcr.append("\n\n")
+                        gcr.append(String(cString: drive.disk.sectorDataBytes(asString: Sector(sector))!))
+                    }
+                }
+                
+                // Remove old sector markers
+                unmarkSectors()
+                
+                // Update text storage
+                let textStorage = NSTextStorage.init(string: gcr)
+                if #available(OSX 10.15, *) {
+                    textStorage.font = NSFont.monospacedSystemFont(ofSize: 10.0, weight: .semibold)
+                } else {
+                    textStorage.font = NSFont.monospacedDigitSystemFont(ofSize: 10.0, weight: .semibold)
+                }
+                textStorage.foregroundColor = .textColor
+                textView?.layoutManager?.replaceTextStorage(textStorage)
+                
+                dataIsDirty = false
+            }
+            
+            if sectionMarksAreDirty {
+                
+                unmarkSectors()
+                markSectors()
+                sectionMarksAreDirty = false
+            }
         }
     }
     
@@ -104,6 +103,12 @@ class DiskDataView: NSScrollView {
 
     func scrollToHead() {
         
+        // Jump to current track
+        let current = drive.halftrack()
+        inspector.selectedHalftrack = Int(current)
+        inspector.selectedSector = -1
+
+        // Highlight drive position inside the current track
         let range = NSRange.init(location: Int(drive.offset()), length: 1)
         textView?.scrollRangeToVisible(range)
     }
@@ -112,7 +117,7 @@ class DiskDataView: NSScrollView {
         
         let halftrack = inspector.selectedHalftrack
         let sector = inspector.selectedSector
-        if sector < 0 || halftrack < 0 { return }
+        if !inspector.rawGcr || sector < 0 || halftrack < 0 { return }
 
         let length = Int(drive.size(ofHalftrack: Halftrack(halftrack)))
         if length == 0 { return }

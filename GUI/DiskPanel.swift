@@ -9,6 +9,9 @@
 
 extension Inspector {
         
+    // Indicates if the raw GCR stream should be displayed
+    var rawGcr: Bool { return drvGcrBytesSel.selectedSegment == 0 }
+
     func refreshDisk(count: Int = 0, full: Bool = false) {
         
         if full {
@@ -27,20 +30,39 @@ extension Inspector {
         }
     }
     
+    func didSetDrive() {
+        
+        track("didSetDrive")
+
+        selectedHalftrack = -1
+        selectedSector = -1
+        
+        // Force the sub views to update
+        drvSectorTableView.isDirty = true
+        drvDiskDataView.dataIsDirty = true
+        drvDiskDataView.sectionMarksAreDirty = true
+        fullRefresh()
+    }
+    
     func didSetHalftrack() {
+        
+        track("didSetHalftrack")
         
         if selectedHalftrack >= 0 && drive.hasDisk() {
             
             // Read track data
             drive.disk.analyzeHalftrack(Halftrack(selectedHalftrack))
-            
-            // Check for errors
+                        
+            // Warn if this track contains errors
             let trackIsValid = drive.disk.numErrors() == 0
             drvWarningText.isHidden = trackIsValid
             drvWarningButton.isHidden = trackIsValid
             
-            // Let the data view know about the change
-            drvDiskDataView.reloadData()
+            // Force the sub views to update
+            drvSectorTableView.isDirty = true
+            drvDiskDataView.dataIsDirty = true
+            drvDiskDataView.sectionMarksAreDirty = true
+            fullRefresh()
         }
         
         fullRefresh()
@@ -48,27 +70,32 @@ extension Inspector {
     
     func didSetSector() {
             
-        // Let the data view know about the change
-        drvDiskDataView.reloadData()
-        
+        track("didSetSector")
+
         // Blend GCR / Byte selector in or out
         drvGcrBytesSel.isHidden = selectedSector < 0
+
+        // Force the data view to update
+        if rawGcr {
+            drvDiskDataView.sectionMarksAreDirty = true
+        } else {
+            drvDiskDataView.dataIsDirty = true
+        }
     }
-        
+
     @IBAction func drvDriveAction(_ sender: NSSegmentedControl!) {
         
         track()
         selectedDrive = sender.selectedSegment == 0 ? DRIVE8 : DRIVE9
-        selectedHalftrack = -1
-        selectedSector = -1
-        fullRefresh()
-        drvDiskDataView.reloadData()
     }
 
     @IBAction func drvGcrBytesAction(_ sender: NSSegmentedControl!) {
         
         track(sender.selectedSegment == 0 ? "GCR" : "Bytes")
-        drvDiskDataView.reloadData()
+        
+        drvDiskDataView.dataIsDirty = true
+        drvDiskDataView.sectionMarksAreDirty = true
+        fullRefresh()
     }
 
     @IBAction func drvHeaderDataAction(_ sender: NSSegmentedControl!) {
@@ -79,6 +106,13 @@ extension Inspector {
     @IBAction func drvSeekAction(_ sender: NSButton!) {
         
         track("Seek")
+        
+        if sender.integerValue == 1 {
+            drvDiskDataView.markHead()
+        } else {
+            drvDiskDataView.unmarkHead()
+        }
+        drvDiskDataView.scrollToHead()
     }
 
     @IBAction func drvHalftracksAction(_ sender: NSButton!) {

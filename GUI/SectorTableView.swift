@@ -16,9 +16,16 @@ class SectorTableView: NSTableView, NSTableViewDelegate {
     var halftrack: Int { return inspector.selectedHalftrack }
     var sector: Int { return inspector.selectedSector }
     
+    //
+    // Data cache
+    //
+    
     // Mapping from table rows to sector numbers
     var sectorForRow: [Int: Int] = [:]
-
+    
+    // Indicates if the cached data needs an update
+    var isDirty = false
+    
     override func awakeFromNib() {
 
         delegate = self
@@ -41,17 +48,21 @@ class SectorTableView: NSTableView, NSTableViewDelegate {
                 }
             }
         }
+        isDirty = false
     }
     
     func refresh(count: Int = 0, full: Bool = false) {
         
         if full {
-            cache()
-            if sector < 0 {
-                selectRowIndexes([], byExtendingSelection: false)
-            }
+            
+            // Update cached data if neccessary
+            if isDirty { cache() }
+            
+            // Unselect all items if no sector is selected
+            if sector < 0 { selectRowIndexes([], byExtendingSelection: false) }
+            
+            reloadData()
         }
-        reloadData()
     }
 }
 
