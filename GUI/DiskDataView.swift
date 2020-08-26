@@ -90,18 +90,18 @@ class DiskDataView: NSScrollView {
         
         unmarkHead()
         headPosition = NSRange.init(location: Int(drive.offset()), length: 1)
-        storage?.addAttribute(.backgroundColor, value: NSColor.red, range: headPosition!)
+        storage?.addAttr(.backgroundColor, value: NSColor.red, range: headPosition)
     }
     
     func unmarkHead() {
         
-        if headPosition != nil {
-            storage?.removeAttribute(.backgroundColor, range: headPosition!)
-            headPosition = nil
-        }
+        storage?.remAttr(.backgroundColor, range: headPosition)
+        headPosition = nil
     }
 
     func scrollToHead() {
+        
+        if !drive.hasDisk() { return }
         
         // Jump to current track
         let current = drive.halftrack()
@@ -152,40 +152,24 @@ class DiskDataView: NSScrollView {
 
         // Colorize
         let color = NSColor.alternateSelectedControlColor
-        if firstHeaderSectorRange != nil {
-            storage?.addAttribute(.foregroundColor, value: color, range: firstHeaderSectorRange!)
-        }
-        if secondHeaderSectorRange != nil {
-            storage?.addAttribute(.foregroundColor, value: color, range: secondHeaderSectorRange!)
-        }
-        if firstDataSectorRange != nil {
-            storage?.addAttribute(.foregroundColor, value: color, range: firstDataSectorRange!)
-        }
-        if secondDataSectorRange != nil {
-            storage?.addAttribute(.foregroundColor, value: color, range: secondDataSectorRange!)
-        }
+        storage?.addAttr(.foregroundColor, value: color, range: firstHeaderSectorRange)
+        storage?.addAttr(.foregroundColor, value: color, range: secondHeaderSectorRange)
+        storage?.addAttr(.foregroundColor, value: color, range: firstDataSectorRange)
+        storage?.addAttr(.foregroundColor, value: color, range: secondDataSectorRange)
         
         scrollToFirstMarkedRange()
     }
 
     func unmarkSectors() {
         
-        if firstHeaderSectorRange != nil {
-            storage?.removeAttribute(.foregroundColor, range: firstHeaderSectorRange!)
-            firstHeaderSectorRange = nil
-        }
-        if secondHeaderSectorRange != nil {
-            storage?.removeAttribute(.foregroundColor, range: secondHeaderSectorRange!)
-            secondHeaderSectorRange = nil
-        }
-        if firstDataSectorRange != nil {
-            storage?.removeAttribute(.foregroundColor, range: firstDataSectorRange!)
-            firstDataSectorRange = nil
-        }
-        if secondDataSectorRange != nil {
-            storage?.removeAttribute(.foregroundColor, range: secondDataSectorRange!)
-            secondDataSectorRange = nil
-        }
+        storage?.remAttr(.foregroundColor, range: firstHeaderSectorRange)
+        storage?.remAttr(.foregroundColor, range: secondHeaderSectorRange)
+        storage?.remAttr(.foregroundColor, range: firstDataSectorRange)
+        storage?.remAttr(.foregroundColor, range: secondDataSectorRange)
+        firstHeaderSectorRange = nil
+        secondHeaderSectorRange = nil
+        firstDataSectorRange = nil
+        secondDataSectorRange = nil
     }
     
     func scrollToFirstMarkedRange() {

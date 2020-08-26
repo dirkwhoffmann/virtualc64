@@ -7,6 +7,38 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+/*
+extension NSAttributedString {
+    
+    func makeRange(start: Int, length: Int) -> NSRange? {
+        
+        let fullRange = NSRange.init(location: 0, length: self.length)
+        let newRange = NSRange.init(location: start, length: length)
+        
+        return fullRange.intersection(newRange)
+    }
+}
+*/
+
+extension NSTextStorage {
+
+    var fullRange: NSRange { return NSRange.init(location: 0, length: self.length) }
+    
+    func addAttr(_ name: NSAttributedString.Key, value: Any, range: NSRange?) {
+        
+        if let intersectedRange = range?.intersection(fullRange) {
+            self.addAttribute(name, value: value, range: intersectedRange)
+        }
+    }
+
+    func remAttr(_ name: NSAttributedString.Key, range: NSRange?) {
+        
+        if let intersectedRange = range?.intersection(fullRange) {
+            self.removeAttribute(name, range: intersectedRange)
+        }
+    }
+}
+
 extension Inspector {
         
     // Indicates if the raw GCR stream should be displayed
@@ -104,15 +136,14 @@ extension Inspector {
     }
 
     @IBAction func drvSeekAction(_ sender: NSButton!) {
-        
-        track("Seek")
-        
+                
         if sender.integerValue == 1 {
+            drvDiskDataView.scrollToHead()
+            drvTrackTableView.scrollToRow()
             drvDiskDataView.markHead()
         } else {
             drvDiskDataView.unmarkHead()
         }
-        drvDiskDataView.scrollToHead()
     }
 
     @IBAction func drvHalftracksAction(_ sender: NSButton!) {

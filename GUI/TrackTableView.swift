@@ -13,6 +13,7 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
    
     var c64: C64Proxy { return inspector.parent.c64 }
     var drive: DriveProxy { return inspector.drive }
+    var halftrack: Int { return inspector.selectedHalftrack }
 
     // Number of items in the table view (0 if no disk is present)
     var numItems = 0
@@ -40,9 +41,26 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
     func refresh(count: Int = 0, full: Bool = false) {
         
         if full {
+
+            // Update cached data
             cache()
+            
+            // Select the correct row
+            track("Selecting track \(halftrack)")
+            let rows: IndexSet = halftrack <= 0 ? [] : [Int(halftrack) - 1]
+            selectRowIndexes(rows, byExtendingSelection: false)
         }
         reloadData()
+    }
+    
+    func scrollToRow() {
+        
+        if halftrack > 0 {
+            let row = Int(halftrack) - 1
+            // let rows: IndexSet = [Int(halftrack) - 1]
+            selectRowIndexes([row], byExtendingSelection: false)
+            scrollRowToVisible(row)
+        }
     }
 }
 

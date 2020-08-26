@@ -59,7 +59,7 @@ class SectorTableView: NSTableView, NSTableViewDelegate {
             if isDirty { cache() }
             
             // Unselect all items if no sector is selected
-            if sector < 0 { selectRowIndexes([], byExtendingSelection: false) }
+            selectRowIndexes([], byExtendingSelection: false)
             
             reloadData()
         }

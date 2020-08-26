@@ -199,10 +199,8 @@ class DiskInspectorController: DialogController {
     func removeHeadMarker() {
         
         let storage = (gcrView.documentView as? NSTextView)?.textStorage
-        if headPosition != nil {
-            storage?.removeAttribute(.backgroundColor, range: headPosition!)
-            headPosition = nil
-        }
+        storage?.remAttr(.backgroundColor, range: headPosition)
+        headPosition = nil
     }
     
     func setHeadMarker() {
@@ -210,7 +208,7 @@ class DiskInspectorController: DialogController {
         removeHeadMarker()
         let storage = (gcrView.documentView as? NSTextView)?.textStorage
         headPosition = NSRange.init(location: Int(drive.offset()), length: 1)
-        storage?.addAttribute(.backgroundColor, value: NSColor.red, range: headPosition!)
+        storage?.addAttr(.backgroundColor, value: NSColor.red, range: headPosition)
     }
     
     func scrollToHead() {
@@ -375,10 +373,15 @@ class DiskInspectorController: DialogController {
     @IBAction func markHeadAction(_ sender: NSButton!) {
         
         if sender.integerValue == 1 {
+            track()
             setHeadMarker()
+            track()
         } else {
+            track()
             removeHeadMarker()
+            track()
         }
+        track()
         scrollToHead()
     }
     
