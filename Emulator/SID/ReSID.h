@@ -72,6 +72,13 @@ private:
 
     
     //
+    // Configuring
+    //
+    
+    bool setConfigItem(ConfigOption option, long value) override;
+
+    
+    //
     // Analyzing
     //
     
@@ -161,12 +168,12 @@ private:
     size_t willSaveToBuffer(u8 *buffer) override;
 
  
-
+/*
 private:
 
     void _setClockFrequency(u32 value) override;
     
-    
+*/
     
 public:
     

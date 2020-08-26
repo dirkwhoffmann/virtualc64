@@ -253,7 +253,7 @@ public:
     
     // Returns the currently set configuration
     C64Configuration getConfig();
-
+    
     // Gets a single configuration item
     long getConfigItem(ConfigOption option);
     long getConfigItem(DriveID id, ConfigOption option);
@@ -261,7 +261,20 @@ public:
     // Sets a single configuration item
     bool configure(ConfigOption option, long value);
     bool configure(DriveID id, ConfigOption option, long value);
-    
+
+    // Configures the C64 to match a specific C64 model
+    void configure(C64Model model);
+
+    // Returns the C64 model matching the current configuration
+    C64Model getModel();
+        
+    // Updates the VICII function table according to the selected model
+    void updateVicFunctionTable();
+
+private:
+
+    bool setConfigItem(ConfigOption option, long value) override;
+
     
     //
     // Analyzing
@@ -270,7 +283,6 @@ public:
 public:
        
     void inspect();
-    // void inspect(InspectionTarget target);
     void setInspectionTarget(InspectionTarget target);
     void clearInspectionTarget();
     
@@ -340,7 +352,7 @@ private:
     void _pause() override;
     void _ping() override;
     void _setWarp(bool enable) override;
-    void _setClockFrequency(u32 value) override;
+    // void _setClockFrequency(u32 value) override;
     
 
     //
@@ -363,30 +375,10 @@ public:
     
     
     //
-    // Configuring the emulator
+    // Accessing the message queue
     //
     
 public:
-    
-    /*! @brief    Returns the emulated C64 model
-     *  @return   C64_CUSTOM, if the selected subcomponents do not match any
-     *            of the supported C64 models.
-     */
-    C64Model getModel();
-    
-    /*! @brief    Sets the currently emulated C64 model
-     *  @param    model is any C64Model other than C64_CUSTOM.
-     *  @note     It it safe to call this function on a running emulator.
-     */
-    void setModel(C64Model m);
-    
-    // Updates the VICII function table (invoked by VICII::setModel())
-    void updateVicFunctionTable();
-    
-    
-    //
-    // Accessing the message queue
-    //
     
     // Registers a listener callback function
     void addListener(const void *sender, void(*func)(const void *, int, long) ) {

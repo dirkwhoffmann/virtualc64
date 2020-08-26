@@ -205,6 +205,7 @@ public:
     DriveConfig getConfig() { return config; }
     
     long getConfigItem(ConfigOption option);
+    bool setConfigItem(ConfigOption option, long value) override;
     bool setConfigItem(DriveID id, ConfigOption option, long value) override;
     
     /*
@@ -286,7 +287,7 @@ private:
     
 private:
     
-    void _setClockFrequency(u32 value) override;
+    // void _setClockFrequency(u32 value) override;
     
 public:
     

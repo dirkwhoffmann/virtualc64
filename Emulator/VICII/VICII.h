@@ -755,25 +755,32 @@ private:
 public:
     
     // Returns true if a PAL chip is plugged in
-    bool isPAL() { return config.revision & (PAL_6569_R1 | PAL_6569_R3 | PAL_8565); }
+    static bool isPAL(VICRevision revision);
+    bool isPAL() { return isPAL(config.revision); }
     
     // Returns true if a NTSC chip is plugged in
-    bool isNTSC() { return config.revision & (NTSC_6567 | NTSC_6567_R56A | NTSC_8562); }
+    static bool isNTSC(VICRevision revision);
+    bool isNTSC() { return isNTSC(config.revision); }
 
     // Returns true if a newer MOS 856x chip is plugged in
-    bool is856x() { return config.revision & (PAL_8565 | NTSC_8562); }
+    static bool is856x(VICRevision revision);
+    bool is856x() { return is856x(config.revision); }
     
     // Returns true if an older MOS 656x chip is plugged in
-    bool is656x() { return config.revision & ~(PAL_8565 | NTSC_8562); }
+    static bool is656x(VICRevision revision);
+    bool is656x() { return is656x(config.revision); }
 
     // Returns true if light pen interrupts are triggered with a delay
-    bool delayedLightPenIrqs() { return config.revision & (PAL_6569_R1 | NTSC_6567_R56A); }
+    static bool delayedLightPenIrqs(VICRevision revision);
+    bool delayedLightPenIrqs() { return delayedLightPenIrqs(config.revision); }
 
     // Returns the clock frequencay of the selected VICII model
-    unsigned getClockFrequency();
+    static unsigned getFrequency(VICRevision revision);
+    unsigned getFrequency() { return getFrequency(config.revision); }
     
     // Returns the number of CPU cycles performed per rasterline
-    unsigned getCyclesPerRasterline();
+    static unsigned getCyclesPerLine(VICRevision revision);
+    unsigned getCyclesPerLine() { return getCyclesPerLine(config.revision); }
     
     // Returns true if the end of the rasterline has been reached
     bool isLastCycleInRasterline(unsigned cycle);
@@ -786,7 +793,7 @@ public:
     
     // Returns the number of CPU cycles executed in one frame
     unsigned getCyclesPerFrame() {
-        return getRasterlinesPerFrame() * getCyclesPerRasterline(); }
+        return getRasterlinesPerFrame() * getCyclesPerLine(); }
     
     /* Returns the number of frames drawn per second. The result is returned as
      * a floating point value, because Commodore did not manage to match the
@@ -794,7 +801,7 @@ public:
      * C64 outputs 50.125 Hz.
      */
     double getFramesPerSecond() {
-        return (double)getClockFrequency() / (double)getCyclesPerFrame();
+        return (double)getFrequency() / (double)getCyclesPerFrame();
     }
     
     // Returns the time interval between two frames in nanoseconds

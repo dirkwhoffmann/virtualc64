@@ -1944,17 +1944,14 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->c64->configure(id, opt, val ? 1 : 0);
 }
-// Configuring the emulator
+- (void) configure:(C64Model)model
+{
+    wrapper->c64->configure(model);
+}
 - (C64Model) model
 {
     return wrapper->c64->getModel();
 }
-- (void) setModel:(C64Model)model
-{
-    wrapper->c64->setModel(model);
-}
-
-// Accessing the message queue
 - (Message)message
 {
     return wrapper->c64->getMessage();

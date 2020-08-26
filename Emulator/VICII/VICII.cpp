@@ -173,14 +173,14 @@ VICII::setRevision(VICRevision revision)
         case PAL_6569_R1:
         case PAL_6569_R3:
         case PAL_8565:
-            c64.setClockFrequency(PAL_CLOCK_FREQUENCY);
+            // c64.setClockFrequency(PAL_CLOCK_FREQUENCY);
             c64.putMessage(MSG_PAL);
             break;
             
         case NTSC_6567:
         case NTSC_6567_R56A:
         case NTSC_8562:
-            c64.setClockFrequency(NTSC_CLOCK_FREQUENCY);
+            // c64.setClockFrequency(NTSC_CLOCK_FREQUENCY);
             c64.putMessage(MSG_NTSC);
             break;
             
@@ -336,35 +336,40 @@ VICII::getSpriteInfo(int nr)
     return result;
 }
 
-/*
-void
-VICII::setGlueLogic(GlueLogic type)
+bool
+VICII::isPAL(VICRevision revision)
 {
-    debug(VIC_DEBUG, "setGlueLogic(%d)\n", type);
-    
-    assert(isGlueLogic(type));
-    config.glueLogic = type;
+    return revision & (PAL_6569_R1 | PAL_6569_R3 | PAL_8565);
 }
-*/
 
-/*
-void
-VICII::setPalette(Palette type)
+bool
+VICII::isNTSC(VICRevision revision)
 {
-    if (!isPalette(type)) {
-        warn("Unknown palette type (%d). Assuming color palette.\n", type);
-        type = COLOR_PALETTE;
-    }
-    
-    config.palette = type;
-    updatePalette();
+     return revision & (NTSC_6567 | NTSC_6567_R56A | NTSC_8562);
 }
-*/
+
+bool
+VICII::is856x(VICRevision revision)
+{
+     return revision & (PAL_8565 | NTSC_8562);
+}
+ 
+bool
+VICII::is656x(VICRevision revision)
+{
+     return revision & ~(PAL_8565 | NTSC_8562);
+}
+
+bool
+VICII::delayedLightPenIrqs(VICRevision revision)
+{
+     return revision & (PAL_6569_R1 | NTSC_6567_R56A);
+}
 
 unsigned
-VICII::getClockFrequency()
+VICII::getFrequency(VICRevision revision)
 {
-    switch (config.revision) {
+    switch (revision) {
             
         case NTSC_6567:
         case NTSC_8562:
@@ -377,9 +382,9 @@ VICII::getClockFrequency()
 }
 
 unsigned
-VICII::getCyclesPerRasterline()
+VICII::getCyclesPerLine(VICRevision revision)
 {
-    switch (config.revision) {
+    switch (revision) {
             
         case NTSC_6567_R56A:
             return 64;
@@ -396,7 +401,7 @@ VICII::getCyclesPerRasterline()
 bool
 VICII::isLastCycleInRasterline(unsigned cycle)
 {
-    return cycle >= getCyclesPerRasterline();
+    return cycle >= getCyclesPerLine();
 }
 
 unsigned

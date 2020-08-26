@@ -97,6 +97,42 @@ C64::~C64()
 }
 
 void
+C64::prefix()
+{
+    fprintf(stderr, "[%lld] (%3d,%3d) %04X ", frame, rasterLine, rasterCycle, cpu.getPC0());
+}
+
+void
+C64::reset()
+{
+    suspend();
+    
+    // Execute the standard reset routine
+    HardwareComponent::reset();
+    
+    // Inform the GUI
+    putMessage(MSG_RESET);
+    
+    resume();
+}
+
+void
+C64::_reset()
+{
+    RESET_SNAPSHOT_ITEMS
+            
+    // Initialize processor port
+    mem.poke(0x0000, 0x2F);
+    mem.poke(0x0001, 0x1F);
+    
+    // Initialize program counter (MOVE TO CPU)
+    cpu.reg.pc = mem.resetVector();
+    
+    rasterCycle = 1;
+    nanoTargetTime = 0UL;
+}
+
+void
 C64::setInspectionTarget(InspectionTarget target)
 {
     assert(isInspectionTarget(target));
@@ -207,39 +243,177 @@ C64::configure(DriveID id, ConfigOption option, long value)
 }
 
 void
-C64::prefix()
+C64::configure(C64Model model)
 {
-    fprintf(stderr, "[%lld] (%3d,%3d) %04X ", frame, rasterLine, rasterCycle, cpu.getPC0());
+    if (model != C64_CUSTOM) {
+        
+        suspend();
+        configure(OPT_VIC_REVISION, configurations[model].vic);
+        configure(OPT_GRAY_DOT_BUG, configurations[model].grayDotBug);
+        configure(OPT_GLUE_LOGIC,   configurations[model].glue);
+        configure(OPT_CIA_REVISION, configurations[model].cia);
+        configure(OPT_TIMER_B_BUG,  configurations[model].timerBBug);
+        configure(OPT_SID_REVISION, configurations[model].sid);
+        configure(OPT_SID_FILTER,   configurations[model].sidFilter);
+        configure(OPT_RAM_PATTERN,  configurations[model].pattern);
+        resume();
+    }
 }
 
-void
-C64::reset()
+bool
+C64::setConfigItem(ConfigOption option, long value)
 {
-    suspend();
-    
-    // Execute the standard reset routine
-    HardwareComponent::reset();
-    
-    // Inform the GUI
-    putMessage(MSG_RESET);
-    
-    resume();
-}
-
-void
-C64::_reset()
-{
-    RESET_SNAPSHOT_ITEMS
+    switch (option) {
             
-    // Initialize processor port
-    mem.poke(0x0000, 0x2F);
-    mem.poke(0x0001, 0x1F);
+        case OPT_VIC_REVISION:
+        {
+            u64 newFrequency = VICII::getFrequency((VICRevision)value);
+            debug(" set freq = %lld\n", newFrequency);
+
+            if (frequency == newFrequency) {
+                assert(durationOfOneCycle == 10000000000 / newFrequency);
+                return false;
+            }
+            
+            frequency = (u32)newFrequency;
+            durationOfOneCycle = 10000000000 / newFrequency;
+            return true;
+        }
+        default:
+            return false;
+    }
+}
+
+C64Model
+C64::getModel()
+{
+    VICRevision vicref = (VICRevision)vic.getConfigItem(OPT_VIC_REVISION);
+    bool grayDotBug    = vic.getConfigItem(OPT_GRAY_DOT_BUG);
+    bool glueLogic     = vic.getConfigItem(OPT_GLUE_LOGIC);
+    CIARevision ciaref = (CIARevision)cia1.getConfigItem(OPT_CIA_REVISION);
+    bool timerBBug     = cia1.getConfigItem(OPT_TIMER_B_BUG);
+    SIDRevision sidref = (SIDRevision)sid.getConfigItem(OPT_SID_REVISION);
+    bool sidFilter     = sid.getConfigItem(OPT_SID_FILTER);
+    RamPattern pattern = (RamPattern)mem.getConfigItem(OPT_RAM_PATTERN);
     
-    // Initialize program counter (MOVE TO CPU)
-    cpu.reg.pc = mem.resetVector();
+    // Try to find a matching configuration
+    for (unsigned i = 0; i < sizeof(configurations) / sizeof(C64ConfigurationDeprecated); i++) {
+        
+        if (vicref     != configurations[i].vic) continue;
+        if (grayDotBug != configurations[i].grayDotBug) continue;
+        if (glueLogic  != configurations[i].glue) continue;
+        if (ciaref     != configurations[i].cia) continue;
+        if (timerBBug  != configurations[i].timerBBug) continue;
+        if (sidref     != configurations[i].sid) continue;
+        if (sidFilter  != configurations[i].sidFilter) continue;
+        if (pattern    != configurations[i].pattern) continue;
+        return (C64Model)i;
+    }
+    return C64_CUSTOM;
+}
+
+void
+C64::updateVicFunctionTable()
+{
+    // Assign model independent execution functions
+    vicfunc[0] = NULL;
+    vicfunc[12] = &VICII::cycle12;
+    vicfunc[13] = &VICII::cycle13;
+    vicfunc[14] = &VICII::cycle14;
+    vicfunc[15] = &VICII::cycle15;
+    vicfunc[16] = &VICII::cycle16;
+    vicfunc[17] = &VICII::cycle17;
+    vicfunc[18] = &VICII::cycle18;
     
-    rasterCycle = 1;
-    nanoTargetTime = 0UL;
+    for (unsigned cycle = 19; cycle <= 54; cycle++)
+        vicfunc[cycle] = &VICII::cycle19to54;
+    
+    vicfunc[56] = &VICII::cycle56;
+    
+    // Assign model specific execution functions
+    switch (vic.getRevision()) {
+            
+        case PAL_6569_R1:
+        case PAL_6569_R3:
+        case PAL_8565:
+            
+            vicfunc[1] = &VICII::cycle1pal;
+            vicfunc[2] = &VICII::cycle2pal;
+            vicfunc[3] = &VICII::cycle3pal;
+            vicfunc[4] = &VICII::cycle4pal;
+            vicfunc[5] = &VICII::cycle5pal;
+            vicfunc[6] = &VICII::cycle6pal;
+            vicfunc[7] = &VICII::cycle7pal;
+            vicfunc[8] = &VICII::cycle8pal;
+            vicfunc[9] = &VICII::cycle9pal;
+            vicfunc[10] = &VICII::cycle10pal;
+            vicfunc[11] = &VICII::cycle11pal;
+            vicfunc[55] = &VICII::cycle55pal;
+            vicfunc[57] = &VICII::cycle57pal;
+            vicfunc[58] = &VICII::cycle58pal;
+            vicfunc[59] = &VICII::cycle59pal;
+            vicfunc[60] = &VICII::cycle60pal;
+            vicfunc[61] = &VICII::cycle61pal;
+            vicfunc[62] = &VICII::cycle62pal;
+            vicfunc[63] = &VICII::cycle63pal;
+            vicfunc[64] = NULL;
+            vicfunc[65] = NULL;
+            break;
+            
+        case NTSC_6567_R56A:
+            
+            vicfunc[1] = &VICII::cycle1pal;
+            vicfunc[2] = &VICII::cycle2pal;
+            vicfunc[3] = &VICII::cycle3pal;
+            vicfunc[4] = &VICII::cycle4pal;
+            vicfunc[5] = &VICII::cycle5pal;
+            vicfunc[6] = &VICII::cycle6pal;
+            vicfunc[7] = &VICII::cycle7pal;
+            vicfunc[8] = &VICII::cycle8pal;
+            vicfunc[9] = &VICII::cycle9pal;
+            vicfunc[10] = &VICII::cycle10pal;
+            vicfunc[11] = &VICII::cycle11pal;
+            vicfunc[55] = &VICII::cycle55ntsc;
+            vicfunc[57] = &VICII::cycle57ntsc;
+            vicfunc[58] = &VICII::cycle58ntsc;
+            vicfunc[59] = &VICII::cycle59ntsc;
+            vicfunc[60] = &VICII::cycle60ntsc;
+            vicfunc[61] = &VICII::cycle61ntsc;
+            vicfunc[62] = &VICII::cycle62ntsc;
+            vicfunc[63] = &VICII::cycle63ntsc;
+            vicfunc[64] = &VICII::cycle64ntsc;
+            vicfunc[65] = NULL;
+            break;
+            
+        case NTSC_6567:
+        case NTSC_8562:
+            
+            vicfunc[1] = &VICII::cycle1ntsc;
+            vicfunc[2] = &VICII::cycle2ntsc;
+            vicfunc[3] = &VICII::cycle3ntsc;
+            vicfunc[4] = &VICII::cycle4ntsc;
+            vicfunc[5] = &VICII::cycle5ntsc;
+            vicfunc[6] = &VICII::cycle6ntsc;
+            vicfunc[7] = &VICII::cycle7ntsc;
+            vicfunc[8] = &VICII::cycle8ntsc;
+            vicfunc[9] = &VICII::cycle9ntsc;
+            vicfunc[10] = &VICII::cycle10ntsc;
+            vicfunc[11] = &VICII::cycle11ntsc;
+            vicfunc[55] = &VICII::cycle55ntsc;
+            vicfunc[57] = &VICII::cycle57ntsc;
+            vicfunc[58] = &VICII::cycle58ntsc;
+            vicfunc[59] = &VICII::cycle59ntsc;
+            vicfunc[60] = &VICII::cycle60ntsc;
+            vicfunc[61] = &VICII::cycle61ntsc;
+            vicfunc[62] = &VICII::cycle62ntsc;
+            vicfunc[63] = &VICII::cycle63ntsc;
+            vicfunc[64] = &VICII::cycle64ntsc;
+            vicfunc[65] = &VICII::cycle65ntsc;
+            break;
+            
+        default:
+            assert(false);
+    }
 }
 
 void
@@ -379,12 +553,15 @@ void C64::_ping()
     putMessage(warpMode ? MSG_WARP_ON : MSG_WARP_OFF);
 }
 
+/*
 void
 C64::_setClockFrequency(u32 value)
 {
+    debug("_setClockFrequency(%d)\n", value);
     frequency = value;
     durationOfOneCycle = 10000000000 / value;
 }
+*/
 
 void
 C64::_dump() {
@@ -393,7 +570,7 @@ C64::_dump() {
     msg("              Machine type : %s\n", vic.isPAL() ? "PAL" : "NTSC");
     msg("         Frames per second : %f\n", vic.getFramesPerSecond());
     msg("     Rasterlines per frame : %d\n", vic.getRasterlinesPerFrame());
-    msg("     Cycles per rasterline : %d\n", vic.getCyclesPerRasterline());
+    msg("     Cycles per rasterline : %d\n", vic.getCyclesPerLine());
     msg("             Current cycle : %llu\n", cpu.cycle);
     msg("             Current frame : %d\n", frame);
     msg("        Current rasterline : %d\n", rasterLine);
@@ -491,158 +668,6 @@ C64::isReady(ErrorCode *error)
     }
     
     return true;
-}
-
-C64Model
-C64::getModel()
-{
-    VICRevision vicref = (VICRevision)vic.getConfigItem(OPT_VIC_REVISION);
-    bool grayDotBug = vic.getConfigItem(OPT_GRAY_DOT_BUG);
-    bool glueLogic = vic.getConfigItem(OPT_GLUE_LOGIC);
-    CIARevision ciaref = (CIARevision)cia1.getConfigItem(OPT_CIA_REVISION);
-    bool timerBBug = cia1.getConfigItem(OPT_TIMER_B_BUG);
-    SIDRevision sidref = (SIDRevision)sid.getConfigItem(OPT_SID_REVISION);
-    RamPattern pattern = (RamPattern)mem.getConfigItem(OPT_RAM_PATTERN);
-    
-    // Look for known configurations
-    for (unsigned i = 0; i < sizeof(configurations) / sizeof(C64ConfigurationDeprecated); i++) {
-        if (vicref == configurations[i].vic &&
-            grayDotBug == configurations[i].grayDotBug &&
-            glueLogic == configurations[i].glue &&
-            ciaref == configurations[i].cia &&
-            timerBBug == configurations[i].timerBBug &&
-            sidref == configurations[i].sid &&
-            pattern == configurations[i].pattern) {
-            return (C64Model)i;
-        }
-    }
-    
-    // We've got a non-standard configuration
-    return C64_CUSTOM;
-}
-
-void
-C64::setModel(C64Model m)
-{
-    if (m != C64_CUSTOM) {
-        
-        suspend();
-        
-        configure(OPT_VIC_REVISION, configurations[m].vic);
-        configure(OPT_GRAY_DOT_BUG, configurations[m].grayDotBug);
-        configure(OPT_GLUE_LOGIC,   configurations[m].glue);
-        configure(OPT_CIA_REVISION, configurations[m].cia);
-        configure(OPT_TIMER_B_BUG,  configurations[m].timerBBug);
-        configure(OPT_SID_REVISION, configurations[m].sid);
-        configure(OPT_SID_FILTER,   configurations[m].sidFilter);
-        configure(OPT_RAM_PATTERN,  configurations[m].pattern);
-
-        resume();
-    }
-}
-
-void
-C64::updateVicFunctionTable()
-{
-    // Assign model independent execution functions
-    vicfunc[0] = NULL;
-    vicfunc[12] = &VICII::cycle12;
-    vicfunc[13] = &VICII::cycle13;
-    vicfunc[14] = &VICII::cycle14;
-    vicfunc[15] = &VICII::cycle15;
-    vicfunc[16] = &VICII::cycle16;
-    vicfunc[17] = &VICII::cycle17;
-    vicfunc[18] = &VICII::cycle18;
-    
-    for (unsigned cycle = 19; cycle <= 54; cycle++)
-        vicfunc[cycle] = &VICII::cycle19to54;
-    
-    vicfunc[56] = &VICII::cycle56;
-    
-    // Assign model specific execution functions
-    switch (vic.getRevision()) {
-            
-        case PAL_6569_R1:
-        case PAL_6569_R3:
-        case PAL_8565:
-            
-            vicfunc[1] = &VICII::cycle1pal;
-            vicfunc[2] = &VICII::cycle2pal;
-            vicfunc[3] = &VICII::cycle3pal;
-            vicfunc[4] = &VICII::cycle4pal;
-            vicfunc[5] = &VICII::cycle5pal;
-            vicfunc[6] = &VICII::cycle6pal;
-            vicfunc[7] = &VICII::cycle7pal;
-            vicfunc[8] = &VICII::cycle8pal;
-            vicfunc[9] = &VICII::cycle9pal;
-            vicfunc[10] = &VICII::cycle10pal;
-            vicfunc[11] = &VICII::cycle11pal;
-            vicfunc[55] = &VICII::cycle55pal;
-            vicfunc[57] = &VICII::cycle57pal;
-            vicfunc[58] = &VICII::cycle58pal;
-            vicfunc[59] = &VICII::cycle59pal;
-            vicfunc[60] = &VICII::cycle60pal;
-            vicfunc[61] = &VICII::cycle61pal;
-            vicfunc[62] = &VICII::cycle62pal;
-            vicfunc[63] = &VICII::cycle63pal;
-            vicfunc[64] = NULL;
-            vicfunc[65] = NULL;
-            break;
-            
-        case NTSC_6567_R56A:
-            
-            vicfunc[1] = &VICII::cycle1pal;
-            vicfunc[2] = &VICII::cycle2pal;
-            vicfunc[3] = &VICII::cycle3pal;
-            vicfunc[4] = &VICII::cycle4pal;
-            vicfunc[5] = &VICII::cycle5pal;
-            vicfunc[6] = &VICII::cycle6pal;
-            vicfunc[7] = &VICII::cycle7pal;
-            vicfunc[8] = &VICII::cycle8pal;
-            vicfunc[9] = &VICII::cycle9pal;
-            vicfunc[10] = &VICII::cycle10pal;
-            vicfunc[11] = &VICII::cycle11pal;
-            vicfunc[55] = &VICII::cycle55ntsc;
-            vicfunc[57] = &VICII::cycle57ntsc;
-            vicfunc[58] = &VICII::cycle58ntsc;
-            vicfunc[59] = &VICII::cycle59ntsc;
-            vicfunc[60] = &VICII::cycle60ntsc;
-            vicfunc[61] = &VICII::cycle61ntsc;
-            vicfunc[62] = &VICII::cycle62ntsc;
-            vicfunc[63] = &VICII::cycle63ntsc;
-            vicfunc[64] = &VICII::cycle64ntsc;
-            vicfunc[65] = NULL;
-            break;
-            
-        case NTSC_6567:
-        case NTSC_8562:
-            
-            vicfunc[1] = &VICII::cycle1ntsc;
-            vicfunc[2] = &VICII::cycle2ntsc;
-            vicfunc[3] = &VICII::cycle3ntsc;
-            vicfunc[4] = &VICII::cycle4ntsc;
-            vicfunc[5] = &VICII::cycle5ntsc;
-            vicfunc[6] = &VICII::cycle6ntsc;
-            vicfunc[7] = &VICII::cycle7ntsc;
-            vicfunc[8] = &VICII::cycle8ntsc;
-            vicfunc[9] = &VICII::cycle9ntsc;
-            vicfunc[10] = &VICII::cycle10ntsc;
-            vicfunc[11] = &VICII::cycle11ntsc;
-            vicfunc[55] = &VICII::cycle55ntsc;
-            vicfunc[57] = &VICII::cycle57ntsc;
-            vicfunc[58] = &VICII::cycle58ntsc;
-            vicfunc[59] = &VICII::cycle59ntsc;
-            vicfunc[60] = &VICII::cycle60ntsc;
-            vicfunc[61] = &VICII::cycle61ntsc;
-            vicfunc[62] = &VICII::cycle62ntsc;
-            vicfunc[63] = &VICII::cycle63ntsc;
-            vicfunc[64] = &VICII::cycle64ntsc;
-            vicfunc[65] = &VICII::cycle65ntsc;
-            break;
-            
-        default:
-            assert(false);
-    }
 }
 
 void
@@ -793,7 +818,7 @@ C64::executeOneLine()
     if (rasterCycle == 1) beginRasterLine();
     
     // Emulate the middle of a rasterline
-    int lastCycle = vic.getCyclesPerRasterline();
+    int lastCycle = vic.getCyclesPerLine();
     for (unsigned i = rasterCycle; i <= lastCycle; i++) {
         
         _executeOneCycle();

@@ -153,10 +153,8 @@ struct AnyC64FileWrapper;
 - (BOOL) configure:(ConfigOption)opt enable:(BOOL)val;
 - (BOOL) configure:(ConfigOption)opt drive:(DriveID)id value:(NSInteger)val;
 - (BOOL) configure:(ConfigOption)opt drive:(DriveID)id enable:(BOOL)val;
-
-// Configuring the emulator
+- (void) configure:(C64Model)value;
 - (C64Model) model;
-- (void) setModel:(C64Model)value;
 
 // Accessing the message queue
 - (Message)message;

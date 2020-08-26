@@ -75,6 +75,28 @@ Drive::getConfigItem(ConfigOption option)
 }
 
 bool
+Drive::setConfigItem(ConfigOption option, long value)
+{
+    switch (option) {
+            
+        case OPT_VIC_REVISION:
+        {
+            u64 duration = 10000000000 / VICII::getFrequency((VICRevision)value);
+            debug("Setting duration to %lld\n", duration);
+            
+            if (durationOfOneCpuCycle ==  duration) {
+                return false;
+            }
+            
+            durationOfOneCpuCycle =  duration;
+            return true;
+        }
+        default:
+            return false;
+    }
+}
+
+bool
 Drive::setConfigItem(DriveID id, ConfigOption option, long value)
 {
     if (id != deviceNr) return false;
@@ -131,51 +153,6 @@ Drive::setConfigItem(DriveID id, ConfigOption option, long value)
     }
 }
 
-/*
-bool
-Drive::isConnectable()
-{
-    return c64.hasVC1541Rom();
-}
-*/
-/*
-void
-Drive::setConnected(bool value)
-{
-    // Only proceed if the configuration will change
-    if (config.connected == value) return;
-        
-    // Only drives with a Rom can be connected
-    if (value && !isConnectable()) return;
-    
-    suspend();
-
-    config.connected = value;
-    active = config.connected && config.switchedOn;
-    _reset();
-    ping();
-
-    resume();    
-}
-
-void
-Drive::setPowerSwitch(bool value)
-{
-    // Only proceed if the configuration will change
-    if (config.switchedOn == value) return;
-            
-    suspend();
-    
-    config.switchedOn = value;
-    active = config.connected && config.switchedOn;
-    _reset();
-    
-    ping();
-
-    resume();
-}
-*/
-
 void
 Drive::_ping()
 {    
@@ -187,11 +164,14 @@ Drive::_ping()
 
 }
 
+/*
 void
 Drive::_setClockFrequency(u32 value)
 {
+    debug("_setClockFrequency(%d)\n", value);
     durationOfOneCpuCycle = 10000000000 / value;
 }
+*/
 
 void 
 Drive::_dump()

@@ -51,7 +51,7 @@ bool
 SIDBridge::setConfigItem(ConfigOption option, long value)
 {
     switch (option) {
-            
+                        
         case OPT_SID_REVISION:
             
             if (!isSIDRevision(value)) {

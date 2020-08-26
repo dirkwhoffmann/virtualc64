@@ -58,9 +58,39 @@ FastSID::_reset()
     init(sampleRate, cpuFrequency);
 }
 
+bool
+FastSID::setConfigItem(ConfigOption option, long value)
+{
+    switch (option) {
+            
+        case OPT_VIC_REVISION:
+        {
+            u32 newFrequency = VICII::getFrequency((VICRevision)value);
+            
+            debug("Setting clock freq to %d\n", newFrequency);
+            debug(SID_DEBUG, "Setting clock frequency to %d\n", newFrequency);
+            
+            if (cpuFrequency == newFrequency) {
+                return false;
+            }
+            
+            cpuFrequency = newFrequency;
+            
+            // Recompute frequency dependent data structures
+            init(sampleRate, cpuFrequency);
+            return true;
+        }
+        default:
+            return false;
+    }
+}
+
+/*
 void
 FastSID::_setClockFrequency(u32 value)
 {
+    debug("_setClockFrequency(%d)\n", value);
+
     debug(SID_DEBUG, "Setting clock frequency to %d\n", value);
 
     cpuFrequency = value;
@@ -68,6 +98,7 @@ FastSID::_setClockFrequency(u32 value)
     // Recompute frequency dependent data structures
     init(sampleRate, cpuFrequency);
 }
+*/
 
 void
 FastSID::_dump()

@@ -300,8 +300,8 @@ public:
      * tables.
      * DEPRECATED. USE THE NEW CONFIG DISTRIBUTION SCHEME FOR THIS.
      */
-    void setClockFrequency(u32 value);
-    virtual void _setClockFrequency(u32 value) { }
+    // void setClockFrequency(u32 value);
+    // virtual void _setClockFrequency(u32 value) { }
 };
 
 #endif

@@ -267,6 +267,7 @@ HardwareComponent::setDebug(bool enable)
      _setDebug(enable);
 }
 
+/*
 void
 HardwareComponent::setClockFrequency(u32 value)
 {
@@ -277,3 +278,4 @@ HardwareComponent::setClockFrequency(u32 value)
     }
     _setClockFrequency(value);
 }
+*/
