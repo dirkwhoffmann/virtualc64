@@ -49,35 +49,17 @@ ReSID::_reset()
     sid->enable_filter(emulateFilter);
 }
 
-bool
-ReSID::setConfigItem(ConfigOption option, long value)
+void
+ReSID::setClockFrequency(u32 frequency)
 {
-    switch (option) {
-            
-        case OPT_VIC_REVISION:
-        {
-            u32 newFrequency = VICII::getFrequency((VICRevision)value);
-            
-            debug("Setting clock freq to %d\n", newFrequency);
-            debug(SID_DEBUG, "Setting clock frequency to %d\n", newFrequency);
-            
-            if (clockFrequency == newFrequency) {
-                return false;
-            }
-            
-            suspend();
-            clockFrequency = newFrequency;
-            sid->set_sampling_parameters((double)clockFrequency,
-                                         (reSID::sampling_method)samplingMethod,
-                                         (double)sampleRate);
-            resume();
-            
-            assert((u32)sid->clock_frequency == clockFrequency);
-            return true;
-        }
-        default:
-            return false;
-    }
+    debug(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
+
+    clockFrequency = frequency;
+    sid->set_sampling_parameters((double)clockFrequency,
+                                 (reSID::sampling_method)samplingMethod,
+                                 (double)sampleRate);
+    
+    assert((u32)sid->clock_frequency == clockFrequency);
 }
 
 void

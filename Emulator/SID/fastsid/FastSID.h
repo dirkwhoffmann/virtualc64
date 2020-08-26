@@ -117,8 +117,10 @@ private:
     // Configuring
     //
     
-    bool setConfigItem(ConfigOption option, long value) override;
-
+public:
+    
+    void setClockFrequency(u32 frequency);
+    
     
     //
     // Analyzing

@@ -20,6 +20,9 @@ SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
     };
     
     config.engine = ENGINE_RESID;
+
+    resid.setClockFrequency(PAL_CLOCK_FREQUENCY);
+    fastsid.setClockFrequency(PAL_CLOCK_FREQUENCY);
 }
 
 void
@@ -51,7 +54,29 @@ bool
 SIDBridge::setConfigItem(ConfigOption option, long value)
 {
     switch (option) {
-                        
+            
+        case OPT_VIC_REVISION:
+        {
+            u32 newFrequency = VICII::getFrequency((VICRevision)value);
+            
+            debug("Setting clock freq to %d\n", newFrequency);
+            debug(SID_DEBUG, "Setting clock frequency to %d\n", newFrequency);
+            
+            assert(resid.getClockFrequency() == fastsid.getClockFrequency());
+
+            if (resid.getClockFrequency() == newFrequency) {
+                return false;
+            }
+            
+            suspend();
+            resid.setClockFrequency(newFrequency);
+            fastsid.setClockFrequency(newFrequency);
+            resume();
+            
+            assert(resid.getClockFrequency() == fastsid.getClockFrequency());
+            return true;
+        }
+            
         case OPT_SID_REVISION:
             
             if (!isSIDRevision(value)) {
