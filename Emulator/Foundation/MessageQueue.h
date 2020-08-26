@@ -20,30 +20,26 @@ class MessageQueue : public C64Object {
     
     private:
     
-    //! @brief    Maximum number of queued messages
+    // Maximum number of queued messages
     const static size_t capacity = 64;
     
-    //! @brief    Message ring buffer
+    // Message ring buffer
     Message queue[capacity];
     
-    //! @brief    The ring buffers read pointer
+    // Read and write pointer
     int r = 0;
-    
-    //! @brief    The ring buffers write pointer
     int w = 0;
     
-    //! @brief    Mutex for streamlining parallel read and write accesses
+    //! @brief Mutex for streamlining parallel read and write accesses
+    // TODO: Use synchronized
     pthread_mutex_t lock;
     
-    //! @brief    A list of all registered listeners
+    // List of all registered listeners
     map <const void *, Callback *> listeners;
     
     public:
     
-    //! @brief    Constructor
     MessageQueue();
-    
-    //! @brief    Destructor
     virtual ~MessageQueue();
     
     //! @brief    Registers a listener together with it's callback function
