@@ -12,140 +12,114 @@
 
 #include "AnyFile.h"
 
-// Forward declarations
-class C64;
-
-// Snapshot header
 typedef struct {
     
-    //! @brief    Magic bytes ('V','C','6','4')
-    char magic[4];
+    // Header signature
+    char magicBytes[4];
     
-    //! @brief    Version number (V major.minor.subminor)
+    // Version number
     u8 major;
     u8 minor;
     u8 subminor;
     
-    //! @brief    Screenshot
+    // Thumbnail image
     struct {
-        
-        //! @brief    Image width and height
         u16 width, height;
-        
-        //! @brief    Screen buffer data
         u32 screen[PAL_RASTERLINES * NTSC_PIXELS];
         
     } screenshot;
     
-    //! @brief    Date and time of snapshot creation
+    // Creation date
     time_t timestamp;
-    
-} SnapshotHeader;
+}
+SnapshotHeader;
 
-
-/*! @class   Snapshot
- *  @brief   The Snapshot class declares the programmatic interface for a file
- *           in V64 format (VirtualC64 snapshot files).
- */
 class Snapshot : public AnyFile {
     
-    private:
-    
-    //! @brief    Header signature
+    // Header signature
     static const u8 magicBytes[];
     
     
     //
-    //! @functiongroup Class methods
+    // Class methods
     //
     
-    public:
+public:
     
-    //! @brief    Returns true iff buffer contains a snapshot.
+    // Checks whether a buffer contains a snapshot
     static bool isSnapshot(const u8 *buffer, size_t length);
     
-    //! @brief    Returns true iff buffer contains a snapshot of a specific version.
+    // Checks whether a buffer contains a snapshot of a specific version
     static bool isSnapshot(const u8 *buffer, size_t length,
                            u8 major, u8 minor, u8 subminor);
     
-    //! @brief    Returns true iff buffer contains a snapshot with a supported version number.
+    // Checks whether a buffer contains a snapshot with a supported version number
     static bool isSupportedSnapshot(const u8 *buffer, size_t length);
     
-    //! @brief    Returns true iff buffer contains a snapshot with an outdated version number.
+    // Checks whether a buffer contains a snapshot with an outdated version number
     static bool isUnsupportedSnapshot(const u8 *buffer, size_t length);
     
-    //! @brief    Returns true if path points to a snapshot file.
+    // Checks whether 'path' points to a snapshot
     static bool isSnapshotFile(const char *path);
     
-    //! @brief    Returns true if file points to a snapshot file of a specific version.
+    // Checks whether 'path' points to a snapshot of a specific version
     static bool isSnapshotFile(const char *path, u8 major, u8 minor, u8 subminor);
     
-    //! @brief    Returns true if file is a snapshot with a supported version number.
+    // Checks whether 'path' points to a snapshot with a supported version number
     static bool isSupportedSnapshotFile(const char *path);
     
-    //! @brief    Returns true if file is a snapshot with an outdated version number.
+    // Checks whether 'path' points to a snapshot with an outdated version number
     static bool isUnsupportedSnapshotFile(const char *path);
     
     
     //
-    //! @functiongroup Creating and destructing
+    // Factory methods
     //
     
-    //! @brief    Standard Constructor
-    Snapshot();
-
-    //! @brief    Custom Constructor
-    Snapshot(size_t capacity);
-
-    //! @brief    Allocates memory for storing the emulator state.
-    bool setCapacity(size_t size);
+public:
     
-    //! @brief    Factory method
     static Snapshot *makeWithFile(const char *filename);
-    
-    //! @brief    Factory method
     static Snapshot *makeWithBuffer(const u8 *buffer, size_t size);
+    static Snapshot *makeWithC64(class C64 *c64);
 
-    //! @brief    Factory method
-    static Snapshot *makeWithC64(C64 *c64);
+    
+    //
+    // Initializing
+    //
+        
+    Snapshot();
+    Snapshot(size_t capacity);
+    
+    void takeScreenshot(class C64 *c64);
+
+private:
+    
+    // Allocates memory for storing the emulator state
+    bool setCapacity(size_t size);
+        
+    
+    //
+    // Methods from AnyC64File
+    //
+    
+    C64FileType type() override { return V64_FILE; }
+    const char *typeAsString() override { return "V64"; }
+    bool hasSameType(const char *filename) override;
     
     
     //
-    //! @functiongroup Methods from AnyC64File
+    // Accessing properties
     //
     
-    C64FileType type() { return V64_FILE; }
-    const char *typeAsString() { return "V64"; }
-    bool hasSameType(const char *filename);
+public:
     
-    
-    //
-    //! @functiongroup Accessing snapshot properties
-    //
-    
-    public:
-    
-    //! @brief    Returns pointer to header data
     SnapshotHeader *getHeader() { return (SnapshotHeader *)data; }
-    
-    //! @brief    Returns pointer to core data
     u8 *getData() { return data + sizeof(SnapshotHeader); }
     
-    //! @brief    Returns the timestamp
     time_t getTimestamp() { return getHeader()->timestamp; }
-        
-    //! @brief    Returns a pointer to the screenshot data.
     unsigned char *getImageData() { return (unsigned char *)(getHeader()->screenshot.screen); }
-    
-    //! @brief    Returns the screenshot image width
     unsigned getImageWidth() { return getHeader()->screenshot.width; }
-    
-    //! @brief    Returns the screenshot image height
     unsigned getImageHeight() { return getHeader()->screenshot.height; }
-    
-    //! @brief    Stores a screenshot inside this snapshot
-    void takeScreenshot(C64 *c64);
-    
 };
 
 #endif

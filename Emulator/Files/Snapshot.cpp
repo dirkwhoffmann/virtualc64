@@ -87,10 +87,10 @@ Snapshot::Snapshot(size_t capacity)
     data = new u8[size];
     
     SnapshotHeader *header = (SnapshotHeader *)data;
-    header->magic[0] = magicBytes[0];
-    header->magic[1] = magicBytes[1];
-    header->magic[2] = magicBytes[2];
-    header->magic[3] = magicBytes[3];
+    header->magicBytes[0] = magicBytes[0];
+    header->magicBytes[1] = magicBytes[1];
+    header->magicBytes[2] = magicBytes[2];
+    header->magicBytes[3] = magicBytes[3];
     header->major = V_MAJOR;
     header->minor = V_MINOR;
     header->subminor = V_SUBMINOR;

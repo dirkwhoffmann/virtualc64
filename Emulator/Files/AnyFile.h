@@ -17,167 +17,126 @@ class AnyFile : public C64Object {
     
 protected:
 	     
-    //! @brief    The physical name (full path) of this file.
+    // The physical name (full path) of this file
     char *path = NULL;
     
-    /*! @brief    The logical name of this file.
-     *  @details  Some archives store a logical name in their header section.
-     *            If they don't store a name, the raw filename is used (path
-     *            and extension stripped off).
+    /* The logical name of this file. Some archives store a logical name in the
+     * header section. If no name is stored, the logical name is constructed
+     * out of the physical name by stripping off path and extension.
      */
     char name[256];
     
-    /*! @brief    Unicode representation of the logical name.
-     *  @seealso  getUnicodeName
+    /* Unicode representation of the logical name. The provides unicode format
+     * is compatible with font C64ProMono which is used, e.g., in the mount
+     * dialogs preview panel.
      */
+
     unsigned short unicode[256];
     
-    //! @brief    The raw data of this file.
+    // The size of this file in bytes
+    size_t size = 0;
+
+    // The raw data of this file
     u8 *data = NULL;
     
-    //! @brief    The size of this file in bytes.
-    size_t size = 0;
-    
-    /*! @brief    File pointer
-     *  @details  An offset into the data array.
-     */
+    // File pointer (an offset into the data array)
     long fp = -1;
     
-    /*! @brief    End of file position
-     *  @details  This value equals the last valid offset plus 1
-     */
+    // End of file position (equals the last valid offset plus 1)
     long eof = -1;
     
-    
-protected:
-    
-    /*! @brief    Checks the header signature of a buffer.
-     *  @details  This functions is used to determine if the buffer contains the
-     *            binary representation of a special file type, e.g., the
-     *            representation of a T64 file.
-     *  @param    buffer    Pointer to buffer, must not be NULL
-     *  @param    length    Length of the buffer
-     *  @param    header    Expected byte sequence, terminated by EOF
-     *  @return   Returns   true iff magic bytes match.
-     */
-    /*
-    static bool checkBufferHeader(const u8 *buffer, size_t length,
-                                  const u8 *header);
-     */
-    
+ 
     //
-    //! @functiongroup Creating and destructing objects
+    // Initializing
     //
     
 public:
     
-    //! @brief    Constructor
     AnyFile();
-
-    //! @brief    Destructor
     virtual ~AnyFile();
     
-    //! @brief    Frees the memory allocated by this object.
+    // Frees the memory allocated by this object
     virtual void dealloc();
 
     
     //
-    //! @functiongroup Accessing file attributes
+    // Accessing file attributes
     //
     
-    //! @brief    Returns the type of this file.
+public:
+    
+    // Returns the type of this file
     virtual C64FileType type() { return UNKNOWN_FILE_FORMAT; }
     
-    /*! @brief      Returns a string representation of the file type.
-     *  @details    E.g., a T64 file returns "T64".
-     */
+    // Returns a string representation of the file type ("T64" etc.)
     virtual const char *typeAsString() { return ""; }
 
-	//! @brief    Returns the physical name of this file.
+	// Returns the physical name of this file
     const char *getPath() { return path ? path : ""; }
 
-    //! @brief    Sets the physical name of this file.
+    // Sets the physical name of this file
     void setPath(const char *path);
 
-    //! @brief    Returns the logical name of this file.
+    // Returns the logical name of this file
     virtual const char *getName() { return name; }
 
-    /*! @brief    Returns the logical name as unicode character array.
-     *  @details  The provides unicode format is compatible with font C64ProMono
-     *            which is used, e.g., in the mount dialogs preview panel.
-     */
+    // Returns the logical name as a unicode character array
     const unsigned short *getUnicodeName();
 	
     
     //
-    //! @functiongroup Reading data from the file
+    // Reading file data
     //
     
-    /*! @brief    Returns the number of bytes in this file.
-     *  @details  After getSize() calls to read(), EOF is returned.
-     */
+    // Returns the file size in bytes
     virtual size_t getSize() { return size; }
 
-    //! @brief    Moves the file pointer to the specified offset.
-    /*! @details  Use seek(0) to return to the beginning of the file.
+    /* Moves the file pointer to the specified offset. seek(0) returns to the
+     * beginning of the file.
      */
     virtual void seek(long offset);
     
-    /*! @brief    Reads a byte.
-     *  @return   EOF (-1) if the end of file has been reached.
-     */
+    // Reads a byte (-1 = EOF)
     virtual int read();
 
-    /*! @brief    Reads multiple bytes in form of a hex dump string.
-     *  @param    Number of bytes ranging from 1 to 85.
-     */
+    // Reads multiple bytes (1 to 85) in form of a hex dump string
     const char *readHex(size_t num = 1);
 
-    /*! @brief    Uses getByte() to copy the file into the C64 memory.
-     *  @param    buffer must be a pointer to RAM or ROM
+    /* Copies the file contents into C64 memory starting at 'offset'. 'buffer'
+     * must be a pointer to RAM or ROM.
      */
     virtual void flash(u8 *buffer, size_t offset = 0);
 
     
     //
-    //! @functiongroup Serializing
+    // Serializing
     //
     
-    //! @brief    Required buffer size for this file
+    // Required buffer size for this file
     size_t sizeOnDisk() { return writeToBuffer(NULL); }
 
-    /*! @brief    Returns true iff this file has the same type as the
-     *            file stored in the specified file.
+    /* Checks whether this file has the same type as the file stored in the
+     * specified file.
      */
-    virtual bool hasSameType(const char *filename) { return false; }
+    virtual bool hasSameType(const char *path) { return false; }
 
-    /*! @brief    Reads the file contents from a memory buffer.
-     *  @param    buffer The address of a binary representation in memory.
-     *  @param    length The size of the binary representation.
-     */
+    // Reads the file contents from a memory buffer
     virtual bool readFromBuffer(const u8 *buffer, size_t length);
 	
-    /*! @brief    Reads the file contents from a file.
-     *  @details  This function requires no custom implementation. It first
-     *            reads in the file contents in memory and invokes
-     *            readFromBuffer afterwards.
-     *  @param    filename The name of a file on disk.
-     */
-	bool readFromFile(const char *filename);
+    // Reads the file contents from a file
+	bool readFromFile(const char *path);
 
-    /*! @brief    Writes the file contents into a memory buffer.
-     *  @details  If a NULL pointer is passed in, a test run is performed. Test
-     *            runs are performed to determine the size of the file on disk.
-     *   @param   buffer The address of the buffer in memory.
+    /* Writes the file contents into a memory buffer. By passing a null pointer,
+     * a test run is performed. Test runs are used to determine how many bytes
+     * will be written.
      */
 	virtual size_t writeToBuffer(u8 *buffer);
 
-    /*! @brief    Writes the file contents to a file.
-     *  @details  This function requires no custom implementation. It invokes
-     *            writeToBuffer first and writes the data to disk afterwards.
-     *  @param    filename The name of a file to be written.
+    /* Writes the file contents to a file. This function requires no custom
+     * implementation. It invokes writeToBuffer first and writes the data to
+     * disk afterwards.
      */
-	bool writeToFile(const char *filename);
+	bool writeToFile(const char *path);
 };
 
 #endif

@@ -57,18 +57,15 @@ public:
     // Returns a string representation of the item type ("PRG" etc.)
     virtual const char *getTypeOfItem() { return ""; }
     
-    // Returns the name of the selected item.
+    // Returns the name of the selected item
     virtual const char *getNameOfItem() { return ""; }
 
-    /* Returns the name of the selected item in unichar format. The returned
-     * unichars are compatible with font C64ProMono which is used, e.g., in the
-     * mount dialogs preview panel.
-     */
+    // Returns the name of the selected item as a unicode character array
     const unsigned short *getUnicodeNameOfItem();
     
 
     //
-    // Reading file data
+    // Reading item data
     //
     
     // Returns the size of an item in bytes
@@ -77,8 +74,8 @@ public:
     // Returns the size of an item in blocks
     virtual size_t getSizeOfItemInBlocks() { return (getSizeOfItem() + 253) / 254; }
 
-    /* Moves the file pointer to the specified offset. Use seekItem(0) to
-     * return to the beginning of the selected item.
+    /* Moves the file pointer to the specified offset. seekItem(0) returns to
+     * the beginning of the selected item.
      */
     virtual void seekItem(long offset) { };
     
