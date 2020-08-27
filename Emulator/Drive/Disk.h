@@ -213,111 +213,86 @@ private:
 
 public:
     
-    //! @brief Returns write protection flag
     bool isWriteProtected() { return writeProtected; }
-
-    //! @brief Sets write protection flag
     void setWriteProtection(bool b) { writeProtected = b; }
-
-    //! @brief Toggles the write protection flag
     void toggleWriteProtection() { writeProtected = !writeProtected; }
 
-    //! @brief Returns modified flag
     bool isModified() { return modified; }
-    
-    //! @brief Sets modified flag
     void setModified(bool b);
 
     
     //
-    //! @functiongroup Handling Gcr encoded data
+    // Handling GCR encoded data
     //
     
 public:
     
-    //! @brief   Converts a 4 bit binary value to a 5 bit GCR codeword
+    // Converts a 4 bit binary value to a 5 bit GCR codeword or vice versa
     u8 bin2gcr(u8 value) { assert(value < 16); return gcr[value]; }
-
-    //! @brief   Converts a 5 bit GCR codeword to a 4 bit binary value
     u8 gcr2bin(u8 value) { assert(value < 32); return invgcr[value]; }
 
-    //! @brief   Returns true if the provided 5 bit codeword is a valid GCR codeword
+    // Returns true if the provided 5 bit codeword is a valid GCR codeword
     bool isGcr(u8 value) { assert(value < 32); return invgcr[value] != 0xFF; }
-
-    //! @brief   Encodes a single byte as a GCR bitstream.
-    /*! @details Writes 10 bits to the specified position on disk.
-     */
-    void encodeGcr(u8 value, Track t, HeadPosition offset);
-
-    //! @brief   Encodes multiple bytes as a GCR bitstream.
-    /*! @details Writes length * 10 bits to the specified position on disk.
-     */
-    void encodeGcr(u8 *values, size_t length, Track t, HeadPosition offset);
-
-    /*! @brief   Translates four data bytes into five GCR encodes bytes
-     *! @deprecated
-     */
-    void encodeGcr(u8 b1, u8 b2, u8 b3, u8 b4, Track t, unsigned offset);
     
-    //! @brief   Decodes a nibble (4 bit) from a previously encoded GCR bitstream.
-    /*! @return  0xFF, if no valid GCR sequence is found.
+    /* Encodes a byte stream as a GCR bit stream. The first function encodes
+     * a single byte and the second functions encodes multiple bytes. For each
+     * byte, 10 bits are written to the specified disk position.
+     */
+    void encodeGcr(u8 value, Track t, HeadPos offset);
+    void encodeGcr(u8 *values, size_t length, Track t, HeadPos offset);
+    
+    
+    /* Decodes a nibble (4 bit) from a previously encoded GCR bitstream.
+     * Returns 0xFF, if no valid GCR sequence is found.
      */
     u8 decodeGcrNibble(u8 *gcrBits);
 
-    //! @brief   Decodes a byte (8 bit) form a previously encoded GCR bitstream.
-    /*! @note    Returns an unpredictable result if invalid GCR sequences are found.
+    /* Decodes a byte (8 bit) form a previously encoded GCR bitstream. Returns
+     * an unpredictable result if invalid GCR sequences are found.
      */
     u8 decodeGcr(u8 *gcrBits);
 
     
     //
-    //! @functiongroup Accessing disk data
+    // Accessing disk data
     //
     
-    //! @brief    Returns true if the provided drive head position is valid.
-    bool isValidHeadPositon(Halftrack ht, HeadPosition pos) {
-        return isHalftrackNumber(ht) && pos < length.halftrack[ht]; }
+    // Returns true if the provided drive head position is valid
+    bool isValidHeadPos(Halftrack ht, HeadPos pos);
     
-    //! @brief    Fixes a wrapped over head position.
-    HeadPosition fitToBounds(Halftrack ht, HeadPosition pos) {
-        u16 len = length.halftrack[ht];
-        return pos < 0 ? pos + len : pos >= len ? pos - len : pos; }
+    // Fixes a wrapped over head position
+    HeadPos fitToBounds(Halftrack ht, HeadPos pos);
     
-    /*! @brief   Returns the duration of a single bit in 1/10 nano seconds.
-     *  @details The returned value is the time span the drive head resists
-     *           over the specified bit. The value is determined by the
-     *           the density bits at the time the bit was written to disk.
-     *  @note    The head position is expected to be inside the halftrack bounds.
+    /* Returns the duration of a single bit in 1/10 nano seconds. The returned
+     * value is the time span the drive head resists over the specified bit.
+     * The value is determined by the the density bits at the time the bit was
+     * written to disk. "_bitDelay" expects the head position to be inside
+     * the halftrack bounds.
      */
-    u64 _bitDelay(Halftrack ht, HeadPosition pos);
-
-    /*! @brief   Returns the duration of a single bit in 1/10 nano seconds.
-     */
-    u64 bitDelay(Halftrack ht, HeadPosition pos) {
-        return _bitDelay(ht, fitToBounds(ht, pos));
-    }
+    u64 _bitDelay(Halftrack ht, HeadPos pos);
+    u64 bitDelay(Halftrack ht, HeadPos pos) { return _bitDelay(ht, fitToBounds(ht, pos)); }
     
     /*! @brief   Reads a single bit from disk.
      *  @note    The head position is expected to be inside the halftrack bounds.
      *  @result  0x00 or 0x01
      */
-    u8 _readBitFromHalftrack(Halftrack ht, HeadPosition pos) {
-        assert(isValidHeadPositon(ht, pos));
+    u8 _readBitFromHalftrack(Halftrack ht, HeadPos pos) {
+        assert(isValidHeadPos(ht, pos));
         return (data.halftrack[ht][pos / 8] & (0x80 >> (pos % 8))) != 0;
     }
     
     /*! @brief   Reads a single bit from disk.
      *  @result	 0x00 or 0x01
      */
-    u8 readBitFromHalftrack(Halftrack ht, HeadPosition pos) {
+    u8 readBitFromHalftrack(Halftrack ht, HeadPos pos) {
         return _readBitFromHalftrack(ht, fitToBounds(ht, pos));
     }
  
     /*! @brief  Writes a single bit to disk.
      *  @note   The head position is expected to be inside the halftrack bounds.
      */
-    void _writeBitToHalftrack(Halftrack ht, HeadPosition pos, bool bit) {
-        assert(isValidHeadPositon(ht, pos));
+    void _writeBitToHalftrack(Halftrack ht, HeadPos pos, bool bit) {
+        assert(isValidHeadPos(ht, pos));
         if (bit) {
             data.halftrack[ht][pos / 8] |= (0x0080 >> (pos % 8));
         } else {
@@ -325,46 +300,46 @@ public:
         }
     }
     
-    void _writeBitToTrack(Track t, HeadPosition pos, bool bit) {
+    void _writeBitToTrack(Track t, HeadPos pos, bool bit) {
         _writeBitToHalftrack(2 * t - 1, pos, bit);
     }
     
     //! @brief  Writes a single bit to disk.
-    void writeBitToHalftrack(Halftrack ht, HeadPosition pos, bool bit) {
+    void writeBitToHalftrack(Halftrack ht, HeadPos pos, bool bit) {
         _writeBitToHalftrack(ht, fitToBounds(ht, pos), bit);
     }
     
-    void writeBitToTrack(Track t, HeadPosition pos, bool bit) {
+    void writeBitToTrack(Track t, HeadPos pos, bool bit) {
         writeBitToHalftrack(2 * t - 1, pos, bit);
     }
     
     //! @brief  Writes a single bit to disk multiple times.
-    void writeBitToHalftrack(Halftrack ht, HeadPosition pos, bool bit, size_t count) {
+    void writeBitToHalftrack(Halftrack ht, HeadPos pos, bool bit, size_t count) {
         for (size_t i = 0; i < count; i++)
             writeBitToHalftrack(ht, pos++, bit);
     }
     
-    void writeBitToTrack(Track t, HeadPosition pos, bool bit, size_t count) {
+    void writeBitToTrack(Track t, HeadPos pos, bool bit, size_t count) {
             writeBitToHalftrack(2 * t - 1, pos, bit, count);
     }
 
     //! @brief  Writes a single byte to disk.
-    void writeByteToHalftrack(Halftrack ht, HeadPosition pos, u8 byte) {
+    void writeByteToHalftrack(Halftrack ht, HeadPos pos, u8 byte) {
         for (u8 mask = 0x80; mask != 0; mask >>= 1)
             writeBitToHalftrack(ht, pos++, byte & mask);
     }
 
-    void writeByteToTrack(Track t, HeadPosition pos, u8 byte) {
+    void writeByteToTrack(Track t, HeadPos pos, u8 byte) {
         writeByteToHalftrack(2 * t - 1, pos, byte);
     }
     
     //! @brief   Writes a certain number of interblock bytes to disk.
-    void writeGapToHalftrack(Halftrack ht, HeadPosition pos, size_t length) {
+    void writeGapToHalftrack(Halftrack ht, HeadPos pos, size_t length) {
         for (size_t i = 0; i < length; i++, pos += 8)
             writeByteToHalftrack(ht, pos, 0x55);
     }
     
-    void writeGapToTrack(Track t, HeadPosition pos, size_t length) {
+    void writeGapToTrack(Track t, HeadPos pos, size_t length) {
         writeGapToHalftrack(2 * t - 1, pos, length);
     }
 
@@ -517,7 +492,7 @@ private:
      *           Number of tail bytes follwowing sectors with odd sector numbers.
      *  @return  Number of written bits.
      */
-    size_t encodeTrack(D64File *a, Track t, u8 tailGap, HeadPosition start);
+    size_t encodeTrack(D64File *a, Track t, u8 tailGap, HeadPos start);
     
     /*! @brief   Encode a single sector
      *  @details This function translates the logical byte sequence of a single sector
@@ -525,7 +500,7 @@ private:
      *           'gap' tail gap bytes.
      *  @return  Number of written bits.
      */
-    size_t encodeSector(D64File *a, Track t, Sector sector, HeadPosition start, int gap);
+    size_t encodeSector(D64File *a, Track t, Sector sector, HeadPos start, int gap);
 };
     
 #endif

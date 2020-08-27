@@ -145,7 +145,7 @@ public:
     Halftrack halftrack = 0;
     
     // Position of the drive head inside the current track
-    HeadPosition offset = 0;
+    HeadPos offset = 0;
     
     /* Current disk zone. Each track belongs to one of four zones. Whenever the
      * drive moves the r/w head, it computes the new number and writes into PB5
@@ -380,7 +380,7 @@ public:
     u16 sizeOfCurrentHalftrack() { return sizeOfHalftrack(halftrack); }
 
     // Returns the position of the drive head inside the current track
-    HeadPosition getOffset() { return offset; }
+    HeadPos getOffset() { return offset; }
 
     // Moves head one halftrack up
     void moveHeadUp();

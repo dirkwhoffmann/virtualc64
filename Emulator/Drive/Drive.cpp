@@ -368,14 +368,14 @@ Drive::moveHeadUp()
 
         float position = (float)offset / (float)disk.lengthOfHalftrack(halftrack);
         halftrack++;
-        offset = (HeadPosition)(position * disk.lengthOfHalftrack(halftrack));
+        offset = (HeadPos)(position * disk.lengthOfHalftrack(halftrack));
         
         debug(DRV_DEBUG, "Moving head up to halftrack %d (track %2.1f) (offset %d)\n",
               halftrack, (halftrack + 1) / 2.0, offset);
         debug(DRV_DEBUG, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
     }
    
-    assert(disk.isValidHeadPositon(halftrack, offset));
+    assert(disk.isValidHeadPos(halftrack, offset));
     
     c64.putMessage(MSG_DRIVE_HEAD, deviceNr);
 }
@@ -386,14 +386,14 @@ Drive::moveHeadDown()
     if (halftrack > 1) {
         float position = (float)offset / (float)disk.lengthOfHalftrack(halftrack);
         halftrack--;
-        offset = (HeadPosition)(position * disk.lengthOfHalftrack(halftrack));
+        offset = (HeadPos)(position * disk.lengthOfHalftrack(halftrack));
         
         debug(DRV_DEBUG, "Moving head down to halftrack %d (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
         debug(DRV_DEBUG, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
     }
     
-    assert(disk.isValidHeadPositon(halftrack, offset));
+    assert(disk.isValidHeadPos(halftrack, offset));
     
     c64.putMessage(MSG_DRIVE_HEAD, deviceNr);
 }

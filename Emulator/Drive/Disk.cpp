@@ -155,7 +155,7 @@ Disk::setModified(bool b)
 
 
 void
-Disk::encodeGcr(u8 value, Track t, HeadPosition offset)
+Disk::encodeGcr(u8 value, Track t, HeadPos offset)
 {
     assert(isTrackNumber(t));
     
@@ -176,21 +176,11 @@ Disk::encodeGcr(u8 value, Track t, HeadPosition offset)
 }
 
 void
-Disk::encodeGcr(u8 *values, size_t length, Track t, HeadPosition offset)
+Disk::encodeGcr(u8 *values, size_t length, Track t, HeadPos offset)
 {
     for (size_t i = 0; i < length; i++, values++, offset += 10) {
         encodeGcr(*values, t, offset);
     }
-}
-
-void
-Disk::encodeGcr(u8 b1, u8 b2, u8 b3, u8 b4, Track t, unsigned offset)
-{
-    assert(isTrackNumber(t));
-    
-    u8 buffer[] = { b1, b2, b3, b4 };
-    
-    encodeGcr(buffer, 4, t, offset);
 }
 
 u8
@@ -215,10 +205,23 @@ Disk::decodeGcr(u8 *gcr)
     return (nibble1 << 4) | nibble2;
 }
 
+bool
+Disk::isValidHeadPos(Halftrack ht, HeadPos pos)
+{
+    return isHalftrackNumber(ht) && pos < length.halftrack[ht];
+}
+
+HeadPos
+Disk::fitToBounds(Halftrack ht, HeadPos pos)
+{
+    u16 len = length.halftrack[ht];
+    return pos < 0 ? pos + len : pos >= len ? pos - len : pos;
+}
+
 u64
-Disk::_bitDelay(Halftrack ht, HeadPosition pos) {
+Disk::_bitDelay(Halftrack ht, HeadPos pos) {
     
-    assert(isValidHeadPositon(ht, pos));
+    assert(isValidHeadPos(ht, pos));
 
     // In the current implementation, we assume that the density bits were
     // set to their correct values when a bit was written to disk. According
@@ -731,12 +734,12 @@ Disk::encodeArchive(D64File *a, bool alignTracks)
          length.halftrack[ht] = trackLength[speedZoneOfHalftrack(ht)];
     
     // Encode tracks
-    HeadPosition start;
+    HeadPos start;
     for (Track t = 1; t <= numTracks; t++) {
         
         unsigned zone = speedZoneOfTrack(t);
         if (alignTracks) {
-            start = (HeadPosition)(length.track[t][0] * trackDefaults[t].stagger);
+            start = (HeadPos)(length.track[t][0] * trackDefaults[t].stagger);
         } else {
             start = 0;
         }
@@ -752,7 +755,7 @@ Disk::encodeArchive(D64File *a, bool alignTracks)
 }
 
 size_t
-Disk::encodeTrack(D64File *a, Track t, u8 tailGap, HeadPosition start)
+Disk::encodeTrack(D64File *a, Track t, u8 tailGap, HeadPos start)
 {
     assert(isTrackNumber(t));
     debug(GCR_DEBUG, "Encoding track %d\n", t);
@@ -763,7 +766,7 @@ Disk::encodeTrack(D64File *a, Track t, u8 tailGap, HeadPosition start)
     for (Sector s = 0; s < trackDefaults[t].sectors; s++) {
         
         size_t encodedBits = encodeSector(a, t, s, start, tailGap);
-        start += (HeadPosition)encodedBits;
+        start += (HeadPos)encodedBits;
         totalEncodedBits += encodedBits;
     }
     
@@ -771,12 +774,12 @@ Disk::encodeTrack(D64File *a, Track t, u8 tailGap, HeadPosition start)
 }
 
 size_t
-Disk::encodeSector(D64File *a, Track t, Sector s, HeadPosition start, int tailGap)
+Disk::encodeSector(D64File *a, Track t, Sector s, HeadPos start, int tailGap)
 {
     assert(a != NULL);
     assert(isValidTrackSectorPair(t, s));
     
-    HeadPosition offset = start;
+    HeadPos offset = start;
     u8 errorCode = a->errorCode(t, s);
     
     a->selectTrackAndSector(t, s);

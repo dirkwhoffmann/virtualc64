@@ -124,7 +124,7 @@ static inline bool isHalftrackNumber(unsigned nr) { return 1 <= nr && nr <= high
 typedef unsigned Sector;
 static inline bool isSectorNumber(unsigned nr) { return nr <= highestSector; }
 
-typedef i32 HeadPosition;
+typedef i32 HeadPos;
 
 
 //
