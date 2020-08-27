@@ -14,16 +14,15 @@
 
 class CIA;
 
-//! @brief    Increments a BCD number by one.
-inline u8 incBCD(u8 bcd) {
-    return ((bcd & 0x0F) == 0x09) ? (bcd & 0xF0) + 0x10 : (bcd & 0xF0) + ((bcd + 0x01) & 0x0F);
+inline u8 incBCD(u8 x)
+{
+    return ((x & 0xF) == 9) ? (x & 0xF0) + 0x10 : (x & 0xF0) + ((x + 1) & 0xF);
 }
 
-/*! @brief    Time of day clock (TOD)
- *  @details  Each CIA chip contains a time of day clock, counting hours,
- *            minutes, seconds and tenth of a second. Every TOD clock features
- *            an alarm mechanism. When the alarm time is reached, an interrupt
- *            is initiated.
+/* Time of day clock (TOD). Each CIA contains a time of day clock, counting
+ * hours, minutes, seconds and tenths of a second. Furthermore, every TOD clock
+ * features an alarm mechanism. When the alarm time is reached, an interrupt
+ * is triggered.
  */
 class TOD : public C64Component {
     
@@ -46,39 +45,35 @@ private:
     // Alarm time
 	TimeOfDay alarm;
 	
-	/*! @brief    Indicates if the TOD registers are frozen
-	 *  @details  The CIA chip freezes the registers when the hours-part is read
-     *            and reactivates them, when the 1/10th part is read. Although
-     *            the values stay constant, the internal clock continues to run.
-     *            Purpose: If you start reading with the hours-part, the clock
-     *            won't change until you have read the whole time.
+	/* Indicates if the TOD registers are frozen. The CIA freezes the registers
+     * when the hours-part is read and reactivates them, when the 1/10th part
+     * is read. Although the values stay constant, the internal clock continues
+     * to advance. Hence, if the hours-part is read first, the clock won't
+     * change until all fragments have been read.
      */
 	bool frozen;
 	
-	/*! @brief    Indicates if the TOD clock is halted.
-	 *  @details  The CIA chip stops the TOD clock when the hours-part is
-     *            written and restarts it, when the 1/10th part is written.
-     *            Purpose: The clock will only start running when the time is
-     *            completely set.
+	/* Indicates if the TOD clock is halted. The CIA chip stops the TOD clock
+     * when the hours-part is written and restarts it, when the 1/10th part is
+     * written. This ensures that the clock doesn't start until the time is
+     * set completely.
      */
 	bool stopped;
 	
-    /*! @brief    Indicates if tod time matches the alarm time
-     *  @details  This value is read in checkForInterrupt() for edge detection.
+    /* Indicates if tod time matches the alarm time. This value is read in
+     * checkForInterrupt() for edge detection.
      */
     bool matching;
     
-    /*! @brief    Indicates if TOD is driven by a 50 Hz or 60 Hz signal
-     *  @details  Valid values are 5 (50 Hz mode) and 6 (60 Hz mode)
+    /* Indicates if TOD is driven by a 50 Hz or 60 Hz signal. Valid values are
+     * 5 (50 Hz mode) or 6 (60 Hz mode).
      */
     u8 hz;
     
-    /*! @brief    Frequency counter
-     *  @details  This counter is driven by the A/C power frequency and
-     *            determines when TOD should increment. This variable is
-     *            incremented in function increment() which is called in
-     *            endFrame(). Hence, frequencyCounter is a 50 Hz signal in PAL
-     *            mode and a 60 Hz signal in NTSC mode.
+    /* Frequency counter. This counter is driven by the A/C power frequency and
+     * determines when TOD should increment. This variable is incremented in
+     * function increment() which is called in endFrame(). Hence, the variable
+     * is a 50 Hz signal in PAL mode and a 60 Hz signal in NTSC mode.
      */
     u64 frequencyCounter;
     
@@ -211,7 +206,7 @@ private:
 
     
     //
-    // Running the component
+    // Emulating
     //
     
 private:
