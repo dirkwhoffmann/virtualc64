@@ -1,14 +1,36 @@
+// -----------------------------------------------------------------------------
+// This file is part of VirtualC64
 //
-//  Disk_types.h
-//  V64
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// Licensed under the GNU General Public License v2
 //
-//  Created by Dirk Hoffmann on 04.06.18.
-//
+// See https://www.gnu.org for license information
+// -----------------------------------------------------------------------------
 
 #ifndef DISK_TYPES_H
 #define DISK_TYPES_H
 
-#include <ctype.h>
+/* Overview:
+ *
+ * The VC1541 can move the drive head to 85 distinct positions (1 .. 85). Odd
+ * numbers correspond to "full tracks" and even numbers to "half tracks". The
+ * full tracks between 1 and 70 correspond to the 35 tracks that are used by
+ * VC1541 DOS. The Rom code always moves the drive head by two positions. When
+ * programmed manually, the head can also be moved to even positions or
+ * positions beyond 70 which correspoonds to the innermost full track used by
+ * DOS.
+ *
+ * VirtualC64 provides two data types for specifying head positions: Track
+ * and Halftrack. They are related as follows:
+ *
+ *            -----------------------------------------------------------------
+ * Layout:    |  1  | 1.5 |  2  | 2.5 | ... |  35  | 35.5 | ... |  42  | 42.5 |
+ *            -----------------------------------------------------------------
+ *            -----------------------------------------------------------------
+ * Halftrack: |  1  |  2  |  3  |  4  |     |  69  |  70  |     |  83  |  84  |
+ * Track:     |  1  |     |  2  |     |     |  35  |      |     |  42  |      |
+ *            -----------------------------------------------------------------
+ */
 
 typedef enum : long
 {
@@ -22,131 +44,83 @@ inline bool isFileSystemType(long value)
     return value >= FS_NONE && value <= FS_COMMODORE;
 }
 
-/* Overview:
- *
- *                       -----------------------------------------------------------------
- * Track layout:         |  1  | 1.5 |  2  | 2.5 | ... |  35  | 35.5 | ... |  42  | 42.5 |
- *                       -----------------------------------------------------------------
- * Halftrack addressing: |  1  |  2  |  3  |  4  |     |  69  |  70  |     |  83  |  84  |
- * Track addressing:     |  1  |     |  2  |     |     |  35  |      |     |  42  |      |
- *                       -----------------------------------------------------------------
- */
 
 
 //
 // Constants
 //
 
-/*! @brief    Maximum number of tracks on a single disk.
- *  @note     Tracks are indexed from 1 to 42. There is no track 0!
- */
-static const unsigned maxNumberOfTracks = 42;
+// Highest track and halftrack number (numbering starts with 1)
+static const unsigned highestTrack = 42;
+static const unsigned highestHalftrack = 84;
 
-/*! @brief    Maximum number of halftracks on a single disk.
- *  @note     Tracks are indexed from 1 to 84. There is no halftrack 0!
- */
-static const unsigned maxNumberOfHalftracks = 84;
+// Highest sector number (numbering starts with 0)
+static const unsigned highestSector = 20;
 
-/*! @brief    Maximum number of sectors in a single track
- *  @details  Sectors are numbered from 0 to 20.
- */
-static const unsigned maxNumberOfSectors = 21;
-
-/*! @brief    Maximum number of bits stored on a single track.
- *  @details  Each track can store a maximum of 7928 bytes. The exact number depends on
- *            the track number (inner tracks contain fewer bytes) and the actual write
- *            speed of a drive.
+/* Maximum number of bits and bytes stored on a single track. Each track can
+ * store a maximum of 7928 bytes (63424 bits). The exact number depends on the
+ * track number (inner tracks contain fewer bytes) and the actual write speed
+ * of a drive.
  */
 static const unsigned maxBytesOnTrack = 7928;
-
-/*! @brief    Maximum number of bits stored on a single track.
- */
 static const unsigned maxBitsOnTrack = maxBytesOnTrack * 8;
 
-/*! @brief    Returns the average duration of a single bit in 1/10 nano seconds.
- *  @details  The returned value is the time span the drive head resists
- *            over a single bit.
- *  @note     The exact value depends on the speed zone and the drive's
- *            rotation speed. We assume a rotation speed of 300 rpm.
+/* Returns the average duration of a single bit in 1/10 nano seconds. The
+ * returned value is the time span the drive head resists over a single bit.
+ * The exact value depends on the speed zone and the disk rotation speed. We
+ * assume a rotation speed of 300 rpm.
  */
- static const u64 averageBitTimeSpan[] = {
-     4 * 10000, // 4 * 16/16 * 10^4 1/10 nsec
-     4 * 9375,  // 4 * 15/16 * 10^4 1/10 nsec
-     4 * 8750,  // 4 * 14/16 * 10^4 1/10 nsec
-     4 * 8125   // 4 * 13/16 * 10^4 1/10 nsec
+ static const u64 averageBitTimeSpan[] =
+{
+     4 * 10000,        // 4 * 16/16 * 10^4 1/10 nsec
+     4 * 9375,         // 4 * 15/16 * 10^4 1/10 nsec
+     4 * 8750,         // 4 * 14/16 * 10^4 1/10 nsec
+     4 * 8125          // 4 * 13/16 * 10^4 1/10 nsec
  };
 
-/*! @brief    Average number of bits stored on a single track.
- *  @note     The values are based on a drive with 300 rotations per minute
- *            which means that a full rotation lasts 2.000.000.000 1/10 nsec.
+/* Average number of bits stored on a single track. The values are based on a
+ * drive with 300 rotations per minute which means that a full rotation lasts
+ * 2.000.000.000 1/10 nsec.
  */
-static const unsigned averageBitsOnTrack[4] = {
-    50000, // 200.000.000.000 / averageBitTimeSpan[0]
-    53333, // 200.000.000.000 / averageBitTimeSpan[1]
-    57142, // 200.000.000.000 / averageBitTimeSpan[2]
-    61528  // 200.000.000.000 / averageBitTimeSpan[3]
+static const unsigned averageBitsOnTrack[4] =
+{
+    50000,             // 200.000.000.000 / averageBitTimeSpan[0]
+    53333,             // 200.000.000.000 / averageBitTimeSpan[1]
+    57142,             // 200.000.000.000 / averageBitTimeSpan[2]
+    61528              // 200.000.000.000 / averageBitTimeSpan[3]
 };
 
-/*! @brief    Average number of bytes stored on a single track.
- *  @note     The values are based on a drive with 300 rotations per minute.
+/* Average number of bytes stored on a single track. The values are based on a
+ * drive with 300 rotations per minute.
  */
-static const unsigned averageBytesOnTrack[4] = {
-    6250, // averageBitsOnTrack[0] / 8
-    6666, // averageBitsOnTrack[1] / 8
-    7142, // averageBitsOnTrack[2] / 8
-    7692  // averageBitsOnTrack[3] / 8
+static const unsigned averageBytesOnTrack[4] =
+{
+    6250,              // averageBitsOnTrack[0] / 8
+    6666,              // averageBitsOnTrack[1] / 8
+    7142,              // averageBitsOnTrack[2] / 8
+    7692               // averageBitsOnTrack[3] / 8
 };
 
-/*! @brief    Size of a sector header block in bits.
+/* Size of a sector header or data block in bits. Each data block consists of
+ * 325 GCR bytes (coding 260 real bytes).
  */
 static const unsigned headerBlockSize = 10 * 8;
-
-/*! @brief    Size of a sector data block in bits.
- *  @details  Each data block consists of 325 GCR bytes (coding 260 real bytes)
- */
 static const unsigned dataBlockSize = 325 * 8;
-
-/*! @brief    Maximum number of files that can be stored on a single disk
- *  @details  VC1541 DOS stores the directors on track 18 which contains 19 sectors.
- *            Sector 0 is reserved for the BAM. Each of the remaining sectors can
- *            hold up to 8 directory entries, summing um to a total of 144 items.
- */
-// static const unsigned maxNumberOfFiles = 144;
 
 
 //
 // Types
 //
 
-/*! @brief    Data type for addressing full tracks on disk
- *  @see      Halftrack
- */
+// Data types for addressing full tracks, half tracks, and sectors
 typedef unsigned Track;
+static inline bool isTrackNumber(unsigned nr) { return 1 <= nr && nr <= highestTrack; }
 
-/*! @brief    Checks if a given number is a valid track number
- */
-static inline bool isTrackNumber(unsigned nr) { return 1 <= nr && nr <= maxNumberOfTracks; }
-
-/*! @brief    Data type for addressing half and full tracks on disk
- *  @details  The VC1541 drive head can move between position 1 and 85.
- *            The odd numbers between 1 and 70 mark the 35 tracks that
- *            are used by VC1541 DOS. This means that DOS moves the
- *            drive head always two positions up or down. If programmed
- *            manually, the head can also be position on half tracks
- *            and on tracks beyond 35.
- *  @see      Track
- */
 typedef unsigned Halftrack;
+static inline bool isHalftrackNumber(unsigned nr) { return 1 <= nr && nr <= highestHalftrack; }
 
-/*! @brief    Checks if a given number is a valid halftrack number
- */
-static inline bool isHalftrackNumber(unsigned nr) { return 1 <= nr && nr <= maxNumberOfHalftracks; }
-
-//! @brief    Data type for addressing sectors inside a track
 typedef unsigned Sector;
-
-//! @brief    Checks if a given number is a valid sector number
-static inline bool isSectorNumber(unsigned nr) { return nr < maxNumberOfSectors; }
+static inline bool isSectorNumber(unsigned nr) { return nr <= highestSector; }
 
 //! @brief    Returns the number of sectors stored in a track
 static inline unsigned numberOfSectorsInTrack(Track t) {
@@ -174,7 +148,7 @@ static inline bool isValidHalftrackSectorPair(Halftrack ht, Sector s) {
     return s < numberOfSectorsInHalftrack(ht);
 }
 
-//! @brief    Data type for specifying the head position inside a track
+// Data type for specifying the head position inside a track
 typedef i32 HeadPosition;
 
 //! @brief    Layout information of a single sector

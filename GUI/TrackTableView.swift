@@ -34,7 +34,7 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
     
     func cache() {
         
-        numItems = Int(showHalftracks ? maxNumberOfHalftracks : maxNumberOfTracks)
+        numItems = Int(showHalftracks ? highestHalftrack : highestTrack)
         if !drive.hasDisk() { numItems = 0}
     }
     

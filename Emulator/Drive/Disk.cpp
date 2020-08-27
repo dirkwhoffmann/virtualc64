@@ -102,7 +102,7 @@ Disk::_dump()
     msg("Floppy disk\n");
     msg("-----------\n\n");
     
-    for (Halftrack ht = 1; ht <= maxNumberOfHalftracks; ht++) {
+    for (Halftrack ht = 1; ht <= highestHalftrack; ht++) {
         u16 length = lengthOfHalftrack(ht);
         msg("Halftrack %2d: %d Bits (%d Bytes)\n", ht, length, length / 8);
     }
@@ -212,7 +212,7 @@ void
 Disk::clearDisk()
 {
     // memset(&data, 0x55, sizeof(data));
-    for (Halftrack ht = 1; ht <= maxNumberOfHalftracks; ht++) {
+    for (Halftrack ht = 1; ht <= highestHalftrack; ht++) {
         // length.halftrack[ht] = sizeof(data.halftrack[ht]) * 8;
         clearHalftrack(ht);
     }
@@ -693,7 +693,7 @@ Disk::encodeArchive(D64File *a, bool alignTracks)
     clearDisk();
 
     // Assign track length
-     for (Halftrack ht = 1; ht <= maxNumberOfHalftracks; ht++)
+     for (Halftrack ht = 1; ht <= highestHalftrack; ht++)
          length.halftrack[ht] = trackLength[speedZoneOfHalftrack(ht)];
     
     // Encode tracks
@@ -712,7 +712,7 @@ Disk::encodeArchive(D64File *a, bool alignTracks)
     }
 
     // Do some consistency checking
-    for (Halftrack ht = 1; ht <= maxNumberOfHalftracks; ht++) {
+    for (Halftrack ht = 1; ht <= highestHalftrack; ht++) {
         assert(length.halftrack[ht] <= sizeof(data.halftrack[ht]) * 8);
     }
 }

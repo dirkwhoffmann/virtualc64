@@ -9,6 +9,8 @@
 
 #include "Utils.h"
 
+#include <ctype.h>
+
 bool
 releaseBuild()
 {

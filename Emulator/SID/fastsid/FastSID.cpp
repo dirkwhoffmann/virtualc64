@@ -288,7 +288,6 @@ FastSID::peek(u16 addr)
     }
 }
 
-//! Special poke function for the I/O memory range.
 void
 FastSID::poke(u16 addr, u8 value)
 {
@@ -343,10 +342,6 @@ FastSID::poke(u16 addr, u8 value)
     latchedDataBus = value;
 }
 
-/*! @brief   Execute SID
- *  @details Runs reSID for the specified amount of CPU cycles and writes
- *           the generated sound samples into the internal ring buffer.
- */
 void
 FastSID::execute(u64 cycles)
 {

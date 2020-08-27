@@ -40,7 +40,7 @@ class SectorTableView: NSTableView, NSTableViewDelegate {
         
         if halftrack != 0 {
             var row = 0
-            for i in 0 ... Int(maxNumberOfSectors - 1) {
+            for i in 0 ... Int(highestSector) {
                 let info = drive.disk.sectorInfo(Sector(i))
                 if info.headerBegin != info.headerEnd {
                     sectorForRow[row] = i
