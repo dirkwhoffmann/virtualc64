@@ -13,7 +13,6 @@
 // Action Replay (hardware revision 3)
 //
 
-//! @brief    An older generation Action Replay cartridge
 u8
 ActionReplay3::peek(u16 addr)
 {
@@ -304,13 +303,6 @@ ActionReplay::ramIsEnabled(u16 addr)
 //
 // Atomic Power 
 //
-
-/*
-AtomicPower::AtomicPower(C64 &ref) : ActionReplay(c64, ref) {
-    
-    setDescription("AtomicPower");
-};
-*/
 
 bool
 AtomicPower::game()

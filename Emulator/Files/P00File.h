@@ -71,7 +71,7 @@ public:
     
     int numberOfItems() { return 1; }
     void selectItem(unsigned item);
-    const char *getTypeOfItemAsString() { return "PRG"; }
+    const char *getTypeOfItem() { return "PRG"; }
     const char *getNameOfItem();
     size_t getSizeOfItem() { return size - 0x1C; }
     void seekItem(long offset);

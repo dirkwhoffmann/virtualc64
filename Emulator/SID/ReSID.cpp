@@ -33,15 +33,16 @@ ReSID::~ReSID()
 void
 ReSID::_reset()
 {
+    assert(sid != NULL);
+
     RESET_SNAPSHOT_ITEMS
     
-    // Create new reSID object
-    // Note: We don't use reSID::reset() which only performs a soft reset
-    assert(sid != NULL);
+    // Resetting reSID is done by creating a new reSID object. We don't call
+    // reSID::reset() because it only performs a soft reset.
+
     delete sid;
     sid = new reSID::SID();
     
-    // Reconfigure reSID
     sid->set_chip_model((reSID::chip_model)model);
     sid->set_sampling_parameters((double)clockFrequency,
                                  (reSID::sampling_method)samplingMethod,

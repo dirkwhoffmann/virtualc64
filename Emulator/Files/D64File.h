@@ -100,7 +100,7 @@ public:
     
     int numberOfItems();
     void selectItem(unsigned n);
-    const char *getTypeOfItemAsString();
+    const char *getTypeOfItem();
     const char *getNameOfItem();
     size_t getSizeOfItem();
     size_t getSizeOfItemInBlocks();

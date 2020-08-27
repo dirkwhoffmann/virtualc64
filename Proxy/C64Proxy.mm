@@ -1505,7 +1505,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 }
 - (NSString *)typeOfItem
 {
-    const char *chars = [self unwrap]->getTypeOfItemAsString();
+    const char *chars = [self unwrap]->getTypeOfItem();
     return [NSString stringWithUTF8String:chars];
 }
 - (NSInteger)destinationAddrOfItem

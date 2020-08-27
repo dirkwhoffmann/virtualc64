@@ -69,7 +69,7 @@ public:
     
     int numberOfItems() { return 1; }
     void selectItem(unsigned item);
-    const char *getTypeOfItemAsString() { return "PRG"; }
+    const char *getTypeOfItem() { return "PRG"; }
     const char *getNameOfItem() { return "FILE"; }
     size_t getSizeOfItem() { return size - 2; }
     void seekItem(long offset);

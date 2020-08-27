@@ -288,7 +288,7 @@ D64File::selectItem(unsigned item)
 }
 
 const char *
-D64File::getTypeOfItemAsString()
+D64File::getTypeOfItem()
 {
     assert(selectedItem != -1);
     

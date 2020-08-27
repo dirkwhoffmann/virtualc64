@@ -253,7 +253,7 @@ T64File::selectItem(unsigned item)
 }
 
 const char *
-T64File::getTypeOfItemAsString()
+T64File::getTypeOfItem()
 {
     assert(selectedItem != -1);
     

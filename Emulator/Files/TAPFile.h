@@ -12,67 +12,60 @@
 
 #include "AnyFile.h"
 
-/*! @class  TAPFile
- *  @brief  Represents a file of the TAP format type (band tapes).
- */
 class TAPFile : public AnyFile {
     
 private:
     
-    //! @brief    Header signature
+    // Header signature
     static const u8 magicBytes[];
     
-    /*! @brief    File pointer
-     *  @details  An offset into the data array. 
-     */
+    // File pointer (offset into the data array)
     int fp;
     
 public:
     
     //
-    //! @functiongroup Class methods
+    // Class methods
     //
     
-    //! @brief    Returns true iff buffer contains a TAP file
     static bool isTAPBuffer(const u8 *buffer, size_t length);
-    
-    //! @brief    Returns true iff the specified file is a TAP file
     static bool isTAPFile(const char *filename);
     
     
     //
-    //! @functiongroup Creating and destructing
+    // Initializing
     //
     
-    //! @brief    Constructor
     TAPFile();
     
-    //! @brief    Factory method
     static TAPFile *makeWithBuffer(const u8 *buffer, size_t length);
-    
-    //! @brief    Factory method
     static TAPFile *makeWithFile(const char *filename);
     
     
     //
-    //! @functiongroup Methods from AnyC64File
+    // Methods from AnyC64File
     //
     
-    void dealloc();
-    C64FileType type() { return TAP_FILE; }
-    const char *typeAsString() { return "TAP"; }
-    const char *getName();
-    bool hasSameType(const char *filename) { return isTAPFile(filename); }
-    bool readFromBuffer(const u8 *buffer, size_t length);
+    void dealloc() override;
+    C64FileType type() override { return TAP_FILE; }
+    const char *typeAsString() override { return "TAP"; }
+    const char *getName() override;
+    bool hasSameType(const char *filename) override { return isTAPFile(filename); }
+    bool readFromBuffer(const u8 *buffer, size_t length) override;
     
     
     //
-    //! @functiongroup Retrieving tape information
+    // Retrieving tape information
     //
     
+    // Returns the TAP version (0 = original layout, 1 = updated layout)
     u8 TAPversion() { return data[0x000C]; }
-    u8 *getData() { return &data[0x0014]; }
-    size_t getSize() { return size - 0x14; }
+    
+    // Returns the beginning of the data area
+    u8 *getData() { return data + 0x14; }
+    
+    // Returns the size of the data area in bytes
+    size_t getDataSize() { return size - 0x14; }
 };
 
 #endif

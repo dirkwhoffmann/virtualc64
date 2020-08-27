@@ -71,17 +71,6 @@ class CartridgeMountController: DialogController {
 
 extension CartridgeMountController: NSTableViewDelegate {
     
-    /*
-    func tableView(_ tableView: NSTableView,
-                   willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
-        
-        let c = cell as! NSTextFieldCell
-        
-        c.font = cbmfont
-        c.textColor = archive.getTypeOfItem() == "PRG" ? .textColor : .gray
-    }
- */
-    
 }
 
 extension CartridgeMountController: NSTableViewDataSource {
