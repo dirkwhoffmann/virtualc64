@@ -261,36 +261,28 @@ public:
     bool isValidHeadPos(Halftrack ht, HeadPos pos);
     
     // Fixes a wrapped over head position
-    HeadPos fitToBounds(Halftrack ht, HeadPos pos);
+    HeadPos wrap(Halftrack ht, HeadPos pos);
     
     /* Returns the duration of a single bit in 1/10 nano seconds. The returned
      * value is the time span the drive head resists over the specified bit.
      * The value is determined by the the density bits at the time the bit was
-     * written to disk. "_bitDelay" expects the head position to be inside
-     * the halftrack bounds.
+     * written to disk. Function "_bitDelay" expects the head position to be
+     * inside the halftrack bounds.
      */
     u64 _bitDelay(Halftrack ht, HeadPos pos);
-    u64 bitDelay(Halftrack ht, HeadPos pos) { return _bitDelay(ht, fitToBounds(ht, pos)); }
+    u64 bitDelay(Halftrack ht, HeadPos pos) { return _bitDelay(ht, wrap(ht, pos)); }
     
-    /*! @brief   Reads a single bit from disk.
-     *  @note    The head position is expected to be inside the halftrack bounds.
-     *  @result  0x00 or 0x01
+    /* Reads or writes a single bit. The functions come in two variants. The
+     * first variants expect the provided head position inside the valid
+     * halftrack bounds. The other variants wrap over the head position first.
      */
     u8 _readBitFromHalftrack(Halftrack ht, HeadPos pos) {
         assert(isValidHeadPos(ht, pos));
         return (data.halftrack[ht][pos / 8] & (0x80 >> (pos % 8))) != 0;
     }
-    
-    /*! @brief   Reads a single bit from disk.
-     *  @result	 0x00 or 0x01
-     */
     u8 readBitFromHalftrack(Halftrack ht, HeadPos pos) {
-        return _readBitFromHalftrack(ht, fitToBounds(ht, pos));
+        return _readBitFromHalftrack(ht, wrap(ht, pos));
     }
- 
-    /*! @brief  Writes a single bit to disk.
-     *  @note   The head position is expected to be inside the halftrack bounds.
-     */
     void _writeBitToHalftrack(Halftrack ht, HeadPos pos, bool bit) {
         assert(isValidHeadPos(ht, pos));
         if (bit) {
@@ -299,71 +291,56 @@ public:
             data.halftrack[ht][pos / 8] &= (0xFF7F >> (pos % 8));
         }
     }
-    
     void _writeBitToTrack(Track t, HeadPos pos, bool bit) {
         _writeBitToHalftrack(2 * t - 1, pos, bit);
     }
-    
-    //! @brief  Writes a single bit to disk.
     void writeBitToHalftrack(Halftrack ht, HeadPos pos, bool bit) {
-        _writeBitToHalftrack(ht, fitToBounds(ht, pos), bit);
+        _writeBitToHalftrack(ht, wrap(ht, pos), bit);
     }
-    
     void writeBitToTrack(Track t, HeadPos pos, bool bit) {
-        writeBitToHalftrack(2 * t - 1, pos, bit);
+        _writeBitToHalftrack(2 * t - 1, pos, bit);
     }
     
-    //! @brief  Writes a single bit to disk multiple times.
+    // Writes a bit multiple times
     void writeBitToHalftrack(Halftrack ht, HeadPos pos, bool bit, size_t count) {
         for (size_t i = 0; i < count; i++)
             writeBitToHalftrack(ht, pos++, bit);
     }
-    
     void writeBitToTrack(Track t, HeadPos pos, bool bit, size_t count) {
             writeBitToHalftrack(2 * t - 1, pos, bit, count);
     }
 
-    //! @brief  Writes a single byte to disk.
+    // Writes a single byte
     void writeByteToHalftrack(Halftrack ht, HeadPos pos, u8 byte) {
         for (u8 mask = 0x80; mask != 0; mask >>= 1)
             writeBitToHalftrack(ht, pos++, byte & mask);
     }
-
     void writeByteToTrack(Track t, HeadPos pos, u8 byte) {
         writeByteToHalftrack(2 * t - 1, pos, byte);
     }
     
-    //! @brief   Writes a certain number of interblock bytes to disk.
+    // Writes a certain number of interblock bytes to disk
     void writeGapToHalftrack(Halftrack ht, HeadPos pos, size_t length) {
         for (size_t i = 0; i < length; i++, pos += 8)
             writeByteToHalftrack(ht, pos, 0x55);
     }
-    
     void writeGapToTrack(Track t, HeadPos pos, size_t length) {
         writeGapToHalftrack(2 * t - 1, pos, length);
     }
 
-    //! @brief    Clears a single half-track.
+    // Clears a single halftrack
     void clearHalftrack(Halftrack ht); 
 
-    /*! @brief    Reverts to a factory-new disk.
-     *  @details  All disk data gets erased and the copy protection mark removed.
+    /* Reverts to a factory-new disk. All disk data gets erased and the copy
+     * protection mark removed.
      */
     void clearDisk();
     
-    /*! @brief    Returns true if a  if a track is cleared out.
-     *  @warning  Don't call this method frequently, because it scans the whole track.
+    /* Checks whether a track or halftrack is cleared. Avoid calling these
+     * methods frequently, because they scan the whole track.
      */
     bool trackIsEmpty(Track t);
-
-    /*! @brief    Checks if a halftrack is cleared out.
-     *  @warning  Don't call this method frequently, because it scans the whole track.
-     */
     bool halftrackIsEmpty(Halftrack ht);
-
-    /*! @brief    Returns the number of halftracks containing data
-     *  @warning  Don't call this method frequently, because it scans the whole disk.
-     */
     unsigned nonemptyHalftracks();
 
     
@@ -429,76 +406,56 @@ private:
     
     
     //
-    //! @functiongroup Decoding disk data
+    // Decoding disk data
     //
     
 public:
     
-    /*! @brief   Converts the disk into a byte stream.
-     *  @details The byte stream is compatible with the D64 file format.
-     *  @param   dest Target buffer. If parameter is NULL, a test run is
-     *           performed. Test runs are used to determine upfront how many
-     *           bytes will be written.
-     *  @return  Number of bytes written.
+    /* Converts the disk into a byte stream and returns the number of bytes
+     * written. The byte stream is compatible with the D64 file format. By
+     * passing a null pointer, a test run is performed. Test runs are used to
+     * determine how many bytes will be written.
      */
     size_t decodeDisk(u8 *dest);
  
 private:
     
-    /*! @brief   Work horse for decodeDisk(u8 *)
-     *  @param   numTracks must be either 35, 40, or 42.
-     */
     size_t decodeDisk(u8 *dest, unsigned numTracks);
-    
-    //! @brief   Decodes all sectors of a track
     size_t decodeTrack(Track t, u8 *dest);
-
-    //! @brief   Decodes a single sector
     size_t decodeSector(size_t offset, u8 *dest);
-
-     //! @brief   Decodes a single broken sector (results in all zeroes)
-     // size_t decodeBrokenSector(u8 *dest);
 
 
     //
-    //! @functiongroup Encoding disk data
+    // Encoding disk data
     //
     
 public:
     
-    /*! @brief   Converts a G64 archive into a virtual floppy disk. */
+    // Encodes a G64 file
     void encodeArchive(G64File *a);
-        
-    /*! @brief   Converts a D64 archive into a floppy disk.
-     *  @details The method creates sync marks, GRC encoded header and data
-     *           blocks, checksums and gaps.
-     *  @param   alignTracks If true, the first sector always starts at the
-     *           beginning of a track.
+    
+    /* Encodes a D64 file. The method creates sync marks, GRC encoded header
+     * and data blocks, checksums and gaps. If alignTracks is true, the first
+     * sector always starts at the beginning of a track.
      */
-    void encodeArchive(D64File *a, bool alignTracks);
-
-    //! @brief   Converts a D64 archive into a floppy disk.
-    void encodeArchive(D64File *a) { encodeArchive(a, false); }
-
+    void encodeArchive(D64File *a, bool alignTracks = false);
+ 
 private:
     
-    /*! @brief   Encode a single track
-     *  @details This function translates the logical byte sequence of a single track into
-     *           the native VC1541 byte representation. The native representation includes
-     *           sync marks, GCR data etc.
-     *  @param   tailGapEven
-     *           Number of tail bytes follwowing sectors with even sector numbers.
-     *  @param   tailGapOdd
-     *           Number of tail bytes follwowing sectors with odd sector numbers.
-     *  @return  Number of written bits.
+    /* Encode a single track. This function translates the logical byte
+     * sequence of a single track into the native VC1541 byte representation.
+     * The native representation includes sync marks, GCR data etc.
+     * 'tailGapEven' specifies the number of tail bytes follwowing sectors with
+     * even sector numbers. 'tailGapOdd' specifies the number of tail bytes
+     * follwowing sectors with odd sector numbers. The number of written bits
+     * is returned.
      */
     size_t encodeTrack(D64File *a, Track t, u8 tailGap, HeadPos start);
     
-    /*! @brief   Encode a single sector
-     *  @details This function translates the logical byte sequence of a single sector
-     *           into the native VC1541 byte representation. The sector is closed by
-     *           'gap' tail gap bytes.
-     *  @return  Number of written bits.
+    /* Encode a single sector. This function translates the logical byte
+     * sequence of a single sector into the native VC1541 byte representation.
+     * The sector is closed by 'gap' tail gap bytes. The number of written bits
+     * is returned.
      */
     size_t encodeSector(D64File *a, Track t, Sector sector, HeadPos start, int gap);
 };

@@ -212,7 +212,7 @@ Disk::isValidHeadPos(Halftrack ht, HeadPos pos)
 }
 
 HeadPos
-Disk::fitToBounds(Halftrack ht, HeadPos pos)
+Disk::wrap(Halftrack ht, HeadPos pos)
 {
     u16 len = length.halftrack[ht];
     return pos < 0 ? pos + len : pos >= len ? pos - len : pos;
