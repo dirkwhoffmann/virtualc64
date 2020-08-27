@@ -66,6 +66,40 @@ const Disk::TrackDefaults Disk::trackDefaults[43] = {
     { 17, 0, 6250, 6250 * 8, 785, 0.830 }  // Track 42
 };
 
+unsigned
+Disk::numberOfSectorsInTrack(Track t)
+{
+    return (t < 1) ? 0 : (t < 18) ? 21 : (t < 25) ? 19 : (t < 31) ? 18 : (t < 43) ? 17 : 0;
+}
+unsigned
+Disk::numberOfSectorsInHalftrack(Halftrack ht)
+{
+    return numberOfSectorsInTrack((ht + 1) / 2);
+}
+
+unsigned
+Disk::speedZoneOfTrack(Track t)
+{
+    return (t < 18) ? 3 : (t < 25) ? 2 : (t < 31) ? 1 : 0;
+}
+
+unsigned
+Disk::speedZoneOfHalftrack(Halftrack ht)
+{
+    return (ht < 35) ? 3 : (ht < 49) ? 2 : (ht < 61) ? 1 : 0;
+}
+
+bool
+Disk::isValidTrackSectorPair(Track t, Sector s)
+{
+    return s < numberOfSectorsInTrack(t);
+}
+
+bool
+Disk::isValidHalftrackSectorPair(Halftrack ht, Sector s)
+{
+    return s < numberOfSectorsInHalftrack(ht);
+}
 
 Disk::Disk(C64 &ref) : C64Component(ref)
 {

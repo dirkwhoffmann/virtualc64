@@ -32,6 +32,10 @@
  *            -----------------------------------------------------------------
  */
 
+//
+// Enumerations
+//
+
 typedef enum : long
 {
     FS_NONE,
@@ -43,7 +47,6 @@ inline bool isFileSystemType(long value)
 {
     return value >= FS_NONE && value <= FS_COMMODORE;
 }
-
 
 
 //
@@ -112,7 +115,6 @@ static const unsigned dataBlockSize = 325 * 8;
 // Types
 //
 
-// Data types for addressing full tracks, half tracks, and sectors
 typedef unsigned Track;
 static inline bool isTrackNumber(unsigned nr) { return 1 <= nr && nr <= highestTrack; }
 
@@ -122,62 +124,40 @@ static inline bool isHalftrackNumber(unsigned nr) { return 1 <= nr && nr <= high
 typedef unsigned Sector;
 static inline bool isSectorNumber(unsigned nr) { return nr <= highestSector; }
 
-//! @brief    Returns the number of sectors stored in a track
-static inline unsigned numberOfSectorsInTrack(Track t) {
-    return (t < 1) ? 0 : (t < 18) ? 21 : (t < 25) ? 19 : (t < 31) ? 18 : (t < 43) ? 17 : 0; }
-
-//! @brief    Returns the number of sectors stored in a halftrack
-static inline unsigned numberOfSectorsInHalftrack(Halftrack ht) {
-    return numberOfSectorsInTrack((ht + 1) / 2); }
-
-//! @brief    Returns the default speed zone of a track
-static inline unsigned speedZoneOfTrack(Track t) {
-    return (t < 18) ? 3 : (t < 25) ? 2 : (t < 31) ? 1 : 0; }
-
-//! @brief    Returns the default speed zone of a halftrack
-static inline unsigned speedZoneOfHalftrack(Halftrack ht) {
-    return (ht < 35) ? 3 : (ht < 49) ? 2 : (ht < 61) ? 1 : 0; }
-
-//! @brief    Checks if the given pair is a valid track / sector combination
-static inline bool isValidTrackSectorPair(Track t, Sector s) {
-    return s < numberOfSectorsInTrack(t);
-}
-
-//! @brief    Checks if the given pair is a valid halftrack / sector combination
-static inline bool isValidHalftrackSectorPair(Halftrack ht, Sector s) {
-    return s < numberOfSectorsInHalftrack(ht);
-}
-
-// Data type for specifying the head position inside a track
 typedef i32 HeadPosition;
 
-//! @brief    Layout information of a single sector
-typedef struct {
+
+//
+// Structures
+//
+
+/* Information about a single sector as gathered by analyzeSector()
+ */
+typedef struct
+{
     size_t headerBegin;
     size_t headerEnd;
     size_t dataBegin;
     size_t dataEnd;
-} SectorInfo;
+}
+SectorInfo;
 
-//! @brief    Information about a single track as gathered by analyzeTrack()
-/*! @note     To provide a fast access, the the track data is stored as a byte stream.
- *            Each byte represents a single bit and is either 0 or 1. The stored sequence
- *            is repeated twice to ease the handling of wrap arounds.
+/* Information about a single track as gathered by analyzeTrack(). To provide a
+ * fast access, the the track data is stored as a byte stream. Each byte
+ * represents a single bit and is either 0 or 1. The stored sequence is
+ * repeated twice to ease the handling of wrap arounds.
  */
-typedef struct {
+typedef struct
+{
+    size_t length;                       // Length of the track in bits
     
-    // Length of the track in bits
-    size_t length;
-    
-    // Track data
     union {
-        u8 bit[2 * maxBitsOnTrack];
-        u64 byte[2 * maxBytesOnTrack];
+        u8 bit[2 * maxBitsOnTrack];      // Track data (bit access)
+        u64 byte[2 * maxBytesOnTrack];   // Track data (byte access)
     };
-
-    // Sector layout data
-    SectorInfo sectorInfo[22];
     
-} TrackInfo;
+    SectorInfo sectorInfo[22];           // Sector layout data
+}
+TrackInfo;
 
 #endif

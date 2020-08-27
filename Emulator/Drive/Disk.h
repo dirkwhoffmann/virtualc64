@@ -140,6 +140,25 @@ private:
     
     
     //
+    // Class functions
+    //
+    
+public:
+    
+    // Returns the number of sectors stored in a certain track or halftrack
+    static unsigned numberOfSectorsInTrack(Track t);
+    static unsigned numberOfSectorsInHalftrack(Halftrack ht);
+
+    // Returns the default speed zone of a track or halftrack
+    static unsigned speedZoneOfTrack(Track t);
+    static unsigned speedZoneOfHalftrack(Halftrack ht);
+
+    // Checks if the given pair is a valid (half)track / sector combination
+    static bool isValidTrackSectorPair(Track t, Sector s);
+    static bool isValidHalftrackSectorPair(Halftrack ht, Sector s);
+    
+    
+    //
     // Initializing
     //
     

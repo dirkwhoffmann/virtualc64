@@ -539,7 +539,7 @@ size_t
 D64File::getSizeOfHalftrack()
 {
     if (selectedHalftrack % 2) {
-        return numberOfSectorsInHalftrack(selectedHalftrack) * 256;
+        return Disk::numberOfSectorsInHalftrack(selectedHalftrack) * 256;
     } else {
         return 0; // Real halftrack (not stored inside D64 files)
     }
@@ -563,7 +563,7 @@ D64File::seekHalftrack(long offset)
 void
 D64File::selectTrackAndSector(Track t, Sector s)
 {
-    assert(isValidTrackSectorPair(t, s));
+    assert(Disk::isValidTrackSectorPair(t, s));
     
     selectHalftrack(2 * t - 1);
     assert(tFp != -1);
@@ -580,7 +580,7 @@ D64File::selectTrackAndSector(Track t, Sector s)
 u8
 D64File::errorCode(Track t, Sector s)
 {
-   assert(isValidTrackSectorPair(t, s));
+   assert(Disk::isValidTrackSectorPair(t, s));
     
     Sector index = Disk::trackDefaults[t].firstSectorNr + s;
     assert(index < 802);
@@ -601,7 +601,7 @@ D64File::offset(Track track, Sector sector)
         632, 649, 666, 683, 700, 717, 734, 751,
         768, 785 };
     
-    if (isValidTrackSectorPair(track, sector)) {
+    if (Disk::isValidTrackSectorPair(track, sector)) {
         return (secCnt[track] + sector) * 256;
     } else {
         return -1;
@@ -615,7 +615,7 @@ D64File::nextTrackAndSector(Track track, Sector sector,
 {
     assert(nextTrack != NULL);
     assert(nextSector != NULL);
-    assert(isValidTrackSectorPair(track, sector));
+    assert(Disk::isValidTrackSectorPair(track, sector));
     
     // Interleave pattern for all four speed zones and the directory track
     Sector zone3[] = { 10,11,12,13,14,15,16,17,18,19,20,0,1,2,3,4,5,6,7,8,9 };
@@ -644,7 +644,7 @@ D64File::nextTrackAndSector(Track track, Sector sector,
         }
     }
     
-    assert(isValidTrackSectorPair(track, sector));
+    assert(Disk::isValidTrackSectorPair(track, sector));
     *nextTrack = track;
     *nextSector = sector;
     return true;
@@ -675,7 +675,7 @@ D64File::writeByteToSector(u8 byte, Track *t, Sector *s)
     Track track = *t;
     Sector sector = *s;
  
-    assert(isValidTrackSectorPair(track, sector));
+    assert(Disk::isValidTrackSectorPair(track, sector));
 
     int pos = offset(track, sector);
     u8 positionOfLastDataByte = data[pos + 1];
@@ -770,7 +770,7 @@ D64File::writeBAM(const char *name)
             data[pos++] = 0x00;
             data[pos++] = 0x00;
         } else {
-            int sectors = numberOfSectorsInTrack(k);
+            int sectors = Disk::numberOfSectorsInTrack(k);
             data[pos++] = sectors; // Number of free sectors on this track
             data[pos++] = 0xFF;    // Occupation bitmap: 1 = sector is free
             data[pos++] = 0xFF;
