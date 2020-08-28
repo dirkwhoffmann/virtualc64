@@ -12,67 +12,61 @@
 
 #include "AnyArchive.h"
 
-/*! @class   PRGFile
- *  @brief   The PRGFile class declares the programmatic interface for a file
- *           in PRG format.
- */
 class PRGFile : public AnyArchive {
 
 public:
 
     //
-    //! @functiongroup Class methods
+    // Class methods
     //
     
-    //! @brief    Returns true if buffer contains a PRG file
-    /*! @details  PRG files can only be determined by their suffix, so this
-     *            function will return true unless you provide a buffer with
-     *            less than two bytes.
+    /* Returns true if buffer contains a PRG file. Since PRG files can only be
+     * determined by their suffix, this function returns true unless you
+     * provide a buffer with less than two bytes.
      */
     static bool isPRGBuffer(const u8 *buffer, size_t length);
     
-    //! @brief    Returns true iff the specified file is a PRG file.
+    // Returns true iff the specified file is a PRG file
     static bool isPRGFile(const char *filename);
     
     
     //
-    //! @functiongroup Creating and destructing
+    // Constructing
     //
     
-    //! @brief    Standard constructor
+    static PRGFile *makeWithBuffer(const u8 *buffer, size_t length);
+    static PRGFile *makeWithFile(const char *path);
+    static PRGFile *makeWithAnyArchive(AnyArchive *otherArchive);
+
+    
+    //
+    // Initializing
+    //
+    
     PRGFile();
     
-    //! @brief    Factory method
-    static PRGFile *makeWithBuffer(const u8 *buffer, size_t length);
-    
-    //! @brief    Factory method
-    static PRGFile *makeWithFile(const char *path);
-    
-    /*! @brief    Factory method
-     *  @details  otherArchive can be of any archive type
-     */
-    static PRGFile *makeWithAnyArchive(AnyArchive *otherArchive);
     
     
     //
-    //! @functiongroup Methods from AnyFile
+    // Methods from AnyFile
     //
 
-    C64FileType type() { return PRG_FILE; }
-    const char *typeAsString() { return "PRG"; }
-    bool hasSameType(const char *filename) { return isPRGFile(filename); }
+    C64FileType type() override { return PRG_FILE; }
+    const char *typeAsString() override { return "PRG"; }
+    bool hasSameType(const char *filename) override { return isPRGFile(filename); }
     
     
     //
-    //! @functiongroup Methods from AnyArchive
+    // Methods from AnyArchive
     //
     
-    int numberOfItems() { return 1; }
-    void selectItem(unsigned item);
-    const char *getTypeOfItem() { return "PRG"; }
-    const char *getNameOfItem() { return "FILE"; }
-    size_t getSizeOfItem() { return size - 2; }
-    void seekItem(long offset);
-    u16 getDestinationAddrOfItem();
+    int numberOfItems() override { return 1; }
+    void selectItem(unsigned item) override;
+    const char *getTypeOfItem() override { return "PRG"; }
+    const char *getNameOfItem() override { return "FILE"; }
+    size_t getSizeOfItem() override { return size - 2; }
+    void seekItem(long offset) override;
+    u16 getDestinationAddrOfItem() override;
 };
+
 #endif

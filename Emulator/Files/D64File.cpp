@@ -942,7 +942,7 @@ D64File::writeDirectoryEntry(unsigned nr, const char *name,
 //
 
 void
-D64File::dumpSector(Track track, Sector sector)
+D64File::dump(Track track, Sector sector)
 {
     int pos = offset(track, sector);
     

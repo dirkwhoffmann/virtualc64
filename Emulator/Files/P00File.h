@@ -12,69 +12,61 @@
 
 #include "AnyArchive.h"
 
-/*! @class   P00File
- *  @brief   The P00File class declares the programmatic interface for a file
- *           in P00 format.
- */
 class P00File : public AnyArchive {
 
-private:
-
-    //! @brief    Header signature
+    // Header signature
     static const u8 magicBytes[];
+    
+    
+    //
+    // Class methods
+    //
     
 public:
 
-    //
-    //! @functiongroup Class methods
-    //
-    
-    //! @brief    Returns true iff buffer contains a P00 file.
+    // Returns true iff buffer contains a P00 file
     static bool isP00Buffer(const u8 *buffer, size_t length);
     
-    //! @brief    Returns true iff the specified file is a P00 file.
+    // Returns true iff the specified file is a P00 file
     static bool isP00File(const char *filename);
     
     
     //
-    //! @functiongroup Creating and destructing
+    // Constructing
     //
     
-    //! @brief    Standard constructor
+    static P00File *makeWithBuffer(const u8 *buffer, size_t length);
+    static P00File *makeWithFile(const char *path);
+    static P00File *makeWithAnyArchive(AnyArchive *otherArchive);
+
+    
+    //
+    // Initializing
+    //
+    
     P00File();
     
-    //! @brief    Factory method
-    static P00File *makeWithBuffer(const u8 *buffer, size_t length);
+
+    //
+    // Methods from AnyFile
+    //
     
-    //! @brief    Factory method
-    static P00File *makeWithFile(const char *path);
-    
-    /*! @brief    Factory method
-     *  @details  otherArchive can be of any archive type
-     */
-    static P00File *makeWithAnyArchive(AnyArchive *otherArchive);
+    const char *getName() override;
+    C64FileType type() override { return P00_FILE; }
+    const char *typeAsString() override { return "P00"; }
+    bool hasSameType(const char *filename) override { return isP00File(filename); }
     
     
     //
-    //! @functiongroup Methods from AnyFile
+    // Methods from AnyArchive
     //
     
-    const char *getName();
-    C64FileType type() { return P00_FILE; }
-    const char *typeAsString() { return "P00"; }
-    bool hasSameType(const char *filename) { return isP00File(filename); }
-    
-    
-    //
-    //! @functiongroup Methods from AnyArchive
-    //
-    
-    int numberOfItems() { return 1; }
-    void selectItem(unsigned item);
-    const char *getTypeOfItem() { return "PRG"; }
-    const char *getNameOfItem();
-    size_t getSizeOfItem() { return size - 0x1C; }
-    void seekItem(long offset);
-    u16 getDestinationAddrOfItem();
+    int numberOfItems() override { return 1; }
+    void selectItem(unsigned item) override;
+    const char *getTypeOfItem() override { return "PRG"; }
+    const char *getNameOfItem() override;
+    size_t getSizeOfItem() override { return size - 0x1C; }
+    void seekItem(long offset) override;
+    u16 getDestinationAddrOfItem() override;
 };
 #endif

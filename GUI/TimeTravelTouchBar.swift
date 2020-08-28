@@ -13,21 +13,12 @@ extension NSTouchBarItem.Identifier {
     static let ttscrubber = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.ttscrubber")
 }
 
-/*! @brief   TimeTravel TouchBar
- *  @details TouchBar is associated with a popup button
- */
 @available(OSX 10.12.2, *)
 class TimeTravelTouchBar: NSTouchBar {
     
     var parentItem: NSPopoverTouchBarItem?
     var c: MyController?
-    
-    /*
-    func rebuild()
-    {
-    }
-    */
-    
+        
     func dismiss(_ sender: Any?) {
 
         guard let popover = parentItem else { return }
