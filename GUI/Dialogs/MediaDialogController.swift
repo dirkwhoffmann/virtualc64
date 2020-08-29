@@ -24,7 +24,6 @@ class MediaDialogController: DialogController {
     @IBOutlet weak var drive8: NSButton!
     @IBOutlet weak var drive9: NSButton!
     @IBOutlet weak var flash: NSPopUpButton!
-    @IBOutlet weak var flashText: NSTextField!
     @IBOutlet weak var carousel: iCarousel!
 
     var type: C64FileType!
@@ -163,7 +162,6 @@ class MediaDialogController: DialogController {
         
         let numberOfItems = setUpFlashItems()
         flash.isHidden = numberOfItems == 0
-        flashText.isHidden = true
         
         // Configure controls
         switch media {
@@ -211,8 +209,6 @@ class MediaDialogController: DialogController {
         let d64 = myDocument.attachment as! AnyArchiveProxy
         
         flash.removeAllItems()
-        // flash.addItem(withTitle: "Select an item to flash...")
-        // flash.item(at: 0)!.tag = -1
         flash.font = monofont
         
         let items = d64.numberOfItems()
@@ -228,14 +224,6 @@ class MediaDialogController: DialogController {
             
             track("\(name) \(size) \(type)")
             
-            /*
-            var title = "\"\(name)\""
-            title = title.padding(toLength: 19, withPad: " ", startingAt: 0)
-            title += "\(type)"
-            title = title.padding(toLength: 23, withPad: " ", startingAt: 0)
-            title += "\(size)"
-            title = title.padding(toLength: 27, withPad: " ", startingAt: 0)
-            */
             var title = "\(size)"
             title = title.padding(toLength: 5, withPad: " ", startingAt: 0)
             title += "\"\(name)\""
