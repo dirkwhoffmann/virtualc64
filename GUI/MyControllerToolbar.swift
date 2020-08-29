@@ -51,6 +51,8 @@ extension MyController {
     
     func setPort2(_ value: Int) {
         
+        track("setPort2: \(value)")
+        
         // Remember selection
         config.gameDevice2 = value
         

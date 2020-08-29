@@ -44,12 +44,12 @@ class GamePadManager {
         gamePads[0] = GamePad(manager: self, type: CPD_JOYSTICK)
         gamePads[0]!.name = "Joystick Keyset 1"
         gamePads[0]!.setIcon(name: "keyset1Template")
-        gamePads[0]!.keyMap = 1
+        gamePads[0]!.keyMap = 0
         
         gamePads[1] = GamePad(manager: self, type: CPD_JOYSTICK)
         gamePads[1]!.name = "Joystick Keyset 2"
         gamePads[1]!.setIcon(name: "keyset2Template")
-        gamePads[1]!.keyMap = 2
+        gamePads[1]!.keyMap = 1
         
         gamePads[2] = GamePad(manager: self, type: CPD_MOUSE)
         gamePads[2]!.name = "Mouse"

@@ -182,6 +182,7 @@ class PreferencesController: DialogController {
     
     @IBAction override func okAction(_ sender: Any!) {
         
+        track()
         pref.saveEmulatorUserDefaults()
         pref.saveDevicesUserDefaults()
         hideSheet()
@@ -192,6 +193,7 @@ extension PreferencesController: NSTabViewDelegate {
     
     func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
         
+        track()
         refresh()
     }
 }

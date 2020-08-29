@@ -11,13 +11,13 @@ import Carbon.HIToolbox
 
 class PreferencesWindow: NSWindow {
     
-    /*
     func respondToEvents() {
         DispatchQueue.main.async {
             self.makeFirstResponder(self)
         }
     }
     
+    /*
     override func awakeFromNib() {
         
         track()
@@ -26,6 +26,8 @@ class PreferencesWindow: NSWindow {
     */
     
     override func keyDown(with event: NSEvent) {
+        
+        track()
         
         if let parent = delegate as? PreferencesController {
             if parent.keyDown(with: MacKey.init(event: event)) {

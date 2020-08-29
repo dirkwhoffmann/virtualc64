@@ -410,7 +410,7 @@ struct KeyboardDefaults {
     
     static let symbolicMapping = KeyboardDefaults.init(
         
-        keyMap: [:],
+        keyMap: KeyboardController.standardKeyMap,
         mapKeysByPosition: false
     )
 
@@ -447,25 +447,6 @@ extension UserDefaults {
         for key in keys { defaults.removeObject(forKey: key) }
     }
 }
-
-/*
-extension MyController {
-        
-    func loadKeyMapUserDefaults() {
-        
-        let defaults = UserDefaults.standard
-        keyboard.mapKeysByPosition = defaults.bool(forKey: Keys.mapKeysByPosition)
-        defaults.decode(&keyboard.keyMap, forKey: Keys.keyMap)
-    }
-    
-    func saveKeyMapUserDefaults() {
-        
-        let defaults = UserDefaults.standard
-        defaults.encode(keyboard.keyMap, forKey: Keys.keyMap)
-        defaults.set(keyboard.mapKeysByPosition, forKey: Keys.mapKeysByPosition)
-    }
-}
-*/
 
 //
 // User defaults (Media)

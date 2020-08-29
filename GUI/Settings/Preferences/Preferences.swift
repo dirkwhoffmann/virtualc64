@@ -113,14 +113,14 @@ class Preferences {
     }
     
     // Mouse
-    var mouseModel = MOUSE1350 // : MouseModel
+    var mouseModel = MOUSE1350
     
     //
     // Keyboard
     //
     
     // Mapping
-    var mapKeysByPosition = false // : Bool
+    var mapKeysByPosition = false
     var keyMap: [MacKey: C64Key] = [:] 
     
     //

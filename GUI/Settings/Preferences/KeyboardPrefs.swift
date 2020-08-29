@@ -17,14 +17,7 @@ class KeyViewItem: NSCollectionViewItem {
 }
 
 extension PreferencesController {
-    
-    /*
-    func awakeKeymapPrefsFromNib() {
-     
-        updateImages()
-    }
-    */
-    
+        
     func refreshKeyboardTab() {
             
         keyMappingPopup.selectItem(withTag: pref.mapKeysByPosition ? 1 : 0)
@@ -108,7 +101,7 @@ extension PreferencesController {
 // NSCollectionView data source and delegate
 //
 
-extension ConfigurationController: NSCollectionViewDataSource {
+extension PreferencesController: NSCollectionViewDataSource {
     
     func numberOfSections(in collectionView: NSCollectionView) -> Int {
         
@@ -137,7 +130,7 @@ extension ConfigurationController: NSCollectionViewDataSource {
     }
 }
 
-extension ConfigurationController: NSCollectionViewDelegate {
+extension PreferencesController: NSCollectionViewDelegate {
     
     func collectionView(_ collectionView: NSCollectionView,
                         didSelectItemsAt indexPaths: Set<IndexPath>) {
@@ -147,8 +140,8 @@ extension ConfigurationController: NSCollectionViewDelegate {
             selectedKey = C64Key( (indexPath.section, indexPath.item) )
             refresh()
             
-            // Make sure that we can receive keyboard events
-            // (window as? PreferencesWindow)?.respondToEvents()
+            // Make sure we can receive keyboard events
+            (window as! PreferencesWindow).respondToEvents()
         }
     }
 }

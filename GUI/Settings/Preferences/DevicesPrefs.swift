@@ -183,8 +183,10 @@ extension PreferencesController {
         refresh()
     }
     
+    /*
     @IBAction func devDefaultsAction(_ sender: NSButton!) {
         
         track()
     }
+    */
 }
