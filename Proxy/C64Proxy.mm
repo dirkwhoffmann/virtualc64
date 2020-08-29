@@ -1440,7 +1440,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return (TAPFile *)wrapper->file;
 }
-- (NSInteger)TAPversion
+- (NSInteger)tapVersion
 {
     return [self unwrap]->TAPversion();
 }

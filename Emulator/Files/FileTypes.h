@@ -10,7 +10,7 @@
 #ifndef FILE_TYPES_H
 #define FILE_TYPES_H
 
-typedef enum
+typedef enum : long
 {    
     UNKNOWN_FILE_FORMAT = 0,
     CRT_FILE,                     // Expansion port cartridge

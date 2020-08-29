@@ -205,13 +205,6 @@ struct AnyC64FileWrapper;
 - (void) deleteCharRom;
 - (void) deleteVC1541Rom;
 
-/*
-- (u64) basicRomFingerprint;
-- (u64) kernalRomFingerprint;
-- (u64) charRomFingerprint;
-- (u64) vc1541RomFingerprint;
-*/
-
 - (RomIdentifier) basicRomIdentifier;
 - (RomIdentifier) kernalRomIdentifier;
 - (RomIdentifier) charRomIdentifier;
@@ -810,7 +803,7 @@ struct AnyC64FileWrapper;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)path;
 
-- (NSInteger)TAPversion;
+- (NSInteger)tapVersion;
 
 @end
 

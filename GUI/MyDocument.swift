@@ -219,6 +219,11 @@ class MyDocument: NSDocument {
     
     func runMountDialog() {
         
+        let name = NSNib.Name("MediaDialog")
+        let controller = MediaDialogController.make(parent: parent, nibName: name)
+        controller?.showSheet()
+
+        /*
         switch attachment {
             
         case _ as CRTFileProxy:
@@ -237,9 +242,11 @@ class MyDocument: NSDocument {
         default:
             break
         }
+        */
     }
     
     func runArchiveMountDialog() {
+        
         let name = NSNib.Name("ArchiveMountDialog")
         let controller = ArchiveMountController.make(parent: parent, nibName: name)
         controller?.showSheet()

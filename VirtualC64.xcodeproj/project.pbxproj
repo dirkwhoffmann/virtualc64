@@ -172,6 +172,9 @@
 		50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1644B202DD52500447D3E /* ExportDiskController.swift */; };
 		50B1644E202DDAA600447D3E /* ExportDiskDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */; };
 		50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */; };
+		50B485F924F96E9400844133 /* MediaDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B485F824F96E9400844133 /* MediaDialog.xib */; };
+		50B485FB24F9911600844133 /* MediaDialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B485FA24F9911600844133 /* MediaDialogController.swift */; };
+		50B485FD24FA1D3200844133 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B485FC24FA1D3200844133 /* iCarousel.m */; };
 		50B929F221C2B5C90039E8F2 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */; };
 		50BE4B5524E7F77F008F39C9 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5424E7F77F008F39C9 /* URL.swift */; };
 		50BE4B5824E7F80C008F39C9 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5724E7F80C008F39C9 /* FileManager.swift */; };
@@ -520,6 +523,10 @@
 		50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportDiskDialog.xib; sourceTree = "<group>"; };
 		50B171051EE6AB840019E8D4 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyControllerTouchBar.swift; sourceTree = "<group>"; };
+		50B485F824F96E9400844133 /* MediaDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaDialog.xib; sourceTree = "<group>"; };
+		50B485FA24F9911600844133 /* MediaDialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDialogController.swift; sourceTree = "<group>"; };
+		50B485FC24FA1D3200844133 /* iCarousel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
+		50B485FE24FA1D4100844133 /* iCarousel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
 		50B99CF024B0DA6B008BC9F8 /* MessageQueueTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageQueueTypes.h; sourceTree = "<group>"; };
 		50BE4B5424E7F77F008F39C9 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
@@ -654,22 +661,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5000473F12DCEC9B0098D890 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				506D3DCF20224BF4009742CF /* MyDocument.swift */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		5000474012DCECAB0098D890 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				506CE96621998C4500B70A3A /* Metal */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
 		5000474112DCECBA0098D890 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -707,10 +698,13 @@
 			isa = PBXGroup;
 			children = (
 				50763276202989D300575110 /* DialogController.swift */,
+				50B485FA24F9911600844133 /* MediaDialogController.swift */,
 				50C12A4321C6B6A6007EFAF6 /* MediaBrowsers */,
 				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
 				50B1644B202DD52500447D3E /* ExportDiskController.swift */,
 				50031B39206FB0FC00A1969B /* SnapshotController.swift */,
+				50B485FE24FA1D4100844133 /* iCarousel.h */,
+				50B485FC24FA1D3200844133 /* iCarousel.m */,
 			);
 			path = Dialogs;
 			sourceTree = "<group>";
@@ -732,9 +726,9 @@
 			children = (
 				50DBB44A2025CE5700489271 /* Utils.swift */,
 				506D3DCD20223E5E009742CF /* MyAppDelegate.swift */,
+				506D3DCF20224BF4009742CF /* MyDocument.swift */,
 				505184E124F23CBF002C6124 /* Foundation */,
-				5000473F12DCEC9B0098D890 /* Model */,
-				5000474012DCECAB0098D890 /* View */,
+				506CE96621998C4500B70A3A /* Metal */,
 				5000474112DCECBA0098D890 /* Controller */,
 				5000474312DCED190098D890 /* Misc */,
 				50BE4B5624E7F786008F39C9 /* Extensions */,
@@ -1246,6 +1240,7 @@
 				50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */,
 				50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */,
 				50031B33206FABA400A1969B /* SnapshotDialog.xib */,
+				50B485F824F96E9400844133 /* MediaDialog.xib */,
 			);
 			path = "XIB files";
 			sourceTree = "<group>";
@@ -1323,6 +1318,7 @@
 				5052AD0A202A526E005FDD88 /* CartridgeMountDialog.xib in Resources */,
 				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
 				50B1644E202DDAA600447D3E /* ExportDiskDialog.xib in Resources */,
+				50B485F924F96E9400844133 /* MediaDialog.xib in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */,
 				503E199020C42C6D007E91F1 /* Assets.xcassets in Resources */,
@@ -1510,6 +1506,7 @@
 				504C436424AF29AC00E69CAE /* Expert.cpp in Sources */,
 				5015F36620B546A30024B4AA /* WaveformView.swift in Sources */,
 				504C436724AF29AC00E69CAE /* MagicDesk.cpp in Sources */,
+				50B485FD24FA1D3200844133 /* iCarousel.m in Sources */,
 				50BE4B7024E7FC21008F39C9 /* MTLDevice.swift in Sources */,
 				504C439F24AF29AC00E69CAE /* FastSID.cpp in Sources */,
 				504C43A624AF29AC00E69CAE /* Disk.cpp in Sources */,
@@ -1540,6 +1537,7 @@
 				50995F2A24DBCDE400F40713 /* CPUDebugger.cpp in Sources */,
 				504C439724AF29AC00E69CAE /* voice.cc in Sources */,
 				504C436224AF29AC00E69CAE /* GeoRam.cpp in Sources */,
+				50B485FB24F9911600844133 /* MediaDialogController.swift in Sources */,
 				5002FA7D21C2651B00DA4BBC /* VideoConf.swift in Sources */,
 				504C43A324AF29AC00E69CAE /* ProcessorPort.cpp in Sources */,
 				50BE4B5E24E7F864008F39C9 /* DispatchTime.swift in Sources */,
