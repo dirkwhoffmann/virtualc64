@@ -13,6 +13,7 @@
                 <outlet property="drive8" destination="K0H-ck-D9u" id="I6r-Gz-1Jl"/>
                 <outlet property="drive9" destination="Bb8-0w-z8z" id="2gu-WZ-6lO"/>
                 <outlet property="flash" destination="TG0-nm-9Vp" id="JJu-ak-1lt"/>
+                <outlet property="flashText" destination="X5I-wf-CUb" id="5Mw-wT-Rnl"/>
                 <outlet property="icon" destination="nmp-Du-NLl" id="bwb-GP-XOx"/>
                 <outlet property="subsubtitle" destination="gQr-Ht-9gj" id="iXJ-ll-qY9"/>
                 <outlet property="subtitle" destination="KEC-fO-FB0" id="dey-b6-JOQ"/>
@@ -116,13 +117,13 @@ Gw
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="tape" id="bZY-0u-DX6"/>
                     </imageView>
-                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TG0-nm-9Vp">
-                        <rect key="frame" x="135" y="17" width="304" height="25"/>
+                    <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TG0-nm-9Vp">
+                        <rect key="frame" x="173" y="17" width="266" height="27"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Item" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="MQP-oE-eMs" id="7T8-qC-9Xy">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <popUpButtonCell key="cell" type="smallSquare" title="Item" bezelStyle="smallSquare" alignment="center" lineBreakMode="truncatingTail" inset="2" autoenablesItems="NO" altersStateOfSelectedItem="NO" selectedItem="MQP-oE-eMs" id="7T8-qC-9Xy">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
-                            <menu key="menu" id="yRq-My-yPO">
+                            <menu key="menu" autoenablesItems="NO" id="yRq-My-yPO">
                                 <items>
                                     <menuItem title="Item" id="MQP-oE-eMs"/>
                                 </items>
@@ -133,12 +134,21 @@ Gw
                         </connections>
                     </popUpButton>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gQr-Ht-9gj">
-                        <rect key="frame" x="135" y="365" width="479" height="14"/>
+                        <rect key="frame" x="135" y="364" width="479" height="14"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="consetetur sadipscing elitr, sed diam nonumy" id="EJE-EM-QGA">
                             <font key="font" metaFont="menu" size="11"/>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X5I-wf-CUb">
+                        <rect key="frame" x="132" y="23" width="37" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Flash" id="4I6-hE-3yQ">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                 </subviews>

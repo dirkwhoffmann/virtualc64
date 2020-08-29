@@ -320,6 +320,11 @@ D64File::getNameOfItem()
         name[i] = data[pos+i];
     }
     name[i] = 0x00;
+    
+    for (int i = 0; i < strlen(name); i++) {
+        name[i] = petscii2printable(name[i], ' ');
+    }
+    debug("Returning %s\n", name);
     return name;
 }
 

@@ -24,6 +24,7 @@ class MediaDialogController: DialogController {
     @IBOutlet weak var drive8: NSButton!
     @IBOutlet weak var drive9: NSButton!
     @IBOutlet weak var flash: NSPopUpButton!
+    @IBOutlet weak var flashText: NSTextField!
     @IBOutlet weak var carousel: iCarousel!
 
     var type: C64FileType!
@@ -38,7 +39,14 @@ class MediaDialogController: DialogController {
     // Custom font
     let cbmfont = NSFont.init(name: "C64ProMono", size: 10)
     let cbmfontsmall = NSFont.init(name: "C64ProMono", size: 8)
-
+    var monofont: NSFont {
+        if #available(OSX 10.15, *) {
+            return NSFont.monospacedSystemFont(ofSize: 13.0, weight: .semibold)
+        } else {
+            return NSFont.monospacedDigitSystemFont(ofSize: 13.0, weight: .semibold)
+        }
+    }
+    
     var titleString = "???"
     var subTitleString = "???"
     var subsubTitleString = ""
@@ -67,7 +75,7 @@ class MediaDialogController: DialogController {
             track("CRTFileProxy")
             titleString = "CRT File"
             subTitleString = "A cartridge for the C64 expansion port"
-            subsubTitleString = "Type \(type) cartridge: \(typeName)"
+            subsubTitleString = "CRT type \(type): \(typeName)"
             
         case _ as TAPFileProxy:
             
@@ -78,7 +86,7 @@ class MediaDialogController: DialogController {
             track("TAPFileProxy")
             titleString = "TAP File"
             subTitleString = "A representation of a C64 cassette"
-            subsubTitleString = "TAP \(version) format: \(versionName) layout"
+            subsubTitleString = "TAP type \(version): \(versionName) layout"
             
         case _ as T64FileProxy:
             
@@ -146,25 +154,39 @@ class MediaDialogController: DialogController {
         
         track("windowDidLoad")
         
+        let connected8 = parent.config.drive8Connected
+        let connected9 = parent.config.drive8Connected
+
         title.stringValue = titleString
         subtitle.stringValue = subTitleString
         subsubtitle.stringValue = subsubTitleString
         
-        flash.isHidden = !setUpFlashItems()
-
+        let numberOfItems = setUpFlashItems()
+        flash.isHidden = numberOfItems == 0
+        flashText.isHidden = true
+        
         // Configure controls
         switch media {
                         
         case .archive, .disk:
             checkbox.title = "Write protect"
             checkbox.isHidden = false
+            drive8.isEnabled = connected8
+            drive9.isEnabled = connected9
 
         case .tape:
             checkbox.title = "Auto load"
             checkbox.isHidden = false
+            drive8.title = "Insert"
+            drive9.isHidden = true
+
+        case .cartridge:
+            checkbox.isHidden = true
+            drive8.title = "Attach"
+            drive9.isHidden = true
 
         default:
-            checkbox.isHidden = true
+            fatalError()
         }
 
         if empty {
@@ -183,34 +205,54 @@ class MediaDialogController: DialogController {
         track("(3)")
     }
     
-    func setUpFlashItems() -> Bool {
+    func setUpFlashItems() -> Int {
         
-        if media != .archive { return false }
+        if media != .archive { return 0 }
         let d64 = myDocument.attachment as! AnyArchiveProxy
         
         flash.removeAllItems()
-        flash.font = cbmfont
+        // flash.addItem(withTitle: "Select an item to flash...")
+        // flash.item(at: 0)!.tag = -1
+        flash.font = monofont
         
-        track()
         let items = d64.numberOfItems()
-        for i in 0 ..< items {
+        var seen: [String] = []
+        var item = 0
+        for i in  0 ..< items {
             
             d64.selectItem(i)
-            let name = d64.unicodeNameOfItem()!
+            let name = d64.nameOfItem()!
+            // let name = d64.unicodeNameOfItem()!
             let size = d64.sizeOfItemInBlocks()
             let type = d64.typeOfItem()!
             
-            var title = "\(size)"
-            title = title.padding(toLength: 4, withPad: " ", startingAt: 0)
-            title += "\"\(name)\""
-            title = title.padding(toLength: 23, withPad: " ", startingAt: 0)
-            title += "\(type)"
-            title = title.padding(toLength: 26, withPad: " ", startingAt: 0)
+            track("\(name) \(size) \(type)")
             
-            flash.addItem(withTitle: title)
-            flash.item(at: i)!.tag = i
+            /*
+            var title = "\"\(name)\""
+            title = title.padding(toLength: 19, withPad: " ", startingAt: 0)
+            title += "\(type)"
+            title = title.padding(toLength: 23, withPad: " ", startingAt: 0)
+            title += "\(size)"
+            title = title.padding(toLength: 27, withPad: " ", startingAt: 0)
+            */
+            var title = "\(size)"
+            title = title.padding(toLength: 5, withPad: " ", startingAt: 0)
+            title += "\"\(name)\""
+            title = title.padding(toLength: 24, withPad: " ", startingAt: 0)
+            title += "\(type)"
+            title = title.padding(toLength: 28, withPad: " ", startingAt: 0)
+
+            if !seen.contains(title) {
+                seen.append(title)
+                flash.addItem(withTitle: title)
+                flash.item(at: item)!.tag = i
+                flash.item(at: item)!.isEnabled = type == "PRG"
+                item += 1
+            }
         }
-        return true
+        flash.autoenablesItems = false
+        return flash.numberOfItems
     }
     
     func setHeight(_ newHeight: CGFloat) {
@@ -250,10 +292,6 @@ class MediaDialogController: DialogController {
         warning.isHidden = compatible
         */
         // Check for available drives
-        let connected8 = parent.config.drive8Connected
-        let connected9 = parent.config.drive8Connected
-        drive8.isEnabled = connected8
-        drive9.isEnabled = connected9
     }
     
     func updateCarousel(goto item: Int = -1, animated: Bool = false) {

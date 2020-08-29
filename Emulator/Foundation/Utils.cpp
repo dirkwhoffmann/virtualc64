@@ -33,7 +33,7 @@ void translateToUnicode(const char *petscii, u16 *unichars, u16 base, size_t max
     size_t len = MIN(strlen(petscii), max);
     
     for (i = 0; i < len; i++) {
-        unichars[i] = base + (u16)petscii[i];
+        unichars[i] = base + (u16)petscii2printable(petscii[i], ' ');
     }
     unichars[i] = 0;
 }
