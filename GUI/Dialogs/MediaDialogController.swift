@@ -28,11 +28,11 @@ class MediaDialogController: DialogController {
 
     var type: C64FileType!
     var media: MediaType!
-    var archive: AnyArchiveProxy?
-    var tape: TAPFileProxy?
-    var crt: CRTFileProxy?
     
-    var writeProtect = false
+    var writeProtect: Bool { return checkbox.state == .on }
+    var autoRun: Bool { return checkbox.state == .on }
+    var autoReset: Bool { return checkbox.state == .on }
+    
     // var screenshots: [Screenshot] = []
     
     // Custom font
@@ -154,7 +154,7 @@ class MediaDialogController: DialogController {
         track("windowDidLoad")
         
         let connected8 = parent.config.drive8Connected
-        let connected9 = parent.config.drive8Connected
+        let connected9 = parent.config.drive9Connected
 
         title.stringValue = titleString
         subtitle.stringValue = subTitleString
@@ -168,18 +168,16 @@ class MediaDialogController: DialogController {
                         
         case .archive, .disk:
             checkbox.title = "Write protect"
-            checkbox.isHidden = false
             drive8.isEnabled = connected8
             drive9.isEnabled = connected9
 
         case .tape:
             checkbox.title = "Auto load"
-            checkbox.isHidden = false
             drive8.title = "Insert"
             drive9.isHidden = true
 
         case .cartridge:
-            checkbox.isHidden = true
+            checkbox.title = "Auto reset"
             drive8.title = "Attach"
             drive9.isHidden = true
 
@@ -255,7 +253,6 @@ class MediaDialogController: DialogController {
 
     func refresh() {
         
-        // Update disk icon
         switch media {
         case .archive, .disk:
             icon.image = NSImage.init(named: writeProtect ? "disk_protected" : "disk")
@@ -266,20 +263,6 @@ class MediaDialogController: DialogController {
         case .none:
             fatalError()
         }
-        /*
-        let typeName = [
-            DiskType.DISK_35_DD: "3.5\"DD Amiga",
-            DiskType.DISK_35_DD_PC: "3.5\"DD PC",
-            DiskType.DISK_35_HD: "3.5\"HD Amiga",
-            DiskType.DISK_35_HD_PC: "3.5\"HD PC",
-            DiskType.DISK_525_SD: "5.25\"SD PC"
-        ]
-        let str = typeName[disk!.diskType]!
-        subtitle.stringValue = "A byte-accurate image of a \(str) diskette."
-        let compatible = disk!.diskType == .DISK_35_DD
-        warning.isHidden = compatible
-        */
-        // Check for available drives
     }
     
     func updateCarousel(goto item: Int = -1, animated: Bool = false) {
@@ -295,9 +278,8 @@ class MediaDialogController: DialogController {
     // Action methods
     //
     
-    @IBAction func writeProtectAction(_ sender: NSButton!) {
+    @IBAction func checkboxAction(_ sender: NSButton!) {
         
-        writeProtect = sender.state == .on
         refresh()
     }
 
@@ -305,18 +287,50 @@ class MediaDialogController: DialogController {
         
         track("insertAction: \(sender.tag)")
 
-        /*
-        amiga.diskController.insert(sender.tag, adf: disk)
-        amiga.diskController.setWriteProtection(sender.tag, value: writeProtect)
-        */
-     
+        switch media {
+        case .archive, .disk:
+            
+            let disk = myDocument.attachment as! AnyDiskProxy
+            let id = sender.tag == 0 ? DRIVE8 : DRIVE9
+            parent.changeDisk(disk, drive: id)
+
+            c64.drive(id).setWriteProtection(writeProtect)
+            
+        case .cartridge:
+
+            let cartridge = myDocument.attachment as! CRTFileProxy
+            c64.expansionport.attachCartridgeAndReset(cartridge)
+            
+            if autoReset { c64.reset() }
+            
+        case .tape:
+            
+            let tape = myDocument.attachment as! TAPFileProxy
+            c64.datasette.insertTape(tape)
+            
+            if autoRun {
+                parent.keyboard.type(string: "LOAD\n",
+                                     completion: c64.datasette.pressPlay)
+            }
+            
+        case .none:
+            fatalError()
+        }
+        
+        parent.renderer.rotateLeft()
         hideSheet()
     }
 
     @IBAction func flashAction(_ sender: NSButton!) {
         
-        let tag = sender.selectedTag()
-        track("flashAction: \(tag)")
+        track("flashAction: \(sender.selectedTag())")
+        
+        let archive = myDocument.attachment as! AnyArchiveProxy
+        parent.c64.flash(archive, item: sender.selectedTag())
+
+        parent.keyboard.type("RUN\n")
+        parent.renderer.rotateLeft()
+        hideSheet()
     }
 
     @IBAction override func cancelAction(_ sender: Any!) {
