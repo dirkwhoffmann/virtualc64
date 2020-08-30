@@ -580,7 +580,6 @@ struct AnyC64FileWrapper;
 - (BOOL) hasDisk;
 - (BOOL) hasModifiedDisk;
 - (void) setModifiedDisk:(BOOL)b;
-- (u64) fnv;
 - (void) prepareToInsert;
 - (void) insertDisk:(AnyArchiveProxy *)disk;
 - (void) prepareToEject;
@@ -719,6 +718,7 @@ struct AnyC64FileWrapper;
 - (void)setPath:(NSString *)path;
 - (NSString *)name;
 - (NSInteger)sizeOnDisk;
+- (u64) fnv;
 - (void)readFromBuffer:(const void *)buffer length:(NSInteger)length;
 - (NSInteger)writeToBuffer:(void *)buffer;
 

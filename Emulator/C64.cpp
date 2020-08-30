@@ -1562,5 +1562,7 @@ C64::flash(AnyArchive *file, unsigned item)
             result = false;
     }
     resume();
+    messageQueue.put(MSG_FLASH);
+    
     return result;
 }

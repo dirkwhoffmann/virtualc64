@@ -33,7 +33,7 @@ class MediaDialogController: DialogController {
     var autoRun: Bool { return checkbox.state == .on }
     var autoReset: Bool { return checkbox.state == .on }
     
-    // var screenshots: [Screenshot] = []
+    var screenshots: [Screenshot] = []
     
     // Custom font
     let cbmfont = NSFont.init(name: "C64ProMono", size: 10)
@@ -110,7 +110,7 @@ class MediaDialogController: DialogController {
             
         case _ as D64FileProxy:
             
-            media = .archive
+            media = .disk
             track("D64FileProxy")
             titleString = "D64 File"
             subTitleString = "A byte-accurate image of a C64 diskette"
@@ -126,18 +126,16 @@ class MediaDialogController: DialogController {
             fatalError()
         }
                   
-        /*
-        if disk != nil {
-            
-            // Load screenshots (if any)
-            for url in Screenshot.collectFiles(forDisk: disk!.fnv) {
-                if let screenshot = Screenshot.init(fromUrl: url) {
-                    screenshots.append(screenshot)
-                }
+        // Load screenshots (if any)
+        let fnv = myDocument.attachment!.fnv()
+        track("fnv = \(fnv)")
+        for url in Screenshot.collectFiles(forDisk: fnv) {
+            if let screenshot = Screenshot.init(fromUrl: url) {
+                track("Append")
+                screenshots.append(screenshot)
             }
-            super.showSheet(completionHandler: handler)
         }
-        */
+        
         super.showSheet(completionHandler: handler)
     }
     
@@ -290,7 +288,7 @@ class MediaDialogController: DialogController {
         switch media {
         case .archive, .disk:
             
-            let disk = myDocument.attachment as! AnyDiskProxy
+            let disk = myDocument.attachment // as! AnyC64FileProxy
             let id = sender.tag == 0 ? DRIVE8 : DRIVE9
             parent.changeDisk(disk, drive: id)
 
@@ -336,7 +334,6 @@ class MediaDialogController: DialogController {
     @IBAction override func cancelAction(_ sender: Any!) {
                                   
          hideSheet()
-         // try? myDocument.persistScreenshots()
      }
 }
 
@@ -366,7 +363,7 @@ extension MediaDialogController: iCarouselDataSource, iCarouselDelegate {
     
     func numberOfItems(in carousel: iCarousel) -> Int {
         
-        return 0; // screenshots.count
+        return screenshots.count
     }
     
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: NSView?) -> NSView {
@@ -375,8 +372,7 @@ extension MediaDialogController: iCarouselDataSource, iCarouselDelegate {
         let w = h * 4 / 3
         let itemView = NSImageView(frame: CGRect(x: 0, y: 0, width: w, height: h))
         
-        // itemView.image = screenshots[index].screen?.roundCorners()
-        itemView.image = nil
+        itemView.image = screenshots[index].screen?.roundCorners()
         return itemView
     }
 }

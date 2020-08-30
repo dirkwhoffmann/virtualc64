@@ -365,87 +365,10 @@ extension MyController: NSMenuItemValidation {
             let name = NSNib.Name("ScreenshotDialog")
             screenshotBrowser = ScreenshotDialog.make(parent: self, nibName: name)
         }
-        screenshotBrowser?.checksum = c64.drive8.fnv()
+        screenshotBrowser?.checksum = mydocument.bootDiskID
         screenshotBrowser?.showSheet()
     }
-    
-    /*
-    @IBAction func saveScreenshotDialog(_ sender: Any!) {
-                
-        // Create save panel
-        let savePanel = NSSavePanel()
-        savePanel.prompt = "Export"
         
-        // Set allowed file types
-        switch pref.screenshotTarget {
-        case .tiff: savePanel.allowedFileTypes = ["jpg"]
-        case .bmp: savePanel.allowedFileTypes = ["bmp"]
-        case .gif: savePanel.allowedFileTypes = ["gif"]
-        case .jpeg: savePanel.allowedFileTypes = ["jpg"]
-        case .png: savePanel.allowedFileTypes = ["png"]
-        default:
-            track("Unsupported image format: \(pref.screenshotTarget)")
-            return
-        }
-        
-        // Run panel as sheet
-        savePanel.beginSheetModal(for: window!, completionHandler: { result in
-            if result == .OK {
-                if let url = savePanel.url {
-                    do {
-                        try self.saveScreenshot(url: url)
-                    } catch {
-                        NSApp.presentError(error)
-                    }
-                }
-            }
-        })
-    }
-    */
-    
-    /*
-    @IBAction func quicksaveScreenshot(_ sender: Any!) {
-        
-        // Determine file suffix
-        var suffix: String
-        switch pref.screenshotTarget {
-        case .tiff: suffix = "tiff"
-        case .bmp: suffix = "bmp"
-        case .gif: suffix = "gif"
-        case .jpeg: suffix = "jpg"
-        case .png: suffix = "png"
-        default:
-            track("Unsupported image format: \(pref.screenshotTarget)")
-            return
-        }
-        
-        // Assemble URL and save
-        let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-        let desktopUrl = NSURL.init(fileURLWithPath: paths[0])
-        if let url = desktopUrl.appendingPathComponent("Screenshot." + suffix) {
-            do {
-                try saveScreenshot(url: url.byAddingTimeStamp().makeUnique())
-            } catch {
-                track("Cannot quicksave screenshot")
-            }
-        }
-    }
-    */
-    
-    /*
-    func saveScreenshot(url: URL) throws {
-        
-        // Take screenshot
-        let image = renderer.screenshot(afterUpscaling: pref.screenshotSource > 0)
-        
-        // Convert to target format
-        let data = image?.representation(using: pref.screenshotTarget)
-        
-        // Save to file
-        try data?.write(to: url, options: .atomic)
-    }
-    */
-    
     //
     // Action methods (Edit menu)
     //

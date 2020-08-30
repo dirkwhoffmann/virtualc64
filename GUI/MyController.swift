@@ -604,7 +604,7 @@ extension MyController {
         case MSG_RESET:
 
             mydocument.deleteBootDiskID()
-            mydocument.setBootDiskID(c64.drive8.fnv())
+            mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
             inspector?.fullRefresh()
 
         case MSG_BASIC_ROM_LOADED,
@@ -656,7 +656,7 @@ extension MyController {
             if pref.driveSounds && pref.driveInsertSound {
                 playSound(name: "drive_snatch_uae", volume: 0.1)
             }
-            if msg.data == 0 { mydocument.setBootDiskID(c64.drive8.fnv()) }
+            mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
             refreshStatusBarDiskIcons(drive: DriveID(msg.data))
             inspector?.fullRefresh()
 
@@ -668,6 +668,9 @@ extension MyController {
             refreshStatusBarDiskIcons(drive: DriveID(msg.data))
             inspector?.fullRefresh()
 
+        case MSG_FLASH:
+            mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
+            
         case MSG_DISK_SAVED,
              MSG_DISK_UNSAVED,
              MSG_DRIVE_LED_ON,

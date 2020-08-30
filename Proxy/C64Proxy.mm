@@ -978,24 +978,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->drive->getConfigItem(OPT_DRIVE_POWER_SWITCH) != 0;
 }
-/*
-- (BOOL) isDisconnected
-{
-    return wrapper->drive->isDisconnected();
-}
-- (void) connect
-{
-    wrapper->drive->connect();
-}
-- (void) disconnect
-{
-    wrapper->drive->disconnect();
-}
-- (void) toggleConnection
-{
-    wrapper->drive->toggleConnection();
-}
-*/
 - (BOOL) readMode
 {
     return wrapper->drive->readMode();
@@ -1019,10 +1001,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 - (void) setModifiedDisk:(BOOL)b
 {
     wrapper->drive->setModifiedDisk(b);
-}
-- (u64) fnv
-{
-    return wrapper->drive->fnv();
 }
 - (void) prepareToInsert
 {
@@ -1267,6 +1245,10 @@ struct AnyC64FileWrapper { AnyFile *file; };
 - (NSInteger) sizeOnDisk
 {
     return wrapper->file->sizeOnDisk();
+}
+- (u64) fnv
+{
+    return wrapper->file->fnv();
 }
 - (void) readFromBuffer:(const void *)buffer length:(NSInteger)length
 {

@@ -59,7 +59,8 @@ typedef enum
     MSG_DRIVE_MOTOR_ON,
     MSG_DRIVE_MOTOR_OFF,
     MSG_DRIVE_HEAD,
-
+    MSG_FLASH,
+    
     // Peripherals (Disk)
     MSG_DISK_SAVED,
     MSG_DISK_UNSAVED,

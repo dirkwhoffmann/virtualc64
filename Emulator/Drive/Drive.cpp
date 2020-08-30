@@ -405,12 +405,6 @@ Drive::setModifiedDisk(bool value)
     c64.putMessage(value ? MSG_DISK_UNSAVED : MSG_DISK_SAVED, deviceNr);
 }
 
-u64
-Drive::fnv()
-{
-    return hasDisk() ? disk.getFnv() : 0;
-}
-
 void
 Drive::prepareToInsert()
 {
@@ -434,8 +428,6 @@ Drive::insertDisk(AnyArchive *a)
     debug(DRV_DEBUG, "insertDisk\n");
 
     suspend();
-
-    disk.setFnv(a->fnv());
     
     switch (a->type()) {
             
