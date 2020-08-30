@@ -94,6 +94,20 @@ extension MyController {
         }
     }
     
+    @IBAction func screenshotAction(_ sender: NSSegmentedControl) {
+        
+        track()
+        
+        switch sender.selectedSegment {
+            
+        case 0: takeScreenshotAction(self)
+        case 1: browseScreenshotsAction(self)
+            
+        default:
+            assert(false)
+        }
+    }
+    
     @IBAction func keyboardAction(_ sender: Any!) {
         
         // Open the virtual keyboard as a sheet

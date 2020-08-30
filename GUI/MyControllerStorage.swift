@@ -42,4 +42,22 @@ extension MyController {
         return count > 0 ? restoreSnapshot(item: count - 1) : false
     }
     
+    //
+    // Screenshots
+    //
+    
+    func takeScreenshot() {
+        
+        track()
+        let upscaled = pref.screenshotSource > 0
+        
+        // Take screenshot
+        guard let screen = renderer.screenshot(afterUpscaling: upscaled) else {
+            track("Failed to create screenshot")
+            return
+        }
+        let screenshot = Screenshot.init(screen: screen, format: pref.screenshotTarget)
+        
+        mydocument.screenshots.append(screenshot)
+    }
 }

@@ -46,6 +46,8 @@ class DialogController: NSWindowController {
     
     static func make(parent: MyController, nibName: NSNib.Name) -> Self? {
         
+        track()
+        
         let controller = Self.init(windowNibName: nibName)
         controller.parent = parent
         controller.c64 = parent.c64

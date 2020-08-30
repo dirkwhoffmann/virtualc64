@@ -334,6 +334,27 @@ extension MyController: NSMenuItemValidation {
         */
     }
     
+    @IBAction func takeScreenshotAction(_ sender: Any!) {
+        
+        track()
+        
+        takeScreenshot()
+        renderer.blendIn(steps: 20)
+    }
+    
+    @IBAction func browseScreenshotsAction(_ sender: Any!) {
+        
+        track()
+        
+        if screenshotBrowser == nil {
+            let name = NSNib.Name("ScreenshotDialog")
+            screenshotBrowser = ScreenshotDialog.make(parent: self, nibName: name)
+        }
+        screenshotBrowser?.checksum = c64.drive8.fnv()
+        screenshotBrowser?.showSheet()
+    }
+    
+    /*
     @IBAction func saveScreenshotDialog(_ sender: Any!) {
                 
         // Create save panel
@@ -365,7 +386,9 @@ extension MyController: NSMenuItemValidation {
             }
         })
     }
+    */
     
+    /*
     @IBAction func quicksaveScreenshot(_ sender: Any!) {
         
         // Determine file suffix
@@ -392,7 +415,9 @@ extension MyController: NSMenuItemValidation {
             }
         }
     }
+    */
     
+    /*
     func saveScreenshot(url: URL) throws {
         
         // Take screenshot
@@ -404,6 +429,7 @@ extension MyController: NSMenuItemValidation {
         // Save to file
         try data?.write(to: url, options: .atomic)
     }
+    */
     
     //
     // Action methods (Edit menu)

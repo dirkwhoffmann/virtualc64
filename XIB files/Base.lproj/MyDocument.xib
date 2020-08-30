@@ -90,7 +90,7 @@
                         </constraints>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="hourglass1Template" imagePosition="above" alignment="center" imageScaling="proportionallyDown" id="1707">
                             <behavior key="behavior" lightByContents="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                         </buttonCell>
                         <connections>
                             <action selector="warpAction:" target="-2" id="qwQ-Ql-wzH"/>
@@ -122,7 +122,7 @@
                         </constraints>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="tapeTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="Rze-Qf-HUV">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                         </buttonCell>
                     </button>
                     <button hidden="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="1045">
@@ -133,7 +133,7 @@
                         </constraints>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="diskTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="1706">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                         </buttonCell>
                     </button>
                     <button hidden="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="lFn-7a-MSQ">
@@ -144,7 +144,7 @@
                         </constraints>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtButtonOffTemplate" imagePosition="only" alignment="right" alternateImage="crtButtonOnTemplate" imageScaling="proportionallyUpOrDown" id="IJt-r3-Tyd">
                             <behavior key="behavior" lightByContents="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                         </buttonCell>
                         <connections>
                             <action selector="pressCartridgeButton1Action:" target="-2" id="G7M-GS-6Os"/>
@@ -197,7 +197,7 @@
                         </constraints>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="diskTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="dWc-LE-E52">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                         </buttonCell>
                     </button>
                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DD4-5B-w9h" customClass="MetalView" customModule="VirtualC64" customModuleProvider="target">
@@ -215,7 +215,7 @@
                         </constraints>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtButtonOffTemplate" imagePosition="only" alignment="right" alternateImage="crtButtonOnTemplate" imageScaling="proportionallyUpOrDown" id="daD-pA-smb">
                             <behavior key="behavior" lightByContents="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                         </buttonCell>
                         <connections>
                             <action selector="pressCartridgeButton2Action:" target="-1" id="465-Oy-aeF"/>
@@ -229,7 +229,7 @@
                         </constraints>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="haltTemplate" imagePosition="only" alignment="right" alternateImage="crtButtonOnTemplate" imageScaling="proportionallyUpOrDown" id="f5d-Lu-xCR">
                             <behavior key="behavior" lightByContents="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                         </buttonCell>
                         <connections>
                             <action selector="pressCartridgeButton2Action:" target="-1" id="7Od-Ip-uUN"/>
@@ -243,7 +243,7 @@
                         </constraints>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="debugTemplate" imagePosition="only" alignment="right" alternateImage="crtButtonOnTemplate" imageScaling="proportionallyUpOrDown" id="9FI-3x-DAh">
                             <behavior key="behavior" lightByContents="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                         </buttonCell>
                         <connections>
                             <action selector="pressCartridgeButton2Action:" target="-1" id="sCr-sT-2Kn"/>
@@ -257,7 +257,7 @@
                         </constraints>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="muteTemplate" imagePosition="only" alignment="right" alternateImage="crtButtonOnTemplate" imageScaling="proportionallyUpOrDown" id="7dZ-BU-MtG">
                             <behavior key="behavior" lightByContents="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                         </buttonCell>
                         <connections>
                             <action selector="pressCartridgeButton2Action:" target="-1" id="r8J-zq-Djz"/>
@@ -271,7 +271,7 @@
                         </constraints>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtSwitchNeutralTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="0s7-pA-Q79">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                         </buttonCell>
                         <connections>
                             <action selector="toggleSwitchAction:" target="-1" id="MvY-UF-tSi"/>
@@ -284,7 +284,7 @@
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="16" id="uHM-gs-9iG"/>
                         </constraints>
                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="00" id="reP-W9-Peb">
-                            <font key="font" metaFont="controlContent" size="11"/>
+                            <font key="font" metaFont="message" size="11"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -296,7 +296,7 @@
                             <constraint firstAttribute="height" constant="14" id="YLY-sB-hcs"/>
                         </constraints>
                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="00" id="Ek0-5h-PCi">
-                            <font key="font" metaFont="controlContent" size="11"/>
+                            <font key="font" metaFont="message" size="11"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -309,7 +309,7 @@
                         </constraints>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="2004">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
+                            <font key="font" metaFont="menu" size="10"/>
                         </buttonCell>
                     </button>
                 </subviews>
@@ -394,6 +394,23 @@
                             </segmentedCell>
                             <connections>
                                 <action selector="snapshotAction:" target="-2" id="S6l-w4-GtS"/>
+                            </connections>
+                        </segmentedControl>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="825AB8BA-D27D-4879-8873-9B36A948590C" label="Screenshots" paletteLabel="Screenshots" sizingBehavior="auto" id="Lvx-ut-HKh">
+                        <nil key="toolTip"/>
+                        <segmentedControl key="view" verticalHuggingPriority="750" id="qPe-qh-6UI" userLabel="clickTemplate, ttGalleryTemplate">
+                            <rect key="frame" x="0.0" y="14" width="88" height="24"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="1Fu-0L-5Ws">
+                                <font key="font" metaFont="system"/>
+                                <segments>
+                                    <segment toolTip="Take Screenshot" image="clickTemplate" width="40"/>
+                                    <segment toolTip="Open Screenshot Browser" image="folderTemplate" width="40" tag="1"/>
+                                </segments>
+                            </segmentedCell>
+                            <connections>
+                                <action selector="screenshotAction:" target="-2" id="HxN-KY-rh3"/>
                             </connections>
                         </segmentedControl>
                     </toolbarItem>
@@ -556,6 +573,8 @@
                     <toolbarItem reference="1851"/>
                     <toolbarItem reference="nxb-IG-KLe"/>
                     <toolbarItem reference="1851"/>
+                    <toolbarItem reference="Lvx-ut-HKh"/>
+                    <toolbarItem reference="1851"/>
                     <toolbarItem reference="kR6-IR-lNs"/>
                     <toolbarItem reference="Klt-YL-0mv"/>
                     <toolbarItem reference="1851"/>
@@ -575,6 +594,7 @@
                     <outlet property="pauseButton" destination="dOU-Sh-aV4" id="q6d-3q-dO6"/>
                     <outlet property="powerButton" destination="yw6-D4-XSX" id="RwM-RM-frJ"/>
                     <outlet property="resetButton" destination="wVB-PW-axj" id="BDe-gJ-zb6"/>
+                    <outlet property="screenshotSegCtrl" destination="qPe-qh-6UI" id="m5u-9x-Vto"/>
                     <outlet property="snapshotSegCtrl" destination="AHD-MB-nXC" id="FJe-yy-eIY"/>
                 </connections>
             </toolbar>
@@ -587,6 +607,7 @@
     </objects>
     <resources>
         <image name="LEDgray" width="128" height="128"/>
+        <image name="clickTemplate" width="36" height="37"/>
         <image name="confTemplate" width="36" height="36"/>
         <image name="crtButtonOffTemplate" width="24" height="24"/>
         <image name="crtButtonOnTemplate" width="24" height="24"/>
@@ -598,6 +619,7 @@
         <image name="devMouseTemplate" width="24" height="24"/>
         <image name="devNoneTemplate" width="24" height="24"/>
         <image name="diskTemplate" width="241" height="241"/>
+        <image name="folderTemplate" width="37" height="37"/>
         <image name="haltTemplate" width="240" height="241"/>
         <image name="hourglass1Template" width="241" height="241"/>
         <image name="joyKeys1Template" width="24" height="24"/>

@@ -19,7 +19,8 @@ class MyToolbar: NSToolbar {
     @IBOutlet weak var resetButton: NSToolbarItem!
     @IBOutlet weak var keyboardButton: NSToolbarItem!
     @IBOutlet weak var snapshotSegCtrl: NSSegmentedControl!
-    
+    @IBOutlet weak var screenshotSegCtrl: NSSegmentedControl!
+
     override func validateVisibleItems() {
                 
         let c64 = parent.c64!
