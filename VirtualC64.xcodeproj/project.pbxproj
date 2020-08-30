@@ -159,6 +159,9 @@
 		507A49A024C8D66A00DBF984 /* GuardTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507A499F24C8D66A00DBF984 /* GuardTableView.swift */; };
 		507A49A224C8D71400DBF984 /* BankTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507A49A124C8D71400DBF984 /* BankTableView.swift */; };
 		507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */; };
+		507E7A9E24FB864E00AB433C /* ScreenshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 507E7A9D24FB864E00AB433C /* ScreenshotDialog.xib */; };
+		507E7AA024FB881500AB433C /* ScreenshotDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507E7A9F24FB881500AB433C /* ScreenshotDialog.swift */; };
+		507E7AA224FB897D00AB433C /* Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507E7AA124FB897D00AB433C /* Screenshot.swift */; };
 		5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* MacAudio.swift */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		50995F2A24DBCDE400F40713 /* CPUDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50995F2824DBCDE400F40713 /* CPUDebugger.cpp */; };
@@ -505,6 +508,9 @@
 		507A499F24C8D66A00DBF984 /* GuardTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardTableView.swift; sourceTree = "<group>"; };
 		507A49A124C8D71400DBF984 /* BankTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankTableView.swift; sourceTree = "<group>"; };
 		507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerCartridges.swift; sourceTree = "<group>"; };
+		507E7A9D24FB864E00AB433C /* ScreenshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScreenshotDialog.xib; sourceTree = "<group>"; };
+		507E7A9F24FB881500AB433C /* ScreenshotDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotDialog.swift; sourceTree = "<group>"; };
+		507E7AA124FB897D00AB433C /* Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screenshot.swift; sourceTree = "<group>"; };
 		5081AB621EF29E6400D6F616 /* MacAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacAudio.swift; sourceTree = "<group>"; };
 		5092A5B0200BC4B70037754D /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
 		5093D6A824B19E9200BDF924 /* Serialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Serialization.h; sourceTree = "<group>"; };
@@ -699,6 +705,7 @@
 			children = (
 				50763276202989D300575110 /* DialogController.swift */,
 				50B485FA24F9911600844133 /* MediaDialogController.swift */,
+				507E7A9F24FB881500AB433C /* ScreenshotDialog.swift */,
 				50C12A4321C6B6A6007EFAF6 /* MediaBrowsers */,
 				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
 				50B1644B202DD52500447D3E /* ExportDiskController.swift */,
@@ -1055,6 +1062,7 @@
 			isa = PBXGroup;
 			children = (
 				505184DF24F23CB6002C6124 /* Storage.swift */,
+				507E7AA124FB897D00AB433C /* Screenshot.swift */,
 			);
 			name = Foundation;
 			sourceTree = "<group>";
@@ -1241,6 +1249,7 @@
 				50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */,
 				50031B33206FABA400A1969B /* SnapshotDialog.xib */,
 				50B485F824F96E9400844133 /* MediaDialog.xib */,
+				507E7A9D24FB864E00AB433C /* ScreenshotDialog.xib */,
 			);
 			path = "XIB files";
 			sourceTree = "<group>";
@@ -1345,6 +1354,7 @@
 				50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */,
 				50A519431B8DA360006771E2 /* drive_snatch_uae.aiff in Resources */,
 				5051A1621B88661000CBFB5A /* 1541_track_change_1.aiff in Resources */,
+				507E7A9E24FB864E00AB433C /* ScreenshotDialog.xib in Resources */,
 				5020434C1EE71B47006C3FD3 /* (null) in Resources */,
 				5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */,
 				501E427F20D975AD000BB48D /* IconPRG.icns in Resources */,
@@ -1462,6 +1472,7 @@
 				50D5F88A24F5573D0062EF13 /* DiskErrorController.swift in Sources */,
 				50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */,
 				504C438D24AF29AC00E69CAE /* VICII.cpp in Sources */,
+				507E7AA224FB897D00AB433C /* Screenshot.swift in Sources */,
 				504C437824AF29AC00E69CAE /* AnyDisk.cpp in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				504C43AB24AF29AC00E69CAE /* CIA.cpp in Sources */,
@@ -1534,6 +1545,7 @@
 				504C436324AF29AC00E69CAE /* Kingsoft.cpp in Sources */,
 				50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */,
 				507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */,
+				507E7AA024FB881500AB433C /* ScreenshotDialog.swift in Sources */,
 				50995F2A24DBCDE400F40713 /* CPUDebugger.cpp in Sources */,
 				504C439724AF29AC00E69CAE /* voice.cc in Sources */,
 				504C436224AF29AC00E69CAE /* GeoRam.cpp in Sources */,

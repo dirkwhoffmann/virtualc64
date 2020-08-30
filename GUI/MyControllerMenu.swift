@@ -386,7 +386,7 @@ extension MyController: NSMenuItemValidation {
         let desktopUrl = NSURL.init(fileURLWithPath: paths[0])
         if let url = desktopUrl.appendingPathComponent("Screenshot." + suffix) {
             do {
-                try saveScreenshot(url: url.addTimeStamp().makeUnique())
+                try saveScreenshot(url: url.byAddingTimeStamp().makeUnique())
             } catch {
                 track("Cannot quicksave screenshot")
             }

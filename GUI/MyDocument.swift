@@ -30,6 +30,12 @@ class MyDocument: NSDocument {
     // Snapshots
     private(set) var snapshots = ManagedArray<SnapshotProxy>.init(capacity: 32)
     
+    // Screenshots
+    private(set) var screenshots = ManagedArray<Screenshot>.init(capacity: 32)
+
+    // Fingerprint of the first media file used after a reset
+    private var bootDiskID = UInt64(0)
+    
     //
     // Initializing
     //
@@ -422,27 +428,60 @@ class MyDocument: NSDocument {
     }
     
     //
-    // Shutting down
+    // Screenshots
     //
     
-    open override func removeWindowController(_ windowController: NSWindowController) {
+    func deleteBootDiskID() {
         
-        track()
-
-        // Shut down the emulator.
-        // Note that all GUI elements have to be inactive when the proxy is set
-        // to nil. Hence, the emulator should be shut down as late as possible.
+        bootDiskID = 0
+    }
+    
+    @discardableResult
+    func setBootDiskID(_ id: UInt64) -> Bool {
         
-        /*
-        let controller = myController!
+        track("setBootDiskID(\(id))")
         
-        controller.proxyLock.lock()
-        c64.kill()
-        c64 = nil
-        controller.c64 = nil
-        controller.proxyLock.unlock()
-        */
+        if bootDiskID == 0 {
+            track("Assigning new ID")
+            bootDiskID = id
+            try? loadScreenshots()
+            return true
+        }
+        return false
+    }
+    
+    // Writes screenshots back to disk if needed
+    func persistScreenshots() throws {
         
-        super.removeWindowController(windowController)
+        if screenshots.modified { try saveScreenshots() }
+    }
+    
+    func saveScreenshots() throws {
+        
+        track("Saving user screenshots to disk (\(bootDiskID))")
+        
+        let format = parent.pref.screenshotTarget
+        
+        Screenshot.deleteFolder(forDisk: bootDiskID)
+        for n in 0 ..< screenshots.count {
+            let data = screenshots.element(at: n)?.screen?.representation(using: format)
+            if let url = Screenshot.newUrl(diskID: bootDiskID, using: format) {
+                try data?.write(to: url, options: .atomic)
+            }
+        }
+    }
+    
+    func loadScreenshots() throws {
+        
+        track("Seeking screenshots for disk with id \(bootDiskID)")
+        
+        screenshots.clear()
+        for url in Screenshot.collectFiles(forDisk: bootDiskID) {
+            if let screenshot = Screenshot.init(fromUrl: url) {
+                screenshots.append(screenshot)
+            }
+        }
+        
+        track("\(screenshots.count) screenshots loaded")
     }
 }

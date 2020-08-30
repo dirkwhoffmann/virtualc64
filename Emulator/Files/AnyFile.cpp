@@ -83,6 +83,12 @@ AnyFile::getUnicodeName()
     return unicode;
 }
 
+u64
+AnyFile::fnv()
+{
+    return data ? fnv_1a_64(data, size) : 0;    
+}
+
 void
 AnyFile::seek(long offset)
 {

@@ -1020,6 +1020,10 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->drive->setModifiedDisk(b);
 }
+- (u64) fnv
+{
+    return wrapper->drive->fnv();
+}
 - (void) prepareToInsert
 {
     wrapper->drive->prepareToInsert();

@@ -299,10 +299,13 @@ public:
     bool hasPartiallyInsertedDisk() { return insertionStatus == PARTIALLY_INSERTED; }
     bool hasWriteProtectedDisk() { return hasDisk() && disk.isWriteProtected(); }
 
-    // Get or sets the modification status
+    // Gets or sets the modification status
     bool hasModifiedDisk() { return hasDisk() && disk.isModified(); }
     void setModifiedDisk(bool value);
 
+    // Returns a fnv checksum for the currently inserted disk
+    u64 fnv();
+ 
     /* Prepares to insert a disk. This functions puts a disk partially into the
      * drive. As a result, the light barrier is blocked. You must not call this
      * functions if a disk is already inserted.

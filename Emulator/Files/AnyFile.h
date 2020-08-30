@@ -83,6 +83,9 @@ public:
     // Returns the logical name as a unicode character array
     const unsigned short *getUnicodeName();
 	
+    // Returns a unique fingerprint for this file
+    u64 fnv();
+    
     
     //
     // Reading file data

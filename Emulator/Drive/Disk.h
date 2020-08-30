@@ -103,6 +103,9 @@ private:
      */
     bool modified;
     
+    // Checksum of this disk if it was created from a file, 0 otherwise
+    u64 fnv;
+
     
     //
     // Disk data
@@ -220,6 +223,9 @@ public:
     bool isModified() { return modified; }
     void setModified(bool b);
 
+    u64 getFnv() { return fnv; }
+    void setFnv(u64 value) { fnv = value; }
+    
     
     //
     // Handling GCR encoded data

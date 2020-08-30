@@ -530,7 +530,7 @@ extension UserDefaults {
     
     static func romUrl(name: String) -> URL? {
         
-        let folder = URL.appSupportFolder("Roms")
+        let folder = try? URL.appSupportFolder("Roms")
         return folder?.appendingPathComponent(name)
     }
     
