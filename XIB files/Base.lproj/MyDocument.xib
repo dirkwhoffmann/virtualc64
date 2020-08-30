@@ -39,11 +39,11 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="preferred" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <rect key="contentRect" x="0.0" y="0.0" width="804" height="645"/>
+            <rect key="contentRect" x="0.0" y="0.0" width="800" height="640"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1536" height="937"/>
             <value key="minSize" type="size" width="402" height="323"/>
-            <view key="contentView" misplaced="YES" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="1191" height="645"/>
+            <view key="contentView" id="6">
+                <rect key="frame" x="0.0" y="0.0" width="800" height="640"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <button toolTip="Connect / Disconnect drive" fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="1208">
@@ -58,14 +58,14 @@
                         </connections>
                     </button>
                     <levelIndicator verticalHuggingPriority="750" id="212">
-                        <rect key="frame" x="1104" y="2" width="80" height="18"/>
+                        <rect key="frame" x="713" y="2" width="80" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <levelIndicatorCell key="cell" alignment="left" maxValue="20" warningValue="11" criticalValue="15" id="1702">
                             <font key="font" metaFont="system"/>
                         </levelIndicatorCell>
                     </levelIndicator>
                     <button toolTip="Warp mode" id="1052">
-                        <rect key="frame" x="1078" y="3" width="18" height="18"/>
+                        <rect key="frame" x="687" y="3" width="18" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="hourglass1Template" imagePosition="above" alignment="center" imageScaling="proportionallyDown" id="1707">
                             <behavior key="behavior" lightByContents="YES"/>
@@ -150,7 +150,7 @@
                         </buttonCell>
                     </button>
                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DD4-5B-w9h" customClass="MetalView" customModule="VirtualC64" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="24" width="1191" height="621"/>
+                        <rect key="frame" x="0.0" y="26" width="800" height="614"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <connections>
                             <outlet property="parent" destination="-2" id="DoA-Vt-vqv"/>
@@ -238,7 +238,7 @@
                         </buttonCell>
                     </button>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="88" id="214">
-                        <rect key="frame" x="980" y="7" width="92" height="11"/>
+                        <rect key="frame" x="589" y="7" width="92" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" title="Clock" id="1703">
                             <font key="font" metaFont="label" size="9"/>
@@ -490,7 +490,7 @@
                 <outlet property="delegate" destination="-2" id="2165"/>
                 <outlet property="initialFirstResponder" destination="DD4-5B-w9h" id="SkX-P7-Vr8"/>
             </connections>
-            <point key="canvasLocation" x="-132.5" y="455.5"/>
+            <point key="canvasLocation" x="-133" y="455"/>
         </window>
     </objects>
     <resources>
