@@ -10,7 +10,7 @@
 import Foundation
 
 extension MyController {
-    
+        
     //
     // Snapshots
     //
@@ -46,9 +46,12 @@ extension MyController {
     // Screenshots
     //
     
+    /*
     func takeScreenshot() {
         
         track()
+        
+        // Determine screenshot format
         let upscaled = pref.screenshotSource > 0
         
         // Take screenshot
@@ -58,6 +61,7 @@ extension MyController {
         }
         let screenshot = Screenshot.init(screen: screen, format: pref.screenshotTarget)
         
-        mydocument.screenshots.append(screenshot)
+        screenshots.append(screenshot)
     }
+    */
 }

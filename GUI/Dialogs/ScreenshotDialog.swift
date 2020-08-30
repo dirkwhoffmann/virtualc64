@@ -24,20 +24,31 @@ class ScreenshotDialog: DialogController {
     // Fingerprint of linked media file
     var checksum = UInt64(0)
     
+    // Screenshots
+    var screenshots: [Screenshot] = []
+    
     var latestIndex = 0
     var favoriteIndex = 0
     
     // Computed variables
     var myDocument: MyDocument { return parent.mydocument! }
-    var numItems: Int { return carousel.numberOfItems }
+    // var numItems: Int { return carousel.numberOfItems }
     var currentItem: Int { return carousel.currentItemIndex }
-    var centerItem: Int { return numItems / 2 }
-    var lastItem: Int { return numItems - 1 }
-    var empty: Bool { return numItems == 0 }
+    var centerItem: Int { return screenshots.count / 2 }
+    var lastItem: Int { return screenshots.count - 1 }
+    var empty: Bool { return screenshots.count == 0 }
 
-    override func windowWillLoad() {
-   
-        track()
+    override func sheetWillShow() {
+              
+        track("Seeking screenshots for disk with id \(checksum)")
+        
+        for url in Screenshot.collectFiles(forDisk: checksum) {
+            if let screenshot = Screenshot.init(fromUrl: url) {
+                screenshots.append(screenshot)
+            }
+        }
+        
+        track("\(screenshots.count) screenshots loaded")
     }
     
     override func sheetDidShow() {
@@ -55,7 +66,7 @@ class ScreenshotDialog: DialogController {
     
     func updateLabels() {
         
-        track("numItems = \(numItems)")
+        track("count = \(screenshots.count) currentItem = \(currentItem)")
         
         carousel.isHidden = false
         itemLabel.isHidden = empty
@@ -64,23 +75,27 @@ class ScreenshotDialog: DialogController {
 
         leftButton.isEnabled = currentItem > 0
         rightButton.isEnabled = currentItem >= 0 && currentItem < lastItem
-        itemLabel.stringValue = "\(currentItem + 1) / \(numItems)"
+        itemLabel.stringValue = "\(currentItem + 1) / \(screenshots.count)"
 
         actionButton.image = NSImage.init(named: "trashTemplate")
-        actionButton.toolTip = "Delete screenshot from disk"
+        actionButton.toolTip = "Delete screenshot"
         actionButton.isHidden = empty
         leftButton.isHidden = empty
         rightButton.isHidden = empty
         finderLabel.isHidden = empty
         finderButton.isHidden = empty
+
+        var label1 = "No screenshots available"
+        var label2 = ""
         
-        if let screenshot = myDocument.screenshots.element(at: currentItem) {
-            text1.stringValue = screenshot.description
-            text2.stringValue = screenshot.sizeString + " pixels"
-        } else {
-            text1.stringValue = "No screenshots available"
-            text2.stringValue = ""
+        if currentItem >= 0 && currentItem < screenshots.count {
+            let screenshot = screenshots[currentItem]
+            label1 = screenshot.description
+            label2 = screenshot.sizeString + " pixels"
         }
+        
+        text1.stringValue = label1
+        text2.stringValue = label2
     }
    
     func updateCarousel(goto item: Int, animated: Bool) {
@@ -107,7 +122,7 @@ class ScreenshotDialog: DialogController {
     @IBAction func leftAction(_ sender: NSButton!) {
         
         if currentItem > 0 {
-            myDocument.screenshots.swapAt(currentItem, currentItem - 1)
+            screenshots.swapAt(currentItem, currentItem - 1)
             updateCarousel(goto: currentItem - 1, animated: true)
         }
     }
@@ -115,14 +130,14 @@ class ScreenshotDialog: DialogController {
     @IBAction func rightAction(_ sender: NSButton!) {
         
         if currentItem < lastItem {
-            myDocument.screenshots.swapAt(currentItem, currentItem + 1)
+            screenshots.swapAt(currentItem, currentItem + 1)
             updateCarousel(goto: currentItem + 1, animated: true)
         }
     }
 
     @IBAction func actionAction(_ sender: NSButton!) {
                     
-        myDocument.screenshots.remove(at: currentItem)
+        screenshots.remove(at: currentItem)
         updateCarousel(goto: currentItem - 1, animated: true)
     }
 
@@ -130,7 +145,6 @@ class ScreenshotDialog: DialogController {
         
         if let url = Screenshot.folder(forDisk: checksum) {
             
-            try? myDocument.persistScreenshots()
             NSWorkspace.shared.open(url)
         }
     }
@@ -147,8 +161,6 @@ class ScreenshotDialog: DialogController {
         actionButton.isHidden = true
         text1.stringValue = ""
         text2.stringValue = ""
-        
-        try? myDocument.persistScreenshots()
     }
 }
 
@@ -160,7 +172,7 @@ extension ScreenshotDialog: iCarouselDataSource, iCarouselDelegate {
     
     func numberOfItems(in carousel: iCarousel) -> Int {
                 
-        return myDocument.screenshots.count
+        return screenshots.count
     }
     
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: NSView?) -> NSView {
@@ -169,9 +181,9 @@ extension ScreenshotDialog: iCarouselDataSource, iCarouselDelegate {
         let w = h * 4 / 3
         let itemView = NSImageView(frame: CGRect(x: 0, y: 0, width: w, height: h))
         
-        itemView.image =
-            myDocument.screenshots.element(at: index)?.screen?.roundCorners()
-        
+        if index < screenshots.count {
+            itemView.image = screenshots[index].screen?.roundCorners()
+        }
         return itemView
     }
     

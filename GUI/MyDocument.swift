@@ -31,10 +31,10 @@ class MyDocument: NSDocument {
     private(set) var snapshots = ManagedArray<SnapshotProxy>.init(capacity: 32)
     
     // Screenshots
-    private(set) var screenshots = ManagedArray<Screenshot>.init(capacity: 32)
+    // private(set) var screenshots = ManagedArray<Screenshot>.init(capacity: 32)
 
     // Fingerprint of the first media file used after a reset
-    private var bootDiskID = UInt64(0)
+    var bootDiskID = UInt64(0)
     
     //
     // Initializing
@@ -444,33 +444,46 @@ class MyDocument: NSDocument {
         if bootDiskID == 0 {
             track("Assigning new ID")
             bootDiskID = id
-            try? loadScreenshots()
+            // try? loadScreenshots()
             return true
         }
         return false
     }
     
     // Writes screenshots back to disk if needed
+    /*
     func persistScreenshots() throws {
         
         if screenshots.modified { try saveScreenshots() }
     }
+    */
     
+    /*
     func saveScreenshots() throws {
         
         track("Saving user screenshots to disk (\(bootDiskID))")
-        
-        let format = parent.pref.screenshotTarget
-        
+
         Screenshot.deleteFolder(forDisk: bootDiskID)
         for n in 0 ..< screenshots.count {
-            let data = screenshots.element(at: n)?.screen?.representation(using: format)
-            if let url = Screenshot.newUrl(diskID: bootDiskID, using: format) {
-                try data?.write(to: url, options: .atomic)
-            }
+            try saveScreenshot(screenshots.element(at: n))
         }
     }
+    */
     
+    // DEPRECATED
+    /*
+    func saveScreenshot(_ screenshot: Screenshot?) throws {
+
+        let format = parent.pref.screenshotTarget
+
+        let data = screenshot?.screen?.representation(using: format)
+        if let url = Screenshot.newUrl(diskID: bootDiskID, using: format) {
+            try data?.write(to: url, options: .atomic)
+        }
+    }
+    */
+    
+    /*
     func loadScreenshots() throws {
         
         track("Seeking screenshots for disk with id \(bootDiskID)")
@@ -484,4 +497,5 @@ class MyDocument: NSDocument {
         
         track("\(screenshots.count) screenshots loaded")
     }
+    */
 }

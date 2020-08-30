@@ -338,7 +338,22 @@ extension MyController: NSMenuItemValidation {
         
         track()
         
-        takeScreenshot()
+        // Determine screenshot format
+        let upscaled = pref.screenshotSource > 0
+        
+        // Take screenshot
+        guard let screen = renderer.screenshot(afterUpscaling: upscaled) else {
+            track("Failed to create screenshot")
+            return
+        }
+
+        // Convert to Screenshot object
+        let screenshot = Screenshot.init(screen: screen, format: pref.screenshotTarget)
+
+        // Save to disk
+        try? screenshot.save(id: mydocument.bootDiskID)
+        
+        // Create a visual effect
         renderer.blendIn(steps: 20)
     }
     
