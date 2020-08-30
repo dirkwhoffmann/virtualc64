@@ -239,12 +239,6 @@ VICII::_inspect()
 }
 
 void
-VICII::_ping()
-{
-    c64.putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
-}
-
-void
 VICII::_dumpConfig()
 {
     msg("    Chip model : %d (%s)\n", config.revision, vicRevisionName(config.revision));

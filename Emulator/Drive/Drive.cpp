@@ -112,7 +112,6 @@ Drive::setConfigItem(DriveID id, ConfigOption option, long value)
             config.connected = value;
             active = config.connected && config.switchedOn;
             reset();
-            ping();
             resume();
             return true;
             
@@ -126,7 +125,6 @@ Drive::setConfigItem(DriveID id, ConfigOption option, long value)
             config.switchedOn = value;
             active = config.connected && config.switchedOn;
             reset();
-            ping();
             resume();
             return true;
             
@@ -134,26 +132,6 @@ Drive::setConfigItem(DriveID id, ConfigOption option, long value)
             return false;
     }
 }
-
-void
-Drive::_ping()
-{    
-    c64.putMessage(config.connected ? MSG_DRIVE_CONNECT : MSG_DRIVE_DISCONNECT, deviceNr);
-    c64.putMessage(redLED ? MSG_DRIVE_LED_ON : MSG_DRIVE_LED_OFF, deviceNr);
-    c64.putMessage(spinning ? MSG_DRIVE_MOTOR_ON : MSG_DRIVE_MOTOR_OFF, deviceNr);
-    c64.putMessage(hasDisk() ? MSG_DRIVE_DISK : MSG_DRIVE_NO_DISK, deviceNr);
-    c64.putMessage(hasModifiedDisk() ? MSG_DISK_UNSAVED : MSG_DISK_SAVED, deviceNr);
-
-}
-
-/*
-void
-Drive::_setClockFrequency(u32 value)
-{
-    debug("_setClockFrequency(%d)\n", value);
-    durationOfOneCpuCycle = 10000000000 / value;
-}
-*/
 
 void 
 Drive::_dump()

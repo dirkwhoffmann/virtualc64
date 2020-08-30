@@ -200,16 +200,6 @@ HardwareComponent::pause()
 }
 
 void
-HardwareComponent::ping()
-{
-    // Ping all subcomponents
-    for (HardwareComponent *c : subComponents) c->ping();
-    
-    // Ping this component
-    _ping();
-}
-
-void
 HardwareComponent::inspect()
 {
     // Inspect all subcomponents

@@ -671,7 +671,8 @@ extension MyController {
         case MSG_FLASH:
             mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
             
-        case MSG_DISK_SAVED,
+        case MSG_DISK_PROTECT,
+             MSG_DISK_SAVED,
              MSG_DISK_UNSAVED,
              MSG_DRIVE_LED_ON,
              MSG_DRIVE_LED_OFF:
@@ -715,6 +716,12 @@ extension MyController {
             track("MSG_SNAPSHOT_TAKEN")
             mydocument.snapshots.append(c64.latestSnapshot)
             renderer.blendIn(steps: 20)
+            
+        case MSG_SNAPSHOT_RESTORED:
+            
+            track("MSG_SNAPSHOT_RESTORED")
+            renderer.updateTextureRect()
+            refreshStatusBar()
             
         default:
             

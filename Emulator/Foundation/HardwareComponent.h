@@ -134,17 +134,7 @@ public:
     void dump();
     virtual void _dump() { }
     
-    /* Asks the component to inform the GUI about its current state.
-     * The GUI invokes this function when it needs to update all of its visual
-     * elements. This happens, e.g., when a snapshot file was loaded.
-     * This function is likely to go away because the approach didn't turn out
-     * to be as fruitful as expected. At many places, the component state is
-     * already obtained by polling and not by calling ping().
-     */
-    void ping();
-    virtual void _ping() { }
-    
-    
+ 
     //
     // Serializing
     //

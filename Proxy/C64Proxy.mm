@@ -1852,10 +1852,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->c64->reset();
 }
-- (void) ping
-{
-    wrapper->c64->ping();
-}
 - (void) dump
 {
     wrapper->c64->dump();

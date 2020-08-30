@@ -148,8 +148,7 @@ Disk::setModified(bool b)
 {
     if (b != modified) {
         modified = b;
-        drive8.ping();
-        drive9.ping();
+        messageQueue.put(MSG_DISK_PROTECT);
     }
 }
 

@@ -112,6 +112,11 @@ public:
     // Mouse
     Mouse mouse = Mouse(*this);
     
+    /* Communication channel to the GUI. The GUI registers a listener and a
+     * callback function to retrieve messages.
+     */
+    MessageQueue messageQueue;
+
     
     //
     // Frame, rasterline, and rasterline cycle information
@@ -205,16 +210,6 @@ private:
      * invisible.
      */
     bool ultimax;
-    
-    
-    //
-    // Message queue
-    //
-    
-    /* Communication channel to the GUI. The GUI registers a listener and a
-     * callback function to retrieve messages.
-     */
-    MessageQueue messageQueue;
     
     
     //
@@ -349,7 +344,6 @@ private:
     void _powerOff() override;
     void _run() override;
     void _pause() override;
-    void _ping() override;
     void _setWarp(bool enable) override;
     
 

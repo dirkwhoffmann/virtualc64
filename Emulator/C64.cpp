@@ -548,11 +548,6 @@ C64::_pause()
     putMessage(MSG_PAUSE);
 }
 
-void C64::_ping()
-{
-    putMessage(warpMode ? MSG_WARP_ON : MSG_WARP_OFF);
-}
-
 void
 C64::_dump() {
     msg("C64:\n");
@@ -1027,7 +1022,8 @@ void C64::loadFromSnapshot(Snapshot *snapshot)
         // Clear the keyboard matrix to avoid constantly pressed keys
         keyboard.releaseAll();
         
-        ping();
+        // Inform the GUI
+        messageQueue.put(MSG_SNAPSHOT_RESTORED);
     }
 }
 

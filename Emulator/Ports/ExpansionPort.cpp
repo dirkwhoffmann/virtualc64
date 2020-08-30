@@ -32,13 +32,6 @@ ExpansionPort::_reset()
     }
 }
 
-void
-ExpansionPort::_ping()
-{
-    c64.putMessage(cartridge ? MSG_CARTRIDGE : MSG_NO_CARTRIDGE);
-    c64.putMessage(MSG_CART_SWITCH);
-}
-
 size_t
 ExpansionPort::_size()
 {

@@ -62,6 +62,7 @@ typedef enum
     MSG_FLASH,
     
     // Peripherals (Disk)
+    MSG_DISK_PROTECT,
     MSG_DISK_SAVED,
     MSG_DISK_UNSAVED,
     
@@ -76,7 +77,8 @@ typedef enum
     MSG_CART_SWITCH,
     
     // Snapshots
-    MSG_SNAPSHOT_TAKEN
+    MSG_SNAPSHOT_TAKEN,
+    MSG_SNAPSHOT_RESTORED
 }
 MessageType;
 

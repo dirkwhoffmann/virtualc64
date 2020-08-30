@@ -68,7 +68,6 @@ public:
 
 private:
     
-    void _ping() override;
     void _dump() override;
 
     

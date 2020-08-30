@@ -129,7 +129,6 @@ struct AnyC64FileWrapper;
 - (void) powerOff;
 - (void) inspect;
 - (void) reset;
-- (void) ping;
 - (void) dump;
 
 @property (readonly, getter=isPoweredOn) BOOL poweredOn;

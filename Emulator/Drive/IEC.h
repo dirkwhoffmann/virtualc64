@@ -73,7 +73,6 @@ private:
     
 private:
     
-    void _ping() override;
     void _dump() override;
     void dumpTrace();
 

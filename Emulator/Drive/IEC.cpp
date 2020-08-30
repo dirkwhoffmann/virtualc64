@@ -36,12 +36,6 @@ IEC::_reset()
     ciaData = 1;
 }
 
-void
-IEC::_ping()
-{
-    c64.putMessage(busActivity > 0 ? MSG_IEC_BUS_BUSY : MSG_IEC_BUS_IDLE);
-}
-
 void 
 IEC::_dump()
 {

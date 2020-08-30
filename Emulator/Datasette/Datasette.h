@@ -81,15 +81,6 @@ private:
     
     void _reset() override;
     
-
-    //
-    // Analyzing
-    //
-
-private:
-    
-    void _ping() override;
-
     
     //
     // Serializing

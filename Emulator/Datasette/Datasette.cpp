@@ -28,13 +28,6 @@ Datasette::_reset()
 }
 
 void
-Datasette::_ping()
-{
-    c64.putMessage(hasTape() ? MSG_VC1530_TAPE : MSG_VC1530_NO_TAPE);
-    c64.putMessage(MSG_VC1530_PROGRESS);
-}
-
-void
 Datasette::setHeadInCycles(u64 value)
 {
     printf("Fast forwarding to cycle %lld (duration %lld)\n", value, durationInCycles);
