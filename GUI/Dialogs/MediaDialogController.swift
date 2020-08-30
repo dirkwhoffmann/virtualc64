@@ -24,6 +24,7 @@ class MediaDialogController: DialogController {
     @IBOutlet weak var drive8: NSButton!
     @IBOutlet weak var drive9: NSButton!
     @IBOutlet weak var flash: NSPopUpButton!
+    @IBOutlet weak var flashLabel: NSTextField!
     @IBOutlet weak var carousel: iCarousel!
 
     var type: C64FileType!
@@ -128,10 +129,8 @@ class MediaDialogController: DialogController {
                   
         // Load screenshots (if any)
         let fnv = myDocument.attachment!.fnv()
-        track("fnv = \(fnv)")
         for url in Screenshot.collectFiles(forDisk: fnv) {
             if let screenshot = Screenshot.init(fromUrl: url) {
-                track("Append")
                 screenshots.append(screenshot)
             }
         }
@@ -148,9 +147,7 @@ class MediaDialogController: DialogController {
     }
     
     override func windowDidLoad() {
-        
-        track("windowDidLoad")
-        
+                
         let connected8 = parent.config.drive8Connected
         let connected9 = parent.config.drive9Connected
 
@@ -160,6 +157,7 @@ class MediaDialogController: DialogController {
         
         let numberOfItems = setUpFlashItems()
         flash.isHidden = numberOfItems == 0
+        flashLabel.isHidden = numberOfItems == 0
         
         // Configure controls
         switch media {
@@ -218,7 +216,7 @@ class MediaDialogController: DialogController {
             let size = d64.sizeOfItemInBlocks()
             let type = d64.typeOfItem()!
             
-            track("\(name) \(size) \(type)")
+            // track("\(name) \(size) \(type)")
             
             var title = "\(size)"
             title = title.padding(toLength: 5, withPad: " ", startingAt: 0)
