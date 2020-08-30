@@ -370,6 +370,7 @@ extension GamePad {
     @discardableResult
     func processJoystickEvents(events: [GamePadAction]) -> Bool {
         
+        // track("\(events) port = \(port)")
         let c64 = manager.parent.c64!
         
         if port == 1 { for event in events { c64.port1.trigger(event) } }
@@ -400,17 +401,17 @@ extension GamePad {
     }
     
     func processKeyDownEvent(macKey: MacKey) -> Bool {
-
+                
         // Only proceed if a keymap is present
-         if keyMap == nil { return false }
-         
-         // Only proceed if this key is used for emulation
-         let events = keyDownEvents(macKey)
-         if events.isEmpty { return false }
-         
-         // Process the events
-         processKeyboardEvent(events: events)
-         return true
+        if keyMap == nil { return false }
+                
+        // Only proceed if this key is used for emulation
+        let events = keyDownEvents(macKey)
+        if events.isEmpty { return false }
+                
+        // Process the events
+        processKeyboardEvent(events: events)
+        return true
     }
 
     func processKeyUpEvent(macKey: MacKey) -> Bool {
