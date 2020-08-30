@@ -13,7 +13,7 @@
 		5002FA7F21C2653600DA4BBC /* EmulatorPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002FA7E21C2653600DA4BBC /* EmulatorPrefs.swift */; };
 		5002FA8121C2654B00DA4BBC /* DevicesPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002FA8021C2654B00DA4BBC /* DevicesPrefs.swift */; };
 		5002FA8321C2655800DA4BBC /* KeyboardPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */; };
-		50031B34206FABA400A1969B /* SnapshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50031B33206FABA400A1969B /* SnapshotDialog.xib */; };
+		50031B34206FABA400A1969B /* OldSnapshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50031B33206FABA400A1969B /* OldSnapshotDialog.xib */; };
 		50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50031B39206FB0FC00A1969B /* SnapshotController.swift */; };
 		5009CF3324C0B8EF00F674FF /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5009CF3224C0B8EF00F674FF /* Preferences.swift */; };
 		500EA6C724B09037009AA7D7 /* C64Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EA6C524B09037009AA7D7 /* C64Component.cpp */; };
@@ -249,7 +249,7 @@
 		5002FA7E21C2653600DA4BBC /* EmulatorPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulatorPrefs.swift; sourceTree = "<group>"; };
 		5002FA8021C2654B00DA4BBC /* DevicesPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesPrefs.swift; sourceTree = "<group>"; };
 		5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardPrefs.swift; sourceTree = "<group>"; };
-		50031B33206FABA400A1969B /* SnapshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SnapshotDialog.xib; sourceTree = "<group>"; };
+		50031B33206FABA400A1969B /* OldSnapshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OldSnapshotDialog.xib; sourceTree = "<group>"; };
 		50031B39206FB0FC00A1969B /* SnapshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
 		5009CF3224C0B8EF00F674FF /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		500EA6C524B09037009AA7D7 /* C64Component.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64Component.cpp; sourceTree = "<group>"; };
@@ -1223,7 +1223,7 @@
 				50F99563203AEC80004C4856 /* KeyViewItem.xib */,
 				50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */,
 				50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */,
-				50031B33206FABA400A1969B /* SnapshotDialog.xib */,
+				50031B33206FABA400A1969B /* OldSnapshotDialog.xib */,
 				50B485F824F96E9400844133 /* MediaDialog.xib */,
 				507E7A9D24FB864E00AB433C /* ScreenshotDialog.xib */,
 			);
@@ -1311,7 +1311,7 @@
 				50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */,
 				50D2A69E210F20CB00F13D43 /* VirtualKeyboard.xib in Resources */,
 				501E428020D975AD000BB48D /* IconVirtualC64.icns in Resources */,
-				50031B34206FABA400A1969B /* SnapshotDialog.xib in Resources */,
+				50031B34206FABA400A1969B /* OldSnapshotDialog.xib in Resources */,
 				50D197E021606DEC008BC551 /* dsa_pub.pem in Resources */,
 				5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */,
 				501E427E20D975AD000BB48D /* IconT64.icns in Resources */,
