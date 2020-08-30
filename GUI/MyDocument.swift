@@ -223,29 +223,9 @@ class MyDocument: NSDocument {
         let name = NSNib.Name("MediaDialog")
         let controller = MediaDialogController.make(parent: parent, nibName: name)
         controller?.showSheet()
-
-        /*
-        switch attachment {
-            
-        case _ as CRTFileProxy:
-            runCartridgeMountDialog()
-            
-        case _ as TAPFileProxy:
-            runTapeMountDialog()
-            
-        case _ as T64FileProxy, _ as D64FileProxy,
-             _ as PRGFileProxy, _ as P00FileProxy:
-            runArchiveMountDialog()
-            
-        case _ as G64FileProxy:
-            runDiskMountDialog()
-            
-        default:
-            break
-        }
-        */
     }
     
+    /*
     func runArchiveMountDialog() {
         
         let name = NSNib.Name("ArchiveMountDialog")
@@ -270,7 +250,8 @@ class MyDocument: NSDocument {
         let controller = CartridgeMountController.make(parent: parent, nibName: name)
         controller?.showSheet()
     }
-    
+ */
+ 
     @discardableResult
     func mountAttachmentAsDisk(drive: DriveID) -> Bool {
         
