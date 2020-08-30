@@ -24,11 +24,11 @@ class ScreenshotDialog: DialogController {
     // Fingerprint of linked media file
     var checksum = UInt64(0)
     
-    // Screenshots
+    // Screenshot storage
     var screenshots: [Screenshot] = []
     
-    var latestIndex = 0
-    var favoriteIndex = 0
+    // Indicates if the screenshot storage has been edited
+    var needsSaving = false
     
     // Computed variables
     var myDocument: MyDocument { return parent.mydocument! }
@@ -38,8 +38,8 @@ class ScreenshotDialog: DialogController {
     var lastItem: Int { return screenshots.count - 1 }
     var empty: Bool { return screenshots.count == 0 }
 
-    override func sheetWillShow() {
-              
+    func loadScreenshots() {
+
         track("Seeking screenshots for disk with id \(checksum)")
         
         for url in Screenshot.collectFiles(forDisk: checksum) {
@@ -49,6 +49,23 @@ class ScreenshotDialog: DialogController {
         }
         
         track("\(screenshots.count) screenshots loaded")
+    }
+    
+    func saveScreenshots() throws {
+        
+        track("Saving screenshots to disk (\(checksum))")
+                
+        Screenshot.deleteFolder(forDisk: checksum)
+        for n in 0 ..< screenshots.count {
+            try? screenshots[n].save(id: checksum)
+        }
+
+        track("All screenshots saved")
+    }
+    
+    override func sheetWillShow() {
+        
+        loadScreenshots()
     }
     
     override func sheetDidShow() {
@@ -124,6 +141,7 @@ class ScreenshotDialog: DialogController {
         if currentItem > 0 {
             screenshots.swapAt(currentItem, currentItem - 1)
             updateCarousel(goto: currentItem - 1, animated: true)
+            needsSaving = true
         }
     }
 
@@ -132,13 +150,15 @@ class ScreenshotDialog: DialogController {
         if currentItem < lastItem {
             screenshots.swapAt(currentItem, currentItem + 1)
             updateCarousel(goto: currentItem + 1, animated: true)
+            needsSaving = true
         }
     }
 
-    @IBAction func actionAction(_ sender: NSButton!) {
-                    
+    @IBAction func deleteAction(_ sender: NSButton!) {
+        
         screenshots.remove(at: currentItem)
         updateCarousel(goto: currentItem - 1, animated: true)
+        needsSaving = true
     }
 
     @IBAction func finderAction(_ sender: NSButton!) {
@@ -161,6 +181,9 @@ class ScreenshotDialog: DialogController {
         actionButton.isHidden = true
         text1.stringValue = ""
         text2.stringValue = ""
+        
+        if needsSaving { try? saveScreenshots() }
+        screenshots = []
     }
 }
 

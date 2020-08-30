@@ -55,7 +55,7 @@ extension URL {
         return folder
     }
     
-    // Return the URL to an empty temporary folder
+    // Returns the URL of an empty temporary folder
     static func tmpFolder() throws -> URL {
         
         let tmp = try appSupportFolder("tmp")
@@ -71,9 +71,8 @@ extension URL {
             options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants]
         )
         
-        track("contents: urls = \(urls)")
         let filtered = urls.filter { allowedTypes?.contains($0.pathExtension) ?? true }
-        track("filtered = \(filtered)")
+        // track("filtered = \(filtered)")
         return filtered
     }
     

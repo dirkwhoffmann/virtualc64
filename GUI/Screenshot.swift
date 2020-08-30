@@ -14,11 +14,8 @@ class Screenshot {
     
     // Proposed file format for this screenshot
     var format = NSBitmapImageRep.FileType.jpeg
-    
-    // Creation date
-    var data = Date()
-    
-    // Image width and heigt
+        
+    // Image width and height
     var width: Int { return Int(screen?.size.width ?? 0) }
     var height: Int { return Int(screen?.size.height ?? 0) }
 
@@ -56,7 +53,6 @@ class Screenshot {
         
         self.screen = screen
         self.format = format
-        data = Date()
     }
     
     convenience init?(fromUrl url: URL) {
@@ -67,31 +63,6 @@ class Screenshot {
         self.init(screen: image, format: format)
     }
     
-    /*
-    func quicksave(format: NSBitmapImageRep.FileType) {
-        
-        // Get URL to desktop directory
-        let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory,
-                                                        .userDomainMask,
-                                                        true)
-        let desktop = NSURL.init(fileURLWithPath: paths[0])
-        
-        // Assemble filename
-        if var url = desktop.appendingPathComponent("Screenshot.") {
-            
-            url = url.byAddingExtension(for: format)
-            url = url.byAddingTimeStamp()
-            url = url.makeUnique()
-            
-            do {
-                try save(url: url, format: format)
-            } catch {
-                track("Failed to quicksave screenshot to \(url.path)")
-            }
-        }
-    }
-    */
-        
     func save(id: UInt64) throws {
                 
         if let url = Screenshot.newUrl(diskID: id, using: format) {
@@ -137,7 +108,7 @@ class Screenshot {
         
         return nil
     }
-        
+    
     static func newUrl(diskID: UInt64,
                        using format: NSBitmapImageRep.FileType = .jpeg) -> URL? {
 
@@ -169,15 +140,6 @@ class Screenshot {
             }
         }
         
-        /*
-            let url = folder!.appendingPathComponent(filename).byAddingExtension(for: format)
-            
-            if !FileManager.default.fileExists(atPath: url.path) {
-                return url
-            }
-        }
-        */
-        
         return nil
     }
         
@@ -201,6 +163,32 @@ class Screenshot {
         return collectFiles(in: folder(forDisk: diskID))
     }
     
+    /*
+    static func swapFiles(forDisk diskID: UInt64, _ i: Int, _ j: Int) throws {
+        
+        guard let path = folder(forDisk: diskID) else { return }
+        guard let url1 = url(forItem: i, in: path) else { return }
+        guard let url2 = url(forItem: j, in: path) else { return }
+        guard let temp = newUrl(diskID: diskID) else { return }
+        
+        track("Swapping files for items \(i) and \(j)")
+        
+        try FileManager.default.moveItem(at: url1, to: temp)
+        try FileManager.default.moveItem(at: url2, to: url1)
+        try FileManager.default.moveItem(at: temp, to: url2)
+    }
+
+    static func deleteFile(forDisk diskID: UInt64, _ i: Int) throws {
+        
+        guard let path = folder(forDisk: diskID) else { return }
+        guard let url = url(forItem: i, in: path) else { return }
+        
+        track("Deleting file for item \(i)")
+        
+        try FileManager.default.removeItem(at: url)
+    }
+    */
+    
     static func deleteFolder(withUrl url: URL?) {
         
         let files = Screenshot.collectFiles(in: url)
@@ -213,5 +201,4 @@ class Screenshot {
         
         deleteFolder(withUrl: folder(forDisk: diskID))
     }
-
 }

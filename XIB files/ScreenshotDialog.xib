@@ -25,12 +25,80 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="593" height="351"/>
+            <rect key="contentRect" x="196" y="240" width="593" height="350"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1536" height="937"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="593" height="351"/>
+                <rect key="frame" x="0.0" y="0.0" width="593" height="350"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <button hidden="YES" toolTip="Move screenshot one slot right" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JxV-0v-tuo">
+                        <rect key="frame" x="312" y="44" width="16" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="frontTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="eyI-d2-Xtw">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="rightAction:" target="-2" id="MCe-EQ-Ot0"/>
+                        </connections>
+                    </button>
+                    <button hidden="YES" toolTip="Move screenshot one slot left" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Umf-Yb-chw">
+                        <rect key="frame" x="264" y="44" width="16" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="backTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="1Qx-Oa-JYY">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="leftAction:" target="-2" id="HLW-fe-Qxb"/>
+                        </connections>
+                    </button>
+                    <button hidden="YES" toolTip="Delete screenshot permanently" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DbX-yS-sAZ">
+                        <rect key="frame" x="288" y="44" width="16" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="trashTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="1PT-7J-ZG0">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="deleteAction:" target="-2" id="lwr-vV-sUl"/>
+                        </connections>
+                    </button>
+                    <customView hidden="YES" canDrawConcurrently="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cia-eO-bUp" customClass="iCarousel">
+                        <rect key="frame" x="20" y="65" width="553" height="205"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <connections>
+                            <outlet property="dataSource" destination="-2" id="I5U-nZ-0yy"/>
+                            <outlet property="delegate" destination="-2" id="qoU-Ly-n6U"/>
+                        </connections>
+                    </customView>
+                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mZr-eM-mYd">
+                        <rect key="frame" x="143" y="295" width="307" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="99 seconds ago" id="MPo-Kb-4r4">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QJj-bO-Yb4">
+                        <rect key="frame" x="143" y="278" width="307" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="center" title="99 seconds ago" id="0jb-wj-IIQ">
+                            <font key="font" metaFont="controlContent" size="11"/>
+                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fl5-Yu-tsc">
+                        <rect key="frame" x="143" y="314" width="307" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="42 / 42" id="dXG-ED-vv3">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xAQ-uZ-u6y">
                         <rect key="frame" x="466" y="13" width="113" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -60,82 +128,14 @@ Gw
                         <rect key="frame" x="44" y="23" width="137" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Open images in Finder" id="NBx-u2-Z1Z">
-                            <font key="font" metaFont="label" size="11"/>
+                            <font key="font" metaFont="controlContent" size="11"/>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button hidden="YES" toolTip="Move screenshot one slot right" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JxV-0v-tuo">
-                        <rect key="frame" x="312" y="40" width="16" height="16"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="frontTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="eyI-d2-Xtw">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="rightAction:" target="-2" id="MCe-EQ-Ot0"/>
-                        </connections>
-                    </button>
-                    <button hidden="YES" toolTip="Move screenshot one slot left" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Umf-Yb-chw">
-                        <rect key="frame" x="264" y="40" width="16" height="16"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="backTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="1Qx-Oa-JYY">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="leftAction:" target="-2" id="HLW-fe-Qxb"/>
-                        </connections>
-                    </button>
-                    <button hidden="YES" toolTip="Delete screenshot permanently" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DbX-yS-sAZ">
-                        <rect key="frame" x="288" y="40" width="16" height="16"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="trashTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="1PT-7J-ZG0">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="actionAction:" target="-2" id="lwr-vV-sUl"/>
-                        </connections>
-                    </button>
-                    <customView hidden="YES" canDrawConcurrently="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cia-eO-bUp" customClass="iCarousel">
-                        <rect key="frame" x="20" y="66" width="553" height="205"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <connections>
-                            <outlet property="dataSource" destination="-2" id="I5U-nZ-0yy"/>
-                            <outlet property="delegate" destination="-2" id="qoU-Ly-n6U"/>
-                        </connections>
-                    </customView>
-                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mZr-eM-mYd">
-                        <rect key="frame" x="143" y="296" width="307" height="16"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="99 seconds ago" id="MPo-Kb-4r4">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QJj-bO-Yb4">
-                        <rect key="frame" x="143" y="279" width="307" height="14"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="center" title="99 seconds ago" id="0jb-wj-IIQ">
-                            <font key="font" metaFont="label" size="11"/>
-                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fl5-Yu-tsc">
-                        <rect key="frame" x="143" y="315" width="307" height="16"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="42 / 42" id="dXG-ED-vv3">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="138.5" y="163.5"/>
+            <point key="canvasLocation" x="138.5" y="163"/>
         </window>
     </objects>
     <resources>

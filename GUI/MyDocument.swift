@@ -444,58 +444,8 @@ class MyDocument: NSDocument {
         if bootDiskID == 0 {
             track("Assigning new ID")
             bootDiskID = id
-            // try? loadScreenshots()
             return true
         }
         return false
     }
-    
-    // Writes screenshots back to disk if needed
-    /*
-    func persistScreenshots() throws {
-        
-        if screenshots.modified { try saveScreenshots() }
-    }
-    */
-    
-    /*
-    func saveScreenshots() throws {
-        
-        track("Saving user screenshots to disk (\(bootDiskID))")
-
-        Screenshot.deleteFolder(forDisk: bootDiskID)
-        for n in 0 ..< screenshots.count {
-            try saveScreenshot(screenshots.element(at: n))
-        }
-    }
-    */
-    
-    // DEPRECATED
-    /*
-    func saveScreenshot(_ screenshot: Screenshot?) throws {
-
-        let format = parent.pref.screenshotTarget
-
-        let data = screenshot?.screen?.representation(using: format)
-        if let url = Screenshot.newUrl(diskID: bootDiskID, using: format) {
-            try data?.write(to: url, options: .atomic)
-        }
-    }
-    */
-    
-    /*
-    func loadScreenshots() throws {
-        
-        track("Seeking screenshots for disk with id \(bootDiskID)")
-        
-        screenshots.clear()
-        for url in Screenshot.collectFiles(forDisk: bootDiskID) {
-            if let screenshot = Screenshot.init(fromUrl: url) {
-                screenshots.append(screenshot)
-            }
-        }
-        
-        track("\(screenshots.count) screenshots loaded")
-    }
-    */
 }
