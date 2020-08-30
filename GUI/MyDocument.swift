@@ -159,39 +159,34 @@ class MyDocument: NSDocument {
     
     @discardableResult
     func mountAttachment() -> Bool {
-        
-        guard let controller = myController else { return false }
-        let pref = controller.pref
-        
-        // Determine action to perform and text to type
-        var mountAction = AutoMountAction.openBrowser
-        var autoText: String?
 
-        func getAction(_ type: String) {
-            mountAction = pref.mountAction[type] ?? mountAction
-            if mountAction != .openBrowser && (pref.autoType[type] ?? false) {
-                autoText = pref.autoText[type]
-            }
-        }
+        // Only proceed if an attachment is present
+        if attachment == nil { return false }
+        
+        // If the attachment is a snapshot, flash it and return
+        if let s = attachment as? SnapshotProxy { c64.flash(s); return true }
 
-        switch attachment {
-        case _ as SnapshotProxy: c64.flash(attachment); return true
-        case _ as D64FileProxy, _ as G64FileProxy: getAction("D64")
-        case _ as PRGFileProxy, _ as P00FileProxy: getAction("PRG")
-        case _ as T64FileProxy: getAction("T64")
-        case _ as TAPFileProxy: getAction("TAP")
-        case _ as CRTFileProxy: getAction("CRT")
-        default: return false
-        }
-    
-        // Check if the emulator has just been startet. In that case, we have
-        // to wait until the Kernal boot routine has been executed. Otherwise,
-        // the C64 would ignore everything we are doing here.
+        // Determine the action to perform and the text to type
+        let key = attachment!.typeAsString()!
+        let action = parent.pref.mountAction[key] ?? AutoMountAction.openBrowser
+        
+        // If the action is to open the media dialog, open it and return
+        if action == .openBrowser { runMountDialog(); return true }
+        
+        // Determine if a text should be typed
+        let type = parent.pref.autoType[key] ?? false
+        let text = type ? parent.pref.autoText[key] : nil
+        
+        /* Determine when the action should be performed. Background: If the
+         * emulator has just been startet, we have to wait until the startup
+         * procedure has been executed. Otherwise, the Kernal would ignore
+         * everything we do here.
+         */
         let delay = (c64.cpu.cycle() < 3000000) ? 2.0 : 0.0
 
-        // Execute asynchronously ...
+        // Execute the action asynchronously
         DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
-            self.mountAttachment(action: mountAction, text: autoText)
+            self.mountAttachment(action: action, text: text)
         })
         
         return true
