@@ -1318,6 +1318,47 @@ struct AnyC64FileWrapper { AnyFile *file; };
     c64->resume();
     return [self make:snapshot];
 }
+- (NSImage *)previewImage
+{
+    if (preview != NULL) { return preview; }
+    
+    // Create preview image
+    Snapshot *snapshot = (Snapshot *)wrapper->file;
+    
+    NSInteger width = snapshot->getImageWidth();
+    NSInteger height = snapshot->getImageHeight();
+    unsigned char *data = snapshot->getImageData();
+    
+    
+    NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
+                             initWithBitmapDataPlanes:&data
+                             pixelsWide:width
+                             pixelsHigh:height
+                             bitsPerSample:8
+                             samplesPerPixel:4
+                             hasAlpha:true
+                             isPlanar:false
+                             colorSpaceName:NSCalibratedRGBColorSpace
+                             bytesPerRow:4*width
+                             bitsPerPixel:32];
+    
+    preview = [[NSImage alloc] initWithSize:[rep size]];
+    [preview addRepresentation:rep];
+    
+    // image.makeGlossy()
+
+    return preview;
+}
+- (time_t)timeStamp
+{
+    return ((Snapshot *)wrapper->file)->getTimestamp();
+}
+- (NSData *)data
+{
+    Snapshot *snapshot = (Snapshot *)wrapper->file;
+    return [NSData dataWithBytes: (void *)snapshot->getHeader()
+                          length: snapshot->sizeOnDisk()];
+}
 
 @end
 

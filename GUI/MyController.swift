@@ -50,9 +50,9 @@ class MyController: NSWindowController, MessageReceiver {
     
     // Configuration panel of this emulator instance
     var configurator: ConfigurationController?
-    
+
     // Snapshot and screenshot browsers
-    // var snapshotBrowser: SnapshotDialog?
+    var snapshotBrowser: SnapshotDialog?
     var screenshotBrowser: ScreenshotDialog?
 
     // The current emulator configuration
@@ -720,6 +720,7 @@ extension MyController {
         case MSG_SNAPSHOT_RESTORED:
             
             track("MSG_SNAPSHOT_RESTORED")
+            renderer.blendIn(steps: 20)
             renderer.updateTextureRect()
             refreshStatusBar()
             

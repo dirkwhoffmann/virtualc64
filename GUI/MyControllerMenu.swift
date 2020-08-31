@@ -325,13 +325,11 @@ extension MyController: NSMenuItemValidation {
     @IBAction func browseSnapshotsAction(_ sender: Any!) {
         
         track()
-        /*
         if snapshotBrowser == nil {
             let name = NSNib.Name("SnapshotDialog")
             snapshotBrowser = SnapshotDialog.make(parent: self, nibName: name)
         }
         snapshotBrowser?.showSheet()
-        */
     }
     
     @IBAction func takeScreenshotAction(_ sender: Any!) {

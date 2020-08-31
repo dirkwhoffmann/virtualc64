@@ -753,6 +753,8 @@ struct AnyC64FileWrapper;
 //
 
 @interface SnapshotProxy : AnyC64FileProxy {
+
+   NSImage *preview;
 }
 
 + (BOOL)isSupportedSnapshot:(const void *)buffer length:(NSInteger)length;
@@ -762,6 +764,10 @@ struct AnyC64FileWrapper;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)path;
 + (instancetype)makeWithC64:(C64Proxy *)c64proxy;
+
+@property (readonly, strong) NSImage *previewImage;
+@property (readonly) time_t timeStamp;
+@property (readonly, copy) NSData *data;
 
 @end
 

@@ -41,6 +41,8 @@
 		5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9220B6C298000D9193 /* CIAPanel.swift */; };
 		5038CA9520B6C2AC000D9193 /* VICPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9420B6C2AC000D9193 /* VICPanel.swift */; };
 		5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9620B6C2BE000D9193 /* SIDPanel.swift */; };
+		503C1DD124FC10F400D91141 /* SnapshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 503C1DD024FC10F400D91141 /* SnapshotDialog.xib */; };
+		503C1DD324FCD1BF00D91141 /* SnapshotDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503C1DD224FCD1BF00D91141 /* SnapshotDialog.swift */; };
 		503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */; };
 		503E199020C42C6D007E91F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 503E198F20C42C6D007E91F1 /* Assets.xcassets */; };
 		504C435924AF29AC00E69CAE /* Ocean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C429124AF29AB00E69CAE /* Ocean.cpp */; };
@@ -277,6 +279,8 @@
 		5038CA9220B6C298000D9193 /* CIAPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIAPanel.swift; sourceTree = "<group>"; };
 		5038CA9420B6C2AC000D9193 /* VICPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VICPanel.swift; sourceTree = "<group>"; };
 		5038CA9620B6C2BE000D9193 /* SIDPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIDPanel.swift; sourceTree = "<group>"; };
+		503C1DD024FC10F400D91141 /* SnapshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SnapshotDialog.xib; sourceTree = "<group>"; };
+		503C1DD224FCD1BF00D91141 /* SnapshotDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotDialog.swift; sourceTree = "<group>"; };
 		503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerToolbar.swift; sourceTree = "<group>"; };
 		503E198F20C42C6D007E91F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		504268AC24F0F76F006BB841 /* C64PrivateTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64PrivateTypes.h; sourceTree = "<group>"; };
@@ -689,6 +693,7 @@
 			children = (
 				50763276202989D300575110 /* DialogController.swift */,
 				50B485FA24F9911600844133 /* MediaDialogController.swift */,
+				503C1DD224FCD1BF00D91141 /* SnapshotDialog.swift */,
 				507E7A9F24FB881500AB433C /* ScreenshotDialog.swift */,
 				50C12A4321C6B6A6007EFAF6 /* MediaBrowsers */,
 				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
@@ -1225,6 +1230,7 @@
 				50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */,
 				50031B33206FABA400A1969B /* OldSnapshotDialog.xib */,
 				50B485F824F96E9400844133 /* MediaDialog.xib */,
+				503C1DD024FC10F400D91141 /* SnapshotDialog.xib */,
 				507E7A9D24FB864E00AB433C /* ScreenshotDialog.xib */,
 			);
 			path = "XIB files";
@@ -1306,6 +1312,7 @@
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */,
 				503E199020C42C6D007E91F1 /* Assets.xcassets in Resources */,
+				503C1DD124FC10F400D91141 /* SnapshotDialog.xib in Resources */,
 				50A0B48D24C1CAEB00FF0B0B /* Preferences.xib in Resources */,
 				50D3092624C71AD300B92563 /* Monitor.xib in Resources */,
 				50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */,
@@ -1448,6 +1455,7 @@
 				504C43AB24AF29AC00E69CAE /* CIA.cpp in Sources */,
 				504C436024AF29AC00E69CAE /* Mach5.cpp in Sources */,
 				504C43A724AF29AC00E69CAE /* VIA.cpp in Sources */,
+				503C1DD324FCD1BF00D91141 /* SnapshotDialog.swift in Sources */,
 				50D5F88024F4F12F0062EF13 /* TrackTableView.swift in Sources */,
 				50BE4B6024E7F8A1008F39C9 /* Date.swift in Sources */,
 				504C435C24AF29AC00E69CAE /* Westermann.cpp in Sources */,
