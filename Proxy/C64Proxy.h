@@ -141,8 +141,10 @@ struct AnyC64FileWrapper;
 - (void) suspend;
 - (void) resume;
 
-- (void) requestSnapshot;
-@property (readonly) SnapshotProxy *latestSnapshot;
+- (void) requestAutoSnapshot;
+- (void) requestUserSnapshot;
+@property (readonly) SnapshotProxy *latestAutoSnapshot;
+@property (readonly) SnapshotProxy *latestUserSnapshot;
 - (void) loadFromSnapshot:(SnapshotProxy *)proxy;
 
 - (C64Configuration) config;

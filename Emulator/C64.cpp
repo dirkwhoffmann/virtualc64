@@ -699,14 +699,14 @@ C64::runLoop()
             // Are we requested to take a snapshot?
             if (runLoopCtrl & RL_AUTO_SNAPSHOT) {
                 debug(RUN_DEBUG, "RL_AUTO_SNAPSHOT\n");
-                // autoSnapshot = Snapshot::makeWithC64(this);
-                // putMessage(MSG_AUTO_SNAPSHOT_TAKEN);
+                autoSnapshot = Snapshot::makeWithC64(this);
+                putMessage(MSG_AUTO_SNAPSHOT_TAKEN);
                 clearControlFlags(RL_AUTO_SNAPSHOT);
             }
             if (runLoopCtrl & RL_USER_SNAPSHOT) {
                 debug("RL_USER_SNAPSHOT\n");
-                snapshot = Snapshot::makeWithC64(this);
-                putMessage(MSG_SNAPSHOT_TAKEN);
+                userSnapshot = Snapshot::makeWithC64(this);
+                putMessage(MSG_USER_SNAPSHOT_TAKEN);
                 clearControlFlags(RL_USER_SNAPSHOT);
             }
             
@@ -984,13 +984,29 @@ C64::synchronizeTiming()
 }
 
 void
-C64::requestSnapshot()
+C64::requestAutoSnapshot()
 {
     if (!isRunning()) {
         
         // Take snapshot immediately
-        snapshot = Snapshot::makeWithC64(this);
-        putMessage(MSG_SNAPSHOT_TAKEN);
+        autoSnapshot = Snapshot::makeWithC64(this);
+        putMessage(MSG_AUTO_SNAPSHOT_TAKEN);
+        
+    } else {
+        
+        // Schedule the snapshot to be taken
+        signalAutoSnapshot();
+    }
+}
+
+void
+C64::requestUserSnapshot()
+{
+    if (!isRunning()) {
+        
+        // Take snapshot immediately
+        userSnapshot = Snapshot::makeWithC64(this);
+        putMessage(MSG_USER_SNAPSHOT_TAKEN);
         
     } else {
         
@@ -1000,10 +1016,18 @@ C64::requestSnapshot()
 }
 
 Snapshot *
-C64::latestSnapshot()
+C64::latestAutoSnapshot()
 {
-    Snapshot *result = snapshot;
-    snapshot = NULL;
+    Snapshot *result = autoSnapshot;
+    autoSnapshot = NULL;
+    return result;
+}
+
+Snapshot *
+C64::latestUserSnapshot()
+{
+    Snapshot *result = userSnapshot;
+    userSnapshot = NULL;
     return result;
 }
 

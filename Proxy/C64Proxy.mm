@@ -1929,13 +1929,22 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->c64->resume();
 }
-- (void) requestSnapshot
+- (void) requestAutoSnapshot
 {
-    wrapper->c64->requestSnapshot();
+    wrapper->c64->requestAutoSnapshot();
 }
-- (SnapshotProxy *) latestSnapshot
+- (void) requestUserSnapshot
 {
-    Snapshot *snapshot = wrapper->c64->latestSnapshot();
+    wrapper->c64->requestUserSnapshot();
+}
+- (SnapshotProxy *) latestAutoSnapshot
+{
+    Snapshot *snapshot = wrapper->c64->latestAutoSnapshot();
+    return [SnapshotProxy make:snapshot];
+}
+- (SnapshotProxy *) latestUserSnapshot
+{
+    Snapshot *snapshot = wrapper->c64->latestUserSnapshot();
     return [SnapshotProxy make:snapshot];
 }
 - (void) loadFromSnapshot:(SnapshotProxy *)proxy

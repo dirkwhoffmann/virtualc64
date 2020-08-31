@@ -218,8 +218,8 @@ private:
     
 private:
     
-    Snapshot *snapshot = NULL;
-
+    Snapshot *autoSnapshot = NULL;
+    Snapshot *userSnapshot = NULL;
     
     //
     // Initializing
@@ -535,12 +535,15 @@ public:
     
     /* Requests a snapshot to be taken. Once the snapshot is ready, a message
      * is written into the message queue. The snapshot can then be picked up by
-     * calling latestSnapshot().
+     * calling latestAutoSnapshot() or latestUserSnapshot(), depending on the
+     * requested snapshot type.
      */
-    void requestSnapshot();
-    
+    void requestAutoSnapshot();
+    void requestUserSnapshot();
+
     // Returns the most recent snapshot or NULL if none was taken
-    Snapshot *latestSnapshot();
+    Snapshot *latestAutoSnapshot();
+    Snapshot *latestUserSnapshot();
     
     /* Loads the current state from a snapshot file. This function is not
      * thread-safe and must not be called on a running emulator.

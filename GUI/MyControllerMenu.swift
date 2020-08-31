@@ -308,8 +308,7 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func takeSnapshotAction(_ sender: Any!) {
         
-        takeSnapshot()
-        renderer.blendIn(steps: 20)
+        c64.requestUserSnapshot()
     }
     
     @IBAction func restoreSnapshotAction(_ sender: Any!) {

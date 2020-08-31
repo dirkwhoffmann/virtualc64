@@ -77,7 +77,8 @@ typedef enum
     MSG_CART_SWITCH,
     
     // Snapshots
-    MSG_SNAPSHOT_TAKEN,
+    MSG_AUTO_SNAPSHOT_TAKEN,
+    MSG_USER_SNAPSHOT_TAKEN,
     MSG_SNAPSHOT_RESTORED
 }
 MessageType;

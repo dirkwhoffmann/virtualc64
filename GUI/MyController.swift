@@ -554,7 +554,7 @@ extension MyController {
     
     @objc func snapshotTimerFunc() {
         
-        if pref.autoSnapshots { takeSnapshot() }
+        if pref.autoSnapshots { c64.requestAutoSnapshot() }
     }
     
     func processMessage(_ msg: Message) {
@@ -711,10 +711,15 @@ extension MyController {
             
             refreshStatusBarCartridgeIcons()
             
-        case MSG_SNAPSHOT_TAKEN:
+        case MSG_AUTO_SNAPSHOT_TAKEN:
             
-            track("MSG_SNAPSHOT_TAKEN")
-            mydocument.snapshots.append(c64.latestSnapshot)
+            track("MSG_AUTO_SNAPSHOT_TAKEN")
+            mydocument.snapshots.append(c64.latestAutoSnapshot)
+
+        case MSG_USER_SNAPSHOT_TAKEN:
+            
+            track("MSG_USER_SNAPSHOT_TAKEN")
+            mydocument.snapshots.append(c64.latestUserSnapshot)
             renderer.blendIn(steps: 20)
             
         case MSG_SNAPSHOT_RESTORED:

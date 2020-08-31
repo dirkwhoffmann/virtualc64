@@ -23,9 +23,7 @@ extension MyController {
         c64.load(fromSnapshot: snapshot)
         c64.resume()
     }
-    
-    func takeSnapshot() { c64.requestSnapshot() }
-    
+        
     func restoreSnapshot(item: Int) -> Bool {
         
         if let snapshot = mydocument.snapshots.element(at: item) {
