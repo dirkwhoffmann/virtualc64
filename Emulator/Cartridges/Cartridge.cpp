@@ -86,7 +86,7 @@ Cartridge::makeWithType(C64 &c64, CartridgeType type)
         case CRT_OCEAN:           return new Ocean(c64);
         case CRT_EXPERT:          return new Expert(c64);
         case CRT_FUNPLAY:         return new Funplay(c64);
-        case CRT_SUPER_GAMES:     return new Supergames(c64);
+        case CRT_SUPER_GAMES:     return new SuperGames(c64);
         case CRT_ATOMIC_POWER:    return new AtomicPower(c64);
         case CRT_EPYX_FASTLOAD:   return new Epyx(c64);
         case CRT_WESTERMANN:      return new Westermann(c64);

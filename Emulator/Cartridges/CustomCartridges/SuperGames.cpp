@@ -10,21 +10,17 @@
 #include "C64.h"
 
 void
-Supergames::pokeIO2(u16 addr, u8 value)
+SuperGames::pokeIO2(u16 addr, u8 value)
 {
-    /* Bits 0, 1: Bank bits 0 and 1
-     * Bits 2:    Exrom / Game control
-     * Bits 3:    if 1, further writes to DE00 have no effect (not implemented)
-     */
-    
-    if (addr == 0xDF00) {
+    if (addr == 0xDF00 && protect == false) {
+
+        // Bit 3: Write protection latch
+        protect = value & 0b1000;
+                
+        // Bit 2: Exrom / Game control
+        expansionport.setCartridgeMode(value & 0b100 ? CRT_OFF : CRT_16K);
         
-        if (value & 0x04) {
-            expansionport.setCartridgeMode(CRT_8K);
-        } else {
-            expansionport.setCartridgeMode(CRT_16K);
-        }
-        
-        bankIn(value & 0x03);
+        // Bit 0 and 1: Bank select
+        bankIn(value & 0b11);
     }
 }
