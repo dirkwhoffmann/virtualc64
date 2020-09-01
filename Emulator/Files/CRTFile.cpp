@@ -102,8 +102,8 @@ CRTFile::cartridgeTypeName(CartridgeType type)
         case CRT_FINAL_PLUS: return "Final Plus";
         case CRT_ACTION_REPLAY4: return "Action replay 4";
         case CRT_STARDOS: return "Stardos";
-        case CRT_EASYFLASH: return "Easyflash";
-        case CRT_EASYFLASH_XBANK: return "Easyflash (XBank)";
+        case CRT_EASYFLASH: return "EasyFlash";
+        case CRT_EASYFLASH_XBANK: return "EasyFlash (XBank)";
         case CRT_CAPTURE: return "Capture";
         case CRT_ACTION_REPLAY3: return "Action replay 3";
         case CRT_RETRO_REPLAY: return "Metro replay";

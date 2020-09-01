@@ -34,10 +34,13 @@ void
 EasyFlash::_reset()
 {
     RESET_SNAPSHOT_ITEMS
-
     Cartridge::_reset();
     
     eraseRAM(0xFF);
+    
+    // Make sure peekRomL() and peekRomH() conver the whole range
+    mappedBytesL = 0x2000;
+    mappedBytesH = 0x2000;
 }
 
 void
@@ -124,6 +127,10 @@ EasyFlash::peek(u16 addr)
 void
 EasyFlash::poke(u16 addr, u8 value)
 {
+    Cartridge::poke(addr, value);
+    /*
+    debug(CRT_DEBUG, "poke(%x, %x) %x %x\n", addr, value, mappedBytesL, mappedBytesH);
+
     if (isROMLaddr(addr)) {
         flashRomL.poke(bank, addr & 0x1FFF, value);
         
@@ -133,23 +140,48 @@ EasyFlash::poke(u16 addr, u8 value)
     } else {
         assert(false);
     }
+    
+    if (!c64.getUltimax()) {
+        debug("Writing %x to RAM %x\n", addr, value);
+        mem.ram[addr] = value;
+    }
+    */
+}
+
+void
+EasyFlash::pokeRomL(u16 addr, u8 value)
+{
+    debug(CRT_DEBUG, "pokeRomL(%x, %x)\n", addr, value);
+    flashRomL.poke(bank, addr & 0x1FFF, value);
+}
+
+void
+EasyFlash::pokeRomH(u16 addr, u8 value)
+{
+    debug(CRT_DEBUG, "pokeRomH(%x, %x)\n", addr, value);
+    flashRomH.poke(bank, addr & 0x1FFF, value);
 }
 
 u8
 EasyFlash::peekIO1(u16 addr)
 {
+    debug(CRT_DEBUG, "peekIO1(%x)\n", addr);
     return 0;
 }
 
 u8
 EasyFlash::peekIO2(u16 addr)
 {
+    debug(CRT_DEBUG, "peekIO2(%x)\n", addr);
+
     return peekRAM(addr & 0xFF);
 }
 
 void
 EasyFlash::pokeIO1(u16 addr, u8 value)
 {
+    debug(CRT_DEBUG, "pokeIO1(%x,%x)\n", addr, value);
+    
     if (addr == 0xDE00) { // Bank register
         
         bank = value & 0x3F;
@@ -157,6 +189,8 @@ EasyFlash::pokeIO1(u16 addr, u8 value)
     }
     
     if (addr == 0xDE02) { // Mode register
+        
+        // c64.signalBreakpoint();
         
         setLED((value & 0x80) != 0);
         
@@ -221,6 +255,8 @@ EasyFlash::pokeIO1(u16 addr, u8 value)
 void
 EasyFlash::pokeIO2(u16 addr, u8 value)
 {
+    debug(CRT_DEBUG, "pokeIO2(%x,%x)\n", addr, value);
+
     pokeRAM(addr & 0xFF, value);
 }
 

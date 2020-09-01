@@ -97,6 +97,8 @@ public:
     
     u8 peek(u16 addr) override;
     void poke(u16 addr, u8 value) override;
+    void pokeRomL(u16 addr, u8 value) override;
+    void pokeRomH(u16 addr, u8 value) override;
     u8 peekIO1(u16 addr) override;
     u8 peekIO2(u16 addr) override;
     void pokeIO1(u16 addr, u8 value) override;
