@@ -560,44 +560,53 @@ extension MyController: NSMenuItemValidation {
             return
         }
         
-        // Show the OpenPanel
         let openPanel = NSOpenPanel()
         openPanel.allowsMultipleSelection = false
         openPanel.canChooseDirectories = false
         openPanel.canCreateDirectories = false
         openPanel.canChooseFiles = true
         openPanel.prompt = "Insert"
-        openPanel.allowedFileTypes = ["t64", "prg", "p00", "d64", "g64", "nib"]
+        openPanel.allowedFileTypes = ["t64", "prg", "p00", "d64", "g64", "zip", "gz"]
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
-            if result == .OK {
-                if let url = openPanel.url {
-                    do {
-                        try self.mydocument?.createAttachment(from: url)
-                        self.mydocument?.mountAttachmentAsDisk(drive: drive)
-                    } catch {
-                        NSApp.presentError(error)
-                    }
-                }
+            if result == .OK, let url = openPanel.url {
+                self.insertDiskAction(from: url, drive: drive)
             }
         })
     }
     
     @IBAction func insertRecentDiskAction(_ sender: NSMenuItem!) {
-
-        // Extrace drive number and slot from tag
-        let drive = sender.tag < 10 ? DRIVE8 : DRIVE9
-        let item = sender.tag < 10 ? sender.tag : sender.tag - 10
         
-        // Get URL and insert
-        if let url = myAppDelegate.getRecentlyInsertedDiskURL(item) {
-            do {
-                try mydocument!.createAttachment(from: url)
-                if mydocument!.proceedWithUnexportedDisk(drive: drive) {
-                    mydocument!.mountAttachmentAsDisk(drive: drive)
-                }
-            } catch {
-                NSApp.presentError(error)
-            }
+        let drive = sender.tag < 10 ? DRIVE8 : DRIVE9
+        let slot  = sender.tag % 10
+                
+        if let url = myAppDelegate.getRecentlyInsertedDiskURL(slot) {
+            insertDiskAction(from: url, drive: drive)
+        }
+    }
+    
+    func insertDiskAction(from url: URL, drive: DriveID) {
+        
+        let types = [ FileType.FILETYPE_D64,
+                      FileType.FILETYPE_T64,
+                      FileType.FILETYPE_PRG,
+                      FileType.FILETYPE_P00,
+                      FileType.FILETYPE_G64 ]
+        
+        do {
+            // Try to create a file proxy
+            try mydocument.createAttachment(from: url, allowedTypes: types)
+            
+            // Ask the user if an unsafed disk should be replaced
+            if !proceedWithUnexportedDisk(drive: drive) { return }
+            
+            // Insert the disk
+            mydocument.mountAttachmentAsDisk(drive: drive)
+                        
+            // Remember the URL
+            myAppDelegate.noteNewRecentlyUsedURL(url)
+            
+        } catch {
+            NSApp.presentError(error)
         }
     }
     
@@ -687,42 +696,48 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func insertTapeAction(_ sender: Any!) {
         
-        // Show the OpenPanel
         let openPanel = NSOpenPanel()
         openPanel.allowsMultipleSelection = false
         openPanel.canChooseDirectories = false
         openPanel.canCreateDirectories = false
         openPanel.canChooseFiles = true
         openPanel.prompt = "Insert"
-        openPanel.allowedFileTypes = ["tap"]
+        openPanel.allowedFileTypes = ["tap", "zip", "gz"]
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
-            if result == .OK {
-                if let url = openPanel.url {
-                    do {
-                        try self.mydocument?.createAttachment(from: url)
-                        self.mydocument?.mountAttachmentAsTape()
-                    } catch {
-                        NSApp.presentError(error)
-                    }
-                }
+            if result == .OK, let url = openPanel.url {
+                self.insertTapeAction(from: url)
             }
         })
     }
     
     @IBAction func insertRecentTapeAction(_ sender: NSMenuItem!) {
         
-        let tag = sender.tag
+        let slot  = sender.tag
         
-        if let url = myAppDelegate.getRecentlyInsertedTapeURL(tag) {
-            do {
-                try mydocument!.createAttachment(from: url)
-                mydocument!.mountAttachmentAsTape()
-            } catch {
-                NSApp.presentError(error)
-            }
+        if let url = myAppDelegate.getRecentlyInsertedTapeURL(slot) {
+            insertTapeAction(from: url)
         }
     }
     
+    func insertTapeAction(from url: URL) {
+        
+        let types = [ FileType.FILETYPE_TAP ]
+        
+        do {
+            // Try to create a file proxy
+            try mydocument.createAttachment(from: url, allowedTypes: types)
+            
+            // Insert the tape
+            mydocument.mountAttachmentAsTape()
+            
+            // Remember the URL
+            myAppDelegate.noteNewRecentlyUsedURL(url)
+            
+        } catch {
+            NSApp.presentError(error)
+        }
+    }
+
     @IBAction func ejectTapeAction(_ sender: Any!) {
         track()
         c64.datasette.ejectTape()
@@ -748,40 +763,45 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func attachCartridgeAction(_ sender: Any!) {
         
-        // Show the OpenPanel
         let openPanel = NSOpenPanel()
         openPanel.allowsMultipleSelection = false
         openPanel.canChooseDirectories = false
         openPanel.canCreateDirectories = false
         openPanel.canChooseFiles = true
         openPanel.prompt = "Attach"
-        openPanel.allowedFileTypes = ["crt"]
+        openPanel.allowedFileTypes = ["crt", "zip", "gz"]
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
-            if result == .OK {
-                if let url = openPanel.url {
-                    do {
-                        try self.mydocument?.createAttachment(from: url)
-                        self.mydocument?.mountAttachmentAsCartridge()
-                    } catch {
-                        NSApp.presentError(error)
-                    }
-                }
+            if result == .OK, let url = openPanel.url {
+                self.attachCartridgeAction(from: url)
             }
         })
     }
     
     @IBAction func attachRecentCartridgeAction(_ sender: NSMenuItem!) {
         
-        track()
-        let tag = sender.tag
+        let slot  = sender.tag
         
-        if let url = myAppDelegate.getRecentlyAtachedCartridgeURL(tag) {
-            do {
-                try mydocument!.createAttachment(from: url)
-                mydocument!.mountAttachmentAsCartridge()
-            } catch {
-                NSApp.presentError(error)
-            }
+        if let url = myAppDelegate.getRecentlyAtachedCartridgeURL(slot) {
+            attachCartridgeAction(from: url)
+        }
+    }
+    
+    func attachCartridgeAction(from url: URL) {
+        
+        let types = [ FileType.FILETYPE_CRT ]
+        
+        do {
+            // Try to create a file proxy
+            try mydocument.createAttachment(from: url, allowedTypes: types)
+            
+            // Attach the cartridge
+            mydocument.mountAttachmentAsCartridge()
+            
+            // Remember the URL
+            myAppDelegate.noteNewRecentlyUsedURL(url)
+            
+        } catch {
+            NSApp.presentError(error)
         }
     }
     

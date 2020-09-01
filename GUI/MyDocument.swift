@@ -93,8 +93,6 @@ class MyDocument: NSDocument {
     }
     
     func createAttachment(from url: URL) throws {
-                
-        track("Creating attachment from URL: \(url.lastPathComponent)")
         
         let types = [ FileType.FILETYPE_V64,
                       FileType.FILETYPE_CRT,
@@ -104,14 +102,20 @@ class MyDocument: NSDocument {
                       FileType.FILETYPE_P00,
                       FileType.FILETYPE_G64,
                       FileType.FILETYPE_TAP ]
-               
-        attachment = try createFileProxy(url: url, allowedTypes: types)
+        
+        try createAttachment(from: url, allowedTypes: types)
+    }
+    
+    func createAttachment(from url: URL, allowedTypes: [FileType]) throws {
+        
+        track("Creating attachment from URL: \(url.lastPathComponent)")
+        
+        attachment = try createFileProxy(url: url, allowedTypes: allowedTypes)
         myAppDelegate.noteNewRecentlyUsedURL(url)
 
         track("Attachment created successfully")
-
     }
-    
+        
     fileprivate
     func createFileProxy(url: URL, allowedTypes: [FileType]) throws -> AnyFileProxy? {
         
