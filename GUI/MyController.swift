@@ -651,7 +651,7 @@ extension MyController {
             }
             refreshStatusBarTracks(drive: DriveID(msg.data))
                         
-        case MSG_DRIVE_DISK:
+        case MSG_DISK_INSERTED:
             
             if pref.driveSounds && pref.driveInsertSound {
                 playSound(name: "drive_snatch_uae", volume: 0.1)
@@ -660,7 +660,7 @@ extension MyController {
             refreshStatusBarDiskIcons(drive: DriveID(msg.data))
             inspector?.fullRefresh()
 
-        case MSG_DRIVE_NO_DISK:
+        case MSG_DISK_EJECTED:
             
             if pref.driveSounds && pref.driveEjectSound {
                 playSound(name: "drive_snatch_uae", volume: 0.1)
@@ -668,7 +668,7 @@ extension MyController {
             refreshStatusBarDiskIcons(drive: DriveID(msg.data))
             inspector?.fullRefresh()
 
-        case MSG_FLASH:
+        case MSG_FILE_FLASHED:
             mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
             
         case MSG_DISK_PROTECT,
@@ -699,11 +699,22 @@ extension MyController {
             myAppDelegate.hideOrShowDriveMenus(proxy: c64)
             refreshStatusBar()
             
-        case MSG_VC1530_TAPE,
-             MSG_VC1530_NO_TAPE,
-             MSG_VC1530_PROGRESS,
-             MSG_CARTRIDGE,
-             MSG_NO_CARTRIDGE:
+        case MSG_VC1530_TAPE:
+            
+            mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
+            refreshStatusBar()
+
+        case MSG_VC1530_NO_TAPE,
+             MSG_VC1530_PROGRESS:
+            
+            refreshStatusBar()
+
+        case MSG_CARTRIDGE:
+
+            mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
+            refreshStatusBar()
+
+        case MSG_NO_CARTRIDGE:
             
             refreshStatusBar()
             

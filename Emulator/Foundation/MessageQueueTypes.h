@@ -47,25 +47,23 @@ typedef enum
     MSG_IEC_BUS_BUSY,
     MSG_IEC_BUS_IDLE,
     
-    // Peripherals (Disk drive)
+    // Floppy drives
     MSG_DRIVE_CONNECT,
     MSG_DRIVE_DISCONNECT,
     MSG_DRIVE_READ,
     MSG_DRIVE_WRITE,
     MSG_DRIVE_LED_ON,
     MSG_DRIVE_LED_OFF,
-    MSG_DRIVE_DISK,
-    MSG_DRIVE_NO_DISK,
     MSG_DRIVE_MOTOR_ON,
     MSG_DRIVE_MOTOR_OFF,
     MSG_DRIVE_HEAD,
-    MSG_FLASH,
-    
-    // Peripherals (Disk)
-    MSG_DISK_PROTECT,
+    MSG_DISK_INSERTED,
+    MSG_DISK_EJECTED,
     MSG_DISK_SAVED,
     MSG_DISK_UNSAVED,
-    
+    MSG_DISK_PROTECT,
+    MSG_FILE_FLASHED,
+
     // Peripherals (Datasette)
     MSG_VC1530_TAPE,
     MSG_VC1530_NO_TAPE,

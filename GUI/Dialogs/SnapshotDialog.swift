@@ -59,7 +59,7 @@ class SnapshotDialog: DialogController {
         
         if let snapshot = myDocument.snapshots.element(at: currentItem) {
             let takenAt = snapshot.timeStamp
-            text1.stringValue = timeInfo(time: takenAt)
+            text1.stringValue = "Taken at " + timeInfo(time: takenAt)
             text2.stringValue = timeDiffInfo(time: takenAt)
         } else {
             text1.stringValue = "No snapshots available"

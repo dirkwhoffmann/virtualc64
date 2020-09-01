@@ -111,7 +111,7 @@ class MediaDialogController: DialogController {
             
         case _ as D64FileProxy:
             
-            media = .disk
+            media = .archive
             track("D64FileProxy")
             titleString = "D64 File"
             subTitleString = "A byte-accurate image of a C64 diskette"

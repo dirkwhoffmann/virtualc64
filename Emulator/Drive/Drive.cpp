@@ -433,7 +433,7 @@ Drive::insertDisk(AnyArchive *a)
     
     insertionStatus = FULLY_INSERTED;
     
-    c64.putMessage(MSG_DRIVE_DISK, deviceNr);
+    c64.putMessage(MSG_DISK_INSERTED, deviceNr);
     c64.putMessage(MSG_DISK_SAVED, deviceNr);
     
     resume();
@@ -468,7 +468,7 @@ Drive::ejectDisk()
     insertionStatus = NOT_INSERTED;
     
     // Notify listener
-    c64.putMessage(MSG_DRIVE_NO_DISK, deviceNr);
+    c64.putMessage(MSG_DISK_EJECTED, deviceNr);
     
     resume();
 }
