@@ -35,7 +35,12 @@ typedef enum : long
     OPT_VIC_REVISION,
     OPT_PALETTE,
     OPT_GRAY_DOT_BUG,
-    
+    OPT_MARK_IRQ_LINES,
+    OPT_MARK_DMA_LINES,
+    OPT_HIDE_SPRITES,
+    OPT_SS_COLLISIONS,
+    OPT_SB_COLLISIONS,
+
     // Logic board
     OPT_GLUE_LOGIC,
 

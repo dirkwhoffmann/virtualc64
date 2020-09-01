@@ -41,6 +41,12 @@ void
 VICII::_initialize()
 {
     setRevision(PAL_8565);
+    
+    config.markIrqLines = false;
+    config.markDmaLines = false;
+    config.hideSprites = false;
+    config.checkSBCollisions = true;
+    config.checkSSCollisions = true;
 }
 
 void 
@@ -71,12 +77,7 @@ VICII::_reset()
     rightComparisonVal = rightComparisonValue();
     upperComparisonVal = upperComparisonValue();
     lowerComparisonVal = lowerComparisonValue();
-    
-	// Disable cheating by default
-	hideSprites = false;
-	spriteSpriteCollisionEnabled = 0xFF;
-	spriteBackgroundCollisionEnabled = 0xFF;
-    
+        
     // Reset the screen buffer pointers
     currentScreenBuffer = screenBuffer1;
     pixelBuffer = currentScreenBuffer;    
@@ -87,11 +88,16 @@ VICII::getConfigItem(ConfigOption option)
 {
     switch (option) {
             
-        case OPT_VIC_REVISION:  return config.revision;
-        case OPT_PALETTE:       return config.palette;
-        case OPT_GRAY_DOT_BUG:  return config.grayDotBug;
-        case OPT_GLUE_LOGIC:    return config.glueLogic;
-        
+        case OPT_VIC_REVISION:   return config.revision;
+        case OPT_PALETTE:        return config.palette;
+        case OPT_GRAY_DOT_BUG:   return config.grayDotBug;
+        case OPT_GLUE_LOGIC:     return config.glueLogic;
+        case OPT_MARK_IRQ_LINES: return config.markIrqLines;
+        case OPT_MARK_DMA_LINES: return config.markDmaLines;
+        case OPT_HIDE_SPRITES:   return config.hideSprites;
+        case OPT_SS_COLLISIONS:  return config.checkSSCollisions;
+        case OPT_SB_COLLISIONS:  return config.checkSBCollisions;
+
         default: assert(false);
     }
 }
@@ -138,6 +144,26 @@ VICII::setConfigItem(ConfigOption option, long value)
             config.grayDotBug = value;
             return true;
             
+        case OPT_MARK_IRQ_LINES:
+            config.markIrqLines = value;
+            return true;
+
+        case OPT_MARK_DMA_LINES:
+            config.markDmaLines = value;
+            return true;
+
+        case OPT_HIDE_SPRITES:
+            config.hideSprites = value;
+            return true;
+
+        case OPT_SS_COLLISIONS:
+            config.checkSSCollisions = value;
+            return true;
+
+        case OPT_SB_COLLISIONS:
+            config.checkSBCollisions = value;
+            return true;
+
         case OPT_GLUE_LOGIC:
             
             if (!isGlueLogic(value)) {
@@ -844,45 +870,15 @@ VICII::endRasterline()
     }
     
     // Draw debug markers
-    if (markIRQLines && yCounter == rasterInterruptLine())
+    if (config.markIrqLines && yCounter == rasterInterruptLine())
         markLine(VICII_WHITE);
-    if (markDMALines && badLine)
+    if (config.markDmaLines && badLine)
         markLine(VICII_RED);
     
     if (!vblank) {
         
         // Make the border look nice (evetually, we should get rid of this)
         expandBorders();
-
-        //
-        // Experimental code for RF modulator effect
-        //
-        /*
-        i8 oldR = (pixelBuffer[0] >> 0) & 0xFF;
-        i8 oldG = (pixelBuffer[0] >> 8) & 0xFF;
-        i8 oldB = (pixelBuffer[0] >> 16) & 0xFF;
-
-        for (unsigned i = 1; i < NTSC_PIXELS; i++) {
-
-            i8 newR = (pixelBuffer[i] >> 0) & 0xFF;
-            i8 newG = (pixelBuffer[i] >> 8) & 0xFF;
-            i8 newB = (pixelBuffer[i] >> 16) & 0xFF;
-
-            int diffR = newR - oldR;
-            int diffG = newG - oldG;
-            int diffB = newB - oldB;
-
-            if (diffR > 0) diffR /= 2;
-            if (diffG > 0) diffG /= 2;
-            if (diffB > 0) diffB /= 2;
-
-            oldR = oldR + diffR;
-            oldG = oldG + diffG;
-            oldB = oldB + diffB;
-
-            pixelBuffer[i] = (oldR << 0) | (oldG << 8) | (oldB << 16);
-        }
-        */
 
         // Advance pixelBuffer
         u16 nextline = c64.rasterLine - PAL_UPPER_VBLANK + 1;

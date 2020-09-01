@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097.2"/>
     </dependencies>
     <objects>
@@ -214,7 +215,6 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="qq8-Qm-VmD"/>
-                            <menuItem isSeparatorItem="YES" id="rLR-9y-0BS"/>
                             <menuItem title="Debug" id="414">
                                 <menu key="submenu" title="Debug" id="415">
                                     <items>
@@ -253,47 +253,6 @@ CA
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="427">
                                             <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                                        </menuItem>
-                                        <menuItem title="Hide Sprites" id="426">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="hideSpritesAction:" target="-1" id="491"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Show IRQ Rasterlines" id="425">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="markIRQLinesAction:" target="-1" id="496"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Show DMA Rasterlines" id="424">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="markDMALinesAction:" target="-1" id="509"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="420"/>
-                                        <menuItem title="Texture" id="l45-bY-cgb">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Texture" id="F5S-uB-hpC">
-                                                <items>
-                                                    <menuItem title="Zoom In" id="417">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="zoomTextureInAction:" target="-1" id="F5H-oX-6Jd"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Zoom Out" id="418">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="zoomTextureOutAction:" target="-1" id="ITJ-AY-sRJ"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                </items>
-                                            </menu>
-                                            <connections>
-                                                <action selector="traceAction:" target="-1" id="U0J-eK-vGr"/>
-                                            </connections>
                                         </menuItem>
                                         <menuItem title="Trace" id="Zxa-kw-ITs">
                                             <modifierMask key="keyEquivalentModifierMask"/>

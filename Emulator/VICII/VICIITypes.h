@@ -122,6 +122,15 @@ typedef struct
     bool grayDotBug;
     GlueLogic glueLogic;
     Palette palette;
+    
+    // Debugging
+    bool markIrqLines;
+    bool markDmaLines;
+    bool hideSprites;
+    
+    // Cheating
+    bool checkSSCollisions;
+    bool checkSBCollisions;
 }
 VICConfig;
 

@@ -420,6 +420,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->vic->setSaturation(value);
 }
+/*
 - (BOOL) hideSprites
 {
     return wrapper->vic->hideSprites;
@@ -444,6 +445,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->vic->setShowDmaLines(b);
 }
+*/
 - (u32 *) noise
 {
     return wrapper->vic->getNoise();

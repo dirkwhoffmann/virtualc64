@@ -172,6 +172,11 @@ C64::getConfigItem(ConfigOption option)
         case OPT_PALETTE:
         case OPT_GRAY_DOT_BUG:
         case OPT_GLUE_LOGIC:
+        case OPT_MARK_IRQ_LINES:
+        case OPT_MARK_DMA_LINES:
+        case OPT_HIDE_SPRITES:
+        case OPT_SS_COLLISIONS:
+        case OPT_SB_COLLISIONS:
             return vic.getConfigItem(option);
                         
         case OPT_CIA_REVISION:

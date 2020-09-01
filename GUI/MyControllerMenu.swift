@@ -165,25 +165,11 @@ extension MyController: NSMenuItemValidation {
             return c64.expansionport.cartridgeType() == CRT_GEO_RAM
             
         // Debug menu
-        case #selector(MyController.markIRQLinesAction(_:)):
-            item.state = c64.vic.showIrqLines() ? .on : .off
-            
-        case #selector(MyController.markDMALinesAction(_:)):
-            item.state = c64.vic.showDmaLines() ? .on : .off
-            
-        case #selector(MyController.hideSpritesAction(_:)):
-            item.state = c64.vic.hideSprites() ? .on : .off
-            
         case #selector(MyController.traceAction(_:)):
             return !c64.isReleaseBuild
             
         case #selector(MyController.traceIecAction(_:)):
             item.state = c64.iec.tracing() ? .on : .off
-
-        /*
-        case #selector(MyController.traceVC1541CpuAction(_:)):
-            item.state = c64.drive8.cpu.tracing() ? .on : .off
-        */
             
         case #selector(MyController.traceViaAction(_:)):
             item.state = c64.drive8.via1.tracing() ? .on : .off
@@ -906,57 +892,12 @@ extension MyController: NSMenuItemValidation {
     // Action methods (Debug menu)
     //
 
-    @IBAction func hideSpritesAction(_ sender: Any!) {
-
-        undoManager?.registerUndo(withTarget: self) { targetSelf in
-            targetSelf.hideSpritesAction(sender)
-        }
-        
-        c64.vic.setHideSprites(!c64.vic.hideSprites())
-    }
-  
-    @IBAction func markIRQLinesAction(_ sender: Any!) {
-    
-        undoManager?.registerUndo(withTarget: self) { targetSelf in
-            targetSelf.markIRQLinesAction(sender)
-        }
-        
-        c64.vic.setShowIrqLines(!c64.vic.showIrqLines())
-    }
-    
-    @IBAction func markDMALinesAction(_ sender: Any!) {
-    
-        undoManager?.registerUndo(withTarget: self) { targetSelf in
-            targetSelf.markDMALinesAction(sender)
-        }
-        
-        c64.vic.setShowDmaLines(!c64.vic.showDmaLines())
-    }
-    
     @IBAction func traceAction(_ sender: Any!) {
         // Dummy target to make menu item validatable
     }
     
     @IBAction func dumpStateAction(_ sender: Any!) {
         // Dummy target to make menu item validatable
-    }
-
-    @IBAction func zoomTextureInAction(_ sender: Any!) {
-        
-        undoManager?.registerUndo(withTarget: self) { targetSelf in
-            targetSelf.zoomTextureOutAction(sender)
-        }
-        
-        renderer.zoomTextureIn()
-    }
-    
-    @IBAction func zoomTextureOutAction(_ sender: Any!) {
-        
-        undoManager?.registerUndo(withTarget: self) { targetSelf in
-            targetSelf.zoomTextureInAction(sender)
-        }
-        
-        renderer.zoomTextureOut()
     }
     
     @IBAction func traceIecAction(_ sender: Any!) {

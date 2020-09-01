@@ -326,7 +326,7 @@ VICII::drawSprites()
             }
             
             // Is it a sprite/background collision?
-            if ((pixelSource[i] & 0x100) && spriteBackgroundCollisionEnabled) {
+            if ((pixelSource[i] & 0x100) && config.checkSBCollisions) {
                 
                 // Trigger an IRQ if this is the first detected collision
                 if (!spriteBackgroundColllision) {
@@ -401,17 +401,11 @@ VICII::drawSpritePixel(unsigned pixel,
             }
             
             // Toggle expansion flipflop for horizontally stretched sprites
-            /*
-            if (xExp)
-                spriteSr[sprite].expFlop = !spriteSr[sprite].expFlop;
-            else
-                spriteSr[sprite].expFlop = true;
-             */
             spriteSr[sprite].expFlop = !spriteSr[sprite].expFlop || !xExp;
         }
         
         // Draw pixel
-        if (active && !hideSprites) {
+        if (active && !config.hideSprites) {
             
             switch (spriteSr[sprite].colBits) {
                     

@@ -33,8 +33,33 @@ class Configuration {
     }
     
     var vicGrayDotBug: Bool {
-        get { return c64.getConfig(OPT_GRAY_DOT_BUG) != 0}
+        get { return c64.getConfig(OPT_GRAY_DOT_BUG) != 0 }
         set { c64.configure(OPT_GRAY_DOT_BUG, enable: newValue) }
+    }
+
+    var vicMarkIrqLines: Bool {
+        get { return c64.getConfig(OPT_MARK_IRQ_LINES) != 0 }
+        set { c64.configure(OPT_MARK_IRQ_LINES, enable: newValue) }
+    }
+
+    var vicMarkDmaLines: Bool {
+        get { return c64.getConfig(OPT_MARK_DMA_LINES) != 0 }
+        set { c64.configure(OPT_MARK_DMA_LINES, enable: newValue) }
+    }
+
+    var vicHideSprites: Bool {
+        get { return c64.getConfig(OPT_HIDE_SPRITES) != 0 }
+        set { c64.configure(OPT_HIDE_SPRITES, enable: newValue) }
+    }
+
+    var vicSSCollisions: Bool {
+        get { return c64.getConfig(OPT_SS_COLLISIONS) != 0 }
+        set { c64.configure(OPT_SS_COLLISIONS, enable: newValue) }
+    }
+
+    var vicSBCollisions: Bool {
+        get { return c64.getConfig(OPT_SB_COLLISIONS) != 0 }
+        set { c64.configure(OPT_SB_COLLISIONS, enable: newValue) }
     }
 
     var ciaRevision: Int {

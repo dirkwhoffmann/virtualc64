@@ -8,7 +8,13 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="Monitor" customModule="VirtualC64" customModuleProvider="target">
             <connections>
+                <outlet property="hideSprites" destination="m32-iU-eGV" id="GJu-fn-Giz"/>
+                <outlet property="markDmaRasterlines" destination="7DE-R5-QIK" id="MTr-SJ-weQ"/>
+                <outlet property="markIrqRasterlines" destination="dR4-9q-kfV" id="tWo-VL-Opf"/>
+                <outlet property="sbCollision" destination="qq9-Mc-de6" id="9Aj-Ns-90S"/>
+                <outlet property="ssCollision" destination="CtT-1a-4cg" id="aqf-IM-0rj"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="Psk-RA-Owv"/>
+                <outlet property="zoomTexture" destination="2aK-qv-2Ny" id="x1m-hk-6Co"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -16,16 +22,113 @@
         <window title="Monitor" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+            <rect key="contentRect" x="196" y="240" width="336" height="291"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1536" height="937"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                <rect key="frame" x="0.0" y="0.0" width="336" height="291"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <box fixedFrame="YES" title="Debugging" translatesAutoresizingMaskIntoConstraints="NO" id="iZp-OR-xEI">
+                        <rect key="frame" x="17" y="117" width="302" height="154"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <view key="contentView" id="hcb-Dy-X0y">
+                            <rect key="frame" x="3" y="3" width="296" height="136"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2aK-qv-2Ny">
+                                    <rect key="frame" x="18" y="100" width="140" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="check" title="Show entire texture" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="5Yc-Yu-Mym">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="zoomTextureAction:" target="-2" id="9nj-Tu-0gA"/>
+                                    </connections>
+                                </button>
+                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dR4-9q-kfV">
+                                    <rect key="frame" x="18" y="73" width="145" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="check" title="Mark IRQ rasterlines" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Mcu-Wd-GCH">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="markIrqLinesAction:" target="-2" id="v2F-T5-BnL"/>
+                                    </connections>
+                                </button>
+                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7DE-R5-QIK">
+                                    <rect key="frame" x="18" y="47" width="153" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="check" title="Mark DMA rasterlines" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="KFu-He-5kL">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="markDmaLinesAction:" target="-2" id="eN7-qz-IPc"/>
+                                    </connections>
+                                </button>
+                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m32-iU-eGV">
+                                    <rect key="frame" x="18" y="21" width="95" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="check" title="Hide sprites" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="kG3-4Y-8OC">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="hideSpritesAction:" target="-2" id="WtD-3b-n3R"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </view>
+                    </box>
+                    <box fixedFrame="YES" title="Cheating" translatesAutoresizingMaskIntoConstraints="NO" id="U8Z-mv-c15">
+                        <rect key="frame" x="17" y="16" width="302" height="97"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <view key="contentView" id="tSL-lH-542">
+                            <rect key="frame" x="3" y="3" width="296" height="79"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qq9-Mc-de6">
+                                    <rect key="frame" x="18" y="16" width="239" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="check" title="Detect sprite-background collisions" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="uid-Lo-rol">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="sbCollisionsAction:" target="-2" id="MH3-E9-Shc"/>
+                                    </connections>
+                                </button>
+                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CtT-1a-4cg">
+                                    <rect key="frame" x="18" y="43" width="201" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="check" title="Detect sprite-sprite collisions" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="E7N-AT-DMY">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="ssCollisionsAction:" target="-2" id="35l-r8-CTb"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </view>
+                    </box>
+                </subviews>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="C5l-tr-0f9"/>
             </connections>
-            <point key="canvasLocation" x="139" y="147"/>
+            <point key="canvasLocation" x="67" y="157.5"/>
         </window>
+        <button verticalHuggingPriority="750" id="T1a-rf-wnL">
+            <rect key="frame" x="0.0" y="0.0" width="140" height="18"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <buttonCell key="cell" type="check" title="Show entire texture" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cHz-7E-Lhc">
+                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                <font key="font" metaFont="system"/>
+            </buttonCell>
+            <point key="canvasLocation" x="126" y="371"/>
+        </button>
     </objects>
 </document>

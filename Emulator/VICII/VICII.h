@@ -492,27 +492,27 @@ public:
 	/* Determines whether sprites are drawn or not. By default, this variable
      * is set to false. It can be set to true for debugging purposes.
 	 */
-	bool hideSprites;
+	// bool hideSprites;
 	
 	/* Enables sprite-sprite or sprite-background collisions checks. If set to
      * true, VICII checks for collisions the same ways as the original C64
      * does. Collision detection can be enabled or disabled for each sprite
      * seperately. Each bit is dedicated to a single sprite.
      */
-	u8 spriteSpriteCollisionEnabled;
-	u8 spriteBackgroundCollisionEnabled;
+	// u8 spriteSpriteCollisionEnabled;
+	// u8 spriteBackgroundCollisionEnabled;
 	
 	/* Determines whether IRQ lines will be made visible. Each rasterline that
      * will potentially trigger a raster IRQ is highlighted. This feature is
      * useful for debugging purposes as it visualizes how the screen is divided
      * into multiple parts.
      */
-	bool markIRQLines = false;
+	// bool markIRQLines = false;
 	
 	/* Determines whether DMA lines will be made visible. Note that partial DMA
      * lines may not appear.
      */
-	bool markDMALines = false;
+	// bool markDMALines = false;
 
     
 private:
@@ -1349,44 +1349,13 @@ private:
 
     
 	//
-	// The following functions are used by the GUI debugger, only
+	// The following functions are used by the GUI debugger
 	//
 
 public: 
 
-    //
-    //! @functiongroup Thread-safe manipulation of the VICII state (VIC_debug.cpp)
-    //
-
-    //! @brief    Returns the current screen geometry.
+    // Returns the current screen geometry
     ScreenGeometry getScreenGeometry(void);
-    
-
-    
-    //
-    //! @functiongroup Debugging and cheating (VIC_debug.cpp)
-    //
-
-	//! @brief    Shows or hides IRQ lines.
-    void setShowIrqLines(bool show);
-	
-	//! @brief    Shows or hides DMA lines.
-    void setShowDmaLines(bool show);
-
-	//! @brief    Hides or shows sprites.
-    void setHideSprites(bool hide);
-	
-	//! @brief    Enables or disables sprite-sprite collision detection.
-    void setSpriteSpriteCollisionFlag(bool b);
-
-	//! @brief    Toggles sprite-sprite collision detection.
-    void toggleSpriteSpriteCollisionFlag();
-	
-	//! @brief    Enables or disable sprite-background collision detection.
-    void setSpriteBackgroundCollisionFlag(bool b);
-
-	//! @brief    Toggles sprite-background collision detection.
-    void toggleSpriteBackgroundCollisionFlag();
 };
 
 #endif

@@ -383,12 +383,14 @@ struct AnyC64FileWrapper;
 - (SpriteInfo) getSpriteInfo:(NSInteger)sprite;
 - (void) dump;
 
+/*
 - (BOOL) hideSprites;
 - (void) setHideSprites:(BOOL)b;
 - (BOOL) showIrqLines;
 - (void) setShowIrqLines:(BOOL)b;
 - (BOOL) showDmaLines;
 - (void) setShowDmaLines:(BOOL)b;
+*/
 
 - (u32 *) noise;
 
