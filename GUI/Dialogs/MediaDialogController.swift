@@ -27,7 +27,7 @@ class MediaDialogController: DialogController {
     @IBOutlet weak var flashLabel: NSTextField!
     @IBOutlet weak var carousel: iCarousel!
 
-    var type: C64FileType!
+    var type: FileType!
     var media: MediaType!
     
     var writeProtect: Bool { return checkbox.state == .on }

@@ -102,7 +102,7 @@ private:
     // Methods from AnyC64File
     //
     
-    C64FileType type() override { return V64_FILE; }
+    FileType type() override { return FILETYPE_V64; }
     const char *typeAsString() override { return "V64"; }
     bool hasSameType(const char *filename) override;
     

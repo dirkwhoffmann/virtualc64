@@ -66,7 +66,7 @@ public:
 public:
     
     // Returns the type of this file
-    virtual C64FileType type() { return UNKNOWN_FILE_FORMAT; }
+    virtual FileType type() { return FILETYPE_UNKNOWN; }
     
     // Returns a string representation of the file type ("T64" etc.)
     virtual const char *typeAsString() { return ""; }

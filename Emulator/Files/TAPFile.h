@@ -47,7 +47,7 @@ public:
     //
     
     void dealloc() override;
-    C64FileType type() override { return TAP_FILE; }
+    FileType type() override { return FILETYPE_TAP; }
     const char *typeAsString() override { return "TAP"; }
     const char *getName() override;
     bool hasSameType(const char *filename) override { return isTAPFile(filename); }

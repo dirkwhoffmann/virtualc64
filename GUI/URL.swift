@@ -71,8 +71,11 @@ extension URL {
             options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants]
         )
         
-        let filtered = urls.filter { allowedTypes?.contains($0.pathExtension) ?? true }
-        // track("filtered = \(filtered)")
+        track("urls = \(urls)")
+        let filtered = urls.filter {
+            allowedTypes?.contains($0.pathExtension.uppercased()) ?? true
+        }
+        track("filtered = \(filtered)")
         return filtered
     }
     
@@ -99,12 +102,12 @@ extension URL {
     
     var unpacked: URL {
         
-        if self.pathExtension == "zip" || self.pathExtension == "adz" {
+        if self.pathExtension == "zip" {
             
             do { return try unpackZip() } catch { }
         }
         
-        if self.pathExtension == "gz" || self.pathExtension == "adz" {
+        if self.pathExtension == "gz" {
             
             do { return try unpackGz() } catch { }
         }
@@ -115,6 +118,7 @@ extension URL {
     func unpackZip() throws -> URL {
         
         let urls = try unpack(suffix: "zip")
+
         if let first = urls.first { return first }
         
         throw UnpackError.noSupportedFiles
@@ -162,7 +166,7 @@ extension URL {
         }
         
         // Collect all extracted URLs with a supported file type
-        let types = ["adf", "dms", "rom", "bin", "vAmiga"]
+        let types = ["VC64", "CRT", "D64", "T64", "PRG", "P00", "G64", "TAP"]
         let urls = try tmp.contents(allowedTypes: types)
         
         // Arrange the URLs in alphabetical order

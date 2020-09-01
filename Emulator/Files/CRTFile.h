@@ -85,7 +85,7 @@ public:
     //
     
     void dealloc() override;
-    C64FileType type() override { return CRT_FILE; }
+    FileType type() override { return FILETYPE_CRT; }
     const char *typeAsString() override { return "CRT"; }
     const char *getName() override { return (char *)&data[0x20]; }
     bool hasSameType(const char *filename) override { return CRTFile::isCRTFile(filename); }

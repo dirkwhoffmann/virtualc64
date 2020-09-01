@@ -1324,7 +1324,7 @@ C64::loadRom(RomType type, RomFile *file)
             
         case ROM_BASIC:
         {
-            if (file->type() == BASIC_ROM_FILE) {
+            if (file->type() == FILETYPE_BASIC_ROM) {
                 debug("Flashing Basic Rom\n");
                 file->flash(mem.rom, 0xA000);
                 
@@ -1337,7 +1337,7 @@ C64::loadRom(RomType type, RomFile *file)
         }
         case ROM_CHAR:
         {
-            if (file->type() == CHAR_ROM_FILE) {
+            if (file->type() == FILETYPE_CHAR_ROM) {
                 debug("Flashing Character Rom\n");
                 file->flash(mem.rom, 0xD000);
                 return true;
@@ -1346,7 +1346,7 @@ C64::loadRom(RomType type, RomFile *file)
         }
         case ROM_KERNAL:
         {
-            if (file->type() == KERNAL_ROM_FILE) {
+            if (file->type() == FILETYPE_KERNAL_ROM) {
                 debug("Flashing Kernal Rom\n");
                 file->flash(mem.rom, 0xE000);
                 
@@ -1359,7 +1359,7 @@ C64::loadRom(RomType type, RomFile *file)
         }
         case ROM_VC1541:
         {
-            if (file->type() == VC1541_ROM_FILE) {
+            if (file->type() == FILETYPE_VC1541_ROM) {
                 debug("Flashing VC1541 Rom\n");
                 file->flash(drive8.mem.rom);
                 file->flash(drive9.mem.rom);
@@ -1532,24 +1532,24 @@ C64::flash(AnyFile *file)
     suspend();
     switch (file->type()) {
             
-        case BASIC_ROM_FILE:
+        case FILETYPE_BASIC_ROM:
             file->flash(mem.rom, 0xA000);
             break;
             
-        case CHAR_ROM_FILE:
+        case FILETYPE_CHAR_ROM:
             file->flash(mem.rom, 0xD000);
             break;
             
-        case KERNAL_ROM_FILE:
+        case FILETYPE_KERNAL_ROM:
             file->flash(mem.rom, 0xE000);
             break;
             
-        case VC1541_ROM_FILE:
+        case FILETYPE_VC1541_ROM:
             file->flash(drive8.mem.rom);
             file->flash(drive9.mem.rom);
             break;
             
-        case V64_FILE:
+        case FILETYPE_V64:
             loadFromSnapshot((Snapshot *)file);
             break;
             
@@ -1569,10 +1569,10 @@ C64::flash(AnyArchive *file, unsigned item)
     suspend();
     switch (file->type()) {
             
-        case D64_FILE:
-        case T64_FILE:
-        case PRG_FILE:
-        case P00_FILE:
+        case FILETYPE_D64:
+        case FILETYPE_T64:
+        case FILETYPE_PRG:
+        case FILETYPE_P00:
             file->selectItem(item);
             file->flashItem(mem.ram);
             break;

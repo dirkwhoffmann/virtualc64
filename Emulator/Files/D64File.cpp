@@ -324,7 +324,6 @@ D64File::getNameOfItem()
     for (int i = 0; i < strlen(name); i++) {
         name[i] = petscii2printable(name[i], ' ');
     }
-    debug("Returning %s\n", name);
     return name;
 }
 

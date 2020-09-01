@@ -32,7 +32,7 @@
 @class DatasetteProxy;
 @class MouseProxy;
 
-@class AnyC64FileProxy;
+@class AnyFileProxy;
 @class AnyArchiveProxy;
 @class AnyDiskProxy;
 @class CRTFileProxy;
@@ -233,7 +233,7 @@ struct AnyC64FileWrapper;
 - (BOOL) loadRom:(NSURL *)url;
 
 // Flashing files
-- (BOOL)flash:(AnyC64FileProxy *)container;
+- (BOOL)flash:(AnyFileProxy *)container;
 - (BOOL)flash:(AnyArchiveProxy *)archive item:(NSInteger)nr;
 
 @end
@@ -707,14 +707,14 @@ struct AnyC64FileWrapper;
 // AnyC64File proxy
 //
 
-@interface AnyC64FileProxy : NSObject {
+@interface AnyFileProxy : NSObject {
     
     struct AnyC64FileWrapper *wrapper;
 }
 
 - (struct AnyC64FileWrapper *)wrapper;
 
-- (C64FileType)type;
+- (FileType)type;
 - (NSString *)typeAsString;
 - (void)setPath:(NSString *)path;
 - (NSString *)name;
@@ -730,7 +730,7 @@ struct AnyC64FileWrapper;
 // AnyArchive proxy
 //
 
-@interface AnyArchiveProxy : AnyC64FileProxy {
+@interface AnyArchiveProxy : AnyFileProxy {
 }
 
 + (instancetype)make;
@@ -754,7 +754,7 @@ struct AnyC64FileWrapper;
 // Snapshot proxy
 //
 
-@interface SnapshotProxy : AnyC64FileProxy {
+@interface SnapshotProxy : AnyFileProxy {
 
    NSImage *preview;
 }
@@ -778,7 +778,7 @@ struct AnyC64FileWrapper;
 // CRTFile proxy
 //
 
-@interface CRTFileProxy : AnyC64FileProxy {
+@interface CRTFileProxy : AnyFileProxy {
 }
 
 + (CartridgeType)typeOfCRTBuffer:(const void *)buffer length:(NSInteger)length;
@@ -805,7 +805,7 @@ struct AnyC64FileWrapper;
 // TAPFile proxy
 //
 
-@interface TAPFileProxy : AnyC64FileProxy {
+@interface TAPFileProxy : AnyFileProxy {
 }
 
 + (BOOL)isTAPFile:(NSString *)path;

@@ -28,7 +28,7 @@ private:
     static const u8 magicVC1541RomBytes[vc1541RomSignatureCnt][3];
 
     // Rom type (Basic, Character, Kernal, or VC1541)
-    C64FileType romtype;
+    FileType romtype;
         
 public:
     
@@ -79,7 +79,7 @@ public:
     // Methods from AnyC64File
     //
     
-    C64FileType type() { return romtype; }
+    FileType type() { return romtype; }
     const char *typeAsString() { return "ROM"; }
     bool hasSameType(const char *filename) { return isRomFile(filename); }
     bool readFromBuffer(const u8 *buffer, size_t length);

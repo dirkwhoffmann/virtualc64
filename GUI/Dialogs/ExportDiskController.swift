@@ -10,7 +10,7 @@
 class ExportDiskController: DialogController {
 
     @IBOutlet weak var button: NSPopUpButton!
-    var type: C64FileType = D64_FILE
+    var type = FileType.FILETYPE_D64
     var savePanel: NSSavePanel!
     var selectedURL: URL?
     
@@ -39,30 +39,30 @@ class ExportDiskController: DialogController {
     @IBAction func selectD64(_ sender: Any!) {
         track()
         savePanel.allowedFileTypes = ["d64"]
-        type = D64_FILE
+        type = FileType.FILETYPE_D64
     }
 
     @IBAction func selectG64(_ sender: Any!) {
         track()
         savePanel.allowedFileTypes = ["g64"]
-        type = G64_FILE
+        type = FileType.FILETYPE_G64
     }
     
     @IBAction func selectPRG(_ sender: Any!) {
         track()
         savePanel.allowedFileTypes = ["prg"]
-        type = PRG_FILE
+        type = FileType.FILETYPE_PRG
     }
     
     @IBAction func selectP00(_ sender: Any!) {
         track()
         savePanel.allowedFileTypes = ["p00"]
-        type = P00_FILE
+        type = FileType.FILETYPE_P00
     }
     
     @IBAction func selectT64(_ sender: Any!) {
         track()
         savePanel.allowedFileTypes = ["t64"]
-        type = T64_FILE
+        type = FileType.FILETYPE_T64
     }
 }

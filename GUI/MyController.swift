@@ -72,24 +72,19 @@ class MyController: NSWindowController, MessageReceiver {
     // Virtual keyboard
     var virtualKeyboard: VirtualKeyboardController?
     
-    /// Loop timer
-    /// The timer fires 60 times a second and executes all tasks that need to be
-    //  done perdiodically (e.g., updating the speedometer and the debug panels)
+    // Loop timer for scheduling periodic updates
     var timer: Timer?
     
-    /// Lock to prevent reentrance into the timer function
+    // // Timer lock
     var timerLock = NSLock()
     
     // Snapshot timers
     var snapshotTimer: Timer?
-
-    /// Lock for protecting the C64 proxy
-    var proxyLock = NSLock()
     
-    /// Speedometer to measure clock frequence and frames per second
+    // Speedometer to measure clock frequence and frames per second
     var speedometer: Speedometer!
     
-    /// Used inside the timer function to fine tune timed events
+    // Used inside the timer function to fine tune timed events
     var animationCounter = 0
     
     /// Current keyboard modifier flags
@@ -103,10 +98,7 @@ class MyController: NSWindowController, MessageReceiver {
     
     /// Indicates if mouse is currently hidden
     var hideMouse = false
-    
-    // Remembers if we run in warp mode
-    // var warp = false
-    
+        
     // Indicates if a status bar is shown
     var statusBar = true
     
@@ -377,18 +369,12 @@ extension MyController {
         
         // Create keyboard controller
         keyboard = KeyboardController(parent: self)
-        if keyboard == nil {
-            track("Failed to create keyboard controller")
-            return
-        }
+        assert(keyboard != nil, "Failed to create keyboard controller")
 
         // Create game pad manager
         gamePadManager = GamePadManager(parent: self)
-        if gamePadManager == nil {
-            track("Failed to create game pad manager")
-            return
-        }
-                
+        assert(gamePadManager != nil, "Failed to create game pad manager")
+
         // Setup renderer
         renderer = Renderer(view: metal,
                             device: MTLCreateSystemDefaultDevice()!,
@@ -400,7 +386,7 @@ extension MyController {
         // Load user defaults
         loadUserDefaults()
         
-        // Enable message processing (register callback)
+        // Enable message processing
         addListener()
         
         // Process attachment (if any)
@@ -409,10 +395,8 @@ extension MyController {
         // Check if the C64 is ready to power on
         if c64.isReady() {
             
-            // Power on the C64
+            // Switch on and launch the emulator thread
             c64.powerOn()
-            
-            // Launch the emulator thread
             c64.run()
 
         } else {
@@ -427,6 +411,9 @@ extension MyController {
         
         // Update toolbar
         toolbar.validateVisibleItems()
+        
+        // Update status bar
+        refreshStatusBar()
     }
     
     func configureWindow() {
@@ -464,8 +451,6 @@ extension MyController {
                 myself.processMessage(Message(type: mType, data: data))
             }
         }
-        
-        track("Listener is in place")
     }
     
     func createTimer() {
@@ -480,8 +465,6 @@ extension MyController {
                                      selector: #selector(timerFunc),
                                      userInfo: nil,
                                      repeats: true)
-        
-        track("GUI timer is up and running")
     }
 
     //
@@ -497,29 +480,23 @@ extension MyController {
         // Animate the inspector
         if inspector?.window?.isVisible == true { inspector!.continuousRefresh() }
         
-        // OLD CODE:
-        
-        // Do 12 times a second ...
-        if (animationCounter % 1) == 0 {
-                        
-            // Update cartridge LED
-            if c64.expansionport.hasLed() {
-                let led = c64.expansionport.led() ? 1 : 0
-                if crtIcon.tag != led {
-                    crtIcon.tag = led
-                    crtIcon.image = NSImage(named: led == 1 ? "crtLedOnTemplate" : "crtTemplate")
-                    crtIcon.needsDisplay = true
-                }
+        // Update the cartridge LED
+        if c64.expansionport.hasLed() {
+            let led = c64.expansionport.led() ? 1 : 0
+            if crtIcon.tag != led {
+                crtIcon.tag = led
+                crtIcon.image = NSImage(named: led == 1 ? "crtLedOnTemplate" : "crtTemplate")
+                crtIcon.needsDisplay = true
             }
         }
         
-        // Do 6 times a second ...
+        // Do less frequently...
         if (animationCounter % 2) == 0 {
- 
-            // Update tape progress icon
-            // Note: The tape progress icon is not switched on or off by push
-            // notification (message), because some games continously switch the
-            // datasette motor on and off.
+            
+            /* Update the tape progress icon. Note: The tape progress icon is
+             * not switched on or off by push notification (message), because
+             * some games continously switch the datasette motor on and off.
+             */
             if c64.datasette.motor() && c64.datasette.playKey() {
                 tapeProgress.startAnimation(self)
             } else {
@@ -527,11 +504,11 @@ extension MyController {
             }
         }
         
-        // Do lesser time...
+        // Do even less frequently...
         if (animationCounter % 4) == 0 {
             
             updateSpeedometer()
-        
+            
             // Let the cursor disappear in fullscreen mode
             if renderer.fullscreen &&
                 CGEventSource.secondsSinceLastEventType(.combinedSessionState,
@@ -565,8 +542,6 @@ extension MyController {
             precondition(msg.data == 8 || msg.data == 9)
             return msg.data == 8
         }
-
-        proxyLock.lock()
         
         switch msg.type {
     
@@ -745,59 +720,8 @@ extension MyController {
             track("Unknown message: \(msg)")
             assert(false)
         }
-        
-        proxyLock.unlock()
     }
 
-    //
-    // Dialogs
-    //
-    
-    /*
-    func openPreferences() {
-        
-        if preferencesController == nil {
-            let nibName = NSNib.Name("Preferences")
-            preferencesController = ConfigurationController.init(windowNibName: nibName)
-        }
-        preferencesController!.showSheet()
-    }
-    */
-    
-    //
-    // Loading Roms
-    //
-    
-    /*
-    @discardableResult
-    func loadRom(_ url: URL?) -> Bool {
-        
-        if url == nil {
-            return false
-        }
-        
-        if c64.loadBasicRom(url!) {
-            config.basicRomURL = url!
-            return true
-        }
-        if c64.loadCharRom(url!) {
-            config.charRomURL = url!
-            return true
-        }
-        if c64.loadKernalRom(url!) {
-            config.kernalRomURL = url!
-            return true
-        }
-        if c64.loadVC1541Rom(url!) {
-            config.vc1541RomURL = url!
-            return true
-        }
-        
-        track("ROM file \(url!) not found")
-        return false
-    }
-    */
-    
     //
     // Keyboard events
     //
@@ -810,22 +734,22 @@ extension MyController {
     //
     
     @discardableResult
-    func mount(_ item: AnyC64FileProxy?) -> Bool {
+    func mount(_ item: AnyFileProxy?) -> Bool {
 
         guard let type = item?.type() else { return false }
         
         switch type {
             
-        case CRT_FILE:
+        case FileType.FILETYPE_CRT:
             c64.expansionport.attachCartridgeAndReset(item as? CRTFileProxy)
             return true
             
-        case TAP_FILE:
+        case FileType.FILETYPE_TAP:
             return c64.datasette.insertTape(item as? TAPFileProxy)
             
-        case T64_FILE, D64_FILE,
-             PRG_FILE, P00_FILE,
-             G64_FILE:
+        case FileType.FILETYPE_T64, FileType.FILETYPE_D64,
+             FileType.FILETYPE_PRG, FileType.FILETYPE_P00,
+             FileType.FILETYPE_G64:
             // We need to take some special care for items that mount as a disk.
             // In that case, the light barrier has to be broken several times.
             // TODO: Use insertDisk for these attachments in future
@@ -840,7 +764,7 @@ extension MyController {
     
     // Emulates changing a disk including the necessary light barrier breaks
     // If disk is nil, only the ejection is emulated.
-    func changeDisk(_ disk: AnyC64FileProxy?, drive: DriveID) {
+    func changeDisk(_ disk: AnyFileProxy?, drive: DriveID) {
         
         let proxy = c64.drive(drive)!
 

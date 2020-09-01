@@ -409,12 +409,12 @@ Drive::insertDisk(AnyArchive *a)
     
     switch (a->type()) {
             
-        case D64_FILE:
+        case FILETYPE_D64:
             disk.clearDisk();
             disk.encodeArchive((D64File *)a);
             break;
             
-        case G64_FILE:
+        case FILETYPE_G64:
             disk.clearDisk();
             disk.encodeArchive((G64File *)a);
             break;

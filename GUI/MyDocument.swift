@@ -15,8 +15,8 @@ class MyDocument: NSDocument {
     // The application delegate
     var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
     
-    /* Emulator proxy object. This object is an Objective-C bridge between
-     the GUI (written in Swift) an the core emulator (written in C++).
+    /* Emulator proxy. This object is an Objective-C bridge between the Swift
+     * GUI an the core emulator which is written in C++.
      */
     var c64: C64Proxy!
     
@@ -25,15 +25,12 @@ class MyDocument: NSDocument {
      * attachment is present, e.g., a D64 archive, it is automatically attached
      * to the emulator.
      */
-    var attachment: AnyC64FileProxy?
+    var attachment: AnyFileProxy?
     
     // Snapshots
     private(set) var snapshots = ManagedArray<SnapshotProxy>.init(capacity: 32)
     
-    // Screenshots
-    // private(set) var screenshots = ManagedArray<Screenshot>.init(capacity: 32)
-
-    // Fingerprint of the first media file used after a reset
+    // Fingerprint of the first media file used after reset
     var bootDiskID = UInt64(0)
     
     //
@@ -79,21 +76,136 @@ class MyDocument: NSDocument {
     // Creating attachments
     //
     
-    /// Creates an attachment from a URL
-    func createAttachment(from url: URL) throws {
+    func fileType(url: URL) -> FileType {
+                
+        switch url.pathExtension.uppercased() {
+            
+        case "VC64": return .FILETYPE_V64
+        case "CRT":  return .FILETYPE_CRT
+        case "D64":  return .FILETYPE_D64
+        case "T64":  return .FILETYPE_T64
+        case "PRG":  return .FILETYPE_PRG
+        case "P00":  return .FILETYPE_P00
+        case "G64":  return .FILETYPE_G64
+        case "TAP":  return .FILETYPE_TAP
+        default:     return .FILETYPE_UNKNOWN
+        }
+    }
     
-        track("Creating attachment from URL \(url.lastPathComponent).")
+    func createAttachment(from url: URL) throws {
+                
+        track("Creating attachment from URL: \(url.lastPathComponent)")
+        
+        let types = [ FileType.FILETYPE_V64,
+                      FileType.FILETYPE_CRT,
+                      FileType.FILETYPE_D64,
+                      FileType.FILETYPE_T64,
+                      FileType.FILETYPE_PRG,
+                      FileType.FILETYPE_P00,
+                      FileType.FILETYPE_G64,
+                      FileType.FILETYPE_TAP ]
+               
+        attachment = try createFileProxy(url: url, allowedTypes: types)
+        myAppDelegate.noteNewRecentlyUsedURL(url)
 
+        track("Attachment created successfully")
+
+    }
+    
+    fileprivate
+    func createFileProxy(url: URL, allowedTypes: [FileType]) throws -> AnyFileProxy? {
+        
+        track("Creating proxy object from URL: \(url.lastPathComponent)")
+        
+        // If the provided URL points to compressed file, decompress it first
+        let newUrl = url.unpacked
+        
+        // Only proceed if the file type is an allowed type
+        let type = fileType(url: newUrl)
+        track("type = \(type)")
+        if !allowedTypes.contains(type) { return nil }
+        
+        // Get the file wrapper and create the proxy with it
+        let wrapper = try FileWrapper.init(url: newUrl)
+        return try createFileProxy(wrapper: wrapper, type: type)
+    }
+    
+    fileprivate
+    func createFileProxy(wrapper: FileWrapper, type: FileType) throws -> AnyFileProxy? {
+                
+        guard let name = wrapper.filename else {
+            throw NSError.fileAccessError()
+        }
+        guard let data = wrapper.regularFileContents else {
+            throw NSError.fileAccessError(filename: name)
+        }
+        
+        var result: AnyFileProxy?
+        let buffer = (data as NSData).bytes
+        let length = data.count
+        
+        track("Read \(length) bytes from file \(name) [\(type.rawValue)].")
+        
+        switch type {
+            
+        case .FILETYPE_V64:
+            if SnapshotProxy.isUnsupportedSnapshot(buffer, length: length) {
+                throw NSError.snapshotVersionError(filename: name)
+            }
+            result = SnapshotProxy.make(withBuffer: buffer, length: length)
+            
+        case .FILETYPE_CRT:
+            if CRTFileProxy.isUnsupportedCRTBuffer(buffer, length: length) {
+                let type = CRTFileProxy.typeName(ofCRTBuffer: buffer, length: length)!
+                throw NSError.unsupportedCartridgeError(filename: name, type: type)
+            }
+            result = CRTFileProxy.make(withBuffer: buffer, length: length)
+            
+        case .FILETYPE_D64:
+            result = D64FileProxy.make(withBuffer: buffer, length: length)
+            
+        case .FILETYPE_T64:
+            result = T64FileProxy.make(withBuffer: buffer, length: length)
+            
+        case .FILETYPE_PRG:
+            result = PRGFileProxy.make(withBuffer: buffer, length: length)
+            
+        case .FILETYPE_P00:
+            result = P00FileProxy.make(withBuffer: buffer, length: length)
+            
+        case .FILETYPE_G64:
+            result = G64FileProxy.make(withBuffer: buffer, length: length)
+            
+        case .FILETYPE_TAP:
+            result = TAPFileProxy.make(withBuffer: buffer, length: length)
+            
+        default:
+            fatalError()
+        }
+        
+        if result == nil {
+            throw NSError.corruptedFileError(filename: name)
+        }
+        result!.setPath(name)
+        return result
+    }
+    
+    /*
+    // Creates an attachment from a URL
+    func createAttachment(from url: URL) throws {
+        
+        track("Creating attachment from URL \(url.lastPathComponent).")
+        
         // Try to create the attachment
         let fileWrapper = try FileWrapper.init(url: url)
         let pathExtension = url.pathExtension.uppercased()
         try createAttachment(from: fileWrapper, ofType: pathExtension)
-
+        
         // Put URL in recently used URL lists
         myAppDelegate.noteNewRecentlyUsedURL(url)
     }
     
-    /// Creates an attachment from a file wrapper
+    // Creates an attachment from a file wrapper
     fileprivate func createAttachment(from fileWrapper: FileWrapper,
                                       ofType typeName: String) throws {
         
@@ -158,7 +270,8 @@ class MyDocument: NSDocument {
         }
         attachment!.setPath(filename)
     }
-
+    */
+    
     //
     // Processing attachments
     //
@@ -168,17 +281,17 @@ class MyDocument: NSDocument {
 
         // Only proceed if an attachment is present
         if attachment == nil { return false }
-        
+
         // If the attachment is a snapshot, flash it and return
         if let s = attachment as? SnapshotProxy { c64.flash(s); return true }
 
         // Determine the action to perform and the text to type
         let key = attachment!.typeAsString()!
         let action = parent.pref.mountAction[key] ?? AutoMountAction.openBrowser
-        
+
         // If the action is to open the media dialog, open it and return
         if action == .openBrowser { runMountDialog(); return true }
-        
+
         // Determine if a text should be typed
         let type = parent.pref.autoType[key] ?? false
         let text = type ? parent.pref.autoText[key] : nil

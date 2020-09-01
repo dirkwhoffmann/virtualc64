@@ -491,7 +491,7 @@ RomFile::makeWithFile(const char *filename)
 RomFile::RomFile()
 {
     setDescription("RomFile");
-    romtype = UNKNOWN_FILE_FORMAT;
+    romtype = FILETYPE_UNKNOWN;
 }
 
 bool
@@ -501,11 +501,11 @@ RomFile::readFromBuffer(const u8 *buffer, size_t length)
         return false;
     
     romtype =
-    isBasicRomBuffer(buffer, length) ? BASIC_ROM_FILE :
-    isCharRomBuffer(buffer, length) ? CHAR_ROM_FILE :
-    isKernalRomBuffer(buffer, length) ? KERNAL_ROM_FILE :
-    isVC1541RomBuffer(buffer, length) ? VC1541_ROM_FILE :
-    UNKNOWN_FILE_FORMAT;
+    isBasicRomBuffer(buffer, length) ? FILETYPE_BASIC_ROM :
+    isCharRomBuffer(buffer, length) ? FILETYPE_CHAR_ROM :
+    isKernalRomBuffer(buffer, length) ? FILETYPE_KERNAL_ROM :
+    isVC1541RomBuffer(buffer, length) ? FILETYPE_VC1541_ROM :
+    FILETYPE_UNKNOWN;
  
-    return romtype != UNKNOWN_FILE_FORMAT;
+    return romtype != FILETYPE_UNKNOWN;
 }

@@ -32,4 +32,14 @@ typedef uint64_t u64;
 
 typedef i64 Cycle;
 
+
+//
+// Replacement for the VA_ENUM macro which is only available on macOS
+//
+
+#define VA_ENUM(_type, _name) \
+enum __attribute__((enum_extensibility(open))) _name : _type _name; \
+enum _name : _type
+
+
 #endif

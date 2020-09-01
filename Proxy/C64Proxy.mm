@@ -1200,7 +1200,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 // AnyC64File
 //
 
-@implementation AnyC64FileProxy
+@implementation AnyFileProxy
 
 - (instancetype) initWithFile:(AnyFile *)file
 {
@@ -1213,7 +1213,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
     }
     return self;
 }
-+ (AnyC64FileProxy *) makeWithFile:(AnyFile *)file
++ (AnyFileProxy *) makeWithFile:(AnyFile *)file
 {
     if (file == nil) {
         return nil;
@@ -1230,7 +1230,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper;
 }
-- (C64FileType)type
+- (FileType)type
 {
     return wrapper->file->type();
 }
@@ -1261,7 +1261,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 - (void) dealloc
 {
-    // NSLog(@"AnyC64FileProxy::dealloc");
+    // NSLog(@"AnyFileProxy::dealloc");
     
     if (wrapper) {
         if (wrapper->file) delete wrapper->file;
@@ -2243,7 +2243,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 }
 
 // Flashing files
-- (BOOL)flash:(AnyC64FileProxy *)file
+- (BOOL)flash:(AnyFileProxy *)file
 {
     return wrapper->c64->flash([file wrapper]->file);
 }

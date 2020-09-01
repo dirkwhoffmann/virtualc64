@@ -51,7 +51,7 @@ public:
     // Methods from AnyFile
     //
 
-    C64FileType type() override { return PRG_FILE; }
+    FileType type() override { return FILETYPE_PRG; }
     const char *typeAsString() override { return "PRG"; }
     bool hasSameType(const char *filename) override { return isPRGFile(filename); }
     
