@@ -32,7 +32,6 @@ class MediaDialogController: DialogController {
     
     var writeProtect: Bool { return checkbox.state == .on }
     var autoRun: Bool { return checkbox.state == .on }
-    var autoReset: Bool { return checkbox.state == .on }
     
     var screenshots: [Screenshot] = []
     
@@ -173,7 +172,7 @@ class MediaDialogController: DialogController {
             drive9.isHidden = true
 
         case .cartridge:
-            checkbox.title = "Auto reset"
+            checkbox.isHidden = true
             drive8.title = "Attach"
             drive9.isHidden = true
 
@@ -296,9 +295,7 @@ class MediaDialogController: DialogController {
 
             let cartridge = myDocument.attachment as! CRTFileProxy
             c64.expansionport.attachCartridgeAndReset(cartridge)
-            
-            if autoReset { c64.reset() }
-            
+                        
         case .tape:
             
             let tape = myDocument.attachment as! TAPFileProxy

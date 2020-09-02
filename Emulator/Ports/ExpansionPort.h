@@ -167,7 +167,7 @@ public:
     //
     
     // Returns the number of available cartridge buttons
-    unsigned numButtons();
+    long numButtons();
     
     // Returns a textual description for a button
     const char *getButtonTitle(unsigned nr);

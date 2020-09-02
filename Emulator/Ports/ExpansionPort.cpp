@@ -345,7 +345,7 @@ ExpansionPort::setBattery(bool value)
     if (cartridge) cartridge->setBattery(value);
 }
 
-unsigned
+long
 ExpansionPort::numButtons()
 {
     return cartridge ? cartridge->numButtons() : 0;

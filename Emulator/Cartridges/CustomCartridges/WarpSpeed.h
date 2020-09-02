@@ -40,7 +40,7 @@ public:
     
 public:
     
-    unsigned numButtons() override { return 1; }
+    long numButtons() override { return 1; }
     const char *getButtonTitle(unsigned nr) override;
     void pressButton(unsigned nr) override;
 };

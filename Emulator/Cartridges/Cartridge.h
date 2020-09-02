@@ -302,7 +302,7 @@ public:
     //
 
     // Returns the number of available cartridge buttons
-    virtual unsigned numButtons() { return 0; }
+    virtual long numButtons() { return 0; }
     
     /* Returns a textual description for a button or NULL, if there is no
      * button with the specified number.

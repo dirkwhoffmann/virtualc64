@@ -113,7 +113,7 @@ private:
     // Operating buttons
     //
     
-    unsigned numButtons() override { return 2; }
+    long numButtons() override { return 2; }
     const char *getButtonTitle(unsigned nr) override;
     void pressButton(unsigned nr) override;
     void releaseButton(unsigned nr) override;

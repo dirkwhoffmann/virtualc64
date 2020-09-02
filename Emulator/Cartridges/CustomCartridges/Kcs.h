@@ -41,7 +41,7 @@ public:
     // Operating buttons
     //
     
-    unsigned numButtons() override { return 1; }
+    long numButtons() override { return 1; }
     const char *getButtonTitle(unsigned nr) override;
     void pressButton(unsigned nr) override;
     void releaseButton(unsigned nr) override;

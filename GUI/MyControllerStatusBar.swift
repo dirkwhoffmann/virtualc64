@@ -77,8 +77,8 @@ extension MyController {
             
             crtIcon: hasCrt,
             crtSwitch: hasCrt && c64.expansionport.hasSwitch(),
-            crtButton1: hasCrt && c64.expansionport.numButtons() < 1,
-            crtButton2: hasCrt && c64.expansionport.numButtons() < 2,
+            crtButton1: hasCrt && c64.expansionport.numButtons() >= 1,
+            crtButton2: hasCrt && c64.expansionport.numButtons() >= 2,
             
             warpIcon: running,
             clockSpeed: running,
