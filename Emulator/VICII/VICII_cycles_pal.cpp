@@ -377,7 +377,6 @@ VICII::cycle14() // SpriteX: 0 - 7 (?)
     
     // Phi1.2 Draw the first visible column
     isVisibleColumn = true;
-    // visibleColumnCnt = 0;
     DRAW
     
     // Phi1.3 Fetch (forth out of five DRAM refreshs)
@@ -695,6 +694,7 @@ VICII::cycle62pal()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
+    printf("bufferoffset = %d\n", bufferoffset);
     // Phi1.2 Draw sprites (invisible area)
     DRAW_IDLE
 

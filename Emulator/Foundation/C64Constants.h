@@ -29,7 +29,7 @@ static const double PAL_PIXEL_ASPECT_RATIO = 0.9365;
 // Horizontal screen parameters
 
 // Width of left HBLANK area in PAL mode
-static const long PAL_LEFT_HBLANK = 76;
+static const long PAL_LEFT_HBLANK = 76; // 112
 
 // Width of left border in PAL mode
 static const long PAL_LEFT_BORDER_WIDTH = 48;
@@ -72,9 +72,6 @@ static const long PAL_HEIGHT = 312; // 16 + 35 + 200 + 49 + 12
 
 // Number of drawn rasterlines per frame in PAL mode
 static const long PAL_RASTERLINES = 284; // 35 + 200 + 49
-
-// Number of viewable rasterlines per frame in PAL mode
-static const long PAL_VISIBLE_RASTERLINES = 284; // was 292
 
 
 //
@@ -137,5 +134,8 @@ static const long NTSC_LOWER_VBLANK = 12;
 
 // Total height of a frame (including VBLANK) in NTSC mode
 static const long NTSC_HEIGHT = 263; // 16 + 10 + 200 + 25 + 12
+
+// Number of drawn rasterlines per frame in NTSC mode
+static const long NTSC_RASTERLINES = 235; // 10 + 200 + 25
 
 #endif

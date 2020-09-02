@@ -452,11 +452,22 @@ VICII::screenBuffer() {
 void
 VICII::resetScreenBuffers()
 {
+    // Determine the HBLANK / VBLANK area
+    int width = isPAL() ? PAL_WIDTH : NTSC_WIDTH;
+    int height = isPAL() ? PAL_HEIGHT : NTSC_HEIGHT;
+    
     for (unsigned line = 0; line < PAL_HEIGHT; line++) {
         for (unsigned i = 0; i < NTSC_WIDTH; i++) {
-            screenBuffer1[line * NTSC_WIDTH + i] =
-            screenBuffer2[line * NTSC_WIDTH + i] =
-            (line % 2) ? rgbaTable[8] : rgbaTable[9];
+
+            int pos = line * NTSC_WIDTH + i;
+            int col = 0xFF000000;
+
+            // Apply a checkerboard pattern inside the HBLANK / VBLANK area
+            if (line < height && i < width)
+                col = (line / 4) % 2 == (i / 8) % 2 ? 0xFF222222 : 0xFF444444;
+
+            screenBuffer1[pos] = col;
+            screenBuffer2[pos] = col;
         }
     }
 }
@@ -813,7 +824,7 @@ VICII::beginFrame()
      */
     refreshCounter = 0xFF;
 
-    /* "Once somewhere outside of the range of raster lines $30-$f7 (i.e.
+    /* "Once somewhere outside of the range of raster lines $30-$f7 (i.e. 
      *  outside of the Bad Line range), VCBASE is reset to zero. This is
      *  presumably done in raster line 0, the exact moment cannot be determined
      *  and is irrelevant." [C.B.]
@@ -835,24 +846,20 @@ VICII::beginRasterline(u16 line)
 {
     verticalFrameFFsetCond = false;
 
-    // Determine if we're inside the VBLANK area (nothing is drawn there).
+    // Determine if we're inside the VBLANK area
     vblank = isVBlankLine(line);
  
-    // Increase yCounter. The overflow case is handled in cycle 2.
+    // Increase the y counter (overflow is handled in cycle 2)
     if (!yCounterOverflow()) yCounter++;
     
-    // Check the DEN bit in rasterline 30.
-    // Note: The value might change later if control register 1 is written to.
+    // Check the DEN bit in rasterline 30 (value might change later)
     if (line == 0x30) DENwasSetInRasterline30 = DENbit();
 
-    // Check if this line is a DMA line (bad line)
-    // Note: The value might change later if control register 1 is written to.
-    if ((badLine = badLineCondition())) {
-        delay |= VICSetDisplayState;
-    }
+    // Check if this line is a DMA line (bad line) (value might change later)
+    if ((badLine = badLineCondition())) delay |= VICSetDisplayState;
     
     // Reset the pixel buffer offset
-    bufferoffset = 0;    
+    bufferoffset = 0;
 }
 
 void 

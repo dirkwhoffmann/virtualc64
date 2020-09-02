@@ -239,27 +239,31 @@ class Renderer: NSObject, MTKViewDelegate {
     }
     
     func computeTextureRect() -> CGRect {
-        
-        var rect: CGRect
-        
+                
         // Display the whole texture if zoom is set
         if zoom { return CGRect.init(x: 0.0, y: 0.0, width: 1.0, height: 1.0) }
         
+        var aw: CGFloat, dw: CGFloat, ah: CGFloat, dh: CGFloat
+        
         if parent.c64.vic.isPAL() {
             
-            // PAL border will be 36 pixels wide and 34 pixels heigh
-            rect = CGRect.init(x: CGFloat(PAL_LEFT_BORDER_WIDTH - 36),
-                               y: CGFloat(PAL_UPPER_BORDER_HEIGHT - 34),
-                               width: CGFloat(PAL_CANVAS_WIDTH + 2 * 36),
-                               height: CGFloat(PAL_CANVAS_HEIGHT + 2 * 34))
+            /*
+            aw = CGFloat(PAL_LEFT_HBLANK)
+            dw = CGFloat(PAL_LEFT_HBLANK + PAL_PIXELS)
+            ah = CGFloat(PAL_UPPER_VBLANK)
+            dh = CGFloat(PAL_UPPER_VBLANK + PAL_RASTERLINES)
+            */
+            aw = CGFloat(104)
+            dw = CGFloat(487)
+            ah = CGFloat(16)
+            dh = CGFloat(299)
             
         } else {
             
-            // NTSC border will be 42 pixels wide and 9 pixels heigh
-            rect = CGRect.init(x: CGFloat(NTSC_LEFT_BORDER_WIDTH - 42),
-                               y: CGFloat(NTSC_UPPER_BORDER_HEIGHT - 9),
-                               width: CGFloat(NTSC_CANVAS_WIDTH + 2 * 42),
-                               height: CGFloat(NTSC_CANVAS_HEIGHT + 2 * 9))
+            aw = CGFloat(104)
+            dw = CGFloat(487)
+            ah = CGFloat(16)
+            dh = CGFloat(249)
         }
         
         /*
@@ -279,11 +283,6 @@ class Renderer: NSObject, MTKViewDelegate {
          *      aw/ah - dw/dh = largest posible texture cutout
          *      bw/bh - cw/ch = currently used texture cutout
          */
-        let aw = rect.minX
-        let dw = rect.maxX
-        let ah = rect.minY
-        let dh = rect.maxY
-        
         let maxWidth = dw - aw
         let maxHeight = dh - ah
         
@@ -291,6 +290,13 @@ class Renderer: NSObject, MTKViewDelegate {
         let vZoom = CGFloat(config.vZoom)
         let hCenter = CGFloat(config.hCenter)
         let vCenter = CGFloat(config.vCenter)
+
+        /*
+        let hZoom = CGFloat(0)
+        let vZoom = CGFloat(0)
+        let hCenter = CGFloat(0)
+        let vCenter = CGFloat(0)
+        */
         
         let width = (1 - hZoom) * maxWidth
         let bw = aw + hCenter * (maxWidth - width)
