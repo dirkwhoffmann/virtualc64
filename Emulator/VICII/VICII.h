@@ -1214,10 +1214,10 @@ public:
     #define DRAW_SPRITES if (spriteDisplay || isSecondDMAcycle) drawSprites();
     #define DRAW_SPRITES59 if (spriteDisplayDelayed || spriteDisplay || isSecondDMAcycle) drawSprites();
 
-    #define DRAW if (!vblank) draw(); DRAW_SPRITES; bufferoffset += 8;
-    #define DRAW17 if (!vblank) draw17(); DRAW_SPRITES; bufferoffset += 8;
-    #define DRAW55 if (!vblank) draw55(); DRAW_SPRITES; bufferoffset += 8;
-    #define DRAW59 if (!vblank) draw(); DRAW_SPRITES59; bufferoffset += 8;
+    #define DRAW if (!vblank) draw(); DRAW_SPRITES;
+    #define DRAW17 if (!vblank) draw17(); DRAW_SPRITES;
+    #define DRAW55 if (!vblank) draw55(); DRAW_SPRITES;
+    #define DRAW59 if (!vblank) draw(); DRAW_SPRITES59;
     #define DRAW_IDLE DRAW_SPRITES;
     
     #define C_ACCESS if (badLine) cAccess();
@@ -1225,6 +1225,7 @@ public:
     #define END_CYCLE \
     dataBusPhi2 = 0xFF; \
     xCounter += 8; \
+    bufferoffset += 8; \
     for (unsigned i = 0; i < 8; i++) { zBuffer[i] = pixelSource[i] = 0; } \
     if (unlikely(delay)) { processDelayedActions(); }
 

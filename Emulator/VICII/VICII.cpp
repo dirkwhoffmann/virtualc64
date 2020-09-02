@@ -851,13 +851,8 @@ VICII::beginRasterline(u16 line)
         delay |= VICSetDisplayState;
     }
     
-    // We adjust the position of the first pixel in the pixel buffer to make
-    // sure that the screen always appears centered.
-    if (vic.isPAL()) {
-        bufferoffset = PAL_LEFT_BORDER_WIDTH - 32;
-    } else {
-        bufferoffset = NTSC_LEFT_BORDER_WIDTH - 32;
-    }
+    // Reset the pixel buffer offset
+    bufferoffset = 0;    
 }
 
 void 
