@@ -12,8 +12,8 @@ import simd
 struct TextureSize {
     
     static let background = MTLSizeMake(512, 512, 0)
-    static let original = MTLSizeMake(512, 320, 0)
-    static let upscaled = MTLSizeMake(2048, 1280, 0)
+    static let original = MTLSizeMake(NTSC_WIDTH, PAL_HEIGHT, 0)
+    static let upscaled = MTLSizeMake(4 * NTSC_WIDTH, 4 * PAL_HEIGHT, 0)
 }
 
 extension Renderer {
@@ -85,6 +85,14 @@ extension Renderer {
         scanlineTexture = device.makeTexture(size: TextureSize.upscaled, usage: rwtp)
         assert(upscaledTexture != nil, "Failed to create upscaledTexture")
         assert(scanlineTexture != nil, "Failed to create scanlineTexture")
+
+        var w = emulatorTexture.width
+        var h = emulatorTexture.height
+        track("Emulator texture created: \(w) x \(h)")
+        
+        w = upscaledTexture.width
+        h = upscaledTexture.height
+        track("Upscaled texture created: \(w) x \(h)")
     }
     
     internal func buildSamplers() {
@@ -128,20 +136,23 @@ extension Renderer {
             disalignmentV: config.disalignmentV
         )
         
+        // let oc = (TextureSize.original.width, TextureSize.original.height)
+        let uc = (TextureSize.upscaled.width, TextureSize.upscaled.width)
+
         // Build upscalers
-        upscalerGallery[0] = BypassUpscaler.init(device: device, library: library)
-        upscalerGallery[1] = EPXUpscaler.init(device: device, library: library)
-        upscalerGallery[2] = XBRUpscaler.init(device: device, library: library)
+        upscalerGallery[0] = BypassUpscaler.init(device: device, library: library, cutout: uc)
+        upscalerGallery[1] = EPXUpscaler.init(device: device, library: library, cutout: uc)
+        upscalerGallery[2] = XBRUpscaler.init(device: device, library: library, cutout: uc)
         
         // Build bloom filters
-        bloomFilterGallery[0] = BypassFilter.init(device: device, library: library)
-        bloomFilterGallery[1] = SplitFilter.init(device: device, library: library)
-        bloomFilterGallery[2] = SplitFilter.init(device: device, library: library)
+        bloomFilterGallery[0] = BypassFilter.init(device: device, library: library, cutout: uc)
+        bloomFilterGallery[1] = SplitFilter.init(device: device, library: library, cutout: uc)
+        bloomFilterGallery[2] = SplitFilter.init(device: device, library: library, cutout: uc)
         
         // Build scanline filters
-        scanlineFilterGallery[0] = BypassFilter.init(device: device, library: library)
-        scanlineFilterGallery[1] = SimpleScanlines(device: device, library: library)
-        scanlineFilterGallery[2] = BypassFilter.init(device: device, library: library)
+        scanlineFilterGallery[0] = BypassFilter.init(device: device, library: library, cutout: uc)
+        scanlineFilterGallery[1] = SimpleScanlines(device: device, library: library, cutout: uc)
+        scanlineFilterGallery[2] = BypassFilter.init(device: device, library: library, cutout: uc)
     }
     
     func buildDotMasks() {

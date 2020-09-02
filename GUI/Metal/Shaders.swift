@@ -125,12 +125,16 @@ class ComputeKernel: NSObject {
     var device: MTLDevice!
     var kernel: MTLComputePipelineState!
 
-    convenience init?(name: String, device: MTLDevice, library: MTLLibrary) {
+    // The rectangle the compute kernel is applied to
+    var cutout = (256, 256)
+
+    convenience init?(name: String, device: MTLDevice, library: MTLLibrary, cutout: (Int, Int)) {
         
         self.init()
         
         self.device = device
-        
+        self.cutout = cutout
+
         // Lookup kernel function in library
         guard let function = library.makeFunction(name: name) else {
             track("ERROR: Cannot find kernel function '\(name)' in library.")
@@ -154,13 +158,13 @@ class ComputeKernel: NSObject {
     }
     
     func apply(commandBuffer: MTLCommandBuffer, source: MTLTexture, target: MTLTexture,
-               options: ShaderOptions? = nil) {
+               options: UnsafeRawPointer? = nil) {
         
         apply(commandBuffer: commandBuffer, textures: [source, target], options: options)
     }
 
     func apply(commandBuffer: MTLCommandBuffer, textures: [MTLTexture],
-               options: ShaderOptions? = nil) {
+               options: UnsafeRawPointer? = nil) {
         
         if let encoder = commandBuffer.makeComputeCommandEncoder() {
             
@@ -171,27 +175,27 @@ class ComputeKernel: NSObject {
         }
     }
 
-    func apply(encoder: MTLComputeCommandEncoder, options: ShaderOptions? = nil) {
+    func apply(encoder: MTLComputeCommandEncoder, options: UnsafeRawPointer? = nil) {
         
         // Bind pipeline
         encoder.setComputePipelineState(kernel)
         
         // Pass in shader options
-        if var _options = options {
-            encoder.setBytes(&_options,
+        if options != nil {
+            encoder.setBytes(options!,
                              length: MemoryLayout<ShaderOptions>.stride,
                              index: 0)
         }
-        
+
         // Determine thread group size and number of groups
         let groupW = kernel.threadExecutionWidth
         let groupH = kernel.maxTotalThreadsPerThreadgroup / groupW
         let threadsPerGroup = MTLSizeMake(groupW, groupH, 1)
         
-        let countW = (UPSCALEDTEXTURE.cutout_x + groupW - 1) / groupW
-        let countH = (UPSCALEDTEXTURE.cutout_y + groupH - 1) / groupH
+        let countW = (cutout.0) / groupW
+        let countH = (cutout.1) / groupH
         let threadgroupCount = MTLSizeMake(countW, countH, 1)
-        
+
         // Finally, we're ready to dispatch
         encoder.dispatchThreadgroups(threadgroupCount,
                                      threadsPerThreadgroup: threadsPerGroup)
@@ -205,8 +209,9 @@ class ComputeKernel: NSObject {
 
 class BypassFilter: ComputeKernel {
     
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
-        self.init(name: "bypass", device: device, library: library)
+    convenience init?(device: MTLDevice, library: MTLLibrary, cutout: (Int, Int)) {
+        self.init(name: "bypass",
+                  device: device, library: library, cutout: cutout)
     }
 }
 
@@ -216,22 +221,25 @@ class BypassFilter: ComputeKernel {
 
 class BypassUpscaler: ComputeKernel {
     
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
-        self.init(name: "bypassupscaler", device: device, library: library)
+    convenience init?(device: MTLDevice, library: MTLLibrary, cutout: (Int, Int)) {
+        self.init(name: "bypassupscaler",
+                  device: device, library: library, cutout: cutout)
     }
 }
 
 class EPXUpscaler: ComputeKernel {
     
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
-        self.init(name: "epxupscaler", device: device, library: library)
+    convenience init?(device: MTLDevice, library: MTLLibrary, cutout: (Int, Int)) {
+        self.init(name: "epxupscaler",
+                  device: device, library: library, cutout: cutout)
     }
 }
 
 class XBRUpscaler: ComputeKernel {
     
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
-        self.init(name: "xbrupscaler", device: device, library: library)
+    convenience init?(device: MTLDevice, library: MTLLibrary, cutout: (Int, Int)) {
+        self.init(name: "xbrupscaler",
+                  device: device, library: library, cutout: cutout)
     }
 }
 
@@ -241,8 +249,9 @@ class XBRUpscaler: ComputeKernel {
 
 class SplitFilter: ComputeKernel {
 
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
-        self.init(name: "split", device: device, library: library)
+    convenience init?(device: MTLDevice, library: MTLLibrary, cutout: (Int, Int)) {
+        self.init(name: "split",
+                  device: device, library: library, cutout: cutout)
     }
 }
 
@@ -252,7 +261,8 @@ class SplitFilter: ComputeKernel {
 
 class SimpleScanlines: ComputeKernel {
     
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
-        self.init(name: "scanlines", device: device, library: library)
+    convenience init?(device: MTLDevice, library: MTLLibrary, cutout: (Int, Int)) {
+        self.init(name: "scanlines",
+                  device: device, library: library, cutout: cutout)
     }
 }

@@ -452,10 +452,10 @@ VICII::screenBuffer() {
 void
 VICII::resetScreenBuffers()
 {
-    for (unsigned line = 0; line < PAL_RASTERLINES; line++) {
-        for (unsigned i = 0; i < NTSC_PIXELS; i++) {
-            screenBuffer1[line * NTSC_PIXELS + i] =
-            screenBuffer2[line * NTSC_PIXELS + i] =
+    for (unsigned line = 0; line < PAL_HEIGHT; line++) {
+        for (unsigned i = 0; i < NTSC_WIDTH; i++) {
+            screenBuffer1[line * NTSC_WIDTH + i] =
+            screenBuffer2[line * NTSC_WIDTH + i] =
             (line % 2) ? rgbaTable[8] : rgbaTable[9];
         }
     }
@@ -875,17 +875,8 @@ VICII::endRasterline()
     if (config.markDmaLines && badLine)
         markLine(VICII_RED);
     
-    if (!vblank) {
-        
-        // Make the border look nice (evetually, we should get rid of this)
-        expandBorders();
-
-        // Advance pixelBuffer
-        u16 nextline = c64.rasterLine - PAL_UPPER_VBLANK + 1;
-        if (nextline < PAL_RASTERLINES) {
-            pixelBuffer = currentScreenBuffer + (nextline * NTSC_PIXELS);
-        }
-    }
+    // Advance pixelBuffer
+    pixelBuffer = currentScreenBuffer + (c64.rasterLine * NTSC_WIDTH);
 }
 
 

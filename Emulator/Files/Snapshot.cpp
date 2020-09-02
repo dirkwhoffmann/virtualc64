@@ -162,10 +162,10 @@ Snapshot::takeScreenshot(C64 *c64)
     
     u32 *source = (u32 *)c64->vic.screenBuffer();
     u32 *target = header->screenshot.screen;
-    source += x_start + y_start * NTSC_PIXELS;
+    source += x_start + y_start * NTSC_WIDTH;
     for (unsigned i = 0; i < header->screenshot.height; i++) {
         memcpy(target, source, header->screenshot.width * 4);
         target += header->screenshot.width;
-        source += NTSC_PIXELS;
+        source += NTSC_WIDTH;
     }
 }

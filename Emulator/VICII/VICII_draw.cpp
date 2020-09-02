@@ -520,50 +520,12 @@ VICII::setSpritePixel(unsigned sprite, unsigned pixel, u8 color)
 }
 
 void
-VICII::expandBorders()
-{
-#if 0
-
-    int color, lastX;
-    unsigned leftPixelPos;
-    unsigned rightPixelPos;
-    
-    if (isPAL()) {
-        leftPixelPos = PAL_LEFT_BORDER_WIDTH - (4*8);
-        rightPixelPos = PAL_LEFT_BORDER_WIDTH + PAL_CANVAS_WIDTH + (4*8) - 1;
-        lastX = PAL_PIXELS;
-    } else {
-        leftPixelPos = NTSC_LEFT_BORDER_WIDTH - (4*8);
-        rightPixelPos = NTSC_LEFT_BORDER_WIDTH + NTSC_CANVAS_WIDTH + (4*8) - 1;
-        lastX = NTSC_PIXELS;
-    }
-        
-    color = pixelBuffer[leftPixelPos];
-    for (unsigned i = 0; i < leftPixelPos; i++) {
-        pixelBuffer[i] = color;
-        // pixelBuffer[i] = 0xFFFFFFFF; // for debugging
-    }
-    color = pixelBuffer[rightPixelPos];
-    for (unsigned i = rightPixelPos+1; i < lastX; i++) {
-        pixelBuffer[i] = color;
-        // pixelBuffer[i] = 0xFFFFFFFF; // for debugging
-    }
-
-    /*
-    // Draw grid lines
-    for (unsigned i = 0; i < NTSC_PIXELS; i += 10)
-    pixelBuffer[i] = 0xFFFFFFFF;
-    */
-#endif
-}
-
-void
 VICII::markLine(u8 color, unsigned start, unsigned end)
 {
-    assert (end <= NTSC_PIXELS);
+    assert (end < NTSC_WIDTH);
     
     int rgba = rgbaTable[color];
-    for (unsigned i = start; i < end; i++) {
+    for (unsigned i = start; i <= end; i++) {
         pixelBuffer[start + i] = rgba;
     }
 }

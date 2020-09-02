@@ -224,8 +224,8 @@ class Renderer: NSObject, MTKViewDelegate {
         precondition(buf != nil)
         
         let pixelSize = 4
-        let width = Int(NTSC_PIXELS)
-        let height = Int(PAL_RASTERLINES)
+        let width = Int(NTSC_WIDTH)
+        let height = Int(PAL_HEIGHT)
         let rowBytes = width * pixelSize
         let imageBytes = rowBytes * height
         let region = MTLRegionMake2D(0, 0, width, height)
@@ -358,7 +358,7 @@ class Renderer: NSObject, MTKViewDelegate {
             let bloomFilter = currentBloomFilter()
             bloomFilter.apply(commandBuffer: commandBuffer,
                               textures: [emulatorTexture, bloomTextureR, bloomTextureG, bloomTextureB],
-                              options: shaderOptions)
+                              options: &shaderOptions)
             
             func applyGauss(_ texture: inout MTLTexture, radius: Float) {
                 
@@ -392,7 +392,7 @@ class Renderer: NSObject, MTKViewDelegate {
         scanlineFilter.apply(commandBuffer: commandBuffer,
                                 source: upscaledTexture,
                                 target: scanlineTexture,
-                                options: shaderOptions)
+                                options: &shaderOptions)
         
         // Create render pass descriptor
         let descriptor = MTLRenderPassDescriptor.init()

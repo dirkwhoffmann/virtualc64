@@ -542,8 +542,8 @@ private:
      * GUI accesses the stable buffer at a constant frame rate and copies it
      * into the texture RAM of the graphics card.
      */
-    int *screenBuffer1 = new int[PAL_RASTERLINES * NTSC_PIXELS];
-    int *screenBuffer2 = new int [PAL_RASTERLINES * NTSC_PIXELS];
+    int *screenBuffer1 = new int[PAL_HEIGHT * NTSC_WIDTH];
+    int *screenBuffer2 = new int[PAL_HEIGHT * NTSC_WIDTH];
 
     /* Pointer to the current working buffer. This variable either points to
      * screenBuffer1 or screenBuffer2. After a frame has been finished, the
@@ -1311,7 +1311,7 @@ private:
     
     // Writes a single color value into the screenbuffer
     #define COLORIZE(pixel,color) \
-        assert(bufferoffset + pixel < NTSC_PIXELS); \
+        assert(bufferoffset + pixel < NTSC_WIDTH); \
         pixelBuffer[bufferoffset + pixel] = rgbaTable[color];
     
     /* Sets a single frame pixel. The upper bit in pixelSource is cleared to
@@ -1336,16 +1336,11 @@ private:
     
     // Draw a single sprite pixel
     void setSpritePixel(unsigned sprite, unsigned pixel, u8 color);
-    
-    /* Extend border to the left and right to look nice. This functions
-     * replicates the color of the leftmost and rightmost pixel
-     */
-    void expandBorders();
-    
+        
     /* Draw a horizontal colored line into the screen buffer. This method is
      * utilized for debugging purposes, only.
      */
-    void markLine(u8 color, unsigned start = 0, unsigned end = NTSC_PIXELS);
+    void markLine(u8 color, unsigned start = 0, unsigned end = NTSC_WIDTH - 1);
 
     
 	//
