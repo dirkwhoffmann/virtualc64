@@ -694,7 +694,6 @@ VICII::cycle62pal()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
-    printf("bufferoffset = %d\n", bufferoffset);
     // Phi1.2 Draw sprites (invisible area)
     DRAW_IDLE
 

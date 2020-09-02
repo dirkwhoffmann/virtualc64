@@ -146,26 +146,18 @@ void
 Snapshot::takeScreenshot(C64 *c64)
 {
     SnapshotHeader *header = (SnapshotHeader *)data;
-    unsigned x_start, y_start;
-       
-    if (c64->vic.isPAL()) {
-        x_start = PAL_LEFT_BORDER_WIDTH - 36;
-        y_start = PAL_UPPER_BORDER_HEIGHT - 34;
-        header->screenshot.width = 36 + PAL_CANVAS_WIDTH + 36;
-        header->screenshot.height = 34 + PAL_CANVAS_HEIGHT + 34;
-    } else {
-        x_start = NTSC_LEFT_BORDER_WIDTH - 42;
-        y_start = NTSC_UPPER_BORDER_HEIGHT - 9;
-        header->screenshot.width = 36 + PAL_CANVAS_WIDTH + 36;
-        header->screenshot.height = 9 + PAL_CANVAS_HEIGHT + 9;
-    }
+    
+    unsigned xStart = FIRST_VISIBLE_PIXEL;
+    unsigned yStart = FIRST_VISIBLE_LINE;
+    header->screenshot.width = VISIBLE_PIXELS;
+    header->screenshot.height = c64->vic.numVisibleRasterlines();
     
     u32 *source = (u32 *)c64->vic.screenBuffer();
     u32 *target = header->screenshot.screen;
-    source += x_start + y_start * NTSC_WIDTH;
+    source += xStart + yStart * TEX_WIDTH;
     for (unsigned i = 0; i < header->screenshot.height; i++) {
         memcpy(target, source, header->screenshot.width * 4);
         target += header->screenshot.width;
-        source += NTSC_WIDTH;
+        source += TEX_WIDTH;
     }
 }

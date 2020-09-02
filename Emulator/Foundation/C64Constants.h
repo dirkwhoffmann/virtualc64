@@ -13,129 +13,55 @@
 #include "Aliases.h"
 
 //
-// PAL constants
+// Timing parameters
 //
 
-// PAL clock frequency in Hz
-static const u32 PAL_CLOCK_FREQUENCY = 985249;
-
-// CPU cycles per second in PAL mode
-static const unsigned PAL_CYCLES_PER_SECOND = PAL_CLOCK_FREQUENCY;
-
-// Pixel aspect ratio in PAL mode
-static const double PAL_PIXEL_ASPECT_RATIO = 0.9365;
-
-
-// Horizontal screen parameters
-
-// Width of left HBLANK area in PAL mode
-static const long PAL_LEFT_HBLANK = 76; // 112
-
-// Width of left border in PAL mode
-static const long PAL_LEFT_BORDER_WIDTH = 48;
-
-// Width of canvas area in PAL mode
-static const long PAL_CANVAS_WIDTH = 320;
-
-// Width of right border in PAL mode
-static const long PAL_RIGHT_BORDER_WIDTH = 37;
-
-// Width of right HBLANK area in PAL mode
-static const long PAL_RIGHT_HBLANK = 23;
-
-// Total width of a rasterline (including HBLANK) in PAL mode
-static const long PAL_WIDTH = 504; // 76 + 48 + 320 + 37 + 23
-
-// Number of drawn pixels per rasterline in PAL mode
-static const long PAL_PIXELS = 405; // 48 + 320 + 37
-
-
-// Vertical screen parameters
-
-// Number of VBLANK lines at top in PAL mode
-static const long PAL_UPPER_VBLANK = 16;
-
-// Heigt of upper boder in PAL mode
-static const long PAL_UPPER_BORDER_HEIGHT = 35;
-
-// Height of canvas area in PAL mode
-static const long PAL_CANVAS_HEIGHT = 200;
-
-// Lower border height in PAL mode
-static const long PAL_LOWER_BORDER_HEIGHT = 49;
-
-// Number of VBLANK lines at bottom in PAL mode
-static const long PAL_LOWER_VBLANK = 12;
-
-// Total height of a frame (including VBLANK) in PAL mode
-static const long PAL_HEIGHT = 312; // 16 + 35 + 200 + 49 + 12
-
-// Number of drawn rasterlines per frame in PAL mode
-static const long PAL_RASTERLINES = 284; // 35 + 200 + 49
+// Clock frequency in Hz
+static const long PAL_CLOCK_FREQUENCY      = 985249;
+static const long NTSC_CLOCK_FREQUENCY     = 1022727;
+static const long PAL_CYCLES_PER_SECOND    = PAL_CLOCK_FREQUENCY;
+static const long NTSC_CYCLES_PER_SECOND   = NTSC_CLOCK_FREQUENCY;
 
 
 //
-// NTSC constants
+// Screen parameters
 //
 
-// NTSC clock frequency in Hz
-static const u32 NTSC_CLOCK_FREQUENCY = 1022727;
+// Pixel aspect ratios
+static const double PAL_ASPECT_RATIO       = 0.9365;
+static const double NTSC_ASPECT_RATIO      = 0.7500;
 
-// CPU cycles per second in NTSC mode
-static const unsigned NTSC_CYCLES_PER_SECOND = NTSC_CLOCK_FREQUENCY;
+// Horizontal parameters (measured in cycles)
+static const long HBLANK_CYCLES_LEFT       = 13;
+static const long BORDER_CYCLES_LEFT       = 4;
+static const long CANVAS_CYCLES            = 40;
+static const long BORDER_CYCLES_RIGHT      = 4;
+static const long HBLANK_CYCLES_RIGHT_PAL  = 2;
+static const long HBLANK_CYCLES_RIGHT_NTSC = 4;
 
-// Pixel aspect ratio in NTSC mode
-static const double NTSC_PIXEL_ASPECT_RATIO = 0.75;
+// Derived values
+static const long PAL_CYCLES               = 63;   // 13 + 4 + 40 + 4 + 2
+static const long NTSC_CYCLES              = 65;   // 13 + 4 + 40 + 4 + 4
 
+// Horizontal parameters (measured in pixels)
+static const long HBLANK_PIXELS_LEFT       = 104;
+static const long BORDER_PIXELS_LEFT       = 32;
+static const long CANVAS_PIXELS            = 320;
+static const long BORDER_PIXELS_RIGHT      = 32;
+static const long HBLANK_PIXELS_RIGHT_PAL  = 16;
+static const long HBLANK_PIXELS_RIGHT_NTSC = 32;
 
-// Horizontal screen parameters
+// Derived values
+static const long FIRST_VISIBLE_PIXEL      = 104;  // 104
+static const long VISIBLE_PIXELS           = 384;  //       32 + 320 + 32
+static const long PAL_PIXELS               = 504;  // 104 + 32 + 320 + 32 + 16
+static const long NTSC_PIXELS              = 520;  // 104 + 32 + 320 + 32 + 32
 
-// Width of left HBLANK area in NTSC mode
-static const long NTSC_LEFT_HBLANK = 77;
+// Width and height of the emulator texture
+static const long TEX_HEIGHT               = 312;  // PAL height
+static const long TEX_WIDTH                = 520;  // NTSC width
 
-// Width of left border in NTSC mode
-static const long NTSC_LEFT_BORDER_WIDTH = 55;
-
-// Width of canvas area in NTSC mode
-static const long NTSC_CANVAS_WIDTH = 320;
-
-// Width of right border in NTSC mode
-static const long NTSC_RIGHT_BORDER_WIDTH = 53;
-
-// Width of right HBLANK area in NTSC mode
-static const long NTSC_RIGHT_HBLANK = 15;
-
-// Total width of a rasterline (including HBLANK) in NTSC mode
-static const long NTSC_WIDTH = 520; // 77 + 55 + 320 + 53 + 15
-
-// Number of drawn pixels per rasterline in NTSC mode
-static const long NTSC_PIXELS = 428; // 55 + 320 + 53
-
-// Number of viewable pixels per rasterline in NTSC mode
-static const long NTSC_VISIBLE_PIXELS = 418;
-
-
-// Vertical screen parameters
-
-// Number of VBLANK lines at top in NTSC mode
-static const long NTSC_UPPER_VBLANK = 16;
-
-// Heigt of upper boder in NTSC mode
-static const long NTSC_UPPER_BORDER_HEIGHT = 10;
-
-// Height of canvas area in NTSC mode
-static const long NTSC_CANVAS_HEIGHT = 200;
-
-// Lower border height in NTSC mode
-static const long NTSC_LOWER_BORDER_HEIGHT = 25;
-
-// Number of VBLANK lines at bottom in NTSC mode
-static const long NTSC_LOWER_VBLANK = 12;
-
-// Total height of a frame (including VBLANK) in NTSC mode
-static const long NTSC_HEIGHT = 263; // 16 + 10 + 200 + 25 + 12
-
-// Number of drawn rasterlines per frame in NTSC mode
-static const long NTSC_RASTERLINES = 235; // 10 + 200 + 25
+// Vertical parameters
+static const long FIRST_VISIBLE_LINE       = 16;
 
 #endif

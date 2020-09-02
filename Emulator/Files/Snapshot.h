@@ -25,7 +25,7 @@ typedef struct {
     // Thumbnail image
     struct {
         u16 width, height;
-        u32 screen[PAL_RASTERLINES * NTSC_PIXELS];
+        u32 screen[TEX_HEIGHT * TEX_WIDTH];
         
     } screenshot;
     

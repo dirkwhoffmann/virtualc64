@@ -522,7 +522,7 @@ VICII::setSpritePixel(unsigned sprite, unsigned pixel, u8 color)
 void
 VICII::markLine(u8 color, unsigned start, unsigned end)
 {
-    assert (end < NTSC_WIDTH);
+    assert (end < TEX_WIDTH);
     
     int rgba = rgbaTable[color];
     for (unsigned i = start; i <= end; i++) {

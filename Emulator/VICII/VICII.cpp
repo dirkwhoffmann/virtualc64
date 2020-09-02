@@ -55,7 +55,7 @@ VICII::_reset()
     RESET_SNAPSHOT_ITEMS
     
     // Reset counters
-    yCounter = PAL_HEIGHT;
+    yCounter = (u32)getRasterlinesPerFrame();
         
     // Reset the memory source lookup table
     setUltimax(false);
@@ -406,7 +406,7 @@ VICII::isLastCycleInRasterline(unsigned cycle)
     return cycle >= getCyclesPerLine();
 }
 
-unsigned
+long
 VICII::getRasterlinesPerFrame()
 {
     switch (config.revision) {
@@ -420,6 +420,23 @@ VICII::getRasterlinesPerFrame()
             
         default:
             return 312;
+    }
+}
+
+long
+VICII::numVisibleRasterlines()
+{
+    switch (config.revision) {
+            
+        case NTSC_6567_R56A:
+            return 234;
+            
+        case NTSC_6567:
+        case NTSC_8562:
+            return 235;
+            
+        default:
+            return 284;
     }
 }
 
@@ -453,13 +470,13 @@ void
 VICII::resetScreenBuffers()
 {
     // Determine the HBLANK / VBLANK area
-    int width = isPAL() ? PAL_WIDTH : NTSC_WIDTH;
-    int height = isPAL() ? PAL_HEIGHT : NTSC_HEIGHT;
+    long width = isPAL() ? PAL_PIXELS : NTSC_PIXELS;
+    long height = getRasterlinesPerFrame();
     
-    for (unsigned line = 0; line < PAL_HEIGHT; line++) {
-        for (unsigned i = 0; i < NTSC_WIDTH; i++) {
+    for (unsigned line = 0; line < TEX_HEIGHT; line++) {
+        for (unsigned i = 0; i < TEX_WIDTH; i++) {
 
-            int pos = line * NTSC_WIDTH + i;
+            int pos = line * TEX_WIDTH + i;
             int col = 0xFF000000;
 
             // Apply a checkerboard pattern inside the HBLANK / VBLANK area
@@ -660,7 +677,7 @@ VICII::checkForLightpenIrq()
         return;
 
     // ... we are in the last PAL rasterline and not in cycle 1.
-    if (yCounter == PAL_HEIGHT - 1 && vicCycle != 1)
+    if (yCounter == 311 && vicCycle != 1)
         return;
     
     // Latch coordinates
@@ -878,7 +895,7 @@ VICII::endRasterline()
         markLine(VICII_RED);
     
     // Advance pixelBuffer
-    pixelBuffer = currentScreenBuffer + (c64.rasterLine * NTSC_WIDTH);
+    pixelBuffer = currentScreenBuffer + (c64.rasterLine * TEX_WIDTH);
 }
 
 

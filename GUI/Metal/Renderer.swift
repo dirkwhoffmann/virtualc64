@@ -224,11 +224,11 @@ class Renderer: NSObject, MTKViewDelegate {
         precondition(buf != nil)
         
         let pixelSize = 4
-        let width = Int(NTSC_WIDTH)
-        let height = Int(PAL_HEIGHT)
-        let rowBytes = width * pixelSize
-        let imageBytes = rowBytes * height
-        let region = MTLRegionMake2D(0, 0, width, height)
+        // let width = Int(NTSC_WIDTH)
+        // let height = Int(PAL_HEIGHT)
+        let rowBytes = TEX_WIDTH * pixelSize
+        let imageBytes = rowBytes * TEX_HEIGHT
+        let region = MTLRegionMake2D(0, 0, TEX_WIDTH, TEX_HEIGHT)
         
         emulatorTexture.replace(region: region,
                                 mipmapLevel: 0,
@@ -249,9 +249,9 @@ class Renderer: NSObject, MTKViewDelegate {
             
             /*
             aw = CGFloat(PAL_LEFT_HBLANK)
-            dw = CGFloat(PAL_LEFT_HBLANK + PAL_PIXELS)
+            dw = CGFloat(PAL_LEFT_HBLANK + )
             ah = CGFloat(PAL_UPPER_VBLANK)
-            dh = CGFloat(PAL_UPPER_VBLANK + PAL_RASTERLINES)
+            dh = CGFloat(PAL_UPPER_VBLANK + )
             */
             aw = CGFloat(104)
             dw = CGFloat(487)

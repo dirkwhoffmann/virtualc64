@@ -542,8 +542,8 @@ private:
      * GUI accesses the stable buffer at a constant frame rate and copies it
      * into the texture RAM of the graphics card.
      */
-    int *screenBuffer1 = new int[PAL_HEIGHT * NTSC_WIDTH];
-    int *screenBuffer2 = new int[PAL_HEIGHT * NTSC_WIDTH];
+    int *screenBuffer1 = new int[TEX_HEIGHT * TEX_WIDTH];
+    int *screenBuffer2 = new int[TEX_HEIGHT * TEX_WIDTH];
 
     /* Pointer to the current working buffer. This variable either points to
      * screenBuffer1 or screenBuffer2. After a frame has been finished, the
@@ -785,13 +785,16 @@ public:
     bool isLastCycleInRasterline(unsigned cycle);
     
     // Returns the number of rasterlines drawn per frame
-    unsigned getRasterlinesPerFrame();
-    
+    long getRasterlinesPerFrame();
+
+    // Returns the number of visible rasterlines in a single frame
+    long numVisibleRasterlines();
+
     // Returns true if rasterline belongs to the VBLANK area
     bool isVBlankLine(unsigned rasterline);
     
     // Returns the number of CPU cycles executed in one frame
-    unsigned getCyclesPerFrame() {
+    long getCyclesPerFrame() {
         return getRasterlinesPerFrame() * getCyclesPerLine(); }
     
     /* Returns the number of frames drawn per second. The result is returned as
@@ -1312,7 +1315,7 @@ private:
     
     // Writes a single color value into the screenbuffer
     #define COLORIZE(pixel,color) \
-        assert(bufferoffset + pixel < NTSC_WIDTH); \
+        assert(bufferoffset + pixel < TEX_WIDTH); \
         pixelBuffer[bufferoffset + pixel] = rgbaTable[color];
     
     /* Sets a single frame pixel. The upper bit in pixelSource is cleared to
@@ -1341,7 +1344,7 @@ private:
     /* Draw a horizontal colored line into the screen buffer. This method is
      * utilized for debugging purposes, only.
      */
-    void markLine(u8 color, unsigned start = 0, unsigned end = NTSC_WIDTH - 1);
+    void markLine(u8 color, unsigned start = 0, unsigned end = TEX_WIDTH - 1);
 
     
 	//
