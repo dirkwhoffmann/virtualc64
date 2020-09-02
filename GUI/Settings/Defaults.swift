@@ -936,7 +936,7 @@ struct VideoDefaults {
         hCenter: 0,
         vCenter: 0,
         hZoom: 0,
-        vZoom: 0,
+        vZoom: 0.046,
         
         upscaler: 0,
         
@@ -971,7 +971,7 @@ struct VideoDefaults {
         hCenter: 0,
         vCenter: 0,
         hZoom: 0,
-        vZoom: 0,
+        vZoom: 0.046,
         
         upscaler: 0,
         

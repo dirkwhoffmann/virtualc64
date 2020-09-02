@@ -279,8 +279,8 @@ extension ConfigurationController {
         UserDefaults.resetVideoUserDefaults()
         
         switch sender.selectedTag() {
-        case 0: myController?.renderer.shaderOptions = ShaderDefaultsTFT
-        case 1: myController?.renderer.shaderOptions = ShaderDefaultsCRT
+        case 0: config.loadVideoDefaults(VideoDefaults.tft)
+        case 1: config.loadVideoDefaults(VideoDefaults.crt)
         default: fatalError()
         }
         

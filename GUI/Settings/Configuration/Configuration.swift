@@ -467,7 +467,7 @@ class Configuration {
          
          loadColorDefaults(defaults)
          loadGeometryDefaults(defaults)
-         loadColorDefaults(defaults)
+         loadShaderDefaults(defaults)
      }
 
      func loadVideoUserDefaults() {
