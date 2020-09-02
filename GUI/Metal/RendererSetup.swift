@@ -11,8 +11,9 @@ import simd
 
 struct TextureSize {
     
-    static let original = MTLSizeMake(512, 512, 0)
-    static let upscaled = MTLSizeMake(2048, 2048, 0)
+    static let background = MTLSizeMake(512, 512, 0)
+    static let original = MTLSizeMake(512, 320, 0)
+    static let upscaled = MTLSizeMake(2048, 1280, 0)
 }
 
 extension Renderer {
@@ -64,7 +65,7 @@ extension Renderer {
         let rwtp: MTLTextureUsage = [ .shaderRead, .shaderWrite, .renderTarget, .pixelFormatView ]
         
         // Background texture used in window mode
-        bgTexture = device.makeTexture(w: 512, h: 512)
+        bgTexture = device.makeTexture(size: TextureSize.background, usage: r)
         assert(bgTexture != nil, "Failed to create bgTexture")
         
         // Emulator texture (long frames)

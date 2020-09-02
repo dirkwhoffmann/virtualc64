@@ -20,15 +20,15 @@ class Renderer: NSObject, MTKViewDelegate {
     var prefs: Preferences { return parent.pref }
     var config: Configuration { return parent.config }
 
-    /* Number of drawn frames since power up.
-     * Used to determine the fps value shown in the emulator's bottom bar.
+    /* Number of drawn frames since power up. This value is used to determine
+     * the fps value shown in the emulator's bottom bar.
      */
     var frames: Int64 = 0
     
-    /* Synchronization semaphore
-     * The semaphore is locked in function draw() and released in function
-     * endFrame(). It's puprpose is to prevent a new frame from being drawn
-     * if the previous isn't finished yet. Not sure if we really need it.
+    /* Synchronization semaphore. The semaphore is locked in function draw()
+     * and released in function endFrame(). It's puprpose is to prevent a new
+     * frame from being drawn if the previous isn't finished yet. Not sure if
+     * we really need it.
      */
     var semaphore = DispatchSemaphore(value: 1)
     
@@ -77,49 +77,47 @@ class Renderer: NSObject, MTKViewDelegate {
                                             dotMaskHeight: 0,
                                             scanlineDistance: 0)
     
+    //
     // Textures
-    
+    //
+
     // Background texture
     var bgTexture: MTLTexture! = nil
     
     // Texture to hold the pixel depth information
     var depthTexture: MTLTexture! = nil
     
-    /* Emulator texture as provided by the emulator.
-     * The C64 screen has size 428 x 284 and covers the upper left part of the
-     * emulator texture. The emulator texture is updated in function
-     * updateTexture() which is called periodically in drawRect().
+    /* Emulator texture as provided by the emulator. The C64 screen is 428
+     * pixels wide and 284 high and covers the upper left part of the emulator
+     * texture. The emulator texture is updated in function updateTexture()
+     * which is called periodically in drawRect().
      */
     var emulatorTexture: MTLTexture! = nil
 
-    /* Bloom textures to emulate blooming.
-     * To emulate a bloom effect, the C64 texture is first split into it's
-     * R, G, and B parts. Each texture is then run through a Gaussian blur
-     * filter with a large radius. These blurred textures are passed into
-     * the fragment shader as a secondary textures where they are recomposed
-     * with the upscaled primary texture.
+    /* Bloom textures. To emulate a bloom effect, the emulator texture is first
+     * split into it's R, G, and B parts. Each texture is then run through a
+     * Gaussian blur filter with a large radius. These blurred textures are
+     * passed into the fragment shader as a secondary textures where they are
+     * recomposed with the upscaled primary texture.
      */
     var bloomTextureR: MTLTexture! = nil
     var bloomTextureG: MTLTexture! = nil
     var bloomTextureB: MTLTexture! = nil
 
-    /* Upscaled emulator texture.
-     * In the first texture processing stage, the emulator texture is bumped up
-     * by a factor of 4. The user can choose between bypass upscaling which
-     * simply replaces each pixel by a 4x4 quad or more sophisticated upscaling
-     * algorithms such as xBr.
+    /* Upscaled emulator texture. In the first texture processing stage, the
+     * emulator texture is bumped up by a factor of 4. The user can choose
+     * between bypass upscaling which simply replaces each pixel by a 4x4 quad
+     * or more sophisticated upscaling algorithms such as xBr.
      */
     var upscaledTexture: MTLTexture! = nil
     
-    /* Upscaled texture with scanlines.
-     * In the second texture processing stage, a scanline effect is applied to
-     * the upscaled texture.
+    /* Upscaled texture with scanlines. In the second texture processing stage,
+     * a scanline effect is applied to the upscaled texture.
      */
     var scanlineTexture: MTLTexture! = nil
     
-    /* Dotmask texture (variable size).
-     * This texture is used by the fragment shader to emulate a dotmask
-     * effect.
+    /* Dotmask texture (variable size). This texture is used by the fragment
+     * shader to emulate a dotmask effect.
      */
     var dotMaskTexture: MTLTexture! = nil
     
@@ -174,6 +172,9 @@ class Renderer: NSObject, MTKViewDelegate {
     
     // Part of the texture that is currently visible
     var textureRect = CGRect.init()
+    
+    // Indicates if the whole texture should be displayed
+    var zoom = false
     
     // Is set to true when fullscreen mode is entered
     var fullscreen = false
@@ -240,6 +241,9 @@ class Renderer: NSObject, MTKViewDelegate {
     func computeTextureRect() -> CGRect {
         
         var rect: CGRect
+        
+        // Display the whole texture if zoom is set
+        if zoom { return CGRect.init(x: 0.0, y: 0.0, width: 1.0, height: 1.0) }
         
         if parent.c64.vic.isPAL() {
             

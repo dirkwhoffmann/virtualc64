@@ -20,9 +20,7 @@ class Monitor: DialogController {
     // Cheating
     @IBOutlet weak var ssCollision: NSButton!
     @IBOutlet weak var sbCollision: NSButton!
-    
-    var zoom = false
-    
+        
     override func awakeFromNib() {
         
         track()
@@ -32,7 +30,7 @@ class Monitor: DialogController {
     
     func refresh() {
         
-        zoomTexture.state = zoom ? .on : .off
+        zoomTexture.state = parent.renderer.zoom ? .on : .off
         markDmaRasterlines.state = config.vicMarkDmaLines ? .on : .off
         markIrqRasterlines.state = config.vicMarkIrqLines ? .on : .off
         hideSprites.state = config.vicHideSprites ? .on : .off
@@ -48,9 +46,12 @@ class Monitor: DialogController {
     @IBAction func zoomTextureAction(_ sender: NSButton!) {
 
         track()
-        zoom = sender.state == .on
         
-        zoom ? parent.renderer.zoomTextureOut() : parent.renderer.zoomTextureIn()
+        if sender.state == .on {
+            parent.renderer.zoomTextureOut()
+        } else {
+            parent.renderer.zoomTextureIn()
+        }
         refresh()
     }
 

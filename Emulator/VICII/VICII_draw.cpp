@@ -522,6 +522,8 @@ VICII::setSpritePixel(unsigned sprite, unsigned pixel, u8 color)
 void
 VICII::expandBorders()
 {
+#if 0
+
     int color, lastX;
     unsigned leftPixelPos;
     unsigned rightPixelPos;
@@ -535,20 +537,16 @@ VICII::expandBorders()
         rightPixelPos = NTSC_LEFT_BORDER_WIDTH + NTSC_CANVAS_WIDTH + (4*8) - 1;
         lastX = NTSC_PIXELS;
     }
-    
-    // Make picked pixels visible for debugging
-    // pixelBuffer[leftPixelPos + 1] = colors[5];
-    // pixelBuffer[rightPixelPos - 1] = colors[5];
-    
+        
     color = pixelBuffer[leftPixelPos];
     for (unsigned i = 0; i < leftPixelPos; i++) {
         pixelBuffer[i] = color;
-        // pixelBuffer[i] = colors[5]; // for debugging
+        // pixelBuffer[i] = 0xFFFFFFFF; // for debugging
     }
     color = pixelBuffer[rightPixelPos];
     for (unsigned i = rightPixelPos+1; i < lastX; i++) {
         pixelBuffer[i] = color;
-        // pixelBuffer[i] = colors[5]; // for debugging
+        // pixelBuffer[i] = 0xFFFFFFFF; // for debugging
     }
 
     /*
@@ -556,6 +554,7 @@ VICII::expandBorders()
     for (unsigned i = 0; i < NTSC_PIXELS; i += 10)
     pixelBuffer[i] = 0xFFFFFFFF;
     */
+#endif
 }
 
 void

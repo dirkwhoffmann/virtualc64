@@ -127,11 +127,14 @@ extension Renderer {
     // Texture animations
     //
     
-    func zoomTextureIn(steps: Int = 30) {
-        
-        track("Zooming texture in...")
-        
+    func zoomTexture(steps: Int = 30) {
+                
         let targetRect = computeTextureRect()
+        
+        cutoutX1.current = Float(textureRect.minX)
+        cutoutY1.current = Float(textureRect.minY)
+        cutoutX2.current = Float(textureRect.maxX)
+        cutoutY2.current = Float(textureRect.maxY)
         
         cutoutX1.target = Float(targetRect.minX)
         cutoutY1.target = Float(targetRect.minY)
@@ -146,10 +149,38 @@ extension Renderer {
         animates |= AnimationType.texture
     }
     
+    func zoomTextureIn(steps: Int = 30) {
+        
+        track("Zooming texture in...")
+        
+        zoom = false
+        zoomTexture()
+    }
+    /*
+        let targetRect = computeTextureRect()
+        
+        cutoutX1.target = Float(targetRect.minX)
+        cutoutY1.target = Float(targetRect.minY)
+        cutoutX2.target = Float(targetRect.maxX)
+        cutoutY2.target = Float(targetRect.maxY)
+        
+        cutoutX1.steps = steps
+        cutoutY1.steps = steps
+        cutoutX2.steps = steps
+        cutoutY2.steps = steps
+        
+        animates |= AnimationType.texture
+    }
+    */
+    
     func zoomTextureOut(steps: Int = 30) {
         
         track("Zooming texture out...")
         
+        zoom = true
+        zoomTexture()
+    }
+    /*
         cutoutX1.current = Float(textureRect.minX)
         cutoutY1.current = Float(textureRect.minY)
         cutoutX2.current = Float(textureRect.maxX)
@@ -167,6 +198,7 @@ extension Renderer {
         
         animates |= AnimationType.texture
     }
+    */
     
     //
     // Geometry animations
