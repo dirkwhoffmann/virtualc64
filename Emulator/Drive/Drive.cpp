@@ -30,7 +30,7 @@ Drive::Drive(DriveID id, C64 &ref) : C64Component(ref), deviceNr(id)
     config.switchedOn = true;
     config.type = DRIVE_VC1541II;
     
-    insertionStatus = NOT_INSERTED;
+    insertionStatus = FULLY_EJECTED;
     disk.clearDisk();
 }
 
@@ -384,90 +384,12 @@ Drive::setModifiedDisk(bool value)
 }
 
 void
-Drive::prepareToInsert()
+Drive::insertDisk(AnyArchive *archive)
 {
-    suspend();
-    
-    debug(DRV_DEBUG, "prepareToInsert\n");
-    assert(insertionStatus == NOT_INSERTED);
-    
-    // Block the light barrier by taking the disk half out
-    insertionStatus = PARTIALLY_INSERTED;
-    
-    resume();
-}
+    assert(archive != NULL);
 
-void
-Drive::insertDisk(AnyArchive *a)
-{
-    assert(a != NULL);
-    assert(insertionStatus == PARTIALLY_INSERTED);
-
-    debug(DRV_DEBUG, "insertDisk\n");
-
-    Disk *disk = Disk::makeWithArchive(c64, a);
-    
-    suspend();
-    insertDisk(disk);
-    insertionStatus = FULLY_INSERTED;
-    c64.putMessage(MSG_DISK_INSERTED, deviceNr);
-    c64.putMessage(MSG_DISK_SAVED, deviceNr);
-    resume();
-    
-    delete disk;
-    
-    /*
-    assert(a != NULL);
-    assert(insertionStatus == PARTIALLY_INSERTED);
-
-    debug(DRV_DEBUG, "insertDisk\n");
-
-    suspend();
-    
-    switch (a->type()) {
-            
-        case FILETYPE_D64:
-            disk.clearDisk();
-            disk.encodeArchive((D64File *)a);
-            break;
-            
-        case FILETYPE_G64:
-            disk.clearDisk();
-            disk.encodeArchive((G64File *)a);
-            break;
-            
-        default: {
-
-            // All other archives cannot be encoded directly.
-            // We convert them to a D64 archive first.
-            
-            D64File *converted = D64File::makeWithAnyArchive(a);
-            disk.clearDisk();
-            disk.encodeArchive(converted);
-            break;
-        }
-    }
-    
-    insertionStatus = FULLY_INSERTED;
-    
-    c64.putMessage(MSG_DISK_INSERTED, deviceNr);
-    c64.putMessage(MSG_DISK_SAVED, deviceNr);
-    
-    resume();
-    */
-}
-
-void
-Drive::insertDisk(Disk *otherDisk)
-{
-    assert(drive != NULL);
-
-    // Copy the disk over
-    size_t size = otherDisk->size();
-    u8 *buffer = new u8[size];
-    otherDisk->save(buffer);
-    disk.load(buffer);
-    delete[] buffer;
+    debug(DRV_DEBUG, "insertDisk(archive %p)\n", archive);
+    insertDisk(Disk::makeWithArchive(c64, archive));
 }
 
 void
@@ -479,18 +401,19 @@ Drive::insertNewDisk(FileSystemType fstype)
 }
 
 void
-Drive::prepareToEject()
+Drive::insertDisk(Disk *otherDisk)
 {
+    debug(DSKCHG_DEBUG, "insertDisk(otherDisk %p)\n", otherDisk);
+    assert(otherDisk != NULL);
+    
     suspend();
     
-    debug(DRV_DEBUG, "prepareToEject\n");
-    assert(insertionStatus == FULLY_INSERTED);
-    
-    // Block the light barrier by taking the disk half out
-    insertionStatus = PARTIALLY_INSERTED;
-    
-    // Make sure the drive can no longer read from this disk
-    disk.clearDisk();
+    if (!diskToInsert) {
+        
+        // Initiate the disk change procedure
+        diskToInsert = otherDisk;
+        diskChangeCounter = 1;
+    }
     
     resume();
 }
@@ -498,17 +421,86 @@ Drive::prepareToEject()
 void 
 Drive::ejectDisk()
 {
+    debug(DSKCHG_DEBUG, "ejectDisk()\n");
+
     suspend();
- 
-    debug(DRV_DEBUG, "ejectDisk\n");
-    assert(insertionStatus == PARTIALLY_INSERTED);
     
-    // Unblock the light barrier by taking the disk out
-    insertionStatus = NOT_INSERTED;
-    
-    // Notify listener
-    c64.putMessage(MSG_DISK_EJECTED, deviceNr);
+    if (insertionStatus == FULLY_INSERTED && !diskToInsert) {
+        
+        // Initiate the disk change procedure
+        diskChangeCounter = 1;
+    }
     
     resume();
 }
 
+void
+Drive::vsyncHandler()
+{
+    // Only proceed if a disk change state transition is to be performed
+    if (--diskChangeCounter) return;
+    
+    switch (insertionStatus) {
+            
+        case FULLY_INSERTED:
+            
+            debug(DSKCHG_DEBUG, "FULLY_INSERTED -> PARTIALLY_EJECTED\n");
+
+            // Pull the disk half out (blocks the light barrier)
+            insertionStatus = PARTIALLY_EJECTED;
+            
+            // Make sure the drive can no longer read from this disk
+            disk.clearDisk();
+            
+            // Schedule the next transition
+            diskChangeCounter = 17;
+            return;
+            
+        case PARTIALLY_EJECTED:
+            
+            debug(DSKCHG_DEBUG, "PARTIALLY_EJECTED -> FULLY_EJECTED\n");
+
+            // Take the disk out (unblocks the light barrier)
+            insertionStatus = FULLY_EJECTED;
+            
+            // Inform listeners
+            c64.putMessage(MSG_DISK_EJECTED, deviceNr);
+            
+            // Schedule the next transition
+            diskChangeCounter = 17;
+            return;
+            
+        case FULLY_EJECTED:
+            
+            debug(DSKCHG_DEBUG, "FULLY_EJECTED -> PARTIALLY_INSERTED\n");
+
+            // Only proceed if a new disk is waiting for insertion
+            if (!diskToInsert) return;
+            
+            // Push the new disk half in (blocks the light barrier)
+            insertionStatus = PARTIALLY_INSERTED;
+            
+            // Schedule the next transition
+            diskChangeCounter = 17;
+            return;
+            
+        case PARTIALLY_INSERTED:
+            
+            debug(DSKCHG_DEBUG, "PARTIALLY_INSERTED -> FULLY_INSERTED\n");
+
+            // Fully insert the disk (unblocks the light barrier)
+            insertionStatus = FULLY_INSERTED;
+
+            // Copy the disk contents
+            size_t size = diskToInsert->size();
+            u8 *buffer = new u8[size];
+            diskToInsert->save(buffer);
+            disk.load(buffer);
+            delete[] buffer;
+            diskToInsert = NULL;
+
+            // Inform listeners
+            c64.putMessage(MSG_DISK_INSERTED, deviceNr);
+            return;
+    }
+}

@@ -39,16 +39,18 @@ inline bool isDriveType(long value)
 
 typedef enum : long
 {
-    NOT_INSERTED,
+    FULLY_EJECTED,
     PARTIALLY_INSERTED,
-    FULLY_INSERTED
+    FULLY_INSERTED,
+    PARTIALLY_EJECTED
 }
 InsertionStatus;
 
 inline bool isInsertionStatus(long value)
 {
-    return value >= NOT_INSERTED && value <= FULLY_INSERTED;
+    return value >= FULLY_EJECTED && value <= PARTIALLY_EJECTED;
 }
+
 
 //
 // Structures

@@ -64,6 +64,17 @@ public:
     
 
     //
+    // Disk change logic
+    //
+    
+    // A disk waiting to be inserted
+    class Disk *diskToInsert = NULL;
+
+    // State change delay counter (checked in the vsync handler)
+    i64 diskChangeCounter = -1;
+    
+    
+    //
     // Drive state
     //
     
@@ -79,7 +90,7 @@ private:
     bool redLED = false;
     
     // Indicates if or how a disk is inserted
-    InsertionStatus insertionStatus = NOT_INSERTED;
+    InsertionStatus insertionStatus = FULLY_EJECTED;
         
     
     //
@@ -295,7 +306,9 @@ public:
     
     // Checks if a disk is present
     bool hasDisk() { return insertionStatus == FULLY_INSERTED; }
-    bool hasPartiallyInsertedDisk() { return insertionStatus == PARTIALLY_INSERTED; }
+    // bool hasPartiallyInsertedDisk() { return insertionStatus == PARTIALLY_INSERTED; }
+    bool hasPartiallyRemovedDisk() {
+        return insertionStatus == PARTIALLY_INSERTED || insertionStatus == PARTIALLY_EJECTED; }
     bool hasWriteProtectedDisk() { return hasDisk() && disk.isWriteProtected(); }
 
     // Gets or sets the modification status
@@ -306,7 +319,7 @@ public:
      * drive. As a result, the light barrier is blocked. You must not call this
      * functions if a disk is already inserted.
      */
-    void prepareToInsert();
+    // void prepareToInsert();
     
     /* Inserts an archive as a virtual disk. You have to eject a previously
      * inserted disk before calling this function. Note: Inserting an archive
@@ -332,7 +345,7 @@ public:
     bool getLightBarrier() {
         return
         (cpu.cycle < 1500000)
-        || hasPartiallyInsertedDisk()
+        || hasPartiallyRemovedDisk()
         || disk.isWriteProtected();
     }
 
@@ -341,7 +354,7 @@ public:
      * and the light barrier is blocked. Warning: Only call this functions if a
      * disk is inserted.
      */
-    void prepareToEject();
+    // void prepareToEject();
     
     /* Finishes the ejection of a disk. This function assumes that the drive
      * lid is already open. It fully removes the disk and frees the light
@@ -419,6 +432,9 @@ public:
     
     // Advances drive head position by one bit
     void rotateDisk() { if (++offset >= disk.lengthOfHalftrack(halftrack)) offset = 0; }
+
+    // Performs periodic actions
+    void vsyncHandler();
 };
 
 #endif

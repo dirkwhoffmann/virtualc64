@@ -634,7 +634,8 @@ extension MyController: NSMenuItemValidation {
         let drive = DriveID(sender.tag)
         
         if proceedWithUnexportedDisk(drive: drive) {
-            changeDisk(nil, drive: drive)
+            
+            c64.drive(drive)?.ejectDisk()
             myAppDelegate.clearRecentlyExportedDiskURLs(drive: drive)
         }
     }

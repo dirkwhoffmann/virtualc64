@@ -57,6 +57,7 @@ static const int EXP_DEBUG       = 0; // Expansion port
 
 // Drive
 static const int DSK_DEBUG       = 0; // Disk controller execution
+static const int DSKCHG_DEBUG    = 1; // Disk changing procedure
 static const int GCR_DEBUG       = 0; // Disk encoding / decoding
 
 // Media

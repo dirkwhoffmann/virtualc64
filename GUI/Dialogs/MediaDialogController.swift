@@ -287,7 +287,9 @@ class MediaDialogController: DialogController {
             
             let disk = myDocument.attachment // as! AnyC64FileProxy
             let id = sender.tag == 0 ? DRIVE8 : DRIVE9
-            parent.changeDisk(disk, drive: id)
+            c64.drive(id)?.insertDisk(disk as? AnyArchiveProxy) 
+            
+            // parent.changeDisk(disk, drive: id)
 
             c64.drive(id).setWriteProtection(writeProtect)
             

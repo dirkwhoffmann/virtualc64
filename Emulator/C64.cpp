@@ -918,7 +918,9 @@ C64::endFrame()
     expansionport.execute();
     port1.execute();
     port2.execute();
-    
+    drive8.vsyncHandler();
+    drive9.vsyncHandler();
+
     // Update mouse coordinates
     mouse.execute();
     

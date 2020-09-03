@@ -376,7 +376,7 @@ class MyDocument: NSDocument {
             
             if proceedWithUnexportedDisk(drive: drive) {
                 
-                parent.changeDisk(archive, drive: drive)
+                c64.drive(drive)?.insertDisk(archive)
                 return true
             }
         }

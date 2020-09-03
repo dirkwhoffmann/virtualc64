@@ -750,10 +750,8 @@ extension MyController {
         case FileType.FILETYPE_T64, FileType.FILETYPE_D64,
              FileType.FILETYPE_PRG, FileType.FILETYPE_P00,
              FileType.FILETYPE_G64:
-            // We need to take some special care for items that mount as a disk.
-            // In that case, the light barrier has to be broken several times.
-            // TODO: Use insertDisk for these attachments in future
-            changeDisk(item, drive: DRIVE8)
+            
+            c64.drive8.insertDisk(item as? AnyArchiveProxy)
             return true
                         
         default:
@@ -761,40 +759,7 @@ extension MyController {
             fatalError()
         }
     }
-    
-    // Emulates changing a disk including the necessary light barrier breaks
-    // If disk is nil, only the ejection is emulated.
-    func changeDisk(_ disk: AnyFileProxy?, drive: DriveID) {
         
-        let proxy = c64.drive(drive)!
-
-        DispatchQueue.global().async {
-            
-            // For a better user experience, we switch on automatically
-            // when a disk is inserted.
-            /*
-            if disk != nil {
-                proxy.connect()
-                // self.c64.drive(drive).connect()
-            }
-            */
-            
-            // Remove old disk if present
-            if proxy.hasDisk() {
-                proxy.prepareToEject()
-                usleep(300000)
-                proxy.ejectDisk()
-            }
-            
-            // Insert new disk if provided
-            if disk != nil {
-                proxy.prepareToInsert()
-                usleep(300000)
-                proxy.insertDisk(disk as? AnyArchiveProxy)
-            }
-        }
-    }
-    
     //
     // Misc
     //

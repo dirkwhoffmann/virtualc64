@@ -1004,10 +1004,12 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->drive->setModifiedDisk(b);
 }
+/*
 - (void) prepareToInsert
 {
     wrapper->drive->prepareToInsert();
 }
+*/
 - (void) insertDisk:(AnyArchiveProxy *)disk
 {
     AnyArchive *archive = (AnyArchive *)([disk wrapper]->file);
@@ -1017,10 +1019,12 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->drive->insertNewDisk(fstype);
 }
+/*
 - (void) prepareToEject
 {
     wrapper->drive->prepareToEject();
 }
+*/
 - (void) ejectDisk
 {
     wrapper->drive->ejectDisk();
