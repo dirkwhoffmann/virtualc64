@@ -529,12 +529,9 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func newDiskAction(_ sender: NSMenuItem!) {
         
-        let drive = DriveID(sender.tag)
-        let emptyArchive = AnyArchiveProxy.make()
-        
-        mydocument?.attachment = D64FileProxy.make(withAnyArchive: emptyArchive)
-        mydocument?.mountAttachmentAsDisk(drive: drive)
-        myAppDelegate.clearRecentlyExportedDiskURLs(drive: drive)
+        let id = DriveID(sender.tag)
+        c64.drive(id)?.insertNewDisk(pref.driveBlankDiskFormat)
+        myAppDelegate.clearRecentlyExportedDiskURLs(drive: id)
     }
     
     @IBAction func insertDiskAction(_ sender: NSMenuItem!) {

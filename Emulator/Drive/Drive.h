@@ -315,26 +315,6 @@ public:
     bool hasModifiedDisk() { return hasDisk() && disk.isModified(); }
     void setModifiedDisk(bool value);
  
-    /* Prepares to insert a disk. This functions puts a disk partially into the
-     * drive. As a result, the light barrier is blocked. You must not call this
-     * functions if a disk is already inserted.
-     */
-    // void prepareToInsert();
-    
-    /* Inserts an archive as a virtual disk. You have to eject a previously
-     * inserted disk before calling this function. Note: Inserting an archive
-     * as a disk is a time consuming task, because various conversion have to
-     * take place. E.g., if you provide a T64 archive, it is first converted to
-     * a D64 archive. After that, all tracks will be GCR-encoded and written to
-     * a new disk.
-     */
-    void insertDisk(AnyArchive *a);
-
-    /* Inserts a disk
-     */
-    void insertDisk(Disk *disk);
-    void insertNewDisk(FileSystemType fstype);
-
     /* Returns the current state of the write protection barrier. If the light
      * barrier is blocked, the drive head is unable to modify bits on disk.
      * Note: We block the write barrier on power up for about 1.5 sec, because
@@ -349,22 +329,20 @@ public:
         || disk.isWriteProtected();
     }
 
-    /* Prepares to eject a disk. This functions opens the drive lid and
-     * partially removes the disk. As a result, no data can be read any more
-     * and the light barrier is blocked. Warning: Only call this functions if a
-     * disk is inserted.
+    /* Requests the emulator to inserts or eject a disk. Background: Many C64
+     * programs try to detect a disk change by checking the light barrier. This
+     * means that proper physical delays have to be taken in account. For that
+     * reason, these functions initiate a sequence of events that are processed
+     * one after another with a proper time delay. The sequence includes pulling
+     * the currently inserted disk halfway out before it is removed completely,
+     * and pushing the new disk halfway in before it is inserted completely.
      */
-    // void prepareToEject();
-    
-    /* Finishes the ejection of a disk. This function assumes that the drive
-     * lid is already open. It fully removes the disk and frees the light
-     * barrier. Note: To eject a disk in the right way, make sure that some
-     * time elapses between the two calls to prepareToEject() and ejectDisk().
-     * Otherwise, the VC1541 DOS does not recognize the ejection.
-     */
+    void insertDisk(FileSystemType fstype);
+    void insertDisk(Disk *otherDisk);
+    void insertDisk(AnyArchive *archive);
     void ejectDisk();
-   
-    
+
+
     //
     // Emulating
     //

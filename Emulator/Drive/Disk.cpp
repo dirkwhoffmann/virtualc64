@@ -110,10 +110,12 @@ Disk::make(C64 &ref, FileSystemType type)
             
         case FS_NONE:
         {
+            printf("FS_NONE");
             return new Disk(ref);
         }
         case FS_COMMODORE:
         {
+            printf("FS_COMMODORE");
             AnyArchive *emptyArchive = new AnyArchive();
             Disk *disk = makeWithArchive(ref, emptyArchive);
             delete emptyArchive;

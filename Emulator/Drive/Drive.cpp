@@ -384,20 +384,19 @@ Drive::setModifiedDisk(bool value)
 }
 
 void
+Drive::insertDisk(FileSystemType fstype)
+{
+    Disk *newDisk = Disk::make(c64, fstype);
+    insertDisk(newDisk);
+}
+
+void
 Drive::insertDisk(AnyArchive *archive)
 {
     assert(archive != NULL);
 
     debug(DRV_DEBUG, "insertDisk(archive %p)\n", archive);
     insertDisk(Disk::makeWithArchive(c64, archive));
-}
-
-void
-Drive::insertNewDisk(FileSystemType fstype)
-{
-    Disk *newDisk = Disk::make(c64, fstype);
-    insertDisk(newDisk);
-    delete newDisk;
 }
 
 void
