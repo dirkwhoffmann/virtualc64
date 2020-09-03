@@ -193,10 +193,10 @@ struct EmulatorDefaults {
         driveEjectUnasked: false,
         driveSounds: true,
         driveSoundPan: 1.0,
-        driveInsertSound: true,
-        driveEjectSound: true,
+        driveInsertSound: false,
+        driveEjectSound: false,
         driveHeadSound: true,
-        driveConnectSound: true,
+        driveConnectSound: false,
         
         autoSnapshots: false,
         autoSnapshotInterval: 20,
