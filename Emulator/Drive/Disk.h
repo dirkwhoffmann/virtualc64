@@ -96,12 +96,12 @@ private:
     //
     
     // Write protection mark
-    bool writeProtected;
+    bool writeProtected = false;
     
     /* Indicates whether data has been written. Depending on this flag, the GUI
      * shows a warning dialog before a disk gets ejected.
      */
-    bool modified;
+    bool modified = false;
     
     
     //
@@ -157,6 +157,16 @@ public:
     static bool isValidTrackSectorPair(Track t, Sector s);
     static bool isValidHalftrackSectorPair(Halftrack ht, Sector s);
     
+    
+    //
+    // Creating
+    //
+    
+public:
+    
+    static Disk *make(C64 &c64, FileSystemType type);
+    static Disk *makeWithArchive(C64 &c64, AnyArchive *archive);
+
     
     //
     // Initializing

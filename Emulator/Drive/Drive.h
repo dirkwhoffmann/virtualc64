@@ -310,13 +310,17 @@ public:
     
     /* Inserts an archive as a virtual disk. You have to eject a previously
      * inserted disk before calling this function. Note: Inserting an archive
-     * as a disk is a time consuming task, because variouls conversion have to
+     * as a disk is a time consuming task, because various conversion have to
      * take place. E.g., if you provide a T64 archive, it is first converted to
      * a D64 archive. After that, all tracks will be GCR-encoded and written to
      * a new disk.
      */
     void insertDisk(AnyArchive *a);
 
+    /* Inserts a disk
+     */
+    void insertDisk(Disk *disk);
+    
     /* Returns the current state of the write protection barrier. If the light
      * barrier is blocked, the drive head is unable to modify bits on disk.
      * Note: We block the write barrier on power up for about 1.5 sec, because

@@ -101,6 +101,67 @@ Disk::isValidHalftrackSectorPair(Halftrack ht, Sector s)
     return s < numberOfSectorsInHalftrack(ht);
 }
 
+Disk *
+Disk::make(C64 &ref, FileSystemType type)
+{
+    assert(isFileSystemType(type));
+    
+    switch (type) {
+            
+        case FS_NONE:
+        {
+            return new Disk(ref);
+        }
+        case FS_COMMODORE:
+        {
+            AnyArchive *emptyArchive = new AnyArchive();
+            Disk *disk = makeWithArchive(ref, emptyArchive);
+            delete emptyArchive;
+            return disk;
+        }
+        default:
+        {
+            assert(false);
+            return NULL;
+        }
+    }
+}
+
+Disk *
+Disk::makeWithArchive(C64 &ref, AnyArchive *archive)
+{
+    assert(archive != NULL);
+        
+    Disk *disk = new Disk(ref);
+    
+    switch (archive->type()) {
+            
+        case FILETYPE_D64:
+            disk->clearDisk();
+            disk->encodeArchive((D64File *)archive);
+            return disk;
+    
+        case FILETYPE_G64:
+
+            disk->clearDisk();
+            disk->encodeArchive((G64File *)archive);
+            return disk;
+
+        default: break;
+    }
+    
+    /* Archive formats other than D64 or G64 cannot be encoded directly. They
+     * are processed in two stages. First a D64 archive is created, which is
+     * then encoded as a disk.
+     */
+    D64File *converted = D64File::makeWithAnyArchive(archive);
+    
+    disk->clearDisk();
+    disk->encodeArchive(converted);
+    delete converted;
+    return disk;
+}
+
 Disk::Disk(C64 &ref) : C64Component(ref)
 {
     setDescription("Disk");
@@ -151,7 +212,6 @@ Disk::setModified(bool b)
         messageQueue.put(MSG_DISK_PROTECT);
     }
 }
-
 
 void
 Disk::encodeGcr(u8 value, Track t, HeadPos offset)

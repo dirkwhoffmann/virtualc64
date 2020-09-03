@@ -405,6 +405,23 @@ Drive::insertDisk(AnyArchive *a)
 
     debug(DRV_DEBUG, "insertDisk\n");
 
+    Disk *disk = Disk::makeWithArchive(c64, a);
+    
+    suspend();
+    insertDisk(disk);
+    insertionStatus = FULLY_INSERTED;
+    c64.putMessage(MSG_DISK_INSERTED, deviceNr);
+    c64.putMessage(MSG_DISK_SAVED, deviceNr);
+    resume();
+    
+    delete disk;
+    
+    /*
+    assert(a != NULL);
+    assert(insertionStatus == PARTIALLY_INSERTED);
+
+    debug(DRV_DEBUG, "insertDisk\n");
+
     suspend();
     
     switch (a->type()) {
@@ -437,6 +454,20 @@ Drive::insertDisk(AnyArchive *a)
     c64.putMessage(MSG_DISK_SAVED, deviceNr);
     
     resume();
+    */
+}
+
+void
+Drive::insertDisk(Disk *otherDisk)
+{
+    assert(drive != NULL);
+
+    // Copy the disk over
+    size_t size = otherDisk->size();
+    u8 *buffer = new u8[size];
+    otherDisk->save(buffer);
+    disk.load(buffer);
+    delete[] buffer;
 }
 
 void
