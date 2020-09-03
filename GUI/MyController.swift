@@ -622,14 +622,14 @@ extension MyController {
         case MSG_DRIVE_HEAD:
             
             if pref.driveSounds && pref.driveHeadSound {
-                playSound(name: "drive_click", volume: 1.0)
+                playSound(name: "1541_track_change_2", volume: 1.0)
             }
             refreshStatusBarTracks(drive: DriveID(msg.data))
                         
         case MSG_DISK_INSERTED:
             
             if pref.driveSounds && pref.driveInsertSound {
-                playSound(name: "drive_snatch_uae", volume: 0.1)
+                playSound(name: "1541_door_closed_2", volume: 0.2)
             }
             mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
             refreshStatusBarDiskIcons(drive: DriveID(msg.data))
@@ -638,7 +638,7 @@ extension MyController {
         case MSG_DISK_EJECTED:
             
             if pref.driveSounds && pref.driveEjectSound {
-                playSound(name: "drive_snatch_uae", volume: 0.1)
+                playSound(name: "1541_door_open_1", volume: 0.15)
             }
             refreshStatusBarDiskIcons(drive: DriveID(msg.data))
             inspector?.fullRefresh()
@@ -666,14 +666,28 @@ extension MyController {
             refreshStatusBarDriveActivity()
             
         case MSG_DRIVE_CONNECT,
-             MSG_DRIVE_DISCONNECT:
+             MSG_DRIVE_DISCONNECT,
+             MSG_DRIVE_POWER_ON,
+             MSG_DRIVE_POWER_OFF:
+            
+            refreshStatusBar()
+                        
+        case MSG_DRIVE_ACTIVE:
             
             if pref.driveSounds && pref.driveConnectSound {
-                playSound(name: "drive_click", volume: 1.0)
+                playSound(name: "1541_power_on_0", volume: 0.15)
             }
             myAppDelegate.hideOrShowDriveMenus(proxy: c64)
             refreshStatusBar()
             
+        case MSG_DRIVE_INACTIVE:
+            
+            if pref.driveSounds && pref.driveConnectSound {
+                // playSound(name: "drive_click", volume: 1.0)
+            }
+            myAppDelegate.hideOrShowDriveMenus(proxy: c64)
+            refreshStatusBar()
+
         case MSG_VC1530_TAPE:
             
             mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)

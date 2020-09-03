@@ -220,7 +220,7 @@ extension MyController {
         default: fatalError()
         }
         
-        refreshStatusBar()
+        // refreshStatusBar()
     }
     
     @IBAction func warpAction(_ sender: Any!) {

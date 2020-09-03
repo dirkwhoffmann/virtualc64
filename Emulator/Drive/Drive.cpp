@@ -86,7 +86,7 @@ Drive::setConfigItem(DriveID id, ConfigOption option, long value)
     switch (option) {
             
         case OPT_DRIVE_TYPE:
-            
+        {
             if (!isDriveType(value)) {
                 warn("Invalid drive type: %d\n", value);
                 return false;
@@ -97,9 +97,9 @@ Drive::setConfigItem(DriveID id, ConfigOption option, long value)
             
             config.type = (DriveType)value;
             return true;
-            
+        }
         case OPT_DRIVE_CONNECT:
-            
+        {
             if (config.connected == value) {
                 return false;
             }
@@ -110,24 +110,32 @@ Drive::setConfigItem(DriveID id, ConfigOption option, long value)
             
             suspend();
             config.connected = value;
+            bool wasActive = active;
             active = config.connected && config.switchedOn;
             reset();
             resume();
+            messageQueue.put(value ? MSG_DRIVE_CONNECT : MSG_DRIVE_DISCONNECT, deviceNr);
+            if (wasActive != active)
+                messageQueue.put(active ? MSG_DRIVE_ACTIVE : MSG_DRIVE_INACTIVE, deviceNr);
             return true;
-            
+        }
         case OPT_DRIVE_POWER_SWITCH:
-            
+        {
             if (config.switchedOn == value) {
                 return false;
             }
             
             suspend();
             config.switchedOn = value;
+            bool wasActive = active;
             active = config.connected && config.switchedOn;
             reset();
             resume();
+            messageQueue.put(value ? MSG_DRIVE_POWER_ON : MSG_DRIVE_POWER_OFF, deviceNr);
+            if (wasActive != active)
+                messageQueue.put(active ? MSG_DRIVE_ACTIVE : MSG_DRIVE_INACTIVE, deviceNr);
             return true;
-            
+        }
         default:
             return false;
     }
