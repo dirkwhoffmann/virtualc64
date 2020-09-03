@@ -1013,6 +1013,10 @@ struct AnyC64FileWrapper { AnyFile *file; };
     AnyArchive *archive = (AnyArchive *)([disk wrapper]->file);
     wrapper->drive->insertDisk(archive);
 }
+- (void) insertNewDisk:(FileSystemType)fstype
+{
+    wrapper->drive->insertNewDisk(fstype);
+}
 - (void) prepareToEject
 {
     wrapper->drive->prepareToEject();

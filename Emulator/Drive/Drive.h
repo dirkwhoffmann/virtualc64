@@ -320,7 +320,8 @@ public:
     /* Inserts a disk
      */
     void insertDisk(Disk *disk);
-    
+    void insertNewDisk(FileSystemType fstype);
+
     /* Returns the current state of the write protection barrier. If the light
      * barrier is blocked, the drive head is unable to modify bits on disk.
      * Note: We block the write barrier on power up for about 1.5 sec, because

@@ -471,6 +471,14 @@ Drive::insertDisk(Disk *otherDisk)
 }
 
 void
+Drive::insertNewDisk(FileSystemType fstype)
+{
+    Disk *newDisk = Disk::make(c64, fstype);
+    insertDisk(newDisk);
+    delete newDisk;
+}
+
+void
 Drive::prepareToEject()
 {
     suspend();
