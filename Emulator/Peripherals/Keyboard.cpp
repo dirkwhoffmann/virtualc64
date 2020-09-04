@@ -90,19 +90,19 @@ Keyboard::getColumnValues(u8 rowMask)
 }
 
 void
-Keyboard::pressKey(long nr, i64 period)
+Keyboard::press(long nr, i64 period)
 {
     assert(nr < 66);
     
     switch (nr) {
         case 34: toggleShiftLock(); return;
-        case 31: pressRestoreKey(period); break;
-        default: pressKey(rowcol[nr][0], rowcol[nr][1], period);
+        case 31: pressRestore(period); break;
+        default: press(rowcol[nr][0], rowcol[nr][1], period);
     }
 }
 
 void
-Keyboard::pressKey(u8 row, u8 col, i64 period)
+Keyboard::press(u8 row, u8 col, i64 period)
 {
     debug(KBD_DEBUG, "pressKey(%d,%d)\n", row, col);
 
@@ -115,7 +115,7 @@ Keyboard::pressKey(u8 row, u8 col, i64 period)
 }
 
 void
-Keyboard::pressRestoreKey(i64 period)
+Keyboard::pressRestore(i64 period)
 {
     debug(KBD_DEBUG, "pressRestoreKey()\n");
 
@@ -124,19 +124,19 @@ Keyboard::pressRestoreKey(i64 period)
 }
 
 void
-Keyboard::releaseKey(long nr)
+Keyboard::release(long nr)
 {
     assert(nr < 66);
 
     switch (nr) {
         case 34: releaseShiftLock(); return;
-        case 31: releaseRestoreKey(); return;
-        default: releaseKey(rowcol[nr][0], rowcol[nr][1]);
+        case 31: releaseRestore(); return;
+        default: release(rowcol[nr][0], rowcol[nr][1]);
     }
 }
 
 void
-Keyboard::releaseKey(u8 row, u8 col)
+Keyboard::release(u8 row, u8 col)
 {
     debug(KBD_DEBUG, "releaseKey(%d,%d)\n", row, col);
 
@@ -152,7 +152,7 @@ Keyboard::releaseKey(u8 row, u8 col)
 }
 
 void
-Keyboard::releaseRestoreKey()
+Keyboard::releaseRestore()
 {
     debug(KBD_DEBUG, "releaseRestoreKey()\n");
     
@@ -165,23 +165,23 @@ Keyboard::releaseAll()
     for (unsigned i = 0; i < 8; i++) {
         kbMatrixRow[i] = kbMatrixCol[i] = 0xFF;
     }
-    releaseRestoreKey();
+    releaseRestore();
 }
 
 bool
-Keyboard::keyIsPressed(long nr)
+Keyboard::isPressed(long nr)
 {
     assert(nr < 66);
     
     switch (nr) {
         case 34: return shiftLockIsPressed();
         case 31: return restoreIsPressed();
-        default: return keyIsPressed(rowcol[nr][0], rowcol[nr][1]);
+        default: return isPressed(rowcol[nr][0], rowcol[nr][1]);
     }
 }
 
 bool
-Keyboard::keyIsPressed(u8 row, u8 col)
+Keyboard::isPressed(u8 row, u8 col)
 {
     // We can either check the row or column matrix
     bool result1 = (kbMatrixRow[row] & (1 << col)) == 0;
@@ -198,22 +198,22 @@ Keyboard::restoreIsPressed()
 }
 
 void
-Keyboard::toggleKey(long nr)
+Keyboard::toggle(long nr)
 {
-    if (keyIsPressed(nr)) {
-        releaseKey(nr);
+    if (isPressed(nr)) {
+        release(nr);
     } else {
-        pressKey(nr);
+        press(nr);
     }
 }
 
 void
-Keyboard::toggleKey(u8 row, u8 col)
+Keyboard::toggle(u8 row, u8 col)
 {
-    if (keyIsPressed(row, col)) {
-        releaseKey(row, col);
+    if (isPressed(row, col)) {
+        release(row, col);
     } else {
-        pressKey(row,col);
+        press(row,col);
     }
 }
 

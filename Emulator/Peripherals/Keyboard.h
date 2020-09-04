@@ -98,50 +98,50 @@ private:
 public:
     
     // Checks whether a certain key is being pressed
-    bool keyIsPressed(long nr);
-    bool keyIsPressed(u8 row, u8 col);
-    bool commodoreIsPressed() { return keyIsPressed(7,5); }
-    bool ctrlIsPressed() { return keyIsPressed(7,2); }
-    bool runstopIsPressed() { return keyIsPressed(7,7); }
-    bool leftShiftIsPressed() { return keyIsPressed(1,7); }
-    bool rightShiftIsPressed() { return keyIsPressed(6,4); }
+    bool isPressed(long nr);
+    bool isPressed(u8 row, u8 col);
+    bool commodoreIsPressed() { return isPressed(7,5); }
+    bool ctrlIsPressed() { return isPressed(7,2); }
+    bool runstopIsPressed() { return isPressed(7,7); }
+    bool leftShiftIsPressed() { return isPressed(1,7); }
+    bool rightShiftIsPressed() { return isPressed(6,4); }
     bool shiftLockIsPressed() { return shiftLock; }
     bool restoreIsPressed();
     
 	// Presses a key
-    void pressKey(long nr, i64 period = 0);
-	void pressKey(u8 row, u8 col, i64 period = 0);
-    void pressCommodoreKey(i64 period = 0) { pressKey(7,5, period); }
-    void pressCtrlKey(i64 period = 0) { pressKey(7,2, period); }
-	void pressRunstopKey(i64 period = 0) { pressKey(7,7, period); }
-    void pressLeftShiftKey(i64 period = 0) { pressKey(1,7, period); }
-    void pressRightShiftKey(i64 period = 0) { pressKey(6,4, period); }
-    void pressShiftLockKey() { shiftLock = true; }
-    void pressRestoreKey(i64 period = 0);
+    void press(long nr, i64 period = 0);
+	void press(u8 row, u8 col, i64 period = 0);
+    void pressCommodore(i64 period = 0) { press(7,5, period); }
+    void pressCtrl(i64 period = 0) { press(7,2, period); }
+	void pressRunstop(i64 period = 0) { press(7,7, period); }
+    void pressLeftShift(i64 period = 0) { press(1,7, period); }
+    void pressRightShift(i64 period = 0) { press(6,4, period); }
+    void pressShiftLock() { shiftLock = true; }
+    void pressRestore(i64 period = 0);
 
 	// Releases a pressed key
-    void releaseKey(long nr);
-	void releaseKey(u8 row, u8 col);
-	void releaseCommodoreKey() { releaseKey(7,5); }
-    void releaseCtrlKey() { releaseKey(7,2); }
-	void releaseRunstopKey() { releaseKey(7,7); }
-    void releaseLeftShiftKey() { releaseKey(1,7); }
-    void releaseRightShiftKey() { releaseKey(6,4); }
+    void release(long nr);
+	void release(u8 row, u8 col);
+	void releaseCommodore() { release(7,5); }
+    void releaseCtrl() { release(7,2); }
+	void releaseRunstop() { release(7,7); }
+    void releaseLeftShift() { release(1,7); }
+    void releaseRightShift() { release(6,4); }
     void releaseShiftLock() { shiftLock = false; }
-    void releaseRestoreKey();
+    void releaseRestore();
     
     // Clears the keyboard matrix
     void releaseAll();
     
     // Presses a released key and vice versa
-    void toggleKey(long nr);
-    void toggleKey(u8 row, u8 col);
-    void toggleLeftShiftKey() { toggleKey(1,7); }
-    void toggleRightShiftKey() { toggleKey(6,4); }
+    void toggle(long nr);
+    void toggle(u8 row, u8 col);
+    void toggleLeftShift() { toggle(1,7); }
+    void toggleRightShift() { toggle(6,4); }
     void toggleShiftLock() { shiftLock = !shiftLock; }
-    void toggleCommodoreKey() { toggleKey(7,5); }
-    void toggleCtrlKey() { toggleKey(7,2); }
-    void toggleRunstopKey() { toggleKey(7,7); }
+    void toggleCommodore() { toggle(7,5); }
+    void toggleCtrl() { toggle(7,2); }
+    void toggleRunstop() { toggle(7,7); }
     
 
     //
