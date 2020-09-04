@@ -109,24 +109,24 @@ public:
     bool restoreIsPressed();
     
 	// Presses a key
-    void press(long nr, i64 period = 0);
-	void press(u8 row, u8 col, i64 period = 0);
-    void pressCommodore(i64 period = 0) { press(7,5, period); }
-    void pressCtrl(i64 period = 0) { press(7,2, period); }
-	void pressRunstop(i64 period = 0) { press(7,7, period); }
-    void pressLeftShift(i64 period = 0) { press(1,7, period); }
-    void pressRightShift(i64 period = 0) { press(6,4, period); }
+    void press(long nr, i64 duration = 0);
+	void pressRowCol(u8 row, u8 col, i64 duration = 0);
+    void pressCommodore(i64 duration = 0) { pressRowCol(7,5, duration); }
+    void pressCtrl(i64 duration = 0) { pressRowCol(7,2, duration); }
+	void pressRunstop(i64 duration = 0) { pressRowCol(7,7, duration); }
+    void pressLeftShift(i64 duration = 0) { pressRowCol(1,7, duration); }
+    void pressRightShift(i64 duration = 0) { pressRowCol(6,4, duration); }
     void pressShiftLock() { shiftLock = true; }
-    void pressRestore(i64 period = 0);
+    void pressRestore(i64 duration = 0);
 
 	// Releases a pressed key
     void release(long nr);
-	void release(u8 row, u8 col);
-	void releaseCommodore() { release(7,5); }
-    void releaseCtrl() { release(7,2); }
-	void releaseRunstop() { release(7,7); }
-    void releaseLeftShift() { release(1,7); }
-    void releaseRightShift() { release(6,4); }
+	void releaseRowCol(u8 row, u8 col);
+	void releaseCommodore() { releaseRowCol(7,5); }
+    void releaseCtrl() { releaseRowCol(7,2); }
+	void releaseRunstop() { releaseRowCol(7,7); }
+    void releaseLeftShift() { releaseRowCol(1,7); }
+    void releaseRightShift() { releaseRowCol(6,4); }
     void releaseShiftLock() { shiftLock = false; }
     void releaseRestore();
     

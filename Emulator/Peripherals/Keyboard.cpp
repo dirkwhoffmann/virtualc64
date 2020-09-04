@@ -90,37 +90,37 @@ Keyboard::getColumnValues(u8 rowMask)
 }
 
 void
-Keyboard::press(long nr, i64 period)
+Keyboard::press(long nr, i64 duration)
 {
     assert(nr < 66);
     
     switch (nr) {
         case 34: toggleShiftLock(); return;
-        case 31: pressRestore(period); break;
-        default: press(rowcol[nr][0], rowcol[nr][1], period);
+        case 31: pressRestore(duration); return;
+        default: pressRowCol(rowcol[nr][0], rowcol[nr][1], duration);
     }
 }
 
 void
-Keyboard::press(u8 row, u8 col, i64 period)
+Keyboard::pressRowCol(u8 row, u8 col, i64 duration)
 {
-    debug(KBD_DEBUG, "pressKey(%d,%d)\n", row, col);
+    debug(KBD_DEBUG, "pressKey(%d,%d, [%d])\n", row, col, duration);
 
     assert(row < 8);
     assert(col < 8);
         
     kbMatrixRow[row] &= ~(1 << col);
     kbMatrixCol[col] &= ~(1 << row);
-    clearCnt = period;
+    clearCnt = duration;
 }
 
 void
-Keyboard::pressRestore(i64 period)
+Keyboard::pressRestore(i64 duration)
 {
     debug(KBD_DEBUG, "pressRestoreKey()\n");
 
     cpu.pullDownNmiLine(INTSRC_KBD);
-    clearCnt = period;
+    clearCnt = duration;
 }
 
 void
@@ -131,12 +131,12 @@ Keyboard::release(long nr)
     switch (nr) {
         case 34: releaseShiftLock(); return;
         case 31: releaseRestore(); return;
-        default: release(rowcol[nr][0], rowcol[nr][1]);
+        default: releaseRowCol(rowcol[nr][0], rowcol[nr][1]);
     }
 }
 
 void
-Keyboard::release(u8 row, u8 col)
+Keyboard::releaseRowCol(u8 row, u8 col)
 {
     debug(KBD_DEBUG, "releaseKey(%d,%d)\n", row, col);
 
@@ -211,9 +211,9 @@ void
 Keyboard::toggle(u8 row, u8 col)
 {
     if (isPressed(row, col)) {
-        release(row, col);
+        releaseRowCol(row, col);
     } else {
-        press(row,col);
+        pressRowCol(row,col);
     }
 }
 

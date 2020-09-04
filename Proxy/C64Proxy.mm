@@ -620,13 +620,13 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->keyboard->press(nr);
 }
-- (void) pressKey:(NSInteger)nr forPeriod:(NSInteger)delay
+- (void) pressAndRelease:(NSInteger)nr duration:(NSInteger)duration
 {
-    wrapper->keyboard->press(nr, delay);
+    wrapper->keyboard->press(nr, duration);
 }
 - (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
-    wrapper->keyboard->press(row, col);
+    wrapper->keyboard->pressRowCol(row, col);
 }
 - (void) pressShiftLock
 {
@@ -638,7 +638,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 }
 - (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
-    wrapper->keyboard->release(row, col);
+    wrapper->keyboard->releaseRowCol(row, col);
 }
 - (void) releaseShiftLock
 {

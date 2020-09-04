@@ -450,7 +450,7 @@ struct AnyC64FileWrapper;
 - (BOOL) shiftLockIsPressed;
 
 - (void) pressKey:(NSInteger)nr;
-- (void) pressKey:(NSInteger)nr forPeriod:(NSInteger)delay;
+- (void) pressAndRelease:(NSInteger)nr duration:(NSInteger)duration;
 - (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col;
 - (void) pressShiftLock;
 

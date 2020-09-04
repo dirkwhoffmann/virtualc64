@@ -11,6 +11,8 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
 
     var keyboard: KeyboardProxy { return c64.keyboard }
     
+    @IBOutlet weak var caseSelector: NSSegmentedControl!
+
     // Array holding a reference to the view of each key
     var keyView = Array(repeating: nil as NSButton?, count: 66)
 
@@ -23,8 +25,8 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
     // Currently set key modifiers
     var modifiers: Modifier = []
         
-    // Indicates if the lower case character set is currently in use
-    var lowercase = false
+    // Indicates if lower case or upper case characters should be displayed
+    var lowercase: Bool { return caseSelector.selectedSegment == 1 }
     
     /* Indicates if the window should be closed when a key is pressed. If the
      * virtual keyboard is opened as a sheet, this variable is set to true. If
@@ -125,7 +127,7 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
         
         track()
         
-        c64.keyboard.pressKey(nr, forPeriod: 10)
+        c64.keyboard.pressAndRelease(nr, duration: 10)
         refresh()
         
         if autoClose { cancelAction(self) }
@@ -137,17 +139,25 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
         refresh()
     }
     
-    @IBAction func pressVirtualKey(_ sender: NSButton!) {
-        
-        // Not used at the moment
-    }
-    
     override func mouseDown(with event: NSEvent) {
         
         track()
         if autoClose {
             cancelAction(self)
         }
+    }
+
+    @IBAction func pressVirtualKey(_ sender: NSButton!) {
+        
+        // Not used at the moment
+    }
+
+    @IBAction func caseSelectorAction(_ sender: NSSegmentedControl!) {
+        
+        let segment = sender.selectedSegment
+        track("segment = \(segment)")
+        
+        refresh()
     }
 }
 

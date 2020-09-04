@@ -451,42 +451,42 @@ extension C64Key {
         
         C64Key.map[1] = [ []: Keycap.init("1"),
                           [.shift]: Keycap.init("!"),
-                          [.commodore]: Keycap.init(""),
+                          [.commodore]: Keycap.init("BLK"),
                           [.control]: Keycap.init("BLK") ]
         
         C64Key.map[2] = [ []: Keycap.init("2"),
                           [.shift]: Keycap.init("\""),
-                          [.commodore]: Keycap.init(""),
+                          [.commodore]: Keycap.init("WHT"),
                           [.control]: Keycap.init("WHT") ]
         
         C64Key.map[3] = [ []: Keycap.init("3"),
                           [.shift]: Keycap.init("#"),
-                          [.commodore]: Keycap.init(""),
+                          [.commodore]: Keycap.init("RED"),
                           [.control]: Keycap.init("RED") ]
         
         C64Key.map[4] = [ []: Keycap.init("4"),
                           [.shift]: Keycap.init("$"),
-                          [.commodore]: Keycap.init(""),
+                          [.commodore]: Keycap.init("CYN"),
                           [.control]: Keycap.init("CYN") ]
         
         C64Key.map[5] = [ []: Keycap.init("5"),
                           [.shift]: Keycap.init("%"),
-                          [.commodore]: Keycap.init(""),
+                          [.commodore]: Keycap.init("PUR"),
                           [.control]: Keycap.init("PUR") ]
         
         C64Key.map[6] = [ []: Keycap.init("6"),
                           [.shift]: Keycap.init("&"),
-                          [.commodore]: Keycap.init(""),
+                          [.commodore]: Keycap.init("GRN"),
                           [.control]: Keycap.init("GRN") ]
         
         C64Key.map[7] = [ []: Keycap.init("7"),
                           [.shift]: Keycap.init("'"),
-                          [.commodore]: Keycap.init(""),
+                          [.commodore]: Keycap.init("BLU"),
                           [.control]: Keycap.init("BLU") ]
         
         C64Key.map[8] = [ []: Keycap.init("8"),
                           [.shift]: Keycap.init("("),
-                          [.commodore]: Keycap.init(""),
+                          [.commodore]: Keycap.init("YEL"),
                           [.control]: Keycap.init("YEL") ]
         
         C64Key.map[9] = [ []: Keycap.init("9"),
