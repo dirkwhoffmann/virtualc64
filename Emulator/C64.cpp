@@ -918,6 +918,7 @@ C64::endFrame()
     expansionport.execute();
     port1.execute();
     port2.execute();
+    keyboard.vsyncHandler();
     drive8.vsyncHandler();
     drive9.vsyncHandler();
 

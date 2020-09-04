@@ -41,28 +41,40 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
             
     func showSheet(autoClose: Bool) {
 
+        track()
+        
          self.autoClose = autoClose
          showSheet()
      }
-
-     func showWindow(autoClose: Bool) {
-         
-         self.autoClose = autoClose
-         showWindow(self)
-     }
+    
+    func showWindow(autoClose: Bool) {
+        
+        self.autoClose = autoClose
+        showWindow(self)
+    }
     
     override func windowDidLoad() {
         
         track()
+        updateImageCache()
+        refresh()
+    }
+
+    override func sheetWillShow() {
+    
+        track()
         
-        // Setup key references
+        // Collect references to all buttons
         for tag in 0 ... 65 {
             keyView[tag] = window!.contentView!.viewWithTag(tag) as? NSButton
         }
-
-        // Compute key caps
-        updateImageCache()
+        
         refresh()
+    }
+
+    override func sheetDidShow() {
+
+        track()
     }
     
     func windowWillClose(_ notification: Notification) {
@@ -84,12 +96,16 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
         
         if keyboard.leftShiftIsPressed() { newModifiers.insert(.shift) }
         if keyboard.rightShiftIsPressed() { newModifiers.insert(.shift) }
-        if keyboard.shiftLockIsHoldDown() { newModifiers.insert(.shift) }
+        if keyboard.shiftLockIsPressed() { newModifiers.insert(.shift) }
         if keyboard.controlIsPressed() { newModifiers.insert(.control) }
         if keyboard.commodoreIsPressed() { newModifiers.insert(.commodore) }
         if lowercase { newModifiers.insert(.lowercase) }
         
+        track("\(modifiers) \(newModifiers)")
+        
+        // Update images if the modifier flags have changed
         if modifiers != newModifiers {
+            modifiers = newModifiers
             updateImageCache()
         }
         
@@ -105,16 +121,9 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
     
     func updateImageCache() {
         
-        track()
-        
-        var modifier: Modifier = []
-        if lshift || rshift || shiftLock { modifier.insert(.shift) }
-        if commodore { modifier.insert(.commodore) }
-        if lowercase { modifier.insert(.lowercase) }
-
         for nr in 0 ... 65 {
             
-            let keycap = C64Key.lookupKeycap(for: nr, modifier: modifier)!
+            let keycap = C64Key.lookupKeycap(for: nr, modifier: modifiers)!
             keyImage[nr] = keycap.image
             pressedKeyImage[nr] = keycap.image?.copy() as? NSImage
             pressedKeyImage[nr]?.pressed()
@@ -124,22 +133,11 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
     func pressKey(nr: Int) {
         
         track()
-        c64.keyboard.pressKey(nr)
-        // refresh()
         
-        DispatchQueue.main.async {
-
-            track()
-
-            // usleep(useconds_t(5000))
-            self.c64.keyboard.releaseAll()
-            self.c64.keyboard.releaseRestoreKey()
-            self.refresh()
-        }
+        c64.keyboard.pressKey(nr, forPeriod: 10)
+        refresh()
         
-        if autoClose {
-            cancelAction(self)
-        }
+        if autoClose { cancelAction(self) }
     }
     
     func holdKey(nr: Int) {

@@ -588,33 +588,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->keyboard->dump();
 }
-- (void) pressKey:(NSInteger)nr
-{
-    wrapper->keyboard->pressKey(nr);
-}
-- (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col
-{
-    wrapper->keyboard->pressKey(row, col);
-}
-- (void) pressRestoreKey {
-    wrapper->keyboard->pressRestoreKey();
-}
-- (void) releaseKey:(NSInteger)nr
-{
-    wrapper->keyboard->releaseKey(nr);
-}
-- (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col
-{
-    wrapper->keyboard->releaseKey(row, col);
-}
-- (void) releaseRestoreKey
-{
-    wrapper->keyboard->releaseRestoreKey();
-}
-- (void) releaseAll
-{
-    wrapper->keyboard->releaseAll();
-}
 - (BOOL) keyIsPressed:(NSInteger)nr
 {
     return wrapper->keyboard->keyIsPressed(nr);
@@ -622,14 +595,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 - (BOOL) keyIsPressedAtRow:(NSInteger)row col:(NSInteger)col
 {
     return wrapper->keyboard->keyIsPressed(row, col);
-}
-- (BOOL) leftShiftIsPressed
-{
-    return wrapper->keyboard->leftShiftIsPressed();
-}
-- (BOOL) rightShiftIsPressed
-{
-    return wrapper->keyboard->rightShiftIsPressed();
 }
 - (BOOL) controlIsPressed
 {
@@ -639,6 +604,64 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->keyboard->commodoreIsPressed();
 }
+- (BOOL) leftShiftIsPressed
+{
+    return wrapper->keyboard->leftShiftIsPressed();
+}
+- (BOOL) rightShiftIsPressed
+{
+    return wrapper->keyboard->rightShiftIsPressed();
+}
+- (BOOL) shiftLockIsPressed
+{
+    return wrapper->keyboard->shiftLockIsPressed();
+}
+- (void) pressKey:(NSInteger)nr
+{
+    wrapper->keyboard->pressKey(nr);
+}
+- (void) pressKey:(NSInteger)nr forPeriod:(NSInteger)delay
+{
+    wrapper->keyboard->pressKey(nr, delay);
+}
+- (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col
+{
+    wrapper->keyboard->pressKey(row, col);
+}
+- (void) pressShiftLock
+{
+    wrapper->keyboard->pressShiftLockKey();
+}
+- (void) releaseKey:(NSInteger)nr
+{
+    wrapper->keyboard->releaseKey(nr);
+}
+- (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col
+{
+    wrapper->keyboard->releaseKey(row, col);
+}
+- (void) releaseShiftLock
+{
+    wrapper->keyboard->releaseShiftLock();
+}
+- (void) releaseAll
+{
+    wrapper->keyboard->releaseAll();
+}
+- (void) toggleKey:(NSInteger)nr
+{
+    wrapper->keyboard->toggleKey(nr);
+}
+- (void) toggleKeyAtRow:(NSInteger)row col:(NSInteger)col
+{
+    wrapper->keyboard->toggleKey(row, col);
+}
+- (void) toggleShiftLock
+{
+    wrapper->keyboard->toggleShiftLock();
+}
+
+/*
 - (BOOL) shiftLockIsHoldDown
 {
     return wrapper->keyboard->shiftLockIsPressed();
@@ -651,6 +674,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->keyboard->releaseShiftLockKey();
 }
+*/
 - (BOOL) inUpperCaseMode
 {
     return wrapper->keyboard->inUpperCaseMode();

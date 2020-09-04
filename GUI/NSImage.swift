@@ -231,8 +231,6 @@ extension NSImage {
     
     func imprint(_ text: String, dx: CGFloat, dy: CGFloat, fontSize: CGFloat) {
         
-        track()
-
         let font = NSFont.systemFont(ofSize: fontSize, weight: .medium)
         let attributes: [NSAttributedString.Key: Any] = [
             .font: font,

@@ -61,7 +61,7 @@ extension MyController: NSMenuItemValidation {
             
         // Keyboard menu
         case #selector(MyController.shiftLockAction(_:)):
-            item.state = c64.keyboard.shiftLockIsHoldDown() ? .on : .off
+            item.state = c64.keyboard.shiftLockIsPressed() ? .on : .off
             return true
             
         // Drive menu
@@ -503,11 +503,7 @@ extension MyController: NSMenuItemValidation {
         undoManager?.registerUndo(withTarget: self) { targetSelf in
             targetSelf.shiftLockAction(sender)
         }
-        if c64.keyboard.shiftLockIsHoldDown() {
-            c64.keyboard.unlockShift()
-        } else {
-            c64.keyboard.lockShift()
-        }
+        c64.keyboard.toggleShiftLock()
     }
 
     // -----------------------------------------------------------------

@@ -316,20 +316,13 @@ class KeyboardController: NSObject {
     func _type(keyList: [C64Key]) {
         
         for key in keyList {
-            if key == .restore {
-                keyboard.pressRestoreKey()
-            } else {
-                keyboard.pressKey(atRow: key.row, col: key.col)
-            }
+            keyboard.pressKey(key.nr)
         }
+
         usleep(useconds_t(50000))
         
         for key in keyList {
-            if key == .restore {
-                keyboard.releaseRestoreKey()
-            } else {
-            keyboard.releaseKey(atRow: key.row, col: key.col)
-            }
+            keyboard.releaseKey(key.nr)
         }
     }
     

@@ -441,25 +441,27 @@ struct AnyC64FileWrapper;
 
 - (void) dump;
 
+- (BOOL) keyIsPressed:(NSInteger)nr;
+- (BOOL) keyIsPressedAtRow:(NSInteger)row col:(NSInteger)col;
+- (BOOL) controlIsPressed;
+- (BOOL) commodoreIsPressed;
+- (BOOL) leftShiftIsPressed;
+- (BOOL) rightShiftIsPressed;
+- (BOOL) shiftLockIsPressed;
+
 - (void) pressKey:(NSInteger)nr;
+- (void) pressKey:(NSInteger)nr forPeriod:(NSInteger)delay;
 - (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col;
-- (void) pressRestoreKey;
+- (void) pressShiftLock;
 
 - (void) releaseKey:(NSInteger)nr;
 - (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col;
-- (void) releaseRestoreKey;
+- (void) releaseShiftLock;
 - (void) releaseAll;
 
-- (BOOL) keyIsPressed:(NSInteger)nr;
-- (BOOL) keyIsPressedAtRow:(NSInteger)row col:(NSInteger)col;
-- (BOOL) leftShiftIsPressed;
-- (BOOL) rightShiftIsPressed;
-- (BOOL) controlIsPressed;
-- (BOOL) commodoreIsPressed;
-
-- (BOOL) shiftLockIsHoldDown;
-- (void) lockShift;
-- (void) unlockShift;
+- (void) toggleKey:(NSInteger)nr;
+- (void) toggleKeyAtRow:(NSInteger)row col:(NSInteger)col;
+- (void) toggleShiftLock;
 
 - (BOOL) inUpperCaseMode;
 

@@ -19,7 +19,7 @@ Keyboard::_reset()
 {
     RESET_SNAPSHOT_ITEMS
 
-	// Release all keys (resets the keyboard matrix)
+	// Reset the keyboard matrix
     releaseAll();
 }
 
@@ -51,14 +51,6 @@ Keyboard::_dump()
 	}
 	msg("\n");
     msg("Shift lock: %s pressed\n", shiftLock ? "" : "not");
-}
-
-void
-Keyboard::setShiftLock(bool value)
-{
-    if (value != shiftLock) {
-        shiftLock = value;
-    }
 }
 
 u8
@@ -98,19 +90,19 @@ Keyboard::getColumnValues(u8 rowMask)
 }
 
 void
-Keyboard::pressKey(long nr)
+Keyboard::pressKey(long nr, i64 period)
 {
     assert(nr < 66);
     
     switch (nr) {
-        case 34: toggleShiftLockKey(); return;
-        case 31: pressRestoreKey(); return;
-        default: pressKey(rowcol[nr][0], rowcol[nr][1]);
+        case 34: toggleShiftLock(); return;
+        case 31: pressRestoreKey(period); break;
+        default: pressKey(rowcol[nr][0], rowcol[nr][1], period);
     }
 }
 
 void
-Keyboard::pressKey(u8 row, u8 col)
+Keyboard::pressKey(u8 row, u8 col, i64 period)
 {
     debug(KBD_DEBUG, "pressKey(%d,%d)\n", row, col);
 
@@ -119,14 +111,16 @@ Keyboard::pressKey(u8 row, u8 col)
         
     kbMatrixRow[row] &= ~(1 << col);
     kbMatrixCol[col] &= ~(1 << row);
+    clearCnt = period;
 }
 
 void
-Keyboard::pressRestoreKey()
+Keyboard::pressRestoreKey(i64 period)
 {
     debug(KBD_DEBUG, "pressRestoreKey()\n");
 
     cpu.pullDownNmiLine(INTSRC_KBD);
+    clearCnt = period;
 }
 
 void
@@ -135,7 +129,7 @@ Keyboard::releaseKey(long nr)
     assert(nr < 66);
 
     switch (nr) {
-        case 34: releaseShiftLockKey(); return;
+        case 34: releaseShiftLock(); return;
         case 31: releaseRestoreKey(); return;
         default: releaseKey(rowcol[nr][0], rowcol[nr][1]);
     }
@@ -171,6 +165,7 @@ Keyboard::releaseAll()
     for (unsigned i = 0; i < 8; i++) {
         kbMatrixRow[i] = kbMatrixCol[i] = 0xFF;
     }
+    releaseRestoreKey();
 }
 
 bool
@@ -200,6 +195,16 @@ bool
 Keyboard::restoreIsPressed()
 {
     return cpu.nmiLine & INTSRC_KBD;
+}
+
+void
+Keyboard::toggleKey(long nr)
+{
+    if (keyIsPressed(nr)) {
+        releaseKey(nr);
+    } else {
+        pressKey(nr);
+    }
 }
 
 void
@@ -241,3 +246,14 @@ Keyboard::rowcol[66][2] = {
     // Fifth physical row
     {7, 4}
 };
+
+void
+Keyboard::vsyncHandler()
+{
+    if (clearCnt) {
+        debug("clearCnt = %d\n", clearCnt);
+        if (--clearCnt == 0) {
+            releaseAll();
+        }
+    }
+}
