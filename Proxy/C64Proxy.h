@@ -441,13 +441,17 @@ struct AnyC64FileWrapper;
 
 - (void) dump;
 
+- (void) pressKey:(NSInteger)nr;
 - (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col;
 - (void) pressRestoreKey;
 
+- (void) releaseKey:(NSInteger)nr;
 - (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col;
 - (void) releaseRestoreKey;
 - (void) releaseAll;
 
+- (BOOL) keyIsPressed:(NSInteger)nr;
+- (BOOL) keyIsPressedAtRow:(NSInteger)row col:(NSInteger)col;
 - (BOOL) leftShiftIsPressed;
 - (BOOL) rightShiftIsPressed;
 - (BOOL) controlIsPressed;

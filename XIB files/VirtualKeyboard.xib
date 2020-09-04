@@ -22,7 +22,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="684" height="256"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vXW-vm-6yg">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vXW-vm-6yg" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="31" y="164" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="Lhf-xh-5gC">
@@ -30,10 +30,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="o1Y-b8-TXV"/>
+                            <action selector="pressVirtualKey:" target="-2" id="o1Y-b8-TXV"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="zsn-Ug-tPq">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="zsn-Ug-tPq" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="66" y="164" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="f85-sj-eYh">
@@ -41,10 +41,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="dIG-sT-Aj2"/>
+                            <action selector="pressVirtualKey:" target="-2" id="dIG-sT-Aj2"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="Zex-ia-E2x">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="Zex-ia-E2x" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="101" y="164" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="gRX-wu-E6c">
@@ -52,10 +52,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="eYL-Y1-7Fm"/>
+                            <action selector="pressVirtualKey:" target="-2" id="eYL-Y1-7Fm"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="OxU-om-yBW">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="OxU-om-yBW" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="136" y="164" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="J5b-bv-iyV">
@@ -63,10 +63,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="cu5-bK-68f"/>
+                            <action selector="pressVirtualKey:" target="-2" id="cu5-bK-68f"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="phO-f9-C4D">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="phO-f9-C4D" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="171" y="164" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="zAn-8R-PsN">
@@ -74,10 +74,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="WH8-As-jbV"/>
+                            <action selector="pressVirtualKey:" target="-2" id="WH8-As-jbV"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="8T0-li-gkF">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="8T0-li-gkF" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="206" y="164" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="Jm9-Fi-Rha">
@@ -85,10 +85,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="2tu-OS-O2I"/>
+                            <action selector="pressVirtualKey:" target="-2" id="2tu-OS-O2I"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="6" translatesAutoresizingMaskIntoConstraints="NO" id="ZJk-b6-Szz">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="6" translatesAutoresizingMaskIntoConstraints="NO" id="ZJk-b6-Szz" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="241" y="164" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="wbf-zv-Mcd">
@@ -96,10 +96,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="nJe-PN-QxD"/>
+                            <action selector="pressVirtualKey:" target="-2" id="nJe-PN-QxD"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="7" translatesAutoresizingMaskIntoConstraints="NO" id="oHA-X6-YQ7">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="7" translatesAutoresizingMaskIntoConstraints="NO" id="oHA-X6-YQ7" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="276" y="164" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="kHx-HM-Lzr">
@@ -107,10 +107,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="FVi-qV-pLP"/>
+                            <action selector="pressVirtualKey:" target="-2" id="FVi-qV-pLP"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="1Pu-TX-xWc">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="1Pu-TX-xWc" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="311" y="164" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="Slf-zW-suq">
@@ -118,10 +118,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="MIC-6U-JRY"/>
+                            <action selector="pressVirtualKey:" target="-2" id="MIC-6U-JRY"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="3XY-ri-VEd">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="3XY-ri-VEd" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="346" y="164" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="oO0-Id-1id">
@@ -129,10 +129,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="2RH-Kc-5La"/>
+                            <action selector="pressVirtualKey:" target="-2" id="2RH-Kc-5La"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="10" translatesAutoresizingMaskIntoConstraints="NO" id="gyY-Wp-s6C">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="10" translatesAutoresizingMaskIntoConstraints="NO" id="gyY-Wp-s6C" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="381" y="164" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="u5d-Q1-B1m">
@@ -140,10 +140,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="Fda-k4-BB6"/>
+                            <action selector="pressVirtualKey:" target="-2" id="Fda-k4-BB6"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="SRl-3V-xl3">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="SRl-3V-xl3" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="416" y="164" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="4be-T8-ljO">
@@ -151,10 +151,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="nIr-Bo-c7R"/>
+                            <action selector="pressVirtualKey:" target="-2" id="nIr-Bo-c7R"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="12" translatesAutoresizingMaskIntoConstraints="NO" id="JRx-JQ-af6">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="12" translatesAutoresizingMaskIntoConstraints="NO" id="JRx-JQ-af6" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="451" y="164" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="Cyr-CW-Kv3">
@@ -162,10 +162,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="xoh-iI-JFg"/>
+                            <action selector="pressVirtualKey:" target="-2" id="xoh-iI-JFg"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="13" translatesAutoresizingMaskIntoConstraints="NO" id="NSw-dI-FuM">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="13" translatesAutoresizingMaskIntoConstraints="NO" id="NSw-dI-FuM" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="486" y="164" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="NQ1-wQ-nWk">
@@ -173,10 +173,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="hK1-Xg-3Im"/>
+                            <action selector="pressVirtualKey:" target="-2" id="hK1-Xg-3Im"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="14" translatesAutoresizingMaskIntoConstraints="NO" id="7Ab-FQ-x2w">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="14" translatesAutoresizingMaskIntoConstraints="NO" id="7Ab-FQ-x2w" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="521" y="164" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="7TT-oR-HYl">
@@ -184,10 +184,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="rOr-bL-NUe"/>
+                            <action selector="pressVirtualKey:" target="-2" id="rOr-bL-NUe"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="15" translatesAutoresizingMaskIntoConstraints="NO" id="Jzg-th-yxi">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="15" translatesAutoresizingMaskIntoConstraints="NO" id="Jzg-th-yxi" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="556" y="164" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="aUl-eZ-bhb">
@@ -195,10 +195,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="UhU-GL-OGB"/>
+                            <action selector="pressVirtualKey:" target="-2" id="UhU-GL-OGB"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="16" translatesAutoresizingMaskIntoConstraints="NO" id="0pC-mc-Zos">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="16" translatesAutoresizingMaskIntoConstraints="NO" id="0pC-mc-Zos" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="610" y="164" width="54" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="zj8-ms-PYU">
@@ -206,10 +206,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="jo2-iQ-jup"/>
+                            <action selector="pressVirtualKey:" target="-2" id="jo2-iQ-jup"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="32" translatesAutoresizingMaskIntoConstraints="NO" id="xAD-eA-B8N">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="32" translatesAutoresizingMaskIntoConstraints="NO" id="xAD-eA-B8N" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="610" y="128" width="54" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="vue-kQ-3TM">
@@ -217,10 +217,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="eGs-2Y-2oh"/>
+                            <action selector="pressVirtualKey:" target="-2" id="eGs-2Y-2oh"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="48" translatesAutoresizingMaskIntoConstraints="NO" id="EB5-Xd-ejK">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="48" translatesAutoresizingMaskIntoConstraints="NO" id="EB5-Xd-ejK" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="610" y="92" width="54" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="CvT-zH-xhp">
@@ -228,10 +228,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="QLF-Gr-ReG"/>
+                            <action selector="pressVirtualKey:" target="-2" id="QLF-Gr-ReG"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="64" translatesAutoresizingMaskIntoConstraints="NO" id="52S-Xx-g6g">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="64" translatesAutoresizingMaskIntoConstraints="NO" id="52S-Xx-g6g" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="610" y="56" width="54" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="J3s-Xo-dvH">
@@ -239,10 +239,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="gIW-zc-Wbz"/>
+                            <action selector="pressVirtualKey:" target="-2" id="gIW-zc-Wbz"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="18" translatesAutoresizingMaskIntoConstraints="NO" id="Wro-Gm-clI">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="18" translatesAutoresizingMaskIntoConstraints="NO" id="Wro-Gm-clI" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="83" y="128" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="zar-eN-bQc">
@@ -250,10 +250,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="uoW-UV-dL7"/>
+                            <action selector="pressVirtualKey:" target="-2" id="uoW-UV-dL7"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="19" translatesAutoresizingMaskIntoConstraints="NO" id="bQM-ju-Gza">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="19" translatesAutoresizingMaskIntoConstraints="NO" id="bQM-ju-Gza" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="118" y="128" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="J1v-Kz-Rmw">
@@ -261,10 +261,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="6Nw-kx-8Da"/>
+                            <action selector="pressVirtualKey:" target="-2" id="6Nw-kx-8Da"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="20" translatesAutoresizingMaskIntoConstraints="NO" id="HKQ-Gx-drB">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="20" translatesAutoresizingMaskIntoConstraints="NO" id="HKQ-Gx-drB" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="153" y="128" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="HvI-NT-at5">
@@ -272,10 +272,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="BtJ-mF-hgD"/>
+                            <action selector="pressVirtualKey:" target="-2" id="BtJ-mF-hgD"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="21" translatesAutoresizingMaskIntoConstraints="NO" id="aCJ-wP-tmI">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="21" translatesAutoresizingMaskIntoConstraints="NO" id="aCJ-wP-tmI" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="188" y="128" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="2iL-xM-Dcx">
@@ -283,10 +283,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="QKp-qm-iWe"/>
+                            <action selector="pressVirtualKey:" target="-2" id="QKp-qm-iWe"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="22" translatesAutoresizingMaskIntoConstraints="NO" id="lYV-Hz-9Ib">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="22" translatesAutoresizingMaskIntoConstraints="NO" id="lYV-Hz-9Ib" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="223" y="128" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="m0S-1W-quB">
@@ -294,10 +294,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="39Y-ja-1so"/>
+                            <action selector="pressVirtualKey:" target="-2" id="39Y-ja-1so"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="23" translatesAutoresizingMaskIntoConstraints="NO" id="qwu-vO-rTn">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="23" translatesAutoresizingMaskIntoConstraints="NO" id="qwu-vO-rTn" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="258" y="128" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="p24-uP-ohU">
@@ -305,10 +305,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="Ehs-vY-MB5"/>
+                            <action selector="pressVirtualKey:" target="-2" id="Ehs-vY-MB5"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="24" translatesAutoresizingMaskIntoConstraints="NO" id="dyH-eH-m4m">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="24" translatesAutoresizingMaskIntoConstraints="NO" id="dyH-eH-m4m" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="293" y="128" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="YWS-RT-BOa">
@@ -316,10 +316,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="E4Y-Uz-Ree"/>
+                            <action selector="pressVirtualKey:" target="-2" id="E4Y-Uz-Ree"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="25" translatesAutoresizingMaskIntoConstraints="NO" id="qzh-Di-WeL">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="25" translatesAutoresizingMaskIntoConstraints="NO" id="qzh-Di-WeL" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="328" y="128" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="82Q-kh-g9F">
@@ -327,10 +327,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="yKd-rt-LNc"/>
+                            <action selector="pressVirtualKey:" target="-2" id="yKd-rt-LNc"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="26" translatesAutoresizingMaskIntoConstraints="NO" id="Xz2-d1-VLN">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="26" translatesAutoresizingMaskIntoConstraints="NO" id="Xz2-d1-VLN" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="363" y="128" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="kZi-x4-WUJ">
@@ -338,10 +338,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="7C0-Fd-vOs"/>
+                            <action selector="pressVirtualKey:" target="-2" id="7C0-Fd-vOs"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="27" translatesAutoresizingMaskIntoConstraints="NO" id="Rnz-bK-Gfl">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="27" translatesAutoresizingMaskIntoConstraints="NO" id="Rnz-bK-Gfl" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="398" y="128" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="IGR-ZD-sMb">
@@ -349,10 +349,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="lnI-Eo-v9t"/>
+                            <action selector="pressVirtualKey:" target="-2" id="lnI-Eo-v9t"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="28" translatesAutoresizingMaskIntoConstraints="NO" id="GoZ-fB-wBV">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="28" translatesAutoresizingMaskIntoConstraints="NO" id="GoZ-fB-wBV" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="433" y="128" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="ji5-gb-CZC">
@@ -360,10 +360,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="IEm-ZX-V1W"/>
+                            <action selector="pressVirtualKey:" target="-2" id="IEm-ZX-V1W"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="29" translatesAutoresizingMaskIntoConstraints="NO" id="jS0-kx-JmE">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="29" translatesAutoresizingMaskIntoConstraints="NO" id="jS0-kx-JmE" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="468" y="128" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="15B-Tq-gRS">
@@ -371,10 +371,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="n7E-xu-fda"/>
+                            <action selector="pressVirtualKey:" target="-2" id="n7E-xu-fda"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="30" translatesAutoresizingMaskIntoConstraints="NO" id="Jre-KH-HaT">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="30" translatesAutoresizingMaskIntoConstraints="NO" id="Jre-KH-HaT" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="503" y="128" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="Eo2-mn-anY">
@@ -382,10 +382,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="Sc5-hL-qYp"/>
+                            <action selector="pressVirtualKey:" target="-2" id="Sc5-hL-qYp"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="31" translatesAutoresizingMaskIntoConstraints="NO" id="zXR-3h-xfG">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="31" translatesAutoresizingMaskIntoConstraints="NO" id="zXR-3h-xfG" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="538" y="128" width="54" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="0Ts-bj-TFy">
@@ -393,10 +393,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="hqm-bt-Ogv"/>
+                            <action selector="pressVirtualKey:" target="-2" id="hqm-bt-Ogv"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="47" translatesAutoresizingMaskIntoConstraints="NO" id="qsP-q5-m5b">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="47" translatesAutoresizingMaskIntoConstraints="NO" id="qsP-q5-m5b" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="510" y="92" width="72" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape200x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="d5u-6g-CDz">
@@ -404,10 +404,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="xES-gn-lv9"/>
+                            <action selector="pressVirtualKey:" target="-2" id="xES-gn-lv9"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="17" translatesAutoresizingMaskIntoConstraints="NO" id="vcY-WK-QTy">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="17" translatesAutoresizingMaskIntoConstraints="NO" id="vcY-WK-QTy" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="31" y="128" width="54" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="GOF-Pr-l32">
@@ -415,10 +415,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="PwY-l0-TwW"/>
+                            <action selector="pressVirtualKey:" target="-2" id="PwY-l0-TwW"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="49" translatesAutoresizingMaskIntoConstraints="NO" id="57O-Jj-vsj">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="49" translatesAutoresizingMaskIntoConstraints="NO" id="57O-Jj-vsj" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="20" y="56" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="kk0-Co-ZKQ">
@@ -426,10 +426,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="Wis-31-kdL"/>
+                            <action selector="pressVirtualKey:" target="-2" id="Wis-31-kdL"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="51" translatesAutoresizingMaskIntoConstraints="NO" id="gWb-t3-uYY">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="51" translatesAutoresizingMaskIntoConstraints="NO" id="gWb-t3-uYY" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="107" y="56" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="d6u-6j-aqh">
@@ -437,10 +437,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="vV7-KM-hpm"/>
+                            <action selector="pressVirtualKey:" target="-2" id="vV7-KM-hpm"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="52" translatesAutoresizingMaskIntoConstraints="NO" id="F45-Vt-MKV">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="52" translatesAutoresizingMaskIntoConstraints="NO" id="F45-Vt-MKV" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="142" y="56" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="2xo-G0-rus">
@@ -448,10 +448,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="JfD-hy-6tV"/>
+                            <action selector="pressVirtualKey:" target="-2" id="JfD-hy-6tV"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="53" translatesAutoresizingMaskIntoConstraints="NO" id="XIt-Qs-qob">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="53" translatesAutoresizingMaskIntoConstraints="NO" id="XIt-Qs-qob" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="177" y="56" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="ccs-Bp-WZn">
@@ -459,10 +459,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="f7D-Fs-pPI"/>
+                            <action selector="pressVirtualKey:" target="-2" id="f7D-Fs-pPI"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="54" translatesAutoresizingMaskIntoConstraints="NO" id="bJj-RV-zMl">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="54" translatesAutoresizingMaskIntoConstraints="NO" id="bJj-RV-zMl" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="212" y="56" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="1JD-5u-zfV">
@@ -470,10 +470,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="6nr-sJ-dUR"/>
+                            <action selector="pressVirtualKey:" target="-2" id="6nr-sJ-dUR"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="55" translatesAutoresizingMaskIntoConstraints="NO" id="ys9-c9-oeE">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="55" translatesAutoresizingMaskIntoConstraints="NO" id="ys9-c9-oeE" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="247" y="56" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="1zy-54-Dmd">
@@ -481,10 +481,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="iCv-EP-B8z"/>
+                            <action selector="pressVirtualKey:" target="-2" id="iCv-EP-B8z"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="56" translatesAutoresizingMaskIntoConstraints="NO" id="dwV-rX-7EZ">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="56" translatesAutoresizingMaskIntoConstraints="NO" id="dwV-rX-7EZ" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="282" y="56" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="8md-mm-LY1">
@@ -492,10 +492,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="MaH-hj-TWZ"/>
+                            <action selector="pressVirtualKey:" target="-2" id="MaH-hj-TWZ"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="57" translatesAutoresizingMaskIntoConstraints="NO" id="0Lj-Zy-PQv">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="57" translatesAutoresizingMaskIntoConstraints="NO" id="0Lj-Zy-PQv" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="317" y="56" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="dvR-at-D8f">
@@ -503,10 +503,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="qTu-gN-ch2"/>
+                            <action selector="pressVirtualKey:" target="-2" id="qTu-gN-ch2"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="58" translatesAutoresizingMaskIntoConstraints="NO" id="L5q-WJ-FMK">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="58" translatesAutoresizingMaskIntoConstraints="NO" id="L5q-WJ-FMK" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="352" y="56" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="mue-Dm-edq">
@@ -514,10 +514,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="P7h-hw-krB"/>
+                            <action selector="pressVirtualKey:" target="-2" id="P7h-hw-krB"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="59" translatesAutoresizingMaskIntoConstraints="NO" id="Kzj-uL-BQa">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="59" translatesAutoresizingMaskIntoConstraints="NO" id="Kzj-uL-BQa" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="387" y="56" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="Uxv-ic-Xgb">
@@ -525,10 +525,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="FGL-pa-gbI"/>
+                            <action selector="pressVirtualKey:" target="-2" id="FGL-pa-gbI"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="60" translatesAutoresizingMaskIntoConstraints="NO" id="iL6-DH-BaF">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="60" translatesAutoresizingMaskIntoConstraints="NO" id="iL6-DH-BaF" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="422" y="56" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="LiH-rH-cy3">
@@ -536,10 +536,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="fho-dT-DFP"/>
+                            <action selector="pressVirtualKey:" target="-2" id="fho-dT-DFP"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="62" translatesAutoresizingMaskIntoConstraints="NO" id="0eO-io-f24">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="62" translatesAutoresizingMaskIntoConstraints="NO" id="0eO-io-f24" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="510" y="56" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="ZrU-Zm-M6p">
@@ -547,10 +547,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="ajd-tK-b1A"/>
+                            <action selector="pressVirtualKey:" target="-2" id="ajd-tK-b1A"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="63" translatesAutoresizingMaskIntoConstraints="NO" id="ydc-OD-6ML">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="63" translatesAutoresizingMaskIntoConstraints="NO" id="ydc-OD-6ML" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="545" y="56" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="vKi-sG-JnA">
@@ -558,10 +558,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="yGD-NC-1NP"/>
+                            <action selector="pressVirtualKey:" target="-2" id="yGD-NC-1NP"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="61" translatesAutoresizingMaskIntoConstraints="NO" id="lme-cQ-1d9">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="61" translatesAutoresizingMaskIntoConstraints="NO" id="lme-cQ-1d9" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="457" y="56" width="54" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="rQO-Dh-8xb">
@@ -569,10 +569,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="noB-vW-DdC"/>
+                            <action selector="pressVirtualKey:" target="-2" id="noB-vW-DdC"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="50" translatesAutoresizingMaskIntoConstraints="NO" id="qZp-cN-5xM">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="50" translatesAutoresizingMaskIntoConstraints="NO" id="qZp-cN-5xM" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="55" y="56" width="54" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="WS5-bI-F8w">
@@ -580,10 +580,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="Cx1-WI-lV3"/>
+                            <action selector="pressVirtualKey:" target="-2" id="Cx1-WI-lV3"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="65" translatesAutoresizingMaskIntoConstraints="NO" id="wIf-LV-ys2">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="65" translatesAutoresizingMaskIntoConstraints="NO" id="wIf-LV-ys2" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="119" y="20" width="324" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape900x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="1I6-rk-bJJ">
@@ -591,10 +591,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="i5C-OR-pAh"/>
+                            <action selector="pressVirtualKey:" target="-2" id="i5C-OR-pAh"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="33" translatesAutoresizingMaskIntoConstraints="NO" id="LI5-KF-EK9">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="33" translatesAutoresizingMaskIntoConstraints="NO" id="LI5-KF-EK9" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="20" y="92" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="Vse-8V-ziH">
@@ -602,10 +602,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="kN3-RB-Vhf"/>
+                            <action selector="pressVirtualKey:" target="-2" id="kN3-RB-Vhf"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="34" translatesAutoresizingMaskIntoConstraints="NO" id="7ac-he-DKY">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="34" translatesAutoresizingMaskIntoConstraints="NO" id="7ac-he-DKY" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="55" y="92" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="mpe-lh-SWy">
@@ -613,10 +613,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="e5e-CW-u0a"/>
+                            <action selector="pressVirtualKey:" target="-2" id="e5e-CW-u0a"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="35" translatesAutoresizingMaskIntoConstraints="NO" id="v6z-T7-Th7">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="35" translatesAutoresizingMaskIntoConstraints="NO" id="v6z-T7-Th7" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="90" y="92" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="04O-rc-iwm">
@@ -624,10 +624,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="8YS-wB-EyX"/>
+                            <action selector="pressVirtualKey:" target="-2" id="8YS-wB-EyX"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="36" translatesAutoresizingMaskIntoConstraints="NO" id="Sl4-F5-N93">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="36" translatesAutoresizingMaskIntoConstraints="NO" id="Sl4-F5-N93" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="125" y="92" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="x9o-Bu-5uM">
@@ -635,10 +635,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="Twa-ca-Ttu"/>
+                            <action selector="pressVirtualKey:" target="-2" id="Twa-ca-Ttu"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="37" translatesAutoresizingMaskIntoConstraints="NO" id="mYe-rB-sCv">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="37" translatesAutoresizingMaskIntoConstraints="NO" id="mYe-rB-sCv" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="160" y="92" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="MAC-jC-Cb6">
@@ -646,10 +646,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="gYc-3a-P6l"/>
+                            <action selector="pressVirtualKey:" target="-2" id="gYc-3a-P6l"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="38" translatesAutoresizingMaskIntoConstraints="NO" id="wd0-8g-Dq8">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="38" translatesAutoresizingMaskIntoConstraints="NO" id="wd0-8g-Dq8" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="195" y="92" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="1BB-Xt-Y4R">
@@ -657,10 +657,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="Axt-7O-N9K"/>
+                            <action selector="pressVirtualKey:" target="-2" id="Axt-7O-N9K"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="39" translatesAutoresizingMaskIntoConstraints="NO" id="jiJ-BN-uFL">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="39" translatesAutoresizingMaskIntoConstraints="NO" id="jiJ-BN-uFL" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="230" y="92" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="KAc-fP-GQq">
@@ -668,10 +668,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="1l9-yh-Xso"/>
+                            <action selector="pressVirtualKey:" target="-2" id="1l9-yh-Xso"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="40" translatesAutoresizingMaskIntoConstraints="NO" id="EWM-gG-Ko4">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="40" translatesAutoresizingMaskIntoConstraints="NO" id="EWM-gG-Ko4" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="265" y="92" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="N8b-ja-haR">
@@ -679,10 +679,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="sXG-rs-zeW"/>
+                            <action selector="pressVirtualKey:" target="-2" id="sXG-rs-zeW"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="41" translatesAutoresizingMaskIntoConstraints="NO" id="SE0-P9-dWN">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="41" translatesAutoresizingMaskIntoConstraints="NO" id="SE0-P9-dWN" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="300" y="92" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="YdW-Zp-dLK">
@@ -690,10 +690,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="dWn-jM-sjH"/>
+                            <action selector="pressVirtualKey:" target="-2" id="dWn-jM-sjH"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="42" translatesAutoresizingMaskIntoConstraints="NO" id="P1v-xO-6g1">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="42" translatesAutoresizingMaskIntoConstraints="NO" id="P1v-xO-6g1" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="335" y="92" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="nE7-BF-DeA">
@@ -701,10 +701,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="OP7-F8-eI4"/>
+                            <action selector="pressVirtualKey:" target="-2" id="OP7-F8-eI4"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="43" translatesAutoresizingMaskIntoConstraints="NO" id="d5b-fg-SNK">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="43" translatesAutoresizingMaskIntoConstraints="NO" id="d5b-fg-SNK" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="370" y="92" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="o5Y-gk-4Vo">
@@ -712,10 +712,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="Av0-SC-yC4"/>
+                            <action selector="pressVirtualKey:" target="-2" id="Av0-SC-yC4"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="44" translatesAutoresizingMaskIntoConstraints="NO" id="PQp-MK-0QL">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="44" translatesAutoresizingMaskIntoConstraints="NO" id="PQp-MK-0QL" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="405" y="92" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="0u4-B4-5rf">
@@ -723,10 +723,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="N1Y-Fx-20z"/>
+                            <action selector="pressVirtualKey:" target="-2" id="N1Y-Fx-20z"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="45" translatesAutoresizingMaskIntoConstraints="NO" id="tQR-0A-qNy">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="45" translatesAutoresizingMaskIntoConstraints="NO" id="tQR-0A-qNy" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="440" y="92" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="Z84-YU-hSM">
@@ -734,10 +734,10 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="hwo-H1-VGL"/>
+                            <action selector="pressVirtualKey:" target="-2" id="hwo-H1-VGL"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="46" translatesAutoresizingMaskIntoConstraints="NO" id="WNJ-9J-ury">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="46" translatesAutoresizingMaskIntoConstraints="NO" id="WNJ-9J-ury" customClass="KeycapButton" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="475" y="92" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" inset="2" id="DNU-hh-TRG">
@@ -745,7 +745,7 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="pressVirtualC64Key:" target="-2" id="8lB-vL-5Ca"/>
+                            <action selector="pressVirtualKey:" target="-2" id="8lB-vL-5Ca"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="B5H-hF-ypx" customClass="Keycap" customModule="VirtualC64" customModuleProvider="target">
@@ -768,7 +768,7 @@
                         <rect key="frame" x="31" y="219" width="131" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <segmentedCell key="cell" controlSize="small" borderStyle="border" alignment="left" style="smallSquare" trackingMode="selectOne" id="YKB-fM-xfm">
-                            <font key="font" metaFont="menu" size="11"/>
+                            <font key="font" metaFont="controlContent" size="11"/>
                             <segments>
                                 <segment label="QWERTY" width="64"/>
                                 <segment label="qwerty" width="64" selected="YES" tag="1"/>

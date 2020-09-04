@@ -26,8 +26,9 @@
  * matrix into the virtual C64.
  */
 class Keyboard : public C64Component {
-
-private:
+    
+    // Maping from key numbers to keyboard matrix positions
+    static const u8 rowcol[66][2];
     
 	// The C64 keyboard matrix indexed by row
 	u8 kbMatrixRow[8];
@@ -93,30 +94,19 @@ private:
     
 public:
     
-    /* Checks if a certain key is currently pressed. The key is identified by
-     * its native row and column index.
-     */
+    // Checks whether a certain key is being pressed
+    bool keyIsPressed(long nr);
     bool keyIsPressed(u8 row, u8 col);
-
-    // Checks if the shift lock key is held down
-    bool shiftLockIsHoldDown() { return shiftLock; }
-
-    // Checks if the left shift key is currently pressed
+    bool shiftLockIsPressed() { return shiftLock; }
     bool leftShiftIsPressed() { return keyIsPressed(1,7); }
-    
-    // Checks if the right shift key is currently pressed
     bool rightShiftIsPressed() { return keyIsPressed(6,4); }
-    
-    // Checks if the commodore key is currently pressed
     bool commodoreIsPressed() { return keyIsPressed(7,5); }
-    
-    // Checks if the CTRL key is currently pressed
     bool ctrlIsPressed() { return keyIsPressed(7,2); }
-    
-    // Checks if the runstop key is currently pressed
     bool runstopIsPressed() { return keyIsPressed(7,7); }
+    bool restoreIsPressed();
     
 	// Presses a key
+    void pressKey(long nr);
 	void pressKey(u8 row, u8 col);
 	void pressCommodoreKey() { pressKey(7,5); }
     void pressCtrlKey() { pressKey(7,2); }
@@ -124,6 +114,7 @@ public:
     void pressRestoreKey();
     
 	// Releases a pressed key
+    void releaseKey(long nr);
 	void releaseKey(u8 row, u8 col);
 	void releaseCommodoreKey() { releaseKey(7,5); }
     void releaseCtrlKey() { releaseKey(7,2); }
@@ -154,7 +145,8 @@ public:
      */
     void pressShiftLockKey() { setShiftLock(true); }
     void releaseShiftLockKey() { setShiftLock(false); }
-    
+    void toggleShiftLockKey() { setShiftLock(!shiftLock); }
+
     
     //
     // Accessing the keyboard matrix

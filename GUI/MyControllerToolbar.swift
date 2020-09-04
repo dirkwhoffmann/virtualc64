@@ -107,14 +107,4 @@ extension MyController {
             assert(false)
         }
     }
-    
-    @IBAction func keyboardAction(_ sender: Any!) {
-        
-        // Open the virtual keyboard as a sheet
-        if virtualKeyboard == nil {
-            virtualKeyboard = VirtualKeyboardController.make(parent: self)
-        }
-        
-        virtualKeyboard?.showSheet(autoClose: true)        
-    }
 }

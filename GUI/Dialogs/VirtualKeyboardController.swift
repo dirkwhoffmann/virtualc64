@@ -9,12 +9,20 @@
 
 class VirtualKeyboardController: DialogController, NSWindowDelegate {
 
+    var keyboard: KeyboardProxy { return c64.keyboard }
+
     // Array holding a reference to the view of each key
     var keyView = Array(repeating: nil as NSButton?, count: 66)
 
     // Array holding a reference to the image of each key
     var keyImage = Array(repeating: nil as NSImage?, count: 66)
 
+    // Image cache for keys that are currently pressed
+    var pressedKeyImage = Array(repeating: nil as NSImage?, count: 128)
+
+    // Currently set key modifiers
+    var modifiers: Modifier = []
+    
     // Remembers the state of some keys (true = currently pressed)
     var lshift = false
     var rshift = false
@@ -25,23 +33,12 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
     // Indicates if the lower case character set is currently in use
     var lowercase = false
     
-    // Indicates if the window should close itself when a key has been pressed.
-    // If the virtual keyboard is opened as a sheet, this variable is set to
-    // true. If it is opened as a seperate window, it is set to false.
+    /* Indicates if the window should close when a key is pressed. If the
+     * virtual keyboard is opened as a sheet, this variable is set to true. If
+     * it is opened as a seperate window, it is set to false.
+     */
     var autoClose = true
-    
-    var keyboard: KeyboardProxy { return c64.keyboard }
-    
-    static func make(parent: MyController) -> VirtualKeyboardController? {
-        
-        let name = "VirtualKeyboard"
-        let keyboard = VirtualKeyboardController.init(windowNibName: name)
-        keyboard.parent = parent
-        keyboard.c64 = parent.c64
-        
-        return keyboard
-    }
-    
+            
     func showSheet(autoClose: Bool) {
 
          self.autoClose = autoClose
@@ -63,13 +60,14 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
             keyView[tag] = window!.contentView!.viewWithTag(tag) as? NSButton
         }
 
-        updateImages()
+        // Compute key caps
+        updateImageCache()
+        refresh()
     }
     
     func windowWillClose(_ notification: Notification) {
     
         track()
-        releaseSpecialKeys()
     }
     
     func windowDidBecomeMain(_ notification: Notification) {
@@ -80,124 +78,79 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
     
     func refresh() {
         
-        if let win = window, win.isVisible {
-            
-            var needsUpdate = false
-            
-            if lshift != keyboard.leftShiftIsPressed() {
-                lshift = keyboard.leftShiftIsPressed()
-                needsUpdate = true
-            }
-            if rshift != keyboard.rightShiftIsPressed() {
-                rshift = keyboard.rightShiftIsPressed()
-                needsUpdate = true
-            }
-            if shiftLock != keyboard.shiftLockIsHoldDown() {
-                shiftLock = keyboard.shiftLockIsHoldDown()
-                needsUpdate = true
-            }
-            if control != keyboard.controlIsPressed() {
-                control = keyboard.controlIsPressed()
-                needsUpdate = true
-            }
-            if commodore != keyboard.commodoreIsPressed() {
-                commodore = keyboard.commodoreIsPressed()
-                needsUpdate = true
-            }
-            if lowercase != !keyboard.inUpperCaseMode() {
-                lowercase = !keyboard.inUpperCaseMode()
-                needsUpdate = true
-            }
-            
-            if needsUpdate {
-                updateImages()
+        track()
+        
+        var newModifiers: Modifier = []
+        
+        if keyboard.leftShiftIsPressed() { newModifiers.insert(.shift) }
+        if keyboard.rightShiftIsPressed() { newModifiers.insert(.shift) }
+        if keyboard.shiftLockIsHoldDown() { newModifiers.insert(.shift) }
+        if keyboard.controlIsPressed() { newModifiers.insert(.control) }
+        if keyboard.commodoreIsPressed() { newModifiers.insert(.commodore) }
+        if lowercase { newModifiers.insert(.lowercase) }
+        
+        if modifiers != newModifiers {
+            updateImageCache()
+        }
+        
+        for nr in 0 ... 65 {
+                        
+            if c64.keyboard.keyIsPressed(nr) {
+                keyView[nr]!.image = pressedKeyImage[nr]
+            } else {
+                keyView[nr]!.image = keyImage[nr]
             }
         }
     }
     
-    func updateImages() {
-                
+    func updateImageCache() {
+        
+        track()
+        
+        var modifier: Modifier = []
+        if lshift || rshift || shiftLock { modifier.insert(.shift) }
+        if commodore { modifier.insert(.commodore) }
+        if lowercase { modifier.insert(.lowercase) }
+
         for nr in 0 ... 65 {
             
-            let shiftLock = keyboard.shiftLockIsHoldDown()
-            
-            let pressed =
-                (nr == 17 && control) ||
-                (nr == 34 && shiftLock) ||
-                (nr == 49 && commodore) ||
-                (nr == 50 && lshift) ||
-                (nr == 61 && rshift)
-            let shift = lshift || rshift || shiftLock
+            let keycap = C64Key.lookupKeycap(for: nr, modifier: modifier)!
+            keyImage[nr] = keycap.image
+            pressedKeyImage[nr] = keycap.image?.copy() as? NSImage
+            pressedKeyImage[nr]?.pressed()
+        }
+    }
         
-            keyView[nr]!.image = C64Key(nr).image(pressed: pressed,
-                                                  shift: shift,
-                                                  control: control,
-                                                  commodore: commodore,
-                                                  lowercase: lowercase)
+    func pressKey(nr: Int) {
+        
+        track()
+        c64.keyboard.pressKey(nr)
+        // refresh()
+        
+        DispatchQueue.main.async {
+
+            track()
+
+            // usleep(useconds_t(5000))
+            self.c64.keyboard.releaseAll()
+            self.c64.keyboard.releaseRestoreKey()
+            self.refresh()
+        }
+        
+        if autoClose {
+            cancelAction(self)
         }
     }
     
-    func releaseSpecialKeys() {
-                
-        keyboard.releaseKey(atRow: C64Key.control.row, col: C64Key.control.col)
-        keyboard.releaseKey(atRow: C64Key.commodore.row, col: C64Key.commodore.col)
-        keyboard.releaseKey(atRow: C64Key.shift.row, col: C64Key.shift.col)
-        keyboard.releaseKey(atRow: C64Key.rightShift.row, col: C64Key.rightShift.col)
+    func holdKey(nr: Int) {
+        
+        c64.keyboard.pressKey(nr)
+        refresh()
     }
     
-    @IBAction func pressVirtualC64Key(_ sender: NSButton!) {
+    @IBAction func pressVirtualKey(_ sender: NSButton!) {
         
-        let tag = sender.tag
-        let key = C64Key(tag)
-        
-        func press() {
-            if key.nr == 31 {
-                keyboard.pressRestoreKey()
-            } else {
-                keyboard.pressKey(atRow: key.row, col: key.col)
-            }
-        }
-        func release() {
-            if key.nr == 31 {
-                keyboard.releaseRestoreKey()
-            } else {
-                keyboard.releaseKey(atRow: key.row, col: key.col)
-            }
-        }
-        
-        switch key.nr {
-            
-        case 34: // Shift Lock
-            shiftLock ? keyboard.unlockShift() : keyboard.lockShift()
-
-        case 17: // Control
-            control ? release() : press()
-
-        case 49: // Commodore
-            commodore ? release() : press()
-            
-        case 50: // Left Shift
-            lshift ? release() : press()
-            
-        case 61: // Right Shift
-            rshift ? release() : press()
-            
-        default:
-            
-            DispatchQueue.global().async {
-                
-                press()
-                usleep(useconds_t(20000))
-                release()
-                if self.autoClose {
-                    self.releaseSpecialKeys()
-                }
-            }
-            
-            if autoClose {
-                cancelAction(self)
-            }
-        }
+        // Not used at the moment
     }
     
     override func mouseDown(with event: NSEvent) {
@@ -205,6 +158,26 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
         track()
         if autoClose {
             cancelAction(self)
+        }
+    }
+}
+
+// Subclass of NSButton for the keys in the virtual keyboard.
+class KeycapButton: NSButton {
+    
+    override func mouseDown(with event: NSEvent) {
+        
+        if let controller = window?.delegate as? VirtualKeyboardController {
+            
+            controller.pressKey(nr: self.tag)
+        }
+    }
+    
+    override func rightMouseDown(with event: NSEvent) {
+    
+        if let controller = window?.delegate as? VirtualKeyboardController {
+            
+            controller.holdKey(nr: self.tag)
         }
     }
 }

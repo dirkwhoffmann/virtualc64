@@ -588,12 +588,20 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->keyboard->dump();
 }
+- (void) pressKey:(NSInteger)nr
+{
+    wrapper->keyboard->pressKey(nr);
+}
 - (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
     wrapper->keyboard->pressKey(row, col);
 }
 - (void) pressRestoreKey {
     wrapper->keyboard->pressRestoreKey();
+}
+- (void) releaseKey:(NSInteger)nr
+{
+    wrapper->keyboard->releaseKey(nr);
 }
 - (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
@@ -606,6 +614,14 @@ struct AnyC64FileWrapper { AnyFile *file; };
 - (void) releaseAll
 {
     wrapper->keyboard->releaseAll();
+}
+- (BOOL) keyIsPressed:(NSInteger)nr
+{
+    return wrapper->keyboard->keyIsPressed(nr);
+}
+- (BOOL) keyIsPressedAtRow:(NSInteger)row col:(NSInteger)col
+{
+    return wrapper->keyboard->keyIsPressed(row, col);
 }
 - (BOOL) leftShiftIsPressed
 {
@@ -625,7 +641,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 }
 - (BOOL) shiftLockIsHoldDown
 {
-    return wrapper->keyboard->shiftLockIsHoldDown();
+    return wrapper->keyboard->shiftLockIsPressed();
 }
 - (void) lockShift
 {

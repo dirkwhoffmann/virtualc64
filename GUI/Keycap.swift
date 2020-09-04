@@ -12,7 +12,7 @@ struct Keycap {
     var label1 = ""
     var label2 = ""
     var font = ""
-    var size = ""
+    var shape = ""
     var dark = false
     
     var stacked: Bool { return label2 != "" }
@@ -20,14 +20,14 @@ struct Keycap {
     var image: NSImage?
         
     init(_ label1: String, _ label2: String = "",
-         font: String = "", size: String = "100x100", dark: Bool = false) {
+         font: String = "", shape: String = "100x100", dark: Bool = false) {
         
         track()
         
         self.label1 = label1
         self.label2 = label2
         self.font = font
-        self.size = size
+        self.shape = shape
         self.dark = dark
         
         if label1 != "" { computeImage() }
@@ -43,7 +43,7 @@ struct Keycap {
         let tiny  = CGFloat(9)
         
         // Start with a background image
-        image = NSImage(named: "shape" + size)?.copy() as? NSImage
+        image = NSImage(named: "shape" + shape)?.copy() as? NSImage
         if dark { image?.darken() }
 
         /*

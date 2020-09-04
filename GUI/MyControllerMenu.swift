@@ -448,17 +448,21 @@ extension MyController: NSMenuItemValidation {
     // Action methods (Keyboard menu)
     //
 
-    /*
-    @IBAction func stickyKeyboardAction(_ sender: Any!) {
+    func openVirtualKeyboard() {
         
-        // Open the virtual keyboard as a window
-        let nibName = NSNib.Name("VirtualKeyboard")
-        // virtualKeyboard = VirtualKeyboardController.init(windowNibName: nibName)
-        // virtualKeyboard?.showWindow(withParent: self)
-        myAppDelegate.virtualKeyboard = VirtualKeyboardController.init(windowNibName: nibName)
-        myAppDelegate.virtualKeyboard?.showWindow(withParent: self)
+        track()
+        if virtualKeyboard == nil {
+            let name = NSNib.Name("VirtualKeyboard")
+            virtualKeyboard = VirtualKeyboardController.make(parent: self, nibName: name)
+        }
+        virtualKeyboard?.showSheet()
     }
-    */
+    
+    @IBAction func virtualKeyboardAction(_ sender: Any!) {
+        
+        track()
+        openVirtualKeyboard()
+    }
     
     @IBAction func clearKeyboardMatrixAction(_ sender: Any!) {
         

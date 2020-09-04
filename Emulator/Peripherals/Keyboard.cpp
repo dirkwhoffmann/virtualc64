@@ -97,6 +97,17 @@ Keyboard::getColumnValues(u8 rowMask)
     return result;
 }
 
+void
+Keyboard::pressKey(long nr)
+{
+    assert(nr < 66);
+    
+    switch (nr) {
+        case 34: toggleShiftLockKey(); return;
+        case 31: pressRestoreKey(); return;
+        default: pressKey(rowcol[nr][0], rowcol[nr][1]);
+    }
+}
 
 void
 Keyboard::pressKey(u8 row, u8 col)
@@ -116,6 +127,18 @@ Keyboard::pressRestoreKey()
     debug(KBD_DEBUG, "pressRestoreKey()\n");
 
     cpu.pullDownNmiLine(INTSRC_KBD);
+}
+
+void
+Keyboard::releaseKey(long nr)
+{
+    assert(nr < 66);
+
+    switch (nr) {
+        case 34: releaseShiftLockKey(); return;
+        case 31: releaseRestoreKey(); return;
+        default: releaseKey(rowcol[nr][0], rowcol[nr][1]);
+    }
 }
 
 void
@@ -151,6 +174,18 @@ Keyboard::releaseAll()
 }
 
 bool
+Keyboard::keyIsPressed(long nr)
+{
+    assert(nr < 66);
+    
+    switch (nr) {
+        case 34: return shiftLockIsPressed();
+        case 31: return restoreIsPressed();
+        default: return keyIsPressed(rowcol[nr][0], rowcol[nr][1]);
+    }
+}
+
+bool
 Keyboard::keyIsPressed(u8 row, u8 col)
 {
     // We can either check the row or column matrix
@@ -159,6 +194,12 @@ Keyboard::keyIsPressed(u8 row, u8 col)
     // assert(result1 == result2);
 
     return result1;
+}
+
+bool
+Keyboard::restoreIsPressed()
+{
+    return cpu.nmiLine & INTSRC_KBD;
 }
 
 void
@@ -177,3 +218,26 @@ Keyboard::inUpperCaseMode()
     return (vic.spypeek(0x18) & 0x02) == 0;
 }
 
+const u8
+Keyboard::rowcol[66][2] = {
+    
+    // First physical row
+    {7, 1}, {7, 0}, {7, 3}, {1, 0}, {1, 3}, {2, 0}, {2, 3}, {3, 0},
+    {3, 3}, {4, 0}, {4, 3}, {5, 0}, {5, 3}, {6, 0}, {6, 3}, {0, 0},
+    {0, 4},
+    
+    // Second physical row
+    {7, 2}, {7, 6}, {1, 1}, {1, 6}, {2, 1}, {2, 6}, {3, 1}, {3, 6},
+    {4, 1}, {4, 6}, {5, 1}, {5, 6}, {6, 1}, {6, 6}, {9, 9}, {0, 5},
+    
+    // Third physical row
+    {7, 7}, {9, 9}, {1, 2}, {1, 5}, {2, 2}, {2, 5}, {3, 2}, {3, 5},
+    {4, 2}, {4, 5}, {5, 2}, {5, 5}, {6, 2}, {6, 5}, {0, 1}, {0, 6},
+    
+    // Fourth physical row
+    {7, 5}, {1, 7}, {1, 4}, {2, 7}, {2, 4}, {3, 7}, {3, 4}, {4, 7},
+    {4, 4}, {5, 7}, {5, 4}, {6, 7}, {6, 4}, {0, 7}, {0, 2}, {0, 3},
+    
+    // Fifth physical row
+    {7, 4}
+};
