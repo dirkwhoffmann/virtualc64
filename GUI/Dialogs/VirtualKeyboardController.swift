@@ -10,7 +10,7 @@
 class VirtualKeyboardController: DialogController, NSWindowDelegate {
 
     var keyboard: KeyboardProxy { return c64.keyboard }
-
+    
     // Array holding a reference to the view of each key
     var keyView = Array(repeating: nil as NSButton?, count: 66)
 
@@ -22,18 +22,11 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
 
     // Currently set key modifiers
     var modifiers: Modifier = []
-    
-    // Remembers the state of some keys (true = currently pressed)
-    var lshift = false
-    var rshift = false
-    var shiftLock = false
-    var control = false
-    var commodore = false
-    
+        
     // Indicates if the lower case character set is currently in use
     var lowercase = false
     
-    /* Indicates if the window should close when a key is pressed. If the
+    /* Indicates if the window should be closed when a key is pressed. If the
      * virtual keyboard is opened as a sheet, this variable is set to true. If
      * it is opened as a seperate window, it is set to false.
      */
@@ -100,9 +93,7 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
         if keyboard.controlIsPressed() { newModifiers.insert(.control) }
         if keyboard.commodoreIsPressed() { newModifiers.insert(.commodore) }
         if lowercase { newModifiers.insert(.lowercase) }
-        
-        track("\(modifiers) \(newModifiers)")
-        
+                
         // Update images if the modifier flags have changed
         if modifiers != newModifiers {
             modifiers = newModifiers
@@ -142,7 +133,7 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
     
     func holdKey(nr: Int) {
         
-        c64.keyboard.pressKey(nr)
+        c64.keyboard.toggleKey(nr)
         refresh()
     }
     
@@ -160,7 +151,7 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
     }
 }
 
-// Subclass of NSButton for the keys in the virtual keyboard.
+// Subclass of NSButton for the keys in the virtual keyboard
 class KeycapButton: NSButton {
     
     override func mouseDown(with event: NSEvent) {

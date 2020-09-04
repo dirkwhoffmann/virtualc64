@@ -394,9 +394,9 @@ extension C64Key {
 extension C64Key {
     
     static var map: [Int: [Modifier: Keycap]] = [:]
-        
+    
     static func lookupKeycap(for key: Int, modifier: Modifier) -> Keycap? {
-                
+        
         // Lookup the keycap for the provided key
         if C64Key.map.isEmpty { initMap() }
         guard let map = C64Key.map[key] else { fatalError() }
@@ -414,7 +414,10 @@ extension C64Key {
         if modifier.contains(.shift) {
             if let keycap = map[.shift] { return keycap }
         }
-        
+        if modifier.contains(.control) {
+            if let keycap = map[.control] { return keycap }
+        }
+
         // Return the generic keycap
         let none: Modifier = []
         return map[none]
@@ -429,161 +432,171 @@ extension C64Key {
         //
         
         C64Key.map[16] = [ []: Keycap.init("f 1", shape: "150x100", dark: true),
-                            [.shift]: Keycap.init("f 2", shape: "150x100", dark: true) ]
+                           [.shift]: Keycap.init("f 2", shape: "150x100", dark: true) ]
         
         C64Key.map[32] = [ []: Keycap.init("f 3", shape: "150x100", dark: true),
-                            [.shift]: Keycap.init("f 4", shape: "150x100", dark: true) ]
+                           [.shift]: Keycap.init("f 4", shape: "150x100", dark: true) ]
         
         C64Key.map[48] = [ []: Keycap.init("f 5", shape: "150x100", dark: true),
-                            [.shift]: Keycap.init("f 6", shape: "150x100", dark: true) ]
+                           [.shift]: Keycap.init("f 6", shape: "150x100", dark: true) ]
         
         C64Key.map[64] = [ []: Keycap.init("f 7", shape: "150x100", dark: true),
-                            [.shift]: Keycap.init("f 8", shape: "150x100", dark: true) ]
+                           [.shift]: Keycap.init("f 8", shape: "150x100", dark: true) ]
         
         //
         // First row
         //
         
         C64Key.map[0] = [ []: Keycap.init("\u{2190}" /* left arrow */) ]
-                
+        
         C64Key.map[1] = [ []: Keycap.init("1"),
-                           [.shift]: Keycap.init("!"),
-                           [.commodore]: Keycap.init("") ]
-                
+                          [.shift]: Keycap.init("!"),
+                          [.commodore]: Keycap.init(""),
+                          [.control]: Keycap.init("BLK") ]
+        
         C64Key.map[2] = [ []: Keycap.init("2"),
-                           [.shift]: Keycap.init("\""),
-                           [.commodore]: Keycap.init("") ]
-                
+                          [.shift]: Keycap.init("\""),
+                          [.commodore]: Keycap.init(""),
+                          [.control]: Keycap.init("WHT") ]
+        
         C64Key.map[3] = [ []: Keycap.init("3"),
-                           [.shift]: Keycap.init("#"),
-                           [.commodore]: Keycap.init("") ]
-                
+                          [.shift]: Keycap.init("#"),
+                          [.commodore]: Keycap.init(""),
+                          [.control]: Keycap.init("RED") ]
+        
         C64Key.map[4] = [ []: Keycap.init("4"),
-                           [.shift]: Keycap.init("$"),
-                           [.commodore]: Keycap.init("") ]
+                          [.shift]: Keycap.init("$"),
+                          [.commodore]: Keycap.init(""),
+                          [.control]: Keycap.init("CYN") ]
         
         C64Key.map[5] = [ []: Keycap.init("5"),
-                           [.shift]: Keycap.init("%"),
-                           [.commodore]: Keycap.init("") ]
-                
+                          [.shift]: Keycap.init("%"),
+                          [.commodore]: Keycap.init(""),
+                          [.control]: Keycap.init("PUR") ]
+        
         C64Key.map[6] = [ []: Keycap.init("6"),
-                           [.shift]: Keycap.init("&"),
-                           [.commodore]: Keycap.init("") ]
-                
+                          [.shift]: Keycap.init("&"),
+                          [.commodore]: Keycap.init(""),
+                          [.control]: Keycap.init("GRN") ]
+        
         C64Key.map[7] = [ []: Keycap.init("7"),
-                           [.shift]: Keycap.init("'"),
-                           [.commodore]: Keycap.init("") ]
+                          [.shift]: Keycap.init("'"),
+                          [.commodore]: Keycap.init(""),
+                          [.control]: Keycap.init("BLU") ]
         
         C64Key.map[8] = [ []: Keycap.init("8"),
-                           [.shift]: Keycap.init("("),
-                           [.commodore]: Keycap.init("") ]
-                
-        C64Key.map[9] = [ []: Keycap.init("9"),
-                           [.shift]: Keycap.init(")"),
-                           [.commodore]: Keycap.init(")") ]
+                          [.shift]: Keycap.init("("),
+                          [.commodore]: Keycap.init(""),
+                          [.control]: Keycap.init("YEL") ]
         
-        C64Key.map[10] = [ []: Keycap.init("0") ]
+        C64Key.map[9] = [ []: Keycap.init("9"),
+                          [.shift]: Keycap.init(")"),
+                          [.commodore]: Keycap.init(")"),
+                          [.control]: Keycap.init("RVS", "ON") ]
+        
+        C64Key.map[10] = [ []: Keycap.init("0"),
+                           [.control]: Keycap.init("RVS", "OFF") ]
         
         C64Key.map[11] = [ []: Keycap.init("+"),
-                            [.shift]: Keycap.init("\u{253c}", font: "C64"),
-                            [.commodore]: Keycap.init("\u{2592}", font: "C64") ]
+                           [.shift]: Keycap.init("\u{253c}", font: "C64"),
+                           [.commodore]: Keycap.init("\u{2592}", font: "C64") ]
         
         C64Key.map[12] = [ []: Keycap.init("-"),
-                            [.shift]: Keycap.init("\u{2502}", font: "C64"),
-                            [.commodore]: Keycap.init("\u{e0dc}", font: "C64") ]
-    
+                           [.shift]: Keycap.init("\u{2502}", font: "C64"),
+                           [.commodore]: Keycap.init("\u{e0dc}", font: "C64") ]
+        
         C64Key.map[13] = [ []: Keycap.init("\u{00a3}" /* Pound */),
-                            [.shift]: Keycap.init("\u{25e4}", font: "C64"),
-                            [.shift,.lowercase]: Keycap.init("\u{e1e9}", font: "C64"),
-                            [.commodore]: Keycap.init("\u{e0a8}", font: "C64") ]
-    
+                           [.shift]: Keycap.init("\u{25e4}", font: "C64"),
+                           [.shift,.lowercase]: Keycap.init("\u{e1e9}", font: "C64"),
+                           [.commodore]: Keycap.init("\u{e0a8}", font: "C64") ]
+        
         C64Key.map[14] = [ []: Keycap.init("HOME"),
-                            [.shift]: Keycap.init("CLR") ]
-
+                           [.shift]: Keycap.init("CLR") ]
+        
         C64Key.map[15] = [ []: Keycap.init("DEL"),
-                            [.shift]: Keycap.init("INST") ]
-
+                           [.shift]: Keycap.init("INST") ]
+        
         //
         // Second row
         //
         
         C64Key.map[17] = [ []: Keycap.init("C T R L", shape: "150x100") ]
-    
+        
         C64Key.map[18] = [ []: Keycap.init("Q"),
-                            [.shift]: Keycap.init("\u{2022}", font: "C64"),
-                            [.lowercase]: Keycap.init("q"),
-                            [.shift,.lowercase]: Keycap.init("Q"),
-                            [.commodore]: Keycap.init("\u{251c}", font: "C64") ]
+                           [.shift]: Keycap.init("\u{2022}", font: "C64"),
+                           [.lowercase]: Keycap.init("q"),
+                           [.shift,.lowercase]: Keycap.init("Q"),
+                           [.commodore]: Keycap.init("\u{251c}", font: "C64") ]
         
         C64Key.map[19] = [ []: Keycap.init("W"),
-                            [.shift]: Keycap.init("\u{25cb}", font: "C64"),
-                            [.lowercase]: Keycap.init("w"),
-                            [.shift,.lowercase]: Keycap.init("W"),
-                            [.commodore]: Keycap.init("\u{2524}", font: "C64") ]
+                           [.shift]: Keycap.init("\u{25cb}", font: "C64"),
+                           [.lowercase]: Keycap.init("w"),
+                           [.shift,.lowercase]: Keycap.init("W"),
+                           [.commodore]: Keycap.init("\u{2524}", font: "C64") ]
         
         C64Key.map[20] = [ []: Keycap.init("E"),
-                            [.shift]: Keycap.init("\u{e0c5}", font: "C64"),
-                            [.lowercase]: Keycap.init("e"),
-                            [.shift,.lowercase]: Keycap.init("E"),
-                            [.commodore]: Keycap.init("\u{2534}", font: "C64") ]
-                
+                           [.shift]: Keycap.init("\u{e0c5}", font: "C64"),
+                           [.lowercase]: Keycap.init("e"),
+                           [.shift,.lowercase]: Keycap.init("E"),
+                           [.commodore]: Keycap.init("\u{2534}", font: "C64") ]
+        
         C64Key.map[21] = [ []: Keycap.init("R"),
-                            [.shift]: Keycap.init("\u{e072}", font: "C64"),
-                            [.lowercase]: Keycap.init("r"),
-                            [.shift,.lowercase]: Keycap.init("R"),
-                            [.commodore]: Keycap.init("\u{252c}", font: "C64") ]
+                           [.shift]: Keycap.init("\u{e072}", font: "C64"),
+                           [.lowercase]: Keycap.init("r"),
+                           [.shift,.lowercase]: Keycap.init("R"),
+                           [.commodore]: Keycap.init("\u{252c}", font: "C64") ]
         
         C64Key.map[22] = [ []: Keycap.init("T"),
-                            [.shift]: Keycap.init("\u{e0d4}", font: "C64"),
-                            [.lowercase]: Keycap.init("t"),
-                            [.shift,.lowercase]: Keycap.init("T"),
-                            [.commodore]: Keycap.init("\u{2594}", font: "C64") ]
-                
+                           [.shift]: Keycap.init("\u{e0d4}", font: "C64"),
+                           [.lowercase]: Keycap.init("t"),
+                           [.shift,.lowercase]: Keycap.init("T"),
+                           [.commodore]: Keycap.init("\u{2594}", font: "C64") ]
+        
         C64Key.map[23] = [ []: Keycap.init("Y"),
-                            [.shift]: Keycap.init("\u{e0d9}", font: "C64"),
-                            [.lowercase]: Keycap.init("y"),
-                            [.shift,.lowercase]: Keycap.init("Y"),
-                            [.commodore]: Keycap.init("\u{e0b7}", font: "C64") ]
-                
+                           [.shift]: Keycap.init("\u{e0d9}", font: "C64"),
+                           [.lowercase]: Keycap.init("y"),
+                           [.shift,.lowercase]: Keycap.init("Y"),
+                           [.commodore]: Keycap.init("\u{e0b7}", font: "C64") ]
+        
         C64Key.map[24] = [ []: Keycap.init("U"),
-                            [.shift]: Keycap.init("\u{256d}", font: "C64"),
-                            [.lowercase]: Keycap.init("u"),
-                            [.shift,.lowercase]: Keycap.init("U"),
-                            [.commodore]: Keycap.init("\u{e0b8}", font: "C64") ]
+                           [.shift]: Keycap.init("\u{256d}", font: "C64"),
+                           [.lowercase]: Keycap.init("u"),
+                           [.shift,.lowercase]: Keycap.init("U"),
+                           [.commodore]: Keycap.init("\u{e0b8}", font: "C64") ]
         
         C64Key.map[25] = [ []: Keycap.init("I"),
-                            [.shift]: Keycap.init("\u{256e}", font: "C64"),
-                            [.lowercase]: Keycap.init("i"),
-                            [.shift,.lowercase]: Keycap.init("I"),
-                            [.commodore]: Keycap.init("\u{2584}", font: "C64") ]
+                           [.shift]: Keycap.init("\u{256e}", font: "C64"),
+                           [.lowercase]: Keycap.init("i"),
+                           [.shift,.lowercase]: Keycap.init("I"),
+                           [.commodore]: Keycap.init("\u{2584}", font: "C64") ]
         
         C64Key.map[26] = [ []: Keycap.init("O"),
-                            [.shift]: Keycap.init("\u{e0cf}", font: "C64"),
-                            [.lowercase]: Keycap.init("o"),
-                            [.shift,.lowercase]: Keycap.init("O"),
-                            [.commodore]: Keycap.init("\u{2583}", font: "C64") ]
+                           [.shift]: Keycap.init("\u{e0cf}", font: "C64"),
+                           [.lowercase]: Keycap.init("o"),
+                           [.shift,.lowercase]: Keycap.init("O"),
+                           [.commodore]: Keycap.init("\u{2583}", font: "C64") ]
         
         C64Key.map[27] = [ []: Keycap.init("P"),
-                            [.shift]: Keycap.init("\u{e0d0}", font: "C64"),
-                            [.lowercase]: Keycap.init("p"),
-                            [.shift,.lowercase]: Keycap.init("P"),
-                            [.commodore]: Keycap.init("\u{2582}", font: "C64") ]
-                
+                           [.shift]: Keycap.init("\u{e0d0}", font: "C64"),
+                           [.lowercase]: Keycap.init("p"),
+                           [.shift,.lowercase]: Keycap.init("P"),
+                           [.commodore]: Keycap.init("\u{2582}", font: "C64") ]
+        
         C64Key.map[28] = [ []: Keycap.init("@"),
-                            [.shift]: Keycap.init("\u{e0ba}", font: "C64"),
-                            [.shift,.lowercase]: Keycap.init("\u{e1fa}", font: "C64"),
-                            [.commodore]: Keycap.init("\u{2581}", font: "C64") ]
+                           [.shift]: Keycap.init("\u{e0ba}", font: "C64"),
+                           [.shift,.lowercase]: Keycap.init("\u{e1fa}", font: "C64"),
+                           [.commodore]: Keycap.init("\u{2581}", font: "C64") ]
         
         C64Key.map[29] = [ []: Keycap.init("*"),
-                            [.shift]: Keycap.init("\u{2500}", font: "C64"),
-                            [.commodore]: Keycap.init("\u{25e5}", font: "C64"),
-                            [.commodore,.lowercase]: Keycap.init("\u{e17f}", font: "C64") ]
-                
+                           [.shift]: Keycap.init("\u{2500}", font: "C64"),
+                           [.commodore]: Keycap.init("\u{25e5}", font: "C64"),
+                           [.commodore,.lowercase]: Keycap.init("\u{e17f}", font: "C64") ]
+        
         C64Key.map[30] = [ []: Keycap.init("\u{2191}"),
-                            [.shift]: Keycap.init("\u{03C0}"),
-                            [.commodore]: Keycap.init("\u{03C0}"),
-                            [.lowercase]: Keycap.init("\u{e1de}", font: "C64") ]
-                
+                           [.shift]: Keycap.init("\u{03C0}"),
+                           [.commodore]: Keycap.init("\u{03C0}"),
+                           [.lowercase]: Keycap.init("\u{e1de}", font: "C64") ]
+        
         C64Key.map[31] = [ []: Keycap.init("RESTORE", shape: "150x100") ]
         
         //
@@ -591,145 +604,145 @@ extension C64Key {
         //
         
         C64Key.map[33] = [ []: Keycap.init("RUN", "STOP") ]
-
+        
         C64Key.map[34] = [ []: Keycap.init("SHIFT", "LOCK") ]
         
         C64Key.map[35] = [ []: Keycap.init("A"),
-                            [.shift]: Keycap.init("\u{2660}", font: "C64"),
-                            [.lowercase]: Keycap.init("a"),
-                            [.shift,.lowercase]: Keycap.init("A"),
-                            [.commodore]: Keycap.init("\u{250c}", font: "C64") ]
+                           [.shift]: Keycap.init("\u{2660}", font: "C64"),
+                           [.lowercase]: Keycap.init("a"),
+                           [.shift,.lowercase]: Keycap.init("A"),
+                           [.commodore]: Keycap.init("\u{250c}", font: "C64") ]
         
         C64Key.map[36] = [ []: Keycap.init("S"),
-                            [.shift]: Keycap.init("\u{2665}", font: "C64"),
-                            [.lowercase]: Keycap.init("s"),
-                            [.shift,.lowercase]: Keycap.init("S"),
-                            [.commodore]: Keycap.init("\u{2510}", font: "C64") ]
-                
+                           [.shift]: Keycap.init("\u{2665}", font: "C64"),
+                           [.lowercase]: Keycap.init("s"),
+                           [.shift,.lowercase]: Keycap.init("S"),
+                           [.commodore]: Keycap.init("\u{2510}", font: "C64") ]
+        
         C64Key.map[37] = [ []: Keycap.init("D"),
-                            [.shift]: Keycap.init("\u{e064}", font: "C64"),
-                            [.lowercase]: Keycap.init("d"),
-                            [.shift,.lowercase]: Keycap.init("D"),
-                            [.commodore]: Keycap.init("\u{2597}", font: "C64") ]
+                           [.shift]: Keycap.init("\u{e064}", font: "C64"),
+                           [.lowercase]: Keycap.init("d"),
+                           [.shift,.lowercase]: Keycap.init("D"),
+                           [.commodore]: Keycap.init("\u{2597}", font: "C64") ]
         
         C64Key.map[38] = [ []: Keycap.init("F"),
-                            [.shift]: Keycap.init("\u{e0c6}", font: "C64"),
-                            [.lowercase]: Keycap.init("f"),
-                            [.shift,.lowercase]: Keycap.init("F"),
-                            [.commodore]: Keycap.init("\u{2596}", font: "C64") ]
-                
+                           [.shift]: Keycap.init("\u{e0c6}", font: "C64"),
+                           [.lowercase]: Keycap.init("f"),
+                           [.shift,.lowercase]: Keycap.init("F"),
+                           [.commodore]: Keycap.init("\u{2596}", font: "C64") ]
+        
         C64Key.map[39] = [ []: Keycap.init("G"),
-                            [.shift]: Keycap.init("\u{e0c7}", font: "C64"),
-                            [.lowercase]: Keycap.init("g"),
-                            [.shift,.lowercase]: Keycap.init("G"),
-                            [.commodore]: Keycap.init("\u{258e}", font: "C64") ]
-                
+                           [.shift]: Keycap.init("\u{e0c7}", font: "C64"),
+                           [.lowercase]: Keycap.init("g"),
+                           [.shift,.lowercase]: Keycap.init("G"),
+                           [.commodore]: Keycap.init("\u{258e}", font: "C64") ]
+        
         C64Key.map[40] = [ []: Keycap.init("H"),
-                            [.shift]: Keycap.init("\u{e0c8}", font: "C64"),
-                            [.lowercase]: Keycap.init("h"),
-                            [.shift,.lowercase]: Keycap.init("H"),
-                            [.commodore]: Keycap.init("\u{258e}", font: "C64") ]
+                           [.shift]: Keycap.init("\u{e0c8}", font: "C64"),
+                           [.lowercase]: Keycap.init("h"),
+                           [.shift,.lowercase]: Keycap.init("H"),
+                           [.commodore]: Keycap.init("\u{258e}", font: "C64") ]
         
         C64Key.map[41] = [ []: Keycap.init("J"),
-                            [.shift]: Keycap.init("\u{2570}", font: "C64"),
-                            [.lowercase]: Keycap.init("j"),
-                            [.shift,.lowercase]: Keycap.init("J"),
-                            [.commodore]: Keycap.init("\u{258d}", font: "C64") ]
-
+                           [.shift]: Keycap.init("\u{2570}", font: "C64"),
+                           [.lowercase]: Keycap.init("j"),
+                           [.shift,.lowercase]: Keycap.init("J"),
+                           [.commodore]: Keycap.init("\u{258d}", font: "C64") ]
+        
         C64Key.map[42] = [ []: Keycap.init("K"),
-                            [.shift]: Keycap.init("\u{256f}", font: "C64"),
-                            [.lowercase]: Keycap.init("k"),
-                            [.shift,.lowercase]: Keycap.init("K"),
-                            [.commodore]: Keycap.init("\u{258c}", font: "C64") ]
-
+                           [.shift]: Keycap.init("\u{256f}", font: "C64"),
+                           [.lowercase]: Keycap.init("k"),
+                           [.shift,.lowercase]: Keycap.init("K"),
+                           [.commodore]: Keycap.init("\u{258c}", font: "C64") ]
+        
         C64Key.map[43] = [ []: Keycap.init("L"),
-                            [.shift]: Keycap.init("\u{e0cc}", font: "C64"),
-                            [.lowercase]: Keycap.init("l"),
-                            [.shift,.lowercase]: Keycap.init("L"),
-                            [.commodore]: Keycap.init("\u{e0b6}", font: "C64") ]
+                           [.shift]: Keycap.init("\u{e0cc}", font: "C64"),
+                           [.lowercase]: Keycap.init("l"),
+                           [.shift,.lowercase]: Keycap.init("L"),
+                           [.commodore]: Keycap.init("\u{e0b6}", font: "C64") ]
         
         C64Key.map[44] = [ []: Keycap.init(":"),
-                            [.shift]: Keycap.init("["),
-                            [.commodore]: Keycap.init("[") ]
-
+                           [.shift]: Keycap.init("["),
+                           [.commodore]: Keycap.init("[") ]
+        
         C64Key.map[45] = [ []: Keycap.init(";"),
-                            [.shift]: Keycap.init("]"),
-                            [.commodore]: Keycap.init("]") ]
-
+                           [.shift]: Keycap.init("]"),
+                           [.commodore]: Keycap.init("]") ]
+        
         C64Key.map[46] = [ []: Keycap.init("=") ]
         
         C64Key.map[47] = [ []: Keycap.init("RETURN", shape: "200x100") ]
-
+        
         //
         // Fourth row
         //
-
+        
         C64Key.map[49] = [ []: Keycap.init(" ", shape: "Commodore") ]
-
+        
         C64Key.map[50] = [ []: Keycap.init("SHIFT", shape: "150x100") ]
-
+        
         C64Key.map[51] = [ []: Keycap.init("Z"),
-                            [.shift]: Keycap.init("\u{2666}", font: "C64"),
-                            [.lowercase]: Keycap.init("z"),
-                            [.shift,.lowercase]: Keycap.init("Z"),
-                            [.commodore]: Keycap.init("\u{2514}", font: "C64") ]
-                
+                           [.shift]: Keycap.init("\u{2666}", font: "C64"),
+                           [.lowercase]: Keycap.init("z"),
+                           [.shift,.lowercase]: Keycap.init("Z"),
+                           [.commodore]: Keycap.init("\u{2514}", font: "C64") ]
+        
         C64Key.map[52] = [ []: Keycap.init("X"),
-                            [.shift]: Keycap.init("\u{2663}", font: "C64"),
-                            [.lowercase]: Keycap.init("x"),
-                            [.shift,.lowercase]: Keycap.init("X"),
-                            [.commodore]: Keycap.init("\u{2518}", font: "C64") ]
-
+                           [.shift]: Keycap.init("\u{2663}", font: "C64"),
+                           [.lowercase]: Keycap.init("x"),
+                           [.shift,.lowercase]: Keycap.init("X"),
+                           [.commodore]: Keycap.init("\u{2518}", font: "C64") ]
+        
         C64Key.map[53] = [ []: Keycap.init("C"),
-                            [.shift]: Keycap.init("\u{2500}", font: "C64"),
-                            [.lowercase]: Keycap.init("c"),
-                            [.shift,.lowercase]: Keycap.init("C"),
-                            [.commodore]: Keycap.init("\u{259d}", font: "C64") ]
+                           [.shift]: Keycap.init("\u{2500}", font: "C64"),
+                           [.lowercase]: Keycap.init("c"),
+                           [.shift,.lowercase]: Keycap.init("C"),
+                           [.commodore]: Keycap.init("\u{259d}", font: "C64") ]
         
         C64Key.map[54] = [ []: Keycap.init("V"),
-                            [.shift]: Keycap.init("\u{2573}", font: "C64"),
-                            [.lowercase]: Keycap.init("v"),
-                            [.shift,.lowercase]: Keycap.init("V"),
-                            [.commodore]: Keycap.init("\u{2598}", font: "C64") ]
-
+                           [.shift]: Keycap.init("\u{2573}", font: "C64"),
+                           [.lowercase]: Keycap.init("v"),
+                           [.shift,.lowercase]: Keycap.init("V"),
+                           [.commodore]: Keycap.init("\u{2598}", font: "C64") ]
+        
         C64Key.map[55] = [ []: Keycap.init("B"),
-                            [.shift]: Keycap.init("\u{2502}", font: "C64"),
-                            [.lowercase]: Keycap.init("b"),
-                            [.shift,.lowercase]: Keycap.init("B"),
-                            [.commodore]: Keycap.init("\u{259a}", font: "C64") ]
-
+                           [.shift]: Keycap.init("\u{2502}", font: "C64"),
+                           [.lowercase]: Keycap.init("b"),
+                           [.shift,.lowercase]: Keycap.init("B"),
+                           [.commodore]: Keycap.init("\u{259a}", font: "C64") ]
+        
         C64Key.map[56] = [ []: Keycap.init("N"),
-                            [.shift]: Keycap.init("\u{2571}", font: "C64"),
-                            [.lowercase]: Keycap.init("n"),
-                            [.shift,.lowercase]: Keycap.init("N"),
-                            [.commodore]: Keycap.init("\u{e0aa}", font: "C64") ]
+                           [.shift]: Keycap.init("\u{2571}", font: "C64"),
+                           [.lowercase]: Keycap.init("n"),
+                           [.shift,.lowercase]: Keycap.init("N"),
+                           [.commodore]: Keycap.init("\u{e0aa}", font: "C64") ]
         
         C64Key.map[57] = [ []: Keycap.init("M"),
-                            [.shift]: Keycap.init("\u{2572}", font: "C64"),
-                            [.lowercase]: Keycap.init("m"),
-                            [.shift,.lowercase]: Keycap.init("N"),
-                            [.commodore]: Keycap.init("\u{e0a7}", font: "C64") ]
-
+                           [.shift]: Keycap.init("\u{2572}", font: "C64"),
+                           [.lowercase]: Keycap.init("m"),
+                           [.shift,.lowercase]: Keycap.init("N"),
+                           [.commodore]: Keycap.init("\u{e0a7}", font: "C64") ]
+        
         C64Key.map[58] = [ []: Keycap.init(","),
-                            [.shift]: Keycap.init("<"),
-                            [.commodore]: Keycap.init("<") ]
-
+                           [.shift]: Keycap.init("<"),
+                           [.commodore]: Keycap.init("<") ]
+        
         C64Key.map[59] = [ []: Keycap.init("."),
-                            [.shift]: Keycap.init(">"),
-                            [.commodore]: Keycap.init(">") ]
+                           [.shift]: Keycap.init(">"),
+                           [.commodore]: Keycap.init(">") ]
         
         C64Key.map[60] = [ []: Keycap.init("/"),
-                            [.shift]: Keycap.init("?"),
-                            [.commodore]: Keycap.init("?") ]
+                           [.shift]: Keycap.init("?"),
+                           [.commodore]: Keycap.init("?") ]
         
         C64Key.map[61] = [ []: Keycap.init("SHIFT", shape: "150x100") ]
-
+        
         C64Key.map[62] = [ []: Keycap.init("\u{21e9}"),
-                            [.shift]: Keycap.init("\u{21e7}") ]
-
+                           [.shift]: Keycap.init("\u{21e7}") ]
+        
         C64Key.map[63] = [ []: Keycap.init("\u{21e8}"),
-                            [.shift]: Keycap.init("\u{21e6}") ]
-
+                           [.shift]: Keycap.init("\u{21e6}") ]
+        
         //
         // Fifth row
         //

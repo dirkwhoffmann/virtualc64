@@ -229,9 +229,8 @@ extension NSImage {
         return texture
     }
     
-    func imprint(_ text: String, dx: CGFloat, dy: CGFloat, fontSize: CGFloat) {
+    func imprint(_ text: String, dx: CGFloat, dy: CGFloat, font: NSFont) {
         
-        let font = NSFont.systemFont(ofSize: fontSize, weight: .medium)
         let attributes: [NSAttributedString.Key: Any] = [
             .font: font,
             .foregroundColor: NSColor.secondaryLabelColor
@@ -245,12 +244,11 @@ extension NSImage {
     
         lockFocus()
         nsstr.draw(at: CGPoint(x: px, y: py), withAttributes: attributes)
-        // text.draw(in: textRect, withAttributes: attributes)
         unlockFocus()
     }
     
-    func imprint(_ c: Character, dx: CGFloat, dy: CGFloat, fontSize: CGFloat) {
+    func imprint(_ c: Character, dx: CGFloat, dy: CGFloat, font: NSFont) {
 
-        return imprint(String(c), dx: dx, dy: dy, fontSize: fontSize)
+        return imprint(String(c), dx: dx, dy: dy, font: font)
     }
 }

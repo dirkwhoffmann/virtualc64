@@ -9,6 +9,11 @@
 
 struct Keycap {
     
+    // Fonts
+    static let proMono = NSFont.init(name: "C64ProMono", size: 9)
+    static let systemLarge = NSFont.systemFont(ofSize: 15)
+    static let systemSmall = NSFont.systemFont(ofSize: 9)
+
     var label1 = ""
     var label2 = ""
     var font = ""
@@ -30,44 +35,33 @@ struct Keycap {
         self.shape = shape
         self.dark = dark
         
-        if label1 != "" { computeImage() }
+        computeImage()
     }
     
     mutating func computeImage() {
                 
         track()
-        
-        // Key label font sizes
-        let large = CGFloat(15)
-        let small = CGFloat(10)
-        let tiny  = CGFloat(9)
-        
+                
         // Start with a background image
         image = NSImage(named: "shape" + shape)?.copy() as? NSImage
         if dark { image?.darken() }
-
-        /*
-         if fontname == "" {
-         font = NSFont.systemFont(ofSize: 13)
-         yoffset = -6
-         } else {
-         font = NSFont.init(name: "C64ProMono", size: 9)!
-         yoffset = -9
-         }
-         */
-                
+                        
         if stacked {
             
             // Generate a stacked label
-            let size = tiny
-            image?.imprint(label1, dx: 0, dy: 5, fontSize: size)
-            image?.imprint(label2, dx: 0, dy: -5, fontSize: size)
+            image?.imprint(label1, dx: 0, dy: 5, font: Keycap.systemSmall)
+            image?.imprint(label2, dx: 0, dy: -5, font: Keycap.systemSmall)
             
         } else {
             
             // Generate a standard label
-            let size = (label1.count == 1) ? large : small
-            image?.imprint(label1, dx: 0, dy: 0, fontSize: size)
+            if font == "C64" {
+                image?.imprint(label1, dx: 0, dy: 0, font: Keycap.proMono!)
+            } else if label1.count == 1 {
+                image?.imprint(label1, dx: 0, dy: 0, font: Keycap.systemLarge)
+            } else {
+                image?.imprint(label1, dx: 0, dy: 0, font: Keycap.systemSmall)
+            }
         }
     }
 }
