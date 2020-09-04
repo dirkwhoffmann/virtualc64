@@ -228,4 +228,26 @@ extension NSImage {
         free(data)
         return texture
     }
+    
+    func imprint(text: String, x: CGFloat, y: CGFloat, fontSize: CGFloat) {
+        
+        let font = NSFont.systemFont(ofSize: fontSize)
+        
+        let w = size.width
+        let h = size.height
+        
+        let textRect = CGRect(x: x, y: -y, width: w - x, height: h - y)
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .foregroundColor: NSColor.secondaryLabelColor
+        ]
+        lockFocus()
+        text.draw(in: textRect, withAttributes: attributes)
+        unlockFocus()
+    }
+    
+    func imprint(character c: Character, x: CGFloat, y: CGFloat, fontSize: CGFloat) {
+
+        return imprint(text: String(c), x: x, y: y, fontSize: fontSize)
+    }
 }
