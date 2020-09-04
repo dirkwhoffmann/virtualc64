@@ -20,7 +20,7 @@ struct Keycap {
     var image: NSImage?
         
     init(_ label1: String, _ label2: String = "",
-         font: String = "", size: String = "100", dark: Bool = false) {
+         font: String = "", size: String = "100x100", dark: Bool = false) {
         
         track()
         
@@ -43,7 +43,7 @@ struct Keycap {
         let tiny  = CGFloat(9)
         
         // Start with a background image
-        image = NSImage(named: "shape" + size + "x100")?.copy() as? NSImage
+        image = NSImage(named: "shape" + size)?.copy() as? NSImage
         if dark { image?.darken() }
 
         /*
@@ -56,20 +56,18 @@ struct Keycap {
          }
          */
                 
-        let xoffset = (label1 == "RESTORE") ? CGFloat(-6) :  CGFloat(0)
-
         if stacked {
             
             // Generate a stacked label
             let size = tiny
-            image?.imprint(text: label1, x: 6, y: 2, fontSize: size)
-            image?.imprint(text: label2, x: 6, y: 9, fontSize: size)
+            image?.imprint(label1, dx: 0, dy: 5, fontSize: size)
+            image?.imprint(label2, dx: 0, dy: -5, fontSize: size)
             
         } else {
             
             // Generate a standard label
             let size = (label1.count == 1) ? large : small
-            image?.imprint(text: label1, x: 8 + xoffset, y: 2, fontSize: size)
+            image?.imprint(label1, dx: 0, dy: 0, fontSize: size)
         }
     }
 }

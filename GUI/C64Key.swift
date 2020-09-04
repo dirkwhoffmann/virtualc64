@@ -663,17 +663,17 @@ extension C64Key {
         // Function keys
         //
         
-        C64Key.map2[16] = [ []: Keycap.init("f 1", size: "150", dark: true),
-                            [.shift]: Keycap.init("f 2", size: "150", dark: true) ]
+        C64Key.map2[16] = [ []: Keycap.init("f 1", size: "150x100", dark: true),
+                            [.shift]: Keycap.init("f 2", size: "150x100", dark: true) ]
         
-        C64Key.map2[32] = [ []: Keycap.init("f 3", size: "150", dark: true),
-                            [.shift]: Keycap.init("f 4", size: "150", dark: true) ]
+        C64Key.map2[32] = [ []: Keycap.init("f 3", size: "150x100", dark: true),
+                            [.shift]: Keycap.init("f 4", size: "150x100", dark: true) ]
         
-        C64Key.map2[48] = [ []: Keycap.init("f 5", size: "150", dark: true),
-                            [.shift]: Keycap.init("f 6", size: "150", dark: true) ]
+        C64Key.map2[48] = [ []: Keycap.init("f 5", size: "150x100", dark: true),
+                            [.shift]: Keycap.init("f 6", size: "150x100", dark: true) ]
         
-        C64Key.map2[64] = [ []: Keycap.init("f 7", size: "150", dark: true),
-                            [.shift]: Keycap.init("f 8", size: "150", dark: true) ]
+        C64Key.map2[64] = [ []: Keycap.init("f 7", size: "150x100", dark: true),
+                            [.shift]: Keycap.init("f 8", size: "150x100", dark: true) ]
         
         assign(16, DEFAULT, "f 1")
         assign(16, SHIFT, "f 2")
@@ -804,7 +804,7 @@ extension C64Key {
         // Second row
         //
         
-        C64Key.map2[17] = [ []: Keycap.init("C T R L", size: "150") ]
+        C64Key.map2[17] = [ []: Keycap.init("C T R L", size: "150x100") ]
         
         assign(17, DEFAULT, "C T R L")
         
@@ -958,7 +958,7 @@ extension C64Key {
         assign(30, COMMODORE, "\u{03C0}")
         assign(30, LOWER, "\u{e1de}", "C64")
         
-        C64Key.map2[31] = [ []: Keycap.init("RESTORE", size: "150") ]
+        C64Key.map2[31] = [ []: Keycap.init("RESTORE", size: "150x100") ]
         
         assign(31, DEFAULT, "RESTORE")
         
@@ -1098,15 +1098,15 @@ extension C64Key {
 
         assign(46, DEFAULT, "=")
         
-        C64Key.map2[47] = [ []: Keycap.init("RETURN", size: "200") ]
+        C64Key.map2[47] = [ []: Keycap.init("RETURN", size: "200x100") ]
 
         //
         // Fourth row
         //
 
-        C64Key.map2[49] = [ []: Keycap.init("C") ]
+        C64Key.map2[49] = [ []: Keycap.init(" ", size: "Commodore") ]
 
-        C64Key.map2[50] = [ []: Keycap.init("SHIFT", size: "150") ]
+        C64Key.map2[50] = [ []: Keycap.init("SHIFT", size: "150x100") ]
 
         C64Key.map2[51] = [ []: Keycap.init("Z"),
                             [.shift]: Keycap.init("\u{2666}", font: "C64"),
@@ -1216,19 +1216,19 @@ extension C64Key {
         assign(60, SHIFT, "?")
         assign(60, COMMODORE, "?")
         
-        C64Key.map2[61] = [ []: Keycap.init("SHIFT", size: "150") ]
+        C64Key.map2[61] = [ []: Keycap.init("SHIFT", size: "150x100") ]
 
-        C64Key.map2[62] = [ []: Keycap.init("CRSR", "\u{21d1}"),
-                            [.shift]: Keycap.init("CRSR", "\u{21d3}") ]
+        C64Key.map2[62] = [ []: Keycap.init("\u{21e9}"),
+                            [.shift]: Keycap.init("\u{21e7}") ]
 
-        C64Key.map2[63] = [ []: Keycap.init("CRSR", "\u{21d2}"),
-                            [.shift]: Keycap.init("CRSR", "\u{21d0}") ]
+        C64Key.map2[63] = [ []: Keycap.init("\u{21e8}"),
+                            [.shift]: Keycap.init("\u{21e6}") ]
 
         //
         // Fifth row
         //
         
-        C64Key.map2[65] = [ []: Keycap.init("", size: "900") ]
+        C64Key.map2[65] = [ []: Keycap.init("", size: "900x100") ]
 
         assign(65, DEFAULT, "")
     }
