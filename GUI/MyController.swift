@@ -711,6 +711,12 @@ extension MyController {
             
             refreshStatusBarCartridgeIcons()
             
+        case MSG_KB_AUTO_RELEASE:
+            
+            if virtualKeyboard?.window?.isVisible == true {
+                virtualKeyboard!.refresh()
+            }
+            
         case MSG_AUTO_SNAPSHOT_TAKEN:
             
             track("MSG_AUTO_SNAPSHOT_TAKEN")

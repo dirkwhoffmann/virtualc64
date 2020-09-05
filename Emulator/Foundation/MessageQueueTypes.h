@@ -77,6 +77,9 @@ typedef enum
     MSG_CARTRIDGE,
     MSG_NO_CARTRIDGE,
     MSG_CART_SWITCH,
+
+    // Peripherals (Keyboard)
+    MSG_KB_AUTO_RELEASE,
     
     // Snapshots
     MSG_AUTO_SNAPSHOT_TAKEN,

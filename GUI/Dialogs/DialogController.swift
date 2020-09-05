@@ -63,6 +63,16 @@ class DialogController: NSWindowController {
         track()
     }
     
+    override func showWindow(_ sender: Any?) {
+
+        super.showWindow(sender)
+
+        if awake {
+            sheetWillShow()
+            sheetDidShow()
+        }
+    }
+    
     override func awakeFromNib() {
         
         track()

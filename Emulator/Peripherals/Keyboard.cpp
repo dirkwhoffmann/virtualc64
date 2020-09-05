@@ -251,9 +251,9 @@ void
 Keyboard::vsyncHandler()
 {
     if (clearCnt) {
-        debug("clearCnt = %d\n", clearCnt);
         if (--clearCnt == 0) {
             releaseAll();
+            messageQueue.put(MSG_KB_AUTO_RELEASE);
         }
     }
 }

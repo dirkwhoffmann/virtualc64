@@ -33,19 +33,19 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
      * it is opened as a seperate window, it is set to false.
      */
     var autoClose = true
-            
-    func showSheet(autoClose: Bool) {
-
-        track()
-        
-         self.autoClose = autoClose
-         showSheet()
-     }
     
-    func showWindow(autoClose: Bool) {
+    func showSheet() {
         
-        self.autoClose = autoClose
-        showWindow(self)
+        autoClose = true
+        track("autoClose = \(autoClose)")
+        super.showSheet()
+    }
+    
+    func showWindow() {
+        
+        autoClose = false
+        track("autoClose = \(autoClose)")
+        super.showWindow(self)
     }
     
     override func windowDidLoad() {
@@ -82,7 +82,7 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
         track()
         refresh()
     }
-    
+
     func refresh() {
         
         track()
@@ -142,9 +142,9 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
     override func mouseDown(with event: NSEvent) {
         
         track()
-        if autoClose {
-            cancelAction(self)
-        }
+        
+        // If opened as a sheet, close if the user clicked inside unsued area
+        if autoClose { cancelAction(self) }
     }
 
     @IBAction func pressVirtualKey(_ sender: NSButton!) {
@@ -156,7 +156,6 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
         
         let segment = sender.selectedSegment
         track("segment = \(segment)")
-        
         refresh()
     }
 }

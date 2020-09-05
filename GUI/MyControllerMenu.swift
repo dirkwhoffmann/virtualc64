@@ -448,6 +448,7 @@ extension MyController: NSMenuItemValidation {
     // Action methods (Keyboard menu)
     //
 
+    /*
     func openVirtualKeyboard() {
         
         track()
@@ -457,11 +458,22 @@ extension MyController: NSMenuItemValidation {
         }
         virtualKeyboard?.showSheet()
     }
+    */
     
-    @IBAction func virtualKeyboardAction(_ sender: Any!) {
+    @IBAction func stickyKeyboardAction(_ sender: Any!) {
         
         track()
-        openVirtualKeyboard()
+
+        if virtualKeyboard == nil {
+            let name = NSNib.Name("VirtualKeyboard")
+            virtualKeyboard = VirtualKeyboardController.make(parent: self, nibName: name)
+        }
+        if virtualKeyboard?.window?.isVisible == true {
+            track("Virtual keyboard already open")
+        } else {
+            track("Opeining virtual keyboard as a window")
+            virtualKeyboard?.showWindow()
+        }
     }
     
     @IBAction func clearKeyboardMatrixAction(_ sender: Any!) {

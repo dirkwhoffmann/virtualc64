@@ -26,7 +26,12 @@ class MyToolbar: NSToolbar {
         let c64 = parent.c64!
         let pause = pauseButton.view as? NSButton
         let reset = resetButton.view as? NSButton
- 
+        let kb = keyboardButton.view as? NSButton
+        
+        // Disable the Keyboard button of the virtual keyboard is open
+        let visible = parent.virtualKeyboard?.window?.isVisible ?? false
+        kb?.isEnabled = !visible
+        
         // Disable the Pause and Reset button if the emulator if powered off
         let poweredOn = c64.isPoweredOn
         pause?.isEnabled = poweredOn
@@ -41,7 +46,7 @@ class MyToolbar: NSToolbar {
             pauseButton.label = "Run"
         }
         
-        // Change the label of reset button. If we don't do that, the
+        // Change the label of reset button. If we don't do this, the
         // label color does not change (at least in macOS Mojave)
         resetButton.label = ""
         resetButton.label = "Reset"

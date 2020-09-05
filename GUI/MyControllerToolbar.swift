@@ -107,4 +107,20 @@ extension MyController {
             assert(false)
         }
     }
+    
+    @IBAction func keyboardAction(_ sender: Any!) {
+        
+        track()
+
+        if virtualKeyboard == nil {
+            let name = NSNib.Name("VirtualKeyboard")
+            virtualKeyboard = VirtualKeyboardController.make(parent: self, nibName: name)
+        }
+        if virtualKeyboard?.window?.isVisible == true {
+            track("Virtual keyboard already open")
+        } else {
+            track("Opeining virtual keyboard as a sheet")
+            virtualKeyboard?.showSheet()
+        }
+    }
 }
