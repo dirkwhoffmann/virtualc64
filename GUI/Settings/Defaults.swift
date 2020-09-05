@@ -425,12 +425,15 @@ extension UserDefaults {
     
     static func registerKeyboardUserDefaults() {
         
+        track()
+        
         let defaults = KeyboardDefaults.symbolicMapping
         let dictionary: [String: Any] = [
             
             Keys.mapKeysByPosition: defaults.mapKeysByPosition
         ]
         
+        track("\(defaults.mapKeysByPosition)")
         let userDefaults = UserDefaults.standard
         userDefaults.register(defaults: dictionary)
         userDefaults.register(encodableItem: defaults.keyMap, forKey: Keys.keyMap)

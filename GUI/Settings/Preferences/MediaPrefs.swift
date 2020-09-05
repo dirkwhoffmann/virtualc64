@@ -76,14 +76,4 @@ extension PreferencesController {
         pref.loadMediaUserDefaults()
         refresh()
     }
-    
-    @IBAction func mediaPresetAction(_ sender: NSPopUpButton!) {
-        
-        track()
-        assert(sender.selectedTag() == 0)
-        
-        UserDefaults.resetMediaDefaults()
-        pref.loadMediaUserDefaults()
-        refresh()
-    }
 }

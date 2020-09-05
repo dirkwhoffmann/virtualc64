@@ -20,6 +20,8 @@ extension PreferencesController {
         
     func refreshKeyboardTab() {
             
+        track()
+        
         keyMappingPopup.selectItem(withTag: pref.mapKeysByPosition ? 1 : 0)
     
         if pref.mapKeysByPosition {
@@ -93,6 +95,7 @@ extension PreferencesController {
         assert(sender.selectedTag() == 0)
 
         UserDefaults.resetKeyMapUserDefaults()
+        pref.loadKeyboardUserDefaults()
         refresh()
     }
 }

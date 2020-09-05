@@ -180,13 +180,7 @@ extension PreferencesController {
         assert(sender.selectedTag() == 0)
         
         UserDefaults.resetDevicesUserDefaults()
+        pref.loadDevicesUserDefaults()
         refresh()
     }
-    
-    /*
-    @IBAction func devDefaultsAction(_ sender: NSButton!) {
-        
-        track()
-    }
-    */
 }
