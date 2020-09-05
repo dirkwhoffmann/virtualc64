@@ -193,89 +193,7 @@ class MyDocument: NSDocument {
         result!.setPath(name)
         return result
     }
-    
-    /*
-    // Creates an attachment from a URL
-    func createAttachment(from url: URL) throws {
         
-        track("Creating attachment from URL \(url.lastPathComponent).")
-        
-        // Try to create the attachment
-        let fileWrapper = try FileWrapper.init(url: url)
-        let pathExtension = url.pathExtension.uppercased()
-        try createAttachment(from: fileWrapper, ofType: pathExtension)
-        
-        // Put URL in recently used URL lists
-        myAppDelegate.noteNewRecentlyUsedURL(url)
-    }
-    
-    // Creates an attachment from a file wrapper
-    fileprivate func createAttachment(from fileWrapper: FileWrapper,
-                                      ofType typeName: String) throws {
-        
-        guard let filename = fileWrapper.filename else {
-            throw NSError(domain: "VirtualC64", code: 0, userInfo: nil)
-        }
-        guard let data = fileWrapper.regularFileContents else {
-            throw NSError(domain: "VirtualC64", code: 0, userInfo: nil)
-        }
-        
-        let buffer = (data as NSData).bytes
-        let length = data.count
-        var openAsUntitled = true
-        
-        track("Read \(length) bytes from file \(filename).")
-        
-        switch typeName {
-            
-        case "VC64":
-            // Check for outdated snapshot formats
-            if SnapshotProxy.isUnsupportedSnapshot(buffer, length: length) {
-                throw NSError.snapshotVersionError(filename: filename)
-            }
-            attachment = SnapshotProxy.make(withBuffer: buffer, length: length)
-            openAsUntitled = false
-
-        case "CRT":
-            // Check for unsupported cartridge types
-            if CRTFileProxy.isUnsupportedCRTBuffer(buffer, length: length) {
-                let type = CRTFileProxy.typeName(ofCRTBuffer: buffer, length: length)!
-                throw NSError.unsupportedCartridgeError(filename: filename, type: type)
-            }
-            attachment = CRTFileProxy.make(withBuffer: buffer, length: length)
-            
-        case "TAP":
-            attachment = TAPFileProxy.make(withBuffer: buffer, length: length)
-            
-        case "T64":
-            attachment = T64FileProxy.make(withBuffer: buffer, length: length)
-            
-        case "PRG":
-            attachment = PRGFileProxy.make(withBuffer: buffer, length: length)
-            
-        case "D64":
-            attachment = D64FileProxy.make(withBuffer: buffer, length: length)
-            
-        case "P00":
-            attachment = P00FileProxy.make(withBuffer: buffer, length: length)
-            
-        case "G64":
-            attachment = G64FileProxy.make(withBuffer: buffer, length: length)
-            
-        default:
-            throw NSError.unsupportedFormatError(filename: filename)
-        }
-        
-        if attachment == nil {
-            throw NSError.corruptedFileError(filename: filename)
-        }
-        if openAsUntitled {
-            fileURL = nil
-        }
-        attachment!.setPath(filename)
-    }
-    */
-    
     //
     // Processing attachments
     //
@@ -342,33 +260,6 @@ class MyDocument: NSDocument {
         controller?.showSheet()
     }
     
-    /*
-    func runArchiveMountDialog() {
-        
-        let name = NSNib.Name("ArchiveMountDialog")
-        let controller = ArchiveMountController.make(parent: parent, nibName: name)
-        controller?.showSheet()
-    }
-    
-    func runDiskMountDialog() {
-        let name = NSNib.Name("DiskMountDialog")
-        let controller = DiskMountController.make(parent: parent, nibName: name)
-        controller?.showSheet()
-    }
-    
-    func runTapeMountDialog() {
-        let name = NSNib.Name("TapeMountDialog")
-        let controller = TapeMountController.make(parent: parent, nibName: name)
-        controller?.showSheet()
-    }
-    
-    func runCartridgeMountDialog() {
-        let name = NSNib.Name("CartridgeMountDialog")
-        let controller = CartridgeMountController.make(parent: parent, nibName: name)
-        controller?.showSheet()
-    }
- */
- 
     @discardableResult
     func mountAttachmentAsDisk(drive: DriveID) -> Bool {
         
