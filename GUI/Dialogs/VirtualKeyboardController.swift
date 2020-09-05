@@ -84,9 +84,7 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
     }
 
     func refresh() {
-        
-        track()
-        
+                
         var newModifiers: Modifier = []
         
         if keyboard.leftShiftIsPressed() { newModifiers.insert(.shift) }
