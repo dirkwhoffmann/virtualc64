@@ -19,8 +19,10 @@ C64Memory::C64Memory(C64 &ref) : C64Component(ref)
 	setDescription("C64 memory");
     		
     memset(rom, 0, sizeof(rom));
+
     config.ramPattern = RAM_PATTERN_C64;
-    
+    config.debugcart = false;
+
     /* Memory bank map
      *
      * If x == (EXROM, GAME, CHAREN, HIRAM, LORAM) then
@@ -119,7 +121,8 @@ C64Memory::getConfigItem(ConfigOption option)
     switch (option) {
             
         case OPT_RAM_PATTERN:  return config.ramPattern;
-        
+        case OPT_DEBUGCART:    return config.debugcart;
+            
         default: assert(false);
     }
 }
@@ -140,6 +143,16 @@ C64Memory::setConfigItem(ConfigOption option, long value)
             }
             
             config.ramPattern = (RamPattern)value;
+            return true;
+            
+        case OPT_DEBUGCART:
+            
+            if (config.debugcart == value) {
+                return false;
+            }
+            
+            config.debugcart = value;
+            if (value) msg("Debug cart enabled\n");
             return true;
             
         default:
@@ -532,6 +545,13 @@ C64Memory::pokeIO(u16 addr, u8 value)
             // Only the lower 5 bits are used for adressing the SID I/O space.
             // As a result, SID's I/O memory repeats every 32 bytes.
             sid.poke(addr & 0x001F, value);
+
+            // Check the exit register (option -debugcart)
+            if (addr == 0xD7FF && config.debugcart) {
+                debug("DEBUGCART: Terminating with exit code %x\n", value);
+                exit(value);
+            }
+
             return;
             
         case 0x8: // Color RAM

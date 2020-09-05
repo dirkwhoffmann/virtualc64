@@ -49,6 +49,7 @@ inline bool isRamPattern(long value)
 typedef struct
 {
     RamPattern ramPattern;
+    bool debugcart;
 }
 MemConfig;
 

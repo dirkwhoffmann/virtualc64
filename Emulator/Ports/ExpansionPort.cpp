@@ -112,25 +112,6 @@ ExpansionPort::spypeek(u16 addr)
     return cartridge ? cartridge->spypeek(addr) : 0;
 }
 
-/*
-u8
-ExpansionPort::peek(u16 addr)
-{
-    assert((addr >= 0x8000 && addr <= 0x9FFF) ||
-           (addr >= 0xA000 && addr <= 0xBFFF) ||
-           (addr >= 0xE000 && addr <= 0xFFFF));
-    
-    if (cartridge) {
-        if (addr <= 0x9FFF) {
-            return cartridge->peekRomLabs(addr);
-        } else {
-            return cartridge->peekRomHabs(addr);
-        }
-    }
-    return 0;
-}
-*/
-
 u8
 ExpansionPort::peekIO1(u16 addr)
 {

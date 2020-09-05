@@ -30,8 +30,6 @@
 #include "Cartridge.h"
 
 class ExpansionPort : public C64Component {
- 
-private:
     
     // Attached cartridge (NULL if no cartridge is plugged in)
     Cartridge *cartridge = NULL;
@@ -56,7 +54,7 @@ public:
 private:
     
     void _reset() override;
-
+    
     
     //
     // Analyzing

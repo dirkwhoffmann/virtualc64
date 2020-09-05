@@ -93,7 +93,27 @@ var proxy: C64Proxy? {
         if #available(OSX 10.12.2, *) {
             NSApplication.shared.isAutomaticCustomizeTouchBarMenuItemEnabled = true
         }
+        
+        // parseCommandLineArguments()
     }
+    
+    /*
+    func parseCommandLineArguments() {
+                
+        for argument in CommandLine.arguments {
+            
+            switch argument {
+                
+            case "-debugcart":
+                for c in controllers { c.c6
+                print("-debugcart")
+                                
+            default:
+                print("an argument")
+            }
+        }
+    }
+    */
     
     public func applicationWillTerminate(_ aNotification: Notification) {
         

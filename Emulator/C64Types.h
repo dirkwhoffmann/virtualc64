@@ -62,7 +62,10 @@ typedef enum : long
     // Drive
     OPT_DRIVE_TYPE,
     OPT_DRIVE_CONNECT,
-    OPT_DRIVE_POWER_SWITCH
+    OPT_DRIVE_POWER_SWITCH,
+    
+    // Debugging
+    OPT_DEBUGCART
 }
 ConfigOption;
 

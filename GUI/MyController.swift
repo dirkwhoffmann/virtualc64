@@ -380,14 +380,15 @@ extension MyController {
                             device: MTLCreateSystemDefaultDevice()!,
                             controller: self)
         
-        // Setup window
+        // Prepare to run
         configureWindow()
-
-        // Load user defaults
         loadUserDefaults()
-        
-        // Enable message processing
         addListener()
+
+        // Evaluate command line arguments
+        if CommandLine.arguments.contains("-debugcart") {
+            c64.configure(OPT_DEBUGCART, enable: true)
+        }
         
         // Process attachment (if any)
         mydocument.mountAttachment()

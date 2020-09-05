@@ -27,6 +27,7 @@ inline bool isControlPortDevice(long value) {
 }
 
 // DEPRECATED
+/*
 typedef enum {
     
     JOYSTICK_UP,
@@ -36,6 +37,7 @@ typedef enum {
     JOYSTICK_FIRE
     
 } JoystickDirection;
+*/
 
 typedef enum
 {
