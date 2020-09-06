@@ -53,10 +53,11 @@
                 <outlet property="emuScreenshotTargetPopup" destination="LXm-7Y-K8D" id="tjb-Sp-IsE"/>
                 <outlet property="emuSnapshotInterval" destination="ITl-Yu-WOZ" id="hfk-Lq-dZd"/>
                 <outlet property="emuWarpMode" destination="YaP-a1-P0K" id="vrS-Wr-jID"/>
-                <outlet property="info" destination="nYs-ee-j0m" id="7l3-HU-l0x"/>
                 <outlet property="keyMappingPopup" destination="Wq6-3c-FTh" id="bLH-aw-mcu"/>
-                <outlet property="keyMatrixCollectionView" destination="kyY-gl-jRY" id="3AQ-CM-SR8"/>
-                <outlet property="keyMatrixScrollView" destination="I2P-UQ-PVX" id="iEZ-ER-Omk"/>
+                <outlet property="keyMappingText" destination="nYs-ee-j0m" id="7l3-HU-l0x"/>
+                <outlet property="keyText1" destination="72F-IX-lCB" id="vnt-uL-fEl"/>
+                <outlet property="keyText2" destination="fYf-Al-G6G" id="aUY-Ew-A6R"/>
+                <outlet property="keyText3" destination="Sec-MV-Rp9" id="hRK-pL-ZmN"/>
                 <outlet property="medCrtAutoTypeButton" destination="xpx-cK-LwZ" id="wbk-9a-9Tg"/>
                 <outlet property="medCrtAutoTypeText" destination="aP0-nV-ESa" id="o72-6v-S4K"/>
                 <outlet property="medCrtPopup" destination="N2J-5r-BF2" id="RU5-ii-PRz"/>
@@ -579,7 +580,7 @@ DQ
                                             <rect key="frame" x="489" y="397" width="18" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="X" id="lwo-W0-685">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -599,7 +600,7 @@ DQ
                                             <rect key="frame" x="489" y="329" width="18" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="X" id="4ZL-F9-iH1">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -619,7 +620,7 @@ DQ
                                             <rect key="frame" x="406" y="363" width="18" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="X" id="KlZ-E5-7Kd">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -639,7 +640,7 @@ DQ
                                             <rect key="frame" x="525" y="363" width="18" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="X" id="TeP-YQ-wIw">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -653,7 +654,7 @@ DQ
                                             <rect key="frame" x="373" y="339" width="18" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="X" id="pVQ-CX-k88">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -662,7 +663,7 @@ DQ
                                             <rect key="frame" x="366" y="385" width="31" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Fire" id="Kop-iQ-hG5">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -683,7 +684,7 @@ DQ
                                             <rect key="frame" x="503" y="181" width="29" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="High" id="J6T-Ib-25R">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -692,7 +693,7 @@ DQ
                                             <rect key="frame" x="339" y="182" width="25" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Low" id="Aql-0P-veq">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -710,7 +711,7 @@ DQ
                                             <rect key="frame" x="381" y="212" width="107" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Auto-fire frequency" id="Lue-gs-DGR">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -778,7 +779,7 @@ DQ
                                             <rect key="frame" x="278" y="98" width="316" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Hit ⌘I to hide the Mac mouse while using this device." id="8Ce-bf-Ojg">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -809,7 +810,7 @@ DQ
                                             <rect key="frame" x="198" y="397" width="18" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="X" id="MdH-BN-1CR">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -829,7 +830,7 @@ DQ
                                             <rect key="frame" x="198" y="329" width="18" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="X" id="n5Q-wB-bAk">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -838,7 +839,7 @@ DQ
                                             <rect key="frame" x="115" y="363" width="18" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="X" id="8sQ-Qw-in3">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -858,7 +859,7 @@ DQ
                                             <rect key="frame" x="234" y="363" width="18" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="X" id="miy-xh-W3A">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -867,7 +868,7 @@ DQ
                                             <rect key="frame" x="83" y="339" width="18" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="X" id="CmG-Ah-Hhe">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -892,7 +893,7 @@ DQ
                                             <rect key="frame" x="76" y="385" width="31" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Fire" id="XJv-If-6Vu">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -958,7 +959,7 @@ DQ
                                             <rect key="frame" x="90" y="68" width="504" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Note: This mouse is analog and needs special software such as GEOS to work." id="u4C-Kh-HhG">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -971,7 +972,7 @@ DQ
                                     <rect key="frame" x="10" y="33" width="600" height="464"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YYv-YY-bbc">
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="YYv-YY-bbc">
                                             <rect key="frame" x="515" y="5" width="82" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                             <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="zqA-a0-o9n">
@@ -989,7 +990,7 @@ DQ
                                             <rect key="frame" x="9" y="49" width="582" height="5"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         </box>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ofC-sP-hOv">
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ofC-sP-hOv">
                                             <rect key="frame" x="69" y="429" width="109" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="left" title="Key assignment:" id="vJf-w8-W0a">
@@ -998,7 +999,7 @@ DQ
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wq6-3c-FTh">
+                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Wq6-3c-FTh">
                                             <rect key="frame" x="176" y="424" width="113" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Symbolic" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="D4q-QJ-Hw5" id="4HC-1K-qMd">
@@ -1019,7 +1020,7 @@ DQ
                                                 <action selector="mapKeyMappingAction:" target="-2" id="JEl-Lg-a7N"/>
                                             </connections>
                                         </popUpButton>
-                                        <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xfT-Fe-hOh" userLabel="System">
+                                        <popUpButton fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="xfT-Fe-hOh" userLabel="System">
                                             <rect key="frame" x="6" y="9" width="128" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Revert to..." bezelStyle="rounded" imagePosition="right" alignment="left" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="chs-0t-YJI" id="bYa-1J-l5p" userLabel="System">
@@ -1040,39 +1041,6 @@ DQ
                                                 <action selector="kbPresetAction:" target="-2" id="7Ob-Ew-4XP"/>
                                             </connections>
                                         </popUpButton>
-                                        <scrollView wantsLayer="YES" fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I2P-UQ-PVX">
-                                            <rect key="frame" x="71" y="73" width="458" height="300"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" heightSizable="YES"/>
-                                            <clipView key="contentView" id="YBz-19-UeU">
-                                                <rect key="frame" x="1" y="1" width="456" height="298"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <subviews>
-                                                    <collectionView selectable="YES" id="kyY-gl-jRY">
-                                                        <rect key="frame" x="0.0" y="0.0" width="456" height="298"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                        <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="4" minimumLineSpacing="4" id="yNu-GP-tut">
-                                                            <size key="itemSize" width="48" height="48"/>
-                                                            <edgeInsets key="sectionInset" left="4" right="4" top="4" bottom="4"/>
-                                                        </collectionViewFlowLayout>
-                                                        <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                        <connections>
-                                                            <outlet property="dataSource" destination="-2" id="e8F-9k-wrL"/>
-                                                            <outlet property="delegate" destination="-2" id="EW7-bh-CpS"/>
-                                                        </connections>
-                                                    </collectionView>
-                                                </subviews>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
-                                            </clipView>
-                                            <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="RxD-cE-JJ4">
-                                                <rect key="frame" x="-100" y="-100" width="0.0" height="16"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                            </scroller>
-                                            <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.5" horizontal="NO" id="Mtg-rO-lHq">
-                                                <rect key="frame" x="441" y="1" width="16" height="298"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                            </scroller>
-                                        </scrollView>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T1O-tL-N02">
                                             <rect key="frame" x="437" y="-33" width="78" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -1081,10 +1049,592 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                         </button>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nYs-ee-j0m">
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nYs-ee-j0m">
                                             <rect key="frame" x="69" y="383" width="462" height="36"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" selectable="YES" title="Multiline Label" id="SoB-lr-O1p">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="100" translatesAutoresizingMaskIntoConstraints="NO" id="GBd-me-Drq" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="49" y="285" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="hsv-9o-n5b">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="101" translatesAutoresizingMaskIntoConstraints="NO" id="6hi-xP-zXf" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="76" y="285" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="eRw-cd-wMN">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="102" translatesAutoresizingMaskIntoConstraints="NO" id="3Af-rQ-hu5" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="103" y="285" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="VfK-WI-kgs">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="103" translatesAutoresizingMaskIntoConstraints="NO" id="urU-05-SsA" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="130" y="285" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="M1V-w5-1Kx">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="104" translatesAutoresizingMaskIntoConstraints="NO" id="fxN-UV-1Xt" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="157" y="285" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="Qtr-UR-Nxk">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="105" translatesAutoresizingMaskIntoConstraints="NO" id="rfJ-JC-7u4" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="184" y="285" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="RYn-ix-e2j">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="106" translatesAutoresizingMaskIntoConstraints="NO" id="axL-yY-hV3" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="211" y="285" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="Tn1-KV-fyb">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="107" translatesAutoresizingMaskIntoConstraints="NO" id="QXc-G7-4EI" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="238" y="285" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="pxg-eW-lEX">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="108" translatesAutoresizingMaskIntoConstraints="NO" id="ZUW-Ub-VcC" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="265" y="285" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="0W5-WR-Jql">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="109" translatesAutoresizingMaskIntoConstraints="NO" id="ank-rO-Jby" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="292" y="285" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="N42-lY-73m">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="110" translatesAutoresizingMaskIntoConstraints="NO" id="Dn9-Z9-MdW" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="319" y="285" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="fEr-8k-kZ0">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="111" translatesAutoresizingMaskIntoConstraints="NO" id="ZUV-tM-MEL" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="346" y="285" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="ahK-kA-GLC">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="112" translatesAutoresizingMaskIntoConstraints="NO" id="nL0-bq-554" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="373" y="285" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="5vl-gf-uhK">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="113" translatesAutoresizingMaskIntoConstraints="NO" id="cKv-3W-980" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="400" y="285" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="uvN-NN-rWm">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="114" translatesAutoresizingMaskIntoConstraints="NO" id="ElJ-Mi-b8K" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="427" y="285" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="Qaz-hx-wiT">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="115" translatesAutoresizingMaskIntoConstraints="NO" id="rUG-VS-Oea" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="455" y="285" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="sIV-Zc-iqZ">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="116" translatesAutoresizingMaskIntoConstraints="NO" id="Wb5-Y4-6w0" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="516" y="285" width="42" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="DaE-Jp-wgp">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="118" translatesAutoresizingMaskIntoConstraints="NO" id="b85-eZ-BeO" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="90" y="258" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="NMT-1E-JCh">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="119" translatesAutoresizingMaskIntoConstraints="NO" id="sn3-Y6-uGM" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="117" y="258" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="QeF-w3-tJG">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="120" translatesAutoresizingMaskIntoConstraints="NO" id="Oza-S3-8iM" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="144" y="258" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="XUe-Xu-Sa5">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="121" translatesAutoresizingMaskIntoConstraints="NO" id="pez-Bs-Jff" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="171" y="258" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="dJB-06-SmZ">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="122" translatesAutoresizingMaskIntoConstraints="NO" id="CkT-fN-F6x" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="198" y="258" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="5fu-Z5-7zg">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="123" translatesAutoresizingMaskIntoConstraints="NO" id="AxA-w1-vdD" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="225" y="258" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="E5e-3s-ick">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="124" translatesAutoresizingMaskIntoConstraints="NO" id="ffp-Tr-WCC" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="252" y="258" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="f7N-uz-JZ9">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="125" translatesAutoresizingMaskIntoConstraints="NO" id="HFR-pA-qHD" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="279" y="258" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="q8o-8H-cNL">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="117" translatesAutoresizingMaskIntoConstraints="NO" id="DzN-vX-ip9" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="49" y="258" width="42" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="XPg-3z-fgx">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="132" translatesAutoresizingMaskIntoConstraints="NO" id="hIi-2s-fM1" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="516" y="258" width="42" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="1S7-Is-4eF">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="126" translatesAutoresizingMaskIntoConstraints="NO" id="noM-mL-9sJ" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="306" y="258" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="uwq-BD-n2l">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="127" translatesAutoresizingMaskIntoConstraints="NO" id="nuc-pt-1bh" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="333" y="258" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="6hB-Xl-p4c">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="128" translatesAutoresizingMaskIntoConstraints="NO" id="d1j-Ay-Jn8" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="360" y="258" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="4xx-br-SZr">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="129" translatesAutoresizingMaskIntoConstraints="NO" id="6q9-vT-8sW" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="387" y="258" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="hcG-AY-ghq">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="130" translatesAutoresizingMaskIntoConstraints="NO" id="mLH-Sv-WYF" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="414" y="258" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="6j3-Hd-sEu">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="131" translatesAutoresizingMaskIntoConstraints="NO" id="xhZ-lM-3As" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="441" y="258" width="42" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="U72-eQ-Awl">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="134" translatesAutoresizingMaskIntoConstraints="NO" id="bom-IP-nOt" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="69" y="231" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="C3d-En-3Xe">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="135" translatesAutoresizingMaskIntoConstraints="NO" id="Adn-X2-wXu" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="96" y="231" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="UOJ-RS-7p9">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="136" translatesAutoresizingMaskIntoConstraints="NO" id="IXb-V7-nCb" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="123" y="231" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="jzj-0t-Eg9">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="137" translatesAutoresizingMaskIntoConstraints="NO" id="mr2-Ey-m2V" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="151" y="231" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="RNL-pd-fxe">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="138" translatesAutoresizingMaskIntoConstraints="NO" id="icC-EC-4vT" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="178" y="231" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="9mV-Wc-toY">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="139" translatesAutoresizingMaskIntoConstraints="NO" id="ABG-nv-ONG" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="206" y="231" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="hZA-C9-Vv3">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="140" translatesAutoresizingMaskIntoConstraints="NO" id="EWo-7F-52q" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="234" y="231" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="f88-bY-oVw">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="141" translatesAutoresizingMaskIntoConstraints="NO" id="5lZ-gC-FQO" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="262" y="231" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="2qf-z7-Mwy">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="148" translatesAutoresizingMaskIntoConstraints="NO" id="6VS-Zj-ZUg" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="516" y="231" width="42" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="hiA-ak-xkF">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="147" translatesAutoresizingMaskIntoConstraints="NO" id="wvf-lL-OiM" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="425" y="231" width="56" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape200x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="ir5-ni-1XI">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="142" translatesAutoresizingMaskIntoConstraints="NO" id="oh1-Ab-MRd" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="290" y="231" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="72W-9L-RCc">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="143" translatesAutoresizingMaskIntoConstraints="NO" id="yEB-9y-9l1" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="317" y="231" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="GvL-Df-Vcc">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="144" translatesAutoresizingMaskIntoConstraints="NO" id="3mN-bL-sjp" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="344" y="231" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="EIH-FS-r7L">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="145" translatesAutoresizingMaskIntoConstraints="NO" id="aLc-nE-ZDJ" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="371" y="231" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="iCD-a7-uHv">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="146" translatesAutoresizingMaskIntoConstraints="NO" id="EXT-8N-byZ" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="398" y="231" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="ZIk-Pw-Oac">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="133" translatesAutoresizingMaskIntoConstraints="NO" id="6qn-w4-upC" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="42" y="231" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="ckF-Da-uwh">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="149" translatesAutoresizingMaskIntoConstraints="NO" id="sIS-F4-Wxq" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="42" y="204" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="jmJ-rZ-m3v">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="151" translatesAutoresizingMaskIntoConstraints="NO" id="Hm9-Ty-q18" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="110" y="204" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="ibF-L0-dNK">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="152" translatesAutoresizingMaskIntoConstraints="NO" id="pO4-e9-C6c" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="137" y="204" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="SUO-4H-1em">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="153" translatesAutoresizingMaskIntoConstraints="NO" id="i2M-Jh-ONK" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="164" y="204" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="cKj-L5-TPc">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="154" translatesAutoresizingMaskIntoConstraints="NO" id="uD2-47-ACQ" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="192" y="204" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="BTN-PK-Zzo">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="155" translatesAutoresizingMaskIntoConstraints="NO" id="61s-Ad-7vY" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="219" y="204" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="uWR-Ul-9I5">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="156" translatesAutoresizingMaskIntoConstraints="NO" id="tMz-cl-UcQ" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="246" y="204" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="cMb-jB-jjG">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="150" translatesAutoresizingMaskIntoConstraints="NO" id="44P-vd-Exc" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="69" y="204" width="42" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="TwX-JX-8PN">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="164" translatesAutoresizingMaskIntoConstraints="NO" id="ZZk-l2-pxB" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="516" y="204" width="42" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="H7V-eZ-Jmp">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="157" translatesAutoresizingMaskIntoConstraints="NO" id="Skc-vj-fqL" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="273" y="204" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="hk8-V8-3eM">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="158" translatesAutoresizingMaskIntoConstraints="NO" id="fUv-9h-kgB" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="301" y="204" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="bP4-3s-Vnv">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="159" translatesAutoresizingMaskIntoConstraints="NO" id="LZX-53-SZh" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="329" y="204" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="fA9-KQ-LWw">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="160" translatesAutoresizingMaskIntoConstraints="NO" id="1L3-a0-64g" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="356" y="204" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="fVD-qd-cAW">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="162" translatesAutoresizingMaskIntoConstraints="NO" id="THH-Zy-kcU" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="425" y="204" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="VVD-JL-SxP">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="163" translatesAutoresizingMaskIntoConstraints="NO" id="ytM-PQ-mxh" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="453" y="204" width="28" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="Oe1-ac-AkP">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="161" translatesAutoresizingMaskIntoConstraints="NO" id="uLc-fv-fEC" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="384" y="204" width="42" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="axd-kl-abL">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="fCj-zh-fKC">
+                                            <rect key="frame" x="219" y="137" width="90" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="C64 Keycode:" id="WRf-kG-HTf">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="72F-IX-lCB">
+                                            <rect key="frame" x="313" y="137" width="170" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="None" id="uzT-Qo-1tK">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="fYf-Al-G6G">
+                                            <rect key="frame" x="313" y="113" width="170" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="None" id="pw1-sR-NMC">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="o4h-hm-mDn">
+                                            <rect key="frame" x="168" y="113" width="141" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Position in C64 matrix:" id="uXO-sQ-EP6">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ec0-1l-z7f">
+                                            <rect key="frame" x="220" y="89" width="89" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Mac Keycode:" id="78O-bv-ATO">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="165" translatesAutoresizingMaskIntoConstraints="NO" id="0ff-2T-iF5" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="123" y="177" width="192" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape900x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="3Gm-XV-plp">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Sec-MV-Rp9">
+                                            <rect key="frame" x="313" y="89" width="170" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="None" id="cev-lm-vPR">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1201,7 +1751,7 @@ DQ
                                             <rect key="frame" x="136" y="356" width="187" height="19"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="pU9-da-2jA">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -1214,7 +1764,7 @@ DQ
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Type:" bezelStyle="regularSquare" imagePosition="left" alignment="right" controlSize="small" state="on" inset="2" id="dzg-0Z-qza">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="medAutoTypeAction:" target="-2" id="c00-ky-oFG"/>
@@ -1266,7 +1816,7 @@ DQ
                                             <rect key="frame" x="136" y="292" width="187" height="19"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="6vz-li-tjs">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -1279,7 +1829,7 @@ DQ
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Type:" bezelStyle="regularSquare" imagePosition="left" alignment="right" controlSize="small" state="on" inset="2" id="FW7-BG-dgn">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="medAutoTypeAction:" target="-2" id="iO3-mV-nXK"/>
@@ -1331,7 +1881,7 @@ DQ
                                             <rect key="frame" x="136" y="226" width="187" height="19"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="si6-Dn-ZjQ">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -1344,7 +1894,7 @@ DQ
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Type:" bezelStyle="regularSquare" imagePosition="left" alignment="right" controlSize="small" state="on" inset="2" id="rTX-HL-9fu">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="medAutoTypeAction:" target="-2" id="k10-Vx-lnp"/>
@@ -1396,7 +1946,7 @@ DQ
                                             <rect key="frame" x="136" y="160" width="187" height="19"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="jb7-aR-vLn">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -1409,7 +1959,7 @@ DQ
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Type:" bezelStyle="regularSquare" imagePosition="left" alignment="right" controlSize="small" state="on" inset="2" id="uPt-T0-kb5">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="medAutoTypeAction:" target="-2" id="axL-OR-Vmb"/>
@@ -1461,7 +2011,7 @@ DQ
                                             <rect key="frame" x="136" y="94" width="187" height="19"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="fRk-fS-tQY">
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -1474,7 +2024,7 @@ DQ
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Type:" bezelStyle="regularSquare" imagePosition="left" alignment="right" controlSize="small" state="on" inset="2" id="avq-NQ-LTy">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="menu" size="11"/>
+                                                <font key="font" metaFont="controlContent" size="11"/>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="medAutoTypeAction:" target="-2" id="iJu-bi-e3k"/>
@@ -1499,5 +2049,9 @@ DQ
     <resources>
         <image name="joystick2" width="261" height="300"/>
         <image name="key" width="198" height="187"/>
+        <image name="shape100x100" width="36" height="36"/>
+        <image name="shape150x100" width="54" height="36"/>
+        <image name="shape200x100" width="72" height="36"/>
+        <image name="shape900x100" width="325" height="36"/>
     </resources>
 </document>

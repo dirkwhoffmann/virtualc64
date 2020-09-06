@@ -132,10 +132,17 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var vidOkButton: NSButton!
     @IBOutlet weak var vidPowerButton: NSButton!
     
+    var bootable: Bool {
+        let off   = c64.isPoweredOff
+        let ready = c64.isReady()
+        return off && ready
+    }
+
     //
     // Emulator preferences
     //
     
+    /*
     // VC1541
     @IBOutlet weak var emuWarpLoad: NSButton!
     @IBOutlet weak var emuDriveSounds: NSButton!
@@ -156,13 +163,7 @@ class ConfigurationController: DialogController {
     
     @IBOutlet weak var emuOkButton: NSButton!
     @IBOutlet weak var emuPowerButton: NSButton!
-    
-    var bootable: Bool {
-        let off   = c64.isPoweredOff
-        let ready = c64.isReady()
-        return off && ready
-    }
-    
+        
     //
     // Devices preferences
     //
@@ -227,6 +228,7 @@ class ConfigurationController: DialogController {
     
     @IBOutlet weak var keyOkButton: NSButton!
     @IBOutlet weak var keyPowerButton: NSButton!
+    */
     
     // The tab to open first
     var firstTab = ""

@@ -20,7 +20,7 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
     var keyImage = Array(repeating: nil as NSImage?, count: 66)
 
     // Image cache for keys that are currently pressed
-    var pressedKeyImage = Array(repeating: nil as NSImage?, count: 128)
+    var pressedKeyImage = Array(repeating: nil as NSImage?, count: 66)
 
     // Currently set key modifiers
     var modifiers: Modifier = []

@@ -19,7 +19,7 @@ class PreferencesController: DialogController {
     // General preferences
     //
         
-     // Drive
+    // Drive
     @IBOutlet weak var emuDriveBlankDiskFormat: NSPopUpButton!
     @IBOutlet weak var emuEjectUnasked: NSButton!
     @IBOutlet weak var emuDriveSounds: NSButton!
@@ -94,13 +94,25 @@ class PreferencesController: DialogController {
     // Keymap preferences
     //
     
-    @IBOutlet weak var info: NSTextField!
+    @IBOutlet weak var keyMappingText: NSTextField!
     @IBOutlet weak var keyMappingPopup: NSPopUpButton!
-    @IBOutlet weak var keyMatrixScrollView: NSScrollView!
-    @IBOutlet weak var keyMatrixCollectionView: NSCollectionView!
-    
+    @IBOutlet weak var keyText1: NSTextField!
+    @IBOutlet weak var keyText2: NSTextField!
+    @IBOutlet weak var keyText3: NSTextField!
+
+    // Array holding a reference to the view of each key button
+    var keyView = Array(repeating: nil as RecordButton?, count: 66)
+
+    // Arrays holding the key caps for each record key
+    var keyImage = Array(repeating: nil as NSImage?, count: 66)
+    var pressedKeyImage = Array(repeating: nil as NSImage?, count: 66)
+    var mappedKeyImage = Array(repeating: nil as NSImage?, count: 66)
+
     // Double array of key images, indexed by their row and column number
-    var keyImage = Array(repeating: Array(repeating: nil as NSImage?, count: 8), count: 8)
+    // var keyImage = Array(repeating: Array(repeating: nil as NSImage?, count: 8), count: 8)
+    
+    // The currently recorded key
+    var recordKey: Int?
     
     // Selected C64 key
     var selectedKey: C64Key?

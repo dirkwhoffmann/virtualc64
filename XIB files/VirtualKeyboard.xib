@@ -769,7 +769,7 @@
                         <rect key="frame" x="30" y="216" width="81" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <segmentedCell key="cell" controlSize="small" borderStyle="border" alignment="left" style="smallSquare" trackingMode="selectOne" id="rZe-HU-0xn">
-                            <font key="font" metaFont="controlContent" size="11"/>
+                            <font key="font" metaFont="menu" size="11"/>
                             <segments>
                                 <segment label="ABC" width="39" selected="YES"/>
                                 <segment label="abc" width="39" tag="1"/>

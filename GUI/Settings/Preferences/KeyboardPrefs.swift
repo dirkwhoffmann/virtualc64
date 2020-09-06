@@ -22,25 +22,97 @@ extension PreferencesController {
             
         track()
         
+        // Set up reference and image caches
+        if keyView[0] == nil {
+            for nr in 0 ... 65 {
+                keyImage[nr] = C64Key.lookupKeycap(for: nr, modifier: [])?.image
+                pressedKeyImage[nr] = keyImage[nr]?.copy() as? NSImage
+                pressedKeyImage[nr]?.pressed()
+                mappedKeyImage[nr] = keyImage[nr]?.copy() as? NSImage
+                mappedKeyImage[nr]?.darken()
+                keyView[nr] = window!.contentView!.viewWithTag(nr + 100) as? RecordButton
+                keyView[nr]!.image = keyImage[nr]
+            }
+        }
+        
         keyMappingPopup.selectItem(withTag: pref.mapKeysByPosition ? 1 : 0)
     
         if pref.mapKeysByPosition {
             
             keyMappingPopup.selectItem(withTag: 1)
-            info.stringValue = "In positonal assignment mode, the Mac keys are assigned to the C64 keys according to the following mapping table:"
-            keyMatrixScrollView.isHidden = false
+            keyMappingText.stringValue = "In positonal assignment mode, the Mac keys are assigned to the C64 keys according to the following mapping table:"
             updateImages()
             
         } else {
             
             keyMappingPopup.selectItem(withTag: 0)
-            info.stringValue = "In symbolic assignment mode, the Mac keys are assigned to C64 keys according to the symbols they represent."
-            keyMatrixScrollView.isHidden = true
-        }        
+            keyMappingText.stringValue = "In symbolic assignment mode, the Mac keys are assigned to C64 keys according to the symbols they represent."
+        }
+        
+        var reverseMap: [C64Key: MacKey] = [:]
+        for (macKey, c64Key) in pref.keyMap {
+            reverseMap[c64Key] = macKey
+        }
+
+        // Update images
+        for nr in 0 ... 65 {
+            
+            let c64Key = C64Key.init(nr)
+            
+            if recordKey == nr {
+                keyView[nr]!.image = pressedKeyImage[nr]
+            } else if reverseMap[c64Key] != nil {
+                keyView[nr]!.image = mappedKeyImage[nr]
+            } else {
+                keyView[nr]!.image = keyImage[nr]
+            }
+        }
+
+        // Update key description
+        if recordKey != nil {
+
+            let key = C64Key.init(recordKey!)
+            keyText1.stringValue = "\(key.nr)"
+            keyText2.stringValue = "(\(key.row),\(key.col))"
+
+            if let macKey = reverseMap[key] {
+                keyText3.stringValue = macKey.stringValue
+            } else {
+                keyText3.stringValue = "None"
+            }
+            
+        } else {
+            
+            keyText1.stringValue = "None"
+            keyText2.stringValue = "None"
+            keyText3.stringValue = "None"
+        }
+    }
+        
+    func pressKey(nr: Int) {
+        
+        track()
+
+        let oldKey = recordKey
+        
+        // Deselect the old key
+        if recordKey != nil {
+            keyView[recordKey!]?.image = keyImage[recordKey!]
+            recordKey = nil
+        }
+
+        // Select the new key if it doesn't match the old one
+        if oldKey != nr {
+            recordKey = nr
+            keyView[recordKey!]?.image = pressedKeyImage[recordKey!]
+        }
+        
+        refresh()
     }
     
     func updateImages() {
                 
+        /*
         // Create labels
         var labels = Array(repeating: Array(repeating: "", count: 8), count: 8)
         for (macKey, c64Key) in pref.keyMap {
@@ -55,8 +127,7 @@ extension PreferencesController {
                 keyImage[row][col] = c64key.image(keyCode: labels[row][col], red: selected)
             }
         }
-
-        keyMatrixCollectionView.reloadData()
+         */
     }
     
     func mapKeyDown(with macKey: MacKey) -> Bool {
@@ -101,8 +172,34 @@ extension PreferencesController {
 }
 
 //
+// Subclass of NSButton for all record buttons
+//
+class RecordButton: NSButton {
+    
+    override func mouseDown(with event: NSEvent) {
+        
+        if let controller = window?.delegate as? PreferencesController {
+            
+            controller.pressKey(nr: self.tag - 100)
+        }
+    }
+    
+    /*
+    override func rightMouseDown(with event: NSEvent) {
+        
+        if let controller = window?.delegate as? PreferencesController {
+            
+            track()
+        }
+    }
+    */
+}
+
+//
 // NSCollectionView data source and delegate
 //
+
+/*
 
 extension PreferencesController: NSCollectionViewDataSource {
     
@@ -148,3 +245,4 @@ extension PreferencesController: NSCollectionViewDelegate {
         }
     }
 }
+*/
