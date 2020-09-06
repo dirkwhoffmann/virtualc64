@@ -27,7 +27,7 @@ FlashRom::getStateAsString(FlashRomState state)
         case FLASH_SECTOR_ERASE_TIMEOUT: return "FLASH_SECTOR_ERASE_TIMEOUT";
         case FLASH_SECTOR_ERASE_SUSPEND: return "FLASH_SECTOR_ERASE_SUSPEND";
         default:
-        assert(false);
+            assert(false);
     }
 }
 
@@ -56,9 +56,9 @@ void
 FlashRom::_reset()
 {
     debug(CRT_DEBUG, "Resetting FlashRom\n");
-
+    
     RESET_SNAPSHOT_ITEMS
-
+    
     state = FLASH_READ;
     baseState = FLASH_READ;
 }
@@ -84,57 +84,57 @@ FlashRom::peek(u32 addr)
     u8 result;
     
     switch (state) {
-        
+            
         case FLASH_AUTOSELECT:
-        
-        switch(addr & 0xFF) {
-           
-            case 0:
-            return 0x01; // Manufacturer ID
             
-            case 1:
-            return 0xA4; // Device ID
+            switch(addr & 0xFF) {
+                    
+                case 0:
+                    return 0x01; // Manufacturer ID
+                    
+                case 1:
+                    return 0xA4; // Device ID
+                    
+                case 2:
+                    return 0;
+            }
+            return rom[addr];
             
-            case 2:
-            return 0;
-        }
-        return rom[addr];
-        
         case FLASH_BYTE_PROGRAM_ERROR:
-        
-        // TODO
-        result = rom[addr];
-        break;
-        
+            
+            // TODO
+            result = rom[addr];
+            break;
+            
         case FLASH_SECTOR_ERASE_SUSPEND:
-        
-        // TODO
-        result = rom[addr];
-        break;
-        
+            
+            // TODO
+            result = rom[addr];
+            break;
+            
         case FLASH_CHIP_ERASE:
-        
-        // TODO
-        result = rom[addr];
-        break;
-        
+            
+            // TODO
+            result = rom[addr];
+            break;
+            
         case FLASH_SECTOR_ERASE:
-        
-        // TODO
-        result = rom[addr];
-        break;
-        
+            
+            // TODO
+            result = rom[addr];
+            break;
+            
         case FLASH_SECTOR_ERASE_TIMEOUT:
-        
-        // TODO
-        result = rom[addr];
-        break;
-        
+            
+            // TODO
+            result = rom[addr];
+            break;
+            
         default:
-        
-        // TODO
-        result = rom[addr];
-        break;
+            
+            // TODO
+            result = rom[addr];
+            break;
     }
     
     return result;
@@ -146,133 +146,132 @@ FlashRom::poke(u32 addr, u8 value)
     assert(addr < size);
     
     switch (state) {
-        
+            
         case FLASH_READ:
-        
-        if (firstCommandAddr(addr) && value == 0xAA) {
             
-            state = FLASH_MAGIC_1;
-            debug(CRT_DEBUG, "%s\n", getStateAsString(state));
-            return;
-        }
-        
-        return;
-        
-        case FLASH_MAGIC_1:
-        
-        if (secondCommandAddr(addr) && value == 0x55) {
-            
-            state = FLASH_MAGIC_2;
-            debug(CRT_DEBUG, "%s\n", getStateAsString(state));
-            return;
-        }
-        
-        state = baseState;
-        debug(CRT_DEBUG, "Back to %s\n", getStateAsString(state));
-        return;
-        
-        case FLASH_MAGIC_2:
-        
-        if (firstCommandAddr(addr)) {
-            
-            switch(value) {
+            if (firstCommandAddr(addr) && value == 0xAA) {
                 
-                case 0xF0:
+                state = FLASH_MAGIC_1;
+                debug(CRT_DEBUG, "%s\n", getStateAsString(state));
+                return;
+            }
+            return;
+            
+        case FLASH_MAGIC_1:
+            
+            if (secondCommandAddr(addr) && value == 0x55) {
+                
+                state = FLASH_MAGIC_2;
+                debug(CRT_DEBUG, "%s\n", getStateAsString(state));
+                return;
+            }
+            
+            state = baseState;
+            debug(CRT_DEBUG, "Back to %s\n", getStateAsString(state));
+            return;
+            
+        case FLASH_MAGIC_2:
+            
+            if (firstCommandAddr(addr)) {
+                
+                switch(value) {
+                        
+                    case 0xF0:
+                        
+                        state = FLASH_READ;
+                        baseState = FLASH_READ;
+                        debug(CRT_DEBUG, "%s\n", getStateAsString(state));
+                        return;
+                        
+                    case 0x90:
+                        
+                        state = FLASH_AUTOSELECT;
+                        baseState = FLASH_AUTOSELECT;
+                        debug(CRT_DEBUG, "%s\n", getStateAsString(state));
+                        return;
+                        
+                    case 0xA0:
+                        state = FLASH_BYTE_PROGRAM;
+                        debug(CRT_DEBUG, "%s\n", getStateAsString(state));
+                        return;
+                        
+                    case 0x80:
+                        state = FLASH_ERASE_MAGIC_1;
+                        debug(CRT_DEBUG, "%s\n", getStateAsString(state));
+                        return;
+                }
+            }
+            
+            state = baseState;
+            debug(CRT_DEBUG, "Back to %s\n", getStateAsString(state));
+            break;
+            
+        case FLASH_BYTE_PROGRAM:
+            
+            if (!doByteProgram(addr, value)) {
+                
+                state = FLASH_BYTE_PROGRAM_ERROR;
+                debug(CRT_DEBUG, "%s\n", getStateAsString(state));
+                return;
+            }
+            
+            state = baseState;
+            debug(CRT_DEBUG, "Back to %s\n", getStateAsString(state));
+            return;
+            
+        case FLASH_ERASE_MAGIC_1:
+            
+            // TODO
+            break;
+            
+        case FLASH_ERASE_MAGIC_2:
+            
+            // TODO
+            break;
+            
+        case FLASH_ERASE_SELECT:
+            
+            // TODO
+            break;
+            
+        case FLASH_SECTOR_ERASE_TIMEOUT:
+            
+            // TODO
+            break;
+            
+        case FLASH_SECTOR_ERASE:
+            
+            // TODO
+            break;
+            
+        case FLASH_SECTOR_ERASE_SUSPEND:
+            
+            // TODO
+            break;
+            
+        case FLASH_BYTE_PROGRAM_ERROR:
+        case FLASH_AUTOSELECT:
+            
+            if (addr == 0x5555 && value == 0xAA) {
+                
+                state = FLASH_MAGIC_1;
+                debug(CRT_DEBUG, "%s\n", getStateAsString(state));
+                return;
+            }
+            if (value == 0xF0) {
                 
                 state = FLASH_READ;
                 baseState = FLASH_READ;
                 debug(CRT_DEBUG, "%s\n", getStateAsString(state));
                 return;
-                
-                case 0x90:
-                
-                state = FLASH_AUTOSELECT;
-                baseState = FLASH_AUTOSELECT;
-                debug(CRT_DEBUG, "%s\n", getStateAsString(state));
-                return;
-                
-                case 0xA0:
-                state = FLASH_BYTE_PROGRAM;
-                debug(CRT_DEBUG, "%s\n", getStateAsString(state));
-                return;
-                
-                case 0x80:
-                state = FLASH_ERASE_MAGIC_1;
-                debug(CRT_DEBUG, "%s\n", getStateAsString(state));
-                return;
             }
-        }
-        
-        state = baseState;
-        debug(CRT_DEBUG, "Back to %s\n", getStateAsString(state));
-        break;
-        
-        case FLASH_BYTE_PROGRAM:
-        
-        if (!doByteProgram(addr, value)) {
-            
-            state = FLASH_BYTE_PROGRAM_ERROR;
-            debug(CRT_DEBUG, "%s\n", getStateAsString(state));
             return;
-        }
-        
-        state = baseState;
-        debug(CRT_DEBUG, "Back to %s\n", getStateAsString(state));
-        return;
-        
-        case FLASH_ERASE_MAGIC_1:
-        
-        // TODO
-        break;
-        
-        case FLASH_ERASE_MAGIC_2:
-        
-        // TODO
-        break;
-        
-        case FLASH_ERASE_SELECT:
-        
-        // TODO
-        break;
-        
-        case FLASH_SECTOR_ERASE_TIMEOUT:
-        
-        // TODO
-        break;
-        
-        case FLASH_SECTOR_ERASE:
-        
-        // TODO
-        break;
-        
-        case FLASH_SECTOR_ERASE_SUSPEND:
-        
-        // TODO
-        break;
-        
-        case FLASH_BYTE_PROGRAM_ERROR:
-        case FLASH_AUTOSELECT:
-        
-        if (addr == 0x5555 && value == 0xAA) {
             
-            state = FLASH_MAGIC_1;
-            debug(CRT_DEBUG, "%s\n", getStateAsString(state));
-            return;
-        }
-        if (value == 0xF0) {
-            
-            state = FLASH_READ;
-            baseState = FLASH_READ;
-            debug(CRT_DEBUG, "%s\n", getStateAsString(state));
-            return;
-        }
-        return;
-        
         case FLASH_CHIP_ERASE:
         default:
-        
-        // TODO
-        break;
+            
+            // TODO
+            break;
     }
 }
 

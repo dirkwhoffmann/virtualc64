@@ -172,7 +172,7 @@ EasyFlash::peekIO1(u16 addr)
 u8
 EasyFlash::peekIO2(u16 addr)
 {
-    debug(CRT_DEBUG, "peekIO2(%x)\n", addr);
+    // debug(CRT_DEBUG, "peekIO2(%x)\n", addr);
 
     return peekRAM(addr & 0xFF);
 }
@@ -183,8 +183,9 @@ EasyFlash::pokeIO1(u16 addr, u8 value)
     debug(CRT_DEBUG, "pokeIO1(%x,%x)\n", addr, value);
     
     if (addr == 0xDE00) { // Bank register
-        
+               
         bank = value & 0x3F;
+        debug(CRT_DEBUG, "Switching to bank %d\n", bank);
         return;
     }
     
@@ -196,19 +197,20 @@ EasyFlash::pokeIO1(u16 addr, u8 value)
         
         u8 MXG = value & 0x07;
         /* MXG
-         * 000 : GAME from jumper, EXROM high (i.e. Ultimax or Off)
-         * 001 : Reserved, don’t use this
-         * 010 : GAME from jumper, EXROM low (i.e. 16K or 8K)
-         * 011 : Reserved, don’t use this
-         * 100 : Cartridge ROM off (RAM at $DF00 still available)
-         * 101 : Ultimax (Low bank at $8000, high bank at $e000)
-         * 110 : 8k Cartridge (Low bank at $8000)
-         * 111 : 16k cartridge (Low bank at $8000, high bank at $a000)
+         * 0 (000) : GAME from jumper, EXROM high (i.e. Ultimax or Off)
+         * 1 (001) : Reserved, don’t use this
+         * 2 (010) : GAME from jumper, EXROM low (i.e. 16K or 8K)
+         * 3 (011) : Reserved, don’t use this
+         * 4 (100) : Cartridge ROM off (RAM at $DF00 still available)
+         * 5 (101) : Ultimax (Low bank at $8000, high bank at $e000)
+         * 6 (110) : 8k Cartridge (Low bank at $8000)
+         * 7 (111) : 16k cartridge (Low bank at $8000, high bank at $a000)
          */
         
         bool exrom;
         bool game;
         
+        debug(CRT_DEBUG, "MXG = %x\n", MXG);
         switch (MXG) {
                 
             case 0b000:
@@ -255,7 +257,7 @@ EasyFlash::pokeIO1(u16 addr, u8 value)
 void
 EasyFlash::pokeIO2(u16 addr, u8 value)
 {
-    debug(CRT_DEBUG, "pokeIO2(%x,%x)\n", addr, value);
+    // debug(CRT_DEBUG, "pokeIO2(%x,%x)\n", addr, value);
 
     pokeRAM(addr & 0xFF, value);
 }
