@@ -229,7 +229,9 @@ extension MacKey {
     static let curRight     = MacKey.init(keyCode: kVK_RightArrow)
     static let curDown      = MacKey.init(keyCode: kVK_DownArrow)
     static let curUp        = MacKey.init(keyCode: kVK_UpArrow)
-    
+    static let pageUp       = MacKey.init(keyCode: kVK_PageUp)
+    static let pageDown     = MacKey.init(keyCode: kVK_PageDown)
+
     // Layout dependend keys. Keycodes refer to the keys on a standard ANSI US keyboard
     struct Ansi {
         static let grave    = MacKey.init(keyCode: kVK_ANSI_Grave)

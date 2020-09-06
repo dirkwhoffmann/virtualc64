@@ -79,6 +79,7 @@ class KeyboardController: NSObject {
             return
         }
         
+        // track("Key str: \(event.characters) \(event.keyCode)")
         keyDown(with: MacKey.init(event: event))
     }
     
@@ -275,13 +276,15 @@ class KeyboardController: NSObject {
         switch macKey {
         
         // First row of C64 keyboard
+        case MacKey.pageDown: return [C64Key.leftArrow]
         case MacKey.home: return [C64Key.home]
         case MacKey.clear: return [C64Key.home, C64Key.shift]
         case MacKey.delete: return [C64Key.delete]
             
         // Second row of C64 keyboard
         case MacKey.tab: return [C64Key.control]
-
+        case MacKey.pageUp: return [C64Key.upArrow]
+            
         // Third row of C64 keyboard
         case MacKey.control: return [C64Key.runStop]
         case MacKey.ret: return [C64Key.ret]
