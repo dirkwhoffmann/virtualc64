@@ -73,19 +73,23 @@ extension PreferencesController {
 
             let key = C64Key.init(recordKey!)
             keyText1.stringValue = "\(key.nr)"
-            keyText2.stringValue = "(\(key.row),\(key.col))"
 
             if let macKey = reverseMap[key] {
-                keyText3.stringValue = macKey.stringValue
+                keyText2.stringValue = "\(macKey.keyCode)"
+                if macKey.stringValue != "" {
+                    keyText2.stringValue.append(" \(macKey.stringValue)")
+                }
+                keyTrash.isHidden = false
             } else {
-                keyText3.stringValue = "None"
+                keyText2.stringValue = "None"
+                keyTrash.isHidden = true
             }
             
         } else {
             
-            keyText1.stringValue = "None"
-            keyText2.stringValue = "None"
-            keyText3.stringValue = "None"
+            keyText1.stringValue = "No key selected"
+            keyText2.stringValue = ""
+            keyTrash.isHidden = true
         }
     }
         
@@ -132,6 +136,11 @@ extension PreferencesController {
     
     func mapKeyDown(with macKey: MacKey) -> Bool {
                 
+        track()
+        
+        // Only proceed if a key has been selected
+        if recordKey == nil { return false }
+        
         // Check for ESC key
         if macKey == MacKey.escape {
             cancelAction(self)
@@ -144,10 +153,10 @@ extension PreferencesController {
         }
         
         // Assign new key
-        pref.keyMap[macKey] = selectedKey
+        pref.keyMap[macKey] = C64Key.init(recordKey!)
         
         // Update  view
-        selectedKey = nil
+        recordKey = nil
         refresh()
         
         return true
@@ -159,7 +168,22 @@ extension PreferencesController {
         pref.mapKeysByPosition = value
         refresh()
     }
-    
+
+    @IBAction func trashKeyAction(_ sender: NSButton!) {
+        
+        track()
+        precondition(recordKey != nil)
+        let c64Key = C64Key.init(recordKey!)
+        
+        // Remove old key assignment (if any)
+        for (macKey, key) in pref.keyMap where key == c64Key {
+            pref.keyMap[macKey] = nil
+        }
+        
+        recordKey = nil
+        refresh()
+    }
+
     @IBAction func kbPresetAction(_ sender: NSPopUpButton!) {
         
         track()
