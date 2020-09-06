@@ -53,11 +53,11 @@
                 <outlet property="emuScreenshotTargetPopup" destination="LXm-7Y-K8D" id="tjb-Sp-IsE"/>
                 <outlet property="emuSnapshotInterval" destination="ITl-Yu-WOZ" id="hfk-Lq-dZd"/>
                 <outlet property="emuWarpMode" destination="YaP-a1-P0K" id="vrS-Wr-jID"/>
+                <outlet property="keyMapText" destination="fCj-zh-fKC" id="1Oe-cc-kEt"/>
                 <outlet property="keyMappingPopup" destination="Wq6-3c-FTh" id="bLH-aw-mcu"/>
                 <outlet property="keyMappingText" destination="nYs-ee-j0m" id="7l3-HU-l0x"/>
-                <outlet property="keyText1" destination="72F-IX-lCB" id="vnt-uL-fEl"/>
-                <outlet property="keyText2" destination="fYf-Al-G6G" id="aUY-Ew-A6R"/>
-                <outlet property="keyTrash" destination="Wkv-m0-U55" id="1Ro-Ea-x3t"/>
+                <outlet property="keyTrashButton" destination="Wkv-m0-U55" id="XBG-jD-ZY2"/>
+                <outlet property="keyTrashText" destination="fYf-Al-G6G" id="oeu-UJ-fID"/>
                 <outlet property="medCrtAutoTypeButton" destination="xpx-cK-LwZ" id="wbk-9a-9Tg"/>
                 <outlet property="medCrtAutoTypeText" destination="aP0-nV-ESa" id="o72-6v-S4K"/>
                 <outlet property="medCrtPopup" destination="N2J-5r-BF2" id="RU5-ii-PRz"/>
@@ -1554,44 +1554,8 @@ DQ
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
                                                     </button>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="fCj-zh-fKC">
-                                                        <rect key="frame" x="8" y="11" width="66" height="16"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="C64 key:" id="WRf-kG-HTf">
-                                                            <font key="font" metaFont="system"/>
-                                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="72F-IX-lCB">
-                                                        <rect key="frame" x="69" y="11" width="49" height="16"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="None" id="uzT-Qo-1tK">
-                                                            <font key="font" metaFont="system"/>
-                                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="fYf-Al-G6G">
-                                                        <rect key="frame" x="251" y="11" width="69" height="16"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="None" id="pw1-sR-NMC">
-                                                            <font key="font" metaFont="system"/>
-                                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="o4h-hm-mDn">
-                                                        <rect key="frame" x="128" y="11" width="119" height="16"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Mapped Mac key:" id="uXO-sQ-EP6">
-                                                            <font key="font" metaFont="system"/>
-                                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wkv-m0-U55">
-                                                        <rect key="frame" x="297" y="10" width="18" height="18"/>
+                                                        <rect key="frame" x="508" y="11" width="18" height="18"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="trashTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" imageScaling="proportionallyDown" inset="2" id="3wR-Fm-dz0">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1601,6 +1565,24 @@ DQ
                                                             <action selector="trashKeyAction:" target="-2" id="Eh6-XS-3Sn"/>
                                                         </connections>
                                                     </button>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="fYf-Al-G6G">
+                                                        <rect key="frame" x="460" y="13" width="48" height="16"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Unmap" id="pw1-sR-NMC">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="fCj-zh-fKC">
+                                                        <rect key="frame" x="8" y="11" width="410" height="16"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Mapped to Mac key 142 ('a')" id="WRf-kG-HTf">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
                                                 </subviews>
                                             </view>
                                         </box>

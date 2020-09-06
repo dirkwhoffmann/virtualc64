@@ -29,7 +29,7 @@ extension PreferencesController {
                 pressedKeyImage[nr] = keyImage[nr]?.copy() as? NSImage
                 pressedKeyImage[nr]?.pressed()
                 mappedKeyImage[nr] = keyImage[nr]?.copy() as? NSImage
-                mappedKeyImage[nr]?.darken()
+                mappedKeyImage[nr]?.mapped()
                 keyView[nr] = window!.contentView!.viewWithTag(nr + 100) as? RecordButton
                 keyView[nr]!.image = keyImage[nr]
             }
@@ -41,7 +41,6 @@ extension PreferencesController {
             
             keyMappingPopup.selectItem(withTag: 1)
             keyMappingText.stringValue = "In positonal assignment mode, the Mac keys are assigned to the C64 keys according to the following mapping table:"
-            updateImages()
             
         } else {
             
@@ -59,7 +58,7 @@ extension PreferencesController {
             
             let c64Key = C64Key.init(nr)
             
-            if recordKey == nr {
+            if c64Key == selectedKey {
                 keyView[nr]!.image = pressedKeyImage[nr]
             } else if reverseMap[c64Key] != nil {
                 keyView[nr]!.image = mappedKeyImage[nr]
@@ -69,79 +68,61 @@ extension PreferencesController {
         }
 
         // Update key description
-        if recordKey != nil {
+        if selectedKey != nil {
 
-            let key = C64Key.init(recordKey!)
-            keyText1.stringValue = "\(key.nr)"
-
-            if let macKey = reverseMap[key] {
-                keyText2.stringValue = "\(macKey.keyCode)"
+            keyMapText.isHidden = false
+            if let macKey = reverseMap[selectedKey!] {
+                keyMapText.stringValue = "Mapped to Mac key \(macKey.keyCode)"
                 if macKey.stringValue != "" {
-                    keyText2.stringValue.append(" \(macKey.stringValue)")
+                    keyMapText.stringValue.append(" ('\(macKey.stringValue)')")
                 }
-                keyTrash.isHidden = false
+                keyTrashText.isHidden = false
+                keyTrashButton.isHidden = false
             } else {
-                keyText2.stringValue = "None"
-                keyTrash.isHidden = true
+                keyMapText.stringValue = "Hit a key on the Mac keyboard to map this key"
+                keyTrashText.isHidden = true
+                keyTrashButton.isHidden = true
             }
             
         } else {
             
-            keyText1.stringValue = "No key selected"
-            keyText2.stringValue = ""
-            keyTrash.isHidden = true
+            keyMapText.isHidden = true
+            keyTrashText.isHidden = true
+            keyTrashButton.isHidden = true
         }
     }
         
-    func pressKey(nr: Int) {
+    func selectKey(nr: Int) {
         
         track()
 
-        let oldKey = recordKey
+        let oldKey = selectedKey
         
-        // Deselect the old key
-        if recordKey != nil {
-            keyView[recordKey!]?.image = keyImage[recordKey!]
-            recordKey = nil
+        // Deselect the old key (if any)
+        if let nr = selectedKey?.nr {
+            keyView[nr]?.image = keyImage[nr]
+            selectedKey = nil
         }
 
         // Select the new key if it doesn't match the old one
-        if oldKey != nr {
-            recordKey = nr
-            keyView[recordKey!]?.image = pressedKeyImage[recordKey!]
+        if oldKey?.nr != nr {
+            selectedKey = C64Key.init(nr)
+            keyView[selectedKey!.nr]?.image = pressedKeyImage[selectedKey!.nr]
         }
         
         refresh()
     }
     
-    func updateImages() {
-                
-        /*
-        // Create labels
-        var labels = Array(repeating: Array(repeating: "", count: 8), count: 8)
-        for (macKey, c64Key) in pref.keyMap {
-            labels[c64Key.row][c64Key.col] = String.init(format: "%02X", macKey.keyCode)
-        }
-        
-        // Create labeled images
-        for row in 0...7 {
-            for col in 0...7 {
-                let c64key = C64Key.init( (row, col) )
-                let selected = (c64key == selectedKey)
-                keyImage[row][col] = c64key.image(keyCode: labels[row][col], red: selected)
-            }
-        }
-         */
-    }
-    
-    func mapKeyDown(with macKey: MacKey) -> Bool {
+    func mapSelectedKey(to macKey: MacKey) -> Bool {
                 
         track()
         
         // Only proceed if a key has been selected
-        if recordKey == nil { return false }
+        if selectedKey == nil { return false }
         
-        // Check for ESC key
+        track()
+        
+        // Check for the ESC key
         if macKey == MacKey.escape {
             cancelAction(self)
             return false
@@ -153,15 +134,19 @@ extension PreferencesController {
         }
         
         // Assign new key
-        pref.keyMap[macKey] = C64Key.init(recordKey!)
+        pref.keyMap[macKey] = selectedKey
         
-        // Update  view
-        recordKey = nil
         refresh()
-        
         return true
     }
     
+    override func mouseDown(with event: NSEvent) {
+        
+        track()
+        selectedKey = nil
+        refresh()
+    }
+
     @IBAction func mapKeyMappingAction(_ sender: NSPopUpButton!) {
         
         let value = (sender.selectedTag() == 1) ? true : false
@@ -172,15 +157,14 @@ extension PreferencesController {
     @IBAction func trashKeyAction(_ sender: NSButton!) {
         
         track()
-        precondition(recordKey != nil)
-        let c64Key = C64Key.init(recordKey!)
+        precondition(selectedKey != nil)
         
         // Remove old key assignment (if any)
-        for (macKey, key) in pref.keyMap where key == c64Key {
+        for (macKey, key) in pref.keyMap where key == selectedKey {
             pref.keyMap[macKey] = nil
         }
         
-        recordKey = nil
+        selectedKey = nil
         refresh()
     }
 
@@ -203,8 +187,8 @@ class RecordButton: NSButton {
     override func mouseDown(with event: NSEvent) {
         
         if let controller = window?.delegate as? PreferencesController {
-            
-            controller.pressKey(nr: self.tag - 100)
+                        
+            controller.selectKey(nr: self.tag - 100)
         }
     }
     

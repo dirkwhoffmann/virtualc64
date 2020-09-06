@@ -96,9 +96,9 @@ class PreferencesController: DialogController {
     
     @IBOutlet weak var keyMappingText: NSTextField!
     @IBOutlet weak var keyMappingPopup: NSPopUpButton!
-    @IBOutlet weak var keyText1: NSTextField!
-    @IBOutlet weak var keyText2: NSTextField!
-    @IBOutlet weak var keyTrash: NSButton!
+    @IBOutlet weak var keyMapText: NSTextField!
+    @IBOutlet weak var keyTrashText: NSTextField!
+    @IBOutlet weak var keyTrashButton: NSButton!
 
     // Array holding a reference to the view of each key button
     var keyView = Array(repeating: nil as RecordButton?, count: 66)
@@ -107,14 +107,8 @@ class PreferencesController: DialogController {
     var keyImage = Array(repeating: nil as NSImage?, count: 66)
     var pressedKeyImage = Array(repeating: nil as NSImage?, count: 66)
     var mappedKeyImage = Array(repeating: nil as NSImage?, count: 66)
-
-    // Double array of key images, indexed by their row and column number
-    // var keyImage = Array(repeating: Array(repeating: nil as NSImage?, count: 8), count: 8)
     
-    // The currently recorded key
-    var recordKey: Int?
-    
-    // Selected C64 key
+    // The C64 key that has been selected to be mapped
     var selectedKey: C64Key?
     
     @IBOutlet weak var keyOkButton: NSButton!
@@ -185,7 +179,7 @@ class PreferencesController: DialogController {
             
             switch id {
             case "Devices": return devKeyDown(with: key)
-            case "Keyboard": return mapKeyDown(with: key)
+            case "Keyboard": return mapSelectedKey(to: key)
             default: break
             }
         }
