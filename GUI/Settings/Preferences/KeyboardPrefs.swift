@@ -41,11 +41,13 @@ extension PreferencesController {
             
             keyMappingPopup.selectItem(withTag: 1)
             keyMappingText.stringValue = "In positonal assignment mode, the Mac keys are assigned to the C64 keys according to the following mapping table:"
+            keyBox.isHidden = false
             
         } else {
             
             keyMappingPopup.selectItem(withTag: 0)
             keyMappingText.stringValue = "In symbolic assignment mode, the Mac keys are assigned to C64 keys according to the symbols they represent."
+            keyBox.isHidden = true
         }
         
         var reverseMap: [C64Key: MacKey] = [:]
@@ -76,19 +78,13 @@ extension PreferencesController {
                 if macKey.stringValue != "" {
                     keyMapText.stringValue.append(" ('\(macKey.stringValue)')")
                 }
-                keyTrashText.isHidden = false
-                keyTrashButton.isHidden = false
             } else {
                 keyMapText.stringValue = "Hit a key on the Mac keyboard to map this key"
-                keyTrashText.isHidden = true
-                keyTrashButton.isHidden = true
             }
             
         } else {
             
             keyMapText.isHidden = true
-            keyTrashText.isHidden = true
-            keyTrashButton.isHidden = true
         }
     }
         
@@ -108,6 +104,18 @@ extension PreferencesController {
         if oldKey?.nr != nr {
             selectedKey = C64Key.init(nr)
             keyView[selectedKey!.nr]?.image = pressedKeyImage[selectedKey!.nr]
+        }
+        
+        refresh()
+    }
+    
+    func trashKey(nr: Int) {
+        
+        track()
+        
+        // Remove old key assignment (if any)
+        for (macKey, key) in pref.keyMap where key.nr == nr {
+            pref.keyMap[macKey] = nil
         }
         
         refresh()
@@ -154,20 +162,6 @@ extension PreferencesController {
         refresh()
     }
 
-    @IBAction func trashKeyAction(_ sender: NSButton!) {
-        
-        track()
-        precondition(selectedKey != nil)
-        
-        // Remove old key assignment (if any)
-        for (macKey, key) in pref.keyMap where key == selectedKey {
-            pref.keyMap[macKey] = nil
-        }
-        
-        selectedKey = nil
-        refresh()
-    }
-
     @IBAction func kbPresetAction(_ sender: NSPopUpButton!) {
         
         track()
@@ -182,6 +176,7 @@ extension PreferencesController {
 //
 // Subclass of NSButton for all record buttons
 //
+
 class RecordButton: NSButton {
     
     override func mouseDown(with event: NSEvent) {
@@ -192,65 +187,11 @@ class RecordButton: NSButton {
         }
     }
     
-    /*
     override func rightMouseDown(with event: NSEvent) {
         
         if let controller = window?.delegate as? PreferencesController {
-            
-            track()
-        }
-    }
-    */
-}
 
-//
-// NSCollectionView data source and delegate
-//
-
-/*
-
-extension PreferencesController: NSCollectionViewDataSource {
-    
-    func numberOfSections(in collectionView: NSCollectionView) -> Int {
-        
-        return 8
-    }
-    
-    func collectionView(_ collectionView: NSCollectionView,
-                        numberOfItemsInSection section: Int) -> Int {
-        
-        return 8
-    }
-    
-    func collectionView(_ itemForRepresentedObjectAtcollectionView: NSCollectionView,
-                        itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-        
-        let id = NSUserInterfaceItemIdentifier(rawValue: "KeyViewItem")
-        let item = keyMatrixCollectionView.makeItem(withIdentifier: id, for: indexPath)
-        guard let keyViewItem = item as? KeyViewItem else {
-            return item
-        }
-        
-        let row = indexPath.section
-        let col = indexPath.item
-        keyViewItem.imageView?.image = keyImage[row][col]
-        return keyViewItem
-    }
-}
-
-extension PreferencesController: NSCollectionViewDelegate {
-    
-    func collectionView(_ collectionView: NSCollectionView,
-                        didSelectItemsAt indexPaths: Set<IndexPath>) {
-        
-        if let indexPath = indexPaths.first {
-            
-            selectedKey = C64Key( (indexPath.section, indexPath.item) )
-            refresh()
-            
-            // Make sure we can receive keyboard events
-            (window as! PreferencesWindow).respondToEvents()
+            controller.trashKey(nr: self.tag - 100)
         }
     }
 }
-*/

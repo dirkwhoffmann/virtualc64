@@ -97,8 +97,7 @@ class PreferencesController: DialogController {
     @IBOutlet weak var keyMappingText: NSTextField!
     @IBOutlet weak var keyMappingPopup: NSPopUpButton!
     @IBOutlet weak var keyMapText: NSTextField!
-    @IBOutlet weak var keyTrashText: NSTextField!
-    @IBOutlet weak var keyTrashButton: NSButton!
+    @IBOutlet weak var keyBox: NSBox!
 
     // Array holding a reference to the view of each key button
     var keyView = Array(repeating: nil as RecordButton?, count: 66)

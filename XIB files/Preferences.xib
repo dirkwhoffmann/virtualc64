@@ -53,6 +53,7 @@
                 <outlet property="emuScreenshotTargetPopup" destination="LXm-7Y-K8D" id="tjb-Sp-IsE"/>
                 <outlet property="emuSnapshotInterval" destination="ITl-Yu-WOZ" id="hfk-Lq-dZd"/>
                 <outlet property="emuWarpMode" destination="YaP-a1-P0K" id="vrS-Wr-jID"/>
+                <outlet property="keyBox" destination="FmQ-sb-BjR" id="MgX-Dg-0CW"/>
                 <outlet property="keyMapText" destination="fCj-zh-fKC" id="1Oe-cc-kEt"/>
                 <outlet property="keyMappingPopup" destination="Wq6-3c-FTh" id="bLH-aw-mcu"/>
                 <outlet property="keyMappingText" destination="nYs-ee-j0m" id="7l3-HU-l0x"/>
@@ -1020,14 +1021,14 @@ DQ
                                             </buttonCell>
                                         </button>
                                         <box fixedFrame="YES" title="Positional Key Map" translatesAutoresizingMaskIntoConstraints="NO" id="FmQ-sb-BjR">
-                                            <rect key="frame" x="29" y="130" width="543" height="213"/>
+                                            <rect key="frame" x="29" y="119" width="543" height="224"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <view key="contentView" id="Rqb-um-eXw">
-                                                <rect key="frame" x="3" y="3" width="537" height="195"/>
+                                                <rect key="frame" x="3" y="3" width="537" height="206"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="100" translatesAutoresizingMaskIntoConstraints="NO" id="yC8-RT-vh1" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="17" y="143" width="28" height="28"/>
+                                                        <rect key="frame" x="24" y="154" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="XwL-Me-fxR">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1035,7 +1036,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="101" translatesAutoresizingMaskIntoConstraints="NO" id="sgJ-2b-H7E" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="44" y="143" width="28" height="28"/>
+                                                        <rect key="frame" x="52" y="154" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="bZi-rR-WcJ">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1043,7 +1044,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="102" translatesAutoresizingMaskIntoConstraints="NO" id="LMJ-za-pV6" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="71" y="143" width="28" height="28"/>
+                                                        <rect key="frame" x="80" y="154" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="bKC-Z0-O6Y">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1051,7 +1052,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="103" translatesAutoresizingMaskIntoConstraints="NO" id="cKk-P7-0Wl" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="98" y="143" width="28" height="28"/>
+                                                        <rect key="frame" x="108" y="154" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="TI3-tY-6BA">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1059,7 +1060,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="104" translatesAutoresizingMaskIntoConstraints="NO" id="w2Z-uu-9Rk" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="125" y="143" width="28" height="28"/>
+                                                        <rect key="frame" x="136" y="154" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="C9I-hJ-CGB">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1067,7 +1068,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="105" translatesAutoresizingMaskIntoConstraints="NO" id="DHj-fC-LOC" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="152" y="143" width="28" height="28"/>
+                                                        <rect key="frame" x="164" y="154" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="hgn-uy-C69">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1075,7 +1076,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="106" translatesAutoresizingMaskIntoConstraints="NO" id="dJZ-pE-K14" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="179" y="143" width="28" height="28"/>
+                                                        <rect key="frame" x="192" y="154" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="Q3y-Lh-DIH">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1083,7 +1084,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="107" translatesAutoresizingMaskIntoConstraints="NO" id="YK4-Ur-6Rc" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="206" y="143" width="28" height="28"/>
+                                                        <rect key="frame" x="220" y="154" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="Glo-Ml-vBh">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1091,7 +1092,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="108" translatesAutoresizingMaskIntoConstraints="NO" id="3Jf-fh-Nqn" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="233" y="143" width="28" height="28"/>
+                                                        <rect key="frame" x="248" y="154" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="9LT-hp-4T8">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1099,7 +1100,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="109" translatesAutoresizingMaskIntoConstraints="NO" id="3AD-5I-O1D" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="260" y="143" width="28" height="28"/>
+                                                        <rect key="frame" x="276" y="154" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="yLm-dg-Jbg">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1107,7 +1108,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="110" translatesAutoresizingMaskIntoConstraints="NO" id="U4Y-FD-kMD" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="287" y="143" width="28" height="28"/>
+                                                        <rect key="frame" x="304" y="154" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="5qu-hH-2ts">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1115,7 +1116,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="111" translatesAutoresizingMaskIntoConstraints="NO" id="eNG-FF-Xpd" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="314" y="143" width="28" height="28"/>
+                                                        <rect key="frame" x="332" y="154" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="GGz-4n-MvD">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1123,7 +1124,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="112" translatesAutoresizingMaskIntoConstraints="NO" id="fbc-vC-jlM" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="341" y="143" width="28" height="28"/>
+                                                        <rect key="frame" x="360" y="154" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="bK4-gm-oEC">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1131,7 +1132,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="113" translatesAutoresizingMaskIntoConstraints="NO" id="6VO-nW-JIW" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="368" y="143" width="28" height="28"/>
+                                                        <rect key="frame" x="388" y="154" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="OId-HM-Jel">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1139,7 +1140,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="114" translatesAutoresizingMaskIntoConstraints="NO" id="18k-Fy-FaK" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="395" y="143" width="28" height="28"/>
+                                                        <rect key="frame" x="416" y="154" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="zXy-3b-LSl">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1147,7 +1148,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="115" translatesAutoresizingMaskIntoConstraints="NO" id="kRw-o1-owM" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="423" y="143" width="28" height="28"/>
+                                                        <rect key="frame" x="444" y="154" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="Hji-PP-lDF">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1155,7 +1156,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="116" translatesAutoresizingMaskIntoConstraints="NO" id="LfT-8D-2xr" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="484" y="143" width="42" height="28"/>
+                                                        <rect key="frame" x="483" y="154" width="42" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="D0M-mi-Wy9">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1163,7 +1164,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="118" translatesAutoresizingMaskIntoConstraints="NO" id="oH6-6F-Gqj" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="58" y="116" width="28" height="28"/>
+                                                        <rect key="frame" x="66" y="127" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="X6M-YP-U3e">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1171,7 +1172,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="119" translatesAutoresizingMaskIntoConstraints="NO" id="Wvb-zW-NAE" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="85" y="116" width="28" height="28"/>
+                                                        <rect key="frame" x="94" y="127" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="vXX-P2-bEg">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1179,7 +1180,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="120" translatesAutoresizingMaskIntoConstraints="NO" id="HRG-TK-Z48" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="112" y="116" width="28" height="28"/>
+                                                        <rect key="frame" x="122" y="127" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="mSq-IZ-WSC">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1187,7 +1188,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="121" translatesAutoresizingMaskIntoConstraints="NO" id="2he-zs-cMY" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="139" y="116" width="28" height="28"/>
+                                                        <rect key="frame" x="150" y="127" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="VBT-fW-m0i">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1195,7 +1196,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="122" translatesAutoresizingMaskIntoConstraints="NO" id="LbD-hx-75O" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="166" y="116" width="28" height="28"/>
+                                                        <rect key="frame" x="178" y="127" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="2jT-mc-pBL">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1203,7 +1204,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="123" translatesAutoresizingMaskIntoConstraints="NO" id="CQC-2g-bHi" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="193" y="116" width="28" height="28"/>
+                                                        <rect key="frame" x="206" y="127" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="0cm-U4-V95">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1211,7 +1212,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="124" translatesAutoresizingMaskIntoConstraints="NO" id="qXy-qj-q5W" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="220" y="116" width="28" height="28"/>
+                                                        <rect key="frame" x="234" y="127" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="JUB-ca-gOL">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1219,7 +1220,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="125" translatesAutoresizingMaskIntoConstraints="NO" id="XMd-g4-CQF" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="247" y="116" width="28" height="28"/>
+                                                        <rect key="frame" x="262" y="127" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="oIY-dy-h1n">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1227,7 +1228,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="117" translatesAutoresizingMaskIntoConstraints="NO" id="UrB-ab-m3x" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="17" y="116" width="42" height="28"/>
+                                                        <rect key="frame" x="24" y="127" width="42" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="Jdb-8y-dZA">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1235,7 +1236,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="132" translatesAutoresizingMaskIntoConstraints="NO" id="rxG-EE-oAa" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="484" y="116" width="42" height="28"/>
+                                                        <rect key="frame" x="483" y="127" width="42" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="flW-Pf-qEi">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1243,7 +1244,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="126" translatesAutoresizingMaskIntoConstraints="NO" id="dOB-hE-dYn" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="274" y="116" width="28" height="28"/>
+                                                        <rect key="frame" x="290" y="127" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="bPB-Ym-RLx">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1251,7 +1252,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="127" translatesAutoresizingMaskIntoConstraints="NO" id="wzJ-AD-UMg" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="301" y="116" width="28" height="28"/>
+                                                        <rect key="frame" x="318" y="127" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="qkD-n1-jwB">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1259,7 +1260,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="128" translatesAutoresizingMaskIntoConstraints="NO" id="BWx-8E-j4q" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="328" y="116" width="28" height="28"/>
+                                                        <rect key="frame" x="346" y="127" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="oa8-FV-ZAt">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1267,7 +1268,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="129" translatesAutoresizingMaskIntoConstraints="NO" id="k34-Ob-DLF" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="355" y="116" width="28" height="28"/>
+                                                        <rect key="frame" x="374" y="127" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="GaM-h6-CGZ">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1275,7 +1276,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="130" translatesAutoresizingMaskIntoConstraints="NO" id="l98-Fu-QWO" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="382" y="116" width="28" height="28"/>
+                                                        <rect key="frame" x="402" y="127" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="xCz-JA-Txn">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1283,7 +1284,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="131" translatesAutoresizingMaskIntoConstraints="NO" id="zgD-xx-Tw6" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="409" y="116" width="42" height="28"/>
+                                                        <rect key="frame" x="430" y="127" width="42" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="8Xi-aU-Ang">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1291,7 +1292,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="134" translatesAutoresizingMaskIntoConstraints="NO" id="jib-Wl-Nyl" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="37" y="89" width="28" height="28"/>
+                                                        <rect key="frame" x="46" y="100" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="aiN-sR-dxu">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1299,7 +1300,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="135" translatesAutoresizingMaskIntoConstraints="NO" id="wd1-fz-gzp" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="64" y="89" width="28" height="28"/>
+                                                        <rect key="frame" x="74" y="100" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="Drk-WK-Iwh">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1307,7 +1308,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="136" translatesAutoresizingMaskIntoConstraints="NO" id="1J2-TK-862" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="91" y="89" width="28" height="28"/>
+                                                        <rect key="frame" x="102" y="100" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="CWG-hA-wQv">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1315,7 +1316,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="137" translatesAutoresizingMaskIntoConstraints="NO" id="cw2-Mt-F8i" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="119" y="89" width="28" height="28"/>
+                                                        <rect key="frame" x="130" y="100" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="lxL-57-sky">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1323,7 +1324,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="138" translatesAutoresizingMaskIntoConstraints="NO" id="teb-l5-Zjm" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="146" y="89" width="28" height="28"/>
+                                                        <rect key="frame" x="158" y="100" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="Aj4-cu-3Jv">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1331,7 +1332,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="139" translatesAutoresizingMaskIntoConstraints="NO" id="MDf-mJ-bwO" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="174" y="89" width="28" height="28"/>
+                                                        <rect key="frame" x="186" y="100" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="OCW-qd-SX1">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1339,7 +1340,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="140" translatesAutoresizingMaskIntoConstraints="NO" id="QQR-NS-jnT" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="202" y="89" width="28" height="28"/>
+                                                        <rect key="frame" x="214" y="100" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="Fjb-Kn-XTF">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1347,7 +1348,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="141" translatesAutoresizingMaskIntoConstraints="NO" id="NB1-FT-KUr" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="230" y="89" width="28" height="28"/>
+                                                        <rect key="frame" x="242" y="100" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="7bW-Gi-DBZ">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1355,7 +1356,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="148" translatesAutoresizingMaskIntoConstraints="NO" id="DH0-RE-ROe" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="484" y="89" width="42" height="28"/>
+                                                        <rect key="frame" x="483" y="100" width="42" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="80m-kH-yI2">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1363,7 +1364,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="147" translatesAutoresizingMaskIntoConstraints="NO" id="ny6-Ba-bWV" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="393" y="89" width="56" height="28"/>
+                                                        <rect key="frame" x="410" y="100" width="56" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape200x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="qHy-e0-5Yt">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1371,7 +1372,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="142" translatesAutoresizingMaskIntoConstraints="NO" id="ok5-sJ-vbu" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="258" y="89" width="28" height="28"/>
+                                                        <rect key="frame" x="270" y="100" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="PTR-26-UX5">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1379,7 +1380,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="143" translatesAutoresizingMaskIntoConstraints="NO" id="Ula-zQ-Ngr" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="285" y="89" width="28" height="28"/>
+                                                        <rect key="frame" x="298" y="100" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="Mjj-7y-tHP">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1387,7 +1388,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="144" translatesAutoresizingMaskIntoConstraints="NO" id="cIY-eD-BEE" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="312" y="89" width="28" height="28"/>
+                                                        <rect key="frame" x="326" y="100" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="pCI-rC-qVt">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1395,7 +1396,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="145" translatesAutoresizingMaskIntoConstraints="NO" id="cAc-JZ-Ekd" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="339" y="89" width="28" height="28"/>
+                                                        <rect key="frame" x="354" y="100" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="TdQ-Fq-IP0">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1403,7 +1404,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="146" translatesAutoresizingMaskIntoConstraints="NO" id="UxL-kY-jRz" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="366" y="89" width="28" height="28"/>
+                                                        <rect key="frame" x="382" y="100" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="b7T-WF-3fu">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1411,7 +1412,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="133" translatesAutoresizingMaskIntoConstraints="NO" id="hbM-NX-I26" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="10" y="89" width="28" height="28"/>
+                                                        <rect key="frame" x="18" y="100" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="sDP-SE-ZAa">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1419,7 +1420,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="149" translatesAutoresizingMaskIntoConstraints="NO" id="fKF-51-zxV" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="10" y="62" width="28" height="28"/>
+                                                        <rect key="frame" x="18" y="73" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="pdM-3O-PgH">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1427,7 +1428,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="151" translatesAutoresizingMaskIntoConstraints="NO" id="nGp-8d-DiE" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="78" y="62" width="28" height="28"/>
+                                                        <rect key="frame" x="88" y="73" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="MMd-UA-rnc">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1435,7 +1436,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="152" translatesAutoresizingMaskIntoConstraints="NO" id="wZO-pG-vE0" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="105" y="62" width="28" height="28"/>
+                                                        <rect key="frame" x="116" y="73" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="Nha-LV-IFm">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1443,7 +1444,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="153" translatesAutoresizingMaskIntoConstraints="NO" id="9UZ-cQ-t4T" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="132" y="62" width="28" height="28"/>
+                                                        <rect key="frame" x="144" y="73" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="FXx-wP-wap">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1451,7 +1452,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="154" translatesAutoresizingMaskIntoConstraints="NO" id="yHd-DX-2dt" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="160" y="62" width="28" height="28"/>
+                                                        <rect key="frame" x="172" y="73" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="A2H-F7-QUc">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1459,7 +1460,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="155" translatesAutoresizingMaskIntoConstraints="NO" id="VJH-hK-emB" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="187" y="62" width="28" height="28"/>
+                                                        <rect key="frame" x="200" y="73" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="ALG-BS-sN7">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1467,7 +1468,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="156" translatesAutoresizingMaskIntoConstraints="NO" id="7FM-Hb-MlV" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="214" y="62" width="28" height="28"/>
+                                                        <rect key="frame" x="228" y="73" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="Urh-FX-wGf">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1475,7 +1476,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="150" translatesAutoresizingMaskIntoConstraints="NO" id="ns3-lM-QON" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="37" y="62" width="42" height="28"/>
+                                                        <rect key="frame" x="46" y="73" width="42" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="dte-Kc-BOY">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1483,7 +1484,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="164" translatesAutoresizingMaskIntoConstraints="NO" id="POR-eP-WTI" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="484" y="62" width="42" height="28"/>
+                                                        <rect key="frame" x="483" y="73" width="42" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="hRh-my-4oC">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1491,7 +1492,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="157" translatesAutoresizingMaskIntoConstraints="NO" id="eIt-Qx-3J9" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="241" y="62" width="28" height="28"/>
+                                                        <rect key="frame" x="256" y="73" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="Xl9-Nc-Jx4">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1499,7 +1500,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="158" translatesAutoresizingMaskIntoConstraints="NO" id="5mh-NE-Mbf" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="269" y="62" width="28" height="28"/>
+                                                        <rect key="frame" x="284" y="73" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="zlG-NP-T7F">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1507,7 +1508,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="159" translatesAutoresizingMaskIntoConstraints="NO" id="wwJ-5I-3EC" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="297" y="62" width="28" height="28"/>
+                                                        <rect key="frame" x="312" y="73" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="vJ7-Co-wgE">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1515,7 +1516,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="160" translatesAutoresizingMaskIntoConstraints="NO" id="MnD-lm-GdQ" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="324" y="62" width="28" height="28"/>
+                                                        <rect key="frame" x="340" y="73" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="8hg-ev-6fM">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1523,7 +1524,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="162" translatesAutoresizingMaskIntoConstraints="NO" id="S7X-5Q-e6w" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="393" y="62" width="28" height="28"/>
+                                                        <rect key="frame" x="410" y="73" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="tvt-wn-fOD">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1531,7 +1532,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="163" translatesAutoresizingMaskIntoConstraints="NO" id="o9B-YN-qwN" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="421" y="62" width="28" height="28"/>
+                                                        <rect key="frame" x="438" y="73" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape100x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="HsC-2S-yJg">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1539,7 +1540,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="161" translatesAutoresizingMaskIntoConstraints="NO" id="LRy-RA-N07" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="352" y="62" width="42" height="28"/>
+                                                        <rect key="frame" x="368" y="73" width="42" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape150x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="XFe-wk-n9p">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1547,7 +1548,7 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="165" translatesAutoresizingMaskIntoConstraints="NO" id="6q7-mY-RwT" customClass="RecordButton" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="91" y="35" width="192" height="28"/>
+                                                        <rect key="frame" x="98" y="46" width="248" height="28"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shape900x100" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="5BP-CY-h4H">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1555,9 +1556,9 @@ DQ
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wkv-m0-U55">
-                                                        <rect key="frame" x="508" y="11" width="18" height="18"/>
+                                                        <rect key="frame" x="425" y="12" width="22" height="22"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="trashTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" imageScaling="proportionallyDown" inset="2" id="3wR-Fm-dz0">
+                                                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="instructions3Template" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" imageScaling="proportionallyDown" inset="2" id="3wR-Fm-dz0">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
@@ -1566,16 +1567,36 @@ DQ
                                                         </connections>
                                                     </button>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="fYf-Al-G6G">
-                                                        <rect key="frame" x="460" y="13" width="48" height="16"/>
+                                                        <rect key="frame" x="394" y="16" width="31" height="16"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Unmap" id="pw1-sR-NMC">
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Map" id="pw1-sR-NMC">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f42-tG-5jV">
+                                                        <rect key="frame" x="504" y="12" width="22" height="22"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="instructions4Template" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" imageScaling="proportionallyDown" inset="2" id="DTo-Kr-Gcq">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="trashKeyAction:" target="-2" id="OCw-By-9Ky"/>
+                                                        </connections>
+                                                    </button>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PTQ-3s-9Ps">
+                                                        <rect key="frame" x="456" y="16" width="48" height="16"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Unmap" id="Nhj-zr-xNZ">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="fCj-zh-fKC">
-                                                        <rect key="frame" x="8" y="11" width="410" height="16"/>
+                                                        <rect key="frame" x="12" y="16" width="297" height="16"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Mapped to Mac key 142 ('a')" id="WRf-kG-HTf">
                                                             <font key="font" metaFont="system"/>
@@ -2033,12 +2054,13 @@ DQ
         </window>
     </objects>
     <resources>
+        <image name="instructions3Template" width="214" height="296"/>
+        <image name="instructions4Template" width="214" height="296"/>
         <image name="joystick2" width="261" height="300"/>
         <image name="key" width="198" height="187"/>
         <image name="shape100x100" width="36" height="36"/>
         <image name="shape150x100" width="54" height="36"/>
         <image name="shape200x100" width="72" height="36"/>
         <image name="shape900x100" width="325" height="36"/>
-        <image name="trashTemplate" width="512" height="512"/>
     </resources>
 </document>

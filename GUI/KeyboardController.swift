@@ -155,7 +155,7 @@ class KeyboardController: NSObject {
     func keyDown(with macKey: MacKey, keyMap: [MacKey: C64Key]) {
         
         if let key = keyMap[macKey] {
-            keyboard.pressKey(atRow: key.row, col: key.col)
+            keyboard.pressKey(key.nr)
         }
     }
         
@@ -186,7 +186,7 @@ class KeyboardController: NSObject {
     func keyUp(with macKey: MacKey, keyMap: [MacKey: C64Key]) {
         
         if let key = keyMap[macKey] {
-            keyboard.releaseKey(atRow: key.row, col: key.col)
+            keyboard.releaseKey(key.nr)
         }
     }
     
