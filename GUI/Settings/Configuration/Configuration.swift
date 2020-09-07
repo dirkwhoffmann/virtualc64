@@ -52,6 +52,16 @@ class Configuration {
         set { c64.configure(OPT_HIDE_SPRITES, enable: newValue) }
     }
 
+    var vicCutLayers: Int {
+        get { return c64.getConfig(OPT_CUT_LAYERS) }
+        set { c64.configure(OPT_CUT_LAYERS, value: newValue) }
+    }
+
+    var vicCutOpacity: Int {
+        get { return c64.getConfig(OPT_CUT_OPACITY) }
+        set { c64.configure(OPT_CUT_OPACITY, value: newValue) }
+    }
+
     var vicSSCollisions: Bool {
         get { return c64.getConfig(OPT_SS_COLLISIONS) != 0 }
         set { c64.configure(OPT_SS_COLLISIONS, enable: newValue) }

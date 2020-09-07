@@ -175,6 +175,8 @@ C64::getConfigItem(ConfigOption option)
         case OPT_MARK_IRQ_LINES:
         case OPT_MARK_DMA_LINES:
         case OPT_HIDE_SPRITES:
+        case OPT_CUT_LAYERS:
+        case OPT_CUT_OPACITY:
         case OPT_SS_COLLISIONS:
         case OPT_SB_COLLISIONS:
             return vic.getConfigItem(option);

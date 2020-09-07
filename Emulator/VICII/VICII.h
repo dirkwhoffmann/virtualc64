@@ -570,6 +570,10 @@ private:
      * sprite pixel is drawn, a distinct bit in the pixelSource array is set.
      * The information is needed to detect sprite-sprite and sprite-background
      * collisions.
+     *
+     *     Bit      8 |  7 |  6 |  5 |  4 |  3 |  2 |  1 |  0
+     *     --------------------------------------------------
+     *     Format: FG | S7 | S6 | S5 | S4 | S3 | S2 | S1 | S0
      */
     u16 pixelSource[TEX_WIDTH];
     
@@ -1343,20 +1347,24 @@ private:
     // Draw a single sprite pixel
     void setSpritePixel(unsigned sprite, unsigned pixel, u8 color);
         
-    /* Draw a horizontal colored line into the screen buffer. This method is
-     * utilized for debugging purposes, only.
-     */
-    void markLine(u8 color, unsigned start = 0, unsigned end = TEX_WIDTH - 1);
-
     
 	//
-	// The following functions are used by the GUI debugger
+	// Debugging
 	//
 
 public: 
 
     // Returns the current screen geometry
     ScreenGeometry getScreenGeometry(void);
+
+    /* Draw a horizontal colored line into the screen buffer. This method is
+     * utilized for debugging purposes, only.
+     */
+    void markLine(u8 color, unsigned start = 0, unsigned end = TEX_WIDTH - 1);
+
+    /* Cuts out certain graphics layers
+     */
+    void cutLayers();
 };
 
 #endif

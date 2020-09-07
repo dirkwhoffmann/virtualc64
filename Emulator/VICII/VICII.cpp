@@ -24,6 +24,8 @@ VICII::VICII(C64 &ref) : C64Component(ref)
     
     config.grayDotBug = true;
     config.palette = COLOR_PALETTE;
+    config.cutLayers = 0xFF;
+    config.cutOpacity = 0xFF;
     
     // Assign reference clock to all time delayed variables
     baLine.setClock(&cpu.cycle);
@@ -95,6 +97,8 @@ VICII::getConfigItem(ConfigOption option)
         case OPT_MARK_IRQ_LINES: return config.markIrqLines;
         case OPT_MARK_DMA_LINES: return config.markDmaLines;
         case OPT_HIDE_SPRITES:   return config.hideSprites;
+        case OPT_CUT_LAYERS:     return config.cutLayers;
+        case OPT_CUT_OPACITY:    return config.cutOpacity;
         case OPT_SS_COLLISIONS:  return config.checkSSCollisions;
         case OPT_SB_COLLISIONS:  return config.checkSBCollisions;
 
@@ -156,6 +160,14 @@ VICII::setConfigItem(ConfigOption option, long value)
             config.hideSprites = value;
             return true;
 
+        case OPT_CUT_LAYERS:
+            config.cutLayers = value;
+            return true;
+            
+        case OPT_CUT_OPACITY:
+            config.cutOpacity = value;
+            return false; // False to avoid MSG_CONFIG being sent to the GUI
+            
         case OPT_SS_COLLISIONS:
             config.checkSSCollisions = value;
             return true;
@@ -888,9 +900,12 @@ VICII::endRasterline()
         setVerticalFrameFF(true);
     }
     
+    // Cut out layers if requested
+    if (config.cutLayers) cutLayers();
+
     // Prepare buffers ready for the next line
     for (unsigned i = 0; i < TEX_WIDTH; i++) { zBuffer[i] = pixelSource[i] = 0; }
-
+    
     // Draw debug markers
     if (config.markIrqLines && yCounter == rasterInterruptLine())
         markLine(VICII_WHITE);
@@ -900,11 +915,3 @@ VICII::endRasterline()
     // Advance pixelBuffer
     pixelBuffer = currentScreenBuffer + (c64.rasterLine * TEX_WIDTH);
 }
-
-
-
-
-
-
-
-

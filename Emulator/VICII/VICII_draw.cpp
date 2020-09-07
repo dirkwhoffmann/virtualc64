@@ -532,3 +532,47 @@ VICII::markLine(u8 color, unsigned start, unsigned end)
         pixelBuffer[start + i] = rgba;
     }
 }
+
+void
+VICII::cutLayers()
+{
+    for (int i = 0; i < TEX_WIDTH; i++) {
+        
+        bool cut;
+
+        switch (zBuffer[i]) {
+
+            case BORDER_LAYER_DEPTH:
+                cut = config.cutLayers & 0x800;
+                break;
+                                
+            case FOREGROUND_LAYER_DEPTH:
+                cut = config.cutLayers & 0x400;
+                break;
+                
+            case BACKGROUD_LAYER_DEPTH:
+                cut = config.cutLayers & 0x200;
+                break;
+                
+            default:
+                cut = pixelSource[i] & config.cutLayers & 0xFF;
+                if (!(config.cutLayers & 0x100)) cut = false;
+                break;
+        }
+        
+        if (cut) {
+            
+            u8 r = pixelBuffer[i] & 0xFF;
+            u8 g = (pixelBuffer[i] >> 8) & 0xFF;
+            u8 b = (pixelBuffer[i] >> 16) & 0xFF;
+
+            double scale = config.cutOpacity / 255.0;
+            u8 bg = (rasterline() / 4) % 2 == (i / 4) % 2 ? 0x22 : 0x44;
+            u8 newr = (u8)(r * (1 - scale) + bg * scale);
+            u8 newg = (u8)(g * (1 - scale) + bg * scale);
+            u8 newb = (u8)(b * (1 - scale) + bg * scale);
+            
+            pixelBuffer[i] = 0xFF000000 | newb << 16 | newg << 8 | newr;
+        }
+    }
+}

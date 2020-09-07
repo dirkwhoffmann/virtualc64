@@ -127,6 +127,8 @@ typedef struct
     bool markIrqLines;
     bool markDmaLines;
     bool hideSprites;
+    u16  cutLayers;
+    u8   cutOpacity;
     
     // Cheating
     bool checkSSCollisions;

@@ -21,6 +21,21 @@ class Monitor: DialogController {
     @IBOutlet weak var ssCollision: NSButton!
     @IBOutlet weak var sbCollision: NSButton!
         
+    // Stencils
+    @IBOutlet weak var cutBorder: NSButton!
+    @IBOutlet weak var cutForeground: NSButton!
+    @IBOutlet weak var cutBackground: NSButton!
+    @IBOutlet weak var cutSprites: NSButton!
+    @IBOutlet weak var cutSprite0: NSButton!
+    @IBOutlet weak var cutSprite1: NSButton!
+    @IBOutlet weak var cutSprite2: NSButton!
+    @IBOutlet weak var cutSprite3: NSButton!
+    @IBOutlet weak var cutSprite4: NSButton!
+    @IBOutlet weak var cutSprite5: NSButton!
+    @IBOutlet weak var cutSprite6: NSButton!
+    @IBOutlet weak var cutSprite7: NSButton!
+    @IBOutlet weak var cutOpacity: NSSlider!
+    
     override func awakeFromNib() {
         
         track()
@@ -37,6 +52,30 @@ class Monitor: DialogController {
 
         ssCollision.state = config.vicSSCollisions ? .on : .off
         sbCollision.state = config.vicSBCollisions ? .on : .off
+        
+        let layers = config.vicCutLayers
+        cutForeground.state = (layers & 0x800) != 0 ? .on : .off
+        cutForeground.state = (layers & 0x400) != 0 ? .on : .off
+        cutBackground.state = (layers & 0x200) != 0 ? .on : .off
+        cutSprites.state = (layers & 0x100) != 0 ? .on : .off
+        cutSprite7.state = (layers & 0x80) != 0 ? .on : .off
+        cutSprite6.state = (layers & 0x40) != 0 ? .on : .off
+        cutSprite5.state = (layers & 0x20) != 0 ? .on : .off
+        cutSprite4.state = (layers & 0x10) != 0 ? .on : .off
+        cutSprite3.state = (layers & 0x08) != 0 ? .on : .off
+        cutSprite2.state = (layers & 0x04) != 0 ? .on : .off
+        cutSprite1.state = (layers & 0x02) != 0 ? .on : .off
+        cutSprite0.state = (layers & 0x01) != 0 ? .on : .off
+        cutOpacity.integerValue = config.vicCutOpacity        
+
+        cutSprite7.isEnabled = (layers & 0x100) != 0
+        cutSprite6.isEnabled = (layers & 0x100) != 0
+        cutSprite5.isEnabled = (layers & 0x100) != 0
+        cutSprite4.isEnabled = (layers & 0x100) != 0
+        cutSprite3.isEnabled = (layers & 0x100) != 0
+        cutSprite2.isEnabled = (layers & 0x100) != 0
+        cutSprite1.isEnabled = (layers & 0x100) != 0
+        cutSprite0.isEnabled = (layers & 0x100) != 0
     }
         
     //
@@ -87,6 +126,55 @@ class Monitor: DialogController {
         
         track()
         config.vicSBCollisions = sender.state == .on
+        refresh()
+    }
+    
+    @IBAction func cutOpacityAction(_ sender: NSSlider!) {
+        
+        config.vicCutOpacity = sender.integerValue
+        refresh()
+    }
+    
+    func addLayer(_ mask: Int) {
+        config.vicCutLayers = config.vicCutLayers | mask
+    }
+    func removeLayer(_ mask: Int) {
+        config.vicCutLayers = config.vicCutLayers & ~mask
+    }
+
+    @IBAction func cutBorderAction(_ sender: NSButton!) {
+    
+        track()
+        sender.state == .on ? addLayer(0x800) : removeLayer(0x800)
+        refresh()
+    }
+
+    @IBAction func cutForegroundAction(_ sender: NSButton!) {
+    
+        track()
+        sender.state == .on ? addLayer(0x400) : removeLayer(0x400)
+        refresh()
+    }
+
+    @IBAction func cutBackgroundAction(_ sender: NSButton!) {
+    
+        track()
+        sender.state == .on ? addLayer(0x200) : removeLayer(0x200)
+        refresh()
+    }
+
+    @IBAction func cutSpritesAction(_ sender: NSButton!) {
+    
+        track()
+        sender.state == .on ? addLayer(0x100) : removeLayer(0x100)
+        refresh()
+    }
+
+    @IBAction func cutSingleSpriteAction(_ sender: NSButton!) {
+    
+        let sprite = sender.tag
+        track()
+        sender.state == .on ? addLayer(1 << sprite) : removeLayer(1 << sprite)
         refresh()
     }
 }
