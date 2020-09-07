@@ -155,10 +155,10 @@ VICII::drawCanvas()
 
 void
 VICII::drawCanvasPixel(u8 pixel,
-                             u8 mode,
-                             u8 d016,
-                             bool loadShiftReg,
-                             bool updateColors)
+                       u8 mode,
+                       u8 d016,
+                       bool loadShiftReg,
+                       bool updateColors)
 {
     assert(pixel < 8);
     
@@ -312,27 +312,29 @@ VICII::drawSprites()
     // Check for collisions
     for (unsigned i = 0; i < 8; i++) {
         
+        int index = bufferoffset + i;
+        
         // Check if two or more bits are set in pixelSource
-        if (pixelSource[i] & (pixelSource[i] - 1)) {
+        if (pixelSource[index] & (pixelSource[index] - 1)) {
             
             // Is it a sprite/sprite collision?
-            if ((pixelSource[i] & 0xFF) & ((pixelSource[i] & 0xFF) - 1)) {
+            if ((pixelSource[index] & 0xFF) & ((pixelSource[index] & 0xFF) - 1)) {
                 
                 // Trigger an IRQ if this is the first detected collision
                 if (!spriteSpriteCollision) {
                     triggerIrq(4);
                 }
-                spriteSpriteCollision |= (pixelSource[i] & 0xFF);
+                spriteSpriteCollision |= (pixelSource[index] & 0xFF);
             }
             
             // Is it a sprite/background collision?
-            if ((pixelSource[i] & 0x100) && config.checkSBCollisions) {
+            if ((pixelSource[index] & 0x100) && config.checkSBCollisions) {
                 
                 // Trigger an IRQ if this is the first detected collision
                 if (!spriteBackgroundColllision) {
                     triggerIrq(2);
                 }
-                spriteBackgroundColllision |= (pixelSource[i] & 0xFF);
+                spriteBackgroundColllision |= (pixelSource[index] & 0xFF);
             }
         }
     }
@@ -503,20 +505,21 @@ VICII::setSpritePixel(unsigned sprite, unsigned pixel, u8 color)
 {
     u8 depth = spriteDepth(sprite);
     u8 source = (1 << sprite);
+    int index = bufferoffset + pixel;
     
-    if (depth <= zBuffer[pixel]) {
+    if (depth <= zBuffer[index]) {
         
         /* "the interesting case is when eg sprite 1 and sprite 0 overlap, and
          *  sprite 0 has the priority bit set (and sprite 1 has not). in this
          *  case 10/11 background bits show in front of whole sprite 0."
          * Test program: VICII/spritePriorities
          */
-        if (!(pixelSource[pixel] & 0xFF)) {
-            if (isVisibleColumn) COLORIZE(pixel, color);
-            zBuffer[pixel] = depth;
+        if (!(pixelSource[index] & 0xFF)) {
+            if (isVisibleColumn) COLORIZE(index, color);
+            zBuffer[index] = depth;
         }
     }
-    pixelSource[pixel] |= source;
+    pixelSource[index] |= source;
 }
 
 void

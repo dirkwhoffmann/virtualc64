@@ -888,6 +888,9 @@ VICII::endRasterline()
         setVerticalFrameFF(true);
     }
     
+    // Prepare buffers ready for the next line
+    for (unsigned i = 0; i < TEX_WIDTH; i++) { zBuffer[i] = pixelSource[i] = 0; }
+
     // Draw debug markers
     if (config.markIrqLines && yCounter == rasterInterruptLine())
         markLine(VICII_WHITE);

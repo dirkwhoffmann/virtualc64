@@ -20,6 +20,10 @@ class EasyFlash : public Cartridge {
     // Flash Rom mapping to ROMH ($A000 - $B000 or $E000 - $FFFF)
     FlashRom flashRomH = FlashRom(c64);
     
+    // Registers register
+    u8 bankReg = 0;
+    u8 modeReg = 0;
+    
     // Selected memory bank
     u8 bank = 0;
     
@@ -70,6 +74,8 @@ private:
     {
         worker
         
+        & bankReg
+        & modeReg
         & bank;
     }
     
@@ -103,6 +109,8 @@ public:
     u8 peekIO2(u16 addr) override;
     void pokeIO1(u16 addr, u8 value) override;
     void pokeIO2(u16 addr, u8 value) override;
+    void pokeBankReg(u8 value);
+    void pokeModeReg(u8 value);
     bool hasLED() override { return true; }
 };
 

@@ -151,116 +151,120 @@ EasyFlash::poke(u16 addr, u8 value)
 void
 EasyFlash::pokeRomL(u16 addr, u8 value)
 {
-    debug(CRT_DEBUG, "pokeRomL(%x, %x)\n", addr, value);
+    plaindebug(CRT_DEBUG, "pokeRomL(%x, %x)\n", addr, value);
     flashRomL.poke(bank, addr & 0x1FFF, value);
 }
 
 void
 EasyFlash::pokeRomH(u16 addr, u8 value)
 {
-    debug(CRT_DEBUG, "pokeRomH(%x, %x)\n", addr, value);
+    plaindebug(CRT_DEBUG, "pokeRomH(%x, %x)\n", addr, value);
     flashRomH.poke(bank, addr & 0x1FFF, value);
 }
 
 u8
 EasyFlash::peekIO1(u16 addr)
 {
-    debug(CRT_DEBUG, "peekIO1(%x)\n", addr);
-    return 0;
+    u8 result = (addr & 2) ? (modeReg & 0x87) : bankReg;
+    plaindebug(CRT_DEBUG, "peekIO1(%x): %x\n", addr, result);
+    return result;
 }
 
 u8
 EasyFlash::peekIO2(u16 addr)
 {
-    // debug(CRT_DEBUG, "peekIO2(%x)\n", addr);
-
-    return peekRAM(addr & 0xFF);
+    u8 result = peekRAM(addr & 0xFF);
+    plaindebug(CRT_DEBUG, "peekIO2(%x): %x\n", addr, result);
+    
+    return result;
 }
 
 void
 EasyFlash::pokeIO1(u16 addr, u8 value)
 {
-    debug(CRT_DEBUG, "pokeIO1(%x,%x)\n", addr, value);
+    plaindebug(CRT_DEBUG, "pokeIO1(%x,%x)\n", addr, value);
     
-    if (addr == 0xDE00) { // Bank register
-               
-        bank = value & 0x3F;
-        debug(CRT_DEBUG, "Switching to bank %d\n", bank);
-        return;
+    (addr & 2) ? pokeModeReg(value) : pokeBankReg(value);
+}
+
+void
+EasyFlash::pokeBankReg(u8 value)
+{
+    bankReg = value;
+    bank = value & 0x3F;
+    plaindebug(CRT_DEBUG, "Switching to bank %d\n", bank);
+}
+
+void
+EasyFlash::pokeModeReg(u8 value)
+{
+    modeReg = value;
+    // c64.signalBreakpoint();
+    
+    setLED((value & 0x80) != 0);
+    
+    u8 MXG = value & 0x07;
+    /* MXG
+     * 0 (000) : GAME from jumper, EXROM high (i.e. Ultimax or Off)
+     * 1 (001) : Reserved, don’t use this
+     * 2 (010) : GAME from jumper, EXROM low (i.e. 16K or 8K)
+     * 3 (011) : Reserved, don’t use this
+     * 4 (100) : Cartridge ROM off (RAM at $DF00 still available)
+     * 5 (101) : Ultimax (Low bank at $8000, high bank at $e000)
+     * 6 (110) : 8k Cartridge (Low bank at $8000)
+     * 7 (111) : 16k cartridge (Low bank at $8000, high bank at $a000)
+     */
+    
+    bool exrom;
+    bool game;
+    
+    plaindebug(CRT_DEBUG, "MXG = %x\n", MXG);
+    switch (MXG) {
+            
+        case 0b000:
+        case 0b001:
+            game = jumper;
+            exrom = 1;
+            break;
+            
+        case 0b010:
+        case 0b011:
+            game = jumper;
+            exrom = 0;
+            break;
+            
+        case 0b100:
+            game = 1;
+            exrom = 1;
+            break;
+            
+        case 0b101:
+            game = 0;
+            exrom = 1;
+            break;
+            
+        case 0b110:
+            game = 1;
+            exrom = 0;
+            break;
+            
+        case 0b111:
+            game = 0;
+            exrom = 0;
+            break;
+            
+        default:
+            assert(false);
+            return;
     }
     
-    if (addr == 0xDE02) { // Mode register
-        
-        // c64.signalBreakpoint();
-        
-        setLED((value & 0x80) != 0);
-        
-        u8 MXG = value & 0x07;
-        /* MXG
-         * 0 (000) : GAME from jumper, EXROM high (i.e. Ultimax or Off)
-         * 1 (001) : Reserved, don’t use this
-         * 2 (010) : GAME from jumper, EXROM low (i.e. 16K or 8K)
-         * 3 (011) : Reserved, don’t use this
-         * 4 (100) : Cartridge ROM off (RAM at $DF00 still available)
-         * 5 (101) : Ultimax (Low bank at $8000, high bank at $e000)
-         * 6 (110) : 8k Cartridge (Low bank at $8000)
-         * 7 (111) : 16k cartridge (Low bank at $8000, high bank at $a000)
-         */
-        
-        bool exrom;
-        bool game;
-        
-        debug(CRT_DEBUG, "MXG = %x\n", MXG);
-        switch (MXG) {
-                
-            case 0b000:
-            case 0b001:
-                game = jumper;
-                exrom = 1;
-                break;
-                
-            case 0b010:
-            case 0b011:
-                game = jumper;
-                exrom = 0;
-                break;
-                
-            case 0b100:
-                game = 1;
-                exrom = 1;
-                break;
-                
-            case 0b101:
-                game = 0;
-                exrom = 1;
-                break;
-                
-            case 0b110:
-                game = 1;
-                exrom = 0;
-                break;
-                
-            case 0b111:
-                game = 0;
-                exrom = 0;
-                break;
-                
-            default:
-                assert(false);
-                return;
-        }
-        
-        expansionport.setGameAndExrom(game, exrom);
-    }
+    expansionport.setGameAndExrom(game, exrom);
 }
 
 void
 EasyFlash::pokeIO2(u16 addr, u8 value)
 {
-    // debug(CRT_DEBUG, "pokeIO2(%x,%x)\n", addr, value);
+    plaindebug(CRT_DEBUG, "pokeIO2(%x,%x)\n", addr, value);
 
     pokeRAM(addr & 0xFF, value);
 }
-
-
-
