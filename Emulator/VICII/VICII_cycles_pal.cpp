@@ -7,6 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#if 0
+
 #include "C64.h"
 
 /* All cycles are processed in this order:
@@ -686,3 +688,5 @@ VICII::cycle63pal()
     
     END_CYCLE
 }
+
+#endif

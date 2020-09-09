@@ -7,6 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#if 0
+
 #include "C64.h"
 
 void
@@ -504,5 +506,4 @@ VICII::cycle65ntsc()
     END_CYCLE
 }
 
-
-
+#endif

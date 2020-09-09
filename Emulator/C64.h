@@ -345,7 +345,8 @@ private:
     void _run() override;
     void _pause() override;
     void _setWarp(bool enable) override;
-    
+    void _setDebug(bool enable) override;
+
 
     //
     // Working with the emulator thread

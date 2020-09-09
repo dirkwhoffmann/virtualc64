@@ -220,35 +220,7 @@ private:
      * previous drawn pixel.
      */
     SpriteSR spriteSr[8];
-    
-#if 0
-    struct {
         
-        // Shift register data (24 bit)
-        u32 data;
-        
-        // The shift register data is read in three chunks
-        u8 chunk1, chunk2, chunk3;
-        
-        /* Multi-color synchronization flipflop. Whenever the shift register is
-         * loaded, the synchronization flipflop is also set. It is toggled with
-         * each pixel and used to synchronize the synthesis of multi-color
-         * pixels.
-         */
-        bool mcFlop;
-        
-        // X expansion synchronization flipflop
-        bool expFlop;
-        
-        /* Color bits of the currently processed pixel. In single-color mode,
-         * these bits are updated every cycle. In multi-color mode, these bits
-         * are updated every second cycle (synchronized with mcFlop).
-         */
-        u8 colBits;
-                
-    } spriteSr[8];
-#endif
-    
     /* Indicates for each sprite if the shift register is active. Once the
      * shift register is started, it runs as long it contains at least one '1'
      * bit (data != 0).
@@ -482,38 +454,10 @@ private:
     double contrast = 100.0;
     double saturation = 50.0;
 
-    
-	//
-	// Debugging and cheating
-	//
-	
-public:
-    
-	/* Determines whether sprites are drawn or not. By default, this variable
-     * is set to false. It can be set to true for debugging purposes.
-	 */
-	// bool hideSprites;
-	
-	/* Enables sprite-sprite or sprite-background collisions checks. If set to
-     * true, VICII checks for collisions the same ways as the original C64
-     * does. Collision detection can be enabled or disabled for each sprite
-     * seperately. Each bit is dedicated to a single sprite.
-     */
-	// u8 spriteSpriteCollisionEnabled;
-	// u8 spriteBackgroundCollisionEnabled;
-	
-	/* Determines whether IRQ lines will be made visible. Each rasterline that
-     * will potentially trigger a raster IRQ is highlighted. This feature is
-     * useful for debugging purposes as it visualizes how the screen is divided
-     * into multiple parts.
-     */
-	// bool markIRQLines = false;
-	
-	/* Determines whether DMA lines will be made visible. Note that partial DMA
-     * lines may not appear.
-     */
-	// bool markDMALines = false;
-
+ 
+    //
+    // Pipeline
+    //
     
 private:
     
@@ -621,21 +565,6 @@ public:
     
     VICRevision getRevision() { return config.revision; }    
     void setRevision(VICRevision revision);
-    
-    // Returns the currently used palette type
-    // Palette getPalette() { return config.palette; }
-     
-    // Sets the palette type
-    // void setPalette(Palette type);
-
-    
-    /*
-    bool getGrayDotBug() { return config.grayDotBug; }
-    void setGrayDotBug(bool value) { config.grayDotBug = value; }
-    
-    GlueLogic getGlueLogic() { return config.glueLogic; }
-    void setGlueLogic(GlueLogic type);
-    */
     
 private:
     
