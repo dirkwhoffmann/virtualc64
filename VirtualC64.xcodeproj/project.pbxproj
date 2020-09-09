@@ -90,7 +90,6 @@
 		504C438324AF29AC00E69CAE /* HardwareComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42EE24AF29AB00E69CAE /* HardwareComponent.cpp */; };
 		504C438424AF29AC00E69CAE /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42EF24AF29AB00E69CAE /* Utils.cpp */; };
 		504C438524AF29AC00E69CAE /* MessageQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F124AF29AB00E69CAE /* MessageQueue.cpp */; };
-		504C438624AF29AC00E69CAE /* TimeDelayed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F324AF29AB00E69CAE /* TimeDelayed.cpp */; };
 		504C438724AF29AC00E69CAE /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F724AF29AB00E69CAE /* C64.cpp */; };
 		504C438824AF29AC00E69CAE /* Mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42FC24AF29AB00E69CAE /* Mouse.cpp */; };
 		504C438924AF29AC00E69CAE /* NeosMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42FD24AF29AB00E69CAE /* NeosMouse.cpp */; };
@@ -194,6 +193,7 @@
 		50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */; };
 		50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */; };
 		50D197E021606DEC008BC551 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 50D197DF21606DEC008BC551 /* dsa_pub.pem */; };
+		50D20B752508F6D70088E8F2 /* VICII_cycles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D20B742508F6D70088E8F2 /* VICII_cycles.cpp */; };
 		50D2A69E210F20CB00F13D43 /* VirtualKeyboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */; };
 		50D2A6A0210F20F700F13D43 /* VirtualKeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */; };
 		50D3091E24C5CE1A00B92563 /* MyControllerStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3091D24C5CE1A00B92563 /* MyControllerStatusBar.swift */; };
@@ -380,7 +380,6 @@
 		504C42F024AF29AB00E69CAE /* TimeDelayed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeDelayed.h; sourceTree = "<group>"; };
 		504C42F124AF29AB00E69CAE /* MessageQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageQueue.cpp; sourceTree = "<group>"; };
 		504C42F224AF29AB00E69CAE /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
-		504C42F324AF29AB00E69CAE /* TimeDelayed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimeDelayed.cpp; sourceTree = "<group>"; };
 		504C42F424AF29AB00E69CAE /* MessageQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageQueue.h; sourceTree = "<group>"; };
 		504C42F524AF29AB00E69CAE /* HardwareComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HardwareComponent.h; sourceTree = "<group>"; };
 		504C42F624AF29AB00E69CAE /* C64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64.h; sourceTree = "<group>"; };
@@ -545,6 +544,7 @@
 		50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePadManager.swift; sourceTree = "<group>"; };
 		50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerMenu.swift; sourceTree = "<group>"; };
 		50D197DF21606DEC008BC551 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
+		50D20B742508F6D70088E8F2 /* VICII_cycles.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_cycles.cpp; sourceTree = "<group>"; };
 		50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VirtualKeyboard.xib; sourceTree = "<group>"; };
 		50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualKeyboardController.swift; sourceTree = "<group>"; };
 		50D3091D24C5CE1A00B92563 /* MyControllerStatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerStatusBar.swift; sourceTree = "<group>"; };
@@ -941,6 +941,7 @@
 				504C430524AF29AB00E69CAE /* VICII_draw.cpp */,
 				504C430824AF29AC00E69CAE /* VICII_colors.cpp */,
 				504C430B24AF29AC00E69CAE /* VICII_memory.cpp */,
+				50D20B742508F6D70088E8F2 /* VICII_cycles.cpp */,
 				504C430A24AF29AC00E69CAE /* VICII_cycles_pal.cpp */,
 				504C430D24AF29AC00E69CAE /* VICII_cycles_ntsc.cpp */,
 				504C430924AF29AC00E69CAE /* VICII_debug.cpp */,
@@ -1155,7 +1156,6 @@
 				504C42F224AF29AB00E69CAE /* Utils.h */,
 				504C42EF24AF29AB00E69CAE /* Utils.cpp */,
 				504C42F024AF29AB00E69CAE /* TimeDelayed.h */,
-				504C42F324AF29AB00E69CAE /* TimeDelayed.cpp */,
 				5093D6A824B19E9200BDF924 /* Serialization.h */,
 				504C42EC24AF29AB00E69CAE /* C64Object.h */,
 				504C42ED24AF29AB00E69CAE /* C64Object.cpp */,
@@ -1428,6 +1428,7 @@
 				504C439A24AF29AC00E69CAE /* dac.cc in Sources */,
 				504C439024AF29AC00E69CAE /* VICII_cycles_pal.cpp in Sources */,
 				5018AF66202EDD2000B4C886 /* Defaults.swift in Sources */,
+				50D20B752508F6D70088E8F2 /* VICII_cycles.cpp in Sources */,
 				504C436A24AF29AC00E69CAE /* FreezeFrame.cpp in Sources */,
 				504C439124AF29AC00E69CAE /* VICII_memory.cpp in Sources */,
 				50FF818F1F88D9100004548A /* GamePad.swift in Sources */,
@@ -1486,7 +1487,6 @@
 				504C43A924AF29AC00E69CAE /* Drive.cpp in Sources */,
 				504C438F24AF29AC00E69CAE /* VICII_debug.cpp in Sources */,
 				50D3092824C71B0A00B92563 /* Monitor.swift in Sources */,
-				504C438624AF29AC00E69CAE /* TimeDelayed.cpp in Sources */,
 				504C436C24AF29AC00E69CAE /* Isepic.cpp in Sources */,
 				5018BFB324B48DD500551848 /* RendererSetup.swift in Sources */,
 				504C437D24AF29AC00E69CAE /* CRTFile.cpp in Sources */,

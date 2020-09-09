@@ -11,21 +11,27 @@
 
 /* All cycles are processed in this order:
  *
- *   Phi2.5 Fetch (previous cycle)
- *   Phi1.1 Frame logic
- *   Phi1.2 Draw
- *   Phi1.3 Fetch
- *   Phi2.1 Rasterline interrupt
- *   Phi2.2 Sprite logic
- *   Phi2.3 VC/RC logic
- *   Phi2.4 BA logic
+ *   Previous cycle  |  Phi2.5 Fetch (previous cycle)
+ *  -------------------------------------------------
+ *   Current cycle   |  Phi1.1 Frame logic
+ *   Phi 1 phase     |  Phi1.2 Draw
+ *                   |  Phi1.3 Fetch
+ *                   |-------------------------------
+ *   Current cycle   |  Phi2.1 Rasterline interrupt
+ *   Phi 2 phase     |  Phi2.2 Sprite logic
+ *                   |  Phi2.3 VC/RC logic
+ *                   |  Phi2.4 BA logic
  */
 
-void
-VICII::cycle1pal()
+#define PAL if (type == PAL_CYCLE || type == PAL_DEBUG_CYCLE)
+#define NTSC if (type == NTSC_CYCLE || type == NTSC_DEBUG_CYCLE)
+
+template <VICIICycleType type> void
+VICII::cycle1()
 {
     // Phi2.5 Fetch (previous cycle)
-    sThirdAccess(2);
+    PAL  { sThirdAccess(2); }
+    NTSC { sFirstAccess(3); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -37,8 +43,8 @@ VICII::cycle1pal()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    sFinalize(2);
-    pAccess(3);
+    PAL  { sFinalize(2); pAccess(3); }
+    NTSC { sSecondAccess(3); }
     
     // Phi2.1 Rasterline interrupt (edge triggered)
     bool edgeOnYCounter = (c64.rasterLine != 0);
@@ -48,20 +54,22 @@ VICII::cycle1pal()
     yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
     
     // Phi2.4 BA logic
-    BA_LINE(spriteDmaOnOff & (SPR3 | SPR4));
+    PAL  { BA_LINE(spriteDmaOnOff & (SPR3 | SPR4)); }
+    NTSC { BA_LINE(spriteDmaOnOff & (SPR3 | SPR4 | SPR5)); }
     
     END_CYCLE
 }
 
-void
-VICII::cycle2pal()
+template <VICIICycleType type> void
+VICII::cycle2()
 {
     // Check for lightpen IRQ in first rasterline
     if (!lpLine && c64.rasterLine == 0)
         checkForLightpenIrqAtStartOfFrame();
     
     // Phi2.5 Fetch (previous cycle)
-    sFirstAccess(3);
+    PAL  { sFirstAccess(3); }
+    NTSC { sThirdAccess(3); }
 
     // Check for yCounter overflows
     if (yCounterOverflow())
@@ -74,8 +82,9 @@ VICII::cycle2pal()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    sSecondAccess(3);
-    
+    PAL  { sSecondAccess(3); }
+    NTSC { sFinalize(3); pAccess(4); }
+        
     // Phi2.1 Rasterline interrupt (edge triggered)
     bool edgeOnYCounter = (yCounter == 0);
     bool edgeOnIrqCond  = (yCounter == rasterInterruptLine() && !yCounterEqualsIrqRasterline);
@@ -83,16 +92,18 @@ VICII::cycle2pal()
         triggerIrq(1);
     
     // Phi2.4 BA logic
-    BA_LINE(spriteDmaOnOff & (SPR3 | SPR4 | SPR5));
-    
+    PAL  { BA_LINE(spriteDmaOnOff & (SPR3 | SPR4 | SPR5)); }
+    NTSC { BA_LINE(spriteDmaOnOff & (SPR4 | SPR5)); }
+        
     END_CYCLE
 }
 
-void
-VICII::cycle3pal()
+template <VICIICycleType type> void
+VICII::cycle3()
 {
     // Phi2.5 Fetch (previous cycle)
-    sThirdAccess(3);
+    PAL  { sThirdAccess(3); }
+    NTSC { sFirstAccess(4); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -101,20 +112,22 @@ VICII::cycle3pal()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    sFinalize(3);
-    pAccess(4);
+    PAL  { sFinalize(3); pAccess(4); }
+    NTSC { sSecondAccess(4); }
     
     // Phi2.4 BA logic
-    BA_LINE(spriteDmaOnOff & (SPR4 | SPR5));
+    PAL  { BA_LINE(spriteDmaOnOff & (SPR4 | SPR5)); }
+    NTSC { BA_LINE(spriteDmaOnOff & (SPR4 | SPR5 | SPR6)); }
     
     END_CYCLE
 }
 
-void
-VICII::cycle4pal()
+template <VICIICycleType type> void
+VICII::cycle4()
 {
     // Phi2.5 Fetch (previous cycle)
-    sFirstAccess(4);
+    PAL  { sFirstAccess(4); }
+    NTSC { sThirdAccess(4); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -123,19 +136,22 @@ VICII::cycle4pal()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    sSecondAccess(4);
+    PAL  { sSecondAccess(4); }
+    NTSC { sFinalize(4); pAccess(5); }
     
     // Phi2.4 BA logic
-    BA_LINE(spriteDmaOnOff & (SPR4 | SPR5 | SPR6));
+    PAL  { BA_LINE(spriteDmaOnOff & (SPR4 | SPR5 | SPR6)); }
+    NTSC { BA_LINE(spriteDmaOnOff & (SPR5 | SPR6)); }
     
     END_CYCLE
 }
 
-void
-VICII::cycle5pal()
+template <VICIICycleType type> void
+VICII::cycle5()
 {
     // Phi2.5 Fetch (previous cycle)
-    sThirdAccess(4);
+    PAL  { sThirdAccess(4); }
+    NTSC { sFirstAccess(5); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -144,20 +160,22 @@ VICII::cycle5pal()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    sFinalize(4);
-    pAccess(5);
+    PAL  { sFinalize(4); pAccess(5); }
+    NTSC { sSecondAccess(5); }
     
     // Phi2.4 BA logic
-    BA_LINE(spriteDmaOnOff & (SPR5 | SPR6));
-    
+    PAL  { BA_LINE(spriteDmaOnOff & (SPR5 | SPR6)); }
+    NTSC { BA_LINE(spriteDmaOnOff & (SPR5 | SPR6 | SPR7)); }
+     
     END_CYCLE
 }
 
-void
-VICII::cycle6pal()
+template <VICIICycleType type> void
+VICII::cycle6()
 {
     // Phi2.5 Fetch (previous cycle)
-    sFirstAccess(5);
+    PAL  { sFirstAccess(5); }
+    NTSC { sThirdAccess(5); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -166,19 +184,22 @@ VICII::cycle6pal()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    sSecondAccess(5);
-    
+    PAL  { sSecondAccess(5); }
+    NTSC { sFinalize(5); pAccess(6); }
+        
     // Phi2.4 BA logic
-    BA_LINE(spriteDmaOnOff & (SPR5 | SPR6 | SPR7));
-    
+    PAL  { BA_LINE(spriteDmaOnOff & (SPR5 | SPR6 | SPR7)); }
+    NTSC { BA_LINE(spriteDmaOnOff & (SPR6 | SPR7)); }
+        
     END_CYCLE
 }
 
-void
-VICII::cycle7pal()
+template <VICIICycleType type> void
+VICII::cycle7()
 {
     // Phi2.5 Fetch (previous cycle)
-    sThirdAccess(5);
+    PAL  { sThirdAccess(5); }
+    NTSC { sFirstAccess(6); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -187,20 +208,22 @@ VICII::cycle7pal()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    sFinalize(5);
-    pAccess(6);
-    
+    PAL  { sFinalize(5); pAccess(6); }
+    NTSC { sSecondAccess(6); }
+        
     // Phi2.4 BA logic
-    BA_LINE(spriteDmaOnOff & (SPR6 | SPR7));
-    
+    PAL  { BA_LINE(spriteDmaOnOff & (SPR6 | SPR7)); }
+    NTSC { BA_LINE(spriteDmaOnOff & (SPR6 | SPR7)); }
+        
     END_CYCLE
 }
 
-void
-VICII::cycle8pal()
+template <VICIICycleType type> void
+VICII::cycle8()
 {
     // Phi2.5 Fetch (previous cycle)
-    sFirstAccess(6);
+    PAL  { sFirstAccess(6); }
+    NTSC { sThirdAccess(6); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -209,19 +232,22 @@ VICII::cycle8pal()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    sSecondAccess(6);
+    PAL  { sSecondAccess(6); }
+    NTSC { sFinalize(6); pAccess(7); }
     
     // Phi2.4 BA logic
-    BA_LINE(spriteDmaOnOff & (SPR6 | SPR7));
+    PAL  { BA_LINE(spriteDmaOnOff & (SPR6 | SPR7)); }
+    NTSC { BA_LINE(spriteDmaOnOff & SPR7); }
     
     END_CYCLE
 }
 
-void
-VICII::cycle9pal()
+template <VICIICycleType type> void
+VICII::cycle9()
 {
     // Phi2.5 Fetch (previous cycle)
-    sThirdAccess(6);
+    PAL  { sThirdAccess(6); }
+    NTSC { sFirstAccess(7); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -230,20 +256,22 @@ VICII::cycle9pal()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    sFinalize(6);
-    pAccess(7);
+    PAL  { sFinalize(6); pAccess(7); }
+    NTSC { sSecondAccess(7); }
     
     // Phi2.4 BA logic
-    BA_LINE(spriteDmaOnOff & SPR7);
+    PAL  { BA_LINE(spriteDmaOnOff & SPR7); }
+    NTSC { BA_LINE(spriteDmaOnOff & SPR7); }
     
     END_CYCLE
 }
 
-void
-VICII::cycle10pal()
+template <VICIICycleType type> void
+VICII::cycle10()
 {
     // Phi2.5 Fetch (previous cycle)
-    sFirstAccess(7);
+    PAL  { sFirstAccess(7); }
+    NTSC { sThirdAccess(7); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -252,19 +280,21 @@ VICII::cycle10pal()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    sSecondAccess(7);
+    PAL  { sSecondAccess(7); }
+    NTSC { sFinalize(7); iAccess(); }
     
     // Phi2.4 BA logic
-    BA_LINE(spriteDmaOnOff & SPR7);
+    PAL  { BA_LINE(spriteDmaOnOff & SPR7); }
+    NTSC { BA_LINE(false); }
     
     END_CYCLE
 }
 
-void
-VICII::cycle11pal()
+template <VICIICycleType type> void
+VICII::cycle11()
 {
     // Phi2.5 Fetch (previous cycle)
-    sThirdAccess(7);
+    PAL  { sThirdAccess(7); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -273,7 +303,7 @@ VICII::cycle11pal()
     DRAW_IDLE
 
     // Phi1.3 Fetch (first out of five DRAM refreshs)
-    sFinalize(7);
+    PAL  { sFinalize(7); }
     rAccess();
     
     // Phi2.4 BA logic
@@ -282,7 +312,7 @@ VICII::cycle11pal()
     END_CYCLE
 }
 
-void
+template <VICIICycleType type> void
 VICII::cycle12()
 {
     // Phi1.1 Frame logic
@@ -309,7 +339,7 @@ VICII::cycle12()
     END_CYCLE
 }
 
-void
+template <VICIICycleType type> void
 VICII::cycle13() // X Coordinate -3 - 4 (?)
 {
     // Phi1.1 Frame logic
@@ -327,7 +357,7 @@ VICII::cycle13() // X Coordinate -3 - 4 (?)
     END_CYCLE
 }
 
-void
+template <VICIICycleType type> void
 VICII::cycle14() // SpriteX: 0 - 7 (?)
 {
     // Phi1.1 Frame logic
@@ -358,7 +388,7 @@ VICII::cycle14() // SpriteX: 0 - 7 (?)
     xCounter = 0;
 }
 
-void
+template <VICIICycleType type> void
 VICII::cycle15() // SpriteX: 8 - 15 (?)
 {
     // Phi1.1 Frame logic
@@ -380,7 +410,7 @@ VICII::cycle15() // SpriteX: 8 - 15 (?)
     END_VISIBLE_CYCLE
 }
 
-void
+template <VICIICycleType type> void
 VICII::cycle16() // SpriteX: 16 - 23 (?)
 {
     // Phi1.1 Frame logic
@@ -404,7 +434,7 @@ VICII::cycle16() // SpriteX: 16 - 23 (?)
     END_VISIBLE_CYCLE
 }
 
-void
+template <VICIICycleType type> void
 VICII::cycle17() // SpriteX: 24 - 31 (?)
 {
     // Phi1.1 Frame logic
@@ -426,7 +456,7 @@ VICII::cycle17() // SpriteX: 24 - 31 (?)
     END_VISIBLE_CYCLE
 }
 
-void
+template <VICIICycleType type> void
 VICII::cycle18() // SpriteX: 32 - 39
 {
     // Phi1.1 Frame logic
@@ -449,7 +479,7 @@ VICII::cycle18() // SpriteX: 32 - 39
     END_VISIBLE_CYCLE
 }
 
-void
+template <VICIICycleType type> void
 VICII::cycle19to54()
 {
     // Phi1.1 Frame logic
@@ -470,8 +500,8 @@ VICII::cycle19to54()
     END_VISIBLE_CYCLE
 }
 
-void
-VICII::cycle55pal()
+template <VICIICycleType type> void
+VICII::cycle55()
 {
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -486,12 +516,13 @@ VICII::cycle55pal()
     turnSpriteDmaOn();
     
     // Phi2.4 BA logic
-    BA_LINE(spriteDmaOnOff & SPR0);
+    PAL  { BA_LINE(spriteDmaOnOff & SPR0); }
+    NTSC { BA_LINE(false); }
     
     END_VISIBLE_CYCLE
 }
 
-void
+template <VICIICycleType type> void
 VICII::cycle56()
 {
     // Phi1.1 Frame logic
@@ -514,8 +545,8 @@ VICII::cycle56()
     END_VISIBLE_CYCLE
 }
 
-void
-VICII::cycle57pal()
+template <VICIICycleType type> void
+VICII::cycle57()
 {
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -529,13 +560,14 @@ VICII::cycle57pal()
     iAccess();
     
     // Phi2.4 BA logic
-    BA_LINE(spriteDmaOnOff & (SPR0 | SPR1));
+    PAL  { BA_LINE(spriteDmaOnOff & (SPR0 | SPR1)); }
+    NTSC { BA_LINE(spriteDmaOnOff & SPR0); }
     
     END_VISIBLE_CYCLE
 }
 
-void
-VICII::cycle58pal()
+template <VICIICycleType type> void
+VICII::cycle58()
 {
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -544,7 +576,8 @@ VICII::cycle58pal()
     DRAW
     
     // Phi1.3 Fetch
-    pAccess(0);
+    PAL  { pAccess(0); }
+    NTSC { iAccess(); }
     
     // Phi2.2 Sprite logic
     spriteDisplayDelayed = spriteDisplay;
@@ -569,16 +602,17 @@ VICII::cycle58pal()
     }
     
     // Phi2.4 BA logic
-    BA_LINE(spriteDmaOnOff & (SPR0 | SPR1));
+    PAL  { BA_LINE(spriteDmaOnOff & (SPR0 | SPR1)); }
+    NTSC { BA_LINE(spriteDmaOnOff & (SPR0 | SPR1)); }
     
     END_VISIBLE_CYCLE
 }
 
-void
-VICII::cycle59pal()
+template <VICIICycleType type> void
+VICII::cycle59()
 {
     // Phi2.5 Fetch (previous cycle)
-    sFirstAccess(0);
+    PAL  { sFirstAccess(0); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -587,22 +621,27 @@ VICII::cycle59pal()
     DRAW59
     
     // Phi1.3 Fetch
-    sSecondAccess(0);
+    PAL  { sSecondAccess(0); }
+    NTSC { pAccess(0); }
     
     // Phi2.2 Sprite logic
     spriteDisplayDelayed = spriteDisplay;
     
     // Phi2.4 BA logic
-    BA_LINE(spriteDmaOnOff & (SPR0 | SPR1 | SPR2));
+    PAL  { BA_LINE(spriteDmaOnOff & (SPR0 | SPR1 | SPR2)); }
+    NTSC { BA_LINE(spriteDmaOnOff & (SPR0 | SPR1)); }
+    
+    // Phi2.5 Fetch
+    NTSC { sFirstAccess(0); }
     
     END_VISIBLE_CYCLE
 }
 
-void
-VICII::cycle60pal()
+template <VICIICycleType type> void
+VICII::cycle60()
 {
     // Phi2.5 Fetch (previous cycle)
-    sThirdAccess(0);
+    PAL  { sThirdAccess(0); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -611,20 +650,24 @@ VICII::cycle60pal()
     DRAW
     
     // Phi1.3 Fetch
-    sFinalize(0);
-    pAccess(1);
+    PAL  { sFinalize(0); pAccess(1); }
+    NTSC { sSecondAccess(0); }
     
     // Phi2.4 BA logic
-    BA_LINE(spriteDmaOnOff & (SPR1 | SPR2));
+    PAL  { BA_LINE(spriteDmaOnOff & (SPR1 | SPR2)); }
+    NTSC { BA_LINE(spriteDmaOnOff & (SPR0 | SPR1 | SPR2)); }
+    
+    // Phi2.5 Fetch
+    NTSC { sThirdAccess(0); }
     
     END_VISIBLE_CYCLE
 }
 
-void
-VICII::cycle61pal()
+template <VICIICycleType type> void
+VICII::cycle61()
 {
     // Phi2.5 Fetch (previous cycle)
-    sFirstAccess(1);
+    PAL  { sFirstAccess(1); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -633,21 +676,25 @@ VICII::cycle61pal()
     DRAW
     
     // Phi1.3 Fetch
-    sSecondAccess(1);
+    PAL  { sSecondAccess(1); }
+    NTSC { sFinalize(0); pAccess(1); }
     
     // Phi2.4 BA logic
-    BA_LINE(spriteDmaOnOff & (SPR1 | SPR2 | SPR3));
+    PAL  { BA_LINE(spriteDmaOnOff & (SPR1 | SPR2 | SPR3)); }
+    NTSC { BA_LINE(spriteDmaOnOff & (SPR1 | SPR2)); }
+    
+    // Phi2.5 Fetch
+    NTSC { sFirstAccess(1); }
     
     END_VISIBLE_CYCLE
     isVisibleColumn = false;
-    // visibleColumnCnt = 0;
 }
 
-void
-VICII::cycle62pal()
+template <VICIICycleType type> void
+VICII::cycle62()
 {
     // Phi2.5 Fetch (previous cycle)
-    sThirdAccess(1);
+    PAL  { sThirdAccess(1); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -656,21 +703,51 @@ VICII::cycle62pal()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    sFinalize(1);
-    pAccess(2);
+    PAL  { sFinalize(1); pAccess(2); }
+    NTSC { sSecondAccess(1); }
     
     // Phi2.4 BA logic
-    BA_LINE(spriteDmaOnOff & (SPR2 | SPR3));
+    PAL  { BA_LINE(spriteDmaOnOff & (SPR2 | SPR3)); }
+    NTSC { BA_LINE(spriteDmaOnOff & (SPR1 | SPR2 | SPR3)); }
+    
+    // Phi2.5 Fetch
+    NTSC { sThirdAccess(1); }
     
     END_CYCLE
 }
 
-void
-VICII::cycle63pal()
+template <VICIICycleType type> void
+VICII::cycle63()
 {
     // Phi2.5 Fetch (previous cycle)
-    sFirstAccess(2);
+    PAL  { sFirstAccess(2); }
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    PAL  { yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine()); }
+    
+    // Phi1.2 Draw sprites (invisible area)
+    DRAW_IDLE
 
+    // Phi1.3 Fetch
+    PAL  { sSecondAccess(2); }
+    NTSC { sFinalize(1); pAccess(2); }
+    
+    // Phi2.4 BA logic
+    PAL  { BA_LINE(spriteDmaOnOff & (SPR2 | SPR3 | SPR4)); }
+    NTSC { BA_LINE(spriteDmaOnOff & (SPR2 | SPR3)); }
+    
+    // Phi2.5 Fetch
+    NTSC { sFirstAccess(2); }
+    
+    END_CYCLE
+}
+
+template <VICIICycleType type> void
+VICII::cycle64()
+{
+    PAL { assert(false); } // NTSC only
+    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
@@ -684,5 +761,31 @@ VICII::cycle63pal()
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR2 | SPR3 | SPR4));
     
+    // Phi2.5 Fetch
+    sThirdAccess(2);
+    
     END_CYCLE
 }
+
+template <VICIICycleType type> void
+VICII::cycle65()
+{
+    PAL { assert(false); } // NTSC only
+
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
+    
+    // Phi1.2 Draw sprites (invisible area)
+    DRAW_IDLE
+
+    // Phi1.3 Fetch
+    sFinalize(2);
+    pAccess(3);
+    
+    // Phi2.4 BA logic
+    BA_LINE(spriteDmaOnOff & (SPR3 | SPR4));
+    
+    END_CYCLE
+}
+

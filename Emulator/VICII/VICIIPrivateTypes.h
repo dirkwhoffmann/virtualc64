@@ -49,6 +49,14 @@ VICSetDisplayState | \
 VICClrSprSprCollReg | \
 VICClrSprBgCollReg);
 
+enum VICIICycleType
+{
+    PAL_CYCLE         = 0x0,
+    PAL_DEBUG_CYCLE   = 0x1,
+    NTSC_CYCLE        = 0x2,
+    NTSC_DEBUG_CYCLE  = 0x3
+};
+
 enum VICIIColors
 {
     VICII_BLACK       = 0x0,

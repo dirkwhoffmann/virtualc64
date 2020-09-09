@@ -1184,9 +1184,39 @@ public:
      */
     void processDelayedActions();
     
-	/* Executes a specific rasterline cycle. The cycle specific actions differ
-     * depending on the selected chip model.
-     */
+	// Emulates a specific rasterline cycle
+    template <VICIICycleType type> void cycle1();
+    template <VICIICycleType type> void cycle2();
+    template <VICIICycleType type> void cycle3();
+    template <VICIICycleType type> void cycle4();
+    template <VICIICycleType type> void cycle5();
+    template <VICIICycleType type> void cycle6();
+    template <VICIICycleType type> void cycle7();
+    template <VICIICycleType type> void cycle8();
+    template <VICIICycleType type> void cycle9();
+    template <VICIICycleType type> void cycle10();
+    template <VICIICycleType type> void cycle11();
+    template <VICIICycleType type> void cycle12();
+    template <VICIICycleType type> void cycle13();
+    template <VICIICycleType type> void cycle14();
+    template <VICIICycleType type> void cycle15();
+    template <VICIICycleType type> void cycle16();
+    template <VICIICycleType type> void cycle17();
+    template <VICIICycleType type> void cycle18();
+    template <VICIICycleType type> void cycle19to54();
+    template <VICIICycleType type> void cycle55();
+    template <VICIICycleType type> void cycle56();
+    template <VICIICycleType type> void cycle57();
+    template <VICIICycleType type> void cycle58();
+    template <VICIICycleType type> void cycle59();
+    template <VICIICycleType type> void cycle60();
+    template <VICIICycleType type> void cycle61();
+    template <VICIICycleType type> void cycle62();
+    template <VICIICycleType type> void cycle63();
+    template <VICIICycleType type> void cycle64();
+    template <VICIICycleType type> void cycle65();
+
+    // DEPRECATED
     void cycle1pal();   void cycle1ntsc();
     void cycle2pal();   void cycle2ntsc();
     void cycle3pal();   void cycle3ntsc();

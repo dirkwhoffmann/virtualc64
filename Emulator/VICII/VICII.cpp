@@ -870,6 +870,47 @@ VICII::endFrame()
     pixelBuffer = currentScreenBuffer;
 }
 
+void
+VICII::processDelayedActions()
+{
+    if (delay & VICUpdateIrqLine) {
+        if (irr & imr) {
+            cpu.pullDownIrqLine(INTSRC_VIC);
+        } else {
+            cpu.releaseIrqLine(INTSRC_VIC);
+        }
+    }
+    if (delay & VICUpdateFlipflops) {
+        flipflops.delayed = flipflops.current;
+    }
+    if (delay & VICSetDisplayState) {
+        displayState |= badLine;
+    }
+    if (delay & VICUpdateRegisters) {
+        reg.delayed = reg.current;
+    }
+
+    // Less frequent actions
+    if (delay & (VICLpTransition | VICUpdateBankAddr | VICClrSprSprCollReg | VICClrSprBgCollReg)) {
+        
+        if (delay & VICLpTransition) {
+            checkForLightpenIrq();
+        }
+        if (delay & VICUpdateBankAddr) {
+            updateBankAddr();
+            // bankAddr = (~cia2.getPA() & 0x03) << 14;
+        }
+        if (delay & VICClrSprSprCollReg) {
+            spriteSpriteCollision = 0;
+        }
+        if (delay & VICClrSprBgCollReg) {
+            spriteBackgroundColllision = 0;
+        }
+    }
+    
+    delay = (delay << 1) & VICClearanceMask;
+}
+
 void 
 VICII::beginRasterline(u16 line)
 {
