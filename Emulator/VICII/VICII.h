@@ -834,16 +834,16 @@ private:
     bool isCharRomAddr(u16 addr);
 
     // Performs a DRAM refresh (r-access)
-    void rAccess() { dataBusPhi1 = memAccess(0x3F00 | refreshCounter--); }
+    template <VICIIMode type> void rAccess();
     
     // Performs an idle access (i-access)
-    void iAccess() { dataBusPhi1 = memAccess(0x3FFF); }
+    template <VICIIMode type> void iAccess();
     
     // Performs a character access (c-access)
-    void cAccess();
+    template <VICIIMode type> void cAccess();
     
     // Performs a graphics access (g-access)
-    void gAccess();
+    template <VICIIMode type> void gAccess();
 
     // Computes the g-access fetch address for different VICII models
     u16 gAccessAddr85x();
@@ -855,12 +855,12 @@ private:
     u16 gAccessAddr(bool bmm, bool ecm);
     
     // Performs a sprite pointer access (p-access)
-    void pAccess(unsigned sprite);
+    template <VICIIMode type> void pAccess(unsigned sprite);
     
     // Performs one of the three sprite data accesses
-    void sFirstAccess(unsigned sprite);
-    void sSecondAccess(unsigned sprite);
-    void sThirdAccess(unsigned sprite);
+    template <VICIIMode type> void sFirstAccess(unsigned sprite);
+    template <VICIIMode type> void sSecondAccess(unsigned sprite);
+    template <VICIIMode type> void sThirdAccess(unsigned sprite);
     
     /* Finalizes the sprite data access. This method is invoked one cycle after
      * the second and third sprite DMA has occurred.
@@ -1114,36 +1114,36 @@ public:
     void processDelayedActions();
     
 	// Emulates a specific rasterline cycle
-    template <VICIICycleType type> void cycle1();
-    template <VICIICycleType type> void cycle2();
-    template <VICIICycleType type> void cycle3();
-    template <VICIICycleType type> void cycle4();
-    template <VICIICycleType type> void cycle5();
-    template <VICIICycleType type> void cycle6();
-    template <VICIICycleType type> void cycle7();
-    template <VICIICycleType type> void cycle8();
-    template <VICIICycleType type> void cycle9();
-    template <VICIICycleType type> void cycle10();
-    template <VICIICycleType type> void cycle11();
-    template <VICIICycleType type> void cycle12();
-    template <VICIICycleType type> void cycle13();
-    template <VICIICycleType type> void cycle14();
-    template <VICIICycleType type> void cycle15();
-    template <VICIICycleType type> void cycle16();
-    template <VICIICycleType type> void cycle17();
-    template <VICIICycleType type> void cycle18();
-    template <VICIICycleType type> void cycle19to54();
-    template <VICIICycleType type> void cycle55();
-    template <VICIICycleType type> void cycle56();
-    template <VICIICycleType type> void cycle57();
-    template <VICIICycleType type> void cycle58();
-    template <VICIICycleType type> void cycle59();
-    template <VICIICycleType type> void cycle60();
-    template <VICIICycleType type> void cycle61();
-    template <VICIICycleType type> void cycle62();
-    template <VICIICycleType type> void cycle63();
-    template <VICIICycleType type> void cycle64();
-    template <VICIICycleType type> void cycle65();
+    template <VICIIMode type> void cycle1();
+    template <VICIIMode type> void cycle2();
+    template <VICIIMode type> void cycle3();
+    template <VICIIMode type> void cycle4();
+    template <VICIIMode type> void cycle5();
+    template <VICIIMode type> void cycle6();
+    template <VICIIMode type> void cycle7();
+    template <VICIIMode type> void cycle8();
+    template <VICIIMode type> void cycle9();
+    template <VICIIMode type> void cycle10();
+    template <VICIIMode type> void cycle11();
+    template <VICIIMode type> void cycle12();
+    template <VICIIMode type> void cycle13();
+    template <VICIIMode type> void cycle14();
+    template <VICIIMode type> void cycle15();
+    template <VICIIMode type> void cycle16();
+    template <VICIIMode type> void cycle17();
+    template <VICIIMode type> void cycle18();
+    template <VICIIMode type> void cycle19to54();
+    template <VICIIMode type> void cycle55();
+    template <VICIIMode type> void cycle56();
+    template <VICIIMode type> void cycle57();
+    template <VICIIMode type> void cycle58();
+    template <VICIIMode type> void cycle59();
+    template <VICIIMode type> void cycle60();
+    template <VICIIMode type> void cycle61();
+    template <VICIIMode type> void cycle62();
+    template <VICIIMode type> void cycle63();
+    template <VICIIMode type> void cycle64();
+    template <VICIIMode type> void cycle65();
 
     // DEPRECATED
     void cycle1pal();   void cycle1ntsc();
@@ -1185,9 +1185,7 @@ public:
     #define DRAW55 if (!vblank) draw55(); DRAW_SPRITES;
     #define DRAW59 if (!vblank) draw(); DRAW_SPRITES59;
     #define DRAW_IDLE DRAW_SPRITES;
-    
-    #define C_ACCESS if (badLine) cAccess();
-    
+        
     #define END_CYCLE \
     dataBusPhi2 = 0xFF; \
     xCounter += 8; \

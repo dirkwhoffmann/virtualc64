@@ -763,7 +763,19 @@ VICII::isCharRomAddr(u16 addr)
     return addr == 1 || addr == 9;
 }
 
-void
+template <VICIIMode type> void
+VICII::rAccess()
+{
+    dataBusPhi1 = memAccess(0x3F00 | refreshCounter--);
+}
+
+template <VICIIMode type> void
+VICII::iAccess()
+{
+    dataBusPhi1 = memAccess(0x3FFF);
+}
+
+template <VICIIMode type> void
 VICII::cAccess()
 {
     // If BA is pulled down for at least three cycles, perform memory access
@@ -802,7 +814,7 @@ VICII::cAccess()
     }
 }
 
-void
+template <VICIIMode type> void
 VICII::gAccess()
 {
     u16 addr;
@@ -915,7 +927,7 @@ VICII::gAccessAddr(bool bmm, bool ecm)
     return addr;
 }
 
-void
+template <VICIIMode type> void
 VICII::pAccess(unsigned sprite)
 {
     assert(sprite < 8);
@@ -925,7 +937,7 @@ VICII::pAccess(unsigned sprite)
     spritePtr[sprite] = dataBusPhi1 << 6;
 }
 
-void
+template <VICIIMode type> void
 VICII::sFirstAccess(unsigned sprite)
 {
     assert(sprite < 8);
@@ -944,7 +956,7 @@ VICII::sFirstAccess(unsigned sprite)
     spriteSr[sprite].chunk1 = dataBusPhi2;
 }
 
-void
+template <VICIIMode type> void
 VICII::sSecondAccess(unsigned sprite)
 {
     assert(sprite < 8);
@@ -966,7 +978,7 @@ VICII::sSecondAccess(unsigned sprite)
     spriteSr[sprite].chunk2 = dataBusPhi1;
 }
 
-void
+template <VICIIMode type> void
 VICII::sThirdAccess(unsigned sprite)
 {
     assert(sprite < 8);
@@ -983,8 +995,41 @@ VICII::sThirdAccess(unsigned sprite)
 
 void VICII::sFinalize(unsigned sprite)
 {
-    assert(sprite < 8);
     isSecondDMAcycle = 0;
 }
 
+template void VICII::rAccess<PAL_CYCLE>();
+template void VICII::iAccess<PAL_CYCLE>();
+template void VICII::cAccess<PAL_CYCLE>();
+template void VICII::gAccess<PAL_CYCLE>();
+template void VICII::pAccess<PAL_CYCLE>(unsigned sprite);
+template void VICII::sFirstAccess<PAL_CYCLE>(unsigned sprite);
+template void VICII::sSecondAccess<PAL_CYCLE>(unsigned sprite);
+template void VICII::sThirdAccess<PAL_CYCLE>(unsigned sprite);
 
+template void VICII::rAccess<PAL_DEBUG_CYCLE>();
+template void VICII::iAccess<PAL_DEBUG_CYCLE>();
+template void VICII::cAccess<PAL_DEBUG_CYCLE>();
+template void VICII::gAccess<PAL_DEBUG_CYCLE>();
+template void VICII::pAccess<PAL_DEBUG_CYCLE>(unsigned sprite);
+template void VICII::sFirstAccess<PAL_DEBUG_CYCLE>(unsigned sprite);
+template void VICII::sSecondAccess<PAL_DEBUG_CYCLE>(unsigned sprite);
+template void VICII::sThirdAccess<PAL_DEBUG_CYCLE>(unsigned sprite);
+
+template void VICII::rAccess<NTSC_CYCLE>();
+template void VICII::iAccess<NTSC_CYCLE>();
+template void VICII::cAccess<NTSC_CYCLE>();
+template void VICII::gAccess<NTSC_CYCLE>();
+template void VICII::pAccess<NTSC_CYCLE>(unsigned sprite);
+template void VICII::sFirstAccess<NTSC_CYCLE>(unsigned sprite);
+template void VICII::sSecondAccess<NTSC_CYCLE>(unsigned sprite);
+template void VICII::sThirdAccess<NTSC_CYCLE>(unsigned sprite);
+
+template void VICII::rAccess<NTSC_DEBUG_CYCLE>();
+template void VICII::iAccess<NTSC_DEBUG_CYCLE>();
+template void VICII::cAccess<NTSC_DEBUG_CYCLE>();
+template void VICII::gAccess<NTSC_DEBUG_CYCLE>();
+template void VICII::pAccess<NTSC_DEBUG_CYCLE>(unsigned sprite);
+template void VICII::sFirstAccess<NTSC_DEBUG_CYCLE>(unsigned sprite);
+template void VICII::sSecondAccess<NTSC_DEBUG_CYCLE>(unsigned sprite);
+template void VICII::sThirdAccess<NTSC_DEBUG_CYCLE>(unsigned sprite);

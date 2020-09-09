@@ -49,7 +49,7 @@ VICSetDisplayState | \
 VICClrSprSprCollReg | \
 VICClrSprBgCollReg);
 
-enum VICIICycleType
+enum VICIIMode
 {
     PAL_CYCLE         = 0x0,
     PAL_DEBUG_CYCLE   = 0x1,

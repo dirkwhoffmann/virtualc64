@@ -376,7 +376,7 @@ VICII::cycle15() // SpriteX: 8 - 15 (?)
     BA_LINE(badLine);
     
     // Phi2.5 Fetch
-    C_ACCESS
+    if (badLine) cAccess <mode> ();
     
     cleared_bits_in_d017 = 0;
     END_VISIBLE_CYCLE
@@ -401,7 +401,7 @@ VICII::cycle16() // SpriteX: 16 - 23 (?)
     BA_LINE(badLine);
     
     // Phi2.5 Fetch
-    C_ACCESS
+    if (badLine) cAccess <mode> ();
     
     END_VISIBLE_CYCLE
 }
@@ -423,7 +423,7 @@ VICII::cycle17() // SpriteX: 24 - 31 (?)
     BA_LINE(badLine);
     
     // Phi2.5 Fetch
-    C_ACCESS
+    if (badLine) cAccess <mode> ();
     
     END_VISIBLE_CYCLE
 }
@@ -446,7 +446,7 @@ VICII::cycle18() // SpriteX: 32 - 39
     BA_LINE(badLine);
     
     // Phi2.5 Fetch
-    C_ACCESS
+    if (badLine) cAccess <mode> ();
     
     END_VISIBLE_CYCLE
 }
@@ -467,7 +467,7 @@ VICII::cycle19to54()
     BA_LINE(badLine);
     
     // Phi2.5 Fetch
-    C_ACCESS
+    if (badLine) cAccess <mode> ();
     
     END_VISIBLE_CYCLE
 }
