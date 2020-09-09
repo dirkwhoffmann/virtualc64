@@ -790,6 +790,246 @@ VICII::cycle65()
 }
 
 //
+// Access functions
+//
+
+template <VICIIMode type> void
+VICII::sFirstAccess(unsigned sprite)
+{
+    assert(sprite < 8);
+    
+    isFirstDMAcycle = (1 << sprite);
+    
+    if (spriteDmaOnOff & (1 << sprite)) {
+        
+        if (BApulledDownForAtLeastThreeCycles()) {
+            dataBusPhi2 = memAccess(spritePtr[sprite] | mc[sprite]);
+        }
+        
+        mc[sprite] = (mc[sprite] + 1) & 0x3F;
+    }
+    
+    spriteSr[sprite].chunk1 = dataBusPhi2;
+}
+
+template <VICIIMode type> void
+VICII::sSecondAccess(unsigned sprite)
+{
+    assert(sprite < 8);
+    
+    isFirstDMAcycle = 0;
+    isSecondDMAcycle = (1 << sprite);
+    
+    if (spriteDmaOnOff & (1 << sprite)) {
+        
+        assert(BApulledDownForAtLeastThreeCycles());
+        dataBusPhi1 = memAccess(spritePtr[sprite] | mc[sprite]);
+        mc[sprite] = (mc[sprite] + 1) & 0x3F;
+    
+    } else {
+        
+        dataBusPhi1 = memAccess(0x3FFF); // Idle access
+    }
+    
+    spriteSr[sprite].chunk2 = dataBusPhi1;
+}
+
+template <VICIIMode type> void
+VICII::sThirdAccess(unsigned sprite)
+{
+    assert(sprite < 8);
+    
+    if (spriteDmaOnOff & (1 << sprite)) {
+        
+        assert(BApulledDownForAtLeastThreeCycles());
+        dataBusPhi2 = memAccess(spritePtr[sprite] | mc[sprite]);
+        mc[sprite] = (mc[sprite] + 1) & 0x3F;
+    }
+    
+    spriteSr[sprite].chunk3 = dataBusPhi2;
+}
+
+template <VICIIMode type> void
+VICII::rAccess()
+{
+    dataBusPhi1 = memAccess(0x3F00 | refreshCounter--);
+}
+
+template <VICIIMode type> void
+VICII::iAccess()
+{
+    dataBusPhi1 = memAccess(0x3FFF);
+}
+
+template <VICIIMode type> void
+VICII::cAccess()
+{
+    // If BA is pulled down for at least three cycles, perform memory access
+    if (BApulledDownForAtLeastThreeCycles()) {
+        
+        // |VM13|VM12|VM11|VM10| VC9| VC8| VC7| VC6| VC5| VC4| VC3| VC2| VC1| VC0|
+        u16 addr = (VM13VM12VM11VM10() << 6) | vc;
+        
+        dataBusPhi2 = memAccess(addr);
+        videoMatrix[vmli] = dataBusPhi2;
+        colorLine[vmli] = mem.colorRam[vc] & 0x0F;
+    }
+    
+    // VICII has no access, yet
+    else {
+        
+        /* "Nevertheless, the VIC accesses the video matrix, or at least it
+         *  tries, because as long as AEC is still high in the second clock
+         *  phase, the address and data bus drivers D0-D7 of the VIC are in
+         *  tri-state and the VIC reads the value $ff from D0-D7 instead of the
+         *  data from the video matrix in the first three cycles. The data lines
+         *  D8-D13 of the VIC however don't have tri-state drivers and are
+         *  always set to input. But the VIC doesn't get valid Color RAM data
+         *  from there either, because as AEC is high, the 6510 is still
+         *  considered the bus master and unless it doesn't by chance want to
+         *  read the next opcode from the Color RAM, the chip select input of
+         *  the Color RAM is not active. [...]
+         *  To make a long story short: In the first three cycles after BA went
+         *  low, the VIC reads $ff as character pointers and as color
+         *  information the lower 4 bits of the opcode after the access to
+         *  $d011. Not until then, regular video matrix data is read." [C.B.]
+         */
+        dataBusPhi2 = 0xFF;
+        videoMatrix[vmli] = dataBusPhi2;
+        colorLine[vmli] = mem.ram[cpu.reg.pc] & 0x0F;
+    }
+}
+
+template <VICIIMode type> void
+VICII::gAccess()
+{
+    u16 addr;
+    
+    if (displayState) {
+        
+        /* "The address generator for the text/bitmap accesses (c- and
+         *  g-accesses) has basically 3 modes for the g-accesses (the c-accesses
+         *  always follow the same address scheme). In display state, the BMM
+         *  bit selects either character generator accesses (BMM=0) or bitmap
+         *  accesses (BMM=1). In idle state, the g-accesses are always done at
+         *  video address $3fff. If the ECM bit is set, the address generator
+         *  always holds the address lines 9 and 10 low without any other
+         *  changes to the addressing scheme (e.g. the g-accesses in idle state
+         *  then occur at address $39ff)." [C.B.]
+         */
+ 
+        // Get address
+        addr = is856x() ? gAccessAddr85x() : gAccessAddr65x();
+        
+        // Fetch
+        dataBusPhi1 = memAccess(addr);
+        
+        // Store result
+        gAccessResult.write(LO_LO_HI(dataBusPhi1,         // Character
+                                     colorLine[vmli],     // Color
+                                     videoMatrix[vmli])); // Data
+        
+        
+        // "VC and VMLI are incremented after each g-access in display state."
+        vc = (vc + 1) & 0x3FF;
+        vmli = (vmli + 1) & 0x3F;
+        
+    } else {
+        
+        // Get address. In idle state, g-accesses read from $39FF or $3FFF,
+        // depending on the ECM bit.
+        if (is856x()) {
+            addr = GET_BIT(reg.delayed.ctrl1, 6) ? 0x39FF : 0x3FFF;
+        } else {
+            addr = GET_BIT(reg.current.ctrl1, 6) ? 0x39FF : 0x3FFF;
+        }
+        
+        // Fetch
+        dataBusPhi1 = memAccess(addr);
+
+        // Store result
+        gAccessResult.write(dataBusPhi1);
+    }
+}
+
+u16
+VICII::gAccessAddr85x()
+{
+    u8 oldBmm = GET_BIT(reg.delayed.ctrl1, 5);
+    u8 oldEcm = GET_BIT(reg.delayed.ctrl1, 6);
+    
+    return gAccessAddr(oldBmm, oldEcm);
+}
+
+u16
+VICII::gAccessAddr65x()
+{
+    u8 oldBmm = GET_BIT(reg.delayed.ctrl1, 5);
+    u8 newBmm = GET_BIT(reg.current.ctrl1, 5);
+    u8 newEcm = GET_BIT(reg.current.ctrl1, 6);
+    
+    u16 result = gAccessAddr(oldBmm | newBmm, newEcm);
+
+    // Check if BMM bit has just changed
+    if (oldBmm != newBmm) {
+        
+        u8 oldEcm = GET_BIT(reg.delayed.ctrl1, 6);
+        u16 oldAddr = gAccessAddr(oldBmm, oldEcm);
+        u16 newAddr = gAccessAddr(newBmm, newEcm);
+
+        // Check if address changes to char ROM. In this case, the result
+        // is a mixture of oldAddr and newAddr (seen in VICE)
+        // Test case: VICII/split-tests/modesplit.prg
+        if (isCharRomAddr(newAddr) && !isCharRomAddr(oldAddr)) {
+            result = (newAddr & 0x3F00) | (oldAddr & 0x00FF);
+        }
+    }
+
+    return result;
+}
+
+u16
+VICII::gAccessAddr(bool bmm, bool ecm)
+{
+    u16 addr;
+
+    /*  Address source:
+     *  BMM=1: |CB13| VC9| VC8|VC7|VC6|VC5|VC4|VC3|VC2|VC1|VC0|RC2|RC1|RC0|
+     *  BMM=0: |CB13|CB12|CB11|D7 |D6 |D5 |D4 |D3 |D2 |D1 |D0 |RC2|RC1|RC0|
+     */
+     if (bmm) {
+        addr = (CB13() << 10) | (vc << 3) | rc;
+    } else {
+        addr = (CB13CB12CB11() << 10) | (videoMatrix[vmli] << 3) | rc;
+    }
+    
+    /* "If the ECM bit is set, the address generator always holds the
+     *  address lines 9 and 10 low without any other changes to the
+     *  addressing scheme (e.g. the g-accesses in idle state then occur at
+     *  address $39ff)." [C.B.]
+     */
+    if (ecm) addr &= 0xF9FF;
+
+    return addr;
+}
+
+template <VICIIMode type> void
+VICII::pAccess(unsigned sprite)
+{
+    assert(sprite < 8);
+    
+    // |VM13|VM12|VM11|VM10|  1 |  1 |  1 |  1 |  1 |  1 |  1 |  Spr.-Nummer |
+    dataBusPhi1 = memAccess((VM13VM12VM11VM10() << 6) | 0x03F8 | sprite);
+    spritePtr[sprite] = dataBusPhi1 << 6;
+}
+
+void VICII::sFinalize(unsigned sprite)
+{
+    isSecondDMAcycle = 0;
+}
+
+
+//
 // Instantiate template functions
 //
 
