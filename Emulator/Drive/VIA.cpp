@@ -883,9 +883,8 @@ VIA1::portBexternal()
     
     external |= 0x1A; // All "out" pins are read as 1
     
-    if (drive.getDeviceNr() == 2) {
-        external |= 0x20; /* device number 9 */
-    }
+    // Assign device address
+    if (drive.getDeviceNr() == DRIVE9) external |= 0x20;
     
     return external;
 }
