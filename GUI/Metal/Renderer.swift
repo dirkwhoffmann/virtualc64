@@ -220,7 +220,7 @@ class Renderer: NSObject, MTKViewDelegate {
     
     func updateTexture() {
         
-        let buf = parent.c64.vic.screenBuffer()
+        let buf = parent.c64.vic.stableEmuTexture()
         precondition(buf != nil)
         
         let pixelSize = 4

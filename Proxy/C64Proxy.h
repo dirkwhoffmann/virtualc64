@@ -369,7 +369,7 @@ struct AnyC64FileWrapper;
 // - (void) setVideoPalette:(NSInteger)value;
 - (BOOL) isPAL;
 
-- (void *) screenBuffer;
+- (void *) stableEmuTexture;
 - (NSColor *) color:(NSInteger)nr;
 - (UInt32) rgbaColor:(NSInteger)nr palette:(Palette)palette;
 - (double)brightness;

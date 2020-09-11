@@ -34,7 +34,9 @@ void
 VICII::drawBorder()
 {
     if (flipflops.delayed.main) {
+        
         SET_FRAME_PIXEL(0, reg.delayed.colors[COLREG_BORDER]);
+
         for (unsigned pixel = 1; pixel <= 7; pixel++) {
             SET_FRAME_PIXEL(pixel, reg.current.colors[COLREG_BORDER]);
         }
@@ -529,7 +531,7 @@ VICII::markLine(u8 color, unsigned start, unsigned end)
     
     int rgba = rgbaTable[color];
     for (unsigned i = start; i <= end; i++) {
-        pixelBuffer[start + i] = rgba;
+        emuTexturePtr[start + i] = rgba;
     }
 }
 
@@ -562,9 +564,9 @@ VICII::cutLayers()
         
         if (cut) {
             
-            u8 r = pixelBuffer[i] & 0xFF;
-            u8 g = (pixelBuffer[i] >> 8) & 0xFF;
-            u8 b = (pixelBuffer[i] >> 16) & 0xFF;
+            u8 r = emuTexturePtr[i] & 0xFF;
+            u8 g = (emuTexturePtr[i] >> 8) & 0xFF;
+            u8 b = (emuTexturePtr[i] >> 16) & 0xFF;
 
             double scale = config.cutOpacity / 255.0;
             u8 bg = (rasterline() / 4) % 2 == (i / 4) % 2 ? 0x22 : 0x44;
@@ -572,7 +574,7 @@ VICII::cutLayers()
             u8 newg = (u8)(g * (1 - scale) + bg * scale);
             u8 newb = (u8)(b * (1 - scale) + bg * scale);
             
-            pixelBuffer[i] = 0xFF000000 | newb << 16 | newg << 8 | newr;
+            emuTexturePtr[i] = 0xFF000000 | newb << 16 | newg << 8 | newr;
         }
     }
 }

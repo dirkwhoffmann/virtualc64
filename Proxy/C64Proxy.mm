@@ -373,9 +373,9 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->vic->getSpriteInfo((unsigned)sprite);
 }
-- (void *) screenBuffer
+- (void *) stableEmuTexture
 {
-    return wrapper->vic->screenBuffer();
+    return wrapper->vic->stableEmuTexture();
 }
 - (NSColor *) color:(NSInteger)nr
 {

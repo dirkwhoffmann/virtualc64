@@ -81,8 +81,8 @@ VICII::_reset()
     lowerComparisonVal = lowerComparisonValue();
         
     // Reset the screen buffer pointers
-    currentScreenBuffer = screenBuffer1;
-    pixelBuffer = currentScreenBuffer;    
+    emuTexture = emuTexturePtr = emuTexture1;
+    dmaTexture = dmaTexturePtr = dmaTexture1;
 }
 
 long
@@ -203,7 +203,7 @@ VICII::setRevision(VICRevision revision)
     config.revision = revision;
     
     updatePalette();
-    resetScreenBuffers();
+    resetTextures();
     c64.updateVicFunctionTable();
     
     c64.putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
@@ -470,16 +470,19 @@ VICII::isVBlankLine(unsigned rasterline)
 }
 
 void *
-VICII::screenBuffer() {
-    if (currentScreenBuffer == screenBuffer1) {
-        return screenBuffer2;
-    } else {
-        return screenBuffer1;
-    }
+VICII::stableEmuTexture()
+{
+    return emuTexture == emuTexture1 ? emuTexture2 : emuTexture1;
+}
+
+void *
+VICII::stableDmaTexture()
+{
+    return dmaTexture == dmaTexture1 ? dmaTexture2 : dmaTexture1;
 }
 
 void
-VICII::resetScreenBuffers()
+VICII::resetTextures()
 {
     // Determine the HBLANK / VBLANK area
     long width = isPAL() ? PAL_PIXELS : NTSC_PIXELS;
@@ -495,8 +498,8 @@ VICII::resetScreenBuffers()
             if (line < height && i < width)
                 col = (line / 4) % 2 == (i / 8) % 2 ? 0xFF222222 : 0xFF444444;
 
-            screenBuffer1[pos] = col;
-            screenBuffer2[pos] = col;
+            emuTexture1[pos] = emuTexture2[pos] = col;
+            dmaTexture1[pos] = dmaTexture2[pos] = col;
         }
     }
 }
@@ -864,10 +867,20 @@ VICII::beginFrame()
 void
 VICII::endFrame()
 {
-    // Switch active screen buffer
-    bool first = (currentScreenBuffer == screenBuffer1);
-    currentScreenBuffer = first ? screenBuffer2 : screenBuffer1;
-    pixelBuffer = currentScreenBuffer;
+    // Switch texture buffers
+    if (emuTexture == emuTexture1) {
+        
+        assert(dmaTexture == dmaTexture1);
+        emuTexture = emuTexturePtr = emuTexture2;
+        dmaTexture = dmaTexturePtr = dmaTexture2;
+        
+    } else {
+        
+        assert(emuTexture == emuTexture2);
+        assert(dmaTexture == dmaTexture2);
+        emuTexture = emuTexturePtr = emuTexture1;
+        dmaTexture = dmaTexturePtr = dmaTexture1;
+    }
 }
 
 void
@@ -953,6 +966,7 @@ VICII::endRasterline()
     if (config.markDmaLines && badLine)
         markLine(VICII_RED);
     
-    // Advance pixelBuffer
-    pixelBuffer = currentScreenBuffer + (c64.rasterLine * TEX_WIDTH);
+    // Advance texture pointers
+    emuTexturePtr = emuTexture + (c64.rasterLine * TEX_WIDTH);
+    dmaTexturePtr = dmaTexture + (c64.rasterLine * TEX_WIDTH);
 }
