@@ -550,6 +550,23 @@ private:
     
     
     //
+    // DMA debugger
+    //
+    
+    // Indicates if memory accesses of a certain type should be visualized
+    bool visualize[ACCESS_CNT];
+
+    // DMA debugging colors
+    RgbColor debugColor[ACCESS_CNT][5];
+
+    // Opacity of DMA pixels
+    double opacity = 0.5;
+
+    // Currently selected display mode
+    DmaDisplayMode displayMode = MODULATE_FG_LAYER;
+
+    
+    //
     // Initializing
     //
     
@@ -1329,11 +1346,14 @@ public:
     /* Draw a horizontal colored line into the screen buffer. This method is
      * utilized for debugging purposes, only.
      */
-    void markLine(u8 color, unsigned start = 0, unsigned end = TEX_WIDTH - 1);
-
+    // void markLine(u8 color, unsigned start = 0, unsigned end = TEX_WIDTH - 1);
+    
     /* Cuts out certain graphics layers
      */
     void cutLayers();
+    
+    // Superimposes the debug output onto the current rasterline
+    void computeOverlay();
 };
 
 #endif

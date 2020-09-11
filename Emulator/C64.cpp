@@ -172,9 +172,22 @@ C64::getConfigItem(ConfigOption option)
         case OPT_PALETTE:
         case OPT_GRAY_DOT_BUG:
         case OPT_GLUE_LOGIC:
-        case OPT_MARK_IRQ_LINES:
-        case OPT_MARK_DMA_LINES:
         case OPT_HIDE_SPRITES:
+        case OPT_DMA_DEBUG:
+        case OPT_DMA_CHANNEL_R:
+        case OPT_DMA_CHANNEL_I:
+        case OPT_DMA_CHANNEL_C:
+        case OPT_DMA_CHANNEL_G:
+        case OPT_DMA_CHANNEL_P:
+        case OPT_DMA_CHANNEL_S:
+        case OPT_DMA_COLOR_R:
+        case OPT_DMA_COLOR_I:
+        case OPT_DMA_COLOR_C:
+        case OPT_DMA_COLOR_G:
+        case OPT_DMA_COLOR_P:
+        case OPT_DMA_COLOR_S:
+        case OPT_DMA_DISPLAY_MODE:
+        case OPT_DMA_OPACITY:
         case OPT_CUT_LAYERS:
         case OPT_CUT_OPACITY:
         case OPT_SS_COLLISIONS:

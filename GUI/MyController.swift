@@ -390,14 +390,16 @@ extension MyController {
             c64.configure(OPT_DEBUGCART, enable: true)
         }
         
-        // Process attachment (if any)
-        mydocument.mountAttachment()
-
         // Check if the C64 is ready to power on
         if c64.isReady() {
             
             // Switch on and launch the emulator thread
             c64.powerOn()
+
+            // Process attachment (if any)
+            mydocument.mountAttachment()
+
+            // Launch the emulator thread
             c64.run()
 
         } else {

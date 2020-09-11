@@ -111,6 +111,29 @@ typedef enum
 }
 DisplayMode;
 
+typedef VA_ENUM(long, MemAccessType)
+{
+    R_ACCESS = 0,             // Memory Refresh
+    I_ACCESS,                 // Idle read
+    C_ACCESS,                 // Character access
+    G_ACCESS,                 // Graphics access
+    P_ACCESS,                 // Sprite pointer access
+    S_ACCESS,                 // Sprite data access
+    ACCESS_CNT
+};
+
+static inline bool isMemAccessType(long value)
+{
+    return value >= 0 && value < ACCESS_CNT;
+}
+
+typedef VA_ENUM(long, DmaDisplayMode)
+{
+    MODULATE_FG_LAYER,
+    MODULATE_BG_LAYER,
+    MODULATE_ODD_EVEN_LAYERS
+};
+
 
 //
 // Structures
@@ -124,11 +147,14 @@ typedef struct
     Palette palette;
     
     // Debugging
-    bool markIrqLines;
-    bool markDmaLines;
     bool hideSprites;
-    u16  cutLayers;
-    u8   cutOpacity;
+    bool dmaDebug;
+    bool dmaChannel[ACCESS_CNT];
+    u32 dmaColor[ACCESS_CNT];
+    DmaDisplayMode dmaDisplayMode;
+    u8 dmaOpacity;
+    u16 cutLayers;
+    u8 cutOpacity;
     
     // Cheating
     bool checkSSCollisions;
@@ -190,6 +216,9 @@ typedef struct
     u8 latchedLPY;
     bool lpLine;
     bool lpIrqHasOccurred;
+    
+    // Debugging
+    
 }
 VICIIInfo;
 

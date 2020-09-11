@@ -11,7 +11,7 @@
 #define _C64OBJECT_H
 
 #include "Utils.h"
-
+#include "Colors.h"
 #include <vector>
 #include <map>
 #include <mutex>

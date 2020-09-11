@@ -524,6 +524,7 @@ VICII::setSpritePixel(unsigned sprite, unsigned pixel, u8 color)
     pixelSource[index] |= source;
 }
 
+/*
 void
 VICII::markLine(u8 color, unsigned start, unsigned end)
 {
@@ -534,6 +535,7 @@ VICII::markLine(u8 color, unsigned start, unsigned end)
         emuTexturePtr[start + i] = rgba;
     }
 }
+*/
 
 void
 VICII::cutLayers()

@@ -26,6 +26,7 @@ VICII::VICII(C64 &ref) : C64Component(ref)
     config.palette = COLOR_PALETTE;
     config.cutLayers = 0xFF;
     config.cutOpacity = 0xFF;
+    config.dmaOpacity = 0x80;
     
     // Assign reference clock to all time delayed variables
     baLine.setClock(&cpu.cycle);
@@ -44,8 +45,6 @@ VICII::_initialize()
 {
     setRevision(PAL_8565);
     
-    config.markIrqLines = false;
-    config.markDmaLines = false;
     config.hideSprites = false;
     config.checkSBCollisions = true;
     config.checkSSCollisions = true;
@@ -90,17 +89,30 @@ VICII::getConfigItem(ConfigOption option)
 {
     switch (option) {
             
-        case OPT_VIC_REVISION:   return config.revision;
-        case OPT_PALETTE:        return config.palette;
-        case OPT_GRAY_DOT_BUG:   return config.grayDotBug;
-        case OPT_GLUE_LOGIC:     return config.glueLogic;
-        case OPT_MARK_IRQ_LINES: return config.markIrqLines;
-        case OPT_MARK_DMA_LINES: return config.markDmaLines;
-        case OPT_HIDE_SPRITES:   return config.hideSprites;
-        case OPT_CUT_LAYERS:     return config.cutLayers;
-        case OPT_CUT_OPACITY:    return config.cutOpacity;
-        case OPT_SS_COLLISIONS:  return config.checkSSCollisions;
-        case OPT_SB_COLLISIONS:  return config.checkSBCollisions;
+        case OPT_VIC_REVISION:     return config.revision;
+        case OPT_PALETTE:          return config.palette;
+        case OPT_GRAY_DOT_BUG:     return config.grayDotBug;
+        case OPT_GLUE_LOGIC:       return config.glueLogic;
+        case OPT_DMA_DEBUG:        return config.dmaDebug;
+        case OPT_DMA_CHANNEL_R:    return config.dmaChannel[R_ACCESS];
+        case OPT_DMA_CHANNEL_I:    return config.dmaChannel[I_ACCESS];
+        case OPT_DMA_CHANNEL_C:    return config.dmaChannel[C_ACCESS];
+        case OPT_DMA_CHANNEL_G:    return config.dmaChannel[G_ACCESS];
+        case OPT_DMA_CHANNEL_P:    return config.dmaChannel[P_ACCESS];
+        case OPT_DMA_CHANNEL_S:    return config.dmaChannel[S_ACCESS];
+        case OPT_DMA_COLOR_R:      return config.dmaColor[R_ACCESS];
+        case OPT_DMA_COLOR_I:      return config.dmaColor[I_ACCESS];
+        case OPT_DMA_COLOR_C:      return config.dmaColor[C_ACCESS];
+        case OPT_DMA_COLOR_G:      return config.dmaColor[G_ACCESS];
+        case OPT_DMA_COLOR_P:      return config.dmaColor[P_ACCESS];
+        case OPT_DMA_COLOR_S:      return config.dmaColor[S_ACCESS];
+        case OPT_DMA_DISPLAY_MODE: return config.dmaDisplayMode;
+        case OPT_DMA_OPACITY:      return config.dmaOpacity;
+        case OPT_HIDE_SPRITES:     return config.hideSprites;
+        case OPT_CUT_LAYERS:       return config.cutLayers;
+        case OPT_CUT_OPACITY:      return config.cutOpacity;
+        case OPT_SS_COLLISIONS:    return config.checkSSCollisions;
+        case OPT_SB_COLLISIONS:    return config.checkSBCollisions;
 
         default: assert(false);
     }
@@ -148,16 +160,68 @@ VICII::setConfigItem(ConfigOption option, long value)
             config.grayDotBug = value;
             return true;
             
-        case OPT_MARK_IRQ_LINES:
-            config.markIrqLines = value;
-            return true;
-
-        case OPT_MARK_DMA_LINES:
-            config.markDmaLines = value;
-            return true;
-
         case OPT_HIDE_SPRITES:
             config.hideSprites = value;
+            return true;
+
+        case OPT_DMA_DEBUG:
+            config.dmaDebug = value;
+            return true;
+            
+        case OPT_DMA_CHANNEL_R:
+            config.dmaChannel[R_ACCESS] = value;
+            return true;
+            
+        case OPT_DMA_CHANNEL_I:
+            config.dmaChannel[I_ACCESS] = value;
+            return true;
+            
+        case OPT_DMA_CHANNEL_C:
+            config.dmaChannel[C_ACCESS] = value;
+            return true;
+            
+        case OPT_DMA_CHANNEL_G:
+            config.dmaChannel[G_ACCESS] = value;
+            return true;
+            
+        case OPT_DMA_CHANNEL_P:
+            config.dmaChannel[P_ACCESS] = value;
+            return true;
+            
+        case OPT_DMA_CHANNEL_S:
+            config.dmaChannel[S_ACCESS] = value;
+            return true;
+
+        case OPT_DMA_COLOR_R:
+            config.dmaColor[R_ACCESS] = (u32)value;
+            return true;
+            
+        case OPT_DMA_COLOR_I:
+            config.dmaColor[I_ACCESS] = (u32)value;
+            return true;
+
+        case OPT_DMA_COLOR_C:
+            config.dmaColor[C_ACCESS] = (u32)value;
+            return true;
+
+        case OPT_DMA_COLOR_G:
+            config.dmaColor[G_ACCESS] = (u32)value;
+            return true;
+
+        case OPT_DMA_COLOR_P:
+            config.dmaColor[P_ACCESS] = (u32)value;
+            return true;
+
+        case OPT_DMA_COLOR_S:
+            config.dmaColor[S_ACCESS] = (u32)value;
+            return true;
+            
+        case OPT_DMA_OPACITY:
+            config.dmaOpacity = value;
+            return false; // 'false' to avoid a MSG_CONFIG being sent
+            
+        case OPT_DMA_DISPLAY_MODE:
+            config.dmaDisplayMode = (DmaDisplayMode)value;
             return true;
 
         case OPT_CUT_LAYERS:
@@ -959,13 +1023,7 @@ VICII::endRasterline()
 
     // Prepare buffers ready for the next line
     for (unsigned i = 0; i < TEX_WIDTH; i++) { zBuffer[i] = pixelSource[i] = 0; }
-    
-    // Draw debug markers
-    if (config.markIrqLines && yCounter == rasterInterruptLine())
-        markLine(VICII_WHITE);
-    if (config.markDmaLines && badLine)
-        markLine(VICII_RED);
-    
+        
     // Advance texture pointers
     emuTexturePtr = emuTexture + (c64.rasterLine * TEX_WIDTH);
     dmaTexturePtr = dmaTexture + (c64.rasterLine * TEX_WIDTH);

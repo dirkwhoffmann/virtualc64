@@ -37,19 +37,84 @@ class Configuration {
         set { c64.configure(OPT_GRAY_DOT_BUG, enable: newValue) }
     }
 
-    var vicMarkIrqLines: Bool {
-        get { return c64.getConfig(OPT_MARK_IRQ_LINES) != 0 }
-        set { c64.configure(OPT_MARK_IRQ_LINES, enable: newValue) }
-    }
-
-    var vicMarkDmaLines: Bool {
-        get { return c64.getConfig(OPT_MARK_DMA_LINES) != 0 }
-        set { c64.configure(OPT_MARK_DMA_LINES, enable: newValue) }
-    }
-
     var vicHideSprites: Bool {
         get { return c64.getConfig(OPT_HIDE_SPRITES) != 0 }
         set { c64.configure(OPT_HIDE_SPRITES, enable: newValue) }
+    }
+    
+    var dmaDebug: Bool {
+        get { return c64.getConfig(OPT_DMA_DEBUG) != 0 }
+        set { c64.configure(OPT_DMA_DEBUG, enable: newValue) }
+    }
+
+    var dmaChannelR: Bool {
+        get { return c64.getConfig(OPT_DMA_CHANNEL_R) != 0 }
+        set { c64.configure(OPT_DMA_CHANNEL_R, enable: newValue) }
+    }
+
+    var dmaChannelI: Bool {
+        get { return c64.getConfig(OPT_DMA_CHANNEL_I) != 0 }
+        set { c64.configure(OPT_DMA_CHANNEL_I, enable: newValue) }
+    }
+
+    var dmaChannelC: Bool {
+        get { return c64.getConfig(OPT_DMA_CHANNEL_C) != 0 }
+        set { c64.configure(OPT_DMA_CHANNEL_C, enable: newValue) }
+    }
+
+    var dmaChannelG: Bool {
+        get { return c64.getConfig(OPT_DMA_CHANNEL_G) != 0 }
+        set { c64.configure(OPT_DMA_CHANNEL_G, enable: newValue) }
+    }
+
+    var dmaChannelP: Bool {
+        get { return c64.getConfig(OPT_DMA_CHANNEL_P) != 0 }
+        set { c64.configure(OPT_DMA_CHANNEL_P, enable: newValue) }
+    }
+
+    var dmaChannelS: Bool {
+        get { return c64.getConfig(OPT_DMA_CHANNEL_S) != 0 }
+        set { c64.configure(OPT_DMA_CHANNEL_S, enable: newValue) }
+    }
+
+    var dmaColorR: NSColor {
+        get { return NSColor.init(rgba: UInt32(c64.getConfig(OPT_DMA_COLOR_R))) }
+        set { c64.configure(OPT_DMA_COLOR_R, value: newValue.gpuColor) }
+    }
+
+    var dmaColorI: NSColor {
+        get { return NSColor.init(rgba: UInt32(c64.getConfig(OPT_DMA_COLOR_I))) }
+        set { c64.configure(OPT_DMA_COLOR_I, value: newValue.gpuColor) }
+    }
+
+    var dmaColorC: NSColor {
+        get { return NSColor.init(rgba: UInt32(c64.getConfig(OPT_DMA_COLOR_C))) }
+        set { c64.configure(OPT_DMA_COLOR_C, value: newValue.gpuColor) }
+    }
+    
+    var dmaColorG: NSColor {
+        get { return NSColor.init(rgba: UInt32(c64.getConfig(OPT_DMA_COLOR_G))) }
+        set { c64.configure(OPT_DMA_COLOR_G, value: newValue.gpuColor) }
+    }
+
+    var dmaColorP: NSColor {
+        get { return NSColor.init(rgba: UInt32(c64.getConfig(OPT_DMA_COLOR_P))) }
+        set { c64.configure(OPT_DMA_COLOR_P, value: newValue.gpuColor) }
+    }
+
+    var dmaColorS: NSColor {
+        get { return NSColor.init(rgba: UInt32(c64.getConfig(OPT_DMA_COLOR_S))) }
+        set { c64.configure(OPT_DMA_COLOR_S, value: newValue.gpuColor) }
+    }
+    
+    var dmaDisplayMode: Int {
+        get { return c64.getConfig(OPT_DMA_DISPLAY_MODE) }
+        set { c64.configure(OPT_DMA_DISPLAY_MODE, value: newValue) }
+    }
+
+    var dmaOpacity: Int {
+        get { return c64.getConfig(OPT_DMA_OPACITY) }
+        set { c64.configure(OPT_DMA_OPACITY, value: newValue) }
     }
 
     var vicCutLayers: Int {

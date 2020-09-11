@@ -311,9 +311,17 @@ class MyDocument: NSDocument {
     
     override open func read(from url: URL, ofType typeName: String) throws {
         
+        track()
         try createAttachment(from: url)
     }
-
+    
+    override open func revert(toContentsOf url: URL, ofType typeName: String) throws {
+        
+            track()
+            try createAttachment(from: url)
+            mountAttachment()
+    }
+    
     //
     // Saving
     //

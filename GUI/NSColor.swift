@@ -56,4 +56,13 @@ extension NSColor {
         
         return (r, g, b, 255)
     }
+    
+    var gpuColor: Int {
+        
+        let r = Int(redComponent * 255)
+        let g = Int(greenComponent * 255)
+        let b = Int(blueComponent * 255)
+
+        return (r << 24) | (g << 16) | (b << 8) | 0xFF
+    }
 }

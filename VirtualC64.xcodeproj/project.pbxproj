@@ -217,6 +217,7 @@
 		50EAFFEA24B2600D00024CD2 /* MyToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EAFFE924B2600D00024CD2 /* MyToolbar.swift */; };
 		50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ED5BF712DD99C000596417 /* Speedometer.swift */; };
 		50F2381E12DF505B00B1F275 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F2381D12DF505B00B1F275 /* Quartz.framework */; };
+		50F420CA250BA3460043DE56 /* Colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F420C8250BA3460043DE56 /* Colors.cpp */; };
 		50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DA30F28EADC0040592B /* MyDocument.xib */; };
 		50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCB0F28EC010040592B /* MainMenu.xib */; };
 		50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F99563203AEC80004C4856 /* KeyViewItem.xib */; };
@@ -573,6 +574,8 @@
 		50EAFFE924B2600D00024CD2 /* MyToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyToolbar.swift; sourceTree = "<group>"; };
 		50ED5BF712DD99C000596417 /* Speedometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speedometer.swift; sourceTree = "<group>"; };
 		50F2381D12DF505B00B1F275 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		50F420C8250BA3460043DE56 /* Colors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colors.cpp; sourceTree = "<group>"; };
+		50F420C9250BA3460043DE56 /* Colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colors.h; sourceTree = "<group>"; };
 		50F99563203AEC80004C4856 /* KeyViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyViewItem.xib; sourceTree = "<group>"; };
 		50FE5B352039B3B7006CE7C7 /* MacKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacKey.swift; sourceTree = "<group>"; };
 		50FE5B372039B3C5006CE7C7 /* C64Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C64Key.swift; sourceTree = "<group>"; };
@@ -1155,6 +1158,8 @@
 				50A2D7B024AF94B400671F38 /* Aliases.h */,
 				504C42F224AF29AB00E69CAE /* Utils.h */,
 				504C42EF24AF29AB00E69CAE /* Utils.cpp */,
+				50F420C9250BA3460043DE56 /* Colors.h */,
+				50F420C8250BA3460043DE56 /* Colors.cpp */,
 				504C42F024AF29AB00E69CAE /* TimeDelayed.h */,
 				5093D6A824B19E9200BDF924 /* Serialization.h */,
 				504C42EC24AF29AB00E69CAE /* C64Object.h */,
@@ -1526,6 +1531,7 @@
 				50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */,
 				507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */,
 				507E7AA024FB881500AB433C /* ScreenshotDialog.swift in Sources */,
+				50F420CA250BA3460043DE56 /* Colors.cpp in Sources */,
 				50995F2A24DBCDE400F40713 /* CPUDebugger.cpp in Sources */,
 				504C439724AF29AC00E69CAE /* voice.cc in Sources */,
 				504C436224AF29AC00E69CAE /* GeoRam.cpp in Sources */,
