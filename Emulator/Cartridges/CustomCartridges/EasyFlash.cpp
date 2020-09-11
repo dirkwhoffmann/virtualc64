@@ -36,7 +36,7 @@ EasyFlash::_reset()
     RESET_SNAPSHOT_ITEMS
     Cartridge::_reset();
     
-    eraseRAM(0xFF);
+    eraseRAM(0);
     
     // Make sure peekRomL() and peekRomH() conver the whole range
     mappedBytesL = 0x2000;
@@ -65,41 +65,26 @@ EasyFlash::_dump()
 void
 EasyFlash::loadChip(unsigned nr, CRTFile *c)
 {
-    static int bank;
-    
     u16 chipSize = c->chipSize(nr);
     u16 chipAddr = c->chipAddr(nr);
+    u16 chipBank = c->chipBank(nr);
     u8 *chipData = c->chipData(nr);
-
-    if (nr == 0) {
-        bank = 0;
-    }
     
     if(chipSize != 0x2000) {
         warn("Package %d has chip size %04X. Expected 0x2000.\n", nr, chipSize);
         return;
     }
 
-    // Check for missing banks
-    if (bank % 2 == 0 && isROMHaddr(chipAddr)) {
-        debug(CRT_DEBUG, "Skipping Rom bank %dL ...\n", bank / 2);
-        bank++;
-    }
-    if (bank % 2 == 1 && isROMLaddr(chipAddr)) {
-        debug(CRT_DEBUG, "Skipping Rom bank %dH ...\n", bank / 2);
-        bank++;
-    }
-
     if (isROMLaddr(chipAddr)) {
             
-        debug(CRT_DEBUG, "Loading Rom bank %dL ...\n", bank / 2);
-        flashRomL.loadBank(bank / 2, chipData);
+        debug(CRT_DEBUG, "Loading Rom bank %dL ...\n", chipBank);
+        flashRomL.loadBank(chipBank, chipData);
         bank++;
     
     } else if (isROMHaddr(chipAddr)) {
 
         debug(CRT_DEBUG, "Loading Rom bank %dH ...\n", bank / 2);
-        flashRomH.loadBank(bank / 2, chipData);
+        flashRomH.loadBank(chipBank, chipData);
         bank++;
         
     } else {
@@ -112,11 +97,17 @@ EasyFlash::loadChip(unsigned nr, CRTFile *c)
 u8
 EasyFlash::peek(u16 addr)
 {
+    u8 result;
+    
     if (isROMLaddr(addr)) {
-        return flashRomL.peek(bank, addr & 0x1FFF);
+        result = flashRomL.peek(bank, addr & 0x1FFF);
+        // debug(CRT_DEBUG, "peekL(%x) = %x\n", addr, result);
+        return result;
         
     } else if (isROMHaddr(addr)) {
-        return flashRomH.peek(bank, addr & 0x1FFF);
+        result = flashRomH.peek(bank, addr & 0x1FFF);
+        // debug(CRT_DEBUG, "peekH(%x) = %x\n", addr, result);
+        return result;
         
     } else {
         assert(false);
@@ -128,24 +119,6 @@ void
 EasyFlash::poke(u16 addr, u8 value)
 {
     Cartridge::poke(addr, value);
-    /*
-    debug(CRT_DEBUG, "poke(%x, %x) %x %x\n", addr, value, mappedBytesL, mappedBytesH);
-
-    if (isROMLaddr(addr)) {
-        flashRomL.poke(bank, addr & 0x1FFF, value);
-        
-    } else if (isROMHaddr(addr)) {
-        flashRomH.poke(bank, addr & 0x1FFF, value);
-        
-    } else {
-        assert(false);
-    }
-    
-    if (!c64.getUltimax()) {
-        debug("Writing %x to RAM %x\n", addr, value);
-        mem.ram[addr] = value;
-    }
-    */
 }
 
 void
@@ -166,7 +139,7 @@ u8
 EasyFlash::peekIO1(u16 addr)
 {
     u8 result = (addr & 2) ? (modeReg & 0x87) : bankReg;
-    plaindebug(CRT_DEBUG, "peekIO1(%x): %x\n", addr, result);
+    debug(CRT_DEBUG, "peekIO1(%x): %x\n", addr & 0xFF, result);
     return result;
 }
 
@@ -174,7 +147,7 @@ u8
 EasyFlash::peekIO2(u16 addr)
 {
     u8 result = peekRAM(addr & 0xFF);
-    plaindebug(CRT_DEBUG, "peekIO2(%x): %x\n", addr, result);
+    debug(CRT_DEBUG, "peekIO2(%x): %x\n", addr & 0xFF, result);
     
     return result;
 }
@@ -182,9 +155,17 @@ EasyFlash::peekIO2(u16 addr)
 void
 EasyFlash::pokeIO1(u16 addr, u8 value)
 {
-    plaindebug(CRT_DEBUG, "pokeIO1(%x,%x)\n", addr, value);
+    debug(CRT_DEBUG, "pokeIO1(%x,%x)\n", addr & 0xFF, value);
     
     (addr & 2) ? pokeModeReg(value) : pokeBankReg(value);
+}
+
+void
+EasyFlash::pokeIO2(u16 addr, u8 value)
+{
+    debug(CRT_DEBUG, "pokeIO2(%x,%x)\n", addr & 0xFF, value);
+
+    pokeRAM(addr & 0xFF, value);
 }
 
 void
@@ -259,12 +240,4 @@ EasyFlash::pokeModeReg(u8 value)
     }
     
     expansionport.setGameAndExrom(game, exrom);
-}
-
-void
-EasyFlash::pokeIO2(u16 addr, u8 value)
-{
-    plaindebug(CRT_DEBUG, "pokeIO2(%x,%x)\n", addr, value);
-
-    pokeRAM(addr & 0xFF, value);
 }
