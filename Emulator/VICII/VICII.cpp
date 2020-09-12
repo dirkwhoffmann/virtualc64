@@ -37,8 +37,8 @@ VICII::VICII(C64 &ref) : C64Component(ref)
 
     // Assign default DMA debugging colors
     setDmaDebugColor(R_ACCESS, RgbColor(1.0, 0.0, 0.0));
-    setDmaDebugColor(I_ACCESS, RgbColor(1.0, 1.0, 0.0));
-    setDmaDebugColor(C_ACCESS, RgbColor(1.0, 0.8, 0.0));
+    setDmaDebugColor(I_ACCESS, RgbColor(1.0, 0.8, 0.0));
+    setDmaDebugColor(C_ACCESS, RgbColor(1.0, 1.0, 0.0));
     setDmaDebugColor(G_ACCESS, RgbColor(0.0, 1.0, 1.0));
     setDmaDebugColor(P_ACCESS, RgbColor(0.0, 1.0, 0.0));
     setDmaDebugColor(S_ACCESS, RgbColor(0.0, 0.5, 1.0));

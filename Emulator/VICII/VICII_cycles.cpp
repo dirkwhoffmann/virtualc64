@@ -803,7 +803,12 @@ VICII::sFirstAccess(unsigned sprite)
     if (spriteDmaOnOff & (1 << sprite)) {
         
         if (BApulledDownForAtLeastThreeCycles()) {
+            
             dataBusPhi2 = memAccess(spritePtr[sprite] | mc[sprite]);
+            
+            if (type == PAL_DEBUG_CYCLE || type == NTSC_DEBUG_CYCLE) {
+                visualizeDma(4, dataBusPhi2, S_ACCESS);
+            }
         }
         
         mc[sprite] = (mc[sprite] + 1) & 0x3F;
@@ -825,6 +830,11 @@ VICII::sSecondAccess(unsigned sprite)
         assert(BApulledDownForAtLeastThreeCycles());
         dataBusPhi1 = memAccess(spritePtr[sprite] | mc[sprite]);
         mc[sprite] = (mc[sprite] + 1) & 0x3F;
+        
+        if (type == PAL_DEBUG_CYCLE || type == NTSC_DEBUG_CYCLE) {
+            visualizeDma(0, dataBusPhi1, S_ACCESS);
+        }
+
     
     } else {
         
@@ -844,6 +854,10 @@ VICII::sThirdAccess(unsigned sprite)
         assert(BApulledDownForAtLeastThreeCycles());
         dataBusPhi2 = memAccess(spritePtr[sprite] | mc[sprite]);
         mc[sprite] = (mc[sprite] + 1) & 0x3F;
+
+        if (type == PAL_DEBUG_CYCLE || type == NTSC_DEBUG_CYCLE) {
+            visualizeDma(4, dataBusPhi2, S_ACCESS);
+        }
     }
     
     spriteSr[sprite].chunk3 = dataBusPhi2;
@@ -863,6 +877,10 @@ template <VICIIMode type> void
 VICII::iAccess()
 {
     dataBusPhi1 = memAccess(0x3FFF);
+    
+    if (type == PAL_DEBUG_CYCLE || type == NTSC_DEBUG_CYCLE) {
+        visualizeDma(0, dataBusPhi1, I_ACCESS);
+    }
 }
 
 template <VICIIMode type> void
@@ -877,6 +895,10 @@ VICII::cAccess()
         dataBusPhi2 = memAccess(addr);
         videoMatrix[vmli] = dataBusPhi2;
         colorLine[vmli] = mem.colorRam[vc] & 0x0F;
+        
+        if (type == PAL_DEBUG_CYCLE || type == NTSC_DEBUG_CYCLE) {
+            visualizeDma(4, dataBusPhi2, C_ACCESS);
+        }
     }
     
     // VICII has no access, yet
@@ -954,6 +976,10 @@ VICII::gAccess()
         // Store result
         gAccessResult.write(dataBusPhi1);
     }
+    
+    if (type == PAL_DEBUG_CYCLE || type == NTSC_DEBUG_CYCLE) {
+        visualizeDma(0, dataBusPhi1, G_ACCESS);
+    }
 }
 
 u16
@@ -1025,6 +1051,10 @@ VICII::pAccess(unsigned sprite)
     // |VM13|VM12|VM11|VM10|  1 |  1 |  1 |  1 |  1 |  1 |  1 |  Spr.-Nummer |
     dataBusPhi1 = memAccess((VM13VM12VM11VM10() << 6) | 0x03F8 | sprite);
     spritePtr[sprite] = dataBusPhi1 << 6;
+    
+    if (type == PAL_DEBUG_CYCLE || type == NTSC_DEBUG_CYCLE) {
+        visualizeDma(0, dataBusPhi1, P_ACCESS);
+    }
 }
 
 void VICII::sFinalize(unsigned sprite)
