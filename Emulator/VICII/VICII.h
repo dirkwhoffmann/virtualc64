@@ -554,16 +554,16 @@ private:
     //
     
     // Indicates if memory accesses of a certain type should be visualized
-    bool visualize[ACCESS_CNT];
+    // bool visualize[ACCESS_CNT];
 
-    // DMA debugging colors
-    RgbColor debugColor[ACCESS_CNT][5];
+    // Lookup table for DMA debugging colors
+    u32 debugColor[ACCESS_CNT][4];
 
     // Opacity of DMA pixels
-    double opacity = 0.5;
+    // double opacity = 0.5;
 
     // Currently selected display mode
-    DmaDisplayMode displayMode = MODULATE_FG_LAYER;
+    // DmaDisplayMode displayMode = MODULATE_FG_LAYER;
 
     
     //
@@ -579,6 +579,9 @@ private:
     void _initialize() override;
     void _reset() override;
 
+    void resetEmuTextures();
+    void resetDmaTextures();
+
     
     //
     // Configuring
@@ -593,6 +596,9 @@ public:
     
     VICRevision getRevision() { return config.revision; }    
     void setRevision(VICRevision revision);
+    
+    void setDmaDebugColor(MemAccessType type, GpuColor color);
+    void setDmaDebugColor(MemAccessType type, RgbColor color);
     
 private:
     
@@ -780,11 +786,6 @@ public:
     // Returns the currently stable textures
     void *stableEmuTexture();
     void *stableDmaTexture();
-
-    /* Initializes both screenBuffers. This function is needed for debugging,
-     * only. It write some recognizable pattern into both buffers.
-     */
-    void resetTextures();
     
     // Returns a pointer to randon noise
     u32 *getNoise();
@@ -1351,6 +1352,9 @@ public:
     /* Cuts out certain graphics layers
      */
     void cutLayers();
+    
+    // Initializes the DMA debugger textures
+    void clearDmaDebuggerTexture();
     
     // Superimposes the debug output onto the current rasterline
     void computeOverlay();

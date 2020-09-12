@@ -78,32 +78,32 @@ class Configuration {
     }
 
     var dmaColorR: NSColor {
-        get { return NSColor.init(rgba: UInt32(c64.getConfig(OPT_DMA_COLOR_R))) }
+        get { return NSColor.init(abgr: UInt32(c64.getConfig(OPT_DMA_COLOR_R))) }
         set { c64.configure(OPT_DMA_COLOR_R, value: newValue.gpuColor) }
     }
 
     var dmaColorI: NSColor {
-        get { return NSColor.init(rgba: UInt32(c64.getConfig(OPT_DMA_COLOR_I))) }
+        get { return NSColor.init(abgr: UInt32(c64.getConfig(OPT_DMA_COLOR_I))) }
         set { c64.configure(OPT_DMA_COLOR_I, value: newValue.gpuColor) }
     }
 
     var dmaColorC: NSColor {
-        get { return NSColor.init(rgba: UInt32(c64.getConfig(OPT_DMA_COLOR_C))) }
+        get { return NSColor.init(abgr: UInt32(c64.getConfig(OPT_DMA_COLOR_C))) }
         set { c64.configure(OPT_DMA_COLOR_C, value: newValue.gpuColor) }
     }
     
     var dmaColorG: NSColor {
-        get { return NSColor.init(rgba: UInt32(c64.getConfig(OPT_DMA_COLOR_G))) }
+        get { return NSColor.init(abgr: UInt32(c64.getConfig(OPT_DMA_COLOR_G))) }
         set { c64.configure(OPT_DMA_COLOR_G, value: newValue.gpuColor) }
     }
 
     var dmaColorP: NSColor {
-        get { return NSColor.init(rgba: UInt32(c64.getConfig(OPT_DMA_COLOR_P))) }
+        get { return NSColor.init(abgr: UInt32(c64.getConfig(OPT_DMA_COLOR_P))) }
         set { c64.configure(OPT_DMA_COLOR_P, value: newValue.gpuColor) }
     }
 
     var dmaColorS: NSColor {
-        get { return NSColor.init(rgba: UInt32(c64.getConfig(OPT_DMA_COLOR_S))) }
+        get { return NSColor.init(abgr: UInt32(c64.getConfig(OPT_DMA_COLOR_S))) }
         set { c64.configure(OPT_DMA_COLOR_S, value: newValue.gpuColor) }
     }
     

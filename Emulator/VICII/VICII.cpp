@@ -38,6 +38,14 @@ VICII::VICII(C64 &ref) : C64Component(ref)
     for (int i = 0; i < noiseSize; i++) {
         noise[i] = rand() % 2 ? 0xFF000000 : 0xFFFFFFFF;
     }
+    
+    // Assign default DMA debugging colors
+    setDmaDebugColor(R_ACCESS, RgbColor(1.0, 0.0, 0.0));
+    setDmaDebugColor(I_ACCESS, RgbColor(1.0, 1.0, 0.0));
+    setDmaDebugColor(C_ACCESS, RgbColor(1.0, 0.8, 0.0));
+    setDmaDebugColor(G_ACCESS, RgbColor(0.0, 1.0, 1.0));
+    setDmaDebugColor(P_ACCESS, RgbColor(0.0, 1.0, 0.0));
+    setDmaDebugColor(S_ACCESS, RgbColor(0.0, 0.5, 1.0));    
 }
 
 void
@@ -82,6 +90,36 @@ VICII::_reset()
     // Reset the screen buffer pointers
     emuTexture = emuTexturePtr = emuTexture1;
     dmaTexture = dmaTexturePtr = dmaTexture1;
+}
+
+void
+VICII::resetEmuTextures()
+{
+    // Determine the HBLANK / VBLANK area
+    long width = isPAL() ? PAL_PIXELS : NTSC_PIXELS;
+    long height = getRasterlinesPerFrame();
+    
+    for (unsigned line = 0; line < TEX_HEIGHT; line++) {
+        for (unsigned i = 0; i < TEX_WIDTH; i++) {
+
+            int pos = line * TEX_WIDTH + i;
+            int col = 0xFF000000;
+
+            // Apply a checkerboard pattern inside the HBLANK / VBLANK area
+            if (line < height && i < width)
+                col = (line / 4) % 2 == (i / 8) % 2 ? 0xFF222222 : 0xFF444444;
+
+            emuTexture1[pos] = emuTexture2[pos] = col;
+            dmaTexture1[pos] = dmaTexture2[pos] = col;
+        }
+    }
+}
+
+void
+VICII::resetDmaTextures()
+{
+    memset(dmaTexture1, 0, TEX_HEIGHT * TEX_WIDTH * sizeof(u32));
+    memset(dmaTexture2, 0, TEX_HEIGHT * TEX_WIDTH * sizeof(u32));
 }
 
 long
@@ -161,82 +199,107 @@ VICII::setConfigItem(ConfigOption option, long value)
             return true;
             
         case OPT_HIDE_SPRITES:
+            
             config.hideSprites = value;
             return true;
 
         case OPT_DMA_DEBUG:
+            
+            if (config.dmaDebug == value) {
+                return false;
+            }
             config.dmaDebug = value;
+            resetDmaTextures();
             return true;
             
         case OPT_DMA_CHANNEL_R:
+            
             config.dmaChannel[R_ACCESS] = value;
             return true;
             
         case OPT_DMA_CHANNEL_I:
+            
             config.dmaChannel[I_ACCESS] = value;
             return true;
             
         case OPT_DMA_CHANNEL_C:
+            
             config.dmaChannel[C_ACCESS] = value;
             return true;
             
         case OPT_DMA_CHANNEL_G:
+            
             config.dmaChannel[G_ACCESS] = value;
             return true;
             
         case OPT_DMA_CHANNEL_P:
+            
             config.dmaChannel[P_ACCESS] = value;
             return true;
             
         case OPT_DMA_CHANNEL_S:
+            
             config.dmaChannel[S_ACCESS] = value;
             return true;
 
         case OPT_DMA_COLOR_R:
+            
+            setDmaDebugColor(R_ACCESS, GpuColor((u32)value));
             config.dmaColor[R_ACCESS] = (u32)value;
             return true;
             
         case OPT_DMA_COLOR_I:
+            
             config.dmaColor[I_ACCESS] = (u32)value;
             return true;
 
         case OPT_DMA_COLOR_C:
+            
             config.dmaColor[C_ACCESS] = (u32)value;
             return true;
 
         case OPT_DMA_COLOR_G:
+            
             config.dmaColor[G_ACCESS] = (u32)value;
             return true;
 
         case OPT_DMA_COLOR_P:
+            
             config.dmaColor[P_ACCESS] = (u32)value;
             return true;
 
         case OPT_DMA_COLOR_S:
+            
             config.dmaColor[S_ACCESS] = (u32)value;
             return true;
             
         case OPT_DMA_OPACITY:
+            
             config.dmaOpacity = value;
             return false; // 'false' to avoid a MSG_CONFIG being sent
             
         case OPT_DMA_DISPLAY_MODE:
+            
             config.dmaDisplayMode = (DmaDisplayMode)value;
             return true;
 
         case OPT_CUT_LAYERS:
+            
             config.cutLayers = value;
             return true;
             
         case OPT_CUT_OPACITY:
+            
             config.cutOpacity = value;
             return false; // False to avoid MSG_CONFIG being sent to the GUI
             
         case OPT_SS_COLLISIONS:
+            
             config.checkSSCollisions = value;
             return true;
 
         case OPT_SB_COLLISIONS:
+            
             config.checkSBCollisions = value;
             return true;
 
@@ -267,10 +330,31 @@ VICII::setRevision(VICRevision revision)
     config.revision = revision;
     
     updatePalette();
-    resetTextures();
+    resetEmuTextures();
+    resetDmaTextures();
     c64.updateVicFunctionTable();
     
     c64.putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
+}
+
+void
+VICII::setDmaDebugColor(MemAccessType type, GpuColor color)
+{
+    assert(isMemAccessType(type));
+    
+    config.dmaColor[type] = color.rawValue;
+        
+    // Update the color lookup table
+    debugColor[type][0] = color.shade(0.3).rawValue;
+    debugColor[type][1] = color.shade(0.1).rawValue;
+    debugColor[type][2] = color.tint(0.1).rawValue;
+    debugColor[type][3] = color.tint(0.3).rawValue;
+}
+
+void
+VICII::setDmaDebugColor(MemAccessType type, RgbColor color)
+{
+    setDmaDebugColor(type, GpuColor(color));
 }
 
 void
@@ -543,29 +627,6 @@ void *
 VICII::stableDmaTexture()
 {
     return dmaTexture == dmaTexture1 ? dmaTexture2 : dmaTexture1;
-}
-
-void
-VICII::resetTextures()
-{
-    // Determine the HBLANK / VBLANK area
-    long width = isPAL() ? PAL_PIXELS : NTSC_PIXELS;
-    long height = getRasterlinesPerFrame();
-    
-    for (unsigned line = 0; line < TEX_HEIGHT; line++) {
-        for (unsigned i = 0; i < TEX_WIDTH; i++) {
-
-            int pos = line * TEX_WIDTH + i;
-            int col = 0xFF000000;
-
-            // Apply a checkerboard pattern inside the HBLANK / VBLANK area
-            if (line < height && i < width)
-                col = (line / 4) % 2 == (i / 8) % 2 ? 0xFF222222 : 0xFF444444;
-
-            emuTexture1[pos] = emuTexture2[pos] = col;
-            dmaTexture1[pos] = dmaTexture2[pos] = col;
-        }
-    }
 }
 
 u32 *
@@ -945,6 +1006,9 @@ VICII::endFrame()
         emuTexture = emuTexturePtr = emuTexture1;
         dmaTexture = dmaTexturePtr = dmaTexture1;
     }
+    
+    // Clear the DMA debugger texture
+    if (config.dmaDebug) resetDmaTextures();
 }
 
 void

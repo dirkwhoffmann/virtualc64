@@ -32,13 +32,24 @@ extension NSColor {
     
     convenience init(rgba: UInt32) {
 
-        let r = CGFloat(rgba & 0xFF)
-        let g = CGFloat((rgba >> 8) & 0xFF)
-        let b = CGFloat((rgba >> 16) & 0xFF)
+        let a = CGFloat(rgba & 0xFF)
+        let b = CGFloat((rgba >> 8) & 0xFF)
+        let g = CGFloat((rgba >> 16) & 0xFF)
+        let r = CGFloat((rgba >> 24) & 0xFF)
 
-        self.init(red: r / 255.0, green: g / 255.0, blue: b / 255.0, alpha: 1.0)
+        self.init(red: r / 255.0, green: g / 255.0, blue: b / 255.0, alpha: a / 255.0)
     }
-    
+
+    convenience init(abgr: UInt32) {
+
+        let r = CGFloat(abgr & 0xFF)
+        let g = CGFloat((abgr >> 8) & 0xFF)
+        let b = CGFloat((abgr >> 16) & 0xFF)
+        let a = CGFloat((abgr >> 24) & 0xFF)
+
+        self.init(red: r / 255.0, green: g / 255.0, blue: b / 255.0, alpha: a / 255.0)
+    }
+
     func rgb() -> (Int, Int, Int) {
         
         let r = Int(redComponent * 255)
@@ -63,6 +74,6 @@ extension NSColor {
         let g = Int(greenComponent * 255)
         let b = Int(blueComponent * 255)
 
-        return (r << 24) | (g << 16) | (b << 8) | 0xFF
+        return (0xFF << 24) | (b << 16) | (g << 8) | r
     }
 }

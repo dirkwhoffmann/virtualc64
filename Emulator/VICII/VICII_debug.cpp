@@ -29,26 +29,26 @@ VICII::computeOverlay()
     double bgWeight, fgWeight;
 
     // Only proceed if DMA debugging has been turned on
-    if (!visualize[0]) return;
+    if (!config.dmaDebug) return;
 
-    switch (displayMode) {
+    switch (config.dmaDisplayMode) {
 
         case MODULATE_FG_LAYER:
 
             bgWeight = 0.0;
-            fgWeight = 1.0 - opacity;
+            fgWeight = 1.0 - config.dmaOpacity;
             break;
 
         case MODULATE_BG_LAYER:
 
-            bgWeight = 1.0 - opacity;
+            bgWeight = 1.0 - config.dmaOpacity;
             fgWeight = 0.0;
             break;
 
         case MODULATE_ODD_EVEN_LAYERS:
 
-            bgWeight = opacity;
-            fgWeight = 1.0 - opacity;
+            bgWeight = config.dmaOpacity;
+            fgWeight = 1.0 - config.dmaOpacity;
             break;
 
         default: assert(false);

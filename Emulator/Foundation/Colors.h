@@ -60,7 +60,7 @@ struct YuvColor {
 
 struct GpuColor {
 
-    u32 rawValue; // TODO: RENAME TO RGBA
+    u32 rawValue; // TODO: RENAME TO abgr
 
     GpuColor() : rawValue(0) {}
     GpuColor(u32 v) : rawValue(v) {}
