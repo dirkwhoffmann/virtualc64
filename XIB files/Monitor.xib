@@ -222,19 +222,8 @@
                             <rect key="frame" x="3" y="3" width="274" height="283"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <button verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="jZQ-L5-INz">
-                                    <rect key="frame" x="71" y="49" width="79" height="18"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <buttonCell key="cell" type="check" title="Sprite 2" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="m02-hk-Mpw">
-                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="message" size="11"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="cutSingleSpriteAction:" target="-2" id="6dc-kT-SEv"/>
-                                    </connections>
-                                </button>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t0V-w6-HjN">
-                                    <rect key="frame" x="71" y="101" width="79" height="18"/>
+                                    <rect key="frame" x="71" y="103" width="79" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="check" title="Sprite 0" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="evN-cM-coe">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -245,7 +234,7 @@
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="Yts-bR-ocR">
-                                    <rect key="frame" x="157" y="100" width="79" height="18"/>
+                                    <rect key="frame" x="157" y="103" width="79" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="check" title="Sprite 4" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="aYT-aX-4Bd">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -256,7 +245,7 @@
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="qvu-aM-Syb">
-                                    <rect key="frame" x="71" y="75" width="79" height="18"/>
+                                    <rect key="frame" x="71" y="77" width="79" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="check" title="Sprite 1" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="Bi3-1M-ET3">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -267,7 +256,7 @@
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="wPL-4m-9rH">
-                                    <rect key="frame" x="71" y="23" width="79" height="18"/>
+                                    <rect key="frame" x="71" y="25" width="79" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="check" title="Sprite 3" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="Fae-UU-SpG">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -278,7 +267,7 @@
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" tag="7" translatesAutoresizingMaskIntoConstraints="NO" id="lWA-47-gaL">
-                                    <rect key="frame" x="157" y="23" width="79" height="18"/>
+                                    <rect key="frame" x="157" y="25" width="79" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="check" title="Sprite 7" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="DUe-ov-ggE">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -289,7 +278,7 @@
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="BY6-Zv-vy4">
-                                    <rect key="frame" x="157" y="74" width="79" height="18"/>
+                                    <rect key="frame" x="157" y="77" width="79" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="check" title="Sprite 5" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="PF4-09-fSR">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -300,7 +289,7 @@
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" tag="6" translatesAutoresizingMaskIntoConstraints="NO" id="hAq-v2-sl3">
-                                    <rect key="frame" x="157" y="48" width="79" height="18"/>
+                                    <rect key="frame" x="157" y="51" width="79" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="check" title="Sprite 6" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="6LU-YS-xyo">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -311,44 +300,44 @@
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tmp-9E-DGf">
-                                    <rect key="frame" x="51" y="183" width="125" height="18"/>
+                                    <rect key="frame" x="51" y="181" width="111" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <buttonCell key="cell" type="check" title="Foreground layer" bezelStyle="regularSquare" imagePosition="left" inset="2" id="jQ0-1U-dRn">
+                                    <buttonCell key="cell" type="check" title="Foreground layer" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="jQ0-1U-dRn">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="system"/>
+                                        <font key="font" metaFont="message" size="11"/>
                                     </buttonCell>
                                     <connections>
                                         <action selector="cutForegroundAction:" target="-2" id="3Dm-di-LW5"/>
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OW4-mK-XJq">
-                                    <rect key="frame" x="51" y="209" width="96" height="18"/>
+                                    <rect key="frame" x="51" y="207" width="86" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <buttonCell key="cell" type="check" title="Border layer" bezelStyle="regularSquare" imagePosition="left" inset="2" id="ehY-8A-jyg">
+                                    <buttonCell key="cell" type="check" title="Border layer" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="ehY-8A-jyg">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="system"/>
+                                        <font key="font" metaFont="message" size="11"/>
                                     </buttonCell>
                                     <connections>
                                         <action selector="cutBorderAction:" target="-2" id="ohO-7S-Gvd"/>
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oMx-3X-yLL">
-                                    <rect key="frame" x="51" y="156" width="128" height="18"/>
+                                    <rect key="frame" x="51" y="155" width="113" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <buttonCell key="cell" type="check" title="Background layer" bezelStyle="regularSquare" imagePosition="left" inset="2" id="AaJ-rX-2By">
+                                    <buttonCell key="cell" type="check" title="Background layer" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="AaJ-rX-2By">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="system"/>
+                                        <font key="font" metaFont="message" size="11"/>
                                     </buttonCell>
                                     <connections>
                                         <action selector="cutBackgroundAction:" target="-2" id="SZy-5C-nTR"/>
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qPb-Iq-Cx8">
-                                    <rect key="frame" x="51" y="128" width="98" height="18"/>
+                                    <rect key="frame" x="51" y="129" width="88" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <buttonCell key="cell" type="check" title="Sprite layers" bezelStyle="regularSquare" imagePosition="left" inset="2" id="xUn-CA-UF2">
+                                    <buttonCell key="cell" type="check" title="Sprite layers" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="xUn-CA-UF2">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="system"/>
+                                        <font key="font" metaFont="message" size="11"/>
                                     </buttonCell>
                                     <connections>
                                         <action selector="cutSpritesAction:" target="-2" id="TCa-ad-Wm7"/>
@@ -369,6 +358,17 @@
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
+                                </button>
+                                <button verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="jZQ-L5-INz">
+                                    <rect key="frame" x="71" y="51" width="79" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="check" title="Sprite 2" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="m02-hk-Mpw">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="message" size="11"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="cutSingleSpriteAction:" target="-2" id="6dc-kT-SEv"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </view>
