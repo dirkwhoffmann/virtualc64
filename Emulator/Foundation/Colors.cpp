@@ -43,6 +43,20 @@ RgbColor::mix(RgbColor additive, double weight)
     return RgbColor(newR, newG, newB);
 }
 
+RgbColor
+RgbColor::mix(RgbColor additive, double weight1, double weight2)
+{
+    assert(additive.r <= 1.0);
+    assert(additive.g <= 1.0);
+    assert(additive.b <= 1.0);
+    
+    double newR = r * weight1 + additive.r * weight2;
+    double newG = g * weight1 + additive.g * weight2;
+    double newB = b * weight1 + additive.b * weight2;
+        
+    return RgbColor(newR, newG, newB);
+}
+
 const RgbColor RgbColor::black(0.0, 0.0, 0.0);
 const RgbColor RgbColor::white(1.0, 1.0, 1.0);
 const RgbColor RgbColor::red(1.0, 0.0, 0.0);
@@ -108,3 +122,9 @@ GpuColor::mix(const RgbColor &color, double weight)
     return GpuColor(mixedColor);
 }
 
+GpuColor
+GpuColor::mix(const RgbColor &color, double weight1, double weight2)
+{
+    RgbColor mixedColor = RgbColor(*this).mix(color, weight1, weight2);
+    return GpuColor(mixedColor);
+}

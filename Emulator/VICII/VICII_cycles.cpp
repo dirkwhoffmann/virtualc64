@@ -853,6 +853,10 @@ template <VICIIMode type> void
 VICII::rAccess()
 {
     dataBusPhi1 = memAccess(0x3F00 | refreshCounter--);
+    
+    if (type == PAL_DEBUG_CYCLE || type == NTSC_DEBUG_CYCLE) {
+        visualizeDma(0, dataBusPhi1, R_ACCESS);
+    }
 }
 
 template <VICIIMode type> void

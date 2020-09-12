@@ -32,6 +32,7 @@ struct RgbColor {
     static const RgbColor cyan;
 
     RgbColor mix(RgbColor additive, double weight);
+    RgbColor mix(RgbColor additive, double weight1, double weight2);
     RgbColor tint(double weight) { return mix(white, weight); }
     RgbColor shade(double weight) { return mix(black, weight); }
 };
@@ -77,6 +78,7 @@ struct GpuColor {
     static const GpuColor cyan;
 
     GpuColor mix(const struct RgbColor &color, double weight);
+    GpuColor mix(const struct RgbColor &color, double weight1, double weight2);
     GpuColor tint(double weight) { return mix(RgbColor::white, weight); }
     GpuColor shade(double weight) { return mix(RgbColor::black, weight); }
 };

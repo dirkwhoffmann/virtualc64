@@ -336,11 +336,13 @@ C64::getModel()
 void
 C64::updateVicFunctionTable()
 {
-    debug("updateVicFunctionTable (debugMode: %d)\n", debugMode);
+    bool dmaDebug = vic.getConfig().dmaDebug;
+    
+    debug("updateVicFunctionTable (dmaDebug: %d)\n", dmaDebug);
     
     // Assign model independent execution functions
     vicfunc[0] = NULL;
-    if (debugMode) {
+    if (dmaDebug) {
         vicfunc[12] = &VICII::cycle12<PAL_DEBUG_CYCLE>;
         vicfunc[13] = &VICII::cycle13<PAL_DEBUG_CYCLE>;
         vicfunc[14] = &VICII::cycle14<PAL_DEBUG_CYCLE>;
@@ -371,7 +373,7 @@ C64::updateVicFunctionTable()
         case PAL_6569_R3:
         case PAL_8565:
             
-            if (debugMode) {
+            if (dmaDebug) {
                 vicfunc[1] = &VICII::cycle1<PAL_DEBUG_CYCLE>;
                 vicfunc[2] = &VICII::cycle2<PAL_DEBUG_CYCLE>;
                 vicfunc[3] = &VICII::cycle3<PAL_DEBUG_CYCLE>;
@@ -417,7 +419,8 @@ C64::updateVicFunctionTable()
             break;
             
         case NTSC_6567_R56A:
-            if (debugMode) {
+            
+            if (dmaDebug) {
                 vicfunc[1] = &VICII::cycle1<PAL_DEBUG_CYCLE>;
                 vicfunc[2] = &VICII::cycle2<PAL_DEBUG_CYCLE>;
                 vicfunc[3] = &VICII::cycle3<PAL_DEBUG_CYCLE>;
@@ -465,7 +468,8 @@ C64::updateVicFunctionTable()
             
         case NTSC_6567:
         case NTSC_8562:
-            if (debugMode) {
+            
+            if (dmaDebug) {
                 vicfunc[1] = &VICII::cycle1<NTSC_DEBUG_CYCLE>;
                 vicfunc[2] = &VICII::cycle2<NTSC_DEBUG_CYCLE>;
                 vicfunc[3] = &VICII::cycle3<NTSC_DEBUG_CYCLE>;

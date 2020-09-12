@@ -24,49 +24,81 @@ VICII::getScreenGeometry(void)
 }
 
 void
+VICII::visualizeDma(u8 offset, u8 data, MemAccessType type)
+{
+    int *p = dmaTexturePtr + bufferoffset + offset;
+    
+    p[0] = debugColor[type][data & 0b11]; data >>= 2;
+    p[1] = debugColor[type][data & 0b11]; data >>= 2;
+    p[2] = debugColor[type][data & 0b11]; data >>= 2;
+    p[3] = debugColor[type][data & 0b11];
+}
+
+void
 VICII::computeOverlay()
 {
-    double bgWeight, fgWeight;
-
-    // Only proceed if DMA debugging has been turned on
-    if (!config.dmaDebug) return;
+    // double bgWeight, fgWeight;
+    double weight = config.dmaOpacity / 255.0;
 
     switch (config.dmaDisplayMode) {
 
         case MODULATE_FG_LAYER:
+            
+            for (int y = 0; y < TEX_HEIGHT; y++) {
+                
+                int *emu = emuTexture + (y * TEX_WIDTH);
+                int *dma = dmaTexture + (y * TEX_WIDTH);
+                
+                for (int x = 0; x < TEX_WIDTH; x++) {
+                    
+                    if ((dma[x] & 0xFFFFFF) == 0) continue;
 
-            bgWeight = 0.0;
-            fgWeight = 1.0 - config.dmaOpacity;
+                    GpuColor emuColor = emu[x];
+                    GpuColor dmaColor = dma[x];
+                    GpuColor mixColor = emuColor.mix(dmaColor, weight);
+                    emu[x] = mixColor.rawValue;
+                }
+            }
             break;
 
         case MODULATE_BG_LAYER:
-
-            bgWeight = 1.0 - config.dmaOpacity;
-            fgWeight = 0.0;
+            
+            for (int y = 0; y < TEX_HEIGHT; y++) {
+                
+                int *emu = emuTexture + (y * TEX_WIDTH);
+                int *dma = dmaTexture + (y * TEX_WIDTH);
+                
+                for (int x = 0; x < TEX_WIDTH; x++) {
+                    
+                    if ((dma[x] & 0xFFFFFF) != 0) {
+                        emu[x] = dma[x];
+                    } else {
+                        GpuColor emuColor = emu[x];
+                        GpuColor mixColor = emuColor.shade(weight);
+                        emu[x] = mixColor.rawValue;
+                    }
+                }
+            }
             break;
 
         case MODULATE_ODD_EVEN_LAYERS:
-
-            bgWeight = config.dmaOpacity;
-            fgWeight = 1.0 - config.dmaOpacity;
+            
+            for (int y = 0; y < TEX_HEIGHT; y++) {
+                
+                int *emu = emuTexture + (y * TEX_WIDTH);
+                int *dma = dmaTexture + (y * TEX_WIDTH);
+                
+                for (int x = 0; x < TEX_WIDTH; x++) {
+                    
+                    GpuColor emuColor = emu[x];
+                    GpuColor dmaColor = dma[x];
+                    GpuColor mixColor = dmaColor.mix(emuColor, weight);
+                    emu[x] = mixColor.rawValue;
+                }
+            }
             break;
-
+            
         default: assert(false);
-
-    }
-
-    for (int y = 0; y < TEX_HEIGHT; y++) {
-        
-        int *emu = emuTexture + (y * TEX_WIDTH);
-        int *dma = dmaTexture + (y * TEX_WIDTH);
-        
-        for (int x = 0; x < TEX_WIDTH; x++) {
             
-            GpuColor emuColor = emu[x];
-            GpuColor dmaColor = dma[x];
-            GpuColor mixColor = emuColor.mix(dmaColor, fgWeight);
-            
-            emu[x] = mixColor.rawValue;
-        }
     }
 }

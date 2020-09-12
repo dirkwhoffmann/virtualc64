@@ -27,6 +27,21 @@ VICII::VICII(C64 &ref) : C64Component(ref)
     config.cutLayers = 0xFF;
     config.cutOpacity = 0xFF;
     config.dmaOpacity = 0x80;
+    config.dmaDebug = false;
+    config.dmaChannel[R_ACCESS] = true;
+    config.dmaChannel[I_ACCESS] = true;
+    config.dmaChannel[C_ACCESS] = true;
+    config.dmaChannel[G_ACCESS] = true;
+    config.dmaChannel[P_ACCESS] = true;
+    config.dmaChannel[S_ACCESS] = true;
+
+    // Assign default DMA debugging colors
+    setDmaDebugColor(R_ACCESS, RgbColor(1.0, 0.0, 0.0));
+    setDmaDebugColor(I_ACCESS, RgbColor(1.0, 1.0, 0.0));
+    setDmaDebugColor(C_ACCESS, RgbColor(1.0, 0.8, 0.0));
+    setDmaDebugColor(G_ACCESS, RgbColor(0.0, 1.0, 1.0));
+    setDmaDebugColor(P_ACCESS, RgbColor(0.0, 1.0, 0.0));
+    setDmaDebugColor(S_ACCESS, RgbColor(0.0, 0.5, 1.0));
     
     // Assign reference clock to all time delayed variables
     baLine.setClock(&cpu.cycle);
@@ -38,14 +53,6 @@ VICII::VICII(C64 &ref) : C64Component(ref)
     for (int i = 0; i < noiseSize; i++) {
         noise[i] = rand() % 2 ? 0xFF000000 : 0xFFFFFFFF;
     }
-    
-    // Assign default DMA debugging colors
-    setDmaDebugColor(R_ACCESS, RgbColor(1.0, 0.0, 0.0));
-    setDmaDebugColor(I_ACCESS, RgbColor(1.0, 1.0, 0.0));
-    setDmaDebugColor(C_ACCESS, RgbColor(1.0, 0.8, 0.0));
-    setDmaDebugColor(G_ACCESS, RgbColor(0.0, 1.0, 1.0));
-    setDmaDebugColor(P_ACCESS, RgbColor(0.0, 1.0, 0.0));
-    setDmaDebugColor(S_ACCESS, RgbColor(0.0, 0.5, 1.0));    
 }
 
 void
@@ -93,33 +100,43 @@ VICII::_reset()
 }
 
 void
-VICII::resetEmuTextures()
+VICII::resetEmuTexture(int nr)
 {
+    assert(nr == 1 || nr == 2);
+    int *p = nr == 1 ? emuTexture1 : emuTexture2;
+
     // Determine the HBLANK / VBLANK area
     long width = isPAL() ? PAL_PIXELS : NTSC_PIXELS;
     long height = getRasterlinesPerFrame();
     
-    for (unsigned line = 0; line < TEX_HEIGHT; line++) {
-        for (unsigned i = 0; i < TEX_WIDTH; i++) {
+    for (int y = 0; y < TEX_HEIGHT; y++) {
+        for (int x = 0; x < TEX_WIDTH; x++) {
 
-            int pos = line * TEX_WIDTH + i;
-            int col = 0xFF000000;
+            int pos = y * TEX_WIDTH + x;
 
-            // Apply a checkerboard pattern inside the HBLANK / VBLANK area
-            if (line < height && i < width)
-                col = (line / 4) % 2 == (i / 8) % 2 ? 0xFF222222 : 0xFF444444;
+            if (y < height && x < width) {
+                
+                // Draw a checkerboard pattern inside the used texture area
+                p[pos] = (y / 4) % 2 == (x / 8) % 2 ? 0xFF222222 : 0xFF444444;
 
-            emuTexture1[pos] = emuTexture2[pos] = col;
-            dmaTexture1[pos] = dmaTexture2[pos] = col;
+            } else {
+                
+                // Draw black pixels outside the used texture area
+                p[pos] = 0xFF000000;
+            }
         }
     }
 }
 
 void
-VICII::resetDmaTextures()
+VICII::resetDmaTexture(int nr)
 {
-    memset(dmaTexture1, 0, TEX_HEIGHT * TEX_WIDTH * sizeof(u32));
-    memset(dmaTexture2, 0, TEX_HEIGHT * TEX_WIDTH * sizeof(u32));
+    assert(nr == 1 || nr == 2);
+    int *p = nr == 1 ? dmaTexture1 : dmaTexture2;
+
+    for (int i = 0; i < TEX_HEIGHT * TEX_WIDTH; i++) {
+        p[i] = 0xFF000000;
+    }
 }
 
 long
@@ -208,8 +225,11 @@ VICII::setConfigItem(ConfigOption option, long value)
             if (config.dmaDebug == value) {
                 return false;
             }
+            suspend();
             config.dmaDebug = value;
             resetDmaTextures();
+            c64.updateVicFunctionTable();
+            resume();
             return true;
             
         case OPT_DMA_CHANNEL_R:
@@ -992,23 +1012,27 @@ VICII::beginFrame()
 void
 VICII::endFrame()
 {
+    // Run the DMA debugger (if enabled)
+    if (config.dmaDebug) {
+        computeOverlay();
+    }
+
     // Switch texture buffers
     if (emuTexture == emuTexture1) {
         
         assert(dmaTexture == dmaTexture1);
         emuTexture = emuTexturePtr = emuTexture2;
         dmaTexture = dmaTexturePtr = dmaTexture2;
-        
+        if (config.dmaDebug) { resetEmuTexture(2); resetDmaTexture(2); }
+
     } else {
         
         assert(emuTexture == emuTexture2);
         assert(dmaTexture == dmaTexture2);
         emuTexture = emuTexturePtr = emuTexture1;
         dmaTexture = dmaTexturePtr = dmaTexture1;
+        if (config.dmaDebug) { resetEmuTexture(1); resetDmaTexture(1); }
     }
-    
-    // Clear the DMA debugger texture
-    if (config.dmaDebug) resetDmaTextures();
 }
 
 void

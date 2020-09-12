@@ -579,8 +579,10 @@ private:
     void _initialize() override;
     void _reset() override;
 
-    void resetEmuTextures();
-    void resetDmaTextures();
+    void resetEmuTexture(int nr);
+    void resetEmuTextures() { resetEmuTexture(1); resetEmuTexture(2); }
+    void resetDmaTexture(int nr);
+    void resetDmaTextures() { resetDmaTexture(1); resetDmaTexture(2); }
 
     
     //
@@ -1355,6 +1357,9 @@ public:
     
     // Initializes the DMA debugger textures
     void clearDmaDebuggerTexture();
+    
+    // Visualizes a memory access by drawing into the DMA debuger texture
+    void visualizeDma(u8 offset, u8 data, MemAccessType type);
     
     // Superimposes the debug output onto the current rasterline
     void computeOverlay();
