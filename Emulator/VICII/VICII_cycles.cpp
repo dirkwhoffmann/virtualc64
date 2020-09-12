@@ -30,8 +30,8 @@ template <VICIIMode mode> void
 VICII::cycle1()
 {
     // Phi2.5 Fetch (previous cycle)
-    PAL  { sThirdAccess <mode> (2); }
-    NTSC { sFirstAccess <mode> (3); }
+    PAL  { sAccess3 <mode,2> (); }
+    NTSC { sAccess1 <mode,3> (); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -44,7 +44,7 @@ VICII::cycle1()
 
     // Phi1.3 Fetch
     PAL  { sFinalize(2); pAccess <mode> (3); }
-    NTSC { sSecondAccess <mode> (3); }
+    NTSC { sAccess2 <mode,3> (); }
     
     // Phi2.1 Rasterline interrupt (edge triggered)
     bool edgeOnYCounter = (c64.rasterLine != 0);
@@ -68,8 +68,8 @@ VICII::cycle2()
         checkForLightpenIrqAtStartOfFrame();
     
     // Phi2.5 Fetch (previous cycle)
-    PAL  { sFirstAccess <mode> (3); }
-    NTSC { sThirdAccess <mode> (3); }
+    PAL  { sAccess1 <mode,3> (); }
+    NTSC { sAccess3 <mode,3> (); }
 
     // Check for yCounter overflows
     if (yCounterOverflow())
@@ -82,7 +82,7 @@ VICII::cycle2()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    PAL  { sSecondAccess <mode> (3); }
+    PAL  { sAccess2 <mode,3> (); }
     NTSC { sFinalize(3); pAccess <mode> (4); }
         
     // Phi2.1 Rasterline interrupt (edge triggered)
@@ -102,8 +102,8 @@ template <VICIIMode mode> void
 VICII::cycle3()
 {
     // Phi2.5 Fetch (previous cycle)
-    PAL  { sThirdAccess <mode> (3); }
-    NTSC { sFirstAccess <mode> (4); }
+    PAL  { sAccess3 <mode,3> (); }
+    NTSC { sAccess1 <mode,4> (); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -113,7 +113,7 @@ VICII::cycle3()
 
     // Phi1.3 Fetch
     PAL  { sFinalize(3); pAccess <mode> (4); }
-    NTSC { sSecondAccess <mode> (4); }
+    NTSC { sAccess2 <mode,4> (); }
     
     // Phi2.4 BA logic
     PAL  { BA_LINE(spriteDmaOnOff & (SPR4 | SPR5)); }
@@ -126,8 +126,8 @@ template <VICIIMode mode> void
 VICII::cycle4()
 {
     // Phi2.5 Fetch (previous cycle)
-    PAL  { sFirstAccess <mode> (4); }
-    NTSC { sThirdAccess <mode> (4); }
+    PAL  { sAccess1 <mode,4> (); }
+    NTSC { sAccess3 <mode,4> (); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -136,7 +136,7 @@ VICII::cycle4()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    PAL  { sSecondAccess <mode> (4); }
+    PAL  { sAccess2 <mode,4> (); }
     NTSC { sFinalize(4); pAccess <mode> (5); }
     
     // Phi2.4 BA logic
@@ -150,8 +150,8 @@ template <VICIIMode mode> void
 VICII::cycle5()
 {
     // Phi2.5 Fetch (previous cycle)
-    PAL  { sThirdAccess <mode> (4); }
-    NTSC { sFirstAccess <mode> (5); }
+    PAL  { sAccess3 <mode,4> (); }
+    NTSC { sAccess1 <mode,5> (); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -161,7 +161,7 @@ VICII::cycle5()
 
     // Phi1.3 Fetch
     PAL  { sFinalize(4); pAccess <mode> (5); }
-    NTSC { sSecondAccess <mode> (5); }
+    NTSC { sAccess2 <mode,5> (); }
     
     // Phi2.4 BA logic
     PAL  { BA_LINE(spriteDmaOnOff & (SPR5 | SPR6)); }
@@ -174,8 +174,8 @@ template <VICIIMode mode> void
 VICII::cycle6()
 {
     // Phi2.5 Fetch (previous cycle)
-    PAL  { sFirstAccess <mode> (5); }
-    NTSC { sThirdAccess <mode> (5); }
+    PAL  { sAccess1 <mode,5> (); }
+    NTSC { sAccess3 <mode,5> (); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -184,7 +184,7 @@ VICII::cycle6()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    PAL  { sSecondAccess <mode> (5); }
+    PAL  { sAccess2 <mode,5> (); }
     NTSC { sFinalize(5); pAccess <mode> (6); }
         
     // Phi2.4 BA logic
@@ -198,8 +198,8 @@ template <VICIIMode mode> void
 VICII::cycle7()
 {
     // Phi2.5 Fetch (previous cycle)
-    PAL  { sThirdAccess <mode> (5); }
-    NTSC { sFirstAccess <mode> (6); }
+    PAL  { sAccess3 <mode,5> (); }
+    NTSC { sAccess1 <mode,6> (); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -209,7 +209,7 @@ VICII::cycle7()
 
     // Phi1.3 Fetch
     PAL  { sFinalize(5); pAccess <mode> (6); }
-    NTSC { sSecondAccess <mode> (6); }
+    NTSC { sAccess2 <mode,6> (); }
         
     // Phi2.4 BA logic
     PAL  { BA_LINE(spriteDmaOnOff & (SPR6 | SPR7)); }
@@ -222,8 +222,8 @@ template <VICIIMode mode> void
 VICII::cycle8()
 {
     // Phi2.5 Fetch (previous cycle)
-    PAL  { sFirstAccess <mode> (6); }
-    NTSC { sThirdAccess <mode> (6); }
+    PAL  { sAccess1 <mode,6> (); }
+    NTSC { sAccess3 <mode,6> (); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -232,7 +232,7 @@ VICII::cycle8()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    PAL  { sSecondAccess <mode> (6); }
+    PAL  { sAccess2 <mode,6> (); }
     NTSC { sFinalize(6); pAccess <mode> (7); }
     
     // Phi2.4 BA logic
@@ -246,8 +246,8 @@ template <VICIIMode mode> void
 VICII::cycle9()
 {
     // Phi2.5 Fetch (previous cycle)
-    PAL  { sThirdAccess <mode> (6); }
-    NTSC { sFirstAccess <mode> (7); }
+    PAL  { sAccess3 <mode,6> (); }
+    NTSC { sAccess1 <mode,7> (); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -257,7 +257,7 @@ VICII::cycle9()
 
     // Phi1.3 Fetch
     PAL  { sFinalize(6); pAccess <mode> (7); }
-    NTSC { sSecondAccess <mode> (7); }
+    NTSC { sAccess2 <mode,7> (); }
     
     // Phi2.4 BA logic
     PAL  { BA_LINE(spriteDmaOnOff & SPR7); }
@@ -270,8 +270,8 @@ template <VICIIMode mode> void
 VICII::cycle10()
 {
     // Phi2.5 Fetch (previous cycle)
-    PAL  { sFirstAccess <mode> (7); }
-    NTSC { sThirdAccess <mode> (7); }
+    PAL  { sAccess1 <mode,7> (); }
+    NTSC { sAccess3 <mode,7> (); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -280,7 +280,7 @@ VICII::cycle10()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    PAL  { sSecondAccess <mode> (7); }
+    PAL  { sAccess2 <mode,7> (); }
     NTSC { sFinalize(7); iAccess <mode> (); }
     
     // Phi2.4 BA logic
@@ -294,7 +294,7 @@ template <VICIIMode mode> void
 VICII::cycle11()
 {
     // Phi2.5 Fetch (previous cycle)
-    PAL  { sThirdAccess <mode> (7); }
+    PAL  { sAccess3 <mode,7> (); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -612,7 +612,7 @@ template <VICIIMode mode> void
 VICII::cycle59()
 {
     // Phi2.5 Fetch (previous cycle)
-    PAL  { sFirstAccess <mode> (0); }
+    PAL  { sAccess1 <mode,0> (); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -621,7 +621,7 @@ VICII::cycle59()
     DRAW59
     
     // Phi1.3 Fetch
-    PAL  { sSecondAccess <mode> (0); }
+    PAL  { sAccess2 <mode,0> (); }
     NTSC { pAccess <mode> (0); }
     
     // Phi2.2 Sprite logic
@@ -632,7 +632,7 @@ VICII::cycle59()
     NTSC { BA_LINE(spriteDmaOnOff & (SPR0 | SPR1)); }
     
     // Phi2.5 Fetch
-    NTSC { sFirstAccess <mode> (0); }
+    NTSC { sAccess1 <mode,0> (); }
     
     END_VISIBLE_CYCLE
 }
@@ -641,7 +641,7 @@ template <VICIIMode mode> void
 VICII::cycle60()
 {
     // Phi2.5 Fetch (previous cycle)
-    PAL  { sThirdAccess <mode> (0); }
+    PAL  { sAccess3 <mode,0> (); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -651,14 +651,14 @@ VICII::cycle60()
     
     // Phi1.3 Fetch
     PAL  { sFinalize(0); pAccess <mode> (1); }
-    NTSC { sSecondAccess <mode> (0); }
+    NTSC { sAccess2 <mode,0> (); }
     
     // Phi2.4 BA logic
     PAL  { BA_LINE(spriteDmaOnOff & (SPR1 | SPR2)); }
     NTSC { BA_LINE(spriteDmaOnOff & (SPR0 | SPR1 | SPR2)); }
     
     // Phi2.5 Fetch
-    NTSC { sThirdAccess <mode> (0); }
+    NTSC { sAccess3 <mode,0> (); }
     
     END_VISIBLE_CYCLE
 }
@@ -667,7 +667,7 @@ template <VICIIMode mode> void
 VICII::cycle61()
 {
     // Phi2.5 Fetch (previous cycle)
-    PAL  { sFirstAccess <mode> (1); }
+    PAL  { sAccess1 <mode,1> (); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -676,7 +676,7 @@ VICII::cycle61()
     DRAW
     
     // Phi1.3 Fetch
-    PAL  { sSecondAccess <mode> (1); }
+    PAL  { sAccess2 <mode,1> (); }
     NTSC { sFinalize(0); pAccess <mode> (1); }
     
     // Phi2.4 BA logic
@@ -684,7 +684,7 @@ VICII::cycle61()
     NTSC { BA_LINE(spriteDmaOnOff & (SPR1 | SPR2)); }
     
     // Phi2.5 Fetch
-    NTSC { sFirstAccess <mode> (1); }
+    NTSC { sAccess1 <mode,1> (); }
     
     END_VISIBLE_CYCLE
     isVisibleColumn = false;
@@ -694,7 +694,7 @@ template <VICIIMode mode> void
 VICII::cycle62()
 {
     // Phi2.5 Fetch (previous cycle)
-    PAL  { sThirdAccess <mode> (1); }
+    PAL  { sAccess3 <mode,1> (); }
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -704,14 +704,14 @@ VICII::cycle62()
 
     // Phi1.3 Fetch
     PAL  { sFinalize(1); pAccess <mode> (2); }
-    NTSC { sSecondAccess <mode> (1); }
+    NTSC { sAccess2 <mode,1> (); }
     
     // Phi2.4 BA logic
     PAL  { BA_LINE(spriteDmaOnOff & (SPR2 | SPR3)); }
     NTSC { BA_LINE(spriteDmaOnOff & (SPR1 | SPR2 | SPR3)); }
     
     // Phi2.5 Fetch
-    NTSC { sThirdAccess <mode> (1); }
+    NTSC { sAccess3 <mode,1> (); }
     
     END_CYCLE
 }
@@ -720,7 +720,7 @@ template <VICIIMode mode> void
 VICII::cycle63()
 {
     // Phi2.5 Fetch (previous cycle)
-    PAL  { sFirstAccess <mode> (2); }
+    PAL  { sAccess1 <mode,2> (); }
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -730,7 +730,7 @@ VICII::cycle63()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    PAL  { sSecondAccess <mode> (2); }
+    PAL  { sAccess2 <mode,2> (); }
     NTSC { sFinalize(1); pAccess <mode> (2); }
     
     // Phi2.4 BA logic
@@ -738,7 +738,7 @@ VICII::cycle63()
     NTSC { BA_LINE(spriteDmaOnOff & (SPR2 | SPR3)); }
     
     // Phi2.5 Fetch
-    NTSC { sFirstAccess <mode> (2); }
+    NTSC { sAccess1 <mode,2> (); }
     
     END_CYCLE
 }
@@ -756,13 +756,13 @@ VICII::cycle64()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    sSecondAccess <mode> (2);
+    sAccess2 <mode,2> ();
     
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR2 | SPR3 | SPR4));
     
     // Phi2.5 Fetch
-    sThirdAccess <mode> (2);
+    sAccess3 <mode,2> ();
     
     END_CYCLE
 }
@@ -793,8 +793,8 @@ VICII::cycle65()
 // Access functions
 //
 
-template <VICIIMode type> void
-VICII::sFirstAccess(unsigned sprite)
+template <VICIIMode type, int sprite> void
+VICII::sAccess1()
 {
     assert(sprite < 8);
     
@@ -817,8 +817,8 @@ VICII::sFirstAccess(unsigned sprite)
     spriteSr[sprite].chunk1 = dataBusPhi2;
 }
 
-template <VICIIMode type> void
-VICII::sSecondAccess(unsigned sprite)
+template <VICIIMode type, int sprite> void
+VICII::sAccess2()
 {
     assert(sprite < 8);
     
@@ -844,8 +844,8 @@ VICII::sSecondAccess(unsigned sprite)
     spriteSr[sprite].chunk2 = dataBusPhi1;
 }
 
-template <VICIIMode type> void
-VICII::sThirdAccess(unsigned sprite)
+template <VICIIMode type, int sprite> void
+VICII::sAccess3()
 {
     assert(sprite < 8);
     

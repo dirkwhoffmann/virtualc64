@@ -15,7 +15,7 @@ void
 VICII::cycle1ntsc()
 {
     // Phi2.5 Fetch (previous cycle)
-    sFirstAccess(3);
+    sAccess1(3);
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -27,7 +27,7 @@ VICII::cycle1ntsc()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    sSecondAccess(3);
+    sAccess2(3);
     
     // Phi2.1 Rasterline interrupt (edge triggered)
     bool edgeOnYCounter = (c64.rasterLine != 0);
@@ -50,7 +50,7 @@ VICII::cycle2ntsc()
         checkForLightpenIrqAtStartOfFrame();
     
     // Phi2.5 Fetch (previous cycle)
-    sThirdAccess(3);
+    sAccess3(3);
 
     // Check for yCounter overflows
     if (yCounterOverflow())
@@ -82,7 +82,7 @@ void
 VICII::cycle3ntsc()
 {
     // Phi2.5 Fetch (previous cycle)
-    sFirstAccess(4);
+    sAccess1(4);
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -91,7 +91,7 @@ VICII::cycle3ntsc()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    sSecondAccess(4);
+    sAccess2(4);
     
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR4 | SPR5 | SPR6));
@@ -103,7 +103,7 @@ void
 VICII::cycle4ntsc()
 {
     // Phi2.5 Fetch (previous cycle)
-    sThirdAccess(4);
+    sAccess3(4);
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -125,7 +125,7 @@ void
 VICII::cycle5ntsc()
 {
     // Phi2.5 Fetch (previous cycle)
-    sFirstAccess(5);
+    sAccess1(5);
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -134,7 +134,7 @@ VICII::cycle5ntsc()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    sSecondAccess(5);
+    sAccess2(5);
     
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR5 | SPR6 | SPR7));
@@ -146,7 +146,7 @@ void
 VICII::cycle6ntsc()
 {
     // Phi2.5 Fetch (previous cycle)
-    sThirdAccess(5);
+    sAccess3(5);
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -168,7 +168,7 @@ void
 VICII::cycle7ntsc()
 {
     // Phi2.5 Fetch (previous cycle)
-    sFirstAccess(6);
+    sAccess1(6);
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -177,7 +177,7 @@ VICII::cycle7ntsc()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    sSecondAccess(6);
+    sAccess2(6);
     
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR6 | SPR7));
@@ -189,7 +189,7 @@ void
 VICII::cycle8ntsc()
 {
     // Phi2.5 Fetch (previous cycle)
-    sThirdAccess(6);
+    sAccess3(6);
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -211,7 +211,7 @@ void
 VICII::cycle9ntsc()
 {
     // Phi2.5 Fetch (previous cycle)
-    sFirstAccess(7);
+    sAccess1(7);
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -220,7 +220,7 @@ VICII::cycle9ntsc()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    sSecondAccess(7);
+    sAccess2(7);
     
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & SPR7);
@@ -232,7 +232,7 @@ void
 VICII::cycle10ntsc()
 {
     // Phi2.5 Fetch (previous cycle)
-    sThirdAccess(7);
+    sAccess3(7);
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -368,7 +368,7 @@ VICII::cycle59ntsc()
     BA_LINE(spriteDmaOnOff & (SPR0 | SPR1));
     
     // Phi2.5 Fetch
-    sFirstAccess(0);
+    sAccess1(0);
     
     END_VISIBLE_CYCLE
 }
@@ -383,13 +383,13 @@ VICII::cycle60ntsc()
     DRAW
 
     // Phi1.3 Fetch
-    sSecondAccess(0);
+    sAccess2(0);
     
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR0 | SPR1 | SPR2));
     
     // Phi2.5 Fetch
-    sThirdAccess(0);
+    sAccess3(0);
     
     END_VISIBLE_CYCLE
 }
@@ -411,7 +411,7 @@ VICII::cycle61ntsc()
     BA_LINE(spriteDmaOnOff & (SPR1 | SPR2));
     
     // Phi2.5 Fetch
-    sFirstAccess(1);
+    sAccess1(1);
  
     END_VISIBLE_CYCLE
     isVisibleColumn = false;
@@ -428,13 +428,13 @@ VICII::cycle62ntsc()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    sSecondAccess(1);
+    sAccess2(1);
     
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR1 | SPR2 | SPR3));
     
     // Phi2.5 Fetch
-    sThirdAccess(1);
+    sAccess3(1);
     
     END_CYCLE
 }
@@ -456,7 +456,7 @@ VICII::cycle63ntsc()
     BA_LINE(spriteDmaOnOff & (SPR2 | SPR3));
     
     // Phi2.5 Fetch
-    sFirstAccess(2);
+    sAccess1(2);
     
     END_CYCLE
 }
@@ -472,13 +472,13 @@ VICII::cycle64ntsc()
     DRAW_IDLE
 
     // Phi1.3 Fetch
-    sSecondAccess(2);
+    sAccess2(2);
     
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR2 | SPR3 | SPR4));
     
     // Phi2.5 Fetch
-    sThirdAccess(2);
+    sAccess3(2);
     
     END_CYCLE
 }

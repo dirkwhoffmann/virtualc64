@@ -890,9 +890,9 @@ private:
     template <VICIIMode type> void pAccess(unsigned sprite);
     
     // Performs one of the three sprite data accesses
-    template <VICIIMode type> void sFirstAccess(unsigned sprite);
-    template <VICIIMode type> void sSecondAccess(unsigned sprite);
-    template <VICIIMode type> void sThirdAccess(unsigned sprite);
+    template <VICIIMode type, int sprite> void sAccess1();
+    template <VICIIMode type, int sprite> void sAccess2();
+    template <VICIIMode type, int sprite> void sAccess3();
     
     /* Finalizes the sprite data access. This method is invoked one cycle after
      * the second and third sprite DMA has occurred.
