@@ -131,7 +131,7 @@ Cartridge::makeWithCRTFile(C64 &c64, CRTFile *file)
         cart->loadChip(i, file);
     }
     
-    cart->dump();
+    if (CRT_DEBUG) cart->dump();
     return cart;
 }
 

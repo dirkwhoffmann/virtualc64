@@ -37,13 +37,7 @@ PageFox::_dump()
     msg("  bankSelect() : %x\n", bankSelect());
     msg("  chipSelect() : %x\n", chipSelect());
     msg("        bank() : %x\n", bank());
-    msg("     disable() : %x\n", disabled());
-    
-    for (unsigned i = 0; i < 256; i++) {
-        msg("%02X ", peekRAM(i));
-        if (i % 16 == 15) msg("\n");
-    }
-    msg("\n");
+    msg("     disable() : %x\n", disabled());    
 }
 
 void
@@ -126,10 +120,10 @@ PageFox::pokeIO1(u16 addr, u8 value)
     
     if (disabled()) {
         expansionport.setCartridgeMode(CRT_OFF);
-        plaindebug("CRT disabled\n");
+        plaindebug(CRT_DEBUG, "CRT disabled\n");
     } else {
         expansionport.setCartridgeMode(CRT_16K);
-        plaindebug("16K mode\n");
+        plaindebug(CRT_DEBUG, "16K mode\n");
     }
     
     bankIn(chipSelect());
