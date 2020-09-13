@@ -163,7 +163,7 @@ public:
     
     virtual CartridgeType getCartridgeType() { return CRT_NORMAL; }
 
-private:
+protected:
     
     void _dump() override;
         

@@ -27,6 +27,7 @@
 #include "MagicDesk.h"
 #include "MikroAss.h"
 #include "Ocean.h"
+#include "PageFox.h"
 #include "Rex.h"
 #include "SimonsBasic.h"
 #include "StarDos.h"

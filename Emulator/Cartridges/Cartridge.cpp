@@ -46,6 +46,7 @@ Cartridge::isSupportedType(CartridgeType type)
 
         case CRT_MACH5:
             
+        case CRT_PAGEFOX:
         case CRT_KINGSOFT:
             
         case CRT_ISEPIC:
@@ -101,6 +102,7 @@ Cartridge::makeWithType(C64 &c64, CartridgeType type)
         case CRT_ACTION_REPLAY3:  return new ActionReplay3(c64);
         case CRT_FREEZE_FRAME:    return new FreezeFrame(c64);
         case CRT_MACH5:           return new Mach5(c64);
+        case CRT_PAGEFOX:         return new PageFox(c64);
         case CRT_KINGSOFT:        return new Kingsoft(c64);
         case CRT_ISEPIC:          return new Isepic(c64);
         case CRT_GEO_RAM:         return new GeoRAM(c64);
@@ -129,6 +131,7 @@ Cartridge::makeWithCRTFile(C64 &c64, CRTFile *file)
         cart->loadChip(i, file);
     }
     
+    cart->dump();
     return cart;
 }
 
@@ -322,7 +325,7 @@ Cartridge::poke(u16 addr, u8 value)
     assert(isROMLaddr(addr) || isROMHaddr(addr));
     
     u16 relAddr = addr & 0x1FFF;
-    
+        
     if (isROMLaddr(addr) && relAddr < mappedBytesL) {
         pokeRomL(relAddr, value);
     }
@@ -465,17 +468,17 @@ Cartridge::bankIn(unsigned nr)
         
         bankInROML(nr, 0x2000, 0); // chip covers ROML and (part of) ROMH
         bankInROMH(nr, packet[nr]->size - 0x2000, 0x2000);
-        debug(CRT_DEBUG, "Banked in chip %d in ROML and ROMH\n", nr);
+        // debug(CRT_DEBUG, "Banked in chip %d in ROML and ROMH\n", nr);
     
     } else if (packet[nr]->mapsToL()) {
         
         bankInROML(nr, packet[nr]->size, 0); // chip covers (part of) ROML
-        debug(CRT_DEBUG, "Banked in chip %d in ROML\n", nr);
+        // debug(CRT_DEBUG, "Banked in chip %d in ROML\n", nr);
         
     } else if (packet[nr]->mapsToH()) {
         
         bankInROMH(nr, packet[nr]->size, 0); // chip covers (part of) ROMH
-        debug(CRT_DEBUG, "Banked in chip %d to ROMH\n", nr);
+        // debug(CRT_DEBUG, "Banked in chip %d to ROMH\n", nr);
         
     } else {
 
