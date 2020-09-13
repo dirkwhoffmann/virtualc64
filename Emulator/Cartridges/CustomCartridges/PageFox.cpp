@@ -141,7 +141,7 @@ PageFox::pokeIO1(u16 addr, u8 value)
 void
 PageFox::updatePeekPokeLookupTables()
 {
-    { // if (ramIsVisible()) {
+    if (ramIsVisible()) {
         mem.pokeTarget[0x8] = mem.pokeTarget[0x9] = M_CRTLO;
         mem.pokeTarget[0xA] = mem.pokeTarget[0xB] = M_CRTHI;
     }
