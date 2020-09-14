@@ -214,7 +214,8 @@ class MyDocument: NSDocument {
         
         track("Creating GenericArchive proxy from directory \(url)")
         
-        let files = try url.contents(allowedTypes: ["PRG"])
+        let types = ["PRG", "SEQ", "USR", "REL"]
+        let files = try url.contents(allowedTypes: types)
         track("files = \(files)")
 
         result = GenericArchiveProxy.make()

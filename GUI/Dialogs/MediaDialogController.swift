@@ -14,6 +14,7 @@ class MediaDialogController: DialogController {
         case disk
         case tape
         case cartridge
+        case directory
     }
     
     @IBOutlet weak var icon: NSImageView!
@@ -123,22 +124,24 @@ class MediaDialogController: DialogController {
             subTitleString = "A bit-accurate image of a C64 diskette"
             
         case _ as GenericArchiveProxy:
-            media = .disk
+            media = .directory
             track("GenericArchiveProxy")
-            titleString = "File collection"
-            subTitleString = "EXPERIMENTAL FEATURE"
+            titleString = "File system folder as a disk"
+            subTitleString = "All files with a PRG, SEQ, USR, or REL suffix will be part of this disk."
             let a = myDocument.attachment as! GenericArchiveProxy
             a.dumpDirectory()
 
         default:
             fatalError()
         }
-                  
+        
         // Load screenshots (if any)
         let fnv = myDocument.attachment!.fnv()
-        for url in Screenshot.collectFiles(forDisk: fnv) {
-            if let screenshot = Screenshot.init(fromUrl: url) {
-                screenshots.append(screenshot)
+        if fnv != 0 {
+            for url in Screenshot.collectFiles(forDisk: fnv) {
+                if let screenshot = Screenshot.init(fromUrl: url) {
+                    screenshots.append(screenshot)
+                }
             }
         }
         
@@ -169,7 +172,7 @@ class MediaDialogController: DialogController {
         // Configure controls
         switch media {
                         
-        case .archive, .disk:
+        case .archive, .disk, .directory:
             checkbox.title = "Write protect"
             drive8.isEnabled = connected8
             drive9.isEnabled = connected9
@@ -259,6 +262,8 @@ class MediaDialogController: DialogController {
         switch media {
         case .archive, .disk:
             icon.image = NSImage.init(named: writeProtect ? "disk_protected" : "disk")
+        case .directory:
+            icon.image = NSImage.init(named: "NSFolder")
         case .cartridge:
             icon.image = NSImage.init(named: "cartridge")
         case .tape:
@@ -291,14 +296,11 @@ class MediaDialogController: DialogController {
         track("insertAction: \(sender.tag)")
 
         switch media {
-        case .archive, .disk:
+        case .archive, .disk, .directory:
             
             let disk = myDocument.attachment
             let id = sender.tag == 0 ? DRIVE8 : DRIVE9
-            c64.drive(id)?.insertDisk(disk as? AnyArchiveProxy) 
-            
-            // parent.changeDisk(disk, drive: id)
-
+            c64.drive(id)?.insertDisk(disk as? AnyArchiveProxy)
             c64.drive(id).setWriteProtection(writeProtect)
             
         case .cartridge:
