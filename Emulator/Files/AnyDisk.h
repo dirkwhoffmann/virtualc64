@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _ANYDISK_H
-#define _ANYDISK_H
+#ifndef _ANY_DISK_H
+#define _ANY_DISK_H
 
 #include "AnyArchive.h"
 

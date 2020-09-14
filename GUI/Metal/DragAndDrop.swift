@@ -17,7 +17,7 @@ public extension MetalView {
     func acceptedTypes() -> [NSPasteboard.PasteboardType] {
         return [.compatibleFileURL, .string, .fileContents]
     }
-    
+
     //! Register supported drag and drop types
     func setupDragAndDrop() {
     
@@ -26,11 +26,14 @@ public extension MetalView {
 
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
         
+        track("Dragging entered")
+
         let pasteBoard = sender.draggingPasteboard
         guard let type = pasteBoard.availableType(from: acceptedTypes()) else {
             return NSDragOperation()
         }
         
+        track("Dragging entered: type = \(type)")
         switch type {
             
         case .string:
@@ -50,6 +53,7 @@ public extension MetalView {
             
         default:
             
+            track("Unsupported type")
             return NSDragOperation()
         }
     }
@@ -111,7 +115,6 @@ public extension MetalView {
                 do {
                     try document.createAttachment(from: url)
                     return document.mountAttachment()
-                    
                 } catch {
                     let dragAndDropError = error
                     let deadline = DispatchTime.now() + .milliseconds(200)

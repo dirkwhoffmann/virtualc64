@@ -78,6 +78,11 @@ class MyDocument: NSDocument {
     
     func fileType(url: URL) -> FileType {
                 
+        if url.hasDirectoryPath {
+            track("\(url) is a directory")
+            return .FILETYPE_GENERIC_ARCHIVE
+        }
+        
         switch url.pathExtension.uppercased() {
             
         case "VC64": return .FILETYPE_V64
@@ -96,12 +101,13 @@ class MyDocument: NSDocument {
         
         let types = [ FileType.FILETYPE_V64,
                       FileType.FILETYPE_CRT,
-                      FileType.FILETYPE_D64,
                       FileType.FILETYPE_T64,
                       FileType.FILETYPE_PRG,
                       FileType.FILETYPE_P00,
+                      FileType.FILETYPE_D64,
                       FileType.FILETYPE_G64,
-                      FileType.FILETYPE_TAP ]
+                      FileType.FILETYPE_TAP,
+                      FileType.FILETYPE_GENERIC_ARCHIVE ]
         
         try createAttachment(from: url, allowedTypes: types)
     }
@@ -126,8 +132,15 @@ class MyDocument: NSDocument {
         
         // Only proceed if the file type is an allowed type
         let type = fileType(url: newUrl)
-        track("type = \(type)")
-        if !allowedTypes.contains(type) { return nil }
+        track("type = \(type.rawValue)")
+        if !allowedTypes.contains(type) {
+            throw NSError.unsupportedFormatError(filename: url.lastPathComponent)
+        }
+        
+        // If url points to a directory, convert it to a generic archive
+        if url.hasDirectoryPath {
+            return try createFileProxyFromDirectory(url: url)
+        }
         
         // Get the file wrapper and create the proxy with it
         let wrapper = try FileWrapper.init(url: newUrl)
@@ -191,6 +204,17 @@ class MyDocument: NSDocument {
             throw NSError.corruptedFileError(filename: name)
         }
         result!.setPath(name)
+        return result
+    }
+        
+    fileprivate
+    func createFileProxyFromDirectory(url: URL) throws -> AnyFileProxy? {
+
+        var result: AnyFileProxy?
+        
+        track("Creating GenericArchive proxy from directory \(url)")
+        
+        result = GenericArchiveProxy.make()
         return result
     }
         

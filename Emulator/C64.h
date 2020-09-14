@@ -23,6 +23,7 @@
 
 // Loading and saving
 #include "Snapshot.h"
+#include "GenericArchive.h"
 #include "T64File.h"
 #include "D64File.h"
 #include "G64File.h"

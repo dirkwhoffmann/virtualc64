@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _T64FILE_H
-#define _T64FILE_H
+#ifndef _T64_FILE_H
+#define _T64_FILE_H
 
 #include "AnyArchive.h"
 

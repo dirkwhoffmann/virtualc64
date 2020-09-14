@@ -12,8 +12,8 @@
  * http://www.infinite-loop.at/Power20/Documentation/Power20-LiesMich/AE-Dateiformate.html
  */
 
-#ifndef _ANYARCHIVE_H
-#define _ANYARCHIVE_H
+#ifndef _ANY_ARCHIVE_H
+#define _ANY_ARCHIVE_H
 
 #include "AnyFile.h"
 

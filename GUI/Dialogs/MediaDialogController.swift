@@ -122,6 +122,14 @@ class MediaDialogController: DialogController {
             titleString = "G64 File"
             subTitleString = "A bit-accurate image of a C64 diskette"
             
+        case _ as GenericArchiveProxy:
+            media = .disk
+            track("GenericArchiveProxy")
+            titleString = "File collection"
+            subTitleString = "EXPERIMENTAL FEATURE"
+            let a = myDocument.attachment as! GenericArchiveProxy
+            a.dumpDirectory()
+
         default:
             fatalError()
         }
@@ -285,7 +293,7 @@ class MediaDialogController: DialogController {
         switch media {
         case .archive, .disk:
             
-            let disk = myDocument.attachment // as! AnyC64FileProxy
+            let disk = myDocument.attachment
             let id = sender.tag == 0 ? DRIVE8 : DRIVE9
             c64.drive(id)?.insertDisk(disk as? AnyArchiveProxy) 
             

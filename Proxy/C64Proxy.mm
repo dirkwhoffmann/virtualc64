@@ -1590,6 +1590,39 @@ struct AnyC64FileWrapper { AnyFile *file; };
 @end
 
 //
+// GenericArchive
+//
+
+@implementation GenericArchiveProxy
+
++ (instancetype) make
+{
+    AnyArchive *archive = new GenericArchive();
+    return [[self alloc] initWithFile:archive];
+}
+
+- (BOOL)addItem:(const char *)name buffer:(u8 *)data size:(NSInteger)size
+{
+    GenericArchive *archive = (GenericArchive *)wrapper->file;
+    return archive->add(name, data, size);
+}
+
+- (BOOL)addItem:(const char *)name buffer:(u8 *)data size:(NSInteger)size at:(NSInteger)at
+{
+    GenericArchive *archive = (GenericArchive *)wrapper->file;
+    return archive->add(name, data, size, at);
+}
+
+- (void)dumpDirectory
+{
+    GenericArchive *archive = (GenericArchive *)wrapper->file;
+    archive->dumpDirectory();
+}
+
+@end
+
+
+//
 // T64
 //
 

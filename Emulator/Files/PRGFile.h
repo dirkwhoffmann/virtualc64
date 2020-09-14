@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _PRGFILE_H
-#define _PRGFILE_H
+#ifndef _PRG_FILE_H
+#define _PRG_FILE_H
 
 #include "AnyArchive.h"
 

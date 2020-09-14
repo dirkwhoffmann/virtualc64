@@ -38,7 +38,7 @@ extension NSError {
             [NSLocalizedDescriptionKey: "The document could not be opened.",
                 NSLocalizedRecoverySuggestionErrorKey: "Unable to access file."])
     }
-    
+
     static func unsupportedCartridgeError(filename: String, type: String) -> NSError {
         return NSError(domain: "VirtualC64", code: 0, userInfo:
             [NSLocalizedDescriptionKey: "The document \"\(filename)\" could not be opened.",

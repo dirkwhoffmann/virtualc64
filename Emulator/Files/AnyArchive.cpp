@@ -115,17 +115,17 @@ AnyArchive::dumpDirectory()
 {
     int numItems = numberOfItems();
     
-    msg("Archive:           %s\n", getName());
+    msg("Archive: %s\n", getName());
     msg("-------\n");
-    msg("  Path:            %s\n", getPath());
-    msg("  Items:           %d\n", numItems);
+    msg("       Path : %s\n", getPath());
+    msg("      Items : %d\n", numItems);
 
     for (unsigned i = 0; i < numItems; i++) {
         
         selectItem(i);
-        msg("  Item %2d:      %s (%d bytes, load address: %d)\n",
+        msg("Item %02d : %s (%d bytes, load address: %d)\n",
                 i, getNameOfItem(), getSizeOfItem(), getDestinationAddrOfItem());
-        msg("                 ");
+        msg("          ");
         selectItem(i);
         for (unsigned j = 0; j < 8; j++) {
             int byte = readItem();

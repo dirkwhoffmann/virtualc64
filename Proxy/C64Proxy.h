@@ -758,6 +758,22 @@ struct AnyC64FileWrapper;
 
 
 //
+// GenericArchive proxy
+//
+
+@interface GenericArchiveProxy : AnyArchiveProxy {
+}
+
++ (instancetype)make;
+
+- (BOOL)addItem:(const char *)name buffer:(u8 *)data size:(NSInteger)size;
+- (BOOL)addItem:(const char *)name buffer:(u8 *)data size:(NSInteger)size at:(NSInteger)at;
+- (void)dumpDirectory;
+
+@end
+
+
+//
 // Snapshot proxy
 //
 
