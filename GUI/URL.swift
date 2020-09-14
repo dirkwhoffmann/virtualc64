@@ -70,9 +70,15 @@ extension URL {
             at: self, includingPropertiesForKeys: nil,
             options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants]
         )
-        
         track("urls = \(urls)")
-        let filtered = urls.filter {
+
+        // Filter out sub directories
+        var filtered = urls.filter {
+            $0.hasDirectoryPath == false
+        }
+        
+        // Filter out all files with an unallowed type
+        filtered = filtered.filter {
             allowedTypes?.contains($0.pathExtension.uppercased()) ?? true
         }
         track("filtered = \(filtered)")

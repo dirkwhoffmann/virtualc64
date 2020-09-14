@@ -36,6 +36,31 @@
 // Enumerations
 //
 
+typedef VA_ENUM(long, CBMFileType)
+{
+    CBM_PRG,
+    CBM_SEQ,
+    CBM_USR,
+    CBM_REL
+};
+
+inline bool isCBMFileType(long value)
+{
+    return value >= CBM_PRG && value <= CBM_REL;
+}
+
+inline const char *CBMFileTypeString(CBMFileType type)
+{
+    switch (type) {
+            
+        case CBM_PRG: return "PRG";
+        case CBM_SEQ: return "SEQ";
+        case CBM_USR: return "USR";
+        case CBM_REL: return "REL";
+        default: assert(false);
+    }
+}
+
 typedef enum : long
 {
     FS_NONE,

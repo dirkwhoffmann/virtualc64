@@ -9,22 +9,11 @@
 
 #include "GenericArchive.h"
 
-GenericArchive::GenericArchive()
+GenericArchive::GenericArchive(const char *archiveName)
 {
-    // Some test code...  TODO: REMOVE ASAP
-
-    /*
-    printf("GenericArchive()\n");
-    
-    u8 data1[] = { 42, 42, 42, 42 };
-    u8 data2[] = { 0, 1, 2, 3 };
-
-    add("Holla,", data1, 4);
-    dumpDirectory();
-
-    add("die Waldfee", data2, 4, 0);
-    dumpDirectory();
-    */
+    strncpy(name, archiveName, sizeof(name));
+    name[sizeof(name) - 1] = 0;
+    ascii2petStr(name);
 }
 
 int
@@ -43,7 +32,7 @@ GenericArchive::selectItem(unsigned n)
 const char *
 GenericArchive::getTypeOfItem()
 {
-    return "PRG";
+    return selectedItem == -1 ? "" : CBMFileTypeString(items[selectedItem].type);
 }
 
 const char *
@@ -85,16 +74,14 @@ GenericArchive::getDestinationAddrOfItem()
 }
  
 bool
-GenericArchive::add(const char *name, const u8 *data, size_t size)
+GenericArchive::add(const char *name, CBMFileType type, u8 *data, size_t size)
 {
-    return add(name, data, size, items.size());
+    return add(name, type, data, size, items.size());
 }
  
 bool
-GenericArchive::add(const char *name, const u8 *data, size_t size, long at)
+GenericArchive::add(const char *name, CBMFileType type, u8 *data, size_t size, long at)
 {
-    printf("GenericArchive::add(%s, %p, %ld, %ld)\n", name, data, size, at);
-
     GenericItem newItem;
     
     // TODO: Add error checks here
@@ -106,7 +93,8 @@ GenericArchive::add(const char *name, const u8 *data, size_t size, long at)
     newItem.name[16] = 0;
     ascii2petStr(newItem.name);
     
-    // Copy size and data
+    // Copy type, size and data
+    newItem.type = type;
     newItem.size = size;
     newItem.data = new u8[size];
     memcpy(newItem.data, data, size);

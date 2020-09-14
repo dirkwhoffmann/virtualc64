@@ -18,6 +18,7 @@ using std::vector;
 typedef struct {
     
     char name[17];
+    CBMFileType type;
     u8 *data;
     size_t size;
     
@@ -47,7 +48,7 @@ public:
     // Initializing
     //
     
-    GenericArchive();
+    GenericArchive(const char *archiveName);
     
     
     //
@@ -76,8 +77,8 @@ public:
     // Managing items
     //
     
-    bool add(const char *name, const u8 *data, size_t size);
-    bool add(const char *name, const u8 *data, size_t size, long at);
+    bool add(const char *name, CBMFileType type, u8 *data, size_t size);
+    bool add(const char *name, CBMFileType type, u8 *data, size_t size, long at);
     bool remove(long at);
     bool swap(long at1, long at2);
 };

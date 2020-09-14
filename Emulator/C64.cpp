@@ -1689,6 +1689,8 @@ C64::flash(AnyArchive *file, unsigned item)
         case FILETYPE_T64:
         case FILETYPE_PRG:
         case FILETYPE_P00:
+        case FILETYPE_GENERIC_ARCHIVE:
+            
             file->selectItem(item);
             file->flashItem(mem.ram);
             break;

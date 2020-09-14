@@ -765,9 +765,10 @@ struct AnyC64FileWrapper;
 }
 
 + (instancetype)make;
++ (instancetype)make:(NSString *)archiveName;
 
-- (BOOL)addItem:(NSString *)name buffer:(const void *)data size:(NSInteger)size;
-- (BOOL)addItem:(NSString *)name buffer:(const void *)data size:(NSInteger)size at:(NSInteger)at;
+- (BOOL)addItem:(NSString *)name type:(CBMFileType)type data:(const void *)data size:(NSInteger)size;
+- (BOOL)addItem:(NSString *)name type:(CBMFileType)type data:(const void *)data size:(NSInteger)size at:(NSInteger)at;
 - (void)dumpDirectory;
 
 @end

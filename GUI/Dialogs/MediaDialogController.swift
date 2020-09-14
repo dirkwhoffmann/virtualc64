@@ -126,10 +126,8 @@ class MediaDialogController: DialogController {
         case _ as GenericArchiveProxy:
             media = .directory
             track("GenericArchiveProxy")
-            titleString = "File system folder as a disk"
-            subTitleString = "All files with a PRG, SEQ, USR, or REL suffix will be part of this disk."
-            let a = myDocument.attachment as! GenericArchiveProxy
-            a.dumpDirectory()
+            titleString = "Disk from a file system folder"
+            subTitleString = "Comprises all files with a .prg, .seq, .usr, or .rel suffix."
 
         default:
             fatalError()
@@ -208,8 +206,8 @@ class MediaDialogController: DialogController {
     }
     
     func setUpFlashItems() -> Int {
-        
-        if media != .archive { return 0 }
+                
+        if media != .archive && media != .directory { return 0 }
         let d64 = myDocument.attachment as! AnyArchiveProxy
         
         flash.removeAllItems()
@@ -219,15 +217,12 @@ class MediaDialogController: DialogController {
         var seen: [String] = []
         var item = 0
         for i in  0 ..< items {
-            
+                        
             d64.selectItem(i)
             let name = d64.nameOfItem()!
-            // let name = d64.unicodeNameOfItem()!
             let size = d64.sizeOfItemInBlocks()
             let type = d64.typeOfItem()!
-            
-            // track("\(name) \(size) \(type)")
-            
+                        
             var title = "\(size)"
             title = title.padding(toLength: 5, withPad: " ", startingAt: 0)
             title += "\"\(name)\""

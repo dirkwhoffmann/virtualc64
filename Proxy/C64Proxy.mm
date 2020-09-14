@@ -1595,22 +1595,27 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @implementation GenericArchiveProxy
 
-+ (instancetype) make
++ (instancetype)make
 {
-    AnyArchive *archive = new GenericArchive();
+    return [self make:@""];
+}
+
++ (instancetype) make:(NSString *)archiveName
+{
+    AnyArchive *archive = new GenericArchive([archiveName UTF8String]);
     return [[self alloc] initWithFile:archive];
 }
 
-- (BOOL)addItem:(NSString *)name buffer:(const void *)data size:(NSInteger)size
+- (BOOL)addItem:(NSString *)name type:(CBMFileType)type data:(const void *)data size:(NSInteger)size
 {
     GenericArchive *archive = (GenericArchive *)wrapper->file;
-    return archive->add([name UTF8String], (const u8 *)data, size);
+    return archive->add([name UTF8String], type, (u8 *)data, size);
 }
 
-- (BOOL)addItem:(NSString *)name buffer:(const void *)data size:(NSInteger)size at:(NSInteger)at
+- (BOOL)addItem:(NSString *)name type:(CBMFileType)type data:(const void *)data size:(NSInteger)size at:(NSInteger)at
 {
     GenericArchive *archive = (GenericArchive *)wrapper->file;
-    return archive->add([name UTF8String], (const u8 *)data, size, at);
+    return archive->add([name UTF8String], type, (u8 *)data, size, at);
 }
 
 - (void)dumpDirectory
