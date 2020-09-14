@@ -13,6 +13,7 @@ GenericArchive::GenericArchive()
 {
     // Some test code...  TODO: REMOVE ASAP
 
+    /*
     printf("GenericArchive()\n");
     
     u8 data1[] = { 42, 42, 42, 42 };
@@ -23,6 +24,7 @@ GenericArchive::GenericArchive()
 
     add("die Waldfee", data2, 4, 0);
     dumpDirectory();
+    */
 }
 
 int
@@ -83,13 +85,13 @@ GenericArchive::getDestinationAddrOfItem()
 }
  
 bool
-GenericArchive::add(const char *name, u8 *data, size_t size)
+GenericArchive::add(const char *name, const u8 *data, size_t size)
 {
     return add(name, data, size, items.size());
 }
  
 bool
-GenericArchive::add(const char *name, u8 *data, size_t size, long at)
+GenericArchive::add(const char *name, const u8 *data, size_t size, long at)
 {
     printf("GenericArchive::add(%s, %p, %ld, %ld)\n", name, data, size, at);
 
@@ -99,10 +101,12 @@ GenericArchive::add(const char *name, u8 *data, size_t size, long at)
     // Limit the number of items to 144
     // Limit the size of a single item to <MAX C64 FILE SIZE>
     
+    // Generate a PETSCII name
     strncpy(newItem.name, name, 16);
     newItem.name[16] = 0;
     ascii2petStr(newItem.name);
     
+    // Copy size and data
     newItem.size = size;
     newItem.data = new u8[size];
     memcpy(newItem.data, data, size);

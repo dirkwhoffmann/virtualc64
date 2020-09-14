@@ -1601,16 +1601,16 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return [[self alloc] initWithFile:archive];
 }
 
-- (BOOL)addItem:(const char *)name buffer:(u8 *)data size:(NSInteger)size
+- (BOOL)addItem:(NSString *)name buffer:(const void *)data size:(NSInteger)size
 {
     GenericArchive *archive = (GenericArchive *)wrapper->file;
-    return archive->add(name, data, size);
+    return archive->add([name UTF8String], (const u8 *)data, size);
 }
 
-- (BOOL)addItem:(const char *)name buffer:(u8 *)data size:(NSInteger)size at:(NSInteger)at
+- (BOOL)addItem:(NSString *)name buffer:(const void *)data size:(NSInteger)size at:(NSInteger)at
 {
     GenericArchive *archive = (GenericArchive *)wrapper->file;
-    return archive->add(name, data, size, at);
+    return archive->add([name UTF8String], (const u8 *)data, size, at);
 }
 
 - (void)dumpDirectory

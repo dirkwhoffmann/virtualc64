@@ -76,8 +76,8 @@ public:
     // Managing items
     //
     
-    bool add(const char *name, u8 *data, size_t size);
-    bool add(const char *name, u8 *data, size_t size, long at);
+    bool add(const char *name, const u8 *data, size_t size);
+    bool add(const char *name, const u8 *data, size_t size, long at);
     bool remove(long at);
     bool swap(long at1, long at2);
 };

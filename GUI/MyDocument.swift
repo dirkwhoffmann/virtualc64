@@ -210,11 +210,31 @@ class MyDocument: NSDocument {
     fileprivate
     func createFileProxyFromDirectory(url: URL) throws -> AnyFileProxy? {
 
-        var result: AnyFileProxy?
+        var result: GenericArchiveProxy?
         
         track("Creating GenericArchive proxy from directory \(url)")
         
+        let files = try url.contents(allowedTypes: ["PRG"])
+        track("files = \(files)")
+
         result = GenericArchiveProxy.make()
+        for file in files {
+            
+            let suffix = file.pathExtension
+            let name = file.deletingPathExtension().lastPathComponent
+
+            let wrapper = try FileWrapper.init(url: file)
+            
+            guard let data = wrapper.regularFileContents else {
+                throw NSError.fileAccessError(filename: name)
+            }
+            let buffer = (data as NSData).bytes
+            let length = data.count
+                
+            track("File \(name).\(suffix): \(length) bytes")
+                
+            result?.addItem(name, buffer: buffer, size: length)
+        }
         return result
     }
         

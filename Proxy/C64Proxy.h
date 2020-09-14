@@ -766,8 +766,8 @@ struct AnyC64FileWrapper;
 
 + (instancetype)make;
 
-- (BOOL)addItem:(const char *)name buffer:(u8 *)data size:(NSInteger)size;
-- (BOOL)addItem:(const char *)name buffer:(u8 *)data size:(NSInteger)size at:(NSInteger)at;
+- (BOOL)addItem:(NSString *)name buffer:(const void *)data size:(NSInteger)size;
+- (BOOL)addItem:(NSString *)name buffer:(const void *)data size:(NSInteger)size at:(NSInteger)at;
 - (void)dumpDirectory;
 
 @end
