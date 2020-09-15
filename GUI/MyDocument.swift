@@ -249,7 +249,7 @@ class MyDocument: NSDocument {
         if let s = attachment as? SnapshotProxy { c64.flash(s); return true }
 
         // Determine the action to perform and the text to type
-        let key = attachment!.typeAsString()!
+        let key = attachment!.typeString()!
         let action = parent.pref.mountAction[key] ?? AutoMountAction.openBrowser
 
         // If the action is to open the media dialog, open it and return

@@ -21,9 +21,8 @@ PageFox::_reset()
     /*
     RESET_SNAPSHOT_ITEMS
     Cartridge::_reset();
-    
-    eraseRAM(0);
     */
+    eraseRAM(0);
 }
 
 void
@@ -82,7 +81,7 @@ void
 PageFox::pokeRomL(u16 addr, u8 value)
 {
 
-    if (chipSelect() == 0b10) {
+    if (ramIsVisible()) {
         plaindebug(CRT_DEBUG, "pokeRomL [RAM] (%x, %x)\n", addr, value);
         pokeRAM(ramAddrL(addr), value);
     } else {
@@ -94,7 +93,7 @@ PageFox::pokeRomL(u16 addr, u8 value)
 void
 PageFox::pokeRomH(u16 addr, u8 value)
 {
-    if (chipSelect() == 0b10) {
+    if (ramIsVisible()) {
         plaindebug(CRT_DEBUG, "pokeRomH [RAM] (%x, %x)\n", addr, value);
         pokeRAM(ramAddrH(addr), value);
     } else {
@@ -126,7 +125,7 @@ PageFox::pokeIO1(u16 addr, u8 value)
         plaindebug(CRT_DEBUG, "16K mode\n");
     }
     
-    bankIn(chipSelect());
+    bankIn(bank());
     mem.updatePeekPokeLookupTables();
     
     // c64.signalStop();

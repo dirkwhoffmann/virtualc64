@@ -103,7 +103,6 @@ private:
     //
     
     FileType type() override { return FILETYPE_V64; }
-    const char *typeAsString() override { return "V64"; }
     bool hasSameType(const char *filename) override;
     
     

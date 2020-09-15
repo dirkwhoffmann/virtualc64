@@ -51,7 +51,6 @@ public:
     //
     
     FileType type() override { return FILETYPE_G64; }
-    const char *typeAsString() override { return "G64"; }
     bool hasSameType(const char *path) override { return G64File::isG64File(path); }
     
     

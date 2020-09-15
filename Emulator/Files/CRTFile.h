@@ -86,7 +86,6 @@ public:
     
     void dealloc() override;
     FileType type() override { return FILETYPE_CRT; }
-    const char *typeAsString() override { return "CRT"; }
     const char *getName() override { return (char *)&data[0x20]; }
     bool hasSameType(const char *filename) override { return CRTFile::isCRTFile(filename); }
     bool readFromBuffer(const u8 *buffer, size_t length) override;

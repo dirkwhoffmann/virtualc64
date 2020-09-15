@@ -80,7 +80,6 @@ public:
     //
     
     FileType type() { return romtype; }
-    const char *typeAsString() { return "ROM"; }
     bool hasSameType(const char *filename) { return isRomFile(filename); }
     bool readFromBuffer(const u8 *buffer, size_t length);
     

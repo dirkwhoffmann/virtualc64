@@ -190,7 +190,7 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
     otherArchive->dumpDirectory();
     archive->dumpDirectory();
     archive->debug(FILE_DEBUG, "T64 archive created with other archive of type %s.\n",
-                   otherArchive->typeAsString());
+                   otherArchive->typeString());
     
     return archive;
 }

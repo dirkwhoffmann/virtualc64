@@ -38,20 +38,20 @@ inline const char* fileTypeString(FileType type)
 {
     switch (type) {
             
-        case FILETYPE_UNKNOWN:    return "FILETYPE_UNKNOWN";
-        case FILETYPE_V64:        return "FILETYPE_V64";
-        case FILETYPE_CRT:        return "FILETYPE_CRT";
-        case FILETYPE_T64:        return "FILETYPE_T64";
-        case FILETYPE_PRG:        return "FILETYPE_PRG";
-        case FILETYPE_PRG_FOLDER: return "FILETYPE_PRG_FOLDER";
-        case FILETYPE_P00:        return "FILETYPE_P00";
-        case FILETYPE_D64:        return "FILETYPE_D64";
-        case FILETYPE_G64:        return "FILETYPE_G64";
-        case FILETYPE_TAP:        return "FILETYPE_TAP";
-        case FILETYPE_BASIC_ROM:  return "FILETYPE_BASIC_ROM";
-        case FILETYPE_CHAR_ROM:   return "FILETYPE_CHAR_ROM";
-        case FILETYPE_KERNAL_ROM: return "FILETYPE_KERNAL_ROM";
-        case FILETYPE_VC1541_ROM: return "FILETYPE_VC1541_ROM";
+        case FILETYPE_UNKNOWN:    return "UNKNOWN";
+        case FILETYPE_V64:        return "V64";
+        case FILETYPE_CRT:        return "CRT";
+        case FILETYPE_T64:        return "T64";
+        case FILETYPE_PRG:        return "PRG";
+        case FILETYPE_PRG_FOLDER: return "PRG_FOLDER";
+        case FILETYPE_P00:        return "P00";
+        case FILETYPE_D64:        return "D64";
+        case FILETYPE_G64:        return "G64";
+        case FILETYPE_TAP:        return "TAP";
+        case FILETYPE_BASIC_ROM:  return "ROM";
+        case FILETYPE_CHAR_ROM:   return "ROM";
+        case FILETYPE_KERNAL_ROM: return "ROM";
+        case FILETYPE_VC1541_ROM: return "ROM";
             
         default: assert(false);
     }

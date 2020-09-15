@@ -114,7 +114,7 @@ D64File::makeWithAnyArchive(AnyArchive *otherArchive)
     // Create a standard 35 track disk with no error checking codes
     D64File *archive = new D64File(35, false);
     archive->debug(FILE_DEBUG, "Creating D64 archive from a %s archive...\n",
-                   otherArchive->typeAsString());
+                   otherArchive->typeString());
     
     // Copy file path
     archive->setPath(otherArchive->getPath());
@@ -159,7 +159,7 @@ D64File::makeWithAnyArchive(AnyArchive *otherArchive)
         (void)archive->nextTrackAndSector(track, sector, &track, &sector);
     }
     
-    archive->debug(FILE_DEBUG, "%s archive created.\n", archive->typeAsString());
+    archive->debug(FILE_DEBUG, "%s archive created.\n", archive->typeString());
     
     return archive;
 }

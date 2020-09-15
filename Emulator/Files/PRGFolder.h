@@ -62,7 +62,6 @@ public:
     //
 
     FileType type() override { return FILETYPE_PRG; }
-    const char *typeAsString() override { return "PRG Folder"; }
     bool hasSameType(const char *path) override { return isPRGFolder(path); }
     
     

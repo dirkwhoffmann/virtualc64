@@ -48,7 +48,6 @@ public:
     
     void dealloc() override;
     FileType type() override { return FILETYPE_TAP; }
-    const char *typeAsString() override { return "TAP"; }
     const char *getName() override;
     bool hasSameType(const char *filename) override { return isTAPFile(filename); }
     bool readFromBuffer(const u8 *buffer, size_t length) override;

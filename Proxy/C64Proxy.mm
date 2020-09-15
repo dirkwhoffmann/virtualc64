@@ -1272,9 +1272,9 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->file->type();
 }
-- (NSString *)typeAsString
+- (NSString *)typeString
 {
-    return [NSString stringWithUTF8String:wrapper->file->typeAsString()];
+    return [NSString stringWithUTF8String:wrapper->file->typeString()];
 }
 - (NSString *)name
 {

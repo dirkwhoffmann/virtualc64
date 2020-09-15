@@ -74,9 +74,9 @@ private:
     // Intepreting the control register
     //
         
-    u16 bankSelect()   { return (ctrlReg & 0b00010) >> 1; }
+    u16 bankSelect()  { return (ctrlReg & 0b00010) >> 1; }
     u8 chipSelect()   { return (ctrlReg & 0b01100) >> 2; }
-    u8 bank()         { return (ctrlReg & 0b01110) >> 1; }
+    u8 bank()         { return (ctrlReg & 0b00110) >> 1; }
     u8 disabled()     { return (ctrlReg & 0b10000) >> 4; }
     u8 ramIsVisible() { return chipSelect() == 0b10; }
     

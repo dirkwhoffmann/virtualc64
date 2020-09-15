@@ -68,12 +68,9 @@ public:
     // Returns the type of this file
     virtual FileType type() { return FILETYPE_UNKNOWN; }
 
-    // Returns the type of this file as a printable string
+    // Returns a string representation for the type of this file
     const char *typeString() { return fileTypeString(type()); }
     
-    // Returns a string representation of the file type ("T64" etc.)
-    virtual const char *typeAsString() { return ""; }
-
 	// Returns the physical name of this file
     const char *getPath() { return path ? path : ""; }
 

@@ -54,7 +54,6 @@ public:
     //
     
     FileType type() override { return FILETYPE_T64; }
-    const char *typeAsString() override { return "T64"; }
     const char *getName() override;
     bool hasSameType(const char *filename) override { return isT64File(filename); }
     bool readFromBuffer(const u8 *buffer, size_t length) override;

@@ -70,7 +70,7 @@ PRGFile::makeWithAnyArchive(AnyArchive *other, int item)
     
     PRGFile *archive = new PRGFile();
     archive->debug(FILE_DEBUG, "Creating PRG archive from %s archive...\n",
-                   other->typeAsString());
+                   other->typeString());
     
     other->selectItem(item);
     

@@ -69,7 +69,6 @@ public:
     //
     
     FileType type() override { return FILETYPE_D64; }
-    const char *typeAsString() override { return "D64"; }
     const char *getName() override;
     bool hasSameType(const char *filename) override { return isD64File(filename); }
     bool readFromBuffer(const u8 *buffer, size_t length) override;
