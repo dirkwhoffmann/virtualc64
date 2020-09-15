@@ -61,7 +61,7 @@ static const int DSKCHG_DEBUG    = 0; // Disk changing procedure
 static const int GCR_DEBUG       = 0; // Disk encoding / decoding
 
 // Media
-static const int CRT_DEBUG       = 0; // Cartridges
+static const int CRT_DEBUG       = 1; // Cartridges
 static const int FILE_DEBUG      = 0; // Media files (D64,T64,...)
 
 // Peripherals

@@ -92,7 +92,7 @@ CRTFile::cartridgeTypeName(CartridgeType type)
         case CRT_MAGIC_DESK: return "Magic Desk";
         case CRT_SUPER_SNAPSHOT_V5: return "Super Snapshot";
         case CRT_COMAL80: return "Comal 80";
-        case CRT_STRUCTURE_BASIC: return "Structured Basic";
+        case CRT_STRUCTURED_BASIC: return "Structured Basic";
         case CRT_ROSS: return "Ross";
         case CRT_DELA_EP64: return "Dela EP64";
         case CRT_DELA_EP7x8: return "Dela EP7x8";

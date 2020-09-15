@@ -34,7 +34,7 @@ typedef enum : long
     CRT_MAGIC_DESK = 19,
     CRT_SUPER_SNAPSHOT_V5 = 20,
     CRT_COMAL80 = 21,
-    CRT_STRUCTURE_BASIC = 22,
+    CRT_STRUCTURED_BASIC = 22,
     CRT_ROSS = 23,
     CRT_DELA_EP64 = 24,
     CRT_DELA_EP7x8 = 25,

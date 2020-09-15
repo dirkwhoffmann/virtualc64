@@ -32,6 +32,7 @@
 #include "Rex.h"
 #include "SimonsBasic.h"
 #include "StarDos.h"
+#include "StructuredBasic.h"
 #include "SuperGames.h"
 #include "WarpSpeed.h"
 #include "Westermann.h"
