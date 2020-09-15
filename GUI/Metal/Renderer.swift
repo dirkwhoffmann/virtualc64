@@ -11,6 +11,14 @@ import Metal
 import MetalKit
 import MetalPerformanceShaders
 
+enum ScreenshotSource: Int {
+        
+    case visible = 0
+    case visibleUpscaled = 1
+    case entire = 2
+    case entireUpscaled = 3
+}
+
 class Renderer: NSObject, MTKViewDelegate {
     
     let mtkView: MTKView
@@ -238,21 +246,42 @@ class Renderer: NSObject, MTKViewDelegate {
                                 bytesPerImage: imageBytes)
     }
     
+    var maxTextureRect: CGRect {
+        
+        if parent.c64.vic.isPAL() {
+            return CGRect.init(x: 104, y: 16, width: 487 - 104, height: 299 - 16)
+        } else {
+            return CGRect.init(x: 104, y: 16, width: 487 - 104, height: 249 - 16)
+        }
+    }
+
+    var maxTextureRectScaled: CGRect {
+        
+        let texW = CGFloat(TextureSize.original.width)
+        let texH = CGFloat(TextureSize.original.height)
+        var rect = maxTextureRect
+        rect.origin.x /= texW
+        rect.origin.y /= texH
+        rect.size.width /= texW
+        rect.size.height /= texH
+        return rect
+    }
+
     func computeTextureRect() -> CGRect {
                 
         // Display the whole texture if zoom is set
         if zoom { return CGRect.init(x: 0.0, y: 0.0, width: 1.0, height: 1.0) }
         
-        var aw: CGFloat, dw: CGFloat, ah: CGFloat, dh: CGFloat
+        let rect = maxTextureRect
+        let aw = rect.minX
+        let dw = rect.maxX
+        let ah = rect.minY
+        let dh = rect.maxY
         
+        /*
+        var aw: CGFloat, dw: CGFloat, ah: CGFloat, dh: CGFloat
         if parent.c64.vic.isPAL() {
             
-            /*
-            aw = CGFloat(PAL_LEFT_HBLANK)
-            dw = CGFloat(PAL_LEFT_HBLANK + )
-            ah = CGFloat(PAL_UPPER_VBLANK)
-            dh = CGFloat(PAL_UPPER_VBLANK + )
-            */
             aw = CGFloat(104)
             dw = CGFloat(487)
             ah = CGFloat(16)
@@ -265,6 +294,7 @@ class Renderer: NSObject, MTKViewDelegate {
             ah = CGFloat(16)
             dh = CGFloat(249)
         }
+        */
         
         /*
          *       aw <--------- maxWidth --------> dw
@@ -311,7 +341,7 @@ class Renderer: NSObject, MTKViewDelegate {
                            width: width / texW,
                            height: height / texH)
     }
-    
+     
     func updateTextureRect() {
         
         textureRect = computeTextureRect()
@@ -556,8 +586,23 @@ class Renderer: NSObject, MTKViewDelegate {
     // Screenshots
     //
     
-    func screenshot(texture: MTLTexture) -> NSImage? {
+    func screenshot(source: ScreenshotSource) -> NSImage? {
 
+        switch source {
+            
+        case .entire:
+            return screenshot(texture: emulatorTexture, rect: maxTextureRectScaled)
+        case .entireUpscaled:
+            return screenshot(texture: upscaledTexture, rect: maxTextureRectScaled)
+        case .visible:
+            return screenshot(texture: emulatorTexture, rect: textureRect)
+        case .visibleUpscaled:
+            return screenshot(texture: upscaledTexture, rect: textureRect)
+        }
+    }
+
+    func screenshot(texture: MTLTexture, rect: CGRect) -> NSImage? {
+        
         // Use the blitter to copy the texture data back from the GPU
         let queue = texture.device.makeCommandQueue()!
         let commandBuffer = queue.makeCommandBuffer()!
@@ -567,18 +612,9 @@ class Renderer: NSObject, MTKViewDelegate {
         commandBuffer.commit()
         commandBuffer.waitUntilCompleted()
         
-        return NSImage.make(texture: texture, rect: textureRect)
+        return NSImage.make(texture: texture, rect: rect)
     }
-    
-    func screenshot(afterUpscaling: Bool = true) -> NSImage? {
-
-        if afterUpscaling {
-            return screenshot(texture: upscaledTexture)
-        } else {
-            return screenshot(texture: emulatorTexture)
-        }
-    }
-    
+        
     //
     // Methods from MTKViewDelegate
     //

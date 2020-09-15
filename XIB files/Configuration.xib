@@ -1555,7 +1555,7 @@ Gw
                                         <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CtW-sO-8Qs">
                                             <rect key="frame" x="330" y="87" width="28" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="100" doubleValue="50" sliderType="circular" id="fZN-0I-gGc"/>
+                                            <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="200" doubleValue="50" sliderType="circular" id="fZN-0I-gGc"/>
                                             <connections>
                                                 <action selector="vidHZoomAction:" target="-2" id="wgR-tX-47l"/>
                                             </connections>
@@ -1563,7 +1563,7 @@ Gw
                                         <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ijT-ZX-NLu">
                                             <rect key="frame" x="404" y="87" width="28" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="200" doubleValue="100" sliderType="circular" id="Jd4-3b-fsV"/>
+                                            <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="400" doubleValue="100" sliderType="circular" id="Jd4-3b-fsV"/>
                                             <connections>
                                                 <action selector="vidVZoomAction:" target="-2" id="MKD-y2-egY"/>
                                             </connections>

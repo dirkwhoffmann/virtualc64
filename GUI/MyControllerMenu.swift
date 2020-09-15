@@ -322,10 +322,10 @@ extension MyController: NSMenuItemValidation {
         track()
         
         // Determine screenshot format
-        let upscaled = pref.screenshotSource > 0
+        let format = ScreenshotSource.init(rawValue: pref.screenshotSource)!
         
         // Take screenshot
-        guard let screen = renderer.screenshot(afterUpscaling: upscaled) else {
+        guard let screen = renderer.screenshot(source: format) else {
             track("Failed to create screenshot")
             return
         }
