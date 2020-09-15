@@ -13,6 +13,7 @@
 #include "Cartridge.h"
 #include "ActionReplay.h"
 #include "Comal80.h"
+#include "Dinamic.h"
 #include "EasyFlash.h"
 #include "Epyx.h"
 #include "Expert.h"

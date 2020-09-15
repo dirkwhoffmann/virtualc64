@@ -157,6 +157,7 @@
 		507E7A9E24FB864E00AB433C /* ScreenshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 507E7A9D24FB864E00AB433C /* ScreenshotDialog.xib */; };
 		507E7AA024FB881500AB433C /* ScreenshotDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507E7A9F24FB881500AB433C /* ScreenshotDialog.swift */; };
 		507E7AA224FB897D00AB433C /* Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507E7AA124FB897D00AB433C /* Screenshot.swift */; };
+		508081E925110FFE0084B060 /* Dinamic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508081E725110FFE0084B060 /* Dinamic.cpp */; };
 		5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* MacAudio.swift */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		50995F2A24DBCDE400F40713 /* CPUDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50995F2824DBCDE400F40713 /* CPUDebugger.cpp */; };
@@ -505,6 +506,8 @@
 		507E7A9D24FB864E00AB433C /* ScreenshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScreenshotDialog.xib; sourceTree = "<group>"; };
 		507E7A9F24FB881500AB433C /* ScreenshotDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotDialog.swift; sourceTree = "<group>"; };
 		507E7AA124FB897D00AB433C /* Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screenshot.swift; sourceTree = "<group>"; };
+		508081E725110FFE0084B060 /* Dinamic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Dinamic.cpp; sourceTree = "<group>"; };
+		508081E825110FFE0084B060 /* Dinamic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Dinamic.h; sourceTree = "<group>"; };
 		5081AB621EF29E6400D6F616 /* MacAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacAudio.swift; sourceTree = "<group>"; };
 		5092A5B0200BC4B70037754D /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
 		5093D6A824B19E9200BDF924 /* Serialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Serialization.h; sourceTree = "<group>"; };
@@ -816,6 +819,8 @@
 				504C42AD24AF29AB00E69CAE /* ActionReplay.cpp */,
 				504C429C24AF29AB00E69CAE /* Comal80.h */,
 				504C42BE24AF29AB00E69CAE /* Comal80.cpp */,
+				508081E825110FFE0084B060 /* Dinamic.h */,
+				508081E725110FFE0084B060 /* Dinamic.cpp */,
 				504C42B224AF29AB00E69CAE /* EasyFlash.h */,
 				504C429724AF29AB00E69CAE /* EasyFlash.cpp */,
 				504C429024AF29AB00E69CAE /* Epyx.h */,
@@ -1549,6 +1554,7 @@
 				504C436224AF29AC00E69CAE /* GeoRam.cpp in Sources */,
 				50B485FB24F9911600844133 /* MediaDialogController.swift in Sources */,
 				5002FA7D21C2651B00DA4BBC /* VideoConf.swift in Sources */,
+				508081E925110FFE0084B060 /* Dinamic.cpp in Sources */,
 				504C43A324AF29AC00E69CAE /* ProcessorPort.cpp in Sources */,
 				50BE4B5E24E7F864008F39C9 /* DispatchTime.swift in Sources */,
 				5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */,
