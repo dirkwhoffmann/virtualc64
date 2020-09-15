@@ -167,7 +167,6 @@
 		50A519411B8DA230006771E2 /* drive_click.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519401B8DA230006771E2 /* drive_click.aiff */; };
 		50A519431B8DA360006771E2 /* drive_snatch_uae.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */; };
 		50A9A088250DE90900723D32 /* PageFox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A9A086250DE90900723D32 /* PageFox.cpp */; };
-		50A9A08C250F3C6500723D32 /* GenericArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A9A08A250F3C6500723D32 /* GenericArchive.cpp */; };
 		50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1644B202DD52500447D3E /* ExportDiskController.swift */; };
 		50B1644E202DDAA600447D3E /* ExportDiskDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */; };
 		50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */; };
@@ -521,8 +520,6 @@
 		50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = drive_snatch_uae.aiff; sourceTree = "<group>"; };
 		50A9A086250DE90900723D32 /* PageFox.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PageFox.cpp; sourceTree = "<group>"; };
 		50A9A087250DE90900723D32 /* PageFox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageFox.h; sourceTree = "<group>"; };
-		50A9A08A250F3C6500723D32 /* GenericArchive.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GenericArchive.cpp; sourceTree = "<group>"; };
-		50A9A08B250F3C6500723D32 /* GenericArchive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GenericArchive.h; sourceTree = "<group>"; };
 		50B1644B202DD52500447D3E /* ExportDiskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportDiskController.swift; sourceTree = "<group>"; };
 		50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportDiskDialog.xib; sourceTree = "<group>"; };
 		50B171051EE6AB840019E8D4 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -883,8 +880,6 @@
 				504C42DA24AF29AB00E69CAE /* CRTFile.cpp */,
 				504C42DC24AF29AB00E69CAE /* AnyArchive.h */,
 				504C42D924AF29AB00E69CAE /* AnyArchive.cpp */,
-				50A9A08B250F3C6500723D32 /* GenericArchive.h */,
-				50A9A08A250F3C6500723D32 /* GenericArchive.cpp */,
 				504C42DF24AF29AB00E69CAE /* T64File.h */,
 				504C42CC24AF29AB00E69CAE /* T64File.cpp */,
 				504C42DE24AF29AB00E69CAE /* PRGFile.h */,
@@ -1395,7 +1390,6 @@
 			files = (
 				504C438A24AF29AC00E69CAE /* Mouse1350.cpp in Sources */,
 				504C436824AF29AC00E69CAE /* ActionReplay.cpp in Sources */,
-				50A9A08C250F3C6500723D32 /* GenericArchive.cpp in Sources */,
 				50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */,
 				50D3091E24C5CE1A00B92563 /* MyControllerStatusBar.swift in Sources */,
 				504C436624AF29AC00E69CAE /* Kcs.cpp in Sources */,

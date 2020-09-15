@@ -63,7 +63,7 @@ public:
     int numberOfItems() override { return 1; }
     void selectItem(unsigned item) override;
     const char *getTypeOfItem() override { return "PRG"; }
-    const char *getNameOfItem() override { return "FILE"; }
+    const char *getNameOfItem() override { return getName(); }
     size_t getSizeOfItem() override { return size - 2; }
     void seekItem(long offset) override;
     u16 getDestinationAddrOfItem() override;
