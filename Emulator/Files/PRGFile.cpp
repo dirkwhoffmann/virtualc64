@@ -16,14 +16,14 @@ PRGFile::isPRGBuffer(const u8 *buffer, size_t length)
 }
 
 bool
-PRGFile::isPRGFile(const char *filename)
+PRGFile::isPRGFile(const char *path)
 {
-    assert(filename != NULL);
+    assert(path != NULL);
     
-    if (!checkFileSuffix(filename, ".PRG") && !checkFileSuffix(filename, ".prg"))
+    if (!checkFileSuffix(path, ".PRG") && !checkFileSuffix(path, ".prg"))
         return false;
     
-    if (!checkFileSize(filename, 2, -1))
+    if (!checkFileSize(path, 2, -1))
         return false;
     
     return true;
@@ -49,11 +49,11 @@ PRGFile::makeWithBuffer(const u8 *buffer, size_t length)
 }
 
 PRGFile *
-PRGFile::makeWithFile(const char *filename)
+PRGFile::makeWithFile(const char *path)
 {
     PRGFile *archive = new PRGFile();
     
-    if (!archive->readFromFile(filename)) {
+    if (!archive->readFromFile(path)) {
         
         delete archive;
         return NULL;
@@ -63,21 +63,19 @@ PRGFile::makeWithFile(const char *filename)
 }
 
 PRGFile *
-PRGFile::makeWithAnyArchive(AnyArchive *otherArchive) {
-    
-    int exportItem = 0;
-    
-    if (otherArchive == NULL || otherArchive->numberOfItems() <= exportItem)
+PRGFile::makeWithAnyArchive(AnyArchive *other, int item)
+{
+    if (other == NULL || other->numberOfItems() <= item)
         return NULL;
     
     PRGFile *archive = new PRGFile();
     archive->debug(FILE_DEBUG, "Creating PRG archive from %s archive...\n",
-                   otherArchive->typeAsString());
+                   other->typeAsString());
     
-    otherArchive->selectItem(exportItem);
+    other->selectItem(item);
     
     // Determine file size and allocate memory
-    archive->size = 2 + otherArchive->getSizeOfItem();
+    archive->size = 2 + other->getSizeOfItem();
     if ((archive->data = new u8[archive->size]) == NULL) {
         archive->warn("Failed to allocate %d bytes of memory\n", archive->size);
         delete archive;
@@ -86,13 +84,13 @@ PRGFile::makeWithAnyArchive(AnyArchive *otherArchive) {
     
     // Load address
     u8* ptr = archive->data;
-    *ptr++ = LO_BYTE(otherArchive->getDestinationAddrOfItem());
-    *ptr++ = HI_BYTE(otherArchive->getDestinationAddrOfItem());
+    *ptr++ = LO_BYTE(other->getDestinationAddrOfItem());
+    *ptr++ = HI_BYTE(other->getDestinationAddrOfItem());
     
     // File data
     int byte;
-    otherArchive->selectItem(exportItem);
-    while ((byte = otherArchive->readItem()) != EOF) {
+    other->selectItem(item);
+    while ((byte = other->readItem()) != EOF) {
         *ptr++ = (u8)byte;
     }
     
@@ -126,5 +124,3 @@ PRGFile::getDestinationAddrOfItem()
 {
 	return LO_HI(data[0], data[1]);
 }
-
-

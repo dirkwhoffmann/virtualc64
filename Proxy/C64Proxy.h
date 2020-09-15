@@ -758,23 +758,6 @@ struct AnyC64FileWrapper;
 
 
 //
-// GenericArchive proxy
-//
-
-@interface GenericArchiveProxy : AnyArchiveProxy {
-}
-
-+ (instancetype)make;
-+ (instancetype)make:(NSString *)archiveName;
-
-- (BOOL)addItem:(NSString *)name type:(CBMFileType)type data:(const void *)data size:(NSInteger)size;
-- (BOOL)addItem:(NSString *)name type:(CBMFileType)type data:(const void *)data size:(NSInteger)size at:(NSInteger)at;
-- (void)dumpDirectory;
-
-@end
-
-
-//
 // Snapshot proxy
 //
 
@@ -867,6 +850,19 @@ struct AnyC64FileWrapper;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)filename;
 + (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)otherArchive;
+
+@end
+
+
+//
+// PRGFolder proxy
+//
+
+@interface PRGFolderProxy : AnyArchiveProxy {
+}
+
++ (instancetype)make;
++ (instancetype)makeWithFolder:(NSString *)path;
 
 @end
 

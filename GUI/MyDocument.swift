@@ -79,8 +79,7 @@ class MyDocument: NSDocument {
     func fileType(url: URL) -> FileType {
                 
         if url.hasDirectoryPath {
-            track("\(url) is a directory")
-            return .FILETYPE_GENERIC_ARCHIVE
+            return .FILETYPE_PRG_FOLDER
         }
         
         switch url.pathExtension.uppercased() {
@@ -89,8 +88,8 @@ class MyDocument: NSDocument {
         case "CRT":  return .FILETYPE_CRT
         case "D64":  return .FILETYPE_D64
         case "T64":  return .FILETYPE_T64
-        case "PRG":  return .FILETYPE_PRG
         case "P00":  return .FILETYPE_P00
+        case "PRG":  return .FILETYPE_PRG
         case "G64":  return .FILETYPE_G64
         case "TAP":  return .FILETYPE_TAP
         default:     return .FILETYPE_UNKNOWN
@@ -102,12 +101,12 @@ class MyDocument: NSDocument {
         let types = [ FileType.FILETYPE_V64,
                       FileType.FILETYPE_CRT,
                       FileType.FILETYPE_T64,
-                      FileType.FILETYPE_PRG,
                       FileType.FILETYPE_P00,
+                      FileType.FILETYPE_PRG,
+                      FileType.FILETYPE_PRG_FOLDER,
                       FileType.FILETYPE_D64,
                       FileType.FILETYPE_G64,
-                      FileType.FILETYPE_TAP,
-                      FileType.FILETYPE_GENERIC_ARCHIVE ]
+                      FileType.FILETYPE_TAP ]
         
         try createAttachment(from: url, allowedTypes: types)
     }
@@ -129,21 +128,26 @@ class MyDocument: NSDocument {
         
         // If the provided URL points to compressed file, decompress it first
         let newUrl = url.unpacked
-        
-        // Only proceed if the file type is an allowed type
+
+        // Get the file type
         let type = fileType(url: newUrl)
-        track("type = \(type.rawValue)")
+
+        // Only proceed if the file type is accepted
         if !allowedTypes.contains(type) {
             throw NSError.unsupportedFormatError(filename: url.lastPathComponent)
         }
         
-        // If url points to a directory, convert it to a generic archive
         if url.hasDirectoryPath {
-            return try createFileProxyFromDirectory(url: url)
+            return try createFileProxy(folderUrl: newUrl, type: type)
+        } else {
+            return try createFileProxy(fileUrl: newUrl, type: type)
         }
-        
+    }
+                
+    func createFileProxy(fileUrl: URL, type: FileType) throws -> AnyFileProxy? {
+            
         // Get the file wrapper and create the proxy with it
-        let wrapper = try FileWrapper.init(url: newUrl)
+        let wrapper = try FileWrapper.init(url: fileUrl)
         return try createFileProxy(wrapper: wrapper, type: type)
     }
     
@@ -206,42 +210,31 @@ class MyDocument: NSDocument {
         result!.setPath(name)
         return result
     }
-        
+
     fileprivate
-    func createFileProxyFromDirectory(url: URL) throws -> AnyFileProxy? {
+    func createFileProxy(folderUrl: URL, type: FileType) throws -> AnyFileProxy? {
 
-        var archive: GenericArchiveProxy?
+        var result: AnyFileProxy?
         
-        track("Creating GenericArchive proxy from directory \(url)")
+        let name = folderUrl.path
+        track("Creating proxy from directory \(name)")
         
-        let files = try url.contents()
-        
-        archive = GenericArchiveProxy.make(url.lastPathComponent)
-
-        for file in files {
+        switch type {
             
-            let name = file.deletingPathExtension().lastPathComponent
-            let type: CBMFileType
-            switch file.pathExtension.uppercased() {
-            case "SEQ": type = .SEQ
-            case "USR": type = .USR
-            case "REL": type = .REL
-            default: type = .PRG
-            }
+        case .FILETYPE_PRG_FOLDER:
+            result = PRGFolderProxy.make(withFolder: name)
             
-            let wrapper = try FileWrapper.init(url: file)
-            
-            guard let data = wrapper.regularFileContents else {
-                throw NSError.fileAccessError(filename: name)
-            }
-            let buffer = (data as NSData).bytes
-            let length = data.count
-                                
-            archive?.addItem(name, type: type, data: buffer, size: length)
+        default:
+            fatalError()
         }
-        return archive
-    }
         
+        if result == nil {
+            throw NSError.corruptedFileError(filename: name)
+        }
+        result!.setPath(name)
+        return result
+    }
+                
     //
     // Processing attachments
     //

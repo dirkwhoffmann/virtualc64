@@ -36,7 +36,7 @@ public:
     
     static PRGFile *makeWithBuffer(const u8 *buffer, size_t length);
     static PRGFile *makeWithFile(const char *path);
-    static PRGFile *makeWithAnyArchive(AnyArchive *otherArchive);
+    static PRGFile *makeWithAnyArchive(AnyArchive *other, int item = 0);
 
     
     //

@@ -1590,44 +1590,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 @end
 
 //
-// GenericArchive
-//
-
-@implementation GenericArchiveProxy
-
-+ (instancetype)make
-{
-    return [self make:@""];
-}
-
-+ (instancetype) make:(NSString *)archiveName
-{
-    AnyArchive *archive = new GenericArchive([archiveName UTF8String]);
-    return [[self alloc] initWithFile:archive];
-}
-
-- (BOOL)addItem:(NSString *)name type:(CBMFileType)type data:(const void *)data size:(NSInteger)size
-{
-    GenericArchive *archive = (GenericArchive *)wrapper->file;
-    return archive->add([name UTF8String], type, (u8 *)data, size);
-}
-
-- (BOOL)addItem:(NSString *)name type:(CBMFileType)type data:(const void *)data size:(NSInteger)size at:(NSInteger)at
-{
-    GenericArchive *archive = (GenericArchive *)wrapper->file;
-    return archive->add([name UTF8String], type, (u8 *)data, size, at);
-}
-
-- (void)dumpDirectory
-{
-    GenericArchive *archive = (GenericArchive *)wrapper->file;
-    archive->dumpDirectory();
-}
-
-@end
-
-
-//
 // T64
 //
 
@@ -1690,6 +1652,26 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
     PRGFile *archive = PRGFile::makeWithAnyArchive(other);
+    return [self make: archive];
+}
+
+@end
+
+//
+// PRGFolder
+//
+
+@implementation PRGFolderProxy
+
++ (instancetype) make
+{
+    AnyArchive *archive = new PRGFolder();
+    return [[self alloc] initWithFile:archive];
+}
+
++ (instancetype) makeWithFolder:(NSString *)path
+{
+    PRGFolder *archive = PRGFolder::makeWithFolder([path UTF8String]);
     return [self make: archive];
 }
 

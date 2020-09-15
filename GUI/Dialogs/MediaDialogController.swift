@@ -94,13 +94,6 @@ class MediaDialogController: DialogController {
             track("T64FileProxy")
             titleString = "T64 File"
             subTitleString = "A collection of multiple C64 programs"
-
-        case _ as PRGFileProxy:
-            
-            media = .archive
-            track("PRGFileProxy")
-            titleString = "PRG File"
-            subTitleString = "Binary representation of a single C64 program"
             
         case _ as P00FileProxy:
             
@@ -109,6 +102,19 @@ class MediaDialogController: DialogController {
             titleString = "P00 File"
             subTitleString = "Binary representation of a single C64 program"
             
+        case _ as PRGFileProxy:
+            
+            media = .archive
+            track("PRGFileProxy")
+            titleString = "PRG File"
+            subTitleString = "Binary representation of a single C64 program"
+            
+        case _ as PRGFolderProxy:
+            media = .directory
+            track("PRGFolderProxy")
+            titleString = "Disk from a file system folder"
+            subTitleString = "Comprises all PRG files found in this directory"
+
         case _ as D64FileProxy:
             
             media = .archive
@@ -123,12 +129,6 @@ class MediaDialogController: DialogController {
             titleString = "G64 File"
             subTitleString = "A bit-accurate image of a C64 diskette"
             
-        case _ as GenericArchiveProxy:
-            media = .directory
-            track("GenericArchiveProxy")
-            titleString = "Disk from a file system folder"
-            subTitleString = "Comprises all files with a .prg, .seq, .usr, or .rel suffix."
-
         default:
             fatalError()
         }
