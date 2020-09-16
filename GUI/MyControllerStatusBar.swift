@@ -35,6 +35,8 @@ extension MyController {
     }
     
     public func refreshStatusBar() {
+                
+        track()
         
         let connected8 = c64.drive8.isConnected()
         let connected9 = c64.drive9.isConnected()
@@ -70,7 +72,7 @@ extension MyController {
             
             haltIcon: jammed,
             debugIcon: debug,
-            muteIcon: warp,
+            muteIcon: !running || warp,
             
             tapeIcon: c64.datasette.hasTape(),
             tapeProgress: c64.datasette.motor(),

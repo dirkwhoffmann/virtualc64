@@ -573,11 +573,13 @@ extension MyController {
             needsSaving = true
             toolbar.validateVisibleItems()
             inspector?.fullRefresh()
+            refreshStatusBar()
     
         case MSG_PAUSE:
             
             toolbar.validateVisibleItems()
             inspector?.fullRefresh()
+            refreshStatusBar()
 
         case MSG_RESET:
 
