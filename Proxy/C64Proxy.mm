@@ -1199,13 +1199,13 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return self;
 }
 
-- (NSInteger) model
+- (MouseModel) model
 {
-    return (NSInteger)wrapper->mouse->getModel();
+    return wrapper->mouse->getModel();
 }
-- (void) setModel:(NSInteger)model
+- (void) setModel:(MouseModel)model
 {
-    wrapper->mouse->setModel((MouseModel)model);
+    wrapper->mouse->setModel(model);
 }
 - (NSInteger) port
 {

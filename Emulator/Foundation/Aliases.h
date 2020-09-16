@@ -41,5 +41,4 @@ typedef i64 Cycle;
 enum __attribute__((enum_extensibility(open))) _name : _type _name; \
 enum _name : _type
 
-
 #endif

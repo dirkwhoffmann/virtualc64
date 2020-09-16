@@ -343,7 +343,7 @@ struct DevicesDefaults {
         autofireBullets: -3,
         autofireFrequency: 2.5,
         
-        mouseModel: MOUSE1350
+        mouseModel: .MOUSE1350
     )
 }
 
@@ -651,7 +651,7 @@ struct HardwareDefaults {
         ramPattern:    RAM_PATTERN_C64,
         
         driveConnect:  [true, false],
-        driveType:     [DRIVE_VC1541II, DRIVE_VC1541II],
+        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
         
         gameDevice1:   -1,
         gameDevice2:   -1
@@ -675,7 +675,7 @@ struct HardwareDefaults {
         ramPattern:    RAM_PATTERN_C64C,
         
         driveConnect:  [true, false],
-        driveType:     [DRIVE_VC1541II, DRIVE_VC1541II],
+        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
         
         gameDevice1:   -1,
         gameDevice2:   -1
@@ -699,7 +699,7 @@ struct HardwareDefaults {
         ramPattern:    RAM_PATTERN_C64,
         
         driveConnect:  [true, false],
-        driveType:     [DRIVE_VC1541II, DRIVE_VC1541II],
+        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
         
         gameDevice1:   -1,
         gameDevice2:   -1
@@ -723,7 +723,7 @@ struct HardwareDefaults {
         ramPattern:    RAM_PATTERN_C64,
         
         driveConnect:  [true, false],
-        driveType:     [DRIVE_VC1541II, DRIVE_VC1541II],
+        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
         
         gameDevice1:   -1,
         gameDevice2:   -1
@@ -747,7 +747,7 @@ struct HardwareDefaults {
         ramPattern:    RAM_PATTERN_C64C,
         
         driveConnect:  [true, false],
-        driveType:     [DRIVE_VC1541II, DRIVE_VC1541II],
+        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
         
         gameDevice1:   -1,
         gameDevice2:   -1
@@ -771,7 +771,7 @@ struct HardwareDefaults {
         ramPattern:    RAM_PATTERN_C64,
         
         driveConnect:  [true, false],
-        driveType:     [DRIVE_VC1541II, DRIVE_VC1541II],
+        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
         
         gameDevice1:   -1,
         gameDevice2:   -1

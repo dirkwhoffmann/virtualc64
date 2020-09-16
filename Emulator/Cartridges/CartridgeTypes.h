@@ -10,7 +10,7 @@
 #ifndef CARTRIDGE_TYPES_H
 #define CARTRIDGE_TYPES_H
 
-typedef enum : long
+typedef VA_ENUM(long, CartridgeType)
 {
     CRT_NORMAL = 0,
     CRT_ACTION_REPLAY = 1,
@@ -78,7 +78,7 @@ typedef enum : long
     CRT_GEO_RAM = 254,
     CRT_NONE = 255
     
-} CartridgeType;
+};
 
 typedef enum : long
 {

@@ -541,11 +541,13 @@ extension MyController {
 
         // track("msg: \(msg)")
         
+        // TODO: REPLACE BY COMPUTED VARIABLE
         func drive8() -> Bool {
             precondition(msg.data == 8 || msg.data == 9)
             return msg.data == 8
         }
-        
+        var driveID: DriveID { return msg.data == 8 ? .DRIVE8 : .DRIVE9 }
+
         switch msg.type {
     
         case .MSG_CONFIG:
@@ -629,7 +631,7 @@ extension MyController {
             if pref.driveSounds && pref.driveHeadSound {
                 playSound(name: "1541_track_change_2", volume: 1.0)
             }
-            refreshStatusBarTracks(drive: DriveID(msg.data))
+            refreshStatusBarTracks(drive: DriveID.init(rawValue: msg.data)!)
                         
         case .MSG_DISK_INSERTED:
             
@@ -637,7 +639,7 @@ extension MyController {
                 playSound(name: "1541_door_closed_2", volume: 0.2)
             }
             mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
-            refreshStatusBarDiskIcons(drive: DriveID(msg.data))
+            refreshStatusBarDiskIcons(drive: driveID)
             inspector?.fullRefresh()
 
         case .MSG_DISK_EJECTED:
@@ -645,7 +647,7 @@ extension MyController {
             if pref.driveSounds && pref.driveEjectSound {
                 playSound(name: "1541_door_open_1", volume: 0.15)
             }
-            refreshStatusBarDiskIcons(drive: DriveID(msg.data))
+            refreshStatusBarDiskIcons(drive: driveID)
             inspector?.fullRefresh()
 
         case .MSG_FILE_FLASHED:

@@ -16,7 +16,7 @@ class ExportDiskController: DialogController {
     
     func showSheet(forDrive drive: DriveID) {
         
-        precondition(drive == DRIVE8 || drive == DRIVE9)
+        precondition(drive == .DRIVE8 || drive == .DRIVE9)
         
         // Create save panel
         savePanel = NSSavePanel()

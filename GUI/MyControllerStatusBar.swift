@@ -35,9 +35,7 @@ extension MyController {
     }
     
     public func refreshStatusBar() {
-                
-        track()
-        
+                        
         let connected8 = c64.drive8.isConnected()
         let connected9 = c64.drive9.isConnected()
         let on8 = c64.drive8.isSwitchedOn()
@@ -51,8 +49,8 @@ extension MyController {
         let hasCrt = c64.expansionport.cartridgeAttached()
             
         // Floppy drives
-        refreshStatusBarDriveItems(drive: DRIVE8)
-        refreshStatusBarDriveItems(drive: DRIVE9)
+        refreshStatusBarDriveItems(drive: .DRIVE8)
+        refreshStatusBarDriveItems(drive: .DRIVE9)
         
         // Cartridges
         refreshStatusBarCartridgeIcons()
@@ -102,9 +100,9 @@ extension MyController {
     
     func refreshStatusBarLEDs(drive: DriveID) {
         
-        assert(drive == DRIVE8 || drive == DRIVE9)
+        assert(drive == .DRIVE8 || drive == .DRIVE9)
         
-        if drive == DRIVE8 {
+        if drive == .DRIVE8 {
             
             greenLED8.image = c64.drive8.greenLedImage
             redLED8.image = c64.drive8.redLedImage
@@ -118,9 +116,9 @@ extension MyController {
     
     func refreshStatusBarTracks(drive: DriveID) {
         
-        assert(drive == DRIVE8 || drive == DRIVE9)
-        
-        if drive == DRIVE8 {
+        assert(drive == .DRIVE8 || drive == .DRIVE9)
+
+        if drive == .DRIVE8 {
             
             trackNumber8.integerValue = Int((c64.drive8.halftrack() + 1) / 2)
             trackNumber8.textColor = c64.drive8.writeMode() ? .red : .secondaryLabelColor
@@ -133,10 +131,10 @@ extension MyController {
     }
     
     func refreshStatusBarDiskIcons(drive: DriveID) {
-        
-        assert(drive == DRIVE8 || drive == DRIVE9)
-        
-        if drive == DRIVE8 {
+    
+        assert(drive == .DRIVE8 || drive == .DRIVE9)
+
+        if drive == .DRIVE8 {
             diskIcon8.image = c64.drive8.icon
             diskIcon8.isHidden = !c64.drive8.isConnected() || !c64.drive8.hasDisk() || !statusBar
         } else {
@@ -147,15 +145,15 @@ extension MyController {
     
     func refreshStatusBarDriveActivity() {
         
-        refreshStatusBarDriveActivity(drive: DRIVE8)
-        refreshStatusBarDriveActivity(drive: DRIVE9)
+        refreshStatusBarDriveActivity(drive: .DRIVE8)
+        refreshStatusBarDriveActivity(drive: .DRIVE9)
     }
 
     func refreshStatusBarDriveActivity(drive: DriveID) {
         
-        assert(drive == DRIVE8 || drive == DRIVE9)
-        
-        if drive == DRIVE8 {
+        assert(drive == .DRIVE8 || drive == .DRIVE9)
+
+        if drive == .DRIVE8 {
             
             if c64.iec.busy() && c64.drive8.isRotating() {
                 spinning8.startAnimation(self)
@@ -217,8 +215,8 @@ extension MyController {
         track()
         
         switch sender.tag {
-        case 8: drivePowerAction(drive: DRIVE8)
-        case 9: drivePowerAction(drive: DRIVE9)
+        case 8: drivePowerAction(drive: .DRIVE8)
+        case 9: drivePowerAction(drive: .DRIVE9)
         default: fatalError()
         }
         

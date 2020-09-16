@@ -14,37 +14,34 @@
 // Enumerations
 //
 
-typedef enum : long
+typedef VA_ENUM(long, DriveID)
 {
     DRIVE8 = 8,
     DRIVE9 = 9
-}
-DriveID;
+};
 
 inline bool isDriveID(long value)
 {
     return value >= DRIVE8 && value <= DRIVE9;
 }
 
-typedef enum : long
+typedef VA_ENUM(long, DriveType)
 {
     DRIVE_VC1541II
-}
-DriveType;
+};
 
 inline bool isDriveType(long value)
 {
     return value == DRIVE_VC1541II;
 }
 
-typedef enum : long
+typedef VA_ENUM(long, InsertionStatus)
 {
     FULLY_EJECTED,
     PARTIALLY_INSERTED,
     FULLY_INSERTED,
     PARTIALLY_EJECTED
-}
-InsertionStatus;
+};
 
 inline bool isInsertionStatus(long value)
 {

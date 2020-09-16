@@ -12,13 +12,12 @@
 #ifndef MOUSE_TYPES_H
 #define MOUSE_TYPES_H
 
-typedef enum
+typedef VA_ENUM(long, MouseModel)
 {
     MOUSE1350 = 0,
     MOUSE1351,
     NEOSMOUSE
-}
-MouseModel;
+};
 
 typedef struct
 {

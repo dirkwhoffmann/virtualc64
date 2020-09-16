@@ -14,7 +14,8 @@ extension MyController: NSMenuItemValidation {
         let powered = c64.isPoweredOn
         let running = c64.isRunning
  
-        var drive: DriveProxy { return c64.drive(DriveID(item.tag))! }
+        var driveID: DriveID { return DriveID.init(rawValue: item.tag)! }
+        var drive: DriveProxy { return c64.drive(driveID) }
         
         func validateURLlist(_ list: [URL], image: NSImage) -> Bool {
             
@@ -113,10 +114,10 @@ extension MyController: NSMenuItemValidation {
             return validateURLlist(myAppDelegate.recentlyAttachedCartridgeURLs, image: smallCart)
             
         case #selector(MyController.attachGeoRamDummyAction(_:)):
-            item.state = (c64.expansionport.cartridgeType() == CRT_GEO_RAM) ? .on : .off
+            item.state = (c64.expansionport.cartridgeType() == .CRT_GEO_RAM) ? .on : .off
             
         case #selector(MyController.attachIsepicAction(_:)):
-            item.state = (c64.expansionport.cartridgeType() == CRT_ISEPIC) ? .on : .off
+            item.state = (c64.expansionport.cartridgeType() == .CRT_ISEPIC) ? .on : .off
             
         case #selector(MyController.detachCartridgeAction(_:)):
             return c64.expansionport.cartridgeAttached()
@@ -162,7 +163,7 @@ extension MyController: NSMenuItemValidation {
             
         case #selector(MyController.geoRamBatteryAction(_:)):
             item.state = c64.expansionport.hasBattery() ? .on : .off
-            return c64.expansionport.cartridgeType() == CRT_GEO_RAM
+            return c64.expansionport.cartridgeType() == .CRT_GEO_RAM
             
         // Debug menu
         case #selector(MyController.traceAction(_:)):
@@ -541,17 +542,17 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func newDiskAction(_ sender: NSMenuItem!) {
         
-        let id = DriveID(sender.tag)
+        let id = DriveID(rawValue: sender.tag)!
         c64.drive(id)?.insertNewDisk(pref.driveBlankDiskFormat)
         myAppDelegate.clearRecentlyExportedDiskURLs(drive: id)
     }
     
     @IBAction func insertDiskAction(_ sender: NSMenuItem!) {
         
-        let drive = DriveID(sender.tag)
+        let id = DriveID(rawValue: sender.tag)!
         
         // Ask user to continue if the current disk contains modified data
-        if !proceedWithUnexportedDisk(drive: drive) {
+        if !proceedWithUnexportedDisk(drive: id) {
             return
         }
         
@@ -564,14 +565,14 @@ extension MyController: NSMenuItemValidation {
         openPanel.allowedFileTypes = ["t64", "prg", "p00", "d64", "g64", "zip", "gz"]
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
             if result == .OK, let url = openPanel.url {
-                self.insertDiskAction(from: url, drive: drive)
+                self.insertDiskAction(from: url, drive: id)
             }
         })
     }
     
     @IBAction func insertRecentDiskAction(_ sender: NSMenuItem!) {
         
-        let drive = sender.tag < 10 ? DRIVE8 : DRIVE9
+        let drive = sender.tag < 10 ? DriveID.DRIVE8 : DriveID.DRIVE9
         let slot  = sender.tag % 10
                 
         if let url = myAppDelegate.getRecentlyInsertedDiskURL(slot) {
@@ -611,7 +612,7 @@ extension MyController: NSMenuItemValidation {
     @IBAction func exportRecentDiskAction(_ sender: NSMenuItem!) {
                 
         // Extrace drive number and slot from tag
-        let drive = sender.tag < 10 ? DRIVE8 : DRIVE9
+        let drive = sender.tag < 10 ? DriveID.DRIVE8 : DriveID.DRIVE9
         let item = sender.tag < 10 ? sender.tag : sender.tag - 10
         
         // Get URL and export
@@ -626,7 +627,7 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func clearRecentlyExportedDisksAction(_ sender: NSMenuItem!) {
 
-        let drive = DriveID(sender.tag)
+        let drive = DriveID(rawValue: sender.tag)!
         myAppDelegate.clearRecentlyExportedDiskURLs(drive: drive)
     }
 
@@ -640,7 +641,7 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func ejectDiskAction(_ sender: NSMenuItem!) {
         
-        let drive = DriveID(sender.tag)
+        let drive = DriveID(rawValue: sender.tag)!
         
         if proceedWithUnexportedDisk(drive: drive) {
             
@@ -651,7 +652,7 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func exportDiskAction(_ sender: NSMenuItem!) {
 
-        let drive = DriveID(sender.tag)
+        let drive = DriveID(rawValue: sender.tag)!
         
         let nibName = NSNib.Name("ExportDiskDialog")
         let exportPanel = ExportDiskController.init(windowNibName: nibName)
@@ -660,9 +661,9 @@ extension MyController: NSMenuItemValidation {
      
     @IBAction func writeProtectAction(_ sender: NSMenuItem!) {
         
-        let drive = DriveID(sender.tag)
+        let drive = DriveID(rawValue: sender.tag)!
 
-        if drive == DRIVE8 {
+        if drive == .DRIVE8 {
             c64.drive8.disk.toggleWriteProtection()
         } else {
             c64.drive9.disk.toggleWriteProtection()
@@ -671,7 +672,7 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func drivePowerAction(_ sender: NSMenuItem!) {
         
-        let drive = DriveID(sender.tag)
+        let drive = DriveID(rawValue: sender.tag)!
         drivePowerAction(drive: drive)
     }
     
@@ -680,8 +681,8 @@ extension MyController: NSMenuItemValidation {
         track()
         
         switch drive {
-        case DRIVE8: config.drive8PowerSwitch = !config.drive8PowerSwitch
-        case DRIVE9: config.drive9PowerSwitch = !config.drive9PowerSwitch
+        case .DRIVE8: config.drive8PowerSwitch = !config.drive8PowerSwitch
+        case .DRIVE9: config.drive9PowerSwitch = !config.drive9PowerSwitch
         default: fatalError()
         }         
     }

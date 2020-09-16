@@ -75,8 +75,8 @@ extension PreferencesController {
         
         // Mouse
         let model = c64.mouse.model()
-        devMouseModel.selectItem(withTag: model)
-        devMouseInfo.isHidden = (model == Int(MOUSE1350.rawValue))
+        devMouseModel.selectItem(withTag: model.rawValue)
+        devMouseInfo.isHidden = model == .MOUSE1350
     }
     
     // Translates a button tag back to the related slot and gamepad action
@@ -165,8 +165,7 @@ extension PreferencesController {
     
     @IBAction func devMouseModelAction(_ sender: NSPopUpButton!) {
         
-        proxy?.mouse.setModel(sender.selectedTag())
-        
+        proxy?.mouse.setModel(MouseModel.init(rawValue: sender.selectedTag())!)
         refresh()
     }
         

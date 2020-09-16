@@ -57,7 +57,7 @@ inline const char* fileTypeString(FileType type)
     }
 }
 
-typedef enum
+typedef VA_ENUM(long, RomIdentifier)
 {
     ROM_MISSING,
     ROM_UNKNOWN,
@@ -109,8 +109,7 @@ typedef enum
     VC1541_II_JIFFY_V600,
     
     ROM_CNT
-}
-RomIdentifier;
+};
 
 inline bool isRomRevision(long value)
 {
