@@ -450,8 +450,8 @@ extension MyController {
             
             // Process message in the main thread
             DispatchQueue.main.async {
-                let mType = MessageType(rawValue: UInt32(type))
-                myself.processMessage(Message(type: mType, data: data))
+                let mType = MessageType(rawValue: type)
+                myself.processMessage(Message(type: mType!, data: data))
             }
         }
     }
@@ -548,12 +548,12 @@ extension MyController {
         
         switch msg.type {
     
-        case MSG_CONFIG:
+        case .MSG_CONFIG:
 
             inspector?.fullRefresh()
             refreshStatusBar()
             
-        case MSG_POWER_ON:
+        case .MSG_POWER_ON:
             
             virtualKeyboard = nil
             renderer.blendIn()
@@ -561,77 +561,77 @@ extension MyController {
             toolbar.validateVisibleItems()
             inspector?.fullRefresh()
 
-        case MSG_POWER_OFF:
+        case .MSG_POWER_OFF:
             
             renderer.blendOut()
             // renderer.zoomOut(steps: 20)
             toolbar.validateVisibleItems()
             inspector?.fullRefresh()
             
-        case MSG_RUN:
+        case .MSG_RUN:
             
             needsSaving = true
             toolbar.validateVisibleItems()
             inspector?.fullRefresh()
             refreshStatusBar()
     
-        case MSG_PAUSE:
+        case .MSG_PAUSE:
             
             toolbar.validateVisibleItems()
             inspector?.fullRefresh()
             refreshStatusBar()
 
-        case MSG_RESET:
+        case .MSG_RESET:
 
             mydocument.deleteBootDiskID()
             mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
             inspector?.fullRefresh()
 
-        case MSG_BASIC_ROM_LOADED,
-             MSG_CHAR_ROM_LOADED,
-             MSG_KERNAL_ROM_LOADED,
-             MSG_DRIVE_ROM_LOADED:
+        case .MSG_BASIC_ROM_LOADED,
+             .MSG_CHAR_ROM_LOADED,
+             .MSG_KERNAL_ROM_LOADED,
+             .MSG_DRIVE_ROM_LOADED:
             
             break
             
-        case MSG_ROM_MISSING:
+        case .MSG_ROM_MISSING:
             
             // openConfigurator()
             break
                 
-        case MSG_CPU_OK:
+        case .MSG_CPU_OK:
             
             break
             
-        case MSG_BREAKPOINT_REACHED,
-             MSG_WATCHPOINT_REACHED:
+        case .MSG_BREAKPOINT_REACHED,
+             .MSG_WATCHPOINT_REACHED:
             
             track("MSG_BREAKPOINT_REACHED MSG_WATCHPOINT_REACHED")
             inspector?.fullRefresh()
             inspector?.scrollToPC()
             
-        case MSG_CPU_JAMMED:
+        case .MSG_CPU_JAMMED:
             
             refreshStatusBar()
             
-        case MSG_WARP_ON,
-             MSG_WARP_OFF:
+        case .MSG_WARP_ON,
+             .MSG_WARP_OFF:
             
             refreshStatusBarWarpIcon()
 
-        case MSG_PAL,
-             MSG_NTSC:
+        case .MSG_PAL,
+             .MSG_NTSC:
             
             renderer.updateTextureRect()
     
-        case MSG_DRIVE_HEAD:
+        case .MSG_DRIVE_HEAD:
             
             if pref.driveSounds && pref.driveHeadSound {
                 playSound(name: "1541_track_change_2", volume: 1.0)
             }
             refreshStatusBarTracks(drive: DriveID(msg.data))
                         
-        case MSG_DISK_INSERTED:
+        case .MSG_DISK_INSERTED:
             
             if pref.driveSounds && pref.driveInsertSound {
                 playSound(name: "1541_door_closed_2", volume: 0.2)
@@ -640,7 +640,7 @@ extension MyController {
             refreshStatusBarDiskIcons(drive: DriveID(msg.data))
             inspector?.fullRefresh()
 
-        case MSG_DISK_EJECTED:
+        case .MSG_DISK_EJECTED:
             
             if pref.driveSounds && pref.driveEjectSound {
                 playSound(name: "1541_door_open_1", volume: 0.15)
@@ -648,36 +648,36 @@ extension MyController {
             refreshStatusBarDiskIcons(drive: DriveID(msg.data))
             inspector?.fullRefresh()
 
-        case MSG_FILE_FLASHED:
+        case .MSG_FILE_FLASHED:
             mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
             
-        case MSG_DISK_PROTECT,
-             MSG_DISK_SAVED,
-             MSG_DISK_UNSAVED,
-             MSG_DRIVE_LED_ON,
-             MSG_DRIVE_LED_OFF:
+        case .MSG_DISK_PROTECT,
+             .MSG_DISK_SAVED,
+             .MSG_DISK_UNSAVED,
+             .MSG_DRIVE_LED_ON,
+             .MSG_DRIVE_LED_OFF:
             
             refreshStatusBar()
     
-        case MSG_IEC_BUS_BUSY,
-             MSG_IEC_BUS_IDLE:
+        case .MSG_IEC_BUS_BUSY,
+             .MSG_IEC_BUS_IDLE:
             
             updateWarp()
             refreshStatusBarDriveActivity()
 
-        case MSG_DRIVE_MOTOR_ON,
-             MSG_DRIVE_MOTOR_OFF:
+        case .MSG_DRIVE_MOTOR_ON,
+             .MSG_DRIVE_MOTOR_OFF:
 
             refreshStatusBarDriveActivity()
             
-        case MSG_DRIVE_CONNECT,
-             MSG_DRIVE_DISCONNECT,
-             MSG_DRIVE_POWER_ON,
-             MSG_DRIVE_POWER_OFF:
+        case .MSG_DRIVE_CONNECT,
+             .MSG_DRIVE_DISCONNECT,
+             .MSG_DRIVE_POWER_ON,
+             .MSG_DRIVE_POWER_OFF:
             
             refreshStatusBar()
                         
-        case MSG_DRIVE_ACTIVE:
+        case .MSG_DRIVE_ACTIVE:
             
             if pref.driveSounds && pref.driveConnectSound {
                 playSound(name: "1541_power_on_0", volume: 0.15)
@@ -685,7 +685,7 @@ extension MyController {
             myAppDelegate.hideOrShowDriveMenus(proxy: c64)
             refreshStatusBar()
             
-        case MSG_DRIVE_INACTIVE:
+        case .MSG_DRIVE_INACTIVE:
             
             if pref.driveSounds && pref.driveConnectSound {
                 // playSound(name: "drive_click", volume: 1.0)
@@ -693,47 +693,47 @@ extension MyController {
             myAppDelegate.hideOrShowDriveMenus(proxy: c64)
             refreshStatusBar()
 
-        case MSG_VC1530_TAPE:
+        case .MSG_VC1530_TAPE:
             
             mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
             refreshStatusBar()
 
-        case MSG_VC1530_NO_TAPE,
-             MSG_VC1530_PROGRESS:
+        case .MSG_VC1530_NO_TAPE,
+             .MSG_VC1530_PROGRESS:
             
             refreshStatusBar()
 
-        case MSG_CARTRIDGE:
+        case .MSG_CARTRIDGE:
 
             mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
             refreshStatusBar()
 
-        case MSG_NO_CARTRIDGE:
+        case .MSG_NO_CARTRIDGE:
             
             refreshStatusBar()
             
-        case MSG_CART_SWITCH:
+        case .MSG_CART_SWITCH:
             
             refreshStatusBarCartridgeIcons()
             
-        case MSG_KB_AUTO_RELEASE:
+        case .MSG_KB_AUTO_RELEASE:
             
             if virtualKeyboard?.window?.isVisible == true {
                 virtualKeyboard!.refresh()
             }
             
-        case MSG_AUTO_SNAPSHOT_TAKEN:
+        case .MSG_AUTO_SNAPSHOT_TAKEN:
             
             track("MSG_AUTO_SNAPSHOT_TAKEN")
             mydocument.snapshots.append(c64.latestAutoSnapshot)
 
-        case MSG_USER_SNAPSHOT_TAKEN:
+        case .MSG_USER_SNAPSHOT_TAKEN:
             
             track("MSG_USER_SNAPSHOT_TAKEN")
             mydocument.snapshots.append(c64.latestUserSnapshot)
             renderer.blendIn(steps: 20)
             
-        case MSG_SNAPSHOT_RESTORED:
+        case .MSG_SNAPSHOT_RESTORED:
             
             track("MSG_SNAPSHOT_RESTORED")
             renderer.blendIn(steps: 20)

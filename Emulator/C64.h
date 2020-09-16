@@ -375,7 +375,7 @@ public:
 public:
     
     // Registers a listener callback function
-    void addListener(const void *sender, void(*func)(const void *, int, long) ) {
+    void addListener(const void *sender, void(*func)(const void *, long, long) ) {
         messageQueue.addListener(sender, func);
     }
     
