@@ -13,108 +13,11 @@ VirtualC64 is open source and released under the GNU General Public License.
 Dirk Hoffmann, 2018
 www.dirkwhoffmann.de/virtualC64
 
-## Source code organization
+## Third-party gamepad support
 
-### Top-level directory structure
+At present, the emulator supports only a limited number of third-party game controllers. However, I am trying to expand the list of supported devices constantly. Since I can only make the necessary code changes for devices in my possession, I have created an [Amazon wish list](https://www.amazon.de/hz/wishlist/ls/35K6X4B0FIEOF?ref_=wl_share) containing a number of yet incompatible devices. If you want to have another controller supported, please let me know the exact model name. I will then add it to the wishlist, and with a bit of luck, a noble donor will be found who will order the device. 
 
-C64 : Contains the core emulator, written in C++. The code is meant to be architecture independent. 
-OSX : Contains everything related to the graphical user interface for macOS
+## Where to go from here?
 
-### Overall architecture
-
-VirtualC64 consists of three major components:
-
-1. The graphical user interface (written in Swift)
-2. The proxy (written in Objective-C)
-3. The core emulator (written in C++)
-
-The GUI talks to VirtualC64 by calling proxy methods. VirtualC64 talks back via
-a message queue that triggers a callback function whenever a message is written into the queue. 
-
-    ------------------------------------------------------------------
-    | callback()                                        putMessage() |
-    v                                                                |
-    ----------------------          ----------------------          ----------------------
-    |                    |  func()  |      C64Proxy      |  func()  |                    |
-    |        GUI         |--------->| Swift / C++ bridge |--------->|        C64         |
-    |      (Swift)       |          |   (Objective-C)    |          |       (C++)        |
-    ----------------------          ----------------------          ----------------------
-
-
-### Initialization procedure
-
-To get VirtualC64 up and running, you need to perform the following steps:
-
-1. Create a C64 object
-c64 = new C64()
-
-2. Register a listener callback
-c64->setListener(...)
-
-3. Load Roms
-c64->loadRom(...)
-
-4. Configure
-c64->set...() etc.
-
-5. Start the execution thread
-c64->run()
-
-
-loadRom() is an important function because it not only installs the necessary ROMs to run the emulator, but also triggers an important side-effect. Once the last ROM has been installed, the function writes the READ_TO_RUN message to the message queue. The GUI reacts to this message by calling run(). This function starts the execution thread and brings the emulator to life. 
-
- 
-### Message queue
-
-To communicate with the GUI, the emulator writes messages into a message queue. At launch, the GUI will register a callback function that is invoked whenever a new message is written into the queue. In the current implementation, a Swift closure is registered that processes all incoming messages. 
-
-If you use the core emulator in a different environment and do not want register a callback, you can periodically query the queue with code similar to the following Objective-C example code: 
-
-    while ((message = [c64 message]) != NULL) {
-        switch (message->id) {
-            
-            case MSG_READY_TO_RUN:
-                [c64 run];
-                
-                ...
-        }
-    }
-
-You can register the listener any time, even to a running emulator. At the time the listener is registered, all pending messages are automatically sent to the registered callback. 
-
-### The execution thread
-
-The execution thread is organized as an infinite loop. In each iteration, control is
-passed to the VIC, CIAs, CPU, VIAs, and the disk drive. The VIC chip draws the screen
-contents into a simple byte array, the so called screen buffer. The asynchronously
-running GUI copies the screen buffer contents onto a GPU texture which is then rendered
-by the GPU.
-
-The following methods control the execution thread:
-
-
-run: Runs the emulation thread
- 
-The GUI invokes this method, e.g., when the user lauches the
-emulator the first time or hits the continue button.
-
-halt: Pauses the emulation thread
- 
-The GUI invokes this method, e.g., when the user hits the pause button.
-VirtualC64 itself calls this method when, e.g., a breakpoint is reached.
-
-suspend / result: Temporarily pauses the emulation thread
- 
-If multiple operations need to be executed atomically (such as
-taking an emulator snapshot), the operations are embedded inside a
-suspend() / resume() block. Both methods use halt() and run() internally.
-
-powerUp:
- 
-This method restarts the emulation on a freshly initialized computer.
-It has the same effect as switching a real C64 off and on again. Note that a
- few items are retained during a reset, e.g., an attached cartridge.
-
-
-
-
+- [VirtualC64 Homepage](http://www.dirkwhoffmann.de/software/virtualc64.html)
+- [vAmiga](https://github.com/dirkwhoffmann/vAmiga)
