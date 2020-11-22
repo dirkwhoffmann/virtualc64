@@ -42,18 +42,18 @@ extension PreferencesController {
         }
         
         // First joystick keyset
-        refreshKey(map: 0, dir: PULL_UP, button: devUp1button, txt: devUp1)
-        refreshKey(map: 0, dir: PULL_DOWN, button: devDown1button, txt: devDown1)
-        refreshKey(map: 0, dir: PULL_LEFT, button: devLeft1button, txt: devLeft1)
-        refreshKey(map: 0, dir: PULL_RIGHT, button: devRight1button, txt: devRight1)
-        refreshKey(map: 0, dir: PRESS_FIRE, button: devFire1button, txt: devFire1)
+        refreshKey(map: 0, dir: .PULL_UP, button: devUp1button, txt: devUp1)
+        refreshKey(map: 0, dir: .PULL_DOWN, button: devDown1button, txt: devDown1)
+        refreshKey(map: 0, dir: .PULL_LEFT, button: devLeft1button, txt: devLeft1)
+        refreshKey(map: 0, dir: .PULL_RIGHT, button: devRight1button, txt: devRight1)
+        refreshKey(map: 0, dir: .PRESS_FIRE, button: devFire1button, txt: devFire1)
         
         // Second joystick keyset
-        refreshKey(map: 1, dir: PULL_UP, button: devUp2button, txt: devUp2)
-        refreshKey(map: 1, dir: PULL_DOWN, button: devDown2button, txt: devDown2)
-        refreshKey(map: 1, dir: PULL_LEFT, button: devLeft2button, txt: devLeft2)
-        refreshKey(map: 1, dir: PULL_RIGHT, button: devRight2button, txt: devRight2)
-        refreshKey(map: 1, dir: PRESS_FIRE, button: devFire2button, txt: devFire2)
+        refreshKey(map: 1, dir: .PULL_UP, button: devUp2button, txt: devUp2)
+        refreshKey(map: 1, dir: .PULL_DOWN, button: devDown2button, txt: devDown2)
+        refreshKey(map: 1, dir: .PULL_LEFT, button: devLeft2button, txt: devLeft2)
+        refreshKey(map: 1, dir: .PULL_RIGHT, button: devRight2button, txt: devRight2)
+        refreshKey(map: 1, dir: .PRESS_FIRE, button: devFire2button, txt: devFire2)
         
         devDisconnectKeys.state = pref.disconnectJoyKeys ? .on : .off
         
@@ -83,8 +83,8 @@ extension PreferencesController {
     func gamePadAction(for tag: Int) -> (Int, GamePadAction) {
         
         switch tag {
-        case 0...4:   return (1, GamePadAction(UInt32(tag)))      // Joy 1
-        case 10...14: return (2, GamePadAction(UInt32(tag - 10))) // Joy 2
+        case 0...4:   return (1, GamePadAction(rawValue: tag)!)      // Joy 1
+        case 10...14: return (2, GamePadAction(rawValue: tag - 10)!) // Joy 2
         default:      fatalError()
         }
     }
