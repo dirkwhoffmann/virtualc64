@@ -654,7 +654,8 @@ C64::_pause()
 }
 
 void
-C64::_dump() {
+C64::_dump()
+{
     msg("C64:\n");
     msg("----\n\n");
     msg("              Machine type : %s\n", vic.isPAL() ? "PAL" : "NTSC");

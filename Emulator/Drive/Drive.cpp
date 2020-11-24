@@ -403,7 +403,7 @@ Drive::insertDisk(AnyArchive *archive)
 {
     assert(archive != NULL);
 
-    debug(DRV_DEBUG, "insertDisk(archive %p)\n", archive);
+    debug(DSKCHG_DEBUG, "insertDisk(archive %p)\n", archive);
     insertDisk(Disk::makeWithArchive(c64, archive));
 }
 

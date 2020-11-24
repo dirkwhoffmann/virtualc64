@@ -125,7 +125,7 @@ HardwareComponent::save(u8 *buffer)
     ptr += didSaveToBuffer(ptr);
 
     // Verify that the number of written bytes matches the snapshot size
-    debug("Saved %d bytes (expected %d)\n", ptr - buffer, size());
+    debug(SNP_DEBUG, "Saved %d bytes (expected %d)\n", ptr - buffer, size());
     assert(ptr - buffer == size());
 
     return ptr - buffer;
