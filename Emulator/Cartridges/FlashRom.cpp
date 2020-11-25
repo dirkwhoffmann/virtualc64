@@ -38,13 +38,13 @@ FlashRom::FlashRom(C64 &ref) : C64Component(ref)
     state = FLASH_READ;
     baseState = FLASH_READ;
     
-    // rom = new u8[romSize];
+    rom = new u8[romSize];
     memset(rom, 0xFF, romSize);
 }
 
 FlashRom::~FlashRom()
 {
-    // delete [] rom;
+    delete [] rom;
 }
 
 void
@@ -78,7 +78,6 @@ FlashRom::_dump()
     msg("       rom: %p\n\n", rom);
 }
 
-/*
 size_t
 FlashRom::didLoadFromBuffer(u8 *buffer)
 {
@@ -96,7 +95,6 @@ FlashRom::didSaveToBuffer(u8 *buffer)
 
     return romSize;
 }
-*/
 
 u8
 FlashRom::peek(u32 addr)

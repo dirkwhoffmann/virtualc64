@@ -38,8 +38,7 @@ class FlashRom : public C64Component {
     FlashRomState baseState;
     
     // Flash Rom data
-    // u8 *rom = nullptr;
-    u8 rom[romSize];
+    u8 *rom = nullptr;
     
     
     //
@@ -95,8 +94,7 @@ private:
         worker
         
         & state
-        & baseState
-        & rom;
+        & baseState;
     }
     
     template <class T>
@@ -104,15 +102,12 @@ private:
     {
     }
     
-    // size_t __size() { COMPUTE_SNAPSHOT_SIZE }
-    // size_t _size() override { return __size() + romSize; }
-    
-    size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
-    size_t _load(u8 *buffer) override { printf("_load\n"); LOAD_SNAPSHOT_ITEMS }
-    size_t _save(u8 *buffer) override { printf("_save\n"); SAVE_SNAPSHOT_ITEMS }
-    
-    // size_t didLoadFromBuffer(u8 *buffer) override;
-    // size_t didSaveToBuffer(u8 *buffer) override;
+    size_t __size() { COMPUTE_SNAPSHOT_SIZE }
+    size_t _size() override { return __size() + romSize; }
+    size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
+    size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
+    size_t didLoadFromBuffer(u8 *buffer) override;
+    size_t didSaveToBuffer(u8 *buffer) override;
 
     
     //
