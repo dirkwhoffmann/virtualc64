@@ -38,11 +38,13 @@ FlashRom::FlashRom(C64 &ref) : C64Component(ref)
     state = FLASH_READ;
     baseState = FLASH_READ;
     
-    memset(rom, 0xFF, size);
+    // rom = new u8[romSize];
+    memset(rom, 0xFF, romSize);
 }
 
 FlashRom::~FlashRom()
 {
+    // delete [] rom;
 }
 
 void
@@ -76,10 +78,30 @@ FlashRom::_dump()
     msg("       rom: %p\n\n", rom);
 }
 
+/*
+size_t
+FlashRom::didLoadFromBuffer(u8 *buffer)
+{
+    SerReader reader(buffer);
+    reader.copy(rom, romSize);
+
+    return romSize;
+}
+
+size_t
+FlashRom::didSaveToBuffer(u8 *buffer)
+{
+    SerWriter writer(buffer);
+    writer.copy(rom, romSize);
+
+    return romSize;
+}
+*/
+
 u8
 FlashRom::peek(u32 addr)
 {
-    assert(addr < size);
+    assert(addr < romSize);
     
     u8 result;
     
@@ -143,7 +165,7 @@ FlashRom::peek(u32 addr)
 void
 FlashRom::poke(u32 addr, u8 value)
 {
-    assert(addr < size);
+    assert(addr < romSize);
     
     switch (state) {
             
@@ -278,7 +300,7 @@ FlashRom::poke(u32 addr, u8 value)
 bool
 FlashRom::doByteProgram(u32 addr, u8 value)
 {
-    assert(addr < size);
+    assert(addr < romSize);
     
     rom[addr] &= value;
     return rom[addr] == value;
@@ -288,13 +310,13 @@ void
 FlashRom::doChipErase() {
     
     debug(CRT_DEBUG, "Erasing chip ...\n");
-    memset(rom, 0xFF, size);
+    memset(rom, 0xFF, romSize);
 }
 
 void
 FlashRom::doSectorErase(u32 addr)
 {
-    assert(addr < size);
+    assert(addr < romSize);
     
     debug(CRT_DEBUG, "Erasing sector %d ... %d\n", addr >> 4);
     memset(rom + (addr & 0x0000), 0xFF, sectorSize);

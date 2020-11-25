@@ -80,13 +80,12 @@ private:
     }
     
     size_t __size() { COMPUTE_SNAPSHOT_SIZE }
-    size_t __load(u8 *buffer) { LOAD_SNAPSHOT_ITEMS }
-    size_t __save(u8 *buffer) { SAVE_SNAPSHOT_ITEMS }
-    
     size_t _size() override { return Cartridge::_size() + __size(); }
-    size_t _load(u8 *buf) override { return Cartridge::_load(buf) + __load(buf); }
-    size_t _save(u8 *buf) override { return Cartridge::_save(buf) + __save(buf); }
-    
+    size_t _load(u8 *buffer) override { return Cartridge::_load(buffer); }
+    size_t _save(u8 *buffer) override { return Cartridge::_save(buffer); }
+    size_t didLoadFromBuffer(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
+    size_t didSaveToBuffer(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
+
     
     //
     // Handling ROM packets
