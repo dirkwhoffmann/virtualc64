@@ -66,11 +66,11 @@ Drive::setConfigItem(ConfigOption option, long value)
             u64 duration = 10000000000 / VICII::getFrequency((VICRevision)value);
             debug("Setting duration to %lld\n", duration);
             
-            if (durationOfOneCpuCycle ==  duration) {
+            if (durationOfOneCpuCycle == duration) {
                 return false;
             }
             
-            durationOfOneCpuCycle =  duration;
+            durationOfOneCpuCycle = duration;
             return true;
         }
         default:
@@ -153,6 +153,13 @@ Drive::_dump()
 	msg("\n");
     mem.dump();
     startTracing();
+}
+
+void
+Drive::_run()
+{
+    // Make sure the emulator has been configured properly
+    assert(durationOfOneCpuCycle > 0);
 }
 
 void

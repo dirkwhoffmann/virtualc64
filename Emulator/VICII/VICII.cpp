@@ -518,6 +518,11 @@ VICII::getSpriteInfo(int nr)
     return result;
 }
 
+void
+VICII::_run()
+{
+}
+
 bool
 VICII::isPAL(VICRevision revision)
 {
