@@ -46,7 +46,7 @@ EasyFlash::_reset()
 void
 EasyFlash::_dump()
 {
-    Cartridge::dump();
+    Cartridge::_dump();
     
     msg("EasyFlash\n");
     msg("---------\n\n");
