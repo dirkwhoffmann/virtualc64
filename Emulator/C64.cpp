@@ -72,7 +72,8 @@ C64::C64()
         &drive8,
         &drive9,
         &datasette,
-        &mouse
+        &mouse,
+        &oscillator
     };
     
     // Set up the initial state
@@ -675,11 +676,14 @@ C64::_setWarp(bool enable)
 {
     if (enable) {
         
+        debug("Warp on\n");
         putMessage(MSG_WARP_ON);
         
     } else {
-        
-        restartTimer();
+
+        debug("Warp off\n");
+        oscillator.restart();
+        // restartTimer();
         putMessage(MSG_WARP_OFF);
     }
 }
@@ -799,7 +803,8 @@ C64::runLoop()
     debug(RUN_DEBUG, "runLoop()\n");
     
     // Prepare to run
-    restartTimer();
+    oscillator.restart();
+    // restartTimer();
     
     // Enter the loop
     while (1) {
@@ -1038,9 +1043,12 @@ C64::endFrame()
     if (stopFlag) { stopFlag = false; signalStop(); }
     
     // Count some sheep (zzzzzz) ...
+    oscillator.synchronize();
+    /*
     if (!inWarpMode()) {
         synchronizeTiming();
     }
+    */
 }
 
 void
@@ -1055,6 +1063,7 @@ C64::clearControlFlags(u32 flags)
     synchronized { runLoopCtrl &= ~flags; }
 }
 
+/*
 void
 C64::restartTimer()
 {
@@ -1063,18 +1072,20 @@ C64::restartTimer()
     
     nanoTargetTime = nanoNow + vic.getFrameDelay();
 }
+*/
 
+/*
 void
 C64::synchronizeTiming()
 {
-    const u64 earlyWakeup = 1500000; /* 1.5 milliseconds */
+    const u64 earlyWakeup = 1500000;
     
     // Get current time in nano seconds
     u64 nanoAbsTime = abs_to_nanos(mach_absolute_time());
     
     // Check how long we're supposed to sleep
     i64 timediff = (i64)nanoTargetTime - (i64)nanoAbsTime;
-    if (timediff > 200000000 || timediff < -200000000 /* 0.2 sec */) {
+    if (timediff > 200000000 || timediff < -200000000) {
         
         // The emulator seems to be out of sync, so we better reset the
         // synchronization timer
@@ -1090,7 +1101,7 @@ C64::synchronizeTiming()
     i64 jitter = sleepUntil(kernelTargetTime, earlyWakeup);
     nanoTargetTime += vic.getFrameDelay();
     
-    if (jitter > 1000000000 /* 1 sec */) {
+    if (jitter > 1000000000) {
         
         // The emulator did not keep up with the real time clock. Instead of
         // running behind for a long time, we reset the synchronization timer
@@ -1099,6 +1110,7 @@ C64::synchronizeTiming()
         restartTimer();
     }
 }
+*/
 
 void
 C64::requestAutoSnapshot()

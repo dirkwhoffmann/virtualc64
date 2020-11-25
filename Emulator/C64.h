@@ -46,6 +46,7 @@
 #include "TOD.h"
 #include "CIA.h"
 #include "CPU.h"
+#include "Oscillator.h"
 
 // Cartridges
 #include "Cartridge.h"
@@ -76,21 +77,16 @@ class C64 : public HardwareComponent {
     
 public:
     
-    // Memory (ROM, RAM and color RAM)
+    // Core components
     C64Memory mem = C64Memory(*this);
-    
-    // CPU
     C64CPU cpu = C64CPU(*this, mem);
-        
-    // Video Interface Controller
     VICII vic = VICII(*this);
-    
-    // Complex Interface Adapters
     CIA1 cia1 = CIA1(*this);
     CIA2 cia2 = CIA2(*this);
-    
-    // Sound Interface Device
     SIDBridge sid = SIDBridge(*this);
+
+    // Logic board
+    Oscillator oscillator = Oscillator(*this);
     
     // Keyboard
     Keyboard keyboard = Keyboard(*this);
@@ -513,20 +509,20 @@ private:
      * time to initialize the timer and reinvoked when the synchronization
      * timer gets out of sync.
      */
-    void restartTimer();
+    // void restartTimer();
     
     // Converts kernel time to nanoseconds
-    u64 abs_to_nanos(u64 abs) { return abs * timebase.numer / timebase.denom; }
+    // u64 abs_to_nanos(u64 abs) { return abs * timebase.numer / timebase.denom; }
     
     // Converts nanoseconds to kernel time
-    u64 nanos_to_abs(u64 nanos) { return nanos * timebase.denom / timebase.numer; }
+    // u64 nanos_to_abs(u64 nanos) { return nanos * timebase.denom / timebase.numer; }
  
     /* Puts the emulation the thread to sleep. This function is called inside
      * endFrame(). It makes the emulation thread wait until nanoTargetTime has
      * been reached. Before returning, nanoTargetTime is assigned with a new
      * target value.
      */
-    void synchronizeTiming();
+    // void synchronizeTiming();
     
     
     //

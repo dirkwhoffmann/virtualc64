@@ -535,3 +535,9 @@ SIDBridge::handleBufferOverflow()
     // Reset the write pointer
     alignWritePtr();
 }
+
+void
+SIDBridge::ignoreNextUnderOrOverflow()
+{
+    lastAlignment = mach_absolute_time();
+}

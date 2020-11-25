@@ -229,7 +229,7 @@ void
 HardwareComponent::setWarp(bool enable)
 {
     if (warpMode == enable) return;
-    
+        
     warpMode = enable;
 
      // Enable or disable warp mode for all subcomponents

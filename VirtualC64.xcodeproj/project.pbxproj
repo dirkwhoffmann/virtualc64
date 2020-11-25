@@ -169,6 +169,7 @@
 		50A519411B8DA230006771E2 /* drive_click.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519401B8DA230006771E2 /* drive_click.aiff */; };
 		50A519431B8DA360006771E2 /* drive_snatch_uae.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */; };
 		50A9A088250DE90900723D32 /* PageFox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A9A086250DE90900723D32 /* PageFox.cpp */; };
+		50ACF4DB256EB43B003B5690 /* Oscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACF4D9256EB43B003B5690 /* Oscillator.cpp */; };
 		50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1644B202DD52500447D3E /* ExportDiskController.swift */; };
 		50B1644E202DDAA600447D3E /* ExportDiskDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */; };
 		50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */; };
@@ -526,6 +527,8 @@
 		50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = drive_snatch_uae.aiff; sourceTree = "<group>"; };
 		50A9A086250DE90900723D32 /* PageFox.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PageFox.cpp; sourceTree = "<group>"; };
 		50A9A087250DE90900723D32 /* PageFox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageFox.h; sourceTree = "<group>"; };
+		50ACF4D9256EB43B003B5690 /* Oscillator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Oscillator.cpp; sourceTree = "<group>"; };
+		50ACF4DA256EB43B003B5690 /* Oscillator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Oscillator.h; sourceTree = "<group>"; };
 		50B1644B202DD52500447D3E /* ExportDiskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportDiskController.swift; sourceTree = "<group>"; };
 		50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportDiskDialog.xib; sourceTree = "<group>"; };
 		50B171051EE6AB840019E8D4 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -784,6 +787,7 @@
 				504C42F624AF29AB00E69CAE /* C64.h */,
 				504C42F724AF29AB00E69CAE /* C64.cpp */,
 				50A2D7AF24AF945200671F38 /* Foundation */,
+				50ACF4DC256EB451003B5690 /* LogicBoard */,
 				504C42E524AF29AB00E69CAE /* CPU */,
 				504C435224AF29AC00E69CAE /* CIA */,
 				504C430424AF29AB00E69CAE /* VICII */,
@@ -1195,6 +1199,15 @@
 			path = Foundation;
 			sourceTree = "<group>";
 		};
+		50ACF4DC256EB451003B5690 /* LogicBoard */ = {
+			isa = PBXGroup;
+			children = (
+				50ACF4DA256EB43B003B5690 /* Oscillator.h */,
+				50ACF4D9256EB43B003B5690 /* Oscillator.cpp */,
+			);
+			path = LogicBoard;
+			sourceTree = "<group>";
+		};
 		50B4B6071EEFE77400D56499 /* TouchBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -1529,6 +1542,7 @@
 				50B485FD24FA1D3200844133 /* iCarousel.m in Sources */,
 				50BE4B7024E7FC21008F39C9 /* MTLDevice.swift in Sources */,
 				504C439F24AF29AC00E69CAE /* FastSID.cpp in Sources */,
+				50ACF4DB256EB43B003B5690 /* Oscillator.cpp in Sources */,
 				504C43A624AF29AC00E69CAE /* Disk.cpp in Sources */,
 				504C43A224AF29AC00E69CAE /* ControlPort.cpp in Sources */,
 				50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */,
