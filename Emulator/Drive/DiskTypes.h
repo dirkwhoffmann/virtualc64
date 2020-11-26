@@ -36,7 +36,7 @@
 // Enumerations
 //
 
-typedef VA_ENUM(long, CBMFileType)
+longenum(CBMFileType)
 {
     CBM_PRG,
     CBM_SEQ,

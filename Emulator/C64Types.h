@@ -86,7 +86,7 @@ ConfigOption;
 
 inline bool isConfigOption(long value)
 {
-    return value >= OPT_VIC_REVISION && value <= OPT_SID_REVISION;
+    return value >= OPT_VIC_REVISION && value <= OPT_DEBUGCART;
 }
 
 typedef enum : long

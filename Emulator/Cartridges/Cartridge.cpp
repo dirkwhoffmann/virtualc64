@@ -112,7 +112,7 @@ Cartridge::makeWithType(C64 &c64, CartridgeType type)
         
         default:
         assert(false); // Should not reach
-        return NULL;
+        return nullptr;
     }
 }
 
@@ -122,7 +122,7 @@ Cartridge::makeWithCRTFile(C64 &c64, CRTFile *file)
     Cartridge *cart;
     
     cart = makeWithType(c64, file->cartridgeType());
-    assert(cart != NULL);
+    assert(cart != nullptr);
     
     // Remember powerup values for game line and exrom line
     cart->gameLineInCrtFile = file->initialGameLine();
@@ -162,15 +162,15 @@ void
 Cartridge::dealloc()
 {
     for (unsigned i = 0; i < numPackets; i++) {
-        assert(packet[i] != NULL);
+        assert(packet[i] != nullptr);
         delete packet[i];
-        packet[i] = NULL;
+        packet[i] = nullptr;
     }
     
     if (externalRam) {
         assert(ramCapacity > 0);
         delete [] externalRam;
-        externalRam = NULL;
+        externalRam = nullptr;
     }
 
     numPackets = 0;
@@ -232,7 +232,7 @@ Cartridge::_size()
     // Determine size of all packets
     size_t packetSize = 0;
     for (unsigned i = 0; i < numPackets; i++) {
-        assert(packet[i] != NULL);
+        assert(packet[i] != nullptr);
         packetSize += packet[i]->_size();
     }
     
@@ -244,22 +244,26 @@ Cartridge::_load(u8 *buffer)
 {
     dealloc();
     
+    printf("Cartridge::_load = %d\n", numPackets);
+
     SerReader reader(buffer);
     applyToPersistentItems(reader);
     applyToResetItems(reader);
     
+    printf("Cartridge::_load2 = %d\n", numPackets);
+    
     // Load ROM packets
     for (unsigned i = 0; i < numPackets; i++) {
-        assert(packet[i] == NULL);
+        assert(packet[i] == nullptr);
         packet[i] = new CartridgeRom(c64);
         reader.ptr += packet[i]->_load(reader.ptr);
     }
 
     // Load on-board RAM
     if (ramCapacity) {
-        assert(externalRam == NULL);
+        assert(externalRam == nullptr);
         externalRam = new u8[ramCapacity];
-        for (int i = 0; i < ramCapacity; i++) externalRam[i] = read8(reader.ptr);
+        for (unsigned i = 0; i < ramCapacity; i++) externalRam[i] = read8(reader.ptr);
     }
 
     debug(SNP_DEBUG, "Recreated from %d bytes\n", reader.ptr - buffer);
@@ -269,20 +273,24 @@ Cartridge::_load(u8 *buffer)
 size_t
 Cartridge::_save(u8 *buffer)
 {
+    printf("Cartridge::_save = %d\n", numPackets);
+
     SerWriter writer(buffer);
     applyToPersistentItems(writer);
     applyToResetItems(writer);
     
+    printf("Cartridge::_save2 = %d\n", numPackets);
+
     // Save ROM packets
     for (unsigned i = 0; i < numPackets; i++) {
-        assert(packet[i] != NULL);
+        assert(packet[i] != nullptr);
         writer.ptr += packet[i]->_save(writer.ptr);
     }
     
     // Save on-board RAM
     if (ramCapacity) {
-        assert(externalRam != NULL);
-        for (int i = 0; i < ramCapacity; i++) write8(writer.ptr, externalRam[i]);
+        assert(externalRam != nullptr);
+        for (unsigned i = 0; i < ramCapacity; i++) write8(writer.ptr, externalRam[i]);
     }
     
     debug(SNP_DEBUG, "Serialized %d bytes\n", writer.ptr - buffer);
@@ -346,9 +354,9 @@ u32
 Cartridge::getRamCapacity()
 {
     if (ramCapacity == 0) {
-        assert(externalRam == NULL);
+        assert(externalRam == nullptr);
     } else {
-        assert(externalRam != NULL);
+        assert(externalRam != nullptr);
     }
     return ramCapacity;
 }
@@ -360,7 +368,7 @@ Cartridge::setRamCapacity(u32 size)
     if (getRamCapacity() > 0) {
         delete [] externalRam;
         ramCapacity = 0;
-        externalRam = NULL;
+        externalRam = nullptr;
     }
     
     // Allocate
@@ -388,7 +396,7 @@ Cartridge::pokeRAM(u16 addr, u8 value)
 void
 Cartridge::eraseRAM(u8 value)
 {
-    assert(externalRam != NULL);
+    assert(externalRam != nullptr);
     memset(externalRam, value, ramCapacity);
 }
 
@@ -396,7 +404,7 @@ void
 Cartridge::loadChip(unsigned nr, CRTFile *c)
 {
     assert(nr < MAX_PACKETS);
-    assert(c != NULL);
+    assert(c != nullptr);
     
     u16 size = c->chipSize(nr);
     u16 start = c->chipAddr(nr);
@@ -462,7 +470,7 @@ Cartridge::bankIn(unsigned nr)
 {
     assert(nr < MAX_PACKETS);
     
-    if (packet[nr] == NULL)
+    if (packet[nr] == nullptr)
         return;
 
     assert(packet[nr]->size <= 0x4000);

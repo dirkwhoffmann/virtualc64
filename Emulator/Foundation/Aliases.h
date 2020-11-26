@@ -10,20 +10,28 @@
 #ifndef _ALIASES_H
 #define _ALIASES_H
 
-#include <stdint.h>
 
 //
 // Basic types
 //
 
-typedef int8_t   i8;
-typedef int16_t  i16;
-typedef int32_t  i32;
-typedef int64_t  i64;
-typedef uint8_t  u8;
-typedef uint16_t u16;
-typedef uint32_t u32;
-typedef uint64_t u64;
+typedef char               i8;
+typedef short              i16;
+typedef int                i32;
+typedef long long          i64;
+typedef unsigned char      u8;
+typedef unsigned short     u16;
+typedef unsigned int       u32;
+typedef unsigned long long u64;
+
+static_assert(sizeof(i8) == 1,  "i8 size mismatch");
+static_assert(sizeof(i16) == 2, "i16 size mismatch");
+static_assert(sizeof(i32) == 4, "i32 size mismatch");
+static_assert(sizeof(i64) == 8, "i64 size mismatch");
+static_assert(sizeof(u8) == 1,  "u8 size mismatch");
+static_assert(sizeof(u16) == 2, "u16 size mismatch");
+static_assert(sizeof(u32) == 4, "u32 size mismatch");
+static_assert(sizeof(u64) == 8, "u64 size mismatch");
 
 
 //
@@ -34,12 +42,29 @@ typedef i64 Cycle;
 
 
 //
-// Replacement for the VA_ENUM macro which is only available on macOS
+// Enumeration types
 //
 
-#define VA_ENUM(_type, _name) \
-enum __attribute__((enum_extensibility(open))) _name : _type _name; \
-enum _name : _type
+/* All enumeration types are declared via a special 'longenum' macro to make
+ * them easily accessible in Swift.
+ */
 
+// Definition for wasm (long = 32 Bit)
+#if defined(__EMSCRIPTEN__)
+#define longenum(_name) \
+typedef enum __attribute__((enum_extensibility(open))) _name : long long _name; \
+enum _name : long long
+
+// Definition for clang (long = 64 Bit)
+#elif defined(__clang__)
+#define longenum(_name) \
+typedef enum __attribute__((enum_extensibility(open))) _name : long _name; \
+enum _name : long
+
+// Definition for gcc (long = 64 Bit)
+#else
+#define longenum(_name) \
+enum _name : long
+#endif
 
 #endif

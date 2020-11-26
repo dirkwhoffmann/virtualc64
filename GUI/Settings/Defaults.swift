@@ -303,8 +303,8 @@ extension Keys {
 struct DevicesDefaults {
     
     // Joysticks
-    let joyKeyMap1: [MacKey: UInt32]
-    let joyKeyMap2: [MacKey: UInt32]
+    let joyKeyMap1: [MacKey: Int]
+    let joyKeyMap2: [MacKey: Int]
     let disconnectJoyKeys: Bool
     let autofire: Bool
     let autofireBullets: Int
@@ -318,21 +318,21 @@ struct DevicesDefaults {
     //
     
     static let stdKeyMap1 = [
-         
-         MacKey.init(keyCode: kVK_LeftArrow): PULL_LEFT.rawValue,
-         MacKey.init(keyCode: kVK_RightArrow): PULL_RIGHT.rawValue,
-         MacKey.init(keyCode: kVK_UpArrow): PULL_UP.rawValue,
-         MacKey.init(keyCode: kVK_DownArrow): PULL_DOWN.rawValue,
-         MacKey.init(keyCode: kVK_Space): PRESS_FIRE.rawValue
-     ]
-     static let stdKeyMap2 = [
-         
-         MacKey.init(keyCode: kVK_ANSI_S): PULL_LEFT.rawValue,
-         MacKey.init(keyCode: kVK_ANSI_D): PULL_RIGHT.rawValue,
-         MacKey.init(keyCode: kVK_ANSI_E): PULL_UP.rawValue,
-         MacKey.init(keyCode: kVK_ANSI_X): PULL_DOWN.rawValue,
-         MacKey.init(keyCode: kVK_ANSI_C): PRESS_FIRE.rawValue
-     ]
+        
+        MacKey.init(keyCode: kVK_LeftArrow): GamePadAction.PULL_LEFT.rawValue,
+        MacKey.init(keyCode: kVK_RightArrow): GamePadAction.PULL_RIGHT.rawValue,
+        MacKey.init(keyCode: kVK_UpArrow): GamePadAction.PULL_UP.rawValue,
+        MacKey.init(keyCode: kVK_DownArrow): GamePadAction.PULL_DOWN.rawValue,
+        MacKey.init(keyCode: kVK_Space): GamePadAction.PRESS_FIRE.rawValue
+    ]
+    static let stdKeyMap2 = [
+        
+        MacKey.init(keyCode: kVK_ANSI_S): GamePadAction.PULL_LEFT.rawValue,
+        MacKey.init(keyCode: kVK_ANSI_D): GamePadAction.PULL_RIGHT.rawValue,
+        MacKey.init(keyCode: kVK_ANSI_E): GamePadAction.PULL_UP.rawValue,
+        MacKey.init(keyCode: kVK_ANSI_X): GamePadAction.PULL_DOWN.rawValue,
+        MacKey.init(keyCode: kVK_ANSI_C): GamePadAction.PRESS_FIRE.rawValue
+    ]
     
     static let std = DevicesDefaults.init(
         
@@ -343,7 +343,7 @@ struct DevicesDefaults {
         autofireBullets: -3,
         autofireFrequency: 2.5,
         
-        mouseModel: MOUSE1350
+        mouseModel: .MOUSE1350
     )
 }
 
@@ -651,7 +651,7 @@ struct HardwareDefaults {
         ramPattern:    RAM_PATTERN_C64,
         
         driveConnect:  [true, false],
-        driveType:     [DRIVE_VC1541II, DRIVE_VC1541II],
+        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
         
         gameDevice1:   -1,
         gameDevice2:   -1
@@ -675,7 +675,7 @@ struct HardwareDefaults {
         ramPattern:    RAM_PATTERN_C64C,
         
         driveConnect:  [true, false],
-        driveType:     [DRIVE_VC1541II, DRIVE_VC1541II],
+        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
         
         gameDevice1:   -1,
         gameDevice2:   -1
@@ -699,7 +699,7 @@ struct HardwareDefaults {
         ramPattern:    RAM_PATTERN_C64,
         
         driveConnect:  [true, false],
-        driveType:     [DRIVE_VC1541II, DRIVE_VC1541II],
+        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
         
         gameDevice1:   -1,
         gameDevice2:   -1
@@ -723,7 +723,7 @@ struct HardwareDefaults {
         ramPattern:    RAM_PATTERN_C64,
         
         driveConnect:  [true, false],
-        driveType:     [DRIVE_VC1541II, DRIVE_VC1541II],
+        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
         
         gameDevice1:   -1,
         gameDevice2:   -1
@@ -747,7 +747,7 @@ struct HardwareDefaults {
         ramPattern:    RAM_PATTERN_C64C,
         
         driveConnect:  [true, false],
-        driveType:     [DRIVE_VC1541II, DRIVE_VC1541II],
+        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
         
         gameDevice1:   -1,
         gameDevice2:   -1
@@ -771,7 +771,7 @@ struct HardwareDefaults {
         ramPattern:    RAM_PATTERN_C64,
         
         driveConnect:  [true, false],
-        driveType:     [DRIVE_VC1541II, DRIVE_VC1541II],
+        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
         
         gameDevice1:   -1,
         gameDevice2:   -1

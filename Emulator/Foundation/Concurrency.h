@@ -7,22 +7,35 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-// This file must conform to standard ANSI-C to be compatible with Swift.
 
-#ifndef MOUSE_TYPES_H
-#define MOUSE_TYPES_H
+#ifndef _CONCURRENCY_H
+#define _CONCURRENCY_H
 
-longenum(MouseModel)
+#include <pthread.h>
+
+class Mutex
 {
-    MOUSE1350 = 0,
-    MOUSE1351,
-    NEOSMOUSE
+    pthread_mutex_t mutex;
+
+public:
+    
+    Mutex();
+    ~Mutex();
+    
+    int lock();
+    int unlock();
 };
 
-typedef struct
+class AutoMutex
 {
-    MouseModel model;
-}
-MouseConfig;
+    Mutex &mutex;
+
+public:
+
+    bool active = true;
+
+    AutoMutex(Mutex &ref) : mutex(ref) { mutex.lock(); }
+    ~AutoMutex() { mutex.unlock(); }
+};
 
 #endif

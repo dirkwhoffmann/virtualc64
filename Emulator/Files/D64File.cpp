@@ -128,7 +128,7 @@ D64File::makeWithAnyArchive(AnyArchive *otherArchive)
     
     // Loop over all entries in archive
     int numberOfItems = otherArchive->numberOfItems();
-    for (unsigned i = 0; i < numberOfItems; i++) {
+    for (int i = 0; i < numberOfItems; i++) {
         
         otherArchive->selectItem(i);
         
@@ -277,7 +277,7 @@ void
 D64File::selectItem(unsigned item)
 {
     // Only proceed of item exists
-    if (item >= numberOfItems())
+    if ((long)item >= numberOfItems())
         return;
     
     // Remember the selection
@@ -321,7 +321,7 @@ D64File::getNameOfItem()
     }
     name[i] = 0x00;
     
-    for (int i = 0; i < strlen(name); i++) {
+    for (size_t i = 0; i < strlen(name); i++) {
         name[i] = petscii2printable(name[i], ' ');
     }
     return name;
@@ -530,7 +530,7 @@ D64File::selectHalftrack(Halftrack ht)
     }
     
     // Check if the requested track is stored inside the D64 file
-    if (t > numberOfTracks()) {
+    if ((int)t > numberOfTracks()) {
         tFp = tEof = -1;
         return;
     }
@@ -560,7 +560,7 @@ D64File::seekHalftrack(long offset)
         tFp += offset;
     
     // Invalidate fp if it is out of range.
-    if (tFp >= size)
+    if (tFp >= (long)size)
         tFp = -1;
 }
 
@@ -640,7 +640,7 @@ D64File::nextTrackAndSector(Track track, Sector sector,
     
     // Move to next track if we wrapped over
     if (sector == 0) {
-        if (track < numberOfTracks()) {
+        if ((int)track < numberOfTracks()) {
             track = (track == 17 && skipDirectoryTrack) ? 19 : track + 1;
             sector = 0;
         } else {

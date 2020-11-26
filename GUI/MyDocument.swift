@@ -280,8 +280,8 @@ class MyDocument: NSDocument {
         track("Action = \(action)")
         switch action {
         case .openBrowser: runMountDialog()
-        case .insertIntoDrive8: mountAttachmentAsDisk(drive: DRIVE8)
-        case .insertIntoDrive9: mountAttachmentAsDisk(drive: DRIVE9)
+        case .insertIntoDrive8: mountAttachmentAsDisk(drive: .DRIVE8)
+        case .insertIntoDrive9: mountAttachmentAsDisk(drive: .DRIVE9)
         case .flashFirstFile: flashAttachmentIntoMemory()
         case .insertIntoDatasette: mountAttachmentAsTape()
         case .attachToExpansionPort: mountAttachmentAsCartridge()

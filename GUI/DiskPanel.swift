@@ -68,7 +68,7 @@ extension Inspector {
         
         if selectedDrive == id { return }
         selectedDrive = id
-        drvDriveSel.selectSegment(withTag: id == DRIVE8 ? 0 : 1)
+        drvDriveSel.selectSegment(withTag: id == .DRIVE8 ? 0 : 1)
         
         selectedHalftrack = -1
         selectedSector = -1
@@ -134,7 +134,7 @@ extension Inspector {
 
     @IBAction func drvDriveAction(_ sender: NSSegmentedControl!) {
         
-        setSelectedDrive(sender.selectedSegment == 0 ? DRIVE8 : DRIVE9)
+        setSelectedDrive(sender.selectedSegment == 0 ? .DRIVE8 : .DRIVE9)
     }
 
     @IBAction func drvGcrBytesAction(_ sender: NSSegmentedControl!) {

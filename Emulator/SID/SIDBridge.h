@@ -247,7 +247,7 @@ public:
     void handleBufferOverflow();
     
     // Signals to ignore the next underflow or overflow condition.
-    void ignoreNextUnderOrOverflow() { lastAlignment = mach_absolute_time(); }
+    void ignoreNextUnderOrOverflow();
         
     // Moves read or write pointer forwards or backwards
     void advanceReadPtr() { readPtr = (readPtr + 1) % bufferSize; }

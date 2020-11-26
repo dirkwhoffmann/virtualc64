@@ -113,7 +113,7 @@ class Preferences {
     }
     
     // Mouse
-    var mouseModel = MOUSE1350
+    var mouseModel = MouseModel.MOUSE1350
     
     //
     // Keyboard

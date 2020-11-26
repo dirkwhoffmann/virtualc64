@@ -237,15 +237,15 @@ protected:
      * running   | paused    | _pause() on each subcomponent
      */
     void pause();
-    virtual void _pause() { };
+    virtual void _pause() { }
     
     // Switches warp mode on or off
     void setWarp(bool enable);
-    virtual void _setWarp(bool enable) { };
+    virtual void _setWarp(bool enable) { }
     
     // Switches debug mode on or off
     void setDebug(bool enable);
-    virtual void _setDebug(bool enable) { };
+    virtual void _setDebug(bool enable) { }
 
 //
 // Standard implementations of _reset, _load, and _save

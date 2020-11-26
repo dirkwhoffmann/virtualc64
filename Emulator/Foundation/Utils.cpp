@@ -266,89 +266,6 @@ matchingBufferHeader(const u8 *buffer, const u8 *header, size_t length)
     return true;
 }
 
-#if 0
-bool 
-checkFileHeader(const char *filename, const u8 *header)
-{
-	int i, c;
-	bool result = true;
-	FILE *file;
-
-	assert(filename != NULL);
-	assert(header != NULL);
-	
-	if ((file = fopen(filename, "r")) == NULL)
-		return false; 
-
-	for (i = 0; header[i] != 0; i++) {
-		c = fgetc(file);
-		if (c != (int)header[i]) {
-			result = false;
-			break;
-		}
-	}
-	    
-	fclose(file);
-	return result;
-}
-#endif
-
-u8 
-localTimeSec()
-{
-	time_t t = time(NULL);
-	struct tm *loctime = localtime(&t);
-	return (u8)loctime->tm_sec;
-}
-
-u8 
-localTimeMinute()
-{
-	time_t t = time(NULL);
-	struct tm *loctime = localtime(&t);
-	return (u8)loctime->tm_min;
-}
-
-u8 
-localTimeHour()
-{
-	time_t t = time(NULL);
-	struct tm *loctime = localtime(&t);
-	return (u8)loctime->tm_hour;
-}
-
-	
-void 
-sleepMicrosec(unsigned usec)
-{		
-	if (usec > 0 && usec < 1000000) {
-		usleep(usec);
-	}
-}
-
-i64
-sleepUntil(u64 kernelTargetTime, u64 kernelEarlyWakeup)
-{
-    u64 now = mach_absolute_time();
-    i64 jitter;
-    
-    if (now > kernelTargetTime)
-        return 0;
-    
-    // Sleep
-    // printf("Sleeping for %d\n", kernelTargetTime - now);
-    mach_wait_until(kernelTargetTime - kernelEarlyWakeup);
-    
-    // Count some sheep to increase precision
-    unsigned sheep = 0;
-    do {
-        jitter = mach_absolute_time() - kernelTargetTime;
-        sheep++;
-    } while (jitter < 0);
-    
-    return jitter;
-}
-
 u32
 fnv_1a_32(u8 *addr, size_t size)
 {
@@ -389,7 +306,7 @@ crc32(const u8 *addr, size_t size)
     for(int i = 0; i < 256; i++) table[i] = crc32forByte(i);
 
     // Compute CRC-32 checksum
-     for(int i = 0; i < size; i++)
+     for(size_t i = 0; i < size; i++)
        result = table[(u8)result ^ addr[i]] ^ result >> 8;
 
     return result;

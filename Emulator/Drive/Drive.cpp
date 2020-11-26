@@ -66,11 +66,11 @@ Drive::setConfigItem(ConfigOption option, long value)
             u64 duration = 10000000000 / VICII::getFrequency((VICRevision)value);
             debug("Setting duration to %lld\n", duration);
             
-            if (durationOfOneCpuCycle ==  duration) {
+            if (durationOfOneCpuCycle == duration) {
                 return false;
             }
             
-            durationOfOneCpuCycle =  duration;
+            durationOfOneCpuCycle = duration;
             return true;
         }
         default:
@@ -156,10 +156,17 @@ Drive::_dump()
 }
 
 void
+Drive::_run()
+{
+    // Make sure the emulator has been configured properly
+    assert(durationOfOneCpuCycle > 0);
+}
+
+void
 Drive::execute(u64 duration)
 {
     elapsedTime += duration;
-    while (nextClock < elapsedTime || nextCarry < elapsedTime) {
+    while (nextClock < (i64)elapsedTime || nextCarry < (i64)elapsedTime) {
 
         if (nextClock <= nextCarry) {
             
@@ -180,7 +187,7 @@ Drive::execute(u64 duration)
             nextCarry += delayBetweenTwoCarryPulses[zone];
         }
     }
-    assert(nextClock >= elapsedTime && nextCarry >= elapsedTime);
+    assert(nextClock >= (i64)elapsedTime && nextCarry >= (i64)elapsedTime);
 }
 
 void
@@ -403,7 +410,7 @@ Drive::insertDisk(AnyArchive *archive)
 {
     assert(archive != NULL);
 
-    debug(DRV_DEBUG, "insertDisk(archive %p)\n", archive);
+    debug(DSKCHG_DEBUG, "insertDisk(archive %p)\n", archive);
     insertDisk(Disk::makeWithArchive(c64, archive));
 }
 

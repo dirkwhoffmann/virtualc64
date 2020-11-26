@@ -62,7 +62,7 @@ extension MyDocument {
     @discardableResult
     func showDiskIsUnexportedAlert(drive: DriveID) -> NSApplication.ModalResponse {
        
-        let label = drive == DRIVE8 ? "8" : "9"
+        let label = drive == .DRIVE8 ? "8" : "9"
 
         let alert = NSAlert()
         alert.alertStyle = .warning
@@ -89,7 +89,7 @@ extension MyDocument {
     
     func proceedWithUnexportedDisk(drive: DriveID) -> Bool {
         
-        precondition(drive == DRIVE8 || drive == DRIVE9)
+        precondition(drive == .DRIVE8 || drive == .DRIVE9)
         
         if let controller = windowForSheet?.windowController as? MyController {
             if controller.pref.driveEjectUnasked {
@@ -97,7 +97,7 @@ extension MyDocument {
             }
         }
         
-        let modified = (drive == DRIVE8) ?
+        let modified = (drive == .DRIVE8) ?
             c64.drive8.hasModifiedDisk() :
             c64.drive9.hasModifiedDisk()
 
@@ -122,9 +122,9 @@ extension MyDocument {
         if modified1 && modified2 {
             return showDiskIsUnexportedAlert() == .alertFirstButtonReturn
         } else if modified1 {
-            return showDiskIsUnexportedAlert(drive: DRIVE8) == .alertFirstButtonReturn
+            return showDiskIsUnexportedAlert(drive: .DRIVE8) == .alertFirstButtonReturn
         } else if modified2 {
-            return showDiskIsUnexportedAlert(drive: DRIVE9) == .alertFirstButtonReturn
+            return showDiskIsUnexportedAlert(drive: .DRIVE9) == .alertFirstButtonReturn
         } else {
             return true
         }

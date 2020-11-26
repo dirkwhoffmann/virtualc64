@@ -36,6 +36,7 @@ class Mouse1350;
 class Mouse1351;
 class NeosMouse;
 class MessageQueue;
+class Oscillator;
 
 class File;
 class TAPFile;
@@ -73,6 +74,7 @@ protected:
     Datasette &datasette;
     Mouse &mouse;
     MessageQueue &messageQueue;
+    Oscillator &oscillator;
     
     Drive *drive[2] = { &drive8, &drive9 };
 

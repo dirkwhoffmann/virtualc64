@@ -46,6 +46,7 @@
 #include "TOD.h"
 #include "CIA.h"
 #include "CPU.h"
+#include "Oscillator.h"
 
 // Cartridges
 #include "Cartridge.h"
@@ -76,21 +77,16 @@ class C64 : public HardwareComponent {
     
 public:
     
-    // Memory (ROM, RAM and color RAM)
+    // Core components
     C64Memory mem = C64Memory(*this);
-    
-    // CPU
     C64CPU cpu = C64CPU(*this, mem);
-        
-    // Video Interface Controller
     VICII vic = VICII(*this);
-    
-    // Complex Interface Adapters
     CIA1 cia1 = CIA1(*this);
     CIA2 cia2 = CIA2(*this);
-    
-    // Sound Interface Device
     SIDBridge sid = SIDBridge(*this);
+
+    // Logic board
+    Oscillator oscillator = Oscillator(*this);
     
     // Keyboard
     Keyboard keyboard = Keyboard(*this);
@@ -173,7 +169,7 @@ private:
     unsigned suspendCounter = 0;
     
     // The emulator thread
-    pthread_t p = NULL;
+    pthread_t p = (pthread_t)0;
     
     // Mutex to coordinate the order of execution
     pthread_mutex_t threadLock;
@@ -184,23 +180,6 @@ private:
     pthread_mutex_t stateChangeLock;
     
     
-    //
-    // Emulation speed
-    //
-    
-private:
-    
-    /* System timer information. Used to match the emulation speed with the
-     * speed of a real C64.
-     */
-    mach_timebase_info_data_t timebase;
-    
-    /* Wake-up time of the synchronization timer in nanoseconds. This value is
-     * recomputed each time the emulator thread is put to sleep.
-     */
-    u64 nanoTargetTime;
-    
-
     //
     // Operation modes
     //
@@ -219,8 +198,8 @@ private:
     
 private:
     
-    Snapshot *autoSnapshot = NULL;
-    Snapshot *userSnapshot = NULL;
+    Snapshot *autoSnapshot = nullptr;
+    Snapshot *userSnapshot = nullptr;
     
     //
     // Initializing
@@ -365,7 +344,7 @@ public:
     /* Returns true if a call to powerOn() will be successful.
      * It returns false, e.g., if no Rom is installed.
      */
-    bool isReady(ErrorCode *error = NULL);
+    bool isReady(ErrorCode *error = nullptr);
     
     
     //
@@ -375,7 +354,7 @@ public:
 public:
     
     // Registers a listener callback function
-    void addListener(const void *sender, void(*func)(const void *, int, long) ) {
+    void addListener(const void *sender, void(*func)(const void *, long, long) ) {
         messageQueue.addListener(sender, func);
     }
     
@@ -513,20 +492,20 @@ private:
      * time to initialize the timer and reinvoked when the synchronization
      * timer gets out of sync.
      */
-    void restartTimer();
+    // void restartTimer();
     
     // Converts kernel time to nanoseconds
-    u64 abs_to_nanos(u64 abs) { return abs * timebase.numer / timebase.denom; }
+    // u64 abs_to_nanos(u64 abs) { return abs * timebase.numer / timebase.denom; }
     
     // Converts nanoseconds to kernel time
-    u64 nanos_to_abs(u64 nanos) { return nanos * timebase.denom / timebase.numer; }
+    // u64 nanos_to_abs(u64 nanos) { return nanos * timebase.denom / timebase.numer; }
  
     /* Puts the emulation the thread to sleep. This function is called inside
      * endFrame(). It makes the emulation thread wait until nanoTargetTime has
      * been reached. Before returning, nanoTargetTime is assigned with a new
      * target value.
      */
-    void synchronizeTiming();
+    // void synchronizeTiming();
     
     
     //
@@ -543,7 +522,7 @@ public:
     void requestAutoSnapshot();
     void requestUserSnapshot();
 
-    // Returns the most recent snapshot or NULL if none was taken
+    // Returns the most recent snapshot or nullptr if none was taken
     Snapshot *latestAutoSnapshot();
     Snapshot *latestUserSnapshot();
     

@@ -393,7 +393,8 @@ Disk::analyzeHalftrack(Halftrack ht)
     
     // Scan for SYNC sequences and decode the byte that follows.
     unsigned noOfOnes = 0;
-    for (unsigned i = 0; i < 2 * len - 10; i++) {
+    long stop = (long)(2 * len - 10);
+    for (long i = 0; i < stop; i++) {
         
         assert(trackInfo.bit[i] <= 1);
         if (trackInfo.bit[i] == 0 && noOfOnes >= 10) {

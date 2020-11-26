@@ -191,32 +191,32 @@ extension GamePad {
         
         guard let n = keyMap, let direction = prefs.keyMaps[n][macKey] else { return [] }
                     
-        switch GamePadAction(direction) {
+        switch GamePadAction(rawValue: direction) {
             
-        case PULL_UP:
+        case .PULL_UP:
             keyUp = true
-            return [PULL_UP]
+            return [.PULL_UP]
             
-        case PULL_DOWN:
+        case .PULL_DOWN:
             keyDown = true
-            return [PULL_DOWN]
+            return [.PULL_DOWN]
             
-        case PULL_LEFT:
+        case .PULL_LEFT:
             keyLeft = true
-            return [PULL_LEFT]
+            return [.PULL_LEFT]
             
-        case PULL_RIGHT:
+        case .PULL_RIGHT:
             keyRight = true
-            return [PULL_RIGHT]
+            return [.PULL_RIGHT]
             
-        case PRESS_FIRE:
-            return [PRESS_FIRE]
+        case .PRESS_FIRE:
+            return [.PRESS_FIRE]
             
-        case PRESS_LEFT:
-            return [PRESS_LEFT]
+        case .PRESS_LEFT:
+            return [.PRESS_LEFT]
             
-        case PRESS_RIGHT:
-            return [PRESS_RIGHT]
+        case .PRESS_RIGHT:
+            return [.PRESS_RIGHT]
             
         default:
             fatalError()
@@ -228,32 +228,32 @@ extension GamePad {
         
         guard let n = keyMap, let direction = prefs.keyMaps[n][macKey] else { return [] }
                 
-        switch GamePadAction(direction) {
+        switch GamePadAction(rawValue: direction) {
             
-        case PULL_UP:
+        case .PULL_UP:
             keyUp = false
-            return keyDown ? [PULL_DOWN] : [RELEASE_Y]
+            return keyDown ? [.PULL_DOWN] : [.RELEASE_Y]
             
-        case PULL_DOWN:
+        case .PULL_DOWN:
             keyDown = false
-            return keyUp ? [PULL_UP] : [RELEASE_Y]
+            return keyUp ? [.PULL_UP] : [.RELEASE_Y]
             
-        case PULL_LEFT:
+        case .PULL_LEFT:
             keyLeft = false
-            return keyRight ? [PULL_RIGHT] : [RELEASE_X]
+            return keyRight ? [.PULL_RIGHT] : [.RELEASE_X]
             
-        case PULL_RIGHT:
+        case .PULL_RIGHT:
             keyRight = false
-            return keyLeft ? [PULL_LEFT] : [RELEASE_X]
+            return keyLeft ? [.PULL_LEFT] : [.RELEASE_X]
             
-        case PRESS_FIRE:
-            return [RELEASE_FIRE]
+        case .PRESS_FIRE:
+            return [.RELEASE_FIRE]
             
-        case PRESS_LEFT:
-            return [RELEASE_LEFT]
+        case .PRESS_LEFT:
+            return [.RELEASE_LEFT]
             
-        case PRESS_RIGHT:
-            return [RELEASE_RIGHT]
+        case .PRESS_RIGHT:
+            return [.RELEASE_RIGHT]
             
         default:
             fatalError()
@@ -304,7 +304,7 @@ extension GamePad {
         // Buttons
         if usagePage == kHIDPage_Button {
 
-            let events = (intValue != 0) ? [PRESS_FIRE] : [RELEASE_FIRE]
+            let events: [GamePadAction] = (intValue != 0) ? [.PRESS_FIRE] : [.RELEASE_FIRE]
             processJoystickEvents(events: events)
             return
         }
@@ -320,29 +320,29 @@ extension GamePad {
                 
                 // track("lThumbXUsageID, rThumbXUsageID: \(intValue)")
                 if let v = mapAnalogAxis(value: value, element: element) {
-                    events = (v == 2) ? [PULL_RIGHT] : (v == -2) ? [PULL_LEFT] : [RELEASE_X]
+                    events = (v == 2) ? [.PULL_RIGHT] : (v == -2) ? [.PULL_LEFT] : [.RELEASE_X]
                 }
                 
             case lThumbYUsageID, rThumbYUsageID:
                 
                 // track("lThumbYUsageID, rThumbYUsageID: \(intValue)")
                 if let v = mapAnalogAxis(value: value, element: element) {
-                    events = (v == 2) ? [PULL_DOWN] : (v == -2) ? [PULL_UP] : [RELEASE_Y]
+                    events = (v == 2) ? [.PULL_DOWN] : (v == -2) ? [.PULL_UP] : [.RELEASE_Y]
                 }
                 
             case kHIDUsage_GD_Hatswitch:
                 
                 // track("kHIDUsage_GD_Hatswitch \(intValue)")
                 switch intValue {
-                case 0: events = [PULL_UP, RELEASE_X]
-                case 1: events = [PULL_UP, PULL_RIGHT]
-                case 2: events = [PULL_RIGHT, RELEASE_Y]
-                case 3: events = [PULL_RIGHT, PULL_DOWN]
-                case 4: events = [PULL_DOWN, RELEASE_X]
-                case 5: events = [PULL_DOWN, PULL_LEFT]
-                case 6: events = [PULL_LEFT, RELEASE_Y]
-                case 7: events = [PULL_LEFT, PULL_UP]
-                default: events = [RELEASE_XY]
+                case 0: events = [.PULL_UP, .RELEASE_X]
+                case 1: events = [.PULL_UP, .PULL_RIGHT]
+                case 2: events = [.PULL_RIGHT, .RELEASE_Y]
+                case 3: events = [.PULL_RIGHT, .PULL_DOWN]
+                case 4: events = [.PULL_DOWN, .RELEASE_X]
+                case 5: events = [.PULL_DOWN, .PULL_LEFT]
+                case 6: events = [.PULL_LEFT, .RELEASE_Y]
+                case 7: events = [.PULL_LEFT, .PULL_UP]
+                default: events = [.RELEASE_XY]
                 }
                 
             default:

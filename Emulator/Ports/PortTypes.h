@@ -39,7 +39,7 @@ typedef enum {
 } JoystickDirection;
 */
 
-typedef enum
+longenum(GamePadAction)
 {
     PULL_UP = 0,   // Pull the joystick up
     PULL_DOWN,     // Pull the joystick down
@@ -54,21 +54,19 @@ typedef enum
     RELEASE_FIRE,  // Release the joystick button
     RELEASE_LEFT,  // Release the left mouse button
     RELEASE_RIGHT  // Release the right mouse button
-}
-GamePadAction;
+};
 
 inline bool isGamePadAction(long value) {
     return value >= 0 && value <= RELEASE_RIGHT;
 }
 
-typedef enum
+longenum(CartridgeMode)
 {
     CRT_16K,
     CRT_8K,
     CRT_ULTIMAX,
     CRT_OFF
     
-}
-CartridgeMode;
+};
 
 #endif

@@ -61,7 +61,7 @@ AnyArchive::readItem()
 {
     int result;
     
-    assert(iEof <= size);
+    assert(iEof <= (long)size);
     
     if (iFp < 0)
         return -1;
@@ -120,7 +120,7 @@ AnyArchive::dumpDirectory()
     msg("       Path : %s\n", getPath());
     msg("      Items : %d\n", numItems);
 
-    for (unsigned i = 0; i < numItems; i++) {
+    for (int i = 0; i < numItems; i++) {
         
         selectItem(i);
         msg("Item %02d : %s (%d bytes, load address: %d)\n",

@@ -92,7 +92,7 @@ AnyFile::fnv()
 void
 AnyFile::seek(long offset)
 {
-    fp = (offset < size) ? offset : -1;
+    fp = (offset < (long)size) ? offset : -1;
 }
 
 int
@@ -100,7 +100,7 @@ AnyFile::read()
 {
     int result;
     
-    assert(eof <= size);
+    assert(eof <= (long)size);
     
     if (fp < 0)
         return -1;

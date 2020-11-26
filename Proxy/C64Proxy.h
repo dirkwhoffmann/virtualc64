@@ -694,8 +694,8 @@ struct AnyC64FileWrapper;
     struct MouseWrapper *wrapper;
 }
 
-- (NSInteger) model;
-- (void) setModel:(NSInteger)model;
+- (MouseModel) model;
+- (void) setModel:(MouseModel)model;
 - (NSInteger) port;
 - (void) connect:(NSInteger)toPort;
 - (void) disconnect;

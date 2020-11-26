@@ -272,6 +272,10 @@ private:
     size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
+private:
+    
+    void _run() override;
+    
     
     //
     // Working with the drive

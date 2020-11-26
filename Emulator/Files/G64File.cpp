@@ -172,7 +172,7 @@ G64File::seekHalftrack(long offset)
     
     tFp = getStartOfHalftrack(selectedHalftrack) + 2 + offset;
     
-    if (tFp >= size)
+    if (tFp >= (long)size)
         tFp = -1;
 }
 

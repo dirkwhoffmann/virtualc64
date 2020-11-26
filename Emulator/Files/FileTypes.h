@@ -10,7 +10,7 @@
 #ifndef FILE_TYPES_H
 #define FILE_TYPES_H
 
-typedef VA_ENUM(long, FileType)
+longenum(FileType)
 {    
     FILETYPE_UNKNOWN = 0,
     FILETYPE_V64,
@@ -57,7 +57,7 @@ inline const char* fileTypeString(FileType type)
     }
 }
 
-typedef enum
+longenum(RomIdentifier)
 {
     ROM_MISSING,
     ROM_UNKNOWN,
@@ -109,8 +109,7 @@ typedef enum
     VC1541_II_JIFFY_V600,
     
     ROM_CNT
-}
-RomIdentifier;
+};
 
 inline bool isRomRevision(long value)
 {

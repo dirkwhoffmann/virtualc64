@@ -346,7 +346,7 @@ void
 FastSID::execute(u64 cycles)
 {
     i16 buf[2049];
-    int buflength = 2048;
+    size_t buflength = 2048;
 
     executedCycles += cycles;
 

@@ -132,25 +132,25 @@ extension ConfigurationController {
         let poweredOff         = c64.isPoweredOff
         
         let basicIdentifier    = c64.basicRomIdentifier()
-        let hasBasic           = basicIdentifier != ROM_MISSING
+        let hasBasic           = basicIdentifier != .ROM_MISSING
         let hasCommodoreBasic  = c64.isCommodoreRom(basicIdentifier)
         let hasMega65Basic     = c64.hasMega65BasicRom()
         let hasPatchedBasic    = c64.isPatchedRom(basicIdentifier)
 
         let charIdentifier     = c64.charRomIdentifier()
-        let hasChar            = charIdentifier != ROM_MISSING
+        let hasChar            = charIdentifier != .ROM_MISSING
         let hasCommodoreChar   = c64.isCommodoreRom(charIdentifier)
         let hasMega65Char      = c64.hasMega65CharRom()
         let hasPatchedChar     = c64.isPatchedRom(charIdentifier)
 
         let kernalIdentifier   = c64.kernalRomIdentifier()
-        let hasKernal          = kernalIdentifier != ROM_MISSING
+        let hasKernal          = kernalIdentifier != .ROM_MISSING
         let hasCommodoreKernal = c64.isCommodoreRom(kernalIdentifier)
         let hasMega65Kernal    = c64.hasMega65KernelRom()
         let hasPatchedKernal   = c64.isPatchedRom(kernalIdentifier)
 
         let vc1541Identifier   = c64.vc1541RomIdentifier()
-        let hasVC1541          = vc1541Identifier != ROM_MISSING
+        let hasVC1541          = vc1541Identifier != .ROM_MISSING
         let hasCommodoreVC1541 = c64.isCommodoreRom(vc1541Identifier)
         let hasPatchedVC1541   = c64.isPatchedRom(vc1541Identifier)
 

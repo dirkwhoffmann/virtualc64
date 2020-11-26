@@ -61,7 +61,7 @@ RomFile::isBasicRomBuffer(const u8 *buffer, size_t length)
 {
     if (length != 0x2000) return false;
 
-    for (int i = 0; i < basicRomSignatureCnt; i++) {
+    for (size_t i = 0; i < basicRomSignatureCnt; i++) {
         if (matchingBufferHeader(buffer, magicBasicRomBytes[i], sizeof(magicBasicRomBytes[i]))) {
             return true;
         }
@@ -75,7 +75,7 @@ RomFile::isCharRomBuffer(const u8 *buffer, size_t length)
 {
     if (length != 0x1000) return false;
 
-    for (int i = 0; i < charRomSignatureCnt; i++) {
+    for (size_t i = 0; i < charRomSignatureCnt; i++) {
         if (matchingBufferHeader(buffer, magicCharRomBytes[i], sizeof(magicCharRomBytes[i]))) {
             return true;
         }
@@ -89,7 +89,7 @@ RomFile::isKernalRomBuffer(const u8 *buffer, size_t length)
 {
     if (length != 0x2000) return false;
 
-    for (int i = 0; i < kernalRomSignatureCnt; i++) {
+    for (size_t i = 0; i < kernalRomSignatureCnt; i++) {
         if (matchingBufferHeader(buffer, magicKernalRomBytes[i], sizeof(magicKernalRomBytes[i]))) {
             return true;
         }
@@ -103,7 +103,7 @@ RomFile::isVC1541RomBuffer(const u8 *buffer, size_t length)
 {
     if (length != 0x4000) return false;
 
-    for (int i = 0; i < vc1541RomSignatureCnt; i++) {
+    for (size_t i = 0; i < vc1541RomSignatureCnt; i++) {
         if (matchingBufferHeader(buffer, magicVC1541RomBytes[i], sizeof(magicVC1541RomBytes[i]))) {
             return true;
         }
@@ -411,7 +411,7 @@ RomFile::isBasicRomFile(const char *filename)
 {
     if (!checkFileSize(filename, 0x2000, 0x2000)) return false;
 
-    for (int i = 0; i < basicRomSignatureCnt; i++) {
+    for (size_t i = 0; i < basicRomSignatureCnt; i++) {
         if (matchingFileHeader(filename, magicBasicRomBytes[i], sizeof(magicBasicRomBytes[i]))) {
             return true;
         }
@@ -425,7 +425,7 @@ RomFile::isCharRomFile(const char *filename)
 {
     if (!checkFileSize(filename, 0x1000, 0x1000)) return false;
 
-    for (int i = 0; i < charRomSignatureCnt; i++) {
+    for (size_t i = 0; i < charRomSignatureCnt; i++) {
         if (matchingFileHeader(filename, magicCharRomBytes[i], sizeof(magicCharRomBytes[i]))) {
             return true;
         }
@@ -439,7 +439,7 @@ RomFile::isKernalRomFile(const char *filename)
 {
     if (!checkFileSize(filename, 0x2000, 0x2000)) return false;
 
-    for (int i = 0; i < kernalRomSignatureCnt; i++) {
+    for (size_t i = 0; i < kernalRomSignatureCnt; i++) {
         if (matchingFileHeader(filename, magicKernalRomBytes[i], sizeof(magicKernalRomBytes[i]))) {
             return true;
         }
@@ -453,7 +453,7 @@ RomFile::isVC1541RomFile(const char *filename)
 {
     if (!checkFileSize(filename, 0x4000, 0x4000)) return false;
 
-    for (int i = 0; i < vc1541RomSignatureCnt; i++) {
+    for (size_t i = 0; i < vc1541RomSignatureCnt; i++) {
         if (matchingFileHeader(filename, magicVC1541RomBytes[i], sizeof(magicVC1541RomBytes[i]))) {
             return true;
         }

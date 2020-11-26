@@ -208,19 +208,7 @@ class Renderer: NSObject, MTKViewDelegate {
     //
     // Managing textures
     //
-    
-    func clearBgTexture() {
         
-        let w = 512
-        let h = 512
-        
-        let bytes = UnsafeMutablePointer<UInt32>.allocate(capacity: w * h)
-        bytes.initialize(repeating: 0xFFFF0000, count: w * h)
-        
-        updateBgTexture(bytes: bytes)
-        bytes.deallocate()
-    }
-    
     func updateBgTexture(bytes: UnsafeMutablePointer<UInt32>) {
         
         bgTexture.replace(w: 512, h: 512, buffer: bytes)
@@ -485,7 +473,6 @@ class Renderer: NSObject, MTKViewDelegate {
         let paused = parent.c64.isPaused
         let poweredOff = parent.c64.isPoweredOff
         let renderBackground = poweredOff || animates != 0 || fullscreen
-        // let renderForeground = alpha.current > 0.0
         let renderForeground = !poweredOff && alpha.current > 0.0
 
         // Perform a single animation step

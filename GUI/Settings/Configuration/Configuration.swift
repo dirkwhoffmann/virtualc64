@@ -178,33 +178,33 @@ class Configuration {
     }
 
     var drive8Type: Int {
-        get { return c64.getConfig(OPT_DRIVE_TYPE, drive: DRIVE8) }
-        set { c64.configure(OPT_DRIVE_TYPE, drive: DRIVE8, value: newValue )}
+        get { return c64.getConfig(OPT_DRIVE_TYPE, drive: .DRIVE8) }
+        set { c64.configure(OPT_DRIVE_TYPE, drive: .DRIVE8, value: newValue )}
     }
     
     var drive9Type: Int {
-        get { return c64.getConfig(OPT_DRIVE_TYPE, drive: DRIVE9) }
-        set { c64.configure(OPT_DRIVE_TYPE, drive: DRIVE9, value: newValue )}
+        get { return c64.getConfig(OPT_DRIVE_TYPE, drive: .DRIVE9) }
+        set { c64.configure(OPT_DRIVE_TYPE, drive: .DRIVE9, value: newValue )}
     }
     
     var drive8Connected: Bool {
-        get { return c64.getConfig(OPT_DRIVE_CONNECT, drive: DRIVE8) != 0 }
-        set { c64.configure(OPT_DRIVE_CONNECT, drive: DRIVE8, enable: newValue )}
+        get { return c64.getConfig(OPT_DRIVE_CONNECT, drive: .DRIVE8) != 0 }
+        set { c64.configure(OPT_DRIVE_CONNECT, drive: .DRIVE8, enable: newValue )}
     }
         
     var drive9Connected: Bool {
-        get { return c64.getConfig(OPT_DRIVE_CONNECT, drive: DRIVE9) != 0 }
-        set { c64.configure(OPT_DRIVE_CONNECT, drive: DRIVE9, enable: newValue )}
+        get { return c64.getConfig(OPT_DRIVE_CONNECT, drive: .DRIVE9) != 0 }
+        set { c64.configure(OPT_DRIVE_CONNECT, drive: .DRIVE9, enable: newValue )}
     }
 
     var drive8PowerSwitch: Bool {
-        get { return c64.getConfig(OPT_DRIVE_POWER_SWITCH, drive: DRIVE8) != 0 }
-        set { c64.configure(OPT_DRIVE_POWER_SWITCH, drive: DRIVE8, enable: newValue )}
+        get { return c64.getConfig(OPT_DRIVE_POWER_SWITCH, drive: .DRIVE8) != 0 }
+        set { c64.configure(OPT_DRIVE_POWER_SWITCH, drive: .DRIVE8, enable: newValue )}
     }
 
     var drive9PowerSwitch: Bool {
-        get { return c64.getConfig(OPT_DRIVE_POWER_SWITCH, drive: DRIVE9) != 0 }
-        set { c64.configure(OPT_DRIVE_POWER_SWITCH, drive: DRIVE9, enable: newValue )}
+        get { return c64.getConfig(OPT_DRIVE_POWER_SWITCH, drive: .DRIVE9) != 0 }
+        set { c64.configure(OPT_DRIVE_POWER_SWITCH, drive: .DRIVE9, enable: newValue )}
     }
 
     // Ports

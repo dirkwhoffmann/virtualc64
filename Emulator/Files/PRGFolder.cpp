@@ -140,7 +140,7 @@ void
 PRGFolder::seekItem(long offset)
 {
     assert(selectedItem != -1);
-    assert(offset < items[selectedItem].size);
+    assert(offset < (long)items[selectedItem].size);
     
     iFp = offset;
 }
@@ -195,7 +195,7 @@ bool
 PRGFolder::remove(long at)
 {
     // Only proceed if the provided index is valid
-    if (at < 0 || at >= items.size()) return false;
+    if (at < 0 || at >= (long)items.size()) return false;
     
     items.erase(items.begin() + at);
     return true;
@@ -205,8 +205,8 @@ bool
 PRGFolder::swap(long at1, long at2)
 {
     // Only proceed if the provided indices are valid
-    if (at1 < 0 || at1 >= items.size()) return false;
-    if (at2 < 0 || at2 >= items.size()) return false;
+    if (at1 < 0 || at1 >= (long)items.size()) return false;
+    if (at2 < 0 || at2 >= (long)items.size()) return false;
     
     if (at1 != at2) {
         iter_swap(items.begin() + at1, items.begin() + at2);

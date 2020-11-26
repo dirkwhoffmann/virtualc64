@@ -147,9 +147,9 @@ var proxy: C64Proxy? {
     
     func noteNewRecentlyExportedDiskURL(_ url: URL, drive: DriveID) {
         
-        precondition(drive == DRIVE8 || drive == DRIVE9)
+        precondition(drive == .DRIVE8 || drive == .DRIVE9)
         
-        if drive == DRIVE8 {
+        if drive == .DRIVE8 {
             noteRecentlyUsedURL(url, to: &recentlyExportedDisk8URLs, size: 1)
         } else {
             noteRecentlyUsedURL(url, to: &recentlyExportedDisk9URLs, size: 1)
@@ -158,9 +158,9 @@ var proxy: C64Proxy? {
     
     func getRecentlyExportedDiskURL(_ pos: Int, drive: DriveID) -> URL? {
         
-        precondition(drive == DRIVE8 || drive == DRIVE9)
+        precondition(drive == .DRIVE8 || drive == .DRIVE9)
 
-        if drive == DRIVE8 {
+        if drive == .DRIVE8 {
             return getRecentlyUsedURL(pos, from: recentlyExportedDisk8URLs)
         } else {
             return getRecentlyUsedURL(pos, from: recentlyExportedDisk9URLs)
@@ -169,9 +169,9 @@ var proxy: C64Proxy? {
     
     func clearRecentlyExportedDiskURLs(drive: DriveID) {
         
-        precondition(drive == DRIVE8 || drive == DRIVE9)
+        precondition(drive == .DRIVE8 || drive == .DRIVE9)
 
-        if drive == DRIVE8 {
+        if drive == .DRIVE8 {
             recentlyExportedDisk8URLs = []
         } else {
             recentlyExportedDisk9URLs = []

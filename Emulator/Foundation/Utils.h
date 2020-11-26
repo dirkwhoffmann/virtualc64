@@ -12,7 +12,6 @@
 
 #include <assert.h>
 #include <limits.h>
-#include <mach/mach_time.h>
 #include <math.h>
 #include <pthread.h>
 #include <stdarg.h>
@@ -68,14 +67,19 @@ bool releaseBuild();
 #define WRITE_BIT(x,nr,value) ((value) ? SET_BIT(x, nr) : CLR_BIT(x, nr))
 
 // Copies a single bit from x to y
-#define COPY_BIT(x,y,nr) ((y) = ((y) & ~(1 << (nr)) | ((x) & (1 << (nr)))))
+// #define COPY_BIT(x,y,nr) ((y) = (((y) & ~(1 << (nr))) | (((x) & (1 << (nr))))))
 
-// Returns true if a boolean x is rising or falling when switching to y
+// Replaces bits, bytes, and words
+#define REPLACE_BIT(x,nr,v) ((v) ? SET_BIT(x, nr) : CLR_BIT(x, nr))
+#define REPLACE_LO(x,y) (((x) & ~0x00FF) | (y))
+#define REPLACE_HI(x,y) (((x) & ~0xFF00) | ((y) << 8))
+#define REPLACE_LO_WORD(x,y) (((x) & ~0xFFFF) | (y))
+#define REPLACE_HI_WORD(x,y) (((x) & ~0xFFFF0000) | ((y) << 16))
+
+// Checks for a rising or a falling edge
 #define RISING_EDGE(x,y) (!(x) && (y))
-#define FALLING_EDGE(x,y) ((x) && !(y))
-
-// Returns true if the n-th bit in x is rising or falling when switching to y
 #define RISING_EDGE_BIT(x,y,n) (!((x) & (1 << (n))) && ((y) & (1 << (n))))
+#define FALLING_EDGE(x,y) ((x) && !(y))
 #define FALLING_EDGE_BIT(x,y,n) (((x) & (1 << (n))) && !((y) & (1 << (n))))
 
 
@@ -154,28 +158,6 @@ bool checkFileSize(const char *filename, long min = -1, long max = -1);
 // Checks the header signature (magic bytes) of a file or buffer
 bool matchingFileHeader(const char *path, const u8 *header, size_t length);
 bool matchingBufferHeader(const u8 *buffer, const u8 *header, size_t length);
-
-
-//
-// Managing time
-//
-
-// Reads a value from the real-time clock of the native host
-u8 localTimeSecFrac();
-u8 localTimeSec();
-u8 localTimeMin();
-u8 localTimeHour();
-
-// Puts the current thread to sleep for a certain amount of time
-void sleepMicrosec(unsigned usec);
-
-/* Sleeps until kernel timer reaches kernelTargetTime. To increase timing
- * precision, the function wakes up the thread earlier by the amount of
- * kernelEarlyWakeup and waits actively in a delay loop until the deadline is
- * reached. It returns the overshoot time (jitter), measured in kernel time.
- * Smaller values are better, 0 is best.
- */
-i64 sleepUntil(u64 kernelTargetTime, u64 kernelEarlyWakeup);
 
 
 //

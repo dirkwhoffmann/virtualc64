@@ -294,7 +294,7 @@ class MediaDialogController: DialogController {
         case .archive, .disk, .directory:
             
             let disk = myDocument.attachment
-            let id = sender.tag == 0 ? DRIVE8 : DRIVE9
+            let id = sender.tag == 0 ? DriveID.DRIVE8 : DriveID.DRIVE9
             c64.drive(id)?.insertDisk(disk as? AnyArchiveProxy)
             c64.drive(id).setWriteProtection(writeProtect)
             
