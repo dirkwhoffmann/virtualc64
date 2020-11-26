@@ -169,7 +169,7 @@ private:
     unsigned suspendCounter = 0;
     
     // The emulator thread
-    pthread_t p = NULL;
+    pthread_t p = (pthread_t)0;
     
     // Mutex to coordinate the order of execution
     pthread_mutex_t threadLock;
@@ -215,8 +215,8 @@ private:
     
 private:
     
-    Snapshot *autoSnapshot = NULL;
-    Snapshot *userSnapshot = NULL;
+    Snapshot *autoSnapshot = nullptr;
+    Snapshot *userSnapshot = nullptr;
     
     //
     // Initializing
@@ -361,7 +361,7 @@ public:
     /* Returns true if a call to powerOn() will be successful.
      * It returns false, e.g., if no Rom is installed.
      */
-    bool isReady(ErrorCode *error = NULL);
+    bool isReady(ErrorCode *error = nullptr);
     
     
     //
@@ -539,7 +539,7 @@ public:
     void requestAutoSnapshot();
     void requestUserSnapshot();
 
-    // Returns the most recent snapshot or NULL if none was taken
+    // Returns the most recent snapshot or nullptr if none was taken
     Snapshot *latestAutoSnapshot();
     Snapshot *latestUserSnapshot();
     

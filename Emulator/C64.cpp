@@ -54,9 +54,7 @@ C64::C64()
 {
     setDescription("C64");
     debug(RUN_DEBUG, "Creating virtual C64 [%p]\n", this);
-    
-    p = NULL;
-    
+        
     subComponents = vector<HardwareComponent *> {
         
         &mem,
@@ -785,7 +783,7 @@ C64::threadDidTerminate()
     debug(RUN_DEBUG, "Emulator thread terminated\n");
     
     // Trash the thread pointer
-    p = NULL;
+    p = (pthread_t)0;
     
     // Pause all components
     HardwareComponent::pause();
