@@ -111,7 +111,7 @@ typedef enum
 }
 DisplayMode;
 
-typedef VA_ENUM(long, MemAccessType)
+longenum(MemAccessType)
 {
     R_ACCESS = 0,             // Memory Refresh
     I_ACCESS,                 // Idle read
@@ -127,7 +127,7 @@ static inline bool isMemAccessType(long value)
     return value >= 0 && value < ACCESS_CNT;
 }
 
-typedef VA_ENUM(long, DmaDisplayMode)
+longenum(DmaDisplayMode)
 {
     MODULATE_FG_LAYER,
     MODULATE_BG_LAYER,

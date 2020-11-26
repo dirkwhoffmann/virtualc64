@@ -12,7 +12,7 @@
 #ifndef _MESSAGE_QUEUE_T_H
 #define _MESSAGE_QUEUE_T_H
 
-typedef VA_ENUM(long, MessageType)
+longenum(MessageType)
 {
     MSG_NONE = 0,
     

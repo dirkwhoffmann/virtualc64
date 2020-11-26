@@ -34,11 +34,29 @@ typedef i64 Cycle;
 
 
 //
-// Replacement for the VA_ENUM macro which is only available on macOS
+// Enumeration types
 //
 
-#define VA_ENUM(_type, _name) \
-enum __attribute__((enum_extensibility(open))) _name : _type _name; \
-enum _name : _type
+/* All enumeration types are declared via a special 'longenum' macro to make
+ * them easily accessible in Swift.
+ */
+
+// Definition for wasm (long = 32 Bit)
+#if defined(__EMSCRIPTEN__)
+#define longenum(_name) \
+typedef enum __attribute__((enum_extensibility(open))) _name : long long _name; \
+enum _name : long long
+
+// Definition for clang (long = 64 Bit)
+#elif defined(__clang__)
+#define longenum(_name) \
+typedef enum __attribute__((enum_extensibility(open))) _name : long _name; \
+enum _name : long
+
+// Definition for gcc (long = 64 Bit)
+#else
+#define longenum(_name) \
+enum _name : long
+#endif
 
 #endif

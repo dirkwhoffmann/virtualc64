@@ -39,7 +39,7 @@ typedef enum {
 } JoystickDirection;
 */
 
-typedef VA_ENUM(long, GamePadAction)
+longenum(GamePadAction)
 {
     PULL_UP = 0,   // Pull the joystick up
     PULL_DOWN,     // Pull the joystick down
@@ -60,7 +60,7 @@ inline bool isGamePadAction(long value) {
     return value >= 0 && value <= RELEASE_RIGHT;
 }
 
-typedef VA_ENUM(long, CartridgeMode)
+longenum(CartridgeMode)
 {
     CRT_16K,
     CRT_8K,

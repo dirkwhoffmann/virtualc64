@@ -12,7 +12,7 @@
 #ifndef MOUSE_TYPES_H
 #define MOUSE_TYPES_H
 
-typedef VA_ENUM(long, MouseModel)
+longenum(MouseModel)
 {
     MOUSE1350 = 0,
     MOUSE1351,

@@ -10,7 +10,7 @@
 #ifndef CARTRIDGE_TYPES_H
 #define CARTRIDGE_TYPES_H
 
-typedef VA_ENUM(long, CartridgeType)
+longenum(CartridgeType)
 {
     CRT_NORMAL = 0,
     CRT_ACTION_REPLAY = 1,
