@@ -77,10 +77,7 @@ C64::C64()
     // Set up the initial state
     initialize();
     _reset();
-    
-    // Initialize mach timer info
-    mach_timebase_info(&timebase);
-    
+        
     // Initialize mutexes
     pthread_mutex_init(&threadLock, NULL);
     pthread_mutex_init(&stateChangeLock, NULL);
@@ -128,7 +125,6 @@ C64::_reset()
     cpu.reg.pc = mem.resetVector();
     
     rasterCycle = 1;
-    nanoTargetTime = 0UL;
 }
 
 void

@@ -181,23 +181,6 @@ private:
     
     
     //
-    // Emulation speed
-    //
-    
-private:
-    
-    /* System timer information. Used to match the emulation speed with the
-     * speed of a real C64.
-     */
-    mach_timebase_info_data_t timebase;
-    
-    /* Wake-up time of the synchronization timer in nanoseconds. This value is
-     * recomputed each time the emulator thread is put to sleep.
-     */
-    u64 nanoTargetTime;
-    
-
-    //
     // Operation modes
     //
     
