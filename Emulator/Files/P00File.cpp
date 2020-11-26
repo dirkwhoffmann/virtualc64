@@ -158,7 +158,7 @@ P00File::seekItem(long offset)
     
     iFp = 0x1C + offset;
     
-    if (iFp >= size)
+    if (iFp >= (long)size)
         iFp = -1;
 }
 

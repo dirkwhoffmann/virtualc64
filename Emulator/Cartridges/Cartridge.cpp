@@ -263,7 +263,7 @@ Cartridge::_load(u8 *buffer)
     if (ramCapacity) {
         assert(externalRam == nullptr);
         externalRam = new u8[ramCapacity];
-        for (int i = 0; i < ramCapacity; i++) externalRam[i] = read8(reader.ptr);
+        for (unsigned i = 0; i < ramCapacity; i++) externalRam[i] = read8(reader.ptr);
     }
 
     debug(SNP_DEBUG, "Recreated from %d bytes\n", reader.ptr - buffer);
@@ -290,7 +290,7 @@ Cartridge::_save(u8 *buffer)
     // Save on-board RAM
     if (ramCapacity) {
         assert(externalRam != nullptr);
-        for (int i = 0; i < ramCapacity; i++) write8(writer.ptr, externalRam[i]);
+        for (unsigned i = 0; i < ramCapacity; i++) write8(writer.ptr, externalRam[i]);
     }
     
     debug(SNP_DEBUG, "Serialized %d bytes\n", writer.ptr - buffer);

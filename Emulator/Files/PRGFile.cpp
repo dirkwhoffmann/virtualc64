@@ -115,7 +115,7 @@ PRGFile::seekItem(long offset)
     
     iFp = 2 + offset;
     
-    if (iFp >= size)
+    if (iFp >= (long)size)
         iFp = -1;
 }
 

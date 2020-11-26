@@ -232,7 +232,7 @@ void
 T64File::selectItem(unsigned item)
 {
     // Invalidate the file pointer if a non-existing item is requested.
-    if (item >= numberOfItems()) {
+    if ((int)item >= numberOfItems()) {
         iFp = -1;
         return;
     }
@@ -247,7 +247,7 @@ T64File::selectItem(unsigned item)
     
     // Check for inconsistent values. As all inconsistencies should have
     // been ruled out by repair(), the if condition should never hit.
-    if (iFp > size || iEof > size) {
+    if (iFp > (long)size || iEof > (long)size) {
         assert(false);
     }
 }
@@ -274,7 +274,7 @@ T64File::getNameOfItem()
     long first = 0x50 + (selectedItem * 0x20);
     long last  = 0x60 + (selectedItem * 0x20);
     
-    if (size < last) {
+    if ((long)size < last) {
         name[0] = 0;
     } else {
         for (j = 0, i = first; i < last; i++, j++) {
@@ -309,7 +309,7 @@ T64File::seekItem(long offset)
     iFp = LO_LO_HI_HI(data[i], data[i+1], data[i+2], data[i+3]) + offset;
 
     // Invalidate file pointer if it is out of range
-    if (iFp > size)
+    if (iFp > (long)size)
         iFp = -1;
 }
 
@@ -336,7 +336,7 @@ T64File::directoryItemIsPresent(int item)
     int i;
     
     // check for zeros...
-    if (last < size)
+    if (last < (long)size)
         for (i = first; i < last; i++)
             if (data[i] != 0)
                 return true;

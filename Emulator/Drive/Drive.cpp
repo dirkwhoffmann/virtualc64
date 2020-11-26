@@ -166,7 +166,7 @@ void
 Drive::execute(u64 duration)
 {
     elapsedTime += duration;
-    while (nextClock < elapsedTime || nextCarry < elapsedTime) {
+    while (nextClock < (i64)elapsedTime || nextCarry < (i64)elapsedTime) {
 
         if (nextClock <= nextCarry) {
             
@@ -187,7 +187,7 @@ Drive::execute(u64 duration)
             nextCarry += delayBetweenTwoCarryPulses[zone];
         }
     }
-    assert(nextClock >= elapsedTime && nextCarry >= elapsedTime);
+    assert(nextClock >= (i64)elapsedTime && nextCarry >= (i64)elapsedTime);
 }
 
 void
