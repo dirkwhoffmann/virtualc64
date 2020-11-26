@@ -12,7 +12,6 @@
 
 #include <assert.h>
 #include <limits.h>
-#include <mach/mach_time.h>
 #include <math.h>
 #include <pthread.h>
 #include <stdarg.h>
@@ -154,28 +153,6 @@ bool checkFileSize(const char *filename, long min = -1, long max = -1);
 // Checks the header signature (magic bytes) of a file or buffer
 bool matchingFileHeader(const char *path, const u8 *header, size_t length);
 bool matchingBufferHeader(const u8 *buffer, const u8 *header, size_t length);
-
-
-//
-// Managing time
-//
-
-// Reads a value from the real-time clock of the native host
-u8 localTimeSecFrac();
-u8 localTimeSec();
-u8 localTimeMin();
-u8 localTimeHour();
-
-// Puts the current thread to sleep for a certain amount of time
-void sleepMicrosec(unsigned usec);
-
-/* Sleeps until kernel timer reaches kernelTargetTime. To increase timing
- * precision, the function wakes up the thread earlier by the amount of
- * kernelEarlyWakeup and waits actively in a delay loop until the deadline is
- * reached. It returns the overshoot time (jitter), measured in kernel time.
- * Smaller values are better, 0 is best.
- */
-i64 sleepUntil(u64 kernelTargetTime, u64 kernelEarlyWakeup);
 
 
 //
