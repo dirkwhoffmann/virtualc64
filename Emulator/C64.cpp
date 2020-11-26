@@ -16,7 +16,7 @@
 void 
 threadTerminated(void* thisC64)
 {
-    assert(thisC64 != NULL);
+    assert(thisC64 != nullptr);
     
     // Inform the C64 that the thread has been canceled
     C64 *c64 = (C64 *)thisC64;
@@ -26,15 +26,15 @@ threadTerminated(void* thisC64)
 void 
 *threadMain(void *thisC64) {
     
-    assert(thisC64 != NULL);
+    assert(thisC64 != nullptr);
     
     // Inform the C64 that the thread is about to start
     C64 *c64 = (C64 *)thisC64;
     c64->threadWillStart();
     
     // Configure thread properties...
-    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
-    pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, nullptr);
+    pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, nullptr);
     pthread_cleanup_push(threadTerminated, thisC64);
     
     // Enter the run loop
@@ -42,7 +42,7 @@ void
     
     // Clean up and exit
     pthread_cleanup_pop(1);
-    pthread_exit(NULL);
+    pthread_exit(nullptr);
 }
 
 
@@ -79,8 +79,8 @@ C64::C64()
     _reset();
         
     // Initialize mutexes
-    pthread_mutex_init(&threadLock, NULL);
-    pthread_mutex_init(&stateChangeLock, NULL);
+    pthread_mutex_init(&threadLock, nullptr);
+    pthread_mutex_init(&stateChangeLock, nullptr);
 }
 
 C64::~C64()
@@ -336,7 +336,7 @@ C64::updateVicFunctionTable()
     debug("updateVicFunctionTable (dmaDebug: %d)\n", dmaDebug);
     
     // Assign model independent execution functions
-    vicfunc[0] = NULL;
+    vicfunc[0] = nullptr;
     if (dmaDebug) {
         vicfunc[12] = &VICII::cycle12<PAL_DEBUG_CYCLE>;
         vicfunc[13] = &VICII::cycle13<PAL_DEBUG_CYCLE>;
@@ -409,8 +409,8 @@ C64::updateVicFunctionTable()
                 vicfunc[62] = &VICII::cycle62<PAL_CYCLE>;
                 vicfunc[63] = &VICII::cycle63<PAL_CYCLE>;
             }
-            vicfunc[64] = NULL;
-            vicfunc[65] = NULL;
+            vicfunc[64] = nullptr;
+            vicfunc[65] = nullptr;
             break;
             
         case NTSC_6567_R56A:
@@ -458,7 +458,7 @@ C64::updateVicFunctionTable()
                 vicfunc[63] = &VICII::cycle63<NTSC_CYCLE>;
                 vicfunc[64] = &VICII::cycle64<NTSC_CYCLE>;
             }
-            vicfunc[65] = NULL;
+            vicfunc[65] = nullptr;
             break;
             
         case NTSC_6567:
@@ -597,7 +597,7 @@ C64::_run()
     debug(RUN_DEBUG, "_run()\n");
     
     // Start the emulator thread
-    pthread_create(&p, NULL, threadMain, (void *)this);
+    pthread_create(&p, nullptr, threadMain, (void *)this);
     
     // Inform the GUI
     putMessage(MSG_RUN);
@@ -639,7 +639,7 @@ C64::_pause()
     debug(RUN_DEBUG, "_pause()\n");
     
     // When we reach this line, the emulator thread is already gone
-    assert(p == NULL);
+    assert(p == (pthread_t)0);
     
     // Update the recorded debug information
     inspect();
@@ -731,7 +731,7 @@ C64::acquireThreadLock()
     if (state == STATE_RUNNING) {
         
         // Assure the emulator thread exists
-        assert(p != NULL);
+        assert(p != (pthread_t)0);
         
         // Free the lock by terminating the thread
         requestStop();
@@ -739,7 +739,7 @@ C64::acquireThreadLock()
     } else {
         
         // There must be no emulator thread
-        assert(p == NULL);
+        assert(p == (pthread_t)0);
         
         // It's save to free the lock immediately
         pthread_mutex_unlock(&threadLock);
@@ -1142,7 +1142,7 @@ Snapshot *
 C64::latestAutoSnapshot()
 {
     Snapshot *result = autoSnapshot;
-    autoSnapshot = NULL;
+    autoSnapshot = nullptr;
     return result;
 }
 
@@ -1150,7 +1150,7 @@ Snapshot *
 C64::latestUserSnapshot()
 {
     Snapshot *result = userSnapshot;
-    userSnapshot = NULL;
+    userSnapshot = nullptr;
     return result;
 }
 
@@ -1278,7 +1278,7 @@ C64::romTitle(RomType type)
         }
         default: assert(false);
     }
-    return NULL;
+    return nullptr;
 }
 
 const char *
@@ -1325,7 +1325,7 @@ C64::romSubTitle(RomType type)
         }
         default: assert(false);
     }
-    return NULL;
+    return nullptr;
 }
 
 const char *
@@ -1357,7 +1357,7 @@ C64::romRevision(RomType type)
          }
          default: assert(false);
      }
-     return NULL;
+     return nullptr;
 }
 
 bool
@@ -1441,7 +1441,7 @@ C64::mega65KernalRev()
 bool
 C64::loadRom(RomType type, RomFile *file)
 {
-    assert(file != NULL);
+    assert(file != nullptr);
     
     switch (type) {
             
@@ -1498,7 +1498,7 @@ C64::loadRom(RomType type, RomFile *file)
 bool
 C64::loadRomFromBuffer(RomType type, const u8 *buffer, size_t length)
 {
-    assert(buffer != NULL);
+    assert(buffer != nullptr);
 
     switch (type) {
             
@@ -1542,7 +1542,7 @@ C64::loadRomFromBuffer(RomType type, const u8 *buffer, size_t length)
 bool
 C64::loadRomFromFile(RomType type, const char *path)
 {
-    assert(path != NULL);
+    assert(path != nullptr);
 
     switch (type) {
             
