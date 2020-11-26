@@ -920,7 +920,7 @@ C64::executeOneLine()
     if (rasterCycle == 1) beginRasterLine();
     
     // Emulate the middle of a rasterline
-    int lastCycle = vic.getCyclesPerLine();
+    unsigned lastCycle = vic.getCyclesPerLine();
     for (unsigned i = rasterCycle; i <= lastCycle; i++) {
         
         _executeOneCycle();
@@ -948,7 +948,7 @@ C64::executeOneCycle()
 void
 C64::_executeOneCycle()
 {
-    u64 cycle = ++cpu.cycle;
+    Cycle cycle = ++cpu.cycle;
     
     //  <---------- o2 low phase ----------->|<- o2 high phase ->|
     //                                       |                   |

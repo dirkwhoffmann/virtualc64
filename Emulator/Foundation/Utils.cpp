@@ -306,7 +306,7 @@ crc32(const u8 *addr, size_t size)
     for(int i = 0; i < 256; i++) table[i] = crc32forByte(i);
 
     // Compute CRC-32 checksum
-     for(int i = 0; i < size; i++)
+     for(size_t i = 0; i < size; i++)
        result = table[(u8)result ^ addr[i]] ^ result >> 8;
 
     return result;

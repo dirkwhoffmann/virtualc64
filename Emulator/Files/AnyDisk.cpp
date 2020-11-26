@@ -29,7 +29,7 @@ AnyDisk::readHalftrack()
 {
     int result;
     
-    assert(tEof <= size);
+    assert(tEof <= (long)size);
     
     if (tFp < 0)
         return -1;
