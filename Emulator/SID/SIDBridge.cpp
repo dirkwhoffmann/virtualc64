@@ -489,7 +489,7 @@ SIDBridge::handleBufferUnderflow()
     debug(SID_DEBUG, "RINGBUFFER UNDERFLOW (r: %ld w: %ld)\n", readPtr, writePtr);
 
     // Determine the elapsed seconds since the last pointer adjustment.
-    u64 now = mach_absolute_time();
+    u64 now = Oscillator::nanos();
     double elapsedTime = (double)(now - lastAlignment) / 1000000000.0;
     lastAlignment = now;
 
