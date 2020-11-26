@@ -717,11 +717,11 @@ CIA1::updatePB()
     
     // Check if timer A underflow shows up on PB6
     if (GET_BIT(PB67TimerMode, 6))
-        COPY_BIT(PB67TimerOut, PB, 6);
+        REPLACE_BIT(PB, 6, PB67TimerOut & (1 << 6));
     
     // Check if timer B underflow shows up on PB7
     if (GET_BIT(PB67TimerMode, 7))
-        COPY_BIT(PB67TimerOut, PB, 7);
+        REPLACE_BIT(PB, 7, PB67TimerOut & (1 << 7));
     
     // The control port can always bring the port lines low
     PB &= port1.bitmask();
@@ -824,11 +824,11 @@ CIA2::portBinternal()
     
     // Check if timer A underflow shows up on PB6
     if (GET_BIT(PB67TimerMode, 6))
-        COPY_BIT(PB67TimerOut, result, 6);
+        REPLACE_BIT(result, 6, PB67TimerOut & (1 << 6));
     
     // Check if timer B underflow shows up on PB7
     if (GET_BIT(PB67TimerMode, 7))
-        COPY_BIT(PB67TimerOut, result, 7);
+        REPLACE_BIT(result, 7, PB67TimerOut & (1 << 7));
     
     return result;
 }

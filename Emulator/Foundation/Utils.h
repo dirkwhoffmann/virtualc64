@@ -67,14 +67,19 @@ bool releaseBuild();
 #define WRITE_BIT(x,nr,value) ((value) ? SET_BIT(x, nr) : CLR_BIT(x, nr))
 
 // Copies a single bit from x to y
-#define COPY_BIT(x,y,nr) ((y) = ((y) & ~(1 << (nr)) | ((x) & (1 << (nr)))))
+// #define COPY_BIT(x,y,nr) ((y) = (((y) & ~(1 << (nr))) | (((x) & (1 << (nr))))))
 
-// Returns true if a boolean x is rising or falling when switching to y
+// Replaces bits, bytes, and words
+#define REPLACE_BIT(x,nr,v) ((v) ? SET_BIT(x, nr) : CLR_BIT(x, nr))
+#define REPLACE_LO(x,y) (((x) & ~0x00FF) | (y))
+#define REPLACE_HI(x,y) (((x) & ~0xFF00) | ((y) << 8))
+#define REPLACE_LO_WORD(x,y) (((x) & ~0xFFFF) | (y))
+#define REPLACE_HI_WORD(x,y) (((x) & ~0xFFFF0000) | ((y) << 16))
+
+// Checks for a rising or a falling edge
 #define RISING_EDGE(x,y) (!(x) && (y))
-#define FALLING_EDGE(x,y) ((x) && !(y))
-
-// Returns true if the n-th bit in x is rising or falling when switching to y
 #define RISING_EDGE_BIT(x,y,n) (!((x) & (1 << (n))) && ((y) & (1 << (n))))
+#define FALLING_EDGE(x,y) ((x) && !(y))
 #define FALLING_EDGE_BIT(x,y,n) (((x) & (1 << (n))) && !((y) & (1 << (n))))
 
 
