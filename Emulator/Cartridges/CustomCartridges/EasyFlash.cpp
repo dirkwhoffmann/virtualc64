@@ -101,12 +101,10 @@ EasyFlash::peek(u16 addr)
     
     if (isROMLaddr(addr)) {
         result = flashRomL.peek(bank, addr & 0x1FFF);
-        // debug(CRT_DEBUG, "peekL(%x) = %x\n", addr, result);
         return result;
         
     } else if (isROMHaddr(addr)) {
         result = flashRomH.peek(bank, addr & 0x1FFF);
-        // debug(CRT_DEBUG, "peekH(%x) = %x\n", addr, result);
         return result;
         
     } else {
@@ -124,14 +122,14 @@ EasyFlash::poke(u16 addr, u8 value)
 void
 EasyFlash::pokeRomL(u16 addr, u8 value)
 {
-    plaindebug(CRT_DEBUG, "pokeRomL(%x, %x)\n", addr, value);
+    debug(CRT_DEBUG, "pokeRomL(%x, %x)\n", addr, value);
     flashRomL.poke(bank, addr & 0x1FFF, value);
 }
 
 void
 EasyFlash::pokeRomH(u16 addr, u8 value)
 {
-    plaindebug(CRT_DEBUG, "pokeRomH(%x, %x)\n", addr, value);
+    debug(CRT_DEBUG, "pokeRomH(%x, %x)\n", addr, value);
     flashRomH.poke(bank, addr & 0x1FFF, value);
 }
 
