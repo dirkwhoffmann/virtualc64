@@ -16,6 +16,8 @@
 #include "TimeDelayed.h"
 #include "envelope.h"
 
+#include <arpa/inet.h>
+
 //
 // Basic memory buffer I/O
 //
