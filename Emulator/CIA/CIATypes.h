@@ -14,12 +14,11 @@
 // Enumerations
 //
 
-typedef enum : long
+longenum(CIARevision)
 {
     MOS_6526,
     MOS_8521
-}
-CIARevision;
+};
 
 inline bool
 isCIARevision(long value)

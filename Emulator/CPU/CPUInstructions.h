@@ -10,7 +10,7 @@
 #ifndef _CPU_INSTRUCTIONS_H
 #define _CPU_INSTRUCTIONS_H
 
-typedef enum {
+longenum(MicroInstruction) {
     
     fetch,
     
@@ -302,8 +302,7 @@ typedef enum {
     SRE_ind_y, SRE_ind_y_2, SRE_ind_y_3, SRE_ind_y_4, SRE_ind_y_5, SRE_ind_y_6, SRE_ind_y_7,
     
     TAS_abs_y, TAS_abs_y_2, TAS_abs_y_3, TAS_abs_y_4
-    
-} MicroInstruction;
+};
 
 // Loads a register and sets the Z and V flag
 #define loadA(v) { u8 u = (v); reg.a = u; reg.sr.n = u & 0x80; reg.sr.z = u == 0; }

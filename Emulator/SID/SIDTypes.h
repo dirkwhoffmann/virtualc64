@@ -14,12 +14,11 @@
 // Enumerations
 //
 
-typedef enum : long
+longenum(SIDRevision)
 {
     MOS_6581,
     MOS_8580
-}
-SIDRevision;
+};
 
 inline bool isSIDRevision(long value)
 {
@@ -37,12 +36,11 @@ inline const char *sidRevisionName(SIDRevision type)
     }
 }
 
-typedef enum : long
+longenum(SIDEngine)
 {
     ENGINE_FASTSID,
     ENGINE_RESID
-}
-SIDEngine;
+};
 
 inline bool isAudioEngine(long value)
 {
@@ -61,14 +59,13 @@ inline const char *sidEngineName(SIDEngine engine)
 }
 
 // This enum reflects enum "sampling_method" used by reSID.
-typedef enum : long
+longenum(SamplingMethod)
 {
     SID_SAMPLE_FAST,
     SID_SAMPLE_INTERPOLATE,
     SID_SAMPLE_RESAMPLE,
     SID_SAMPLE_RESAMPLE_FASTMEM
-}
-SamplingMethod;
+};
 
 inline bool isSamplingMethod(long value)
 {

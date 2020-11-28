@@ -58,18 +58,18 @@ extension BankTableView: NSTableViewDataSource {
 
         case "source":
 
-            switch inspector.bankType[row]?.rawValue {
+            switch inspector.bankType[row] {
                 
-            case M_NONE.rawValue:   return "Unmapped"
-            case M_RAM.rawValue:    return "Ram"
-            case M_PP.rawValue:     return "Ram"
-            case M_BASIC.rawValue:  return "Basic Rom"
-            case M_CHAR.rawValue:   return "Character Rom"
-            case M_KERNAL.rawValue: return "Kernal Rom"
-            case M_IO.rawValue:     return "IO"
-            case M_CRTLO.rawValue:  return "Cartridge Lo"
-            case M_CRTHI.rawValue:  return "Cartridge Hi"
-            default:                return "???"
+            case .M_NONE:   return "Unmapped"
+            case .M_RAM:    return "Ram"
+            case .M_PP:     return "Ram"
+            case .M_BASIC:  return "Basic Rom"
+            case .M_CHAR:   return "Character Rom"
+            case .M_KERNAL: return "Kernal Rom"
+            case .M_IO:     return "IO"
+            case .M_CRTLO:  return "Cartridge Lo"
+            case .M_CRTHI:  return "Cartridge Hi"
+            default:        return "???"
             }
 
         default:

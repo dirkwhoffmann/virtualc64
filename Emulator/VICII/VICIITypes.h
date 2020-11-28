@@ -14,7 +14,7 @@
 // Enumerations
 //
 
-typedef enum : long
+longenum(VICRevision)
 {
     PAL_6569_R1 = 1,
     PAL_6569_R3 = 2,
@@ -22,8 +22,7 @@ typedef enum : long
     NTSC_6567_R56A = 8,
     NTSC_6567 = 16,
     NTSC_8562 = 32
-}
-VICRevision;
+};
 
 inline bool isVICRevision(long value)
 {
@@ -51,12 +50,11 @@ inline const char *vicRevisionName(VICRevision revision)
     }
 }
 
-typedef enum : long
+longenum(GlueLogic)
 {
     GLUE_DISCRETE = 0,
     GLUE_CUSTOM_IC = 1
-}
-GlueLogic;
+};
 
 inline bool isGlueLogic(long value)
 {

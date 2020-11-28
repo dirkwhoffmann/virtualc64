@@ -12,27 +12,27 @@ extension ConfigurationController {
     func refreshHardwareTab() {
                 
         let vicRevision = config.vicRevision
-        let resid = config.sidEngine == ENGINE_RESID.rawValue
+        let resid = config.sidEngine == SIDEngine.ENGINE_RESID.rawValue
         
         track()
         
         // VIC
         hwVicModelPopup.selectItem(withTag: vicRevision)
         
-        switch vicRevision {
+        switch VICRevision.init(rawValue: vicRevision) {
             
-        case PAL_6569_R1.rawValue,
-             PAL_6569_R3.rawValue,
-             PAL_8565.rawValue:
+        case .PAL_6569_R1,
+             .PAL_6569_R3,
+             .PAL_8565:
             
             hwVicIcon.image = NSImage(named: "pref_vicii_pal")
             
-        case NTSC_6567_R56A.rawValue:
+        case .NTSC_6567_R56A:
             
             hwVicIcon.image = NSImage(named: "pref_vicii_ntsc")
             
-        case NTSC_6567.rawValue,
-             NTSC_8562.rawValue:
+        case .NTSC_6567,
+             .NTSC_8562:
             
             hwVicIcon.image = NSImage(named: "pref_vicii_ntsc")
             

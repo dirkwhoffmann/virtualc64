@@ -635,20 +635,20 @@ struct HardwareDefaults {
     
     static let C64_PAL = HardwareDefaults.init(
         
-        vicRevision:   PAL_6569_R3,
+        vicRevision:   .PAL_6569_R3,
         vicGrayDotBug: false,
         
-        ciaRevision:   MOS_6526,
+        ciaRevision:   .MOS_6526,
         ciaTimerBBug:  true,
         
-        sidRevision:   MOS_6581,
+        sidRevision:   .MOS_6581,
         sidFilter:     true,
 
-        sidEngine:     ENGINE_RESID,
-        sampling:      SID_SAMPLE_INTERPOLATE,
+        sidEngine:     .ENGINE_RESID,
+        sampling:      .SID_SAMPLE_INTERPOLATE,
         
-        glueLogic:     GLUE_DISCRETE,
-        ramPattern:    RAM_PATTERN_C64,
+        glueLogic:     .GLUE_DISCRETE,
+        ramPattern:    .RAM_PATTERN_C64,
         
         driveConnect:  [true, false],
         driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
@@ -659,20 +659,20 @@ struct HardwareDefaults {
     
     static let C64_II_PAL = HardwareDefaults.init(
         
-        vicRevision:   PAL_8565,
+        vicRevision:   .PAL_8565,
         vicGrayDotBug: true,
         
-        ciaRevision:   MOS_8521,
+        ciaRevision:   .MOS_8521,
         ciaTimerBBug:  false,
         
-        sidRevision:   MOS_8580,
+        sidRevision:   .MOS_8580,
         sidFilter:     true,
 
-        sidEngine:     ENGINE_RESID,
-        sampling:      SID_SAMPLE_INTERPOLATE,
+        sidEngine:     .ENGINE_RESID,
+        sampling:      .SID_SAMPLE_INTERPOLATE,
         
-        glueLogic:     GLUE_CUSTOM_IC,
-        ramPattern:    RAM_PATTERN_C64C,
+        glueLogic:     .GLUE_CUSTOM_IC,
+        ramPattern:    .RAM_PATTERN_C64C,
         
         driveConnect:  [true, false],
         driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
@@ -683,20 +683,20 @@ struct HardwareDefaults {
     
     static let C64_OLD_PAL = HardwareDefaults.init(
         
-        vicRevision:   PAL_6569_R1,
+        vicRevision:   .PAL_6569_R1,
         vicGrayDotBug: false,
         
-        ciaRevision:   MOS_6526,
+        ciaRevision:   .MOS_6526,
         ciaTimerBBug:  true,
         
-        sidRevision:   MOS_6581,
+        sidRevision:   .MOS_6581,
         sidFilter:     true,
 
-        sidEngine:     ENGINE_RESID,
-        sampling:      SID_SAMPLE_INTERPOLATE,
+        sidEngine:     .ENGINE_RESID,
+        sampling:      .SID_SAMPLE_INTERPOLATE,
         
-        glueLogic:     GLUE_DISCRETE,
-        ramPattern:    RAM_PATTERN_C64,
+        glueLogic:     .GLUE_DISCRETE,
+        ramPattern:    .RAM_PATTERN_C64,
         
         driveConnect:  [true, false],
         driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
@@ -707,20 +707,20 @@ struct HardwareDefaults {
 
     static let C64_NTSC = HardwareDefaults.init(
         
-        vicRevision:   NTSC_6567,
+        vicRevision:   .NTSC_6567,
         vicGrayDotBug: false,
         
-        ciaRevision:   MOS_6526,
+        ciaRevision:   .MOS_6526,
         ciaTimerBBug:  false,
         
-        sidRevision:   MOS_6581,
+        sidRevision:   .MOS_6581,
         sidFilter:     true,
 
-        sidEngine:     ENGINE_RESID,
-        sampling:      SID_SAMPLE_INTERPOLATE,
+        sidEngine:     .ENGINE_RESID,
+        sampling:      .SID_SAMPLE_INTERPOLATE,
         
-        glueLogic:     GLUE_DISCRETE,
-        ramPattern:    RAM_PATTERN_C64,
+        glueLogic:     .GLUE_DISCRETE,
+        ramPattern:    .RAM_PATTERN_C64,
         
         driveConnect:  [true, false],
         driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
@@ -731,20 +731,20 @@ struct HardwareDefaults {
     
     static let C64_II_NTSC = HardwareDefaults.init(
         
-        vicRevision:   NTSC_8562,
+        vicRevision:   .NTSC_8562,
         vicGrayDotBug: true,
         
-        ciaRevision:   MOS_8521,
+        ciaRevision:   .MOS_8521,
         ciaTimerBBug:  true,
         
-        sidRevision:   MOS_8580,
+        sidRevision:   .MOS_8580,
         sidFilter:     true,
 
-        sidEngine:     ENGINE_RESID,
-        sampling:      SID_SAMPLE_INTERPOLATE,
+        sidEngine:     .ENGINE_RESID,
+        sampling:      .SID_SAMPLE_INTERPOLATE,
         
-        glueLogic:     GLUE_CUSTOM_IC,
-        ramPattern:    RAM_PATTERN_C64C,
+        glueLogic:     .GLUE_CUSTOM_IC,
+        ramPattern:    .RAM_PATTERN_C64C,
         
         driveConnect:  [true, false],
         driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
@@ -755,20 +755,20 @@ struct HardwareDefaults {
     
     static let C64_OLD_NTSC = HardwareDefaults.init(
         
-        vicRevision:   NTSC_6567_R56A,
+        vicRevision:   .NTSC_6567_R56A,
         vicGrayDotBug: false,
         
-        ciaRevision:   MOS_6526,
+        ciaRevision:   .MOS_6526,
         ciaTimerBBug:  false,
         
-        sidRevision:   MOS_6581,
+        sidRevision:   .MOS_6581,
         sidFilter:     true,
 
-        sidEngine:     ENGINE_RESID,
-        sampling:      SID_SAMPLE_INTERPOLATE,
+        sidEngine:     .ENGINE_RESID,
+        sampling:      .SID_SAMPLE_INTERPOLATE,
         
-        glueLogic:     GLUE_DISCRETE,
-        ramPattern:    RAM_PATTERN_C64,
+        glueLogic:     .GLUE_DISCRETE,
+        ramPattern:    .RAM_PATTERN_C64,
         
         driveConnect:  [true, false],
         driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],

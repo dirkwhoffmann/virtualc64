@@ -68,21 +68,21 @@ extension Inspector {
             
         case 2: // RAM
             
-            for i in 0...15 { bankType[i] = M_RAM }
+            for i in 0...15 { bankType[i] = .M_RAM }
             
         case 3: // ROM
             
-            for i in 0...15 { bankType[i] = M_NONE }
-            bankType[0xA] = M_BASIC
-            bankType[0xB] = M_BASIC
-            bankType[0xD] = M_CHAR
-            bankType[0xE] = M_KERNAL
-            bankType[0xF] = M_KERNAL
+            for i in 0...15 { bankType[i] = .M_NONE }
+            bankType[0xA] = .M_BASIC
+            bankType[0xB] = .M_BASIC
+            bankType[0xD] = .M_CHAR
+            bankType[0xE] = .M_KERNAL
+            bankType[0xF] = .M_KERNAL
             
         case 4: // IO
 
-            for i in 0...15 { bankType[i] = M_NONE }
-            bankType[0xD] = M_IO
+            for i in 0...15 { bankType[i] = .M_NONE }
+            bankType[0xD] = .M_IO
             
         default:
             fatalError()
@@ -180,42 +180,42 @@ extension Inspector {
         
     @IBAction func memPPAction(_ sender: NSButton!) {
 
-        jumpTo(type: [M_PP])
+        jumpTo(type: [.M_PP])
     }
 
     @IBAction func memRamAction(_ sender: NSButton!) {
 
-        jumpTo(type: [M_PP, M_RAM])
+        jumpTo(type: [.M_PP, .M_RAM])
     }
 
     @IBAction func memBasicAction(_ sender: NSButton!) {
 
-        jumpTo(type: [M_BASIC])
+        jumpTo(type: [.M_BASIC])
     }
 
     @IBAction func memCharAction(_ sender: NSButton!) {
 
-        jumpTo(type: [M_CHAR])
+        jumpTo(type: [.M_CHAR])
     }
 
     @IBAction func memKernalAction(_ sender: NSButton!) {
 
-        jumpTo(type: [M_KERNAL])
+        jumpTo(type: [.M_KERNAL])
     }
 
     @IBAction func memIOAction(_ sender: NSButton!) {
 
-        jumpTo(type: [M_IO])
+        jumpTo(type: [.M_IO])
     }
 
     @IBAction func memCrtLoAction(_ sender: NSButton!) {
 
-        jumpTo(type: [M_CRTLO])
+        jumpTo(type: [.M_CRTLO])
     }
 
     @IBAction func memCrtHiAction(_ sender: NSButton!) {
 
-        jumpTo(type: [M_CRTHI])
+        jumpTo(type: [.M_CRTHI])
     }
     
     @IBAction func memSliderAction(_ sender: NSSlider!) {
@@ -256,16 +256,16 @@ extension Inspector {
         for bank in 0...15 {
             
             var color: NSColor
-            switch bankType[bank]!.rawValue {
-            case M_NONE.rawValue: color = MemColors.unmapped
-            case M_PP.rawValue: color = MemColors.ram
-            case M_RAM.rawValue: color = MemColors.ram
-            case M_BASIC.rawValue: color = MemColors.basic
-            case M_CHAR.rawValue: color = MemColors.char
-            case M_KERNAL.rawValue: color = MemColors.kernal
-            case M_IO.rawValue: color = MemColors.io
-            case M_CRTLO.rawValue: color = MemColors.cartlo
-            case M_CRTHI.rawValue: color = MemColors.carthi
+            switch bankType[bank] {
+            case .M_NONE: color = MemColors.unmapped
+            case .M_PP: color = MemColors.ram
+            case .M_RAM: color = MemColors.ram
+            case .M_BASIC: color = MemColors.basic
+            case .M_CHAR: color = MemColors.char
+            case .M_KERNAL: color = MemColors.kernal
+            case .M_IO: color = MemColors.io
+            case .M_CRTLO: color = MemColors.cartlo
+            case .M_CRTHI: color = MemColors.carthi
             default: color = MemColors.unmapped
             }
             
@@ -282,7 +282,7 @@ extension Inspector {
         }
 
         // Mark the processor port area
-        if bankType[0]!.rawValue == M_PP.rawValue {
+        if bankType[0] == .M_PP {
             let ciColor = CIColor(color: MemColors.pp)!
             for y in 0...15 {
                 let r = Int(ciColor.red * CGFloat(255 - y*c))

@@ -80,7 +80,7 @@ longenum(CartridgeType)
     
 };
 
-typedef enum : long
+longenum(FlashRomState)
 {
     FLASH_READ = 0,
     FLASH_MAGIC_1,
@@ -95,7 +95,6 @@ typedef enum : long
     FLASH_SECTOR_ERASE,
     FLASH_SECTOR_ERASE_TIMEOUT,
     FLASH_SECTOR_ERASE_SUSPEND
-}
-FlashRomState;
+};
 
 #endif
