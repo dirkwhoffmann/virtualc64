@@ -72,7 +72,7 @@ public:
     // Debugging the component
     //
     
-protected:
+public:
     
     /* There a four types of messages:
      *
