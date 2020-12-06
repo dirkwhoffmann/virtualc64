@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-ReSID::ReSID(C64 &ref, SIDBridge &bridgeref) : C64Component(ref), bridge(bridgeref)
+ReSID::ReSID(C64 &ref, SIDStream &streamref) : C64Component(ref), stream(streamref)
 {
 	setDescription("ReSID");
 
@@ -232,7 +232,5 @@ ReSID::execute(u64 elapsedCycles)
     }
     
     // Write samples into ringbuffer
-    if (bufindex) {
-        bridge.writeData(buf, bufindex);
-    }
+    stream.append(buf, bufindex);
 }

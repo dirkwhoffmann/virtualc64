@@ -30,7 +30,7 @@
 
 #include "C64.h"
 
-FastSID::FastSID(C64 &ref, SIDBridge &bridgeref) : C64Component(ref), bridge(bridgeref)
+FastSID::FastSID(C64 &ref, SIDStream &streamref) : C64Component(ref), stream(streamref)
 {
 	setDescription("FastSID");
     
@@ -369,7 +369,7 @@ FastSID::execute(u64 cycles)
     }
     
     // Write samples into ringbuffer
-    bridge.writeData(buf, numSamples);
+    stream.append(buf, numSamples);
 }
 
 void

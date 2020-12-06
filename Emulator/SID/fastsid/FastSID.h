@@ -34,9 +34,13 @@
 
 class FastSID : public C64Component {
     
-    // Reference to the connected bridge object
-    SIDBridge &bridge;
+    // Reference to the connected SID bridge
+    // SIDBridge &bridge;
 
+    // Reference to the connected output stream
+    SIDStream &stream;
+
+    
     //
     // Sub components
     //
@@ -106,7 +110,7 @@ private:
     
 public:
         
-	FastSID(C64 &ref, SIDBridge &bridgeref);
+	FastSID(C64 &ref, SIDStream &streamref);
 
 private:
     

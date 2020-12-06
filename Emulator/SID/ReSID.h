@@ -27,8 +27,11 @@
 
 class ReSID : public C64Component {
 
-    // Reference to the connected bridge object
-     SIDBridge &bridge;
+    // Reference to the connected SID bridge
+    // SIDBridge &bridge;
+    
+    // Reference to the connected output stream
+    SIDStream &stream;
     
     // Entry point to the reSID backend
     reSID::SID *sid;
@@ -68,7 +71,7 @@ private:
     
 public:
     
-	ReSID(C64 &ref, SIDBridge &bridgeref);
+	ReSID(C64 &ref, SIDStream &streamref);
 	~ReSID();
     
 private:

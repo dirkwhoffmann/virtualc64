@@ -30,10 +30,10 @@ class SIDBridge : public C64Component {
 private:
 
     // FastSID (Adapted from VICE 3.1)
-    FastSID fastsid = FastSID(c64, *this);
+    FastSID fastsid = FastSID(c64, ringBuffer);
 
     // ReSID (Taken from VICE 3.1)
-    ReSID resid = ReSID(c64, *this);
+    ReSID resid = ReSID(c64, ringBuffer);
        
     // CPU cycle at the last call to executeUntil()
     u64 cycles;
@@ -59,8 +59,7 @@ public:
     /* The audio sample ringbuffer. This ringbuffer is used to transfer samples
      * from the emulated SID to the native audio device (CoreAudio on macOS).
      */
-    SIDStream ringBuffer;
-    // RingBuffer<float,12288> ringBuffer;
+    SIDStream ringBuffer = SIDStream(*this);
     
 private:
     
@@ -223,7 +222,7 @@ public:
     
     /* Writes a certain number of audio samples into ringbuffer
      */
-    void writeData(short *data, size_t count);
+    // void writeData(short *data, size_t count);
     
     /* Handles a buffer underflow condition.
      * A buffer underflow occurs when the computer's audio device needs sound

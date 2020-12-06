@@ -455,6 +455,7 @@ SIDBridge::readStereoSamplesInterleaved(float *target, size_t n)
     }
 }
 
+/*
 void
 SIDBridge::writeData(short *data, size_t count)
 {
@@ -468,6 +469,7 @@ SIDBridge::writeData(short *data, size_t count)
         ringBuffer.write(float(data[i]) * scale);
     }
 }
+*/
 
 void
 SIDBridge::handleBufferUnderflow()
@@ -484,12 +486,12 @@ SIDBridge::handleBufferUnderflow()
     double elapsedTime = (double)(now - lastAlignment) / 1000000000.0;
     lastAlignment = now;
 
-    // Adjust the sample rate, if condition (1) holds.
+    // Adjust the sample rate, if condition (1) holds
     if (elapsedTime > 10.0) {
         
         bufferUnderflows++;
         
-        // Increase the sample rate based on what we've measured.
+        // Increase the sample rate based on what we've measured
         int offPerSecond = (int)(samplesAhead / elapsedTime);
         setSampleRate(getSampleRate() + offPerSecond);
     }
@@ -503,22 +505,22 @@ SIDBridge::handleBufferOverflow()
 {
     // There are two common scenarios in which buffer overflows occur:
     //
-    // (1) The consumer runs slightly slower than the producer.
-    // (2) The consumer is halted or not startet yet.
+    // (1) The consumer runs slightly slower than the producer
+    // (2) The consumer is halted or not startet yet
     
     debug(SID_DEBUG, "BUFFER OVERFLOW (r: %ld w: %ld)\n", ringBuffer.r, ringBuffer.w);
     
-    // Determine the elapsed seconds since the last pointer adjustment.
+    // Determine the elapsed seconds since the last pointer adjustment
     u64 now = Oscillator::nanos();
     double elapsedTime = (double)(now - lastAlignment) / 1000000000.0;
     lastAlignment = now;
     
-    // Adjust the sample rate, if condition (1) holds.
+    // Adjust the sample rate, if condition (1) holds
     if (elapsedTime > 10.0) {
         
         bufferOverflows++;
         
-        // Decrease the sample rate based on what we've measured.
+        // Decrease the sample rate based on what we've measured
         int offPerSecond = (int)(samplesAhead / elapsedTime);
         setSampleRate(getSampleRate() - offPerSecond);
     }

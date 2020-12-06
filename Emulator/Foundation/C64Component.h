@@ -25,6 +25,7 @@ class VICII;
 class CIA1;
 class CIA2;
 class SIDBridge;
+class SIDStream;
 class Keyboard;
 class ControlPort;
 class ExpansionPort;
