@@ -10,6 +10,8 @@
 #ifndef _BUFFERS_H
 #define _BUFFERS_H
 
+#include "C64Types.h"
+
 template <class T, size_t capacity> struct RingBuffer
 {
     // Element storage

@@ -28,9 +28,7 @@ isCIARevision(long value)
 
 inline const char *
 ciaRevisionName(CIARevision type)
-{
-    assert(isCIARevision(type));
-    
+{    
     switch (type) {
         case MOS_6526: return "MOS_6526";
         case MOS_8521: return "MOS_8521";

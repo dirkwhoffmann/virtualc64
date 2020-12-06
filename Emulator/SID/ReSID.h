@@ -7,12 +7,17 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-// This class is a wrapper around the third-party reSID library.
-//
-// List of modifications applied to reSID:
-// 1. Changed visibility of some objects from protected to public
-//
-// Good candidate for testing sound emulation: INTERNAT.P00
+/* This class is a wrapper around the third-party reSID library.
+ *
+ *   List of modifications applied to reSID:
+ *
+ *     - Changed visibility of some objects from protected to public
+ *
+ *   Good candidate for testing sound emulation:
+ *
+ *     - INTERNAT.P00
+ *     - DEFEND1.PRG  ("Das Boot" intro music)
+ */
 
 #ifndef _RESID_H
 #define _RESID_H

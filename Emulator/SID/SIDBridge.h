@@ -7,14 +7,14 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _SIDBRIDGE_H
-#define _SIDBRIDGE_H
+#ifndef _SID_BRIDGE_H
+#define _SID_BRIDGE_H
 
 #include "C64Component.h"
+#include "SIDTypes.h"
+#include "SIDStream.h"
 #include "FastSID.h"
 #include "ReSID.h"
-#include "SIDTypes.h"
-#include "Buffers.h"
 
 class SIDBridge : public C64Component {
 
@@ -49,6 +49,7 @@ public:
     // Number of buffer overflows since power up
     u64 bufferOverflows;
     
+    
     //
     // Audio ringbuffer
     //
@@ -58,7 +59,8 @@ public:
     /* The audio sample ringbuffer. This ringbuffer is used to transfer samples
      * from the emulated SID to the native audio device (CoreAudio on macOS).
      */
-    RingBuffer<float,12288> ringBuffer;
+    SIDStream ringBuffer;
+    // RingBuffer<float,12288> ringBuffer;
     
 private:
     
