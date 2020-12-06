@@ -378,9 +378,11 @@ SIDBridge::execute(u64 numCycles)
 void
 SIDBridge::clearRingbuffer()
 {
-    // Reset ringbuffer contents
+    ringBuffer.clear(0);
+    
+    // Reset ringbuffer contents (DEPRECATED)
     for (unsigned i = 0; i < bufferSize; i++) {
-        ringBuffer[i] = 0.0f;
+        deprecatedRingBuffer[i] = 0.0f;
     }
     
     // Put the write pointer ahead of the read pointer
@@ -391,7 +393,9 @@ float
 SIDBridge::readData()
 {
     // Read sound sample
-    float value = ringBuffer[readPtr];
+    float deprecatedValue = deprecatedRingBuffer[readPtr];
+    float value = ringBuffer.read();
+    assert(deprecatedValue == value);
     
     // Adjust volume
     if (volume != targetVolume) {
@@ -414,7 +418,9 @@ SIDBridge::readData()
 float
 SIDBridge::ringbufferData(size_t offset)
 {
-    return ringBuffer[(readPtr + offset) % bufferSize];
+    float result = ringBuffer.current((int)offset);
+    assert(result == deprecatedRingBuffer[(readPtr + offset) % bufferSize]);
+    return result;
 }
 
 void
@@ -473,8 +479,9 @@ SIDBridge::writeData(short *data, size_t count)
     
     // Convert sound samples to floating point values and write into ringbuffer
     for (unsigned i = 0; i < count; i++) {
-        ringBuffer[writePtr] = float(data[i]) * scale;
+        deprecatedRingBuffer[writePtr] = float(data[i]) * scale;
         advanceWritePtr();
+        ringBuffer.write(float(data[i]) * scale);
     }
 }
 

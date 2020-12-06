@@ -35,7 +35,14 @@ static_assert(sizeof(u64) == 8, "u64 size mismatch");
 
 
 //
-// Cycle counts
+// Syntactic sugar
+//
+
+#define fallthrough
+
+
+//
+// Cycles
 //
 
 typedef i64 Cycle;

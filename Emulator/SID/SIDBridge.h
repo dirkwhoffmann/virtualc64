@@ -14,6 +14,7 @@
 #include "FastSID.h"
 #include "ReSID.h"
 #include "SIDTypes.h"
+#include "Buffers.h"
 
 class SIDBridge : public C64Component {
 
@@ -60,7 +61,8 @@ private:
     /* The audio sample ringbuffer. This ringbuffer is used to transfer samples
      * from the emulated SID to the native audio device (CoreAudio on macOS).
      */
-    float ringBuffer[bufferSize];
+    float deprecatedRingBuffer[bufferSize];
+    RingBuffer<float,12288> ringBuffer;
     
     /* Scaling value for sound samples. All sound samples produced by reSID are
      * scaled by this value before they are written into the ringBuffer.
@@ -269,7 +271,10 @@ public:
      * With a standard sample rate of 44100 Hz, 735 samples is 1/60 sec.
      */
     const u32 samplesAhead = 8 * 735;
-    void alignWritePtr() { writePtr = (readPtr  + samplesAhead) % bufferSize; }
+    void alignWritePtr() {
+        writePtr = (readPtr  + samplesAhead) % bufferSize;
+        ringBuffer.align(8 * 735);
+    }
     
     // Executes SID until a certain cycle is reached
     void executeUntil(u64 targetCycle);
