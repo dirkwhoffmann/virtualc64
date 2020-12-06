@@ -379,13 +379,6 @@ void
 SIDBridge::clearRingbuffer()
 {
     ringBuffer.clear(0);
-    
-    // Reset ringbuffer contents (DEPRECATED)
-    for (unsigned i = 0; i < bufferSize; i++) {
-        deprecatedRingBuffer[i] = 0.0f;
-    }
-    
-    // Put the write pointer ahead of the read pointer
     alignWritePtr();
 }
 
@@ -393,9 +386,7 @@ float
 SIDBridge::readData()
 {
     // Read sound sample
-    float deprecatedValue = deprecatedRingBuffer[readPtr];
     float value = ringBuffer.read();
-    assert(deprecatedValue == value);
     
     // Adjust volume
     if (volume != targetVolume) {
@@ -408,32 +399,27 @@ SIDBridge::readData()
     // float divider = 75000.0f; // useReSID ? 100000.0f : 150000.0f;
     float divider = 40000.0f;
     value = (volume <= 0) ? 0.0f : value * (float)volume / divider;
-    
-    // Advance read pointer
-    advanceReadPtr();
-    
+        
     return value;
 }
 
 float
 SIDBridge::ringbufferData(size_t offset)
 {
-    float result = ringBuffer.current((int)offset);
-    assert(result == deprecatedRingBuffer[(readPtr + offset) % bufferSize]);
-    return result;
+    return ringBuffer.current((int)offset);
 }
 
 void
 SIDBridge::readMonoSamples(float *target, size_t n)
 {
     // Check for buffer underflow
-    if (samplesInBuffer() < n) {
+    if (ringBuffer.count() < n) {
         handleBufferUnderflow();
     }
     
     // Read samples
     for (size_t i = 0; i < n; i++) {
-        float value = readData();
+        float value =   readData();
         target[i] = value;
     }
 }
@@ -442,7 +428,7 @@ void
 SIDBridge::readStereoSamples(float *target1, float *target2, size_t n)
 {
     // Check for buffer underflow
-    if (samplesInBuffer() < n) {
+    if (ringBuffer.count() < n) {
         handleBufferUnderflow();
     }
     
@@ -457,7 +443,7 @@ void
 SIDBridge::readStereoSamplesInterleaved(float *target, size_t n)
 {
     // Check for buffer underflow
-    if (samplesInBuffer() < n) {
+    if (ringBuffer.count() < n) {
         handleBufferUnderflow();
     }
     
@@ -473,14 +459,12 @@ void
 SIDBridge::writeData(short *data, size_t count)
 {
     // Check for buffer overflow
-    if (bufferCapacity() < count) {
+    if (ringBuffer.free() < count) {
         handleBufferOverflow();
     }
     
     // Convert sound samples to floating point values and write into ringbuffer
     for (unsigned i = 0; i < count; i++) {
-        deprecatedRingBuffer[writePtr] = float(data[i]) * scale;
-        advanceWritePtr();
         ringBuffer.write(float(data[i]) * scale);
     }
 }
@@ -493,7 +477,7 @@ SIDBridge::handleBufferUnderflow()
     // (1) The consumer runs slightly faster than the producer.
     // (2) The producer is halted or not startet yet.
     
-    debug(SID_DEBUG, "RINGBUFFER UNDERFLOW (r: %ld w: %ld)\n", readPtr, writePtr);
+    debug(SID_DEBUG, "BUFFER UNDERFLOW (r: %ld w: %ld)\n", ringBuffer.r, ringBuffer.w);
 
     // Determine the elapsed seconds since the last pointer adjustment.
     u64 now = Oscillator::nanos();
@@ -522,7 +506,7 @@ SIDBridge::handleBufferOverflow()
     // (1) The consumer runs slightly slower than the producer.
     // (2) The consumer is halted or not startet yet.
     
-    debug(SID_DEBUG, "RINGBUFFER OVERFLOW (r: %ld w: %ld)\n", readPtr, writePtr);
+    debug(SID_DEBUG, "BUFFER OVERFLOW (r: %ld w: %ld)\n", ringBuffer.r, ringBuffer.w);
     
     // Determine the elapsed seconds since the last pointer adjustment.
     u64 now = Oscillator::nanos();

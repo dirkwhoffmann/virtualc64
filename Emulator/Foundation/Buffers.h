@@ -45,9 +45,10 @@ template <class T, size_t capacity> struct RingBuffer
 
     size_t cap() { return capacity; }
     size_t count() const { return (capacity + w - r) % capacity; }
+    size_t free() const { return capacity - count() - 1; }
     double fillLevel() const { return (double)count() / capacity; }
     bool isEmpty() const { return r == w; }
-    bool isFull() const { return count() == capacity - 1; }
+    bool isFull() const { return free() == 0; }
 
     
     //

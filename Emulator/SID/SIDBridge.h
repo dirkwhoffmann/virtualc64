@@ -53,26 +53,20 @@ public:
     // Audio ringbuffer
     //
 
-private:
-
-    // Number of sound samples stored in ringbuffer
-    static constexpr size_t bufferSize = 12288;
+public:
     
     /* The audio sample ringbuffer. This ringbuffer is used to transfer samples
      * from the emulated SID to the native audio device (CoreAudio on macOS).
      */
-    float deprecatedRingBuffer[bufferSize];
     RingBuffer<float,12288> ringBuffer;
+    
+private:
     
     /* Scaling value for sound samples. All sound samples produced by reSID are
      * scaled by this value before they are written into the ringBuffer.
      */
     static constexpr float scale = 0.000005f;
-    
-    // Ring buffer pointers
-    u32 readPtr;
-    u32 writePtr;
-    
+        
     // Current volume (0 = silent)
     i32 volume;
     
@@ -201,13 +195,6 @@ public:
     
 public:
     
-    // Returns the size of the ringbuffer (constant value)
-    size_t ringbufferSize() { return bufferSize; }
-    
-    // Returns the position of the read or write pointer
-    u32 getReadPtr() { return readPtr; }
-    u32 getWritePtr() { return writePtr; }
-
     // Clears the ringbuffer and resets the read and write pointer
     void clearRingbuffer();
     
@@ -250,13 +237,8 @@ public:
     
     // Signals to ignore the next underflow or overflow condition.
     void ignoreNextUnderOrOverflow();
-        
-    // Moves read or write pointer forwards or backwards
-    void advanceReadPtr() { readPtr = (readPtr + 1) % bufferSize; }
-    void advanceReadPtr(int steps) { readPtr = (readPtr + bufferSize + steps) % bufferSize; }
-    void advanceWritePtr() { writePtr = (writePtr + 1) % bufferSize; }
-    void advanceWritePtr(int steps) { writePtr = (writePtr + bufferSize + steps) % bufferSize; }
     
+    /*
     // Returns number of stored samples in ringbuffer
     unsigned samplesInBuffer() { return (writePtr + bufferSize - readPtr) % bufferSize; }
     
@@ -265,16 +247,14 @@ public:
     
     // Returns the fill level as a percentage value
     double fillLevel() { return (double)samplesInBuffer() / (double)bufferSize; }
+    */
     
     /* Aligns the write pointer.
      * This function puts the write pointer somewhat ahead of the read pointer.
      * With a standard sample rate of 44100 Hz, 735 samples is 1/60 sec.
      */
     const u32 samplesAhead = 8 * 735;
-    void alignWritePtr() {
-        writePtr = (readPtr  + samplesAhead) % bufferSize;
-        ringBuffer.align(8 * 735);
-    }
+    void alignWritePtr() { ringBuffer.align(samplesAhead); }
     
     // Executes SID until a certain cycle is reached
     void executeUntil(u64 targetCycle);

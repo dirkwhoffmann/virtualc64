@@ -489,7 +489,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 }
 - (NSInteger) ringbufferSize
 {
-    return wrapper->sid->ringbufferSize();
+    return wrapper->sid->ringBuffer.cap();
 }
 - (float) ringbufferData:(NSInteger)offset
 {
@@ -497,7 +497,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 }
 - (double) fillLevel
 {
-    return wrapper->sid->fillLevel();
+    return wrapper->sid->ringBuffer.fillLevel();
 }
 - (NSInteger) bufferUnderflows
 {
