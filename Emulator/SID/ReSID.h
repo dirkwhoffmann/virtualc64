@@ -207,9 +207,10 @@ public:
     //
     
 	/* Runs reSID for the specified amount of CPU cycles. The generated sound
-     * samples are written into the internal ring buffer.
+     * samples are written into the internal ring buffer. The fuction returns
+     * the number of written audio samples.
      */
-    void execute(u64 cycles);
+    u64 execute(u64 cycles);
 };
 
 #endif

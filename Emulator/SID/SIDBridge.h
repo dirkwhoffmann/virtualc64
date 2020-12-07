@@ -31,7 +31,7 @@ private:
 
     // FastSID (Adapted from VICE 3.1)
     FastSID fastsid = FastSID(c64, ringBuffer);
-
+    
     // ReSID (Taken from VICE 3.1)
     ReSID resid = ReSID(c64, ringBuffer);
        
@@ -66,7 +66,7 @@ private:
     /* Scaling value for sound samples. All sound samples produced by reSID are
      * scaled by this value before they are written into the ringBuffer.
      */
-    static constexpr float scale = 0.000005f;
+    // static constexpr float scale = 0.000005f;
         
     // Current volume (0 = silent)
     i32 volume;
@@ -219,11 +219,7 @@ public:
      * Samples are stored in an interleaved stereo stream.
      */
     void readStereoSamplesInterleaved(float *target, size_t n);
-    
-    /* Writes a certain number of audio samples into ringbuffer
-     */
-    // void writeData(short *data, size_t count);
-    
+        
     /* Handles a buffer underflow condition.
      * A buffer underflow occurs when the computer's audio device needs sound
      * samples than SID hasn't produced, yet.
@@ -238,17 +234,6 @@ public:
     
     // Signals to ignore the next underflow or overflow condition.
     void ignoreNextUnderOrOverflow();
-    
-    /*
-    // Returns number of stored samples in ringbuffer
-    unsigned samplesInBuffer() { return (writePtr + bufferSize - readPtr) % bufferSize; }
-    
-    // Returns remaining storage capacity of ringbuffer
-    unsigned bufferCapacity() { return (readPtr + bufferSize - writePtr) % bufferSize; }
-    
-    // Returns the fill level as a percentage value
-    double fillLevel() { return (double)samplesInBuffer() / (double)bufferSize; }
-    */
     
     /* Aligns the write pointer.
      * This function puts the write pointer somewhat ahead of the read pointer.

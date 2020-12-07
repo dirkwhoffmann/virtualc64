@@ -212,25 +212,32 @@ ReSID::poke(u16 addr, u8 value)
     sid->write(addr, value);
 }
 
-void
-ReSID::execute(u64 elapsedCycles)
+u64
+ReSID::execute(u64 cycles)
 {
     short buf[2049];
     int buflength = 2048;
     
+    // Don't ask SID to compute samples for a time interval greater than 1 sec
+    assert(cycles <= PAL_CYCLES_PER_SECOND);
+    /*
     if (elapsedCycles > PAL_CYCLES_PER_SECOND) {
         warn("Number of missing SID cycles is far too large.\n");
         elapsedCycles = PAL_CYCLES_PER_SECOND;
     }
-
-    reSID::cycle_count delta_t = (reSID::cycle_count)elapsedCycles;
-    int bufindex = 0;
+    */
+    
+    reSID::cycle_count delta_t = (reSID::cycle_count)cycles;
+    int numSamples = 0;
     
     // Let reSID compute some sound samples
     while (delta_t) {
-        bufindex += sid->clock(delta_t, buf + bufindex, buflength - bufindex);
+        numSamples += sid->clock(delta_t, buf + numSamples, buflength - numSamples);
     }
     
     // Write samples into ringbuffer
-    stream.append(buf, bufindex);
+    stream.append(buf, numSamples);
+    
+    assert(numSamples >= 0);
+    return (u64)numSamples;
 }

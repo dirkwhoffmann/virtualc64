@@ -11,7 +11,7 @@
 
 void
 SIDStream::append(short *data, size_t count)
-{
+{    
     // Check for buffer overflow
     if (free() < count) {
          bridge.handleBufferOverflow();

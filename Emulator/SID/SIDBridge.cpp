@@ -362,17 +362,23 @@ SIDBridge::executeUntil(u64 targetCycle)
 void
 SIDBridge::execute(u64 numCycles)
 {
-    if (numCycles == 0)
-        return;
-    
+    // Only proceed if we should advances some cycles
+    if (numCycles == 0) return;
+ 
+    u64 numSamples;
+
     switch (config.engine) {
             
-        case ENGINE_FASTSID: fastsid.execute(numCycles); break;
-        case ENGINE_RESID:   resid.execute(numCycles); break;
+        case ENGINE_FASTSID: numSamples = fastsid.execute(numCycles); break;
+        case ENGINE_RESID:   numSamples = resid.execute(numCycles); break;
             
         default:
             assert(false);
     }
+    
+    
+    // TODO:
+    // ADD MIXING CODE HERE
 }
 
 void
@@ -454,22 +460,6 @@ SIDBridge::readStereoSamplesInterleaved(float *target, size_t n)
         target[i*2+1] = value;
     }
 }
-
-/*
-void
-SIDBridge::writeData(short *data, size_t count)
-{
-    // Check for buffer overflow
-    if (ringBuffer.free() < count) {
-        handleBufferOverflow();
-    }
-    
-    // Convert sound samples to floating point values and write into ringbuffer
-    for (unsigned i = 0; i < count; i++) {
-        ringBuffer.write(float(data[i]) * scale);
-    }
-}
-*/
 
 void
 SIDBridge::handleBufferUnderflow()

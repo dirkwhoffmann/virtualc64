@@ -342,12 +342,15 @@ FastSID::poke(u16 addr, u8 value)
     latchedDataBus = value;
 }
 
-void
+u64
 FastSID::execute(u64 cycles)
 {
     i16 buf[2049];
     size_t buflength = 2048;
 
+    // Don't ask SID to compute samples for a time interval greater than 1 sec
+    assert(cycles <= PAL_CYCLES_PER_SECOND);
+    
     executedCycles += cycles;
 
     // Compute how many sound samples should have been computed
@@ -370,6 +373,8 @@ FastSID::execute(u64 cycles)
     
     // Write samples into ringbuffer
     stream.append(buf, numSamples);
+    
+    return numSamples;
 }
 
 void
