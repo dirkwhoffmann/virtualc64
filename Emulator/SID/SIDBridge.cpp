@@ -195,7 +195,7 @@ SIDBridge::getSampleRate()
     
     for (int i = 0; i < 4; i++) {
         assert(resid[i].getSampleRate() == result);
-        assert(fastsid[i].getClockFrequency() == result);
+        assert(fastsid[i].getSampleRate() == result);
     }
     
     return result;
@@ -379,22 +379,33 @@ SIDBridge::getVoiceInfo(unsigned voice)
 u8 
 SIDBridge::peek(u16 addr)
 {
-    assert(addr <= 0x1F);
+    int sid = 0;
     
     // Get SID up to date
     executeUntil(cpu.cycle);
     
-    if (addr == 0x19) {
+    // Experimental code for second SID
+    if (addr >= 0xD420 && addr <= 0xD43F) {
+        debug("Trapped SID read from %x\n", addr);
+        sid = 1;
+    }
+    
+    // SID registers repeat every 32 bytes
+    addr &= 0x1F;
+    
+    if (sid == 0 && addr == 0x19) {
+        debug("PEEKING POT X\n");
         return mouse.readPotX();
     }
-    if (addr == 0x1A) {
+    if (sid == 0 && addr == 0x1A) {
+        debug("PEEKING POT Y\n");
         return mouse.readPotY();
     }
     
     switch (config.engine) {
             
-        case ENGINE_FASTSID: return fastsid[0].peek(addr);
-        case ENGINE_RESID:   return resid[0].peek(addr);
+        case ENGINE_FASTSID: return fastsid[sid].peek(addr);
+        case ENGINE_RESID:   return resid[sid].peek(addr);
             
         default:
             assert(false);
@@ -415,12 +426,23 @@ SIDBridge::poke(u16 addr, u8 value)
     // Get SID up to date
     executeUntil(cpu.cycle);
 
+    // Experimental code for second SID
+    if (addr >= 0xD420 && addr <= 0xD43F) {
+        debug("Trapped SID write to %x (%x)\n", addr, value); 
+        resid[1].poke(addr, value);
+        fastsid[1].poke(addr, value);
+    }
+    // SID registers repeat every 32 bytes
+    addr &= 0x1F;
+
     // Keep both SID implementations up to date
     resid[0].poke(addr, value);
     fastsid[0].poke(addr, value);
     
     // Run ReSID for at least one cycle to make pipelined writes work
-    if (config.engine != ENGINE_RESID) resid[0].clock();
+    if (config.engine != ENGINE_RESID) {
+        for (int i = 0; i < 4; i++) resid[0].clock();
+    }
 }
 
 void

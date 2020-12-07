@@ -326,9 +326,7 @@ C64Memory::peekIO(u16 addr)
         case 0x6: // SID
         case 0x7: // SID
             
-            // Only the lower 5 bits are used for adressing the SID I/O space.
-            // As a result, SID's I/O memory repeats every 32 bytes.
-            return sid.peek(addr & 0x001F);
+            return sid.peek(addr);
 
         case 0x8: // Color RAM
         case 0x9: // Color RAM
@@ -542,9 +540,7 @@ C64Memory::pokeIO(u16 addr, u8 value)
         case 0x6: // SID
         case 0x7: // SID
             
-            // Only the lower 5 bits are used for adressing the SID I/O space.
-            // As a result, SID's I/O memory repeats every 32 bytes.
-            sid.poke(addr & 0x001F, value);
+            sid.poke(addr, value);
 
             // Check the exit register (option -debugcart)
             if (addr == 0xD7FF && config.debugcart) {
