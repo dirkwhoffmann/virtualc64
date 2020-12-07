@@ -30,11 +30,21 @@ class SIDBridge : public C64Component {
 private:
 
     // FastSID (Adapted from VICE 3.1)
-    FastSID fastsid = FastSID(c64, ringBuffer);
+    FastSID fastsid[4] = {
+        FastSID(c64, ringBuffer[0]),
+        FastSID(c64, ringBuffer[1]),
+        FastSID(c64, ringBuffer[2]),
+        FastSID(c64, ringBuffer[3])
+    };
     
     // ReSID (Taken from VICE 3.1)
-    ReSID resid = ReSID(c64, ringBuffer);
-       
+    ReSID resid[4] = {
+        ReSID(c64, ringBuffer[0]),
+        ReSID(c64, ringBuffer[1]),
+        ReSID(c64, ringBuffer[2]),
+        ReSID(c64, ringBuffer[3])
+    };
+
     // CPU cycle at the last call to executeUntil()
     u64 cycles;
     
@@ -59,7 +69,12 @@ public:
     /* The audio sample ringbuffer. This ringbuffer is used to transfer samples
      * from the emulated SID to the native audio device (CoreAudio on macOS).
      */
-    SIDStream ringBuffer = SIDStream(*this);
+    SIDStream ringBuffer[4] = {
+        SIDStream(*this),
+        SIDStream(*this),
+        SIDStream(*this),
+        SIDStream(*this)
+    };
     
 private:
     
@@ -111,11 +126,21 @@ public:
     long getConfigItem(ConfigOption option);
     bool setConfigItem(ConfigOption option, long value) override;
     
+    u32 getClockFrequency();
+    void setClockFrequency(u32 frequency);
+    
+    SIDRevision getRevision();
+    void setRevision(SIDRevision revision);
+    
     double getSampleRate();
     void setSampleRate(double rate);
     
-    u32 getClockFrequency();
+    bool getAudioFilter();
+    void setAudioFilter(bool enable);
     
+    SamplingMethod getSamplingMethod();
+    void setSamplingMethod(SamplingMethod method);
+
     
     //
     // Analyzing
@@ -240,7 +265,8 @@ public:
      * With a standard sample rate of 44100 Hz, 735 samples is 1/60 sec.
      */
     const u32 samplesAhead = 8 * 735;
-    void alignWritePtr() { ringBuffer.align(samplesAhead); }
+    void alignWritePtr() {
+        for (int i = 0; i < 4; i++) ringBuffer[i].align(samplesAhead); }
     
     // Executes SID until a certain cycle is reached
     void executeUntil(u64 targetCycle);

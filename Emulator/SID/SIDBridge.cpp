@@ -15,14 +15,22 @@ SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
         
     subComponents = vector<HardwareComponent *> {
         
-        &resid,
-        &fastsid
+        &resid[0],
+        &resid[1],
+        &resid[2],
+        &resid[3],
+        &fastsid[0],
+        &fastsid[1],
+        &fastsid[2],
+        &fastsid[3]
     };
     
     config.engine = ENGINE_RESID;
 
-    resid.setClockFrequency(PAL_CLOCK_FREQUENCY);
-    fastsid.setClockFrequency(PAL_CLOCK_FREQUENCY);
+    for (int i = 0; i < 4; i++) {
+        resid[i].setClockFrequency(PAL_CLOCK_FREQUENCY);
+        fastsid[i].setClockFrequency(PAL_CLOCK_FREQUENCY);
+    }
 }
 
 void
@@ -58,22 +66,11 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
         case OPT_VIC_REVISION:
         {
             u32 newFrequency = VICII::getFrequency((VICRevision)value);
-            
-            debug("Setting clock freq to %d\n", newFrequency);
-            debug(SID_DEBUG, "Setting clock frequency to %d\n", newFrequency);
-            
-            assert(resid.getClockFrequency() == fastsid.getClockFrequency());
-
-            if (resid.getClockFrequency() == newFrequency) {
-                return false;
-            }
-            
+                                    
             suspend();
-            resid.setClockFrequency(newFrequency);
-            fastsid.setClockFrequency(newFrequency);
+            setClockFrequency(newFrequency);
             resume();
             
-            assert(resid.getClockFrequency() == fastsid.getClockFrequency());
             return true;
         }
             
@@ -89,8 +86,7 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
             
             suspend();
             config.revision = (SIDRevision)value;
-            resid.setRevision(config.revision);
-            fastsid.setRevision(config.revision);
+            setRevision((SIDRevision)value);
             resume();
             
             return true;
@@ -103,8 +99,7 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
 
             suspend();
             config.filter = value;
-            resid.setAudioFilter(config.filter);
-            fastsid.setAudioFilter(config.filter);
+            setAudioFilter(value);
             resume();
             
             return true;
@@ -135,7 +130,7 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
             }
             suspend();
             config.sampling = (SamplingMethod)value;
-            resid.setSamplingMethod(config.sampling); // reSID only
+            setSamplingMethod((SamplingMethod)value);
             resume();
             
             return true;
@@ -145,40 +140,123 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
     }
 }
 
+u32
+SIDBridge::getClockFrequency()
+{
+    u32 result = resid[0].getClockFrequency();
+    
+    for (int i = 0; i < 4; i++) {
+        assert(resid[i].getClockFrequency() == result);
+        assert(fastsid[i].getClockFrequency() == result);
+    }
+    
+    return result;
+}
+
+void
+SIDBridge::setClockFrequency(u32 frequency)
+{
+    debug(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
+
+    for (int i = 0; i < 4; i++) {
+        resid[i].setClockFrequency(frequency);
+        fastsid[i].setClockFrequency(frequency);
+    }
+}
+
+SIDRevision
+SIDBridge::getRevision()
+{
+    SIDRevision result = resid[0].getRevision();
+    
+    for (int i = 0; i < 4; i++) {
+        assert(resid[i].getRevision() == result);
+        assert(fastsid[i].getRevision() == result);
+    }
+    
+    return result;
+}
+
+void
+SIDBridge::setRevision(SIDRevision revision)
+{
+    debug(SID_DEBUG, "Setting SID revision to %s\n", sidRevisionName(revision));
+
+    for (int i = 0; i < 4; i++) {
+        resid[i].setRevision(revision);
+        fastsid[i].setRevision(revision);
+    }
+}
+
 double
 SIDBridge::getSampleRate()
 {
-    switch (config.engine) {
-            
-        case ENGINE_FASTSID: return (double)fastsid.getSampleRate();
-        case ENGINE_RESID:   return resid.getSampleRate();
-            
-        default:
-            assert(false);
-            return 0;
+    double result = resid[0].getSampleRate();
+    
+    for (int i = 0; i < 4; i++) {
+        assert(resid[i].getSampleRate() == result);
+        assert(fastsid[i].getClockFrequency() == result);
     }
+    
+    return result;
 }
 
 void
 SIDBridge::setSampleRate(double rate)
 {
-    debug(SID_DEBUG, "Changing sample rate from %f to %f\n", getSampleRate(), rate);
-    
-    resid.setSampleRate(rate);
-    fastsid.setSampleRate((u32)rate);
+    debug(SID_DEBUG, "Setting sample rate to %f\n", rate);
+
+    for (int i = 0; i < 4; i++) {
+        resid[i].setSampleRate(rate);
+        fastsid[i].setSampleRate(rate);
+    }
 }
 
-u32
-SIDBridge::getClockFrequency()
+bool
+SIDBridge::getAudioFilter()
 {
-    switch (config.engine) {
-            
-        case ENGINE_FASTSID: return fastsid.getClockFrequency();
-        case ENGINE_RESID:   return resid.getClockFrequency();
-            
-        default:
-            assert(false);
-            return 0;
+    bool result = resid[0].getAudioFilter();
+    
+    for (int i = 0; i < 4; i++) {
+        assert(resid[i].getAudioFilter() == result);
+        assert(fastsid[i].getAudioFilter() == result);
+    }
+    
+    return result;
+}
+
+void
+SIDBridge::setAudioFilter(bool enable)
+{
+    debug(SID_DEBUG, "%s audio filter\n", enable ? "Enabling" : "Disabling");
+
+    for (int i = 0; i < 4; i++) {
+        resid[i].setAudioFilter(enable);
+        fastsid[i].setAudioFilter(enable);
+    }
+}
+
+SamplingMethod
+SIDBridge::getSamplingMethod()
+{
+    SamplingMethod result = resid[0].getSamplingMethod();
+    
+    for (int i = 0; i < 4; i++) {
+        assert(resid[i].getSamplingMethod() == result);
+        // Note: fastSID has no such option
+    }
+    
+    return result;
+}
+
+void
+SIDBridge::setSamplingMethod(SamplingMethod method)
+{
+    debug(SID_DEBUG, "Setting sampling method to %s\n",sidSamplingMethodName(method));
+
+    for (int i = 0; i < 4; i++) {
+        resid[i].setSamplingMethod(method);
+        // Note: fastSID has no such option
     }
 }
 
@@ -206,16 +284,16 @@ SIDBridge::_dump()
 {
     msg("ReSID:\n");
     msg("------\n");
-    _dump(resid.getInfo());
+    _dump(resid[0].getInfo());
 
     msg("FastSID:\n");
     msg("--------\n");
-    msg("    Chip model: %d (%s)\n", sidRevisionName(fastsid.getRevision()));
-    msg(" Sampling rate: %d\n", fastsid.getSampleRate());
-    msg(" CPU frequency: %d\n", fastsid.getClockFrequency());
-    msg("Emulate filter: %s\n", fastsid.getAudioFilter() ? "yes" : "no");
+    msg("    Chip model: %d (%s)\n", sidRevisionName(fastsid[0].getRevision()));
+    msg(" Sampling rate: %d\n", fastsid[0].getSampleRate());
+    msg(" CPU frequency: %d\n", fastsid[0].getClockFrequency());
+    msg("Emulate filter: %s\n", fastsid[0].getAudioFilter() ? "yes" : "no");
     msg("\n");
-    _dump(fastsid.getInfo());
+    _dump(fastsid[0].getInfo());
 }
 
 void
@@ -274,8 +352,8 @@ SIDBridge::getInfo()
     
     switch (config.engine) {
             
-        case ENGINE_FASTSID: info = fastsid.getInfo(); break;
-        case ENGINE_RESID:   info = resid.getInfo(); break;
+        case ENGINE_FASTSID: info = fastsid[0].getInfo(); break;
+        case ENGINE_RESID:   info = resid[0].getInfo(); break;
     }
     
     info.potX = mouse.readPotX();
@@ -291,8 +369,8 @@ SIDBridge::getVoiceInfo(unsigned voice)
     
     switch (config.engine) {
             
-        case ENGINE_FASTSID: info = fastsid.getVoiceInfo(voice); break;
-        case ENGINE_RESID:   info = resid.getVoiceInfo(voice); break;
+        case ENGINE_FASTSID: info = fastsid[0].getVoiceInfo(voice); break;
+        case ENGINE_RESID:   info = resid[0].getVoiceInfo(voice); break;
     }
     
     return info;
@@ -315,8 +393,8 @@ SIDBridge::peek(u16 addr)
     
     switch (config.engine) {
             
-        case ENGINE_FASTSID: return fastsid.peek(addr);
-        case ENGINE_RESID:   return resid.peek(addr);
+        case ENGINE_FASTSID: return fastsid[0].peek(addr);
+        case ENGINE_RESID:   return resid[0].peek(addr);
             
         default:
             assert(false);
@@ -338,11 +416,11 @@ SIDBridge::poke(u16 addr, u8 value)
     executeUntil(cpu.cycle);
 
     // Keep both SID implementations up to date
-    resid.poke(addr, value);
-    fastsid.poke(addr, value);
+    resid[0].poke(addr, value);
+    fastsid[0].poke(addr, value);
     
     // Run ReSID for at least one cycle to make pipelined writes work
-    if (config.engine != ENGINE_RESID) resid.clock();
+    if (config.engine != ENGINE_RESID) resid[0].clock();
 }
 
 void
@@ -369,8 +447,8 @@ SIDBridge::execute(u64 numCycles)
 
     switch (config.engine) {
             
-        case ENGINE_FASTSID: numSamples = fastsid.execute(numCycles); break;
-        case ENGINE_RESID:   numSamples = resid.execute(numCycles); break;
+        case ENGINE_FASTSID: numSamples = fastsid[0].execute(numCycles); break;
+        case ENGINE_RESID:   numSamples = resid[0].execute(numCycles); break;
             
         default:
             assert(false);
@@ -384,7 +462,7 @@ SIDBridge::execute(u64 numCycles)
 void
 SIDBridge::clearRingbuffer()
 {
-    ringBuffer.clear(0);
+    for (int i = 0; i < 4; i++) ringBuffer[i].clear(0);
     alignWritePtr();
 }
 
@@ -392,7 +470,7 @@ float
 SIDBridge::readData()
 {
     // Read sound sample
-    float value = ringBuffer.read();
+    float value = ringBuffer[0].read();
     
     // Adjust volume
     if (volume != targetVolume) {
@@ -412,14 +490,14 @@ SIDBridge::readData()
 float
 SIDBridge::ringbufferData(size_t offset)
 {
-    return ringBuffer.current((int)offset);
+    return ringBuffer[0].current((int)offset);
 }
 
 void
 SIDBridge::readMonoSamples(float *target, size_t n)
 {
     // Check for buffer underflow
-    if (ringBuffer.count() < n) {
+    if (ringBuffer[0].count() < n) {
         handleBufferUnderflow();
     }
     
@@ -434,7 +512,7 @@ void
 SIDBridge::readStereoSamples(float *target1, float *target2, size_t n)
 {
     // Check for buffer underflow
-    if (ringBuffer.count() < n) {
+    if (ringBuffer[0].count() < n) {
         handleBufferUnderflow();
     }
     
@@ -449,7 +527,7 @@ void
 SIDBridge::readStereoSamplesInterleaved(float *target, size_t n)
 {
     // Check for buffer underflow
-    if (ringBuffer.count() < n) {
+    if (ringBuffer[0].count() < n) {
         handleBufferUnderflow();
     }
     
@@ -469,7 +547,7 @@ SIDBridge::handleBufferUnderflow()
     // (1) The consumer runs slightly faster than the producer.
     // (2) The producer is halted or not startet yet.
     
-    debug(SID_DEBUG, "BUFFER UNDERFLOW (r: %ld w: %ld)\n", ringBuffer.r, ringBuffer.w);
+    debug(SID_DEBUG, "BUFFER UNDERFLOW (r: %ld w: %ld)\n", ringBuffer[0].r, ringBuffer[0].w);
 
     // Determine the elapsed seconds since the last pointer adjustment.
     u64 now = Oscillator::nanos();
@@ -498,7 +576,7 @@ SIDBridge::handleBufferOverflow()
     // (1) The consumer runs slightly slower than the producer
     // (2) The consumer is halted or not startet yet
     
-    debug(SID_DEBUG, "BUFFER OVERFLOW (r: %ld w: %ld)\n", ringBuffer.r, ringBuffer.w);
+    debug(SID_DEBUG, "BUFFER OVERFLOW (r: %ld w: %ld)\n", ringBuffer[0].r, ringBuffer[0].w);
     
     // Determine the elapsed seconds since the last pointer adjustment
     u64 now = Oscillator::nanos();
