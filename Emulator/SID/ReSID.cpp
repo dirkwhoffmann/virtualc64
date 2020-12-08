@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-ReSID::ReSID(C64 &ref, SIDStream &streamref) : C64Component(ref), stream(streamref)
+ReSID::ReSID(C64 &ref, SIDStream &streamref, short *buffer) : C64Component(ref), stream(streamref), samples(buffer)
 {
 	setDescription("ReSID");
 
@@ -223,8 +223,8 @@ ReSID::poke(u16 addr, u8 value)
 u64
 ReSID::execute(u64 cycles)
 {
-    short buf[2049];
-    int buflength = 2048;
+    // short buf[2049];
+    // int buflength = 2048;
     
     // Don't ask SID to compute samples for a time interval greater than 1 sec
     assert(cycles <= PAL_CYCLES_PER_SECOND);
@@ -240,11 +240,12 @@ ReSID::execute(u64 cycles)
     
     // Let reSID compute some sound samples
     while (delta_t) {
-        numSamples += sid->clock(delta_t, buf + numSamples, buflength - numSamples);
+        numSamples += sid->clock(delta_t, samples + numSamples,
+                                 SIDBridge::sampleBufferSize - numSamples);
     }
     
     // Write samples into ringbuffer
-    stream.append(buf, numSamples);
+    // stream.append(buf, numSamples);
     
     assert(numSamples >= 0);
     return (u64)numSamples;

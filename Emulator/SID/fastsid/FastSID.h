@@ -40,6 +40,9 @@ class FastSID : public C64Component {
     // Reference to the connected output stream
     SIDStream &stream;
 
+    // Target buffer for storing the produced audio samples
+    short *samples = nullptr;
+
     
     //
     // Sub components
@@ -110,7 +113,7 @@ private:
     
 public:
         
-	FastSID(C64 &ref, SIDStream &streamref);
+	FastSID(C64 &ref, SIDStream &streamref, short *buffer);
 
 private:
     

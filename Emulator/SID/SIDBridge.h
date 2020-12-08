@@ -31,18 +31,18 @@ private:
 
     // FastSID (Adapted from VICE 3.1)
     FastSID fastsid[4] = {
-        FastSID(c64, ringBuffer[0]),
-        FastSID(c64, ringBuffer[1]),
-        FastSID(c64, ringBuffer[2]),
-        FastSID(c64, ringBuffer[3])
+        FastSID(c64, ringBuffer[0], samples[0]),
+        FastSID(c64, ringBuffer[1], samples[1]),
+        FastSID(c64, ringBuffer[2], samples[2]),
+        FastSID(c64, ringBuffer[3], samples[3])
     };
     
     // ReSID (Taken from VICE 3.1)
     ReSID resid[4] = {
-        ReSID(c64, ringBuffer[0]),
-        ReSID(c64, ringBuffer[1]),
-        ReSID(c64, ringBuffer[2]),
-        ReSID(c64, ringBuffer[3])
+        ReSID(c64, ringBuffer[0], samples[0]),
+        ReSID(c64, ringBuffer[1], samples[1]),
+        ReSID(c64, ringBuffer[2], samples[2]),
+        ReSID(c64, ringBuffer[3], samples[3])
     };
 
     // CPU cycle at the last call to executeUntil()
@@ -65,13 +65,19 @@ public:
 
     
     //
-    // Audio ringbuffer
+    // Audio buffers
     //
 
+    /* Sample buffers. There is a seperate buffer for each of the four SID
+     * channels. Every reSID or fastSID instance uses one of these buffers for
+     * storing the created sound samples.
+     */
+    static const size_t sampleBufferSize = 2048;
+    short samples[4][sampleBufferSize];
+    
 public:
     
-    /* The audio sample ringbuffer. This ringbuffer is used to transfer samples
-     * from the emulated SID to the native audio device (CoreAudio on macOS).
+    /* DEPRECATED
      */
     SIDStream ringBuffer[4] = {
         SIDStream(*this),
@@ -79,14 +85,14 @@ public:
         SIDStream(*this),
         SIDStream(*this)
     };
+
+    /* The mixed stereo stream. This stream contains the final audio stream
+     * ready to be handed over to the audio device of the host OS.
+     */
+    StereoStream stream = StereoStream(*this);
     
 private:
-    
-    /* Scaling value for sound samples. All sound samples produced by reSID are
-     * scaled by this value before they are written into the ringBuffer.
-     */
-    // static constexpr float scale = 0.000005f;
-        
+            
     // Current volume (0 = silent)
     i32 volume;
     
@@ -271,7 +277,9 @@ public:
      */
     const u32 samplesAhead = 8 * 735;
     void alignWritePtr() {
-        for (int i = 0; i < 4; i++) ringBuffer[i].align(samplesAhead); }
+        for (int i = 0; i < 4; i++) ringBuffer[i].align(samplesAhead);
+        stream.align(samplesAhead);
+    }
     
     // Executes SID until a certain cycle is reached
     void executeUntil(u64 targetCycle);

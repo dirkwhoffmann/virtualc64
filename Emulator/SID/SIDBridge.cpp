@@ -443,18 +443,15 @@ SIDBridge::poke(u16 addr, u8 value)
     // Experimental code for second SID
     if (addr >= 0xD420 && addr <= 0xD43F) {
         
-        debug(SID_DEBUG, "Trapped SID write to %x (%x)\n", addr, value); 
-        resid[1].poke(addr, value);
-        fastsid[1].poke(addr, value);
+        debug(SID_DEBUG, "Trapped SID write to %x (%x)\n", addr, value);
+        resid[1].poke(addr & 0x1F, value);
+        fastsid[1].poke(addr & 0x1F, value);
         
     } else {
 
-        // SID registers repeat every 32 bytes
-        addr &= 0x1F;
-
         // Keep both SID implementations up to date
-        resid[0].poke(addr, value);
-        fastsid[0].poke(addr, value);
+        resid[0].poke(addr & 0x1F, value);
+        fastsid[0].poke(addr & 0x1F, value);
     }
     
     // Run ReSID for at least one cycle to make pipelined writes work
@@ -509,10 +506,12 @@ SIDBridge::execute(u64 numCycles)
             assert(false);
     }
     
+    /*
     if (signalOverflow) {
         signalOverflow = false;
         handleBufferOverflow();
     }
+    */
     
     if (numSamples1 != numSamples2) {
         _dump(0);
@@ -520,29 +519,61 @@ SIDBridge::execute(u64 numCycles)
     }
     assert(numSamples1 == numSamples2);
     
-    // TODO:
-    // ADD MIXING CODE HERE AND WRITE RESULT TO StereoStream
+    //
+    // Mix channels
+    //
+    
+    // Check for buffer overflow
+    if (stream.free() < numSamples1) {
+        handleBufferOverflow();
+    }
+    
+    // Adjust volume
+    if (volume != targetVolume) {
+        if (volume < targetVolume) {
+            volume += MIN(volumeDelta, targetVolume - volume);
+        } else {
+            volume -= MIN(volumeDelta, volume - targetVolume);
+        }
+    }
+    // float divider = 75000.0f; // useReSID ? 100000.0f : 150000.0f;
+    const float divider = 40000.0f;
+        
+    // Convert sound samples to floating point values and write into ringbuffer
+    for (unsigned i = 0; i < numSamples1; i++) {
+        
+        float value1 = (float)samples[0][i] * StereoStream::scale;
+        float value2 = (float)samples[1][i] * StereoStream::scale;
+        
+        value1 = (volume <= 0) ? 0.0f : value1 * (float)volume / divider;
+        value2 = (volume <= 0) ? 0.0f : value2 * (float)volume / divider;
+
+        // if (tmp++ % 100 == 0) debug("%f %f\n", value1, value2);
+        // float value = (value1 + value2) * StereoStream::scale / 2;
+        stream.write(SamplePair { value1, value2 } );        
+    }
 }
 
 void
 SIDBridge::clearRingbuffer()
 {
     for (int i = 0; i < 4; i++) ringBuffer[i].clear(0);
+    stream.clear();
     alignWritePtr();
 }
 
 float
 SIDBridge::readData()
 {
-    static long tmp = 0;
+    // static long tmp = 0;
     
     // Read sound samples
     float value1 = ringBuffer[0].read();
     float value2 = ringBuffer[1].read();
     
     // if (tmp++ % 100 == 0) debug("%f %f\n", value1, value2);
-    // float value = (value1 + value2) / 2;
-    float value = value1;
+    float value = (value1 + value2) / 2;
+    // float value = value1;
     
     // Adjust volume
     if (volume != targetVolume) {
@@ -569,6 +600,10 @@ SIDBridge::ringbufferData(size_t offset)
 void
 SIDBridge::readMonoSamples(float *target, size_t n)
 {
+    i32 volume = 0; // REMOVE ASAP
+    stream.copyInterleaved(target, n, volume, volume, 0);
+
+    /*
     // Check for buffer underflow
     if (ringBuffer[0].count() < n) {
         signalUnderflow = true;
@@ -581,11 +616,16 @@ SIDBridge::readMonoSamples(float *target, size_t n)
         float value = readData();
         target[i] = value;
     }
+    */
 }
 
 void
 SIDBridge::readStereoSamples(float *target1, float *target2, size_t n)
 {
+    i32 volume = 0; // REMOVE ASAP
+    stream.copy(target1, target2, n, volume, volume, 0);
+    
+    /*
     // Check for buffer underflow
     if (ringBuffer[0].count() < n) {
         signalUnderflow = true;
@@ -598,11 +638,16 @@ SIDBridge::readStereoSamples(float *target1, float *target2, size_t n)
         float value = readData();
         target1[i] = target2[i] = value;
     }
+    */
 }
 
 void
 SIDBridge::readStereoSamplesInterleaved(float *target, size_t n)
 {
+    i32 volume = 0; // REMOVE ASAP
+    stream.copyInterleaved(target, n, volume, volume, 0);
+
+    /*
     // Check for buffer underflow
     if (ringBuffer[0].count() < n) {
         signalUnderflow = true;
@@ -616,6 +661,7 @@ SIDBridge::readStereoSamplesInterleaved(float *target, size_t n)
         target[i*2] = value;
         target[i*2+1] = value;
     }
+    */
 }
 
 void

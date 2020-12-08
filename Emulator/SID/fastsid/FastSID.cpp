@@ -30,7 +30,7 @@
 
 #include "C64.h"
 
-FastSID::FastSID(C64 &ref, SIDStream &streamref) : C64Component(ref), stream(streamref)
+FastSID::FastSID(C64 &ref, SIDStream &streamref, short *buffer) : C64Component(ref), stream(streamref), samples(buffer)
 {
 	setDescription("FastSID");
     
@@ -345,8 +345,8 @@ FastSID::poke(u16 addr, u8 value)
 u64
 FastSID::execute(u64 cycles)
 {
-    i16 buf[2049];
-    size_t buflength = 2048;
+    // i16 buf[2049];
+    // size_t buflength = 2048;
 
     // Don't ask SID to compute samples for a time interval greater than 1 sec
     assert(cycles <= PAL_CYCLES_PER_SECOND);
@@ -361,18 +361,18 @@ FastSID::execute(u64 cycles)
     computedSamples = shouldHave;
     
     // Do some consistency checking
-    if (numSamples > buflength) {
+    if (numSamples > SIDBridge::sampleBufferSize) {
         debug(SID_DEBUG, "Number of missing sound samples exceeds buffer size\n");
-        numSamples = buflength;
+        numSamples = SIDBridge::sampleBufferSize;
     }
     
     // Compute missing samples
     for (unsigned i = 0; i < numSamples; i++) {
-        buf[i] = calculateSingleSample();
+        samples[i] = calculateSingleSample();
     }
     
     // Write samples into ringbuffer
-    stream.append(buf, numSamples);
+    // stream.append(buf, numSamples);
     
     return numSamples;
 }
