@@ -16,6 +16,52 @@
 #include "FastSID.h"
 #include "ReSID.h"
 
+/* Architecture of the audio pipeline
+ *
+ *           Mux class
+ *           -------------------------------------------------
+ *          |   --------  vol                                 |
+ *   SID 0 --->| Buffer |----->                               |
+ *          |   --------       |                              |
+ *          |                  |                              |
+ *          |   --------  vol  |             --------------   |
+ *   SID 1 --->| Buffer |----->|          ->| StereoStream |-----> Speaker
+ *          |   --------       |   pan   |   --------------   |
+ *          |                  |-------->|                    |
+ *          |   --------  vol  |  l vol  |   --------------
+ *   SID 2 --->| Buffer |----->|  r vol   ->| StereoStream |-----> Recorder
+ *          |   --------       |             --------------   |
+ *          |                  |                              |
+ *          |   --------  vol  |                              |
+ *   SID 3 --->| Buffer |----->                               |
+ *          |   --------                                      |
+ *           -------------------------------------------------
+ */
+
+struct Volume {
+
+    // Maximum volume
+    const static i32 maxVolume = 100000;
+
+    // Current volume (will eventually reach the target volume)
+    i32 current = maxVolume;
+
+    // Target volume
+    i32 target = maxVolume;
+
+    // Delta steps (added to volume until the target volume is reached)
+    i32 delta = 0;
+
+    // Shifts the current volume towards the target volume
+    void shift() {
+        if (current < target) {
+            current += MIN(delta, target - current);
+        } else {
+            current -= MIN(delta, current - target);
+        }
+    }
+};
+
 class SIDBridge : public C64Component {
 
     friend C64Memory;
@@ -23,28 +69,32 @@ class SIDBridge : public C64Component {
     // Current configuration
     SIDConfig config;
     
+    
     //
     // Sub components
     //
         
 private:
-
-    // FastSID (Adapted from VICE 3.1)
+    
     FastSID fastsid[4] = {
+        
         FastSID(c64, samples[0]),
         FastSID(c64, samples[1]),
         FastSID(c64, samples[2]),
         FastSID(c64, samples[3])
     };
     
-    // ReSID (Taken from VICE 3.1)
     ReSID resid[4] = {
+        
         ReSID(c64, samples[0]),
         ReSID(c64, samples[1]),
         ReSID(c64, samples[2]),
         ReSID(c64, samples[3])
     };
 
+    // Volume control
+    // Volume volume;
+    
     // CPU cycle at the last call to executeUntil()
     u64 cycles;
     
@@ -54,18 +104,20 @@ private:
 public:
     
     // Number of buffer underflows since power up
+    // TODO: MOVE TO SIDStats
     u64 bufferUnderflows;
 
     // Number of buffer overflows since power up
+    // TODO: MOVE TO SIDStats
     u64 bufferOverflows;
     
     // Set to true to signal a buffer exception
     bool signalUnderflow = false;
-    bool signalOverflow = false;
+    // bool signalOverflow = false; // DEPRECATED
 
     
     //
-    // Audio buffers
+    // Inputs
     //
 
     /* Sample buffers. There is a seperate buffer for each of the four SID
@@ -75,6 +127,11 @@ public:
     static const size_t sampleBufferSize = 2048;
     short samples[4][sampleBufferSize];
     
+    
+    //
+    // Outputs
+    //
+
 public:
     
     /* The mixed stereo stream. This stream contains the final audio stream
@@ -127,6 +184,8 @@ public:
     long getConfigItem(ConfigOption option);
     bool setConfigItem(ConfigOption option, long value) override;
     
+    bool isMuted() { return config.volL == 0 && config.volR == 0; }
+
     u32 getClockFrequency();
     void setClockFrequency(u32 frequency);
     

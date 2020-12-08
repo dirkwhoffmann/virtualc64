@@ -23,6 +23,10 @@ longenum(MessageType)
     MSG_RUN,
     MSG_PAUSE,
     MSG_RESET,
+    MSG_WARP_ON,
+    MSG_WARP_OFF,
+    MSG_MUTE_ON,
+    MSG_MUTE_OFF,
 
     // ROMs
     MSG_BASIC_ROM_LOADED,
@@ -36,8 +40,6 @@ longenum(MessageType)
     MSG_CPU_JAMMED,
     MSG_BREAKPOINT_REACHED,
     MSG_WATCHPOINT_REACHED,
-    MSG_WARP_ON,
-    MSG_WARP_OFF,
 
     // VIC related messages
     MSG_PAL,

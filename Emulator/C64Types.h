@@ -66,6 +66,16 @@ typedef enum : long
     // SID
     OPT_SID_REVISION,
     OPT_SID_FILTER,
+    OPT_AUDVOLL,
+    OPT_AUDVOLR,
+    OPT_AUDVOL0,
+    OPT_AUDVOL1,
+    OPT_AUDVOL2,
+    OPT_AUDVOL3,
+    OPT_AUDPAN0,
+    OPT_AUDPAN1,
+    OPT_AUDPAN2,
+    OPT_AUDPAN3,
     
     // Sound synthesis
     OPT_SID_ENGINE,

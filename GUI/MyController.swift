@@ -87,6 +87,9 @@ class MyController: NSWindowController, MessageReceiver {
     // Used inside the timer function to fine tune timed events
     var animationCounter = 0
     
+    // Remembers if audio is muted (master volume of both channels is 0)
+    var muted = false
+
     /// Current keyboard modifier flags
     /// These flags tell us if one of the special keysare currently pressed.
     /// The flags are utilized, e.g., to alter behaviour when a key on the
@@ -589,6 +592,23 @@ extension MyController {
             mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
             inspector?.fullRefresh()
 
+        case .MSG_MUTE_ON:
+            
+            muted = true
+            refreshStatusBar()
+            
+        case .MSG_MUTE_OFF:
+            
+            muted = false
+            refreshStatusBar()
+
+
+        case .MSG_WARP_ON,
+             .MSG_WARP_OFF:
+            
+            refreshStatusBarWarpIcon()
+
+            
         case .MSG_BASIC_ROM_LOADED,
              .MSG_CHAR_ROM_LOADED,
              .MSG_KERNAL_ROM_LOADED,
@@ -616,11 +636,6 @@ extension MyController {
             
             refreshStatusBar()
             
-        case .MSG_WARP_ON,
-             .MSG_WARP_OFF:
-            
-            refreshStatusBarWarpIcon()
-
         case .MSG_PAL,
              .MSG_NTSC:
             

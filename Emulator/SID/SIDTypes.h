@@ -95,8 +95,18 @@ typedef struct
     SIDRevision revision;
     bool filter;
     
+    // Engine parameters
     SIDEngine engine;
     SamplingMethod sampling;
+    
+    // Input channel volumes and pan settings
+    double vol[4];
+    double pan[4];
+    
+    // Output channel volumes
+    double volL;
+    double volR;
+
 }
 SIDConfig;
 
