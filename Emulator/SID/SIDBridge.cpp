@@ -282,18 +282,32 @@ SIDBridge::_pause()
 void 
 SIDBridge::_dump()
 {
+    _dump(0);
+}
+
+void
+SIDBridge::_dump(int nr)
+{
+    SIDRevision residRev = resid[nr].getRevision();
+    SIDRevision fastsidRev = fastsid[nr].getRevision();
+
     msg("ReSID:\n");
     msg("------\n");
-    _dump(resid[0].getInfo());
+    msg("    Chip model: %d (%s)\n", residRev, sidRevisionName(residRev));
+    msg(" Sampling rate: %d\n", resid[nr].getSampleRate());
+    msg(" CPU frequency: %d\n", resid[nr].getClockFrequency());
+    msg("Emulate filter: %s\n", resid[nr].getAudioFilter() ? "yes" : "no");
+    msg("\n");
+    _dump(resid[nr].getInfo());
 
     msg("FastSID:\n");
     msg("--------\n");
-    msg("    Chip model: %d (%s)\n", sidRevisionName(fastsid[0].getRevision()));
-    msg(" Sampling rate: %d\n", fastsid[0].getSampleRate());
-    msg(" CPU frequency: %d\n", fastsid[0].getClockFrequency());
-    msg("Emulate filter: %s\n", fastsid[0].getAudioFilter() ? "yes" : "no");
+    msg("    Chip model: %d (%s)\n", fastsidRev, sidRevisionName(fastsidRev));
+    msg(" Sampling rate: %d\n", fastsid[nr].getSampleRate());
+    msg(" CPU frequency: %d\n", fastsid[nr].getClockFrequency());
+    msg("Emulate filter: %s\n", fastsid[nr].getAudioFilter() ? "yes" : "no");
     msg("\n");
-    _dump(fastsid[0].getInfo());
+    _dump(fastsid[nr].getInfo());
 }
 
 void
@@ -386,7 +400,7 @@ SIDBridge::peek(u16 addr)
     
     // Experimental code for second SID
     if (addr >= 0xD420 && addr <= 0xD43F) {
-        debug("Trapped SID read from %x\n", addr);
+        debug(SID_DEBUG, "Trapped SID read from %x\n", addr);
         sid = 1;
     }
     
@@ -394,11 +408,11 @@ SIDBridge::peek(u16 addr)
     addr &= 0x1F;
     
     if (sid == 0 && addr == 0x19) {
-        debug("PEEKING POT X\n");
+        debug(SID_DEBUG, "PEEKING POT X\n");
         return mouse.readPotX();
     }
     if (sid == 0 && addr == 0x1A) {
-        debug("PEEKING POT Y\n");
+        debug(SID_DEBUG, "PEEKING POT Y\n");
         return mouse.readPotY();
     }
     
@@ -428,20 +442,24 @@ SIDBridge::poke(u16 addr, u8 value)
 
     // Experimental code for second SID
     if (addr >= 0xD420 && addr <= 0xD43F) {
-        debug("Trapped SID write to %x (%x)\n", addr, value); 
+        
+        debug(SID_DEBUG, "Trapped SID write to %x (%x)\n", addr, value); 
         resid[1].poke(addr, value);
         fastsid[1].poke(addr, value);
-    }
-    // SID registers repeat every 32 bytes
-    addr &= 0x1F;
+        
+    } else {
 
-    // Keep both SID implementations up to date
-    resid[0].poke(addr, value);
-    fastsid[0].poke(addr, value);
+        // SID registers repeat every 32 bytes
+        addr &= 0x1F;
+
+        // Keep both SID implementations up to date
+        resid[0].poke(addr, value);
+        fastsid[0].poke(addr, value);
+    }
     
     // Run ReSID for at least one cycle to make pipelined writes work
     if (config.engine != ENGINE_RESID) {
-        for (int i = 0; i < 4; i++) resid[0].clock();
+        for (int i = 0; i < 4; i++) resid[i].clock();
     }
 }
 
@@ -465,20 +483,45 @@ SIDBridge::execute(u64 numCycles)
     // Only proceed if we should advances some cycles
     if (numCycles == 0) return;
  
-    u64 numSamples;
+    // Check
+    if (signalUnderflow) {
+        signalUnderflow = false;
+        handleBufferUnderflow();
+    }
+    
+    u64 numSamples1, numSamples2;
 
     switch (config.engine) {
             
-        case ENGINE_FASTSID: numSamples = fastsid[0].execute(numCycles); break;
-        case ENGINE_RESID:   numSamples = resid[0].execute(numCycles); break;
+        case ENGINE_FASTSID:
+            
+            numSamples1 = fastsid[0].execute(numCycles);
+            numSamples2 = fastsid[1].execute(numCycles);
+            break;
+    
+        case ENGINE_RESID:
+            
+            numSamples1 = resid[0].execute(numCycles);
+            numSamples2 = resid[1].execute(numCycles);
+            break;
             
         default:
             assert(false);
     }
     
+    if (signalOverflow) {
+        signalOverflow = false;
+        handleBufferOverflow();
+    }
+    
+    if (numSamples1 != numSamples2) {
+        _dump(0);
+        _dump(1);
+    }
+    assert(numSamples1 == numSamples2);
     
     // TODO:
-    // ADD MIXING CODE HERE
+    // ADD MIXING CODE HERE AND WRITE RESULT TO StereoStream
 }
 
 void
@@ -491,8 +534,15 @@ SIDBridge::clearRingbuffer()
 float
 SIDBridge::readData()
 {
-    // Read sound sample
-    float value = ringBuffer[0].read();
+    static long tmp = 0;
+    
+    // Read sound samples
+    float value1 = ringBuffer[0].read();
+    float value2 = ringBuffer[1].read();
+    
+    // if (tmp++ % 100 == 0) debug("%f %f\n", value1, value2);
+    // float value = (value1 + value2) / 2;
+    float value = value1;
     
     // Adjust volume
     if (volume != targetVolume) {
@@ -504,6 +554,7 @@ SIDBridge::readData()
     }
     // float divider = 75000.0f; // useReSID ? 100000.0f : 150000.0f;
     float divider = 40000.0f;
+
     value = (volume <= 0) ? 0.0f : value * (float)volume / divider;
         
     return value;
@@ -520,12 +571,14 @@ SIDBridge::readMonoSamples(float *target, size_t n)
 {
     // Check for buffer underflow
     if (ringBuffer[0].count() < n) {
-        handleBufferUnderflow();
+        signalUnderflow = true;
+        n = ringBuffer[0].count();
+        // handleBufferUnderflow();
     }
     
     // Read samples
     for (size_t i = 0; i < n; i++) {
-        float value =   readData();
+        float value = readData();
         target[i] = value;
     }
 }
@@ -535,7 +588,9 @@ SIDBridge::readStereoSamples(float *target1, float *target2, size_t n)
 {
     // Check for buffer underflow
     if (ringBuffer[0].count() < n) {
-        handleBufferUnderflow();
+        signalUnderflow = true;
+        n = ringBuffer[0].count();
+        // handleBufferUnderflow();
     }
     
     // Read samples
@@ -550,7 +605,9 @@ SIDBridge::readStereoSamplesInterleaved(float *target, size_t n)
 {
     // Check for buffer underflow
     if (ringBuffer[0].count() < n) {
-        handleBufferUnderflow();
+        signalUnderflow = true;
+        n = ringBuffer[0].count();
+        // handleBufferUnderflow();
     }
     
     // Read samples

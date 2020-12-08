@@ -14,7 +14,9 @@ SIDStream::append(short *data, size_t count)
 {    
     // Check for buffer overflow
     if (free() < count) {
-         bridge.handleBufferOverflow();
+        bridge.signalOverflow = true;
+        return;
+        // bridge.handleBufferOverflow();
     }
     
     // Convert sound samples to floating point values and write into ringbuffer

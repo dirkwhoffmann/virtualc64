@@ -127,6 +127,8 @@ ReSID::getRevision()
 void
 ReSID::setRevision(SIDRevision revision)
 {
+    assert(!isRunning());
+
     assert(revision == 0 || revision == 1);
     model = revision;
     
@@ -141,18 +143,22 @@ ReSID::setRevision(SIDRevision revision)
 void
 ReSID::setSampleRate(double value)
 {
+    // assert(!isRunning());
+
     sampleRate = value;
     
     sid->set_sampling_parameters((double)clockFrequency,
                                  (reSID::sampling_method)samplingMethod,
                                  sampleRate);
     
-    debug(SID_DEBUG, "Setting sample rate to %d samples per second.\n", sampleRate);
+    debug(SID_DEBUG, "Setting sample rate to %f samples per second\n", sampleRate);
 }
 
 void 
 ReSID::setAudioFilter(bool value)
 {
+    assert(!isRunning());
+
     emulateFilter = value;
     
     suspend();
@@ -171,6 +177,8 @@ ReSID::getSamplingMethod() {
 void 
 ReSID::setSamplingMethod(SamplingMethod value)
 {
+    assert(!isRunning());
+    
     switch(value) {
         case SID_SAMPLE_FAST:
             debug(SID_DEBUG, "Using sampling method SAMPLE_FAST.\n");

@@ -59,6 +59,10 @@ public:
     // Number of buffer overflows since power up
     u64 bufferOverflows;
     
+    // Set to true to signal a buffer exception
+    bool signalUnderflow = false;
+    bool signalOverflow = false;
+
     
     //
     // Audio ringbuffer
@@ -154,6 +158,7 @@ public:
 private:
     
     void _dump() override;
+    void _dump(int nr);
     void _dump(SIDInfo info);
 
     
