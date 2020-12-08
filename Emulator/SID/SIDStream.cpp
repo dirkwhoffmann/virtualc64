@@ -10,24 +10,6 @@
 #include "SIDBridge.h"
 
 void
-SIDStream::append(short *data, size_t count)
-{
-    assert(false);
-    
-    // Check for buffer overflow
-    if (free() < count) {
-        bridge.signalOverflow = true;
-        return;
-        // bridge.handleBufferOverflow();
-    }
-    
-    // Convert sound samples to floating point values and write into ringbuffer
-    for (unsigned i = 0; i < count; i++) {
-        write(float(data[i]) * scale);
-    }
-}
-
-void
 StereoStream::copyMono(float *buffer, size_t n,
                        i32 &volume, i32 targetVolume, i32 volumeDelta)
 {

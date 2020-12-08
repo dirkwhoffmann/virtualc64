@@ -31,18 +31,18 @@ private:
 
     // FastSID (Adapted from VICE 3.1)
     FastSID fastsid[4] = {
-        FastSID(c64, ringBuffer[0], samples[0]),
-        FastSID(c64, ringBuffer[1], samples[1]),
-        FastSID(c64, ringBuffer[2], samples[2]),
-        FastSID(c64, ringBuffer[3], samples[3])
+        FastSID(c64, samples[0]),
+        FastSID(c64, samples[1]),
+        FastSID(c64, samples[2]),
+        FastSID(c64, samples[3])
     };
     
     // ReSID (Taken from VICE 3.1)
     ReSID resid[4] = {
-        ReSID(c64, ringBuffer[0], samples[0]),
-        ReSID(c64, ringBuffer[1], samples[1]),
-        ReSID(c64, ringBuffer[2], samples[2]),
-        ReSID(c64, ringBuffer[3], samples[3])
+        ReSID(c64, samples[0]),
+        ReSID(c64, samples[1]),
+        ReSID(c64, samples[2]),
+        ReSID(c64, samples[3])
     };
 
     // CPU cycle at the last call to executeUntil()
@@ -77,15 +77,6 @@ public:
     
 public:
     
-    /* DEPRECATED
-     */
-    SIDStream ringBuffer[4] = {
-        SIDStream(*this),
-        SIDStream(*this),
-        SIDStream(*this),
-        SIDStream(*this)
-    };
-
     /* The mixed stereo stream. This stream contains the final audio stream
      * ready to be handed over to the audio device of the host OS.
      */
@@ -236,7 +227,7 @@ public:
     void clearRingbuffer();
     
     // Reads a single audio sample from the ringbuffer
-    float readData();
+    // float readData();
     
     // Reads a single audio sample without moving the read pointer
     float ringbufferData(size_t offset);
@@ -276,10 +267,7 @@ public:
      * With a standard sample rate of 44100 Hz, 735 samples is 1/60 sec.
      */
     const u32 samplesAhead = 8 * 735;
-    void alignWritePtr() {
-        for (int i = 0; i < 4; i++) ringBuffer[i].align(samplesAhead);
-        stream.align(samplesAhead);
-    }
+    void alignWritePtr() { stream.align(samplesAhead); }
     
     // Executes SID until a certain cycle is reached
     void executeUntil(u64 targetCycle);

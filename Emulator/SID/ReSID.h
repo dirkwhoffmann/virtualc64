@@ -30,9 +30,6 @@ class ReSID : public C64Component {
     // Reference to the connected SID bridge
     // SIDBridge &bridge;
     
-    // Reference to the connected output stream
-    SIDStream &stream;
-
     // Target buffer for storing the produced audio samples
     short *samples = nullptr;
     
@@ -74,7 +71,7 @@ private:
     
 public:
     
-	ReSID(C64 &ref, SIDStream &streamref, short *buffer);
+	ReSID(C64 &ref, short *buffer);
 	~ReSID();
     
 private:

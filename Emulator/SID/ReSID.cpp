@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-ReSID::ReSID(C64 &ref, SIDStream &streamref, short *buffer) : C64Component(ref), stream(streamref), samples(buffer)
+ReSID::ReSID(C64 &ref, short *buffer) : C64Component(ref), samples(buffer)
 {
 	setDescription("ReSID");
 

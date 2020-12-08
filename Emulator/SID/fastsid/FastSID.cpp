@@ -30,7 +30,7 @@
 
 #include "C64.h"
 
-FastSID::FastSID(C64 &ref, SIDStream &streamref, short *buffer) : C64Component(ref), stream(streamref), samples(buffer)
+FastSID::FastSID(C64 &ref, short *buffer) : C64Component(ref), samples(buffer)
 {
 	setDescription("FastSID");
     
@@ -370,10 +370,7 @@ FastSID::execute(u64 cycles)
     for (unsigned i = 0; i < numSamples; i++) {
         samples[i] = calculateSingleSample();
     }
-    
-    // Write samples into ringbuffer
-    // stream.append(buf, numSamples);
-    
+        
     return numSamples;
 }
 
