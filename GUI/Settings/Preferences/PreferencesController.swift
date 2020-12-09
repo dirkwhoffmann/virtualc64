@@ -188,7 +188,7 @@ class PreferencesController: DialogController {
     @IBAction override func okAction(_ sender: Any!) {
         
         track()
-        pref.saveEmulatorUserDefaults()
+        pref.saveGeneralUserDefaults()
         pref.saveDevicesUserDefaults()
         hideSheet()
     }

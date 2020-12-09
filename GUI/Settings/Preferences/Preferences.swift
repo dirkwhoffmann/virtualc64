@@ -127,70 +127,70 @@ class Preferences {
     // General
     //
     
-    func loadEmulatorUserDefaults() {
+    func loadGeneralUserDefaults() {
         
         let defaults = UserDefaults.standard
         
         // Floppy
-        driveBlankDiskFormatIntValue = defaults.integer(forKey: Keys.driveBlankDiskFormat)
-        driveEjectUnasked = defaults.bool(forKey: Keys.driveEjectUnasked)
-        driveSounds = defaults.bool(forKey: Keys.driveSounds)
-        driveSoundPan = defaults.double(forKey: Keys.driveSoundPan)
-        driveInsertSound = defaults.bool(forKey: Keys.driveInsertSound)
-        driveEjectSound = defaults.bool(forKey: Keys.driveEjectSound)
-        driveHeadSound = defaults.bool(forKey: Keys.driveHeadSound)
-        driveConnectSound = defaults.bool(forKey: Keys.driveConnectSound)
+        driveBlankDiskFormatIntValue = defaults.integer(forKey: Keys.Gen.driveBlankDiskFormat)
+        driveEjectUnasked = defaults.bool(forKey: Keys.Gen.driveEjectUnasked)
+        driveSounds = defaults.bool(forKey: Keys.Gen.driveSounds)
+        driveSoundPan = defaults.double(forKey: Keys.Gen.driveSoundPan)
+        driveInsertSound = defaults.bool(forKey: Keys.Gen.driveInsertSound)
+        driveEjectSound = defaults.bool(forKey: Keys.Gen.driveEjectSound)
+        driveHeadSound = defaults.bool(forKey: Keys.Gen.driveHeadSound)
+        driveConnectSound = defaults.bool(forKey: Keys.Gen.driveConnectSound)
         
         // Fullscreen
-        keepAspectRatio = defaults.bool(forKey: Keys.keepAspectRatio)
-        exitOnEsc = defaults.bool(forKey: Keys.exitOnEsc)
+        keepAspectRatio = defaults.bool(forKey: Keys.Gen.keepAspectRatio)
+        exitOnEsc = defaults.bool(forKey: Keys.Gen.exitOnEsc)
         
         // Snapshots and screenshots
-        autoSnapshots = defaults.bool(forKey: Keys.autoSnapshots)
-        snapshotInterval = defaults.integer(forKey: Keys.autoSnapshotInterval)
-        autoScreenshots = defaults.bool(forKey: Keys.autoScreenshots)
-        screenshotSource = defaults.integer(forKey: Keys.screenshotSource)
-        screenshotTargetIntValue = defaults.integer(forKey: Keys.screenshotTarget)
+        autoSnapshots = defaults.bool(forKey: Keys.Gen.autoSnapshots)
+        snapshotInterval = defaults.integer(forKey: Keys.Gen.autoSnapshotInterval)
+        autoScreenshots = defaults.bool(forKey: Keys.Gen.autoScreenshots)
+        screenshotSource = defaults.integer(forKey: Keys.Gen.screenshotSource)
+        screenshotTargetIntValue = defaults.integer(forKey: Keys.Gen.screenshotTarget)
         
         // Warp mode
-        warpModeIntValue = defaults.integer(forKey: Keys.warpMode)
+        warpModeIntValue = defaults.integer(forKey: Keys.Gen.warpMode)
         
         // Misc
-        pauseInBackground = defaults.bool(forKey: Keys.pauseInBackground)
-        closeWithoutAsking = defaults.bool(forKey: Keys.closeWithoutAsking)
+        pauseInBackground = defaults.bool(forKey: Keys.Gen.pauseInBackground)
+        closeWithoutAsking = defaults.bool(forKey: Keys.Gen.closeWithoutAsking)
     }
     
-    func saveEmulatorUserDefaults() {
+    func saveGeneralUserDefaults() {
         
         let defaults = UserDefaults.standard
         
         // Floppy
-        defaults.set(screenshotTargetIntValue, forKey: Keys.screenshotTarget)
-        defaults.set(driveEjectUnasked, forKey: Keys.driveEjectUnasked)
-        defaults.set(driveSounds, forKey: Keys.driveSounds)
-        defaults.set(driveSoundPan, forKey: Keys.driveSoundPan)
-        defaults.set(driveInsertSound, forKey: Keys.driveInsertSound)
-        defaults.set(driveEjectSound, forKey: Keys.driveEjectSound)
-        defaults.set(driveHeadSound, forKey: Keys.driveHeadSound)
-        defaults.set(driveConnectSound, forKey: Keys.driveConnectSound)
-        defaults.set(driveBlankDiskFormatIntValue, forKey: Keys.driveBlankDiskFormat)
+        defaults.set(screenshotTargetIntValue, forKey: Keys.Gen.screenshotTarget)
+        defaults.set(driveEjectUnasked, forKey: Keys.Gen.driveEjectUnasked)
+        defaults.set(driveSounds, forKey: Keys.Gen.driveSounds)
+        defaults.set(driveSoundPan, forKey: Keys.Gen.driveSoundPan)
+        defaults.set(driveInsertSound, forKey: Keys.Gen.driveInsertSound)
+        defaults.set(driveEjectSound, forKey: Keys.Gen.driveEjectSound)
+        defaults.set(driveHeadSound, forKey: Keys.Gen.driveHeadSound)
+        defaults.set(driveConnectSound, forKey: Keys.Gen.driveConnectSound)
+        defaults.set(driveBlankDiskFormatIntValue, forKey: Keys.Gen.driveBlankDiskFormat)
         
         // Fullscreen
-        defaults.set(keepAspectRatio, forKey: Keys.keepAspectRatio)
-        defaults.set(exitOnEsc, forKey: Keys.exitOnEsc)
+        defaults.set(keepAspectRatio, forKey: Keys.Gen.keepAspectRatio)
+        defaults.set(exitOnEsc, forKey: Keys.Gen.exitOnEsc)
         
         // Snapshots and screenshots
-        defaults.set(autoSnapshots, forKey: Keys.autoSnapshots)
-        defaults.set(snapshotInterval, forKey: Keys.autoSnapshotInterval)
-        defaults.set(autoScreenshots, forKey: Keys.autoScreenshots)
-        defaults.set(screenshotSource, forKey: Keys.screenshotSource)
+        defaults.set(autoSnapshots, forKey: Keys.Gen.autoSnapshots)
+        defaults.set(snapshotInterval, forKey: Keys.Gen.autoSnapshotInterval)
+        defaults.set(autoScreenshots, forKey: Keys.Gen.autoScreenshots)
+        defaults.set(screenshotSource, forKey: Keys.Gen.screenshotSource)
         
         // Warp mode
-        defaults.set(warpModeIntValue, forKey: Keys.warpMode)
+        defaults.set(warpModeIntValue, forKey: Keys.Gen.warpMode)
         
         // Misc
-        defaults.set(pauseInBackground, forKey: Keys.pauseInBackground)
-        defaults.set(closeWithoutAsking, forKey: Keys.closeWithoutAsking)
+        defaults.set(pauseInBackground, forKey: Keys.Gen.pauseInBackground)
+        defaults.set(closeWithoutAsking, forKey: Keys.Gen.closeWithoutAsking)
     }
     
     //

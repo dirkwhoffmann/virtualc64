@@ -185,8 +185,8 @@ extension PreferencesController {
         track()
         assert(sender.selectedTag() == 0)
         
-        UserDefaults.resetEmulatorUserDefaults()
-        pref.loadEmulatorUserDefaults()
+        UserDefaults.resetGeneralUserDefaults()
+        pref.loadGeneralUserDefaults()
         refresh()
     }
 }

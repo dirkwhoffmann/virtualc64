@@ -58,7 +58,7 @@ extension UserDefaults {
         
         track()
         
-        registerEmulatorUserDefaults()
+        registerGeneralUserDefaults()
         registerDevicesUserDefaults()
         registerKeyboardUserDefaults()
         registerMediaUserDefaults()
@@ -77,7 +77,7 @@ extension MyController {
         
         c64.suspend()
         
-        pref.loadEmulatorUserDefaults()
+        pref.loadGeneralUserDefaults()
         pref.loadDevicesUserDefaults()
         pref.loadKeyboardUserDefaults()
         pref.loadMediaUserDefaults()
@@ -122,35 +122,38 @@ extension MyController {
 
 struct Keys {
     
-    // Drives
-    static let driveBlankDiskFormat   = "VC64_EMU_DriveBlankDiskFormat"
-    static let driveEjectUnasked      = "VC64_EMU_EjectUnasked"
-    static let driveSounds            = "VC64_EMU_DriveSounds"
-    static let driveSoundPan          = "VC64_EMU_DriveSoundPan"
-    static let driveInsertSound       = "VC64_EMU_DriveInsertSound"
-    static let driveEjectSound        = "VC64_EMU_DriveEjectSound"
-    static let driveHeadSound         = "VC64_EMU_DriveHeadSound"
-    static let driveConnectSound      = "VC64_EMU_DriveConnectSound"
-
-    // Snapshots and screenshots
-    static let autoSnapshots          = "VC64_EMU_AutoSnapshots"
-    static let autoSnapshotInterval   = "VC64_EMU_ScreenshotInterval"
-    static let autoScreenshots        = "VC64_EMU_AutoScreenshots"
-    static let screenshotSource       = "VC64_EMU_ScreenshotSource"
-    static let screenshotTarget       = "VC64_EMU_ScreenshotTarget"
-    
-    // Fullscreen
-    static let keepAspectRatio        = "VC64_EMU_FullscreenKeepAspectRatio"
-    static let exitOnEsc              = "VC64_EMU_FullscreenExitOnEsc"
-
-    // User dialogs
-    static let closeWithoutAsking     = "VC64_EMU_CloseWithoutAsking"
-    
-    // Warp mode
-    static let warpMode               = "VC64_EMU_WarpMode"
-
-    // Miscellaneous
-    static let pauseInBackground      = "VC64_EMU_PauseInBackground"
+    struct Gen {
+        
+        // Drives
+        static let driveBlankDiskFormat   = "VC64_GEN_DriveBlankDiskFormat"
+        static let driveEjectUnasked      = "VC64_GEN_EjectUnasked"
+        static let driveSounds            = "VC64_GEN_DriveSounds"
+        static let driveSoundPan          = "VC64_GEN_DriveSoundPan"
+        static let driveInsertSound       = "VC64_GEN_DriveInsertSound"
+        static let driveEjectSound        = "VC64_GEN_DriveEjectSound"
+        static let driveHeadSound         = "VC64_GEN_DriveHeadSound"
+        static let driveConnectSound      = "VC64_GEN_DriveConnectSound"
+        
+        // Snapshots and screenshots
+        static let autoSnapshots          = "VC64_GEN_AutoSnapshots"
+        static let autoSnapshotInterval   = "VC64_GEN_ScreenshotInterval"
+        static let autoScreenshots        = "VC64_GEN_AutoScreenshots"
+        static let screenshotSource       = "VC64_GEN_ScreenshotSource"
+        static let screenshotTarget       = "VC64_GEN_ScreenshotTarget"
+        
+        // Fullscreen
+        static let keepAspectRatio        = "VC64_GEN_FullscreenKeepAspectRatio"
+        static let exitOnEsc              = "VC64_GEN_FullscreenExitOnEsc"
+        
+        // User dialogs
+        static let closeWithoutAsking     = "VC64_GEN_CloseWithoutAsking"
+        
+        // Warp mode
+        static let warpMode               = "VC64_GEN_WarpMode"
+        
+        // Miscellaneous
+        static let pauseInBackground      = "VC64_GEN_PauseInBackground"
+    }
 }
 
 struct EmulatorDefaults {
@@ -216,33 +219,33 @@ struct EmulatorDefaults {
 
 extension UserDefaults {
 
-    static func registerEmulatorUserDefaults() {
+    static func registerGeneralUserDefaults() {
         
         let defaults = EmulatorDefaults.std
         let dictionary: [String: Any] = [
             
-            Keys.driveBlankDiskFormat: Int(defaults.driveBlankDiskFormat.rawValue),
-            Keys.driveEjectUnasked: defaults.driveEjectUnasked,
-            Keys.driveSounds: defaults.driveSounds,
-            Keys.driveSoundPan: defaults.driveSoundPan,
-            Keys.driveInsertSound: defaults.driveInsertSound,
-            Keys.driveEjectSound: defaults.driveEjectSound,
-            Keys.driveHeadSound: defaults.driveHeadSound,
-            Keys.driveConnectSound: defaults.driveConnectSound,
+            Keys.Gen.driveBlankDiskFormat: Int(defaults.driveBlankDiskFormat.rawValue),
+            Keys.Gen.driveEjectUnasked: defaults.driveEjectUnasked,
+            Keys.Gen.driveSounds: defaults.driveSounds,
+            Keys.Gen.driveSoundPan: defaults.driveSoundPan,
+            Keys.Gen.driveInsertSound: defaults.driveInsertSound,
+            Keys.Gen.driveEjectSound: defaults.driveEjectSound,
+            Keys.Gen.driveHeadSound: defaults.driveHeadSound,
+            Keys.Gen.driveConnectSound: defaults.driveConnectSound,
             
-            Keys.autoSnapshots: defaults.autoSnapshots,
-            Keys.autoSnapshotInterval: defaults.autoSnapshotInterval,
-            Keys.autoScreenshots: defaults.autoScreenshots,
-            Keys.screenshotSource: defaults.screenshotSource,
-            Keys.screenshotTarget: Int(defaults.screenshotTarget.rawValue),
+            Keys.Gen.autoSnapshots: defaults.autoSnapshots,
+            Keys.Gen.autoSnapshotInterval: defaults.autoSnapshotInterval,
+            Keys.Gen.autoScreenshots: defaults.autoScreenshots,
+            Keys.Gen.screenshotSource: defaults.screenshotSource,
+            Keys.Gen.screenshotTarget: Int(defaults.screenshotTarget.rawValue),
             
-            Keys.keepAspectRatio: defaults.keepAspectRatio,
-            Keys.exitOnEsc: defaults.exitOnEsc,
+            Keys.Gen.keepAspectRatio: defaults.keepAspectRatio,
+            Keys.Gen.exitOnEsc: defaults.exitOnEsc,
             
-            Keys.warpMode: Int(defaults.warpMode.rawValue),
+            Keys.Gen.warpMode: Int(defaults.warpMode.rawValue),
             
-            Keys.pauseInBackground: defaults.pauseInBackground,
-            Keys.closeWithoutAsking: defaults.closeWithoutAsking
+            Keys.Gen.pauseInBackground: defaults.pauseInBackground,
+            Keys.Gen.closeWithoutAsking: defaults.closeWithoutAsking
         ]
         
         let userDefaults = UserDefaults.standard
@@ -250,32 +253,32 @@ extension UserDefaults {
         userDefaults.register(defaults: dictionary)
     }
     
-    static func resetEmulatorUserDefaults() {
+    static func resetGeneralUserDefaults() {
         
         let defaults = UserDefaults.standard
         
-        let keys = [ Keys.driveBlankDiskFormat,
-                     Keys.driveEjectUnasked,
-                     Keys.driveSounds,
-                     Keys.driveSoundPan,
-                     Keys.driveInsertSound,
-                     Keys.driveEjectSound,
-                     Keys.driveHeadSound,
-                     Keys.driveConnectSound,
+        let keys = [ Keys.Gen.driveBlankDiskFormat,
+                     Keys.Gen.driveEjectUnasked,
+                     Keys.Gen.driveSounds,
+                     Keys.Gen.driveSoundPan,
+                     Keys.Gen.driveInsertSound,
+                     Keys.Gen.driveEjectSound,
+                     Keys.Gen.driveHeadSound,
+                     Keys.Gen.driveConnectSound,
                      
-                     Keys.autoSnapshots,
-                     Keys.autoSnapshotInterval,
-                     Keys.autoScreenshots,
-                     Keys.screenshotSource,
-                     Keys.screenshotTarget,
+                     Keys.Gen.autoSnapshots,
+                     Keys.Gen.autoSnapshotInterval,
+                     Keys.Gen.autoScreenshots,
+                     Keys.Gen.screenshotSource,
+                     Keys.Gen.screenshotTarget,
                      
-                     Keys.keepAspectRatio,
-                     Keys.exitOnEsc,
+                     Keys.Gen.keepAspectRatio,
+                     Keys.Gen.exitOnEsc,
                      
-                     Keys.warpMode,
+                     Keys.Gen.warpMode,
                      
-                     Keys.pauseInBackground,
-                     Keys.closeWithoutAsking
+                     Keys.Gen.pauseInBackground,
+                     Keys.Gen.closeWithoutAsking
         ]
         
         for key in keys { defaults.removeObject(forKey: key) }
