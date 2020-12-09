@@ -872,6 +872,16 @@ extension Keys {
     
     struct Aud {
         
+        // SIDs
+        static let sidEnable0         = "VC64_AUD_SidEnable0"
+        static let sidEnable1         = "VC64_AUD_SidEnable1"
+        static let sidEnable2         = "VC64_AUD_SidEnable2"
+        static let sidEnable3         = "VC64_AUD_SidEnable3"
+        static let sidAddress0        = "VC64_AUD_SidAddress0"
+        static let sidAddress1        = "VC64_AUD_SidAddress1"
+        static let sidAddress2        = "VC64_AUD_SidAddress2"
+        static let sidAddress3        = "VC64_AUD_SidAddress3"
+
         // Engine
         static let sidEngine          = "VC64_AUD_SidEngine"
         static let sidSampling        = "VC64_AUD_Sampling"
@@ -894,6 +904,16 @@ extension Keys {
 
 struct AudioDefaults {
     
+    // SIDs
+    let sidEnable0: Bool
+    let sidEnable1: Bool
+    let sidEnable2: Bool
+    let sidEnable3: Bool
+    let sidAddress0: Int
+    let sidAddress1: Int
+    let sidAddress2: Int
+    let sidAddress3: Int
+
     // Engine
     let sidEngine: SIDEngine
     let sidSampling: SamplingMethod
@@ -918,6 +938,15 @@ struct AudioDefaults {
     
     static let mono = AudioDefaults.init(
         
+        sidEnable0: true,
+        sidEnable1: false,
+        sidEnable2: false,
+        sidEnable3: false,
+        sidAddress0: 0xD400,
+        sidAddress1: 0xD420,
+        sidAddress2: 0xD440,
+        sidAddress3: 0xD460,
+
         sidEngine: .ENGINE_RESID,
         sidSampling: .SID_SAMPLE_INTERPOLATE,
         
@@ -936,6 +965,15 @@ struct AudioDefaults {
     
     static let stereo = AudioDefaults.init(
         
+        sidEnable0: true,
+        sidEnable1: false,
+        sidEnable2: false,
+        sidEnable3: false,
+        sidAddress0: 0xD400,
+        sidAddress1: 0xD420,
+        sidAddress2: 0xD440,
+        sidAddress3: 0xD460,
+
         sidEngine: .ENGINE_RESID,
         sidSampling: .SID_SAMPLE_INTERPOLATE,
 
@@ -959,6 +997,15 @@ extension UserDefaults {
 
         let defaults = AudioDefaults.mono
         let dictionary: [String: Any] = [
+
+            Keys.Aud.sidEnable0: defaults.sidEnable0,
+            Keys.Aud.sidEnable1: defaults.sidEnable1,
+            Keys.Aud.sidEnable2: defaults.sidEnable2,
+            Keys.Aud.sidEnable3: defaults.sidEnable3,
+            Keys.Aud.sidAddress0: defaults.sidAddress0,
+            Keys.Aud.sidAddress1: defaults.sidAddress1,
+            Keys.Aud.sidAddress2: defaults.sidAddress2,
+            Keys.Aud.sidAddress3: defaults.sidAddress3,
 
             Keys.Aud.sidEngine: Int(defaults.sidEngine.rawValue),
             Keys.Aud.sidSampling: Int(defaults.sidSampling.rawValue),
@@ -984,7 +1031,16 @@ extension UserDefaults {
 
         let userDefaults = UserDefaults.standard
         
-        let keys = [ Keys.Aud.sidEngine,
+        let keys = [ Keys.Aud.sidEnable0,
+                     Keys.Aud.sidEnable1,
+                     Keys.Aud.sidEnable2,
+                     Keys.Aud.sidEnable3,
+                     Keys.Aud.sidAddress0,
+                     Keys.Aud.sidAddress1,
+                     Keys.Aud.sidAddress2,
+                     Keys.Aud.sidAddress3,
+
+                     Keys.Aud.sidEngine,
                      Keys.Aud.sidSampling,
                      
                      Keys.Aud.vol0,

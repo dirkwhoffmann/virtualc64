@@ -516,44 +516,41 @@ SIDBridge::getVoiceInfo(unsigned voice)
 u8 
 SIDBridge::peek(u16 addr)
 {
-    int sid = 0;
-    
     // Get SID up to date
     executeUntil(cpu.cycle);
     
-    // Experimental code for second SID
-    if (addr >= 0xD420 && addr <= 0xD43F) {
-        debug(SID_DEBUG, "Trapped SID read from %x\n", addr);
-        sid = 1;
+    // REMOVE ASAP:
+    config.enabled = 0b11;
+    
+    // Route access to one of the secondary SIDs (if mapped in)
+    if (config.enabled > 1) {
+        for (int i = 1; i < 4; i++) {
+            if (isEnabled(i) && (addr & 0xFFE0) == (config.address[i] & 0xFFE0)) {
+                switch (config.engine) {
+                    case ENGINE_FASTSID: return fastsid[i].peek(addr & 0x1F);
+                    case ENGINE_RESID:   return resid[i].peek(addr & 0x1F);
+                }
+            }
+        }
     }
     
-    // SID registers repeat every 32 bytes
+    // Route access to the primary SID
     addr &= 0x1F;
-    
-    if (sid == 0 && addr == 0x19) {
-        debug(SID_DEBUG, "PEEKING POT X\n");
-        return mouse.readPotX();
-    }
-    if (sid == 0 && addr == 0x1A) {
-        debug(SID_DEBUG, "PEEKING POT Y\n");
-        return mouse.readPotY();
-    }
+    if (addr == 0x19) return mouse.readPotX();
+    if (addr == 0x1A) return mouse.readPotY();
     
     switch (config.engine) {
-            
-        case ENGINE_FASTSID: return fastsid[sid].peek(addr);
-        case ENGINE_RESID:   return resid[sid].peek(addr);
-            
-        default:
-            assert(false);
-            return 0;
+        case ENGINE_FASTSID: return fastsid[0].peek(addr & 0x1F);
+        case ENGINE_RESID:   return resid[0].peek(addr & 0x1F);
     }
+    
+    assert(false);
+    return 0;
 }
 
 u8
 SIDBridge::spypeek(u16 addr)
 {
-    assert(addr <= 0x1F);
     return peek(addr);
 }
 

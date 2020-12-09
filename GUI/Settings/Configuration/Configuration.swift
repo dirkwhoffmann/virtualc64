@@ -245,6 +245,38 @@ class Configuration {
     // Audio settings
     //
 
+    var sidEnable0: Bool {
+        get { return c64.getConfig(OPT_SID_ENABLE, id: 0) != 0 }
+        set { c64.configure(OPT_SID_ENABLE, id: 0, enable: newValue) }
+    }
+    var sidEnable1: Bool {
+        get { return c64.getConfig(OPT_SID_ENABLE, id: 1) != 0 }
+        set { c64.configure(OPT_SID_ENABLE, id: 1, enable: newValue) }
+    }
+    var sidEnable2: Bool {
+        get { return c64.getConfig(OPT_SID_ENABLE, id: 2) != 0 }
+        set { c64.configure(OPT_SID_ENABLE, id: 2, enable: newValue) }
+    }
+    var sidEnable3: Bool {
+        get { return c64.getConfig(OPT_SID_ENABLE, id: 3) != 0 }
+        set { c64.configure(OPT_SID_ENABLE, id: 3, enable: newValue) }
+    }
+    var sidAddress0: Int {
+        get { return c64.getConfig(OPT_SID_ADDRESS, id: 0) }
+        set { c64.configure(OPT_SID_ADDRESS, id: 0, value: newValue) }
+    }
+    var sidAddress1: Int {
+        get { return c64.getConfig(OPT_SID_ADDRESS, id: 1) }
+        set { c64.configure(OPT_SID_ADDRESS, id: 1, value: newValue) }
+    }
+    var sidAddress2: Int {
+        get { return c64.getConfig(OPT_SID_ADDRESS, id: 2) }
+        set { c64.configure(OPT_SID_ADDRESS, id: 2, value: newValue) }
+    }
+    var sidAddress3: Int {
+        get { return c64.getConfig(OPT_SID_ADDRESS, id: 3) }
+        set { c64.configure(OPT_SID_ADDRESS, id: 3, value: newValue) }
+    }
     var sidEngine: Int {
         get { return c64.getConfig(OPT_SID_ENGINE) }
         set { c64.configure(OPT_SID_ENGINE, value: newValue) }
@@ -571,7 +603,16 @@ class Configuration {
         let defaults = UserDefaults.standard
         
         c64.suspend()
-        
+
+        sidEnable0 = defaults.bool(forKey: Keys.Aud.sidEnable0)
+        sidEnable1 = defaults.bool(forKey: Keys.Aud.sidEnable1)
+        sidEnable2 = defaults.bool(forKey: Keys.Aud.sidEnable2)
+        sidEnable3 = defaults.bool(forKey: Keys.Aud.sidEnable3)
+        sidAddress0 = defaults.integer(forKey: Keys.Aud.sidAddress0)
+        sidAddress1 = defaults.integer(forKey: Keys.Aud.sidAddress1)
+        sidAddress2 = defaults.integer(forKey: Keys.Aud.sidAddress2)
+        sidAddress3 = defaults.integer(forKey: Keys.Aud.sidAddress3)
+
         sidEngine = defaults.integer(forKey: Keys.Aud.sidEngine)
         sidSampling = defaults.integer(forKey: Keys.Aud.sidSampling)
 
@@ -595,6 +636,15 @@ class Configuration {
         track()
         
         let defaults = UserDefaults.standard
+        
+        defaults.set(sidEnable0, forKey: Keys.Aud.sidEnable0)
+        defaults.set(sidEnable1, forKey: Keys.Aud.sidEnable1)
+        defaults.set(sidEnable2, forKey: Keys.Aud.sidEnable2)
+        defaults.set(sidEnable3, forKey: Keys.Aud.sidEnable3)
+        defaults.set(sidAddress0, forKey: Keys.Aud.sidAddress0)
+        defaults.set(sidAddress1, forKey: Keys.Aud.sidAddress1)
+        defaults.set(sidAddress2, forKey: Keys.Aud.sidAddress2)
+        defaults.set(sidAddress3, forKey: Keys.Aud.sidAddress3)
         
         defaults.set(sidEngine, forKey: Keys.Aud.sidEngine)
         defaults.set(sidSampling, forKey: Keys.Aud.sidSampling)

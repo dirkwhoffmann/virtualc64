@@ -187,6 +187,8 @@ public:
     bool setConfigItem(ConfigOption option, long value) override;
     bool setConfigItem(ConfigOption option, long id, long value) override;
 
+    bool isEnabled(int nr) { return GET_BIT(config.enabled, nr); }
+    
     bool isMuted() { return config.volL == 0 && config.volR == 0; }
 
     u32 getClockFrequency();
