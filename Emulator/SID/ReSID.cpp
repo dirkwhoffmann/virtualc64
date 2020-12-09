@@ -223,17 +223,8 @@ ReSID::poke(u16 addr, u8 value)
 u64
 ReSID::execute(u64 cycles)
 {
-    // short buf[2049];
-    // int buflength = 2048;
-    
     // Don't ask SID to compute samples for a time interval greater than 1 sec
     assert(cycles <= PAL_CYCLES_PER_SECOND);
-    /*
-    if (elapsedCycles > PAL_CYCLES_PER_SECOND) {
-        warn("Number of missing SID cycles is far too large.\n");
-        elapsedCycles = PAL_CYCLES_PER_SECOND;
-    }
-    */
     
     reSID::cycle_count delta_t = (reSID::cycle_count)cycles;
     int numSamples = 0;
@@ -243,9 +234,6 @@ ReSID::execute(u64 cycles)
         numSamples += sid->clock(delta_t, samples + numSamples,
                                  SIDBridge::sampleBufferSize - numSamples);
     }
-    
-    // Write samples into ringbuffer
-    // stream.append(buf, numSamples);
     
     assert(numSamples >= 0);
     return (u64)numSamples;

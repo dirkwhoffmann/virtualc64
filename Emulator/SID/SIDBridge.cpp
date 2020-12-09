@@ -26,7 +26,8 @@ SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
     };
     
     config.engine = ENGINE_RESID;
-
+    config.enabled = 1;
+    
     for (int i = 0; i < 4; i++) {
         resid[i].setClockFrequency(PAL_CLOCK_FREQUENCY);
         fastsid[i].setClockFrequency(PAL_CLOCK_FREQUENCY);
@@ -216,6 +217,12 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
                      
         case OPT_SID_ENABLE:
                       
+            // The built-in SID can't be disabled
+            if (id == 0 && value == false) {
+                warn("SID 0 can't be disabled.\n");
+                return false;
+            }
+
             // REMOVE ASAP (FORCE SID0 and SID1)
             value = (id == 0 || id == 1);
             
@@ -531,14 +538,12 @@ SIDBridge::mappedSID(u16 addr)
 u8 
 SIDBridge::peek(u16 addr)
 {
-    int sidNr = 0;
-    
-    // Get SID up to date
+    // Get SIDs up to date
     executeUntil(cpu.cycle);
-        
-    // Reroute access to one of the auxiliary SIDs (if mapped in)
-    if (config.enabled > 1) sidNr = mappedSID(addr);
-    
+ 
+    // Select the target SID
+    int sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
+
     addr &= 0x1F;
 
     if (sidNr == 0) {
@@ -564,13 +569,11 @@ SIDBridge::spypeek(u16 addr)
 void 
 SIDBridge::poke(u16 addr, u8 value)
 {
-    int sidNr = 0;
-    
     // Get SID up to date
     executeUntil(cpu.cycle);
-    
-    // Reroute access to one of the auxiliary SIDs (if mapped in)
-    if (config.enabled > 1) sidNr = mappedSID(addr);
+ 
+    // Select the target SID
+    int sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
 
     addr &= 0x1F;
     
@@ -590,7 +593,7 @@ SIDBridge::executeUntil(u64 targetCycle)
     u64 missingCycles = targetCycle - cycles;
     
     if (missingCycles > PAL_CYCLES_PER_SECOND) {
-        debug(SID_DEBUG, "Far too many SID cycles are missing.\n");
+        debug(SID_DEBUG, "Far too many SID cycles missing.\n");
         missingCycles = PAL_CYCLES_PER_SECOND;
     }
     
@@ -601,54 +604,64 @@ SIDBridge::executeUntil(u64 targetCycle)
 void
 SIDBridge::execute(u64 numCycles)
 {
-    // Only proceed if we should advances some cycles
     if (numCycles == 0) return;
- 
-    // Check
+  
+    // Check for a buffer underflow
     if (signalUnderflow) {
         signalUnderflow = false;
         handleBufferUnderflow();
     }
-    
-    u64 numSamples1, numSamples2;
 
+    //
+    // Synthesize samples
+    //
+    
+    u64 numSamples;
+    
     switch (config.engine) {
             
         case ENGINE_FASTSID:
+
+            // Run the primary SID (which is always enabled)
+            numSamples = fastsid[0].execute(numCycles);
             
-            numSamples1 = fastsid[0].execute(numCycles);
-            numSamples2 = fastsid[1].execute(numCycles);
+            // Run all other SIDS (if any)
+            if (config.enabled > 1) {
+                for (int i = 1; i < 4; i++) {
+                    if (isEnabled(i)) {
+                        u64 numSamples2 = fastsid[i].execute(numCycles);
+                        assert(numSamples2 == numSamples);
+                    }
+                }
+            }
             break;
-    
+
         case ENGINE_RESID:
+
+            // Run the primary SID (which is always enabled)
+            numSamples = resid[0].execute(numCycles);
             
-            numSamples1 = resid[0].execute(numCycles);
-            numSamples2 = resid[1].execute(numCycles);
+            // Run all other SIDS (if any)
+            if (config.enabled > 1) {
+                for (int i = 1; i < 4; i++) {
+                    if (isEnabled(i)) {
+                        u64 numSamples2 = resid[i].execute(numCycles);
+                        assert(numSamples2 == numSamples);
+                    }
+                }
+            }
             break;
-            
+
         default:
             assert(false);
     }
-    
-    /*
-    if (signalOverflow) {
-        signalOverflow = false;
-        handleBufferOverflow();
-    }
-    */
-    
-    if (numSamples1 != numSamples2) {
-        _dump(0);
-        _dump(1);
-    }
-    assert(numSamples1 == numSamples2);
     
     //
     // Mix channels
     //
     
     // Check for buffer overflow
-    if (stream.free() < numSamples1) {
+    if (stream.free() < numSamples) {
         handleBufferOverflow();
     }
     
@@ -664,7 +677,7 @@ SIDBridge::execute(u64 numCycles)
     const float divider = 40000.0f;
         
     // Convert sound samples to floating point values and write into ringbuffer
-    for (unsigned i = 0; i < numSamples1; i++) {
+    for (unsigned i = 0; i < numSamples; i++) {
         
         float value1 = (float)samples[0][i] * StereoStream::scale;
         float value2 = (float)samples[1][i] * StereoStream::scale;
