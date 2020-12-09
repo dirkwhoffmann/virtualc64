@@ -216,6 +216,9 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
                      
         case OPT_SID_ENABLE:
                       
+            // REMOVE ASAP (FORCE SID0 and SID1)
+            value = (id == 0 || id == 1);
+            
             assert(id >= 0 && id <= 3);
             if (!!GET_BIT(config.enabled, id) == value) {
                 return false;
@@ -513,35 +516,39 @@ SIDBridge::getVoiceInfo(unsigned voice)
     return info;
 }
 
+int
+SIDBridge::mappedSID(u16 addr)
+{
+    addr &= 0xFFE0;
+    
+    if (isEnabled(1) && addr == config.address[1]) return 1;
+    if (isEnabled(2) && addr == config.address[2]) return 2;
+    if (isEnabled(3) && addr == config.address[3]) return 3;
+
+    return 0;
+}
+
 u8 
 SIDBridge::peek(u16 addr)
 {
+    int sidNr = 0;
+    
     // Get SID up to date
     executeUntil(cpu.cycle);
+        
+    // Reroute access to one of the auxiliary SIDs (if mapped in)
+    if (config.enabled > 1) sidNr = mappedSID(addr);
     
-    // REMOVE ASAP:
-    config.enabled = 0b11;
-    
-    // Route access to one of the secondary SIDs (if mapped in)
-    if (config.enabled > 1) {
-        for (int i = 1; i < 4; i++) {
-            if (isEnabled(i) && (addr & 0xFFE0) == (config.address[i] & 0xFFE0)) {
-                switch (config.engine) {
-                    case ENGINE_FASTSID: return fastsid[i].peek(addr & 0x1F);
-                    case ENGINE_RESID:   return resid[i].peek(addr & 0x1F);
-                }
-            }
-        }
+    addr &= 0x1F;
+
+    if (sidNr == 0) {
+        if (addr == 0x19) return mouse.readPotX();
+        if (addr == 0x1A) return mouse.readPotY();
     }
     
-    // Route access to the primary SID
-    addr &= 0x1F;
-    if (addr == 0x19) return mouse.readPotX();
-    if (addr == 0x1A) return mouse.readPotY();
-    
     switch (config.engine) {
-        case ENGINE_FASTSID: return fastsid[0].peek(addr & 0x1F);
-        case ENGINE_RESID:   return resid[0].peek(addr & 0x1F);
+        case ENGINE_FASTSID: return fastsid[sidNr].peek(addr);
+        case ENGINE_RESID:   return resid[sidNr].peek(addr);
     }
     
     assert(false);
@@ -557,22 +564,19 @@ SIDBridge::spypeek(u16 addr)
 void 
 SIDBridge::poke(u16 addr, u8 value)
 {
+    int sidNr = 0;
+    
     // Get SID up to date
     executeUntil(cpu.cycle);
+    
+    // Reroute access to one of the auxiliary SIDs (if mapped in)
+    if (config.enabled > 1) sidNr = mappedSID(addr);
 
-    // Experimental code for second SID
-    if (addr >= 0xD420 && addr <= 0xD43F) {
-        
-        debug(SID_DEBUG, "Trapped SID write to %x (%x)\n", addr, value);
-        resid[1].poke(addr & 0x1F, value);
-        fastsid[1].poke(addr & 0x1F, value);
-        
-    } else {
-
-        // Keep both SID implementations up to date
-        resid[0].poke(addr & 0x1F, value);
-        fastsid[0].poke(addr & 0x1F, value);
-    }
+    addr &= 0x1F;
+    
+    // Keep both SID implementations up to date
+    resid[sidNr].poke(addr, value);
+    fastsid[sidNr].poke(addr, value);
     
     // Run ReSID for at least one cycle to make pipelined writes work
     if (config.engine != ENGINE_RESID) {

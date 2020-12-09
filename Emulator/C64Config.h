@@ -23,6 +23,13 @@
 // #define RELEASEBUILD
 // #define NDEBUG
 
+//
+// Configuration overrides
+//
+
+// Uncomment to override a configuration setting
+// EMPTY LIST SO FAR
+
 
 //
 // Debug settings

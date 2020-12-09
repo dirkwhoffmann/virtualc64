@@ -341,10 +341,13 @@ public:
 
      
 	//
-	// Accessig device properties
+	// Accessig memory
 	//
     
 public:
+    
+    // Translates a memory address to the mapped in SID
+    int mappedSID(u16 addr); 
     
 	// Special peek function for the I/O memory range
 	u8 peek(u16 addr);
