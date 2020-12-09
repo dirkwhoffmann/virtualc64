@@ -47,10 +47,10 @@ extension ConfigurationController {
         
         // Audio
         hwSidModelPopup.selectItem(withTag: config.sidRevision)
-        hwSidFilter.state = config.sidFilter ? .on : .off
-        hwSidEnginePopup.selectItem(withTag: config.sidEngine)
-        hwSidSamplingPopup.isEnabled = resid
-        hwSidSamplingPopup.selectItem(withTag: config.sidSampling)
+        // hwSidFilter.state = config.sidFilter ? .on : .off
+        // hwSidEnginePopup.selectItem(withTag: config.sidEngine)
+        // hwSidSamplingPopup.isEnabled = resid
+        // hwSidSamplingPopup.selectItem(withTag: config.sidSampling)
         
         // Logic board
         hwGlueLogicPopup.selectItem(withTag: config.glueLogic)

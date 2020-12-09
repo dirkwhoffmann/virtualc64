@@ -15,13 +15,6 @@
 
 typedef struct { float left; float right; } SamplePair;
 class StereoStream : public RingBuffer < SamplePair, 12288 > {
-
-public:
-    
-    // Scaling factor applied to all sound samples produced by reSID
-    static constexpr float scale = 0.000005f;
-
-private:
     
     // Reference to the connected SID bridge
     class SIDBridge &bridge;

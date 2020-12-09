@@ -524,7 +524,13 @@ class Configuration {
 
         sidRevision = defaults.integer(forKey: Keys.Hwd.sidRevision)
         sidFilter = defaults.bool(forKey: Keys.Hwd.sidFilter)
-        
+        sidEnable1 = defaults.bool(forKey: Keys.Hwd.sidEnable1)
+        sidEnable2 = defaults.bool(forKey: Keys.Hwd.sidEnable2)
+        sidEnable3 = defaults.bool(forKey: Keys.Hwd.sidEnable3)
+        sidAddress1 = defaults.integer(forKey: Keys.Hwd.sidAddress1)
+        sidAddress2 = defaults.integer(forKey: Keys.Hwd.sidAddress2)
+        sidAddress3 = defaults.integer(forKey: Keys.Hwd.sidAddress3)
+
         sidEngine = defaults.integer(forKey: Keys.Hwd.sidEngine)
         sidSampling = defaults.integer(forKey: Keys.Hwd.sidSampling)
         
@@ -556,7 +562,13 @@ class Configuration {
 
         defaults.set(sidRevision, forKey: Keys.Hwd.sidRevision)
         defaults.set(sidFilter, forKey: Keys.Hwd.sidFilter)
-        
+        defaults.set(sidEnable1, forKey: Keys.Hwd.sidEnable1)
+        defaults.set(sidEnable2, forKey: Keys.Hwd.sidEnable2)
+        defaults.set(sidEnable3, forKey: Keys.Hwd.sidEnable3)
+        defaults.set(sidAddress1, forKey: Keys.Hwd.sidAddress1)
+        defaults.set(sidAddress2, forKey: Keys.Hwd.sidAddress2)
+        defaults.set(sidAddress3, forKey: Keys.Hwd.sidAddress3)
+
         defaults.set(sidEngine, forKey: Keys.Hwd.sidEngine)
         defaults.set(sidSampling, forKey: Keys.Hwd.sidSampling)
         
@@ -604,15 +616,6 @@ class Configuration {
         
         c64.suspend()
 
-        sidEnable0 = defaults.bool(forKey: Keys.Aud.sidEnable0)
-        sidEnable1 = defaults.bool(forKey: Keys.Aud.sidEnable1)
-        sidEnable2 = defaults.bool(forKey: Keys.Aud.sidEnable2)
-        sidEnable3 = defaults.bool(forKey: Keys.Aud.sidEnable3)
-        sidAddress0 = defaults.integer(forKey: Keys.Aud.sidAddress0)
-        sidAddress1 = defaults.integer(forKey: Keys.Aud.sidAddress1)
-        sidAddress2 = defaults.integer(forKey: Keys.Aud.sidAddress2)
-        sidAddress3 = defaults.integer(forKey: Keys.Aud.sidAddress3)
-
         sidEngine = defaults.integer(forKey: Keys.Aud.sidEngine)
         sidSampling = defaults.integer(forKey: Keys.Aud.sidSampling)
 
@@ -636,16 +639,7 @@ class Configuration {
         track()
         
         let defaults = UserDefaults.standard
-        
-        defaults.set(sidEnable0, forKey: Keys.Aud.sidEnable0)
-        defaults.set(sidEnable1, forKey: Keys.Aud.sidEnable1)
-        defaults.set(sidEnable2, forKey: Keys.Aud.sidEnable2)
-        defaults.set(sidEnable3, forKey: Keys.Aud.sidEnable3)
-        defaults.set(sidAddress0, forKey: Keys.Aud.sidAddress0)
-        defaults.set(sidAddress1, forKey: Keys.Aud.sidAddress1)
-        defaults.set(sidAddress2, forKey: Keys.Aud.sidAddress2)
-        defaults.set(sidAddress3, forKey: Keys.Aud.sidAddress3)
-        
+                
         defaults.set(sidEngine, forKey: Keys.Aud.sidEngine)
         defaults.set(sidSampling, forKey: Keys.Aud.sidSampling)
 

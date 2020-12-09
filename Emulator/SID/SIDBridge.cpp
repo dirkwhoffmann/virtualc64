@@ -675,21 +675,16 @@ SIDBridge::execute(u64 numCycles)
             volume -= MIN(volumeDelta, volume - targetVolume);
         }
     }
-    // float divider = 75000.0f; // useReSID ? 100000.0f : 150000.0f;
-    const float divider = 40000.0f;
         
     // Convert sound samples to floating point values and write into ringbuffer
     for (unsigned i = 0; i < numSamples; i++) {
         
         float ch0, ch1, ch2, ch3, l, r;
         
-        ch0 = (float)samples[0][i] * StereoStream::scale;
-        ch1 = (float)samples[1][i] * StereoStream::scale;
-        ch2 = (float)samples[2][i] * StereoStream::scale;
-        ch3 = (float)samples[3][i] * StereoStream::scale;
-
-        // value1 = (volume <= 0) ? 0.0f : value1 * (float)volume / divider;
-        // value2 = (volume <= 0) ? 0.0f : value2 * (float)volume / divider;
+        ch0 = (float)samples[0][i] * config.vol[0];
+        ch1 = (float)samples[1][i] * config.vol[1];
+        ch2 = (float)samples[2][i] * config.vol[2];
+        ch3 = (float)samples[3][i] * config.vol[3];
 
         // Compute left channel output
         l =
@@ -701,8 +696,10 @@ SIDBridge::execute(u64 numCycles)
         ch0 * (1 - config.pan[0]) + ch1 * (1 - config.pan[1]) +
         ch2 * (1 - config.pan[2]) + ch3 * (1 - config.pan[3]);
 
-        // if (tmp++ % 100 == 0) debug("%f %f\n", value1, value2);
-        // float value = (value1 + value2) * StereoStream::scale / 2;
+        // Apply master volume
+        l *= config.volL;
+        r *= config.volR;
+
         stream.write(SamplePair { l, r } );
     }
     
