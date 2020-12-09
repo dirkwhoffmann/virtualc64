@@ -602,12 +602,10 @@ extension MyController {
             muted = false
             refreshStatusBar()
 
-
         case .MSG_WARP_ON,
              .MSG_WARP_OFF:
             
             refreshStatusBarWarpIcon()
-
             
         case .MSG_BASIC_ROM_LOADED,
              .MSG_CHAR_ROM_LOADED,

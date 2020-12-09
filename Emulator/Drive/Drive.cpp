@@ -79,7 +79,7 @@ Drive::setConfigItem(ConfigOption option, long value)
 }
 
 bool
-Drive::setConfigItem(DriveID id, ConfigOption option, long value)
+Drive::setConfigItem(ConfigOption option, long id, long value)
 {
     if (id != deviceNr) return false;
     

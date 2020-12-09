@@ -182,8 +182,11 @@ public:
     SIDConfig getConfig() { return config; }
     
     long getConfigItem(ConfigOption option);
+    long getConfigItem(ConfigOption option, long id);
+
     bool setConfigItem(ConfigOption option, long value) override;
-    
+    bool setConfigItem(ConfigOption option, long id, long value) override;
+
     bool isMuted() { return config.volL == 0 && config.volR == 0; }
 
     u32 getClockFrequency();

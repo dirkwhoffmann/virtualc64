@@ -64,18 +64,14 @@ typedef enum : long
     OPT_TIMER_B_BUG,
     
     // SID
+    OPT_SID_ENABLE,
+    OPT_SID_ADDRESS,
     OPT_SID_REVISION,
     OPT_SID_FILTER,
+    OPT_AUDPAN,
+    OPT_AUDVOL,
     OPT_AUDVOLL,
     OPT_AUDVOLR,
-    OPT_AUDVOL0,
-    OPT_AUDVOL1,
-    OPT_AUDVOL2,
-    OPT_AUDVOL3,
-    OPT_AUDPAN0,
-    OPT_AUDPAN1,
-    OPT_AUDPAN2,
-    OPT_AUDPAN3,
     
     // Sound synthesis
     OPT_SID_ENGINE,

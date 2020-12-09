@@ -66,31 +66,34 @@ SIDBridge::getConfigItem(ConfigOption option)
 
         case OPT_AUDVOLR:
             return (long)(exp2(config.volR) * 100.0);
+            
+        default:
+            assert(false);
+    }
+}
 
-        case OPT_AUDVOL0:
-            return (long)(exp2(config.vol[0] / 0.0000025) * 100.0);
+long
+SIDBridge::getConfigItem(ConfigOption option, long id)
+{
+    
+    switch (option) {
+            
+        case OPT_SID_ENABLE:
+            
+            return GET_BIT(config.enabled, id);
+            
+        case OPT_SID_ADDRESS:
+            
+            return config.address[id];
+            
+        case OPT_AUDVOL:
+            
+            return (long)(exp2(config.vol[id] / 0.0000025) * 100.0);
 
-        case OPT_AUDVOL1:
-            return (long)(exp2(config.vol[1] / 0.0000025) * 100.0);
+        case OPT_AUDPAN:
             
-        case OPT_AUDVOL2:
-            return (long)(exp2(config.vol[2] / 0.0000025) * 100.0);
-            
-        case OPT_AUDVOL3:
-            return (long)(exp2(config.vol[3] / 0.0000025) * 100.0);
-
-        case OPT_AUDPAN0:
-            return (long)(config.pan[0] * 100.0);
-            
-        case OPT_AUDPAN1:
-            return (long)(config.pan[1] * 100.0);
-            
-        case OPT_AUDPAN2:
-            return (long)(config.pan[2] * 100.0);
-            
-        case OPT_AUDPAN3:
-            return (long)(config.pan[3] * 100.0);
-            
+            return (long)(config.pan[id] * 100.0);
+                        
         default:
             assert(false);
     }
@@ -100,39 +103,7 @@ bool
 SIDBridge::setConfigItem(ConfigOption option, long value)
 {
     bool wasMuted = isMuted();
-    
-    switch (option) {
-                        
-        case OPT_AUDVOLL:
-        case OPT_AUDVOLR:
-        case OPT_AUDVOL0:
-        case OPT_AUDVOL1:
-        case OPT_AUDVOL2:
-        case OPT_AUDVOL3:
-            
-            if (value < 100 || value > 400) {
-                warn("Invalid volumne: %d\n", value);
-                warn("       Valid values: 100 ... 400\n");
-                return false;
-            }
-            break;
-            
-        case OPT_AUDPAN0:
-        case OPT_AUDPAN1:
-        case OPT_AUDPAN2:
-        case OPT_AUDPAN3:
-            
-            if (value < 0 || value > 100) {
-                warn("Invalid pan: %d\n", value);
-                warn("       Valid values: 0 ... 100\n");
-                return false;
-            }
-            break;
-            
-        default:
-            break;
-    }
-    
+        
     switch (option) {
             
         case OPT_VIC_REVISION:
@@ -209,6 +180,12 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
             
         case OPT_AUDVOLL:
             
+            if (value < 100 || value > 400) {
+                warn("Invalid volume (L): %d\n", value);
+                warn("       Valid values: 100 ... 400\n");
+                return false;
+            }
+
             config.volL = log2((double)value / 100.0);
             if (wasMuted != isMuted())
                 messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
@@ -216,48 +193,69 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
             
         case OPT_AUDVOLR:
 
+            if (value < 100 || value > 400) {
+                warn("Invalid volume (R): %d\n", value);
+                warn("       Valid values: 100 ... 400\n");
+                return false;
+            }
+
             config.volR = log2((double)value / 100.0);
             if (wasMuted != isMuted())
                 messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
             return true;
             
-        case OPT_AUDVOL0:
-            
-            config.vol[0] = log2((double)value / 100.0) * 0.0000025;
-            return true;
-            
-        case OPT_AUDVOL1:
-            
-            config.vol[1] = log2((double)value / 100.0) * 0.0000025;
-            return true;
+        default:
+            return false;
+    }
+}
 
-        case OPT_AUDVOL2:
+bool
+SIDBridge::setConfigItem(ConfigOption option, long id, long value)
+{
+    switch (option) {
+                     
+        case OPT_SID_ENABLE:
+                      
+            assert(id >= 0 && id <= 3);
+            if (!!GET_BIT(config.enabled, id) == value) {
+                return false;
+            }
             
-            config.vol[2] = log2((double)value / 100.0) * 0.0000025;
+            REPLACE_BIT(config.enabled, id, value);
             return true;
-
-        case OPT_AUDVOL3:
             
-            config.vol[3] = log2((double)value / 100.0) * 0.0000025;
-            return true;
+        case OPT_SID_ADDRESS:
 
-        case OPT_AUDPAN0:
+            assert(id >= 0 && id <= 3);
+            if (config.address[id] == value) {
+                return false;
+            }
             
-            config.pan[0] = MAX(0.0, MIN(value / 100.0, 1.0));
+            config.address[id] = value;
             return true;
-
-        case OPT_AUDPAN1:
-            config.pan[1] = MAX(0.0, MIN(value / 100.0, 1.0));
-            return true;
-
-        case OPT_AUDPAN2:
             
-            config.pan[2] = MAX(0.0, MIN(value / 100.0, 1.0));
-            return true;
-
-        case OPT_AUDPAN3:
+        case OPT_AUDVOL:
             
-            config.pan[3] = MAX(0.0, MIN(value / 100.0, 1.0));
+            assert(id >= 0 && id <= 3);
+            if (value < 100 || value > 400) {
+                warn("Invalid volumne: %d\n", value);
+                warn("       Valid values: 100 ... 400\n");
+                return false;
+            }
+
+            config.vol[id] = log2((double)value / 100.0) * 0.0000025;
+            return true;
+            
+        case OPT_AUDPAN:
+            
+            assert(id >= 0 && id <= 3);
+            if (value < 0 || value > 100) {
+                warn("Invalid pan: %d\n", value);
+                warn("       Valid values: 0 ... 100\n");
+                return false;
+            }
+
+            config.pan[id] = MAX(0.0, MIN(value / 100.0, 1.0));
             return true;
 
         default:

@@ -149,9 +149,12 @@ struct AnyC64FileWrapper;
 
 - (C64Configuration) config;
 - (NSInteger) getConfig:(ConfigOption)opt;
+- (NSInteger) getConfig:(ConfigOption)opt id:(NSInteger)id;
 - (NSInteger) getConfig:(ConfigOption)opt drive:(DriveID)id;
 - (BOOL) configure:(ConfigOption)opt value:(NSInteger)val;
 - (BOOL) configure:(ConfigOption)opt enable:(BOOL)val;
+- (BOOL) configure:(ConfigOption)opt id:(NSInteger)id value:(NSInteger)val;
+- (BOOL) configure:(ConfigOption)opt id:(NSInteger)id enable:(BOOL)val;
 - (BOOL) configure:(ConfigOption)opt drive:(DriveID)id value:(NSInteger)val;
 - (BOOL) configure:(ConfigOption)opt drive:(DriveID)id enable:(BOOL)val;
 - (void) configure:(C64Model)value;

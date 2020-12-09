@@ -216,7 +216,7 @@ public:
     
     long getConfigItem(ConfigOption option);
     bool setConfigItem(ConfigOption option, long value) override;
-    bool setConfigItem(DriveID id, ConfigOption option, long value) override;
+    bool setConfigItem(ConfigOption option, long id, long value) override;
         
     
     //

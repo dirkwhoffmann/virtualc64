@@ -198,6 +198,8 @@ C64::getConfigItem(ConfigOption option)
         case OPT_SID_FILTER:
         case OPT_SID_ENGINE:
         case OPT_SID_SAMPLING:
+        case OPT_AUDVOLL:
+        case OPT_AUDVOLR:
             return sid.getConfigItem(option);
 
         case OPT_RAM_PATTERN:
@@ -211,13 +213,19 @@ C64::getConfigItem(ConfigOption option)
 }
 
 long
-C64::getConfigItem(DriveID id, ConfigOption option)
+C64::getConfigItem(ConfigOption option, long id)
 {
     assert(isDriveID(id));
     
     Drive &drive = id == DRIVE8 ? drive8 : drive9;
     
     switch (option) {
+            
+        case OPT_SID_ENABLE:
+        case OPT_SID_ADDRESS:
+        case OPT_AUDPAN:
+        case OPT_AUDVOL:
+            return sid.getConfigItem(option, id);
             
         case OPT_DRIVE_TYPE:
         case OPT_DRIVE_CONNECT:
@@ -245,12 +253,12 @@ C64::configure(ConfigOption option, long value)
 }
 
 bool
-C64::configure(DriveID id, ConfigOption option, long value)
+C64::configure(ConfigOption option, long id, long value)
 {
-    debug(CNF_DEBUG, "configure(id: %d, option: %d, value: %d\n", id, option, value);
+    debug(CNF_DEBUG, "configure(option: %d, id: %d, value: %d\n", option, id, value);
     
     // Propagate configuration request to all components
-    bool changed = HardwareComponent::configure(id, option, value);
+    bool changed = HardwareComponent::configure(option, id, value);
     
     // Inform the GUI if the configuration has changed
     if (changed) messageQueue.put(MSG_CONFIG);

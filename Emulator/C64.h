@@ -230,11 +230,11 @@ public:
     
     // Gets a single configuration item
     long getConfigItem(ConfigOption option);
-    long getConfigItem(DriveID id, ConfigOption option);
+    long getConfigItem(ConfigOption option, long id);
     
     // Sets a single configuration item
     bool configure(ConfigOption option, long value);
-    bool configure(DriveID id, ConfigOption option, long value);
+    bool configure(ConfigOption option, long id, long value);
 
     // Configures the C64 to match a specific C64 model
     void configure(C64Model model);
