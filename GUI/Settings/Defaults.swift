@@ -634,8 +634,8 @@ struct HardwareDefaults {
     var sidRevision: SIDRevision
     var sidFilter: Bool
 
-    var sidEngine: SIDEngine
-    var sampling: SamplingMethod
+    var sidEngine: SIDEngine      // DEPRECATED
+    var sampling: SamplingMethod  // DEPRECATED
     
     var glueLogic: GlueLogic
     var ramPattern: RamPattern
@@ -811,8 +811,8 @@ extension UserDefaults {
             Keys.Hwd.sidRevision:   defaults.sidRevision.rawValue,
             Keys.Hwd.sidFilter:     defaults.sidFilter,
 
-            Keys.Hwd.sidEngine:     defaults.sidEngine.rawValue,
-            Keys.Hwd.sidSampling:   defaults.sampling.rawValue,
+            Keys.Hwd.sidEngine:     defaults.sidEngine.rawValue, // DEPRECATED
+            Keys.Hwd.sidSampling:   defaults.sampling.rawValue, // DEPRECATED
             
             Keys.Hwd.glueLogic:     defaults.glueLogic.rawValue,
             Keys.Hwd.ramPattern:    defaults.ramPattern.rawValue,
@@ -859,6 +859,145 @@ extension UserDefaults {
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }
+    }
+}
+
+//
+// User defaults (Audio)
+//
+
+extension Keys {
+    
+    struct Aud {
+        
+        // Engine
+        static let sidEngine          = "VC64_AUD_SidEngine"
+        static let sidSampling        = "VC64_AUD_Sampling"
+        
+        // In
+        static let vol0               = "VAMIGA_AUD_Volume0"
+        static let vol1               = "VAMIGA_AUD_Volume1"
+        static let vol2               = "VAMIGA_AUD_Volume2"
+        static let vol3               = "VAMIGA_AUD_Volume3"
+        static let pan0               = "VAMIGA_AUD_Pan0"
+        static let pan1               = "VAMIGA_AUD_Pan1"
+        static let pan2               = "VAMIGA_AUD_Pan2"
+        static let pan3               = "VAMIGA_AUD_Pan3"
+        
+        // Out
+        static let volL               = "VAMIGA_AUD_VolumeL"
+        static let volR               = "VAMIGA_AUD_VolumeR"
+    }
+}
+
+struct AudioDefaults {
+    
+    // Engine
+    let sidEngine: SIDEngine
+    let sidSampling: SamplingMethod
+    
+    // In
+    let vol0: Int
+    let vol1: Int
+    let vol2: Int
+    let vol3: Int
+    let pan0: Int
+    let pan1: Int
+    let pan2: Int
+    let pan3: Int
+    
+    // Out
+    let volL: Int
+    let volR: Int
+    
+    //
+    // Schemes
+    //
+    
+    static let mono = AudioDefaults.init(
+        
+        sidEngine: .ENGINE_RESID,
+        sidSampling: .SID_SAMPLE_INTERPOLATE,
+        
+        vol0: 400,
+        vol1: 400,
+        vol2: 400,
+        vol3: 400,
+        pan0: 70,
+        pan1: 30,
+        pan2: 30,
+        pan3: 70,
+        
+        volL: 250,
+        volR: 250
+    )
+    
+    static let stereo = AudioDefaults.init(
+        
+        sidEngine: .ENGINE_RESID,
+        sidSampling: .SID_SAMPLE_INTERPOLATE,
+
+        vol0: 400,
+        vol1: 400,
+        vol2: 400,
+        vol3: 400,
+        pan0: 100,
+        pan1: 0,
+        pan2: 0,
+        pan3: 100,
+        
+        volL: 250,
+        volR: 250
+    )
+}
+
+extension UserDefaults {
+
+    static func registerAudioUserDefaults() {
+
+        let defaults = AudioDefaults.mono
+        let dictionary: [String: Any] = [
+
+            Keys.Aud.sidEngine: Int(defaults.sidEngine.rawValue),
+            Keys.Aud.sidSampling: Int(defaults.sidSampling.rawValue),
+
+            Keys.Aud.vol0: defaults.vol0,
+            Keys.Aud.vol1: defaults.vol1,
+            Keys.Aud.vol2: defaults.vol2,
+            Keys.Aud.vol3: defaults.vol3,
+            Keys.Aud.pan0: defaults.pan0,
+            Keys.Aud.pan1: defaults.pan1,
+            Keys.Aud.pan2: defaults.pan2,
+            Keys.Aud.pan3: defaults.pan3,
+            
+            Keys.Aud.volL: defaults.volL,
+            Keys.Aud.volR: defaults.volR
+        ]
+
+        let userDefaults = UserDefaults.standard
+        userDefaults.register(defaults: dictionary)
+    }
+
+    static func resetAudioUserDefaults() {
+
+        let userDefaults = UserDefaults.standard
+        
+        let keys = [ Keys.Aud.sidEngine,
+                     Keys.Aud.sidSampling,
+                     
+                     Keys.Aud.vol0,
+                     Keys.Aud.vol1,
+                     Keys.Aud.vol2,
+                     Keys.Aud.vol3,
+                     Keys.Aud.pan0,
+                     Keys.Aud.pan1,
+                     Keys.Aud.pan2,
+                     Keys.Aud.pan3,
+                     
+                     Keys.Aud.volL,
+                     Keys.Aud.volR]
+
+        for key in keys { userDefaults.removeObject(forKey: key) }
     }
 }
 
