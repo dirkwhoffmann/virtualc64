@@ -156,7 +156,7 @@ class Configuration {
         get { return c64.getConfig(OPT_SID_FILTER) != 0 }
         set { c64.configure(OPT_SID_FILTER, enable: newValue) }
     }
-    
+    /*
     var sidEngine: Int {
         get { return c64.getConfig(OPT_SID_ENGINE) }
         set { c64.configure(OPT_SID_ENGINE, value: newValue) }
@@ -166,7 +166,7 @@ class Configuration {
         get { return c64.getConfig(OPT_SID_SAMPLING) }
         set { c64.configure(OPT_SID_SAMPLING, value: newValue) }
     }
-
+    */
     var glueLogic: Int {
         get { return c64.getConfig(OPT_GLUE_LOGIC) }
         set { c64.configure(OPT_GLUE_LOGIC, value: newValue) }
@@ -241,6 +241,59 @@ class Configuration {
         }
     }
 
+    //
+    // Audio settings
+    //
+
+    var sidEngine: Int {
+        get { return c64.getConfig(OPT_SID_ENGINE) }
+        set { c64.configure(OPT_SID_ENGINE, value: newValue) }
+    }
+    var sidSampling: Int {
+        get { return c64.getConfig(OPT_SID_SAMPLING) }
+        set { c64.configure(OPT_SID_SAMPLING, value: newValue) }
+    }
+    var vol0: Int {
+        get { return c64.getConfig(OPT_AUDVOL, id: 0) }
+        set { c64.configure(OPT_AUDVOL, id: 0, value: newValue) }
+    }
+    var vol1: Int {
+        get { return c64.getConfig(OPT_AUDVOL, id: 1) }
+        set { c64.configure(OPT_AUDVOL, id: 1, value: newValue) }
+    }
+    var vol2: Int {
+        get { return c64.getConfig(OPT_AUDVOL, id: 2) }
+        set { c64.configure(OPT_AUDVOL, id: 2, value: newValue) }
+    }
+    var vol3: Int {
+        get { return c64.getConfig(OPT_AUDVOL, id: 3) }
+        set { c64.configure(OPT_AUDVOL, id: 3, value: newValue) }
+    }
+    var pan0: Int {
+        get { return c64.getConfig(OPT_AUDPAN, id: 0) }
+        set { c64.configure(OPT_AUDPAN, id: 0, value: newValue) }
+    }
+    var pan1: Int {
+        get { return c64.getConfig(OPT_AUDPAN, id: 1) }
+        set { c64.configure(OPT_AUDPAN, id: 1, value: newValue) }
+    }
+    var pan2: Int {
+        get { return c64.getConfig(OPT_AUDPAN, id: 2) }
+        set { c64.configure(OPT_AUDPAN, id: 2, value: newValue) }
+    }
+    var pan3: Int {
+        get { return c64.getConfig(OPT_AUDPAN, id: 3) }
+        set { c64.configure(OPT_AUDPAN, id: 3, value: newValue) }
+    }
+    var volL: Int {
+        get { return c64.getConfig(OPT_AUDVOLL) }
+        set { c64.configure(OPT_AUDVOLL, value: newValue) }
+    }
+    var volR: Int {
+        get { return c64.getConfig(OPT_AUDVOLR) }
+        set { c64.configure(OPT_AUDVOLR, value: newValue) }
+    }
+    
     //
     // Video settings
     //
@@ -485,6 +538,78 @@ class Configuration {
 
         defaults.set(gameDevice1, forKey: Keys.Hwd.gameDevice1)
         defaults.set(gameDevice2, forKey: Keys.Hwd.gameDevice2)
+    }
+    
+    //
+    // Audio
+    //
+    
+    func loadAudioDefaults(_ defaults: AudioDefaults) {
+        
+        c64.suspend()
+        
+        sidEngine = defaults.sidEngine.rawValue
+        sidSampling = defaults.sidSampling.rawValue
+
+        vol0 = defaults.vol0
+        vol1 = defaults.vol1
+        vol2 = defaults.vol2
+        vol3 = defaults.vol3
+        pan0 = defaults.pan0
+        pan1 = defaults.pan1
+        pan2 = defaults.pan2
+        pan3 = defaults.pan3
+        
+        volL = defaults.volL
+        volR = defaults.volR
+        
+        c64.resume()
+    }
+    
+    func loadAudioUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        
+        c64.suspend()
+        
+        sidEngine = defaults.integer(forKey: Keys.Aud.sidEngine)
+        sidSampling = defaults.integer(forKey: Keys.Aud.sidSampling)
+
+        vol0 = defaults.integer(forKey: Keys.Aud.vol0)
+        vol1 = defaults.integer(forKey: Keys.Aud.vol1)
+        vol2 = defaults.integer(forKey: Keys.Aud.vol2)
+        vol3 = defaults.integer(forKey: Keys.Aud.vol3)
+        pan0 = defaults.integer(forKey: Keys.Aud.pan0)
+        pan1 = defaults.integer(forKey: Keys.Aud.pan1)
+        pan2 = defaults.integer(forKey: Keys.Aud.pan2)
+        pan3 = defaults.integer(forKey: Keys.Aud.pan3)
+        
+        volL = defaults.integer(forKey: Keys.Aud.volL)
+        volR = defaults.integer(forKey: Keys.Aud.volR)
+                
+        c64.resume()
+    }
+    
+    func saveAudioUserDefaults() {
+        
+        track()
+        
+        let defaults = UserDefaults.standard
+        
+        defaults.set(sidEngine, forKey: Keys.Aud.sidEngine)
+        defaults.set(sidSampling, forKey: Keys.Aud.sidSampling)
+
+        defaults.set(vol0, forKey: Keys.Aud.vol0)
+        defaults.set(vol1, forKey: Keys.Aud.vol1)
+        defaults.set(vol2, forKey: Keys.Aud.vol2)
+        defaults.set(vol3, forKey: Keys.Aud.vol3)
+        defaults.set(pan0, forKey: Keys.Aud.pan0)
+        defaults.set(pan1, forKey: Keys.Aud.pan1)
+        defaults.set(pan2, forKey: Keys.Aud.pan2)
+        defaults.set(pan3, forKey: Keys.Aud.pan3)
+        
+        defaults.set(volL, forKey: Keys.Aud.volL)
+        defaults.set(volR, forKey: Keys.Aud.volR)
     }
     
     //

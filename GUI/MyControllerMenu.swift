@@ -250,11 +250,13 @@ extension MyController: NSMenuItemValidation {
         
         UserDefaults.resetRomUserDefaults()
         UserDefaults.resetHardwareUserDefaults()
+        UserDefaults.resetAudioUserDefaults()
         UserDefaults.resetVideoUserDefaults()
         
         c64.suspend()
         config.loadRomUserDefaults()
         config.loadHardwareUserDefaults()
+        config.loadAudioUserDefaults()
         config.loadVideoUserDefaults()
         c64.resume()
     }

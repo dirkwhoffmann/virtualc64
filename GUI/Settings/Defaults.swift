@@ -65,6 +65,7 @@ extension UserDefaults {
         
         registerRomUserDefaults()
         registerHardwareUserDefaults()
+        registerAudioUserDefaults()
         registerVideoUserDefaults()
     }
 }
@@ -84,6 +85,7 @@ extension MyController {
         
         config.loadRomUserDefaults()
         config.loadHardwareUserDefaults()
+        config.loadAudioUserDefaults()
         config.loadVideoUserDefaults()
         
         c64.resume()
@@ -1240,52 +1242,3 @@ extension UserDefaults {
         for key in keys { defaults.removeObject(forKey: key) }
     }
 }
-
-/*
-extension MyController {
-        
-    func loadVideoUserDefaults() {
-        
-        let defaults = UserDefaults.standard
-        
-        c64.suspend()
-        
-        renderer.upscaler = defaults.integer(forKey: Keys.upscaler)
-        c64.vic.setVideoPalette(defaults.integer(forKey: Keys.palette))
-        c64.vic.setBrightness(defaults.double(forKey: Keys.brightness))
-        c64.vic.setContrast(defaults.double(forKey: Keys.contrast))
-        c64.vic.setSaturation(defaults.double(forKey: Keys.saturation))
-
-        renderer.keepAspectRatio = defaults.bool(forKey: Keys.keepAspectRatio)
-        /*
-        renderer.setEyeX(defaults.float(forKey: VC64Keys.eyeX))
-        renderer.setEyeY(defaults.float(forKey: VC64Keys.eyeY))
-        renderer.setEyeZ(defaults.float(forKey: VC64Keys.eyeZ))
-        */
-        
-        defaults.decode(&renderer.shaderOptions, forKey: Keys.shaderOptions)
-        renderer.buildDotMasks()
- 
-        c64.resume()
-    }
-    
-    func saveVideoUserDefaults() {
-        
-        let defaults = UserDefaults.standard
-        
-        defaults.set(renderer.upscaler, forKey: Keys.upscaler)
-        defaults.set(c64.vic.videoPalette(), forKey: Keys.palette)
-        defaults.set(c64.vic.brightness(), forKey: Keys.brightness)
-        defaults.set(c64.vic.contrast(), forKey: Keys.contrast)
-        defaults.set(c64.vic.saturation(), forKey: Keys.saturation)
-        
-        defaults.set(renderer.keepAspectRatio, forKey: Keys.keepAspectRatio)
-        /*
-        defaults.set(renderer.eyeX(), forKey: VC64Keys.eyeX)
-        defaults.set(renderer.eyeY(), forKey: VC64Keys.eyeY)
-        defaults.set(renderer.eyeZ(), forKey: VC64Keys.eyeZ)
-        */
-        defaults.encode(renderer.shaderOptions, forKey: Keys.shaderOptions)
-    }
-}
-*/
