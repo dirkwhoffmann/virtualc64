@@ -25,39 +25,39 @@ class Preferences {
     //
     
     // Floppy
-     var driveBlankDiskFormat = EmulatorDefaults.std.driveBlankDiskFormat
+     var driveBlankDiskFormat = GeneralDefaults.std.driveBlankDiskFormat
      var driveBlankDiskFormatIntValue: Int {
          get { return Int(driveBlankDiskFormat.rawValue) }
          set { driveBlankDiskFormat = FileSystemType.init(newValue) }
      }
-     var driveEjectUnasked = EmulatorDefaults.std.driveEjectUnasked
-     var driveSounds = EmulatorDefaults.std.driveSounds
-     var driveSoundPan = EmulatorDefaults.std.driveSoundPan
-     var driveInsertSound = EmulatorDefaults.std.driveInsertSound
-     var driveEjectSound = EmulatorDefaults.std.driveEjectSound
-     var driveHeadSound = EmulatorDefaults.std.driveHeadSound
-     var driveConnectSound = EmulatorDefaults.std.driveConnectSound
+     var driveEjectUnasked = GeneralDefaults.std.driveEjectUnasked
+     var driveSounds = GeneralDefaults.std.driveSounds
+     var driveSoundPan = GeneralDefaults.std.driveSoundPan
+     var driveInsertSound = GeneralDefaults.std.driveInsertSound
+     var driveEjectSound = GeneralDefaults.std.driveEjectSound
+     var driveHeadSound = GeneralDefaults.std.driveHeadSound
+     var driveConnectSound = GeneralDefaults.std.driveConnectSound
      
      // Fullscreen
-     var keepAspectRatio = EmulatorDefaults.std.keepAspectRatio
-     var exitOnEsc = EmulatorDefaults.std.exitOnEsc
+     var keepAspectRatio = GeneralDefaults.std.keepAspectRatio
+     var exitOnEsc = GeneralDefaults.std.exitOnEsc
          
      // Snapshots and screenshots
-     var autoSnapshots = EmulatorDefaults.std.autoSnapshots
+     var autoSnapshots = GeneralDefaults.std.autoSnapshots
      var snapshotInterval = 0 {
          didSet { for c in myAppDelegate.controllers { c.startSnapshotTimer() } }
      }
-     var autoScreenshots = EmulatorDefaults.std.autoScreenshots
+     var autoScreenshots = GeneralDefaults.std.autoScreenshots
 
-    var screenshotSource = EmulatorDefaults.std.screenshotSource
-     var screenshotTarget = EmulatorDefaults.std.screenshotTarget
+    var screenshotSource = GeneralDefaults.std.screenshotSource
+     var screenshotTarget = GeneralDefaults.std.screenshotTarget
      var screenshotTargetIntValue: Int {
          get { return Int(screenshotTarget.rawValue) }
          set { screenshotTarget = NSBitmapImageRep.FileType(rawValue: UInt(newValue))! }
      }
      
      // Warp mode
-     var warpMode = EmulatorDefaults.std.warpMode {
+     var warpMode = GeneralDefaults.std.warpMode {
          didSet { for c in myAppDelegate.controllers { c.updateWarp() } }
      }
      var warpModeIntValue: Int {
@@ -66,8 +66,8 @@ class Preferences {
      }
      
      // Misc
-     var closeWithoutAsking = EmulatorDefaults.std.closeWithoutAsking
-     var pauseInBackground = EmulatorDefaults.std.pauseInBackground
+     var closeWithoutAsking = GeneralDefaults.std.closeWithoutAsking
+     var pauseInBackground = GeneralDefaults.std.pauseInBackground
     
     //
     // Media
@@ -202,14 +202,14 @@ class Preferences {
         let defaults = UserDefaults.standard
         
         // Emulation keys
-        defaults.decode(&keyMaps[0], forKey: Keys.joyKeyMap1)
-        defaults.decode(&keyMaps[1], forKey: Keys.joyKeyMap2)
-        disconnectJoyKeys = defaults.bool(forKey: Keys.disconnectJoyKeys)
+        defaults.decode(&keyMaps[0], forKey: Keys.Dev.joyKeyMap1)
+        defaults.decode(&keyMaps[1], forKey: Keys.Dev.joyKeyMap2)
+        disconnectJoyKeys = defaults.bool(forKey: Keys.Dev.disconnectJoyKeys)
         
         // Joysticks
-        autofire = defaults.bool(forKey: Keys.autofire)
-        autofireBullets = defaults.integer(forKey: Keys.autofireBullets)
-        autofireFrequency = defaults.float(forKey: Keys.autofireFrequency)
+        autofire = defaults.bool(forKey: Keys.Dev.autofire)
+        autofireBullets = defaults.integer(forKey: Keys.Dev.autofireBullets)
+        autofireFrequency = defaults.float(forKey: Keys.Dev.autofireFrequency)
     }
     
     func saveDevicesUserDefaults() {
@@ -217,14 +217,14 @@ class Preferences {
         let defaults = UserDefaults.standard
         
         // Emulation keys
-        defaults.encode(keyMaps[0], forKey: Keys.joyKeyMap1)
-        defaults.encode(keyMaps[1], forKey: Keys.joyKeyMap2)
-        defaults.set(disconnectJoyKeys, forKey: Keys.disconnectJoyKeys)
+        defaults.encode(keyMaps[0], forKey: Keys.Dev.joyKeyMap1)
+        defaults.encode(keyMaps[1], forKey: Keys.Dev.joyKeyMap2)
+        defaults.set(disconnectJoyKeys, forKey: Keys.Dev.disconnectJoyKeys)
         
         // Joysticks
-        defaults.set(autofire, forKey: Keys.autofire)
-        defaults.set(autofireBullets, forKey: Keys.autofireBullets)
-        defaults.set(autofireFrequency, forKey: Keys.autofireFrequency)
+        defaults.set(autofire, forKey: Keys.Dev.autofire)
+        defaults.set(autofireBullets, forKey: Keys.Dev.autofireBullets)
+        defaults.set(autofireFrequency, forKey: Keys.Dev.autofireFrequency)
     }
     
     //
@@ -234,15 +234,15 @@ class Preferences {
     func loadKeyboardUserDefaults() {
         
         let defaults = UserDefaults.standard
-        mapKeysByPosition = defaults.bool(forKey: Keys.mapKeysByPosition)
-        defaults.decode(&keyMap, forKey: Keys.keyMap)
+        mapKeysByPosition = defaults.bool(forKey: Keys.Kbd.mapKeysByPosition)
+        defaults.decode(&keyMap, forKey: Keys.Kbd.keyMap)
     }
     
     func saveKeyboardUserDefaults() {
         
         let defaults = UserDefaults.standard
-        defaults.encode(keyMap, forKey: Keys.keyMap)
-        defaults.set(mapKeysByPosition, forKey: Keys.mapKeysByPosition)
+        defaults.encode(keyMap, forKey: Keys.Kbd.keyMap)
+        defaults.set(mapKeysByPosition, forKey: Keys.Kbd.mapKeysByPosition)
     }
     
     //
@@ -253,17 +253,17 @@ class Preferences {
         
         let defaults = UserDefaults.standard
         
-        defaults.decode(&mountAction, forKey: Keys.mountAction)
-        defaults.decode(&autoType, forKey: Keys.autoType)
-        defaults.decode(&autoText, forKey: Keys.autoText)
+        defaults.decode(&mountAction, forKey: Keys.Med.mountAction)
+        defaults.decode(&autoType, forKey: Keys.Med.autoType)
+        defaults.decode(&autoText, forKey: Keys.Med.autoText)
     }
     
     func saveMediaUserDefaults() {
         
         let defaults = UserDefaults.standard
         
-        defaults.encode(mountAction, forKey: Keys.mountAction)
-        defaults.encode(autoType, forKey: Keys.autoType)
-        defaults.encode(autoText, forKey: Keys.autoText)
+        defaults.encode(mountAction, forKey: Keys.Med.mountAction)
+        defaults.encode(autoType, forKey: Keys.Med.autoType)
+        defaults.encode(autoText, forKey: Keys.Med.autoText)
     }
 }

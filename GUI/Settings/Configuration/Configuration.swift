@@ -431,28 +431,28 @@ class Configuration {
         
         c64.suspend()
         
-        vicRevision = defaults.integer(forKey: Keys.vicRevision)
-        vicGrayDotBug = defaults.bool(forKey: Keys.vicGrayDotBug)
+        vicRevision = defaults.integer(forKey: Keys.Hwd.vicRevision)
+        vicGrayDotBug = defaults.bool(forKey: Keys.Hwd.vicGrayDotBug)
 
-        ciaRevision = defaults.integer(forKey: Keys.ciaRevision)
-        ciaTimerBBug = defaults.bool(forKey: Keys.ciaTimerBBug)
+        ciaRevision = defaults.integer(forKey: Keys.Hwd.ciaRevision)
+        ciaTimerBBug = defaults.bool(forKey: Keys.Hwd.ciaTimerBBug)
 
-        sidRevision = defaults.integer(forKey: Keys.sidRevision)
-        sidFilter = defaults.bool(forKey: Keys.sidFilter)
+        sidRevision = defaults.integer(forKey: Keys.Hwd.sidRevision)
+        sidFilter = defaults.bool(forKey: Keys.Hwd.sidFilter)
         
-        sidEngine = defaults.integer(forKey: Keys.sidEngine)
-        sidSampling = defaults.integer(forKey: Keys.sidSampling)
+        sidEngine = defaults.integer(forKey: Keys.Hwd.sidEngine)
+        sidSampling = defaults.integer(forKey: Keys.Hwd.sidSampling)
         
-        glueLogic = defaults.integer(forKey: Keys.glueLogic)
-        ramPattern = defaults.integer(forKey: Keys.ramPattern)
+        glueLogic = defaults.integer(forKey: Keys.Hwd.glueLogic)
+        ramPattern = defaults.integer(forKey: Keys.Hwd.ramPattern)
         
-        drive8Connected = defaults.bool(forKey: Keys.drive8Connect)
-        drive8Type = defaults.integer(forKey: Keys.drive8Type)
-        drive9Connected = defaults.bool(forKey: Keys.drive9Connect)
-        drive9Type = defaults.integer(forKey: Keys.drive9Type)
+        drive8Connected = defaults.bool(forKey: Keys.Hwd.drive8Connect)
+        drive8Type = defaults.integer(forKey: Keys.Hwd.drive8Type)
+        drive9Connected = defaults.bool(forKey: Keys.Hwd.drive9Connect)
+        drive9Type = defaults.integer(forKey: Keys.Hwd.drive9Type)
         
-        gameDevice1 = defaults.integer(forKey: Keys.gameDevice1)
-        gameDevice2 = defaults.integer(forKey: Keys.gameDevice2)
+        gameDevice1 = defaults.integer(forKey: Keys.Hwd.gameDevice1)
+        gameDevice2 = defaults.integer(forKey: Keys.Hwd.gameDevice2)
 
         c64.resume()
     }
@@ -463,28 +463,28 @@ class Configuration {
         
         let defaults = UserDefaults.standard
 
-        defaults.set(vicRevision, forKey: Keys.vicRevision)
-        defaults.set(vicGrayDotBug, forKey: Keys.vicGrayDotBug)
+        defaults.set(vicRevision, forKey: Keys.Hwd.vicRevision)
+        defaults.set(vicGrayDotBug, forKey: Keys.Hwd.vicGrayDotBug)
 
-        defaults.set(ciaRevision, forKey: Keys.ciaRevision)
-        defaults.set(ciaTimerBBug, forKey: Keys.ciaTimerBBug)
+        defaults.set(ciaRevision, forKey: Keys.Hwd.ciaRevision)
+        defaults.set(ciaTimerBBug, forKey: Keys.Hwd.ciaTimerBBug)
 
-        defaults.set(sidRevision, forKey: Keys.sidRevision)
-        defaults.set(sidFilter, forKey: Keys.sidFilter)
+        defaults.set(sidRevision, forKey: Keys.Hwd.sidRevision)
+        defaults.set(sidFilter, forKey: Keys.Hwd.sidFilter)
         
-        defaults.set(sidEngine, forKey: Keys.sidEngine)
-        defaults.set(sidSampling, forKey: Keys.sidSampling)
+        defaults.set(sidEngine, forKey: Keys.Hwd.sidEngine)
+        defaults.set(sidSampling, forKey: Keys.Hwd.sidSampling)
         
-        defaults.set(glueLogic, forKey: Keys.glueLogic)
-        defaults.set(ramPattern, forKey: Keys.ramPattern)
+        defaults.set(glueLogic, forKey: Keys.Hwd.glueLogic)
+        defaults.set(ramPattern, forKey: Keys.Hwd.ramPattern)
 
-        defaults.set(drive8Connected, forKey: Keys.drive8Connect)
-        defaults.set(drive8Type, forKey: Keys.drive8Type)
-        defaults.set(drive9Connected, forKey: Keys.drive9Connect)
-        defaults.set(drive9Type, forKey: Keys.drive9Type)
+        defaults.set(drive8Connected, forKey: Keys.Hwd.drive8Connect)
+        defaults.set(drive8Type, forKey: Keys.Hwd.drive8Type)
+        defaults.set(drive9Connected, forKey: Keys.Hwd.drive9Connect)
+        defaults.set(drive9Type, forKey: Keys.Hwd.drive9Type)
 
-        defaults.set(gameDevice1, forKey: Keys.gameDevice1)
-        defaults.set(gameDevice2, forKey: Keys.gameDevice2)
+        defaults.set(gameDevice1, forKey: Keys.Hwd.gameDevice1)
+        defaults.set(gameDevice2, forKey: Keys.Hwd.gameDevice2)
     }
     
     //
@@ -551,32 +551,32 @@ class Configuration {
          
          c64.suspend()
          
-         palette = defaults.integer(forKey: Keys.palette)
-         brightness = defaults.double(forKey: Keys.brightness)
-         contrast = defaults.double(forKey: Keys.contrast)
-         saturation = defaults.double(forKey: Keys.saturation)
+         palette = defaults.integer(forKey: Keys.Vid.palette)
+         brightness = defaults.double(forKey: Keys.Vid.brightness)
+         contrast = defaults.double(forKey: Keys.Vid.contrast)
+         saturation = defaults.double(forKey: Keys.Vid.saturation)
 
-         hCenter = defaults.float(forKey: Keys.hCenter)
-         vCenter = defaults.float(forKey: Keys.vCenter)
-         hZoom = defaults.float(forKey: Keys.hZoom)
-         vZoom = defaults.float(forKey: Keys.vZoom)
+         hCenter = defaults.float(forKey: Keys.Vid.hCenter)
+         vCenter = defaults.float(forKey: Keys.Vid.vCenter)
+         hZoom = defaults.float(forKey: Keys.Vid.hZoom)
+         vZoom = defaults.float(forKey: Keys.Vid.vZoom)
 
-         upscaler = defaults.integer(forKey: Keys.upscaler)
+         upscaler = defaults.integer(forKey: Keys.Vid.upscaler)
          
-         bloom = Int32(defaults.integer(forKey: Keys.bloom))
-         bloomRadiusR = defaults.float(forKey: Keys.bloomRadiusR)
-         bloomRadiusG = defaults.float(forKey: Keys.bloomRadiusG)
-         bloomRadiusB = defaults.float(forKey: Keys.bloomRadiusB)
-         bloomBrightness = defaults.float(forKey: Keys.bloomBrightness)
-         bloomWeight = defaults.float(forKey: Keys.bloomWeight)
-         dotMask = Int32(defaults.integer(forKey: Keys.dotMask))
-         dotMaskBrightness = defaults.float(forKey: Keys.dotMaskBrightness)
-         scanlines = Int32(defaults.integer(forKey: Keys.scanlines))
-         scanlineBrightness = defaults.float(forKey: Keys.scanlineBrightness)
-         scanlineWeight = defaults.float(forKey: Keys.scanlineWeight)
-         disalignment = Int32(defaults.integer(forKey: Keys.disalignment))
-         disalignmentH = defaults.float(forKey: Keys.disalignmentH)
-         disalignmentV = defaults.float(forKey: Keys.disalignmentV)
+         bloom = Int32(defaults.integer(forKey: Keys.Vid.bloom))
+         bloomRadiusR = defaults.float(forKey: Keys.Vid.bloomRadiusR)
+         bloomRadiusG = defaults.float(forKey: Keys.Vid.bloomRadiusG)
+         bloomRadiusB = defaults.float(forKey: Keys.Vid.bloomRadiusB)
+         bloomBrightness = defaults.float(forKey: Keys.Vid.bloomBrightness)
+         bloomWeight = defaults.float(forKey: Keys.Vid.bloomWeight)
+         dotMask = Int32(defaults.integer(forKey: Keys.Vid.dotMask))
+         dotMaskBrightness = defaults.float(forKey: Keys.Vid.dotMaskBrightness)
+         scanlines = Int32(defaults.integer(forKey: Keys.Vid.scanlines))
+         scanlineBrightness = defaults.float(forKey: Keys.Vid.scanlineBrightness)
+         scanlineWeight = defaults.float(forKey: Keys.Vid.scanlineWeight)
+         disalignment = Int32(defaults.integer(forKey: Keys.Vid.disalignment))
+         disalignmentH = defaults.float(forKey: Keys.Vid.disalignmentH)
+         disalignmentV = defaults.float(forKey: Keys.Vid.disalignmentV)
          
          renderer.updateTextureRect()
          renderer.buildDotMasks()
@@ -590,31 +590,31 @@ class Configuration {
          
          let defaults = UserDefaults.standard
          
-         defaults.set(palette, forKey: Keys.palette)
-         defaults.set(brightness, forKey: Keys.brightness)
-         defaults.set(contrast, forKey: Keys.contrast)
-         defaults.set(saturation, forKey: Keys.saturation)
+         defaults.set(palette, forKey: Keys.Vid.palette)
+         defaults.set(brightness, forKey: Keys.Vid.brightness)
+         defaults.set(contrast, forKey: Keys.Vid.contrast)
+         defaults.set(saturation, forKey: Keys.Vid.saturation)
 
-         defaults.set(hCenter, forKey: Keys.hCenter)
-         defaults.set(vCenter, forKey: Keys.vCenter)
-         defaults.set(hZoom, forKey: Keys.hZoom)
-         defaults.set(vZoom, forKey: Keys.vZoom)
+         defaults.set(hCenter, forKey: Keys.Vid.hCenter)
+         defaults.set(vCenter, forKey: Keys.Vid.vCenter)
+         defaults.set(hZoom, forKey: Keys.Vid.hZoom)
+         defaults.set(vZoom, forKey: Keys.Vid.vZoom)
 
-         defaults.set(upscaler, forKey: Keys.upscaler)
+         defaults.set(upscaler, forKey: Keys.Vid.upscaler)
          
-         defaults.set(bloom, forKey: Keys.bloom)
-         defaults.set(bloomRadiusR, forKey: Keys.bloomRadiusR)
-         defaults.set(bloomRadiusG, forKey: Keys.bloomRadiusG)
-         defaults.set(bloomRadiusB, forKey: Keys.bloomRadiusB)
-         defaults.set(bloomBrightness, forKey: Keys.bloomBrightness)
-         defaults.set(bloomWeight, forKey: Keys.bloomWeight)
-         defaults.set(dotMask, forKey: Keys.dotMask)
-         defaults.set(dotMaskBrightness, forKey: Keys.dotMaskBrightness)
-         defaults.set(scanlines, forKey: Keys.scanlines)
-         defaults.set(scanlineBrightness, forKey: Keys.scanlineBrightness)
-         defaults.set(scanlineWeight, forKey: Keys.scanlineWeight)
-         defaults.set(disalignment, forKey: Keys.disalignment)
-         defaults.set(disalignmentH, forKey: Keys.disalignmentH)
-         defaults.set(disalignmentV, forKey: Keys.disalignmentV)
+         defaults.set(bloom, forKey: Keys.Vid.bloom)
+         defaults.set(bloomRadiusR, forKey: Keys.Vid.bloomRadiusR)
+         defaults.set(bloomRadiusG, forKey: Keys.Vid.bloomRadiusG)
+         defaults.set(bloomRadiusB, forKey: Keys.Vid.bloomRadiusB)
+         defaults.set(bloomBrightness, forKey: Keys.Vid.bloomBrightness)
+         defaults.set(bloomWeight, forKey: Keys.Vid.bloomWeight)
+         defaults.set(dotMask, forKey: Keys.Vid.dotMask)
+         defaults.set(dotMaskBrightness, forKey: Keys.Vid.dotMaskBrightness)
+         defaults.set(scanlines, forKey: Keys.Vid.scanlines)
+         defaults.set(scanlineBrightness, forKey: Keys.Vid.scanlineBrightness)
+         defaults.set(scanlineWeight, forKey: Keys.Vid.scanlineWeight)
+         defaults.set(disalignment, forKey: Keys.Vid.disalignment)
+         defaults.set(disalignmentH, forKey: Keys.Vid.disalignmentH)
+         defaults.set(disalignmentV, forKey: Keys.Vid.disalignmentV)
      }
 }
