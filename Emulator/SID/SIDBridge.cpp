@@ -168,7 +168,7 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
                 warn("Invalid sampling method: %d\n", value);
                 return false;
             }
-            if (config.engine == value) {
+            if (config.sampling == value) {
                 return false;
             }
             suspend();

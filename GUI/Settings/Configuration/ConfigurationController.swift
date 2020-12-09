@@ -90,6 +90,33 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var hwPowerButton: NSButton!
 
     //
+    // Audio preferences
+    //
+    
+    // Engine
+    @IBOutlet weak var audEngine: NSPopUpButton!
+    @IBOutlet weak var audFilter: NSButton!
+    @IBOutlet weak var audSampling: NSPopUpButton!
+    
+    // In
+    @IBOutlet weak var audVol0: NSSlider!
+    @IBOutlet weak var audVol1: NSSlider!
+    @IBOutlet weak var audVol2: NSSlider!
+    @IBOutlet weak var audVol3: NSSlider!
+    @IBOutlet weak var audPan0: NSSlider!
+    @IBOutlet weak var audPan1: NSSlider!
+    @IBOutlet weak var audPan2: NSSlider!
+    @IBOutlet weak var audPan3: NSSlider!
+    
+    // Out
+    @IBOutlet weak var audVolL: NSSlider!
+    @IBOutlet weak var audVolR: NSSlider!
+
+    // Buttons
+    @IBOutlet weak var audOKButton: NSButton!
+    @IBOutlet weak var audPowerButton: NSButton!
+    
+    //
     // Video preferences
     //
     
@@ -138,98 +165,6 @@ class ConfigurationController: DialogController {
         return off && ready
     }
 
-    //
-    // Emulator preferences
-    //
-    
-    /*
-    // VC1541
-    @IBOutlet weak var emuWarpLoad: NSButton!
-    @IBOutlet weak var emuDriveSounds: NSButton!
-    
-    // Screenshots
-    @IBOutlet weak var emuScreenshotSourcePopup: NSPopUpButton!
-    @IBOutlet weak var emuScreenshotTargetPopup: NSPopUpButton!
-    
-    // User Dialogs
-    @IBOutlet weak var emuAutoMountButton: NSButton!
-    @IBOutlet weak var emuCloseWithoutAskingButton: NSButton!
-    @IBOutlet weak var emuEjectWithoutAskingButton: NSButton!
-    
-    // Misc
-    @IBOutlet weak var emuPauseInBackground: NSButton!
-    @IBOutlet weak var emuAutoSnapshots: NSButton!
-    @IBOutlet weak var emuSnapshotInterval: NSTextField!
-    
-    @IBOutlet weak var emuOkButton: NSButton!
-    @IBOutlet weak var emuPowerButton: NSButton!
-        
-    //
-    // Devices preferences
-    //
-    
-    /// Indicates if a keycode should be recorded for keyset 1
-    // var devRecordKey1: JoystickDirection?
-    
-    /// Indicates if a keycode should be recorded for keyset 1
-    // var devRecordKey2: JoystickDirection?
-    
-    /// Joystick emulation keys
-    @IBOutlet weak var devLeft1: NSTextField!
-    @IBOutlet weak var devLeft1button: NSButton!
-    @IBOutlet weak var devRight1: NSTextField!
-    @IBOutlet weak var devRight1button: NSButton!
-    @IBOutlet weak var devUp1: NSTextField!
-    @IBOutlet weak var devUp1button: NSButton!
-    @IBOutlet weak var devDown1: NSTextField!
-    @IBOutlet weak var devDown1button: NSButton!
-    @IBOutlet weak var devFire1: NSTextField!
-    @IBOutlet weak var devFire1button: NSButton!
-    @IBOutlet weak var devLeft2: NSTextField!
-    @IBOutlet weak var devLeft2button: NSButton!
-    @IBOutlet weak var devRight2: NSTextField!
-    @IBOutlet weak var devRight2button: NSButton!
-    @IBOutlet weak var devUp2: NSTextField!
-    @IBOutlet weak var devUp2button: NSButton!
-    @IBOutlet weak var devDown2: NSTextField!
-    @IBOutlet weak var devDown2button: NSButton!
-    @IBOutlet weak var devFire2: NSTextField!
-    @IBOutlet weak var devFire2button: NSButton!
-    @IBOutlet weak var devDisconnectKeys: NSButton!
-    
-    // Joystick buttons
-    @IBOutlet weak var devAutofire: NSButton!
-    @IBOutlet weak var devAutofireCease: NSButton!
-    @IBOutlet weak var devAutofireCeaseText: NSTextField!
-    @IBOutlet weak var devAutofireBullets: NSTextField!
-    @IBOutlet weak var devAutofireFrequency: NSSlider!
-    
-    // Mouse
-    @IBOutlet weak var devMouseModel: NSPopUpButton!
-    @IBOutlet weak var devMouseInfo: NSTextField!
-
-    @IBOutlet weak var devOkButton: NSButton!
-    @IBOutlet weak var devPowerButton: NSButton!
-    
-    //
-    // Keymap preferences
-    //
-    
-    @IBOutlet weak var info: NSTextField!
-    @IBOutlet weak var keyMappingPopup: NSPopUpButton!
-    @IBOutlet weak var keyMatrixScrollView: NSScrollView!
-    @IBOutlet weak var keyMatrixCollectionView: NSCollectionView!
-
-    // Double array of key images, indexed by their row and column number
-    var keyImage = Array(repeating: Array(repeating: nil as NSImage?, count: 8), count: 8)
-    
-    // Selected C64 key
-    var selectedKey: C64Key?
-    
-    @IBOutlet weak var keyOkButton: NSButton!
-    @IBOutlet weak var keyPowerButton: NSButton!
-    */
-    
     // The tab to open first
     var firstTab = ""
     
@@ -259,6 +194,7 @@ class ConfigurationController: DialogController {
             switch id {
             case "Roms": refreshRomTab()
             case "Hardware": refreshHardwareTab()
+            case "Audio": refreshAudioTab()
             case "Video": refreshVideoTab()
             default: break
             }

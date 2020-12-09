@@ -215,23 +215,24 @@ C64::getConfigItem(ConfigOption option)
 long
 C64::getConfigItem(ConfigOption option, long id)
 {
-    assert(isDriveID(id));
-    
-    Drive &drive = id == DRIVE8 ? drive8 : drive9;
-    
     switch (option) {
             
         case OPT_SID_ENABLE:
         case OPT_SID_ADDRESS:
         case OPT_AUDPAN:
         case OPT_AUDVOL:
+        {
+            assert(id >= 0 && id <= 3);
             return sid.getConfigItem(option, id);
-            
+        }
         case OPT_DRIVE_TYPE:
         case OPT_DRIVE_CONNECT:
         case OPT_DRIVE_POWER_SWITCH:
+        {
+            assert(isDriveID(id));
+            Drive &drive = id == DRIVE8 ? drive8 : drive9;
             return drive.getConfigItem(option);
-            
+        }
         default:
             assert(false);
             return 0;
