@@ -660,6 +660,8 @@ SIDBridge::execute(u64 numCycles)
     // Mix channels
     //
     
+    stream.lock();
+    
     // Check for buffer overflow
     if (stream.free() < numSamples) {
         handleBufferOverflow();
@@ -679,16 +681,32 @@ SIDBridge::execute(u64 numCycles)
     // Convert sound samples to floating point values and write into ringbuffer
     for (unsigned i = 0; i < numSamples; i++) {
         
-        float value1 = (float)samples[0][i] * StereoStream::scale;
-        float value2 = (float)samples[1][i] * StereoStream::scale;
+        float ch0, ch1, ch2, ch3, l, r;
         
-        value1 = (volume <= 0) ? 0.0f : value1 * (float)volume / divider;
-        value2 = (volume <= 0) ? 0.0f : value2 * (float)volume / divider;
+        ch0 = (float)samples[0][i] * StereoStream::scale;
+        ch1 = (float)samples[1][i] * StereoStream::scale;
+        ch2 = (float)samples[2][i] * StereoStream::scale;
+        ch3 = (float)samples[3][i] * StereoStream::scale;
+
+        // value1 = (volume <= 0) ? 0.0f : value1 * (float)volume / divider;
+        // value2 = (volume <= 0) ? 0.0f : value2 * (float)volume / divider;
+
+        // Compute left channel output
+        l =
+        ch0 * config.pan[0] + ch1 * config.pan[1] +
+        ch2 * config.pan[2] + ch3 * config.pan[3];
+
+        // Compute right channel output
+        r =
+        ch0 * (1 - config.pan[0]) + ch1 * (1 - config.pan[1]) +
+        ch2 * (1 - config.pan[2]) + ch3 * (1 - config.pan[3]);
 
         // if (tmp++ % 100 == 0) debug("%f %f\n", value1, value2);
         // float value = (value1 + value2) * StereoStream::scale / 2;
-        stream.write(SamplePair { value1, value2 } );        
+        stream.write(SamplePair { l, r } );
     }
+    
+    stream.unlock();
 }
 
 void
@@ -697,37 +715,6 @@ SIDBridge::clearRingbuffer()
     stream.clear();
     alignWritePtr();
 }
-
-/*
-float
-SIDBridge::readData()
-{
-    // static long tmp = 0;
-    
-    // Read sound samples
-    float value1 = ringBuffer[0].read();
-    float value2 = ringBuffer[1].read();
-    
-    // if (tmp++ % 100 == 0) debug("%f %f\n", value1, value2);
-    float value = (value1 + value2) / 2;
-    // float value = value1;
-    
-    // Adjust volume
-    if (volume != targetVolume) {
-        if (volume < targetVolume) {
-            volume += MIN(volumeDelta, targetVolume - volume);
-        } else {
-            volume -= MIN(volumeDelta, volume - targetVolume);
-        }
-    }
-    // float divider = 75000.0f; // useReSID ? 100000.0f : 150000.0f;
-    float divider = 40000.0f;
-
-    value = (volume <= 0) ? 0.0f : value * (float)volume / divider;
-        
-    return value;
-}
-*/
 
 float
 SIDBridge::ringbufferData(size_t offset)
@@ -741,21 +728,6 @@ SIDBridge::readMonoSamples(float *target, size_t n)
 {
     i32 volume = 0; // REMOVE ASAP
     stream.copyInterleaved(target, n, volume, volume, 0);
-
-    /*
-    // Check for buffer underflow
-    if (ringBuffer[0].count() < n) {
-        signalUnderflow = true;
-        n = ringBuffer[0].count();
-        // handleBufferUnderflow();
-    }
-    
-    // Read samples
-    for (size_t i = 0; i < n; i++) {
-        float value = readData();
-        target[i] = value;
-    }
-    */
 }
 
 void
@@ -763,21 +735,6 @@ SIDBridge::readStereoSamples(float *target1, float *target2, size_t n)
 {
     i32 volume = 0; // REMOVE ASAP
     stream.copy(target1, target2, n, volume, volume, 0);
-    
-    /*
-    // Check for buffer underflow
-    if (ringBuffer[0].count() < n) {
-        signalUnderflow = true;
-        n = ringBuffer[0].count();
-        // handleBufferUnderflow();
-    }
-    
-    // Read samples
-    for (unsigned i = 0; i < n; i++) {
-        float value = readData();
-        target1[i] = target2[i] = value;
-    }
-    */
 }
 
 void
@@ -785,22 +742,6 @@ SIDBridge::readStereoSamplesInterleaved(float *target, size_t n)
 {
     i32 volume = 0; // REMOVE ASAP
     stream.copyInterleaved(target, n, volume, volume, 0);
-
-    /*
-    // Check for buffer underflow
-    if (ringBuffer[0].count() < n) {
-        signalUnderflow = true;
-        n = ringBuffer[0].count();
-        // handleBufferUnderflow();
-    }
-    
-    // Read samples
-    for (unsigned i = 0; i < n; i++) {
-        float value = readData();
-        target[i*2] = value;
-        target[i*2+1] = value;
-    }
-    */
 }
 
 void
