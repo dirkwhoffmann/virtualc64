@@ -176,7 +176,7 @@ public:
 
     bool isEnabled(int nr) { return GET_BIT(config.enabled, nr); }
     
-    bool isMuted() { return config.volL == 0 && config.volR == 0; }
+    bool isMuted();
 
     u32 getClockFrequency();
     void setClockFrequency(u32 frequency);

@@ -70,7 +70,7 @@ extension MyController {
             
             haltIcon: jammed,
             debugIcon: debug,
-            muteIcon: !running || warp,
+            muteIcon: warp || muted,
             
             tapeIcon: c64.datasette.hasTape(),
             tapeProgress: c64.datasette.motor(),

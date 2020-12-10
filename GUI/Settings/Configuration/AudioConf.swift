@@ -13,6 +13,12 @@ extension ConfigurationController {
                 
         track()
         
+        /*
+        let sid1 = config.sidEnable1
+        let sid2 = config.sidEnable2
+        let sid3 = config.sidEnable3
+        */
+        
         // Engine
         audEngine.selectItem(withTag: config.sidEngine)
         audFilter.state = config.sidFilter ? .on : .off
@@ -28,7 +34,15 @@ extension ConfigurationController {
         audPan1.integerValue = config.pan1
         audPan2.integerValue = config.pan2
         audPan3.integerValue = config.pan3
-
+        /*
+        audVol1.isEnabled = sid1
+        audVol2.isEnabled = sid2
+        audVol3.isEnabled = sid3
+        audPan1.isEnabled = sid1
+        audPan2.isEnabled = sid2
+        audPan3.isEnabled = sid3
+        */
+        
         // Out
         audVolL.integerValue = config.volL
         audVolR.integerValue = config.volR

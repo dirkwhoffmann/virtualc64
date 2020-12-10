@@ -605,7 +605,7 @@ extension MyController {
         case .MSG_WARP_ON,
              .MSG_WARP_OFF:
             
-            refreshStatusBarWarpIcon()
+            refreshStatusBar()
             
         case .MSG_BASIC_ROM_LOADED,
              .MSG_CHAR_ROM_LOADED,

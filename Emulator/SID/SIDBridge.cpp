@@ -177,8 +177,9 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
             config.volL = MIN(100, MAX(0, value));
             volL = pow((double)config.volL / 50, 1.4);
 
-            if (wasMuted != isMuted())
+            if (wasMuted != isMuted()) {
                 messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
+            }
             return true;
             
         case OPT_AUDVOLR:
@@ -186,8 +187,9 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
             config.volR = MIN(100, MAX(0, value));
             volR = pow((double)config.volR / 50, 1.4);
 
-            if (wasMuted != isMuted())
+            if (wasMuted != isMuted()) {
                 messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
+            }
             return true;
             
         default:
@@ -198,6 +200,8 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
 bool
 SIDBridge::setConfigItem(ConfigOption option, long id, long value)
 {
+    bool wasMuted = isMuted();
+
     switch (option) {
                      
         case OPT_SID_ENABLE:
@@ -250,6 +254,11 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
 
             config.vol[id] = MIN(100, MAX(0, value));
             vol[id] = pow((double)config.vol[id] / 100, 1.4) * 0.0000025;
+
+            if (wasMuted != isMuted()) {
+                messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
+            }
+
             return true;
             
         case OPT_AUDPAN:
@@ -271,6 +280,18 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
         default:
             return false;
     }
+}
+
+bool
+SIDBridge::isMuted()
+{
+    if (config.volL == 0 && config.volR == 0) return true;
+    
+    return
+    config.vol[0] == 0 &&
+    config.vol[1] == 0 &&
+    config.vol[2] == 0 &&
+    config.vol[3] == 0;
 }
 
 u32
