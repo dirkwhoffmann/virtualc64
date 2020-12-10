@@ -156,17 +156,7 @@ class Configuration {
         get { return c64.getConfig(OPT_SID_FILTER) != 0 }
         set { c64.configure(OPT_SID_FILTER, enable: newValue) }
     }
-    /*
-    var sidEngine: Int {
-        get { return c64.getConfig(OPT_SID_ENGINE) }
-        set { c64.configure(OPT_SID_ENGINE, value: newValue) }
-    }
-    
-    var sidSampling: Int {
-        get { return c64.getConfig(OPT_SID_SAMPLING) }
-        set { c64.configure(OPT_SID_SAMPLING, value: newValue) }
-    }
-    */
+ 
     var glueLogic: Int {
         get { return c64.getConfig(OPT_GLUE_LOGIC) }
         set { c64.configure(OPT_GLUE_LOGIC, value: newValue) }
@@ -177,6 +167,10 @@ class Configuration {
         set { c64.configure(OPT_RAM_PATTERN, value: newValue) }
     }
 
+    //
+    // Peripherals
+    //
+    
     var drive8Type: Int {
         get { return c64.getConfig(OPT_DRIVE_TYPE, drive: .DRIVE8) }
         set { c64.configure(OPT_DRIVE_TYPE, drive: .DRIVE8, value: newValue )}
@@ -207,7 +201,6 @@ class Configuration {
         set { c64.configure(OPT_DRIVE_POWER_SWITCH, drive: .DRIVE9, enable: newValue )}
     }
 
-    // Ports
     var gameDevice1 = -1 {
         didSet {
              
@@ -242,15 +235,9 @@ class Configuration {
     }
 
     //
-    // Audio settings
+    // Audio
     //
 
-    /*
-    var sidEnable0: Bool {
-        get { return c64.getConfig(OPT_SID_ENABLE, id: 0) != 0 }
-        set { c64.configure(OPT_SID_ENABLE, id: 0, enable: newValue) }
-    }
-    */
     var sidEnable1: Bool {
         get { return c64.getConfig(OPT_SID_ENABLE, id: 1) != 0 }
         set { c64.configure(OPT_SID_ENABLE, id: 1, enable: newValue) }
@@ -263,12 +250,6 @@ class Configuration {
         get { return c64.getConfig(OPT_SID_ENABLE, id: 3) != 0 }
         set { c64.configure(OPT_SID_ENABLE, id: 3, enable: newValue) }
     }
-    /*
-    var sidAddress0: Int {
-        get { return c64.getConfig(OPT_SID_ADDRESS, id: 0) }
-        set { c64.configure(OPT_SID_ADDRESS, id: 0, value: newValue) }
-    }
-    */
     var sidAddress1: Int {
         get { return c64.getConfig(OPT_SID_ADDRESS, id: 1) }
         set { c64.configure(OPT_SID_ADDRESS, id: 1, value: newValue) }
@@ -331,7 +312,7 @@ class Configuration {
     }
     
     //
-    // Video settings
+    // Video
     //
     
     var palette: Int {
@@ -496,21 +477,10 @@ class Configuration {
 
         sidRevision = defaults.sidRevision.rawValue
         sidFilter = defaults.sidFilter
-
-        sidEngine = defaults.sidEngine.rawValue
-        sidSampling = defaults.sampling.rawValue
         
         glueLogic = defaults.glueLogic.rawValue
         ramPattern = defaults.ramPattern.rawValue
         
-        drive8Connected = defaults.driveConnect[0]
-        drive8Type = defaults.driveType[0].rawValue
-        drive9Connected = defaults.driveConnect[1]
-        drive9Type = defaults.driveType[1].rawValue
-        
-        gameDevice1 = defaults.gameDevice1
-        gameDevice2 = defaults.gameDevice2
-
         c64.resume()
     }
     
@@ -534,21 +504,10 @@ class Configuration {
         sidAddress1 = defaults.integer(forKey: Keys.Hwd.sidAddress1)
         sidAddress2 = defaults.integer(forKey: Keys.Hwd.sidAddress2)
         sidAddress3 = defaults.integer(forKey: Keys.Hwd.sidAddress3)
-
-        sidEngine = defaults.integer(forKey: Keys.Hwd.sidEngine)
-        sidSampling = defaults.integer(forKey: Keys.Hwd.sidSampling)
         
         glueLogic = defaults.integer(forKey: Keys.Hwd.glueLogic)
         ramPattern = defaults.integer(forKey: Keys.Hwd.ramPattern)
         
-        drive8Connected = defaults.bool(forKey: Keys.Hwd.drive8Connect)
-        drive8Type = defaults.integer(forKey: Keys.Hwd.drive8Type)
-        drive9Connected = defaults.bool(forKey: Keys.Hwd.drive9Connect)
-        drive9Type = defaults.integer(forKey: Keys.Hwd.drive9Type)
-        
-        gameDevice1 = defaults.integer(forKey: Keys.Hwd.gameDevice1)
-        gameDevice2 = defaults.integer(forKey: Keys.Hwd.gameDevice2)
-
         c64.resume()
     }
     
@@ -572,20 +531,60 @@ class Configuration {
         defaults.set(sidAddress1, forKey: Keys.Hwd.sidAddress1)
         defaults.set(sidAddress2, forKey: Keys.Hwd.sidAddress2)
         defaults.set(sidAddress3, forKey: Keys.Hwd.sidAddress3)
-
-        defaults.set(sidEngine, forKey: Keys.Hwd.sidEngine)
-        defaults.set(sidSampling, forKey: Keys.Hwd.sidSampling)
         
         defaults.set(glueLogic, forKey: Keys.Hwd.glueLogic)
         defaults.set(ramPattern, forKey: Keys.Hwd.ramPattern)
+    }
 
-        defaults.set(drive8Connected, forKey: Keys.Hwd.drive8Connect)
-        defaults.set(drive8Type, forKey: Keys.Hwd.drive8Type)
-        defaults.set(drive9Connected, forKey: Keys.Hwd.drive9Connect)
-        defaults.set(drive9Type, forKey: Keys.Hwd.drive9Type)
+    //
+    // Peripherals
+    //
+    
+    func loadPeripheralsDefaults(_ defaults: PeripheralsDefaults) {
+        
+        c64.suspend()
+                
+        drive8Connected = defaults.driveConnect[0]
+        drive8Type = defaults.driveType[0].rawValue
+        drive9Connected = defaults.driveConnect[1]
+        drive9Type = defaults.driveType[1].rawValue
+        
+        gameDevice1 = defaults.gameDevice1
+        gameDevice2 = defaults.gameDevice2
 
-        defaults.set(gameDevice1, forKey: Keys.Hwd.gameDevice1)
-        defaults.set(gameDevice2, forKey: Keys.Hwd.gameDevice2)
+        c64.resume()
+    }
+    
+    func loadPeripheralsUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        
+        c64.suspend()
+        
+        drive8Connected = defaults.bool(forKey: Keys.Per.drive8Connect)
+        drive8Type = defaults.integer(forKey: Keys.Per.drive8Type)
+        drive9Connected = defaults.bool(forKey: Keys.Per.drive9Connect)
+        drive9Type = defaults.integer(forKey: Keys.Per.drive9Type)
+        
+        gameDevice1 = defaults.integer(forKey: Keys.Per.gameDevice1)
+        gameDevice2 = defaults.integer(forKey: Keys.Per.gameDevice2)
+
+        c64.resume()
+    }
+    
+    func savePeripheralsUserDefaults() {
+        
+        track()
+        
+        let defaults = UserDefaults.standard
+
+        defaults.set(drive8Connected, forKey: Keys.Per.drive8Connect)
+        defaults.set(drive8Type, forKey: Keys.Per.drive8Type)
+        defaults.set(drive9Connected, forKey: Keys.Per.drive9Connect)
+        defaults.set(drive9Type, forKey: Keys.Per.drive9Type)
+
+        defaults.set(gameDevice1, forKey: Keys.Per.gameDevice1)
+        defaults.set(gameDevice2, forKey: Keys.Per.gameDevice2)
     }
     
     //

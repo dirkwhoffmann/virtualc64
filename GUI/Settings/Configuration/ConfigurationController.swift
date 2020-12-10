@@ -14,7 +14,7 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var prefTabView: NSTabView!
     
     //
-    // Rom preferences
+    // Roms
     //
         
     @IBOutlet weak var basicDropView: RomDropView!
@@ -51,7 +51,7 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var romPowerButton: NSButton!
 
     //
-    // Hardware preferences
+    // Hardware
     //
     
     // VIC
@@ -78,16 +78,6 @@ class ConfigurationController: DialogController {
     // Startup
     @IBOutlet weak var hwRamPatternPopup: NSPopUpButton!
 
-    // Drive
-    @IBOutlet weak var hwDrive8Type: NSPopUpButton!
-    @IBOutlet weak var hwDrive8Connect: NSButton!
-    @IBOutlet weak var hwDrive9Type: NSPopUpButton!
-    @IBOutlet weak var hwDrive9Connect: NSButton!
-
-    // Ports
-    @IBOutlet weak var hwGameDevice1: NSPopUpButton!
-    @IBOutlet weak var hwGameDevice2: NSPopUpButton!
-    
     // Lock
     @IBOutlet weak var hwLockImage: NSButton!
     @IBOutlet weak var hwLockText: NSTextField!
@@ -96,6 +86,24 @@ class ConfigurationController: DialogController {
     // Buttons
     @IBOutlet weak var hwOkButton: NSButton!
     @IBOutlet weak var hwPowerButton: NSButton!
+
+    //
+    // Peripherals
+    //
+    
+    // Drive
+    @IBOutlet weak var perDrive8Type: NSPopUpButton!
+    @IBOutlet weak var perDrive8Connect: NSButton!
+    @IBOutlet weak var perDrive9Type: NSPopUpButton!
+    @IBOutlet weak var perDrive9Connect: NSButton!
+
+    // Ports
+    @IBOutlet weak var perControlPort1: NSPopUpButton!
+    @IBOutlet weak var perControlPort2: NSPopUpButton!
+    
+    // Buttons
+    @IBOutlet weak var perOkButton: NSButton!
+    @IBOutlet weak var perPowerButton: NSButton!
 
     //
     // Audio preferences
@@ -204,6 +212,7 @@ class ConfigurationController: DialogController {
             switch id {
             case "Roms": refreshRomTab()
             case "Hardware": refreshHardwareTab()
+            case "Peripherals": refreshPeripheralsTab()
             case "Audio": refreshAudioTab()
             case "Video": refreshVideoTab()
             default: break

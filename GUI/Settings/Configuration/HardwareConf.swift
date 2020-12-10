@@ -77,16 +77,16 @@ extension ConfigurationController {
         hwRamPatternPopup.selectItem(withTag: config.ramPattern)
         
         // Drive
-        hwDrive8Connect.state = config.drive8Connected ? .on : .off
-        hwDrive9Connect.state = config.drive9Connected ? .on : .off
-        hwDrive8Type.selectItem(withTag: config.drive8Type)
-        hwDrive9Type.selectItem(withTag: config.drive9Type)
+        perDrive8Connect.state = config.drive8Connected ? .on : .off
+        perDrive9Connect.state = config.drive9Connected ? .on : .off
+        perDrive8Type.selectItem(withTag: config.drive8Type)
+        perDrive9Type.selectItem(withTag: config.drive9Type)
         
         // Ports
-        parent.gamePadManager.refresh(popup: hwGameDevice1, hide: true)
-        parent.gamePadManager.refresh(popup: hwGameDevice2, hide: true)
-        hwGameDevice1.selectItem(withTag: config.gameDevice1)
-        hwGameDevice2.selectItem(withTag: config.gameDevice2)
+        parent.gamePadManager.refresh(popup: perControlPort1, hide: true)
+        parent.gamePadManager.refresh(popup: perControlPort2, hide: true)
+        perControlPort1.selectItem(withTag: config.gameDevice1)
+        perControlPort2.selectItem(withTag: config.gameDevice2)
                 
         // Lock symbol and explanation
         hwLockImage.isHidden = true // poweredOff
@@ -159,38 +159,6 @@ extension ConfigurationController {
         refresh()
     }
     
-    @IBAction func hwDriveTypeAction(_ sender: NSPopUpButton!) {
-        
-        switch sender.tag {
-        case 8: config.drive8Type = sender.tag
-        case 9: config.drive9Type = sender.tag
-        default: fatalError()
-        }
-        refresh()
-    }
-    
-    @IBAction func hwDriveConnectAction(_ sender: NSButton!) {
-        
-        switch sender.tag {
-        case 8: config.drive8Connected = sender.state == .on
-        case 9: config.drive9Connected = sender.state == .on
-        default: fatalError()
-        }
-        refresh()
-    }
-    
-    @IBAction func hwGameDeviceAction(_ sender: NSPopUpButton!) {
-        
-        track("port: \(sender.tag) device: \(sender.selectedTag())")
-        
-        switch sender.tag {
-        case 1: config.gameDevice1 = sender.selectedTag()
-        case 2: config.gameDevice2 = sender.selectedTag()
-        default: fatalError()
-        }
-        refresh()
-    }
-
     @IBAction func hwRamPatternAction(_ sender: NSPopUpButton!) {
         
         track()

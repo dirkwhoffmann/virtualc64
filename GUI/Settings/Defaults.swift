@@ -65,6 +65,7 @@ extension UserDefaults {
         
         registerRomUserDefaults()
         registerHardwareUserDefaults()
+        registerPeripheralsUserDefaults()
         registerAudioUserDefaults()
         registerVideoUserDefaults()
     }
@@ -85,6 +86,7 @@ extension MyController {
         
         config.loadRomUserDefaults()
         config.loadHardwareUserDefaults()
+        config.loadPeripheralsUserDefaults()
         config.loadAudioUserDefaults()
         config.loadVideoUserDefaults()
         
@@ -611,23 +613,10 @@ extension Keys {
         static let sidAddress1    = "VC64_HW_SidAddress1"
         static let sidAddress2    = "VC64_HW_SidAddress2"
         static let sidAddress3    = "VC64_HW_SidAddress3"
-
-        static let sidEngine      = "VC64_HW_SidEngine"
-        static let sidSampling    = "VC64_HW_Sampling"
         
         // Logic board and RAM
         static let glueLogic      = "VC64_HW_GlueLogic"
         static let ramPattern     = "VC64_HW_RamPattern"
-        
-        // Drive
-        static let drive8Connect  = "VC64_HW_Drive8Connect"
-        static let drive8Type     = "VC64_HW_Drive8Type"
-        static let drive9Connect  = "VC64_HW_Drive9Connect"
-        static let drive9Type     = "VC64_HW_Drive9Type"
-        
-        // Ports
-        static let gameDevice1    = "VC64_HW_GameDevice1"
-        static let gameDevice2    = "VC64_HW_GameDevice2"
     }
 }
 
@@ -647,18 +636,9 @@ struct HardwareDefaults {
     let sidAddress1: Int
     let sidAddress2: Int
     let sidAddress3: Int
-
-    var sidEngine: SIDEngine      // DEPRECATED
-    var sampling: SamplingMethod  // DEPRECATED
     
     var glueLogic: GlueLogic
     var ramPattern: RamPattern
-
-    var driveConnect: [Bool]
-    var driveType: [DriveType]
-    
-    var gameDevice1: Int
-    var gameDevice2: Int
     
     //
     // Schemes
@@ -680,18 +660,9 @@ struct HardwareDefaults {
         sidAddress1:   0xD420,
         sidAddress2:   0xD440,
         sidAddress3:   0xD460,
-
-        sidEngine:     .ENGINE_RESID,
-        sampling:      .SID_SAMPLE_INTERPOLATE,
         
         glueLogic:     .GLUE_DISCRETE,
-        ramPattern:    .RAM_PATTERN_C64,
-        
-        driveConnect:  [true, false],
-        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
-        
-        gameDevice1:   -1,
-        gameDevice2:   -1
+        ramPattern:    .RAM_PATTERN_C64
     )
     
     static let C64_II_PAL = HardwareDefaults.init(
@@ -710,18 +681,9 @@ struct HardwareDefaults {
         sidAddress1:   0xD420,
         sidAddress2:   0xD440,
         sidAddress3:   0xD460,
-
-        sidEngine:     .ENGINE_RESID,
-        sampling:      .SID_SAMPLE_INTERPOLATE,
         
         glueLogic:     .GLUE_CUSTOM_IC,
-        ramPattern:    .RAM_PATTERN_C64C,
-        
-        driveConnect:  [true, false],
-        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
-        
-        gameDevice1:   -1,
-        gameDevice2:   -1
+        ramPattern:    .RAM_PATTERN_C64C
     )
     
     static let C64_OLD_PAL = HardwareDefaults.init(
@@ -740,18 +702,9 @@ struct HardwareDefaults {
         sidAddress1:   0xD420,
         sidAddress2:   0xD440,
         sidAddress3:   0xD460,
-
-        sidEngine:     .ENGINE_RESID,
-        sampling:      .SID_SAMPLE_INTERPOLATE,
         
         glueLogic:     .GLUE_DISCRETE,
-        ramPattern:    .RAM_PATTERN_C64,
-        
-        driveConnect:  [true, false],
-        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
-        
-        gameDevice1:   -1,
-        gameDevice2:   -1
+        ramPattern:    .RAM_PATTERN_C64
     )
 
     static let C64_NTSC = HardwareDefaults.init(
@@ -770,18 +723,9 @@ struct HardwareDefaults {
         sidAddress1:   0xD420,
         sidAddress2:   0xD440,
         sidAddress3:   0xD460,
-
-        sidEngine:     .ENGINE_RESID,
-        sampling:      .SID_SAMPLE_INTERPOLATE,
         
         glueLogic:     .GLUE_DISCRETE,
-        ramPattern:    .RAM_PATTERN_C64,
-        
-        driveConnect:  [true, false],
-        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
-        
-        gameDevice1:   -1,
-        gameDevice2:   -1
+        ramPattern:    .RAM_PATTERN_C64
     )
     
     static let C64_II_NTSC = HardwareDefaults.init(
@@ -800,18 +744,9 @@ struct HardwareDefaults {
         sidAddress1:   0xD420,
         sidAddress2:   0xD440,
         sidAddress3:   0xD460,
-
-        sidEngine:     .ENGINE_RESID,
-        sampling:      .SID_SAMPLE_INTERPOLATE,
         
         glueLogic:     .GLUE_CUSTOM_IC,
-        ramPattern:    .RAM_PATTERN_C64C,
-        
-        driveConnect:  [true, false],
-        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
-        
-        gameDevice1:   -1,
-        gameDevice2:   -1
+        ramPattern:    .RAM_PATTERN_C64C
     )
     
     static let C64_OLD_NTSC = HardwareDefaults.init(
@@ -830,18 +765,9 @@ struct HardwareDefaults {
         sidAddress1:   0xD420,
         sidAddress2:   0xD440,
         sidAddress3:   0xD460,
-
-        sidEngine:     .ENGINE_RESID,
-        sampling:      .SID_SAMPLE_INTERPOLATE,
         
         glueLogic:     .GLUE_DISCRETE,
-        ramPattern:    .RAM_PATTERN_C64,
-        
-        driveConnect:  [true, false],
-        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
-        
-        gameDevice1:   -1,
-        gameDevice2:   -1
+        ramPattern:    .RAM_PATTERN_C64
     )
 }
 
@@ -867,15 +793,7 @@ extension UserDefaults {
             Keys.Hwd.sidAddress3:   defaults.sidAddress3,
 
             Keys.Hwd.glueLogic:     defaults.glueLogic.rawValue,
-            Keys.Hwd.ramPattern:    defaults.ramPattern.rawValue,
-            
-            Keys.Hwd.drive8Connect: defaults.driveConnect[0],
-            Keys.Hwd.drive8Type:    defaults.driveType[0].rawValue,
-            Keys.Hwd.drive9Connect: defaults.driveConnect[1],
-            Keys.Hwd.drive9Type:    defaults.driveType[1].rawValue,
-            
-            Keys.Hwd.gameDevice1:   defaults.gameDevice1,
-            Keys.Hwd.gameDevice2:   defaults.gameDevice2
+            Keys.Hwd.ramPattern:    defaults.ramPattern.rawValue
         ]
         
         let userDefaults = UserDefaults.standard
@@ -901,15 +819,86 @@ extension UserDefaults {
                     Keys.Hwd.sidAddress3,
                     
                     Keys.Hwd.glueLogic,
-                    Keys.Hwd.ramPattern,
+                    Keys.Hwd.ramPattern
+        ]
+
+        for key in keys { defaults.removeObject(forKey: key) }
+    }
+}
+
+//
+// User defaults (Peripherals)
+//
+
+extension Keys {
+    
+    struct Per {
+                
+        // Drive
+        static let drive8Connect  = "VC64_PER_Drive8Connect"
+        static let drive8Type     = "VC64_PER_Drive8Type"
+        static let drive9Connect  = "VC64_PER_Drive9Connect"
+        static let drive9Type     = "VC64_PER_Drive9Type"
+        
+        // Ports
+        static let gameDevice1    = "VC64_PER_ControlPort1"
+        static let gameDevice2    = "VC64_PER_ControlPort2"
+    }
+}
+
+struct PeripheralsDefaults {
+    
+    var driveConnect: [Bool]
+    var driveType: [DriveType]
+    
+    var gameDevice1: Int
+    var gameDevice2: Int
+    
+    //
+    // Schemes
+    //
+    
+    static let std = PeripheralsDefaults.init(
+        
+        driveConnect:  [true, false],
+        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
+        
+        gameDevice1:   -1,
+        gameDevice2:   -1
+    )
+}
+
+extension UserDefaults {
+    
+    static func registerPeripheralsUserDefaults() {
+        
+        let defaults = PeripheralsDefaults.std
+        let dictionary: [String: Any] = [
+                        
+            Keys.Per.drive8Connect: defaults.driveConnect[0],
+            Keys.Per.drive8Type:    defaults.driveType[0].rawValue,
+            Keys.Per.drive9Connect: defaults.driveConnect[1],
+            Keys.Per.drive9Type:    defaults.driveType[1].rawValue,
+            
+            Keys.Per.gameDevice1:   defaults.gameDevice1,
+            Keys.Per.gameDevice2:   defaults.gameDevice2
+        ]
+        
+        let userDefaults = UserDefaults.standard
+        userDefaults.register(defaults: dictionary)
+    }
+    
+    static func resetPeripheralsUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        
+        let keys = [Keys.Per.drive8Connect,
+                    Keys.Per.drive8Type,
+                    Keys.Per.drive9Connect,
+                    Keys.Per.drive9Type,
                     
-                    Keys.Hwd.drive8Connect,
-                    Keys.Hwd.drive8Type,
-                    Keys.Hwd.drive9Connect,
-                    Keys.Hwd.drive9Type,
-                    
-                    Keys.Hwd.gameDevice1,
-                    Keys.Hwd.gameDevice2
+                    Keys.Per.gameDevice1,
+                    Keys.Per.gameDevice2
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }
