@@ -212,9 +212,7 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
     switch (option) {
                      
         case OPT_SID_ENABLE:
-                      
-            assert(isPoweredOff());
-            
+                                  
             // The built-in SID can't be disabled
             if (id == 0 && value == false) {
                 warn("SID 0 can't be disabled.\n");
@@ -234,7 +232,6 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
                 resid[i].reset();
                 fastsid[i].reset();
             }
-            debug("config.enable = %x\n", config.enabled);
             resume();
             return true;
             

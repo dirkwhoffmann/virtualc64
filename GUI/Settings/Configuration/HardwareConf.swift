@@ -63,9 +63,9 @@ extension ConfigurationController {
         hwSidEnable1.state = config.sidEnable1 ? .on : .off
         hwSidEnable2.state = config.sidEnable2 ? .on : .off
         hwSidEnable3.state = config.sidEnable3 ? .on : .off
-        hwSidEnable1.isEnabled = poweredOff
-        hwSidEnable2.isEnabled = poweredOff
-        hwSidEnable3.isEnabled = poweredOff
+        // hwSidEnable1.isEnabled = poweredOff
+        // hwSidEnable2.isEnabled = poweredOff
+        // hwSidEnable3.isEnabled = poweredOff
         hwSidAddress1.selectItem(withTag: config.sidAddress1)
         hwSidAddress2.selectItem(withTag: config.sidAddress2)
         hwSidAddress3.selectItem(withTag: config.sidAddress3)
@@ -89,9 +89,9 @@ extension ConfigurationController {
         hwGameDevice2.selectItem(withTag: config.gameDevice2)
                 
         // Lock symbol and explanation
-        hwLockImage.isHidden = poweredOff
-        hwLockText.isHidden = poweredOff
-        hwLockSubText.isHidden = poweredOff
+        // hwLockImage.isHidden = poweredOff
+        // hwLockText.isHidden = poweredOff
+        // hwLockSubText.isHidden = poweredOff
 
         // Power button
         hwPowerButton.isHidden = !bootable
