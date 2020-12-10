@@ -91,18 +91,18 @@ private:
         ReSID(c64, samples[2]),
         ReSID(c64, samples[3])
     };
-
-    // Volume control
-    // Volume volume;
-    
-    // Panning factors
-    float pan[4];
-    
+        
     // CPU cycle at the last call to executeUntil()
     u64 cycles;
     
     // Time stamp of the last write pointer alignment
     u64 lastAlignment = 0;
+
+    // Volume control
+    Volume volume;
+
+    // Panning factors
+    float pan[4];
     
 public:
     
@@ -144,22 +144,22 @@ public:
 private:
             
     // Current volume (0 = silent)
-    i32 volume;
+    // i32 volume;
     
     /* Target volume. Whenever an audio sample is written, the volume is
      * increased or decreased by volumeDelta steps to make it reach the target
      * volume eventually. This feature simulates a fading effect.
      */
-    i32 targetVolume;
+    // i32 targetVolume;
     
     // Maximum volume
-    const static i32 maxVolume = 100000;
+    // const static i32 maxVolume = 100000;
     
     /* Volume offset. If the current volume does not match the target volume,
      * it is increased or decreased by the specified amount. The increase or
      * decrease takes place whenever an audio sample is generated.
      */
-    i32 volumeDelta;
+    // i32 volumeDelta;
     
     
     //
@@ -236,8 +236,16 @@ private:
     {
         worker
         
+        & config.revision
+        & config.enabled
+        & config.address
+        & config.filter
         & config.engine
-        & config.filter;
+        & config.sampling
+        & config.vol
+        & config.pan
+        & config.volL
+        & config.volR;
     }
     
     template <class T>
@@ -263,26 +271,40 @@ private:
     
   
     //
-    // Volume control
+    // Controlling the volume
     //
     
+public:
+        
+    /* Starts to ramp up the volume. This function configures variables volume
+     * and targetVolume to simulate a smooth audio fade in.
+     */
+    void rampUp();
+    void rampUpFromZero();
+    
+    /* Starts to ramp down the volume. This function configures variables
+     * volume and targetVolume to simulate a quick audio fade out.
+     */
+    void rampDown();
+
+    
+    
+/*
 public:
     
     // Sets the current volume
     void setVolume(i32 vol) { volume = vol; }
     
-    /* Ramps the volume up. Configures volume and targetVolume to simulate a
-     * smooth audio fade in
-     */
+    // Ramps the volume up. Configures volume and targetVolume to simulate a
+    // smooth audio fade in
     void rampUp() { targetVolume = maxVolume; volumeDelta = 3; ignoreNextUnderOrOverflow(); }
     void rampUpFromZero() { volume = 0; rampUp(); }
     
-    /* Ramps the volume down. Configures volume and targetVolume to simulate a
-     * quick audio fade out
-     */
+    // Ramps the volume down. Configures volume and targetVolume to simulate a
+    // quick audio fade out
     void rampDown() { targetVolume = 0; volumeDelta = 50; ignoreNextUnderOrOverflow(); }
+*/
     
-
     //
     // Managing the four sample buffers
     //

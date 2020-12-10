@@ -40,9 +40,6 @@ SIDBridge::_reset()
     RESET_SNAPSHOT_ITEMS
     
     clearRingbuffer();
-    
-    volume = 100000;
-    targetVolume = 100000;
 }
 
 long
@@ -543,6 +540,32 @@ SIDBridge::getVoiceInfo(unsigned voice)
     return info;
 }
 
+void
+SIDBridge::rampUp()
+{
+    // Only proceed if the emulator is not running in warp mode
+    if (warpMode) return;
+    
+    volume.target = Volume::maxVolume;
+    volume.delta = 3;
+    ignoreNextUnderOrOverflow();
+}
+
+void
+SIDBridge::rampUpFromZero()
+{
+    volume.current = 0;
+    rampUp();
+}
+ 
+void
+SIDBridge::rampDown()
+{
+    volume.target = 0;
+    volume.delta = 50;
+    ignoreNextUnderOrOverflow();
+}
+
 int
 SIDBridge::mappedSID(u16 addr)
 {
@@ -693,6 +716,7 @@ SIDBridge::execute(u64 numCycles)
     }
     
     // Adjust volume
+    /*
     if (volume != targetVolume) {
         if (volume < targetVolume) {
             volume += MIN(volumeDelta, targetVolume - volume);
@@ -700,7 +724,8 @@ SIDBridge::execute(u64 numCycles)
             volume -= MIN(volumeDelta, volume - targetVolume);
         }
     }
-        
+    */
+    
     // Convert sound samples to floating point values and write into ringbuffer
     for (unsigned i = 0; i < numSamples; i++) {
         
@@ -819,8 +844,8 @@ SIDBridge::copyMono(float *target, size_t n)
     // Check for a buffer underflow
     if (stream.count() < n) handleBufferUnderflow();
 
-    i32 volume = 0; // REMOVE ASAP
-    stream.copyInterleaved(target, n, volume, volume, 0);
+    // Copy sound samples
+    stream.copyMono(target, n, volume.current, volume.target, volume.delta);
     
     stream.unlock();
 }
@@ -833,8 +858,8 @@ SIDBridge::copyStereo(float *target1, float *target2, size_t n)
     // Check for a buffer underflow
     if (stream.count() < n) handleBufferUnderflow();
 
-    i32 volume = 0; // REMOVE ASAP
-    stream.copy(target1, target2, n, volume, volume, 0);
+    // Copy sound samples
+    stream.copy(target1, target2, n, volume.current, volume.target, volume.delta);
     
     stream.unlock();
 }
@@ -847,8 +872,8 @@ SIDBridge::copyInterleaved(float *target, size_t n)
     // Check for a buffer underflow
     if (stream.count() < n) handleBufferUnderflow();
 
-    i32 volume = 0; // REMOVE ASAP
-    stream.copyInterleaved(target, n, volume, volume, 0);
+    // Read sound samples
+    stream.copyInterleaved(target, n, volume.current, volume.target, volume.delta);
     
     stream.unlock();
 }

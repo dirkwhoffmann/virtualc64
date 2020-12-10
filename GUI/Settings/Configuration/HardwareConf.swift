@@ -27,7 +27,7 @@ extension ConfigurationController {
                         
         track()
         
-        let poweredOff = c64.isPoweredOff
+        // let poweredOff = c64.isPoweredOff
 
         // VIC
         hwVicModelPopup.selectItem(withTag: config.vicRevision)
@@ -89,9 +89,9 @@ extension ConfigurationController {
         hwGameDevice2.selectItem(withTag: config.gameDevice2)
                 
         // Lock symbol and explanation
-        // hwLockImage.isHidden = poweredOff
-        // hwLockText.isHidden = poweredOff
-        // hwLockSubText.isHidden = poweredOff
+        hwLockImage.isHidden = true // poweredOff
+        hwLockText.isHidden = true // poweredOff
+        hwLockSubText.isHidden = true // poweredOff
 
         // Power button
         hwPowerButton.isHidden = !bootable
