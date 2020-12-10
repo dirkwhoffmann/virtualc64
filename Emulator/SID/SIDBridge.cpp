@@ -51,11 +51,11 @@ SIDBridge::getConfigItem(ConfigOption option)
     switch (option) {
             
         case OPT_SID_REVISION:
-            
             return config.revision;
-        case OPT_SID_FILTER:
             
+        case OPT_SID_FILTER:
             return config.filter;
+            
         case OPT_SID_ENGINE:
             return config.engine;
             
@@ -80,20 +80,16 @@ SIDBridge::getConfigItem(ConfigOption option, long id)
     switch (option) {
             
         case OPT_SID_ENABLE:
-            
             return GET_BIT(config.enabled, id);
             
         case OPT_SID_ADDRESS:
-            
             return config.address[id];
             
         case OPT_AUDVOL:
-            
             return (long)(exp2(config.vol[id] / 0.0000025) * 100.0);
 
         case OPT_AUDPAN:
-            
-            return (long)(config.pan[id] * 100.0);
+            return (long)config.pan[id]; // (long)(config.pan[id] * 100.0);
                         
         default:
             assert(false);
@@ -217,6 +213,8 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
                      
         case OPT_SID_ENABLE:
                       
+            assert(isPoweredOff());
+            
             // The built-in SID can't be disabled
             if (id == 0 && value == false) {
                 warn("SID 0 can't be disabled.\n");
@@ -231,6 +229,11 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
             suspend();
             REPLACE_BIT(config.enabled, id, value);
             clearSampleBuffer(id);
+            
+            for (int i = 0; i < 4; i++) {
+                resid[i].reset();
+                fastsid[i].reset();
+            }
             debug("config.enable = %x\n", config.enabled);
             resume();
             return true;
@@ -270,13 +273,18 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
         case OPT_AUDPAN:
             
             assert(id >= 0 && id <= 3);
-            if (value < 0 || value > 100) {
+            if (value < 0 || value > 200) {
                 warn("Invalid pan: %d\n", value);
-                warn("       Valid values: 0 ... 100\n");
+                warn("       Valid values: 0 ... 200\n");
                 return false;
             }
 
-            config.pan[id] = MAX(0.0, MIN(value / 100.0, 1.0));
+            config.pan[id] = value; //  MAX(0.0, MIN(value / 100.0, 1.0));
+            
+            if (value <= 50) pan[id] = (50 + value) / 100.0;
+            else if (value <= 150) pan[id] = (150 - value) / 100.0;
+            else if (value <= 200) pan[id] = (value - 150) / 100.0;
+            printf("%f\n", pan[id]);
             return true;
 
         default:
@@ -302,10 +310,14 @@ SIDBridge::setClockFrequency(u32 frequency)
 {
     debug(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
 
+    // suspend();
+    
     for (int i = 0; i < 4; i++) {
         resid[i].setClockFrequency(frequency);
         fastsid[i].setClockFrequency(frequency);
     }
+    
+    // resume();
 }
 
 SIDRevision
@@ -657,7 +669,12 @@ SIDBridge::execute(u64 numCycles)
                 for (int i = 1; i < 4; i++) {
                     if (isEnabled(i)) {
                         u64 numSamples2 = resid[i].execute(numCycles);
-                        assert(numSamples2 == numSamples);
+                        if (numSamples2 != numSamples) {
+                            warn("SID sample mismatch %d %d\n", numSamples, numSamples2);
+                            _dump(0);
+                            _dump(1);
+                            assert(false);
+                        }
                     }
                 }
             }
@@ -698,14 +715,10 @@ SIDBridge::execute(u64 numCycles)
         ch3 = (float)samples[3][i] * config.vol[3];
 
         // Compute left channel output
-        l =
-        ch0 * config.pan[0] + ch1 * config.pan[1] +
-        ch2 * config.pan[2] + ch3 * config.pan[3];
+        l = ch0 * (1 - pan[0]) + ch1 * (1 - pan[1]) + ch2 * (1 - pan[2]) + ch3 * (1 - pan[3]);
 
         // Compute right channel output
-        r =
-        ch0 * (1 - config.pan[0]) + ch1 * (1 - config.pan[1]) +
-        ch2 * (1 - config.pan[2]) + ch3 * (1 - config.pan[3]);
+        r = ch0 * pan[0] + ch1 * pan[1] + ch2 * pan[2] + ch3 * pan[3];
 
         // Apply master volume
         l *= config.volL;

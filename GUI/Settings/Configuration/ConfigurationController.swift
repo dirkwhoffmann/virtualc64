@@ -88,6 +88,11 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var hwGameDevice1: NSPopUpButton!
     @IBOutlet weak var hwGameDevice2: NSPopUpButton!
     
+    // Lock
+    @IBOutlet weak var hwLockImage: NSButton!
+    @IBOutlet weak var hwLockText: NSTextField!
+    @IBOutlet weak var hwLockSubText: NSTextField!
+
     // Buttons
     @IBOutlet weak var hwOkButton: NSButton!
     @IBOutlet weak var hwPowerButton: NSButton!
@@ -175,6 +180,7 @@ class ConfigurationController: DialogController {
         
         firstTab = tab
         showSheet()
+        refresh()
     }
     
     override func awakeFromNib() {

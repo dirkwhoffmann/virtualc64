@@ -226,6 +226,8 @@ ReSID::execute(u64 cycles)
     // Don't ask SID to compute samples for a time interval greater than 1 sec
     assert(cycles <= PAL_CYCLES_PER_SECOND);
     
+    // debug("Executing ReSID %p for %lld cycles\n", this, cycles);
+    
     reSID::cycle_count delta_t = (reSID::cycle_count)cycles;
     int numSamples = 0;
     

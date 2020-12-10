@@ -95,6 +95,9 @@ private:
     // Volume control
     // Volume volume;
     
+    // Panning factors
+    float pan[4];
+    
     // CPU cycle at the last call to executeUntil()
     u64 cycles;
     
