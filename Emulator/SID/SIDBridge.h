@@ -101,6 +101,11 @@ private:
     // Volume control
     Volume volume;
 
+    // Volume scaling factors
+    float vol[4];
+    float volL;
+    float volR;
+
     // Panning factors
     float pan[4];
     
@@ -139,27 +144,7 @@ public:
     /* The mixed stereo stream. This stream contains the final audio stream
      * ready to be handed over to the audio device of the host OS.
      */
-    StereoStream stream = StereoStream(*this);
-    
-private:
-            
-    // Current volume (0 = silent)
-    // i32 volume;
-    
-    /* Target volume. Whenever an audio sample is written, the volume is
-     * increased or decreased by volumeDelta steps to make it reach the target
-     * volume eventually. This feature simulates a fading effect.
-     */
-    // i32 targetVolume;
-    
-    // Maximum volume
-    // const static i32 maxVolume = 100000;
-    
-    /* Volume offset. If the current volume does not match the target volume,
-     * it is increased or decreased by the specified amount. The increase or
-     * decrease takes place whenever an audio sample is generated.
-     */
-    // i32 volumeDelta;
+    StereoStream stream; //  = StereoStream(*this);
     
     
     //
@@ -242,10 +227,14 @@ private:
         & config.filter
         & config.engine
         & config.sampling
-        & config.vol
         & config.pan
+        & config.vol
         & config.volL
-        & config.volR;
+        & config.volR
+        & pan
+        & vol
+        & volL
+        & volR;
     }
     
     template <class T>

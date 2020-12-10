@@ -60,10 +60,10 @@ SIDBridge::getConfigItem(ConfigOption option)
             return config.sampling;
             
         case OPT_AUDVOLL:
-            return (long)(exp2(config.volL) * 100.0);
+            return config.volL;
 
         case OPT_AUDVOLR:
-            return (long)(exp2(config.volR) * 100.0);
+            return config.volR;
             
         default:
             assert(false);
@@ -83,10 +83,10 @@ SIDBridge::getConfigItem(ConfigOption option, long id)
             return config.address[id];
             
         case OPT_AUDVOL:
-            return (long)(exp2(config.vol[id] / 0.0000025) * 100.0);
+            return config.vol[id];
 
         case OPT_AUDPAN:
-            return (long)config.pan[id]; // (long)(config.pan[id] * 100.0);
+            return config.pan[id];
                         
         default:
             assert(false);
@@ -174,26 +174,18 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
             
         case OPT_AUDVOLL:
             
-            if (value < 100 || value > 400) {
-                warn("Invalid volume (L): %d\n", value);
-                warn("       Valid values: 100 ... 400\n");
-                return false;
-            }
+            config.volL = MIN(100, MAX(0, value));
+            volL = pow((double)config.volL / 50, 1.4);
 
-            config.volL = log2((double)value / 100.0);
             if (wasMuted != isMuted())
                 messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
             return true;
             
         case OPT_AUDVOLR:
 
-            if (value < 100 || value > 400) {
-                warn("Invalid volume (R): %d\n", value);
-                warn("       Valid values: 100 ... 400\n");
-                return false;
-            }
+            config.volR = MIN(100, MAX(0, value));
+            volR = pow((double)config.volR / 50, 1.4);
 
-            config.volR = log2((double)value / 100.0);
             if (wasMuted != isMuted())
                 messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
             return true;
@@ -255,13 +247,9 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
         case OPT_AUDVOL:
             
             assert(id >= 0 && id <= 3);
-            if (value < 100 || value > 400) {
-                warn("Invalid volumne: %d\n", value);
-                warn("       Valid values: 100 ... 400\n");
-                return false;
-            }
 
-            config.vol[id] = log2((double)value / 100.0) * 0.0000025;
+            config.vol[id] = MIN(100, MAX(0, value));
+            vol[id] = pow((double)config.vol[id] / 100, 1.4) * 0.0000025;
             return true;
             
         case OPT_AUDPAN:
@@ -278,7 +266,6 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
             if (value <= 50) pan[id] = (50 + value) / 100.0;
             else if (value <= 150) pan[id] = (150 - value) / 100.0;
             else if (value <= 200) pan[id] = (value - 150) / 100.0;
-            printf("%f\n", pan[id]);
             return true;
 
         default:
@@ -731,16 +718,20 @@ SIDBridge::execute(u64 numCycles)
         
         float ch0, ch1, ch2, ch3, l, r;
         
-        ch0 = (float)samples[0][i] * config.vol[0];
-        ch1 = (float)samples[1][i] * config.vol[1];
-        ch2 = (float)samples[2][i] * config.vol[2];
-        ch3 = (float)samples[3][i] * config.vol[3];
+        ch0 = (float)samples[0][i] * vol[0];
+        ch1 = (float)samples[1][i] * vol[1];
+        ch2 = (float)samples[2][i] * vol[2];
+        ch3 = (float)samples[3][i] * vol[3];
 
         // Compute left channel output
-        l = ch0 * (1 - pan[0]) + ch1 * (1 - pan[1]) + ch2 * (1 - pan[2]) + ch3 * (1 - pan[3]);
+        l =
+        ch0 * (1 - pan[0]) + ch1 * (1 - pan[1]) +
+        ch2 * (1 - pan[2]) + ch3 * (1 - pan[3]);
 
         // Compute right channel output
-        r = ch0 * pan[0] + ch1 * pan[1] + ch2 * pan[2] + ch3 * pan[3];
+        r =
+        ch0 * pan[0] + ch1 * pan[1] +
+        ch2 * pan[2] + ch3 * pan[3];
 
         // Apply master volume
         l *= config.volL;

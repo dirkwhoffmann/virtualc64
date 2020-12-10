@@ -50,6 +50,13 @@ inline u64 read64(u8 *& buffer)
     return ((u64)hi << 32) | lo;
 }
 
+inline float readFloat(u8 *& buffer)
+{
+    float result;
+    *((u32 *)(&result)) = read32(buffer);
+    return result;
+}
+
 inline double readDouble(u8 *& buffer)
 {
     double result;
@@ -79,6 +86,11 @@ inline void write64(u8 *& buffer, u64 value)
 {
     write32(buffer, (u32)(value >> 32));
     write32(buffer, (u32)(value));
+}
+
+inline void writeFloat(u8 *& buffer, float value)
+{
+    write32(buffer, *((u32 *)(&value)));
 }
 
 inline void writeDouble(u8 *& buffer, double value)
@@ -126,6 +138,7 @@ public:
     COUNT(const unsigned long)
     COUNT(const long long)
     COUNT(const unsigned long long)
+    COUNT(const float)
     COUNT(const double)
 
     COUNT(const MemoryType)
@@ -174,6 +187,7 @@ return *this; \
 #define DESERIALIZE16(type) static_assert(sizeof(type) == 2); DESERIALIZE(type,read16)
 #define DESERIALIZE32(type) static_assert(sizeof(type) == 4); DESERIALIZE(type,read32)
 #define DESERIALIZE64(type) static_assert(sizeof(type) == 8); DESERIALIZE(type,read64)
+#define DESERIALIZEF(type) static_assert(sizeof(type) == 4); DESERIALIZE(type,readFloat)
 #define DESERIALIZED(type) static_assert(sizeof(type) == 8); DESERIALIZE(type,readDouble)
 
 class SerReader
@@ -198,6 +212,7 @@ public:
     DESERIALIZE64(unsigned long)
     DESERIALIZE64(long long)
     DESERIALIZE64(unsigned long long)
+    DESERIALIZEF(float)
     DESERIALIZED(double)
  
     DESERIALIZE64(MemoryType)
@@ -252,6 +267,7 @@ return *this; \
 #define SERIALIZE16(type) static_assert(sizeof(type) == 2); SERIALIZE(type,write16,u16)
 #define SERIALIZE32(type) static_assert(sizeof(type) == 4); SERIALIZE(type,write32,u32)
 #define SERIALIZE64(type) static_assert(sizeof(type) == 8); SERIALIZE(type,write64,u64)
+#define SERIALIZEF(type) static_assert(sizeof(type) == 4); SERIALIZE(type,writeFloat,float)
 #define SERIALIZED(type) static_assert(sizeof(type) == 8); SERIALIZE(type,writeDouble,double)
 
 class SerWriter
@@ -276,6 +292,7 @@ public:
     SERIALIZE64(const unsigned long)
     SERIALIZE64(const long long)
     SERIALIZE64(const unsigned long long)
+    SERIALIZEF(const float)
     SERIALIZED(const double)
  
     SERIALIZE64(const MemoryType)
@@ -346,6 +363,7 @@ public:
     RESET(unsigned long)
     RESET(long long)
     RESET(unsigned long long)
+    RESET(float)
     RESET(double)
 
     RESET(MemoryType)

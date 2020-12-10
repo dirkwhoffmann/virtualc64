@@ -16,9 +16,6 @@
 typedef struct { float left; float right; } SamplePair;
 class StereoStream : public RingBuffer < SamplePair, 12288 > {
     
-    // Reference to the connected SID bridge
-    class SIDBridge &bridge;
-
     // Mutex for synchronizing read / write accesses
     Mutex mutex;
 
@@ -29,7 +26,7 @@ class StereoStream : public RingBuffer < SamplePair, 12288 > {
     
 public:
         
-    StereoStream(SIDBridge &bridgeref) : bridge(bridgeref) { }
+    // StereoStream() { }
     
     
     //

@@ -971,8 +971,8 @@ struct AudioDefaults {
         pan2: 0,
         pan3: 0,
         
-        volL: 250,
-        volR: 250
+        volL: 50,
+        volR: 50
     )
     
     static let stereo = AudioDefaults.init(
@@ -989,8 +989,8 @@ struct AudioDefaults {
         pan2: 150,
         pan3: 50,
         
-        volL: 250,
-        volR: 250
+        volL: 50,
+        volR: 50
     )
 }
 

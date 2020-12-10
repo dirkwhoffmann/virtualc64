@@ -1127,7 +1127,7 @@ Gw
                                                     <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0ia-dl-Oxn">
                                                         <rect key="frame" x="12" y="12" width="24" height="140"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <sliderCell key="cell" continuous="YES" alignment="left" minValue="100" maxValue="400" doubleValue="100" tickMarkPosition="right" numberOfTickMarks="20" sliderType="linear" id="pIh-WO-KSZ"/>
+                                                        <sliderCell key="cell" continuous="YES" alignment="left" maxValue="100" doubleValue="100" tickMarkPosition="right" numberOfTickMarks="20" sliderType="linear" id="pIh-WO-KSZ"/>
                                                         <connections>
                                                             <action selector="audVol0Action:" target="-2" id="sDr-Qq-zb6"/>
                                                         </connections>
@@ -1171,7 +1171,7 @@ Gw
                                                     <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a3U-4Q-Idn">
                                                         <rect key="frame" x="164" y="12" width="24" height="140"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <sliderCell key="cell" continuous="YES" alignment="left" minValue="100" maxValue="400" doubleValue="100" tickMarkPosition="right" numberOfTickMarks="20" sliderType="linear" id="x9p-nN-Cy8"/>
+                                                        <sliderCell key="cell" continuous="YES" alignment="left" maxValue="100" doubleValue="100" tickMarkPosition="right" numberOfTickMarks="20" sliderType="linear" id="x9p-nN-Cy8"/>
                                                         <connections>
                                                             <action selector="audVol2Action:" target="-2" id="mwD-de-VMj"/>
                                                         </connections>
@@ -1215,7 +1215,7 @@ Gw
                                                     <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nxr-7U-G2Z">
                                                         <rect key="frame" x="240" y="12" width="24" height="140"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <sliderCell key="cell" continuous="YES" alignment="left" minValue="100" maxValue="400" doubleValue="100" tickMarkPosition="right" numberOfTickMarks="20" sliderType="linear" id="5E8-v4-zPR"/>
+                                                        <sliderCell key="cell" continuous="YES" alignment="left" maxValue="100" doubleValue="100" tickMarkPosition="right" numberOfTickMarks="20" sliderType="linear" id="5E8-v4-zPR"/>
                                                         <connections>
                                                             <action selector="audVol3Action:" target="-2" id="rZe-ox-PUu"/>
                                                         </connections>
@@ -1250,7 +1250,7 @@ Gw
                                                     <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7jZ-dK-VwM">
                                                         <rect key="frame" x="88" y="12" width="24" height="140"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <sliderCell key="cell" continuous="YES" alignment="left" minValue="100" maxValue="400" doubleValue="100" tickMarkPosition="right" numberOfTickMarks="20" sliderType="linear" id="x8q-PX-ufF"/>
+                                                        <sliderCell key="cell" continuous="YES" alignment="left" maxValue="100" doubleValue="100" tickMarkPosition="right" numberOfTickMarks="20" sliderType="linear" id="x8q-PX-ufF"/>
                                                         <connections>
                                                             <action selector="audVol1Action:" target="-2" id="EYq-uA-pcm"/>
                                                         </connections>
@@ -1313,7 +1313,7 @@ Gw
                                                     <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O1Q-z8-zVP">
                                                         <rect key="frame" x="44" y="12" width="24" height="140"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <sliderCell key="cell" continuous="YES" alignment="left" minValue="100" maxValue="400" doubleValue="100" tickMarkPosition="right" numberOfTickMarks="20" sliderType="linear" id="xgB-ce-OVe"/>
+                                                        <sliderCell key="cell" continuous="YES" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="right" numberOfTickMarks="20" sliderType="linear" id="xgB-ce-OVe"/>
                                                         <connections>
                                                             <action selector="audVolLAction:" target="-2" id="gyB-Wa-ZeX"/>
                                                         </connections>
@@ -1366,7 +1366,7 @@ Gw
                                                     <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hrp-8d-Rbm">
                                                         <rect key="frame" x="139" y="12" width="24" height="140"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <sliderCell key="cell" continuous="YES" alignment="left" minValue="100" maxValue="400" doubleValue="100" tickMarkPosition="right" numberOfTickMarks="20" sliderType="linear" id="8l6-zN-EeR"/>
+                                                        <sliderCell key="cell" continuous="YES" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="right" numberOfTickMarks="20" sliderType="linear" id="8l6-zN-EeR"/>
                                                         <connections>
                                                             <action selector="audVolRAction:" target="-2" id="gBf-iH-dW7"/>
                                                         </connections>
