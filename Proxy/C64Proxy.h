@@ -422,9 +422,9 @@ struct AnyC64FileWrapper;
 - (NSInteger) bufferUnderflows;
 - (NSInteger) bufferOverflows;
 
-- (void) readMonoSamples:(float *)target size:(NSInteger)n;
-- (void) readStereoSamples:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
-- (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n;
+- (void) copyMono:(float *)target size:(NSInteger)n;
+- (void) copyStereo:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
+- (void) copyInterleaved:(float *)target size:(NSInteger)n;
 
 - (void) rampUp;
 - (void) rampUpFromZero;

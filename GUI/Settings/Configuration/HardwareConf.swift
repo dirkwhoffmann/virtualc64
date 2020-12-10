@@ -9,17 +9,28 @@
 
 extension ConfigurationController {
     
-    func refreshHardwareTab() {
-                
-        let vicRevision = config.vicRevision
-        let resid = config.sidEngine == SIDEngine.ENGINE_RESID.rawValue
+    func awakeHardwarePrefsFromNib() {
         
+        for addr in stride(from: 0xD400, through: 0xD7E0, by: 0x20) {
+
+            let label = String.init(format: "$%04X", addr)
+            hwSidAddress1.addItem(withTitle: label)
+            hwSidAddress2.addItem(withTitle: label)
+            hwSidAddress3.addItem(withTitle: label)
+            hwSidAddress1.lastItem!.tag = addr
+            hwSidAddress2.lastItem!.tag = addr
+            hwSidAddress3.lastItem!.tag = addr
+        }
+    }
+    
+    func refreshHardwareTab() {
+                        
         track()
         
         // VIC
-        hwVicModelPopup.selectItem(withTag: vicRevision)
+        hwVicModelPopup.selectItem(withTag: config.vicRevision)
         
-        switch VICRevision.init(rawValue: vicRevision) {
+        switch VICRevision.init(rawValue: config.vicRevision) {
             
         case .PAL_6569_R1,
              .PAL_6569_R3,
@@ -47,10 +58,12 @@ extension ConfigurationController {
         
         // Audio
         hwSidModelPopup.selectItem(withTag: config.sidRevision)
-        // hwSidFilter.state = config.sidFilter ? .on : .off
-        // hwSidEnginePopup.selectItem(withTag: config.sidEngine)
-        // hwSidSamplingPopup.isEnabled = resid
-        // hwSidSamplingPopup.selectItem(withTag: config.sidSampling)
+        hwSidEnable1.state = config.sidEnable1 ? .on : .off
+        hwSidEnable2.state = config.sidEnable2 ? .on : .off
+        hwSidEnable3.state = config.sidEnable3 ? .on : .off
+        hwSidAddress1.selectItem(withTag: config.sidAddress1)
+        hwSidAddress2.selectItem(withTag: config.sidAddress2)
+        hwSidAddress3.selectItem(withTag: config.sidAddress3)
         
         // Logic board
         hwGlueLogicPopup.selectItem(withTag: config.glueLogic)
@@ -69,35 +82,7 @@ extension ConfigurationController {
         parent.gamePadManager.refresh(popup: hwGameDevice2, hide: true)
         hwGameDevice1.selectItem(withTag: config.gameDevice1)
         hwGameDevice2.selectItem(withTag: config.gameDevice2)
-        
-        // Configuration info text
-        /*
-        var descr: String
-        switch c64Model {
-        case C64_PAL:
-            descr = "matches a C64 with brown casing (breadbox) and PAL video ouput"
-            
-        case C64_II_PAL:
-            descr = "matches a C64 II (white casing) with PAL video ouput"
-            
-        case C64_OLD_PAL:
-            descr = "matches an early C64 with brown casing (breadbox) and PAL video output"
-            
-        case C64_NTSC:
-            descr = "matches a C64 with brown casing (breadbox) and NTSC video ouput"
-            
-        case C64_II_NTSC:
-            descr = "matches a C64 II (white casing) with NTSC video ouput"
-            
-        case C64_OLD_NTSC:
-            descr = "matches an early C64 with brown casing (breadbox) and NTSC video output"
-            
-        default:
-            descr = "is a custom configuration. It matches no known C64 model"
-        }
-        hwInfoText.stringValue = "This configuration \(descr)."
-        */
-        
+                
         // Power button
         hwPowerButton.isHidden = !bootable
     }
@@ -132,24 +117,32 @@ extension ConfigurationController {
         refresh()
     }
 
-    @IBAction func hwSidFilterAction(_ sender: NSButton!) {
+    @IBAction func hwSidEnable(_ sender: NSButton!) {
         
-        config.sidFilter = sender.state == .on
+        track()
+        
+        switch sender.tag {
+        case 1: config.sidEnable1 = sender.state == .on
+        case 2: config.sidEnable2 = sender.state == .on
+        case 3: config.sidEnable3 = sender.state == .on
+        default: fatalError()
+        }
         refresh()
     }
-    
-    @IBAction func hwSidEngineAction(_ sender: NSPopUpButton!) {
+
+    @IBAction func hwSidAddressAction(_ sender: NSPopUpButton!) {
         
-        config.sidEngine = sender.selectedTag()
+        track()
+        
+        switch sender.tag {
+        case 1: config.sidAddress1 = sender.selectedTag()
+        case 2: config.sidAddress2 = sender.selectedTag()
+        case 3: config.sidAddress3 = sender.selectedTag()
+        default: fatalError()
+        }
         refresh()
     }
-    
-    @IBAction func hwSidSamplingAction(_ sender: NSPopUpButton!) {
-        
-        config.sidSampling = sender.selectedTag()
-        refresh()
-    }
-        
+            
     @IBAction func hwGlueLogicAction(_ sender: NSPopUpButton!) {
         
         config.glueLogic = sender.selectedTag()

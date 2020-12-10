@@ -245,10 +245,12 @@ class Configuration {
     // Audio settings
     //
 
+    /*
     var sidEnable0: Bool {
         get { return c64.getConfig(OPT_SID_ENABLE, id: 0) != 0 }
         set { c64.configure(OPT_SID_ENABLE, id: 0, enable: newValue) }
     }
+    */
     var sidEnable1: Bool {
         get { return c64.getConfig(OPT_SID_ENABLE, id: 1) != 0 }
         set { c64.configure(OPT_SID_ENABLE, id: 1, enable: newValue) }
@@ -261,10 +263,12 @@ class Configuration {
         get { return c64.getConfig(OPT_SID_ENABLE, id: 3) != 0 }
         set { c64.configure(OPT_SID_ENABLE, id: 3, enable: newValue) }
     }
+    /*
     var sidAddress0: Int {
         get { return c64.getConfig(OPT_SID_ADDRESS, id: 0) }
         set { c64.configure(OPT_SID_ADDRESS, id: 0, value: newValue) }
     }
+    */
     var sidAddress1: Int {
         get { return c64.getConfig(OPT_SID_ADDRESS, id: 1) }
         set { c64.configure(OPT_SID_ADDRESS, id: 1, value: newValue) }

@@ -977,10 +977,10 @@ struct AudioDefaults {
         vol1: 400,
         vol2: 400,
         vol3: 400,
-        pan0: 70,
-        pan1: 30,
-        pan2: 30,
-        pan3: 70,
+        pan0: 50,
+        pan1: 50,
+        pan2: 50,
+        pan3: 50,
         
         volL: 250,
         volR: 250
@@ -997,8 +997,8 @@ struct AudioDefaults {
         vol3: 400,
         pan0: 100,
         pan1: 0,
-        pan2: 0,
-        pan3: 100,
+        pan2: 100,
+        pan3: 0,
         
         volL: 250,
         volR: 250

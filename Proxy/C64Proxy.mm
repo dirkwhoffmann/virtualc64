@@ -507,17 +507,17 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->sid->bufferOverflows;
 }
-- (void) readMonoSamples:(float *)target size:(NSInteger)n
+- (void) copyMono:(float *)target size:(NSInteger)n
 {
-    wrapper->sid->readMonoSamples(target, n);
+    wrapper->sid->copyMono(target, n);
 }
-- (void) readStereoSamples:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n
+- (void) copyStereo:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n
 {
-    wrapper->sid->readStereoSamples(target1, target2, n);
+    wrapper->sid->copyStereo(target1, target2, n);
 }
-- (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n
+- (void) copyInterleaved:(float *)target size:(NSInteger)n
 {
-    wrapper->sid->readStereoSamplesInterleaved(target, n);
+    wrapper->sid->copyInterleaved(target, n);
 }
 - (void) rampUp
 {

@@ -115,7 +115,7 @@ public class MacAudio: NSObject {
         assert(bufferList.count == 1)
         
         let ptr = bufferList[0].mData!.assumingMemoryBound(to: Float.self)
-        sid.readMonoSamples(ptr, size: Int(frameCount))
+        sid.copyMono(ptr, size: Int(frameCount))
     }
     
     private func renderStereo(inputDataList: UnsafeMutablePointer<AudioBufferList>,
@@ -126,7 +126,7 @@ public class MacAudio: NSObject {
         
         let ptr1 = bufferList[0].mData!.assumingMemoryBound(to: Float.self)
         let ptr2 = bufferList[1].mData!.assumingMemoryBound(to: Float.self)
-        sid.readStereoSamples(ptr1, buffer2: ptr2, size: Int(frameCount))
+        sid.copyStereo(ptr1, buffer2: ptr2, size: Int(frameCount))
     }
     
     // Connects SID to the audio backend

@@ -113,7 +113,6 @@ public:
     
     // Set to true to signal a buffer exception
     bool signalUnderflow = false;
-    // bool signalOverflow = false; // DEPRECATED
 
     
     //
@@ -280,9 +279,19 @@ public:
      */
     void rampDown() { targetVolume = 0; volumeDelta = 50; ignoreNextUnderOrOverflow(); }
     
+
+    //
+    // Managing the four sample buffers
+    //
+    
+public:
+
+    // Clear the sample buffer of a single SID channel
+    void clearSampleBuffer(long nr);
+
     
     //
-    // Managing the ringbuffer
+    // Managing the ring buffer
     //
     
 public:
@@ -295,22 +304,7 @@ public:
     
     // Reads a single audio sample without moving the read pointer
     float ringbufferData(size_t offset);
-    
-    /* Reads a number of sound samples from ringbuffer.
-     * Samples are stored in a single mono stream.
-     */
-    void readMonoSamples(float *target, size_t n);
-    
-    /* Reads a number of sound samples from ringbuffer.
-     * Samples are stored in two seperate mono streams
-     */
-    void readStereoSamples(float *target1, float *target2, size_t n);
-    
-    /* Reads a certain amount of samples from ringbuffer.
-     * Samples are stored in an interleaved stereo stream.
-     */
-    void readStereoSamplesInterleaved(float *target, size_t n);
-        
+            
     /* Handles a buffer underflow condition.
      * A buffer underflow occurs when the computer's audio device needs sound
      * samples than SID hasn't produced, yet.
@@ -338,7 +332,19 @@ public:
 
     // Executes SID for a certain number of cycles
 	void execute(u64 numCycles);
+    
+    
+    //
+    // Copying data from the ring buffer
+    //
+    
+public:
+    
+    void copyMono(float *buffer, size_t n);
+    void copyStereo(float *left, float *right, size_t n);
+    void copyInterleaved(float *buffer, size_t n);
 
+    
      
 	//
 	// Accessig memory

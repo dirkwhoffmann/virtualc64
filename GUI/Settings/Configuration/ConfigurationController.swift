@@ -65,10 +65,13 @@ class ConfigurationController: DialogController {
     
     // SID
     @IBOutlet weak var hwSidModelPopup: NSPopUpButton!
-    @IBOutlet weak var hwSidFilter: NSButton!
-    @IBOutlet weak var hwSidEnginePopup: NSPopUpButton!
-    @IBOutlet weak var hwSidSamplingPopup: NSPopUpButton!
-    
+    @IBOutlet weak var hwSidEnable1: NSButton!
+    @IBOutlet weak var hwSidEnable2: NSButton!
+    @IBOutlet weak var hwSidEnable3: NSButton!
+    @IBOutlet weak var hwSidAddress1: NSPopUpButton!
+    @IBOutlet weak var hwSidAddress2: NSPopUpButton!
+    @IBOutlet weak var hwSidAddress3: NSPopUpButton!
+
     // Board logic
     @IBOutlet weak var hwGlueLogicPopup: NSPopUpButton!
 
@@ -177,6 +180,7 @@ class ConfigurationController: DialogController {
     override func awakeFromNib() {
     
         awakeVideoPrefsFromNib()
+        awakeHardwarePrefsFromNib()
         refresh()
     }
     

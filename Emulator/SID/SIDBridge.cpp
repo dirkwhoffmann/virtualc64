@@ -222,26 +222,37 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
                 warn("SID 0 can't be disabled.\n");
                 return false;
             }
-
-            // REMOVE ASAP (FORCE SID0 and SID1)
-            value = (id == 0 || id == 1);
             
             assert(id >= 0 && id <= 3);
             if (!!GET_BIT(config.enabled, id) == value) {
                 return false;
             }
             
+            suspend();
             REPLACE_BIT(config.enabled, id, value);
+            clearSampleBuffer(id);
+            debug("config.enable = %x\n", config.enabled);
+            resume();
             return true;
             
         case OPT_SID_ADDRESS:
 
             assert(id >= 0 && id <= 3);
+            if (value < 0xD400 || value > 0xD7E0 || (value & 0x1F)) {
+                warn("Invalid SID address: %x\n", value);
+                warn("       Valid values: D400, D420, ... D7E0\n");
+                return false;
+            }
+
             if (config.address[id] == value) {
                 return false;
             }
             
+            suspend();
             config.address[id] = value;
+            clearSampleBuffer(id);
+            debug("config.address[%d] = %x\n", id, config.address);
+            resume();
             return true;
             
         case OPT_AUDVOL:
@@ -707,6 +718,12 @@ SIDBridge::execute(u64 numCycles)
 }
 
 void
+SIDBridge::clearSampleBuffer(long nr)
+{
+    memset(samples[nr], 0, sizeof(samples[nr]));
+}
+
+void
 SIDBridge::clearRingbuffer()
 {
     stream.clear();
@@ -718,27 +735,6 @@ SIDBridge::ringbufferData(size_t offset)
 {
     SamplePair &pair = stream.current((int)offset);
     return (pair.left + pair.right) / 2.0;
-}
-
-void
-SIDBridge::readMonoSamples(float *target, size_t n)
-{
-    i32 volume = 0; // REMOVE ASAP
-    stream.copyInterleaved(target, n, volume, volume, 0);
-}
-
-void
-SIDBridge::readStereoSamples(float *target1, float *target2, size_t n)
-{
-    i32 volume = 0; // REMOVE ASAP
-    stream.copy(target1, target2, n, volume, volume, 0);
-}
-
-void
-SIDBridge::readStereoSamplesInterleaved(float *target, size_t n)
-{
-    i32 volume = 0; // REMOVE ASAP
-    stream.copyInterleaved(target, n, volume, volume, 0);
 }
 
 void
@@ -803,4 +799,46 @@ void
 SIDBridge::ignoreNextUnderOrOverflow()
 {
     lastAlignment = Oscillator::nanos();
+}
+
+void
+SIDBridge::copyMono(float *target, size_t n)
+{
+    stream.lock();
+    
+    // Check for a buffer underflow
+    if (stream.count() < n) handleBufferUnderflow();
+
+    i32 volume = 0; // REMOVE ASAP
+    stream.copyInterleaved(target, n, volume, volume, 0);
+    
+    stream.unlock();
+}
+
+void
+SIDBridge::copyStereo(float *target1, float *target2, size_t n)
+{
+    stream.lock();
+    
+    // Check for a buffer underflow
+    if (stream.count() < n) handleBufferUnderflow();
+
+    i32 volume = 0; // REMOVE ASAP
+    stream.copy(target1, target2, n, volume, volume, 0);
+    
+    stream.unlock();
+}
+
+void
+SIDBridge::copyInterleaved(float *target, size_t n)
+{
+    stream.lock();
+    
+    // Check for a buffer underflow
+    if (stream.count() < n) handleBufferUnderflow();
+
+    i32 volume = 0; // REMOVE ASAP
+    stream.copyInterleaved(target, n, volume, volume, 0);
+    
+    stream.unlock();
 }

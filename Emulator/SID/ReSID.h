@@ -26,9 +26,6 @@
 #include "resid/sid.h"
 
 class ReSID : public C64Component {
-
-    // Reference to the connected SID bridge
-    // SIDBridge &bridge;
     
     // Target buffer for storing the produced audio samples
     short *samples = nullptr;

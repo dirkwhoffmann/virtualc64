@@ -12,9 +12,7 @@
 void
 StereoStream::copyMono(float *buffer, size_t n,
                        i32 &volume, i32 targetVolume, i32 volumeDelta)
-{
-    lock();
-    
+{    
     // The caller has to ensure that no buffer underflows occurs
     assert(count() >= n);
 
@@ -48,15 +46,12 @@ StereoStream::copyMono(float *buffer, size_t n,
             *buffer++ = (pair.left + pair.right) * scale;
         }
     }
-    unlock();
 }
 
 void
 StereoStream::copy(float *left, float *right, size_t n,
                    i32 &volume, i32 targetVolume, i32 volumeDelta)
 {
-    lock();
-    
     // The caller has to ensure that no buffer underflows occurs
     assert(count() >= n);
 
@@ -92,15 +87,12 @@ StereoStream::copy(float *left, float *right, size_t n,
             *right++ = pair.right * scale;
         }
     }
-    unlock();
 }
 
 void
 StereoStream::copyInterleaved(float *buffer, size_t n,
                               i32 &volume, i32 targetVolume, i32 volumeDelta)
 {
-    lock();
-    
     // The caller has to ensure that no buffer underflows occurs
     assert(count() >= n);
 
@@ -136,5 +128,4 @@ StereoStream::copyInterleaved(float *buffer, size_t n,
             *buffer++ = pair.right * scale;
         }
     }
-    unlock();
 }
