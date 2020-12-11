@@ -180,19 +180,26 @@ public:
 
     u32 getClockFrequency();
     void setClockFrequency(u32 frequency);
-    
+
+    // DEPRECATED: Use OPT_xxx
     SIDRevision getRevision();
     void setRevision(SIDRevision revision);
     
     double getSampleRate();
     void setSampleRate(double rate);
     
+    // DEPRECATED: Use OPT_xxx
     bool getAudioFilter();
     void setAudioFilter(bool enable);
-    
+
+    // DEPRECATED: Use OPT_xxx
     SamplingMethod getSamplingMethod();
     void setSamplingMethod(SamplingMethod method);
 
+private:
+    
+    void _dumpConfig() override;
+    
     
     //
     // Analyzing

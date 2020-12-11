@@ -246,10 +246,13 @@ C64::configure(ConfigOption option, long value)
 
     // Propagate configuration request to all components
     bool changed = HardwareComponent::configure(option, value);
-    
+        
     // Inform the GUI if the configuration has changed
     if (changed) messageQueue.put(MSG_CONFIG);
     
+    // Dump the current configuration in debugging mode
+    if (changed && CNF_DEBUG) dumpConfig();
+
     return changed;
 }
 
@@ -264,6 +267,9 @@ C64::configure(ConfigOption option, long id, long value)
     // Inform the GUI if the configuration has changed
     if (changed) messageQueue.put(MSG_CONFIG);
     
+    // Dump the current configuration in debugging mode
+    if (changed && CNF_DEBUG) dumpConfig();
+
     return changed;
 }
 

@@ -222,7 +222,7 @@ extension ConfigurationController {
         if poweredOff {
             romLockImage.image = NSImage.init(named: "NSInfo")
             romLockText.stringValue = "To add a Rom, drag a Rom image file onto one of the four chip icons."
-            romLockSubText.stringValue = "Original Roms are protected by copyright. Unauthorized use is a violation of law."
+            romLockSubText.stringValue = "Original Roms are protected by copyright. Please obey legal regulations."
         } else {
             romLockImage.image = NSImage.init(named: "lockIcon")
             romLockText.stringValue = "The settings are locked because the emulator is running."

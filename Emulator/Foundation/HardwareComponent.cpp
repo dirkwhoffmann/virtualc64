@@ -214,8 +214,15 @@ HardwareComponent::inspect()
 void
 HardwareComponent::dumpConfig()
 {
-    msg("%s (memory location: %p)\n\n", getDescription(), this);
+    // Dump the configuration of all subcomponents
+    for (HardwareComponent *c : subComponents) {
+        c->dumpConfig();
+    }
+
+    // Dump the configuration of this component
+    msg("%s (%p):\n", getDescription(), this);
     _dumpConfig();
+    msg("\n");
 }
 
 void
