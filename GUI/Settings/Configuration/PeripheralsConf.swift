@@ -26,15 +26,15 @@ extension ConfigurationController {
         perControlPort2.selectItem(withTag: config.gameDevice2)
                 
         // USB devices
-        let pad1 = parent.gamePadManager.gamePads[3]
+        let pad1 = parent.gamePad1
         perUSBName1.stringValue = pad1?.property(key: kIOHIDProductKey) ?? "-"
-        perUSBManu1.stringValue = pad1?.property(key: kIOHIDManufacturerKey) ?? "-"
+        perUSBManufacturer1.stringValue = pad1?.property(key: kIOHIDManufacturerKey) ?? "-"
         perUSBProductID1.stringValue = pad1?.property(key: kIOHIDProductIDKey) ?? "-"
         perUSBVendorID1.stringValue = pad1?.property(key: kIOHIDVendorIDKey) ?? "-"
         
-        let pad2 = parent.gamePadManager.gamePads[4]
+        let pad2 = parent.gamePad2
         perUSBName2.stringValue = pad2?.property(key: kIOHIDProductKey) ?? "-"
-        perUSBManu2.stringValue = pad2?.property(key: kIOHIDManufacturerKey) ?? "-"
+        perUSBManufactorer2.stringValue = pad2?.property(key: kIOHIDManufacturerKey) ?? "-"
         perUSBProductID2.stringValue = pad2?.property(key: kIOHIDProductIDKey) ?? "-"
         perUSBVendorID2.stringValue = pad2?.property(key: kIOHIDVendorIDKey) ?? "-"
 
