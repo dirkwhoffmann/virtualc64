@@ -323,8 +323,8 @@ public:
     // Reads a single audio sample from the ringbuffer
     // float readData();
     
-    // Reads a single audio sample without moving the read pointer
-    float ringbufferData(size_t offset);
+    // Reads a audio sample pair without moving the read pointer
+    void ringbufferData(size_t offset, float *left, float *right);
             
     /* Handles a buffer underflow condition.
      * A buffer underflow occurs when the computer's audio device needs sound

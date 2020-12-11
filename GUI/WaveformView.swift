@@ -50,17 +50,27 @@ class WaveformView: NSView {
         let baseline = Float(frame.height / 2)
         let normalizer = highestAmplitude
         highestAmplitude = 0.001
+
+        var l = Float(0)
+        var r = Float(0)
         
         for x in 0...w {
-            let sample = sid.ringbufferData(40 * x)
-            let absvalue = abs(sample)
-            highestAmplitude = (absvalue > highestAmplitude) ? absvalue : highestAmplitude
-            var scaledSample = absvalue / normalizer * baseline
-            if scaledSample == 0 { // just for effect
-                scaledSample = (running && drand48() > 0.5) ? 1.0 : 0.0
-            }
-            let from = CGPoint(x: x, y: Int(baseline + scaledSample + 1))
-            let to = CGPoint(x: x, y: Int(baseline - scaledSample))
+            
+            sid.ringbufferData(40 * x, left: &l, right: &r)
+            
+            // Scale samples and determine the highest amplitude
+            let absl = abs(l), absr = abs(r)
+            var scaledl = absl / normalizer * baseline
+            var scaledr = absr / normalizer * baseline
+            highestAmplitude = max(highestAmplitude, max(absl, absr))
+
+            // Apply some eye candy (artifical noise)
+            if scaledl == 0 { scaledl = (running && drand48() > 0.5) ? 1.0 : 0.0 }
+            if scaledr == 0 { scaledr = (running && drand48() > 0.5) ? 1.0 : 0.0 }
+
+            // Draw bars
+            let from = CGPoint(x: x, y: Int(baseline + scaledl + 1))
+            let to = CGPoint(x: x, y: Int(baseline - scaledr))
             context?.move(to: from)
             context?.addLine(to: to)
         }

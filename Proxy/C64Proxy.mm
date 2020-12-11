@@ -491,9 +491,9 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->sid->stream.cap();
 }
-- (float) ringbufferData:(NSInteger)offset
+- (void) ringbufferData:(NSInteger)offset left:(float *)l right:(float *)r
 {
-    return wrapper->sid->ringbufferData(offset);
+    wrapper->sid->ringbufferData(offset, l, r);
 }
 - (double) fillLevel
 {

@@ -417,7 +417,7 @@ struct AnyC64FileWrapper;
 - (void) setSampleRate:(double)rate;
 
 - (NSInteger) ringbufferSize;
-- (float) ringbufferData:(NSInteger)offset;
+- (void) ringbufferData:(NSInteger)offset left:(float *)l right:(float *)r;
 - (double) fillLevel;
 - (NSInteger) bufferUnderflows;
 - (NSInteger) bufferOverflows;

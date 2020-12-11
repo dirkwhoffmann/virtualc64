@@ -807,11 +807,12 @@ SIDBridge::clearRingbuffer()
     alignWritePtr();
 }
 
-float
-SIDBridge::ringbufferData(size_t offset)
+void
+SIDBridge::ringbufferData(size_t offset, float *left, float *right)
 {
     SamplePair &pair = stream.current((int)offset);
-    return (pair.left + pair.right) / 2.0;
+    *left = pair.left;
+    *right = pair.right;
 }
 
 void
