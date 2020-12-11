@@ -243,8 +243,10 @@ class GamePadManager {
         addJoystick(slot: slot, device: device,
                     vendorID: vendorID, productID: productID, locationID: locationID)
         
-        // Update to toolbar
+        // Inform the controller about the new device
         parent.toolbar.validateVisibleItems()
+        parent.configurator?.refresh()
+
         listDevices()
     }
     
@@ -298,6 +300,7 @@ class GamePadManager {
         
         // Inform the controller about the new device
         parent.toolbar.validateVisibleItems()
+        parent.configurator?.refresh()
         
         listDevices()
     }
