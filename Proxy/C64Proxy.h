@@ -409,8 +409,8 @@ struct AnyC64FileWrapper;
     struct SidBridgeWrapper *wrapper;
 }
 
-- (SIDInfo) getInfo;
-- (VoiceInfo) getVoiceInfo:(NSInteger)voice;
+- (SIDInfo) getInfo:(NSInteger)nr;
+- (VoiceInfo) getVoiceInfo:(NSInteger)nr voice:(NSInteger)voice;
 - (void) dump;
 
 - (double) sampleRate;

@@ -9,6 +9,8 @@
 
 extension Inspector {
     
+    private var selectedSID: Int { return sidSelector.indexOfSelectedItem }
+
     func refreshSID(count: Int = 0, full: Bool = false) {
         
         if full {
@@ -41,8 +43,8 @@ extension Inspector {
             sidFilterResonance.assignFormatter(fmt8)
         }
         
-        // Voice 1
-        var vinfo = c64.sid.getVoiceInfo(0)
+        // First voice
+        var vinfo = c64.sid.getVoiceInfo(selectedSID, voice: 0)
         refresh(waveform: vinfo.waveform, waveformPopup: sidWaveform1)
         sidPulseWidth1.isHidden = (vinfo.waveform & 0x40 == 0)
         sidPulseWidthText1.isHidden = (vinfo.waveform & 0x40 == 0)
@@ -58,8 +60,8 @@ extension Inspector {
         sidSyncBit1.intValue = vinfo.hardSync ? 1 : 0
         sidRingBit1.intValue = vinfo.ringMod ? 1 : 0
         
-        // Voice 2
-        vinfo = c64.sid.getVoiceInfo(0)
+        // Second voice
+        vinfo = c64.sid.getVoiceInfo(selectedSID, voice: 1)
         refresh(waveform: vinfo.waveform, waveformPopup: sidWaveform2)
         sidPulseWidth2.isHidden = (vinfo.waveform & 0x40 == 0)
         sidPulseWidthText2.isHidden = (vinfo.waveform & 0x40 == 0)
@@ -75,8 +77,8 @@ extension Inspector {
         sidSyncBit2.intValue = vinfo.hardSync ? 1 : 0
         sidRingBit2.intValue = vinfo.ringMod ? 1 : 0
         
-        // Voice 3
-        vinfo = c64.sid.getVoiceInfo(0)
+        // Third voice
+        vinfo = c64.sid.getVoiceInfo(selectedSID, voice: 2)
         refresh(waveform: vinfo.waveform, waveformPopup: sidWaveform3)
         sidPulseWidth3.isHidden = (vinfo.waveform & 0x40 == 0)
         sidPulseWidthText3.isHidden = (vinfo.waveform & 0x40 == 0)
@@ -93,7 +95,7 @@ extension Inspector {
         sidRingBit3.intValue = vinfo.ringMod ? 1 : 0
         
         // Volume and potentiometers
-        let info = c64.sid.getInfo()
+        let info = c64.sid.getInfo(selectedSID)
         sidVolume.intValue = Int32(info.volume)
         sidPotX.intValue = Int32(info.potX)
         sidPotY.intValue = Int32(info.potY)
@@ -147,5 +149,10 @@ extension Inspector {
          popup.item(at: 2)?.state = (waveform & 0x20 != 0) ? .on : .off
          popup.item(at: 3)?.state = (waveform & 0x40 != 0) ? .on : .off
          popup.item(at: 4)?.state = (waveform & 0x80 != 0) ? .on : .off
+    }
+
+    @IBAction func selectSIDAction(_ sender: Any!) {
+
+        fullRefresh()
     }
 }

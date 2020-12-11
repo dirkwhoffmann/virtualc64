@@ -215,6 +215,7 @@ class Inspector: DialogController {
     @IBOutlet weak var sprExtra2: NSColorWell!
 
     // SID panel
+    @IBOutlet weak var sidSelector: NSSegmentedControl!
     @IBOutlet weak var sidWaveform1: NSPopUpButton!
     @IBOutlet weak var sidFrequency1: NSTextField!
     @IBOutlet weak var sidPulseWidth1: NSTextField!

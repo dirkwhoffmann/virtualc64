@@ -460,9 +460,11 @@ SIDBridge::_dump()
 void
 SIDBridge::_dump(int nr)
 {
+    SIDInfo sidinfo;
+    VoiceInfo voiceinfo[3];
     SIDRevision residRev = resid[nr].getRevision();
     SIDRevision fastsidRev = fastsid[nr].getRevision();
-
+    
     msg("ReSID:\n");
     msg("------\n");
     msg("    Chip model: %d (%s)\n", residRev, sidRevisionName(residRev));
@@ -470,7 +472,12 @@ SIDBridge::_dump(int nr)
     msg(" CPU frequency: %d\n", resid[nr].getClockFrequency());
     msg("Emulate filter: %s\n", resid[nr].getAudioFilter() ? "yes" : "no");
     msg("\n");
-    _dump(resid[nr].getInfo());
+
+    sidinfo = resid[nr].getInfo();
+    voiceinfo[0] = resid[nr].getVoiceInfo(0);
+    voiceinfo[1] = resid[nr].getVoiceInfo(1);
+    voiceinfo[2] = resid[nr].getVoiceInfo(2);
+    _dump(sidinfo, voiceinfo);
 
     msg("FastSID:\n");
     msg("--------\n");
@@ -479,11 +486,16 @@ SIDBridge::_dump(int nr)
     msg(" CPU frequency: %d\n", fastsid[nr].getClockFrequency());
     msg("Emulate filter: %s\n", fastsid[nr].getAudioFilter() ? "yes" : "no");
     msg("\n");
-    _dump(fastsid[nr].getInfo());
+    
+    sidinfo = fastsid[nr].getInfo();
+    voiceinfo[0] = fastsid[nr].getVoiceInfo(0);
+    voiceinfo[1] = fastsid[nr].getVoiceInfo(1);
+    voiceinfo[2] = fastsid[nr].getVoiceInfo(2);
+    _dump(sidinfo, voiceinfo);
 }
 
 void
-SIDBridge::_dump(SIDInfo info)
+SIDBridge::_dump(SIDInfo &info, VoiceInfo (&vinfo)[3])
 {
     u8 ft = info.filterType;
     msg("        Volume: %d\n", info.volume);
@@ -496,21 +508,21 @@ SIDBridge::_dump(SIDInfo info)
     msg("Filter enable bits: %d\n\n", info.filterEnableBits);
 
     for (unsigned i = 0; i < 3; i++) {
-        VoiceInfo vinfo = getVoiceInfo(i);
-        u8 wf = vinfo.waveform;
-        msg("Voice %d:       Frequency: %d\n", i, vinfo.frequency);
-        msg("             Pulse width: %d\n", vinfo.pulseWidth);
+        // VoiceInfo vinfo = getVoiceInfo(i);
+        u8 wf = vinfo[i].waveform;
+        msg("Voice %d:       Frequency: %d\n", i, vinfo[i].frequency);
+        msg("             Pulse width: %d\n", vinfo[i].pulseWidth);
         msg("                Waveform: %s\n",
             (wf == FASTSID_NOISE) ? "NOISE" :
             (wf == FASTSID_PULSE) ? "PULSE" :
             (wf == FASTSID_SAW) ? "SAW" :
             (wf == FASTSID_TRIANGLE) ? "TRIANGLE" : "NONE");
-        msg("         Ring modulation: %s\n", vinfo.ringMod ? "yes" : "no");
-        msg("               Hard sync: %s\n", vinfo.hardSync ? "yes" : "no");
-        msg("             Attack rate: %d\n", vinfo.attackRate);
-        msg("              Decay rate: %d\n", vinfo.decayRate);
-        msg("            Sustain rate: %d\n", vinfo.sustainRate);
-        msg("            Release rate: %d\n", vinfo.releaseRate);
+        msg("         Ring modulation: %s\n", vinfo[i].ringMod ? "yes" : "no");
+        msg("               Hard sync: %s\n", vinfo[i].hardSync ? "yes" : "no");
+        msg("             Attack rate: %d\n", vinfo[i].attackRate);
+        msg("              Decay rate: %d\n", vinfo[i].decayRate);
+        msg("            Sustain rate: %d\n", vinfo[i].sustainRate);
+        msg("            Release rate: %d\n", vinfo[i].releaseRate);
     }
 }
 
@@ -532,14 +544,16 @@ SIDBridge::_setWarp(bool enable)
 }
 
 SIDInfo
-SIDBridge::getInfo()
+SIDBridge::getInfo(unsigned nr)
 {
+    assert(nr < 4);
+    
     SIDInfo info;
     
     switch (config.engine) {
             
-        case ENGINE_FASTSID: info = fastsid[0].getInfo(); break;
-        case ENGINE_RESID:   info = resid[0].getInfo(); break;
+        case ENGINE_FASTSID: info = fastsid[nr].getInfo(); break;
+        case ENGINE_RESID:   info = resid[nr].getInfo(); break;
     }
     
     info.potX = mouse.readPotX();
@@ -549,14 +563,16 @@ SIDBridge::getInfo()
 }
 
 VoiceInfo
-SIDBridge::getVoiceInfo(unsigned voice)
+SIDBridge::getVoiceInfo(unsigned nr, unsigned voice)
 {
+    assert(nr < 4);
+    
     VoiceInfo info;
     
     switch (config.engine) {
             
-        case ENGINE_FASTSID: info = fastsid[0].getVoiceInfo(voice); break;
-        case ENGINE_RESID:   info = resid[0].getVoiceInfo(voice); break;
+        case ENGINE_FASTSID: info = fastsid[nr].getVoiceInfo(voice); break;
+        case ENGINE_RESID:   info = resid[nr].getVoiceInfo(voice); break;
     }
     
     return info;

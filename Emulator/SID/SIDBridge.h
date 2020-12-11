@@ -207,14 +207,14 @@ private:
 
 public:
     
-    SIDInfo getInfo();
-    VoiceInfo getVoiceInfo(unsigned voice);
+    SIDInfo getInfo(unsigned nr);
+    VoiceInfo getVoiceInfo(unsigned nr, unsigned voice);
     
 private:
     
     void _dump() override;
     void _dump(int nr);
-    void _dump(SIDInfo info);
+    void _dump(SIDInfo &info, VoiceInfo (&vinfo)[3]);
 
     
     //

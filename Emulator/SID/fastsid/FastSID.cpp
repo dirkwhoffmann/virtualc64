@@ -216,6 +216,8 @@ FastSID::getInfo()
 VoiceInfo
 FastSID::getVoiceInfo(unsigned i)
 {
+    assert(i < 3);
+    
     VoiceInfo info;
     for (unsigned j = 0; j < 7; j++) {
         info.reg[j] = sidreg[7*i+j];

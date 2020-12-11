@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17156" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -161,6 +161,7 @@
                 <outlet property="sidRingBit1" destination="k7A-s2-Ya8" id="2AN-Rd-1Ki"/>
                 <outlet property="sidRingBit2" destination="GVz-YN-SAW" id="ijE-bZ-Zdt"/>
                 <outlet property="sidRingBit3" destination="yyU-b4-n3C" id="6Qn-0w-pw2"/>
+                <outlet property="sidSelector" destination="2tX-AE-OFh" id="fSo-Ct-XG7"/>
                 <outlet property="sidSustainRate1" destination="ADn-Sv-Ijx" id="YI7-T0-PYb"/>
                 <outlet property="sidSustainRate2" destination="oKn-g7-II1" id="c0b-WF-cFM"/>
                 <outlet property="sidSustainRate3" destination="Q0o-GB-BDT" id="luM-LP-Pt5"/>
@@ -4023,6 +4024,22 @@
                                                 </subviews>
                                             </view>
                                         </box>
+                                        <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2tX-AE-OFh">
+                                            <rect key="frame" x="330" y="362" width="219" height="24"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="Gej-r3-P7G">
+                                                <font key="font" metaFont="system"/>
+                                                <segments>
+                                                    <segment label="SID 1" selected="YES"/>
+                                                    <segment label="SID 2" tag="1"/>
+                                                    <segment label="SID 3"/>
+                                                    <segment label="SID 4"/>
+                                                </segments>
+                                            </segmentedCell>
+                                            <connections>
+                                                <action selector="selectSIDAction:" target="-2" id="yeH-F8-Dal"/>
+                                            </connections>
+                                        </segmentedControl>
                                     </subviews>
                                 </view>
                             </tabViewItem>
@@ -4165,7 +4182,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pSG-fR-aTJ">
-                                            <rect key="frame" x="73" y="345" width="130" height="20"/>
+                                            <rect key="frame" x="72" y="345" width="130" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="RnV-Re-f9Q">
                                                 <font key="font" metaFont="label" size="12"/>

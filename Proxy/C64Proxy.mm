@@ -471,13 +471,13 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->sid->dump();
 }
-- (SIDInfo) getInfo
+- (SIDInfo) getInfo:(NSInteger)nr
 {
-    return wrapper->sid->getInfo();
+    return wrapper->sid->getInfo((unsigned)nr);
 }
-- (VoiceInfo) getVoiceInfo:(NSInteger)voice
+- (VoiceInfo) getVoiceInfo:(NSInteger)nr voice:(NSInteger)voice
 {
-    return wrapper->sid->getVoiceInfo((unsigned)voice);
+    return wrapper->sid->getVoiceInfo((unsigned)nr, (unsigned)voice);
 } 
 - (double) sampleRate
 {
