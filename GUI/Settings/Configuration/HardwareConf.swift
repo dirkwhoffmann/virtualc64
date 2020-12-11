@@ -88,11 +88,6 @@ extension ConfigurationController {
         perControlPort1.selectItem(withTag: config.gameDevice1)
         perControlPort2.selectItem(withTag: config.gameDevice2)
                 
-        // Lock symbol and explanation
-        hwLockImage.isHidden = true // poweredOff
-        hwLockText.isHidden = true // poweredOff
-        hwLockSubText.isHidden = true // poweredOff
-
         // Power button
         hwPowerButton.isHidden = !bootable
     }

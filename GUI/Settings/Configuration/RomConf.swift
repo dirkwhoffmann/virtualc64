@@ -219,9 +219,15 @@ extension ConfigurationController {
         vc1541DeleteButton.isHidden = !hasVC1541
 
         // Lock symbol and explanation
-        romLockImage.isHidden = poweredOff
-        romLockText.isHidden = poweredOff
-        romLockSubText.isHidden = poweredOff
+        if poweredOff {
+            romLockImage.image = NSImage.init(named: "NSInfo")
+            romLockText.stringValue = "To add a Rom, drag a Rom image file onto one of the four chip icons."
+            romLockSubText.stringValue = "Original Roms are protected by copyright. Unauthorized use is a violation of law."
+        } else {
+            romLockImage.image = NSImage.init(named: "lockIcon")
+            romLockText.stringValue = "The settings are locked because the emulator is running."
+            romLockSubText.stringValue = "Click the lock to power down the emulator."
+        }
 
         // Boot button
         romPowerButton.isHidden = !bootable

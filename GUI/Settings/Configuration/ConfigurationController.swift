@@ -78,11 +78,6 @@ class ConfigurationController: DialogController {
     // Startup
     @IBOutlet weak var hwRamPatternPopup: NSPopUpButton!
 
-    // Lock
-    @IBOutlet weak var hwLockImage: NSButton!
-    @IBOutlet weak var hwLockText: NSTextField!
-    @IBOutlet weak var hwLockSubText: NSTextField!
-
     // Buttons
     @IBOutlet weak var hwOkButton: NSButton!
     @IBOutlet weak var hwPowerButton: NSButton!
