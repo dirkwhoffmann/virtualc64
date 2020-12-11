@@ -96,6 +96,16 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var perControlPort1: NSPopUpButton!
     @IBOutlet weak var perControlPort2: NSPopUpButton!
     
+    // USB Devices
+    @IBOutlet weak var perUSBName1: NSTextField!
+    @IBOutlet weak var perUSBManu1: NSTextField!
+    @IBOutlet weak var perUSBProductID1: NSTextField!
+    @IBOutlet weak var perUSBVendorID1: NSTextField!
+    @IBOutlet weak var perUSBName2: NSTextField!
+    @IBOutlet weak var perUSBManu2: NSTextField!
+    @IBOutlet weak var perUSBProductID2: NSTextField!
+    @IBOutlet weak var perUSBVendorID2: NSTextField!
+    
     // Buttons
     @IBOutlet weak var perOkButton: NSButton!
     @IBOutlet weak var perPowerButton: NSButton!

@@ -42,15 +42,15 @@ class GamePad {
     var isJoystick: Bool { return type == CPD_JOYSTICK }
     
     // Name of the managed device
-     var name: String?
-
-     // Icon of this device
-     var icon: NSImage?
-             
-     // Keymap of the managed device (only set for keyboard emulated devices)
-     var keyMap: Int?
+    var name: String?
     
-     // Indicates if a joystick emulation key is currently pressed
+    // Icon of this device
+    var icon: NSImage?
+    
+    // Keymap of the managed device (only set for keyboard emulated devices)
+    var keyMap: Int?
+    
+    // Indicates if a joystick emulation key is currently pressed
     var keyUp = false, keyDown = false, keyLeft = false, keyRight = false
     
     // Minimum and maximum value of analog axis event
@@ -156,6 +156,16 @@ class GamePad {
     func setIcon(name: String) {
         
         icon = NSImage.init(named: name)
+    }
+    
+    func property(key: String) -> String? {
+            
+        if device != nil {
+            if let prop = IOHIDDeviceGetProperty(device!, key as CFString) {
+                return "\(prop)"
+            }
+        }
+        return nil
     }
 }
 
