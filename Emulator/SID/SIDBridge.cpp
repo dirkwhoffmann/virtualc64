@@ -205,14 +205,14 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
     switch (option) {
                      
         case OPT_SID_ENABLE:
-                                  
-            // The built-in SID can't be disabled
+
+            assert(id >= 0 && id <= 3);
+
             if (id == 0 && value == false) {
-                warn("SID 0 can't be disabled.\n");
+                warn("SID 0 can't be disabled\n");
                 return false;
             }
             
-            assert(id >= 0 && id <= 3);
             if (!!GET_BIT(config.enabled, id) == value) {
                 return false;
             }
@@ -231,6 +231,12 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
         case OPT_SID_ADDRESS:
 
             assert(id >= 0 && id <= 3);
+
+            if (id == 0) {
+                warn("SID 0 can't be remapped\n");
+                return false;
+            }
+
             if (value < 0xD400 || value > 0xD7E0 || (value & 0x1F)) {
                 warn("Invalid SID address: %x\n", value);
                 warn("       Valid values: D400, D420, ... D7E0\n");
