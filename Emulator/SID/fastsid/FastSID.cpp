@@ -387,7 +387,7 @@ FastSID::executeSamples(u64 numSamples, short *buffer)
     }
 
     // Return the estimated number of consumed cycles
-    return (u64)(samplesPerCycle * numSamples);
+    return (u64)(numSamples / samplesPerCycle);
 }
 
 void

@@ -223,7 +223,8 @@ ReSID::poke(u16 addr, u8 value)
     sid->write(addr, value);
 }
 
-u64
+/*
+i64
 ReSID::executeCycles(u64 numCycles, short *buffer)
 {
     // Don't ask SID to compute samples for a time interval greater than 1 sec
@@ -242,26 +243,21 @@ ReSID::executeCycles(u64 numCycles, short *buffer)
     assert(numSamples >= 0);
     return (u64)numSamples;
 }
+*/
 
-u64
+i64
 ReSID::executeSamples(u64 numSamples, short *buffer)
 {
+    reSID::cycle_count delta = 100000;
+
     // Don't ask to compute more samples that fit into the buffer
     assert(numSamples <= SIDBridge::sampleBufferSize);
     
     // debug("Executing ReSID %p for %lld samples\n", this, numSamples);
 
-    // Estimate the number of cycles to execute
-    u64 cycles = numSamples * cyclesPerSample;
-
-    // Compute the estimated amount of samples
-    u64 curSamples = executeCycles(cycles, buffer);
-     
-    // Compute missing samples until the target count has been reached
-    while (curSamples < numSamples) {
-        curSamples += executeCycles(cyclesPerSample, buffer + curSamples);
-        cycles += cyclesPerSample;
-    }
-    
-    return cycles;
+    // Invoke reSID
+    int result = sid->clock(delta, buffer, (int)numSamples);
+    assert(result == (int)numSamples);
+        
+    return (i64)(100000 - delta);
 }

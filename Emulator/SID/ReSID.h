@@ -210,15 +210,15 @@ public:
      * samples are written into the provided buffer. The fuction returns the
      * number of written audio samples.
      */
-    u64 executeCycles(u64 numCycles, short *buffer);
-    u64 executeCycles(u64 numCycles) { return executeCycles(numCycles, samples); }
+    // i64 executeCycles(u64 numCycles, short *buffer);
+    // i64 executeCycles(u64 numCycles) { return executeCycles(numCycles, samples); }
 
     /* Runs SID until a certain number of audio samples is produced. The
      * generated sound samples are written into the provided buffer. The
      * fuction returns the number of executed cycles.
      */
-    u64 executeSamples(u64 numSamples, short *buffer);
-    u64 executeSamples(u64 numSamples) { return executeSamples(numSamples, samples); }
+    i64 executeSamples(u64 numSamples, short *buffer);
+    i64 executeSamples(u64 numSamples) { return executeSamples(numSamples, samples); }
 };
 
 #endif

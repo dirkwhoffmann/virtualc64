@@ -677,21 +677,25 @@ SIDBridge::poke(u16 addr, u8 value)
 void
 SIDBridge::executeUntil(u64 targetCycle)
 {
+    double samplesPerCycles = (double)getSampleRate() / (double)getClockFrequency();
+
     u64 missingCycles = targetCycle - cycles;
+    u64 missingSamples = u64(missingCycles * samplesPerCycles);
+    i64 consumedCycles = execute(missingSamples);
     
-    if (missingCycles > PAL_CYCLES_PER_SECOND) {
-        debug(SID_DEBUG, "Far too many SID cycles missing.\n");
-        missingCycles = PAL_CYCLES_PER_SECOND;
-    }
+    cycles += consumedCycles;
     
-    executeCycles(missingCycles);
-    cycles = targetCycle;
+    debug(SID_EXEC_DEBUG,
+          "target: %lld  missing: %lld consumed: %lld reached: %lld still missing: %lld\n",
+          targetCycle, missingCycles, consumedCycles, cycles, targetCycle - cycles);
 }
 
-void
-SIDBridge::executeCycles(u64 numCycles)
+i64
+SIDBridge::execute(u64 numSamples)
 {
-    if (numCycles == 0) return;
+    u64 cycles;
+    
+    if (numSamples == 0) return 0;
   
     // Check for a buffer underflow
     if (signalUnderflow) {
@@ -703,14 +707,12 @@ SIDBridge::executeCycles(u64 numCycles)
     // Synthesize samples
     //
     
-    u64 numSamples;
-    
     switch (config.engine) {
             
         case ENGINE_FASTSID:
 
             // Run the primary SID (which is always enabled)
-            numSamples = fastsid[0].executeCycles(numCycles);
+            cycles = fastsid[0].executeSamples(numSamples);
             
             // Run all other SIDS (if any)
             if (config.enabled > 1) {
@@ -723,7 +725,7 @@ SIDBridge::executeCycles(u64 numCycles)
         case ENGINE_RESID:
 
             // Run the primary SID (which is always enabled)
-            numSamples = resid[0].executeCycles(numCycles);
+            cycles = resid[0].executeSamples(numSamples);
             
             // Run all other SIDS (if any)
             if (config.enabled > 1) {
@@ -774,8 +776,9 @@ SIDBridge::executeCycles(u64 numCycles)
 
         stream.write(SamplePair { l, r } );
     }
-    
     stream.unlock();
+    
+    return cycles;
 }
 
 void

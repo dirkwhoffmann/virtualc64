@@ -284,23 +284,6 @@ public:
     void rampDown();
 
     
-    
-/*
-public:
-    
-    // Sets the current volume
-    void setVolume(i32 vol) { volume = vol; }
-    
-    // Ramps the volume up. Configures volume and targetVolume to simulate a
-    // smooth audio fade in
-    void rampUp() { targetVolume = maxVolume; volumeDelta = 3; ignoreNextUnderOrOverflow(); }
-    void rampUpFromZero() { volume = 0; rampUp(); }
-    
-    // Ramps the volume down. Configures volume and targetVolume to simulate a
-    // quick audio fade out
-    void rampDown() { targetVolume = 0; volumeDelta = 50; ignoreNextUnderOrOverflow(); }
-*/
-    
     //
     // Managing the four sample buffers
     //
@@ -352,7 +335,13 @@ public:
     void executeUntil(u64 targetCycle);
 
     // Executes SID for a certain number of CPU cycles
+    // DEPRECATED
 	void executeCycles(u64 numCycles);
+
+    /* Executes SID for a certain number of audio samples. The function returns
+     * the number of consumed CPU cycles.
+     */
+    i64 execute(u64 numSamples);
 
     
     //
