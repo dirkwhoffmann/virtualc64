@@ -429,7 +429,7 @@ SIDBridge::_dumpConfig()
 {
     msg(" Chip revision : %d (%s)\n", config.revision, sidRevisionName(config.revision));
     msg("   Enable mask : %x\n", config.enabled);
-    msg("       Address : %x %x %x\n", config.address[1], config.address[1], config.address[2]);
+    msg("       Address : %x %x %x\n", config.address[1], config.address[2], config.address[3]);
     msg("        Filter : %s\n", config.filter ? "yes" : "no");
     msg("        Engine : %d (%s)\n", config.engine, sidEngineName(config.engine));
     msg("      Sampling : %d (%s)\n", config.sampling, sidSamplingMethodName(config.sampling));
