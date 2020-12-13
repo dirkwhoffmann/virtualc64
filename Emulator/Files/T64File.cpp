@@ -313,11 +313,6 @@ T64File::seekItem(long offset)
         iFp = -1;
 }
 
-
-
-
-
-
 u16
 T64File::getDestinationAddrOfItem()
 {
@@ -325,8 +320,6 @@ T64File::getDestinationAddrOfItem()
     u16 result = LO_HI(data[i], data[i+1]);
     return result;
 }
-
-
 
 bool
 T64File::directoryItemIsPresent(int item)

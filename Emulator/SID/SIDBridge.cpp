@@ -474,7 +474,7 @@ SIDBridge::_dump(int nr)
     msg("ReSID:\n");
     msg("------\n");
     msg("    Chip model: %d (%s)\n", residRev, sidRevisionName(residRev));
-    msg(" Sampling rate: %d\n", resid[nr].getSampleRate());
+    msg(" Sampling rate: %f\n", resid[nr].getSampleRate());
     msg(" CPU frequency: %d\n", resid[nr].getClockFrequency());
     msg("Emulate filter: %s\n", resid[nr].getAudioFilter() ? "yes" : "no");
     msg("\n");
@@ -488,7 +488,7 @@ SIDBridge::_dump(int nr)
     msg("FastSID:\n");
     msg("--------\n");
     msg("    Chip model: %d (%s)\n", fastsidRev, sidRevisionName(fastsidRev));
-    msg(" Sampling rate: %d\n", fastsid[nr].getSampleRate());
+    msg(" Sampling rate: %f\n", fastsid[nr].getSampleRate());
     msg(" CPU frequency: %d\n", fastsid[nr].getClockFrequency());
     msg("Emulate filter: %s\n", fastsid[nr].getAudioFilter() ? "yes" : "no");
     msg("\n");
