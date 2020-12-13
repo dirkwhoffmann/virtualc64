@@ -103,13 +103,12 @@ typedef struct
     SamplingMethod sampling;
     
     // Input channel volumes and pan settings
-    long vol[4];
-    long pan[4];
+    i64 vol[4];
+    i64 pan[4];
     
     // Output channel volumes
-    long volL;
-    long volR;
-
+    i64 volL;
+    i64 volR;
 }
 SIDConfig;
 
