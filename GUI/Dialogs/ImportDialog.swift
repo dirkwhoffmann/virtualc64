@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-class MediaDialogController: DialogController {
+class ImportDialog: DialogController {
         
     enum MediaType {
         case archive
@@ -20,8 +20,9 @@ class MediaDialogController: DialogController {
     @IBOutlet weak var icon: NSImageView!
     @IBOutlet weak var checkbox: NSButton!
     @IBOutlet weak var title: NSTextField!
-    @IBOutlet weak var subtitle: NSTextField!
-    @IBOutlet weak var subsubtitle: NSTextField!
+    @IBOutlet weak var subtitle1: NSTextField!
+    @IBOutlet weak var subtitle2: NSTextField!
+    @IBOutlet weak var subtitle3: NSTextField!
     @IBOutlet weak var drive8: NSButton!
     @IBOutlet weak var drive9: NSButton!
     @IBOutlet weak var flash: NSPopUpButton!
@@ -48,9 +49,10 @@ class MediaDialogController: DialogController {
     }
     
     var titleString = "???"
-    var subTitleString = "???"
-    var subsubTitleString = ""
-    
+    var subtitle1String = "???"
+    var subtitle2String = ""
+    var subtitle3String = ""
+
     // Shortcuts
     var myDocument: MyDocument { return parent.mydocument! }
     var numItems: Int { return carousel.numberOfItems }
@@ -74,8 +76,8 @@ class MediaDialogController: DialogController {
             
             track("CRTFileProxy")
             titleString = "CRT File"
-            subTitleString = "A cartridge for the C64 expansion port"
-            subsubTitleString = "CRT type \(type): \(typeName)"
+            subtitle1String = "A cartridge for the C64 expansion port"
+            subtitle2String = "CRT type \(type): \(typeName)"
             
         case _ as TAPFileProxy:
             
@@ -85,49 +87,49 @@ class MediaDialogController: DialogController {
             let versionName = version == 0 ? "Original" : "Extended"
             track("TAPFileProxy")
             titleString = "TAP File"
-            subTitleString = "A representation of a C64 cassette"
-            subsubTitleString = "TAP type \(version): \(versionName) layout"
+            subtitle1String = "A representation of a C64 cassette"
+            subtitle2String = "TAP type \(version): \(versionName) layout"
             
         case _ as T64FileProxy:
             
             media = .archive
             track("T64FileProxy")
             titleString = "T64 File"
-            subTitleString = "A collection of multiple C64 programs"
+            subtitle1String = "A collection of multiple C64 programs"
             
         case _ as P00FileProxy:
             
             media = .archive
             track("P00FileProxy")
             titleString = "P00 File"
-            subTitleString = "Binary representation of a single C64 program"
+            subtitle1String = "Binary representation of a single C64 program"
             
         case _ as PRGFileProxy:
             
             media = .archive
             track("PRGFileProxy")
             titleString = "PRG File"
-            subTitleString = "Binary representation of a single C64 program"
+            subtitle1String = "Binary representation of a single C64 program"
             
         case _ as PRGFolderProxy:
             media = .directory
             track("PRGFolderProxy")
             titleString = "Disk from a file system folder"
-            subTitleString = "Comprises all PRG files found in this directory"
+            subtitle1String = "Comprises all PRG files found in this directory"
 
         case _ as D64FileProxy:
             
             media = .archive
             track("D64FileProxy")
             titleString = "D64 File"
-            subTitleString = "A byte-accurate image of a C64 diskette"
+            subtitle1String = "A byte-accurate image of a C64 diskette"
             
         case _ as G64FileProxy:
             
             media = .disk
             track("G64FileProxy")
             titleString = "G64 File"
-            subTitleString = "A bit-accurate image of a C64 diskette"
+            subtitle1String = "A bit-accurate image of a C64 diskette"
             
         default:
             fatalError()
@@ -160,9 +162,10 @@ class MediaDialogController: DialogController {
         let connected9 = parent.config.drive9Connected
 
         title.stringValue = titleString
-        subtitle.stringValue = subTitleString
-        subsubtitle.stringValue = subsubTitleString
-        
+        subtitle1.stringValue = subtitle1String
+        subtitle2.stringValue = subtitle2String
+        subtitle3.stringValue = subtitle3String
+
         let numberOfItems = setUpFlashItems()
         flash.isHidden = numberOfItems == 0
         flashLabel.isHidden = numberOfItems == 0
@@ -191,7 +194,7 @@ class MediaDialogController: DialogController {
 
         if empty {
 
-            setHeight(196)
+            setHeight(212)
             
         } else {
             
@@ -339,7 +342,7 @@ class MediaDialogController: DialogController {
      }
 }
 
-extension MediaDialogController: NSWindowDelegate {
+extension ImportDialog: NSWindowDelegate {
     
     func windowDidResize(_ notification: Notification) {
         
@@ -361,7 +364,7 @@ extension MediaDialogController: NSWindowDelegate {
 // iCarousel data source and delegate
 //
 
-extension MediaDialogController: iCarouselDataSource, iCarouselDelegate {
+extension ImportDialog: iCarouselDataSource, iCarouselDelegate {
     
     func numberOfItems(in carousel: iCarousel) -> Int {
         

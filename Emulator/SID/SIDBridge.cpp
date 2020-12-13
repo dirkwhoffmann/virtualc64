@@ -758,18 +758,7 @@ SIDBridge::execute(u64 numCycles)
     if (stream.free() < numSamples) {
         handleBufferOverflow();
     }
-    
-    // Adjust volume
-    /*
-    if (volume != targetVolume) {
-        if (volume < targetVolume) {
-            volume += MIN(volumeDelta, targetVolume - volume);
-        } else {
-            volume -= MIN(volumeDelta, volume - targetVolume);
-        }
-    }
-    */
-    
+        
     // Convert sound samples to floating point values and write into ringbuffer
     for (unsigned i = 0; i < numSamples; i++) {
         

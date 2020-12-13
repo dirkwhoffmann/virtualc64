@@ -21,7 +21,6 @@ StereoStream::copyMono(float *buffer, size_t n,
     
     if (volume == targetVolume) {
         
-        // float scale = volume / 10000.0f;
         float scale = 1.0;
         
         for (size_t i = 0; i < n; i++) {
@@ -60,7 +59,6 @@ StereoStream::copy(float *left, float *right, size_t n,
 
     if (volume == targetVolume) {
         
-        // float scale = volume / 10000.0f;
         float scale = 1.0;
         
         for (size_t i = 0; i < n; i++) {

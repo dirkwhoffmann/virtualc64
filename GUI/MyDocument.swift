@@ -296,8 +296,8 @@ class MyDocument: NSDocument {
     
     func runMountDialog() {
         
-        let name = NSNib.Name("MediaDialog")
-        let controller = MediaDialogController.make(parent: parent, nibName: name)
+        let name = NSNib.Name("ImportDialog")
+        let controller = ImportDialog.make(parent: parent, nibName: name)
         controller?.showSheet()
     }
     
