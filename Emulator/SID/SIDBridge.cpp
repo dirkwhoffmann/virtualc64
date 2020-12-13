@@ -684,12 +684,12 @@ SIDBridge::executeUntil(u64 targetCycle)
         missingCycles = PAL_CYCLES_PER_SECOND;
     }
     
-    execute(missingCycles);
+    executeCycles(missingCycles);
     cycles = targetCycle;
 }
 
 void
-SIDBridge::execute(u64 numCycles)
+SIDBridge::executeCycles(u64 numCycles)
 {
     if (numCycles == 0) return;
   
@@ -710,15 +710,12 @@ SIDBridge::execute(u64 numCycles)
         case ENGINE_FASTSID:
 
             // Run the primary SID (which is always enabled)
-            numSamples = fastsid[0].execute(numCycles);
+            numSamples = fastsid[0].executeCycles(numCycles);
             
             // Run all other SIDS (if any)
             if (config.enabled > 1) {
                 for (int i = 1; i < 4; i++) {
-                    if (isEnabled(i)) {
-                        u64 numSamples2 = fastsid[i].execute(numCycles);
-                        assert(numSamples2 == numSamples);
-                    }
+                    if (isEnabled(i)) fastsid[i].executeSamples(numSamples);
                 }
             }
             break;
@@ -726,20 +723,12 @@ SIDBridge::execute(u64 numCycles)
         case ENGINE_RESID:
 
             // Run the primary SID (which is always enabled)
-            numSamples = resid[0].execute(numCycles);
+            numSamples = resid[0].executeCycles(numCycles);
             
             // Run all other SIDS (if any)
             if (config.enabled > 1) {
                 for (int i = 1; i < 4; i++) {
-                    if (isEnabled(i)) {
-                        u64 numSamples2 = resid[i].execute(numCycles);
-                        if (numSamples2 != numSamples) {
-                            warn("SID sample mismatch %d %d\n", numSamples, numSamples2);
-                            _dump(0);
-                            _dump(1);
-                            assert(false);
-                        }
-                    }
+                    if (isEnabled(i)) resid[i].executeSamples(numSamples);
                 }
             }
             break;

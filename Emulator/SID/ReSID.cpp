@@ -63,6 +63,8 @@ ReSID::setClockFrequency(u32 frequency)
     debug(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
 
     clockFrequency = frequency;
+    cyclesPerSample = (u64)(clockFrequency / sampleRate);
+    
     sid->set_sampling_parameters((double)clockFrequency,
                                  (reSID::sampling_method)samplingMethod,
                                  (double)sampleRate);
@@ -146,7 +148,8 @@ ReSID::setSampleRate(double value)
     // assert(!isRunning());
 
     sampleRate = value;
-    
+    cyclesPerSample = (u64)(clockFrequency / sampleRate);
+
     sid->set_sampling_parameters((double)clockFrequency,
                                  (reSID::sampling_method)samplingMethod,
                                  sampleRate);
@@ -221,22 +224,45 @@ ReSID::poke(u16 addr, u8 value)
 }
 
 u64
-ReSID::execute(u64 cycles)
+ReSID::executeCycles(u64 numCycles, short *buffer)
 {
     // Don't ask SID to compute samples for a time interval greater than 1 sec
-    assert(cycles <= PAL_CYCLES_PER_SECOND);
+    assert(numCycles <= PAL_CYCLES_PER_SECOND);
     
     // debug("Executing ReSID %p for %lld cycles\n", this, cycles);
     
-    reSID::cycle_count delta_t = (reSID::cycle_count)cycles;
+    reSID::cycle_count delta_t = (reSID::cycle_count)numCycles;
     int numSamples = 0;
     
     // Let reSID compute some sound samples
     while (delta_t) {
-        numSamples += sid->clock(delta_t, samples + numSamples,
+        numSamples += sid->clock(delta_t, buffer + numSamples,
                                  SIDBridge::sampleBufferSize - numSamples);
     }
     
     assert(numSamples >= 0);
     return (u64)numSamples;
+}
+
+u64
+ReSID::executeSamples(u64 numSamples, short *buffer)
+{
+    // Don't ask to compute more samples that fit into the buffer
+    assert(numSamples <= SIDBridge::sampleBufferSize);
+    
+    // debug("Executing ReSID %p for %lld samples\n", this, numSamples);
+
+    // Estimate the number of cycles to execute
+    u64 cycles = numSamples * cyclesPerSample;
+
+    // Compute the estimated amount of samples
+    u64 curSamples = executeCycles(cycles, buffer);
+     
+    // Compute missing samples until the target count has been reached
+    while (curSamples < numSamples) {
+        curSamples += executeCycles(cyclesPerSample, buffer + curSamples);
+        cycles += cyclesPerSample;
+    }
+    
+    return cycles;
 }

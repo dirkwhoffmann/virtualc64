@@ -345,12 +345,14 @@ FastSID::poke(u16 addr, u8 value)
 }
 
 u64
-FastSID::execute(u64 cycles)
+FastSID::executeCycles(u64 numCycles, short *buffer)
 {
     // Don't ask SID to compute samples for a time interval greater than 1 sec
-    assert(cycles <= PAL_CYCLES_PER_SECOND);
+    assert(numCycles <= PAL_CYCLES_PER_SECOND);
     
-    executedCycles += cycles;
+    // debug("Executing FastSID %p for %lld cycles\n", this, cycles);
+    
+    executedCycles += numCycles;
 
     // Compute how many sound samples should have been computed
     u64 shouldHave = (u64)(executedCycles * samplesPerCycle);
@@ -367,10 +369,25 @@ FastSID::execute(u64 cycles)
     
     // Compute missing samples
     for (unsigned i = 0; i < numSamples; i++) {
-        samples[i] = calculateSingleSample();
+        buffer[i] = calculateSingleSample();
     }
         
     return numSamples;
+}
+
+u64
+FastSID::executeSamples(u64 numSamples, short *buffer)
+{
+    // Don't ask to compute more samples that fit into the buffer
+    assert(numSamples <= SIDBridge::sampleBufferSize);
+    
+    // Compute samples
+    for (unsigned i = 0; i < numSamples; i++) {
+        samples[i] = calculateSingleSample();
+    }
+
+    // Return the estimated number of consumed cycles
+    return (u64)(samplesPerCycle * numSamples);
 }
 
 void

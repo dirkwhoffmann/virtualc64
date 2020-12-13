@@ -108,7 +108,7 @@ private:
 
     // Panning factors
     float pan[4];
-    
+        
 public:
     
     // Number of buffer underflows since power up
@@ -351,9 +351,9 @@ public:
     // Executes SID until a certain cycle is reached
     void executeUntil(u64 targetCycle);
 
-    // Executes SID for a certain number of cycles
-	void execute(u64 numCycles);
-    
+    // Executes SID for a certain number of CPU cycles
+	void executeCycles(u64 numCycles);
+
     
     //
     // Copying data from the ring buffer

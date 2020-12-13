@@ -52,9 +52,12 @@ private:
     // Clock frequency
     u32 clockFrequency;
     
-    // Sample rate (usually set to 44.1 kHz)
+    // Sample rate (usually set to 44.1 kHz or 48.0 kHz)
     double sampleRate;
     
+    // Approximate number of clock cycles per audio sample
+    u64 cyclesPerSample = 0;
+
     // Sampling method
     SamplingMethod samplingMethod;
     
@@ -203,11 +206,19 @@ public:
     // Emulating
     //
     
-	/* Runs reSID for the specified amount of CPU cycles. The generated sound
-     * samples are written into the internal ring buffer. The fuction returns
-     * the number of written audio samples.
+	/* Runs SID for the specified amount of CPU cycles. The generated sound
+     * samples are written into the provided buffer. The fuction returns the
+     * number of written audio samples.
      */
-    u64 execute(u64 cycles);
+    u64 executeCycles(u64 numCycles, short *buffer);
+    u64 executeCycles(u64 numCycles) { return executeCycles(numCycles, samples); }
+
+    /* Runs SID until a certain number of audio samples is produced. The
+     * generated sound samples are written into the provided buffer. The
+     * fuction returns the number of executed cycles.
+     */
+    u64 executeSamples(u64 numSamples, short *buffer);
+    u64 executeSamples(u64 numSamples) { return executeSamples(numSamples, samples); }
 };
 
 #endif
