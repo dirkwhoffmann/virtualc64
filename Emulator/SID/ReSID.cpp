@@ -236,8 +236,7 @@ ReSID::executeCycles(u64 numCycles, short *buffer)
     
     // Let reSID compute some sound samples
     while (delta_t) {
-        numSamples += sid->clock(delta_t, buffer + numSamples,
-                                 SIDBridge::sampleBufferSize - numSamples);
+        numSamples += sid->clock(delta_t, buffer + numSamples, 1);
     }
     
     assert(numSamples >= 0);
