@@ -244,7 +244,7 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
             suspend();
             config.address[id] = value;
             clearSampleBuffer(id);
-            debug("config.address[%d] = %x\n", id, config.address);
+            debug("config.address[%d] = %x\n", id, config.address[id]);
             resume();
             return true;
             
