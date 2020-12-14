@@ -454,7 +454,7 @@ SIDBridge::_run()
 void
 SIDBridge::_pause()
 {
-    clearRingbuffer();
+    clearSampleBuffers();
 }
 
 void 
@@ -587,11 +587,11 @@ SIDBridge::getVoiceInfo(unsigned nr, unsigned voice)
 void
 SIDBridge::rampUp()
 {
-    // Only proceed if the emulator is not running in warp mode
     if (warpMode) return;
     
-    volume.target = Volume::maxVolume;
-    volume.delta = 3;
+    volume.target = 1.0;
+    volume.delta  = 1.0 / 30000;
+    
     ignoreNextUnderOrOverflow();
 }
 
@@ -605,8 +605,9 @@ SIDBridge::rampUpFromZero()
 void
 SIDBridge::rampDown()
 {
-    volume.target = 0;
-    volume.delta = 50;
+    volume.target = 0.0;
+    volume.delta  = 1.0 / 2000;
+    
     ignoreNextUnderOrOverflow();
 }
 
@@ -782,6 +783,12 @@ SIDBridge::execute(u64 numSamples)
 }
 
 void
+SIDBridge::clearSampleBuffers()
+{
+    for (int i = 0; i < 4; i++) clearSampleBuffer(i);
+}
+
+void
 SIDBridge::clearSampleBuffer(long nr)
 {
     memset(samples[nr], 0, sizeof(samples[nr]));
@@ -790,7 +797,7 @@ SIDBridge::clearSampleBuffer(long nr)
 void
 SIDBridge::clearRingbuffer()
 {
-    stream.clear();
+    // stream.clear();
     alignWritePtr();
 }
 
@@ -875,7 +882,7 @@ SIDBridge::copyMono(float *target, size_t n)
     if (stream.count() < n) handleBufferUnderflow();
 
     // Copy sound samples
-    stream.copyMono(target, n, volume.current, volume.target, volume.delta);
+    stream.copyMono(target, n, volume);
     
     stream.unlock();
 }
@@ -889,7 +896,7 @@ SIDBridge::copyStereo(float *target1, float *target2, size_t n)
     if (stream.count() < n) handleBufferUnderflow();
 
     // Copy sound samples
-    stream.copy(target1, target2, n, volume.current, volume.target, volume.delta);
+    stream.copyStereo(target1, target2, n, volume);
     
     stream.unlock();
 }
@@ -903,7 +910,7 @@ SIDBridge::copyInterleaved(float *target, size_t n)
     if (stream.count() < n) handleBufferUnderflow();
 
     // Read sound samples
-    stream.copyInterleaved(target, n, volume.current, volume.target, volume.delta);
+    stream.copyInterleaved(target, n, volume);
     
     stream.unlock();
 }

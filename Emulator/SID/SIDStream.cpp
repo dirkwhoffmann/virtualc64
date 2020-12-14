@@ -10,120 +10,77 @@
 #include "SIDBridge.h"
 
 void
-StereoStream::copyMono(float *buffer, size_t n,
-                       i32 &volume, i32 targetVolume, i32 volumeDelta)
+StereoStream::copyMono(float *buffer, size_t n, Volume &volume)
 {    
     // The caller has to ensure that no buffer underflows occurs
     assert(count() >= n);
-
-    // REMOVE ASAP
-    targetVolume = volume;
     
-    if (volume == targetVolume) {
-        
-        float scale = 1.0;
+    if (volume.current == volume.target) {
         
         for (size_t i = 0; i < n; i++) {
             
             SamplePair pair = read();
-            *buffer++ = (pair.left + pair.right) * scale;
+            *buffer++ = (pair.left + pair.right) * volume.current;
         }
 
     } else {
         
-        for (size_t i = 0; i < n; i++) {
+        for (size_t i = 0; i < n; i++, volume.shift()) {
                             
-            if (volume < targetVolume) {
-                volume += MIN(volumeDelta, targetVolume - volume);
-            } else {
-                volume -= MIN(volumeDelta, volume - targetVolume);
-            }
-
-            float scale = volume / 10000.0f;
-
             SamplePair pair = read();
-            *buffer++ = (pair.left + pair.right) * scale;
+            *buffer++ = (pair.left + pair.right) * volume.current;
         }
     }
 }
 
 void
-StereoStream::copy(float *left, float *right, size_t n,
-                   i32 &volume, i32 targetVolume, i32 volumeDelta)
+StereoStream::copyStereo(float *left, float *right, size_t n, Volume &volume)
 {
     // The caller has to ensure that no buffer underflows occurs
     assert(count() >= n);
 
-    // REMOVE ASAP
-    targetVolume = volume;
-
-    if (volume == targetVolume) {
-        
-        float scale = 1.0;
-        
+    if (volume.current == volume.target) {
+                
         for (size_t i = 0; i < n; i++) {
             
             SamplePair pair = read();
-            *left++ = pair.left * scale;
-            *right++ = pair.right * scale;
+            *left++ = pair.left * volume.current;
+            *right++ = pair.right * volume.current;
         }
 
     } else {
         
-        for (size_t i = 0; i < n; i++) {
-                            
-            if (volume < targetVolume) {
-                volume += MIN(volumeDelta, targetVolume - volume);
-            } else {
-                volume -= MIN(volumeDelta, volume - targetVolume);
-            }
-
-            float scale = volume / 10000.0f;
-
+        for (size_t i = 0; i < n; i++, volume.shift()) {
+                                        
             SamplePair pair = read();
-            *left++ = pair.left * scale;
-            *right++ = pair.right * scale;
+            *left++ = pair.left * volume.current;
+            *right++ = pair.right * volume.current;
         }
     }
 }
 
 void
-StereoStream::copyInterleaved(float *buffer, size_t n,
-                              i32 &volume, i32 targetVolume, i32 volumeDelta)
+StereoStream::copyInterleaved(float *buffer, size_t n, Volume &volume)
 {
     // The caller has to ensure that no buffer underflows occurs
     assert(count() >= n);
 
-    // REMOVE ASAP
-    targetVolume = volume;
-
-    if (volume == targetVolume) {
-        
-        // float scale = volume / 10000.0f;
-        float scale = 1.0;
-        
+    if (volume.current == volume.target) {
+                
         for (size_t i = 0; i < n; i++) {
             
             SamplePair pair = read();
-            *buffer++ = pair.left * scale;
-            *buffer++ = pair.right * scale;
+            *buffer++ = pair.left * volume.current;
+            *buffer++ = pair.right * volume.current;
         }
 
     } else {
         
-        for (size_t i = 0; i < n; i++) {
-                            
-            if (volume < targetVolume) {
-                volume += MIN(volumeDelta, targetVolume - volume);
-            } else {
-                volume -= MIN(volumeDelta, volume - targetVolume);
-            }
-
-            float scale = volume / 10000.0f;
-
+        for (size_t i = 0; i < n; i++, volume.shift()) {
+                                        
             SamplePair pair = read();
-            *buffer++ = pair.left * scale;
-            *buffer++ = pair.right * scale;
+            *buffer++ = pair.left * volume.current;
+            *buffer++ = pair.right * volume.current;
         }
     }
 }

@@ -884,14 +884,12 @@ C64::runLoop()
 void
 C64::stopAndGo()
 {
-    debug("stopAndGo()");
     isRunning() ? pause() : run();
 }
 
 void
 C64::stepInto()
 {
-    debug("stepInto()");
     if (isRunning()) return;
     
     // Execute the next instruction
@@ -905,7 +903,6 @@ C64::stepInto()
 void
 C64::stepOver()
 {
-    debug("stepOver()");
     if (isRunning()) return;
     
     // If the next instruction is a JSR instruction (0x20), we set a breakpoint

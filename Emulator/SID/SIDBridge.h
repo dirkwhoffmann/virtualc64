@@ -40,24 +40,21 @@
 
 struct Volume {
 
-    // Maximum volume
-    const static i32 maxVolume = 100000;
-
     // Current volume (will eventually reach the target volume)
-    i32 current = maxVolume;
+    float current = 1.0;
 
     // Target volume
-    i32 target = maxVolume;
+    float target = 1.0;
 
     // Delta steps (added to volume until the target volume is reached)
-    i32 delta = 0;
-
+    float delta = 0.0;
+    
     // Shifts the current volume towards the target volume
     void shift() {
         if (current < target) {
-            current += MIN(delta, target - current);
+            current = MIN(current + delta, target);
         } else {
-            current -= MIN(delta, current - target);
+            current = MAX(current - delta, target);
         }
     }
 };
@@ -290,7 +287,8 @@ public:
     
 public:
 
-    // Clear the sample buffer of a single SID channel
+    // Clears the SID sample buffers
+    void clearSampleBuffers();
     void clearSampleBuffer(long nr);
 
     
@@ -329,7 +327,7 @@ public:
      * With a standard sample rate of 44100 Hz, 735 samples is 1/60 sec.
      */
     const u32 samplesAhead = 8 * 735;
-    void alignWritePtr() { stream.align(samplesAhead); }
+    void alignWritePtr() { stream.clear(SamplePair {0,0} ); stream.align(samplesAhead); }
     
     // Executes SID until a certain cycle is reached
     void executeUntil(u64 targetCycle);

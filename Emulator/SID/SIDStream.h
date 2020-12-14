@@ -44,17 +44,11 @@ public:
     
     /* Copies n audio samples into a memory buffer. These functions mark the
      * final step in the audio pipeline. They are used to copy the generated
-     * sound samples into the buffers of the native sound device. In additon
-     * to copying, the volume is modulated and audio filters can be applied.
+     * sound samples into the buffers of the native sound device.
      */
-    void copyMono(float *buffer, size_t n,
-                  i32 &volume, i32 targetVolume, i32 volumeDelta);
-    
-    void copy(float *left, float *right, size_t n,
-                    i32 &volume, i32 targetVolume, i32 volumeDelta);
-    
-    void copyInterleaved(float *buffer, size_t n,
-                         i32 &volume, i32 targetVolume, i32 volumeDelta);
+    void copyMono(float *buffer, size_t n, struct Volume &volume);
+    void copyStereo(float *left, float *right, size_t n, struct Volume &volume);
+    void copyInterleaved(float *buffer, size_t n, struct Volume &volume);
     
 };
 
