@@ -670,20 +670,15 @@ SIDBridge::poke(u16 addr, u8 value)
     // Keep both SID implementations up to date
     resid[sidNr].poke(addr, value);
     fastsid[sidNr].poke(addr, value);
-    
-    // Run ReSID for at least one cycle to make pipelined writes work
-    if (config.engine != ENGINE_RESID) {
-        for (int i = 0; i < 4; i++) resid[i].clock();
-    }
 }
 
 void
 SIDBridge::executeUntil(u64 targetCycle)
 {
-    u64 missingCycles = targetCycle - cycles;
-    u64 missingSamples = u64(missingCycles * samplesPerCycle);
+    i64 missingCycles  = targetCycle - cycles;
+    i64 missingSamples = i64(missingCycles * samplesPerCycle);
     i64 consumedCycles = execute(missingSamples);
-    
+
     cycles += consumedCycles;
     
     debug(SID_EXEC_DEBUG,
@@ -696,8 +691,15 @@ SIDBridge::execute(u64 numSamples)
 {
     u64 cycles;
     
-    if (numSamples == 0) return 0;
-  
+    // Run reSID for at least one cycle to make pipelined writes work
+    if (numSamples == 0) {
+
+        debug(SID_EXEC_DEBUG, "Running SIDs for an extra cycle");
+
+        for (int i = 0; i < 4; i++) resid[i].clock();
+        return 1;
+    }
+
     // Check for a buffer underflow
     if (signalUnderflow) {
         signalUnderflow = false;

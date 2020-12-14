@@ -56,7 +56,7 @@ static const int CIA_ON_STEROIDS = 0; // Keep the CIAs awake all the time
 static const int VIA_DEBUG       = 0; // Versatile Interface Adapter
 static const int VIC_DEBUG       = 0; // Video Interface Controller
 static const int SID_DEBUG       = 0; // Sound Interface Device
-static const int SID_EXEC_DEBUG  = 1; // Sound Interface Device (execution)
+static const int SID_EXEC_DEBUG  = 0; // Sound Interface Device (execution)
 static const int IEC_DEBUG       = 0; // IEC bus
 
 // Ports
