@@ -318,14 +318,13 @@ SIDBridge::setClockFrequency(u32 frequency)
 {
     debug(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
 
-    // suspend();
-    
+    cpuFrequency = frequency;
+    samplesPerCycle = sampleRate / cpuFrequency;
+
     for (int i = 0; i < 4; i++) {
         resid[i].setClockFrequency(frequency);
         fastsid[i].setClockFrequency(frequency);
     }
-    
-    // resume();
 }
 
 SIDRevision
@@ -370,10 +369,13 @@ SIDBridge::setSampleRate(double rate)
 {
     debug(SID_DEBUG, "Setting sample rate to %f\n", rate);
 
+    sampleRate = rate;
+    samplesPerCycle = sampleRate / cpuFrequency;
+    
     for (int i = 0; i < 4; i++) {
         resid[i].setSampleRate(rate);
         fastsid[i].setSampleRate(rate);
-    }
+    }    
 }
 
 bool
@@ -678,10 +680,8 @@ SIDBridge::poke(u16 addr, u8 value)
 void
 SIDBridge::executeUntil(u64 targetCycle)
 {
-    double samplesPerCycles = (double)getSampleRate() / (double)getClockFrequency();
-
     u64 missingCycles = targetCycle - cycles;
-    u64 missingSamples = u64(missingCycles * samplesPerCycles);
+    u64 missingSamples = u64(missingCycles * samplesPerCycle);
     i64 consumedCycles = execute(missingSamples);
     
     cycles += consumedCycles;

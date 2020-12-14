@@ -90,7 +90,16 @@ private:
     };
         
     // CPU cycle at the last call to executeUntil()
-    u64 cycles;
+    u64 cycles = 0;
+    
+    // Current CPU frequency
+    u32 cpuFrequency = PAL_CLOCK_FREQUENCY;
+    
+    // Sample rate (44.1 kHz per default)
+    double sampleRate = 44100.0;
+    
+    // Ratio between sample rate and cpu frequency
+    double samplesPerCycle = sampleRate / cpuFrequency;
     
     // Time stamp of the last write pointer alignment
     u64 lastAlignment = 0;
@@ -235,6 +244,7 @@ private:
         & config.vol
         & config.volL
         & config.volR
+        & samplesPerCycle
         & pan
         & vol
         & volL

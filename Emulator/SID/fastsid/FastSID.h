@@ -167,6 +167,7 @@ private:
         & model
         & cpuFrequency
         & sampleRate
+        & samplesPerCycle
         & emulateFilter;
     }
     
