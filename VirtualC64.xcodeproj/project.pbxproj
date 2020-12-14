@@ -161,6 +161,8 @@
 		507E7A9E24FB864E00AB433C /* ScreenshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 507E7A9D24FB864E00AB433C /* ScreenshotDialog.xib */; };
 		507E7AA024FB881500AB433C /* ScreenshotDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507E7A9F24FB881500AB433C /* ScreenshotDialog.swift */; };
 		507E7AA224FB897D00AB433C /* Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507E7AA124FB897D00AB433C /* Screenshot.swift */; };
+		5080501825873EC9004FE1F5 /* ExportDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5080501725873EC9004FE1F5 /* ExportDialog.swift */; };
+		5080501B2587A16D004FE1F5 /* FSDescriptors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508050192587A16D004FE1F5 /* FSDescriptors.cpp */; };
 		508081E925110FFE0084B060 /* Dinamic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508081E725110FFE0084B060 /* Dinamic.cpp */; };
 		508081EC2511206D0084B060 /* StructuredBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508081EA2511206D0084B060 /* StructuredBasic.cpp */; };
 		5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* MacAudio.swift */; };
@@ -519,6 +521,10 @@
 		507E7A9D24FB864E00AB433C /* ScreenshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScreenshotDialog.xib; sourceTree = "<group>"; };
 		507E7A9F24FB881500AB433C /* ScreenshotDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotDialog.swift; sourceTree = "<group>"; };
 		507E7AA124FB897D00AB433C /* Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screenshot.swift; sourceTree = "<group>"; };
+		5080501725873EC9004FE1F5 /* ExportDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportDialog.swift; sourceTree = "<group>"; };
+		508050192587A16D004FE1F5 /* FSDescriptors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSDescriptors.cpp; sourceTree = "<group>"; };
+		5080501A2587A16D004FE1F5 /* FSDescriptors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSDescriptors.h; sourceTree = "<group>"; };
+		5080501D2587A1B0004FE1F5 /* FSTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSTypes.h; sourceTree = "<group>"; };
 		508081E725110FFE0084B060 /* Dinamic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Dinamic.cpp; sourceTree = "<group>"; };
 		508081E825110FFE0084B060 /* Dinamic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Dinamic.h; sourceTree = "<group>"; };
 		508081EA2511206D0084B060 /* StructuredBasic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StructuredBasic.cpp; sourceTree = "<group>"; };
@@ -727,6 +733,7 @@
 				507E7A9F24FB881500AB433C /* ScreenshotDialog.swift */,
 				50763276202989D300575110 /* DialogController.swift */,
 				50B485FA24F9911600844133 /* ImportDialog.swift */,
+				5080501725873EC9004FE1F5 /* ExportDialog.swift */,
 				503C1DD224FCD1BF00D91141 /* SnapshotDialog.swift */,
 				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
 				50B1644B202DD52500447D3E /* ExportDiskController.swift */,
@@ -811,6 +818,7 @@
 				504C42F924AF29AB00E69CAE /* Peripherals */,
 				504C428E24AF29AB00E69CAE /* Cartridges */,
 				504C42C624AF29AB00E69CAE /* Files */,
+				5080501C2587A177004FE1F5 /* FileSystems */,
 			);
 			path = Emulator;
 			sourceTree = "<group>";
@@ -1191,6 +1199,16 @@
 			path = Preferences;
 			sourceTree = "<group>";
 		};
+		5080501C2587A177004FE1F5 /* FileSystems */ = {
+			isa = PBXGroup;
+			children = (
+				5080501D2587A1B0004FE1F5 /* FSTypes.h */,
+				5080501A2587A16D004FE1F5 /* FSDescriptors.h */,
+				508050192587A16D004FE1F5 /* FSDescriptors.cpp */,
+			);
+			path = FileSystems;
+			sourceTree = "<group>";
+		};
 		50A2D7AF24AF945200671F38 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1439,6 +1457,7 @@
 				5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */,
 				504C437724AF29AC00E69CAE /* G64File.cpp in Sources */,
 				504C438924AF29AC00E69CAE /* NeosMouse.cpp in Sources */,
+				5080501825873EC9004FE1F5 /* ExportDialog.swift in Sources */,
 				504C435924AF29AC00E69CAE /* Ocean.cpp in Sources */,
 				504C439424AF29AC00E69CAE /* SIDBridge.cpp in Sources */,
 				506A724A21C0341900DA0AC3 /* ConfigurationController.swift in Sources */,
@@ -1487,6 +1506,7 @@
 				50FF818F1F88D9100004548A /* GamePad.swift in Sources */,
 				505184DE24F23484002C6124 /* MyControllerStorage.swift in Sources */,
 				504C438024AF29AC00E69CAE /* CPU.cpp in Sources */,
+				5080501B2587A16D004FE1F5 /* FSDescriptors.cpp in Sources */,
 				504C439C24AF29AC00E69CAE /* wave.cc in Sources */,
 				50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */,
 				5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */,

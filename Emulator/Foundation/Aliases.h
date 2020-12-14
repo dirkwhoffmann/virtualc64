@@ -52,7 +52,19 @@ typedef i64 Cycle;
 
 
 //
-// Enumeration types
+// Floppy drives and disks
+//
+
+typedef unsigned Cylinder;
+typedef unsigned Head;
+typedef unsigned Track;
+typedef unsigned Halftrack;
+typedef unsigned Sector;
+typedef unsigned Block;
+
+
+//
+// Enumerations
 //
 
 /* All enumeration types are declared via a special 'longenum' macro to make
