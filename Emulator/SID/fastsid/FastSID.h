@@ -33,13 +33,13 @@
 #include "FastVoice.h"
 
 class FastSID : public C64Component {
-    
-    // Number of this SID (0 = primary SID)
-    int nr;
-    
+        
     // Reference to the SID bridge
     SIDBridge &bridge;
     
+    // Number of this SID (0 = primary SID)
+    int nr;
+
     // Target buffer for storing the produced audio samples
     short *samples = nullptr;
 
@@ -113,7 +113,7 @@ private:
     
 public:
         
-	FastSID(C64 &ref, SIDBridge &bridgeref, int n, short *buffer);
+	FastSID(C64 &ref, SIDBridge &bridgeref, int n);
     const char *getDescription() override { return "FastSID"; }
 
 private:
@@ -214,15 +214,15 @@ public:
      * samples are written into the provided buffer. The fuction returns the
      * number of written audio samples.
      */
-    u64 executeCycles(u64 numCycles, short *buffer);
-    u64 executeCycles(u64 numCycles) { return executeCycles(numCycles, samples); }
+    // u64 executeCycles(u64 numCycles, short *buffer);
+    // u64 executeCycles(u64 numCycles) { return executeCycles(numCycles, samples); }
 
     /* Runs SID until a certain number of audio samples is produced. The
      * generated sound samples are written into the provided buffer. The
      * fuction returns the number of executed cycles.
      */
-    u64 executeSamples(u64 numSamples, short *buffer);
-    u64 executeSamples(u64 numSamples) { return executeSamples(numSamples, samples); }
+    i64 executeSamples(u64 numSamples);
+    i64 executeSamples(u64 numSamples, short *buffer);
     
 private:
     

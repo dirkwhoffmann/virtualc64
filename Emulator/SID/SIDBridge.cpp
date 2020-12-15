@@ -257,7 +257,7 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
             assert(id >= 0 && id <= 3);
 
             config.vol[id] = MIN(100, MAX(0, value));
-            vol[id] = pow((double)config.vol[id] / 100, 1.4) * 0.0000025;
+            vol[id] = pow((double)config.vol[id] / 100, 1.4) * 0.00000025;
 
             if (wasMuted != isMuted()) {
                 messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);

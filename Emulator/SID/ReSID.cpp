@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-ReSID::ReSID(C64 &ref, SIDBridge &bridgeref, int n, short *buffer) : C64Component(ref), bridge(bridgeref), nr(n), samples(buffer)
+ReSID::ReSID(C64 &ref, SIDBridge &bridgeref, int n) : C64Component(ref), bridge(bridgeref), nr(n)
 {
     model = MOS_6581;
     emulateFilter = true;
@@ -240,6 +240,12 @@ ReSID::executeCycles(u64 numCycles, short *buffer)
     return (u64)numSamples;
 }
 */
+
+i64
+ReSID::executeSamples(u64 numSamples)
+{
+    return executeSamples(numSamples, bridge.samples[nr]);
+}
 
 i64
 ReSID::executeSamples(u64 numSamples, short *buffer)

@@ -78,18 +78,18 @@ private:
     
     FastSID fastsid[4] = {
         
-        FastSID(c64, *this, 0, samples[0]),
-        FastSID(c64, *this, 1, samples[1]),
-        FastSID(c64, *this, 2, samples[2]),
-        FastSID(c64, *this, 3, samples[3])
+        FastSID(c64, *this, 0),
+        FastSID(c64, *this, 1),
+        FastSID(c64, *this, 2),
+        FastSID(c64, *this, 3)
     };
     
     ReSID resid[4] = {
         
-        ReSID(c64, *this, 0, samples[0]),
-        ReSID(c64, *this, 1, samples[1]),
-        ReSID(c64, *this, 2, samples[2]),
-        ReSID(c64, *this, 3, samples[3])
+        ReSID(c64, *this, 0),
+        ReSID(c64, *this, 1),
+        ReSID(c64, *this, 2),
+        ReSID(c64, *this, 3)
     };
         
     // CPU cycle at the last call to executeUntil()
