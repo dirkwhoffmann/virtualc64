@@ -53,7 +53,6 @@ D64File::isD64File(const char *filename)
 
 D64File::D64File()
 {
-    setDescription("D64Archive");
     memset(errors, 0x01, sizeof(errors));
 }
 

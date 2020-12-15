@@ -9,11 +9,6 @@
 
 #include "C64.h"
 
-ExpansionPort::ExpansionPort(C64 &ref) : C64Component(ref)
-{
-    setDescription("Expansion port");
-}
-
 ExpansionPort::~ExpansionPort()
 {
     detachCartridge();

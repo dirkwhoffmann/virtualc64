@@ -11,7 +11,6 @@
 
 DriveMemory::DriveMemory(C64 &ref, Drive &dref) : C64Component(ref), drive(dref)
 {
-    setDescription("1541MEM");    
     memset(rom, 0, sizeof(rom));
 }
 

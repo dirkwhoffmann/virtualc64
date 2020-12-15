@@ -173,25 +173,10 @@ CPU<M>::setRDY(bool value)
     }
 }
 
-//
-// C64 CPU
-//
-
-C64CPU::C64CPU(C64& ref, C64Memory& memref) : CPU(ref, memref)
-{
-    setDescription("CPU");
-}
-
 
 //
-// Drive CPU
+// Template instantiations
 //
-
-DriveCPU::DriveCPU(C64& ref, DriveMemory &memref) : CPU(ref, memref)
-{
-    setDescription("DriveCPU");
-}
-
 
 template         CPU<C64Memory>::CPU(C64& ref, C64Memory& memref);
 template CPUInfo CPU<C64Memory>::getInfo();

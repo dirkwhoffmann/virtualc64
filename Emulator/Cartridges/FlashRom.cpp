@@ -33,8 +33,6 @@ FlashRom::getStateAsString(FlashRomState state)
 
 FlashRom::FlashRom(C64 &ref) : C64Component(ref)
 {
-    setDescription("FlashRom");
-    
     state = FLASH_READ;
     baseState = FLASH_READ;
     

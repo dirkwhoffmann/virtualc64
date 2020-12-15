@@ -188,9 +188,9 @@ public:
     
 public:
     
-    CPUDebugger(C64 &ref);
+    CPUDebugger(C64 &ref) : C64Component(ref) { };
 
-    const char *getDescriptionNew() override { return "CPUDebugger"; }
+    const char *getDescription() override { return "CPUDebugger"; }
 
     // Initializes an entry of the lookup tables
     void registerInstruction(u8 opcode, const char *mnemonic, AddressingMode mode);

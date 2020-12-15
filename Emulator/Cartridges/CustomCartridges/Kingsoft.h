@@ -16,8 +16,8 @@ class Kingsoft : public Cartridge {
     
 public:
     
-    Kingsoft(C64 &ref) : Cartridge(ref, "Kingsoft") { };
-    const char *getDescriptionNew() override { return "Kingsoft"; }
+    Kingsoft(C64 &ref) : Cartridge(ref) { };
+    const char *getDescription() override { return "Kingsoft"; }
     CartridgeType getCartridgeType() override { return CRT_KINGSOFT; }
 
     void resetCartConfig() override;

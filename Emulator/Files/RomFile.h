@@ -28,7 +28,7 @@ private:
     static const u8 magicVC1541RomBytes[vc1541RomSignatureCnt][3];
 
     // Rom type (Basic, Character, Kernal, or VC1541)
-    FileType romtype;
+    FileType romtype = FILETYPE_UNKNOWN;
         
 public:
     
@@ -68,8 +68,8 @@ public:
     // Creating and destructing
     //
     
-    RomFile();
-    const char *getDescriptionNew() override { return "RomFile"; }
+    RomFile() { };
+    const char *getDescription() override { return "RomFile"; }
 
     // Factory methods
     static RomFile *makeWithBuffer(const u8 *buffer, size_t length);

@@ -11,8 +11,6 @@
 
 Mouse::Mouse(C64 &ref) : C64Component(ref)
 {
-    setDescription("Mouse");
-    
     subComponents = vector<HardwareComponent *> {
         
         &mouse1350,

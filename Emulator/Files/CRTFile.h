@@ -77,7 +77,7 @@ public:
     //
 
     CRTFile();
-    const char *getDescriptionNew() override { return "CRTFile"; }
+    const char *getDescription() override { return "CRTFile"; }
 
         
     //

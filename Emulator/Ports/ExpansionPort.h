@@ -48,9 +48,9 @@ class ExpansionPort : public C64Component {
     
 public:
     
-    ExpansionPort(C64 &ref);
+    ExpansionPort(C64 &ref) : C64Component(ref) { };
     ~ExpansionPort();
-    const char *getDescriptionNew() override { return "ExpansionPort"; }
+    const char *getDescription() override { return "ExpansionPort"; }
 
 private:
     

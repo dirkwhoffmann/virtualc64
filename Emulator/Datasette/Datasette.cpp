@@ -9,11 +9,6 @@
 
 #include "C64.h"
 
-Datasette::Datasette(C64 &ref) : C64Component(ref)
-{
-    setDescription("Datasette");
-}
-
 Datasette::~Datasette()
 {
     if (data) delete[] data;

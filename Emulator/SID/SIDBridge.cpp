@@ -10,9 +10,7 @@
 #include "C64.h"
 
 SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
-{
-	setDescription("SIDBridge");
-        
+{        
     subComponents = vector<HardwareComponent *> {
         
         &resid[0],

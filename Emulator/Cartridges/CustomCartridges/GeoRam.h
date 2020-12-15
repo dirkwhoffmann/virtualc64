@@ -29,8 +29,8 @@ private:
 
 public:
     
-    GeoRAM(C64 &ref) : Cartridge(ref, "GeoRam") { };
-    const char *getDescriptionNew() override { return "GeoRam"; }
+    GeoRAM(C64 &ref) : Cartridge(ref) { };
+    const char *getDescription() override { return "GeoRam"; }
     CartridgeType getCartridgeType() override { return CRT_GEO_RAM; }
     
 private:

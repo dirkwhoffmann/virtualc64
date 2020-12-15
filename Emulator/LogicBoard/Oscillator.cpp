@@ -11,14 +11,11 @@
 
 Oscillator::Oscillator(C64& ref) : C64Component(ref)
 {
-    setDescription("Oscillator");
-    
 #ifdef __MACH__
     mach_timebase_info(&tb);
 #endif
 }
 
-/*
 const char *
 Oscillator::getDescription()
 {
@@ -28,7 +25,6 @@ Oscillator::getDescription()
     return "Oscillator (Generic)";
 #endif
 }
-*/
 
 void
 Oscillator::_reset()

@@ -9,11 +9,6 @@
 
 #include "MessageQueue.h"
 
-MessageQueue::MessageQueue()
-{
-    setDescription("MessageQueue");
-}
-
 void
 MessageQueue::addListener(const void *listener, Callback *func)
 {

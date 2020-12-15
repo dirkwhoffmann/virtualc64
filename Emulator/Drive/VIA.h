@@ -515,9 +515,9 @@ class VIA1 : public VIA6522 {
 	
 public:
 
-	VIA1(C64 &ref, Drive &drvref);
-	~VIA1();
-    const char *getDescriptionNew() override { return "VIA1"; }
+    VIA1(C64 &ref, Drive &drvref) : VIA6522(ref, drvref) { }
+    ~VIA1() { }
+    const char *getDescription() override { return "VIA1"; }
     
     u8 portAexternal() override;
     u8 portBexternal() override;
@@ -533,9 +533,9 @@ class VIA2 : public VIA6522 {
 	
 public:
 
-	VIA2(C64 &ref, Drive &drvref);
-	~VIA2();
-    const char *getDescriptionNew() override { return "VIA2"; }
+    VIA2(C64 &ref, Drive &drvref) : VIA6522(ref, drvref) { }
+    ~VIA2() { }
+    const char *getDescription() override { return "VIA2"; }
 
     u8 portAexternal() override;
     u8 portBexternal() override;

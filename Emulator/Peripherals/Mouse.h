@@ -54,7 +54,7 @@ private:
 public:
     
     Mouse(C64 &ref);
-    const char *getDescriptionNew() override { return "Mouse"; }
+    const char *getDescription() override { return "Mouse"; }
     
 private:
     

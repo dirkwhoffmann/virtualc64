@@ -11,7 +11,6 @@
 
 CartridgeRom::CartridgeRom(C64 &ref) : C64Component(ref)
 {
-    setDescription("CartridgeRom");
 }
 
 CartridgeRom::CartridgeRom(C64 &ref, u16 size, u16 loadAddress, const u8 *buffer) : CartridgeRom(ref)

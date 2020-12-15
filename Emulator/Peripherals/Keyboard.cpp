@@ -9,11 +9,6 @@
 
 #include "C64.h"
 
-Keyboard::Keyboard(C64 &ref) : C64Component(ref)
-{
-	setDescription("Keyboard");
-}
-
 void 
 Keyboard::_reset() 
 {

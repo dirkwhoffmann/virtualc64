@@ -232,7 +232,9 @@ public:
 public:
     
 	CIA(C64 &ref);
-    const char *getDescriptionNew() override { return "CIA"; }
+    virtual bool isCIA1() = 0;
+    virtual bool isCIA2() = 0;
+    // const char *getDescription() override { return "CIA"; }
 
 protected:
     
@@ -467,8 +469,11 @@ class CIA1 : public CIA {
 	
 public:
 
-    CIA1(C64 &ref);
-
+    CIA1(C64 &ref) : CIA(ref) { };
+    bool isCIA1() override { return true; }
+    bool isCIA2() override { return false; }
+    const char *getDescription() override { return "CIA1"; }
+    
 private:
         
     void pullDownInterruptLine() override;
@@ -491,8 +496,11 @@ class CIA2 : public CIA {
 
 public:
 
-    CIA2(C64 &ref);
-    
+    CIA2(C64 &ref) : CIA(ref) { };
+    bool isCIA1() override { return false; }
+    bool isCIA2() override { return true; }
+    const char *getDescription() override { return "CIA2"; }
+
 private:
     
     void _reset() override;

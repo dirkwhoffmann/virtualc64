@@ -15,9 +15,7 @@ if (checkWatchpoints && cpu.debugger.watchpointMatches(x)) { \
 }
 
 C64Memory::C64Memory(C64 &ref) : C64Component(ref)
-{	
-	setDescription("C64 memory");
-    		
+{    		
     memset(rom, 0, sizeof(rom));
 
     config.ramPattern = RAM_PATTERN_C64;

@@ -29,11 +29,6 @@ PRGFile::isPRGFile(const char *path)
     return true;
 }
 
-PRGFile::PRGFile()
-{
-    setDescription("PRGArchive");
-}
-
 PRGFile *
 PRGFile::makeWithBuffer(const u8 *buffer, size_t length)
 {

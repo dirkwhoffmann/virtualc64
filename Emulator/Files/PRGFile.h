@@ -43,8 +43,7 @@ public:
     // Initializing
     //
     
-    PRGFile();
-    const char *getDescriptionNew() override { return "PRGFile"; }
+    const char *getDescription() override { return "PRGFile"; }
     
     
     //

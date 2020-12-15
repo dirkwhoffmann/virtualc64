@@ -49,11 +49,6 @@ static u32 exptable[6] =
     0x30000000, 0x1c000000, 0x0e000000, 0x08000000, 0x04000000, 0x00000000
 };
 
-FastVoice::FastVoice()
-{
-    setDescription("Voice");
-}
-
 void
 FastVoice::_reset()
 {

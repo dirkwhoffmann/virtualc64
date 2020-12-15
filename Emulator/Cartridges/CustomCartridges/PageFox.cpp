@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-PageFox::PageFox(C64 &ref) : Cartridge(ref, "PageFox")
+PageFox::PageFox(C64 &ref) : Cartridge(ref)
 {
     // Allocate 32KB RAM
     setRamCapacity(0x8000);
@@ -18,10 +18,6 @@ PageFox::PageFox(C64 &ref) : Cartridge(ref, "PageFox")
 void
 PageFox::_reset()
 {
-    /*
-    RESET_SNAPSHOT_ITEMS
-    Cartridge::_reset();
-    */
     eraseRAM(0);
 }
 

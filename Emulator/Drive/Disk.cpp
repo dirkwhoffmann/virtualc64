@@ -165,9 +165,7 @@ Disk::makeWithArchive(C64 &ref, AnyArchive *archive)
 }
 
 Disk::Disk(C64 &ref) : C64Component(ref)
-{
-    setDescription("Disk");
-    
+{    
     /* Create the bit expansion table. Note that this table expects a Little
      * Endian architecture to work. If you compile the emulator on a Big Endian
      * architecture, the byte order needs to be reversed.

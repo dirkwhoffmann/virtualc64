@@ -62,7 +62,7 @@ public:
     
     D64File();
     D64File(unsigned tracks, bool ecc);
-    const char *getDescriptionNew() override { return "D64File"; }
+    const char *getDescription() override { return "D64File"; }
 
         
     //

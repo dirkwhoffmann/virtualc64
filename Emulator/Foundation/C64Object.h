@@ -31,12 +31,7 @@ for (AutoMutex _am(mutex); _am.active; _am.active = false)
  * warnings.
  */
 class C64Object {
-            
-    /* Textual description of this object. Most debug output methods preceed
-     * their output with this string. If set to NULL, no prefix is printed.
-     */
-    const char *description = NULL;
-     
+                 
     /* Stores how many trace messages are left to be printed. If positive, this
      * value is decremented in tracingEnabled(). A negative value indicates
      * that tracing should continue forever.
@@ -61,12 +56,9 @@ public:
     virtual ~C64Object() { };
     
     // Returns the name for this component (e.g., "CPU" or "VICII")
-    virtual const char *getDescriptionNew() = 0;
+    virtual const char *getDescription() = 0;
     
-    const char *getDescription() const { return description ? description : ""; }
-    void setDescription(const char *str) { description = strdup(str); }
-    
-    
+        
     //
     // Debugging the component
     //

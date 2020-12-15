@@ -14,8 +14,6 @@ const u8 TAPFile::magicBytes[] = {
 
 TAPFile::TAPFile()
 {
-    setDescription("TAPFile");
-    data = NULL;
     dealloc();
 }
 

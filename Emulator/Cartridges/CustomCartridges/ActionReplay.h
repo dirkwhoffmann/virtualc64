@@ -20,8 +20,8 @@ class ActionReplay3 : public Cartridge {
     
 public:
     
-    ActionReplay3(C64 &ref) : Cartridge(ref, "AR3") { };
-    const char *getDescriptionNew() override { return "AR3"; }
+    ActionReplay3(C64 &ref) : Cartridge(ref) { };
+    const char *getDescription() override { return "AR3"; }
     CartridgeType getCartridgeType() override { return CRT_ACTION_REPLAY3; }
 
     
@@ -62,9 +62,8 @@ class ActionReplay : public Cartridge {
         
 public:
         
-    ActionReplay(C64 &ref, const char *description);
-    ActionReplay(C64 &ref) : ActionReplay(ref, "AR") { };
-    
+    ActionReplay(C64 &ref);
+    const char *getDescription() override { return "ActionReplay"; }
     CartridgeType getCartridgeType() override { return CRT_ACTION_REPLAY; }
 
     void _reset() override;
@@ -115,7 +114,8 @@ class AtomicPower : public ActionReplay {
     
 public:
     
-    AtomicPower(C64 &ref) : ActionReplay(ref, "AtomicPower") { };
+    AtomicPower(C64 &ref) : ActionReplay(ref) { };
+    const char *getDescription() override { return "AtomicPower"; }
     CartridgeType getCartridgeType() override { return CRT_ATOMIC_POWER; }
     
     /* Indicates if special ROM / RAM config has to be used. In contrast to

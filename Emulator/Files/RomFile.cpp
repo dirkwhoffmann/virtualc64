@@ -488,12 +488,6 @@ RomFile::makeWithFile(const char *filename)
     return rom;
 }
 
-RomFile::RomFile()
-{
-    setDescription("RomFile");
-    romtype = FILETYPE_UNKNOWN;
-}
-
 bool
 RomFile::readFromBuffer(const u8 *buffer, size_t length)
 {

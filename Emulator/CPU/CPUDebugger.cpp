@@ -176,11 +176,6 @@ Watchpoints::setNeedsCheck(bool value)
 // CPUDebugger
 //
 
-CPUDebugger::CPUDebugger(C64 &ref) : C64Component(ref)
-{
-    setDescription("CPU Debugger");
-}
-
 void
 CPUDebugger::registerInstruction(u8 opcode, const char *mnemonic, AddressingMode mode)
 {

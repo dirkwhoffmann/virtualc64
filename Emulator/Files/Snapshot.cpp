@@ -76,11 +76,6 @@ Snapshot::isUnsupportedSnapshotFile(const char *path)
     return isSnapshotFile(path) && !isSupportedSnapshotFile(path);
 }
 
-Snapshot::Snapshot()
-{
-    setDescription("Snapshot");
-}
-
 Snapshot::Snapshot(size_t capacity)
 {
     size = capacity + sizeof(SnapshotHeader);

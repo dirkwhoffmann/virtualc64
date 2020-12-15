@@ -60,8 +60,8 @@ private:
     
 public:
         
-	IEC(C64 &ref);
-    const char *getDescriptionNew() override { return "IEC"; }
+    IEC(C64 &ref) : C64Component(ref) { };
+    const char *getDescription() override { return "IEC"; }
     
 private:
     

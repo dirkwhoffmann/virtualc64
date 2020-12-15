@@ -15,7 +15,6 @@
 
 VIA6522::VIA6522(C64 &ref, Drive &drvref) : C64Component(ref), drive(drvref)
 {
-	setDescription("VIA");
 }
 	
 void VIA6522::_reset()
@@ -843,15 +842,6 @@ VIA6522::wakeUp()
 // VIA 1
 //
 
-VIA1::VIA1(C64 &ref, Drive &drvref) : VIA6522(ref, drvref)
-{
-    setDescription("VIA1");
-}
-
-VIA1::~VIA1()
-{
-}
-
 void
 VIA1::pullDownIrqLine() {
     drive.cpu.pullDownIrqLine(INTSRC_VIA1);
@@ -899,15 +889,6 @@ VIA1::updatePB()
 //
 // VIA 2
 // 
-
-VIA2::VIA2(C64 &ref, Drive &drvref) : VIA6522(ref, drvref)
-{
-    setDescription("VIA2");
-}
-	
-VIA2::~VIA2()
-{
-}
 
 u8
 VIA2::portAexternal()

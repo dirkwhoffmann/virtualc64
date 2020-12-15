@@ -10,11 +10,6 @@
 #include "C64.h"
 #include "Mouse1350.h"
 
-Mouse1350::Mouse1350(C64 &ref) : C64Component(ref) {
-    
-    setDescription("Mouse1350");
-}
-
 void
 Mouse1350::_reset()
 {

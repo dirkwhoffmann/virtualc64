@@ -43,7 +43,7 @@ public:
      */
     static AnyArchive *makeWithFile(const char *filename);
     
-    const char *getDescriptionNew() override { return "AnyArchive"; }
+    const char *getDescription() override { return "AnyArchive"; }
 
 
     //

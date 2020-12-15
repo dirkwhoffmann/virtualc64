@@ -9,11 +9,6 @@
 
 #include "C64.h"
 
-IEC::IEC(C64 &ref) : C64Component(ref)
-{
-  	setDescription("IEC");
-}
-
 void 
 IEC::_reset()
 {

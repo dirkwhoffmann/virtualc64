@@ -38,9 +38,9 @@ public:
     
 public:
     
-    G64File();
+    G64File() { };
     G64File(size_t capacity);
-    const char *getDescriptionNew() override { return "G64File"; }
+    const char *getDescription() override { return "G64File"; }
 
     static G64File *makeWithBuffer(const u8 *buffer, size_t length);
     static G64File *makeWithFile(const char *path);

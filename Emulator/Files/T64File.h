@@ -47,7 +47,7 @@ public:
     //
     
     T64File();
-    const char *getDescriptionNew() override { return "T64File"; }
+    const char *getDescription() override { return "T64File"; }
 
     
     //

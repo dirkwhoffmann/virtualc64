@@ -42,8 +42,8 @@ private:
     
 public:
     
-    Mouse1350(C64 &ref);
-    const char *getDescriptionNew() override { return "Mouse1350"; }
+    Mouse1350(C64 &ref) : C64Component(ref) { }
+    const char *getDescription() override { return "Mouse1350"; }
     
 private:
     

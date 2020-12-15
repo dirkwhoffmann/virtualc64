@@ -55,7 +55,7 @@ private:
 public:
  
     ControlPort(int p, C64 &ref);
-    const char *getDescriptionNew() override { return "ControlPort"; }
+    const char *getDescription() override { return "ControlPort"; }
 
 private:
     

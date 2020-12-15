@@ -9,7 +9,7 @@
 
 #include "C64.h"
 
-EasyFlash::EasyFlash(C64 &ref) : Cartridge(ref, "EasyFlash")
+EasyFlash::EasyFlash(C64 &ref) : Cartridge(ref)
 {
     subComponents = vector <HardwareComponent *> {
         
@@ -17,9 +17,6 @@ EasyFlash::EasyFlash(C64 &ref) : Cartridge(ref, "EasyFlash")
         &flashRomH
     };
     
-    flashRomL.setDescription("FlashRom_L");
-    flashRomH.setDescription("FlashRom_H");
-
     // Allocate 256 bytes on-board RAM
     setRamCapacity(256);
 }

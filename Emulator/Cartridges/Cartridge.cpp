@@ -138,9 +138,8 @@ Cartridge::makeWithCRTFile(C64 &c64, CRTFile *file)
     return cart;
 }
 
-Cartridge::Cartridge(C64 &ref, const char *description) : C64Component(ref)
+Cartridge::Cartridge(C64 &ref) : C64Component(ref)
 {
-    setDescription(description);
     debug(CRT_DEBUG, "Creating cartridge at address %p...\n", this);
     
     memset(packet, 0, sizeof(packet));

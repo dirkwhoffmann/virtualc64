@@ -38,14 +38,8 @@ public:
     static P00File *makeWithBuffer(const u8 *buffer, size_t length);
     static P00File *makeWithFile(const char *path);
     static P00File *makeWithAnyArchive(AnyArchive *otherArchive);
-
     
-    //
-    // Initializing
-    //
-    
-    P00File();
-    const char *getDescriptionNew() override { return "P00File"; }
+    const char *getDescription() override { return "P00File"; }
 
 
     //

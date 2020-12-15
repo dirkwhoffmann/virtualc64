@@ -34,11 +34,6 @@ P00File::isP00File(const char *filename)
     return true;
 }
 
-P00File::P00File()
-{
-    setDescription("P00Archive");
-}
-
 P00File *
 P00File::makeWithBuffer(const u8 *buffer, size_t length)
 {

@@ -10,11 +10,6 @@
 #include "C64.h"
 #include "NeosMouse.h"
 
-NeosMouse::NeosMouse(C64 &ref) : C64Component(ref)
-{    
-    setDescription("NeosMouse");
-}
-
 void
 NeosMouse::_reset()
 {

@@ -10,9 +10,7 @@
 #include "C64.h"
 
 CIA::CIA(C64 &ref) : C64Component(ref)
-{
-	setDescription("CIA");
-    
+{    
     subComponents = vector<HardwareComponent *> { &tod };
     
     config.revision = MOS_6526;
@@ -614,11 +612,6 @@ CIA::idleSince()
 // CIA 1
 //
 
-CIA1::CIA1(C64 &ref) : CIA(ref)
-{
-    setDescription("CIA1");
-}
-
 void 
 CIA1::pullDownInterruptLine()
 {
@@ -740,11 +733,6 @@ CIA1::updatePB()
 //
 // CIA 2
 //
-
-CIA2::CIA2(C64 &ref) : CIA(ref)
-{
-    setDescription("CIA2");
-}
 
 void
 CIA2::_reset()

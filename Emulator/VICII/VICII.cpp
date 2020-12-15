@@ -19,9 +19,7 @@
 #define SPR7 0x80
 
 VICII::VICII(C64 &ref) : C64Component(ref)
-{
-	setDescription("VICII");
-    
+{    
     config.grayDotBug = true;
     config.palette = COLOR_PALETTE;
     config.cutLayers = 0xFF;

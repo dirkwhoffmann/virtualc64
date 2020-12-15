@@ -11,8 +11,6 @@
 
 ReSID::ReSID(C64 &ref, short *buffer) : C64Component(ref), samples(buffer)
 {
-	setDescription("ReSID");
-
     model = MOS_6581;
     emulateFilter = true;
     sampleRate = 44100;

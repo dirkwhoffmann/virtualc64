@@ -22,11 +22,6 @@ PRGFolder::isPRGFolder(const char *path)
     return true;
 }
 
-PRGFolder::PRGFolder()
-{
-    setDescription("PRGFolder");
-}
-
 PRGFolder *
 PRGFolder::makeWithFolder(const char *path)
 {

@@ -13,7 +13,7 @@
 
 #include "C64.h"
 
-Expert::Expert(C64 &ref) : Cartridge(ref, "Expert")
+Expert::Expert(C64 &ref) : Cartridge(ref)
 {    
     setSwitch(0);
     

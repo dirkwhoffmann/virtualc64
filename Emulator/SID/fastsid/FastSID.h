@@ -108,7 +108,7 @@ private:
 public:
         
 	FastSID(C64 &ref, short *buffer);
-    const char *getDescriptionNew() override { return "FastSID"; }
+    const char *getDescription() override { return "FastSID"; }
 
 private:
     

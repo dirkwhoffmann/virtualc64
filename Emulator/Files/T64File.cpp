@@ -49,7 +49,6 @@ T64File::isT64File(const char *path)
 
 T64File::T64File()
 {
-    setDescription("T64Archive");
 }
 
 T64File *

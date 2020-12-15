@@ -138,7 +138,6 @@ CRTFile::cartridgeTypeName(CartridgeType type)
 
 CRTFile::CRTFile()
 {
-    setDescription("CRTFile");
     memset(chips, 0, sizeof(chips));
 }
 

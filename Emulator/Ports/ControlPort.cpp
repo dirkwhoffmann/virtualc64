@@ -18,9 +18,7 @@ ControlPort::ControlPort(int portNr, C64 &ref) : C64Component(ref)
     autofireBullets = -3;
     autofireFrequency = 2.5;
     bulletCounter = 0;
-    nextAutofireFrame = 0;
-    
-    setDescription("ControlPort");    
+    nextAutofireFrame = 0;    
 }
 
 void

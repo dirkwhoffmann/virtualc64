@@ -31,9 +31,7 @@
 #include "C64.h"
 
 FastSID::FastSID(C64 &ref, short *buffer) : C64Component(ref), samples(buffer)
-{
-	setDescription("FastSID");
-    
+{    
     subComponents = vector<HardwareComponent *> {
         
         &voice[0],

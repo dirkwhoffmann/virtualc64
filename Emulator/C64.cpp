@@ -52,7 +52,6 @@ void
 
 C64::C64()
 {
-    setDescription("C64");
     debug(RUN_DEBUG, "Creating virtual C64 [%p]\n", this);
         
     subComponents = vector<HardwareComponent *> {

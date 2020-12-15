@@ -36,11 +36,6 @@ G64File::isG64File(const char *filename)
     return true;
 }
 
-G64File::G64File()
-{
-    setDescription("G64Archive");
-}
-
 G64File::G64File(size_t capacity)
 {
     assert(capacity > 0);
