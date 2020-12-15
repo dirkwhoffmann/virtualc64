@@ -30,7 +30,7 @@
 
 #include "C64.h"
 
-FastSID::FastSID(C64 &ref, short *buffer) : C64Component(ref), samples(buffer)
+FastSID::FastSID(C64 &ref, SIDBridge &bridgeref, int n, short *buffer) : C64Component(ref), bridge(bridgeref), nr(n), samples(buffer)
 {    
     subComponents = vector<HardwareComponent *> {
         

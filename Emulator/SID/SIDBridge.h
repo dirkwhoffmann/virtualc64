@@ -66,6 +66,9 @@ class SIDBridge : public C64Component {
     // Current configuration
     SIDConfig config;
     
+    // Volume control
+    Volume volume;
+
     
     //
     // Sub components
@@ -75,18 +78,18 @@ private:
     
     FastSID fastsid[4] = {
         
-        FastSID(c64, samples[0]),
-        FastSID(c64, samples[1]),
-        FastSID(c64, samples[2]),
-        FastSID(c64, samples[3])
+        FastSID(c64, *this, 0, samples[0]),
+        FastSID(c64, *this, 1, samples[1]),
+        FastSID(c64, *this, 2, samples[2]),
+        FastSID(c64, *this, 3, samples[3])
     };
     
     ReSID resid[4] = {
         
-        ReSID(c64, samples[0]),
-        ReSID(c64, samples[1]),
-        ReSID(c64, samples[2]),
-        ReSID(c64, samples[3])
+        ReSID(c64, *this, 0, samples[0]),
+        ReSID(c64, *this, 1, samples[1]),
+        ReSID(c64, *this, 2, samples[2]),
+        ReSID(c64, *this, 3, samples[3])
     };
         
     // CPU cycle at the last call to executeUntil()
@@ -103,9 +106,6 @@ private:
     
     // Time stamp of the last write pointer alignment
     u64 lastAlignment = 0;
-
-    // Volume control
-    Volume volume;
 
     // Volume scaling factors
     float vol[4];
@@ -150,7 +150,7 @@ public:
     /* The mixed stereo stream. This stream contains the final audio stream
      * ready to be handed over to the audio device of the host OS.
      */
-    StereoStream stream; //  = StereoStream(*this);
+    StereoStream stream;
     
     
     //
@@ -245,11 +245,16 @@ private:
         & config.vol
         & config.volL
         & config.volR
+        & volume.current
+        & volume.target
+        & volume.delta
+        & cpuFrequency
+        & sampleRate
         & samplesPerCycle
-        & pan
         & vol
         & volL
-        & volR;
+        & volR
+        & pan;
     }
     
     template <class T>

@@ -103,8 +103,8 @@ typedef struct
     SamplingMethod sampling;
     
     // Input channel volumes and pan settings
-    i64 vol[4];
     i64 pan[4];
+    i64 vol[4];
     
     // Output channel volumes
     i64 volL;

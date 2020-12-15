@@ -9,6 +9,27 @@
 
 #include "FSDescriptors.h"
 
+FSDeviceDescriptor::FSDeviceDescriptor(DiskType type, FSVolumeType dos)
+{
+    assert(dos == FS_CBM_DOS);
+    
+    switch (type) {
+            
+        case DISK_SS_SD:
+            numCyls = 35;
+            numHeads = 1;
+            break;
+            
+        case DISK_DS_SD:
+            numCyls = 35;
+            numHeads = 2;
+            break;
+            
+        default:
+            assert(false);
+    }
+}
+
 bool
 FSDeviceDescriptor::isTrackSectorPair(Track t, Sector s)
 {

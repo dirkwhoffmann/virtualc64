@@ -27,6 +27,12 @@
 
 class ReSID : public C64Component {
     
+    // Number of this SID (0 = primary SID)
+    int nr;
+    
+    // Reference to the SID bridge
+    SIDBridge &bridge;
+    
     // Target buffer for storing the produced audio samples
     short *samples = nullptr;
     
@@ -55,9 +61,6 @@ private:
     // Sample rate (usually set to 44.1 kHz or 48.0 kHz)
     double sampleRate;
     
-    // Approximate number of clock cycles per audio sample
-    u64 cyclesPerSample = 0;
-
     // Sampling method
     SamplingMethod samplingMethod;
     
@@ -71,7 +74,7 @@ private:
     
 public:
     
-	ReSID(C64 &ref, short *buffer);
+	ReSID(C64 &ref, SIDBridge &bridgeref, int n, short *buffer);
 	~ReSID();
     const char *getDescription() override { return "ReSID"; }
 
@@ -126,10 +129,7 @@ private:
     void applyToPersistentItems(T& worker)
     {
         worker
-        
-        & sampleRate
-        & emulateFilter
-        
+                
         & st.sid_register
         & st.bus_value
         & st.bus_value_ttl
@@ -177,7 +177,13 @@ private:
         & st.hold_zero[2]
         & st.envelope_pipeline[0]
         & st.envelope_pipeline[1]
-        & st.envelope_pipeline[2];
+        & st.envelope_pipeline[2]
+        
+        & model
+        & clockFrequency
+        & sampleRate
+        & emulateFilter;
+
     }
     
     template <class T>
