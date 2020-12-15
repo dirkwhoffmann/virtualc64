@@ -37,7 +37,8 @@ class Mouse1351 : public C64Component {
 public:
         
     Mouse1351(C64 &ref);
-    
+    const char *getDescriptionNew() override { return "Mouse1351"; }
+
 private:
     
     void _reset() override;

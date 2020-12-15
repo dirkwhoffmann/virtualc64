@@ -37,7 +37,8 @@ public:
     //
     
     TAPFile();
-    
+    const char *getDescriptionNew() override { return "TAPFile"; }
+
     static TAPFile *makeWithBuffer(const u8 *buffer, size_t length);
     static TAPFile *makeWithFile(const char *filename);
     

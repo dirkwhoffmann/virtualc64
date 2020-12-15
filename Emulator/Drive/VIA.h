@@ -517,12 +517,13 @@ public:
 
 	VIA1(C64 &ref, Drive &drvref);
 	~VIA1();
+    const char *getDescriptionNew() override { return "VIA1"; }
     
-    u8 portAexternal();
-    u8 portBexternal();
-    void updatePB();
-    void pullDownIrqLine();
-    void releaseIrqLine();
+    u8 portAexternal() override;
+    u8 portBexternal() override;
+    void updatePB() override;
+    void pullDownIrqLine() override;
+    void releaseIrqLine() override;
 };
 
 /* Second virtual VIA6522 controller. VIA2 serves as hardware interface between
@@ -534,12 +535,13 @@ public:
 
 	VIA2(C64 &ref, Drive &drvref);
 	~VIA2();
- 
-    u8 portAexternal();
-    u8 portBexternal();
-    void updatePB();
-    void pullDownIrqLine();
-    void releaseIrqLine();
+    const char *getDescriptionNew() override { return "VIA2"; }
+
+    u8 portAexternal() override;
+    u8 portBexternal() override;
+    void updatePB() override;
+    void pullDownIrqLine() override;
+    void releaseIrqLine() override;
 };
 
 #endif

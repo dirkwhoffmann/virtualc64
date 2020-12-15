@@ -21,6 +21,7 @@ class ActionReplay3 : public Cartridge {
 public:
     
     ActionReplay3(C64 &ref) : Cartridge(ref, "AR3") { };
+    const char *getDescriptionNew() override { return "AR3"; }
     CartridgeType getCartridgeType() override { return CRT_ACTION_REPLAY3; }
 
     

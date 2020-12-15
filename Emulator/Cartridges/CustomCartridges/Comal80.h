@@ -17,6 +17,7 @@ class Comal80 : public Cartridge {
 public:
     
     Comal80(C64 &ref) : Cartridge(ref, "Comal80") { };
+    const char *getDescriptionNew() override { return "Comal80"; }
     CartridgeType getCartridgeType() override { return CRT_COMAL80; }
     
     void _reset() override;

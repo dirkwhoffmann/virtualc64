@@ -232,6 +232,7 @@ public:
 public:
     
 	CIA(C64 &ref);
+    const char *getDescriptionNew() override { return "CIA"; }
 
 protected:
     

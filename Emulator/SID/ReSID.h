@@ -73,7 +73,8 @@ public:
     
 	ReSID(C64 &ref, short *buffer);
 	~ReSID();
-    
+    const char *getDescriptionNew() override { return "ReSID"; }
+
 private:
     
     void _reset() override;

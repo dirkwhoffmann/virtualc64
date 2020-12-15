@@ -85,7 +85,8 @@ private:
 public:
     
 	TOD(C64 &ref, CIA &cia);
-    
+    const char *getDescriptionNew() override { return "TOD"; }
+
 private:
     
     void _reset() override;

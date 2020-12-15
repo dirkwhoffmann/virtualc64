@@ -52,8 +52,7 @@ class Oscillator : public C64Component {
 public:
     
     Oscillator(C64& ref);
-
-    // const char *getDescription() override;
+    const char *getDescriptionNew() override { return "Oscillator"; }
 
 private:
     

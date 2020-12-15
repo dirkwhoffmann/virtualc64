@@ -17,6 +17,7 @@ class Dinamic : public Cartridge {
 public:
     
     Dinamic(C64 &ref) : Cartridge(ref, "Dinamic") { };
+    const char *getDescriptionNew() override { return "Dinamic"; }
     CartridgeType getCartridgeType() override { return CRT_DINAMIC; }
 
 private:

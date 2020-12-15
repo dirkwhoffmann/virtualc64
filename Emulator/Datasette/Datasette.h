@@ -76,6 +76,7 @@ public:
  
     Datasette(C64 &ref);    
     ~Datasette();
+    const char *getDescriptionNew() override { return "Datasette"; }
     
 private:
     

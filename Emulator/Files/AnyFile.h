@@ -54,6 +54,7 @@ public:
     
     AnyFile();
     virtual ~AnyFile();
+
     
     // Frees the memory allocated by this object
     virtual void dealloc();

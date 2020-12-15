@@ -209,6 +209,7 @@ public:
     
     C64();
     ~C64();
+    const char *getDescriptionNew() override { return "C64"; }
     
     void prefix() override;
 

@@ -34,9 +34,6 @@
 
 class FastSID : public C64Component {
     
-    // Reference to the connected SID bridge
-    // SIDBridge &bridge;
-
     // Target buffer for storing the produced audio samples
     short *samples = nullptr;
 
@@ -111,6 +108,7 @@ private:
 public:
         
 	FastSID(C64 &ref, short *buffer);
+    const char *getDescriptionNew() override { return "FastSID"; }
 
 private:
     

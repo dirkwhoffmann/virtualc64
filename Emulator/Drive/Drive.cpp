@@ -34,6 +34,13 @@ Drive::Drive(DriveID id, C64 &ref) : C64Component(ref), deviceNr(id)
     disk.clearDisk();
 }
 
+const char *
+Drive::getDescriptionNew()
+{
+    assert(deviceNr == DRIVE8 || deviceNr == DRIVE9);
+    return deviceNr == DRIVE8 ? "Drive8" : "Drive9";
+}
+
 void
 Drive::_reset()
 {

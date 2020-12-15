@@ -17,6 +17,7 @@ class Ocean : public Cartridge {
 public:
     
     Ocean(C64 &ref) : Cartridge(ref, "Ocean") { };
+    const char *getDescriptionNew() override { return "Ocean"; }
     CartridgeType getCartridgeType() override { return CRT_OCEAN; }
 
     

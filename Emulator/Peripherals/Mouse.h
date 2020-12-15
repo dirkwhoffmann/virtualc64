@@ -34,18 +34,14 @@ private:
     
     // A Neos (analog) mouse
     NeosMouse mouseNeos = NeosMouse(c64);
-    
-    // Emulated mouse model
-    // MouseModel model = MOUSE1350;
-    
+        
     // The port the mouse is connected to (0 = unconnected)
     unsigned port = 0;
 
-    /* Target mouse position
-     * In order to achieve a smooth mouse movement, a new mouse coordinate is
-     * not written directly into mouseX and mouseY. Instead, these variables
-     * are set. In execute(), mouseX and mouseY are shifted smoothly towards
-     * the target positions.
+    /* Target mouse position. In order to achieve a smooth mouse movement, a
+     * new mouse coordinate is not written directly into mouseX and mouseY.
+     * Instead, these variables are set. In execute(), mouseX and mouseY are
+     * shifted smoothly towards the target positions.
      */
     i64 targetX;
     i64 targetY;
@@ -58,6 +54,7 @@ private:
 public:
     
     Mouse(C64 &ref);
+    const char *getDescriptionNew() override { return "Mouse"; }
     
 private:
     

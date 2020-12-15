@@ -31,13 +31,7 @@ for (AutoMutex _am(mutex); _am.active; _am.active = false)
  * warnings.
  */
 class C64Object {
-    
-public:
-    
-    virtual ~C64Object() { };
-    
-private:
-    
+            
     /* Textual description of this object. Most debug output methods preceed
      * their output with this string. If set to NULL, no prefix is printed.
      */
@@ -63,6 +57,11 @@ protected:
     //
     
 public:
+    
+    virtual ~C64Object() { };
+    
+    // Returns the name for this component (e.g., "CPU" or "VICII")
+    virtual const char *getDescriptionNew() = 0;
     
     const char *getDescription() const { return description ? description : ""; }
     void setDescription(const char *str) { description = strdup(str); }

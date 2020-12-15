@@ -55,7 +55,8 @@ class NeosMouse : public C64Component {
 public:
     
     NeosMouse(C64 &ref);
-            
+    const char *getDescriptionNew() override { return "NeosMouse"; }
+
 private:
     
     void _reset() override;

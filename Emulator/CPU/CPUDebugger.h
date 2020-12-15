@@ -190,6 +190,8 @@ public:
     
     CPUDebugger(C64 &ref);
 
+    const char *getDescriptionNew() override { return "CPUDebugger"; }
+
     // Initializes an entry of the lookup tables
     void registerInstruction(u8 opcode, const char *mnemonic, AddressingMode mode);
 

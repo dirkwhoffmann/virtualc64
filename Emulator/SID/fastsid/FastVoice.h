@@ -173,7 +173,8 @@ class FastVoice : public HardwareComponent {
 public:
  
     FastVoice();
-    
+    const char *getDescriptionNew() override { return "FastVoice"; }
+
     static void initWaveTables();
     void init(FastSID *owner, unsigned voiceNr, FastVoice *prevVoice);
     

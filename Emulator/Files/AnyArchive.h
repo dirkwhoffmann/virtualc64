@@ -32,7 +32,7 @@ protected:
     
     
     //
-    // Creating objects
+    // Constructing
     //
     
 public:
@@ -43,6 +43,8 @@ public:
      */
     static AnyArchive *makeWithFile(const char *filename);
     
+    const char *getDescriptionNew() override { return "AnyArchive"; }
+
 
     //
     // Accessing items

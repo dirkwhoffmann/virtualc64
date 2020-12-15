@@ -194,6 +194,8 @@ public:
     
     CPU(C64& ref, MEMTYPE& memref);
     
+    const char *getDescriptionNew() override { return "CPU"; }
+
 private:
     
     // Registers the instruction set

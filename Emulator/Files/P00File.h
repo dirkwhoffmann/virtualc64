@@ -45,7 +45,8 @@ public:
     //
     
     P00File();
-    
+    const char *getDescriptionNew() override { return "P00File"; }
+
 
     //
     // Methods from AnyFile

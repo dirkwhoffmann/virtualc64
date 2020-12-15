@@ -54,6 +54,8 @@ public:
     
     ProcessorPort(C64 &ref);
     
+    const char *getDescriptionNew() override { return "ProcessorPort"; }
+
 private:
     
     void _reset() override { RESET_SNAPSHOT_ITEMS };

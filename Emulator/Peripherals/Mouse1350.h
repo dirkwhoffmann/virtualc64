@@ -43,6 +43,7 @@ private:
 public:
     
     Mouse1350(C64 &ref);
+    const char *getDescriptionNew() override { return "Mouse1350"; }
     
 private:
     

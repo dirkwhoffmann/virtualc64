@@ -47,7 +47,8 @@ public:
     //
     
     T64File();
-    
+    const char *getDescriptionNew() override { return "T64File"; }
+
     
     //
     // Methods from AnyC64File

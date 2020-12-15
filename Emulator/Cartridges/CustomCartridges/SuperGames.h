@@ -20,6 +20,7 @@ class SuperGames : public Cartridge {
 public:
     
     SuperGames(C64 &ref) : Cartridge(ref, "Supergames") { };
+    const char *getDescriptionNew() override { return "Supergames"; }
     CartridgeType getCartridgeType() override { return CRT_SUPER_GAMES; }
         
     

@@ -44,7 +44,7 @@ public:
     //
     
     PRGFile();
-    
+    const char *getDescriptionNew() override { return "PRGFile"; }
     
     
     //

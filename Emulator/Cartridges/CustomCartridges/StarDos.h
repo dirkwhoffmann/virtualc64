@@ -25,6 +25,7 @@ class StarDos : public Cartridge {
 public:
     
     StarDos(C64 &ref) : Cartridge(ref, "StarDos") { };
+    const char *getDescriptionNew() override { return "StarDos"; }
     CartridgeType getCartridgeType() override { return CRT_STARDOS; }
 
 private:

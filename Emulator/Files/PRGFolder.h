@@ -54,7 +54,7 @@ public:
     //
     
     PRGFolder();
-    
+    const char *getDescriptionNew() override { return "PRGFolder"; }
     
     
     //

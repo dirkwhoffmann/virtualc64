@@ -17,6 +17,7 @@ class Zaxxon : public Cartridge {
 public:
     
     Zaxxon(C64 &ref) : Cartridge(ref, "Zaxxon") { };
+    const char *getDescriptionNew() override { return "Zaxxon"; }
     CartridgeType getCartridgeType() override { return CRT_ZAXXON; }
 
 private:

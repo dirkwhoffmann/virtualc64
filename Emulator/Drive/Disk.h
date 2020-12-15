@@ -167,7 +167,7 @@ public:
     static Disk *make(C64 &c64, FileSystemType type);
     static Disk *makeWithArchive(C64 &c64, AnyArchive *archive);
 
-    
+
     //
     // Initializing
     //
@@ -175,6 +175,7 @@ public:
 public:
     
     Disk(C64 &ref);
+    const char *getDescriptionNew() override { return "Disk"; }
     
 private:
     

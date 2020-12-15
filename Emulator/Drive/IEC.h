@@ -61,6 +61,7 @@ private:
 public:
         
 	IEC(C64 &ref);
+    const char *getDescriptionNew() override { return "IEC"; }
     
 private:
     

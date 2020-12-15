@@ -49,7 +49,8 @@ class Keyboard : public C64Component {
 public:
     
     Keyboard(C64 &ref);
-    
+    const char *getDescriptionNew() override { return "Keyboard"; }
+
 private:
     
 	void _reset() override;

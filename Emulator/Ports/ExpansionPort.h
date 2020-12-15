@@ -50,6 +50,7 @@ public:
     
     ExpansionPort(C64 &ref);
     ~ExpansionPort();
+    const char *getDescriptionNew() override { return "ExpansionPort"; }
 
 private:
     

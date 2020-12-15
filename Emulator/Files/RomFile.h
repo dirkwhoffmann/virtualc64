@@ -69,7 +69,8 @@ public:
     //
     
     RomFile();
-    
+    const char *getDescriptionNew() override { return "RomFile"; }
+
     // Factory methods
     static RomFile *makeWithBuffer(const u8 *buffer, size_t length);
     static RomFile *makeWithFile(const char *filename);
@@ -79,9 +80,9 @@ public:
     // Methods from AnyC64File
     //
     
-    FileType type() { return romtype; }
-    bool hasSameType(const char *filename) { return isRomFile(filename); }
-    bool readFromBuffer(const u8 *buffer, size_t length);
+    FileType type() override { return romtype; }
+    bool hasSameType(const char *filename) override { return isRomFile(filename); }
+    bool readFromBuffer(const u8 *buffer, size_t length) override;
     
 };
 #endif
