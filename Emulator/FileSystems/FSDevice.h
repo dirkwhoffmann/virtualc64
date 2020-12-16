@@ -1,0 +1,119 @@
+// -----------------------------------------------------------------------------
+// This file is part of VirtualC64
+//
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// Licensed under the GNU General Public License v2
+//
+// See https://www.gnu.org for license information
+// -----------------------------------------------------------------------------
+
+#ifndef _FS_DEVICES_H
+#define _FS_DEVICES_H
+
+#include "FSDescriptors.h"
+#include "FSObjects.h"
+#include "FSBlock.h"
+#include "D64File.h"
+
+class FSDevice : C64Object {
+    
+    friend class FSBlock;
+
+    // Layout descriptor for this device
+    FSDeviceDescriptor layout;
+    
+    // The block storage
+    std::vector<BlockPtr> blocks;
+
+    
+    //
+    // Factory methods
+    //
+    
+public:
+
+    // Creates a file system with a custom device descriptor
+    static FSDevice *makeWithFormat(FSDeviceDescriptor &layout);
+
+    // Creates a file system for a standard floppy disk
+    static FSDevice *makeWithFormat(DiskType type);
+
+    // Creates a file system from a D64 image
+    static FSDevice *makeWithD64(class D64File *d64, FSError *error);
+
+    
+    //
+    // Initializing
+    //
+    
+public:
+
+    FSDevice(u32 capacity);
+    ~FSDevice();
+    
+    const char *getDescription() override { return "FSVolume"; }
+        
+    // Prints information about this volume
+    void info();
+
+    
+    //
+    // Debugging
+    //
+
+public:
+    
+    // Prints debug information
+    void dump();
+
+    // Prints a directory listing
+    void printDirectory();
+
+    
+    //
+    // Querying file system properties
+    //
+
+public:
+
+    // Returns the DOS version of this file system
+    FSVolumeType dos() { return layout.dos; }
+    
+    // Reports layout information
+    u32 getNumCyls() { return layout.numCyls; }
+    u32 getNumHeads() { return layout.numHeads; }
+    u32 getNumTracks() { return layout.numTracks(); }
+    u32 getNumSectors(Track track) { return layout.numSectors(track); }
+    u32 getNumBlocks() { return layout.numBlocks(); }
+
+    
+    //
+    // Accessing blocks
+    //
+    
+public:
+    
+    // Returns the type of a certain block
+    FSBlockType blockType(u32 nr);
+    
+    // Returns the usage type of a certain byte in a certain block
+    FSItemType itemType(u32 nr, u32 pos);
+    
+    // Queries a pointer from the block storage (may return nullptr)
+    FSBlock *blockPtr(u32 nr);
+    
+    
+    //
+    // Importing and exporting
+    //
+    
+public:
+        
+    // Reads a single byte from a block
+    u8 readByte(u32 block, u32 offset);
+
+    // Imports the volume from a buffer
+    bool importVolume(const u8 *src, size_t size, FSError *error = nullptr);
+};
+
+#endif

@@ -23,6 +23,7 @@ struct ControlPortWrapper { ControlPort *port; };
 struct SidBridgeWrapper { SIDBridge *sid; };
 struct IecWrapper { IEC *iec; };
 struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
+struct FSDeviceWrapper { FSDevice *device; };
 struct ViaWrapper { VIA6522 *via; };
 struct DiskWrapper { Disk *disk; };
 struct DriveWrapper { Drive *drive; };
@@ -935,6 +936,142 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return wrapper->disk->sectorDataBytesAsString(nr, hex);
 }
 
+@end
+
+//
+// FSDevice
+//
+
+@implementation FSDeviceProxy
+
+- (instancetype) initWithDevice:(FSDevice *)volume
+{
+    if (self = [super init]) {
+        wrapper = new FSDeviceWrapper();
+        wrapper->device = volume;
+    }
+    return self;
+}
+
++ (instancetype) make:(FSDevice *)volume
+{
+    if (volume == NULL) { return nil; }
+    
+    FSDeviceProxy *proxy = [[self alloc] initWithDevice: volume];
+    return proxy;
+}
+
++ (instancetype) makeWithD64:(D64FileProxy *)fileProxy
+{
+    FSError error;
+    AnyC64FileWrapper *d64 = [fileProxy wrapper];
+
+    FSDevice *volume = FSDevice::makeWithD64((D64File *)(d64->file), &error);
+    return [self make:volume];
+}
+
+- (FSVolumeType) dos
+{
+    return wrapper->device->dos();
+}
+
+- (NSInteger) numCyls
+{
+    return wrapper->device->getNumCyls();
+}
+
+- (NSInteger) numHeads
+{
+    return wrapper->device->getNumHeads();
+}
+
+- (NSInteger) numTracks
+{
+    return wrapper->device->getNumTracks();
+}
+
+- (NSInteger) numSectors:(Track)track
+{
+    return wrapper->device->getNumSectors(track);
+}
+
+- (NSInteger) numBlocks
+{
+    return wrapper->device->getNumBlocks();
+}
+
+- (FSBlockType) blockType:(NSInteger)blockNr
+{
+    return wrapper->device->blockType((u32)blockNr);
+}
+
+/*
+- (FSItemType) itemType:(NSInteger)blockNr pos:(NSInteger)pos
+{
+    return wrapper->device->itemType(blockNr, pos);
+}
+
+- (FSErrorReport) check:(BOOL)strict
+{
+    return wrapper->device->check(strict);
+}
+
+- (FSError) check:(NSInteger)nr
+              pos:(NSInteger)pos
+         expected:(unsigned char *)exp
+           strict:(BOOL)strict
+{
+    return wrapper->device->check(nr, pos, exp, strict);
+}
+
+- (BOOL) isCorrupted:(NSInteger)blockNr
+{
+    return wrapper->device->isCorrupted(blockNr);
+}
+
+- (NSInteger) getCorrupted:(NSInteger)blockNr
+{
+    return wrapper->device->getCorrupted(blockNr);
+}
+
+- (NSInteger) nextCorrupted:(NSInteger)blockNr
+{
+    return wrapper->device->nextCorrupted(blockNr);
+}
+
+- (NSInteger) prevCorrupted:(NSInteger)blockNr
+{
+    return wrapper->device->prevCorrupted(blockNr);
+}
+*/
+
+- (void) printDirectory
+{
+    return wrapper->device->printDirectory();
+}
+
+- (NSInteger) readByte:(NSInteger)block offset:(NSInteger)offset
+{
+    return wrapper->device->readByte((u32)block, (u32)offset);
+}
+
+/*
+- (FSError) export:(NSString *)path
+{
+    return wrapper->device->exportDirectory([path fileSystemRepresentation]);
+}
+*/
+/*
+- (BOOL) exportBlock:(NSInteger)block buffer:(unsigned char *)buffer
+{
+    return wrapper->device->exportBlock(block, buffer, 256);
+}
+*/
+
+- (void) dump
+{
+    wrapper->device->dump();
+}
 @end
 
 //

@@ -12,6 +12,8 @@
 FSDeviceDescriptor::FSDeviceDescriptor(DiskType type, FSVolumeType dos)
 {
     assert(dos == FS_CBM_DOS);
+ 
+    this->dos = dos;
     
     switch (type) {
             

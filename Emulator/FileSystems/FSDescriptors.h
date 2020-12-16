@@ -40,6 +40,9 @@
 
 struct FSDeviceDescriptor : C64Object {
     
+    // DOS type
+    FSVolumeType dos;
+    
     // Number of cylinders
     u32 numCyls = 0;
     
@@ -54,8 +57,7 @@ struct FSDeviceDescriptor : C64Object {
     FSDeviceDescriptor() { }
     FSDeviceDescriptor(DiskType type, FSVolumeType dos = FS_CBM_DOS);
 
-    // const char *getDescription() override { return "FSLayout"; }
-    void dump();
+    const char *getDescription() override { return "FSLayout"; }
     
     
     //

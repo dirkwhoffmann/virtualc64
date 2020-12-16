@@ -67,6 +67,7 @@ static const int EXP_DEBUG       = 0; // Expansion port
 static const int DSK_DEBUG       = 0; // Disk controller execution
 static const int DSKCHG_DEBUG    = 0; // Disk changing procedure
 static const int GCR_DEBUG       = 0; // Disk encoding / decoding
+static const int FS_DEBUG        = 1; // File System Classes
 
 // Media
 static const int CRT_DEBUG       = 0; // Cartridges

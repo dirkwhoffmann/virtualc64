@@ -32,6 +32,7 @@
 #include "RomFile.h"
 #include "TAPFile.h"
 #include "CRTFile.h"
+#include "FSDevice.h"
 
 // Sub components
 #include "ExpansionPort.h"

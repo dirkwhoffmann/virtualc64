@@ -19,6 +19,7 @@
 #include "DiskTypes.h"
 #include "DriveTypes.h"
 #include "FileTypes.h"
+#include "FSTypes.h"
 #include "MemoryTypes.h"
 #include "MessageQueueTypes.h"
 #include "MouseTypes.h"

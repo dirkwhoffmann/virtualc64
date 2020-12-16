@@ -14,8 +14,8 @@
 
 longenum(FSVolumeType)
 {
-    FS_NODOS = -1,
-    FS_CBM_DOS = 0
+    FS_NODOS = 0,
+    FS_CBM_DOS = 1
 };
 
 inline bool isFSVolumeType(long value)
@@ -85,6 +85,7 @@ longenum(FSError)
     FS_UNKNOWN,
     FS_UNSUPPORTED,
     FS_WRONG_CAPACITY,
+    FS_OUT_OF_MEMORY,
     FS_HAS_CYCLES,
     FS_CORRUPTED,
 

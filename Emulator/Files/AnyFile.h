@@ -91,7 +91,10 @@ public:
     //
     // Reading file data
     //
-    
+
+    // Returns a pointer to the raw data of this file
+    u8 *getData() { return data; }
+
     // Returns the file size in bytes
     virtual size_t getSize() { return size; }
 

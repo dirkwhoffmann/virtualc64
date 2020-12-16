@@ -58,6 +58,8 @@ struct KeyboardWrapper;
 struct ControlPortWrapper;
 struct IecWrapper;
 struct ExpansionPortWrapper;
+struct FSDeviceWrapper;
+struct FSDeviceWrapper;
 struct DriveWrapper;
 struct ViaWrapper;
 struct DiskWrapper;
@@ -656,6 +658,44 @@ struct AnyC64FileWrapper;
 - (const char *)sectorDataBytesAsString:(Sector)nr hex:(BOOL)hex;
 @end
 
+
+//
+// FSDevice
+//
+
+@interface FSDeviceProxy : NSObject {
+    
+    struct FSDeviceWrapper *wrapper;
+}
+
++ (instancetype)makeWithD64:(D64FileProxy *)adf;
+
+@property (readonly) FSVolumeType dos;
+@property (readonly) NSInteger numCyls;
+@property (readonly) NSInteger numHeads;
+@property (readonly) NSInteger numTracks;
+- (NSInteger)numSectors:(Track)track;
+@property (readonly) NSInteger numBlocks;
+
+- (FSBlockType)blockType:(NSInteger)blockNr;
+/*
+- (FSItemType)itemType:(NSInteger)blockNr pos:(NSInteger)pos;
+- (FSErrorReport)check:(BOOL)strict;
+- (FSError)check:(NSInteger)nr pos:(NSInteger)pos expected:(unsigned char *)exp strict:(BOOL)strict;
+- (BOOL)isCorrupted:(NSInteger)blockNr;
+- (NSInteger)getCorrupted:(NSInteger)blockNr;
+- (NSInteger)nextCorrupted:(NSInteger)blockNr;
+- (NSInteger)prevCorrupted:(NSInteger)blockNr;
+*/
+- (void)printDirectory;
+
+- (NSInteger)readByte:(NSInteger)block offset:(NSInteger)offset;
+// - (FSError)export:(NSString *)path;
+// - (BOOL)exportBlock:(NSInteger)block buffer:(unsigned char *)buffer;
+
+- (void)dump;
+
+@end
 
 //
 // Datasette proxy

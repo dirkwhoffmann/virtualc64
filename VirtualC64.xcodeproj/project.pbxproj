@@ -168,6 +168,9 @@
 		5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* MacAudio.swift */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		50995F2A24DBCDE400F40713 /* CPUDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50995F2824DBCDE400F40713 /* CPUDebugger.cpp */; };
+		50A077F8258A18B9005ACF5B /* FSDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A077F6258A18B9005ACF5B /* FSDevice.cpp */; };
+		50A077FB258A1AB3005ACF5B /* FSObjects.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A077F9258A1AB3005ACF5B /* FSObjects.cpp */; };
+		50A077FE258A1ADF005ACF5B /* FSBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A077FC258A1ADF005ACF5B /* FSBlock.cpp */; };
 		50A0B48D24C1CAEB00FF0B0B /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50A0B48C24C1CAEB00FF0B0B /* Preferences.xib */; };
 		50A0B48F24C1D15300FF0B0B /* MediaPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A0B48E24C1D15300FF0B0B /* MediaPrefs.swift */; };
 		50A0E0210A8F33120067714C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A0E0200A8F33120067714C /* IOKit.framework */; };
@@ -534,6 +537,12 @@
 		5093D6A824B19E9200BDF924 /* Serialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Serialization.h; sourceTree = "<group>"; };
 		50995F2824DBCDE400F40713 /* CPUDebugger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPUDebugger.cpp; sourceTree = "<group>"; };
 		50995F2924DBCDE400F40713 /* CPUDebugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPUDebugger.h; sourceTree = "<group>"; };
+		50A077F6258A18B9005ACF5B /* FSDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSDevice.cpp; sourceTree = "<group>"; };
+		50A077F7258A18B9005ACF5B /* FSDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSDevice.h; sourceTree = "<group>"; };
+		50A077F9258A1AB3005ACF5B /* FSObjects.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSObjects.cpp; sourceTree = "<group>"; };
+		50A077FA258A1AB3005ACF5B /* FSObjects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSObjects.h; sourceTree = "<group>"; };
+		50A077FC258A1ADF005ACF5B /* FSBlock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSBlock.cpp; sourceTree = "<group>"; };
+		50A077FD258A1ADF005ACF5B /* FSBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSBlock.h; sourceTree = "<group>"; };
 		50A0B48C24C1CAEB00FF0B0B /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		50A0B48E24C1D15300FF0B0B /* MediaPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPrefs.swift; sourceTree = "<group>"; };
 		50A0E0200A8F33120067714C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
@@ -1207,6 +1216,12 @@
 				5080501D2587A1B0004FE1F5 /* FSTypes.h */,
 				5080501A2587A16D004FE1F5 /* FSDescriptors.h */,
 				508050192587A16D004FE1F5 /* FSDescriptors.cpp */,
+				50A077F7258A18B9005ACF5B /* FSDevice.h */,
+				50A077F6258A18B9005ACF5B /* FSDevice.cpp */,
+				50A077FA258A1AB3005ACF5B /* FSObjects.h */,
+				50A077F9258A1AB3005ACF5B /* FSObjects.cpp */,
+				50A077FD258A1ADF005ACF5B /* FSBlock.h */,
+				50A077FC258A1ADF005ACF5B /* FSBlock.cpp */,
 			);
 			path = FileSystems;
 			sourceTree = "<group>";
@@ -1508,6 +1523,8 @@
 				50FF818F1F88D9100004548A /* GamePad.swift in Sources */,
 				505184DE24F23484002C6124 /* MyControllerStorage.swift in Sources */,
 				504C438024AF29AC00E69CAE /* CPU.cpp in Sources */,
+				50A077FE258A1ADF005ACF5B /* FSBlock.cpp in Sources */,
+				50A077FB258A1AB3005ACF5B /* FSObjects.cpp in Sources */,
 				5080501B2587A16D004FE1F5 /* FSDescriptors.cpp in Sources */,
 				504C439C24AF29AC00E69CAE /* wave.cc in Sources */,
 				50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */,
@@ -1596,6 +1613,7 @@
 				50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */,
 				504C439324AF29AC00E69CAE /* Datasette.cpp in Sources */,
 				504C437024AF29AC00E69CAE /* Cartridge.cpp in Sources */,
+				50A077F8258A18B9005ACF5B /* FSDevice.cpp in Sources */,
 				50BE4B6824E7FB28008F39C9 /* MTLTexture.swift in Sources */,
 				5031D59C200B81D20088C802 /* Animation.swift in Sources */,
 				50D5F88424F4FE9C0062EF13 /* SectorTableView.swift in Sources */,
