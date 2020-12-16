@@ -14,7 +14,7 @@
  * to emulate a fading effect. Fading is utilized to avoid cracking noises if,
  * e.g., the emulator is put in pause mode.
  */
-template <typename T> struct Volume {
+template <typename T> struct AudioVolume {
 
     // Current volume
     T current = 0;
@@ -84,5 +84,7 @@ template <typename T> struct Volume {
         delta[0] = delta[1];
     }
 };
+
+typedef AudioVolume<float> Volume;
 
 #endif 

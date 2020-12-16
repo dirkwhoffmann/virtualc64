@@ -29,9 +29,7 @@ SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
     for (int i = 0; i < 4; i++) {
         resid[i].setClockFrequency(PAL_CLOCK_FREQUENCY);
         fastsid[i].setClockFrequency(PAL_CLOCK_FREQUENCY);
-    }
-    
-    volume.set(1.0);
+    }    
 }
 
 void
@@ -259,7 +257,7 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
             assert(id >= 0 && id <= 3);
 
             config.vol[id] = MIN(100, MAX(0, value));
-            vol[id] = pow((double)config.vol[id] / 100, 1.4) * 0.00005;
+            vol[id] = pow((double)config.vol[id] / 100, 1.4) * 0.0000125;
 
             if (wasMuted != isMuted()) {
                 messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
@@ -591,7 +589,8 @@ SIDBridge::rampUp()
 {
     if (warpMode) return;
     
-    volume.fadeIn(30000);
+    volL.fadeIn(30000);
+    volR.fadeIn(30000);
     
     ignoreNextUnderOrOverflow();
 }
@@ -599,14 +598,17 @@ SIDBridge::rampUp()
 void
 SIDBridge::rampUpFromZero()
 {
-    volume.current = 0;
+    volL.current = 0;
+    volR.current = 0;
+
     rampUp();
 }
  
 void
 SIDBridge::rampDown()
 {
-    volume.fadeOut(2000);
+    volL.fadeOut(2000);
+    volR.fadeOut(2000);
     
     ignoreNextUnderOrOverflow();
 }
@@ -882,7 +884,7 @@ SIDBridge::copyMono(float *target, size_t n)
     if (stream.count() < n) handleBufferUnderflow();
 
     // Copy sound samples
-    stream.copyMono(target, n, volume);
+    stream.copyMono(target, n, volL, volR);
     
     stream.unlock();
 }
@@ -896,7 +898,7 @@ SIDBridge::copyStereo(float *target1, float *target2, size_t n)
     if (stream.count() < n) handleBufferUnderflow();
 
     // Copy sound samples
-    stream.copyStereo(target1, target2, n, volume);
+    stream.copyStereo(target1, target2, n, volL, volR);
     
     stream.unlock();
 }
@@ -910,7 +912,7 @@ SIDBridge::copyInterleaved(float *target, size_t n)
     if (stream.count() < n) handleBufferUnderflow();
 
     // Read sound samples
-    stream.copyInterleaved(target, n, volume);
+    stream.copyInterleaved(target, n, volL, volR);
     
     stream.unlock();
 }

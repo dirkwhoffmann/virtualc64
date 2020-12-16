@@ -160,8 +160,8 @@ public:
     STRUCT(SpriteSR)
     STRUCT(DiskData)
     STRUCT(DiskLength)
+    STRUCT(Volume)
     template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
-    template <typename T> STRUCT(Volume<T>)
 
     template <class T, size_t N>
     SerCounter& operator&(T (&v)[N])
@@ -235,8 +235,8 @@ public:
     STRUCT(SpriteSR)
     STRUCT(DiskData)
     STRUCT(DiskLength)
+    STRUCT(Volume)
     template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
-    template <typename T> STRUCT(Volume<T>)
 
     template <class T, size_t N>
     SerReader& operator&(T (&v)[N])
@@ -316,8 +316,8 @@ public:
     STRUCT(SpriteSR)
     STRUCT(DiskData)
     STRUCT(DiskLength)
+    STRUCT(Volume)
     template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
-    template <typename T> STRUCT(Volume<T>)
 
     template <class T, size_t N>
     SerWriter& operator&(T (&v)[N])
@@ -377,8 +377,8 @@ public:
     STRUCT(SpriteSR)
     STRUCT(DiskData)
     STRUCT(DiskLength)
+    STRUCT(Volume)
     template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
-    template <class T> STRUCT(Volume<T>)
 
     template <class T, size_t N>
     SerResetter& operator&(T (&v)[N])

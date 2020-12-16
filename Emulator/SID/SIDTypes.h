@@ -102,13 +102,13 @@ typedef struct
     SIDEngine engine;
     SamplingMethod sampling;
     
-    // Input channel volumes and pan settings
-    i64 pan[4];
-    i64 vol[4];
-    
-    // Output channel volumes
+    // Master volume (left and right channel)
     i64 volL;
     i64 volR;
+
+    // Channel volumes and pan factors
+    i64 vol[4];
+    i64 pan[4];
 }
 SIDConfig;
 

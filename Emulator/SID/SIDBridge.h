@@ -46,9 +46,6 @@ class SIDBridge : public C64Component {
     // Current configuration
     SIDConfig config;
     
-    // Volume control
-    Volume<float> volume;
-
     
     //
     // Sub components
@@ -87,12 +84,12 @@ private:
     // Time stamp of the last write pointer alignment
     u64 lastAlignment = 0;
 
+    // Master volumes (fadable)
+    Volume volL;
+    Volume volR;
+
     // Channel volumes
     float vol[4];
-
-    // Master volumes (fadable)
-    Volume<float> volL;
-    Volume<float> volR;
 
     // Panning factors
     float pan[4];
@@ -223,16 +220,16 @@ private:
         & config.filter
         & config.engine
         & config.sampling
-        & config.pan
-        & config.vol
         & config.volL
         & config.volR
+        & config.pan
+        & config.vol
         & cpuFrequency
         & sampleRate
         & samplesPerCycle
-        & vol
         & volL
         & volR
+        & vol
         & pan;
     }
     
