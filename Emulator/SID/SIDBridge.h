@@ -87,10 +87,12 @@ private:
     // Time stamp of the last write pointer alignment
     u64 lastAlignment = 0;
 
-    // Volume scaling factors
+    // Channel volumes
     float vol[4];
-    float volL;
-    float volR;
+
+    // Master volumes (fadable)
+    Volume<float> volL;
+    Volume<float> volR;
 
     // Panning factors
     float pan[4];

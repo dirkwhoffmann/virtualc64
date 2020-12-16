@@ -175,7 +175,7 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
         case OPT_AUDVOLL:
             
             config.volL = MIN(100, MAX(0, value));
-            volL = pow((double)config.volL / 50, 1.4);
+            volL.set(pow((double)config.volL / 50, 1.4));
 
             if (wasMuted != isMuted()) {
                 messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
@@ -185,7 +185,7 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
         case OPT_AUDVOLR:
 
             config.volR = MIN(100, MAX(0, value));
-            volR = pow((double)config.volR / 50, 1.4);
+            volR.set(pow((double)config.volR / 100, 1.4));
 
             if (wasMuted != isMuted()) {
                 messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
@@ -259,7 +259,7 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
             assert(id >= 0 && id <= 3);
 
             config.vol[id] = MIN(100, MAX(0, value));
-            vol[id] = pow((double)config.vol[id] / 100, 1.4) * 0.00000025;
+            vol[id] = pow((double)config.vol[id] / 100, 1.4) * 0.00005;
 
             if (wasMuted != isMuted()) {
                 messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
@@ -772,8 +772,8 @@ SIDBridge::execute(u64 numSamples)
         ch2 * pan[2] + ch3 * pan[3];
 
         // Apply master volume
-        l *= config.volL;
-        r *= config.volR;
+        l *= volL.current;
+        r *= volR.current;
 
         stream.write(SamplePair { l, r } );
     }
