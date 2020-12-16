@@ -12,6 +12,7 @@
 
 #include "C64Component.h"
 #include "SIDTypes.h"
+#include "Volume.h"
 #include "SIDStream.h"
 #include "FastSID.h"
 #include "ReSID.h"
@@ -38,27 +39,6 @@
  *           -------------------------------------------------
  */
 
-struct Volume {
-
-    // Current volume (will eventually reach the target volume)
-    float current = 1.0;
-
-    // Target volume
-    float target = 1.0;
-
-    // Delta steps (added to volume until the target volume is reached)
-    float delta = 0.0;
-    
-    // Shifts the current volume towards the target volume
-    void shift() {
-        if (current < target) {
-            current = MIN(current + delta, target);
-        } else {
-            current = MAX(current - delta, target);
-        }
-    }
-};
-
 class SIDBridge : public C64Component {
 
     friend C64Memory;
@@ -67,7 +47,7 @@ class SIDBridge : public C64Component {
     SIDConfig config;
     
     // Volume control
-    Volume volume;
+    Volume<float> volume;
 
     
     //

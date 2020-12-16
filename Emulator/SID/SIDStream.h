@@ -13,6 +13,8 @@
 #include "Buffers.h"
 #include "Concurrency.h"
 
+template <typename T> struct Volume;
+
 typedef struct { float left; float right; } SamplePair;
 class StereoStream : public RingBuffer < SamplePair, 12288 > {
     
@@ -32,7 +34,9 @@ public:
     //
     // Synchronizing access
     //
-    
+
+public:
+
     // Locks or unlocks the synchronization mutex
     void lock() { mutex.lock(); }
     void unlock() { mutex.unlock(); }
@@ -46,9 +50,9 @@ public:
      * final step in the audio pipeline. They are used to copy the generated
      * sound samples into the buffers of the native sound device.
      */
-    void copyMono(float *buffer, size_t n, struct Volume &volume);
-    void copyStereo(float *left, float *right, size_t n, struct Volume &volume);
-    void copyInterleaved(float *buffer, size_t n, struct Volume &volume);
+    void copyMono(float *buffer, size_t n, Volume<float> &volume);
+    void copyStereo(float *left, float *right, size_t n, Volume<float> &volume);
+    void copyInterleaved(float *buffer, size_t n, Volume<float> &volume);
     
 };
 

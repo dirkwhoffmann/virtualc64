@@ -30,6 +30,8 @@ SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
         resid[i].setClockFrequency(PAL_CLOCK_FREQUENCY);
         fastsid[i].setClockFrequency(PAL_CLOCK_FREQUENCY);
     }
+    
+    volume.set(1.0);
 }
 
 void
@@ -589,8 +591,7 @@ SIDBridge::rampUp()
 {
     if (warpMode) return;
     
-    volume.target = 1.0;
-    volume.delta  = 1.0 / 30000;
+    volume.fadeIn(30000);
     
     ignoreNextUnderOrOverflow();
 }
@@ -605,8 +606,7 @@ SIDBridge::rampUpFromZero()
 void
 SIDBridge::rampDown()
 {
-    volume.target = 0.0;
-    volume.delta  = 1.0 / 2000;
+    volume.fadeOut(2000);
     
     ignoreNextUnderOrOverflow();
 }
