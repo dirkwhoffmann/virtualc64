@@ -253,6 +253,11 @@ ReSID::executeSamples(u64 numSamples, short *buffer)
     reSID::cycle_count delta = 100000;
 
     // Don't ask to compute more samples that fit into the buffer
+    if (numSamples > SIDBridge::sampleBufferSize) {
+        panic("numSamples = %lld (max: %lld)\n", numSamples, SIDBridge::sampleBufferSize);
+        bridge.dump();
+        assert(false);
+    }
     assert(numSamples <= SIDBridge::sampleBufferSize);
     
     // debug("Executing ReSID %p for %lld samples\n", this, numSamples);

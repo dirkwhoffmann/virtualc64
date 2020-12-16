@@ -225,9 +225,6 @@ private:
         & config.vol
         & config.volL
         & config.volR
-        & volume.current
-        & volume.target
-        & volume.delta
         & cpuFrequency
         & sampleRate
         & samplesPerCycle
@@ -330,7 +327,7 @@ public:
 
     // Executes SID for a certain number of CPU cycles
     // DEPRECATED
-	void executeCycles(u64 numCycles);
+	// void executeCycles(u64 numCycles);
 
     /* Executes SID for a certain number of audio samples. The function returns
      * the number of consumed CPU cycles.

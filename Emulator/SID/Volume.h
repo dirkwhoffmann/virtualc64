@@ -26,6 +26,18 @@ template <typename T> struct Volume {
     T target[2] = { 0, 0 };
     T delta[2] = { 0, 0 };
 
+    // Serializing
+    template <class W>
+    void applyToItems(W& worker)
+    {
+        worker
+        
+        & current
+        & normal
+        & target
+        & delta;
+    }
+    
     // Setter and getter
     T get() { return current; }
     void set(T value) { current = normal = target[0] = value; }

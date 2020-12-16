@@ -14,6 +14,7 @@
 #include "C64PrivateTypes.h"
 #include "CPUInstructions.h"
 #include "TimeDelayed.h"
+#include "Volume.h"
 #include "envelope.h"
 
 #include <arpa/inet.h>
@@ -160,6 +161,7 @@ public:
     STRUCT(DiskData)
     STRUCT(DiskLength)
     template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
+    template <typename T> STRUCT(Volume<T>)
 
     template <class T, size_t N>
     SerCounter& operator&(T (&v)[N])
@@ -234,6 +236,7 @@ public:
     STRUCT(DiskData)
     STRUCT(DiskLength)
     template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
+    template <typename T> STRUCT(Volume<T>)
 
     template <class T, size_t N>
     SerReader& operator&(T (&v)[N])
@@ -314,6 +317,7 @@ public:
     STRUCT(DiskData)
     STRUCT(DiskLength)
     template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
+    template <typename T> STRUCT(Volume<T>)
 
     template <class T, size_t N>
     SerWriter& operator&(T (&v)[N])
@@ -374,6 +378,7 @@ public:
     STRUCT(DiskData)
     STRUCT(DiskLength)
     template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
+    template <class T> STRUCT(Volume<T>)
 
     template <class T, size_t N>
     SerResetter& operator&(T (&v)[N])
