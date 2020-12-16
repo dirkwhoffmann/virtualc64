@@ -103,6 +103,30 @@ public:
     FSBlock *blockPtr(u32 nr);
     
     
+    
+    //
+    // Working with the BAM (Block Allocation Map)
+    //
+
+    // Checks if a block is marked as free in the allocation bitmap
+    bool isFree(Block b);
+    bool isFree(Track t, Sector s);
+
+    // Marks a block as allocated or free
+    void markAsAllocated(Block b) { setAllocationBit(b, 0); }
+    void markAsAllocated(Track t, Sector s) { setAllocationBit(t, s, 0); }
+    void markAsFree(Block b) { setAllocationBit(b, 1); }
+    void markAsFree(Track t, Sector s) { setAllocationBit(t, s, 1); }
+    void setAllocationBit(Block b, bool value);
+    void setAllocationBit(Track t, Sector s, bool value);
+
+private:
+    
+    // Locates the allocation bit for a certain block
+    FSBlock *locateAllocationBit(Block b, u32 *byte, u32 *bit);
+    FSBlock *locateAllocationBit(Track t, Sector s, u32 *byte, u32 *bit);
+
+    
     //
     // Importing and exporting
     //

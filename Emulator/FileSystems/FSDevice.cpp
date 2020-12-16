@@ -112,6 +112,92 @@ FSDevice::blockPtr(u32 nr)
     return nr < blocks.size() ? blocks[nr] : nullptr;
 }
 
+bool
+FSDevice::isFree(Block b)
+{
+    u32 byte, bit;
+    FSBlock *bam = locateAllocationBit(b, &byte, &bit);
+    
+    return GET_BIT(bam->data[byte], bit);
+}
+
+bool
+FSDevice::isFree(Track t, Sector s)
+{
+    u32 byte, bit;
+    FSBlock *bam = locateAllocationBit(t, s, &byte, &bit);
+    
+    return GET_BIT(bam->data[byte], bit);
+}
+
+void
+FSDevice::setAllocationBit(Block b, bool value)
+{
+    Track t; Sector s;
+    layout.translateBlockNr(b, &t, &s);
+
+    setAllocationBit(t, s, value);
+}
+
+void
+FSDevice::setAllocationBit(Track t, Sector s, bool value)
+{
+    u32 byte, bit;
+    FSBlock *bam = locateAllocationBit(t, s, &byte, &bit);
+
+    if (value && !GET_BIT(bam->data[byte], bit)) {
+
+        // Mark sector as free
+        SET_BIT(bam->data[byte], bit);
+
+        // Increase the number of free sectors
+        bam->data[byte & ~0b11]++;
+    }
+    
+    if (!value && !GET_BIT(bam->data[byte], bit)) {
+        
+        // Mark sector as allocated
+        CLR_BIT(bam->data[byte], bit);
+
+        // Decrease the number of free sectors
+        bam->data[byte & ~0b11]--;
+    }
+}
+
+FSBlock *
+FSDevice::locateAllocationBit(Block b, u32 *byte, u32 *bit)
+{
+    assert(b < blocks.size());
+    
+    Track t; Sector s;
+    layout.translateBlockNr(b, &t, &s);
+    
+    return locateAllocationBit(t, s, byte, bit);
+}
+
+FSBlock *
+FSDevice::locateAllocationBit(Track t, Sector s, u32 *byte, u32 *bit)
+{
+    assert(layout.isTrackSectorPair(t, s));
+        
+    /* Bytes $04 - $8F store the BAM entries for each track, in groups of four
+     * bytes per track, starting on track 1. [...] The first byte is the number
+     * of free sectors on that track. The next three bytes represent the bitmap
+     * of which sectors are used/free. Since it is 3 bytes we have 24 bits of
+     * storage. Remember that at most, each track only has 21 sectors, so there
+     * are a few unused bits.
+     */
+    
+    Block bam;
+    layout.translateBlockNr(&bam, 18, 0);
+    printf("BAM is located in block %d\n", bam);
+    u32 group = 4 * t;
+    *byte = group + 1 + (s >> 3);
+    *bit = s & 0x07;
+    
+    return blocks[bam];
+}
+
 u8
 FSDevice::readByte(u32 block, u32 offset)
 {
