@@ -178,7 +178,6 @@ private:
         
         & model
         & clockFrequency
-        & sampleRate
         & emulateFilter;
 
     }

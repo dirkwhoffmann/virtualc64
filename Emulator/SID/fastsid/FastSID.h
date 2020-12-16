@@ -72,10 +72,7 @@ private:
     
     // Sample rate (44.1 kHz per default)
     u32 sampleRate = 44100;
-    
-    // Ratio between sample rate and cpu frequency
-    double samplesPerCycle;
-    
+        
     // Stores for how many cycles FastSID was executed so far
     u64 executedCycles;
 
@@ -170,8 +167,6 @@ private:
         
         & model
         & cpuFrequency
-        & sampleRate
-        & samplesPerCycle
         & emulateFilter;
     }
     
@@ -182,7 +177,6 @@ private:
         
         & sidreg
         & speed1
-        & samplesPerCycle
         & executedCycles
         & computedSamples
         & latchedDataBus;
@@ -210,13 +204,6 @@ public:
     
 public:
     
-    /* Runs SID for the specified amount of CPU cycles. The generated sound
-     * samples are written into the provided buffer. The fuction returns the
-     * number of written audio samples.
-     */
-    // u64 executeCycles(u64 numCycles, short *buffer);
-    // u64 executeCycles(u64 numCycles) { return executeCycles(numCycles, samples); }
-
     /* Runs SID until a certain number of audio samples is produced. The
      * generated sound samples are written into the provided buffer. The
      * fuction returns the number of executed cycles.

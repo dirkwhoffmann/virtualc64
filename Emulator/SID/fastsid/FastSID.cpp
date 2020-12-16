@@ -53,8 +53,6 @@ FastSID::init(int sampleRate, int cycles_per_sec)
 {
     u32 i;
     
-    // Recompute sample/cycle ratio and reset counters
-    samplesPerCycle = (double)sampleRate / (double)cpuFrequency;
     executedCycles = 0LL;
     computedSamples = 0LL;
 
@@ -342,39 +340,6 @@ FastSID::poke(u16 addr, u8 value)
     latchedDataBus = value;
 }
 
-/*
-u64
-FastSID::executeCycles(u64 numCycles, short *buffer)
-{
-    // Don't ask SID to compute samples for a time interval greater than 1 sec
-    assert(numCycles <= PAL_CYCLES_PER_SECOND);
-    
-    // debug("Executing FastSID %p for %lld cycles\n", this, cycles);
-    
-    executedCycles += numCycles;
-
-    // Compute how many sound samples should have been computed
-    u64 shouldHave = (u64)(executedCycles * samplesPerCycle);
-    
-    // How many sound samples are missing?
-    u64 numSamples = shouldHave - computedSamples;
-    computedSamples = shouldHave;
-    
-    // Do some consistency checking
-    if (numSamples > SIDBridge::sampleBufferSize) {
-        debug(SID_DEBUG, "Number of missing sound samples exceeds buffer size\n");
-        numSamples = SIDBridge::sampleBufferSize;
-    }
-    
-    // Compute missing samples
-    for (unsigned i = 0; i < numSamples; i++) {
-        buffer[i] = calculateSingleSample();
-    }
-        
-    return numSamples;
-}
-*/
-
 i64
 FastSID::executeSamples(u64 numSamples)
 {
@@ -393,6 +358,7 @@ FastSID::executeSamples(u64 numSamples, short *buffer)
     }
 
     // Return the estimated number of consumed cycles
+    double samplesPerCycle = (double)sampleRate / (double)cpuFrequency;
     return (u64)(numSamples / samplesPerCycle);
 }
 

@@ -77,10 +77,7 @@ private:
     
     // Sample rate (44.1 kHz per default)
     double sampleRate = 44100.0;
-    
-    // Ratio between sample rate and cpu frequency
-    double samplesPerCycle = sampleRate / cpuFrequency;
-    
+        
     // Time stamp of the last write pointer alignment
     u64 lastAlignment = 0;
 
@@ -225,8 +222,6 @@ private:
         & config.pan
         & config.vol
         & cpuFrequency
-        & sampleRate
-        & samplesPerCycle
         & volL
         & volR
         & vol
@@ -247,7 +242,6 @@ private:
     size_t didLoadFromBuffer(u8 *buffer) override;
     
  
-
 private:
     
     void _run() override;

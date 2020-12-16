@@ -317,7 +317,6 @@ SIDBridge::setClockFrequency(u32 frequency)
     debug(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
 
     cpuFrequency = frequency;
-    samplesPerCycle = sampleRate / cpuFrequency;
 
     for (int i = 0; i < 4; i++) {
         resid[i].setClockFrequency(frequency);
@@ -368,7 +367,6 @@ SIDBridge::setSampleRate(double rate)
     debug(SID_DEBUG, "Setting sample rate to %f\n", rate);
 
     sampleRate = rate;
-    samplesPerCycle = sampleRate / cpuFrequency;
     
     for (int i = 0; i < 4; i++) {
         resid[i].setSampleRate(rate);
@@ -676,7 +674,7 @@ void
 SIDBridge::executeUntil(u64 targetCycle)
 {
     i64 missingCycles  = targetCycle - cycles;
-    i64 missingSamples = i64(missingCycles * samplesPerCycle);
+    i64 missingSamples = i64(missingCycles * sampleRate / cpuFrequency);
     i64 consumedCycles = execute(missingSamples);
 
     cycles += consumedCycles;
