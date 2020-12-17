@@ -89,6 +89,14 @@ struct FSDeviceDescriptor : C64Object {
     
     void translateBlockNr(Block *b, Track t, Sector s);
     void translateBlockNr(Block *b, Cylinder c, Head h, Sector s);
+    
+    
+    //
+    // Ordering blocks
+    //
+    
+    bool nextBlock(Block b, Block *nb);
+    bool nextTrackAndSector(Track t, Sector s, Track *nt, Sector *ns);
 };
 
 #endif

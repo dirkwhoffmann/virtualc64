@@ -108,7 +108,7 @@ D64File::makeWithFile(const char *path)
 D64File *
 D64File::makeWithAnyArchive(AnyArchive *otherArchive)
 {
-    assert(otherArchive != NULL);
+    assert(otherArchive);
     
     // Create a standard 35 track disk with no error checking codes
     D64File *archive = new D64File(35, false);

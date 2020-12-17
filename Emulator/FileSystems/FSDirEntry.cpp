@@ -9,6 +9,12 @@
 
 #include "FSDevice.h"
 
+bool
+FSDirEntry::isEmpty()
+{
+    return isZero(&nextDirTrack, 32);
+}
+
 const char *
 FSDirEntry::typeString()
 {

@@ -152,7 +152,7 @@ bool isZero(const u8 *ptr, size_t size);
 
 
 //
-// Handling file and path names
+// Handling file
 //
 
 /* Extracts a certain component from a path. Every function returns a newly
@@ -174,6 +174,10 @@ bool checkFileSize(const char *filename, long min = -1, long max = -1);
 // Checks the header signature (magic bytes) of a file or buffer
 bool matchingFileHeader(const char *path, const u8 *header, size_t length);
 bool matchingBufferHeader(const u8 *buffer, const u8 *header, size_t length);
+
+// Loads a file from disk
+bool loadFile(const char *path, u8 **buffer, long *size);
+bool loadFile(const char *path, const char *name, u8 **buffer, long *size);
 
 
 //

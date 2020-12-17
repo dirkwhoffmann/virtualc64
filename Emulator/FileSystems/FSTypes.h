@@ -32,6 +32,31 @@ inline const char *sFSVolumeType(FSVolumeType value)
     }
 }
 
+longenum(FSFileType)
+{
+    FS_PRG = 1,
+    FS_SEQ,
+    FS_REL,
+    FS_USR,
+    FS_DEL
+};
+
+inline bool isFSFileType(long value)
+{
+    return value >= FS_PRG && value <= FS_DEL;
+}
+
+inline const char *sFSFileType(FSFileType value)
+{
+    switch (value) {
+        case FS_PRG:  return "PRG";
+        case FS_SEQ:  return "SEQ";
+        case FS_REL:  return "REL";
+        case FS_USR:  return "USR";
+        default:      return "???";
+    }
+}
+
 longenum(FSBlockType)
 {
     FS_UNKNOWN_BLOCK,
@@ -88,6 +113,7 @@ longenum(FSError)
     FS_OUT_OF_MEMORY,
     FS_HAS_CYCLES,
     FS_CORRUPTED,
+    FS_IMPORT_ERROR,
 
     // Export errors
     FS_DIRECTORY_NOT_EMPTY,

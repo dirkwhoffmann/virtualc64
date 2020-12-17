@@ -125,7 +125,8 @@ class ImportDialog: DialogController {
             subtitle1String = "A byte-accurate image of a C64 diskette"
             
             // REMOVE ASAP
-            let device = FSDeviceProxy.make(withD64: myDocument.attachment as? D64FileProxy)
+            // let device = FSDeviceProxy.make(withD64: myDocument.attachment as? D64FileProxy)
+            // let device = FSDeviceProxy.make(withArchive: myDocument.attachment as? AnyArchiveProxy)
             
         case _ as G64FileProxy:
             

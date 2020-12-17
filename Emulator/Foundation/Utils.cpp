@@ -306,6 +306,55 @@ matchingBufferHeader(const u8 *buffer, const u8 *header, size_t length)
     return true;
 }
 
+bool
+loadFile(const char *path, u8 **buffer, long *size)
+{
+    assert(path != nullptr);
+    assert(buffer != nullptr);
+    assert(size != nullptr);
+
+    *buffer = nullptr;
+    *size = 0;
+    
+    // Get file size
+    long bytes = getSizeOfFile(path);
+    if (bytes == -1) return false;
+    
+    // Open file
+    FILE *file = fopen(path, "r");
+    if (file == nullptr) return false;
+     
+    // Allocate memory
+    u8 *data = new u8[bytes];
+    if (data == nullptr) { fclose(file); return false; }
+    
+    // Read data
+    for (unsigned i = 0; i < bytes; i++) {
+        int c = fgetc(file);
+        if (c == EOF) break;
+        data[i] = (u8)c;
+    }
+    
+    fclose(file);
+    *buffer = data;
+    *size = bytes;
+    return true;
+}
+
+bool
+loadFile(const char *path, const char *name, u8 **buffer, long *size)
+{
+    assert(path != nullptr);
+    assert(name != nullptr);
+
+    char *fullpath = new char[strlen(path) + strlen(name) + 2];
+    strcpy(fullpath, path);
+    strcat(fullpath, "/");
+    strcat(fullpath, name);
+    
+    return loadFile(fullpath, buffer, size);
+}
+
 u32
 fnv_1a_32(u8 *addr, size_t size)
 {

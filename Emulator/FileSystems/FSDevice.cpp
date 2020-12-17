@@ -36,7 +36,7 @@ FSDevice::makeWithFormat(DiskType type)
 FSDevice *
 FSDevice::makeWithD64(D64File *d64, FSError *error)
 {
-    assert(d64 != nullptr);
+    assert(d64);
 
     // Get device descriptor
     FSDeviceDescriptor descriptor = FSDeviceDescriptor(DISK_SS_SD);
@@ -50,6 +50,60 @@ FSDevice::makeWithD64(D64File *d64, FSError *error)
         return nullptr;
     }
     
+    return device;
+}
+
+FSDevice *
+FSDevice::makeWithArchive(AnyArchive *archive, FSError *error)
+{
+    assert(archive);
+    
+    // Get device descriptor
+    FSDeviceDescriptor descriptor = FSDeviceDescriptor(DISK_SS_SD);
+        
+    // Create the device
+    FSDevice *device = makeWithFormat(descriptor);
+        
+    // Write BAM
+    // device->writeBAM(otherArchive->getName());
+    
+    // Loop over all entries in archive
+    int numberOfItems = archive->numberOfItems();
+    for (int i = 0; i < numberOfItems; i++) {
+        
+        archive->selectItem(i);
+        
+        /*
+        writeDirectoryEntry(i,
+                            archive->getNameOfItem(),
+                            track, sector,
+                            archive->getSizeOfItem());
+        */
+        
+        // Every file is preceded with two bytes containing its load address
+        /*
+        u16 loadAddr = otherArchive->getDestinationAddrOfItem();
+        archive->writeByteToSector(LO_BYTE(loadAddr), &track, &sector);
+        archive->writeByteToSector(HI_BYTE(loadAddr), &track, &sector);
+        */
+        
+        // Write raw data to disk
+        Track t = 1;
+        Sector s = 0;
+        u32 offset = 2;
+        
+        int byte;
+        unsigned num = 0;
+                
+        archive->selectItem(i);
+        while ((byte = archive->readItem()) != EOF) {
+            device->writeByteToSector(byte, &t, &s, &offset);
+            num++;
+        }
+        
+        device->layout.nextTrackAndSector(t, s, &t, &s);
+    }
+        
     return device;
 }
 
@@ -145,6 +199,41 @@ FSDevice::nextBlockPtr(Track t, Sector s)
     if (ptr) { ptr = blockPtr(ptr->data[0], ptr->data[1]); }
     
     return ptr;
+}
+
+bool
+FSDevice::writeByteToSector(u8 byte, Track *pt, Sector *ps, u32 *pOffset)
+{
+    Track t = *pt;
+    Sector s = *ps;
+    u32 offset = *pOffset;
+    
+    assert(layout.isTrackSectorPair(t, s));
+    assert(offset >= 2 && offset <= 0x100);
+    
+    FSBlock *ptr = blockPtr(t, s);
+    
+    // No free slots in this sector, proceed to next one
+    if (offset == 0x100) {
+        
+        // Only proceed if there is space left on the disk
+        if (!layout.nextTrackAndSector(t, s, &t, &s)) return false;
+        
+        // Link previous sector with the new one
+        ptr->data[0] = (u8)t;
+        ptr->data[1] = (u8)s;
+        ptr = blockPtr(t, s);
+        offset = 2;
+    }
+    
+    // Write byte
+    ptr->data[offset] = byte;
+    if (offset == 0) markAsAllocated(t, s);
+    
+    *pt = t;
+    *ps = s;
+    *pOffset = offset;
+    return true;
 }
 
 FSBlock *
@@ -259,8 +348,9 @@ FSDevice::scanDirectory(bool skipInvisible)
         FSDirEntry *entry = (FSDirEntry *)ptr->data + (i % 8);
         
         // Terminate if there are no more entries
-        if (isZero((u8 *)entry, 32)) break;
-                
+        // if (isZero((u8 *)entry, 32)) break;
+        if (entry->isEmpty()) break;
+
         // Add file to the result list
         if (!(skipInvisible && entry->isHidden())) result.push_back(entry);
      
@@ -269,6 +359,81 @@ FSDevice::scanDirectory(bool skipInvisible)
     }
     
     return result;
+}
+
+bool
+FSDevice::setCapacity(u32 n)
+{
+    // A disk can hold up to 144 files
+    if (n > 144) return false;
+    
+    // Determine how many directory blocks are needed
+    u32 numBlocks = n / 8;
+    
+    // The directory starts on track 18, sector 1
+    FSBlock *ptr = blockPtr(18, 1);
+    
+    // Create all missing directory blocks
+    for (u32 i = 1; i < numBlocks; i++) {
+
+        FSBlock *next = nextBlockPtr(ptr);
+
+        if (next == nullptr) {
+                
+        }
+    }
+    
+    assert(false);
+    return false;
+}
+
+bool
+FSDevice::increaseCapacity(u32 n)
+{
+    return setCapacity(numFiles() + n);
+}
+
+FSBlock *
+FSDevice::makeFile(const char *name)
+{
+    // The directory starts on track 18, sector 1
+    FSBlock *ptr = blockPtr(18, 1);
+    
+    // Search for the next free slot
+    for (int i = 0; ptr && i < 144; i++) {
+    
+        FSDirEntry *entry = (FSDirEntry *)ptr->data + (i % 8);
+
+        if (entry->isEmpty()) {
+            
+            makeFile(name, entry); 
+        }
+     
+        // Jump to the next sector if this was the last directory item
+        if (i % 8 == 7) ptr = nextBlockPtr(ptr);
+    }
+    
+    return nullptr;
+}
+
+FSBlock *
+FSDevice::makeFile(const char *name, const u8 *buffer, size_t size)
+{
+    assert(false);
+    return nullptr;
+}
+
+FSBlock *
+FSDevice::makeFile(const char *name, const char *str)
+{
+    assert(str);
+    return makeFile(name, (const u8 *)str, strlen(str));
+}
+
+FSBlock *
+FSDevice::makeFile(const char *name, FSDirEntry *entry)
+{
+    assert(false);
 }
 
 u8

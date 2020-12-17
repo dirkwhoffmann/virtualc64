@@ -133,3 +133,51 @@ FSDeviceDescriptor::translateBlockNr(Block *b, Cylinder c, Head h, Sector s)
 {
     translateBlockNr(b, c + h * numTracks(), s);
 }
+
+bool
+FSDeviceDescriptor::nextTrackAndSector(Track t, Sector s, Track *nt, Sector *ns)
+{
+    assert(isTrackSectorPair(t, s));
+    assert(nt);
+    assert(ns);
+    
+    // Lookup table for the next sector (interleave patterns)
+    Sector next[5][21] = {
+
+        // Speed zone 0 - 3
+        { 10,11,12,13,14,15,16, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 },
+        { 10,11,12,13,14,15,16,17, 1, 0, 2, 3, 4, 5, 6, 7, 8, 9 },
+        { 10,11,12,13,14,15,16,17,18, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+        { 10,11,12,13,14,15,16,17,18,19,20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 },
+        
+        // Directory track
+        {  3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15,16,17,18, 0, 1, 2 }
+    };
+
+    if (t == 18) {
+
+        // Take care of the directory track
+        s = next[4][s];
+
+        // Return false if we've wrapped over (directory track is full)
+        if (s == 0) return false;
+    
+    } else {
+            
+        // Take care of all other tracks
+        s = next[speedZone(t)][s];
+        
+        // Move to the next track if we've wrapped over
+        if (s == 0) {
+            
+            if (t >= numTracks()) return false;
+            t = t == 17 ? 19 : t + 1;
+        }
+    }
+    
+    assert(isTrackSectorPair(t, s));
+    *nt = t;
+    *ns = s;
+    return true;
+}
+

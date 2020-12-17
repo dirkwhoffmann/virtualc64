@@ -669,6 +669,7 @@ struct AnyC64FileWrapper;
 }
 
 + (instancetype)makeWithD64:(D64FileProxy *)adf;
++ (instancetype)makeWithArchive:(AnyArchiveProxy *)archive;
 
 @property (readonly) FSVolumeType dos;
 @property (readonly) NSInteger numCyls;

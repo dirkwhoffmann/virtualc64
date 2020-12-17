@@ -16,6 +16,8 @@
 #include "FSDirEntry.h"
 #include "D64File.h"
 
+#include <dirent.h>
+
 class FSDevice : C64Object {
     
     friend class FSBlock;
@@ -41,6 +43,9 @@ public:
 
     // Creates a file system from a D64 image
     static FSDevice *makeWithD64(class D64File *d64, FSError *error);
+
+    // Creates a file from an object implementing the Archive interface
+    static FSDevice *makeWithArchive(AnyArchive *otherArchive, FSError *error);
 
     
     //
@@ -87,6 +92,9 @@ public:
     u32 getNumSectors(Track track) { return layout.numSectors(track); }
     u32 getNumBlocks() { return layout.numBlocks(); }
 
+    // Returns the number of stored files
+    u32 numFiles() { return (u32)scanDirectory().size(); }
+
     
     //
     // Accessing blocks
@@ -109,7 +117,11 @@ public:
     FSBlock *nextBlockPtr(Track t, Sector s);
     FSBlock *nextBlockPtr(FSBlock *ptr);
 
-        
+    // Writes a byte to a block (returns true on success)
+    // bool writeByteToSector(u8 byte, Block *b, u8 *offset);
+    bool writeByteToSector(u8 byte, Track *t, Sector *s, u32 *offset);
+
+    
     //
     // Working with the BAM (Block Allocation Map)
     //
@@ -143,8 +155,21 @@ public:
     FSDirEntry *seek(u32 nr);
     // FSDirEntry *seek(FSName &name);
     
-    // Collects references to all files
+    // Collects pointers to the directory entries of all existing files
     std::vector<FSDirEntry *> scanDirectory(bool skipInvisible = true);
+        
+    // Ensures that the disk has enough directory blocks to host 'n' files
+    bool setCapacity(u32 n);
+    bool increaseCapacity(u32 n);
+    
+    // Creates a new file
+    FSBlock *makeFile(const char *name);
+    FSBlock *makeFile(const char *name, const u8 *buffer, size_t size);
+    FSBlock *makeFile(const char *name, const char *str);
+
+private:
+    
+    FSBlock *makeFile(const char *name, FSDirEntry *entry);
     
     
     //
@@ -157,7 +182,7 @@ public:
     u8 readByte(u32 block, u32 offset);
 
     // Imports the volume from a buffer
-    bool importVolume(const u8 *src, size_t size, FSError *error = nullptr);
+    bool importVolume(const u8 *src, size_t size, FSError *error = nullptr);    
 };
 
 #endif

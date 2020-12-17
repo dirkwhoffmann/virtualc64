@@ -963,10 +963,19 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 + (instancetype) makeWithD64:(D64FileProxy *)fileProxy
 {
-    FSError error;
     AnyC64FileWrapper *d64 = [fileProxy wrapper];
 
+    FSError error;
     FSDevice *volume = FSDevice::makeWithD64((D64File *)(d64->file), &error);
+    return [self make:volume];
+}
+
++ (instancetype) makeWithArchive:(AnyArchiveProxy *)archiveProxy
+{
+    AnyC64FileWrapper *archive = [archiveProxy wrapper];
+
+    FSError error;
+    FSDevice *volume = FSDevice::makeWithArchive((AnyArchive *)(archive->file), &error);
     return [self make:volume];
 }
 

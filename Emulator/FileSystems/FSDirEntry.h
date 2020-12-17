@@ -27,6 +27,9 @@ typedef struct
     u8 fileSizeLo;        // $1E
     u8 fileSizeHi;        // $1F
 
+    // Checks if this directory entry if empty
+    bool isEmpty(); 
+    
     // Returns the file type as a string
     const char *typeString(); 
     
