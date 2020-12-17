@@ -35,7 +35,8 @@ const u8 RomFile::magicKernalRomBytes[kernalRomSignatureCnt][3] = {
 
     { 0x85, 0x56, 0x20 },       // Commodore ROM
     { 0xA9, 0x93, 0x20 },       // MEGA65 project
-    { 0x20, 0x02, 0xBE }
+    { 0x20, 0x2E, 0xBA },       // MEGA65 project
+    { 0x20, 0x02, 0xBE }        // MEGA65 project
 };
 
 const u8 RomFile::magicVC1541RomBytes[vc1541RomSignatureCnt][3] = {

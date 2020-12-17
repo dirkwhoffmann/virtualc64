@@ -2,7 +2,8 @@
   "data" : [
     {
       "filename" : "kernal_generic.rom",
-      "idiom" : "universal"
+      "idiom" : "universal",
+      "universal-type-identifier" : "dyn.ah62d4rv4ge81e55r"
     }
   ],
   "info" : {
