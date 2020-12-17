@@ -49,6 +49,15 @@ public:
     // Returns the role of a certain byte in this block
     FSItemType itemType(u32 byte);
 
+
+    //
+    // Initializing
+    //
+    
+    // Writes the Block Availability Map (BAM)
+    void writeBAM(const char *name);
+    void writeBAM(FSName &name);
+
     
     //
     // Debugging

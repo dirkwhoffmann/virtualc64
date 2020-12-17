@@ -23,6 +23,20 @@ FSName::FSName(const u8 *_pet)
     }    
 }
 
+FSName::FSName(const char *_str)
+{
+    assert(_str);
+    
+    memset(pet, 0xA0, sizeof(pet));
+    memset(str, 0x00, sizeof(str));
+    
+    for (int i = 0; i < 16 && str[i]; i++) {
+        
+        str[i] = _str[i];
+        pet[i] = ascii2pet(_str[i]);
+    }
+}
+
 bool
 FSName::operator== (FSName &rhs)
 {

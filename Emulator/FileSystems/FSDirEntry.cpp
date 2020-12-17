@@ -50,3 +50,18 @@ FSDirEntry::isHidden()
 {
     return strlen(typeString()) == 0;
 }
+
+void
+FSDirEntry::init(const char *name, Track t, Sector s, size_t fileSize)
+{
+    FSName fsName = FSName(name);
+    size_t blocks = (fileSize + 255) / 256;
+    
+    fileType        = 0x82;  // PRG
+    firstDataTrack  = (u8)t;
+    firstDataSector = (u8)s;
+    fileSizeLo      = LO_BYTE(blocks);
+    fileSizeHi      = HI_BYTE(blocks);
+
+    fsName.write(fileName);
+}

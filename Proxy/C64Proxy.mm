@@ -944,6 +944,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @implementation FSDeviceProxy
 
+@synthesize wrapper;
+
 - (instancetype) initWithDevice:(FSDevice *)volume
 {
     if (self = [super init]) {
@@ -1917,32 +1919,45 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return D64File::isD64File([filename UTF8String]);
 }
+
 + (instancetype) make:(D64File *)archive
 {
     if (archive == NULL) return nil;
     return [[self alloc] initWithFile:archive];
 }
+
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
     D64File *archive = D64File::makeWithBuffer((const u8 *)buffer, length);
     return [self make: archive];
 }
+
 + (instancetype) makeWithFile:(NSString *)path
 {
     D64File *archive = D64File::makeWithFile([path UTF8String]);
     return [self make: archive];
 }
+
 + (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)otherArchive
 {
     AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
     D64File *archive = D64File::makeWithAnyArchive(other);
-    return [self make: archive];
+    return archive ? [self make: archive] : nullptr;
 }
+
 + (instancetype) makeWithDisk:(DiskProxy *)disk
 {
     Disk *d = (Disk *)([disk wrapper]->disk);
     D64File *archive = D64File::makeWithDisk(d);
-    return archive ? [self make: archive] : NULL; 
+    return archive ? [self make: archive] : nullptr;
+}
+
++ (instancetype)makeWithVolume:(FSDeviceProxy *)proxy error:(FSError *)error
+{
+    FSDevice *device = (FSDevice *)([proxy wrapper]->device);
+    
+    D64File *archive = D64File::makeWithVolume(*device, error);
+    return archive ? [self make: archive] : nullptr;
 }
 
 @end

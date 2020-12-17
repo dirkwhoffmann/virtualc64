@@ -27,6 +27,9 @@ typedef struct
     u8 fileSizeLo;        // $1E
     u8 fileSizeHi;        // $1F
 
+    // Initializes this entry
+    void init(const char *name, Track t, Sector s, size_t filesize);
+
     // Checks if this directory entry if empty
     bool isEmpty(); 
     

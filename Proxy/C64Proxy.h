@@ -671,6 +671,7 @@ struct AnyC64FileWrapper;
 + (instancetype)makeWithD64:(D64FileProxy *)adf;
 + (instancetype)makeWithArchive:(AnyArchiveProxy *)archive;
 
+@property (readonly) struct FSDeviceWrapper *wrapper;
 @property (readonly) FSVolumeType dos;
 @property (readonly) NSInteger numCyls;
 @property (readonly) NSInteger numHeads;
@@ -957,6 +958,7 @@ struct AnyC64FileWrapper;
 + (instancetype)makeWithFile:(NSString *)filename;
 + (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)otherArchive;
 + (instancetype)makeWithDisk:(DiskProxy *)disk;
++ (instancetype)makeWithVolume:(FSDeviceProxy *)volume error:(FSError *)error;
 
 @end
 

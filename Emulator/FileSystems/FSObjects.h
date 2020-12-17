@@ -21,6 +21,8 @@ struct FSName : C64Object {
     char str[16 + 1];
     
     FSName(const u8 *_pet);
+    FSName(const char *_str);
+    
     const char *getDescription() override { return "FSName"; }
     const char *c_str() { return str; }
     bool operator== (FSName &rhs);

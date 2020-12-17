@@ -65,43 +65,34 @@ FSDevice::makeWithArchive(AnyArchive *archive, FSError *error)
     FSDevice *device = makeWithFormat(descriptor);
         
     // Write BAM
-    // device->writeBAM(otherArchive->getName());
-    
-    // Loop over all entries in archive
+    device->blockPtr(18,0)->writeBAM(archive->getName());
+
+    // Create the proper amount of directory blocks
     int numberOfItems = archive->numberOfItems();
+    device->setCapacity(numberOfItems);
+
+    // The first directory block is located on track 18, sector 1
+    Track t = 1; Sector s = 0; u32 offset = 2;
+
+    // Loop over all entries in archive
     for (int i = 0; i < numberOfItems; i++) {
         
         archive->selectItem(i);
         
-        /*
-        writeDirectoryEntry(i,
-                            archive->getNameOfItem(),
-                            track, sector,
-                            archive->getSizeOfItem());
-        */
-        
-        // Every file is preceded with two bytes containing its load address
-        /*
-        u16 loadAddr = otherArchive->getDestinationAddrOfItem();
-        archive->writeByteToSector(LO_BYTE(loadAddr), &track, &sector);
-        archive->writeByteToSector(HI_BYTE(loadAddr), &track, &sector);
-        */
-        
-        // Write raw data to disk
-        Track t = 1;
-        Sector s = 0;
-        u32 offset = 2;
+        // Add directory entry
+        FSDirEntry *entry = device->nextFreeDirEntry();
+        printf("nextFreeDirEntry = %p\n", entry);
+        entry->init(archive->getNameOfItem(), t, s, archive->getSizeOfItem());
+            
+        // Add data blocks
+        u16 loadAddr = archive->getDestinationAddrOfItem();
+        device->writeByteToSector(LO_BYTE(loadAddr), &t, &s, &offset);
+        device->writeByteToSector(HI_BYTE(loadAddr), &t, &s, &offset);
         
         int byte;
-        unsigned num = 0;
-                
-        archive->selectItem(i);
         while ((byte = archive->readItem()) != EOF) {
             device->writeByteToSector(byte, &t, &s, &offset);
-            num++;
         }
-        
-        device->layout.nextTrackAndSector(t, s, &t, &s);
     }
         
     return device;
@@ -201,6 +192,12 @@ FSDevice::nextBlockPtr(Track t, Sector s)
     return ptr;
 }
 
+FSBlock *
+FSDevice::nextBlockPtr(FSBlock *ptr)
+{
+    return ptr ? nextBlockPtr(ptr->nr) : nullptr;
+}
+
 bool
 FSDevice::writeByteToSector(u8 byte, Track *pt, Sector *ps, u32 *pOffset)
 {
@@ -234,12 +231,6 @@ FSDevice::writeByteToSector(u8 byte, Track *pt, Sector *ps, u32 *pOffset)
     *ps = s;
     *pOffset = offset;
     return true;
-}
-
-FSBlock *
-FSDevice::nextBlockPtr(FSBlock *ptr)
-{
-    return ptr ? nextBlockPtr(ptr->nr) : nullptr;
 }
 
 bool
@@ -328,9 +319,32 @@ FSDevice::locateAllocationBit(Track t, Sector s, u32 *byte, u32 *bit)
     return blocks[bam];
 }
 
+/*
 FSDirEntry *
 FSDevice::seek(u32 nr)
 {
+    return nullptr;
+}
+*/
+
+FSDirEntry *
+FSDevice::nextFreeDirEntry()
+{
+    // The directory starts on track 18, sector 1
+    FSBlock *ptr = blockPtr(18, 1);
+    
+    // The number of files is limited by 144
+    for (int i = 0; ptr && i < 144; i++) {
+    
+        FSDirEntry *entry = (FSDirEntry *)ptr->data + (i % 8);
+        
+        // Return if this entry is not used
+        if (entry->isEmpty()) return entry;
+     
+        // Jump to the next sector if this was the last directory item
+        if (i % 8 == 7) ptr = nextBlockPtr(ptr);
+    }
+    
     return nullptr;
 }
 
@@ -348,7 +362,6 @@ FSDevice::scanDirectory(bool skipInvisible)
         FSDirEntry *entry = (FSDirEntry *)ptr->data + (i % 8);
         
         // Terminate if there are no more entries
-        // if (isZero((u8 *)entry, 32)) break;
         if (entry->isEmpty()) break;
 
         // Add file to the result list
@@ -365,26 +378,28 @@ bool
 FSDevice::setCapacity(u32 n)
 {
     // A disk can hold up to 144 files
-    if (n > 144) return false;
+    assert(n <= 144);
     
     // Determine how many directory blocks are needed
     u32 numBlocks = n / 8;
     
-    // The directory starts on track 18, sector 1
-    FSBlock *ptr = blockPtr(18, 1);
+    // The firsr directory block is located at (18,1)
+    Track t = 18;
+    Sector s = 1;
+    FSBlock *ptr = blockPtr(t, s);
     
-    // Create all missing directory blocks
     for (u32 i = 1; i < numBlocks; i++) {
 
-        FSBlock *next = nextBlockPtr(ptr);
-
-        if (next == nullptr) {
-                
-        }
+        // Get location of the next block
+        if (!layout.nextTrackAndSector(t, s, &t, &s)) return false;
+        markAsAllocated(t, s);
+        
+        // Link blocks
+        ptr->data[0] = t;
+        ptr->data[1] = s;
     }
     
-    assert(false);
-    return false;
+    return true;
 }
 
 bool
