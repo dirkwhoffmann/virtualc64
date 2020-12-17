@@ -126,7 +126,6 @@ class ImportDialog: DialogController {
             
             // REMOVE ASAP
             let device = FSDeviceProxy.make(withD64: myDocument.attachment as? D64FileProxy)
-            device?.dump()
             
         case _ as G64FileProxy:
             
