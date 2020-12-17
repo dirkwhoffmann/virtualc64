@@ -66,9 +66,6 @@ bool releaseBuild();
 // Sets a single bit to 0 (value == 0) or 1 (value != 0)
 #define WRITE_BIT(x,nr,value) ((value) ? SET_BIT(x, nr) : CLR_BIT(x, nr))
 
-// Copies a single bit from x to y
-// #define COPY_BIT(x,y,nr) ((y) = (((y) & ~(1 << (nr))) | (((x) & (1 << (nr))))))
-
 // Replaces bits, bytes, and words
 #define REPLACE_BIT(x,nr,v) ((v) ? SET_BIT(x, nr) : CLR_BIT(x, nr))
 #define REPLACE_LO(x,y) (((x) & ~0x00FF) | (y))
@@ -144,6 +141,14 @@ void hexdump(u8 *p, size_t size, size_t cols, size_t pad);
 void hexdump(u8 *p, size_t size, size_t cols = 32);
 void hexdumpWords(u8 *p, size_t size, size_t cols = 32);
 void hexdumpLongwords(u8 *p, size_t size, size_t cols = 32);
+
+
+//
+// Accessing memory
+//
+
+// Checks if a certain memory area is all zero
+bool isZero(const u8 *ptr, size_t size); 
 
 
 //

@@ -91,7 +91,11 @@ FSDevice::dump()
 void
 FSDevice::printDirectory()
 {
-    debug("printDirectory: IMPLEMENTATION MISSING\n");
+    auto dir = scanDirectory();
+    
+    for (auto &item : dir) {
+        msg("Item: %s\n", item->getName().c_str());
+    }
 }
 
 FSBlockType
@@ -107,9 +111,46 @@ FSDevice::itemType(u32 nr, u32 pos)
 }
 
 FSBlock *
-FSDevice::blockPtr(u32 nr)
+FSDevice::blockPtr(Block b)
 {
-    return nr < blocks.size() ? blocks[nr] : nullptr;
+    return b < blocks.size() ? blocks[b] : nullptr;
+}
+
+FSBlock *
+FSDevice::blockPtr(Track t, Sector s)
+{
+    Block b;
+    layout.translateBlockNr(&b, t, s);
+    
+    return blockPtr(b);
+}
+
+FSBlock *
+FSDevice::nextBlockPtr(Block b)
+{
+    FSBlock *ptr = blockPtr(b);
+    
+    // Jump to linked block
+    if (ptr) { ptr = blockPtr(ptr->data[0], ptr->data[1]); }
+    
+    return ptr;
+}
+
+FSBlock *
+FSDevice::nextBlockPtr(Track t, Sector s)
+{
+    FSBlock *ptr = blockPtr(t, s);
+    
+    // Jump to linked block
+    if (ptr) { ptr = blockPtr(ptr->data[0], ptr->data[1]); }
+    
+    return ptr;
+}
+
+FSBlock *
+FSDevice::nextBlockPtr(FSBlock *ptr)
+{
+    return ptr ? nextBlockPtr(ptr->nr) : nullptr;
 }
 
 bool
@@ -198,6 +239,38 @@ FSDevice::locateAllocationBit(Track t, Sector s, u32 *byte, u32 *bit)
     return blocks[bam];
 }
 
+FSDirEntry *
+FSDevice::seek(u32 nr)
+{
+    return nullptr;
+}
+
+std::vector<FSDirEntry *>
+FSDevice::scanDirectory(bool skipInvisible)
+{
+    std::vector<FSDirEntry *> result;
+    
+    // The directory starts on track 18, sector 1
+    FSBlock *ptr = blockPtr(18, 1);
+    
+    // The number of files is limited by 144
+    for (int i = 0; ptr && i < 144; i++) {
+    
+        FSDirEntry *entry = (FSDirEntry *)ptr->data + (i % 8);
+        
+        // Terminate if there are no more entries
+        if (isZero((u8 *)entry, 32)) break;
+                
+        // Add file to the result list
+        if (!(skipInvisible && entry->isHidden())) result.push_back(entry);
+     
+        // Jump to the next sector if this was the last directory item
+        if (i % 8 == 7) ptr = nextBlockPtr(ptr);
+    }
+    
+    return result;
+}
+
 u8
 FSDevice::readByte(u32 block, u32 offset)
 {
@@ -231,9 +304,9 @@ FSDevice::importVolume(const u8 *src, size_t size, FSError *error)
     if (error) *error = FS_OK;
 
     if (FS_DEBUG) {
-        info();
-        dump();
-        hexdump(blocks[0]->data, 256);
+        
+        // info();
+        // dump();
         printDirectory();
     }
     

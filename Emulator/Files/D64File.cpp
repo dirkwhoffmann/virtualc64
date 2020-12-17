@@ -716,7 +716,7 @@ D64File::writeByteToSector(u8 byte, Track *t, Sector *s)
 
 
 //
-//! Accessing file and directory items
+// Accessing file and directory items
 //
 
 void

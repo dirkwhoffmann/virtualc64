@@ -1166,7 +1166,7 @@ C64::latestUserSnapshot()
 }
 
 void C64::loadFromSnapshot(Snapshot *snapshot)
-{
+{    
     u8 *ptr;
     
     if (snapshot && (ptr = snapshot->getData())) {

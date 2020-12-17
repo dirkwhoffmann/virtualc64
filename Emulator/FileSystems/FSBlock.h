@@ -19,8 +19,8 @@ class FSBlock : C64Object {
     
 public:
     
-    // The sector number of this block
-    u32 nr;
+    // The number of this block
+    Block nr;
         
     // The actual block data
     u8 data[256];

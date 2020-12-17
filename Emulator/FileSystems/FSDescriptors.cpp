@@ -96,17 +96,18 @@ FSDeviceDescriptor::translateBlockNr(Block b, Track *t, Sector *s)
         b -= num;
     }
     
-    assert(false);
+    *t = *s = -1;
 }
 
 void
 FSDeviceDescriptor::translateBlockNr(Block b, Cylinder *c, Head *h, Sector *s)
 {
     Track t;
-    
     translateBlockNr(b, &t, s);
     
-    if (t <= numCyls) {
+    if (t == (Track)(-1)) {
+        *h = -1; *c = -1;
+    } else if (t <= numCyls) {
         *h = 0; *c = t;
     } else {
         *h = 1; *c = t - numCyls;
@@ -116,7 +117,9 @@ FSDeviceDescriptor::translateBlockNr(Block b, Cylinder *c, Head *h, Sector *s)
 void
 FSDeviceDescriptor::translateBlockNr(Block *b, Track t, Sector s)
 {
-    u32 cnt = 0;
+    if (!isTrackSectorPair(t, s)) { *b = (Block)(-1); return; }
+    
+    u32 cnt = s;
     
     for (Track i = 1; i < t; i++) {
         cnt += numSectors(i);

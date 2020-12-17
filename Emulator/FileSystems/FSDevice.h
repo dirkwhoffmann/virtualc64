@@ -13,6 +13,7 @@
 #include "FSDescriptors.h"
 #include "FSObjects.h"
 #include "FSBlock.h"
+#include "FSDirEntry.h"
 #include "D64File.h"
 
 class FSDevice : C64Object {
@@ -100,10 +101,15 @@ public:
     FSItemType itemType(u32 nr, u32 pos);
     
     // Queries a pointer from the block storage (may return nullptr)
-    FSBlock *blockPtr(u32 nr);
-    
-    
-    
+    FSBlock *blockPtr(Block b);
+    FSBlock *blockPtr(Track t, Sector s);
+
+    // Follows the block chain link of a specific block
+    FSBlock *nextBlockPtr(Block b);
+    FSBlock *nextBlockPtr(Track t, Sector s);
+    FSBlock *nextBlockPtr(FSBlock *ptr);
+
+        
     //
     // Working with the BAM (Block Allocation Map)
     //
@@ -126,6 +132,20 @@ private:
     FSBlock *locateAllocationBit(Block b, u32 *byte, u32 *bit);
     FSBlock *locateAllocationBit(Track t, Sector s, u32 *byte, u32 *bit);
 
+    
+    //
+    // Working with files
+    //
+    
+public:
+
+    // Seeks a file by number or name
+    FSDirEntry *seek(u32 nr);
+    // FSDirEntry *seek(FSName &name);
+    
+    // Collects references to all files
+    std::vector<FSDirEntry *> scanDirectory(bool skipInvisible = true);
+    
     
     //
     // Importing and exporting

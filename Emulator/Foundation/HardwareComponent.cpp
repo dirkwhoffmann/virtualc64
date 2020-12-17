@@ -82,6 +82,8 @@ HardwareComponent::size()
 size_t
 HardwareComponent::load(u8 *buffer)
 {
+    assert(!isRunning());
+    
     u8 *ptr = buffer;
 
     // Call delegation method

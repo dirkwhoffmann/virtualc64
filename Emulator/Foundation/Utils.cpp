@@ -176,6 +176,14 @@ void hexdumpLongwords(u8 *p, size_t size, size_t cols)
     hexdump(p, size, cols, 4);
 }
 
+bool isZero(const u8 *ptr, size_t size)
+{
+    for (size_t i = 0; i < size; i++) {
+        if (ptr[i]) return false;
+    }
+    return true;
+}
+
 char *
 extractFilename(const char *path)
 {
