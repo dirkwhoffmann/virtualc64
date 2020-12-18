@@ -298,7 +298,6 @@ C64::setConfigItem(ConfigOption option, long value)
         case OPT_VIC_REVISION:
         {
             u64 newFrequency = VICII::getFrequency((VICRevision)value);
-            debug(" set freq = %lld\n", newFrequency);
 
             if (frequency == newFrequency) {
                 assert(durationOfOneCycle == 10000000000 / newFrequency);
@@ -347,7 +346,7 @@ C64::updateVicFunctionTable()
 {
     bool dmaDebug = vic.getConfig().dmaDebug;
     
-    debug("updateVicFunctionTable (dmaDebug: %d)\n", dmaDebug);
+    debug(VIC_DEBUG, "updateVicFunctionTable (dmaDebug: %d)\n", dmaDebug);
     
     // Assign model independent execution functions
     vicfunc[0] = nullptr;
@@ -684,14 +683,13 @@ C64::_setWarp(bool enable)
 {
     if (enable) {
         
-        debug("Warp on\n");
+        debug(RUN_DEBUG, "Warp on\n");
         putMessage(MSG_WARP_ON);
         
     } else {
 
-        debug("Warp off\n");
+        debug(RUN_DEBUG, "Warp off\n");
         oscillator.restart();
-        // restartTimer();
         putMessage(MSG_WARP_OFF);
     }
 }
@@ -831,7 +829,7 @@ C64::runLoop()
                 clearControlFlags(RL_AUTO_SNAPSHOT);
             }
             if (runLoopCtrl & RL_USER_SNAPSHOT) {
-                debug("RL_USER_SNAPSHOT\n");
+                debug(RUN_DEBUG, "RL_USER_SNAPSHOT\n");
                 userSnapshot = Snapshot::makeWithC64(this);
                 putMessage(MSG_USER_SNAPSHOT_TAKEN);
                 clearControlFlags(RL_USER_SNAPSHOT);
@@ -863,14 +861,14 @@ C64::runLoop()
             // Are we requested to terminate the run loop?
             if (runLoopCtrl & RL_STOP) {
                 clearControlFlags(RL_STOP);
-                debug("RL_STOP\n");
+                debug(RUN_DEBUG, "RL_STOP\n");
                 break;
             }
             
             // Is the CPU jammed due the execution of an illegal instruction?
             if (runLoopCtrl & RL_CPU_JAMMED) {
                 putMessage(MSG_CPU_JAMMED);
-                debug("RL_CPU_JAMMED\n");
+                debug(RUN_DEBUG, "RL_CPU_JAMMED\n");
                 clearControlFlags(RL_CPU_JAMMED);
                 break;
             }
@@ -1459,11 +1457,11 @@ C64::loadRom(RomType type, RomFile *file)
         case ROM_BASIC:
         {
             if (file->type() == FILETYPE_BASIC_ROM) {
-                debug("Flashing Basic Rom\n");
+                debug(MEM_DEBUG, "Flashing Basic Rom\n");
                 file->flash(mem.rom, 0xA000);
                 
-                debug("hasMega65Rom() = %d\n", hasMega65Rom(ROM_BASIC));
-                debug("mega65BasicRev() = %s\n", mega65BasicRev());
+                debug(MEM_DEBUG, "hasMega65Rom() = %d\n", hasMega65Rom(ROM_BASIC));
+                debug(MEM_DEBUG, "mega65BasicRev() = %s\n", mega65BasicRev());
                 
                 return true;
             }
@@ -1472,7 +1470,7 @@ C64::loadRom(RomType type, RomFile *file)
         case ROM_CHAR:
         {
             if (file->type() == FILETYPE_CHAR_ROM) {
-                debug("Flashing Character Rom\n");
+                debug(MEM_DEBUG, "Flashing Character Rom\n");
                 file->flash(mem.rom, 0xD000);
                 return true;
             }
@@ -1481,11 +1479,11 @@ C64::loadRom(RomType type, RomFile *file)
         case ROM_KERNAL:
         {
             if (file->type() == FILETYPE_KERNAL_ROM) {
-                debug("Flashing Kernal Rom\n");
+                debug(MEM_DEBUG, "Flashing Kernal Rom\n");
                 file->flash(mem.rom, 0xE000);
                 
-                debug("hasMega65Rom() = %d\n", hasMega65Rom(ROM_KERNAL));
-                debug("mega65KernalRev() = %s\n", mega65KernalRev());
+                debug(MEM_DEBUG, "hasMega65Rom() = %d\n", hasMega65Rom(ROM_KERNAL));
+                debug(MEM_DEBUG, "mega65KernalRev() = %s\n", mega65KernalRev());
                 
                 return true;
             }
@@ -1494,7 +1492,7 @@ C64::loadRom(RomType type, RomFile *file)
         case ROM_VC1541:
         {
             if (file->type() == FILETYPE_VC1541_ROM) {
-                debug("Flashing VC1541 Rom\n");
+                debug(MEM_DEBUG, "Flashing VC1541 Rom\n");
                 file->flash(drive8.mem.rom);
                 file->flash(drive9.mem.rom);
                 return true;

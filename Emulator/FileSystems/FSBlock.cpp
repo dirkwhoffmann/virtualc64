@@ -40,9 +40,7 @@ FSBlock::writeBAM(FSName &name)
 {
     // Don't call this methods on blocks other than the BAM block
     assert(this == device.blockPtr(18, 0));
-    
-    debug("Writing BAM\n");
-    
+        
     // Location of the first directory sector
     data[0x00] = 18;
     data[0x01] = 1;

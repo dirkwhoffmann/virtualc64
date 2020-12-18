@@ -456,7 +456,6 @@ CPU<M>::executeOneCycle()
                 }
                 
                 debug(IRQ_DEBUG, "NMI (source = %02X)\n", nmiLine);
-                // if (tracingEnabled()) debug("NMI (source = %02X)\n", nmiLine);
                 IDLE_FETCH
                 edgeDetector.clear();
                 next = nmi_2;

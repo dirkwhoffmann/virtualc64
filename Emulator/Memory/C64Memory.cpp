@@ -542,7 +542,7 @@ C64Memory::pokeIO(u16 addr, u8 value)
 
             // Check the exit register (option -debugcart)
             if (addr == 0xD7FF && config.debugcart) {
-                debug("DEBUGCART: Terminating with exit code %x\n", value);
+                msg("DEBUGCART: Terminating with exit code %x\n", value);
                 exit(value);
             }
 

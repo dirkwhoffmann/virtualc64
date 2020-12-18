@@ -58,9 +58,7 @@ ProcessorPort::readDirection()
 
 void
 ProcessorPort::write(u8 value)
-{
-    // debug("write(%x)\n", value);
-    
+{    
     port = value;
     
     // Check for datasette motor bit

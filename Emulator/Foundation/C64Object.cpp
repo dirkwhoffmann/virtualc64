@@ -50,6 +50,7 @@ C64Object::panic(const char *fmt, ...)
     std::abort();
 }
 
+/*
 void
 C64Object::debug(const char *fmt, ...)
 {
@@ -58,6 +59,7 @@ C64Object::debug(const char *fmt, ...)
     VC64PRINT("")
 #endif
 }
+*/
 
 void
 C64Object::debug(int verbose, const char *fmt, ...)
@@ -70,6 +72,7 @@ C64Object::debug(int verbose, const char *fmt, ...)
 #endif
 }
 
+/*
 void
 C64Object::plaindebug(const char *fmt, ...)
 {
@@ -78,6 +81,7 @@ C64Object::plaindebug(const char *fmt, ...)
     VC64PRINTPLAIN("")
 #endif
 }
+*/
 
 void
 C64Object::plaindebug(int verbose, const char *fmt, ...)

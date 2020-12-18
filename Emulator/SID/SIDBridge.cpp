@@ -248,7 +248,6 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
             suspend();
             config.address[id] = value;
             clearSampleBuffer(id);
-            debug("config.address[%d] = %x\n", id, config.address[id]);
             resume();
             return true;
             
@@ -679,7 +678,7 @@ SIDBridge::executeUntil(u64 targetCycle)
 
     cycles += consumedCycles;
     
-    debug(SID_EXEC_DEBUG,
+    debug(SID_EXEC,
           "target: %lld  missing: %lld consumed: %lld reached: %lld still missing: %lld\n",
           targetCycle, missingCycles, consumedCycles, cycles, targetCycle - cycles);
 }
@@ -692,7 +691,7 @@ SIDBridge::execute(u64 numSamples)
     // Run reSID for at least one cycle to make pipelined writes work
     if (numSamples == 0) {
 
-        debug(SID_EXEC_DEBUG, "Running SIDs for an extra cycle");
+        debug(SID_EXEC, "Running SIDs for an extra cycle");
 
         for (int i = 0; i < 4; i++) resid[i].clock();
         return 1;

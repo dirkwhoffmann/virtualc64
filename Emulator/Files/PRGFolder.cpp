@@ -48,7 +48,6 @@ PRGFolder::makeWithFolder(const char *path)
         // Create the full path for this file
         char *filename = new char[pathLength + strlen(entry->d_name) + 1];
         sprintf(filename, "%s/%s", path, entry->d_name);
-        archive->plaindebug("%s\n", filename);
         
         // Get information for this file
         struct stat st;
@@ -60,15 +59,10 @@ PRGFolder::makeWithFolder(const char *path)
         // Skip files that are not PRGs
         if ((prg = PRGFile::makeWithFile(filename)) == NULL) continue;
 
-        archive->plaindebug("Found PRG\n");
-
         // Add the PRG
         archive->add(prg);
         delete prg;
     }
-
-    archive->plaindebug("dumpDirectory\n");
-    archive->dumpDirectory();
 
     return archive;
 }

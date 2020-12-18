@@ -125,7 +125,7 @@ Datasette::pulseLength(int *skip)
         if (head + 3 < size) {
             return  LO_LO_HI_HI(data[head+1], data[head+2], data[head+3], 0);
         } else {
-            debug("TAP file ended unexpectedly (%d, %d)\n", size, head + 3);
+            warn("TAP file ended unexpectedly (%d, %d)\n", size, head + 3);
             assert(false);
             return 8 * 256;
         }

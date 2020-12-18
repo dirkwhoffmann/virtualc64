@@ -18,8 +18,6 @@ Dinamic::_reset()
 u8
 Dinamic::peekIO1(u16 addr)
 {
-    debug("peekIO1(%x)", addr);
-
     if (addr <= 0xDE0F) {
         bankIn(addr & 0xF);
     }

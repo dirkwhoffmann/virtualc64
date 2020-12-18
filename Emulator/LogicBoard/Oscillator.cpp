@@ -67,11 +67,11 @@ Oscillator::synchronize()
     u64 targetTime   = timeBase + elapsedTime;
     
     /*
-    debug("now         = %lld\n", now);
-    debug("clockDelta  = %lld\n", clockDelta);
-    debug("elapsedTime = %lld\n", elapsedTime);
-    debug("targetTime  = %lld\n", targetTime);
-    debug("\n");
+    debug(TIM_DEBUG, "now         = %lld\n", now);
+    debug(TIM_DEBUG, "clockDelta  = %lld\n", clockDelta);
+    debug(TIM_DEBUG, "elapsedTime = %lld\n", elapsedTime);
+    debug(TIM_DEBUG, "targetTime  = %lld\n", targetTime);
+    debug(TIM_DEBUG, "\n");
     */
     
     // Check if we're running too slow ...

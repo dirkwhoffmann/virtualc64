@@ -367,7 +367,6 @@ Disk::lengthOfTrack(Track t)
 void
 Disk::analyzeHalftrack(Halftrack ht)
 {
-    debug("analyzeHalftrack(%d)\n", ht);
     assert(isHalftrackNumber(ht));
     
     u16 len = length.halftrack[ht];
