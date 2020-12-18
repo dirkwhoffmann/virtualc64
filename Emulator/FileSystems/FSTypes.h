@@ -153,6 +153,13 @@ inline const char *sFSError(FSError value)
 
 typedef struct
 {
+    Track t;
+    Sector s;
+}
+BlockRef;
+
+typedef struct
+{
     long bitmapErrors;
     long corruptedBlocks;
     long firstErrorBlock;

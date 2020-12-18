@@ -235,6 +235,12 @@ D64File::getName()
     return name;
 }
 
+FSName
+D64File::getFSName()
+{
+    return FSName(data + offset(18,0) + 0x90);
+}
+
 bool 
 D64File::readFromBuffer(const u8 *buffer, size_t length)
 {

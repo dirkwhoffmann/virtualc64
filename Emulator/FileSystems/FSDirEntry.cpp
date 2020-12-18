@@ -12,7 +12,7 @@
 bool
 FSDirEntry::isEmpty()
 {
-    return isZero(&nextDirTrack, 32);
+    return isZero(&fileType, 30);
 }
 
 const char *
@@ -52,17 +52,20 @@ FSDirEntry::isHidden()
 }
 
 void
-FSDirEntry::init(const char *name, Track t, Sector s, size_t fileSize)
+FSDirEntry::init(FSName name, BlockRef ref, size_t numBlocks)
+{
+    fileType        = 0x82;  // PRG
+    firstDataTrack  = (u8)ref.t;
+    firstDataSector = (u8)ref.s;
+    fileSizeLo      = LO_BYTE(numBlocks);
+    fileSizeHi      = HI_BYTE(numBlocks);
+
+    name.write(fileName);
+}
+
+void
+FSDirEntry::init(const char *name, BlockRef ref, size_t numBlocks)
 {
     FSName fsName = FSName(name);
-    size_t bytesPerBlock = 254;
-    size_t blocks = (fileSize + bytesPerBlock - 1) / bytesPerBlock;
-
-    fileType        = 0x82;  // PRG
-    firstDataTrack  = (u8)t;
-    firstDataSector = (u8)s;
-    fileSizeLo      = LO_BYTE(blocks);
-    fileSizeHi      = HI_BYTE(blocks);
-
-    fsName.write(fileName);
+    init(fsName, ref, numBlocks);
 }

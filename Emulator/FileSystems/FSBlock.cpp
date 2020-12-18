@@ -9,6 +9,11 @@
 
 #include "FSDevice.h"
 
+FSBlock::FSBlock(FSDevice& _device, u32 _nr) : device(_device), nr(_nr)
+{
+    memset(data, 0, sizeof(data));
+}
+
 FSBlockType
 FSBlock::type()
 {

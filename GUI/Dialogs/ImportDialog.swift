@@ -96,15 +96,6 @@ class ImportDialog: DialogController {
             track("T64FileProxy")
             titleString = "T64 File"
             subtitle1String = "A collection of multiple C64 programs"
-
-            /* REMOVE ASAP
-            var err: FSError = .OK
-            let d64 = D64FileProxy.make(withAnyArchive: myDocument.attachment as? AnyArchiveProxy)
-            let vol = FSDeviceProxy.make(withArchive: myDocument.attachment as? AnyArchiveProxy)
-            let d64_2 = D64FileProxy.make(withVolume: vol, error: &err)
-            d64?.write(toFile: "/tmp/d64_1.d64")
-            d64_2?.write(toFile: "/tmp/d64_2.d64")
-            */
         
         case _ as P00FileProxy:
             
@@ -133,6 +124,16 @@ class ImportDialog: DialogController {
             titleString = "D64 File"
             subtitle1String = "A byte-accurate image of a C64 diskette"
             
+            // REMOVE ASAP
+            /*
+            var err: FSError = .OK
+            let d64_1 = D64FileProxy.make(withAnyArchive: myDocument.attachment as? AnyArchiveProxy)
+            let vol = FSDeviceProxy.make(withArchive: myDocument.attachment as? AnyArchiveProxy)
+            let d64_2 = D64FileProxy.make(withVolume: vol, error: &err)
+            d64_1?.write(toFile: "/tmp/d64_1.d64")
+            d64_2?.write(toFile: "/tmp/d64_2.d64")
+            */
+
             // REMOVE ASAP
             // let device = FSDeviceProxy.make(withD64: myDocument.attachment as? D64FileProxy)
             // let device = FSDeviceProxy.make(withArchive: myDocument.attachment as? AnyArchiveProxy)

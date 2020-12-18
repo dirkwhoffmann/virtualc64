@@ -28,7 +28,8 @@ typedef struct
     u8 fileSizeHi;        // $1F
 
     // Initializes this entry
-    void init(const char *name, Track t, Sector s, size_t filesize);
+    void init(FSName name, BlockRef ref, size_t numBlocks);
+    void init(const char *name, BlockRef ref, size_t numBlocks);
 
     // Checks if this directory entry if empty
     bool isEmpty(); 

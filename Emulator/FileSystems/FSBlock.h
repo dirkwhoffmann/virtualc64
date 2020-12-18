@@ -32,7 +32,7 @@ public:
 
 public:
     
-    FSBlock(FSDevice& _device, u32 _nr) : device(_device), nr(_nr) { }
+    FSBlock(FSDevice& _device, u32 _nr);
     virtual ~FSBlock() { }
     const char *getDescription() override { return "FSBlock"; }
 

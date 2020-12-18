@@ -12,6 +12,7 @@
 #include "PRGFile.h"
 #include "P00File.h"
 #include "G64File.h"
+#include "FSObjects.h"
 
 AnyArchive *
 AnyArchive::makeWithFile(const char *path)
@@ -36,6 +37,12 @@ AnyArchive::makeWithFile(const char *path)
     return NULL;
 }
 
+FSName
+AnyArchive::getFSNameOfItem()
+{
+    return FSName(getNameOfItem());
+}
+
 const unsigned short *
 AnyArchive::getUnicodeNameOfItem()
 {
@@ -54,6 +61,25 @@ AnyArchive::getSizeOfItem()
 
     seekItem(0);
     return size;
+}
+
+void
+AnyArchive::getItem(u8 **buf, size_t *cnt)
+{
+    size_t size = getSizeOfItem() + 2;
+    u8 *buffer = new u8[size];
+
+    u16 loadAddr = getDestinationAddrOfItem();
+    buffer[0] = LO_BYTE(loadAddr);
+    buffer[1] = HI_BYTE(loadAddr);
+
+    int byte, j = 2;
+    while ((byte = readItem()) != EOF) {
+        buffer[j++] = (u8)byte;
+    }
+        
+    *buf = buffer;
+    *cnt = size;
 }
 
 int

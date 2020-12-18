@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "AnyFile.h"
+#include "FSObjects.h"
 
 AnyFile::AnyFile()
 {
@@ -74,6 +75,12 @@ AnyFile::setPath(const char *str)
     strncpy(name, filename, sizeof(name) - 1);
     free(filename);
     ascii2petStr(name);
+}
+
+FSName
+AnyFile::getFSName()
+{
+    return FSName(getName());
 }
 
 const unsigned short *

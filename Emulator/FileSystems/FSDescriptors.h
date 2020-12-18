@@ -68,6 +68,7 @@ struct FSDeviceDescriptor : C64Object {
     bool isHeadNr(Head h) { return h == 0 || h == 1; }
     bool isTrackNr(Track t) { return 1 <= t && t <= numCyls * numHeads; }
     bool isTrackSectorPair(Track t, Sector s);
+    bool isValidRef(BlockRef ref);
 
     
     //
@@ -96,6 +97,7 @@ struct FSDeviceDescriptor : C64Object {
     //
     
     bool nextBlock(Block b, Block *nb);
+    BlockRef nextBlockRef(BlockRef b);
     bool nextTrackAndSector(Track t, Sector s, Track *nt, Sector *ns);
 };
 

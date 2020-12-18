@@ -65,35 +65,23 @@ FSDevice::makeWithArchive(AnyArchive *archive, FSError *error)
     FSDevice *device = makeWithFormat(descriptor);
         
     // Write BAM
-    device->blockPtr(18,0)->writeBAM(archive->getName());
+    FSName name = archive->getFSName();
+    device->blockPtr(18,0)->writeBAM(name);
 
     // Create the proper amount of directory blocks
     int numberOfItems = archive->numberOfItems();
     device->setCapacity(numberOfItems);
 
-    // The first directory block is located on track 18, sector 1
-    Track t = 1; Sector s = 0; u32 offset = 2;
-
     // Loop over all entries in archive
     for (int i = 0; i < numberOfItems; i++) {
         
+        u8 *buf; size_t cnt;
+
         archive->selectItem(i);
-        
-        // Add directory entry
-        FSDirEntry *entry = device->nextFreeDirEntry();
-        printf("nextFreeDirEntry = %p\n", entry);
-        entry->init(archive->getNameOfItem(), t, s, archive->getSizeOfItem());
-        device->markAsAllocated(t, s);
-        
-        // Add data blocks
-        u16 loadAddr = archive->getDestinationAddrOfItem();
-        device->writeByte(LO_BYTE(loadAddr), &t, &s, &offset);
-        device->writeByte(HI_BYTE(loadAddr), &t, &s, &offset);
-        
-        int byte;
-        while ((byte = archive->readItem()) != EOF) {
-            device->writeByte(byte, &t, &s, &offset);
-        }
+        archive->getItem(&buf, &cnt);
+
+        device->makeFile(archive->getNameOfItem(), buf, cnt);
+        delete[](buf);
     }
     
     device->printDirectory();
@@ -142,8 +130,8 @@ FSDevice::printDirectory()
     auto dir = scanDirectory();
     
     for (auto &item : dir) {
-        msg("Item %p: %3d \"%16s\" %s\n",
-            item, HI_LO(item->fileSizeHi, item->fileSizeLo),
+        msg("%3d \"%16s\" %s\n",
+            HI_LO(item->fileSizeHi, item->fileSizeLo),
             item->getName().c_str(), item->typeString());
     }
 }
@@ -164,6 +152,15 @@ FSBlock *
 FSDevice::blockPtr(Block b)
 {
     return b < blocks.size() ? blocks[b] : nullptr;
+}
+
+FSBlock *
+FSDevice::blockPtr(BlockRef ref)
+{
+    Block b;
+    layout.translateBlockNr(&b, ref.t, ref.s);
+    
+    return blockPtr(b);
 }
 
 FSBlock *
@@ -200,7 +197,7 @@ FSDevice::nextBlockPtr(Track t, Sector s)
 FSBlock *
 FSDevice::nextBlockPtr(FSBlock *ptr)
 {
-    return ptr ? nextBlockPtr(ptr->nr) : nullptr;
+    return ptr ? blockPtr(ptr->data[0], ptr->data[1]) : nullptr;
 }
 
 bool
@@ -220,13 +217,15 @@ FSDevice::writeByte(u8 byte, Track *pt, Sector *ps, u32 *pOffset)
         
         // Only proceed if there is space left on the disk
         if (!layout.nextTrackAndSector(t, s, &t, &s)) return false;
-        
+                
         // Mark the new block as allocated
         markAsAllocated(t, s);
         
         // Link previous sector with the new one
         ptr->data[0] = (u8)t;
         ptr->data[1] = (u8)s;
+        Track t2; Sector s2; layout.translateBlockNr(ptr->nr, &t2, &s2);
+
         ptr = blockPtr(t, s);
         offset = 2;
     }
@@ -250,12 +249,33 @@ FSDevice::isFree(Block b)
 }
 
 bool
+FSDevice::isFree(BlockRef ref)
+{
+    u32 byte, bit;
+    FSBlock *bam = locateAllocationBit(ref, &byte, &bit);
+    
+    return GET_BIT(bam->data[byte], bit);
+}
+
+bool
 FSDevice::isFree(Track t, Sector s)
 {
     u32 byte, bit;
     FSBlock *bam = locateAllocationBit(t, s, &byte, &bit);
     
     return GET_BIT(bam->data[byte], bit);
+}
+
+BlockRef
+FSDevice::nextFreeBlock(BlockRef ref)
+{
+    if (!layout.isValidRef(ref)) return {0,0};
+    
+    while (ref.t && !isFree(ref)) {
+        ref = layout.nextBlockRef(ref);
+    }
+    
+    return ref;
 }
 
 void
@@ -292,6 +312,40 @@ FSDevice::setAllocationBit(Track t, Sector s, bool value)
     }
 }
 
+std::vector<BlockRef>
+FSDevice::allocate(BlockRef ref, u32 n)
+{
+    assert(n > 0);
+    
+    std::vector<BlockRef> result;
+    FSBlock *block = nullptr;
+
+    // Get to the next free block
+    ref = nextFreeBlock(ref);
+
+    if (ref.t) {
+        
+        for (u32 i = 0; i < n; i++) {
+            
+            // Collect block reference
+            result.push_back(ref);
+            markAsAllocated(ref.t, ref.s);
+            
+            // Link this block
+            block = blockPtr(ref.t, ref.s);
+            layout.nextTrackAndSector(ref.t, ref.s, &ref.t, &ref.s);
+            block->data[0] = ref.t;
+            block->data[1] = ref.s;
+        }
+        
+        // Delete the block reference in the last block
+        block->data[0] = 0;
+        block->data[1] = 0;
+    }
+    
+    return result;
+}
+
 FSBlock *
 FSDevice::locateAllocationBit(Block b, u32 *byte, u32 *bit)
 {
@@ -301,6 +355,25 @@ FSDevice::locateAllocationBit(Block b, u32 *byte, u32 *bit)
     layout.translateBlockNr(b, &t, &s);
     
     return locateAllocationBit(t, s, byte, bit);
+}
+
+FSBlock *
+FSDevice::locateAllocationBit(BlockRef ref, u32 *byte, u32 *bit)
+{
+    assert(layout.isValidRef(ref));
+        
+    /* Bytes $04 - $8F store the BAM entries for each track, in groups of four
+     * bytes per track, starting on track 1. [...] The first byte is the number
+     * of free sectors on that track. The next three bytes represent the bitmap
+     * of which sectors are used/free. Since it is 3 bytes we have 24 bits of
+     * storage. Remember that at most, each track only has 21 sectors, so there
+     * are a few unused bits.
+     */
+        
+    *byte = (4 * ref.t) + 1 + (ref.s >> 3);
+    *bit = ref.s & 0x07;
+    
+    return bamPtr();
 }
 
 FSBlock *
@@ -384,18 +457,18 @@ FSDevice::setCapacity(u32 n)
     assert(n <= 144);
     
     // Determine how many directory blocks are needed
-    u32 numBlocks = n / 8;
-    
+    u32 numBlocks = (n + 7) / 8;
+    debug(FS_DEBUG, "Allocation %d directory blocks for %d files\n", numBlocks, n);
+
     // The firsr directory block is located at (18,1)
     Track t = 18;
     Sector s = 1;
     FSBlock *ptr = blockPtr(t, s);
     
-    for (u32 i = 1; i < numBlocks; i++) {
+    for (u32 i = 1; i < numBlocks; i++, ptr = blockPtr(t, s)) {
 
         // Get location of the next block
         if (!layout.nextTrackAndSector(t, s, &t, &s)) return false;
-        markAsAllocated(t, s);
         
         // Link blocks
         ptr->data[0] = t;
@@ -406,13 +479,7 @@ FSDevice::setCapacity(u32 n)
 }
 
 bool
-FSDevice::increaseCapacity(u32 n)
-{
-    return setCapacity(numFiles() + n);
-}
-
-FSBlock *
-FSDevice::makeFile(const char *name)
+FSDevice::makeFile(const char *name, const u8 *buf, size_t cnt)
 {
     // The directory starts on track 18, sector 1
     FSBlock *ptr = blockPtr(18, 1);
@@ -420,38 +487,49 @@ FSDevice::makeFile(const char *name)
     // Search for the next free slot
     for (int i = 0; ptr && i < 144; i++) {
     
-        FSDirEntry *entry = (FSDirEntry *)ptr->data + (i % 8);
-
-        if (entry->isEmpty()) {
-            
-            makeFile(name, entry); 
-        }
+        FSDirEntry *dir = (FSDirEntry *)ptr->data + (i % 8);
+        
+        // Create the file once we've found a free slot
+        if (dir->isEmpty()) return makeFile(name, dir, buf, cnt);
      
         // Jump to the next sector if this was the last directory item
         if (i % 8 == 7) ptr = nextBlockPtr(ptr);
     }
     
-    return nullptr;
+    return true;
 }
 
-FSBlock *
-FSDevice::makeFile(const char *name, const u8 *buffer, size_t size)
+bool
+FSDevice::makeFile(const char *name, FSDirEntry *dir, const u8 *buf, size_t cnt)
 {
-    assert(false);
-    return nullptr;
-}
+    // Determine the number of blocks needed for this file
+    u32 numBlocks = (u32)((cnt + 253) / 254);
+    
+    // Allocate data blocks
+    auto blockList = allocate(numBlocks);
+    if (blockList.empty()) return false;
+        
+    auto it = blockList.begin();
+    FSBlock *ptr = blockPtr(*it);
+    
+    // Write data
+    size_t i, j;
+    for (i = 0, j = 2; i < cnt; i++, j++) {
 
-FSBlock *
-FSDevice::makeFile(const char *name, const char *str)
-{
-    assert(str);
-    return makeFile(name, (const u8 *)str, strlen(str));
-}
-
-FSBlock *
-FSDevice::makeFile(const char *name, FSDirEntry *entry)
-{
-    assert(false);
+        if (j == 0x100) {
+            ++it;
+            ptr = blockPtr(*it);
+            j = 2;
+            Block b;
+            layout.translateBlockNr(&b, it->t, it->s);
+        }
+        ptr->data[j] = buf[i];
+    }
+ 
+    // Write directory entry
+    dir->init(name, blockList[0], numBlocks);
+    
+    return true;
 }
 
 u8

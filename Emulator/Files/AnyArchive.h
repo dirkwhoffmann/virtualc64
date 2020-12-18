@@ -61,6 +61,7 @@ public:
     
     // Returns the name of the selected item
     virtual const char *getNameOfItem() { return ""; }
+    virtual struct FSName getFSNameOfItem();
 
     // Returns the name of the selected item as a unicode character array
     const unsigned short *getUnicodeNameOfItem();
@@ -76,6 +77,9 @@ public:
     // Returns the size of an item in blocks
     virtual size_t getSizeOfItemInBlocks() { return (getSizeOfItem() + 253) / 254; }
 
+    // Returns an item in a buffer. The caller has to free the buffer.
+    virtual void getItem(u8 **buf, size_t *cnt); 
+    
     /* Moves the file pointer to the specified offset. seekItem(0) returns to
      * the beginning of the selected item.
      */

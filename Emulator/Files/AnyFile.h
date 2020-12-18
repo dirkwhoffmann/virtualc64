@@ -80,6 +80,7 @@ public:
 
     // Returns the logical name of this file
     virtual const char *getName() { return name; }
+    virtual struct FSName getFSName();
 
     // Returns the logical name as a unicode character array
     const unsigned short *getUnicodeName();

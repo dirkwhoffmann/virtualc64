@@ -110,6 +110,7 @@ public:
     
     // Queries a pointer from the block storage (may return nullptr)
     FSBlock *blockPtr(Block b);
+    FSBlock *blockPtr(BlockRef ref);
     FSBlock *blockPtr(Track t, Sector s);
     FSBlock *bamPtr() { return blocks[357]; }
 
@@ -129,20 +130,32 @@ public:
 
     // Checks if a block is marked as free in the allocation bitmap
     bool isFree(Block b);
+    bool isFree(BlockRef r);
     bool isFree(Track t, Sector s);
+
+    // Returns the first or the next free block in the interleaving chain
+    BlockRef nextFreeBlock(BlockRef start);
+    BlockRef firstFreeBlock() { return nextFreeBlock({1,0}); }
 
     // Marks a block as allocated or free
     void markAsAllocated(Block b) { setAllocationBit(b, 0); }
     void markAsAllocated(Track t, Sector s) { setAllocationBit(t, s, 0); }
+    
     void markAsFree(Block b) { setAllocationBit(b, 1); }
     void markAsFree(Track t, Sector s) { setAllocationBit(t, s, 1); }
+    
     void setAllocationBit(Block b, bool value);
     void setAllocationBit(Track t, Sector s, bool value);
+
+    // Allocates a certain amount of (interleaved) blocks
+    std::vector<BlockRef> allocate(BlockRef ref, u32 n);
+    std::vector<BlockRef> allocate(u32 n) { return allocate( {1,0}, n); }
 
 private:
     
     // Locates the allocation bit for a certain block
     FSBlock *locateAllocationBit(Block b, u32 *byte, u32 *bit);
+    FSBlock *locateAllocationBit(BlockRef ref, u32 *byte, u32 *bit);
     FSBlock *locateAllocationBit(Track t, Sector s, u32 *byte, u32 *bit);
 
     
@@ -164,16 +177,13 @@ public:
         
     // Ensures that the disk has enough directory blocks to host 'n' files
     bool setCapacity(u32 n);
-    bool increaseCapacity(u32 n);
     
     // Creates a new file
-    FSBlock *makeFile(const char *name);
-    FSBlock *makeFile(const char *name, const u8 *buffer, size_t size);
-    FSBlock *makeFile(const char *name, const char *str);
+    bool makeFile(const char *name, const u8 *buf, size_t cnt);
 
 private:
     
-    FSBlock *makeFile(const char *name, FSDirEntry *entry);
+    bool makeFile(const char *name, FSDirEntry *dir, const u8 *buf, size_t cnt);
     
     
     //
