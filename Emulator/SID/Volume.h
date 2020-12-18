@@ -17,14 +17,14 @@
 template <typename T> struct AudioVolume {
 
     // Current volume
-    T current = 0;
+    T current = 1.0;
 
     // Value of 'current' if no fading takes place
-    T normal = 0;
+    T normal = 1.0;
 
     // Target value pipe (used to modulate the volume)
-    T target[2] = { 0, 0 };
-    T delta[2] = { 0, 0 };
+    T target[2] = { 1.0, 1.0 };
+    T delta[2] = { 1.0, 1.0 };
 
     // Serializing
     template <class W>

@@ -749,6 +749,8 @@ SIDBridge::execute(u64 numSamples)
     if (stream.free() < numSamples) {
         handleBufferOverflow();
     }
+    
+    debug(SID_EXEC, "%d %f %f %f\n", samples[0][0], vol[0], pan[0], volL.current);
         
     // Convert sound samples to floating point values and write into ringbuffer
     for (unsigned i = 0; i < numSamples; i++) {

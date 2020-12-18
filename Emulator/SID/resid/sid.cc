@@ -394,6 +394,7 @@ void SID::write_state(const State& state)
 
   for (i = 0; i <= 0x18; i++) {
     write(i, state.sid_register[i]);
+    write(); // DIRK
   }
 
   bus_value = state.bus_value;
