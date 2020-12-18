@@ -83,17 +83,20 @@ FSDevice::makeWithArchive(AnyArchive *archive, FSError *error)
         FSDirEntry *entry = device->nextFreeDirEntry();
         printf("nextFreeDirEntry = %p\n", entry);
         entry->init(archive->getNameOfItem(), t, s, archive->getSizeOfItem());
-            
+        device->markAsAllocated(t, s);
+        
         // Add data blocks
         u16 loadAddr = archive->getDestinationAddrOfItem();
-        device->writeByteToSector(LO_BYTE(loadAddr), &t, &s, &offset);
-        device->writeByteToSector(HI_BYTE(loadAddr), &t, &s, &offset);
+        device->writeByte(LO_BYTE(loadAddr), &t, &s, &offset);
+        device->writeByte(HI_BYTE(loadAddr), &t, &s, &offset);
         
         int byte;
         while ((byte = archive->readItem()) != EOF) {
-            device->writeByteToSector(byte, &t, &s, &offset);
+            device->writeByte(byte, &t, &s, &offset);
         }
     }
+    
+    device->printDirectory();
         
     return device;
 }
@@ -139,7 +142,9 @@ FSDevice::printDirectory()
     auto dir = scanDirectory();
     
     for (auto &item : dir) {
-        msg("Item: %s\n", item->getName().c_str());
+        msg("Item %p: %3d \"%16s\" %s\n",
+            item, HI_LO(item->fileSizeHi, item->fileSizeLo),
+            item->getName().c_str(), item->typeString());
     }
 }
 
@@ -199,7 +204,7 @@ FSDevice::nextBlockPtr(FSBlock *ptr)
 }
 
 bool
-FSDevice::writeByteToSector(u8 byte, Track *pt, Sector *ps, u32 *pOffset)
+FSDevice::writeByte(u8 byte, Track *pt, Sector *ps, u32 *pOffset)
 {
     Track t = *pt;
     Sector s = *ps;
@@ -209,12 +214,15 @@ FSDevice::writeByteToSector(u8 byte, Track *pt, Sector *ps, u32 *pOffset)
     assert(offset >= 2 && offset <= 0x100);
     
     FSBlock *ptr = blockPtr(t, s);
-    
+        
     // No free slots in this sector, proceed to next one
     if (offset == 0x100) {
         
         // Only proceed if there is space left on the disk
         if (!layout.nextTrackAndSector(t, s, &t, &s)) return false;
+        
+        // Mark the new block as allocated
+        markAsAllocated(t, s);
         
         // Link previous sector with the new one
         ptr->data[0] = (u8)t;
@@ -225,11 +233,10 @@ FSDevice::writeByteToSector(u8 byte, Track *pt, Sector *ps, u32 *pOffset)
     
     // Write byte
     ptr->data[offset] = byte;
-    if (offset == 0) markAsAllocated(t, s);
     
     *pt = t;
     *ps = s;
-    *pOffset = offset;
+    *pOffset = offset + 1;
     return true;
 }
 
@@ -275,11 +282,11 @@ FSDevice::setAllocationBit(Track t, Sector s, bool value)
         bam->data[byte & ~0b11]++;
     }
     
-    if (!value && !GET_BIT(bam->data[byte], bit)) {
+    if (!value && GET_BIT(bam->data[byte], bit)) {
         
         // Mark sector as allocated
         CLR_BIT(bam->data[byte], bit);
-
+        
         // Decrease the number of free sectors
         bam->data[byte & ~0b11]--;
     }
@@ -308,15 +315,11 @@ FSDevice::locateAllocationBit(Track t, Sector s, u32 *byte, u32 *bit)
      * storage. Remember that at most, each track only has 21 sectors, so there
      * are a few unused bits.
      */
-    
-    Block bam;
-    layout.translateBlockNr(&bam, 18, 0);
-    printf("BAM is located in block %d\n", bam);
-    u32 group = 4 * t;
-    *byte = group + 1 + (s >> 3);
+        
+    *byte = (4 * t) + 1 + (s >> 3);
     *bit = s & 0x07;
     
-    return blocks[bam];
+    return bamPtr();
 }
 
 /*
@@ -490,5 +493,83 @@ FSDevice::importVolume(const u8 *src, size_t size, FSError *error)
         printDirectory();
     }
     
+    return true;
+}
+
+bool
+FSDevice::exportVolume(u8 *dst, size_t size, FSError *error)
+{
+    return exportBlocks(0, layout.numBlocks() - 1, dst, size, error);
+}
+
+bool
+FSDevice::exportBlock(u32 nr, u8 *dst, size_t size, FSError *error)
+{
+    return exportBlocks(nr, nr, dst, size, error);
+}
+
+bool
+FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, size_t size, FSError *error)
+{
+    assert(last < layout.numBlocks());
+    assert(first <= last);
+    assert(dst);
+    
+    u32 count = last - first + 1;
+    
+    debug(FS_DEBUG, "Exporting %d blocks (%d - %d)\n", count, first, last);
+
+    // Only proceed if the source buffer contains the right amount of data
+    if (count * 256 != size) {
+        if (error) *error = FS_WRONG_CAPACITY;
+        return false;
+    }
+        
+    // Wipe out the target buffer
+    memset(dst, 0, size);
+    
+    // Export all blocks
+    for (u32 i = 0; i < count; i++) {
+        
+        blocks[first + i]->exportBlock(dst + i * 256);
+    }
+
+    debug(FS_DEBUG, "Success\n");
+    
+    if (error) *error = FS_OK;
+    return true;
+}
+
+bool
+FSDevice::exportFile(FSDirEntry *item, const char *path, FSError *error)
+{
+    debug(FS_DEBUG, "Exporting file %s to %s\n", item->getName().c_str(), path);
+
+    assert(false);
+}
+
+bool
+FSDevice::exportDirectory(const char *path, FSError *err)
+{
+    assert(path);
+        
+    // Only proceed if path points to an empty directory
+    long numItems = numDirectoryItems(path);
+    if (numItems != 0) return FS_DIRECTORY_NOT_EMPTY;
+    
+    // Collect all directory entries
+    auto items = scanDirectory();
+    
+    // Export all items
+    for (auto const& item : items) {
+
+        if (!exportFile(item, path, err)) {
+            msg("Export error: %d\n", err);
+            return false;
+        }
+    }
+    
+    msg("Exported %d items", items.size());
+    *err = FS_OK;
     return true;
 }

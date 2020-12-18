@@ -111,6 +111,7 @@ public:
     // Queries a pointer from the block storage (may return nullptr)
     FSBlock *blockPtr(Block b);
     FSBlock *blockPtr(Track t, Sector s);
+    FSBlock *bamPtr() { return blocks[357]; }
 
     // Follows the block chain link of a specific block
     FSBlock *nextBlockPtr(Block b);
@@ -119,7 +120,7 @@ public:
 
     // Writes a byte to a block (returns true on success)
     // bool writeByteToSector(u8 byte, Block *b, u8 *offset);
-    bool writeByteToSector(u8 byte, Track *t, Sector *s, u32 *offset);
+    bool writeByte(u8 byte, Track *t, Sector *s, u32 *offset);
 
     
     //
@@ -185,7 +186,18 @@ public:
     u8 readByte(u32 block, u32 offset);
 
     // Imports the volume from a buffer
-    bool importVolume(const u8 *src, size_t size, FSError *error = nullptr);    
+    bool importVolume(const u8 *src, size_t size, FSError *error = nullptr);
+    
+    // Exports the volume to a buffer
+    bool exportVolume(u8 *dst, size_t size, FSError *error = nullptr);
+
+    // Exports a single block or a range of blocks
+    bool exportBlock(u32 nr, u8 *dst, size_t size, FSError *error = nullptr);
+    bool exportBlocks(u32 first, u32 last, u8 *dst, size_t size, FSError *error = nullptr);
+
+    // Exports a file the volume to a directory of the host file system
+    bool exportFile(FSDirEntry *item, const char *path, FSError *error);
+    bool exportDirectory(const char *path, FSError *error);
 };
 
 #endif

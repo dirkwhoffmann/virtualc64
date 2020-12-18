@@ -17,9 +17,9 @@ FSName::FSName(const u8 *_pet)
     memset(str, 0x00, sizeof(str));
     
     for (int i = 0; i < 16 && _pet[i] != 0xA0; i++) {
-        
-        str[i] = _pet[i];
-        pet[i] = petscii2printable(_pet[i], '_');
+                
+        str[i] = petscii2printable(_pet[i], '_');
+        pet[i] = _pet[i];
     }    
 }
 
@@ -30,7 +30,7 @@ FSName::FSName(const char *_str)
     memset(pet, 0xA0, sizeof(pet));
     memset(str, 0x00, sizeof(str));
     
-    for (int i = 0; i < 16 && str[i]; i++) {
+    for (int i = 0; i < 16 && _str[i] != 0x00; i++) {
         
         str[i] = _str[i];
         pet[i] = ascii2pet(_str[i]);

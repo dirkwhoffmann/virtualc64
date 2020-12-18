@@ -22,6 +22,7 @@
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <dirent.h>
 
 #include "C64Config.h"
 #include "C64Constants.h"
@@ -167,6 +168,12 @@ bool checkFileSuffix(const char *filename, const char *suffix);
 
 // Returns the size of a file in bytes
 long getSizeOfFile(const char *filename);
+
+// Checks if a path points to a directory
+bool isDirectory(const char *path);
+
+// Returns the number of files in a directory
+long numDirectoryItems(const char *path);
 
 // Checks the size of a file
 bool checkFileSize(const char *filename, long min = -1, long max = -1);

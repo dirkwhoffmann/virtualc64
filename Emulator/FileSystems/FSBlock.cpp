@@ -106,13 +106,13 @@ FSBlock::dump()
 void
 FSBlock::importBlock(const u8 *src)
 {
-    assert(src != nullptr);
+    assert(src);
     memcpy(data, src, 256);
 }
 
 void
 FSBlock::exportBlock(u8 *dst)
 {
-    assert(dst != nullptr);
+    assert(dst);
     memcpy(dst, data, 256);
 }

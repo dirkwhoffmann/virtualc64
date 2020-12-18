@@ -154,6 +154,11 @@ D64File::makeWithAnyArchive(AnyArchive *otherArchive)
             num++;
         }
         
+        // Make sure the last block doesn't link to another block
+        int off = archive->offset(track, sector);
+        archive->data[off + 0] = 0;
+        archive->data[off + 1] = 0;
+
         archive->debug(FILE_DEBUG, "D64 item %d: %d bytes written\n", i, num);
         // Item i has been written. Goto next free sector and proceed with the next item
         (void)archive->nextTrackAndSector(track, sector, &track, &sector);
@@ -190,21 +195,29 @@ D64File::makeWithVolume(FSDevice &volume, FSError *error)
     
     printf("numBlocks = %d\n", volume.getNumBlocks());
     
-    switch (volume.getNumBlocks()) {
-            
-        case 42:
+    switch (volume.getNumBlocks() * 256) {
+                        
+        case D64_683_SECTORS:
             d64 = new D64File(35, false);
             break;
-                        
+            
+        case D64_768_SECTORS:
+            d64 = new D64File(40, false);
+            break;
+
+        case D64_802_SECTORS:
+            d64 = new D64File(42, false);
+            break;
+
         default:
             assert(false);
     }
 
-    // volume.exportVolume(d64->data, d64->size, error);
+    if (!volume.exportVolume(d64->data, d64->size, error)) {
+        delete d64;
+        return nullptr;
+    }
     
-    // REMOVE ASAP
-    // adf->dumpSector(0);
-
     return d64;
 }
 
@@ -901,8 +914,8 @@ D64File::findDirectoryEntry(long item, bool skipInvisibleFiles)
 
 bool
 D64File::writeDirectoryEntry(unsigned nr, const char *name,
-                                Track startTrack, Sector startSector,
-                                size_t filesize)
+                             Track startTrack, Sector startSector,
+                             size_t filesize)
 {
     int pos;
     
@@ -980,4 +993,3 @@ D64File::dump(Track track, Sector sector)
         msg("%02X ", data[pos++]);
     }
 }
-

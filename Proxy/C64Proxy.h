@@ -692,7 +692,7 @@ struct AnyC64FileWrapper;
 - (void)printDirectory;
 
 - (NSInteger)readByte:(NSInteger)block offset:(NSInteger)offset;
-// - (FSError)export:(NSString *)path;
+- (BOOL)exportDirectory:(NSString *)path error:(FSError *)err;
 // - (BOOL)exportBlock:(NSInteger)block buffer:(unsigned char *)buffer;
 
 - (void)dump;
@@ -774,6 +774,7 @@ struct AnyC64FileWrapper;
 - (u64) fnv;
 - (void)readFromBuffer:(const void *)buffer length:(NSInteger)length;
 - (NSInteger)writeToBuffer:(void *)buffer;
+- (BOOL)writeToFile:(NSString *)path;
 
 @end
 

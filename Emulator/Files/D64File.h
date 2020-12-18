@@ -238,7 +238,8 @@ private:
     
 private:
     
-    // Dumps the contents of a sector to stderr
+    // Dumps the contents of a sector
     void dump(Track track, Sector sector);
 };
+
 #endif

@@ -1066,12 +1066,11 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return wrapper->device->readByte((u32)block, (u32)offset);
 }
 
-/*
-- (FSError) export:(NSString *)path
+- (BOOL) exportDirectory:(NSString *)path error:(FSError *)err
 {
-    return wrapper->device->exportDirectory([path fileSystemRepresentation]);
+    return wrapper->device->exportDirectory([path fileSystemRepresentation], err);
 }
-*/
+
 /*
 - (BOOL) exportBlock:(NSInteger)block buffer:(unsigned char *)buffer
 {
@@ -1399,6 +1398,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
     }
     return self;
 }
+
 + (AnyFileProxy *) makeWithFile:(AnyFile *)file
 {
     if (file == nil) {
@@ -1412,37 +1412,50 @@ struct AnyC64FileWrapper { AnyFile *file; };
     AnyFile *file = (AnyFile *)([self wrapper]->file);
     file->setPath([path UTF8String]);
 }
+
 - (AnyC64FileWrapper *)wrapper
 {
     return wrapper;
 }
+
 - (FileType)type
 {
     return wrapper->file->type();
 }
+
 - (NSString *)typeString
 {
     return [NSString stringWithUTF8String:wrapper->file->typeString()];
 }
+
 - (NSString *)name
 {
     return [NSString stringWithUTF8String:wrapper->file->getName()];
 }
+
 - (NSInteger) sizeOnDisk
 {
     return wrapper->file->sizeOnDisk();
 }
+
 - (u64) fnv
 {
     return wrapper->file->fnv();
 }
+
 - (void) readFromBuffer:(const void *)buffer length:(NSInteger)length
 {
     wrapper->file->readFromBuffer((const u8 *)buffer, length);
 }
+
 - (NSInteger) writeToBuffer:(void *)buffer
 {
     return wrapper->file->writeToBuffer((u8 *)buffer);
+}
+
+- (BOOL)writeToFile:(NSString *)path
+{
+    return wrapper->file->writeToFile([path fileSystemRepresentation]);
 }
 
 - (void) dealloc
