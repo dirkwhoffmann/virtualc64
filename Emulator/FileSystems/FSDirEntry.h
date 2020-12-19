@@ -12,7 +12,7 @@
 
 #include "FSObjects.h"
 
-typedef struct
+struct FSDirEntry
 {
     u8 nextDirTrack;      // $00
     u8 nextDirSector;     // $01
@@ -42,7 +42,6 @@ typedef struct
     
     // Returns true if this file does not appear in a regular directory listing
     bool isHidden();
-}
-FSDirEntry;
+};
 
 #endif
