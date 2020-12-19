@@ -424,12 +424,12 @@ SIDBridge::setSamplingMethod(SamplingMethod method)
 void
 SIDBridge::_dumpConfig()
 {
-    msg(" Chip revision : %ld (%s)\n", config.revision, sidRevisionName(config.revision));
+    msg(" Chip revision : %lld (%s)\n", config.revision, sidRevisionName(config.revision));
     msg("   Enable mask : %x\n", config.enabled);
     msg("       Address : %x %x %x\n", config.address[1], config.address[2], config.address[3]);
     msg("        Filter : %s\n", config.filter ? "yes" : "no");
-    msg("        Engine : %ld (%s)\n", config.engine, sidEngineName(config.engine));
-    msg("      Sampling : %ld (%s)\n", config.sampling, sidSamplingMethodName(config.sampling));
+    msg("        Engine : %lld (%s)\n", config.engine, sidEngineName(config.engine));
+    msg("      Sampling : %lld (%s)\n", config.sampling, sidSamplingMethodName(config.sampling));
     msg("Channel volume : %lld %lld %lld %lld\n",
         config.vol[0], config.vol[1], config.vol[2], config.vol[3]);
     msg(" Master volume : %lld %lld\n", config.volL, config.volR);
@@ -470,7 +470,7 @@ SIDBridge::_dump(int nr)
     
     msg("ReSID:\n");
     msg("------\n");
-    msg("    Chip model: %ld (%s)\n", residRev, sidRevisionName(residRev));
+    msg("    Chip model: %lld (%s)\n", residRev, sidRevisionName(residRev));
     msg(" Sampling rate: %f\n", resid[nr].getSampleRate());
     msg(" CPU frequency: %d\n", resid[nr].getClockFrequency());
     msg("Emulate filter: %s\n", resid[nr].getAudioFilter() ? "yes" : "no");
@@ -484,7 +484,7 @@ SIDBridge::_dump(int nr)
 
     msg("FastSID:\n");
     msg("--------\n");
-    msg("    Chip model: %ld (%s)\n", fastsidRev, sidRevisionName(fastsidRev));
+    msg("    Chip model: %lld (%s)\n", fastsidRev, sidRevisionName(fastsidRev));
     msg(" Sampling rate: %f\n", fastsid[nr].getSampleRate());
     msg(" CPU frequency: %d\n", fastsid[nr].getClockFrequency());
     msg("Emulate filter: %s\n", fastsid[nr].getAudioFilter() ? "yes" : "no");

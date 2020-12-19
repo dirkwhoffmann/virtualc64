@@ -68,24 +68,23 @@ typedef unsigned Block;
 //
 
 /* All enumeration types are declared via a special 'longenum' macro to make
- * them easily accessible in Swift.
+ * them easily accessible in Swift. The macro has two definitions, one for the
+ * Swift side and one for the C side. On the Swift side, all enums are mapped
+ * to type 'long' to make them accessible via the Swift standard type 'Int'.
+ * On the C side all enums are mapped to long long. This ensures the same size
+ * for all enums, both on 32-bit and 64-bit architectures.
  */
 
-// Definition for wasm (long = 32 Bit)
-#if defined(__EMSCRIPTEN__)
-#define longenum(_name) \
-enum _name : long long
-
-// Definition for clang (long = 64 Bit)
-#elif defined(__clang__)
+// Definition for Swift
+#if defined(__VC64GUI__)
 #define longenum(_name) \
 typedef enum __attribute__((enum_extensibility(open))) _name : long _name; \
 enum _name : long
 
-// Definition for gcc (long = 64 Bit)
+// Definition for the C
 #else
 #define longenum(_name) \
-enum _name : long
+enum _name : long long
 #endif
 
 #endif

@@ -728,7 +728,7 @@ FSDevice::exportDirectory(const char *path, FSError *err)
     for (auto const& item : items) {
 
         if (!exportFile(item, path, err)) {
-            msg("Export error: %ld\n", *err);
+            msg("Export error: %ld\n", (long)*err);
             return false;
         }
     }

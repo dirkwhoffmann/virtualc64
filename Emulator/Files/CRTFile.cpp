@@ -201,7 +201,7 @@ CRTFile::readFromBuffer(const u8 *buffer, size_t length)
     
     msg("Cartridge: %s\n", getName());
     msg("   Header: %08X bytes long (normally 0x40)\n", headerSize);
-    msg("   Type:   %ld\n", cartridgeType());
+    msg("   Type:   %ld\n", (long)cartridgeType());
     msg("   Game:   %d\n", initialGameLine());
     msg("   Exrom:  %d\n", initialExromLine());
     
