@@ -99,7 +99,7 @@ Keyboard::press(long nr, i64 duration)
 void
 Keyboard::pressRowCol(u8 row, u8 col, i64 duration)
 {
-    debug(KBD_DEBUG, "pressKey(%d,%d, [%lld])\n", row, col, duration);
+    trace(KBD_DEBUG, "pressKey(%d,%d, [%lld])\n", row, col, duration);
 
     assert(row < 8);
     assert(col < 8);
@@ -112,7 +112,7 @@ Keyboard::pressRowCol(u8 row, u8 col, i64 duration)
 void
 Keyboard::pressRestore(i64 duration)
 {
-    debug(KBD_DEBUG, "pressRestoreKey()\n");
+    trace(KBD_DEBUG, "pressRestoreKey()\n");
 
     cpu.pullDownNmiLine(INTSRC_KBD);
     clearCnt = duration;
@@ -133,7 +133,7 @@ Keyboard::release(long nr)
 void
 Keyboard::releaseRowCol(u8 row, u8 col)
 {
-    debug(KBD_DEBUG, "releaseKey(%d,%d)\n", row, col);
+    trace(KBD_DEBUG, "releaseKey(%d,%d)\n", row, col);
 
     assert(row < 8);
     assert(col < 8);
@@ -149,7 +149,7 @@ Keyboard::releaseRowCol(u8 row, u8 col)
 void
 Keyboard::releaseRestore()
 {
-    debug(KBD_DEBUG, "releaseRestoreKey()\n");
+    trace(KBD_DEBUG, "releaseRestoreKey()\n");
     
     cpu.releaseNmiLine(INTSRC_KBD);
 }

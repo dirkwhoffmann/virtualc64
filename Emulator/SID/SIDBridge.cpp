@@ -313,7 +313,7 @@ SIDBridge::getClockFrequency()
 void
 SIDBridge::setClockFrequency(u32 frequency)
 {
-    debug(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
+    trace(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
 
     cpuFrequency = frequency;
 
@@ -339,7 +339,7 @@ SIDBridge::getRevision()
 void
 SIDBridge::setRevision(SIDRevision revision)
 {
-    debug(SID_DEBUG, "Setting SID revision to %s\n", sidRevisionName(revision));
+    trace(SID_DEBUG, "Setting SID revision to %s\n", sidRevisionName(revision));
 
     for (int i = 0; i < 4; i++) {
         resid[i].setRevision(revision);
@@ -363,7 +363,7 @@ SIDBridge::getSampleRate()
 void
 SIDBridge::setSampleRate(double rate)
 {
-    debug(SID_DEBUG, "Setting sample rate to %f\n", rate);
+    trace(SID_DEBUG, "Setting sample rate to %f\n", rate);
 
     sampleRate = rate;
     
@@ -389,7 +389,7 @@ SIDBridge::getAudioFilter()
 void
 SIDBridge::setAudioFilter(bool enable)
 {
-    debug(SID_DEBUG, "%s audio filter\n", enable ? "Enabling" : "Disabling");
+    trace(SID_DEBUG, "%s audio filter\n", enable ? "Enabling" : "Disabling");
 
     for (int i = 0; i < 4; i++) {
         resid[i].setAudioFilter(enable);
@@ -413,7 +413,7 @@ SIDBridge::getSamplingMethod()
 void
 SIDBridge::setSamplingMethod(SamplingMethod method)
 {
-    debug(SID_DEBUG, "Setting sampling method to %s\n",sidSamplingMethodName(method));
+    trace(SID_DEBUG, "Setting sampling method to %s\n",sidSamplingMethodName(method));
 
     for (int i = 0; i < 4; i++) {
         resid[i].setSamplingMethod(method);
@@ -678,7 +678,7 @@ SIDBridge::executeUntil(u64 targetCycle)
 
     cycles += consumedCycles;
     
-    debug(SID_EXEC,
+    trace(SID_EXEC,
           "target: %lld  missing: %lld consumed: %lld reached: %lld still missing: %lld\n",
           targetCycle, missingCycles, consumedCycles, cycles, targetCycle - cycles);
 }
@@ -691,7 +691,7 @@ SIDBridge::execute(u64 numSamples)
     // Run reSID for at least one cycle to make pipelined writes work
     if (numSamples == 0) {
 
-        debug(SID_EXEC, "Running SIDs for an extra cycle");
+        trace(SID_EXEC, "Running SIDs for an extra cycle");
 
         for (int i = 0; i < 4; i++) resid[i].clock();
         return 1;
@@ -750,7 +750,7 @@ SIDBridge::execute(u64 numSamples)
         handleBufferOverflow();
     }
     
-    debug(SID_EXEC, "%d %f %f %f\n", samples[0][0], vol[0], pan[0], volL.current);
+    trace(SID_EXEC, "%d %f %f %f\n", samples[0][0], vol[0], pan[0], volL.current);
         
     // Convert sound samples to floating point values and write into ringbuffer
     for (unsigned i = 0; i < numSamples; i++) {
@@ -818,7 +818,7 @@ SIDBridge::handleBufferUnderflow()
     // (1) The consumer runs slightly faster than the producer.
     // (2) The producer is halted or not startet yet.
     
-    debug(SID_DEBUG, "BUFFER UNDERFLOW (r: %d w: %d)\n", stream.r, stream.w);
+    trace(SID_DEBUG, "BUFFER UNDERFLOW (r: %d w: %d)\n", stream.r, stream.w);
 
     // Determine the elapsed seconds since the last pointer adjustment.
     u64 now = Oscillator::nanos();
@@ -847,7 +847,7 @@ SIDBridge::handleBufferOverflow()
     // (1) The consumer runs slightly slower than the producer
     // (2) The consumer is halted or not startet yet
     
-    debug(SID_DEBUG, "BUFFER OVERFLOW (r: %d w: %d)\n", stream.r, stream.w);
+    trace(SID_DEBUG, "BUFFER OVERFLOW (r: %d w: %d)\n", stream.r, stream.w);
     
     // Determine the elapsed seconds since the last pointer adjustment
     u64 now = Oscillator::nanos();

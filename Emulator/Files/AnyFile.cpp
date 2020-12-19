@@ -218,7 +218,7 @@ AnyFile::readFromFile(const char *filename)
     setPath(filename);
     success = true;
     
-    debug(FILE_DEBUG, "File %s read successfully\n", path);
+    trace(FILE_DEBUG, "File %s read successfully\n", path);
 	
 exit:
 	

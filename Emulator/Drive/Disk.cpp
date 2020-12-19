@@ -402,9 +402,9 @@ Disk::analyzeHalftrack(Halftrack ht)
             sync[i] = decodeGcr(trackInfo.bit + i);
             
             if (sync[i] == 0x08) {
-                debug(GCR_DEBUG, "Sector header block found at offset %ld\n", i);
+                trace(GCR_DEBUG, "Sector header block found at offset %ld\n", i);
             } else if (sync[i] == 0x07) {
-                debug(GCR_DEBUG, "Sector data block found at offset %ld\n", i);
+                trace(GCR_DEBUG, "Sector data block found at offset %ld\n", i);
             } else {
                 log(i, 10, "Invalid sector ID %02X at index %d. Should be 0x07 or 0x08.", sync[i], i);
             }
@@ -648,7 +648,7 @@ Disk::decodeDisk(u8 *dest, unsigned numTracks)
         if (trackIsEmpty(t))
             break;
         
-        debug(GCR_DEBUG, "Decoding track %d %s\n", t, dest ? "" : "(test run)");
+        trace(GCR_DEBUG, "Decoding track %d %s\n", t, dest ? "" : "(test run)");
         numBytes += decodeTrack(t, dest + (dest ? numBytes : 0));
     }
     
@@ -667,7 +667,7 @@ Disk::decodeTrack(Track t, u8 *dest)
     // For each sector ...
     for (unsigned s = 0; s < numSectors; s++) {
         
-        debug(GCR_DEBUG, "   Decoding sector %d\n", s);
+        trace(GCR_DEBUG, "   Decoding sector %d\n", s);
         SectorInfo info = sectorLayout(s);
         if (info.dataBegin != info.dataEnd) {
             numBytes += decodeSector(info.dataBegin, dest + (dest ? numBytes : 0));
@@ -707,7 +707,7 @@ Disk::decodeSector(size_t offset, u8 *dest)
 void
 Disk::encodeArchive(G64File *a)
 {
-    debug(GCR_DEBUG, "Encoding G64 archive\n");
+    trace(GCR_DEBUG, "Encoding G64 archive\n");
     
     assert(a != NULL);
     
@@ -729,7 +729,7 @@ Disk::encodeArchive(G64File *a)
             warn("Halftrack %d has %d bytes. Must be less than 7928\n", ht, size);
             continue;
         }
-        debug(GCR_DEBUG, "  Encoding halftrack %d (%d bytes)\n", ht, size);
+        trace(GCR_DEBUG, "  Encoding halftrack %d (%d bytes)\n", ht, size);
         length.halftrack[ht] = 8 * size;
         
         for (unsigned i = 0; i < size; i++) {
@@ -783,7 +783,7 @@ Disk::encodeArchive(D64File *a, bool alignTracks)
     size_t encodedBits;
     unsigned numTracks = a->numberOfTracks();
 
-    debug(GCR_DEBUG, "Encoding D64 archive with %d tracks\n", numTracks);
+    trace(GCR_DEBUG, "Encoding D64 archive with %d tracks\n", numTracks);
 
     // Wipe out track data
     clearDisk();
@@ -803,7 +803,7 @@ Disk::encodeArchive(D64File *a, bool alignTracks)
             start = 0;
         }
         encodedBits = encodeTrack(a, t, tailGap[zone], start);
-        debug(GCR_DEBUG, "Encoded %zu bits (%lu bytes) for track %d.\n",
+        trace(GCR_DEBUG, "Encoded %zu bits (%lu bytes) for track %d.\n",
               encodedBits, encodedBits / 8, t);
     }
 
@@ -817,7 +817,7 @@ size_t
 Disk::encodeTrack(D64File *a, Track t, u8 tailGap, HeadPos start)
 {
     assert(isTrackNumber(t));
-    debug(GCR_DEBUG, "Encoding track %d\n", t);
+    trace(GCR_DEBUG, "Encoding track %d\n", t);
 
     size_t totalEncodedBits = 0;
     
@@ -843,7 +843,7 @@ Disk::encodeSector(D64File *a, Track t, Sector s, HeadPos start, int tailGap)
     
     a->selectTrackAndSector(t, s);
     
-    debug(GCR_DEBUG, "  Encoding track/sector %d/%d\n", t, s);
+    trace(GCR_DEBUG, "  Encoding track/sector %d/%d\n", t, s);
     
     // Get disk id and compute checksum
     u8 id1 = a->diskId1();

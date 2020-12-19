@@ -326,7 +326,7 @@ Drive::setZone(u8 value)
     assert(value < 4);
     
     if (value != zone) {
-        debug(DRV_DEBUG, "Switching from disk zone %d to disk zone %d\n", zone, value);
+        trace(DRV_DEBUG, "Switching from disk zone %d to disk zone %d\n", zone, value);
         zone = value;
     }
 }
@@ -364,9 +364,9 @@ Drive::moveHeadUp()
         halftrack++;
         offset = (HeadPos)(position * disk.lengthOfHalftrack(halftrack));
         
-        debug(DRV_DEBUG, "Moving head up to halftrack %d (track %2.1f) (offset %d)\n",
+        trace(DRV_DEBUG, "Moving head up to halftrack %d (track %2.1f) (offset %d)\n",
               halftrack, (halftrack + 1) / 2.0, offset);
-        debug(DRV_DEBUG, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
+        trace(DRV_DEBUG, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
     }
    
     assert(disk.isValidHeadPos(halftrack, offset));
@@ -382,9 +382,9 @@ Drive::moveHeadDown()
         halftrack--;
         offset = (HeadPos)(position * disk.lengthOfHalftrack(halftrack));
         
-        debug(DRV_DEBUG, "Moving head down to halftrack %d (track %2.1f)\n",
+        trace(DRV_DEBUG, "Moving head down to halftrack %d (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
-        debug(DRV_DEBUG, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
+        trace(DRV_DEBUG, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
     }
     
     assert(disk.isValidHeadPos(halftrack, offset));
@@ -411,14 +411,14 @@ Drive::insertDisk(AnyArchive *archive)
 {
     assert(archive != NULL);
 
-    debug(DSKCHG_DEBUG, "insertDisk(archive %p)\n", archive);
+    trace(DSKCHG_DEBUG, "insertDisk(archive %p)\n", archive);
     insertDisk(Disk::makeWithArchive(c64, archive));
 }
 
 void
 Drive::insertDisk(Disk *otherDisk)
 {
-    debug(DSKCHG_DEBUG, "insertDisk(otherDisk %p)\n", otherDisk);
+    trace(DSKCHG_DEBUG, "insertDisk(otherDisk %p)\n", otherDisk);
     assert(otherDisk != NULL);
     
     suspend();
@@ -436,7 +436,7 @@ Drive::insertDisk(Disk *otherDisk)
 void 
 Drive::ejectDisk()
 {
-    debug(DSKCHG_DEBUG, "ejectDisk()\n");
+    trace(DSKCHG_DEBUG, "ejectDisk()\n");
 
     suspend();
     
@@ -459,7 +459,7 @@ Drive::vsyncHandler()
             
         case FULLY_INSERTED:
             
-            debug(DSKCHG_DEBUG, "FULLY_INSERTED -> PARTIALLY_EJECTED\n");
+            trace(DSKCHG_DEBUG, "FULLY_INSERTED -> PARTIALLY_EJECTED\n");
 
             // Pull the disk half out (blocks the light barrier)
             insertionStatus = PARTIALLY_EJECTED;
@@ -473,7 +473,7 @@ Drive::vsyncHandler()
             
         case PARTIALLY_EJECTED:
             
-            debug(DSKCHG_DEBUG, "PARTIALLY_EJECTED -> FULLY_EJECTED\n");
+            trace(DSKCHG_DEBUG, "PARTIALLY_EJECTED -> FULLY_EJECTED\n");
 
             // Take the disk out (unblocks the light barrier)
             insertionStatus = FULLY_EJECTED;
@@ -487,7 +487,7 @@ Drive::vsyncHandler()
             
         case FULLY_EJECTED:
             
-            debug(DSKCHG_DEBUG, "FULLY_EJECTED -> PARTIALLY_INSERTED\n");
+            trace(DSKCHG_DEBUG, "FULLY_EJECTED -> PARTIALLY_INSERTED\n");
 
             // Only proceed if a new disk is waiting for insertion
             if (!diskToInsert) return;
@@ -501,7 +501,7 @@ Drive::vsyncHandler()
             
         case PARTIALLY_INSERTED:
             
-            debug(DSKCHG_DEBUG, "PARTIALLY_INSERTED -> FULLY_INSERTED\n");
+            trace(DSKCHG_DEBUG, "PARTIALLY_INSERTED -> FULLY_INSERTED\n");
 
             // Fully insert the disk (unblocks the light barrier)
             insertionStatus = FULLY_INSERTED;

@@ -315,8 +315,8 @@ public:
     void enableWarpMode() { setWarp(true); }
     void disableWarpMode() { setWarp(false); }
 
-    void enableDebugMode() { setDebug(true); }
-    void disableDebugMode() { setDebug(false); }
+    void enableDebugMode() { settrace(true); }
+    void disableDebugMode() { settrace(false); }
     bool inDebugMode() { return debugMode; }
     
 private:
@@ -326,7 +326,7 @@ private:
     void _run() override;
     void _pause() override;
     void _setWarp(bool enable) override;
-    void _setDebug(bool enable) override;
+    void _settrace(bool enable) override;
 
 
     //

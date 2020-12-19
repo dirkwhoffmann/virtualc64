@@ -86,8 +86,6 @@ public:
     void suspend();
     void resume();
     
-private:
-
     void prefix() override;
 };
 

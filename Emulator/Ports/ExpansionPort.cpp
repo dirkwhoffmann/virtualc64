@@ -53,7 +53,7 @@ ExpansionPort::_load(u8 *buffer)
         reader.ptr += cartridge->load(reader.ptr);
     }
     
-    debug(SNP_DEBUG, "Recreated from %ld bytes\n", reader.ptr - buffer);
+    trace(SNP_DEBUG, "Recreated from %ld bytes\n", reader.ptr - buffer);
     return reader.ptr - buffer;
 }
 
@@ -69,7 +69,7 @@ ExpansionPort::_save(u8 *buffer)
         writer.ptr += cartridge->save(writer.ptr);
     }
     
-    debug(SNP_DEBUG, "Serialized to %ld bytes\n", writer.ptr - buffer); \
+    trace(SNP_DEBUG, "Serialized to %ld bytes\n", writer.ptr - buffer); \
     return writer.ptr - buffer;
 }
 
@@ -228,7 +228,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
     c64.putMessage(MSG_CARTRIDGE);
     if (cartridge->hasSwitch()) c64.putMessage(MSG_CART_SWITCH);
     
-    debug(EXP_DEBUG, "Cartridge attached to expansion port");
+    trace(EXP_DEBUG, "Cartridge attached to expansion port");
 }
 
 bool
@@ -253,7 +253,7 @@ ExpansionPort::attachCartridgeAndReset(CRTFile *file)
 bool
 ExpansionPort::attachGeoRamCartridge(u32 capacity)
 {
-    debug(EXP_DEBUG, "Attaching GeoRAM cartridge (%d KB)\n", capacity);
+    trace(EXP_DEBUG, "Attaching GeoRAM cartridge (%d KB)\n", capacity);
 
     switch (capacity) {
         case 64: case 128: case 256: case 512: case 1024: case 2048: case 4096:
@@ -274,7 +274,7 @@ ExpansionPort::attachGeoRamCartridge(u32 capacity)
 void
 ExpansionPort::attachIsepicCartridge()
 {
-    debug(EXP_DEBUG, "Attaching Isepic cartridge\n");
+    trace(EXP_DEBUG, "Attaching Isepic cartridge\n");
     
     Cartridge *isepic = Cartridge::makeWithType(c64, CRT_ISEPIC);
     return attachCartridge(isepic);
@@ -293,7 +293,7 @@ ExpansionPort::detachCartridge()
         
         setCartridgeMode(CRT_OFF);
         
-        debug(EXP_DEBUG, "Cartridge detached from expansion port");
+        trace(EXP_DEBUG, "Cartridge detached from expansion port");
         c64.putMessage(MSG_NO_CARTRIDGE);
        
         resume();

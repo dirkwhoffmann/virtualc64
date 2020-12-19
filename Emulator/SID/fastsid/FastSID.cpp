@@ -145,7 +145,7 @@ FastSID::_reset()
 void
 FastSID::setClockFrequency(u32 frequency)
 {
-    debug(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
+    trace(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
     
     cpuFrequency = frequency;
     
@@ -247,7 +247,7 @@ FastSID::setRevision(SIDRevision rev)
 void
 FastSID::setSampleRate(double rate)
 {
-    debug(SID_DEBUG, "Setting sample rate to %d\n", (u32)rate);
+    trace(SID_DEBUG, "Setting sample rate to %d\n", (u32)rate);
     
     sampleRate = (u32)rate;
     

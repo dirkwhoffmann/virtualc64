@@ -41,7 +41,7 @@ Datasette::insertTape(TAPFile *a)
     size = a->getDataSize();
     type = a->TAPversion();
     
-    debug(TAP_DEBUG, "Inserting tape (size = %llu, type = %d)...\n", size, type);
+    trace(TAP_DEBUG, "Inserting tape (size = %llu, type = %d)...\n", size, type);
     
     // Copy data
     data = (u8 *)malloc(size);
@@ -65,7 +65,7 @@ Datasette::ejectTape()
 {
     suspend();
     
-    debug(TAP_DEBUG, "Ejecting tape\n");
+    trace(TAP_DEBUG, "Ejecting tape\n");
 
     if (!hasTape())
         return;
@@ -138,7 +138,7 @@ Datasette::pressPlay()
     if (!hasTape())
         return;
     
-    debug(TAP_DEBUG, "pressPlay\n");
+    trace(TAP_DEBUG, "pressPlay\n");
     playKey = true;
 
     // Schedule first pulse
@@ -151,7 +151,7 @@ Datasette::pressPlay()
 void
 Datasette::pressStop()
 {
-    debug(TAP_DEBUG, "pressStop\n");
+    trace(TAP_DEBUG, "pressStop\n");
     motor = false;
     playKey = false;
 }

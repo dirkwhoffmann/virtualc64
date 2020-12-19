@@ -52,7 +52,7 @@ void
 
 C64::C64()
 {
-    debug(RUN_DEBUG, "Creating virtual C64 [%p]\n", this);
+    trace(RUN_DEBUG, "Creating virtual C64 [%p]\n", this);
         
     subComponents = vector<HardwareComponent *> {
         
@@ -84,7 +84,7 @@ C64::C64()
 
 C64::~C64()
 {
-    debug(RUN_DEBUG, "Destroying C64[%p]\n", this);
+    trace(RUN_DEBUG, "Destroying C64[%p]\n", this);
     powerOff();
     
     pthread_mutex_destroy(&threadLock);
@@ -241,7 +241,7 @@ C64::getConfigItem(ConfigOption option, long id)
 bool
 C64::configure(ConfigOption option, long value)
 {
-    debug(CNF_DEBUG, "configure(option: %ld, value: %ld\n", option, value);
+    trace(CNF_DEBUG, "configure(option: %ld, value: %ld\n", option, value);
 
     // Propagate configuration request to all components
     bool changed = HardwareComponent::configure(option, value);
@@ -258,7 +258,7 @@ C64::configure(ConfigOption option, long value)
 bool
 C64::configure(ConfigOption option, long id, long value)
 {
-    debug(CNF_DEBUG, "configure(option: %ld, id: %ld, value: %ld\n", option, id, value);
+    trace(CNF_DEBUG, "configure(option: %ld, id: %ld, value: %ld\n", option, id, value);
     
     // Propagate configuration request to all components
     bool changed = HardwareComponent::configure(option, id, value);
@@ -346,7 +346,7 @@ C64::updateVicFunctionTable()
 {
     bool dmaDebug = vic.getConfig().dmaDebug;
     
-    debug(VIC_DEBUG, "updateVicFunctionTable (dmaDebug: %d)\n", dmaDebug);
+    trace(VIC_DEBUG, "updateVicFunctionTable (dmaDebug: %d)\n", dmaDebug);
     
     // Assign model independent execution functions
     vicfunc[0] = nullptr;
@@ -540,7 +540,7 @@ C64::setWarp(bool enable)
 void
 C64::powerOn()
 {
-    debug(RUN_DEBUG, "powerOn()\n");
+    trace(RUN_DEBUG, "powerOn()\n");
     
     pthread_mutex_lock(&stateChangeLock);
     
@@ -556,7 +556,7 @@ C64::powerOn()
 void
 C64::_powerOn()
 {
-    debug(RUN_DEBUG, "_powerOn()\n");
+    trace(RUN_DEBUG, "_powerOn()\n");
     
     // Clear all runloop flags
     runLoopCtrl = 0;
@@ -567,7 +567,7 @@ C64::_powerOn()
 void
 C64::powerOff()
 {
-    debug(RUN_DEBUG, "powerOff()\n");
+    trace(RUN_DEBUG, "powerOff()\n");
     
     pthread_mutex_lock(&stateChangeLock);
     
@@ -583,7 +583,7 @@ C64::powerOff()
 void
 C64::_powerOff()
 {
-    debug(RUN_DEBUG, "_powerOff()\n");
+    trace(RUN_DEBUG, "_powerOff()\n");
     
     putMessage(MSG_POWER_OFF);
 }
@@ -591,7 +591,7 @@ C64::_powerOff()
 void
 C64::run()
 {
-    debug(RUN_DEBUG, "run()\n");
+    trace(RUN_DEBUG, "run()\n");
     
     pthread_mutex_lock(&stateChangeLock);
     
@@ -607,7 +607,7 @@ C64::run()
 void
 C64::_run()
 {
-    debug(RUN_DEBUG, "_run()\n");
+    trace(RUN_DEBUG, "_run()\n");
     
     // Start the emulator thread
     pthread_create(&p, nullptr, threadMain, (void *)this);
@@ -619,7 +619,7 @@ C64::_run()
 void
 C64::pause()
 {
-    debug(RUN_DEBUG, "pause()\n");
+    trace(RUN_DEBUG, "pause()\n");
     
     pthread_mutex_lock(&stateChangeLock);
     
@@ -649,7 +649,7 @@ C64::inspect()
 void
 C64::_pause()
 {
-    debug(RUN_DEBUG, "_pause()\n");
+    trace(RUN_DEBUG, "_pause()\n");
     
     // When we reach this line, the emulator thread is already gone
     assert(p == (pthread_t)0);
@@ -683,19 +683,19 @@ C64::_setWarp(bool enable)
 {
     if (enable) {
         
-        debug(RUN_DEBUG, "Warp on\n");
+        trace(RUN_DEBUG, "Warp on\n");
         putMessage(MSG_WARP_ON);
         
     } else {
 
-        debug(RUN_DEBUG, "Warp off\n");
+        trace(RUN_DEBUG, "Warp off\n");
         oscillator.restart();
         putMessage(MSG_WARP_OFF);
     }
 }
 
 void
-C64::_setDebug(bool enable)
+C64::_settrace(bool enable)
 {
     suspend();
     updateVicFunctionTable();
@@ -707,7 +707,7 @@ C64::suspend()
 {
     pthread_mutex_lock(&stateChangeLock);
     
-    debug(RUN_DEBUG, "Suspending (%d)...\n", suspendCounter);
+    trace(RUN_DEBUG, "Suspending (%d)...\n", suspendCounter);
     
     if (suspendCounter || isRunning()) {
         
@@ -725,7 +725,7 @@ C64::resume()
 {
     pthread_mutex_lock(&stateChangeLock);
     
-    debug(RUN_DEBUG, "Resuming (%d)...\n", suspendCounter);
+    trace(RUN_DEBUG, "Resuming (%d)...\n", suspendCounter);
     
     if (suspendCounter && --suspendCounter == 0) {
         
@@ -782,13 +782,13 @@ C64::isReady(ErrorCode *error)
 void
 C64::threadWillStart()
 {
-    debug(RUN_DEBUG, "Emulator thread started\n");
+    trace(RUN_DEBUG, "Emulator thread started\n");
 }
 
 void
 C64::threadDidTerminate()
 {
-    debug(RUN_DEBUG, "Emulator thread terminated\n");
+    trace(RUN_DEBUG, "Emulator thread terminated\n");
     
     // Trash the thread pointer
     p = (pthread_t)0;
@@ -806,7 +806,7 @@ C64::threadDidTerminate()
 void
 C64::runLoop()
 {
-    debug(RUN_DEBUG, "runLoop()\n");
+    trace(RUN_DEBUG, "runLoop()\n");
     
     // Prepare to run
     oscillator.restart();
@@ -823,13 +823,13 @@ C64::runLoop()
             
             // Are we requested to take a snapshot?
             if (runLoopCtrl & RL_AUTO_SNAPSHOT) {
-                debug(RUN_DEBUG, "RL_AUTO_SNAPSHOT\n");
+                trace(RUN_DEBUG, "RL_AUTO_SNAPSHOT\n");
                 autoSnapshot = Snapshot::makeWithC64(this);
                 putMessage(MSG_AUTO_SNAPSHOT_TAKEN);
                 clearControlFlags(RL_AUTO_SNAPSHOT);
             }
             if (runLoopCtrl & RL_USER_SNAPSHOT) {
-                debug(RUN_DEBUG, "RL_USER_SNAPSHOT\n");
+                trace(RUN_DEBUG, "RL_USER_SNAPSHOT\n");
                 userSnapshot = Snapshot::makeWithC64(this);
                 putMessage(MSG_USER_SNAPSHOT_TAKEN);
                 clearControlFlags(RL_USER_SNAPSHOT);
@@ -837,7 +837,7 @@ C64::runLoop()
             
             // Are we requested to update the debugger info structs?
             if (runLoopCtrl & RL_INSPECT) {
-                debug(RUN_DEBUG, "RL_INSPECT\n");
+                trace(RUN_DEBUG, "RL_INSPECT\n");
                 inspect();
                 clearControlFlags(RL_INSPECT);
             }
@@ -845,7 +845,7 @@ C64::runLoop()
             // Did we reach a breakpoint?
             if (runLoopCtrl & RL_BREAKPOINT_REACHED) {
                 putMessage(MSG_BREAKPOINT_REACHED);
-                debug(RUN_DEBUG, "BREAKPOINT_REACHED pc: %x\n", cpu.getPC0());
+                trace(RUN_DEBUG, "BREAKPOINT_REACHED pc: %x\n", cpu.getPC0());
                 clearControlFlags(RL_BREAKPOINT_REACHED);
                 break;
             }
@@ -853,7 +853,7 @@ C64::runLoop()
             // Did we reach a watchpoint?
             if (runLoopCtrl & RL_WATCHPOINT_REACHED) {
                 putMessage(MSG_WATCHPOINT_REACHED);
-                debug(RUN_DEBUG, "WATCHPOINT_REACHED pc: %x\n", cpu.getPC0());
+                trace(RUN_DEBUG, "WATCHPOINT_REACHED pc: %x\n", cpu.getPC0());
                 clearControlFlags(RL_WATCHPOINT_REACHED);
                 break;
             }
@@ -861,14 +861,14 @@ C64::runLoop()
             // Are we requested to terminate the run loop?
             if (runLoopCtrl & RL_STOP) {
                 clearControlFlags(RL_STOP);
-                debug(RUN_DEBUG, "RL_STOP\n");
+                trace(RUN_DEBUG, "RL_STOP\n");
                 break;
             }
             
             // Is the CPU jammed due the execution of an illegal instruction?
             if (runLoopCtrl & RL_CPU_JAMMED) {
                 putMessage(MSG_CPU_JAMMED);
-                debug(RUN_DEBUG, "RL_CPU_JAMMED\n");
+                trace(RUN_DEBUG, "RL_CPU_JAMMED\n");
                 clearControlFlags(RL_CPU_JAMMED);
                 break;
             }
@@ -1093,7 +1093,7 @@ C64::synchronizeTiming()
         // The emulator seems to be out of sync, so we better reset the
         // synchronization timer
         
-        debug(RUN_DEBUG, "Synchronization lost: (%lld)\n", timediff);
+        trace(RUN_DEBUG, "Synchronization lost: (%lld)\n", timediff);
         restartTimer();
     }
     
@@ -1109,7 +1109,7 @@ C64::synchronizeTiming()
         // The emulator did not keep up with the real time clock. Instead of
         // running behind for a long time, we reset the synchronization timer
         
-        debug(RUN_DEBUG, "Jitter exceeds limit: (%lld)\n", jitter);
+        trace(RUN_DEBUG, "Jitter exceeds limit: (%lld)\n", jitter);
         restartTimer();
     }
 }
@@ -1457,11 +1457,11 @@ C64::loadRom(RomType type, RomFile *file)
         case ROM_BASIC:
         {
             if (file->type() == FILETYPE_BASIC_ROM) {
-                debug(MEM_DEBUG, "Flashing Basic Rom\n");
+                trace(MEM_DEBUG, "Flashing Basic Rom\n");
                 file->flash(mem.rom, 0xA000);
                 
-                debug(MEM_DEBUG, "hasMega65Rom() = %d\n", hasMega65Rom(ROM_BASIC));
-                debug(MEM_DEBUG, "mega65BasicRev() = %s\n", mega65BasicRev());
+                trace(MEM_DEBUG, "hasMega65Rom() = %d\n", hasMega65Rom(ROM_BASIC));
+                trace(MEM_DEBUG, "mega65BasicRev() = %s\n", mega65BasicRev());
                 
                 return true;
             }
@@ -1470,7 +1470,7 @@ C64::loadRom(RomType type, RomFile *file)
         case ROM_CHAR:
         {
             if (file->type() == FILETYPE_CHAR_ROM) {
-                debug(MEM_DEBUG, "Flashing Character Rom\n");
+                trace(MEM_DEBUG, "Flashing Character Rom\n");
                 file->flash(mem.rom, 0xD000);
                 return true;
             }
@@ -1479,11 +1479,11 @@ C64::loadRom(RomType type, RomFile *file)
         case ROM_KERNAL:
         {
             if (file->type() == FILETYPE_KERNAL_ROM) {
-                debug(MEM_DEBUG, "Flashing Kernal Rom\n");
+                trace(MEM_DEBUG, "Flashing Kernal Rom\n");
                 file->flash(mem.rom, 0xE000);
                 
-                debug(MEM_DEBUG, "hasMega65Rom() = %d\n", hasMega65Rom(ROM_KERNAL));
-                debug(MEM_DEBUG, "mega65KernalRev() = %s\n", mega65KernalRev());
+                trace(MEM_DEBUG, "hasMega65Rom() = %d\n", hasMega65Rom(ROM_KERNAL));
+                trace(MEM_DEBUG, "mega65KernalRev() = %s\n", mega65KernalRev());
                 
                 return true;
             }
@@ -1492,7 +1492,7 @@ C64::loadRom(RomType type, RomFile *file)
         case ROM_VC1541:
         {
             if (file->type() == FILETYPE_VC1541_ROM) {
-                debug(MEM_DEBUG, "Flashing VC1541 Rom\n");
+                trace(MEM_DEBUG, "Flashing VC1541 Rom\n");
                 file->flash(drive8.mem.rom);
                 file->flash(drive9.mem.rom);
                 return true;

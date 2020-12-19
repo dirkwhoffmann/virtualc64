@@ -290,7 +290,7 @@ private:
     
 private:
     
-    void _setDebug(bool enable) override;
+    void _settrace(bool enable) override;
     
     
     //

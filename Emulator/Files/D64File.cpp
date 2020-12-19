@@ -261,42 +261,42 @@ D64File::readFromBuffer(const u8 *buffer, size_t length)
     {
         case D64_683_SECTORS: // 35 tracks, no errors
             
-            debug(FILE_DEBUG, "D64 file contains 35 tracks, no EC bytes\n");
+            trace(FILE_DEBUG, "D64 file contains 35 tracks, no EC bytes\n");
             numSectors = 683;
             errorCodes = false;
             break;
             
         case D64_683_SECTORS_ECC: // 35 tracks, 683 error bytes
             
-            debug(FILE_DEBUG, "D64 file contains 35 tracks, 683 EC bytes\n");
+            trace(FILE_DEBUG, "D64 file contains 35 tracks, 683 EC bytes\n");
             numSectors = 683;
             errorCodes = true;
             break;
             
         case D64_768_SECTORS: // 40 tracks, no errors
             
-            debug(FILE_DEBUG, "D64 file contains 40 tracks, no EC bytes\n");
+            trace(FILE_DEBUG, "D64 file contains 40 tracks, no EC bytes\n");
             numSectors = 768;
             errorCodes = false;
             break;
             
         case D64_768_SECTORS_ECC: // 40 tracks, 768 error bytes
             
-            debug(FILE_DEBUG, "D64 file contains 40 tracks, 768 EC bytes\n");
+            trace(FILE_DEBUG, "D64 file contains 40 tracks, 768 EC bytes\n");
             numSectors = 768;
             errorCodes = true;
             break;
             
         case D64_802_SECTORS: // 42 tracks, no error bytes
             
-            debug(FILE_DEBUG, "D64 file contains 42 tracks, no EC bytes\n");
+            trace(FILE_DEBUG, "D64 file contains 42 tracks, no EC bytes\n");
             numSectors = 802;
             errorCodes = false;
             break;
             
         case D64_802_SECTORS_ECC: // 42 tracks, 802 error bytes
             
-            debug(FILE_DEBUG, "D64 file contains 42 tracks, 802 EC bytes\n");
+            trace(FILE_DEBUG, "D64 file contains 42 tracks, 802 EC bytes\n");
             numSectors = 802;
             errorCodes = true;
             break;

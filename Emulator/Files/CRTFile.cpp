@@ -253,7 +253,7 @@ CRTFile::repair()
 
     // Compute a fingerprint for the CRT file
     u64 fingerprint = fnv_1a_64(data, size);
-    debug(CRT_DEBUG, "CRT fingerprint: %llx\n", fingerprint);
+    trace(CRT_DEBUG, "CRT fingerprint: %llx\n", fingerprint);
 
     // Check for known inconsistencies
     switch (fingerprint) {

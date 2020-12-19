@@ -15,10 +15,10 @@ GeoRAM::_reset()
     RESET_SNAPSHOT_ITEMS
 
     if (!getBattery()) {
-        debug(CRT_DEBUG, "Erasing GeoRAM\n");
+        trace(CRT_DEBUG, "Erasing GeoRAM\n");
         eraseRAM(0);
     } else {
-        debug(CRT_DEBUG, "Preserving GeoRAM\n");
+        trace(CRT_DEBUG, "Preserving GeoRAM\n");
     }
 }
 

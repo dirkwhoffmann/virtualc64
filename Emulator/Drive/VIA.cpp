@@ -967,7 +967,7 @@ VIA2::updatePB()
                 drive.moveHeadDown();
                 // assert(newPos == ((drive->getHalftrack() - 1) & 0x03));
             } else {
-                debug(VIA_DEBUG, "Unexpected stepper motor control sequence\n");
+                trace(VIA_DEBUG, "Unexpected stepper motor control sequence\n");
             }
         }
     }

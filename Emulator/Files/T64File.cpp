@@ -189,7 +189,7 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
     otherArchive->dumpDirectory();
     archive->dumpDirectory();
     debug(FILE_DEBUG, "T64 archive created with other archive of type %s.\n",
-                   otherArchive->typeString());
+          otherArchive->typeString());
     
     return archive;
 }
@@ -354,7 +354,7 @@ T64File::repair()
         u16 noOfItemsStatedInHeader = numberOfItems();
         if (noOfItems != noOfItemsStatedInHeader) {
         
-            debug(FILE_DEBUG, "Repairing corrupted T64 archive: Changing number of items from %d to %d.\n", noOfItemsStatedInHeader, noOfItems);
+            trace(FILE_DEBUG, "Repairing corrupted T64 archive: Changing number of items from %d to %d.\n", noOfItemsStatedInHeader, noOfItems);
         
             data[0x24] = LO_BYTE(noOfItems);
             data[0x25] = HI_BYTE(noOfItems);
@@ -395,7 +395,7 @@ T64File::repair()
             // Let's assume that the rest of the file data belongs to this file ...
             u16 fixedEndAddrInMemory = startAddrInMemory + (size - startAddrInContainer);
 
-            debug(FILE_DEBUG, "Repairing corrupted T64 archive: Changing end address of item %d from %04X to %04X.\n", i, endAddrInMemory, fixedEndAddrInMemory);
+            trace(FILE_DEBUG, "Repairing corrupted T64 archive: Changing end address of item %d from %04X to %04X.\n", i, endAddrInMemory, fixedEndAddrInMemory);
 
             data[n] = LO_BYTE(fixedEndAddrInMemory);
             data[n+1] = HI_BYTE(fixedEndAddrInMemory);

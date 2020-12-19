@@ -66,7 +66,7 @@ MessageQueue::put(MessageType type, u64 data)
         w = (w + 1) % capacity;
         
         if (w == r) {
-            debug(MSG_DEBUG, "Queue overflow. Oldest message is lost.\n");
+            trace(MSG_DEBUG, "Queue overflow. Oldest message is lost.\n");
             r = (r + 1) % capacity;
         }
         

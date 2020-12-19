@@ -21,7 +21,7 @@ Expert::Expert(C64 &ref) : Cartridge(ref)
     setRamCapacity(0x2000);
     setBattery(true);
     
-    debug(CRT_DEBUG, "Expert cartridge created\n");
+    trace(CRT_DEBUG, "Expert cartridge created\n");
 }
 
 void
@@ -59,7 +59,7 @@ Expert::loadChip(unsigned nr, CRTFile *c)
     }
 
     // Initialize RAM with data from CRT file
-    debug(CRT_DEBUG, "Copying file contents into Expert RAM\n");
+    trace(CRT_DEBUG, "Copying file contents into Expert RAM\n");
     assert(getRamCapacity() == chipSize);
     for (unsigned i = 0; i < chipSize; i++) pokeRAM(i, chipData[i]);
 }
@@ -110,7 +110,7 @@ Expert::pokeIO1(u16 addr, u8 value)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
     
-    debug(CRT_DEBUG, "Expert::pokeIO1\n");
+    trace(CRT_DEBUG, "Expert::pokeIO1\n");
     
     // Any IO1 access disabled the cartridge
     active = false;
@@ -126,7 +126,7 @@ void
 Expert::pressButton(unsigned nr)
 {
     assert(nr <= numButtons());
-    debug(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
+    trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
     
     suspend();
     

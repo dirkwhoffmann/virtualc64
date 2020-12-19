@@ -66,10 +66,7 @@ public:
     void msg(const char *fmt, ...);
     void warn(const char *fmt, ...);
     
-    // void debug(const char *fmt, ...);
-    // void debug(int verbose, const char *fmt, ...);
-    // void plaindebug(const char *fmt, ...);
-    void plaindebug(int verbose, const char *fmt, ...);
+    void plaintrace(int verbose, const char *fmt, ...);
 };
 
 #endif

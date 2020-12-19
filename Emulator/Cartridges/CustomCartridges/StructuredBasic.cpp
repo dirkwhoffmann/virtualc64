@@ -18,7 +18,7 @@ StructuredBasic::resetCartConfig()
 u8
 StructuredBasic::peekIO1(u16 addr)
 {
-    debug(CRT_DEBUG, "peekIO1(%x)\n", addr);
+    trace(CRT_DEBUG, "peekIO1(%x)\n", addr);
 
     switch (addr & 0b11) {
             
@@ -43,7 +43,7 @@ StructuredBasic::peekIO1(u16 addr)
 void
 StructuredBasic::pokeIO1(u16 addr, u8 value)
 {
-    debug(CRT_DEBUG, "pokeIO1(%x,%x)\n", addr, value);
+    trace(CRT_DEBUG, "pokeIO1(%x,%x)\n", addr, value);
 
     peekIO1(addr);
 }

@@ -44,7 +44,7 @@ C64Object::warn(const char *fmt, ...)
 }
 
 void
-C64Object::plaindebug(int verbose, const char *fmt, ...)
+C64Object::plaintrace(int verbose, const char *fmt, ...)
 {
 #ifndef NDEBUG
     if (verbose) {

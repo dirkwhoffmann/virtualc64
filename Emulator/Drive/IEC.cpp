@@ -49,7 +49,7 @@ IEC::_dump()
 void 
 IEC::dumpTrace()
 {
-    debug(IEC_DEBUG, "ATN: %d CLK: %d DATA: %d\n", atnLine, clockLine, dataLine);
+    trace(IEC_DEBUG, "ATN: %d CLK: %d DATA: %d\n", atnLine, clockLine, dataLine);
 }
 
 bool IEC::_updateIecLines()

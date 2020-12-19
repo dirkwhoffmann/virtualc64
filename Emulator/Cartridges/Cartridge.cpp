@@ -140,14 +140,14 @@ Cartridge::makeWithCRTFile(C64 &c64, CRTFile *file)
 
 Cartridge::Cartridge(C64 &ref) : C64Component(ref)
 {
-    debug(CRT_DEBUG, "Creating cartridge at address %p...\n", this);
+    trace(CRT_DEBUG, "Creating cartridge at address %p...\n", this);
     
     memset(packet, 0, sizeof(packet));
 }
 
 Cartridge::~Cartridge()
 {
-    debug(CRT_DEBUG, "Releasing cartridge...\n");
+    trace(CRT_DEBUG, "Releasing cartridge...\n");
     dealloc();
 }
 
@@ -195,7 +195,7 @@ Cartridge::resetWithoutDeletingRam()
 {
     u8 ram[0x10000];
     
-    debug(RUN_DEBUG, "Resetting virtual C64 (preserving RAM)\n");
+    trace(RUN_DEBUG, "Resetting virtual C64 (preserving RAM)\n");
     
     memcpy(ram, mem.ram, 0x10000);
     c64.reset();
@@ -265,7 +265,7 @@ Cartridge::_load(u8 *buffer)
         for (unsigned i = 0; i < ramCapacity; i++) externalRam[i] = read8(reader.ptr);
     }
 
-    debug(SNP_DEBUG, "Recreated from %ld bytes\n", reader.ptr - buffer);
+    trace(SNP_DEBUG, "Recreated from %ld bytes\n", reader.ptr - buffer);
     return reader.ptr - buffer;
 }
 
@@ -292,7 +292,7 @@ Cartridge::_save(u8 *buffer)
         for (unsigned i = 0; i < ramCapacity; i++) write8(writer.ptr, externalRam[i]);
     }
     
-    debug(SNP_DEBUG, "Serialized %ld bytes\n", writer.ptr - buffer);
+    trace(SNP_DEBUG, "Serialized %ld bytes\n", writer.ptr - buffer);
     return writer.ptr - buffer;
 }
 
@@ -478,17 +478,17 @@ Cartridge::bankIn(unsigned nr)
         
         bankInROML(nr, 0x2000, 0); // chip covers ROML and (part of) ROMH
         bankInROMH(nr, packet[nr]->size - 0x2000, 0x2000);
-        // debug(CRT_DEBUG, "Banked in chip %d in ROML and ROMH\n", nr);
+        // trace(CRT_DEBUG, "Banked in chip %d in ROML and ROMH\n", nr);
     
     } else if (packet[nr]->mapsToL()) {
         
         bankInROML(nr, packet[nr]->size, 0); // chip covers (part of) ROML
-        // debug(CRT_DEBUG, "Banked in chip %d in ROML\n", nr);
+        // trace(CRT_DEBUG, "Banked in chip %d in ROML\n", nr);
         
     } else if (packet[nr]->mapsToH()) {
         
         bankInROMH(nr, packet[nr]->size, 0); // chip covers (part of) ROMH
-        // debug(CRT_DEBUG, "Banked in chip %d to ROMH\n", nr);
+        // trace(CRT_DEBUG, "Banked in chip %d to ROMH\n", nr);
         
     } else {
 

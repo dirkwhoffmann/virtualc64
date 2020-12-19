@@ -34,16 +34,15 @@
 #ifndef NDEBUG
 
 #define debug(verbose, format, ...) \
-if (verbose) { \
-fprintf(stderr, format, ##__VA_ARGS__); \
-}
+if (verbose) { fprintf(stderr, format, ##__VA_ARGS__); }
 
-// prefix(); \
-// fprintf(stderr, "%s: ", getDescription()); prefix();
+#define trace(verbose, format, ...) \
+if (verbose) { prefix(); fprintf(stderr, format, ##__VA_ARGS__); }
 
 #else
 
 #define debug(verbose, format, ...)
+#define trace(verbose, format, ...)
 
 #endif
 

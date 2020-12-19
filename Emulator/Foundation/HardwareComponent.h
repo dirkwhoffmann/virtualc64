@@ -244,8 +244,8 @@ protected:
     virtual void _setWarp(bool enable) { }
     
     // Switches debug mode on or off
-    void setDebug(bool enable);
-    virtual void _setDebug(bool enable) { }
+    void settrace(bool enable);
+    virtual void _settrace(bool enable) { }
 
 //
 // Standard implementations of _reset, _load, and _save
@@ -261,7 +261,7 @@ return counter.count;
 SerResetter resetter; \
 applyToResetItems(resetter);
 
-    // debug(SNP_DEBUG, "Resetted\n");
+    // trace(SNP_DEBUG, "Resetted\n");
 
 #define LOAD_SNAPSHOT_ITEMS \
 SerReader reader(buffer); \
@@ -269,7 +269,7 @@ applyToPersistentItems(reader); \
 applyToResetItems(reader); \
 return reader.ptr - buffer;
 
-    // debug(SNP_DEBUG, "Recreated from %d bytes\n", reader.ptr - buffer);
+    // trace(SNP_DEBUG, "Recreated from %d bytes\n", reader.ptr - buffer);
 
 #define SAVE_SNAPSHOT_ITEMS \
 SerWriter writer(buffer); \
@@ -277,7 +277,7 @@ applyToPersistentItems(writer); \
 applyToResetItems(writer); \
 return writer.ptr - buffer;
 
-    // debug(SNP_DEBUG, "Serialized to %d bytes\n", writer.ptr - buffer);
+    // trace(SNP_DEBUG, "Serialized to %d bytes\n", writer.ptr - buffer);
 
 };
 
