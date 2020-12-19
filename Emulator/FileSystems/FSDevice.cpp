@@ -716,7 +716,10 @@ FSDevice::exportDirectory(const char *path, FSError *err)
         
     // Only proceed if path points to an empty directory
     long numItems = numDirectoryItems(path);
-    if (numItems != 0) return FS_DIRECTORY_NOT_EMPTY;
+    if (numItems != 0) {
+        if (err) *err = FS_DIRECTORY_NOT_EMPTY;
+        return false;
+    }
     
     // Collect all directory entries
     auto items = scanDirectory();
@@ -731,6 +734,6 @@ FSDevice::exportDirectory(const char *path, FSError *err)
     }
     
     msg("Exported %lu items", items.size());
-    *err = FS_OK;
+    if (err) *err = FS_OK;
     return true;
 }
