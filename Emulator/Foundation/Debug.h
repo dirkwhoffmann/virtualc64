@@ -22,9 +22,9 @@
  * overwrite this function to output additional debug information.
  *
  * Debug and trace messages are accompanied by an optional 'verbose' parameter.
- * If 0 is passed in, no output will be created.
+ * If 0 is passed in, no output will be generated.
  *
- * Sidenote: In previous versions the printing macros were implemented in form
+ * Sidenote: In previous releases the printing macros were implemented in form
  * of variadic functions. Although this might seem to be a superior approach at
  * first glance, it is not. Using macros allows modern compilers to verify the
  * format string placeholders against the data types of the provided arguments.
@@ -41,10 +41,12 @@ fprintf(stderr, format, ##__VA_ARGS__);
 #ifndef NDEBUG
 
 #define debug(verbose, format, ...) \
-if (verbose) { fprintf(stderr, format, ##__VA_ARGS__); }
+if (verbose) { \
+fprintf(stderr, format, ##__VA_ARGS__); }
 
 #define trace(verbose, format, ...) \
-if (verbose) { prefix(); fprintf(stderr, format, ##__VA_ARGS__); }
+if (verbose) { \
+prefix(); fprintf(stderr, "%s: " format, getDescription(), ##__VA_ARGS__); }
 
 #else
 

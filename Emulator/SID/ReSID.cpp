@@ -238,7 +238,7 @@ ReSID::executeSamples(u64 numSamples, short *buffer)
     }
     assert(numSamples <= SIDBridge::sampleBufferSize);
     
-    // trace(SID_EXEC, "Executing ReSID %p for %lld samples\n", this, numSamples);
+    // debug(SID_EXEC, "Executing ReSID %p for %lld samples\n", this, numSamples);
 
     // Invoke reSID
     int result = sid->clock(delta, buffer, (int)numSamples);

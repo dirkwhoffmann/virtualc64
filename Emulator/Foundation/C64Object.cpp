@@ -9,20 +9,6 @@
 
 #include "C64Object.h"
 
-#define VC64OBJ_PARSE \
-char buf[256]; \
-va_list ap; \
-va_start(ap, fmt); \
-vsnprintf(buf, sizeof(buf), fmt, ap); \
-va_end(ap);
-
-#define VC64PRINTPLAIN(trailer) \
-fprintf(stderr, "%s%s", trailer, buf);
-
-#define VC64PRINT(trailer) \
-prefix(); \
-fprintf(stderr, "%s: %s%s", getDescription(), trailer, buf);
-
 void
 C64Object::prefix()
 {

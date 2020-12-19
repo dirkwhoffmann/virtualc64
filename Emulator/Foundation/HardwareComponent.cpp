@@ -12,7 +12,7 @@
 
 HardwareComponent::~HardwareComponent()
 {
-	trace(RUN_DEBUG, "Terminated\n");
+	debug(RUN_DEBUG, "Terminated\n");
 }
 
 void

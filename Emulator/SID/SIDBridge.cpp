@@ -678,7 +678,7 @@ SIDBridge::executeUntil(u64 targetCycle)
 
     cycles += consumedCycles;
     
-    trace(SID_EXEC,
+    debug(SID_EXEC,
           "target: %lld  missing: %lld consumed: %lld reached: %lld still missing: %lld\n",
           targetCycle, missingCycles, consumedCycles, cycles, targetCycle - cycles);
 }
@@ -691,7 +691,7 @@ SIDBridge::execute(u64 numSamples)
     // Run reSID for at least one cycle to make pipelined writes work
     if (numSamples == 0) {
 
-        trace(SID_EXEC, "Running SIDs for an extra cycle");
+        debug(SID_EXEC, "Running SIDs for an extra cycle");
 
         for (int i = 0; i < 4; i++) resid[i].clock();
         return 1;
@@ -750,7 +750,7 @@ SIDBridge::execute(u64 numSamples)
         handleBufferOverflow();
     }
     
-    trace(SID_EXEC, "%d %f %f %f\n", samples[0][0], vol[0], pan[0], volL.current);
+    debug(SID_EXEC, "%d %f %f %f\n", samples[0][0], vol[0], pan[0], volL.current);
         
     // Convert sound samples to floating point values and write into ringbuffer
     for (unsigned i = 0; i < numSamples; i++) {
