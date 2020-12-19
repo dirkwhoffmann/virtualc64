@@ -64,9 +64,7 @@ public:
     virtual void prefix();
     
     void msg(const char *fmt, ...);
-    void warn(const char *fmt, ...);
-    
-    void plaintrace(int verbose, const char *fmt, ...);
+    void warn(const char *fmt, ...);    
 };
 
 #endif

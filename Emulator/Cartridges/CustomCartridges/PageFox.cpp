@@ -48,10 +48,10 @@ PageFox::peekRomL(u16 addr)
     
     if (ramIsVisible()) {
         result = peekRAM(ramAddrL(addr));
-        plaintrace(CRT_DEBUG, "peekRomL(%x) [RAM] = %x\n", addr, result);
+        debug(CRT_DEBUG, "peekRomL(%x) [RAM] = %x\n", addr, result);
     } else {
         result = Cartridge::peekRomL(addr);
-        plaintrace(CRT_DEBUG, "peekRomL(%x) = %x\n", addr, result);
+        debug(CRT_DEBUG, "peekRomL(%x) = %x\n", addr, result);
     }
     
     return result;
@@ -64,10 +64,10 @@ PageFox::peekRomH(u16 addr)
     
     if (ramIsVisible()) {
         result = peekRAM(ramAddrH(addr));
-        plaintrace(CRT_DEBUG, "peekRomH(%x) [RAM] = %x\n", addr, result);
+        debug(CRT_DEBUG, "peekRomH(%x) [RAM] = %x\n", addr, result);
     } else {
         result = Cartridge::peekRomH(addr);
-        plaintrace(CRT_DEBUG, "peekRomH(%x) = %x\n", addr, result);
+        debug(CRT_DEBUG, "peekRomH(%x) = %x\n", addr, result);
     }
 
     return result;
@@ -78,10 +78,10 @@ PageFox::pokeRomL(u16 addr, u8 value)
 {
 
     if (ramIsVisible()) {
-        plaintrace(CRT_DEBUG, "pokeRomL [RAM] (%x, %x)\n", addr, value);
+        debug(CRT_DEBUG, "pokeRomL [RAM] (%x, %x)\n", addr, value);
         pokeRAM(ramAddrL(addr), value);
     } else {
-        plaintrace(CRT_DEBUG, "pokeRomL(%x, %x)\n", addr, value);
+        debug(CRT_DEBUG, "pokeRomL(%x, %x)\n", addr, value);
     }
     mem.ram[0x8000 + addr] = value;
 }
@@ -90,10 +90,10 @@ void
 PageFox::pokeRomH(u16 addr, u8 value)
 {
     if (ramIsVisible()) {
-        plaintrace(CRT_DEBUG, "pokeRomH [RAM] (%x, %x)\n", addr, value);
+        debug(CRT_DEBUG, "pokeRomH [RAM] (%x, %x)\n", addr, value);
         pokeRAM(ramAddrH(addr), value);
     } else {
-        plaintrace(CRT_DEBUG, "pokeRomH(%x, %x)\n", addr, value);
+        debug(CRT_DEBUG, "pokeRomH(%x, %x)\n", addr, value);
     }
     mem.ram[0xA000 + addr] = value;
 }
@@ -102,23 +102,23 @@ u8
 PageFox::peekIO1(u16 addr)
 {
     u8 result = ctrlReg & 0b11111;
-    plaintrace(CRT_DEBUG, "peekIO1(%x) = %x\n", addr, result);
+    debug(CRT_DEBUG, "peekIO1(%x) = %x\n", addr, result);
     return result;
 }
 
 void
 PageFox::pokeIO1(u16 addr, u8 value)
 {
-    plaintrace(CRT_DEBUG, "pokeIO1(%x, %x)\n", addr, value);
+    debug(CRT_DEBUG, "pokeIO1(%x, %x)\n", addr, value);
 
     ctrlReg = value;
     
     if (disabled()) {
         expansionport.setCartridgeMode(CRT_OFF);
-        plaintrace(CRT_DEBUG, "CRT disabled\n");
+        debug(CRT_DEBUG, "CRT disabled\n");
     } else {
         expansionport.setCartridgeMode(CRT_16K);
-        plaintrace(CRT_DEBUG, "16K mode\n");
+        debug(CRT_DEBUG, "16K mode\n");
     }
     
     bankIn(bank());

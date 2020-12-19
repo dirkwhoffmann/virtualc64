@@ -168,7 +168,7 @@ EasyFlash::pokeBankReg(u8 value)
 {
     bankReg = value;
     bank = value & 0x3F;
-    plaintrace(CRT_DEBUG, "Switching to bank %d\n", bank);
+    debug(CRT_DEBUG, "Switching to bank %d\n", bank);
 }
 
 void
@@ -194,7 +194,7 @@ EasyFlash::pokeModeReg(u8 value)
     bool exrom;
     bool game;
     
-    plaintrace(CRT_DEBUG, "MXG = %x\n", MXG);
+    debug(CRT_DEBUG, "MXG = %x\n", MXG);
     switch (MXG) {
             
         case 0b000:

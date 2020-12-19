@@ -73,8 +73,7 @@ PRGFolder::makeWithAnyArchive(AnyArchive *other)
     if (other == NULL) return NULL;
     
     PRGFolder *archive = new PRGFolder();
-    archive->plaintrace(FILE_DEBUG, "Creating %s from %s...\n",
-                        archive->typeString(), other->typeString());
+    debug(FILE_DEBUG, "Creating %s from %s...\n", archive->typeString(), other->typeString());
     
     // Iterate through all items
     for (int i = 0; i < other->numberOfItems(); i++) {

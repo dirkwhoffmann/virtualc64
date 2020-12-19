@@ -42,14 +42,3 @@ C64Object::warn(const char *fmt, ...)
     VC64OBJ_PARSE;
     VC64PRINT("WARNING: ")
 }
-
-void
-C64Object::plaintrace(int verbose, const char *fmt, ...)
-{
-#ifndef NDEBUG
-    if (verbose) {
-        VC64OBJ_PARSE
-        VC64PRINTPLAIN("")
-    }
-#endif
-}
