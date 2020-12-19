@@ -7,11 +7,14 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+/*
 #include "D64File.h"
 #include "T64File.h"
 #include "PRGFile.h"
 #include "P00File.h"
 #include "FSDevice.h"
+*/
+#include "C64.h"
 
 bool
 D64File::isD64Buffer(const u8 *buffer, size_t length)
@@ -186,6 +189,13 @@ D64File::makeWithDisk(Disk *disk)
     
     // Create object from byte stream
     return makeWithBuffer(buffer, len);
+}
+
+D64File *
+D64File::makeWithDrive(Drive *drive)
+{
+    assert(drive);
+    return makeWithDisk(&drive->disk);
 }
 
 D64File *

@@ -7,17 +7,13 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#if false
-
-class ExporterDialog: DialogController {
+class ExportDialog: DialogController {
         
     @IBOutlet weak var diskIcon: NSImageView!
-    @IBOutlet weak var virusIcon: NSImageView!
     @IBOutlet weak var title: NSTextField!
     @IBOutlet weak var layoutInfo: NSTextField!
     @IBOutlet weak var volumeInfo: NSTextField!
     @IBOutlet weak var bootInfo: NSTextField!
-    @IBOutlet weak var decontaminationButton: NSButton!
 
     @IBOutlet weak var disclosureButton: NSButton!
     @IBOutlet weak var previewScrollView: NSScrollView!
@@ -55,24 +51,25 @@ class ExporterDialog: DialogController {
 
     var driveNr: DriveID?
     var drive: DriveProxy? { return driveNr == nil ? nil : c64.drive(driveNr!) }
-    // var disk: DiskFileProxy?
-    // var volume: FSDeviceProxy?
+    var disk: D64FileProxy?
+    var volume: FSDeviceProxy?
+
+    var errorReport: FSErrorReport?
     
     var selection: Int?
     var selectedRow: Int? { return selection == nil ? nil : selection! / 16 }
     var selectedCol: Int? { return selection == nil ? nil : selection! % 16 }
+    var strict: Bool { return strictButton.state == .on }
         
     var myDocument: MyDocument { return parent.mydocument! }
     var size: CGSize { return window!.frame.size }
     var shrinked: Bool { return size.height < 300 }
         
-    var numCyls: Int { return disk?.numCyls ?? volume?.numCyls ?? 0 }
-    var numSides: Int { return disk?.numSides ?? volume?.numHeads ?? 0 }
-    var numTracks: Int { return disk?.numTracks ?? volume?.numTracks ?? 0 }
-    var numSectors: Int { return disk?.numSectors ?? volume?.numSectors ?? 0 }
-    var numBlocks: Int { return disk?.numBlocks ?? volume?.numBlocks ?? 0 }
-    var isDD: Bool { return disk?.diskDensity == .DISK_DD }
-    var isHD: Bool { return disk?.diskDensity == .DISK_HD }
+    var numCyls: Int { return volume?.numCyls ?? 0 }
+    var numSides: Int { return volume?.numHeads ?? 0 }
+    var numTracks: Int { return volume?.numTracks ?? 0 }
+    var numSectors: Int { return volume?.numSectors(trackNr) ?? 0 }
+    var numBlocks: Int { return volume?.numBlocks ?? 0 }
     
     // Block preview
     var cylinderNr = 0
@@ -166,7 +163,7 @@ class ExporterDialog: DialogController {
     }
 
     func setCorruptedBlock(_ newValue: Int) {
-        
+                
         var jump: Int
          
         if newValue > blockNr {
@@ -174,7 +171,7 @@ class ExporterDialog: DialogController {
         } else {
             jump = volume!.prevCorrupted(blockNr)
         }
-
+        
         // track("Current: \(blockNr) Stepper: \(newValue) Jump: \(jump)")
         corruptionStepper.integerValue = jump
         setBlock(jump)
@@ -184,34 +181,27 @@ class ExporterDialog: DialogController {
     // Starting up
     //
     
-    func showSheet(forDrive nr: Int) {
+    func showSheet(forDrive nr: DriveID) {
         
         track()
         
         driveNr = nr
         
-        // Try to decode the disk with the ADF decoder
-        disk = ADFFileProxy.make(withDrive: drive)
+        // Try to decode the selected disk with the D64 decoder
+        disk = D64FileProxy.make(withDrive: drive)
         
-        // If it is an ADF, try to extract the file system
-        if disk != nil { volume = FSDeviceProxy.make(withADF: disk as? ADFFileProxy) }
+        // Try to extract the file system
+        if disk != nil { volume = FSDeviceProxy.make(withD64: disk) }
         
         // REMOVE ASAP
-        // volume?.printDirectory(true)
-        
-        // If it is not an ADF, try the DOS decoder
-        if disk == nil { disk = IMGFileProxy.make(withDrive: drive) }
-                
+        volume?.printDirectory()
+                        
         super.showSheet()
     }
     
     func showSheet(forVolume vol: FSDeviceProxy) {
         
         volume = vol
-        
-        // REMOVE ASAP
-        // volume?.printDirectory(true)
-        
         super.showSheet()
     }
         
@@ -240,16 +230,14 @@ class ExporterDialog: DialogController {
     }
     
     override func windowDidLoad() {
-        
-        let adf = disk?.type == .FILETYPE_ADF
-        let dos = disk?.type == .FILETYPE_IMG
-            
+                    
         // Enable compatible file formats in the format selector popup
         formatPopup.autoenablesItems = false
-        formatPopup.item(at: 0)!.isEnabled = adf
-        formatPopup.item(at: 1)!.isEnabled = dos
-        formatPopup.item(at: 2)!.isEnabled = dos
-        formatPopup.item(at: 3)!.isEnabled = volume != nil
+        formatPopup.item(at: 0)!.isEnabled = disk != nil    // D64
+        formatPopup.item(at: 1)!.isEnabled = volume != nil  // T64
+        formatPopup.item(at: 2)!.isEnabled = volume != nil  // PRG
+        formatPopup.item(at: 3)!.isEnabled = volume != nil  // P00
+        formatPopup.item(at: 4)!.isEnabled = volume != nil  // DIR
         
         // Preselect an available export format and enable the Export button
         let enabled = [0, 1, 2, 3].filter { formatPopup.item(at: $0)!.isEnabled }
@@ -333,13 +321,7 @@ class ExporterDialog: DialogController {
         
         // Only proceed if the window is expanded
         if shrinked { return }
-        
-        // Hide more elements if no errors are present
-        if volume == nil || errorReport?.corruptedBlocks == 0 {
-            corruptionText.isHidden = true
-            corruptionStepper.isHidden = true
-        }
-
+                
         // Update all elements
         cylinderField.stringValue      = String.init(format: "%d", cylinderNr)
         cylinderStepper.integerValue   = cylinderNr
@@ -352,18 +334,26 @@ class ExporterDialog: DialogController {
         blockField.stringValue         = String.init(format: "%d", blockNr)
         blockStepper.integerValue      = blockNr
         corruptionStepper.integerValue = blockNr
-
-        if let corr = volume?.getCorrupted(blockNr) {
-            
-            let total = errorReport!.corruptedBlocks
-
-            if corr > 0 {
+        
+        if let total = errorReport?.corruptedBlocks, total > 0 {
+                     
+            if let corr = volume?.getCorrupted(blockNr), corr > 0 {
+                track("total = \(total) corr = \(corr)")
                 corruptionText.stringValue = "Corrupted block \(corr) out of \(total)"
-                corruptionText.textColor = .labelColor
             } else {
-                corruptionText.stringValue = ""
-                corruptionText.textColor = .secondaryLabelColor
+                let blocks = total == 1 ? "block" : "blocks"
+                corruptionText.stringValue = "\(total) corrupted \(blocks)"
             }
+            
+            corruptionText.textColor = .labelColor
+            corruptionText.textColor = .warningColor
+            corruptionStepper.isHidden = false
+        
+        } else {
+            corruptionText.stringValue = ""
+            // corruptionText.textColor = .textColor
+            // corruptionText.textColor = .secondaryLabelColor
+            corruptionStepper.isHidden = true
         }
         
         updateBlockInfo()
@@ -374,92 +364,67 @@ class ExporterDialog: DialogController {
         
         if driveNr == nil {
             
-            diskIcon.image = NSImage.init(named: "hdf")!
-            virusIcon.isHidden = true
-            decontaminationButton.isHidden = true
+            diskIcon.image = disk?.icon(protected: false)
             
         } else {
             
             let wp = drive!.hasWriteProtectedDisk()
             diskIcon.image = disk!.icon(protected: wp)
-            virusIcon.isHidden = !disk!.hasVirus
-            decontaminationButton.isHidden = !disk!.hasVirus
         }
     }
     
     func updateTitleText() {
         
-        var text = "This disk contains an unrecognized MFM stream"
+        var text = "This disk contains an unrecognized GCR stream"
+        let color = NSColor.textColor
         
-        if driveNr == nil {
-            
-            text = "Amiga Hard Drive"
-            
-        } else {
-            
-            if disk?.type == .FILETYPE_ADF { text = "Amiga Disk" }
-            if disk?.type == .FILETYPE_IMG { text = "PC Disk" }
+        if disk != nil {
+            text = "C64 Floppy Disk"
         }
         
         title.stringValue = text
+        title.textColor = color
     }
 
     func updateTrackAndSectorInfo() {
         
         var text = "This disk contains un unknown track and sector format."
+        var color = NSColor.warningColor
         
-        if driveNr == nil {
-            
-            let blocks = volume!.numBlocks
-            let capacity = blocks / 2000
-            text = "\(capacity) MB (\(blocks) sectors)"
-        
-        } else {
-            
-            if disk != nil {
-                text = disk!.layoutInfo
-            } else {
-                layoutInfo.textColor = .warningColor
-            }
+        if disk != nil {
+            text = disk!.layoutInfo
+            color = .secondaryLabelColor
         }
 
         layoutInfo.stringValue = text
+        layoutInfo.textColor = color
     }
     
     func updateVolumeInfo() {
         
         var text = "No compatible file system"
+        var color = NSColor.warningColor
         
         if volume != nil {
             
             text = volume!.dos.description
+            color = .secondaryLabelColor
             
             if let errors = errorReport?.corruptedBlocks, errors > 0 {
                 
                 let blocks = errors == 1 ? "block" : "blocks"
-                let text2 = " with \(errors) corrupted \(blocks)"
-                volumeInfo.stringValue = text + text2
-                volumeInfo.textColor = .warningColor
-                return
+                text += " with \(errors) corrupted \(blocks)"
+                color = .warningColor
             }
-            
-        } else {
-            
-            volumeInfo.textColor = .warningColor
         }
         
         volumeInfo.stringValue = text
+        volumeInfo.textColor = color
     }
     
     func updateBootInfo() {
                 
-        if driveNr == nil {
-            bootInfo.stringValue = ""
-            return
-        }
-                    
-        bootInfo.stringValue = disk!.bootInfo
-        bootInfo.textColor = disk!.hasVirus ? .warningColor : .secondaryLabelColor
+        bootInfo.stringValue = "XXX files, XXX blocks used, XXX blocks free"
     }
     
     func updateBlockInfo() {
@@ -482,115 +447,13 @@ class ExporterDialog: DialogController {
     func updateBlockInfoUnselected() {
         
         let type = volume!.blockType(blockNr)
-        var text: String
-        
-        switch type {
-        case .UNKNOWN_BLOCK:    text = "Unknown block type"
-        case .EMPTY_BLOCK:      text = "Empty Block"
-        case .BOOT_BLOCK:       text = "Boot Block"
-        case .ROOT_BLOCK:       text = "Root Block"
-        case .BITMAP_BLOCK:     text = "Bitmap Block"
-        case .BITMAP_EXT_BLOCK: text = "Bitmap Extension Block"
-        case .USERDIR_BLOCK:    text = "User Directory Block"
-        case .FILEHEADER_BLOCK: text = "File Header Block"
-        case .FILELIST_BLOCK:   text = "File List Block"
-        case .DATA_BLOCK_OFS:   text = "Data Block (OFS)"
-        case .DATA_BLOCK_FFS:   text = "Data Block (FFS)"
-        default: fatalError()
-        }
-        
-        info1.stringValue = text
+        info1.stringValue = type.description
     }
     
     func updateBlockInfoSelected() {
         
         let usage = volume!.itemType(blockNr, pos: selection!)
-        var text: String
-        
-        switch usage {
-        case .FSI_UNKNOWN:
-            text = "Unknown"
-        case .FSI_UNUSED:
-            text = "Unused"
-        case .FSI_DOS_HEADER:
-            text = "AmigaDOS header signature"
-        case .FSI_DOS_VERSION:
-            text = "AmigaDOS version number"
-        case .FSI_BOOTCODE:
-            text = "Boot code instruction"
-        case .FSI_TYPE_ID:
-            text = "Type identifier"
-        case .FSI_SUBTYPE_ID:
-            text = "Subtype identifier"
-        case .FSI_SELF_REF:
-            text = "Block reference to itself"
-        case .FSI_CHECKSUM:
-            text = "Checksum"
-        case .FSI_HASHTABLE_SIZE:
-            text = "Hashtable size"
-        case .FSI_HASH_REF:
-            text = "Hashtable entry"
-        case .FSI_PROT_BITS:
-            text = "Protection status bits"
-        case .FSI_BCPL_STRING_LENGTH:
-            text = "BCPL string Length"
-        case .FSI_BCPL_DISK_NAME:
-            text = "Disk name (BCPL character)"
-        case .FSI_BCPL_DIR_NAME:
-            text = "Directory name (BCPL character)"
-        case .FSI_BCPL_FILE_NAME:
-            text = "File name (BCPL character)"
-        case .FSI_BCPL_COMMENT:
-            text = "Comment (BCPL character)"
-        case .FSI_CREATED_DAY:
-            text = "Creation date (days)"
-        case .FSI_CREATED_MIN:
-            text = "Creation date (minutes)"
-        case .FSI_CREATED_TICKS:
-            text = "Creation date (ticks)"
-        case .FSI_MODIFIED_DAY:
-            text = "Modification date (day)"
-        case .FSI_MODIFIED_MIN:
-            text = "Modification date (minutes)"
-        case .FSI_MODIFIED_TICKS:
-            text = "Modification date (ticks)"
-        case .FSI_NEXT_HASH_REF:
-            text = "Reference to the next hash block"
-        case .FSI_PARENT_DIR_REF:
-            text = "Parent directory block reference"
-        case .FSI_FILEHEADER_REF:
-            text = "File header block reference"
-        case .FSI_EXT_BLOCK_REF:
-            text = "Next extension block reference"
-        case .FSI_BITMAP_BLOCK_REF:
-            text = "Bitmap block reference"
-        case .FSI_BITMAP_EXT_BLOCK_REF:
-            text = "Extension bitmap block reference"
-        case .FSI_BITMAP_VALIDITY:
-            text = "Bitmap validity bits"
-        case .FSI_DATA_BLOCK_REF_COUNT:
-            text = "Number of data block references"
-        case .FSI_FILESIZE:
-            text = "File size"
-        case .FSI_DATA_BLOCK_NUMBER:
-            text = "Position in the data block chain"
-        case .FSI_DATA_BLOCK_REF:
-            text = "Data block reference"
-        case .FSI_FIRST_DATA_BLOCK_REF:
-            text = "Reference to the first data block"
-        case .FSI_NEXT_DATA_BLOCK_REF:
-            text = "Reference to next data block"
-        case .FSI_DATA_COUNT:
-            text = "Number of stored data bytes"
-        case .FSI_DATA:
-            text = "Data byte"
-        case .FSI_BITMAP:
-            text = "Block allocation table"
-        default:
-            fatalError()
-        }
-        
-        info1.stringValue = text
+        info1.stringValue = usage.description
     }
 
     func updateErrorInfoUnselected() {
@@ -600,55 +463,9 @@ class ExporterDialog: DialogController {
 
     func updateErrorInfoSelected() {
         
-        var text: String
         var exp = UInt8(0)
-
         let error = volume!.check(blockNr, pos: selection!, expected: &exp, strict: strict)
-
-        switch error {
-        case .OK:
-            text = ""
-        case .EXPECTED_VALUE:
-            text = String.init(format: "Expected $%02X", exp)
-        case .EXPECTED_SMALLER_VALUE:
-            text = String.init(format: "Expected a value less or equal $%02X", exp)
-        case .EXPECTED_DOS_REVISION:
-            text = "Expected a value between 0 and 7"
-        case .EXPECTED_NO_REF:
-            text = "Did not expect a block reference here"
-        case .EXPECTED_REF:
-            text = "Expected a block reference"
-        case .EXPECTED_SELFREF:
-            text = "Expected a self-reference"
-    
-        case .PTR_TO_UNKNOWN_BLOCK:
-            text = "This reference points to a block of unknown type"
-        case .PTR_TO_EMPTY_BLOCK:
-            text = "This reference points to an empty block"
-        case .PTR_TO_BOOT_BLOCK:
-            text = "This reference points to a boot block"
-        case .PTR_TO_ROOT_BLOCK:
-            text = "This reference points to the root block"
-        case .PTR_TO_BITMAP_BLOCK:
-            text = "This reference points to a bitmap block"
-        case .PTR_TO_USERDIR_BLOCK:
-            text = "This reference points to a user directory block"
-        case .PTR_TO_FILEHEADER_BLOCK:
-            text = "This reference points to a file header block"
-        case .PTR_TO_FILELIST_BLOCK:
-            text = "This reference points to a file header block"
-        case .PTR_TO_DATA_BLOCK:
-            text = "This reference points to a data block"
-        case .EXPECTED_DATABLOCK_NR:
-            text = "Invalid data block position number"
-        case .INVALID_HASHTABLE_SIZE:
-            text = "Expected $48 (72 hash table entries)"
-        default:
-            track("error = \(error)")
-            fatalError()
-        }
-        
-        info2.stringValue = text
+        info2.stringValue = error.description(expected: Int(exp))
     }
         
     //
@@ -676,8 +493,10 @@ class ExporterDialog: DialogController {
     func exportToFile(url: URL) {
 
         track("url = \(url)")
-        parent.mydocument.export(drive: driveNr!, to: url, diskFileProxy: disk!)
-        hideSheet()
+        track("IMPLEMENTATION MISSING")
+        fatalError()
+        // parent.mydocument.export(drive: driveNr!, to: url, diskFileProxy: disk!)
+        // hideSheet()
     }
 
     func exportToDirectory() {
@@ -704,9 +523,12 @@ class ExporterDialog: DialogController {
     func exportToDirectory(url: URL) {
         
         track("url = \(url)")
+        track("IMPLEMENTATION MISSING")
+        fatalError()
         
+        /*
         let error = volume!.export(url.path)
-
+        
         switch error {
 
         case .DIRECTORY_NOT_EMPTY:
@@ -719,19 +541,12 @@ class ExporterDialog: DialogController {
 
             hideSheet()
         }
+        */
     }
     
     //
     // Action methods
     //
-
-    @IBAction func decontaminationAction(_ sender: NSButton!) {
-        
-        track()
-        disk?.killVirus()
-        volume?.killVirus()
-        update()
-    }
 
     @IBAction func disclosureAction(_ sender: NSButton!) {
         
@@ -836,7 +651,7 @@ class ExporterDialog: DialogController {
 // Extensions
 //
 
-extension ExporterDialog: NSWindowDelegate {
+extension ExportDialog: NSWindowDelegate {
     
     func windowDidResize(_ notification: Notification) {
         
@@ -854,7 +669,7 @@ extension ExporterDialog: NSWindowDelegate {
      }
 }
 
-extension ExporterDialog: NSTableViewDataSource {
+extension ExportDialog: NSTableViewDataSource {
     
     func columnNr(_ column: NSTableColumn?) -> Int? {
         
@@ -874,9 +689,7 @@ extension ExporterDialog: NSTableViewDataSource {
             if let byte = volume?.readByte(blockNr, offset: 16 * row + col) {
                 return String(format: "%02X", byte)
             }
-            if let byte = disk?.readByte(blockNr, offset: 16 * row + col) {
-                return String(format: "%02X", byte)
-            }
+
         } else {
             return String(format: "%X", row)
         }
@@ -885,7 +698,7 @@ extension ExporterDialog: NSTableViewDataSource {
     }
 }
 
-extension ExporterDialog: NSTableViewDelegate {
+extension ExportDialog: NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
 
@@ -895,7 +708,10 @@ extension ExporterDialog: NSTableViewDelegate {
         if let col = columnNr(tableColumn) {
             
             let offset = 16 * row + col
-            let error = volume?.check(blockNr, pos: offset, expected: &exp, strict: strict) ?? .OK
+            let error = volume?.check(blockNr,
+                                      pos: offset,
+                                      expected: &exp,
+                                      strict: strict) ?? .OK
             
             if row == selectedRow && col == selectedCol {
                 cell?.textColor = .white
@@ -913,5 +729,3 @@ extension ExporterDialog: NSTableViewDelegate {
         return false
     }
 }
-
-#endif

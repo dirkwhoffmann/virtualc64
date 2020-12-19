@@ -108,6 +108,30 @@ FSBlock::dump()
     
 }
 
+unsigned
+FSBlock::check(bool strict)
+{
+    FSError error;
+    unsigned count = 0;
+    u8 expected;
+    
+    for (u32 i = 0; i < 256; i++) {
+        
+        if ((error = check(i, &expected, strict)) != FS_OK) {
+            count++;
+            debug(FS_DEBUG, "Block %d [%d.%d]: %s\n", nr, i / 4, i % 4, sFSError(error));
+        }
+    }
+    
+    return count;
+}
+
+FSError
+FSBlock::check(u32 pos, u8 *expected, bool strict)
+{
+    return FS_OK;
+}
+
 void
 FSBlock::importBlock(const u8 *src)
 {

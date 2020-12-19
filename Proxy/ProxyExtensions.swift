@@ -52,3 +52,20 @@ public extension DriveProxy {
         return hasModifiedDisk() ? DriveProxy.diskUnsaved : DriveProxy.diskSaved
     }
 }
+
+extension D64FileProxy {
+       
+    func icon(protected: Bool) -> NSImage {
+                        
+        var name = "disk"
+        if protected { name += "_protected" }
+        
+        return NSImage.init(named: name)!
+    }
+    
+    var layoutInfo: String {
+
+        let numTracks = numberOfTracks()
+        return "Single sided, single density, \(numTracks) tracks"
+    }
+}

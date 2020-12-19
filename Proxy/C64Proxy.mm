@@ -1001,9 +1001,9 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return wrapper->device->getNumTracks();
 }
 
-- (NSInteger) numSectors:(Track)track
+- (NSInteger) numSectors:(NSInteger)track
 {
-    return wrapper->device->getNumSectors(track);
+    return wrapper->device->getNumSectors((Track)track);
 }
 
 - (NSInteger) numBlocks
@@ -1016,10 +1016,9 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return wrapper->device->blockType((u32)blockNr);
 }
 
-/*
 - (FSItemType) itemType:(NSInteger)blockNr pos:(NSInteger)pos
 {
-    return wrapper->device->itemType(blockNr, pos);
+    return wrapper->device->itemType((u32)blockNr, (u32)pos);
 }
 
 - (FSErrorReport) check:(BOOL)strict
@@ -1027,34 +1026,33 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return wrapper->device->check(strict);
 }
 
-- (FSError) check:(NSInteger)nr
+- (FSError) check:(NSInteger)blockNr
               pos:(NSInteger)pos
          expected:(unsigned char *)exp
            strict:(BOOL)strict
 {
-    return wrapper->device->check(nr, pos, exp, strict);
+    return wrapper->device->check((u32)blockNr, (u32)pos, exp, strict);
 }
 
 - (BOOL) isCorrupted:(NSInteger)blockNr
 {
-    return wrapper->device->isCorrupted(blockNr);
+    return wrapper->device->isCorrupted((u32)blockNr);
 }
 
 - (NSInteger) getCorrupted:(NSInteger)blockNr
 {
-    return wrapper->device->getCorrupted(blockNr);
+    return wrapper->device->getCorrupted((u32)blockNr);
 }
 
 - (NSInteger) nextCorrupted:(NSInteger)blockNr
 {
-    return wrapper->device->nextCorrupted(blockNr);
+    return wrapper->device->nextCorrupted((u32)blockNr);
 }
 
 - (NSInteger) prevCorrupted:(NSInteger)blockNr
 {
-    return wrapper->device->prevCorrupted(blockNr);
+    return wrapper->device->prevCorrupted((u32)blockNr);
 }
-*/
 
 - (void) printDirectory
 {
@@ -1883,15 +1881,23 @@ struct AnyC64FileWrapper { AnyFile *file; };
     if (disk == NULL) return nil;
     return [[self alloc] initWithFile:disk];
 }
+
 + (instancetype) make
 {
     AnyDisk *disk = new AnyDisk();
     return [self make: disk];
 }
+
 + (instancetype) makeWithFile:(NSString *)path
 {
     AnyDisk *disk = AnyDisk::makeWithFile([path UTF8String]);
     return [self make: disk];
+}
+
+- (NSInteger)numberOfTracks
+{
+    AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
+    return disk->numberOfTracks();
 }
 
 - (NSInteger) numberOfHalftracks
@@ -1899,21 +1905,25 @@ struct AnyC64FileWrapper { AnyFile *file; };
     AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
     return disk->numberOfHalftracks();
 }
+
 - (void) selectHalftrack:(NSInteger)ht
 {
     AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
     disk->selectHalftrack((unsigned)ht);
 }
+
 - (NSInteger) sizeOfHalftrack
 {
     AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
     return disk->getSizeOfHalftrack();
 }
+
 - (void)seekHalftrack:(NSInteger)offset
 {
     AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
     return disk->seekHalftrack(offset);
 }
+
 - (NSString *)readHalftrackHex:(NSInteger)num
 {
     AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
@@ -1951,17 +1961,24 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return [self make: archive];
 }
 
-+ (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)otherArchive
++ (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)proxy
 {
-    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
+    AnyArchive *other = (AnyArchive *)([proxy wrapper]->file);
     D64File *archive = D64File::makeWithAnyArchive(other);
     return archive ? [self make: archive] : nullptr;
 }
 
-+ (instancetype) makeWithDisk:(DiskProxy *)disk
++ (instancetype) makeWithDisk:(DiskProxy *)proxy
 {
-    Disk *d = (Disk *)([disk wrapper]->disk);
-    D64File *archive = D64File::makeWithDisk(d);
+    Disk *disk = (Disk *)([proxy wrapper]->disk);
+    D64File *archive = D64File::makeWithDisk(disk);
+    return archive ? [self make: archive] : nullptr;
+}
+
++ (instancetype) makeWithDrive:(DriveProxy *)proxy
+{
+    Drive *drive = (Drive *)([proxy wrapper]->drive);
+    D64File *archive = D64File::makeWithDrive(drive);
     return archive ? [self make: archive] : nullptr;
 }
 

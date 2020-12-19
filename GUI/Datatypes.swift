@@ -7,6 +7,10 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+//
+// Integer types
+//
+
 extension UInt32 {
 
     init(rgba: (UInt8, UInt8, UInt8, UInt8)) {
@@ -26,4 +30,19 @@ extension UInt32 {
     
     init(r: UInt8, g: UInt8, b: UInt8, a: UInt8) { self.init(rgba: (r, g, b, a)) }
     init(r: UInt8, g: UInt8, b: UInt8) { self.init(rgba: (r, g, b)) }
+}
+
+//
+// Numeric types
+//
+
+extension Comparable {
+    
+    func clamped(_ f: Self, _ t: Self) -> Self {
+        
+        var r = self
+        if r < f { r = f }
+        if r > t { r = t }
+        return r
+    }
 }

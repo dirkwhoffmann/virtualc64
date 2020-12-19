@@ -532,6 +532,89 @@ FSDevice::makeFile(const char *name, FSDirEntry *dir, const u8 *buf, size_t cnt)
     return true;
 }
 
+FSErrorReport
+FSDevice::check(bool strict)
+{
+    FSErrorReport result;
+
+    long total = 0, min = LONG_MAX, max = 0;
+    size_t numBlocks = blocks.size();
+    
+    // Analyze all blocks
+    for (u32 i = 0; i < numBlocks; i++) {
+
+        if (blocks[i]->check(strict) > 0) {
+            min = MIN(min, i);
+            max = MAX(max, i);
+            blocks[i]->corrupted = (u32)++total;
+        } else {
+            blocks[i]->corrupted = 0;
+        }
+    }
+
+    // Record findings
+    if (total) {
+        result.corruptedBlocks = total;
+        result.firstErrorBlock = min;
+        result.lastErrorBlock = max;
+    } else {
+        result.corruptedBlocks = 0;
+        result.firstErrorBlock = min;
+        result.lastErrorBlock = max;
+    }
+    
+    return result;
+}
+
+FSError
+FSDevice::check(u32 blockNr, u32 pos, u8 *expected, bool strict)
+{
+    return blocks[blockNr]->check(pos, expected, strict);
+}
+
+u32
+FSDevice::getCorrupted(u32 blockNr)
+{
+    return blockPtr(blockNr) ? blocks[blockNr]->corrupted : 0;
+}
+
+bool
+FSDevice::isCorrupted(u32 blockNr, u32 n)
+{
+    size_t numBlocks = blocks.size();
+    
+    for (u32 i = 0, cnt = 0; i < numBlocks; i++) {
+        
+        if (isCorrupted(i)) {
+            cnt++;
+            if (blockNr == i) return cnt == n;
+        }
+    }
+    return false;
+}
+
+u32
+FSDevice::nextCorrupted(u32 blockNr)
+{
+    size_t numBlocks = blocks.size();
+    
+    for (u32 i = blockNr + 1; i < numBlocks; i++) {
+        if (isCorrupted(i)) return i;
+    }
+    return blockNr;
+}
+
+u32
+FSDevice::prevCorrupted(u32 blockNr)
+{
+    size_t numBlocks = blocks.size();
+    
+    for (u32 i = blockNr - 1; i < numBlocks; i--) {
+        if (isCorrupted(i)) return i;
+    }
+    return blockNr;
+}
+
 u8
 FSDevice::readByte(u32 block, u32 offset)
 {

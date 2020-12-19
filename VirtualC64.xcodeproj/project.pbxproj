@@ -199,7 +199,7 @@
 		50BE4B6824E7FB28008F39C9 /* MTLTexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B6724E7FB28008F39C9 /* MTLTexture.swift */; };
 		50BE4B6A24E7FB6C008F39C9 /* NSImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B6924E7FB6C008F39C9 /* NSImage.swift */; };
 		50BE4B6C24E7FB9E008F39C9 /* CGImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B6B24E7FB9E008F39C9 /* CGImage.swift */; };
-		50BE4B6E24E7FBE1008F39C9 /* UInt32.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B6D24E7FBE1008F39C9 /* UInt32.swift */; };
+		50BE4B6E24E7FBE1008F39C9 /* Datatypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B6D24E7FBE1008F39C9 /* Datatypes.swift */; };
 		50BE4B7024E7FC21008F39C9 /* MTLDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B6F24E7FC21008F39C9 /* MTLDevice.swift */; };
 		50BE4B7224E81266008F39C9 /* CIARegisters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B7124E81266008F39C9 /* CIARegisters.cpp */; };
 		50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF77D120309A2A006E000F /* WindowDelegate.swift */; };
@@ -232,6 +232,8 @@
 		50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92E201FA92C00065A89 /* Alerts.swift */; };
 		50EAFFEA24B2600D00024CD2 /* MyToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EAFFE924B2600D00024CD2 /* MyToolbar.swift */; };
 		50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ED5BF712DD99C000596417 /* Speedometer.swift */; };
+		50F062E1258DD0A3009A6B21 /* ExportDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F062E0258DD0A3009A6B21 /* ExportDialog.xib */; };
+		50F062E3258DE564009A6B21 /* TypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F062E2258DE564009A6B21 /* TypeExtensions.swift */; };
 		50F2381E12DF505B00B1F275 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F2381D12DF505B00B1F275 /* Quartz.framework */; };
 		50F420CA250BA3460043DE56 /* Colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F420C8250BA3460043DE56 /* Colors.cpp */; };
 		50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DA30F28EADC0040592B /* MyDocument.xib */; };
@@ -580,7 +582,7 @@
 		50BE4B6724E7FB28008F39C9 /* MTLTexture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLTexture.swift; sourceTree = "<group>"; };
 		50BE4B6924E7FB6C008F39C9 /* NSImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSImage.swift; sourceTree = "<group>"; };
 		50BE4B6B24E7FB9E008F39C9 /* CGImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGImage.swift; sourceTree = "<group>"; };
-		50BE4B6D24E7FBE1008F39C9 /* UInt32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UInt32.swift; sourceTree = "<group>"; };
+		50BE4B6D24E7FBE1008F39C9 /* Datatypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Datatypes.swift; sourceTree = "<group>"; };
 		50BE4B6F24E7FC21008F39C9 /* MTLDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLDevice.swift; sourceTree = "<group>"; };
 		50BE4B7124E81266008F39C9 /* CIARegisters.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CIARegisters.cpp; sourceTree = "<group>"; };
 		50BF77D120309A2A006E000F /* WindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDelegate.swift; sourceTree = "<group>"; };
@@ -620,6 +622,8 @@
 		50E9B92E201FA92C00065A89 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		50EAFFE924B2600D00024CD2 /* MyToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyToolbar.swift; sourceTree = "<group>"; };
 		50ED5BF712DD99C000596417 /* Speedometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speedometer.swift; sourceTree = "<group>"; };
+		50F062E0258DD0A3009A6B21 /* ExportDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportDialog.xib; sourceTree = "<group>"; };
+		50F062E2258DE564009A6B21 /* TypeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeExtensions.swift; sourceTree = "<group>"; };
 		50F2381D12DF505B00B1F275 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		50F420C8250BA3460043DE56 /* Colors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colors.cpp; sourceTree = "<group>"; };
 		50F420C9250BA3460043DE56 /* Colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colors.h; sourceTree = "<group>"; };
@@ -772,14 +776,13 @@
 		50176C6D0A6F7357009E80BD /* GUI */ = {
 			isa = PBXGroup;
 			children = (
-				50DBB44A2025CE5700489271 /* Utils.swift */,
 				506D3DCD20223E5E009742CF /* MyAppDelegate.swift */,
 				506D3DCF20224BF4009742CF /* MyDocument.swift */,
 				505184E124F23CBF002C6124 /* Foundation */,
+				50BE4B5624E7F786008F39C9 /* Extensions */,
 				506CE96621998C4500B70A3A /* Metal */,
 				5000474112DCECBA0098D890 /* Controller */,
 				5000474312DCED190098D890 /* Misc */,
-				50BE4B5624E7F786008F39C9 /* Extensions */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -1116,6 +1119,7 @@
 		505184E124F23CBF002C6124 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				50DBB44A2025CE5700489271 /* Utils.swift */,
 				505184DF24F23CB6002C6124 /* Storage.swift */,
 				507E7AA124FB897D00AB433C /* Screenshot.swift */,
 			);
@@ -1179,6 +1183,7 @@
 				50B171051EE6AB840019E8D4 /* Bridging-Header.h */,
 				50176C790A6F7357009E80BD /* C64Proxy.h */,
 				50176C7A0A6F7357009E80BD /* C64Proxy.mm */,
+				50F062E2258DE564009A6B21 /* TypeExtensions.swift */,
 				50D3091F24C625B200B92563 /* ProxyExtensions.swift */,
 			);
 			path = Proxy;
@@ -1280,6 +1285,7 @@
 			isa = PBXGroup;
 			children = (
 				50BE4B6B24E7FB9E008F39C9 /* CGImage.swift */,
+				50BE4B6D24E7FBE1008F39C9 /* Datatypes.swift */,
 				50BE4B5F24E7F8A1008F39C9 /* Date.swift */,
 				50BE4B5B24E7F857008F39C9 /* Data.swift */,
 				50BE4B5D24E7F864008F39C9 /* DispatchTime.swift */,
@@ -1290,7 +1296,6 @@
 				50BE4B6924E7FB6C008F39C9 /* NSImage.swift */,
 				50BE4B6124E7F8DE008F39C9 /* NSTableView.swift */,
 				50BE4B6524E7F965008F39C9 /* String.swift */,
-				50BE4B6D24E7FBE1008F39C9 /* UInt32.swift */,
 				50BE4B5424E7F77F008F39C9 /* URL.swift */,
 				50BE4B6F24E7FC21008F39C9 /* MTLDevice.swift */,
 			);
@@ -1323,6 +1328,7 @@
 				50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */,
 				50031B33206FABA400A1969B /* OldSnapshotDialog.xib */,
 				50B485F824F96E9400844133 /* ImportDialog.xib */,
+				50F062E0258DD0A3009A6B21 /* ExportDialog.xib */,
 				503C1DD024FC10F400D91141 /* SnapshotDialog.xib */,
 				507E7A9D24FB864E00AB433C /* ScreenshotDialog.xib */,
 			);
@@ -1406,6 +1412,7 @@
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */,
 				503E199020C42C6D007E91F1 /* Assets.xcassets in Resources */,
+				50F062E1258DD0A3009A6B21 /* ExportDialog.xib in Resources */,
 				503C1DD124FC10F400D91141 /* SnapshotDialog.xib in Resources */,
 				50A0B48D24C1CAEB00FF0B0B /* Preferences.xib in Resources */,
 				50D3092624C71AD300B92563 /* Monitor.xib in Resources */,
@@ -1503,7 +1510,7 @@
 				50520F8B25108FC400C7D47F /* PRGFolder.cpp in Sources */,
 				507A499C24C8D64700DBF984 /* InstrTableView.swift in Sources */,
 				5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */,
-				50BE4B6E24E7FBE1008F39C9 /* UInt32.swift in Sources */,
+				50BE4B6E24E7FBE1008F39C9 /* Datatypes.swift in Sources */,
 				5009CF3324C0B8EF00F674FF /* Preferences.swift in Sources */,
 				5002FA7B21C2650600DA4BBC /* HardwareConf.swift in Sources */,
 				504C435B24AF29AC00E69CAE /* StarDos.cpp in Sources */,
@@ -1517,6 +1524,7 @@
 				50B929F221C2B5C90039E8F2 /* PreferencesWindow.swift in Sources */,
 				505184E024F23CB6002C6124 /* Storage.swift in Sources */,
 				504C43A824AF29AC00E69CAE /* DriveMemory.cpp in Sources */,
+				50F062E3258DE564009A6B21 /* TypeExtensions.swift in Sources */,
 				5002FA8321C2655800DA4BBC /* KeyboardPrefs.swift in Sources */,
 				507887CC20B1858B00941F7E /* MemTableView.swift in Sources */,
 				504C439A24AF29AC00E69CAE /* dac.cc in Sources */,
@@ -1716,7 +1724,7 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.dirkwhoffmann.VirtualC64;
 				PRODUCT_NAME = VirtualC64;
@@ -1746,7 +1754,7 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.dirkwhoffmann.VirtualC64;
 				PRODUCT_NAME = VirtualC64;
@@ -1765,7 +1773,7 @@
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -1808,7 +1816,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1824,7 +1832,7 @@
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -1871,7 +1879,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.2;

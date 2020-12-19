@@ -121,7 +121,8 @@ longenum(FSError)
     FS_CANNOT_CREATE_FILE,
 
     // Block errros
-    FS_EXPECTED_VALUE
+    FS_EXPECTED_VALUE,
+    FS_EXPECTED_SMALLER_VALUE
 };
 
 inline bool isFSError(FSError value)

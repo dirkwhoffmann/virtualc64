@@ -676,11 +676,10 @@ struct AnyC64FileWrapper;
 @property (readonly) NSInteger numCyls;
 @property (readonly) NSInteger numHeads;
 @property (readonly) NSInteger numTracks;
-- (NSInteger)numSectors:(Track)track;
+- (NSInteger)numSectors:(NSInteger)track;
 @property (readonly) NSInteger numBlocks;
 
 - (FSBlockType)blockType:(NSInteger)blockNr;
-/*
 - (FSItemType)itemType:(NSInteger)blockNr pos:(NSInteger)pos;
 - (FSErrorReport)check:(BOOL)strict;
 - (FSError)check:(NSInteger)nr pos:(NSInteger)pos expected:(unsigned char *)exp strict:(BOOL)strict;
@@ -688,7 +687,6 @@ struct AnyC64FileWrapper;
 - (NSInteger)getCorrupted:(NSInteger)blockNr;
 - (NSInteger)nextCorrupted:(NSInteger)blockNr;
 - (NSInteger)prevCorrupted:(NSInteger)blockNr;
-*/
 - (void)printDirectory;
 
 - (NSInteger)readByte:(NSInteger)block offset:(NSInteger)offset;
@@ -938,6 +936,7 @@ struct AnyC64FileWrapper;
 + (instancetype)make;
 + (instancetype)makeWithFile:(NSString *)path;
 
+- (NSInteger)numberOfTracks;
 - (NSInteger)numberOfHalftracks;
 - (void)selectHalftrack:(NSInteger)ht;
 - (NSInteger)sizeOfHalftrack;
@@ -957,9 +956,10 @@ struct AnyC64FileWrapper;
 + (BOOL)isD64File:(NSString *)filename;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)filename;
-+ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)otherArchive;
-+ (instancetype)makeWithDisk:(DiskProxy *)disk;
-+ (instancetype)makeWithVolume:(FSDeviceProxy *)volume error:(FSError *)error;
++ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)proxy;
++ (instancetype)makeWithDisk:(DiskProxy *)proxy;
++ (instancetype)makeWithDrive:(DriveProxy *)proxy;
++ (instancetype)makeWithVolume:(FSDeviceProxy *)proxy error:(FSError *)error;
 
 @end
 

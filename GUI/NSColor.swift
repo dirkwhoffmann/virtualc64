@@ -9,6 +9,10 @@
 
 extension NSColor {
     
+    static var warningColor: NSColor {
+        return NSColor(named: NSColor.Name("warningColor"))!
+    }
+
     convenience init(r: Int, g: Int, b: Int, a: Int = 255) {
         
         self.init(red: CGFloat(r) / 255,

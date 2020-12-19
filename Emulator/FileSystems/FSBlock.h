@@ -22,6 +22,9 @@ public:
     // The number of this block
     Block nr;
         
+    // Outcome of the last integrity check (0 = OK, n = n-th corrupted block)
+    u32 corrupted = 0;
+
     // The actual block data
     u8 data[256];
     
@@ -51,7 +54,7 @@ public:
 
 
     //
-    // Initializing
+    // Formatting
     //
     
     // Writes the Block Availability Map (BAM)
@@ -68,6 +71,17 @@ public:
     // Prints some debug information for this block
     void dump();
     
+    
+    //
+    // Integrity checking
+    //
+
+    // Scans the block data and returns the number of errors
+    unsigned check(bool strict);
+
+    // Checks the integrity of a certain byte in this block
+    FSError check(u32 pos, u8 *expected, bool strict);
+  
     
     //
     // Importing and exporting

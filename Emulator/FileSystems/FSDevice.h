@@ -184,7 +184,42 @@ public:
 private:
     
     bool makeFile(const char *name, FSDirEntry *dir, const u8 *buf, size_t cnt);
+
     
+    //
+    // Integrity checking
+    //
+
+public:
+    
+    // Checks all blocks in this volume
+    FSErrorReport check(bool strict);
+
+    // Checks a single byte in a certain block
+    FSError check(u32 blockNr, u32 pos, u8 *expected, bool strict);
+
+    /*
+    // Checks if the type of a block matches one of the provides types
+    FSError checkBlockType(u32, FSBlockType type);
+    FSError checkBlockType(u32, FSBlockType type, FSBlockType altType);
+    */
+    
+    // Checks if a certain block is corrupted
+    bool isCorrupted(u32 blockNr) { return getCorrupted(blockNr) != 0; }
+
+    // Returns the position in the corrupted block list (0 = OK)
+    u32 getCorrupted(u32 blockNr);
+
+    // Returns the number of the next or previous corrupted block
+    u32 nextCorrupted(u32 blockNr);
+    u32 prevCorrupted(u32 blockNr);
+
+    // Checks if a certain block is the n-th corrupted block
+    bool isCorrupted(u32 blockNr, u32 n);
+
+    // Returns the number of the the n-th corrupted block
+    u32 seekCorruptedBlock(u32 n);
+
     
     //
     // Importing and exporting
