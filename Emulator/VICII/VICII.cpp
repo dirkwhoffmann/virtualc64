@@ -342,7 +342,7 @@ VICII::setConfigItem(ConfigOption option, long value)
 void
 VICII::setRevision(VICRevision revision)
 {
-    trace(VIC_DEBUG, "setRevision(%ld)\n", revision);
+    trace(VIC_DEBUG, "setRevision(%ld)\n", (long)revision);
     
     assert(isVICRevision(revision));
     config.revision = revision;
@@ -445,12 +445,12 @@ VICII::_inspect()
 void
 VICII::_dumpConfig()
 {
-    msg("    Chip model : %ld (%s)\n", config.revision, vicRevisionName(config.revision));
+    msg("    Chip model : %ld (%s)\n", (long)config.revision, vicRevisionName(config.revision));
     msg("  Gray dot bug : %s\n", config.grayDotBug ? "yes" : "no");
     msg("           PAL : %s\n", isPAL() ? "yes" : "no");
     msg("          NTSC : %s\n", isNTSC() ? "yes" : "no");
     msg("is656x, is856x : %d %d\n", is656x(), is856x());
-    msg("    Glue logic : %ld (%s)\n", config.glueLogic, glueLogicName(config.glueLogic));
+    msg("    Glue logic : %ld (%s)\n", (long)config.glueLogic, glueLogicName(config.glueLogic));
 }
 
 void 
