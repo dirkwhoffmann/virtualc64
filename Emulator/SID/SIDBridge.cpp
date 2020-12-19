@@ -112,7 +112,7 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
         case OPT_SID_REVISION:
             
             if (!isSIDRevision(value)) {
-                warn("Invalid SID revision: %d\n", value);
+                warn("Invalid SID revision: %ld\n", value);
                 return false;
             }
             if (config.revision == value) {
@@ -142,7 +142,7 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
         case OPT_SID_ENGINE:
             
             if (!isAudioEngine(value)) {
-                warn("Invalid SID engine: %d\n", value);
+                warn("Invalid SID engine: %ld\n", value);
                 return false;
             }
             if (config.engine == value) {
@@ -157,7 +157,7 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
         case OPT_SID_SAMPLING:
             
             if (!isSamplingMethod(value)) {
-                warn("Invalid sampling method: %d\n", value);
+                warn("Invalid sampling method: %ld\n", value);
                 return false;
             }
             if (config.sampling == value) {
@@ -236,8 +236,8 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
             }
 
             if (value < 0xD400 || value > 0xD7E0 || (value & 0x1F)) {
-                warn("Invalid SID address: %x\n", value);
-                warn("       Valid values: D400, D420, ... D7E0\n");
+                warn("Invalid SID address: %lx\n", value);
+                warn("Valid values: D400, D420, ... D7E0\n");
                 return false;
             }
 
@@ -268,8 +268,8 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
             
             assert(id >= 0 && id <= 3);
             if (value < 0 || value > 200) {
-                warn("Invalid pan: %d\n", value);
-                warn("       Valid values: 0 ... 200\n");
+                warn("Invalid pan: %ld\n", value);
+                warn("Valid values: 0 ... 200\n");
                 return false;
             }
 

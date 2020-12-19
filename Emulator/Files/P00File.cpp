@@ -79,7 +79,7 @@ P00File::makeWithAnyArchive(AnyArchive *otherArchive)
     }
     catch (std::bad_alloc&) {
         
-        archive->warn("Failed to allocate %d bytes of memory\n", archive->size);
+        warn("Failed to allocate %zu bytes of memory\n", archive->size);
         delete archive;
         return NULL;
     }

@@ -247,7 +247,7 @@ bool
 CRTFile::repair()
 {
     if ((data == NULL) != (size == 0)) {
-        warn("CRT file inconsistency: data = %p size = %d\n", data, size);
+        warn("CRT file inconsistency: data = %p size = %zu\n", data, size);
         return false;
     }
 

@@ -49,7 +49,7 @@ CIA::setConfigItem(ConfigOption option, long value)
         case OPT_CIA_REVISION:
             
             if (!isCIARevision(value)) {
-                warn("Invalid CIA revision: %d\n", value);
+                warn("Invalid CIA revision: %ld\n", value);
                 return false;
             }
             if (config.revision == value) {

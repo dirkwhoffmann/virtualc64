@@ -179,7 +179,7 @@ VICII::setConfigItem(ConfigOption option, long value)
         case OPT_VIC_REVISION:
             
             if (!isVICRevision(value)) {
-                warn("Invalid VIC revision: %d\n", value);
+                warn("Invalid VIC revision: %ld\n", value);
                 return false;
             }
             if (config.revision == value) {
@@ -195,7 +195,7 @@ VICII::setConfigItem(ConfigOption option, long value)
         case OPT_PALETTE:
             
             if (!isPalette(value)) {
-                warn("Invalid color palette: %d\n", value);
+                warn("Invalid color palette: %ld\n", value);
                 return false;
             }
             if (config.palette == value) {
@@ -324,7 +324,7 @@ VICII::setConfigItem(ConfigOption option, long value)
         case OPT_GLUE_LOGIC:
             
             if (!isGlueLogic(value)) {
-                warn("Invalid glue logic type: %d\n", value);
+                warn("Invalid glue logic type: %ld\n", value);
                 return false;
             }
             if (config.glueLogic == value) {

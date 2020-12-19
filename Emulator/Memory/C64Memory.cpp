@@ -133,7 +133,7 @@ C64Memory::setConfigItem(ConfigOption option, long value)
         case OPT_RAM_PATTERN:
             
             if (!isRamPattern(value)) {
-                warn("Invalid RAM pattern: %d\n", value);
+                warn("Invalid RAM pattern: %ld\n", value);
                 return false;
             }
             if (config.ramPattern == value) {

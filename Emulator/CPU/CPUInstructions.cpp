@@ -3171,7 +3171,7 @@ CPU<M>::executeOneCycle()
             
         default:
             
-            warn("UNIMPLEMENTED OPCODE: %d (%02X)\n", next, next);
+            warn("UNIMPLEMENTED OPCODE: %ld (%02lX)\n", next, next);
             assert(false);
     }
 }

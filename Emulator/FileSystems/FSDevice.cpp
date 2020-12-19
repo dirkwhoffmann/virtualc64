@@ -633,7 +633,7 @@ FSDevice::importVolume(const u8 *src, size_t size, FSError *error)
 
     // Only proceed if the buffer size matches
     if (blocks.size() * 256 != size) {
-        warn("BUFFER SIZE MISMATCH (%d %d)\n", blocks.size(), blocks.size() * 256);
+        warn("BUFFER SIZE MISMATCH (%lu %lu)\n", blocks.size(), blocks.size() * 256);
         if (error) *error = FS_WRONG_CAPACITY;
         return false;
     }

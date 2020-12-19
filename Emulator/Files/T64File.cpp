@@ -96,7 +96,7 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
     }
 
     if ((archive->data = new u8[archive->size]) == NULL) {
-        archive->warn("Failed to allocate %d bytes of memory\n", archive->size);
+        warn("Failed to allocate %zu bytes of memory\n", archive->size);
         delete archive;
         return NULL;
     }

@@ -95,7 +95,7 @@ TAPFile::readFromBuffer(const u8 *buffer, size_t length)
     
     u32 l = LO_LO_HI_HI(data[0x10], data[0x11], data[0x12], data[0x13]);
     if (l + 0x14 /* Header */ != size) {
-        warn("Size mismatch! Archive should have %d data bytes, found %d\n", l, size - 0x14);
+        warn("readFromBuffer: Expected %d bytes, found %lu\n", l, size - 0x14);
     }
         
     return true;

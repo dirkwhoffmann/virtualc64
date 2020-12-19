@@ -52,17 +52,8 @@ public:
     // Returns the name for this component (e.g., "CPU" or "VICII")
     virtual const char *getDescription() = 0;
     
-        
-    //
-    // Debugging the component
-    //
-    
-public:
-    
+    // Called by debug() and trace() to produce a detailed debug output
     virtual void prefix();
-    
-    // void msg(const char *fmt, ...);
-    void warn(const char *fmt, ...);    
 };
 
 #endif

@@ -71,7 +71,7 @@ PRGFile::makeWithAnyArchive(AnyArchive *other, int item)
     // Determine file size and allocate memory
     archive->size = 2 + other->getSizeOfItem();
     if ((archive->data = new u8[archive->size]) == NULL) {
-        archive->warn("Failed to allocate %d bytes of memory\n", archive->size);
+        warn("Failed to allocate %zu bytes of memory\n", archive->size);
         delete archive;
         return NULL;
     }

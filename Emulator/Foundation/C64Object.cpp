@@ -28,10 +28,3 @@ C64Object::prefix()
 {
     fprintf(stderr, "%s: ", getDescription());
 }
-
-void
-C64Object::warn(const char *fmt, ...)
-{
-    VC64OBJ_PARSE;
-    VC64PRINT("WARNING: ")
-}

@@ -193,7 +193,7 @@ ReSID::setSamplingMethod(SamplingMethod value)
             value = SID_SAMPLE_INTERPOLATE;
             break;
         default:
-            warn("Unknown sampling method: %d\n", value);
+            warn("Unknown sampling method: %ld\n", value);
     }
 
     samplingMethod = value;
@@ -232,7 +232,7 @@ ReSID::executeSamples(u64 numSamples, short *buffer)
 
     // Don't ask to compute more samples that fit into the buffer
     if (numSamples > SIDBridge::sampleBufferSize) {
-        warn("numSamples = %lld (max: %lld)\n", numSamples, SIDBridge::sampleBufferSize);
+        warn("numSamples = %lld (max: %zu)\n", numSamples, SIDBridge::sampleBufferSize);
         bridge.dump();
         assert(false);
     }
