@@ -232,7 +232,7 @@ ReSID::executeSamples(u64 numSamples, short *buffer)
 
     // Don't ask to compute more samples that fit into the buffer
     if (numSamples > SIDBridge::sampleBufferSize) {
-        panic("numSamples = %lld (max: %lld)\n", numSamples, SIDBridge::sampleBufferSize);
+        warn("numSamples = %lld (max: %lld)\n", numSamples, SIDBridge::sampleBufferSize);
         bridge.dump();
         assert(false);
     }

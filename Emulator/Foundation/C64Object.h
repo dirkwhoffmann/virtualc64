@@ -59,22 +59,12 @@ public:
     
 public:
     
-    /* There a four types of messages:
-     *
-     *   - msg     Debug messages   (Show up in debug and release builds)
-     *   - warn    Warning messages (Do not terminate the program)
-     *   - panic   Error messages   (Terminate the program)
-     *   - debug   Debug messages   (Show up in debug builds, only)
-     *
-     * Debug messages are prefixed by the string description produced by the
-     * prefix() function. To omit the prefix, use plaindebug(...). Some objects
-     * overwrite prefix() to output additional debug information.
+    /* DEPRECATED
      */
     virtual void prefix();
     
     void msg(const char *fmt, ...);
     void warn(const char *fmt, ...);
-    void panic(const char *fmt, ...);
     
     // void debug(const char *fmt, ...);
     // void debug(int verbose, const char *fmt, ...);

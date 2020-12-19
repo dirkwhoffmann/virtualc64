@@ -10,29 +10,28 @@
 #ifndef _DEBUG_H
 #define _DEBUG_H
 
-/* This file provides several macros for printing messages
+/* This file provides several macros for printing messages:
  *
- *   - msg     Debug messages   (Shows up in all builds)
- *   - warn    Warning messages (Shows up in all builds)
- *   - panic   Error messages   (Shows up in all builds, terminates execution)
- *   - debug   Debug messages   (Shows up in debug builds, only)
+ *   - msg    Information messages  (Show up in all builds)
+ *   - warn   Warning messages      (Show up in all builds)
+ *   - debug  Debug messages        (Show up in debug builds, only)
+ *   - trace  Detailed debug output (Show up in debug builds, only)
  *
- * Debug messages are prefixed by the string description produced by the
- * prefix() function which returns an empty string by default. Classes may
- * implement this function to provide a detailed string.
+ * Trace messages are prefixed by a string description produced by the prefix()
+ * function. By default, prefix() returns the component name. Some classes
+ * overwrite this function to output additional debug information.
  *
- * Sidenote: Previous version of the emulator implemented the printing macros
- * in form of variadic functions. Although this might seem to be a cleaner
- * approach at first glance, it is not. Using macros allows modern compilers
- * to verify the format string placeholders against the data types of the
- * provided arguments. This check is not performed when using variadic
- * functions.
+ * Debug and trace messages are accompanied by an optional 'verbose' parameter.
+ * If 0 is passed in, no output will be created.
+ *
+ * Sidenote: In previous versions the printing macros were implemented in form
+ * of variadic functions. Although this might seem to be a superior approach at
+ * first glance, it is not. Using macros allows modern compilers to verify the
+ * format string placeholders against the data types of the provided arguments.
+ * This check can't be performed when using variadic functions are utilized.
  */
 
 #ifndef NDEBUG
-
-inline void prefix() { }
-inline const char *getDescription() { return ""; }
 
 #define debug(verbose, format, ...) \
 if (verbose) { \

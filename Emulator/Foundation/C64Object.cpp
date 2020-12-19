@@ -26,6 +26,7 @@ fprintf(stderr, "%s: %s%s", getDescription(), trailer, buf);
 void
 C64Object::prefix()
 {
+    fprintf(stderr, "%s: ", getDescription());
 }
 
 void
@@ -41,49 +42,6 @@ C64Object::warn(const char *fmt, ...)
     VC64OBJ_PARSE;
     VC64PRINT("WARNING: ")
 }
-
-void
-C64Object::panic(const char *fmt, ...)
-{
-    VC64OBJ_PARSE;
-    VC64PRINT("PANIC: ")
-    std::abort();
-}
-
-/*
-void
-C64Object::debug(const char *fmt, ...)
-{
-#ifndef NDEBUG
-    VC64OBJ_PARSE
-    VC64PRINT("")
-#endif
-}
-*/
-
-/*
-void
-C64Object::debug(int verbose, const char *fmt, ...)
-{
-#ifndef NDEBUG
-    if (verbose) {
-        VC64OBJ_PARSE
-        VC64PRINT("")
-    }
-#endif
-}
-*/
-
-/*
-void
-C64Object::plaindebug(const char *fmt, ...)
-{
-#ifndef NDEBUG
-    VC64OBJ_PARSE
-    VC64PRINTPLAIN("")
-#endif
-}
-*/
 
 void
 C64Object::plaindebug(int verbose, const char *fmt, ...)
