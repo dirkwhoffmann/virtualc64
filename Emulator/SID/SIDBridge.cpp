@@ -183,7 +183,7 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
         case OPT_AUDVOLR:
 
             config.volR = MIN(100, MAX(0, value));
-            volR.set(pow((double)config.volR / 100, 1.4));
+            volR.set(pow((double)config.volR / 50, 1.4));
 
             if (wasMuted != isMuted()) {
                 messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
@@ -537,12 +537,12 @@ SIDBridge::_setWarp(bool enable)
         // Warping has the unavoidable drawback that audio playback gets out of
         // sync. To cope with this issue, we ramp down the volume when warping
         // is switched on and fade in smoothly when it is switched off.
-        sid.rampDown();
+        rampDown();
         
     } else {
         
-        sid.rampUp();
-        sid.alignWritePtr();
+        rampUp();
+        alignWritePtr();
     }
 }
 
@@ -679,7 +679,7 @@ SIDBridge::executeUntil(u64 targetCycle)
     cycles += consumedCycles;
     
     debug(SID_EXEC,
-          "target: %lld  missing: %lld consumed: %lld reached: %lld still missing: %lld\n",
+          "target: %lld missing: %lld consumed: %lld reached: %lld still missing: %lld\n",
           targetCycle, missingCycles, consumedCycles, cycles, targetCycle - cycles);
 }
 
@@ -750,7 +750,9 @@ SIDBridge::execute(u64 numSamples)
         handleBufferOverflow();
     }
     
-    debug(SID_EXEC, "%d %f %f %f\n", samples[0][0], vol[0], pan[0], volL.current);
+    debug(SID_EXEC, "(%d,%d,%d...) vol0: %f pan0: %f volL: %f volR: %f\n",
+          samples[0][0], samples[0][1], samples[0][2],
+          vol[0], pan[0], volL.current, volR.current);
         
     // Convert sound samples to floating point values and write into ringbuffer
     for (unsigned i = 0; i < numSamples; i++) {
