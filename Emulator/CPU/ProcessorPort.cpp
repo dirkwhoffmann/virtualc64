@@ -16,9 +16,9 @@ ProcessorPort::_dump()
     msg("---------------\n\n");
     msg("port:           %02X\n", port);
     msg("direction:      %02X\n", direction);
-    msg("Bit 3 discharge cycle: %ld\n", dischargeCycleBit3);
-    msg("Bit 6 discharge cycle: %ld\n", dischargeCycleBit6);
-    msg("Bit 7 discharge cycle: %ld\n", dischargeCycleBit7);
+    msg("Bit 3 discharge cycle: %llu\n", dischargeCycleBit3);
+    msg("Bit 6 discharge cycle: %llu\n", dischargeCycleBit6);
+    msg("Bit 7 discharge cycle: %llu\n", dischargeCycleBit7);
 }
             
 u8

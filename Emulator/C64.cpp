@@ -668,10 +668,10 @@ C64::_dump()
     msg("----\n\n");
     msg("              Machine type : %s\n", vic.isPAL() ? "PAL" : "NTSC");
     msg("         Frames per second : %f\n", vic.getFramesPerSecond());
-    msg("     Rasterlines per frame : %d\n", vic.getRasterlinesPerFrame());
+    msg("     Rasterlines per frame : %ld\n", vic.getRasterlinesPerFrame());
     msg("     Cycles per rasterline : %d\n", vic.getCyclesPerLine());
     msg("             Current cycle : %llu\n", cpu.cycle);
-    msg("             Current frame : %d\n", frame);
+    msg("             Current frame : %llu\n", frame);
     msg("        Current rasterline : %d\n", rasterLine);
     msg("  Current rasterline cycle : %d\n", rasterCycle);
     msg("              Ultimax mode : %s\n\n", getUltimax() ? "YES" : "NO");

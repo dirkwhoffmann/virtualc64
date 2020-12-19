@@ -209,7 +209,7 @@ Cartridge::_dump()
     msg("Cartridge\n");
     msg("---------\n");
     
-    msg("        Cartridge type: %d\n", getCartridgeType());
+    msg("        Cartridge type: %ld\n", getCartridgeType());
     msg(" Game line in CRT file: %d\n", gameLineInCrtFile);
     msg("Exrom line in CRT file: %d\n", exromLineInCrtFile);
     msg(" Number of Rom packets: %d\n", numPackets);

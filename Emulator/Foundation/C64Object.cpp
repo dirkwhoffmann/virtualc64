@@ -30,13 +30,6 @@ C64Object::prefix()
 }
 
 void
-C64Object::msg(const char *fmt, ...)
-{
-    VC64OBJ_PARSE
-    VC64PRINTPLAIN("")
-}
-
-void
 C64Object::warn(const char *fmt, ...)
 {
     VC64OBJ_PARSE;

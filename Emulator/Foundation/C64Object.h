@@ -59,11 +59,9 @@ public:
     
 public:
     
-    /* DEPRECATED
-     */
     virtual void prefix();
     
-    void msg(const char *fmt, ...);
+    // void msg(const char *fmt, ...);
     void warn(const char *fmt, ...);    
 };
 

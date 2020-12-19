@@ -69,10 +69,10 @@ FlashRom::_dump()
     msg("FlashRom\n");
     msg("--------\n\n");
     
-    msg("     state: %d\n", state);
-    msg(" baseState: %d\n", baseState);
-    msg("numSectors: %d\n", numSectors);
-    msg("sectorSize: %d\n", sectorSize);
+    msg("     state: %ld\n", state);
+    msg(" baseState: %ld\n", baseState);
+    msg("numSectors: %zu\n", numSectors);
+    msg("sectorSize: %zu\n", sectorSize);
     msg("       rom: %p\n\n", rom);
 }
 

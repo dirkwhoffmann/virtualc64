@@ -117,7 +117,7 @@ FSDevice::dump()
     // Dump all blocks
     for (size_t i = 0; i < blocks.size(); i++)  {
         
-        msg("\nBlock %d (%d):", i, blocks[i]->nr);
+        msg("\nBlock %zu (%d):", i, blocks[i]->nr);
         msg(" %s\n", sFSBlockType(blocks[i]->type()));
         
         blocks[i]->dump();
@@ -725,12 +725,12 @@ FSDevice::exportDirectory(const char *path, FSError *err)
     for (auto const& item : items) {
 
         if (!exportFile(item, path, err)) {
-            msg("Export error: %d\n", err);
+            msg("Export error: %ld\n", *err);
             return false;
         }
     }
     
-    msg("Exported %d items", items.size());
+    msg("Exported %lu items", items.size());
     *err = FS_OK;
     return true;
 }

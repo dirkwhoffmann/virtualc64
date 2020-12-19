@@ -149,7 +149,7 @@ AnyArchive::dumpDirectory()
     for (int i = 0; i < numItems; i++) {
         
         selectItem(i);
-        msg("Item %02d : %s (%d bytes, load address: %d)\n",
+        msg("Item %02d : %s (%zu bytes, load address: %d)\n",
                 i, getNameOfItem(), getSizeOfItem(), getDestinationAddrOfItem());
         msg("          ");
         selectItem(i);
