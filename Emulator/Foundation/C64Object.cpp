@@ -95,15 +95,3 @@ C64Object::plaindebug(int verbose, const char *fmt, ...)
     }
 #endif
 }
-
-bool
-C64Object::tracingEnabled()
-{
-    if (traceCounter == 0)
-        return false;
-    
-    if (traceCounter > 0)
-        traceCounter--;
-    
-    return true;
-}

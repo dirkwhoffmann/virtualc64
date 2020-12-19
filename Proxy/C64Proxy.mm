@@ -157,14 +157,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->cpu->isJammed();
 }
-- (BOOL) tracing
-{
-    return wrapper->cpu->tracingEnabled();
-}
-- (void) setTracing:(BOOL)b
-{
-    b ? wrapper->cpu->startTracing() : wrapper->cpu->stopTracing();
-}
 - (void) setHex
 {
     wrapper->cpu->debugger.hex = true;
@@ -318,14 +310,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 - (void) dump
 {
     wrapper->cia->dump();
-}
-- (BOOL) tracing
-{
-    return wrapper->cia->tracingEnabled();
-}
-- (void) setTracing:(BOOL)b
-{
-    b ? wrapper->cia->startTracing() : wrapper->cia->stopTracing();
 }
 - (void) poke:(u16)addr value:(u8)value {
     wrapper->cia->suspend();
@@ -557,14 +541,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 - (BOOL) busy
 {
     return wrapper->iec->isBusy();
-}
-- (BOOL) tracing
-{
-    return wrapper->iec->tracingEnabled();
-}
-- (void) setTracing:(BOOL)b
-{
-    b ? wrapper->iec->startTracing() : wrapper->iec->stopTracing();
 }
 
 @end
@@ -1100,14 +1076,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->via->dump();
 }
-- (BOOL) tracing
-{
-    return wrapper->via->tracingEnabled();
-}
-- (void) setTracing:(BOOL)b
-{
-    b ? wrapper->via->startTracing() : wrapper->via->stopTracing();
-}
 
 @end
 
@@ -1148,14 +1116,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 - (void) dump
 {
     wrapper->drive->dump();
-}
-- (BOOL) tracing
-{
-    return wrapper->drive->tracingEnabled();
-}
-- (void) setTracing:(BOOL)b
-{
-    b ? wrapper->drive->startTracing() : wrapper->drive->stopTracing();
 }
 - (BOOL) isConnected
 {

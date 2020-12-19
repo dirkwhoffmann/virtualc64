@@ -168,13 +168,7 @@ extension MyController: NSMenuItemValidation {
         // Debug menu
         case #selector(MyController.traceAction(_:)):
             return !c64.isReleaseBuild
-            
-        case #selector(MyController.traceIecAction(_:)):
-            item.state = c64.iec.tracing() ? .on : .off
-            
-        case #selector(MyController.traceViaAction(_:)):
-            item.state = c64.drive8.via1.tracing() ? .on : .off
-            
+                        
         case #selector(MyController.dumpStateAction(_:)):
             return !c64.isReleaseBuild
             
@@ -914,35 +908,7 @@ extension MyController: NSMenuItemValidation {
     @IBAction func dumpStateAction(_ sender: Any!) {
         // Dummy target to make menu item validatable
     }
-    
-    @IBAction func traceIecAction(_ sender: Any!) {
-        
-        undoManager?.registerUndo(withTarget: self) { targetSelf in
-            targetSelf.traceIecAction(sender)
-        }
-        
-        c64.iec.setTracing(!c64.iec.tracing())
-    }
- 
-    @IBAction func traceVC1541CpuAction(_ sender: Any!) {
-        
-        undoManager?.registerUndo(withTarget: self) { targetSelf in
-            targetSelf.traceVC1541CpuAction(sender)
-        }
-        
-        // c64.drive8.cpu.setTracing(!c64.drive8.cpu.tracing())
-    }
-  
-    @IBAction func traceViaAction(_ sender: Any!) {
-        
-        undoManager?.registerUndo(withTarget: self) { targetSelf in
-            targetSelf.traceViaAction(sender)
-        }
-        
-        c64.drive8.via1.setTracing(!c64.drive8.via1.tracing())
-        c64.drive8.via2.setTracing(!c64.drive8.via2.tracing())
-    }
-    
+       
     @IBAction func dumpC64(_ sender: Any!) { c64.dump() }
     @IBAction func dumpC64CPU(_ sender: Any!) { c64.cpu.dump() }
     @IBAction func dumpC64CIA1(_ sender: Any!) {c64.cia1.dump() }

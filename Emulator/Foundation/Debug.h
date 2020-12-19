@@ -20,17 +20,27 @@
  * Debug messages are prefixed by the string description produced by the
  * prefix() function which returns an empty string by default. Classes may
  * implement this function to provide a detailed string.
+ *
+ * Sidenote: Previous version of the emulator implemented the printing macros
+ * in form of variadic functions. Although this might seem to be a cleaner
+ * approach at first glance, it is not. Using macros allows modern compilers
+ * to verify the format string placeholders against the data types of the
+ * provided arguments. This check is not performed when using variadic
+ * functions.
  */
-
-/*
-#define debug(verbose, format, ...) \
-if (verbose) { fprintf (stderr, format __VA_OPT__(,) __VA_ARGS__); }
-*/
 
 #ifndef NDEBUG
 
+inline void prefix() { }
+inline const char *getDescription() { return ""; }
+
 #define debug(verbose, format, ...) \
-if (verbose) { fprintf (stderr, format, ##__VA_ARGS__); } \
+if (verbose) { \
+fprintf(stderr, format, ##__VA_ARGS__); \
+}
+
+// prefix(); \
+// fprintf(stderr, "%s: ", getDescription()); prefix();
 
 #else
 

@@ -112,9 +112,7 @@ IEC::updateIecLines()
         drive8.via1.CA1action(!atnLine);
         drive9.via1.CA1action(!atnLine);
         
-        if (tracingEnabled()) {
-            dumpTrace();
-        }
+        // dumpTrace();
         
 		if (busActivity == 0) {
             

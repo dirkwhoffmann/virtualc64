@@ -290,9 +290,6 @@ struct AnyC64FileWrapper;
 - (void) dump;
 - (bool) isJammed;
 
-- (BOOL) tracing;
-- (void) setTracing:(BOOL)b;
-
 - (void) setHex;
 - (void) setDec;
 
@@ -352,9 +349,6 @@ struct AnyC64FileWrapper;
 
 - (CIAInfo) getInfo;
 - (void) dump;
-- (BOOL) tracing;
-- (void) setTracing:(BOOL)b;
-
 - (void) poke:(u16)addr value:(u8)value;
 
 @end
@@ -548,11 +542,7 @@ struct AnyC64FileWrapper;
 }
 
 - (void) dump;
-
 - (BOOL) busy;
-
-- (BOOL) tracing;
-- (void) setTracing:(BOOL)b;
 
 @end
 
@@ -581,8 +571,6 @@ struct AnyC64FileWrapper;
 - (DriveConfig) getConfig;
 
 - (void) dump;
-- (BOOL) tracing;
-- (void) setTracing:(BOOL)b;
 
 - (BOOL) isConnected;
 - (BOOL) isSwitchedOn;
@@ -623,8 +611,6 @@ struct AnyC64FileWrapper;
 }
 
 - (void) dump;
-- (BOOL) tracing;
-- (void) setTracing:(BOOL)b;
 
 @end
 

@@ -154,7 +154,6 @@ Drive::_dump()
     msg("       Read mode : %s\n", readMode() ? "YES" : "NO");
 	msg("\n");
     mem.dump();
-    startTracing();
 }
 
 void

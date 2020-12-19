@@ -31,13 +31,7 @@ for (AutoMutex _am(mutex); _am.active; _am.active = false)
  * warnings.
  */
 class C64Object {
-                 
-    /* Stores how many trace messages are left to be printed. If positive, this
-     * value is decremented in tracingEnabled(). A negative value indicates
-     * that tracing should continue forever.
-     */
-    int traceCounter = 0;
-    
+                     
 protected:
     
     /* Mutex for implementing the 'synchronized' macro. The macro can be used
@@ -86,22 +80,6 @@ public:
     // void debug(int verbose, const char *fmt, ...);
     // void plaindebug(const char *fmt, ...);
     void plaindebug(int verbose, const char *fmt, ...);
-    
-    
-    //
-    // Tracing
-    //
-    
-public:
-    
-    // Returns true iff trace mode is enabled
-    bool tracingEnabled();
-        
-    // Starts tracing
-    void startTracing(int counter = -1) { traceCounter = counter; }
-
-    // Stops tracing
-    void stopTracing() { traceCounter = 0; }
 };
 
 #endif
