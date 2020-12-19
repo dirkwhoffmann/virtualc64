@@ -210,8 +210,13 @@ public:
     DESERIALIZE16(unsigned short)
     DESERIALIZE32(int)
     DESERIALIZE32(unsigned int)
+#ifdef __EMSCRIPTEN__
+    DESERIALIZE32(long)
+    DESERIALIZE32(unsigned long)
+#else
     DESERIALIZE64(long)
     DESERIALIZE64(unsigned long)
+#endif
     DESERIALIZE64(long long)
     DESERIALIZE64(unsigned long long)
     DESERIALIZEF(float)
@@ -291,8 +296,13 @@ public:
     SERIALIZE16(const unsigned short)
     SERIALIZE32(const int)
     SERIALIZE32(const unsigned int)
-    SERIALIZE64(const long)
-    SERIALIZE64(const unsigned long)
+#ifdef __EMSCRIPTEN__
+    SERIALIZE32(long)
+    SERIALIZE32(unsigned long)
+#else
+    SERIALIZE64(long)
+    SERIALIZE64(unsigned long)
+#endif
     SERIALIZE64(const long long)
     SERIALIZE64(const unsigned long long)
     SERIALIZEF(const float)

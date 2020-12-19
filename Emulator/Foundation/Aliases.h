@@ -74,7 +74,6 @@ typedef unsigned Block;
 // Definition for wasm (long = 32 Bit)
 #if defined(__EMSCRIPTEN__)
 #define longenum(_name) \
-typedef enum __attribute__((enum_extensibility(open))) _name : long long _name; \
 enum _name : long long
 
 // Definition for clang (long = 64 Bit)
