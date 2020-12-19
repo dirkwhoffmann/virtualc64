@@ -102,7 +102,3 @@ static const int KBD_DEBUG       = 0; // Keyboard
 // Update IEC bus inside CIA and VIA. Use delay flags if neccessary
 // Use a simpler implementation for the raster irq trigger. Edge sensitive matching value
 // Call CA1 action in VIA class only if the pin value really has changed.
-//
-// Add setter API for SID stuff
-//
-

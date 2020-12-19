@@ -16,7 +16,7 @@
 
 // Memory source identifiers. The identifiers are used inside the peek and poke
 // lookup tables to indicate the source and target of a peek or poke operation.
-longenum(MemoryType)
+enum_long(MemoryType)
 {
     M_RAM = 1,
     M_CHAR,
@@ -29,7 +29,7 @@ longenum(MemoryType)
     M_NONE
 };
 
-longenum(RamPattern)
+enum_long(RamPattern)
 {
     RAM_PATTERN_C64 = 0,
     RAM_PATTERN_C64C = 1

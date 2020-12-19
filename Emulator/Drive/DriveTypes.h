@@ -14,7 +14,7 @@
 // Enumerations
 //
 
-longenum(DriveID)
+enum_long(DriveID)
 {
     DRIVE8 = 8,
     DRIVE9 = 9
@@ -25,7 +25,7 @@ inline bool isDriveID(long value)
     return value >= DRIVE8 && value <= DRIVE9;
 }
 
-longenum(DriveType)
+enum_long(DriveType)
 {
     DRIVE_VC1541II
 };
@@ -35,7 +35,7 @@ inline bool isDriveType(long value)
     return value == DRIVE_VC1541II;
 }
 
-longenum(InsertionStatus)
+enum_long(InsertionStatus)
 {
     FULLY_EJECTED,
     PARTIALLY_INSERTED,

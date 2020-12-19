@@ -14,7 +14,7 @@
 // Enumerations
 //
 
-longenum(CIARevision)
+enum_long(CIARevision)
 {
     MOS_6526,
     MOS_8521

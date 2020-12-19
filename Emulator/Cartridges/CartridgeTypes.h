@@ -10,7 +10,7 @@
 #ifndef CARTRIDGE_TYPES_H
 #define CARTRIDGE_TYPES_H
 
-longenum(CartridgeType)
+enum_long(CartridgeType)
 {
     CRT_NORMAL = 0,
     CRT_ACTION_REPLAY = 1,
@@ -80,7 +80,7 @@ longenum(CartridgeType)
     
 };
 
-longenum(FlashRomState)
+enum_long(FlashRomState)
 {
     FLASH_READ = 0,
     FLASH_MAGIC_1,

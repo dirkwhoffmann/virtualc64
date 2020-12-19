@@ -12,7 +12,7 @@
 
 #include "Aliases.h"
 
-longenum(FSVolumeType)
+enum_long(FSVolumeType)
 {
     FS_NODOS = 0,
     FS_CBM_DOS = 1
@@ -32,7 +32,7 @@ inline const char *sFSVolumeType(FSVolumeType value)
     }
 }
 
-longenum(FSFileType)
+enum_long(FSFileType)
 {
     FS_PRG = 1,
     FS_SEQ,
@@ -57,7 +57,7 @@ inline const char *sFSFileType(FSFileType value)
     }
 }
 
-longenum(FSBlockType)
+enum_long(FSBlockType)
 {
     FS_UNKNOWN_BLOCK,
     FS_BAM_BLOCK,
@@ -85,7 +85,7 @@ sFSBlockType(FSBlockType type)
     }
 }
 
-longenum(FSItemType)
+enum_long(FSItemType)
 {
     FSI_UNKNOWN,
     FSI_UNUSED,
@@ -102,7 +102,7 @@ isFSBlockItem(long value)
     return value >= 0 && value <= FSI_DATA;
 }
 
-longenum(FSError)
+enum_long(FSError)
 {
     FS_OK,
     

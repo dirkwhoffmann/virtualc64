@@ -36,7 +36,7 @@
 // Enumerations
 //
 
-longenum(DiskType)
+enum_long(DiskType)
 {
     DISK_SS_SD,   // Single-sided, single density (VC1541)
     DISK_DS_SD    // Double-sided, single density (VC1571) (not supported)
@@ -58,7 +58,7 @@ inline const char *sDiskType(DiskType value)
     }
 }
 
-longenum(CBMFileType)
+enum_long(CBMFileType)
 {
     CBM_PRG,
     CBM_SEQ,

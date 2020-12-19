@@ -10,7 +10,7 @@
 #ifndef _CPU_INSTRUCTIONS_H
 #define _CPU_INSTRUCTIONS_H
 
-longenum(MicroInstruction) {
+enum_long(MicroInstruction) {
     
     fetch,
     

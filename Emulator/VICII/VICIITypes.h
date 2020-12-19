@@ -14,7 +14,7 @@
 // Enumerations
 //
 
-longenum(VICRevision)
+enum_long(VICRevision)
 {
     PAL_6569_R1 = 1,
     PAL_6569_R3 = 2,
@@ -50,7 +50,7 @@ inline const char *vicRevisionName(VICRevision revision)
     }
 }
 
-longenum(GlueLogic)
+enum_long(GlueLogic)
 {
     GLUE_DISCRETE = 0,
     GLUE_CUSTOM_IC = 1
@@ -109,7 +109,7 @@ typedef enum
 }
 DisplayMode;
 
-longenum(MemAccessType)
+enum_long(MemAccessType)
 {
     R_ACCESS = 0,             // Memory Refresh
     I_ACCESS,                 // Idle read
@@ -125,7 +125,7 @@ static inline bool isMemAccessType(long value)
     return value >= 0 && value < ACCESS_CNT;
 }
 
-longenum(DmaDisplayMode)
+enum_long(DmaDisplayMode)
 {
     MODULATE_FG_LAYER,
     MODULATE_BG_LAYER,

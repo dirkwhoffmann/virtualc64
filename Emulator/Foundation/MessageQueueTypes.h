@@ -12,7 +12,7 @@
 #ifndef _MESSAGE_QUEUE_T_H
 #define _MESSAGE_QUEUE_T_H
 
-longenum(MessageType)
+enum_long(MessageType)
 {
     MSG_NONE = 0,
     

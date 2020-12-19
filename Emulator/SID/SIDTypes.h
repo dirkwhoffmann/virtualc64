@@ -14,7 +14,7 @@
 // Enumerations
 //
 
-longenum(SIDRevision)
+enum_long(SIDRevision)
 {
     MOS_6581,
     MOS_8580
@@ -36,7 +36,7 @@ inline const char *sidRevisionName(SIDRevision type)
     }
 }
 
-longenum(SIDEngine)
+enum_long(SIDEngine)
 {
     ENGINE_FASTSID,
     ENGINE_RESID
@@ -59,7 +59,7 @@ inline const char *sidEngineName(SIDEngine engine)
 }
 
 // This enum reflects enum "sampling_method" used by reSID.
-longenum(SamplingMethod)
+enum_long(SamplingMethod)
 {
     SID_SAMPLE_FAST,
     SID_SAMPLE_INTERPOLATE,

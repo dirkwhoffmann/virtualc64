@@ -12,7 +12,7 @@
 #ifndef MOUSE_TYPES_H
 #define MOUSE_TYPES_H
 
-longenum(MouseModel)
+enum_long(MouseModel)
 {
     MOUSE1350 = 0,
     MOUSE1351,

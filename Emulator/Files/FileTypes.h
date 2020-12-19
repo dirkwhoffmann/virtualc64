@@ -10,7 +10,7 @@
 #ifndef FILE_TYPES_H
 #define FILE_TYPES_H
 
-longenum(FileType)
+enum_long(FileType)
 {    
     FILETYPE_UNKNOWN = 0,
     FILETYPE_V64,
@@ -57,7 +57,7 @@ inline const char* fileTypeString(FileType type)
     }
 }
 
-longenum(RomIdentifier)
+enum_long(RomIdentifier)
 {
     ROM_MISSING,
     ROM_UNKNOWN,

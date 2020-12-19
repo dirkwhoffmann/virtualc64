@@ -35,8 +35,7 @@
 fprintf(stderr, format, ##__VA_ARGS__);
 
 #define warn(format, ...) \
-fprintf(stderr, "Warning: "); \
-fprintf(stderr, format, ##__VA_ARGS__);
+fprintf(stderr, "Warning: " format, ##__VA_ARGS__);
 
 #ifndef NDEBUG
 
