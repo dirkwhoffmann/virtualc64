@@ -135,8 +135,6 @@ public:
     COUNT(const unsigned short)
     COUNT(const int)
     COUNT(const unsigned int)
-    COUNT(const long)
-    COUNT(const unsigned long)
     COUNT(const long long)
     COUNT(const unsigned long long)
     COUNT(const float)
@@ -210,13 +208,6 @@ public:
     DESERIALIZE16(unsigned short)
     DESERIALIZE32(int)
     DESERIALIZE32(unsigned int)
-#ifdef __EMSCRIPTEN__
-    DESERIALIZE32(long)
-    DESERIALIZE32(unsigned long)
-#else
-    DESERIALIZE64(long)
-    DESERIALIZE64(unsigned long)
-#endif
     DESERIALIZE64(long long)
     DESERIALIZE64(unsigned long long)
     DESERIALIZEF(float)
@@ -296,13 +287,6 @@ public:
     SERIALIZE16(const unsigned short)
     SERIALIZE32(const int)
     SERIALIZE32(const unsigned int)
-#ifdef __EMSCRIPTEN__
-    SERIALIZE32(long)
-    SERIALIZE32(unsigned long)
-#else
-    SERIALIZE64(long)
-    SERIALIZE64(unsigned long)
-#endif
     SERIALIZE64(const long long)
     SERIALIZE64(const unsigned long long)
     SERIALIZEF(const float)
