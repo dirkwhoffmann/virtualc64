@@ -24,6 +24,7 @@
 #include <unistd.h>
 #include <dirent.h>
 
+#include "Debug.h"
 #include "C64Config.h"
 #include "C64Constants.h"
 #include "C64Types.h"

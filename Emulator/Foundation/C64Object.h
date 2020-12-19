@@ -83,7 +83,7 @@ public:
     void panic(const char *fmt, ...);
     
     // void debug(const char *fmt, ...);
-    void debug(int verbose, const char *fmt, ...);
+    // void debug(int verbose, const char *fmt, ...);
     // void plaindebug(const char *fmt, ...);
     void plaindebug(int verbose, const char *fmt, ...);
     

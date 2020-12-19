@@ -624,6 +624,7 @@
 		50ED5BF712DD99C000596417 /* Speedometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speedometer.swift; sourceTree = "<group>"; };
 		50F062E0258DD0A3009A6B21 /* ExportDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportDialog.xib; sourceTree = "<group>"; };
 		50F062E2258DE564009A6B21 /* TypeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeExtensions.swift; sourceTree = "<group>"; };
+		50F062E4258DFC2A009A6B21 /* Debug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Debug.h; sourceTree = "<group>"; };
 		50F2381D12DF505B00B1F275 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		50F420C8250BA3460043DE56 /* Colors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colors.cpp; sourceTree = "<group>"; };
 		50F420C9250BA3460043DE56 /* Colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colors.h; sourceTree = "<group>"; };
@@ -1244,6 +1245,7 @@
 				50A2D7B024AF94B400671F38 /* Aliases.h */,
 				504C42F224AF29AB00E69CAE /* Utils.h */,
 				504C42EF24AF29AB00E69CAE /* Utils.cpp */,
+				50F062E4258DFC2A009A6B21 /* Debug.h */,
 				50CCC309256FAC870052619A /* Concurrency.h */,
 				50CCC308256FAC870052619A /* Concurrency.cpp */,
 				504C42F024AF29AB00E69CAE /* TimeDelayed.h */,

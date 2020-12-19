@@ -41,7 +41,7 @@ Datasette::insertTape(TAPFile *a)
     size = a->getDataSize();
     type = a->TAPversion();
     
-    debug(TAP_DEBUG, "Inserting tape (size = %d, type = %d)...\n", size, type);
+    debug(TAP_DEBUG, "Inserting tape (size = %llu, type = %d)...\n", size, type);
     
     // Copy data
     data = (u8 *)malloc(size);

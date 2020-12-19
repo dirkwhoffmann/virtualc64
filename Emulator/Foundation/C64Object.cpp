@@ -61,6 +61,7 @@ C64Object::debug(const char *fmt, ...)
 }
 */
 
+/*
 void
 C64Object::debug(int verbose, const char *fmt, ...)
 {
@@ -71,6 +72,7 @@ C64Object::debug(int verbose, const char *fmt, ...)
     }
 #endif
 }
+*/
 
 /*
 void

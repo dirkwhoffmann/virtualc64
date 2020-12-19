@@ -241,7 +241,7 @@ C64::getConfigItem(ConfigOption option, long id)
 bool
 C64::configure(ConfigOption option, long value)
 {
-    debug(CNF_DEBUG, "configure(option: %d, value: %d\n", option, value);
+    debug(CNF_DEBUG, "configure(option: %ld, value: %ld\n", option, value);
 
     // Propagate configuration request to all components
     bool changed = HardwareComponent::configure(option, value);
@@ -258,7 +258,7 @@ C64::configure(ConfigOption option, long value)
 bool
 C64::configure(ConfigOption option, long id, long value)
 {
-    debug(CNF_DEBUG, "configure(option: %d, id: %d, value: %d\n", option, id, value);
+    debug(CNF_DEBUG, "configure(option: %ld, id: %ld, value: %ld\n", option, id, value);
     
     // Propagate configuration request to all components
     bool changed = HardwareComponent::configure(option, id, value);

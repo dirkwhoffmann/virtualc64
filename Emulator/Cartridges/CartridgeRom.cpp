@@ -59,7 +59,7 @@ CartridgeRom::_load(u8 *buffer)
     // Read packet data
     for (int i = 0; i < size; i++) rom[i] = read8(reader.ptr);
 
-    debug(SNP_DEBUG, "Recreated from %d bytes\n", reader.ptr - buffer); \
+    debug(SNP_DEBUG, "Recreated from %ld bytes\n", reader.ptr - buffer);
     return reader.ptr - buffer;
 }
 
@@ -73,7 +73,7 @@ CartridgeRom::_save(u8 *buffer)
     // Write packet data
     for (int i = 0; i < size; i++) write8(writer.ptr, rom[i]);
 
-    debug(SNP_DEBUG, "Serialized to %d bytes\n", writer.ptr - buffer);
+    debug(SNP_DEBUG, "Serialized to %ld bytes\n", writer.ptr - buffer);
     return writer.ptr - buffer;
 }
 

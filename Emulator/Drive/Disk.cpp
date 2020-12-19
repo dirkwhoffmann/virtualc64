@@ -402,9 +402,9 @@ Disk::analyzeHalftrack(Halftrack ht)
             sync[i] = decodeGcr(trackInfo.bit + i);
             
             if (sync[i] == 0x08) {
-                debug(GCR_DEBUG, "Sector header block found at offset %d\n", i);
+                debug(GCR_DEBUG, "Sector header block found at offset %ld\n", i);
             } else if (sync[i] == 0x07) {
-                debug(GCR_DEBUG, "Sector data block found at offset %d\n", i);
+                debug(GCR_DEBUG, "Sector data block found at offset %ld\n", i);
             } else {
                 log(i, 10, "Invalid sector ID %02X at index %d. Should be 0x07 or 0x08.", sync[i], i);
             }
@@ -803,7 +803,7 @@ Disk::encodeArchive(D64File *a, bool alignTracks)
             start = 0;
         }
         encodedBits = encodeTrack(a, t, tailGap[zone], start);
-        debug(GCR_DEBUG, "Encoded %d bits (%d bytes) for track %d.\n",
+        debug(GCR_DEBUG, "Encoded %zu bits (%lu bytes) for track %d.\n",
               encodedBits, encodedBits / 8, t);
     }
 

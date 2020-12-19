@@ -265,7 +265,7 @@ Cartridge::_load(u8 *buffer)
         for (unsigned i = 0; i < ramCapacity; i++) externalRam[i] = read8(reader.ptr);
     }
 
-    debug(SNP_DEBUG, "Recreated from %d bytes\n", reader.ptr - buffer);
+    debug(SNP_DEBUG, "Recreated from %ld bytes\n", reader.ptr - buffer);
     return reader.ptr - buffer;
 }
 
@@ -292,7 +292,7 @@ Cartridge::_save(u8 *buffer)
         for (unsigned i = 0; i < ramCapacity; i++) write8(writer.ptr, externalRam[i]);
     }
     
-    debug(SNP_DEBUG, "Serialized %d bytes\n", writer.ptr - buffer);
+    debug(SNP_DEBUG, "Serialized %ld bytes\n", writer.ptr - buffer);
     return writer.ptr - buffer;
 }
 

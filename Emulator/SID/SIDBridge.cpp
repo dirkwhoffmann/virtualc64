@@ -818,7 +818,7 @@ SIDBridge::handleBufferUnderflow()
     // (1) The consumer runs slightly faster than the producer.
     // (2) The producer is halted or not startet yet.
     
-    debug(SID_DEBUG, "BUFFER UNDERFLOW (r: %ld w: %ld)\n", stream.r, stream.w);
+    debug(SID_DEBUG, "BUFFER UNDERFLOW (r: %d w: %d)\n", stream.r, stream.w);
 
     // Determine the elapsed seconds since the last pointer adjustment.
     u64 now = Oscillator::nanos();
@@ -847,7 +847,7 @@ SIDBridge::handleBufferOverflow()
     // (1) The consumer runs slightly slower than the producer
     // (2) The consumer is halted or not startet yet
     
-    debug(SID_DEBUG, "BUFFER OVERFLOW (r: %ld w: %ld)\n", stream.r, stream.w);
+    debug(SID_DEBUG, "BUFFER OVERFLOW (r: %d w: %d)\n", stream.r, stream.w);
     
     // Determine the elapsed seconds since the last pointer adjustment
     u64 now = Oscillator::nanos();

@@ -314,6 +314,6 @@ FlashRom::doSectorErase(u32 addr)
 {
     assert(addr < romSize);
     
-    debug(CRT_DEBUG, "Erasing sector %d ... %d\n", addr >> 4);
+    debug(CRT_DEBUG, "Erasing sector %d\n", addr >> 4);
     memset(rom + (addr & 0x0000), 0xFF, sectorSize);
 }

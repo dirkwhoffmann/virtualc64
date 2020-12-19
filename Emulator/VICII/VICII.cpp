@@ -342,7 +342,7 @@ VICII::setConfigItem(ConfigOption option, long value)
 void
 VICII::setRevision(VICRevision revision)
 {
-    debug(VIC_DEBUG, "setRevision(%d)\n", revision);
+    debug(VIC_DEBUG, "setRevision(%ld)\n", revision);
     
     assert(isVICRevision(revision));
     config.revision = revision;

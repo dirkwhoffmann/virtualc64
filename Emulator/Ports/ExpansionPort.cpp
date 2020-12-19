@@ -53,7 +53,7 @@ ExpansionPort::_load(u8 *buffer)
         reader.ptr += cartridge->load(reader.ptr);
     }
     
-    debug(SNP_DEBUG, "Recreated from %d bytes\n", reader.ptr - buffer);
+    debug(SNP_DEBUG, "Recreated from %ld bytes\n", reader.ptr - buffer);
     return reader.ptr - buffer;
 }
 
@@ -69,7 +69,7 @@ ExpansionPort::_save(u8 *buffer)
         writer.ptr += cartridge->save(writer.ptr);
     }
     
-    debug(SNP_DEBUG, "Serialized to %d bytes\n", writer.ptr - buffer); \
+    debug(SNP_DEBUG, "Serialized to %ld bytes\n", writer.ptr - buffer); \
     return writer.ptr - buffer;
 }
 

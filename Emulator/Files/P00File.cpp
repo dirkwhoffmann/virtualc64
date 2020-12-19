@@ -69,7 +69,7 @@ P00File::makeWithAnyArchive(AnyArchive *otherArchive)
     otherArchive->selectItem(0);
     
     P00File *archive = new P00File();
-    archive->debug(FILE_DEBUG, "Creating P00 archive from %s archive...\n", otherArchive->typeString());
+    debug(FILE_DEBUG, "Creating P00 archive from %s archive...\n", otherArchive->typeString());
     
     // Determine file size and allocate memory
     try {

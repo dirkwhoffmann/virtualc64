@@ -116,8 +116,8 @@ D64File::makeWithAnyArchive(AnyArchive *otherArchive)
     
     // Create a standard 35 track disk with no error checking codes
     D64File *archive = new D64File(35, false);
-    archive->debug(FILE_DEBUG, "Creating D64 archive from a %s archive...\n",
-                   otherArchive->typeString());
+    debug(FILE_DEBUG, "Creating D64 archive from a %s archive...\n",
+          otherArchive->typeString());
     
     // Copy file path
     archive->setPath(otherArchive->getPath());
@@ -149,7 +149,7 @@ D64File::makeWithAnyArchive(AnyArchive *otherArchive)
         int byte;
         unsigned num = 0;
         
-        archive->debug(FILE_DEBUG, "Will write %d bytes\n", otherArchive->getSizeOfItem());
+        debug(FILE_DEBUG, "Will write %zu bytes\n", otherArchive->getSizeOfItem());
         
         otherArchive->selectItem(i);
         while ((byte = otherArchive->readItem()) != EOF) {
@@ -162,12 +162,12 @@ D64File::makeWithAnyArchive(AnyArchive *otherArchive)
         archive->data[off + 0] = 0;
         archive->data[off + 1] = 0;
 
-        archive->debug(FILE_DEBUG, "D64 item %d: %d bytes written\n", i, num);
+        debug(FILE_DEBUG, "D64 item %d: %d bytes written\n", i, num);
         // Item i has been written. Goto next free sector and proceed with the next item
         (void)archive->nextTrackAndSector(track, sector, &track, &sector);
     }
     
-    archive->debug(FILE_DEBUG, "%s archive created.\n", archive->typeString());
+    debug(FILE_DEBUG, "%s archive created.\n", archive->typeString());
     
     return archive;
 }

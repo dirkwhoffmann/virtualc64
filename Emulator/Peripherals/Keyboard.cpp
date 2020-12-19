@@ -99,7 +99,7 @@ Keyboard::press(long nr, i64 duration)
 void
 Keyboard::pressRowCol(u8 row, u8 col, i64 duration)
 {
-    debug(KBD_DEBUG, "pressKey(%d,%d, [%d])\n", row, col, duration);
+    debug(KBD_DEBUG, "pressKey(%d,%d, [%lld])\n", row, col, duration);
 
     assert(row < 8);
     assert(col < 8);
