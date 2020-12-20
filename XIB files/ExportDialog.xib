@@ -55,7 +55,7 @@
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gO7-Tx-iGM" userLabel="Icon">
                         <rect key="frame" x="20" y="344" width="112" height="112"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="disk" id="PEe-EX-z3y"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="disk2" id="PEe-EX-z3y"/>
                     </imageView>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D6F-I8-VNs">
                         <rect key="frame" x="143" y="433" width="346" height="19"/>
@@ -610,6 +610,6 @@ Gw
         </window>
     </objects>
     <resources>
-        <image name="disk" width="500" height="501"/>
+        <image name="disk2" width="474" height="474"/>
     </resources>
 </document>

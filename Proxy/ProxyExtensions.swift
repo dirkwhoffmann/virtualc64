@@ -57,7 +57,7 @@ extension D64FileProxy {
        
     func icon(protected: Bool) -> NSImage {
                         
-        var name = "disk"
+        var name = "disk2"
         if protected { name += "_protected" }
         
         return NSImage.init(named: name)!
