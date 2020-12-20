@@ -27,12 +27,6 @@ FSBlock::type()
     }
 }
 
-FSItemType
-FSBlock::itemType(u32 byte)
-{
-    return FSI_UNKNOWN;
-}
-
 void
 FSBlock::writeBAM(const char *name)
 {
@@ -108,6 +102,129 @@ FSBlock::dump()
     
 }
 
+FSItemType
+FSBlock::itemType(u32 byte)
+{
+    switch (type()) {
+            
+        case FS_BAM_BLOCK:
+            
+            switch (byte) {
+                    
+                case 0x00: return FSI_FIRST_DIR_TRACK;
+                case 0x01: return FSI_FIRST_DIR_SECTOR;
+                case 0x02: return FSI_DOS_VERSION;
+                case 0xA2: return FSI_DISK_ID;
+                case 0xA3: return FSI_DISK_ID;
+                case 0xA5: return FSI_DOS_TYPE;
+                case 0xA6: return FSI_DOS_TYPE;
+            }
+            if (byte >= 0x04 && byte <= 0x8F) return FSI_ALLOCATION_BITS;
+            if (byte >= 0x90 && byte <= 0x9F) return FSI_DISK_NAME;
+
+            return FSI_UNUSED;
+
+        case FS_DIR_BLOCK:
+            
+            if (byte == 0) return FSI_TRACK_LINK;
+            if (byte == 1) return FSI_SECTOR_LINK;
+
+            byte &= 0x1F;
+            
+            switch (byte) {
+                    
+                case 0x02: return FSI_FILE_TYPE;
+                case 0x03: return FSI_FIRST_FILE_TRACK;
+                case 0x04: return FSI_FIRST_FILE_SECTOR;
+                case 0x15: return FSI_FIRST_REL_TRACK;
+                case 0x16: return FSI_FIRST_REL_SECTOR;
+                case 0x17: return FSI_REL_RECORD_LENGTH;
+                case 0x1E: return FSI_FILE_LENGTH_LO;
+                case 0x1F: return FSI_FILE_LENGTH_HI;
+            }
+            
+            if (byte >= 0x05 && byte <= 0x14) return FSI_FILE_NAME;
+            if (byte >= 0x18 && byte <= 0x1D) return FSI_GEOS;
+
+            return FSI_UNUSED;
+            
+        case FS_DATA_BLOCK:
+            
+            if (byte == 0) return FSI_TRACK_LINK;
+            if (byte == 1) return FSI_SECTOR_LINK;
+            
+            return FSI_DATA;
+            
+        default:
+            assert(false);
+    }
+    
+    return FSI_UNKNOWN;
+}
+
+FSError
+FSBlock::check(u32 byte, u8 *expected, bool strict)
+{
+    assert(byte < 256);
+    u8 value = data[byte];
+
+    switch (type()) {
+            
+        case FS_BAM_BLOCK:
+            
+            switch (byte) {
+                    
+                case 0x00: EXPECT_BYTE(18);               break;
+                case 0x01: EXPECT_BYTE(1);                break;
+                case 0x02: EXPECT_BYTE(0x41);             break;
+                case 0xA0:
+                case 0xA1:
+                case 0xA4: if (strict) EXPECT_BYTE(0xA0); break;
+                case 0xA5: EXPECT_BYTE('2');              break;
+                case 0xA6: EXPECT_BYTE('A');              break;
+                case 0xA7:
+                case 0xA8:
+                case 0xA9:
+                case 0xAA: if (strict) EXPECT_BYTE(0xA0); break;
+            }
+            
+            if (strict && byte >= 0xAB && byte <= 0xFF) EXPECT_BYTE(0x00);
+
+            return FS_OK;
+            
+        case FS_DIR_BLOCK:
+            
+            if (byte == 0) EXPECT_TRACK_REF (data[byte + 1]);
+            if (byte == 1) EXPECT_SECTOR_REF(data[byte - 1]);
+                        
+            if (!isZero(data + byte, 0x20)) {
+            
+                switch (byte & 0x1F) {
+                        
+                    case 0x03: EXPECT_TRACK_REF (data[byte + 1]); break;
+                    case 0x04: EXPECT_SECTOR_REF(data[byte - 1]); break;
+                    case 0x15: EXPECT_TRACK_REF (data[byte + 1]); break;
+                    case 0x16: EXPECT_SECTOR_REF(data[byte - 1]); break;
+                    case 0x17: EXPECT_MAX(254);                   break;
+                }
+            }
+            
+            return FS_OK;
+            
+        case FS_DATA_BLOCK:
+            
+            if (byte == 0 && strict) EXPECT_TRACK_REF (data[byte + 1]);
+            if (byte == 1 && strict) EXPECT_SECTOR_REF(data[byte - 1]);
+
+            return FS_OK;
+            
+        default:
+            assert(false);
+    }
+    
+    return FS_OK;
+}
+
 unsigned
 FSBlock::check(bool strict)
 {
@@ -124,12 +241,6 @@ FSBlock::check(bool strict)
     }
     
     return count;
-}
-
-FSError
-FSBlock::check(u32 pos, u8 *expected, bool strict)
-{
-    return FS_OK;
 }
 
 void

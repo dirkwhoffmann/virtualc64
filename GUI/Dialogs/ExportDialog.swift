@@ -84,9 +84,7 @@ class ExportDialog: DialogController {
     //
     
     func setCylinder(_ newValue: Int) {
-        
-        track("cylinderNr = \(cylNr) numCyls = \(numCyls)")
-        
+                
         if let v = volume, newValue != cylNr {
 
             let value = newValue.clamped(1, numCyls)
@@ -381,10 +379,11 @@ class ExportDialog: DialogController {
     func updateTitleText() {
         
         var text = "This disk contains an unrecognized GCR stream"
-        let color = NSColor.textColor
+        var color = NSColor.warningColor
         
         if disk != nil {
             text = "C64 Floppy Disk"
+            color = NSColor.textColor
         }
         
         title.stringValue = text
@@ -393,7 +392,7 @@ class ExportDialog: DialogController {
 
     func updateTrackAndSectorInfo() {
         
-        var text = "This disk contains un unknown track and sector format."
+        var text = "This disk contains un unknown track and sector format"
         var color = NSColor.warningColor
         
         if disk != nil {
@@ -429,10 +428,17 @@ class ExportDialog: DialogController {
     
     func updateFileInfo() {
         
+        var text = ""
+        let color = NSColor.secondaryLabelColor
+
         let num = volume!.numFiles
         let free = volume!.numFreeBlocks
+        
         let files = num == 1 ? "file" : "files"
-        fileInfo.stringValue = "\(num) \(files), \(free) blocks free"
+        text = "\(num) \(files), \(free) blocks free"
+        
+        fileInfo.stringValue = text
+        fileInfo.textColor = color
     }
     
     func updateBlockInfo() {

@@ -62,6 +62,8 @@ FSDeviceDescriptor::speedZone(Track t)
 u32
 FSDeviceDescriptor::numSectors(Track t)
 {
+    if (!isTrackNr(t)) return 0;
+    
     switch (speedZone(t)) {
 
         case 0: return 17;

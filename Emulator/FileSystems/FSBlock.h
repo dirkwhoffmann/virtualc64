@@ -49,9 +49,6 @@ public:
     // Returns the type of this block
     FSBlockType type();
     
-    // Returns the role of a certain byte in this block
-    FSItemType itemType(u32 byte);
-
 
     //
     // Formatting
@@ -76,13 +73,18 @@ public:
     // Integrity checking
     //
 
+public:
+    
+    // Returns the role of a certain byte in this block
+    FSItemType itemType(u32 byte);
+
+    // Checks the integrity of a certain byte in this block
+    FSError check(u32 byte, u8 *expected, bool strict);
+
     // Scans the block data and returns the number of errors
     unsigned check(bool strict);
 
-    // Checks the integrity of a certain byte in this block
-    FSError check(u32 pos, u8 *expected, bool strict);
-  
-    
+      
     //
     // Importing and exporting
     //
@@ -98,5 +100,31 @@ public:
 };
     
 typedef FSBlock* BlockPtr;
+
+
+//
+// Convenience macros used inside the check() methods
+//
+
+typedef FSBlock* BlockPtr;
+
+#define EXPECT_BYTE(exp) { \
+if (value != (exp)) { *expected = (exp); return FS_EXPECTED; } }
+
+#define EXPECT_MIN(min) { \
+if (value < (min)) { *expected = (min); return FS_EXPECTED_MIN; } }
+
+#define EXPECT_MAX(max) { \
+if (value > (max)) { *expected = (max); return FS_EXPECTED_MAX; } }
+
+#define EXPECT_RANGE(min,max) { \
+EXPECT_MIN(min); EXPECT_MAX(max) }
+
+#define EXPECT_TRACK_REF(s) \
+EXPECT_RANGE(0, device.layout.numTracks() + 1)
+
+#define EXPECT_SECTOR_REF(t) { \
+if (u32 num = device.layout.numSectors(t)) EXPECT_RANGE(0,num) }
+// if (u32 num = device.layout.numSectors(t)) EXPECT_RANGE(0,num) else if (strict) EXPECT_BYTE(0) }
 
 #endif

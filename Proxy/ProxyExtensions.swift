@@ -66,6 +66,6 @@ extension D64FileProxy {
     var layoutInfo: String {
 
         let numTracks = numberOfTracks()
-        return "Single sided, single density, \(numTracks) tracks"
+        return "Single sided, single density disk with \(numTracks) tracks"
     }
 }
