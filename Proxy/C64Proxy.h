@@ -665,6 +665,9 @@ struct AnyC64FileWrapper;
 - (NSInteger)numSectors:(NSInteger)track;
 @property (readonly) NSInteger numBlocks;
 
+@property (readonly) NSInteger numFreeBlocks;
+@property (readonly) NSInteger numFiles;
+
 - (NSInteger)cylNr:(NSInteger)t;
 - (NSInteger)headNr:(NSInteger)t;
 - (NSInteger)trackNr:(NSInteger)c head:(NSInteger)h;

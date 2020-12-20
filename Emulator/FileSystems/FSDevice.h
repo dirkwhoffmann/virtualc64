@@ -94,9 +94,12 @@ public:
     u32 getNumSectors(Track track) { return layout.numSectors(track); }
     u32 getNumBlocks() { return layout.numBlocks(); }
 
+    // Returns the number of free blocks
+    u32 numFreeBlocks();
+    
     // Returns the number of stored files
     u32 numFiles() { return (u32)scanDirectory().size(); }
-
+    
     
     //
     // Accessing blocks
@@ -128,8 +131,8 @@ public:
 
     // Checks if a block is marked as free in the allocation bitmap
     bool isFree(Block b);
-    bool isFree(BlockRef r);
     bool isFree(Track t, Sector s);
+    bool isFree(BlockRef ts) { return isFree(ts.t, ts.s); }
 
     // Returns the first or the next free block in the interleaving chain
     BlockRef nextFreeBlock(BlockRef start);
@@ -138,12 +141,15 @@ public:
     // Marks a block as allocated or free
     void markAsAllocated(Block b) { setAllocationBit(b, 0); }
     void markAsAllocated(Track t, Sector s) { setAllocationBit(t, s, 0); }
+    void markAsAllocated(BlockRef ts) { markAsAllocated(ts.t, ts.s); }
     
     void markAsFree(Block b) { setAllocationBit(b, 1); }
     void markAsFree(Track t, Sector s) { setAllocationBit(t, s, 1); }
-    
+    void markAsFree(BlockRef ts) { markAsFree(ts.t, ts.s); }
+
     void setAllocationBit(Block b, bool value);
     void setAllocationBit(Track t, Sector s, bool value);
+    void setAllocationBit(BlockRef ts) { setAllocationBit(ts.t, ts.s); }
 
     // Allocates a certain amount of (interleaved) blocks
     std::vector<BlockRef> allocate(BlockRef ref, u32 n);
@@ -153,8 +159,8 @@ private:
     
     // Locates the allocation bit for a certain block
     FSBlock *locateAllocationBit(Block b, u32 *byte, u32 *bit);
-    FSBlock *locateAllocationBit(BlockRef ref, u32 *byte, u32 *bit);
     FSBlock *locateAllocationBit(Track t, Sector s, u32 *byte, u32 *bit);
+    FSBlock *locateAllocationBit(BlockRef ref, u32 *byte, u32 *bit);
 
     
     //

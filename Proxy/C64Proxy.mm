@@ -987,6 +987,16 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return wrapper->device->getNumBlocks();
 }
 
+- (NSInteger) numFreeBlocks
+{
+    return wrapper->device->numFreeBlocks();
+}
+
+- (NSInteger) numFiles
+{
+    return wrapper->device->numFiles();
+}
+
 - (NSInteger)cylNr:(NSInteger)t
 {
     return (NSInteger)wrapper->device->layout.cylNr((Track)t);

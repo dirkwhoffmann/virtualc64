@@ -136,6 +136,18 @@ FSDevice::printDirectory()
     }
 }
 
+u32
+FSDevice::numFreeBlocks()
+{
+    u32 result = 0;
+    
+    for (size_t i = 0; i < blocks.size(); i++) {
+        if (isFree((Block)i)) result++;
+    }
+    
+    return result;
+}
+
 FSBlockType
 FSDevice::blockType(u32 nr)
 {
@@ -203,6 +215,7 @@ FSDevice::isFree(Block b)
     return GET_BIT(bam->data[byte], bit);
 }
 
+/*
 bool
 FSDevice::isFree(BlockRef ref)
 {
@@ -211,6 +224,7 @@ FSDevice::isFree(BlockRef ref)
     
     return GET_BIT(bam->data[byte], bit);
 }
+*/
 
 bool
 FSDevice::isFree(Track t, Sector s)

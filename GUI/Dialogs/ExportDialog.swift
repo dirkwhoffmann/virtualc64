@@ -13,7 +13,7 @@ class ExportDialog: DialogController {
     @IBOutlet weak var title: NSTextField!
     @IBOutlet weak var layoutInfo: NSTextField!
     @IBOutlet weak var volumeInfo: NSTextField!
-    @IBOutlet weak var bootInfo: NSTextField!
+    @IBOutlet weak var fileInfo: NSTextField!
 
     @IBOutlet weak var disclosureButton: NSButton!
     @IBOutlet weak var previewScrollView: NSScrollView!
@@ -303,7 +303,7 @@ class ExportDialog: DialogController {
         updateTitleText()
         updateTrackAndSectorInfo()
         updateVolumeInfo()
-        updateBootInfo()
+        updateFileInfo()
 
         // Update the disclosure button state
         disclosureButton.state = shrinked ? .off : .on
@@ -427,9 +427,12 @@ class ExportDialog: DialogController {
         volumeInfo.textColor = color
     }
     
-    func updateBootInfo() {
-                
-        bootInfo.stringValue = "XXX files, XXX blocks used, XXX blocks free"
+    func updateFileInfo() {
+        
+        let num = volume!.numFiles
+        let free = volume!.numFreeBlocks
+        let files = num == 1 ? "file" : "files"
+        fileInfo.stringValue = "\(num) \(files), \(free) blocks free"
     }
     
     func updateBlockInfo() {

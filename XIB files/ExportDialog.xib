@@ -11,7 +11,6 @@
                 <outlet property="blockField" destination="COg-a9-gAP" id="FNA-ke-SfE"/>
                 <outlet property="blockStepper" destination="lQw-at-pGh" id="2vg-V0-F6e"/>
                 <outlet property="blockText" destination="wwf-y7-Zbw" id="gSL-qH-ytx"/>
-                <outlet property="bootInfo" destination="SAY-XU-D2H" id="QCm-2f-poq"/>
                 <outlet property="corruptionStepper" destination="3d7-st-hZN" id="MUI-v6-HDM"/>
                 <outlet property="corruptionText" destination="jXg-V5-ZLP" id="V4q-52-a7Y"/>
                 <outlet property="cylinderField" destination="i7n-BG-tgm" id="lLj-sR-g6y"/>
@@ -20,6 +19,7 @@
                 <outlet property="disclosureButton" destination="vgA-eF-JVm" id="zIL-jP-s5S"/>
                 <outlet property="diskIcon" destination="gO7-Tx-iGM" id="CY6-Hp-MNw"/>
                 <outlet property="exportButton" destination="byJ-4E-JOd" id="6hS-Ev-lgd"/>
+                <outlet property="fileInfo" destination="SAY-XU-D2H" id="QCm-2f-poq"/>
                 <outlet property="formatPopup" destination="KrT-lo-eZL" id="zbO-MP-ejM"/>
                 <outlet property="headField" destination="8Cy-CV-Fnm" id="agD-c6-ha1"/>
                 <outlet property="headStepper" destination="Fsc-1O-3ed" id="9ep-tb-Hu5"/>
@@ -170,13 +170,13 @@ Gw
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="15" headerView="aVI-pX-WD8" id="1bQ-ti-kY4">
-                                    <rect key="frame" x="0.0" y="-22" width="564" height="159"/>
+                                    <rect key="frame" x="0.0" y="-22" width="570" height="159"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="1" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="Offset" editable="NO" width="32" minWidth="10" maxWidth="1000" id="6NZ-pX-MGy" userLabel="Offset">
+                                        <tableColumn identifier="Offset" editable="NO" width="30" minWidth="10" maxWidth="1000" id="6NZ-pX-MGy" userLabel="Offset">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -368,7 +368,7 @@ Gw
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="15" width="10" minWidth="10" maxWidth="3.4028234663852886e+38" id="pPY-Oz-38w">
+                                        <tableColumn identifier="15" width="32" minWidth="10" maxWidth="3.4028234663852886e+38" id="pPY-Oz-38w">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="F">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -388,7 +388,7 @@ Gw
                                 </tableView>
                             </subviews>
                         </clipView>
-                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="yXo-Hr-haP">
+                        <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="yXo-Hr-haP">
                             <rect key="frame" x="1" y="172" width="564" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
@@ -397,7 +397,7 @@ Gw
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <tableHeaderView key="headerView" wantsLayer="YES" id="aVI-pX-WD8">
-                            <rect key="frame" x="0.0" y="0.0" width="564" height="28"/>
+                            <rect key="frame" x="0.0" y="0.0" width="570" height="28"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
