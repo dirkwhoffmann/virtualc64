@@ -101,3 +101,17 @@ TAPFile::readFromBuffer(const u8 *buffer, size_t length)
     return true;
 }
 
+/*
+const char *
+TAPFile::description1()
+{
+    switch (TAPversion()) {
+            
+        case 0:  sprintf(str, "TAP type 0 (Original pulse layout)"); break;
+        case 1:  sprintf(str, "TAP type 1 (Advanced pulse layout)"); break;
+        default: sprintf(str, "TAP type %d (Unknown)", TAPversion());
+    }
+    
+    return str;
+}
+*/

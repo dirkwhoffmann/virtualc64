@@ -116,4 +116,26 @@ inline bool isRomRevision(long value)
     return value >= 0 && value <= ROM_CNT;
 }
 
+enum_long(TAPVersion)
+{
+    TAP_ORIGINAL = 0,
+    TAP_ADVANCED = 1
+};
+
+inline bool isTAPVersion(long value)
+{
+    return value >= TAP_ORIGINAL && value <= TAP_ADVANCED;
+}
+
+inline const char* sTAPVersion(TAPVersion type)
+{
+    switch (type) {
+            
+        case TAP_ORIGINAL: return "TAP_ORIGINAL";
+        case TAP_ADVANCED: return "TAP_ADVANCED";
+            
+        default: assert(false);
+    }
+}
+
 #endif

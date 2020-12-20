@@ -21,7 +21,7 @@ private:
     
     // File pointer (offset into the data array)
     int fp;
-    
+        
 public:
     
     //
@@ -53,13 +53,12 @@ public:
     bool hasSameType(const char *filename) override { return isTAPFile(filename); }
     bool readFromBuffer(const u8 *buffer, size_t length) override;
     
-    
     //
     // Retrieving tape information
     //
     
     // Returns the TAP version (0 = original layout, 1 = updated layout)
-    u8 TAPversion() { return data[0x000C]; }
+    TAPVersion version() { return (TAPVersion)data[0x000C]; }
     
     // Returns the beginning of the data area
     u8 *getData() { return data + 0x14; }

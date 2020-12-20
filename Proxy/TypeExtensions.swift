@@ -12,8 +12,10 @@ extension FSVolumeType {
     var description: String {
         
         switch self {
+        
         case .NODOS:    return "No File System"
         case .CBM_DOS:  return "Commodore File System (CBM DOS 2.6)"
+            
         default:        fatalError()
         }
     }
@@ -24,10 +26,12 @@ extension FSBlockType {
     var description: String {
         
         switch self {
+        
         case .UNKNOWN_BLOCK:  return "Unknown block type"
         case .BAM_BLOCK:      return "Block Allocation Map (BAM)"
         case .DIR_BLOCK:      return "Directory Block"
         case .DATA_BLOCK:     return "Data Block"
+            
         default:              fatalError()
         }
     }
@@ -38,6 +42,7 @@ extension FSItemType {
     var description: String {
         
         switch self {
+        
         case .FSI_UNKNOWN:           return "Unknown"
         case .FSI_UNUSED:            return "Unused"
         case .FSI_DOS_VERSION:       return "DOS version"
@@ -72,6 +77,7 @@ extension FSError {
     func description(expected exp: Int = 0) -> String {
         
         switch self {
+        
         case .OK:
             return ""
         case .EXPECTED:
@@ -80,9 +86,24 @@ extension FSError {
             return String.init(format: "Expected a value greater or equal %d", exp)
         case .EXPECTED_MAX:
             return String.init(format: "Expected a value less or equal %d", exp)
+
         default:
             track("\(self)")
             fatalError()
+        }
+    }
+}
+
+extension TAPVersion {
+    
+    var description: String {
+        
+        switch self {
+        
+        case .ORIGINAL: return "TAP type 0 (Original pulse layout)"
+        case .ADVANCED: return "TAP type 1 (Advanced pulse layout)"
+            
+        default: return "TAP type \(self.rawValue) (Unknown)"
         }
     }
 }

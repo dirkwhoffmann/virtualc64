@@ -39,7 +39,7 @@ Datasette::insertTape(TAPFile *a)
     suspend();
     
     size = a->getDataSize();
-    type = a->TAPversion();
+    type = a->version();
     
     trace(TAP_DEBUG, "Inserting tape (size = %llu, type = %d)...\n", size, type);
     

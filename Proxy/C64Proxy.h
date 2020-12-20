@@ -862,7 +862,7 @@ struct AnyC64FileWrapper;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)path;
 
-- (NSInteger)tapVersion;
+@property (readonly) TAPVersion version;
 
 @end
 

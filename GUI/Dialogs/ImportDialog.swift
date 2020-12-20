@@ -83,12 +83,8 @@ class ImportDialog: DialogController {
             
             media = .tape
             let tap = myDocument.attachment as! TAPFileProxy
-            let version = tap.tapVersion()
-            let versionName = version == 0 ? "Original" : "Extended"
-            track("TAPFileProxy")
-            titleString = "TAP File"
-            subtitle1String = "A representation of a C64 cassette"
-            subtitle2String = "TAP type \(version): \(versionName) layout"
+            titleString = "Commodore Cassette Tape"
+            subtitle1String = tap.version.description
 
         case is T64FileProxy, is P00FileProxy, is PRGFileProxy, is D64FileProxy:
             
@@ -226,7 +222,7 @@ class ImportDialog: DialogController {
 
         if empty {
 
-            setHeight(212)
+            setHeight(222)
             
         } else {
             

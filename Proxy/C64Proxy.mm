@@ -1683,9 +1683,9 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return (TAPFile *)wrapper->file;
 }
-- (NSInteger)tapVersion
+- (TAPVersion)version
 {
-    return [self unwrap]->TAPversion();
+    return [self unwrap]->version();
 }
 
 @end
