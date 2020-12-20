@@ -94,9 +94,10 @@ public:
     u32 getNumSectors(Track track) { return layout.numSectors(track); }
     u32 getNumBlocks() { return layout.numBlocks(); }
 
-    // Returns the number of free blocks
+    // Returns the number of free or used blocks
     u32 numFreeBlocks();
-    
+    u32 numUsedBlocks();
+
     // Returns the number of stored files
     u32 numFiles() { return (u32)scanDirectory().size(); }
     

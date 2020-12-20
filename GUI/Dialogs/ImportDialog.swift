@@ -89,7 +89,24 @@ class ImportDialog: DialogController {
             titleString = "TAP File"
             subtitle1String = "A representation of a C64 cassette"
             subtitle2String = "TAP type \(version): \(versionName) layout"
+
+        case is T64FileProxy, is P00FileProxy, is PRGFileProxy, is D64FileProxy:
             
+            let volume = FSDeviceProxy.make(withArchive: myDocument.attachment as? AnyArchiveProxy)
+            let numTracks = volume?.numTracks ?? 0
+            
+            media = .archive
+            track("ArchiveFileProxy")
+            titleString = "Commodore 64 Floppy Disk"
+            subtitle1String = "Single sided, single density disk with \(numTracks) tracks"
+            subtitle2String = volume!.dos.description
+            
+            let num = volume!.numFiles
+            let free = volume!.numUsedBlocks
+            let files = num == 1 ? "file" : "files"
+            subtitle3String = "\(num) \(files), \(free) blocks used"
+                        
+            /*
         case _ as T64FileProxy:
             
             media = .archive
@@ -111,19 +128,14 @@ class ImportDialog: DialogController {
             titleString = "PRG File"
             subtitle1String = "Binary representation of a single C64 program"
             
-        case _ as PRGFolderProxy:
-            media = .directory
-            track("PRGFolderProxy")
-            titleString = "Disk from a file system folder"
-            subtitle1String = "Comprises all PRG files found in this directory"
-
         case _ as D64FileProxy:
             
             media = .archive
             track("D64FileProxy")
             titleString = "D64 File"
             subtitle1String = "A byte-accurate image of a C64 diskette"
-            
+            */
+        
             // REMOVE ASAP
             /*
             var err: FSError = .OK
@@ -138,6 +150,12 @@ class ImportDialog: DialogController {
             // let device = FSDeviceProxy.make(withD64: myDocument.attachment as? D64FileProxy)
             // let device = FSDeviceProxy.make(withArchive: myDocument.attachment as? AnyArchiveProxy)
             
+        case _ as PRGFolderProxy:
+            media = .directory
+            track("PRGFolderProxy")
+            titleString = "Disk from a file system folder"
+            subtitle1String = "Comprises all PRG files found in this directory"
+
         case _ as G64FileProxy:
             
             media = .disk
@@ -218,8 +236,6 @@ class ImportDialog: DialogController {
                 self.carousel.scrollToItem(at: self.centerItem, animated: false)
             }
         }
-        
-        track("(3)")
     }
     
     func setUpFlashItems() -> Int {
@@ -273,7 +289,7 @@ class ImportDialog: DialogController {
         
         switch media {
         case .archive, .disk:
-            icon.image = NSImage.init(named: writeProtect ? "disk_protected" : "disk")
+            icon.image = NSImage.init(named: writeProtect ? "disk2_protected" : "disk2")
         case .directory:
             icon.image = NSImage.init(named: "NSFolder")
         case .cartridge:

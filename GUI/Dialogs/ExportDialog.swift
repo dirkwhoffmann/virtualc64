@@ -382,7 +382,7 @@ class ExportDialog: DialogController {
         var color = NSColor.warningColor
         
         if disk != nil {
-            text = "C64 Floppy Disk"
+            text = "Commodore 64 Floppy Disk"
             color = NSColor.textColor
         }
         
@@ -432,10 +432,10 @@ class ExportDialog: DialogController {
         let color = NSColor.secondaryLabelColor
 
         let num = volume!.numFiles
-        let free = volume!.numFreeBlocks
+        let free = volume!.numUsedBlocks
         
         let files = num == 1 ? "file" : "files"
-        text = "\(num) \(files), \(free) blocks free"
+        text = "\(num) \(files), \(free) blocks used"
         
         fileInfo.stringValue = text
         fileInfo.textColor = color

@@ -992,6 +992,11 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return wrapper->device->numFreeBlocks();
 }
 
+- (NSInteger) numUsedBlocks
+{
+    return wrapper->device->numUsedBlocks();
+}
+
 - (NSInteger) numFiles
 {
     return wrapper->device->numFiles();

@@ -666,6 +666,7 @@ struct AnyC64FileWrapper;
 @property (readonly) NSInteger numBlocks;
 
 @property (readonly) NSInteger numFreeBlocks;
+@property (readonly) NSInteger numUsedBlocks;
 @property (readonly) NSInteger numFiles;
 
 - (NSInteger)cylNr:(NSInteger)t;

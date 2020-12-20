@@ -148,6 +148,18 @@ FSDevice::numFreeBlocks()
     return result;
 }
 
+u32
+FSDevice::numUsedBlocks()
+{
+    u32 result = 0;
+    
+    for (size_t i = 0; i < blocks.size(); i++) {
+        if (!isFree((Block)i)) result++;
+    }
+    
+    return result;
+}
+
 FSBlockType
 FSDevice::blockType(u32 nr)
 {
