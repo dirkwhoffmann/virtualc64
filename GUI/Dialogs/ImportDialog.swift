@@ -77,12 +77,16 @@ class ImportDialog: DialogController {
             
             track("CRTFileProxy")
             titleString = "Commodore Expansion Port Module"
-            subtitle1String = "\(type.description)"
+
             if type == .CRT_NORMAL {
-                let packages = cnt == 1 ? "Package" : "Packages"
-                subtitle1String += " with \(cnt) Chip \(packages)" }
-            subtitle2String = "Exrom Line: \(crt.initialExromLine) "
-            subtitle2String += "Game Line: \(crt.initialGameLine)"
+                let packages = cnt == 1 ? "chip package" : "chip packages"
+                subtitle1String = "Standard cartridge with \(cnt) \(packages)"
+            } else {
+                subtitle1String = "\(type.description)"
+            }
+            
+            subtitle2String = "Exrom line: \(crt.initialExromLine), "
+            subtitle2String += "Game line: \(crt.initialGameLine)"
                         
             if !crt.isSupported {
                 subtitle3String = "This cartridge is not supported by the emulator yet"

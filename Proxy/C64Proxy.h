@@ -831,9 +831,6 @@ struct AnyC64FileWrapper;
 @interface CRTFileProxy : AnyFileProxy {
 }
 
-+ (CartridgeType)typeOfCRTBuffer:(const void *)buffer length:(NSInteger)length;
-+ (BOOL)isSupportedCRTBuffer:(const void *)buffer length:(NSInteger)length; // DEPRECATED
-+ (BOOL)isUnsupportedCRTBuffer:(const void *)buffer length:(NSInteger)length; // DEPRECATED
 + (BOOL)isCRTFile:(NSString *)path;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)path;

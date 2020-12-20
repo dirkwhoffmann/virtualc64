@@ -1580,21 +1580,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @implementation CRTFileProxy
 
-+ (CartridgeType) typeOfCRTBuffer:(const void *)buffer length:(NSInteger)length
-{
-    return CRTFile::typeOfCRTBuffer((u8 *)buffer, length);
-}
-
-+ (BOOL) isSupportedCRTBuffer:(const void *)buffer length:(NSInteger)length
-{
-    return CRTFile::isSupportedCRTBuffer((u8 *)buffer, length);
-}
-
-+ (BOOL) isUnsupportedCRTBuffer:(const void *)buffer length:(NSInteger)length
-{
-    return CRTFile::isUnsupportedCRTBuffer((u8 *)buffer, length);
-}
-
 + (BOOL) isCRTFile:(NSString *)path
 {
     return CRTFile::isCRTFile([path UTF8String]);
