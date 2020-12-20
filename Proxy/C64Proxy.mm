@@ -987,6 +987,46 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return wrapper->device->getNumBlocks();
 }
 
+- (NSInteger)cylNr:(NSInteger)t
+{
+    return (NSInteger)wrapper->device->layout.cylNr((Track)t);
+}
+
+- (NSInteger)headNr:(NSInteger)t
+{
+    return (NSInteger)wrapper->device->layout.headNr((Track)t);
+}
+
+- (NSInteger)trackNr:(NSInteger)c head:(NSInteger)h
+{
+    return (NSInteger)wrapper->device->layout.trackNr((Cylinder)c, (Head)h);
+}
+
+- (NSInteger)trackNr:(NSInteger)b
+{
+    return (NSInteger)wrapper->device->layout.trackNr((Block)b);
+}
+
+- (NSInteger)sectorNr:(NSInteger)b
+{
+    return (NSInteger)wrapper->device->layout.sectorNr((Block)b);
+}
+
+- (NSInteger)blockNr:(NSInteger)c head:(NSInteger)h sector:(NSInteger)s
+{
+    return (NSInteger)wrapper->device->layout.blockNr((Cylinder)c, (Head)h, (Sector)s);
+}
+
+- (NSInteger)blockNr:(NSInteger)t sector:(NSInteger)s
+{
+    return (NSInteger)wrapper->device->layout.blockNr((Track)t, (Sector)s);
+}
+
+- (NSInteger)blockNr:(BlockRef)ts
+{
+    return (NSInteger)wrapper->device->layout.blockNr(ts);
+}
+
 - (FSBlockType) blockType:(NSInteger)blockNr
 {
     return wrapper->device->blockType((u32)blockNr);

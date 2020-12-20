@@ -86,23 +86,73 @@ FSDeviceDescriptor::numBlocks()
     return result;
 }
 
+Cylinder
+FSDeviceDescriptor::cylNr(Track t)
+{
+    return t <= numCyls ? t : t - numCyls;
+}
+
+Head
+FSDeviceDescriptor::headNr(Track t)
+{
+    return t <= numCyls ? 0 : 1;
+}
+
+Track
+FSDeviceDescriptor::trackNr(Cylinder c, Head h)
+{
+    return c + h * numTracks();
+}
+
+Track
+FSDeviceDescriptor::trackNr(Block b)
+{
+    Track t; Sector s;
+    translateBlockNr(b, &t, &s);
+    return t;
+}
+
+Sector
+FSDeviceDescriptor::sectorNr(Block b)
+{
+    Track t; Sector s;
+    translateBlockNr(b, &t, &s);
+    return s;
+}
+
+Block
+FSDeviceDescriptor::blockNr(Track t, Sector s)
+{
+    Block b;
+    translateBlockNr(&b, t, s);
+    return b;
+}
+
+Block
+FSDeviceDescriptor::blockNr(Cylinder c, Head h, Sector s)
+{
+    Block b;
+    translateBlockNr(&b, c, h, s);
+    return b;
+}
+
+Block
+FSDeviceDescriptor::blockNr(BlockRef ts)
+{
+    return blockNr(ts.t, ts.s);
+}
+
 void
 FSDeviceDescriptor::translateBlockNr(Block b, Track *t, Sector *s)
 {
     for (Track i = 1; i <= numTracks(); i++) {
 
         u32 num = numSectors(i);
-        
-        if (b < num) {
-            *t = i;
-            *s = b;
-            return;
-        }
-        
+        if (b < num) { *t = i; *s = b; return; }
         b -= num;
     }
     
-    *t = *s = -1;
+    *t = *s = 0; // Invalid
 }
 
 void
@@ -111,9 +161,7 @@ FSDeviceDescriptor::translateBlockNr(Block b, Cylinder *c, Head *h, Sector *s)
     Track t;
     translateBlockNr(b, &t, s);
     
-    if (t == (Track)(-1)) {
-        *h = -1; *c = -1;
-    } else if (t <= numCyls) {
+    if (t <= numCyls) {
         *h = 0; *c = t;
     } else {
         *h = 1; *c = t - numCyls;

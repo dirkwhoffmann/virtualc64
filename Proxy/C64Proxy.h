@@ -665,6 +665,15 @@ struct AnyC64FileWrapper;
 - (NSInteger)numSectors:(NSInteger)track;
 @property (readonly) NSInteger numBlocks;
 
+- (NSInteger)cylNr:(NSInteger)t;
+- (NSInteger)headNr:(NSInteger)t;
+- (NSInteger)trackNr:(NSInteger)c head:(NSInteger)h;
+- (NSInteger)trackNr:(NSInteger)b;
+- (NSInteger)sectorNr:(NSInteger)b;
+- (NSInteger)blockNr:(NSInteger)c head:(NSInteger)h sector:(NSInteger)s;
+- (NSInteger)blockNr:(NSInteger)t sector:(NSInteger)s;
+- (NSInteger)blockNr:(BlockRef)ts;
+
 - (FSBlockType)blockType:(NSInteger)blockNr;
 - (FSItemType)itemType:(NSInteger)blockNr pos:(NSInteger)pos;
 - (FSErrorReport)check:(BOOL)strict;

@@ -27,6 +27,7 @@
                 <outlet property="info1" destination="e6c-tI-USp" id="bTd-kd-GFr"/>
                 <outlet property="info2" destination="Rsa-bf-YBz" id="vc1-Dp-4rs"/>
                 <outlet property="layoutInfo" destination="d5M-2n-chd" id="iis-xw-GJW"/>
+                <outlet property="previewScrollView" destination="k7e-RB-lW9" id="DLI-0P-cZ7"/>
                 <outlet property="previewTable" destination="1bQ-ti-kY4" id="Bae-yT-cpl"/>
                 <outlet property="sectorField" destination="Jq5-n5-P2v" id="MjX-TX-wZI"/>
                 <outlet property="sectorStepper" destination="Xpc-lz-b03" id="EhQ-24-Zde"/>
@@ -37,6 +38,7 @@
                 <outlet property="trackStepper" destination="nL9-tW-JOO" id="qie-AB-dJF"/>
                 <outlet property="trackText" destination="pXe-Ik-Tbv" id="R3a-dW-doM"/>
                 <outlet property="volumeInfo" destination="ehB-S4-dRg" id="zZ3-DE-eiR"/>
+                <outlet property="window" destination="QvC-M9-y7g" id="fV4-kA-1Zm"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -366,7 +368,7 @@ Gw
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="15" width="24" minWidth="10" maxWidth="3.4028234663852886e+38" id="pPY-Oz-38w">
+                                        <tableColumn identifier="15" width="10" minWidth="10" maxWidth="3.4028234663852886e+38" id="pPY-Oz-38w">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="F">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -387,7 +389,7 @@ Gw
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="yXo-Hr-haP">
-                            <rect key="frame" x="1" y="186" width="564" height="16"/>
+                            <rect key="frame" x="1" y="172" width="564" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="kGp-Kp-f8z">

@@ -72,13 +72,11 @@ class ExportDialog: DialogController {
     var numBlocks: Int { return volume?.numBlocks ?? 0 }
     
     // Block preview
-    var cylinderNr = 0
+    var cylNr = 1
     var headNr = 0
-    var trackNr = 0
+    var trackNr = 1
     var sectorNr = 0
     var blockNr = 0
-    
-    // var sectorData: [String] = []
     let bytesPerRow = 16
     
     //
@@ -87,13 +85,16 @@ class ExportDialog: DialogController {
     
     func setCylinder(_ newValue: Int) {
         
-        if newValue != cylinderNr {
+        track("cylinderNr = \(cylNr) numCyls = \(numCyls)")
+        
+        if let v = volume, newValue != cylNr {
 
-            let value = newValue.clamped(0, numCyls - 1)
+            let value = newValue.clamped(1, numCyls)
 
-            cylinderNr = value
-            trackNr    = cylinderNr * 2 + headNr
-            blockNr    = trackNr * numSectors + sectorNr
+            cylNr    = value
+            trackNr  = v.trackNr(cylNr, head: headNr)
+            sectorNr = sectorNr.clamped(0, numSectors - 1)
+            blockNr  = v.blockNr(trackNr, sector: sectorNr)
             
             selection = nil
             update()
@@ -102,14 +103,15 @@ class ExportDialog: DialogController {
     
     func setHead(_ newValue: Int) {
         
-        if newValue != headNr {
+        if let v = volume, newValue != headNr {
                         
             let value = newValue.clamped(0, numSides - 1)
 
-            headNr     = value
-            trackNr    = cylinderNr * 2 + headNr
-            blockNr    = trackNr * numSectors + sectorNr
-            
+            headNr   = value
+            trackNr  = v.trackNr(blockNr)
+            sectorNr = sectorNr.clamped(0, numSectors - 1)
+            blockNr  = v.blockNr(trackNr, sector: sectorNr)
+
             selection = nil
             update()
         }
@@ -117,14 +119,15 @@ class ExportDialog: DialogController {
     
     func setTrack(_ newValue: Int) {
         
-        if newValue != trackNr {
+        if let v = volume, newValue != trackNr {
                    
-            let value = newValue.clamped(0, numTracks - 1)
+            let value = newValue.clamped(1, numTracks)
             
-            trackNr    = value
-            cylinderNr = trackNr / 2
-            headNr     = trackNr % 2
-            blockNr    = trackNr * numSectors + sectorNr
+            trackNr  = value
+            sectorNr = sectorNr.clamped(0, numSectors - 1)
+            cylNr    = v.cylNr(trackNr)
+            headNr   = v.headNr(trackNr)
+            blockNr  = v.blockNr(trackNr, sector: sectorNr)
 
             selection = nil
             update()
@@ -133,12 +136,12 @@ class ExportDialog: DialogController {
 
     func setSector(_ newValue: Int) {
         
-        if newValue != sectorNr {
+        if let v = volume, newValue != sectorNr {
                   
             let value = newValue.clamped(0, numSectors - 1)
             
-            sectorNr   = value
-            blockNr    = trackNr * numSectors + sectorNr
+            sectorNr = value
+            blockNr  = v.blockNr(trackNr, sector: sectorNr)
             
             selection = nil
             update()
@@ -147,15 +150,15 @@ class ExportDialog: DialogController {
 
     func setBlock(_ newValue: Int) {
         
-        if newValue != blockNr {
+        if let v = volume, newValue != blockNr {
                         
             let value = newValue.clamped(0, numBlocks - 1)
 
-            blockNr    = value
-            trackNr    = blockNr / numSectors
-            sectorNr   = blockNr % numSectors
-            cylinderNr = trackNr / 2
-            headNr     = trackNr % 2
+            blockNr  = value
+            trackNr  = v.trackNr(blockNr)
+            sectorNr = v.sectorNr(blockNr)
+            cylNr    = v.cylNr(trackNr)
+            headNr   = v.headNr(trackNr)
             
             selection = nil
             update()
@@ -181,7 +184,7 @@ class ExportDialog: DialogController {
     // Starting up
     //
     
-    func showSheet(forDrive nr: DriveID) {
+    func showSheet(forDrive nr: DriveID, completionHandler handler:(() -> Void)? = nil) {
         
         track()
         
@@ -196,15 +199,17 @@ class ExportDialog: DialogController {
         // REMOVE ASAP
         volume?.printDirectory()
                         
-        super.showSheet()
+        super.showSheet(completionHandler: handler)
     }
-    
+
+    /*
     func showSheet(forVolume vol: FSDeviceProxy) {
         
         volume = vol
         super.showSheet()
     }
-        
+    */
+    
     override public func awakeFromNib() {
         
         track()
@@ -277,7 +282,7 @@ class ExportDialog: DialogController {
         
         // Force the preview table to appear at the correct vertical position
         var r = previewScrollView.frame
-        r.origin.y = 82
+        r.origin.y = 96
         previewScrollView.frame = r
 
         exportButton.keyEquivalent = shrinked ? "\r" : ""
@@ -323,8 +328,8 @@ class ExportDialog: DialogController {
         if shrinked { return }
                 
         // Update all elements
-        cylinderField.stringValue      = String.init(format: "%d", cylinderNr)
-        cylinderStepper.integerValue   = cylinderNr
+        cylinderField.stringValue      = String.init(format: "%d", cylNr)
+        cylinderStepper.integerValue   = cylNr
         headField.stringValue          = String.init(format: "%d", headNr)
         headStepper.integerValue       = headNr
         trackField.stringValue         = String.init(format: "%d", trackNr)
@@ -678,7 +683,7 @@ extension ExportDialog: NSTableViewDataSource {
         
     func numberOfRows(in tableView: NSTableView) -> Int {
         
-        return 512 / bytesPerRow
+        return 256 / bytesPerRow
     }
     
     func tableView(_ tableView: NSTableView,

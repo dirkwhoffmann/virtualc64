@@ -21,12 +21,14 @@
 class FSDevice : C64Object {
     
     friend class FSBlock;
-
-    // Layout descriptor for this device
-    FSDeviceDescriptor layout;
     
     // The block storage
     std::vector<BlockPtr> blocks;
+
+public:
+    
+    // Layout descriptor for this device
+    FSDeviceDescriptor layout;
 
     
     //
@@ -81,7 +83,7 @@ public:
     //
 
 public:
-
+    
     // Returns the DOS version of this file system
     FSVolumeType dos() { return layout.dos; }
     
@@ -118,10 +120,6 @@ public:
     FSBlock *nextBlockPtr(Block b);
     FSBlock *nextBlockPtr(Track t, Sector s);
     FSBlock *nextBlockPtr(FSBlock *ptr);
-
-    // Writes a byte to a block (returns true on success)
-    // bool writeByteToSector(u8 byte, Block *b, u8 *offset);
-    bool writeByte(u8 byte, Track *t, Sector *s, u32 *offset);
 
     
     //
