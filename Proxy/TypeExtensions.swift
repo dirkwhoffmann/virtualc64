@@ -94,6 +94,78 @@ extension FSError {
     }
 }
 
+extension CartridgeType {
+    
+    var description: String {
+        
+        switch self {
+        case .CRT_NORMAL: return "Standard Cartridge"
+        case .CRT_ACTION_REPLAY: return "Action Replay Cartridge"
+        case .CRT_KCS_POWER: return "KCS Power Cartridge"
+        case .CRT_FINAL_III: return "Final Cartridge III"
+        case .CRT_SIMONS_BASIC: return "Simons Basic Cartridge"
+        case .CRT_OCEAN: return "Ocean Cartridge"
+        case .CRT_EXPERT: return "Expert Cartridge"
+        case .CRT_FUNPLAY: return "Fun Play Cartridge"
+        case .CRT_SUPER_GAMES: return "Super Games Cartridge"
+        case .CRT_ATOMIC_POWER: return "Atomic Power Cartridge"
+        case .CRT_EPYX_FASTLOAD: return "Epyx Fastload Cartridge"
+        case .CRT_WESTERMANN: return "Westermann Cartridge"
+        case .CRT_REX: return "REX Cartridge"
+        case .CRT_FINAL_I: return "Final Cartridge I"
+        case .CRT_MAGIC_FORMEL: return "Magic Formel Cartridge"
+        case .CRT_GAME_SYSTEM_SYSTEM_3: return "Game Cartridge System 3"
+        case .CRT_WARPSPEED: return "WarpSpeed Cartridge"
+        case .CRT_DINAMIC: return "Dinamic Cartridge"
+        case .CRT_ZAXXON: return "Zaxxon Cartridge (SEGA)"
+        case .CRT_MAGIC_DESK: return "Magic Desk Cartridge"
+        case .CRT_SUPER_SNAPSHOT_V5: return "Super Snapshot Cartridge"
+        case .CRT_COMAL80: return "Comal 80 Cartridge"
+        case .CRT_STRUCTURED_BASIC: return "Structured Basic Cartridge"
+        case .CRT_ROSS: return "Ross Cartridge"
+        case .CRT_DELA_EP64: return "Dela EP64 Cartridge"
+        case .CRT_DELA_EP7x8: return "Dela EP7x8 Cartridge"
+        case .CRT_DELA_EP256: return "Dela EP256 Cartridge"
+        case .CRT_REX_EP256: return "Rex EP256 Cartridge"
+        case .CRT_MIKRO_ASS: return "Mikro Assembler Cartridge"
+        case .CRT_FINAL_PLUS: return "Final Plus Cartridge"
+        case .CRT_ACTION_REPLAY4: return "Action replay 4 Cartridge"
+        case .CRT_STARDOS: return "Stardos Cartridge"
+        case .CRT_EASYFLASH: return "EasyFlash Cartridge"
+        case .CRT_EASYFLASH_XBANK: return "EasyFlash (XBank)"
+        case .CRT_CAPTURE: return "Capture Cartridge"
+        case .CRT_ACTION_REPLAY3: return "Action Replay Cartridge 3"
+        case .CRT_RETRO_REPLAY: return "Metro Replay Cartridge"
+        case .CRT_MMC64: return "MMC 64 Cartridge"
+        case .CRT_MMC_REPLAY: return "MMC Replay Cartridge"
+        case .CRT_IDE64: return "IDE 64 Cartridge"
+        case .CRT_SUPER_SNAPSHOT: return "Super Snapshot Cartridge"
+        case .CRT_IEEE488: return "IEEE 488 Cartridge"
+        case .CRT_GAME_KILLER: return "Game Killer Cartridge"
+        case .CRT_P64: return "P64 Cartridge"
+        case .CRT_EXOS: return "Exos Cartridge"
+        case .CRT_FREEZE_FRAME: return "Freeze Frame Cartridge"
+        case .CRT_FREEZE_MACHINE: return "Freeze Machine Cartridge"
+        case .CRT_SNAPSHOT64: return "Snapshot 64 Cartridge"
+        case .CRT_SUPER_EXPLODE_V5: return "Super Explode V5 Cartridge"
+        case .CRT_MAGIC_VOICE: return "Magic Voice Cartridge"
+        case .CRT_ACTION_REPLAY2: return "Action Replay Cartridge 2"
+        case .CRT_MACH5: return "Mach 5 Cartridge"
+        case .CRT_DIASHOW_MAKER: return "Diashow Maker Cartridge"
+        case .CRT_PAGEFOX: return "Pagefox Cartridge"
+        case .CRT_KINGSOFT: return "Kingsoft Cartridge"
+        case .CRT_SILVERROCK_128: return "Silverrock 128"
+        case .CRT_FORMEL64: return "Formel 64 Cartridge"
+        case .CRT_RGCD: return "RGCD Cartridge"
+        case .CRT_RRNETMK3: return "RRNETMK3 Cartridge"
+        case .CRT_EASYCALC: return "Easy Calc Cartridge"
+        case .CRT_GMOD2: return "GMOD 2 Cartridge"
+            
+        default: return "TAP type \(self.rawValue) (Unknown)"
+        }
+    }
+}
+            
 extension TAPVersion {
     
     var description: String {

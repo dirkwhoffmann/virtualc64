@@ -71,13 +71,11 @@ class ImportDialog: DialogController {
             
             media = .cartridge
             let crt = myDocument.attachment as! CRTFileProxy
-            let type = crt.cartridgeType().rawValue
-            let typeName = crt.cartridgeTypeName()!
+            let type = crt.cartridgeType()
             
             track("CRTFileProxy")
-            titleString = "CRT File"
-            subtitle1String = "A cartridge for the C64 expansion port"
-            subtitle2String = "CRT type \(type): \(typeName)"
+            titleString = "Commodore Expansion Port Module"
+            subtitle1String = "\(type.description)"
             
         case _ as TAPFileProxy:
             
@@ -204,17 +202,25 @@ class ImportDialog: DialogController {
         case .archive, .disk, .directory:
             checkbox.title = "Write protect"
             drive8.isEnabled = connected8
+            drive8.keyEquivalent = "\r"
+            drive8.isHidden = false
             drive9.isEnabled = connected9
+            drive9.keyEquivalent = ""
+            drive9.isHidden = false
 
         case .tape:
             checkbox.title = "Auto load"
-            drive8.title = "Insert"
-            drive9.isHidden = true
+            drive8.isHidden = true
+            drive9.title = "Insert"
+            drive9.isHidden = false
+            drive9.keyEquivalent = "\r"
 
         case .cartridge:
             checkbox.isHidden = true
-            drive8.title = "Attach"
-            drive9.isHidden = true
+            drive8.isHidden = true
+            drive9.title = "Attach"
+            drive9.isHidden = false
+            drive9.keyEquivalent = "\r"
 
         default:
             fatalError()

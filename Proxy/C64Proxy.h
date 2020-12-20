@@ -832,7 +832,7 @@ struct AnyC64FileWrapper;
 }
 
 + (CartridgeType)typeOfCRTBuffer:(const void *)buffer length:(NSInteger)length;
-+ (NSString *)typeNameOfCRTBuffer:(const void *)buffer length:(NSInteger)length;
+// + (NSString *)typeNameOfCRTBuffer:(const void *)buffer length:(NSInteger)length;
 + (BOOL)isSupportedCRTBuffer:(const void *)buffer length:(NSInteger)length;
 + (BOOL)isUnsupportedCRTBuffer:(const void *)buffer length:(NSInteger)length;
 + (BOOL)isCRTFile:(NSString *)path;
@@ -840,7 +840,7 @@ struct AnyC64FileWrapper;
 + (instancetype)makeWithFile:(NSString *)path;
  
 - (CartridgeType)cartridgeType;
-- (NSString *)cartridgeTypeName;
+// - (NSString *)cartridgeTypeName;
 - (NSInteger)initialExromLine;
 - (NSInteger)initialGameLine;
 - (NSInteger)chipCount;

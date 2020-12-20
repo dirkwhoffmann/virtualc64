@@ -27,12 +27,14 @@ CRTFile::typeOfCRTBuffer(const u8 *buffer, size_t length)
     return (CartridgeType)LO_HI(buffer[0x17], buffer[0x16]);
 }
 
+/*
 const char *
 CRTFile::typeNameOfCRTBuffer(const u8 *buffer, size_t length)
 {
     CartridgeType type = typeOfCRTBuffer(buffer, length);
     return CRTFile::cartridgeTypeName(type);
 }
+*/
 
 bool
 CRTFile::isSupportedCRTBuffer(const u8 *buffer, size_t length)
@@ -65,12 +67,13 @@ CRTFile::isCRTFile(const char *path)
     return true;
 }
 
+/*
 const char *
 CRTFile::cartridgeTypeName(CartridgeType type)
 {
     switch (type) {
             
-        case CRT_NORMAL: return "Normal cartridge";
+        case CRT_NORMAL: return "Standard cartridge";
         case CRT_ACTION_REPLAY: return "Action Replay";
         case CRT_KCS_POWER: return "KCS Power";
         case CRT_FINAL_III: return "Final Cartridge III";
@@ -135,6 +138,7 @@ CRTFile::cartridgeTypeName(CartridgeType type)
         default: return "";
     }
 }
+*/
 
 CRTFile::CRTFile()
 {
@@ -237,11 +241,13 @@ CRTFile::cartridgeType() {
     return CartridgeType(type);
 }
 
+/*
 const char *
 CRTFile::cartridgeTypeName()
 {
     return cartridgeTypeName(cartridgeType());
 }
+*/
 
 bool
 CRTFile::repair()

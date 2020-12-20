@@ -1584,11 +1584,13 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return CRTFile::typeOfCRTBuffer((u8 *)buffer, length);
 }
+/*
 + (NSString *) typeNameOfCRTBuffer:(const void *)buffer length:(NSInteger)length
 {
     const char *str = CRTFile::typeNameOfCRTBuffer((u8 *)buffer, length);
     return [NSString stringWithUTF8String: str];
 }
+*/
 + (BOOL) isSupportedCRTBuffer:(const void *)buffer length:(NSInteger)length
 {
     return CRTFile::isSupportedCRTBuffer((u8 *)buffer, length);
@@ -1624,10 +1626,12 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return [self unwrap]->cartridgeType();
 }
+/*
 - (NSString *)cartridgeTypeName
 {
     return [NSString stringWithUTF8String:[self unwrap]->cartridgeTypeName()];
 }
+*/
 - (NSInteger)initialExromLine
 {
     return [self unwrap]->initialExromLine();

@@ -77,7 +77,6 @@ enum_long(CartridgeType)
     CRT_ISEPIC = 253,
     CRT_GEO_RAM = 254,
     CRT_NONE = 255
-    
 };
 
 enum_long(FlashRomState)

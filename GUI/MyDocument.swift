@@ -177,8 +177,8 @@ class MyDocument: NSDocument {
             
         case .FILETYPE_CRT:
             if CRTFileProxy.isUnsupportedCRTBuffer(buffer, length: length) {
-                let type = CRTFileProxy.typeName(ofCRTBuffer: buffer, length: length)!
-                throw NSError.unsupportedCartridgeError(filename: name, type: type)
+                let type = CRTFileProxy.type(ofCRTBuffer: buffer, length: length)
+                throw NSError.unsupportedCartridgeError(filename: name, type: type.description)
             }
             result = CRTFileProxy.make(withBuffer: buffer, length: length)
             
