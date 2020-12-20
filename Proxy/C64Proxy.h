@@ -832,18 +832,17 @@ struct AnyC64FileWrapper;
 }
 
 + (CartridgeType)typeOfCRTBuffer:(const void *)buffer length:(NSInteger)length;
-// + (NSString *)typeNameOfCRTBuffer:(const void *)buffer length:(NSInteger)length;
-+ (BOOL)isSupportedCRTBuffer:(const void *)buffer length:(NSInteger)length;
-+ (BOOL)isUnsupportedCRTBuffer:(const void *)buffer length:(NSInteger)length;
++ (BOOL)isSupportedCRTBuffer:(const void *)buffer length:(NSInteger)length; // DEPRECATED
++ (BOOL)isUnsupportedCRTBuffer:(const void *)buffer length:(NSInteger)length; // DEPRECATED
 + (BOOL)isCRTFile:(NSString *)path;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)path;
  
-- (CartridgeType)cartridgeType;
-// - (NSString *)cartridgeTypeName;
-- (NSInteger)initialExromLine;
-- (NSInteger)initialGameLine;
-- (NSInteger)chipCount;
+@property (readonly) CartridgeType cartridgeType;
+@property (readonly) BOOL isSupported;
+@property (readonly) NSInteger initialExromLine;
+@property (readonly) NSInteger initialGameLine;
+@property (readonly) NSInteger chipCount;
 - (NSInteger)chipType:(NSInteger)nr;
 - (NSInteger)chipAddr:(NSInteger)nr;
 - (NSInteger)chipSize:(NSInteger)nr;

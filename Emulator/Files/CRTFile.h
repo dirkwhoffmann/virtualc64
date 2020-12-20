@@ -101,8 +101,8 @@ public:
     // Returns the cartridge type (e.g., SimonsBasic, FinalIII)
     CartridgeType cartridgeType();
 
-    // Returns the cartridge type in plain text
-    // const char *cartridgeTypeName();
+    // Checks whether the cartridge type is supported by the emulator, yet
+    bool isSupported();
     
     // Returns the initial value of the Exrom line and the Game line
     bool initialExromLine() { return data[0x18] != 0; }

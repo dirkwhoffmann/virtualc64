@@ -790,7 +790,7 @@ extension MyController: NSMenuItemValidation {
             try mydocument.createAttachment(from: url, allowedTypes: types)
             
             // Attach the cartridge
-            mydocument.mountAttachmentAsCartridge()
+            try mydocument.mountAttachmentAsCartridge()
             
             // Remember the URL
             myAppDelegate.noteNewRecentlyUsedURL(url)

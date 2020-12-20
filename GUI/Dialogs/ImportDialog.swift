@@ -52,7 +52,8 @@ class ImportDialog: DialogController {
     var subtitle1String = "???"
     var subtitle2String = ""
     var subtitle3String = ""
-
+    var supportedCrt = true
+    
     // Shortcuts
     var myDocument: MyDocument { return parent.mydocument! }
     var numItems: Int { return carousel.numberOfItems }
@@ -71,11 +72,22 @@ class ImportDialog: DialogController {
             
             media = .cartridge
             let crt = myDocument.attachment as! CRTFileProxy
-            let type = crt.cartridgeType()
+            let cnt = crt.chipCount
+            let type = crt.cartridgeType
             
             track("CRTFileProxy")
             titleString = "Commodore Expansion Port Module"
             subtitle1String = "\(type.description)"
+            if type == .CRT_NORMAL {
+                let packages = cnt == 1 ? "Package" : "Packages"
+                subtitle1String += " with \(cnt) Chip \(packages)" }
+            subtitle2String = "Exrom Line: \(crt.initialExromLine) "
+            subtitle2String += "Game Line: \(crt.initialGameLine)"
+                        
+            if !crt.isSupported {
+                subtitle3String = "This cartridge is not supported by the emulator yet"
+                supportedCrt = false
+            }
             
         case _ as TAPFileProxy:
             
@@ -191,7 +203,7 @@ class ImportDialog: DialogController {
         subtitle1.stringValue = subtitle1String
         subtitle2.stringValue = subtitle2String
         subtitle3.stringValue = subtitle3String
-
+        
         let numberOfItems = setUpFlashItems()
         flash.isHidden = numberOfItems == 0
         flashLabel.isHidden = numberOfItems == 0
@@ -221,6 +233,8 @@ class ImportDialog: DialogController {
             drive9.title = "Attach"
             drive9.isHidden = false
             drive9.keyEquivalent = "\r"
+            drive9.isEnabled = supportedCrt
+            if !supportedCrt { subtitle3.textColor = .warningColor }
 
         default:
             fatalError()

@@ -1584,34 +1584,33 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return CRTFile::typeOfCRTBuffer((u8 *)buffer, length);
 }
-/*
-+ (NSString *) typeNameOfCRTBuffer:(const void *)buffer length:(NSInteger)length
-{
-    const char *str = CRTFile::typeNameOfCRTBuffer((u8 *)buffer, length);
-    return [NSString stringWithUTF8String: str];
-}
-*/
+
 + (BOOL) isSupportedCRTBuffer:(const void *)buffer length:(NSInteger)length
 {
     return CRTFile::isSupportedCRTBuffer((u8 *)buffer, length);
 }
+
 + (BOOL) isUnsupportedCRTBuffer:(const void *)buffer length:(NSInteger)length
 {
     return CRTFile::isUnsupportedCRTBuffer((u8 *)buffer, length);
 }
+
 + (BOOL) isCRTFile:(NSString *)path
 {
     return CRTFile::isCRTFile([path UTF8String]);
 }
+
 + (instancetype) make:(CRTFile *)container
 {
     return container ? [[self alloc] initWithFile:container] : nil;
 }
+
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
     CRTFile *container = CRTFile::makeWithBuffer((const u8 *)buffer, length);
     return [self make: container];
 }
+
 + (instancetype) makeWithFile:(NSString *)path
 {
     CRTFile *container = CRTFile::makeWithFile([path UTF8String]);
@@ -1622,36 +1621,42 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return (CRTFile *)wrapper->file;
 }
+
 - (CartridgeType)cartridgeType
 {
     return [self unwrap]->cartridgeType();
 }
-/*
-- (NSString *)cartridgeTypeName
+
+- (BOOL)isSupported
 {
-    return [NSString stringWithUTF8String:[self unwrap]->cartridgeTypeName()];
+    return [self unwrap]->isSupported();
 }
-*/
+
 - (NSInteger)initialExromLine
 {
     return [self unwrap]->initialExromLine();
 }
+
 - (NSInteger)initialGameLine
 {
     return [self unwrap]->initialGameLine();
 }
+
 - (NSInteger)chipCount
 {
     return [self unwrap]->chipCount();
 }
+
 - (NSInteger)chipType:(NSInteger)nr;
 {
     return [self unwrap]->chipType((unsigned)nr);
 }
+
 - (NSInteger)chipAddr:(NSInteger)nr;
 {
     return [self unwrap]->chipAddr((unsigned)nr);
 }
+
 - (NSInteger)chipSize:(NSInteger)nr;
 {
     return [self unwrap]->chipSize((unsigned)nr);

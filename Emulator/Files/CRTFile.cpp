@@ -241,13 +241,11 @@ CRTFile::cartridgeType() {
     return CartridgeType(type);
 }
 
-/*
-const char *
-CRTFile::cartridgeTypeName()
+bool
+CRTFile::isSupported()
 {
-    return cartridgeTypeName(cartridgeType());
+    return Cartridge::isSupportedType(cartridgeType());
 }
-*/
 
 bool
 CRTFile::repair()

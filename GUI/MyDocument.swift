@@ -176,10 +176,12 @@ class MyDocument: NSDocument {
             result = SnapshotProxy.make(withBuffer: buffer, length: length)
             
         case .FILETYPE_CRT:
+            /*
             if CRTFileProxy.isUnsupportedCRTBuffer(buffer, length: length) {
                 let type = CRTFileProxy.type(ofCRTBuffer: buffer, length: length)
                 throw NSError.unsupportedCartridgeError(filename: name, type: type.description)
             }
+            */
             result = CRTFileProxy.make(withBuffer: buffer, length: length)
             
         case .FILETYPE_D64:
@@ -284,7 +286,7 @@ class MyDocument: NSDocument {
         case .insertIntoDrive9: mountAttachmentAsDisk(drive: .DRIVE9)
         case .flashFirstFile: flashAttachmentIntoMemory()
         case .insertIntoDatasette: mountAttachmentAsTape()
-        case .attachToExpansionPort: mountAttachmentAsCartridge()
+        case .attachToExpansionPort: do { try mountAttachmentAsCartridge() } catch { }
         }
         
         // Type text
@@ -336,12 +338,19 @@ class MyDocument: NSDocument {
     }
     
     @discardableResult
-    func mountAttachmentAsCartridge() -> Bool {
+    func mountAttachmentAsCartridge() throws -> Bool {
         
         if let cartridge = attachment as? CRTFileProxy {
             
-            parent.c64.expansionport.attachCartridgeAndReset(cartridge)
-            return true
+            if cartridge.isSupported {
+
+                parent.c64.expansionport.attachCartridgeAndReset(cartridge)
+                return true
+            }
+
+            let name = cartridge.name()!
+            let type = cartridge.cartridgeType.description
+            throw NSError.unsupportedCartridgeError(filename: name, type: type)
         }
         return false
     }
