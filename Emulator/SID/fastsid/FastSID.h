@@ -40,9 +40,6 @@ class FastSID : public C64Component {
     // Number of this SID (0 = primary SID)
     int nr;
 
-    // Target buffer for storing the produced audio samples
-    short *samples = nullptr;
-
     
     //
     // Sub components

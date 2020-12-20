@@ -354,7 +354,7 @@ FastSID::executeSamples(u64 numSamples, short *buffer)
     
     // Compute samples
     for (unsigned i = 0; i < numSamples; i++) {
-        samples[i] = calculateSingleSample();
+        buffer[i] = calculateSingleSample();
     }
 
     // Return the estimated number of consumed cycles
