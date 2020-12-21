@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -116,7 +116,7 @@
             <windowStyleMask key="styleMask" titled="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="646" height="486"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1536" height="937"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1536" height="935"/>
             <value key="minSize" type="size" width="646" height="486"/>
             <value key="maxSize" type="size" width="646" height="486"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
@@ -1095,10 +1095,10 @@ Gw
                                                         <menuItem title="No device" state="on" image="devNoneTemplate" tag="-1" id="8UE-0C-Sra">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Joystick Keyset 1" image="keyset1Template" id="nbF-Sn-IOv">
+                                                        <menuItem title="Joystick Keyset 1" image="devKeyset1Template" id="nbF-Sn-IOv">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Joystick Keyset 1" image="keyset2Template" tag="1" id="qrr-kM-C8s">
+                                                        <menuItem title="Joystick Keyset 1" image="devKeyset2Template" tag="1" id="qrr-kM-C8s">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="Mouse" image="devMouseTemplate" tag="2" id="fl2-si-6Bn">
@@ -2454,8 +2454,10 @@ Gw
         <userDefaultsController representsSharedInstance="YES" id="boj-yF-D6X"/>
     </objects>
     <resources>
-        <image name="devGamepad1Template" width="24" height="24"/>
-        <image name="devGamepad2Template" width="24" height="24"/>
+        <image name="devGamepad1Template" width="20" height="21"/>
+        <image name="devGamepad2Template" width="20" height="21"/>
+        <image name="devKeyset1Template" width="24" height="24"/>
+        <image name="devKeyset2Template" width="24" height="24"/>
         <image name="devMouseTemplate" width="24" height="24"/>
         <image name="devNoneTemplate" width="24" height="24"/>
         <image name="keyset1Template" width="24" height="24"/>

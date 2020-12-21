@@ -347,7 +347,7 @@ class Inspector: DialogController {
                 stepIntoButton.isEnabled = false
                 stepOverButton.isEnabled = false
             } else {
-                stopAndGoButton.image = NSImage.init(named: "continueTemplate")
+                stopAndGoButton.image = NSImage.init(named: "runTemplate")
                 stepIntoButton.isEnabled = true
                 stepOverButton.isEnabled = true
             }

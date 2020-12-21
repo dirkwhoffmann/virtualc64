@@ -42,7 +42,7 @@ class MyToolbar: NSToolbar {
             pause?.image = NSImage.init(named: "pauseTemplate")
             pauseButton.label = "Pause"
         } else {
-            pause?.image = NSImage.init(named: "continueTemplate")
+            pause?.image = NSImage.init(named: "runTemplate")
             pauseButton.label = "Run"
         }
         
