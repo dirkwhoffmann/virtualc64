@@ -357,8 +357,24 @@ class KeyboardController: NSObject {
             if truncated.count > 255 {
                 truncated = truncated.prefix(256) + "..."
             }
+                       
+            // Record events
+            for c in truncated.lowercased() {
+
+                let keyList = C64Key.translate(char: String(c))
+
+                for key in keyList {
+                    keyboard.addKeyPress(atRow: key.row, col: key.col, delay: 25)
+                }
+                for key in keyList {
+                    keyboard.addKeyRelease(atRow: key.row, col: key.col, delay: 25)
+                }
+            }
             
-            // Type string ...
+            // Start typing
+            keyboard.setInitialDelay(25)
+            
+            // OLD CODE: Type string ...
             DispatchQueue.global().async {
                 
                 usleep(initialDelay)

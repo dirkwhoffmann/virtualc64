@@ -565,97 +565,117 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     wrapper->keyboard->dump();
 }
+
 - (BOOL) keyIsPressed:(NSInteger)nr
 {
     return wrapper->keyboard->isPressed(nr);
 }
+
 - (BOOL) keyIsPressedAtRow:(NSInteger)row col:(NSInteger)col
 {
     return wrapper->keyboard->isPressed(row, col);
 }
+
 - (BOOL) controlIsPressed
 {
     return wrapper->keyboard->ctrlIsPressed();
 }
+
 - (BOOL) commodoreIsPressed
 {
     return wrapper->keyboard->commodoreIsPressed();
 }
+
 - (BOOL) leftShiftIsPressed
 {
     return wrapper->keyboard->leftShiftIsPressed();
 }
+
 - (BOOL) rightShiftIsPressed
 {
     return wrapper->keyboard->rightShiftIsPressed();
 }
+
 - (BOOL) shiftLockIsPressed
 {
     return wrapper->keyboard->shiftLockIsPressed();
 }
+
 - (void) pressKey:(NSInteger)nr
 {
     wrapper->keyboard->press(nr);
 }
+
 - (void) pressAndRelease:(NSInteger)nr duration:(NSInteger)duration
 {
     wrapper->keyboard->press(nr, duration);
 }
+
 - (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
     wrapper->keyboard->pressRowCol(row, col);
 }
+
 - (void) pressShiftLock
 {
     wrapper->keyboard->pressShiftLock();
 }
+
 - (void) releaseKey:(NSInteger)nr
 {
     wrapper->keyboard->release(nr);
 }
+
 - (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
     wrapper->keyboard->releaseRowCol(row, col);
 }
+
 - (void) releaseShiftLock
 {
     wrapper->keyboard->releaseShiftLock();
 }
+
 - (void) releaseAll
 {
     wrapper->keyboard->releaseAll();
 }
+
 - (void) toggleKey:(NSInteger)nr
 {
     wrapper->keyboard->toggle(nr);
 }
+
 - (void) toggleKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
     wrapper->keyboard->toggle(row, col);
 }
+
 - (void) toggleShiftLock
 {
     wrapper->keyboard->toggleShiftLock();
 }
 
-/*
-- (BOOL) shiftLockIsHoldDown
-{
-    return wrapper->keyboard->shiftLockIsPressed();
-}
-- (void) lockShift
-{
-    wrapper->keyboard->pressShiftLock();
-}
-- (void) unlockShift
-{
-    wrapper->keyboard->releaseShiftLockKey();
-}
-*/
 - (BOOL) inUpperCaseMode
 {
     return wrapper->keyboard->inUpperCaseMode();
 }
+
+- (void) addKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay
+{
+    wrapper->keyboard->addKeyPress(row, col, delay);
+}
+
+- (void) addKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay
+{
+    wrapper->keyboard->addKeyRelease(row, col, delay);
+}
+
+- (void) setInitialDelay:(NSInteger)delay
+{
+    wrapper->keyboard->setInitialDelay(delay);
+}
+
 @end
 
 

@@ -196,7 +196,7 @@ extension C64Key: Hashable {
 }
 
 //
-// Symbolic keymapping
+// Symbolic key mapping
 //
 
 extension C64Key {

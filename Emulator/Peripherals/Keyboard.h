@@ -12,19 +12,28 @@
 
 #include "C64Component.h"
 
-/* This class manages the keyboard matrix of the virtual C64. Keyboard
- * management works as follows: When the GUI recognizes a key press or a key
- * release, it calls one of the functions in this class to tell the virtual
- * keyboard about the event. The called functions do nothing more than clearing
- * or setting a bit in the 8x8 keyboard matrix.Each key corresponds to a
- * specific bit in the matrix and is uniquely determined by a row and a column
- * value.
- *
- * Communication with the virtual computer is managed solely by the CIA. When a
- * method getRowValues is called which finally gets the contents of the keyboard
- * matrix into the C64.
- */
+struct KeyAction {
+    
+    // Keyboard matrix location
+    u8 row, col;
+
+    // Action type (true = press, false = release)
+    bool press;
+
+    // Delay until the next action is performed, measures in frames
+    u64 delay;
+
+    // Initializes a key action
+    KeyAction(u8 _row, u8 _col, bool _press, u64 _delay = 0) :
+    row(_row), col(_col), press(_press), delay(_delay) { }
+
+    // Performs a key action (presses or releases the recorded key)
+    void perform(Keyboard &kb);
+};
+
 class Keyboard : public C64Component {
+    
+    friend struct KeyAction;
     
     // Maping from key numbers to keyboard matrix positions
     static const u8 rowcol[66][2];
@@ -39,7 +48,13 @@ class Keyboard : public C64Component {
     bool shiftLock;
     
     // Counter for clearing the keyboard matrix with delay
-    i64 clearCnt = 0;
+    i64 clearCnt = 0; // DEPRECATED
+    
+    // Key action list (for auto typing)
+    std::queue<KeyAction> actions;
+    
+    // Delay counter until the next key action is processed
+    i64 delay = 0;
     
     
     //
@@ -158,7 +173,20 @@ public:
      * is in normal operation, pressing SHIFT + COMMODORE toggles between the
      * two modes.
      */
+    // DEPRECATED
     bool inUpperCaseMode();
+    
+    
+    //
+    // Auto typing
+    //
+    
+    // void addKeyAction(KeyAction action);
+    void addKeyPress(u8 row, u8 col, i64 delay = 0);
+    void addKeyRelease(u8 row, u8 col, i64 delay = 0);
+
+    // Sets the delay counter
+    void setInitialDelay(i64 initialDelay);
     
     
     //

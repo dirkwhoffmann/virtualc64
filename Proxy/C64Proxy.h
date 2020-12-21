@@ -464,6 +464,10 @@ struct AnyC64FileWrapper;
 
 - (BOOL) inUpperCaseMode;
 
+- (void) addKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay;
+- (void) addKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay;
+- (void) setInitialDelay:(NSInteger)delay;
+
 @end
 
 

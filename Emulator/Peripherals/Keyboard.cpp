@@ -9,6 +9,20 @@
 
 #include "C64.h"
 
+void
+KeyAction::perform(Keyboard &kb)
+{
+    msg("%s (%d,%d)\n", press ? "Pressing" : "Releasing", row, col);
+    /*
+    if (press) {
+        kb.pressRowCol(row, col);
+    } else {
+        kb.releaseRowCol(row, col);
+    }
+    */
+    kb.delay = delay;
+}
+
 void 
 Keyboard::_reset() 
 {
@@ -218,6 +232,96 @@ Keyboard::inUpperCaseMode()
     return (vic.spypeek(0x18) & 0x02) == 0;
 }
 
+/*
+void
+Keyboard::addKeyAction(KeyAction action)
+{
+    synchronized {
+        actions.push(action);
+    }
+}
+*/
+
+void
+Keyboard::addKeyPress(u8 row, u8 col, i64 delay)
+{
+    synchronized {
+        
+        msg("Adding press (%d,%d) (%lld)\n", row, col, delay);
+
+        KeyAction action = KeyAction(row, col, true, delay);
+        actions.push(action);
+    }
+}
+
+void
+Keyboard::addKeyRelease(u8 row, u8 col, i64 delay)
+{
+    synchronized {
+        
+        msg("Adding release (%d,%d) (%lld)\n", row, col, delay);
+        
+        KeyAction action = KeyAction(row, col, false, delay);
+        actions.push(action);
+    }
+}
+
+void
+Keyboard::setInitialDelay(i64 initialDelay)
+{
+    delay = initialDelay;
+}
+
+/*
+KeyAction
+Keyboard::removeKeyAction()
+{
+    synchronized {
+        
+        if (!actions.empty()) {
+            
+            KeyAction action = actions.back();
+            actions.pop();
+            return action;
+        }
+        
+            return KeyAction(255, 255, false, -1);
+        } else {
+            return KeyAction()
+        }
+    }
+}
+*/
+
+void
+Keyboard::vsyncHandler()
+{
+    // OLD CODE
+    if (clearCnt) {
+        if (--clearCnt == 0) {
+            releaseAll();
+            messageQueue.put(MSG_KB_AUTO_RELEASE);
+        }
+    }
+    
+    // NEW CODE
+
+    // Only proceed if timer fires
+    if (--delay != 0) return ;
+
+    // Process the next key action (if any)
+    synchronized {
+        
+        if (!actions.empty()) {
+            
+            KeyAction action = actions.front();
+            action.perform(*this);
+            
+            actions.pop();
+        }
+    }
+}
+
 const u8
 Keyboard::rowcol[66][2] = {
     
@@ -241,14 +345,3 @@ Keyboard::rowcol[66][2] = {
     // Fifth physical row
     {7, 4}
 };
-
-void
-Keyboard::vsyncHandler()
-{
-    if (clearCnt) {
-        if (--clearCnt == 0) {
-            releaseAll();
-            messageQueue.put(MSG_KB_AUTO_RELEASE);
-        }
-    }
-}

@@ -17,6 +17,7 @@
 #include <vector>
 #include <map>
 #include <mutex>
+#include <queue>
 
 using std::vector;
 using std::map;
