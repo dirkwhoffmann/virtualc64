@@ -606,11 +606,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
     wrapper->keyboard->press(nr);
 }
 
-- (void) pressAndRelease:(NSInteger)nr duration:(NSInteger)duration
-{
-    wrapper->keyboard->press(nr, duration);
-}
-
 - (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
     wrapper->keyboard->pressRowCol(row, col);
@@ -661,9 +656,19 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return wrapper->keyboard->inUpperCaseMode();
 }
 
+- (void) addKeyPress:(NSInteger)nr delay:(NSInteger)delay
+{
+    wrapper->keyboard->addKeyPress(nr, delay);
+}
+
 - (void) addKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay
 {
     wrapper->keyboard->addKeyPress(row, col, delay);
+}
+
+- (void) addKeyRelease:(NSInteger)nr delay:(NSInteger)delay
+{
+    wrapper->keyboard->addKeyRelease(nr, delay);
 }
 
 - (void) addKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay

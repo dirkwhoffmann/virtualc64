@@ -365,7 +365,7 @@ extension MyController: NSMenuItemValidation {
             return
         }
         
-        keyboard.type(string: text, completion: nil)
+        keyboard.type(text)
     }
     
     @IBAction func stopAndGoAction(_ sender: Any!) {
@@ -519,19 +519,19 @@ extension MyController: NSMenuItemValidation {
 
     // -----------------------------------------------------------------
     @IBAction func loadDirectoryAction(_ sender: Any!) {
-        keyboard.type(string: "LOAD \"$\",8", completion: nil)
+        keyboard.type("LOAD \"$\",8")
     }
     @IBAction func listAction(_ sender: Any!) {
-        keyboard.type(string: "LIST", completion: nil)
+        keyboard.type("LIST")
     }
     @IBAction func loadFirstFileAction(_ sender: Any!) {
-        keyboard.type(string: "LOAD \"*\",8,1", completion: nil)
+        keyboard.type("LOAD \"*\",8,1")
     }
     @IBAction func runProgramAction(_ sender: Any!) {
-        keyboard.type(string: "RUN", completion: nil)
+        keyboard.type("RUN")
     }
     @IBAction func formatDiskAction(_ sender: Any!) {
-        keyboard.type(string: "OPEN 1,8,15,\"N:TEST, ID\": CLOSE 1", completion: nil)
+        keyboard.type("OPEN 1,8,15,\"N:TEST, ID\": CLOSE 1")
     }
 
     //

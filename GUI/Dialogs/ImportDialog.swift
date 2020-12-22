@@ -362,8 +362,12 @@ class ImportDialog: DialogController {
             c64.datasette.insertTape(tape)
             
             if autoRun {
+                /*
                 parent.keyboard.type(string: "LOAD\n",
                                      completion: c64.datasette.pressPlay)
+                */
+                parent.keyboard.type("LOAD\n")
+                c64.datasette.pressPlay()
             }
             
         case .none:

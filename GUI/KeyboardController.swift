@@ -269,8 +269,8 @@ class KeyboardController: NSObject {
         MacKey.space: C64Key.space
     ]
     
-    /// Logical key mapping
-    /// Keys are mapped based on their meaning or the characters they represent
+    // Logical key mapping
+    // Keys are mapped based on their meaning or the characters they represent
     func translate(macKey: MacKey) -> [C64Key] {
         
         switch macKey {
@@ -316,46 +316,50 @@ class KeyboardController: NSObject {
         }
     }
     
-    func _type(keyList: [C64Key]) {
+    func type(key: C64Key) {
         
-        for key in keyList {
-            keyboard.pressKey(key.nr)
-        }
+        type(keyNr: key.nr)
+        /*
+        // Press key
+        keyboard.pressKey(key.nr)
 
-        usleep(useconds_t(50000))
-        
-        for key in keyList {
-            keyboard.releaseKey(key.nr)
-        }
+        //Record release event
+        keyboard.addKeyRelease(key.nr, delay: 0)
+        keyboard.startTyping(withDelay: 1)
+        */
     }
-    
-    func _type(key: C64Key) {
-        type(keyList: [key])
+
+    func type(keyNr: Int) {
+        
+        // Press key
+        keyboard.pressKey(keyNr)
+
+        //Record release event
+        keyboard.addKeyRelease(keyNr, delay: 0)
+        keyboard.startTyping(withDelay: 1)
     }
 
     func type(keyList: [C64Key]) {
-        
-        DispatchQueue.global().async {
-            self._type(keyList: keyList)
+
+        // Press keys
+        for key in keyList {
+            keyboard.pressKey(key.nr)
         }
-    }
- 
-    func type(key: C64Key) {
         
-        DispatchQueue.global().async {
-            self._type(key: key)
+        // Record release events
+        for key in keyList {
+            keyboard.addKeyRelease(key.nr, delay: 0)
+            keyboard.startTyping(withDelay: 1)
         }
     }
     
-    func type(string: String?,
-              initialDelay: Int = 0,
-              completion: (() -> Void)? = nil) {
-
+    func type(_ string: String?, initialDelay seconds: Double = 0.0) {
+        
         if var truncated = string {
             
             // Shorten string if it is too large
-            if truncated.count > 255 {
-                truncated = truncated.prefix(256) + "..."
+            if truncated.count > 2048 {
+                truncated = truncated.prefix(2048) + "..."
             }
 
             // Record events
@@ -373,34 +377,11 @@ class KeyboardController: NSObject {
                 for key in keyList {
                     keyboard.addKeyRelease(atRow: key.row, col: key.col, delay: 0)
                 }
-                keyboard.addDelay(1) // Wait
+                keyboard.addDelay(1)
             }
 
             // Start typing
-            keyboard.startTyping(withDelay: initialDelay)
-
-            // OLD CODE: Type string ...
-            /*
-            DispatchQueue.global().async {
-                
-                usleep(initialDelay)
-                for c in truncated.lowercased() {
-                    let c64Keys = C64Key.translate(char: String(c))
-                    self._type(keyList: c64Keys)
-                    usleep(useconds_t(20000))
-                }
-                completion?()
-            }
-            */
+            keyboard.startTyping(withDelay: Int(seconds / 50.0))
         }
-    }
-    
-    func type(_ string: String?, initialDelay seconds: Double = 0.0) {
-        let frames = Int(seconds / 50.0)
-        type(string: string, initialDelay: frames)
-    }
-    
-    func typeOnKeyboardAndPressPlay(string: String?) {
-        type(string: string, completion: parent.c64.datasette.pressPlay)
-    }
+    }    
 }

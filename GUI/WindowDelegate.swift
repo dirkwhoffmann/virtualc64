@@ -151,7 +151,7 @@ extension MyController: NSWindowDelegate {
 
 extension MyController {
     
-    /// Adjusts the windows vertical size programatically
+    // Adjusts the windows vertical size programatically
     func adjustWindowSize() {
         
         track()
