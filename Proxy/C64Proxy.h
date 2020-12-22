@@ -465,7 +465,6 @@ struct AnyC64FileWrapper;
 - (void) scheduleKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay;
 - (void) scheduleKeyRelease:(NSInteger)nr delay:(NSInteger)delay;
 - (void) scheduleKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay;
-- (void) addDelay:(NSInteger)delay;
 
 @end
 

@@ -671,11 +671,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
     wrapper->keyboard->scheduleKeyRelease(row, col, delay);
 }
 
-- (void) addDelay:(NSInteger)delay
-{
-    wrapper->keyboard->addDelay(delay);
-}
-
 @end
 
 

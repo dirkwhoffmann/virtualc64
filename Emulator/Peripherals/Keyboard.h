@@ -190,14 +190,15 @@ public:
     void scheduleKeyRelease(long nr, i64 delay);
     void scheduleKeyRelease(u8 row, u8 col, i64 delay);
 
+private:
+    
     // Inserts a delay after the last pending action
     void addDelay(i64 delay);
 
     // Deletes all pending actions and clears the keyboard matrix
     void abortAutoTyping();
     
-private:
-    
+    // Workhorses for scheduleKeyPress and scheduleKeyRelease
     void _scheduleKeyAction(bool press, long nr, i64 delay);
     void _scheduleKeyAction(bool press, u8 row, u8 col, i64 delay);
 
