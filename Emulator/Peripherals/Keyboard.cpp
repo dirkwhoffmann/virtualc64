@@ -13,13 +13,13 @@ void
 KeyAction::perform(Keyboard &kb)
 {
     msg("%s (%d,%d)\n", press ? "Pressing" : "Releasing", row, col);
-    /*
+    
     if (press) {
-        kb.pressRowCol(row, col);
+        kb._pressRowCol(row, col);
     } else {
-        kb.releaseRowCol(row, col);
+        kb._releaseRowCol(row, col);
     }
-    */
+    
     kb.delay = delay;
 }
 
@@ -113,14 +113,11 @@ Keyboard::press(long nr, i64 duration)
 void
 Keyboard::pressRowCol(u8 row, u8 col, i64 duration)
 {
-    trace(KBD_DEBUG, "pressKey(%d,%d, [%lld])\n", row, col, duration);
-
-    assert(row < 8);
-    assert(col < 8);
+    synchronized {
         
-    kbMatrixRow[row] &= ~(1 << col);
-    kbMatrixCol[col] &= ~(1 << row);
-    clearCnt = duration;
+        abortAutoTyping();
+        _pressRowCol(row, col, duration);
+    }
 }
 
 void
@@ -129,6 +126,19 @@ Keyboard::pressRestore(i64 duration)
     trace(KBD_DEBUG, "pressRestoreKey()\n");
 
     cpu.pullDownNmiLine(INTSRC_KBD);
+    clearCnt = duration;
+}
+
+void
+Keyboard::_pressRowCol(u8 row, u8 col, i64 duration)
+{
+    trace(KBD_DEBUG, "pressKey(%d,%d, [%lld])\n", row, col, duration);
+    
+    assert(row < 8);
+    assert(col < 8);
+    
+    kbMatrixRow[row] &= ~(1 << col);
+    kbMatrixCol[col] &= ~(1 << row);
     clearCnt = duration;
 }
 
@@ -147,14 +157,23 @@ Keyboard::release(long nr)
 void
 Keyboard::releaseRowCol(u8 row, u8 col)
 {
-    trace(KBD_DEBUG, "releaseKey(%d,%d)\n", row, col);
+    synchronized {
+        
+        abortAutoTyping();
+        _releaseRowCol(row, col);
+    }
+}
+
+void
+Keyboard::_releaseRowCol(u8 row, u8 col)
+{
+    debug(KBD_DEBUG, "releaseKey(%d,%d)\n", row, col);
 
     assert(row < 8);
     assert(col < 8);
     
     // Only release right shift key if shift lock is not pressed
-    if (row == 6 && col == 4 && shiftLock)
-        return;
+    if (row == 6 && col == 4 && shiftLock) return;
     
     kbMatrixRow[row] |= (1 << col);
     kbMatrixCol[col] |= (1 << row);
@@ -269,7 +288,23 @@ Keyboard::addKeyRelease(u8 row, u8 col, i64 delay)
 void
 Keyboard::setInitialDelay(i64 initialDelay)
 {
-    delay = initialDelay;
+    synchronized {
+        if (actions.empty()) {
+            printf("initialDelay = %lld\n", initialDelay);
+            delay = initialDelay;
+        }
+    }
+}
+
+void
+Keyboard::abortAutoTyping()
+{
+    if (!actions.empty()) {
+        std::queue<KeyAction> empty;
+        std::swap(actions, empty);
+    }
+    
+    releaseAll();
 }
 
 /*
@@ -297,21 +332,23 @@ void
 Keyboard::vsyncHandler()
 {
     // OLD CODE
+    /*
     if (clearCnt) {
         if (--clearCnt == 0) {
             releaseAll();
             messageQueue.put(MSG_KB_AUTO_RELEASE);
         }
     }
+    */
     
     // NEW CODE
 
     // Only proceed if timer fires
-    if (--delay != 0) return ;
+    if (delay-- != 0) return;
 
     // Process the next key action (if any)
     synchronized {
-        
+
         if (!actions.empty()) {
             
             KeyAction action = actions.front();

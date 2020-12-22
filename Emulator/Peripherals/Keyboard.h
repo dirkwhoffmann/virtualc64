@@ -159,10 +159,17 @@ public:
     void toggleCtrl() { toggle(7,2); }
     void toggleRunstop() { toggle(7,7); }
     
+private:
+    
+    void _pressRowCol(u8 row, u8 col, i64 duration = 0);
+    void _releaseRowCol(u8 row, u8 col);
 
+    
     //
     // Accessing the keyboard matrix
     //
+    
+public:
     
 	// Reads a row or a column from the keyboard matrix
 	u8 getRowValues(u8 columnMask);
@@ -185,8 +192,11 @@ public:
     void addKeyPress(u8 row, u8 col, i64 delay = 0);
     void addKeyRelease(u8 row, u8 col, i64 delay = 0);
 
-    // Sets the delay counter
+    // Sets the delay counter if no pending actions are present
     void setInitialDelay(i64 initialDelay);
+    
+    // Deletes all pending actions and clears the keyboard matrix
+    void abortAutoTyping();
     
     
     //

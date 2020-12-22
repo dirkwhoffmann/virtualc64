@@ -348,7 +348,7 @@ class KeyboardController: NSObject {
     }
     
     func type(string: String?,
-              initialDelay: useconds_t = 0,
+              initialDelay: Int = 0,
               completion: (() -> Void)? = nil) {
 
         if var truncated = string {
@@ -357,24 +357,23 @@ class KeyboardController: NSObject {
             if truncated.count > 255 {
                 truncated = truncated.prefix(256) + "..."
             }
-                       
+
             // Record events
+            keyboard.setInitialDelay(initialDelay)
             for c in truncated.lowercased() {
 
                 let keyList = C64Key.translate(char: String(c))
 
                 for key in keyList {
-                    keyboard.addKeyPress(atRow: key.row, col: key.col, delay: 25)
+                    keyboard.addKeyPress(atRow: key.row, col: key.col, delay: 1)
                 }
                 for key in keyList {
-                    keyboard.addKeyRelease(atRow: key.row, col: key.col, delay: 25)
+                    keyboard.addKeyRelease(atRow: key.row, col: key.col, delay: 0)
                 }
             }
-            
-            // Start typing
-            keyboard.setInitialDelay(25)
-            
+                        
             // OLD CODE: Type string ...
+            /*
             DispatchQueue.global().async {
                 
                 usleep(initialDelay)
@@ -385,12 +384,13 @@ class KeyboardController: NSObject {
                 }
                 completion?()
             }
+            */
         }
     }
     
     func type(_ string: String?, initialDelay seconds: Double = 0.0) {
-        let uSeconds = useconds_t(1000000 * seconds)
-        type(string: string, initialDelay: uSeconds)
+        let frames = Int(seconds / 50.0)
+        type(string: string, initialDelay: frames)
     }
     
     func typeOnKeyboardAndPressPlay(string: String?) {
