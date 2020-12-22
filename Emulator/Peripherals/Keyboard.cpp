@@ -310,25 +310,25 @@ Keyboard::toggle(u8 row, u8 col)
 }
 
 void
-Keyboard::addKeyPress(long nr, i64 delay)
+Keyboard::scheduleKeyPress(long nr, i64 delay)
 {
     synchronized { _addKeyAction(true, nr, delay); }
 }
 
 void
-Keyboard::addKeyPress(u8 row, u8 col, i64 delay)
+Keyboard::scheduleKeyPress(u8 row, u8 col, i64 delay)
 {
     synchronized { _addKeyAction(true, row, col, delay); }
 }
 
 void
-Keyboard::addKeyRelease(long nr, i64 delay)
+Keyboard::scheduleKeyRelease(long nr, i64 delay)
 {
     synchronized { _addKeyAction(false, nr, delay); }
 }
 
 void
-Keyboard::addKeyRelease(u8 row, u8 col, i64 delay)
+Keyboard::scheduleKeyRelease(u8 row, u8 col, i64 delay)
 {
     synchronized { _addKeyAction(false, row, col, delay); }
 }

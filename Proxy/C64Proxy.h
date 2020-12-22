@@ -461,10 +461,10 @@ struct AnyC64FileWrapper;
 - (void) toggleKeyAtRow:(NSInteger)row col:(NSInteger)col;
 - (void) toggleShiftLock;
 
-- (void) addKeyPress:(NSInteger)nr delay:(NSInteger)delay;
-- (void) addKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay;
-- (void) addKeyRelease:(NSInteger)nr delay:(NSInteger)delay;
-- (void) addKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay;
+- (void) scheduleKeyPress:(NSInteger)nr delay:(NSInteger)delay;
+- (void) scheduleKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay;
+- (void) scheduleKeyRelease:(NSInteger)nr delay:(NSInteger)delay;
+- (void) scheduleKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay;
 - (void) startTyping;
 - (void) startTypingWithDelay:(NSInteger)delay;
 - (void) addDelay:(NSInteger)delay;

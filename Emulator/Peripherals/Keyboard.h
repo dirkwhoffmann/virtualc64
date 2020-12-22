@@ -188,10 +188,10 @@ public:
     
 public:
     
-    void addKeyPress(long nr, i64 delay);
-    void addKeyPress(u8 row, u8 col, i64 delay);
-    void addKeyRelease(long nr, i64 delay);
-    void addKeyRelease(u8 row, u8 col, i64 delay);
+    void scheduleKeyPress(long nr, i64 delay);
+    void scheduleKeyPress(u8 row, u8 col, i64 delay);
+    void scheduleKeyRelease(long nr, i64 delay);
+    void scheduleKeyRelease(u8 row, u8 col, i64 delay);
 
     // Arms the delay counter if no pending actions are present
     void startTyping() { startTypingWithDelay(0); }

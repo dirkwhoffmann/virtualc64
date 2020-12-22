@@ -323,7 +323,7 @@ class KeyboardController: NSObject {
 
         //Schedule the key release
         if numFrames != nil {
-            keyboard.addKeyRelease(key.nr, delay: 0)
+            keyboard.scheduleKeyRelease(key.nr, delay: 0)
             keyboard.startTyping(withDelay: numFrames!)
         }
     }
@@ -338,7 +338,7 @@ class KeyboardController: NSObject {
         //Schedule the key releases
         if numFrames != nil {
             for key in keys {
-                keyboard.addKeyRelease(key.nr, delay: 0)
+                keyboard.scheduleKeyRelease(key.nr, delay: 0)
                 keyboard.startTyping(withDelay: numFrames!)
             }
         }
@@ -393,13 +393,13 @@ class KeyboardController: NSObject {
 
                 // Press keys
                 for key in keyList {
-                    keyboard.addKeyPress(atRow: key.row, col: key.col, delay: 0)
+                    keyboard.scheduleKeyPress(atRow: key.row, col: key.col, delay: 0)
                 }
                 keyboard.addDelay(1)
                 
                 // Release keys
                 for key in keyList {
-                    keyboard.addKeyRelease(atRow: key.row, col: key.col, delay: 0)
+                    keyboard.scheduleKeyRelease(atRow: key.row, col: key.col, delay: 0)
                 }
                 keyboard.addDelay(1)
             }

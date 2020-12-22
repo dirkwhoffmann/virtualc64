@@ -651,24 +651,24 @@ struct AnyC64FileWrapper { AnyFile *file; };
     wrapper->keyboard->toggleShiftLock();
 }
 
-- (void) addKeyPress:(NSInteger)nr delay:(NSInteger)delay
+- (void) scheduleKeyPress:(NSInteger)nr delay:(NSInteger)delay
 {
-    wrapper->keyboard->addKeyPress(nr, delay);
+    wrapper->keyboard->scheduleKeyPress(nr, delay);
 }
 
-- (void) addKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay
+- (void) scheduleKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay
 {
-    wrapper->keyboard->addKeyPress(row, col, delay);
+    wrapper->keyboard->scheduleKeyPress(row, col, delay);
 }
 
-- (void) addKeyRelease:(NSInteger)nr delay:(NSInteger)delay
+- (void) scheduleKeyRelease:(NSInteger)nr delay:(NSInteger)delay
 {
-    wrapper->keyboard->addKeyRelease(nr, delay);
+    wrapper->keyboard->scheduleKeyRelease(nr, delay);
 }
 
-- (void) addKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay
+- (void) scheduleKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay
 {
-    wrapper->keyboard->addKeyRelease(row, col, delay);
+    wrapper->keyboard->scheduleKeyRelease(row, col, delay);
 }
 
 - (void) startTyping
