@@ -466,7 +466,9 @@ struct AnyC64FileWrapper;
 
 - (void) addKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay;
 - (void) addKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay;
-- (void) setInitialDelay:(NSInteger)delay;
+- (void) startTyping;
+- (void) startTypingWithDelay:(NSInteger)delay;
+- (void) addDelay:(NSInteger)delay;
 
 @end
 

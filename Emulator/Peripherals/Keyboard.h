@@ -14,18 +14,21 @@
 
 struct KeyAction {
     
-    // Keyboard matrix location
-    u8 row, col;
-
     // Action type (true = press, false = release)
     bool press;
 
-    // Delay until the next action is performed, measures in frames
-    u64 delay;
+    // Key identifier (0 .. 65)
+    u8 nr;
+    
+    // Keyboard matrix location
+    u8 row, col;
 
-    // Initializes a key action
-    KeyAction(u8 _row, u8 _col, bool _press, u64 _delay = 0) :
-    row(_row), col(_col), press(_press), delay(_delay) { }
+    // Delay until the next action is performed, measures in frames
+    i64 delay;
+
+    // Constructors
+    KeyAction(bool _press, u8 _nr, u64 _delay);
+    KeyAction(bool _press, u8 _row, u8 _col, u64 _delay);
 
     // Performs a key action (presses or releases the recorded key)
     void perform(Keyboard &kb);
@@ -46,10 +49,7 @@ class Keyboard : public C64Component {
 
     // Indicates if the shift lock is currently pressed
     bool shiftLock;
-    
-    // Counter for clearing the keyboard matrix with delay
-    i64 clearCnt = 0; // DEPRECATED
-    
+        
     // Key action list (for auto typing)
     std::queue<KeyAction> actions;
     
@@ -98,8 +98,7 @@ private:
         
         & kbMatrixRow
         & kbMatrixCol
-        & shiftLock
-        & clearCnt;
+        & shiftLock;
     }
     
     size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
@@ -161,9 +160,15 @@ public:
     
 private:
     
-    void _pressRowCol(u8 row, u8 col, i64 duration = 0);
+    void _press(long nr);
+    void _pressRowCol(u8 row, u8 col);
+    void _pressRestore();
+    
+    void _release(long nr);
     void _releaseRowCol(u8 row, u8 col);
+    void _releaseRestore();
 
+    void _releaseAll();
     
     //
     // Accessing the keyboard matrix
@@ -188,16 +193,28 @@ public:
     // Auto typing
     //
     
-    // void addKeyAction(KeyAction action);
-    void addKeyPress(u8 row, u8 col, i64 delay = 0);
-    void addKeyRelease(u8 row, u8 col, i64 delay = 0);
-
-    // Sets the delay counter if no pending actions are present
-    void setInitialDelay(i64 initialDelay);
+public:
     
+    void addKeyPress(long nr, i64 delay);
+    void addKeyPress(u8 row, u8 col, i64 delay);
+    void addKeyRelease(long nr, i64 delay);
+    void addKeyRelease(u8 row, u8 col, i64 delay);
+
+    // Arms the delay counter if no pending actions are present
+    void startTyping() { startTypingWithDelay(0); }
+    void startTypingWithDelay(i64 initialDelay);
+
+    // Adds a delay to the last pending action
+    void addDelay(i64 delay);
+
     // Deletes all pending actions and clears the keyboard matrix
     void abortAutoTyping();
     
+private:
+    
+    void _addKeyAction(bool press, long nr, i64 delay);
+    void _addKeyAction(bool press, u8 row, u8 col, i64 delay);
+
     
     //
     // Performing periodic events

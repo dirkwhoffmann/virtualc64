@@ -359,19 +359,26 @@ class KeyboardController: NSObject {
             }
 
             // Record events
-            keyboard.setInitialDelay(initialDelay)
             for c in truncated.lowercased() {
 
                 let keyList = C64Key.translate(char: String(c))
 
+                // Press keys
                 for key in keyList {
-                    keyboard.addKeyPress(atRow: key.row, col: key.col, delay: 1)
+                    keyboard.addKeyPress(atRow: key.row, col: key.col, delay: 0)
                 }
+                keyboard.addDelay(1)
+                
+                // Release keys
                 for key in keyList {
                     keyboard.addKeyRelease(atRow: key.row, col: key.col, delay: 0)
                 }
+                keyboard.addDelay(1) // Wait
             }
-                        
+
+            // Start typing
+            keyboard.startTyping(withDelay: initialDelay)
+
             // OLD CODE: Type string ...
             /*
             DispatchQueue.global().async {

@@ -671,9 +671,19 @@ struct AnyC64FileWrapper { AnyFile *file; };
     wrapper->keyboard->addKeyRelease(row, col, delay);
 }
 
-- (void) setInitialDelay:(NSInteger)delay
+- (void) startTyping
 {
-    wrapper->keyboard->setInitialDelay(delay);
+    wrapper->keyboard->startTyping();
+}
+
+- (void) startTypingWithDelay:(NSInteger)delay
+{
+    wrapper->keyboard->startTypingWithDelay(delay);
+}
+
+- (void) addDelay:(NSInteger)delay
+{
+    wrapper->keyboard->addDelay(delay);
 }
 
 @end

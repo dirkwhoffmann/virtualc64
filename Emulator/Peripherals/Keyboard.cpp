@@ -9,17 +9,42 @@
 
 #include "C64.h"
 
+KeyAction::KeyAction(bool _press, u8 _nr, u64 _delay)
+: press(_press), nr(_nr), delay(_delay)
+{
+    assert(nr < 66);
+    
+    row = Keyboard::rowcol[nr][0];
+    col = Keyboard::rowcol[nr][1];
+}
+
+KeyAction::KeyAction(bool _press, u8 _row, u8 _col, u64 _delay)
+: press(_press), row(_row), col(_col), delay(_delay)
+{
+    const u8 _nr[64] = {
+        
+        15, 47, 63, 64, 16, 32, 48, 62,
+        3, 19, 35, 4, 51, 36, 20, 50,
+        5, 21, 37, 6, 53, 38, 22, 52,
+        7, 23, 39, 8, 55, 40, 24, 54,
+        9, 25, 41, 10, 57, 42, 26, 56,
+        11, 27, 43, 12, 59, 44, 28, 58,
+        13, 29, 45, 14, 61, 46, 30, 60,
+        1, 0, 17, 2, 65, 49, 18, 33
+    };
+    
+    assert(row < 8);
+    assert(col < 8);
+    
+    nr = _nr[8 * row + col];
+}
+
 void
 KeyAction::perform(Keyboard &kb)
 {
-    msg("%s (%d,%d)\n", press ? "Pressing" : "Releasing", row, col);
+    debug(KBD_DEBUG, "%s %d (%d,%d)\n", press ? "Pressing" : "Releasing", nr, row, col);
     
-    if (press) {
-        kb._pressRowCol(row, col);
-    } else {
-        kb._releaseRowCol(row, col);
-    }
-    
+    press ? kb._press(nr) : kb._release(nr);
     kb.delay = delay;
 }
 
@@ -101,12 +126,13 @@ Keyboard::getColumnValues(u8 rowMask)
 void
 Keyboard::press(long nr, i64 duration)
 {
-    assert(nr < 66);
-    
-    switch (nr) {
-        case 34: toggleShiftLock(); return;
-        case 31: pressRestore(duration); return;
-        default: pressRowCol(rowcol[nr][0], rowcol[nr][1], duration);
+    synchronized {
+
+        abortAutoTyping();
+        _press(nr);
+        
+        // Schedule key release
+        if (duration) { _addKeyAction(false, nr, 0); delay = duration; }
     }
 }
 
@@ -116,58 +142,102 @@ Keyboard::pressRowCol(u8 row, u8 col, i64 duration)
     synchronized {
         
         abortAutoTyping();
-        _pressRowCol(row, col, duration);
+        _pressRowCol(row, col);
+        
+        // Schedule key release
+        if (duration) { _addKeyAction(false, row, col, 0); delay = duration; }
     }
 }
 
 void
 Keyboard::pressRestore(i64 duration)
 {
-    trace(KBD_DEBUG, "pressRestoreKey()\n");
-
-    cpu.pullDownNmiLine(INTSRC_KBD);
-    clearCnt = duration;
+    synchronized {
+        
+        abortAutoTyping();
+        _pressRestore();
+        
+        // Schedule release event
+        if (duration) { _addKeyAction(false, 31, 0); delay = duration; }
+    }
 }
 
 void
-Keyboard::_pressRowCol(u8 row, u8 col, i64 duration)
+Keyboard::release(long nr)
 {
-    trace(KBD_DEBUG, "pressKey(%d,%d, [%lld])\n", row, col, duration);
+    synchronized { _release(nr); }
+}
+
+void
+Keyboard::releaseRowCol(u8 row, u8 col)
+{
+    synchronized { _releaseRowCol(row, col); }
+}
+
+void
+Keyboard::releaseRestore()
+{
+    synchronized { _releaseRestore(); }
+}
+
+void
+Keyboard::releaseAll()
+{
+    synchronized { _releaseAll(); }
+}
+
+void
+Keyboard::_press(long nr)
+{
+    debug(KBD_DEBUG, "_press(%ld)\n", nr);
+
+    assert(nr < 66);
+
+    switch (nr) {
+        case 34: toggleShiftLock(); return;
+        case 31: _pressRestore(); return;
+        default: _pressRowCol(rowcol[nr][0], rowcol[nr][1]);
+    }
+}
+
+void
+Keyboard::_pressRowCol(u8 row, u8 col)
+{
+    debug(KBD_DEBUG, "_pressRowCol(%d,%d)\n", row, col);
     
     assert(row < 8);
     assert(col < 8);
     
     kbMatrixRow[row] &= ~(1 << col);
     kbMatrixCol[col] &= ~(1 << row);
-    clearCnt = duration;
 }
 
 void
-Keyboard::release(long nr)
+Keyboard::_pressRestore()
 {
-    assert(nr < 66);
+    debug(KBD_DEBUG, "_pressRestor()\n");
+    
+    cpu.pullDownNmiLine(INTSRC_KBD);
+}
 
+void
+Keyboard::_release(long nr)
+{
+    debug(KBD_DEBUG, "_release(%ld)\n", nr);
+
+    assert(nr < 66);
+    
     switch (nr) {
         case 34: releaseShiftLock(); return;
-        case 31: releaseRestore(); return;
-        default: releaseRowCol(rowcol[nr][0], rowcol[nr][1]);
-    }
-}
-
-void
-Keyboard::releaseRowCol(u8 row, u8 col)
-{
-    synchronized {
-        
-        abortAutoTyping();
-        _releaseRowCol(row, col);
+        case 31: _releaseRestore(); return;
+        default: _releaseRowCol(rowcol[nr][0], rowcol[nr][1]);
     }
 }
 
 void
 Keyboard::_releaseRowCol(u8 row, u8 col)
 {
-    debug(KBD_DEBUG, "releaseKey(%d,%d)\n", row, col);
+    debug(KBD_DEBUG, "releaseRowCol(%d,%d)\n", row, col);
 
     assert(row < 8);
     assert(col < 8);
@@ -180,20 +250,20 @@ Keyboard::_releaseRowCol(u8 row, u8 col)
 }
 
 void
-Keyboard::releaseRestore()
+Keyboard::_releaseRestore()
 {
-    trace(KBD_DEBUG, "releaseRestoreKey()\n");
+    debug(KBD_DEBUG, "_releaseRestore()\n");
     
     cpu.releaseNmiLine(INTSRC_KBD);
 }
 
 void
-Keyboard::releaseAll()
+Keyboard::_releaseAll()
 {
     for (unsigned i = 0; i < 8; i++) {
         kbMatrixRow[i] = kbMatrixCol[i] = 0xFF;
     }
-    releaseRestore();
+    _releaseRestore();
 }
 
 bool
@@ -211,10 +281,13 @@ Keyboard::isPressed(long nr)
 bool
 Keyboard::isPressed(u8 row, u8 col)
 {
-    // We can either check the row or column matrix
     bool result1 = (kbMatrixRow[row] & (1 << col)) == 0;
-    // bool result2 = (kbMatrixCol[col] & (1 << row)) == 0;
-    // assert(result1 == result2);
+
+    // We could have also checked the column matrix
+    if (KBD_DEBUG) {
+        bool result2 = (kbMatrixCol[col] & (1 << row)) == 0;
+        assert(result1 == result2);
+    }
 
     return result1;
 }
@@ -251,47 +324,53 @@ Keyboard::inUpperCaseMode()
     return (vic.spypeek(0x18) & 0x02) == 0;
 }
 
-/*
 void
-Keyboard::addKeyAction(KeyAction action)
+Keyboard::addKeyPress(long nr, i64 delay)
 {
-    synchronized {
-        actions.push(action);
-    }
+    synchronized { _addKeyAction(true, nr, delay); }
 }
-*/
 
 void
 Keyboard::addKeyPress(u8 row, u8 col, i64 delay)
 {
-    synchronized {
-        
-        msg("Adding press (%d,%d) (%lld)\n", row, col, delay);
+    synchronized { _addKeyAction(true, row, col, delay); }
+}
 
-        KeyAction action = KeyAction(row, col, true, delay);
-        actions.push(action);
-    }
+void
+Keyboard::addKeyRelease(long nr, i64 delay)
+{
+    synchronized { _addKeyAction(false, nr, delay); }
 }
 
 void
 Keyboard::addKeyRelease(u8 row, u8 col, i64 delay)
 {
+    synchronized { _addKeyAction(false, row, col, delay); }
+}
+
+void
+Keyboard::startTypingWithDelay(i64 initialDelay)
+{
     synchronized {
         
-        msg("Adding release (%d,%d) (%lld)\n", row, col, delay);
-        
-        KeyAction action = KeyAction(row, col, false, delay);
-        actions.push(action);
+        if (!actions.empty()) {
+            
+            debug(KBD_DEBUG, "Setting delay counter to %lld\n", initialDelay);
+            delay = initialDelay;
+        }
     }
 }
 
 void
-Keyboard::setInitialDelay(i64 initialDelay)
+Keyboard::addDelay(i64 delay)
 {
     synchronized {
-        if (actions.empty()) {
-            printf("initialDelay = %lld\n", initialDelay);
-            delay = initialDelay;
+        if (!actions.empty()) {
+            
+            debug(KBD_DEBUG, "Adding delay %lld\n", delay);
+            actions.back().delay += delay;
+            debug(KBD_DEBUG, "New delay is %lld\n", actions.back().delay);
+
         }
     }
 }
@@ -300,58 +379,50 @@ void
 Keyboard::abortAutoTyping()
 {
     if (!actions.empty()) {
+
         std::queue<KeyAction> empty;
         std::swap(actions, empty);
+
+        _releaseAll();
     }
-    
-    releaseAll();
 }
 
-/*
-KeyAction
-Keyboard::removeKeyAction()
+void
+Keyboard::_addKeyAction(bool press, long nr, i64 delay)
 {
-    synchronized {
-        
-        if (!actions.empty()) {
-            
-            KeyAction action = actions.back();
-            actions.pop();
-            return action;
-        }
-        
-            return KeyAction(255, 255, false, -1);
-        } else {
-            return KeyAction()
-        }
-    }
+    debug(KBD_DEBUG, "Recording %d %ld %lld\n", press, nr, delay);
+
+    KeyAction action = KeyAction(press, nr, delay);
+    actions.push(action);
 }
-*/
+
+void
+Keyboard::_addKeyAction(bool press, u8 row, u8 col, i64 delay)
+{
+    debug(KBD_DEBUG, "Recording %d %d %d %lld\n", press, row, col, delay);
+    
+    KeyAction action = KeyAction(press, row, col, delay);
+    actions.push(action);
+}
 
 void
 Keyboard::vsyncHandler()
 {
-    // OLD CODE
-    /*
-    if (clearCnt) {
-        if (--clearCnt == 0) {
-            releaseAll();
-            messageQueue.put(MSG_KB_AUTO_RELEASE);
-        }
-    }
-    */
-    
-    // NEW CODE
-
     // Only proceed if timer fires
-    if (delay-- != 0) return;
+    if (delay) { --delay; return; }
 
-    // Process the next key action (if any)
+    // Process all pending auto-typing events
     synchronized {
-
-        if (!actions.empty()) {
-            
+        
+        // printf("delay = %d empty: %d count: %d\n", delay, actions.empty(), actions.size());
+        
+        while (delay == 0 && !actions.empty()) {
+                        
             KeyAction action = actions.front();
+
+            debug(KBD_DEBUG, "Processing next key action (%d,%d) in %lld\n",
+                  action.row, action.col, action.delay);
+
             action.perform(*this);
             
             actions.pop();
