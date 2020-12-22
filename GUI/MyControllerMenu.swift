@@ -483,31 +483,31 @@ extension MyController: NSMenuItemValidation {
 
     // -----------------------------------------------------------------
     @IBAction func runstopAction(_ sender: Any!) {
-        keyboard.type(key: C64Key.runStop)
+        keyboard.pressKey(C64Key.runStop)
     }
     @IBAction func restoreAction(_ sender: Any!) {
-        keyboard.type(key: C64Key.restore)
+        keyboard.pressKey(C64Key.restore)
     }
     @IBAction func runstopRestoreAction(_ sender: Any!) {
-        keyboard.type(keyList: [C64Key.runStop, C64Key.restore])
+        keyboard.pressKeys([C64Key.runStop, C64Key.restore])
     }
     @IBAction func commodoreKeyAction(_ sender: Any!) {
-        keyboard.type(key: C64Key.commodore)
+        keyboard.pressKey(C64Key.commodore)
     }
     @IBAction func clearKeyAction(_ sender: Any!) {
-        keyboard.type(keyList: [C64Key.home, C64Key.shift])
+        keyboard.pressKeys([C64Key.home, C64Key.shift])
     }
     @IBAction func homeKeyAction(_ sender: Any!) {
-        keyboard.type(key: C64Key.home)
+        keyboard.pressKey(C64Key.home)
     }
     @IBAction func insertKeyAction(_ sender: Any!) {
-        keyboard.type(keyList: [C64Key.delete, C64Key.shift])
+        keyboard.pressKeys([C64Key.delete, C64Key.shift])
     }
     @IBAction func deleteKeyAction(_ sender: Any!) {
-        keyboard.type(key: C64Key.delete)
+        keyboard.pressKey(C64Key.delete)
     }
     @IBAction func leftarrowKeyAction(_ sender: Any!) {
-        keyboard.type(key: C64Key.leftArrow)
+        keyboard.pressKey(C64Key.leftArrow)
     }
     @IBAction func shiftLockAction(_ sender: Any!) {
         

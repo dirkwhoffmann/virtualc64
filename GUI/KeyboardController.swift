@@ -316,17 +316,39 @@ class KeyboardController: NSObject {
         }
     }
     
-    func type(key: C64Key) {
-        
-        type(keyNr: key.nr)
-        /*
+    func pressKey(_ key: C64Key, duration numFrames: Int? = nil) {
+    
         // Press key
         keyboard.pressKey(key.nr)
 
-        //Record release event
-        keyboard.addKeyRelease(key.nr, delay: 0)
-        keyboard.startTyping(withDelay: 1)
-        */
+        //Schedule the key release
+        if numFrames != nil {
+            keyboard.addKeyRelease(key.nr, delay: 0)
+            keyboard.startTyping(withDelay: numFrames!)
+        }
+    }
+
+    func pressKeys(_ keys: [C64Key], duration numFrames: Int? = nil) {
+        
+        // Press keys
+        for key in keys {
+            keyboard.pressKey(key.nr)
+        }
+        
+        //Schedule the key releases
+        if numFrames != nil {
+            for key in keys {
+                keyboard.addKeyRelease(key.nr, delay: 0)
+                keyboard.startTyping(withDelay: numFrames!)
+            }
+        }
+    }
+    
+    /*
+    func type(key: C64Key) {
+        
+        type(keyNr: key.nr)
+  
     }
 
     func type(keyNr: Int) {
@@ -338,7 +360,8 @@ class KeyboardController: NSObject {
         keyboard.addKeyRelease(keyNr, delay: 0)
         keyboard.startTyping(withDelay: 1)
     }
-
+    */
+    /*
     func type(keyList: [C64Key]) {
 
         // Press keys
@@ -352,6 +375,7 @@ class KeyboardController: NSObject {
             keyboard.startTyping(withDelay: 1)
         }
     }
+    */
     
     func type(_ string: String?, initialDelay seconds: Double = 0.0) {
         
