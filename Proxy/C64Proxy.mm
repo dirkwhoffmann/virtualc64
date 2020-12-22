@@ -671,16 +671,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
     wrapper->keyboard->scheduleKeyRelease(row, col, delay);
 }
 
-- (void) startTyping
-{
-    wrapper->keyboard->startTyping();
-}
-
-- (void) startTypingWithDelay:(NSInteger)delay
-{
-    wrapper->keyboard->startTypingWithDelay(delay);
-}
-
 - (void) addDelay:(NSInteger)delay
 {
     wrapper->keyboard->addDelay(delay);

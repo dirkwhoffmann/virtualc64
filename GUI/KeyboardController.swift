@@ -323,8 +323,7 @@ class KeyboardController: NSObject {
 
         //Schedule the key release
         if numFrames != nil {
-            keyboard.scheduleKeyRelease(key.nr, delay: 0)
-            keyboard.startTyping(withDelay: numFrames!)
+            keyboard.scheduleKeyRelease(key.nr, delay: numFrames!)
         }
     }
 
@@ -338,44 +337,10 @@ class KeyboardController: NSObject {
         //Schedule the key releases
         if numFrames != nil {
             for key in keys {
-                keyboard.scheduleKeyRelease(key.nr, delay: 0)
-                keyboard.startTyping(withDelay: numFrames!)
+                keyboard.scheduleKeyRelease(key.nr, delay: numFrames!)
             }
         }
     }
-    
-    /*
-    func type(key: C64Key) {
-        
-        type(keyNr: key.nr)
-  
-    }
-
-    func type(keyNr: Int) {
-        
-        // Press key
-        keyboard.pressKey(keyNr)
-
-        //Record release event
-        keyboard.addKeyRelease(keyNr, delay: 0)
-        keyboard.startTyping(withDelay: 1)
-    }
-    */
-    /*
-    func type(keyList: [C64Key]) {
-
-        // Press keys
-        for key in keyList {
-            keyboard.pressKey(key.nr)
-        }
-        
-        // Record release events
-        for key in keyList {
-            keyboard.addKeyRelease(key.nr, delay: 0)
-            keyboard.startTyping(withDelay: 1)
-        }
-    }
-    */
     
     func type(_ string: String?, initialDelay seconds: Double = 0.0) {
         
@@ -386,26 +351,28 @@ class KeyboardController: NSObject {
                 truncated = truncated.prefix(2048) + "..."
             }
 
+            // Set the initial delay for the first key (in frames)
+            var delay = Int(seconds / 50.0)
+
             // Record events
             for c in truncated.lowercased() {
 
                 let keyList = C64Key.translate(char: String(c))
-
+                
                 // Press keys
                 for key in keyList {
-                    keyboard.scheduleKeyPress(atRow: key.row, col: key.col, delay: 0)
+                    keyboard.scheduleKeyPress(atRow: key.row, col: key.col, delay: delay)
+                    delay = 0
                 }
-                keyboard.addDelay(1)
-                
+                delay = 1
+
                 // Release keys
                 for key in keyList {
-                    keyboard.scheduleKeyRelease(atRow: key.row, col: key.col, delay: 0)
+                    keyboard.scheduleKeyRelease(atRow: key.row, col: key.col, delay: delay)
+                    delay = 0
                 }
-                keyboard.addDelay(1)
+                delay = 1
             }
-
-            // Start typing
-            keyboard.startTyping(withDelay: Int(seconds / 50.0))
         }
     }    
 }

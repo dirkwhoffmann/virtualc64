@@ -29,9 +29,6 @@ struct KeyAction {
     // Constructors
     KeyAction(bool _press, u8 _nr, u64 _delay);
     KeyAction(bool _press, u8 _row, u8 _col, u64 _delay);
-
-    // Performs a key action (presses or releases the recorded key)
-    void perform(Keyboard &kb);
 };
 
 class Keyboard : public C64Component {
@@ -193,11 +190,7 @@ public:
     void scheduleKeyRelease(long nr, i64 delay);
     void scheduleKeyRelease(u8 row, u8 col, i64 delay);
 
-    // Arms the delay counter if no pending actions are present
-    void startTyping() { startTypingWithDelay(0); }
-    void startTypingWithDelay(i64 initialDelay);
-
-    // Adds a delay to the last pending action
+    // Inserts a delay after the last pending action
     void addDelay(i64 delay);
 
     // Deletes all pending actions and clears the keyboard matrix
@@ -205,8 +198,8 @@ public:
     
 private:
     
-    void _addKeyAction(bool press, long nr, i64 delay);
-    void _addKeyAction(bool press, u8 row, u8 col, i64 delay);
+    void _scheduleKeyAction(bool press, long nr, i64 delay);
+    void _scheduleKeyAction(bool press, u8 row, u8 col, i64 delay);
 
     
     //

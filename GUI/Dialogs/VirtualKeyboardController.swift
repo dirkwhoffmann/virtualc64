@@ -126,6 +126,10 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
         track()
         
         parent.keyboard.pressKey(C64Key.init(nr))
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.c64.keyboard.releaseAll()
+        }
+        
         refresh()
         
         if autoClose { cancelAction(self) }
