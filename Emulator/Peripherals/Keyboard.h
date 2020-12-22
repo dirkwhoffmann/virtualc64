@@ -124,15 +124,15 @@ public:
     bool restoreIsPressed();
     
 	// Presses a key
-    void press(long nr, i64 duration = 0);
-	void pressRowCol(u8 row, u8 col, i64 duration = 0);
-    void pressCommodore(i64 duration = 0) { pressRowCol(7,5, duration); }
-    void pressCtrl(i64 duration = 0) { pressRowCol(7,2, duration); }
-	void pressRunstop(i64 duration = 0) { pressRowCol(7,7, duration); }
-    void pressLeftShift(i64 duration = 0) { pressRowCol(1,7, duration); }
-    void pressRightShift(i64 duration = 0) { pressRowCol(6,4, duration); }
+    void press(long nr);
+	void pressRowCol(u8 row, u8 col);
+    void pressCommodore() { pressRowCol(7,5); }
+    void pressCtrl() { pressRowCol(7,2); }
+	void pressRunstop() { pressRowCol(7,7); }
+    void pressLeftShift() { pressRowCol(1,7); }
+    void pressRightShift() { pressRowCol(6,4); }
     void pressShiftLock() { shiftLock = true; }
-    void pressRestore(i64 duration = 0);
+    void pressRestore();
 
 	// Releases a pressed key
     void release(long nr);
@@ -170,6 +170,7 @@ private:
 
     void _releaseAll();
     
+    
     //
     // Accessing the keyboard matrix
     //
@@ -179,14 +180,6 @@ public:
 	// Reads a row or a column from the keyboard matrix
 	u8 getRowValues(u8 columnMask);
     u8 getColumnValues(u8 rowMask);
-    
-    
-    /* Returns true if the C64 is currently in upper case mode. When the C64
-     * is in normal operation, pressing SHIFT + COMMODORE toggles between the
-     * two modes.
-     */
-    // DEPRECATED
-    bool inUpperCaseMode();
     
     
     //

@@ -124,41 +124,32 @@ Keyboard::getColumnValues(u8 rowMask)
 }
 
 void
-Keyboard::press(long nr, i64 duration)
+Keyboard::press(long nr)
 {
     synchronized {
 
         abortAutoTyping();
         _press(nr);
-        
-        // Schedule key release
-        if (duration) { _addKeyAction(false, nr, 0); delay = duration; }
     }
 }
 
 void
-Keyboard::pressRowCol(u8 row, u8 col, i64 duration)
+Keyboard::pressRowCol(u8 row, u8 col)
 {
     synchronized {
         
         abortAutoTyping();
         _pressRowCol(row, col);
-        
-        // Schedule key release
-        if (duration) { _addKeyAction(false, row, col, 0); delay = duration; }
     }
 }
 
 void
-Keyboard::pressRestore(i64 duration)
+Keyboard::pressRestore()
 {
     synchronized {
         
         abortAutoTyping();
-        _pressRestore();
-        
-        // Schedule release event
-        if (duration) { _addKeyAction(false, 31, 0); delay = duration; }
+        _pressRestore();        
     }
 }
 
@@ -316,12 +307,6 @@ Keyboard::toggle(u8 row, u8 col)
     } else {
         pressRowCol(row,col);
     }
-}
-
-bool
-Keyboard::inUpperCaseMode()
-{
-    return (vic.spypeek(0x18) & 0x02) == 0;
 }
 
 void

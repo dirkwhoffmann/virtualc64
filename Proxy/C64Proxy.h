@@ -461,8 +461,6 @@ struct AnyC64FileWrapper;
 - (void) toggleKeyAtRow:(NSInteger)row col:(NSInteger)col;
 - (void) toggleShiftLock;
 
-- (BOOL) inUpperCaseMode;
-
 - (void) addKeyPress:(NSInteger)nr delay:(NSInteger)delay;
 - (void) addKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay;
 - (void) addKeyRelease:(NSInteger)nr delay:(NSInteger)delay;
@@ -847,9 +845,6 @@ struct AnyC64FileWrapper;
 @property (readonly) NSInteger initialExromLine;
 @property (readonly) NSInteger initialGameLine;
 @property (readonly) NSInteger chipCount;
-- (NSInteger)chipType:(NSInteger)nr;
-- (NSInteger)chipAddr:(NSInteger)nr;
-- (NSInteger)chipSize:(NSInteger)nr;
 
 @end
 

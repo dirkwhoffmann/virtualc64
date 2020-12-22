@@ -651,11 +651,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
     wrapper->keyboard->toggleShiftLock();
 }
 
-- (BOOL) inUpperCaseMode
-{
-    return wrapper->keyboard->inUpperCaseMode();
-}
-
 - (void) addKeyPress:(NSInteger)nr delay:(NSInteger)delay
 {
     wrapper->keyboard->addKeyPress(nr, delay);
@@ -1665,21 +1660,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 - (NSInteger)chipCount
 {
     return [self unwrap]->chipCount();
-}
-
-- (NSInteger)chipType:(NSInteger)nr;
-{
-    return [self unwrap]->chipType((unsigned)nr);
-}
-
-- (NSInteger)chipAddr:(NSInteger)nr;
-{
-    return [self unwrap]->chipAddr((unsigned)nr);
-}
-
-- (NSInteger)chipSize:(NSInteger)nr;
-{
-    return [self unwrap]->chipSize((unsigned)nr);
 }
 
 @end
