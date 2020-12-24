@@ -360,8 +360,6 @@ Keyboard::abortAutoTyping()
 void
 Keyboard::_scheduleKeyAction(bool press, long nr, i64 delay)
 {
-    assert(delay < 50);
-
     debug(KBD_DEBUG, "Recording %d %ld %lld\n", press, nr, delay);
 
     addDelay(delay);
@@ -371,8 +369,6 @@ Keyboard::_scheduleKeyAction(bool press, long nr, i64 delay)
 void
 Keyboard::_scheduleKeyAction(bool press, u8 row, u8 col, i64 delay)
 {
-    assert(delay < 50);
-    
     debug(KBD_DEBUG, "Recording %d %d %d %lld\n", press, row, col, delay);
     
     addDelay(delay);
