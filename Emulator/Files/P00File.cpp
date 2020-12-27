@@ -162,3 +162,39 @@ P00File::getDestinationAddrOfItem()
 {
     return LO_HI(data[0x1A], data[0x1B]);
 }
+
+std::string
+P00File::collectionName()
+{
+    std::string result = "";
+    for (int i = 0; i < 17; i++) result += (char)data[0x08+i];
+    return result;
+}
+
+u64
+P00File::collectionCount()
+{
+    return 1;
+}
+
+std::string
+P00File::itemName(unsigned nr)
+{
+    assert(nr == 0);
+    return collectionName();
+}
+
+u64
+P00File::itemSize(unsigned nr)
+{
+    assert(nr == 0);
+    return size - 0x1C;
+}
+
+u8
+P00File::readByte(unsigned nr, u64 pos)
+{
+    assert(nr == 0);
+    assert(pos < itemSize(nr));
+    return data[0x1C + pos];
+}

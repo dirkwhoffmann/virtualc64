@@ -10,9 +10,12 @@
 #ifndef _P00_FILE_H
 #define _P00_FILE_H
 
-#include "AnyArchive.h"
+#include "AnyFile.h"
+#include "AnyCollection.h"
 
-class P00File : public AnyArchive {
+#include "AnyArchive.h" // DEPRECATED
+
+class P00File : public AnyArchive, AnyCollection {
 
     // Header signature
     static const u8 magicBytes[];
@@ -50,9 +53,20 @@ public:
     FileType type() override { return FILETYPE_P00; }
     bool hasSameType(const char *filename) override { return isP00File(filename); }
     
+
+    //
+    // Methods from AnyCollection
+    //
+
+    std::string collectionName() override;
+    u64 collectionCount() override;
+    std::string itemName(unsigned nr) override;
+    u64 itemSize(unsigned nr) override;
+    u8 readByte(unsigned nr, u64 pos) override;
+    
     
     //
-    // Methods from AnyArchive
+    // Methods from AnyArchive (DEPRECATED)
     //
     
     int numberOfItems() override { return 1; }

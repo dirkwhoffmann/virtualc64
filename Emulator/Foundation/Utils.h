@@ -23,12 +23,15 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h>
+#include <string>
 
 #include "Debug.h"
 #include "C64Config.h"
 #include "C64Constants.h"
 #include "C64Types.h"
 #include "C64PrivateTypes.h"
+
+using std::string;
 
 // Returns true if this executable is a release build
 bool releaseBuild();

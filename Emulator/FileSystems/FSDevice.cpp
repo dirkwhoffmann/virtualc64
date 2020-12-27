@@ -34,7 +34,7 @@ FSDevice::makeWithFormat(DiskType type)
 }
 
 FSDevice *
-FSDevice::makeWithD64(D64File *d64, FSError *error)
+FSDevice::makeWithD64(D64File *d64, FSError *err)
 {
     assert(d64);
 
@@ -45,7 +45,7 @@ FSDevice::makeWithD64(D64File *d64, FSError *error)
     FSDevice *device = makeWithFormat(descriptor);
 
     // Import file system
-    if (!device->importVolume(d64->getData(), d64->getSize(), error)) {
+    if (!device->importVolume(d64->getData(), d64->getSize(), err)) {
         delete device;
         return nullptr;
     }
@@ -54,10 +54,37 @@ FSDevice::makeWithD64(D64File *d64, FSError *error)
 }
 
 FSDevice *
-FSDevice::makeWithDisk(class Disk *disk, FSError *error)
+FSDevice::makeWithDisk(class Disk *disk, FSError *err)
 {
-    assert(false);
-    return nullptr;
+    assert(disk);
+
+    // Translate the GCR stream into a byte stream
+    u8 buffer[D64_802_SECTORS];
+    size_t len = disk->decodeDisk(buffer);
+    
+    // Create a suitable device descriptor
+    FSDeviceDescriptor descriptor = FSDeviceDescriptor(DISK_SS_SD);
+    switch (len) {
+            
+        case D64_683_SECTORS: descriptor.numCyls = 35; break;
+        case D64_768_SECTORS: descriptor.numCyls = 40; break;
+        case D64_802_SECTORS: descriptor.numCyls = 42; break;
+
+        default:
+            *err = FS_CORRUPTED;
+            return nullptr;
+    }
+        
+    // Create the device
+    FSDevice *device = makeWithFormat(descriptor);
+
+    // Import file system
+    if (!device->importVolume(buffer, len, err)) {
+        delete device;
+        return nullptr;
+    }
+    
+    return device;
 }
 
 FSDevice *

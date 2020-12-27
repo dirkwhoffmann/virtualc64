@@ -55,7 +55,7 @@ public:
     static D64File *makeWithAnyArchive(AnyArchive *otherArchive);
     static D64File *makeWithDisk(Disk *disk);
     static D64File *makeWithDrive(Drive *drive);
-    static D64File *makeWithVolume(class FSDevice &volume, FSError *error);
+    static D64File *makeWithVolume(class FSDevice &volume, FSError *err);
 
 
     //

@@ -7,7 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "FSDescriptors.h"
+// #include "FSDescriptors.h"
+#include "C64.h"
 
 FSDeviceDescriptor::FSDeviceDescriptor(DiskType type, FSVolumeType dos)
 {
@@ -31,6 +32,23 @@ FSDeviceDescriptor::FSDeviceDescriptor(DiskType type, FSVolumeType dos)
             assert(false);
     }
 }
+
+/*
+FSDeviceDescriptor::FSDeviceDescriptor(class D64File *d64)
+{
+    dos = FS_CBM_DOS;
+    numCyls = d64->numberOfTracks();
+    numHeads = 1;
+}
+
+FSDeviceDescriptor::FSDeviceDescriptor(class Disk *disk)
+{
+    dos = FS_CBM_DOS;
+    numCyls = (disk->nonemptyHalftracks() + 1) / 2;
+    numCyls = MAX(35, MIN(numCyls, 42));
+    numHeads = 1;
+}
+*/
 
 bool
 FSDeviceDescriptor::isTrackSectorPair(Track t, Sector s)

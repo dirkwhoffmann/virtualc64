@@ -151,7 +151,7 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
         *ptr++ = LO_BYTE(startAddr);
         *ptr++ = HI_BYTE(startAddr);
         
-        // Start address (2 bytes)
+        // End address (2 bytes)
         u16 endAddr = startAddr + otherArchive->getSizeOfItem();
         *ptr++ = LO_BYTE(endAddr);
         *ptr++ = HI_BYTE(endAddr);
