@@ -122,7 +122,6 @@ CIA::_dump()
 {
     _inspect();
 
-    msg("                   Clock : %lu\n", clock());
     msg("                Sleeping : %s\n", sleeping ? "yes" : "no");
     msg("               Tiredness : %d\n", tiredness);
     msg(" Most recent sleep cycle : %lld\n", sleepCycle);

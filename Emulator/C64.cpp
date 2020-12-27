@@ -1066,55 +1066,6 @@ C64::clearControlFlags(u32 flags)
     synchronized { runLoopCtrl &= ~flags; }
 }
 
-/*
-void
-C64::restartTimer()
-{
-    u64 kernelNow = mach_absolute_time();
-    u64 nanoNow = abs_to_nanos(kernelNow);
-    
-    nanoTargetTime = nanoNow + vic.getFrameDelay();
-}
-*/
-
-/*
-void
-C64::synchronizeTiming()
-{
-    const u64 earlyWakeup = 1500000;
-    
-    // Get current time in nano seconds
-    u64 nanoAbsTime = abs_to_nanos(mach_absolute_time());
-    
-    // Check how long we're supposed to sleep
-    i64 timediff = (i64)nanoTargetTime - (i64)nanoAbsTime;
-    if (timediff > 200000000 || timediff < -200000000) {
-        
-        // The emulator seems to be out of sync, so we better reset the
-        // synchronization timer
-        
-        trace(RUN_DEBUG, "Synchronization lost: (%lld)\n", timediff);
-        restartTimer();
-    }
-    
-    // Convert nanoTargetTime into kernel unit
-    i64 kernelTargetTime = nanos_to_abs(nanoTargetTime);
-    
-    // Sleep and update target timer
-    i64 jitter = sleepUntil(kernelTargetTime, earlyWakeup);
-    nanoTargetTime += vic.getFrameDelay();
-    
-    if (jitter > 1000000000) {
-        
-        // The emulator did not keep up with the real time clock. Instead of
-        // running behind for a long time, we reset the synchronization timer
-        
-        trace(RUN_DEBUG, "Jitter exceeds limit: (%lld)\n", jitter);
-        restartTimer();
-    }
-}
-*/
-
 void
 C64::requestAutoSnapshot()
 {
@@ -1171,9 +1122,10 @@ void C64::loadFromSnapshot(Snapshot *snapshot)
         
         // Make sure the emulator is not running
         assert(!isRunning());
-        
+
         // Restore the saved state
         load(ptr);
+        if (SNP_DEBUG) dump();
         
         // Clear the keyboard matrix to avoid constantly pressed keys
         keyboard.releaseAll();
@@ -1200,32 +1152,6 @@ C64::romCRC32(RomType type)
             assert(false);
     }
 }
-
-/*
-u32
-C64::basicRomCRC32()
-{
-    return hasBasicRom() ? crc32(mem.rom + 0xA000, 0x2000) : 0;
-}
-
-u32
-C64::charRomCRC32()
-{
-    return hasCharRom() ? crc32(mem.rom + 0xD000, 0x1000) : 0;
-}
-
-u32
-C64::kernalRomCRC32()
-{
-    return hasKernalRom() ? crc32(mem.rom + 0xE000, 0x2000) : 0;
-}
-
-u32
-C64::vc1541RomCRC32()
-{
-    return hasVC1541Rom() ? crc32(drive8.mem.rom, 0x4000) : 0;
-}
-*/
 
 u64
 C64::romFNV64(RomType type)

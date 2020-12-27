@@ -228,8 +228,15 @@ HardwareComponent::dumpConfig()
 void
 HardwareComponent::dump()
 {
-    msg("%s (memory location: %p)\n\n", getDescription(), this);
+    // Dump all subcomponents
+    for (HardwareComponent *c : subComponents) {
+        c->dump();
+    }
+
+    // Dump this component
+    msg("%s (%p):\n", getDescription(), this);
     _dump();
+    msg("\n");
 }
 
 void

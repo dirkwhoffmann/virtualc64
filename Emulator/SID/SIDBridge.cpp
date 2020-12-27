@@ -439,6 +439,7 @@ size_t
 SIDBridge::didLoadFromBuffer(u8 *buffer)
 {
     clearRingbuffer();
+    for (int i = 0; i < 4; i++) sidStream[i].clear(0);
     return 0;
 }
 
@@ -463,6 +464,8 @@ SIDBridge::_dump()
 void
 SIDBridge::_dump(int nr)
 {
+    resid[nr].inspect();
+    
     SIDInfo sidinfo;
     VoiceInfo voiceinfo[3];
     SIDRevision residRev = resid[nr].getRevision();
@@ -722,13 +725,13 @@ i64 SIDBridge::executeCycles(u64 numCycles)
         case ENGINE_FASTSID:
 
             // Run the primary SID (which is always enabled)
-            numSamples = fastsid[0].executeCycles(numCycles, buffer[0]);
+            numSamples = fastsid[0].executeCycles(numCycles, sidStream[0]);
             
             // Run all other SIDS (if any)
             if (config.enabled > 1) {
                 for (int i = 1; i < 4; i++) {
                     if (isEnabled(i)) {
-                        u64 numSamples2 = fastsid[i].executeCycles(numCycles, buffer[i]);
+                        u64 numSamples2 = fastsid[i].executeCycles(numCycles, sidStream[i]);
                         numSamples = min(numSamples, numSamples2);
                     }
                 }
@@ -738,13 +741,13 @@ i64 SIDBridge::executeCycles(u64 numCycles)
         case ENGINE_RESID:
 
             // Run the primary SID (which is always enabled)
-            numSamples = resid[0].executeCycles(numCycles, buffer[0]);
+            numSamples = resid[0].executeCycles(numCycles, sidStream[0]);
             
             // Run all other SIDS (if any)
             if (config.enabled > 1) {
                 for (int i = 1; i < 4; i++) {
                     if (isEnabled(i)) {
-                        u64 numSamples2 = resid[i].executeCycles(numCycles, buffer[i]);
+                        u64 numSamples2 = resid[i].executeCycles(numCycles, sidStream[i]);
                         numSamples = min(numSamples, numSamples2);
                     }
                 }
@@ -766,8 +769,7 @@ i64 SIDBridge::executeCycles(u64 numCycles)
         handleBufferOverflow();
     }
     
-    debug(SID_EXEC, "(%d,%d,%d...) vol0: %f pan0: %f volL: %f volR: %f\n",
-          samples[0][0], samples[0][1], samples[0][2],
+    debug(SID_EXEC, "vol0: %f pan0: %f volL: %f volR: %f\n",
           vol[0], pan[0], volL.current, volR.current);
 
     // Convert sound samples to floating point values and write into ringbuffer
@@ -775,10 +777,10 @@ i64 SIDBridge::executeCycles(u64 numCycles)
         
         float ch0, ch1, ch2, ch3, l, r;
         
-        ch0 = (float)buffer[0].read()    * vol[0];
-        ch1 = (float)buffer[1].read(0.0) * vol[1];
-        ch2 = (float)buffer[2].read(0.0) * vol[2];
-        ch3 = (float)buffer[3].read(0.0) * vol[3];
+        ch0 = (float)sidStream[0].read()    * vol[0];
+        ch1 = (float)sidStream[1].read(0.0) * vol[1];
+        ch2 = (float)sidStream[2].read(0.0) * vol[2];
+        ch3 = (float)sidStream[3].read(0.0) * vol[3];
 
         // Compute left channel output
         l =
@@ -814,8 +816,7 @@ SIDBridge::clearSampleBuffers()
 void
 SIDBridge::clearSampleBuffer(long nr)
 {
-    memset(samples[nr], 0, sizeof(samples[nr]));
-    for (int i = 0; i < 4; i++) buffer[i].clear(0);
+    for (int i = 0; i < 4; i++) sidStream[i].clear(0);
 }
 
 void

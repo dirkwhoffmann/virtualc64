@@ -46,6 +46,9 @@ public:
     // Creates a file system from a D64 image
     static FSDevice *makeWithD64(class D64File *d64, FSError *error);
 
+    // Creates a file system from a GCR encoded disk
+    static FSDevice *makeWithDisk(class Disk *disk, FSError *error);
+
     // Creates a file from an object implementing the Archive interface
     static FSDevice *makeWithArchive(AnyArchive *otherArchive, FSError *error);
 

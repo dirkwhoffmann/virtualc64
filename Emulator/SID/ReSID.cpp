@@ -246,5 +246,5 @@ ReSID::executeCycles(u64 numCycles, SampleStream &stream)
 i64
 ReSID::executeCycles(u64 numCycles)
 {
-    return executeCycles(numCycles, bridge.buffer[nr]);
+    return executeCycles(numCycles, bridge.sidStream[nr]);
 }

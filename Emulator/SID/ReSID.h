@@ -42,11 +42,7 @@ class ReSID : public C64Component {
     // Result of the latest inspection
     SIDInfo info;
     VoiceInfo voiceInfo[3];
-    
-public:
-    
-    void clock() { sid->clock(); }
-    
+        
 private:
     
     // ReSID state
@@ -136,6 +132,21 @@ private:
         & st.write_pipeline
         & st.write_address
         & st.voice_mask
+        & st.accumulator
+        & st.shift_register
+        & st.shift_register_reset
+        & st.shift_pipeline
+        & st.pulse_output
+        & st.floating_output_ttl
+        & st.rate_counter
+        & st.rate_counter_period
+        & st.exponential_counter
+        & st.exponential_counter_period
+        & st.envelope_counter
+        & st.envelope_state
+        & st.hold_zero
+        & st.envelope_pipeline
+        /*
         & st.accumulator[0]
         & st.accumulator[1]
         & st.accumulator[2]
@@ -178,11 +189,11 @@ private:
         & st.envelope_pipeline[0]
         & st.envelope_pipeline[1]
         & st.envelope_pipeline[2]
-        
+        */
         & model
         & clockFrequency
+        & samplingMethod
         & emulateFilter;
-
     }
     
     template <class T>

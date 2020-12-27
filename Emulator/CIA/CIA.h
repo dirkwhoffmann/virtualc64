@@ -288,8 +288,8 @@ private:
         worker
         
         & counterA
-        & latchA
         & counterB
+        & latchA
         & latchB
         & delay
         & feed
@@ -314,6 +314,7 @@ private:
         & INT
         & tiredness
         & idleCycles
+        & sleeping
         & sleepCycle
         & wakeUpCycle;
     }

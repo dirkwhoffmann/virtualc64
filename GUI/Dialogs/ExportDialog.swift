@@ -49,9 +49,10 @@ class ExportDialog: DialogController {
     let shrinkedHeight = CGFloat(196)
     let expandedHeight = CGFloat(476)
 
-    var driveNr: DriveID?
-    var drive: DriveProxy? { return driveNr == nil ? nil : c64.drive(driveNr!) }
-    var disk: D64FileProxy?
+    var driveID: DriveID?
+    var drive: DriveProxy? { return driveID == nil ? nil : c64.drive(driveID!) }
+    var disk: DiskProxy?
+    var d64: D64FileProxy?
     var volume: FSDeviceProxy?
 
     var errorReport: FSErrorReport?
@@ -186,13 +187,16 @@ class ExportDialog: DialogController {
         
         track()
         
-        driveNr = nr
+        driveID = nr
         
-        // Try to decode the selected disk with the D64 decoder
-        disk = D64FileProxy.make(withDrive: drive)
+        // Get the disk from the specified drive
+        disk = c64.drive(nr)?.disk
+        
+        // Try to decode the disk with the D64 decoder
+        d64 = D64FileProxy.make(withDrive: drive)
         
         // Try to extract the file system
-        if disk != nil { volume = FSDeviceProxy.make(withD64: disk) }
+        if d64 != nil { volume = FSDeviceProxy.make(withD64: d64) }
         
         // REMOVE ASAP
         volume?.printDirectory()
@@ -236,7 +240,7 @@ class ExportDialog: DialogController {
                     
         // Enable compatible file formats in the format selector popup
         formatPopup.autoenablesItems = false
-        formatPopup.item(at: 0)!.isEnabled = disk != nil    // D64
+        formatPopup.item(at: 0)!.isEnabled = d64 != nil    // D64
         formatPopup.item(at: 1)!.isEnabled = volume != nil  // T64
         formatPopup.item(at: 2)!.isEnabled = volume != nil  // PRG
         formatPopup.item(at: 3)!.isEnabled = volume != nil  // P00
@@ -365,14 +369,14 @@ class ExportDialog: DialogController {
     
     func updateDiskIcon() {
         
-        if driveNr == nil {
+        if driveID == nil {
             
-            diskIcon.image = disk?.icon(protected: false)
+            diskIcon.image = d64?.icon(protected: false)
             
         } else {
             
             let wp = drive!.hasWriteProtectedDisk()
-            diskIcon.image = disk!.icon(protected: wp)
+            diskIcon.image = d64!.icon(protected: wp)
         }
     }
     
@@ -381,7 +385,7 @@ class ExportDialog: DialogController {
         var text = "This disk contains an unrecognized GCR stream"
         var color = NSColor.warningColor
         
-        if disk != nil {
+        if d64 != nil {
             text = "Commodore 64 Floppy Disk"
             color = NSColor.textColor
         }
@@ -395,8 +399,8 @@ class ExportDialog: DialogController {
         var text = "This disk contains un unknown track and sector format"
         var color = NSColor.warningColor
         
-        if disk != nil {
-            text = disk!.layoutInfo
+        if d64 != nil {
+            text = d64!.layoutInfo
             color = .secondaryLabelColor
         }
 
@@ -505,12 +509,66 @@ class ExportDialog: DialogController {
     }
 
     func exportToFile(url: URL) {
+        
+        let suffix = url.pathExtension
 
         track("url = \(url)")
-        track("IMPLEMENTATION MISSING")
-        fatalError()
-        // parent.mydocument.export(drive: driveNr!, to: url, diskFileProxy: disk!)
-        // hideSheet()
+        track("suffix = \(suffix)")
+
+        // Convert the D64 archive into the target format
+        var archive: AnyArchiveProxy?
+        switch suffix.uppercased() {
+        
+        case "D64":
+            track("Exporting to D64 format")
+            archive = d64
+            
+        case "T64":
+            track("Exporting to T64 format")
+            archive = T64FileProxy.make(withAnyArchive: d64!)
+            
+        case "PRG":
+            track("Exporting to PRG format")
+            if d64!.numberOfItems() > 1 {
+                myDocument.showDiskHasMultipleFilesAlert(format: "PRG")
+            }
+            archive = PRGFileProxy.make(withAnyArchive: d64!)
+            
+        case "P00":
+            track("Exporting to P00 format")
+            if d64!.numberOfItems() > 1 {
+                myDocument.showDiskHasMultipleFilesAlert(format: "P00")
+            }
+            archive = P00FileProxy.make(withAnyArchive: d64!)
+            
+        case "G64":
+            track("Exporting to G64 format")
+            archive = G64FileProxy.make(withDisk: disk)
+
+        default:
+
+            track("Exporting to D64 format (no matching suffix)")
+            archive = d64
+        }
+            
+        // Serialize archive
+        let data = NSMutableData.init(length: archive!.sizeOnDisk())!
+        archive!.write(toBuffer: data.mutableBytes)
+        
+        // Write to file
+        if !data.write(to: url, atomically: true) {
+            myDocument.showExportErrorAlert(url: url)
+            return
+        }
+        
+        // Mark disk as "not modified"
+        c64.drive(driveID!)
+        c64.drive(driveID!)?.setModifiedDisk(false)
+        
+        // Remember export URL
+        myAppDelegate.noteNewRecentlyExportedDiskURL(url, drive: driveID!)
+
+        return
     }
 
     func exportToDirectory() {
@@ -646,10 +704,12 @@ class ExportDialog: DialogController {
     @IBAction func exportAction(_ sender: NSButton!) {
         
         switch formatPopup.indexOfSelectedItem {
-        case 0: exportToFile(allowedTypes: ["adf", "ADF"])
-        case 1: exportToFile(allowedTypes: ["img", "IMG"])
-        case 2: exportToFile(allowedTypes: ["ima", "IMA"])
-        case 3: exportToDirectory()
+        case 0: exportToFile(allowedTypes: ["d64", "D64"])
+        case 1: exportToFile(allowedTypes: ["t64", "T64"])
+        case 2: exportToFile(allowedTypes: ["prg", "PRG"])
+        case 3: exportToFile(allowedTypes: ["p00", "P00"])
+        case 4: exportToFile(allowedTypes: ["g64", "G64"])
+        case 5: exportToDirectory()
         default: fatalError()
         }
     }

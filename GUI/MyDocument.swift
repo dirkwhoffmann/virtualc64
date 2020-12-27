@@ -400,6 +400,7 @@ class MyDocument: NSDocument {
     // Exporting disks
     //
     
+    // DEPRECATED
     func export(drive: DriveID, to url: URL, ofType typeName: String) -> Bool {
         
         track("url = \(url) typeName = \(typeName)")

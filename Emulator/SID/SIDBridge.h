@@ -114,8 +114,8 @@ public:
      * storing the created sound samples.
      */
     static const size_t sampleBufferSize = 2048; // DEPRECATED
-    short samples[4][sampleBufferSize]; // DEPRECATED
-    SampleStream buffer[4];
+    // short samples[4][sampleBufferSize]; // DEPRECATED
+    SampleStream sidStream[4];
     
     
     //
@@ -220,9 +220,11 @@ private:
         & config.sampling
         & config.volL
         & config.volR
-        & config.pan
         & config.vol
+        & config.pan
+        & cycles
         & cpuFrequency
+        & lastAlignment
         & volL
         & volR
         & vol

@@ -134,10 +134,11 @@ Gw
                             <menu key="menu" id="wXQ-Ds-d9k">
                                 <items>
                                     <menuItem title="D64" state="on" id="TdY-YT-WmZ" userLabel="P00 Format"/>
-                                    <menuItem title="TAP" tag="1" id="KJ6-Qv-r3b" userLabel="P00 Format"/>
+                                    <menuItem title="T64" tag="1" id="KJ6-Qv-r3b" userLabel="P00 Format"/>
                                     <menuItem title="PRG" tag="2" id="oCk-TE-PNF" userLabel="P00 Format"/>
-                                    <menuItem title="P00" tag="2" id="IOi-Bm-zcy" userLabel="P00 Format"/>
-                                    <menuItem title="Directory" tag="3" id="6en-Pe-BdQ" userLabel="P00 Format"/>
+                                    <menuItem title="P00" tag="3" id="IOi-Bm-zcy" userLabel="P00 Format"/>
+                                    <menuItem title="G64" tag="4" id="7Is-lU-3Yx" userLabel="P00 Format"/>
+                                    <menuItem title="Directory" tag="5" id="6en-Pe-BdQ" userLabel="P00 Format"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
@@ -161,7 +162,7 @@ Gw
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="15" headerView="aVI-pX-WD8" id="1bQ-ti-kY4">
-                                    <rect key="frame" x="0.0" y="-22" width="570" height="159"/>
+                                    <rect key="frame" x="0.0" y="-22" width="564" height="159"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="1" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -359,7 +360,7 @@ Gw
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="15" width="32" minWidth="10" maxWidth="3.4028234663852886e+38" id="pPY-Oz-38w">
+                                        <tableColumn identifier="15" width="10" minWidth="10" maxWidth="3.4028234663852886e+38" id="pPY-Oz-38w">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="F">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -379,7 +380,7 @@ Gw
                                 </tableView>
                             </subviews>
                         </clipView>
-                        <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="yXo-Hr-haP">
+                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="yXo-Hr-haP">
                             <rect key="frame" x="1" y="172" width="564" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
@@ -388,7 +389,7 @@ Gw
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <tableHeaderView key="headerView" wantsLayer="YES" id="aVI-pX-WD8">
-                            <rect key="frame" x="0.0" y="0.0" width="570" height="28"/>
+                            <rect key="frame" x="0.0" y="0.0" width="564" height="28"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>

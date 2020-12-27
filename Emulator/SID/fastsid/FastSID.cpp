@@ -372,7 +372,7 @@ FastSID::executeCycles(u64 numCycles, SampleStream &stream)
 i64
 FastSID::executeCycles(u64 numCycles)
 {
-    return executeCycles(numCycles, bridge.buffer[nr]);
+    return executeCycles(numCycles, bridge.sidStream[nr]);
 }
 
 void

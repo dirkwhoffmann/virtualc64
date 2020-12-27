@@ -126,6 +126,8 @@ Snapshot::makeWithC64(C64 *c64)
     snapshot = new Snapshot(c64->size());
     
     snapshot->takeScreenshot(c64);
+
+    if (SNP_DEBUG) c64->dump();
     c64->save(snapshot->getData());
     
     return snapshot;

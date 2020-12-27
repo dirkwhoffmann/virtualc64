@@ -54,6 +54,13 @@ FSDevice::makeWithD64(D64File *d64, FSError *error)
 }
 
 FSDevice *
+FSDevice::makeWithDisk(class Disk *disk, FSError *error)
+{
+    assert(false);
+    return nullptr;
+}
+
+FSDevice *
 FSDevice::makeWithArchive(AnyArchive *archive, FSError *error)
 {
     assert(archive);
