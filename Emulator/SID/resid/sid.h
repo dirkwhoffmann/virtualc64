@@ -98,9 +98,10 @@ public:
   void input(short sample);
 
   // 16-bit output (AUDIO OUT).
-  short output();
+  int output();
 
  public:
+    
   static double I0(double x);
   int clock_fast(cycle_count& delta_t, short* buf, int n, int interleave);
   int clock_interpolate(cycle_count& delta_t, short* buf, int n, int interleave);
@@ -180,7 +181,7 @@ public:
 // Read 16-bit sample from audio output.
 // ----------------------------------------------------------------------------
 RESID_INLINE
-short SID::output()
+int SID::output()
 {
   return extfilt.output();
 }
@@ -236,3 +237,4 @@ void SID::clock()
 } // namespace reSID
 
 #endif // not RESID_SID_H
+

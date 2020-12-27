@@ -683,4 +683,3 @@ void Filter::set_sum_mix()
 }
 
 } // namespace reSID
-
