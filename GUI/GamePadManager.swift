@@ -9,9 +9,9 @@
 
 // import IOKit.pwr_mgt
 
-/* Holds and manages an array of GamePad objects.
+/* An object of this class holds and manages an array of GamePad objects.
  * Up to five gamepads are managed. The first three gamepads are initialized
- * by default and represent two keyboard emulated joysticks and a mouse.
+ * by default and represent a mouse and two keyboard emulated joysticks.
  * All remaining gamepads are added dynamically when HID devices are connected.
  */
 class GamePadManager {
@@ -41,20 +41,21 @@ class GamePadManager {
                                         IOOptionBits(kIOHIDOptionsTypeNone))
         
         // Add default devices
-        gamePads[0] = GamePad(manager: self, type: CPD_JOYSTICK)
-        gamePads[0]!.name = "Joystick Keyset 1"
-        gamePads[0]!.setIcon(name: "devKeyset1Template")
+        gamePads[0] = GamePad(manager: self, type: CPD_MOUSE)
+        gamePads[0]!.name = "Mouse"
+        gamePads[0]!.setIcon(name: "devMouseTemplate")
         gamePads[0]!.keyMap = 0
-        
+
         gamePads[1] = GamePad(manager: self, type: CPD_JOYSTICK)
-        gamePads[1]!.name = "Joystick Keyset 2"
-        gamePads[1]!.setIcon(name: "devKeyset2Template")
+        gamePads[1]!.name = "Joystick Keyset 1"
+        gamePads[1]!.setIcon(name: "devKeyset1Template")
         gamePads[1]!.keyMap = 1
         
-        gamePads[2] = GamePad(manager: self, type: CPD_MOUSE)
-        gamePads[2]!.name = "Mouse"
-        gamePads[2]!.setIcon(name: "devMouseTemplate")
-        
+        gamePads[2] = GamePad(manager: self, type: CPD_JOYSTICK)
+        gamePads[2]!.name = "Joystick Keyset 2"
+        gamePads[2]!.setIcon(name: "devKeyset2Template")
+        gamePads[2]!.keyMap = 2
+                
         // Prepare to accept HID devices
         let deviceCriteria = [
             [
@@ -139,35 +140,14 @@ class GamePadManager {
         
         // Bind the new device
         gamePads[slot]?.port = port
-        
-        // Update the device type on the C64 side
-        /*
-        parent.c64.suspend()
-        let deviceType = gamePads[slot]?.type ?? CPD_NONE
-        if port == 1 { parent.c64.port1.connect(deviceType) }
-        if port == 2 { parent.c64.port2.connect(deviceType) }
-        parent.c64.resume()
-        */
     }
 
-    func getName(slot: Int) -> String {
-        
-        if let name = gamePads[slot]?.name {
-            return name
-        } else {
-            return "USB device"
-        }
+    func name(slot: Int) -> String {
+        return gamePads[slot]?.name ?? "External device"
     }
 
-    func getIcon(slot: Int) -> NSImage {
-        
-        if let icon = gamePads[slot]?.icon {
-            return icon
-        } else if gamePads[slot]?.isMouse == true {
-            return NSImage.init(named: "devMouseTemplate")!
-        } else {
-            return NSImage.init(named: "devGamepad1Template")!
-        }
+    func icon(slot: Int) -> NSImage {
+        return gamePads[slot]?.icon ?? NSImage.init(named: "devGamepad1Template")!
     }
 
     func getSlot(port: Int) -> Int {
@@ -181,11 +161,11 @@ class GamePadManager {
         
         return result
     }
-
-  //
-   // HID stuff
-   //
-   
+    
+    //
+    // HID stuff
+    //
+    
    func isBuiltIn(device: IOHIDDevice) -> Bool {
        
        let key = kIOHIDBuiltInKey as CFString
@@ -334,8 +314,8 @@ class GamePadManager {
         
         for s in slots {
             if let item = popup.menu?.item(withTag: s) {
-                item.title = getName(slot: s)
-                item.image = getIcon(slot: s)
+                item.title = name(slot: s)
+                item.image = icon(slot: s)
                 item.isEnabled = isUsed(slot: s)
                 item.isHidden = isEmpty(slot: s) && hide
             }

@@ -313,9 +313,9 @@
                                 <menu key="menu" autoenablesItems="NO" id="zHf-yH-YTM">
                                     <items>
                                         <menuItem title="None" state="on" image="devNoneTemplate" tag="-1" id="VD3-Wr-Ufe"/>
-                                        <menuItem title="Keyset 1" image="devKeyset1Template" id="L2h-xt-iO6"/>
-                                        <menuItem title="Keyset 2" image="devKeyset2Template" tag="1" id="Ohe-Pi-c1S"/>
-                                        <menuItem title="Mouse" image="devMouseTemplate" tag="2" id="yOc-MG-77p"/>
+                                        <menuItem title="Mouse" image="devMouseTemplate" id="yOc-MG-77p"/>
+                                        <menuItem title="Keyset 1" image="devKeyset1Template" tag="1" id="L2h-xt-iO6"/>
+                                        <menuItem title="Keyset 2" image="devKeyset2Template" tag="2" id="Ohe-Pi-c1S"/>
                                         <menuItem title="USB Joystick 1" image="devGamepad1Template" tag="3" id="1PP-xx-NoT" userLabel="USB Joystick 1">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
@@ -344,9 +344,9 @@
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
                                     <items>
                                         <menuItem title="None" state="on" image="devNoneTemplate" tag="-1" id="xyt-eC-0im"/>
-                                        <menuItem title="Keyset 1" image="devKeyset1Template" id="PAa-za-K8O"/>
-                                        <menuItem title="Keyset 2" image="devKeyset2Template" tag="1" id="1M8-Dz-dop"/>
-                                        <menuItem title="Mouse" image="devMouseTemplate" tag="2" id="JM3-8Y-xZU"/>
+                                        <menuItem title="Mouse" image="devMouseTemplate" id="JM3-8Y-xZU"/>
+                                        <menuItem title="Keyset 1" image="devKeyset1Template" tag="1" id="PAa-za-K8O"/>
+                                        <menuItem title="Keyset 2" image="devKeyset2Template" tag="2" id="1M8-Dz-dop"/>
                                         <menuItem title="USB Joystick 1" image="devGamepad1Template" tag="3" id="Ahc-WA-2jp">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>

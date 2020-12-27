@@ -298,23 +298,25 @@ extension Keys {
     struct Dev {
         
         // Emulation keys
-        static let joyKeyMap1        = "VC64_DEV_JoyKeyMap1"
-        static let joyKeyMap2        = "VC64_DEV_JoyKeyMap2"
-        static let disconnectJoyKeys = "VC64_DEV_DisconnectKeys"
+        static let mouseKeyMap       = "VC64_CON_MouseKeyMap"
+        static let joyKeyMap1        = "VC64_CON_JoyKeyMap1"
+        static let joyKeyMap2        = "VC64_CON_JoyKeyMap2"
+        static let disconnectJoyKeys = "VC64_CON_DisconnectKeys"
         
         // Joysticks
-        static let autofire          = "VC64_DEV_Autofire"
-        static let autofireBullets   = "VC64_DEV_AutofireBullets"
-        static let autofireFrequency = "VC64_DEV_AutofireFrequency"
+        static let autofire          = "VC64_CON_Autofire"
+        static let autofireBullets   = "VC64_CON_AutofireBullets"
+        static let autofireFrequency = "VC64_CON_AutofireFrequency"
         
         // Mouse
-        static let mouseModel        = "VC64_DEV_MouseModel"
+        static let mouseModel        = "VC64_CON_MouseModel"
     }
 }
 
 struct DevicesDefaults {
     
     // Joysticks
+    let mouseKeyMap: [MacKey: Int]
     let joyKeyMap1: [MacKey: Int]
     let joyKeyMap2: [MacKey: Int]
     let disconnectJoyKeys: Bool
@@ -348,6 +350,7 @@ struct DevicesDefaults {
     
     static let std = DevicesDefaults.init(
         
+        mouseKeyMap: [:],
         joyKeyMap1: stdKeyMap1,
         joyKeyMap2: stdKeyMap2,
         disconnectJoyKeys: true,

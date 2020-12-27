@@ -106,24 +106,14 @@ public:
 
     
     //
-    // Inputs
+    // Audio streams
     //
     
-    /* Sample buffers. There is a seperate buffer for each of the four SID
-     * channels. Every reSID or fastSID instance uses one of these buffers for
-     * storing the created sound samples.
+    /* The four SID streams. Each stream stores the sound samples produced by
+     * one of the four supported SIDs.
      */
-    static const size_t sampleBufferSize = 2048; // DEPRECATED
-    // short samples[4][sampleBufferSize]; // DEPRECATED
     SampleStream sidStream[4];
-    
-    
-    //
-    // Outputs
-    //
-
-public:
-    
+        
     /* The mixed stereo stream. This stream contains the final audio stream
      * ready to be handed over to the audio device of the host OS.
      */

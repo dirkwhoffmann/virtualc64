@@ -82,7 +82,8 @@ class Preferences {
     //
     
     // Emulation keys
-    var keyMaps = [ DevicesDefaults.std.joyKeyMap1,
+    var keyMaps = [ DevicesDefaults.std.mouseKeyMap,
+                    DevicesDefaults.std.joyKeyMap1,
                     DevicesDefaults.std.joyKeyMap2 ]
     
     // Joystick
@@ -202,8 +203,9 @@ class Preferences {
         let defaults = UserDefaults.standard
         
         // Emulation keys
-        defaults.decode(&keyMaps[0], forKey: Keys.Dev.joyKeyMap1)
-        defaults.decode(&keyMaps[1], forKey: Keys.Dev.joyKeyMap2)
+        defaults.decode(&keyMaps[0], forKey: Keys.Dev.mouseKeyMap)
+        defaults.decode(&keyMaps[1], forKey: Keys.Dev.joyKeyMap1)
+        defaults.decode(&keyMaps[2], forKey: Keys.Dev.joyKeyMap2)
         disconnectJoyKeys = defaults.bool(forKey: Keys.Dev.disconnectJoyKeys)
         
         // Joysticks
@@ -217,8 +219,9 @@ class Preferences {
         let defaults = UserDefaults.standard
         
         // Emulation keys
-        defaults.encode(keyMaps[0], forKey: Keys.Dev.joyKeyMap1)
-        defaults.encode(keyMaps[1], forKey: Keys.Dev.joyKeyMap2)
+        defaults.encode(keyMaps[0], forKey: Keys.Dev.mouseKeyMap)
+        defaults.encode(keyMaps[1], forKey: Keys.Dev.joyKeyMap1)
+        defaults.encode(keyMaps[2], forKey: Keys.Dev.joyKeyMap2)
         defaults.set(disconnectJoyKeys, forKey: Keys.Dev.disconnectJoyKeys)
         
         // Joysticks

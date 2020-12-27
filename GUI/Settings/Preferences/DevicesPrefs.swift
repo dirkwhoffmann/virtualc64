@@ -16,44 +16,42 @@ extension PreferencesController {
         
         func refreshKey(map: Int, dir: GamePadAction, button: NSButton, txt: NSTextField) {
             
-            var macKeyCode: NSAttributedString = NSAttributedString.init()
-            var macKeyDesc: String = ""
-            
+            var keyDesc = ""
+            var keyCode = ""
+
             // Which MacKey is assigned to this joystick action?
             for (key, direction) in pref.keyMaps[map] where direction == dir.rawValue {
-                let attr = [NSAttributedString.Key.foregroundColor: NSColor.black]
-                let myStr = NSString(format: "%02X", key.keyCode) as String
-                macKeyCode = NSAttributedString(string: myStr, attributes: attr)
-                macKeyDesc = key.stringValue
+                keyCode = NSString(format: "%02X", key.keyCode) as String
+                keyDesc = key.stringValue
                 break
             }
-            
+
             // Update text and button image
             if button.tag == devRecordedKey {
                 button.title = ""
-                button.image = NSImage(named: "key_red")
+                button.image = NSImage(named: "recordKeyRed")
                 button.imageScaling = .scaleAxesIndependently
             } else {
-                button.image = NSImage(named: "key")
+                button.image = NSImage(named: "recordKey")
                 button.imageScaling = .scaleAxesIndependently
             }
-            button.attributedTitle = macKeyCode
-            txt.stringValue = macKeyDesc
+            button.title = keyCode
+            txt.stringValue = keyDesc
         }
         
         // First joystick keyset
-        refreshKey(map: 0, dir: .PULL_UP, button: devUp1button, txt: devUp1)
-        refreshKey(map: 0, dir: .PULL_DOWN, button: devDown1button, txt: devDown1)
-        refreshKey(map: 0, dir: .PULL_LEFT, button: devLeft1button, txt: devLeft1)
-        refreshKey(map: 0, dir: .PULL_RIGHT, button: devRight1button, txt: devRight1)
-        refreshKey(map: 0, dir: .PRESS_FIRE, button: devFire1button, txt: devFire1)
+        refreshKey(map: 1, dir: .PULL_UP, button: devUp1button, txt: devUp1)
+        refreshKey(map: 1, dir: .PULL_DOWN, button: devDown1button, txt: devDown1)
+        refreshKey(map: 1, dir: .PULL_LEFT, button: devLeft1button, txt: devLeft1)
+        refreshKey(map: 1, dir: .PULL_RIGHT, button: devRight1button, txt: devRight1)
+        refreshKey(map: 1, dir: .PRESS_FIRE, button: devFire1button, txt: devFire1)
         
         // Second joystick keyset
-        refreshKey(map: 1, dir: .PULL_UP, button: devUp2button, txt: devUp2)
-        refreshKey(map: 1, dir: .PULL_DOWN, button: devDown2button, txt: devDown2)
-        refreshKey(map: 1, dir: .PULL_LEFT, button: devLeft2button, txt: devLeft2)
-        refreshKey(map: 1, dir: .PULL_RIGHT, button: devRight2button, txt: devRight2)
-        refreshKey(map: 1, dir: .PRESS_FIRE, button: devFire2button, txt: devFire2)
+        refreshKey(map: 2, dir: .PULL_UP, button: devUp2button, txt: devUp2)
+        refreshKey(map: 2, dir: .PULL_DOWN, button: devDown2button, txt: devDown2)
+        refreshKey(map: 2, dir: .PULL_LEFT, button: devLeft2button, txt: devLeft2)
+        refreshKey(map: 2, dir: .PULL_RIGHT, button: devRight2button, txt: devRight2)
+        refreshKey(map: 2, dir: .PRESS_FIRE, button: devFire2button, txt: devFire2)
         
         devDisconnectKeys.state = pref.disconnectJoyKeys ? .on : .off
         
@@ -83,6 +81,7 @@ extension PreferencesController {
     func gamePadAction(for tag: Int) -> (Int, GamePadAction) {
         
         switch tag {
+        case 5...6:   return (0, GamePadAction(rawValue: tag)!)      // Mouse
         case 0...4:   return (1, GamePadAction(rawValue: tag)!)      // Joy 1
         case 10...14: return (2, GamePadAction(rawValue: tag - 10)!) // Joy 2
         default:      fatalError()
@@ -96,6 +95,8 @@ extension PreferencesController {
     // Handles a key press event.
     // Returns true if the controller has responded to this key.
     func devKeyDown(with macKey: MacKey) -> Bool {
+        
+        track()
         
         // Only proceed if a recording sessing is in progress
         if devRecordedKey == nil { return false }
