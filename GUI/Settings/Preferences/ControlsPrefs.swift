@@ -9,7 +9,7 @@
 
 extension PreferencesController {
     
-    func refreshDevicesTab() {
+    func refreshControlsTab() {
         
         let port1 = c64.port1!
         let port2 = c64.port2!
@@ -27,7 +27,7 @@ extension PreferencesController {
             }
 
             // Update text and button image
-            if button.tag == devRecordedKey {
+            if button.tag == conRecordedKey {
                 button.title = ""
                 button.image = NSImage(named: "recordKeyRed")
                 button.imageScaling = .scaleAxesIndependently
@@ -40,20 +40,20 @@ extension PreferencesController {
         }
         
         // First joystick keyset
-        refreshKey(map: 1, dir: .PULL_UP, button: devUp1button, txt: devUp1)
-        refreshKey(map: 1, dir: .PULL_DOWN, button: devDown1button, txt: devDown1)
-        refreshKey(map: 1, dir: .PULL_LEFT, button: devLeft1button, txt: devLeft1)
-        refreshKey(map: 1, dir: .PULL_RIGHT, button: devRight1button, txt: devRight1)
-        refreshKey(map: 1, dir: .PRESS_FIRE, button: devFire1button, txt: devFire1)
+        refreshKey(map: 1, dir: .PULL_UP, button: conUp1button, txt: conUp1)
+        refreshKey(map: 1, dir: .PULL_DOWN, button: conDown1button, txt: conDown1)
+        refreshKey(map: 1, dir: .PULL_LEFT, button: conLeft1button, txt: conLeft1)
+        refreshKey(map: 1, dir: .PULL_RIGHT, button: conRight1button, txt: conRight1)
+        refreshKey(map: 1, dir: .PRESS_FIRE, button: conFire1button, txt: conFire1)
         
         // Second joystick keyset
-        refreshKey(map: 2, dir: .PULL_UP, button: devUp2button, txt: devUp2)
-        refreshKey(map: 2, dir: .PULL_DOWN, button: devDown2button, txt: devDown2)
-        refreshKey(map: 2, dir: .PULL_LEFT, button: devLeft2button, txt: devLeft2)
-        refreshKey(map: 2, dir: .PULL_RIGHT, button: devRight2button, txt: devRight2)
-        refreshKey(map: 2, dir: .PRESS_FIRE, button: devFire2button, txt: devFire2)
+        refreshKey(map: 2, dir: .PULL_UP, button: conUp2button, txt: conUp2)
+        refreshKey(map: 2, dir: .PULL_DOWN, button: conDown2button, txt: conDown2)
+        refreshKey(map: 2, dir: .PULL_LEFT, button: conLeft2button, txt: conLeft2)
+        refreshKey(map: 2, dir: .PULL_RIGHT, button: conRight2button, txt: conRight2)
+        refreshKey(map: 2, dir: .PRESS_FIRE, button: conFire2button, txt: conFire2)
         
-        devDisconnectKeys.state = pref.disconnectJoyKeys ? .on : .off
+        conDisconnectKeys.state = pref.disconnectJoyKeys ? .on : .off
         
         // Joystick buttons
          assert(pref.autofire == port2.autofire())
@@ -62,19 +62,19 @@ extension PreferencesController {
          assert(port1.autofire() == port2.autofire())
          assert(port1.autofireBullets() == port2.autofireBullets())
          assert(port1.autofireFrequency() == port2.autofireFrequency())
-         devAutofire.state = pref.autofire ? .on : .off
-         devAutofireCease.state = pref.autofireBullets > 0 ? .on : .off
-         devAutofireBullets.integerValue = Int(pref.autofireBullets.magnitude)
-         devAutofireFrequency.floatValue = pref.autofireFrequency
-         devAutofireCease.isEnabled = devAutofire.state == .on
-         devAutofireCeaseText.textColor = devAutofire.state == .on ? .controlTextColor : .disabledControlTextColor
-         devAutofireBullets.isEnabled = devAutofire.state == .on
-         devAutofireFrequency.isEnabled = devAutofire.state == .on
+         conAutofire.state = pref.autofire ? .on : .off
+         conAutofireCease.state = pref.autofireBullets > 0 ? .on : .off
+         conAutofireBullets.integerValue = Int(pref.autofireBullets.magnitude)
+         conAutofireFrequency.floatValue = pref.autofireFrequency
+         conAutofireCease.isEnabled = conAutofire.state == .on
+         conAutofireCeaseText.textColor = conAutofire.state == .on ? .controlTextColor : .disabledControlTextColor
+         conAutofireBullets.isEnabled = conAutofire.state == .on
+         conAutofireFrequency.isEnabled = conAutofire.state == .on
         
         // Mouse
         let model = c64.mouse.model()
-        devMouseModel.selectItem(withTag: model.rawValue)
-        devMouseInfo.isHidden = model == .MOUSE1350
+        conMouseModel.selectItem(withTag: model.rawValue)
+        conMouseInfo.isHidden = model == .MOUSE1350
     }
     
     // Translates a button tag back to the related slot and gamepad action
@@ -94,22 +94,22 @@ extension PreferencesController {
     
     // Handles a key press event.
     // Returns true if the controller has responded to this key.
-    func devKeyDown(with macKey: MacKey) -> Bool {
+    func conKeyDown(with macKey: MacKey) -> Bool {
         
         track()
         
         // Only proceed if a recording sessing is in progress
-        if devRecordedKey == nil { return false }
+        if conRecordedKey == nil { return false }
         
         track()
         
         // Record the key if it is not the ESC key
         if macKey != MacKey.escape {
-            let (slot, action) = gamePadAction(for: devRecordedKey!)
+            let (slot, action) = gamePadAction(for: conRecordedKey!)
             gamePadManager.gamePads[slot]?.bind(key: macKey, action: action)
         }
         
-        devRecordedKey = nil
+        conRecordedKey = nil
         refresh()
         return true
     }
@@ -118,19 +118,19 @@ extension PreferencesController {
     // Action methods
     //
     
-    @IBAction func devRecordKeyAction(_ sender: NSButton!) {
+    @IBAction func conRecordKeyAction(_ sender: NSButton!) {
         
-        devRecordedKey = sender.tag
+        conRecordedKey = sender.tag
         refresh()
     }
     
-    @IBAction func devDisconnectKeysAction(_ sender: NSButton!) {
+    @IBAction func conDisconnectKeysAction(_ sender: NSButton!) {
         
         pref.disconnectJoyKeys = (sender.state == .on)
         refresh()
     }
     
-    @IBAction func devDeleteKeysetAction(_ sender: NSButton!) {
+    @IBAction func conDeleteKeysetAction(_ sender: NSButton!) {
 
         assert(sender.tag >= 0 && sender.tag <= 2)
         
@@ -138,13 +138,13 @@ extension PreferencesController {
         refresh()
     }
 
-    @IBAction func devAutofireAction(_ sender: NSButton!) {
+    @IBAction func conAutofireAction(_ sender: NSButton!) {
         
         pref.autofire = (sender.state == .on)
         refresh()
     }
     
-    @IBAction func devAutofireCeaseAction(_ sender: NSButton!) {
+    @IBAction func conAutofireCeaseAction(_ sender: NSButton!) {
         
         let sign = sender.state == .on ? 1 : -1
         let bullets = pref.autofireBullets.magnitude
@@ -152,19 +152,19 @@ extension PreferencesController {
         refresh()
     }
     
-    @IBAction func devAutofireBulletsAction(_ sender: NSTextField!) {
+    @IBAction func conAutofireBulletsAction(_ sender: NSTextField!) {
         
         pref.autofireBullets = sender.integerValue
         refresh()
     }
     
-    @IBAction func devAutofireFrequencyAction(_ sender: NSSlider!) {
+    @IBAction func conAutofireFrequencyAction(_ sender: NSSlider!) {
         
         pref.autofireFrequency = sender.floatValue
         refresh()
     }
     
-    @IBAction func devMouseModelAction(_ sender: NSPopUpButton!) {
+    @IBAction func conMouseModelAction(_ sender: NSPopUpButton!) {
         
         proxy?.mouse.setModel(MouseModel.init(rawValue: sender.selectedTag())!)
         refresh()
@@ -174,13 +174,13 @@ extension PreferencesController {
     // Action methods (Misc)
     //
     
-    @IBAction func devPresetAction(_ sender: NSPopUpButton!) {
+    @IBAction func conPresetAction(_ sender: NSPopUpButton!) {
         
         track()
         assert(sender.selectedTag() == 0)
         
-        UserDefaults.resetDevicesUserDefaults()
-        pref.loadDevicesUserDefaults()
+        UserDefaults.resetControlsUserDefaults()
+        pref.loadControlsUserDefaults()
         refresh()
     }
 }

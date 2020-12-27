@@ -47,48 +47,48 @@ class PreferencesController: DialogController {
     @IBOutlet weak var emuCloseWithoutAskingButton: NSButton!
     
     //
-    // Devices preferences
+    // Controls preferences
     //
     
     // Tag of the button that is currently being recorded
-    var devRecordedKey: Int?
+    var conRecordedKey: Int?
     
     // Joystick emulation keys
-    @IBOutlet weak var devLeft1: NSTextField!
-    @IBOutlet weak var devLeft1button: NSButton!
-    @IBOutlet weak var devRight1: NSTextField!
-    @IBOutlet weak var devRight1button: NSButton!
-    @IBOutlet weak var devUp1: NSTextField!
-    @IBOutlet weak var devUp1button: NSButton!
-    @IBOutlet weak var devDown1: NSTextField!
-    @IBOutlet weak var devDown1button: NSButton!
-    @IBOutlet weak var devFire1: NSTextField!
-    @IBOutlet weak var devFire1button: NSButton!
-    @IBOutlet weak var devLeft2: NSTextField!
-    @IBOutlet weak var devLeft2button: NSButton!
-    @IBOutlet weak var devRight2: NSTextField!
-    @IBOutlet weak var devRight2button: NSButton!
-    @IBOutlet weak var devUp2: NSTextField!
-    @IBOutlet weak var devUp2button: NSButton!
-    @IBOutlet weak var devDown2: NSTextField!
-    @IBOutlet weak var devDown2button: NSButton!
-    @IBOutlet weak var devFire2: NSTextField!
-    @IBOutlet weak var devFire2button: NSButton!
-    @IBOutlet weak var devDisconnectKeys: NSButton!
+    @IBOutlet weak var conLeft1: NSTextField!
+    @IBOutlet weak var conLeft1button: NSButton!
+    @IBOutlet weak var conRight1: NSTextField!
+    @IBOutlet weak var conRight1button: NSButton!
+    @IBOutlet weak var conUp1: NSTextField!
+    @IBOutlet weak var conUp1button: NSButton!
+    @IBOutlet weak var conDown1: NSTextField!
+    @IBOutlet weak var conDown1button: NSButton!
+    @IBOutlet weak var conFire1: NSTextField!
+    @IBOutlet weak var conFire1button: NSButton!
+    @IBOutlet weak var conLeft2: NSTextField!
+    @IBOutlet weak var conLeft2button: NSButton!
+    @IBOutlet weak var conRight2: NSTextField!
+    @IBOutlet weak var conRight2button: NSButton!
+    @IBOutlet weak var conUp2: NSTextField!
+    @IBOutlet weak var conUp2button: NSButton!
+    @IBOutlet weak var conDown2: NSTextField!
+    @IBOutlet weak var conDown2button: NSButton!
+    @IBOutlet weak var conFire2: NSTextField!
+    @IBOutlet weak var conFire2button: NSButton!
+    @IBOutlet weak var conDisconnectKeys: NSButton!
     
     // Joystick buttons
-    @IBOutlet weak var devAutofire: NSButton!
-    @IBOutlet weak var devAutofireCease: NSButton!
-    @IBOutlet weak var devAutofireCeaseText: NSTextField!
-    @IBOutlet weak var devAutofireBullets: NSTextField!
-    @IBOutlet weak var devAutofireFrequency: NSSlider!
+    @IBOutlet weak var conAutofire: NSButton!
+    @IBOutlet weak var conAutofireCease: NSButton!
+    @IBOutlet weak var conAutofireCeaseText: NSTextField!
+    @IBOutlet weak var conAutofireBullets: NSTextField!
+    @IBOutlet weak var conAutofireFrequency: NSSlider!
     
     // Mouse
-    @IBOutlet weak var devMouseModel: NSPopUpButton!
-    @IBOutlet weak var devMouseInfo: NSTextField!
+    @IBOutlet weak var conMouseModel: NSPopUpButton!
+    @IBOutlet weak var conMouseInfo: NSTextField!
     
-    @IBOutlet weak var devOkButton: NSButton!
-    @IBOutlet weak var devPowerButton: NSButton!
+    @IBOutlet weak var conOkButton: NSButton!
+    @IBOutlet weak var conPowerButton: NSButton!
     
     //
     // Keymap preferences
@@ -163,7 +163,7 @@ class PreferencesController: DialogController {
             
             switch id {
             case "Emulator": refreshEmulatorTab()
-            case "Devices": refreshDevicesTab()
+            case "Controls": refreshControlsTab()
             case "Keyboard": refreshKeyboardTab()
             case "Media": refreshMediaTab()
             default: break
@@ -177,7 +177,7 @@ class PreferencesController: DialogController {
         if let id = tabView.selectedTabViewItem?.identifier as? String {
             
             switch id {
-            case "Devices": return devKeyDown(with: key)
+            case "Controls": return conKeyDown(with: key)
             case "Keyboard": return mapSelectedKey(to: key)
             default: break
             }
@@ -226,10 +226,10 @@ extension PreferencesController: NSTextFieldDelegate {
                 
                 medAutoTextAction(view)
                 
-            case devAutofireBullets:
+            case conAutofireBullets:
                 
                 if formatter?.number(from: view.stringValue) != nil {
-                    devAutofireBulletsAction(view)
+                    conAutofireBulletsAction(view)
                 }
                 
             default:

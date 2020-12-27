@@ -78,17 +78,17 @@ class Preferences {
     var autoText: [String: String] = MediaDefaults.std.autoText
     
     //
-    // Devices
+    // Controls
     //
     
     // Emulation keys
-    var keyMaps = [ DevicesDefaults.std.mouseKeyMap,
-                    DevicesDefaults.std.joyKeyMap1,
-                    DevicesDefaults.std.joyKeyMap2 ]
+    var keyMaps = [ ControlsDefaults.std.mouseKeyMap,
+                    ControlsDefaults.std.joyKeyMap1,
+                    ControlsDefaults.std.joyKeyMap2 ]
     
     // Joystick
-    var disconnectJoyKeys = DevicesDefaults.std.disconnectJoyKeys
-    var autofire = DevicesDefaults.std.autofire {
+    var disconnectJoyKeys = ControlsDefaults.std.disconnectJoyKeys
+    var autofire = ControlsDefaults.std.autofire {
         didSet {
             for c64 in myAppDelegate.proxies {
                 c64.port1.setAutofire(autofire)
@@ -96,7 +96,7 @@ class Preferences {
             }
         }
     }
-    var autofireBullets = DevicesDefaults.std.autofireBullets {
+    var autofireBullets = ControlsDefaults.std.autofireBullets {
         didSet {
             for c64 in myAppDelegate.proxies {
                 c64.port1.setAutofireBullets(autofireBullets)
@@ -104,7 +104,7 @@ class Preferences {
             }
         }
     }
-    var autofireFrequency = DevicesDefaults.std.autofireFrequency {
+    var autofireFrequency = ControlsDefaults.std.autofireFrequency {
         didSet {
             for c64 in myAppDelegate.proxies {
                 c64.port1.setAutofireFrequency(autofireFrequency)
@@ -195,23 +195,23 @@ class Preferences {
     }
     
     //
-    // Devices
+    // Controls
     //
         
-    func loadDevicesUserDefaults() {
+    func loadControlsUserDefaults() {
         
         let defaults = UserDefaults.standard
         
         // Emulation keys
-        defaults.decode(&keyMaps[0], forKey: Keys.Dev.mouseKeyMap)
-        defaults.decode(&keyMaps[1], forKey: Keys.Dev.joyKeyMap1)
-        defaults.decode(&keyMaps[2], forKey: Keys.Dev.joyKeyMap2)
-        disconnectJoyKeys = defaults.bool(forKey: Keys.Dev.disconnectJoyKeys)
+        defaults.decode(&keyMaps[0], forKey: Keys.Con.mouseKeyMap)
+        defaults.decode(&keyMaps[1], forKey: Keys.Con.joyKeyMap1)
+        defaults.decode(&keyMaps[2], forKey: Keys.Con.joyKeyMap2)
+        disconnectJoyKeys = defaults.bool(forKey: Keys.Con.disconnectJoyKeys)
         
         // Joysticks
-        autofire = defaults.bool(forKey: Keys.Dev.autofire)
-        autofireBullets = defaults.integer(forKey: Keys.Dev.autofireBullets)
-        autofireFrequency = defaults.float(forKey: Keys.Dev.autofireFrequency)
+        autofire = defaults.bool(forKey: Keys.Con.autofire)
+        autofireBullets = defaults.integer(forKey: Keys.Con.autofireBullets)
+        autofireFrequency = defaults.float(forKey: Keys.Con.autofireFrequency)
     }
     
     func saveDevicesUserDefaults() {
@@ -219,15 +219,15 @@ class Preferences {
         let defaults = UserDefaults.standard
         
         // Emulation keys
-        defaults.encode(keyMaps[0], forKey: Keys.Dev.mouseKeyMap)
-        defaults.encode(keyMaps[1], forKey: Keys.Dev.joyKeyMap1)
-        defaults.encode(keyMaps[2], forKey: Keys.Dev.joyKeyMap2)
-        defaults.set(disconnectJoyKeys, forKey: Keys.Dev.disconnectJoyKeys)
+        defaults.encode(keyMaps[0], forKey: Keys.Con.mouseKeyMap)
+        defaults.encode(keyMaps[1], forKey: Keys.Con.joyKeyMap1)
+        defaults.encode(keyMaps[2], forKey: Keys.Con.joyKeyMap2)
+        defaults.set(disconnectJoyKeys, forKey: Keys.Con.disconnectJoyKeys)
         
         // Joysticks
-        defaults.set(autofire, forKey: Keys.Dev.autofire)
-        defaults.set(autofireBullets, forKey: Keys.Dev.autofireBullets)
-        defaults.set(autofireFrequency, forKey: Keys.Dev.autofireFrequency)
+        defaults.set(autofire, forKey: Keys.Con.autofire)
+        defaults.set(autofireBullets, forKey: Keys.Con.autofireBullets)
+        defaults.set(autofireFrequency, forKey: Keys.Con.autofireFrequency)
     }
     
     //

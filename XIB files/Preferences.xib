@@ -1,41 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PreferencesController" customModule="VirtualC64" customModuleProvider="target">
             <connections>
-                <outlet property="devAutofire" destination="v0I-w8-RKV" id="ZDJ-tW-UvE"/>
-                <outlet property="devAutofireBullets" destination="wgL-Pf-Ev6" id="HVA-1I-1w6"/>
-                <outlet property="devAutofireCease" destination="cpa-YE-Dl2" id="Ljs-Dd-6qr"/>
-                <outlet property="devAutofireCeaseText" destination="Aiw-ZN-xPY" id="6JL-NI-Th1"/>
-                <outlet property="devAutofireFrequency" destination="nzG-Ti-25y" id="KBX-fO-GqO"/>
-                <outlet property="devDisconnectKeys" destination="WaS-zN-r2k" id="Rdy-fe-6qA"/>
-                <outlet property="devDown1" destination="Uqp-o1-OtK" id="xh7-WD-zJZ"/>
-                <outlet property="devDown1button" destination="r4z-8O-gXy" id="RXE-c1-kde"/>
-                <outlet property="devDown2" destination="TZW-gG-WUi" id="l5K-nZ-709"/>
-                <outlet property="devDown2button" destination="W1g-cH-KMk" id="cDR-MK-fPi"/>
-                <outlet property="devFire1" destination="auK-l7-g33" id="8pT-DF-l7T"/>
-                <outlet property="devFire1button" destination="hJF-0O-GPY" id="qCs-rb-Lw2"/>
-                <outlet property="devFire2" destination="M8a-JF-bO2" id="9J4-ff-ePa"/>
-                <outlet property="devFire2button" destination="JFr-6y-m2E" id="qsN-eu-CZL"/>
-                <outlet property="devLeft1" destination="ON6-km-apn" id="Ueq-Zu-Yv7"/>
-                <outlet property="devLeft1button" destination="pJt-aE-a5n" id="34Y-cV-xKC"/>
-                <outlet property="devLeft2" destination="rQL-Le-05A" id="tmj-NY-pEr"/>
-                <outlet property="devLeft2button" destination="jxz-rN-u7b" id="hs7-u7-Wix"/>
-                <outlet property="devMouseInfo" destination="7b8-Tq-JgV" id="aCM-JE-W5Y"/>
-                <outlet property="devMouseModel" destination="Rpg-04-ZcE" id="aec-ub-7Zx"/>
-                <outlet property="devRight1" destination="KnJ-x2-H6b" id="90I-DT-oxr"/>
-                <outlet property="devRight1button" destination="tbT-23-uAI" id="VAI-3O-ui2"/>
-                <outlet property="devRight2" destination="oPF-x3-PoQ" id="oeZ-in-uAA"/>
-                <outlet property="devRight2button" destination="VrN-Sd-xJu" id="Laf-83-AI3"/>
-                <outlet property="devUp1" destination="SuE-b4-NCf" id="peg-OZ-lVN"/>
-                <outlet property="devUp1button" destination="Pif-bc-k53" id="uye-So-Trc"/>
-                <outlet property="devUp2" destination="ppG-Po-QlH" id="Q2o-jv-Z1Q"/>
-                <outlet property="devUp2button" destination="Xgn-sL-wPJ" id="72y-Qa-vIH"/>
+                <outlet property="conAutofire" destination="v0I-w8-RKV" id="ZDJ-tW-UvE"/>
+                <outlet property="conAutofireBullets" destination="wgL-Pf-Ev6" id="HVA-1I-1w6"/>
+                <outlet property="conAutofireCease" destination="cpa-YE-Dl2" id="Ljs-Dd-6qr"/>
+                <outlet property="conAutofireCeaseText" destination="Aiw-ZN-xPY" id="6JL-NI-Th1"/>
+                <outlet property="conAutofireFrequency" destination="nzG-Ti-25y" id="KBX-fO-GqO"/>
+                <outlet property="conDisconnectKeys" destination="WaS-zN-r2k" id="Rdy-fe-6qA"/>
+                <outlet property="conDown1" destination="Uqp-o1-OtK" id="xh7-WD-zJZ"/>
+                <outlet property="conDown1button" destination="r4z-8O-gXy" id="RXE-c1-kde"/>
+                <outlet property="conDown2" destination="TZW-gG-WUi" id="l5K-nZ-709"/>
+                <outlet property="conDown2button" destination="W1g-cH-KMk" id="cDR-MK-fPi"/>
+                <outlet property="conFire1" destination="auK-l7-g33" id="8pT-DF-l7T"/>
+                <outlet property="conFire1button" destination="hJF-0O-GPY" id="qCs-rb-Lw2"/>
+                <outlet property="conFire2" destination="M8a-JF-bO2" id="9J4-ff-ePa"/>
+                <outlet property="conFire2button" destination="JFr-6y-m2E" id="qsN-eu-CZL"/>
+                <outlet property="conLeft1" destination="ON6-km-apn" id="Ueq-Zu-Yv7"/>
+                <outlet property="conLeft1button" destination="pJt-aE-a5n" id="34Y-cV-xKC"/>
+                <outlet property="conLeft2" destination="rQL-Le-05A" id="tmj-NY-pEr"/>
+                <outlet property="conLeft2button" destination="jxz-rN-u7b" id="hs7-u7-Wix"/>
+                <outlet property="conMouseInfo" destination="7b8-Tq-JgV" id="aCM-JE-W5Y"/>
+                <outlet property="conMouseModel" destination="Rpg-04-ZcE" id="aec-ub-7Zx"/>
+                <outlet property="conRight1" destination="KnJ-x2-H6b" id="90I-DT-oxr"/>
+                <outlet property="conRight1button" destination="tbT-23-uAI" id="VAI-3O-ui2"/>
+                <outlet property="conRight2" destination="oPF-x3-PoQ" id="oeZ-in-uAA"/>
+                <outlet property="conRight2button" destination="VrN-Sd-xJu" id="Laf-83-AI3"/>
+                <outlet property="conUp1" destination="SuE-b4-NCf" id="peg-OZ-lVN"/>
+                <outlet property="conUp1button" destination="Pif-bc-k53" id="uye-So-Trc"/>
+                <outlet property="conUp2" destination="ppG-Po-QlH" id="Q2o-jv-Z1Q"/>
+                <outlet property="conUp2button" destination="Xgn-sL-wPJ" id="72y-Qa-vIH"/>
                 <outlet property="emuAspectRatioButton" destination="XLu-74-7AG" id="Xjx-CV-MUc"/>
                 <outlet property="emuAutoSnapshots" destination="DON-RP-HPW" id="bQG-hM-4dz"/>
                 <outlet property="emuCloseWithoutAskingButton" destination="f7R-rS-Csv" id="Htu-GY-zf4"/>
@@ -514,7 +513,7 @@ DQ
                                     </subviews>
                                 </view>
                             </tabViewItem>
-                            <tabViewItem label="Devices" identifier="Devices" id="cFr-dO-Qx2">
+                            <tabViewItem label="Controls" identifier="Controls" id="cFr-dO-Qx2">
                                 <view key="view" id="LLS-Zr-3Eb">
                                     <rect key="frame" x="10" y="33" width="600" height="464"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -536,7 +535,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="devDisconnectKeysAction:" target="-2" id="7h0-sn-aTL"/>
+                                                <action selector="conDisconnectKeysAction:" target="-2" id="7h0-sn-aTL"/>
                                             </connections>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v0I-w8-RKV">
@@ -547,7 +546,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="devAutofireAction:" target="-2" id="rnL-Hi-1ac"/>
+                                                <action selector="conAutofireAction:" target="-2" id="rnL-Hi-1ac"/>
                                             </connections>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cpa-YE-Dl2">
@@ -558,7 +557,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="devAutofireCeaseAction:" target="-2" id="feY-Ge-cB6"/>
+                                                <action selector="conAutofireCeaseAction:" target="-2" id="feY-Ge-cB6"/>
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" tag="10" translatesAutoresizingMaskIntoConstraints="NO" id="Xgn-sL-wPJ">
@@ -569,7 +568,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="devRecordKeyAction:" target="-2" id="KYt-Vx-gvQ"/>
+                                                <action selector="conRecordKeyAction:" target="-2" id="KYt-Vx-gvQ"/>
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="W1g-cH-KMk">
@@ -580,7 +579,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="devRecordKeyAction:" target="-2" id="3S0-lj-Kl5"/>
+                                                <action selector="conRecordKeyAction:" target="-2" id="3S0-lj-Kl5"/>
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ppG-Po-QlH">
@@ -600,7 +599,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="devRecordKeyAction:" target="-2" id="d8q-Ak-siu"/>
+                                                <action selector="conRecordKeyAction:" target="-2" id="d8q-Ak-siu"/>
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TZW-gG-WUi">
@@ -620,7 +619,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="devRecordKeyAction:" target="-2" id="lld-so-vkV"/>
+                                                <action selector="conRecordKeyAction:" target="-2" id="lld-so-vkV"/>
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rQL-Le-05A">
@@ -640,7 +639,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="devRecordKeyAction:" target="-2" id="ppM-4a-gww"/>
+                                                <action selector="conRecordKeyAction:" target="-2" id="ppM-4a-gww"/>
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oPF-x3-PoQ">
@@ -684,7 +683,7 @@ DQ
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <sliderCell key="cell" state="on" alignment="left" minValue="1" maxValue="4" doubleValue="1" tickMarkPosition="above" numberOfTickMarks="7" sliderType="linear" id="l4R-ah-kmt"/>
                                             <connections>
-                                                <action selector="devAutofireFrequencyAction:" target="-2" id="BbQ-CC-v6y"/>
+                                                <action selector="conAutofireFrequencyAction:" target="-2" id="BbQ-CC-v6y"/>
                                             </connections>
                                         </slider>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Nk-RY-23I">
@@ -733,7 +732,7 @@ DQ
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <action selector="devAutofireBulletsAction:" target="-2" id="V2Z-0Q-N3N"/>
+                                                <action selector="conAutofireBulletsAction:" target="-2" id="V2Z-0Q-N3N"/>
                                             </connections>
                                         </textField>
                                         <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="NrQ-0s-Uik">
@@ -770,7 +769,7 @@ DQ
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="devMouseModelAction:" target="-2" id="wQC-Zj-vYH"/>
+                                                <action selector="conMouseModelAction:" target="-2" id="wQC-Zj-vYH"/>
                                             </connections>
                                         </popUpButton>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lri-1l-9qT">
@@ -799,7 +798,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="devRecordKeyAction:" target="-2" id="kDO-wI-j4i"/>
+                                                <action selector="conRecordKeyAction:" target="-2" id="kDO-wI-j4i"/>
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="r4z-8O-gXy">
@@ -810,7 +809,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="devRecordKeyAction:" target="-2" id="wlB-VR-nNp"/>
+                                                <action selector="conRecordKeyAction:" target="-2" id="wlB-VR-nNp"/>
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SuE-b4-NCf">
@@ -830,7 +829,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="devRecordKeyAction:" target="-2" id="W1s-fE-lUJ"/>
+                                                <action selector="conRecordKeyAction:" target="-2" id="W1s-fE-lUJ"/>
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uqp-o1-OtK">
@@ -859,7 +858,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="devRecordKeyAction:" target="-2" id="vUz-pv-WQx"/>
+                                                <action selector="conRecordKeyAction:" target="-2" id="vUz-pv-WQx"/>
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KnJ-x2-H6b">
@@ -893,7 +892,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="devRecordKeyAction:" target="-2" id="amt-BN-X70"/>
+                                                <action selector="conRecordKeyAction:" target="-2" id="amt-BN-X70"/>
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ybe-fH-0UT">
@@ -959,7 +958,7 @@ DQ
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="devPresetAction:" target="-2" id="f0U-hR-cNh"/>
+                                                <action selector="conPresetAction:" target="-2" id="f0U-hR-cNh"/>
                                             </connections>
                                         </popUpButton>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7b8-Tq-JgV">

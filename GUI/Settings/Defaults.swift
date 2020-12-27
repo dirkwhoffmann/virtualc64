@@ -59,7 +59,7 @@ extension UserDefaults {
         track()
         
         registerGeneralUserDefaults()
-        registerDevicesUserDefaults()
+        registerControlsUserDefaults()
         registerKeyboardUserDefaults()
         registerMediaUserDefaults()
         
@@ -80,7 +80,7 @@ extension MyController {
         c64.suspend()
         
         pref.loadGeneralUserDefaults()
-        pref.loadDevicesUserDefaults()
+        pref.loadControlsUserDefaults()
         pref.loadKeyboardUserDefaults()
         pref.loadMediaUserDefaults()
         
@@ -290,12 +290,12 @@ extension UserDefaults {
 }
     
 //
-// User defaults (Devices)
+// User defaults (Controls)
 //
 
 extension Keys {
     
-    struct Dev {
+    struct Con {
         
         // Emulation keys
         static let mouseKeyMap       = "VC64_CON_MouseKeyMap"
@@ -313,7 +313,7 @@ extension Keys {
     }
 }
 
-struct DevicesDefaults {
+struct ControlsDefaults {
     
     // Joysticks
     let mouseKeyMap: [MacKey: Int]
@@ -348,7 +348,7 @@ struct DevicesDefaults {
         MacKey.init(keyCode: kVK_ANSI_C): GamePadAction.PRESS_FIRE.rawValue
     ]
     
-    static let std = DevicesDefaults.init(
+    static let std = ControlsDefaults.init(
         
         mouseKeyMap: [:],
         joyKeyMap1: stdKeyMap1,
@@ -364,39 +364,39 @@ struct DevicesDefaults {
 
 extension UserDefaults {
     
-    static func registerDevicesUserDefaults() {
+    static func registerControlsUserDefaults() {
         
-        let defaults = DevicesDefaults.std
+        let defaults = ControlsDefaults.std
         let dictionary: [String: Any] = [
 
             // Joysticks
-            Keys.Dev.disconnectJoyKeys: defaults.disconnectJoyKeys,
-            Keys.Dev.autofire: defaults.autofire,
-            Keys.Dev.autofireBullets: defaults.autofireBullets,
-            Keys.Dev.autofireFrequency: defaults.autofireFrequency,
+            Keys.Con.disconnectJoyKeys: defaults.disconnectJoyKeys,
+            Keys.Con.autofire: defaults.autofire,
+            Keys.Con.autofireBullets: defaults.autofireBullets,
+            Keys.Con.autofireFrequency: defaults.autofireFrequency,
             
             // Mouse
-            Keys.Dev.mouseModel: defaults.mouseModel.rawValue
+            Keys.Con.mouseModel: defaults.mouseModel.rawValue
         ]
         
         let userDefaults = UserDefaults.standard
         userDefaults.register(defaults: dictionary)
-        userDefaults.register(encodableItem: defaults.joyKeyMap1, forKey: Keys.Dev.joyKeyMap1)
-        userDefaults.register(encodableItem: defaults.joyKeyMap2, forKey: Keys.Dev.joyKeyMap2)
+        userDefaults.register(encodableItem: defaults.joyKeyMap1, forKey: Keys.Con.joyKeyMap1)
+        userDefaults.register(encodableItem: defaults.joyKeyMap2, forKey: Keys.Con.joyKeyMap2)
     }
     
-    static func resetDevicesUserDefaults() {
+    static func resetControlsUserDefaults() {
         
         let defaults = UserDefaults.standard
         
-        let keys = [ Keys.Dev.joyKeyMap1,
-                     Keys.Dev.joyKeyMap2,
-                     Keys.Dev.disconnectJoyKeys,
-                     Keys.Dev.autofire,
-                     Keys.Dev.autofireBullets,
-                     Keys.Dev.autofireFrequency,
+        let keys = [ Keys.Con.joyKeyMap1,
+                     Keys.Con.joyKeyMap2,
+                     Keys.Con.disconnectJoyKeys,
+                     Keys.Con.autofire,
+                     Keys.Con.autofireBullets,
+                     Keys.Con.autofireFrequency,
                      
-                     Keys.Dev.mouseModel ]
+                     Keys.Con.mouseModel ]
         
         for key in keys { defaults.removeObject(forKey: key) }
     }
