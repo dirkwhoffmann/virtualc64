@@ -7,6 +7,21 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+class PaddedButton: NSButton {
+    
+    @IBInspectable var vPad: CGFloat = 4.5
+    @IBInspectable var hPad: CGFloat = 0
+    
+    override func draw(_ dirtyRect: NSRect) {
+        
+        let origBounds = self.bounds
+        defer { self.bounds = origBounds }
+        
+        self.bounds = origBounds.insetBy(dx: hPad, dy: vPad)
+        super.draw(dirtyRect)
+    }
+}
+
 @available(OSX 10.12.2, *)
 extension NSTouchBarItem.Identifier {
     
@@ -112,36 +127,36 @@ extension MyController: NSTouchBarDelegate {
             let item = NSCustomTouchBarItem(identifier: identifier)
             let icon = NSImage(named: NSImage.Name("restoreTemplate"))!
             item.customizationLabel = "Restore key"
-            item.view = NSButton(image: icon,
-                                 target: self,
-                                 action: #selector(restoreAction))
+            item.view = PaddedButton(image: icon,
+                                     target: self,
+                                     action: #selector(restoreAction))
             return item
             
         case NSTouchBarItem.Identifier.save:
             let item = NSCustomTouchBarItem(identifier: identifier)
             let icon = NSImage(named: NSImage.Name("pushTemplate"))!
             item.customizationLabel = "Save"
-            item.view = NSButton(image: icon,
-                                 target: self,
-                                 action: #selector(takeSnapshotAction(_:)))
+            item.view = PaddedButton(image: icon,
+                                     target: self,
+                                     action: #selector(takeSnapshotAction(_:)))
             return item
             
         case NSTouchBarItem.Identifier.load:
             let item = NSCustomTouchBarItem(identifier: identifier)
             let icon = NSImage(named: NSImage.Name("popTemplate"))!
             item.customizationLabel = "Load"
-            item.view = NSButton(image: icon,
-                                 target: self,
-                                 action: #selector(restoreSnapshotAction(_:)))
+            item.view = PaddedButton(image: icon,
+                                     target: self,
+                                     action: #selector(restoreSnapshotAction(_:)))
             return item
             
         case NSTouchBarItem.Identifier.browse:
             let item = NSCustomTouchBarItem(identifier: identifier)
             let icon = NSImage(named: NSImage.Name("timeMachineTemplate"))!
             item.customizationLabel = "Browse"
-            item.view = NSButton(image: icon,
-                                 target: self,
-                                 action: #selector(browseSnapshotsAction(_:)))
+            item.view = PaddedButton(image: icon,
+                                     target: self,
+                                     action: #selector(browseSnapshotsAction(_:)))
             return item
             
         default:
