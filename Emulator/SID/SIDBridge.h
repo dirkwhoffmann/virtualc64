@@ -86,10 +86,10 @@ private:
     Volume volR;
 
     // Channel volumes
-    float vol[4];
+    float vol[4] = { 0, 0, 0, 0 };
 
     // Panning factors
-    float pan[4];
+    float pan[4] = { 0, 0, 0, 0 };
         
 public:
     
