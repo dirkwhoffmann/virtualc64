@@ -138,7 +138,7 @@
 		5051A1621B88661000CBFB5A /* 1541_track_change_1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1611B88661000CBFB5A /* 1541_track_change_1.aiff */; };
 		50520F8B25108FC400C7D47F /* PRGFolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50520F8925108FC400C7D47F /* PRGFolder.cpp */; };
 		50549B45257D1A6C006FE39C /* C64Constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549B44257D1A6C006FE39C /* C64Constants.cpp */; };
-		50549B49257D288E006FE39C /* SIDStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549B47257D288E006FE39C /* SIDStream.cpp */; };
+		50549B49257D288E006FE39C /* StereoStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549B47257D288E006FE39C /* StereoStream.cpp */; };
 		5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5055A83E1BC7996900399A20 /* MetalKit.framework */; };
 		505D492821C155DD00A7C575 /* RomConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505D492721C155DD00A7C575 /* RomConf.swift */; };
 		505F8FE72580BD780066ACE4 /* AudioConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F8FE62580BD780066ACE4 /* AudioConf.swift */; };
@@ -504,8 +504,8 @@
 		50520F8A25108FC400C7D47F /* PRGFolder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PRGFolder.h; sourceTree = "<group>"; };
 		50549B44257D1A6C006FE39C /* C64Constants.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64Constants.cpp; sourceTree = "<group>"; };
 		50549B46257D1B6A006FE39C /* Buffers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffers.h; sourceTree = "<group>"; };
-		50549B47257D288E006FE39C /* SIDStream.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SIDStream.cpp; sourceTree = "<group>"; };
-		50549B48257D288E006FE39C /* SIDStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIDStream.h; sourceTree = "<group>"; };
+		50549B47257D288E006FE39C /* StereoStream.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StereoStream.cpp; sourceTree = "<group>"; };
+		50549B48257D288E006FE39C /* StereoStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StereoStream.h; sourceTree = "<group>"; };
 		5055A83E1BC7996900399A20 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		505D492721C155DD00A7C575 /* RomConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomConf.swift; sourceTree = "<group>"; };
 		505F8FE62580BD780066ACE4 /* AudioConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioConf.swift; sourceTree = "<group>"; };
@@ -1029,8 +1029,8 @@
 				50C9318D2589E41D00D8BB94 /* Volume.h */,
 				504C433224AF29AC00E69CAE /* SIDBridge.h */,
 				504C431224AF29AC00E69CAE /* SIDBridge.cpp */,
-				50549B48257D288E006FE39C /* SIDStream.h */,
-				50549B47257D288E006FE39C /* SIDStream.cpp */,
+				50549B48257D288E006FE39C /* StereoStream.h */,
+				50549B47257D288E006FE39C /* StereoStream.cpp */,
 				504C433324AF29AC00E69CAE /* ReSID.h */,
 				504C433124AF29AC00E69CAE /* ReSID.cpp */,
 				504C431324AF29AC00E69CAE /* resid */,
@@ -1545,7 +1545,7 @@
 				50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */,
 				5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */,
 				50BE4B6224E7F8DE008F39C9 /* NSTableView.swift in Sources */,
-				50549B49257D288E006FE39C /* SIDStream.cpp in Sources */,
+				50549B49257D288E006FE39C /* StereoStream.cpp in Sources */,
 				503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */,
 				504C437524AF29AC00E69CAE /* PRGFile.cpp in Sources */,
 				504C43A524AF29AC00E69CAE /* ExpansionPort.cpp in Sources */,

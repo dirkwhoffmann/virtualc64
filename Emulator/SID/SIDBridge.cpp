@@ -656,6 +656,8 @@ SIDBridge::spypeek(u16 addr)
 void 
 SIDBridge::poke(u16 addr, u8 value)
 {
+    resid[0].flush();
+    
     // Get SID up to date
     executeUntil(cpu.cycle);
  
@@ -691,10 +693,15 @@ SIDBridge::execute(u64 numSamples)
     // Run reSID for at least one cycle to make pipelined writes work
     if (numSamples == 0) {
 
-        debug(SID_EXEC, "Running SIDs for an extra cycle");
+        // resid[0].flush();
+        return 0;
+        
+        /*
+        debug(SID_EXEC, "Running SIDs for an extra cycle\n");
 
         for (int i = 0; i < 4; i++) resid[i].clock();
         return 1;
+        */
     }
 
     // Check for a buffer underflow
@@ -777,7 +784,10 @@ SIDBridge::execute(u64 numSamples)
         // Apply master volume
         l *= volL.current;
         r *= volR.current;
-
+        
+        // Ear protection
+        assert(abs(l) < 0.15);
+        assert(abs(r) < 0.15);
         stream.write(SamplePair { l, r } );
     }
     stream.unlock();
@@ -795,6 +805,7 @@ void
 SIDBridge::clearSampleBuffer(long nr)
 {
     memset(samples[nr], 0, sizeof(samples[nr]));
+    for (int i = 0; i < 4; i++) buffer[i].clear(0);
 }
 
 void

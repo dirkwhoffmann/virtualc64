@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _SID_STREAM_H
-#define _SID_STREAM_H
+#ifndef _STEREO_STREAM_H
+#define _STEREO_STREAM_H
 
 #include "Buffers.h"
 #include "Concurrency.h"

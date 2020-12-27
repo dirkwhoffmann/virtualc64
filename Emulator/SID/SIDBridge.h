@@ -13,7 +13,7 @@
 #include "C64Component.h"
 #include "SIDTypes.h"
 #include "Volume.h"
-#include "SIDStream.h"
+#include "StereoStream.h"
 #include "FastSID.h"
 #include "ReSID.h"
 
@@ -114,7 +114,8 @@ public:
      * storing the created sound samples.
      */
     static const size_t sampleBufferSize = 2048;
-    short samples[4][sampleBufferSize];
+    short samples[4][sampleBufferSize]; // DEPRECATED
+    RingBuffer<short, sampleBufferSize> buffer[4];
     
     
     //

@@ -246,3 +246,13 @@ ReSID::executeSamples(u64 numSamples, short *buffer)
         
     return (i64)(100000 - delta);
 }
+
+void
+ReSID::flush()
+{
+    if (sid->write_pipeline) {
+        
+        debug(SID_EXEC, "Flushing pipeline\n");
+        sid->write();
+    }
+}

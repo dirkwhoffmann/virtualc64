@@ -222,6 +222,9 @@ public:
      */
     i64 executeSamples(u64 numSamples);
     i64 executeSamples(u64 numSamples, short *buffer);
+    
+    // Flushes the write pipeline
+    void flush();
 };
 
 #endif
