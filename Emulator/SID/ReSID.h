@@ -213,23 +213,11 @@ public:
     //
     
 	/* Runs SID for the specified amount of CPU cycles. The generated sound
-     * samples are written into the provided buffer. The fuction returns the
-     * number of written audio samples.
+     * samples are written into the provided ring buffer. The fuction returns
+     * the number of written audio samples.
      */
     i64 executeCycles(u64 numCycles, SampleStream &stream);
     i64 executeCycles(u64 numCycles);
-
-    /* Runs SID until a certain number of audio samples is produced. The
-     * generated sound samples are written into the provided buffer. The
-     * fuction returns the number of executed cycles.
-     */
-    /*
-    i64 executeSamples(u64 numSamples); // DEPRECATED
-    i64 executeSamples(u64 numSamples, short *buffer); // DEPRECATED
-    */
-    
-    // Flushes the write pipeline
-    // void flush();
 };
 
 #endif

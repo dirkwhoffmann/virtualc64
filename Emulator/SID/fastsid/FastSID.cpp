@@ -1,6 +1,6 @@
 /*
- * This file belongs to the FastSID implementation of VirtualC64,
- * an adaption of the code used in VICE 3.1, the Versatile Commodore Emulator.
+ * This file belongs to the FastSID implementation of VirtualC64, an adaption
+ * of the code used in VICE 3.1, the Versatile Commodore Emulator.
  *
  * Original code written by
  *  Teemu Rantanen <tvr@cs.hut.fi>
@@ -374,30 +374,6 @@ FastSID::executeCycles(u64 numCycles)
 {
     return executeCycles(numCycles, bridge.buffer[nr]);
 }
-
-/*
-i64
-FastSID::executeSamples(u64 numSamples)
-{
-    return executeSamples(numSamples, bridge.samples[nr]);
-}
-
-i64
-FastSID::executeSamples(u64 numSamples, short *buffer)
-{
-    // Don't ask to compute more samples that fit into the buffer
-    assert(numSamples <= SIDBridge::sampleBufferSize);
-    
-    // Compute samples
-    for (unsigned i = 0; i < numSamples; i++) {
-        buffer[i] = calculateSingleSample();
-    }
-
-    // Return the estimated number of consumed cycles
-    double samplesPerCycle = (double)sampleRate / (double)cpuFrequency;
-    return (u64)(numSamples / samplesPerCycle);
-}
-*/
 
 void
 FastSID::updateInternals()
