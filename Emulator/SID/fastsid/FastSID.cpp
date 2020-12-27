@@ -341,6 +341,42 @@ FastSID::poke(u16 addr, u8 value)
 }
 
 i64
+FastSID::executeCycles(u64 numCycles, SampleStream &stream)
+{
+    u64 buflength = stream.cap();
+    
+    executedCycles += numCycles;
+    
+    // Compute the number of sound samples to produce
+    double samplesPerCycle = (double)sampleRate / (double)cpuFrequency;
+    uint64_t shouldHave = (uint64_t)(executedCycles * samplesPerCycle);
+    
+    // How many sound samples are missing?
+    uint64_t samples = shouldHave - computedSamples;
+    computedSamples = shouldHave;
+    
+    // Do some consistency checking
+    if (samples > buflength) {
+        warn("Number of missing sound samples exceeds buffer size\n");
+        samples = buflength;
+    }
+    
+    // Compute missing samples
+    for (unsigned i = 0; i < samples; i++) {
+        stream.write(calculateSingleSample());
+    }
+    
+    return samples;
+}
+
+i64
+FastSID::executeCycles(u64 numCycles)
+{
+    return executeCycles(numCycles, bridge.buffer[nr]);
+}
+
+/*
+i64
 FastSID::executeSamples(u64 numSamples)
 {
     return executeSamples(numSamples, bridge.samples[nr]);
@@ -361,6 +397,7 @@ FastSID::executeSamples(u64 numSamples, short *buffer)
     double samplesPerCycle = (double)sampleRate / (double)cpuFrequency;
     return (u64)(numSamples / samplesPerCycle);
 }
+*/
 
 void
 FastSID::updateInternals()

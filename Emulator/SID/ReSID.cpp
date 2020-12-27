@@ -220,6 +220,37 @@ ReSID::poke(u16 addr, u8 value)
 }
 
 i64
+ReSID::executeCycles(u64 numCycles, SampleStream &stream)
+{
+    short buf[2049];
+    int buflength = 2048;
+    
+    if (numCycles > PAL_CYCLES_PER_SECOND) {
+        warn("Number of missing SID cycles is far too large\n");
+        numCycles = PAL_CYCLES_PER_SECOND;
+    }
+    
+    // Let reSID compute sound samples
+    int samples = 0;
+    reSID::cycle_count cycles = (reSID::cycle_count)numCycles;
+    while (cycles) {
+        samples += sid->clock(cycles, buf + samples, buflength - samples);
+    }
+    
+    // Write samples into ringbuffer
+    if (samples) { for (int i = 0; i < samples; i++) stream.write(buf[i]); }
+    
+    return samples;
+}
+
+i64
+ReSID::executeCycles(u64 numCycles)
+{
+    return executeCycles(numCycles, bridge.buffer[nr]);
+}
+
+/*
+i64
 ReSID::executeSamples(u64 numSamples)
 {
     return executeSamples(numSamples, bridge.samples[nr]);
@@ -246,7 +277,9 @@ ReSID::executeSamples(u64 numSamples, short *buffer)
         
     return (i64)(100000 - delta);
 }
+*/
 
+/*
 void
 ReSID::flush()
 {
@@ -256,3 +289,4 @@ ReSID::flush()
         sid->write();
     }
 }
+*/

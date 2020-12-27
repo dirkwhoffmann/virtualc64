@@ -655,9 +655,7 @@ SIDBridge::spypeek(u16 addr)
 
 void 
 SIDBridge::poke(u16 addr, u8 value)
-{
-    resid[0].flush();
-    
+{    
     // Get SID up to date
     executeUntil(cpu.cycle);
  
@@ -675,6 +673,16 @@ void
 SIDBridge::executeUntil(u64 targetCycle)
 {
     i64 missingCycles  = targetCycle - cycles;
+    i64 consumedCycles = executeCycles(missingCycles);
+
+    cycles += consumedCycles;
+    
+    debug(SID_EXEC,
+          "target: %lld missing: %lld consumed: %lld reached: %lld still missing: %lld\n",
+          targetCycle, missingCycles, consumedCycles, cycles, targetCycle - cycles);
+
+    /*
+    i64 missingCycles  = targetCycle - cycles;
     i64 missingSamples = i64(missingCycles * sampleRate / cpuFrequency);
     i64 consumedCycles = execute(missingSamples);
 
@@ -683,8 +691,121 @@ SIDBridge::executeUntil(u64 targetCycle)
     debug(SID_EXEC,
           "target: %lld missing: %lld consumed: %lld reached: %lld still missing: %lld\n",
           targetCycle, missingCycles, consumedCycles, cycles, targetCycle - cycles);
+    */
 }
 
+i64 SIDBridge::executeCycles(u64 numCycles)
+{
+    // TODO: ADD A QUICK PATH FOR THE SINGLE-SID STANDARD CASE
+
+    u64 numSamples;
+    
+    // Run reSID for at least one cycle to make pipelined writes work
+    if (numCycles == 0) {
+        
+        numCycles = 1;
+        debug(SID_EXEC, "Running SIDs for an extra cycle\n");
+    }
+
+    // Check for a buffer underflow
+    if (signalUnderflow) {
+        signalUnderflow = false;
+        handleBufferUnderflow();
+    }
+
+    //
+    // Synthesize samples
+    //
+    
+    switch (config.engine) {
+            
+        case ENGINE_FASTSID:
+
+            // Run the primary SID (which is always enabled)
+            numSamples = fastsid[0].executeCycles(numCycles, buffer[0]);
+            
+            // Run all other SIDS (if any)
+            if (config.enabled > 1) {
+                for (int i = 1; i < 4; i++) {
+                    if (isEnabled(i)) {
+                        u64 numSamples2 = fastsid[i].executeCycles(numCycles, buffer[i]);
+                        numSamples = min(numSamples, numSamples2);
+                    }
+                }
+            }
+            break;
+
+        case ENGINE_RESID:
+
+            // Run the primary SID (which is always enabled)
+            numSamples = resid[0].executeCycles(numCycles, buffer[0]);
+            
+            // Run all other SIDS (if any)
+            if (config.enabled > 1) {
+                for (int i = 1; i < 4; i++) {
+                    if (isEnabled(i)) {
+                        u64 numSamples2 = resid[i].executeCycles(numCycles, buffer[i]);
+                        numSamples = min(numSamples, numSamples2);
+                    }
+                }
+            }
+            break;
+
+        default:
+            assert(false);
+    }
+    
+    //
+    // Mix channels
+    //
+    
+    stream.lock();
+    
+    // Check for buffer overflow
+    if (stream.free() < numSamples) {
+        handleBufferOverflow();
+    }
+    
+    debug(SID_EXEC, "(%d,%d,%d...) vol0: %f pan0: %f volL: %f volR: %f\n",
+          samples[0][0], samples[0][1], samples[0][2],
+          vol[0], pan[0], volL.current, volR.current);
+
+    // Convert sound samples to floating point values and write into ringbuffer
+    for (unsigned i = 0; i < numSamples; i++) {
+        
+        float ch0, ch1, ch2, ch3, l, r;
+        
+        ch0 = (float)buffer[0].read()    * vol[0];
+        ch1 = (float)buffer[1].read(0.0) * vol[1];
+        ch2 = (float)buffer[2].read(0.0) * vol[2];
+        ch3 = (float)buffer[3].read(0.0) * vol[3];
+
+        // Compute left channel output
+        l =
+        ch0 * (1 - pan[0]) + ch1 * (1 - pan[1]) +
+        ch2 * (1 - pan[2]) + ch3 * (1 - pan[3]);
+
+        // Compute right channel output
+        r =
+        ch0 * pan[0] + ch1 * pan[1] +
+        ch2 * pan[2] + ch3 * pan[3];
+
+        // Apply master volume
+        l *= volL.current;
+        r *= volR.current;
+        
+        // Apply ear protection
+        assert(abs(l) < 0.15);
+        assert(abs(r) < 0.15);
+        
+        stream.write(SamplePair { l, r } );
+    }
+    stream.unlock();
+    
+    return numCycles;
+}
+
+/*
 i64
 SIDBridge::execute(u64 numSamples)
 {
@@ -695,13 +816,7 @@ SIDBridge::execute(u64 numSamples)
 
         // resid[0].flush();
         return 0;
-        
-        /*
-        debug(SID_EXEC, "Running SIDs for an extra cycle\n");
 
-        for (int i = 0; i < 4; i++) resid[i].clock();
-        return 1;
-        */
     }
 
     // Check for a buffer underflow
@@ -794,6 +909,7 @@ SIDBridge::execute(u64 numSamples)
     
     return cycles;
 }
+*/
 
 void
 SIDBridge::clearSampleBuffers()

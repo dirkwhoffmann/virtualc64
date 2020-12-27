@@ -86,6 +86,12 @@ template <class T, size_t capacity> struct RingBuffer
         return elements[oldr];
     }
 
+    T& read(T fallback)
+    {
+        if (isEmpty()) write(fallback);
+        return read();
+    }
+    
     void write(T element)
     {
         assert(!isFull());

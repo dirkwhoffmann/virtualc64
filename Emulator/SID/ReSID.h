@@ -17,12 +17,15 @@
  *
  *     - INTERNAT.P00
  *     - DEFEND1.PRG  ("Das Boot" intro music)
+ *     - To Norah (Elysium)
+ *     - Vortex (LMan)
  */
 
 #ifndef _RESID_H
 #define _RESID_H
 
 #include "C64Component.h"
+#include "SIDStreams.h"
 #include "resid/sid.h"
 
 class ReSID : public C64Component {
@@ -213,18 +216,20 @@ public:
      * samples are written into the provided buffer. The fuction returns the
      * number of written audio samples.
      */
-    // i64 executeCycles(u64 numCycles, short *buffer);
-    // i64 executeCycles(u64 numCycles) { return executeCycles(numCycles, samples); }
+    i64 executeCycles(u64 numCycles, SampleStream &stream);
+    i64 executeCycles(u64 numCycles);
 
     /* Runs SID until a certain number of audio samples is produced. The
      * generated sound samples are written into the provided buffer. The
      * fuction returns the number of executed cycles.
      */
-    i64 executeSamples(u64 numSamples);
-    i64 executeSamples(u64 numSamples, short *buffer);
+    /*
+    i64 executeSamples(u64 numSamples); // DEPRECATED
+    i64 executeSamples(u64 numSamples, short *buffer); // DEPRECATED
+    */
     
     // Flushes the write pipeline
-    void flush();
+    // void flush();
 };
 
 #endif
