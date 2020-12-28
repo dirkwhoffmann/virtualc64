@@ -161,7 +161,7 @@ FSDevice::dump()
 void
 FSDevice::printDirectory()
 {
-    auto dir = scanDirectory();
+    scanDirectory();
     
     for (auto &item : dir) {
         msg("%3d \"%16s\" %s\n",
@@ -439,10 +439,11 @@ FSDevice::nextFreeDirEntry()
     return nullptr;
 }
 
-std::vector<FSDirEntry *>
+void
 FSDevice::scanDirectory(bool skipInvisible)
 {
-    std::vector<FSDirEntry *> result;
+    // Start from scratch
+    dir.clear();
     
     // The directory starts on track 18, sector 1
     FSBlock *ptr = blockPtr(18, 1);
@@ -456,13 +457,11 @@ FSDevice::scanDirectory(bool skipInvisible)
         if (entry->isEmpty()) break;
 
         // Add file to the result list
-        if (!(skipInvisible && entry->isHidden())) result.push_back(entry);
+        if (!(skipInvisible && entry->isHidden())) dir.push_back(entry);
      
         // Jump to the next sector if this was the last directory item
         if (i % 8 == 7) ptr = nextBlockPtr(ptr);
     }
-    
-    return result;
 }
 
 bool
@@ -662,8 +661,10 @@ FSDevice::importVolume(const u8 *src, size_t size, FSError *error)
     
     if (error) *error = FS_OK;
 
+    // Run a directory scan
+    scanDirectory();
+    
     if (FS_DEBUG) {
-        
         // info();
         // dump();
         printDirectory();
@@ -736,11 +737,11 @@ FSDevice::exportDirectory(const char *path, FSError *err)
         return false;
     }
     
-    // Collect all directory entries
-    auto items = scanDirectory();
+    // Rescan the directory to get variable 'dir' up to date
+    scanDirectory();
     
     // Export all items
-    for (auto const& item : items) {
+    for (auto const& item : dir) {
 
         if (!exportFile(item, path, err)) {
             msg("Export error: %ld\n", (long)*err);
@@ -748,7 +749,98 @@ FSDevice::exportDirectory(const char *path, FSError *err)
         }
     }
     
-    msg("Exported %lu items", items.size());
+    msg("Exported %lu items", dir.size());
     if (err) *err = FS_OK;
     return true;
+}
+
+std::string
+FSDevice::collectionName()
+{
+    return std::string("Volume"); // TODO
+}
+
+u64
+FSDevice::collectionCount()
+{
+    return dir.size();
+}
+
+std::string
+FSDevice::itemName(unsigned nr)
+{
+    assert(nr < collectionCount());
+    
+    auto item = dir[nr];
+    return std::string(item->getName().c_str());
+}
+
+u64
+FSDevice::itemSize(unsigned nr)
+{
+    assert(nr < collectionCount());
+    
+    u64 size = 0;
+
+    // Locate the first data block
+    BlockPtr b = blockPtr(dir[nr]->firstDataTrack, dir[nr]->firstDataSector);
+
+    // Iterate through the block chain
+    while (b) {
+        
+        BlockPtr next = nextBlockPtr(b);
+        
+        if (next) {
+            size += 254;
+            b = next;
+        } else {
+            size += b->data[1];
+        }
+        b = next;
+    }
+    
+    return size;
+}
+
+u8
+FSDevice::readByte(unsigned nr, u64 pos)
+{
+    assert(nr < collectionCount());
+    
+    // Locate the first data block
+    BlockPtr b = blockPtr(dir[nr]->firstDataTrack, dir[nr]->firstDataSector);
+
+    // Iterate through the block chain
+    while (b) {
+        
+        if (pos < 254) {
+            return b->data[pos + 2];
+        } else {
+            pos -= 254;
+        }
+        b = nextBlockPtr(b);
+    }
+    
+    return 0;
+}
+
+void
+FSDevice::copyItem(unsigned nr, u8 *buf, u64 len, u64 offset)
+{
+    assert(nr < collectionCount());
+    
+    // Locate the first data block
+    BlockPtr b = blockPtr(dir[nr]->firstDataTrack, dir[nr]->firstDataSector);
+    u64 pos = 2;
+    
+    // Iterate through the block chain
+    while (b && len--) {
+                
+        *buf++ = b->data[pos++];
+
+        if (pos == 254) {
+            b = nextBlockPtr(b);
+            pos = 2;
+        }
+    }
 }

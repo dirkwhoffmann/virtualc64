@@ -15,10 +15,11 @@
 #include "FSBlock.h"
 #include "FSDirEntry.h"
 #include "D64File.h"
+#include "AnyCollection.h"
 
 #include <dirent.h>
 
-class FSDevice : C64Object {
+class FSDevice : C64Object, AnyCollection {
     
     friend class FSBlock;
     
@@ -30,6 +31,9 @@ public:
     // Layout descriptor for this device
     FSDeviceDescriptor layout;
 
+    // Result of the latest directory scan
+    std::vector<FSDirEntry *> dir;
+    
     
     //
     // Factory methods
@@ -101,8 +105,8 @@ public:
     u32 numFreeBlocks();
     u32 numUsedBlocks();
 
-    // Returns the number of stored files
-    u32 numFiles() { return (u32)scanDirectory().size(); }
+    // Returns the number of stored files (run a directory scan first!)
+    u32 numFiles() { return (u32)dir.size(); }
     
     
     //
@@ -176,8 +180,8 @@ public:
     // Returns the next free directory entry
     FSDirEntry *nextFreeDirEntry(); 
     
-    // Collects pointers to the directory entries of all existing files
-    std::vector<FSDirEntry *> scanDirectory(bool skipInvisible = true);
+    // Scans the directory and stores the result in variable 'dir'
+    void scanDirectory(bool skipInvisible = true);
         
     // Ensures that the disk has enough directory blocks to host 'n' files
     bool setCapacity(u32 n);
@@ -201,12 +205,6 @@ public:
 
     // Checks a single byte in a certain block
     FSError check(u32 blockNr, u32 pos, u8 *expected, bool strict);
-
-    /*
-    // Checks if the type of a block matches one of the provides types
-    FSError checkBlockType(u32, FSBlockType type);
-    FSError checkBlockType(u32, FSBlockType type, FSBlockType altType);
-    */
     
     // Checks if a certain block is corrupted
     bool isCorrupted(u32 blockNr) { return getCorrupted(blockNr) != 0; }
@@ -247,6 +245,18 @@ public:
     // Exports a file the volume to a directory of the host file system
     bool exportFile(FSDirEntry *item, const char *path, FSError *error);
     bool exportDirectory(const char *path, FSError *error);
+    
+    
+    //
+    // Implementing the AnyCollection interface
+    //
+    
+    std::string collectionName() override;
+    u64 collectionCount() override;
+    std::string itemName(unsigned nr) override;
+    u64 itemSize(unsigned nr) override;
+    u8 readByte(unsigned nr, u64 pos) override;
+    void copyItem(unsigned nr, u8 *buf, u64 len, u64 offset = 0) override;
 };
 
 #endif
