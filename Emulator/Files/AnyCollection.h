@@ -13,7 +13,7 @@
 #include "Aliases.h"
 #include <string>
 
-/* Abstract interface for accessing file items stored in a collection */
+/* An abstract interface for accessing C64 files stored in a collection. */
 
 class AnyCollection {
 
@@ -49,7 +49,7 @@ public:
     u64 itemLoadAddr(unsigned nr);
 
     // Copies an item into a buffer
-    void copyItem(unsigned nr, u8 *buf, u64 len, u64 offset = 0);
+    virtual void copyItem(unsigned nr, u8 *buf, u64 len, u64 offset = 0);
 };
 
 #endif

@@ -8,7 +8,6 @@
 // -----------------------------------------------------------------------------
 
 #include "P00File.h"
-#include <new>
 
 const u8
 P00File::magicBytes[] = { 0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65 };
@@ -188,7 +187,7 @@ u64
 P00File::itemSize(unsigned nr)
 {
     assert(nr == 0);
-    return size - 0x1C;
+    return size - 0x1A;
 }
 
 u8

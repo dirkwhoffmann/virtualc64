@@ -11,8 +11,9 @@
 #define _PRG_FILE_H
 
 #include "AnyArchive.h"
+#include "AnyCollection.h"
 
-class PRGFile : public AnyArchive {
+class PRGFile : public AnyArchive, AnyCollection {
 
 public:
 
@@ -53,6 +54,17 @@ public:
     FileType type() override { return FILETYPE_PRG; }
     bool hasSameType(const char *filename) override { return isPRGFile(filename); }
     
+    
+    //
+    // Methods from AnyCollection
+    //
+
+    std::string collectionName() override;
+    u64 collectionCount() override;
+    std::string itemName(unsigned nr) override;
+    u64 itemSize(unsigned nr) override;
+    u8 readByte(unsigned nr, u64 pos) override;
+ 
     
     //
     // Methods from AnyArchive

@@ -91,6 +91,40 @@ PRGFile::makeWithAnyArchive(AnyArchive *other, int item)
     return archive;
 }
 
+std::string
+PRGFile::collectionName()
+{
+    return std::string(getName());
+}
+
+u64
+PRGFile::collectionCount()
+{
+    return 1;
+}
+
+std::string
+PRGFile::itemName(unsigned nr)
+{
+    assert(nr == 0);
+    return std::string(getName());
+}
+
+u64
+PRGFile::itemSize(unsigned nr)
+{
+    assert(nr == 0);
+    return size;
+}
+
+u8
+PRGFile::readByte(unsigned nr, u64 pos)
+{
+    assert(nr == 0);
+    assert(pos < itemSize(nr));
+    return data[pos];
+}
+
 void
 PRGFile::selectItem(unsigned item)
 {

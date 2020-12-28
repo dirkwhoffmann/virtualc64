@@ -172,10 +172,6 @@ private:
     //
     
 public:
-
-    // Seeks a file by number or name
-    // FSDirEntry *seek(u32 nr);
-    // FSDirEntry *seek(FSName &name);
     
     // Returns the next free directory entry
     FSDirEntry *nextFreeDirEntry(); 

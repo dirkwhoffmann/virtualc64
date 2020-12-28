@@ -11,8 +11,9 @@
 #define _T64_FILE_H
 
 #include "AnyArchive.h"
+#include "AnyCollection.h"
 
-class T64File : public AnyArchive {
+class T64File : public AnyArchive, AnyCollection {
     
     // Header signature
     static const u8 magicBytes[];
@@ -59,6 +60,20 @@ public:
     bool hasSameType(const char *filename) override { return isT64File(filename); }
     bool readFromBuffer(const u8 *buffer, size_t length) override;
     
+    
+    //
+    // Methods from AnyCollection
+    //
+
+    std::string collectionName() override;
+    u64 collectionCount() override;
+    std::string itemName(unsigned nr) override;
+    u64 itemSize(unsigned nr) override;
+    u8 readByte(unsigned nr, u64 pos) override;
+    
+    // Returns the start or end address in C64 memory for a certain item
+    u16 memStart(unsigned nr);
+    u16 memEnd(unsigned nr);
     
     //
     // Methods from AnyArchive

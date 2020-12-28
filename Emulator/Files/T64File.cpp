@@ -221,6 +221,76 @@ T64File::readFromBuffer(const u8 *buffer, size_t length)
     return true;
 }
 
+std::string
+T64File::collectionName()
+{
+    return std::string(getName());
+}
+
+u64
+T64File::collectionCount()
+{
+    return LO_HI(data[0x24], data[0x25]);
+}
+
+std::string
+T64File::itemName(unsigned nr)
+{
+    assert(nr < collectionCount());
+
+    string result = "";
+
+    unsigned first = 0x50 + (nr * 0x20);
+    unsigned last  = 0x60 + (nr * 0x20);
+    
+    for (unsigned i = first; i < last; i++) {
+        result += (char)(data[i] == 0x20 ? ' ' : data[i]);
+    }
+
+    return name;
+}
+
+u64
+T64File::itemSize(unsigned nr)
+{
+    assert(nr < collectionCount());
+    
+    // Return the number of data bytes plus 2 (for the loading address header)
+    return memEnd(nr) - memStart(nr) + 2;
+}
+
+u8
+T64File::readByte(unsigned nr, u64 pos)
+{
+    assert(nr < collectionCount());
+    assert(pos < itemSize(nr));
+
+    // The first two bytes are the loading address which is stored seperately
+    if (pos <= 1) return nr ? HI_BYTE(memStart(nr)) : LO_BYTE(memStart(nr));
+    
+    // Locate the first byte of the requested file
+    unsigned i = 0x48 + (nr * 0x20);
+    u64 start = LO_LO_HI_HI(data[i], data[i+1], data[i+2], data[i+3]);
+
+    // Locate the requested byte
+    u64 offset = start + pos - 2;
+    assert(offset < size);
+    
+    return data[offset];
+}
+
+u16
+T64File::memStart(unsigned nr)
+{
+    return LO_HI(data[0x42 + nr * 0x20], data[0x43 + nr * 0x20]);
+}
+
+u16
+T64File::memEnd(unsigned nr)
+{
+    return LO_HI(data[0x44 + nr * 0x20], data[0x45 + nr * 0x20]);
+}
+
 int
 T64File::numberOfItems()
 {

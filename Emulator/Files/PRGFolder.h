@@ -58,10 +58,10 @@ public:
     
     
     //
-    // Methods from AnyFile
+    // Methods from AnyFile (DEPRECATED)
     //
 
-    FileType type() override { return FILETYPE_PRG; }
+    FileType type() override { return FILETYPE_PRG_FOLDER; }
     bool hasSameType(const char *path) override { return isPRGFolder(path); }
     
     

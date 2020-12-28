@@ -2317,8 +2317,9 @@ CPU<M>::executeOneCycle()
             
             POLL_IRQ
             setI(1);
+            [[fallthrough]];
             
-        case SEI_cont: // fallthrough
+        case SEI_cont:
             
             next = SEI_cont;
             IDLE_READ_IMPLIED
