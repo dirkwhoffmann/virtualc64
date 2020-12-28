@@ -43,6 +43,9 @@ public:
      */
     static AnyArchive *makeWithFile(const char *filename);
     
+    AnyArchive() : AnyFile() { }
+    AnyArchive(size_t capacity) : AnyFile(capacity) { }
+    
     const char *getDescription() override { return "AnyArchive"; }
 
 

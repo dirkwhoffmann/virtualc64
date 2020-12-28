@@ -19,6 +19,12 @@ AnyFile::AnyFile()
     memset(unicode, 0, sizeof(unicode));
 }
 
+AnyFile::AnyFile(size_t capacity)
+{
+    size = capacity;
+    data = new u8[capacity]();
+}
+
 AnyFile::~AnyFile()
 {
     dealloc();

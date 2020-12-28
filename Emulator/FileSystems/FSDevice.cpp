@@ -790,13 +790,18 @@ FSDevice::itemSize(unsigned nr)
         
         BlockPtr next = nextBlockPtr(b);
         
+        printf("Block %d/%d", b->data[0], b->data[1]);
+        
         if (next) {
             size += 254;
             b = next;
         } else {
-            size += b->data[1];
+            // The number of remaining bytes are stored in the sector link
+            size += MAX(b->data[1], 254);
         }
         b = next;
+
+        printf(" size = %lld\n", size); 
     }
     
     return size;
@@ -834,11 +839,17 @@ FSDevice::copyItem(unsigned nr, u8 *buf, u64 len, u64 offset)
     u64 pos = 2;
     
     // Iterate through the block chain
-    while (b && len--) {
+    while (b && len) {
                 
-        *buf++ = b->data[pos++];
-
-        if (pos == 254) {
+        if (offset) {
+            --offset;
+            printf("Skipping byte\n");
+        } else {
+            --len;
+            *buf++ = b->data[pos];
+        }
+        
+        if (++pos == 256) {
             b = nextBlockPtr(b);
             pos = 2;
         }

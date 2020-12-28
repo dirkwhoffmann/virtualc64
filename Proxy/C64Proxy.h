@@ -34,6 +34,7 @@
 
 @class AnyFileProxy;
 @class AnyArchiveProxy;
+@class AnyCollectionProxy;
 @class AnyDiskProxy;
 @class CRTFileProxy;
 @class TAPFileProxy;
@@ -43,6 +44,7 @@
 @class P00FileProxy;
 @class D64FileProxy;
 @class G64FileProxy;
+@class FSDeviceProxy;
 
 // Forward declarations of wrappers for C++ classes.
 // We wrap classes into normal C structs to avoid any reference to C++.
@@ -646,6 +648,290 @@ struct AnyC64FileWrapper;
 - (const char *)sectorDataBytesAsString:(Sector)nr hex:(BOOL)hex;
 @end
 
+//
+// Datasette proxy
+//
+
+@interface DatasetteProxy : NSObject {
+    
+    struct DatasetteWrapper *wrapper;
+}
+
+- (void) dump;
+
+- (BOOL) hasTape;
+
+- (void) pressPlay;
+- (void) pressStop;
+- (void) rewind;
+- (void) ejectTape;
+- (BOOL) insertTape:(TAPFileProxy *)tape;
+- (NSInteger) getType; 
+- (long) durationInCycles;
+- (int) durationInSeconds;
+- (NSInteger) head;
+- (NSInteger) headInCycles;
+- (int) headInSeconds;
+- (void) setHeadInCycles:(long)value;
+- (BOOL) motor;
+- (BOOL) playKey;
+
+@end
+
+//
+// Mouse proxy
+//
+
+@interface MouseProxy : NSObject {
+    
+    struct MouseWrapper *wrapper;
+}
+
+- (MouseModel) model;
+- (void) setModel:(MouseModel)model;
+- (NSInteger) port;
+- (void) connect:(NSInteger)toPort;
+- (void) disconnect;
+- (void) setXY:(NSPoint)pos;
+- (void) setLeftButton:(BOOL)pressed;
+- (void) setRightButton:(BOOL)pressed;
+
+@end
+
+//
+// F I L E   T Y P E   P R O X Y S
+//
+
+//
+// AnyC64File proxy
+//
+
+@interface AnyFileProxy : NSObject {
+    
+    struct AnyC64FileWrapper *wrapper;
+}
+
+- (struct AnyC64FileWrapper *)wrapper;
+
+- (FileType)type;
+- (NSString *)typeString;
+- (void)setPath:(NSString *)path;
+- (NSString *)name;
+- (NSInteger)sizeOnDisk;
+- (u64) fnv;
+- (void)readFromBuffer:(const void *)buffer length:(NSInteger)length;
+- (NSInteger)writeToBuffer:(void *)buffer;
+- (BOOL)writeToFile:(NSString *)path;
+
+@end
+
+//
+// AnyCollection proxy
+//
+
+@interface AnyCollectionProxy : AnyFileProxy {
+}
+
+- (NSInteger)itemSize:(NSInteger)nr;
+/*
+- (NSInteger)numberOfItems;
+- (void)selectItem:(NSInteger)item;
+- (NSString *)nameOfItem;
+- (NSString *)unicodeNameOfItem;
+- (NSInteger)sizeOfItem;
+- (NSInteger)sizeOfItemInBlocks;
+- (void)seekItem:(NSInteger)offset;
+- (NSString *)typeOfItem;
+- (NSString *)readItemHex:(NSInteger)num;
+- (NSInteger)destinationAddrOfItem;
+*/
+
+@end
+
+//
+// AnyArchive proxy
+//
+
+@interface AnyArchiveProxy : AnyCollectionProxy {
+}
+
++ (instancetype)make;
++ (instancetype)makeWithFile:(NSString *)path;
+
+- (NSInteger)numberOfItems;
+- (void)selectItem:(NSInteger)item;
+- (NSString *)nameOfItem;
+- (NSString *)unicodeNameOfItem;
+- (NSInteger)sizeOfItem;
+- (NSInteger)sizeOfItemInBlocks;
+- (void)seekItem:(NSInteger)offset;
+- (NSString *)typeOfItem;
+- (NSString *)readItemHex:(NSInteger)num;
+- (NSInteger)destinationAddrOfItem;
+
+@end
+
+//
+// Snapshot proxy
+//
+
+@interface SnapshotProxy : AnyFileProxy {
+
+   NSImage *preview;
+}
+
++ (BOOL)isSupportedSnapshot:(const void *)buffer length:(NSInteger)length;
++ (BOOL)isUnsupportedSnapshot:(const void *)buffer length:(NSInteger)length;
++ (BOOL)isSupportedSnapshotFile:(NSString *)path;
++ (BOOL)isUnsupportedSnapshotFile:(NSString *)path;
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype)makeWithFile:(NSString *)path;
++ (instancetype)makeWithC64:(C64Proxy *)c64proxy;
+
+@property (readonly, strong) NSImage *previewImage;
+@property (readonly) time_t timeStamp;
+@property (readonly, copy) NSData *data;
+
+@end
+
+//
+// CRTFile proxy
+//
+
+@interface CRTFileProxy : AnyFileProxy {
+}
+
++ (BOOL)isCRTFile:(NSString *)path;
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype)makeWithFile:(NSString *)path;
+ 
+@property (readonly) CartridgeType cartridgeType;
+@property (readonly) BOOL isSupported;
+@property (readonly) NSInteger initialExromLine;
+@property (readonly) NSInteger initialGameLine;
+@property (readonly) NSInteger chipCount;
+
+@end
+
+//
+// TAPFile proxy
+//
+
+@interface TAPFileProxy : AnyFileProxy {
+}
+
++ (BOOL)isTAPFile:(NSString *)path;
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype)makeWithFile:(NSString *)path;
+
+@property (readonly) TAPVersion version;
+
+@end
+
+//
+// T64File proxy
+//
+
+@interface T64FileProxy : AnyArchiveProxy
+{
+}
++ (BOOL)isT64File:(NSString *)filename;
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype)makeWithFile:(NSString *)filename;
++ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)otherArchive;
+
+@end
+
+//
+// PRGFile proxy
+//
+
+@interface PRGFileProxy : AnyArchiveProxy
+{
+}
++ (BOOL)isPRGFile:(NSString *)filename;
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype)makeWithFile:(NSString *)filename;
++ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)otherArchive;
+
+@end
+
+//
+// PRGFolder proxy
+//
+
+@interface PRGFolderProxy : AnyArchiveProxy {
+}
+
++ (instancetype)make;
++ (instancetype)makeWithFolder:(NSString *)path;
+
+@end
+
+//
+// P00File proxy
+//
+
+@interface P00FileProxy : AnyArchiveProxy
+{
+}
++ (BOOL)isP00File:(NSString *)filename;
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype)makeWithFile:(NSString *)filename;
++ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)otherArchive;
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)volume;
+
+@end
+
+//
+// AnyDisk proxy
+//
+
+@interface AnyDiskProxy : AnyArchiveProxy {
+}
+
++ (instancetype)make;
++ (instancetype)makeWithFile:(NSString *)path;
+
+- (NSInteger)numberOfTracks;
+- (NSInteger)numberOfHalftracks;
+- (void)selectHalftrack:(NSInteger)ht;
+- (NSInteger)sizeOfHalftrack;
+- (void)seekHalftrack:(NSInteger)offset;
+- (NSString *)readHalftrackHex:(NSInteger)num;
+
+@end
+
+//
+// D64File proxy
+//
+
+@interface D64FileProxy : AnyDiskProxy
+{
+}
++ (BOOL)isD64File:(NSString *)filename;
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype)makeWithFile:(NSString *)filename;
++ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)proxy;
++ (instancetype)makeWithDisk:(DiskProxy *)proxy;
++ (instancetype)makeWithDrive:(DriveProxy *)proxy;
++ (instancetype)makeWithVolume:(FSDeviceProxy *)proxy error:(FSError *)error;
+
+@end
+
+//
+// G64File proxy
+//
+
+@interface G64FileProxy : AnyDiskProxy
+{
+}
++ (BOOL)isG64File:(NSString *)filename;
++ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype) makeWithFile:(NSString *)filename;
++ (instancetype) makeWithDisk:(DiskProxy *)diskProxy;
+
+@end
 
 //
 // FSDevice
@@ -692,282 +978,7 @@ struct AnyC64FileWrapper;
 
 - (NSInteger)readByte:(NSInteger)block offset:(NSInteger)offset;
 - (BOOL)exportDirectory:(NSString *)path error:(FSError *)err;
-// - (BOOL)exportBlock:(NSInteger)block buffer:(unsigned char *)buffer;
 
 - (void)dump;
-
-@end
-
-//
-// Datasette proxy
-//
-
-@interface DatasetteProxy : NSObject {
-    
-    struct DatasetteWrapper *wrapper;
-}
-
-- (void) dump;
-
-- (BOOL) hasTape;
-
-- (void) pressPlay;
-- (void) pressStop;
-- (void) rewind;
-- (void) ejectTape;
-- (BOOL) insertTape:(TAPFileProxy *)tape;
-- (NSInteger) getType; 
-- (long) durationInCycles;
-- (int) durationInSeconds;
-- (NSInteger) head;
-- (NSInteger) headInCycles;
-- (int) headInSeconds;
-- (void) setHeadInCycles:(long)value;
-- (BOOL) motor;
-- (BOOL) playKey;
-
-@end
-
-
-//
-// Mouse proxy
-//
-
-@interface MouseProxy : NSObject {
-    
-    struct MouseWrapper *wrapper;
-}
-
-- (MouseModel) model;
-- (void) setModel:(MouseModel)model;
-- (NSInteger) port;
-- (void) connect:(NSInteger)toPort;
-- (void) disconnect;
-- (void) setXY:(NSPoint)pos;
-- (void) setLeftButton:(BOOL)pressed;
-- (void) setRightButton:(BOOL)pressed;
-
-@end
-
-
-//
-// F I L E   T Y P E   P R O X Y S
-//
-
-//
-// AnyC64File proxy
-//
-
-@interface AnyFileProxy : NSObject {
-    
-    struct AnyC64FileWrapper *wrapper;
-}
-
-- (struct AnyC64FileWrapper *)wrapper;
-
-- (FileType)type;
-- (NSString *)typeString;
-- (void)setPath:(NSString *)path;
-- (NSString *)name;
-- (NSInteger)sizeOnDisk;
-- (u64) fnv;
-- (void)readFromBuffer:(const void *)buffer length:(NSInteger)length;
-- (NSInteger)writeToBuffer:(void *)buffer;
-- (BOOL)writeToFile:(NSString *)path;
-
-@end
-
-
-//
-// AnyArchive proxy
-//
-
-@interface AnyArchiveProxy : AnyFileProxy {
-}
-
-+ (instancetype)make;
-+ (instancetype)makeWithFile:(NSString *)path;
-
-- (NSInteger)numberOfItems;
-- (void)selectItem:(NSInteger)item;
-- (NSString *)nameOfItem;
-- (NSString *)unicodeNameOfItem;
-- (NSInteger)sizeOfItem;
-- (NSInteger)sizeOfItemInBlocks;
-- (void)seekItem:(NSInteger)offset;
-- (NSString *)typeOfItem;
-- (NSString *)readItemHex:(NSInteger)num;
-- (NSInteger)destinationAddrOfItem;
-
-@end
-
-
-//
-// Snapshot proxy
-//
-
-@interface SnapshotProxy : AnyFileProxy {
-
-   NSImage *preview;
-}
-
-+ (BOOL)isSupportedSnapshot:(const void *)buffer length:(NSInteger)length;
-+ (BOOL)isUnsupportedSnapshot:(const void *)buffer length:(NSInteger)length;
-+ (BOOL)isSupportedSnapshotFile:(NSString *)path;
-+ (BOOL)isUnsupportedSnapshotFile:(NSString *)path;
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype)makeWithFile:(NSString *)path;
-+ (instancetype)makeWithC64:(C64Proxy *)c64proxy;
-
-@property (readonly, strong) NSImage *previewImage;
-@property (readonly) time_t timeStamp;
-@property (readonly, copy) NSData *data;
-
-@end
-
-
-//
-// CRTFile proxy
-//
-
-@interface CRTFileProxy : AnyFileProxy {
-}
-
-+ (BOOL)isCRTFile:(NSString *)path;
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype)makeWithFile:(NSString *)path;
- 
-@property (readonly) CartridgeType cartridgeType;
-@property (readonly) BOOL isSupported;
-@property (readonly) NSInteger initialExromLine;
-@property (readonly) NSInteger initialGameLine;
-@property (readonly) NSInteger chipCount;
-
-@end
-
-
-//
-// TAPFile proxy
-//
-
-@interface TAPFileProxy : AnyFileProxy {
-}
-
-+ (BOOL)isTAPFile:(NSString *)path;
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype)makeWithFile:(NSString *)path;
-
-@property (readonly) TAPVersion version;
-
-@end
-
-
-//
-// T64File proxy
-//
-
-@interface T64FileProxy : AnyArchiveProxy
-{
-}
-+ (BOOL)isT64File:(NSString *)filename;
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype)makeWithFile:(NSString *)filename;
-+ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)otherArchive;
-
-@end
-
-
-//
-// PRGFile proxy
-//
-
-@interface PRGFileProxy : AnyArchiveProxy
-{
-}
-+ (BOOL)isPRGFile:(NSString *)filename;
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype)makeWithFile:(NSString *)filename;
-+ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)otherArchive;
-
-@end
-
-
-//
-// PRGFolder proxy
-//
-
-@interface PRGFolderProxy : AnyArchiveProxy {
-}
-
-+ (instancetype)make;
-+ (instancetype)makeWithFolder:(NSString *)path;
-
-@end
-
-
-//
-// P00File proxy
-//
-
-@interface P00FileProxy : AnyArchiveProxy
-{
-}
-+ (BOOL)isP00File:(NSString *)filename;
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype)makeWithFile:(NSString *)filename;
-+ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)otherArchive;
-
-@end
-
-
-//
-// AnyDisk proxy
-//
-
-@interface AnyDiskProxy : AnyArchiveProxy {
-}
-
-+ (instancetype)make;
-+ (instancetype)makeWithFile:(NSString *)path;
-
-- (NSInteger)numberOfTracks;
-- (NSInteger)numberOfHalftracks;
-- (void)selectHalftrack:(NSInteger)ht;
-- (NSInteger)sizeOfHalftrack;
-- (void)seekHalftrack:(NSInteger)offset;
-- (NSString *)readHalftrackHex:(NSInteger)num;
-
-@end
-
-
-//
-// D64File proxy
-//
-
-@interface D64FileProxy : AnyDiskProxy
-{
-}
-+ (BOOL)isD64File:(NSString *)filename;
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype)makeWithFile:(NSString *)filename;
-+ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)proxy;
-+ (instancetype)makeWithDisk:(DiskProxy *)proxy;
-+ (instancetype)makeWithDrive:(DriveProxy *)proxy;
-+ (instancetype)makeWithVolume:(FSDeviceProxy *)proxy error:(FSError *)error;
-
-@end
-
-
-//
-// G64File proxy
-//
-
-@interface G64FileProxy : AnyDiskProxy
-{
-}
-+ (BOOL)isG64File:(NSString *)filename;
-+ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype) makeWithFile:(NSString *)filename;
-+ (instancetype) makeWithDisk:(DiskProxy *)diskProxy;
 
 @end

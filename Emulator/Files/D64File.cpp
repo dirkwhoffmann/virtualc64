@@ -717,6 +717,8 @@ D64File::jumpToNextSector(long *pos)
     nTrack = nextTrack(*pos);
     nSector = nextSector(*pos);
     
+    printf("Jumping to %d/%d\n", nTrack, nSector);
+
     if (nTrack > numberOfTracks())
         return false;
     

@@ -510,55 +510,77 @@ class ExportDialog: DialogController {
 
     func exportToFile(url: URL) {
         
-        let suffix = url.pathExtension
-
         track("url = \(url)")
-        track("suffix = \(suffix)")
 
-        // Convert the D64 archive into the target format
-        var archive: AnyArchiveProxy?
-        switch suffix.uppercased() {
+        // Remove any existing extension from the URL
+        var newUrl = url.deletingPathExtension()
+        track("new url = \(url)")
         
-        case "D64":
-            track("Exporting to D64 format")
+        track("format: \(formatPopup.selectedTag())")
+
+        var archive: AnyArchiveProxy? // DEPRECATED
+        var collection: AnyCollectionProxy?
+
+        switch formatPopup.selectedTag() {
+        
+        case 0:
+            newUrl.appendPathExtension("d64")
+            track("Exporting to \(newUrl)")
             archive = d64
             
-        case "T64":
-            track("Exporting to T64 format")
+        case 1:
+            newUrl.appendPathExtension("t64")
+            track("Exporting to \(newUrl)")
             archive = T64FileProxy.make(withAnyArchive: d64!)
             
-        case "PRG":
-            track("Exporting to PRG format")
+        case 2:
+            newUrl.appendPathExtension("prg")
+            track("Exporting to \(newUrl)")
             if d64!.numberOfItems() > 1 {
                 myDocument.showDiskHasMultipleFilesAlert(format: "PRG")
             }
             archive = PRGFileProxy.make(withAnyArchive: d64!)
             
-        case "P00":
-            track("Exporting to P00 format")
+        case 3:
+            newUrl.appendPathExtension("p00")
+            track("Exporting to \(newUrl)")
             if d64!.numberOfItems() > 1 {
                 myDocument.showDiskHasMultipleFilesAlert(format: "P00")
             }
             archive = P00FileProxy.make(withAnyArchive: d64!)
+            collection = P00FileProxy.make(withFileSystem: volume!)
             
-        case "G64":
-            track("Exporting to G64 format")
+        case 4:
+            newUrl.appendPathExtension("g64")
+            track("Exporting to \(newUrl)")
             archive = G64FileProxy.make(withDisk: disk)
 
         default:
-
-            track("Exporting to D64 format (no matching suffix)")
-            archive = d64
+            fatalError()
         }
             
-        // Serialize archive
-        let data = NSMutableData.init(length: archive!.sizeOnDisk())!
-        archive!.write(toBuffer: data.mutableBytes)
-        
-        // Write to file
-        if !data.write(to: url, atomically: true) {
-            myDocument.showExportErrorAlert(url: url)
-            return
+        // Serialize archive (DEPRECATED)
+        if archive != nil {
+            let data = NSMutableData.init(length: archive!.sizeOnDisk())!
+            archive!.write(toBuffer: data.mutableBytes)
+            
+            // Write to file
+            if !data.write(to: newUrl, atomically: true) {
+                myDocument.showExportErrorAlert(url: newUrl)
+                return
+            }
+        }
+        // Serialize collection
+        if collection != nil {
+            let data = NSMutableData.init(length: collection!.sizeOnDisk())!
+            collection!.write(toBuffer: data.mutableBytes)
+            
+            // Write to file
+            let url2 = newUrl.appendingPathExtension("2")
+            if !data.write(to: url2, atomically: true) {
+                myDocument.showExportErrorAlert(url: newUrl)
+                return
+            }
         }
         
         // Mark disk as "not modified"

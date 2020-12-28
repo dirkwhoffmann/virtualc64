@@ -38,7 +38,7 @@ public:
     
 public:
     
-    G64File() { };
+    G64File() : AnyDisk() { };
     G64File(size_t capacity);
     const char *getDescription() override { return "G64File"; }
 

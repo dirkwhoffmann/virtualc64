@@ -1410,7 +1410,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 
 //
-// AnyC64File
+// AnyFile
 //
 
 @implementation AnyFileProxy
@@ -1685,6 +1685,24 @@ struct AnyC64FileWrapper { AnyFile *file; };
 @end
 
 //
+// AnyCollection
+//
+
+@implementation AnyCollectionProxy
+
+- (AnyCollection *)unwrap
+{
+    return (AnyCollection *)([self wrapper]->file);
+}
+
+- (NSInteger)itemSize:(NSInteger)nr
+{
+    return [self unwrap]->itemSize((unsigned)nr);
+}
+
+@end
+
+//
 // AnyArchive
 //
 
@@ -1855,25 +1873,36 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return P00File::isP00File([filename UTF8String]);
 }
+
 + (instancetype) make:(P00File *)archive
 {
     if (archive == NULL) return nil;
     return [[self alloc] initWithFile:archive];
 }
+
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
     P00File *archive = P00File::makeWithBuffer((const u8 *)buffer, length);
     return [self make: archive];
 }
+
 + (instancetype) makeWithFile:(NSString *)path
 {
     P00File *archive = P00File::makeWithFile([path UTF8String]);
     return [self make: archive];
 }
+
 + (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)otherArchive
 {
     AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
     P00File *archive = P00File::makeWithAnyArchive(other);
+    return [self make: archive];
+}
+
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy
+{
+    FSDevice *device = [proxy wrapper]->device;
+    P00File *archive = P00File::makeWithAnyCollection((AnyCollection *)device);
     return [self make: archive];
 }
 

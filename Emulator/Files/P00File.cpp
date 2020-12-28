@@ -83,6 +83,8 @@ P00File::makeWithAnyArchive(AnyArchive *otherArchive)
         return NULL;
     }
     
+    printf("old P00 exporter: getSizeOfItem = %zu\n", otherArchive->getSizeOfItem());
+    
     // Magic bytes (8 bytes)
     u8 *ptr = archive->data;
     strcpy((char *)ptr, "C64File");
@@ -97,9 +99,11 @@ P00File::makeWithAnyArchive(AnyArchive *otherArchive)
     *ptr++ = 0;
     
     // Load address (2 bytes)
+    printf("Load addr (old): %04x\n", otherArchive->getDestinationAddrOfItem());
     *ptr++ = LO_BYTE(otherArchive->getDestinationAddrOfItem());
     *ptr++ = HI_BYTE(otherArchive->getDestinationAddrOfItem());
-    
+    printf("%02X %02X\n", *(ptr-2), *(ptr-1));
+
     // File data
     int byte;
     otherArchive->selectItem(0);
@@ -108,6 +112,42 @@ P00File::makeWithAnyArchive(AnyArchive *otherArchive)
     }
     
     return archive;
+}
+
+P00File *
+P00File::makeWithAnyCollection(AnyCollection *collection)
+{
+    assert(collection);
+
+    debug(FILE_DEBUG, "Creating P00 archive...\n");
+
+    // Only proceed if at least one file is present
+    if (collection->collectionCount() == 0) return nullptr;
+        
+    // Create new archive
+    size_t itemSize = collection->itemSize(0);
+    size_t capacity = itemSize + 8 + 17 + 1;
+    P00File *p00 = new P00File(capacity);
+        
+    printf("new P00 exporter: itemSize = %zu\n", itemSize);
+
+    // Write magic bytes (8 bytes)
+    u8 *p = p00->data;
+    strcpy((char *)p, "C64File");
+    p += 8;
+    
+    // Write name in PET format (17 bytes)
+    strncpy((char *)p, (char *)collection->collectionName().c_str(), 17);
+    for (unsigned i = 0; i < 17; i++, p++)
+    *p = ascii2pet(*p);
+    
+    // Record size (applies to REL files, only) (1 byte)
+    *p++ = 0;
+        
+    // Write data bytes
+    collection->copyItem(0, p, itemSize);
+    
+    return p00;
 }
 
 const char *

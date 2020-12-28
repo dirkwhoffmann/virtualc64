@@ -53,6 +53,7 @@ protected:
 public:
     
     AnyFile();
+    AnyFile(size_t capacity);
     virtual ~AnyFile();
 
     

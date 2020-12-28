@@ -41,6 +41,10 @@ public:
     static P00File *makeWithBuffer(const u8 *buffer, size_t length);
     static P00File *makeWithFile(const char *path);
     static P00File *makeWithAnyArchive(AnyArchive *otherArchive);
+    static P00File *makeWithAnyCollection(AnyCollection *collection);
+    
+    P00File() : AnyArchive() { }
+    P00File(size_t capacity) : AnyArchive(capacity) { }
     
     const char *getDescription() override { return "P00File"; }
 

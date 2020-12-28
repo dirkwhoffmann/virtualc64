@@ -124,7 +124,7 @@ EXPECT_MIN(min); EXPECT_MAX(max) }
 EXPECT_RANGE(0, device.layout.numTracks() + 1)
 
 #define EXPECT_SECTOR_REF(t) { \
-if (u32 num = device.layout.numSectors(t)) EXPECT_RANGE(0,num) }
-// if (u32 num = device.layout.numSectors(t)) EXPECT_RANGE(0,num) else if (strict) EXPECT_BYTE(0) }
+if (u32 num = device.layout.numSectors(t)) \
+EXPECT_RANGE(0,num) else if (strict) EXPECT_MAX(254) }
 
 #endif

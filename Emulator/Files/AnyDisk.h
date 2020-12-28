@@ -37,6 +37,8 @@ public:
      */
     static AnyDisk *makeWithFile(const char *path);
 
+    AnyDisk() : AnyArchive() { }
+    
     
     //
     // Selecting tracks or halftracks
