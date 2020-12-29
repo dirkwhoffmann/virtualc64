@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "PRGFile.h"
+#include "FSDevice.h"
 
 bool
 PRGFile::isPRGBuffer(const u8 *buffer, size_t length)
@@ -91,6 +92,7 @@ PRGFile::makeWithAnyArchive(AnyArchive *other, int item)
     return archive;
 }
 
+/*
 PRGFile *
 PRGFile::makeWithAnyCollection(AnyCollection *collection, int item)
 {
@@ -107,6 +109,28 @@ PRGFile::makeWithAnyCollection(AnyCollection *collection, int item)
                 
     // Add data
     collection->copyItem(item, prg->data, itemSize);
+    
+    return prg;
+}
+*/
+
+PRGFile *
+PRGFile::makeWithFileSystem(FSDevice *fs, int item)
+{
+    assert(fs);
+
+    debug(FILE_DEBUG, "Creating PRG archive...\n");
+
+    // Only proceed if at least one file is present
+    if (fs->collectionCount() <= (u64)item) return nullptr;
+        
+    // Create new archive
+    size_t itemSize = fs->itemSize(item);
+    printf("Item size = %zu", itemSize);
+    PRGFile *prg = new PRGFile(itemSize);
+                
+    // Add data
+    fs->copyItem(item, prg->getData(), itemSize);
     
     return prg;
 }

@@ -130,24 +130,43 @@ Disk::make(C64 &ref, FileSystemType type)
 }
 
 Disk *
+Disk::makeWithD64(C64 &ref, D64File *d64)
+{
+    Disk *disk = new Disk(ref);
+
+    disk->encodeD64(d64);
+    return disk;
+}
+
+Disk *
+Disk::makeWithG64(C64 &ref, G64File *g64)
+{
+    Disk *disk = new Disk(ref);
+
+    disk->encodeG64(g64);
+    return disk;
+}
+
+Disk *
 Disk::makeWithArchive(C64 &ref, AnyArchive *archive)
 {
-    assert(archive != NULL);
+    assert(archive);
         
     Disk *disk = new Disk(ref);
     
     switch (archive->type()) {
             
         case FILETYPE_D64:
-            disk->clearDisk();
-            disk->encodeArchive((D64File *)archive);
-            return disk;
+            
+            msg("Use makeWithG64() instead\n");
+            assert(false);
+            return nullptr;
     
         case FILETYPE_G64:
 
-            disk->clearDisk();
-            disk->encodeArchive((G64File *)archive);
-            return disk;
+            msg("Use makeWithG64() instead\n");
+            assert(false);
+            return nullptr;
 
         default: break;
     }
@@ -159,7 +178,7 @@ Disk::makeWithArchive(C64 &ref, AnyArchive *archive)
     D64File *converted = D64File::makeWithAnyArchive(archive);
     
     disk->clearDisk();
-    disk->encodeArchive(converted);
+    disk->encodeD64(converted);
     delete converted;
     return disk;
 }
@@ -705,11 +724,11 @@ Disk::decodeSector(size_t offset, u8 *dest)
 //
 
 void
-Disk::encodeArchive(G64File *a)
+Disk::encodeG64(G64File *a)
 {
     trace(GCR_DEBUG, "Encoding G64 archive\n");
     
-    assert(a != NULL);
+    assert(a);
     
     clearDisk();
     for (Halftrack ht = 1; ht <= 84; ht++) {
@@ -742,9 +761,9 @@ Disk::encodeArchive(G64File *a)
 }
 
 void
-Disk::encodeArchive(D64File *a, bool alignTracks)
+Disk::encodeD64(D64File *a, bool alignTracks)
 {
-    assert(a != NULL);
+    assert(a);
     
     // 64COPY (fails on VICE test drive/skew)
     /*

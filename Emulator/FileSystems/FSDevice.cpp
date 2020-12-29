@@ -180,6 +180,7 @@ FSDevice::~FSDevice()
 void
 FSDevice::info()
 {
+    scanDirectory();
 }
 
 void
@@ -615,13 +616,10 @@ FSDevice::makeFile(const char *name, FSDirEntry *dir, const u8 *buf, size_t cnt)
     // Store the size of the last data chunk inside the sector link
     assert(ptr->data[0] == 0);
     ptr->data[1] = cnt % 254;
-    printf("%d: Last chunk size = %d (T: %d)\n", ptr->nr, ptr->data[1], ptr->data[0]);
     
     // Write directory entry
     dir->init(name, blockList[0], numBlocks);
     
-    scanDirectory();
-    printf("Size of item: %llu\n", itemSize((unsigned)0));
     return true;
 }
 

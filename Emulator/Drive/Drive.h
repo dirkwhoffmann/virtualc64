@@ -344,6 +344,8 @@ public:
      */
     void insertDisk(FileSystemType fstype);
     void insertDisk(Disk *otherDisk);
+    void insertD64(D64File *d64);
+    void insertG64(G64File *g64);
     void insertDisk(AnyArchive *archive);
     void ejectDisk();
 

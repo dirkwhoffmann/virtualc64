@@ -164,8 +164,10 @@ public:
     
 public:
     
-    static Disk *make(C64 &c64, FileSystemType type);
-    static Disk *makeWithArchive(C64 &c64, AnyArchive *archive);
+    static Disk *make(C64 &ref, FileSystemType type);
+    static Disk *makeWithD64(C64 &ref, D64File *d64);
+    static Disk *makeWithG64(C64 &ref, G64File *g64);
+    static Disk *makeWithArchive(C64 &ref, AnyArchive *archive); // DEPRECATED
 
 
     //
@@ -443,13 +445,13 @@ private:
 public:
     
     // Encodes a G64 file
-    void encodeArchive(G64File *a);
+    void encodeG64(G64File *a);
     
     /* Encodes a D64 file. The method creates sync marks, GRC encoded header
      * and data blocks, checksums and gaps. If alignTracks is true, the first
      * sector always starts at the beginning of a track.
      */
-    void encodeArchive(D64File *a, bool alignTracks = false);
+    void encodeD64(D64File *a, bool alignTracks = false);
  
 private:
     

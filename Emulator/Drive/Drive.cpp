@@ -407,20 +407,31 @@ Drive::insertDisk(FileSystemType fstype)
 }
 
 void
+Drive::insertD64(D64File *d64)
+{
+    debug(DSKCHG_DEBUG, "insertD64(%p)\n", d64);
+    insertDisk(Disk::makeWithD64(c64, d64));
+}
+
+void
+Drive::insertG64(G64File *g64)
+{
+    debug(DSKCHG_DEBUG, "insertG64(%p)\n", g64);
+    insertDisk(Disk::makeWithG64(c64, g64));
+}
+
+void
 Drive::insertDisk(AnyArchive *archive)
 {
-    assert(archive != NULL);
-
-    trace(DSKCHG_DEBUG, "insertDisk(archive %p)\n", archive);
+    debug(DSKCHG_DEBUG, "insertDisk(archive %p)\n", archive);
     insertDisk(Disk::makeWithArchive(c64, archive));
 }
 
 void
 Drive::insertDisk(Disk *otherDisk)
 {
-    trace(DSKCHG_DEBUG, "insertDisk(otherDisk %p)\n", otherDisk);
-    assert(otherDisk != NULL);
-    
+    debug(DSKCHG_DEBUG, "insertDisk(otherDisk %p)\n", otherDisk);
+
     suspend();
     
     if (!diskToInsert) {
@@ -436,7 +447,7 @@ Drive::insertDisk(Disk *otherDisk)
 void 
 Drive::ejectDisk()
 {
-    trace(DSKCHG_DEBUG, "ejectDisk()\n");
+    debug(DSKCHG_DEBUG, "ejectDisk()\n");
 
     suspend();
     

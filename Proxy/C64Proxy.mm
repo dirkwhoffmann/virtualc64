@@ -1185,6 +1185,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
     }
     return self;
 }
+
 - (VIAProxy *) via:(NSInteger)num {
 	switch (num) {
 		case 1:
@@ -1196,95 +1197,124 @@ struct AnyC64FileWrapper { AnyFile *file; };
 			return NULL;
 	}
 }
+
 - (DriveConfig) getConfig
 {
     return wrapper->drive->getConfig();
 }
+
 - (void) dump
 {
     wrapper->drive->dump();
 }
+
 - (BOOL) isConnected
 {
     return wrapper->drive->getConfigItem(OPT_DRIVE_CONNECT) != 0;
 }
+
 - (BOOL) isSwitchedOn
 {
     return wrapper->drive->getConfigItem(OPT_DRIVE_POWER_SWITCH) != 0;
 }
+
 - (BOOL) readMode
 {
     return wrapper->drive->readMode();
 }
+
 - (BOOL) writeMode
 {
     return wrapper->drive->writeMode();
 }
+
 - (BOOL) redLED
 {
     return wrapper->drive->getRedLED();
 }
+
 - (BOOL) hasDisk
 {
     return wrapper->drive->hasDisk();
 }
+
 - (BOOL) hasModifiedDisk
 {
     return wrapper->drive->hasModifiedDisk();
 }
+
 - (void) setModifiedDisk:(BOOL)b
 {
     wrapper->drive->setModifiedDisk(b);
 }
+
+- (void) insertD64:(D64FileProxy *)proxy
+{
+    D64File *d64 = (D64File *)([proxy wrapper]->file);
+    wrapper->drive->insertD64(d64);
+}
+
 - (void) insertDisk:(AnyArchiveProxy *)disk
 {
     AnyArchive *archive = (AnyArchive *)([disk wrapper]->file);
     wrapper->drive->insertDisk(archive);
 }
+
 - (void) insertNewDisk:(FileSystemType)fstype
 {
     wrapper->drive->insertDisk(fstype);
 }
+
 - (void) ejectDisk
 {
     wrapper->drive->ejectDisk();
 }
+
 - (BOOL) writeProtected
 {
     return wrapper->drive->disk.isWriteProtected();
 }
+
 - (void) setWriteProtection:(BOOL)b
 {
     wrapper->drive->disk.setWriteProtection(b);
 }
+
 - (BOOL) hasWriteProtectedDisk
 {
     return wrapper->drive->hasWriteProtectedDisk();
 }
+
 - (Track) track
 {
     return wrapper->drive->getTrack();
 }
+
 - (Halftrack) halftrack
 {
     return wrapper->drive->getHalftrack();
 }
+
 - (u16) sizeOfHalftrack:(Halftrack)ht
 {
     return wrapper->drive->sizeOfHalftrack(ht);
 }
+
 - (u16) sizeOfCurrentHalftrack
 {
     return wrapper->drive->sizeOfCurrentHalftrack();
 }
+
 - (u16) offset
 {
     return wrapper->drive->getOffset();
 }
+
 - (u8) readBitFromHead
 {
     return wrapper->drive->readBitFromHead();
 }
+
 - (BOOL) isRotating
 {
     return wrapper->drive->isRotating();
@@ -1860,8 +1890,8 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy
 {
-    FSDevice *device = [proxy wrapper]->device;
-    PRGFile *archive = PRGFile::makeWithAnyCollection((AnyCollection *)device);
+    FSDevice *fs = [proxy wrapper]->device;
+    PRGFile *archive = PRGFile::makeWithFileSystem(fs);
     return [self make: archive];
 }
 
@@ -1999,6 +2029,11 @@ struct AnyC64FileWrapper { AnyFile *file; };
 //
 
 @implementation D64FileProxy
+
+- (D64File *)unwrap
+{
+    return (D64File *)wrapper->file;
+}
 
 + (BOOL)isD64File:(NSString *)filename
 {

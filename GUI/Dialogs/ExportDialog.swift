@@ -202,6 +202,7 @@ class ExportDialog: DialogController {
         // if d64 != nil { volume = FSDeviceProxy.make(withD64: d64) }
         
         // REMOVE ASAP
+        track("Exporter: Volume:")
         volume?.printDirectory()
                         
         super.showSheet(completionHandler: handler)

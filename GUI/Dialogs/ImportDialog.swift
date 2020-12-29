@@ -31,8 +31,9 @@ class ImportDialog: DialogController {
     @IBOutlet weak var flashLabel: NSTextField!
     @IBOutlet weak var carousel: iCarousel!
 
-    // File system created from a D64, T64, PRG, or P00 attachment
+    var disk: DiskProxy?
     var volume: FSDeviceProxy?
+    var d64: D64FileProxy?
     
     var type: FileType!
     var media: MediaType!
@@ -68,6 +69,8 @@ class ImportDialog: DialogController {
     
     override func showSheet(completionHandler handler:(() -> Void)? = nil) {
     
+        var err = FSError.OK
+        
         type = myDocument.attachment!.type()
 
         switch myDocument.attachment {
@@ -107,6 +110,7 @@ class ImportDialog: DialogController {
         case is D64FileProxy:
 
             volume = FSDeviceProxy.make(withD64: myDocument.attachment as? D64FileProxy)
+            d64 = myDocument.attachment as? D64FileProxy
             let numTracks = volume?.numTracks ?? 0
             
             media = .d64
@@ -123,6 +127,7 @@ class ImportDialog: DialogController {
         case is T64FileProxy, is P00FileProxy, is PRGFileProxy:
             
             volume = FSDeviceProxy.make(withCollection: myDocument.attachment as? AnyCollectionProxy)
+            d64 = D64FileProxy.make(withVolume: volume, error: &err)
             let numTracks = volume?.numTracks ?? 0
             
             media = .collection
@@ -367,8 +372,16 @@ class ImportDialog: DialogController {
 
     @IBAction func insertAction(_ sender: NSButton!) {
         
+        let id = sender.tag == 0 ? DriveID.DRIVE8 : DriveID.DRIVE9
+        
         track("insertAction: \(sender.tag)")
 
+        if d64 != nil {
+            track("Inserting D64")
+            c64.drive(id)?.insertD64(d64)
+            c64.drive(id).setWriteProtection(writeProtect)
+        }
+        /*
         switch media {
         case .collection, .d64, .g64, .directory:
             
@@ -399,6 +412,7 @@ class ImportDialog: DialogController {
         case .none:
             fatalError()
         }
+        */
         
         parent.renderer.rotateLeft()
         hideSheet()

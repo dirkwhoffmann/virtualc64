@@ -586,6 +586,7 @@ struct AnyC64FileWrapper;
 - (BOOL) hasDisk;
 - (BOOL) hasModifiedDisk;
 - (void) setModifiedDisk:(BOOL)b;
+- (void) insertD64:(D64FileProxy *)disk;
 - (void) insertDisk:(AnyArchiveProxy *)disk;
 - (void) insertNewDisk:(FileSystemType)fstype;
 - (void) ejectDisk;
