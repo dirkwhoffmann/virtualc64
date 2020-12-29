@@ -15,7 +15,7 @@
 
 #include "AnyArchive.h" // DEPRECATED
 
-class P00File : public AnyArchive, AnyCollection {
+class P00File : public AnyArchive {
 
     // Header signature
     static const u8 magicBytes[];

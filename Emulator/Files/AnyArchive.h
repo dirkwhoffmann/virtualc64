@@ -15,12 +15,12 @@
 #ifndef _ANY_ARCHIVE_H
 #define _ANY_ARCHIVE_H
 
-#include "AnyFile.h"
+#include "AnyCollection.h"
 
 /* This class adds an API to AnyC64File for handling file formats that store a
  * collection of multiple C64 files (archives).
  */
-class AnyArchive : public AnyFile {
+class AnyArchive : public AnyCollection {
     
 protected:
         
@@ -43,8 +43,8 @@ public:
      */
     static AnyArchive *makeWithFile(const char *filename);
     
-    AnyArchive() : AnyFile() { }
-    AnyArchive(size_t capacity) : AnyFile(capacity) { }
+    AnyArchive() : AnyCollection() { }
+    AnyArchive(size_t capacity) : AnyCollection(capacity) { }
     
     const char *getDescription() override { return "AnyArchive"; }
 

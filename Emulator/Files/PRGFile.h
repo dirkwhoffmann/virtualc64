@@ -13,7 +13,7 @@
 #include "AnyArchive.h"
 #include "AnyCollection.h"
 
-class PRGFile : public AnyArchive, AnyCollection {
+class PRGFile : public AnyArchive {
 
 public:
 
@@ -38,11 +38,15 @@ public:
     static PRGFile *makeWithBuffer(const u8 *buffer, size_t length);
     static PRGFile *makeWithFile(const char *path);
     static PRGFile *makeWithAnyArchive(AnyArchive *other, int item = 0);
+    static PRGFile *makeWithAnyCollection(AnyCollection *collection, int item = 0);
 
     
     //
     // Initializing
     //
+    
+    PRGFile() : AnyArchive() { }
+    PRGFile(size_t capacity) : AnyArchive(capacity) { }
     
     const char *getDescription() override { return "PRGFile"; }
     

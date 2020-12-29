@@ -10,8 +10,10 @@
 class ImportDialog: DialogController {
         
     enum MediaType {
-        case archive
-        case disk
+        
+        case d64
+        case collection
+        case g64
         case tape
         case cartridge
         case directory
@@ -29,9 +31,11 @@ class ImportDialog: DialogController {
     @IBOutlet weak var flashLabel: NSTextField!
     @IBOutlet weak var carousel: iCarousel!
 
+    // File system created from a D64, T64, PRG, or P00 attachment
+    var volume: FSDeviceProxy?
+    
     var type: FileType!
     var media: MediaType!
-    
     var writeProtect: Bool { return checkbox.state == .on }
     var autoRun: Bool { return checkbox.state == .on }
     
@@ -100,16 +104,32 @@ class ImportDialog: DialogController {
             titleString = "Commodore Cassette Tape"
             subtitle1String = tap.version.description
 
-        case is T64FileProxy, is P00FileProxy, is PRGFileProxy, is D64FileProxy:
-            
-            let volume = FSDeviceProxy.make(withArchive: myDocument.attachment as? AnyArchiveProxy)
+        case is D64FileProxy:
+
+            volume = FSDeviceProxy.make(withD64: myDocument.attachment as? D64FileProxy)
             let numTracks = volume?.numTracks ?? 0
             
-            media = .archive
-            track("ArchiveFileProxy")
+            media = .d64
+            track("D64FileProxy")
             titleString = "Commodore 64 Floppy Disk"
             subtitle1String = "Single sided, single density disk with \(numTracks) tracks"
-            subtitle2String = volume!.dos.description
+            subtitle2String = volume?.dos.description ?? ""
+            
+            let num = volume!.numFiles
+            let free = volume!.numUsedBlocks
+            let files = num == 1 ? "file" : "files"
+            subtitle3String = "\(num) \(files), \(free) blocks used"
+            
+        case is T64FileProxy, is P00FileProxy, is PRGFileProxy:
+            
+            volume = FSDeviceProxy.make(withCollection: myDocument.attachment as? AnyCollectionProxy)
+            let numTracks = volume?.numTracks ?? 0
+            
+            media = .collection
+            track("T64FileProxy / P00FileProxy / PRGFileProxy")
+            titleString = "Commodore 64 Floppy Disk (Converted)"
+            subtitle1String = "Single sided, single density disk with \(numTracks) tracks"
+            subtitle2String = volume?.dos.description ?? ""
             
             let num = volume!.numFiles
             let free = volume!.numUsedBlocks
@@ -168,7 +188,7 @@ class ImportDialog: DialogController {
 
         case _ as G64FileProxy:
             
-            media = .disk
+            media = .g64
             track("G64FileProxy")
             titleString = "G64 File"
             subtitle1String = "A bit-accurate image of a C64 diskette"
@@ -185,6 +205,12 @@ class ImportDialog: DialogController {
                     screenshots.append(screenshot)
                 }
             }
+        }
+        
+        if volume != nil {
+            track("Volume created successfully")
+            volume?.info()
+            volume?.printDirectory()
         }
         
         super.showSheet(completionHandler: handler)
@@ -215,7 +241,7 @@ class ImportDialog: DialogController {
         // Configure controls
         switch media {
                         
-        case .archive, .disk, .directory:
+        case .collection, .d64, .g64, .directory:
             checkbox.title = "Write protect"
             drive8.isEnabled = connected8
             drive8.keyEquivalent = "\r"
@@ -260,7 +286,7 @@ class ImportDialog: DialogController {
     
     func setUpFlashItems() -> Int {
                 
-        if media != .archive && media != .directory { return 0 }
+        if media != .collection && media != .directory { return 0 }
         let d64 = myDocument.attachment as! AnyArchiveProxy
         
         flash.removeAllItems()
@@ -308,7 +334,7 @@ class ImportDialog: DialogController {
     func refresh() {
         
         switch media {
-        case .archive, .disk:
+        case .collection, .d64, .g64:
             icon.image = NSImage.init(named: writeProtect ? "disk2_protected" : "disk2")
         case .directory:
             icon.image = NSImage.init(named: "NSFolder")
@@ -344,7 +370,7 @@ class ImportDialog: DialogController {
         track("insertAction: \(sender.tag)")
 
         switch media {
-        case .archive, .disk, .directory:
+        case .collection, .d64, .g64, .directory:
             
             let disk = myDocument.attachment
             let id = sender.tag == 0 ? DriveID.DRIVE8 : DriveID.DRIVE9

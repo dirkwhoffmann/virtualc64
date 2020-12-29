@@ -192,11 +192,14 @@ class ExportDialog: DialogController {
         // Get the disk from the specified drive
         disk = c64.drive(nr)?.disk
         
-        // Try to decode the disk with the D64 decoder
+        // Try to decode the disk with the D64 decoder (DEPRECATED)
         d64 = D64FileProxy.make(withDrive: drive)
+
+        // Try to extract the file system
+        volume = FSDeviceProxy.make(withDisk: disk)
         
         // Try to extract the file system
-        if d64 != nil { volume = FSDeviceProxy.make(withD64: d64) }
+        // if d64 != nil { volume = FSDeviceProxy.make(withD64: d64) }
         
         // REMOVE ASAP
         volume?.printDirectory()
@@ -540,7 +543,8 @@ class ExportDialog: DialogController {
                 myDocument.showDiskHasMultipleFilesAlert(format: "PRG")
             }
             archive = PRGFileProxy.make(withAnyArchive: d64!)
-            
+            collection = PRGFileProxy.make(withFileSystem: volume!)
+
         case 3:
             newUrl.appendPathExtension("p00")
             track("Exporting to \(newUrl)")

@@ -57,7 +57,7 @@ FSDeviceDescriptor::isTrackSectorPair(Track t, Sector s)
 }
 
 bool
-FSDeviceDescriptor::isValidRef(BlockRef ref)
+FSDeviceDescriptor::isValidRef(TSLink ref)
 {
     return isTrackNr(ref.t) && ref.s >= 0 && ref.s < numSectors(ref.t);
 }
@@ -157,7 +157,7 @@ FSDeviceDescriptor::blockNr(Cylinder c, Head h, Sector s)
 }
 
 Block
-FSDeviceDescriptor::blockNr(BlockRef ts)
+FSDeviceDescriptor::blockNr(TSLink ts)
 {
     return blockNr(ts.t, ts.s);
 }
@@ -208,8 +208,8 @@ FSDeviceDescriptor::translateBlockNr(Block *b, Cylinder c, Head h, Sector s)
     translateBlockNr(b, c + h * numTracks(), s);
 }
 
-BlockRef
-FSDeviceDescriptor::nextBlockRef(BlockRef ref)
+TSLink
+FSDeviceDescriptor::nextBlockRef(TSLink ref)
 {
     assert(isValidRef(ref));
     

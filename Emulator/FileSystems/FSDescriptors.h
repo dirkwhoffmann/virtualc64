@@ -77,7 +77,7 @@ struct FSDeviceDescriptor : C64Object {
     bool isHeadNr(Head h) { return h == 0 || h == 1; }
     bool isTrackNr(Track t) { return 1 <= t && t <= numCyls * numHeads; }
     bool isTrackSectorPair(Track t, Sector s);
-    bool isValidRef(BlockRef ref);
+    bool isValidRef(TSLink ref);
 
     
     //
@@ -105,7 +105,7 @@ struct FSDeviceDescriptor : C64Object {
 
     Block blockNr(Cylinder c, Head h, Sector s);
     Block blockNr(Track t, Sector s);
-    Block blockNr(BlockRef ts);
+    Block blockNr(TSLink ts);
     
     void translateBlockNr(Block b, Track *t, Sector *s);
     void translateBlockNr(Block b, Cylinder *c, Head *h, Sector *s);
@@ -121,7 +121,7 @@ struct FSDeviceDescriptor : C64Object {
 public:
     
     bool nextBlock(Block b, Block *nb);
-    BlockRef nextBlockRef(BlockRef b);
+    TSLink nextBlockRef(TSLink b);
     bool nextTrackAndSector(Track t, Sector s, Track *nt, Sector *ns);
 };
 

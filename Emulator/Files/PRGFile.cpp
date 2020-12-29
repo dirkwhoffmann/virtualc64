@@ -91,6 +91,26 @@ PRGFile::makeWithAnyArchive(AnyArchive *other, int item)
     return archive;
 }
 
+PRGFile *
+PRGFile::makeWithAnyCollection(AnyCollection *collection, int item)
+{
+    assert(collection);
+
+    debug(FILE_DEBUG, "Creating PRG archive...\n");
+
+    // Only proceed if at least one file is present
+    if (collection->collectionCount() <= (u64)item) return nullptr;
+        
+    // Create new archive
+    size_t itemSize = collection->itemSize(item);
+    PRGFile *prg = new PRGFile(itemSize);
+                
+    // Add data
+    collection->copyItem(item, prg->data, itemSize);
+    
+    return prg;
+}
+
 std::string
 PRGFile::collectionName()
 {

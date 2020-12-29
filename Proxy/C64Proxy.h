@@ -853,6 +853,7 @@ struct AnyC64FileWrapper;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)filename;
 + (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)otherArchive;
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)volume;
 
 @end
 
@@ -942,8 +943,10 @@ struct AnyC64FileWrapper;
     struct FSDeviceWrapper *wrapper;
 }
 
-+ (instancetype)makeWithD64:(D64FileProxy *)adf;
-+ (instancetype)makeWithArchive:(AnyArchiveProxy *)archive;
++ (instancetype)makeWithD64:(D64FileProxy *)proxy;
++ (instancetype)makeWithDisk:(DiskProxy *)proxy;
++ (instancetype)makeWithArchive:(AnyArchiveProxy *)proxy;
++ (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy;
 
 @property (readonly) struct FSDeviceWrapper *wrapper;
 @property (readonly) FSVolumeType dos;
@@ -964,7 +967,7 @@ struct AnyC64FileWrapper;
 - (NSInteger)sectorNr:(NSInteger)b;
 - (NSInteger)blockNr:(NSInteger)c head:(NSInteger)h sector:(NSInteger)s;
 - (NSInteger)blockNr:(NSInteger)t sector:(NSInteger)s;
-- (NSInteger)blockNr:(BlockRef)ts;
+- (NSInteger)blockNr:(TSLink)ts;
 
 - (FSBlockType)blockType:(NSInteger)blockNr;
 - (FSItemType)itemType:(NSInteger)blockNr pos:(NSInteger)pos;
@@ -980,5 +983,6 @@ struct AnyC64FileWrapper;
 - (BOOL)exportDirectory:(NSString *)path error:(FSError *)err;
 
 - (void)dump;
+- (void)info;
 
 @end

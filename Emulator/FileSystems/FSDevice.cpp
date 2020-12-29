@@ -87,6 +87,7 @@ FSDevice::makeWithDisk(class Disk *disk, FSError *err)
     return device;
 }
 
+// DEPRECATED
 FSDevice *
 FSDevice::makeWithArchive(AnyArchive *archive, FSError *error)
 {
@@ -120,6 +121,42 @@ FSDevice::makeWithArchive(AnyArchive *archive, FSError *error)
     
     device->printDirectory();
         
+    return device;
+}
+
+FSDevice *
+FSDevice::makeWithCollection(AnyCollection *collection, FSError *err)
+{
+    assert(collection);
+        
+    // Get a device descriptor
+    FSDeviceDescriptor descriptor = FSDeviceDescriptor(DISK_SS_SD);
+        
+    // Create the device
+    FSDevice *device = makeWithFormat(descriptor);
+        
+    // Write BAM
+    FSName name = FSName(collection->collectionName());
+    device->blockPtr(18,0)->writeBAM(name);
+
+    // Create the proper amount of directory blocks
+    u32 numberOfItems = (u32)collection->collectionCount();
+    device->setCapacity(numberOfItems);
+
+    // Loop over all items
+    for (u32 i = 0; i < numberOfItems; i++) {
+        
+        // Serialize item into a buffer
+        u64 size = collection->itemSize(i);
+        u8 *buffer = new u8[size];
+        collection->copyItem(i, buffer, size);
+        
+        // Create a file for this item
+        device->makeFile(collection->itemName(i), buffer, size);
+        delete[] buffer;
+    }
+    
+    device->printDirectory();
     return device;
 }
 
@@ -164,9 +201,9 @@ FSDevice::printDirectory()
     scanDirectory();
     
     for (auto &item : dir) {
-        msg("%3d \"%16s\" %s\n",
+        msg("%3d \"%16s\" %s (%5llu bytes)\n",
             HI_LO(item->fileSizeHi, item->fileSizeLo),
-            item->getName().c_str(), item->typeString());
+            item->getName().c_str(), item->typeString(), itemSize(item));
     }
 }
 
@@ -213,7 +250,7 @@ FSDevice::blockPtr(Block b)
 }
 
 FSBlock *
-FSDevice::blockPtr(BlockRef ts)
+FSDevice::blockPtr(TSLink ts)
 {
     return blockPtr(layout.blockNr(ts));
 }
@@ -281,8 +318,8 @@ FSDevice::isFree(Track t, Sector s)
     return GET_BIT(bam->data[byte], bit);
 }
 
-BlockRef
-FSDevice::nextFreeBlock(BlockRef ref)
+TSLink
+FSDevice::nextFreeBlock(TSLink ref)
 {
     if (!layout.isValidRef(ref)) return {0,0};
     
@@ -327,12 +364,12 @@ FSDevice::setAllocationBit(Track t, Sector s, bool value)
     }
 }
 
-std::vector<BlockRef>
-FSDevice::allocate(BlockRef ref, u32 n)
+std::vector<TSLink>
+FSDevice::allocate(TSLink ref, u32 n)
 {
     assert(n > 0);
     
-    std::vector<BlockRef> result;
+    std::vector<TSLink> result;
     FSBlock *block = nullptr;
 
     // Get to the next free block
@@ -373,7 +410,7 @@ FSDevice::locateAllocationBit(Block b, u32 *byte, u32 *bit)
 }
 
 FSBlock *
-FSDevice::locateAllocationBit(BlockRef ref, u32 *byte, u32 *bit)
+FSDevice::locateAllocationBit(TSLink ref, u32 *byte, u32 *bit)
 {
     assert(layout.isValidRef(ref));
         
@@ -417,6 +454,32 @@ FSDevice::seek(u32 nr)
     return nullptr;
 }
 */
+
+u64
+FSDevice::itemSize(FSDirEntry *entry)
+{
+    u64 size = 0;
+
+    // Locate the first data block
+    BlockPtr b = blockPtr(entry->firstDataTrack, entry->firstDataSector);
+
+    // Iterate through the block chain
+    while (b) {
+        
+        BlockPtr next = nextBlockPtr(b);
+                
+        if (next) {
+            size += 254;
+            b = next;
+        } else {
+            // The number of remaining bytes are stored in the sector link
+            size += MIN(b->data[1], 254);
+        }
+        b = next;
+    }
+    
+    return size;
+}
 
 FSDirEntry *
 FSDevice::nextFreeDirEntry()
@@ -514,8 +577,16 @@ FSDevice::makeFile(const char *name, const u8 *buf, size_t cnt)
 }
 
 bool
+FSDevice::makeFile(std::string name, const u8 *buf, size_t cnt)
+{
+    return makeFile(name.c_str(), buf, cnt); 
+}
+
+bool
 FSDevice::makeFile(const char *name, FSDirEntry *dir, const u8 *buf, size_t cnt)
 {
+    printf("FILE SIZE = %zu\n", cnt);
+    
     // Determine the number of blocks needed for this file
     u32 numBlocks = (u32)((cnt + 253) / 254);
     
@@ -536,13 +607,21 @@ FSDevice::makeFile(const char *name, FSDirEntry *dir, const u8 *buf, size_t cnt)
             j = 2;
             Block b;
             layout.translateBlockNr(&b, it->t, it->s);
+            printf("t: %d s: %d\n", it->t, it->s);
         }
         ptr->data[j] = buf[i];
     }
  
+    // Store the size of the last data chunk inside the sector link
+    assert(ptr->data[0] == 0);
+    ptr->data[1] = cnt % 254;
+    printf("%d: Last chunk size = %d (T: %d)\n", ptr->nr, ptr->data[1], ptr->data[0]);
+    
     // Write directory entry
     dir->init(name, blockList[0], numBlocks);
     
+    scanDirectory();
+    printf("Size of item: %llu\n", itemSize((unsigned)0));
     return true;
 }
 
@@ -779,32 +858,7 @@ u64
 FSDevice::itemSize(unsigned nr)
 {
     assert(nr < collectionCount());
-    
-    u64 size = 0;
-
-    // Locate the first data block
-    BlockPtr b = blockPtr(dir[nr]->firstDataTrack, dir[nr]->firstDataSector);
-
-    // Iterate through the block chain
-    while (b) {
-        
-        BlockPtr next = nextBlockPtr(b);
-        
-        printf("Block %d/%d", b->data[0], b->data[1]);
-        
-        if (next) {
-            size += 254;
-            b = next;
-        } else {
-            // The number of remaining bytes are stored in the sector link
-            size += MAX(b->data[1], 254);
-        }
-        b = next;
-
-        printf(" size = %lld\n", size); 
-    }
-    
-    return size;
+    return itemSize(dir[nr]);
 }
 
 u8

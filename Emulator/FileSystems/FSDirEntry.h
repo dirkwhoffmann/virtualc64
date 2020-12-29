@@ -28,8 +28,8 @@ struct FSDirEntry
     u8 fileSizeHi;        // $1F
 
     // Initializes this entry
-    void init(FSName name, BlockRef ref, size_t numBlocks);
-    void init(const char *name, BlockRef ref, size_t numBlocks);
+    void init(FSName name, TSLink ref, size_t numBlocks);
+    void init(const char *name, TSLink ref, size_t numBlocks);
 
     // Checks if this directory entry if empty
     bool isEmpty(); 

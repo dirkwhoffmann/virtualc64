@@ -52,7 +52,7 @@ FSDirEntry::isHidden()
 }
 
 void
-FSDirEntry::init(FSName name, BlockRef ref, size_t numBlocks)
+FSDirEntry::init(FSName name, TSLink ref, size_t numBlocks)
 {
     fileType        = 0x82;  // PRG
     firstDataTrack  = (u8)ref.t;
@@ -64,7 +64,7 @@ FSDirEntry::init(FSName name, BlockRef ref, size_t numBlocks)
 }
 
 void
-FSDirEntry::init(const char *name, BlockRef ref, size_t numBlocks)
+FSDirEntry::init(const char *name, TSLink ref, size_t numBlocks)
 {
     FSName fsName = FSName(name);
     init(fsName, ref, numBlocks);

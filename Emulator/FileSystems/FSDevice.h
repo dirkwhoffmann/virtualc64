@@ -19,7 +19,7 @@
 
 #include <dirent.h>
 
-class FSDevice : C64Object, AnyCollection {
+class FSDevice : C64Object {
     
     friend class FSBlock;
     
@@ -53,8 +53,11 @@ public:
     // Creates a file system from a GCR encoded disk
     static FSDevice *makeWithDisk(class Disk *disk, FSError *error);
 
-    // Creates a file from an object implementing the Archive interface
+    // Creates a file from an object implementing the Archive interface DEPRECATED
     static FSDevice *makeWithArchive(AnyArchive *otherArchive, FSError *error);
+
+    // Creates a file from an object implementing the AnyCollection interface
+    static FSDevice *makeWithCollection(AnyCollection *collection, FSError *error);
 
     
     //
@@ -123,7 +126,7 @@ public:
     
     // Queries a pointer from the block storage (may return nullptr)
     FSBlock *blockPtr(Block b);
-    FSBlock *blockPtr(BlockRef ref);
+    FSBlock *blockPtr(TSLink ref);
     FSBlock *blockPtr(Track t, Sector s);
     FSBlock *bamPtr() { return blocks[357]; }
 
@@ -140,35 +143,35 @@ public:
     // Checks if a block is marked as free in the allocation bitmap
     bool isFree(Block b);
     bool isFree(Track t, Sector s);
-    bool isFree(BlockRef ts) { return isFree(ts.t, ts.s); }
+    bool isFree(TSLink ts) { return isFree(ts.t, ts.s); }
 
     // Returns the first or the next free block in the interleaving chain
-    BlockRef nextFreeBlock(BlockRef start);
-    BlockRef firstFreeBlock() { return nextFreeBlock({1,0}); }
+    TSLink nextFreeBlock(TSLink start);
+    TSLink firstFreeBlock() { return nextFreeBlock({1,0}); }
 
     // Marks a block as allocated or free
     void markAsAllocated(Block b) { setAllocationBit(b, 0); }
     void markAsAllocated(Track t, Sector s) { setAllocationBit(t, s, 0); }
-    void markAsAllocated(BlockRef ts) { markAsAllocated(ts.t, ts.s); }
+    void markAsAllocated(TSLink ts) { markAsAllocated(ts.t, ts.s); }
     
     void markAsFree(Block b) { setAllocationBit(b, 1); }
     void markAsFree(Track t, Sector s) { setAllocationBit(t, s, 1); }
-    void markAsFree(BlockRef ts) { markAsFree(ts.t, ts.s); }
+    void markAsFree(TSLink ts) { markAsFree(ts.t, ts.s); }
 
     void setAllocationBit(Block b, bool value);
     void setAllocationBit(Track t, Sector s, bool value);
-    void setAllocationBit(BlockRef ts) { setAllocationBit(ts.t, ts.s); }
+    void setAllocationBit(TSLink ts) { setAllocationBit(ts.t, ts.s); }
 
     // Allocates a certain amount of (interleaved) blocks
-    std::vector<BlockRef> allocate(BlockRef ref, u32 n);
-    std::vector<BlockRef> allocate(u32 n) { return allocate( {1,0}, n); }
+    std::vector<TSLink> allocate(TSLink ref, u32 n);
+    std::vector<TSLink> allocate(u32 n) { return allocate( {1,0}, n); }
 
 private:
     
     // Locates the allocation bit for a certain block
     FSBlock *locateAllocationBit(Block b, u32 *byte, u32 *bit);
     FSBlock *locateAllocationBit(Track t, Sector s, u32 *byte, u32 *bit);
-    FSBlock *locateAllocationBit(BlockRef ref, u32 *byte, u32 *bit);
+    FSBlock *locateAllocationBit(TSLink ref, u32 *byte, u32 *bit);
 
     
     //
@@ -177,21 +180,25 @@ private:
     
 public:
     
+    // Returns the (precise) size of a certain directory entry in bytes
+    u64 itemSize(FSDirEntry *entry);
+    
     // Returns the next free directory entry
     FSDirEntry *nextFreeDirEntry(); 
     
     // Scans the directory and stores the result in variable 'dir'
     void scanDirectory(bool skipInvisible = true);
-        
+            
     // Ensures that the disk has enough directory blocks to host 'n' files
     bool setCapacity(u32 n);
     
     // Creates a new file
     bool makeFile(const char *name, const u8 *buf, size_t cnt);
+    bool makeFile(std::string name, const u8 *buf, size_t cnt);
 
 private:
     
-    bool makeFile(const char *name, FSDirEntry *dir, const u8 *buf, size_t cnt);
+    bool makeFile(const char *name, FSDirEntry *entry, const u8 *buf, size_t cnt);
 
     
     //
@@ -251,12 +258,12 @@ public:
     // Implementing the AnyCollection interface
     //
     
-    std::string collectionName() override;
-    u64 collectionCount() override;
-    std::string itemName(unsigned nr) override;
-    u64 itemSize(unsigned nr) override;
-    u8 readByte(unsigned nr, u64 pos) override;
-    void copyItem(unsigned nr, u8 *buf, u64 len, u64 offset = 0) override;
+    std::string collectionName();
+    u64 collectionCount();
+    std::string itemName(unsigned nr);
+    u64 itemSize(unsigned nr);
+    u8 readByte(unsigned nr, u64 pos);
+    void copyItem(unsigned nr, u8 *buf, u64 len, u64 offset = 0);
 };
 
 #endif

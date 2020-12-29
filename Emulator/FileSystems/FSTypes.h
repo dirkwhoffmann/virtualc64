@@ -175,7 +175,7 @@ typedef struct
     Track t;
     Sector s;
 }
-BlockRef;
+TSLink;
 
 typedef struct
 {

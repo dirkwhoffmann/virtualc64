@@ -20,8 +20,9 @@ struct FSName : C64Object {
     // ASCII representation (for pretty printing)
     char str[16 + 1];
     
-    FSName(const u8 *_pet);
-    FSName(const char *_str);
+    FSName(const u8 *pet);
+    FSName(const char *str);
+    FSName(std::string str) : FSName(str.c_str()) { }
     
     const char *getDescription() override { return "FSName"; }
     const char *c_str() { return str; }

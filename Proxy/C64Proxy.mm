@@ -954,21 +954,39 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return proxy;
 }
 
-+ (instancetype) makeWithD64:(D64FileProxy *)fileProxy
++ (instancetype) makeWithD64:(D64FileProxy *)proxy
 {
-    AnyC64FileWrapper *d64 = [fileProxy wrapper];
+    AnyFile *file = [proxy wrapper]->file;
 
     FSError error;
-    FSDevice *volume = FSDevice::makeWithD64((D64File *)(d64->file), &error);
+    FSDevice *volume = FSDevice::makeWithD64((D64File *)file, &error);
     return [self make:volume];
 }
 
-+ (instancetype) makeWithArchive:(AnyArchiveProxy *)archiveProxy
++ (instancetype)makeWithDisk:(DiskProxy *)proxy
 {
-    AnyC64FileWrapper *archive = [archiveProxy wrapper];
+    Disk *disk = [proxy wrapper]->disk;
 
     FSError error;
-    FSDevice *volume = FSDevice::makeWithArchive((AnyArchive *)(archive->file), &error);
+    FSDevice *volume = FSDevice::makeWithDisk(disk, &error);
+    return [self make:volume];
+}
+
++ (instancetype) makeWithArchive:(AnyArchiveProxy *)proxy
+{
+    AnyFile *file = [proxy wrapper]->file;
+
+    FSError error;
+    FSDevice *volume = FSDevice::makeWithArchive((AnyArchive *)file, &error);
+    return [self make:volume];
+}
+
++ (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy
+{
+    AnyFile *file = [proxy wrapper]->file;
+
+    FSError error;
+    FSDevice *volume = FSDevice::makeWithCollection((AnyCollection *)file, &error);
     return [self make:volume];
 }
 
@@ -1052,7 +1070,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return (NSInteger)wrapper->device->layout.blockNr((Track)t, (Sector)s);
 }
 
-- (NSInteger)blockNr:(BlockRef)ts
+- (NSInteger)blockNr:(TSLink)ts
 {
     return (NSInteger)wrapper->device->layout.blockNr(ts);
 }
@@ -1115,17 +1133,16 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return wrapper->device->exportDirectory([path fileSystemRepresentation], err);
 }
 
-/*
-- (BOOL) exportBlock:(NSInteger)block buffer:(unsigned char *)buffer
-{
-    return wrapper->device->exportBlock(block, buffer, 256);
-}
-*/
-
 - (void) dump
 {
     wrapper->device->dump();
 }
+
+- (void) info
+{
+    wrapper->device->info();
+}
+
 @end
 
 //
@@ -1838,6 +1855,13 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
     PRGFile *archive = PRGFile::makeWithAnyArchive(other);
+    return [self make: archive];
+}
+
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy
+{
+    FSDevice *device = [proxy wrapper]->device;
+    PRGFile *archive = PRGFile::makeWithAnyCollection((AnyCollection *)device);
     return [self make: archive];
 }
 

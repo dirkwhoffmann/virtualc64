@@ -13,7 +13,7 @@
 #include "AnyArchive.h"
 #include "AnyCollection.h"
 
-class T64File : public AnyArchive, AnyCollection {
+class T64File : public AnyArchive {
     
     // Header signature
     static const u8 magicBytes[];

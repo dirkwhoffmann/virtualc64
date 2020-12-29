@@ -11,30 +11,33 @@
 #define _ANY_COLLECTION_H
 
 #include "Aliases.h"
+#include "AnyFile.h"
 #include <string>
 
 /* An abstract interface for accessing C64 files stored in a collection. */
 
-class AnyCollection {
+class AnyCollection : public AnyFile {
 
 public:
     
+    AnyCollection() : AnyFile() { }
+    AnyCollection(size_t capacity) : AnyFile(capacity) { }
     virtual ~AnyCollection() { }
     
     // Returns the name of this collection
-    virtual std::string collectionName() = 0;
+    virtual std::string collectionName() { return ""; } // = 0;
     
     // Returns the number of items stored in this collection
-    virtual u64 collectionCount() = 0;
+    virtual u64 collectionCount() { return 0; } // = 0;
     
     // Returns the name of a certain item
-    virtual std::string itemName(unsigned nr) = 0;
+    virtual std::string itemName(unsigned nr) { return ""; } // = 0;
     
     // Returns the size of a certain in bytes
-    virtual u64 itemSize(unsigned nr) = 0;
+    virtual u64 itemSize(unsigned nr) { return 0; } // = 0;
         
     // Reads a byte from a certain item
-    virtual u8 readByte(unsigned nr, u64 pos) = 0;
+    virtual u8 readByte(unsigned nr, u64 pos) { return 0; } //  = 0;
 
     
     //
