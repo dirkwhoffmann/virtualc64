@@ -64,8 +64,8 @@ public:
     
     // Returns the name of the selected item
     virtual const char *getNameOfItem() { return ""; }
-    virtual struct FSName getFSNameOfItem();
-
+    virtual PETName<16> getPETNameOfItem();
+    
     // Returns the name of the selected item as a unicode character array
     const unsigned short *getUnicodeNameOfItem();
     

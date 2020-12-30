@@ -10,8 +10,6 @@
 #ifndef _FS_DIR_ENTRY_H
 #define _FS_DIR_ENTRY_H
 
-#include "FSObjects.h"
-
 struct FSDirEntry
 {
     u8 nextDirTrack;      // $00
@@ -28,7 +26,7 @@ struct FSDirEntry
     u8 fileSizeHi;        // $1F
 
     // Initializes this entry
-    void init(FSName name, TSLink ref, size_t numBlocks);
+    void init(PETName<16> name, TSLink ref, size_t numBlocks);
     void init(const char *name, TSLink ref, size_t numBlocks);
 
     // Checks if this directory entry if empty
@@ -38,7 +36,7 @@ struct FSDirEntry
     const char *typeString(); 
     
     // Returns the name of this file
-    FSName getName() { return FSName(fileName); }
+    PETName<16> getName() { return PETName<16>(fileName); }
     
     // Returns the file type of this file
     FSFileType getFileType();

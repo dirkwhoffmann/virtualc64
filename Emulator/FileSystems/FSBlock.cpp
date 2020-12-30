@@ -30,12 +30,12 @@ FSBlock::type()
 void
 FSBlock::writeBAM(const char *name)
 {
-    FSName fsName = FSName(name);
-    writeBAM(fsName); 
+    auto petName = PETName<16>(name);
+    writeBAM(petName);
 }
 
 void
-FSBlock::writeBAM(FSName &name)
+FSBlock::writeBAM(PETName<16> &name)
 {
     // Don't call this methods on blocks other than the BAM block
     assert(this == device.blockPtr(18, 0));

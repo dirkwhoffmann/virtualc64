@@ -100,7 +100,7 @@ FSDevice::makeWithArchive(AnyArchive *archive, FSError *error)
     FSDevice *device = makeWithFormat(descriptor);
         
     // Write BAM
-    FSName name = archive->getFSName();
+    PETName<16> name = PETName<16>("VOLUME");
     device->blockPtr(18,0)->writeBAM(name);
 
     // Create the proper amount of directory blocks
@@ -136,7 +136,7 @@ FSDevice::makeWithCollection(AnyCollection *collection, FSError *err)
     FSDevice *device = makeWithFormat(descriptor);
         
     // Write BAM
-    FSName name = FSName(collection->collectionName());
+    auto name = PETName<16>(collection->collectionName());
     device->blockPtr(18,0)->writeBAM(name);
 
     // Create the proper amount of directory blocks
@@ -448,29 +448,15 @@ FSDevice::locateAllocationBit(Track t, Sector s, u32 *byte, u32 *bit)
     return bamPtr();
 }
 
-FSName
+PETName<16>
 FSDevice::fileName(unsigned nr)
 {
     assert(nr < numFiles());
     return fileName(dir[nr]);
 }
 
-FSName
+PETName<16>
 FSDevice::fileName(FSDirEntry *entry)
-{
-    assert(entry);
-    return FSName(entry->fileName);
-}
-
-PETName<16>
-FSDevice::petName(unsigned nr)
-{
-    assert(nr < numFiles());
-    return petName(dir[nr]);
-}
-
-PETName<16>
-FSDevice::petName(FSDirEntry *entry)
 {
     assert(entry);
     return PETName<16>(entry->fileName);

@@ -289,7 +289,7 @@ T64File::makeWithFileSystem(class FSDevice *fs)
         ptr += 4;
         
         // File name (16 bytes)
-        auto name = fs->petName(n);
+        PETName<16> name = fs->fileName(n);
         name.write(ptr);
         ptr += 16;
     }

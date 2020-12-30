@@ -12,7 +12,6 @@
 #include "PRGFile.h"
 #include "P00File.h"
 #include "G64File.h"
-#include "FSObjects.h"
 
 AnyArchive *
 AnyArchive::makeWithFile(const char *path)
@@ -37,10 +36,10 @@ AnyArchive::makeWithFile(const char *path)
     return NULL;
 }
 
-FSName
-AnyArchive::getFSNameOfItem()
+PETName<16>
+AnyArchive::getPETNameOfItem()
 {
-    return FSName(getNameOfItem());
+    return PETName<16>(getNameOfItem());
 }
 
 const unsigned short *

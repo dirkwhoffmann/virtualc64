@@ -10,7 +10,7 @@
 #ifndef _FS_BLOCK_H
 #define _FS_BLOCK_H
 
-#include "FSObjects.h"
+#include "PETName.h"
 
 class FSBlock : C64Object {
     
@@ -56,7 +56,7 @@ public:
     
     // Writes the Block Availability Map (BAM)
     void writeBAM(const char *name);
-    void writeBAM(FSName &name);
+    void writeBAM(PETName<16> &name);
 
     
     //

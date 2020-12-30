@@ -11,7 +11,6 @@
 #define _FS_DEVICES_H
 
 #include "FSDescriptors.h"
-#include "FSObjects.h"
 #include "FSBlock.h"
 #include "FSDirEntry.h"
 #include "D64File.h"
@@ -181,10 +180,8 @@ private:
 public:
     
     // Returns the name of a file
-    FSName fileName(unsigned nr); // DEPRECATED
-    FSName fileName(FSDirEntry *entry); // DEPRECATED
-    PETName<16> petName(unsigned nr);
-    PETName<16> petName(FSDirEntry *entry);
+    PETName<16> fileName(unsigned nr);
+    PETName<16> fileName(FSDirEntry *entry);
 
     // Returns the type of a file
     FSFileType fileType(unsigned nr);

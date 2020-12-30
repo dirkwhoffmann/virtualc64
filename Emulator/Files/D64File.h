@@ -73,11 +73,10 @@ public:
     
     FileType type() override { return FILETYPE_D64; }
     const char *getName() override;
-    struct FSName getFSName() override;
     bool hasSameType(const char *filename) override { return isD64File(filename); }
     bool readFromBuffer(const u8 *buffer, size_t length) override;
     
-    
+
     //
     // Methods from AnyArchive
     //
@@ -103,6 +102,13 @@ public:
     void seekHalftrack(long offset) override;
 
     void selectTrackAndSector(Track t, Sector s);
+
+
+    //
+    // Accessing disk attributes
+    //
+
+    PETName<16>getPETName();
 
     
     //

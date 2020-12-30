@@ -170,7 +170,6 @@
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		50995F2A24DBCDE400F40713 /* CPUDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50995F2824DBCDE400F40713 /* CPUDebugger.cpp */; };
 		50A077F8258A18B9005ACF5B /* FSDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A077F6258A18B9005ACF5B /* FSDevice.cpp */; };
-		50A077FB258A1AB3005ACF5B /* FSObjects.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A077F9258A1AB3005ACF5B /* FSObjects.cpp */; };
 		50A077FE258A1ADF005ACF5B /* FSBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A077FC258A1ADF005ACF5B /* FSBlock.cpp */; };
 		50A0B48D24C1CAEB00FF0B0B /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50A0B48C24C1CAEB00FF0B0B /* Preferences.xib */; };
 		50A0B48F24C1D15300FF0B0B /* MediaPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A0B48E24C1D15300FF0B0B /* MediaPrefs.swift */; };
@@ -546,8 +545,6 @@
 		50995F2924DBCDE400F40713 /* CPUDebugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPUDebugger.h; sourceTree = "<group>"; };
 		50A077F6258A18B9005ACF5B /* FSDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSDevice.cpp; sourceTree = "<group>"; };
 		50A077F7258A18B9005ACF5B /* FSDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSDevice.h; sourceTree = "<group>"; };
-		50A077F9258A1AB3005ACF5B /* FSObjects.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSObjects.cpp; sourceTree = "<group>"; };
-		50A077FA258A1AB3005ACF5B /* FSObjects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSObjects.h; sourceTree = "<group>"; };
 		50A077FC258A1ADF005ACF5B /* FSBlock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSBlock.cpp; sourceTree = "<group>"; };
 		50A077FD258A1ADF005ACF5B /* FSBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSBlock.h; sourceTree = "<group>"; };
 		50A0B48C24C1CAEB00FF0B0B /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
@@ -1234,8 +1231,6 @@
 				508050192587A16D004FE1F5 /* FSDescriptors.cpp */,
 				50A077F7258A18B9005ACF5B /* FSDevice.h */,
 				50A077F6258A18B9005ACF5B /* FSDevice.cpp */,
-				50A077FA258A1AB3005ACF5B /* FSObjects.h */,
-				50A077F9258A1AB3005ACF5B /* FSObjects.cpp */,
 				50A077FD258A1ADF005ACF5B /* FSBlock.h */,
 				50A077FC258A1ADF005ACF5B /* FSBlock.cpp */,
 				50300AED258B2C5400D261E3 /* FSDirEntry.h */,
@@ -1547,7 +1542,6 @@
 				505184DE24F23484002C6124 /* MyControllerStorage.swift in Sources */,
 				504C438024AF29AC00E69CAE /* CPU.cpp in Sources */,
 				50A077FE258A1ADF005ACF5B /* FSBlock.cpp in Sources */,
-				50A077FB258A1AB3005ACF5B /* FSObjects.cpp in Sources */,
 				5080501B2587A16D004FE1F5 /* FSDescriptors.cpp in Sources */,
 				504C439C24AF29AC00E69CAE /* wave.cc in Sources */,
 				50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */,

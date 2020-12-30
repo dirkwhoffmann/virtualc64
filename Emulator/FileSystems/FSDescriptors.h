@@ -13,20 +13,6 @@
 #include "C64Object.h"
 #include "FSTypes.h"
 
-/*
-#include "FSObjects.h"
-#include "FSBlock.h"
-#include "FSEmptyBlock.h"
-#include "FSBootBlock.h"
-#include "FSRootBlock.h"
-#include "FSBitmapBlock.h"
-#include "FSBitmapExtBlock.h"
-#include "FSUserDirBlock.h"
-#include "FSFileHeaderBlock.h"
-#include "FSFileListBlock.h"
-#include "FSDataBlock.h"
-*/
-
 /* To create a FSDevice, the layout parameters of the represendet device have
  * to be provided. This is done by passing a structure of type FSDeviceLayout
  * which contains physical properties such as the number of cylinders and heads
