@@ -134,10 +134,10 @@ PRGFile::makeWithFileSystem(FSDevice *fs, int item)
     return prg;
 }
 
-std::string
+PETName<16>
 PRGFile::collectionName()
 {
-    return std::string(getName());
+    return PETName<16>(getName());
 }
 
 u64

@@ -25,7 +25,7 @@ public:
     virtual ~AnyCollection() { }
     
     // Returns the name of this collection
-    virtual std::string collectionName() { return ""; } // = 0;
+    virtual PETName<16> collectionName() { return PETName<16>(""); } // = 0;
     
     // Returns the number of items stored in this collection
     virtual u64 collectionCount() { return 0; } // = 0;

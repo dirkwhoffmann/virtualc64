@@ -225,7 +225,7 @@ T64File::makeWithFileSystem(class FSDevice *fs)
     ptr += 32;
     
     // Version (2 bytes)
-    *ptr++ = 0x00;
+    *ptr++ = 0x01;
     *ptr++ = 0x01;
     
     // Max files (2 bytes)
@@ -240,8 +240,8 @@ T64File::makeWithFileSystem(class FSDevice *fs)
     *ptr++ = 0x00;
     *ptr++ = 0x00;
     
-    // User description (24 bytes)
-    auto name = PETName<24>("Volume");
+    // User description (24 bytes, padded with 0x20)
+    auto name = PETName<24>(fs->getName().c_str(), 0x20);
     name.write(ptr);
     ptr += 24;
     
@@ -337,10 +337,10 @@ T64File::readFromBuffer(const u8 *buffer, size_t length)
     return true;
 }
 
-std::string
+PETName<16>
 T64File::collectionName()
 {
-    return std::string(getName());
+    return PETName<16>(data + 0x28);
 }
 
 u64
@@ -386,7 +386,7 @@ T64File::readByte(unsigned nr, u64 pos)
     assert(pos < itemSize(nr));
 
     // The first two bytes are the loading address which is stored seperately
-    if (pos <= 1) return nr ? HI_BYTE(memStart(nr)) : LO_BYTE(memStart(nr));
+    if (pos <= 1) return pos ? HI_BYTE(memStart(nr)) : LO_BYTE(memStart(nr));
     
     // Locate the first byte of the requested file
     unsigned i = 0x48 + (nr * 0x20);

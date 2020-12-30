@@ -290,6 +290,13 @@ FSDevice::nextBlockPtr(FSBlock *ptr)
     return ptr ? blockPtr(ptr->data[0], ptr->data[1]) : nullptr;
 }
 
+PETName<16>
+FSDevice::getName()
+{
+    FSBlock *bam = bamPtr();
+    return PETName<16>(bam->data + 0x90);
+}
+
 bool
 FSDevice::isFree(Block b)
 {

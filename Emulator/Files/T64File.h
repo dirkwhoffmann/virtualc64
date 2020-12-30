@@ -53,7 +53,6 @@ public:
 
     const char *getDescription() override { return "T64File"; }
 
-    
     //
     // Methods from AnyC64File
     //
@@ -68,7 +67,7 @@ public:
     // Methods from AnyCollection
     //
 
-    std::string collectionName() override;
+    PETName<16> collectionName() override;
     u64 collectionCount() override;
     PETName<16> itemName(unsigned nr) override;
     u64 itemSize(unsigned nr) override;

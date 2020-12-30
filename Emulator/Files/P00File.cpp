@@ -241,12 +241,10 @@ P00File::getDestinationAddrOfItem()
     return LO_HI(data[0x1A], data[0x1B]);
 }
 
-std::string
+PETName<16>
 P00File::collectionName()
 {
-    std::string result = "";
-    for (int i = 0; i < 17; i++) result += (char)data[0x08+i];
-    return result;
+    return PETName<16>(data + 0x08);
 }
 
 u64

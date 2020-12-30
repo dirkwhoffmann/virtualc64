@@ -21,7 +21,7 @@
 class FSDevice : C64Object {
     
     friend class FSBlock;
-    
+        
     // The block storage
     std::vector<BlockPtr> blocks;
 
@@ -139,6 +139,9 @@ public:
     // Working with the BAM (Block Allocation Map)
     //
 
+    // Returns the disk name
+    PETName<16> getName();
+    
     // Checks if a block is marked as free in the allocation bitmap
     bool isFree(Block b);
     bool isFree(Track t, Sector s);
