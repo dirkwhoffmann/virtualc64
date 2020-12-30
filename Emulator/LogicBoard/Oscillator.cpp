@@ -108,7 +108,7 @@ Oscillator::waitUntil(u64 deadline)
 {
 #ifdef __MACH__
     
-    mach_wait_until(deadline);
+    mach_wait_until(nanos_to_abs(deadline));
     
 #else
 

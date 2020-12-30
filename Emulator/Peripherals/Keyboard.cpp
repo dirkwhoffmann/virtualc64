@@ -278,8 +278,7 @@ Keyboard::isPressed(u8 row, u8 col)
 
     // We could have also checked the column matrix
     if (KBD_DEBUG) {
-        bool result2 = (kbMatrixCol[col] & (1 << row)) == 0;
-        assert(result1 == result2);
+        assert(result1 == ((kbMatrixCol[col] & (1 << row)) == 0));
     }
 
     return result1;

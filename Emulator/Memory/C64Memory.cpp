@@ -121,7 +121,9 @@ C64Memory::getConfigItem(ConfigOption option)
         case OPT_RAM_PATTERN:  return config.ramPattern;
         case OPT_DEBUGCART:    return config.debugcart;
             
-        default: assert(false);
+        default:
+            assert(false);
+            return 0;
     }
 }
 

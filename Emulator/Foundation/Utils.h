@@ -10,7 +10,6 @@
 #ifndef C64_UTILS_H
 #define C64_UTILS_H
 
-#include <assert.h>
 #include <limits.h>
 #include <math.h>
 #include <pthread.h>

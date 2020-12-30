@@ -65,6 +65,7 @@ SIDBridge::getConfigItem(ConfigOption option)
             
         default:
             assert(false);
+            return 0;
     }
 }
 
@@ -88,6 +89,7 @@ SIDBridge::getConfigItem(ConfigOption option, long id)
                         
         default:
             assert(false);
+            return 0;
     }
 }
 

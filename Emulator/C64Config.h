@@ -21,7 +21,7 @@
 
 // Uncomment these settings in a release build
 // #define RELEASEBUILD
-// #define NDEBUG
+#define NDEBUG
 
 //
 // Configuration overrides

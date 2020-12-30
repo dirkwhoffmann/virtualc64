@@ -37,7 +37,9 @@ CIA::getConfigItem(ConfigOption option)
         case OPT_CIA_REVISION:  return config.revision;
         case OPT_TIMER_B_BUG:   return config.timerBBug;
         
-        default: assert(false);
+        default:
+            assert(false);
+            return 0;
     }
 }
 

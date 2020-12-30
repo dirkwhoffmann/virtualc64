@@ -162,7 +162,7 @@ FSDevice::makeWithCollection(AnyCollection *collection, FSError *err)
 
 FSDevice::FSDevice(u32 capacity)
 {
-    trace(FS_DEBUG, "Creating device with %d blocks\n", capacity);
+    debug(FS_DEBUG, "Creating device with %d blocks\n", capacity);
     
     // Initialize the block storage
     blocks.reserve(capacity);
@@ -637,7 +637,7 @@ FSDevice::setCapacity(u32 n)
     
     // Determine how many directory blocks are needed
     u32 numBlocks = (n + 7) / 8;
-    trace(FS_DEBUG, "Allocation %d directory blocks for %d files\n", numBlocks, n);
+    debug(FS_DEBUG, "Allocation %d directory blocks for %d files\n", numBlocks, n);
 
     // The firsr directory block is located at (18,1)
     Track t = 18;
@@ -821,7 +821,7 @@ FSDevice::importVolume(const u8 *src, size_t size, FSError *error)
 {
     assert(src != nullptr);
 
-    trace(FS_DEBUG, "Importing file system (%zu bytes)...\n", size);
+    debug(FS_DEBUG, "Importing file system (%zu bytes)...\n", size);
 
     // Only proceed if the buffer size matches
     if (blocks.size() * 256 != size) {
@@ -872,7 +872,7 @@ FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, size_t size, FSError *error
     
     u32 count = last - first + 1;
     
-    trace(FS_DEBUG, "Exporting %d blocks (%d - %d)\n", count, first, last);
+    debug(FS_DEBUG, "Exporting %d blocks (%d - %d)\n", count, first, last);
 
     // Only proceed if the source buffer contains the right amount of data
     if (count * 256 != size) {
@@ -889,7 +889,7 @@ FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, size_t size, FSError *error
         blocks[first + i]->exportBlock(dst + i * 256);
     }
 
-    trace(FS_DEBUG, "Success\n");
+    debug(FS_DEBUG, "Success\n");
     
     if (error) *error = FS_OK;
     return true;
@@ -898,9 +898,10 @@ FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, size_t size, FSError *error
 bool
 FSDevice::exportFile(FSDirEntry *item, const char *path, FSError *error)
 {
-    trace(FS_DEBUG, "Exporting file %s to %s\n", item->getName().c_str(), path);
+    debug(FS_DEBUG, "Exporting file %s to %s\n", item->getName().c_str(), path);
 
     assert(false);
+    return false;
 }
 
 bool

@@ -167,7 +167,9 @@ VICII::getConfigItem(ConfigOption option)
         case OPT_SS_COLLISIONS:    return config.checkSSCollisions;
         case OPT_SB_COLLISIONS:    return config.checkSBCollisions;
 
-        default: assert(false);
+        default:
+            assert(false);
+            return 0;
     }
 }
 

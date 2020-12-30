@@ -55,7 +55,9 @@ Drive::getConfigItem(ConfigOption option)
         case OPT_DRIVE_CONNECT:       return config.connected;
         case OPT_DRIVE_POWER_SWITCH:  return config.switchedOn;
             
-        default: assert(false);
+        default:
+            assert(false);
+            return 0;
     }
 }
 

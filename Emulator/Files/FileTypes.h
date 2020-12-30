@@ -34,7 +34,7 @@ inline bool isFileType(long value)
     return value >= 0 && value <= FILETYPE_VC1541_ROM;
 }
 
-inline const char* fileTypeString(FileType type)
+inline const char *sFileType(FileType type)
 {
     switch (type) {
             
@@ -53,7 +53,9 @@ inline const char* fileTypeString(FileType type)
         case FILETYPE_KERNAL_ROM: return "ROM";
         case FILETYPE_VC1541_ROM: return "ROM";
             
-        default: assert(false);
+        default:
+            assert(false);
+            return "";
     }
 }
 

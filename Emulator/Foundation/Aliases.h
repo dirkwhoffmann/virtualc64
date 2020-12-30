@@ -10,9 +10,10 @@
 #ifndef _ALIASES_H
 #define _ALIASES_H
 
+#include "C64Config.h"
+#include <assert.h>
 #include <stdint.h>
 #include <stddef.h>
-#include <assert.h>
 
 //
 // Basic types
