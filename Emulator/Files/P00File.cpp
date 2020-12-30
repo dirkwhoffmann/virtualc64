@@ -255,11 +255,12 @@ P00File::collectionCount()
     return 1;
 }
 
-std::string
+PETName<16>
 P00File::itemName(unsigned nr)
 {
     assert(nr == 0);
-    return collectionName();
+    u8 padChar = 0x00;
+    return PETName<16>(data + 0x08, padChar);
 }
 
 u64

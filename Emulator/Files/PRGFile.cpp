@@ -146,11 +146,11 @@ PRGFile::collectionCount()
     return 1;
 }
 
-std::string
+PETName<16>
 PRGFile::itemName(unsigned nr)
 {
     assert(nr == 0);
-    return std::string(getName());
+    return PETName<16>(getName());
 }
 
 u64

@@ -218,12 +218,11 @@ public:
     bool setCapacity(u32 n);
     
     // Creates a new file
-    bool makeFile(const char *name, const u8 *buf, size_t cnt);
-    bool makeFile(std::string name, const u8 *buf, size_t cnt);
+    bool makeFile(PETName<16> name, const u8 *buf, size_t cnt);
 
 private:
     
-    bool makeFile(const char *name, FSDirEntry *entry, const u8 *buf, size_t cnt);
+    bool makeFile(PETName<16> name, FSDirEntry *entry, const u8 *buf, size_t cnt);
 
     
     //

@@ -349,11 +349,14 @@ T64File::collectionCount()
     return LO_HI(data[0x24], data[0x25]);
 }
 
-std::string
+PETName<16>
 T64File::itemName(unsigned nr)
 {
     assert(nr < collectionCount());
-
+    
+    u8 padChar = 0x20;
+    return PETName<16>(data + 0x50 + nr * 0x20, padChar);
+    /*
     string result = "";
 
     unsigned first = 0x50 + (nr * 0x20);
@@ -364,6 +367,7 @@ T64File::itemName(unsigned nr)
     }
 
     return name;
+    */
 }
 
 u64

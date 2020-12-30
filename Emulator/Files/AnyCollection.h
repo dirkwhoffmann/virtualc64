@@ -31,7 +31,7 @@ public:
     virtual u64 collectionCount() { return 0; } // = 0;
     
     // Returns the name of a certain item
-    virtual std::string itemName(unsigned nr) { return ""; } // = 0;
+    virtual PETName<16> itemName(unsigned nr) { return PETName<16>(""); } // = 0;
     
     // Returns the size of a certain in bytes
     virtual u64 itemSize(unsigned nr) { return 0; } // = 0;

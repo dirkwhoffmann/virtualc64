@@ -66,7 +66,7 @@ public:
 
     std::string collectionName() override;
     u64 collectionCount() override;
-    std::string itemName(unsigned nr) override;
+    PETName<16> itemName(unsigned nr) override;
     u64 itemSize(unsigned nr) override;
     u8 readByte(unsigned nr, u64 pos) override;
  

@@ -115,7 +115,7 @@ FSDevice::makeWithArchive(AnyArchive *archive, FSError *error)
         archive->selectItem(i);
         archive->getItem(&buf, &cnt);
 
-        device->makeFile(archive->getNameOfItem(), buf, cnt);
+        device->makeFile(archive->getPETNameOfItem(), buf, cnt);
         delete[](buf);
     }
     
@@ -672,7 +672,7 @@ FSDevice::setCapacity(u32 n)
 }
 
 bool
-FSDevice::makeFile(const char *name, const u8 *buf, size_t cnt)
+FSDevice::makeFile(PETName<16> name, const u8 *buf, size_t cnt)
 {
     // The directory starts on track 18, sector 1
     FSBlock *ptr = blockPtr(18, 1);
@@ -693,13 +693,7 @@ FSDevice::makeFile(const char *name, const u8 *buf, size_t cnt)
 }
 
 bool
-FSDevice::makeFile(std::string name, const u8 *buf, size_t cnt)
-{
-    return makeFile(name.c_str(), buf, cnt); 
-}
-
-bool
-FSDevice::makeFile(const char *name, FSDirEntry *dir, const u8 *buf, size_t cnt)
+FSDevice::makeFile(PETName<16> name, FSDirEntry *dir, const u8 *buf, size_t cnt)
 {
     printf("FILE SIZE = %zu\n", cnt);
     
