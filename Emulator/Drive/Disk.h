@@ -165,6 +165,7 @@ public:
 public:
     
     static Disk *make(C64 &ref, FileSystemType type);
+    static Disk *makeWithFileSystem(C64 &ref, class FSDevice *device);
     static Disk *makeWithD64(C64 &ref, D64File *d64);
     static Disk *makeWithG64(C64 &ref, G64File *g64);
     static Disk *makeWithArchive(C64 &ref, AnyArchive *archive); // DEPRECATED

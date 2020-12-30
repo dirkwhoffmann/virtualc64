@@ -402,10 +402,34 @@ Drive::setModifiedDisk(bool value)
 }
 
 void
-Drive::insertDisk(FileSystemType fstype)
+Drive::insertDisk(Disk *otherDisk)
+{
+    debug(DSKCHG_DEBUG, "insertDisk(otherDisk %p)\n", otherDisk);
+
+    suspend();
+    
+    if (!diskToInsert) {
+        
+        // Initiate the disk change procedure
+        diskToInsert = otherDisk;
+        diskChangeCounter = 1;
+    }
+    
+    resume();
+}
+
+void
+Drive::insertNewDisk(FileSystemType fstype)
 {
     Disk *newDisk = Disk::make(c64, fstype);
     insertDisk(newDisk);
+}
+
+void
+Drive::insertFileSystem(FSDevice *device)
+{
+    debug(DSKCHG_DEBUG, "insertFileSystem(%p)\n", device);
+    insertDisk(Disk::makeWithFileSystem(c64, device));
 }
 
 void
@@ -427,23 +451,6 @@ Drive::insertDisk(AnyArchive *archive)
 {
     debug(DSKCHG_DEBUG, "insertDisk(archive %p)\n", archive);
     insertDisk(Disk::makeWithArchive(c64, archive));
-}
-
-void
-Drive::insertDisk(Disk *otherDisk)
-{
-    debug(DSKCHG_DEBUG, "insertDisk(otherDisk %p)\n", otherDisk);
-
-    suspend();
-    
-    if (!diskToInsert) {
-        
-        // Initiate the disk change procedure
-        diskToInsert = otherDisk;
-        diskChangeCounter = 1;
-    }
-    
-    resume();
 }
 
 void 

@@ -1274,6 +1274,12 @@ struct AnyC64FileWrapper { AnyFile *file; };
     wrapper->drive->insertD64(d64);
 }
 
+- (void) insertFileSystem:(FSDeviceProxy *)proxy
+{
+    FSDevice *device = (FSDevice *)([proxy wrapper]->device);
+    wrapper->drive->insertFileSystem(device);
+}
+
 - (void) insertDisk:(AnyArchiveProxy *)disk
 {
     AnyArchive *archive = (AnyArchive *)([disk wrapper]->file);
@@ -1282,7 +1288,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 - (void) insertNewDisk:(FileSystemType)fstype
 {
-    wrapper->drive->insertDisk(fstype);
+    wrapper->drive->insertNewDisk(fstype);
 }
 
 - (void) ejectDisk
@@ -1975,9 +1981,9 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy
 {
-    FSDevice *device = [proxy wrapper]->device;
-    P00File *archive = P00File::makeWithAnyCollection((AnyCollection *)device);
-    return [self make: archive];
+    FSDevice *fs = [proxy wrapper]->device;
+    P00File *archive = P00File::makeWithFileSystem(fs);
+    return [self make: archive];    
 }
 
 @end

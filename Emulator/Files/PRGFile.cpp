@@ -121,12 +121,11 @@ PRGFile::makeWithFileSystem(FSDevice *fs, int item)
 
     debug(FILE_DEBUG, "Creating PRG archive...\n");
 
-    // Only proceed if at least one file is present
+    // Only proceed if the requested file exists
     if (fs->numFiles() <= (u64)item) return nullptr;
         
     // Create new archive
     size_t itemSize = fs->fileSize(item);
-    printf("Item size = %zu", itemSize);
     PRGFile *prg = new PRGFile(itemSize);
                 
     // Add data

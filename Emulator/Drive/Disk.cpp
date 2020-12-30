@@ -130,6 +130,17 @@ Disk::make(C64 &ref, FileSystemType type)
 }
 
 Disk *
+Disk::makeWithFileSystem(C64 &ref, FSDevice *device)
+{
+    FSError err;
+    if (D64File *d64 = D64File::makeWithVolume(*device, &err)) {
+        return makeWithD64(ref, d64);
+    } else {
+        return nullptr;
+    }
+}
+
+Disk *
 Disk::makeWithD64(C64 &ref, D64File *d64)
 {
     Disk *disk = new Disk(ref);

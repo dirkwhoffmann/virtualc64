@@ -363,15 +363,23 @@ class ImportDialog: DialogController {
 
     @IBAction func insertAction(_ sender: NSButton!) {
         
-        let id = sender.tag == 0 ? DriveID.DRIVE8 : DriveID.DRIVE9
+        let drive = sender.tag == 0 ? c64.drive8! : c64.drive9!
         
         track("insertAction: \(sender.tag)")
 
         if d64 != nil {
+            
             track("Inserting D64")
-            c64.drive(id)?.insertD64(d64)
-            c64.drive(id).setWriteProtection(writeProtect)
+            drive.insertD64(d64)
+            drive.setWriteProtection(writeProtect)
+        
+        } else if volume != nil {
+            
+            track("Inserting Volume")
+            drive.insertFileSystem(volume)
+            drive.setWriteProtection(writeProtect)
         }
+        
         /*
         switch media {
         case .collection, .d64, .g64, .directory:
