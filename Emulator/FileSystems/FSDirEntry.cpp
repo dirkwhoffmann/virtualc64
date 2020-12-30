@@ -63,6 +63,12 @@ FSDirEntry::init(FSName name, TSLink ref, size_t numBlocks)
     name.write(fileName);
 }
 
+FSFileType
+FSDirEntry::getFileType()
+{
+    return (FSFileType)(fileType & 0b111);
+}
+
 void
 FSDirEntry::init(const char *name, TSLink ref, size_t numBlocks)
 {

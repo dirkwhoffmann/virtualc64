@@ -202,9 +202,9 @@ FSDevice::printDirectory()
     scanDirectory();
     
     for (auto &item : dir) {
-        msg("%3d \"%16s\" %s (%5llu bytes)\n",
-            HI_LO(item->fileSizeHi, item->fileSizeLo),
-            item->getName().c_str(), item->typeString(), itemSize(item));
+        msg("%3llu \"%16s\" %s (%5llu bytes)\n",
+            fileBlocks(item),
+            item->getName().c_str(), item->typeString(), fileSize(item));
     }
 }
 
@@ -448,17 +448,46 @@ FSDevice::locateAllocationBit(Track t, Sector s, u32 *byte, u32 *bit)
     return bamPtr();
 }
 
-/*
-FSDirEntry *
-FSDevice::seek(u32 nr)
+FSName
+FSDevice::fileName(unsigned nr)
 {
-    return nullptr;
+    assert(nr < numFiles());
+    return fileName(dir[nr]);
 }
-*/
+
+FSName
+FSDevice::fileName(FSDirEntry *entry)
+{
+    assert(entry);
+    return FSName(entry->fileName);
+}
+
+FSFileType
+FSDevice::fileType(unsigned nr)
+{
+    assert(nr < numFiles());
+    return fileType(dir[nr]);
+}
+
+FSFileType
+FSDevice::fileType(FSDirEntry *entry)
+{
+    assert(entry);
+    return entry->getFileType();
+}
 
 u64
-FSDevice::itemSize(FSDirEntry *entry)
+FSDevice::fileSize(unsigned nr)
 {
+    assert(nr < numFiles());
+    return fileSize(dir[nr]);
+}
+
+u64
+FSDevice::fileSize(FSDirEntry *entry)
+{
+    assert(entry);
+    
     u64 size = 0;
 
     // Locate the first data block
@@ -480,6 +509,78 @@ FSDevice::itemSize(FSDirEntry *entry)
     }
     
     return size;
+}
+
+u64
+FSDevice::fileBlocks(unsigned nr)
+{
+    assert(nr < numFiles());
+    return fileBlocks(dir[nr]);
+}
+
+u64
+FSDevice::fileBlocks(FSDirEntry *entry)
+{
+    assert(entry);
+    return HI_LO(entry->fileSizeHi, entry->fileSizeLo);
+}
+
+/*
+u8
+FSDevice::readByte(unsigned nr, u64 pos)
+{
+    assert(nr < collectionCount());
+    
+    // Locate the first data block
+    BlockPtr b = blockPtr(dir[nr]->firstDataTrack, dir[nr]->firstDataSector);
+
+    // Iterate through the block chain
+    while (b) {
+        
+        if (pos < 254) {
+            return b->data[pos + 2];
+        } else {
+            pos -= 254;
+        }
+        b = nextBlockPtr(b);
+    }
+    
+    return 0;
+}
+*/
+
+void
+FSDevice::copyFile(unsigned nr, u8 *buf, u64 len, u64 offset)
+{
+    assert(nr < numFiles());
+    copyFile(dir[nr], buf, len, offset);
+}
+
+void
+FSDevice::copyFile(FSDirEntry *entry, u8 *buf, u64 len, u64 offset)
+{
+    assert(entry);
+    
+    // Locate the first data block
+    BlockPtr b = blockPtr(entry->firstDataTrack, entry->firstDataSector);
+    u64 pos = 2;
+    
+    // Iterate through the block chain
+    while (b && len) {
+                
+        if (offset) {
+            --offset;
+            printf("Skipping byte\n");
+        } else {
+            --len;
+            *buf++ = b->data[pos];
+        }
+        
+        if (++pos == 256) {
+            b = nextBlockPtr(b);
+            pos = 2;
+        }
+    }
 }
 
 FSDirEntry *
@@ -829,81 +930,4 @@ FSDevice::exportDirectory(const char *path, FSError *err)
     msg("Exported %lu items", dir.size());
     if (err) *err = FS_OK;
     return true;
-}
-
-std::string
-FSDevice::collectionName()
-{
-    return std::string("Volume"); // TODO
-}
-
-u64
-FSDevice::collectionCount()
-{
-    return dir.size();
-}
-
-std::string
-FSDevice::itemName(unsigned nr)
-{
-    assert(nr < collectionCount());
-    
-    auto item = dir[nr];
-    return std::string(item->getName().c_str());
-}
-
-u64
-FSDevice::itemSize(unsigned nr)
-{
-    assert(nr < collectionCount());
-    return itemSize(dir[nr]);
-}
-
-u8
-FSDevice::readByte(unsigned nr, u64 pos)
-{
-    assert(nr < collectionCount());
-    
-    // Locate the first data block
-    BlockPtr b = blockPtr(dir[nr]->firstDataTrack, dir[nr]->firstDataSector);
-
-    // Iterate through the block chain
-    while (b) {
-        
-        if (pos < 254) {
-            return b->data[pos + 2];
-        } else {
-            pos -= 254;
-        }
-        b = nextBlockPtr(b);
-    }
-    
-    return 0;
-}
-
-void
-FSDevice::copyItem(unsigned nr, u8 *buf, u64 len, u64 offset)
-{
-    assert(nr < collectionCount());
-    
-    // Locate the first data block
-    BlockPtr b = blockPtr(dir[nr]->firstDataTrack, dir[nr]->firstDataSector);
-    u64 pos = 2;
-    
-    // Iterate through the block chain
-    while (b && len) {
-                
-        if (offset) {
-            --offset;
-            printf("Skipping byte\n");
-        } else {
-            --len;
-            *buf++ = b->data[pos];
-        }
-        
-        if (++pos == 256) {
-            b = nextBlockPtr(b);
-            pos = 2;
-        }
-    }
 }

@@ -175,20 +175,42 @@ private:
 
     
     //
-    // Working with files
+    // Reading
     //
     
 public:
     
-    // Returns the (precise) size of a certain directory entry in bytes
-    u64 itemSize(FSDirEntry *entry);
+    // Returns the name of a file
+    FSName fileName(unsigned nr);
+    FSName fileName(FSDirEntry *entry);
+
+    // Returns the type of a file
+    FSFileType fileType(unsigned nr);
+    FSFileType fileType(FSDirEntry *entry);
     
-    // Returns the next free directory entry
-    FSDirEntry *nextFreeDirEntry(); 
+    // Returns the precise size of a file in bytes
+    u64 fileSize(unsigned nr);
+    u64 fileSize(FSDirEntry *entry);
     
+    // Returns the size of a file in blocks (read from the BAM)
+    u64 fileBlocks(unsigned nr);
+    u64 fileBlocks(FSDirEntry *entry);
+
+    // Copies the file contents into a buffer
+    void copyFile(unsigned nr, u8 *buf, u64 len, u64 offset = 0);
+    void copyFile(FSDirEntry *entry, u8 *buf, u64 len, u64 offset = 0);
+
     // Scans the directory and stores the result in variable 'dir'
     void scanDirectory(bool skipInvisible = true);
-            
+
+    
+    //
+    // Writing
+    //
+
+    // Returns the next free directory entry
+    FSDirEntry *nextFreeDirEntry(); 
+                
     // Ensures that the disk has enough directory blocks to host 'n' files
     bool setCapacity(u32 n);
     
@@ -252,18 +274,6 @@ public:
     // Exports a file the volume to a directory of the host file system
     bool exportFile(FSDirEntry *item, const char *path, FSError *error);
     bool exportDirectory(const char *path, FSError *error);
-    
-    
-    //
-    // Implementing the AnyCollection interface
-    //
-    
-    std::string collectionName();
-    u64 collectionCount();
-    std::string itemName(unsigned nr);
-    u64 itemSize(unsigned nr);
-    u8 readByte(unsigned nr, u64 pos);
-    void copyItem(unsigned nr, u8 *buf, u64 len, u64 offset = 0);
 };
 
 #endif

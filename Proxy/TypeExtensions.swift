@@ -21,6 +21,23 @@ extension FSVolumeType {
     }
 }
 
+extension FSFileType {
+
+    var description: String {
+        
+        switch self {
+        
+        case .DEL:  return "DEL"
+        case .SEQ:  return "SEQ"
+        case .PRG:  return "PRG"
+        case .USR:  return "USR"
+        case .REL:  return "REL"
+            
+        default:    fatalError()
+        }
+    }
+}
+
 extension FSBlockType {
     
     var description: String {

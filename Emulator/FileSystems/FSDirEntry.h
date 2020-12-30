@@ -40,6 +40,9 @@ struct FSDirEntry
     // Returns the name of this file
     FSName getName() { return FSName(fileName); }
     
+    // Returns the file type of this file
+    FSFileType getFileType();
+    
     // Returns true if this file does not appear in a regular directory listing
     bool isHidden();
 };

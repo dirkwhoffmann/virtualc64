@@ -8,17 +8,7 @@
 // -----------------------------------------------------------------------------
 
 class ImportDialog: DialogController {
-        
-    enum MediaType {
-        
-        case d64
-        case collection
-        case g64
-        case tape
-        case cartridge
-        case directory
-    }
-    
+            
     @IBOutlet weak var icon: NSImageView!
     @IBOutlet weak var checkbox: NSButton!
     @IBOutlet weak var title: NSTextField!
@@ -31,12 +21,15 @@ class ImportDialog: DialogController {
     @IBOutlet weak var flashLabel: NSTextField!
     @IBOutlet weak var carousel: iCarousel!
 
+    // Proxy objects (created from the attachment when the sheet opens)
+    var d64: D64FileProxy?
+    var g64: G64FileProxy?
+    var tap: TAPFileProxy?
+    var crt: CRTFileProxy?
     var disk: DiskProxy?
     var volume: FSDeviceProxy?
-    var d64: D64FileProxy?
     
     var type: FileType!
-    var media: MediaType!
     var writeProtect: Bool { return checkbox.state == .on }
     var autoRun: Bool { return checkbox.state == .on }
     
@@ -67,136 +60,142 @@ class ImportDialog: DialogController {
     var lastItem: Int { return numItems - 1 }
     var empty: Bool { return numItems == 0 }
     
+    var layoutInfo: String {
+        
+        guard let v = volume else { return "" }
+        return "Single sided, single density disk with \(v.numTracks) tracks"
+    }
+
+    var dosInfo: String {
+
+        guard let v = volume else { return "" }
+        return v.dos.description
+    }
+
+    var filesInfo: String {
+ 
+        guard let v = volume else { return "" }
+        
+        let num = v.numFiles
+        let free = v.numUsedBlocks
+        let files = num == 1 ? "file" : "files"
+        
+        return "\(num) \(files), \(free) blocks used"
+    }
+    
+    var crtInfo: String {
+        
+        guard let c = crt else { return "" }
+
+        let cnt = c.chipCount
+        let type = c.cartridgeType
+        let packages = cnt == 1 ? "package" : "packages"
+
+        if type == .CRT_NORMAL {
+            return "Standard cartridge with \(cnt) chip \(packages)"
+        } else {
+            return "\(type.description)"
+        }
+    }
+    
+    var crtLineInfo: String {
+        
+        guard let c = crt else { return "" }
+        
+        let exrom = c.initialExromLine
+        let game = c.initialGameLine
+        
+        return "Exrom line: \(exrom), " + "Game line: \(game)"
+    }
+    
     override func showSheet(completionHandler handler:(() -> Void)? = nil) {
     
-        var err = FSError.OK
-        
-        type = myDocument.attachment!.type()
+        let type = myDocument.attachment!.typeString() ?? "?"
+        track("showSheet(fileType: \(type))")
 
         switch myDocument.attachment {
              
-        case _ as CRTFileProxy:
+        case is CRTFileProxy:
             
-            media = .cartridge
-            let crt = myDocument.attachment as! CRTFileProxy
-            let cnt = crt.chipCount
-            let type = crt.cartridgeType
+            crt = myDocument.attachment as? CRTFileProxy
             
-            track("CRTFileProxy")
             titleString = "Commodore Expansion Port Module"
-
-            if type == .CRT_NORMAL {
-                let packages = cnt == 1 ? "chip package" : "chip packages"
-                subtitle1String = "Standard cartridge with \(cnt) \(packages)"
-            } else {
-                subtitle1String = "\(type.description)"
-            }
+            subtitle1String = crtInfo
+            subtitle2String = crtLineInfo
+            subtitle3String = ""
             
-            subtitle2String = "Exrom line: \(crt.initialExromLine), "
-            subtitle2String += "Game line: \(crt.initialGameLine)"
-                        
-            if !crt.isSupported {
+            if !crt!.isSupported {
                 subtitle3String = "This cartridge is not supported by the emulator yet"
                 supportedCrt = false
             }
             
-        case _ as TAPFileProxy:
+        case is TAPFileProxy:
             
-            media = .tape
-            let tap = myDocument.attachment as! TAPFileProxy
+            tap = myDocument.attachment as? TAPFileProxy
+            
             titleString = "Commodore Cassette Tape"
-            subtitle1String = tap.version.description
+            subtitle1String = tap!.version.description
+            subtitle2String = ""
+            subtitle3String = ""
 
         case is D64FileProxy:
 
-            volume = FSDeviceProxy.make(withD64: myDocument.attachment as? D64FileProxy)
             d64 = myDocument.attachment as? D64FileProxy
-            let numTracks = volume?.numTracks ?? 0
+            volume = FSDeviceProxy.make(withD64: d64!)
             
-            media = .d64
-            track("D64FileProxy")
             titleString = "Commodore 64 Floppy Disk"
-            subtitle1String = "Single sided, single density disk with \(numTracks) tracks"
-            subtitle2String = volume?.dos.description ?? ""
+            subtitle1String = layoutInfo
+            subtitle2String = dosInfo
+            subtitle3String = filesInfo
             
-            let num = volume!.numFiles
-            let free = volume!.numUsedBlocks
-            let files = num == 1 ? "file" : "files"
-            subtitle3String = "\(num) \(files), \(free) blocks used"
-            
-        case is T64FileProxy, is P00FileProxy, is PRGFileProxy:
-            
-            volume = FSDeviceProxy.make(withCollection: myDocument.attachment as? AnyCollectionProxy)
-            d64 = D64FileProxy.make(withVolume: volume, error: &err)
-            let numTracks = volume?.numTracks ?? 0
-            
-            media = .collection
-            track("T64FileProxy / P00FileProxy / PRGFileProxy")
-            titleString = "Commodore 64 Floppy Disk (Converted)"
-            subtitle1String = "Single sided, single density disk with \(numTracks) tracks"
-            subtitle2String = volume?.dos.description ?? ""
-            
-            let num = volume!.numFiles
-            let free = volume!.numUsedBlocks
-            let files = num == 1 ? "file" : "files"
-            subtitle3String = "\(num) \(files), \(free) blocks used"
-                        
-            /*
-        case _ as T64FileProxy:
-            
-            media = .archive
-            track("T64FileProxy")
-            titleString = "T64 File"
-            subtitle1String = "A collection of multiple C64 programs"
-        
-        case _ as P00FileProxy:
-            
-            media = .archive
-            track("P00FileProxy")
-            titleString = "P00 File"
-            subtitle1String = "Binary representation of a single C64 program"
-            
-        case _ as PRGFileProxy:
-            
-            media = .archive
-            track("PRGFileProxy")
-            titleString = "PRG File"
-            subtitle1String = "Binary representation of a single C64 program"
-            
-        case _ as D64FileProxy:
-            
-            media = .archive
-            track("D64FileProxy")
-            titleString = "D64 File"
-            subtitle1String = "A byte-accurate image of a C64 diskette"
-            */
-        
-            // REMOVE ASAP
-            /*
-            var err: FSError = .OK
-            let d64_1 = D64FileProxy.make(withAnyArchive: myDocument.attachment as? AnyArchiveProxy)
-            let vol = FSDeviceProxy.make(withArchive: myDocument.attachment as? AnyArchiveProxy)
-            let d64_2 = D64FileProxy.make(withVolume: vol, error: &err)
-            d64_1?.write(toFile: "/tmp/d64_1.d64")
-            d64_2?.write(toFile: "/tmp/d64_2.d64")
-            */
+        case is G64FileProxy:
 
-            // REMOVE ASAP
-            // let device = FSDeviceProxy.make(withD64: myDocument.attachment as? D64FileProxy)
-            // let device = FSDeviceProxy.make(withArchive: myDocument.attachment as? AnyArchiveProxy)
+            g64 = myDocument.attachment as? G64FileProxy
             
-        case _ as PRGFolderProxy:
-            media = .directory
-            track("PRGFolderProxy")
+            titleString = "Commodore 64 Floppy Disk"
+            subtitle1String = "A bit-accurate image of a C64 diskette"
+            subtitle2String = ""
+            subtitle3String = ""
+
+        case is T64FileProxy:
+            
+            if let c = myDocument.attachment as? AnyCollectionProxy {
+                volume = FSDeviceProxy.make(withCollection: c)
+            }
+
+            titleString = "Commodore 64 Floppy Disk (from T64 file)"
+            subtitle1String = layoutInfo
+            subtitle2String = dosInfo
+            subtitle3String = filesInfo
+
+        case is PRGFileProxy:
+            
+            if let c = myDocument.attachment as? AnyCollectionProxy {
+                volume = FSDeviceProxy.make(withCollection: c)
+            }
+
+            titleString = "Commodore 64 Floppy Disk (from PRG file)"
+            subtitle1String = layoutInfo
+            subtitle2String = dosInfo
+            subtitle3String = filesInfo
+
+        case is P00FileProxy:
+            
+            if let c = myDocument.attachment as? AnyCollectionProxy {
+                volume = FSDeviceProxy.make(withCollection: c)
+            }
+
+            titleString = "Commodore 64 Floppy Disk (from P00 file)"
+            subtitle1String = layoutInfo
+            subtitle2String = dosInfo
+            subtitle3String = filesInfo
+
+        case is PRGFolderProxy:
+            
             titleString = "Disk from a file system folder"
             subtitle1String = "Comprises all PRG files found in this directory"
-
-        case _ as G64FileProxy:
-            
-            media = .g64
-            track("G64FileProxy")
-            titleString = "G64 File"
-            subtitle1String = "A bit-accurate image of a C64 diskette"
+            subtitle2String = ""
+            subtitle3String = ""
             
         default:
             fatalError()
@@ -244,25 +243,16 @@ class ImportDialog: DialogController {
         flashLabel.isHidden = numberOfItems == 0
         
         // Configure controls
-        switch media {
-                        
-        case .collection, .d64, .g64, .directory:
-            checkbox.title = "Write protect"
-            drive8.isEnabled = connected8
-            drive8.keyEquivalent = "\r"
-            drive8.isHidden = false
-            drive9.isEnabled = connected9
-            drive9.keyEquivalent = ""
-            drive9.isHidden = false
-
-        case .tape:
+        if tap != nil {
+            
             checkbox.title = "Auto load"
             drive8.isHidden = true
             drive9.title = "Insert"
             drive9.isHidden = false
             drive9.keyEquivalent = "\r"
-
-        case .cartridge:
+            
+        } else if crt != nil {
+            
             checkbox.isHidden = true
             drive8.isHidden = true
             drive9.title = "Attach"
@@ -270,9 +260,16 @@ class ImportDialog: DialogController {
             drive9.keyEquivalent = "\r"
             drive9.isEnabled = supportedCrt
             if !supportedCrt { subtitle3.textColor = .warningColor }
-
-        default:
-            fatalError()
+            
+        } else {
+            
+            checkbox.title = "Write protect"
+            drive8.isEnabled = connected8
+            drive8.keyEquivalent = "\r"
+            drive8.isHidden = false
+            drive9.isEnabled = connected9
+            drive9.keyEquivalent = ""
+            drive9.isHidden = false
         }
 
         if empty {
@@ -291,34 +288,31 @@ class ImportDialog: DialogController {
     
     func setUpFlashItems() -> Int {
                 
-        if media != .collection && media != .directory { return 0 }
-        let d64 = myDocument.attachment as! AnyArchiveProxy
-        
+        guard let v = volume else { return 0 }
+                
         flash.removeAllItems()
         flash.font = monofont
         
-        let items = d64.numberOfItems()
         var seen: [String] = []
         var item = 0
-        for i in  0 ..< items {
+        for i in  0 ..< v.numFiles {
                         
-            d64.selectItem(i)
-            let name = d64.nameOfItem()!
-            let size = d64.sizeOfItemInBlocks()
-            let type = d64.typeOfItem()!
+            let size = v.fileBlocks(i) // TODO:.itemBlocks(i)
+            let name = v.fileName(i) ?? "<null>"
+            let type = v.fileType(i)
                         
             var title = "\(size)"
             title = title.padding(toLength: 5, withPad: " ", startingAt: 0)
             title += "\"\(name)\""
             title = title.padding(toLength: 24, withPad: " ", startingAt: 0)
-            title += "\(type)"
+            title += "\(type.description)"
             title = title.padding(toLength: 28, withPad: " ", startingAt: 0)
 
             if !seen.contains(title) {
                 seen.append(title)
                 flash.addItem(withTitle: title)
                 flash.item(at: item)!.tag = i
-                flash.item(at: item)!.isEnabled = type == "PRG"
+                flash.item(at: item)!.isEnabled = type == .PRG
                 item += 1
             }
         }
@@ -338,17 +332,14 @@ class ImportDialog: DialogController {
 
     func refresh() {
         
-        switch media {
-        case .collection, .d64, .g64:
-            icon.image = NSImage.init(named: writeProtect ? "disk2_protected" : "disk2")
-        case .directory:
-            icon.image = NSImage.init(named: "NSFolder")
-        case .cartridge:
+        if crt != nil {
             icon.image = NSImage.init(named: "cartridge")
-        case .tape:
+        } else if tap != nil {
             icon.image = NSImage.init(named: "tape")
-        case .none:
-            fatalError()
+        } else if volume != nil {
+            icon.image = NSImage.init(named: writeProtect ? "disk2_protected" : "disk2")
+        } else {
+            icon.image = NSImage.init(named: "NSFolder")
         }
     }
     

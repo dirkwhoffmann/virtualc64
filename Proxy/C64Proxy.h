@@ -986,4 +986,9 @@ struct AnyC64FileWrapper;
 - (void)dump;
 - (void)info;
 
+- (NSString *)fileName:(NSInteger)nr;
+- (FSFileType)fileType:(NSInteger)nr;
+- (NSInteger)fileSize:(NSInteger)nr;
+- (NSInteger)fileBlocks:(NSInteger)nr;
+
 @end

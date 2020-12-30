@@ -1143,6 +1143,26 @@ struct AnyC64FileWrapper { AnyFile *file; };
     wrapper->device->info();
 }
 
+- (NSString *)fileName:(NSInteger)nr
+{
+    return @(wrapper->device->fileName((unsigned)nr).c_str());
+}
+
+- (FSFileType)fileType:(NSInteger)nr
+{
+    return wrapper->device->fileType((unsigned)nr);
+}
+
+- (NSInteger)fileSize:(NSInteger)nr
+{
+    return wrapper->device->fileSize((unsigned)nr);
+}
+
+- (NSInteger)fileBlocks:(NSInteger)nr
+{
+    return wrapper->device->fileBlocks((unsigned)nr);
+}
+
 @end
 
 //

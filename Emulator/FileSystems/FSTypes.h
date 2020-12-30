@@ -34,16 +34,16 @@ inline const char *sFSVolumeType(FSVolumeType value)
 
 enum_long(FSFileType)
 {
-    FS_PRG = 1,
-    FS_SEQ,
-    FS_REL,
-    FS_USR,
-    FS_DEL
+    FS_DEL = 0,
+    FS_SEQ = 1,
+    FS_PRG = 2,
+    FS_USR = 3,
+    FS_REL = 4
 };
 
 inline bool isFSFileType(long value)
 {
-    return value >= FS_PRG && value <= FS_DEL;
+    return value >= FS_DEL && value <= FS_REL;
 }
 
 inline const char *sFSFileType(FSFileType value)

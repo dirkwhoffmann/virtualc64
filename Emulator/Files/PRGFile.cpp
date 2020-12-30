@@ -122,15 +122,15 @@ PRGFile::makeWithFileSystem(FSDevice *fs, int item)
     debug(FILE_DEBUG, "Creating PRG archive...\n");
 
     // Only proceed if at least one file is present
-    if (fs->collectionCount() <= (u64)item) return nullptr;
+    if (fs->numFiles() <= (u64)item) return nullptr;
         
     // Create new archive
-    size_t itemSize = fs->itemSize(item);
+    size_t itemSize = fs->fileSize(item);
     printf("Item size = %zu", itemSize);
     PRGFile *prg = new PRGFile(itemSize);
                 
     // Add data
-    fs->copyItem(item, prg->getData(), itemSize);
+    fs->copyFile(item, prg->getData(), itemSize);
     
     return prg;
 }
