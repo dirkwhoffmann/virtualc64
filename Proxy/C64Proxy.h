@@ -840,7 +840,8 @@ struct AnyC64FileWrapper;
 + (BOOL)isT64File:(NSString *)filename;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)filename;
-+ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)otherArchive;
++ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)proxy;
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy;
 
 @end
 
@@ -854,8 +855,8 @@ struct AnyC64FileWrapper;
 + (BOOL)isPRGFile:(NSString *)filename;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)filename;
-+ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)otherArchive;
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)volume;
++ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)proxy;
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy;
 
 @end
 
@@ -881,8 +882,8 @@ struct AnyC64FileWrapper;
 + (BOOL)isP00File:(NSString *)filename;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)filename;
-+ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)otherArchive;
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)volume;
++ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)proxy;
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy;
 
 @end
 

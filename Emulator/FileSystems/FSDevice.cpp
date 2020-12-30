@@ -462,6 +462,20 @@ FSDevice::fileName(FSDirEntry *entry)
     return FSName(entry->fileName);
 }
 
+PETName<16>
+FSDevice::petName(unsigned nr)
+{
+    assert(nr < numFiles());
+    return petName(dir[nr]);
+}
+
+PETName<16>
+FSDevice::petName(FSDirEntry *entry)
+{
+    assert(entry);
+    return PETName<16>(entry->fileName);
+}
+
 FSFileType
 FSDevice::fileType(unsigned nr)
 {
@@ -525,6 +539,21 @@ FSDevice::fileBlocks(FSDirEntry *entry)
     return HI_LO(entry->fileSizeHi, entry->fileSizeLo);
 }
 
+u16
+FSDevice::loadAddr(unsigned nr)
+{
+    assert(nr < numFiles());
+    return loadAddr(dir[nr]);
+}
+
+u16
+FSDevice::loadAddr(FSDirEntry *entry)
+{
+    assert(entry);
+    u8 addr[2]; copyFile(entry, addr, 2);
+    return LO_HI(addr[0], addr[1]);
+}
+
 /*
 u8
 FSDevice::readByte(unsigned nr, u64 pos)
@@ -570,7 +599,6 @@ FSDevice::copyFile(FSDirEntry *entry, u8 *buf, u64 len, u64 offset)
                 
         if (offset) {
             --offset;
-            printf("Skipping byte\n");
         } else {
             --len;
             *buf++ = b->data[pos];

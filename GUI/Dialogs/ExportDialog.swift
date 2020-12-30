@@ -536,6 +536,7 @@ class ExportDialog: DialogController {
             newUrl.appendPathExtension("t64")
             track("Exporting to \(newUrl)")
             archive = T64FileProxy.make(withAnyArchive: d64!)
+            collection = T64FileProxy.make(withFileSystem: volume!)
             
         case 2:
             newUrl.appendPathExtension("prg")

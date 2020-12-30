@@ -1858,25 +1858,36 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return T64File::isT64File([filename UTF8String]);
 }
+
 + (instancetype) make:(T64File *)archive
 {
     if (archive == NULL) return nil;
     return [[self alloc] initWithFile:archive];
 }
+
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
     T64File *archive = T64File::makeWithBuffer((const u8 *)buffer, length);
     return [self make: archive];
 }
+
 + (instancetype) makeWithFile:(NSString *)path
 {
     T64File *archive = T64File::makeWithFile([path UTF8String]);
     return [self make: archive];
 }
-+ (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)otherArchive
+
++ (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)proxy
 {
-    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
+    AnyArchive *other = (AnyArchive *)([proxy wrapper]->file);
     T64File *archive = T64File::makeT64ArchiveWithAnyArchive(other);
+    return [self make: archive];
+}
+
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy
+{
+    FSDevice *fs = [proxy wrapper]->device;
+    T64File *archive = T64File::makeWithFileSystem(fs);
     return [self make: archive];
 }
 
@@ -1907,9 +1918,9 @@ struct AnyC64FileWrapper { AnyFile *file; };
     PRGFile *archive = PRGFile::makeWithFile([path UTF8String]);
     return [self make: archive];
 }
-+ (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)otherArchive
++ (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)proxy
 {
-    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
+    AnyArchive *other = (AnyArchive *)([proxy wrapper]->file);
     PRGFile *archive = PRGFile::makeWithAnyArchive(other);
     return [self make: archive];
 }
@@ -1972,9 +1983,9 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return [self make: archive];
 }
 
-+ (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)otherArchive
++ (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)proxy
 {
-    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
+    AnyArchive *other = (AnyArchive *)([proxy wrapper]->file);
     P00File *archive = P00File::makeWithAnyArchive(other);
     return [self make: archive];
 }

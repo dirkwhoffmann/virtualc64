@@ -9,6 +9,7 @@
 
 #include "TAPFile.h"
 #include "T64File.h"
+#include "FSDevice.h"
 
 /* "Anmerkung: Der String muß nicht wortwörtlich so vorhanden sein. Man sollte nach den
  *  Substrings 'C64' und 'tape' suchen." [Power64 doc]
@@ -45,10 +46,6 @@ T64File::isT64File(const char *path)
         return false;
     
     return true;
-}
-
-T64File::T64File()
-{
 }
 
 T64File *
@@ -91,7 +88,7 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
     archive->size = 64 /* header */ + maxFiles * 32 /* tape entries */;
     
     for (unsigned i = 0; i < currentFiles; i++) {
-        archive->selectItem(i);
+        otherArchive->selectItem(i);
         archive->size += otherArchive->getSizeOfItem();
     }
 
@@ -192,6 +189,125 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
           otherArchive->typeString());
     
     return archive;
+}
+
+T64File *
+T64File::makeWithFileSystem(class FSDevice *fs)
+{
+    assert(fs);
+        
+    debug(FILE_DEBUG, "Creating T64 archive...\n");
+    
+    // Analyze the file system
+    u16 numFiles = (u16)fs->numFiles();
+    std::vector<u64> length(numFiles);
+    size_t dataLength = 0;
+    for (u16 i = 0; i < numFiles; i++) {
+        length[i] = fs->fileSize(i) - 2;
+        dataLength += length[i];
+    }
+    
+    for (auto &it : length) {
+        printf("Length = %lld\n", it);
+    }
+    // Create new archive
+    u16 maxFiles = MAX(numFiles, 30);
+    size_t fileSize = 64 + maxFiles * 32 + dataLength;
+    T64File *t64 = new T64File(fileSize);
+    
+    //
+    // Header
+    //
+    
+    // Magic bytes (32 bytes)
+    u8 *ptr = t64->getData();
+    strncpy((char *)ptr, "C64 tape image file", 32);
+    ptr += 32;
+    
+    // Version (2 bytes)
+    *ptr++ = 0x00;
+    *ptr++ = 0x01;
+    
+    // Max files (2 bytes)
+    *ptr++ = LO_BYTE(maxFiles);
+    *ptr++ = HI_BYTE(maxFiles);
+    
+    // Stored files (2 bytes)
+    *ptr++ = LO_BYTE(numFiles);
+    *ptr++ = HI_BYTE(numFiles);
+    
+    // Reserved (2 bytes)
+    *ptr++ = 0x00;
+    *ptr++ = 0x00;
+    
+    // User description (24 bytes)
+    auto name = PETName<24>("Volume");
+    name.write(ptr);
+    ptr += 24;
+    
+    assert(ptr - t64->getData() == 64);
+    
+    //
+    // Tape entries
+    //
+    
+    u32 tapePosition = 64 + maxFiles * 32; // Start of item 0
+    memset(ptr, 0, 32 * maxFiles);
+    
+    for (unsigned n = 0; n < maxFiles; n++) {
+        
+        // Skip if this is an empty tape slot
+        if (n >= numFiles) { ptr += 32; continue; }
+                        
+        // Entry used (1 byte)
+        *ptr++ = 0x01;
+        
+        // File type (1 byte)
+        *ptr++ = 0x82;
+        
+        // Start address (2 bytes)
+        u16 startAddr = fs->loadAddr(n);
+        *ptr++ = LO_BYTE(startAddr);
+        *ptr++ = HI_BYTE(startAddr);
+        
+        // End address (2 bytes)
+        u16 endAddr = startAddr + length[n];
+        *ptr++ = LO_BYTE(endAddr);
+        *ptr++ = HI_BYTE(endAddr);
+        
+        // Reserved (2 bytes)
+        ptr += 2;
+        
+        // Tape position (4 bytes)
+        *ptr++ = LO_BYTE(tapePosition);
+        *ptr++ = LO_BYTE(tapePosition >> 8);
+        *ptr++ = LO_BYTE(tapePosition >> 16);
+        *ptr++ = LO_BYTE(tapePosition >> 24);
+        tapePosition += fileSize;
+        
+        // Reserved (4 bytes)
+        ptr += 4;
+        
+        // File name (16 bytes)
+        auto name = fs->petName(n);
+        name.write(ptr);
+        ptr += 16;
+    }
+    
+    //
+    // File data
+    //
+    
+    for (unsigned n = 0; n < numFiles; n++) {
+    
+        fs->copyFile(n, ptr, length[n], 2);
+        ptr += length[n];
+    }
+
+    debug(FILE_DEBUG, "T64 file created");
+    t64->dumpDirectory();
+
+    return t64;
 }
 
 const char *

@@ -75,7 +75,7 @@ static const int FS_DEBUG        = 0; // File System Classes
 
 // Media
 static const int CRT_DEBUG       = 0; // Cartridges
-static const int FILE_DEBUG      = 0; // Media files (D64,T64,...)
+static const int FILE_DEBUG      = 1; // Media files (D64,T64,...)
 
 // Peripherals
 static const int JOY_DEBUG       = 0; // Joystick

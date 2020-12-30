@@ -11,6 +11,7 @@
 #define _ANYC64FILE_H
 
 #include "C64Object.h"
+#include "PETName.h"
 
 // Base class for all supported file types
 class AnyFile : public C64Object {

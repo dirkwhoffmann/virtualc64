@@ -12,6 +12,7 @@
 
 #include "C64Object.h"
 
+// DEPRECATED: Use PETName<16> instead
 struct FSName : C64Object {
     
     // PETASCII string

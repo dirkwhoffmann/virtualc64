@@ -181,8 +181,10 @@ private:
 public:
     
     // Returns the name of a file
-    FSName fileName(unsigned nr);
-    FSName fileName(FSDirEntry *entry);
+    FSName fileName(unsigned nr); // DEPRECATED
+    FSName fileName(FSDirEntry *entry); // DEPRECATED
+    PETName<16> petName(unsigned nr);
+    PETName<16> petName(FSDirEntry *entry);
 
     // Returns the type of a file
     FSFileType fileType(unsigned nr);
@@ -196,6 +198,10 @@ public:
     u64 fileBlocks(unsigned nr);
     u64 fileBlocks(FSDirEntry *entry);
 
+    // Returns the load address of a file
+    u16 loadAddr(unsigned nr);
+    u16 loadAddr(FSDirEntry *entry);
+    
     // Copies the file contents into a buffer
     void copyFile(unsigned nr, u8 *buf, u64 len, u64 offset = 0);
     void copyFile(FSDirEntry *entry, u8 *buf, u64 len, u64 offset = 0);

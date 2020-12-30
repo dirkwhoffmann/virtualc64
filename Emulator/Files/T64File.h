@@ -40,14 +40,17 @@ public:
     
     static T64File *makeWithBuffer(const u8 *buffer, size_t length);
     static T64File *makeWithFile(const char *path);
-    static T64File *makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive);
+    static T64File *makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive); // DEPRECATED
+    static T64File *makeWithFileSystem(class FSDevice *fs);
 
     
     //
     // Initializing
     //
     
-    T64File();
+    T64File() : AnyArchive() { }
+    T64File(size_t capacity) : AnyArchive(capacity) { }
+
     const char *getDescription() override { return "T64File"; }
 
     
