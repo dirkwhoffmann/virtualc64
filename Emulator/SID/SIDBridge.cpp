@@ -685,24 +685,11 @@ SIDBridge::executeUntil(u64 targetCycle)
     debug(SID_EXEC,
           "target: %lld missing: %lld consumed: %lld reached: %lld still missing: %lld\n",
           targetCycle, missingCycles, consumedCycles, cycles, targetCycle - cycles);
-
-    /*
-    i64 missingCycles  = targetCycle - cycles;
-    i64 missingSamples = i64(missingCycles * sampleRate / cpuFrequency);
-    i64 consumedCycles = execute(missingSamples);
-
-    cycles += consumedCycles;
-    
-    debug(SID_EXEC,
-          "target: %lld missing: %lld consumed: %lld reached: %lld still missing: %lld\n",
-          targetCycle, missingCycles, consumedCycles, cycles, targetCycle - cycles);
-    */
 }
 
-i64 SIDBridge::executeCycles(u64 numCycles)
+i64
+SIDBridge::executeCycles(u64 numCycles)
 {
-    // TODO: ADD A QUICK PATH FOR THE SINGLE-SID STANDARD CASE
-
     u64 numSamples;
     
     // Run reSID for at least one cycle to make pipelined writes work
@@ -718,10 +705,6 @@ i64 SIDBridge::executeCycles(u64 numCycles)
         handleBufferUnderflow();
     }
 
-    //
-    // Synthesize samples
-    //
-    
     switch (config.engine) {
             
         case ENGINE_FASTSID:
@@ -760,10 +743,51 @@ i64 SIDBridge::executeCycles(u64 numCycles)
             assert(false);
     }
     
-    //
-    // Mix channels
-    //
+    // Produce the final stereo stream
+    (config.enabled > 1) ? mixMultiSID(numSamples) : mixSingleSID(numSamples);
     
+    return numCycles;
+}
+
+void
+SIDBridge::mixSingleSID(u64 numSamples)
+{    
+    stream.lock();
+    
+    // Check for buffer overflow
+    if (stream.free() < numSamples) {
+        handleBufferOverflow();
+    }
+    
+    debug(SID_EXEC, "vol0: %f pan0: %f volL: %f volR: %f\n",
+          vol[0], pan[0], volL.current, volR.current);
+
+    // Convert sound samples to floating point values and write into ringbuffer
+    for (unsigned i = 0; i < numSamples; i++) {
+        
+        // Read SID sample from ring buffer
+        float ch0 = (float)sidStream[0].read() * vol[0];
+        
+        // Compute left and right channel output
+        float l = ch0 * (1 - pan[0]);
+        float r = ch0 * pan[0];
+
+        // Apply master volume
+        l *= volL.current;
+        r *= volR.current;
+        
+        // Apply ear protection
+        assert(abs(l) < 0.15);
+        assert(abs(r) < 0.15);
+        
+        stream.write(SamplePair { l, r } );
+    }
+    stream.unlock();
+}
+        
+void
+SIDBridge::mixMultiSID(u64 numSamples)
+{
     stream.lock();
     
     // Check for buffer overflow
@@ -805,8 +829,6 @@ i64 SIDBridge::executeCycles(u64 numCycles)
         stream.write(SamplePair { l, r } );
     }
     stream.unlock();
-    
-    return numCycles;
 }
 
 void

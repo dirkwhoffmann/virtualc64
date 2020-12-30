@@ -316,11 +316,11 @@ public:
     // Executes SID for a certain number of CPU cycles
 	i64 executeCycles(u64 numCycles);
 
-    /* Executes SID for a certain number of audio samples. The function returns
-     * the number of consumed CPU cycles.
-     */
-    // DEPRECATED
-    // i64 execute(u64 numSamples);
+private:
+    
+    // Called by executeCycles to produce the final stereo stream
+    void mixSingleSID(u64 numSamples);
+    void mixMultiSID(u64 numSamples);
 
     
     //
