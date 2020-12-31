@@ -418,7 +418,6 @@ Drive::insertDisk(Disk *otherDisk)
     resume();
 }
 
-
 void
 Drive::insertNewDisk(FSType fsType)
 {

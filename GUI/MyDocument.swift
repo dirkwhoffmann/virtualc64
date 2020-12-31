@@ -336,7 +336,7 @@ class MyDocument: NSDocument {
     @discardableResult
     func flashAttachmentIntoMemory() -> Bool {
         
-        if let archive = attachment as? AnyArchiveProxy {
+        if let archive = attachment as? AnyCollectionProxy {
             
             return parent.c64.flash(archive, item: 0)
         }

@@ -972,15 +972,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return [self make:volume];
 }
 
-+ (instancetype) makeWithArchive:(AnyArchiveProxy *)proxy
-{
-    AnyFile *file = [proxy wrapper]->file;
-
-    FSError error;
-    FSDevice *volume = FSDevice::makeWithArchive((AnyArchive *)file, &error);
-    return [self make:volume];
-}
-
 + (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy
 {
     AnyFile *file = [proxy wrapper]->file;
@@ -1780,92 +1771,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @end
 
-//
-// AnyArchive
-//
-
-@implementation AnyArchiveProxy
-
-+ (instancetype)make:(AnyArchive *)archive
-{
-    if (archive == NULL) return nil;
-    return [[self alloc] initWithFile:archive];
-}
-
-+ (instancetype)make
-{
-    AnyArchive *archive = new AnyArchive();
-    return [self make: archive];
-}
-
-/*
-+ (instancetype)makeWithFile:(NSString *)path
-{
-    AnyArchive *archive = AnyArchive::makeWithFile([path UTF8String]);
-    return [self make: archive];
-}
-*/
-
-- (AnyArchive *)unwrap
-{
-    return (AnyArchive *)([self wrapper]->file);
-}
-
-- (void)selectItem:(NSInteger)item
-{
-    return [self unwrap]->selectItem((unsigned)item);
-}
-
-- (NSInteger)numberOfItems
-{
-    return [self unwrap]->numberOfItems();
-}
-
-- (NSString *)nameOfItem
-{
-    const char *chars = [self unwrap]->getNameOfItem();
-    return [NSString stringWithUTF8String:chars];
-}
-
-- (NSString *)unicodeNameOfItem
-{
-    const unsigned short *unichars = [self unwrap]->getUnicodeNameOfItem();
-    return [NSString stringWithCharacters:unichars length:strlen16(unichars)];
-}
-
-- (NSInteger)sizeOfItem
-{
-    return [self unwrap]->getSizeOfItem();
-}
-
-- (NSInteger)sizeOfItemInBlocks
-{
-    return [self unwrap]->getSizeOfItemInBlocks();
-}
-
-- (void)seekItem:(NSInteger)offset
-{
-    [self unwrap]->seekItem(offset);
-}
-
-- (NSString *)typeOfItem
-{
-    const char *chars = [self unwrap]->getTypeOfItem();
-    return [NSString stringWithUTF8String:chars];
-}
-
-- (NSInteger)destinationAddrOfItem
-{
-    return [self unwrap]->getDestinationAddrOfItem();
-}
-
-- (NSString *)readItemHex:(NSInteger)num
-{
-    const char *chars = [self unwrap]->readItemHex(num);
-    return [NSString stringWithUTF8String:chars];
-}
-
-@end
 
 //
 // T64
@@ -2102,15 +2007,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
     D64File *archive = D64File::makeWithFile([path UTF8String]);
     return [self make: archive];
 }
-
-/*
-+ (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)proxy
-{
-    AnyArchive *other = (AnyArchive *)([proxy wrapper]->file);
-    D64File *archive = D64File::makeWithAnyArchive(other);
-    return archive ? [self make: archive] : nullptr;
-}
-*/
 
 + (instancetype) makeWithDisk:(DiskProxy *)proxy
 {

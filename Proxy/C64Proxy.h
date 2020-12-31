@@ -33,7 +33,6 @@
 @class MouseProxy;
 
 @class AnyFileProxy;
-@class AnyArchiveProxy;
 @class AnyCollectionProxy;
 @class AnyDiskProxy;
 @class CRTFileProxy;
@@ -735,41 +734,6 @@ struct AnyC64FileWrapper;
 }
 
 - (NSInteger)itemSize:(NSInteger)nr;
-/*
-- (NSInteger)numberOfItems;
-- (void)selectItem:(NSInteger)item;
-- (NSString *)nameOfItem;
-- (NSString *)unicodeNameOfItem;
-- (NSInteger)sizeOfItem;
-- (NSInteger)sizeOfItemInBlocks;
-- (void)seekItem:(NSInteger)offset;
-- (NSString *)typeOfItem;
-- (NSString *)readItemHex:(NSInteger)num;
-- (NSInteger)destinationAddrOfItem;
-*/
-
-@end
-
-//
-// AnyArchive proxy
-//
-
-@interface AnyArchiveProxy : AnyCollectionProxy {
-}
-
-+ (instancetype)make;
-// + (instancetype)makeWithFile:(NSString *)path;
-
-- (NSInteger)numberOfItems;
-- (void)selectItem:(NSInteger)item;
-- (NSString *)nameOfItem;
-- (NSString *)unicodeNameOfItem;
-- (NSInteger)sizeOfItem;
-- (NSInteger)sizeOfItemInBlocks;
-- (void)seekItem:(NSInteger)offset;
-- (NSString *)typeOfItem;
-- (NSString *)readItemHex:(NSInteger)num;
-- (NSInteger)destinationAddrOfItem;
 
 @end
 
@@ -862,7 +826,7 @@ struct AnyC64FileWrapper;
 // Folder proxy
 //
 
-@interface FolderProxy : AnyArchiveProxy {
+@interface FolderProxy : AnyCollectionProxy {
 }
 
 + (instancetype)makeWithFolder:(NSString *)path;
@@ -889,7 +853,7 @@ struct AnyC64FileWrapper;
 // AnyDisk proxy
 //
 
-@interface AnyDiskProxy : AnyArchiveProxy {
+@interface AnyDiskProxy : AnyCollectionProxy {
 }
 
 + (instancetype)make;
@@ -914,7 +878,6 @@ struct AnyC64FileWrapper;
 + (BOOL)isD64File:(NSString *)filename;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)filename;
-// + (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)proxy;
 + (instancetype)makeWithDisk:(DiskProxy *)proxy;
 + (instancetype)makeWithDrive:(DriveProxy *)proxy;
 + (instancetype)makeWithVolume:(FSDeviceProxy *)proxy error:(FSError *)error;
@@ -946,7 +909,6 @@ struct AnyC64FileWrapper;
 
 + (instancetype)makeWithD64:(D64FileProxy *)proxy;
 + (instancetype)makeWithDisk:(DiskProxy *)proxy;
-+ (instancetype)makeWithArchive:(AnyArchiveProxy *)proxy;
 + (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy;
 
 @property (readonly) struct FSDeviceWrapper *wrapper;
