@@ -22,21 +22,6 @@ releaseBuild()
 }
 
 struct timeval t;
-// long tv_base = ((void)gettimeofday(&t,NULL), t.tv_sec);
-
-void translateToUnicode(const char *petscii, u16 *unichars, u16 base, size_t max)
-{
-    assert(petscii != NULL);
-    assert(unichars != NULL);
-    
-    unsigned i;
-    size_t len = MIN(strlen(petscii), max);
-    
-    for (i = 0; i < len; i++) {
-        unichars[i] = base + (u16)petscii2printable(petscii[i], ' ');
-    }
-    unichars[i] = 0;
-}
 
 size_t
 strlen16(const u16 *unichars)

@@ -13,9 +13,7 @@ AnyFile::AnyFile()
 {
     const char *defaultName = "HELLO VIRTUALC64";
     memcpy(name, defaultName, strlen(defaultName) + 1);
-    
     memset(name, 0, sizeof(name));
-    memset(unicode, 0, sizeof(unicode));
 }
 
 AnyFile::AnyFile(size_t capacity)
@@ -82,43 +80,10 @@ AnyFile::setPath(const char *str)
     ascii2petStr(name);
 }
 
-const unsigned short *
-AnyFile::getUnicodeName()
-{
-    translateToUnicode(getName(), unicode, 0xE000, sizeof(unicode) / 2);
-    return unicode;
-}
-
 u64
 AnyFile::fnv()
 {
     return data ? fnv_1a_64(data, size) : 0;    
-}
-
-void
-AnyFile::seek(long offset)
-{
-    fp = (offset < (long)size) ? offset : -1;
-}
-
-int
-AnyFile::read()
-{
-    int result;
-    
-    assert(eof <= (long)size);
-    
-    if (fp < 0)
-        return -1;
-    
-    // Get byte
-    result = data[fp++];
-    
-    // Check for end of file
-    if (fp == eof)
-        fp = -1;
-
-    return result;
 }
 
 void

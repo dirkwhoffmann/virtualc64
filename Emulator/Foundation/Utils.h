@@ -88,21 +88,6 @@ bool releaseBuild();
 // Converting low level data objects
 //
 
-/* Translates a PETSCII string to a unichar array. This functions creates
- * unicode characters compatible with the C64ProMono font. The target font
- * supports four different mapping tables starting at different base addresses:
- *
- *     0xE000 : Unshifted (only upper case characters)
- *     0xE100 : Shifted   (upper and lower case characters)
- *     0xE200 : Unshifted, reversed
- *     0xE300 : Shifted, reversed
- *
- * A maximum of max characters are translated. The unicode array will always
- * be terminated by a NULL character.
- */
-void translateToUnicode(const char *petscii, u16 *unichars,
-                        u16 base, size_t max);
-
 // Returns the number of characters in a null terminated unichar array
 size_t strlen16(const u16 *unichars);
 

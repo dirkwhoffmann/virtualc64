@@ -27,13 +27,6 @@ protected:
      */
     char name[256];
     
-    /* Unicode representation of the logical name. The provides unicode format
-     * is compatible with font C64ProMono which is used, e.g., in the mount
-     * dialogs preview panel.
-     */
-
-    unsigned short unicode[256];
-    
     // The size of this file in bytes
     size_t size = 0;
 
@@ -83,9 +76,6 @@ public:
     // Returns the logical name of this file
     virtual const char *getName() { return name; }
  
-    // Returns the logical name as a unicode character array
-    const unsigned short *getUnicodeName();
-	
     // Returns a unique fingerprint for this file
     u64 fnv();
     
@@ -99,14 +89,6 @@ public:
 
     // Returns the file size in bytes
     virtual size_t getSize() { return size; }
-
-    /* Moves the file pointer to the specified offset. seek(0) returns to the
-     * beginning of the file.
-     */
-    virtual void seek(long offset);
-    
-    // Reads a byte (-1 = EOF)
-    virtual int read();
 
     /* Copies the file contents into C64 memory starting at 'offset'. 'buffer'
      * must be a pointer to RAM or ROM.
