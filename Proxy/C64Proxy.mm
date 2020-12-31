@@ -1798,11 +1798,13 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return [self make: archive];
 }
 
+/*
 + (instancetype)makeWithFile:(NSString *)path
 {
     AnyArchive *archive = AnyArchive::makeWithFile([path UTF8String]);
     return [self make: archive];
 }
+*/
 
 - (AnyArchive *)unwrap
 {

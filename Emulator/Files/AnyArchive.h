@@ -41,7 +41,7 @@ public:
      * PRGFile, P00File, or G64File object, depending on the type of the
      * specified file.
      */
-    static AnyArchive *makeWithFile(const char *filename);
+    // static AnyArchive *makeWithFile(const char *filename);
     
     AnyArchive() : AnyCollection() { }
     AnyArchive(size_t capacity) : AnyCollection(capacity) { }

@@ -758,7 +758,7 @@ struct AnyC64FileWrapper;
 }
 
 + (instancetype)make;
-+ (instancetype)makeWithFile:(NSString *)path;
+// + (instancetype)makeWithFile:(NSString *)path;
 
 - (NSInteger)numberOfItems;
 - (void)selectItem:(NSInteger)item;
@@ -893,7 +893,7 @@ struct AnyC64FileWrapper;
 }
 
 + (instancetype)make;
-+ (instancetype)makeWithFile:(NSString *)path;
+// + (instancetype)makeWithFile:(NSString *)path;
 
 @property (readonly) NSInteger numTracks;
 @property (readonly) NSInteger numHalftracks;
