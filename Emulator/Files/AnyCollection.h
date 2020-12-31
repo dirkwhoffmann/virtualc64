@@ -49,7 +49,7 @@ public:
     u16 readWordLE(unsigned nr, u64 pos);
     
     // Return the load address of this item
-    u64 itemLoadAddr(unsigned nr);
+    u16 itemLoadAddr(unsigned nr);
 
     // Copies an item into a buffer
     virtual void copyItem(unsigned nr, u8 *buf, u64 len, u64 offset = 0);

@@ -1620,11 +1620,16 @@ C64::flash(AnyFile *file)
 }
 
 bool
-C64::flash(AnyArchive *file, unsigned item)
+C64::flash(AnyCollection *file, unsigned nr)
 {
     bool result = true;
     
+    u16 addr = file->itemLoadAddr(nr);
+    u64 size = file->itemSize(nr);
+    if (size <= 2) return false;
+    
     suspend();
+    
     switch (file->type()) {
             
         case FILETYPE_D64:
@@ -1633,8 +1638,8 @@ C64::flash(AnyArchive *file, unsigned item)
         case FILETYPE_PRG:
         case FILETYPE_PRG_FOLDER:
             
-            file->selectItem(item);
-            file->flashItem(mem.ram);
+            size = MIN(size - 2, 0x10000 - addr);
+            file->copyItem(nr, mem.ram + addr, size, 2);
             break;
             
         default:
@@ -1642,7 +1647,7 @@ C64::flash(AnyArchive *file, unsigned item)
             result = false;
     }
     resume();
-    messageQueue.put(MSG_FILE_FLASHED);
     
+    messageQueue.put(MSG_FILE_FLASHED);
     return result;
 }

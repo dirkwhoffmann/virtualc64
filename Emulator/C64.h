@@ -565,9 +565,7 @@ public:
     
     // Flashes a single file into memory
     bool flash(AnyFile *file);
-    
-    // Flashes a single item of an archive into memory
-    bool flash(AnyArchive *file, unsigned item);
+    bool flash(AnyCollection *file, unsigned item);
     
     
     //

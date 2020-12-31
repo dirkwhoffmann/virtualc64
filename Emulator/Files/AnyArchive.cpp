@@ -27,9 +27,6 @@ AnyArchive::makeWithFile(const char *path)
     if (PRGFile::isPRGFile(path)) {
         return PRGFile::makeWithFile(path);
     }
-    if (P00File::isP00File(path)) {
-        return P00File::makeWithFile(path);
-    }
     if (G64File::isG64File(path)) {
         return G64File::makeWithFile(path);
     }

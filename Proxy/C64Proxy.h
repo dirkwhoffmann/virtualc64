@@ -241,7 +241,8 @@ struct AnyC64FileWrapper;
 
 // Flashing files
 - (BOOL)flash:(AnyFileProxy *)container;
-- (BOOL)flash:(AnyArchiveProxy *)archive item:(NSInteger)nr;
+// - (BOOL)flash:(AnyArchiveProxy *)archive item:(NSInteger)nr;
+- (BOOL)flash:(AnyCollectionProxy *)proxy item:(NSInteger)nr;
 
 @end
 
@@ -876,13 +877,13 @@ struct AnyC64FileWrapper;
 // P00File proxy
 //
 
-@interface P00FileProxy : AnyArchiveProxy
+@interface P00FileProxy : AnyCollectionProxy
 {
 }
 + (BOOL)isP00File:(NSString *)filename;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)filename;
-+ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)proxy;
+// + (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)proxy;
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy;
 
 @end

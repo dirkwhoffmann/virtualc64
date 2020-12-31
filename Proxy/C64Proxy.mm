@@ -1983,12 +1983,14 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return [self make: archive];
 }
 
+/*
 + (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)proxy
 {
     AnyArchive *other = (AnyArchive *)([proxy wrapper]->file);
     P00File *archive = P00File::makeWithAnyArchive(other);
     return [self make: archive];
 }
+*/
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy
 {
@@ -2642,10 +2644,17 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->c64->flash([file wrapper]->file);
 }
-- (BOOL)flash:(AnyArchiveProxy *)archive item:(NSInteger)nr;
+/*
+- (BOOL)flash:(AnyArchiveProxy *)archive item:(NSInteger)nr
 {
     AnyArchive *a = (AnyArchive *)([archive wrapper]->file);
     return wrapper->c64->flash(a, (unsigned)nr);
+}
+*/
+- (BOOL)flash:(AnyCollectionProxy *)proxy item:(NSInteger)nr
+{
+    AnyCollection *collection = (AnyCollection *)([proxy wrapper]->file);
+    return wrapper->c64->flash(collection, (unsigned)nr);
 }
 
 @end

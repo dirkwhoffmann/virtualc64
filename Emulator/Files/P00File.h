@@ -10,12 +10,9 @@
 #ifndef _P00_FILE_H
 #define _P00_FILE_H
 
-#include "AnyFile.h"
 #include "AnyCollection.h"
 
-#include "AnyArchive.h" // DEPRECATED
-
-class P00File : public AnyArchive {
+class P00File : public AnyCollection {
 
     // Header signature
     static const u8 magicBytes[];
@@ -40,12 +37,10 @@ public:
     
     static P00File *makeWithBuffer(const u8 *buffer, size_t length);
     static P00File *makeWithFile(const char *path);
-    static P00File *makeWithAnyArchive(AnyArchive *otherArchive); // DEPRECATED
-    // static P00File *makeWithAnyCollection(AnyCollection *collection); // DEPRECATED
     static P00File *makeWithFileSystem(class FSDevice *fs, int item = 0);
     
-    P00File() : AnyArchive() { }
-    P00File(size_t capacity) : AnyArchive(capacity) { }
+    P00File() : AnyCollection() { }
+    P00File(size_t capacity) : AnyCollection(capacity) { }
     
     const char *getDescription() override { return "P00File"; }
 
@@ -68,18 +63,5 @@ public:
     PETName<16> itemName(unsigned nr) override;
     u64 itemSize(unsigned nr) override;
     u8 readByte(unsigned nr, u64 pos) override;
-    
-    
-    //
-    // Methods from AnyArchive (DEPRECATED)
-    //
-    
-    int numberOfItems() override { return 1; }
-    void selectItem(unsigned item) override;
-    const char *getTypeOfItem() override { return "PRG"; }
-    const char *getNameOfItem() override;
-    size_t getSizeOfItem() override { return size - 0x1C; }
-    void seekItem(long offset) override;
-    u16 getDestinationAddrOfItem() override;
 };
 #endif

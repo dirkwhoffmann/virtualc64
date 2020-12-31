@@ -361,8 +361,8 @@ class ImportDialog: DialogController {
         
         track("flashAction: \(sender.selectedTag())")
         
-        let archive = myDocument.attachment as! AnyArchiveProxy
-        parent.c64.flash(archive, item: sender.selectedTag())
+        let collection = myDocument.attachment as! AnyCollectionProxy
+        parent.c64.flash(collection, item: sender.selectedTag())
 
         parent.keyboard.type("RUN\n")
         parent.renderer.rotateLeft()

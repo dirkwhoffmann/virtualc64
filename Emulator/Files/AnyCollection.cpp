@@ -22,7 +22,7 @@ AnyCollection::readWordLE(unsigned nr, u64 pos)
     return LO_HI(readByte(nr, pos), readByte(nr, pos + 1));
 }
 
-u64
+u16
 AnyCollection::itemLoadAddr(unsigned nr)
 {
     return readWordLE(nr, 0);
