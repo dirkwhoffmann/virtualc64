@@ -65,7 +65,31 @@ extension D64FileProxy {
     
     var layoutInfo: String {
 
-        let numTracks = numberOfTracks()
         return "Single sided, single density disk with \(numTracks) tracks"
     }
 }
+
+extension FSDeviceProxy {
+    
+    func icon(protected: Bool) -> NSImage {
+                        
+        var name = "disk2"
+        if protected { name += "_protected" }
+        
+        return NSImage.init(named: name)!
+    }
+
+    var layoutInfo: String {
+
+        return "Single sided, single density disk with \(numTracks) tracks"
+    }
+    
+    var filesInfo: String {
+        
+        let num = numFiles
+        let files = num == 1 ? "file" : "files"
+        
+        return "\(num) \(files), \(numUsedBlocks) blocks used"
+    }
+}
+    

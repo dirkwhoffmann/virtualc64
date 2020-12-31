@@ -61,26 +61,25 @@ class ImportDialog: DialogController {
     var empty: Bool { return numItems == 0 }
     
     var layoutInfo: String {
-        
-        guard let v = volume else { return "" }
-        return "Single sided, single density disk with \(v.numTracks) tracks"
+    
+        if let v = volume { return v.layoutInfo }
+        if let d = d64 { return d.layoutInfo }
+
+        return ""
     }
 
     var dosInfo: String {
 
-        guard let v = volume else { return "" }
-        return v.dos.description
+        if let v = volume { return v.dos.description }
+        
+        return "No compatible file system"
     }
 
     var filesInfo: String {
- 
-        guard let v = volume else { return "" }
+
+        if let v = volume { return v.filesInfo }
         
-        let num = v.numFiles
-        let free = v.numUsedBlocks
-        let files = num == 1 ? "file" : "files"
-        
-        return "\(num) \(files), \(free) blocks used"
+        return ""
     }
     
     var crtInfo: String {
@@ -336,7 +335,7 @@ class ImportDialog: DialogController {
             icon.image = NSImage.init(named: "cartridge")
         } else if tap != nil {
             icon.image = NSImage.init(named: "tape")
-        } else if volume != nil {
+        } else if d64 != nil || volume != nil {
             icon.image = NSImage.init(named: writeProtect ? "disk2_protected" : "disk2")
         } else {
             icon.image = NSImage.init(named: "NSFolder")
@@ -379,40 +378,7 @@ class ImportDialog: DialogController {
             drive.insertFileSystem(volume)
             drive.setWriteProtection(writeProtect)
         }
-        
-        /*
-        switch media {
-        case .collection, .d64, .g64, .directory:
-            
-            let disk = myDocument.attachment
-            let id = sender.tag == 0 ? DriveID.DRIVE8 : DriveID.DRIVE9
-            c64.drive(id)?.insertDisk(disk as? AnyArchiveProxy)
-            c64.drive(id).setWriteProtection(writeProtect)
-            
-        case .cartridge:
 
-            let cartridge = myDocument.attachment as! CRTFileProxy
-            c64.expansionport.attachCartridgeAndReset(cartridge)
-                        
-        case .tape:
-            
-            let tape = myDocument.attachment as! TAPFileProxy
-            c64.datasette.insertTape(tape)
-            
-            if autoRun {
-                /*
-                parent.keyboard.type(string: "LOAD\n",
-                                     completion: c64.datasette.pressPlay)
-                */
-                parent.keyboard.type("LOAD\n")
-                c64.datasette.pressPlay()
-            }
-            
-        case .none:
-            fatalError()
-        }
-        */
-        
         parent.renderer.rotateLeft()
         hideSheet()
     }

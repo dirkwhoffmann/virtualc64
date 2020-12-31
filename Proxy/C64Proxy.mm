@@ -2023,13 +2023,13 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return [self make: disk];
 }
 
-- (NSInteger)numberOfTracks
+- (NSInteger)numTracks
 {
     AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
     return disk->numberOfTracks();
 }
 
-- (NSInteger) numberOfHalftracks
+- (NSInteger) numHalftracks
 {
     AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
     return disk->numberOfHalftracks();

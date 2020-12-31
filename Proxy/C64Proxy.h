@@ -897,8 +897,8 @@ struct AnyC64FileWrapper;
 + (instancetype)make;
 + (instancetype)makeWithFile:(NSString *)path;
 
-- (NSInteger)numberOfTracks;
-- (NSInteger)numberOfHalftracks;
+@property (readonly) NSInteger numTracks;
+@property (readonly) NSInteger numHalftracks;
 - (void)selectHalftrack:(NSInteger)ht;
 - (NSInteger)sizeOfHalftrack;
 - (void)seekHalftrack:(NSInteger)offset;
