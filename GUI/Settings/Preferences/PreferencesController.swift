@@ -47,7 +47,7 @@ class PreferencesController: DialogController {
     @IBOutlet weak var emuCloseWithoutAskingButton: NSButton!
     
     //
-    // Controls preferences
+    // Controls
     //
     
     // Tag of the button that is currently being recorded
@@ -91,7 +91,38 @@ class PreferencesController: DialogController {
     @IBOutlet weak var conPowerButton: NSButton!
     
     //
-    // Keymap preferences
+    // Devices
+    //
+    
+    @IBOutlet weak var devSelector: NSSegmentedControl!
+    
+    // Property Box
+    @IBOutlet weak var devInfoBox: NSBox!
+    @IBOutlet weak var devInfoBoxTitle: NSTextField!
+    @IBOutlet weak var devManufacturer: NSTextField!
+    @IBOutlet weak var devProduct: NSTextField!
+    @IBOutlet weak var devVersion: NSTextField!
+    @IBOutlet weak var devVendorID: NSTextField!
+    @IBOutlet weak var devProductID: NSTextField!
+    @IBOutlet weak var devTransport: NSTextField!
+    @IBOutlet weak var devUsage: NSTextField!
+    @IBOutlet weak var devUsagePage: NSTextField!
+    @IBOutlet weak var devLocationID: NSTextField!
+    @IBOutlet weak var devUniqueID: NSTextField!
+    @IBOutlet weak var devActivity: NSTextField!
+    @IBOutlet weak var devActivity2: NSTextField!
+
+    // Controller
+    @IBOutlet weak var devImage: NSImageView!
+    @IBOutlet weak var devLeftText: NSTextField!
+    @IBOutlet weak var devRightText: NSTextField!
+    @IBOutlet weak var devHatText: NSTextField!
+    @IBOutlet weak var devLeftScheme: NSPopUpButton!
+    @IBOutlet weak var devRightScheme: NSPopUpButton!
+    @IBOutlet weak var devHatScheme: NSPopUpButton!
+    
+    //
+    // Keymap
     //
     
     @IBOutlet weak var keyMappingText: NSTextField!

@@ -204,6 +204,7 @@
 		50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* Shaders.metal */; };
 		50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */; };
 		50CCC30A256FAC870052619A /* Concurrency.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CCC308256FAC870052619A /* Concurrency.cpp */; };
+		50CCE179259DFD7800481E7F /* DevicesPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CCE178259DFD7800481E7F /* DevicesPrefs.swift */; };
 		50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */; };
 		50D197E021606DEC008BC551 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 50D197DF21606DEC008BC551 /* dsa_pub.pem */; };
 		50D20B752508F6D70088E8F2 /* VICII_cycles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D20B742508F6D70088E8F2 /* VICII_cycles.cpp */; };
@@ -587,6 +588,7 @@
 		50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePadManager.swift; sourceTree = "<group>"; };
 		50CCC308256FAC870052619A /* Concurrency.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Concurrency.cpp; sourceTree = "<group>"; };
 		50CCC309256FAC870052619A /* Concurrency.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Concurrency.h; sourceTree = "<group>"; };
+		50CCE178259DFD7800481E7F /* DevicesPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesPrefs.swift; sourceTree = "<group>"; };
 		50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerMenu.swift; sourceTree = "<group>"; };
 		50D197DF21606DEC008BC551 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		50D20B742508F6D70088E8F2 /* VICII_cycles.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_cycles.cpp; sourceTree = "<group>"; };
@@ -1212,6 +1214,7 @@
 				506B13C124C1C40600814BB0 /* PreferencesController.swift */,
 				5002FA7E21C2653600DA4BBC /* EmulatorPrefs.swift */,
 				5002FA8021C2654B00DA4BBC /* ControlsPrefs.swift */,
+				50CCE178259DFD7800481E7F /* DevicesPrefs.swift */,
 				5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */,
 				50A0B48E24C1D15300FF0B0B /* MediaPrefs.swift */,
 			);
@@ -1614,6 +1617,7 @@
 				507A49A224C8D71400DBF984 /* BankTableView.swift in Sources */,
 				504C437C24AF29AC00E69CAE /* AnyArchive.cpp in Sources */,
 				504C437424AF29AC00E69CAE /* T64File.cpp in Sources */,
+				50CCE179259DFD7800481E7F /* DevicesPrefs.swift in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
 				504C438224AF29AC00E69CAE /* C64Object.cpp in Sources */,
 				504C437224AF29AC00E69CAE /* FlashRom.cpp in Sources */,
