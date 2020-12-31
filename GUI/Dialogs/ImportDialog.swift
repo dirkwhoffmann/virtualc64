@@ -60,6 +60,7 @@ class ImportDialog: DialogController {
     var lastItem: Int { return numItems - 1 }
     var empty: Bool { return numItems == 0 }
     
+    /*
     var layoutInfo: String {
     
         if let v = volume { return v.layoutInfo }
@@ -67,46 +68,23 @@ class ImportDialog: DialogController {
 
         return ""
     }
-
+    */
+    /*
     var dosInfo: String {
 
         if let v = volume { return v.dos.description }
         
         return "No compatible file system"
     }
-
+     */
+    /*
     var filesInfo: String {
 
         if let v = volume { return v.filesInfo }
         
         return ""
     }
-    
-    var crtInfo: String {
-        
-        guard let c = crt else { return "" }
-
-        let cnt = c.chipCount
-        let type = c.cartridgeType
-        let packages = cnt == 1 ? "package" : "packages"
-
-        if type == .CRT_NORMAL {
-            return "Standard cartridge with \(cnt) chip \(packages)"
-        } else {
-            return "\(type.description)"
-        }
-    }
-    
-    var crtLineInfo: String {
-        
-        guard let c = crt else { return "" }
-        
-        let exrom = c.initialExromLine
-        let game = c.initialGameLine
-        
-        return "Exrom line: \(exrom), " + "Game line: \(game)"
-    }
-    
+     */
     override func showSheet(completionHandler handler:(() -> Void)? = nil) {
     
         let type = myDocument.attachment!.typeString() ?? "?"
@@ -119,8 +97,8 @@ class ImportDialog: DialogController {
             crt = myDocument.attachment as? CRTFileProxy
             
             titleString = "Commodore Expansion Port Module"
-            subtitle1String = crtInfo
-            subtitle2String = crtLineInfo
+            subtitle1String = crt!.packageInfo
+            subtitle2String = crt!.lineInfo
             subtitle3String = ""
             
             if !crt!.isSupported {
@@ -143,9 +121,9 @@ class ImportDialog: DialogController {
             volume = FSDeviceProxy.make(withD64: d64!)
             
             titleString = "Commodore 64 Floppy Disk"
-            subtitle1String = layoutInfo
-            subtitle2String = dosInfo
-            subtitle3String = filesInfo
+            subtitle1String = volume?.layoutInfo ?? d64?.layoutInfo ?? ""
+            subtitle2String = volume?.dos.description ?? ""
+            subtitle3String = volume?.filesInfo ?? ""
             
         case is G64FileProxy:
 
@@ -163,9 +141,9 @@ class ImportDialog: DialogController {
             }
 
             titleString = "Commodore 64 Floppy Disk (from T64 file)"
-            subtitle1String = layoutInfo
-            subtitle2String = dosInfo
-            subtitle3String = filesInfo
+            subtitle1String = volume?.layoutInfo ?? d64?.layoutInfo ?? ""
+            subtitle2String = volume?.dos.description ?? ""
+            subtitle3String = volume?.filesInfo ?? ""
 
         case is PRGFileProxy:
             
@@ -174,9 +152,9 @@ class ImportDialog: DialogController {
             }
 
             titleString = "Commodore 64 Floppy Disk (from PRG file)"
-            subtitle1String = layoutInfo
-            subtitle2String = dosInfo
-            subtitle3String = filesInfo
+            subtitle1String = volume?.layoutInfo ?? d64?.layoutInfo ?? ""
+            subtitle2String = volume?.dos.description ?? ""
+            subtitle3String = volume?.filesInfo ?? ""
 
         case is P00FileProxy:
             
@@ -185,9 +163,9 @@ class ImportDialog: DialogController {
             }
 
             titleString = "Commodore 64 Floppy Disk (from P00 file)"
-            subtitle1String = layoutInfo
-            subtitle2String = dosInfo
-            subtitle3String = filesInfo
+            subtitle1String = volume?.layoutInfo ?? d64?.layoutInfo ?? ""
+            subtitle2String = volume?.dos.description ?? ""
+            subtitle3String = volume?.filesInfo ?? ""
 
         case is PRGFolderProxy:
             
@@ -331,17 +309,13 @@ class ImportDialog: DialogController {
 
     func refresh() {
         
-        if crt != nil {
-            icon.image = NSImage.init(named: "cartridge")
-        } else if tap != nil {
-            icon.image = NSImage.init(named: "tape")
-        } else if d64 != nil || volume != nil {
-            icon.image = NSImage.init(named: writeProtect ? "disk2_protected" : "disk2")
-        } else {
-            icon.image = NSImage.init(named: "NSFolder")
-        }
+        icon.image =
+            crt?.icon() ??
+            tap?.icon() ??
+            d64?.icon(protected: writeProtect) ??
+            volume?.icon(protected: writeProtect) ?? nil
     }
-    
+
     func updateCarousel(goto item: Int = -1, animated: Bool = false) {
         
         carousel.reloadData()

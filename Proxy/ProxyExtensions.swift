@@ -53,19 +53,85 @@ public extension DriveProxy {
     }
 }
 
+extension AnyFileProxy {
+
+    func icon() -> NSImage {
+        
+        switch type() {
+        
+        case .FILETYPE_CRT:
+            return NSImage.init(named: "cartridge")!
+        
+        case .FILETYPE_TAP:
+            return NSImage.init(named: "tape")!
+            
+        case .FILETYPE_PRG_FOLDER:
+            return NSImage.init(named: "NSFolder")!
+            
+        default:
+            return icon(protected: false)
+        }
+    }
+        
+    func icon(protected: Bool) -> NSImage {
+     
+        switch type() {
+     
+        case .FILETYPE_D64,
+             .FILETYPE_G64,
+             .FILETYPE_T64,
+             .FILETYPE_PRG,
+             .FILETYPE_P00:
+            
+            let name = "disk2" + (protected ? "_protected" : "")
+            return NSImage.init(named: name)!
+            
+        default:
+            fatalError()
+        }
+    }
+}
+
 extension D64FileProxy {
        
-    func icon(protected: Bool) -> NSImage {
-                        
-        var name = "disk2"
-        if protected { name += "_protected" }
-        
-        return NSImage.init(named: name)!
-    }
-    
     var layoutInfo: String {
 
         return "Single sided, single density disk with \(numTracks) tracks"
+    }
+}
+
+extension CRTFileProxy {
+    
+    var packageInfo: String {
+        
+        let cnt = chipCount
+        let type = cartridgeType
+        let packages = cnt == 1 ? "package" : "packages"
+
+        if type == .CRT_NORMAL {
+            return "Standard cartridge with \(cnt) chip \(packages)"
+        } else {
+            return "\(type.description)"
+        }
+    }
+    
+    var lineInfo: String {
+                
+        let exrom = initialExromLine
+        let game = initialGameLine
+        
+        var result = ""
+        
+        switch (exrom, game) {
+        case (0, 0): result += "16K Cartridge Mode"
+        case (0, 1): result += "8K Cartridge Mode"
+        case (1, 0): result += "Ultimax Cartridge Mode"
+        case (1, 1): result += "Disabled Cartridge"
+        default: fatalError()
+        }
+
+        result += " (Exrom: \(exrom), " + "Game: \(game))"
+        return result
     }
 }
 
@@ -73,9 +139,7 @@ extension FSDeviceProxy {
     
     func icon(protected: Bool) -> NSImage {
                         
-        var name = "disk2"
-        if protected { name += "_protected" }
-        
+        let name = "disk2" + (protected ? "_protected" : "")
         return NSImage.init(named: name)!
     }
 
