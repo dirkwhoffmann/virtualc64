@@ -81,7 +81,6 @@
 		504C437924AF29AC00E69CAE /* Snapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42D524AF29AB00E69CAE /* Snapshot.cpp */; };
 		504C437A24AF29AC00E69CAE /* AnyFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42D624AF29AB00E69CAE /* AnyFile.cpp */; };
 		504C437B24AF29AC00E69CAE /* D64File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42D824AF29AB00E69CAE /* D64File.cpp */; };
-		504C437C24AF29AC00E69CAE /* AnyArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42D924AF29AB00E69CAE /* AnyArchive.cpp */; };
 		504C437D24AF29AC00E69CAE /* CRTFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42DA24AF29AB00E69CAE /* CRTFile.cpp */; };
 		504C437E24AF29AC00E69CAE /* TAPFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42DB24AF29AB00E69CAE /* TAPFile.cpp */; };
 		504C437F24AF29AC00E69CAE /* C64Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42E124AF29AB00E69CAE /* C64Memory.cpp */; };
@@ -379,10 +378,8 @@
 		504C42D624AF29AB00E69CAE /* AnyFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnyFile.cpp; sourceTree = "<group>"; };
 		504C42D724AF29AB00E69CAE /* RomFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomFile.h; sourceTree = "<group>"; };
 		504C42D824AF29AB00E69CAE /* D64File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = D64File.cpp; sourceTree = "<group>"; };
-		504C42D924AF29AB00E69CAE /* AnyArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnyArchive.cpp; sourceTree = "<group>"; };
 		504C42DA24AF29AB00E69CAE /* CRTFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRTFile.cpp; sourceTree = "<group>"; };
 		504C42DB24AF29AB00E69CAE /* TAPFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TAPFile.cpp; sourceTree = "<group>"; };
-		504C42DC24AF29AB00E69CAE /* AnyArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyArchive.h; sourceTree = "<group>"; };
 		504C42DD24AF29AB00E69CAE /* Snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Snapshot.h; sourceTree = "<group>"; };
 		504C42DE24AF29AB00E69CAE /* PRGFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRGFile.h; sourceTree = "<group>"; };
 		504C42DF24AF29AB00E69CAE /* T64File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = T64File.h; sourceTree = "<group>"; };
@@ -930,8 +927,6 @@
 				504C42DA24AF29AB00E69CAE /* CRTFile.cpp */,
 				50E2D9AB25991E4B009A986B /* AnyCollection.h */,
 				50E2D9AA25991E4B009A986B /* AnyCollection.cpp */,
-				504C42DC24AF29AB00E69CAE /* AnyArchive.h */,
-				504C42D924AF29AB00E69CAE /* AnyArchive.cpp */,
 				504C42DF24AF29AB00E69CAE /* T64File.h */,
 				504C42CC24AF29AB00E69CAE /* T64File.cpp */,
 				504C42DE24AF29AB00E69CAE /* PRGFile.h */,
@@ -1615,7 +1610,6 @@
 				504C43A624AF29AC00E69CAE /* Disk.cpp in Sources */,
 				504C43A224AF29AC00E69CAE /* ControlPort.cpp in Sources */,
 				507A49A224C8D71400DBF984 /* BankTableView.swift in Sources */,
-				504C437C24AF29AC00E69CAE /* AnyArchive.cpp in Sources */,
 				504C437424AF29AC00E69CAE /* T64File.cpp in Sources */,
 				50CCE179259DFD7800481E7F /* DevicesPrefs.swift in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
