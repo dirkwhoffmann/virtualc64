@@ -15,7 +15,7 @@
 /* This class adds an API to AnyArchive for handling file formats that
  * represent a physical floppy disk.
  */
-class AnyDisk : public AnyArchive {
+class AnyDisk : public AnyCollection {
     
 protected:
     
@@ -37,8 +37,9 @@ public:
      */
     static AnyDisk *makeWithFile(const char *path);
 
-    AnyDisk() : AnyArchive() { }
+    AnyDisk() : AnyCollection() { }
     
+    const char *getDescription() override { return "AnyDisk"; }
     
     //
     // Selecting tracks or halftracks

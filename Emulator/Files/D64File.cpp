@@ -310,6 +310,7 @@ D64File::readFromBuffer(const u8 *buffer, size_t length)
     return true;    
 }
 
+/*
 int
 D64File::numberOfItems()
 {
@@ -344,7 +345,7 @@ D64File::getTypeOfItem()
     long pos = findDirectoryEntry(selectedItem);
     
     if (pos > 0)
-        (void)itemIsVisible(data[pos] /* file type byte */, &extension);
+        (void)itemIsVisible(data[pos], &extension);
     
     return extension;
 }
@@ -473,6 +474,7 @@ D64File::getDestinationAddrOfItem()
     result = LO_HI(data[pos+2],data[pos+3]);
     return result;
 }
+*/
 
 PETName<16>
 D64File::getPETName()

@@ -30,7 +30,7 @@ class D64File : public AnyDisk {
     u8 errors[802];
     
     // Number of the currently selected item (-1 if no item is selected)
-    long selectedItem = -1;
+    // long selectedItem = -1;
     
     
     //
@@ -81,6 +81,7 @@ public:
     // Methods from AnyArchive
     //
     
+    /*
     int numberOfItems() override;
     void selectItem(unsigned n) override;
     const char *getTypeOfItem() override;
@@ -90,7 +91,7 @@ public:
     void seekItem(long offset) override;
     int readItem() override;
     u16 getDestinationAddrOfItem() override;
-    
+    */
     
     //
     // Methods from AnyDisk
