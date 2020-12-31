@@ -834,13 +834,12 @@ struct AnyC64FileWrapper;
 // T64File proxy
 //
 
-@interface T64FileProxy : AnyArchiveProxy
+@interface T64FileProxy : AnyCollectionProxy
 {
 }
 + (BOOL)isT64File:(NSString *)filename;
 + (instancetype)makeWithFile:(NSString *)filename;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)proxy;
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy;
 
 @end
@@ -882,7 +881,6 @@ struct AnyC64FileWrapper;
 + (BOOL)isP00File:(NSString *)filename;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)filename;
-// + (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)proxy;
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy;
 
 @end
@@ -916,7 +914,7 @@ struct AnyC64FileWrapper;
 + (BOOL)isD64File:(NSString *)filename;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)filename;
-+ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)proxy;
+// + (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)proxy;
 + (instancetype)makeWithDisk:(DiskProxy *)proxy;
 + (instancetype)makeWithDrive:(DriveProxy *)proxy;
 + (instancetype)makeWithVolume:(FSDeviceProxy *)proxy error:(FSError *)error;

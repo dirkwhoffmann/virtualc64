@@ -10,10 +10,9 @@
 #ifndef _T64_FILE_H
 #define _T64_FILE_H
 
-#include "AnyArchive.h"
 #include "AnyCollection.h"
 
-class T64File : public AnyArchive {
+class T64File : public AnyCollection {
     
     // Header signature
     static const u8 magicBytes[];
@@ -40,7 +39,6 @@ public:
     
     static T64File *makeWithBuffer(const u8 *buffer, size_t length);
     static T64File *makeWithFile(const char *path);
-    static T64File *makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive); // DEPRECATED
     static T64File *makeWithFileSystem(class FSDevice *fs);
 
     
@@ -48,8 +46,8 @@ public:
     // Initializing
     //
     
-    T64File() : AnyArchive() { }
-    T64File(size_t capacity) : AnyArchive(capacity) { }
+    T64File() : AnyCollection() { }
+    T64File(size_t capacity) : AnyCollection(capacity) { }
 
     const char *getDescription() override { return "T64File"; }
 
@@ -73,26 +71,17 @@ public:
     u64 itemSize(unsigned nr) override;
     u8 readByte(unsigned nr, u64 pos) override;
     
-    // Returns the start or end address in C64 memory for a certain item
+private:
+
     u16 memStart(unsigned nr);
     u16 memEnd(unsigned nr);
     
-    //
-    // Methods from AnyArchive
-    //
     
-    int numberOfItems() override;
-    void selectItem(unsigned n) override;
-    const char *getTypeOfItem() override;
-    const char *getNameOfItem() override;
-    size_t getSizeOfItem() override;
-    void seekItem(long offset) override;
-    u16 getDestinationAddrOfItem() override;
-
-   
     //
     // Scanning and repairing a T64 file
     //
+    
+public:
     
     // Checks if the header contains information at the specified location
     bool directoryItemIsPresent(int n);

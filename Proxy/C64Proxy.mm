@@ -1894,13 +1894,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return [self make: archive];
 }
 
-+ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)proxy
-{
-    AnyArchive *other = (AnyArchive *)([proxy wrapper]->file);
-    T64File *archive = T64File::makeT64ArchiveWithAnyArchive(other);
-    return [self make: archive];
-}
-
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy
 {
     FSDevice *fs = [proxy wrapper]->device;
@@ -2108,12 +2101,14 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return [self make: archive];
 }
 
+/*
 + (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)proxy
 {
     AnyArchive *other = (AnyArchive *)([proxy wrapper]->file);
     D64File *archive = D64File::makeWithAnyArchive(other);
     return archive ? [self make: archive] : nullptr;
 }
+*/
 
 + (instancetype) makeWithDisk:(DiskProxy *)proxy
 {
