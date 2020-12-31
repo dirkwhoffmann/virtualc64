@@ -867,6 +867,59 @@ FSDevice::importVolume(const u8 *src, size_t size, FSError *error)
 }
 
 bool
+FSDevice::importDirectory(const char *path)
+{
+    assert(path);
+    
+    if (DIR *dir = opendir(path)) {
+        
+        bool result = importDirectory(path, dir);
+        closedir(dir);
+        return result;
+    }
+
+    warn("Error opening directory %s\n", path);
+    return false;
+}
+
+bool
+FSDevice::importDirectory(const char *path, DIR *dir)
+{
+    assert(dir);
+    
+    struct dirent *item;
+    bool result = true;
+    
+    while ((item = readdir(dir))) {
+        
+        // Skip '.', '..' and all hidden files
+        if (item->d_name[0] == '.') continue;
+        
+        // Assemble file name
+        char *name = new char [strlen(path) + strlen(item->d_name) + 2];
+        strcpy(name, path);
+        strcat(name, "/");
+        strcat(name, item->d_name);
+        
+        msg("importDirectory: Processing %s\n", name);
+        
+        if (item->d_type == DT_DIR) continue;
+        
+        u8 *buffer; long size;
+        if (loadFile(name, &buffer, &size)) {
+            
+            if (!makeFile(PETName<16>(item->d_name), buffer, size)) {
+                warn("Failed to translate file %s\n", name);
+                result = false;
+            }
+            delete(buffer);
+        }
+        delete [] name;
+    }
+    return result;
+}
+
+bool
 FSDevice::exportVolume(u8 *dst, size_t size, FSError *error)
 {
     return exportBlocks(0, layout.numBlocks() - 1, dst, size, error);

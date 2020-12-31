@@ -58,7 +58,7 @@ public:
     
     
     //
-    // Methods from AnyFile (DEPRECATED)
+    // Methods from AnyFile
     //
 
     FileType type() override { return FILETYPE_PRG_FOLDER; }
@@ -66,7 +66,7 @@ public:
     
     
     //
-    // Methods from AnyArchive
+    // Methods from AnyArchive (DEPRECATED)
     //
     
     int numberOfItems() override;

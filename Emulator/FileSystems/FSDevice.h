@@ -269,6 +269,10 @@ public:
     // Imports the volume from a buffer
     bool importVolume(const u8 *src, size_t size, FSError *error = nullptr);
     
+    // Imports a folder from the host file system
+    bool importDirectory(const char *path);
+    bool importDirectory(const char *path, DIR *dir);
+
     // Exports the volume to a buffer
     bool exportVolume(u8 *dst, size_t size, FSError *error = nullptr);
 
@@ -276,7 +280,7 @@ public:
     bool exportBlock(u32 nr, u8 *dst, size_t size, FSError *error = nullptr);
     bool exportBlocks(u32 first, u32 last, u8 *dst, size_t size, FSError *error = nullptr);
 
-    // Exports a file the volume to a directory of the host file system
+    // Exports a single file or all files to a folder in the host file system
     bool exportFile(FSDirEntry *item, const char *path, FSError *error);
     bool exportDirectory(const char *path, FSError *error);
 };
