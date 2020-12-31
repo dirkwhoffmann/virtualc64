@@ -108,9 +108,6 @@ public:
     // Reads a byte (-1 = EOF)
     virtual int read();
 
-    // Reads multiple bytes (1 to 85) in form of a hex dump string
-    const char *readHex(size_t num = 1);
-
     /* Copies the file contents into C64 memory starting at 'offset'. 'buffer'
      * must be a pointer to RAM or ROM.
      */

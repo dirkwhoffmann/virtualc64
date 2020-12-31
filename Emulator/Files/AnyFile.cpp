@@ -121,21 +121,6 @@ AnyFile::read()
     return result;
 }
 
-const char *
-AnyFile::readHex(size_t num)
-{
-    assert(sizeof(name) > 3 * num);
-    
-    for (unsigned i = 0; i < num; i++) {
-        
-        int byte = read();
-        if (byte == EOF) break;
-        sprintf(name + (3 * i), "%02X ", byte);
-    }
-    
-    return name;
-}
-
 void
 AnyFile::flash(u8 *buffer, size_t offset)
 {
