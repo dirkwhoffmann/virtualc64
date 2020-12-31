@@ -241,7 +241,6 @@ struct AnyC64FileWrapper;
 
 // Flashing files
 - (BOOL)flash:(AnyFileProxy *)container;
-// - (BOOL)flash:(AnyArchiveProxy *)archive item:(NSInteger)nr;
 - (BOOL)flash:(AnyCollectionProxy *)proxy item:(NSInteger)nr;
 
 @end
@@ -862,14 +861,15 @@ struct AnyC64FileWrapper;
 @end
 
 //
-// PRGFolder proxy
+// Folder proxy
 //
 
-@interface PRGFolderProxy : AnyArchiveProxy {
+@interface FolderProxy : AnyArchiveProxy {
 }
 
-+ (instancetype)make;
 + (instancetype)makeWithFolder:(NSString *)path;
+
+@property (readonly) FSDeviceProxy *fileSystem;
 
 @end
 

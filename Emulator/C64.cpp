@@ -1636,7 +1636,7 @@ C64::flash(AnyCollection *file, unsigned nr)
         case FILETYPE_T64:
         case FILETYPE_P00:
         case FILETYPE_PRG:
-        case FILETYPE_PRG_FOLDER:
+        case FILETYPE_FOLDER:
             
             size = MIN(size - 2, 0x10000 - addr);
             file->copyItem(nr, mem.ram + addr, size, 2);

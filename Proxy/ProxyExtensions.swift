@@ -54,29 +54,20 @@ public extension DriveProxy {
 }
 
 extension AnyFileProxy {
-
-    func icon() -> NSImage {
         
+    func icon(protected: Bool = false) -> NSImage {
+     
         switch type() {
-        
+     
         case .FILETYPE_CRT:
             return NSImage.init(named: "cartridge")!
         
         case .FILETYPE_TAP:
             return NSImage.init(named: "tape")!
             
-        case .FILETYPE_PRG_FOLDER:
+        case .FILETYPE_FOLDER:
             return NSImage.init(named: "NSFolder")!
-            
-        default:
-            return icon(protected: false)
-        }
-    }
-        
-    func icon(protected: Bool) -> NSImage {
-     
-        switch type() {
-     
+
         case .FILETYPE_D64,
              .FILETYPE_G64,
              .FILETYPE_T64,

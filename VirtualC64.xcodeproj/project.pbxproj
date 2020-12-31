@@ -136,7 +136,7 @@
 		5051A15F1B885FDD00CBFB5A /* 1541_power_on_0.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A15D1B885FDD00CBFB5A /* 1541_power_on_0.aiff */; };
 		5051A1601B885FDD00CBFB5A /* 1541_track_change_2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A15E1B885FDD00CBFB5A /* 1541_track_change_2.aiff */; };
 		5051A1621B88661000CBFB5A /* 1541_track_change_1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1611B88661000CBFB5A /* 1541_track_change_1.aiff */; };
-		50520F8B25108FC400C7D47F /* PRGFolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50520F8925108FC400C7D47F /* PRGFolder.cpp */; };
+		50520F8B25108FC400C7D47F /* Folder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50520F8925108FC400C7D47F /* Folder.cpp */; };
 		50549B45257D1A6C006FE39C /* C64Constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549B44257D1A6C006FE39C /* C64Constants.cpp */; };
 		50549B49257D288E006FE39C /* SIDStreams.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549B47257D288E006FE39C /* SIDStreams.cpp */; };
 		5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5055A83E1BC7996900399A20 /* MetalKit.framework */; };
@@ -500,8 +500,8 @@
 		5051A15D1B885FDD00CBFB5A /* 1541_power_on_0.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_power_on_0.aiff; sourceTree = "<group>"; };
 		5051A15E1B885FDD00CBFB5A /* 1541_track_change_2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_2.aiff; sourceTree = "<group>"; };
 		5051A1611B88661000CBFB5A /* 1541_track_change_1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_1.aiff; sourceTree = "<group>"; };
-		50520F8925108FC400C7D47F /* PRGFolder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PRGFolder.cpp; sourceTree = "<group>"; };
-		50520F8A25108FC400C7D47F /* PRGFolder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PRGFolder.h; sourceTree = "<group>"; };
+		50520F8925108FC400C7D47F /* Folder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Folder.cpp; sourceTree = "<group>"; };
+		50520F8A25108FC400C7D47F /* Folder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Folder.h; sourceTree = "<group>"; };
 		50549B44257D1A6C006FE39C /* C64Constants.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64Constants.cpp; sourceTree = "<group>"; };
 		50549B46257D1B6A006FE39C /* Buffers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffers.h; sourceTree = "<group>"; };
 		50549B47257D288E006FE39C /* SIDStreams.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SIDStreams.cpp; sourceTree = "<group>"; };
@@ -936,8 +936,8 @@
 				504C42CC24AF29AB00E69CAE /* T64File.cpp */,
 				504C42DE24AF29AB00E69CAE /* PRGFile.h */,
 				504C42CD24AF29AB00E69CAE /* PRGFile.cpp */,
-				50520F8A25108FC400C7D47F /* PRGFolder.h */,
-				50520F8925108FC400C7D47F /* PRGFolder.cpp */,
+				50520F8A25108FC400C7D47F /* Folder.h */,
+				50520F8925108FC400C7D47F /* Folder.cpp */,
 				504C42D024AF29AB00E69CAE /* P00File.h */,
 				504C42CF24AF29AB00E69CAE /* P00File.cpp */,
 				504C42C824AF29AB00E69CAE /* AnyDisk.h */,
@@ -1507,7 +1507,7 @@
 				504C435F24AF29AC00E69CAE /* SuperGames.cpp in Sources */,
 				50BE4B5C24E7F857008F39C9 /* Data.swift in Sources */,
 				50BE4B6424E7F941008F39C9 /* NSControl.swift in Sources */,
-				50520F8B25108FC400C7D47F /* PRGFolder.cpp in Sources */,
+				50520F8B25108FC400C7D47F /* Folder.cpp in Sources */,
 				507A499C24C8D64700DBF984 /* InstrTableView.swift in Sources */,
 				5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */,
 				50BE4B6E24E7FBE1008F39C9 /* Datatypes.swift in Sources */,

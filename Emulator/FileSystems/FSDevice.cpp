@@ -14,20 +14,11 @@ FSDevice::makeWithFormat(FSDeviceDescriptor &layout)
 {
     FSDevice *dev = new FSDevice(layout.numBlocks());
     dev->layout = layout;
-        
-    /*
-    if (FS_DEBUG) {
-        printf("cd = %d\n", dev->cd);
-        dev->info();
-        dev->dump();
-    }
-    */
-    
     return dev;
 }
 
 FSDevice *
-FSDevice::makeWithFormat(DiskType type)
+FSDevice::makeWithType(DiskType type)
 {
     FSDeviceDescriptor layout = FSDeviceDescriptor(type);
     return makeWithFormat(layout);
@@ -103,11 +94,8 @@ FSDevice::makeWithArchive(AnyArchive *archive, FSError *error)
     PETName<16> name = PETName<16>("VOLUME");
     device->blockPtr(18,0)->writeBAM(name);
 
-    // Create the proper amount of directory blocks
-    int numberOfItems = archive->numberOfItems();
-    device->setCapacity(numberOfItems);
-
     // Loop over all entries in archive
+    int numberOfItems = archive->numberOfItems();
     for (int i = 0; i < numberOfItems; i++) {
         
         u8 *buf; size_t cnt;
@@ -129,21 +117,16 @@ FSDevice::makeWithCollection(AnyCollection *collection, FSError *err)
 {
     assert(collection);
         
-    // Get a device descriptor
-    FSDeviceDescriptor descriptor = FSDeviceDescriptor(DISK_SS_SD);
-        
     // Create the device
-    FSDevice *device = makeWithFormat(descriptor);
-        
+    FSDevice *device = makeWithType(DISK_SS_SD);
+    assert(device);
+    
     // Write BAM
     auto name = PETName<16>(collection->collectionName());
     device->blockPtr(18,0)->writeBAM(name);
 
-    // Create the proper amount of directory blocks
-    u32 numberOfItems = (u32)collection->collectionCount();
-    device->setCapacity(numberOfItems);
-
     // Loop over all items
+    u32 numberOfItems = (u32)collection->collectionCount();
     for (u32 i = 0; i < numberOfItems; i++) {
         
         // Serialize item into a buffer
@@ -154,6 +137,30 @@ FSDevice::makeWithCollection(AnyCollection *collection, FSError *err)
         // Create a file for this item
         device->makeFile(collection->itemName(i), buffer, size);
         delete[] buffer;
+    }
+    
+    device->printDirectory();
+    return device;
+}
+
+FSDevice *
+FSDevice::makeWithFolder(const char *path, FSError *error)
+{
+    assert(path);
+    
+    // Create the device
+    FSDevice *device = makeWithType(DISK_SS_SD);
+    assert(device);
+    
+    // Write BAM
+    auto name = PETName<16>(path);
+    device->blockPtr(18,0)->writeBAM(name);
+    
+    // Import the folder
+    if (!device->importDirectory(path)) {
+        *error = FS_IMPORT_ERROR;
+        delete device;
+        return nullptr;
     }
     
     device->printDirectory();
@@ -295,6 +302,13 @@ FSDevice::getName()
 {
     FSBlock *bam = bamPtr();
     return PETName<16>(bam->data + 0x90);
+}
+
+void
+FSDevice::setName(PETName<16> name)
+{
+    FSBlock *bam = bamPtr();
+    name.write(bam->data + 0x90);
 }
 
 bool
@@ -547,30 +561,6 @@ FSDevice::loadAddr(FSDirEntry *entry)
     return LO_HI(addr[0], addr[1]);
 }
 
-/*
-u8
-FSDevice::readByte(unsigned nr, u64 pos)
-{
-    assert(nr < collectionCount());
-    
-    // Locate the first data block
-    BlockPtr b = blockPtr(dir[nr]->firstDataTrack, dir[nr]->firstDataSector);
-
-    // Iterate through the block chain
-    while (b) {
-        
-        if (pos < 254) {
-            return b->data[pos + 2];
-        } else {
-            pos -= 254;
-        }
-        b = nextBlockPtr(b);
-    }
-    
-    return 0;
-}
-*/
-
 void
 FSDevice::copyFile(unsigned nr, u8 *buf, u64 len, u64 offset)
 {
@@ -610,16 +600,24 @@ FSDevice::nextFreeDirEntry()
     // The directory starts on track 18, sector 1
     FSBlock *ptr = blockPtr(18, 1);
     
-    // The number of files is limited by 144
+    // A disk can hold up to 144 files
     for (int i = 0; ptr && i < 144; i++) {
     
         FSDirEntry *entry = (FSDirEntry *)ptr->data + (i % 8);
         
-        // Return if this entry is not used
+        // Return if this entry is unused
         if (entry->isEmpty()) return entry;
      
-        // Jump to the next sector if this was the last directory item
-        if (i % 8 == 7) ptr = nextBlockPtr(ptr);
+        // Keep on searching in the current block if slots remain
+        if (i % 8 != 7) continue;
+        
+        // Keep on searching in the next directory block if it already exists
+        if (FSBlock *next = nextBlockPtr(ptr)) { ptr = next; continue; }
+        
+        // Create a new directory block and link to it
+        TSLink ts = layout.nextBlockRef(layout.tsLink(ptr->nr));
+        ptr->data[0] = ts.t;
+        ptr->data[1] = ts.s;
     }
     
     return nullptr;
@@ -651,61 +649,24 @@ FSDevice::scanDirectory(bool skipInvisible)
 }
 
 bool
-FSDevice::setCapacity(u32 n)
-{
-    // A disk can hold up to 144 files
-    assert(n <= 144);
-    
-    // Determine how many directory blocks are needed
-    u32 numBlocks = (n + 7) / 8;
-    debug(FS_DEBUG, "Allocation %d directory blocks for %d files\n", numBlocks, n);
-
-    // The firsr directory block is located at (18,1)
-    Track t = 18;
-    Sector s = 1;
-    FSBlock *ptr = blockPtr(t, s);
-    
-    for (u32 i = 1; i < numBlocks; i++, ptr = blockPtr(t, s)) {
-
-        // Get location of the next block
-        if (!layout.nextTrackAndSector(t, s, &t, &s)) return false;
-        
-        // Link blocks
-        ptr->data[0] = t;
-        ptr->data[1] = s;
-    }
-    
-    return true;
-}
-
-bool
 FSDevice::makeFile(PETName<16> name, const u8 *buf, size_t cnt)
 {
-    // The directory starts on track 18, sector 1
-    FSBlock *ptr = blockPtr(18, 1);
-    
-    // Search for the next free slot
-    for (int i = 0; ptr && i < 144; i++) {
-    
-        FSDirEntry *dir = (FSDirEntry *)ptr->data + (i % 8);
-        
-        // Create the file once we've found a free slot
-        if (dir->isEmpty()) return makeFile(name, dir, buf, cnt);
-     
-        // Jump to the next sector if this was the last directory item
-        if (i % 8 == 7) ptr = nextBlockPtr(ptr);
-    }
-    
-    return true;
+    // Search the next free directory slot
+    FSDirEntry *dir = nextFreeDirEntry();
+
+    // Create the file if we've found a free slot
+    if (dir) return makeFile(name, dir, buf, cnt);
+         
+    return false;
 }
 
 bool
 FSDevice::makeFile(PETName<16> name, FSDirEntry *dir, const u8 *buf, size_t cnt)
 {
-    printf("FILE SIZE = %zu\n", cnt);
-    
     // Determine the number of blocks needed for this file
     u32 numBlocks = (u32)((cnt + 253) / 254);
+    
+    printf("size = %zu (%02x %02x)\n", cnt, buf[0], buf[1]);
     
     // Allocate data blocks
     auto blockList = allocate(numBlocks);
@@ -909,7 +870,7 @@ FSDevice::importDirectory(const char *path, DIR *dir)
         if (loadFile(name, &buffer, &size)) {
             
             if (!makeFile(PETName<16>(item->d_name), buffer, size)) {
-                warn("Failed to translate file %s\n", name);
+                warn("Failed to import file %s\n", name);
                 result = false;
             }
             delete(buffer);

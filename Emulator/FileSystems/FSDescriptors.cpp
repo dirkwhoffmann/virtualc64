@@ -140,6 +140,14 @@ FSDeviceDescriptor::sectorNr(Block b)
     return s;
 }
 
+TSLink
+FSDeviceDescriptor::tsLink(Block b)
+{
+    Track t; Sector s;
+    translateBlockNr(b, &t, &s);
+    return TSLink { t, s };
+}
+
 Block
 FSDeviceDescriptor::blockNr(Track t, Sector s)
 {

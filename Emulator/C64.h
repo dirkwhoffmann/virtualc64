@@ -27,7 +27,7 @@
 #include "D64File.h"
 #include "G64File.h"
 #include "PRGFile.h"
-#include "PRGFolder.h"
+#include "Folder.h"
 #include "P00File.h"
 #include "RomFile.h"
 #include "TAPFile.h"

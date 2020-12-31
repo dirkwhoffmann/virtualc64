@@ -60,31 +60,6 @@ class ImportDialog: DialogController {
     var lastItem: Int { return numItems - 1 }
     var empty: Bool { return numItems == 0 }
     
-    /*
-    var layoutInfo: String {
-    
-        if let v = volume { return v.layoutInfo }
-        if let d = d64 { return d.layoutInfo }
-
-        return ""
-    }
-    */
-    /*
-    var dosInfo: String {
-
-        if let v = volume { return v.dos.description }
-        
-        return "No compatible file system"
-    }
-     */
-    /*
-    var filesInfo: String {
-
-        if let v = volume { return v.filesInfo }
-        
-        return ""
-    }
-     */
     override func showSheet(completionHandler handler:(() -> Void)? = nil) {
     
         let type = myDocument.attachment!.typeString() ?? "?"
@@ -167,8 +142,11 @@ class ImportDialog: DialogController {
             subtitle2String = volume?.dos.description ?? ""
             subtitle3String = volume?.filesInfo ?? ""
 
-        case is PRGFolderProxy:
+        case is FolderProxy:
             
+            if let f = myDocument.attachment as? FolderProxy {
+                volume = f.fileSystem
+            }
             titleString = "Disk from a file system folder"
             subtitle1String = "Comprises all PRG files found in this directory"
             subtitle2String = ""
@@ -309,11 +287,7 @@ class ImportDialog: DialogController {
 
     func refresh() {
         
-        icon.image =
-            crt?.icon() ??
-            tap?.icon() ??
-            d64?.icon(protected: writeProtect) ??
-            volume?.icon(protected: writeProtect) ?? nil
+        icon.image = myDocument.attachment?.icon(protected: writeProtect)
     }
 
     func updateCarousel(goto item: Int = -1, animated: Bool = false) {

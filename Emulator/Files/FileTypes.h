@@ -19,7 +19,7 @@ enum_long(FileType)
     FILETYPE_T64,
     FILETYPE_P00,
     FILETYPE_PRG,
-    FILETYPE_PRG_FOLDER,
+    FILETYPE_FOLDER,
     FILETYPE_D64,
     FILETYPE_G64,
     FILETYPE_TAP,
@@ -43,7 +43,7 @@ inline const char *sFileType(FileType type)
         case FILETYPE_CRT:        return "CRT";
         case FILETYPE_T64:        return "T64";
         case FILETYPE_PRG:        return "PRG";
-        case FILETYPE_PRG_FOLDER: return "PRG_FOLDER";
+        case FILETYPE_FOLDER:     return "FOLDER";
         case FILETYPE_P00:        return "P00";
         case FILETYPE_D64:        return "D64";
         case FILETYPE_G64:        return "G64";

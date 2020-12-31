@@ -1935,21 +1935,27 @@ struct AnyC64FileWrapper { AnyFile *file; };
 @end
 
 //
-// PRGFolder
+// Folder
 //
 
-@implementation PRGFolderProxy
+@implementation FolderProxy
 
-+ (instancetype) make
++ (instancetype)make:(Folder *)folder
 {
-    AnyArchive *archive = new PRGFolder();
-    return [[self alloc] initWithFile:archive];
+    if (folder == NULL) return nil;
+    return [[self alloc] initWithFile:folder];
 }
 
-+ (instancetype) makeWithFolder:(NSString *)path
++ (instancetype)makeWithFolder:(NSString *)path
 {
-    PRGFolder *archive = PRGFolder::makeWithFolder([path UTF8String]);
-    return [self make: archive];
+    Folder *folder = Folder::makeWithFolder([path UTF8String]);
+    return [self make: folder];
+}
+
+- (FSDeviceProxy *)fileSystem
+{
+    Folder *folder = (Folder *)([self wrapper]->file);
+    return [FSDeviceProxy make:folder->getFS()];
 }
 
 @end
@@ -1965,32 +1971,23 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return P00File::isP00File([filename UTF8String]);
 }
 
-+ (instancetype) make:(P00File *)archive
++ (instancetype)make:(P00File *)archive
 {
     if (archive == NULL) return nil;
     return [[self alloc] initWithFile:archive];
 }
 
-+ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
     P00File *archive = P00File::makeWithBuffer((const u8 *)buffer, length);
     return [self make: archive];
 }
 
-+ (instancetype) makeWithFile:(NSString *)path
++ (instancetype)makeWithFile:(NSString *)path
 {
     P00File *archive = P00File::makeWithFile([path UTF8String]);
     return [self make: archive];
 }
-
-/*
-+ (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)proxy
-{
-    AnyArchive *other = (AnyArchive *)([proxy wrapper]->file);
-    P00File *archive = P00File::makeWithAnyArchive(other);
-    return [self make: archive];
-}
-*/
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy
 {
@@ -2644,13 +2641,6 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->c64->flash([file wrapper]->file);
 }
-/*
-- (BOOL)flash:(AnyArchiveProxy *)archive item:(NSInteger)nr
-{
-    AnyArchive *a = (AnyArchive *)([archive wrapper]->file);
-    return wrapper->c64->flash(a, (unsigned)nr);
-}
-*/
 - (BOOL)flash:(AnyCollectionProxy *)proxy item:(NSInteger)nr
 {
     AnyCollection *collection = (AnyCollection *)([proxy wrapper]->file);

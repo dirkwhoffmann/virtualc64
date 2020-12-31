@@ -44,13 +44,6 @@ struct FSDeviceDescriptor : C64Object {
 
     // Creates a device descriptor for a standard disk
     FSDeviceDescriptor(DiskType type, FSVolumeType dos = FS_CBM_DOS);
-
-    // Creates a device descriptor compatible with the provided D64 file
-    // FSDeviceDescriptor(class D64File *d64);
-
-    // Creates a device descriptor compatible with the provided disk
-    // FSDeviceDescriptor(class Disk *disk);
-
     
     const char *getDescription() override { return "FSLayout"; }
     
@@ -86,8 +79,10 @@ struct FSDeviceDescriptor : C64Object {
 
     Track trackNr(Cylinder c, Head h);
     Track trackNr(Block b);
-
+    
     Sector sectorNr(Block b);
+    
+    TSLink tsLink(Block b);
 
     Block blockNr(Cylinder c, Head h, Sector s);
     Block blockNr(Track t, Sector s);

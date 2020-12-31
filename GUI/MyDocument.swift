@@ -79,7 +79,7 @@ class MyDocument: NSDocument {
     func fileType(url: URL) -> FileType {
                 
         if url.hasDirectoryPath {
-            return .FILETYPE_PRG_FOLDER
+            return .FILETYPE_FOLDER
         }
         
         switch url.pathExtension.uppercased() {
@@ -103,7 +103,7 @@ class MyDocument: NSDocument {
                       FileType.FILETYPE_T64,
                       FileType.FILETYPE_P00,
                       FileType.FILETYPE_PRG,
-                      FileType.FILETYPE_PRG_FOLDER,
+                      FileType.FILETYPE_FOLDER,
                       FileType.FILETYPE_D64,
                       FileType.FILETYPE_G64,
                       FileType.FILETYPE_TAP ]
@@ -223,8 +223,8 @@ class MyDocument: NSDocument {
         
         switch type {
             
-        case .FILETYPE_PRG_FOLDER:
-            result = PRGFolderProxy.make(withFolder: name)
+        case .FILETYPE_FOLDER:
+            result = FolderProxy.make(withFolder: name)
             
         default:
             fatalError()

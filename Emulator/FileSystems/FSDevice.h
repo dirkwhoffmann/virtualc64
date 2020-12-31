@@ -44,7 +44,7 @@ public:
     static FSDevice *makeWithFormat(FSDeviceDescriptor &layout);
 
     // Creates a file system for a standard floppy disk
-    static FSDevice *makeWithFormat(DiskType type);
+    static FSDevice *makeWithType(DiskType type);
 
     // Creates a file system from a D64 image
     static FSDevice *makeWithD64(class D64File *d64, FSError *error);
@@ -57,6 +57,9 @@ public:
 
     // Creates a file from an object implementing the AnyCollection interface
     static FSDevice *makeWithCollection(AnyCollection *collection, FSError *error);
+
+    // Creates a file system with the files from a disk folder
+    static FSDevice *makeWithFolder(const char *path, FSError *error);
 
     
     //
@@ -139,8 +142,9 @@ public:
     // Working with the BAM (Block Allocation Map)
     //
 
-    // Returns the disk name
+    // Gets or sets the disk name
     PETName<16> getName();
+    void setName(PETName<16> name);
     
     // Checks if a block is marked as free in the allocation bitmap
     bool isFree(Block b);
@@ -216,10 +220,7 @@ public:
 
     // Returns the next free directory entry
     FSDirEntry *nextFreeDirEntry(); 
-                
-    // Ensures that the disk has enough directory blocks to host 'n' files
-    bool setCapacity(u32 n);
-    
+                    
     // Creates a new file
     bool makeFile(PETName<16> name, const u8 *buf, size_t cnt);
 
