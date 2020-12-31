@@ -139,18 +139,8 @@ AnyFile::readHex(size_t num)
 void
 AnyFile::flash(u8 *buffer, size_t offset)
 {
-    int byte;
-    assert(buffer != NULL);
-    
-    seek(0);
-
-    while ((byte = read()) != EOF) {
-        if (offset <= 0xFFFF) {
-            buffer[offset++] = (u8)byte;
-        } else {
-            break;
-        }
-    }
+    assert(buffer);
+    memcpy(buffer + offset, data, size);
 }
 
 bool
