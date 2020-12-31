@@ -29,9 +29,6 @@ class D64File : public AnyDisk {
     // Error information stored in the D64 archive
     u8 errors[802];
     
-    // Number of the currently selected item (-1 if no item is selected)
-    // long selectedItem = -1;
-    
     
     //
     // Class methods
@@ -52,7 +49,6 @@ public:
     
     static D64File *makeWithBuffer(const u8 *buffer, size_t length);
     static D64File *makeWithFile(const char *path);
-    static D64File *makeWithAnyArchive(AnyArchive *otherArchive);
     static D64File *makeWithDisk(Disk *disk);
     static D64File *makeWithDrive(Drive *drive);
     static D64File *makeWithVolume(class FSDevice &volume, FSError *err);
@@ -76,22 +72,6 @@ public:
     bool hasSameType(const char *filename) override { return isD64File(filename); }
     bool readFromBuffer(const u8 *buffer, size_t length) override;
     
-
-    //
-    // Methods from AnyArchive
-    //
-    
-    /*
-    int numberOfItems() override;
-    void selectItem(unsigned n) override;
-    const char *getTypeOfItem() override;
-    const char *getNameOfItem() override;
-    size_t getSizeOfItem() override;
-    size_t getSizeOfItemInBlocks() override;
-    void seekItem(long offset) override;
-    int readItem() override;
-    u16 getDestinationAddrOfItem() override;
-    */
     
     //
     // Methods from AnyDisk
@@ -122,27 +102,6 @@ public:
     
     
     //
-    // Accessing file items
-    //
-    
-private:
-    
-    /* Returns the offset to the first data byte of an item, or -1 if the item
-     * does not exist.
-     */
-    long findItem(long item);
-    
-    /* Returns true iff item is a visible file. Whether a file is visible or
-     * not is determined by the type character, a special byte stored inside
-     * the directory. The type character also determines how the file is
-     * displayed when the directory is loaded via LOAD "$",8. E.g., standard
-     * program files are listes as PRG. If the optional argument is provided,
-     * an extension string is returned (e.g. "PRG"). Invisible files return "".
-     */
-    bool itemIsVisible(u8 typeChar, const char **extension = NULL);
-    
-    
-    //
     // Accessing tracks and sectors
     //
     
@@ -160,85 +119,6 @@ private:
      */
     int offset(Track track, Sector sector);
     
-    // Returns true iff offset points to the last byte of a sector
-    bool isLastByteOfSector(long offset) { return ((offset+1) % 256) == 0; }
-    
-    // Returns the next logical track number following this sector
-    int nextTrack(long offset) { return data[offset & (~0xFF)]; }
-    
-    // Returns the next sector number following this sector
-    int nextSector(long offset) { return data[(offset & (~0xFF)) + 1]; }
-    
-    // Returns the next physical track and sector
-    bool nextTrackAndSector(Track track, Sector sector,
-                            Track *nextTrack, Sector *nextSector,
-                            bool skipDirectory = true);
-
-    /* Jumps to the beginning of the next sector. The beginning of the next
-     * sector is written into variable 'pos'. Returns true if the jump to the
-     * next sector was successfull and false if the current sector points to an
-     * invalid valid track/sector combination. In case of failure, pos remains
-     * unchanged.
-     */
-    bool jumpToNextSector(long *pos);
-    
-    /* Writes a byte to the specified track and sector. If the sector overflows,
-     * the values of track and sector are overwritten with the next free sector.
-     * Returns true if the byte was written successfully and false if there is
-     * no space left on disk.
-     */
-    bool writeByteToSector(u8 byte, Track *track, Sector *sector);
-    
-    
-    //
-    // Accessing file and directory items
-    //
-    
-private:
-    
-    // Marks a single sector as "used"
-    void markSectorAsUsed(Track track, Sector sector);
-    
-    // Writes the Block Availability Map (BAM) on track 18, sector 0
-    void writeBAM(const char *name);
-    
-    /* Gathers data about all directory items. This function scans all
-     * directory items and stores the relative start address of the first
-     * sector into the provided offsets array. Furthermore, the total number
-     * of files is written into variable noOfFiles. If the additional parameter
-     * skipInvisibleFiles is set to true, only those files are considered that
-     * would show up when loading the directory via LOAD "$",8. Otherwise, all
-     * files are considered, i.e. those that are marked as deleted.
-     */
-    void scanDirectory(long *offsets, unsigned *noOfFiles, bool skipInvisibleFiles = true);
-    
-    /* Looks up a directory item by number. This function searches the
-     * directory for the requested item. If the additional parameter
-     * skipInvisibleFiles is set to true, only those files are considered that
-     * would show up when loading the directory via LOAD "$",8. Otherwise, all
-     * files are considered, i.e. those that are marked as deleted. The
-     * function returns an offset to the first data sector of the requested
-     * file. If the file is not found, -1 is returned.
-     */
-    long findDirectoryEntry(long item, bool skipInvisibleFiles = true);
-    
-    /* Returns the track or sector number of the first file block.
-     * Example usages: firstTrackOfFile(findDirectoryEntry(42))
-     *                 firstSectorOfFile(findDirectoryEntry(42))
-     */
-    u8 firstTrackOfFile(unsigned dirEntry) { return data[dirEntry + 1]; }
-    u8 firstSectorOfFile(unsigned dirEntry) { return data[dirEntry + 2]; }
-    
-    // Returns true if offset points to the last byte of a file
-    bool isEndOfFile(long offset) {
-        return nextTrack(offset) == 0 && nextSector(offset) == offset % 256; }
-    
-    /* Writes a directory item. This function is used to convert other archive
-     * formats into the D64 format.
-     */
-    bool writeDirectoryEntry(unsigned nr, const char *name,
-                             Track startTrack, Sector startSector,
-                             size_t filesize);
     
     
     //
