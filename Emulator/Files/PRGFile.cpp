@@ -59,62 +59,6 @@ PRGFile::makeWithFile(const char *path)
 }
 
 PRGFile *
-PRGFile::makeWithAnyArchive(AnyArchive *other, int item)
-{
-    if (other == NULL || other->numberOfItems() <= item)
-        return NULL;
-    
-    PRGFile *archive = new PRGFile();
-    debug(FILE_DEBUG, "Creating PRG archive from %s archive...\n", other->typeString());
-    
-    other->selectItem(item);
-    
-    // Determine file size and allocate memory
-    archive->size = 2 + other->getSizeOfItem();
-    if ((archive->data = new u8[archive->size]) == NULL) {
-        warn("Failed to allocate %zu bytes of memory\n", archive->size);
-        delete archive;
-        return NULL;
-    }
-    
-    // Load address
-    u8* ptr = archive->data;
-    *ptr++ = LO_BYTE(other->getDestinationAddrOfItem());
-    *ptr++ = HI_BYTE(other->getDestinationAddrOfItem());
-    
-    // File data
-    int byte;
-    other->selectItem(item);
-    while ((byte = other->readItem()) != EOF) {
-        *ptr++ = (u8)byte;
-    }
-    
-    return archive;
-}
-
-/*
-PRGFile *
-PRGFile::makeWithAnyCollection(AnyCollection *collection, int item)
-{
-    assert(collection);
-
-    debug(FILE_DEBUG, "Creating PRG archive...\n");
-
-    // Only proceed if at least one file is present
-    if (collection->collectionCount() <= (u64)item) return nullptr;
-        
-    // Create new archive
-    size_t itemSize = collection->itemSize(item);
-    PRGFile *prg = new PRGFile(itemSize);
-                
-    // Add data
-    collection->copyItem(item, prg->data, itemSize);
-    
-    return prg;
-}
-*/
-
-PRGFile *
 PRGFile::makeWithFileSystem(FSDevice *fs, int item)
 {
     assert(fs);
@@ -150,6 +94,7 @@ PETName<16>
 PRGFile::itemName(unsigned nr)
 {
     assert(nr == 0);
+    
     return PETName<16>(getName());
 }
 
@@ -157,6 +102,7 @@ u64
 PRGFile::itemSize(unsigned nr)
 {
     assert(nr == 0);
+    
     return size;
 }
 
@@ -165,33 +111,6 @@ PRGFile::readByte(unsigned nr, u64 pos)
 {
     assert(nr == 0);
     assert(pos < itemSize(nr));
+    
     return data[pos];
-}
-
-void
-PRGFile::selectItem(unsigned item)
-{
-    if (item == 0) {
-        iFp = 2;
-        iEof = size;
-    } else {
-        iFp = -1;
-    }
-}
-
-void
-PRGFile::seekItem(long offset)
-{
-    assert(iFp != -1);
-    
-    iFp = 2 + offset;
-    
-    if (iFp >= (long)size)
-        iFp = -1;
-}
-
-u16 
-PRGFile::getDestinationAddrOfItem()
-{
-	return LO_HI(data[0], data[1]);
 }

@@ -804,8 +804,8 @@ struct AnyC64FileWrapper;
 }
 
 + (BOOL)isCRTFile:(NSString *)path;
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)path;
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
  
 @property (readonly) CartridgeType cartridgeType;
 @property (readonly) BOOL isSupported;
@@ -823,8 +823,8 @@ struct AnyC64FileWrapper;
 }
 
 + (BOOL)isTAPFile:(NSString *)path;
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)path;
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 
 @property (readonly) TAPVersion version;
 
@@ -838,8 +838,8 @@ struct AnyC64FileWrapper;
 {
 }
 + (BOOL)isT64File:(NSString *)filename;
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)filename;
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)proxy;
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy;
 
@@ -849,13 +849,12 @@ struct AnyC64FileWrapper;
 // PRGFile proxy
 //
 
-@interface PRGFileProxy : AnyArchiveProxy
+@interface PRGFileProxy : AnyCollectionProxy
 {
 }
 + (BOOL)isPRGFile:(NSString *)filename;
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)filename;
-+ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)proxy;
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy;
 
 @end

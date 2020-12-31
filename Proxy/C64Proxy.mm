@@ -1678,15 +1678,15 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return container ? [[self alloc] initWithFile:container] : nil;
 }
 
-+ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
-{
-    CRTFile *container = CRTFile::makeWithBuffer((const u8 *)buffer, length);
-    return [self make: container];
-}
-
 + (instancetype) makeWithFile:(NSString *)path
 {
     CRTFile *container = CRTFile::makeWithFile([path UTF8String]);
+    return [self make: container];
+}
+
++ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
+{
+    CRTFile *container = CRTFile::makeWithBuffer((const u8 *)buffer, length);
     return [self make: container];
 }
 
@@ -1728,28 +1728,33 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @implementation TAPFileProxy
 
-+ (BOOL) isTAPFile:(NSString *)path
++ (BOOL)isTAPFile:(NSString *)path
 {
     return TAPFile::isTAPFile([path UTF8String]);
 }
-+ (instancetype) make:(TAPFile *)container
+
++ (instancetype)make:(TAPFile *)container
 {
     return container ? [[self alloc] initWithFile:container] : nil;
 }
-+ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
-{
-    TAPFile *container = TAPFile::makeWithBuffer((const u8 *)buffer, length);
-    return [self make: container];
-}
-+ (instancetype) makeWithFile:(NSString *)path
+
++ (instancetype)makeWithFile:(NSString *)path
 {
     TAPFile *container = TAPFile::makeWithFile([path UTF8String]);
     return [self make: container];
 }
+
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length
+{
+    TAPFile *container = TAPFile::makeWithBuffer((const u8 *)buffer, length);
+    return [self make: container];
+}
+
 - (TAPFile *)unwrap
 {
     return (TAPFile *)wrapper->file;
 }
+
 - (TAPVersion)version
 {
     return [self unwrap]->version();
@@ -1781,17 +1786,19 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 @implementation AnyArchiveProxy
 
-+ (instancetype) make:(AnyArchive *)archive
++ (instancetype)make:(AnyArchive *)archive
 {
     if (archive == NULL) return nil;
     return [[self alloc] initWithFile:archive];
 }
-+ (instancetype) make
+
++ (instancetype)make
 {
     AnyArchive *archive = new AnyArchive();
     return [self make: archive];
 }
-+ (instancetype) makeWithFile:(NSString *)path
+
++ (instancetype)makeWithFile:(NSString *)path
 {
     AnyArchive *archive = AnyArchive::makeWithFile([path UTF8String]);
     return [self make: archive];
@@ -1801,45 +1808,55 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return (AnyArchive *)([self wrapper]->file);
 }
+
 - (void)selectItem:(NSInteger)item
 {
     return [self unwrap]->selectItem((unsigned)item);
 }
+
 - (NSInteger)numberOfItems
 {
     return [self unwrap]->numberOfItems();
 }
+
 - (NSString *)nameOfItem
 {
     const char *chars = [self unwrap]->getNameOfItem();
     return [NSString stringWithUTF8String:chars];
 }
+
 - (NSString *)unicodeNameOfItem
 {
     const unsigned short *unichars = [self unwrap]->getUnicodeNameOfItem();
     return [NSString stringWithCharacters:unichars length:strlen16(unichars)];
 }
+
 - (NSInteger)sizeOfItem
 {
     return [self unwrap]->getSizeOfItem();
 }
+
 - (NSInteger)sizeOfItemInBlocks
 {
     return [self unwrap]->getSizeOfItemInBlocks();
 }
+
 - (void)seekItem:(NSInteger)offset
 {
     [self unwrap]->seekItem(offset);
 }
+
 - (NSString *)typeOfItem
 {
     const char *chars = [self unwrap]->getTypeOfItem();
     return [NSString stringWithUTF8String:chars];
 }
+
 - (NSInteger)destinationAddrOfItem
 {
     return [self unwrap]->getDestinationAddrOfItem();
 }
+
 - (NSString *)readItemHex:(NSInteger)num
 {
     const char *chars = [self unwrap]->readItemHex(num);
@@ -1859,25 +1876,25 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return T64File::isT64File([filename UTF8String]);
 }
 
-+ (instancetype) make:(T64File *)archive
++ (instancetype)make:(T64File *)archive
 {
     if (archive == NULL) return nil;
     return [[self alloc] initWithFile:archive];
 }
 
-+ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
-{
-    T64File *archive = T64File::makeWithBuffer((const u8 *)buffer, length);
-    return [self make: archive];
-}
-
-+ (instancetype) makeWithFile:(NSString *)path
++ (instancetype)makeWithFile:(NSString *)path
 {
     T64File *archive = T64File::makeWithFile([path UTF8String]);
     return [self make: archive];
 }
 
-+ (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)proxy
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length
+{
+    T64File *archive = T64File::makeWithBuffer((const u8 *)buffer, length);
+    return [self make: archive];
+}
+
++ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)proxy
 {
     AnyArchive *other = (AnyArchive *)([proxy wrapper]->file);
     T64File *archive = T64File::makeT64ArchiveWithAnyArchive(other);
@@ -1903,25 +1920,22 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return PRGFile::isPRGFile([filename UTF8String]);
 }
-+ (instancetype) make:(PRGFile *)archive
+
++ (instancetype)make:(PRGFile *)archive
 {
     if (archive == NULL) return nil;
     return [[self alloc] initWithFile:archive];
 }
-+ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
-{
-    PRGFile *archive = PRGFile::makeWithBuffer((const u8 *)buffer, length);
-    return [self make: archive];
-}
-+ (instancetype) makeWithFile:(NSString *)path
+
++ (instancetype)makeWithFile:(NSString *)path
 {
     PRGFile *archive = PRGFile::makeWithFile([path UTF8String]);
     return [self make: archive];
 }
-+ (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)proxy
+
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    AnyArchive *other = (AnyArchive *)([proxy wrapper]->file);
-    PRGFile *archive = PRGFile::makeWithAnyArchive(other);
+    PRGFile *archive = PRGFile::makeWithBuffer((const u8 *)buffer, length);
     return [self make: archive];
 }
 
@@ -1977,15 +1991,15 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return [[self alloc] initWithFile:archive];
 }
 
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length
-{
-    P00File *archive = P00File::makeWithBuffer((const u8 *)buffer, length);
-    return [self make: archive];
-}
-
 + (instancetype)makeWithFile:(NSString *)path
 {
     P00File *archive = P00File::makeWithFile([path UTF8String]);
+    return [self make: archive];
+}
+
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length
+{
+    P00File *archive = P00File::makeWithBuffer((const u8 *)buffer, length);
     return [self make: archive];
 }
 

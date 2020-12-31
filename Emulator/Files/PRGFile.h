@@ -10,10 +10,9 @@
 #ifndef _PRG_FILE_H
 #define _PRG_FILE_H
 
-#include "AnyArchive.h"
 #include "AnyCollection.h"
 
-class PRGFile : public AnyArchive {
+class PRGFile : public AnyCollection {
 
 public:
 
@@ -37,8 +36,6 @@ public:
     
     static PRGFile *makeWithBuffer(const u8 *buffer, size_t length);
     static PRGFile *makeWithFile(const char *path);
-    static PRGFile *makeWithAnyArchive(AnyArchive *other, int item = 0); // DEPRECATED
-    // static PRGFile *makeWithAnyCollection(AnyCollection *collection, int item = 0);
     static PRGFile *makeWithFileSystem(class FSDevice *fs, int item = 0);
 
     
@@ -46,8 +43,8 @@ public:
     // Initializing
     //
     
-    PRGFile() : AnyArchive() { }
-    PRGFile(size_t capacity) : AnyArchive(capacity) { }
+    PRGFile() : AnyCollection() { }
+    PRGFile(size_t capacity) : AnyCollection(capacity) { }
     
     const char *getDescription() override { return "PRGFile"; }
     
@@ -69,19 +66,6 @@ public:
     PETName<16> itemName(unsigned nr) override;
     u64 itemSize(unsigned nr) override;
     u8 readByte(unsigned nr, u64 pos) override;
- 
-    
-    //
-    // Methods from AnyArchive
-    //
-    
-    int numberOfItems() override { return 1; }
-    void selectItem(unsigned item) override;
-    const char *getTypeOfItem() override { return "PRG"; }
-    const char *getNameOfItem() override { return getName(); }
-    size_t getSizeOfItem() override { return size - 2; }
-    void seekItem(long offset) override;
-    u16 getDestinationAddrOfItem() override;
 };
 
 #endif
