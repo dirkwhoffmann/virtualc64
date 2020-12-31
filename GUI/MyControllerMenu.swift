@@ -609,13 +609,26 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func exportRecentDiskAction(_ sender: NSMenuItem!) {
                 
-        // Extrace drive number and slot from tag
+        track()
+
         let drive = sender.tag < 10 ? DriveID.DRIVE8 : DriveID.DRIVE9
-        let item = sender.tag < 10 ? sender.tag : sender.tag - 10
+        let slot = sender.tag % 10
         
-        // Get URL and export
-        if let url = myAppDelegate.getRecentlyExportedDiskURL(item, drive: drive) {
-            mydocument!.export(drive: drive, to: url)
+        exportRecentDiskAction(drive: drive, slot: slot)
+    }
+    
+    func exportRecentDiskAction(drive id: DriveID, slot: Int) {
+        
+        track("drive: \(id) slot: \(slot)")
+        
+        if let url = myAppDelegate.getRecentlyExportedDiskURL(slot, drive: id) {
+            
+            do {
+                try mydocument.export(drive: id, to: url)
+                c64.drive(id)?.setModifiedDisk(false)
+            } catch {
+                mydocument.showExportErrorAlert(url: url)
+            }
         }
     }
     

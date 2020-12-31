@@ -239,7 +239,7 @@ Disk::setModified(bool b)
 {
     if (b != modified) {
         modified = b;
-        messageQueue.put(MSG_DISK_PROTECT);
+        // messageQueue.put(MSG_DISK_PROTECT);
     }
 }
 

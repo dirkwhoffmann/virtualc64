@@ -400,81 +400,108 @@ class MyDocument: NSDocument {
     // Exporting disks
     //
     
-    // DEPRECATED
-    func export(drive: DriveID, to url: URL, ofType typeName: String) -> Bool {
+    enum ExportError: Error {
+        case invalidFormat(format: FileType)
+        case fileSystemError(error: FSError)
+        case undecodableDisk
+        case other
+    }
+    
+    func export(drive id: DriveID, to url: URL) throws {
         
-        track("url = \(url) typeName = \(typeName)")
-        precondition(["D64", "T64", "PRG", "P00", "G64"].contains(typeName))
+        track("drive: \(id) to: \(url)")
         
-        let proxy = c64.drive(drive)!
+        let disk = c64.drive(id)?.disk
+        try export(disk: disk!, to: url)
+    }
+ 
+    func export(disk: DiskProxy, to url: URL) throws {
+
+        track("disk: \(disk) to: \(url)")
         
-        // Convert disk to a D64 archive
-        guard let d64archive = D64FileProxy.make(withDisk: proxy.disk) else {
-            showCannotDecodeDiskAlert()
-            return false
+        if url.c64FileType == .FILETYPE_G64 {
+         
+            if let g64 = G64FileProxy.make(withDisk: disk) {
+                try export(file: g64, to: url)
+            }
+
+        } else {
+            
+            if let fs = FSDeviceProxy.make(withDisk: disk) {
+                try export(fs: fs, to: url)
+            } else {
+                throw ExportError.undecodableDisk
+            }
         }
+    }
+    
+    func export(fs: FSDeviceProxy, to url: URL) throws {
         
-        // Convert the D64 archive into the target format
-        var archive: AnyArchiveProxy?
-        switch typeName.uppercased() {
-        case "D64":
-            track("Exporting to D64 format")
-            archive = d64archive
+        track("fs: \(fs) to: \(url)")
+
+        var err = FSError.OK
+                
+        switch url.c64FileType {
         
-        case "G64":
-            track("Exporting to G64 format")
-            archive = G64FileProxy.make(withDisk: proxy.disk)
+        case .FILETYPE_D64:
+
+            if let d64 = D64FileProxy.make(withVolume: fs, error: &err) {
+                try export(file: d64, to: url)
+            } else {
+                throw ExportError.fileSystemError(error: err)
+            }
             
-        case "T64":
-            track("Exporting to T64 format")
-            archive = T64FileProxy.make(withAnyArchive: d64archive)
+        case .FILETYPE_T64:
             
-        case "PRG":
-            track("Exporting to PRG format")
-            if d64archive.numberOfItems() > 1 {
+            if let t64 = T64FileProxy.make(withFileSystem: fs) {
+                try export(file: t64, to: url)
+            } else {
+                throw ExportError.fileSystemError(error: err)
+            }
+            
+        case .FILETYPE_PRG:
+            
+            if fs.numFiles > 1 {
                 showDiskHasMultipleFilesAlert(format: "PRG")
             }
-            archive = PRGFileProxy.make(withAnyArchive: d64archive)
             
-        case "P00":
-            track("Exporting to P00 format")
-            if d64archive.numberOfItems() > 1 {
+            if let prg = PRGFileProxy.make(withFileSystem: fs) {
+                try export(file: prg, to: url)
+            } else {
+                throw ExportError.fileSystemError(error: err)
+            }
+
+        case .FILETYPE_P00:
+            
+            if fs.numFiles > 1 {
                 showDiskHasMultipleFilesAlert(format: "P00")
             }
-            archive = P00FileProxy.make(withAnyArchive: d64archive)
             
+            if let p00 = P00FileProxy.make(withFileSystem: fs) {
+                try export(file: p00, to: url)
+            } else {
+                throw ExportError.fileSystemError(error: err)
+            }
+
         default:
-            fatalError()
+            throw ExportError.invalidFormat(format: url.c64FileType)
         }
+    }
+    
+    func export(file: AnyFileProxy, to url: URL) throws {
+        
+        track("file: \(file) to: \(url)")
         
         // Serialize archive
-        let data = NSMutableData.init(length: archive!.sizeOnDisk())!
-        archive!.write(toBuffer: data.mutableBytes)
-        
-        // Write to file
-        if !data.write(to: url, atomically: true) {
-            showExportErrorAlert(url: url)
-            return false
+        if let data = NSMutableData.init(length: file.sizeOnDisk()) {
+            
+            file.write(toBuffer: data.mutableBytes)
+            if data.write(to: url, atomically: true) { return }
         }
         
-        // Mark disk as "not modified"
-        proxy.setModifiedDisk(false)
-        
-        // Remember export URL
-        myAppDelegate.noteNewRecentlyExportedDiskURL(url, drive: drive)
-        return true
+        throw ExportError.other
     }
-    
-    @discardableResult
-    func export(drive: DriveID, to url: URL?) -> Bool {
-        
-        if let suffix = url?.pathExtension {
-            return export(drive: drive, to: url!, ofType: suffix.uppercased())
-        } else {
-            return false
-        }
-    }
-    
+
     //
     // Screenshots
     //

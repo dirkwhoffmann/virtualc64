@@ -239,13 +239,35 @@ extension URL {
     
     var imageFormat: NSBitmapImageRep.FileType? {
         
-        switch pathExtension {
+        switch pathExtension.lowercased() {
+        
         case "tiff": return .tiff
         case "bmp": return .bmp
         case "gif": return .gif
         case "jpg", "jpeg": return .jpeg
         case "png": return .png
-        default: return nil
+            
+        default:
+            return nil
+        }
+    }
+    
+    var c64FileType: FileType {
+        
+        switch pathExtension.lowercased() {
+        
+        case "v64": return .FILETYPE_V64
+        case "d64": return .FILETYPE_D64
+        case "g64": return .FILETYPE_G64
+        case "t64": return .FILETYPE_T64
+        case "prg": return .FILETYPE_PRG
+        case "p00": return .FILETYPE_P00
+        case "tap": return .FILETYPE_TAP
+        case "crt": return .FILETYPE_CRT
+            
+        default:
+            return .FILETYPE_UNKNOWN
+            
         }
     }
 }

@@ -496,17 +496,21 @@ class ExportDialog: DialogController {
     
     func exportToFile(allowedTypes: [String]) {
      
+        track("allowedTypes = \(allowedTypes)")
+        let firstAllowed = allowedTypes.first ?? ""
+
         savePanel = NSSavePanel()
         savePanel.prompt = "Export"
         savePanel.title = "Export"
         savePanel.nameFieldLabel = "Export As:"
         savePanel.canCreateDirectories = true
+        savePanel.allowsOtherFileTypes = false
         
         savePanel.beginSheetModal(for: window!, completionHandler: { result in
             if result == .OK {
                 if let url = self.savePanel.url {
-                    track("url = \(url)")
-                    self.exportToFile(url: url)
+                    let suffix = url.pathExtension == "" ? firstAllowed : ""
+                    self.exportToFile(url: url.appendingPathExtension(suffix))
                 }
             }
         })
@@ -514,89 +518,17 @@ class ExportDialog: DialogController {
 
     func exportToFile(url: URL) {
         
-        track("url = \(url)")
+        track("url: \(url)")
 
-        // Remove any existing extension from the URL
-        var newUrl = url.deletingPathExtension()
-        track("new url = \(url)")
-        
-        track("format: \(formatPopup.selectedTag())")
-
-        var archive: AnyArchiveProxy? // DEPRECATED
-        var collection: AnyCollectionProxy?
-
-        switch formatPopup.selectedTag() {
-        
-        case 0:
-            newUrl.appendPathExtension("d64")
-            track("Exporting to \(newUrl)")
-            archive = d64
+        do {
+            try parent.mydocument.export(drive: driveID!, to: url)
+            myAppDelegate.noteNewRecentlyExportedDiskURL(url, drive: driveID!)
+            drive?.setModifiedDisk(false)
+            self.hideSheet()
             
-        case 1:
-            newUrl.appendPathExtension("t64")
-            track("Exporting to \(newUrl)")
-            archive = T64FileProxy.make(withAnyArchive: d64!)
-            collection = T64FileProxy.make(withFileSystem: volume!)
-            
-        case 2:
-            newUrl.appendPathExtension("prg")
-            track("Exporting to \(newUrl)")
-            if d64!.numberOfItems() > 1 {
-                myDocument.showDiskHasMultipleFilesAlert(format: "PRG")
-            }
-            archive = PRGFileProxy.make(withAnyArchive: d64!)
-            collection = PRGFileProxy.make(withFileSystem: volume!)
-
-        case 3:
-            newUrl.appendPathExtension("p00")
-            track("Exporting to \(newUrl)")
-            if d64!.numberOfItems() > 1 {
-                myDocument.showDiskHasMultipleFilesAlert(format: "P00")
-            }
-            archive = P00FileProxy.make(withAnyArchive: d64!)
-            collection = P00FileProxy.make(withFileSystem: volume!)
-            
-        case 4:
-            newUrl.appendPathExtension("g64")
-            track("Exporting to \(newUrl)")
-            archive = G64FileProxy.make(withDisk: disk)
-
-        default:
-            fatalError()
+        } catch {
+            parent.mydocument.showExportErrorAlert(url: url)
         }
-            
-        // Serialize archive (DEPRECATED)
-        if archive != nil {
-            let data = NSMutableData.init(length: archive!.sizeOnDisk())!
-            archive!.write(toBuffer: data.mutableBytes)
-            
-            // Write to file
-            if !data.write(to: newUrl, atomically: true) {
-                myDocument.showExportErrorAlert(url: newUrl)
-                return
-            }
-        }
-        // Serialize collection
-        if collection != nil {
-            let data = NSMutableData.init(length: collection!.sizeOnDisk())!
-            collection!.write(toBuffer: data.mutableBytes)
-            
-            // Write to file
-            let url2 = newUrl.appendingPathExtension("2")
-            if !data.write(to: url2, atomically: true) {
-                myDocument.showExportErrorAlert(url: newUrl)
-                return
-            }
-        }
-        
-        // Mark disk as "not modified"
-        c64.drive(driveID!)
-        c64.drive(driveID!)?.setModifiedDisk(false)
-        
-        // Remember export URL
-        myAppDelegate.noteNewRecentlyExportedDiskURL(url, drive: driveID!)
-
-        return
     }
 
     func exportToDirectory() {
@@ -617,7 +549,6 @@ class ExportDialog: DialogController {
                 }
             }
         })
-
     }
     
     func exportToDirectory(url: URL) {
