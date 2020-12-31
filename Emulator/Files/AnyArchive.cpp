@@ -12,6 +12,8 @@
 #include "PRGFile.h"
 #include "P00File.h"
 #include "G64File.h"
+#include "AnyArchive.h"
+
 
 /*
 AnyArchive *

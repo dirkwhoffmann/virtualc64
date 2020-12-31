@@ -46,28 +46,13 @@ public:
     static G64File *makeWithFile(const char *path);
     static G64File *makeWithDisk(Disk *disk);
     
-    
     //
     // Methods from AnyC64File
     //
     
     FileType type() override { return FILETYPE_G64; }
     bool hasSameType(const char *path) override { return G64File::isG64File(path); }
-    
-    
-    //
-    // Methods from AnyArchive (this API is not supported by the G64 format)
-    //
-    
-    /*
-    int numberOfItems() override { assert(false); return 0; };
-    size_t getSizeOfItem() override { assert(false); return 0; }
-    const char *getNameOfItem() override { assert(false); return ""; }
-    const char *getTypeOfItem() override { assert(false); return ""; }
-    u16 getDestinationAddrOfItem() override { assert(false); return 0; }
-    void selectItem(unsigned n) override { assert(false); }
-    */
-    
+        
     //
     // Methods from AnyDisk
     //

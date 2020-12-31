@@ -52,9 +52,6 @@ public:
     // Creates a file system from a GCR encoded disk
     static FSDevice *makeWithDisk(class Disk *disk, FSError *error);
 
-    // Creates a file from an object implementing the Archive interface DEPRECATED
-    static FSDevice *makeWithArchive(AnyArchive *otherArchive, FSError *error);
-
     // Creates a file from an object implementing the AnyCollection interface
     static FSDevice *makeWithCollection(AnyCollection *collection, FSError *error);
 

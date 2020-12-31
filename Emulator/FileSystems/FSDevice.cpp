@@ -84,40 +84,6 @@ FSDevice::makeWithDisk(class Disk *disk, FSError *err)
     return device;
 }
 
-// DEPRECATED
-FSDevice *
-FSDevice::makeWithArchive(AnyArchive *archive, FSError *error)
-{
-    assert(archive);
-    
-    // Get device descriptor
-    FSDeviceDescriptor descriptor = FSDeviceDescriptor(DISK_SS_SD);
-        
-    // Create the device
-    FSDevice *device = makeWithFormat(descriptor);
-        
-    // Write BAM
-    PETName<16> name = PETName<16>("VOLUME");
-    device->blockPtr(18,0)->writeBAM(name);
-
-    // Loop over all entries in archive
-    int numberOfItems = archive->numberOfItems();
-    for (int i = 0; i < numberOfItems; i++) {
-        
-        u8 *buf; size_t cnt;
-
-        archive->selectItem(i);
-        archive->getItem(&buf, &cnt);
-
-        device->makeFile(archive->getPETNameOfItem(), buf, cnt);
-        delete[](buf);
-    }
-    
-    device->printDirectory();
-        
-    return device;
-}
-
 FSDevice *
 FSDevice::makeWithCollection(AnyCollection *collection, FSError *err)
 {

@@ -10,11 +10,8 @@
 #ifndef _ANY_DISK_H
 #define _ANY_DISK_H
 
-#include "AnyArchive.h"
+#include "AnyCollection.h"
 
-/* This class adds an API to AnyArchive for handling file formats that
- * represent a physical floppy disk.
- */
 class AnyDisk : public AnyCollection {
     
 protected:
