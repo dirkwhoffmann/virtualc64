@@ -18,10 +18,16 @@ FSDevice::makeWithFormat(FSDeviceDescriptor &layout)
 }
 
 FSDevice *
-FSDevice::makeWithType(DiskType type)
+FSDevice::makeWithType(DiskType type, FSVolumeType vType)
 {
     FSDeviceDescriptor layout = FSDeviceDescriptor(type);
-    return makeWithFormat(layout);
+    FSDevice *fileSystem = makeWithFormat(layout);
+    
+    if (vType != FS_NODOS) {
+        fileSystem->blockPtr(18,0)->writeBAM();
+    }
+    
+    return fileSystem;
 }
 
 FSDevice *

@@ -196,7 +196,7 @@ struct GeneralDefaults {
     
     static let std = GeneralDefaults.init(
         
-        driveBlankDiskFormat: FS_COMMODORE,
+        driveBlankDiskFormat: .FS_COMMODORE,
         driveEjectUnasked: false,
         driveSounds: true,
         driveSoundPan: 1.0,

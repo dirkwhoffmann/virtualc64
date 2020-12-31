@@ -91,7 +91,7 @@ extension PreferencesController {
     @IBAction func emuBlankDiskFormatAction(_ sender: NSPopUpButton!) {
         
         let tag = sender.selectedTag()
-        pref.driveBlankDiskFormat = FileSystemType(rawValue: tag)
+        pref.driveBlankDiskFormatIntValue = tag
         refresh()
     }
     

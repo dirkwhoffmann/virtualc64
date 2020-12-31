@@ -25,10 +25,10 @@ class Preferences {
     //
     
     // Floppy
-     var driveBlankDiskFormat = GeneralDefaults.std.driveBlankDiskFormat
-     var driveBlankDiskFormatIntValue: Int {
-         get { return Int(driveBlankDiskFormat.rawValue) }
-         set { driveBlankDiskFormat = FileSystemType.init(newValue) }
+    var driveBlankDiskFormat = GeneralDefaults.std.driveBlankDiskFormat
+    var driveBlankDiskFormatIntValue: Int {
+        get { return Int(driveBlankDiskFormat.rawValue) }
+        set { driveBlankDiskFormat = FileSystemType.init(rawValue: newValue) ?? .FS_NONE }
      }
      var driveEjectUnasked = GeneralDefaults.std.driveEjectUnasked
      var driveSounds = GeneralDefaults.std.driveSounds
