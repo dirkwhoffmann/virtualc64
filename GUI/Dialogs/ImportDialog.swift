@@ -36,8 +36,6 @@ class ImportDialog: DialogController {
     var screenshots: [Screenshot] = []
     
     // Custom font
-    let cbmfont = NSFont.init(name: "C64ProMono", size: 10)
-    let cbmfontsmall = NSFont.init(name: "C64ProMono", size: 8)
     var monofont: NSFont {
         if #available(OSX 10.15, *) {
             return NSFont.monospacedSystemFont(ofSize: 13.0, weight: .semibold)

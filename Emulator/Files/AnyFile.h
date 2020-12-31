@@ -33,13 +33,7 @@ protected:
     // The raw data of this file
     u8 *data = nullptr;
     
-    // File pointer (an offset into the data array)
-    long fp = -1;
-    
-    // End of file position (equals the last valid offset plus 1)
-    long eof = -1;
-    
- 
+
     //
     // Initializing
     //

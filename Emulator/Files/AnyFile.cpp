@@ -41,27 +41,7 @@ AnyFile::dealloc()
     delete[] data;
     data = NULL;
     size = 0;
-    fp = -1;
-    eof = -1;
 }
-
-/*
-bool
-AnyC64File::checkBufferHeader(const u8 *buffer, size_t length, const u8 *header)
-{
-    assert(buffer != NULL);
-    assert(header != NULL);
-    
-    unsigned i;
-    
-    for (i = 0; i < length && header[i] != 0; i++) {
-        if (header[i] != buffer[i])
-            return false;
-    }
- 
-    return header[i] == 0;
-}
-*/
 
 void
 AnyFile::setPath(const char *str)
@@ -104,8 +84,8 @@ AnyFile::readFromBuffer(const u8 *buffer, size_t length)
     
     memcpy(data, buffer, length);
     size = length;
-    eof = length;
-    fp = 0;
+    // eof = length;
+    // fp = 0;
     return true;
 }
 

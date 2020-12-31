@@ -76,10 +76,6 @@ extension MemTableView: NSTableViewDelegate {
             cell?.textColor = .gray
         } else {
             cell?.textColor = NSColor.textColor
-        }
-        
-        if tableColumn?.identifier.rawValue == "ascii" {
-            // cell?.font = cbmfont
-        }
+        }        
     }
 }
