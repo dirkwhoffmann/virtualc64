@@ -83,26 +83,6 @@ inline const char *CBMFileTypeString(CBMFileType type)
     }
 }
 
-enum_long(FileSystemType)
-{
-    FS_NONE,
-    FS_COMMODORE
-};
-
-inline bool isFileSystemType(long value)
-{
-    return value >= FS_NONE && value <= FS_COMMODORE;
-}
-
-inline const char *sFileSystemType(FileSystemType value)
-{
-    switch (value) {
-        case FS_NONE:       return "No DOS";
-        case FS_COMMODORE:  return "Commdore CBM DOS";
-        default:            return "???";
-    }
-}
-
 
 //
 // Constants

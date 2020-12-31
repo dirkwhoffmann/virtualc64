@@ -12,18 +12,18 @@
 
 #include "Aliases.h"
 
-enum_long(FSVolumeType)
+enum_long(FSType)
 {
     FS_NODOS = 0,
     FS_CBM_DOS = 1
 };
 
-inline bool isFSVolumeType(long value)
+inline bool isFSType(long value)
 {
     return value >= FS_NODOS && value <= FS_CBM_DOS;
 }
 
-inline const char *sFSVolumeType(FSVolumeType value)
+inline const char *sFSType(FSType value)
 {
     switch (value) {
         case FS_NODOS:    return "No DOS";

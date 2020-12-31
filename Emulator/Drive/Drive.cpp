@@ -419,9 +419,9 @@ Drive::insertDisk(Disk *otherDisk)
 }
 
 void
-Drive::insertNewDisk(FileSystemType fstype)
+Drive::insertNewDisk(FSType fsType)
 {
-    Disk *newDisk = Disk::make(c64, fstype);
+    Disk *newDisk = Disk::make(c64, fsType);
     insertDisk(newDisk);
 }
 

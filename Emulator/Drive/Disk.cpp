@@ -102,20 +102,20 @@ Disk::isValidHalftrackSectorPair(Halftrack ht, Sector s)
 }
 
 Disk *
-Disk::make(C64 &ref, FileSystemType type)
+Disk::make(C64 &ref, FSType type)
 {
-    assert(isFileSystemType(type));
+    assert(isFSType(type));
     
     switch (type) {
             
-        case FS_NONE:
+        case FS_NODOS:
         {
-            printf("FS_NONE");
+            printf("FS_NODOS");
             return new Disk(ref);
         }
-        case FS_COMMODORE:
+        case FS_CBM_DOS:
         {
-            printf("FS_COMMODORE");
+            printf("FS_CBM_DOS");
             AnyArchive *emptyArchive = new AnyArchive();
             Disk *disk = makeWithArchive(ref, emptyArchive);
             delete emptyArchive;

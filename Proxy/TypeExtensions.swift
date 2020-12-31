@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-extension FSVolumeType {
+extension FSType {
 
     var description: String {
         

@@ -586,7 +586,7 @@ struct AnyC64FileWrapper;
 - (BOOL) hasDisk;
 - (BOOL) hasModifiedDisk;
 - (void) setModifiedDisk:(BOOL)b;
-- (void) insertNewDisk:(FileSystemType)fstype;
+- (void) insertNewDisk:(FSType)fstype;
 - (void) insertD64:(D64FileProxy *)disk;
 - (void) insertFileSystem:(FSDeviceProxy *)proxy;
 - (void) insertDisk:(AnyArchiveProxy *)disk;
@@ -950,7 +950,7 @@ struct AnyC64FileWrapper;
 + (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy;
 
 @property (readonly) struct FSDeviceWrapper *wrapper;
-@property (readonly) FSVolumeType dos;
+@property (readonly) FSType dos;
 @property (readonly) NSInteger numCyls;
 @property (readonly) NSInteger numHeads;
 @property (readonly) NSInteger numTracks;

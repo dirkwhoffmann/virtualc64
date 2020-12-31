@@ -990,7 +990,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return [self make:volume];
 }
 
-- (FSVolumeType) dos
+- (FSType) dos
 {
     return wrapper->device->dos();
 }
@@ -1286,9 +1286,9 @@ struct AnyC64FileWrapper { AnyFile *file; };
     wrapper->drive->insertDisk(archive);
 }
 
-- (void) insertNewDisk:(FileSystemType)fstype
+- (void) insertNewDisk:(FSType)fsType
 {
-    wrapper->drive->insertNewDisk(fstype);
+    wrapper->drive->insertNewDisk(fsType);
 }
 
 - (void) ejectDisk

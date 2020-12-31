@@ -18,7 +18,7 @@ FSDevice::makeWithFormat(FSDeviceDescriptor &layout)
 }
 
 FSDevice *
-FSDevice::makeWithType(DiskType type, FSVolumeType vType)
+FSDevice::makeWithType(DiskType type, FSType vType)
 {
     FSDeviceDescriptor layout = FSDeviceDescriptor(type);
     FSDevice *fileSystem = makeWithFormat(layout);
