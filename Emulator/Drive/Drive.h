@@ -344,10 +344,11 @@ public:
      */
     void insertDisk(Disk *otherDisk);
     void insertNewDisk(FSType fstype);
+    void insertNewDisk(FSType fstype, PETName<16> name);
     void insertFileSystem(class FSDevice *device);
     void insertD64(D64File *d64);
     void insertG64(G64File *g64);
-    void insertDisk(AnyArchive *archive);
+    void insertDisk(AnyCollection *archive);
     void ejectDisk();
 
 

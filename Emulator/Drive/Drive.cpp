@@ -418,10 +418,18 @@ Drive::insertDisk(Disk *otherDisk)
     resume();
 }
 
+
 void
 Drive::insertNewDisk(FSType fsType)
 {
-    Disk *newDisk = Disk::make(c64, fsType);
+    PETName<16> name = PETName<16>("NEW DISK");
+    insertNewDisk(fsType, name);
+}
+
+void
+Drive::insertNewDisk(FSType fsType, PETName<16> name)
+{
+    Disk *newDisk = Disk::make(c64, fsType, name);
     insertDisk(newDisk);
 }
 
@@ -447,10 +455,10 @@ Drive::insertG64(G64File *g64)
 }
 
 void
-Drive::insertDisk(AnyArchive *archive)
+Drive::insertDisk(AnyCollection *collection)
 {
-    debug(DSKCHG_DEBUG, "insertDisk(archive %p)\n", archive);
-    insertDisk(Disk::makeWithArchive(c64, archive));
+    debug(DSKCHG_DEBUG, "insertDisk(collection %p)\n", collection);
+    insertDisk(Disk::makeWithCollection(c64, collection));
 }
 
 void 

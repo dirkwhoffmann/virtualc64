@@ -1280,10 +1280,10 @@ struct AnyC64FileWrapper { AnyFile *file; };
     wrapper->drive->insertFileSystem(device);
 }
 
-- (void) insertDisk:(AnyArchiveProxy *)disk
+- (void) insertCollection:(AnyCollectionProxy *)disk
 {
-    AnyArchive *archive = (AnyArchive *)([disk wrapper]->file);
-    wrapper->drive->insertDisk(archive);
+    AnyCollection *collection = (AnyCollection *)([disk wrapper]->file);
+    wrapper->drive->insertDisk(collection);
 }
 
 - (void) insertNewDisk:(FSType)fsType

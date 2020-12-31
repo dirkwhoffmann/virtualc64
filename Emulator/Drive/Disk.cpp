@@ -101,8 +101,16 @@ Disk::isValidHalftrackSectorPair(Halftrack ht, Sector s)
     return s < numberOfSectorsInHalftrack(ht);
 }
 
+/*
 Disk *
 Disk::make(C64 &ref, FSType type)
+{
+    return make(ref, type, PETName<16>("NEW DISK"));
+}
+*/
+
+Disk *
+Disk::make(C64 &ref, FSType type, PETName<16> name)
 {
     assert(isFSType(type));
     
@@ -116,9 +124,10 @@ Disk::make(C64 &ref, FSType type)
         case FS_CBM_DOS:
         {
             printf("FS_CBM_DOS");
-            AnyArchive *emptyArchive = new AnyArchive();
-            Disk *disk = makeWithArchive(ref, emptyArchive);
-            delete emptyArchive;
+            FSDevice *fs = FSDevice::makeWithType(DISK_SS_SD, FS_CBM_DOS);
+            fs->setName(name);
+            Disk *disk = makeWithFileSystem(ref, fs);
+            delete fs;
             return disk;
         }
         default:
@@ -159,38 +168,17 @@ Disk::makeWithG64(C64 &ref, G64File *g64)
 }
 
 Disk *
-Disk::makeWithArchive(C64 &ref, AnyArchive *archive)
+Disk::makeWithCollection(C64 &ref, AnyCollection *collection)
 {
-    assert(archive);
+    assert(collection);
         
-    Disk *disk = new Disk(ref);
+    FSError err;
+    FSDevice *fs = FSDevice::makeWithCollection(collection, &err);
+    if (fs == nullptr) return nullptr;
     
-    switch (archive->type()) {
-            
-        case FILETYPE_D64:
-            
-            msg("Use makeWithG64() instead\n");
-            assert(false);
-            return nullptr;
+    Disk *disk = makeWithFileSystem(ref, fs);
+    delete fs;
     
-        case FILETYPE_G64:
-
-            msg("Use makeWithG64() instead\n");
-            assert(false);
-            return nullptr;
-
-        default: break;
-    }
-    
-    /* Archive formats other than D64 or G64 cannot be encoded directly. They
-     * are processed in two stages. First a D64 archive is created, which is
-     * then encoded as a disk.
-     */
-    D64File *converted = D64File::makeWithAnyArchive(archive);
-    
-    disk->clearDisk();
-    disk->encodeD64(converted);
-    delete converted;
     return disk;
 }
 

@@ -589,7 +589,7 @@ struct AnyC64FileWrapper;
 - (void) insertNewDisk:(FSType)fstype;
 - (void) insertD64:(D64FileProxy *)disk;
 - (void) insertFileSystem:(FSDeviceProxy *)proxy;
-- (void) insertDisk:(AnyArchiveProxy *)disk;
+- (void) insertCollection:(AnyCollectionProxy *)disk;
 - (void) ejectDisk;
 - (BOOL) writeProtected;
 - (void) setWriteProtection:(BOOL)b;

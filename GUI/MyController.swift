@@ -768,37 +768,6 @@ extension MyController {
 
     // Keyboard events are handled by the emulator window.
     // If they are handled here, some keys such as 'TAB' don't trigger an event.
-    
-    //
-    // Mounting media files
-    //
-    
-    @discardableResult
-    func mount(_ item: AnyFileProxy?) -> Bool {
-
-        guard let type = item?.type() else { return false }
-        
-        switch type {
-            
-        case FileType.FILETYPE_CRT:
-            c64.expansionport.attachCartridgeAndReset(item as? CRTFileProxy)
-            return true
-            
-        case FileType.FILETYPE_TAP:
-            return c64.datasette.insertTape(item as? TAPFileProxy)
-            
-        case FileType.FILETYPE_T64, FileType.FILETYPE_D64,
-             FileType.FILETYPE_PRG, FileType.FILETYPE_P00,
-             FileType.FILETYPE_G64:
-            
-            c64.drive8.insertDisk(item as? AnyArchiveProxy)
-            return true
-                        
-        default:
-            track("Unknown attachment type \(type).")
-            fatalError()
-        }
-    }
         
     //
     // Misc
