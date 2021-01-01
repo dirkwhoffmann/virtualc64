@@ -30,7 +30,7 @@
 // Enumerations
 //
 
-typedef enum : long
+enum_long(ConfigOption)
 {
     // VICII
     OPT_VIC_REVISION,
@@ -88,15 +88,14 @@ typedef enum : long
     
     // Debugging
     OPT_DEBUGCART
-}
-ConfigOption;
+};
 
 inline bool isConfigOption(long value)
 {
-    return value >= OPT_VIC_REVISION && value <= OPT_DEBUGCART;
+    return (unsigned long)value <= OPT_DEBUGCART;
 }
 
-typedef enum : long
+enum_long(C64Model)
 {
     C64_PAL,
     C64_II_PAL,
@@ -105,29 +104,26 @@ typedef enum : long
     C64_II_NTSC,
     C64_OLD_NTSC,
     C64_CUSTOM
-}
-C64Model;
+};
 
-typedef enum : long
+enum_long(RomType)
 {
     ROM_BASIC,
     ROM_CHAR,
     ROM_KERNAL,
     ROM_VC1541
-}
-RomType;
+};
 
 inline bool isC64Model(long value) {
     return value >= C64_PAL && value <= C64_OLD_NTSC;
 }
 
-typedef enum : long
+enum_long(EmulatorState)
 {
     STATE_OFF,
     STATE_PAUSED,
     STATE_RUNNING
-}
-EmulatorState;
+};
 
 inline bool isEmulatorState(long value) {
     return value >= STATE_OFF && value <= STATE_RUNNING;
@@ -145,7 +141,7 @@ typedef enum
 }
 RunLoopControlFlag;
 
-typedef enum : long
+enum_long(InspectionTarget)
 {
     INSPECT_NONE,
     INSPECT_CPU,
@@ -153,8 +149,7 @@ typedef enum : long
     INSPECT_CIA,
     INSPECT_VIC,
     INSPECT_SID
-}
-InspectionTarget;
+};
 
 inline bool isInspectionTarget(long value) {
     return value >= INSPECT_NONE && value <= INSPECT_SID;

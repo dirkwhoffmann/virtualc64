@@ -434,11 +434,11 @@ extension Inspector: NSTabViewDelegate {
             
             switch id {
                 
-            case "CPU":     parent.c64.setInspectionTarget(INSPECT_CPU)
-            case "Memory":  parent.c64.setInspectionTarget(INSPECT_MEM)
-            case "CIA":     parent.c64.setInspectionTarget(INSPECT_CIA)
-            case "VICII":   parent.c64.setInspectionTarget(INSPECT_VIC)
-            case "SID":     parent.c64.setInspectionTarget(INSPECT_SID)
+            case "CPU":     parent.c64.setInspectionTarget(.INSPECT_CPU)
+            case "Memory":  parent.c64.setInspectionTarget(.INSPECT_MEM)
+            case "CIA":     parent.c64.setInspectionTarget(.INSPECT_CIA)
+            case "VICII":   parent.c64.setInspectionTarget(.INSPECT_VIC)
+            case "SID":     parent.c64.setInspectionTarget(.INSPECT_SID)
             default:        break
             }
             

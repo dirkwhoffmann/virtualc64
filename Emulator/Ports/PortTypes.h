@@ -14,13 +14,12 @@
 // Enumerations
 //
 
-typedef enum : long
+enum_long(ControlPortDevice)
 {
     CPD_NONE,
     CPD_MOUSE,
     CPD_JOYSTICK
-}
-ControlPortDevice;
+};
 
 inline bool isControlPortDevice(long value) {
     return value >= 0 && value <= CPD_JOYSTICK;

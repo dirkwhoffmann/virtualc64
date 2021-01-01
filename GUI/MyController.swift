@@ -390,7 +390,7 @@ extension MyController {
 
         // Evaluate command line arguments
         if CommandLine.arguments.contains("-debugcart") {
-            c64.configure(OPT_DEBUGCART, enable: true)
+            c64.configure(.OPT_DEBUGCART, enable: true)
         }
         
         // Check if the C64 is ready to power on

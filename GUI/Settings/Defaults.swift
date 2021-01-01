@@ -1057,7 +1057,7 @@ struct VideoDefaults {
     // TFT monitor appearance
     static let tft = VideoDefaults.init(
         
-        palette: COLOR_PALETTE,
+        palette: .COLOR_PALETTE,
         brightness: 50.0,
         contrast: 100.0,
         saturation: 50.0,
@@ -1092,7 +1092,7 @@ struct VideoDefaults {
     // CRT monitor appearance
     static let crt = VideoDefaults.init(
         
-        palette: COLOR_PALETTE,
+        palette: .COLOR_PALETTE,
         brightness: 50.0,
         contrast: 100.0,
         saturation: 50.0,

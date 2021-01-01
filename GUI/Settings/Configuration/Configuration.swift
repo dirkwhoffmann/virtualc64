@@ -28,143 +28,143 @@ class Configuration {
     //
     
     var vicRevision: Int {
-        get { return c64.getConfig(OPT_VIC_REVISION) }
-        set { c64.configure(OPT_VIC_REVISION, value: newValue) }
+        get { return c64.getConfig(.OPT_VIC_REVISION) }
+        set { c64.configure(.OPT_VIC_REVISION, value: newValue) }
     }
     
     var vicGrayDotBug: Bool {
-        get { return c64.getConfig(OPT_GRAY_DOT_BUG) != 0 }
-        set { c64.configure(OPT_GRAY_DOT_BUG, enable: newValue) }
+        get { return c64.getConfig(.OPT_GRAY_DOT_BUG) != 0 }
+        set { c64.configure(.OPT_GRAY_DOT_BUG, enable: newValue) }
     }
 
     var vicHideSprites: Bool {
-        get { return c64.getConfig(OPT_HIDE_SPRITES) != 0 }
-        set { c64.configure(OPT_HIDE_SPRITES, enable: newValue) }
+        get { return c64.getConfig(.OPT_HIDE_SPRITES) != 0 }
+        set { c64.configure(.OPT_HIDE_SPRITES, enable: newValue) }
     }
     
     var dmaDebug: Bool {
-        get { return c64.getConfig(OPT_DMA_DEBUG) != 0 }
-        set { c64.configure(OPT_DMA_DEBUG, enable: newValue) }
+        get { return c64.getConfig(.OPT_DMA_DEBUG) != 0 }
+        set { c64.configure(.OPT_DMA_DEBUG, enable: newValue) }
     }
 
     var dmaChannelR: Bool {
-        get { return c64.getConfig(OPT_DMA_CHANNEL_R) != 0 }
-        set { c64.configure(OPT_DMA_CHANNEL_R, enable: newValue) }
+        get { return c64.getConfig(.OPT_DMA_CHANNEL_R) != 0 }
+        set { c64.configure(.OPT_DMA_CHANNEL_R, enable: newValue) }
     }
 
     var dmaChannelI: Bool {
-        get { return c64.getConfig(OPT_DMA_CHANNEL_I) != 0 }
-        set { c64.configure(OPT_DMA_CHANNEL_I, enable: newValue) }
+        get { return c64.getConfig(.OPT_DMA_CHANNEL_I) != 0 }
+        set { c64.configure(.OPT_DMA_CHANNEL_I, enable: newValue) }
     }
 
     var dmaChannelC: Bool {
-        get { return c64.getConfig(OPT_DMA_CHANNEL_C) != 0 }
-        set { c64.configure(OPT_DMA_CHANNEL_C, enable: newValue) }
+        get { return c64.getConfig(.OPT_DMA_CHANNEL_C) != 0 }
+        set { c64.configure(.OPT_DMA_CHANNEL_C, enable: newValue) }
     }
 
     var dmaChannelG: Bool {
-        get { return c64.getConfig(OPT_DMA_CHANNEL_G) != 0 }
-        set { c64.configure(OPT_DMA_CHANNEL_G, enable: newValue) }
+        get { return c64.getConfig(.OPT_DMA_CHANNEL_G) != 0 }
+        set { c64.configure(.OPT_DMA_CHANNEL_G, enable: newValue) }
     }
 
     var dmaChannelP: Bool {
-        get { return c64.getConfig(OPT_DMA_CHANNEL_P) != 0 }
-        set { c64.configure(OPT_DMA_CHANNEL_P, enable: newValue) }
+        get { return c64.getConfig(.OPT_DMA_CHANNEL_P) != 0 }
+        set { c64.configure(.OPT_DMA_CHANNEL_P, enable: newValue) }
     }
 
     var dmaChannelS: Bool {
-        get { return c64.getConfig(OPT_DMA_CHANNEL_S) != 0 }
-        set { c64.configure(OPT_DMA_CHANNEL_S, enable: newValue) }
+        get { return c64.getConfig(.OPT_DMA_CHANNEL_S) != 0 }
+        set { c64.configure(.OPT_DMA_CHANNEL_S, enable: newValue) }
     }
 
     var dmaColorR: NSColor {
-        get { return NSColor.init(abgr: UInt32(c64.getConfig(OPT_DMA_COLOR_R))) }
-        set { c64.configure(OPT_DMA_COLOR_R, value: newValue.gpuColor) }
+        get { return NSColor.init(abgr: UInt32(c64.getConfig(.OPT_DMA_COLOR_R))) }
+        set { c64.configure(.OPT_DMA_COLOR_R, value: newValue.gpuColor) }
     }
 
     var dmaColorI: NSColor {
-        get { return NSColor.init(abgr: UInt32(c64.getConfig(OPT_DMA_COLOR_I))) }
-        set { c64.configure(OPT_DMA_COLOR_I, value: newValue.gpuColor) }
+        get { return NSColor.init(abgr: UInt32(c64.getConfig(.OPT_DMA_COLOR_I))) }
+        set { c64.configure(.OPT_DMA_COLOR_I, value: newValue.gpuColor) }
     }
 
     var dmaColorC: NSColor {
-        get { return NSColor.init(abgr: UInt32(c64.getConfig(OPT_DMA_COLOR_C))) }
-        set { c64.configure(OPT_DMA_COLOR_C, value: newValue.gpuColor) }
+        get { return NSColor.init(abgr: UInt32(c64.getConfig(.OPT_DMA_COLOR_C))) }
+        set { c64.configure(.OPT_DMA_COLOR_C, value: newValue.gpuColor) }
     }
     
     var dmaColorG: NSColor {
-        get { return NSColor.init(abgr: UInt32(c64.getConfig(OPT_DMA_COLOR_G))) }
-        set { c64.configure(OPT_DMA_COLOR_G, value: newValue.gpuColor) }
+        get { return NSColor.init(abgr: UInt32(c64.getConfig(.OPT_DMA_COLOR_G))) }
+        set { c64.configure(.OPT_DMA_COLOR_G, value: newValue.gpuColor) }
     }
 
     var dmaColorP: NSColor {
-        get { return NSColor.init(abgr: UInt32(c64.getConfig(OPT_DMA_COLOR_P))) }
-        set { c64.configure(OPT_DMA_COLOR_P, value: newValue.gpuColor) }
+        get { return NSColor.init(abgr: UInt32(c64.getConfig(.OPT_DMA_COLOR_P))) }
+        set { c64.configure(.OPT_DMA_COLOR_P, value: newValue.gpuColor) }
     }
 
     var dmaColorS: NSColor {
-        get { return NSColor.init(abgr: UInt32(c64.getConfig(OPT_DMA_COLOR_S))) }
-        set { c64.configure(OPT_DMA_COLOR_S, value: newValue.gpuColor) }
+        get { return NSColor.init(abgr: UInt32(c64.getConfig(.OPT_DMA_COLOR_S))) }
+        set { c64.configure(.OPT_DMA_COLOR_S, value: newValue.gpuColor) }
     }
     
     var dmaDisplayMode: Int {
-        get { return c64.getConfig(OPT_DMA_DISPLAY_MODE) }
-        set { c64.configure(OPT_DMA_DISPLAY_MODE, value: newValue) }
+        get { return c64.getConfig(.OPT_DMA_DISPLAY_MODE) }
+        set { c64.configure(.OPT_DMA_DISPLAY_MODE, value: newValue) }
     }
 
     var dmaOpacity: Int {
-        get { return c64.getConfig(OPT_DMA_OPACITY) }
-        set { c64.configure(OPT_DMA_OPACITY, value: newValue) }
+        get { return c64.getConfig(.OPT_DMA_OPACITY) }
+        set { c64.configure(.OPT_DMA_OPACITY, value: newValue) }
     }
 
     var vicCutLayers: Int {
-        get { return c64.getConfig(OPT_CUT_LAYERS) }
-        set { c64.configure(OPT_CUT_LAYERS, value: newValue) }
+        get { return c64.getConfig(.OPT_CUT_LAYERS) }
+        set { c64.configure(.OPT_CUT_LAYERS, value: newValue) }
     }
 
     var vicCutOpacity: Int {
-        get { return c64.getConfig(OPT_CUT_OPACITY) }
-        set { c64.configure(OPT_CUT_OPACITY, value: newValue) }
+        get { return c64.getConfig(.OPT_CUT_OPACITY) }
+        set { c64.configure(.OPT_CUT_OPACITY, value: newValue) }
     }
 
     var vicSSCollisions: Bool {
-        get { return c64.getConfig(OPT_SS_COLLISIONS) != 0 }
-        set { c64.configure(OPT_SS_COLLISIONS, enable: newValue) }
+        get { return c64.getConfig(.OPT_SS_COLLISIONS) != 0 }
+        set { c64.configure(.OPT_SS_COLLISIONS, enable: newValue) }
     }
 
     var vicSBCollisions: Bool {
-        get { return c64.getConfig(OPT_SB_COLLISIONS) != 0 }
-        set { c64.configure(OPT_SB_COLLISIONS, enable: newValue) }
+        get { return c64.getConfig(.OPT_SB_COLLISIONS) != 0 }
+        set { c64.configure(.OPT_SB_COLLISIONS, enable: newValue) }
     }
 
     var ciaRevision: Int {
-        get { return c64.getConfig(OPT_CIA_REVISION) }
-        set { c64.configure(OPT_CIA_REVISION, value: newValue) }
+        get { return c64.getConfig(.OPT_CIA_REVISION) }
+        set { c64.configure(.OPT_CIA_REVISION, value: newValue) }
     }
 
     var ciaTimerBBug: Bool {
-        get { return c64.getConfig(OPT_TIMER_B_BUG) != 0}
-        set { c64.configure(OPT_TIMER_B_BUG, enable: newValue) }
+        get { return c64.getConfig(.OPT_TIMER_B_BUG) != 0}
+        set { c64.configure(.OPT_TIMER_B_BUG, enable: newValue) }
     }
 
     var sidRevision: Int {
-        get { return c64.getConfig(OPT_SID_REVISION) }
-        set { c64.configure(OPT_SID_REVISION, value: newValue) }
+        get { return c64.getConfig(.OPT_SID_REVISION) }
+        set { c64.configure(.OPT_SID_REVISION, value: newValue) }
     }
     
     var sidFilter: Bool {
-        get { return c64.getConfig(OPT_SID_FILTER) != 0 }
-        set { c64.configure(OPT_SID_FILTER, enable: newValue) }
+        get { return c64.getConfig(.OPT_SID_FILTER) != 0 }
+        set { c64.configure(.OPT_SID_FILTER, enable: newValue) }
     }
  
     var glueLogic: Int {
-        get { return c64.getConfig(OPT_GLUE_LOGIC) }
-        set { c64.configure(OPT_GLUE_LOGIC, value: newValue) }
+        get { return c64.getConfig(.OPT_GLUE_LOGIC) }
+        set { c64.configure(.OPT_GLUE_LOGIC, value: newValue) }
     }
     
     var ramPattern: Int {
-        get { return c64.getConfig(OPT_RAM_PATTERN) }
-        set { c64.configure(OPT_RAM_PATTERN, value: newValue) }
+        get { return c64.getConfig(.OPT_RAM_PATTERN) }
+        set { c64.configure(.OPT_RAM_PATTERN, value: newValue) }
     }
 
     //
@@ -172,33 +172,33 @@ class Configuration {
     //
     
     var drive8Type: Int {
-        get { return c64.getConfig(OPT_DRIVE_TYPE, drive: .DRIVE8) }
-        set { c64.configure(OPT_DRIVE_TYPE, drive: .DRIVE8, value: newValue )}
+        get { return c64.getConfig(.OPT_DRIVE_TYPE, drive: .DRIVE8) }
+        set { c64.configure(.OPT_DRIVE_TYPE, drive: .DRIVE8, value: newValue )}
     }
     
     var drive9Type: Int {
-        get { return c64.getConfig(OPT_DRIVE_TYPE, drive: .DRIVE9) }
-        set { c64.configure(OPT_DRIVE_TYPE, drive: .DRIVE9, value: newValue )}
+        get { return c64.getConfig(.OPT_DRIVE_TYPE, drive: .DRIVE9) }
+        set { c64.configure(.OPT_DRIVE_TYPE, drive: .DRIVE9, value: newValue )}
     }
     
     var drive8Connected: Bool {
-        get { return c64.getConfig(OPT_DRIVE_CONNECT, drive: .DRIVE8) != 0 }
-        set { c64.configure(OPT_DRIVE_CONNECT, drive: .DRIVE8, enable: newValue )}
+        get { return c64.getConfig(.OPT_DRIVE_CONNECT, drive: .DRIVE8) != 0 }
+        set { c64.configure(.OPT_DRIVE_CONNECT, drive: .DRIVE8, enable: newValue )}
     }
         
     var drive9Connected: Bool {
-        get { return c64.getConfig(OPT_DRIVE_CONNECT, drive: .DRIVE9) != 0 }
-        set { c64.configure(OPT_DRIVE_CONNECT, drive: .DRIVE9, enable: newValue )}
+        get { return c64.getConfig(.OPT_DRIVE_CONNECT, drive: .DRIVE9) != 0 }
+        set { c64.configure(.OPT_DRIVE_CONNECT, drive: .DRIVE9, enable: newValue )}
     }
 
     var drive8PowerSwitch: Bool {
-        get { return c64.getConfig(OPT_DRIVE_POWER_SWITCH, drive: .DRIVE8) != 0 }
-        set { c64.configure(OPT_DRIVE_POWER_SWITCH, drive: .DRIVE8, enable: newValue )}
+        get { return c64.getConfig(.OPT_DRIVE_POWER_SWITCH, drive: .DRIVE8) != 0 }
+        set { c64.configure(.OPT_DRIVE_POWER_SWITCH, drive: .DRIVE8, enable: newValue )}
     }
 
     var drive9PowerSwitch: Bool {
-        get { return c64.getConfig(OPT_DRIVE_POWER_SWITCH, drive: .DRIVE9) != 0 }
-        set { c64.configure(OPT_DRIVE_POWER_SWITCH, drive: .DRIVE9, enable: newValue )}
+        get { return c64.getConfig(.OPT_DRIVE_POWER_SWITCH, drive: .DRIVE9) != 0 }
+        set { c64.configure(.OPT_DRIVE_POWER_SWITCH, drive: .DRIVE9, enable: newValue )}
     }
 
     var gameDevice1 = -1 {
@@ -239,76 +239,76 @@ class Configuration {
     //
 
     var sidEnable1: Bool {
-        get { return c64.getConfig(OPT_SID_ENABLE, id: 1) != 0 }
-        set { c64.configure(OPT_SID_ENABLE, id: 1, enable: newValue) }
+        get { return c64.getConfig(.OPT_SID_ENABLE, id: 1) != 0 }
+        set { c64.configure(.OPT_SID_ENABLE, id: 1, enable: newValue) }
     }
     var sidEnable2: Bool {
-        get { return c64.getConfig(OPT_SID_ENABLE, id: 2) != 0 }
-        set { c64.configure(OPT_SID_ENABLE, id: 2, enable: newValue) }
+        get { return c64.getConfig(.OPT_SID_ENABLE, id: 2) != 0 }
+        set { c64.configure(.OPT_SID_ENABLE, id: 2, enable: newValue) }
     }
     var sidEnable3: Bool {
-        get { return c64.getConfig(OPT_SID_ENABLE, id: 3) != 0 }
-        set { c64.configure(OPT_SID_ENABLE, id: 3, enable: newValue) }
+        get { return c64.getConfig(.OPT_SID_ENABLE, id: 3) != 0 }
+        set { c64.configure(.OPT_SID_ENABLE, id: 3, enable: newValue) }
     }
     var sidAddress1: Int {
-        get { return c64.getConfig(OPT_SID_ADDRESS, id: 1) }
-        set { c64.configure(OPT_SID_ADDRESS, id: 1, value: newValue) }
+        get { return c64.getConfig(.OPT_SID_ADDRESS, id: 1) }
+        set { c64.configure(.OPT_SID_ADDRESS, id: 1, value: newValue) }
     }
     var sidAddress2: Int {
-        get { return c64.getConfig(OPT_SID_ADDRESS, id: 2) }
-        set { c64.configure(OPT_SID_ADDRESS, id: 2, value: newValue) }
+        get { return c64.getConfig(.OPT_SID_ADDRESS, id: 2) }
+        set { c64.configure(.OPT_SID_ADDRESS, id: 2, value: newValue) }
     }
     var sidAddress3: Int {
-        get { return c64.getConfig(OPT_SID_ADDRESS, id: 3) }
-        set { c64.configure(OPT_SID_ADDRESS, id: 3, value: newValue) }
+        get { return c64.getConfig(.OPT_SID_ADDRESS, id: 3) }
+        set { c64.configure(.OPT_SID_ADDRESS, id: 3, value: newValue) }
     }
     var sidEngine: Int {
-        get { return c64.getConfig(OPT_SID_ENGINE) }
-        set { c64.configure(OPT_SID_ENGINE, value: newValue) }
+        get { return c64.getConfig(.OPT_SID_ENGINE) }
+        set { c64.configure(.OPT_SID_ENGINE, value: newValue) }
     }
     var sidSampling: Int {
-        get { return c64.getConfig(OPT_SID_SAMPLING) }
-        set { c64.configure(OPT_SID_SAMPLING, value: newValue) }
+        get { return c64.getConfig(.OPT_SID_SAMPLING) }
+        set { c64.configure(.OPT_SID_SAMPLING, value: newValue) }
     }
     var vol0: Int {
-        get { return c64.getConfig(OPT_AUDVOL, id: 0) }
-        set { c64.configure(OPT_AUDVOL, id: 0, value: newValue) }
+        get { return c64.getConfig(.OPT_AUDVOL, id: 0) }
+        set { c64.configure(.OPT_AUDVOL, id: 0, value: newValue) }
     }
     var vol1: Int {
-        get { return c64.getConfig(OPT_AUDVOL, id: 1) }
-        set { c64.configure(OPT_AUDVOL, id: 1, value: newValue) }
+        get { return c64.getConfig(.OPT_AUDVOL, id: 1) }
+        set { c64.configure(.OPT_AUDVOL, id: 1, value: newValue) }
     }
     var vol2: Int {
-        get { return c64.getConfig(OPT_AUDVOL, id: 2) }
-        set { c64.configure(OPT_AUDVOL, id: 2, value: newValue) }
+        get { return c64.getConfig(.OPT_AUDVOL, id: 2) }
+        set { c64.configure(.OPT_AUDVOL, id: 2, value: newValue) }
     }
     var vol3: Int {
-        get { return c64.getConfig(OPT_AUDVOL, id: 3) }
-        set { c64.configure(OPT_AUDVOL, id: 3, value: newValue) }
+        get { return c64.getConfig(.OPT_AUDVOL, id: 3) }
+        set { c64.configure(.OPT_AUDVOL, id: 3, value: newValue) }
     }
     var pan0: Int {
-        get { return c64.getConfig(OPT_AUDPAN, id: 0) }
-        set { c64.configure(OPT_AUDPAN, id: 0, value: newValue) }
+        get { return c64.getConfig(.OPT_AUDPAN, id: 0) }
+        set { c64.configure(.OPT_AUDPAN, id: 0, value: newValue) }
     }
     var pan1: Int {
-        get { return c64.getConfig(OPT_AUDPAN, id: 1) }
-        set { c64.configure(OPT_AUDPAN, id: 1, value: newValue) }
+        get { return c64.getConfig(.OPT_AUDPAN, id: 1) }
+        set { c64.configure(.OPT_AUDPAN, id: 1, value: newValue) }
     }
     var pan2: Int {
-        get { return c64.getConfig(OPT_AUDPAN, id: 2) }
-        set { c64.configure(OPT_AUDPAN, id: 2, value: newValue) }
+        get { return c64.getConfig(.OPT_AUDPAN, id: 2) }
+        set { c64.configure(.OPT_AUDPAN, id: 2, value: newValue) }
     }
     var pan3: Int {
-        get { return c64.getConfig(OPT_AUDPAN, id: 3) }
-        set { c64.configure(OPT_AUDPAN, id: 3, value: newValue) }
+        get { return c64.getConfig(.OPT_AUDPAN, id: 3) }
+        set { c64.configure(.OPT_AUDPAN, id: 3, value: newValue) }
     }
     var volL: Int {
-        get { return c64.getConfig(OPT_AUDVOLL) }
-        set { c64.configure(OPT_AUDVOLL, value: newValue) }
+        get { return c64.getConfig(.OPT_AUDVOLL) }
+        set { c64.configure(.OPT_AUDVOLL, value: newValue) }
     }
     var volR: Int {
-        get { return c64.getConfig(OPT_AUDVOLR) }
-        set { c64.configure(OPT_AUDVOLR, value: newValue) }
+        get { return c64.getConfig(.OPT_AUDVOLR) }
+        set { c64.configure(.OPT_AUDVOLR, value: newValue) }
     }
     
     //
@@ -316,8 +316,8 @@ class Configuration {
     //
     
     var palette: Int {
-        get { return c64.getConfig(OPT_PALETTE) }
-        set { c64.configure(OPT_PALETTE, value: newValue) }
+        get { return c64.getConfig(.OPT_PALETTE) }
+        set { c64.configure(.OPT_PALETTE, value: newValue) }
     }
     var brightness: Double {
         get { return c64.vic.brightness() }

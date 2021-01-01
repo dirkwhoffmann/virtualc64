@@ -41,17 +41,17 @@ class GamePadManager {
                                         IOOptionBits(kIOHIDOptionsTypeNone))
         
         // Add default devices
-        gamePads[0] = GamePad(manager: self, type: CPD_MOUSE)
+        gamePads[0] = GamePad(manager: self, type: .CPD_MOUSE)
         gamePads[0]!.name = "Mouse"
         gamePads[0]!.setIcon(name: "devMouseTemplate")
         gamePads[0]!.keyMap = 0
 
-        gamePads[1] = GamePad(manager: self, type: CPD_JOYSTICK)
+        gamePads[1] = GamePad(manager: self, type: .CPD_JOYSTICK)
         gamePads[1]!.name = "Joystick Keyset 1"
         gamePads[1]!.setIcon(name: "devKeyset1Template")
         gamePads[1]!.keyMap = 1
         
-        gamePads[2] = GamePad(manager: self, type: CPD_JOYSTICK)
+        gamePads[2] = GamePad(manager: self, type: .CPD_JOYSTICK)
         gamePads[2]!.name = "Joystick Keyset 2"
         gamePads[2]!.setIcon(name: "devKeyset2Template")
         gamePads[2]!.keyMap = 2
@@ -247,7 +247,7 @@ class GamePadManager {
         // Create a GamePad object
         gamePads[slot] = GamePad(manager: self,
                                  device: device,
-                                 type: CPD_JOYSTICK,
+                                 type: .CPD_JOYSTICK,
                                  vendorID: vendorID,
                                  productID: productID,
                                  locationID: locationID)
