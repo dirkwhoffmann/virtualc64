@@ -63,32 +63,6 @@ CRTFile::CRTFile()
     memset(chips, 0, sizeof(chips));
 }
 
-CRTFile *
-CRTFile::makeWithBuffer(const u8 *buffer, size_t length)
-{
-    CRTFile *cartridge = new CRTFile();
-    
-    if (!cartridge->oldReadFromBuffer(buffer, length)) {
-        delete cartridge;
-        return NULL;
-    }
-    
-    return cartridge;
-}
-
-CRTFile *
-CRTFile::makeWithFile(const char *filename)
-{
-    CRTFile *cartridge = new CRTFile();
-    
-    if (!cartridge->oldReadFromFile(filename)) {
-        delete cartridge;
-        return NULL;
-    }
-    
-    return cartridge;
-}
-
 void
 CRTFile::dealloc()
 {

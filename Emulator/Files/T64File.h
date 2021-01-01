@@ -37,8 +37,6 @@ public:
     // Creating
     //
     
-    [[deprecated]] static T64File *makeWithBuffer(const u8 *buffer, size_t length);
-    [[deprecated]] static T64File *makeWithFile(const char *path);
     static T64File *makeWithFileSystem(class FSDevice *fs);
 
     

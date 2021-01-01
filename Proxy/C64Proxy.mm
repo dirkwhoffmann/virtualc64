@@ -1800,14 +1800,12 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithFile:(NSString *)path
 {
-    // T64File *archive = T64File::makeWithFile([path UTF8String]);
     T64File *archive = T64File::make <T64File> ([path UTF8String]);
     return [self make: archive];
 }
 
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    // T64File *archive = T64File::makeWithBuffer((const u8 *)buffer, length);
     T64File *archive = T64File::make <T64File> ((const u8 *)buffer, length);
     return [self make: archive];
 }

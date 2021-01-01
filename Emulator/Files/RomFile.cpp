@@ -463,32 +463,6 @@ RomFile::isVC1541RomFile(const char *filename)
     return false;
 }
 
-RomFile *
-RomFile::makeWithBuffer(const u8 *buffer, size_t length)
-{
-    RomFile *rom = new RomFile();
-    
-    if (!rom->oldReadFromBuffer(buffer, length)) {
-        delete rom;
-        return NULL;
-    }
-    
-    return rom;
-}
-
-RomFile *
-RomFile::makeWithFile(const char *filename)
-{
-    RomFile *rom = new RomFile();
-    
-    if (!rom->oldReadFromFile(filename)) {
-        delete rom;
-        return NULL;
-    }
-    
-    return rom;
-}
-
 FileType
 RomFile::type()
 {

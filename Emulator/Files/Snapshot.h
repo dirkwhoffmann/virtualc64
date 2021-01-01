@@ -78,8 +78,6 @@ public:
     
 public:
     
-    [[deprecated]] static Snapshot *makeWithFile(const char *filename);
-    [[deprecated]] static Snapshot *makeWithBuffer(const u8 *buffer, size_t size);
     static Snapshot *makeWithC64(class C64 *c64);
 
     

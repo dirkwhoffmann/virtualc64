@@ -93,32 +93,6 @@ Snapshot::Snapshot(size_t capacity)
 }
 
 Snapshot *
-Snapshot::makeWithBuffer(const u8 *buffer, size_t length)
-{
-    Snapshot *snapshot;
-    
-    snapshot = new Snapshot();
-    if (!snapshot->oldReadFromBuffer(buffer, length)) {
-        delete snapshot;
-        return NULL;
-    }
-    return snapshot;
-}
-
-Snapshot *
-Snapshot::makeWithFile(const char *filename)
-{
-    Snapshot *snapshot;
-    
-    snapshot = new Snapshot();
-    if (!snapshot->oldReadFromFile(filename)) {
-        delete snapshot;
-        return NULL;
-    }
-    return snapshot;
-}
-
-Snapshot *
 Snapshot::makeWithC64(C64 *c64)
 {
     Snapshot *snapshot;

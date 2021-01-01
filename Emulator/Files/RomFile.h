@@ -70,10 +70,6 @@ public:
     
     RomFile() { };
     const char *getDescription() override { return "RomFile"; }
-
-    // Factory methods
-    [[deprecated]] static RomFile *makeWithBuffer(const u8 *buffer, size_t length);
-    [[deprecated]] static RomFile *makeWithFile(const char *filename);
     
     
     //

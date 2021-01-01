@@ -49,32 +49,6 @@ T64File::isT64File(const char *path)
 }
 
 T64File *
-T64File::makeWithBuffer(const u8 *buffer, size_t length)
-{
-    T64File *archive = new T64File();
-    
-    if (!archive->oldReadFromBuffer(buffer, length)) {
-        delete archive;
-        return NULL;
-    }
-    
-    return archive;
-}
-
-T64File *
-T64File::makeWithFile(const char *path)
-{
-    T64File *archive = new T64File();
-    
-    if (!archive->oldReadFromFile(path)) {
-        delete archive;
-        return NULL;
-    }
-    
-    return archive;
-}
-
-T64File *
 T64File::makeWithFileSystem(class FSDevice *fs)
 {
     assert(fs);

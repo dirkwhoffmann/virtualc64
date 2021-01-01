@@ -62,15 +62,7 @@ public:
     
     // Returns the cartridge type in plain text
     static const char *cartridgeTypeName(CartridgeType type);
-
     
-    //
-    // Constructing
-    //
-    
-    [[deprecated]] static CRTFile *makeWithBuffer(const u8 *buffer, size_t length);
-    [[deprecated]] static CRTFile *makeWithFile(const char *filename);
-
     
     //
     // Initializing
