@@ -97,25 +97,29 @@ inline bool isConfigOption(long value)
 
 enum_long(C64Model)
 {
-    C64_PAL,
-    C64_II_PAL,
-    C64_OLD_PAL,
-    C64_NTSC,
-    C64_II_NTSC,
-    C64_OLD_NTSC,
-    C64_CUSTOM
-};
-
-enum_long(RomType)
-{
-    ROM_BASIC,
-    ROM_CHAR,
-    ROM_KERNAL,
-    ROM_VC1541
+    C64Model_PAL,
+    C64Model_PAL_II,
+    C64Model_PAL_OLD,
+    C64Model_NTSC,
+    C64Model_NTSC_II,
+    C64Model_NTSC_OLD,
+    C64Model_CUSTOM
 };
 
 inline bool isC64Model(long value) {
-    return value >= C64_PAL && value <= C64_OLD_NTSC;
+    return (unsigned long)value <= C64Model_CUSTOM;
+}
+
+enum_long(RomType)
+{
+    ROMType_BASIC,
+    ROMType_CHAR,
+    ROMType_KERNAL,
+    ROMType_VC1541
+};
+
+inline bool isRomType(long value) {
+    return (unsigned long)value <= ROMType_VC1541;
 }
 
 enum_long(EmulatorState)

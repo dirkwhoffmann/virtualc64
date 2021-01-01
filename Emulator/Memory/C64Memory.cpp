@@ -185,9 +185,9 @@ C64Memory::_dump()
 {
 	msg("C64 Memory:\n");
 	msg("-----------\n");
-    msg("    Basic ROM: %s loaded\n", c64.hasRom(ROM_BASIC)  ? "" : " not");
-	msg("Character ROM: %s loaded\n", c64.hasRom(ROM_CHAR)   ? "" : " not");
-    msg("   Kernal ROM: %s loaded\n", c64.hasRom(ROM_KERNAL) ? "" : " not");
+    msg("    Basic ROM: %s loaded\n", c64.hasRom(ROMType_BASIC)  ? "" : " not");
+	msg("Character ROM: %s loaded\n", c64.hasRom(ROMType_CHAR)   ? "" : " not");
+    msg("   Kernal ROM: %s loaded\n", c64.hasRom(ROMType_KERNAL) ? "" : " not");
 	msg("\n");
 }
 
@@ -587,7 +587,7 @@ C64Memory::pokeIO(u16 addr, u8 value)
 u16
 C64Memory::nmiVector() {
     
-    if (peekSrc[0xF] != M_KERNAL || c64.hasRom(ROM_KERNAL)) {
+    if (peekSrc[0xF] != M_KERNAL || c64.hasRom(ROMType_KERNAL)) {
         return LO_HI(peek(0xFFFA), peek(0xFFFB));
     } else {
         return 0xFE43;
@@ -597,7 +597,7 @@ C64Memory::nmiVector() {
 u16
 C64Memory::irqVector() {
     
-    if (peekSrc[0xF] != M_KERNAL || c64.hasRom(ROM_KERNAL)) {
+    if (peekSrc[0xF] != M_KERNAL || c64.hasRom(ROMType_KERNAL)) {
         return LO_HI(peek(0xFFFE), peek(0xFFFF));
     } else {
         return 0xFF48;
@@ -607,7 +607,7 @@ C64Memory::irqVector() {
 u16
 C64Memory::resetVector() {
     
-    if (peekSrc[0xF] != M_KERNAL || c64.hasRom(ROM_KERNAL)) {
+    if (peekSrc[0xF] != M_KERNAL || c64.hasRom(ROMType_KERNAL)) {
         return LO_HI(peek(0xFFFC), peek(0xFFFD));
     } else {
         return 0xFCE2;

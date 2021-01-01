@@ -30,7 +30,7 @@ DriveMemory::_dump()
 {
 	msg("VC1541 Memory:\n");
 	msg("--------------\n\n");
-    msg("VC1541 ROM :%s loaded\n", c64.hasRom(ROM_VC1541) ? "" : " not");
+    msg("VC1541 ROM :%s loaded\n", c64.hasRom(ROMType_VC1541) ? "" : " not");
 	msg("\n");
 }
 
