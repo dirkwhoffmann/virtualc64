@@ -29,7 +29,7 @@ public:
     u8 data[256];
     
     // Error code (imported from D64 files)
-    u8 error;
+    u8 error = 0;
     
     
     //
@@ -52,7 +52,10 @@ public:
     // Returns the type of this block
     FSBlockType type();
     
+    // Returns the track / sector link stored in the fist two bytes
+    TSLink tsLink() { return TSLink { data[0], data[1] }; }
 
+    
     //
     // Formatting
     //

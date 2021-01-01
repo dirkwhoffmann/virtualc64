@@ -50,12 +50,12 @@ typedef i64 Cycle;
 // Floppy drives and disks
 //
 
-typedef unsigned Cylinder;
-typedef unsigned Head;
-typedef unsigned Track;
-typedef unsigned Halftrack;
-typedef unsigned Sector;
-typedef unsigned Block;
+typedef u32 Cylinder;
+typedef u32 Head;
+typedef u32 Track;
+typedef u32 Halftrack;
+typedef u32 Sector;
+typedef u32 Block;
 
 
 //

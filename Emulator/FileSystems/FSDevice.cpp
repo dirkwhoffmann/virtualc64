@@ -24,7 +24,7 @@ FSDevice::makeWithType(DiskType type, DOSType vType)
     FSDevice *fileSystem = makeWithFormat(layout);
     
     if (vType != DOSType_NODOS) {
-        fileSystem->blockPtr(18,0)->writeBAM();
+        fileSystem->bamPtr()->writeBAM();
     }
     
     return fileSystem;
@@ -95,7 +95,7 @@ FSDevice::makeWithCollection(AnyCollection *collection, FSError *err)
     
     // Write BAM
     auto name = PETName<16>(collection->collectionName());
-    device->blockPtr(18,0)->writeBAM(name);
+    device->bamPtr()->writeBAM(name);
 
     // Loop over all items
     u32 numberOfItems = (u32)collection->collectionCount();
@@ -126,7 +126,7 @@ FSDevice::makeWithFolder(const char *path, FSError *error)
     
     // Write BAM
     auto name = PETName<16>(path);
-    device->blockPtr(18,0)->writeBAM(name);
+    device->bamPtr()->writeBAM(name);
     
     // Import the folder
     if (!device->importDirectory(path)) {
@@ -212,27 +212,33 @@ FSDevice::numUsedBlocks()
 }
 
 FSBlockType
-FSDevice::blockType(u32 nr)
+FSDevice::blockType(Block b)
 {
-    return blockPtr(nr) ? blocks[nr]->type() : FSBlockType_UNKNOWN;
+    return blockPtr(b) ? blocks[b]->type() : FSBlockType_UNKNOWN;
 }
 
 FSUsage
-FSDevice::itemType(u32 nr, u32 pos)
+FSDevice::usage(Block b, u32 pos)
 {
-    return blockPtr(nr) ? blocks[nr]->itemType(pos) : FSUsage_UNUSED;
+    return blockPtr(b) ? blocks[b]->itemType(pos) : FSUsage_UNUSED;
+}
+
+u8
+FSDevice::getErrorCode(Block b)
+{
+    return blockPtr(b) ? blocks[b]->error : 0;
+}
+
+void
+FSDevice::setErrorCode(Block b, u8 code)
+{
+    if (blockPtr(b)) blocks[b]->error = code;
 }
 
 FSBlock *
 FSDevice::blockPtr(Block b)
 {
     return (u64)b < (u64)blocks.size() ? blocks[b] : nullptr;
-}
-
-FSBlock *
-FSDevice::blockPtr(TSLink ts)
-{
-    return blockPtr(layout.blockNr(ts));
 }
 
 FSBlock *
@@ -247,7 +253,7 @@ FSDevice::nextBlockPtr(Block b)
     FSBlock *ptr = blockPtr(b);
     
     // Jump to linked block
-    if (ptr) { ptr = blockPtr(ptr->data[0], ptr->data[1]); }
+    if (ptr) { ptr = blockPtr(ptr->tsLink()); }
     
     return ptr;
 }
@@ -266,7 +272,7 @@ FSDevice::nextBlockPtr(Track t, Sector s)
 FSBlock *
 FSDevice::nextBlockPtr(FSBlock *ptr)
 {
-    return ptr ? blockPtr(ptr->data[0], ptr->data[1]) : nullptr;
+    return ptr ? blockPtr(ptr->tsLink()) : nullptr;
 }
 
 PETName<16>
@@ -303,6 +309,7 @@ FSDevice::isFree(BlockRef ref)
 }
 */
 
+/*
 bool
 FSDevice::isFree(Track t, Sector s)
 {
@@ -311,6 +318,7 @@ FSDevice::isFree(Track t, Sector s)
     
     return GET_BIT(bam->data[byte], bit);
 }
+*/
 
 TSLink
 FSDevice::nextFreeBlock(TSLink ref)
@@ -330,14 +338,20 @@ FSDevice::setAllocationBit(Block b, bool value)
     Track t; Sector s;
     layout.translateBlockNr(b, &t, &s);
 
-    setAllocationBit(t, s, value);
+    setAllocationBit(TSLink { t, s }, value);
 }
 
 void
 FSDevice::setAllocationBit(Track t, Sector s, bool value)
 {
+    setAllocationBit(TSLink { t, s }, value);
+}
+    
+void
+FSDevice::setAllocationBit(TSLink ts, bool value)
+{
     u32 byte, bit;
-    FSBlock *bam = locateAllocationBit(t, s, &byte, &bit);
+    FSBlock *bam = locateAllocationBit(ts, &byte, &bit);
 
     if (value && !GET_BIT(bam->data[byte], bit)) {
 
@@ -359,29 +373,29 @@ FSDevice::setAllocationBit(Track t, Sector s, bool value)
 }
 
 std::vector<TSLink>
-FSDevice::allocate(TSLink ref, u32 n)
+FSDevice::allocate(TSLink ts, u32 n)
 {
     assert(n > 0);
     
     std::vector<TSLink> result;
     FSBlock *block = nullptr;
 
-    // Get to the next free block
-    ref = nextFreeBlock(ref);
+    // Get the next free block
+    ts = nextFreeBlock(ts);
 
-    if (ref.t) {
+    if (ts.t) {
         
         for (u32 i = 0; i < n; i++) {
             
             // Collect block reference
-            result.push_back(ref);
-            markAsAllocated(ref.t, ref.s);
+            result.push_back(ts);
+            markAsAllocated(ts);
             
             // Link this block
-            block = blockPtr(ref.t, ref.s);
-            layout.nextTrackAndSector(ref.t, ref.s, &ref.t, &ref.s);
-            block->data[0] = ref.t;
-            block->data[1] = ref.s;
+            block = blockPtr(ts);
+            ts = layout.nextBlockRef(ts);
+            block->data[0] = ts.t;
+            block->data[1] = ts.s;
         }
         
         // Delete the block reference in the last block
@@ -400,13 +414,13 @@ FSDevice::locateAllocationBit(Block b, u32 *byte, u32 *bit)
     Track t; Sector s;
     layout.translateBlockNr(b, &t, &s);
     
-    return locateAllocationBit(t, s, byte, bit);
+    return locateAllocationBit(TSLink{t,s}, byte, bit);
 }
 
 FSBlock *
-FSDevice::locateAllocationBit(TSLink ref, u32 *byte, u32 *bit)
+FSDevice::locateAllocationBit(TSLink ts, u32 *byte, u32 *bit)
 {
-    assert(layout.isValidRef(ref));
+    assert(layout.isValidRef(ts));
         
     /* Bytes $04 - $8F store the BAM entries for each track, in groups of four
      * bytes per track, starting on track 1. [...] The first byte is the number
@@ -416,8 +430,8 @@ FSDevice::locateAllocationBit(TSLink ref, u32 *byte, u32 *bit)
      * are a few unused bits.
      */
         
-    *byte = (4 * ref.t) + 1 + (ref.s >> 3);
-    *bit = ref.s & 0x07;
+    *byte = (4 * ts.t) + 1 + (ts.s >> 3);
+    *bit = ts.s & 0x07;
     
     return bamPtr();
 }

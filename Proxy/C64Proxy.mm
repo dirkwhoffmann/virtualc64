@@ -1073,7 +1073,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 - (FSUsage) itemType:(NSInteger)blockNr pos:(NSInteger)pos
 {
-    return wrapper->device->itemType((u32)blockNr, (u32)pos);
+    return wrapper->device->usage((u32)blockNr, (u32)pos);
 }
 
 - (FSErrorReport) check:(BOOL)strict

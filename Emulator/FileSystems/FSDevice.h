@@ -118,20 +118,29 @@ public:
 public:
     
     // Returns the type of a certain block
-    FSBlockType blockType(u32 nr);
+    FSBlockType blockType(Block b);
+    FSBlockType blockType(TSLink ts) { return blockType(layout.blockNr(ts)); }
     
-    // Returns the usage type of a certain byte in a certain block
-    FSUsage itemType(u32 nr, u32 pos);
-    
+    // Informs about the usage of a certain byte in a certain block
+    FSUsage usage(Block b, u32 pos);
+    FSUsage usage(TSLink ts, u32 pos) { return usage(layout.blockNr(ts), pos); }
+
+    // Gets or sets the error code for a certain block
+    u8 getErrorCode(Block b);
+    u8 getErrorCode(TSLink ts) { return getErrorCode(layout.blockNr(ts)); }
+    void setErrorCode(Block b, u8 code);
+    void getErrorCode(TSLink ts, u8 code) { setErrorCode(layout.blockNr(ts), code); }
+
     // Queries a pointer from the block storage (may return nullptr)
     FSBlock *blockPtr(Block b);
-    FSBlock *blockPtr(TSLink ref);
-    FSBlock *blockPtr(Track t, Sector s);
+    FSBlock *blockPtr(TSLink ts) { return blockPtr(layout.blockNr(ts)); }
+    [[deprecated]] FSBlock *blockPtr(Track t, Sector s);
     FSBlock *bamPtr() { return blocks[357]; }
 
     // Follows the block chain link of a specific block
     FSBlock *nextBlockPtr(Block b);
-    FSBlock *nextBlockPtr(Track t, Sector s);
+    FSBlock *nextBlockPtr(TSLink ts) { return nextBlockPtr(layout.blockNr(ts)); }
+    [[deprecated]] FSBlock *nextBlockPtr(Track t, Sector s);
     FSBlock *nextBlockPtr(FSBlock *ptr);
 
     
@@ -145,8 +154,8 @@ public:
     
     // Checks if a block is marked as free in the allocation bitmap
     bool isFree(Block b);
-    bool isFree(Track t, Sector s);
-    bool isFree(TSLink ts) { return isFree(ts.t, ts.s); }
+    // bool isFree(Track t, Sector s);
+    bool isFree(TSLink ts) { return isFree(layout.blockNr(ts)); }
 
     // Returns the first or the next free block in the interleaving chain
     TSLink nextFreeBlock(TSLink start);
@@ -154,31 +163,31 @@ public:
 
     // Marks a block as allocated or free
     void markAsAllocated(Block b) { setAllocationBit(b, 0); }
-    void markAsAllocated(Track t, Sector s) { setAllocationBit(t, s, 0); }
-    void markAsAllocated(TSLink ts) { markAsAllocated(ts.t, ts.s); }
+    void markAsAllocated(TSLink ts) { setAllocationBit(ts, 0); }
+    [[deprecated]] void markAsAllocated(Track t, Sector s) { setAllocationBit(t, s, 0); }
     
     void markAsFree(Block b) { setAllocationBit(b, 1); }
-    void markAsFree(Track t, Sector s) { setAllocationBit(t, s, 1); }
-    void markAsFree(TSLink ts) { markAsFree(ts.t, ts.s); }
+    void markAsFree(TSLink ts) { setAllocationBit(ts, 1); }
+    [[deprecated]] void markAsFree(Track t, Sector s) { setAllocationBit(t, s, 1); }
 
     void setAllocationBit(Block b, bool value);
-    void setAllocationBit(Track t, Sector s, bool value);
-    void setAllocationBit(TSLink ts) { setAllocationBit(ts.t, ts.s); }
+    [[deprecated]] void setAllocationBit(Track t, Sector s, bool value);
+    void setAllocationBit(TSLink ts, bool value);
 
     // Allocates a certain amount of (interleaved) blocks
     std::vector<TSLink> allocate(TSLink ref, u32 n);
-    std::vector<TSLink> allocate(u32 n) { return allocate( {1,0}, n); }
+    std::vector<TSLink> allocate(u32 n) { return allocate( TSLink{1,0}, n); }
 
 private:
     
     // Locates the allocation bit for a certain block
     FSBlock *locateAllocationBit(Block b, u32 *byte, u32 *bit);
-    FSBlock *locateAllocationBit(Track t, Sector s, u32 *byte, u32 *bit);
+    [[deprecated]] FSBlock *locateAllocationBit(Track t, Sector s, u32 *byte, u32 *bit);
     FSBlock *locateAllocationBit(TSLink ref, u32 *byte, u32 *bit);
 
     
     //
-    // Reading
+    // Reading files
     //
     
 public:
@@ -212,7 +221,7 @@ public:
 
     
     //
-    // Writing
+    // Writing files
     //
 
     // Returns the next free directory entry
