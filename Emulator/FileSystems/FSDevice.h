@@ -134,13 +134,11 @@ public:
     // Queries a pointer from the block storage (may return nullptr)
     FSBlock *blockPtr(Block b);
     FSBlock *blockPtr(TSLink ts) { return blockPtr(layout.blockNr(ts)); }
-    [[deprecated]] FSBlock *blockPtr(Track t, Sector s);
     FSBlock *bamPtr() { return blocks[357]; }
-
+    
     // Follows the block chain link of a specific block
     FSBlock *nextBlockPtr(Block b);
     FSBlock *nextBlockPtr(TSLink ts) { return nextBlockPtr(layout.blockNr(ts)); }
-    [[deprecated]] FSBlock *nextBlockPtr(Track t, Sector s);
     FSBlock *nextBlockPtr(FSBlock *ptr);
 
     
@@ -153,26 +151,22 @@ public:
     void setName(PETName<16> name);
     
     // Checks if a block is marked as free in the allocation bitmap
-    bool isFree(Block b);
-    // bool isFree(Track t, Sector s);
-    bool isFree(TSLink ts) { return isFree(layout.blockNr(ts)); }
+    bool isFree(Block b) { return isFree(layout.tsLink(b)); }
+    bool isFree(TSLink ts);
 
     // Returns the first or the next free block in the interleaving chain
     TSLink nextFreeBlock(TSLink start);
     TSLink firstFreeBlock() { return nextFreeBlock({1,0}); }
 
     // Marks a block as allocated or free
-    void markAsAllocated(Block b) { setAllocationBit(b, 0); }
-    void markAsAllocated(TSLink ts) { setAllocationBit(ts, 0); }
-    [[deprecated]] void markAsAllocated(Track t, Sector s) { setAllocationBit(t, s, 0); }
+    void markAsAllocated(Block b) { setAllocBit(b, 0); }
+    void markAsAllocated(TSLink ts) { setAllocBit(ts, 0); }
     
-    void markAsFree(Block b) { setAllocationBit(b, 1); }
-    void markAsFree(TSLink ts) { setAllocationBit(ts, 1); }
-    [[deprecated]] void markAsFree(Track t, Sector s) { setAllocationBit(t, s, 1); }
+    void markAsFree(Block b) { setAllocBit(b, 1); }
+    void markAsFree(TSLink ts) { setAllocBit(ts, 1); }
 
-    void setAllocationBit(Block b, bool value);
-    [[deprecated]] void setAllocationBit(Track t, Sector s, bool value);
-    void setAllocationBit(TSLink ts, bool value);
+    void setAllocBit(Block b, bool value) { setAllocBit(layout.tsLink(b), value); }
+    void setAllocBit(TSLink ts, bool value);
 
     // Allocates a certain amount of (interleaved) blocks
     std::vector<TSLink> allocate(TSLink ref, u32 n);
@@ -181,9 +175,8 @@ public:
 private:
     
     // Locates the allocation bit for a certain block
-    FSBlock *locateAllocationBit(Block b, u32 *byte, u32 *bit);
-    [[deprecated]] FSBlock *locateAllocationBit(Track t, Sector s, u32 *byte, u32 *bit);
-    FSBlock *locateAllocationBit(TSLink ref, u32 *byte, u32 *bit);
+    FSBlock *locateAllocBit(Block b, u32 *byte, u32 *bit);
+    FSBlock *locateAllocBit(TSLink ref, u32 *byte, u32 *bit);
 
     
     //

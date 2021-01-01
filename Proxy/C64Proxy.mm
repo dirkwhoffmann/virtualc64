@@ -1041,14 +1041,19 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return (NSInteger)wrapper->device->layout.trackNr((Cylinder)c, (Head)h);
 }
 
+- (TSLink)tsLink:(NSInteger)b
+{
+    return wrapper->device->layout.tsLink((Block)b);
+}
+
 - (NSInteger)trackNr:(NSInteger)b
 {
-    return (NSInteger)wrapper->device->layout.trackNr((Block)b);
+    return (NSInteger)[self tsLink:b].t;
 }
 
 - (NSInteger)sectorNr:(NSInteger)b
 {
-    return (NSInteger)wrapper->device->layout.sectorNr((Block)b);
+    return (NSInteger)[self tsLink:b].s;
 }
 
 - (NSInteger)blockNr:(NSInteger)c head:(NSInteger)h sector:(NSInteger)s

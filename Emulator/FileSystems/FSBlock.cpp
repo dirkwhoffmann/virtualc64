@@ -17,11 +17,10 @@ FSBlock::FSBlock(FSDevice& _device, u32 _nr) : device(_device), nr(_nr)
 FSBlockType
 FSBlock::type()
 {
-    Track t; Sector s;
-    device.layout.translateBlockNr(nr, &t, &s);
-    
-    if (t == 18) {
-        return s == 0 ? FSBlockType_BAM : FSBlockType_DIR;
+    TSLink ts = device.layout.tsLink(nr);
+  
+    if (ts.t == 18) {
+        return ts.s == 0 ? FSBlockType_BAM : FSBlockType_DIR;
     } else {
         return FSBlockType_DATA;
     }
@@ -38,7 +37,7 @@ void
 FSBlock::writeBAM(PETName<16> &name)
 {
     // Don't call this methods on blocks other than the BAM block
-    assert(this == device.blockPtr(18, 0));
+    assert(this == device.bamPtr());
         
     // Location of the first directory sector
     data[0x00] = 18;

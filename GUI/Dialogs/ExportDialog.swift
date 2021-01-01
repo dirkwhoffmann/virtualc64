@@ -105,7 +105,7 @@ class ExportDialog: DialogController {
         if let v = volume, newValue != headNr {
                         
             let value = newValue.clamped(0, numSides - 1)
-
+            
             headNr   = value
             trackNr  = v.trackNr(blockNr)
             sectorNr = sectorNr.clamped(0, numSectors - 1)

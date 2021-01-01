@@ -29,20 +29,23 @@ struct FSDirEntry
     void init(PETName<16> name, TSLink ref, size_t numBlocks);
     void init(const char *name, TSLink ref, size_t numBlocks);
 
-    // Checks if this directory entry if empty
+    // Checks whether this entry if empty
     bool isEmpty(); 
-    
-    // Returns the file type as a string
-    const char *typeString(); 
     
     // Returns the name of this file
     PETName<16> getName() { return PETName<16>(fileName); }
-    
+        
     // Returns the file type of this file
     FSFileType getFileType();
     
+    // Returns the file type as a string
+    const char *typeString();
+
     // Returns true if this file does not appear in a regular directory listing
     bool isHidden();
+    
+    // Returns the link to the first data block
+    TSLink firstBlock() { return TSLink{firstDataTrack,firstDataSector}; }
 };
 
 #endif

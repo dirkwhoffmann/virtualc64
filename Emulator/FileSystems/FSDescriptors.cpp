@@ -124,96 +124,42 @@ FSDeviceDescriptor::trackNr(Cylinder c, Head h)
     return c + h * numTracks();
 }
 
-Track
-FSDeviceDescriptor::trackNr(Block b)
-{
-    Track t; Sector s;
-    translateBlockNr(b, &t, &s);
-    return t;
-}
-
-Sector
-FSDeviceDescriptor::sectorNr(Block b)
-{
-    Track t; Sector s;
-    translateBlockNr(b, &t, &s);
-    return s;
-}
-
 TSLink
 FSDeviceDescriptor::tsLink(Block b)
 {
-    Track t; Sector s;
-    translateBlockNr(b, &t, &s);
-    return TSLink { t, s };
+    for (Track i = 1; i <= numTracks(); i++) {
+
+        u32 num = numSectors(i);
+        if (b < num) return TSLink{i,b};
+        b -= num;
+    }
+    
+    return TSLink{0,0};
 }
 
 Block
 FSDeviceDescriptor::blockNr(Track t, Sector s)
 {
-    Block b;
-    translateBlockNr(&b, t, s);
-    return b;
+    if (!isTrackSectorPair(t, s)) return (Block)(-1);
+    
+    u32 cnt = s;
+    for (Track i = 1; i < t; i++) {
+        cnt += numSectors(i);
+    }
+    
+    return cnt;
 }
 
 Block
 FSDeviceDescriptor::blockNr(Cylinder c, Head h, Sector s)
 {
-    Block b;
-    translateBlockNr(&b, c, h, s);
-    return b;
+    return blockNr(c + h * numTracks(), s);
 }
 
 Block
 FSDeviceDescriptor::blockNr(TSLink ts)
 {
     return blockNr(ts.t, ts.s);
-}
-
-void
-FSDeviceDescriptor::translateBlockNr(Block b, Track *t, Sector *s)
-{
-    for (Track i = 1; i <= numTracks(); i++) {
-
-        u32 num = numSectors(i);
-        if (b < num) { *t = i; *s = b; return; }
-        b -= num;
-    }
-    
-    *t = *s = 0; // Invalid
-}
-
-void
-FSDeviceDescriptor::translateBlockNr(Block b, Cylinder *c, Head *h, Sector *s)
-{
-    Track t;
-    translateBlockNr(b, &t, s);
-    
-    if (t <= numCyls) {
-        *h = 0; *c = t;
-    } else {
-        *h = 1; *c = t - numCyls;
-    }
-}
-
-void
-FSDeviceDescriptor::translateBlockNr(Block *b, Track t, Sector s)
-{
-    if (!isTrackSectorPair(t, s)) { *b = (Block)(-1); return; }
-    
-    u32 cnt = s;
-    
-    for (Track i = 1; i < t; i++) {
-        cnt += numSectors(i);
-    }
-    
-    *b = cnt;
-}
-
-void
-FSDeviceDescriptor::translateBlockNr(Block *b, Cylinder c, Head h, Sector s)
-{
-    translateBlockNr(b, c + h * numTracks(), s);
 }
 
 TSLink

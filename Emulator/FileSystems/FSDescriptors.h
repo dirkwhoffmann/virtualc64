@@ -78,21 +78,10 @@ struct FSDeviceDescriptor : C64Object {
     Head headNr(Track t);
 
     Track trackNr(Cylinder c, Head h);
-    Track trackNr(Block b);
-    
-    Sector sectorNr(Block b);
-    
     TSLink tsLink(Block b);
-
     Block blockNr(Cylinder c, Head h, Sector s);
     Block blockNr(Track t, Sector s);
     Block blockNr(TSLink ts);
-    
-    void translateBlockNr(Block b, Track *t, Sector *s);
-    void translateBlockNr(Block b, Cylinder *c, Head *h, Sector *s);
-    
-    void translateBlockNr(Block *b, Track t, Sector s);
-    void translateBlockNr(Block *b, Cylinder c, Head h, Sector s);
     
     
     //

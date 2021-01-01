@@ -242,29 +242,12 @@ FSDevice::blockPtr(Block b)
 }
 
 FSBlock *
-FSDevice::blockPtr(Track t, Sector s)
-{
-    return blockPtr(layout.blockNr(t, s));
-}
-
-FSBlock *
 FSDevice::nextBlockPtr(Block b)
 {
     FSBlock *ptr = blockPtr(b);
     
     // Jump to linked block
     if (ptr) { ptr = blockPtr(ptr->tsLink()); }
-    
-    return ptr;
-}
-
-FSBlock *
-FSDevice::nextBlockPtr(Track t, Sector s)
-{
-    FSBlock *ptr = blockPtr(t, s);
-    
-    // Jump to linked block
-    if (ptr) { ptr = blockPtr(ptr->data[0], ptr->data[1]); }
     
     return ptr;
 }
@@ -289,6 +272,7 @@ FSDevice::setName(PETName<16> name)
     name.write(bam->data + 0x90);
 }
 
+/*
 bool
 FSDevice::isFree(Block b)
 {
@@ -297,28 +281,16 @@ FSDevice::isFree(Block b)
     
     return GET_BIT(bam->data[byte], bit);
 }
+*/
 
-/*
 bool
-FSDevice::isFree(BlockRef ref)
+FSDevice::isFree(TSLink ts)
 {
     u32 byte, bit;
-    FSBlock *bam = locateAllocationBit(ref, &byte, &bit);
+    FSBlock *bam = locateAllocBit(ts, &byte, &bit);
     
     return GET_BIT(bam->data[byte], bit);
 }
-*/
-
-/*
-bool
-FSDevice::isFree(Track t, Sector s)
-{
-    u32 byte, bit;
-    FSBlock *bam = locateAllocationBit(t, s, &byte, &bit);
-    
-    return GET_BIT(bam->data[byte], bit);
-}
-*/
 
 TSLink
 FSDevice::nextFreeBlock(TSLink ref)
@@ -333,25 +305,10 @@ FSDevice::nextFreeBlock(TSLink ref)
 }
 
 void
-FSDevice::setAllocationBit(Block b, bool value)
-{
-    Track t; Sector s;
-    layout.translateBlockNr(b, &t, &s);
-
-    setAllocationBit(TSLink { t, s }, value);
-}
-
-void
-FSDevice::setAllocationBit(Track t, Sector s, bool value)
-{
-    setAllocationBit(TSLink { t, s }, value);
-}
-    
-void
-FSDevice::setAllocationBit(TSLink ts, bool value)
+FSDevice::setAllocBit(TSLink ts, bool value)
 {
     u32 byte, bit;
-    FSBlock *bam = locateAllocationBit(ts, &byte, &bit);
+    FSBlock *bam = locateAllocBit(ts, &byte, &bit);
 
     if (value && !GET_BIT(bam->data[byte], bit)) {
 
@@ -407,18 +364,13 @@ FSDevice::allocate(TSLink ts, u32 n)
 }
 
 FSBlock *
-FSDevice::locateAllocationBit(Block b, u32 *byte, u32 *bit)
+FSDevice::locateAllocBit(Block b, u32 *byte, u32 *bit)
 {
-    assert(b < blocks.size());
-    
-    Track t; Sector s;
-    layout.translateBlockNr(b, &t, &s);
-    
-    return locateAllocationBit(TSLink{t,s}, byte, bit);
+    return locateAllocBit(layout.tsLink(b), byte, bit);
 }
 
 FSBlock *
-FSDevice::locateAllocationBit(TSLink ts, u32 *byte, u32 *bit)
+FSDevice::locateAllocBit(TSLink ts, u32 *byte, u32 *bit)
 {
     assert(layout.isValidRef(ts));
         
@@ -432,25 +384,6 @@ FSDevice::locateAllocationBit(TSLink ts, u32 *byte, u32 *bit)
         
     *byte = (4 * ts.t) + 1 + (ts.s >> 3);
     *bit = ts.s & 0x07;
-    
-    return bamPtr();
-}
-
-FSBlock *
-FSDevice::locateAllocationBit(Track t, Sector s, u32 *byte, u32 *bit)
-{
-    assert(layout.isTrackSectorPair(t, s));
-        
-    /* Bytes $04 - $8F store the BAM entries for each track, in groups of four
-     * bytes per track, starting on track 1. [...] The first byte is the number
-     * of free sectors on that track. The next three bytes represent the bitmap
-     * of which sectors are used/free. Since it is 3 bytes we have 24 bits of
-     * storage. Remember that at most, each track only has 21 sectors, so there
-     * are a few unused bits.
-     */
-        
-    *byte = (4 * t) + 1 + (s >> 3);
-    *bit = s & 0x07;
     
     return bamPtr();
 }
@@ -497,8 +430,8 @@ FSDevice::fileSize(FSDirEntry *entry)
     
     u64 size = 0;
 
-    // Locate the first data block
-    BlockPtr b = blockPtr(entry->firstDataTrack, entry->firstDataSector);
+    // Start at the first data block
+    BlockPtr b = blockPtr(entry->firstBlock());
 
     // Iterate through the block chain
     while (b) {
@@ -559,8 +492,8 @@ FSDevice::copyFile(FSDirEntry *entry, u8 *buf, u64 len, u64 offset)
 {
     assert(entry);
     
-    // Locate the first data block
-    BlockPtr b = blockPtr(entry->firstDataTrack, entry->firstDataSector);
+    // Start at the first data block
+    BlockPtr b = blockPtr(entry->firstBlock());
     u64 pos = 2;
     
     // Iterate through the block chain
@@ -584,7 +517,7 @@ FSDirEntry *
 FSDevice::nextFreeDirEntry()
 {
     // The directory starts on track 18, sector 1
-    FSBlock *ptr = blockPtr(18, 1);
+    FSBlock *ptr = blockPtr(TSLink{18,1});
     
     // A disk can hold up to 144 files
     for (int i = 0; ptr && i < 144; i++) {
@@ -616,7 +549,7 @@ FSDevice::scanDirectory(bool skipInvisible)
     dir.clear();
     
     // The directory starts on track 18, sector 1
-    FSBlock *ptr = blockPtr(18, 1);
+    FSBlock *ptr = blockPtr(TSLink{18,1});
     
     // The number of files is limited by 144
     for (int i = 0; ptr && i < 144; i++) {
@@ -669,9 +602,6 @@ FSDevice::makeFile(PETName<16> name, FSDirEntry *dir, const u8 *buf, size_t cnt)
             ++it;
             ptr = blockPtr(*it);
             j = 2;
-            Block b;
-            layout.translateBlockNr(&b, it->t, it->s);
-            printf("t: %d s: %d\n", it->t, it->s);
         }
         ptr->data[j] = buf[i];
     }
