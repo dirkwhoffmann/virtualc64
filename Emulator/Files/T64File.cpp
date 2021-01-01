@@ -53,7 +53,7 @@ T64File::makeWithBuffer(const u8 *buffer, size_t length)
 {
     T64File *archive = new T64File();
     
-    if (!archive->readFromBuffer(buffer, length)) {
+    if (!archive->oldReadFromBuffer(buffer, length)) {
         delete archive;
         return NULL;
     }
@@ -66,7 +66,7 @@ T64File::makeWithFile(const char *path)
 {
     T64File *archive = new T64File();
     
-    if (!archive->readFromFile(path)) {
+    if (!archive->oldReadFromFile(path)) {
         delete archive;
         return NULL;
     }
@@ -208,9 +208,21 @@ T64File::getName()
 }
 
 bool
-T64File::readFromBuffer(const u8 *buffer, size_t length)
+T64File::matchingBuffer(const u8 *buf, size_t len)
 {
-    if (!AnyFile::readFromBuffer(buffer, length))
+    return isT64Buffer(buf, len);
+}
+
+bool
+T64File::matchingFile(const char *path)
+{
+    return isT64File(path);
+}
+
+bool
+T64File::oldReadFromBuffer(const u8 *buffer, size_t length)
+{
+    if (!AnyFile::oldReadFromBuffer(buffer, length))
         return false;
     
     // Some T64 archives contain incosistencies. We fix them asap

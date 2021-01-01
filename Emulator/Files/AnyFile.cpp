@@ -9,6 +9,45 @@
 
 #include "AnyFile.h"
 
+template <class T> T *
+AnyFile::make(const u8 *buffer, size_t length, FileError *error)
+{
+    T *obj = new T();
+    
+    if (!obj->readFromBuffer(buffer, length, error)) {
+        delete obj;
+        return nullptr;
+    }
+        
+    return obj;
+}
+
+template <class T> T *
+AnyFile::make(const char *path, FileError *error)
+{
+    T *obj = new T();
+    
+    if (!obj->readFromFile(path, error)) {
+        delete obj;
+        return nullptr;
+    }
+    
+    return obj;
+}
+
+template <class T> T *
+AnyFile::make(FILE *file, FileError *error)
+{
+    T *obj = new T();
+    
+    if (!obj->readFromFile(file, error)) {
+        delete obj;
+        return nullptr;
+    }
+    
+    return obj;
+}
+
 AnyFile::AnyFile()
 {
     const char *defaultName = "HELLO VIRTUALC64";
@@ -16,7 +55,7 @@ AnyFile::AnyFile()
     memset(name, 0, sizeof(name));
 }
 
-AnyFile::AnyFile(size_t capacity)
+AnyFile::AnyFile(usize capacity)
 {
     size = capacity;
     data = new u8[capacity]();
@@ -33,14 +72,24 @@ AnyFile::~AnyFile()
 void
 AnyFile::dealloc()
 {
-    if (data == NULL) {
+    if (data == nullptr) {
         assert(size == 0);
         return;
     }
     
     delete[] data;
-    data = NULL;
+    data = nullptr;
     size = 0;
+}
+
+bool
+AnyFile::alloc(usize capacity)
+{
+    dealloc();
+    if ((data = new u8[capacity]()) == nullptr) return false;
+    size = capacity;
+    
+    return true;
 }
 
 void
@@ -74,23 +123,117 @@ AnyFile::flash(u8 *buffer, size_t offset)
 }
 
 bool
-AnyFile::readFromBuffer(const u8 *buffer, size_t length)
+AnyFile::readFromBuffer(const u8 *buffer, size_t length, FileError *error)
 {
-    assert (buffer != NULL);
+    assert (buffer);
     
-    dealloc();
-    if ((data = new u8[length]) == NULL)
+    // Check file type
+    if (!matchingBuffer(buffer, length)) {
+        if (error) *error = ERR_INVALID_TYPE;
         return false;
+    }
     
+    // Allocate memory
+    if (!alloc(length)) {
+        if (error) *error = ERR_OUT_OF_MEMORY;
+        return false;
+    }
+    
+    // Read from buffer
     memcpy(data, buffer, length);
-    size = length;
-    // eof = length;
-    // fp = 0;
+ 
+    if (error) *error = ERR_FILE_OK;
     return true;
 }
 
 bool
-AnyFile::readFromFile(const char *filename)
+AnyFile::readFromFile(const char *filename, FileError *error)
+{
+    assert (filename);
+    
+    bool success;
+    FILE *file = nullptr;
+    struct stat fileProperties;
+    
+    // Get properties
+    if (stat(filename, &fileProperties) != 0) {
+        if (error) *error = ERR_FILE_NOT_FOUND;
+        return false;
+    }
+
+    // Check type
+    if (!matchingFile(filename)) {
+        if (error) *error = ERR_INVALID_TYPE;
+        return false;
+    }
+        
+    // Open
+    if (!(file = fopen(filename, "r"))) {
+        if (error) *error = ERR_CANT_READ;
+        return false;
+    }
+    
+    // Read
+    setPath(filename);
+    success = readFromFile(file, error);
+    
+    fclose(file);
+    return success;
+}
+
+bool
+AnyFile::readFromFile(FILE *file, FileError *error)
+{
+    assert (file);
+    
+    u8 *buffer = nullptr;
+
+    // Get size
+    fseek(file, 0, SEEK_END);
+    size_t size = (size_t)ftell(file);
+    rewind(file);
+    
+    // Allocate memory
+    if (!(buffer = new u8[size])) {
+        if (error) *error = ERR_OUT_OF_MEMORY;
+        return false;
+    }
+
+    // Read from file
+    int c;
+    for (unsigned i = 0; i < size; i++) {
+        if ((c = fgetc(file)) == EOF) break;
+        buffer[i] = (u8)c;
+    }
+    
+    // Read from buffer
+    dealloc();
+    if (!readFromBuffer(buffer, size, error)) {
+        delete[] buffer;
+        return false;
+    }
+    
+    delete[] buffer;
+    if (error) *error = ERR_FILE_OK;
+    return true;
+}
+
+bool
+AnyFile::oldReadFromBuffer(const u8 *buffer, size_t length)
+{
+    assert (buffer);
+    
+    dealloc();
+    if ((data = new u8[length]) == nullptr)
+        return false;
+    
+    memcpy(data, buffer, length);
+    size = length;
+    return true;
+}
+
+bool
+AnyFile::oldReadFromFile(const char *filename)
 {
     assert (filename != NULL);
     
@@ -100,7 +243,7 @@ AnyFile::readFromFile(const char *filename)
 	struct stat fileProperties;
 	
 	// Check file type
-    if (!hasSameType(filename)) {
+    if (!matchingFile(filename)) {
 		goto exit;
 	}
 	
@@ -130,7 +273,7 @@ AnyFile::readFromFile(const char *filename)
 	
 	// Read from buffer (subclass specific behaviour)
 	dealloc();
-	if (!readFromBuffer(buffer, (unsigned)fileProperties.st_size)) {
+	if (!oldReadFromBuffer(buffer, (unsigned)fileProperties.st_size)) {
 		goto exit;
 	}
 

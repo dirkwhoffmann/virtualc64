@@ -39,7 +39,7 @@ P00File::makeWithBuffer(const u8 *buffer, size_t length)
 {
     P00File *archive = new P00File();
     
-    if (!archive->readFromBuffer(buffer, length)) {
+    if (!archive->oldReadFromBuffer(buffer, length)) {
         delete archive;
         return NULL;
     }
@@ -52,7 +52,7 @@ P00File::makeWithFile(const char *filename)
 {
     P00File *archive = new P00File();
     
-    if (!archive->readFromFile(filename)) {
+    if (!archive->oldReadFromFile(filename)) {
         delete archive;
         return NULL;
     }
@@ -106,6 +106,18 @@ P00File::getName()
     }
     name[i] = 0x00;
     return name;
+}
+
+bool
+P00File::matchingBuffer(const u8 *buf, size_t len)
+{
+    return isP00Buffer(buf, len); 
+}
+
+bool
+P00File::matchingFile(const char *path)
+{
+    return isP00File(path);
 }
 
 PETName<16>

@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _ANYC64FILE_H
-#define _ANYC64FILE_H
+#ifndef _ANY_FILE_H
+#define _ANY_FILE_H
 
 #include "C64Object.h"
 #include "PETName.h"
@@ -18,8 +18,8 @@ class AnyFile : public C64Object {
     
 protected:
 	     
-    // The physical name (full path) of this file
-    char *path = NULL;
+    // Physical location of this file on disk (if known)
+    char *path = nullptr;
     
     /* The logical name of this file. Some archives store a logical name in the
      * header section. If no name is stored, the logical name is constructed
@@ -27,13 +27,24 @@ protected:
      */
     char name[256];
     
-    // The size of this file in bytes
-    size_t size = 0;
-
     // The raw data of this file
     u8 *data = nullptr;
     
+    // The size of this file in bytes
+    usize size = 0;
+    
 
+    //
+    // Creating
+    //
+    
+public:
+    
+    template <class T> static T *make(const u8 *buf, size_t len, FileError *err = nullptr);
+    template <class T> static T *make(const char *path, FileError *err = nullptr);
+    template <class T> static T *make(FILE *file, FileError *err = nullptr);
+
+    
     //
     // Initializing
     //
@@ -41,10 +52,12 @@ protected:
 public:
     
     AnyFile();
-    AnyFile(size_t capacity);
+    AnyFile(usize capacity);
     virtual ~AnyFile();
 
-    
+    // Allocates memory for storing the object data
+    virtual bool alloc(usize capacity);
+
     // Frees the memory allocated by this object
     virtual void dealloc();
 
@@ -94,19 +107,46 @@ public:
     // Serializing
     //
     
-    // Required buffer size for this file
-    size_t sizeOnDisk() { return writeToBuffer(NULL); }
+    // Returns the required buffer size for this file
+    size_t sizeOnDisk() { return writeToBuffer(nullptr); }
 
+    /* Returns true iff this specified buffer is compatible with this object.
+     * This function is used in readFromBuffer().
+     */
+    virtual bool matchingBuffer(const u8 *buffer, size_t length) { return false; }
+    
     /* Checks whether this file has the same type as the file stored in the
      * specified file.
      */
-    virtual bool hasSameType(const char *path) { return false; }
+    virtual bool matchingFile(const char *path) { return false; }
 
+    
+    /* Deserializes this object from a memory buffer. This function uses
+     * matchingBuffer() to verify that the buffer contains a compatible
+     * binary representation.
+     */
+    virtual bool readFromBuffer(const u8 *buffer, size_t length, FileError *error = nullptr);
+
+    /* Deserializes this object from a file. This function uses
+     * matchingFile() to verify that the file contains a compatible binary
+     * representation. This function requires no custom implementation. It
+     * first reads in the file contents in memory and invokes readFromBuffer
+     * afterwards.
+     */
+    virtual bool readFromFile(const char *filename, FileError *error = nullptr);
+
+    /* Deserializes this object from a file that is already open.
+     */
+    virtual bool readFromFile(FILE *file, FileError *error = nullptr);
+    
+    
+    
+    
     // Reads the file contents from a memory buffer
-    virtual bool readFromBuffer(const u8 *buffer, size_t length);
+    virtual bool oldReadFromBuffer(const u8 *buffer, size_t length);
 	
     // Reads the file contents from a file
-	bool readFromFile(const char *path);
+	bool oldReadFromFile(const char *path);
 
     /* Writes the file contents into a memory buffer. By passing a null pointer,
      * a test run is performed. Test runs are used to determine how many bytes

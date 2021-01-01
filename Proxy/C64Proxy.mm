@@ -29,7 +29,7 @@ struct DiskWrapper { Disk *disk; };
 struct DriveWrapper { Drive *drive; };
 struct DatasetteWrapper { Datasette *datasette; };
 struct MouseWrapper { Mouse *mouse; };
-struct AnyC64FileWrapper { AnyFile *file; };
+struct AnyFileWrapper { AnyFile *file; };
 
 //
 // Guards (Breakpoints, Watchpoints)
@@ -1490,7 +1490,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
         return nil;
     }
     if (self = [super init]) {
-        wrapper = new AnyC64FileWrapper();
+        wrapper = new AnyFileWrapper();
         wrapper->file = file;
     }
     return self;
@@ -1510,7 +1510,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
     file->setPath([path UTF8String]);
 }
 
-- (AnyC64FileWrapper *)wrapper
+- (AnyFileWrapper *)wrapper
 {
     return wrapper;
 }
@@ -1542,7 +1542,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 - (void) readFromBuffer:(const void *)buffer length:(NSInteger)length
 {
-    wrapper->file->readFromBuffer((const u8 *)buffer, length);
+    wrapper->file->oldReadFromBuffer((const u8 *)buffer, length);
 }
 
 - (NSInteger) writeToBuffer:(void *)buffer

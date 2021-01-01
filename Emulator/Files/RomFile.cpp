@@ -468,7 +468,7 @@ RomFile::makeWithBuffer(const u8 *buffer, size_t length)
 {
     RomFile *rom = new RomFile();
     
-    if (!rom->readFromBuffer(buffer, length)) {
+    if (!rom->oldReadFromBuffer(buffer, length)) {
         delete rom;
         return NULL;
     }
@@ -481,7 +481,7 @@ RomFile::makeWithFile(const char *filename)
 {
     RomFile *rom = new RomFile();
     
-    if (!rom->readFromFile(filename)) {
+    if (!rom->oldReadFromFile(filename)) {
         delete rom;
         return NULL;
     }
@@ -490,9 +490,21 @@ RomFile::makeWithFile(const char *filename)
 }
 
 bool
-RomFile::readFromBuffer(const u8 *buffer, size_t length)
+RomFile::matchingBuffer(const u8 *buf, size_t len)
 {
-    if (!AnyFile::readFromBuffer(buffer, length))
+    return isRomBuffer(buf, len);
+}
+
+bool
+RomFile::matchingFile(const char *path)
+{
+    return isRomFile(path);
+}
+
+bool
+RomFile::oldReadFromBuffer(const u8 *buffer, size_t length)
+{
+    if (!AnyFile::oldReadFromBuffer(buffer, length))
         return false;
     
     romtype =

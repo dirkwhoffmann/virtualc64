@@ -66,7 +66,7 @@ D64File::makeWithBuffer(const u8 *buffer, size_t length)
 {
     D64File *archive = new D64File();
     
-    if (!archive->readFromBuffer(buffer, length)) {
+    if (!archive->oldReadFromBuffer(buffer, length)) {
         delete archive;
         return NULL;
     }
@@ -79,7 +79,7 @@ D64File::makeWithFile(const char *path)
 {
     D64File *archive = new D64File();
     
-    if (!archive->readFromFile(path)) {
+    if (!archive->oldReadFromFile(path)) {
         delete archive;
         return NULL;
     }
@@ -150,8 +150,20 @@ D64File::getName()
     return name;
 }
 
+bool
+D64File::matchingBuffer(const u8 *buf, size_t len)
+{
+    return isD64Buffer(buf, len);
+}
+
+bool
+D64File::matchingFile(const char *path)
+{
+    return isD64File(path);
+}
+
 bool 
-D64File::readFromBuffer(const u8 *buffer, size_t length)
+D64File::oldReadFromBuffer(const u8 *buffer, size_t length)
 {
     unsigned numSectors;
     bool errorCodes;
@@ -205,7 +217,7 @@ D64File::readFromBuffer(const u8 *buffer, size_t length)
             return false;
     }
     
-    AnyFile::readFromBuffer(buffer, length);
+    AnyFile::oldReadFromBuffer(buffer, length);
     
     // Copy error codes
     if (errorCodes) {

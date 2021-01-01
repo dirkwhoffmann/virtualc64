@@ -100,11 +100,12 @@ private:
         
     
     //
-    // Methods from AnyC64File
+    // Methods from AnyFile
     //
     
     FileType type() override { return FileType_V64; }
-    bool hasSameType(const char *filename) override;
+    bool matchingBuffer(const u8 *buf, size_t len) override;
+    bool matchingFile(const char *path) override;
     
     
     //

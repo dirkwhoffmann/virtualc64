@@ -81,14 +81,15 @@ public:
 
         
     //
-    // Methods from AnyC64File
+    // Methods from AnyFile
     //
     
     void dealloc() override;
     FileType type() override { return FileType_CRT; }
     const char *getName() override { return (char *)&data[0x20]; }
-    bool hasSameType(const char *filename) override { return CRTFile::isCRTFile(filename); }
-    bool readFromBuffer(const u8 *buffer, size_t length) override;
+    bool matchingBuffer(const u8 *buf, size_t len) override;
+    bool matchingFile(const char *path) override;
+    bool oldReadFromBuffer(const u8 *buffer, size_t length) override;
     
     
     //

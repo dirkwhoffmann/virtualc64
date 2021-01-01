@@ -98,7 +98,7 @@ Snapshot::makeWithBuffer(const u8 *buffer, size_t length)
     Snapshot *snapshot;
     
     snapshot = new Snapshot();
-    if (!snapshot->readFromBuffer(buffer, length)) {
+    if (!snapshot->oldReadFromBuffer(buffer, length)) {
         delete snapshot;
         return NULL;
     }
@@ -111,7 +111,7 @@ Snapshot::makeWithFile(const char *filename)
     Snapshot *snapshot;
     
     snapshot = new Snapshot();
-    if (!snapshot->readFromFile(filename)) {
+    if (!snapshot->oldReadFromFile(filename)) {
         delete snapshot;
         return NULL;
     }
@@ -133,12 +133,6 @@ Snapshot::makeWithC64(C64 *c64)
     return snapshot;
 }
 
-bool 
-Snapshot::hasSameType(const char *filename)
-{
-    return Snapshot::isSnapshotFile(filename, V_MAJOR, V_MINOR, V_SUBMINOR);
-}
-
 void
 Snapshot::takeScreenshot(C64 *c64)
 {
@@ -157,4 +151,16 @@ Snapshot::takeScreenshot(C64 *c64)
         target += header->screenshot.width;
         source += TEX_WIDTH;
     }
+}
+
+bool
+Snapshot::matchingBuffer(const u8 *buf, size_t len)
+{
+    return isSnapshot(buf, len, V_MAJOR, V_MINOR, V_SUBMINOR);
+}
+
+bool
+Snapshot::matchingFile(const char *path)
+{
+    return isSnapshotFile(path, V_MAJOR, V_MINOR, V_SUBMINOR);
 }

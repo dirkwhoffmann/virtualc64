@@ -51,7 +51,8 @@ public:
     
     const char *getName() override;
     FileType type() override { return FileType_P00; }
-    bool hasSameType(const char *filename) override { return isP00File(filename); }
+    bool matchingBuffer(const u8 *buf, size_t len) override;
+    bool matchingFile(const char *path) override;
     
 
     //

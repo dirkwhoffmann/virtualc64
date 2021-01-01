@@ -47,11 +47,12 @@ public:
     static G64File *makeWithDisk(Disk *disk);
     
     //
-    // Methods from AnyC64File
+    // Methods from AnyFile
     //
     
     FileType type() override { return FileType_G64; }
-    bool hasSameType(const char *path) override { return G64File::isG64File(path); }
+    bool matchingBuffer(const u8 *buf, size_t len) override;
+    bool matchingFile(const char *path) override;
         
     //
     // Methods from AnyDisk

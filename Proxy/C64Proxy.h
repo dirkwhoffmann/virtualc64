@@ -66,7 +66,7 @@ struct ViaWrapper;
 struct DiskWrapper;
 struct DatasetteWrapper;
 struct MouseWrapper;
-struct AnyC64FileWrapper;
+struct AnyFileWrapper;
 
 //
 // C64 proxy
@@ -704,15 +704,15 @@ struct AnyC64FileWrapper;
 //
 
 //
-// AnyC64File proxy
+// AnyFile proxy
 //
 
 @interface AnyFileProxy : NSObject {
     
-    struct AnyC64FileWrapper *wrapper;
+    struct AnyFileWrapper *wrapper;
 }
 
-- (struct AnyC64FileWrapper *)wrapper;
+- (struct AnyFileWrapper *)wrapper;
 
 - (FileType)type;
 - (NSString *)typeString;

@@ -115,6 +115,26 @@ inline bool isRomRevision(long value)
     return (unsigned long)value <= ROM_CNT;
 }
 
+enum_long(FileError)
+{
+    ERR_FILE_OK,
+    
+    // General
+    ERR_FILE_NOT_FOUND,
+    ERR_INVALID_TYPE,
+    ERR_CANT_READ,
+    ERR_CANT_WRITE,
+    ERR_OUT_OF_MEMORY,
+    ERR_UNKNOWN,
+    
+    // Snapshots
+    ERR_UNSUPPORTED_SNAPSHOT,
+    
+    // Encrypted Roms
+    ERR_MISSING_ROM_KEY,
+    ERR_INVALID_ROM_KEY
+};
+
 enum_long(TAPVersion)
 {
     TAPVersion_ORIGINAL,

@@ -35,7 +35,7 @@ PRGFile::makeWithBuffer(const u8 *buffer, size_t length)
 {
     PRGFile *archive = new PRGFile();
     
-    if (!archive->readFromBuffer(buffer, length)) {
+    if (!archive->oldReadFromBuffer(buffer, length)) {
         
         delete archive;
         return NULL;
@@ -49,7 +49,7 @@ PRGFile::makeWithFile(const char *path)
 {
     PRGFile *archive = new PRGFile();
     
-    if (!archive->readFromFile(path)) {
+    if (!archive->oldReadFromFile(path)) {
         
         delete archive;
         return NULL;
@@ -76,6 +76,18 @@ PRGFile::makeWithFileSystem(FSDevice *fs, int item)
     fs->copyFile(item, prg->getData(), itemSize);
     
     return prg;
+}
+
+bool
+PRGFile::matchingBuffer(const u8 *buf, size_t len)
+{
+    return isPRGBuffer(buf, len);
+}
+
+bool
+PRGFile::matchingFile(const char *path)
+{
+    return isPRGFile(path);
 }
 
 PETName<16>

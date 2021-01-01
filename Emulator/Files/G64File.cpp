@@ -50,7 +50,7 @@ G64File::makeWithBuffer(const u8 *buffer, size_t length)
 {
     G64File *archive = new G64File();
     
-    if (!archive->readFromBuffer(buffer, length)) {
+    if (!archive->oldReadFromBuffer(buffer, length)) {
         delete archive;
         return NULL;
     }
@@ -63,7 +63,7 @@ G64File::makeWithFile(const char *filename)
 {
     G64File *archive = new G64File();
     
-    if (!archive->readFromFile(filename)) {
+    if (!archive->oldReadFromFile(filename)) {
         delete archive;
         return NULL;
     }
@@ -148,6 +148,18 @@ G64File::makeWithDisk(Disk *disk)
     assert(pos == length);
     
     return G64File::makeWithBuffer(buffer, length);
+}
+
+bool
+G64File::matchingBuffer(const u8 *buf, size_t len)
+{
+    return isG64Buffer(buf, len);
+}
+
+bool
+G64File::matchingFile(const char *path)
+{
+    return isG64File(path);
 }
 
 void

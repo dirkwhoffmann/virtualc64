@@ -22,7 +22,7 @@ TAPFile::makeWithBuffer(const u8 *buffer, size_t length)
 {
     TAPFile *tape = new TAPFile();
     
-    if (!tape->readFromBuffer(buffer, length)) {
+    if (!tape->oldReadFromBuffer(buffer, length)) {
         delete tape;
         return NULL;
     }
@@ -35,7 +35,7 @@ TAPFile::makeWithFile(const char *filename)
 {
     TAPFile *tape = new TAPFile();
     
-    if (!tape->readFromFile(filename)) {
+    if (!tape->oldReadFromFile(filename)) {
         delete tape;
         return NULL;
     }
@@ -88,9 +88,21 @@ TAPFile::getName()
 }
 
 bool
-TAPFile::readFromBuffer(const u8 *buffer, size_t length)
+TAPFile::matchingBuffer(const u8 *buf, size_t len)
 {
-    if (!AnyFile::readFromBuffer(buffer, length))
+    return isTAPBuffer(buf, len);
+}
+
+bool
+TAPFile::matchingFile(const char *path)
+{
+    return isTAPFile(path);
+}
+
+bool
+TAPFile::oldReadFromBuffer(const u8 *buffer, size_t length)
+{
+    if (!AnyFile::oldReadFromBuffer(buffer, length))
         return false;
     
     u32 l = LO_LO_HI_HI(data[0x10], data[0x11], data[0x12], data[0x13]);

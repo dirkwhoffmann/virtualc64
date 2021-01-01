@@ -54,7 +54,8 @@ public:
     //
 
     FileType type() override { return FileType_PRG; }
-    bool hasSameType(const char *filename) override { return isPRGFile(filename); }
+    bool matchingBuffer(const u8 *buf, size_t len) override;
+    bool matchingFile(const char *path) override;
     
     
     //
