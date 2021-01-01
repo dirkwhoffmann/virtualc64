@@ -190,7 +190,7 @@ typedef struct
     bool grayDotBug;
     CIARevision cia;
     bool timerBBug;
-    SIDRevision sid;
+    SIDRev sid;
     bool sidFilter;
     GlueLogic glue;
     RamPattern pattern;
@@ -201,22 +201,22 @@ C64ConfigurationDeprecated;
 static const C64ConfigurationDeprecated configurations[] = {
     
     // C64 PAL
-    { VICRev_PAL_6569_R3, false, MOS_6526, true, MOS_6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 },
+    { VICRev_PAL_6569_R3, false, MOS_6526, true, SIDRev_MOS6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 },
     
     // C64_II_PAL
-    { VICRev_PAL_8565, true, MOS_8521, false, MOS_8580, true, GlueLogic_IC, RAM_PATTERN_C64C },
+    { VICRev_PAL_8565, true, MOS_8521, false, SIDRev_MOS8580, true, GlueLogic_IC, RAM_PATTERN_C64C },
     
     // C64_OLD_PAL
-    { VICRev_PAL_6569_R1, false, MOS_6526, true, MOS_6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 },
+    { VICRev_PAL_6569_R1, false, MOS_6526, true, SIDRev_MOS6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 },
 
     // C64_NTSC
-    { VICRev_NTSC_6567, false, MOS_6526, false, MOS_6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 },
+    { VICRev_NTSC_6567, false, MOS_6526, false, SIDRev_MOS6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 },
 
     // C64_II_NTSC
-    { VICRev_NTSC_8562, true, MOS_8521, true, MOS_8580, true, GlueLogic_IC, RAM_PATTERN_C64C },
+    { VICRev_NTSC_8562, true, MOS_8521, true, SIDRev_MOS8580, true, GlueLogic_IC, RAM_PATTERN_C64C },
     
     // C64_OLD_NTSC
-    { VICRev_NTSC_6567_R56A, false, MOS_6526, false, MOS_6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 }
+    { VICRev_NTSC_6567_R56A, false, MOS_6526, false, SIDRev_MOS6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 }
 };
 
 #endif

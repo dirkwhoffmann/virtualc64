@@ -166,12 +166,12 @@ inline const char *DisplayModeName(DisplayMode value)
 
 enum_long(MemAccess)
 {
-    MemAccess_R,                 // Memory Refresh
-    MemAccess_I,                 // Idle read
-    MemAccess_C,                 // Character access
-    MemAccess_G,                 // Graphics access
-    MemAccess_P,                 // Sprite pointer access
-    MemAccess_S                  // Sprite data access
+    MemAccess_R, // Memory Refresh
+    MemAccess_I, // Idle read
+    MemAccess_C, // Character access
+    MemAccess_G, // Graphics access
+    MemAccess_P, // Sprite pointer access
+    MemAccess_S  // Sprite data access
 };
 
 static inline bool isMemAccess(long value)
@@ -197,11 +197,28 @@ inline const char *MemAccessName(MemAccess value)
 
 enum_long(DmaDisplayMode)
 {
-    MODULATE_FG_LAYER,
-    MODULATE_BG_LAYER,
-    MODULATE_ODD_EVEN_LAYERS
+    DmaDisplayMode_FG_LAYER,
+    DmaDisplayMode_BG_LAYER,
+    DmaDisplayMode_ODD_EVEN_LAYERS
 };
 
+static inline bool isDmaDisplayMode(long value)
+{
+    return (unsigned long)value <= DmaDisplayMode_ODD_EVEN_LAYERS;
+}
+
+inline const char *DmaDisplayModeName(DmaDisplayMode value)
+{
+    assert(isDmaDisplayMode(value));
+    
+    switch (value) {
+            
+        case DmaDisplayMode_FG_LAYER:         return "FG_LAYER";
+        case DmaDisplayMode_BG_LAYER:         return "BG_LAYER";
+        case DmaDisplayMode_ODD_EVEN_LAYERS:  return "ODD_EVEN_LAYERS";
+        default:                              return "???";
+    }
+}
 
 //
 // Structures

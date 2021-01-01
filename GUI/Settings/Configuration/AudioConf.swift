@@ -12,17 +12,11 @@ extension ConfigurationController {
     func refreshAudioTab() {
                 
         track()
-        
-        /*
-        let sid1 = config.sidEnable1
-        let sid2 = config.sidEnable2
-        let sid3 = config.sidEnable3
-        */
-        
+                
         // Engine
         audEngine.selectItem(withTag: config.sidEngine)
         audFilter.state = config.sidFilter ? .on : .off
-        audSampling.isEnabled = config.sidEngine == SIDEngine.ENGINE_RESID.rawValue
+        audSampling.isEnabled = config.sidEngine == SIDEngine.RESID.rawValue
         audSampling.selectItem(withTag: config.sidSampling)
 
         // In

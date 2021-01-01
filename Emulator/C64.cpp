@@ -319,12 +319,12 @@ C64::setConfigItem(Option option, long value)
 C64Model
 C64::getModel()
 {
-    VICRev vicref = (VICRev)vic.getConfigItem(Option_VIC_REVISION);
+    VICRev vicref      = (VICRev)vic.getConfigItem(Option_VIC_REVISION);
     bool grayDotBug    = vic.getConfigItem(Option_GRAY_DOT_BUG);
     bool glueLogic     = vic.getConfigItem(Option_GLUE_LOGIC);
     CIARevision ciaref = (CIARevision)cia1.getConfigItem(Option_CIA_REVISION);
     bool timerBBug     = cia1.getConfigItem(Option_TIMER_B_BUG);
-    SIDRevision sidref = (SIDRevision)sid.getConfigItem(Option_SID_REVISION);
+    SIDRev sidref = (SIDRev)sid.getConfigItem(Option_SID_REVISION);
     bool sidFilter     = sid.getConfigItem(Option_SID_FILTER);
     RamPattern pattern = (RamPattern)mem.getConfigItem(Option_RAM_PATTERN);
     

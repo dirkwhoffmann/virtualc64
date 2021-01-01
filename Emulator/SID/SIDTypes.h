@@ -14,77 +14,79 @@
 // Enumerations
 //
 
-enum_long(SIDRevision)
+enum_long(SIDRev)
 {
-    MOS_6581,
-    MOS_8580
+    SIDRev_MOS6581,
+    SIDRev_MOS8580
 };
 
-inline bool isSIDRevision(long value)
+inline bool isSIDRev(long value)
 {
-    return value == MOS_6581 || value == MOS_8580;
+    return (unsigned long)value <= SIDRev_MOS8580;
 }
 
-inline const char *sidRevisionName(SIDRevision type)
+inline const char *SIDRevName(SIDRev type)
 {
-    assert(isSIDRevision(type));
+    assert(isSIDRev(type));
     
     switch (type) {
-        case MOS_6581: return "MOS_6581";
-        case MOS_8580: return "MOS_8580";
-        default:       return "???";
+            
+        case SIDRev_MOS6581:  return "MOS_6581";
+        case SIDRev_MOS8580:  return "MOS_8580";
+        default:              return "???";
     }
 }
 
 enum_long(SIDEngine)
 {
-    ENGINE_FASTSID,
-    ENGINE_RESID
+    SIDEngine_FASTSID,
+    SIDEngine_RESID
 };
 
-inline bool isAudioEngine(long value)
+inline bool isSIDEngine(long value)
 {
-    return value >= ENGINE_FASTSID && value <= ENGINE_RESID;
+    return (unsigned long)value <= SIDEngine_RESID;
 }
 
-inline const char *sidEngineName(SIDEngine engine)
+inline const char *SIDEngineName(SIDEngine value)
 {
-    assert(isAudioEngine(engine));
+    assert(isSIDEngine(value));
     
-    switch (engine) {
-        case ENGINE_FASTSID: return "FASTSID";
-        case ENGINE_RESID:   return "RESID";
-        default:             return "???";
+    switch (value) {
+            
+        case SIDEngine_FASTSID:  return "FASTSID";
+        case SIDEngine_RESID:    return "RESID";
+        default:                 return "???";
     }
 }
 
 // This enum reflects enum "sampling_method" used by reSID.
 enum_long(SamplingMethod)
 {
-    SID_SAMPLE_FAST,
-    SID_SAMPLE_INTERPOLATE,
-    SID_SAMPLE_RESAMPLE,
-    SID_SAMPLE_RESAMPLE_FASTMEM
+    SamplingMethod_FAST,
+    SamplingMethod_INTERPOLATE,
+    SamplingMethod_RESAMPLE,
+    SamplingMethod_RESAMPLE_FASTMEM
 };
 
 inline bool isSamplingMethod(long value)
 {
-    return value >= SID_SAMPLE_FAST && value <= SID_SAMPLE_RESAMPLE_FASTMEM;
+    return (unsigned long)value <= SamplingMethod_RESAMPLE_FASTMEM;
 }
 
-inline const char *sidSamplingMethodName(SamplingMethod method)
+inline const char *SamplingMethodName(SamplingMethod method)
 {
     assert(isSamplingMethod(method));
     
     switch (method) {
-        case SID_SAMPLE_FAST:             return "FAST";
-        case SID_SAMPLE_INTERPOLATE:      return "INTERPOLATE";
-        case SID_SAMPLE_RESAMPLE:         return "RESAMPLE";
-        case SID_SAMPLE_RESAMPLE_FASTMEM: return "RESAMPLE FASTMEM";
-        default:                          return "???";
+            
+        case SamplingMethod_FAST:              return "FAST";
+        case SamplingMethod_INTERPOLATE:       return "INTERPOLATE";
+        case SamplingMethod_RESAMPLE:          return "RESAMPLE";
+        case SamplingMethod_RESAMPLE_FASTMEM:  return "RESAMPLE FASTMEM";
+        default:                               return "???";
     }
 }
-
 
 //
 // Structures
@@ -93,7 +95,7 @@ inline const char *sidSamplingMethodName(SamplingMethod method)
 typedef struct
 {
     // Hardware settings
-    SIDRevision revision;
+    SIDRev revision;
     u8 enabled;
     u16 address[4];
     bool filter;

@@ -552,7 +552,7 @@ struct HardwareDefaults {
     var ciaRevision: CIARevision
     var ciaTimerBBug: Bool
     
-    var sidRevision: SIDRevision
+    var sidRevision: SIDRev
     var sidFilter: Bool
     let sidEnable1: Bool
     let sidEnable2: Bool
@@ -576,7 +576,7 @@ struct HardwareDefaults {
         ciaRevision:   .MOS_6526,
         ciaTimerBBug:  true,
         
-        sidRevision:   .MOS_6581,
+        sidRevision:   ._MOS6581,
         sidFilter:     true,
         sidEnable1:    false,
         sidEnable2:    false,
@@ -597,7 +597,7 @@ struct HardwareDefaults {
         ciaRevision:   .MOS_8521,
         ciaTimerBBug:  false,
         
-        sidRevision:   .MOS_8580,
+        sidRevision:   ._MOS8580,
         sidFilter:     true,
         sidEnable1:    false,
         sidEnable2:    false,
@@ -618,7 +618,7 @@ struct HardwareDefaults {
         ciaRevision:   .MOS_6526,
         ciaTimerBBug:  true,
         
-        sidRevision:   .MOS_6581,
+        sidRevision:   ._MOS6581,
         sidFilter:     true,
         sidEnable1:    false,
         sidEnable2:    false,
@@ -639,7 +639,7 @@ struct HardwareDefaults {
         ciaRevision:   .MOS_6526,
         ciaTimerBBug:  false,
         
-        sidRevision:   .MOS_6581,
+        sidRevision:   ._MOS6581,
         sidFilter:     true,
         sidEnable1:    false,
         sidEnable2:    false,
@@ -660,7 +660,7 @@ struct HardwareDefaults {
         ciaRevision:   .MOS_8521,
         ciaTimerBBug:  true,
         
-        sidRevision:   .MOS_8580,
+        sidRevision:   ._MOS8580,
         sidFilter:     true,
         sidEnable1:    false,
         sidEnable2:    false,
@@ -681,7 +681,7 @@ struct HardwareDefaults {
         ciaRevision:   .MOS_6526,
         ciaTimerBBug:  false,
         
-        sidRevision:   .MOS_6581,
+        sidRevision:   ._MOS6581,
         sidFilter:     true,
         sidEnable1:    false,
         sidEnable2:    false,
@@ -883,8 +883,8 @@ struct AudioDefaults {
     
     static let mono = AudioDefaults.init(
         
-        sidEngine: .ENGINE_RESID,
-        sidSampling: .SID_SAMPLE_INTERPOLATE,
+        sidEngine: .RESID,
+        sidSampling: .INTERPOLATE,
         
         vol0: 400,
         vol1: 400,
@@ -901,8 +901,8 @@ struct AudioDefaults {
     
     static let stereo = AudioDefaults.init(
         
-        sidEngine: .ENGINE_RESID,
-        sidSampling: .SID_SAMPLE_INTERPOLATE,
+        sidEngine: .RESID,
+        sidSampling: .INTERPOLATE,
 
         vol0: 400,
         vol1: 400,

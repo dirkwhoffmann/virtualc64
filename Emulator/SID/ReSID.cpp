@@ -11,7 +11,7 @@
 
 ReSID::ReSID(C64 &ref, SIDBridge &bridgeref, int n) : C64Component(ref), bridge(bridgeref), nr(n)
 {
-    model = MOS_6581;
+    model = SIDRev_MOS6581;
     emulateFilter = true;
     sampleRate = 44100;
 
@@ -116,15 +116,15 @@ ReSID::willSaveToBuffer(u8 *buffer)
     return 0;
 }
 
-SIDRevision
+SIDRev
 ReSID::getRevision()
 {
-    assert((SIDRevision)sid->sid_model == model);
+    assert((SIDRev)sid->sid_model == model);
     return model;
 }
 
 void
-ReSID::setRevision(SIDRevision revision)
+ReSID::setRevision(SIDRev revision)
 {
     assert(!isRunning());
 
@@ -135,8 +135,8 @@ ReSID::setRevision(SIDRevision revision)
     sid->set_chip_model((reSID::chip_model)revision);
     resume();
         
-    assert((SIDRevision)sid->sid_model == revision);
-    trace(SID_DEBUG, "Emulating SID revision %s.\n", sidRevisionName(revision));
+    assert((SIDRev)sid->sid_model == revision);
+    trace(SID_DEBUG, "Emulating SID revision %s.\n", SIDRevName(revision));
 }
 
 void
@@ -179,18 +179,18 @@ ReSID::setSamplingMethod(SamplingMethod value)
     assert(!isRunning());
     
     switch(value) {
-        case SID_SAMPLE_FAST:
+        case SamplingMethod_FAST:
             trace(SID_DEBUG, "Using sampling method SAMPLE_FAST.\n");
             break;
-        case SID_SAMPLE_INTERPOLATE:
+        case SamplingMethod_INTERPOLATE:
             trace(SID_DEBUG, "Using sampling method SAMPLE_INTERPOLATE.\n");
             break;
-        case SID_SAMPLE_RESAMPLE:
+        case SamplingMethod_RESAMPLE:
             trace(SID_DEBUG, "Using sampling method SAMPLE_RESAMPLE.\n");
             break;
-        case SID_SAMPLE_RESAMPLE_FASTMEM:
+        case SamplingMethod_RESAMPLE_FASTMEM:
             warn("SAMPLE_RESAMPLE_FASTMEM not supported. Using SAMPLE_INTERPOLATE.\n");
-            value = SID_SAMPLE_INTERPOLATE;
+            value = SamplingMethod_INTERPOLATE;
             break;
         default:
             warn("Unknown sampling method: %lld\n", value);

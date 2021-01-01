@@ -156,8 +156,8 @@ public:
     void setClockFrequency(u32 frequency);
 
     // DEPRECATED: Use OPT_xxx
-    SIDRevision getRevision();
-    void setRevision(SIDRevision revision);
+    SIDRev getRevision();
+    void setRevision(SIDRev revision);
     
     double getSampleRate();
     void setSampleRate(double rate);

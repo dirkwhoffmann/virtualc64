@@ -42,7 +42,7 @@ VICII::computeOverlay()
 
     switch (config.dmaDisplayMode) {
 
-        case MODULATE_FG_LAYER:
+        case DmaDisplayMode_FG_LAYER:
             
             for (int y = 0; y < TEX_HEIGHT; y++) {
                 
@@ -61,7 +61,7 @@ VICII::computeOverlay()
             }
             break;
 
-        case MODULATE_BG_LAYER:
+        case DmaDisplayMode_BG_LAYER:
             
             for (int y = 0; y < TEX_HEIGHT; y++) {
                 
@@ -81,7 +81,7 @@ VICII::computeOverlay()
             }
             break;
 
-        case MODULATE_ODD_EVEN_LAYERS:
+        case DmaDisplayMode_ODD_EVEN_LAYERS:
             
             for (int y = 0; y < TEX_HEIGHT; y++) {
                 

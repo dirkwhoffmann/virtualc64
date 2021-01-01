@@ -49,7 +49,7 @@ private:
     reSID::SID::State st;
     
     // The emulated chip model
-    SIDRevision model;
+    SIDRev model;
     
     // Clock frequency
     u32 clockFrequency;
@@ -88,8 +88,8 @@ public:
     u32 getClockFrequency();
     void setClockFrequency(u32 frequency);
     
-    SIDRevision getRevision();
-    void setRevision(SIDRevision m);
+    SIDRev getRevision();
+    void setRevision(SIDRev m);
     
     double getSampleRate() { return sampleRate; }
     void setSampleRate(double rate);
