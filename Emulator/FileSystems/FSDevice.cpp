@@ -295,7 +295,7 @@ FSDevice::isFree(TSLink ts)
 TSLink
 FSDevice::nextFreeBlock(TSLink ref)
 {
-    if (!layout.isValidRef(ref)) return {0,0};
+    if (!layout.isValidLink(ref)) return {0,0};
     
     while (ref.t && !isFree(ref)) {
         ref = layout.nextBlockRef(ref);
@@ -372,7 +372,7 @@ FSDevice::locateAllocBit(Block b, u32 *byte, u32 *bit)
 FSBlock *
 FSDevice::locateAllocBit(TSLink ts, u32 *byte, u32 *bit)
 {
-    assert(layout.isValidRef(ts));
+    assert(layout.isValidLink(ts));
         
     /* Bytes $04 - $8F store the BAM entries for each track, in groups of four
      * bytes per track, starting on track 1. [...] The first byte is the number

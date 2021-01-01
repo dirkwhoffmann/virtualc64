@@ -929,9 +929,9 @@ struct AnyC64FileWrapper;
 - (TSLink)tsLink:(NSInteger)b;
 - (NSInteger)trackNr:(NSInteger)b;
 - (NSInteger)sectorNr:(NSInteger)b;
-- (NSInteger)blockNr:(NSInteger)c head:(NSInteger)h sector:(NSInteger)s;
-- (NSInteger)blockNr:(NSInteger)t sector:(NSInteger)s;
 - (NSInteger)blockNr:(TSLink)ts;
+- (NSInteger)blockNr:(NSInteger)t sector:(NSInteger)s;
+- (NSInteger)blockNr:(NSInteger)c head:(NSInteger)h sector:(NSInteger)s;
 
 - (FSBlockType)blockType:(NSInteger)blockNr;
 - (FSUsage)itemType:(NSInteger)blockNr pos:(NSInteger)pos;

@@ -55,8 +55,7 @@ struct FSDeviceDescriptor : C64Object {
     bool isCylinderNr(Cylinder c) { return 1 <= c && c <= numCyls; }
     bool isHeadNr(Head h) { return h == 0 || h == 1; }
     bool isTrackNr(Track t) { return 1 <= t && t <= numCyls * numHeads; }
-    bool isTrackSectorPair(Track t, Sector s);
-    bool isValidRef(TSLink ref);
+    bool isValidLink(TSLink ref);
 
     
     //
@@ -70,19 +69,21 @@ struct FSDeviceDescriptor : C64Object {
 
     
     //
-    // Translating block numbers
+    // Translating blocks, tracks, sectors, and heads
     //
-        
-    Cylinder cylNr(Track t);
 
-    Head headNr(Track t);
+    Cylinder cylNr(Track t) { return t <= numCyls ? t : t - numCyls; }
+    Head headNr(Track t) { return t <= numCyls ? 0 : 1; }
+    Track trackNr(Cylinder c, Head h) { return c + h * numCyls; }
 
-    Track trackNr(Cylinder c, Head h);
     TSLink tsLink(Block b);
-    Block blockNr(Cylinder c, Head h, Sector s);
-    Block blockNr(Track t, Sector s);
-    Block blockNr(TSLink ts);
+    Track trackNr(Block b) { return tsLink(b).t; }
+    Sector sectorNr(Block b) { return tsLink(b).s; }
     
+    Block blockNr(TSLink ts);
+    Block blockNr(Track t, Sector s) { return blockNr(TSLink{t,s}); }
+    Block blockNr(Cylinder c, Head h, Sector s) { return blockNr(trackNr(c,h), s); }
+
     
     //
     // Ordering blocks
@@ -92,7 +93,6 @@ public:
     
     bool nextBlock(Block b, Block *nb);
     TSLink nextBlockRef(TSLink b);
-    bool nextTrackAndSector(Track t, Sector s, Track *nt, Sector *ns);
 };
 
 #endif

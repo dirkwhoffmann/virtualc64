@@ -1056,9 +1056,9 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return (NSInteger)[self tsLink:b].s;
 }
 
-- (NSInteger)blockNr:(NSInteger)c head:(NSInteger)h sector:(NSInteger)s
+- (NSInteger)blockNr:(TSLink)ts
 {
-    return (NSInteger)wrapper->device->layout.blockNr((Cylinder)c, (Head)h, (Sector)s);
+    return (NSInteger)wrapper->device->layout.blockNr(ts);
 }
 
 - (NSInteger)blockNr:(NSInteger)t sector:(NSInteger)s
@@ -1066,9 +1066,9 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return (NSInteger)wrapper->device->layout.blockNr((Track)t, (Sector)s);
 }
 
-- (NSInteger)blockNr:(TSLink)ts
+- (NSInteger)blockNr:(NSInteger)c head:(NSInteger)h sector:(NSInteger)s
 {
-    return (NSInteger)wrapper->device->layout.blockNr(ts);
+    return (NSInteger)wrapper->device->layout.blockNr((Cylinder)c, (Head)h, (Sector)s);
 }
 
 - (FSBlockType) blockType:(NSInteger)blockNr
