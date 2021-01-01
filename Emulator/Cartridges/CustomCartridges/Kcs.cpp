@@ -81,7 +81,7 @@ KcsPower::pressButton(unsigned nr)
  
         // Pressing the button triggers an NMI in Ultimax mode
         suspend();
-        expansionport.setCartridgeMode(CRT_ULTIMAX);
+        expansionport.setCartridgeMode(CRTMode_ULTIMAX);
         cpu.pullDownNmiLine(INTSRC_EXP);
         resume();
     }

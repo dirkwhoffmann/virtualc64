@@ -24,7 +24,7 @@ EasyFlash::EasyFlash(C64 &ref) : Cartridge(ref)
 void
 EasyFlash::resetCartConfig()
 {
-    expansionport.setCartridgeMode(CRT_ULTIMAX);
+    expansionport.setCartridgeMode(CRTMode_ULTIMAX);
 }
 
 void

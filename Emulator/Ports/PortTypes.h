@@ -16,27 +16,28 @@
 
 enum_long(ControlPortDevice)
 {
-    CPD_NONE,
-    CPD_MOUSE,
-    CPD_JOYSTICK
+    ControlPortDevice_NONE,
+    ControlPortDevice_MOUSE,
+    ControlPortDevice_JOYSTICK
 };
 
 inline bool isControlPortDevice(long value) {
-    return value >= 0 && value <= CPD_JOYSTICK;
+    
+    return (unsigned long)value <= ControlPortDevice_JOYSTICK;
 }
 
-// DEPRECATED
-/*
-typedef enum {
+inline const char *ControlPortDeviceName(ControlPortDevice value)
+{
+    assert(isControlPortDevice(value));
     
-    JOYSTICK_UP,
-    JOYSTICK_DOWN,
-    JOYSTICK_LEFT,
-    JOYSTICK_RIGHT,
-    JOYSTICK_FIRE
-    
-} JoystickDirection;
-*/
+    switch (value) {
+            
+        case ControlPortDevice_NONE:      return "NONE";
+        case ControlPortDevice_MOUSE:     return "MOUSE";
+        case ControlPortDevice_JOYSTICK:  return "JOYSTICK";
+        default:                          return "???";
+    }
+}
 
 enum_long(GamePadAction)
 {
@@ -56,16 +57,35 @@ enum_long(GamePadAction)
 };
 
 inline bool isGamePadAction(long value) {
-    return value >= 0 && value <= RELEASE_RIGHT;
+    
+    return (unsigned long)value <= RELEASE_RIGHT;
 }
 
-enum_long(CartridgeMode)
+enum_long(CRTMode)
 {
-    CRT_16K,
-    CRT_8K,
-    CRT_ULTIMAX,
-    CRT_OFF
-    
+    CRTMode_16K,
+    CRTMode_8K,
+    CRTMode_ULTIMAX,
+    CRTMode_OFF
 };
+
+inline bool isCRTMode(long value) {
+    
+    return (unsigned long)value <= CRTMode_OFF;
+}
+
+inline const char *CRTModeName(CRTMode value)
+{
+    assert(isCRTMode(value));
+    
+    switch (value) {
+            
+        case CRTMode_16K:      return "16K";
+        case CRTMode_8K:       return "8K";
+        case CRTMode_ULTIMAX:  return "ULTIMAX";
+        case CRTMode_OFF:      return "OFF";
+        default:               return "???";
+    }
+}
 
 #endif

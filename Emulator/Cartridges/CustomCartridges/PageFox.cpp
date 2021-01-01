@@ -114,10 +114,10 @@ PageFox::pokeIO1(u16 addr, u8 value)
     ctrlReg = value;
     
     if (disabled()) {
-        expansionport.setCartridgeMode(CRT_OFF);
+        expansionport.setCartridgeMode(CRTMode_OFF);
         debug(CRT_DEBUG, "CRT disabled\n");
     } else {
-        expansionport.setCartridgeMode(CRT_16K);
+        expansionport.setCartridgeMode(CRTMode_16K);
         debug(CRT_DEBUG, "16K mode\n");
     }
     

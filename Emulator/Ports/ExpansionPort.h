@@ -128,8 +128,8 @@ public:
     
     void setGameAndExrom(bool game, bool exrom);
     
-    CartridgeMode getCartridgeMode();
-    void setCartridgeMode(CartridgeMode mode);
+    CRTMode getCartridgeMode();
+    void setCartridgeMode(CRTMode mode);
 
     
     //

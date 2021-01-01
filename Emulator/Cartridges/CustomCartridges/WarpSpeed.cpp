@@ -12,7 +12,7 @@
 void
 WarpSpeed::resetCartConfig()
 {
-    expansionport.setCartridgeMode(CRT_16K);
+    expansionport.setCartridgeMode(CRTMode_16K);
 }
 
 u8
@@ -30,13 +30,13 @@ WarpSpeed::peekIO2(u16 addr)
 void
 WarpSpeed::pokeIO1(u16 addr, u8 value)
 {
-    expansionport.setCartridgeMode(CRT_16K);
+    expansionport.setCartridgeMode(CRTMode_16K);
 }
 
 void
 WarpSpeed::pokeIO2(u16 addr, u8 value)
 {
-    expansionport.setCartridgeMode(CRT_OFF);
+    expansionport.setCartridgeMode(CRTMode_OFF);
 }
 
 const char *

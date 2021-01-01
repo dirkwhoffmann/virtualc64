@@ -38,8 +38,8 @@ class GamePad {
     
     // Type of the managed device (joystick or mouse)
     var type: ControlPortDevice
-    var isMouse: Bool { return type == .CPD_MOUSE }
-    var isJoystick: Bool { return type == .CPD_JOYSTICK }
+    var isMouse: Bool { return type == .MOUSE }
+    var isJoystick: Bool { return type == .JOYSTICK }
     
     // Name of the managed device
     var name: String?
@@ -100,7 +100,7 @@ class GamePad {
             name = "Competition Pro SL-6602"
             icon = NSImage.init(named: joystick)
             
-        case 0x46D where type == .CPD_MOUSE:
+        case 0x46D where type == .MOUSE:
             name = "Logitech Mouse"
             icon = NSImage.init(named: mouse)
             

@@ -119,7 +119,7 @@ Isepic::setSwitch(i8 pos)
     if (oldVisible != newVisible) {
 
         // Enforce a call to updatePeekPokeLookupTables()
-        expansionport.setCartridgeMode(CRT_OFF);
+        expansionport.setCartridgeMode(CRTMode_OFF);
 
         if (newVisible) {
 

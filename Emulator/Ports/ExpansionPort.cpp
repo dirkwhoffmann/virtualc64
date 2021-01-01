@@ -23,7 +23,7 @@ ExpansionPort::_reset()
         cartridge->reset();
         cartridge->resetCartConfig();
     } else {
-        setCartridgeMode(CRT_OFF);
+        setCartridgeMode(CRTMode_OFF);
     }
 }
 
@@ -189,25 +189,25 @@ ExpansionPort::setGameAndExrom(bool game, bool exrom)
     mem.updatePeekPokeLookupTables();
 }
 
-CartridgeMode
+CRTMode
 ExpansionPort::getCartridgeMode()
 {
     switch ((exromLine ? 0b10 : 0) | (gameLine ? 0b01 : 0)) {
             
-        case 0b00: return CRT_16K;
-        case 0b01: return CRT_8K;
-        case 0b10: return CRT_ULTIMAX;
-        default:   return CRT_OFF;
+        case 0b00: return CRTMode_16K;
+        case 0b01: return CRTMode_8K;
+        case 0b10: return CRTMode_ULTIMAX;
+        default:   return CRTMode_OFF;
     }
 }
 
 void
-ExpansionPort::setCartridgeMode(CartridgeMode mode)
+ExpansionPort::setCartridgeMode(CRTMode mode)
 {
     switch (mode) {
-        case CRT_16K:     setGameAndExrom(0,0); return;
-        case CRT_8K:      setGameAndExrom(1,0); return;
-        case CRT_ULTIMAX: setGameAndExrom(0,1); return;
+        case CRTMode_16K:     setGameAndExrom(0,0); return;
+        case CRTMode_8K:      setGameAndExrom(1,0); return;
+        case CRTMode_ULTIMAX: setGameAndExrom(0,1); return;
         default:          setGameAndExrom(1,1);
     }
 }
@@ -291,7 +291,7 @@ ExpansionPort::detachCartridge()
         cartridge = NULL;
         crtType = CRT_NONE;
         
-        setCartridgeMode(CRT_OFF);
+        setCartridgeMode(CRTMode_OFF);
         
         trace(EXP_DEBUG, "Cartridge detached from expansion port");
         c64.putMessage(MSG_NO_CARTRIDGE);
