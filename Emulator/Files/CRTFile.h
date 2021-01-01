@@ -68,8 +68,8 @@ public:
     // Constructing
     //
     
-    static CRTFile *makeWithBuffer(const u8 *buffer, size_t length);
-    static CRTFile *makeWithFile(const char *filename);
+    [[deprecated]] static CRTFile *makeWithBuffer(const u8 *buffer, size_t length);
+    [[deprecated]] static CRTFile *makeWithFile(const char *filename);
 
     
     //

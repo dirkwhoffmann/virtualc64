@@ -1439,7 +1439,8 @@ C64::loadRomFromBuffer(RomType type, const u8 *buffer, size_t length)
             
         case ROMType_BASIC:
         {
-            if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
+            // if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
+            if (RomFile *file = AnyFile::make <RomFile> (buffer, length)) {
                 return loadRom(ROMType_BASIC, file);
             }
             msg("Failed to read Basic Rom from buffer\n");
@@ -1447,7 +1448,8 @@ C64::loadRomFromBuffer(RomType type, const u8 *buffer, size_t length)
         }
         case ROMType_CHAR:
         {
-            if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
+            // if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
+            if (RomFile *file = RomFile::make <RomFile> (buffer, length)) {
                 return loadRom(ROMType_CHAR, file);
             }
             msg("Failed to read Character Rom from buffer\n");
@@ -1455,7 +1457,8 @@ C64::loadRomFromBuffer(RomType type, const u8 *buffer, size_t length)
         }
         case ROMType_KERNAL:
         {
-            if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
+            // if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
+            if (RomFile *file = RomFile::make <RomFile> (buffer, length)) {
                 return loadRom(ROMType_KERNAL, file);
             }
             msg("Failed to read Kernal Rom from buffer\n");
@@ -1463,7 +1466,8 @@ C64::loadRomFromBuffer(RomType type, const u8 *buffer, size_t length)
         }
         case ROMType_VC1541:
         {
-            if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
+            // if (RomFile *file = RomFile::makeWithBuffer(buffer, length)) {
+            if (RomFile *file = RomFile::make <RomFile> (buffer, length)) {
                 return loadRom(ROMType_VC1541, file);
             }
             msg("Failed to read VC1541 Rom from buffer\n");
@@ -1483,7 +1487,7 @@ C64::loadRomFromFile(RomType type, const char *path)
             
         case ROMType_BASIC:
         {
-            if (RomFile *file = RomFile::makeWithFile(path)) {
+            if (RomFile *file = RomFile::make <RomFile> (path)) {
                 return loadRom(ROMType_BASIC, file);
             }
             msg("Failed to read Basic Rom from %s\n", path);
@@ -1491,7 +1495,7 @@ C64::loadRomFromFile(RomType type, const char *path)
         }
         case ROMType_CHAR:
         {
-            if (RomFile *file = RomFile::makeWithFile(path)) {
+            if (RomFile *file = RomFile::make <RomFile> (path)) {
                 return loadRom(ROMType_CHAR, file);
             }
             msg("Failed to read Character Rom from %s\n", path);
@@ -1499,7 +1503,7 @@ C64::loadRomFromFile(RomType type, const char *path)
         }
         case ROMType_KERNAL:
         {
-            if (RomFile *file = RomFile::makeWithFile(path)) {
+            if (RomFile *file = RomFile::make <RomFile> (path)) {
                 return loadRom(ROMType_KERNAL, file);
             }
             msg("Failed to read Kernal Rom from %s\n", path);
@@ -1507,7 +1511,7 @@ C64::loadRomFromFile(RomType type, const char *path)
         }
         case ROMType_VC1541:
         {
-            if (RomFile *file = RomFile::makeWithFile(path)) {
+            if (RomFile *file = RomFile::make <RomFile> (path)) {
                 return loadRom(ROMType_VC1541, file);
             }
             msg("Failed to read VC1541 Rom from %s\n", path);
@@ -1553,28 +1557,32 @@ C64::saveRom(RomType type, const char *path)
         {
             if (!hasRom(ROMType_BASIC)) return false;
             
-            RomFile *file = RomFile::makeWithBuffer(mem.rom + 0xA000, 0x2000);
+            // RomFile *file = RomFile::makeWithBuffer(mem.rom + 0xA000, 0x2000);
+            RomFile *file = RomFile::make <RomFile> (mem.rom + 0xA000, 0x2000);
             return file && file->writeToFile(path);
         }
         case ROMType_CHAR:
         {
             if (!hasRom(ROMType_CHAR)) return false;
             
-            RomFile *file = RomFile::makeWithBuffer(mem.rom + 0xD000, 0x1000);
+            // RomFile *file = RomFile::makeWithBuffer(mem.rom + 0xD000, 0x1000);
+            RomFile *file = RomFile::make <RomFile> (mem.rom + 0xD000, 0x1000);
             return file && file->writeToFile(path);
         }
         case ROMType_KERNAL:
         {
             if (!hasRom(ROMType_KERNAL)) return false;
             
-            RomFile *file = RomFile::makeWithBuffer(mem.rom + 0xE000, 0x2000);
+            // RomFile *file = RomFile::makeWithBuffer(mem.rom + 0xE000, 0x2000);
+            RomFile *file = RomFile::make <RomFile> (mem.rom + 0xE000, 0x2000);
             return file && file->writeToFile(path);
         }
         case ROMType_VC1541:
         {
             if (!hasRom(ROMType_VC1541)) return false;
             
-            RomFile *file = RomFile::makeWithBuffer(drive8.mem.rom, 0x4000);
+            // RomFile *file = RomFile::makeWithBuffer(drive8.mem.rom, 0x4000);
+            RomFile *file = RomFile::make <RomFile> (drive8.mem.rom, 0x4000);
             return file && file->writeToFile(path);
         }
         default: assert(false);

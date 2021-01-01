@@ -150,7 +150,7 @@ AnyFile::readFromBuffer(const u8 *buffer, size_t length, FileError *error)
     
     // Read from buffer
     memcpy(data, buffer, length);
- 
+    
     if (error) *error = ERR_FILE_OK;
     return true;
 }

@@ -1598,12 +1598,14 @@ struct AnyFileWrapper { AnyFile *file; };
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    Snapshot *snapshot = Snapshot::makeWithBuffer((u8 *)buffer, length);
+    // Snapshot *snapshot = Snapshot::makeWithBuffer((u8 *)buffer, length);
+    Snapshot *snapshot = Snapshot::make <Snapshot> ((u8 *)buffer, length);
     return [self make:snapshot];
 }
 + (instancetype) makeWithFile:(NSString *)path
 {
-    Snapshot *snapshot = Snapshot::makeWithFile([path UTF8String]);
+    // Snapshot *snapshot = Snapshot::makeWithFile([path UTF8String]);
+    Snapshot *snapshot = Snapshot::make <Snapshot> ([path UTF8String]);
     return [self make:snapshot];
 }
 + (instancetype) makeWithC64:(C64Proxy *)c64proxy
@@ -1676,13 +1678,15 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype) makeWithFile:(NSString *)path
 {
-    CRTFile *container = CRTFile::makeWithFile([path UTF8String]);
+    // CRTFile *container = CRTFile::makeWithFile([path UTF8String]);
+    CRTFile *container = CRTFile::make <CRTFile> ([path UTF8String]);
     return [self make: container];
 }
 
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    CRTFile *container = CRTFile::makeWithBuffer((const u8 *)buffer, length);
+    // CRTFile *container = CRTFile::makeWithBuffer((const u8 *)buffer, length);
+    CRTFile *container = CRTFile::make <CRTFile> ((const u8 *)buffer, length);
     return [self make: container];
 }
 
@@ -1796,13 +1800,15 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithFile:(NSString *)path
 {
-    T64File *archive = T64File::makeWithFile([path UTF8String]);
+    // T64File *archive = T64File::makeWithFile([path UTF8String]);
+    T64File *archive = T64File::make <T64File> ([path UTF8String]);
     return [self make: archive];
 }
 
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    T64File *archive = T64File::makeWithBuffer((const u8 *)buffer, length);
+    // T64File *archive = T64File::makeWithBuffer((const u8 *)buffer, length);
+    T64File *archive = T64File::make <T64File> ((const u8 *)buffer, length);
     return [self make: archive];
 }
 

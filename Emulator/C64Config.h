@@ -50,7 +50,7 @@ static const int CPU_DEBUG       = 0; // CPU
 static const int IRQ_DEBUG       = 0; // Interrupts
 
 // Memory
-static const int MEM_DEBUG       = 0; // RAM, ROM
+static const int MEM_DEBUG       = 1; // RAM, ROM
 
 // CIAs
 static const int CIA_DEBUG       = 0; // Complex Interface Adapter
