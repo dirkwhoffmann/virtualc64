@@ -171,7 +171,6 @@
 		50A077F8258A18B9005ACF5B /* FSDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A077F6258A18B9005ACF5B /* FSDevice.cpp */; };
 		50A077FE258A1ADF005ACF5B /* FSBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A077FC258A1ADF005ACF5B /* FSBlock.cpp */; };
 		50A0B48D24C1CAEB00FF0B0B /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50A0B48C24C1CAEB00FF0B0B /* Preferences.xib */; };
-		50A0B48F24C1D15300FF0B0B /* MediaPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A0B48E24C1D15300FF0B0B /* MediaPrefs.swift */; };
 		50A0E0210A8F33120067714C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A0E0200A8F33120067714C /* IOKit.framework */; };
 		50A0E0250A8F332A0067714C /* System.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A0E0240A8F332A0067714C /* System.framework */; };
 		50A519411B8DA230006771E2 /* drive_click.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519401B8DA230006771E2 /* drive_click.aiff */; };
@@ -544,7 +543,6 @@
 		50A077FC258A1ADF005ACF5B /* FSBlock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSBlock.cpp; sourceTree = "<group>"; };
 		50A077FD258A1ADF005ACF5B /* FSBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSBlock.h; sourceTree = "<group>"; };
 		50A0B48C24C1CAEB00FF0B0B /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
-		50A0B48E24C1D15300FF0B0B /* MediaPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPrefs.swift; sourceTree = "<group>"; };
 		50A0E0200A8F33120067714C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		50A0E0240A8F332A0067714C /* System.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = System.framework; path = /System/Library/Frameworks/System.framework; sourceTree = "<absolute>"; };
 		50A2D7AE24AF944500671F38 /* C64Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Constants.h; sourceTree = "<group>"; };
@@ -1211,7 +1209,6 @@
 				5002FA8021C2654B00DA4BBC /* ControlsPrefs.swift */,
 				50CCE178259DFD7800481E7F /* DevicesPrefs.swift */,
 				5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */,
-				50A0B48E24C1D15300FF0B0B /* MediaPrefs.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -1490,7 +1487,6 @@
 				504C439E24AF29AC00E69CAE /* ReSID.cpp in Sources */,
 				50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */,
 				50D5F88624F52A300062EF13 /* DiskDataView.swift in Sources */,
-				50A0B48F24C1D15300FF0B0B /* MediaPrefs.swift in Sources */,
 				504C439B24AF29AC00E69CAE /* extfilt.cc in Sources */,
 				508081EC2511206D0084B060 /* StructuredBasic.cpp in Sources */,
 				504C437124AF29AC00E69CAE /* CartridgeRom.cpp in Sources */,

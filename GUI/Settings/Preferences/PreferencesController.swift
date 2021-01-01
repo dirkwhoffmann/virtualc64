@@ -144,28 +144,6 @@ class PreferencesController: DialogController {
     @IBOutlet weak var keyOkButton: NSButton!
     @IBOutlet weak var keyPowerButton: NSButton!
     
-    //
-    // Media files
-    //
-    
-    @IBOutlet weak var medD64Popup: NSPopUpButton!
-    @IBOutlet weak var medPrgPopup: NSPopUpButton!
-    @IBOutlet weak var medT64Popup: NSPopUpButton!
-    @IBOutlet weak var medTapPopup: NSPopUpButton!
-    @IBOutlet weak var medCrtPopup: NSPopUpButton!
-
-    @IBOutlet weak var medD64AutoTypeButton: NSButton!
-    @IBOutlet weak var medPrgAutoTypeButton: NSButton!
-    @IBOutlet weak var medT64AutoTypeButton: NSButton!
-    @IBOutlet weak var medTapAutoTypeButton: NSButton!
-    @IBOutlet weak var medCrtAutoTypeButton: NSButton!
-
-    @IBOutlet weak var medD64AutoTypeText: NSTextField!
-    @IBOutlet weak var medPrgAutoTypeText: NSTextField!
-    @IBOutlet weak var medT64AutoTypeText: NSTextField!
-    @IBOutlet weak var medTapAutoTypeText: NSTextField!
-    @IBOutlet weak var medCrtAutoTypeText: NSTextField!
-
     // The tab to open first
     var firstTab: String?
 
@@ -196,7 +174,6 @@ class PreferencesController: DialogController {
             case "Emulator": refreshEmulatorTab()
             case "Controls": refreshControlsTab()
             case "Keyboard": refreshKeyboardTab()
-            case "Media": refreshMediaTab()
             default: break
             }
         }
@@ -251,12 +228,7 @@ extension PreferencesController: NSTextFieldDelegate {
                 if formatter?.number(from: view.stringValue) != nil {
                     emuSnapshotIntervalAction(view)
                 }
-                
-            case medD64AutoTypeText, medPrgAutoTypeText, medT64AutoTypeText,
-                 medTapAutoTypeText, medCrtAutoTypeText:
-                
-                medAutoTextAction(view)
-                
+
             case conAutofireBullets:
                 
                 if formatter?.number(from: view.stringValue) != nil {

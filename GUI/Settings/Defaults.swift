@@ -61,7 +61,6 @@ extension UserDefaults {
         registerGeneralUserDefaults()
         registerControlsUserDefaults()
         registerKeyboardUserDefaults()
-        registerMediaUserDefaults()
         
         registerRomUserDefaults()
         registerHardwareUserDefaults()
@@ -82,7 +81,6 @@ extension MyController {
         pref.loadGeneralUserDefaults()
         pref.loadControlsUserDefaults()
         pref.loadKeyboardUserDefaults()
-        pref.loadMediaUserDefaults()
         
         config.loadRomUserDefaults()
         config.loadHardwareUserDefaults()
@@ -463,83 +461,6 @@ extension UserDefaults {
         
         let keys = [ Keys.Kbd.mapKeysByPosition,
                      Keys.Kbd.keyMap
-        ]
-        
-        for key in keys { defaults.removeObject(forKey: key) }
-    }
-}
-
-//
-// User defaults (Media)
-//
-
-extension Keys {
-    
-    struct Med {
-        
-        // Media files
-        static let mountAction          = "VC64_MED_AutoMountAction"
-        static let autoType             = "VC64_MED_AutoType"
-        static let autoText             = "VC64_MED_AutoText"
-    }
-}
-
-struct MediaDefaults {
-    
-    // Media files
-    let mountAction: [String: AutoMountAction]
-    let autoType: [String: Bool]
-    let autoText: [String: String]
-   
-    //
-    // Schemes
-    //
-    
-    static let stdAutoMountAction = [ "D64": AutoMountAction.openBrowser,
-                                      "PRG": AutoMountAction.openBrowser,
-                                      "T64": AutoMountAction.openBrowser,
-                                      "TAP": AutoMountAction.openBrowser,
-                                      "CRT": AutoMountAction.openBrowser ]
-    
-    static let stdAutoType        = [ "D64": true,
-                                      "PRG": true,
-                                      "T64": true,
-                                      "TAP": true,
-                                      "CRT": false ]
-    
-    static let stdAutoText        = [ "D64": "LOAD \"*\",8,1:",
-                                      "PRG": "RUN",
-                                      "T64": "RUN",
-                                      "TAP": "LOAD",
-                                      "CRT": "" ]
-
-    static let std = MediaDefaults.init(
-        
-        mountAction: stdAutoMountAction,
-        autoType: stdAutoType,
-        autoText: stdAutoText
-    )
-}
-
-extension UserDefaults {
-    
-    static func registerMediaUserDefaults() {
-        
-        let defaults = MediaDefaults.std
-                
-        let userDefaults = UserDefaults.standard
-        userDefaults.register(encodableItem: defaults.mountAction, forKey: Keys.Med.mountAction)
-        userDefaults.register(encodableItem: defaults.autoType, forKey: Keys.Med.autoType)
-        userDefaults.register(encodableItem: defaults.autoText, forKey: Keys.Med.autoText)
-    }
-
-    static func resetMediaDefaults() {
-        
-        let defaults = UserDefaults.standard
-        
-        let keys = [Keys.Med.mountAction,
-                    Keys.Med.autoType,
-                    Keys.Med.autoText
         ]
         
         for key in keys { defaults.removeObject(forKey: key) }

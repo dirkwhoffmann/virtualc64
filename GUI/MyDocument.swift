@@ -250,50 +250,8 @@ class MyDocument: NSDocument {
         // If the attachment is a snapshot, flash it and return
         if let s = attachment as? SnapshotProxy { c64.flash(s); return true }
 
-        // Determine the action to perform and the text to type
-        let key = attachment!.typeString()!
-        let action = parent.pref.mountAction[key] ?? AutoMountAction.openBrowser
-
-        // If the action is to open the media dialog, open it and return
-        if action == .openBrowser { runMountDialog(); return true }
-
-        // Determine if a text should be typed
-        let type = parent.pref.autoType[key] ?? false
-        let text = type ? parent.pref.autoText[key] : nil
-        
-        /* Determine when the action should be performed. Background: If the
-         * emulator has just been startet, we have to wait until the startup
-         * procedure has been executed. Otherwise, the Kernal would ignore
-         * everything we do here.
-         */
-        let delay = (c64.cpu.cycle() < 3000000) ? 2.0 : 0.0
-
-        // Execute the action asynchronously
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
-            self.mountAttachment(action: action, text: text)
-        })
-        
+        runMountDialog()
         return true
-    }
-    
-    func mountAttachment(action: AutoMountAction, text: String?) {
-        
-        // Perform action
-        track("Action = \(action)")
-        switch action {
-        case .openBrowser: runMountDialog()
-        case .insertIntoDrive8: mountAttachmentAsDisk(drive: .DRIVE8)
-        case .insertIntoDrive9: mountAttachmentAsDisk(drive: .DRIVE9)
-        case .flashFirstFile: flashAttachmentIntoMemory()
-        case .insertIntoDatasette: mountAttachmentAsTape()
-        case .attachToExpansionPort: do { try mountAttachmentAsCartridge() } catch { }
-        }
-        
-        // Type text
-        if text != nil {
-            track("Auto typing: \(text!)")
-            myController?.keyboard.type(text! + "\n")
-        }
     }
     
     func runMountDialog() {

@@ -29,53 +29,45 @@ class Preferences {
     var driveBlankDiskFormatIntValue: Int {
         get { return Int(driveBlankDiskFormat.rawValue) }
         set { driveBlankDiskFormat = FSType.init(rawValue: newValue) ?? .NODOS }
-     }
-     var driveEjectUnasked = GeneralDefaults.std.driveEjectUnasked
-     var driveSounds = GeneralDefaults.std.driveSounds
-     var driveSoundPan = GeneralDefaults.std.driveSoundPan
-     var driveInsertSound = GeneralDefaults.std.driveInsertSound
-     var driveEjectSound = GeneralDefaults.std.driveEjectSound
-     var driveHeadSound = GeneralDefaults.std.driveHeadSound
-     var driveConnectSound = GeneralDefaults.std.driveConnectSound
-     
-     // Fullscreen
-     var keepAspectRatio = GeneralDefaults.std.keepAspectRatio
-     var exitOnEsc = GeneralDefaults.std.exitOnEsc
-         
-     // Snapshots and screenshots
-     var autoSnapshots = GeneralDefaults.std.autoSnapshots
-     var snapshotInterval = 0 {
-         didSet { for c in myAppDelegate.controllers { c.startSnapshotTimer() } }
-     }
-     var autoScreenshots = GeneralDefaults.std.autoScreenshots
-
+    }
+    var driveEjectUnasked = GeneralDefaults.std.driveEjectUnasked
+    var driveSounds = GeneralDefaults.std.driveSounds
+    var driveSoundPan = GeneralDefaults.std.driveSoundPan
+    var driveInsertSound = GeneralDefaults.std.driveInsertSound
+    var driveEjectSound = GeneralDefaults.std.driveEjectSound
+    var driveHeadSound = GeneralDefaults.std.driveHeadSound
+    var driveConnectSound = GeneralDefaults.std.driveConnectSound
+    
+    // Fullscreen
+    var keepAspectRatio = GeneralDefaults.std.keepAspectRatio
+    var exitOnEsc = GeneralDefaults.std.exitOnEsc
+    
+    // Snapshots and screenshots
+    var autoSnapshots = GeneralDefaults.std.autoSnapshots
+    var snapshotInterval = 0 {
+        didSet { for c in myAppDelegate.controllers { c.startSnapshotTimer() } }
+    }
+    var autoScreenshots = GeneralDefaults.std.autoScreenshots
+    
     var screenshotSource = GeneralDefaults.std.screenshotSource
-     var screenshotTarget = GeneralDefaults.std.screenshotTarget
-     var screenshotTargetIntValue: Int {
-         get { return Int(screenshotTarget.rawValue) }
-         set { screenshotTarget = NSBitmapImageRep.FileType(rawValue: UInt(newValue))! }
-     }
-     
-     // Warp mode
-     var warpMode = GeneralDefaults.std.warpMode {
-         didSet { for c in myAppDelegate.controllers { c.updateWarp() } }
-     }
-     var warpModeIntValue: Int {
-         get { return Int(warpMode.rawValue) }
-         set { warpMode = WarpMode.init(rawValue: newValue)! }
-     }
-     
-     // Misc
-     var closeWithoutAsking = GeneralDefaults.std.closeWithoutAsking
-     var pauseInBackground = GeneralDefaults.std.pauseInBackground
+    var screenshotTarget = GeneralDefaults.std.screenshotTarget
+    var screenshotTargetIntValue: Int {
+        get { return Int(screenshotTarget.rawValue) }
+        set { screenshotTarget = NSBitmapImageRep.FileType(rawValue: UInt(newValue))! }
+    }
     
-    //
-    // Media
-    //
+    // Warp mode
+    var warpMode = GeneralDefaults.std.warpMode {
+        didSet { for c in myAppDelegate.controllers { c.updateWarp() } }
+    }
+    var warpModeIntValue: Int {
+        get { return Int(warpMode.rawValue) }
+        set { warpMode = WarpMode.init(rawValue: newValue)! }
+    }
     
-    var mountAction: [String: AutoMountAction] = MediaDefaults.std.mountAction
-    var autoType: [String: Bool] = MediaDefaults.std.autoType
-    var autoText: [String: String] = MediaDefaults.std.autoText
+    // Misc
+    var closeWithoutAsking = GeneralDefaults.std.closeWithoutAsking
+    var pauseInBackground = GeneralDefaults.std.pauseInBackground
     
     //
     // Controls
@@ -197,7 +189,7 @@ class Preferences {
     //
     // Controls
     //
-        
+    
     func loadControlsUserDefaults() {
         
         let defaults = UserDefaults.standard
@@ -233,7 +225,7 @@ class Preferences {
     //
     // Keyboard
     //
-
+    
     func loadKeyboardUserDefaults() {
         
         let defaults = UserDefaults.standard
@@ -246,27 +238,5 @@ class Preferences {
         let defaults = UserDefaults.standard
         defaults.encode(keyMap, forKey: Keys.Kbd.keyMap)
         defaults.set(mapKeysByPosition, forKey: Keys.Kbd.mapKeysByPosition)
-    }
-    
-    //
-    // Media
-    //
-    
-    func loadMediaUserDefaults() {
-        
-        let defaults = UserDefaults.standard
-        
-        defaults.decode(&mountAction, forKey: Keys.Med.mountAction)
-        defaults.decode(&autoType, forKey: Keys.Med.autoType)
-        defaults.decode(&autoText, forKey: Keys.Med.autoText)
-    }
-    
-    func saveMediaUserDefaults() {
-        
-        let defaults = UserDefaults.standard
-        
-        defaults.encode(mountAction, forKey: Keys.Med.mountAction)
-        defaults.encode(autoType, forKey: Keys.Med.autoType)
-        defaults.encode(autoText, forKey: Keys.Med.autoText)
     }
 }
