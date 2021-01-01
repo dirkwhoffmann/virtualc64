@@ -368,7 +368,7 @@ public:
     Message getMessage() { return messageQueue.get(); }
     
     // Feeds a notification message into message queue
-    void putMessage(MessageType msg, u64 data = 0) { messageQueue.put(msg, data); }
+    void putMessage(MSG msg, u64 data = 0) { messageQueue.put(msg, data); }
     
     
  

@@ -12,7 +12,7 @@
 #ifndef _MESSAGE_QUEUE_T_H
 #define _MESSAGE_QUEUE_T_H
 
-enum_long(MessageType)
+enum_long(MSG)
 {
     MSG_NONE = 0,
     
@@ -91,7 +91,7 @@ enum_long(MessageType)
 
 typedef struct
 {
-    MessageType type;
+    MSG type;
     long data;
 }
 Message;
