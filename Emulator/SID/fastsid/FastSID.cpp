@@ -159,8 +159,8 @@ FastSID::_dump()
     SIDInfo info = getInfo();
 
     msg("    Chip model: %s\n",
-        (model == SIDRev_MOS6581) ? "6581" :
-        (model == SIDRev_MOS8580) ? "8580" : "???");
+        (model == MOS_6581) ? "6581" :
+        (model == MOS_8580) ? "8580" : "???");
     msg(" Sampling rate: %d\n", sampleRate);
     msg(" CPU frequency: %d\n", cpuFrequency);
     msg("Emulate filter: %s\n", emulateFilter ? "yes" : "no");

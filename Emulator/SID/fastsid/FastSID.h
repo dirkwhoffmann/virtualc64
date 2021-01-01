@@ -63,7 +63,7 @@ public:
 private:
             
     // Chip model
-    SIDRev model = SIDRev_MOS6581;
+    SIDRev model = MOS_6581;
     
     // Current CPU frequency
     u32 cpuFrequency = PAL_CLOCK_FREQUENCY;

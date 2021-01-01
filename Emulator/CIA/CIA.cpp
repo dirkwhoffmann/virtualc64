@@ -50,7 +50,7 @@ CIA::setConfigItem(Option option, long value)
             
         case Option_CIA_REVISION:
             
-            if (!isCIARevision(value)) {
+            if (!isCIARev(value)) {
                 warn("Invalid CIA revision: %ld\n", value);
                 return false;
             }
@@ -58,7 +58,7 @@ CIA::setConfigItem(Option option, long value)
                 return false;
             }
             
-            config.revision = (CIARevision)value;
+            config.revision = (CIARev)value;
             return true;
             
         case Option_TIMER_B_BUG:

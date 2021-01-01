@@ -115,7 +115,7 @@ void
 FastVoice::updateWaveTablePtr()
 {
     SIDRev revision = fastsid->getRevision();
-    assert(revision == SIDRev_MOS6581 || revision == SIDRev_MOS8580);
+    assert(revision == MOS_6581 || revision == MOS_8580);
     
     unsigned offset;
     switch (waveform()) {

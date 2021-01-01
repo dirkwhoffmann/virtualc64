@@ -549,7 +549,7 @@ struct HardwareDefaults {
     var vicRevision: VICRev
     var vicGrayDotBug: Bool
     
-    var ciaRevision: CIARevision
+    var ciaRevision: CIARev
     var ciaTimerBBug: Bool
     
     var sidRevision: SIDRev
@@ -576,7 +576,7 @@ struct HardwareDefaults {
         ciaRevision:   .MOS_6526,
         ciaTimerBBug:  true,
         
-        sidRevision:   ._MOS6581,
+        sidRevision:   .MOS_6581,
         sidFilter:     true,
         sidEnable1:    false,
         sidEnable2:    false,
@@ -597,7 +597,7 @@ struct HardwareDefaults {
         ciaRevision:   .MOS_8521,
         ciaTimerBBug:  false,
         
-        sidRevision:   ._MOS8580,
+        sidRevision:   .MOS_8580,
         sidFilter:     true,
         sidEnable1:    false,
         sidEnable2:    false,
@@ -618,7 +618,7 @@ struct HardwareDefaults {
         ciaRevision:   .MOS_6526,
         ciaTimerBBug:  true,
         
-        sidRevision:   ._MOS6581,
+        sidRevision:   .MOS_6581,
         sidFilter:     true,
         sidEnable1:    false,
         sidEnable2:    false,
@@ -639,7 +639,7 @@ struct HardwareDefaults {
         ciaRevision:   .MOS_6526,
         ciaTimerBBug:  false,
         
-        sidRevision:   ._MOS6581,
+        sidRevision:   .MOS_6581,
         sidFilter:     true,
         sidEnable1:    false,
         sidEnable2:    false,
@@ -660,7 +660,7 @@ struct HardwareDefaults {
         ciaRevision:   .MOS_8521,
         ciaTimerBBug:  true,
         
-        sidRevision:   ._MOS8580,
+        sidRevision:   .MOS_8580,
         sidFilter:     true,
         sidEnable1:    false,
         sidEnable2:    false,
@@ -681,7 +681,7 @@ struct HardwareDefaults {
         ciaRevision:   .MOS_6526,
         ciaTimerBBug:  false,
         
-        sidRevision:   ._MOS6581,
+        sidRevision:   .MOS_6581,
         sidFilter:     true,
         sidEnable1:    false,
         sidEnable2:    false,

@@ -16,13 +16,13 @@
 
 enum_long(SIDRev)
 {
-    SIDRev_MOS6581,
-    SIDRev_MOS8580
+    MOS_6581,
+    MOS_8580
 };
 
 inline bool isSIDRev(long value)
 {
-    return (unsigned long)value <= SIDRev_MOS8580;
+    return (unsigned long)value <= MOS_8580;
 }
 
 inline const char *SIDRevName(SIDRev type)
@@ -31,9 +31,9 @@ inline const char *SIDRevName(SIDRev type)
     
     switch (type) {
             
-        case SIDRev_MOS6581:  return "MOS_6581";
-        case SIDRev_MOS8580:  return "MOS_8580";
-        default:              return "???";
+        case MOS_6581:  return "MOS_6581";
+        case MOS_8580:  return "MOS_8580";
+        default:        return "???";
     }
 }
 

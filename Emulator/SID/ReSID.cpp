@@ -11,7 +11,7 @@
 
 ReSID::ReSID(C64 &ref, SIDBridge &bridgeref, int n) : C64Component(ref), bridge(bridgeref), nr(n)
 {
-    model = SIDRev_MOS6581;
+    model = MOS_6581;
     emulateFilter = true;
     sampleRate = 44100;
 

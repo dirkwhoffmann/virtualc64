@@ -7,32 +7,31 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _CIA_T_H
-#define _CIA_T_H
+#ifndef _CIA_TYPES_H
+#define _CIA_TYPES_H
 
 //
 // Enumerations
 //
 
-enum_long(CIARevision)
+enum_long(CIARev)
 {
     MOS_6526,
     MOS_8521
 };
 
-inline bool
-isCIARevision(long value)
+inline bool isCIARev(long value)
 {
-    return value == MOS_6526 || value == MOS_8521;
+    return (unsigned long)value <= MOS_8521;
 }
 
-inline const char *
-ciaRevisionName(CIARevision type)
+inline const char * CIARevisionName(CIARev value)
 {    
-    switch (type) {
-        case MOS_6526: return "MOS_6526";
-        case MOS_8521: return "MOS_8521";
-        default:       return "???";
+    switch (value) {
+            
+        case MOS_6526:  return "MOS_6526";
+        case MOS_8521:  return "MOS_8521";
+        default:        return "???";
     }
 }
 
@@ -42,7 +41,7 @@ ciaRevisionName(CIARevision type)
 
 typedef struct
 {
-    CIARevision revision;
+    CIARev revision;
     bool timerBBug;
 }
 CIAConfig;
