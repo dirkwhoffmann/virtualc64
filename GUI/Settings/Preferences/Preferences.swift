@@ -28,7 +28,7 @@ class Preferences {
     var driveBlankDiskFormat = GeneralDefaults.std.driveBlankDiskFormat
     var driveBlankDiskFormatIntValue: Int {
         get { return Int(driveBlankDiskFormat.rawValue) }
-        set { driveBlankDiskFormat = FSType.init(rawValue: newValue) ?? .NODOS }
+        set { driveBlankDiskFormat = DOSType.init(rawValue: newValue) ?? .NODOS }
     }
     var driveEjectUnasked = GeneralDefaults.std.driveEjectUnasked
     var driveSounds = GeneralDefaults.std.driveSounds

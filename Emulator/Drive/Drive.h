@@ -343,8 +343,8 @@ public:
      * and pushing the new disk halfway in before it is inserted completely.
      */
     void insertDisk(Disk *otherDisk);
-    void insertNewDisk(FSType fstype);
-    void insertNewDisk(FSType fstype, PETName<16> name);
+    void insertNewDisk(DOSType fstype);
+    void insertNewDisk(DOSType fstype, PETName<16> name);
     void insertFileSystem(class FSDevice *device);
     void insertD64(D64File *d64);
     void insertG64(G64File *g64);

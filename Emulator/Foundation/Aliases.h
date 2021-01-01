@@ -12,9 +12,7 @@
 
 #include "C64Config.h"
 #include <assert.h>
-// #include <stdint.h>
 #include <sys/types.h>
-// #include <stddef.h>
 
 //
 // Basic types

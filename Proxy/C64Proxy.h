@@ -585,7 +585,7 @@ struct AnyC64FileWrapper;
 - (BOOL) hasDisk;
 - (BOOL) hasModifiedDisk;
 - (void) setModifiedDisk:(BOOL)b;
-- (void) insertNewDisk:(FSType)fstype;
+- (void) insertNewDisk:(DOSType)fstype;
 - (void) insertD64:(D64FileProxy *)disk;
 - (void) insertFileSystem:(FSDeviceProxy *)proxy;
 - (void) insertCollection:(AnyCollectionProxy *)disk;
@@ -912,7 +912,7 @@ struct AnyC64FileWrapper;
 + (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy;
 
 @property (readonly) struct FSDeviceWrapper *wrapper;
-@property (readonly) FSType dos;
+@property (readonly) DOSType dos;
 @property (readonly) NSInteger numCyls;
 @property (readonly) NSInteger numHeads;
 @property (readonly) NSInteger numTracks;
@@ -933,7 +933,7 @@ struct AnyC64FileWrapper;
 - (NSInteger)blockNr:(TSLink)ts;
 
 - (FSBlockType)blockType:(NSInteger)blockNr;
-- (FSItemType)itemType:(NSInteger)blockNr pos:(NSInteger)pos;
+- (FSUsage)itemType:(NSInteger)blockNr pos:(NSInteger)pos;
 - (FSErrorReport)check:(BOOL)strict;
 - (FSError)check:(NSInteger)nr pos:(NSInteger)pos expected:(unsigned char *)exp strict:(BOOL)strict;
 - (BOOL)isCorrupted:(NSInteger)blockNr;

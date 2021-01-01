@@ -21,9 +21,9 @@ FSBlock::type()
     device.layout.translateBlockNr(nr, &t, &s);
     
     if (t == 18) {
-        return s == 0 ? FS_BAM_BLOCK : FS_DIR_BLOCK;
+        return s == 0 ? FSBlockType_BAM : FSBlockType_DIR;
     } else {
-        return FS_DATA_BLOCK;
+        return FSBlockType_DATA;
     }
 }
 
@@ -102,64 +102,64 @@ FSBlock::dump()
     
 }
 
-FSItemType
+FSUsage
 FSBlock::itemType(u32 byte)
 {
     switch (type()) {
             
-        case FS_BAM_BLOCK:
+        case FSBlockType_BAM:
             
             switch (byte) {
                     
-                case 0x00: return FSI_FIRST_DIR_TRACK;
-                case 0x01: return FSI_FIRST_DIR_SECTOR;
-                case 0x02: return FSI_DOS_VERSION;
-                case 0xA2: return FSI_DISK_ID;
-                case 0xA3: return FSI_DISK_ID;
-                case 0xA5: return FSI_DOS_TYPE;
-                case 0xA6: return FSI_DOS_TYPE;
+                case 0x00: return FSUsage_FIRST_DIR_TRACK;
+                case 0x01: return FSUsage_FIRST_DIR_SECTOR;
+                case 0x02: return FSUsage_DOS_VERSION;
+                case 0xA2: return FSUsage_DISK_ID;
+                case 0xA3: return FSUsage_DISK_ID;
+                case 0xA5: return FSUsage_DOS_TYPE;
+                case 0xA6: return FSUsage_DOS_TYPE;
             }
-            if (byte >= 0x04 && byte <= 0x8F) return FSI_ALLOCATION_BITS;
-            if (byte >= 0x90 && byte <= 0x9F) return FSI_DISK_NAME;
+            if (byte >= 0x04 && byte <= 0x8F) return FSUsage_ALLOCATION_BITS;
+            if (byte >= 0x90 && byte <= 0x9F) return FSUsage_DISK_NAME;
 
-            return FSI_UNUSED;
+            return FSUsage_UNUSED;
 
-        case FS_DIR_BLOCK:
+        case FSBlockType_DIR:
             
-            if (byte == 0) return FSI_TRACK_LINK;
-            if (byte == 1) return FSI_SECTOR_LINK;
+            if (byte == 0) return FSUsage_TRACK_LINK;
+            if (byte == 1) return FSUsage_SECTOR_LINK;
 
             byte &= 0x1F;
             
             switch (byte) {
                     
-                case 0x02: return FSI_FILE_TYPE;
-                case 0x03: return FSI_FIRST_FILE_TRACK;
-                case 0x04: return FSI_FIRST_FILE_SECTOR;
-                case 0x15: return FSI_FIRST_REL_TRACK;
-                case 0x16: return FSI_FIRST_REL_SECTOR;
-                case 0x17: return FSI_REL_RECORD_LENGTH;
-                case 0x1E: return FSI_FILE_LENGTH_LO;
-                case 0x1F: return FSI_FILE_LENGTH_HI;
+                case 0x02: return FSUsage_FILE_TYPE;
+                case 0x03: return FSUsage_FIRST_FILE_TRACK;
+                case 0x04: return FSUsage_FIRST_FILE_SECTOR;
+                case 0x15: return FSUsage_FIRST_REL_TRACK;
+                case 0x16: return FSUsage_FIRST_REL_SECTOR;
+                case 0x17: return FSUsage_REL_RECORD_LENGTH;
+                case 0x1E: return FSUsage_FILE_LENGTH_LO;
+                case 0x1F: return FSUsage_FILE_LENGTH_HI;
             }
             
-            if (byte >= 0x05 && byte <= 0x14) return FSI_FILE_NAME;
-            if (byte >= 0x18 && byte <= 0x1D) return FSI_GEOS;
+            if (byte >= 0x05 && byte <= 0x14) return FSUsage_FILE_NAME;
+            if (byte >= 0x18 && byte <= 0x1D) return FSUsage_GEOS;
 
-            return FSI_UNUSED;
+            return FSUsage_UNUSED;
             
-        case FS_DATA_BLOCK:
+        case FSBlockType_DATA:
             
-            if (byte == 0) return FSI_TRACK_LINK;
-            if (byte == 1) return FSI_SECTOR_LINK;
+            if (byte == 0) return FSUsage_TRACK_LINK;
+            if (byte == 1) return FSUsage_SECTOR_LINK;
             
-            return FSI_DATA;
+            return FSUsage_DATA;
             
         default:
             assert(false);
     }
     
-    return FSI_UNKNOWN;
+    return FSUsage_UNKNOWN;
 }
 
 FSError
@@ -170,7 +170,7 @@ FSBlock::check(u32 byte, u8 *expected, bool strict)
 
     switch (type()) {
             
-        case FS_BAM_BLOCK:
+        case FSBlockType_BAM:
             
             switch (byte) {
                     
@@ -190,9 +190,9 @@ FSBlock::check(u32 byte, u8 *expected, bool strict)
             
             if (strict && byte >= 0xAB && byte <= 0xFF) EXPECT_BYTE(0x00);
 
-            return FS_OK;
+            return FSError_OK;
             
-        case FS_DIR_BLOCK:
+        case FSBlockType_DIR:
             
             if (byte == 0) EXPECT_TRACK_REF (data[byte + 1]);
             if (byte == 1) EXPECT_SECTOR_REF(data[byte - 1]);
@@ -209,20 +209,20 @@ FSBlock::check(u32 byte, u8 *expected, bool strict)
                 }
             }
             
-            return FS_OK;
+            return FSError_OK;
             
-        case FS_DATA_BLOCK:
+        case FSBlockType_DATA:
             
             if (byte == 0 && strict) EXPECT_TRACK_REF (data[byte + 1]);
             if (byte == 1 && strict) EXPECT_SECTOR_REF(data[byte - 1]);
 
-            return FS_OK;
+            return FSError_OK;
             
         default:
             assert(false);
     }
     
-    return FS_OK;
+    return FSError_OK;
 }
 
 unsigned
@@ -234,7 +234,7 @@ FSBlock::check(bool strict)
     
     for (u32 i = 0; i < 256; i++) {
         
-        if ((error = check(i, &expected, strict)) != FS_OK) {
+        if ((error = check(i, &expected, strict)) != FSError_OK) {
             count++;
             debug(FS_DEBUG, "Block %d [%d.%d]: %s\n", nr, i / 4, i % 4, sFSError(error));
         }

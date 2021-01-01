@@ -419,14 +419,14 @@ Drive::insertDisk(Disk *otherDisk)
 }
 
 void
-Drive::insertNewDisk(FSType fsType)
+Drive::insertNewDisk(DOSType fsType)
 {
     PETName<16> name = PETName<16>("NEW DISK");
     insertNewDisk(fsType, name);
 }
 
 void
-Drive::insertNewDisk(FSType fsType, PETName<16> name)
+Drive::insertNewDisk(DOSType fsType, PETName<16> name)
 {
     Disk *newDisk = Disk::make(c64, fsType, name);
     insertDisk(newDisk);

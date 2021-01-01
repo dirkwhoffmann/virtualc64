@@ -18,12 +18,12 @@ FSDevice::makeWithFormat(FSDeviceDescriptor &layout)
 }
 
 FSDevice *
-FSDevice::makeWithType(DiskType type, FSType vType)
+FSDevice::makeWithType(DiskType type, DOSType vType)
 {
     FSDeviceDescriptor layout = FSDeviceDescriptor(type);
     FSDevice *fileSystem = makeWithFormat(layout);
     
-    if (vType != FS_NODOS) {
+    if (vType != DOSType_NODOS) {
         fileSystem->blockPtr(18,0)->writeBAM();
     }
     
@@ -68,7 +68,7 @@ FSDevice::makeWithDisk(class Disk *disk, FSError *err)
         case D64_802_SECTORS: descriptor.numCyls = 42; break;
 
         default:
-            *err = FS_CORRUPTED;
+            *err = FSError_CORRUPTED;
             return nullptr;
     }
         
@@ -130,7 +130,7 @@ FSDevice::makeWithFolder(const char *path, FSError *error)
     
     // Import the folder
     if (!device->importDirectory(path)) {
-        *error = FS_IMPORT_ERROR;
+        *error = FSError_IMPORT_ERROR;
         delete device;
         return nullptr;
     }
@@ -214,13 +214,13 @@ FSDevice::numUsedBlocks()
 FSBlockType
 FSDevice::blockType(u32 nr)
 {
-    return blockPtr(nr) ? blocks[nr]->type() : FS_UNKNOWN_BLOCK;
+    return blockPtr(nr) ? blocks[nr]->type() : FSBlockType_UNKNOWN;
 }
 
-FSItemType
+FSUsage
 FSDevice::itemType(u32 nr, u32 pos)
 {
-    return blockPtr(nr) ? blocks[nr]->itemType(pos) : FSI_UNUSED;
+    return blockPtr(nr) ? blocks[nr]->itemType(pos) : FSUsage_UNUSED;
 }
 
 FSBlock *
@@ -774,7 +774,7 @@ FSDevice::importVolume(const u8 *src, size_t size, FSError *error)
     // Only proceed if the buffer size matches
     if (blocks.size() * 256 != size) {
         warn("BUFFER SIZE MISMATCH (%lu %lu)\n", blocks.size(), blocks.size() * 256);
-        if (error) *error = FS_WRONG_CAPACITY;
+        if (error) *error = FSError_WRONG_CAPACITY;
         return false;
     }
         
@@ -785,7 +785,7 @@ FSDevice::importVolume(const u8 *src, size_t size, FSError *error)
         blocks[i]->importBlock(data);
     }
     
-    if (error) *error = FS_OK;
+    if (error) *error = FSError_OK;
 
     // Run a directory scan
     scanDirectory();
@@ -877,7 +877,7 @@ FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, size_t size, FSError *error
 
     // Only proceed if the source buffer contains the right amount of data
     if (count * 256 != size) {
-        if (error) *error = FS_WRONG_CAPACITY;
+        if (error) *error = FSError_WRONG_CAPACITY;
         return false;
     }
         
@@ -892,7 +892,7 @@ FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, size_t size, FSError *error
 
     debug(FS_DEBUG, "Success\n");
     
-    if (error) *error = FS_OK;
+    if (error) *error = FSError_OK;
     return true;
 }
 
@@ -913,7 +913,7 @@ FSDevice::exportDirectory(const char *path, FSError *err)
     // Only proceed if path points to an empty directory
     long numItems = numDirectoryItems(path);
     if (numItems != 0) {
-        if (err) *err = FS_DIRECTORY_NOT_EMPTY;
+        if (err) *err = FSError_DIRECTORY_NOT_EMPTY;
         return false;
     }
     
@@ -930,6 +930,6 @@ FSDevice::exportDirectory(const char *path, FSError *err)
     }
     
     msg("Exported %lu items", dir.size());
-    if (err) *err = FS_OK;
+    if (err) *err = FSError_OK;
     return true;
 }

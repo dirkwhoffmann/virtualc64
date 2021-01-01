@@ -44,7 +44,7 @@ public:
     static FSDevice *makeWithFormat(FSDeviceDescriptor &layout);
 
     // Creates a file system for a standard floppy disk
-    static FSDevice *makeWithType(DiskType type, FSType vType = FS_NODOS);
+    static FSDevice *makeWithType(DiskType type, DOSType vType = DOSType_NODOS);
 
     // Creates a file system from a D64 image
     static FSDevice *makeWithD64(class D64File *d64, FSError *error);
@@ -94,7 +94,7 @@ public:
 public:
     
     // Returns the DOS version of this file system
-    FSType dos() { return layout.dos; }
+    DOSType dos() { return layout.dos; }
     
     // Reports layout information
     u32 getNumCyls() { return layout.numCyls; }
@@ -121,7 +121,7 @@ public:
     FSBlockType blockType(u32 nr);
     
     // Returns the usage type of a certain byte in a certain block
-    FSItemType itemType(u32 nr, u32 pos);
+    FSUsage itemType(u32 nr, u32 pos);
     
     // Queries a pointer from the block storage (may return nullptr)
     FSBlock *blockPtr(Block b);

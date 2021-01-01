@@ -981,7 +981,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return [self make:volume];
 }
 
-- (FSType) dos
+- (DOSType) dos
 {
     return wrapper->device->dos();
 }
@@ -1071,7 +1071,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return wrapper->device->blockType((u32)blockNr);
 }
 
-- (FSItemType) itemType:(NSInteger)blockNr pos:(NSInteger)pos
+- (FSUsage) itemType:(NSInteger)blockNr pos:(NSInteger)pos
 {
     return wrapper->device->itemType((u32)blockNr, (u32)pos);
 }
@@ -1277,7 +1277,7 @@ struct AnyC64FileWrapper { AnyFile *file; };
     wrapper->drive->insertDisk(collection);
 }
 
-- (void) insertNewDisk:(FSType)fsType
+- (void) insertNewDisk:(DOSType)fsType
 {
     wrapper->drive->insertNewDisk(fsType);
 }

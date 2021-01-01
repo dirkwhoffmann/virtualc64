@@ -28,6 +28,9 @@ public:
     // The actual block data
     u8 data[256];
     
+    // Error code (imported from D64 files)
+    u8 error;
+    
     
     //
     // Constructing
@@ -76,7 +79,7 @@ public:
 public:
     
     // Returns the role of a certain byte in this block
-    FSItemType itemType(u32 byte);
+    FSUsage itemType(u32 byte);
 
     // Checks the integrity of a certain byte in this block
     FSError check(u32 byte, u8 *expected, bool strict);
@@ -109,13 +112,13 @@ typedef FSBlock* BlockPtr;
 typedef FSBlock* BlockPtr;
 
 #define EXPECT_BYTE(exp) { \
-if (value != (exp)) { *expected = (exp); return FS_EXPECTED; } }
+if (value != (exp)) { *expected = (exp); return FSError_EXPECTED; } }
 
 #define EXPECT_MIN(min) { \
-if (value < (min)) { *expected = (min); return FS_EXPECTED_MIN; } }
+if (value < (min)) { *expected = (min); return FSError_EXPECTED_MIN; } }
 
 #define EXPECT_MAX(max) { \
-if (value > (max)) { *expected = (max); return FS_EXPECTED_MAX; } }
+if (value > (max)) { *expected = (max); return FSError_EXPECTED_MAX; } }
 
 #define EXPECT_RANGE(min,max) { \
 EXPECT_MIN(min); EXPECT_MAX(max) }

@@ -10,9 +10,9 @@
 // #include "FSDescriptors.h"
 #include "C64.h"
 
-FSDeviceDescriptor::FSDeviceDescriptor(DiskType type, FSType dos)
+FSDeviceDescriptor::FSDeviceDescriptor(DiskType type, DOSType dos)
 {
-    assert(dos == FS_CBM_DOS);
+    assert(dos == DOSType_CBM);
  
     this->dos = dos;
     
