@@ -175,7 +175,7 @@ extension MyDocument {
         alert.runModal()
     }
     
-    func showConfigurationAltert(_ error: ErrorCode) {
+    func showConfigurationAltert(_ error: RomErrorCode) {
         
         var msg: String
         

@@ -128,11 +128,7 @@ enum_long(FileError)
     ERR_UNKNOWN,
     
     // Snapshots
-    ERR_UNSUPPORTED_SNAPSHOT,
-    
-    // Encrypted Roms
-    ERR_MISSING_ROM_KEY,
-    ERR_INVALID_ROM_KEY
+    ERR_UNSUPPORTED_SNAPSHOT    
 };
 
 enum_long(TAPVersion)

@@ -164,10 +164,85 @@ typedef enum
     ERR_ROM_MISSING,
     ERR_ROM_MEGA65_MISMATCH
 }
-ErrorCode;
+RomErrorCode;
 
-inline bool isErrorCode(long value) {
+inline bool isRomErrorCode(long value) {
     return value >= ERR_OK && value <= ERR_ROM_MEGA65_MISMATCH;
+}
+
+enum_long(ErrorCode)
+{
+    Error_OK,
+    Error_UNKNOWN,
+
+    // Memory errors
+    Error_OUT_OF_MEMORY,
+
+    // File errors
+    Error_FILE_NOT_FOUND,
+    Error_INVALID_TYPE,
+    Error_CANT_READ,
+    Error_CANT_WRITE,
+
+    // File system errors
+    Error_UNSUPPORTED,
+    Error_WRONG_CAPACITY,
+    Error_HAS_CYCLES,
+    Error_CORRUPTED,
+    Error_IMPORT_ERROR,
+
+    // Export errors
+    Error_DIRECTORY_NOT_EMPTY,
+    Error_CANNOT_CREATE_DIR,
+    Error_CANNOT_CREATE_FILE,
+
+    // Block errros
+    Error_EXPECTED,
+    Error_EXPECTED_MIN,
+    Error_EXPECTED_MAX,
+            
+    // Snapshot errors
+    Error_UNSUPPORTED_SNAPSHOT
+};
+
+inline bool isErrorCode(long value)
+{
+    return (unsigned long)value <= Error_UNSUPPORTED_SNAPSHOT;
+}
+
+inline const char *ErrorCodeName(ErrorCode value)
+{
+    switch (value) {
+            
+        case Error_OK:                    return "OK";
+        case Error_UNKNOWN:               return "UNKNOWN";
+
+        case Error_OUT_OF_MEMORY:         return "OUT_OF_MEMORY";
+
+        case Error_FILE_NOT_FOUND:        return "FILE_NOT_FOUND";
+        case Error_INVALID_TYPE:          return "INVALID_TYPE";
+        case Error_CANT_READ:             return "CANT_READ";
+        case Error_CANT_WRITE:            return "CANT_WRITE";
+
+        case Error_UNSUPPORTED:           return "UNSUPPORTED";
+        case Error_WRONG_CAPACITY:        return "WRONG_CAPACITY";
+        case Error_HAS_CYCLES:            return "HAS_CYCLES";
+        case Error_CORRUPTED:             return "CORRUPTED";
+        case Error_IMPORT_ERROR:          return "IMPORT_ERROR";
+
+        case Error_DIRECTORY_NOT_EMPTY:   return "DIRECTORY_NOT_EMPTY";
+        case Error_CANNOT_CREATE_DIR:     return "CANNOT_CREATE_DIR";
+        case Error_CANNOT_CREATE_FILE:    return "CANNOT_CREATE_FILE";
+
+        case Error_EXPECTED:              return "EXPECTED";
+        case Error_EXPECTED_MIN:          return "EXPECTED_MIN";
+        case Error_EXPECTED_MAX:          return "EXPECTED_MAX";
+                    
+        case Error_UNSUPPORTED_SNAPSHOT:  return "UNSUPPORTED_SNAPSHOT";
+            
+        default:
+            return isErrorCode(value) ? "<other>" : "???";
+    }
 }
 
 //

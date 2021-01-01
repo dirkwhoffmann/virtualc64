@@ -10,6 +10,13 @@
 #ifndef C64_UTILS_H
 #define C64_UTILS_H
 
+#include "Debug.h"
+#include "Error.h"
+#include "C64Config.h"
+#include "C64Constants.h"
+#include "C64Types.h"
+#include "C64PrivateTypes.h"
+
 #include <limits.h>
 #include <math.h>
 #include <pthread.h>
@@ -23,12 +30,6 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <string>
-
-#include "Debug.h"
-#include "C64Config.h"
-#include "C64Constants.h"
-#include "C64Types.h"
-#include "C64PrivateTypes.h"
 
 using std::string;
 

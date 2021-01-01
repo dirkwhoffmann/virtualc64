@@ -2175,7 +2175,7 @@ struct AnyFileWrapper { AnyFile *file; };
 {
     wrapper->c64->clearInspectionTarget();
 }
-- (BOOL) isReady:(ErrorCode *)error
+- (BOOL) isReady:(RomErrorCode *)error
 {
     return wrapper->c64->isReady(error);
 }

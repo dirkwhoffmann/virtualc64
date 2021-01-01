@@ -762,7 +762,7 @@ C64::acquireThreadLock()
 }
 
 bool
-C64::isReady(ErrorCode *error)
+C64::isReady(RomErrorCode *error)
 {
     if (!hasRom(ROMType_BASIC) || !hasRom(ROMType_CHAR) || !hasRom(ROMType_KERNAL)) {
         if (error) *error = ERR_ROM_MISSING;
