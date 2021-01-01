@@ -34,8 +34,8 @@ public:
     // Constructing
     //
     
-    static PRGFile *makeWithBuffer(const u8 *buffer, size_t length);
-    static PRGFile *makeWithFile(const char *path);
+    // static PRGFile *makeWithBuffer(const u8 *buffer, size_t length);
+    // static PRGFile *makeWithFile(const char *path);
     static PRGFile *makeWithFileSystem(class FSDevice *fs, int item = 0);
 
     

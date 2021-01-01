@@ -12,37 +12,6 @@
 const u8 TAPFile::magicBytes[] = {
     0x43, 0x36, 0x34, 0x2D, 0x54, 0x41, 0x50, 0x45, 0x2D, 0x52, 0x41, 0x57 };
 
-TAPFile::TAPFile()
-{
-    dealloc();
-}
-
-TAPFile *
-TAPFile::makeWithBuffer(const u8 *buffer, size_t length)
-{
-    TAPFile *tape = new TAPFile();
-    
-    if (!tape->oldReadFromBuffer(buffer, length)) {
-        delete tape;
-        return NULL;
-    }
-    
-    return tape;
-}
-
-TAPFile *
-TAPFile::makeWithFile(const char *filename)
-{
-    TAPFile *tape = new TAPFile();
-    
-    if (!tape->oldReadFromFile(filename)) {
-        delete tape;
-        return NULL;
-    }
-    
-    return tape;
-}
-
 bool
 TAPFile::isTAPBuffer(const u8 *buffer, size_t length)
 {

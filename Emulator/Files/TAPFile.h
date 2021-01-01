@@ -20,7 +20,7 @@ private:
     static const u8 magicBytes[];
     
     // File pointer (offset into the data array)
-    int fp;
+    int fp = -1;
         
 public:
     
@@ -36,12 +36,9 @@ public:
     // Initializing
     //
     
-    TAPFile();
+    TAPFile() : AnyFile() { }
     const char *getDescription() override { return "TAPFile"; }
 
-    static TAPFile *makeWithBuffer(const u8 *buffer, size_t length);
-    static TAPFile *makeWithFile(const char *filename);
-    
     
     //
     // Methods from AnyFile

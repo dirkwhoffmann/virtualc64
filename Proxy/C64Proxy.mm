@@ -1734,16 +1734,16 @@ struct AnyFileWrapper { AnyFile *file; };
     return container ? [[self alloc] initWithFile:container] : nil;
 }
 
-+ (instancetype)makeWithFile:(NSString *)path
++ (instancetype)makeWithFile:(NSString *)path error:(FileError *)err
 {
-    TAPFile *container = TAPFile::makeWithFile([path UTF8String]);
-    return [self make: container];
+    TAPFile *tap = AnyFile::make <TAPFile> ([path fileSystemRepresentation], err);
+    return [self make: tap];
 }
 
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len
 {
-    TAPFile *container = TAPFile::makeWithBuffer((const u8 *)buffer, length);
-    return [self make: container];
+    TAPFile *tap = AnyFile::make <TAPFile> ((const u8 *)buf, len);
+    return [self make: tap];
 }
 
 - (TAPFile *)unwrap
@@ -1832,16 +1832,16 @@ struct AnyFileWrapper { AnyFile *file; };
     return [[self alloc] initWithFile:archive];
 }
 
-+ (instancetype)makeWithFile:(NSString *)path
++ (instancetype)makeWithFile:(NSString *)path error:(FileError *)err
 {
-    PRGFile *archive = PRGFile::makeWithFile([path UTF8String]);
-    return [self make: archive];
+    PRGFile *prg = AnyFile::make <PRGFile> ([path fileSystemRepresentation], err);
+    return [self make: prg];
 }
 
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len
 {
-    PRGFile *archive = PRGFile::makeWithBuffer((const u8 *)buffer, length);
-    return [self make: archive];
+    PRGFile *prg = AnyFile::make <PRGFile> ((const u8 *)buf, len);
+    return [self make: prg];
 }
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy

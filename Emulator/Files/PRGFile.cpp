@@ -30,6 +30,7 @@ PRGFile::isPRGFile(const char *path)
     return true;
 }
 
+/*
 PRGFile *
 PRGFile::makeWithBuffer(const u8 *buffer, size_t length)
 {
@@ -57,6 +58,7 @@ PRGFile::makeWithFile(const char *path)
     
     return archive;
 }
+*/
 
 PRGFile *
 PRGFile::makeWithFileSystem(FSDevice *fs, int item)

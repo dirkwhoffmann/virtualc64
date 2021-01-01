@@ -8,6 +8,15 @@
 // -----------------------------------------------------------------------------
 
 #include "AnyFile.h"
+#include "Snapshot.h"
+#include "RomFile.h"
+#include "TAPFile.h"
+#include "CRTFile.h"
+#include "T64File.h"
+#include "PRGFile.h"
+#include "P00File.h"
+#include "D64File.h"
+#include "G64File.h"
 
 template <class T> T *
 AnyFile::make(const u8 *buffer, size_t length, FileError *error)
@@ -31,7 +40,7 @@ AnyFile::make(const char *path, FileError *error)
         delete obj;
         return nullptr;
     }
-    
+
     return obj;
 }
 
@@ -166,13 +175,13 @@ AnyFile::readFromFile(const char *filename, FileError *error)
         if (error) *error = ERR_INVALID_TYPE;
         return false;
     }
-        
+
     // Open
     if (!(file = fopen(filename, "r"))) {
         if (error) *error = ERR_CANT_READ;
         return false;
     }
-    
+
     // Read
     setPath(filename);
     success = readFromFile(file, error);
@@ -348,3 +357,28 @@ exit:
 		
 	return success;
 }
+
+
+//
+// Instantiate template functions
+//
+
+template Snapshot* AnyFile::make <Snapshot> (const u8 *, size_t, FileError *);
+template RomFile* AnyFile::make <RomFile> (const u8 *, size_t, FileError *);
+template TAPFile* AnyFile::make <TAPFile> (const u8 *, size_t, FileError *);
+template CRTFile* AnyFile::make <CRTFile> (const u8 *, size_t, FileError *);
+template T64File* AnyFile::make <T64File> (const u8 *, size_t, FileError *);
+template PRGFile* AnyFile::make <PRGFile> (const u8 *, size_t, FileError *);
+template P00File* AnyFile::make <P00File> (const u8 *, size_t, FileError *);
+template D64File* AnyFile::make <D64File> (const u8 *, size_t, FileError *);
+template G64File* AnyFile::make <G64File> (const u8 *, size_t, FileError *);
+
+template Snapshot* AnyFile::make <Snapshot> (const char *, FileError *);
+template RomFile* AnyFile::make <RomFile> (const char *, FileError *);
+template TAPFile* AnyFile::make <TAPFile> (const char *, FileError *);
+template CRTFile* AnyFile::make <CRTFile> (const char *, FileError *);
+template T64File* AnyFile::make <T64File> (const char *, FileError *);
+template PRGFile* AnyFile::make <PRGFile> (const char *, FileError *);
+template P00File* AnyFile::make <P00File> (const char *, FileError *);
+template D64File* AnyFile::make <D64File> (const char *, FileError *);
+template G64File* AnyFile::make <G64File> (const char *, FileError *);

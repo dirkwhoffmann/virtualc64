@@ -787,8 +787,8 @@ struct AnyFileWrapper;
 }
 
 + (BOOL)isTAPFile:(NSString *)path;
-+ (instancetype)makeWithFile:(NSString *)path;
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype)makeWithFile:(NSString *)path error:(FileError *)err;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len;
 
 @property (readonly) TAPVersion version;
 
@@ -816,8 +816,8 @@ struct AnyFileWrapper;
 {
 }
 + (BOOL)isPRGFile:(NSString *)filename;
-+ (instancetype)makeWithFile:(NSString *)filename;
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype)makeWithFile:(NSString *)path error:(FileError *)err;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len;
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy;
 
 @end

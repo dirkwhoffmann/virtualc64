@@ -103,6 +103,8 @@ private:
     // Methods from AnyFile
     //
     
+public:
+    
     FileType type() override { return FileType_V64; }
     bool matchingBuffer(const u8 *buf, size_t len) override;
     bool matchingFile(const char *path) override;
