@@ -10,8 +10,7 @@
 #ifndef _D64_FILE_H
 #define _D64_FILE_H
 
-#include "AnyDisk.h"
-#include "Disk.h"
+#include "AnyFile.h"
 
 // D64 files come in six different sizes
 #define D64_683_SECTORS 174848
@@ -22,10 +21,7 @@
 #define D64_802_SECTORS_ECC 206114
 
 class D64File : public AnyFile {
-    
-    // Number of the currently selected track (0 if no track is selected)
-    Halftrack selectedHalftrack = 0;
-    
+        
     // Error information stored in the D64 archive
     u8 errors[802];
     
@@ -49,8 +45,8 @@ public:
     
     static D64File *makeWithBuffer(const u8 *buffer, size_t length);
     static D64File *makeWithFile(const char *path);
-    static D64File *makeWithDisk(Disk *disk);
-    static D64File *makeWithDrive(Drive *drive);
+    static D64File *makeWithDisk(class Disk *disk);
+    static D64File *makeWithDrive(class Drive *drive);
     static D64File *makeWithVolume(class FSDevice &volume, FSError *err);
 
 
@@ -72,53 +68,31 @@ public:
     bool hasSameType(const char *filename) override { return isD64File(filename); }
     bool readFromBuffer(const u8 *buffer, size_t length) override;
     
-    
-    //
-    // Methods from AnyDisk
-    //
-    
-    Track numHalftracks();
-    Track numTracks() { return numHalftracks() / 2; }
-    
-    [[deprecated]] void selectHalftrack(Halftrack ht);
-    size_t getSizeOfHalftrack();
-    void seekHalftrack(long offset);
-
-    void selectTrackAndSector(Track t, Sector s);
-
-
-    //
-    // Accessing disk attributes
-    //
-
-    [[deprecated]] PETName<16>getPETName();
-
+        
     //
     // Accessing tracks and sectors
     //
     
 public:
     
-    /* Returns the error for the specified sector, or 01 (no error) if the D64
-     * file does not contain error codes.
-     */
+    // Returns the number of halftracks or tracks stored in this file
+    Track numHalftracks();
+    Track numTracks() { return numHalftracks() / 2; }
+
+    // Returns the error code for the specified sector (01 = no error)
     u8 getErrorCode(Block b);
-    [[deprecated]] u8 getErrorCode(Track t, Sector s);
     
 private:
     
-    /* Translates a track and sector number into an offset. Returns -1, if an
-     * invalid track or sector number is provided.
-     */
+    // Translates a track and sector number into an offset (-1 if invalid)
     int offset(Track track, Sector sector);
-    
     
     
     //
     // Debugging
     //
     
-private:
+public:
     
     // Dumps the contents of a sector
     void dump(Track track, Sector sector);

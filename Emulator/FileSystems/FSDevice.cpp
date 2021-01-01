@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "FSDevice.h"
+#include "Disk.h"
 
 FSDevice *
 FSDevice::makeWithFormat(FSDeviceDescriptor &layout)

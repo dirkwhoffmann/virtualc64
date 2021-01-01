@@ -11,6 +11,7 @@
 #define _DISK_H
 
 #include "C64Component.h"
+#include "PETName.h"
 
 class Disk : public C64Component {
     

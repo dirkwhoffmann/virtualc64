@@ -7,53 +7,39 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-/*
-#include "D64File.h"
-#include "T64File.h"
-#include "PRGFile.h"
-#include "P00File.h"
-#include "FSDevice.h"
-*/
 #include "C64.h"
 
 bool
-D64File::isD64Buffer(const u8 *buffer, size_t length)
+D64File::isD64Buffer(const u8 *buf, size_t len)
 {
-    // Unfortunaltely, D64 containers do not contain magic bytes.
-    // We can only check the buffer size
+    assert(buf);
     
+    // D64 files have no magic bytes. Hence, we can only check the buffer size
     return
-    length == D64_683_SECTORS ||
-    length == D64_683_SECTORS_ECC ||
-    length == D64_768_SECTORS ||
-    length == D64_768_SECTORS_ECC ||
-    length == D64_802_SECTORS ||
-    length == D64_802_SECTORS_ECC;
+    len == D64_683_SECTORS ||
+    len == D64_683_SECTORS_ECC ||
+    len == D64_768_SECTORS ||
+    len == D64_768_SECTORS_ECC ||
+    len == D64_802_SECTORS ||
+    len == D64_802_SECTORS_ECC;
 }
 
 bool
-D64File::isD64File(const char *filename)
+D64File::isD64File(const char *path)
 {
-    bool fileOK = false;
+    assert (path);
     
-    assert (filename != NULL);
-    
-    if (!checkFileSuffix(filename, ".D64") && !checkFileSuffix(filename, ".d64"))
+    if (!checkFileSuffix(path, ".D64") && !checkFileSuffix(path, ".d64"))
         return false;
     
-    fileOK = checkFileSize(filename, D64_683_SECTORS, D64_683_SECTORS)
-    || checkFileSize(filename, D64_683_SECTORS_ECC, D64_683_SECTORS_ECC)
-    || checkFileSize(filename, D64_768_SECTORS, D64_768_SECTORS)
-    || checkFileSize(filename, D64_768_SECTORS_ECC, D64_768_SECTORS_ECC)
-    || checkFileSize(filename, D64_802_SECTORS, D64_802_SECTORS)
-    || checkFileSize(filename, D64_802_SECTORS_ECC, D64_802_SECTORS_ECC);
-    
-    // Unfortunaltely, D64 containers do not contain magic bytes,
-    // so we can't check anything further here
-    
-    return fileOK;
+    return
+    checkFileSize(path, D64_683_SECTORS, D64_683_SECTORS) ||
+    checkFileSize(path, D64_683_SECTORS_ECC, D64_683_SECTORS_ECC) ||
+    checkFileSize(path, D64_768_SECTORS, D64_768_SECTORS) ||
+    checkFileSize(path, D64_768_SECTORS_ECC, D64_768_SECTORS_ECC) ||
+    checkFileSize(path, D64_802_SECTORS, D64_802_SECTORS) ||
+    checkFileSize(path, D64_802_SECTORS_ECC, D64_802_SECTORS_ECC);
 }
-
 
 D64File::D64File()
 {
@@ -63,24 +49,16 @@ D64File::D64File()
 D64File::D64File(unsigned tracks, bool ecc) : D64File()
 {
     switch(tracks) {
-        case 35:
-            size = ecc ? D64_683_SECTORS_ECC : D64_683_SECTORS;
-            break;
             
-        case 40:
-            size = ecc ? D64_768_SECTORS_ECC : D64_768_SECTORS;
-            break;
-            
-        case 42:
-            size = ecc ? D64_802_SECTORS_ECC : D64_802_SECTORS;
-            break;
+        case 35: size = ecc ? D64_683_SECTORS_ECC : D64_683_SECTORS; break;
+        case 40: size = ecc ? D64_768_SECTORS_ECC : D64_768_SECTORS; break;
+        case 42: size = ecc ? D64_802_SECTORS_ECC : D64_802_SECTORS; break;
             
         default:
             assert(false);
     }
     
-    data = new u8[size];
-    memset(data, 0, size);
+    data = new u8[size]();
 }
 
 D64File *
@@ -112,16 +90,16 @@ D64File::makeWithFile(const char *path)
 D64File *
 D64File::makeWithDisk(Disk *disk)
 {
+    assert(disk);
+
     u8 buffer[D64_802_SECTORS];
     
-    assert(disk != NULL);
-    
-    // Translate disk contents into a byte stream
+    // Serialize disk data into a byte stream
     size_t len = disk->decodeDisk(buffer);
 
     // Check if the disk has been fully decoded
     if (len != D64_683_SECTORS && len != D64_768_SECTORS && len != D64_802_SECTORS) {
-        return NULL;
+        return nullptr;
     }
     
     // Create object from byte stream
@@ -139,22 +117,12 @@ D64File *
 D64File::makeWithVolume(FSDevice &volume, FSError *error)
 {
     D64File *d64 = nullptr;
-    
-    printf("numBlocks = %d\n", volume.getNumBlocks());
-    
+        
     switch (volume.getNumBlocks() * 256) {
                         
-        case D64_683_SECTORS:
-            d64 = new D64File(35, false);
-            break;
-            
-        case D64_768_SECTORS:
-            d64 = new D64File(40, false);
-            break;
-
-        case D64_802_SECTORS:
-            d64 = new D64File(42, false);
-            break;
+        case D64_683_SECTORS: d64 = new D64File(35, false); break;
+        case D64_768_SECTORS: d64 = new D64File(40, false); break;
+        case D64_802_SECTORS: d64 = new D64File(42, false); break;
 
         default:
             assert(false);
@@ -239,7 +207,7 @@ D64File::readFromBuffer(const u8 *buffer, size_t length)
     
     AnyFile::readFromBuffer(buffer, length);
     
-    // Copy error codes into seperate array
+    // Copy error codes
     if (errorCodes) {
         memcpy(errors, data + (numSectors * 256), numSectors);
     }
@@ -247,33 +215,14 @@ D64File::readFromBuffer(const u8 *buffer, size_t length)
     return true;    
 }
 
-PETName<16>
-D64File::getPETName()
-{
-    return PETName<16>(data + offset(18,0) + 0x90);
-}
-
-
-//
-// Accessing archive attributes
-//
-
 Track
 D64File::numHalftracks()
 {
     switch (size) {
             
-        case D64_683_SECTORS:
-        case D64_683_SECTORS_ECC:
-            return 2 * 35;
-            
-        case D64_768_SECTORS:
-        case D64_768_SECTORS_ECC:
-            return 2 * 40;
-            
-        case D64_802_SECTORS:
-        case D64_802_SECTORS_ECC:
-            return 2 * 42;
+        case D64_683_SECTORS: case D64_683_SECTORS_ECC: return 2 * 35;
+        case D64_768_SECTORS: case D64_768_SECTORS_ECC: return 2 * 40;
+        case D64_802_SECTORS: case D64_802_SECTORS_ECC: return 2 * 42;
             
         default:
             assert(false);
@@ -281,55 +230,11 @@ D64File::numHalftracks()
     }
 }
 
-void
-D64File::selectHalftrack(Halftrack ht)
-{
-    assert(false);
-}
-
-size_t
-D64File::getSizeOfHalftrack()
-{
-    if (selectedHalftrack % 2) {
-        return Disk::numberOfSectorsInHalftrack(selectedHalftrack) * 256;
-    } else {
-        return 0; // Real halftrack (not stored inside D64 files)
-    }
-}
-
-void
-D64File::seekHalftrack(long offset)
-{
-    assert(false);
-}
-
-void
-D64File::selectTrackAndSector(Track t, Sector s)
-{
-    assert(false);
-}
-
-
-//
-//! @functiongroup Accessing tracks and sectors
-//
-
 u8
 D64File::getErrorCode(Block b)
 {
     assert(b < 802);
     return errors[b];
-}
-
-u8
-D64File::getErrorCode(Track t, Sector s)
-{
-   assert(Disk::isValidTrackSectorPair(t, s));
-    
-    Sector index = Disk::trackDefaults[t].firstSectorNr + s;
-    assert(index < 802);
-    
-    return errors[index];
 }
 
 int
@@ -350,10 +255,6 @@ D64File::offset(Track track, Sector sector)
         return -1;
     }
 }
-
-//
-// Debugging
-//
 
 void
 D64File::dump(Track track, Sector sector)

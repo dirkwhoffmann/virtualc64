@@ -39,7 +39,9 @@ class NeosMouse;
 class MessageQueue;
 class Oscillator;
 
-class File;
+// class File;
+class AnyFile;
+class AnyCollection;
 class TAPFile;
 class T64File;
 class PRGFile;
