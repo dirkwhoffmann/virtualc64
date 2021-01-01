@@ -553,17 +553,8 @@ private:
     // DMA debugger
     //
     
-    // Indicates if memory accesses of a certain type should be visualized
-    // bool visualize[ACCESS_CNT];
-
     // Lookup table for DMA debugging colors
-    u32 debugColor[ACCESS_CNT][4];
-
-    // Opacity of DMA pixels
-    // double opacity = 0.5;
-
-    // Currently selected display mode
-    // DmaDisplayMode displayMode = MODULATE_FG_LAYER;
+    u32 debugColor[6][4];
 
     
     //
@@ -600,8 +591,8 @@ public:
     VICRev getRevision() { return config.revision; }    
     void setRevision(VICRev revision);
     
-    void setDmaDebugColor(MemAccessType type, GpuColor color);
-    void setDmaDebugColor(MemAccessType type, RgbColor color);
+    void setDmaDebugColor(MemAccess type, GpuColor color);
+    void setDmaDebugColor(MemAccess type, RgbColor color);
     
 private:
     
@@ -1362,7 +1353,7 @@ public:
     void clearDmaDebuggerTexture();
     
     // Visualizes a memory access by drawing into the DMA debuger texture
-    void visualizeDma(u8 offset, u8 data, MemAccessType type);
+    void visualizeDma(u8 offset, u8 data, MemAccess type);
     
     // Superimposes the debug output onto the current rasterline
     void computeOverlay();

@@ -130,13 +130,13 @@ class Monitor: DialogController {
         
         track()
                 
-        switch MemAccessType.init(rawValue: sender.tag)! {
-        case .R_ACCESS: config.dmaColorR = sender.color
-        case .I_ACCESS: config.dmaColorI = sender.color
-        case .C_ACCESS: config.dmaColorC = sender.color
-        case .G_ACCESS: config.dmaColorG = sender.color
-        case .P_ACCESS: config.dmaColorP = sender.color
-        case .S_ACCESS: config.dmaColorS = sender.color
+        switch MemAccess.init(rawValue: sender.tag)! {
+        case .R: config.dmaColorR = sender.color
+        case .I: config.dmaColorI = sender.color
+        case .C: config.dmaColorC = sender.color
+        case .G: config.dmaColorG = sender.color
+        case .P: config.dmaColorP = sender.color
+        case .S: config.dmaColorS = sender.color
         default: fatalError()
         }
         refresh()
@@ -146,13 +146,13 @@ class Monitor: DialogController {
         
         track()
         
-        switch MemAccessType.init(rawValue: sender.tag)! {
-        case .R_ACCESS: config.dmaChannelR = sender.state == .on
-        case .I_ACCESS: config.dmaChannelI = sender.state == .on
-        case .C_ACCESS: config.dmaChannelC = sender.state == .on
-        case .G_ACCESS: config.dmaChannelG = sender.state == .on
-        case .P_ACCESS: config.dmaChannelP = sender.state == .on
-        case .S_ACCESS: config.dmaChannelS = sender.state == .on
+        switch MemAccess.init(rawValue: sender.tag)! {
+        case .R: config.dmaChannelR = sender.state == .on
+        case .I: config.dmaChannelI = sender.state == .on
+        case .C: config.dmaChannelC = sender.state == .on
+        case .G: config.dmaChannelG = sender.state == .on
+        case .P: config.dmaChannelP = sender.state == .on
+        case .S: config.dmaChannelS = sender.state == .on
         default: fatalError()
         }
         refresh()

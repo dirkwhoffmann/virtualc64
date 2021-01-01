@@ -17,14 +17,14 @@ VICII::getScreenGeometry(void)
     unsigned cols = GET_BIT(reg.current.ctrl2, 3) ? 40 : 38;
     
     if (cols == 40) {
-        return rows == 25 ? COL_40_ROW_25 : COL_40_ROW_24;
+        return rows == 25 ? ScreenGeometry_25_40 : ScreenGeometry_24_40;
     } else {
-        return rows == 25 ? COL_38_ROW_25 : COL_38_ROW_24;
+        return rows == 25 ? ScreenGeometry_25_38 : ScreenGeometry_24_38;
     }
 }
 
 void
-VICII::visualizeDma(u8 offset, u8 data, MemAccessType type)
+VICII::visualizeDma(u8 offset, u8 data, MemAccess type)
 {
     int *p = dmaTexturePtr + bufferoffset + offset;
     

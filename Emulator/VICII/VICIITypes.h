@@ -40,6 +40,7 @@ inline const char *sVICRev(VICRev revision)
     assert(isVICRev(revision));
     
     switch (revision) {
+            
         case VICRev_PAL_6569_R1:    return "PAL_6569_R1";
         case VICRev_PAL_6569_R3:    return "PAL_6569_R3";
         case VICRev_PAL_8565:       return "PAL_8565";
@@ -53,12 +54,12 @@ inline const char *sVICRev(VICRev revision)
 enum_long(GlueLogic)
 {
     GlueLogic_DISCRETE,
-    GLUE_CUSTOM_IC
+    GlueLogic_IC
 };
 
 inline bool isGlueLogic(long value)
 {
-    return (unsigned long)value <= GLUE_CUSTOM_IC;
+    return (unsigned long)value <= GlueLogic_IC;
 }
 
 inline const char *GlueLogicName(GlueLogic value)
@@ -66,62 +67,132 @@ inline const char *GlueLogicName(GlueLogic value)
     assert(isGlueLogic(value));
     
     switch (value) {
-        case GlueLogic_DISCRETE:  return "DISCRETE";
-        case GLUE_CUSTOM_IC:      return "IC";
-        default:                  return "???";
+            
+        case GlueLogic_DISCRETE:   return "DISCRETE";
+        case GlueLogic_IC:         return "IC";
+        default:                   return "???";
     }
 }
 
 enum_long(Palette)
 {
-    COLOR_PALETTE = 0,
-    BLACK_WHITE_PALETTE,
-    PAPER_WHITE_PALETTE,
-    GREEN_PALETTE,
-    AMBER_PALETTE,
-    SEPIA_PALETTE
+    Palette_COLOR,
+    Palette_BLACK_WHITE,
+    Palette_PAPER_WHITE,
+    Palette_GREEN,
+    Palette_AMBER,
+    Palette_SEPIA
 };
 
 inline bool isPalette(long value) {
-    return value >= COLOR_PALETTE && value <= SEPIA_PALETTE;
+    return (unsigned long)value <= Palette_SEPIA;
 }
 
-typedef enum
+inline const char *PaletteName(Palette value)
 {
-    COL_40_ROW_25 = 0x01,
-    COL_38_ROW_25 = 0x02,
-    COL_40_ROW_24 = 0x03,
-    COL_38_ROW_24 = 0x04
+    assert(isGlueLogic(value));
+    
+    switch (value) {
+            
+        case Palette_COLOR:        return "COLOR";
+        case Palette_BLACK_WHITE:  return "BLACK_WHITE";
+        case Palette_PAPER_WHITE:  return "PAPER_WHITE";
+        case Palette_GREEN:        return "GREEN";
+        case Palette_AMBER:        return "AMBER";
+        case Palette_SEPIA:        return "SEPIA";
+        default:                   return "???";
+    }
 }
-ScreenGeometry;
 
-typedef enum
+enum_long(ScreenGeometry)
 {
-    STANDARD_TEXT             = 0x00,
-    MULTICOLOR_TEXT           = 0x10,
-    STANDARD_BITMAP           = 0x20,
-    MULTICOLOR_BITMAP         = 0x30,
-    EXTENDED_BACKGROUND_COLOR = 0x40,
-    INVALID_TEXT              = 0x50,
-    INVALID_STANDARD_BITMAP   = 0x60,
-    INVALID_MULTICOLOR_BITMAP = 0x70
-}
-DisplayMode;
-
-enum_long(MemAccessType)
-{
-    R_ACCESS = 0,             // Memory Refresh
-    I_ACCESS,                 // Idle read
-    C_ACCESS,                 // Character access
-    G_ACCESS,                 // Graphics access
-    P_ACCESS,                 // Sprite pointer access
-    S_ACCESS,                 // Sprite data access
-    ACCESS_CNT
+    ScreenGeometry_25_40 = 1,
+    ScreenGeometry_25_38,
+    ScreenGeometry_24_40,
+    ScreenGeometry_24_38
 };
 
-static inline bool isMemAccessType(long value)
+inline bool isScreenGeometry(long value) {
+    return (unsigned long)value <= ScreenGeometry_24_38;
+}
+
+inline const char *ScreenGeometryName(ScreenGeometry value)
 {
-    return value >= 0 && value < ACCESS_CNT;
+    assert(isScreenGeometry(value));
+    
+    switch (value) {
+            
+        case ScreenGeometry_25_40:  return "25_40";
+        case ScreenGeometry_25_38:  return "25_38";
+        case ScreenGeometry_24_40:  return "24_40";
+        case ScreenGeometry_24_38:  return "24_38";
+        default:                    return "???";
+    }
+}
+
+enum_long(DisplayMode)
+{
+    DisplayMode_STANDARD_TEXT       = 0x00,
+    DisplayMode_MULTICOLOR_TEXT     = 0x10,
+    DisplayMode_STANDARD_BITMAP     = 0x20,
+    DisplayMode_MULTICOLOR_BITMAP   = 0x30,
+    DisplayMode_EXTENDED_BG_COLOR   = 0x40,
+    DisplayMode_INVALID_TEXT        = 0x50,
+    DisplayMode_INV_STANDARD_BITMAP = 0x60,
+    DisplayMode_INV_MULTICOL_BITMAP = 0x70
+};
+
+inline bool isDisplayMode(long value) {
+    return (unsigned long)value <= DisplayMode_INV_MULTICOL_BITMAP;
+}
+
+inline const char *DisplayModeName(DisplayMode value)
+{
+    assert(isDisplayMode(value));
+    
+    switch (value) {
+            
+        case DisplayMode_STANDARD_TEXT:        return "STANDARD_TEXT";
+        case DisplayMode_MULTICOLOR_TEXT:      return "MULTICOLOR_TEXT";
+        case DisplayMode_STANDARD_BITMAP:      return "STANDARD_BITMAP";
+        case DisplayMode_MULTICOLOR_BITMAP:    return "MULTICOLOR_BITMAP";
+        case DisplayMode_EXTENDED_BG_COLOR:    return "EXTENDED_BG_COLOR";
+        case DisplayMode_INVALID_TEXT:         return "INVALID_TEXT";
+        case DisplayMode_INV_STANDARD_BITMAP:  return "INV_STANDARD_BITMAP";
+        case DisplayMode_INV_MULTICOL_BITMAP:  return "INV_MULTICOL_BITMAP";
+        default:                               return "???";
+    }
+}
+
+enum_long(MemAccess)
+{
+    MemAccess_R,                 // Memory Refresh
+    MemAccess_I,                 // Idle read
+    MemAccess_C,                 // Character access
+    MemAccess_G,                 // Graphics access
+    MemAccess_P,                 // Sprite pointer access
+    MemAccess_S                  // Sprite data access
+};
+
+static inline bool isMemAccess(long value)
+{
+    return (unsigned long)value <= MemAccess_S;
+}
+
+inline const char *MemAccessName(MemAccess value)
+{
+    assert(isMemAccess(value));
+    
+    switch (value) {
+            
+        case MemAccess_R:  return "R";
+        case MemAccess_I:  return "I";
+        case MemAccess_C:  return "C";
+        case MemAccess_G:  return "G";
+        case MemAccess_P:  return "P";
+        case MemAccess_S:  return "S";
+        default:           return "???";
+    }
 }
 
 enum_long(DmaDisplayMode)
@@ -146,8 +217,8 @@ typedef struct
     // Debugging
     bool hideSprites;
     bool dmaDebug;
-    bool dmaChannel[ACCESS_CNT];
-    u32 dmaColor[ACCESS_CNT];
+    bool dmaChannel[6];
+    u32 dmaColor[6];
     DmaDisplayMode dmaDisplayMode;
     u8 dmaOpacity;
     u16 cutLayers;

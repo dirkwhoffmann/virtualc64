@@ -21,25 +21,25 @@
 VICII::VICII(C64 &ref) : C64Component(ref)
 {    
     config.grayDotBug = true;
-    config.palette = COLOR_PALETTE;
+    config.palette = Palette_COLOR;
     config.cutLayers = 0xFF;
     config.cutOpacity = 0xFF;
     config.dmaOpacity = 0x80;
     config.dmaDebug = false;
-    config.dmaChannel[R_ACCESS] = true;
-    config.dmaChannel[I_ACCESS] = true;
-    config.dmaChannel[C_ACCESS] = true;
-    config.dmaChannel[G_ACCESS] = true;
-    config.dmaChannel[P_ACCESS] = true;
-    config.dmaChannel[S_ACCESS] = true;
+    config.dmaChannel[MemAccess_R] = true;
+    config.dmaChannel[MemAccess_I] = true;
+    config.dmaChannel[MemAccess_C] = true;
+    config.dmaChannel[MemAccess_G] = true;
+    config.dmaChannel[MemAccess_P] = true;
+    config.dmaChannel[MemAccess_S] = true;
 
     // Assign default DMA debugging colors
-    setDmaDebugColor(R_ACCESS, RgbColor(1.0, 0.0, 0.0));
-    setDmaDebugColor(I_ACCESS, RgbColor(1.0, 0.8, 0.0));
-    setDmaDebugColor(C_ACCESS, RgbColor(1.0, 1.0, 0.0));
-    setDmaDebugColor(G_ACCESS, RgbColor(0.0, 1.0, 1.0));
-    setDmaDebugColor(P_ACCESS, RgbColor(0.0, 1.0, 0.0));
-    setDmaDebugColor(S_ACCESS, RgbColor(0.0, 0.5, 1.0));
+    setDmaDebugColor(MemAccess_R, RgbColor(1.0, 0.0, 0.0));
+    setDmaDebugColor(MemAccess_I, RgbColor(1.0, 0.8, 0.0));
+    setDmaDebugColor(MemAccess_C, RgbColor(1.0, 1.0, 0.0));
+    setDmaDebugColor(MemAccess_G, RgbColor(0.0, 1.0, 1.0));
+    setDmaDebugColor(MemAccess_P, RgbColor(0.0, 1.0, 0.0));
+    setDmaDebugColor(MemAccess_S, RgbColor(0.0, 0.5, 1.0));
     
     // Assign reference clock to all time delayed variables
     baLine.setClock(&cpu.cycle);
@@ -147,18 +147,18 @@ VICII::getConfigItem(Option option)
         case Option_GRAY_DOT_BUG:     return config.grayDotBug;
         case Option_GLUE_LOGIC:       return config.glueLogic;
         case Option_DMA_DEBUG:        return config.dmaDebug;
-        case Option_DMA_CHANNEL_R:    return config.dmaChannel[R_ACCESS];
-        case Option_DMA_CHANNEL_I:    return config.dmaChannel[I_ACCESS];
-        case Option_DMA_CHANNEL_C:    return config.dmaChannel[C_ACCESS];
-        case Option_DMA_CHANNEL_G:    return config.dmaChannel[G_ACCESS];
-        case Option_DMA_CHANNEL_P:    return config.dmaChannel[P_ACCESS];
-        case Option_DMA_CHANNEL_S:    return config.dmaChannel[S_ACCESS];
-        case Option_DMA_COLOR_R:      return config.dmaColor[R_ACCESS];
-        case Option_DMA_COLOR_I:      return config.dmaColor[I_ACCESS];
-        case Option_DMA_COLOR_C:      return config.dmaColor[C_ACCESS];
-        case Option_DMA_COLOR_G:      return config.dmaColor[G_ACCESS];
-        case Option_DMA_COLOR_P:      return config.dmaColor[P_ACCESS];
-        case Option_DMA_COLOR_S:      return config.dmaColor[S_ACCESS];
+        case Option_DMA_CHANNEL_R:    return config.dmaChannel[MemAccess_R];
+        case Option_DMA_CHANNEL_I:    return config.dmaChannel[MemAccess_I];
+        case Option_DMA_CHANNEL_C:    return config.dmaChannel[MemAccess_C];
+        case Option_DMA_CHANNEL_G:    return config.dmaChannel[MemAccess_G];
+        case Option_DMA_CHANNEL_P:    return config.dmaChannel[MemAccess_P];
+        case Option_DMA_CHANNEL_S:    return config.dmaChannel[MemAccess_S];
+        case Option_DMA_COLOR_R:      return config.dmaColor[MemAccess_R];
+        case Option_DMA_COLOR_I:      return config.dmaColor[MemAccess_I];
+        case Option_DMA_COLOR_C:      return config.dmaColor[MemAccess_C];
+        case Option_DMA_COLOR_G:      return config.dmaColor[MemAccess_G];
+        case Option_DMA_COLOR_P:      return config.dmaColor[MemAccess_P];
+        case Option_DMA_COLOR_S:      return config.dmaColor[MemAccess_S];
         case Option_DMA_DISPLAY_MODE: return config.dmaDisplayMode;
         case Option_DMA_OPACITY:      return config.dmaOpacity;
         case Option_HIDE_SPRITES:     return config.hideSprites;
@@ -234,63 +234,63 @@ VICII::setConfigItem(Option option, long value)
             
         case Option_DMA_CHANNEL_R:
             
-            config.dmaChannel[R_ACCESS] = value;
+            config.dmaChannel[MemAccess_R] = value;
             return true;
             
         case Option_DMA_CHANNEL_I:
             
-            config.dmaChannel[I_ACCESS] = value;
+            config.dmaChannel[MemAccess_I] = value;
             return true;
             
         case Option_DMA_CHANNEL_C:
             
-            config.dmaChannel[C_ACCESS] = value;
+            config.dmaChannel[MemAccess_C] = value;
             return true;
             
         case Option_DMA_CHANNEL_G:
             
-            config.dmaChannel[G_ACCESS] = value;
+            config.dmaChannel[MemAccess_G] = value;
             return true;
             
         case Option_DMA_CHANNEL_P:
             
-            config.dmaChannel[P_ACCESS] = value;
+            config.dmaChannel[MemAccess_P] = value;
             return true;
             
         case Option_DMA_CHANNEL_S:
             
-            config.dmaChannel[S_ACCESS] = value;
+            config.dmaChannel[MemAccess_S] = value;
             return true;
 
         case Option_DMA_COLOR_R:
             
-            setDmaDebugColor(R_ACCESS, GpuColor((u32)value));
-            config.dmaColor[R_ACCESS] = (u32)value;
+            setDmaDebugColor(MemAccess_R, GpuColor((u32)value));
+            config.dmaColor[MemAccess_R] = (u32)value;
             return true;
             
         case Option_DMA_COLOR_I:
             
-            config.dmaColor[I_ACCESS] = (u32)value;
+            config.dmaColor[MemAccess_I] = (u32)value;
             return true;
 
         case Option_DMA_COLOR_C:
             
-            config.dmaColor[C_ACCESS] = (u32)value;
+            config.dmaColor[MemAccess_C] = (u32)value;
             return true;
 
         case Option_DMA_COLOR_G:
             
-            config.dmaColor[G_ACCESS] = (u32)value;
+            config.dmaColor[MemAccess_G] = (u32)value;
             return true;
 
         case Option_DMA_COLOR_P:
             
-            config.dmaColor[P_ACCESS] = (u32)value;
+            config.dmaColor[MemAccess_P] = (u32)value;
             return true;
 
         case Option_DMA_COLOR_S:
             
-            config.dmaColor[S_ACCESS] = (u32)value;
+            config.dmaColor[MemAccess_S] = (u32)value;
             return true;
             
         case Option_DMA_OPACITY:
@@ -358,9 +358,9 @@ VICII::setRevision(VICRev revision)
 }
 
 void
-VICII::setDmaDebugColor(MemAccessType type, GpuColor color)
+VICII::setDmaDebugColor(MemAccess type, GpuColor color)
 {
-    assert(isMemAccessType(type));
+    assert(isMemAccess(type));
     
     config.dmaColor[type] = color.rawValue;
         
@@ -372,7 +372,7 @@ VICII::setDmaDebugColor(MemAccessType type, GpuColor color)
 }
 
 void
-VICII::setDmaDebugColor(MemAccessType type, RgbColor color)
+VICII::setDmaDebugColor(MemAccess type, RgbColor color)
 {
     setDmaDebugColor(type, GpuColor(color));
 }
@@ -470,27 +470,9 @@ VICII::_dump()
 	msg("X/Y raster scroll : %d / %d\n", xscroll, yscroll);
     msg("    Control reg 1 : %02X\n", reg.current.ctrl1);
     msg("    Control reg 2 : %02X\n", reg.current.ctrl2);
-	msg("     Display mode : ");
-	switch (mode) {
-		case STANDARD_TEXT: 
-			msg("Standard character mode\n");
-			break;
-		case MULTICOLOR_TEXT:
-			msg("Multicolor character mode\n");
-			break;
-		case STANDARD_BITMAP:
-			msg("Standard bitmap mode\n");
-			break;
-		case MULTICOLOR_BITMAP:
-			msg("Multicolor bitmap mode\n");
-			break;
-		case EXTENDED_BACKGROUND_COLOR:
-			msg("Extended background color mode\n");
-			break;
-		default:
-			msg("Invalid\n");
-	}
-	msg("            (X,Y) : (%d,%d) %s %s\n", xCounter, yCounter,  badLine ? "(DMA line)" : "", DENwasSetInRasterline30 ? "" : "(DMA lines disabled, no DEN bit in rasterline 30)");
+	msg("     Display mode : %s\n", DisplayModeName(mode));
+    msg("          badLine : %s\n", badLine ? "yes" : "no");
+    msg("    DENwasSetIn30 : %s\n", DENwasSetInRasterline30 ? "yes" : "no");
 	msg("               VC : %02X\n", vc);
 	msg("           VCBASE : %02X\n", vcBase);
 	msg("               RC : %02X\n", rc);
@@ -501,11 +483,11 @@ VICII::_dump()
 	msg("     DisplayState : %s\n", displayState ? "on" : "off");
     msg("    SpriteDisplay : %02X (%02X)\n", spriteDisplay, spriteDisplayDelayed);
 	msg("        SpriteDma : %02X ( ", spriteDmaOnOff);
-	for (int i = 0; i < 8; i++) 
+	for (usize i = 0; i < 8; i++)
 		msg("%d ", (spriteDmaOnOff & (1 << i)) != 0 );
 	msg(")\n");
 	msg("      Y expansion : %02X ( ", expansionFF);
-	for (int i = 0; i < 8; i++) 
+	for (usize i = 0; i < 8; i++) 
 		msg("%d ", (expansionFF & (1 << i)) != 0);
 	msg(")\n");
 }
