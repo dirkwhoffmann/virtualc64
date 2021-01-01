@@ -34,7 +34,7 @@ inline bool isFileType(long value)
     return value >= 0 && value <= FileType_VC1541_ROM;
 }
 
-inline const char *sFileType(FileType type)
+inline const char *FileTypeName(FileType type)
 {
     switch (type) {
             
@@ -52,10 +52,7 @@ inline const char *sFileType(FileType type)
         case FileType_CHAR_ROM:   return "ROM";
         case FileType_KERNAL_ROM: return "ROM";
         case FileType_VC1541_ROM: return "ROM";
-            
-        default:
-            assert(false);
-            return "";
+        default:                  return "???";
     }
 }
 
@@ -115,28 +112,27 @@ enum_long(RomIdentifier)
 
 inline bool isRomRevision(long value)
 {
-    return value >= 0 && value <= ROM_CNT;
+    return (unsigned long)value <= ROM_CNT;
 }
 
 enum_long(TAPVersion)
 {
-    TAP_ORIGINAL = 0,
-    TAP_ADVANCED = 1
+    TAPVersion_ORIGINAL,
+    TAPVersion_ADVANCED
 };
 
 inline bool isTAPVersion(long value)
 {
-    return value >= TAP_ORIGINAL && value <= TAP_ADVANCED;
+    return (unsigned long)value <= TAPVersion_ADVANCED;
 }
 
-inline const char* sTAPVersion(TAPVersion type)
+inline const char* TAPVersionName(TAPVersion value)
 {
-    switch (type) {
+    switch (value) {
             
-        case TAP_ORIGINAL: return "TAP_ORIGINAL";
-        case TAP_ADVANCED: return "TAP_ADVANCED";
-            
-        default: assert(false);
+        case TAPVersion_ORIGINAL: return "ORIGINAL";
+        case TAPVersion_ADVANCED: return "ADVANCED";
+        default:                  return "???";
     }
 }
 

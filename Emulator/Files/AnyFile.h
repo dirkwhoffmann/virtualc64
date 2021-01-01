@@ -59,7 +59,7 @@ public:
     virtual FileType type() { return FileType_UNKNOWN; }
 
     // Returns a string representation for the type of this file
-    const char *typeString() { return sFileType(type()); }
+    const char *typeString() { return FileTypeName(type()); }
     
 	// Returns the physical name of this file
     const char *getPath() { return path ? path : ""; }

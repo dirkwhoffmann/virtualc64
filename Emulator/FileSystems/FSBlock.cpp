@@ -235,7 +235,7 @@ FSBlock::check(bool strict)
         
         if ((error = check(i, &expected, strict)) != FSError_OK) {
             count++;
-            debug(FS_DEBUG, "Block %d [%d.%d]: %s\n", nr, i / 4, i % 4, sFSError(error));
+            debug(FS_DEBUG, "Block %d [%d.%d]: %s\n", nr, i / 4, i % 4, FSErrorName(error));
         }
     }
     

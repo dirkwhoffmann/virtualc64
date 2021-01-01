@@ -27,7 +27,7 @@ inline bool isDOSType(long value)
     return (unsigned long)value < DOSType_CBM;
 }
 
-inline const char *sFSType(DOSType value)
+inline const char *DOSTypeName(DOSType value)
 {
     switch (value) {
             
@@ -51,7 +51,7 @@ inline bool isFSFileType(long value)
     return (unsigned long)value <= FSFileType_REL;
 }
 
-inline const char *sFSFileType(FSFileType value)
+inline const char *FSFileTypeName(FSFileType value)
 {
     switch (value) {
             
@@ -59,7 +59,7 @@ inline const char *sFSFileType(FSFileType value)
         case FSFileType_SEQ:  return "SEQ";
         case FSFileType_REL:  return "REL";
         case FSFileType_USR:  return "USR";
-        default:      return "???";
+        default:              return "???";
     }
 }
 
@@ -153,7 +153,7 @@ inline bool isFSError(long value)
     return (unsigned long)value <= FSError_EXPECTED_MAX;
 }
 
-inline const char *sFSError(FSError value)
+inline const char *FSErrorName(FSError value)
 {
     switch (value) {
             
@@ -177,7 +177,6 @@ inline const char *sFSError(FSError value)
             return isFSError(value) ? "<other>" : "???";
     }
 }
-
 
 //
 // Structures
