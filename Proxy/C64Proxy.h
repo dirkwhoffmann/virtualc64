@@ -872,7 +872,7 @@ struct AnyC64FileWrapper;
 // D64File proxy
 //
 
-@interface D64FileProxy : AnyDiskProxy
+@interface D64FileProxy : AnyFileProxy
 {
 }
 + (BOOL)isD64File:(NSString *)filename;
@@ -881,6 +881,9 @@ struct AnyC64FileWrapper;
 + (instancetype)makeWithDisk:(DiskProxy *)proxy;
 + (instancetype)makeWithDrive:(DriveProxy *)proxy;
 + (instancetype)makeWithVolume:(FSDeviceProxy *)proxy error:(FSError *)error;
+
+@property (readonly) NSInteger numTracks;
+@property (readonly) NSInteger numHalftracks;
 
 @end
 

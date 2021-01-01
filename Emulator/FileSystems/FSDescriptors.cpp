@@ -38,7 +38,7 @@ FSDeviceDescriptor::FSDeviceDescriptor(D64File *d64)
     assert(d64);
     
     this->dos = DOSType_CBM;
-    numCyls = d64->numberOfTracks();
+    numCyls = d64->numTracks();
     numHeads = 1;
 }
 

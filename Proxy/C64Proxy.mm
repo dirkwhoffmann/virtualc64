@@ -2035,6 +2035,18 @@ struct AnyC64FileWrapper { AnyFile *file; };
     return archive ? [self make: archive] : nullptr;
 }
 
+- (NSInteger)numTracks
+{
+    D64File *disk = (D64File *)([self wrapper]->file);
+    return disk->numTracks();
+}
+
+- (NSInteger) numHalftracks
+{
+    D64File *disk = (D64File *)([self wrapper]->file);
+    return disk->numHalftracks();
+}
+
 @end
 
 //

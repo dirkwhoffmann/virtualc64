@@ -15,9 +15,6 @@ AnyDisk::makeWithFile(const char *path)
 {
     assert(path != NULL);
     
-    if (D64File::isD64File(path)) {
-        return D64File::makeWithFile(path);
-    }
     if (G64File::isG64File(path)) {
         return G64File::makeWithFile(path);
     }

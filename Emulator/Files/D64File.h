@@ -21,7 +21,7 @@
 #define D64_802_SECTORS 205312
 #define D64_802_SECTORS_ECC 206114
 
-class D64File : public AnyDisk {
+class D64File : public AnyFile {
     
     // Number of the currently selected track (0 if no track is selected)
     Halftrack selectedHalftrack = 0;
@@ -77,10 +77,12 @@ public:
     // Methods from AnyDisk
     //
     
-    int numberOfHalftracks() override;
-    void selectHalftrack(Halftrack ht) override;
-    size_t getSizeOfHalftrack() override;
-    void seekHalftrack(long offset) override;
+    Track numHalftracks();
+    Track numTracks() { return numHalftracks() / 2; }
+    
+    [[deprecated]] void selectHalftrack(Halftrack ht);
+    size_t getSizeOfHalftrack();
+    void seekHalftrack(long offset);
 
     void selectTrackAndSector(Track t, Sector s);
 
@@ -89,18 +91,8 @@ public:
     // Accessing disk attributes
     //
 
-    PETName<16>getPETName();
+    [[deprecated]] PETName<16>getPETName();
 
-    
-    //
-    // Accessing file attributes
-    //
-    
-    // Returns the first and second disk ID character
-    u8 diskId1() { return data[offset(18, 0) + 0xA2]; }
-    u8 diskId2() { return data[offset(18, 0) + 0xA3]; }
-    
-    
     //
     // Accessing tracks and sectors
     //
@@ -111,7 +103,7 @@ public:
      * file does not contain error codes.
      */
     u8 getErrorCode(Block b);
-    u8 getErrorCode(Track t, Sector s);
+    [[deprecated]] u8 getErrorCode(Track t, Sector s);
     
 private:
     

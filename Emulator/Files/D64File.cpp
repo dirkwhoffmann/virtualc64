@@ -258,8 +258,8 @@ D64File::getPETName()
 // Accessing archive attributes
 //
 
-int
-D64File::numberOfHalftracks()
+Track
+D64File::numHalftracks()
 {
     switch (size) {
             
@@ -284,25 +284,7 @@ D64File::numberOfHalftracks()
 void
 D64File::selectHalftrack(Halftrack ht)
 {
-    assert(isHalftrackNumber(ht));
-    
-    selectedHalftrack = ht;
-    Track t = (ht + 1) / 2;
-
-    // Check if a real track is requested (D64 files do not store halftracks)
-    if ((selectedHalftrack % 2) == 0) {
-        tFp = tEof = -1;
-        return;
-    }
-    
-    // Check if the requested track is stored inside the D64 file
-    if ((int)t > numberOfTracks()) {
-        tFp = tEof = -1;
-        return;
-    }
-
-    tFp = offset(t, 0);
-    tEof = tFp + getSizeOfHalftrack();
+    assert(false);
 }
 
 size_t
@@ -318,28 +300,13 @@ D64File::getSizeOfHalftrack()
 void
 D64File::seekHalftrack(long offset)
 {
-    // Reset file pointer to the first data byte.
-    selectHalftrack(selectedHalftrack);
-    
-    // Advance file pointer to the requested position.
-    if (tFp != -1)
-        tFp += offset;
-    
-    // Invalidate fp if it is out of range.
-    if (tFp >= (long)size)
-        tFp = -1;
+    assert(false);
 }
 
 void
 D64File::selectTrackAndSector(Track t, Sector s)
 {
-    assert(Disk::isValidTrackSectorPair(t, s));
-    
-    selectHalftrack(2 * t - 1);
-    assert(tFp != -1);
-    
-    tFp += 256 * s;
-    tEof = tFp + 256;
+    assert(false);
 }
 
 
@@ -384,42 +351,6 @@ D64File::offset(Track track, Sector sector)
     }
 }
 
-
-//
-// Accessing file and directory items
-//
-
-/*
-void
-D64File::markSectorAsUsed(Track track, Sector sector)
-{
-    // For each track and sector, there exists a single bit in the BAM.
-    // 1 = used, 0 = unused
-    
-    // First byte of BAM
-    int bam = offset(18, 0);
-    
-    // Select byte group correspondig to track
-    bam += (4 * track);
-    
-    // Select byte carrying the information for sector
-    int offset = 1 + (sector >> 3);
-    assert(offset >= 1 && offset <= 3);
-    
-    // Select bit for this sector
-    u8 bitmask = 0x01 << (sector & 0x07);
-    
-    if (data[bam+offset] & bitmask) {
-        // Clear bit
-        data[bam + offset] &= ~bitmask;
-        
-        // Descrease number of free sectors
-        assert(data[bam] > 0);
-        data[bam]--;
-    }
-}
-*/
-
 //
 // Debugging
 //
@@ -427,10 +358,5 @@ D64File::markSectorAsUsed(Track track, Sector sector)
 void
 D64File::dump(Track track, Sector sector)
 {
-    int pos = offset(track, sector);
-    
-    msg("Sector %d/%d\n", track, sector);
-    for (int i = 0; i < 256; i++) {
-        msg("%02X ", data[pos++]);
-    }
+    hexdump(data + offset(track, sector), 256);
 }
