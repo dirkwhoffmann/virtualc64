@@ -53,7 +53,7 @@ public:
     // Methods from AnyFile
     //
 
-    FileType type() override { return FILETYPE_PRG; }
+    FileType type() override { return FileType_PRG; }
     bool hasSameType(const char *filename) override { return isPRGFile(filename); }
     
     

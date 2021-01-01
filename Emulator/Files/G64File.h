@@ -50,7 +50,7 @@ public:
     // Methods from AnyC64File
     //
     
-    FileType type() override { return FILETYPE_G64; }
+    FileType type() override { return FileType_G64; }
     bool hasSameType(const char *path) override { return G64File::isG64File(path); }
         
     //

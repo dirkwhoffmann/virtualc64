@@ -27,12 +27,26 @@
 // Enumerations
 //
 
-typedef enum
+enum_long(CPURev)
 {
-    MOS_6510 = 0,
-    MOS_6502 = 1
+    MOS_6510,
+    MOS_6502
+};
+
+inline bool isCPURev(long value)
+{
+    return (unsigned long)value <= MOS_6502;
 }
-CPUModel;
+
+inline const char * CPURevName(CPURev value)
+{
+    switch (value) {
+            
+        case MOS_6510:  return "MOS_6510";
+        case MOS_6502:  return "MOS_6502";
+        default:        return "???";
+    }
+}
 
 typedef enum
 {

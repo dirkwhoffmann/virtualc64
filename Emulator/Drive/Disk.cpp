@@ -124,7 +124,7 @@ Disk::make(C64 &ref, DOSType type, PETName<16> name)
         case DOSType_CBM:
         {
             printf("FS_CBM_DOS");
-            FSDevice *fs = FSDevice::makeWithType(DISK_SS_SD, DOSType_CBM);
+            FSDevice *fs = FSDevice::makeWithType(DiskType_SS_SD, DOSType_CBM);
             fs->setName(name);
             Disk *disk = makeWithFileSystem(ref, fs);
             delete fs;

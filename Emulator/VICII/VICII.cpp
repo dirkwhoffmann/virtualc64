@@ -447,7 +447,7 @@ VICII::_inspect()
 void
 VICII::_dumpConfig()
 {
-    msg("    Chip model : %lld (%s)\n", config.revision, sVICRev(config.revision));
+    msg("    Chip model : %lld (%s)\n", config.revision, VICRevName(config.revision));
     msg("  Gray dot bug : %s\n", config.grayDotBug ? "yes" : "no");
     msg("           PAL : %s\n", isPAL() ? "yes" : "no");
     msg("          NTSC : %s\n", isNTSC() ? "yes" : "no");

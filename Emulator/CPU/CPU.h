@@ -58,7 +58,7 @@ public:
     
 public:
     
-    virtual CPUModel model() = 0;
+    virtual CPURev model() = 0;
     virtual bool isC64CPU() = 0;
     virtual bool isDriveCPU() = 0;
 
@@ -418,7 +418,7 @@ public:
     C64CPU(C64& ref, C64Memory& memref) : CPU(ref, memref) { }
     const char *getDescription() override { return "CPU"; }
     
-    CPUModel model() override { return MOS_6510; }
+    CPURev model() override { return MOS_6510; }
     bool isC64CPU() override { return true; }
     bool isDriveCPU() override { return false; }
 };
@@ -435,7 +435,7 @@ public:
     DriveCPU(C64& ref, DriveMemory &memref) : CPU(ref, memref) { }
     const char *getDescription() override { return "DriveCPU"; }
     
-    CPUModel model() override { return MOS_6502; }
+    CPURev model() override { return MOS_6502; }
     bool isC64CPU() override { return false; }
     bool isDriveCPU() override { return true; }
 };

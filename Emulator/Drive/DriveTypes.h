@@ -22,7 +22,7 @@ enum_long(DriveID)
 
 inline bool isDriveID(long value)
 {
-    return value >= DRIVE8 && value <= DRIVE9;
+    return (unsigned long)value <= DRIVE9;
 }
 
 enum_long(DriveType)

@@ -56,7 +56,7 @@ public:
 public:
     
     // Returns the type of this file
-    virtual FileType type() { return FILETYPE_UNKNOWN; }
+    virtual FileType type() { return FileType_UNKNOWN; }
 
     // Returns a string representation for the type of this file
     const char *typeString() { return sFileType(type()); }

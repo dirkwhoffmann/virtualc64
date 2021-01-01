@@ -18,12 +18,12 @@ FSDeviceDescriptor::FSDeviceDescriptor(DiskType type, DOSType dos)
     
     switch (type) {
             
-        case DISK_SS_SD:
+        case DiskType_SS_SD:
             numCyls = 35;
             numHeads = 1;
             break;
             
-        case DISK_DS_SD:
+        case DiskType_DS_SD:
             numCyls = 35;
             numHeads = 2;
             break;

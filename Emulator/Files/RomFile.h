@@ -28,7 +28,7 @@ private:
     static const u8 magicVC1541RomBytes[vc1541RomSignatureCnt][3];
 
     // Rom type (Basic, Character, Kernal, or VC1541)
-    FileType romtype = FILETYPE_UNKNOWN;
+    FileType romtype = FileType_UNKNOWN;
         
 public:
     

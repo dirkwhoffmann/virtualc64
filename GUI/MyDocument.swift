@@ -79,34 +79,34 @@ class MyDocument: NSDocument {
     func fileType(url: URL) -> FileType {
                 
         if url.hasDirectoryPath {
-            return .FILETYPE_FOLDER
+            return .FOLDER
         }
         
         switch url.pathExtension.uppercased() {
             
-        case "VC64": return .FILETYPE_V64
-        case "CRT":  return .FILETYPE_CRT
-        case "D64":  return .FILETYPE_D64
-        case "T64":  return .FILETYPE_T64
-        case "P00":  return .FILETYPE_P00
-        case "PRG":  return .FILETYPE_PRG
-        case "G64":  return .FILETYPE_G64
-        case "TAP":  return .FILETYPE_TAP
-        default:     return .FILETYPE_UNKNOWN
+        case "VC64": return .V64
+        case "CRT":  return .CRT
+        case "D64":  return .D64
+        case "T64":  return .T64
+        case "P00":  return .P00
+        case "PRG":  return .PRG
+        case "G64":  return .G64
+        case "TAP":  return .TAP
+        default:     return .UNKNOWN
         }
     }
     
     func createAttachment(from url: URL) throws {
         
-        let types = [ FileType.FILETYPE_V64,
-                      FileType.FILETYPE_CRT,
-                      FileType.FILETYPE_T64,
-                      FileType.FILETYPE_P00,
-                      FileType.FILETYPE_PRG,
-                      FileType.FILETYPE_FOLDER,
-                      FileType.FILETYPE_D64,
-                      FileType.FILETYPE_G64,
-                      FileType.FILETYPE_TAP ]
+        let types = [ FileType.V64,
+                      FileType.CRT,
+                      FileType.T64,
+                      FileType.P00,
+                      FileType.PRG,
+                      FileType.FOLDER,
+                      FileType.D64,
+                      FileType.G64,
+                      FileType.TAP ]
         
         try createAttachment(from: url, allowedTypes: types)
     }
@@ -169,13 +169,13 @@ class MyDocument: NSDocument {
         
         switch type {
             
-        case .FILETYPE_V64:
+        case .V64:
             if SnapshotProxy.isUnsupportedSnapshot(buffer, length: length) {
                 throw NSError.snapshotVersionError(filename: name)
             }
             result = SnapshotProxy.make(withBuffer: buffer, length: length)
             
-        case .FILETYPE_CRT:
+        case .CRT:
             /*
             if CRTFileProxy.isUnsupportedCRTBuffer(buffer, length: length) {
                 let type = CRTFileProxy.type(ofCRTBuffer: buffer, length: length)
@@ -184,22 +184,22 @@ class MyDocument: NSDocument {
             */
             result = CRTFileProxy.make(withBuffer: buffer, length: length)
             
-        case .FILETYPE_D64:
+        case .D64:
             result = D64FileProxy.make(withBuffer: buffer, length: length)
             
-        case .FILETYPE_T64:
+        case .T64:
             result = T64FileProxy.make(withBuffer: buffer, length: length)
             
-        case .FILETYPE_PRG:
+        case .PRG:
             result = PRGFileProxy.make(withBuffer: buffer, length: length)
             
-        case .FILETYPE_P00:
+        case .P00:
             result = P00FileProxy.make(withBuffer: buffer, length: length)
             
-        case .FILETYPE_G64:
+        case .G64:
             result = G64FileProxy.make(withBuffer: buffer, length: length)
             
-        case .FILETYPE_TAP:
+        case .TAP:
             result = TAPFileProxy.make(withBuffer: buffer, length: length)
             
         default:
@@ -223,7 +223,7 @@ class MyDocument: NSDocument {
         
         switch type {
             
-        case .FILETYPE_FOLDER:
+        case .FOLDER:
             result = FolderProxy.make(withFolder: name)
             
         default:
@@ -383,7 +383,7 @@ class MyDocument: NSDocument {
 
         track("disk: \(disk) to: \(url)")
         
-        if url.c64FileType == .FILETYPE_G64 {
+        if url.c64FileType == .G64 {
          
             if let g64 = G64FileProxy.make(withDisk: disk) {
                 try export(file: g64, to: url)
@@ -407,7 +407,7 @@ class MyDocument: NSDocument {
                 
         switch url.c64FileType {
         
-        case .FILETYPE_D64:
+        case .D64:
 
             if let d64 = D64FileProxy.make(withVolume: fs, error: &err) {
                 try export(file: d64, to: url)
@@ -415,7 +415,7 @@ class MyDocument: NSDocument {
                 throw ExportError.fileSystemError(error: err)
             }
             
-        case .FILETYPE_T64:
+        case .T64:
             
             if let t64 = T64FileProxy.make(withFileSystem: fs) {
                 try export(file: t64, to: url)
@@ -423,7 +423,7 @@ class MyDocument: NSDocument {
                 throw ExportError.fileSystemError(error: err)
             }
             
-        case .FILETYPE_PRG:
+        case .PRG:
             
             if fs.numFiles > 1 {
                 showDiskHasMultipleFilesAlert(format: "PRG")
@@ -435,7 +435,7 @@ class MyDocument: NSDocument {
                 throw ExportError.fileSystemError(error: err)
             }
 
-        case .FILETYPE_P00:
+        case .P00:
             
             if fs.numFiles > 1 {
                 showDiskHasMultipleFilesAlert(format: "P00")

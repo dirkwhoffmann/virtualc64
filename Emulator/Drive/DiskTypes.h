@@ -38,23 +38,24 @@
 
 enum_long(DiskType)
 {
-    DISK_SS_SD,   // Single-sided, single density (VC1541)
-    DISK_DS_SD    // Double-sided, single density (VC1571) (not supported)
+    DiskType_SS_SD,   // Single-sided, single density (VC1541)
+    DiskType_DS_SD    // Double-sided, single density (VC1571) (not supported)
 };
 
 inline bool isDiskType(DiskType value)
 {
-    return value >= 0 && value <= DISK_DS_SD;
+    return (unsigned long)value <= DiskType_DS_SD;
 }
 
-inline const char *sDiskType(DiskType value)
+inline const char *DiskTypeName(DiskType value)
 {
     assert(isDiskType(value));
     
     switch (value) {
-        case DISK_SS_SD:  return "SS_SD";
-        case DISK_DS_SD:  return "DS_SD";
-        default:          return "???";
+            
+        case DiskType_SS_SD:  return "SS_SD";
+        case DiskType_DS_SD:  return "DS_SD";
+        default:              return "???";
     }
 }
 

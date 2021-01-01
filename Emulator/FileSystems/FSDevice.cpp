@@ -36,7 +36,7 @@ FSDevice::makeWithD64(D64File *d64, FSError *err)
     assert(d64);
 
     // Get device descriptor
-    FSDeviceDescriptor descriptor = FSDeviceDescriptor(DISK_SS_SD);
+    FSDeviceDescriptor descriptor = FSDeviceDescriptor(DiskType_SS_SD);
         
     // Create the device
     FSDevice *device = makeWithFormat(descriptor);
@@ -60,7 +60,7 @@ FSDevice::makeWithDisk(class Disk *disk, FSError *err)
     size_t len = disk->decodeDisk(buffer);
     
     // Create a suitable device descriptor
-    FSDeviceDescriptor descriptor = FSDeviceDescriptor(DISK_SS_SD);
+    FSDeviceDescriptor descriptor = FSDeviceDescriptor(DiskType_SS_SD);
     switch (len) {
             
         case D64_683_SECTORS: descriptor.numCyls = 35; break;
@@ -90,7 +90,7 @@ FSDevice::makeWithCollection(AnyCollection *collection, FSError *err)
     assert(collection);
         
     // Create the device
-    FSDevice *device = makeWithType(DISK_SS_SD);
+    FSDevice *device = makeWithType(DiskType_SS_SD);
     assert(device);
     
     // Write BAM
@@ -121,7 +121,7 @@ FSDevice::makeWithFolder(const char *path, FSError *error)
     assert(path);
     
     // Create the device
-    FSDevice *device = makeWithType(DISK_SS_SD);
+    FSDevice *device = makeWithType(DiskType_SS_SD);
     assert(device);
     
     // Write BAM

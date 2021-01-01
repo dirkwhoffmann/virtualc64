@@ -35,11 +35,11 @@ inline bool isVICRev(long value)
     (value == VICRev_NTSC_8562);
 }
 
-inline const char *sVICRev(VICRev revision)
+inline const char *VICRevName(VICRev value)
 {
-    assert(isVICRev(revision));
+    assert(isVICRev(value));
     
-    switch (revision) {
+    switch (value) {
             
         case VICRev_PAL_6569_R1:    return "PAL_6569_R1";
         case VICRev_PAL_6569_R3:    return "PAL_6569_R3";

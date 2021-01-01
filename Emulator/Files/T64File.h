@@ -55,7 +55,7 @@ public:
     // Methods from AnyC64File
     //
     
-    FileType type() override { return FILETYPE_T64; }
+    FileType type() override { return FileType_T64; }
     const char *getName() override;
     bool hasSameType(const char *filename) override { return isT64File(filename); }
     bool readFromBuffer(const u8 *buffer, size_t length) override;

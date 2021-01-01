@@ -580,11 +580,11 @@ extension MyController: NSMenuItemValidation {
     
     func insertDiskAction(from url: URL, drive: DriveID) {
         
-        let types = [ FileType.FILETYPE_D64,
-                      FileType.FILETYPE_T64,
-                      FileType.FILETYPE_PRG,
-                      FileType.FILETYPE_P00,
-                      FileType.FILETYPE_G64 ]
+        let types = [ FileType.D64,
+                      FileType.T64,
+                      FileType.PRG,
+                      FileType.P00,
+                      FileType.G64 ]
         
         do {
             // Try to create a file proxy
@@ -729,7 +729,7 @@ extension MyController: NSMenuItemValidation {
     
     func insertTapeAction(from url: URL) {
         
-        let types = [ FileType.FILETYPE_TAP ]
+        let types = [ FileType.TAP ]
         
         do {
             // Try to create a file proxy
@@ -796,7 +796,7 @@ extension MyController: NSMenuItemValidation {
     
     func attachCartridgeAction(from url: URL) {
         
-        let types = [ FileType.FILETYPE_CRT ]
+        let types = [ FileType.CRT ]
         
         do {
             // Try to create a file proxy

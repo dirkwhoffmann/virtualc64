@@ -50,7 +50,7 @@ public:
     //
     
     const char *getName() override;
-    FileType type() override { return FILETYPE_P00; }
+    FileType type() override { return FileType_P00; }
     bool hasSameType(const char *filename) override { return isP00File(filename); }
     
 

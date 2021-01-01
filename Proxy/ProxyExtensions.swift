@@ -59,20 +59,16 @@ extension AnyFileProxy {
      
         switch type() {
      
-        case .FILETYPE_CRT:
+        case .CRT:
             return NSImage.init(named: "cartridge")!
         
-        case .FILETYPE_TAP:
+        case .TAP:
             return NSImage.init(named: "tape")!
             
-        case .FILETYPE_FOLDER:
+        case .FOLDER:
             return NSImage.init(named: "NSFolder")!
 
-        case .FILETYPE_D64,
-             .FILETYPE_G64,
-             .FILETYPE_T64,
-             .FILETYPE_PRG,
-             .FILETYPE_P00:
+        case .D64, .G64, .T64, .PRG, .P00:
             
             let name = "disk2" + (protected ? "_protected" : "")
             return NSImage.init(named: name)!
