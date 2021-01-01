@@ -475,17 +475,17 @@ public:
     /* Sets or clears a run loop control flag. The functions are thread-safe
      * and can be called from inside or outside the emulator thread.
      */
-    void setControlFlags(u32 flags);
-    void clearControlFlags(u32 flags);
+    void setActionFlags(u32 flags);
+    void clearActionFlags(u32 flags);
     
     // Convenience wrappers for controlling the run loop
-    void signalAutoSnapshot() { setControlFlags(RL_AUTO_SNAPSHOT); }
-    void signalUserSnapshot() { setControlFlags(RL_USER_SNAPSHOT); }
-    void signalBreakpoint() { setControlFlags(RL_BREAKPOINT_REACHED); }
-    void signalWatchpoint() { setControlFlags(RL_WATCHPOINT_REACHED); }
-    void signalInspect() { setControlFlags(RL_INSPECT); }
-    void signalJammed() { setControlFlags(RL_CPU_JAMMED); }
-    void signalStop() { setControlFlags(RL_STOP); }
+    void signalAutoSnapshot() { setActionFlags(ActionFlag_AUTO_SNAPSHOT); }
+    void signalUserSnapshot() { setActionFlags(ActionFlag_USER_SNAPSHOT); }
+    void signalBreakpoint() { setActionFlags(ActionFlag_BREAKPOINT); }
+    void signalWatchpoint() { setActionFlags(ActionFlag_WATCHPOINT); }
+    void signalInspect() { setActionFlags(ActionFlag_INSPECT); }
+    void signalJammed() { setActionFlags(ActionFlag_CPU_JAMMED); }
+    void signalStop() { setActionFlags(ActionFlag_STOP); }
 
 
     //

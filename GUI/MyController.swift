@@ -392,7 +392,7 @@ extension MyController {
         if CommandLine.arguments.contains("-debugcart") {
             c64.configure(.DEBUGCART, enable: true)
         }
-        
+                
         // Check if the C64 is ready to power on
         if c64.isReady() {
             

@@ -102,7 +102,7 @@ SIDBridge::setConfigItem(Option option, long value)
             
         case Option_VIC_REVISION:
         {
-            u32 newFrequency = VICII::getFrequency((VICRevision)value);
+            u32 newFrequency = VICII::getFrequency((VICRev)value);
                                     
             suspend();
             setClockFrequency(newFrequency);

@@ -597,8 +597,8 @@ public:
     long getConfigItem(Option option);
     bool setConfigItem(Option option, long value) override;
     
-    VICRevision getRevision() { return config.revision; }    
-    void setRevision(VICRevision revision);
+    VICRev getRevision() { return config.revision; }    
+    void setRevision(VICRev revision);
     
     void setDmaDebugColor(MemAccessType type, GpuColor color);
     void setDmaDebugColor(MemAccessType type, RgbColor color);
@@ -728,31 +728,31 @@ private:
 public:
     
     // Returns true if a PAL chip is plugged in
-    static bool isPAL(VICRevision revision);
+    static bool isPAL(VICRev revision);
     bool isPAL() { return isPAL(config.revision); }
     
     // Returns true if a NTSC chip is plugged in
-    static bool isNTSC(VICRevision revision);
+    static bool isNTSC(VICRev revision);
     bool isNTSC() { return isNTSC(config.revision); }
 
     // Returns true if a newer MOS 856x chip is plugged in
-    static bool is856x(VICRevision revision);
+    static bool is856x(VICRev revision);
     bool is856x() { return is856x(config.revision); }
     
     // Returns true if an older MOS 656x chip is plugged in
-    static bool is656x(VICRevision revision);
+    static bool is656x(VICRev revision);
     bool is656x() { return is656x(config.revision); }
 
     // Returns true if light pen interrupts are triggered with a delay
-    static bool delayedLightPenIrqs(VICRevision revision);
+    static bool delayedLightPenIrqs(VICRev revision);
     bool delayedLightPenIrqs() { return delayedLightPenIrqs(config.revision); }
 
     // Returns the clock frequencay of the selected VICII model
-    static unsigned getFrequency(VICRevision revision);
+    static unsigned getFrequency(VICRev revision);
     unsigned getFrequency() { return getFrequency(config.revision); }
     
     // Returns the number of CPU cycles performed per rasterline
-    static unsigned getCyclesPerLine(VICRevision revision);
+    static unsigned getCyclesPerLine(VICRev revision);
     unsigned getCyclesPerLine() { return getCyclesPerLine(config.revision); }
     
     // Returns true if the end of the rasterline has been reached

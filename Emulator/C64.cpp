@@ -139,7 +139,7 @@ C64::setInspectionTarget(InspectionTarget target)
 void
 C64::clearInspectionTarget()
 {
-    inspectionTarget = INSPECT_NONE;
+    inspectionTarget = InspectionTarget_NONE;
 }
 
 C64Configuration
@@ -300,7 +300,7 @@ C64::setConfigItem(Option option, long value)
             
         case Option_VIC_REVISION:
         {
-            u64 newFrequency = VICII::getFrequency((VICRevision)value);
+            u64 newFrequency = VICII::getFrequency((VICRev)value);
 
             if (frequency == newFrequency) {
                 assert(durationOfOneCycle == 10000000000 / newFrequency);
@@ -319,7 +319,7 @@ C64::setConfigItem(Option option, long value)
 C64Model
 C64::getModel()
 {
-    VICRevision vicref = (VICRevision)vic.getConfigItem(Option_VIC_REVISION);
+    VICRev vicref = (VICRev)vic.getConfigItem(Option_VIC_REVISION);
     bool grayDotBug    = vic.getConfigItem(Option_GRAY_DOT_BUG);
     bool glueLogic     = vic.getConfigItem(Option_GLUE_LOGIC);
     CIARevision ciaref = (CIARevision)cia1.getConfigItem(Option_CIA_REVISION);
@@ -380,9 +380,9 @@ C64::updateVicFunctionTable()
     // Assign model specific execution functions
     switch (vic.getRevision()) {
             
-        case PAL_6569_R1:
-        case PAL_6569_R3:
-        case PAL_8565:
+        case VICRev_PAL_6569_R1:
+        case VICRev_PAL_6569_R3:
+        case VICRev_PAL_8565:
             
             if (dmaDebug) {
                 vicfunc[1] = &VICII::cycle1<PAL_DEBUG_CYCLE>;
@@ -429,7 +429,7 @@ C64::updateVicFunctionTable()
             vicfunc[65] = nullptr;
             break;
             
-        case NTSC_6567_R56A:
+        case VICRev_NTSC_6567_R56A:
             
             if (dmaDebug) {
                 vicfunc[1] = &VICII::cycle1<PAL_DEBUG_CYCLE>;
@@ -477,8 +477,8 @@ C64::updateVicFunctionTable()
             vicfunc[65] = nullptr;
             break;
             
-        case NTSC_6567:
-        case NTSC_8562:
+        case VICRev_NTSC_6567:
+        case VICRev_NTSC_8562:
             
             if (dmaDebug) {
                 vicfunc[1] = &VICII::cycle1<NTSC_DEBUG_CYCLE>;
@@ -637,11 +637,11 @@ C64::inspect()
 {
     switch(inspectionTarget) {
             
-        case INSPECT_CPU: cpu.inspect(); break;
-        case INSPECT_MEM: mem.inspect(); break;
-        case INSPECT_CIA: cia1.inspect(); cia2.inspect(); break;
-        case INSPECT_VIC: vic.inspect(); break;
-        case INSPECT_SID: sid.inspect(); break;
+        case InspectionTarget_CPU: cpu.inspect(); break;
+        case InspectionTarget_MEM: mem.inspect(); break;
+        case InspectionTarget_CIA: cia1.inspect(); cia2.inspect(); break;
+        case InspectionTarget_VIC: vic.inspect(); break;
+        case InspectionTarget_SID: sid.inspect(); break;
         default: break;
     }
 }
@@ -740,7 +740,7 @@ void
 C64::acquireThreadLock()
 {
     // Free the lock
-    if (state == STATE_RUNNING) {
+    if (state == State_RUNNING) {
         
         // Assure the emulator thread exists
         assert(p != (pthread_t)0);
@@ -822,54 +822,54 @@ C64::runLoop()
         if (runLoopCtrl) {
             
             // Are we requested to take a snapshot?
-            if (runLoopCtrl & RL_AUTO_SNAPSHOT) {
+            if (runLoopCtrl & ActionFlag_AUTO_SNAPSHOT) {
                 trace(RUN_DEBUG, "RL_AUTO_SNAPSHOT\n");
                 autoSnapshot = Snapshot::makeWithC64(this);
                 putMessage(MSG_AUTO_SNAPSHOT_TAKEN);
-                clearControlFlags(RL_AUTO_SNAPSHOT);
+                clearActionFlags(ActionFlag_AUTO_SNAPSHOT);
             }
-            if (runLoopCtrl & RL_USER_SNAPSHOT) {
+            if (runLoopCtrl & ActionFlag_USER_SNAPSHOT) {
                 trace(RUN_DEBUG, "RL_USER_SNAPSHOT\n");
                 userSnapshot = Snapshot::makeWithC64(this);
                 putMessage(MSG_USER_SNAPSHOT_TAKEN);
-                clearControlFlags(RL_USER_SNAPSHOT);
+                clearActionFlags(ActionFlag_USER_SNAPSHOT);
             }
             
             // Are we requested to update the debugger info structs?
-            if (runLoopCtrl & RL_INSPECT) {
+            if (runLoopCtrl & ActionFlag_INSPECT) {
                 trace(RUN_DEBUG, "RL_INSPECT\n");
                 inspect();
-                clearControlFlags(RL_INSPECT);
+                clearActionFlags(ActionFlag_INSPECT);
             }
             
             // Did we reach a breakpoint?
-            if (runLoopCtrl & RL_BREAKPOINT_REACHED) {
+            if (runLoopCtrl & ActionFlag_BREAKPOINT) {
                 putMessage(MSG_BREAKPOINT_REACHED);
                 trace(RUN_DEBUG, "BREAKPOINT_REACHED pc: %x\n", cpu.getPC0());
-                clearControlFlags(RL_BREAKPOINT_REACHED);
+                clearActionFlags(ActionFlag_BREAKPOINT);
                 break;
             }
             
             // Did we reach a watchpoint?
-            if (runLoopCtrl & RL_WATCHPOINT_REACHED) {
+            if (runLoopCtrl & ActionFlag_WATCHPOINT) {
                 putMessage(MSG_WATCHPOINT_REACHED);
                 trace(RUN_DEBUG, "WATCHPOINT_REACHED pc: %x\n", cpu.getPC0());
-                clearControlFlags(RL_WATCHPOINT_REACHED);
+                clearActionFlags(ActionFlag_WATCHPOINT);
                 break;
             }
             
             // Are we requested to terminate the run loop?
-            if (runLoopCtrl & RL_STOP) {
-                clearControlFlags(RL_STOP);
+            if (runLoopCtrl & ActionFlag_STOP) {
+                clearActionFlags(ActionFlag_STOP);
                 trace(RUN_DEBUG, "RL_STOP\n");
                 break;
             }
             
             // Is the CPU jammed due the execution of an illegal instruction?
-            if (runLoopCtrl & RL_CPU_JAMMED) {
+            if (runLoopCtrl & ActionFlag_CPU_JAMMED) {
                 putMessage(MSG_CPU_JAMMED);
                 trace(RUN_DEBUG, "RL_CPU_JAMMED\n");
-                clearControlFlags(RL_CPU_JAMMED);
+                clearActionFlags(ActionFlag_CPU_JAMMED);
                 break;
             }
             
@@ -1055,13 +1055,13 @@ C64::endFrame()
 }
 
 void
-C64::setControlFlags(u32 flags)
+C64::setActionFlags(u32 flags)
 {
     synchronized { runLoopCtrl |= flags; }
 }
 
 void
-C64::clearControlFlags(u32 flags)
+C64::clearActionFlags(u32 flags)
 {
     synchronized { runLoopCtrl &= ~flags; }
 }

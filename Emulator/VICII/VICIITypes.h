@@ -14,61 +14,61 @@
 // Enumerations
 //
 
-enum_long(VICRevision)
+enum_long(VICRev)
 {
-    PAL_6569_R1 = 1,
-    PAL_6569_R3 = 2,
-    PAL_8565 = 4,
-    NTSC_6567_R56A = 8,
-    NTSC_6567 = 16,
-    NTSC_8562 = 32
+    VICRev_PAL_6569_R1 = 1,
+    VICRev_PAL_6569_R3 = 2,
+    VICRev_PAL_8565 = 4,
+    VICRev_NTSC_6567_R56A = 8,
+    VICRev_NTSC_6567 = 16,
+    VICRev_NTSC_8562 = 32
 };
 
-inline bool isVICRevision(long value)
+inline bool isVICRev(long value)
 {
     return
-    (value == PAL_6569_R1) ||
-    (value == PAL_6569_R3) ||
-    (value == PAL_8565) ||
-    (value == NTSC_6567) ||
-    (value == NTSC_6567_R56A) ||
-    (value == NTSC_8562);
+    (value == VICRev_PAL_6569_R1) ||
+    (value == VICRev_PAL_6569_R3) ||
+    (value == VICRev_PAL_8565) ||
+    (value == VICRev_NTSC_6567) ||
+    (value == VICRev_NTSC_6567_R56A) ||
+    (value == VICRev_NTSC_8562);
 }
 
-inline const char *vicRevisionName(VICRevision revision)
+inline const char *sVICRev(VICRev revision)
 {
-    assert(isVICRevision(revision));
+    assert(isVICRev(revision));
     
     switch (revision) {
-        case PAL_6569_R1:    return "PAL_6569_R1";
-        case PAL_6569_R3:    return "PAL_6569_R3";
-        case PAL_8565:       return "PAL_8565";
-        case NTSC_6567:      return "NTSC_6567";
-        case NTSC_6567_R56A: return "NTSC_6567_R56A";
-        case NTSC_8562:      return "NTSC_8562";
-        default:             return "???";
+        case VICRev_PAL_6569_R1:    return "PAL_6569_R1";
+        case VICRev_PAL_6569_R3:    return "PAL_6569_R3";
+        case VICRev_PAL_8565:       return "PAL_8565";
+        case VICRev_NTSC_6567:      return "NTSC_6567";
+        case VICRev_NTSC_6567_R56A: return "NTSC_6567_R56A";
+        case VICRev_NTSC_8562:      return "NTSC_8562";
+        default:                    return "???";
     }
 }
 
 enum_long(GlueLogic)
 {
-    GLUE_DISCRETE = 0,
-    GLUE_CUSTOM_IC = 1
+    GlueLogic_DISCRETE,
+    GLUE_CUSTOM_IC
 };
 
 inline bool isGlueLogic(long value)
 {
-    return value == GLUE_DISCRETE || value == GLUE_CUSTOM_IC;
+    return (unsigned long)value <= GLUE_CUSTOM_IC;
 }
 
-inline const char *glueLogicName(GlueLogic type)
+inline const char *GlueLogicName(GlueLogic value)
 {
-    assert(isGlueLogic(type));
+    assert(isGlueLogic(value));
     
-    switch (type) {
-        case GLUE_DISCRETE:  return "Discrete";
-        case GLUE_CUSTOM_IC: return "IC";
-        default:             return "???";
+    switch (value) {
+        case GlueLogic_DISCRETE:  return "DISCRETE";
+        case GLUE_CUSTOM_IC:      return "IC";
+        default:                  return "???";
     }
 }
 
@@ -138,7 +138,7 @@ enum_long(DmaDisplayMode)
 
 typedef struct
 {
-    VICRevision revision;
+    VICRev revision;
     bool grayDotBug;
     GlueLogic glueLogic;
     Palette palette;

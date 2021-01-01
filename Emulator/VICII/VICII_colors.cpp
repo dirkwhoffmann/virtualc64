@@ -100,20 +100,20 @@ VICII::getColor(unsigned nr, Palette palette)
     double *luma;
     switch(config.revision) {
             
-        case PAL_6569_R1:
+        case VICRev_PAL_6569_R1:
             luma = luma_vice_6569_r1;
             break;
-        case PAL_6569_R3:
+        case VICRev_PAL_6569_R3:
             luma = luma_vice_6569_r3;
             break;
-        case NTSC_6567:
+        case VICRev_NTSC_6567:
             luma = luma_vice_6567;
             break;
-        case NTSC_6567_R56A:
+        case VICRev_NTSC_6567_R56A:
             luma = luma_vice_6567_r65a;
             break;
-        case PAL_8565:
-        case NTSC_8562:
+        case VICRev_PAL_8565:
+        case VICRev_NTSC_8562:
             luma = luma_pepto;
             break;
         default:

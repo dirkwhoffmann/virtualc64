@@ -122,41 +122,40 @@ inline bool isRomType(long value) {
     return (unsigned long)value <= ROMType_VC1541;
 }
 
-enum_long(EmulatorState)
+enum_long(State)
 {
-    STATE_OFF,
-    STATE_PAUSED,
-    STATE_RUNNING
+    State_OFF,
+    State_PAUSED,
+    State_RUNNING
 };
 
 inline bool isEmulatorState(long value) {
-    return value >= STATE_OFF && value <= STATE_RUNNING;
+    return (unsigned long)value <=  State_RUNNING;
 }
 
-typedef enum
+enum_int(ActionFlag)
 {
-    RL_STOP               = 0b0000001,
-    RL_CPU_JAMMED         = 0b0000010,
-    RL_INSPECT            = 0b0000100,
-    RL_BREAKPOINT_REACHED = 0b0001000,
-    RL_WATCHPOINT_REACHED = 0b0010000,
-    RL_AUTO_SNAPSHOT      = 0b0100000,
-    RL_USER_SNAPSHOT      = 0b1000000
-}
-RunLoopControlFlag;
+    ActionFlag_STOP          = 0b0000001,
+    ActionFlag_CPU_JAMMED    = 0b0000010,
+    ActionFlag_INSPECT       = 0b0000100,
+    ActionFlag_BREAKPOINT    = 0b0001000,
+    ActionFlag_WATCHPOINT    = 0b0010000,
+    ActionFlag_AUTO_SNAPSHOT = 0b0100000,
+    ActionFlag_USER_SNAPSHOT = 0b1000000
+};
 
 enum_long(InspectionTarget)
 {
-    INSPECT_NONE,
-    INSPECT_CPU,
-    INSPECT_MEM,
-    INSPECT_CIA,
-    INSPECT_VIC,
-    INSPECT_SID
+    InspectionTarget_NONE,
+    InspectionTarget_CPU,
+    InspectionTarget_MEM,
+    InspectionTarget_CIA,
+    InspectionTarget_VIC,
+    InspectionTarget_SID
 };
 
 inline bool isInspectionTarget(long value) {
-    return value >= INSPECT_NONE && value <= INSPECT_SID;
+    return (unsigned long)value <= InspectionTarget_SID;
 }
 
 typedef enum
@@ -187,7 +186,7 @@ C64Configuration;
 
 typedef struct
 {
-    VICRevision vic;
+    VICRev vic;
     bool grayDotBug;
     CIARevision cia;
     bool timerBBug;
@@ -202,22 +201,22 @@ C64ConfigurationDeprecated;
 static const C64ConfigurationDeprecated configurations[] = {
     
     // C64 PAL
-    { PAL_6569_R3, false, MOS_6526, true, MOS_6581, true, GLUE_DISCRETE, RAM_PATTERN_C64 },
+    { VICRev_PAL_6569_R3, false, MOS_6526, true, MOS_6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 },
     
     // C64_II_PAL
-    { PAL_8565, true, MOS_8521, false, MOS_8580, true, GLUE_CUSTOM_IC, RAM_PATTERN_C64C },
+    { VICRev_PAL_8565, true, MOS_8521, false, MOS_8580, true, GLUE_CUSTOM_IC, RAM_PATTERN_C64C },
     
     // C64_OLD_PAL
-    { PAL_6569_R1, false, MOS_6526, true, MOS_6581, true, GLUE_DISCRETE, RAM_PATTERN_C64 },
+    { VICRev_PAL_6569_R1, false, MOS_6526, true, MOS_6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 },
 
     // C64_NTSC
-    { NTSC_6567, false, MOS_6526, false, MOS_6581, true, GLUE_DISCRETE, RAM_PATTERN_C64 },
+    { VICRev_NTSC_6567, false, MOS_6526, false, MOS_6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 },
 
     // C64_II_NTSC
-    { NTSC_8562, true, MOS_8521, true, MOS_8580, true, GLUE_CUSTOM_IC, RAM_PATTERN_C64C },
+    { VICRev_NTSC_8562, true, MOS_8521, true, MOS_8580, true, GLUE_CUSTOM_IC, RAM_PATTERN_C64C },
     
     // C64_OLD_NTSC
-    { NTSC_6567_R56A, false, MOS_6526, false, MOS_6581, true, GLUE_DISCRETE, RAM_PATTERN_C64 }
+    { VICRev_NTSC_6567_R56A, false, MOS_6526, false, MOS_6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 }
 };
 
 #endif

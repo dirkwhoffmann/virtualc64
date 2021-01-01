@@ -32,7 +32,7 @@ extension ConfigurationController {
         // VIC
         hwVicModelPopup.selectItem(withTag: config.vicRevision)
         
-        switch VICRevision.init(rawValue: config.vicRevision) {
+        switch VICRev.init(rawValue: config.vicRevision) {
             
         case .PAL_6569_R1,
              .PAL_6569_R3,

@@ -33,7 +33,7 @@ protected:
      *     Paused: The C64 is turned on, but there is no emulator thread
      *    Running: The C64 is turned on and the emulator thread running
      */
-    EmulatorState state = STATE_OFF;
+    State state = State_OFF;
     
     /* Indicates if the emulator should be executed in warp mode. To speed up
      * emulation (e.g., during disk accesses), the virtual hardware may be put
@@ -188,10 +188,10 @@ public:
      * Additional component flags: warp (on / off), debug (on / off)
      */
     
-    bool isPoweredOff() { return state == STATE_OFF; }
-    bool isPoweredOn() { return state != STATE_OFF; }
-    bool isPaused() { return state == STATE_PAUSED; }
-    bool isRunning() { return state == STATE_RUNNING; }
+    bool isPoweredOff() { return state == State_OFF; }
+    bool isPoweredOn() { return state != State_OFF; }
+    bool isPaused() { return state == State_PAUSED; }
+    bool isRunning() { return state == State_RUNNING; }
     
 protected:
     

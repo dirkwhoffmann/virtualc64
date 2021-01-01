@@ -546,7 +546,7 @@ extension Keys {
 
 struct HardwareDefaults {
     
-    var vicRevision: VICRevision
+    var vicRevision: VICRev
     var vicGrayDotBug: Bool
     
     var ciaRevision: CIARevision
@@ -585,7 +585,7 @@ struct HardwareDefaults {
         sidAddress2:   0xD440,
         sidAddress3:   0xD460,
         
-        glueLogic:     .GLUE_DISCRETE,
+        glueLogic:     .GlueLogic_DISCRETE,
         ramPattern:    .RAM_PATTERN_C64
     )
     
@@ -627,7 +627,7 @@ struct HardwareDefaults {
         sidAddress2:   0xD440,
         sidAddress3:   0xD460,
         
-        glueLogic:     .GLUE_DISCRETE,
+        glueLogic:     .GlueLogic_DISCRETE,
         ramPattern:    .RAM_PATTERN_C64
     )
 
@@ -648,7 +648,7 @@ struct HardwareDefaults {
         sidAddress2:   0xD440,
         sidAddress3:   0xD460,
         
-        glueLogic:     .GLUE_DISCRETE,
+        glueLogic:     .GlueLogic_DISCRETE,
         ramPattern:    .RAM_PATTERN_C64
     )
     
@@ -690,7 +690,7 @@ struct HardwareDefaults {
         sidAddress2:   0xD440,
         sidAddress3:   0xD460,
         
-        glueLogic:     .GLUE_DISCRETE,
+        glueLogic:     .GlueLogic_DISCRETE,
         ramPattern:    .RAM_PATTERN_C64
     )
 }
