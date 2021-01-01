@@ -138,34 +138,34 @@ VICII::resetDmaTexture(int nr)
 }
 
 long
-VICII::getConfigItem(ConfigOption option)
+VICII::getConfigItem(Option option)
 {
     switch (option) {
             
-        case OPT_VIC_REVISION:     return config.revision;
-        case OPT_PALETTE:          return config.palette;
-        case OPT_GRAY_DOT_BUG:     return config.grayDotBug;
-        case OPT_GLUE_LOGIC:       return config.glueLogic;
-        case OPT_DMA_DEBUG:        return config.dmaDebug;
-        case OPT_DMA_CHANNEL_R:    return config.dmaChannel[R_ACCESS];
-        case OPT_DMA_CHANNEL_I:    return config.dmaChannel[I_ACCESS];
-        case OPT_DMA_CHANNEL_C:    return config.dmaChannel[C_ACCESS];
-        case OPT_DMA_CHANNEL_G:    return config.dmaChannel[G_ACCESS];
-        case OPT_DMA_CHANNEL_P:    return config.dmaChannel[P_ACCESS];
-        case OPT_DMA_CHANNEL_S:    return config.dmaChannel[S_ACCESS];
-        case OPT_DMA_COLOR_R:      return config.dmaColor[R_ACCESS];
-        case OPT_DMA_COLOR_I:      return config.dmaColor[I_ACCESS];
-        case OPT_DMA_COLOR_C:      return config.dmaColor[C_ACCESS];
-        case OPT_DMA_COLOR_G:      return config.dmaColor[G_ACCESS];
-        case OPT_DMA_COLOR_P:      return config.dmaColor[P_ACCESS];
-        case OPT_DMA_COLOR_S:      return config.dmaColor[S_ACCESS];
-        case OPT_DMA_DISPLAY_MODE: return config.dmaDisplayMode;
-        case OPT_DMA_OPACITY:      return config.dmaOpacity;
-        case OPT_HIDE_SPRITES:     return config.hideSprites;
-        case OPT_CUT_LAYERS:       return config.cutLayers;
-        case OPT_CUT_OPACITY:      return config.cutOpacity;
-        case OPT_SS_COLLISIONS:    return config.checkSSCollisions;
-        case OPT_SB_COLLISIONS:    return config.checkSBCollisions;
+        case Option_VIC_REVISION:     return config.revision;
+        case Option_PALETTE:          return config.palette;
+        case Option_GRAY_DOT_BUG:     return config.grayDotBug;
+        case Option_GLUE_LOGIC:       return config.glueLogic;
+        case Option_DMA_DEBUG:        return config.dmaDebug;
+        case Option_DMA_CHANNEL_R:    return config.dmaChannel[R_ACCESS];
+        case Option_DMA_CHANNEL_I:    return config.dmaChannel[I_ACCESS];
+        case Option_DMA_CHANNEL_C:    return config.dmaChannel[C_ACCESS];
+        case Option_DMA_CHANNEL_G:    return config.dmaChannel[G_ACCESS];
+        case Option_DMA_CHANNEL_P:    return config.dmaChannel[P_ACCESS];
+        case Option_DMA_CHANNEL_S:    return config.dmaChannel[S_ACCESS];
+        case Option_DMA_COLOR_R:      return config.dmaColor[R_ACCESS];
+        case Option_DMA_COLOR_I:      return config.dmaColor[I_ACCESS];
+        case Option_DMA_COLOR_C:      return config.dmaColor[C_ACCESS];
+        case Option_DMA_COLOR_G:      return config.dmaColor[G_ACCESS];
+        case Option_DMA_COLOR_P:      return config.dmaColor[P_ACCESS];
+        case Option_DMA_COLOR_S:      return config.dmaColor[S_ACCESS];
+        case Option_DMA_DISPLAY_MODE: return config.dmaDisplayMode;
+        case Option_DMA_OPACITY:      return config.dmaOpacity;
+        case Option_HIDE_SPRITES:     return config.hideSprites;
+        case Option_CUT_LAYERS:       return config.cutLayers;
+        case Option_CUT_OPACITY:      return config.cutOpacity;
+        case Option_SS_COLLISIONS:    return config.checkSSCollisions;
+        case Option_SB_COLLISIONS:    return config.checkSBCollisions;
 
         default:
             assert(false);
@@ -174,11 +174,11 @@ VICII::getConfigItem(ConfigOption option)
 }
 
 bool
-VICII::setConfigItem(ConfigOption option, long value)
+VICII::setConfigItem(Option option, long value)
 {
     switch (option) {
             
-        case OPT_VIC_REVISION:
+        case Option_VIC_REVISION:
             
             if (!isVICRevision(value)) {
                 warn("Invalid VIC revision: %ld\n", value);
@@ -194,7 +194,7 @@ VICII::setConfigItem(ConfigOption option, long value)
             resume();
             return true;
             
-        case OPT_PALETTE:
+        case Option_PALETTE:
             
             if (!isPalette(value)) {
                 warn("Invalid color palette: %ld\n", value);
@@ -210,17 +210,17 @@ VICII::setConfigItem(ConfigOption option, long value)
             resume();
             return true;
             
-        case OPT_GRAY_DOT_BUG:
+        case Option_GRAY_DOT_BUG:
             
             config.grayDotBug = value;
             return true;
             
-        case OPT_HIDE_SPRITES:
+        case Option_HIDE_SPRITES:
             
             config.hideSprites = value;
             return true;
 
-        case OPT_DMA_DEBUG:
+        case Option_DMA_DEBUG:
             
             if (config.dmaDebug == value) {
                 return false;
@@ -232,98 +232,98 @@ VICII::setConfigItem(ConfigOption option, long value)
             resume();
             return true;
             
-        case OPT_DMA_CHANNEL_R:
+        case Option_DMA_CHANNEL_R:
             
             config.dmaChannel[R_ACCESS] = value;
             return true;
             
-        case OPT_DMA_CHANNEL_I:
+        case Option_DMA_CHANNEL_I:
             
             config.dmaChannel[I_ACCESS] = value;
             return true;
             
-        case OPT_DMA_CHANNEL_C:
+        case Option_DMA_CHANNEL_C:
             
             config.dmaChannel[C_ACCESS] = value;
             return true;
             
-        case OPT_DMA_CHANNEL_G:
+        case Option_DMA_CHANNEL_G:
             
             config.dmaChannel[G_ACCESS] = value;
             return true;
             
-        case OPT_DMA_CHANNEL_P:
+        case Option_DMA_CHANNEL_P:
             
             config.dmaChannel[P_ACCESS] = value;
             return true;
             
-        case OPT_DMA_CHANNEL_S:
+        case Option_DMA_CHANNEL_S:
             
             config.dmaChannel[S_ACCESS] = value;
             return true;
 
-        case OPT_DMA_COLOR_R:
+        case Option_DMA_COLOR_R:
             
             setDmaDebugColor(R_ACCESS, GpuColor((u32)value));
             config.dmaColor[R_ACCESS] = (u32)value;
             return true;
             
-        case OPT_DMA_COLOR_I:
+        case Option_DMA_COLOR_I:
             
             config.dmaColor[I_ACCESS] = (u32)value;
             return true;
 
-        case OPT_DMA_COLOR_C:
+        case Option_DMA_COLOR_C:
             
             config.dmaColor[C_ACCESS] = (u32)value;
             return true;
 
-        case OPT_DMA_COLOR_G:
+        case Option_DMA_COLOR_G:
             
             config.dmaColor[G_ACCESS] = (u32)value;
             return true;
 
-        case OPT_DMA_COLOR_P:
+        case Option_DMA_COLOR_P:
             
             config.dmaColor[P_ACCESS] = (u32)value;
             return true;
 
-        case OPT_DMA_COLOR_S:
+        case Option_DMA_COLOR_S:
             
             config.dmaColor[S_ACCESS] = (u32)value;
             return true;
             
-        case OPT_DMA_OPACITY:
+        case Option_DMA_OPACITY:
             
             config.dmaOpacity = value;
             return false; // 'false' to avoid a MSG_CONFIG being sent
             
-        case OPT_DMA_DISPLAY_MODE:
+        case Option_DMA_DISPLAY_MODE:
             
             config.dmaDisplayMode = (DmaDisplayMode)value;
             return true;
 
-        case OPT_CUT_LAYERS:
+        case Option_CUT_LAYERS:
             
             config.cutLayers = value;
             return true;
             
-        case OPT_CUT_OPACITY:
+        case Option_CUT_OPACITY:
             
             config.cutOpacity = value;
             return false; // False to avoid MSG_CONFIG being sent to the GUI
             
-        case OPT_SS_COLLISIONS:
+        case Option_SS_COLLISIONS:
             
             config.checkSSCollisions = value;
             return true;
 
-        case OPT_SB_COLLISIONS:
+        case Option_SB_COLLISIONS:
             
             config.checkSBCollisions = value;
             return true;
 
-        case OPT_GLUE_LOGIC:
+        case Option_GLUE_LOGIC:
             
             if (!isGlueLogic(value)) {
                 warn("Invalid glue logic type: %ld\n", value);

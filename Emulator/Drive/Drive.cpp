@@ -47,13 +47,13 @@ Drive::_reset()
 }
 
 long
-Drive::getConfigItem(ConfigOption option)
+Drive::getConfigItem(Option option)
 {
     switch (option) {
             
-        case OPT_DRIVE_TYPE:          return config.type;
-        case OPT_DRIVE_CONNECT:       return config.connected;
-        case OPT_DRIVE_POWER_SWITCH:  return config.switchedOn;
+        case Option_DRIVE_TYPE:          return config.type;
+        case Option_DRIVE_CONNECT:       return config.connected;
+        case Option_DRIVE_POWER_SWITCH:  return config.switchedOn;
             
         default:
             assert(false);
@@ -62,11 +62,11 @@ Drive::getConfigItem(ConfigOption option)
 }
 
 bool
-Drive::setConfigItem(ConfigOption option, long value)
+Drive::setConfigItem(Option option, long value)
 {
     switch (option) {
             
-        case OPT_VIC_REVISION:
+        case Option_VIC_REVISION:
         {
             u64 duration = 10000000000 / VICII::getFrequency((VICRevision)value);
             
@@ -83,13 +83,13 @@ Drive::setConfigItem(ConfigOption option, long value)
 }
 
 bool
-Drive::setConfigItem(ConfigOption option, long id, long value)
+Drive::setConfigItem(Option option, long id, long value)
 {
     if (id != deviceNr) return false;
     
     switch (option) {
             
-        case OPT_DRIVE_TYPE:
+        case Option_DRIVE_TYPE:
         {
             if (!isDriveType(value)) {
                 warn("Invalid drive type: %ld\n", value);
@@ -102,7 +102,7 @@ Drive::setConfigItem(ConfigOption option, long id, long value)
             config.type = (DriveType)value;
             return true;
         }
-        case OPT_DRIVE_CONNECT:
+        case Option_DRIVE_CONNECT:
         {
             if (config.connected == value) {
                 return false;
@@ -123,7 +123,7 @@ Drive::setConfigItem(ConfigOption option, long id, long value)
                 messageQueue.put(active ? MSG_DRIVE_ACTIVE : MSG_DRIVE_INACTIVE, deviceNr);
             return true;
         }
-        case OPT_DRIVE_POWER_SWITCH:
+        case Option_DRIVE_POWER_SWITCH:
         {
             if (config.switchedOn == value) {
                 return false;

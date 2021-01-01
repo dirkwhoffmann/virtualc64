@@ -36,7 +36,7 @@ HardwareComponent::reset()
 }
 
 bool
-HardwareComponent::configure(ConfigOption option, long value)
+HardwareComponent::configure(Option option, long value)
 {
     bool result = false;
     
@@ -52,7 +52,7 @@ HardwareComponent::configure(ConfigOption option, long value)
 }
 
 bool
-HardwareComponent::configure(ConfigOption option, long id, long value)
+HardwareComponent::configure(Option option, long id, long value)
 {
     bool result = false;
     

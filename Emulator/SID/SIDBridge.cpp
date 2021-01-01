@@ -41,26 +41,26 @@ SIDBridge::_reset()
 }
 
 long
-SIDBridge::getConfigItem(ConfigOption option)
+SIDBridge::getConfigItem(Option option)
 {
     switch (option) {
             
-        case OPT_SID_REVISION:
+        case Option_SID_REVISION:
             return config.revision;
             
-        case OPT_SID_FILTER:
+        case Option_SID_FILTER:
             return config.filter;
             
-        case OPT_SID_ENGINE:
+        case Option_SID_ENGINE:
             return config.engine;
             
-        case OPT_SID_SAMPLING:
+        case Option_SID_SAMPLING:
             return config.sampling;
             
-        case OPT_AUDVOLL:
+        case Option_AUDVOLL:
             return config.volL;
 
-        case OPT_AUDVOLR:
+        case Option_AUDVOLR:
             return config.volR;
             
         default:
@@ -70,21 +70,21 @@ SIDBridge::getConfigItem(ConfigOption option)
 }
 
 long
-SIDBridge::getConfigItem(ConfigOption option, long id)
+SIDBridge::getConfigItem(Option option, long id)
 {
     
     switch (option) {
             
-        case OPT_SID_ENABLE:
+        case Option_SID_ENABLE:
             return GET_BIT(config.enabled, id);
             
-        case OPT_SID_ADDRESS:
+        case Option_SID_ADDRESS:
             return config.address[id];
             
-        case OPT_AUDVOL:
+        case Option_AUDVOL:
             return config.vol[id];
 
-        case OPT_AUDPAN:
+        case Option_AUDPAN:
             return config.pan[id];
                         
         default:
@@ -94,13 +94,13 @@ SIDBridge::getConfigItem(ConfigOption option, long id)
 }
 
 bool
-SIDBridge::setConfigItem(ConfigOption option, long value)
+SIDBridge::setConfigItem(Option option, long value)
 {
     bool wasMuted = isMuted();
         
     switch (option) {
             
-        case OPT_VIC_REVISION:
+        case Option_VIC_REVISION:
         {
             u32 newFrequency = VICII::getFrequency((VICRevision)value);
                                     
@@ -111,7 +111,7 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
             return true;
         }
             
-        case OPT_SID_REVISION:
+        case Option_SID_REVISION:
             
             if (!isSIDRevision(value)) {
                 warn("Invalid SID revision: %ld\n", value);
@@ -128,7 +128,7 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
             
             return true;
             
-        case OPT_SID_FILTER:
+        case Option_SID_FILTER:
             
             if (config.filter == value) {
                 return false;
@@ -141,7 +141,7 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
             
             return true;
             
-        case OPT_SID_ENGINE:
+        case Option_SID_ENGINE:
             
             if (!isAudioEngine(value)) {
                 warn("Invalid SID engine: %ld\n", value);
@@ -156,7 +156,7 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
             
             return true;
             
-        case OPT_SID_SAMPLING:
+        case Option_SID_SAMPLING:
             
             if (!isSamplingMethod(value)) {
                 warn("Invalid sampling method: %ld\n", value);
@@ -172,7 +172,7 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
             
             return true;
             
-        case OPT_AUDVOLL:
+        case Option_AUDVOLL:
             
             config.volL = MIN(100, MAX(0, value));
             volL.set(pow((double)config.volL / 50, 1.4));
@@ -182,7 +182,7 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
             }
             return true;
             
-        case OPT_AUDVOLR:
+        case Option_AUDVOLR:
 
             config.volR = MIN(100, MAX(0, value));
             volR.set(pow((double)config.volR / 50, 1.4));
@@ -198,13 +198,13 @@ SIDBridge::setConfigItem(ConfigOption option, long value)
 }
 
 bool
-SIDBridge::setConfigItem(ConfigOption option, long id, long value)
+SIDBridge::setConfigItem(Option option, long id, long value)
 {
     bool wasMuted = isMuted();
 
     switch (option) {
                      
-        case OPT_SID_ENABLE:
+        case Option_SID_ENABLE:
 
             assert(id >= 0 && id <= 3);
 
@@ -228,7 +228,7 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
             resume();
             return true;
             
-        case OPT_SID_ADDRESS:
+        case Option_SID_ADDRESS:
 
             assert(id >= 0 && id <= 3);
 
@@ -253,7 +253,7 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
             resume();
             return true;
             
-        case OPT_AUDVOL:
+        case Option_AUDVOL:
             
             assert(id >= 0 && id <= 3);
 
@@ -266,7 +266,7 @@ SIDBridge::setConfigItem(ConfigOption option, long id, long value)
 
             return true;
             
-        case OPT_AUDPAN:
+        case Option_AUDPAN:
             
             assert(id >= 0 && id <= 3);
             if (value < 0 || value > 200) {

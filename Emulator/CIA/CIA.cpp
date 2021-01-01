@@ -30,12 +30,12 @@ CIA::_reset()
 }
 
 long
-CIA::getConfigItem(ConfigOption option)
+CIA::getConfigItem(Option option)
 {
     switch (option) {
             
-        case OPT_CIA_REVISION:  return config.revision;
-        case OPT_TIMER_B_BUG:   return config.timerBBug;
+        case Option_CIA_REVISION:  return config.revision;
+        case Option_TIMER_B_BUG:   return config.timerBBug;
         
         default:
             assert(false);
@@ -44,11 +44,11 @@ CIA::getConfigItem(ConfigOption option)
 }
 
 bool
-CIA::setConfigItem(ConfigOption option, long value)
+CIA::setConfigItem(Option option, long value)
 {
     switch (option) {
             
-        case OPT_CIA_REVISION:
+        case Option_CIA_REVISION:
             
             if (!isCIARevision(value)) {
                 warn("Invalid CIA revision: %ld\n", value);
@@ -61,7 +61,7 @@ CIA::setConfigItem(ConfigOption option, long value)
             config.revision = (CIARevision)value;
             return true;
             
-        case OPT_TIMER_B_BUG:
+        case Option_TIMER_B_BUG:
             
             if (config.timerBBug == value) {
                 return false;

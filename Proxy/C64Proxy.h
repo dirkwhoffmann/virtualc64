@@ -151,15 +151,15 @@ struct AnyC64FileWrapper;
 - (void) loadFromSnapshot:(SnapshotProxy *)proxy;
 
 - (C64Configuration) config;
-- (NSInteger) getConfig:(ConfigOption)opt;
-- (NSInteger) getConfig:(ConfigOption)opt id:(NSInteger)id;
-- (NSInteger) getConfig:(ConfigOption)opt drive:(DriveID)id;
-- (BOOL) configure:(ConfigOption)opt value:(NSInteger)val;
-- (BOOL) configure:(ConfigOption)opt enable:(BOOL)val;
-- (BOOL) configure:(ConfigOption)opt id:(NSInteger)id value:(NSInteger)val;
-- (BOOL) configure:(ConfigOption)opt id:(NSInteger)id enable:(BOOL)val;
-- (BOOL) configure:(ConfigOption)opt drive:(DriveID)id value:(NSInteger)val;
-- (BOOL) configure:(ConfigOption)opt drive:(DriveID)id enable:(BOOL)val;
+- (NSInteger) getConfig:(Option)opt;
+- (NSInteger) getConfig:(Option)opt id:(NSInteger)id;
+- (NSInteger) getConfig:(Option)opt drive:(DriveID)id;
+- (BOOL) configure:(Option)opt value:(NSInteger)val;
+- (BOOL) configure:(Option)opt enable:(BOOL)val;
+- (BOOL) configure:(Option)opt id:(NSInteger)id value:(NSInteger)val;
+- (BOOL) configure:(Option)opt id:(NSInteger)id enable:(BOOL)val;
+- (BOOL) configure:(Option)opt drive:(DriveID)id value:(NSInteger)val;
+- (BOOL) configure:(Option)opt drive:(DriveID)id enable:(BOOL)val;
 - (void) configure:(C64Model)value;
 - (C64Model) model;
 

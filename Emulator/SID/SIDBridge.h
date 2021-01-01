@@ -142,11 +142,11 @@ public:
     
     SIDConfig getConfig() { return config; }
     
-    long getConfigItem(ConfigOption option);
-    long getConfigItem(ConfigOption option, long id);
+    long getConfigItem(Option option);
+    long getConfigItem(Option option, long id);
 
-    bool setConfigItem(ConfigOption option, long value) override;
-    bool setConfigItem(ConfigOption option, long id, long value) override;
+    bool setConfigItem(Option option, long value) override;
+    bool setConfigItem(Option option, long id, long value) override;
 
     bool isEnabled(int nr) { return GET_BIT(config.enabled, nr); }
     

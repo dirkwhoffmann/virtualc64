@@ -1226,12 +1226,12 @@ struct AnyC64FileWrapper { AnyFile *file; };
 
 - (BOOL) isConnected
 {
-    return wrapper->drive->getConfigItem(OPT_DRIVE_CONNECT) != 0;
+    return wrapper->drive->getConfigItem(Option_DRIVE_CONNECT) != 0;
 }
 
 - (BOOL) isSwitchedOn
 {
-    return wrapper->drive->getConfigItem(OPT_DRIVE_POWER_SWITCH) != 0;
+    return wrapper->drive->getConfigItem(Option_DRIVE_POWER_SWITCH) != 0;
 }
 
 - (BOOL) readMode
@@ -2250,39 +2250,39 @@ struct AnyC64FileWrapper { AnyFile *file; };
 {
     return wrapper->c64->getConfig();
 }
-- (NSInteger) getConfig:(ConfigOption)opt
+- (NSInteger) getConfig:(Option)opt
 {
     return wrapper->c64->getConfigItem(opt);
 }
-- (NSInteger) getConfig:(ConfigOption)opt id:(NSInteger)id
+- (NSInteger) getConfig:(Option)opt id:(NSInteger)id
 {
     return wrapper->c64->getConfigItem(opt, id);
 }
-- (NSInteger) getConfig:(ConfigOption)opt drive:(DriveID)id
+- (NSInteger) getConfig:(Option)opt drive:(DriveID)id
 {
     return wrapper->c64->getConfigItem(opt, (long)id);
 }
-- (BOOL) configure:(ConfigOption)opt value:(NSInteger)val
+- (BOOL) configure:(Option)opt value:(NSInteger)val
 {
     return wrapper->c64->configure(opt, val);
 }
-- (BOOL) configure:(ConfigOption)opt enable:(BOOL)val
+- (BOOL) configure:(Option)opt enable:(BOOL)val
 {
     return wrapper->c64->configure(opt, val ? 1 : 0);
 }
-- (BOOL) configure:(ConfigOption)opt id:(NSInteger)id value:(NSInteger)val
+- (BOOL) configure:(Option)opt id:(NSInteger)id value:(NSInteger)val
 {
     return wrapper->c64->configure(opt, id, val);
 }
-- (BOOL) configure:(ConfigOption)opt id:(NSInteger)id enable:(BOOL)val
+- (BOOL) configure:(Option)opt id:(NSInteger)id enable:(BOOL)val
 {
     return wrapper->c64->configure(opt, id, val ? 1 : 0);
 }
-- (BOOL) configure:(ConfigOption)opt drive:(DriveID)id value:(NSInteger)val
+- (BOOL) configure:(Option)opt drive:(DriveID)id value:(NSInteger)val
 {
     return wrapper->c64->configure(opt, (long)id, val);
 }
-- (BOOL) configure:(ConfigOption)opt drive:(DriveID)id enable:(BOOL)val
+- (BOOL) configure:(Option)opt drive:(DriveID)id enable:(BOOL)val
 {
     return wrapper->c64->configure(opt, (long)id, val ? 1 : 0);
 }

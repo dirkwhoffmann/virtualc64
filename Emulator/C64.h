@@ -230,12 +230,12 @@ public:
     C64Configuration getConfig();
     
     // Gets a single configuration item
-    long getConfigItem(ConfigOption option);
-    long getConfigItem(ConfigOption option, long id);
+    long getConfigItem(Option option);
+    long getConfigItem(Option option, long id);
     
     // Sets a single configuration item
-    bool configure(ConfigOption option, long value);
-    bool configure(ConfigOption option, long id, long value);
+    bool configure(Option option, long value);
+    bool configure(Option option, long id, long value);
 
     // Configures the C64 to match a specific C64 model
     void configure(C64Model model);
@@ -248,7 +248,7 @@ public:
 
 private:
 
-    bool setConfigItem(ConfigOption option, long value) override;
+    bool setConfigItem(Option option, long value) override;
 
     
     //
