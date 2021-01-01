@@ -348,7 +348,14 @@ D64File::selectTrackAndSector(Track t, Sector s)
 //
 
 u8
-D64File::errorCode(Track t, Sector s)
+D64File::getErrorCode(Block b)
+{
+    assert(b < 802);
+    return errors[b];
+}
+
+u8
+D64File::getErrorCode(Track t, Sector s)
 {
    assert(Disk::isValidTrackSectorPair(t, s));
     
@@ -356,7 +363,6 @@ D64File::errorCode(Track t, Sector s)
     assert(index < 802);
     
     return errors[index];
-    
 }
 
 int

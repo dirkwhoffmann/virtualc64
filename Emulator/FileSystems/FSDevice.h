@@ -96,6 +96,14 @@ public:
     // Returns the DOS version of this file system
     DOSType dos() { return layout.dos; }
     
+    // Gets or sets the disk name
+    PETName<16> getName();
+    void setName(PETName<16> name);
+
+    // Returns the first or second disk ID character
+    u8 diskId1() { return bamPtr()->data[0xA2]; }
+    u8 diskId2() { return bamPtr()->data[0xA3]; }
+    
     // Reports layout information
     u32 getNumCyls() { return layout.numCyls; }
     u32 getNumHeads() { return layout.numHeads; }
@@ -145,10 +153,6 @@ public:
     //
     // Working with the BAM (Block Allocation Map)
     //
-
-    // Gets or sets the disk name
-    PETName<16> getName();
-    void setName(PETName<16> name);
     
     // Checks if a block is marked as free in the allocation bitmap
     bool isFree(Block b) { return isFree(layout.tsLink(b)); }
@@ -264,7 +268,8 @@ public:
 public:
         
     // Reads a single byte from a block
-    u8 readByte(u32 block, u32 offset);
+    u8 readByte(Block block, u32 offset);
+    u8 readByte(TSLink ts, u32 offset) { return readByte(layout.blockNr(ts), offset); }
 
     // Imports the volume from a buffer
     bool importVolume(const u8 *src, size_t size, FSError *error = nullptr);

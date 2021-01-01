@@ -449,12 +449,12 @@ public:
     // Encodes a G64 file
     void encodeG64(G64File *a);
     
-    /* Encodes a D64 file. The method creates sync marks, GRC encoded header
+    /* Encodes a file system. The method creates sync marks, GRC encoded header
      * and data blocks, checksums and gaps. If alignTracks is true, the first
      * sector always starts at the beginning of a track.
      */
-    void encodeD64(D64File *a, bool alignTracks = false);
- 
+    void encode(FSDevice *fs, bool alignTracks = false);
+    
 private:
     
     /* Encode a single track. This function translates the logical byte
@@ -465,14 +465,14 @@ private:
      * follwowing sectors with odd sector numbers. The number of written bits
      * is returned.
      */
-    size_t encodeTrack(D64File *a, Track t, u8 tailGap, HeadPos start);
+    usize encodeTrack(FSDevice *fs, Track t, u8 tailGap, HeadPos start);
     
     /* Encode a single sector. This function translates the logical byte
      * sequence of a single sector into the native VC1541 byte representation.
      * The sector is closed by 'gap' tail gap bytes. The number of written bits
      * is returned.
      */
-    size_t encodeSector(D64File *a, Track t, Sector sector, HeadPos start, int gap);
+    usize encodeSector(FSDevice *fs, Track t, Sector sector, HeadPos start, int gap);
 };
     
 #endif

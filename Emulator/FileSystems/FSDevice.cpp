@@ -36,7 +36,7 @@ FSDevice::makeWithD64(D64File *d64, FSError *err)
     assert(d64);
 
     // Get device descriptor
-    FSDeviceDescriptor descriptor = FSDeviceDescriptor(DiskType_SS_SD);
+    FSDeviceDescriptor descriptor = FSDeviceDescriptor(d64);
         
     // Create the device
     FSDevice *device = makeWithFormat(descriptor);
@@ -45,6 +45,11 @@ FSDevice::makeWithD64(D64File *d64, FSError *err)
     if (!device->importVolume(d64->getData(), d64->getSize(), err)) {
         delete device;
         return nullptr;
+    }
+    
+    // Import error codes (if any)
+    for (Block b = 0; b < device->blocks.size(); b++) {
+        device->setErrorCode(b, d64->getErrorCode(b));
     }
     
     return device;
@@ -226,13 +231,13 @@ FSDevice::usage(Block b, u32 pos)
 u8
 FSDevice::getErrorCode(Block b)
 {
-    return blockPtr(b) ? blocks[b]->error : 0;
+    return blockPtr(b) ? blocks[b]->errorCode : 0;
 }
 
 void
 FSDevice::setErrorCode(Block b, u8 code)
 {
-    if (blockPtr(b)) blocks[b]->error = code;
+    if (blockPtr(b)) blocks[b]->errorCode = code;
 }
 
 FSBlock *
@@ -271,17 +276,6 @@ FSDevice::setName(PETName<16> name)
     FSBlock *bam = bamPtr();
     name.write(bam->data + 0x90);
 }
-
-/*
-bool
-FSDevice::isFree(Block b)
-{
-    u32 byte, bit;
-    FSBlock *bam = locateAllocationBit(b, &byte, &bit);
-    
-    return GET_BIT(bam->data[byte], bit);
-}
-*/
 
 bool
 FSDevice::isFree(TSLink ts)

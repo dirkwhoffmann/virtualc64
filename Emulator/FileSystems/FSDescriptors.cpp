@@ -33,6 +33,15 @@ FSDeviceDescriptor::FSDeviceDescriptor(DiskType type, DOSType dos)
     }
 }
 
+FSDeviceDescriptor::FSDeviceDescriptor(D64File *d64)
+{
+    assert(d64);
+    
+    this->dos = DOSType_CBM;
+    numCyls = d64->numberOfTracks();
+    numHeads = 1;
+}
+
 bool
 FSDeviceDescriptor::isValidLink(TSLink ref)
 {

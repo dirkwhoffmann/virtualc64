@@ -110,7 +110,8 @@ public:
     /* Returns the error for the specified sector, or 01 (no error) if the D64
      * file does not contain error codes.
      */
-    u8 errorCode(Track t, Sector s);
+    u8 getErrorCode(Block b);
+    u8 getErrorCode(Track t, Sector s);
     
 private:
     

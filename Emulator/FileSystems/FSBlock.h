@@ -28,8 +28,8 @@ public:
     // The actual block data
     u8 data[256];
     
-    // Error code (imported from D64 files)
-    u8 error = 0;
+    // Error code (imported from D64 files, 1 = No error)
+    u8 errorCode = 1;
     
     
     //
