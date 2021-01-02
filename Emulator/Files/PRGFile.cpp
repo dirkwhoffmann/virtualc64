@@ -11,13 +11,13 @@
 #include "FSDevice.h"
 
 bool
-PRGFile::isPRGBuffer(const u8 *buffer, size_t length)
+PRGFile::isCompatibleBuffer(const u8 *buffer, size_t length)
 {
     return length >= 2;
 }
 
 bool
-PRGFile::isPRGFile(const char *path)
+PRGFile::isCompatibleFile(const char *path)
 {
     assert(path != NULL);
     
@@ -83,13 +83,13 @@ PRGFile::makeWithFileSystem(FSDevice *fs, int item)
 bool
 PRGFile::matchingBuffer(const u8 *buf, size_t len)
 {
-    return isPRGBuffer(buf, len);
+    return isCompatibleBuffer(buf, len);
 }
 
 bool
 PRGFile::matchingFile(const char *path)
 {
-    return isPRGFile(path);
+    return isCompatibleFile(path);
 }
 
 PETName<16>

@@ -48,7 +48,7 @@ const u8 RomFile::magicVC1541RomBytes[vc1541RomSignatureCnt][3] = {
 };
 
 bool
-RomFile::isRomBuffer(const u8 *buffer, size_t length)
+RomFile::isCompatibleBuffer(const u8 *buffer, size_t length)
 {
     return
     isBasicRomBuffer(buffer, length) ||
@@ -398,7 +398,7 @@ RomFile::revision(RomIdentifier rev)
 }
 
 bool
-RomFile::isRomFile(const char *filename)
+RomFile::isCompatibleFile(const char *filename)
 {
     return
     isBasicRomFile(filename) ||
@@ -466,6 +466,8 @@ RomFile::isVC1541RomFile(const char *filename)
 FileType
 RomFile::type()
 {
+    return romType;
+    /*
     if (romType == FILETYPE_UNKNOWN) {
 
         if      (isBasicRomBuffer (data, size)) romType = FILETYPE_BASIC_ROM;
@@ -474,25 +476,25 @@ RomFile::type()
         else if (isVC1541RomBuffer(data, size)) romType = FILETYPE_VC1541_ROM;
     }
     return romType;
+    */
 }
 
 bool
 RomFile::matchingBuffer(const u8 *buf, size_t len)
 {
-    return isRomBuffer(buf, len);
+    return isCompatibleBuffer(buf, len);
 }
 
 bool
 RomFile::matchingFile(const char *path)
 {
-    return isRomFile(path);
+    return isCompatibleFile(path);
 }
 
-bool
-RomFile::oldReadFromBuffer(const u8 *buffer, size_t length)
+void
+RomFile::readFromBuffer(const u8 *buffer, size_t length)
 {
-    if (!AnyFile::oldReadFromBuffer(buffer, length))
-        return false;
+    AnyFile::readFromBuffer(buffer, length);
     
     romType =
     isBasicRomBuffer(buffer, length) ? FILETYPE_BASIC_ROM :
@@ -500,6 +502,4 @@ RomFile::oldReadFromBuffer(const u8 *buffer, size_t length)
     isKernalRomBuffer(buffer, length) ? FILETYPE_KERNAL_ROM :
     isVC1541RomBuffer(buffer, length) ? FILETYPE_VC1541_ROM :
     FILETYPE_UNKNOWN;
- 
-    return romType != FILETYPE_UNKNOWN;
 }

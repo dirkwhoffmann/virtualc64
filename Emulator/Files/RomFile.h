@@ -37,14 +37,14 @@ public:
     //
     
     // Returns true if buffer contains a ROM image
-    static bool isRomBuffer(const u8 *buffer, size_t length);
+    static bool isCompatibleBuffer(const u8 *buffer, size_t length);
     static bool isBasicRomBuffer(const u8 *buffer, size_t length);
     static bool isCharRomBuffer(const u8 *buffer, size_t length);
     static bool isKernalRomBuffer(const u8 *buffer, size_t length);
     static bool isVC1541RomBuffer(const u8 *buffer, size_t length);
 
     // Returns true if path points to a ROM image
-    static bool isRomFile(const char *path);
+    static bool isCompatibleFile(const char *path);
     static bool isBasicRomFile(const char *path);
     static bool isCharRomFile(const char *path);
     static bool isKernalRomFile(const char *path);
@@ -79,7 +79,6 @@ public:
     FileType type() override;
     bool matchingBuffer(const u8 *buf, size_t len) override;
     bool matchingFile(const char *path) override;
-    
-    bool oldReadFromBuffer(const u8 *buf, size_t len) override;
+    void readFromBuffer(const u8 *buf, size_t len) override;
 };
 #endif

@@ -13,14 +13,14 @@ const u8 /* "GCR-1541" */
 G64File::magicBytes[] = { 0x47, 0x43, 0x52, 0x2D, 0x31, 0x35, 0x34, 0x31 };
 
 bool
-G64File::isG64Buffer(const u8 *buffer, size_t length)
+G64File::isCompatibleBuffer(const u8 *buffer, size_t length)
 {
     if (length < 0x02AC) return false;
     return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
 }
 
 bool
-G64File::isG64File(const char *filename)
+G64File::isCompatibleFile(const char *filename)
 {
     assert(filename != NULL);
     
@@ -127,13 +127,13 @@ G64File::makeWithDisk(Disk *disk)
 bool
 G64File::matchingBuffer(const u8 *buf, size_t len)
 {
-    return isG64Buffer(buf, len);
+    return isCompatibleBuffer(buf, len);
 }
 
 bool
 G64File::matchingFile(const char *path)
 {
-    return isG64File(path);
+    return isCompatibleFile(path);
 }
 
 void

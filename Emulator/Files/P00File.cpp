@@ -14,14 +14,14 @@ const u8
 P00File::magicBytes[] = { 0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65 };
 
 bool
-P00File::isP00Buffer(const u8 *buffer, size_t length)
+P00File::isCompatibleBuffer(const u8 *buffer, size_t length)
 {
     if (length < 0x1A) return false;
     return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
 }
 
 bool
-P00File::isP00File(const char *filename)
+P00File::isCompatibleFile(const char *filename)
 {
     assert (filename != NULL);
     
@@ -85,13 +85,13 @@ P00File::getName()
 bool
 P00File::matchingBuffer(const u8 *buf, size_t len)
 {
-    return isP00Buffer(buf, len); 
+    return isCompatibleBuffer(buf, len); 
 }
 
 bool
 P00File::matchingFile(const char *path)
 {
-    return isP00File(path);
+    return isCompatibleFile(path);
 }
 
 PETName<16>

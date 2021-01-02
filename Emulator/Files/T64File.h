@@ -27,10 +27,10 @@ public:
     //
     
     // Returns true iff buffer contains a T64 file
-    static bool isT64Buffer(const u8 *buffer, size_t length);
+    static bool isCompatibleBuffer(const u8 *buffer, size_t length);
     
     // Returns true of filename points to a valid file of that type
-    static bool isT64File(const char *filename);
+    static bool isCompatibleFile(const char *filename);
     
     
     //
@@ -57,7 +57,7 @@ public:
     const char *getName() override;
     bool matchingBuffer(const u8 *buf, size_t len) override;
     bool matchingFile(const char *path) override;
-    bool oldReadFromBuffer(const u8 *buffer, size_t length) override;
+    void readFromBuffer(const u8 *buffer, size_t length) override;
     
     
     //

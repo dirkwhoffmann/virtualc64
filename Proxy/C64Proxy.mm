@@ -1540,10 +1540,12 @@ struct AnyFileWrapper { AnyFile *file; };
     return wrapper->file->fnv();
 }
 
+/*
 - (void) readFromBuffer:(const void *)buffer length:(NSInteger)length
 {
-    wrapper->file->oldReadFromBuffer((const u8 *)buffer, length);
+    wrapper->file->readFromBuffer((const u8 *)buffer, length);
 }
+*/
 
 - (NSInteger) writeToBuffer:(void *)buffer
 {
@@ -1750,7 +1752,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (BOOL)isTAPFile:(NSString *)path
 {
-    return TAPFile::isTAPFile([path UTF8String]);
+    return TAPFile::isCompatibleFile([path UTF8String]);
 }
 
 + (instancetype)make:(TAPFile *)container
@@ -1817,7 +1819,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (BOOL)isT64File:(NSString *)path
 {
-    return T64File::isT64File([path UTF8String]);
+    return T64File::isCompatibleFile([path UTF8String]);
 }
 
 + (instancetype)make:(T64File *)archive
@@ -1863,7 +1865,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (BOOL)isPRGFile:(NSString *)path
 {
-    return PRGFile::isPRGFile([path UTF8String]);
+    return PRGFile::isCompatibleFile([path UTF8String]);
 }
 
 + (instancetype)make:(PRGFile *)archive
@@ -1939,7 +1941,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (BOOL)isP00File:(NSString *)path
 {
-    return P00File::isP00File([path UTF8String]);
+    return P00File::isCompatibleFile([path UTF8String]);
 }
 
 + (instancetype)make:(P00File *)archive
@@ -2046,7 +2048,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (BOOL)isD64File:(NSString *)path
 {
-    return D64File::isD64File([path UTF8String]);
+    return D64File::isCompatibleFile([path UTF8String]);
 }
 
 + (instancetype) make:(D64File *)archive
@@ -2119,7 +2121,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (BOOL)isG64File:(NSString *)path
 {
-    return G64File::isG64File([path UTF8String]);
+    return G64File::isCompatibleFile([path UTF8String]);
 }
 + (instancetype) make:(G64File *)archive
 {

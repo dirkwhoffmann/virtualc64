@@ -83,23 +83,13 @@ CRTFile::matchingFile(const char *path)
     return isCRTFile(path);
 }
 
-bool
-CRTFile::oldReadFromBuffer(const u8 *buffer, size_t length)
+void
+CRTFile::readFromBuffer(const u8 *buffer, size_t length)
 {
-    if (!AnyFile::oldReadFromBuffer(buffer, length))
-        return false;
+    AnyFile::readFromBuffer(buffer, length);
     
-    // Only proceed if the cartridge header matches
-    if (memcmp("C64 CARTRIDGE   ", data, 16) != 0) {
-        warn("Bad cartridge signature. Expected 'C64  CARTRIDGE  '\n");
-        return false;
-    }
-
     // Some CRT files contain incosistencies. We try to fix them here.
-    if (!repair()) {
-        warn("Failed to repair broken CRT file\n");
-        return false;
-    }
+    if (!repair()) { warn("Failed to repair broken CRT file\n"); }
 
     // Cartridge header size
     u32 headerSize = HI_HI_LO_LO(data[0x10],data[0x11],data[0x12],data[0x13]);
@@ -124,7 +114,7 @@ CRTFile::oldReadFromBuffer(const u8 *buffer, size_t length)
         
         if (memcmp("CHIP", ptr, 4) != 0) {
             warn("Unexpected data in cartridge, expected 'CHIP'\n");
-            return false;
+            return; // TODO: throw exception instead
         }
         
         // Remember start address of each chip section
@@ -135,7 +125,6 @@ CRTFile::oldReadFromBuffer(const u8 *buffer, size_t length)
     }
     
     msg("CRT file imported successfully (%d chips)\n", numberOfChips);
-    return true;	
 }
 
 CartridgeType

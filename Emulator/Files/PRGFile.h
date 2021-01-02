@@ -24,18 +24,16 @@ public:
      * determined by their suffix, this function returns true unless you
      * provide a buffer with less than two bytes.
      */
-    static bool isPRGBuffer(const u8 *buffer, size_t length);
+    static bool isCompatibleBuffer(const u8 *buffer, size_t length);
     
     // Returns true iff the specified file is a PRG file
-    static bool isPRGFile(const char *filename);
+    static bool isCompatibleFile(const char *filename);
     
     
     //
     // Constructing
     //
     
-    // static PRGFile *makeWithBuffer(const u8 *buffer, size_t length);
-    // static PRGFile *makeWithFile(const char *path);
     static PRGFile *makeWithFileSystem(class FSDevice *fs, int item = 0);
 
     

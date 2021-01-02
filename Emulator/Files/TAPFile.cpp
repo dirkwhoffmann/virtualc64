@@ -13,7 +13,7 @@ const u8 TAPFile::magicBytes[] = {
     0x43, 0x36, 0x34, 0x2D, 0x54, 0x41, 0x50, 0x45, 0x2D, 0x52, 0x41, 0x57 };
 
 bool
-TAPFile::isTAPBuffer(const u8 *buffer, size_t length)
+TAPFile::isCompatibleBuffer(const u8 *buffer, size_t length)
 {
     if (length < 0x15) return false;
     return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
@@ -21,7 +21,7 @@ TAPFile::isTAPBuffer(const u8 *buffer, size_t length)
 }
 
 bool
-TAPFile::isTAPFile(const char *filename)
+TAPFile::isCompatibleFile(const char *filename)
 {
     assert (filename != NULL);
     
@@ -41,7 +41,6 @@ TAPFile::isTAPFile(const char *filename)
 void
 TAPFile::dealloc()
 {
-    fp = -1;
 }
 
 const char *
@@ -59,27 +58,24 @@ TAPFile::getName()
 bool
 TAPFile::matchingBuffer(const u8 *buf, size_t len)
 {
-    return isTAPBuffer(buf, len);
+    return isCompatibleBuffer(buf, len);
 }
 
 bool
 TAPFile::matchingFile(const char *path)
 {
-    return isTAPFile(path);
+    return isCompatibleFile(path);
 }
 
-bool
-TAPFile::oldReadFromBuffer(const u8 *buffer, size_t length)
+void
+TAPFile::readFromBuffer(const u8 *buffer, size_t length)
 {
-    if (!AnyFile::oldReadFromBuffer(buffer, length))
-        return false;
+    AnyFile::readFromBuffer(buffer, length);
     
     u32 l = LO_LO_HI_HI(data[0x10], data[0x11], data[0x12], data[0x13]);
     if (l + 0x14 /* Header */ != size) {
         warn("readFromBuffer: Expected %d bytes, found %lu\n", l, size - 0x14);
     }
-        
-    return true;
 }
 
 /*

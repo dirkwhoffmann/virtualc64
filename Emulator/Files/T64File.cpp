@@ -17,26 +17,26 @@
 const u8 T64File::magicBytes[] = { 0x43, 0x36, 0x34 };
 
 bool
-T64File::isT64Buffer(const u8 *buffer, size_t length)
+T64File::isCompatibleBuffer(const u8 *buffer, size_t length)
 {
     if (length < 0x40)
         return false;
     
-    if (TAPFile::isTAPBuffer(buffer, length)) // Note: TAP files have a very similar header
+    if (TAPFile::isCompatibleBuffer(buffer, length)) // Note: TAP files have a very similar header
         return false;
     
     return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
 }
 
 bool
-T64File::isT64File(const char *path)
+T64File::isCompatibleFile(const char *path)
 {
     assert(path != NULL);
     
     if (!checkFileSuffix(path, ".T64") && !checkFileSuffix(path, ".t64"))
         return false;
     
-    if (TAPFile::isTAPFile(path)) // Note: TAP files have a very similar header
+    if (TAPFile::isCompatibleFile(path)) // Note: TAP files have a very similar header
         return false;
     
     if (!checkFileSize(path, 0x40, -1))
@@ -184,25 +184,22 @@ T64File::getName()
 bool
 T64File::matchingBuffer(const u8 *buf, size_t len)
 {
-    return isT64Buffer(buf, len);
+    return isCompatibleBuffer(buf, len);
 }
 
 bool
 T64File::matchingFile(const char *path)
 {
-    return isT64File(path);
+    return isCompatibleFile(path);
 }
 
-bool
-T64File::oldReadFromBuffer(const u8 *buffer, size_t length)
+void
+T64File::readFromBuffer(const u8 *buffer, size_t length)
 {
-    if (!AnyFile::oldReadFromBuffer(buffer, length))
-        return false;
+    AnyFile::readFromBuffer(buffer, length);
     
     // Some T64 archives contain incosistencies. We fix them asap
     (void)repair();
-    
-    return true;
 }
 
 PETName<16>

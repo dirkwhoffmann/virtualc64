@@ -140,13 +140,11 @@ public:
     virtual void readFromFile(FILE *file);
     
     
-    
-    
     // Reads the file contents from a memory buffer
-    virtual bool oldReadFromBuffer(const u8 *buffer, size_t length);
+    // virtual bool oldReadFromBuffer(const u8 *buffer, size_t length);
 	
     // Reads the file contents from a file
-	bool oldReadFromFile(const char *path);
+	// bool oldReadFromFile(const char *path);
 
     /* Writes the file contents into a memory buffer. By passing a null pointer,
      * a test run is performed. Test runs are used to determine how many bytes

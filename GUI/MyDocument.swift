@@ -200,9 +200,6 @@ class MyDocument: NSDocument {
             fatalError()
         }
         
-        if result == nil {
-            throw NSError.corruptedFileError(filename: name)
-        }
         result!.setPath(name)
         return result
     }

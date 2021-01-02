@@ -136,6 +136,7 @@
 		5051A1601B885FDD00CBFB5A /* 1541_track_change_2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A15E1B885FDD00CBFB5A /* 1541_track_change_2.aiff */; };
 		5051A1621B88661000CBFB5A /* 1541_track_change_1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1611B88661000CBFB5A /* 1541_track_change_1.aiff */; };
 		50520F8B25108FC400C7D47F /* Folder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50520F8925108FC400C7D47F /* Folder.cpp */; };
+		5052A7C125A0AC0700E62EDD /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5052A7C025A0AC0700E62EDD /* Errors.swift */; };
 		50549B45257D1A6C006FE39C /* C64Constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549B44257D1A6C006FE39C /* C64Constants.cpp */; };
 		50549B49257D288E006FE39C /* SIDStreams.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549B47257D288E006FE39C /* SIDStreams.cpp */; };
 		5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5055A83E1BC7996900399A20 /* MetalKit.framework */; };
@@ -500,6 +501,7 @@
 		50520F8925108FC400C7D47F /* Folder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Folder.cpp; sourceTree = "<group>"; };
 		50520F8A25108FC400C7D47F /* Folder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Folder.h; sourceTree = "<group>"; };
 		5052A7BF25A0703D00E62EDD /* CPUPrivateTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPUPrivateTypes.h; sourceTree = "<group>"; };
+		5052A7C025A0AC0700E62EDD /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		50549B44257D1A6C006FE39C /* C64Constants.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64Constants.cpp; sourceTree = "<group>"; };
 		50549B46257D1B6A006FE39C /* Buffers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffers.h; sourceTree = "<group>"; };
 		50549B47257D288E006FE39C /* SIDStreams.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SIDStreams.cpp; sourceTree = "<group>"; };
@@ -774,6 +776,7 @@
 			children = (
 				506D3DCD20223E5E009742CF /* MyAppDelegate.swift */,
 				506D3DCF20224BF4009742CF /* MyDocument.swift */,
+				5052A7C025A0AC0700E62EDD /* Errors.swift */,
 				505184E124F23CBF002C6124 /* Foundation */,
 				50BE4B5624E7F786008F39C9 /* Extensions */,
 				506CE96621998C4500B70A3A /* Metal */,
@@ -1481,6 +1484,7 @@
 				50BE4B6624E7F965008F39C9 /* String.swift in Sources */,
 				5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */,
 				504C437724AF29AC00E69CAE /* G64File.cpp in Sources */,
+				5052A7C125A0AC0700E62EDD /* Errors.swift in Sources */,
 				504C438924AF29AC00E69CAE /* NeosMouse.cpp in Sources */,
 				5080501825873EC9004FE1F5 /* ExportDialog.swift in Sources */,
 				504C435924AF29AC00E69CAE /* Ocean.cpp in Sources */,

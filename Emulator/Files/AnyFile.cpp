@@ -217,6 +217,7 @@ AnyFile::readFromFile(FILE *file)
     delete[] buffer;
 }
 
+/*
 bool
 AnyFile::oldReadFromBuffer(const u8 *buffer, size_t length)
 {
@@ -290,6 +291,7 @@ exit:
 
 	return success;
 }
+*/
 
 size_t
 AnyFile::writeToBuffer(u8 *buffer)

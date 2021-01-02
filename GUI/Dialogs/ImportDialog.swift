@@ -334,6 +334,11 @@ class ImportDialog: DialogController {
                 c64.datasette.pressPlay()
             }
         
+        } else if crt != nil {
+            
+            track("Inserting Cartridge")
+            c64.expansionport.attachCartridgeAndReset(crt)
+            
         } else {
             
             fatalError()

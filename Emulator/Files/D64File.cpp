@@ -10,7 +10,7 @@
 #include "C64.h"
 
 bool
-D64File::isD64Buffer(const u8 *buf, size_t len)
+D64File::isCompatibleBuffer(const u8 *buf, size_t len)
 {
     assert(buf);
     
@@ -25,7 +25,7 @@ D64File::isD64Buffer(const u8 *buf, size_t len)
 }
 
 bool
-D64File::isD64File(const char *path)
+D64File::isCompatibleFile(const char *path)
 {
     assert (path);
     
@@ -127,17 +127,17 @@ D64File::getName()
 bool
 D64File::matchingBuffer(const u8 *buf, size_t len)
 {
-    return isD64Buffer(buf, len);
+    return isCompatibleBuffer(buf, len);
 }
 
 bool
 D64File::matchingFile(const char *path)
 {
-    return isD64File(path);
+    return isCompatibleFile(path);
 }
 
-bool 
-D64File::oldReadFromBuffer(const u8 *buffer, size_t length)
+void
+D64File::readFromBuffer(const u8 *buffer, size_t length)
 {
     unsigned numSectors;
     bool errorCodes;
@@ -188,17 +188,15 @@ D64File::oldReadFromBuffer(const u8 *buffer, size_t length)
             
         default:
             warn("D64 has an unknown format\n");
-            return false;
+            return; // TODO: THROW EXCPETION INSTEAD
     }
     
-    AnyFile::oldReadFromBuffer(buffer, length);
+    AnyFile::readFromBuffer(buffer, length);
     
     // Copy error codes
     if (errorCodes) {
         memcpy(errors, data + (numSectors * 256), numSectors);
     }
-    
-    return true;    
 }
 
 Track

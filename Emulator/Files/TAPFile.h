@@ -18,18 +18,15 @@ private:
     
     // Header signature
     static const u8 magicBytes[];
-    
-    // File pointer (offset into the data array)
-    int fp = -1;
-        
+            
 public:
     
     //
     // Class methods
     //
     
-    static bool isTAPBuffer(const u8 *buffer, size_t length);
-    static bool isTAPFile(const char *filename);
+    static bool isCompatibleBuffer(const u8 *buffer, size_t length);
+    static bool isCompatibleFile(const char *filename);
     
     
     //
@@ -51,7 +48,7 @@ public:
     bool matchingFile(const char *path) override;
     
     // bool matchingFile(const char *filename) override { return isTAPFile(filename); }
-    bool oldReadFromBuffer(const u8 *buffer, size_t length) override;
+    void readFromBuffer(const u8 *buffer, size_t length) override;
     
     //
     // Retrieving tape information

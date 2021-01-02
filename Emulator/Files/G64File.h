@@ -28,8 +28,8 @@ class G64File : public AnyDisk {
     
 public:
 
-    static bool isG64Buffer(const u8 *buffer, size_t length);
-    static bool isG64File(const char *filename);
+    static bool isCompatibleBuffer(const u8 *buffer, size_t length);
+    static bool isCompatibleFile(const char *filename);
     
     
     //
