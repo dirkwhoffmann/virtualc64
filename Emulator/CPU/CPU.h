@@ -58,7 +58,7 @@ public:
     
 public:
     
-    virtual CPURev model() = 0;
+    virtual CPURevision model() = 0;
     virtual bool isC64CPU() = 0;
     virtual bool isDriveCPU() = 0;
 
@@ -344,18 +344,6 @@ public:
     
 private:
     
-    /*
-    // Loads the accumulator. The Z- and N-flag may change.
-    void loadA(u8 a) { reg.a = a; setN(a & 0x80); setZ(a == 0); }
-    
-    // Loads the X register. The Z- and N-flag may change.
-    void loadX(u8 x) { reg.x = x; setN(x & 0x80); setZ(x == 0); }
-    
-    // Loads the Y register. The Z- and N-flag may change.
-    void loadY(u8 y) { reg.y = y; setN(y & 0x80); setZ(y == 0); }
-    */
-    
-    
     //
     // Operating the Arithmetical Logical Unit (ALU)
     //
@@ -418,7 +406,7 @@ public:
     C64CPU(C64& ref, C64Memory& memref) : CPU(ref, memref) { }
     const char *getDescription() override { return "CPU"; }
     
-    CPURev model() override { return MOS_6510; }
+    CPURevision model() override { return MOS_6510; }
     bool isC64CPU() override { return true; }
     bool isDriveCPU() override { return false; }
 };
@@ -435,7 +423,7 @@ public:
     DriveCPU(C64& ref, DriveMemory &memref) : CPU(ref, memref) { }
     const char *getDescription() override { return "DriveCPU"; }
     
-    CPURev model() override { return MOS_6502; }
+    CPURevision model() override { return MOS_6502; }
     bool isC64CPU() override { return false; }
     bool isDriveCPU() override { return true; }
 };

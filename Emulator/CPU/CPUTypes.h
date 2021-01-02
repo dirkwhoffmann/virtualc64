@@ -27,25 +27,26 @@
 // Enumerations
 //
 
-enum_long(CPURev)
+enum_long(CPURevision)
 {
     MOS_6510,
     MOS_6502
 };
+// typedef CPUREV CPURevision;
 
-inline bool isCPURev(long value)
+inline bool isCPURevision(long value)
 {
     return (unsigned long)value <= MOS_6502;
 }
 
-inline const char * CPURevName(CPURev value)
+inline const char * CPURevisionName(CPURevision value)
 {
     switch (value) {
             
         case MOS_6510:  return "MOS_6510";
         case MOS_6502:  return "MOS_6502";
-        default:        return "???";
     }
+    return "???";
 }
 
 typedef enum
@@ -66,17 +67,6 @@ typedef enum
     ADDR_INDIRECT
 }
 AddressingMode;
-
-/*
-typedef enum
-{
-    CPU_OK = 0,
-    CPU_JAMMED,
-    CPU_HALTED_BY_BREAKPOINT,
-    CPU_HALTED_BY_WATCHPOINT
-}
-CPUState;
-*/
 
 typedef enum : u8
 {

@@ -8,18 +8,3 @@
 // -----------------------------------------------------------------------------
 
 #include "Utils.h"
-
-const char *ciaRegName(u32 addr)
-{
-    assert(addr < 16);
-
-    static const char *name[16] = {
-        
-        "PRA",      "PRB",      "DDRA",     "DDRB",
-        "TALO",     "TAHI",     "TBLO",     "TBHI",
-        "TODLO",    "TODMID",   "TODHI",    "UNUSED",
-        "SDR",      "ICR",      "CRA",      "CRB"
-    };
-
-    return name[addr];
-}

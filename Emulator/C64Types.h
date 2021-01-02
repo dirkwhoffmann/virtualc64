@@ -91,9 +91,65 @@ enum_long(OPT)
 };
 typedef OPT Option;
 
-inline bool isConfigOption(long value)
+inline bool isOption(long value)
 {
     return (unsigned long)value <= OPT_DEBUGCART;
+}
+
+inline const char *OptionName(Option value)
+{
+    switch (value) {
+            
+        case OPT_VIC_REVISION:        return "VIC_REVISION";
+        case OPT_PALETTE:             return "PALETTE";
+        case OPT_GRAY_DOT_BUG:        return "GRAY_DOT_BUG";
+        case OPT_HIDE_SPRITES:        return "HIDE_SPRITES";
+        case OPT_DMA_DEBUG:           return "DMA_DEBUG";
+        case OPT_DMA_CHANNEL_R:       return "DMA_CHANNEL_R";
+        case OPT_DMA_CHANNEL_I:       return "DMA_CHANNEL_I";
+        case OPT_DMA_CHANNEL_C:       return "DMA_CHANNEL_C";
+        case OPT_DMA_CHANNEL_G:       return "DMA_CHANNEL_G";
+        case OPT_DMA_CHANNEL_P:       return "DMA_CHANNEL_P";
+        case OPT_DMA_CHANNEL_S:       return "DMA_CHANNEL_S";
+        case OPT_DMA_COLOR_R:         return "DMA_COLOR_R";
+        case OPT_DMA_COLOR_I:         return "DMA_COLOR_I";
+        case OPT_DMA_COLOR_C:         return "DMA_COLOR_C";
+        case OPT_DMA_COLOR_G:         return "DMA_COLOR_G";
+        case OPT_DMA_COLOR_P:         return "DMA_COLOR_P";
+        case OPT_DMA_COLOR_S:         return "DMA_COLOR_S";
+        case OPT_DMA_DISPLAY_MODE:    return "DMA_DISPLAY_MODE";
+        case OPT_DMA_OPACITY:         return "DMA_OPACITY";
+        case OPT_CUT_LAYERS:          return "CUT_LAYERS";
+        case OPT_CUT_OPACITY:         return "CUT_OPACITY";
+        case OPT_SS_COLLISIONS:       return "SS_COLLISIONS";
+        case OPT_SB_COLLISIONS:       return "SB_COLLISIONS";
+
+        case OPT_GLUE_LOGIC:          return "GLUE_LOGIC";
+
+        case OPT_CIA_REVISION:        return "CIA_REVISION";
+        case OPT_TIMER_B_BUG:         return "TIMER_B_BUG";
+            
+        case OPT_SID_ENABLE:          return "SID_ENABLE";
+        case OPT_SID_ADDRESS:         return "SID_ADDRESS";
+        case OPT_SID_REVISION:        return "SID_REVISION";
+        case OPT_SID_FILTER:          return "SID_FILTER";
+        case OPT_AUDPAN:              return "AUDPAN";
+        case OPT_AUDVOL:              return "AUDVOL";
+        case OPT_AUDVOLL:             return "AUDVOLL";
+        case OPT_AUDVOLR:             return "AUDVOLR";
+            
+        case OPT_SID_ENGINE:          return "SID_ENGINE";
+        case OPT_SID_SAMPLING:        return "SID_SAMPLING";
+            
+        case OPT_RAM_PATTERN:         return "RAM_PATTERN";
+            
+        case OPT_DRIVE_TYPE:          return "DRIVE_TYPE";
+        case OPT_DRIVE_CONNECT:       return "DRIVE_CONNECT";
+        case OPT_DRIVE_POWER_SWITCH:  return "DRIVE_POWER_SWITCH";
+            
+        case OPT_DEBUGCART:           return "DEBUGCART";
+    }
+    return "???";
 }
 
 enum_long(C64_MODEL)
@@ -112,6 +168,21 @@ inline bool isC64Model(long value) {
     return (unsigned long)value <= C64_MODEL_CUSTOM;
 }
 
+inline const char * C64ModelName(C64Model value)
+{
+    switch (value) {
+            
+        case C64_MODEL_PAL:       return "PAL";
+        case C64_MODEL_PAL_II:    return "PAL_II";
+        case C64_MODEL_PAL_OLD:   return "PAL_OLD";
+        case C64_MODEL_NTSC:      return "NTSC";
+        case C64_MODEL_NTSC_II:   return "NTSC_II";
+        case C64_MODEL_NTSC_OLD:  return "NTSC_OLD";
+        case C64_MODEL_CUSTOM:    return "CUSTOM";
+    }
+    return "???";
+}
+
 enum_long(ROM_TYPE)
 {
     ROM_TYPE_BASIC,
@@ -125,6 +196,18 @@ inline bool isRomType(long value) {
     return (unsigned long)value <= ROM_TYPE_VC1541;
 }
 
+inline const char * RomTypeName(RomType value)
+{
+    switch (value) {
+            
+        case ROM_TYPE_BASIC:   return "BASIC";
+        case ROM_TYPE_CHAR:    return "CHAR";
+        case ROM_TYPE_KERNAL:  return "KERNAL";
+        case ROM_TYPE_VC1541:  return "VC1541";
+    }
+    return "???";
+}
+
 enum_long(STATE)
 {
     STATE_OFF,
@@ -135,6 +218,17 @@ typedef STATE State;
 
 inline bool isEmulatorState(long value) {
     return (unsigned long)value <=  STATE_RUNNING;
+}
+
+inline const char * EmulatorStateName(State value)
+{
+    switch (value) {
+            
+        case STATE_OFF:      return "OFF";
+        case STATE_PAUSED:   return "PAUSED";
+        case STATE_RUNNING:  return "RUNNING";
+    }
+    return "???";
 }
 
 enum_int(ACTION_FLAG)
@@ -174,8 +268,8 @@ inline const char *InspectionTargetName(InspectionTarget value)
         case INSPECTION_TARGET_CIA:   return "CIA";
         case INSPECTION_TARGET_VIC:   return "VIC";
         case INSPECTION_TARGET_SID:   return "SID";
-        default:                      return "???";
     }
+    return "???";
 }
 
 typedef enum

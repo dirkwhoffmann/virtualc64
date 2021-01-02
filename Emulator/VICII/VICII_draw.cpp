@@ -437,13 +437,13 @@ VICII::loadColors(u8 mode)
     
     switch ((DisplayMode)mode) {
             
-        case DisplayMode_STANDARD_TEXT:
+        case DISPLAY_MODE_STANDARD_TEXT:
             
             col[0] = reg.delayed.colors[COLREG_BG0];
             col[1] = color;
             break;
             
-        case DisplayMode_MULTICOLOR_TEXT:
+        case DISPLAY_MODE_MULTICOLOR_TEXT:
             
             if (color & 0x8 /* MC flag */) {
                 
@@ -460,13 +460,13 @@ VICII::loadColors(u8 mode)
             }
             break;
             
-        case DisplayMode_STANDARD_BITMAP:
+        case DISPLAY_MODE_STANDARD_BITMAP:
             
             col[0] = character & 0xF;
             col[1] = character >> 4;
             break;
             
-        case DisplayMode_MULTICOLOR_BITMAP:
+        case DISPLAY_MODE_MULTICOLOR_BITMAP:
             
             col[0] = reg.delayed.colors[COLREG_BG0];
             col[1] = character >> 4;
@@ -474,15 +474,15 @@ VICII::loadColors(u8 mode)
             col[3] = color;
             break;
             
-        case DisplayMode_EXTENDED_BG_COLOR:
+        case DISPLAY_MODE_EXTENDED_BG_COLOR:
             
             col[0] = reg.delayed.colors[COLREG_BG0 + (character >> 6)];
             col[1] = color;
             break;
             
-        case DisplayMode_INVALID_TEXT:
-        case DisplayMode_INV_STANDARD_BITMAP:
-        case DisplayMode_INV_MULTICOL_BITMAP:
+        case DISPLAY_MODE_INVALID_TEXT:
+        case DISPLAY_MODE_INV_STANDARD_BITMAP:
+        case DISPLAY_MODE_INV_MULTICOL_BITMAP:
             
             col[0] = 0;
             col[1] = 0;

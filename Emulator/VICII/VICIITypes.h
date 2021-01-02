@@ -72,8 +72,8 @@ inline const char *GlueLogicName(GlueLogic value)
             
         case GLUE_LOGIC_DISCRETE:  return "DISCRETE";
         case GLUE_LOGIC_IC:        return "IC";
-        default:                   return "???";
     }
+    return "???";
 }
 
 enum_long(PALETTE)
@@ -103,8 +103,8 @@ inline const char *PaletteName(Palette value)
         case PALETTE_GREEN:        return "GREEN";
         case PALETTE_AMBER:        return "AMBER";
         case PALETTE_SEPIA:        return "SEPIA";
-        default:                   return "???";
     }
+    return "???";
 }
 
 enum_long(SCREEN_GEOMETRY)
@@ -130,24 +130,25 @@ inline const char *ScreenGeometryName(ScreenGeometry value)
         case SCREEN_GEOMETRY_25_38:  return "25_38";
         case SCREEN_GEOMETRY_24_40:  return "24_40";
         case SCREEN_GEOMETRY_24_38:  return "24_38";
-        default:                     return "???";
     }
+    return "???";
 }
 
-enum_long(DisplayMode)
+enum_long(DISPLAY_MODE)
 {
-    DisplayMode_STANDARD_TEXT       = 0x00,
-    DisplayMode_MULTICOLOR_TEXT     = 0x10,
-    DisplayMode_STANDARD_BITMAP     = 0x20,
-    DisplayMode_MULTICOLOR_BITMAP   = 0x30,
-    DisplayMode_EXTENDED_BG_COLOR   = 0x40,
-    DisplayMode_INVALID_TEXT        = 0x50,
-    DisplayMode_INV_STANDARD_BITMAP = 0x60,
-    DisplayMode_INV_MULTICOL_BITMAP = 0x70
+    DISPLAY_MODE_STANDARD_TEXT       = 0x00,
+    DISPLAY_MODE_MULTICOLOR_TEXT     = 0x10,
+    DISPLAY_MODE_STANDARD_BITMAP     = 0x20,
+    DISPLAY_MODE_MULTICOLOR_BITMAP   = 0x30,
+    DISPLAY_MODE_EXTENDED_BG_COLOR   = 0x40,
+    DISPLAY_MODE_INVALID_TEXT        = 0x50,
+    DISPLAY_MODE_INV_STANDARD_BITMAP = 0x60,
+    DISPLAY_MODE_INV_MULTICOL_BITMAP = 0x70
 };
+typedef DISPLAY_MODE DisplayMode;
 
 inline bool isDisplayMode(long value) {
-    return (unsigned long)value <= DisplayMode_INV_MULTICOL_BITMAP;
+    return (unsigned long)value <= DISPLAY_MODE_INV_MULTICOL_BITMAP;
 }
 
 inline const char *DisplayModeName(DisplayMode value)
@@ -156,16 +157,16 @@ inline const char *DisplayModeName(DisplayMode value)
     
     switch (value) {
             
-        case DisplayMode_STANDARD_TEXT:        return "STANDARD_TEXT";
-        case DisplayMode_MULTICOLOR_TEXT:      return "MULTICOLOR_TEXT";
-        case DisplayMode_STANDARD_BITMAP:      return "STANDARD_BITMAP";
-        case DisplayMode_MULTICOLOR_BITMAP:    return "MULTICOLOR_BITMAP";
-        case DisplayMode_EXTENDED_BG_COLOR:    return "EXTENDED_BG_COLOR";
-        case DisplayMode_INVALID_TEXT:         return "INVALID_TEXT";
-        case DisplayMode_INV_STANDARD_BITMAP:  return "INV_STANDARD_BITMAP";
-        case DisplayMode_INV_MULTICOL_BITMAP:  return "INV_MULTICOL_BITMAP";
-        default:                               return "???";
+        case DISPLAY_MODE_STANDARD_TEXT:        return "STANDARD_TEXT";
+        case DISPLAY_MODE_MULTICOLOR_TEXT:      return "MULTICOLOR_TEXT";
+        case DISPLAY_MODE_STANDARD_BITMAP:      return "STANDARD_BITMAP";
+        case DISPLAY_MODE_MULTICOLOR_BITMAP:    return "MULTICOLOR_BITMAP";
+        case DISPLAY_MODE_EXTENDED_BG_COLOR:    return "EXTENDED_BG_COLOR";
+        case DISPLAY_MODE_INVALID_TEXT:         return "INVALID_TEXT";
+        case DISPLAY_MODE_INV_STANDARD_BITMAP:  return "INV_STANDARD_BITMAP";
+        case DISPLAY_MODE_INV_MULTICOL_BITMAP:  return "INV_MULTICOL_BITMAP";
     }
+    return "???";
 }
 
 enum_long(MemAccess)
@@ -195,20 +196,21 @@ inline const char *MemAccessName(MemAccess value)
         case MemAccess_G:  return "G";
         case MemAccess_P:  return "P";
         case MemAccess_S:  return "S";
-        default:           return "???";
     }
+    return "???";
 }
 
-enum_long(DmaDisplayMode)
+enum_long(DMA_DISPLAY_MODE)
 {
-    DmaDisplayMode_FG_LAYER,
-    DmaDisplayMode_BG_LAYER,
-    DmaDisplayMode_ODD_EVEN_LAYERS
+    DMA_DISPLAY_MODE_FG_LAYER,
+    DMA_DISPLAY_MODE_BG_LAYER,
+    DMA_DISPLAY_MODE_ODD_EVEN_LAYERS
 };
+typedef DMA_DISPLAY_MODE DmaDisplayMode;
 
 static inline bool isDmaDisplayMode(long value)
 {
-    return (unsigned long)value <= DmaDisplayMode_ODD_EVEN_LAYERS;
+    return (unsigned long)value <= DMA_DISPLAY_MODE_ODD_EVEN_LAYERS;
 }
 
 inline const char *DmaDisplayModeName(DmaDisplayMode value)
@@ -217,11 +219,11 @@ inline const char *DmaDisplayModeName(DmaDisplayMode value)
     
     switch (value) {
             
-        case DmaDisplayMode_FG_LAYER:         return "FG_LAYER";
-        case DmaDisplayMode_BG_LAYER:         return "BG_LAYER";
-        case DmaDisplayMode_ODD_EVEN_LAYERS:  return "ODD_EVEN_LAYERS";
-        default:                              return "???";
+        case DMA_DISPLAY_MODE_FG_LAYER:         return "FG_LAYER";
+        case DMA_DISPLAY_MODE_BG_LAYER:         return "BG_LAYER";
+        case DMA_DISPLAY_MODE_ODD_EVEN_LAYERS:  return "ODD_EVEN_LAYERS";
     }
+    return "???";
 }
 
 //
