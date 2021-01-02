@@ -35,8 +35,6 @@ public:
     // Constructing
     //
     
-    static P00File *makeWithBuffer(const u8 *buffer, size_t length);
-    static P00File *makeWithFile(const char *path);
     static P00File *makeWithFileSystem(class FSDevice *fs, int item = 0);
     
     P00File() : AnyCollection() { }

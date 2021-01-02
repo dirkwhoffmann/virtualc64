@@ -10,17 +10,6 @@
 #include "D64File.h"
 #include "G64File.h"
 
-AnyDisk *
-AnyDisk::makeWithFile(const char *path)
-{
-    assert(path != NULL);
-    
-    if (G64File::isG64File(path)) {
-        return G64File::makeWithFile(path);
-    }
-    return NULL;
-}
-
 int
 AnyDisk::readHalftrack()
 {

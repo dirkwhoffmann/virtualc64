@@ -43,8 +43,6 @@ public:
     // Constructing
     //
     
-    static D64File *makeWithBuffer(const u8 *buffer, size_t length);
-    static D64File *makeWithFile(const char *path);
     static D64File *makeWithDisk(class Disk *disk);
     static D64File *makeWithDrive(class Drive *drive);
     static D64File *makeWithVolume(class FSDevice &volume, FSError *err);

@@ -323,6 +323,20 @@ class ImportDialog: DialogController {
             track("Inserting Volume")
             drive.insertFileSystem(volume)
             drive.setWriteProtection(writeProtect)
+        
+        } else if tap != nil {
+            
+            track("Inserting Tape")
+            c64.datasette.insertTape(tap)
+            
+            if autoRun {
+                parent.keyboard.type("LOAD\n")
+                c64.datasette.pressPlay()
+            }
+        
+        } else {
+            
+            fatalError()
         }
 
         parent.renderer.rotateLeft()

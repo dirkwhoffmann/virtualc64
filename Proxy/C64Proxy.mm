@@ -1902,13 +1902,13 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithFile:(NSString *)path
 {
-    P00File *archive = P00File::makeWithFile([path UTF8String]);
+    P00File *archive = AnyFile::make <P00File> ([path UTF8String]);
     return [self make: archive];
 }
 
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    P00File *archive = P00File::makeWithBuffer((const u8 *)buffer, length);
+    P00File *archive = AnyFile::make <P00File> ((const u8 *)buffer, length);
     return [self make: archive];
 }
 
@@ -1939,11 +1939,13 @@ struct AnyFileWrapper { AnyFile *file; };
     return [self make: disk];
 }
 
+/*
 + (instancetype) makeWithFile:(NSString *)path
 {
     AnyDisk *disk = AnyDisk::makeWithFile([path UTF8String]);
     return [self make: disk];
 }
+*/
 
 - (NSInteger)numTracks
 {
@@ -2007,13 +2009,13 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    D64File *archive = D64File::makeWithBuffer((const u8 *)buffer, length);
+    D64File *archive = AnyFile::make <D64File> ((const u8 *)buffer, length);
     return [self make: archive];
 }
 
 + (instancetype) makeWithFile:(NSString *)path
 {
-    D64File *archive = D64File::makeWithFile([path UTF8String]);
+    D64File *archive = AnyFile::make <D64File> ([path UTF8String]);
     return [self make: archive];
 }
 
@@ -2070,12 +2072,12 @@ struct AnyFileWrapper { AnyFile *file; };
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    G64File *archive = G64File::makeWithBuffer((const u8 *)buffer, length);
+    G64File *archive = AnyFile::make <G64File> ((const u8 *)buffer, length);
     return [self make: archive];
 }
 + (instancetype) makeWithFile:(NSString *)path
 {
-    G64File *archive = G64File::makeWithFile([path UTF8String]);
+    G64File *archive = AnyFile::make <G64File> ([path UTF8String]);
     return [self make: archive];
 }
 + (instancetype) makeWithDisk:(DiskProxy *)diskProxy

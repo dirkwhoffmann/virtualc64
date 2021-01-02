@@ -29,11 +29,6 @@ protected:
     
 public:
     
-    /* Returns a D64File object, a G64File object, or NULL, depending on the
-     * type of the specified file.
-     */
-    static AnyDisk *makeWithFile(const char *path);
-
     AnyDisk() : AnyCollection() { }
     
     const char *getDescription() override { return "AnyDisk"; }

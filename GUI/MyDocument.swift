@@ -284,6 +284,7 @@ class MyDocument: NSDocument {
     @discardableResult
     func mountAttachmentAsTape() -> Bool {
         
+        track()
         if let tape = attachment as? TAPFileProxy {
             
             return parent.c64.datasette.insertTape(tape)

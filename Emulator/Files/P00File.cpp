@@ -35,32 +35,6 @@ P00File::isP00File(const char *filename)
 }
 
 P00File *
-P00File::makeWithBuffer(const u8 *buffer, size_t length)
-{
-    P00File *archive = new P00File();
-    
-    if (!archive->oldReadFromBuffer(buffer, length)) {
-        delete archive;
-        return NULL;
-    }
-    
-    return archive;
-}
-
-P00File *
-P00File::makeWithFile(const char *filename)
-{
-    P00File *archive = new P00File();
-    
-    if (!archive->oldReadFromFile(filename)) {
-        delete archive;
-        return NULL;
-    }
-    
-    return archive;
-}
-
-P00File *
 P00File::makeWithFileSystem(FSDevice *fs, int item)
 {
     assert(fs);

@@ -62,32 +62,6 @@ D64File::D64File(unsigned tracks, bool ecc) : D64File()
 }
 
 D64File *
-D64File::makeWithBuffer(const u8 *buffer, size_t length)
-{
-    D64File *archive = new D64File();
-    
-    if (!archive->oldReadFromBuffer(buffer, length)) {
-        delete archive;
-        return NULL;
-    }
-    
-    return archive;
-}
-
-D64File *
-D64File::makeWithFile(const char *path)
-{
-    D64File *archive = new D64File();
-    
-    if (!archive->oldReadFromFile(path)) {
-        delete archive;
-        return NULL;
-    }
-    
-    return archive;
-}
-
-D64File *
 D64File::makeWithDisk(Disk *disk)
 {
     assert(disk);
@@ -103,7 +77,7 @@ D64File::makeWithDisk(Disk *disk)
     }
     
     // Create object from byte stream
-    return makeWithBuffer(buffer, len);
+    return make <D64File> (buffer, len);
 }
 
 D64File *
