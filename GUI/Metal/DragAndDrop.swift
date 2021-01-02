@@ -96,9 +96,9 @@ public extension MetalView {
             let nsData = fileData! as NSData
             let rawPtr = nsData.bytes
             
-            guard let snapshot = SnapshotProxy.make(withBuffer: rawPtr, length: length) else {
-                return false
-            }
+            let snapshot: SnapshotProxy? = try? create(buffer: rawPtr, length: length)
+            if snapshot == nil { return false }
+            
             if document.proceedWithUnexportedDisk() {
                 DispatchQueue.main.async {
                     let snap = snapshot

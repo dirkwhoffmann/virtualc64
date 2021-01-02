@@ -703,6 +703,13 @@ struct AnyFileWrapper;
 // F I L E   T Y P E   P R O X Y S
 //
 
+@protocol Makeable
+
++ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
+
+@end
+
 //
 // AnyFile proxy
 //
@@ -741,17 +748,17 @@ struct AnyFileWrapper;
 // Snapshot proxy
 //
 
-@interface SnapshotProxy : AnyFileProxy {
+@interface SnapshotProxy : AnyFileProxy <Makeable> {
 
    NSImage *preview;
 }
 
-+ (BOOL)isSupportedSnapshot:(const void *)buffer length:(NSInteger)length;
-+ (BOOL)isUnsupportedSnapshot:(const void *)buffer length:(NSInteger)length;
++ (BOOL)isSupportedSnapshot:(const void *)buf length:(NSInteger)len;
++ (BOOL)isUnsupportedSnapshot:(const void *)buf length:(NSInteger)len;
 + (BOOL)isSupportedSnapshotFile:(NSString *)path;
 + (BOOL)isUnsupportedSnapshotFile:(NSString *)path;
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype)makeWithFile:(NSString *)path;
++ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
 + (instancetype)makeWithC64:(C64Proxy *)c64proxy;
 
 @property (readonly, strong) NSImage *previewImage;
@@ -764,12 +771,12 @@ struct AnyFileWrapper;
 // CRTFile proxy
 //
 
-@interface CRTFileProxy : AnyFileProxy {
+@interface CRTFileProxy : AnyFileProxy <Makeable> {
 }
 
 + (BOOL)isCRTFile:(NSString *)path;
-+ (instancetype)makeWithFile:(NSString *)path;
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
  
 @property (readonly) CartridgeType cartridgeType;
 @property (readonly) BOOL isSupported;
@@ -783,7 +790,7 @@ struct AnyFileWrapper;
 // TAPFile proxy
 //
 
-@interface TAPFileProxy : AnyFileProxy {
+@interface TAPFileProxy : AnyFileProxy <Makeable> {
 }
 
 + (BOOL)isTAPFile:(NSString *)path;
@@ -798,12 +805,11 @@ struct AnyFileWrapper;
 // T64File proxy
 //
 
-@interface T64FileProxy : AnyCollectionProxy
-{
+@interface T64FileProxy : AnyCollectionProxy <Makeable> {
 }
-+ (BOOL)isT64File:(NSString *)filename;
-+ (instancetype)makeWithFile:(NSString *)filename;
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (BOOL)isT64File:(NSString *)path;
++ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy;
 
 @end
@@ -812,10 +818,9 @@ struct AnyFileWrapper;
 // PRGFile proxy
 //
 
-@interface PRGFileProxy : AnyCollectionProxy
-{
+@interface PRGFileProxy : AnyCollectionProxy <Makeable> {
 }
-+ (BOOL)isPRGFile:(NSString *)filename;
++ (BOOL)isPRGFile:(NSString *)path;
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy;
@@ -829,7 +834,7 @@ struct AnyFileWrapper;
 @interface FolderProxy : AnyCollectionProxy {
 }
 
-+ (instancetype)makeWithFolder:(NSString *)path;
++ (instancetype)makeWithFolder:(NSString *)path error:(ErrorCode *)err;
 
 @property (readonly) FSDeviceProxy *fileSystem;
 
@@ -839,12 +844,11 @@ struct AnyFileWrapper;
 // P00File proxy
 //
 
-@interface P00FileProxy : AnyCollectionProxy
-{
+@interface P00FileProxy : AnyCollectionProxy <Makeable> {
 }
-+ (BOOL)isP00File:(NSString *)filename;
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype)makeWithFile:(NSString *)filename;
++ (BOOL)isP00File:(NSString *)path;
++ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy;
 
 @end
@@ -871,12 +875,11 @@ struct AnyFileWrapper;
 // D64File proxy
 //
 
-@interface D64FileProxy : AnyFileProxy
-{
+@interface D64FileProxy : AnyFileProxy <Makeable> {
 }
-+ (BOOL)isD64File:(NSString *)filename;
-+ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype)makeWithFile:(NSString *)filename;
++ (BOOL)isD64File:(NSString *)path;
++ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
 + (instancetype)makeWithDisk:(DiskProxy *)proxy;
 + (instancetype)makeWithDrive:(DriveProxy *)proxy;
 + (instancetype)makeWithVolume:(FSDeviceProxy *)proxy error:(FSError *)error;
@@ -890,12 +893,11 @@ struct AnyFileWrapper;
 // G64File proxy
 //
 
-@interface G64FileProxy : AnyDiskProxy
-{
+@interface G64FileProxy : AnyDiskProxy <Makeable> {
 }
-+ (BOOL)isG64File:(NSString *)filename;
-+ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype) makeWithFile:(NSString *)filename;
++ (BOOL)isG64File:(NSString *)path;
++ (instancetype) makeWithFile:(NSString *)path error:(ErrorCode *)err;
++ (instancetype) makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
 + (instancetype) makeWithDisk:(DiskProxy *)diskProxy;
 
 @end

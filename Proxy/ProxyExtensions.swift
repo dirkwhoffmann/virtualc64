@@ -14,6 +14,30 @@ class MyError: Error {
     init(_ errorCode: ErrorCode) { self.errorCode = errorCode }
 }
 
+//
+// Factory extensions
+//
+
+func create<T: Makeable>(buffer: UnsafeRawPointer, length: Int) throws -> T {
+    
+    var err = ErrorCode.OK
+    let obj = T.make(withBuffer: buffer, length: length, error: &err)
+    if err != ErrorCode.OK { throw MyError(err) }
+    return obj!
+}
+
+func create<T: Makeable>(url: URL) throws -> T {
+    
+    var err = ErrorCode.OK
+    let obj = T.make(withFile: url.path, error: &err)
+    if err != ErrorCode.OK { throw MyError(err) }
+    return obj!
+}
+
+//
+// Informational extensions
+//
+
 public extension C64Proxy {
     
     func image(data: UnsafeMutablePointer<UInt8>?, size: NSSize) -> NSImage {
@@ -126,18 +150,6 @@ extension CRTFileProxy {
 
         result += " (Exrom: \(exrom), " + "Game: \(game))"
         return result
-    }
-}
-
-extension PRGFileProxy {
-
-    static func make(withBuffer buffer: UnsafeRawPointer, length: Int) throws -> PRGFileProxy? {
-        
-        var err = ErrorCode.OK
-        let prg = PRGFileProxy.make(withBuffer: buffer, length: length, error: &err)
-
-        if err != ErrorCode.OK { throw MyError(err) }        
-        return prg
     }
 }
 

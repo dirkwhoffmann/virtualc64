@@ -173,35 +173,29 @@ class MyDocument: NSDocument {
             if SnapshotProxy.isUnsupportedSnapshot(buffer, length: length) {
                 throw NSError.snapshotVersionError(filename: name)
             }
-            result = SnapshotProxy.make(withBuffer: buffer, length: length)
+            try result = create(buffer: buffer, length: length) as SnapshotProxy
             
         case .CRT:
-            /*
-            if CRTFileProxy.isUnsupportedCRTBuffer(buffer, length: length) {
-                let type = CRTFileProxy.type(ofCRTBuffer: buffer, length: length)
-                throw NSError.unsupportedCartridgeError(filename: name, type: type.description)
-            }
-            */
-            result = CRTFileProxy.make(withBuffer: buffer, length: length)
+            try result = create(buffer: buffer, length: length) as CRTFileProxy
             
         case .D64:
-            result = D64FileProxy.make(withBuffer: buffer, length: length)
+            try result = create(buffer: buffer, length: length) as D64FileProxy
             
         case .T64:
-            result = T64FileProxy.make(withBuffer: buffer, length: length)
+            try result = create(buffer: buffer, length: length) as T64FileProxy
             
         case .PRG:
-            try result = PRGFileProxy.make(withBuffer: buffer, length: length)
+            try result = create(buffer: buffer, length: length) as PRGFileProxy
             
         case .P00:
-            result = P00FileProxy.make(withBuffer: buffer, length: length)
+            try result = create(buffer: buffer, length: length) as P00FileProxy
             
         case .G64:
-            result = G64FileProxy.make(withBuffer: buffer, length: length)
+            try result = create(buffer: buffer, length: length) as G64FileProxy
             
         case .TAP:
-            // result = TAPFileProxy.make(withBuffer: buffer, length: length)
-            result = nil 
+            try result = create(buffer: buffer, length: length) as TAPFileProxy
+            
         default:
             fatalError()
         }
@@ -224,7 +218,8 @@ class MyDocument: NSDocument {
         switch type {
             
         case .FOLDER:
-            result = FolderProxy.make(withFolder: name)
+            var err = ErrorCode.OK
+            result = FolderProxy.make(withFolder: name, error: &err)
             
         default:
             fatalError()
