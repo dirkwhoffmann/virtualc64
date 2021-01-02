@@ -21,7 +21,7 @@
 VICII::VICII(C64 &ref) : C64Component(ref)
 {    
     config.grayDotBug = true;
-    config.palette = Palette_COLOR;
+    config.palette = PALETTE_COLOR;
     config.cutLayers = 0xFF;
     config.cutOpacity = 0xFF;
     config.dmaOpacity = 0x80;

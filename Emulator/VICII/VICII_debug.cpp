@@ -17,9 +17,9 @@ VICII::getScreenGeometry(void)
     unsigned cols = GET_BIT(reg.current.ctrl2, 3) ? 40 : 38;
     
     if (cols == 40) {
-        return rows == 25 ? ScreenGeometry_25_40 : ScreenGeometry_24_40;
+        return rows == 25 ? SCREEN_GEOMETRY_25_40 : SCREEN_GEOMETRY_24_40;
     } else {
-        return rows == 25 ? ScreenGeometry_25_38 : ScreenGeometry_24_38;
+        return rows == 25 ? SCREEN_GEOMETRY_25_38 : SCREEN_GEOMETRY_24_38;
     }
 }
 

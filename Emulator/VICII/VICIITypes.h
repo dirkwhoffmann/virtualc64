@@ -52,15 +52,16 @@ inline const char *VICRevisionName(VICRevision value)
     return "???";
 }
 
-enum_long(GlueLogic)
+enum_long(GLUE_LOGIC)
 {
-    GlueLogic_DISCRETE,
-    GlueLogic_IC
+    GLUE_LOGIC_DISCRETE,
+    GLUE_LOGIC_IC
 };
+typedef GLUE_LOGIC GlueLogic;
 
 inline bool isGlueLogic(long value)
 {
-    return (unsigned long)value <= GlueLogic_IC;
+    return (unsigned long)value <= GLUE_LOGIC_IC;
 }
 
 inline const char *GlueLogicName(GlueLogic value)
@@ -69,24 +70,25 @@ inline const char *GlueLogicName(GlueLogic value)
     
     switch (value) {
             
-        case GlueLogic_DISCRETE:   return "DISCRETE";
-        case GlueLogic_IC:         return "IC";
+        case GLUE_LOGIC_DISCRETE:  return "DISCRETE";
+        case GLUE_LOGIC_IC:        return "IC";
         default:                   return "???";
     }
 }
 
-enum_long(Palette)
+enum_long(PALETTE)
 {
-    Palette_COLOR,
-    Palette_BLACK_WHITE,
-    Palette_PAPER_WHITE,
-    Palette_GREEN,
-    Palette_AMBER,
-    Palette_SEPIA
+    PALETTE_COLOR,
+    PALETTE_BLACK_WHITE,
+    PALETTE_PAPER_WHITE,
+    PALETTE_GREEN,
+    PALETTE_AMBER,
+    PALETTE_SEPIA
 };
+typedef PALETTE Palette;
 
 inline bool isPalette(long value) {
-    return (unsigned long)value <= Palette_SEPIA;
+    return (unsigned long)value <= PALETTE_SEPIA;
 }
 
 inline const char *PaletteName(Palette value)
@@ -95,26 +97,27 @@ inline const char *PaletteName(Palette value)
     
     switch (value) {
             
-        case Palette_COLOR:        return "COLOR";
-        case Palette_BLACK_WHITE:  return "BLACK_WHITE";
-        case Palette_PAPER_WHITE:  return "PAPER_WHITE";
-        case Palette_GREEN:        return "GREEN";
-        case Palette_AMBER:        return "AMBER";
-        case Palette_SEPIA:        return "SEPIA";
+        case PALETTE_COLOR:        return "COLOR";
+        case PALETTE_BLACK_WHITE:  return "BLACK_WHITE";
+        case PALETTE_PAPER_WHITE:  return "PAPER_WHITE";
+        case PALETTE_GREEN:        return "GREEN";
+        case PALETTE_AMBER:        return "AMBER";
+        case PALETTE_SEPIA:        return "SEPIA";
         default:                   return "???";
     }
 }
 
-enum_long(ScreenGeometry)
+enum_long(SCREEN_GEOMETRY)
 {
-    ScreenGeometry_25_40 = 1,
-    ScreenGeometry_25_38,
-    ScreenGeometry_24_40,
-    ScreenGeometry_24_38
+    SCREEN_GEOMETRY_25_40 = 1,
+    SCREEN_GEOMETRY_25_38,
+    SCREEN_GEOMETRY_24_40,
+    SCREEN_GEOMETRY_24_38
 };
+typedef SCREEN_GEOMETRY ScreenGeometry;
 
 inline bool isScreenGeometry(long value) {
-    return (unsigned long)value <= ScreenGeometry_24_38;
+    return (unsigned long)value <= SCREEN_GEOMETRY_24_38;
 }
 
 inline const char *ScreenGeometryName(ScreenGeometry value)
@@ -123,11 +126,11 @@ inline const char *ScreenGeometryName(ScreenGeometry value)
     
     switch (value) {
             
-        case ScreenGeometry_25_40:  return "25_40";
-        case ScreenGeometry_25_38:  return "25_38";
-        case ScreenGeometry_24_40:  return "24_40";
-        case ScreenGeometry_24_38:  return "24_38";
-        default:                    return "???";
+        case SCREEN_GEOMETRY_25_40:  return "25_40";
+        case SCREEN_GEOMETRY_25_38:  return "25_38";
+        case SCREEN_GEOMETRY_24_40:  return "24_40";
+        case SCREEN_GEOMETRY_24_38:  return "24_38";
+        default:                     return "???";
     }
 }
 

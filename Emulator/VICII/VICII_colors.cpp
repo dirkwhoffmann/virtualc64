@@ -179,33 +179,33 @@ VICII::getColor(unsigned nr, Palette palette)
     // Translate to monochrome if applicable
     switch(palette) {
         
-        case Palette_BLACK_WHITE:
+        case PALETTE_BLACK_WHITE:
         u = 0.0;
         v = 0.0;
         break;
         
-        case Palette_PAPER_WHITE:
+        case PALETTE_PAPER_WHITE:
         u = -128.0 + 120.0;
         v = -128.0 + 133.0;
         break;
         
-        case Palette_GREEN:
+        case PALETTE_GREEN:
         u = -128.0 + 29.0;
         v = -128.0 + 64.0;
         break;
         
-        case Palette_AMBER:
+        case PALETTE_AMBER:
         u = -128.0 + 24.0;
         v = -128.0 + 178.0;
         break;
         
-        case Palette_SEPIA:
+        case PALETTE_SEPIA:
         u = -128.0 + 97.0;
         v = -128.0 + 154.0;
         break;
         
         default:
-        assert(palette == Palette_COLOR);
+        assert(palette == PALETTE_COLOR);
     }
     
     // Convert YUV value to RGB

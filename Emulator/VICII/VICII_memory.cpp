@@ -60,7 +60,7 @@ VICII::setUltimax(bool value) {
 void
 VICII::switchBank(u16 addr) {
 
-    if (config.glueLogic == GlueLogic_DISCRETE) {
+    if (config.glueLogic == GLUE_LOGIC_DISCRETE) {
          
          updateBankAddr(); // Switch immediately
          return;
