@@ -81,25 +81,26 @@ inline const char * IntSourceName(IntSource value)
     return "???";
 }
 
-enum_long(Breakpoint)
+enum_long(BPTYPE)
 {
-    NO_BREAKPOINT   = 0x00,
-    HARD_BREAKPOINT = 0x01,
-    SOFT_BREAKPOINT = 0x02
+    BPTYPE_NONE,
+    BPTYPE_HARD,
+    BPTYPE_SOFT
 };
+typedef BPTYPE BreakpointType;
 
 inline bool isBreakpointType(long value)
 {
-    return (unsigned long)value <= SOFT_BREAKPOINT;
+    return (unsigned long)value <= BPTYPE_SOFT;
 }
 
-inline const char * BreakpointTypeName(Breakpoint value)
+inline const char * BreakpointTypeName(BreakpointType value)
 {
     switch (value) {
             
-        case NO_BREAKPOINT:   return "NO";
-        case HARD_BREAKPOINT:   return "HARD";
-        case SOFT_BREAKPOINT:  return "SOFT";
+        case BPTYPE_NONE:  return "NONE";
+        case BPTYPE_HARD:  return "HARD";
+        case BPTYPE_SOFT:  return "SOFT";
     }
     return "???";
 }
