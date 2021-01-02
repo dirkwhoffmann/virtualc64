@@ -110,39 +110,42 @@ inline bool isC64Model(long value) {
     return (unsigned long)value <= C64Model_CUSTOM;
 }
 
-enum_long(RomType)
+enum_long(ROM_TYPE)
 {
-    ROMType_BASIC,
-    ROMType_CHAR,
-    ROMType_KERNAL,
-    ROMType_VC1541
+    ROM_TYPE_BASIC,
+    ROM_TYPE_CHAR,
+    ROM_TYPE_KERNAL,
+    ROM_TYPE_VC1541
 };
+typedef ROM_TYPE RomType;
 
 inline bool isRomType(long value) {
-    return (unsigned long)value <= ROMType_VC1541;
+    return (unsigned long)value <= ROM_TYPE_VC1541;
 }
 
-enum_long(State)
+enum_long(STATE)
 {
-    State_OFF,
-    State_PAUSED,
-    State_RUNNING
+    STATE_OFF,
+    STATE_PAUSED,
+    STATE_RUNNING
 };
+typedef STATE State;
 
 inline bool isEmulatorState(long value) {
-    return (unsigned long)value <=  State_RUNNING;
+    return (unsigned long)value <=  STATE_RUNNING;
 }
 
-enum_int(ActionFlag)
+enum_int(ACTION_FLAG)
 {
-    ActionFlag_STOP          = 0b0000001,
-    ActionFlag_CPU_JAMMED    = 0b0000010,
-    ActionFlag_INSPECT       = 0b0000100,
-    ActionFlag_BREAKPOINT    = 0b0001000,
-    ActionFlag_WATCHPOINT    = 0b0010000,
-    ActionFlag_AUTO_SNAPSHOT = 0b0100000,
-    ActionFlag_USER_SNAPSHOT = 0b1000000
+    ACTION_FLAG_STOP          = 0b0000001,
+    ACTION_FLAG_CPU_JAMMED    = 0b0000010,
+    ACTION_FLAG_INSPECT       = 0b0000100,
+    ACTION_FLAG_BREAKPOINT    = 0b0001000,
+    ACTION_FLAG_WATCHPOINT    = 0b0010000,
+    ACTION_FLAG_AUTO_SNAPSHOT = 0b0100000,
+    ACTION_FLAG_USER_SNAPSHOT = 0b1000000
 };
+typedef ACTION_FLAG ActionFlag;
 
 enum_long(INSPECTION_TARGET)
 {

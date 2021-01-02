@@ -479,13 +479,13 @@ public:
     void clearActionFlags(u32 flags);
     
     // Convenience wrappers for controlling the run loop
-    void signalAutoSnapshot() { setActionFlags(ActionFlag_AUTO_SNAPSHOT); }
-    void signalUserSnapshot() { setActionFlags(ActionFlag_USER_SNAPSHOT); }
-    void signalBreakpoint() { setActionFlags(ActionFlag_BREAKPOINT); }
-    void signalWatchpoint() { setActionFlags(ActionFlag_WATCHPOINT); }
-    void signalInspect() { setActionFlags(ActionFlag_INSPECT); }
-    void signalJammed() { setActionFlags(ActionFlag_CPU_JAMMED); }
-    void signalStop() { setActionFlags(ActionFlag_STOP); }
+    void signalAutoSnapshot() { setActionFlags(ACTION_FLAG_AUTO_SNAPSHOT); }
+    void signalUserSnapshot() { setActionFlags(ACTION_FLAG_USER_SNAPSHOT); }
+    void signalBreakpoint() { setActionFlags(ACTION_FLAG_BREAKPOINT); }
+    void signalWatchpoint() { setActionFlags(ACTION_FLAG_WATCHPOINT); }
+    void signalInspect() { setActionFlags(ACTION_FLAG_INSPECT); }
+    void signalJammed() { setActionFlags(ACTION_FLAG_CPU_JAMMED); }
+    void signalStop() { setActionFlags(ACTION_FLAG_STOP); }
 
 
     //

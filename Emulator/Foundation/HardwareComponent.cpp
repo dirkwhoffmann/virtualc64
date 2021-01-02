@@ -146,7 +146,7 @@ HardwareComponent::powerOn()
     // Power this component on
     _powerOn();
 
-    state = State_PAUSED;
+    state = STATE_PAUSED;
 }
 
 void
@@ -163,7 +163,7 @@ HardwareComponent::powerOff()
     // Power all subcomponents off
     for (HardwareComponent *c : subComponents) c->powerOff();
 
-    state = State_OFF;
+    state = STATE_OFF;
 }
 
 void
@@ -182,7 +182,7 @@ HardwareComponent::run()
     // Start this component
     _run();
     
-    state = State_RUNNING;
+    state = STATE_RUNNING;
 }
 
 void
@@ -196,7 +196,7 @@ HardwareComponent::pause()
     // Pause all subcomponents
     for (HardwareComponent *c : subComponents) c->pause();
 
-    state = State_PAUSED;
+    state = STATE_PAUSED;
 }
 
 void
