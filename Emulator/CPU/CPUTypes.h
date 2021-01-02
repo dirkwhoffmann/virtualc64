@@ -15,6 +15,7 @@
 #define LOG_BUFFER_CAPACITY 256 // TODO: CLEAN THIS UP. STILL USED?
 #define CPUINFO_INSTR_COUNT 256 // TODO: CLEAN THIS UP. STILL USED? 
 
+/*
 #define C_FLAG 0x01
 #define Z_FLAG 0x02
 #define I_FLAG 0x04
@@ -22,17 +23,18 @@
 #define B_FLAG 0x10
 #define V_FLAG 0x40
 #define N_FLAG 0x80
+*/
 
 //
 // Enumerations
 //
 
-enum_long(CPURevision)
+enum_long(CPUREV)
 {
     MOS_6510,
     MOS_6502
 };
-// typedef CPUREV CPURevision;
+typedef CPUREV CPURevision;
 
 inline bool isCPURevision(long value)
 {
@@ -49,26 +51,7 @@ inline const char * CPURevisionName(CPURevision value)
     return "???";
 }
 
-typedef enum
-{
-    ADDR_IMPLIED,
-    ADDR_ACCUMULATOR,
-    ADDR_IMMEDIATE,
-    ADDR_ZERO_PAGE,
-    ADDR_ZERO_PAGE_X,
-    ADDR_ZERO_PAGE_Y,
-    ADDR_ABSOLUTE,
-    ADDR_ABSOLUTE_X,
-    ADDR_ABSOLUTE_Y,
-    ADDR_INDIRECT_X,
-    ADDR_INDIRECT_Y,
-    ADDR_RELATIVE,
-    ADDR_DIRECT,
-    ADDR_INDIRECT
-}
-AddressingMode;
-
-typedef enum : u8
+enum_byte(INTSRC)
 {
     INTSRC_CIA  = 0x01,
     INTSRC_VIC  = 0x02,
@@ -76,16 +59,50 @@ typedef enum : u8
     INTSRC_VIA2 = 0x08,
     INTSRC_EXP  = 0x10,
     INTSRC_KBD  = 0x20
-}
-IntSource;
+};
+typedef INTSRC IntSource;
 
-typedef enum
+inline bool isIntSource(long value)
+{
+    return (unsigned long)value <= INTSRC_KBD;
+}
+
+inline const char * IntSourceName(IntSource value)
+{
+    switch (value) {
+            
+        case INTSRC_CIA:   return "CIA";
+        case INTSRC_VIC:   return "VIC";
+        case INTSRC_VIA1:  return "VIA1";
+        case INTSRC_VIA2:  return "VIA2";
+        case INTSRC_EXP:   return "EXP";
+        case INTSRC_KBD:   return "KBD";
+    }
+    return "???";
+}
+
+enum_long(Breakpoint)
 {
     NO_BREAKPOINT   = 0x00,
     HARD_BREAKPOINT = 0x01,
     SOFT_BREAKPOINT = 0x02
+};
+
+inline bool isBreakpointType(long value)
+{
+    return (unsigned long)value <= SOFT_BREAKPOINT;
 }
-Breakpoint;
+
+inline const char * BreakpointTypeName(Breakpoint value)
+{
+    switch (value) {
+            
+        case NO_BREAKPOINT:   return "NO";
+        case HARD_BREAKPOINT:   return "HARD";
+        case SOFT_BREAKPOINT:  return "SOFT";
+    }
+    return "???";
+}
 
 //
 // Structures

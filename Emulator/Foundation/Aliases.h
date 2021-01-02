@@ -80,12 +80,14 @@ enum _name : _type
 
 #define enum_long(_name) enum_open(_name, long)
 #define enum_int(_name) enum_open(_name, int)
+#define enum_byte(_name) enum_open(_name, unsigned char)
 
 #else
 
 // Definition for C
 #define enum_long(_name) enum _name : long long
 #define enum_int(_name) enum _name : int
+#define enum_byte(_name) enum _name : unsigned char
 
 #endif
 

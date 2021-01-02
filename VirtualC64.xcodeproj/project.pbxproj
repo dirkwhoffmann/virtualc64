@@ -499,6 +499,7 @@
 		5051A1611B88661000CBFB5A /* 1541_track_change_1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_1.aiff; sourceTree = "<group>"; };
 		50520F8925108FC400C7D47F /* Folder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Folder.cpp; sourceTree = "<group>"; };
 		50520F8A25108FC400C7D47F /* Folder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Folder.h; sourceTree = "<group>"; };
+		5052A7BF25A0703D00E62EDD /* CPUPrivateTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPUPrivateTypes.h; sourceTree = "<group>"; };
 		50549B44257D1A6C006FE39C /* C64Constants.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64Constants.cpp; sourceTree = "<group>"; };
 		50549B46257D1B6A006FE39C /* Buffers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffers.h; sourceTree = "<group>"; };
 		50549B47257D288E006FE39C /* SIDStreams.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SIDStreams.cpp; sourceTree = "<group>"; };
@@ -960,6 +961,7 @@
 			isa = PBXGroup;
 			children = (
 				504C42E624AF29AB00E69CAE /* CPUTypes.h */,
+				5052A7BF25A0703D00E62EDD /* CPUPrivateTypes.h */,
 				504C42E824AF29AB00E69CAE /* CPU.h */,
 				504C42E924AF29AB00E69CAE /* CPU.cpp */,
 				504C42E724AF29AB00E69CAE /* CPUInstructions.h */,
