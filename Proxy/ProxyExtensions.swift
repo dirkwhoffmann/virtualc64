@@ -13,9 +13,13 @@
 
 func create<T: Makeable>(buffer: UnsafeRawPointer, length: Int) throws -> T {
     
+    track()
+    
     var err = ErrorCode.OK
     let obj = T.make(withBuffer: buffer, length: length, error: &err)
+    track("err = \(err.rawValue)")
     if err != ErrorCode.OK { throw MyError(err) }
+    if obj == nil { fatalError() }
     return obj!
 }
 

@@ -286,6 +286,12 @@ enum_long(ERRORCode)
     ERROR_CANT_READ,
     ERROR_CANT_WRITE,
 
+    // Snapshots
+    ERROR_UNSUPPORTED_SNAPSHOT,
+
+    // Cartridges
+    ERROR_UNSUPPORTED_CRT,
+    
     // File system errors
     ERROR_UNSUPPORTED,
     ERROR_WRONG_CAPACITY,
@@ -293,24 +299,21 @@ enum_long(ERRORCode)
     ERROR_CORRUPTED,
     ERROR_IMPORT_ERROR,
 
-    // Export errors
-    ERROR_DIRECTORY_NOT_EMPTY,
-    ERROR_CANNOT_CREATE_DIR,
-    ERROR_CANNOT_CREATE_FILE,
-
     // Block errros
     ERROR_EXPECTED,
     ERROR_EXPECTED_MIN,
     ERROR_EXPECTED_MAX,
-            
-    // Snapshot errors
-    ERROR_UNSUPPORTED_SNAPSHOT
+
+    // Export errors
+    ERROR_DIRECTORY_NOT_EMPTY,
+    ERROR_CANNOT_CREATE_DIR,
+    ERROR_CANNOT_CREATE_FILE
 };
 typedef ERRORCode ErrorCode;
 
 inline bool isErrorCode(long value)
 {
-    return (unsigned long)value <= ERROR_UNSUPPORTED_SNAPSHOT;
+    return (unsigned long)value <= ERROR_CANNOT_CREATE_FILE;
 }
 
 inline const char *ErrorCodeName(ErrorCode value)
@@ -327,6 +330,10 @@ inline const char *ErrorCodeName(ErrorCode value)
         case ERROR_CANT_READ:             return "CANT_READ";
         case ERROR_CANT_WRITE:            return "CANT_WRITE";
 
+        case ERROR_UNSUPPORTED_SNAPSHOT:  return "UNSUPPORTED_SNAPSHOT";
+            
+        case ERROR_UNSUPPORTED_CRT:       return "UNSUPPORTED_CRT";
+
         case ERROR_UNSUPPORTED:           return "UNSUPPORTED";
         case ERROR_WRONG_CAPACITY:        return "WRONG_CAPACITY";
         case ERROR_HAS_CYCLES:            return "HAS_CYCLES";
@@ -340,8 +347,6 @@ inline const char *ErrorCodeName(ErrorCode value)
         case ERROR_EXPECTED:              return "EXPECTED";
         case ERROR_EXPECTED_MIN:          return "EXPECTED_MIN";
         case ERROR_EXPECTED_MAX:          return "EXPECTED_MAX";
-                    
-        case ERROR_UNSUPPORTED_SNAPSHOT:  return "UNSUPPORTED_SNAPSHOT";            
     }
     return "???";
 }

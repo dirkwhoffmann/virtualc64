@@ -463,22 +463,6 @@ RomFile::isVC1541RomFile(const char *filename)
     return false;
 }
 
-FileType
-RomFile::type()
-{
-    return romType;
-    /*
-    if (romType == FILETYPE_UNKNOWN) {
-
-        if      (isBasicRomBuffer (data, size)) romType = FILETYPE_BASIC_ROM;
-        else if (isCharRomBuffer  (data, size)) romType = FILETYPE_CHAR_ROM;
-        else if (isKernalRomBuffer(data, size)) romType = FILETYPE_KERNAL_ROM;
-        else if (isVC1541RomBuffer(data, size)) romType = FILETYPE_VC1541_ROM;
-    }
-    return romType;
-    */
-}
-
 bool
 RomFile::matchingBuffer(const u8 *buf, size_t len)
 {

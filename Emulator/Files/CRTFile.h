@@ -43,26 +43,11 @@ public:
     //
     
     // Returns true if buffer contains a CRT file
-    static bool isCRTBuffer(const u8 *buffer, size_t length);
-    
-    // Returns the cartridge type number stored in the CRT buffer
-    static CartridgeType typeOfCRTBuffer(const u8 *buffer, size_t length);
-    
-    // Returns the cartridge type name stored in the CRT buffer
-    // static const char *typeNameOfCRTBuffer(const u8 *buffer, size_t length);
-    
-    // Returns true if buffer contains a supported CRT file
-    static bool isSupportedCRTBuffer(const u8 *buffer, size_t length);
-    
-    // Returns true if buffer contains a CRT file of unsupported type
-    static bool isUnsupportedCRTBuffer(const u8 *buffer, size_t length);
-
+    static bool isCompatibleBuffer(const u8 *buffer, size_t length);
+        
     // Returns true if path points to a CRT file
-    static bool isCRTFile(const char *path);
-    
-    // Returns the cartridge type in plain text
-    static const char *cartridgeTypeName(CartridgeType type);
-    
+    static bool isCompatibleFile(const char *path);
+        
     
     //
     // Initializing
@@ -90,6 +75,9 @@ public:
     
     // Returns the version number of the cartridge
     u16 cartridgeVersion() { return LO_HI(data[0x15], data[0x14]); }
+    
+    // Returns the size of the cartridge header
+    u32 headerSize() { return HI_HI_LO_LO(data[0x10], data[0x11], data[0x12], data[0x13]); }
     
     // Returns the cartridge type (e.g., SimonsBasic, FinalIII)
     CartridgeType cartridgeType();
@@ -126,20 +114,21 @@ public:
 
 
     //
-    // Scanning and repairing a CRT file
+    // Debugging, scanning and repairing a CRT file
     //
 
+    // Prints some information about this cartridge
+    void dump();
+    
     /* Checks the file for inconsistencies and tries to repair it. This method
      * can eliminate the following inconsistencies:
      *
-     *   - invalid cartridge IDs:
+     *   - Invalid cartridge IDs:
      *     Some non-standard cartridges are marked  as standard. If such a
      *     cartridge is recognised, the ID is rectified.
      *
-     * Returns true, if the file was consistent or could be repaired. Returns
-     * false, if an inconsistency has been detected that could not be repaired.
      */
-    bool repair();
+    void repair();
 };
 
 #endif

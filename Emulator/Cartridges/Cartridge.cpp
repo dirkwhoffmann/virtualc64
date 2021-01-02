@@ -17,7 +17,7 @@ Cartridge::isSupportedType(CartridgeType type)
         case CRT_NORMAL:
         case CRT_ACTION_REPLAY:
         case CRT_KCS_POWER:
-        case CRT_FINAL_III:
+        // case CRT_FINAL_III:
         case CRT_SIMONS_BASIC:
         case CRT_OCEAN:
         case CRT_EXPERT:

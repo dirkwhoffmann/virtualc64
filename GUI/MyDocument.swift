@@ -108,7 +108,13 @@ class MyDocument: NSDocument {
                       FileType.G64,
                       FileType.TAP ]
         
-        try createAttachment(from: url, allowedTypes: types)
+        do {
+            try createAttachment(from: url, allowedTypes: types)
+        } catch let error as MyError {
+            let code = error.errorCode.rawValue
+            track("CATCHED ERROR \(code)")
+            throw error
+        }
     }
     
     func createAttachment(from url: URL, allowedTypes: [FileType]) throws {
@@ -146,6 +152,8 @@ class MyDocument: NSDocument {
                 
     func createFileProxy(fileUrl: URL, type: FileType) throws -> AnyFileProxy? {
             
+        track()
+        
         // Get the file wrapper and create the proxy with it
         let wrapper = try FileWrapper.init(url: fileUrl)
         return try createFileProxy(wrapper: wrapper, type: type)

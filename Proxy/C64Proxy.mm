@@ -1540,13 +1540,6 @@ struct AnyFileWrapper { AnyFile *file; };
     return wrapper->file->fnv();
 }
 
-/*
-- (void) readFromBuffer:(const void *)buffer length:(NSInteger)length
-{
-    wrapper->file->readFromBuffer((const u8 *)buffer, length);
-}
-*/
-
 - (NSInteger) writeToBuffer:(void *)buffer
 {
     return wrapper->file->writeToBuffer((u8 *)buffer);
@@ -1605,7 +1598,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype) makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
-    Snapshot *file;
+    Snapshot *file = nil;
     
     try { file = AnyFile::make <Snapshot> ((const u8 *)buf, len); }
     catch (Error &exception) { *err = exception.errorCode; }
@@ -1615,7 +1608,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype) makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
-    Snapshot *file;
+    Snapshot *file = nil;
     
     try { file = AnyFile::make <Snapshot> ([path fileSystemRepresentation]); }
     catch (Error &exception) { *err = exception.errorCode; }
@@ -1684,7 +1677,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (BOOL) isCRTFile:(NSString *)path
 {
-    return CRTFile::isCRTFile([path UTF8String]);
+    return CRTFile::isCompatibleFile([path UTF8String]);
 }
 
 + (instancetype) make:(CRTFile *)container
@@ -1694,7 +1687,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype) makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
-    CRTFile *file;
+    CRTFile *file = nil;
     
     try { file = AnyFile::make <CRTFile> ([path fileSystemRepresentation]); }
     catch (Error &exception) { *err = exception.errorCode; }
@@ -1704,7 +1697,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype) makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
-    CRTFile *file;
+    CRTFile *file = nil;
     
     try { file = AnyFile::make <CRTFile> ((const u8 *)buf, len); }
     catch (Error &exception) { *err = exception.errorCode; }
@@ -1762,7 +1755,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
-    TAPFile *file;
+    TAPFile *file = nil;
     
     try { file = AnyFile::make <TAPFile> ([path fileSystemRepresentation]); }
     catch (Error &exception) { *err = exception.errorCode; }
@@ -1772,7 +1765,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
-    TAPFile *file;
+    TAPFile *file = nil;
     
     try { file = AnyFile::make <TAPFile> ((const u8 *)buf, len); }
     catch (Error &exception) { *err = exception.errorCode; }
@@ -1830,7 +1823,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
-    T64File *file;
+    T64File *file = nil;
     
     try { file = AnyFile::make <T64File> ([path fileSystemRepresentation]); }
     catch (Error &exception) { *err = exception.errorCode; }
@@ -1840,7 +1833,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
-    T64File *file;
+    T64File *file = nil;
     
     try { file = AnyFile::make <T64File> ((const u8 *)buf, len); }
     catch (Error &exception) { *err = exception.errorCode; }
@@ -1876,7 +1869,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
-    PRGFile *file;
+    PRGFile *file = nil;
     
     try { file = AnyFile::make <PRGFile> ([path fileSystemRepresentation]); }
     catch (Error &exception) { *err = exception.errorCode; }
@@ -1886,7 +1879,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
-    PRGFile *file;
+    PRGFile *file = nil;
     
     try { file = AnyFile::make <PRGFile> ((const u8 *)buf, len); }
     catch (Error &exception) { *err = exception.errorCode; }
@@ -1917,7 +1910,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithFolder:(NSString *)path error:(ErrorCode *)err
 {
-    Folder *folder;
+    Folder *folder = nil;
     
     try { folder = Folder::makeWithFolder([path fileSystemRepresentation]); }
     catch (Error &exception) { *err = exception.errorCode; }
@@ -1952,7 +1945,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
-    P00File *file;
+    P00File *file = nil;
     
     try { file = AnyFile::make <P00File> ([path fileSystemRepresentation]); }
     catch (Error &exception) { *err = exception.errorCode; }
@@ -1962,7 +1955,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
-    P00File *file;
+    P00File *file = nil;
     
     try { file = AnyFile::make <P00File> ((const u8 *)buf, len); }
     catch (Error &exception) { *err = exception.errorCode; }
@@ -2059,7 +2052,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype) makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
-    D64File *file;
+    D64File *file = nil;
     
     try { file = AnyFile::make <D64File> ([path fileSystemRepresentation]); }
     catch (Error &exception) { *err = exception.errorCode; }
@@ -2069,7 +2062,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype) makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
-    D64File *file;
+    D64File *file= nil;
     
     try { file = AnyFile::make <D64File> ((const u8 *)buf, len); }
     catch (Error &exception) { *err = exception.errorCode; }
@@ -2131,7 +2124,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype) makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
-    G64File *file;
+    G64File *file = nil;
     
     try { file = AnyFile::make <G64File> ([path fileSystemRepresentation]); }
     catch (Error &exception) { *err = exception.errorCode; }
@@ -2141,7 +2134,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype) makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
-    G64File *file;
+    G64File *file = nil;
     
     try { file = AnyFile::make <G64File> ((const u8 *)buf, len); }
     catch (Error &exception) { *err = exception.errorCode; }

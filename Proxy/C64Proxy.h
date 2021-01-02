@@ -727,7 +727,6 @@ struct AnyFileWrapper;
 - (NSString *)name;
 - (NSInteger)sizeOnDisk;
 - (u64) fnv;
-// - (void)readFromBuffer:(const void *)buffer length:(NSInteger)length;
 - (NSInteger)writeToBuffer:(void *)buffer;
 - (BOOL)writeToFile:(NSString *)path;
 

@@ -25,6 +25,7 @@ AnyFile::make(const u8 *buffer, size_t length)
     
     try { obj->readFromBuffer(buffer, length); } catch (Error &err) {
         delete obj;
+        printf("Prior to throw\n");
         throw err;
     }
     
@@ -38,6 +39,7 @@ AnyFile::make(const char *path)
     
     try { obj->readFromFile(path); } catch (Error &err) {
         delete obj;
+        printf("Prior to throw\n");
         throw err;
     }
 
@@ -72,8 +74,10 @@ AnyFile::AnyFile(usize capacity)
 
 AnyFile::~AnyFile()
 {
-    dealloc();
+    printf("Destructor %p\n", this);
 
+    dealloc();
+    
     if (path)
 		free(path);
 }

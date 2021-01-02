@@ -76,7 +76,7 @@ public:
     // Methods from AnyFile
     //
     
-    FileType type() override;
+    FileType type() override { return romType; }
     bool matchingBuffer(const u8 *buf, size_t len) override;
     bool matchingFile(const char *path) override;
     void readFromBuffer(const u8 *buf, size_t len) override;

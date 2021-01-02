@@ -120,13 +120,14 @@ public:
      */
     virtual bool matchingFile(const char *path) { return false; }
 
-    
+protected:
+
     /* Deserializes this object from a memory buffer. This function uses
      * matchingBuffer() to verify that the buffer contains a compatible
      * binary representation.
      */
     virtual void readFromBuffer(const u8 *buffer, size_t length);
-
+    
     /* Deserializes this object from a file. This function uses
      * matchingFile() to verify that the file contains a compatible binary
      * representation. This function requires no custom implementation. It
@@ -139,13 +140,8 @@ public:
      */
     virtual void readFromFile(FILE *file);
     
+public:
     
-    // Reads the file contents from a memory buffer
-    // virtual bool oldReadFromBuffer(const u8 *buffer, size_t length);
-	
-    // Reads the file contents from a file
-	// bool oldReadFromFile(const char *path);
-
     /* Writes the file contents into a memory buffer. By passing a null pointer,
      * a test run is performed. Test runs are used to determine how many bytes
      * will be written.

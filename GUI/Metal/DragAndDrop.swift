@@ -116,6 +116,7 @@ public extension MetalView {
                     try document.createAttachment(from: url)
                     return document.mountAttachment()
                 } catch {
+                    track("Catched")
                     let dragAndDropError = error
                     let deadline = DispatchTime.now() + .milliseconds(200)
                     DispatchQueue.main.asyncAfter(deadline: deadline) {

@@ -14,35 +14,14 @@ const u8 CRTFile::magicBytes[] = {
     'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ' };
 
 bool
-CRTFile::isCRTBuffer(const u8 *buffer, size_t length)
+CRTFile::isCompatibleBuffer(const u8 *buffer, size_t length)
 {
     if (length < 0x40) return false;
     return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
 }
 
-CartridgeType
-CRTFile::typeOfCRTBuffer(const u8 *buffer, size_t length)
-{
-    assert(isCRTBuffer(buffer, length));
-    return (CartridgeType)LO_HI(buffer[0x17], buffer[0x16]);
-}
-
 bool
-CRTFile::isSupportedCRTBuffer(const u8 *buffer, size_t length)
-{
-    if (!isCRTBuffer(buffer, length))
-        return false;
-    return Cartridge::isSupportedType(typeOfCRTBuffer(buffer, length));
-}
-
-bool
-CRTFile::isUnsupportedCRTBuffer(const u8 *buffer, size_t length)
-{
-    return isCRTBuffer(buffer, length) && !isSupportedCRTBuffer(buffer, length);
-}
-
-bool
-CRTFile::isCRTFile(const char *path)
+CRTFile::isCompatibleFile(const char *path)
 {
     assert(path != NULL);
     
@@ -74,37 +53,27 @@ CRTFile::dealloc()
 bool
 CRTFile::matchingBuffer(const u8 *buf, size_t len)
 {
-    return isCRTBuffer(buf, len);
+    return isCompatibleBuffer(buf, len);
 }
 
 bool
 CRTFile::matchingFile(const char *path)
 {
-    return isCRTFile(path);
+    return isCompatibleFile(path);
 }
 
 void
 CRTFile::readFromBuffer(const u8 *buffer, size_t length)
 {
-    AnyFile::readFromBuffer(buffer, length);
+    // Read the CRT file
+    AnyFile::readFromBuffer(buffer, length);    
+    if (CRT_DEBUG) dump();
     
-    // Some CRT files contain incosistencies. We try to fix them here.
-    if (!repair()) { warn("Failed to repair broken CRT file\n"); }
-
-    // Cartridge header size
-    u32 headerSize = HI_HI_LO_LO(data[0x10],data[0x11],data[0x12],data[0x13]);
-    
-    // Minimum header size is 0x40. Some cartridges show a value of 0x20 which is wrong.
-    if (headerSize < 0x40) headerSize = 0x40;
-    
-    msg("Cartridge: %s\n", getName());
-    msg("   Header: %08X bytes long (normally 0x40)\n", headerSize);
-    msg("   Type:   %ld\n", (long)cartridgeType());
-    msg("   Game:   %d\n", initialGameLine());
-    msg("   Exrom:  %d\n", initialExromLine());
-    
+    // Try to fix incosistencies (if any)
+    repair();
+        
     // Load chip packets
-    u8 *ptr = &data[headerSize];
+    u8 *ptr = data + headerSize();
     for (numberOfChips = 0; ptr < data + length; numberOfChips++) {
         
         if (numberOfChips == MAX_PACKETS) {
@@ -140,17 +109,39 @@ CRTFile::isSupported()
     return Cartridge::isSupportedType(cartridgeType());
 }
 
-bool
+void
+CRTFile::dump()
+{
+    msg("Cartridge: %s\n", getName());
+    msg("   Header: %08X bytes (normally 0x40)\n", headerSize());
+    msg("   Type:   %ld\n", (long)cartridgeType());
+    msg("   Game:   %d\n", initialGameLine());
+    msg("   Exrom:  %d\n", initialExromLine());
+}
+
+void
 CRTFile::repair()
 {
-    if ((data == NULL) != (size == 0)) {
-        warn("CRT file inconsistency: data = %p size = %zu\n", data, size);
-        return false;
+    //
+    // General errors
+    //
+        
+    // Some cartridges show a header size of 0x20 which is wrong
+    if (headerSize() < 0x40) {
+        u32 newSize = 0x40;
+        data[0x10] = BYTE3(newSize);
+        data[0x11] = BYTE2(newSize);
+        data[0x12] = BYTE1(newSize);
+        data[0x13] = BYTE0(newSize);
     }
-
+    
+    //
+    // Individual errors
+    //
+    
     // Compute a fingerprint for the CRT file
     u64 fingerprint = fnv_1a_64(data, size);
-    trace(CRT_DEBUG, "CRT fingerprint: %llx\n", fingerprint);
+    debug(CRT_DEBUG, "CRT fingerprint: %llx\n", fingerprint);
 
     // Check for known inconsistencies
     switch (fingerprint) {
@@ -162,7 +153,5 @@ CRTFile::repair()
             data[0x17] = 0x1C;
             break;
     }
-
-    return true; 
 }
 
