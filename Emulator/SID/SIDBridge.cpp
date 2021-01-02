@@ -45,22 +45,22 @@ SIDBridge::getConfigItem(Option option)
 {
     switch (option) {
             
-        case Option_SID_REVISION:
+        case OPT_SID_REVISION:
             return config.revision;
             
-        case Option_SID_FILTER:
+        case OPT_SID_FILTER:
             return config.filter;
             
-        case Option_SID_ENGINE:
+        case OPT_SID_ENGINE:
             return config.engine;
             
-        case Option_SID_SAMPLING:
+        case OPT_SID_SAMPLING:
             return config.sampling;
             
-        case Option_AUDVOLL:
+        case OPT_AUDVOLL:
             return config.volL;
 
-        case Option_AUDVOLR:
+        case OPT_AUDVOLR:
             return config.volR;
             
         default:
@@ -75,16 +75,16 @@ SIDBridge::getConfigItem(Option option, long id)
     
     switch (option) {
             
-        case Option_SID_ENABLE:
+        case OPT_SID_ENABLE:
             return GET_BIT(config.enabled, id);
             
-        case Option_SID_ADDRESS:
+        case OPT_SID_ADDRESS:
             return config.address[id];
             
-        case Option_AUDVOL:
+        case OPT_AUDVOL:
             return config.vol[id];
 
-        case Option_AUDPAN:
+        case OPT_AUDPAN:
             return config.pan[id];
                         
         default:
@@ -100,7 +100,7 @@ SIDBridge::setConfigItem(Option option, long value)
         
     switch (option) {
             
-        case Option_VIC_REVISION:
+        case OPT_VIC_REVISION:
         {
             u32 newFrequency = VICII::getFrequency((VICRev)value);
                                     
@@ -111,7 +111,7 @@ SIDBridge::setConfigItem(Option option, long value)
             return true;
         }
             
-        case Option_SID_REVISION:
+        case OPT_SID_REVISION:
             
             if (!isSIDRev(value)) {
                 warn("Invalid SID revision: %ld\n", value);
@@ -128,7 +128,7 @@ SIDBridge::setConfigItem(Option option, long value)
             
             return true;
             
-        case Option_SID_FILTER:
+        case OPT_SID_FILTER:
             
             if (config.filter == value) {
                 return false;
@@ -141,7 +141,7 @@ SIDBridge::setConfigItem(Option option, long value)
             
             return true;
             
-        case Option_SID_ENGINE:
+        case OPT_SID_ENGINE:
             
             if (!isSIDEngine(value)) {
                 warn("Invalid SID engine: %ld\n", value);
@@ -156,7 +156,7 @@ SIDBridge::setConfigItem(Option option, long value)
             
             return true;
             
-        case Option_SID_SAMPLING:
+        case OPT_SID_SAMPLING:
             
             if (!isSamplingMethod(value)) {
                 warn("Invalid sampling method: %ld\n", value);
@@ -172,7 +172,7 @@ SIDBridge::setConfigItem(Option option, long value)
             
             return true;
             
-        case Option_AUDVOLL:
+        case OPT_AUDVOLL:
             
             config.volL = MIN(100, MAX(0, value));
             volL.set(pow((double)config.volL / 50, 1.4));
@@ -182,7 +182,7 @@ SIDBridge::setConfigItem(Option option, long value)
             }
             return true;
             
-        case Option_AUDVOLR:
+        case OPT_AUDVOLR:
 
             config.volR = MIN(100, MAX(0, value));
             volR.set(pow((double)config.volR / 50, 1.4));
@@ -204,7 +204,7 @@ SIDBridge::setConfigItem(Option option, long id, long value)
 
     switch (option) {
                      
-        case Option_SID_ENABLE:
+        case OPT_SID_ENABLE:
 
             assert(id >= 0 && id <= 3);
 
@@ -228,7 +228,7 @@ SIDBridge::setConfigItem(Option option, long id, long value)
             resume();
             return true;
             
-        case Option_SID_ADDRESS:
+        case OPT_SID_ADDRESS:
 
             assert(id >= 0 && id <= 3);
 
@@ -253,7 +253,7 @@ SIDBridge::setConfigItem(Option option, long id, long value)
             resume();
             return true;
             
-        case Option_AUDVOL:
+        case OPT_AUDVOL:
             
             assert(id >= 0 && id <= 3);
 
@@ -266,7 +266,7 @@ SIDBridge::setConfigItem(Option option, long id, long value)
 
             return true;
             
-        case Option_AUDPAN:
+        case OPT_AUDPAN:
             
             assert(id >= 0 && id <= 3);
             if (value < 0 || value > 200) {

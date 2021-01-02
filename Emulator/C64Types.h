@@ -30,84 +30,86 @@
 // Enumerations
 //
 
-enum_long(Option)
+enum_long(OPT)
 {
     // VICII
-    Option_VIC_REVISION,
-    Option_PALETTE,
-    Option_GRAY_DOT_BUG,
-    Option_HIDE_SPRITES,
-    Option_DMA_DEBUG,
-    Option_DMA_CHANNEL_R,
-    Option_DMA_CHANNEL_I,
-    Option_DMA_CHANNEL_C,
-    Option_DMA_CHANNEL_G,
-    Option_DMA_CHANNEL_P,
-    Option_DMA_CHANNEL_S,
-    Option_DMA_COLOR_R,
-    Option_DMA_COLOR_I,
-    Option_DMA_COLOR_C,
-    Option_DMA_COLOR_G,
-    Option_DMA_COLOR_P,
-    Option_DMA_COLOR_S,
-    Option_DMA_DISPLAY_MODE,
-    Option_DMA_OPACITY,
-    Option_CUT_LAYERS,
-    Option_CUT_OPACITY,
-    Option_SS_COLLISIONS,
-    Option_SB_COLLISIONS,
+    OPT_VIC_REVISION,
+    OPT_PALETTE,
+    OPT_GRAY_DOT_BUG,
+    OPT_HIDE_SPRITES,
+    OPT_DMA_DEBUG,
+    OPT_DMA_CHANNEL_R,
+    OPT_DMA_CHANNEL_I,
+    OPT_DMA_CHANNEL_C,
+    OPT_DMA_CHANNEL_G,
+    OPT_DMA_CHANNEL_P,
+    OPT_DMA_CHANNEL_S,
+    OPT_DMA_COLOR_R,
+    OPT_DMA_COLOR_I,
+    OPT_DMA_COLOR_C,
+    OPT_DMA_COLOR_G,
+    OPT_DMA_COLOR_P,
+    OPT_DMA_COLOR_S,
+    OPT_DMA_DISPLAY_MODE,
+    OPT_DMA_OPACITY,
+    OPT_CUT_LAYERS,
+    OPT_CUT_OPACITY,
+    OPT_SS_COLLISIONS,
+    OPT_SB_COLLISIONS,
 
     // Logic board
-    Option_GLUE_LOGIC,
+    OPT_GLUE_LOGIC,
 
     // CIA
-    Option_CIA_REVISION,
-    Option_TIMER_B_BUG,
+    OPT_CIA_REVISION,
+    OPT_TIMER_B_BUG,
     
     // SID
-    Option_SID_ENABLE,
-    Option_SID_ADDRESS,
-    Option_SID_REVISION,
-    Option_SID_FILTER,
-    Option_AUDPAN,
-    Option_AUDVOL,
-    Option_AUDVOLL,
-    Option_AUDVOLR,
+    OPT_SID_ENABLE,
+    OPT_SID_ADDRESS,
+    OPT_SID_REVISION,
+    OPT_SID_FILTER,
+    OPT_AUDPAN,
+    OPT_AUDVOL,
+    OPT_AUDVOLL,
+    OPT_AUDVOLR,
     
     // Sound synthesis
-    Option_SID_ENGINE,
-    Option_SID_SAMPLING,
+    OPT_SID_ENGINE,
+    OPT_SID_SAMPLING,
     
     // Memory
-    Option_RAM_PATTERN,
+    OPT_RAM_PATTERN,
     
     // Drive
-    Option_DRIVE_TYPE,
-    Option_DRIVE_CONNECT,
-    Option_DRIVE_POWER_SWITCH,
+    OPT_DRIVE_TYPE,
+    OPT_DRIVE_CONNECT,
+    OPT_DRIVE_POWER_SWITCH,
     
     // Debugging
-    Option_DEBUGCART
+    OPT_DEBUGCART
 };
+typedef OPT Option;
 
 inline bool isConfigOption(long value)
 {
-    return (unsigned long)value <= Option_DEBUGCART;
+    return (unsigned long)value <= OPT_DEBUGCART;
 }
 
-enum_long(C64Model)
+enum_long(C64_MODEL)
 {
-    C64Model_PAL,
-    C64Model_PAL_II,
-    C64Model_PAL_OLD,
-    C64Model_NTSC,
-    C64Model_NTSC_II,
-    C64Model_NTSC_OLD,
-    C64Model_CUSTOM
+    C64_MODEL_PAL,
+    C64_MODEL_PAL_II,
+    C64_MODEL_PAL_OLD,
+    C64_MODEL_NTSC,
+    C64_MODEL_NTSC_II,
+    C64_MODEL_NTSC_OLD,
+    C64_MODEL_CUSTOM
 };
+typedef C64_MODEL C64Model;
 
 inline bool isC64Model(long value) {
-    return (unsigned long)value <= C64Model_CUSTOM;
+    return (unsigned long)value <= C64_MODEL_CUSTOM;
 }
 
 enum_long(ROM_TYPE)

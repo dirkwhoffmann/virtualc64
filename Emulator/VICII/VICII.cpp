@@ -142,30 +142,30 @@ VICII::getConfigItem(Option option)
 {
     switch (option) {
             
-        case Option_VIC_REVISION:     return config.revision;
-        case Option_PALETTE:          return config.palette;
-        case Option_GRAY_DOT_BUG:     return config.grayDotBug;
-        case Option_GLUE_LOGIC:       return config.glueLogic;
-        case Option_DMA_DEBUG:        return config.dmaDebug;
-        case Option_DMA_CHANNEL_R:    return config.dmaChannel[MemAccess_R];
-        case Option_DMA_CHANNEL_I:    return config.dmaChannel[MemAccess_I];
-        case Option_DMA_CHANNEL_C:    return config.dmaChannel[MemAccess_C];
-        case Option_DMA_CHANNEL_G:    return config.dmaChannel[MemAccess_G];
-        case Option_DMA_CHANNEL_P:    return config.dmaChannel[MemAccess_P];
-        case Option_DMA_CHANNEL_S:    return config.dmaChannel[MemAccess_S];
-        case Option_DMA_COLOR_R:      return config.dmaColor[MemAccess_R];
-        case Option_DMA_COLOR_I:      return config.dmaColor[MemAccess_I];
-        case Option_DMA_COLOR_C:      return config.dmaColor[MemAccess_C];
-        case Option_DMA_COLOR_G:      return config.dmaColor[MemAccess_G];
-        case Option_DMA_COLOR_P:      return config.dmaColor[MemAccess_P];
-        case Option_DMA_COLOR_S:      return config.dmaColor[MemAccess_S];
-        case Option_DMA_DISPLAY_MODE: return config.dmaDisplayMode;
-        case Option_DMA_OPACITY:      return config.dmaOpacity;
-        case Option_HIDE_SPRITES:     return config.hideSprites;
-        case Option_CUT_LAYERS:       return config.cutLayers;
-        case Option_CUT_OPACITY:      return config.cutOpacity;
-        case Option_SS_COLLISIONS:    return config.checkSSCollisions;
-        case Option_SB_COLLISIONS:    return config.checkSBCollisions;
+        case OPT_VIC_REVISION:     return config.revision;
+        case OPT_PALETTE:          return config.palette;
+        case OPT_GRAY_DOT_BUG:     return config.grayDotBug;
+        case OPT_GLUE_LOGIC:       return config.glueLogic;
+        case OPT_DMA_DEBUG:        return config.dmaDebug;
+        case OPT_DMA_CHANNEL_R:    return config.dmaChannel[MemAccess_R];
+        case OPT_DMA_CHANNEL_I:    return config.dmaChannel[MemAccess_I];
+        case OPT_DMA_CHANNEL_C:    return config.dmaChannel[MemAccess_C];
+        case OPT_DMA_CHANNEL_G:    return config.dmaChannel[MemAccess_G];
+        case OPT_DMA_CHANNEL_P:    return config.dmaChannel[MemAccess_P];
+        case OPT_DMA_CHANNEL_S:    return config.dmaChannel[MemAccess_S];
+        case OPT_DMA_COLOR_R:      return config.dmaColor[MemAccess_R];
+        case OPT_DMA_COLOR_I:      return config.dmaColor[MemAccess_I];
+        case OPT_DMA_COLOR_C:      return config.dmaColor[MemAccess_C];
+        case OPT_DMA_COLOR_G:      return config.dmaColor[MemAccess_G];
+        case OPT_DMA_COLOR_P:      return config.dmaColor[MemAccess_P];
+        case OPT_DMA_COLOR_S:      return config.dmaColor[MemAccess_S];
+        case OPT_DMA_DISPLAY_MODE: return config.dmaDisplayMode;
+        case OPT_DMA_OPACITY:      return config.dmaOpacity;
+        case OPT_HIDE_SPRITES:     return config.hideSprites;
+        case OPT_CUT_LAYERS:       return config.cutLayers;
+        case OPT_CUT_OPACITY:      return config.cutOpacity;
+        case OPT_SS_COLLISIONS:    return config.checkSSCollisions;
+        case OPT_SB_COLLISIONS:    return config.checkSBCollisions;
 
         default:
             assert(false);
@@ -178,7 +178,7 @@ VICII::setConfigItem(Option option, long value)
 {
     switch (option) {
             
-        case Option_VIC_REVISION:
+        case OPT_VIC_REVISION:
             
             if (!isVICRev(value)) {
                 warn("Invalid VIC revision: %ld\n", value);
@@ -194,7 +194,7 @@ VICII::setConfigItem(Option option, long value)
             resume();
             return true;
             
-        case Option_PALETTE:
+        case OPT_PALETTE:
             
             if (!isPalette(value)) {
                 warn("Invalid color palette: %ld\n", value);
@@ -210,17 +210,17 @@ VICII::setConfigItem(Option option, long value)
             resume();
             return true;
             
-        case Option_GRAY_DOT_BUG:
+        case OPT_GRAY_DOT_BUG:
             
             config.grayDotBug = value;
             return true;
             
-        case Option_HIDE_SPRITES:
+        case OPT_HIDE_SPRITES:
             
             config.hideSprites = value;
             return true;
 
-        case Option_DMA_DEBUG:
+        case OPT_DMA_DEBUG:
             
             if (config.dmaDebug == value) {
                 return false;
@@ -232,98 +232,98 @@ VICII::setConfigItem(Option option, long value)
             resume();
             return true;
             
-        case Option_DMA_CHANNEL_R:
+        case OPT_DMA_CHANNEL_R:
             
             config.dmaChannel[MemAccess_R] = value;
             return true;
             
-        case Option_DMA_CHANNEL_I:
+        case OPT_DMA_CHANNEL_I:
             
             config.dmaChannel[MemAccess_I] = value;
             return true;
             
-        case Option_DMA_CHANNEL_C:
+        case OPT_DMA_CHANNEL_C:
             
             config.dmaChannel[MemAccess_C] = value;
             return true;
             
-        case Option_DMA_CHANNEL_G:
+        case OPT_DMA_CHANNEL_G:
             
             config.dmaChannel[MemAccess_G] = value;
             return true;
             
-        case Option_DMA_CHANNEL_P:
+        case OPT_DMA_CHANNEL_P:
             
             config.dmaChannel[MemAccess_P] = value;
             return true;
             
-        case Option_DMA_CHANNEL_S:
+        case OPT_DMA_CHANNEL_S:
             
             config.dmaChannel[MemAccess_S] = value;
             return true;
 
-        case Option_DMA_COLOR_R:
+        case OPT_DMA_COLOR_R:
             
             setDmaDebugColor(MemAccess_R, GpuColor((u32)value));
             config.dmaColor[MemAccess_R] = (u32)value;
             return true;
             
-        case Option_DMA_COLOR_I:
+        case OPT_DMA_COLOR_I:
             
             config.dmaColor[MemAccess_I] = (u32)value;
             return true;
 
-        case Option_DMA_COLOR_C:
+        case OPT_DMA_COLOR_C:
             
             config.dmaColor[MemAccess_C] = (u32)value;
             return true;
 
-        case Option_DMA_COLOR_G:
+        case OPT_DMA_COLOR_G:
             
             config.dmaColor[MemAccess_G] = (u32)value;
             return true;
 
-        case Option_DMA_COLOR_P:
+        case OPT_DMA_COLOR_P:
             
             config.dmaColor[MemAccess_P] = (u32)value;
             return true;
 
-        case Option_DMA_COLOR_S:
+        case OPT_DMA_COLOR_S:
             
             config.dmaColor[MemAccess_S] = (u32)value;
             return true;
             
-        case Option_DMA_OPACITY:
+        case OPT_DMA_OPACITY:
             
             config.dmaOpacity = value;
             return false; // 'false' to avoid a MSG_CONFIG being sent
             
-        case Option_DMA_DISPLAY_MODE:
+        case OPT_DMA_DISPLAY_MODE:
             
             config.dmaDisplayMode = (DmaDisplayMode)value;
             return true;
 
-        case Option_CUT_LAYERS:
+        case OPT_CUT_LAYERS:
             
             config.cutLayers = value;
             return true;
             
-        case Option_CUT_OPACITY:
+        case OPT_CUT_OPACITY:
             
             config.cutOpacity = value;
             return false; // False to avoid MSG_CONFIG being sent to the GUI
             
-        case Option_SS_COLLISIONS:
+        case OPT_SS_COLLISIONS:
             
             config.checkSSCollisions = value;
             return true;
 
-        case Option_SB_COLLISIONS:
+        case OPT_SB_COLLISIONS:
             
             config.checkSBCollisions = value;
             return true;
 
-        case Option_GLUE_LOGIC:
+        case OPT_GLUE_LOGIC:
             
             if (!isGlueLogic(value)) {
                 warn("Invalid glue logic type: %ld\n", value);

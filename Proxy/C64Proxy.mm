@@ -1226,12 +1226,12 @@ struct AnyFileWrapper { AnyFile *file; };
 
 - (BOOL) isConnected
 {
-    return wrapper->drive->getConfigItem(Option_DRIVE_CONNECT) != 0;
+    return wrapper->drive->getConfigItem(OPT_DRIVE_CONNECT) != 0;
 }
 
 - (BOOL) isSwitchedOn
 {
-    return wrapper->drive->getConfigItem(Option_DRIVE_POWER_SWITCH) != 0;
+    return wrapper->drive->getConfigItem(OPT_DRIVE_POWER_SWITCH) != 0;
 }
 
 - (BOOL) readMode

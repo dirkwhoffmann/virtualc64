@@ -118,8 +118,8 @@ C64Memory::getConfigItem(Option option)
 {
     switch (option) {
             
-        case Option_RAM_PATTERN:  return config.ramPattern;
-        case Option_DEBUGCART:    return config.debugcart;
+        case OPT_RAM_PATTERN:  return config.ramPattern;
+        case OPT_DEBUGCART:    return config.debugcart;
             
         default:
             assert(false);
@@ -132,7 +132,7 @@ C64Memory::setConfigItem(Option option, long value)
 {
     switch (option) {
             
-        case Option_RAM_PATTERN:
+        case OPT_RAM_PATTERN:
             
             if (!isRamPattern(value)) {
                 warn("Invalid RAM pattern: %ld\n", value);
@@ -145,7 +145,7 @@ C64Memory::setConfigItem(Option option, long value)
             config.ramPattern = (RamPattern)value;
             return true;
             
-        case Option_DEBUGCART:
+        case OPT_DEBUGCART:
             
             if (config.debugcart == value) {
                 return false;

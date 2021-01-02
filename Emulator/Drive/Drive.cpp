@@ -51,9 +51,9 @@ Drive::getConfigItem(Option option)
 {
     switch (option) {
             
-        case Option_DRIVE_TYPE:          return config.type;
-        case Option_DRIVE_CONNECT:       return config.connected;
-        case Option_DRIVE_POWER_SWITCH:  return config.switchedOn;
+        case OPT_DRIVE_TYPE:          return config.type;
+        case OPT_DRIVE_CONNECT:       return config.connected;
+        case OPT_DRIVE_POWER_SWITCH:  return config.switchedOn;
             
         default:
             assert(false);
@@ -66,7 +66,7 @@ Drive::setConfigItem(Option option, long value)
 {
     switch (option) {
             
-        case Option_VIC_REVISION:
+        case OPT_VIC_REVISION:
         {
             u64 duration = 10000000000 / VICII::getFrequency((VICRev)value);
             
@@ -89,7 +89,7 @@ Drive::setConfigItem(Option option, long id, long value)
     
     switch (option) {
             
-        case Option_DRIVE_TYPE:
+        case OPT_DRIVE_TYPE:
         {
             if (!isDriveType(value)) {
                 warn("Invalid drive type: %ld\n", value);
@@ -102,7 +102,7 @@ Drive::setConfigItem(Option option, long id, long value)
             config.type = (DriveType)value;
             return true;
         }
-        case Option_DRIVE_CONNECT:
+        case OPT_DRIVE_CONNECT:
         {
             if (config.connected == value) {
                 return false;
@@ -123,7 +123,7 @@ Drive::setConfigItem(Option option, long id, long value)
                 messageQueue.put(active ? MSG_DRIVE_ACTIVE : MSG_DRIVE_INACTIVE, deviceNr);
             return true;
         }
-        case Option_DRIVE_POWER_SWITCH:
+        case OPT_DRIVE_POWER_SWITCH:
         {
             if (config.switchedOn == value) {
                 return false;

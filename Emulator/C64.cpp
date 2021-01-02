@@ -165,47 +165,47 @@ C64::getConfigItem(Option option)
 {
     switch (option) {
             
-        case Option_VIC_REVISION:
-        case Option_PALETTE:
-        case Option_GRAY_DOT_BUG:
-        case Option_GLUE_LOGIC:
-        case Option_HIDE_SPRITES:
-        case Option_DMA_DEBUG:
-        case Option_DMA_CHANNEL_R:
-        case Option_DMA_CHANNEL_I:
-        case Option_DMA_CHANNEL_C:
-        case Option_DMA_CHANNEL_G:
-        case Option_DMA_CHANNEL_P:
-        case Option_DMA_CHANNEL_S:
-        case Option_DMA_COLOR_R:
-        case Option_DMA_COLOR_I:
-        case Option_DMA_COLOR_C:
-        case Option_DMA_COLOR_G:
-        case Option_DMA_COLOR_P:
-        case Option_DMA_COLOR_S:
-        case Option_DMA_DISPLAY_MODE:
-        case Option_DMA_OPACITY:
-        case Option_CUT_LAYERS:
-        case Option_CUT_OPACITY:
-        case Option_SS_COLLISIONS:
-        case Option_SB_COLLISIONS:
+        case OPT_VIC_REVISION:
+        case OPT_PALETTE:
+        case OPT_GRAY_DOT_BUG:
+        case OPT_GLUE_LOGIC:
+        case OPT_HIDE_SPRITES:
+        case OPT_DMA_DEBUG:
+        case OPT_DMA_CHANNEL_R:
+        case OPT_DMA_CHANNEL_I:
+        case OPT_DMA_CHANNEL_C:
+        case OPT_DMA_CHANNEL_G:
+        case OPT_DMA_CHANNEL_P:
+        case OPT_DMA_CHANNEL_S:
+        case OPT_DMA_COLOR_R:
+        case OPT_DMA_COLOR_I:
+        case OPT_DMA_COLOR_C:
+        case OPT_DMA_COLOR_G:
+        case OPT_DMA_COLOR_P:
+        case OPT_DMA_COLOR_S:
+        case OPT_DMA_DISPLAY_MODE:
+        case OPT_DMA_OPACITY:
+        case OPT_CUT_LAYERS:
+        case OPT_CUT_OPACITY:
+        case OPT_SS_COLLISIONS:
+        case OPT_SB_COLLISIONS:
             return vic.getConfigItem(option);
                         
-        case Option_CIA_REVISION:
-        case Option_TIMER_B_BUG:
+        case OPT_CIA_REVISION:
+        case OPT_TIMER_B_BUG:
             assert(cia1.getConfigItem(option) == cia2.getConfigItem(option));
             return cia1.getConfigItem(option);
 
-        case Option_SID_REVISION:
-        case Option_SID_FILTER:
-        case Option_SID_ENGINE:
-        case Option_SID_SAMPLING:
-        case Option_AUDVOLL:
-        case Option_AUDVOLR:
+        case OPT_SID_REVISION:
+        case OPT_SID_FILTER:
+        case OPT_SID_ENGINE:
+        case OPT_SID_SAMPLING:
+        case OPT_AUDVOLL:
+        case OPT_AUDVOLR:
             return sid.getConfigItem(option);
 
-        case Option_RAM_PATTERN:
-        case Option_DEBUGCART:
+        case OPT_RAM_PATTERN:
+        case OPT_DEBUGCART:
             return mem.getConfigItem(option);
 
         default:
@@ -219,17 +219,17 @@ C64::getConfigItem(Option option, long id)
 {
     switch (option) {
             
-        case Option_SID_ENABLE:
-        case Option_SID_ADDRESS:
-        case Option_AUDPAN:
-        case Option_AUDVOL:
+        case OPT_SID_ENABLE:
+        case OPT_SID_ADDRESS:
+        case OPT_AUDPAN:
+        case OPT_AUDVOL:
         {
             assert(id >= 0 && id <= 3);
             return sid.getConfigItem(option, id);
         }
-        case Option_DRIVE_TYPE:
-        case Option_DRIVE_CONNECT:
-        case Option_DRIVE_POWER_SWITCH:
+        case OPT_DRIVE_TYPE:
+        case OPT_DRIVE_CONNECT:
+        case OPT_DRIVE_POWER_SWITCH:
         {
             assert(isDriveID(id));
             Drive &drive = id == DRIVE8 ? drive8 : drive9;
@@ -278,17 +278,17 @@ C64::configure(Option option, long id, long value)
 void
 C64::configure(C64Model model)
 {
-    if (model != C64Model_CUSTOM) {
+    if (model != C64_MODEL_CUSTOM) {
         
         suspend();
-        configure(Option_VIC_REVISION, configurations[model].vic);
-        configure(Option_GRAY_DOT_BUG, configurations[model].grayDotBug);
-        configure(Option_GLUE_LOGIC,   configurations[model].glue);
-        configure(Option_CIA_REVISION, configurations[model].cia);
-        configure(Option_TIMER_B_BUG,  configurations[model].timerBBug);
-        configure(Option_SID_REVISION, configurations[model].sid);
-        configure(Option_SID_FILTER,   configurations[model].sidFilter);
-        configure(Option_RAM_PATTERN,  configurations[model].pattern);
+        configure(OPT_VIC_REVISION, configurations[model].vic);
+        configure(OPT_GRAY_DOT_BUG, configurations[model].grayDotBug);
+        configure(OPT_GLUE_LOGIC,   configurations[model].glue);
+        configure(OPT_CIA_REVISION, configurations[model].cia);
+        configure(OPT_TIMER_B_BUG,  configurations[model].timerBBug);
+        configure(OPT_SID_REVISION, configurations[model].sid);
+        configure(OPT_SID_FILTER,   configurations[model].sidFilter);
+        configure(OPT_RAM_PATTERN,  configurations[model].pattern);
         resume();
     }
 }
@@ -298,7 +298,7 @@ C64::setConfigItem(Option option, long value)
 {
     switch (option) {
             
-        case Option_VIC_REVISION:
+        case OPT_VIC_REVISION:
         {
             u64 newFrequency = VICII::getFrequency((VICRev)value);
 
@@ -319,14 +319,14 @@ C64::setConfigItem(Option option, long value)
 C64Model
 C64::getModel()
 {
-    VICRev vicref      = (VICRev)vic.getConfigItem(Option_VIC_REVISION);
-    bool grayDotBug    = vic.getConfigItem(Option_GRAY_DOT_BUG);
-    bool glueLogic     = vic.getConfigItem(Option_GLUE_LOGIC);
-    CIARev ciaref = (CIARev)cia1.getConfigItem(Option_CIA_REVISION);
-    bool timerBBug     = cia1.getConfigItem(Option_TIMER_B_BUG);
-    SIDRev sidref = (SIDRev)sid.getConfigItem(Option_SID_REVISION);
-    bool sidFilter     = sid.getConfigItem(Option_SID_FILTER);
-    RamPattern pattern = (RamPattern)mem.getConfigItem(Option_RAM_PATTERN);
+    VICRev vicref      = (VICRev)vic.getConfigItem(OPT_VIC_REVISION);
+    bool grayDotBug    = vic.getConfigItem(OPT_GRAY_DOT_BUG);
+    bool glueLogic     = vic.getConfigItem(OPT_GLUE_LOGIC);
+    CIARev ciaref = (CIARev)cia1.getConfigItem(OPT_CIA_REVISION);
+    bool timerBBug     = cia1.getConfigItem(OPT_TIMER_B_BUG);
+    SIDRev sidref = (SIDRev)sid.getConfigItem(OPT_SID_REVISION);
+    bool sidFilter     = sid.getConfigItem(OPT_SID_FILTER);
+    RamPattern pattern = (RamPattern)mem.getConfigItem(OPT_RAM_PATTERN);
     
     // Try to find a matching configuration
     for (unsigned i = 0; i < sizeof(configurations) / sizeof(C64ConfigurationDeprecated); i++) {
@@ -341,7 +341,7 @@ C64::getModel()
         if (pattern    != configurations[i].pattern) continue;
         return (C64Model)i;
     }
-    return C64Model_CUSTOM;
+    return C64_MODEL_CUSTOM;
 }
 
 void
