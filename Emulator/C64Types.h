@@ -144,18 +144,35 @@ enum_int(ActionFlag)
     ActionFlag_USER_SNAPSHOT = 0b1000000
 };
 
-enum_long(InspectionTarget)
+enum_long(INSPECTION_TARGET)
 {
-    InspectionTarget_NONE,
-    InspectionTarget_CPU,
-    InspectionTarget_MEM,
-    InspectionTarget_CIA,
-    InspectionTarget_VIC,
-    InspectionTarget_SID
+    INSPECTION_TARGET_NONE,
+    INSPECTION_TARGET_CPU,
+    INSPECTION_TARGET_MEM,
+    INSPECTION_TARGET_CIA,
+    INSPECTION_TARGET_VIC,
+    INSPECTION_TARGET_SID
 };
+typedef INSPECTION_TARGET InspectionTarget;
 
 inline bool isInspectionTarget(long value) {
-    return (unsigned long)value <= InspectionTarget_SID;
+    return (unsigned long)value <= INSPECTION_TARGET_SID;
+}
+
+inline const char *InspectionTargetName(InspectionTarget value)
+{
+    switch (value) {
+            
+        case INSPECTION_TARGET_NONE:  return "NONE";
+        case INSPECTION_TARGET_CPU:   return "CPU";
+        case INSPECTION_TARGET_MEM:   return "IMEM";
+        case INSPECTION_TARGET_CIA:   return "CIA";
+        case INSPECTION_TARGET_VIC:   return "VIC";
+        case INSPECTION_TARGET_SID:   return "SID";
+
+        default:
+            return isInspectionTarget(value) ? "???" : "<invalid>";
+    }
 }
 
 typedef enum
@@ -170,13 +187,13 @@ inline bool isRomErrorCode(long value) {
     return value >= ERR_OK && value <= ERR_ROM_MEGA65_MISMATCH;
 }
 
-enum_long(ErrorCode)
+enum_long(ERRORCode)
 {
     Error_OK,
     Error_UNKNOWN,
 
     // Memory errors
-    Error_OUT_OF_MEMORY,
+    ERROR_OUT_OF_MEMORY,
 
     // File errors
     Error_FILE_NOT_FOUND,
@@ -204,6 +221,7 @@ enum_long(ErrorCode)
     // Snapshot errors
     Error_UNSUPPORTED_SNAPSHOT
 };
+typedef ERRORCode ErrorCode;
 
 inline bool isErrorCode(long value)
 {
@@ -217,7 +235,7 @@ inline const char *ErrorCodeName(ErrorCode value)
         case Error_OK:                    return "OK";
         case Error_UNKNOWN:               return "UNKNOWN";
 
-        case Error_OUT_OF_MEMORY:         return "OUT_OF_MEMORY";
+        case ERROR_OUT_OF_MEMORY:         return "OUT_OF_MEMORY";
 
         case Error_FILE_NOT_FOUND:        return "FILE_NOT_FOUND";
         case Error_INVALID_TYPE:          return "INVALID_TYPE";

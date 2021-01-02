@@ -139,7 +139,7 @@ C64::setInspectionTarget(InspectionTarget target)
 void
 C64::clearInspectionTarget()
 {
-    inspectionTarget = InspectionTarget_NONE;
+    inspectionTarget = INSPECTION_TARGET_NONE;
 }
 
 C64Configuration
@@ -637,11 +637,11 @@ C64::inspect()
 {
     switch(inspectionTarget) {
             
-        case InspectionTarget_CPU: cpu.inspect(); break;
-        case InspectionTarget_MEM: mem.inspect(); break;
-        case InspectionTarget_CIA: cia1.inspect(); cia2.inspect(); break;
-        case InspectionTarget_VIC: vic.inspect(); break;
-        case InspectionTarget_SID: sid.inspect(); break;
+        case INSPECTION_TARGET_CPU: cpu.inspect(); break;
+        case INSPECTION_TARGET_MEM: mem.inspect(); break;
+        case INSPECTION_TARGET_CIA: cia1.inspect(); cia2.inspect(); break;
+        case INSPECTION_TARGET_VIC: vic.inspect(); break;
+        case INSPECTION_TARGET_SID: sid.inspect(); break;
         default: break;
     }
 }

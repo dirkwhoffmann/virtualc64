@@ -59,7 +59,7 @@ class ImportDialog: DialogController {
     var empty: Bool { return numItems == 0 }
     
     override func showSheet(completionHandler handler:(() -> Void)? = nil) {
-    
+                    
         let type = myDocument.attachment!.typeString() ?? "?"
         track("showSheet(fileType: \(type))")
 
