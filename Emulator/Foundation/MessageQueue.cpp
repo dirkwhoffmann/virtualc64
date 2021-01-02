@@ -52,7 +52,7 @@ MessageQueue::get()
 }
 
 void
-MessageQueue::put(MSGType type, u64 data)
+MessageQueue::put(MsgType type, u64 data)
 {
     synchronized {
         

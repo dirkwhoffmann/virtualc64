@@ -453,7 +453,7 @@ extension MyController {
             
             // Process message in the main thread
             DispatchQueue.main.async {
-                let mType = MSGType(rawValue: type)
+                let mType = MsgType(rawValue: type)
                 myself.processMessage(Message(type: mType!, data: data))
             }
         }
