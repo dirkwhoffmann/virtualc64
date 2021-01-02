@@ -45,7 +45,7 @@ public:
     //
     
     void dealloc() override;
-    FileType type() override { return FileType_TAP; }
+    FileType type() override { return FILETYPE_TAP; }
     const char *getName() override;
     bool matchingBuffer(const u8 *buf, size_t len) override;
     bool matchingFile(const char *path) override;

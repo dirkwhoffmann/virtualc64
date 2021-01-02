@@ -48,7 +48,7 @@ public:
     //
     
     const char *getName() override;
-    FileType type() override { return FileType_P00; }
+    FileType type() override { return FILETYPE_P00; }
     bool matchingBuffer(const u8 *buf, size_t len) override;
     bool matchingFile(const char *path) override;
     

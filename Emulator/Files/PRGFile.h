@@ -53,7 +53,7 @@ public:
     // Methods from AnyFile
     //
 
-    FileType type() override { return FileType_PRG; }
+    FileType type() override { return FILETYPE_PRG; }
     bool matchingBuffer(const u8 *buf, size_t len) override;
     bool matchingFile(const char *path) override;
     

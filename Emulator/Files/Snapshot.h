@@ -103,7 +103,7 @@ private:
     
 public:
     
-    FileType type() override { return FileType_V64; }
+    FileType type() override { return FILETYPE_V64; }
     bool matchingBuffer(const u8 *buf, size_t len) override;
     bool matchingFile(const char *path) override;
     

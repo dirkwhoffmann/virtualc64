@@ -77,7 +77,7 @@ public:
     //
     
     void dealloc() override;
-    FileType type() override { return FileType_CRT; }
+    FileType type() override { return FILETYPE_CRT; }
     const char *getName() override { return (char *)&data[0x20]; }
     bool matchingBuffer(const u8 *buf, size_t len) override;
     bool matchingFile(const char *path) override;

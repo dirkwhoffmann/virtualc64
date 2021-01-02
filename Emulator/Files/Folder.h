@@ -47,7 +47,7 @@ public:
     // Methods from AnyFile
     //
 
-    FileType type() override { return FileType_FOLDER; }
+    FileType type() override { return FILETYPE_FOLDER; }
     bool matchingFile(const char *path) override { return isFolder(path); }
     
     

@@ -37,91 +37,92 @@ inline const char *DOSTypeName(DOSType value)
     }
 }
 
-enum_long(FSFileType)
+enum_long(FS_FILETYPE)
 {
-    FSFileType_DEL = 0,
-    FSFileType_SEQ = 1,
-    FSFileType_PRG = 2,
-    FSFileType_USR = 3,
-    FSFileType_REL = 4
+    FS_FILETYPE_DEL = 0,
+    FS_FILETYPE_SEQ = 1,
+    FS_FILETYPE_PRG = 2,
+    FS_FILETYPE_USR = 3,
+    FS_FILETYPE_REL = 4
 };
+typedef FS_FILETYPE FSFileType;
 
 inline bool isFSFileType(long value)
 {
-    return (unsigned long)value <= FSFileType_REL;
+    return (unsigned long)value <= FS_FILETYPE_REL;
 }
 
 inline const char *FSFileTypeName(FSFileType value)
 {
     switch (value) {
             
-        case FSFileType_PRG:  return "PRG";
-        case FSFileType_SEQ:  return "SEQ";
-        case FSFileType_REL:  return "REL";
-        case FSFileType_USR:  return "USR";
-        default:              return "???";
+        case FS_FILETYPE_DEL:  return "DEL";
+        case FS_FILETYPE_SEQ:  return "SEQ";
+        case FS_FILETYPE_PRG:  return "PRG";
+        case FS_FILETYPE_USR:  return "USR";
+        case FS_FILETYPE_REL:  return "REL";
     }
+    return "???";
 }
 
-enum_long(FSBlockType)
+enum_long(FS_BLOCKTYPE)
 {
-    FSBlockType_UNKNOWN,
-    FSBlockType_BAM,
-    FSBlockType_DIR,
-    FSBlockType_DATA
+    FS_BLOCKTYPE_UNKNOWN,
+    FS_BLOCKTYPE_BAM,
+    FS_BLOCKTYPE_DIR,
+    FS_BLOCKTYPE_DATA
 };
+typedef FS_BLOCKTYPE FSBlockType;
 
 inline bool
 isFSBlockType(long value)
 {
-    return (unsigned long)value <= FSBlockType_DATA;
+    return (unsigned long)value <= FS_BLOCKTYPE_DATA;
 }
 
 inline const char *
 sFSBlockType(FSBlockType type)
 {
-    assert(isFSBlockType(type));
-
     switch (type) {
             
-        case FSBlockType_UNKNOWN:  return "UNKNOWN";
-        case FSBlockType_BAM:      return "BAM";
-        case FSBlockType_DIR:      return "DIR";
-        case FSBlockType_DATA:     return "DATA";
-        default:                   return "???";
+        case FS_BLOCKTYPE_UNKNOWN:  return "UNKNOWN";
+        case FS_BLOCKTYPE_BAM:      return "BAM";
+        case FS_BLOCKTYPE_DIR:      return "DIR";
+        case FS_BLOCKTYPE_DATA:     return "DATA";
     }
+    return "???";
 }
 
-enum_long(FSUsage)
+enum_long(FS_USAGE)
 {
-    FSUsage_UNKNOWN,
-    FSUsage_UNUSED,
-    FSUsage_DOS_VERSION,
-    FSUsage_DOS_TYPE,
-    FSUsage_ALLOCATION_BITS,
-    FSUsage_DISK_ID,
-    FSUsage_DISK_NAME,
-    FSUsage_TRACK_LINK,
-    FSUsage_SECTOR_LINK,
-    FSUsage_FIRST_FILE_TRACK,
-    FSUsage_FIRST_FILE_SECTOR,
-    FSUsage_FIRST_REL_TRACK,
-    FSUsage_FIRST_REL_SECTOR,
-    FSUsage_FIRST_DIR_TRACK,
-    FSUsage_FIRST_DIR_SECTOR,
-    FSUsage_FILE_TYPE,
-    FSUsage_FILE_NAME,
-    FSUsage_FILE_LENGTH_LO,
-    FSUsage_FILE_LENGTH_HI,
-    FSUsage_REL_RECORD_LENGTH,
-    FSUsage_GEOS,
-    FSUsage_DATA
+    FS_USAGE_UNKNOWN,
+    FS_USAGE_UNUSED,
+    FS_USAGE_DOS_VERSION,
+    FS_USAGE_DOS_TYPE,
+    FS_USAGE_ALLOCATION_BITS,
+    FS_USAGE_DISK_ID,
+    FS_USAGE_DISK_NAME,
+    FS_USAGE_TRACK_LINK,
+    FS_USAGE_SECTOR_LINK,
+    FS_USAGE_FIRST_FILE_TRACK,
+    FS_USAGE_FIRST_FILE_SECTOR,
+    FS_USAGE_FIRST_REL_TRACK,
+    FS_USAGE_FIRST_REL_SECTOR,
+    FS_USAGE_FIRST_DIR_TRACK,
+    FS_USAGE_FIRST_DIR_SECTOR,
+    FS_USAGE_FILE_TYPE,
+    FS_USAGE_FILE_NAME,
+    FS_USAGE_FILE_LENGTH_LO,
+    FS_USAGE_FILE_LENGTH_HI,
+    FS_USAGE_REL_RECORD_LENGTH,
+    FS_USAGE_GEOS,
+    FS_USAGE_DATA
 };
+typedef FS_USAGE FSUsage;
 
-inline bool
-isFSBlockItem(long value)
+inline bool isFSUsage(long value)
 {
-    return (unsigned long)value <= FSUsage_DATA;
+    return (unsigned long)value <= FS_USAGE_DATA;
 }
 
 enum_long(FSError)

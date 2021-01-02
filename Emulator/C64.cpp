@@ -1382,7 +1382,7 @@ C64::loadRom(RomType type, RomFile *file)
             
         case ROM_TYPE_BASIC:
         {
-            if (file->type() == FileType_BASIC_ROM) {
+            if (file->type() == FILETYPE_BASIC_ROM) {
                 trace(MEM_DEBUG, "Flashing Basic Rom\n");
                 file->flash(mem.rom, 0xA000);
                 
@@ -1395,7 +1395,7 @@ C64::loadRom(RomType type, RomFile *file)
         }
         case ROM_TYPE_CHAR:
         {
-            if (file->type() == FileType_CHAR_ROM) {
+            if (file->type() == FILETYPE_CHAR_ROM) {
                 trace(MEM_DEBUG, "Flashing Character Rom\n");
                 file->flash(mem.rom, 0xD000);
                 return true;
@@ -1404,7 +1404,7 @@ C64::loadRom(RomType type, RomFile *file)
         }
         case ROM_TYPE_KERNAL:
         {
-            if (file->type() == FileType_KERNAL_ROM) {
+            if (file->type() == FILETYPE_KERNAL_ROM) {
                 trace(MEM_DEBUG, "Flashing Kernal Rom\n");
                 file->flash(mem.rom, 0xE000);
                 
@@ -1417,7 +1417,7 @@ C64::loadRom(RomType type, RomFile *file)
         }
         case ROM_TYPE_VC1541:
         {
-            if (file->type() == FileType_VC1541_ROM) {
+            if (file->type() == FILETYPE_VC1541_ROM) {
                 trace(MEM_DEBUG, "Flashing VC1541 Rom\n");
                 file->flash(drive8.mem.rom);
                 file->flash(drive9.mem.rom);
@@ -1598,24 +1598,24 @@ C64::flash(AnyFile *file)
     suspend();
     switch (file->type()) {
             
-        case FileType_BASIC_ROM:
+        case FILETYPE_BASIC_ROM:
             file->flash(mem.rom, 0xA000);
             break;
             
-        case FileType_CHAR_ROM:
+        case FILETYPE_CHAR_ROM:
             file->flash(mem.rom, 0xD000);
             break;
             
-        case FileType_KERNAL_ROM:
+        case FILETYPE_KERNAL_ROM:
             file->flash(mem.rom, 0xE000);
             break;
             
-        case FileType_VC1541_ROM:
+        case FILETYPE_VC1541_ROM:
             file->flash(drive8.mem.rom);
             file->flash(drive9.mem.rom);
             break;
             
-        case FileType_V64:
+        case FILETYPE_V64:
             loadFromSnapshot((Snapshot *)file);
             break;
             
@@ -1640,11 +1640,11 @@ C64::flash(AnyCollection *file, unsigned nr)
     
     switch (file->type()) {
             
-        case FileType_D64:
-        case FileType_T64:
-        case FileType_P00:
-        case FileType_PRG:
-        case FileType_FOLDER:
+        case FILETYPE_D64:
+        case FILETYPE_T64:
+        case FILETYPE_P00:
+        case FILETYPE_PRG:
+        case FILETYPE_FOLDER:
             
             size = MIN(size - 2, 0x10000 - addr);
             file->copyItem(nr, mem.ram + addr, size, 2);

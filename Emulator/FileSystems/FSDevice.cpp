@@ -220,13 +220,13 @@ FSDevice::numUsedBlocks()
 FSBlockType
 FSDevice::blockType(Block b)
 {
-    return blockPtr(b) ? blocks[b]->type() : FSBlockType_UNKNOWN;
+    return blockPtr(b) ? blocks[b]->type() : FS_BLOCKTYPE_UNKNOWN;
 }
 
 FSUsage
 FSDevice::usage(Block b, u32 pos)
 {
-    return blockPtr(b) ? blocks[b]->itemType(pos) : FSUsage_UNUSED;
+    return blockPtr(b) ? blocks[b]->itemType(pos) : FS_USAGE_UNUSED;
 }
 
 u8

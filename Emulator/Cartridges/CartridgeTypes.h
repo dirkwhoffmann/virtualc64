@@ -80,7 +80,7 @@ enum_long(CRT_TYPE)
 };
 typedef CRT_TYPE CartridgeType; 
 
-enum_long(FlashRomState)
+enum_long(FLASH_ROM_STATE)
 {
     FLASH_READ = 0,
     FLASH_MAGIC_1,
@@ -96,5 +96,32 @@ enum_long(FlashRomState)
     FLASH_SECTOR_ERASE_TIMEOUT,
     FLASH_SECTOR_ERASE_SUSPEND
 };
+typedef FLASH_ROM_STATE FlashRomState;
+
+inline bool isFlashRomState(long value)
+{
+    return (unsigned long)value <= FLASH_SECTOR_ERASE_SUSPEND;
+}
+
+inline const char *FlashRomStateName(FlashRomState value)
+{
+    switch (value) {
+            
+        case FLASH_READ:                 return "READ";
+        case FLASH_MAGIC_1:              return "MAGIC_1";
+        case FLASH_MAGIC_2:              return "MAGIC_2";
+        case FLASH_AUTOSELECT:           return "AUTOSELECT";
+        case FLASH_BYTE_PROGRAM:         return "BYTE_PROGRAM";
+        case FLASH_BYTE_PROGRAM_ERROR:   return "BYTE_PROGRAM_ERROR";
+        case FLASH_ERASE_MAGIC_1:        return "ERASE_MAGIC_1";
+        case FLASH_ERASE_MAGIC_2:        return "ERASE_MAGIC_2";
+        case FLASH_ERASE_SELECT:         return "ERASE_SELECT";
+        case FLASH_CHIP_ERASE:           return "CHIP_ERASE";
+        case FLASH_SECTOR_ERASE:         return "SECTOR_ERASE";
+        case FLASH_SECTOR_ERASE_TIMEOUT: return "SECTOR_ERASE_TIMEOUT";
+        case FLASH_SECTOR_ERASE_SUSPEND: return "SECTOR_ERASE_SUSPEND";
+    }
+    return "???";
+}
 
 #endif

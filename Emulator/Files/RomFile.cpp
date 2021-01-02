@@ -466,12 +466,12 @@ RomFile::isVC1541RomFile(const char *filename)
 FileType
 RomFile::type()
 {
-    if (romType == FileType_UNKNOWN) {
+    if (romType == FILETYPE_UNKNOWN) {
 
-        if      (isBasicRomBuffer (data, size)) romType = FileType_BASIC_ROM;
-        else if (isCharRomBuffer  (data, size)) romType = FileType_CHAR_ROM;
-        else if (isKernalRomBuffer(data, size)) romType = FileType_KERNAL_ROM;
-        else if (isVC1541RomBuffer(data, size)) romType = FileType_VC1541_ROM;
+        if      (isBasicRomBuffer (data, size)) romType = FILETYPE_BASIC_ROM;
+        else if (isCharRomBuffer  (data, size)) romType = FILETYPE_CHAR_ROM;
+        else if (isKernalRomBuffer(data, size)) romType = FILETYPE_KERNAL_ROM;
+        else if (isVC1541RomBuffer(data, size)) romType = FILETYPE_VC1541_ROM;
     }
     return romType;
 }
@@ -495,11 +495,11 @@ RomFile::oldReadFromBuffer(const u8 *buffer, size_t length)
         return false;
     
     romType =
-    isBasicRomBuffer(buffer, length) ? FileType_BASIC_ROM :
-    isCharRomBuffer(buffer, length) ? FileType_CHAR_ROM :
-    isKernalRomBuffer(buffer, length) ? FileType_KERNAL_ROM :
-    isVC1541RomBuffer(buffer, length) ? FileType_VC1541_ROM :
-    FileType_UNKNOWN;
+    isBasicRomBuffer(buffer, length) ? FILETYPE_BASIC_ROM :
+    isCharRomBuffer(buffer, length) ? FILETYPE_CHAR_ROM :
+    isKernalRomBuffer(buffer, length) ? FILETYPE_KERNAL_ROM :
+    isVC1541RomBuffer(buffer, length) ? FILETYPE_VC1541_ROM :
+    FILETYPE_UNKNOWN;
  
-    return romType != FileType_UNKNOWN;
+    return romType != FILETYPE_UNKNOWN;
 }

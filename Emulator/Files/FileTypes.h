@@ -10,53 +10,53 @@
 #ifndef FILE_TYPES_H
 #define FILE_TYPES_H
 
-enum_long(FileType)
+enum_long(FILETYPE)
 {    
-    FileType_UNKNOWN = 0,
-    FileType_V64,
-    FileType_CRT,
-    FileType_GENERIC_ARCHIVE,
-    FileType_T64,
-    FileType_P00,
-    FileType_PRG,
-    FileType_FOLDER,
-    FileType_D64,
-    FileType_G64,
-    FileType_TAP,
-    FileType_BASIC_ROM,
-    FileType_CHAR_ROM,
-    FileType_KERNAL_ROM,
-    FileType_VC1541_ROM
+    FILETYPE_UNKNOWN = 0,
+    FILETYPE_V64,
+    FILETYPE_CRT,
+    FILETYPE_T64,
+    FILETYPE_P00,
+    FILETYPE_PRG,
+    FILETYPE_FOLDER,
+    FILETYPE_D64,
+    FILETYPE_G64,
+    FILETYPE_TAP,
+    FILETYPE_BASIC_ROM,
+    FILETYPE_CHAR_ROM,
+    FILETYPE_KERNAL_ROM,
+    FILETYPE_VC1541_ROM
 };
+typedef FILETYPE FileType;
 
 inline bool isFileType(long value)
 {
-    return value >= 0 && value <= FileType_VC1541_ROM;
+    return (unsigned long)value <= FILETYPE_VC1541_ROM;
 }
 
 inline const char *FileTypeName(FileType type)
 {
     switch (type) {
             
-        case FileType_UNKNOWN:    return "UNKNOWN";
-        case FileType_V64:        return "V64";
-        case FileType_CRT:        return "CRT";
-        case FileType_T64:        return "T64";
-        case FileType_PRG:        return "PRG";
-        case FileType_FOLDER:     return "FOLDER";
-        case FileType_P00:        return "P00";
-        case FileType_D64:        return "D64";
-        case FileType_G64:        return "G64";
-        case FileType_TAP:        return "TAP";
-        case FileType_BASIC_ROM:  return "ROM";
-        case FileType_CHAR_ROM:   return "ROM";
-        case FileType_KERNAL_ROM: return "ROM";
-        case FileType_VC1541_ROM: return "ROM";
-        default:                  return "???";
+        case FILETYPE_UNKNOWN:    return "UNKNOWN";
+        case FILETYPE_V64:        return "V64";
+        case FILETYPE_CRT:        return "CRT";
+        case FILETYPE_T64:        return "T64";
+        case FILETYPE_PRG:        return "PRG";
+        case FILETYPE_FOLDER:     return "FOLDER";
+        case FILETYPE_P00:        return "P00";
+        case FILETYPE_D64:        return "D64";
+        case FILETYPE_G64:        return "G64";
+        case FILETYPE_TAP:        return "TAP";
+        case FILETYPE_BASIC_ROM:  return "ROM";
+        case FILETYPE_CHAR_ROM:   return "ROM";
+        case FILETYPE_KERNAL_ROM: return "ROM";
+        case FILETYPE_VC1541_ROM: return "ROM";
     }
+    return "???";
 }
 
-enum_long(RomIdentifier)
+enum_long(ROM_IDENTIFIER)
 {
     ROM_MISSING,
     ROM_UNKNOWN,
@@ -109,8 +109,9 @@ enum_long(RomIdentifier)
     
     ROM_CNT
 };
+typedef ROM_IDENTIFIER RomIdentifier;
 
-inline bool isRomRevision(long value)
+inline bool isRomIdentifier(long value)
 {
     return (unsigned long)value <= ROM_CNT;
 }
