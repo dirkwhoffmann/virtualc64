@@ -40,9 +40,9 @@ protected:
     
 public:
     
-    template <class T> static T *make(const u8 *buf, size_t len, FileError *err = nullptr);
-    template <class T> static T *make(const char *path, FileError *err = nullptr);
-    template <class T> static T *make(FILE *file, FileError *err = nullptr);
+    template <class T> static T *make(const u8 *buf, size_t len);
+    template <class T> static T *make(const char *path);
+    template <class T> static T *make(FILE *file);
 
     
     //
@@ -125,7 +125,7 @@ public:
      * matchingBuffer() to verify that the buffer contains a compatible
      * binary representation.
      */
-    virtual bool readFromBuffer(const u8 *buffer, size_t length, FileError *error = nullptr);
+    virtual void readFromBuffer(const u8 *buffer, size_t length);
 
     /* Deserializes this object from a file. This function uses
      * matchingFile() to verify that the file contains a compatible binary
@@ -133,11 +133,11 @@ public:
      * first reads in the file contents in memory and invokes readFromBuffer
      * afterwards.
      */
-    virtual bool readFromFile(const char *filename, FileError *error = nullptr);
+    virtual void readFromFile(const char *filename);
 
     /* Deserializes this object from a file that is already open.
      */
-    virtual bool readFromFile(FILE *file, FileError *error = nullptr);
+    virtual void readFromFile(FILE *file);
     
     
     

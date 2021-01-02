@@ -1738,15 +1738,23 @@ struct AnyFileWrapper { AnyFile *file; };
     return container ? [[self alloc] initWithFile:container] : nil;
 }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(FileError *)err
++ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
-    TAPFile *tap = AnyFile::make <TAPFile> ([path fileSystemRepresentation], err);
+    TAPFile *tap;
+    
+    try { tap = AnyFile::make <TAPFile> ([path fileSystemRepresentation]); }
+    catch (Error &exception) { *err = exception.errorCode; }
+    
     return [self make: tap];
 }
 
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
-    TAPFile *tap = AnyFile::make <TAPFile> ((const u8 *)buf, len);
+    TAPFile *tap;
+    
+    try { tap = AnyFile::make <TAPFile> ((const u8 *)buf, len); }
+    catch (Error &exception) { *err = exception.errorCode; }
+    
     return [self make: tap];
 }
 
@@ -1836,15 +1844,23 @@ struct AnyFileWrapper { AnyFile *file; };
     return [[self alloc] initWithFile:archive];
 }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(FileError *)err
++ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
-    PRGFile *prg = AnyFile::make <PRGFile> ([path fileSystemRepresentation], err);
+    PRGFile *prg;
+    
+    try { prg = AnyFile::make <PRGFile> ([path fileSystemRepresentation]); }
+    catch (Error &exception) { *err = exception.errorCode; }
+    
     return [self make: prg];
 }
 
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
-    PRGFile *prg = AnyFile::make <PRGFile> ((const u8 *)buf, len);
+    PRGFile *prg;
+    
+    try { prg = AnyFile::make <PRGFile> ((const u8 *)buf, len); }
+    catch (Error &exception) { *err = exception.errorCode; }
+        
     return [self make: prg];
 }
 

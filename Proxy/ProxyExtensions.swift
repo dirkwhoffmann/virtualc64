@@ -7,6 +7,13 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+class MyError: Error {
+    
+    var errorCode: ErrorCode
+    
+    init(_ errorCode: ErrorCode) { self.errorCode = errorCode }
+}
+
 public extension C64Proxy {
     
     func image(data: UnsafeMutablePointer<UInt8>?, size: NSSize) -> NSImage {
@@ -119,6 +126,18 @@ extension CRTFileProxy {
 
         result += " (Exrom: \(exrom), " + "Game: \(game))"
         return result
+    }
+}
+
+extension PRGFileProxy {
+
+    static func make(withBuffer buffer: UnsafeRawPointer, length: Int) throws -> PRGFileProxy? {
+        
+        var err = ErrorCode.OK
+        let prg = PRGFileProxy.make(withBuffer: buffer, length: length, error: &err)
+
+        if err != ErrorCode.OK { throw MyError(err) }        
+        return prg
     }
 }
 

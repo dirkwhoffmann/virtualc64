@@ -19,39 +19,39 @@
 #include "G64File.h"
 
 template <class T> T *
-AnyFile::make(const u8 *buffer, size_t length, FileError *error)
+AnyFile::make(const u8 *buffer, size_t length)
 {
     T *obj = new T();
     
-    if (!obj->readFromBuffer(buffer, length, error)) {
+    try { obj->readFromBuffer(buffer, length); } catch (Error &err) {
         delete obj;
-        return nullptr;
+        throw err;
     }
-        
+    
     return obj;
 }
 
 template <class T> T *
-AnyFile::make(const char *path, FileError *error)
+AnyFile::make(const char *path)
 {
     T *obj = new T();
     
-    if (!obj->readFromFile(path, error)) {
+    try { obj->readFromFile(path); } catch (Error &err) {
         delete obj;
-        return nullptr;
+        throw err;
     }
 
     return obj;
 }
 
 template <class T> T *
-AnyFile::make(FILE *file, FileError *error)
+AnyFile::make(FILE *file)
 {
     T *obj = new T();
     
-    if (!obj->readFromFile(file, error)) {
+    try { obj->readFromFile(file); } catch (Error &err) {
         delete obj;
-        return nullptr;
+        throw err;
     }
     
     return obj;
@@ -131,67 +131,57 @@ AnyFile::flash(u8 *buffer, size_t offset)
     memcpy(buffer + offset, data, size);
 }
 
-bool
-AnyFile::readFromBuffer(const u8 *buffer, size_t length, FileError *error)
+void
+AnyFile::readFromBuffer(const u8 *buffer, size_t length)
 {
     assert (buffer);
     
     // Check file type
     if (!matchingBuffer(buffer, length)) {
-        if (error) *error = ERR_INVALID_TYPE;
-        return false;
+        throw(Error(ERROR_INVALID_TYPE));
     }
     
     // Allocate memory
     if (!alloc(length)) {
-        if (error) *error = ERR_OUT_OF_MEMORY;
-        return false;
+        throw(Error(ERROR_OUT_OF_MEMORY));
     }
     
     // Read from buffer
     memcpy(data, buffer, length);
-    
-    if (error) *error = ERR_FILE_OK;
-    return true;
 }
 
-bool
-AnyFile::readFromFile(const char *filename, FileError *error)
+void
+AnyFile::readFromFile(const char *filename)
 {
     assert (filename);
     
-    bool success;
     FILE *file = nullptr;
     struct stat fileProperties;
     
     // Get properties
     if (stat(filename, &fileProperties) != 0) {
-        if (error) *error = ERR_FILE_NOT_FOUND;
-        return false;
+        throw Error(ERROR_FILE_NOT_FOUND);
+        return;
     }
 
     // Check type
     if (!matchingFile(filename)) {
-        if (error) *error = ERR_INVALID_TYPE;
-        return false;
+        throw Error(ERROR_INVALID_TYPE);
     }
 
     // Open
     if (!(file = fopen(filename, "r"))) {
-        if (error) *error = ERR_CANT_READ;
-        return false;
+        throw Error(ERROR_CANT_READ);
     }
 
     // Read
     setPath(filename);
-    success = readFromFile(file, error);
-    
-    fclose(file);
-    return success;
+    readFromFile(file);
+    fclose(file);        // TODO: MOVE TO FINALIZE BLOCK
 }
 
-bool
-AnyFile::readFromFile(FILE *file, FileError *error)
+void
+AnyFile::readFromFile(FILE *file)
 {
     assert (file);
     
@@ -204,8 +194,7 @@ AnyFile::readFromFile(FILE *file, FileError *error)
     
     // Allocate memory
     if (!(buffer = new u8[size])) {
-        if (error) *error = ERR_OUT_OF_MEMORY;
-        return false;
+        throw Error(ERROR_OUT_OF_MEMORY);
     }
 
     // Read from file
@@ -217,14 +206,15 @@ AnyFile::readFromFile(FILE *file, FileError *error)
     
     // Read from buffer
     dealloc();
-    if (!readFromBuffer(buffer, size, error)) {
+    readFromBuffer(buffer, size);
+    /* FINALIZE
+    {
         delete[] buffer;
         return false;
     }
+    */
     
     delete[] buffer;
-    if (error) *error = ERR_FILE_OK;
-    return true;
 }
 
 bool
@@ -363,22 +353,22 @@ exit:
 // Instantiate template functions
 //
 
-template Snapshot* AnyFile::make <Snapshot> (const u8 *, size_t, FileError *);
-template RomFile* AnyFile::make <RomFile> (const u8 *, size_t, FileError *);
-template TAPFile* AnyFile::make <TAPFile> (const u8 *, size_t, FileError *);
-template CRTFile* AnyFile::make <CRTFile> (const u8 *, size_t, FileError *);
-template T64File* AnyFile::make <T64File> (const u8 *, size_t, FileError *);
-template PRGFile* AnyFile::make <PRGFile> (const u8 *, size_t, FileError *);
-template P00File* AnyFile::make <P00File> (const u8 *, size_t, FileError *);
-template D64File* AnyFile::make <D64File> (const u8 *, size_t, FileError *);
-template G64File* AnyFile::make <G64File> (const u8 *, size_t, FileError *);
+template Snapshot* AnyFile::make <Snapshot> (const u8 *, size_t);
+template RomFile* AnyFile::make <RomFile> (const u8 *, size_t);
+template TAPFile* AnyFile::make <TAPFile> (const u8 *, size_t);
+template CRTFile* AnyFile::make <CRTFile> (const u8 *, size_t);
+template T64File* AnyFile::make <T64File> (const u8 *, size_t);
+template PRGFile* AnyFile::make <PRGFile> (const u8 *, size_t);
+template P00File* AnyFile::make <P00File> (const u8 *, size_t);
+template D64File* AnyFile::make <D64File> (const u8 *, size_t);
+template G64File* AnyFile::make <G64File> (const u8 *, size_t);
 
-template Snapshot* AnyFile::make <Snapshot> (const char *, FileError *);
-template RomFile* AnyFile::make <RomFile> (const char *, FileError *);
-template TAPFile* AnyFile::make <TAPFile> (const char *, FileError *);
-template CRTFile* AnyFile::make <CRTFile> (const char *, FileError *);
-template T64File* AnyFile::make <T64File> (const char *, FileError *);
-template PRGFile* AnyFile::make <PRGFile> (const char *, FileError *);
-template P00File* AnyFile::make <P00File> (const char *, FileError *);
-template D64File* AnyFile::make <D64File> (const char *, FileError *);
-template G64File* AnyFile::make <G64File> (const char *, FileError *);
+template Snapshot* AnyFile::make <Snapshot> (const char *);
+template RomFile* AnyFile::make <RomFile> (const char *);
+template TAPFile* AnyFile::make <TAPFile> (const char *);
+template CRTFile* AnyFile::make <CRTFile> (const char *);
+template T64File* AnyFile::make <T64File> (const char *);
+template PRGFile* AnyFile::make <PRGFile> (const char *);
+template P00File* AnyFile::make <P00File> (const char *);
+template D64File* AnyFile::make <D64File> (const char *);
+template G64File* AnyFile::make <G64File> (const char *);

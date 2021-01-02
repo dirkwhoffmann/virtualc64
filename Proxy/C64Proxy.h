@@ -787,8 +787,8 @@ struct AnyFileWrapper;
 }
 
 + (BOOL)isTAPFile:(NSString *)path;
-+ (instancetype)makeWithFile:(NSString *)path error:(FileError *)err;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len;
++ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
 
 @property (readonly) TAPVersion version;
 
@@ -816,8 +816,8 @@ struct AnyFileWrapper;
 {
 }
 + (BOOL)isPRGFile:(NSString *)filename;
-+ (instancetype)makeWithFile:(NSString *)path error:(FileError *)err;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len;
++ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy;
 
 @end
@@ -857,7 +857,6 @@ struct AnyFileWrapper;
 }
 
 + (instancetype)make;
-// + (instancetype)makeWithFile:(NSString *)path;
 
 @property (readonly) NSInteger numTracks;
 @property (readonly) NSInteger numHalftracks;

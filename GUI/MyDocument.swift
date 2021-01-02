@@ -191,7 +191,7 @@ class MyDocument: NSDocument {
             result = T64FileProxy.make(withBuffer: buffer, length: length)
             
         case .PRG:
-            result = PRGFileProxy.make(withBuffer: buffer, length: length)
+            try result = PRGFileProxy.make(withBuffer: buffer, length: length)
             
         case .P00:
             result = P00FileProxy.make(withBuffer: buffer, length: length)
@@ -200,8 +200,8 @@ class MyDocument: NSDocument {
             result = G64FileProxy.make(withBuffer: buffer, length: length)
             
         case .TAP:
-            result = TAPFileProxy.make(withBuffer: buffer, length: length)
-            
+            // result = TAPFileProxy.make(withBuffer: buffer, length: length)
+            result = nil 
         default:
             fatalError()
         }
