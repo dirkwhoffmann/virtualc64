@@ -14,41 +14,42 @@
 // Enumerations
 //
 
-enum_long(VICRev)
+enum_long(VICREV)
 {
-    VICRev_PAL_6569_R1 = 1,
-    VICRev_PAL_6569_R3 = 2,
-    VICRev_PAL_8565 = 4,
-    VICRev_NTSC_6567_R56A = 8,
-    VICRev_NTSC_6567 = 16,
-    VICRev_NTSC_8562 = 32
+    VICREV_PAL_6569_R1 = 1,
+    VICREV_PAL_6569_R3 = 2,
+    VICREV_PAL_8565 = 4,
+    VICREV_NTSC_6567_R56A = 8,
+    VICREV_NTSC_6567 = 16,
+    VICREV_NTSC_8562 = 32
 };
+typedef VICREV VICRevision;
 
-inline bool isVICRev(long value)
+inline bool isVICRevision(long value)
 {
     return
-    (value == VICRev_PAL_6569_R1) ||
-    (value == VICRev_PAL_6569_R3) ||
-    (value == VICRev_PAL_8565) ||
-    (value == VICRev_NTSC_6567) ||
-    (value == VICRev_NTSC_6567_R56A) ||
-    (value == VICRev_NTSC_8562);
+    (value == VICREV_PAL_6569_R1) ||
+    (value == VICREV_PAL_6569_R3) ||
+    (value == VICREV_PAL_8565) ||
+    (value == VICREV_NTSC_6567) ||
+    (value == VICREV_NTSC_6567_R56A) ||
+    (value == VICREV_NTSC_8562);
 }
 
-inline const char *VICRevName(VICRev value)
+inline const char *VICRevisionName(VICRevision value)
 {
-    assert(isVICRev(value));
+    assert(isVICRevision(value));
     
     switch (value) {
             
-        case VICRev_PAL_6569_R1:    return "PAL_6569_R1";
-        case VICRev_PAL_6569_R3:    return "PAL_6569_R3";
-        case VICRev_PAL_8565:       return "PAL_8565";
-        case VICRev_NTSC_6567:      return "NTSC_6567";
-        case VICRev_NTSC_6567_R56A: return "NTSC_6567_R56A";
-        case VICRev_NTSC_8562:      return "NTSC_8562";
-        default:                    return "???";
+        case VICREV_PAL_6569_R1:    return "PAL_6569_R1";
+        case VICREV_PAL_6569_R3:    return "PAL_6569_R3";
+        case VICREV_PAL_8565:       return "PAL_8565";
+        case VICREV_NTSC_6567:      return "NTSC_6567";
+        case VICREV_NTSC_6567_R56A: return "NTSC_6567_R56A";
+        case VICREV_NTSC_8562:      return "NTSC_8562";
     }
+    return "???";
 }
 
 enum_long(GlueLogic)
@@ -226,7 +227,7 @@ inline const char *DmaDisplayModeName(DmaDisplayMode value)
 
 typedef struct
 {
-    VICRev revision;
+    VICRevision revision;
     bool grayDotBug;
     GlueLogic glueLogic;
     Palette palette;

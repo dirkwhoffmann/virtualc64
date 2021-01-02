@@ -546,13 +546,13 @@ extension Keys {
 
 struct HardwareDefaults {
     
-    var vicRevision: VICRev
+    var vicRevision: VICRevision
     var vicGrayDotBug: Bool
     
-    var ciaRevision: CIARev
+    var ciaRevision: CIARevision
     var ciaTimerBBug: Bool
     
-    var sidRevision: SIDRev
+    var sidRevision: SIDRevision
     var sidFilter: Bool
     let sidEnable1: Bool
     let sidEnable2: Bool

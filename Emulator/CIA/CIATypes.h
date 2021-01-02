@@ -14,18 +14,19 @@
 // Enumerations
 //
 
-enum_long(CIARev)
+enum_long(CIAREV)
 {
     MOS_6526,
     MOS_8521
 };
+typedef CIAREV CIARevision;
 
-inline bool isCIARev(long value)
+inline bool isCIARevision(long value)
 {
     return (unsigned long)value <= MOS_8521;
 }
 
-inline const char * CIARevisionName(CIARev value)
+inline const char * CIARevisionName(CIARevision value)
 {    
     switch (value) {
             
@@ -41,7 +42,7 @@ inline const char * CIARevisionName(CIARev value)
 
 typedef struct
 {
-    CIARev revision;
+    CIARevision revision;
     bool timerBBug;
 }
 CIAConfig;

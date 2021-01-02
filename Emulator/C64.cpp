@@ -300,7 +300,7 @@ C64::setConfigItem(Option option, long value)
             
         case OPT_VIC_REVISION:
         {
-            u64 newFrequency = VICII::getFrequency((VICRev)value);
+            u64 newFrequency = VICII::getFrequency((VICRevision)value);
 
             if (frequency == newFrequency) {
                 assert(durationOfOneCycle == 10000000000 / newFrequency);
@@ -319,12 +319,12 @@ C64::setConfigItem(Option option, long value)
 C64Model
 C64::getModel()
 {
-    VICRev vicref      = (VICRev)vic.getConfigItem(OPT_VIC_REVISION);
+    VICRevision vicref = (VICRevision)vic.getConfigItem(OPT_VIC_REVISION);
     bool grayDotBug    = vic.getConfigItem(OPT_GRAY_DOT_BUG);
     bool glueLogic     = vic.getConfigItem(OPT_GLUE_LOGIC);
-    CIARev ciaref = (CIARev)cia1.getConfigItem(OPT_CIA_REVISION);
+    CIARevision ciaref = (CIARevision)cia1.getConfigItem(OPT_CIA_REVISION);
     bool timerBBug     = cia1.getConfigItem(OPT_TIMER_B_BUG);
-    SIDRev sidref = (SIDRev)sid.getConfigItem(OPT_SID_REVISION);
+    SIDRevision sidref = (SIDRevision)sid.getConfigItem(OPT_SID_REVISION);
     bool sidFilter     = sid.getConfigItem(OPT_SID_FILTER);
     RamPattern pattern = (RamPattern)mem.getConfigItem(OPT_RAM_PATTERN);
     
@@ -380,9 +380,9 @@ C64::updateVicFunctionTable()
     // Assign model specific execution functions
     switch (vic.getRevision()) {
             
-        case VICRev_PAL_6569_R1:
-        case VICRev_PAL_6569_R3:
-        case VICRev_PAL_8565:
+        case VICREV_PAL_6569_R1:
+        case VICREV_PAL_6569_R3:
+        case VICREV_PAL_8565:
             
             if (dmaDebug) {
                 vicfunc[1] = &VICII::cycle1<PAL_DEBUG_CYCLE>;
@@ -429,7 +429,7 @@ C64::updateVicFunctionTable()
             vicfunc[65] = nullptr;
             break;
             
-        case VICRev_NTSC_6567_R56A:
+        case VICREV_NTSC_6567_R56A:
             
             if (dmaDebug) {
                 vicfunc[1] = &VICII::cycle1<PAL_DEBUG_CYCLE>;
@@ -477,8 +477,8 @@ C64::updateVicFunctionTable()
             vicfunc[65] = nullptr;
             break;
             
-        case VICRev_NTSC_6567:
-        case VICRev_NTSC_8562:
+        case VICREV_NTSC_6567:
+        case VICREV_NTSC_8562:
             
             if (dmaDebug) {
                 vicfunc[1] = &VICII::cycle1<NTSC_DEBUG_CYCLE>;

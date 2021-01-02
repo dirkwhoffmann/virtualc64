@@ -68,7 +68,7 @@ Drive::setConfigItem(Option option, long value)
             
         case OPT_VIC_REVISION:
         {
-            u64 duration = 10000000000 / VICII::getFrequency((VICRev)value);
+            u64 duration = 10000000000 / VICII::getFrequency((VICRevision)value);
             
             if (durationOfOneCpuCycle == duration) {
                 return false;

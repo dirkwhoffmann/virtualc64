@@ -63,7 +63,7 @@ public:
 private:
             
     // Chip model
-    SIDRev model = MOS_6581;
+    SIDRevision model = MOS_6581;
     
     // Current CPU frequency
     u32 cpuFrequency = PAL_CLOCK_FREQUENCY;
@@ -128,8 +128,8 @@ public:
     u32 getClockFrequency() { return cpuFrequency; }
     void setClockFrequency(u32 frequency);
     
-    SIDRev getRevision() { return model; }
-    void setRevision(SIDRev m);
+    SIDRevision getRevision() { return model; }
+    void setRevision(SIDRevision m);
     
     double getSampleRate() { return (double)sampleRate; }
     void setSampleRate(double rate);

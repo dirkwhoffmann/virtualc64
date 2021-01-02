@@ -116,15 +116,15 @@ ReSID::willSaveToBuffer(u8 *buffer)
     return 0;
 }
 
-SIDRev
+SIDRevision
 ReSID::getRevision()
 {
-    assert((SIDRev)sid->sid_model == model);
+    assert((SIDRevision)sid->sid_model == model);
     return model;
 }
 
 void
-ReSID::setRevision(SIDRev revision)
+ReSID::setRevision(SIDRevision revision)
 {
     assert(!isRunning());
 
@@ -135,8 +135,8 @@ ReSID::setRevision(SIDRev revision)
     sid->set_chip_model((reSID::chip_model)revision);
     resume();
         
-    assert((SIDRev)sid->sid_model == revision);
-    trace(SID_DEBUG, "Emulating SID revision %s.\n", SIDRevName(revision));
+    assert((SIDRevision)sid->sid_model == revision);
+    trace(SID_DEBUG, "Emulating SID revision %s.\n", SIDRevisionName(revision));
 }
 
 void
@@ -179,18 +179,18 @@ ReSID::setSamplingMethod(SamplingMethod value)
     assert(!isRunning());
     
     switch(value) {
-        case SamplingMethod_FAST:
+        case SAMPLING_FAST:
             trace(SID_DEBUG, "Using sampling method SAMPLE_FAST.\n");
             break;
-        case SamplingMethod_INTERPOLATE:
+        case SAMPLING_INTERPOLATE:
             trace(SID_DEBUG, "Using sampling method SAMPLE_INTERPOLATE.\n");
             break;
-        case SamplingMethod_RESAMPLE:
+        case SAMPLING_RESAMPLE:
             trace(SID_DEBUG, "Using sampling method SAMPLE_RESAMPLE.\n");
             break;
-        case SamplingMethod_RESAMPLE_FASTMEM:
+        case SAMPLING_RESAMPLE_FASTMEM:
             warn("SAMPLE_RESAMPLE_FASTMEM not supported. Using SAMPLE_INTERPOLATE.\n");
-            value = SamplingMethod_INTERPOLATE;
+            value = SAMPLING_INTERPOLATE;
             break;
         default:
             warn("Unknown sampling method: %lld\n", value);

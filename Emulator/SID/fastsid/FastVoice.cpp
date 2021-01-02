@@ -114,7 +114,7 @@ FastVoice::didLoadFromBuffer(u8 *buffer)
 void
 FastVoice::updateWaveTablePtr()
 {
-    SIDRev revision = fastsid->getRevision();
+    SIDRevision revision = fastsid->getRevision();
     assert(revision == MOS_6581 || revision == MOS_8580);
     
     unsigned offset;

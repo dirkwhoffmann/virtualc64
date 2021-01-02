@@ -234,7 +234,7 @@ FastSID::getVoiceInfo(unsigned i)
 }
 
 void
-FastSID::setRevision(SIDRev rev)
+FastSID::setRevision(SIDRevision rev)
 {
     model = rev;
     

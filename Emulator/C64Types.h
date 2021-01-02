@@ -174,9 +174,7 @@ inline const char *InspectionTargetName(InspectionTarget value)
         case INSPECTION_TARGET_CIA:   return "CIA";
         case INSPECTION_TARGET_VIC:   return "VIC";
         case INSPECTION_TARGET_SID:   return "SID";
-
-        default:
-            return isInspectionTarget(value) ? "???" : "<invalid>";
+        default:                      return "???";
     }
 }
 
@@ -194,78 +192,76 @@ inline bool isRomErrorCode(long value) {
 
 enum_long(ERRORCode)
 {
-    Error_OK,
-    Error_UNKNOWN,
+    ERROR_OK,
+    ERROR_UNKNOWN,
 
     // Memory errors
     ERROR_OUT_OF_MEMORY,
 
     // File errors
-    Error_FILE_NOT_FOUND,
-    Error_INVALID_TYPE,
-    Error_CANT_READ,
-    Error_CANT_WRITE,
+    ERROR_FILE_NOT_FOUND,
+    ERROR_INVALID_TYPE,
+    ERROR_CANT_READ,
+    ERROR_CANT_WRITE,
 
     // File system errors
-    Error_UNSUPPORTED,
-    Error_WRONG_CAPACITY,
-    Error_HAS_CYCLES,
-    Error_CORRUPTED,
-    Error_IMPORT_ERROR,
+    ERROR_UNSUPPORTED,
+    ERROR_WRONG_CAPACITY,
+    ERROR_HAS_CYCLES,
+    ERROR_CORRUPTED,
+    ERROR_IMPORT_ERROR,
 
     // Export errors
-    Error_DIRECTORY_NOT_EMPTY,
-    Error_CANNOT_CREATE_DIR,
-    Error_CANNOT_CREATE_FILE,
+    ERROR_DIRECTORY_NOT_EMPTY,
+    ERROR_CANNOT_CREATE_DIR,
+    ERROR_CANNOT_CREATE_FILE,
 
     // Block errros
-    Error_EXPECTED,
-    Error_EXPECTED_MIN,
-    Error_EXPECTED_MAX,
+    ERROR_EXPECTED,
+    ERROR_EXPECTED_MIN,
+    ERROR_EXPECTED_MAX,
             
     // Snapshot errors
-    Error_UNSUPPORTED_SNAPSHOT
+    ERROR_UNSUPPORTED_SNAPSHOT
 };
 typedef ERRORCode ErrorCode;
 
 inline bool isErrorCode(long value)
 {
-    return (unsigned long)value <= Error_UNSUPPORTED_SNAPSHOT;
+    return (unsigned long)value <= ERROR_UNSUPPORTED_SNAPSHOT;
 }
 
 inline const char *ErrorCodeName(ErrorCode value)
 {
     switch (value) {
             
-        case Error_OK:                    return "OK";
-        case Error_UNKNOWN:               return "UNKNOWN";
+        case ERROR_OK:                    return "OK";
+        case ERROR_UNKNOWN:               return "UNKNOWN";
 
         case ERROR_OUT_OF_MEMORY:         return "OUT_OF_MEMORY";
 
-        case Error_FILE_NOT_FOUND:        return "FILE_NOT_FOUND";
-        case Error_INVALID_TYPE:          return "INVALID_TYPE";
-        case Error_CANT_READ:             return "CANT_READ";
-        case Error_CANT_WRITE:            return "CANT_WRITE";
+        case ERROR_FILE_NOT_FOUND:        return "FILE_NOT_FOUND";
+        case ERROR_INVALID_TYPE:          return "INVALID_TYPE";
+        case ERROR_CANT_READ:             return "CANT_READ";
+        case ERROR_CANT_WRITE:            return "CANT_WRITE";
 
-        case Error_UNSUPPORTED:           return "UNSUPPORTED";
-        case Error_WRONG_CAPACITY:        return "WRONG_CAPACITY";
-        case Error_HAS_CYCLES:            return "HAS_CYCLES";
-        case Error_CORRUPTED:             return "CORRUPTED";
-        case Error_IMPORT_ERROR:          return "IMPORT_ERROR";
+        case ERROR_UNSUPPORTED:           return "UNSUPPORTED";
+        case ERROR_WRONG_CAPACITY:        return "WRONG_CAPACITY";
+        case ERROR_HAS_CYCLES:            return "HAS_CYCLES";
+        case ERROR_CORRUPTED:             return "CORRUPTED";
+        case ERROR_IMPORT_ERROR:          return "IMPORT_ERROR";
 
-        case Error_DIRECTORY_NOT_EMPTY:   return "DIRECTORY_NOT_EMPTY";
-        case Error_CANNOT_CREATE_DIR:     return "CANNOT_CREATE_DIR";
-        case Error_CANNOT_CREATE_FILE:    return "CANNOT_CREATE_FILE";
+        case ERROR_DIRECTORY_NOT_EMPTY:   return "DIRECTORY_NOT_EMPTY";
+        case ERROR_CANNOT_CREATE_DIR:     return "CANNOT_CREATE_DIR";
+        case ERROR_CANNOT_CREATE_FILE:    return "CANNOT_CREATE_FILE";
 
-        case Error_EXPECTED:              return "EXPECTED";
-        case Error_EXPECTED_MIN:          return "EXPECTED_MIN";
-        case Error_EXPECTED_MAX:          return "EXPECTED_MAX";
+        case ERROR_EXPECTED:              return "EXPECTED";
+        case ERROR_EXPECTED_MIN:          return "EXPECTED_MIN";
+        case ERROR_EXPECTED_MAX:          return "EXPECTED_MAX";
                     
-        case Error_UNSUPPORTED_SNAPSHOT:  return "UNSUPPORTED_SNAPSHOT";
-            
-        default:
-            return isErrorCode(value) ? "<other>" : "???";
+        case ERROR_UNSUPPORTED_SNAPSHOT:  return "UNSUPPORTED_SNAPSHOT";            
     }
+    return "???";
 }
 
 //
@@ -284,11 +280,11 @@ C64Configuration;
 
 typedef struct
 {
-    VICRev vic;
+    VICRevision vic;
     bool grayDotBug;
-    CIARev cia;
+    CIARevision cia;
     bool timerBBug;
-    SIDRev sid;
+    SIDRevision sid;
     bool sidFilter;
     GlueLogic glue;
     RamPattern pattern;
@@ -299,22 +295,22 @@ C64ConfigurationDeprecated;
 static const C64ConfigurationDeprecated configurations[] = {
     
     // C64 PAL
-    { VICRev_PAL_6569_R3, false, MOS_6526, true, MOS_6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 },
+    { VICREV_PAL_6569_R3, false, MOS_6526, true, MOS_6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 },
     
     // C64_II_PAL
-    { VICRev_PAL_8565, true, MOS_8521, false, MOS_8580, true, GlueLogic_IC, RAM_PATTERN_C64C },
+    { VICREV_PAL_8565, true, MOS_8521, false, MOS_8580, true, GlueLogic_IC, RAM_PATTERN_C64C },
     
     // C64_OLD_PAL
-    { VICRev_PAL_6569_R1, false, MOS_6526, true, MOS_6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 },
+    { VICREV_PAL_6569_R1, false, MOS_6526, true, MOS_6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 },
 
     // C64_NTSC
-    { VICRev_NTSC_6567, false, MOS_6526, false, MOS_6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 },
+    { VICREV_NTSC_6567, false, MOS_6526, false, MOS_6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 },
 
     // C64_II_NTSC
-    { VICRev_NTSC_8562, true, MOS_8521, true, MOS_8580, true, GlueLogic_IC, RAM_PATTERN_C64C },
+    { VICREV_NTSC_8562, true, MOS_8521, true, MOS_8580, true, GlueLogic_IC, RAM_PATTERN_C64C },
     
     // C64_OLD_NTSC
-    { VICRev_NTSC_6567_R56A, false, MOS_6526, false, MOS_6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 }
+    { VICREV_NTSC_6567_R56A, false, MOS_6526, false, MOS_6581, true, GlueLogic_DISCRETE, RAM_PATTERN_C64 }
 };
 
 #endif

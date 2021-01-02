@@ -23,7 +23,7 @@ SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
         &fastsid[3]
     };
     
-    config.engine = SIDEngine_RESID;
+    config.engine = SIDENGINE_RESID;
     config.enabled = 1;
     
     for (int i = 0; i < 4; i++) {
@@ -102,7 +102,7 @@ SIDBridge::setConfigItem(Option option, long value)
             
         case OPT_VIC_REVISION:
         {
-            u32 newFrequency = VICII::getFrequency((VICRev)value);
+            u32 newFrequency = VICII::getFrequency((VICRevision)value);
                                     
             suspend();
             setClockFrequency(newFrequency);
@@ -113,7 +113,7 @@ SIDBridge::setConfigItem(Option option, long value)
             
         case OPT_SID_REVISION:
             
-            if (!isSIDRev(value)) {
+            if (!isSIDRevision(value)) {
                 warn("Invalid SID revision: %ld\n", value);
                 return false;
             }
@@ -122,8 +122,8 @@ SIDBridge::setConfigItem(Option option, long value)
             }
             
             suspend();
-            config.revision = (SIDRev)value;
-            setRevision((SIDRev)value);
+            config.revision = (SIDRevision)value;
+            setRevision((SIDRevision)value);
             resume();
             
             return true;
@@ -325,10 +325,10 @@ SIDBridge::setClockFrequency(u32 frequency)
     }
 }
 
-SIDRev
+SIDRevision
 SIDBridge::getRevision()
 {
-    SIDRev result = resid[0].getRevision();
+    SIDRevision result = resid[0].getRevision();
     
     for (int i = 0; i < 4; i++) {
         assert(resid[i].getRevision() == result);
@@ -339,9 +339,9 @@ SIDBridge::getRevision()
 }
 
 void
-SIDBridge::setRevision(SIDRev revision)
+SIDBridge::setRevision(SIDRevision revision)
 {
-    trace(SID_DEBUG, "Setting SID revision to %s\n", SIDRevName(revision));
+    trace(SID_DEBUG, "Setting SID revision to %s\n", SIDRevisionName(revision));
 
     for (int i = 0; i < 4; i++) {
         resid[i].setRevision(revision);
@@ -426,7 +426,7 @@ SIDBridge::setSamplingMethod(SamplingMethod method)
 void
 SIDBridge::_dumpConfig()
 {
-    msg(" Chip revision : %lld (%s)\n", config.revision, SIDRevName(config.revision));
+    msg(" Chip revision : %lld (%s)\n", config.revision, SIDRevisionName(config.revision));
     msg("   Enable mask : %x\n", config.enabled);
     msg("       Address : %x %x %x\n", config.address[1], config.address[2], config.address[3]);
     msg("        Filter : %s\n", config.filter ? "yes" : "no");
@@ -470,12 +470,12 @@ SIDBridge::_dump(int nr)
     
     SIDInfo sidinfo;
     VoiceInfo voiceinfo[3];
-    SIDRev residRev = resid[nr].getRevision();
-    SIDRev fastsidRev = fastsid[nr].getRevision();
+    SIDRevision residRev = resid[nr].getRevision();
+    SIDRevision fastsidRev = fastsid[nr].getRevision();
     
     msg("ReSID:\n");
     msg("------\n");
-    msg("    Chip model: %lld (%s)\n", residRev, SIDRevName(residRev));
+    msg("    Chip model: %lld (%s)\n", residRev, SIDRevisionName(residRev));
     msg(" Sampling rate: %f\n", resid[nr].getSampleRate());
     msg(" CPU frequency: %d\n", resid[nr].getClockFrequency());
     msg("Emulate filter: %s\n", resid[nr].getAudioFilter() ? "yes" : "no");
@@ -489,7 +489,7 @@ SIDBridge::_dump(int nr)
 
     msg("FastSID:\n");
     msg("--------\n");
-    msg("    Chip model: %lld (%s)\n", fastsidRev, SIDRevName(fastsidRev));
+    msg("    Chip model: %lld (%s)\n", fastsidRev, SIDRevisionName(fastsidRev));
     msg(" Sampling rate: %f\n", fastsid[nr].getSampleRate());
     msg(" CPU frequency: %d\n", fastsid[nr].getClockFrequency());
     msg("Emulate filter: %s\n", fastsid[nr].getAudioFilter() ? "yes" : "no");
@@ -560,8 +560,8 @@ SIDBridge::getInfo(unsigned nr)
     
     switch (config.engine) {
             
-        case SIDEngine_FASTSID: info = fastsid[nr].getInfo(); break;
-        case SIDEngine_RESID:   info = resid[nr].getInfo(); break;
+        case SIDENGINE_FASTSID: info = fastsid[nr].getInfo(); break;
+        case SIDENGINE_RESID:   info = resid[nr].getInfo(); break;
     }
     
     info.potX = mouse.readPotX();
@@ -579,8 +579,8 @@ SIDBridge::getVoiceInfo(unsigned nr, unsigned voice)
     
     switch (config.engine) {
             
-        case SIDEngine_FASTSID: info = fastsid[nr].getVoiceInfo(voice); break;
-        case SIDEngine_RESID:   info = resid[nr].getVoiceInfo(voice); break;
+        case SIDENGINE_FASTSID: info = fastsid[nr].getVoiceInfo(voice); break;
+        case SIDENGINE_RESID:   info = resid[nr].getVoiceInfo(voice); break;
     }
     
     return info;
@@ -644,8 +644,8 @@ SIDBridge::peek(u16 addr)
     }
     
     switch (config.engine) {
-        case SIDEngine_FASTSID: return fastsid[sidNr].peek(addr);
-        case SIDEngine_RESID:   return resid[sidNr].peek(addr);
+        case SIDENGINE_FASTSID: return fastsid[sidNr].peek(addr);
+        case SIDENGINE_RESID:   return resid[sidNr].peek(addr);
     }
     
     assert(false);
@@ -707,7 +707,7 @@ SIDBridge::executeCycles(u64 numCycles)
 
     switch (config.engine) {
             
-        case SIDEngine_FASTSID:
+        case SIDENGINE_FASTSID:
 
             // Run the primary SID (which is always enabled)
             numSamples = fastsid[0].executeCycles(numCycles, sidStream[0]);
@@ -723,7 +723,7 @@ SIDBridge::executeCycles(u64 numCycles)
             }
             break;
 
-        case SIDEngine_RESID:
+        case SIDENGINE_RESID:
 
             // Run the primary SID (which is always enabled)
             numSamples = resid[0].executeCycles(numCycles, sidStream[0]);
