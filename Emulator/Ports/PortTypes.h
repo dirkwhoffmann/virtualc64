@@ -14,34 +14,33 @@
 // Enumerations
 //
 
-enum_long(ControlPortDevice)
+enum_long(CPDEVICE)
 {
-    ControlPortDevice_NONE,
-    ControlPortDevice_MOUSE,
-    ControlPortDevice_JOYSTICK
+    CPDEVICE_NONE,
+    CPDEVICE_MOUSE,
+    CPDEVICE_JOYSTICK
 };
+typedef CPDEVICE ControlPortDevice;
 
 inline bool isControlPortDevice(long value) {
     
-    return (unsigned long)value <= ControlPortDevice_JOYSTICK;
+    return (unsigned long)value <= CPDEVICE_JOYSTICK;
 }
 
 inline const char *ControlPortDeviceName(ControlPortDevice value)
 {
-    assert(isControlPortDevice(value));
-    
     switch (value) {
             
-        case ControlPortDevice_NONE:      return "NONE";
-        case ControlPortDevice_MOUSE:     return "MOUSE";
-        case ControlPortDevice_JOYSTICK:  return "JOYSTICK";
-        default:                          return "???";
+        case CPDEVICE_NONE:      return "NONE";
+        case CPDEVICE_MOUSE:     return "MOUSE";
+        case CPDEVICE_JOYSTICK:  return "JOYSTICK";
     }
+    return "???";
 }
 
-enum_long(GamePadAction)
+enum_long(GAME_PAD_ACTION)
 {
-    PULL_UP = 0,   // Pull the joystick up
+    PULL_UP,       // Pull the joystick up
     PULL_DOWN,     // Pull the joystick down
     PULL_LEFT,     // Pull the joystick left
     PULL_RIGHT,    // Pull the joystick right
@@ -55,37 +54,58 @@ enum_long(GamePadAction)
     RELEASE_LEFT,  // Release the left mouse button
     RELEASE_RIGHT  // Release the right mouse button
 };
+typedef GAME_PAD_ACTION GamePadAction;
 
 inline bool isGamePadAction(long value) {
     
     return (unsigned long)value <= RELEASE_RIGHT;
 }
 
-enum_long(CRTMode)
+inline const char *GamePadActionName(GamePadAction value)
 {
-    CRTMode_16K,
-    CRTMode_8K,
-    CRTMode_ULTIMAX,
-    CRTMode_OFF
+    switch (value) {
+            
+        case PULL_UP:        return "PULL_UP";
+        case PULL_DOWN:      return "PULL_DOWN";
+        case PULL_LEFT:      return "PULL_LEFT";
+        case PULL_RIGHT:     return "PULL_RIGHT";
+        case PRESS_FIRE:     return "PRESS_FIRE";
+        case PRESS_LEFT:     return "PRESS_LEFT";
+        case PRESS_RIGHT:    return "PRESS_RIGHT";
+        case RELEASE_X:      return "RELEASE_X";
+        case RELEASE_Y:      return "RELEASE_Y";
+        case RELEASE_XY:     return "RELEASE_XY";
+        case RELEASE_FIRE:   return "RELEASE_FIRE";
+        case RELEASE_LEFT:   return "RELEASE_LEFT";
+        case RELEASE_RIGHT:  return "RELEASE_RIGHT";
+    }
+    return "???";
+}
+
+enum_long(CRTMODE)
+{
+    CRTMODE_16K,
+    CRTMODE_8K,
+    CRTMODE_ULTIMAX,
+    CRTMODE_OFF
 };
+typedef CRTMODE CRTMode;
 
 inline bool isCRTMode(long value) {
     
-    return (unsigned long)value <= CRTMode_OFF;
+    return (unsigned long)value <= CRTMODE_OFF;
 }
 
 inline const char *CRTModeName(CRTMode value)
 {
-    assert(isCRTMode(value));
-    
     switch (value) {
             
-        case CRTMode_16K:      return "16K";
-        case CRTMode_8K:       return "8K";
-        case CRTMode_ULTIMAX:  return "ULTIMAX";
-        case CRTMode_OFF:      return "OFF";
-        default:               return "???";
+        case CRTMODE_16K:      return "16K";
+        case CRTMODE_8K:       return "8K";
+        case CRTMODE_ULTIMAX:  return "ULTIMAX";
+        case CRTMODE_OFF:      return "OFF";
     }
+    return "???";
 }
 
 #endif

@@ -356,7 +356,7 @@ struct ControlsDefaults {
         autofireBullets: -3,
         autofireFrequency: 2.5,
         
-        mouseModel: .MOUSE1350
+        mouseModel: .C1350
     )
 }
 
@@ -586,7 +586,7 @@ struct HardwareDefaults {
         sidAddress3:   0xD460,
         
         glueLogic:     .DISCRETE,
-        ramPattern:    .RAM_PATTERN_C64
+        ramPattern:    .C64
     )
     
     static let C64_II_PAL = HardwareDefaults.init(
@@ -607,7 +607,7 @@ struct HardwareDefaults {
         sidAddress3:   0xD460,
         
         glueLogic:     .IC,
-        ramPattern:    .RAM_PATTERN_C64C
+        ramPattern:    .C64C
     )
     
     static let C64_OLD_PAL = HardwareDefaults.init(
@@ -628,7 +628,7 @@ struct HardwareDefaults {
         sidAddress3:   0xD460,
         
         glueLogic:     .DISCRETE,
-        ramPattern:    .RAM_PATTERN_C64
+        ramPattern:    .C64
     )
 
     static let C64_NTSC = HardwareDefaults.init(
@@ -649,7 +649,7 @@ struct HardwareDefaults {
         sidAddress3:   0xD460,
         
         glueLogic:     .DISCRETE,
-        ramPattern:    .RAM_PATTERN_C64
+        ramPattern:    .C64
     )
     
     static let C64_II_NTSC = HardwareDefaults.init(
@@ -670,7 +670,7 @@ struct HardwareDefaults {
         sidAddress3:   0xD460,
         
         glueLogic:     .IC,
-        ramPattern:    .RAM_PATTERN_C64C
+        ramPattern:    .C64C
     )
     
     static let C64_OLD_NTSC = HardwareDefaults.init(
@@ -691,7 +691,7 @@ struct HardwareDefaults {
         sidAddress3:   0xD460,
         
         glueLogic:     .DISCRETE,
-        ramPattern:    .RAM_PATTERN_C64
+        ramPattern:    .C64
     )
 }
 
@@ -785,7 +785,7 @@ struct PeripheralsDefaults {
     static let std = PeripheralsDefaults.init(
         
         driveConnect:  [true, false],
-        driveType:     [.DRIVE_VC1541II, .DRIVE_VC1541II],
+        driveType:     [.VC1541II, .VC1541II],
         
         gameDevice1:   -1,
         gameDevice2:   -1

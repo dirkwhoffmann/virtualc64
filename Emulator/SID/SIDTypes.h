@@ -28,14 +28,12 @@ inline bool isSIDRevision(long value)
 
 inline const char *SIDRevisionName(SIDRevision type)
 {
-    assert(isSIDRevision(type));
-    
     switch (type) {
             
         case MOS_6581:  return "6581";
         case MOS_8580:  return "8580";
-        default:           return "???";
     }
+    return "???";
 }
 
 enum_long(SIDENGINE)
@@ -52,14 +50,12 @@ inline bool isSIDEngine(long value)
 
 inline const char *SIDEngineName(SIDEngine value)
 {
-    assert(isSIDEngine(value));
-    
     switch (value) {
             
         case SIDENGINE_FASTSID:  return "FASTSID";
         case SIDENGINE_RESID:    return "RESID";
-        default:                 return "???";
     }
+    return "???";
 }
 
 // This enum reflects enum "sampling_method" used by reSID.
@@ -79,16 +75,14 @@ inline bool isSamplingMethod(long value)
 
 inline const char *SamplingMethodName(SamplingMethod method)
 {
-    assert(isSamplingMethod(method));
-    
     switch (method) {
             
         case SAMPLING_FAST:              return "FAST";
         case SAMPLING_INTERPOLATE:       return "INTERPOLATE";
         case SAMPLING_RESAMPLE:          return "RESAMPLE";
         case SAMPLING_RESAMPLE_FASTMEM:  return "RESAMPLE FASTMEM";
-        default:                         return "???";
     }
+    return "???";
 }
 
 //

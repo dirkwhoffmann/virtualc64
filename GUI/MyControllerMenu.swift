@@ -114,10 +114,10 @@ extension MyController: NSMenuItemValidation {
             return validateURLlist(myAppDelegate.recentlyAttachedCartridgeURLs, image: smallCart)
             
         case #selector(MyController.attachGeoRamDummyAction(_:)):
-            item.state = (c64.expansionport.cartridgeType() == .CRT_GEO_RAM) ? .on : .off
+            item.state = (c64.expansionport.cartridgeType() == .GEO_RAM) ? .on : .off
             
         case #selector(MyController.attachIsepicAction(_:)):
-            item.state = (c64.expansionport.cartridgeType() == .CRT_ISEPIC) ? .on : .off
+            item.state = (c64.expansionport.cartridgeType() == .ISEPIC) ? .on : .off
             
         case #selector(MyController.detachCartridgeAction(_:)):
             return c64.expansionport.cartridgeAttached()
@@ -163,7 +163,7 @@ extension MyController: NSMenuItemValidation {
             
         case #selector(MyController.geoRamBatteryAction(_:)):
             item.state = c64.expansionport.hasBattery() ? .on : .off
-            return c64.expansionport.cartridgeType() == .CRT_GEO_RAM
+            return c64.expansionport.cartridgeType() == .GEO_RAM
             
         // Debug menu
         case #selector(MyController.traceAction(_:)):

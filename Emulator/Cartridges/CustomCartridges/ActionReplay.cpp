@@ -137,7 +137,7 @@ void
 ActionReplay::resetCartConfig()
 {
     trace(CRT_DEBUG, "Starting ActionReplay cartridge in 8K game mode.\n");
-    expansionport.setCartridgeMode(CRTMode_8K);
+    expansionport.setCartridgeMode(CRTMODE_8K);
 }
 
 u8

@@ -38,8 +38,6 @@ inline bool isVICRevision(long value)
 
 inline const char *VICRevisionName(VICRevision value)
 {
-    assert(isVICRevision(value));
-    
     switch (value) {
             
         case VICREV_PAL_6569_R1:    return "PAL_6569_R1";
@@ -66,8 +64,6 @@ inline bool isGlueLogic(long value)
 
 inline const char *GlueLogicName(GlueLogic value)
 {
-    assert(isGlueLogic(value));
-    
     switch (value) {
             
         case GLUE_LOGIC_DISCRETE:  return "DISCRETE";
@@ -93,8 +89,6 @@ inline bool isPalette(long value) {
 
 inline const char *PaletteName(Palette value)
 {
-    assert(isGlueLogic(value));
-    
     switch (value) {
             
         case PALETTE_COLOR:        return "COLOR";
@@ -122,8 +116,6 @@ inline bool isScreenGeometry(long value) {
 
 inline const char *ScreenGeometryName(ScreenGeometry value)
 {
-    assert(isScreenGeometry(value));
-    
     switch (value) {
             
         case SCREEN_GEOMETRY_25_40:  return "25_40";
@@ -153,8 +145,6 @@ inline bool isDisplayMode(long value) {
 
 inline const char *DisplayModeName(DisplayMode value)
 {
-    assert(isDisplayMode(value));
-    
     switch (value) {
             
         case DISPLAY_MODE_STANDARD_TEXT:        return "STANDARD_TEXT";
@@ -169,33 +159,32 @@ inline const char *DisplayModeName(DisplayMode value)
     return "???";
 }
 
-enum_long(MemAccess)
+enum_long(MEMACCESS)
 {
-    MemAccess_R, // Memory Refresh
-    MemAccess_I, // Idle read
-    MemAccess_C, // Character access
-    MemAccess_G, // Graphics access
-    MemAccess_P, // Sprite pointer access
-    MemAccess_S  // Sprite data access
+    MEMACCESS_R, // Memory Refresh
+    MEMACCESS_I, // Idle read
+    MEMACCESS_C, // Character access
+    MEMACCESS_G, // Graphics access
+    MEMACCESS_P, // Sprite pointer access
+    MEMACCESS_S  // Sprite data access
 };
+typedef MEMACCESS MemAccess;
 
 static inline bool isMemAccess(long value)
 {
-    return (unsigned long)value <= MemAccess_S;
+    return (unsigned long)value <= MEMACCESS_S;
 }
 
 inline const char *MemAccessName(MemAccess value)
 {
-    assert(isMemAccess(value));
-    
     switch (value) {
             
-        case MemAccess_R:  return "R";
-        case MemAccess_I:  return "I";
-        case MemAccess_C:  return "C";
-        case MemAccess_G:  return "G";
-        case MemAccess_P:  return "P";
-        case MemAccess_S:  return "S";
+        case MEMACCESS_R:  return "R";
+        case MEMACCESS_I:  return "I";
+        case MEMACCESS_C:  return "C";
+        case MEMACCESS_G:  return "G";
+        case MEMACCESS_P:  return "P";
+        case MEMACCESS_S:  return "S";
     }
     return "???";
 }
@@ -215,8 +204,6 @@ static inline bool isDmaDisplayMode(long value)
 
 inline const char *DmaDisplayModeName(DmaDisplayMode value)
 {
-    assert(isDmaDisplayMode(value));
-    
     switch (value) {
             
         case DMA_DISPLAY_MODE_FG_LAYER:         return "FG_LAYER";

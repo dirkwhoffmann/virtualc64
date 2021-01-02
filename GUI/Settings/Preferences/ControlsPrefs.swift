@@ -74,7 +74,7 @@ extension PreferencesController {
         // Mouse
         let model = c64.mouse.model()
         conMouseModel.selectItem(withTag: model.rawValue)
-        conMouseInfo.isHidden = model == .MOUSE1350
+        conMouseInfo.isHidden = model == .C1350
     }
     
     // Translates a button tag back to the related slot and gamepad action

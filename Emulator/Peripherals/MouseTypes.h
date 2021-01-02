@@ -12,12 +12,29 @@
 #ifndef MOUSE_TYPES_H
 #define MOUSE_TYPES_H
 
-enum_long(MouseModel)
+enum_long(MOUSE_MODEL)
 {
-    MOUSE1350 = 0,
-    MOUSE1351,
-    NEOSMOUSE
+    MOUSE_C1350,
+    MOUSE_C1351,
+    MOUSE_NEOS
 };
+typedef MOUSE_MODEL MouseModel;
+
+inline bool isMouseModel(long value)
+{
+    return (unsigned long)value <= MOUSE_NEOS;
+}
+
+inline const char *MouseModelName(MouseModel value)
+{
+    switch (value) {
+            
+        case MOUSE_C1350:  return "C1350";
+        case MOUSE_C1351:  return "C1351";
+        case MOUSE_NEOS:   return "NEOS";
+    }
+    return "???";
+}
 
 typedef struct
 {

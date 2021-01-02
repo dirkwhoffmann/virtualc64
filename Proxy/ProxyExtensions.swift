@@ -95,7 +95,7 @@ extension CRTFileProxy {
         let type = cartridgeType
         let packages = cnt == 1 ? "package" : "packages"
 
-        if type == .CRT_NORMAL {
+        if type == .NORMAL {
             return "Standard cartridge with \(cnt) chip \(packages)"
         } else {
             return "\(type.description)"

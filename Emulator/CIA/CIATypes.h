@@ -26,14 +26,14 @@ inline bool isCIARevision(long value)
     return (unsigned long)value <= MOS_8521;
 }
 
-inline const char * CIARevisionName(CIARevision value)
+inline const char *CIARevisionName(CIARevision value)
 {    
     switch (value) {
             
         case MOS_6526:  return "MOS_6526";
         case MOS_8521:  return "MOS_8521";
-        default:        return "???";
     }
+    return "???";
 }
 
 enum_long(CIAREG)
@@ -62,7 +62,7 @@ inline bool isCIAReg(long value)
     return (unsigned long)value <= CIAREG_CRB;
 }
 
-inline const char * CIARegName(CIAReg value)
+inline const char *CIARegName(CIAReg value)
 {
     switch (value) {
             

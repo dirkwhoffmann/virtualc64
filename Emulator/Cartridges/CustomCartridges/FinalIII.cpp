@@ -12,7 +12,7 @@
 void
 FinalIII::resetCartConfig()
 {
-    expansionport.setCartridgeMode(CRTMode_16K);
+    expansionport.setCartridgeMode(CRTMODE_16K);
 }
 
 void

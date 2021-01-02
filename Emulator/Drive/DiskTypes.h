@@ -36,52 +36,52 @@
 // Enumerations
 //
 
-enum_long(DiskType)
+enum_long(DISK_TYPE)
 {
-    DiskType_SS_SD,   // Single-sided, single density (VC1541)
-    DiskType_DS_SD    // Double-sided, single density (VC1571) (not supported)
+    DISK_TYPE_SS_SD,   // Single-sided, single density (VC1541)
+    DISK_TYPE_DS_SD    // Double-sided, single density (VC1571) (not supported)
 };
+typedef DISK_TYPE DiskType;
 
 inline bool isDiskType(DiskType value)
 {
-    return (unsigned long)value <= DiskType_DS_SD;
+    return (unsigned long)value <= DISK_TYPE_DS_SD;
 }
 
 inline const char *DiskTypeName(DiskType value)
-{
-    assert(isDiskType(value));
-    
+{    
     switch (value) {
             
-        case DiskType_SS_SD:  return "SS_SD";
-        case DiskType_DS_SD:  return "DS_SD";
-        default:              return "???";
+        case DISK_TYPE_SS_SD:  return "SS_SD";
+        case DISK_TYPE_DS_SD:  return "DS_SD";
     }
+    return "???";
 }
 
-enum_long(CBMFileType)
+enum_long(CMB_FILE_TYPE)
 {
     CBM_PRG,
     CBM_SEQ,
     CBM_USR,
     CBM_REL
 };
+typedef CMB_FILE_TYPE CBMFileType;
 
 inline bool isCBMFileType(long value)
 {
-    return value >= CBM_PRG && value <= CBM_REL;
+    return (unsigned long)value <= CBM_REL;
 }
 
-inline const char *CBMFileTypeString(CBMFileType type)
+inline const char *CBMFileTypeName(CBMFileType value)
 {
-    switch (type) {
+    switch (value) {
             
-        case CBM_PRG: return "PRG";
-        case CBM_SEQ: return "SEQ";
-        case CBM_USR: return "USR";
-        case CBM_REL: return "REL";
-        default: assert(false);
+        case CBM_PRG:  return "PRG";
+        case CBM_SEQ:  return "SEQ";
+        case CBM_USR:  return "USR";
+        case CBM_REL:  return "REL";
     }
+    return "???";
 }
 
 

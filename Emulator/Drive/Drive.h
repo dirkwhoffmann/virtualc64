@@ -90,7 +90,7 @@ private:
     bool redLED = false;
     
     // Indicates if or how a disk is inserted
-    InsertionStatus insertionStatus = FULLY_EJECTED;
+    InsertionStatus insertionStatus = DISK_FULLY_EJECTED;
         
     
     //
@@ -310,10 +310,10 @@ public:
 public:
     
     // Checks if a disk is present
-    bool hasDisk() { return insertionStatus == FULLY_INSERTED; }
+    bool hasDisk() { return insertionStatus == DISK_FULLY_INSERTED; }
     // bool hasPartiallyInsertedDisk() { return insertionStatus == PARTIALLY_INSERTED; }
     bool hasPartiallyRemovedDisk() {
-        return insertionStatus == PARTIALLY_INSERTED || insertionStatus == PARTIALLY_EJECTED; }
+        return insertionStatus == DISK_PARTIALLY_INSERTED || insertionStatus == DISK_PARTIALLY_EJECTED; }
     bool hasWriteProtectedDisk() { return hasDisk() && disk.isWriteProtected(); }
 
     // Gets or sets the modification status

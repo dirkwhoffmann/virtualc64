@@ -60,16 +60,16 @@ extension BankTableView: NSTableViewDataSource {
 
             switch inspector.bankType[row] {
                 
-            case .M_NONE:   return "Unmapped"
-            case .M_RAM:    return "Ram"
-            case .M_PP:     return "Ram"
-            case .M_BASIC:  return "Basic Rom"
-            case .M_CHAR:   return "Character Rom"
-            case .M_KERNAL: return "Kernal Rom"
-            case .M_IO:     return "IO"
-            case .M_CRTLO:  return "Cartridge Lo"
-            case .M_CRTHI:  return "Cartridge Hi"
-            default:        return "???"
+            case .NONE:   return "Unmapped"
+            case .RAM:    return "Ram"
+            case .PP:     return "Ram"
+            case .BASIC:  return "Basic Rom"
+            case .CHAR:   return "Character Rom"
+            case .KERNAL: return "Kernal Rom"
+            case .IO:     return "IO"
+            case .CRTLO:  return "Cartridge Lo"
+            case .CRTHI:  return "Cartridge Hi"
+            default:      return "???"
             }
 
         default:

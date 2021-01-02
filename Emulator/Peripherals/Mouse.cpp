@@ -18,7 +18,7 @@ Mouse::Mouse(C64 &ref) : C64Component(ref)
         &mouseNeos
     };
     
-    config.model = MOUSE1350;
+    config.model = MOUSE_C1350;
 }
 
 void Mouse::_reset()
@@ -58,13 +58,13 @@ Mouse::setLeftButton(bool value)
 {
     switch(config.model) {
             
-        case MOUSE1350:
+        case MOUSE_C1350:
             mouse1350.setLeftMouseButton(value);
             break;
-        case MOUSE1351:
+        case MOUSE_C1351:
             mouse1351.setLeftMouseButton(value);
             break;
-        case NEOSMOUSE:
+        case MOUSE_NEOS:
             mouseNeos.setLeftMouseButton(value);
             break;
         default:
@@ -77,13 +77,13 @@ Mouse::setRightButton(bool value)
 {
     switch(config.model) {
             
-        case MOUSE1350:
+        case MOUSE_C1350:
             mouse1350.setRightMouseButton(value);
             break;
-        case MOUSE1351:
+        case MOUSE_C1351:
             mouse1351.setRightMouseButton(value);
             break;
-        case NEOSMOUSE:
+        case MOUSE_NEOS:
             mouseNeos.setRightMouseButton(value);
             break;
         default:
@@ -109,14 +109,14 @@ Mouse::readPotX()
     if (port > 0) {
         switch(config.model) {
                 
-            case MOUSE1350:
+            case MOUSE_C1350:
                 return mouse1350.readPotX();
                 
-            case MOUSE1351:
+            case MOUSE_C1351:
                 mouse1351.executeX(targetX);
                 return mouse1351.readPotX();
                 
-            case NEOSMOUSE:
+            case MOUSE_NEOS:
                 return mouseNeos.readPotX();
                 
             default:
@@ -131,12 +131,12 @@ Mouse::readPotY()
 {
     if (port > 0) {
         switch(config.model) {
-            case MOUSE1350:
+            case MOUSE_C1350:
                 return mouse1350.readPotY();
-            case MOUSE1351:
+            case MOUSE_C1351:
                 mouse1351.executeY(targetY);
                 return mouse1351.readPotY();
-            case NEOSMOUSE:
+            case MOUSE_NEOS:
                 return mouseNeos.readPotY();
             default:
                 assert(false);
@@ -150,11 +150,11 @@ Mouse::readControlPort(unsigned portNr)
 {    
     if (port == portNr) {
         switch(config.model) {
-            case MOUSE1350:
+            case MOUSE_C1350:
                 return mouse1350.readControlPort();
-            case MOUSE1351:
+            case MOUSE_C1351:
                 return mouse1351.readControlPort();
-            case NEOSMOUSE:
+            case MOUSE_NEOS:
                 return mouseNeos.readControlPort(targetX, targetY);
             default:
                 assert(false);
@@ -169,13 +169,13 @@ Mouse::execute()
     if (port) {
         switch(config.model) {
                 
-            case MOUSE1350:
+            case MOUSE_C1350:
                 mouse1350.execute(targetX, targetY);
                 break;
-            case MOUSE1351:
+            case MOUSE_C1351:
                 // Coordinates are updated in readPotX() and readPotY()
                 break;
-            case NEOSMOUSE:
+            case MOUSE_NEOS:
                 // Coordinates are updated in latchPosition()
                 break;
             default:

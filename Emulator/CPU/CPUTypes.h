@@ -41,7 +41,7 @@ inline bool isCPURevision(long value)
     return (unsigned long)value <= MOS_6502;
 }
 
-inline const char * CPURevisionName(CPURevision value)
+inline const char *CPURevisionName(CPURevision value)
 {
     switch (value) {
             
@@ -67,7 +67,7 @@ inline bool isIntSource(long value)
     return (unsigned long)value <= INTSRC_KBD;
 }
 
-inline const char * IntSourceName(IntSource value)
+inline const char *IntSourceName(IntSource value)
 {
     switch (value) {
             
@@ -94,7 +94,7 @@ inline bool isBreakpointType(long value)
     return (unsigned long)value <= BPTYPE_SOFT;
 }
 
-inline const char * BreakpointTypeName(BreakpointType value)
+inline const char *BreakpointTypeName(BreakpointType value)
 {
     switch (value) {
             

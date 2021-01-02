@@ -10,7 +10,7 @@
 #ifndef CARTRIDGE_TYPES_H
 #define CARTRIDGE_TYPES_H
 
-enum_long(CartridgeType)
+enum_long(CRT_TYPE)
 {
     CRT_NORMAL = 0,
     CRT_ACTION_REPLAY = 1,
@@ -37,7 +37,7 @@ enum_long(CartridgeType)
     CRT_STRUCTURED_BASIC = 22,
     CRT_ROSS = 23,
     CRT_DELA_EP64 = 24,
-    CRT_DELA_EP7x8 = 25,
+    CRT_DELA_EP7X8 = 25,
     CRT_DELA_EP256 = 26,
     CRT_REX_EP256 = 27,
     CRT_MIKRO_ASS = 28,
@@ -78,6 +78,7 @@ enum_long(CartridgeType)
     CRT_GEO_RAM = 254,
     CRT_NONE = 255
 };
+typedef CRT_TYPE CartridgeType; 
 
 enum_long(FlashRomState)
 {

@@ -26,7 +26,7 @@ Drive::Drive(DriveID id, C64 &ref) : C64Component(ref), deviceNr(id)
     config.switchedOn = true;
     config.type = DRIVE_VC1541II;
     
-    insertionStatus = FULLY_EJECTED;
+    insertionStatus = DISK_FULLY_EJECTED;
     disk.clearDisk();
 }
 
@@ -467,7 +467,7 @@ Drive::ejectDisk()
 
     suspend();
     
-    if (insertionStatus == FULLY_INSERTED && !diskToInsert) {
+    if (insertionStatus == DISK_FULLY_INSERTED && !diskToInsert) {
         
         // Initiate the disk change procedure
         diskChangeCounter = 1;
@@ -484,12 +484,12 @@ Drive::vsyncHandler()
     
     switch (insertionStatus) {
             
-        case FULLY_INSERTED:
+        case DISK_FULLY_INSERTED:
             
             trace(DSKCHG_DEBUG, "FULLY_INSERTED -> PARTIALLY_EJECTED\n");
 
             // Pull the disk half out (blocks the light barrier)
-            insertionStatus = PARTIALLY_EJECTED;
+            insertionStatus = DISK_PARTIALLY_EJECTED;
             
             // Make sure the drive can no longer read from this disk
             disk.clearDisk();
@@ -498,12 +498,12 @@ Drive::vsyncHandler()
             diskChangeCounter = 17;
             return;
             
-        case PARTIALLY_EJECTED:
+        case DISK_PARTIALLY_EJECTED:
             
             trace(DSKCHG_DEBUG, "PARTIALLY_EJECTED -> FULLY_EJECTED\n");
 
             // Take the disk out (unblocks the light barrier)
-            insertionStatus = FULLY_EJECTED;
+            insertionStatus = DISK_FULLY_EJECTED;
             
             // Inform listeners
             c64.putMessage(MSG_DISK_EJECTED, deviceNr);
@@ -512,7 +512,7 @@ Drive::vsyncHandler()
             diskChangeCounter = 17;
             return;
             
-        case FULLY_EJECTED:
+        case DISK_FULLY_EJECTED:
             
             trace(DSKCHG_DEBUG, "FULLY_EJECTED -> PARTIALLY_INSERTED\n");
 
@@ -520,18 +520,18 @@ Drive::vsyncHandler()
             if (!diskToInsert) return;
             
             // Push the new disk half in (blocks the light barrier)
-            insertionStatus = PARTIALLY_INSERTED;
+            insertionStatus = DISK_PARTIALLY_INSERTED;
             
             // Schedule the next transition
             diskChangeCounter = 17;
             return;
             
-        case PARTIALLY_INSERTED:
+        case DISK_PARTIALLY_INSERTED:
             
             trace(DSKCHG_DEBUG, "PARTIALLY_INSERTED -> FULLY_INSERTED\n");
 
             // Fully insert the disk (unblocks the light barrier)
-            insertionStatus = FULLY_INSERTED;
+            insertionStatus = DISK_FULLY_INSERTED;
 
             // Copy the disk contents
             size_t size = diskToInsert->size();

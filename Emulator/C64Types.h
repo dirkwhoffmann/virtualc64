@@ -168,7 +168,7 @@ inline bool isC64Model(long value) {
     return (unsigned long)value <= C64_MODEL_CUSTOM;
 }
 
-inline const char * C64ModelName(C64Model value)
+inline const char *C64ModelName(C64Model value)
 {
     switch (value) {
             
@@ -196,7 +196,7 @@ inline bool isRomType(long value) {
     return (unsigned long)value <= ROM_TYPE_VC1541;
 }
 
-inline const char * RomTypeName(RomType value)
+inline const char *RomTypeName(RomType value)
 {
     switch (value) {
             
@@ -220,7 +220,7 @@ inline bool isEmulatorState(long value) {
     return (unsigned long)value <=  STATE_RUNNING;
 }
 
-inline const char * EmulatorStateName(State value)
+inline const char *EmulatorStateName(State value)
 {
     switch (value) {
             

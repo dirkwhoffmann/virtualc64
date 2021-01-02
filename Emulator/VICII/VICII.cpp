@@ -26,20 +26,20 @@ VICII::VICII(C64 &ref) : C64Component(ref)
     config.cutOpacity = 0xFF;
     config.dmaOpacity = 0x80;
     config.dmaDebug = false;
-    config.dmaChannel[MemAccess_R] = true;
-    config.dmaChannel[MemAccess_I] = true;
-    config.dmaChannel[MemAccess_C] = true;
-    config.dmaChannel[MemAccess_G] = true;
-    config.dmaChannel[MemAccess_P] = true;
-    config.dmaChannel[MemAccess_S] = true;
+    config.dmaChannel[MEMACCESS_R] = true;
+    config.dmaChannel[MEMACCESS_I] = true;
+    config.dmaChannel[MEMACCESS_C] = true;
+    config.dmaChannel[MEMACCESS_G] = true;
+    config.dmaChannel[MEMACCESS_P] = true;
+    config.dmaChannel[MEMACCESS_S] = true;
 
     // Assign default DMA debugging colors
-    setDmaDebugColor(MemAccess_R, RgbColor(1.0, 0.0, 0.0));
-    setDmaDebugColor(MemAccess_I, RgbColor(1.0, 0.8, 0.0));
-    setDmaDebugColor(MemAccess_C, RgbColor(1.0, 1.0, 0.0));
-    setDmaDebugColor(MemAccess_G, RgbColor(0.0, 1.0, 1.0));
-    setDmaDebugColor(MemAccess_P, RgbColor(0.0, 1.0, 0.0));
-    setDmaDebugColor(MemAccess_S, RgbColor(0.0, 0.5, 1.0));
+    setDmaDebugColor(MEMACCESS_R, RgbColor(1.0, 0.0, 0.0));
+    setDmaDebugColor(MEMACCESS_I, RgbColor(1.0, 0.8, 0.0));
+    setDmaDebugColor(MEMACCESS_C, RgbColor(1.0, 1.0, 0.0));
+    setDmaDebugColor(MEMACCESS_G, RgbColor(0.0, 1.0, 1.0));
+    setDmaDebugColor(MEMACCESS_P, RgbColor(0.0, 1.0, 0.0));
+    setDmaDebugColor(MEMACCESS_S, RgbColor(0.0, 0.5, 1.0));
     
     // Assign reference clock to all time delayed variables
     baLine.setClock(&cpu.cycle);
@@ -147,18 +147,18 @@ VICII::getConfigItem(Option option)
         case OPT_GRAY_DOT_BUG:     return config.grayDotBug;
         case OPT_GLUE_LOGIC:       return config.glueLogic;
         case OPT_DMA_DEBUG:        return config.dmaDebug;
-        case OPT_DMA_CHANNEL_R:    return config.dmaChannel[MemAccess_R];
-        case OPT_DMA_CHANNEL_I:    return config.dmaChannel[MemAccess_I];
-        case OPT_DMA_CHANNEL_C:    return config.dmaChannel[MemAccess_C];
-        case OPT_DMA_CHANNEL_G:    return config.dmaChannel[MemAccess_G];
-        case OPT_DMA_CHANNEL_P:    return config.dmaChannel[MemAccess_P];
-        case OPT_DMA_CHANNEL_S:    return config.dmaChannel[MemAccess_S];
-        case OPT_DMA_COLOR_R:      return config.dmaColor[MemAccess_R];
-        case OPT_DMA_COLOR_I:      return config.dmaColor[MemAccess_I];
-        case OPT_DMA_COLOR_C:      return config.dmaColor[MemAccess_C];
-        case OPT_DMA_COLOR_G:      return config.dmaColor[MemAccess_G];
-        case OPT_DMA_COLOR_P:      return config.dmaColor[MemAccess_P];
-        case OPT_DMA_COLOR_S:      return config.dmaColor[MemAccess_S];
+        case OPT_DMA_CHANNEL_R:    return config.dmaChannel[MEMACCESS_R];
+        case OPT_DMA_CHANNEL_I:    return config.dmaChannel[MEMACCESS_I];
+        case OPT_DMA_CHANNEL_C:    return config.dmaChannel[MEMACCESS_C];
+        case OPT_DMA_CHANNEL_G:    return config.dmaChannel[MEMACCESS_G];
+        case OPT_DMA_CHANNEL_P:    return config.dmaChannel[MEMACCESS_P];
+        case OPT_DMA_CHANNEL_S:    return config.dmaChannel[MEMACCESS_S];
+        case OPT_DMA_COLOR_R:      return config.dmaColor[MEMACCESS_R];
+        case OPT_DMA_COLOR_I:      return config.dmaColor[MEMACCESS_I];
+        case OPT_DMA_COLOR_C:      return config.dmaColor[MEMACCESS_C];
+        case OPT_DMA_COLOR_G:      return config.dmaColor[MEMACCESS_G];
+        case OPT_DMA_COLOR_P:      return config.dmaColor[MEMACCESS_P];
+        case OPT_DMA_COLOR_S:      return config.dmaColor[MEMACCESS_S];
         case OPT_DMA_DISPLAY_MODE: return config.dmaDisplayMode;
         case OPT_DMA_OPACITY:      return config.dmaOpacity;
         case OPT_HIDE_SPRITES:     return config.hideSprites;
@@ -234,63 +234,63 @@ VICII::setConfigItem(Option option, long value)
             
         case OPT_DMA_CHANNEL_R:
             
-            config.dmaChannel[MemAccess_R] = value;
+            config.dmaChannel[MEMACCESS_R] = value;
             return true;
             
         case OPT_DMA_CHANNEL_I:
             
-            config.dmaChannel[MemAccess_I] = value;
+            config.dmaChannel[MEMACCESS_I] = value;
             return true;
             
         case OPT_DMA_CHANNEL_C:
             
-            config.dmaChannel[MemAccess_C] = value;
+            config.dmaChannel[MEMACCESS_C] = value;
             return true;
             
         case OPT_DMA_CHANNEL_G:
             
-            config.dmaChannel[MemAccess_G] = value;
+            config.dmaChannel[MEMACCESS_G] = value;
             return true;
             
         case OPT_DMA_CHANNEL_P:
             
-            config.dmaChannel[MemAccess_P] = value;
+            config.dmaChannel[MEMACCESS_P] = value;
             return true;
             
         case OPT_DMA_CHANNEL_S:
             
-            config.dmaChannel[MemAccess_S] = value;
+            config.dmaChannel[MEMACCESS_S] = value;
             return true;
 
         case OPT_DMA_COLOR_R:
             
-            setDmaDebugColor(MemAccess_R, GpuColor((u32)value));
-            config.dmaColor[MemAccess_R] = (u32)value;
+            setDmaDebugColor(MEMACCESS_R, GpuColor((u32)value));
+            config.dmaColor[MEMACCESS_R] = (u32)value;
             return true;
             
         case OPT_DMA_COLOR_I:
             
-            config.dmaColor[MemAccess_I] = (u32)value;
+            config.dmaColor[MEMACCESS_I] = (u32)value;
             return true;
 
         case OPT_DMA_COLOR_C:
             
-            config.dmaColor[MemAccess_C] = (u32)value;
+            config.dmaColor[MEMACCESS_C] = (u32)value;
             return true;
 
         case OPT_DMA_COLOR_G:
             
-            config.dmaColor[MemAccess_G] = (u32)value;
+            config.dmaColor[MEMACCESS_G] = (u32)value;
             return true;
 
         case OPT_DMA_COLOR_P:
             
-            config.dmaColor[MemAccess_P] = (u32)value;
+            config.dmaColor[MEMACCESS_P] = (u32)value;
             return true;
 
         case OPT_DMA_COLOR_S:
             
-            config.dmaColor[MemAccess_S] = (u32)value;
+            config.dmaColor[MEMACCESS_S] = (u32)value;
             return true;
             
         case OPT_DMA_OPACITY:

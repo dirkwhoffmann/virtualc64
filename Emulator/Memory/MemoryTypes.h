@@ -16,7 +16,7 @@
 
 // Memory source identifiers. The identifiers are used inside the peek and poke
 // lookup tables to indicate the source and target of a peek or poke operation.
-enum_long(MemoryType)
+enum_long(M_TYPE)
 {
     M_RAM = 1,
     M_CHAR,
@@ -28,16 +28,50 @@ enum_long(MemoryType)
     M_PP,
     M_NONE
 };
+typedef M_TYPE MemoryType;
 
-enum_long(RamPattern)
+inline bool isMemoryType(long value)
 {
-    RAM_PATTERN_C64 = 0,
-    RAM_PATTERN_C64C = 1
+    return value >= 1 && value <= M_NONE;
+}
+
+inline const char *MemoryTypeName(MemoryType value)
+{
+    switch (value) {
+            
+        case M_RAM:     return "M_RAM";
+        case M_CHAR:    return "M_CHAR";
+        case M_KERNAL:  return "M_KERNAL";
+        case M_BASIC:   return "M_BASIC";
+        case M_IO:      return "M_IO";
+        case M_CRTLO:   return "M_CRTLO";
+        case M_CRTHI:   return "M_CRTHI";
+        case M_PP:      return "M_PP";
+        case M_NONE:    return "M_NONE";
+    }
+    return "???";
+}
+
+enum_long(RAM_PATTERN)
+{
+    RAM_PATTERN_C64,
+    RAM_PATTERN_C64C
 };
+typedef RAM_PATTERN RamPattern;
 
 inline bool isRamPattern(long value)
 {
-    return value == RAM_PATTERN_C64 || value == RAM_PATTERN_C64C;
+    return (unsigned long)value <= RAM_PATTERN_C64C;
+}
+
+inline const char *RamPatternName(RamPattern value)
+{
+    switch (value) {
+            
+        case RAM_PATTERN_C64:   return "RAM_PATTERN_C64";
+        case RAM_PATTERN_C64C:  return "RAM_PATTERN_C64C";
+    }
+    return "???";
 }
 
 //
