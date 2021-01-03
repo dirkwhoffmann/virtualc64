@@ -189,7 +189,7 @@ FSBlock::check(u32 byte, u8 *expected, bool strict)
             
             if (strict && byte >= 0xAB && byte <= 0xFF) EXPECT_BYTE(0x00);
 
-            return FSError_OK;
+            return FS_ERROR_OK;
             
         case FS_BLOCKTYPE_DIR:
             
@@ -208,20 +208,20 @@ FSBlock::check(u32 byte, u8 *expected, bool strict)
                 }
             }
             
-            return FSError_OK;
+            return FS_ERROR_OK;
             
         case FS_BLOCKTYPE_DATA:
             
             if (byte == 0 && strict) EXPECT_TRACK_REF (data[byte + 1]);
             if (byte == 1 && strict) EXPECT_SECTOR_REF(data[byte - 1]);
 
-            return FSError_OK;
+            return FS_ERROR_OK;
             
         default:
             assert(false);
     }
     
-    return FSError_OK;
+    return FS_ERROR_OK;
 }
 
 unsigned
@@ -233,7 +233,7 @@ FSBlock::check(bool strict)
     
     for (u32 i = 0; i < 256; i++) {
         
-        if ((error = check(i, &expected, strict)) != FSError_OK) {
+        if ((error = check(i, &expected, strict)) != FS_ERROR_OK) {
             count++;
             debug(FS_DEBUG, "Block %d [%d.%d]: %s\n", nr, i / 4, i % 4, FSErrorName(error));
         }

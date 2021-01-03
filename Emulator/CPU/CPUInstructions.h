@@ -10,7 +10,7 @@
 #ifndef _CPU_INSTRUCTIONS_H
 #define _CPU_INSTRUCTIONS_H
 
-enum_long(MicroInstruction) {
+enum_long(MICRO_INSTRUCTION) {
     
     fetch,
     
@@ -303,6 +303,7 @@ enum_long(MicroInstruction) {
     
     TAS_abs_y, TAS_abs_y_2, TAS_abs_y_3, TAS_abs_y_4
 };
+typedef MICRO_INSTRUCTION MicroInstruction;
 
 // Loads a register and sets the Z and V flag
 #define loadA(v) { u8 u = (v); reg.a = u; reg.sr.n = u & 0x80; reg.sr.z = u == 0; }

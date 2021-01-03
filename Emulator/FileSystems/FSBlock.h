@@ -115,13 +115,13 @@ typedef FSBlock* BlockPtr;
 typedef FSBlock* BlockPtr;
 
 #define EXPECT_BYTE(exp) { \
-if (value != (exp)) { *expected = (exp); return FSError_EXPECTED; } }
+if (value != (exp)) { *expected = (exp); return FS_ERROR_EXPECTED; } }
 
 #define EXPECT_MIN(min) { \
-if (value < (min)) { *expected = (min); return FSError_EXPECTED_MIN; } }
+if (value < (min)) { *expected = (min); return FS_ERROR_EXPECTED_MIN; } }
 
 #define EXPECT_MAX(max) { \
-if (value > (max)) { *expected = (max); return FSError_EXPECTED_MAX; } }
+if (value > (max)) { *expected = (max); return FS_ERROR_EXPECTED_MAX; } }
 
 #define EXPECT_RANGE(min,max) { \
 EXPECT_MIN(min); EXPECT_MAX(max) }

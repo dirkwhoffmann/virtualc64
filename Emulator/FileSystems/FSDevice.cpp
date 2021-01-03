@@ -74,7 +74,7 @@ FSDevice::makeWithDisk(class Disk *disk, FSError *err)
         case D64_802_SECTORS: descriptor.numCyls = 42; break;
 
         default:
-            *err = FSError_CORRUPTED;
+            *err = FS_ERROR_CORRUPTED;
             return nullptr;
     }
         
@@ -136,7 +136,7 @@ FSDevice::makeWithFolder(const char *path, FSError *error)
     
     // Import the folder
     if (!device->importDirectory(path)) {
-        *error = FSError_IMPORT_ERROR;
+        *error = FS_ERROR_IMPORT_ERROR;
         delete device;
         return nullptr;
     }
@@ -713,7 +713,7 @@ FSDevice::importVolume(const u8 *src, size_t size, FSError *error)
     // Only proceed if the buffer size matches
     if (blocks.size() * 256 != size) {
         warn("BUFFER SIZE MISMATCH (%lu %lu)\n", blocks.size(), blocks.size() * 256);
-        if (error) *error = FSError_WRONG_CAPACITY;
+        if (error) *error = FS_ERROR_WRONG_CAPACITY;
         return false;
     }
         
@@ -724,7 +724,7 @@ FSDevice::importVolume(const u8 *src, size_t size, FSError *error)
         blocks[i]->importBlock(data);
     }
     
-    if (error) *error = FSError_OK;
+    if (error) *error = FS_ERROR_OK;
 
     // Run a directory scan
     scanDirectory();
@@ -816,7 +816,7 @@ FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, size_t size, FSError *error
 
     // Only proceed if the source buffer contains the right amount of data
     if (count * 256 != size) {
-        if (error) *error = FSError_WRONG_CAPACITY;
+        if (error) *error = FS_ERROR_WRONG_CAPACITY;
         return false;
     }
         
@@ -831,7 +831,7 @@ FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, size_t size, FSError *error
 
     debug(FS_DEBUG, "Success\n");
     
-    if (error) *error = FSError_OK;
+    if (error) *error = FS_ERROR_OK;
     return true;
 }
 
@@ -852,7 +852,7 @@ FSDevice::exportDirectory(const char *path, FSError *err)
     // Only proceed if path points to an empty directory
     long numItems = numDirectoryItems(path);
     if (numItems != 0) {
-        if (err) *err = FSError_DIRECTORY_NOT_EMPTY;
+        if (err) *err = FS_ERROR_DIRECTORY_NOT_EMPTY;
         return false;
     }
     
@@ -869,6 +869,6 @@ FSDevice::exportDirectory(const char *path, FSError *err)
     }
     
     msg("Exported %lu items", dir.size());
-    if (err) *err = FSError_OK;
+    if (err) *err = FS_ERROR_OK;
     return true;
 }

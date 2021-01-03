@@ -84,7 +84,7 @@ enum_long(ROM_IDENTIFIER)
 };
 typedef ROM_IDENTIFIER RomIdentifier;
 
-enum_long(FileError)
+enum_long(FILE_ERROR)
 {
     ERR_FILE_OK,
     
@@ -99,6 +99,7 @@ enum_long(FileError)
     // Snapshots
     ERR_UNSUPPORTED_SNAPSHOT    
 };
+typedef FILE_ERROR FileError;
 
 enum_long(TAP_VERSION)
 {
