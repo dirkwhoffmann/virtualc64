@@ -740,7 +740,7 @@ void
 C64::acquireThreadLock()
 {
     // Free the lock
-    if (state == STATE_RUNNING) {
+    if (state == EMULATOR_STATE_RUNNING) {
         
         // Assure the emulator thread exists
         assert(p != (pthread_t)0);

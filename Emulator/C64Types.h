@@ -208,25 +208,25 @@ inline const char *RomTypeName(RomType value)
     return "???";
 }
 
-enum_long(STATE)
+enum_long(EMULATOR_STATE)
 {
-    STATE_OFF,
-    STATE_PAUSED,
-    STATE_RUNNING
+    EMULATOR_STATE_OFF,
+    EMULATOR_STATE_PAUSED,
+    EMULATOR_STATE_RUNNING
 };
-typedef STATE State;
+typedef EMULATOR_STATE EmulatorState;
 
 inline bool isEmulatorState(long value) {
-    return (unsigned long)value <=  STATE_RUNNING;
+    return (unsigned long)value <=  EMULATOR_STATE_RUNNING;
 }
 
-inline const char *EmulatorStateName(State value)
+inline const char *EmulatorStateName(EmulatorState value)
 {
     switch (value) {
             
-        case STATE_OFF:      return "OFF";
-        case STATE_PAUSED:   return "PAUSED";
-        case STATE_RUNNING:  return "RUNNING";
+        case EMULATOR_STATE_OFF:      return "OFF";
+        case EMULATOR_STATE_PAUSED:   return "PAUSED";
+        case EMULATOR_STATE_RUNNING:  return "RUNNING";
     }
     return "???";
 }
