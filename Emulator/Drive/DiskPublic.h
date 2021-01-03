@@ -43,14 +43,14 @@ enum_long(DISK_TYPE)
 };
 typedef DISK_TYPE DiskType;
 
-enum_long(CMB_FILE_TYPE)
+enum_long(CBM_FILE_TYPE)
 {
-    CBM_PRG,
-    CBM_SEQ,
-    CBM_USR,
-    CBM_REL
+    CBM_FILE_PRG,
+    CBM_FILE_SEQ,
+    CBM_FILE_USR,
+    CBM_FILE_REL
 };
-typedef CMB_FILE_TYPE CBMFileType;
+typedef CBM_FILE_TYPE CBMFileType;
 
 
 //

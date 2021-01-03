@@ -24,7 +24,7 @@ Drive::Drive(DriveID id, C64 &ref) : C64Component(ref), deviceNr(id)
     
     config.connected = false;
     config.switchedOn = true;
-    config.type = DRIVE_VC1541II;
+    config.type = DRIVE_MODEL_VC1541II;
     
     insertionStatus = DISK_FULLY_EJECTED;
     disk.clearDisk();
@@ -94,7 +94,7 @@ Drive::setConfigItem(Option option, long id, long value)
             if (!DriveTypeEnum::verify(value)) return false;
             if (config.type == value) return false;
             
-            config.type = (DriveType)value;
+            config.type = (DriveModel)value;
             return true;
         }
         case OPT_DRIVE_CONNECT:

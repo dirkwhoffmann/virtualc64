@@ -14,23 +14,23 @@
 // Enumerations
 //
 
-enum_long(DRIVE_IDENTIFIER)
+enum_long(DRIVE_ID)
 {
     DRIVE8 = 8,
     DRIVE9 = 9
 };
-typedef DRIVE_IDENTIFIER DriveID;
+typedef DRIVE_ID DriveID;
 
 inline bool isDriveID(long value)
 {
     return (unsigned long)value <= DRIVE9;
 }
 
-enum_long(DRIVE_TYPE)
+enum_long(DRIVE_MODEL)
 {
-    DRIVE_VC1541II
+    DRIVE_MODEL_VC1541II
 };
-typedef DRIVE_TYPE DriveType;
+typedef DRIVE_MODEL DriveModel;
 
 enum_long(DISK_INSERTION_STATUS)
 {
@@ -47,7 +47,7 @@ typedef DISK_INSERTION_STATUS InsertionStatus;
 
 typedef struct
 {
-    DriveType type;
+    DriveModel type;
     bool connected;
     bool switchedOn;
 }

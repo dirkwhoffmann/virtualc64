@@ -37,7 +37,7 @@ struct CBMFileTypeEnum : Reflection<CBMFileTypeEnum, CBMFileType> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= CBM_REL;
+        return (unsigned long)value <= CBM_FILE_REL;
     }
     
     static const char *prefix() { return "CBM"; }
@@ -45,10 +45,10 @@ struct CBMFileTypeEnum : Reflection<CBMFileTypeEnum, CBMFileType> {
     {
         switch (value) {
                 
-            case CBM_PRG:  return "PRG";
-            case CBM_SEQ:  return "SEQ";
-            case CBM_USR:  return "USR";
-            case CBM_REL:  return "REL";
+            case CBM_FILE_PRG:  return "PRG";
+            case CBM_FILE_SEQ:  return "SEQ";
+            case CBM_FILE_USR:  return "USR";
+            case CBM_FILE_REL:  return "REL";
         }
         return "???";
     }

@@ -142,7 +142,7 @@ public:
 
     COUNT(const MemoryType)
     COUNT(const CartridgeType)
-    COUNT(const DriveType)
+    COUNT(const DriveModel)
     COUNT(const InsertionStatus)
     COUNT(const MicroInstruction)
     COUNT(const CIARevision)
@@ -151,7 +151,7 @@ public:
     COUNT(const SIDEngine)
     COUNT(const SamplingMethod)
     COUNT(const GlueLogic)
-    COUNT(const FlashRomState)
+    COUNT(const FlashState)
     COUNT(const reSID::EnvelopeGenerator::State)
     
     STRUCT(VICIIRegisters)
@@ -215,7 +215,7 @@ public:
  
     DESERIALIZE64(MemoryType)
     DESERIALIZE64(CartridgeType)
-    DESERIALIZE64(DriveType)
+    DESERIALIZE64(DriveModel)
     DESERIALIZE64(InsertionStatus)
     DESERIALIZE64(MicroInstruction)
     DESERIALIZE64(CIARevision)
@@ -224,7 +224,7 @@ public:
     DESERIALIZE64(SIDEngine)
     DESERIALIZE64(SamplingMethod)
     DESERIALIZE64(GlueLogic)
-    DESERIALIZE64(FlashRomState)
+    DESERIALIZE64(FlashState)
     DESERIALIZE32(reSID::EnvelopeGenerator::State)
 
     STRUCT(VICIIRegisters)
@@ -294,7 +294,7 @@ public:
  
     SERIALIZE64(const MemoryType)
     SERIALIZE64(const CartridgeType)
-    SERIALIZE64(const DriveType)
+    SERIALIZE64(const DriveModel)
     SERIALIZE64(const InsertionStatus)
     SERIALIZE64(const MicroInstruction)
     SERIALIZE64(const CIARevision)
@@ -303,7 +303,7 @@ public:
     SERIALIZE64(const SIDEngine)
     SERIALIZE64(const SamplingMethod)
     SERIALIZE64(const GlueLogic)
-    SERIALIZE64(const FlashRomState)
+    SERIALIZE64(const FlashState)
     SERIALIZE32(const reSID::EnvelopeGenerator::State)
 
     STRUCT(VICIIRegisters)

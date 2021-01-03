@@ -14,19 +14,19 @@
 // Reflection APIs
 //
 
-struct DriveTypeEnum : Reflection<DriveTypeEnum, DriveType> {
+struct DriveTypeEnum : Reflection<DriveTypeEnum, DriveModel> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= DRIVE_VC1541II;
+        return (unsigned long)value <= DRIVE_MODEL_VC1541II;
     }
     
     static const char *prefix() { return "DRIVE"; }
-    static const char *key(DriveType value)
+    static const char *key(DriveModel value)
     {
         switch (value) {
                 
-            case DRIVE_VC1541II:  return "VC1541II";
+            case DRIVE_MODEL_VC1541II:  return "VC1541II";
         }
         return "???";
     }

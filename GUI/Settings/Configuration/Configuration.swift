@@ -545,9 +545,9 @@ class Configuration {
         c64.suspend()
                 
         drive8Connected = defaults.driveConnect[0]
-        drive8Type = defaults.driveType[0].rawValue
+        drive8Type = defaults.driveModel[0].rawValue
         drive9Connected = defaults.driveConnect[1]
-        drive9Type = defaults.driveType[1].rawValue
+        drive9Type = defaults.driveModel[1].rawValue
         
         gameDevice1 = defaults.gameDevice1
         gameDevice2 = defaults.gameDevice2
@@ -562,9 +562,9 @@ class Configuration {
         c64.suspend()
         
         drive8Connected = defaults.bool(forKey: Keys.Per.drive8Connect)
-        drive8Type = defaults.integer(forKey: Keys.Per.drive8Type)
+        drive8Type = defaults.integer(forKey: Keys.Per.drive8Model)
         drive9Connected = defaults.bool(forKey: Keys.Per.drive9Connect)
-        drive9Type = defaults.integer(forKey: Keys.Per.drive9Type)
+        drive9Type = defaults.integer(forKey: Keys.Per.drive9Model)
         
         gameDevice1 = defaults.integer(forKey: Keys.Per.gameDevice1)
         gameDevice2 = defaults.integer(forKey: Keys.Per.gameDevice2)
@@ -579,9 +579,9 @@ class Configuration {
         let defaults = UserDefaults.standard
 
         defaults.set(drive8Connected, forKey: Keys.Per.drive8Connect)
-        defaults.set(drive8Type, forKey: Keys.Per.drive8Type)
+        defaults.set(drive8Type, forKey: Keys.Per.drive8Model)
         defaults.set(drive9Connected, forKey: Keys.Per.drive9Connect)
-        defaults.set(drive9Type, forKey: Keys.Per.drive9Type)
+        defaults.set(drive9Type, forKey: Keys.Per.drive9Model)
 
         defaults.set(gameDevice1, forKey: Keys.Per.gameDevice1)
         defaults.set(gameDevice2, forKey: Keys.Per.gameDevice2)

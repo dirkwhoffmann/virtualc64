@@ -17,7 +17,7 @@
 // Reflection APIs
 //
 
-struct FlashRomStateEnum : Reflection<FlashRomStateEnum, FlashRomState> {
+struct FlashStateEnum : Reflection<FlashStateEnum, FlashState> {
     
     static bool isValid(long value)
     {
@@ -25,7 +25,7 @@ struct FlashRomStateEnum : Reflection<FlashRomStateEnum, FlashRomState> {
     }
     
     static const char *prefix() { return "FLASH"; }
-    static const char *key(FlashRomState value)
+    static const char *key(FlashState value)
     {
         switch (value) {
                 

@@ -80,7 +80,7 @@ enum_long(CRT_TYPE)
 };
 typedef CRT_TYPE CartridgeType; 
 
-enum_long(FLASH_ROM_STATE)
+enum_long(FLASH_STATE)
 {
     FLASH_READ = 0,
     FLASH_MAGIC_1,
@@ -96,6 +96,6 @@ enum_long(FLASH_ROM_STATE)
     FLASH_SECTOR_ERASE_TIMEOUT,
     FLASH_SECTOR_ERASE_SUSPEND
 };
-typedef FLASH_ROM_STATE FlashRomState;
+typedef FLASH_STATE FlashState;
 
 #endif

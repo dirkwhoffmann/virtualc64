@@ -12,7 +12,7 @@
 #ifndef MESSAGE_QUEUE_PUBLIC_H
 #define MESSAGE_QUEUE_PUBLIC_H
 
-enum_long(MSGType)
+enum_long(MSG)
 {
     MSG_NONE = 0,
     
@@ -88,7 +88,7 @@ enum_long(MSGType)
     MSG_USER_SNAPSHOT_TAKEN,
     MSG_SNAPSHOT_RESTORED
 };
-typedef MSGType MsgType;
+typedef MSG MsgType;
 
 typedef struct
 {

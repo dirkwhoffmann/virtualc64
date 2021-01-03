@@ -32,10 +32,10 @@ class FlashRom : public C64Component {
     static const size_t romSize = 0x80000;
 
     // Current Flash Rom state
-    FlashRomState state;
+    FlashState state;
 
     // State taken after an operations has been completed
-    FlashRomState baseState;
+    FlashState baseState;
     
     // Flash Rom data
     u8 *rom = nullptr;
@@ -51,7 +51,7 @@ public:
     static bool isBankNumber(unsigned bank) { return bank < 64; }
     
     // Converts a Flash Rom state to a string
-    static const char *getStateAsString(FlashRomState state);
+    static const char *getStateAsString(FlashState state);
     
     
     //

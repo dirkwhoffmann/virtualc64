@@ -760,9 +760,9 @@ extension Keys {
                 
         // Drive
         static let drive8Connect  = "VC64_PER_Drive8Connect"
-        static let drive8Type     = "VC64_PER_Drive8Type"
+        static let drive8Model    = "VC64_PER_Drive8Type"
         static let drive9Connect  = "VC64_PER_Drive9Connect"
-        static let drive9Type     = "VC64_PER_Drive9Type"
+        static let drive9Model    = "VC64_PER_Drive9Type"
         
         // Ports
         static let gameDevice1    = "VC64_PER_ControlPort1"
@@ -773,7 +773,7 @@ extension Keys {
 struct PeripheralsDefaults {
     
     var driveConnect: [Bool]
-    var driveType: [DriveType]
+    var driveModel: [DriveModel]
     
     var gameDevice1: Int
     var gameDevice2: Int
@@ -785,7 +785,7 @@ struct PeripheralsDefaults {
     static let std = PeripheralsDefaults.init(
         
         driveConnect:  [true, false],
-        driveType:     [.VC1541II, .VC1541II],
+        driveModel:     [.VC1541II, .VC1541II],
         
         gameDevice1:   -1,
         gameDevice2:   -1
@@ -800,9 +800,9 @@ extension UserDefaults {
         let dictionary: [String: Any] = [
                         
             Keys.Per.drive8Connect: defaults.driveConnect[0],
-            Keys.Per.drive8Type:    defaults.driveType[0].rawValue,
+            Keys.Per.drive8Model:   defaults.driveModel[0].rawValue,
             Keys.Per.drive9Connect: defaults.driveConnect[1],
-            Keys.Per.drive9Type:    defaults.driveType[1].rawValue,
+            Keys.Per.drive9Model:   defaults.driveModel[1].rawValue,
             
             Keys.Per.gameDevice1:   defaults.gameDevice1,
             Keys.Per.gameDevice2:   defaults.gameDevice2
@@ -817,9 +817,9 @@ extension UserDefaults {
         let defaults = UserDefaults.standard
         
         let keys = [Keys.Per.drive8Connect,
-                    Keys.Per.drive8Type,
+                    Keys.Per.drive8Model,
                     Keys.Per.drive9Connect,
-                    Keys.Per.drive9Type,
+                    Keys.Per.drive9Model,
                     
                     Keys.Per.gameDevice1,
                     Keys.Per.gameDevice2

@@ -17,7 +17,7 @@
 // Reflection APIs
 //
 
-struct MSGTypeEnum : Reflection<MSGTypeEnum, MSGType> {
+struct MSGTypeEnum : Reflection<MSGTypeEnum, MsgType> {
     
     static bool isValid(long value)
     {
@@ -25,7 +25,7 @@ struct MSGTypeEnum : Reflection<MSGTypeEnum, MSGType> {
     }
 
     static const char *prefix() { return "MSG"; }
-    static const char *key(MSGType value)
+    static const char *key(MsgType value)
     {
         switch (value) {
                 

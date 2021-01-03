@@ -10,7 +10,7 @@
 #include "FlashRom.h"
 
 const char *
-FlashRom::getStateAsString(FlashRomState state)
+FlashRom::getStateAsString(FlashState state)
 {
     switch(state) {
         case FLASH_READ:return "FLASH_READ";
