@@ -136,7 +136,7 @@ ReSID::setRevision(SIDRevision revision)
     resume();
         
     assert((SIDRevision)sid->sid_model == revision);
-    trace(SID_DEBUG, "Emulating SID revision %s.\n", SIDRevisionName(revision));
+    trace(SID_DEBUG, "Emulating SID revision %s.\n", SIDRevisionEnum::key(revision));
 }
 
 void

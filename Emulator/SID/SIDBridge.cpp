@@ -113,13 +113,9 @@ SIDBridge::setConfigItem(Option option, long value)
             
         case OPT_SID_REVISION:
             
-            if (!isSIDRevision(value)) {
-                warn("Invalid SID revision: %ld\n", value);
-                return false;
-            }
-            if (config.revision == value) {
-                return false;
-            }
+            
+            if (!SIDRevisionEnum::verify(value)) return false;
+            if (config.revision == value) return false;
             
             suspend();
             config.revision = (SIDRevision)value;
@@ -143,13 +139,9 @@ SIDBridge::setConfigItem(Option option, long value)
             
         case OPT_SID_ENGINE:
             
-            if (!isSIDEngine(value)) {
-                warn("Invalid SID engine: %ld\n", value);
-                return false;
-            }
-            if (config.engine == value) {
-                return false;
-            }
+            if (!SIDEngineEnum::verify(value)) return false;
+            if (config.engine == value) return false;
+
             suspend();
             config.engine = (SIDEngine)value;
             resume();
@@ -158,13 +150,9 @@ SIDBridge::setConfigItem(Option option, long value)
             
         case OPT_SID_SAMPLING:
             
-            if (!isSamplingMethod(value)) {
-                warn("Invalid sampling method: %ld\n", value);
-                return false;
-            }
-            if (config.sampling == value) {
-                return false;
-            }
+            if (!SamplingMethodEnum::verify(value)) return false;
+            if (config.sampling == value)  return false;
+
             suspend();
             config.sampling = (SamplingMethod)value;
             setSamplingMethod((SamplingMethod)value);
@@ -341,7 +329,7 @@ SIDBridge::getRevision()
 void
 SIDBridge::setRevision(SIDRevision revision)
 {
-    trace(SID_DEBUG, "Setting SID revision to %s\n", SIDRevisionName(revision));
+    trace(SID_DEBUG, "Setting SID revision to %s\n", SIDRevisionEnum::key(revision));
 
     for (int i = 0; i < 4; i++) {
         resid[i].setRevision(revision);
@@ -415,7 +403,7 @@ SIDBridge::getSamplingMethod()
 void
 SIDBridge::setSamplingMethod(SamplingMethod method)
 {
-    trace(SID_DEBUG, "Setting sampling method to %s\n",SamplingMethodName(method));
+    trace(SID_DEBUG, "Setting sampling method to %s\n",SamplingMethodEnum::key(method));
 
     for (int i = 0; i < 4; i++) {
         resid[i].setSamplingMethod(method);
@@ -426,15 +414,20 @@ SIDBridge::setSamplingMethod(SamplingMethod method)
 void
 SIDBridge::_dumpConfig()
 {
-    msg(" Chip revision : %lld (%s)\n", config.revision, SIDRevisionName(config.revision));
-    msg("   Enable mask : %x\n", config.enabled);
-    msg("       Address : %x %x %x\n", config.address[1], config.address[2], config.address[3]);
-    msg("        Filter : %s\n", config.filter ? "yes" : "no");
-    msg("        Engine : %lld (%s)\n", config.engine, SIDEngineName(config.engine));
-    msg("      Sampling : %lld (%s)\n", config.sampling, SamplingMethodName(config.sampling));
-    msg("Channel volume : %lld %lld %lld %lld\n",
-        config.vol[0], config.vol[1], config.vol[2], config.vol[3]);
-    msg(" Master volume : %lld %lld\n", config.volL, config.volR);
+    msg("  Chip revision : %s\n",   SIDRevisionEnum::key(config.revision));
+    msg("    Enable mask : %x\n",   config.enabled);
+    msg("  1st extra SID : %x\n",   config.address[1]);
+    msg("  2nd extra SID : %x\n",   config.address[2]);
+    msg("  3rd extra SID : %x\n",   config.address[3]);
+    msg("         Filter : %s\n",   config.filter ? "yes" : "no");
+    msg("         Engine : %s\n",   SIDEngineEnum::key(config.engine));
+    msg("       Sampling : %s\n",   SamplingMethodEnum::key(config.sampling));
+    msg("       Volume 1 : %lld\n", config.vol[0]);
+    msg("       Volume 2 : %lld\n", config.vol[1]);
+    msg("       Volume 3 : %lld\n", config.vol[2]);
+    msg("       Volume 4 : %lld\n", config.vol[3]);
+    msg("       Volume L : %lld\n", config.volL);
+    msg("       Volume R : %lld\n", config.volR);
 }
 
 size_t
@@ -475,10 +468,10 @@ SIDBridge::_dump(int nr)
     
     msg("ReSID:\n");
     msg("------\n");
-    msg("    Chip model: %lld (%s)\n", residRev, SIDRevisionName(residRev));
-    msg(" Sampling rate: %f\n", resid[nr].getSampleRate());
-    msg(" CPU frequency: %d\n", resid[nr].getClockFrequency());
-    msg("Emulate filter: %s\n", resid[nr].getAudioFilter() ? "yes" : "no");
+    msg("    Chip model : %s\n", SIDRevisionEnum::key(residRev));
+    msg(" Sampling rate : %f\n", resid[nr].getSampleRate());
+    msg(" CPU frequency : %d\n", resid[nr].getClockFrequency());
+    msg("Emulate filter : %s\n", resid[nr].getAudioFilter() ? "yes" : "no");
     msg("\n");
 
     sidinfo = resid[nr].getInfo();
@@ -489,10 +482,10 @@ SIDBridge::_dump(int nr)
 
     msg("FastSID:\n");
     msg("--------\n");
-    msg("    Chip model: %lld (%s)\n", fastsidRev, SIDRevisionName(fastsidRev));
-    msg(" Sampling rate: %f\n", fastsid[nr].getSampleRate());
-    msg(" CPU frequency: %d\n", fastsid[nr].getClockFrequency());
-    msg("Emulate filter: %s\n", fastsid[nr].getAudioFilter() ? "yes" : "no");
+    msg("    Chip model : %s\n", SIDRevisionEnum::key(fastsidRev));
+    msg(" Sampling rate : %f\n", fastsid[nr].getSampleRate());
+    msg(" CPU frequency : %d\n", fastsid[nr].getClockFrequency());
+    msg("Emulate filter : %s\n", fastsid[nr].getAudioFilter() ? "yes" : "no");
     msg("\n");
         
     sidinfo = fastsid[nr].getInfo();

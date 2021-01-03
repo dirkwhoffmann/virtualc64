@@ -619,6 +619,7 @@
 		50E806BE25A1C2B800F08732 /* Reflection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reflection.h; sourceTree = "<group>"; };
 		50E806BF25A1C93B00F08732 /* CIAPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIAPrivate.h; sourceTree = "<group>"; };
 		50E806C025A1DE9200F08732 /* MessageQueuePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageQueuePrivate.h; sourceTree = "<group>"; };
+		50E806C125A1F1C500F08732 /* SIDPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIDPrivate.h; sourceTree = "<group>"; };
 		50E9B92C201F299500065A89 /* MyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyController.swift; sourceTree = "<group>"; };
 		50E9B92E201FA92C00065A89 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		50EAFFE924B2600D00024CD2 /* MyToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyToolbar.swift; sourceTree = "<group>"; };
@@ -1029,6 +1030,7 @@
 			isa = PBXGroup;
 			children = (
 				504C433024AF29AC00E69CAE /* SIDPublic.h */,
+				50E806C125A1F1C500F08732 /* SIDPrivate.h */,
 				50C9318D2589E41D00D8BB94 /* Volume.h */,
 				504C433224AF29AC00E69CAE /* SIDBridge.h */,
 				504C431224AF29AC00E69CAE /* SIDBridge.cpp */,

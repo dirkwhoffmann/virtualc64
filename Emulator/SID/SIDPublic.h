@@ -21,42 +21,12 @@ enum_long(SIDREV)
 };
 typedef SIDREV SIDRevision;
 
-inline bool isSIDRevision(long value)
-{
-    return (unsigned long)value <= MOS_8580;
-}
-
-inline const char *SIDRevisionName(SIDRevision type)
-{
-    switch (type) {
-            
-        case MOS_6581:  return "6581";
-        case MOS_8580:  return "8580";
-    }
-    return "???";
-}
-
 enum_long(SIDENGINE)
 {
     SIDENGINE_FASTSID,
     SIDENGINE_RESID
 };
 typedef SIDENGINE SIDEngine;
-
-inline bool isSIDEngine(long value)
-{
-    return (unsigned long)value <= SIDENGINE_RESID;
-}
-
-inline const char *SIDEngineName(SIDEngine value)
-{
-    switch (value) {
-            
-        case SIDENGINE_FASTSID:  return "FASTSID";
-        case SIDENGINE_RESID:    return "RESID";
-    }
-    return "???";
-}
 
 // This enum reflects enum "sampling_method" used by reSID.
 enum_long(SAMPLING)
@@ -67,23 +37,6 @@ enum_long(SAMPLING)
     SAMPLING_RESAMPLE_FASTMEM
 };
 typedef SAMPLING SamplingMethod;
-
-inline bool isSamplingMethod(long value)
-{
-    return (unsigned long)value <= SAMPLING_RESAMPLE_FASTMEM;
-}
-
-inline const char *SamplingMethodName(SamplingMethod method)
-{
-    switch (method) {
-            
-        case SAMPLING_FAST:              return "FAST";
-        case SAMPLING_INTERPOLATE:       return "INTERPOLATE";
-        case SAMPLING_RESAMPLE:          return "RESAMPLE";
-        case SAMPLING_RESAMPLE_FASTMEM:  return "RESAMPLE FASTMEM";
-    }
-    return "???";
-}
 
 //
 // Structures

@@ -19,7 +19,7 @@ public:
     MagicDesk(C64 &ref) : Cartridge(ref) { };
     const char *getDescription() override { return "MagicDesk"; }
     CartridgeType getCartridgeType() override { return CRT_MAGIC_DESK; }
-    
+    void resetCartConfig() override;
     
     //
     // Accessing cartridge memory

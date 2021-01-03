@@ -152,11 +152,6 @@ CRTFile::repair()
             // Replace invalid CRT type $00 by $1C
             msg("Repairing broken Mikro Assembler cartridge\n");
             data[0x17] = 0x1C;
-            break;
-            
-        case 0x5eef8cc7682f973: // Moonspire (invalid CRT type)
-            msg("TODO: Repairing Moonspire cartridge (%d)\n", data[0x17]);
-            // data[0x17] = 0x00;
-            break;
+            break;            
     }
 }

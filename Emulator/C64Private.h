@@ -17,9 +17,10 @@
 
 #include "MessageQueuePrivate.h"
 #include "VICIIPrivate.h"
-#include "DiskPrivate.h"
+#include "SIDPrivate.h"
 #include "CIAPrivate.h"
 #include "CPUPrivate.h"
+#include "DiskPrivate.h"
 
 //
 // Reflection APIs
