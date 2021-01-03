@@ -89,7 +89,7 @@
 		504C438224AF29AC00E69CAE /* C64Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42ED24AF29AB00E69CAE /* C64Object.cpp */; };
 		504C438324AF29AC00E69CAE /* HardwareComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42EE24AF29AB00E69CAE /* HardwareComponent.cpp */; };
 		504C438424AF29AC00E69CAE /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42EF24AF29AB00E69CAE /* Utils.cpp */; };
-		504C438524AF29AC00E69CAE /* MessageQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F124AF29AB00E69CAE /* MessageQueue.cpp */; };
+		504C438524AF29AC00E69CAE /* MsgQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F124AF29AB00E69CAE /* MsgQueue.cpp */; };
 		504C438724AF29AC00E69CAE /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F724AF29AB00E69CAE /* C64.cpp */; };
 		504C438824AF29AC00E69CAE /* Mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42FC24AF29AB00E69CAE /* Mouse.cpp */; };
 		504C438924AF29AC00E69CAE /* NeosMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42FD24AF29AB00E69CAE /* NeosMouse.cpp */; };
@@ -305,8 +305,8 @@
 		503C1DD224FCD1BF00D91141 /* SnapshotDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotDialog.swift; sourceTree = "<group>"; };
 		503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerToolbar.swift; sourceTree = "<group>"; };
 		503E198F20C42C6D007E91F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		504268AC24F0F76F006BB841 /* C64Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Private.h; sourceTree = "<group>"; };
-		504268AD24F12705006BB841 /* DiskPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskPrivate.h; sourceTree = "<group>"; };
+		504268AC24F0F76F006BB841 /* C64Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Types.h; sourceTree = "<group>"; };
+		504268AD24F12705006BB841 /* DiskTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskTypes.h; sourceTree = "<group>"; };
 		504C429024AF29AB00E69CAE /* Epyx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Epyx.h; sourceTree = "<group>"; };
 		504C429124AF29AB00E69CAE /* Ocean.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ocean.cpp; sourceTree = "<group>"; };
 		504C429224AF29AB00E69CAE /* WarpSpeed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WarpSpeed.cpp; sourceTree = "<group>"; };
@@ -360,11 +360,11 @@
 		504C42C224AF29AB00E69CAE /* CartridgeRom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CartridgeRom.cpp; sourceTree = "<group>"; };
 		504C42C324AF29AB00E69CAE /* FlashRom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FlashRom.cpp; sourceTree = "<group>"; };
 		504C42C424AF29AB00E69CAE /* Cartridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cartridge.h; sourceTree = "<group>"; };
-		504C42C524AF29AB00E69CAE /* CartridgePublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartridgePublic.h; sourceTree = "<group>"; };
+		504C42C524AF29AB00E69CAE /* CartridgePublicTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartridgePublicTypes.h; sourceTree = "<group>"; };
 		504C42C724AF29AB00E69CAE /* RomFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RomFile.cpp; sourceTree = "<group>"; };
 		504C42C824AF29AB00E69CAE /* AnyDisk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyDisk.h; sourceTree = "<group>"; };
 		504C42C924AF29AB00E69CAE /* D64File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = D64File.h; sourceTree = "<group>"; };
-		504C42CA24AF29AB00E69CAE /* FilePublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilePublic.h; sourceTree = "<group>"; };
+		504C42CA24AF29AB00E69CAE /* FilePublicTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilePublicTypes.h; sourceTree = "<group>"; };
 		504C42CB24AF29AB00E69CAE /* TAPFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPFile.h; sourceTree = "<group>"; };
 		504C42CC24AF29AB00E69CAE /* T64File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = T64File.cpp; sourceTree = "<group>"; };
 		504C42CD24AF29AB00E69CAE /* PRGFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PRGFile.cpp; sourceTree = "<group>"; };
@@ -385,9 +385,9 @@
 		504C42DE24AF29AB00E69CAE /* PRGFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRGFile.h; sourceTree = "<group>"; };
 		504C42DF24AF29AB00E69CAE /* T64File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = T64File.h; sourceTree = "<group>"; };
 		504C42E124AF29AB00E69CAE /* C64Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C64Memory.cpp; sourceTree = "<group>"; };
-		504C42E224AF29AB00E69CAE /* MemoryPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemoryPublic.h; sourceTree = "<group>"; };
+		504C42E224AF29AB00E69CAE /* MemoryPublicTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemoryPublicTypes.h; sourceTree = "<group>"; };
 		504C42E424AF29AB00E69CAE /* C64Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64Memory.h; sourceTree = "<group>"; };
-		504C42E624AF29AB00E69CAE /* CPUPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUPublic.h; sourceTree = "<group>"; };
+		504C42E624AF29AB00E69CAE /* CPUPublicTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUPublicTypes.h; sourceTree = "<group>"; };
 		504C42E724AF29AB00E69CAE /* CPUInstructions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUInstructions.h; sourceTree = "<group>"; };
 		504C42E824AF29AB00E69CAE /* CPU.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPU.h; sourceTree = "<group>"; };
 		504C42E924AF29AB00E69CAE /* CPU.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CPU.cpp; sourceTree = "<group>"; };
@@ -397,9 +397,9 @@
 		504C42EE24AF29AB00E69CAE /* HardwareComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HardwareComponent.cpp; sourceTree = "<group>"; };
 		504C42EF24AF29AB00E69CAE /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
 		504C42F024AF29AB00E69CAE /* TimeDelayed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeDelayed.h; sourceTree = "<group>"; };
-		504C42F124AF29AB00E69CAE /* MessageQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageQueue.cpp; sourceTree = "<group>"; };
+		504C42F124AF29AB00E69CAE /* MsgQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MsgQueue.cpp; sourceTree = "<group>"; };
 		504C42F224AF29AB00E69CAE /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
-		504C42F424AF29AB00E69CAE /* MessageQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageQueue.h; sourceTree = "<group>"; };
+		504C42F424AF29AB00E69CAE /* MsgQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MsgQueue.h; sourceTree = "<group>"; };
 		504C42F524AF29AB00E69CAE /* HardwareComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HardwareComponent.h; sourceTree = "<group>"; };
 		504C42F624AF29AB00E69CAE /* C64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64.h; sourceTree = "<group>"; };
 		504C42F724AF29AB00E69CAE /* C64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C64.cpp; sourceTree = "<group>"; };
@@ -410,12 +410,12 @@
 		504C42FD24AF29AB00E69CAE /* NeosMouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NeosMouse.cpp; sourceTree = "<group>"; };
 		504C42FE24AF29AB00E69CAE /* Mouse1350.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mouse1350.cpp; sourceTree = "<group>"; };
 		504C42FF24AF29AB00E69CAE /* Mouse1351.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mouse1351.cpp; sourceTree = "<group>"; };
-		504C430024AF29AB00E69CAE /* MousePublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MousePublic.h; sourceTree = "<group>"; };
+		504C430024AF29AB00E69CAE /* MousePublicTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MousePublicTypes.h; sourceTree = "<group>"; };
 		504C430124AF29AB00E69CAE /* Mouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mouse.h; sourceTree = "<group>"; };
 		504C430224AF29AB00E69CAE /* Mouse1351.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mouse1351.h; sourceTree = "<group>"; };
-		504C430324AF29AB00E69CAE /* C64Public.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64Public.h; sourceTree = "<group>"; };
+		504C430324AF29AB00E69CAE /* C64PublicTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64PublicTypes.h; sourceTree = "<group>"; };
 		504C430524AF29AB00E69CAE /* VICII_draw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_draw.cpp; sourceTree = "<group>"; };
-		504C430624AF29AC00E69CAE /* VICIIPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VICIIPublic.h; sourceTree = "<group>"; };
+		504C430624AF29AC00E69CAE /* VICIIPublicTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VICIIPublicTypes.h; sourceTree = "<group>"; };
 		504C430724AF29AC00E69CAE /* VICII.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII.cpp; sourceTree = "<group>"; };
 		504C430824AF29AC00E69CAE /* VICII_colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_colors.cpp; sourceTree = "<group>"; };
 		504C430924AF29AC00E69CAE /* VICII_debug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_debug.cpp; sourceTree = "<group>"; };
@@ -454,7 +454,7 @@
 		504C432D24AF29AC00E69CAE /* wave.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wave.cc; sourceTree = "<group>"; };
 		504C432E24AF29AC00E69CAE /* wave6581_PS_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave6581_PS_.h; sourceTree = "<group>"; };
 		504C432F24AF29AC00E69CAE /* version.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = version.cc; sourceTree = "<group>"; };
-		504C433024AF29AC00E69CAE /* SIDPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIDPublic.h; sourceTree = "<group>"; };
+		504C433024AF29AC00E69CAE /* SIDPublicTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIDPublicTypes.h; sourceTree = "<group>"; };
 		504C433124AF29AC00E69CAE /* ReSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReSID.cpp; sourceTree = "<group>"; };
 		504C433224AF29AC00E69CAE /* SIDBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIDBridge.h; sourceTree = "<group>"; };
 		504C433324AF29AC00E69CAE /* ReSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReSID.h; sourceTree = "<group>"; };
@@ -463,7 +463,7 @@
 		504C433724AF29AC00E69CAE /* FastSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastSID.h; sourceTree = "<group>"; };
 		504C433824AF29AC00E69CAE /* FastVoice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastVoice.cpp; sourceTree = "<group>"; };
 		504C433924AF29AC00E69CAE /* FastVoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastVoice.h; sourceTree = "<group>"; };
-		504C433B24AF29AC00E69CAE /* PortPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PortPublic.h; sourceTree = "<group>"; };
+		504C433B24AF29AC00E69CAE /* PortPublicTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PortPublicTypes.h; sourceTree = "<group>"; };
 		504C433C24AF29AC00E69CAE /* IEC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEC.cpp; sourceTree = "<group>"; };
 		504C433D24AF29AC00E69CAE /* ProcessorPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessorPort.h; sourceTree = "<group>"; };
 		504C433E24AF29AC00E69CAE /* ControlPort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ControlPort.cpp; sourceTree = "<group>"; };
@@ -482,12 +482,12 @@
 		504C434D24AF29AC00E69CAE /* Drive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Drive.cpp; sourceTree = "<group>"; };
 		504C434E24AF29AC00E69CAE /* Disk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Disk.h; sourceTree = "<group>"; };
 		504C434F24AF29AC00E69CAE /* DriveMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DriveMemory.h; sourceTree = "<group>"; };
-		504C435024AF29AC00E69CAE /* DiskPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiskPublic.h; sourceTree = "<group>"; };
-		504C435124AF29AC00E69CAE /* DrivePublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrivePublic.h; sourceTree = "<group>"; };
+		504C435024AF29AC00E69CAE /* DiskPublicTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiskPublicTypes.h; sourceTree = "<group>"; };
+		504C435124AF29AC00E69CAE /* DrivePublicTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrivePublicTypes.h; sourceTree = "<group>"; };
 		504C435324AF29AC00E69CAE /* CIA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CIA.h; sourceTree = "<group>"; };
 		504C435424AF29AC00E69CAE /* TOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOD.h; sourceTree = "<group>"; };
 		504C435524AF29AC00E69CAE /* TOD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TOD.cpp; sourceTree = "<group>"; };
-		504C435624AF29AC00E69CAE /* CIAPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CIAPublic.h; sourceTree = "<group>"; };
+		504C435624AF29AC00E69CAE /* CIAPublicTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CIAPublicTypes.h; sourceTree = "<group>"; };
 		504C435824AF29AC00E69CAE /* CIA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CIA.cpp; sourceTree = "<group>"; };
 		505184DD24F23484002C6124 /* MyControllerStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerStorage.swift; sourceTree = "<group>"; };
 		505184DF24F23CB6002C6124 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
@@ -500,7 +500,7 @@
 		5051A1611B88661000CBFB5A /* 1541_track_change_1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_1.aiff; sourceTree = "<group>"; };
 		50520F8925108FC400C7D47F /* Folder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Folder.cpp; sourceTree = "<group>"; };
 		50520F8A25108FC400C7D47F /* Folder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Folder.h; sourceTree = "<group>"; };
-		5052A7BF25A0703D00E62EDD /* CPUPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPUPrivate.h; sourceTree = "<group>"; };
+		5052A7BF25A0703D00E62EDD /* CPUTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPUTypes.h; sourceTree = "<group>"; };
 		5052A7C025A0AC0700E62EDD /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		50549B44257D1A6C006FE39C /* C64Constants.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64Constants.cpp; sourceTree = "<group>"; };
 		50549B46257D1B6A006FE39C /* Buffers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffers.h; sourceTree = "<group>"; };
@@ -532,7 +532,7 @@
 		5080501725873EC9004FE1F5 /* ExportDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportDialog.swift; sourceTree = "<group>"; };
 		508050192587A16D004FE1F5 /* FSDescriptors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSDescriptors.cpp; sourceTree = "<group>"; };
 		5080501A2587A16D004FE1F5 /* FSDescriptors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSDescriptors.h; sourceTree = "<group>"; };
-		5080501D2587A1B0004FE1F5 /* FSPublic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSPublic.h; sourceTree = "<group>"; };
+		5080501D2587A1B0004FE1F5 /* FSPublicTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSPublicTypes.h; sourceTree = "<group>"; };
 		508081E725110FFE0084B060 /* Dinamic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Dinamic.cpp; sourceTree = "<group>"; };
 		508081E825110FFE0084B060 /* Dinamic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Dinamic.h; sourceTree = "<group>"; };
 		508081EA2511206D0084B060 /* StructuredBasic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StructuredBasic.cpp; sourceTree = "<group>"; };
@@ -559,19 +559,19 @@
 		50ACF4DA256EB43B003B5690 /* Oscillator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Oscillator.h; sourceTree = "<group>"; };
 		50B171051EE6AB840019E8D4 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyControllerTouchBar.swift; sourceTree = "<group>"; };
-		50B1A61525A2028B00201A2C /* MemoryPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemoryPrivate.h; sourceTree = "<group>"; };
-		50B1A61625A203B100201A2C /* PortPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PortPrivate.h; sourceTree = "<group>"; };
-		50B1A61725A205D500201A2C /* DrivePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrivePrivate.h; sourceTree = "<group>"; };
-		50B1A61825A208D900201A2C /* MousePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MousePrivate.h; sourceTree = "<group>"; };
-		50B1A61925A209A200201A2C /* CartridgePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CartridgePrivate.h; sourceTree = "<group>"; };
-		50B1A61A25A20A8900201A2C /* FilePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilePrivate.h; sourceTree = "<group>"; };
-		50B1A61B25A20DFB00201A2C /* FSPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSPrivate.h; sourceTree = "<group>"; };
+		50B1A61525A2028B00201A2C /* MemoryTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemoryTypes.h; sourceTree = "<group>"; };
+		50B1A61625A203B100201A2C /* PortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PortTypes.h; sourceTree = "<group>"; };
+		50B1A61725A205D500201A2C /* DriveTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DriveTypes.h; sourceTree = "<group>"; };
+		50B1A61825A208D900201A2C /* MouseTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseTypes.h; sourceTree = "<group>"; };
+		50B1A61925A209A200201A2C /* CartridgeTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CartridgeTypes.h; sourceTree = "<group>"; };
+		50B1A61A25A20A8900201A2C /* FileTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileTypes.h; sourceTree = "<group>"; };
+		50B1A61B25A20DFB00201A2C /* FSTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSTypes.h; sourceTree = "<group>"; };
 		50B485F824F96E9400844133 /* ImportDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportDialog.xib; sourceTree = "<group>"; };
 		50B485FA24F9911600844133 /* ImportDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportDialog.swift; sourceTree = "<group>"; };
 		50B485FC24FA1D3200844133 /* iCarousel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		50B485FE24FA1D4100844133 /* iCarousel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
-		50B99CF024B0DA6B008BC9F8 /* MessageQueuePublic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageQueuePublic.h; sourceTree = "<group>"; };
+		50B99CF024B0DA6B008BC9F8 /* MsgQueuePublicTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MsgQueuePublicTypes.h; sourceTree = "<group>"; };
 		50BE4B5424E7F77F008F39C9 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		50BE4B5724E7F80C008F39C9 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		50BE4B5924E7F81B008F39C9 /* NSColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColor.swift; sourceTree = "<group>"; };
@@ -613,7 +613,7 @@
 		50D5F88724F556270062EF13 /* DiskErrors.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskErrors.xib; sourceTree = "<group>"; };
 		50D5F88924F5573D0062EF13 /* DiskErrorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskErrorController.swift; sourceTree = "<group>"; };
 		50D8421720A82CF500EB859A /* MetalViewEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalViewEvents.swift; sourceTree = "<group>"; };
-		50DAABD824F0108A005D426F /* VICIIPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VICIIPrivate.h; sourceTree = "<group>"; };
+		50DAABD824F0108A005D426F /* VICIITypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VICIITypes.h; sourceTree = "<group>"; };
 		50DBB44A2025CE5700489271 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		50DEAD8E2008E615008A8761 /* Shaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
 		50DF719325021FCA00953E2E /* Keycap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keycap.swift; sourceTree = "<group>"; };
@@ -624,9 +624,9 @@
 		50E5FFB3227964FA0025C73D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		50E5FFB4227964FA0025C73D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		50E806BE25A1C2B800F08732 /* Reflection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reflection.h; sourceTree = "<group>"; };
-		50E806BF25A1C93B00F08732 /* CIAPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIAPrivate.h; sourceTree = "<group>"; };
-		50E806C025A1DE9200F08732 /* MessageQueuePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageQueuePrivate.h; sourceTree = "<group>"; };
-		50E806C125A1F1C500F08732 /* SIDPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIDPrivate.h; sourceTree = "<group>"; };
+		50E806BF25A1C93B00F08732 /* CIATypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIATypes.h; sourceTree = "<group>"; };
+		50E806C025A1DE9200F08732 /* MsgQueueTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MsgQueueTypes.h; sourceTree = "<group>"; };
+		50E806C125A1F1C500F08732 /* SIDTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIDTypes.h; sourceTree = "<group>"; };
 		50E9B92C201F299500065A89 /* MyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyController.swift; sourceTree = "<group>"; };
 		50E9B92E201FA92C00065A89 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		50EAFFE924B2600D00024CD2 /* MyToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyToolbar.swift; sourceTree = "<group>"; };
@@ -773,8 +773,8 @@
 		5014B35024C4B44F009EFA63 /* Ports */ = {
 			isa = PBXGroup;
 			children = (
-				504C433B24AF29AC00E69CAE /* PortPublic.h */,
-				50B1A61625A203B100201A2C /* PortPrivate.h */,
+				504C433B24AF29AC00E69CAE /* PortPublicTypes.h */,
+				50B1A61625A203B100201A2C /* PortTypes.h */,
 				504C434024AF29AC00E69CAE /* ControlPort.h */,
 				504C433E24AF29AC00E69CAE /* ControlPort.cpp */,
 				504C434324AF29AC00E69CAE /* ExpansionPort.h */,
@@ -828,8 +828,8 @@
 			isa = PBXGroup;
 			children = (
 				504C42F824AF29AB00E69CAE /* C64Config.h */,
-				504C430324AF29AB00E69CAE /* C64Public.h */,
-				504268AC24F0F76F006BB841 /* C64Private.h */,
+				504C430324AF29AB00E69CAE /* C64PublicTypes.h */,
+				504268AC24F0F76F006BB841 /* C64Types.h */,
 				504C42F624AF29AB00E69CAE /* C64.h */,
 				504C42F724AF29AB00E69CAE /* C64.cpp */,
 				50A2D7AF24AF945200671F38 /* Foundation */,
@@ -853,8 +853,8 @@
 		504C428E24AF29AB00E69CAE /* Cartridges */ = {
 			isa = PBXGroup;
 			children = (
-				504C42C524AF29AB00E69CAE /* CartridgePublic.h */,
-				50B1A61925A209A200201A2C /* CartridgePrivate.h */,
+				504C42C524AF29AB00E69CAE /* CartridgePublicTypes.h */,
+				50B1A61925A209A200201A2C /* CartridgeTypes.h */,
 				504C42C424AF29AB00E69CAE /* Cartridge.h */,
 				504C42C024AF29AB00E69CAE /* Cartridge.cpp */,
 				504C42C124AF29AB00E69CAE /* CartridgeRom.h */,
@@ -929,8 +929,8 @@
 		504C42C624AF29AB00E69CAE /* Files */ = {
 			isa = PBXGroup;
 			children = (
-				504C42CA24AF29AB00E69CAE /* FilePublic.h */,
-				50B1A61A25A20A8900201A2C /* FilePrivate.h */,
+				504C42CA24AF29AB00E69CAE /* FilePublicTypes.h */,
+				50B1A61A25A20A8900201A2C /* FileTypes.h */,
 				5026118D259CACB60066E754 /* PETName.h */,
 				504C42CE24AF29AB00E69CAE /* AnyFile.h */,
 				504C42D624AF29AB00E69CAE /* AnyFile.cpp */,
@@ -965,8 +965,8 @@
 		504C42E024AF29AB00E69CAE /* Memory */ = {
 			isa = PBXGroup;
 			children = (
-				504C42E224AF29AB00E69CAE /* MemoryPublic.h */,
-				50B1A61525A2028B00201A2C /* MemoryPrivate.h */,
+				504C42E224AF29AB00E69CAE /* MemoryPublicTypes.h */,
+				50B1A61525A2028B00201A2C /* MemoryTypes.h */,
 				504C42E424AF29AB00E69CAE /* C64Memory.h */,
 				504C42E124AF29AB00E69CAE /* C64Memory.cpp */,
 				504C434F24AF29AC00E69CAE /* DriveMemory.h */,
@@ -978,8 +978,8 @@
 		504C42E524AF29AB00E69CAE /* CPU */ = {
 			isa = PBXGroup;
 			children = (
-				504C42E624AF29AB00E69CAE /* CPUPublic.h */,
-				5052A7BF25A0703D00E62EDD /* CPUPrivate.h */,
+				504C42E624AF29AB00E69CAE /* CPUPublicTypes.h */,
+				5052A7BF25A0703D00E62EDD /* CPUTypes.h */,
 				504C42E824AF29AB00E69CAE /* CPU.h */,
 				504C42E924AF29AB00E69CAE /* CPU.cpp */,
 				504C42E724AF29AB00E69CAE /* CPUInstructions.h */,
@@ -995,8 +995,8 @@
 		504C42F924AF29AB00E69CAE /* Peripherals */ = {
 			isa = PBXGroup;
 			children = (
-				504C430024AF29AB00E69CAE /* MousePublic.h */,
-				50B1A61825A208D900201A2C /* MousePrivate.h */,
+				504C430024AF29AB00E69CAE /* MousePublicTypes.h */,
+				50B1A61825A208D900201A2C /* MouseTypes.h */,
 				504C430124AF29AB00E69CAE /* Mouse.h */,
 				504C42FC24AF29AB00E69CAE /* Mouse.cpp */,
 				504C42FA24AF29AB00E69CAE /* Mouse1350.h */,
@@ -1014,8 +1014,8 @@
 		504C430424AF29AB00E69CAE /* VICII */ = {
 			isa = PBXGroup;
 			children = (
-				504C430624AF29AC00E69CAE /* VICIIPublic.h */,
-				50DAABD824F0108A005D426F /* VICIIPrivate.h */,
+				504C430624AF29AC00E69CAE /* VICIIPublicTypes.h */,
+				50DAABD824F0108A005D426F /* VICIITypes.h */,
 				504C430C24AF29AC00E69CAE /* VICII.h */,
 				504C430724AF29AC00E69CAE /* VICII.cpp */,
 				504C430524AF29AB00E69CAE /* VICII_draw.cpp */,
@@ -1041,8 +1041,8 @@
 		504C431124AF29AC00E69CAE /* SID */ = {
 			isa = PBXGroup;
 			children = (
-				504C433024AF29AC00E69CAE /* SIDPublic.h */,
-				50E806C125A1F1C500F08732 /* SIDPrivate.h */,
+				504C433024AF29AC00E69CAE /* SIDPublicTypes.h */,
+				50E806C125A1F1C500F08732 /* SIDTypes.h */,
 				50C9318D2589E41D00D8BB94 /* Volume.h */,
 				504C433224AF29AC00E69CAE /* SIDBridge.h */,
 				504C431224AF29AC00E69CAE /* SIDBridge.cpp */,
@@ -1106,16 +1106,16 @@
 		504C434724AF29AC00E69CAE /* Drive */ = {
 			isa = PBXGroup;
 			children = (
-				504C435124AF29AC00E69CAE /* DrivePublic.h */,
-				50B1A61725A205D500201A2C /* DrivePrivate.h */,
+				504C435124AF29AC00E69CAE /* DrivePublicTypes.h */,
+				50B1A61725A205D500201A2C /* DriveTypes.h */,
 				504C434C24AF29AC00E69CAE /* Drive.h */,
 				504C434D24AF29AC00E69CAE /* Drive.cpp */,
 				504C434924AF29AC00E69CAE /* VIA.h */,
 				504C434A24AF29AC00E69CAE /* VIA.cpp */,
 				504C434624AF29AC00E69CAE /* IEC.h */,
 				504C433C24AF29AC00E69CAE /* IEC.cpp */,
-				504C435024AF29AC00E69CAE /* DiskPublic.h */,
-				504268AD24F12705006BB841 /* DiskPrivate.h */,
+				504C435024AF29AC00E69CAE /* DiskPublicTypes.h */,
+				504268AD24F12705006BB841 /* DiskTypes.h */,
 				504C434E24AF29AC00E69CAE /* Disk.h */,
 				504C434824AF29AC00E69CAE /* Disk.cpp */,
 			);
@@ -1125,8 +1125,8 @@
 		504C435224AF29AC00E69CAE /* CIA */ = {
 			isa = PBXGroup;
 			children = (
-				504C435624AF29AC00E69CAE /* CIAPublic.h */,
-				50E806BF25A1C93B00F08732 /* CIAPrivate.h */,
+				504C435624AF29AC00E69CAE /* CIAPublicTypes.h */,
+				50E806BF25A1C93B00F08732 /* CIATypes.h */,
 				504C435324AF29AC00E69CAE /* CIA.h */,
 				504C435824AF29AC00E69CAE /* CIA.cpp */,
 				50BE4B7124E81266008F39C9 /* CIARegisters.cpp */,
@@ -1241,8 +1241,8 @@
 		5080501C2587A177004FE1F5 /* FileSystems */ = {
 			isa = PBXGroup;
 			children = (
-				5080501D2587A1B0004FE1F5 /* FSPublic.h */,
-				50B1A61B25A20DFB00201A2C /* FSPrivate.h */,
+				5080501D2587A1B0004FE1F5 /* FSPublicTypes.h */,
+				50B1A61B25A20DFB00201A2C /* FSTypes.h */,
 				5080501A2587A16D004FE1F5 /* FSDescriptors.h */,
 				508050192587A16D004FE1F5 /* FSDescriptors.cpp */,
 				50A077F7258A18B9005ACF5B /* FSDevice.h */,
@@ -1279,10 +1279,10 @@
 				504C42EE24AF29AB00E69CAE /* HardwareComponent.cpp */,
 				500EA6C624B09037009AA7D7 /* C64Component.h */,
 				500EA6C524B09037009AA7D7 /* C64Component.cpp */,
-				50B99CF024B0DA6B008BC9F8 /* MessageQueuePublic.h */,
-				50E806C025A1DE9200F08732 /* MessageQueuePrivate.h */,
-				504C42F424AF29AB00E69CAE /* MessageQueue.h */,
-				504C42F124AF29AB00E69CAE /* MessageQueue.cpp */,
+				50B99CF024B0DA6B008BC9F8 /* MsgQueuePublicTypes.h */,
+				50E806C025A1DE9200F08732 /* MsgQueueTypes.h */,
+				504C42F424AF29AB00E69CAE /* MsgQueue.h */,
+				504C42F124AF29AB00E69CAE /* MsgQueue.cpp */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -1675,7 +1675,7 @@
 				504C436124AF29AC00E69CAE /* SimonsBasic.cpp in Sources */,
 				50D5F88224F4F2E90062EF13 /* DiskPanel.swift in Sources */,
 				504C438824AF29AC00E69CAE /* Mouse.cpp in Sources */,
-				504C438524AF29AC00E69CAE /* MessageQueue.cpp in Sources */,
+				504C438524AF29AC00E69CAE /* MsgQueue.cpp in Sources */,
 				504C435D24AF29AC00E69CAE /* EasyFlash.cpp in Sources */,
 				504C435A24AF29AC00E69CAE /* WarpSpeed.cpp in Sources */,
 				50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */,

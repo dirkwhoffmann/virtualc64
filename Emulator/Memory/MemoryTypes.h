@@ -7,8 +7,11 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef MEMORY_PRIVATE_H
-#define MEMORY_PRIVATE_H
+#ifndef MEMORY_TYPES_H
+#define MEMORY_TYPES_H
+
+#include "MemoryPublicTypes.h"
+#include "Reflection.h"
 
 //
 // Reflection APIs

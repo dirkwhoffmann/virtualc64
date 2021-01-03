@@ -9,8 +9,8 @@
 
 // This file must conform to standard ANSI-C to be compatible with Swift
 
-#ifndef MESSAGE_QUEUE_PUBLIC_H
-#define MESSAGE_QUEUE_PUBLIC_H
+#ifndef MSG_QUEUE_PUBLIC_TYPES_H
+#define MSG_QUEUE_PUBLIC_TYPES_H
 
 enum_long(MSG)
 {

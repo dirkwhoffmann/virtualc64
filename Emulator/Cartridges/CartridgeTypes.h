@@ -7,10 +7,10 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef CARTRIDGE_PRIVATE_H
-#define CARTRIDGE_PRIVATE_H
+#ifndef CARTRIDGE_TYPES_H
+#define CARTRIDGE_TYPES_H
 
-#include "CartridgePublic.h"
+#include "CartridgePublicTypes.h"
 #include "Reflection.h"
 
 //

@@ -7,8 +7,11 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef DISK_PRIVATE_H
-#define DISK_PRIVATE_H
+#ifndef DISK_TYPES_H
+#define DISK_TYPES_H
+
+#include "DiskPublicTypes.h"
+#include "Reflection.h"
 
 //
 // Reflection APIs

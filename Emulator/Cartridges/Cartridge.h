@@ -11,9 +11,9 @@
 #define _CARTRIDGE_H
 
 #include "C64Component.h"
-#include "CartridgePublic.h"
-#include "CRTFile.h"
+#include "CartridgePublicTypes.h"
 #include "CartridgeRom.h"
+#include "CRTFile.h"
 
 class Cartridge : public C64Component {
     

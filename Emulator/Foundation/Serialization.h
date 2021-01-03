@@ -10,8 +10,7 @@
 #ifndef _SERIALIZATION_H
 #define _SERIALIZATION_H
 
-#include "C64Public.h"
-#include "C64Private.h"
+#include "C64Types.h"
 #include "CPUInstructions.h"
 #include "TimeDelayed.h"
 #include "Volume.h"

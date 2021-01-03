@@ -7,8 +7,11 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef DRIVE_PRIVATE_H
-#define DRIVE_PRIVATE_H
+#ifndef DRIVE_TYPES_H
+#define DRIVE_TYPES_H
+
+#include "DrivePublicTypes.h"
+#include "Reflection.h"
 
 //
 // Reflection APIs

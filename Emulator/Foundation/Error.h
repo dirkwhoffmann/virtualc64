@@ -10,7 +10,7 @@
 #ifndef _ERROR_H
 #define _ERROR_H
 
-#include "C64Public.h"
+#include "C64PublicTypes.h"
 #include <exception>
 
 struct Error : public std::exception

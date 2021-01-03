@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef CPU_PUBLIC_H
-#define CPU_PUBLIC_H
+#ifndef CPU_PUBLIC_TYPES_H
+#define CPU_PUBLIC_TYPES_H
 
 #include "Aliases.h"
 

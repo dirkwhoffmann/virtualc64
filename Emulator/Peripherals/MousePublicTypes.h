@@ -9,8 +9,8 @@
 
 // This file must conform to standard ANSI-C to be compatible with Swift.
 
-#ifndef MOUSE_PUBLIC_H
-#define MOUSE_PUBLIC_H
+#ifndef MOUSE_PUBLIC_TYPES_H
+#define MOUSE_PUBLIC_TYPES_H
 
 enum_long(MOUSE_MODEL)
 {

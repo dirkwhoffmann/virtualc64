@@ -13,14 +13,13 @@
 // General
 #include "C64Component.h"
 #include "Serialization.h"
-#include "MessageQueue.h"
+#include "MsgQueue.h"
 
 // Configuration items
 #include "C64Config.h"
 
 // Data types and constants
-#include "C64Public.h"
-#include "C64Private.h"
+#include "C64Types.h"
 
 // Loading and saving
 #include "Snapshot.h"
@@ -114,7 +113,7 @@ public:
     /* Communication channel to the GUI. The GUI registers a listener and a
      * callback function to retrieve messages.
      */
-    MessageQueue messageQueue;
+    MsgQueue messageQueue;
 
     
     //

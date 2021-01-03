@@ -12,22 +12,23 @@
  * APIs for various enum data types.
  */
 
-#ifndef C64_PRIVATE_H
-#define C64_PRIVATE_H
+#ifndef C64_TYPES_H
+#define C64_TYPES_H
 
-#include "CartridgePrivate.h"
-#include "CIAPrivate.h"
-#include "CPUPrivate.h"
-#include "DrivePrivate.h"
-#include "DiskPrivate.h"
-#include "FilePrivate.h"
-#include "FSPrivate.h"
-#include "MemoryPrivate.h"
-#include "MessageQueuePrivate.h"
-#include "MousePrivate.h"
-#include "PortPrivate.h"
-#include "SIDPrivate.h"
-#include "VICIIPrivate.h"
+#include "C64PublicTypes.h"
+#include "CartridgeTypes.h"
+#include "CIATypes.h"
+#include "CPUTypes.h"
+#include "DriveTypes.h"
+#include "DiskTypes.h"
+#include "FileTypes.h"
+#include "FSTypes.h"
+#include "MemoryTypes.h"
+#include "MsgQueueTypes.h"
+#include "MouseTypes.h"
+#include "PortTypes.h"
+#include "SIDTypes.h"
+#include "VICIITypes.h"
 
 //
 // Reflection APIs

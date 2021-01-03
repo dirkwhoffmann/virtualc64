@@ -11,12 +11,12 @@
 #define _MESSAGE_QUEUE_H
 
 #include "C64Object.h"
-#include "C64Public.h"
+// #include "C64PublicTypes.h"
 #include <map>
 
 using namespace std;
 
-class MessageQueue : public C64Object {
+class MsgQueue : public C64Object {
         
     // Maximum number of queued messages
     const static size_t capacity = 64;

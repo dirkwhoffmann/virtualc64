@@ -11,7 +11,7 @@
 #import <MetalKit/MetalKit.h>
 
 #include "C64Constants.h"
-#include "C64Public.h"
+#include "C64PublicTypes.h"
 
 // Forward declarations of proxy classes
 @class MyController;

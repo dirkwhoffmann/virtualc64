@@ -11,6 +11,8 @@
 #define _PET_NAME_H
 
 #include "C64Object.h"
+// #include "Utils.h"
+#include "PETName.h"
 
 template <int len> struct PETName : C64Object {
     

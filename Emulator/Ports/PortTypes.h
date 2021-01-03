@@ -7,8 +7,11 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef PORT_PRIVATE_H
-#define PORT_PRIVATE_H
+#ifndef PORT_TYPES_H
+#define PORT_TYPES_H
+
+#include "PortPublicTypes.h"
+#include "Reflection.h"
 
 //
 // Reflection APIs

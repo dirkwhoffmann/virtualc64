@@ -7,10 +7,10 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "MessageQueue.h"
+#include "MsgQueue.h"
 
 void
-MessageQueue::addListener(const void *listener, Callback *func)
+MsgQueue::addListener(const void *listener, Callback *func)
 {
     synchronized {
         listeners.insert(pair <const void *, Callback *> (listener, func));
@@ -24,7 +24,7 @@ MessageQueue::addListener(const void *listener, Callback *func)
 }
 
 void
-MessageQueue::removeListener(const void *listener)
+MsgQueue::removeListener(const void *listener)
 {
     synchronized {
         listeners.erase(listener);
@@ -32,7 +32,7 @@ MessageQueue::removeListener(const void *listener)
 }
 
 Message
-MessageQueue::get()
+MsgQueue::get()
 { 
 	Message result;
 
@@ -52,7 +52,7 @@ MessageQueue::get()
 }
 
 void
-MessageQueue::put(MsgType type, u64 data)
+MsgQueue::put(MsgType type, u64 data)
 {
     synchronized {
         
@@ -76,7 +76,7 @@ MessageQueue::put(MsgType type, u64 data)
 }
 
 void
-MessageQueue::propagate(Message *msg)
+MsgQueue::propagate(Message *msg)
 {
     map <const void *, Callback *> :: iterator i;
     

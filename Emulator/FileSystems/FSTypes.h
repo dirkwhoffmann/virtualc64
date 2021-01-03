@@ -7,10 +7,10 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef FS_PRIVATE_H
-#define FS_PRIVATE_H
+#ifndef FS_TYPES_H
+#define FS_TYPES_H
 
-#include "FSPublic.h"
+#include "FSPublicTypes.h"
 #include "Reflection.h"
 
 //

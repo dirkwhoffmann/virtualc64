@@ -7,11 +7,11 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef MESSAGE_QUEUE_PRIVATE_H
-#define MESSAGE_QUEUE_PRIVATE_H
+#ifndef MSG_QUEUE_TYPES_H
+#define MSG_QUEUE_TYPES_H
 
+#include "MsgQueuePublicTypes.h"
 #include "Reflection.h"
-#include "MessageQueuePublic.h"
 
 //
 // Reflection APIs

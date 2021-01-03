@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef MEMORY_PUBLIC_H
-#define MEMORY_PUBLIC_H
+#ifndef MEMORY_PUBLIC_TYPES_H
+#define MEMORY_PUBLIC_TYPES_H
 
 //
 // Enumerations

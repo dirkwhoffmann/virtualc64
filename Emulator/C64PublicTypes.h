@@ -15,24 +15,24 @@
  * Objective-C.
  */
 
-#ifndef C64_PUBLIC_H
-#define C64_PUBLIC_H
+#ifndef C64_PUBLIC_TYPES_H
+#define C64_PUBLIC_TYPES_H
 
 #include "Aliases.h"
 
-#include "CartridgePublic.h"
-#include "CIAPublic.h"
-#include "PortPublic.h"
-#include "CPUPublic.h"
-#include "DiskPublic.h"
-#include "DrivePublic.h"
-#include "FilePublic.h"
-#include "FSPublic.h"
-#include "MemoryPublic.h"
-#include "MessageQueuePublic.h"
-#include "MousePublic.h"
-#include "SIDPublic.h"
-#include "VICIIPublic.h"
+#include "CartridgePublicTypes.h"
+#include "CIAPublicTypes.h"
+#include "CPUPublicTypes.h"
+#include "DiskPublicTypes.h"
+#include "DrivePublicTypes.h"
+#include "FilePublicTypes.h"
+#include "FSPublicTypes.h"
+#include "MemoryPublicTypes.h"
+#include "MsgQueuePublicTypes.h"
+#include "MousePublicTypes.h"
+#include "PortPublicTypes.h"
+#include "SIDPublicTypes.h"
+#include "VICIIPublicTypes.h"
 
 //
 // Enumerations

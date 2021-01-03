@@ -7,8 +7,11 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef MOUSE_PRIVATE_H
-#define MOUSE_PRIVATE_H
+#ifndef MOUSE_TYPES_H
+#define MOUSE_TYPES_H
+
+#include "MousePublicTypes.h"
+#include "Reflection.h"
 
 //
 // Reflection APIs

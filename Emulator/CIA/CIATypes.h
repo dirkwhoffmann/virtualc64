@@ -7,11 +7,11 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _CIA_PRIVATE_H
-#define _CIA_PRIVATE_H
+#ifndef CIA_TYPES_H
+#define CIA_TYPES_H
 
+#include "CIAPublicTypes.h"
 #include "Reflection.h"
-#include "CIAPublic.h"
 
 struct CIARevisionEnum : Reflection<CIARevisionEnum, CIARevision> {
     

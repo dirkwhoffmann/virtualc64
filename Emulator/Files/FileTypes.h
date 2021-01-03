@@ -7,10 +7,10 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef FILE_PRIVATE_H
-#define FILE_PRIVATE_H
+#ifndef FILE_TYPES_H
+#define FILE_TYPES_H
 
-#include "FilePublic.h"
+#include "FilePublicTypes.h"
 #include "Reflection.h"
 
 //

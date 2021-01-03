@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef CARTRIDGE_PUBLIC_H
-#define CARTRIDGE_PUBLIC_H
+#ifndef CARTRIDGE_PUBLIC_TYPES_H
+#define CARTRIDGE_PUBLIC_TYPES_H
 
 enum_long(CRT_TYPE)
 {

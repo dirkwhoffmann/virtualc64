@@ -7,9 +7,15 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef CPU_PRIVATE_TYPES_H
-#define CPU_PRIVATE_TYPES_H
+#ifndef CPU_TYPES_H
+#define CPU_TYPES_H
 
+#include "CPUPublicTypes.h"
+#include "Reflection.h"
+
+//
+// Constants
+//
 
 #define C_FLAG 0x01
 #define Z_FLAG 0x02

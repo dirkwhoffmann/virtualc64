@@ -7,8 +7,15 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _VICII_INTERNAL_TYPES_H
-#define _VICII_INTERNAL_TYPES_H
+#ifndef VICII_TYPES_H
+#define VICII_TYPES_H
+
+#include "VICIIPublicTypes.h"
+#include "Reflection.h"
+
+//
+// Constants
+//
 
 // Sprite bit masks
 #define SPR0 0x01

@@ -7,8 +7,11 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef SID_PRIVATE_H
-#define SID_PRIVATE_H
+#ifndef SID_TYPES_H
+#define SID_TYPES_H
+
+#include "SIDPublicTypes.h"
+#include "Reflection.h"
 
 //
 // Reflection APIs
