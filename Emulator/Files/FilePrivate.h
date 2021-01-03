@@ -10,6 +10,9 @@
 #ifndef FILE_PRIVATE_H
 #define FILE_PRIVATE_H
 
+#include "FilePublic.h"
+#include "Reflection.h"
+
 //
 // Reflection APIs
 //

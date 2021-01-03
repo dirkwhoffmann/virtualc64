@@ -27,7 +27,7 @@
 struct FSDeviceDescriptor : C64Object {
     
     // DOS type
-    DOSType dos = DOSType_NODOS;
+    DOSType dos = DOS_TYPE_NODOS;
     
     // Number of cylinders
     u32 numCyls = 0;
@@ -43,7 +43,7 @@ struct FSDeviceDescriptor : C64Object {
     FSDeviceDescriptor() { }
 
     // Creates a device descriptor for a standard disk
-    FSDeviceDescriptor(DiskType type, DOSType dos = DOSType_CBM);
+    FSDeviceDescriptor(DiskType type, DOSType dos = DOS_TYPE_CBM);
 
     // Creates a device descriptor from a D64 file
     FSDeviceDescriptor(class D64File *d64);

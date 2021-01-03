@@ -12,7 +12,7 @@
 
 FSDeviceDescriptor::FSDeviceDescriptor(DiskType type, DOSType dos)
 {
-    assert(dos == DOSType_CBM);
+    assert(dos == DOS_TYPE_CBM);
  
     this->dos = dos;
     
@@ -37,7 +37,7 @@ FSDeviceDescriptor::FSDeviceDescriptor(D64File *d64)
 {
     assert(d64);
     
-    this->dos = DOSType_CBM;
+    this->dos = DOS_TYPE_CBM;
     numCyls = d64->numTracks();
     numHeads = 1;
 }

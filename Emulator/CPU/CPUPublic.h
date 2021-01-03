@@ -15,16 +15,6 @@
 #define LOG_BUFFER_CAPACITY 256 // TODO: CLEAN THIS UP. STILL USED?
 #define CPUINFO_INSTR_COUNT 256 // TODO: CLEAN THIS UP. STILL USED? 
 
-/*
-#define C_FLAG 0x01
-#define Z_FLAG 0x02
-#define I_FLAG 0x04
-#define D_FLAG 0x08
-#define B_FLAG 0x10
-#define V_FLAG 0x40
-#define N_FLAG 0x80
-*/
-
 //
 // Enumerations
 //
@@ -114,22 +104,6 @@ typedef struct
 {
     u64 cycle;
 
-    /*
-    u16 pc0;
-    u8 sp;
-    u8 a;
-    u8 x;
-    u8 y;
-    
-    bool nFlag;
-    bool vFlag;
-    bool bFlag;
-    bool dFlag;
-    bool iFlag;
-    bool zFlag;
-    bool cFlag;
-    */
-    
     Registers reg;
     
     u8 irq;

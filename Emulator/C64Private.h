@@ -20,6 +20,8 @@
 #include "CPUPrivate.h"
 #include "DrivePrivate.h"
 #include "DiskPrivate.h"
+#include "FilePrivate.h"
+#include "FSPrivate.h"
 #include "MemoryPrivate.h"
 #include "MessageQueuePrivate.h"
 #include "MousePrivate.h"

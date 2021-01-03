@@ -565,6 +565,7 @@
 		50B1A61825A208D900201A2C /* MousePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MousePrivate.h; sourceTree = "<group>"; };
 		50B1A61925A209A200201A2C /* CartridgePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CartridgePrivate.h; sourceTree = "<group>"; };
 		50B1A61A25A20A8900201A2C /* FilePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilePrivate.h; sourceTree = "<group>"; };
+		50B1A61B25A20DFB00201A2C /* FSPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSPrivate.h; sourceTree = "<group>"; };
 		50B485F824F96E9400844133 /* ImportDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportDialog.xib; sourceTree = "<group>"; };
 		50B485FA24F9911600844133 /* ImportDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportDialog.swift; sourceTree = "<group>"; };
 		50B485FC24FA1D3200844133 /* iCarousel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
@@ -1241,6 +1242,7 @@
 			isa = PBXGroup;
 			children = (
 				5080501D2587A1B0004FE1F5 /* FSPublic.h */,
+				50B1A61B25A20DFB00201A2C /* FSPrivate.h */,
 				5080501A2587A16D004FE1F5 /* FSDescriptors.h */,
 				508050192587A16D004FE1F5 /* FSDescriptors.cpp */,
 				50A077F7258A18B9005ACF5B /* FSDevice.h */,

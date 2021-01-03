@@ -16,26 +16,12 @@
 // Enumerations
 //
 
-enum_long(DOSType)
+enum_long(DOS_TYPE)
 {
-    DOSType_NODOS,
-    DOSType_CBM
+    DOS_TYPE_NODOS,
+    DOS_TYPE_CBM
 };
-
-inline bool isDOSType(long value)
-{
-    return (unsigned long)value < DOSType_CBM;
-}
-
-inline const char *DOSTypeName(DOSType value)
-{
-    switch (value) {
-            
-        case DOSType_NODOS:  return "NODOS";
-        case DOSType_CBM:    return "CBM";
-        default:             return "???";
-    }
-}
+typedef DOS_TYPE DOSType;
 
 enum_long(FS_FILETYPE)
 {
@@ -47,24 +33,6 @@ enum_long(FS_FILETYPE)
 };
 typedef FS_FILETYPE FSFileType;
 
-inline bool isFSFileType(long value)
-{
-    return (unsigned long)value <= FS_FILETYPE_REL;
-}
-
-inline const char *FSFileTypeName(FSFileType value)
-{
-    switch (value) {
-            
-        case FS_FILETYPE_DEL:  return "DEL";
-        case FS_FILETYPE_SEQ:  return "SEQ";
-        case FS_FILETYPE_PRG:  return "PRG";
-        case FS_FILETYPE_USR:  return "USR";
-        case FS_FILETYPE_REL:  return "REL";
-    }
-    return "???";
-}
-
 enum_long(FS_BLOCKTYPE)
 {
     FS_BLOCKTYPE_UNKNOWN,
@@ -73,25 +41,6 @@ enum_long(FS_BLOCKTYPE)
     FS_BLOCKTYPE_DATA
 };
 typedef FS_BLOCKTYPE FSBlockType;
-
-inline bool
-isFSBlockType(long value)
-{
-    return (unsigned long)value <= FS_BLOCKTYPE_DATA;
-}
-
-inline const char *
-sFSBlockType(FSBlockType type)
-{
-    switch (type) {
-            
-        case FS_BLOCKTYPE_UNKNOWN:  return "UNKNOWN";
-        case FS_BLOCKTYPE_BAM:      return "BAM";
-        case FS_BLOCKTYPE_DIR:      return "DIR";
-        case FS_BLOCKTYPE_DATA:     return "DATA";
-    }
-    return "???";
-}
 
 enum_long(FS_USAGE)
 {
@@ -119,11 +68,6 @@ enum_long(FS_USAGE)
     FS_USAGE_DATA
 };
 typedef FS_USAGE FSUsage;
-
-inline bool isFSUsage(long value)
-{
-    return (unsigned long)value <= FS_USAGE_DATA;
-}
 
 enum_long(FSError)
 {

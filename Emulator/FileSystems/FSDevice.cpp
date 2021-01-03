@@ -24,7 +24,7 @@ FSDevice::makeWithType(DiskType type, DOSType vType)
     FSDeviceDescriptor layout = FSDeviceDescriptor(type);
     FSDevice *fileSystem = makeWithFormat(layout);
     
-    if (vType != DOSType_NODOS) {
+    if (vType != DOS_TYPE_NODOS) {
         fileSystem->bamPtr()->writeBAM();
     }
     
@@ -175,7 +175,7 @@ FSDevice::dump()
     for (size_t i = 0; i < blocks.size(); i++)  {
         
         msg("\nBlock %zu (%d):", i, blocks[i]->nr);
-        msg(" %s\n", sFSBlockType(blocks[i]->type()));
+        msg(" %s\n", FSBlockTypeEnum::key(blocks[i]->type()));
         
         blocks[i]->dump();
     }
