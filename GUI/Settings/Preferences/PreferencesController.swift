@@ -166,6 +166,13 @@ class PreferencesController: DialogController {
         if let id = firstTab { tabView.selectTabViewItem(withIdentifier: id) }
     }
 
+    override func cleanup() {
+     
+        track()
+        parent.gamePadManager.gamePads[3]?.notify = false
+        parent.gamePadManager.gamePads[4]?.notify = false
+    }
+    
     func refresh() {
         
         if let id = tabView.selectedTabViewItem?.identifier as? String {
@@ -173,6 +180,7 @@ class PreferencesController: DialogController {
             switch id {
             case "Emulator": refreshEmulatorTab()
             case "Controls": refreshControlsTab()
+            case "Devices": refreshDevicesTab()
             case "Keyboard": refreshKeyboardTab()
             default: break
             }
@@ -197,7 +205,8 @@ class PreferencesController: DialogController {
         
         track()
         pref.saveGeneralUserDefaults()
-        pref.saveDevicesUserDefaults()
+        pref.saveControlsUserDefaults()
+        myAppDelegate.database.save()
         hideSheet()
     }
 }
@@ -207,7 +216,24 @@ extension PreferencesController: NSTabViewDelegate {
     func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
         
         track()
-        refresh()
+        if let id = tabViewItem?.identifier as? String {
+            
+            switch id {
+            case "Emulator": refreshEmulatorTab()
+            case "Controls": refreshControlsTab()
+            case "Devices": selectDevicesTab(); refreshDevicesTab()
+            case "Keyboard": refreshKeyboardTab()
+            default: fatalError()
+            }
+        }
+    }
+}
+
+extension PreferencesController: NSWindowDelegate {
+    
+    func windowWillClose(_ notification: Notification) {
+         
+        cleanup()
     }
 }
 

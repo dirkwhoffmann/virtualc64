@@ -206,7 +206,7 @@ class Preferences {
         autofireFrequency = defaults.float(forKey: Keys.Con.autofireFrequency)
     }
     
-    func saveDevicesUserDefaults() {
+    func saveControlsUserDefaults() {
         
         let defaults = UserDefaults.standard
         
