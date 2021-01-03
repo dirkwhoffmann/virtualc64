@@ -180,6 +180,7 @@
 		50ACF4DB256EB43B003B5690 /* Oscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACF4D9256EB43B003B5690 /* Oscillator.cpp */; };
 		50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */; };
 		50B1A61D25A2368D00201A2C /* DeviceDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1A61C25A2368D00201A2C /* DeviceDatabase.swift */; };
+		50B1A61F25A2386F00201A2C /* HIDExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1A61E25A2386F00201A2C /* HIDExtensions.swift */; };
 		50B485F924F96E9400844133 /* ImportDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B485F824F96E9400844133 /* ImportDialog.xib */; };
 		50B485FB24F9911600844133 /* ImportDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B485FA24F9911600844133 /* ImportDialog.swift */; };
 		50B485FD24FA1D3200844133 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B485FC24FA1D3200844133 /* iCarousel.m */; };
@@ -568,6 +569,7 @@
 		50B1A61A25A20A8900201A2C /* FileTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileTypes.h; sourceTree = "<group>"; };
 		50B1A61B25A20DFB00201A2C /* FSTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSTypes.h; sourceTree = "<group>"; };
 		50B1A61C25A2368D00201A2C /* DeviceDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDatabase.swift; sourceTree = "<group>"; };
+		50B1A61E25A2386F00201A2C /* HIDExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDExtensions.swift; sourceTree = "<group>"; };
 		50B485F824F96E9400844133 /* ImportDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportDialog.xib; sourceTree = "<group>"; };
 		50B485FA24F9911600844133 /* ImportDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportDialog.swift; sourceTree = "<group>"; };
 		50B485FC24FA1D3200844133 /* iCarousel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
@@ -752,6 +754,7 @@
 				5081AB621EF29E6400D6F616 /* MacAudio.swift */,
 				50FF818E1F88D9100004548A /* GamePad.swift */,
 				50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */,
+				50B1A61E25A2386F00201A2C /* HIDExtensions.swift */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -1689,6 +1692,7 @@
 				50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */,
 				50BE4B6C24E7FB9E008F39C9 /* CGImage.swift in Sources */,
 				504C436924AF29AC00E69CAE /* Zaxxon.cpp in Sources */,
+				50B1A61F25A2386F00201A2C /* HIDExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

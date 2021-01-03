@@ -7,8 +7,6 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-// import IOKit.pwr_mgt
-
 /* An object of this class holds and manages an array of GamePad objects.
  * Up to five gamepads are managed. The first three gamepads are initialized
  * by default and represent a mouse and two keyboard emulated joysticks.
@@ -21,13 +19,12 @@ class GamePadManager {
     
     // Reference to the HID manager
     var hidManager: IOHIDManager
-    
-    // private let inputLock = NSLock()
-    // Such a thing is used here: TODO: Check if we need this
-    // https://github.com/joekarl/swift_handmade_hero/blob/master/Handmade%20Hero%20OSX/Handmade%20Hero%20OSX/InputManager.swift
-    
+        
     // Gamepad storage
     var gamePads: [Int: GamePad] = [:]
+    
+    // Lock for synchronizing asynchroneous calls
+    var lock = NSLock()
     
     //
     // Initializing
@@ -101,7 +98,7 @@ class GamePadManager {
         track()
         
         // Terminate communication with all connected HID devices
-        for (_, pad) in gamePads { pad.close() }
+        for (_, pad) in gamePads { pad.device?.close() }
         
         // Close the HID manager
         IOHIDManagerClose(hidManager, IOOptionBits(kIOHIDOptionsTypeNone))
@@ -130,7 +127,10 @@ class GamePadManager {
         while !isEmpty(slot: nr) { nr += 1 }
         
         // We support up to 5 devices
-        return (nr < 5) ? nr : nil
+        if nr < 5 { return nr }
+        
+        track("Maximum number of devices reached.")
+        return nil
     }
     
     func connect(slot: Int, port: Int) {
@@ -150,6 +150,7 @@ class GamePadManager {
         return gamePads[slot]?.icon ?? NSImage.init(named: "devGamepad1Template")!
     }
 
+    /*
     func getSlot(port: Int) -> Int {
         
         var result = InputDevice.none
@@ -161,96 +162,50 @@ class GamePadManager {
         
         return result
     }
+    */
     
     //
-    // HID stuff
+    // HID support
     //
     
-   func isBuiltIn(device: IOHIDDevice) -> Bool {
-       
-       let key = kIOHIDBuiltInKey as CFString
-       
-       if let value = IOHIDDeviceGetProperty(device, key) as? Int {
-           return value != 0
-       } else {
-           return false
-       }
-   }
-    
-    // Device matching callback
-    // This method is invoked when a matching HID device is plugged in.
+    // Matching callback (invoked when a matching HID device is plugged in)
     func hidDeviceAdded(context: UnsafeMutableRawPointer?,
                         result: IOReturn,
                         sender: UnsafeMutableRawPointer?,
                         device: IOHIDDevice) {
-        
+    
+        lock.lock(); defer { lock.unlock() }
         track()
         
         // Ignore internal devices
-        if isBuiltIn(device: device) { return }
+        if device.isBuiltIn { return }
         
         // Find a free slot for the new device
-        guard let slot = findFreeSlot() else {
-            track("Maximum number of devices reached. Ignoring device")
-            return
-        }
-        
-        // Collect device properties
-        let vendorIDKey = kIOHIDVendorIDKey as CFString
-        let productIDKey = kIOHIDProductIDKey as CFString
-        let locationIDKey = kIOHIDLocationIDKey as CFString
-        
-        var vendorID = 0
-        var productID = 0
-        var locationID = 0
-        
-        if let value = IOHIDDeviceGetProperty(device, vendorIDKey) as? Int {
-            vendorID = value
-        }
-        if let value = IOHIDDeviceGetProperty(device, productIDKey) as? Int {
-            productID = value
-        }
-        if let value = IOHIDDeviceGetProperty(device, locationIDKey) as? Int {
-            locationID = value
-        }
-        
-        track("    slotNr = \(slot)")
-        track("  vendorID = \(vendorID)")
-        track(" productID = \(productID)")
-        track("locationID = \(locationID)")
+        guard let slot = findFreeSlot() else { return }
         
         // Add device
-        addJoystick(slot: slot, device: device,
-                    vendorID: vendorID, productID: productID, locationID: locationID)
+        addDevice(slot: slot, device: device)
+                
+        // Reconnect devices (assignments trigger side effects)
+        parent.config.gameDevice1 = parent.config.gameDevice1
+        parent.config.gameDevice2 = parent.config.gameDevice2
         
-        // Inform the controller about the new device
+        // Inform about the changed configuration
         parent.toolbar.validateVisibleItems()
-        parent.configurator?.refresh()
-
+        parent.myAppDelegate.deviceAdded()
+        
         listDevices()
     }
     
-    func addJoystick(slot: Int,
-                     device: IOHIDDevice,
-                     vendorID: Int,
-                     productID: Int,
-                     locationID: Int) {
+    func addDevice(slot: Int, device: IOHIDDevice) {
         
         // Open device
-        let optionBits = kIOHIDOptionsTypeNone // kIOHIDOptionsTypeSeizeDevice
-        let status = IOHIDDeviceOpen(device, IOOptionBits(optionBits))
-        if status != kIOReturnSuccess {
-            track("WARNING: Cannot open HID device")
-            return
-        }
+        if !device.open() { return }
         
         // Create a GamePad object
-        gamePads[slot] = GamePad(manager: self,
-                                 device: device,
-                                 type: .JOYSTICK,
-                                 vendorID: vendorID,
-                                 productID: productID,
-                                 locationID: locationID)
+        gamePads[slot] = GamePad(manager: self, device: device, type: .JOYSTICK)
+        
+        track()
         
         // Register input value callback
         let hidContext = unsafeBitCast(gamePads[slot], to: UnsafeMutableRawPointer.self)
@@ -264,24 +219,18 @@ class GamePadManager {
                           sender: UnsafeMutableRawPointer?,
                           device: IOHIDDevice) {
         
+        lock.lock(); defer { lock.unlock() }
         track()
-        
-        let locationIDKey = kIOHIDLocationIDKey as CFString
-        var locationID = 0
-        if let value = IOHIDDeviceGetProperty(device, locationIDKey) as? Int {
-            locationID = value
-        }
-        
+            
         // Search for a matching locationID and remove device
-        for (slotNr, device) in gamePads where device.locationID == locationID {
-            gamePads[slotNr] = nil
-            track("Clearing slot \(slotNr)")
+        for (slot, pad) in gamePads where pad.locationID == device.locationID {
+            gamePads[slot] = nil
         }
-        
-        // Inform the controller about the new device
+
+        // Inform about the changed configuration
         parent.toolbar.validateVisibleItems()
-        parent.configurator?.refresh()
-        
+        parent.myAppDelegate.deviceAdded()
+
         listDevices()
     }
     
@@ -291,14 +240,7 @@ class GamePadManager {
         for i in 0 ... Int.max {
             
             guard let dev = gamePads[i] else { break }
-            
-            print("Slot \(i) [\(dev.port)]: ", terminator: "")
-            if let name = dev.name {
-                print("\(name) (\(dev.vendorID), \(dev.productID), \(dev.locationID))", terminator: "")
-            } else {
-                print("Placeholder device", terminator: "")
-            }
-            print(dev.isMouse ? " (Mouse)" : "")
+            dev.dump()
         }
     }
     
@@ -318,31 +260,6 @@ class GamePadManager {
                 item.image = icon(slot: s)
                 item.isEnabled = isUsed(slot: s)
                 item.isHidden = isEmpty(slot: s) && hide
-            }
-        }
-    }
-}
-
-extension IOHIDDevice {
-    
-    func isMouse() -> Bool {
-        
-        let key = kIOHIDPrimaryUsageKey as CFString
-        
-        if let value = IOHIDDeviceGetProperty(self, key) as? Int {
-            return value == kHIDUsage_GD_Mouse
-        } else {
-            return false
-        }
-    }
-    
-    func listProperties() {
-        
-        let keys = [kIOHIDTransportKey, kIOHIDVendorIDKey, kIOHIDVendorIDSourceKey, kIOHIDProductIDKey, kIOHIDVersionNumberKey, kIOHIDManufacturerKey, kIOHIDProductKey, kIOHIDSerialNumberKey, kIOHIDCountryCodeKey, kIOHIDStandardTypeKey, kIOHIDLocationIDKey, kIOHIDDeviceUsageKey, kIOHIDDeviceUsagePageKey, kIOHIDDeviceUsagePairsKey, kIOHIDPrimaryUsageKey, kIOHIDPrimaryUsagePageKey, kIOHIDMaxInputReportSizeKey, kIOHIDMaxOutputReportSizeKey, kIOHIDMaxFeatureReportSizeKey, kIOHIDReportIntervalKey, kIOHIDSampleIntervalKey, kIOHIDBatchIntervalKey, kIOHIDRequestTimeoutKey, kIOHIDReportDescriptorKey, kIOHIDResetKey, kIOHIDKeyboardLanguageKey, kIOHIDAltHandlerIdKey, kIOHIDBuiltInKey, kIOHIDDisplayIntegratedKey, kIOHIDProductIDMaskKey, kIOHIDProductIDArrayKey, kIOHIDPowerOnDelayNSKey, kIOHIDCategoryKey, kIOHIDMaxResponseLatencyKey, kIOHIDUniqueIDKey, kIOHIDPhysicalDeviceUniqueIDKey]
-        
-        for key in keys {
-            if let prop = IOHIDDeviceGetProperty(self, key as CFString) {
-                print("\t" + key + ": \(prop)")
             }
         }
     }

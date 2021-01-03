@@ -201,34 +201,32 @@ class Configuration {
         set { c64.configure(.DRIVE_POWER_SWITCH, drive: .DRIVE9, enable: newValue )}
     }
 
-    var gameDevice1 = -1 {
+    var gameDevice1 = PeripheralsDefaults.std.gameDevice1 {
         didSet {
-             
-            // Try to connect the device
+                         
+            // Try to connect the device (may disconnect the other device)
             gamePadManager.connect(slot: gameDevice1, port: 1)
             gamePadManager.listDevices()
 
-            // Read back values (the other device may have been disconnected)
-            let device1 = gamePadManager.getSlot(port: 1)
-            let device2 = gamePadManager.getSlot(port: 2)
-            if gameDevice1 != device1 { gameDevice1 = device1 }
-            if gameDevice2 != device2 { gameDevice2 = device2 }
-
+            // Avoid double mappings
+            if gameDevice1 != -1 && gameDevice1 == gameDevice2 {
+                gameDevice2 = -1
+            }
+            
             parent.toolbar.validateVisibleItems()
         }
     }
-    var gameDevice2 = -1 {
+    var gameDevice2 = PeripheralsDefaults.std.gameDevice2 {
         didSet {
-            
-            // Try to connect the device
+ 
+            // Try to connect the device (may disconnect the other device)
             gamePadManager.connect(slot: gameDevice2, port: 2)
             gamePadManager.listDevices()
-            
-            // Read back values (the other device may have been disconnected)
-            let device1 = gamePadManager.getSlot(port: 1)
-            let device2 = gamePadManager.getSlot(port: 2)
-            if gameDevice1 != device1 { gameDevice1 = device1 }
-            if gameDevice2 != device2 { gameDevice2 = device2 }
+
+            // Avoid double mappings
+            if gameDevice2 != -1 && gameDevice2 == gameDevice1 {
+                gameDevice1 = -1
+            }
             
             parent.toolbar.validateVisibleItems()
         }

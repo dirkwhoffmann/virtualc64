@@ -23,19 +23,13 @@ class GamePad {
     var db: DeviceDatabase { return manager.parent.myAppDelegate.database }
     
     // The Amiga port this device is connected to (1, 2, or nil)
-    var port = 0
+    var port: Int?
 
     // Reference to the device object
     var device: IOHIDDevice?
-    
-    // Vendor ID of the managed device (only set for HID devices)
-    var vendorID: Int
-    
-    // Product ID of the managed device (only set for HID devices)
-    var productID: Int
-    
-    // Location ID of the managed device (only set for HID devices)
-    var locationID: Int
+    var vendorID: String { return device?.vendorID ?? "" }
+    var productID: String { return device?.productID ?? "" }
+    var locationID: String { return device?.locationID ?? "" }
     
     // Type of the managed device (joystick or mouse)
     var type: ControlPortDevice
@@ -43,10 +37,13 @@ class GamePad {
     var isJoystick: Bool { return type == .JOYSTICK }
     
     // Name of the managed device
-    var name: String?
+    var name = ""
     
     // Icon of this device
     var icon: NSImage?
+    
+    // Indicates if this device is officially supported
+    var isKnown: Bool { return db.isKnown(vendorID: vendorID, productID: productID) }
     
     // Keymap of the managed device (only set for keyboard emulated devices)
     var keyMap: Int?
@@ -54,17 +51,22 @@ class GamePad {
     // Indicates if a joystick emulation key is currently pressed
     var keyUp = false, keyDown = false, keyLeft = false, keyRight = false
     
+    // Indicates if other components should be notified when the device is used
+    var notify = false
+    
     // Minimum and maximum value of analog axis event
     var min: Int?, max: Int?
     
-    // Cotroller specific usage IDs for left and right gamepad joysticks
-    var lThumbXUsageID = kHIDUsage_GD_X
-    var lThumbYUsageID = kHIDUsage_GD_Y
-    var rThumbXUsageID = kHIDUsage_GD_Rz
-    var rThumbYUsageID = kHIDUsage_GD_Z
+    // Cotroller specific usage IDs (set in updateMappingScheme())
+    var lxAxis = kHIDUsage_GD_X
+    var lyAxis = kHIDUsage_GD_Y
+    var rxAxis = kHIDUsage_GD_Z
+    var ryAxis = kHIDUsage_GD_Rz
+    var hShift = 0
     
     /* Rescued information from the latest invocation of the action function.
-     * It is needed to determine whether a joystick event has to be triggered.
+     * This information is utilized to determine whether a joystick event has
+     * to be triggered.
      */
     var oldEvents: [Int: [GamePadAction]] = [:]
     
@@ -78,79 +80,51 @@ class GamePad {
                                  value: value)
     }
     
-    init(manager: GamePadManager,
-         device: IOHIDDevice? = nil, type: ControlPortDevice,
-         vendorID: Int = 0, productID: Int = 0, locationID: Int = 0) {
-        
-        // track("\(nr): \(vendorID) \(productID) \(locationID)")
-        
+    init(manager: GamePadManager, device: IOHIDDevice? = nil, type: ControlPortDevice) {
+                
         self.manager = manager
         self.device = device
         self.type = type
-        self.vendorID = vendorID
-        self.productID = productID
-        self.locationID = locationID
-        
-        let joystick = "devJoystickTemplate"
-        let mouse = "devMouseTemplate"
-        
-        // Check for known devices
-        switch vendorID {
-            
-        case 0x40B where productID == 0x6533:
-            name = "Competition Pro SL-6602"
-            icon = NSImage.init(named: joystick)
-            
-        case 0x46D where type == .MOUSE:
-            name = "Logitech Mouse"
-            icon = NSImage.init(named: mouse)
-            
-        case 0x738 where productID == 0x2217:
-            name = "Competition Pro SL-650212"
-            icon = NSImage.init(named: joystick)
-            
-        case 0x1C59 where productID == 0x24:
-            name = "The C64 Joystick"
-            icon = NSImage.init(named: joystick)
-            
-        case 0x79 where productID == 0x11:
-            name = "iNNEXT Retro (SNES)"
-            
-        case 0x54C where productID == 0x268:
-            name = "Sony DualShock 3"
-            rThumbXUsageID = kHIDUsage_GD_Z
-            rThumbYUsageID = kHIDUsage_GD_Rz
-            
-        case 0x54C where productID == 0x5C4:
-            name = "Sony DualShock 4"
-            rThumbXUsageID = kHIDUsage_GD_Z
-            rThumbYUsageID = kHIDUsage_GD_Rz
-            
-        case 0x54C where productID == 0x9CC:
-            name = "Sony Dualshock 4 (2nd Gen)"
-            rThumbXUsageID = kHIDUsage_GD_Z
-            rThumbYUsageID = kHIDUsage_GD_Rz
-            
-        case 0x483 where productID == 0x9005:
-            name = "RetroFun! Joystick Adapter"
-            
-        case 0x004 where productID == 0x0001:
-            name = "aJoy Retro Adapter"
-            
-        default:
-            break  // name = "Generic Gamepad"
+                
+        name = db.name(vendorID: vendorID, productID: productID) ?? device?.name ?? ""
+        icon = db.icon(vendorID: vendorID, productID: productID)
+
+        if icon == nil && isMouse {
+            icon = NSImage.init(named: "devMouseTemplate")
         }
+        
+        updateMappingScheme()
     }
-    
-    func close() {
+
+    func updateMappingScheme() {
         
-        if device == nil { return }
+        let lScheme = db.left(vendorID: vendorID, productID: productID)
+        let rScheme = db.right(vendorID: vendorID, productID: productID)
+        let hScheme = db.hatSwitch(vendorID: vendorID, productID: productID)
+                
+        switch lScheme { // Left stick
+        case 1:
+            lxAxis = kHIDUsage_GD_Y
+            lyAxis = kHIDUsage_GD_X
+        default:
+            lxAxis = kHIDUsage_GD_X
+            lyAxis = kHIDUsage_GD_Y
+        }
         
-        let optionBits = IOOptionBits(kIOHIDOptionsTypeNone)
-        if IOHIDDeviceClose(device!, optionBits) == kIOReturnSuccess {
-            track("Closed HID device")
-        } else {
-            track("WARNING: Cannot close HID device")
+        switch rScheme { // Right stick
+        case 1:
+            rxAxis = kHIDUsage_GD_Z
+            ryAxis = kHIDUsage_GD_Rz
+        default:
+            rxAxis = kHIDUsage_GD_Rz
+            ryAxis = kHIDUsage_GD_Z
+        }
+
+        switch hScheme { // Hat switch
+        case 1:
+            hShift = 1
+        default:
+            hShift = 0
         }
     }
     
@@ -168,13 +142,23 @@ class GamePad {
         }
         return nil
     }
-}
 
-//
-// Keyboard emulation
-//
+    func dump() {
+        
+        print(name != "" ? "\(name) " : "Placeholder device ", terminator: "")
+        print(isMouse ? "(Mouse) " : "", terminator: "")
+        print(port != nil ? "[\(port!)] " : "[-] ", terminator: "")
+        if vendorID != "" { print("v: \(vendorID) ", terminator: "") }
+        if productID != "" { print("p: \(productID) ", terminator: "") }
+        if locationID != "" { print("l: \(locationID) ", terminator: "") }
+        print("\(lxAxis) \(lyAxis) ", terminator: "")
+        print("\(rxAxis) \(ryAxis) ", terminator: "")
+        print("\(hShift)")
+    }
 
-extension GamePad {
+    //
+    // Responding to keyboard events
+    //
 
     // Binds a key to a gamepad action
     func bind(key: MacKey, action: GamePadAction) {
@@ -270,13 +254,10 @@ extension GamePad {
             fatalError()
         }
     }
-}
-
-//
-// Event handling
-//
-
-extension GamePad {
+    
+    //
+    // Responding to HID events
+    //
 
     // Based on
     // http://docs.ros.org/hydro/api/oculus_sdk/html/OSX__Gamepad_8cpp_source.html#l00170
@@ -325,25 +306,37 @@ extension GamePad {
             
             var events: [GamePadAction]?
             
+            /*
+            switch usage {
+            case lThumbXUsageID: track("lThumbXUsageID \(value)")
+            case rThumbXUsageID: track("rThumbXUsageID \(value)")
+            case lThumbYUsageID: track("lThumbYUsageID \(value)")
+            case rThumbYUsageID: track("rThumbYUsageID \(value)")
+            case kHIDUsage_GD_Hatswitch: track("kHIDUsage_GD_Hatswitch \(value)")
+            default: break
+            }
+            */
+            
             switch usage {
                 
-            case lThumbXUsageID, rThumbXUsageID:
+            case lxAxis, rxAxis:
                 
-                // track("lThumbXUsageID, rThumbXUsageID: \(intValue)")
                 if let v = mapAnalogAxis(value: value, element: element) {
-                    events = (v == 2) ? [.PULL_RIGHT] : (v == -2) ? [.PULL_LEFT] : [.RELEASE_X]
+                    events =
+                        (v == 2) ? [.PULL_RIGHT] :
+                        (v == -2) ? [.PULL_LEFT] : [.RELEASE_X]
                 }
                 
-            case lThumbYUsageID, rThumbYUsageID:
+            case lyAxis, ryAxis:
                 
-                // track("lThumbYUsageID, rThumbYUsageID: \(intValue)")
                 if let v = mapAnalogAxis(value: value, element: element) {
-                    events = (v == 2) ? [.PULL_DOWN] : (v == -2) ? [.PULL_UP] : [.RELEASE_Y]
+                    events =
+                        (v == 2) ? [.PULL_DOWN] :
+                        (v == -2) ? [.PULL_UP] : [.RELEASE_Y]
                 }
                 
             case kHIDUsage_GD_Hatswitch:
                 
-                // track("kHIDUsage_GD_Hatswitch \(intValue)")
                 switch intValue {
                 case 0: events = [.PULL_UP, .RELEASE_X]
                 case 1: events = [.PULL_UP, .PULL_RIGHT]
@@ -366,26 +359,24 @@ extension GamePad {
             oldEvents[usage] = events!
             
             // Trigger events
-            // manager.parent.emulateEventsOnGamePort(slot: nr, events: events!)
             processJoystickEvents(events: events!)
         }
     }
-}
-
-//
-// Emulate events on the C64 side
-//
-
-extension GamePad {
+    
+    //
+    // Emulate events on the C64 side
+    //
     
     @discardableResult
     func processJoystickEvents(events: [GamePadAction]) -> Bool {
         
-        // track("\(events) port = \(port)")
         let c64 = manager.parent.c64!
         
         if port == 1 { for event in events { c64.port1.trigger(event) } }
         if port == 2 { for event in events { c64.port2.trigger(event) } }
+        
+        // Notify other components (if requested)
+        if notify { manager.parent.myAppDelegate.devicePulled(events: events) }
         
         return events != []
     }
