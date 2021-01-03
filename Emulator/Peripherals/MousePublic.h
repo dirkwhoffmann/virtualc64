@@ -16,7 +16,8 @@ enum_long(MOUSE_MODEL)
 {
     MOUSE_C1350,
     MOUSE_C1351,
-    MOUSE_NEOS
+    MOUSE_NEOS,
+    MOUSE_COUNT
 };
 typedef MOUSE_MODEL MouseModel;
 

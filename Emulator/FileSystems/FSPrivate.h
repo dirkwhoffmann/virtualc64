@@ -40,7 +40,7 @@ struct FSFileTypeEnum : Reflection<FSFileTypeEnum, FSFileType> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= FS_FILETYPE_REL;
+        return (unsigned long)value < FS_FILETYPE_COUNT;
     }
     
     static const char *prefix() { return "FS_FILETYPE"; }
@@ -48,11 +48,12 @@ struct FSFileTypeEnum : Reflection<FSFileTypeEnum, FSFileType> {
     {
         switch (value) {
                 
-            case FS_FILETYPE_DEL:  return "DEL";
-            case FS_FILETYPE_SEQ:  return "SEQ";
-            case FS_FILETYPE_PRG:  return "PRG";
-            case FS_FILETYPE_USR:  return "USR";
-            case FS_FILETYPE_REL:  return "REL";
+            case FS_FILETYPE_DEL:    return "DEL";
+            case FS_FILETYPE_SEQ:    return "SEQ";
+            case FS_FILETYPE_PRG:    return "PRG";
+            case FS_FILETYPE_USR:    return "USR";
+            case FS_FILETYPE_REL:    return "REL";
+            case FS_FILETYPE_COUNT:  return "???";
         }
         return "???";
     }
@@ -62,7 +63,7 @@ struct FSBlockTypeEnum : Reflection<FSBlockTypeEnum, FSBlockType> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= FS_BLOCKTYPE_DATA;
+        return (unsigned long)value < FS_BLOCKTYPE_COUNT;
     }
     
     static const char *prefix() { return "FS_BLOCKTYPE"; }
@@ -74,6 +75,7 @@ struct FSBlockTypeEnum : Reflection<FSBlockTypeEnum, FSBlockType> {
             case FS_BLOCKTYPE_BAM:      return "BAM";
             case FS_BLOCKTYPE_DIR:      return "DIR";
             case FS_BLOCKTYPE_DATA:     return "DATA";
+            case FS_BLOCKTYPE_COUNT:    return "???";
         }
         return "???";
     }

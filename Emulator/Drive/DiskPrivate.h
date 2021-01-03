@@ -18,7 +18,7 @@ struct DiskTypeEnum : Reflection<DiskTypeEnum, DiskType> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= DISK_TYPE_DS_SD;
+        return (unsigned long)value < DISK_TYPE_COUNT;
     }
     
     static const char *prefix() { return "DISK_TYPE"; }
@@ -28,6 +28,7 @@ struct DiskTypeEnum : Reflection<DiskTypeEnum, DiskType> {
                 
             case DISK_TYPE_SS_SD:  return "SS_SD";
             case DISK_TYPE_DS_SD:  return "DS_SD";
+            case DISK_TYPE_COUNT:  return "???";
         }
         return "???";
     }
@@ -37,7 +38,7 @@ struct CBMFileTypeEnum : Reflection<CBMFileTypeEnum, CBMFileType> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= CBM_FILE_REL;
+        return (unsigned long)value < CBM_FILE_COUNT;
     }
     
     static const char *prefix() { return "CBM"; }
@@ -45,10 +46,11 @@ struct CBMFileTypeEnum : Reflection<CBMFileTypeEnum, CBMFileType> {
     {
         switch (value) {
                 
-            case CBM_FILE_PRG:  return "PRG";
-            case CBM_FILE_SEQ:  return "SEQ";
-            case CBM_FILE_USR:  return "USR";
-            case CBM_FILE_REL:  return "REL";
+            case CBM_FILE_PRG:    return "PRG";
+            case CBM_FILE_SEQ:    return "SEQ";
+            case CBM_FILE_USR:    return "USR";
+            case CBM_FILE_REL:    return "REL";
+            case CBM_FILE_COUNT:  return "???";
         }
         return "???";
     }

@@ -21,7 +21,7 @@ struct FileTypeEnum : Reflection<FileTypeEnum, FileType> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= FILETYPE_VC1541_ROM;
+        return (unsigned long)value < FILETYPE_COUNT;
     }
     
     static const char *prefix() { return "FILETYPE"; }
@@ -43,6 +43,7 @@ struct FileTypeEnum : Reflection<FileTypeEnum, FileType> {
             case FILETYPE_CHAR_ROM:   return "ROM";
             case FILETYPE_KERNAL_ROM: return "ROM";
             case FILETYPE_VC1541_ROM: return "ROM";
+            case FILETYPE_COUNT:      return "???";
         }
         return "???";
     }

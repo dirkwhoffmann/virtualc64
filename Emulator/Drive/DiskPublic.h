@@ -39,7 +39,8 @@
 enum_long(DISK_TYPE)
 {
     DISK_TYPE_SS_SD,   // Single-sided, single density (VC1541)
-    DISK_TYPE_DS_SD    // Double-sided, single density (VC1571) (not supported)
+    DISK_TYPE_DS_SD,   // Double-sided, single density (VC1571) (not supported)
+    DISK_TYPE_COUNT
 };
 typedef DISK_TYPE DiskType;
 
@@ -48,7 +49,8 @@ enum_long(CBM_FILE_TYPE)
     CBM_FILE_PRG,
     CBM_FILE_SEQ,
     CBM_FILE_USR,
-    CBM_FILE_REL
+    CBM_FILE_REL,
+    CBM_FILE_COUNT
 };
 typedef CBM_FILE_TYPE CBMFileType;
 

@@ -18,7 +18,7 @@ struct MouseModelEnum : Reflection<MouseModelEnum, MouseModel> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= MOUSE_NEOS;
+        return (unsigned long)value < MOUSE_COUNT;
     }
     
     static const char *prefix() { return "DISK_TYPE"; }
@@ -29,6 +29,7 @@ struct MouseModelEnum : Reflection<MouseModelEnum, MouseModel> {
             case MOUSE_C1350:  return "C1350";
             case MOUSE_C1351:  return "C1351";
             case MOUSE_NEOS:   return "NEOS";
+            case MOUSE_COUNT:  return "???";
         }
         return "???";
     }

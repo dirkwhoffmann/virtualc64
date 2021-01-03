@@ -21,7 +21,7 @@ struct FlashStateEnum : Reflection<FlashStateEnum, FlashState> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= FLASH_SECTOR_ERASE_SUSPEND;
+        return (unsigned long)value < FLASH_COUNT;
     }
     
     static const char *prefix() { return "FLASH"; }
@@ -42,6 +42,7 @@ struct FlashStateEnum : Reflection<FlashStateEnum, FlashState> {
             case FLASH_SECTOR_ERASE:         return "SECTOR_ERASE";
             case FLASH_SECTOR_ERASE_TIMEOUT: return "SECTOR_ERASE_TIMEOUT";
             case FLASH_SECTOR_ERASE_SUSPEND: return "SECTOR_ERASE_SUSPEND";
+            case FLASH_COUNT:                return "???";
         }
         return "???";
     }
