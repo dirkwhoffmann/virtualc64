@@ -19,7 +19,8 @@
 #include "C64Config.h"
 
 // Data types and constants
-#include "C64Types.h"
+#include "C64Public.h"
+#include "C64Private.h"
 
 // Loading and saving
 #include "Snapshot.h"

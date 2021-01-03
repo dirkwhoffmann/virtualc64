@@ -11,7 +11,7 @@
 #define _MESSAGE_QUEUE_H
 
 #include "C64Object.h"
-#include "C64Types.h"
+#include "C64Public.h"
 #include <map>
 
 using namespace std;

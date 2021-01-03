@@ -12,9 +12,8 @@
 
 #include "Aliases.h"
 #include <stdio.h>
-// #include <string>
 
-// using std::string;
+#define assert_enum(e,v) assert(e##Enum::isValid(v))
 
 template <class T, typename E> struct Reflection {
 

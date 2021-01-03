@@ -11,6 +11,7 @@
 #define _CIA_PRIVATE_H
 
 #include "Reflection.h"
+#include "CIAPublic.h"
 
 struct CIARevisionEnum : Reflection<CIARevisionEnum, CIARevision> {
     

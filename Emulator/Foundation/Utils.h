@@ -14,8 +14,8 @@
 #include "Error.h"
 #include "C64Config.h"
 #include "C64Constants.h"
-#include "C64Types.h"
-#include "C64PrivateTypes.h"
+#include "C64Public.h"
+#include "C64Private.h"
 
 #include <limits.h>
 #include <math.h>

@@ -132,7 +132,7 @@ C64::_reset()
 void
 C64::setInspectionTarget(InspectionTarget target)
 {
-    assert(isInspectionTarget(target));
+    assert_enum(InspectionTarget, target);
     inspectionTarget = target;
 }
 

@@ -10,7 +10,7 @@
 #ifndef _BUFFERS_H
 #define _BUFFERS_H
 
-#include "C64Types.h"
+#include "C64Public.h"
 
 template <class T, size_t capacity> struct RingBuffer
 {
