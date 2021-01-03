@@ -29,7 +29,7 @@ extension NSTextStorage {
 extension Inspector {
     
     var halftrack: Halftrack? {
-        if selectedHalftrack >= 0 && isHalftrackNumber(UInt32(selectedHalftrack)) {
+        if selectedHalftrack >= 0 && isHalftrackNumber(selectedHalftrack) {
             return Halftrack(selectedHalftrack)
         } else {
             return nil
@@ -37,7 +37,7 @@ extension Inspector {
     }
     
     var sector: Sector? {
-        if selectedSector >= 0 && isSectorNumber(UInt32(selectedSector)) {
+        if selectedSector >= 0 && isSectorNumber(selectedSector) {
             return Sector(selectedSector)
         } else {
             return nil

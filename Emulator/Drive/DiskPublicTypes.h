@@ -33,29 +33,6 @@
  */
 
 //
-// Enumerations
-//
-
-enum_long(DISK_TYPE)
-{
-    DISK_TYPE_SS_SD,   // Single-sided, single density (VC1541)
-    DISK_TYPE_DS_SD,   // Double-sided, single density (VC1571) (not supported)
-    DISK_TYPE_COUNT
-};
-typedef DISK_TYPE DiskType;
-
-enum_long(CBM_FILE_TYPE)
-{
-    CBM_FILE_PRG,
-    CBM_FILE_SEQ,
-    CBM_FILE_USR,
-    CBM_FILE_REL,
-    CBM_FILE_COUNT
-};
-typedef CBM_FILE_TYPE CBMFileType;
-
-
-//
 // Constants
 //
 
@@ -65,6 +42,10 @@ static const unsigned highestHalftrack = 84;
 
 // Highest sector number (numbering starts with 0)
 static const unsigned highestSector = 20;
+
+static inline bool isTrackNumber(usize nr) { return 1 <= nr && nr <= highestTrack; }
+static inline bool isHalftrackNumber(usize nr) { return 1 <= nr && nr <= highestHalftrack; }
+static inline bool isSectorNumber(usize nr) { return nr <= highestSector; }
 
 /* Maximum number of bits and bytes stored on a single track. Each track can
  * store a maximum of 7928 bytes (63424 bits). The exact number depends on the
@@ -118,14 +99,26 @@ static const unsigned dataBlockSize = 325 * 8;
 
 
 //
-// Types
+// Enumerations
 //
 
-static inline bool isTrackNumber(unsigned nr) { return 1 <= nr && nr <= highestTrack; }
-static inline bool isHalftrackNumber(unsigned nr) { return 1 <= nr && nr <= highestHalftrack; }
-static inline bool isSectorNumber(unsigned nr) { return nr <= highestSector; }
+enum_long(DISK_TYPE)
+{
+    DISK_TYPE_SS_SD,   // Single-sided, single density (VC1541)
+    DISK_TYPE_DS_SD,   // Double-sided, single density (VC1571) (not supported)
+    DISK_TYPE_COUNT
+};
+typedef DISK_TYPE DiskType;
 
-typedef i32 HeadPos;
+enum_long(CBM_FILE_TYPE)
+{
+    CBM_FILE_PRG,
+    CBM_FILE_SEQ,
+    CBM_FILE_USR,
+    CBM_FILE_REL,
+    CBM_FILE_COUNT
+};
+typedef CBM_FILE_TYPE CBMFileType;
 
 
 //

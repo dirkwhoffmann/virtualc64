@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef VC1541_PUBLIC_TYPES_H
-#define VC1541_PUBLIC_TYPES_H
+#ifndef DRIVE_PUBLIC_TYPES_H
+#define DRIVE_PUBLIC_TYPES_H
 
 //
 // Enumerations

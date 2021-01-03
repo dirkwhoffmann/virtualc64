@@ -57,6 +57,8 @@ typedef u32 Halftrack;
 typedef u32 Sector;
 typedef u32 Block;
 
+typedef i32 HeadPos;
+
 
 //
 // Enumerations
