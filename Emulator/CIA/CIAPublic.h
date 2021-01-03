@@ -21,21 +21,6 @@ enum_long(CIAREV)
 };
 typedef CIAREV CIARevision;
 
-inline bool isCIARevision(long value)
-{
-    return (unsigned long)value <= MOS_8521;
-}
-
-inline const char *CIARevisionName(CIARevision value)
-{    
-    switch (value) {
-            
-        case MOS_6526:  return "MOS_6526";
-        case MOS_8521:  return "MOS_8521";
-    }
-    return "???";
-}
-
 enum_long(CIAREG)
 {
     CIAREG_PRA,
@@ -56,35 +41,6 @@ enum_long(CIAREG)
     CIAREG_CRB
 };
 typedef CIAREG CIAReg;
-
-inline bool isCIAReg(long value)
-{
-    return (unsigned long)value <= CIAREG_CRB;
-}
-
-inline const char *CIARegName(CIAReg value)
-{
-    switch (value) {
-            
-        case CIAREG_PRA:     return "PRA";
-        case CIAREG_PRB:     return "PRB";
-        case CIAREG_DDRA:    return "DDRA";
-        case CIAREG_DDRB:    return "DDRB";
-        case CIAREG_TALO:    return "TALO";
-        case CIAREG_TAHI:    return "TAHI";
-        case CIAREG_TBLO:    return "TBLO";
-        case CIAREG_TBHI:    return "TBHI";
-        case CIAREG_TODTHS:  return "TODTHS";
-        case CIAREG_TODSEC:  return "TODSEC";
-        case CIAREG_TODMIN:  return "TODMIN";
-        case CIAREG_TODHR:   return "TODHR";
-        case CIAREG_SDR:     return "SDR";
-        case CIAREG_ICR:     return "ICR";
-        case CIAREG_CRA:     return "CRA";
-        case CIAREG_CRB:     return "CRB";
-    }
-    return "???";
-}
 
 //
 // Structures

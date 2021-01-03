@@ -12,6 +12,7 @@
 
 #include "VICIIPrivateTypes.h"
 #include "DiskPrivateTypes.h"
+#include "CIAPrivate.h"
 
 enum_int(ACTION_FLAG)
 {
