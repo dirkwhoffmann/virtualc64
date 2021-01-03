@@ -49,6 +49,176 @@ VICSetDisplayState | \
 VICClrSprSprCollReg | \
 VICClrSprBgCollReg);
 
+//
+// Reflection APIs
+//
+
+struct VICRevisionEnum : Reflection<VICRevisionEnum, VICRevision> {
+    
+    static bool isValid(long value)
+    {
+        return
+        (value == VICREV_PAL_6569_R1) ||
+        (value == VICREV_PAL_6569_R3) ||
+        (value == VICREV_PAL_8565) ||
+        (value == VICREV_NTSC_6567) ||
+        (value == VICREV_NTSC_6567_R56A) ||
+        (value == VICREV_NTSC_8562);
+    }
+
+    static const char *prefix() { return "VICREV"; }
+    static const char *key(VICRevision value)
+    {
+        switch (value) {
+                
+            case VICREV_PAL_6569_R1:    return "PAL_6569_R1";
+            case VICREV_PAL_6569_R3:    return "PAL_6569_R3";
+            case VICREV_PAL_8565:       return "PAL_8565";
+            case VICREV_NTSC_6567:      return "NTSC_6567";
+            case VICREV_NTSC_6567_R56A: return "NTSC_6567_R56A";
+            case VICREV_NTSC_8562:      return "NTSC_8562";
+        }
+        return "???";
+    }
+    
+    static bool verify(long nr) { return Reflection::verify(nr,VICREV_NTSC_8562); }
+};
+
+struct GlueLogicEnum : Reflection<GlueLogicEnum, GlueLogic> {
+    
+    static bool isValid(long value)
+    {
+        return (unsigned long)value <= GLUE_LOGIC_IC;
+    }
+
+    static const char *prefix() { return "GLUE_LOGIC"; }
+    static const char *key(GlueLogic value)
+    {
+        switch (value) {
+                
+            case GLUE_LOGIC_DISCRETE:  return "DISCRETE";
+            case GLUE_LOGIC_IC:        return "IC";
+        }
+        return "???";
+    }
+};
+
+struct PaletteEnum : Reflection<PaletteEnum, Palette> {
+    
+    static bool isValid(long value)
+    {
+        return (unsigned long)value <= PALETTE_SEPIA;
+    }
+
+    static const char *prefix() { return "PALETTE"; }
+    static const char *key(Palette value)
+    {
+        switch (value) {
+                
+            case PALETTE_COLOR:        return "COLOR";
+            case PALETTE_BLACK_WHITE:  return "BLACK_WHITE";
+            case PALETTE_PAPER_WHITE:  return "PAPER_WHITE";
+            case PALETTE_GREEN:        return "GREEN";
+            case PALETTE_AMBER:        return "AMBER";
+            case PALETTE_SEPIA:        return "SEPIA";
+        }
+        return "???";
+    }
+};
+
+struct ScreenGeometryEnum : Reflection<ScreenGeometryEnum, ScreenGeometry> {
+    
+    static bool isValid(long value)
+    {
+        return (unsigned long)value <= SCREEN_GEOMETRY_24_38;
+    }
+
+    static const char *prefix() { return "SCREEN_GEOMETRY"; }
+    static const char *key(ScreenGeometry value)
+    {
+        switch (value) {
+                
+            case SCREEN_GEOMETRY_25_40:  return "25_40";
+            case SCREEN_GEOMETRY_25_38:  return "25_38";
+            case SCREEN_GEOMETRY_24_40:  return "24_40";
+            case SCREEN_GEOMETRY_24_38:  return "24_38";
+        }
+        return "???";
+    }
+};
+
+struct DisplayModeEnum : Reflection<DisplayModeEnum, DisplayMode> {
+    
+    static bool isValid(long value)
+    {
+        return (unsigned long)value <= DISPLAY_MODE_INV_MULTICOL_BITMAP;
+    }
+
+    static const char *prefix() { return "DISPLAY_MODE"; }
+    static const char *key(DisplayMode value)
+    {
+        switch (value) {
+                
+            case DISPLAY_MODE_STANDARD_TEXT:        return "STANDARD_TEXT";
+            case DISPLAY_MODE_MULTICOLOR_TEXT:      return "MULTICOLOR_TEXT";
+            case DISPLAY_MODE_STANDARD_BITMAP:      return "STANDARD_BITMAP";
+            case DISPLAY_MODE_MULTICOLOR_BITMAP:    return "MULTICOLOR_BITMAP";
+            case DISPLAY_MODE_EXTENDED_BG_COLOR:    return "EXTENDED_BG_COLOR";
+            case DISPLAY_MODE_INVALID_TEXT:         return "INVALID_TEXT";
+            case DISPLAY_MODE_INV_STANDARD_BITMAP:  return "INV_STANDARD_BITMAP";
+            case DISPLAY_MODE_INV_MULTICOL_BITMAP:  return "INV_MULTICOL_BITMAP";
+        }
+        return "???";
+    }
+};
+
+struct MemAccessEnum : Reflection<MemAccessEnum, MemAccess> {
+    
+    static bool isValid(long value)
+    {
+        return (unsigned long)value <= MEMACCESS_S;
+    }
+    
+    static const char *prefix() { return "MEMACCESS"; }
+    static const char *key(MemAccess value)
+    {
+        switch (value) {
+                
+            case MEMACCESS_R:  return "R";
+            case MEMACCESS_I:  return "I";
+            case MEMACCESS_C:  return "C";
+            case MEMACCESS_G:  return "G";
+            case MEMACCESS_P:  return "P";
+            case MEMACCESS_S:  return "S";
+        }
+        return "???";
+    }
+};
+
+struct DmaDisplayModeEnum : Reflection<DmaDisplayModeEnum, DmaDisplayMode> {
+    
+    static bool isValid(long value)
+    {
+        return (unsigned long)value <= MEMACCESS_S;
+    }
+    
+    static const char *prefix() { return "DMA_DISPLAY_MODE"; }
+    static const char *key(DmaDisplayMode value)
+    {
+        switch (value) {
+                
+            case DMA_DISPLAY_MODE_FG_LAYER:         return "FG_LAYER";
+            case DMA_DISPLAY_MODE_BG_LAYER:         return "BG_LAYER";
+            case DMA_DISPLAY_MODE_ODD_EVEN_LAYERS:  return "ODD_EVEN_LAYERS";
+        }
+        return "???";
+    }
+};
+
+//
+// Private types
+//
+
 enum VICIIMode
 {
     PAL_CYCLE         = 0x0,

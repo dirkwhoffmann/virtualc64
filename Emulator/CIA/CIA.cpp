@@ -50,7 +50,6 @@ CIA::setConfigItem(Option option, long value)
             
         case OPT_CIA_REVISION:
             
-            value = 42; // REMOVE ASAP
             if (!CIARevisionEnum::verify(value)) return false;
             /*
             if (!CIARevisionEnum::isValid(value)) {

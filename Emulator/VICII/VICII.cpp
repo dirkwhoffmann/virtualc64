@@ -180,13 +180,8 @@ VICII::setConfigItem(Option option, long value)
             
         case OPT_VIC_REVISION:
             
-            if (!isVICRevision(value)) {
-                warn("Invalid VIC revision: %ld\n", value);
-                return false;
-            }
-            if (config.revision == value) {
-                return false;
-            }
+            if (!VICRevisionEnum::verify(value)) return false;
+            if (config.revision == value) return false;
             
             suspend();
             config.revision = (VICRevision)value;
@@ -196,13 +191,8 @@ VICII::setConfigItem(Option option, long value)
             
         case OPT_PALETTE:
             
-            if (!isPalette(value)) {
-                warn("Invalid color palette: %ld\n", value);
-                return false;
-            }
-            if (config.palette == value) {
-                return false;
-            }
+            if (!PaletteEnum::verify(value)) return false;
+            if (config.palette == value) return false;
             
             suspend();
             config.palette = (Palette)value;
@@ -325,13 +315,8 @@ VICII::setConfigItem(Option option, long value)
 
         case OPT_GLUE_LOGIC:
             
-            if (!isGlueLogic(value)) {
-                warn("Invalid glue logic type: %ld\n", value);
-                return false;
-            }
-            if (config.glueLogic == value) {
-                return false;
-            }
+            if (!GlueLogicEnum::verify(value)) return false;
+            if (config.glueLogic == value) return false;
             
             config.glueLogic = (GlueLogic)value;
             return true;
@@ -344,9 +329,10 @@ VICII::setConfigItem(Option option, long value)
 void
 VICII::setRevision(VICRevision revision)
 {
-    trace(VIC_DEBUG, "setRevision(%ld)\n", (long)revision);
+    assert_enum(VICRevision, revision);
     
-    assert(isVICRevision(revision));
+    debug(VIC_DEBUG, "setRevision(%ld)\n", (long)revision);
+    
     config.revision = revision;
     
     updatePalette();
@@ -360,7 +346,7 @@ VICII::setRevision(VICRevision revision)
 void
 VICII::setDmaDebugColor(MemAccess type, GpuColor color)
 {
-    assert(isMemAccess(type));
+    assert_enum(MemAccess, type);
     
     config.dmaColor[type] = color.rawValue;
         
@@ -447,12 +433,12 @@ VICII::_inspect()
 void
 VICII::_dumpConfig()
 {
-    msg("    Chip model : %lld (%s)\n", config.revision, VICRevisionName(config.revision));
+    msg("    Chip model : %lld (%s)\n", config.revision, VICRevisionEnum::key(config.revision));
     msg("  Gray dot bug : %s\n", config.grayDotBug ? "yes" : "no");
     msg("           PAL : %s\n", isPAL() ? "yes" : "no");
     msg("          NTSC : %s\n", isNTSC() ? "yes" : "no");
     msg("is656x, is856x : %d %d\n", is656x(), is856x());
-    msg("    Glue logic : %lld (%s)\n", config.glueLogic, GlueLogicName(config.glueLogic));
+    msg("    Glue logic : %lld (%s)\n", config.glueLogic, GlueLogicEnum::key(config.glueLogic));
 }
 
 void 
@@ -470,7 +456,7 @@ VICII::_dump()
 	msg("X/Y raster scroll : %d / %d\n", xscroll, yscroll);
     msg("    Control reg 1 : %02X\n", reg.current.ctrl1);
     msg("    Control reg 2 : %02X\n", reg.current.ctrl2);
-	msg("     Display mode : %s\n", DisplayModeName(mode));
+	msg("     Display mode : %s\n", DisplayModeEnum::key(mode));
     msg("          badLine : %s\n", badLine ? "yes" : "no");
     msg("    DENwasSetIn30 : %s\n", DENwasSetInRasterline30 ? "yes" : "no");
 	msg("               VC : %02X\n", vc);

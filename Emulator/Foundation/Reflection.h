@@ -34,13 +34,13 @@ template <class T, typename E> struct Reflection {
         
         if (T::isValid(nr)) return true;
         
-        printf("%ld doesn't specify a valid key. Valid keys are: ", nr);
+        printf("ERROR: %ld doesn't specify a valid key.\nValid keys: ", nr);
         
-        for (long i = 0 ;; i++) {
+        for (long i = 0, j = 0 ;; i++) {
             
             if (T::isValid(i)) {
                 
-                if (i) printf(", ");
+                if (j++) printf(", ");
                 if (T::prefix()) printf("%s_", T::prefix());
                 printf("%s", key(i));
            

@@ -25,52 +25,12 @@ enum_long(VICREV)
 };
 typedef VICREV VICRevision;
 
-inline bool isVICRevision(long value)
-{
-    return
-    (value == VICREV_PAL_6569_R1) ||
-    (value == VICREV_PAL_6569_R3) ||
-    (value == VICREV_PAL_8565) ||
-    (value == VICREV_NTSC_6567) ||
-    (value == VICREV_NTSC_6567_R56A) ||
-    (value == VICREV_NTSC_8562);
-}
-
-inline const char *VICRevisionName(VICRevision value)
-{
-    switch (value) {
-            
-        case VICREV_PAL_6569_R1:    return "PAL_6569_R1";
-        case VICREV_PAL_6569_R3:    return "PAL_6569_R3";
-        case VICREV_PAL_8565:       return "PAL_8565";
-        case VICREV_NTSC_6567:      return "NTSC_6567";
-        case VICREV_NTSC_6567_R56A: return "NTSC_6567_R56A";
-        case VICREV_NTSC_8562:      return "NTSC_8562";
-    }
-    return "???";
-}
-
 enum_long(GLUE_LOGIC)
 {
     GLUE_LOGIC_DISCRETE,
     GLUE_LOGIC_IC
 };
 typedef GLUE_LOGIC GlueLogic;
-
-inline bool isGlueLogic(long value)
-{
-    return (unsigned long)value <= GLUE_LOGIC_IC;
-}
-
-inline const char *GlueLogicName(GlueLogic value)
-{
-    switch (value) {
-            
-        case GLUE_LOGIC_DISCRETE:  return "DISCRETE";
-        case GLUE_LOGIC_IC:        return "IC";
-    }
-    return "???";
-}
 
 enum_long(PALETTE)
 {
@@ -83,24 +43,6 @@ enum_long(PALETTE)
 };
 typedef PALETTE Palette;
 
-inline bool isPalette(long value) {
-    return (unsigned long)value <= PALETTE_SEPIA;
-}
-
-inline const char *PaletteName(Palette value)
-{
-    switch (value) {
-            
-        case PALETTE_COLOR:        return "COLOR";
-        case PALETTE_BLACK_WHITE:  return "BLACK_WHITE";
-        case PALETTE_PAPER_WHITE:  return "PAPER_WHITE";
-        case PALETTE_GREEN:        return "GREEN";
-        case PALETTE_AMBER:        return "AMBER";
-        case PALETTE_SEPIA:        return "SEPIA";
-    }
-    return "???";
-}
-
 enum_long(SCREEN_GEOMETRY)
 {
     SCREEN_GEOMETRY_25_40 = 1,
@@ -109,22 +51,6 @@ enum_long(SCREEN_GEOMETRY)
     SCREEN_GEOMETRY_24_38
 };
 typedef SCREEN_GEOMETRY ScreenGeometry;
-
-inline bool isScreenGeometry(long value) {
-    return (unsigned long)value <= SCREEN_GEOMETRY_24_38;
-}
-
-inline const char *ScreenGeometryName(ScreenGeometry value)
-{
-    switch (value) {
-            
-        case SCREEN_GEOMETRY_25_40:  return "25_40";
-        case SCREEN_GEOMETRY_25_38:  return "25_38";
-        case SCREEN_GEOMETRY_24_40:  return "24_40";
-        case SCREEN_GEOMETRY_24_38:  return "24_38";
-    }
-    return "???";
-}
 
 enum_long(DISPLAY_MODE)
 {
@@ -139,26 +65,6 @@ enum_long(DISPLAY_MODE)
 };
 typedef DISPLAY_MODE DisplayMode;
 
-inline bool isDisplayMode(long value) {
-    return (unsigned long)value <= DISPLAY_MODE_INV_MULTICOL_BITMAP;
-}
-
-inline const char *DisplayModeName(DisplayMode value)
-{
-    switch (value) {
-            
-        case DISPLAY_MODE_STANDARD_TEXT:        return "STANDARD_TEXT";
-        case DISPLAY_MODE_MULTICOLOR_TEXT:      return "MULTICOLOR_TEXT";
-        case DISPLAY_MODE_STANDARD_BITMAP:      return "STANDARD_BITMAP";
-        case DISPLAY_MODE_MULTICOLOR_BITMAP:    return "MULTICOLOR_BITMAP";
-        case DISPLAY_MODE_EXTENDED_BG_COLOR:    return "EXTENDED_BG_COLOR";
-        case DISPLAY_MODE_INVALID_TEXT:         return "INVALID_TEXT";
-        case DISPLAY_MODE_INV_STANDARD_BITMAP:  return "INV_STANDARD_BITMAP";
-        case DISPLAY_MODE_INV_MULTICOL_BITMAP:  return "INV_MULTICOL_BITMAP";
-    }
-    return "???";
-}
-
 enum_long(MEMACCESS)
 {
     MEMACCESS_R, // Memory Refresh
@@ -170,25 +76,6 @@ enum_long(MEMACCESS)
 };
 typedef MEMACCESS MemAccess;
 
-static inline bool isMemAccess(long value)
-{
-    return (unsigned long)value <= MEMACCESS_S;
-}
-
-inline const char *MemAccessName(MemAccess value)
-{
-    switch (value) {
-            
-        case MEMACCESS_R:  return "R";
-        case MEMACCESS_I:  return "I";
-        case MEMACCESS_C:  return "C";
-        case MEMACCESS_G:  return "G";
-        case MEMACCESS_P:  return "P";
-        case MEMACCESS_S:  return "S";
-    }
-    return "???";
-}
-
 enum_long(DMA_DISPLAY_MODE)
 {
     DMA_DISPLAY_MODE_FG_LAYER,
@@ -196,22 +83,6 @@ enum_long(DMA_DISPLAY_MODE)
     DMA_DISPLAY_MODE_ODD_EVEN_LAYERS
 };
 typedef DMA_DISPLAY_MODE DmaDisplayMode;
-
-static inline bool isDmaDisplayMode(long value)
-{
-    return (unsigned long)value <= DMA_DISPLAY_MODE_ODD_EVEN_LAYERS;
-}
-
-inline const char *DmaDisplayModeName(DmaDisplayMode value)
-{
-    switch (value) {
-            
-        case DMA_DISPLAY_MODE_FG_LAYER:         return "FG_LAYER";
-        case DMA_DISPLAY_MODE_BG_LAYER:         return "BG_LAYER";
-        case DMA_DISPLAY_MODE_ODD_EVEN_LAYERS:  return "ODD_EVEN_LAYERS";
-    }
-    return "???";
-}
 
 //
 // Structures
