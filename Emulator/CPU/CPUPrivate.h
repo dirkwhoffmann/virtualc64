@@ -27,7 +27,7 @@ struct CPURevisionEnum : Reflection<CPURevisionEnum, CPURevision> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= MOS_6502;
+        return (unsigned long)value < CPUREV_COUNT;
     }
     
     static const char *prefix() { return nullptr; }
@@ -35,18 +35,25 @@ struct CPURevisionEnum : Reflection<CPURevisionEnum, CPURevision> {
     {
         switch (value) {
                 
-            case MOS_6510:  return "MOS_6510";
-            case MOS_6502:  return "MOS_6502";
+            case MOS_6510:      return "MOS_6510";
+            case MOS_6502:      return "MOS_6502";
+            case CPUREV_COUNT:  return "???";
         }
         return "???";
     }
 };
 
-struct IntSourceEnum : Reflection<IntSourceEnum, CPURevision> {
+struct IntSourceEnum : Reflection<IntSourceEnum, IntSource> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= INTSRC_KBD;
+        return
+        value == INTSRC_CIA  ||
+        value == INTSRC_VIC  ||
+        value == INTSRC_VIA1 ||
+        value == INTSRC_VIA2 ||
+        value == INTSRC_EXP  ||
+        value == INTSRC_KBD;
     }
     
     static const char *prefix() { return "INTSRC"; }
@@ -63,13 +70,15 @@ struct IntSourceEnum : Reflection<IntSourceEnum, CPURevision> {
         }
         return "???";
     }
+    
+    static bool verify(long nr) { return Reflection::verify(nr, INTSRC_KBD); }
 };
 
 struct BreakpointTypeEnum : Reflection<BreakpointTypeEnum, BreakpointType> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= BPTYPE_SOFT;
+        return (unsigned long)value < BPTYPE_COUNT;
     }
     
     static const char *prefix() { return "BPTYPE"; }
@@ -77,9 +86,10 @@ struct BreakpointTypeEnum : Reflection<BreakpointTypeEnum, BreakpointType> {
     {
         switch (value) {
                 
-            case BPTYPE_NONE:  return "NONE";
-            case BPTYPE_HARD:  return "HARD";
-            case BPTYPE_SOFT:  return "SOFT";
+            case BPTYPE_NONE:   return "NONE";
+            case BPTYPE_HARD:   return "HARD";
+            case BPTYPE_SOFT:   return "SOFT";
+            case BPTYPE_COUNT:  return "???";
         }
         return "???";
     }

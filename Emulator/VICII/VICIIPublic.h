@@ -28,7 +28,8 @@ typedef VICREV VICRevision;
 enum_long(GLUE_LOGIC)
 {
     GLUE_LOGIC_DISCRETE,
-    GLUE_LOGIC_IC
+    GLUE_LOGIC_IC,
+    GLUE_LOGIC_COUNT
 };
 typedef GLUE_LOGIC GlueLogic;
 
@@ -39,7 +40,8 @@ enum_long(PALETTE)
     PALETTE_PAPER_WHITE,
     PALETTE_GREEN,
     PALETTE_AMBER,
-    PALETTE_SEPIA
+    PALETTE_SEPIA,
+    PALETTE_COUNT
 };
 typedef PALETTE Palette;
 
@@ -48,7 +50,8 @@ enum_long(SCREEN_GEOMETRY)
     SCREEN_GEOMETRY_25_40 = 1,
     SCREEN_GEOMETRY_25_38,
     SCREEN_GEOMETRY_24_40,
-    SCREEN_GEOMETRY_24_38
+    SCREEN_GEOMETRY_24_38,
+    SCREEN_GEOMETRY_COUNT
 };
 typedef SCREEN_GEOMETRY ScreenGeometry;
 
@@ -67,12 +70,13 @@ typedef DISPLAY_MODE DisplayMode;
 
 enum_long(MEMACCESS)
 {
-    MEMACCESS_R, // Memory Refresh
-    MEMACCESS_I, // Idle read
-    MEMACCESS_C, // Character access
-    MEMACCESS_G, // Graphics access
-    MEMACCESS_P, // Sprite pointer access
-    MEMACCESS_S  // Sprite data access
+    MEMACCESS_R,     // Memory Refresh
+    MEMACCESS_I,     // Idle read
+    MEMACCESS_C,     // Character access
+    MEMACCESS_G,     // Graphics access
+    MEMACCESS_P,     // Sprite pointer access
+    MEMACCESS_S,     // Sprite data access
+    MEMACCESS_COUNT
 };
 typedef MEMACCESS MemAccess;
 
@@ -80,7 +84,8 @@ enum_long(DMA_DISPLAY_MODE)
 {
     DMA_DISPLAY_MODE_FG_LAYER,
     DMA_DISPLAY_MODE_BG_LAYER,
-    DMA_DISPLAY_MODE_ODD_EVEN_LAYERS
+    DMA_DISPLAY_MODE_ODD_EVEN_LAYERS,
+    DMA_DISPLAY_MODE_COUNT
 };
 typedef DMA_DISPLAY_MODE DmaDisplayMode;
 

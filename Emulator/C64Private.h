@@ -37,7 +37,7 @@ struct OptionEnum : Reflection<OptionEnum, Option> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= OPT_DEBUGCART;
+        return (unsigned long)value < OPT_COUNT;
     }
 
     static const char *prefix() { return "OPT"; }
@@ -93,6 +93,8 @@ struct OptionEnum : Reflection<OptionEnum, Option> {
             case OPT_DRIVE_POWER_SWITCH:  return "DRIVE_POWER_SWITCH";
                 
             case OPT_DEBUGCART:           return "DEBUGCART";
+
+            case OPT_COUNT:               return "???";
         }
         return "???";
     }
@@ -102,7 +104,7 @@ struct C64ModelEnum : Reflection<C64ModelEnum, C64Model> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= C64_MODEL_CUSTOM;
+        return (unsigned long)value < C64_MODEL_COUNT;
     }
 
     static const char *prefix() { return "C64_MODEL"; }
@@ -117,6 +119,7 @@ struct C64ModelEnum : Reflection<C64ModelEnum, C64Model> {
             case C64_MODEL_NTSC_II:   return "NTSC_II";
             case C64_MODEL_NTSC_OLD:  return "NTSC_OLD";
             case C64_MODEL_CUSTOM:    return "CUSTOM";
+            case C64_MODEL_COUNT:     return "???";
         }
         return "???";
     }
@@ -126,7 +129,7 @@ struct RomTypeEnum : Reflection<RomTypeEnum, RomType> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= ROM_TYPE_VC1541;
+        return (unsigned long)value < ROM_TYPE_COUNT;
     }
 
     static const char *prefix() { return "ROM_TYPE"; }
@@ -138,6 +141,7 @@ struct RomTypeEnum : Reflection<RomTypeEnum, RomType> {
             case ROM_TYPE_CHAR:    return "CHAR";
             case ROM_TYPE_KERNAL:  return "KERNAL";
             case ROM_TYPE_VC1541:  return "VC1541";
+            case ROM_TYPE_COUNT:   return "???";
         }
         return "???";
     }
@@ -147,7 +151,7 @@ struct EmulatorStateEnum : Reflection<EmulatorStateEnum, EmulatorState> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= EMULATOR_STATE_RUNNING;
+        return (unsigned long)value < EMULATOR_STATE_COUNT;
     }
 
     static const char *prefix() { return "EMULATOR_STATE"; }
@@ -158,6 +162,7 @@ struct EmulatorStateEnum : Reflection<EmulatorStateEnum, EmulatorState> {
             case EMULATOR_STATE_OFF:      return "OFF";
             case EMULATOR_STATE_PAUSED:   return "PAUSED";
             case EMULATOR_STATE_RUNNING:  return "RUNNING";
+            case EMULATOR_STATE_COUNT:    return "???";
         }
         return "???";
     }
@@ -167,7 +172,7 @@ struct InspectionTargetEnum : Reflection<InspectionTargetEnum, InspectionTarget>
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= INSPECTION_TARGET_SID;
+        return (unsigned long)value < INSPECTION_TARGET_COUNT;
     }
     
     static const char *prefix() { return "INSPECTION_TARGET"; }
@@ -181,6 +186,7 @@ struct InspectionTargetEnum : Reflection<InspectionTargetEnum, InspectionTarget>
             case INSPECTION_TARGET_CIA:   return "CIA";
             case INSPECTION_TARGET_VIC:   return "VIC";
             case INSPECTION_TARGET_SID:   return "SID";
+            case INSPECTION_TARGET_COUNT: return "???";
         }
         return "???";
     }

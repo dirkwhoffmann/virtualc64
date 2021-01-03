@@ -21,7 +21,7 @@ struct MSGTypeEnum : Reflection<MSGTypeEnum, MsgType> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= MSG_SNAPSHOT_RESTORED;
+        return (unsigned long)value < MSG_COUNT;
     }
 
     static const char *prefix() { return "MSG"; }
@@ -91,6 +91,8 @@ struct MSGTypeEnum : Reflection<MSGTypeEnum, MsgType> {
             case MSG_AUTO_SNAPSHOT_TAKEN:  return "AUTO_SNAPSHOT_TAKEN";
             case MSG_USER_SNAPSHOT_TAKEN:  return "USER_SNAPSHOT_TAKEN";
             case MSG_SNAPSHOT_RESTORED:    return "SNAPSHOT_RESTORED";
+                
+            case MSG_COUNT:                return "???";
         }
         return "???";
     }

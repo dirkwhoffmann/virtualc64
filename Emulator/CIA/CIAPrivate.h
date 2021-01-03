@@ -17,7 +17,7 @@ struct CIARevisionEnum : Reflection<CIARevisionEnum, CIARevision> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= MOS_8521;
+        return (unsigned long)value < CIAREV_COUNT;
     }
 
     static const char *prefix() { return nullptr; }
@@ -25,8 +25,9 @@ struct CIARevisionEnum : Reflection<CIARevisionEnum, CIARevision> {
     {
         switch (value) {
                 
-            case MOS_6526:  return "MOS_6526";
-            case MOS_8521:  return "MOS_8521";
+            case MOS_6526:      return "MOS_6526";
+            case MOS_8521:      return "MOS_8521";
+            case CIAREV_COUNT:  return "???";
         }
         return "";
     }
@@ -36,7 +37,7 @@ struct CIARegEnum : Reflection<CIARegEnum, CIAReg> {
 
     static bool isValid(long value)
     {
-        return (unsigned long)value <= CIAREG_CRB;
+        return (unsigned long)value < CIAREG_COUNT;
     }
     
     static const char *prefix() { return "CIAREG"; }
@@ -60,6 +61,7 @@ struct CIARegEnum : Reflection<CIARegEnum, CIAReg> {
             case CIAREG_ICR:     return "ICR";
             case CIAREG_CRA:     return "CRA";
             case CIAREG_CRB:     return "CRB";
+            case CIAREG_COUNT:   return "???";
         }
         return "???";
     }

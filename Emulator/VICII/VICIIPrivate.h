@@ -88,7 +88,7 @@ struct GlueLogicEnum : Reflection<GlueLogicEnum, GlueLogic> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= GLUE_LOGIC_IC;
+        return (unsigned long)value < GLUE_LOGIC_COUNT;
     }
 
     static const char *prefix() { return "GLUE_LOGIC"; }
@@ -98,6 +98,7 @@ struct GlueLogicEnum : Reflection<GlueLogicEnum, GlueLogic> {
                 
             case GLUE_LOGIC_DISCRETE:  return "DISCRETE";
             case GLUE_LOGIC_IC:        return "IC";
+            case GLUE_LOGIC_COUNT:     return "???";
         }
         return "???";
     }
@@ -107,7 +108,7 @@ struct PaletteEnum : Reflection<PaletteEnum, Palette> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= PALETTE_SEPIA;
+        return (unsigned long)value < PALETTE_COUNT;
     }
 
     static const char *prefix() { return "PALETTE"; }
@@ -121,6 +122,7 @@ struct PaletteEnum : Reflection<PaletteEnum, Palette> {
             case PALETTE_GREEN:        return "GREEN";
             case PALETTE_AMBER:        return "AMBER";
             case PALETTE_SEPIA:        return "SEPIA";
+            case PALETTE_COUNT:        return "???";
         }
         return "???";
     }
@@ -130,7 +132,7 @@ struct ScreenGeometryEnum : Reflection<ScreenGeometryEnum, ScreenGeometry> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= SCREEN_GEOMETRY_24_38;
+        return (unsigned long)value < SCREEN_GEOMETRY_COUNT;
     }
 
     static const char *prefix() { return "SCREEN_GEOMETRY"; }
@@ -142,6 +144,7 @@ struct ScreenGeometryEnum : Reflection<ScreenGeometryEnum, ScreenGeometry> {
             case SCREEN_GEOMETRY_25_38:  return "25_38";
             case SCREEN_GEOMETRY_24_40:  return "24_40";
             case SCREEN_GEOMETRY_24_38:  return "24_38";
+            case SCREEN_GEOMETRY_COUNT:  return "???";
         }
         return "???";
     }
@@ -151,7 +154,15 @@ struct DisplayModeEnum : Reflection<DisplayModeEnum, DisplayMode> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= DISPLAY_MODE_INV_MULTICOL_BITMAP;
+        return
+        (value == DISPLAY_MODE_STANDARD_TEXT) ||
+        (value == DISPLAY_MODE_MULTICOLOR_TEXT) ||
+        (value == DISPLAY_MODE_STANDARD_BITMAP) ||
+        (value == DISPLAY_MODE_MULTICOLOR_BITMAP) ||
+        (value == DISPLAY_MODE_EXTENDED_BG_COLOR) ||
+        (value == DISPLAY_MODE_INVALID_TEXT) ||
+        (value == DISPLAY_MODE_INV_STANDARD_BITMAP) ||
+        (value == DISPLAY_MODE_INV_MULTICOL_BITMAP);
     }
 
     static const char *prefix() { return "DISPLAY_MODE"; }
@@ -170,13 +181,15 @@ struct DisplayModeEnum : Reflection<DisplayModeEnum, DisplayMode> {
         }
         return "???";
     }
+
+    static bool verify(long nr) { return Reflection::verify(nr, 0x70); }
 };
 
 struct MemAccessEnum : Reflection<MemAccessEnum, MemAccess> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= MEMACCESS_S;
+        return (unsigned long)value < MEMACCESS_COUNT;
     }
     
     static const char *prefix() { return "MEMACCESS"; }
@@ -184,12 +197,13 @@ struct MemAccessEnum : Reflection<MemAccessEnum, MemAccess> {
     {
         switch (value) {
                 
-            case MEMACCESS_R:  return "R";
-            case MEMACCESS_I:  return "I";
-            case MEMACCESS_C:  return "C";
-            case MEMACCESS_G:  return "G";
-            case MEMACCESS_P:  return "P";
-            case MEMACCESS_S:  return "S";
+            case MEMACCESS_R:      return "R";
+            case MEMACCESS_I:      return "I";
+            case MEMACCESS_C:      return "C";
+            case MEMACCESS_G:      return "G";
+            case MEMACCESS_P:      return "P";
+            case MEMACCESS_S:      return "S";
+            case MEMACCESS_COUNT:  return "???";
         }
         return "???";
     }
@@ -199,7 +213,7 @@ struct DmaDisplayModeEnum : Reflection<DmaDisplayModeEnum, DmaDisplayMode> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= MEMACCESS_S;
+        return (unsigned long)value < DMA_DISPLAY_MODE_COUNT;
     }
     
     static const char *prefix() { return "DMA_DISPLAY_MODE"; }
@@ -210,6 +224,7 @@ struct DmaDisplayModeEnum : Reflection<DmaDisplayModeEnum, DmaDisplayMode> {
             case DMA_DISPLAY_MODE_FG_LAYER:         return "FG_LAYER";
             case DMA_DISPLAY_MODE_BG_LAYER:         return "BG_LAYER";
             case DMA_DISPLAY_MODE_ODD_EVEN_LAYERS:  return "ODD_EVEN_LAYERS";
+            case DMA_DISPLAY_MODE_COUNT:            return "???";
         }
         return "???";
     }

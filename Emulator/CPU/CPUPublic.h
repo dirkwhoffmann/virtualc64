@@ -22,7 +22,8 @@
 enum_long(CPUREV)
 {
     MOS_6510,
-    MOS_6502
+    MOS_6502,
+    CPUREV_COUNT
 };
 typedef CPUREV CPURevision;
 
@@ -41,7 +42,8 @@ enum_long(BPTYPE)
 {
     BPTYPE_NONE,
     BPTYPE_HARD,
-    BPTYPE_SOFT
+    BPTYPE_SOFT,
+    BPTYPE_COUNT
 };
 typedef BPTYPE BreakpointType;
 

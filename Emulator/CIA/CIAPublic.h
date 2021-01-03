@@ -17,7 +17,8 @@
 enum_long(CIAREV)
 {
     MOS_6526,
-    MOS_8521
+    MOS_8521,
+    CIAREV_COUNT
 };
 typedef CIAREV CIARevision;
 
@@ -38,7 +39,8 @@ enum_long(CIAREG)
     CIAREG_SDR,
     CIAREG_ICR,
     CIAREG_CRA,
-    CIAREG_CRB
+    CIAREG_CRB,
+    CIAREG_COUNT
 };
 typedef CIAREG CIAReg;
 
