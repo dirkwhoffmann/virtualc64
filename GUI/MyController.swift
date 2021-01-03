@@ -642,14 +642,14 @@ extension MyController {
         case .DRIVE_HEAD:
             
             if pref.driveSounds && pref.driveHeadSound {
-                playSound(name: "1541_track_change_2", volume: 1.0)
+                macAudio.playSound(name: "1541_track_change_2", volume: 1.0)
             }
             refreshStatusBarTracks(drive: DriveID.init(rawValue: msg.data)!)
                         
         case .DISK_INSERTED:
             
             if pref.driveSounds && pref.driveInsertSound {
-                playSound(name: "1541_door_closed_2", volume: 0.2)
+                macAudio.playSound(name: "1541_door_closed_2", volume: 0.2)
             }
             mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
             refreshStatusBarDiskIcons(drive: driveID)
@@ -658,7 +658,7 @@ extension MyController {
         case .DISK_EJECTED:
             
             if pref.driveSounds && pref.driveEjectSound {
-                playSound(name: "1541_door_open_1", volume: 0.15)
+                macAudio.playSound(name: "1541_door_open_1", volume: 0.15)
             }
             refreshStatusBarDiskIcons(drive: driveID)
             inspector?.fullRefresh()
@@ -695,7 +695,7 @@ extension MyController {
         case .DRIVE_ACTIVE:
             
             if pref.driveSounds && pref.driveConnectSound {
-                playSound(name: "1541_power_on_0", volume: 0.15)
+                macAudio.playSound(name: "1541_power_on_0", volume: 0.15)
             }
             myAppDelegate.hideOrShowDriveMenus(proxy: c64)
             refreshStatusBar()
@@ -768,18 +768,4 @@ extension MyController {
 
     // Keyboard events are handled by the emulator window.
     // If they are handled here, some keys such as 'TAB' don't trigger an event.
-        
-    //
-    // Misc
-    //
-    
-    func playSound(name: String, volume: Float) {
-        
-        if let s = NSSound.init(named: name) {
-            s.volume = volume
-            s.play()
-        } else {
-            track("ERROR: Cannot create NSSound object.")
-        }
-    }
 }
