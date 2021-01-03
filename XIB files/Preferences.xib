@@ -1064,7 +1064,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <box fixedFrame="YES" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="7mv-rw-ZS3">
-                                            <rect key="frame" x="19" y="256" width="565" height="123"/>
+                                            <rect key="frame" x="19" y="263" width="565" height="123"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <view key="contentView" id="dsT-AG-Oap">
                                                 <rect key="frame" x="3" y="3" width="559" height="117"/>

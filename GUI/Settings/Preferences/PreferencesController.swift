@@ -187,6 +187,20 @@ class PreferencesController: DialogController {
         }
     }
     
+    func select() {
+        
+        if let id = tabView.selectedTabViewItem?.identifier as? String {
+            
+            switch id {
+            case "Emulator": selectEmulatorTab()
+            case "Controls": selectControlsTab()
+            case "Devices": selectDevicesTab()
+            case "Keyboard": selectKeyboardTab()
+            default: fatalError()
+            }
+        }
+    }
+    
     @discardableResult
     func keyDown(with key: MacKey) -> Bool {
         
@@ -216,16 +230,7 @@ extension PreferencesController: NSTabViewDelegate {
     func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
         
         track()
-        if let id = tabViewItem?.identifier as? String {
-            
-            switch id {
-            case "Emulator": refreshEmulatorTab()
-            case "Controls": refreshControlsTab()
-            case "Devices": selectDevicesTab(); refreshDevicesTab()
-            case "Keyboard": refreshKeyboardTab()
-            default: fatalError()
-            }
-        }
+        select()
     }
 }
 
@@ -234,6 +239,12 @@ extension PreferencesController: NSWindowDelegate {
     func windowWillClose(_ notification: Notification) {
          
         cleanup()
+    }
+        
+    func windowDidBecomeKey(_ notification: Notification) {
+        
+        track()
+        select()
     }
 }
 

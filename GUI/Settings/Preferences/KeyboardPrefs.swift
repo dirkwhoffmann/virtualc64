@@ -88,6 +88,12 @@ extension PreferencesController {
         }
     }
         
+    func selectKeyboardTab() {
+
+        track()
+        refreshKeyboardTab()
+    }
+    
     func selectKey(nr: Int) {
         
         track()

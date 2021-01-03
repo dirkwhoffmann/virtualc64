@@ -11,6 +11,8 @@ extension PreferencesController {
     
     func refreshControlsTab() {
         
+        track()
+
         let port1 = c64.port1!
         let port2 = c64.port2!
         
@@ -75,6 +77,12 @@ extension PreferencesController {
         let model = c64.mouse.model()
         conMouseModel.selectItem(withTag: model.rawValue)
         conMouseInfo.isHidden = model == .C1350
+    }
+    
+    func selectControlsTab() {
+
+        track()
+        refreshControlsTab()
     }
     
     // Translates a button tag back to the related slot and gamepad action

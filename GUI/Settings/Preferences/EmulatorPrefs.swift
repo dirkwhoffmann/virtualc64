@@ -47,6 +47,12 @@ extension PreferencesController {
         emuCloseWithoutAskingButton.state = pref.closeWithoutAsking ? .on : .off
     }
     
+    func selectEmulatorTab() {
+
+        track()
+        refreshEmulatorTab()
+    }
+
     //
     // Action methods (Drive)
     //

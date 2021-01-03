@@ -26,9 +26,7 @@ struct Keycap {
         
     init(_ label1: String, _ label2: String = "",
          font: String = "", shape: String = "100x100", dark: Bool = false) {
-        
-        track()
-        
+                
         self.label1 = label1
         self.label2 = label2
         self.font = font
@@ -39,9 +37,7 @@ struct Keycap {
     }
     
     mutating func computeImage() {
-                
-        track()
-                
+                                
         // Start with a background image
         image = NSImage(named: "shape" + shape)?.copy() as? NSImage
         if dark { image?.darken() }

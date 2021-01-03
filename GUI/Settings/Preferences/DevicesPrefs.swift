@@ -99,8 +99,10 @@ extension PreferencesController {
     
     func selectDevicesTab() {
         
+        track()
         devActivity.stringValue = ""
         devActivity2.stringValue = ""
+        refreshDevicesTab()
     }
     
     //
