@@ -32,20 +32,6 @@ enum_long(DRIVE_TYPE)
 };
 typedef DRIVE_TYPE DriveType;
 
-inline bool isDriveType(long value)
-{
-    return (unsigned long)value <= DRIVE_VC1541II;
-}
-
-inline const char *DriveTypeName(DriveType value)
-{
-    switch (value) {
-            
-        case DRIVE_VC1541II:     return "VC1541II";
-    }
-    return "???";
-}
-
 enum_long(DISK_INSERTION_STATUS)
 {
     DISK_FULLY_EJECTED,
@@ -54,23 +40,6 @@ enum_long(DISK_INSERTION_STATUS)
     DISK_PARTIALLY_EJECTED
 };
 typedef DISK_INSERTION_STATUS InsertionStatus;
-
-inline bool isInsertionStatus(long value)
-{
-    return (unsigned)value <= DISK_PARTIALLY_EJECTED;
-}
-
-inline const char *InsertionStatusName(InsertionStatus value)
-{
-    switch (value) {
-            
-        case DISK_FULLY_EJECTED:       return "FULLY_EJECTED";
-        case DISK_PARTIALLY_INSERTED:  return "PARTIALLY_INSERTED";
-        case DISK_FULLY_INSERTED:      return "FULLY_INSERTED";
-        case DISK_PARTIALLY_EJECTED:   return "PARTIALLY_EJECTED";
-    }
-    return "???";
-}
 
 //
 // Structures

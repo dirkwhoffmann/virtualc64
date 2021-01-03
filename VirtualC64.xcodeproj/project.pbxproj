@@ -559,6 +559,9 @@
 		50ACF4DA256EB43B003B5690 /* Oscillator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Oscillator.h; sourceTree = "<group>"; };
 		50B171051EE6AB840019E8D4 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyControllerTouchBar.swift; sourceTree = "<group>"; };
+		50B1A61525A2028B00201A2C /* MemoryPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemoryPrivate.h; sourceTree = "<group>"; };
+		50B1A61625A203B100201A2C /* PortPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PortPrivate.h; sourceTree = "<group>"; };
+		50B1A61725A205D500201A2C /* DrivePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrivePrivate.h; sourceTree = "<group>"; };
 		50B485F824F96E9400844133 /* ImportDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportDialog.xib; sourceTree = "<group>"; };
 		50B485FA24F9911600844133 /* ImportDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportDialog.swift; sourceTree = "<group>"; };
 		50B485FC24FA1D3200844133 /* iCarousel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
@@ -767,6 +770,7 @@
 			isa = PBXGroup;
 			children = (
 				504C433B24AF29AC00E69CAE /* PortPublic.h */,
+				50B1A61625A203B100201A2C /* PortPrivate.h */,
 				504C434024AF29AC00E69CAE /* ControlPort.h */,
 				504C433E24AF29AC00E69CAE /* ControlPort.cpp */,
 				504C434324AF29AC00E69CAE /* ExpansionPort.h */,
@@ -956,6 +960,7 @@
 			isa = PBXGroup;
 			children = (
 				504C42E224AF29AB00E69CAE /* MemoryPublic.h */,
+				50B1A61525A2028B00201A2C /* MemoryPrivate.h */,
 				504C42E424AF29AB00E69CAE /* C64Memory.h */,
 				504C42E124AF29AB00E69CAE /* C64Memory.cpp */,
 				504C434F24AF29AC00E69CAE /* DriveMemory.h */,
@@ -1095,6 +1100,7 @@
 			isa = PBXGroup;
 			children = (
 				504C435124AF29AC00E69CAE /* DrivePublic.h */,
+				50B1A61725A205D500201A2C /* DrivePrivate.h */,
 				504C434C24AF29AC00E69CAE /* Drive.h */,
 				504C434D24AF29AC00E69CAE /* Drive.cpp */,
 				504C434924AF29AC00E69CAE /* VIA.h */,

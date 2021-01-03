@@ -91,13 +91,8 @@ Drive::setConfigItem(Option option, long id, long value)
             
         case OPT_DRIVE_TYPE:
         {
-            if (!isDriveType(value)) {
-                warn("Invalid drive type: %ld\n", value);
-                return false;
-            }
-            if (config.type == value) {
-                return false;
-            }
+            if (!DriveTypeEnum::verify(value)) return false;
+            if (config.type == value) return false;
             
             config.type = (DriveType)value;
             return true;

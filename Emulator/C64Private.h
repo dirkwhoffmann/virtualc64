@@ -20,7 +20,10 @@
 #include "SIDPrivate.h"
 #include "CIAPrivate.h"
 #include "CPUPrivate.h"
+#include "MemoryPrivate.h"
+#include "DrivePrivate.h"
 #include "DiskPrivate.h"
+#include "PortPrivate.h"
 
 //
 // Reflection APIs

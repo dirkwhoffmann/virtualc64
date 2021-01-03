@@ -7,8 +7,56 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef DISK_PRIVATE_TYPES_H
-#define DISK_PRIVATE_TYPES_H
+#ifndef DISK_PRIVATE_H
+#define DISK_PRIVATE_H
+
+//
+// Reflection APIs
+//
+
+struct DiskTypeEnum : Reflection<DiskTypeEnum, DiskType> {
+    
+    static bool isValid(long value)
+    {
+        return (unsigned long)value <= DISK_TYPE_DS_SD;
+    }
+    
+    static const char *prefix() { return "DISK_TYPE"; }
+    static const char *key(DiskType value)
+    {
+        switch (value) {
+                
+            case DISK_TYPE_SS_SD:  return "SS_SD";
+            case DISK_TYPE_DS_SD:  return "DS_SD";
+        }
+        return "???";
+    }
+};
+
+struct CBMFileTypeEnum : Reflection<CBMFileTypeEnum, CBMFileType> {
+    
+    static bool isValid(long value)
+    {
+        return (unsigned long)value <= CBM_REL;
+    }
+    
+    static const char *prefix() { return "CBM"; }
+    static const char *key(CBMFileType value)
+    {
+        switch (value) {
+                
+            case CBM_PRG:  return "PRG";
+            case CBM_SEQ:  return "SEQ";
+            case CBM_USR:  return "USR";
+            case CBM_REL:  return "REL";
+        }
+        return "???";
+    }
+};
+
+//
+// Private types
+//
 
 /* Disk data
  *

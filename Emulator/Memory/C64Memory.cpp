@@ -134,13 +134,8 @@ C64Memory::setConfigItem(Option option, long value)
             
         case OPT_RAM_PATTERN:
             
-            if (!isRamPattern(value)) {
-                warn("Invalid RAM pattern: %ld\n", value);
-                return false;
-            }
-            if (config.ramPattern == value) {
-                return false;
-            }
+            if (!RamPatternEnum::verify(value)) return false;
+            if (config.ramPattern == value) return false;
             
             config.ramPattern = (RamPattern)value;
             return true;
@@ -194,8 +189,8 @@ C64Memory::_dump()
 void
 C64Memory::eraseWithPattern(RamPattern pattern)
 {
-    if (!isRamPattern(pattern)) {
-        warn("Unknown RAM init pattern. Assuming INIT_PATTERN_C64\n");
+    if (!RamPatternEnum::isValid(pattern)) {
+        warn("Unknown RAM init pattern. Falling back to default.\n");
         pattern = RAM_PATTERN_C64;
     }
     

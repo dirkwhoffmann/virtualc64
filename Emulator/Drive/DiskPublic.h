@@ -43,21 +43,6 @@ enum_long(DISK_TYPE)
 };
 typedef DISK_TYPE DiskType;
 
-inline bool isDiskType(DiskType value)
-{
-    return (unsigned long)value <= DISK_TYPE_DS_SD;
-}
-
-inline const char *DiskTypeName(DiskType value)
-{    
-    switch (value) {
-            
-        case DISK_TYPE_SS_SD:  return "SS_SD";
-        case DISK_TYPE_DS_SD:  return "DS_SD";
-    }
-    return "???";
-}
-
 enum_long(CMB_FILE_TYPE)
 {
     CBM_PRG,
@@ -66,23 +51,6 @@ enum_long(CMB_FILE_TYPE)
     CBM_REL
 };
 typedef CMB_FILE_TYPE CBMFileType;
-
-inline bool isCBMFileType(long value)
-{
-    return (unsigned long)value <= CBM_REL;
-}
-
-inline const char *CBMFileTypeName(CBMFileType value)
-{
-    switch (value) {
-            
-        case CBM_PRG:  return "PRG";
-        case CBM_SEQ:  return "SEQ";
-        case CBM_USR:  return "USR";
-        case CBM_REL:  return "REL";
-    }
-    return "???";
-}
 
 
 //
