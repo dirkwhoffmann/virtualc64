@@ -7,24 +7,24 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef C64_TYPES_H
-#define C64_TYPES_H
+#ifndef C64_PUBLIC_H
+#define C64_PUBLIC_H
 
 #include "Aliases.h"
 
-#include "CartridgeTypes.h"
-#include "CIATypes.h"
-#include "PortTypes.h"
-#include "CPUTypes.h"
-#include "DiskTypes.h"
-#include "DriveTypes.h"
-#include "FileTypes.h"
-#include "FSTypes.h"
-#include "MemoryTypes.h"
-#include "MessageQueueTypes.h"
-#include "MouseTypes.h"
-#include "SIDTypes.h"
-#include "VICIITypes.h"
+#include "CartridgePublic.h"
+#include "CIAPublic.h"
+#include "PortPublic.h"
+#include "CPUPublic.h"
+#include "DiskPublic.h"
+#include "DrivePublic.h"
+#include "FilePublic.h"
+#include "FSPublic.h"
+#include "MemoryPublic.h"
+#include "MessageQueuePublic.h"
+#include "MousePublic.h"
+#include "SIDPublic.h"
+#include "VICIIPublic.h"
 
 //
 // Enumerations

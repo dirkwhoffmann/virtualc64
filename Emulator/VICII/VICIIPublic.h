@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _VICII_TYPES_H
-#define _VICII_TYPES_H
+#ifndef _VICII_PUBLIC_H
+#define _VICII_PUBLIC_H
 
 //
 // Enumerations

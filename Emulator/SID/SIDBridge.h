@@ -11,7 +11,7 @@
 #define _SID_BRIDGE_H
 
 #include "C64Component.h"
-#include "SIDTypes.h"
+#include "SIDPublic.h"
 #include "Volume.h"
 #include "SIDStreams.h"
 #include "FastSID.h"

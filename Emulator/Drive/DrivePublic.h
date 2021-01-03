@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef VC1541_TYPES_H
-#define VC1541_TYPES_H
+#ifndef VC1541_PUBLIC_H
+#define VC1541_PUBLIC_H
 
 //
 // Enumerations

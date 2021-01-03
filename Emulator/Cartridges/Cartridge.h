@@ -11,7 +11,7 @@
 #define _CARTRIDGE_H
 
 #include "C64Component.h"
-#include "CartridgeTypes.h"
+#include "CartridgePublic.h"
 #include "CRTFile.h"
 #include "CartridgeRom.h"
 

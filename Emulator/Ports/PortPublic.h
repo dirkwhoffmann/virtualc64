@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _PORT_TYPES_H
-#define _PORT_TYPES_H
+#ifndef _PORT_PUBLIC_H
+#define _PORT_PUBLIC_H
 
 //
 // Enumerations

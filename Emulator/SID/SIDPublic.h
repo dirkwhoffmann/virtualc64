@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef SID_TYPES_H
-#define SID_TYPES_H
+#ifndef SID_PUBLIC_H
+#define SID_PUBLIC_H
 
 //
 // Enumerations

@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _CIA_TYPES_H
-#define _CIA_TYPES_H
+#ifndef _CIA_PUBLIC_H
+#define _CIA_PUBLIC_H
 
 //
 // Enumerations

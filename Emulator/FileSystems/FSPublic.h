@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _FS_TYPES_H
-#define _FS_TYPES_H
+#ifndef FS_PUBLIC_H
+#define FS_PUBLIC_H
 
 #include "Aliases.h"
 

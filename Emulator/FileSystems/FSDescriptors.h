@@ -11,7 +11,7 @@
 #define _FS_DESCRIPTORS_H
 
 #include "C64Object.h"
-#include "FSTypes.h"
+#include "FSPublic.h"
 
 /* To create a FSDevice, the layout parameters of the represendet device have
  * to be provided. This is done by passing a structure of type FSDeviceLayout

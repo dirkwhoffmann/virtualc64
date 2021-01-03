@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef FILE_TYPES_H
-#define FILE_TYPES_H
+#ifndef FILE_PUBLIC_H
+#define FILE_PUBLIC_H
 
 enum_long(FILETYPE)
 {    

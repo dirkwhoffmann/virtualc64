@@ -7,8 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef DISK_TYPES_H
-#define DISK_TYPES_H
+#ifndef DISK_PUBLIC_H
+#define DISK_PUBLIC_H
 
 /* Overview:
  *
