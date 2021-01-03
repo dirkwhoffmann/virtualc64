@@ -12,6 +12,7 @@
 
 #include "C64Object.h"
 #include "PETName.h"
+#include "FilePrivate.h"
 
 // Base class for all supported file types
 class AnyFile : public C64Object {
@@ -72,7 +73,7 @@ public:
     virtual FileType type() { return FILETYPE_UNKNOWN; }
 
     // Returns a string representation for the type of this file
-    const char *typeString() { return FileTypeName(type()); }
+    const char *typeString() { return FileTypeEnum::key(type()); }
     
 	// Returns the physical name of this file
     const char *getPath() { return path ? path : ""; }

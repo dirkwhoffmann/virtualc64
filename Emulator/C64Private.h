@@ -15,15 +15,17 @@
 #ifndef C64_PRIVATE_H
 #define C64_PRIVATE_H
 
-#include "MessageQueuePrivate.h"
-#include "VICIIPrivate.h"
-#include "SIDPrivate.h"
+#include "CartridgePrivate.h"
 #include "CIAPrivate.h"
 #include "CPUPrivate.h"
-#include "MemoryPrivate.h"
 #include "DrivePrivate.h"
 #include "DiskPrivate.h"
+#include "MemoryPrivate.h"
+#include "MessageQueuePrivate.h"
+#include "MousePrivate.h"
 #include "PortPrivate.h"
+#include "SIDPrivate.h"
+#include "VICIIPrivate.h"
 
 //
 // Reflection APIs

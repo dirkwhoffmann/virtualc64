@@ -562,6 +562,9 @@
 		50B1A61525A2028B00201A2C /* MemoryPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemoryPrivate.h; sourceTree = "<group>"; };
 		50B1A61625A203B100201A2C /* PortPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PortPrivate.h; sourceTree = "<group>"; };
 		50B1A61725A205D500201A2C /* DrivePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrivePrivate.h; sourceTree = "<group>"; };
+		50B1A61825A208D900201A2C /* MousePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MousePrivate.h; sourceTree = "<group>"; };
+		50B1A61925A209A200201A2C /* CartridgePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CartridgePrivate.h; sourceTree = "<group>"; };
+		50B1A61A25A20A8900201A2C /* FilePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilePrivate.h; sourceTree = "<group>"; };
 		50B485F824F96E9400844133 /* ImportDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportDialog.xib; sourceTree = "<group>"; };
 		50B485FA24F9911600844133 /* ImportDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportDialog.swift; sourceTree = "<group>"; };
 		50B485FC24FA1D3200844133 /* iCarousel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
@@ -850,6 +853,7 @@
 			isa = PBXGroup;
 			children = (
 				504C42C524AF29AB00E69CAE /* CartridgePublic.h */,
+				50B1A61925A209A200201A2C /* CartridgePrivate.h */,
 				504C42C424AF29AB00E69CAE /* Cartridge.h */,
 				504C42C024AF29AB00E69CAE /* Cartridge.cpp */,
 				504C42C124AF29AB00E69CAE /* CartridgeRom.h */,
@@ -924,8 +928,9 @@
 		504C42C624AF29AB00E69CAE /* Files */ = {
 			isa = PBXGroup;
 			children = (
-				5026118D259CACB60066E754 /* PETName.h */,
 				504C42CA24AF29AB00E69CAE /* FilePublic.h */,
+				50B1A61A25A20A8900201A2C /* FilePrivate.h */,
+				5026118D259CACB60066E754 /* PETName.h */,
 				504C42CE24AF29AB00E69CAE /* AnyFile.h */,
 				504C42D624AF29AB00E69CAE /* AnyFile.cpp */,
 				504C42D724AF29AB00E69CAE /* RomFile.h */,
@@ -990,6 +995,7 @@
 			isa = PBXGroup;
 			children = (
 				504C430024AF29AB00E69CAE /* MousePublic.h */,
+				50B1A61825A208D900201A2C /* MousePrivate.h */,
 				504C430124AF29AB00E69CAE /* Mouse.h */,
 				504C42FC24AF29AB00E69CAE /* Mouse.cpp */,
 				504C42FA24AF29AB00E69CAE /* Mouse1350.h */,

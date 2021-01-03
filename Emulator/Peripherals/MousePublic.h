@@ -9,8 +9,8 @@
 
 // This file must conform to standard ANSI-C to be compatible with Swift.
 
-#ifndef MOUSE_TYPES_H
-#define MOUSE_TYPES_H
+#ifndef MOUSE_PUBLIC_H
+#define MOUSE_PUBLIC_H
 
 enum_long(MOUSE_MODEL)
 {
@@ -19,22 +19,6 @@ enum_long(MOUSE_MODEL)
     MOUSE_NEOS
 };
 typedef MOUSE_MODEL MouseModel;
-
-inline bool isMouseModel(long value)
-{
-    return (unsigned long)value <= MOUSE_NEOS;
-}
-
-inline const char *MouseModelName(MouseModel value)
-{
-    switch (value) {
-            
-        case MOUSE_C1350:  return "C1350";
-        case MOUSE_C1351:  return "C1351";
-        case MOUSE_NEOS:   return "NEOS";
-    }
-    return "???";
-}
 
 typedef struct
 {

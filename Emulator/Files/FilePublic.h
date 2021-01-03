@@ -29,33 +29,6 @@ enum_long(FILETYPE)
 };
 typedef FILETYPE FileType;
 
-inline bool isFileType(long value)
-{
-    return (unsigned long)value <= FILETYPE_VC1541_ROM;
-}
-
-inline const char *FileTypeName(FileType type)
-{
-    switch (type) {
-            
-        case FILETYPE_UNKNOWN:    return "UNKNOWN";
-        case FILETYPE_V64:        return "V64";
-        case FILETYPE_CRT:        return "CRT";
-        case FILETYPE_T64:        return "T64";
-        case FILETYPE_PRG:        return "PRG";
-        case FILETYPE_FOLDER:     return "FOLDER";
-        case FILETYPE_P00:        return "P00";
-        case FILETYPE_D64:        return "D64";
-        case FILETYPE_G64:        return "G64";
-        case FILETYPE_TAP:        return "TAP";
-        case FILETYPE_BASIC_ROM:  return "ROM";
-        case FILETYPE_CHAR_ROM:   return "ROM";
-        case FILETYPE_KERNAL_ROM: return "ROM";
-        case FILETYPE_VC1541_ROM: return "ROM";
-    }
-    return "???";
-}
-
 enum_long(ROM_IDENTIFIER)
 {
     ROM_MISSING,
@@ -111,11 +84,6 @@ enum_long(ROM_IDENTIFIER)
 };
 typedef ROM_IDENTIFIER RomIdentifier;
 
-inline bool isRomIdentifier(long value)
-{
-    return (unsigned long)value <= ROM_CNT;
-}
-
 enum_long(FileError)
 {
     ERR_FILE_OK,
@@ -132,25 +100,11 @@ enum_long(FileError)
     ERR_UNSUPPORTED_SNAPSHOT    
 };
 
-enum_long(TAPVersion)
+enum_long(TAP_VERSION)
 {
-    TAPVersion_ORIGINAL,
-    TAPVersion_ADVANCED
+    TAP_VERSION_ORIGINAL,
+    TAP_VERSION_ADVANCED
 };
-
-inline bool isTAPVersion(long value)
-{
-    return (unsigned long)value <= TAPVersion_ADVANCED;
-}
-
-inline const char* TAPVersionName(TAPVersion value)
-{
-    switch (value) {
-            
-        case TAPVersion_ORIGINAL: return "ORIGINAL";
-        case TAPVersion_ADVANCED: return "ADVANCED";
-        default:                  return "???";
-    }
-}
+typedef TAP_VERSION TAPVersion;
 
 #endif
