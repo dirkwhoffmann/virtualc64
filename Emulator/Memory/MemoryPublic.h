@@ -26,14 +26,16 @@ enum_long(M_TYPE)
     M_CRTLO,
     M_CRTHI,
     M_PP,
-    M_NONE
+    M_NONE,
+    M_COUNT
 };
 typedef M_TYPE MemoryType;
 
 enum_long(RAM_PATTERN)
 {
     RAM_PATTERN_C64,
-    RAM_PATTERN_C64C
+    RAM_PATTERN_C64C,
+    RAM_PATTERN_COUNT
 };
 typedef RAM_PATTERN RamPattern;
 

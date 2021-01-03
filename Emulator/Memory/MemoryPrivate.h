@@ -18,7 +18,7 @@ struct MemoryTypeEnum : Reflection<MemoryTypeEnum, MemoryType> {
     
     static bool isValid(long value)
     {
-        return value >= 1 && value <= M_NONE;
+        return value >= 1 && value < M_COUNT;
     }
     
     static const char *prefix() { return "M"; }
@@ -35,6 +35,7 @@ struct MemoryTypeEnum : Reflection<MemoryTypeEnum, MemoryType> {
             case M_CRTHI:   return "M_CRTHI";
             case M_PP:      return "M_PP";
             case M_NONE:    return "M_NONE";
+            case M_COUNT:   return "???";
         }
         return "???";
     }
@@ -44,7 +45,7 @@ struct RamPatternEnum : Reflection<RamPatternEnum, RamPattern> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= RAM_PATTERN_C64C;
+        return (unsigned long)value < RAM_PATTERN_COUNT;
     }
     
     static const char *prefix() { return "RAM_PATTERN"; }
@@ -52,8 +53,9 @@ struct RamPatternEnum : Reflection<RamPatternEnum, RamPattern> {
     {
         switch (value) {
                 
-            case RAM_PATTERN_C64:   return "C64";
-            case RAM_PATTERN_C64C:  return "C64C";
+            case RAM_PATTERN_C64:    return "C64";
+            case RAM_PATTERN_C64C:   return "C64C";
+            case RAM_PATTERN_COUNT:  return "???";
         }
         return "???";
     }

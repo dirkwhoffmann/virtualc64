@@ -555,6 +555,7 @@ SIDBridge::getInfo(unsigned nr)
             
         case SIDENGINE_FASTSID: info = fastsid[nr].getInfo(); break;
         case SIDENGINE_RESID:   info = resid[nr].getInfo(); break;
+        default: assert(false);
     }
     
     info.potX = mouse.readPotX();
@@ -574,6 +575,7 @@ SIDBridge::getVoiceInfo(unsigned nr, unsigned voice)
             
         case SIDENGINE_FASTSID: info = fastsid[nr].getVoiceInfo(voice); break;
         case SIDENGINE_RESID:   info = resid[nr].getVoiceInfo(voice); break;
+        default: assert(false);
     }
     
     return info;
@@ -639,6 +641,7 @@ SIDBridge::peek(u16 addr)
     switch (config.engine) {
         case SIDENGINE_FASTSID: return fastsid[sidNr].peek(addr);
         case SIDENGINE_RESID:   return resid[sidNr].peek(addr);
+        default: assert(false);
     }
     
     assert(false);

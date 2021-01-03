@@ -18,7 +18,8 @@ enum_long(CPDEVICE)
 {
     CPDEVICE_NONE,
     CPDEVICE_MOUSE,
-    CPDEVICE_JOYSTICK
+    CPDEVICE_JOYSTICK,
+    CPDEVICE_COUNT
 };
 typedef CPDEVICE ControlPortDevice;
 
@@ -45,7 +46,8 @@ enum_long(CRTMODE)
     CRTMODE_16K,
     CRTMODE_8K,
     CRTMODE_ULTIMAX,
-    CRTMODE_OFF
+    CRTMODE_OFF,
+    CRTMODE_COUNT
 };
 typedef CRTMODE CRTMode;
 

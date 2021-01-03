@@ -18,7 +18,7 @@ struct ControlPortDeviceEnum : Reflection<ControlPortDeviceEnum, ControlPortDevi
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= CPDEVICE_JOYSTICK;
+        return (unsigned long)value < CPDEVICE_COUNT;
     }
     
     static const char *prefix() { return "CPDEVICE"; }
@@ -29,6 +29,7 @@ struct ControlPortDeviceEnum : Reflection<ControlPortDeviceEnum, ControlPortDevi
             case CPDEVICE_NONE:      return "NONE";
             case CPDEVICE_MOUSE:     return "MOUSE";
             case CPDEVICE_JOYSTICK:  return "JOYSTICK";
+            case CPDEVICE_COUNT:     return "???";
         }
         return "???";
     }
@@ -68,7 +69,7 @@ struct CRTModeEnum : Reflection<CRTModeEnum, CRTMode> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= CRTMODE_OFF;
+        return (unsigned long)value < CRTMODE_COUNT;
     }
     
     static const char *prefix() { return "CRTMODE"; }
@@ -80,6 +81,7 @@ struct CRTModeEnum : Reflection<CRTModeEnum, CRTMode> {
             case CRTMODE_8K:       return "8K";
             case CRTMODE_ULTIMAX:  return "ULTIMAX";
             case CRTMODE_OFF:      return "OFF";
+            case CRTMODE_COUNT:    return "???";
         }
         return "???";
     }

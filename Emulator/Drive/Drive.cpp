@@ -480,7 +480,7 @@ Drive::vsyncHandler()
     switch (insertionStatus) {
             
         case DISK_FULLY_INSERTED:
-            
+        {
             trace(DSKCHG_DEBUG, "FULLY_INSERTED -> PARTIALLY_EJECTED\n");
 
             // Pull the disk half out (blocks the light barrier)
@@ -492,9 +492,9 @@ Drive::vsyncHandler()
             // Schedule the next transition
             diskChangeCounter = 17;
             return;
-            
+        }
         case DISK_PARTIALLY_EJECTED:
-            
+        {
             trace(DSKCHG_DEBUG, "PARTIALLY_EJECTED -> FULLY_EJECTED\n");
 
             // Take the disk out (unblocks the light barrier)
@@ -506,9 +506,9 @@ Drive::vsyncHandler()
             // Schedule the next transition
             diskChangeCounter = 17;
             return;
-            
+        }
         case DISK_FULLY_EJECTED:
-            
+        {
             trace(DSKCHG_DEBUG, "FULLY_EJECTED -> PARTIALLY_INSERTED\n");
 
             // Only proceed if a new disk is waiting for insertion
@@ -520,9 +520,9 @@ Drive::vsyncHandler()
             // Schedule the next transition
             diskChangeCounter = 17;
             return;
-            
+        }
         case DISK_PARTIALLY_INSERTED:
-            
+        {
             trace(DSKCHG_DEBUG, "PARTIALLY_INSERTED -> FULLY_INSERTED\n");
 
             // Fully insert the disk (unblocks the light barrier)
@@ -539,5 +539,8 @@ Drive::vsyncHandler()
             // Inform listeners
             c64.putMessage(MSG_DISK_INSERTED, deviceNr);
             return;
+        }
+        default:
+            assert(false);
     }
 }

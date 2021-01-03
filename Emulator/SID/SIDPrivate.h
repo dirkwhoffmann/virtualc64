@@ -18,7 +18,7 @@ struct SIDRevisionEnum : Reflection<SIDRevisionEnum, SIDRevision> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= MOS_8580;
+        return (unsigned long)value < SIDREV_COUNT;
     }
     
     static const char *prefix() { return nullptr; }
@@ -26,8 +26,9 @@ struct SIDRevisionEnum : Reflection<SIDRevisionEnum, SIDRevision> {
     {
         switch (value) {
                 
-            case MOS_6581:  return "MOS_6581";
-            case MOS_8580:  return "MOS_8580";
+            case MOS_6581:      return "MOS_6581";
+            case MOS_8580:      return "MOS_8580";
+            case SIDREV_COUNT:  return "???";
         }
         return "???";
     }
@@ -37,7 +38,7 @@ struct SIDEngineEnum : Reflection<SIDEngineEnum, SIDEngine> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= SIDENGINE_RESID;
+        return (unsigned long)value < SIDENGINE_COUNT;
     }
     
     static const char *prefix() { return "SIDENGINE"; }
@@ -47,6 +48,7 @@ struct SIDEngineEnum : Reflection<SIDEngineEnum, SIDEngine> {
                 
             case SIDENGINE_FASTSID:  return "FASTSID";
             case SIDENGINE_RESID:    return "RESID";
+            case SIDENGINE_COUNT:    return "???";
         }
         return "???";
     }
@@ -56,7 +58,7 @@ struct SamplingMethodEnum : Reflection<SamplingMethodEnum, SamplingMethod> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= SAMPLING_RESAMPLE_FASTMEM;
+        return (unsigned long)value < SAMPLING_COUNT;
     }
     
     static const char *prefix() { return "SAMPLING"; }
@@ -68,6 +70,7 @@ struct SamplingMethodEnum : Reflection<SamplingMethodEnum, SamplingMethod> {
             case SAMPLING_INTERPOLATE:       return "INTERPOLATE";
             case SAMPLING_RESAMPLE:          return "RESAMPLE";
             case SAMPLING_RESAMPLE_FASTMEM:  return "RESAMPLE FASTMEM";
+            case SAMPLING_COUNT:             return "???";
         }
         return "???";
     }
