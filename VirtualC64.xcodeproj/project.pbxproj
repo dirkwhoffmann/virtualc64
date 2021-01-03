@@ -306,7 +306,7 @@
 		503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerToolbar.swift; sourceTree = "<group>"; };
 		503E198F20C42C6D007E91F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		504268AC24F0F76F006BB841 /* C64Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Private.h; sourceTree = "<group>"; };
-		504268AD24F12705006BB841 /* DiskPrivateTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskPrivateTypes.h; sourceTree = "<group>"; };
+		504268AD24F12705006BB841 /* DiskPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskPrivate.h; sourceTree = "<group>"; };
 		504C429024AF29AB00E69CAE /* Epyx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Epyx.h; sourceTree = "<group>"; };
 		504C429124AF29AB00E69CAE /* Ocean.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ocean.cpp; sourceTree = "<group>"; };
 		504C429224AF29AB00E69CAE /* WarpSpeed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WarpSpeed.cpp; sourceTree = "<group>"; };
@@ -500,7 +500,7 @@
 		5051A1611B88661000CBFB5A /* 1541_track_change_1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_1.aiff; sourceTree = "<group>"; };
 		50520F8925108FC400C7D47F /* Folder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Folder.cpp; sourceTree = "<group>"; };
 		50520F8A25108FC400C7D47F /* Folder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Folder.h; sourceTree = "<group>"; };
-		5052A7BF25A0703D00E62EDD /* CPUPrivateTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPUPrivateTypes.h; sourceTree = "<group>"; };
+		5052A7BF25A0703D00E62EDD /* CPUPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPUPrivate.h; sourceTree = "<group>"; };
 		5052A7C025A0AC0700E62EDD /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		50549B44257D1A6C006FE39C /* C64Constants.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64Constants.cpp; sourceTree = "<group>"; };
 		50549B46257D1B6A006FE39C /* Buffers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffers.h; sourceTree = "<group>"; };
@@ -606,7 +606,7 @@
 		50D5F88724F556270062EF13 /* DiskErrors.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskErrors.xib; sourceTree = "<group>"; };
 		50D5F88924F5573D0062EF13 /* DiskErrorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskErrorController.swift; sourceTree = "<group>"; };
 		50D8421720A82CF500EB859A /* MetalViewEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalViewEvents.swift; sourceTree = "<group>"; };
-		50DAABD824F0108A005D426F /* VICIIPrivateTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VICIIPrivateTypes.h; sourceTree = "<group>"; };
+		50DAABD824F0108A005D426F /* VICIIPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VICIIPrivate.h; sourceTree = "<group>"; };
 		50DBB44A2025CE5700489271 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		50DEAD8E2008E615008A8761 /* Shaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
 		50DF719325021FCA00953E2E /* Keycap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keycap.swift; sourceTree = "<group>"; };
@@ -967,7 +967,7 @@
 			isa = PBXGroup;
 			children = (
 				504C42E624AF29AB00E69CAE /* CPUPublic.h */,
-				5052A7BF25A0703D00E62EDD /* CPUPrivateTypes.h */,
+				5052A7BF25A0703D00E62EDD /* CPUPrivate.h */,
 				504C42E824AF29AB00E69CAE /* CPU.h */,
 				504C42E924AF29AB00E69CAE /* CPU.cpp */,
 				504C42E724AF29AB00E69CAE /* CPUInstructions.h */,
@@ -1002,7 +1002,7 @@
 			isa = PBXGroup;
 			children = (
 				504C430624AF29AC00E69CAE /* VICIIPublic.h */,
-				50DAABD824F0108A005D426F /* VICIIPrivateTypes.h */,
+				50DAABD824F0108A005D426F /* VICIIPrivate.h */,
 				504C430C24AF29AC00E69CAE /* VICII.h */,
 				504C430724AF29AC00E69CAE /* VICII.cpp */,
 				504C430524AF29AB00E69CAE /* VICII_draw.cpp */,
@@ -1100,7 +1100,7 @@
 				504C434624AF29AC00E69CAE /* IEC.h */,
 				504C433C24AF29AC00E69CAE /* IEC.cpp */,
 				504C435024AF29AC00E69CAE /* DiskPublic.h */,
-				504268AD24F12705006BB841 /* DiskPrivateTypes.h */,
+				504268AD24F12705006BB841 /* DiskPrivate.h */,
 				504C434E24AF29AC00E69CAE /* Disk.h */,
 				504C434824AF29AC00E69CAE /* Disk.cpp */,
 			);

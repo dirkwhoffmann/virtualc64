@@ -36,21 +36,6 @@ enum_long(CPUREV)
 };
 typedef CPUREV CPURevision;
 
-inline bool isCPURevision(long value)
-{
-    return (unsigned long)value <= MOS_6502;
-}
-
-inline const char *CPURevisionName(CPURevision value)
-{
-    switch (value) {
-            
-        case MOS_6510:  return "MOS_6510";
-        case MOS_6502:  return "MOS_6502";
-    }
-    return "???";
-}
-
 enum_byte(INTSRC)
 {
     INTSRC_CIA  = 0x01,
@@ -62,25 +47,6 @@ enum_byte(INTSRC)
 };
 typedef INTSRC IntSource;
 
-inline bool isIntSource(long value)
-{
-    return (unsigned long)value <= INTSRC_KBD;
-}
-
-inline const char *IntSourceName(IntSource value)
-{
-    switch (value) {
-            
-        case INTSRC_CIA:   return "CIA";
-        case INTSRC_VIC:   return "VIC";
-        case INTSRC_VIA1:  return "VIA1";
-        case INTSRC_VIA2:  return "VIA2";
-        case INTSRC_EXP:   return "EXP";
-        case INTSRC_KBD:   return "KBD";
-    }
-    return "???";
-}
-
 enum_long(BPTYPE)
 {
     BPTYPE_NONE,
@@ -88,22 +54,6 @@ enum_long(BPTYPE)
     BPTYPE_SOFT
 };
 typedef BPTYPE BreakpointType;
-
-inline bool isBreakpointType(long value)
-{
-    return (unsigned long)value <= BPTYPE_SOFT;
-}
-
-inline const char *BreakpointTypeName(BreakpointType value)
-{
-    switch (value) {
-            
-        case BPTYPE_NONE:  return "NONE";
-        case BPTYPE_HARD:  return "HARD";
-        case BPTYPE_SOFT:  return "SOFT";
-    }
-    return "???";
-}
 
 //
 // Structures

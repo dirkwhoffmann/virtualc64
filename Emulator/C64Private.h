@@ -16,9 +16,10 @@
 #define C64_PRIVATE_H
 
 #include "MessageQueuePrivate.h"
-#include "VICIIPrivateTypes.h"
-#include "DiskPrivateTypes.h"
+#include "VICIIPrivate.h"
+#include "DiskPrivate.h"
 #include "CIAPrivate.h"
+#include "CPUPrivate.h"
 
 //
 // Reflection APIs

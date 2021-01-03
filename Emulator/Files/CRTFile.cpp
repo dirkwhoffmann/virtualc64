@@ -141,6 +141,7 @@ CRTFile::repair()
     
     // Compute a fingerprint for the CRT file
     u64 fingerprint = fnv_1a_64(data, size);
+    printf("CRT fingerprint: %llx\n", fingerprint);
     debug(CRT_DEBUG, "CRT fingerprint: %llx\n", fingerprint);
 
     // Check for known inconsistencies
@@ -152,6 +153,10 @@ CRTFile::repair()
             msg("Repairing broken Mikro Assembler cartridge\n");
             data[0x17] = 0x1C;
             break;
+            
+        case 0x5eef8cc7682f973: // Moonspire (invalid CRT type)
+            msg("TODO: Repairing Moonspire cartridge (%d)\n", data[0x17]);
+            // data[0x17] = 0x00;
+            break;
     }
 }
-
