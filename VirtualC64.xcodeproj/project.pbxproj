@@ -179,6 +179,7 @@
 		50A9A088250DE90900723D32 /* PageFox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A9A086250DE90900723D32 /* PageFox.cpp */; };
 		50ACF4DB256EB43B003B5690 /* Oscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACF4D9256EB43B003B5690 /* Oscillator.cpp */; };
 		50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */; };
+		50B1A61D25A2368D00201A2C /* DeviceDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1A61C25A2368D00201A2C /* DeviceDatabase.swift */; };
 		50B485F924F96E9400844133 /* ImportDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B485F824F96E9400844133 /* ImportDialog.xib */; };
 		50B485FB24F9911600844133 /* ImportDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B485FA24F9911600844133 /* ImportDialog.swift */; };
 		50B485FD24FA1D3200844133 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B485FC24FA1D3200844133 /* iCarousel.m */; };
@@ -566,6 +567,7 @@
 		50B1A61925A209A200201A2C /* CartridgeTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CartridgeTypes.h; sourceTree = "<group>"; };
 		50B1A61A25A20A8900201A2C /* FileTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileTypes.h; sourceTree = "<group>"; };
 		50B1A61B25A20DFB00201A2C /* FSTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSTypes.h; sourceTree = "<group>"; };
+		50B1A61C25A2368D00201A2C /* DeviceDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDatabase.swift; sourceTree = "<group>"; };
 		50B485F824F96E9400844133 /* ImportDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportDialog.xib; sourceTree = "<group>"; };
 		50B485FA24F9911600844133 /* ImportDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportDialog.swift; sourceTree = "<group>"; };
 		50B485FC24FA1D3200844133 /* iCarousel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
@@ -1234,6 +1236,7 @@
 				5002FA8021C2654B00DA4BBC /* ControlsPrefs.swift */,
 				50CCE178259DFD7800481E7F /* DevicesPrefs.swift */,
 				5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */,
+				50B1A61C25A2368D00201A2C /* DeviceDatabase.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -1582,6 +1585,7 @@
 				504C438D24AF29AC00E69CAE /* VICII.cpp in Sources */,
 				507E7AA224FB897D00AB433C /* Screenshot.swift in Sources */,
 				504C437824AF29AC00E69CAE /* AnyDisk.cpp in Sources */,
+				50B1A61D25A2368D00201A2C /* DeviceDatabase.swift in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				504C43AB24AF29AC00E69CAE /* CIA.cpp in Sources */,
 				504C436024AF29AC00E69CAE /* Mach5.cpp in Sources */,

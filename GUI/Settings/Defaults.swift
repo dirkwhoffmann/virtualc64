@@ -401,6 +401,18 @@ extension UserDefaults {
 }
 
 //
+// User defaults (Devices)
+//
+
+extension Keys {
+    
+    struct Dev {
+
+        static let schemes            = "VC64_DEV_Schemes"
+    }
+}
+
+//
 // User defaults (Keyboard)
 //
 

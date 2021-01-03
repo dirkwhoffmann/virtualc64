@@ -10,6 +10,8 @@
 #ifndef _COLORS_H
 #define _COLORS_H
 
+#include "Aliases.h"
+
 struct RgbColor {
 
     double r;

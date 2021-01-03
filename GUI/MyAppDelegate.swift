@@ -70,6 +70,9 @@ var proxy: C64Proxy? {
     var pref: Preferences!
     var prefController: PreferencesController?
     
+    // Information provider for connected HID devices
+    var database = DeviceDatabase.init()
+    
     // The list of recently inserted media URLs
     var recentlyInsertedDiskURLs: [URL] = []
     

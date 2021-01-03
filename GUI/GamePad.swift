@@ -9,19 +9,20 @@
 
 import IOKit.hid
 
-// An object representing an input device connected to the Game Port. The object
-// can either represent a connected HID device or a keyboard emulated device.
-// In the first case, the object serves as a callback handler for HID events.
-// In the latter case, it translates keyboard events to GamePadAction events by
-// utilizing a key map.
-
+/* An object of this class represents an input device connected to the Game
+ * Port. The object can either represent a connected HID device or a keyboard
+ * emulated device. In the first case, the object serves as a callback handler
+ * for HID events. In the latter case, it translates keyboard events to
+ * GamePadAction events by utilizing a key map.
+ */
 class GamePad {
 
-    // Reference to the game pad manager
+    // References to other objects
     var manager: GamePadManager
     var prefs: Preferences { return manager.parent.pref }
+    var db: DeviceDatabase { return manager.parent.myAppDelegate.database }
     
-    // The C64 control port this device is connected to (0 = unconnected)
+    // The Amiga port this device is connected to (1, 2, or nil)
     var port = 0
 
     // Reference to the device object
