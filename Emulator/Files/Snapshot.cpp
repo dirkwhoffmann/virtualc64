@@ -96,9 +96,7 @@ Snapshot::matchingFile(const char *path)
 
 bool
 Snapshot::isTooOld()
-{
-    return true; // REMOVE ASAP
-    
+{    
     if (data[4] < V_MAJOR) return true; else if (data[4] > V_MAJOR) return false;
     if (data[5] < V_MINOR) return true; else if (data[5] > V_MINOR) return false;
     return data[6] < V_SUBMINOR;
