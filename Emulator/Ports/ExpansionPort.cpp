@@ -212,10 +212,16 @@ ExpansionPort::setCartridgeMode(CRTMode mode)
     }
 }
 
-void
+bool
 ExpansionPort::attachCartridge(Cartridge *c)
 {
     assert(c);
+    
+    // Only proceed if this cartridge is supported
+    if (!c->isSupported()) {
+        c64.putMessage(MSG_UNSUPPORTED_CRT, c->getCartridgeType());
+        return false;
+    }
     
     // Remove old cartridge (if any) and assign new one
     detachCartridge();
@@ -225,10 +231,11 @@ ExpansionPort::attachCartridge(Cartridge *c)
     // Reset cartridge to update exrom and game line on the expansion port
     cartridge->reset();
     
-    c64.putMessage(MSG_CARTRIDGE);
+    c64.putMessage(MSG_CRT_ATTACHED);
     if (cartridge->hasSwitch()) c64.putMessage(MSG_CART_SWITCH);
     
-    trace(EXP_DEBUG, "Cartridge attached to expansion port");
+    debug(EXP_DEBUG, "Cartridge attached to expansion port");
+    return true;
 }
 
 bool
@@ -236,24 +243,28 @@ ExpansionPort::attachCartridgeAndReset(CRTFile *file)
 {
     assert(file);
     
-    Cartridge *cartridge = Cartridge::makeWithCRTFile(c64, file);
-    
-    if (cartridge) {
-        
-        suspend();
-        attachCartridge(cartridge);
-        c64.reset();
-        resume();
-        return true;
+    bool result = false;
+
+    // Only proceed if this cartridge is supported
+    if (!file->isSupported()) {
+        c64.putMessage(MSG_UNSUPPORTED_CRT, file->cartridgeType());
+        return false;
     }
     
-    return false;
+    if (Cartridge *cartridge = Cartridge::makeWithCRTFile(c64, file)) {
+        
+        suspend();
+        if ((result = attachCartridge(cartridge))) c64.reset();
+        resume();
+    }
+    
+    return result;
 }
 
 void
 ExpansionPort::attachGeoRamCartridge(usize kb)
 {
-    trace(EXP_DEBUG, "Attaching GeoRAM cartridge (%zu KB)", kb);
+    debug(EXP_DEBUG, "Attaching GeoRAM cartridge (%zu KB)", kb);
 
     if (kb != 64 && kb != 256 && kb != 512 && kb != 1024 && kb != 2048) {
         assert(false);
@@ -261,16 +272,16 @@ ExpansionPort::attachGeoRamCartridge(usize kb)
     
     Cartridge *geoRAM = Cartridge::makeWithType(c64, CRT_GEO_RAM);
     geoRAM->setRamCapacity(kb * 1024);
-    attachCartridge(geoRAM);
+    (void)attachCartridge(geoRAM);
 }
 
 void
 ExpansionPort::attachIsepicCartridge()
 {
-    trace(EXP_DEBUG, "Attaching Isepic cartridge\n");
+    debug(EXP_DEBUG, "Attaching Isepic cartridge\n");
     
     Cartridge *isepic = Cartridge::makeWithType(c64, CRT_ISEPIC);
-    return attachCartridge(isepic);
+    (void)attachCartridge(isepic);
 }
 
 void
@@ -286,8 +297,8 @@ ExpansionPort::detachCartridge()
         
         setCartridgeMode(CRTMODE_OFF);
         
-        trace(EXP_DEBUG, "Cartridge detached from expansion port");
-        c64.putMessage(MSG_NO_CARTRIDGE);
+        debug(EXP_DEBUG, "Cartridge detached from expansion port");
+        c64.putMessage(MSG_CRT_DETACHED);
        
         resume();
     }

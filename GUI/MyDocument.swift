@@ -305,19 +305,22 @@ class MyDocument: NSDocument {
     @discardableResult
     func mountAttachmentAsCartridge() throws -> Bool {
         
-        if let cartridge = attachment as? CRTFileProxy {
+        guard let cartridge = attachment as? CRTFileProxy else { return false }
             
+            /*
             if cartridge.isSupported {
 
                 parent.c64.expansionport.attachCartridgeAndReset(cartridge)
                 return true
             }
 
-            let name = cartridge.name()!
-            let type = cartridge.cartridgeType.description
-            throw NSError.unsupportedCartridgeError(filename: name, type: type)
-        }
-        return false
+             let name = cartridge.name()!
+             let type = cartridge.cartridgeType.description
+             throw NSError.unsupportedCartridgeError(filename: name, type: type)
+
+             */
+
+        return c64.expansionport.attachCartridgeAndReset(cartridge)
     }
 
     //

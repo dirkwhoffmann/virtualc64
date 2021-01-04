@@ -785,7 +785,7 @@ extension MyController: NSMenuItemValidation {
         })
     }
     
-    @IBAction func attachRecentCartridgeAction(_ sender: NSMenuItem!) {
+    @IBAction func attachRecentCartridgeAction(_ sender: NSMenuItem!) throws {
         
         let slot  = sender.tag
         

@@ -200,6 +200,27 @@ extension MyDocument {
 
 extension MyController {
             
+    func warning(_ msg1: String, _ msg2: String, icon: String? = nil) {
+
+        alert(msg1, msg2, style: .warning, icon: icon)
+    }
+
+    func critical(_ msg1: String, _ msg2: String, icon: String? = nil) {
+
+        alert(msg1, msg2, style: .critical, icon: icon)
+    }
+
+    func alert(_ msg1: String, _ msg2: String, style: NSAlert.Style, icon: String?) {
+        
+        let alert = NSAlert()
+        alert.alertStyle = style
+        if icon != nil { alert.icon = NSImage.init(named: icon!) }
+        alert.messageText = msg1
+        alert.informativeText = msg2
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+    }
+    
     func proceedWithUnexportedDisk(drive: DriveID) -> Bool {
         return mydocument?.proceedWithUnexportedDisk(drive: drive) ?? false
     }

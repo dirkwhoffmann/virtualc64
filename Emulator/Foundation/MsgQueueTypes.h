@@ -81,8 +81,9 @@ struct MSGTypeEnum : Reflection<MSGTypeEnum, MsgType> {
             case MSG_VC1530_NO_TAPE:       return "VC1530_NO_TAPE";
             case MSG_VC1530_PROGRESS:      return "VC1530_PROGRESS";
                 
-            case MSG_CARTRIDGE:            return "CARTRIDGE";
-            case MSG_NO_CARTRIDGE:         return "NO_CARTRIDGE";
+            case MSG_UNSUPPORTED_CRT:      return "UNSUPPORTED_CRT";
+            case MSG_CRT_ATTACHED:         return "CRT_ATTACHED";
+            case MSG_CRT_DETACHED:         return "CRT_DETACHED";
             case MSG_CART_SWITCH:          return "CART_SWITCH";
                 
             case MSG_KB_AUTO_RELEASE:      return "KB_AUTO_RELEASE";

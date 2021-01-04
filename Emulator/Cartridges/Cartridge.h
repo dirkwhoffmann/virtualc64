@@ -73,17 +73,13 @@ private:
     // On-board RAM
     //
     
-    /* Additional RAM. Some cartridges such as ActionReplay contain additional
-     * RAM. By default, this variable is NULL.
-     */
-    u8 *externalRam = NULL;
+    // Additional RAM
+    u8 *externalRam = nullptr;
     
-    /* Capacity of the additional RAM in bytes. This value is 0 if and only if
-     * externaRam is NULL.
-     */
+    // RAM capacity in bytes
     u64 ramCapacity = 0;
     
-    // Indicates if the RAM contents is preserved during a reset
+    // Indicates whether RAM data is preserved during a reset
     bool battery = false;
 
     
@@ -161,8 +157,12 @@ protected:
 
 public:
     
+    // Returns the cartridge type
     virtual CartridgeType getCartridgeType() { return CRT_NORMAL; }
-
+    
+    // Checks whether this cartridge is supported by the emulator yet
+    bool isSupported() { return isSupportedType(getCartridgeType()); }
+    
 protected:
     
     void _dump() override;

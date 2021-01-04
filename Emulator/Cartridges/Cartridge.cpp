@@ -17,7 +17,7 @@ Cartridge::isSupportedType(CartridgeType type)
         case CRT_NORMAL:
         case CRT_ACTION_REPLAY:
         case CRT_KCS_POWER:
-        // case CRT_FINAL_III:
+        case CRT_FINAL_III:
         case CRT_SIMONS_BASIC:
         case CRT_OCEAN:
         case CRT_EXPERT:
@@ -79,7 +79,7 @@ Cartridge::makeWithType(C64 &c64, CartridgeType type)
     assert(isSupportedType(type));
     
     switch (type) {
-        
+            
         case CRT_NORMAL:           return new Cartridge(c64);
         case CRT_ACTION_REPLAY:    return new ActionReplay(c64);
         case CRT_KCS_POWER:        return new KcsPower(c64);
@@ -109,10 +109,10 @@ Cartridge::makeWithType(C64 &c64, CartridgeType type)
         case CRT_KINGSOFT:         return new Kingsoft(c64);
         case CRT_ISEPIC:           return new Isepic(c64);
         case CRT_GEO_RAM:          return new GeoRAM(c64);
-        
+            
         default:
-        assert(false); // Should not reach
-        return nullptr;
+            assert(false);
+            return nullptr;
     }
 }
 

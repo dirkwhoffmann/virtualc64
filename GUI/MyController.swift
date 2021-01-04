@@ -718,12 +718,16 @@ extension MyController {
             
             refreshStatusBar()
 
-        case .CARTRIDGE:
+        case .UNSUPPORTED_CRT:
+            warning("Cannot attach cartridge",
+                    "The emulator does not support type \(msg.data) cartridges yet")
+            
+        case .CRT_ATTACHED:
 
             mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
             refreshStatusBar()
 
-        case .NO_CARTRIDGE:
+        case .CRT_DETACHED:
             
             refreshStatusBar()
             

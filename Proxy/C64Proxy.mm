@@ -750,10 +750,10 @@ struct AnyFileWrapper { AnyFile *file; };
 {
     return wrapper->expansionPort->getCartridgeAttached();
 }
-- (void) attachCartridgeAndReset:(CRTFileProxy *)c
+- (BOOL) attachCartridgeAndReset:(CRTFileProxy *)c
 {
     CRTFile *file = (CRTFile *)([c wrapper]->file);
-    wrapper->expansionPort->attachCartridgeAndReset(file);
+    return wrapper->expansionPort->attachCartridgeAndReset(file);
 }
 - (void) attachGeoRamCartridge:(NSInteger)capacity
 {
