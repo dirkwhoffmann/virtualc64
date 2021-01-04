@@ -215,7 +215,7 @@ ExpansionPort::setCartridgeMode(CRTMode mode)
 void
 ExpansionPort::attachCartridge(Cartridge *c)
 {
-    assert(c != NULL);
+    assert(c);
     
     // Remove old cartridge (if any) and assign new one
     detachCartridge();
@@ -234,7 +234,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
 bool
 ExpansionPort::attachCartridgeAndReset(CRTFile *file)
 {
-    assert(file != NULL);
+    assert(file);
     
     Cartridge *cartridge = Cartridge::makeWithCRTFile(c64, file);
     
@@ -250,25 +250,18 @@ ExpansionPort::attachCartridgeAndReset(CRTFile *file)
     return false;
 }
 
-bool
-ExpansionPort::attachGeoRamCartridge(u32 capacity)
+void
+ExpansionPort::attachGeoRamCartridge(usize kb)
 {
-    trace(EXP_DEBUG, "Attaching GeoRAM cartridge (%d KB)\n", capacity);
+    trace(EXP_DEBUG, "Attaching GeoRAM cartridge (%zu KB)", kb);
 
-    switch (capacity) {
-        case 64: case 128: case 256: case 512: case 1024: case 2048: case 4096:
-            break;
-        default:
-            warn("Cannot create GeoRAM cartridge of size %d\n", capacity);
-            return false;
+    if (kb != 64 && kb != 256 && kb != 512 && kb != 1024 && kb != 2048) {
+        assert(false);
     }
     
     Cartridge *geoRAM = Cartridge::makeWithType(c64, CRT_GEO_RAM);
-    u32 capacityInBytes = capacity * 1024;
-    geoRAM->setRamCapacity(capacityInBytes);
-    
+    geoRAM->setRamCapacity(kb * 1024);
     attachCartridge(geoRAM);
-    return true;
 }
 
 void

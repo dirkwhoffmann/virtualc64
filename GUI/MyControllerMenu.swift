@@ -825,7 +825,6 @@ extension MyController: NSMenuItemValidation {
     @IBAction func attachGeoRamAction(_ sender: NSMenuItem!) {
 
         let capacity = sender.tag
-        track("RAM capacity = \(capacity)")
         c64.expansionport.attachGeoRamCartridge(capacity)
     }
     

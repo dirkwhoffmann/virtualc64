@@ -141,7 +141,7 @@ public:
     // Attaches a cartridge to the expansion port
     void attachCartridge(Cartridge *c);
     bool attachCartridgeAndReset(CRTFile *c);
-    bool attachGeoRamCartridge(u32 capacity);
+    void attachGeoRamCartridge(usize capacity);
     void attachIsepicCartridge();
 
     // Removes a cartridge from the expansion port (if any)

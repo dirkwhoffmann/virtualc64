@@ -349,7 +349,7 @@ Cartridge::poke(u16 addr, u8 value)
     }
 }
 
-u32
+usize
 Cartridge::getRamCapacity()
 {
     if (ramCapacity == 0) {
@@ -361,7 +361,7 @@ Cartridge::getRamCapacity()
 }
 
 void
-Cartridge::setRamCapacity(u32 size)
+Cartridge::setRamCapacity(usize size)
 {
     // Free
     if (getRamCapacity() > 0) {
@@ -373,7 +373,7 @@ Cartridge::setRamCapacity(u32 size)
     // Allocate
     if (size > 0) {
         externalRam = new u8[size];
-        ramCapacity = size;
+        ramCapacity = (u64)size;
         memset(externalRam, 0xFF, size);
     }
 }

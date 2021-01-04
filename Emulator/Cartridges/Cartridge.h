@@ -81,7 +81,7 @@ private:
     /* Capacity of the additional RAM in bytes. This value is 0 if and only if
      * externaRam is NULL.
      */
-    u32 ramCapacity = 0;
+    u64 ramCapacity = 0;
     
     // Indicates if the RAM contents is preserved during a reset
     bool battery = false;
@@ -277,13 +277,13 @@ public:
     //
     
     // Returns the RAM size in bytes
-    u32 getRamCapacity(); 
+    usize getRamCapacity();
 
     /* Assigns external RAM to this cartridge. This functions frees any
      * previously assigned RAM and allocates memory of the specified size. The
      * size is stored in variable ramCapacity.
      */
-    void setRamCapacity(u32 size);
+    void setRamCapacity(usize size);
 
     // Returns true if RAM data is preserved during a reset
     bool getBattery() { return battery; }

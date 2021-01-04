@@ -60,6 +60,19 @@ typedef i32 HeadPos;
 
 
 //
+// Syntactic sugar
+//
+
+/* The following keyword is used for documentary purposes only. It is used to
+ * mark all methods that use the exception mechanism to signal error conditions
+ * instead of returning error codes. It is used in favor of classic throw
+ * lists, since the latter cause the compiler to embed unwanted runtime checks
+ * in the code.
+ */
+#define throws
+
+
+//
 // Enumerations
 //
 
