@@ -136,25 +136,25 @@ AnyFile::flash(u8 *buffer, size_t offset)
 }
 
 void
-AnyFile::readFromFile(const char *filename)
+AnyFile::readFromFile(const char *path)
 {
-    assert (filename);
+    assert(path);
         
     // Get properties
     struct stat fileProperties;
-    if (stat(filename, &fileProperties) != 0) {
+    if (stat(path, &fileProperties) != 0) {
         throw Error(ERROR_FILE_NOT_FOUND);
         return;
     }
 
     // Check type
-    if (!matchingFile(filename)) {
+    if (!matchingFile(path)) {
         throw Error(ERROR_INVALID_TYPE);
     }
 
     // Open
-    FILE *file = nullptr;
-    if (!(file = fopen(filename, "r"))) {
+    FILE *file;
+    if (!(file = fopen(path, "r"))) {
         throw Error(ERROR_CANT_READ);
     }
 
@@ -163,22 +163,21 @@ AnyFile::readFromFile(const char *filename)
     catch (Error &err) { fclose(file); throw err; }
     fclose(file);
     
-    setPath(filename);
+    setPath(path);
 }
 
 void
 AnyFile::readFromFile(FILE *file)
 {
-    assert (file);
+    assert(file);
     
-    u8 *buffer = nullptr;
-
     // Get size
     fseek(file, 0, SEEK_END);
     size_t size = (size_t)ftell(file);
     rewind(file);
     
     // Allocate memory
+    u8 *buffer = nullptr;
     if (!(buffer = new u8[size])) {
         throw Error(ERROR_OUT_OF_MEMORY);
     }
@@ -219,7 +218,7 @@ AnyFile::readFromBuffer(const u8 *buf, size_t len)
 size_t
 AnyFile::writeToBuffer(u8 *buffer)
 {
-    assert(data != NULL);
+    assert(data);
     
     if (buffer) {
         memcpy(buffer, data, size);
