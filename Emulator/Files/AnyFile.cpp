@@ -136,33 +136,12 @@ AnyFile::flash(u8 *buffer, size_t offset)
 }
 
 void
-AnyFile::readFromBuffer(const u8 *buffer, size_t length)
-{
-    assert(buffer);
-        
-    // Check file type
-    if (!matchingBuffer(buffer, length)) {
-        throw(Error(ERROR_INVALID_TYPE));
-    }
-    
-    // Allocate memory
-    if (!alloc(length)) {
-        throw(Error(ERROR_OUT_OF_MEMORY));
-    }
-    
-    // Read from buffer
-    memcpy(data, buffer, length);
-}
-
-void
 AnyFile::readFromFile(const char *filename)
 {
     assert (filename);
-    
-    FILE *file = nullptr;
-    struct stat fileProperties;
-    
+        
     // Get properties
+    struct stat fileProperties;
     if (stat(filename, &fileProperties) != 0) {
         throw Error(ERROR_FILE_NOT_FOUND);
         return;
@@ -174,14 +153,17 @@ AnyFile::readFromFile(const char *filename)
     }
 
     // Open
+    FILE *file = nullptr;
     if (!(file = fopen(filename, "r"))) {
         throw Error(ERROR_CANT_READ);
     }
 
     // Read
+    try { readFromFile(file); }
+    catch (Error &err) { fclose(file); throw err; }
+    fclose(file);
+    
     setPath(filename);
-    readFromFile(file);
-    fclose(file);        // TODO: MOVE TO FINALIZE BLOCK
 }
 
 void
@@ -209,16 +191,29 @@ AnyFile::readFromFile(FILE *file)
     }
     
     // Read from buffer
-    dealloc();
-    readFromBuffer(buffer, size);
-    /* FINALIZE
-    {
-        delete[] buffer;
-        return false;
-    }
-    */
+    try { readFromBuffer(buffer, size); }
+    catch (Error &err) { delete[] buffer; throw err; }
     
     delete[] buffer;
+}
+
+void
+AnyFile::readFromBuffer(const u8 *buf, size_t len)
+{
+    assert(buf);
+        
+    // Check file type
+    if (!matchingBuffer(buf, len)) {
+        throw(Error(ERROR_INVALID_TYPE));
+    }
+    
+    // Allocate memory
+    if (!alloc(len)) {
+        throw(Error(ERROR_OUT_OF_MEMORY));
+    }
+    
+    // Read from buffer
+    memcpy(data, buf, len);
 }
 
 size_t
