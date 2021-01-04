@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef C64CONFIG_H
-#define C64CONFIG_H
+#pragma once
 
 //
 // Release settings
@@ -87,8 +86,6 @@ static const int KBD_DEBUG       = 0; // Keyboard
 
 // Default debug level for all components (Set to 1 in release build)
 #define DEBUG_LEVEL 1
-
-#endif 
 
 
 // CLEANUP:

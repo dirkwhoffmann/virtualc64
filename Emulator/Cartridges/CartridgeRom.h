@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _CARTRIDGEROM_H
-#define _CARTRIDGEROM_H
+#pragma once
 
 #include "C64Component.h"
 
@@ -95,7 +94,3 @@ public:
     u8 spypeek(u16 addr) { return peek(addr); }
     void poke(u16 addr, u8 value) { }
 };
-
-#endif
-
-

@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _ALIASES_H
-#define _ALIASES_H
+#pragma once
 
 #include "C64Config.h"
 #include <assert.h>
@@ -90,7 +89,5 @@ enum _name : _type
 #define enum_long(_name) enum _name : long long
 #define enum_int(_name) enum _name : int
 #define enum_byte(_name) enum _name : unsigned char
-
-#endif
 
 #endif

@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _FLASHROM_H
-#define _FLASHROM_H
+#pragma once
 
 #include "C64Component.h"
 #include "CartridgePublicTypes.h"
@@ -157,5 +156,3 @@ public:
     // Performs a "Chip Erase" operation
     void doChipErase();
 };
-
-#endif 

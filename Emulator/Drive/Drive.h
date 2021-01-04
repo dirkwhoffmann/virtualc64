@@ -7,6 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#pragma once
+
 /*
  * This implementation is based on the following two documents written
  * by Ruud Baltissen. Ruud, thank you for this excellent work!
@@ -15,9 +17,6 @@
  * Schematics:  http://www.baltissen.org/images/1540.gif
  */
  
-#ifndef _DRIVE_H
-#define _DRIVE_H
-
 #include "VIA.h"
 #include "Disk.h"
 
@@ -423,5 +422,3 @@ public:
     // Performs periodic actions
     void vsyncHandler();
 };
-
-#endif

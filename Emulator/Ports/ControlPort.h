@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef CONTROLPORT_H
-#define CONTROLPORT_H
+#pragma once
 
 #include "C64Component.h"
 
@@ -137,5 +136,3 @@ public:
     u8 potX();
     u8 potY();
 };
-
-#endif

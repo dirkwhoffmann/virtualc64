@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _CPU_H
-#define _CPU_H
+#pragma once
 
 #include "CPUTypes.h"
 #include "C64Component.h"
@@ -428,5 +427,3 @@ public:
     bool isC64CPU() override { return false; }
     bool isDriveCPU() override { return true; }
 };
-
-#endif

@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _EPYX_H
-#define _EPYX_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -89,5 +88,3 @@ private:
     // Discharges the cartridge's capacitor
     void dischargeCapacitor();
 };
-
-#endif

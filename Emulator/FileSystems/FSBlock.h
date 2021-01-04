@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _FS_BLOCK_H
-#define _FS_BLOCK_H
+#pragma once
 
 #include "PETName.h"
 
@@ -132,5 +131,3 @@ EXPECT_RANGE(0, device.layout.numTracks() + 1)
 #define EXPECT_SECTOR_REF(t) { \
 if (u32 num = device.layout.numSectors(t)) \
 EXPECT_RANGE(0,num) else if (strict) EXPECT_MAX(254) }
-
-#endif

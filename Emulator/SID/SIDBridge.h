@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _SID_BRIDGE_H
-#define _SID_BRIDGE_H
+#pragma once
 
 #include "C64Component.h"
 #include "SIDPublicTypes.h"
@@ -353,5 +352,3 @@ public:
 	// Special poke function for the I/O memory range
 	void poke(u16 addr, u8 value);
 };
-
-#endif

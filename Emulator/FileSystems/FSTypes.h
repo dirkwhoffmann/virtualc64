@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef FS_TYPES_H
-#define FS_TYPES_H
+#pragma once
 
 #include "FSPublicTypes.h"
 #include "Reflection.h"
@@ -91,5 +90,3 @@ struct FSUsageEnum : Reflection<FSUsageEnum, FSUsage> {
     static const char *prefix() { return "FS_USAGE"; }
     static const char *key(FSUsage value) { return "???"; }
 };
-
-#endif

@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _DINAMIC_H
-#define _DINAMIC_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -33,10 +32,4 @@ public:
         
     u8 peekIO1(u16 addr) override;
     u8 spypeekIO1(u16 addr) override;
-    /*
-    u8 peekRomL(u16 addr) override;
-    u8 spypeekRomL(u16 addr) override;
-    */
 };
-
-#endif

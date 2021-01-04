@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _STEREO_STREAM_H
-#define _STEREO_STREAM_H
+#pragma once
 
 #include "Buffers.h"
 #include "Concurrency.h"
@@ -55,5 +54,3 @@ public:
     void copyStereo(float *left, float *right, size_t n, Volume &volL, Volume &volR);
     void copyInterleaved(float *buffer, size_t n, Volume &volL, Volume &volR);
 };
-
-#endif

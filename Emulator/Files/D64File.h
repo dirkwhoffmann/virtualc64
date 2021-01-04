@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _D64_FILE_H
-#define _D64_FILE_H
+#pragma once
 
 #include "AnyFile.h"
 
@@ -96,5 +95,3 @@ public:
     // Dumps the contents of a sector
     void dump(Track track, Sector sector);
 };
-
-#endif

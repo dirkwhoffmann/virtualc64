@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _T64_FILE_H
-#define _T64_FILE_H
+#pragma once
 
 #include "AnyCollection.h"
 
@@ -103,6 +102,3 @@ public:
      */
     bool repair();
 };
-
-#endif
-

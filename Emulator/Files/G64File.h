@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _G64_FILE_H
-#define _G64_FILE_H
+#pragma once
 
 #include "AnyDisk.h"
 #include "Disk.h"
@@ -65,6 +64,3 @@ private:
     
     long getStartOfHalftrack(Halftrack ht);
 };
-
-#endif
-

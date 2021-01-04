@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _SNAPSHOT_H
-#define _SNAPSHOT_H
+#pragma once
 
 #include "AnyFile.h"
 
@@ -122,6 +121,3 @@ public:
     unsigned getImageWidth() { return getHeader()->screenshot.width; }
     unsigned getImageHeight() { return getHeader()->screenshot.height; }
 };
-
-#endif
-

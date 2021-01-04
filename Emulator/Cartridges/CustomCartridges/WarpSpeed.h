@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _WARPSPEED_H
-#define _WARPSPEED_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -45,5 +44,3 @@ public:
     const char *getButtonTitle(unsigned nr) override;
     void pressButton(unsigned nr) override;
 };
-
-#endif

@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _PROCESSOR_PORT_H
-#define _PROCESSOR_PORT_H
+#pragma once
 
 #include "C64Component.h"
 
@@ -113,5 +112,3 @@ public:
     bool getHiram() { return read() & 0x2; }
     bool getCharen() { return read() & 0x4; }
 };
-
-#endif 

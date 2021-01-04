@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _PAGEFOX_H
-#define _PAGEFOX_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -101,5 +100,3 @@ private:
     u16 ramAddrL(u16 addr) { return (bankSelect() << 14) + (addr & 0x1FFF); }
     u16 ramAddrH(u16 addr) { return 0x2000 + ramAddrL(addr); }
 };
-
-#endif

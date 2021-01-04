@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef MEMORY_TYPES_H
-#define MEMORY_TYPES_H
+#pragma once
 
 #include "MemoryPublicTypes.h"
 #include "Reflection.h"
@@ -63,5 +62,3 @@ struct RamPatternEnum : Reflection<RamPatternEnum, RamPattern> {
         return "???";
     }
 };
-
-#endif

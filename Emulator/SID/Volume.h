@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _VOLUME_H
-#define _VOLUME_H
+#pragma once
 
 /* An object of this class stores a single volume value and provides the means
  * to emulate a fading effect. Fading is utilized to avoid cracking noises if,
@@ -86,5 +85,3 @@ template <typename T> struct AudioVolume {
 };
 
 typedef AudioVolume<float> Volume;
-
-#endif 

@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _C64_CONSTANTS_H
-#define _C64_CONSTANTS_H
+#pragma once
 
 #include "Aliases.h"
 
@@ -63,5 +62,3 @@ static const long TEX_WIDTH                = 520;  // NTSC width
 
 // Vertical parameters
 static const long FIRST_VISIBLE_LINE       = 16;
-
-#endif

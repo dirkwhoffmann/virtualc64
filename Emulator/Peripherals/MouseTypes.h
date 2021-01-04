@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef MOUSE_TYPES_H
-#define MOUSE_TYPES_H
+#pragma once
 
 #include "MousePublicTypes.h"
 #include "Reflection.h"
@@ -37,5 +36,3 @@ struct MouseModelEnum : Reflection<MouseModelEnum, MouseModel> {
         return "???";
     }
 };
-
-#endif

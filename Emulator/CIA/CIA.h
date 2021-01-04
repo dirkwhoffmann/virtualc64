@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _CIA_H
-#define _CIA_H
+#pragma once
 
 #include "TOD.h"
 
@@ -524,5 +523,3 @@ private:
     void pokePA(u8 value) override;
     void pokeDDRA(u8 value) override;
 };
-
-#endif

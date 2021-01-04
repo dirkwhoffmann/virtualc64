@@ -26,9 +26,7 @@
  *
  */
 
-
-#ifndef FASTSIDVOICE_H
-#define FASTSIDVOICE_H
+#pragma once
 
 #include "HardwareComponent.h"
 
@@ -341,5 +339,3 @@ public:
      */
     u8 releaseRate() { return sidreg[0x06] & 0x0F; }
 };
-
-#endif

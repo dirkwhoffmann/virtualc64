@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef CARTRIDGE_TYPES_H
-#define CARTRIDGE_TYPES_H
+#pragma once
 
 #include "CartridgePublicTypes.h"
 #include "Reflection.h"
@@ -47,5 +46,3 @@ struct FlashStateEnum : Reflection<FlashStateEnum, FlashState> {
         return "???";
     }
 };
-
-#endif

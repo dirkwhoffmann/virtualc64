@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef MOUSE1351_H
-#define MOUSE1351_H
+#pragma once
 
 #include "C64Component.h"
 
@@ -90,5 +89,3 @@ public:
     u8 mouseXBits() { return (mouseX & 0x3F) << 1; }
     u8 mouseYBits() { return (mouseY & 0x3F) << 1; }
 };
-
-#endif

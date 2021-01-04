@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _C64_H
-#define _C64_H
+#pragma once
 
 // General
 #include "C64Component.h"
@@ -583,5 +582,3 @@ public:
      */
     void setUltimax(bool b) { ultimax = b; }
 };
-
-#endif

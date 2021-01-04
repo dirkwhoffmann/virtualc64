@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _ANY_COLLECTION_H
-#define _ANY_COLLECTION_H
+#pragma once
 
 #include "Aliases.h"
 #include "AnyFile.h"
@@ -55,5 +54,3 @@ public:
     // Copies an item into a buffer
     virtual void copyItem(unsigned nr, u8 *buf, u64 len, u64 offset = 0);
 };
-
-#endif

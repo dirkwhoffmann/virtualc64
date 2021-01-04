@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef CARTRIDGE_PUBLIC_TYPES_H
-#define CARTRIDGE_PUBLIC_TYPES_H
+#pragma once
 
 enum_long(CRT_TYPE)
 {
@@ -98,5 +97,3 @@ enum_long(FLASH_STATE)
     FLASH_COUNT
 };
 typedef FLASH_STATE FlashState;
-
-#endif

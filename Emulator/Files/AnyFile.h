@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _ANY_FILE_H
-#define _ANY_FILE_H
+#pragma once
 
 #include "C64Object.h"
 #include "FileTypes.h"
@@ -155,5 +154,3 @@ public:
      */
 	bool writeToFile(const char *path);
 };
-
-#endif

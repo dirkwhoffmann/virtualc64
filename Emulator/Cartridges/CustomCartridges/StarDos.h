@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _STARDOS_H
-#define _STARDOS_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -92,5 +91,3 @@ private:
     void enableROML();
     void disableROML();
 };
-
-#endif

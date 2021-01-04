@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _ACTIONREPLAY_H
-#define _ACTIONREPLAY_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -136,5 +135,3 @@ public:
     bool exrom() override;
     bool ramIsEnabled(u16 addr) override;
 };
-
-#endif

@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _REFLECTION_H
-#define _REFLECTION_H
+#pragma once
 
 #include "Aliases.h"
 #include <stdio.h>
@@ -51,5 +50,3 @@ template <class T, typename E> struct Reflection {
         return false;
     }
 };
-
-#endif

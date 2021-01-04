@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _SUPERGAMES_H
-#define _SUPERGAMES_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -60,5 +59,3 @@ public:
     
     void pokeIO2(u16 addr, u8 value) override;
 };
-
-#endif

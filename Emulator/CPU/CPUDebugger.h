@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _CPU_DEBUGGER_H
-#define _CPU_DEBUGGER_H
+#pragma once
 
 #include "C64Component.h"
 
@@ -308,5 +307,3 @@ private:
     const char *disassembleBytes(RecordedInstruction &instr);
     const char *disassembleRecordedFlags(RecordedInstruction &instr);
 };
-
-#endif

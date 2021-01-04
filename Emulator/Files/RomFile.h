@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _ROMFILE_H
-#define _ROMFILE_H
+#pragma once
 
 #include "AnyFile.h"
 
@@ -81,4 +80,3 @@ public:
     bool matchingFile(const char *path) override;
     void readFromBuffer(const u8 *buf, size_t len) override;
 };
-#endif

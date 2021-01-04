@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _ZAXXON_H
-#define _ZAXXON_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -34,5 +33,3 @@ public:
     u8 peekRomL(u16 addr) override;
     u8 spypeekRomL(u16 addr) override;
 };
-
-#endif

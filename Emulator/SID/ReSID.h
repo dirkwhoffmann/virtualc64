@@ -7,6 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#pragma once
+
 /* This class is a wrapper around the third-party reSID library.
  *
  *   List of modifications applied to reSID:
@@ -20,9 +22,6 @@
  *     - To Norah (Elysium)
  *     - Vortex (LMan)
  */
-
-#ifndef _RESID_H
-#define _RESID_H
 
 #include "C64Component.h"
 #include "SIDStreams.h"
@@ -230,5 +229,3 @@ public:
     i64 executeCycles(u64 numCycles, SampleStream &stream);
     i64 executeCycles(u64 numCycles);
 };
-
-#endif

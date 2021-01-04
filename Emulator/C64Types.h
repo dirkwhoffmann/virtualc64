@@ -12,8 +12,7 @@
  * APIs for various enum data types.
  */
 
-#ifndef C64_TYPES_H
-#define C64_TYPES_H
+#pragma once
 
 #include "C64PublicTypes.h"
 #include "CartridgeTypes.h"
@@ -208,5 +207,3 @@ enum_int(ACTION_FLAG)
     ACTION_FLAG_USER_SNAPSHOT = 0b1000000
 };
 typedef ACTION_FLAG ActionFlag;
-
-#endif

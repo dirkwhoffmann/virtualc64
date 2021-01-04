@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef NEOSMOUSE_H
-#define NEOSMOUSE_H
+#pragma once
 
 #include "C64Component.h"
 
@@ -109,5 +108,3 @@ private:
     // Latches the current mouse position and computed the transmission deltas
     void latchPosition(i64 targetX, i64 targetY);
 };
-
-#endif

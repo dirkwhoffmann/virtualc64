@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _FS_DESCRIPTORS_H
-#define _FS_DESCRIPTORS_H
+#pragma once
 
 #include "C64Object.h"
 #include "FSPublicTypes.h"
@@ -97,5 +96,3 @@ public:
     bool nextBlock(Block b, Block *nb);
     TSLink nextBlockRef(TSLink b);
 };
-
-#endif

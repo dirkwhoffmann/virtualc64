@@ -6,11 +6,10 @@
 //
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
+// THIS FILE MUST CONFORM TO ANSI-C TO BE COMPATIBLE WITH SWIFT
+// -----------------------------------------------------------------------------
 
-// This file must conform to standard ANSI-C to be compatible with Swift
-
-#ifndef MSG_QUEUE_PUBLIC_TYPES_H
-#define MSG_QUEUE_PUBLIC_TYPES_H
+#pragma once
 
 enum_long(MSG)
 {
@@ -101,5 +100,3 @@ Message;
 
 // Callback function signature
 typedef void Callback(const void *, long, long);
-
-#endif 

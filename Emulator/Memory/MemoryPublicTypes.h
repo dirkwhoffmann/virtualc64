@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef MEMORY_PUBLIC_TYPES_H
-#define MEMORY_PUBLIC_TYPES_H
+#pragma once
 
 //
 // Enumerations
@@ -63,5 +62,3 @@ typedef struct
     MemoryType vicPeekSrc[16];
 }
 MemInfo;
-
-#endif

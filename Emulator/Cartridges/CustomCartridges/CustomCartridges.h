@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _CUSTOM_CARTRIDGES_H
-#define _CUSTOM_CARTRIDGES_H
+#pragma once
 
 #include "Cartridge.h"
 #include "ActionReplay.h"
@@ -37,5 +36,3 @@
 #include "WarpSpeed.h"
 #include "Westermann.h"
 #include "Zaxxon.h"
-
-#endif

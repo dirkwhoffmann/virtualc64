@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _VICII_H
-#define _VICII_H
+#pragma once
 
 #include "C64Component.h"
 #include "TimeDelayed.h"
@@ -1358,6 +1357,3 @@ public:
     // Superimposes the debug output onto the current rasterline
     void computeOverlay();
 };
-
-#endif
-

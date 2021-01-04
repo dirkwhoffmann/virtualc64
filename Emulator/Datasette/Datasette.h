@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _DATASETTE_H
-#define _DATASETTE_H
+#pragma once
 
 #include "C64Component.h"
 
@@ -200,5 +199,3 @@ private:
     // Internal execution function
     void _execute();
 };
-
-#endif

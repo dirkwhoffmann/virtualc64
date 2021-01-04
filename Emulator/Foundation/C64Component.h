@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _C64_COMPONENT_H
-#define _C64_COMPONENT_H
+#pragma once
 
 #include "HardwareComponent.h"
 
@@ -90,5 +89,3 @@ public:
     
     void prefix() override;
 };
-
-#endif

@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef SID_PUBLIC_TYPES_H
-#define SID_PUBLIC_TYPES_H
+#pragma once
 
 //
 // Enumerations
@@ -97,5 +96,3 @@ typedef struct
     u8 potY;
 }
 SIDInfo;
-
-#endif

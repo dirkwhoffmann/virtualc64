@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _PRG_FILE_H
-#define _PRG_FILE_H
+#pragma once
 
 #include "AnyCollection.h"
 
@@ -66,5 +65,3 @@ public:
     u64 itemSize(unsigned nr) override;
     u8 readByte(unsigned nr, u64 pos) override;
 };
-
-#endif

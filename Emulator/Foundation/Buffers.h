@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _BUFFERS_H
-#define _BUFFERS_H
+#pragma once
 
 #include "C64PublicTypes.h"
 
@@ -101,5 +100,3 @@ template <class T, size_t capacity> struct RingBuffer
         elements[oldw] = element;
     }
 };
-
-#endif

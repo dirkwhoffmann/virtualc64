@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef FILE_TYPES_H
-#define FILE_TYPES_H
+#pragma once
 
 #include "FilePublicTypes.h"
 #include "Reflection.h"
@@ -67,5 +66,3 @@ struct TAPVersionEnum : Reflection<TAPVersionEnum, TAPVersion> {
         }
     }
 };
-
-#endif

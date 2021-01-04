@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _CIA_PUBLIC_TYPES_H
-#define _CIA_PUBLIC_TYPES_H
+#pragma once
 
 //
 // Enumerations
@@ -121,5 +120,3 @@ typedef struct
     double idlePercentage;
 }
 CIAInfo;
-
-#endif

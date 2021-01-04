@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef MOUSE1350_H
-#define MOUSE1350_H
+#pragma once
 
 #include "C64Component.h"
 
@@ -91,5 +90,3 @@ public:
     // Execution function (Translates movement deltas into joystick events)
     void execute(i64 targetX, i64 targetY);
 };
-
-#endif

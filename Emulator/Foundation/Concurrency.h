@@ -7,9 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-
-#ifndef _CONCURRENCY_H
-#define _CONCURRENCY_H
+#pragma once
 
 #include <pthread.h>
 
@@ -37,5 +35,3 @@ public:
     AutoMutex(Mutex &ref) : mutex(ref) { mutex.lock(); }
     ~AutoMutex() { mutex.unlock(); }
 };
-
-#endif

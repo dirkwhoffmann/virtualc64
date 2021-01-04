@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _C64OBJECT_H
-#define _C64OBJECT_H
+#pragma once
 
 #include "Utils.h"
 #include "Concurrency.h"
@@ -56,5 +55,3 @@ public:
     // Called by debug() and trace() to produce a detailed debug output
     virtual void prefix();
 };
-
-#endif

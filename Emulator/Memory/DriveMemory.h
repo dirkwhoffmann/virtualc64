@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _VC1541MEMORY_H
-#define _VC1541MEMORY_H
+#pragma once
 
 #include "DriveMemory.h"
 
@@ -99,5 +98,3 @@ public:
     void pokeZP(u8 addr, u8 value) { ram[addr] = value; }
     void pokeStack(u8 sp, u8 value) { ram[0x100 + sp] = value; }
 };
-
-#endif

@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef PORT_TYPES_H
-#define PORT_TYPES_H
+#pragma once
 
 #include "PortPublicTypes.h"
 #include "Reflection.h"
@@ -89,5 +88,3 @@ struct CRTModeEnum : Reflection<CRTModeEnum, CRTMode> {
         return "???";
     }
 };
-
-#endif

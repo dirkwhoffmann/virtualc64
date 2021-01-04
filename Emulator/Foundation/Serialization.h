@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _SERIALIZATION_H
-#define _SERIALIZATION_H
+#pragma once
 
 #include "C64Types.h"
 #include "CPUInstructions.h"
@@ -382,5 +381,3 @@ public:
         return *this;
     }
 };
-
-#endif

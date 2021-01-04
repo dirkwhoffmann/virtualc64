@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef DRIVE_TYPES_H
-#define DRIVE_TYPES_H
+#pragma once
 
 #include "DrivePublicTypes.h"
 #include "Reflection.h"
@@ -57,5 +56,3 @@ struct InsertionStatusEnum : Reflection<InsertionStatusEnum, InsertionStatus> {
         return "???";
     }
 };
-
-#endif

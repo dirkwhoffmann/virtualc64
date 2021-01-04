@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _TOD_H
-#define _TOD_H
+#pragma once
 
 #include "C64Component.h"
 
@@ -232,7 +231,3 @@ private:
      */
     void checkForInterrupt();
 };
-
-#endif
-
-

@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _KCS_H
-#define _KCS_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -47,6 +46,3 @@ public:
     void pressButton(unsigned nr) override;
     void releaseButton(unsigned nr) override;
 };
-
-#endif
-

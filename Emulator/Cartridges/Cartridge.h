@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _CARTRIDGE_H
-#define _CARTRIDGE_H
+#pragma once
 
 #include "C64Component.h"
 #include "CartridgePublicTypes.h"
@@ -373,5 +372,3 @@ public:
     // Called after the C64 CPU has processed the NMI instruction
     virtual void nmiDidTrigger() { }
 };
-
-#endif 

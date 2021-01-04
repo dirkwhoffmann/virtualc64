@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _TAPFILE_H
-#define _TAPFILE_H
+#pragma once
 
 #include "AnyFile.h"
 
@@ -63,5 +62,3 @@ public:
     // Returns the size of the data area in bytes
     size_t getDataSize() { return size - 0x14; }
 };
-
-#endif

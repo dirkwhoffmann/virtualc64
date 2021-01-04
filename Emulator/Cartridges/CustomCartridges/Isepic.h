@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _ISEPIC_H
-#define _ISEPIC_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -101,6 +100,3 @@ private:
     
     void updatePeekPokeLookupTables() override;
 };
-
-
-#endif

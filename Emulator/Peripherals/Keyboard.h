@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _KEYBOARD_H
-#define _KEYBOARD_H
+#pragma once
 
 #include "C64Component.h"
 
@@ -212,4 +211,3 @@ public:
     void vsyncHandler();
 };
 	
-#endif

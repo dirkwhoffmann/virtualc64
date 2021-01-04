@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef SID_TYPES_H
-#define SID_TYPES_H
+#pragma once
 
 #include "SIDPublicTypes.h"
 #include "Reflection.h"
@@ -78,5 +77,3 @@ struct SamplingMethodEnum : Reflection<SamplingMethodEnum, SamplingMethod> {
         return "???";
     }
 };
-
-#endif

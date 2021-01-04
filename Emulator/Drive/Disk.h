@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _DISK_H
-#define _DISK_H
+#pragma once
 
 #include "C64Component.h"
 #include "PETName.h"
@@ -475,5 +474,4 @@ private:
      */
     usize encodeSector(FSDevice *fs, Track t, Sector sector, HeadPos start, int gap);
 };
-    
-#endif
+ 

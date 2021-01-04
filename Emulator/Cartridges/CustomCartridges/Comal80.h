@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _COMAL80_H
-#define _COMAL80_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -26,5 +25,3 @@ public:
     u8 peekIO2(u16 addr) override { return 0; }
     void pokeIO1(u16 addr, u8 value) override;
 };
-
-#endif

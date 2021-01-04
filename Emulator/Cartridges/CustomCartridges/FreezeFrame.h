@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _FREEZEFRAME_H
-#define _FREEZEFRAME_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -46,5 +45,3 @@ public:
     void pressButton(unsigned nr) override;
     void releaseButton(unsigned nr) override;
 };
-
-#endif

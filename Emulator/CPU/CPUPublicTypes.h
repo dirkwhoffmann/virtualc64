@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef CPU_PUBLIC_TYPES_H
-#define CPU_PUBLIC_TYPES_H
+#pragma once
 
 #include "Aliases.h"
 
@@ -117,5 +116,3 @@ typedef struct
     u8 processorPortDir;
 }
 CPUInfo;
-
-#endif

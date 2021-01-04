@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _GEORAM_H
-#define _GEORAM_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -83,5 +82,3 @@ private:
     // Maps an address to the proper position in cartridge RAM
     unsigned offset(u8 addr);
 };
-
-#endif

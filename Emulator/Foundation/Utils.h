@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef C64_UTILS_H
-#define C64_UTILS_H
+#pragma once
 
 #include "Debug.h"
 #include "Error.h"
@@ -194,5 +193,3 @@ u64 fnv_1a_64(u8 *addr, size_t size);
 // Computes a CRC-32 checksum for a given buffer
 u32 crc32(const u8 *addr, size_t size);
 u32 crc32forByte(u32 r);
-
-#endif

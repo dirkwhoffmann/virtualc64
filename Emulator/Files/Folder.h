@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _FOLDER_H
-#define _FOLDER_H
+#pragma once
 
 #include "AnyCollection.h"
 
@@ -68,5 +67,3 @@ public:
     
     FSDevice *getFS() { return fs; }
 };
-
-#endif

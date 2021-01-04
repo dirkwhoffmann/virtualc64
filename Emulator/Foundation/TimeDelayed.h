@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _TIME_DELAYED_H
-#define _TIME_DELAYED_H
+#pragma once
 
 template <class T, int capacity> class TimeDelayed {
     
@@ -125,5 +124,3 @@ public:
         return pipeline[MAX(0, timeStamp - *clock + delay)];
     }
 };
-
-#endif

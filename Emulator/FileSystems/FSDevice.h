@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _FS_DEVICES_H
-#define _FS_DEVICES_H
+#pragma once
 
 #include "FSDescriptors.h"
 #include "FSBlock.h"
@@ -289,5 +288,3 @@ public:
     bool exportFile(FSDirEntry *item, const char *path, FSError *error);
     bool exportDirectory(const char *path, FSError *error);
 };
-
-#endif

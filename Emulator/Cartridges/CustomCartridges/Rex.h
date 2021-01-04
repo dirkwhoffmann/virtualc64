@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _REX_H
-#define _REX_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -30,5 +29,3 @@ public:
     u8 peekIO2(u16 addr) override;
     u8 spypeekIO2(u16 addr) override { return 0; }
 };
-
-#endif

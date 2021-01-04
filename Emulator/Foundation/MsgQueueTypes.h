@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef MSG_QUEUE_TYPES_H
-#define MSG_QUEUE_TYPES_H
+#pragma once
 
 #include "MsgQueuePublicTypes.h"
 #include "Reflection.h"
@@ -97,5 +96,3 @@ struct MSGTypeEnum : Reflection<MSGTypeEnum, MsgType> {
         return "???";
     }
 };
-
-#endif

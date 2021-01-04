@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _FINALIII_H
-#define _FINALIII_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -119,6 +118,3 @@ private:
     void pressButton(unsigned nr) override;
     void releaseButton(unsigned nr) override;
 };
-
-#endif
-

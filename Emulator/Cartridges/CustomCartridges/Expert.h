@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _EXPERT_H
-#define _EXPERT_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -116,5 +115,3 @@ private:
     
     void nmiWillTrigger() override;
 };
-
-#endif

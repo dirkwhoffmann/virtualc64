@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef FILE_PUBLIC_TYPES_H
-#define FILE_PUBLIC_TYPES_H
+#pragma once
 
 enum_long(FILETYPE)
 {    
@@ -108,5 +107,3 @@ enum_long(TAP_VERSION)
     TAP_VERSION_ADVANCED
 };
 typedef TAP_VERSION TAPVersion;
-
-#endif

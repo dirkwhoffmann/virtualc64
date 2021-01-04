@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef PORT_PUBLIC_TYPES_H
-#define PORT_PUBLIC_TYPES_H
+#pragma once
 
 //
 // Enumerations
@@ -50,5 +49,3 @@ enum_long(CRTMODE)
     CRTMODE_COUNT
 };
 typedef CRTMODE CRTMode;
-
-#endif

@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef CPU_TYPES_H
-#define CPU_TYPES_H
+#pragma once
 
 #include "CPUPublicTypes.h"
 #include "Reflection.h"
@@ -123,7 +122,3 @@ typedef enum
     ADDR_INDIRECT
 }
 AddressingMode;
-
-
-
-#endif

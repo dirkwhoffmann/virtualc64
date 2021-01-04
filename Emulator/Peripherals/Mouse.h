@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef MOUSE_H
-#define MOUSE_H
+#pragma once
 
 #include "C64Component.h"
 #include "Mouse1350.h"
@@ -128,5 +127,3 @@ public:
     // Performs periodic actions for this device
     void execute();
 };
-
-#endif

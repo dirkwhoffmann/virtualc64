@@ -7,12 +7,9 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _PET_NAME_H
-#define _PET_NAME_H
+#pragma once
 
 #include "C64Object.h"
-// #include "Utils.h"
-#include "PETName.h"
 
 template <int len> struct PETName : C64Object {
     
@@ -81,5 +78,3 @@ template <int len> struct PETName : C64Object {
     const char *getDescription() override { return "PETName"; }
     const char *c_str() { return str; }
 };
-
-#endif

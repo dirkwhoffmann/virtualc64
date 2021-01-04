@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _DEBUG_H
-#define _DEBUG_H
+#pragma once
 
 /* This file provides several macros for printing messages:
  *
@@ -51,7 +50,5 @@ prefix(); fprintf(stderr, "%s: " format, getDescription(), ##__VA_ARGS__); }
 
 #define debug(verbose, format, ...)
 #define trace(verbose, format, ...)
-
-#endif
 
 #endif

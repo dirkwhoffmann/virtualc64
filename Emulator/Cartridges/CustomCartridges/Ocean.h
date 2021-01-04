@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _OCEAN_H
-#define _OCEAN_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -29,6 +28,3 @@ public:
     
     void pokeIO1(u16 addr, u8 value) override;
 };
-
-#endif
-

@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _SIMONS_BASIC_H
-#define _SIMONS_BASIC_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -34,6 +33,3 @@ public:
     u8 peekIO1(u16 addr) override;
     void pokeIO1(u16 addr, u8 value) override;
 };
-
-#endif
-

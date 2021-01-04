@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef DRIVE_PUBLIC_TYPES_H
-#define DRIVE_PUBLIC_TYPES_H
+#pragma once
 
 //
 // Enumerations
@@ -54,5 +53,3 @@ typedef struct
     bool switchedOn;
 }
 DriveConfig;
-
-#endif

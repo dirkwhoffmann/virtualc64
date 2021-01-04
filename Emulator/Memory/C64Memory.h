@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _C64MEMORY_H
-#define _C64MEMORY_H
+#pragma once
 
 #include "C64Memory.h"
 
@@ -195,5 +194,3 @@ public:
     char *decdump(u16 addr, long num) { return decdump(addr, num, peekSrc[addr >> 12]); }
     char *txtdump(u16 addr, long num) { return txtdump(addr, num, peekSrc[addr >> 12]); }
 };
-
-#endif

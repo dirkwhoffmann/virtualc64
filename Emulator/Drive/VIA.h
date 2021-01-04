@@ -7,6 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#pragma once
+
 /*
  * This implementation is mainly based on the document
  *
@@ -14,9 +16,6 @@
  *
  * and the Hoxs64 implementation by David Horrocks.
  */
-
-#ifndef _VIA6522_H
-#define _VIA6522_H
 
 #include "C64Component.h"
 
@@ -543,5 +542,3 @@ public:
     void pullDownIrqLine() override;
     void releaseIrqLine() override;
 };
-
-#endif

@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _FS_DIR_ENTRY_H
-#define _FS_DIR_ENTRY_H
+#pragma once
 
 struct FSDirEntry
 {
@@ -47,5 +46,3 @@ struct FSDirEntry
     // Returns the link to the first data block
     TSLink firstBlock() { return TSLink{firstDataTrack,firstDataSector}; }
 };
-
-#endif

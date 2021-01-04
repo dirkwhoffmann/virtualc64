@@ -26,8 +26,7 @@
  *
  */
 
-#ifndef _FASTSID_H
-#define _FASTSID_H
+#pragma once
 
 #include "C64Component.h"
 #include "FastVoice.h"
@@ -254,5 +253,3 @@ private:
      */
     void updateInternals();
 };
-
-#endif

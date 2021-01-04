@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _HARDWARE_COMPONENT_H
-#define _HARDWARE_COMPONENT_H
+#pragma once
 
 #include "C64Object.h"
 #include "Serialization.h"
@@ -280,5 +279,3 @@ return writer.ptr - buffer;
     // trace(SNP_DEBUG, "Serialized to %d bytes\n", writer.ptr - buffer);
 
 };
-
-#endif

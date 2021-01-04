@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _KINGSOFT_H
-#define _KINGSOFT_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -41,7 +40,3 @@ public:
     
     void updatePeekPokeLookupTables() override;
 };
-
-
-
-#endif

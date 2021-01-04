@@ -7,6 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#pragma once
+
 /*
  * For more information: http://www.c64-wiki.com/index.php/Cartridge
  *
@@ -22,9 +24,6 @@
  *
  *  As well read the Commodore 64 Programmers Reference Guide pages 260-267.
  */
-
-#ifndef _EXPANSIONPORT_H
-#define _EXPANSIONPORT_H
 
 #include "C64Component.h"
 #include "Cartridge.h"
@@ -240,5 +239,4 @@ public:
     // Called after the C64 CPU has processed the NMI instruction
     void nmiDidTrigger();
 };
-    
-#endif
+ 

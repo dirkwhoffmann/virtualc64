@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef DISK_PUBLIC_TYPES_H
-#define DISK_PUBLIC_TYPES_H
+#pragma once
 
 /* Overview:
  *
@@ -153,5 +152,3 @@ typedef struct
     SectorInfo sectorInfo[22];           // Sector layout data
 }
 TrackInfo;
-
-#endif

@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef CIA_TYPES_H
-#define CIA_TYPES_H
+#pragma once
 
 #include "CIAPublicTypes.h"
 #include "Reflection.h"
@@ -66,5 +65,3 @@ struct CIARegEnum : Reflection<CIARegEnum, CIAReg> {
         return "???";
     }
 };
-
-#endif

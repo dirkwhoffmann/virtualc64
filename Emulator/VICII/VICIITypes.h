@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef VICII_TYPES_H
-#define VICII_TYPES_H
+#pragma once
 
 #include "VICIIPublicTypes.h"
 #include "Reflection.h"
@@ -358,5 +357,3 @@ struct SpriteSR
         & colBits;
     }
 };
-
-#endif

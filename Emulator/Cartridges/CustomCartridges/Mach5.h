@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _MACH5_H
-#define _MACH5_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -36,5 +35,3 @@ public:
     void pokeIO1(u16 addr, u8 value) override;
     void pokeIO2(u16 addr, u8 value) override;
 };
-
-#endif

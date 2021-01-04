@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _EASYFLASH_H
-#define _EASYFLASH_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -113,5 +112,3 @@ public:
     void pokeModeReg(u8 value);
     bool hasLED() override { return true; }
 };
-
-#endif

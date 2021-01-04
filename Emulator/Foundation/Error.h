@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _ERROR_H
-#define _ERROR_H
+#pragma once
 
 #include "C64PublicTypes.h"
 #include <exception>
@@ -24,5 +23,3 @@ struct Error : public std::exception
         return ErrorCodeName(errorCode);
     }
 };
-
-#endif

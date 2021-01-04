@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _MESSAGE_QUEUE_H
-#define _MESSAGE_QUEUE_H
+#pragma once
 
 #include "C64Object.h"
 // #include "C64PublicTypes.h"
@@ -52,5 +51,3 @@ private:
     // Propagates a single message to all registered listeners
     void propagate(Message *msg);
 };
-
-#endif

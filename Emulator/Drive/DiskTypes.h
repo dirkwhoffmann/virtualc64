@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef DISK_TYPES_H
-#define DISK_TYPES_H
+#pragma once
 
 #include "DiskPublicTypes.h"
 #include "Reflection.h"
@@ -114,5 +113,3 @@ union DiskLength
         & track;
     }
 };
-
-#endif

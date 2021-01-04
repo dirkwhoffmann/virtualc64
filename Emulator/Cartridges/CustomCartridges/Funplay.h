@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _FUNPLAY_H
-#define _FUNPLAY_H
+#pragma once
 
 #include "Cartridge.h"
 
@@ -29,5 +28,3 @@ public:
     
     void pokeIO1(u16 addr, u8 value) override;
 };
-
-#endif

@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _VICII_PUBLIC_TYPES_H
-#define _VICII_PUBLIC_TYPES_H
+#pragma once
 
 //
 // Enumerations
@@ -193,4 +192,3 @@ typedef struct
 }
 SpriteInfo;
     
-#endif

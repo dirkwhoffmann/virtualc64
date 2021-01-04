@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _ANY_DISK_H
-#define _ANY_DISK_H
+#pragma once
 
 #include "AnyCollection.h"
 
@@ -74,5 +73,3 @@ public:
     virtual void copyHalftrack(u8 *buffer, size_t offset = 0);
     virtual void copyTrack(u8 *buffer, size_t offset = 0) { copyHalftrack(buffer, offset); }
 };
-
-#endif

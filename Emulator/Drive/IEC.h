@@ -7,8 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#ifndef _IEC_H
-#define _IEC_H
+#pragma once
 
 #include "C64Component.h"
 
@@ -154,5 +153,3 @@ private:
      */
     bool _updateIecLines();
 };
-	
-#endif
