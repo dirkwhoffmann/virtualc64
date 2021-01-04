@@ -752,10 +752,6 @@ struct AnyFileWrapper;
    NSImage *preview;
 }
 
-+ (BOOL)isSupportedSnapshot:(const void *)buf length:(NSInteger)len;
-+ (BOOL)isUnsupportedSnapshot:(const void *)buf length:(NSInteger)len;
-+ (BOOL)isSupportedSnapshotFile:(NSString *)path;
-+ (BOOL)isUnsupportedSnapshotFile:(NSString *)path;
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
 + (instancetype)makeWithC64:(C64Proxy *)c64proxy;

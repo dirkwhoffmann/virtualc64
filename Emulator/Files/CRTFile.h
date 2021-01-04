@@ -41,10 +41,7 @@ public:
     // Class methods
     //
     
-    // Returns true if buffer contains a CRT file
-    static bool isCompatibleBuffer(const u8 *buffer, size_t length);
-        
-    // Returns true if path points to a CRT file
+    static bool isCompatibleBuffer(const u8 *buf, size_t len);        
     static bool isCompatibleFile(const char *path);
         
     

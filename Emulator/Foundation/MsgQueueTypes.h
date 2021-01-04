@@ -87,7 +87,9 @@ struct MSGTypeEnum : Reflection<MSGTypeEnum, MsgType> {
             case MSG_CART_SWITCH:          return "CART_SWITCH";
                 
             case MSG_KB_AUTO_RELEASE:      return "KB_AUTO_RELEASE";
-                
+
+            case MSG_SNAPSHOT_TOO_OLD:     return "SNAPSHOT_TOO_OLD";
+            case MSG_SNAPSHOT_TOO_NEW:     return "SNAPSHOT_TOO_NEW";
             case MSG_AUTO_SNAPSHOT_TAKEN:  return "AUTO_SNAPSHOT_TAKEN";
             case MSG_USER_SNAPSHOT_TAKEN:  return "USER_SNAPSHOT_TAKEN";
             case MSG_SNAPSHOT_RESTORED:    return "SNAPSHOT_RESTORED";

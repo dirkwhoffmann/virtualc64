@@ -24,8 +24,8 @@ public:
     // Class methods
     //
     
-    static bool isCompatibleBuffer(const u8 *buffer, size_t length);
-    static bool isCompatibleFile(const char *filename);
+    static bool isCompatibleBuffer(const u8 *buf, size_t len);
+    static bool isCompatibleFile(const char *path);
     
     
     //

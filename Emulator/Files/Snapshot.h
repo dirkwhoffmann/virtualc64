@@ -45,31 +45,9 @@ class Snapshot : public AnyFile {
     
 public:
     
-    // Checks whether a buffer contains a snapshot
-    static bool isSnapshot(const u8 *buffer, size_t length);
-    
-    // Checks whether a buffer contains a snapshot of a specific version
-    static bool isSnapshot(const u8 *buffer, size_t length,
-                           u8 major, u8 minor, u8 subminor);
-    
-    // Checks whether a buffer contains a snapshot with a supported version number
-    static bool isSupportedSnapshot(const u8 *buffer, size_t length);
-    
-    // Checks whether a buffer contains a snapshot with an outdated version number
-    static bool isUnsupportedSnapshot(const u8 *buffer, size_t length);
-    
-    // Checks whether 'path' points to a snapshot
-    static bool isSnapshotFile(const char *path);
-    
-    // Checks whether 'path' points to a snapshot of a specific version
-    static bool isSnapshotFile(const char *path, u8 major, u8 minor, u8 subminor);
-    
-    // Checks whether 'path' points to a snapshot with a supported version number
-    static bool isSupportedSnapshotFile(const char *path);
-    
-    // Checks whether 'path' points to a snapshot with an outdated version number
-    static bool isUnsupportedSnapshotFile(const char *path);
-    
+    static bool isCompatibleBuffer(const u8 *buf, size_t len);
+    static bool isCompatibleFile(const char *path);
+ 
     
     //
     // Factory methods
@@ -116,6 +94,9 @@ public:
     SnapshotHeader *getHeader() { return (SnapshotHeader *)data; }
     u8 *getData() { return data + sizeof(SnapshotHeader); }
     
+    bool isTooOld();
+    bool isTooNew();
+
     time_t getTimestamp() { return getHeader()->timestamp; }
     unsigned char *getImageData() { return (unsigned char *)(getHeader()->screenshot.screen); }
     unsigned getImageWidth() { return getHeader()->screenshot.width; }

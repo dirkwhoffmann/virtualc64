@@ -1114,25 +1114,34 @@ C64::latestUserSnapshot()
     return result;
 }
 
-void C64::loadFromSnapshot(Snapshot *snapshot)
-{    
-    u8 *ptr;
+bool
+C64::loadFromSnapshot(Snapshot *snapshot)
+{
+    assert(snapshot);
+    assert(snapshot->getData());
+    assert(!isRunning());
     
-    if (snapshot && (ptr = snapshot->getData())) {
-        
-        // Make sure the emulator is not running
-        assert(!isRunning());
-
-        // Restore the saved state
-        load(ptr);
-        if (SNP_DEBUG) dump();
-        
-        // Clear the keyboard matrix to avoid constantly pressed keys
-        keyboard.releaseAll();
-        
-        // Inform the GUI
-        messageQueue.put(MSG_SNAPSHOT_RESTORED);
+    // Check if this snapshot is compatible with the emulator
+    if (snapshot->isTooOld()) {
+        messageQueue.put(MSG_SNAPSHOT_TOO_OLD);
+        return false;
     }
+    if (snapshot->isTooNew()) {
+        messageQueue.put(MSG_SNAPSHOT_TOO_NEW);
+        return false;
+    }
+    
+    // Restore the saved state
+    load(snapshot->getData());
+    
+    // Clear the keyboard matrix to avoid constantly pressed keys
+    keyboard.releaseAll();
+    
+    // Inform the GUI
+    messageQueue.put(MSG_SNAPSHOT_RESTORED);
+    
+    if (SNP_DEBUG) dump();
+    return true;
 }
 
 u32
@@ -1593,6 +1602,8 @@ C64::saveRom(RomType type, const char *path)
 bool
 C64::flash(AnyFile *file)
 {
+    assert(file);
+    
     bool result = true;
     
     suspend();
@@ -1616,7 +1627,7 @@ C64::flash(AnyFile *file)
             break;
             
         case FILETYPE_V64:
-            loadFromSnapshot((Snapshot *)file);
+            result = loadFromSnapshot((Snapshot *)file);
             break;
             
         default:

@@ -508,7 +508,7 @@ public:
     /* Loads the current state from a snapshot file. This function is not
      * thread-safe and must not be called on a running emulator.
      */
-    void loadFromSnapshot(Snapshot *snapshot);
+    bool loadFromSnapshot(Snapshot *snapshot);
     
     
     //

@@ -12,36 +12,16 @@
 const u8 Snapshot::magicBytes[] = { 'V', 'C', '6', '4' };
 
 bool
-Snapshot::isSnapshot(const u8 *buffer, size_t length)
+Snapshot::isCompatibleBuffer(const u8 *buf, size_t len)
 {
-    assert(buffer != NULL);
+    assert(buf != NULL);
     
-    if (length < 0x15) return false;
-    return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
+    if (len < 0x15) return false;
+    return matchingBufferHeader(buf, magicBytes, sizeof(magicBytes));
 }
 
 bool
-Snapshot::isSnapshot(const u8 *buffer, size_t length,
-                     u8 major, u8 minor, u8 subminor)
-{
-    if (!isSnapshot(buffer, length)) return false;
-    return buffer[4] == major && buffer[5] == minor && buffer[6] == subminor;
-}
-
-bool
-Snapshot::isSupportedSnapshot(const u8 *buffer, size_t length)
-{
-    return isSnapshot(buffer, length, V_MAJOR, V_MINOR, V_SUBMINOR);
-}
-
-bool
-Snapshot::isUnsupportedSnapshot(const u8 *buffer, size_t length)
-{
-    return isSnapshot(buffer, length) && !isSupportedSnapshot(buffer, length);
-}
-
-bool
-Snapshot::isSnapshotFile(const char *path)
+Snapshot::isCompatibleFile(const char *path)
 {
     assert(path != NULL);
     
@@ -49,31 +29,6 @@ Snapshot::isSnapshotFile(const char *path)
         return false;
     
     return true;
-}
-
-bool
-Snapshot::isSnapshotFile(const char *path, u8 major, u8 minor, u8 subminor)
-{
-    u8 signature[] = { 'V', 'C', '6', '4', major, minor, subminor };
-    
-    assert(path != NULL);
-    
-    if (!matchingFileHeader(path, signature, sizeof(signature)))
-        return false;
-    
-    return true;
-}
-
-bool
-Snapshot::isSupportedSnapshotFile(const char *path)
-{
-    return isSnapshotFile(path, V_MAJOR, V_MINOR, V_SUBMINOR);
-}
-
-bool
-Snapshot::isUnsupportedSnapshotFile(const char *path)
-{
-    return isSnapshotFile(path) && !isSupportedSnapshotFile(path);
 }
 
 Snapshot::Snapshot(size_t capacity)
@@ -130,11 +85,29 @@ Snapshot::takeScreenshot(C64 *c64)
 bool
 Snapshot::matchingBuffer(const u8 *buf, size_t len)
 {
-    return isSnapshot(buf, len, V_MAJOR, V_MINOR, V_SUBMINOR);
+    return isCompatibleBuffer(buf, len); // , V_MAJOR, V_MINOR, V_SUBMINOR);
 }
 
 bool
 Snapshot::matchingFile(const char *path)
 {
-    return isSnapshotFile(path, V_MAJOR, V_MINOR, V_SUBMINOR);
+    return isCompatibleFile(path); // , V_MAJOR, V_MINOR, V_SUBMINOR);
+}
+
+bool
+Snapshot::isTooOld()
+{
+    return true; // REMOVE ASAP
+    
+    if (data[4] < V_MAJOR) return true; else if (data[4] > V_MAJOR) return false;
+    if (data[5] < V_MINOR) return true; else if (data[5] > V_MINOR) return false;
+    return data[6] < V_SUBMINOR;
+}
+
+bool
+Snapshot::isTooNew()
+{
+    if (data[4] > V_MAJOR) return true; else if (data[4] < V_MAJOR) return false;
+    if (data[5] > V_MINOR) return true; else if (data[5] < V_MINOR) return false;
+    return data[6] > V_SUBMINOR;
 }

@@ -31,11 +31,8 @@ class D64File : public AnyFile {
     
 public:
     
-    // Returns true iff buffer contains a D64 file
-    static bool isCompatibleBuffer(const u8 *buffer, size_t length);
-    
-    // Returns true iff the specified file is a D64 file
-    static bool isCompatibleFile(const char *filename);
+    static bool isCompatibleBuffer(const u8 *buf, size_t len);
+    static bool isCompatibleFile(const char *path);
     
     
     //

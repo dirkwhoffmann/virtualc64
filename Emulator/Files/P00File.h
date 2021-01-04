@@ -23,11 +23,8 @@ class P00File : public AnyCollection {
     
 public:
 
-    // Returns true iff buffer contains a P00 file
-    static bool isCompatibleBuffer(const u8 *buffer, size_t length);
-    
-    // Returns true iff the specified file is a P00 file
-    static bool isCompatibleFile(const char *filename);
+    static bool isCompatibleBuffer(const u8 *buf, size_t len);    
+    static bool isCompatibleFile(const char *path);
     
     
     //

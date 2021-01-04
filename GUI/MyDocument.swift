@@ -176,11 +176,8 @@ class MyDocument: NSDocument {
         track("Read \(length) bytes from file \(name) [\(type.rawValue)].")
         
         switch type {
-            
+        
         case .V64:
-            if SnapshotProxy.isUnsupportedSnapshot(buffer, length: length) {
-                throw NSError.snapshotVersionError(filename: name)
-            }
             try result = create(buffer: buffer, length: length) as SnapshotProxy
             
         case .CRT:
@@ -303,23 +300,9 @@ class MyDocument: NSDocument {
     }
     
     @discardableResult
-    func mountAttachmentAsCartridge() throws -> Bool {
+    func mountAttachmentAsCartridge() -> Bool {
         
         guard let cartridge = attachment as? CRTFileProxy else { return false }
-            
-            /*
-            if cartridge.isSupported {
-
-                parent.c64.expansionport.attachCartridgeAndReset(cartridge)
-                return true
-            }
-
-             let name = cartridge.name()!
-             let type = cartridge.cartridgeType.description
-             throw NSError.unsupportedCartridgeError(filename: name, type: type)
-
-             */
-
         return c64.expansionport.attachCartridgeAndReset(cartridge)
     }
 

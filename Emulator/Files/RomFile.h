@@ -36,11 +36,11 @@ public:
     //
     
     // Returns true if buffer contains a ROM image
-    static bool isCompatibleBuffer(const u8 *buffer, size_t length);
-    static bool isBasicRomBuffer(const u8 *buffer, size_t length);
-    static bool isCharRomBuffer(const u8 *buffer, size_t length);
-    static bool isKernalRomBuffer(const u8 *buffer, size_t length);
-    static bool isVC1541RomBuffer(const u8 *buffer, size_t length);
+    static bool isCompatibleBuffer(const u8 *buf, size_t len);
+    static bool isBasicRomBuffer(const u8 *buf, size_t len);
+    static bool isCharRomBuffer(const u8 *buf, size_t len);
+    static bool isKernalRomBuffer(const u8 *buf, size_t len);
+    static bool isVC1541RomBuffer(const u8 *buf, size_t len);
 
     // Returns true if path points to a ROM image
     static bool isCompatibleFile(const char *path);

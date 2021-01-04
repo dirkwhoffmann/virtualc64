@@ -719,8 +719,9 @@ extension MyController {
             refreshStatusBar()
 
         case .UNSUPPORTED_CRT:
-            warning("Cannot attach cartridge",
-                    "The emulator does not support type \(msg.data) cartridges yet")
+
+            warning("This cartridge cannot be attached.",
+                    "The emulator does not support type \(msg.data) cartridges yet.")
             
         case .CRT_ATTACHED:
 
@@ -740,6 +741,18 @@ extension MyController {
             if virtualKeyboard?.window?.isVisible == true {
                 virtualKeyboard!.refresh()
             }
+            
+        case .SNAPSHOT_TOO_OLD:
+            
+            warning("Unable to restore snapshot",
+                    "The snapshot was created with an older version of " +
+                        "VirtualC64 and is incompatible with this release.")
+            
+        case .SNAPSHOT_TOO_NEW:
+            
+            warning("Unable to restore snapshot",
+                    "The snapshot was created with a newer version of " +
+                        "VirtualC64 and is incompatible with this release.")
             
         case .AUTO_SNAPSHOT_TAKEN:
             

@@ -1568,26 +1568,6 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation SnapshotProxy
 
-+ (BOOL) isSupportedSnapshot:(const void *)buf length:(NSInteger)len
-{
-    return Snapshot::isSupportedSnapshot((u8 *)buf, len);
-}
-
-+ (BOOL) isUnsupportedSnapshot:(const void *)buf length:(NSInteger)len
-{
-    return Snapshot::isUnsupportedSnapshot((u8 *)buf, len);
-}
-
-+ (BOOL) isSupportedSnapshotFile:(NSString *)path
-{
-    return Snapshot::isSupportedSnapshotFile([path UTF8String]);
-}
-
-+ (BOOL) isUnsupportedSnapshotFile:(NSString *)path
-{
-    return Snapshot::isUnsupportedSnapshotFile([path UTF8String]);
-}
-
 + (instancetype) make:(Snapshot *)snapshot
 {
     if (snapshot == NULL) {
