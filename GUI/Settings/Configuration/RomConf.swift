@@ -274,9 +274,9 @@ extension ConfigurationController {
         let kernalRom = NSDataAsset(name: "kernal_generic")?.data
         
         // Install OpenROMs
-        c64.loadBasicRom(fromBuffer: basicRom)
-        c64.loadCharRom(fromBuffer: charRom)
-        c64.loadKernalRom(fromBuffer: kernalRom)
+        try? c64.loadRom(type: .BASIC, data: basicRom)
+        try? c64.loadRom(type: .CHAR, data: charRom)
+        try? c64.loadRom(type: .KERNAL, data: kernalRom)
         
         refresh()
     }

@@ -411,19 +411,19 @@ class Configuration {
         
         if let url = UserDefaults.basicRomUrl {
             track("Seeking Basic Rom")
-            c64.loadBasicRom(fromFile: url)
+            try? c64.loadRom(type: .BASIC, url: url)
         }
         if let url = UserDefaults.kernalRomUrl {
             track("Seeking Kernal Rom")
-            c64.loadKernalRom(fromFile: url)
+            try? c64.loadRom(type: .KERNAL, url: url)
         }
         if let url = UserDefaults.charRomUrl {
             track("Seeking Character Rom")
-            c64.loadCharRom(fromFile: url)
+            try? c64.loadRom(type: .CHAR, url: url)
         }
         if let url = UserDefaults.vc1541RomUrl {
             track("Seeking VC1541 Rom")
-            c64.loadVC1541Rom(fromFile: url)
+            try? c64.loadRom(type: .VC1541, url: url)
         }
         
         c64.resume()

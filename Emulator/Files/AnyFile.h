@@ -126,7 +126,7 @@ protected:
      * matchingBuffer() to verify that the buffer contains a compatible
      * binary representation.
      */
-    virtual void readFromBuffer(const u8 *buffer, size_t length);
+    virtual void readFromBuffer(const u8 *buf, size_t len);
     
     /* Deserializes this object from a file. This function uses
      * matchingFile() to verify that the file contains a compatible binary
@@ -134,7 +134,7 @@ protected:
      * first reads in the file contents in memory and invokes readFromBuffer
      * afterwards.
      */
-    virtual void readFromFile(const char *filename);
+    virtual void readFromFile(const char *path);
 
     /* Deserializes this object from a file that is already open.
      */
@@ -146,7 +146,7 @@ public:
      * a test run is performed. Test runs are used to determine how many bytes
      * will be written.
      */
-	virtual size_t writeToBuffer(u8 *buffer);
+	virtual size_t writeToBuffer(u8 *buf);
 
     /* Writes the file contents to a file. This function requires no custom
      * implementation. It invokes writeToBuffer first and writes the data to

@@ -192,15 +192,20 @@ struct AnyFileWrapper;
 - (BOOL) isKernalRom:(NSURL *)url;
 - (BOOL) isVC1541Rom:(NSURL *)url;
 
+- (BOOL) loadRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)err;
+/*
 - (BOOL) loadBasicRomFromFile:(NSURL *)url;
 - (BOOL) loadCharRomFromFile:(NSURL *)url;
 - (BOOL) loadKernalRomFromFile:(NSURL *)url;
 - (BOOL) loadVC1541RomFromFile:(NSURL *)url;
-
+*/
+- (BOOL) loadRom:(RomType)type data:(NSData *)data error:(ErrorCode *)err;
+/*
 - (BOOL) loadBasicRomFromBuffer:(NSData *)buffer;
 - (BOOL) loadCharRomFromBuffer:(NSData *)buffer;
 - (BOOL) loadKernalRomFromBuffer:(NSData *)buffer;
 - (BOOL) loadVC1541RomFromBuffer:(NSData *)buffer;
+*/
 
 - (BOOL) saveBasicRom:(NSURL *)url;
 - (BOOL) saveCharRom:(NSURL *)url;
@@ -235,8 +240,8 @@ struct AnyFileWrapper;
 - (BOOL) isCommodoreRom:(RomIdentifier)rev;
 - (BOOL) isPatchedRom:(RomIdentifier)rev;
 
-- (BOOL) isRom:(NSURL *)url;
-- (BOOL) loadRom:(NSURL *)url;
+// - (BOOL) isRom:(NSURL *)url;
+// - (BOOL) loadRom:(NSURL *)url;
 
 // Flashing files
 - (BOOL)flash:(AnyFileProxy *)container;

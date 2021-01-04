@@ -138,8 +138,8 @@ AnyFile::flash(u8 *buffer, size_t offset)
 void
 AnyFile::readFromBuffer(const u8 *buffer, size_t length)
 {
-    assert (buffer);
-    
+    assert(buffer);
+        
     // Check file type
     if (!matchingBuffer(buffer, length)) {
         throw(Error(ERROR_INVALID_TYPE));
@@ -220,82 +220,6 @@ AnyFile::readFromFile(FILE *file)
     
     delete[] buffer;
 }
-
-/*
-bool
-AnyFile::oldReadFromBuffer(const u8 *buffer, size_t length)
-{
-    assert (buffer);
-    
-    dealloc();
-    if ((data = new u8[length]) == nullptr)
-        return false;
-    
-    memcpy(data, buffer, length);
-    size = length;
-    return true;
-}
-
-bool
-AnyFile::oldReadFromFile(const char *filename)
-{
-    assert (filename != NULL);
-    
-    bool success = false;
-	u8 *buffer = NULL;
-	FILE *file = NULL;
-	struct stat fileProperties;
-	
-	// Check file type
-    if (!matchingFile(filename)) {
-		goto exit;
-	}
-	
-	// Get file properties
-    if (stat(filename, &fileProperties) != 0) {
-		goto exit;
-	}
-		
-	// Open file
-	if (!(file = fopen(filename, "r"))) {
-		goto exit;
-	}
-
-	// Allocate memory
-	if (!(buffer = new u8[fileProperties.st_size])) {
-		goto exit;
-	}
-	
-	// Read from file
-	int c;
-	for (unsigned i = 0; i < fileProperties.st_size; i++) {
-		c = fgetc(file);
-		if (c == EOF)
-			break;
-		buffer[i] = (u8)c;
-	}
-	
-	// Read from buffer (subclass specific behaviour)
-	dealloc();
-	if (!oldReadFromBuffer(buffer, (unsigned)fileProperties.st_size)) {
-		goto exit;
-	}
-
-    setPath(filename);
-    success = true;
-    
-    trace(FILE_DEBUG, "File %s read successfully\n", path);
-	
-exit:
-	
-    if (file)
-		fclose(file);
-	if (buffer)
-		delete[] buffer;
-
-	return success;
-}
-*/
 
 size_t
 AnyFile::writeToBuffer(u8 *buffer)

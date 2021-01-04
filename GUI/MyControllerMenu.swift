@@ -589,7 +589,7 @@ extension MyController: NSMenuItemValidation {
         do {
             // Try to create a file proxy
             try mydocument.createAttachment(from: url, allowedTypes: types)
-            
+
             // Ask the user if an unsafed disk should be replaced
             if !proceedWithUnexportedDisk(drive: drive) { return }
             
@@ -600,7 +600,8 @@ extension MyController: NSMenuItemValidation {
             myAppDelegate.noteNewRecentlyUsedURL(url)
             
         } catch {
-            NSApp.presentError(error)
+            
+            (error as? MyError)?.cantOpen(url: url)
         }
     }
     
@@ -742,7 +743,8 @@ extension MyController: NSMenuItemValidation {
             myAppDelegate.noteNewRecentlyUsedURL(url)
             
         } catch {
-            NSApp.presentError(error)
+
+            (error as? MyError)?.cantOpen(url: url)
         }
     }
 
@@ -809,7 +811,8 @@ extension MyController: NSMenuItemValidation {
             myAppDelegate.noteNewRecentlyUsedURL(url)
             
         } catch {
-            NSApp.presentError(error)
+
+            (error as? MyError)?.cantOpen(url: url)
         }
     }
     

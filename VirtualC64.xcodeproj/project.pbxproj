@@ -793,7 +793,6 @@
 			children = (
 				506D3DCD20223E5E009742CF /* MyAppDelegate.swift */,
 				506D3DCF20224BF4009742CF /* MyDocument.swift */,
-				5052A7C025A0AC0700E62EDD /* Errors.swift */,
 				505184E124F23CBF002C6124 /* Foundation */,
 				50BE4B5624E7F786008F39C9 /* Extensions */,
 				506CE96621998C4500B70A3A /* Metal */,
@@ -1144,6 +1143,7 @@
 		505184E124F23CBF002C6124 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				5052A7C025A0AC0700E62EDD /* Errors.swift */,
 				50DBB44A2025CE5700489271 /* Utils.swift */,
 				505184DF24F23CB6002C6124 /* Storage.swift */,
 				507E7AA124FB897D00AB433C /* Screenshot.swift */,

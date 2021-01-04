@@ -32,6 +32,27 @@ func create<T: Makeable>(url: URL) throws -> T {
 }
 
 //
+// Exception passing
+//
+
+extension C64Proxy {
+    
+    func loadRom(type: RomType, url: URL) throws {
+
+        var err = ErrorCode.OK
+        loadRom(type, url: url, error: &err)
+        if err != ErrorCode.OK { throw MyError(err) }
+    }
+
+    func loadRom(type: RomType, data: Data?) throws {
+
+        var err = ErrorCode.OK
+        loadRom(type, data: data, error: &err)
+        if err != ErrorCode.OK { throw MyError(err) }
+    }
+}
+
+//
 // Informational extensions
 //
 

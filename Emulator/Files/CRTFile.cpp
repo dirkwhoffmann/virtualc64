@@ -64,7 +64,7 @@ CRTFile::matchingFile(const char *path)
 
 void
 CRTFile::readFromBuffer(const u8 *buffer, size_t length)
-{
+{    
     // Read the CRT file
     AnyFile::readFromBuffer(buffer, length);    
     if (CRT_DEBUG) dump();

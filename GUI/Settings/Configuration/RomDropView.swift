@@ -51,16 +51,24 @@ class RomDropView: NSImageView {
 
         return true
     }
-
-    /*
-    override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
-
-    }
-    */
     
     override func concludeDragOperation(_ sender: NSDraggingInfo?) {
 
         parent.refresh()
+    }
+    
+    func performDrag(type: RomType, url: URL?) -> Bool {
+        
+        if url != nil {
+            do {
+                try c64.loadRom(type: type, url: url!)
+                return true
+            } catch {
+                let filename = url!.lastPathComponent
+                (error as? MyError)?.warning("Cannot open Rom file \"\(filename)\"")
+            }
+        }
+        return false
     }
 }
 
@@ -69,8 +77,9 @@ class BasicRomDropView: RomDropView {
     override func acceptDragSource(url: URL) -> Bool {
         return c64.isPoweredOff && c64.isBasicRom(url)
     }
+    
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        return sender.url == nil ? false : c64.loadBasicRom(fromFile: sender.url)
+        return performDrag(type: .BASIC, url: sender.url)
     }
 }
 
@@ -79,7 +88,7 @@ class CharRomDropView: RomDropView {
         return c64.isPoweredOff && c64.isCharRom(url)
     }
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        return sender.url == nil ? false : c64.loadCharRom(fromFile: sender.url)
+        return performDrag(type: .CHAR, url: sender.url)
     }
 }
 
@@ -89,7 +98,7 @@ class KernalRomDropView: RomDropView {
         return c64.isPoweredOff && c64.isKernalRom(url)
     }
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        return sender.url == nil ? false : c64.loadKernalRom(fromFile: sender.url)
+        return performDrag(type: .KERNAL, url: sender.url)
     }
 }
 
@@ -99,6 +108,6 @@ class Vc1541RomDropView: RomDropView {
         return c64.isPoweredOff && c64.isVC1541Rom(url)
     }
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        return sender.url == nil ? false : c64.loadVC1541Rom(fromFile: sender.url)
+        return performDrag(type: .VC1541, url: sender.url)
     }
 }

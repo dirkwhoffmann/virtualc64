@@ -108,13 +108,7 @@ class MyDocument: NSDocument {
                       FileType.G64,
                       FileType.TAP ]
         
-        do {
-            try createAttachment(from: url, allowedTypes: types)
-        } catch let error as MyError {
-            let code = error.errorCode.rawValue
-            track("CATCHED ERROR \(code)")
-            throw error
-        }
+        try createAttachment(from: url, allowedTypes: types)
     }
     
     func createAttachment(from url: URL, allowedTypes: [FileType]) throws {
@@ -123,7 +117,7 @@ class MyDocument: NSDocument {
         
         attachment = try createFileProxy(url: url, allowedTypes: allowedTypes)
         myAppDelegate.noteNewRecentlyUsedURL(url)
-
+        
         track("Attachment created successfully")
     }
         
@@ -313,14 +307,22 @@ class MyDocument: NSDocument {
     override open func read(from url: URL, ofType typeName: String) throws {
         
         track()
-        try createAttachment(from: url)
+        do {
+            try createAttachment(from: url)
+        } catch let error as MyError {
+            error.cantOpen(url: url)
+        }
     }
     
     override open func revert(toContentsOf url: URL, ofType typeName: String) throws {
         
-            track()
+        track()
+        do {
             try createAttachment(from: url)
             mountAttachment()
+        } catch let error as MyError {
+            error.cantOpen(url: url)
+        }
     }
     
     //

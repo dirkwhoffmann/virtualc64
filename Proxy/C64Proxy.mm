@@ -2434,6 +2434,25 @@ struct AnyFileWrapper { AnyFile *file; };
 {
     return RomFile::isVC1541RomFile([[url path] UTF8String]);
 }
+
+- (BOOL) loadRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)err;
+{
+    try { wrapper->c64->loadRomFromFile(type, [[url path] UTF8String]); }
+    catch (Error &exception) { *err = exception.errorCode; }
+    return YES;
+}
+/*
+- (BOOL) loadBasicRomFromFile:(NSURL *)url;
+- (BOOL) loadCharRomFromFile:(NSURL *)url;
+- (BOOL) loadKernalRomFromFile:(NSURL *)url;
+- (BOOL) loadVC1541RomFromFile:(NSURL *)url;
+*/
+- (BOOL) loadRom:(RomType)type data:(NSData *)data error:(ErrorCode *)err;
+{
+    if (data == nil) return NO;
+    const u8 *bytes = (const u8 *)[data bytes];
+    return wrapper->c64->loadRomFromBuffer(type, bytes, [data length]);
+}/*
 - (BOOL) loadBasicRomFromFile:(NSURL *)url
 {
     return wrapper->c64->loadRomFromFile(ROM_TYPE_BASIC, [[url path] UTF8String]);
@@ -2474,6 +2493,7 @@ struct AnyFileWrapper { AnyFile *file; };
     const u8 *bytes = (const u8 *)[data bytes];
     return wrapper->c64->loadRomFromBuffer(ROM_TYPE_VC1541, bytes, [data length]);
 }
+*/
 - (BOOL) saveBasicRom:(NSURL *)url
 {
     return wrapper->c64->saveRom(ROM_TYPE_BASIC, [[url path] UTF8String]);
@@ -2590,6 +2610,7 @@ struct AnyFileWrapper { AnyFile *file; };
 {
     return RomFile::isPatchedRom(rev);
 }
+/*
 - (BOOL) isRom:(NSURL *)url
 {
     return
@@ -2598,15 +2619,17 @@ struct AnyFileWrapper { AnyFile *file; };
     [self isKernalRom:url] ||
     [self isVC1541Rom:url];
 }
-
+*/
+/*
 - (BOOL) loadRom:(NSURL *)url
 {
     return
-    [self loadBasicRomFromFile:url] ||
-    [self loadCharRomFromFile:url] ||
-    [self loadKernalRomFromFile:url] ||
-    [self loadVC1541RomFromFile:url];
+    [self loadRom: ROM_TYPE_BASIC url: url] ||
+    [self loadRom: ROM_TYPE_CHAR url: url] ||
+    [self loadRom: ROM_TYPE_KERNAL url: url] ||
+    [self loadRom: ROM_TYPE_VC1541 url: url];
 }
+*/
 
 // Flashing files
 - (BOOL)flash:(AnyFileProxy *)file

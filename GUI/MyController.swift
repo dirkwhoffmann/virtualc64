@@ -746,13 +746,13 @@ extension MyController {
             
             warning("Unable to restore snapshot",
                     "The snapshot was created with an older version of " +
-                        "VirtualC64 and is incompatible with this release.")
+                        "VirtualC64 which is incompatible with this release.")
             
         case .SNAPSHOT_TOO_NEW:
             
             warning("Unable to restore snapshot",
                     "The snapshot was created with a newer version of " +
-                        "VirtualC64 and is incompatible with this release.")
+                        "VirtualC64 which is incompatible with this release.")
             
         case .AUTO_SNAPSHOT_TAKEN:
             
