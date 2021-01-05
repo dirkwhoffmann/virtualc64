@@ -14,16 +14,11 @@
 
 class G64File : public AnyFile {
 
-    // Number of the currently selected halftrack (0 = nothing selected)
-    [[deprecated]] Halftrack selectedHalftrack = 0;
- 
-    // File pointer. An offset into the data range of the selected track
-    [[deprecated]] long tFp = -1;
-    
-    // End of file position. This value equals the last valid offset plus 1
-    [[deprecated]] long tEof = -1;
-
 public:
+
+    //
+    // Class methods
+    //
 
     static bool isCompatibleName(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
@@ -52,24 +47,15 @@ public:
     
     FileType type() override { return FILETYPE_G64; }
         
-    //
-    // Selecting tracks or halftracks
-    //
-    
-    int numberOfHalftracks() { return 84; }
-    
-    [[deprecated]] void selectHalftrack(Halftrack ht);
-
-    
+  
     //
     // Reading data from a track
     //
+
+public:
     
     // Returns the size of a certain haltrack in bytes
     usize getSizeOfHalftrack(Halftrack ht);
-
-    // Moves the file pointer to the specified offset
-    [[deprecated]] void seekHalftrack(Halftrack ht, long offset);
         
     // Copies a certain track into a buffer
     void copyHalftrack(Halftrack ht, u8 *buf);
