@@ -727,7 +727,6 @@ struct AnyFileWrapper;
 - (struct AnyFileWrapper *)wrapper;
 
 - (FileType)type;
-- (NSString *)typeString;
 - (void)setPath:(NSString *)path;
 - (NSString *)name;
 - (NSInteger)sizeOnDisk;

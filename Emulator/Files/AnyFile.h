@@ -70,9 +70,6 @@ public:
     
     // Returns the type of this file
     virtual FileType type() { return FILETYPE_UNKNOWN; }
-
-    // Returns a string representation for the type of this file
-    const char *typeString() { return FileTypeEnum::key(type()); }
     
 	// Returns the physical name of this file
     const char *getPath() { return path ? path : ""; }
@@ -134,11 +131,11 @@ protected:
      * first reads in the file contents in memory and invokes readFromBuffer
      * afterwards.
      */
-    virtual void readFromFile(const char *path);
+    void readFromFile(const char *path);
 
     /* Deserializes this object from a file that is already open.
      */
-    virtual void readFromFile(FILE *file);
+    void readFromFile(FILE *file);
     
 public:
     

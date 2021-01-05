@@ -60,8 +60,7 @@ class ImportDialog: DialogController {
     
     override func showSheet(completionHandler handler:(() -> Void)? = nil) {
                     
-        let type = myDocument.attachment!.typeString() ?? "?"
-        track("showSheet(fileType: \(type))")
+        track()
 
         switch myDocument.attachment {
              

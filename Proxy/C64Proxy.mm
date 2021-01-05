@@ -1520,11 +1520,6 @@ struct AnyFileWrapper { AnyFile *file; };
     return wrapper->file->type();
 }
 
-- (NSString *)typeString
-{
-    return [NSString stringWithUTF8String:wrapper->file->typeString()];
-}
-
 - (NSString *)name
 {
     return [NSString stringWithUTF8String:wrapper->file->getName()];
@@ -1539,12 +1534,10 @@ struct AnyFileWrapper { AnyFile *file; };
 {
     return wrapper->file->fnv();
 }
-
 - (NSInteger) writeToBuffer:(void *)buffer
 {
     return wrapper->file->writeToBuffer((u8 *)buffer);
 }
-
 - (BOOL)writeToFile:(NSString *)path
 {
     return wrapper->file->writeToFile([path fileSystemRepresentation]);
