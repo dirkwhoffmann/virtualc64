@@ -25,8 +25,8 @@ public:
 
     static bool isCompatibleName(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
-    static bool isCompatibleBuffer(const u8 *buf, size_t len);    
-    static bool isCompatibleFile(const char *path);
+    [[deprecated]] static bool isCompatibleBuffer(const u8 *buf, size_t len);
+    [[deprecated]] static bool isCompatibleFile(const char *path);
     
     
     //
@@ -47,8 +47,8 @@ public:
     
     const char *getName() override;
     FileType type() override { return FILETYPE_P00; }
-    bool matchingBuffer(const u8 *buf, size_t len) override;
-    bool matchingFile(const char *path) override;
+    [[deprecated]] bool matchingBuffer(const u8 *buf, size_t len) override;
+    [[deprecated]] bool matchingFile(const char *path) override;
     
 
     //

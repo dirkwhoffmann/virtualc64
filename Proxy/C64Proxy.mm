@@ -1639,11 +1639,6 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation CRTFileProxy
 
-+ (BOOL) isCRTFile:(NSString *)path
-{
-    return CRTFile::isCompatibleFile([path UTF8String]);
-}
-
 + (instancetype) make:(CRTFile *)container
 {
     return container ? [[self alloc] initWithFile:container] : nil;
@@ -1707,11 +1702,6 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation TAPFileProxy
 
-+ (BOOL)isTAPFile:(NSString *)path
-{
-    return TAPFile::isCompatibleFile([path UTF8String]);
-}
-
 + (instancetype)make:(TAPFile *)container
 {
     return container ? [[self alloc] initWithFile:container] : nil;
@@ -1774,11 +1764,6 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation T64FileProxy
 
-+ (BOOL)isT64File:(NSString *)path
-{
-    return T64File::isCompatibleFile([path UTF8String]);
-}
-
 + (instancetype)make:(T64File *)archive
 {
     if (archive == NULL) return nil;
@@ -1819,11 +1804,6 @@ struct AnyFileWrapper { AnyFile *file; };
 //
 
 @implementation PRGFileProxy
-
-+ (BOOL)isPRGFile:(NSString *)path
-{
-    return PRGFile::isCompatibleFile([path UTF8String]);
-}
 
 + (instancetype)make:(PRGFile *)archive
 {
@@ -1895,11 +1875,6 @@ struct AnyFileWrapper { AnyFile *file; };
 //
 
 @implementation P00FileProxy
-
-+ (BOOL)isP00File:(NSString *)path
-{
-    return P00File::isCompatibleFile([path UTF8String]);
-}
 
 + (instancetype)make:(P00File *)archive
 {
@@ -2003,11 +1978,6 @@ struct AnyFileWrapper { AnyFile *file; };
     return (D64File *)wrapper->file;
 }
 
-+ (BOOL)isD64File:(NSString *)path
-{
-    return D64File::isCompatibleFile([path UTF8String]);
-}
-
 + (instancetype) make:(D64File *)archive
 {
     if (archive == NULL) return nil;
@@ -2076,10 +2046,6 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation G64FileProxy
 
-+ (BOOL)isG64File:(NSString *)path
-{
-    return G64File::isCompatibleFile([path UTF8String]);
-}
 + (instancetype) make:(G64File *)archive
 {
     if (archive == NULL) return nil;
