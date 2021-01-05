@@ -119,6 +119,8 @@ public:
 
 protected:
 
+    virtual usize readFromStream(std::istream &stream) throws;
+    
     /* Deserializes this object from a memory buffer. This function uses
      * matchingBuffer() to verify that the buffer contains a compatible
      * binary representation.

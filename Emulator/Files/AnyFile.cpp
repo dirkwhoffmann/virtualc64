@@ -135,6 +135,51 @@ AnyFile::flash(u8 *buffer, size_t offset)
     memcpy(buffer + offset, data, size);
 }
 
+usize
+AnyFile::readFromStream(std::istream &stream)
+{
+    // Get stream size
+    auto fsize = stream.tellg();
+    stream.seekg(0, std::ios::end);
+    fsize = stream.tellg() - fsize;
+    stream.seekg(0, std::ios::beg);
+        
+    printf("size = %zu\n", (usize)fsize);
+    
+    // Allocate memory
+    u8 *buffer = nullptr;
+    if (!(buffer = new u8[fsize])) {
+        throw Error(ERROR_OUT_OF_MEMORY);
+    }
+    
+    // Read from stream
+    stream.read((char *)buffer, fsize);
+    
+    // Read from buffer
+    try { readFromBuffer(buffer, fsize); }
+    catch (Error &err) { delete[] buffer; throw err; }
+    
+    delete[] buffer;
+    return fsize;
+}
+
+void
+AnyFile::readFromFile(const char *path)
+{
+    assert(path);
+        
+    std::ifstream stream(path);
+
+    if (!stream.is_open()) {
+        throw Error(ERROR_CANT_READ);
+    }
+    
+    usize size = readFromStream(stream);
+    
+    setPath(path);
+}
+
+/*
 void
 AnyFile::readFromFile(const char *path)
 {
@@ -165,6 +210,7 @@ AnyFile::readFromFile(const char *path)
     
     setPath(path);
 }
+*/
 
 void
 AnyFile::readFromFile(FILE *file)
