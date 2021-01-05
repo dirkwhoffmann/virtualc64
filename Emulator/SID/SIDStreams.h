@@ -50,7 +50,7 @@ public:
      * final step in the audio pipeline. They are used to copy the generated
      * sound samples into the buffers of the native sound device.
      */
-    void copyMono(float *buffer, size_t n, Volume &volL, Volume &volR);
-    void copyStereo(float *left, float *right, size_t n, Volume &volL, Volume &volR);
-    void copyInterleaved(float *buffer, size_t n, Volume &volL, Volume &volR);
+    void copyMono(float *buffer, usize n, Volume &volL, Volume &volR);
+    void copyStereo(float *left, float *right, usize n, Volume &volL, Volume &volR);
+    void copyInterleaved(float *buffer, usize n, Volume &volL, Volume &volR);
 };

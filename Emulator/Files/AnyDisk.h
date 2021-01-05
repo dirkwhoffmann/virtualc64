@@ -50,8 +50,8 @@ public:
     //
     
     // Returns the size of the selected haltrack in bytes
-    virtual size_t getSizeOfHalftrack() { return 0; }
-    virtual size_t getSizeOfTrack() { return getSizeOfHalftrack(); }
+    virtual usize getSizeOfHalftrack() { return 0; }
+    virtual usize getSizeOfTrack() { return getSizeOfHalftrack(); }
                                                 
     /* Moves the file pointer to the specified offset. seek(0) returns to the
      * beginning of the selected track.
@@ -66,10 +66,10 @@ public:
     virtual int readTrack() { return readHalftrack(); }
     
     // Reads multiple bytes (1 .. 85) in form of a hex dump string
-    // virtual const char *readHalftrackHex(size_t num);
-    // virtual const char *readTrackHex(size_t num) { return readHalftrackHex(num); }
+    // virtual const char *readHalftrackHex(usize num);
+    // virtual const char *readTrackHex(usize num) { return readHalftrackHex(num); }
     
     // Copies the selected track into the specified buffer
-    virtual void copyHalftrack(u8 *buffer, size_t offset = 0);
-    virtual void copyTrack(u8 *buffer, size_t offset = 0) { copyHalftrack(buffer, offset); }
+    virtual void copyHalftrack(u8 *buffer, usize offset = 0);
+    virtual void copyTrack(u8 *buffer, usize offset = 0) { copyHalftrack(buffer, offset); }
 };

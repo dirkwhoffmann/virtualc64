@@ -54,7 +54,7 @@ AnyFile::fnv()
 }
 
 void
-AnyFile::flash(u8 *buffer, size_t offset)
+AnyFile::flash(u8 *buffer, usize offset)
 {
     assert(buffer);
     memcpy(buffer + offset, data, size);
@@ -79,7 +79,7 @@ AnyFile::readFromFile(const char *path)
 }
 
 usize
-AnyFile::readFromBuffer(const u8 *buf, size_t len)
+AnyFile::readFromBuffer(const u8 *buf, usize len)
 {
     assert(buf);
 

@@ -128,10 +128,10 @@ typedef CBM_FILE_TYPE CBMFileType;
  */
 typedef struct
 {
-    size_t headerBegin;
-    size_t headerEnd;
-    size_t dataBegin;
-    size_t dataEnd;
+    usize headerBegin;
+    usize headerEnd;
+    usize dataBegin;
+    usize dataEnd;
 }
 SectorInfo;
 
@@ -142,7 +142,7 @@ SectorInfo;
  */
 typedef struct
 {
-    size_t length;                       // Length of the track in bits
+    usize length;                       // Length of the track in bits
     
     union {
         u8 bit[2 * maxBitsOnTrack];      // Track data (bit access)

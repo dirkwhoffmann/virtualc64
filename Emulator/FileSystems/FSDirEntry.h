@@ -25,8 +25,8 @@ struct FSDirEntry
     u8 fileSizeHi;        // $1F
 
     // Initializes this entry
-    void init(PETName<16> name, TSLink ref, size_t numBlocks);
-    void init(const char *name, TSLink ref, size_t numBlocks);
+    void init(PETName<16> name, TSLink ref, usize numBlocks);
+    void init(const char *name, TSLink ref, usize numBlocks);
 
     // Checks whether this entry if empty
     bool isEmpty(); 

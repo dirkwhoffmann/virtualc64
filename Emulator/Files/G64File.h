@@ -30,7 +30,7 @@ public:
     //
     
     G64File() : AnyDisk() { };
-    G64File(size_t capacity);
+    G64File(usize capacity);
     
     
     //
@@ -52,7 +52,7 @@ public:
     
     int numberOfHalftracks() override { return 84; }
     void selectHalftrack(Halftrack ht) override;
-    size_t getSizeOfHalftrack() override;
+    usize getSizeOfHalftrack() override;
     void seekHalftrack(long offset) override;
     
 private:

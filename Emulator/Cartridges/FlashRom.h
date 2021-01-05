@@ -22,13 +22,13 @@
 class FlashRom : public C64Component {
             
     // Number of sectors in this Flash Rom
-    static const size_t numSectors = 8;
+    static const usize numSectors = 8;
     
     // Size of a single sector in bytes (64 KB)
-    static const size_t sectorSize = 0x10000;
+    static const usize sectorSize = 0x10000;
     
     // Total size of the Flash Rom in bytes (512 KB)
-    static const size_t romSize = 0x80000;
+    static const usize romSize = 0x80000;
 
     // Current Flash Rom state
     FlashState state;
@@ -102,12 +102,12 @@ private:
     {
     }
     
-    size_t __size() { COMPUTE_SNAPSHOT_SIZE }
-    size_t _size() override { return __size() + romSize; }
-    size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-    size_t didLoadFromBuffer(u8 *buffer) override;
-    size_t didSaveToBuffer(u8 *buffer) override;
+    usize __size() { COMPUTE_SNAPSHOT_SIZE }
+    usize _size() override { return __size() + romSize; }
+    usize _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
+    usize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
+    usize didLoadFromBuffer(u8 *buffer) override;
+    usize didSaveToBuffer(u8 *buffer) override;
 
     
     //

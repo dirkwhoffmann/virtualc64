@@ -34,7 +34,7 @@ PRGFile::makeWithFileSystem(FSDevice *fs, int item)
     if (fs->numFiles() <= (u64)item) return nullptr;
         
     // Create new archive
-    size_t itemSize = fs->fileSize(item);
+    usize itemSize = fs->fileSize(item);
     PRGFile *prg = new PRGFile(itemSize);
                 
     // Add data

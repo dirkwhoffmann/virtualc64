@@ -10,14 +10,14 @@
 #include "SIDBridge.h"
 
 void
-StereoStream::copyMono(float *buffer, size_t n, Volume &volL, Volume &volR)
+StereoStream::copyMono(float *buffer, usize n, Volume &volL, Volume &volR)
 {    
     // The caller has to ensure that no buffer underflows occurs
     assert(count() >= n);
     
     if (volL.isFading()) {
         
-        for (size_t i = 0; i < n; i++, volL.shift()) {
+        for (usize i = 0; i < n; i++, volL.shift()) {
             
             SamplePair pair = read();
             *buffer++ = (pair.left + pair.right) * volL.current;
@@ -25,7 +25,7 @@ StereoStream::copyMono(float *buffer, size_t n, Volume &volL, Volume &volR)
 
     } else {
         
-        for (size_t i = 0; i < n; i++) {
+        for (usize i = 0; i < n; i++) {
                             
             SamplePair pair = read();
             *buffer++ = (pair.left + pair.right) * volL.current;
@@ -34,7 +34,7 @@ StereoStream::copyMono(float *buffer, size_t n, Volume &volL, Volume &volR)
 }
 
 void
-StereoStream::copyStereo(float *left, float *right, size_t n, Volume &volL, Volume &volR)
+StereoStream::copyStereo(float *left, float *right, usize n, Volume &volL, Volume &volR)
 {
     // The caller has to ensure that no buffer underflows occurs
     assert(count() >= n);
@@ -44,7 +44,7 @@ StereoStream::copyStereo(float *left, float *right, size_t n, Volume &volL, Volu
     
     if (volL.isFading() || volR.isFading()) {
                 
-        for (size_t i = 0; i < n; i++, volL.shift(), volR.shift()) {
+        for (usize i = 0; i < n; i++, volL.shift(), volR.shift()) {
             
             SamplePair pair = read();
             *left++ = pair.left * volL.current;
@@ -53,7 +53,7 @@ StereoStream::copyStereo(float *left, float *right, size_t n, Volume &volL, Volu
 
     } else {
         
-        for (size_t i = 0; i < n; i++) {
+        for (usize i = 0; i < n; i++) {
                                         
             SamplePair pair = read();
             *left++ = pair.left * volL.current;
@@ -63,14 +63,14 @@ StereoStream::copyStereo(float *left, float *right, size_t n, Volume &volL, Volu
 }
 
 void
-StereoStream::copyInterleaved(float *buffer, size_t n, Volume &volL, Volume &volR)
+StereoStream::copyInterleaved(float *buffer, usize n, Volume &volL, Volume &volR)
 {
     // The caller has to ensure that no buffer underflows occurs
     assert(count() >= n);
 
     if (volL.isFading()) {
                 
-        for (size_t i = 0; i < n; i++, volL.shift()) {
+        for (usize i = 0; i < n; i++, volL.shift()) {
             
             SamplePair pair = read();
             *buffer++ = pair.left * volL.current;
@@ -79,7 +79,7 @@ StereoStream::copyInterleaved(float *buffer, size_t n, Volume &volL, Volume &vol
 
     } else {
         
-        for (size_t i = 0; i < n; i++) {
+        for (usize i = 0; i < n; i++) {
                                         
             SamplePair pair = read();
             *buffer++ = pair.left * volL.current;

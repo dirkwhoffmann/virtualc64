@@ -63,7 +63,7 @@ FSDevice::makeWithDisk(class Disk *disk, FSError *err)
 
     // Translate the GCR stream into a byte stream
     u8 buffer[D64_802_SECTORS];
-    size_t len = disk->decodeDisk(buffer);
+    usize len = disk->decodeDisk(buffer);
     
     // Create a suitable device descriptor
     FSDeviceDescriptor descriptor = FSDeviceDescriptor(DISK_TYPE_SS_SD);
@@ -172,7 +172,7 @@ void
 FSDevice::dump()
 {
     // Dump all blocks
-    for (size_t i = 0; i < blocks.size(); i++)  {
+    for (usize i = 0; i < blocks.size(); i++)  {
         
         msg("\nBlock %zu (%d):", i, blocks[i]->nr);
         msg(" %s\n", FSBlockTypeEnum::key(blocks[i]->type()));
@@ -198,7 +198,7 @@ FSDevice::numFreeBlocks()
 {
     u32 result = 0;
     
-    for (size_t i = 0; i < blocks.size(); i++) {
+    for (usize i = 0; i < blocks.size(); i++) {
         if (isFree((Block)i)) result++;
     }
     
@@ -210,7 +210,7 @@ FSDevice::numUsedBlocks()
 {
     u32 result = 0;
     
-    for (size_t i = 0; i < blocks.size(); i++) {
+    for (usize i = 0; i < blocks.size(); i++) {
         if (!isFree((Block)i)) result++;
     }
     
@@ -563,7 +563,7 @@ FSDevice::scanDirectory(bool skipInvisible)
 }
 
 bool
-FSDevice::makeFile(PETName<16> name, const u8 *buf, size_t cnt)
+FSDevice::makeFile(PETName<16> name, const u8 *buf, usize cnt)
 {
     // Search the next free directory slot
     FSDirEntry *dir = nextFreeDirEntry();
@@ -575,7 +575,7 @@ FSDevice::makeFile(PETName<16> name, const u8 *buf, size_t cnt)
 }
 
 bool
-FSDevice::makeFile(PETName<16> name, FSDirEntry *dir, const u8 *buf, size_t cnt)
+FSDevice::makeFile(PETName<16> name, FSDirEntry *dir, const u8 *buf, usize cnt)
 {
     // Determine the number of blocks needed for this file
     u32 numBlocks = (u32)((cnt + 253) / 254);
@@ -590,7 +590,7 @@ FSDevice::makeFile(PETName<16> name, FSDirEntry *dir, const u8 *buf, size_t cnt)
     FSBlock *ptr = blockPtr(*it);
     
     // Write data
-    size_t i, j;
+    usize i, j;
     for (i = 0, j = 2; i < cnt; i++, j++) {
 
         if (j == 0x100) {
@@ -617,7 +617,7 @@ FSDevice::check(bool strict)
     FSErrorReport result;
 
     long total = 0, min = LONG_MAX, max = 0;
-    size_t numBlocks = blocks.size();
+    usize numBlocks = blocks.size();
     
     // Analyze all blocks
     for (u32 i = 0; i < numBlocks; i++) {
@@ -660,7 +660,7 @@ FSDevice::getCorrupted(u32 blockNr)
 bool
 FSDevice::isCorrupted(u32 blockNr, u32 n)
 {
-    size_t numBlocks = blocks.size();
+    usize numBlocks = blocks.size();
     
     for (u32 i = 0, cnt = 0; i < numBlocks; i++) {
         
@@ -675,7 +675,7 @@ FSDevice::isCorrupted(u32 blockNr, u32 n)
 u32
 FSDevice::nextCorrupted(u32 blockNr)
 {
-    size_t numBlocks = blocks.size();
+    usize numBlocks = blocks.size();
     
     for (u32 i = blockNr + 1; i < numBlocks; i++) {
         if (isCorrupted(i)) return i;
@@ -686,7 +686,7 @@ FSDevice::nextCorrupted(u32 blockNr)
 u32
 FSDevice::prevCorrupted(u32 blockNr)
 {
-    size_t numBlocks = blocks.size();
+    usize numBlocks = blocks.size();
     
     for (u32 i = blockNr - 1; i < numBlocks; i--) {
         if (isCorrupted(i)) return i;
@@ -704,7 +704,7 @@ FSDevice::readByte(u32 block, u32 offset)
 }
 
 bool
-FSDevice::importVolume(const u8 *src, size_t size, FSError *error)
+FSDevice::importVolume(const u8 *src, usize size, FSError *error)
 {
     assert(src != nullptr);
 
@@ -792,19 +792,19 @@ FSDevice::importDirectory(const char *path, DIR *dir)
 }
 
 bool
-FSDevice::exportVolume(u8 *dst, size_t size, FSError *error)
+FSDevice::exportVolume(u8 *dst, usize size, FSError *error)
 {
     return exportBlocks(0, layout.numBlocks() - 1, dst, size, error);
 }
 
 bool
-FSDevice::exportBlock(u32 nr, u8 *dst, size_t size, FSError *error)
+FSDevice::exportBlock(u32 nr, u8 *dst, usize size, FSError *error)
 {
     return exportBlocks(nr, nr, dst, size, error);
 }
 
 bool
-FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, size_t size, FSError *error)
+FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, usize size, FSError *error)
 {
     assert(last < layout.numBlocks());
     assert(first <= last);

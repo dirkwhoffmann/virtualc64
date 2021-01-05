@@ -48,7 +48,7 @@ public:
     //
         
     Snapshot() { };
-    Snapshot(size_t capacity);
+    Snapshot(usize capacity);
         
     
     //

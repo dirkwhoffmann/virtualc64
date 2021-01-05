@@ -26,7 +26,7 @@ G64File::isCompatibleStream(std::istream &stream)
     return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 
-G64File::G64File(size_t capacity)
+G64File::G64File(usize capacity)
 {
     assert(capacity > 0);
     assert(data == NULL);
@@ -59,7 +59,7 @@ G64File::makeWithDisk(Disk *disk)
     }
     
     // Allocate memory
-    size_t length = pos + 84 * 4; /* speed zones entries */
+    usize length = pos + 84 * 4; /* speed zones entries */
     u8 *buffer = new u8[length];
     
     // Write header, number of tracks, and track length
@@ -141,7 +141,7 @@ G64File::seekHalftrack(long offset)
         tFp = -1;
 }
 
-size_t
+usize
 G64File::getSizeOfHalftrack()
 {
     assert(isHalftrackNumber(selectedHalftrack));

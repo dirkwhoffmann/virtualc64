@@ -11,7 +11,7 @@
 
 #include "C64PublicTypes.h"
 
-template <class T, size_t capacity> struct RingBuffer
+template <class T, usize capacity> struct RingBuffer
 {
     // Element storage
     T elements[capacity];
@@ -26,7 +26,7 @@ template <class T, size_t capacity> struct RingBuffer
     RingBuffer() { clear(); }
     
     void clear() { r = w = 0; }
-    void clear(T t) { for (size_t i = 0; i < capacity; i++) elements[i] = t; clear(); }
+    void clear(T t) { for (usize i = 0; i < capacity; i++) elements[i] = t; clear(); }
     void align(int offset) { w = (r + offset) % capacity; }
 
     //
@@ -44,9 +44,9 @@ template <class T, size_t capacity> struct RingBuffer
     // Querying the fill status
     //
 
-    size_t cap() { return capacity; }
-    size_t count() const { return (capacity + w - r) % capacity; }
-    size_t free() const { return capacity - count() - 1; }
+    usize cap() { return capacity; }
+    usize count() const { return (capacity + w - r) % capacity; }
+    usize free() const { return capacity - count() - 1; }
     double fillLevel() const { return (double)count() / capacity; }
     bool isEmpty() const { return r == w; }
     bool isFull() const { return free() == 0; }

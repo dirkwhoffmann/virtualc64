@@ -79,12 +79,12 @@ private:
         & bank;
     }
     
-    size_t __size() { COMPUTE_SNAPSHOT_SIZE }
-    size_t _size() override { return Cartridge::_size() + __size(); }
-    size_t _load(u8 *buffer) override { return Cartridge::_load(buffer); }
-    size_t _save(u8 *buffer) override { return Cartridge::_save(buffer); }
-    size_t didLoadFromBuffer(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    size_t didSaveToBuffer(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
+    usize __size() { COMPUTE_SNAPSHOT_SIZE }
+    usize _size() override { return Cartridge::_size() + __size(); }
+    usize _load(u8 *buffer) override { return Cartridge::_load(buffer); }
+    usize _save(u8 *buffer) override { return Cartridge::_save(buffer); }
+    usize didLoadFromBuffer(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
+    usize didSaveToBuffer(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
 
     
     //

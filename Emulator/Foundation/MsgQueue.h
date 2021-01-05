@@ -18,7 +18,7 @@ using namespace std;
 class MsgQueue : public C64Object {
         
     // Maximum number of queued messages
-    const static size_t capacity = 64;
+    const static usize capacity = 64;
     
      // Ring buffer storing all pending messages
     Message queue[capacity];

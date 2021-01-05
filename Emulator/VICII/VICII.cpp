@@ -46,9 +46,9 @@ VICII::VICII(C64 &ref) : C64Component(ref)
     gAccessResult.setClock(&cpu.cycle);
     
     // Create random background noise pattern
-    const size_t noiseSize = 2 * 512 * 512;
+    const usize noiseSize = 2 * 512 * 512;
     noise = new u32[noiseSize];
-    for (size_t i = 0; i < noiseSize; i++) {
+    for (usize i = 0; i < noiseSize; i++) {
         noise[i] = rand() % 2 ? 0xFF000000 : 0xFFFFFFFF;
     }
 }

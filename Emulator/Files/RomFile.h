@@ -16,10 +16,10 @@ class RomFile : public AnyFile {
 private:
 
     // Accepted header signatures
-    static const size_t basicRomSignatureCnt  = 3;
-    static const size_t charRomSignatureCnt   = 10;
-    static const size_t kernalRomSignatureCnt = 4;
-    static const size_t vc1541RomSignatureCnt = 4;
+    static const usize basicRomSignatureCnt  = 3;
+    static const usize charRomSignatureCnt   = 10;
+    static const usize kernalRomSignatureCnt = 4;
+    static const usize vc1541RomSignatureCnt = 4;
 
     static const u8 magicBasicRomBytes[basicRomSignatureCnt][3];
     static const u8 magicCharRomBytes[charRomSignatureCnt][4];

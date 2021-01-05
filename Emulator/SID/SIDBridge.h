@@ -228,10 +228,10 @@ private:
         & cycles;
     }
     
-    size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
-    size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-    size_t didLoadFromBuffer(u8 *buffer) override;
+    usize _size() override { COMPUTE_SNAPSHOT_SIZE }
+    usize _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
+    usize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
+    usize didLoadFromBuffer(u8 *buffer) override;
     
  
 private:
@@ -283,7 +283,7 @@ public:
     // float readData();
     
     // Reads a audio sample pair without moving the read pointer
-    void ringbufferData(size_t offset, float *left, float *right);
+    void ringbufferData(usize offset, float *left, float *right);
             
     /* Handles a buffer underflow condition.
      * A buffer underflow occurs when the computer's audio device needs sound
@@ -328,9 +328,9 @@ private:
     
 public:
     
-    void copyMono(float *buffer, size_t n);
-    void copyStereo(float *left, float *right, size_t n);
-    void copyInterleaved(float *buffer, size_t n);
+    void copyMono(float *buffer, usize n);
+    void copyStereo(float *left, float *right, usize n);
+    void copyInterleaved(float *buffer, usize n);
 
     
      

@@ -222,7 +222,7 @@ Cartridge::_dump()
     msg("\n");
 }
 
-size_t
+usize
 Cartridge::_size()
 {
     SerCounter counter;
@@ -230,7 +230,7 @@ Cartridge::_size()
     applyToResetItems(counter);
  
     // Determine size of all packets
-    size_t packetSize = 0;
+    usize packetSize = 0;
     for (unsigned i = 0; i < numPackets; i++) {
         assert(packet[i] != nullptr);
         packetSize += packet[i]->_size();
@@ -239,7 +239,7 @@ Cartridge::_size()
     return ramCapacity + packetSize + counter.count;
 }
 
-size_t
+usize
 Cartridge::_load(u8 *buffer)
 {
     dealloc();
@@ -270,7 +270,7 @@ Cartridge::_load(u8 *buffer)
     return reader.ptr - buffer;
 }
 
-size_t
+usize
 Cartridge::_save(u8 *buffer)
 {
     printf("Cartridge::_save = %d\n", numPackets);

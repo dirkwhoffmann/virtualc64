@@ -68,7 +68,7 @@ RomFile::isBasicRomStream(std::istream &stream)
 {
     if (streamLength(stream) != 0x2000) return false;
 
-    for (size_t i = 0; i < basicRomSignatureCnt; i++) {
+    for (usize i = 0; i < basicRomSignatureCnt; i++) {
         if (matchingStreamHeader(stream, magicBasicRomBytes[i], sizeof(magicBasicRomBytes[i]))) {
             return true;
         }
@@ -81,7 +81,7 @@ RomFile::isCharRomStream(std::istream &stream)
 {
     if (streamLength(stream) != 0x1000) return false;
 
-    for (size_t i = 0; i < basicRomSignatureCnt; i++) {
+    for (usize i = 0; i < basicRomSignatureCnt; i++) {
         if (matchingStreamHeader(stream, magicCharRomBytes[i], sizeof(magicCharRomBytes[i]))) {
             return true;
         }
@@ -94,7 +94,7 @@ RomFile::isKernalRomStream(std::istream &stream)
 {
     if (streamLength(stream) != 0x2000) return false;
 
-    for (size_t i = 0; i < kernalRomSignatureCnt; i++) {
+    for (usize i = 0; i < kernalRomSignatureCnt; i++) {
         if (matchingStreamHeader(stream, magicKernalRomBytes[i], sizeof(magicKernalRomBytes[i]))) {
             return true;
         }
@@ -107,7 +107,7 @@ RomFile::isVC1541RomStream(std::istream &stream)
 {
     if (streamLength(stream) != 0x4000) return false;
 
-    for (size_t i = 0; i < vc1541RomSignatureCnt; i++) {
+    for (usize i = 0; i < vc1541RomSignatureCnt; i++) {
         if (matchingStreamHeader(stream, magicVC1541RomBytes[i], sizeof(magicVC1541RomBytes[i]))) {
             return true;
         }

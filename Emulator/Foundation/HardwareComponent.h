@@ -139,25 +139,25 @@ public:
     //
     
     // Returns the size of the internal state in bytes
-    size_t size();
-    virtual size_t _size() = 0;
+    usize size();
+    virtual usize _size() = 0;
     
     // Loads the internal state from a memory buffer
-    size_t load(u8 *buffer);
-    virtual size_t _load(u8 *buffer) = 0;
+    usize load(u8 *buffer);
+    virtual usize _load(u8 *buffer) = 0;
     
     // Saves the internal state to a memory buffer
-    size_t save(u8 *buffer);
-    virtual size_t _save(u8 *buffer) = 0;
+    usize save(u8 *buffer);
+    virtual usize _save(u8 *buffer) = 0;
     
     /* Delegation methods called inside load() or save(). Some components
      * override these methods to add custom behavior if not all elements can be
      * processed by the default implementation.
      */
-    virtual size_t willLoadFromBuffer(u8 *buffer) { return 0; }
-    virtual size_t didLoadFromBuffer(u8 *buffer) { return 0; }
-    virtual size_t willSaveToBuffer(u8 *buffer) {return 0; }
-    virtual size_t didSaveToBuffer(u8 *buffer) { return 0; }
+    virtual usize willLoadFromBuffer(u8 *buffer) { return 0; }
+    virtual usize didLoadFromBuffer(u8 *buffer) { return 0; }
+    virtual usize willSaveToBuffer(u8 *buffer) {return 0; }
+    virtual usize didSaveToBuffer(u8 *buffer) { return 0; }
     
     
     //

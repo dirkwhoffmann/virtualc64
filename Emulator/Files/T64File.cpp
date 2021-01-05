@@ -42,7 +42,7 @@ T64File::makeWithFileSystem(class FSDevice *fs)
     // Analyze the file system
     u16 numFiles = (u16)fs->numFiles();
     std::vector<u64> length(numFiles);
-    size_t dataLength = 0;
+    usize dataLength = 0;
     for (u16 i = 0; i < numFiles; i++) {
         length[i] = fs->fileSize(i) - 2;
         dataLength += length[i];
@@ -53,7 +53,7 @@ T64File::makeWithFileSystem(class FSDevice *fs)
     }
     // Create new archive
     u16 maxFiles = MAX(numFiles, 30);
-    size_t fileSize = 64 + maxFiles * 32 + dataLength;
+    usize fileSize = 64 + maxFiles * 32 + dataLength;
     T64File *t64 = new T64File(fileSize);
     
     //

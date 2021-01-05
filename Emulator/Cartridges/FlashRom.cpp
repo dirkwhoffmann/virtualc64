@@ -76,7 +76,7 @@ FlashRom::_dump()
     msg("       rom: %p\n\n", rom);
 }
 
-size_t
+usize
 FlashRom::didLoadFromBuffer(u8 *buffer)
 {
     SerReader reader(buffer);
@@ -85,7 +85,7 @@ FlashRom::didLoadFromBuffer(u8 *buffer)
     return romSize;
 }
 
-size_t
+usize
 FlashRom::didSaveToBuffer(u8 *buffer)
 {
     SerWriter writer(buffer);

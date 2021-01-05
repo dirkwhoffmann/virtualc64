@@ -224,11 +224,11 @@ public:
     FSDirEntry *nextFreeDirEntry(); 
                     
     // Creates a new file
-    bool makeFile(PETName<16> name, const u8 *buf, size_t cnt);
+    bool makeFile(PETName<16> name, const u8 *buf, usize cnt);
 
 private:
     
-    bool makeFile(PETName<16> name, FSDirEntry *entry, const u8 *buf, size_t cnt);
+    bool makeFile(PETName<16> name, FSDirEntry *entry, const u8 *buf, usize cnt);
 
     
     //
@@ -271,18 +271,18 @@ public:
     u8 readByte(TSLink ts, u32 offset) { return readByte(layout.blockNr(ts), offset); }
 
     // Imports the volume from a buffer
-    bool importVolume(const u8 *src, size_t size, FSError *error = nullptr);
+    bool importVolume(const u8 *src, usize size, FSError *error = nullptr);
     
     // Imports a folder from the host file system
     bool importDirectory(const char *path);
     bool importDirectory(const char *path, DIR *dir);
 
     // Exports the volume to a buffer
-    bool exportVolume(u8 *dst, size_t size, FSError *error = nullptr);
+    bool exportVolume(u8 *dst, usize size, FSError *error = nullptr);
 
     // Exports a single block or a range of blocks
-    bool exportBlock(u32 nr, u8 *dst, size_t size, FSError *error = nullptr);
-    bool exportBlocks(u32 first, u32 last, u8 *dst, size_t size, FSError *error = nullptr);
+    bool exportBlock(u32 nr, u8 *dst, usize size, FSError *error = nullptr);
+    bool exportBlocks(u32 first, u32 last, u8 *dst, usize size, FSError *error = nullptr);
 
     // Exports a single file or all files to a folder in the host file system
     bool exportFile(FSDirEntry *item, const char *path, FSError *error);

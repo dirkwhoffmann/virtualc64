@@ -35,7 +35,7 @@ CartridgeRom::_reset()
     RESET_SNAPSHOT_ITEMS
 }
 
-size_t
+usize
 CartridgeRom::_size()
 {
     SerCounter counter;
@@ -45,7 +45,7 @@ CartridgeRom::_size()
     return size + counter.count;
 }
 
-size_t
+usize
 CartridgeRom::_load(u8 *buffer)
 {
     SerReader reader(buffer);
@@ -63,7 +63,7 @@ CartridgeRom::_load(u8 *buffer)
     return reader.ptr - buffer;
 }
 
-size_t
+usize
 CartridgeRom::_save(u8 *buffer)
 {
     SerWriter writer(buffer);

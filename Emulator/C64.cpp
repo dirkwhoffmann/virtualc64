@@ -1440,7 +1440,7 @@ C64::loadRom(RomType type, RomFile *file)
 }
 
 bool
-C64::loadRomFromBuffer(RomType type, const u8 *buffer, size_t length)
+C64::loadRomFromBuffer(RomType type, const u8 *buffer, usize length)
 {
     assert(buffer != nullptr);
 

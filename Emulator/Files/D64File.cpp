@@ -58,7 +58,7 @@ D64File::makeWithDisk(Disk *disk)
     u8 buffer[D64_802_SECTORS];
     
     // Serialize disk data into a byte stream
-    size_t len = disk->decodeDisk(buffer);
+    usize len = disk->decodeDisk(buffer);
 
     // Check if the disk has been fully decoded
     if (len != D64_683_SECTORS && len != D64_768_SECTORS && len != D64_802_SECTORS) {

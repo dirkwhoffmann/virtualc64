@@ -130,10 +130,10 @@ private:
     std::vector<std::string> errorLog;
 
     // Stores the start offset of the erroneous bit sequence
-    std::vector<size_t> errorStartIndex;
+    std::vector<usize> errorStartIndex;
 
     // Stores the end offset of the erroneous bit sequence
-    std::vector<size_t> errorEndIndex;
+    std::vector<usize> errorEndIndex;
 
     // Textual representation of track data
     char text[maxBitsOnTrack + 1];
@@ -217,9 +217,9 @@ private:
     {
     }
     
-    size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
-    size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
+    usize _size() override { COMPUTE_SNAPSHOT_SIZE }
+    usize _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
+    usize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
     
     //
@@ -254,7 +254,7 @@ public:
      * byte, 10 bits are written to the specified disk position.
      */
     void encodeGcr(u8 value, Track t, HeadPos offset);
-    void encodeGcr(u8 *values, size_t length, Track t, HeadPos offset);
+    void encodeGcr(u8 *values, usize length, Track t, HeadPos offset);
     
     
     /* Decodes a nibble (4 bit) from a previously encoded GCR bitstream.
@@ -317,11 +317,11 @@ public:
     }
     
     // Writes a bit multiple times
-    void writeBitToHalftrack(Halftrack ht, HeadPos pos, bool bit, size_t count) {
-        for (size_t i = 0; i < count; i++)
+    void writeBitToHalftrack(Halftrack ht, HeadPos pos, bool bit, usize count) {
+        for (usize i = 0; i < count; i++)
             writeBitToHalftrack(ht, pos++, bit);
     }
-    void writeBitToTrack(Track t, HeadPos pos, bool bit, size_t count) {
+    void writeBitToTrack(Track t, HeadPos pos, bool bit, usize count) {
             writeBitToHalftrack(2 * t - 1, pos, bit, count);
     }
 
@@ -335,11 +335,11 @@ public:
     }
     
     // Writes a certain number of interblock bytes to disk
-    void writeGapToHalftrack(Halftrack ht, HeadPos pos, size_t length) {
-        for (size_t i = 0; i < length; i++, pos += 8)
+    void writeGapToHalftrack(Halftrack ht, HeadPos pos, usize length) {
+        for (usize i = 0; i < length; i++, pos += 8)
             writeByteToHalftrack(ht, pos, 0x55);
     }
-    void writeGapToTrack(Track t, HeadPos pos, size_t length) {
+    void writeGapToTrack(Track t, HeadPos pos, usize length) {
         writeGapToHalftrack(2 * t - 1, pos, length);
     }
 
@@ -378,11 +378,11 @@ public:
 private:
     
     // Checks the integrity of a sector header or sector data block
-    void analyzeSectorHeaderBlock(size_t offset);
-    void analyzeSectorDataBlock(size_t offset);
+    void analyzeSectorHeaderBlock(usize offset);
+    void analyzeSectorDataBlock(usize offset);
 
     // Writes an error message into the error log
-    void log(size_t begin, size_t length, const char *fmt, ...);
+    void log(usize begin, usize length, const char *fmt, ...);
     
 public:
     
@@ -397,10 +397,10 @@ public:
     std::string errorMessage(unsigned nr) { return errorLog.at(nr); }
     
     // Reads the error begin index from the error log
-    size_t firstErroneousBit(unsigned nr) { return errorStartIndex.at(nr); }
+    usize firstErroneousBit(unsigned nr) { return errorStartIndex.at(nr); }
     
     // Reads the error end index from the error log
-    size_t lastErroneousBit(unsigned nr) { return errorEndIndex.at(nr); }
+    usize lastErroneousBit(unsigned nr) { return errorEndIndex.at(nr); }
     
     // Returns a textual representation of the disk name
     const char *diskNameAsString();
@@ -417,7 +417,7 @@ public:
 private:
     
     // Returns a textual representation
-    const char *sectorBytesAsString(u8 *buffer, size_t length, bool hex);
+    const char *sectorBytesAsString(u8 *buffer, usize length, bool hex);
     
     
     //
@@ -431,13 +431,13 @@ public:
      * passing a null pointer, a test run is performed. Test runs are used to
      * determine how many bytes will be written.
      */
-    size_t decodeDisk(u8 *dest);
+    usize decodeDisk(u8 *dest);
  
 private:
     
-    size_t decodeDisk(u8 *dest, unsigned numTracks);
-    size_t decodeTrack(Track t, u8 *dest);
-    size_t decodeSector(size_t offset, u8 *dest);
+    usize decodeDisk(u8 *dest, unsigned numTracks);
+    usize decodeTrack(Track t, u8 *dest);
+    usize decodeSector(usize offset, u8 *dest);
 
 
     //

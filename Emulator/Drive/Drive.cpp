@@ -529,7 +529,7 @@ Drive::vsyncHandler()
             insertionStatus = DISK_FULLY_INSERTED;
 
             // Copy the disk contents
-            size_t size = diskToInsert->size();
+            usize size = diskToInsert->size();
             u8 *buffer = new u8[size];
             diskToInsert->save(buffer);
             disk.load(buffer);

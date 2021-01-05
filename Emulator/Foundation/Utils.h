@@ -90,7 +90,7 @@ bool releaseBuild();
 //
 
 // Returns the number of characters in a null terminated unichar array
-size_t strlen16(const u16 *unichars);
+usize strlen16(const u16 *unichars);
 
 /* Converts a PETSCII character to a printable character. Replaces all
  * unprintable characters by subst.
@@ -127,10 +127,10 @@ void sprint16b(char *s, u16 value);
 //
 
 // Prints a hex dump of a buffer to the console (for debugging)
-void hexdump(u8 *p, size_t size, size_t cols, size_t pad);
-void hexdump(u8 *p, size_t size, size_t cols = 32);
-void hexdumpWords(u8 *p, size_t size, size_t cols = 32);
-void hexdumpLongwords(u8 *p, size_t size, size_t cols = 32);
+void hexdump(u8 *p, usize size, usize cols, usize pad);
+void hexdump(u8 *p, usize size, usize cols = 32);
+void hexdumpWords(u8 *p, usize size, usize cols = 32);
+void hexdumpLongwords(u8 *p, usize size, usize cols = 32);
 
 
 //
@@ -138,7 +138,7 @@ void hexdumpLongwords(u8 *p, size_t size, size_t cols = 32);
 //
 
 // Checks if a certain memory area is all zero
-bool isZero(const u8 *ptr, size_t size); 
+bool isZero(const u8 *ptr, usize size); 
 
 
 //
@@ -171,9 +171,9 @@ long numDirectoryItems(const char *path);
 bool checkFileSize(const char *filename, long min = -1, long max = -1);
 
 // Checks the header signature (magic bytes) of a file or buffer
-bool matchingFileHeader(const char *path, const u8 *header, size_t length);
-bool matchingBufferHeader(const u8 *buffer, const u8 *header, size_t length);
-bool matchingStreamHeader(std::istream &stream, const u8 *header, size_t length);
+bool matchingFileHeader(const char *path, const u8 *header, usize length);
+bool matchingBufferHeader(const u8 *buffer, const u8 *header, usize length);
+bool matchingStreamHeader(std::istream &stream, const u8 *header, usize length);
 
 // Loads a file from disk
 bool loadFile(const char *path, u8 **buffer, long *size);
@@ -200,9 +200,9 @@ inline u32 fnv_1a_it32(u32 prev, u32 value) { return (prev ^ value) * 0x1000193;
 inline u64 fnv_1a_it64(u64 prev, u64 value) { return (prev ^ value) * 0x100000001b3; }
 
 // Computes a FNV-1a checksum for a given buffer
-u32 fnv_1a_32(u8 *addr, size_t size);
-u64 fnv_1a_64(u8 *addr, size_t size);
+u32 fnv_1a_32(u8 *addr, usize size);
+u64 fnv_1a_64(u8 *addr, usize size);
 
 // Computes a CRC-32 checksum for a given buffer
-u32 crc32(const u8 *addr, size_t size);
+u32 crc32(const u8 *addr, usize size);
 u32 crc32forByte(u32 r);

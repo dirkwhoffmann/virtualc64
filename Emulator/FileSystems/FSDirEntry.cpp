@@ -52,7 +52,7 @@ FSDirEntry::isHidden()
 }
 
 void
-FSDirEntry::init(PETName<16> name, TSLink ref, size_t numBlocks)
+FSDirEntry::init(PETName<16> name, TSLink ref, usize numBlocks)
 {
     fileType        = 0x82;  // PRG
     firstDataTrack  = (u8)ref.t;
@@ -70,7 +70,7 @@ FSDirEntry::getFileType()
 }
 
 void
-FSDirEntry::init(const char *name, TSLink ref, size_t numBlocks)
+FSDirEntry::init(const char *name, TSLink ref, usize numBlocks)
 {
     auto petName = PETName<16>(name);
     init(petName, ref, numBlocks);

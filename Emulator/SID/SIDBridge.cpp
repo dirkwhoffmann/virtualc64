@@ -430,7 +430,7 @@ SIDBridge::_dumpConfig()
     msg("       Volume R : %lld\n", config.volR);
 }
 
-size_t
+usize
 SIDBridge::didLoadFromBuffer(u8 *buffer)
 {
     clearRingbuffer();
@@ -847,7 +847,7 @@ SIDBridge::clearRingbuffer()
 }
 
 void
-SIDBridge::ringbufferData(size_t offset, float *left, float *right)
+SIDBridge::ringbufferData(usize offset, float *left, float *right)
 {
     SamplePair &pair = stream.current((int)offset);
     *left = pair.left;
@@ -919,7 +919,7 @@ SIDBridge::ignoreNextUnderOrOverflow()
 }
 
 void
-SIDBridge::copyMono(float *target, size_t n)
+SIDBridge::copyMono(float *target, usize n)
 {
     stream.lock();
     
@@ -933,7 +933,7 @@ SIDBridge::copyMono(float *target, size_t n)
 }
 
 void
-SIDBridge::copyStereo(float *target1, float *target2, size_t n)
+SIDBridge::copyStereo(float *target1, float *target2, usize n)
 {
     stream.lock();
     
@@ -947,7 +947,7 @@ SIDBridge::copyStereo(float *target1, float *target2, size_t n)
 }
 
 void
-SIDBridge::copyInterleaved(float *target, size_t n)
+SIDBridge::copyInterleaved(float *target, usize n)
 {
     stream.lock();
     

@@ -27,7 +27,7 @@ ExpansionPort::_reset()
     }
 }
 
-size_t
+usize
 ExpansionPort::_size()
 {
     SerCounter counter;
@@ -38,7 +38,7 @@ ExpansionPort::_size()
     return counter.count;
 }
 
-size_t
+usize
 ExpansionPort::_load(u8 *buffer)
 {
     SerReader reader(buffer);
@@ -57,7 +57,7 @@ ExpansionPort::_load(u8 *buffer)
     return reader.ptr - buffer;
 }
 
-size_t
+usize
 ExpansionPort::_save(u8 *buffer)
 {
     SerWriter writer(buffer);

@@ -257,9 +257,9 @@ Disk::encodeGcr(u8 value, Track t, HeadPos offset)
 }
 
 void
-Disk::encodeGcr(u8 *values, size_t length, Track t, HeadPos offset)
+Disk::encodeGcr(u8 *values, usize length, Track t, HeadPos offset)
 {
-    for (size_t i = 0; i < length; i++, values++, offset += 10) {
+    for (usize i = 0; i < length; i++, values++, offset += 10) {
         encodeGcr(*values, t, offset);
     }
 }
@@ -510,7 +510,7 @@ Disk::analyzeTrack(Track t)
 }
 
 void
-Disk::analyzeSectorHeaderBlock(size_t offset)
+Disk::analyzeSectorHeaderBlock(usize offset)
 {
     // The first byte must be 0x08 (indicating a header block)
     assert(decodeGcr(trackInfo.bit + offset) == 0x08);
@@ -528,7 +528,7 @@ Disk::analyzeSectorHeaderBlock(size_t offset)
 }
 
 void
-Disk::analyzeSectorDataBlock(size_t offset)
+Disk::analyzeSectorDataBlock(usize offset)
 {
     // The first byte must be 0x07 (indicating a header block)
     assert(decodeGcr(trackInfo.bit + offset) == 0x07);
@@ -545,7 +545,7 @@ Disk::analyzeSectorDataBlock(size_t offset)
 }
 
 void
-Disk::log(size_t begin, size_t length, const char *fmt, ...)
+Disk::log(usize begin, usize length, const char *fmt, ...)
 {
     char buf[256];
     
@@ -565,7 +565,7 @@ Disk::diskNameAsString()
     analyzeTrack(18);
     
     unsigned i;
-    size_t offset = trackInfo.sectorInfo[0].dataBegin + (0x90 * 10);
+    usize offset = trackInfo.sectorInfo[0].dataBegin + (0x90 * 10);
     
     for (i = 0; i < 255; i++, offset += 10) {
         u8 value = decodeGcr(trackInfo.bit + offset);
@@ -581,7 +581,7 @@ Disk::diskNameAsString()
 const char *
 Disk::trackBitsAsString()
 {
-    size_t i;
+    usize i;
     for (i = 0; i < trackInfo.length; i++) {
         if (trackInfo.bit[i]) {
             text[i] = '1';
@@ -597,8 +597,8 @@ const char *
 Disk::sectorHeaderBytesAsString(Sector nr, bool hex)
 {
     assert(isSectorNumber(nr));
-    size_t begin = trackInfo.sectorInfo[nr].headerBegin;
-    size_t end = trackInfo.sectorInfo[nr].headerEnd;
+    usize begin = trackInfo.sectorInfo[nr].headerBegin;
+    usize end = trackInfo.sectorInfo[nr].headerEnd;
     return (begin == end) ? "" : sectorBytesAsString(trackInfo.bit + begin, 10, hex);
 }
 
@@ -606,18 +606,18 @@ const char *
 Disk::sectorDataBytesAsString(Sector nr, bool hex)
 {
     assert(isSectorNumber(nr));
-    size_t begin = trackInfo.sectorInfo[nr].dataBegin;
-    size_t end = trackInfo.sectorInfo[nr].dataEnd;
+    usize begin = trackInfo.sectorInfo[nr].dataBegin;
+    usize end = trackInfo.sectorInfo[nr].dataEnd;
     return (begin == end) ? "" : sectorBytesAsString(trackInfo.bit + begin, 256, hex);
 }
 
 const char *
-Disk::sectorBytesAsString(u8 *buffer, size_t length, bool hex)
+Disk::sectorBytesAsString(u8 *buffer, usize length, bool hex)
 {
-    size_t gcrOffset = 0;
-    size_t strOffset = 0;
+    usize gcrOffset = 0;
+    usize strOffset = 0;
     
-    for (size_t i = 0; i < length; i++, gcrOffset += 10) {
+    for (usize i = 0; i < length; i++, gcrOffset += 10) {
 
         u8 value = decodeGcr(buffer + gcrOffset);
 
@@ -640,7 +640,7 @@ Disk::sectorBytesAsString(u8 *buffer, size_t length, bool hex)
 // Decoding disk data
 //
 
-size_t
+usize
 Disk::decodeDisk(u8 *dest)
 {
     // Determine highest non-empty track
@@ -657,7 +657,7 @@ Disk::decodeDisk(u8 *dest)
     return decodeDisk(dest, 42);
 }
 
-size_t
+usize
 Disk::decodeDisk(u8 *dest, unsigned numTracks)
 {
     unsigned numBytes = 0;
@@ -677,7 +677,7 @@ Disk::decodeDisk(u8 *dest, unsigned numTracks)
     return numBytes;
 }
 
-size_t
+usize
 Disk::decodeTrack(Track t, u8 *dest)
 {
     unsigned numBytes = 0;
@@ -705,8 +705,8 @@ Disk::decodeTrack(Track t, u8 *dest)
     return numBytes;
 }
 
-size_t
-Disk::decodeSector(size_t offset, u8 *dest)
+usize
+Disk::decodeSector(usize offset, u8 *dest)
 {
     // The first byte must be 0x07 (indicating a data block)
     assert(decodeGcr(trackInfo.bit + offset) == 0x07);
@@ -835,18 +835,18 @@ Disk::encode(FSDevice *fs, bool alignTracks)
     }
 }
 
-size_t
+usize
 Disk::encodeTrack(FSDevice *fs, Track t, u8 tailGap, HeadPos start)
 {
     assert(isTrackNumber(t));
     trace(GCR_DEBUG, "Encoding track %d\n", t);
 
-    size_t totalEncodedBits = 0;
+    usize totalEncodedBits = 0;
     
     // For each sector in this track ...
     for (Sector s = 0; s < trackDefaults[t].sectors; s++) {
         
-        size_t encodedBits = encodeSector(fs, t, s, start, tailGap);
+        usize encodedBits = encodeSector(fs, t, s, start, tailGap);
         start += (HeadPos)encodedBits;
         totalEncodedBits += encodedBits;
     }
@@ -854,7 +854,7 @@ Disk::encodeTrack(FSDevice *fs, Track t, u8 tailGap, HeadPos start)
     return totalEncodedBits;
 }
 
-size_t
+usize
 Disk::encodeSector(FSDevice *fs, Track t, Sector s, HeadPos start, int tailGap)
 {
     assert(fs);

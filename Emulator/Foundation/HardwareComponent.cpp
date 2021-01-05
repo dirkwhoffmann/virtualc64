@@ -67,10 +67,10 @@ HardwareComponent::configure(Option option, long id, long value)
     return result;
 }
 
-size_t
+usize
 HardwareComponent::size()
 {
-    size_t result = _size();
+    usize result = _size();
 
     for (HardwareComponent *c : subComponents) {
         result += c->size();
@@ -79,7 +79,7 @@ HardwareComponent::size()
     return result;
 }
 
-size_t
+usize
 HardwareComponent::load(u8 *buffer)
 {    
     u8 *ptr = buffer;
@@ -105,7 +105,7 @@ HardwareComponent::load(u8 *buffer)
     return ptr - buffer;
 }
 
-size_t
+usize
 HardwareComponent::save(u8 *buffer)
 {
     u8 *ptr = buffer;

@@ -293,9 +293,9 @@ private:
         & ultimax;
     }
     
-    size_t _size() override { COMPUTE_SNAPSHOT_SIZE }
-    size_t _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    size_t _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
+    usize _size() override { COMPUTE_SNAPSHOT_SIZE }
+    usize _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
+    usize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
     
     //
@@ -548,7 +548,7 @@ public:
     
     // Installs a Rom
     bool loadRom(RomType type, RomFile *file);
-    bool loadRomFromBuffer(RomType type, const u8 *buffer, size_t length);
+    bool loadRomFromBuffer(RomType type, const u8 *buffer, usize length);
     bool loadRomFromFile(RomType type, const char *path);
     
     // Erases an installed Rom

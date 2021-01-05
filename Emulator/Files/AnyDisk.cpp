@@ -32,7 +32,7 @@ AnyDisk::readHalftrack()
 
 /*
 const char *
-AnyDisk::readHalftrackHex(size_t num)
+AnyDisk::readHalftrackHex(usize num)
 {
     assert(sizeof(name) > 3 * num);
     
@@ -48,7 +48,7 @@ AnyDisk::readHalftrackHex(size_t num)
 */
 
 void
-AnyDisk::copyHalftrack(u8 *buffer, size_t offset)
+AnyDisk::copyHalftrack(u8 *buffer, usize offset)
 {
     int byte;
     

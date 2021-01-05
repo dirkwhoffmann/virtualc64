@@ -66,12 +66,12 @@ template <int len> struct PETName : C64Object {
         return true;
     }
 
-    void write(u8 *p, size_t length)
+    void write(u8 *p, usize length)
     {
         assert(p);
         assert(length <= len);
         
-        for (size_t i = 0; i < length; i++) p[i] = pet[i];
+        for (usize i = 0; i < length; i++) p[i] = pet[i];
     }
 
     void write(u8 *p) { write(p, len); }

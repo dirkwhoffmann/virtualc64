@@ -21,7 +21,7 @@ class AnyCollection : public AnyFile {
 public:
     
     AnyCollection() : AnyFile() { }
-    AnyCollection(size_t capacity) : AnyFile(capacity) { }
+    AnyCollection(usize capacity) : AnyFile(capacity) { }
     virtual ~AnyCollection() { }
     
     // Returns the name of this collection

@@ -42,8 +42,8 @@ P00File::makeWithFileSystem(FSDevice *fs, int item)
     if (fs->numFiles() <= (u64)item) return nullptr;
         
     // Create new archive
-    size_t fileSize = fs->fileSize(item);
-    size_t p00Size = fileSize + 8 + 17 + 1;
+    usize fileSize = fs->fileSize(item);
+    usize p00Size = fileSize + 8 + 17 + 1;
     P00File *p00 = new P00File(p00Size);
         
     debug(FILE_DEBUG, "File size = %zu\n", fileSize);

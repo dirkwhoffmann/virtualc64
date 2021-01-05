@@ -90,9 +90,9 @@ private:
     {
     }
     
-    size_t _size() override;
-    size_t _load(u8 *buffer) override;
-    size_t _save(u8 *buffer) override;
+    usize _size() override;
+    usize _load(u8 *buffer) override;
+    usize _save(u8 *buffer) override;
 
  
     //

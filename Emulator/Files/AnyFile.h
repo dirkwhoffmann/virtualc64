@@ -47,7 +47,7 @@ public:
         return obj;
     }
 
-    template <class T> static T *make(const u8 *buf, size_t len)
+    template <class T> static T *make(const u8 *buf, usize len)
     {
         std::stringstream stream;
         stream.write((const char *)buf, len);
@@ -83,7 +83,7 @@ public:
     u8 *getData() { return data; }
 
     // Returns the file size in bytes
-    size_t getSize() { return size; }
+    usize getSize() { return size; }
     
     // Returns the type of this file
     virtual FileType type() { return FILETYPE_UNKNOWN; }
@@ -106,7 +106,7 @@ public:
     //
 
     // Copies the file contents into a buffer starting at the provided offset
-    void flash(u8 *buffer, size_t offset = 0);
+    void flash(u8 *buffer, usize offset = 0);
 
     
     //
@@ -116,7 +116,7 @@ public:
 protected:
 
     usize readFromFile(const char *path) throws;
-    usize readFromBuffer(const u8 *buf, size_t len) throws;
+    usize readFromBuffer(const u8 *buf, usize len) throws;
     virtual usize readFromStream(std::istream &stream) throws;
 
 public:

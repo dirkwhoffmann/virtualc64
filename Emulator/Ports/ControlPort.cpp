@@ -31,7 +31,7 @@ ControlPort::_reset()
     axisY = 0;
 }
 
-size_t
+usize
 ControlPort::didLoadFromBuffer(u8 *buffer)
 {
     // Discard active joystick movements

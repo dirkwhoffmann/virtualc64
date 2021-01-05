@@ -52,7 +52,7 @@ public:
     u8 *getData() { return data + 0x14; }
     
     // Returns the size of the data area in bytes
-    size_t getDataSize() { return size - 0x14; }
+    usize getDataSize() { return size - 0x14; }
     
     
     //

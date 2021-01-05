@@ -23,10 +23,10 @@ releaseBuild()
 
 struct timeval t;
 
-size_t
+usize
 strlen16(const u16 *unichars)
 {
-    size_t count = 0;
+    usize count = 0;
     
     if (unichars)
         while(unichars[count]) count++;
@@ -129,12 +129,12 @@ sprint16b(char *s, u16 value)
     s[16] = 0;
 }
 
-void hexdump(u8 *p, size_t size, size_t cols, size_t pad)
+void hexdump(u8 *p, usize size, usize cols, usize pad)
 {
     while (size) {
         
-        size_t cnt = MIN(size, cols);
-        for (size_t x = 0; x < cnt; x++) {
+        usize cnt = MIN(size, cols);
+        for (usize x = 0; x < cnt; x++) {
             fprintf(stderr, "%02X %s", p[x], ((x + 1) % pad) == 0 ? " " : "");
         }
         
@@ -146,24 +146,24 @@ void hexdump(u8 *p, size_t size, size_t cols, size_t pad)
     fprintf(stderr, "\n");
 }
 
-void hexdump(u8 *p, size_t size, size_t cols)
+void hexdump(u8 *p, usize size, usize cols)
 {
     hexdump(p, size, cols, cols);
 }
 
-void hexdumpWords(u8 *p, size_t size, size_t cols)
+void hexdumpWords(u8 *p, usize size, usize cols)
 {
     hexdump(p, size, cols, 2);
 }
 
-void hexdumpLongwords(u8 *p, size_t size, size_t cols)
+void hexdumpLongwords(u8 *p, usize size, usize cols)
 {
     hexdump(p, size, cols, 4);
 }
 
-bool isZero(const u8 *ptr, size_t size)
+bool isZero(const u8 *ptr, usize size)
 {
-    for (size_t i = 0; i < size; i++) {
+    for (usize i = 0; i < size; i++) {
         if (ptr[i]) return false;
     }
     return true;
@@ -289,7 +289,7 @@ checkFileSize(const char *filename, long min, long max)
 }
 
 bool
-matchingFileHeader(const char *path, const u8 *header, size_t length)
+matchingFileHeader(const char *path, const u8 *header, usize length)
 {
     assert(path);
     assert(header);
@@ -300,7 +300,7 @@ matchingFileHeader(const char *path, const u8 *header, size_t length)
     if ((file = fopen(path, "r")) == NULL) {
         return false;
     }
-    for (size_t i = 0; i < length; i++) {
+    for (usize i = 0; i < length; i++) {
         int c = fgetc(file);
         if (c != (int)header[i]) {
             result = false;
@@ -313,12 +313,12 @@ matchingFileHeader(const char *path, const u8 *header, size_t length)
 }
 
 bool
-matchingBufferHeader(const u8 *buffer, const u8 *header, size_t length)
+matchingBufferHeader(const u8 *buffer, const u8 *header, usize length)
 {
     assert(buffer);
     assert(header);
 
-    for (size_t i = 0; i < length; i++) {
+    for (usize i = 0; i < length; i++) {
         if (header[i] != buffer[i])
         return false;
     }
@@ -326,11 +326,11 @@ matchingBufferHeader(const u8 *buffer, const u8 *header, size_t length)
     return true;
 }
 
-bool matchingStreamHeader(std::istream &stream, const u8 *header, size_t length)
+bool matchingStreamHeader(std::istream &stream, const u8 *header, usize length)
 {
     stream.seekg(0, std::ios::beg);
     
-    for (size_t i = 0; i < length; i++) {
+    for (usize i = 0; i < length; i++) {
         int c = stream.get();
         if (c != (int)header[i]) {
             stream.seekg(0, std::ios::beg);
@@ -404,13 +404,13 @@ streamLength(std::istream &stream)
 }
 
 u32
-fnv_1a_32(u8 *addr, size_t size)
+fnv_1a_32(u8 *addr, usize size)
 {
     if (addr == NULL || size == 0) return 0;
 
     u32 hash = fnv_1a_init32();
 
-    for (size_t i = 0; i < size; i++) {
+    for (usize i = 0; i < size; i++) {
         hash = fnv_1a_it32(hash, (u32)addr[i]);
     }
 
@@ -418,13 +418,13 @@ fnv_1a_32(u8 *addr, size_t size)
 }
 
 u64
-fnv_1a_64(u8 *addr, size_t size)
+fnv_1a_64(u8 *addr, usize size)
 {
     if (addr == NULL || size == 0) return 0;
 
     u64 hash = fnv_1a_init64();
 
-    for (size_t i = 0; i < size; i++) {
+    for (usize i = 0; i < size; i++) {
         hash = fnv_1a_it64(hash, (u64)addr[i]);
     }
 
@@ -432,7 +432,7 @@ fnv_1a_64(u8 *addr, size_t size)
 }
 
 u32
-crc32(const u8 *addr, size_t size)
+crc32(const u8 *addr, usize size)
 {
     if (addr == NULL || size == 0) return 0;
 
@@ -443,7 +443,7 @@ crc32(const u8 *addr, size_t size)
     for(int i = 0; i < 256; i++) table[i] = crc32forByte(i);
 
     // Compute CRC-32 checksum
-     for(size_t i = 0; i < size; i++)
+     for(usize i = 0; i < size; i++)
        result = table[(u8)result ^ addr[i]] ^ result >> 8;
 
     return result;
