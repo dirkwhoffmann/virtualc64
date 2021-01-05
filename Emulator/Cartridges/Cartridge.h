@@ -47,7 +47,7 @@ private:
 protected:
 
     u8 numPackets = 0;
-    CartridgeRom *packet[MAX_PACKETS];
+    CartridgeRom *packet[MAX_PACKETS] = {};
     
     // Indicates which packets are currently mapped to ROML and ROMH
     u8 chipL = 0;

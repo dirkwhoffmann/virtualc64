@@ -52,7 +52,6 @@ public:
     // Methods from AnyFile
     //
     
-    void dealloc() override;
     FileType type() override { return FILETYPE_CRT; }
     PETName<16> getName() override; 
     usize readFromStream(std::istream &stream) override;

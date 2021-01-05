@@ -37,14 +37,6 @@ CRTFile::CRTFile()
     memset(chips, 0, sizeof(chips));
 }
 
-void
-CRTFile::dealloc()
-{
-    AnyFile::dealloc();
-    memset(chips, 0, sizeof(chips));
-    numberOfChips = 0;
-}
-
 PETName<16>
 CRTFile::getName()
 {

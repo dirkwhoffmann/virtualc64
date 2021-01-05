@@ -33,7 +33,6 @@ public:
     // Methods from AnyFile
     //
     
-    void dealloc() override;
     FileType type() override { return FILETYPE_TAP; }
     PETName<16> getName() override;
     

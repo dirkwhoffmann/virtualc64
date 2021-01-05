@@ -13,12 +13,12 @@
 #include "FileTypes.h"
 #include "PETName.h"
 
-// Base class for all supported file types
+// Base class for all supported media file formats (D64, T64, PRG, etc.)
 class AnyFile : public C64Object {
     
 protected:
 	     
-    // Physical location of this file on disk (if known)
+    // Physical location of this file
     string path = "";
     
     // The raw data of this file
@@ -29,7 +29,7 @@ protected:
     
 
     //
-    // Creating
+    // Generating
     //
     
 public:
@@ -68,15 +68,12 @@ public:
     
 public:
     
-    AnyFile() : C64Object() { };
+    AnyFile() { };
     AnyFile(usize capacity);
     virtual ~AnyFile();
 
     // Allocates memory for storing the object data
     virtual bool alloc(usize capacity);
-
-    // Frees the memory allocated by this object
-    virtual void dealloc();
 
     
     //

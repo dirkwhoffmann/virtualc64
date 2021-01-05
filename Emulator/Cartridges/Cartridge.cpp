@@ -142,19 +142,14 @@ Cartridge::Cartridge(C64 &ref) : C64Component(ref)
 {
     trace(CRT_DEBUG, "Creating cartridge at address %p...\n", this);
     
-    memset(packet, 0, sizeof(packet));
+    // REMOVE ASAP
+    for (usize i = 0; i < MAX_PACKETS; i++) assert(packet[i] == nullptr);
 }
 
 Cartridge::~Cartridge()
 {
     trace(CRT_DEBUG, "Releasing cartridge...\n");
     dealloc();
-}
-
-void
-Cartridge::resetCartConfig() {
-
-    expansionport.setGameAndExrom(gameLineInCrtFile, exromLineInCrtFile);
 }
 
 void
@@ -173,6 +168,12 @@ Cartridge::dealloc()
     }
 
     numPackets = 0;
+}
+
+void
+Cartridge::resetCartConfig() {
+
+    expansionport.setGameAndExrom(gameLineInCrtFile, exromLineInCrtFile);
 }
 
 void

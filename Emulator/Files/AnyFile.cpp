@@ -20,34 +20,21 @@
 
 AnyFile::AnyFile(usize capacity)
 {
-    size = capacity;
     data = new u8[capacity]();
+    size = capacity;
 }
 
 AnyFile::~AnyFile()
 {
-    printf("Destructor %p\n", this);
-
-    dealloc();
-}
-
-void
-AnyFile::dealloc()
-{
-    if (data == nullptr) {
-        assert(size == 0);
-        return;
-    }
-    
-    delete[] data;
-    data = nullptr;
-    size = 0;
+    if (data) delete[] data;
 }
 
 bool
 AnyFile::alloc(usize capacity)
 {
-    dealloc();
+    assert(data == nullptr);
+    
+    // dealloc();
     if ((data = new u8[capacity]()) == nullptr) return false;
     size = capacity;
     

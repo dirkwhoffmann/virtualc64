@@ -31,11 +31,6 @@ TAPFile::isCompatibleStream(std::istream &stream)
     return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 
-void
-TAPFile::dealloc()
-{
-}
-
 PETName<16>
 TAPFile::getName()
 {
