@@ -72,7 +72,7 @@ public:
     void seekHalftrack(Halftrack ht, long offset);
 
     // Reads a byte from a certain halftrack track (-1 = EOF)
-    int readHalftrack(Halftrack ht);
+    [[deprecated]] int readHalftrack(Halftrack ht);
         
     // Copies a certain track into a buffer
     void copyHalftrack(Halftrack ht, u8 *buf, usize offset = 0);

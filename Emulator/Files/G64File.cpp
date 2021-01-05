@@ -177,10 +177,17 @@ G64File::copyHalftrack(Halftrack ht, u8 *buffer, usize offset)
 
     seekHalftrack(ht, 0);
 
+    usize start = getStartOfHalftrack(ht) + 2;
+    usize len = getSizeOfHalftrack(ht);
+    
+    memcpy(buffer + offset, data + start, len);
+    /*
+    
     int byte;
     while ((byte = readHalftrack(ht)) != EOF) {
         buffer[offset++] = (u8)byte;
     }
+    */
 }
 
 usize
