@@ -14,8 +14,6 @@
 #include "PETName.h"
 #include <string>
 
-/* An abstract interface for accessing C64 files stored in a collection. */
-
 class AnyCollection : public AnyFile {
 
 public:

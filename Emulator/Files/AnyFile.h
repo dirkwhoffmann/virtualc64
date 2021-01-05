@@ -13,7 +13,34 @@
 #include "FileTypes.h"
 #include "PETName.h"
 
-// Base class for all supported media file formats (D64, T64, PRG, etc.)
+/* All media files are organized in the class hierarchy displayed below. Two
+ * abstract classes are involed: AnyFile and AnyCollection. AnyFiles provided
+ * basic functionality for reading and writing files, streams, and buffers.
+ * AnyCollection provides an abstract interface for accessing single files.
+ * This interface is implemented by those file classes that provide easy
+ * access to single files.
+ *
+ *     ---------
+ *    | AnyFile |
+ *     ---------
+ *         |
+ *         |------------------------------------------------------------
+ *         |         |           |            |            |            |
+ *         |     ---------   ---------    ---------    ---------    ---------
+ *         |    | ROMFile | |Snapshot |  | TAPFile |  | CRTFile |  | G64File |
+ *         |     ---------   ---------    ---------    ---------    ---------
+ *         |
+ *  ---------------
+ * | AnyCollection |
+ *  ---------------
+ *         |
+ *         |-----------------------------------------------
+ *                   |           |            |            |
+ *               ---------   ---------    ---------    ---------
+ *              | D64File | | T64File |  | PRGFile |  | P00File |
+ *               ---------   ---------    ---------    ---------
+ */
+  
 class AnyFile : public C64Object {
     
 public:
