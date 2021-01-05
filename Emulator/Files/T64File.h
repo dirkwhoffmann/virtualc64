@@ -36,7 +36,7 @@ public:
     //
     
     FileType type() override { return FILETYPE_T64; }
-    const char *getName() override;
+    PETName<16> getName() override;
         
 
     //

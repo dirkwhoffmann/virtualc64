@@ -30,6 +30,7 @@ AnyDisk::readHalftrack()
     return result;
 }
 
+/*
 const char *
 AnyDisk::readHalftrackHex(size_t num)
 {
@@ -44,6 +45,7 @@ AnyDisk::readHalftrackHex(size_t num)
     
     return name;
 }
+*/
 
 void
 AnyDisk::copyHalftrack(u8 *buffer, size_t offset)

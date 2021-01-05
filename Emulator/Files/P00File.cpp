@@ -67,22 +67,16 @@ P00File::makeWithFileSystem(FSDevice *fs, int item)
     return p00;
 }
     
-const char *
+PETName<16>
 P00File::getName()
 {
-    unsigned i;
-    
-    for (i = 0; i < 17; i++) {
-        name[i] = data[0x08+i];
-    }
-    name[i] = 0x00;
-    return name;
+    return PETName<16>(data + 8, 0x00);
 }
 
 PETName<16>
 P00File::collectionName()
 {
-    return PETName<16>(data + 0x08);
+    return PETName<16>(data + 8, 0x00);
 }
 
 u64

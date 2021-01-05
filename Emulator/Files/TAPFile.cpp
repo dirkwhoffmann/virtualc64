@@ -36,16 +36,10 @@ TAPFile::dealloc()
 {
 }
 
-const char *
+PETName<16>
 TAPFile::getName()
 {
-    unsigned i;
-    
-    for (i = 0; i < 17; i++) {
-        name[i] = data[0x08+i];
-    }
-    name[i] = 0x00;
-    return name;
+    return PETName<16>(data + 8);
 }
 
 void

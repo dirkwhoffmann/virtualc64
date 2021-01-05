@@ -19,13 +19,7 @@ class AnyFile : public C64Object {
 protected:
 	     
     // Physical location of this file on disk (if known)
-    char *path = nullptr;
-    
-    /* The logical name of this file. Some archives store a logical name in the
-     * header section. If no name is stored, the logical name is constructed
-     * out of the physical name by stripping off path and extension.
-     */
-    char name[256];
+    string path = "";
     
     // The raw data of this file
     u8 *data = nullptr;
@@ -74,7 +68,7 @@ public:
     
 public:
     
-    AnyFile();
+    AnyFile() : C64Object() { };
     AnyFile(usize capacity);
     virtual ~AnyFile();
 
@@ -101,13 +95,13 @@ public:
     virtual FileType type() { return FILETYPE_UNKNOWN; }
     
 	// Returns the physical name of this file
-    const char *getPath() { return path ? path : ""; }
+    string getPath() { return path; }
 
     // Sets the physical name of this file
-    void setPath(const char *path);
+    void setPath(string path);
 
     // Returns the logical name of this file
-    virtual const char *getName() { return name; }
+    virtual PETName<16> getName();
  
     // Returns a unique fingerprint for this file
     u64 fnv();

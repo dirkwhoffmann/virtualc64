@@ -54,7 +54,7 @@ public:
     
     void dealloc() override;
     FileType type() override { return FILETYPE_CRT; }
-    const char *getName() override { return (char *)&data[0x20]; }
+    PETName<16> getName() override; 
     usize readFromStream(std::istream &stream) override;
 
     

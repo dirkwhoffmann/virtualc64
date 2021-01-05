@@ -48,7 +48,7 @@ public:
     //
     
     FileType type() override { return FILETYPE_D64; }
-    const char *getName() override;
+    PETName<16> getName() override;
     usize readFromStream(std::istream &stream) override;
 
         

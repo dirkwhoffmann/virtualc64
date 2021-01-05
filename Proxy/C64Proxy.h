@@ -855,7 +855,7 @@ struct AnyFileWrapper;
 - (void)selectHalftrack:(NSInteger)ht;
 - (NSInteger)sizeOfHalftrack;
 - (void)seekHalftrack:(NSInteger)offset;
-- (NSString *)readHalftrackHex:(NSInteger)num;
+// - (NSString *)readHalftrackHex:(NSInteger)num;
 
 @end
 

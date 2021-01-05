@@ -1522,7 +1522,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 - (NSString *)name
 {
-    return [NSString stringWithUTF8String:wrapper->file->getName()];
+    return [NSString stringWithUTF8String:wrapper->file->getName().c_str()];
 }
 
 - (u64) fnv
@@ -1959,11 +1959,13 @@ struct AnyFileWrapper { AnyFile *file; };
     return disk->seekHalftrack(offset);
 }
 
+/*
 - (NSString *)readHalftrackHex:(NSInteger)num
 {
     AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
     return [NSString stringWithUTF8String:disk->readHalftrackHex(num)];
 }
+*/
 
 @end
 

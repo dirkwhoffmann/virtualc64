@@ -66,8 +66,8 @@ public:
     virtual int readTrack() { return readHalftrack(); }
     
     // Reads multiple bytes (1 .. 85) in form of a hex dump string
-    virtual const char *readHalftrackHex(size_t num);
-    virtual const char *readTrackHex(size_t num) { return readHalftrackHex(num); }
+    // virtual const char *readHalftrackHex(size_t num);
+    // virtual const char *readTrackHex(size_t num) { return readHalftrackHex(num); }
     
     // Copies the selected track into the specified buffer
     virtual void copyHalftrack(u8 *buffer, size_t offset = 0);

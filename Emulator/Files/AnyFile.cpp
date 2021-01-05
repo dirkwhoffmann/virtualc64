@@ -18,13 +18,6 @@
 #include "D64File.h"
 #include "G64File.h"
 
-AnyFile::AnyFile()
-{
-    const char *defaultName = "HELLO VIRTUALC64";
-    memcpy(name, defaultName, strlen(defaultName) + 1);
-    memset(name, 0, sizeof(name));
-}
-
 AnyFile::AnyFile(usize capacity)
 {
     size = capacity;
@@ -36,9 +29,6 @@ AnyFile::~AnyFile()
     printf("Destructor %p\n", this);
 
     dealloc();
-    
-    if (path)
-		free(path);
 }
 
 void
@@ -65,20 +55,21 @@ AnyFile::alloc(usize capacity)
 }
 
 void
-AnyFile::setPath(const char *str)
+AnyFile::setPath(string path)
 {
-    assert(str != NULL);
+    this->path = path;
+}
+
+PETName<16>
+AnyFile::getName()
+{
+    auto idx = path.rfind('/');
+    usize start = idx != std::string::npos ? idx + 1 : 0;
     
-    // Set path
-    if (path) free(path);
-    path = strdup(str);
+    idx = path.rfind('.');
+    usize len = idx != std::string::npos ? idx - start : std::string::npos;
     
-    // Set default name (path without suffix)
-    memset(name, 0, sizeof(name));
-    char *filename = extractFilenameWithoutSuffix(path);
-    strncpy(name, filename, sizeof(name) - 1);
-    free(filename);
-    ascii2petStr(name);
+    return PETName<16>(path.substr(start, len));
 }
 
 u64

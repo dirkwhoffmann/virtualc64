@@ -30,7 +30,7 @@ public:
     // Methods from AnyFile
     //
     
-    const char *getName() override;
+    PETName<16> getName() override;
     FileType type() override { return FILETYPE_P00; }
     
 

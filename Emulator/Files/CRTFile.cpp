@@ -44,7 +44,13 @@ CRTFile::dealloc()
     memset(chips, 0, sizeof(chips));
     numberOfChips = 0;
 }
-        
+
+PETName<16>
+CRTFile::getName()
+{
+    return PETName<16>(data + 0x20, 0x00);
+}
+
 usize
 CRTFile::readFromStream(std::istream &stream)
 {
@@ -92,7 +98,7 @@ CRTFile::isSupported()
 void
 CRTFile::dump()
 {
-    msg("Cartridge: %s\n", getName());
+    msg("Cartridge: %s\n", getName().c_str());
     msg("   Header: %08X bytes (normally 0x40)\n", headerSize());
     msg("   Type:   %ld\n", (long)cartridgeType());
     msg("   Game:   %d\n", initialGameLine());

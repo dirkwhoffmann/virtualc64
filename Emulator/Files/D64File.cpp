@@ -99,18 +99,10 @@ D64File::makeWithVolume(FSDevice &volume, FSError *error)
     return d64;
 }
 
-const char *
+PETName<16>
 D64File::getName()
 {
-    int i, pos = offset(18, 0) + 0x90;
-    
-    for (i = 0; i < 255; i++) {
-        if (data[pos+i] == 0xA0)
-            break;
-        name[i] = data[pos+i];
-    }
-    name[i] = 0x00;
-    return name;
+    return PETName<16>(data + offset(18, 0) + 0x90);
 }
 
 usize

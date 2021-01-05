@@ -150,25 +150,16 @@ T64File::makeWithFileSystem(class FSDevice *fs)
     return t64;
 }
 
-const char *
+PETName<16>
 T64File::getName()
 {
-	int i,j;
-	int first = 0x28;
-	int last  = 0x40;
-	
-	for (j = 0, i = first; i < last; i++, j++) {
-		name[j] = (data[i] == 0x20 ? ' ' : data[i]);
-		if (j == 255) break; 
-	}
-	name[j] = 0x00;
-	return name;
+    return PETName<16>(data + 0x28, 0x20);
 }
 
 PETName<16>
 T64File::collectionName()
 {
-    return PETName<16>(data + 0x28);
+    return PETName<16>(data + 0x28, 0x20);
 }
 
 u64

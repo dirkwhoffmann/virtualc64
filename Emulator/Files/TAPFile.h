@@ -35,7 +35,7 @@ public:
     
     void dealloc() override;
     FileType type() override { return FILETYPE_TAP; }
-    const char *getName() override;
+    PETName<16> getName() override;
     
     
     //
