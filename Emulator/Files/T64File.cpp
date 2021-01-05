@@ -193,13 +193,6 @@ T64File::matchingFile(const char *path)
     return isCompatibleFile(path);
 }
 
-void
-T64File::readFromBuffer(const u8 *buffer, size_t length)
-{
-    AnyFile::readFromBuffer(buffer, length);    
-    repair();
-}
-
 PETName<16>
 T64File::collectionName()
 {

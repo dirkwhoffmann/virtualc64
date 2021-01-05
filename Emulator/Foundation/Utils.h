@@ -28,6 +28,7 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <string>
+#include <sstream>
 #include <fstream>
 
 using std::string;

@@ -62,8 +62,8 @@ public:
     const char *getName() override { return (char *)&data[0x20]; }
     bool matchingBuffer(const u8 *buf, size_t len) override;
     bool matchingFile(const char *path) override;
-    void readFromBuffer(const u8 *buffer, size_t length) override;
-    
+    usize readFromStream(std::istream &stream) override;
+
     
     //
     // Analyzing the cartridge

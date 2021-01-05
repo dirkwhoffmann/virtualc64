@@ -45,6 +45,7 @@ public:
 
     const char *getDescription() override { return "T64File"; }
 
+    
     //
     // Methods from AnyFile
     //
@@ -53,9 +54,8 @@ public:
     const char *getName() override;
     bool matchingBuffer(const u8 *buf, size_t len) override;
     bool matchingFile(const char *path) override;
-    void readFromBuffer(const u8 *buffer, size_t length) override;
-    
-    
+        
+
     //
     // Methods from AnyCollection
     //

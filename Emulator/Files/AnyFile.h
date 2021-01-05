@@ -125,7 +125,7 @@ protected:
      * matchingBuffer() to verify that the buffer contains a compatible
      * binary representation.
      */
-    virtual void readFromBuffer(const u8 *buf, size_t len) throws;
+    usize readFromBuffer(const u8 *buf, size_t len) throws;
     
     /* Deserializes this object from a file. This function uses
      * matchingFile() to verify that the file contains a compatible binary
@@ -133,7 +133,7 @@ protected:
      * first reads in the file contents in memory and invokes readFromBuffer
      * afterwards.
      */
-    void readFromFile(const char *path) throws;
+    usize readFromFile(const char *path) throws;
     
 public:
     

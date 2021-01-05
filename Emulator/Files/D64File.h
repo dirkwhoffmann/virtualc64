@@ -61,8 +61,8 @@ public:
     const char *getName() override;
     bool matchingBuffer(const u8 *buf, size_t len) override;
     bool matchingFile(const char *path) override;
-    void readFromBuffer(const u8 *buffer, size_t length) override;
-    
+    usize readFromStream(std::istream &stream) override;
+
         
     //
     // Accessing tracks and sectors

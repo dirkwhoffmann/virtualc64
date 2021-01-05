@@ -145,25 +145,18 @@ AnyFile::readFromStream(std::istream &stream)
     stream.seekg(0, std::ios::beg);
         
     printf("size = %zu\n", (usize)fsize);
-    
-    // Allocate memory
-    u8 *buffer = nullptr;
-    if (!(buffer = new u8[fsize])) {
+            
+    // Read from stream
+    if (!alloc((usize)fsize)) {
         throw Error(ERROR_OUT_OF_MEMORY);
     }
+    assert((usize)fsize == size);
+    stream.read((char *)data, size);
     
-    // Read from stream
-    stream.read((char *)buffer, fsize);
-    
-    // Read from buffer
-    try { readFromBuffer(buffer, fsize); }
-    catch (Error &err) { delete[] buffer; throw err; }
-    
-    delete[] buffer;
-    return fsize;
+    return size;
 }
 
-void
+usize
 AnyFile::readFromFile(const char *path)
 {
     assert(path);
@@ -174,28 +167,23 @@ AnyFile::readFromFile(const char *path)
         throw Error(ERROR_CANT_READ);
     }
     
-    usize size = readFromStream(stream);
+    usize result = readFromStream(stream);
+    assert(result == size);
     
     setPath(path);
+    return size;
 }
 
-void
+usize
 AnyFile::readFromBuffer(const u8 *buf, size_t len)
 {
     assert(buf);
-        
-    // Check file type
-    if (!matchingBuffer(buf, len)) {
-        throw(Error(ERROR_INVALID_TYPE));
-    }
+
+    std::istringstream stream(std::string((const char *)buf, len));
     
-    // Allocate memory
-    if (!alloc(len)) {
-        throw(Error(ERROR_OUT_OF_MEMORY));
-    }
-    
-    // Read from buffer
-    memcpy(data, buf, len);
+    usize result = readFromStream(stream);
+    assert(result == size);
+    return size;
 }
 
 usize

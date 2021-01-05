@@ -62,19 +62,15 @@ CRTFile::matchingFile(const char *path)
     return isCompatibleFile(path);
 }
 
-void
-CRTFile::readFromBuffer(const u8 *buffer, size_t length)
-{    
-    // Read the CRT file
-    AnyFile::readFromBuffer(buffer, length);    
+usize
+CRTFile::readFromStream(std::istream &stream)
+{
+    usize result = AnyFile::readFromStream(stream);
     if (CRT_DEBUG) dump();
-    
-    // Try to fix incosistencies (if any)
-    repair();
-        
+            
     // Load chip packets
     u8 *ptr = data + headerSize();
-    for (numberOfChips = 0; ptr < data + length; numberOfChips++) {
+    for (numberOfChips = 0; ptr < data + size; numberOfChips++) {
         
         if (numberOfChips == MAX_PACKETS) {
             warn("CRT file contains too many chip packets. Aborting!\n");
@@ -83,7 +79,7 @@ CRTFile::readFromBuffer(const u8 *buffer, size_t length)
         
         if (memcmp("CHIP", ptr, 4) != 0) {
             warn("Unexpected data in cartridge, expected 'CHIP'\n");
-            return; // TODO: throw exception instead
+            return result; // TODO: throw exception instead
         }
         
         // Remember start address of each chip section
@@ -94,6 +90,7 @@ CRTFile::readFromBuffer(const u8 *buffer, size_t length)
     }
     
     msg("CRT file imported successfully (%d chips)\n", numberOfChips);
+    return result;
 }
 
 CartridgeType

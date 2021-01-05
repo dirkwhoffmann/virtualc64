@@ -475,10 +475,10 @@ RomFile::matchingFile(const char *path)
     return isCompatibleFile(path);
 }
 
-void
-RomFile::readFromBuffer(const u8 *buffer, size_t length)
+usize
+RomFile::readFromStream(std::istream &stream)
 {
-    AnyFile::readFromBuffer(buffer, length);
+    usize result = AnyFile::readFromStream(stream);
     
     romType =
     isBasicRomBuffer(data, size) ? FILETYPE_BASIC_ROM :
@@ -486,4 +486,6 @@ RomFile::readFromBuffer(const u8 *buffer, size_t length)
     isKernalRomBuffer(data, size) ? FILETYPE_KERNAL_ROM :
     isVC1541RomBuffer(data, size) ? FILETYPE_VC1541_ROM :
     FILETYPE_UNKNOWN;
+    
+    return result;
 }

@@ -136,67 +136,69 @@ D64File::matchingFile(const char *path)
     return isCompatibleFile(path);
 }
 
-void
-D64File::readFromBuffer(const u8 *buffer, size_t length)
+usize
+D64File::readFromStream(std::istream &stream)
 {
+    usize result = AnyFile::readFromStream(stream);
+    assert(result == size);
+    
     unsigned numSectors;
     bool errorCodes;
  
-    switch (length)
+    switch (result)
     {
         case D64_683_SECTORS: // 35 tracks, no errors
             
-            trace(FILE_DEBUG, "D64 file contains 35 tracks, no EC bytes\n");
+            debug(FILE_DEBUG, "D64 file contains 35 tracks, no EC bytes\n");
             numSectors = 683;
             errorCodes = false;
             break;
             
         case D64_683_SECTORS_ECC: // 35 tracks, 683 error bytes
             
-            trace(FILE_DEBUG, "D64 file contains 35 tracks, 683 EC bytes\n");
+            debug(FILE_DEBUG, "D64 file contains 35 tracks, 683 EC bytes\n");
             numSectors = 683;
             errorCodes = true;
             break;
             
         case D64_768_SECTORS: // 40 tracks, no errors
             
-            trace(FILE_DEBUG, "D64 file contains 40 tracks, no EC bytes\n");
+            debug(FILE_DEBUG, "D64 file contains 40 tracks, no EC bytes\n");
             numSectors = 768;
             errorCodes = false;
             break;
             
         case D64_768_SECTORS_ECC: // 40 tracks, 768 error bytes
             
-            trace(FILE_DEBUG, "D64 file contains 40 tracks, 768 EC bytes\n");
+            debug(FILE_DEBUG, "D64 file contains 40 tracks, 768 EC bytes\n");
             numSectors = 768;
             errorCodes = true;
             break;
             
         case D64_802_SECTORS: // 42 tracks, no error bytes
             
-            trace(FILE_DEBUG, "D64 file contains 42 tracks, no EC bytes\n");
+            debug(FILE_DEBUG, "D64 file contains 42 tracks, no EC bytes\n");
             numSectors = 802;
             errorCodes = false;
             break;
             
         case D64_802_SECTORS_ECC: // 42 tracks, 802 error bytes
             
-            trace(FILE_DEBUG, "D64 file contains 42 tracks, 802 EC bytes\n");
+            debug(FILE_DEBUG, "D64 file contains 42 tracks, 802 EC bytes\n");
             numSectors = 802;
             errorCodes = true;
             break;
             
         default:
-            warn("D64 has an unknown format\n");
-            return; // TODO: THROW EXCPETION INSTEAD
+            assert(false);
     }
-    
-    AnyFile::readFromBuffer(buffer, length);
-    
+        
     // Copy error codes
     if (errorCodes) {
         memcpy(errors, data + (numSectors * 256), numSectors);
     }
+    
+    return result;
 }
 
 Track
