@@ -57,33 +57,27 @@ public:
     //
     
     int numberOfHalftracks() { return 84; }
-    int numberOfTracks() { return (numberOfHalftracks() + 1) / 2; }
-
+    
     void selectHalftrack(Halftrack ht);
-    void selectTrack(Track t) { selectHalftrack(2 * t - 1); }
 
     
     //
     // Reading data from a track
     //
     
-    // Returns the size of the selected haltrack in bytes
-    usize getSizeOfHalftrack();
-    usize getSizeOfTrack() { return getSizeOfHalftrack(); }
+    // Returns the size of a certain haltrack in bytes
+    usize getSizeOfHalftrack(Halftrack ht);
 
     // Moves the file pointer to the specified offset
-    void seekHalftrack(long offset);
-    void seekTrack(long offset) { seekHalftrack(offset); }
+    void seekHalftrack(Halftrack ht, long offset);
 
-    // Reads a byte from the selected track (-1 = EOF)
-    virtual int readHalftrack();
-    virtual int readTrack() { return readHalftrack(); }
+    // Reads a byte from a certain halftrack track (-1 = EOF)
+    int readHalftrack(Halftrack ht);
         
-    // Copies the selected track into the specified buffer
-    virtual void copyHalftrack(u8 *buffer, usize offset = 0);
-    virtual void copyTrack(u8 *buffer, usize offset = 0) { copyHalftrack(buffer, offset); }
+    // Copies a certain track into a buffer
+    void copyHalftrack(Halftrack ht, u8 *buf, usize offset = 0);
     
 private:
     
-    long getStartOfHalftrack(Halftrack ht);
+    usize getStartOfHalftrack(Halftrack ht);
 };

@@ -1918,14 +1918,6 @@ struct AnyFileWrapper { AnyFile *file; };
 @end
 
 //
-// AnyDisk
-//
-
-@implementation AnyDiskProxy
-
-@end
-
-//
 // D64
 //
 

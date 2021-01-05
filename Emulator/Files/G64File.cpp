@@ -127,31 +127,31 @@ G64File::selectHalftrack(Halftrack ht)
     
     selectedHalftrack = ht;
     tFp = getStartOfHalftrack(ht) + 2 /* length info */;
-    tEof = tFp + getSizeOfHalftrack();
+    tEof = tFp + getSizeOfHalftrack(ht);
 }
 
 void
-G64File::seekHalftrack(long offset)
+G64File::seekHalftrack(Halftrack ht, long offset)
 {
-    assert(isHalftrackNumber(selectedHalftrack));
+    assert(isHalftrackNumber(ht));
     
-    tFp = getStartOfHalftrack(selectedHalftrack) + 2 + offset;
+    tFp = getStartOfHalftrack(ht) + 2 + offset;
     
     if (tFp >= (long)size)
         tFp = -1;
 }
 
 usize
-G64File::getSizeOfHalftrack()
+G64File::getSizeOfHalftrack(Halftrack ht)
 {
-    assert(isHalftrackNumber(selectedHalftrack));
+    assert(isHalftrackNumber(ht));
     
-    long offset = getStartOfHalftrack(selectedHalftrack);
+    usize offset = getStartOfHalftrack(ht);
     return offset ? LO_HI(data[offset], data[offset+1]) : 0;
 }
 
 int
-G64File::readHalftrack()
+G64File::readHalftrack(Halftrack ht)
 {
     int result;
     
@@ -171,25 +171,24 @@ G64File::readHalftrack()
 }
 
 void
-G64File::copyHalftrack(u8 *buffer, usize offset)
+G64File::copyHalftrack(Halftrack ht, u8 *buffer, usize offset)
 {
+    assert(buffer);
+
+    seekHalftrack(ht, 0);
+
     int byte;
-    
-    assert(buffer != NULL);
-    
-    seekHalftrack(0);
-    
-    while ((byte = readHalftrack()) != EOF) {
+    while ((byte = readHalftrack(ht)) != EOF) {
         buffer[offset++] = (u8)byte;
     }
 }
 
-long
+usize
 G64File::getStartOfHalftrack(Halftrack ht)
 {
     assert(isHalftrackNumber(ht));
     
-    int offset = 0x008 + (4 * ht);
+    usize offset = 0x008 + (4 * ht);
     return LO_LO_HI_HI(data[offset], data[offset+1], data[offset+2], data[offset+3]);
 }
 

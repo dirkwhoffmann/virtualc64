@@ -34,7 +34,6 @@
 
 @class AnyFileProxy;
 @class AnyCollectionProxy;
-@class AnyDiskProxy;
 @class CRTFileProxy;
 @class TAPFileProxy;
 @class SnapshotProxy;
@@ -843,16 +842,6 @@ struct AnyFileWrapper;
 @end
 
 //
-// AnyDisk proxy
-//
-
-@interface AnyDiskProxy : AnyCollectionProxy {
-}
-
-@end
-
-
-//
 // D64File proxy
 //
 
@@ -870,10 +859,10 @@ struct AnyFileWrapper;
 @end
 
 //
-// G64File proxy
+// G64File
 //
 
-@interface G64FileProxy : AnyDiskProxy <Makeable> {
+@interface G64FileProxy : AnyFileProxy <Makeable> {
 }
 + (instancetype) makeWithFile:(NSString *)path error:(ErrorCode *)err;
 + (instancetype) makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;

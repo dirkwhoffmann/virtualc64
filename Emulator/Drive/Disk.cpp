@@ -737,7 +737,7 @@ Disk::encodeG64(G64File *a)
     for (Halftrack ht = 1; ht <= 84; ht++) {
         
         a->selectHalftrack(ht);
-        u16 size = a->getSizeOfHalftrack();
+        u16 size = a->getSizeOfHalftrack(ht);
         
         if (size == 0) {
             if (ht > 1) {
@@ -755,11 +755,11 @@ Disk::encodeG64(G64File *a)
         length.halftrack[ht] = 8 * size;
         
         for (unsigned i = 0; i < size; i++) {
-            int b = a->readHalftrack();
+            int b = a->readHalftrack(ht);
             assert(b != -1);
             data.halftrack[ht][i] = (u8)b;
         }
-        assert(a->readHalftrack() == -1 /* EOF */);
+        assert(a->readHalftrack(ht) == -1 /* EOF */);
     }
 }
 
