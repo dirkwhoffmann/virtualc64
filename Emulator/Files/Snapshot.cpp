@@ -55,6 +55,22 @@ Snapshot::makeWithC64(C64 *c64)
     return snapshot;
 }
 
+bool
+Snapshot::isTooOld()
+{    
+    if (data[4] < V_MAJOR) return true; else if (data[4] > V_MAJOR) return false;
+    if (data[5] < V_MINOR) return true; else if (data[5] > V_MINOR) return false;
+    return data[6] < V_SUBMINOR;
+}
+
+bool
+Snapshot::isTooNew()
+{
+    if (data[4] > V_MAJOR) return true; else if (data[4] < V_MAJOR) return false;
+    if (data[5] > V_MINOR) return true; else if (data[5] < V_MINOR) return false;
+    return data[6] > V_SUBMINOR;
+}
+
 void
 Snapshot::takeScreenshot(C64 *c64)
 {
@@ -73,20 +89,4 @@ Snapshot::takeScreenshot(C64 *c64)
         target += header->screenshot.width;
         source += TEX_WIDTH;
     }
-}
-
-bool
-Snapshot::isTooOld()
-{    
-    if (data[4] < V_MAJOR) return true; else if (data[4] > V_MAJOR) return false;
-    if (data[5] < V_MINOR) return true; else if (data[5] > V_MINOR) return false;
-    return data[6] < V_SUBMINOR;
-}
-
-bool
-Snapshot::isTooNew()
-{
-    if (data[4] > V_MAJOR) return true; else if (data[4] < V_MAJOR) return false;
-    if (data[5] > V_MINOR) return true; else if (data[5] < V_MINOR) return false;
-    return data[6] > V_SUBMINOR;
 }

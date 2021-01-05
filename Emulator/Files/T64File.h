@@ -28,6 +28,11 @@ public:
     T64File() : AnyCollection() { }
     T64File(size_t capacity) : AnyCollection(capacity) { }
 
+    
+    //
+    // Methods from C64Object
+    //
+    
     const char *getDescription() override { return "T64File"; }
 
     

@@ -62,12 +62,11 @@ public:
     static const char *subTitle(RomIdentifier rev);
     static const char *revision(RomIdentifier rev);
 
-    
+  
     //
-    // Creating and destructing
+    // Methods from C64Object
     //
     
-    RomFile() { };
     const char *getDescription() override { return "RomFile"; }
     
     

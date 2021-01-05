@@ -22,18 +22,23 @@ public:
     static bool isCompatibleName(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
     
+    static G64File *makeWithDisk(Disk *disk);
+
     
     //
     // Initializing
     //
     
-public:
-    
     G64File() : AnyDisk() { };
     G64File(size_t capacity);
+    
+    
+    //
+    // Methods from C64Object
+    //
+    
     const char *getDescription() override { return "G64File"; }
 
-    static G64File *makeWithDisk(Disk *disk);
     
     //
     // Methods from AnyFile

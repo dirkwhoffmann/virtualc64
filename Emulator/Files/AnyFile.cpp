@@ -29,18 +29,6 @@ AnyFile::~AnyFile()
     if (data) delete[] data;
 }
 
-bool
-AnyFile::alloc(usize capacity)
-{
-    assert(data == nullptr);
-    
-    // dealloc();
-    if ((data = new u8[capacity]()) == nullptr) return false;
-    size = capacity;
-    
-    return true;
-}
-
 void
 AnyFile::setPath(string path)
 {
@@ -110,12 +98,13 @@ AnyFile::readFromStream(std::istream &stream)
     stream.seekg(0, std::ios::end);
     fsize = stream.tellg() - fsize;
     stream.seekg(0, std::ios::beg);
-                    
-    // Read from stream
-    if (!alloc((usize)fsize)) {
-        throw Error(ERROR_OUT_OF_MEMORY);
-    }
-    assert((usize)fsize == size);
+
+    // Allocate memory
+    assert(data == nullptr);
+    data = new u8[fsize]();
+    size = fsize;
+
+    // Fix known inconsistencies
     stream.read((char *)data, size);
     
     // Repair the file (if applicable)

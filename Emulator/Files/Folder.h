@@ -33,12 +33,11 @@ public:
     
     static Folder *makeWithFolder(const char *path);
 
-    
+        
     //
-    // Initializing
+    // Methods from C64Object
     //
     
-    Folder() { };
     const char *getDescription() override { return "Folder"; }
     
     

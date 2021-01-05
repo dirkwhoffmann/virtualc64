@@ -22,7 +22,11 @@ public:
     
     P00File() : AnyCollection() { }
     P00File(size_t capacity) : AnyCollection(capacity) { }
-    
+
+    //
+    // Methods from C64Object
+    //
+
     const char *getDescription() override { return "P00File"; }
 
 

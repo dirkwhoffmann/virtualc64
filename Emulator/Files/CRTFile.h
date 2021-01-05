@@ -28,7 +28,7 @@ class CRTFile : public AnyFile {
     unsigned int numberOfChips = 0;
     
     // Indicates where each chip section starts
-    u8 *chips[MAX_PACKETS];
+    u8 *chips[MAX_PACKETS] = {};
 
 public:
     
@@ -41,10 +41,9 @@ public:
         
     
     //
-    // Initializing
+    // Methods from C64Object
     //
-
-    CRTFile();
+    
     const char *getDescription() override { return "CRTFile"; }
 
         

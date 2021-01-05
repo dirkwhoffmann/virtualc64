@@ -28,6 +28,11 @@ public:
     PRGFile() : AnyCollection() { }
     PRGFile(size_t capacity) : AnyCollection(capacity) { }
     
+    
+    //
+    // Methods from C64Object
+    //
+    
     const char *getDescription() override { return "PRGFile"; }
     
     

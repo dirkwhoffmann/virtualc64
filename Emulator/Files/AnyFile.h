@@ -72,9 +72,6 @@ public:
     AnyFile(usize capacity);
     virtual ~AnyFile();
 
-    // Allocates memory for storing the object data
-    virtual bool alloc(usize capacity);
-
     
     //
     // Accessing file attributes

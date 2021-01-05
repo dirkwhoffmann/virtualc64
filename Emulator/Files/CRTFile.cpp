@@ -32,11 +32,6 @@ CRTFile::isCompatibleStream(std::istream &stream)
     return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 
-CRTFile::CRTFile()
-{
-    memset(chips, 0, sizeof(chips));
-}
-
 PETName<16>
 CRTFile::getName()
 {

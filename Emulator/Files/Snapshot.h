@@ -49,15 +49,14 @@ public:
         
     Snapshot() { };
     Snapshot(size_t capacity);
+        
+    
+    //
+    // Methods from C64Object
+    //
+
     const char *getDescription() override { return "Snapshot"; }
 
-    void takeScreenshot(class C64 *c64);
-
-private:
-    
-    // Allocates memory for storing the emulator state
-    bool setCapacity(size_t size);
-        
     
     //
     // Methods from AnyFile
@@ -84,4 +83,6 @@ public:
     unsigned char *getImageData() { return (unsigned char *)(getHeader()->screenshot.screen); }
     unsigned getImageWidth() { return getHeader()->screenshot.width; }
     unsigned getImageHeight() { return getHeader()->screenshot.height; }
+    
+    void takeScreenshot(class C64 *c64);
 };

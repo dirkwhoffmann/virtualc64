@@ -23,11 +23,15 @@ public:
     // Initializing
     //
     
-public:
-
     TAPFile() : AnyFile() { }
+   
+    
+    //
+    // Methods from C64Object
+    //
+    
     const char *getDescription() override { return "TAPFile"; }
-
+    
     
     //
     // Methods from AnyFile
@@ -54,8 +58,6 @@ public:
     //
     // Repairing
     //
-    
-public:
     
     void repair() override;
 };

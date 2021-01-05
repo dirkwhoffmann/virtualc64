@@ -40,6 +40,12 @@ public:
     
     D64File();
     D64File(unsigned tracks, bool ecc);
+    
+    
+    //
+    // Methods from C64Object
+    //
+    
     const char *getDescription() override { return "D64File"; }
 
         
