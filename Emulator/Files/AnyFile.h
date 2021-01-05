@@ -150,4 +150,6 @@ public:
      * disk afterwards.
      */
 	virtual size_t writeToFile(const char *path) throws;
+
+    // virtual size_t writeToFile(FILE *file) throws;
 };

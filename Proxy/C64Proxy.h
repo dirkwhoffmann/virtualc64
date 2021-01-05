@@ -728,7 +728,6 @@ struct AnyFileWrapper;
 - (NSString *)name;
 - (NSInteger)sizeOnDisk;
 - (u64) fnv;
-- (NSInteger)writeToBuffer:(void *)buffer;
 - (NSInteger)writeToFile:(NSString *)path error:(ErrorCode *)err;
 
 @end

@@ -349,28 +349,7 @@ class MyDocument: NSDocument {
             }
         }
     }
-    /*
-    override open func data(ofType typeName: String) throws -> Data {
-        
-        track("Trying to write \(typeName) file.")
-        
-        if typeName == "VC64" {
-            
-            // Take snapshot
-            if let snapshot = SnapshotProxy.make(withC64: c64) {
 
-                // Write to data buffer
-                if let data = NSMutableData.init(length: snapshot.sizeOnDisk()) {
-                    snapshot.write(toBuffer: data.mutableBytes)
-                    return data as Data
-                }
-            }
-        }
-        
-        throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-    }
-    */
-    
     //
     // Exporting disks
     //
@@ -466,15 +445,7 @@ class MyDocument: NSDocument {
     func export(file: AnyFileProxy, to url: URL) throws {
         
         track("file: \(file) to: \(url)")
-        
-        // Serialize archive
-        if let data = NSMutableData.init(length: file.sizeOnDisk()) {
-            
-            file.write(toBuffer: data.mutableBytes)
-            if data.write(to: url, atomically: true) { return }
-        }
-        
-        throw ExportError.other
+        try file.writeToFile(url: url)
     }
 
     //

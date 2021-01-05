@@ -1534,10 +1534,6 @@ struct AnyFileWrapper { AnyFile *file; };
 {
     return wrapper->file->fnv();
 }
-- (NSInteger) writeToBuffer:(void *)buffer
-{
-    return wrapper->file->writeToBuffer((u8 *)buffer);
-}
 
 - (NSInteger)writeToFile:(NSString *)path error:(ErrorCode *)err
 {

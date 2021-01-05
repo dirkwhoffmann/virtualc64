@@ -54,6 +54,7 @@ extension C64Proxy {
 
 extension AnyFileProxy {
     
+    @discardableResult
     func writeToFile(url: URL) throws -> Int {
         
         var err = ErrorCode.OK
