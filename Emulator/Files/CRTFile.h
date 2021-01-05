@@ -51,8 +51,8 @@ public:
     // Methods from AnyFile
     //
     
+    PETName<16> getName() override;
     FileType type() override { return FILETYPE_CRT; }
-    PETName<16> getName() override; 
     usize readFromStream(std::istream &stream) override;
 
     
@@ -107,12 +107,5 @@ public:
     // Prints some information about this cartridge
     void dump();
     
-    /* This method eliminates the following inconsistencies:
-     *
-     *   - Invalid cartridge IDs:
-     *     Some non-standard cartridges are marked  as standard. If such a
-     *     cartridge is recognised, the ID is rectified.
-     *
-     */
     void repair() override;
 };

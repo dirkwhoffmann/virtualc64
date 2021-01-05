@@ -112,15 +112,9 @@ CRTFile::repair()
     // Individual errors
     //
     
-    // Compute a fingerprint for the CRT file
-    u64 fingerprint = fnv_1a_64(data, size);
-    printf("CRT fingerprint: %llx\n", fingerprint);
-    debug(CRT_DEBUG, "CRT fingerprint: %llx\n", fingerprint);
+    switch (fnv_1a_64(data, size)) {
 
-    // Check for known inconsistencies
-    switch (fingerprint) {
-
-        case 0xb2a479a5a2ee6cd5: // Mikro Assembler (invalid CRT type)
+        case 0xb2a479a5a2ee6cd5: // Mikro Assembler
 
             // Replace invalid CRT type $00 by $1C
             msg("Repairing broken Mikro Assembler cartridge\n");
