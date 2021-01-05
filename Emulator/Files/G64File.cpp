@@ -9,9 +9,6 @@
 
 #include "G64File.h"
 
-const u8 /* "GCR-1541" */
-G64File::magicBytes[] = { 0x47, 0x43, 0x52, 0x2D, 0x31, 0x35, 0x34, 0x31 };
-
 bool
 G64File::isCompatibleName(const std::string &name)
 {
@@ -22,6 +19,9 @@ G64File::isCompatibleName(const std::string &name)
 bool
 G64File::isCompatibleStream(std::istream &stream)
 {
+    // const u8 magicBytes[] = { 0x47, 0x43, 0x52, 0x2D, 0x31, 0x35, 0x34, 0x31 };
+    const u8 magicBytes[] = { 'G', 'C', 'R', '-', '1', '5', '4', '1' };
+
     if (streamLength(stream) < 0x2AC) return false;
     return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
@@ -64,7 +64,8 @@ G64File::makeWithDisk(Disk *disk)
     
     // Write header, number of tracks, and track length
     pos = 0;
-    memcpy(buffer, G64File::magicBytes, 9);
+    strcpy((char *)buffer, "GCR-1541");
+    // memcpy(buffer, G64File::magicBytes, 9);
     buffer[9]  = 84; // 0x54 (Number of tracks)
     buffer[10] = LO_BYTE(maxBytesOnTrack); // 0xF8
     buffer[11] = HI_BYTE(maxBytesOnTrack); // 0x1E

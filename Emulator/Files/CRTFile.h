@@ -20,15 +20,10 @@
 #include "AnyFile.h"
 
 class CRTFile : public AnyFile {
-    
-private:
-    
+        
     // Maximum number of chip packets in a CRT file
     static const unsigned MAX_PACKETS = 128;
-    
-    // Header signature
-    static const u8 magicBytes[];
-        
+
     // Number of chips contained in cartridge file
     unsigned int numberOfChips = 0;
     

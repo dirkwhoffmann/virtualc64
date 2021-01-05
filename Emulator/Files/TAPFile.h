@@ -12,18 +12,9 @@
 #include "AnyFile.h"
 
 class TAPFile : public AnyFile {
-    
-private:
-    
-    // Header signature
-    static const u8 magicBytes[];
-            
+ 
 public:
-    
-    //
-    // Class methods
-    //
-    
+
     static bool isCompatibleName(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
     
@@ -32,6 +23,8 @@ public:
     // Initializing
     //
     
+public:
+
     TAPFile() : AnyFile() { }
     const char *getDescription() override { return "TAPFile"; }
 

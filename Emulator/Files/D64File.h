@@ -24,21 +24,11 @@ class D64File : public AnyFile {
     // Error information stored in the D64 archive
     u8 errors[802];
     
-    
-    //
-    // Class methods
-    //
-    
 public:
     
     static bool isCompatibleName(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
-    
-    
-    //
-    // Constructing
-    //
-    
+  
     static D64File *makeWithDisk(class Disk *disk);
     static D64File *makeWithDrive(class Drive *drive);
     static D64File *makeWithVolume(class FSDevice &volume, FSError *err);

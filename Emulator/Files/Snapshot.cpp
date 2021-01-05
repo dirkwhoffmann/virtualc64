@@ -9,8 +9,6 @@
 
 #include "C64.h"
 
-const u8 Snapshot::magicBytes[] = { 'V', 'C', '6', '4' };
-
 bool
 Snapshot::isCompatibleName(const std::string &name)
 {
@@ -20,6 +18,8 @@ Snapshot::isCompatibleName(const std::string &name)
 bool
 Snapshot::isCompatibleStream(std::istream &stream)
 {
+    const u8 magicBytes[] = { 'V', 'C', '6', '4' };
+    
     if (streamLength(stream) < 0x15) return false; 
     return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
@@ -30,10 +30,10 @@ Snapshot::Snapshot(size_t capacity)
     data = new u8[size];
     
     SnapshotHeader *header = (SnapshotHeader *)data;
-    header->magicBytes[0] = magicBytes[0];
-    header->magicBytes[1] = magicBytes[1];
-    header->magicBytes[2] = magicBytes[2];
-    header->magicBytes[3] = magicBytes[3];
+    header->magicBytes[0] = 'V';
+    header->magicBytes[1] = 'C';
+    header->magicBytes[2] = '6';
+    header->magicBytes[3] = '4';
     header->major = V_MAJOR;
     header->minor = V_MINOR;
     header->subminor = V_SUBMINOR;

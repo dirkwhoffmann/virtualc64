@@ -10,8 +10,10 @@
 #include "CRTFile.h"
 #include "Cartridge.h"
 
+/*
 const u8 CRTFile::magicBytes[] = {
     'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ' };
+*/
 
 bool
 CRTFile::isCompatibleName(const std::string &name)
@@ -23,6 +25,9 @@ CRTFile::isCompatibleName(const std::string &name)
 bool
 CRTFile::isCompatibleStream(std::istream &stream)
 {
+    const u8 magicBytes[] = {
+        'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ' };
+    
     if (streamLength(stream) < 0x40) return false;
     return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }

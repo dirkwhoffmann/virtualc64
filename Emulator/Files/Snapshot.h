@@ -34,27 +34,12 @@ typedef struct {
 SnapshotHeader;
 
 class Snapshot : public AnyFile {
-    
-    // Header signature
-    static const u8 magicBytes[];
-    
-    
-    //
-    // Class methods
-    //
-    
+     
 public:
- 
+    
     static bool isCompatibleName(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
- 
-    
-    //
-    // Factory methods
-    //
-    
-public:
-    
+     
     static Snapshot *makeWithC64(class C64 *c64);
 
     

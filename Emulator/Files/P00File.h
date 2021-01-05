@@ -13,23 +13,10 @@
 
 class P00File : public AnyCollection {
 
-    // Header signature
-    static const u8 magicBytes[];
-    
-    
-    //
-    // Class methods
-    //
-    
 public:
 
     static bool isCompatibleName(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
-    
-    
-    //
-    // Constructing
-    //
     
     static P00File *makeWithFileSystem(class FSDevice *fs, int item = 0);
     

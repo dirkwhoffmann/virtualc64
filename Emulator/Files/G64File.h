@@ -14,17 +14,9 @@
 
 class G64File : public AnyDisk {
 
-    // Header signature
-    static const u8 magicBytes[];
-    
     // Number of the currently selected halftrack (0 = nothing selected)
     Halftrack selectedHalftrack = 0;
-    
-    
-    //
-    // Class functions
-    //
-    
+ 
 public:
 
     static bool isCompatibleName(const std::string &name);

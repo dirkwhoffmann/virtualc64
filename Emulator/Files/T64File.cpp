@@ -14,7 +14,7 @@
 /* "Anmerkung: Der String muß nicht wortwörtlich so vorhanden sein. Man sollte nach den
  *  Substrings 'C64' und 'tape' suchen." [Power64 doc]
  */
-const u8 T64File::magicBytes[] = { 0x43, 0x36, 0x34 };
+// const u8 T64File::magicBytes[] = { 0x43, 0x36, 0x34 };
 
 bool
 T64File::isCompatibleName(const std::string &name)
@@ -26,6 +26,8 @@ T64File::isCompatibleName(const std::string &name)
 bool
 T64File::isCompatibleStream(std::istream &stream)
 {
+    const u8 magicBytes[] = { 0x43, 0x36, 0x34 };
+    
     if (streamLength(stream) < 0x40) return false;
     return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }

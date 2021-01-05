@@ -14,18 +14,9 @@
 class PRGFile : public AnyCollection {
 
 public:
-
-    //
-    // Class methods
-    //
     
     static bool isCompatibleName(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
-    
-    
-    //
-    // Constructing
-    //
     
     static PRGFile *makeWithFileSystem(class FSDevice *fs, int item = 0);
 

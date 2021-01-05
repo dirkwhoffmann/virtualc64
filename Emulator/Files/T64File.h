@@ -12,26 +12,11 @@
 #include "AnyCollection.h"
 
 class T64File : public AnyCollection {
-    
-    // Header signature
-    static const u8 magicBytes[];
-    
-    // Number of the currently selected item (-1 if no item is selected)
-    long selectedItem = -1;
-    
+     
 public:
-    
-    //
-    // Class methods
-    //
-    
+
     static bool isCompatibleName(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
-    
-    
-    //
-    // Creating
-    //
     
     static T64File *makeWithFileSystem(class FSDevice *fs);
 
