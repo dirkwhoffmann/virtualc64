@@ -43,8 +43,6 @@ public:
     
     static bool isCompatibleName(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
-    [[deprecated]] static bool isCompatibleBuffer(const u8 *buf, size_t len);
-    [[deprecated]] static bool isCompatibleFile(const char *path);
         
     
     //
@@ -62,8 +60,6 @@ public:
     void dealloc() override;
     FileType type() override { return FILETYPE_CRT; }
     const char *getName() override { return (char *)&data[0x20]; }
-    [[deprecated]] bool matchingBuffer(const u8 *buf, size_t len) override;
-    [[deprecated]] bool matchingFile(const char *path) override;
     usize readFromStream(std::istream &stream) override;
 
     

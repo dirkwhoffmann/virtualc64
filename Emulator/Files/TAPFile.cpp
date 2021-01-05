@@ -26,32 +26,6 @@ TAPFile::isCompatibleStream(std::istream &stream)
     return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 
-bool
-TAPFile::isCompatibleBuffer(const u8 *buffer, size_t length)
-{
-    if (length < 0x15) return false;
-    return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
-    // return checkBufferHeader(buffer, length, magicBytes);
-}
-
-bool
-TAPFile::isCompatibleFile(const char *filename)
-{
-    assert (filename != NULL);
-    
-    if (!checkFileSuffix(filename, ".TAP") && !checkFileSuffix(filename, ".tap") &&
-        !checkFileSuffix(filename, ".T64") && !checkFileSuffix(filename, ".t64"))
-        return false;
-    
-    if (!checkFileSize(filename, 0x15, -1))
-        return false;
-    
-    if (!matchingFileHeader(filename, magicBytes, sizeof(magicBytes)))
-        return false;
-    
-    return true;
-}
-
 void
 TAPFile::dealloc()
 {
@@ -67,18 +41,6 @@ TAPFile::getName()
     }
     name[i] = 0x00;
     return name;
-}
-
-bool
-TAPFile::matchingBuffer(const u8 *buf, size_t len)
-{
-    return isCompatibleBuffer(buf, len);
-}
-
-bool
-TAPFile::matchingFile(const char *path)
-{
-    return isCompatibleFile(path);
 }
 
 void

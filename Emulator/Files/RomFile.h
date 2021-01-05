@@ -35,22 +35,15 @@ public:
     // Class methods
     //
     
-    // Returns true if buffer contains a ROM image
     static bool isCompatibleName(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
+    
     static bool isBasicRomStream(std::istream &stream);
     static bool isCharRomStream(std::istream &stream);
     static bool isKernalRomStream(std::istream &stream);
     static bool isVC1541RomStream(std::istream &stream);
     
-    [[deprecated]] static bool isCompatibleBuffer(const u8 *buf, size_t len);
-    [[deprecated]] static bool isBasicRomBuffer(const u8 *buf, size_t len);
-    [[deprecated]] static bool isCharRomBuffer(const u8 *buf, size_t len);
-    [[deprecated]] static bool isKernalRomBuffer(const u8 *buf, size_t len);
-    [[deprecated]] static bool isVC1541RomBuffer(const u8 *buf, size_t len);
-
     // Returns true if path points to a ROM image
-    [[deprecated]] static bool isCompatibleFile(const char *path);
     static bool isBasicRomFile(const char *path);
     static bool isCharRomFile(const char *path);
     static bool isKernalRomFile(const char *path);
@@ -83,7 +76,5 @@ public:
     //
     
     FileType type() override { return romType; }
-    [[deprecated]] bool matchingBuffer(const u8 *buf, size_t len) override;
-    [[deprecated]] bool matchingFile(const char *path) override;
     usize readFromStream(std::istream &stream) override;
 };

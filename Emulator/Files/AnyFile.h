@@ -125,17 +125,6 @@ public:
     // Serializing
     //
     
-
-    /* Returns true iff this specified buffer is compatible with this object.
-     * This function is used in readFromBuffer().
-     */
-    [[deprecated]] virtual bool matchingBuffer(const u8 *buffer, size_t length) { return false; }
-    
-    /* Checks whether this file has the same type as the file stored in the
-     * specified file.
-     */
-    virtual bool matchingFile(const char *path) { return false; }
-
 protected:
 
     usize readFromFile(const char *path) throws;

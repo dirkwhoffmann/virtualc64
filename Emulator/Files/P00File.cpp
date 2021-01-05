@@ -27,27 +27,6 @@ P00File::isCompatibleStream(std::istream &stream)
     return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 
-bool
-P00File::isCompatibleBuffer(const u8 *buffer, size_t length)
-{
-    if (length < 0x1A) return false;
-    return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
-}
-
-bool
-P00File::isCompatibleFile(const char *filename)
-{
-    assert (filename != NULL);
-    
-    if (!checkFileSize(filename, 0x1A, -1))
-        return false;
-    
-    if (!matchingFileHeader(filename, magicBytes, sizeof(magicBytes)))
-        return false;
-    
-    return true;
-}
-
 P00File *
 P00File::makeWithFileSystem(FSDevice *fs, int item)
 {
@@ -94,18 +73,6 @@ P00File::getName()
     }
     name[i] = 0x00;
     return name;
-}
-
-bool
-P00File::matchingBuffer(const u8 *buf, size_t len)
-{
-    return isCompatibleBuffer(buf, len); 
-}
-
-bool
-P00File::matchingFile(const char *path)
-{
-    return isCompatibleFile(path);
 }
 
 PETName<16>

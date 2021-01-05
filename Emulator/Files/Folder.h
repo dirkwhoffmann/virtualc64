@@ -47,7 +47,6 @@ public:
     //
 
     FileType type() override { return FILETYPE_FOLDER; }
-    bool matchingFile(const char *path) override { return isFolder(path); }
     
     
     //

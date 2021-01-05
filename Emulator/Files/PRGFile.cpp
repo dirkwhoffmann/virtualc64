@@ -23,26 +23,6 @@ PRGFile::isCompatibleStream(std::istream &stream)
     return (streamLength(stream) >= 2);
 }
 
-bool
-PRGFile::isCompatibleBuffer(const u8 *buffer, size_t length)
-{
-    return length >= 2;
-}
-
-bool
-PRGFile::isCompatibleFile(const char *path)
-{
-    assert(path != NULL);
-    
-    if (!checkFileSuffix(path, ".PRG") && !checkFileSuffix(path, ".prg"))
-        return false;
-    
-    if (!checkFileSize(path, 2, -1))
-        return false;
-    
-    return true;
-}
-
 PRGFile *
 PRGFile::makeWithFileSystem(FSDevice *fs, int item)
 {
@@ -61,18 +41,6 @@ PRGFile::makeWithFileSystem(FSDevice *fs, int item)
     fs->copyFile(item, prg->getData(), itemSize);
     
     return prg;
-}
-
-bool
-PRGFile::matchingBuffer(const u8 *buf, size_t len)
-{
-    return isCompatibleBuffer(buf, len);
-}
-
-bool
-PRGFile::matchingFile(const char *path)
-{
-    return isCompatibleFile(path);
 }
 
 PETName<16>

@@ -115,72 +115,6 @@ RomFile::isVC1541RomStream(std::istream &stream)
     return false;
 }
 
-bool
-RomFile::isCompatibleBuffer(const u8 *buffer, size_t length)
-{
-    return
-    isBasicRomBuffer(buffer, length) ||
-    isCharRomBuffer(buffer, length) ||
-    isKernalRomBuffer(buffer, length) ||
-    isVC1541RomBuffer(buffer, length);
-}
-
-bool
-RomFile::isBasicRomBuffer(const u8 *buffer, size_t length)
-{
-    if (length != 0x2000) return false;
-
-    for (size_t i = 0; i < basicRomSignatureCnt; i++) {
-        if (matchingBufferHeader(buffer, magicBasicRomBytes[i], sizeof(magicBasicRomBytes[i]))) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-bool
-RomFile::isCharRomBuffer(const u8 *buffer, size_t length)
-{
-    if (length != 0x1000) return false;
-
-    for (size_t i = 0; i < charRomSignatureCnt; i++) {
-        if (matchingBufferHeader(buffer, magicCharRomBytes[i], sizeof(magicCharRomBytes[i]))) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-bool
-RomFile::isKernalRomBuffer(const u8 *buffer, size_t length)
-{
-    if (length != 0x2000) return false;
-
-    for (size_t i = 0; i < kernalRomSignatureCnt; i++) {
-        if (matchingBufferHeader(buffer, magicKernalRomBytes[i], sizeof(magicKernalRomBytes[i]))) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-bool
-RomFile::isVC1541RomBuffer(const u8 *buffer, size_t length)
-{
-    if (length != 0x4000) return false;
-
-    for (size_t i = 0; i < vc1541RomSignatureCnt; i++) {
-        if (matchingBufferHeader(buffer, magicVC1541RomBytes[i], sizeof(magicVC1541RomBytes[i]))) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
 RomIdentifier
 RomFile::identifier(u64 fnv)
 {
@@ -466,16 +400,6 @@ RomFile::revision(RomIdentifier rev)
 }
 
 bool
-RomFile::isCompatibleFile(const char *filename)
-{
-    return
-    isBasicRomFile(filename) ||
-    isCharRomFile(filename) ||
-    isKernalRomFile(filename) ||
-    isVC1541RomFile(filename);
-}
-
-bool
 RomFile::isBasicRomFile(const char *path)
 {
     std::ifstream stream(path);
@@ -501,18 +425,6 @@ RomFile::isVC1541RomFile(const char *path)
 {
     std::ifstream stream(path);
     return stream.is_open() ? isVC1541RomStream(stream) : false;
-}
-
-bool
-RomFile::matchingBuffer(const u8 *buf, size_t len)
-{
-    return isCompatibleBuffer(buf, len);
-}
-
-bool
-RomFile::matchingFile(const char *path)
-{
-    return isCompatibleFile(path);
 }
 
 usize

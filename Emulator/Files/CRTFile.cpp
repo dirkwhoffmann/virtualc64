@@ -27,30 +27,6 @@ CRTFile::isCompatibleStream(std::istream &stream)
     return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 
-bool
-CRTFile::isCompatibleBuffer(const u8 *buffer, size_t length)
-{
-    if (length < 0x40) return false;
-    return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
-}
-
-bool
-CRTFile::isCompatibleFile(const char *path)
-{
-    assert(path != NULL);
-    
-    if (!checkFileSuffix(path, ".CRT") && !checkFileSuffix(path, ".crt"))
-        return false;
-    
-    if (!checkFileSize(path, 0x40, -1))
-        return false;
-    
-    if (!matchingFileHeader(path, magicBytes, sizeof(magicBytes)))
-        return false;
-    
-    return true;
-}
-
 CRTFile::CRTFile()
 {
     memset(chips, 0, sizeof(chips));
@@ -64,18 +40,6 @@ CRTFile::dealloc()
     numberOfChips = 0;
 }
         
-bool
-CRTFile::matchingBuffer(const u8 *buf, size_t len)
-{
-    return isCompatibleBuffer(buf, len);
-}
-
-bool
-CRTFile::matchingFile(const char *path)
-{
-    return isCompatibleFile(path);
-}
-
 usize
 CRTFile::readFromStream(std::istream &stream)
 {

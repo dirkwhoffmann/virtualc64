@@ -30,38 +30,6 @@ T64File::isCompatibleStream(std::istream &stream)
     return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 
-bool
-T64File::isCompatibleBuffer(const u8 *buffer, size_t length)
-{
-    if (length < 0x40)
-        return false;
-    
-    if (TAPFile::isCompatibleBuffer(buffer, length)) // Note: TAP files have a very similar header
-        return false;
-    
-    return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
-}
-
-bool
-T64File::isCompatibleFile(const char *path)
-{
-    assert(path != NULL);
-    
-    if (!checkFileSuffix(path, ".T64") && !checkFileSuffix(path, ".t64"))
-        return false;
-    
-    if (TAPFile::isCompatibleFile(path)) // Note: TAP files have a very similar header
-        return false;
-    
-    if (!checkFileSize(path, 0x40, -1))
-        return false;
-    
-    if (!matchingFileHeader(path, magicBytes, sizeof(magicBytes)))
-        return false;
-    
-    return true;
-}
-
 T64File *
 T64File::makeWithFileSystem(class FSDevice *fs)
 {
@@ -193,18 +161,6 @@ T64File::getName()
 	}
 	name[j] = 0x00;
 	return name;
-}
-
-bool
-T64File::matchingBuffer(const u8 *buf, size_t len)
-{
-    return isCompatibleBuffer(buf, len);
-}
-
-bool
-T64File::matchingFile(const char *path)
-{
-    return isCompatibleFile(path);
 }
 
 PETName<16>

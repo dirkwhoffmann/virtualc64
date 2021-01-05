@@ -30,38 +30,6 @@ D64File::isCompatibleStream(std::istream &stream)
     len == D64_802_SECTORS_ECC;
 }
 
-bool
-D64File::isCompatibleBuffer(const u8 *buf, size_t len)
-{
-    assert(buf);
-    
-    // D64 files have no magic bytes. Hence, we can only check the buffer size
-    return
-    len == D64_683_SECTORS ||
-    len == D64_683_SECTORS_ECC ||
-    len == D64_768_SECTORS ||
-    len == D64_768_SECTORS_ECC ||
-    len == D64_802_SECTORS ||
-    len == D64_802_SECTORS_ECC;
-}
-
-bool
-D64File::isCompatibleFile(const char *path)
-{
-    assert (path);
-    
-    if (!checkFileSuffix(path, ".D64") && !checkFileSuffix(path, ".d64"))
-        return false;
-    
-    return
-    checkFileSize(path, D64_683_SECTORS, D64_683_SECTORS) ||
-    checkFileSize(path, D64_683_SECTORS_ECC, D64_683_SECTORS_ECC) ||
-    checkFileSize(path, D64_768_SECTORS, D64_768_SECTORS) ||
-    checkFileSize(path, D64_768_SECTORS_ECC, D64_768_SECTORS_ECC) ||
-    checkFileSize(path, D64_802_SECTORS, D64_802_SECTORS) ||
-    checkFileSize(path, D64_802_SECTORS_ECC, D64_802_SECTORS_ECC);
-}
-
 D64File::D64File()
 {
     memset(errors, 0x01, sizeof(errors));
@@ -143,18 +111,6 @@ D64File::getName()
     }
     name[i] = 0x00;
     return name;
-}
-
-bool
-D64File::matchingBuffer(const u8 *buf, size_t len)
-{
-    return isCompatibleBuffer(buf, len);
-}
-
-bool
-D64File::matchingFile(const char *path)
-{
-    return isCompatibleFile(path);
 }
 
 usize

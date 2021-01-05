@@ -24,26 +24,6 @@ Snapshot::isCompatibleStream(std::istream &stream)
     return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 
-bool
-Snapshot::isCompatibleBuffer(const u8 *buf, size_t len)
-{
-    assert(buf != NULL);
-    
-    if (len < 0x15) return false;
-    return matchingBufferHeader(buf, magicBytes, sizeof(magicBytes));
-}
-
-bool
-Snapshot::isCompatibleFile(const char *path)
-{
-    assert(path != NULL);
-    
-    if (!matchingFileHeader(path, magicBytes, sizeof(magicBytes)))
-        return false;
-    
-    return true;
-}
-
 Snapshot::Snapshot(size_t capacity)
 {
     size = capacity + sizeof(SnapshotHeader);
@@ -93,18 +73,6 @@ Snapshot::takeScreenshot(C64 *c64)
         target += header->screenshot.width;
         source += TEX_WIDTH;
     }
-}
-
-bool
-Snapshot::matchingBuffer(const u8 *buf, size_t len)
-{
-    return isCompatibleBuffer(buf, len); // , V_MAJOR, V_MINOR, V_SUBMINOR);
-}
-
-bool
-Snapshot::matchingFile(const char *path)
-{
-    return isCompatibleFile(path); // , V_MAJOR, V_MINOR, V_SUBMINOR);
 }
 
 bool

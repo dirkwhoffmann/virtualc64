@@ -33,8 +33,6 @@ public:
     
     static bool isCompatibleName(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
-    [[deprecated]] static bool isCompatibleBuffer(const u8 *buf, size_t len);
-    [[deprecated]] static bool isCompatibleFile(const char *path);
     
     
     //
@@ -61,8 +59,6 @@ public:
     
     FileType type() override { return FILETYPE_D64; }
     const char *getName() override;
-    [[deprecated]] bool matchingBuffer(const u8 *buf, size_t len) override;
-    [[deprecated]] bool matchingFile(const char *path) override;
     usize readFromStream(std::istream &stream) override;
 
         

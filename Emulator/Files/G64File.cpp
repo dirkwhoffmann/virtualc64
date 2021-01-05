@@ -26,30 +26,6 @@ G64File::isCompatibleStream(std::istream &stream)
     return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 
-bool
-G64File::isCompatibleBuffer(const u8 *buffer, size_t length)
-{
-    if (length < 0x02AC) return false;
-    return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
-}
-
-bool
-G64File::isCompatibleFile(const char *filename)
-{
-    assert(filename != NULL);
-    
-    if (!checkFileSuffix(filename, ".G64") && !checkFileSuffix(filename, ".g64"))
-        return false;
-    
-    if (!checkFileSize(filename, 0x02AC, -1))
-        return false;
-    
-    if (!matchingFileHeader(filename, magicBytes, sizeof(magicBytes)))
-        return false;
-    
-    return true;
-}
-
 G64File::G64File(size_t capacity)
 {
     assert(capacity > 0);
@@ -141,18 +117,6 @@ G64File::makeWithDisk(Disk *disk)
     
     return make <G64File> (stream);
     // return make <G64File> (buffer, length);
-}
-
-bool
-G64File::matchingBuffer(const u8 *buf, size_t len)
-{
-    return isCompatibleBuffer(buf, len);
-}
-
-bool
-G64File::matchingFile(const char *path)
-{
-    return isCompatibleFile(path);
 }
 
 void
