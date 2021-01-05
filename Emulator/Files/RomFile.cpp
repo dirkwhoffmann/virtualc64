@@ -123,7 +123,6 @@ RomFile::identifier(u64 fnv)
         case 0x0000000000000000: return ROM_MISSING;
             
         case 0x20765FEA67A8762D: return BASIC_COMMODORE;
-        case 0x2e2a8ba6b516d316: return BASIC_MEGA65;
                         
         case 0xACC576F7B332AC15: return CHAR_COMMODORE;
         case 0x3CA9D37AA3DE0969: return CHAR_SWEDISH_C2D007;
@@ -154,7 +153,6 @@ RomFile::identifier(u64 fnv)
         case 0x7E0A124C3F192818: return KERNAL_DATEL_V32;
         case 0x211EAC45AB03A2CA: return KERNAL_EXOS_V3;
         case 0xF2A39FF166D338AE: return KERNAL_TURBO_TAPE;
-        case 0x921c11f1c5ad1544: return KERNAL_MEGA65;
             
         case 0x44BBA0EAC5898597: return VC1541_II_1987;
         case 0xA1D36980A17C8756: return VC1541_II_NEWTRONIC;
@@ -197,22 +195,6 @@ RomFile::isCommodoreRom(RomIdentifier rev)
 }
 
 bool
-RomFile::isMega65Rom(RomIdentifier rev)
-{
-    switch (rev) {
-            
-        case BASIC_MEGA65:
-        case CHAR_MEGA65:
-        case CHAR_PXLFONT_V23:
-        case KERNAL_MEGA65:
-            return true;
-            
-        default:
-            return false;
-     }
-}
-
-bool
 RomFile::isPatchedRom(RomIdentifier rev)
 {
     switch (rev) {
@@ -252,7 +234,6 @@ RomFile::title(RomIdentifier rev)
         case ROM_UNKNOWN:             return "Unknown";
             
         case BASIC_COMMODORE:         return "Basic Rom";
-        case BASIC_MEGA65:            return "Free Basic Replacement";
             
         case CHAR_COMMODORE:
         case CHAR_SWEDISH_C2D007:
@@ -283,7 +264,6 @@ RomFile::title(RomIdentifier rev)
         case KERNAL_DATEL_V32:
         case KERNAL_EXOS_V3:
         case KERNAL_TURBO_TAPE:       return "Patched Kernal Rom";
-        case KERNAL_MEGA65:           return "Free Kernal Replacement";
             
         case VC1541_II_1987:        
         case VC1541_II_NEWTRONIC:
@@ -303,7 +283,6 @@ RomFile::subTitle(RomIdentifier rev)
     switch (rev) {
             
         case BASIC_COMMODORE:         return "Generic C64";
-        case BASIC_MEGA65:            return "M.E.G.A. C64 OpenROM";
             
         case CHAR_COMMODORE:          return "Generic C64";
         case CHAR_SWEDISH_C2D007:     return "Swedish C64 (C2D007)";
@@ -334,7 +313,6 @@ RomFile::subTitle(RomIdentifier rev)
         case KERNAL_DATEL_V32:        return "Datel Rom";
         case KERNAL_EXOS_V3:          return "Exos Rom";
         case KERNAL_TURBO_TAPE:       return "Turbo Tape";
-        case KERNAL_MEGA65:           return "M.E.G.A. C64 OpenROM";
             
         case VC1541_II_1987:          return "VC1541-II (1987)";
         case VC1541_II_NEWTRONIC:     return "VC1541-II (Newtronic motor)";
@@ -354,7 +332,6 @@ RomFile::revision(RomIdentifier rev)
     switch (rev) {
             
         case BASIC_COMMODORE:         return "V2";
-        case BASIC_MEGA65:            return "";
             
         case CHAR_COMMODORE:          return "V1";
         case CHAR_SWEDISH_C2D007:     return "";
@@ -385,7 +362,6 @@ RomFile::revision(RomIdentifier rev)
         case KERNAL_DATEL_V32:        return "V3.2+";
         case KERNAL_EXOS_V3:          return "V3";
         case KERNAL_TURBO_TAPE:       return "V0.1";
-        case KERNAL_MEGA65:           return "";
             
         case VC1541_II_1987:          return "";
         case VC1541_II_NEWTRONIC:     return "";

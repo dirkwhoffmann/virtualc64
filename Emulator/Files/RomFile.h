@@ -43,7 +43,6 @@ public:
     static bool isKernalRomStream(std::istream &stream);
     static bool isVC1541RomStream(std::istream &stream);
     
-    // Returns true if path points to a ROM image
     static bool isBasicRomFile(const char *path);
     static bool isCharRomFile(const char *path);
     static bool isKernalRomFile(const char *path);
@@ -54,7 +53,6 @@ public:
 
     // Classifies a ROM identifier by type
     static bool isCommodoreRom(RomIdentifier rev);
-    static bool isMega65Rom(RomIdentifier rev);
     static bool isPatchedRom(RomIdentifier rev);
 
     // Provides information about known ROMs

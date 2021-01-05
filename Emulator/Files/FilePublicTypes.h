@@ -36,7 +36,6 @@ enum_long(ROM_IDENTIFIER)
     
     // Basic Roms
     BASIC_COMMODORE,
-    BASIC_MEGA65,
 
     // Character Roms
     CHAR_COMMODORE,
@@ -69,7 +68,6 @@ enum_long(ROM_IDENTIFIER)
     KERNAL_DATEL_V32,
     KERNAL_EXOS_V3,
     KERNAL_TURBO_TAPE,
-    KERNAL_MEGA65,
 
     // VC1541 Roms
     VC1541_II_1987,

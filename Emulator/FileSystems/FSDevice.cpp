@@ -43,7 +43,7 @@ FSDevice::makeWithD64(D64File *d64, FSError *err)
     FSDevice *device = makeWithFormat(descriptor);
 
     // Import file system
-    if (!device->importVolume(d64->getData(), d64->getSize(), err)) {
+    if (!device->importVolume(d64->data, d64->size, err)) {
         delete device;
         return nullptr;
     }

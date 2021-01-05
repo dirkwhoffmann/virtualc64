@@ -29,12 +29,6 @@ AnyFile::~AnyFile()
     if (data) delete[] data;
 }
 
-void
-AnyFile::setPath(string path)
-{
-    this->path = path;
-}
-
 PETName<16>
 AnyFile::getName()
 {
@@ -74,7 +68,7 @@ AnyFile::readFromFile(const char *path)
     usize result = readFromStream(stream);
     assert(result == size);
     
-    setPath(path);
+    this->path = path;
     return size;
 }
 

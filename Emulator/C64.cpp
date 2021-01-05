@@ -1343,7 +1343,8 @@ C64::hasMega65Rom(RomType type)
         }
         case ROM_TYPE_CHAR:
         {
-            return RomFile::isMega65Rom(romIdentifier(ROM_TYPE_CHAR));
+            auto id = romIdentifier(ROM_TYPE_CHAR);
+            return id == CHAR_MEGA65 || id == CHAR_PXLFONT_V23;
         }
         case ROM_TYPE_KERNAL:
         {

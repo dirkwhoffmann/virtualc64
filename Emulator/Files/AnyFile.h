@@ -16,7 +16,7 @@
 // Base class for all supported media file formats (D64, T64, PRG, etc.)
 class AnyFile : public C64Object {
     
-protected:
+public:
 	     
     // Physical location of this file
     string path = "";
@@ -74,35 +74,23 @@ public:
 
     
     //
-    // Accessing file attributes
+    // Accessing
     //
     
 public:
     
-    // Returns a pointer to the raw data of this file
-    u8 *getData() { return data; }
-
-    // Returns the file size in bytes
-    usize getSize() { return size; }
-    
-    // Returns the type of this file
-    virtual FileType type() { return FILETYPE_UNKNOWN; }
-    
-	// Returns the physical name of this file
-    string getPath() { return path; }
-
-    // Sets the physical name of this file
-    void setPath(string path);
-
     // Returns the logical name of this file
     virtual PETName<16> getName();
- 
-    // Returns a unique fingerprint for this file
+
+    // Returns the media type of this file
+    virtual FileType type() { return FILETYPE_UNKNOWN; }
+     
+    // Returns a unique fingerprint
     u64 fnv();
     
     
     //
-    // Flashing file data
+    // Flashing data
     //
 
     // Copies the file contents into a buffer starting at the provided offset
@@ -132,10 +120,9 @@ public:
     
 public:
     
-    /* Some media files (CRTs, TAPs, T64s) contain known inconsistencies in
-     * their header signature. Some subclasses overwrite this function to
-     * provide a standardized place where those error can be fixed.
+    /* This function is called in the default implementation of readFromStream.
+     * It is overwritten by some subclasses to fix known inconsistencies in
+     * certain media files.
      */
-    virtual void repair() { };
-    
+    virtual void repair() { };    
 };

@@ -1507,7 +1507,7 @@ struct AnyFileWrapper { AnyFile *file; };
 - (void)setPath:(NSString *)path
 {
     AnyFile *file = (AnyFile *)([self wrapper]->file);
-    file->setPath([path UTF8String]);
+    file->path = [path UTF8String];
 }
 
 - (AnyFileWrapper *)wrapper

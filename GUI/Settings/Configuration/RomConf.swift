@@ -15,7 +15,6 @@ struct Rom {
 
     // Basic Roms
     static let basic_commodore         = 0x20765FEA67A8762D as UInt64
-    static let basic_mega65_generic    = 0xF5E925DCABE2D3F0 as UInt64
 
     // Character Roms
     static let char_commodore          = 0xACC576F7B332AC15 as UInt64
@@ -47,7 +46,6 @@ struct Rom {
     static let kernal_datel_v32        = 0x7E0A124C3F192818 as UInt64
     static let kernal_exos_v3          = 0x211EAC45AB03A2CA as UInt64
     static let kernal_turbo_tape       = 0xF2A39FF166D338AE as UInt64
-    static let kernal_mega65_generic   = 0xCB54D7934B99ADAC as UInt64
 
     // VC1541 Roms
     static let vc1541_II_1987          = 0x44BBA0EAC5898597 as UInt64
@@ -62,8 +60,7 @@ struct Rom {
 let knownBasicRoms: [UInt64: String] = [
 
     Rom.missing:                 "This 8 KB Rom contains Commodore's Basic interpreter.",
-    Rom.basic_commodore:         "Commodore 64 Basic V2",
-    Rom.basic_mega65_generic:    "M.E.G.A. C64 OpenROM"
+    Rom.basic_commodore:         "Commodore 64 Basic V2"
 ]
 
 let knownCharacterRoms: [UInt64: String] = [
@@ -100,8 +97,7 @@ let knownKernalRoms: [UInt64: String] = [
     Rom.kernal_turbo_rom:        "Cockroach Turbo-ROM V1",
     Rom.kernal_datel_v32:        "Datel Electronics Turbo Rom II 3.2+",
     Rom.kernal_exos_v3:          "Exos Kernal ROM V3",
-    Rom.kernal_turbo_tape:       "Turbo Tape ROM V0.1 (2007)",
-    Rom.kernal_mega65_generic:   "M.E.G.A. C64 OpenROM"
+    Rom.kernal_turbo_tape:       "Turbo Tape ROM V0.1 (2007)"
 ]
 
 let knownVc1541Roms: [UInt64: String] = [
@@ -114,13 +110,6 @@ let knownVc1541Roms: [UInt64: String] = [
     Rom.vc1541_II_reloc_patch:   "1541-II firmware with relocation patch",
     Rom.vc1541_II_jiffy:         "1541-II firmware (JiffyDOS patch)",
     Rom.vc1541_II_jiffy_v600:    "1541-II firmware (JiffyDOS patch 6.00)"
-]
-
-let megaRoms: [UInt64] = [
-
-    Rom.basic_mega65_generic,
-    Rom.char_mega65_generic,
-    Rom.kernal_mega65_generic
 ]
 
 extension ConfigurationController {

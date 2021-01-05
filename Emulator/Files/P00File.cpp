@@ -49,7 +49,7 @@ P00File::makeWithFileSystem(FSDevice *fs, int item)
     debug(FILE_DEBUG, "File size = %zu\n", fileSize);
     
     // Write magic bytes (8 bytes)
-    u8 *p = p00->getData();
+    u8 *p = p00->data;
     strcpy((char *)p, "C64File");
     p += 8;
     

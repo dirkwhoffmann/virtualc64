@@ -61,7 +61,7 @@ T64File::makeWithFileSystem(class FSDevice *fs)
     //
     
     // Magic bytes (32 bytes)
-    u8 *ptr = t64->getData();
+    u8 *ptr = t64->data;
     strncpy((char *)ptr, "C64 tape image file", 32);
     ptr += 32;
     
@@ -86,7 +86,7 @@ T64File::makeWithFileSystem(class FSDevice *fs)
     name.write(ptr);
     ptr += 24;
     
-    assert(ptr - t64->getData() == 64);
+    assert(ptr - t64->data == 64);
     
     //
     // Tape entries

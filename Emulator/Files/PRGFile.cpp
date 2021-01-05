@@ -38,7 +38,7 @@ PRGFile::makeWithFileSystem(FSDevice *fs, int item)
     PRGFile *prg = new PRGFile(itemSize);
                 
     // Add data
-    fs->copyFile(item, prg->getData(), itemSize);
+    fs->copyFile(item, prg->data, itemSize);
     
     return prg;
 }
