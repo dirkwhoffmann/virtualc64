@@ -1538,9 +1538,15 @@ struct AnyFileWrapper { AnyFile *file; };
 {
     return wrapper->file->writeToBuffer((u8 *)buffer);
 }
-- (BOOL)writeToFile:(NSString *)path
+
+- (NSInteger)writeToFile:(NSString *)path error:(ErrorCode *)err
 {
-    return wrapper->file->writeToFile([path fileSystemRepresentation]);
+    NSInteger result = 0;
+    
+    try { result = wrapper->file->writeToFile([path fileSystemRepresentation]); }
+    catch (Error &exception) { *err = exception.errorCode; }
+    
+    return result;
 }
 
 - (void) dealloc

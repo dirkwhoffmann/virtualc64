@@ -215,24 +215,22 @@ AnyFile::readFromBuffer(const u8 *buf, size_t len)
     memcpy(data, buf, len);
 }
 
-size_t
-AnyFile::writeToBuffer(u8 *buffer)
+usize
+AnyFile::writeToBuffer(u8 *buf)
 {
     assert(data);
     
-    if (buffer) {
-        memcpy(buffer, data, size);
+    if (buf) {
+        memcpy(buf, data, size);
     }
     return size;
 }
 
-bool 
+usize
 AnyFile::writeToFile(const char *filename)
 {
-	bool success = false;
-	u8 *data = NULL;
 	FILE *file;
-	size_t filesize;
+	usize filesize;
    
     // Determine file size
     filesize = writeToBuffer(NULL);
@@ -242,34 +240,29 @@ AnyFile::writeToFile(const char *filename)
 	// Open file
     assert (filename != NULL);
 	if (!(file = fopen(filename, "w"))) {
-		goto exit;
+        throw Error(ERROR_CANT_WRITE);
 	}
 		
 	// Allocate memory
-    if (!(data = new u8[filesize])) {
-		goto exit;
-	}
+    u8 *buf = nullptr;
+    if (!(buf = new u8[filesize])) {
+        fclose(file);
+        throw Error(ERROR_OUT_OF_MEMORY);
+    }
 	
 	// Write to buffer 
-	if (!writeToBuffer(data)) {
-		goto exit;
-	}
-
-	// Write to file
-	for (unsigned i = 0; i < filesize; i++) {
-		fputc(data[i], file);
-	}	
-	
-	success = true;
-
-exit:
-		
-	if (file)
-        fclose(file);
-	if (data)
-        delete[] data;
-		
-	return success;
+    usize written = writeToBuffer(buf);
+    assert(written == filesize);
+    
+    // Write to file
+    for (unsigned i = 0; i < filesize; i++) {
+        fputc(buf[i], file);
+    }
+    
+    fclose(file);
+    delete[] buf;
+    
+    return written;
 }
 
 

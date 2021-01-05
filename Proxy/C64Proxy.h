@@ -240,9 +240,6 @@ struct AnyFileWrapper;
 - (BOOL) isCommodoreRom:(RomIdentifier)rev;
 - (BOOL) isPatchedRom:(RomIdentifier)rev;
 
-// - (BOOL) isRom:(NSURL *)url;
-// - (BOOL) loadRom:(NSURL *)url;
-
 // Flashing files
 - (BOOL)flash:(AnyFileProxy *)container;
 - (BOOL)flash:(AnyCollectionProxy *)proxy item:(NSInteger)nr;
@@ -732,7 +729,7 @@ struct AnyFileWrapper;
 - (NSInteger)sizeOnDisk;
 - (u64) fnv;
 - (NSInteger)writeToBuffer:(void *)buffer;
-- (BOOL)writeToFile:(NSString *)path;
+- (NSInteger)writeToFile:(NSString *)path error:(ErrorCode *)err;
 
 @end
 

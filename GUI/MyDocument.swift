@@ -307,6 +307,7 @@ class MyDocument: NSDocument {
     override open func read(from url: URL, ofType typeName: String) throws {
         
         track()
+        
         do {
             try createAttachment(from: url)
         } catch let error as MyError {
@@ -317,6 +318,7 @@ class MyDocument: NSDocument {
     override open func revert(toContentsOf url: URL, ofType typeName: String) throws {
         
         track()
+        
         do {
             try createAttachment(from: url)
             mountAttachment()
@@ -329,6 +331,25 @@ class MyDocument: NSDocument {
     // Saving
     //
     
+    override func write(to url: URL, ofType typeName: String) throws {
+            
+        track()
+        
+        if typeName == "VC64" {
+            
+            // Take snapshot
+            if let snapshot = SnapshotProxy.make(withC64: c64) {
+
+                // Write to data buffer
+                do {
+                    _ = try snapshot.writeToFile(url: url)
+                } catch {
+                    throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
+                }
+            }
+        }
+    }
+    /*
     override open func data(ofType typeName: String) throws -> Data {
         
         track("Trying to write \(typeName) file.")
@@ -348,6 +369,7 @@ class MyDocument: NSDocument {
         
         throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
     }
+    */
     
     //
     // Exporting disks

@@ -41,14 +41,26 @@ extension C64Proxy {
 
         var err = ErrorCode.OK
         loadRom(type, url: url, error: &err)
-        if err != ErrorCode.OK { throw MyError(err) }
+        if err != .OK { throw MyError(err) }
     }
 
     func loadRom(type: RomType, data: Data?) throws {
 
         var err = ErrorCode.OK
         loadRom(type, data: data, error: &err)
-        if err != ErrorCode.OK { throw MyError(err) }
+        if err != .OK { throw MyError(err) }
+    }
+}
+
+extension AnyFileProxy {
+    
+    func writeToFile(url: URL) throws -> Int {
+        
+        var err = ErrorCode.OK
+        let result = write(toFile: url.path, error: &err)
+        if err != .OK { throw MyError(err) }
+        
+        return result
     }
 }
 
