@@ -1525,11 +1525,6 @@ struct AnyFileWrapper { AnyFile *file; };
     return [NSString stringWithUTF8String:wrapper->file->getName()];
 }
 
-- (NSInteger) sizeOnDisk
-{
-    return wrapper->file->sizeOnDisk();
-}
-
 - (u64) fnv
 {
     return wrapper->file->fnv();
@@ -1634,12 +1629,6 @@ struct AnyFileWrapper { AnyFile *file; };
 - (time_t)timeStamp
 {
     return ((Snapshot *)wrapper->file)->getTimestamp();
-}
-- (NSData *)data
-{
-    Snapshot *snapshot = (Snapshot *)wrapper->file;
-    return [NSData dataWithBytes: (void *)snapshot->getHeader()
-                          length: snapshot->sizeOnDisk()];
 }
 
 @end

@@ -102,8 +102,6 @@ public:
     // Serializing
     //
     
-    // Returns the required buffer size for this file
-    size_t sizeOnDisk() { return writeToBuffer(nullptr); }
 
     /* Returns true iff this specified buffer is compatible with this object.
      * This function is used in readFromBuffer().
@@ -117,28 +115,14 @@ public:
 
 protected:
 
-    /* Deserializes the object from a file, a buffer, or a stream. In case of
-     * success, the number of read bytes is returned. In case of error, an
-     * exception is thrown.
-     */
     usize readFromFile(const char *path) throws;
     usize readFromBuffer(const u8 *buf, size_t len) throws;
     virtual usize readFromStream(std::istream &stream) throws;
 
 public:
     
-    /* Writes the file contents into a memory buffer. By passing a null pointer,
-     * a test run is performed. Test runs are used to determine how many bytes
-     * will be written.
-     */
-	virtual size_t writeToBuffer(u8 *buf) throws;
-
-    /* Writes the file contents to a file. This function requires no custom
-     * implementation. It invokes writeToBuffer first and writes the data to
-     * disk afterwards.
-     */
-	virtual size_t writeToFile(const char *path) throws;
-
+    usize writeToFile(const char *path) throws;
+    // usize writeToBuffer(u8 **buf) throws;
     virtual usize writeToStream(std::ostream &stream) throws;
     
 

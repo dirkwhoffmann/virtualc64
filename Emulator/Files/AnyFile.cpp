@@ -187,16 +187,22 @@ AnyFile::readFromStream(std::istream &stream)
     return size;
 }
 
+/*
 usize
-AnyFile::writeToBuffer(u8 *buf)
+AnyFile::writeToBuffer(u8 **buf)
 {
-    assert(data);
+    assert(buf);
+
+    std::ostringstream stream;
+    usize len = writeToStream(stream);
     
-    if (buf) {
-        memcpy(buf, data, size);
-    }
-    return size;
+    char *data = new u8[len];
+    stream.write(data, len);
+    
+    *buf = (u8 *)data;
+    return len;
 }
+*/
 
 usize
 AnyFile::writeToFile(const char *path)

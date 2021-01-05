@@ -726,7 +726,6 @@ struct AnyFileWrapper;
 - (FileType)type;
 - (void)setPath:(NSString *)path;
 - (NSString *)name;
-- (NSInteger)sizeOnDisk;
 - (u64) fnv;
 - (NSInteger)writeToFile:(NSString *)path error:(ErrorCode *)err;
 
@@ -758,7 +757,6 @@ struct AnyFileWrapper;
 
 @property (readonly, strong) NSImage *previewImage;
 @property (readonly) time_t timeStamp;
-@property (readonly, copy) NSData *data;
 
 @end
 
