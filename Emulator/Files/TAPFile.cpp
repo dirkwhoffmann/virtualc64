@@ -13,18 +13,25 @@ const u8 TAPFile::magicBytes[] = {
     0x43, 0x36, 0x34, 0x2D, 0x54, 0x41, 0x50, 0x45, 0x2D, 0x52, 0x41, 0x57 };
 
 bool
+TAPFile::isCompatibleName(const std::string &name)
+{
+    auto s = suffix(name);
+    return s == "tap" || s == "TAP" || s == "t64" || s == "T64";
+}
+
+bool
+TAPFile::isCompatibleStream(std::istream &stream)
+{
+    if (streamLength(stream) < 0x15) return false;
+    return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
+}
+
+bool
 TAPFile::isCompatibleBuffer(const u8 *buffer, size_t length)
 {
     if (length < 0x15) return false;
     return matchingBufferHeader(buffer, magicBytes, sizeof(magicBytes));
     // return checkBufferHeader(buffer, length, magicBytes);
-}
-
-bool
-TAPFile::isCompatibleName(const std::string &name)
-{
-    auto s = suffix(name);
-    return s == "tap" || s == "TAP" || s == "t64" || s == "T64";
 }
 
 bool

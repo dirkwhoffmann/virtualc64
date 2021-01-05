@@ -31,9 +31,14 @@ AnyFile::make(const u8 *buffer, size_t length)
     return obj;
 }
 
+/*
 template <class T> T *
 AnyFile::make(const char *path)
 {
+    if (!T::isCompatibleName(path)) {
+        throw Error(ERROR_INVALID_TYPE);
+    }
+    
     T *obj = new T();
     
     try { obj->readFromFile(path); } catch (Error &err) {
@@ -43,6 +48,7 @@ AnyFile::make(const char *path)
 
     return obj;
 }
+*/
 
 template <class T> T *
 AnyFile::make(FILE *file)
