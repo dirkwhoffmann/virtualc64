@@ -135,7 +135,12 @@ G64File::makeWithDisk(Disk *disk)
     }
     assert(pos == length);
     
-    return make <G64File> (buffer, length);
+    std::stringstream stream;
+    stream.write((char *)buffer, length);
+    stream.seekg(0, std::ios::beg);
+    
+    return make <G64File> (stream);
+    // return make <G64File> (buffer, length);
 }
 
 bool

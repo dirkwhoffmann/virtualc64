@@ -40,10 +40,6 @@ protected:
     
 public:
     
-    template <class T> static T *make(const u8 *buf, size_t len);
-    
-    template <class T> static T *make(FILE *file);
-
     template <class T> static T *make(std::istream &stream)
     {
         if (!T::isCompatibleStream(stream)) throw Error(ERROR_INVALID_TYPE);
@@ -57,6 +53,13 @@ public:
         return obj;
     }
 
+    template <class T> static T *make(const u8 *buf, size_t len)
+    {
+        std::stringstream stream;
+        stream.write((const char *)buf, len);
+        return make <T> (stream);
+    }
+    
     template <class T> static T *make(const char *path)
     {
         std::ifstream stream(path);

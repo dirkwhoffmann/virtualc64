@@ -18,51 +18,6 @@
 #include "D64File.h"
 #include "G64File.h"
 
-template <class T> T *
-AnyFile::make(const u8 *buffer, size_t length)
-{
-    T *obj = new T();
-    
-    try { obj->readFromBuffer(buffer, length); } catch (Error &err) {
-        delete obj;
-        throw err;
-    }
-    
-    return obj;
-}
-
-/*
-template <class T> T *
-AnyFile::make(const char *path)
-{
-    if (!T::isCompatibleName(path)) {
-        throw Error(ERROR_INVALID_TYPE);
-    }
-    
-    T *obj = new T();
-    
-    try { obj->readFromFile(path); } catch (Error &err) {
-        delete obj;
-        throw err;
-    }
-
-    return obj;
-}
-*/
-
-template <class T> T *
-AnyFile::make(FILE *file)
-{
-    T *obj = new T();
-    
-    try { obj->readFromFile(file); } catch (Error &err) {
-        delete obj;
-        throw err;
-    }
-    
-    return obj;
-}
-
 AnyFile::AnyFile()
 {
     const char *defaultName = "HELLO VIRTUALC64";
@@ -226,28 +181,3 @@ AnyFile::writeToStream(std::ostream &stream)
     stream.write((char *)data, size);
     return size;
 }
-
-
-//
-// Instantiate template functions
-//
-
-template Snapshot* AnyFile::make <Snapshot> (const u8 *, size_t);
-template RomFile* AnyFile::make <RomFile> (const u8 *, size_t);
-template TAPFile* AnyFile::make <TAPFile> (const u8 *, size_t);
-template CRTFile* AnyFile::make <CRTFile> (const u8 *, size_t);
-template T64File* AnyFile::make <T64File> (const u8 *, size_t);
-template PRGFile* AnyFile::make <PRGFile> (const u8 *, size_t);
-template P00File* AnyFile::make <P00File> (const u8 *, size_t);
-template D64File* AnyFile::make <D64File> (const u8 *, size_t);
-template G64File* AnyFile::make <G64File> (const u8 *, size_t);
-
-template Snapshot* AnyFile::make <Snapshot> (const char *);
-template RomFile* AnyFile::make <RomFile> (const char *);
-template TAPFile* AnyFile::make <TAPFile> (const char *);
-template CRTFile* AnyFile::make <CRTFile> (const char *);
-template T64File* AnyFile::make <T64File> (const char *);
-template PRGFile* AnyFile::make <PRGFile> (const char *);
-template P00File* AnyFile::make <P00File> (const char *);
-template D64File* AnyFile::make <D64File> (const char *);
-template G64File* AnyFile::make <G64File> (const char *);
