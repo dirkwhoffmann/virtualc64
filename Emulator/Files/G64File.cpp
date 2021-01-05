@@ -150,44 +150,15 @@ G64File::getSizeOfHalftrack(Halftrack ht)
     return offset ? LO_HI(data[offset], data[offset+1]) : 0;
 }
 
-int
-G64File::readHalftrack(Halftrack ht)
-{
-    int result;
-    
-    assert(tEof <= (long)size);
-    
-    if (tFp < 0)
-        return -1;
-    
-    // Get byte
-    result = data[tFp++];
-    
-    // Check for end of file
-    if (tFp == tEof)
-        tFp = -1;
-    
-    return result;
-}
-
 void
-G64File::copyHalftrack(Halftrack ht, u8 *buffer, usize offset)
+G64File::copyHalftrack(Halftrack ht, u8 *buf)
 {
-    assert(buffer);
-
-    seekHalftrack(ht, 0);
+    assert(buf);
 
     usize start = getStartOfHalftrack(ht) + 2;
     usize len = getSizeOfHalftrack(ht);
     
-    memcpy(buffer + offset, data + start, len);
-    /*
-    
-    int byte;
-    while ((byte = readHalftrack(ht)) != EOF) {
-        buffer[offset++] = (u8)byte;
-    }
-    */
+    memcpy(buf, data + start, len);
 }
 
 usize

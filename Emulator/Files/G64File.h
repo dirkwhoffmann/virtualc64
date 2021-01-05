@@ -15,13 +15,13 @@
 class G64File : public AnyFile {
 
     // Number of the currently selected halftrack (0 = nothing selected)
-    Halftrack selectedHalftrack = 0;
+    [[deprecated]] Halftrack selectedHalftrack = 0;
  
     // File pointer. An offset into the data range of the selected track
-    long tFp = -1;
+    [[deprecated]] long tFp = -1;
     
     // End of file position. This value equals the last valid offset plus 1
-    long tEof = -1;
+    [[deprecated]] long tEof = -1;
 
 public:
 
@@ -58,7 +58,7 @@ public:
     
     int numberOfHalftracks() { return 84; }
     
-    void selectHalftrack(Halftrack ht);
+    [[deprecated]] void selectHalftrack(Halftrack ht);
 
     
     //
@@ -69,13 +69,10 @@ public:
     usize getSizeOfHalftrack(Halftrack ht);
 
     // Moves the file pointer to the specified offset
-    void seekHalftrack(Halftrack ht, long offset);
-
-    // Reads a byte from a certain halftrack track (-1 = EOF)
-    [[deprecated]] int readHalftrack(Halftrack ht);
+    [[deprecated]] void seekHalftrack(Halftrack ht, long offset);
         
     // Copies a certain track into a buffer
-    void copyHalftrack(Halftrack ht, u8 *buf, usize offset = 0);
+    void copyHalftrack(Halftrack ht, u8 *buf);
     
 private:
     

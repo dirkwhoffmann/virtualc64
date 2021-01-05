@@ -736,7 +736,6 @@ Disk::encodeG64(G64File *a)
     clearDisk();
     for (Halftrack ht = 1; ht <= 84; ht++) {
         
-        a->selectHalftrack(ht);
         u16 size = a->getSizeOfHalftrack(ht);
         
         if (size == 0) {
