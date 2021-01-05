@@ -139,6 +139,8 @@ public:
      */
 	virtual size_t writeToFile(const char *path) throws;
 
+    virtual usize writeToStream(std::ostream &stream) throws;
+    
 
     //
     // Repairing

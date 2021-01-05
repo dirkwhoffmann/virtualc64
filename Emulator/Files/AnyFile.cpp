@@ -199,42 +199,27 @@ AnyFile::writeToBuffer(u8 *buf)
 }
 
 usize
-AnyFile::writeToFile(const char *filename)
+AnyFile::writeToFile(const char *path)
 {
-	FILE *file;
-	usize filesize;
-   
-    // Determine file size
-    filesize = writeToBuffer(NULL);
-    if (filesize == 0)
-        return false;
-    
-	// Open file
-    assert (filename != NULL);
-	if (!(file = fopen(filename, "w"))) {
+    assert(path);
+        
+    std::ofstream stream(path);
+
+    if (!stream.is_open()) {
         throw Error(ERROR_CANT_WRITE);
-	}
-		
-	// Allocate memory
-    u8 *buf = nullptr;
-    if (!(buf = new u8[filesize])) {
-        fclose(file);
-        throw Error(ERROR_OUT_OF_MEMORY);
-    }
-	
-	// Write to buffer 
-    usize written = writeToBuffer(buf);
-    assert(written == filesize);
-    
-    // Write to file
-    for (unsigned i = 0; i < filesize; i++) {
-        fputc(buf[i], file);
     }
     
-    fclose(file);
-    delete[] buf;
+    usize result = writeToStream(stream);
+    assert(result == size);
     
-    return written;
+    return size;
+}
+
+usize
+AnyFile::writeToStream(std::ostream &stream)
+{
+    stream.write((char *)data, size);
+    return size;
 }
 
 
