@@ -68,6 +68,12 @@ public:
     
 public:
     
+    // Returns a pointer to the raw data of this file
+    u8 *getData() { return data; }
+
+    // Returns the file size in bytes
+    size_t getSize() { return size; }
+    
     // Returns the type of this file
     virtual FileType type() { return FILETYPE_UNKNOWN; }
     
@@ -85,19 +91,11 @@ public:
     
     
     //
-    // Reading file data
+    // Flashing file data
     //
 
-    // Returns a pointer to the raw data of this file
-    u8 *getData() { return data; }
-
-    // Returns the file size in bytes
-    virtual size_t getSize() { return size; }
-
-    /* Copies the file contents into C64 memory starting at 'offset'. 'buffer'
-     * must be a pointer to RAM or ROM.
-     */
-    virtual void flash(u8 *buffer, size_t offset = 0);
+    // Copies the file contents into a buffer starting at the provided offset
+    void flash(u8 *buffer, size_t offset = 0);
 
     
     //
@@ -110,7 +108,7 @@ public:
     /* Returns true iff this specified buffer is compatible with this object.
      * This function is used in readFromBuffer().
      */
-    virtual bool matchingBuffer(const u8 *buffer, size_t length) { return false; }
+    [[deprecated]] virtual bool matchingBuffer(const u8 *buffer, size_t length) { return false; }
     
     /* Checks whether this file has the same type as the file stored in the
      * specified file.
@@ -119,22 +117,14 @@ public:
 
 protected:
 
-    virtual usize readFromStream(std::istream &stream) throws;
-    
-    /* Deserializes this object from a memory buffer. This function uses
-     * matchingBuffer() to verify that the buffer contains a compatible
-     * binary representation.
-     */
-    usize readFromBuffer(const u8 *buf, size_t len) throws;
-    
-    /* Deserializes this object from a file. This function uses
-     * matchingFile() to verify that the file contains a compatible binary
-     * representation. This function requires no custom implementation. It
-     * first reads in the file contents in memory and invokes readFromBuffer
-     * afterwards.
+    /* Deserializes the object from a file, a buffer, or a stream. In case of
+     * success, the number of read bytes is returned. In case of error, an
+     * exception is thrown.
      */
     usize readFromFile(const char *path) throws;
-    
+    usize readFromBuffer(const u8 *buf, size_t len) throws;
+    virtual usize readFromStream(std::istream &stream) throws;
+
 public:
     
     /* Writes the file contents into a memory buffer. By passing a null pointer,

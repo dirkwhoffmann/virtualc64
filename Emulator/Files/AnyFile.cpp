@@ -136,27 +136,6 @@ AnyFile::flash(u8 *buffer, size_t offset)
 }
 
 usize
-AnyFile::readFromStream(std::istream &stream)
-{
-    // Get stream size
-    auto fsize = stream.tellg();
-    stream.seekg(0, std::ios::end);
-    fsize = stream.tellg() - fsize;
-    stream.seekg(0, std::ios::beg);
-        
-    printf("size = %zu\n", (usize)fsize);
-            
-    // Read from stream
-    if (!alloc((usize)fsize)) {
-        throw Error(ERROR_OUT_OF_MEMORY);
-    }
-    assert((usize)fsize == size);
-    stream.read((char *)data, size);
-    
-    return size;
-}
-
-usize
 AnyFile::readFromFile(const char *path)
 {
     assert(path);
@@ -183,6 +162,28 @@ AnyFile::readFromBuffer(const u8 *buf, size_t len)
     
     usize result = readFromStream(stream);
     assert(result == size);
+    return size;
+}
+
+usize
+AnyFile::readFromStream(std::istream &stream)
+{
+    // Get stream size
+    auto fsize = stream.tellg();
+    stream.seekg(0, std::ios::end);
+    fsize = stream.tellg() - fsize;
+    stream.seekg(0, std::ios::beg);
+                    
+    // Read from stream
+    if (!alloc((usize)fsize)) {
+        throw Error(ERROR_OUT_OF_MEMORY);
+    }
+    assert((usize)fsize == size);
+    stream.read((char *)data, size);
+    
+    // Repair the file (if applicable)
+    repair();
+    
     return size;
 }
 
