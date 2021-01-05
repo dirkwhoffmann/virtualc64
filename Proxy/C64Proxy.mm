@@ -1270,6 +1270,12 @@ struct AnyFileWrapper { AnyFile *file; };
     wrapper->drive->insertD64(d64);
 }
 
+- (void) insertG64:(G64FileProxy *)proxy
+{
+    G64File *g64 = (G64File *)([proxy wrapper]->file);
+    wrapper->drive->insertG64(g64);
+}
+
 - (void) insertFileSystem:(FSDeviceProxy *)proxy
 {
     FSDevice *device = (FSDevice *)([proxy wrapper]->device);
@@ -1916,56 +1922,6 @@ struct AnyFileWrapper { AnyFile *file; };
 //
 
 @implementation AnyDiskProxy
-
-+ (instancetype) make:(AnyDisk *)disk
-{
-    if (disk == NULL) return nil;
-    return [[self alloc] initWithFile:disk];
-}
-
-+ (instancetype) make
-{
-    AnyDisk *disk = new AnyDisk();
-    return [self make: disk];
-}
-
-- (NSInteger)numTracks
-{
-    AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
-    return disk->numberOfTracks();
-}
-
-- (NSInteger) numHalftracks
-{
-    AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
-    return disk->numberOfHalftracks();
-}
-
-- (void) selectHalftrack:(NSInteger)ht
-{
-    AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
-    disk->selectHalftrack((unsigned)ht);
-}
-
-- (NSInteger) sizeOfHalftrack
-{
-    AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
-    return disk->getSizeOfHalftrack();
-}
-
-- (void)seekHalftrack:(NSInteger)offset
-{
-    AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
-    return disk->seekHalftrack(offset);
-}
-
-/*
-- (NSString *)readHalftrackHex:(NSInteger)num
-{
-    AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
-    return [NSString stringWithUTF8String:disk->readHalftrackHex(num)];
-}
-*/
 
 @end
 

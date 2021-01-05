@@ -589,6 +589,7 @@ struct AnyFileWrapper;
 - (void) setModifiedDisk:(BOOL)b;
 - (void) insertNewDisk:(DOSType)fstype;
 - (void) insertD64:(D64FileProxy *)disk;
+- (void) insertG64:(G64FileProxy *)disk;
 - (void) insertFileSystem:(FSDeviceProxy *)proxy;
 - (void) insertCollection:(AnyCollectionProxy *)disk;
 - (void) ejectDisk;
@@ -848,16 +849,8 @@ struct AnyFileWrapper;
 @interface AnyDiskProxy : AnyCollectionProxy {
 }
 
-+ (instancetype)make;
-
-@property (readonly) NSInteger numTracks;
-@property (readonly) NSInteger numHalftracks;
-- (void)selectHalftrack:(NSInteger)ht;
-- (NSInteger)sizeOfHalftrack;
-- (void)seekHalftrack:(NSInteger)offset;
-// - (NSString *)readHalftrackHex:(NSInteger)num;
-
 @end
+
 
 //
 // D64File proxy

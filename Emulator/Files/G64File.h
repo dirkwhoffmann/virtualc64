@@ -9,14 +9,20 @@
 
 #pragma once
 
-#include "AnyDisk.h"
+#include "AnyFile.h"
 #include "Disk.h"
 
-class G64File : public AnyDisk {
+class G64File : public AnyFile {
 
     // Number of the currently selected halftrack (0 = nothing selected)
     Halftrack selectedHalftrack = 0;
  
+    // File pointer. An offset into the data range of the selected track
+    long tFp = -1;
+    
+    // End of file position. This value equals the last valid offset plus 1
+    long tEof = -1;
+
 public:
 
     static bool isCompatibleName(const std::string &name);
@@ -29,7 +35,7 @@ public:
     // Initializing
     //
     
-    G64File() : AnyDisk() { };
+    G64File() { };
     G64File(usize capacity);
     
     
@@ -47,13 +53,35 @@ public:
     FileType type() override { return FILETYPE_G64; }
         
     //
-    // Methods from AnyDisk
+    // Selecting tracks or halftracks
     //
     
-    int numberOfHalftracks() override { return 84; }
-    void selectHalftrack(Halftrack ht) override;
-    usize getSizeOfHalftrack() override;
-    void seekHalftrack(long offset) override;
+    int numberOfHalftracks() { return 84; }
+    int numberOfTracks() { return (numberOfHalftracks() + 1) / 2; }
+
+    void selectHalftrack(Halftrack ht);
+    void selectTrack(Track t) { selectHalftrack(2 * t - 1); }
+
+    
+    //
+    // Reading data from a track
+    //
+    
+    // Returns the size of the selected haltrack in bytes
+    usize getSizeOfHalftrack();
+    usize getSizeOfTrack() { return getSizeOfHalftrack(); }
+
+    // Moves the file pointer to the specified offset
+    void seekHalftrack(long offset);
+    void seekTrack(long offset) { seekHalftrack(offset); }
+
+    // Reads a byte from the selected track (-1 = EOF)
+    virtual int readHalftrack();
+    virtual int readTrack() { return readHalftrack(); }
+        
+    // Copies the selected track into the specified buffer
+    virtual void copyHalftrack(u8 *buffer, usize offset = 0);
+    virtual void copyTrack(u8 *buffer, usize offset = 0) { copyHalftrack(buffer, offset); }
     
 private:
     

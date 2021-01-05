@@ -7,6 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#if 0
+
 #pragma once
 
 #include "AnyCollection.h"
@@ -73,3 +75,5 @@ public:
     virtual void copyHalftrack(u8 *buffer, usize offset = 0);
     virtual void copyTrack(u8 *buffer, usize offset = 0) { copyHalftrack(buffer, offset); }
 };
+
+#endif

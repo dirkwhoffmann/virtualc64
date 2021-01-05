@@ -338,6 +338,11 @@ class ImportDialog: DialogController {
             track("Inserting Cartridge")
             c64.expansionport.attachCartridgeAndReset(crt)
             
+        } else if g64 != nil {
+            
+            track("Inserting G64")
+            drive.insertG64(g64)
+
         } else {
             
             fatalError()

@@ -7,6 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#if 0
+
 #include "D64File.h"
 #include "G64File.h"
 
@@ -30,23 +32,6 @@ AnyDisk::readHalftrack()
     return result;
 }
 
-/*
-const char *
-AnyDisk::readHalftrackHex(usize num)
-{
-    assert(sizeof(name) > 3 * num);
-    
-    for (unsigned i = 0; i < num; i++) {
-        
-        int byte = readHalftrack();
-        if (byte == EOF) break;
-        sprintf(name + (3 * i), "%02X ", byte);
-    }
-    
-    return name;
-}
-*/
-
 void
 AnyDisk::copyHalftrack(u8 *buffer, usize offset)
 {
@@ -60,3 +45,5 @@ AnyDisk::copyHalftrack(u8 *buffer, usize offset)
         buffer[offset++] = (u8)byte;
     }
 }
+
+#endif
