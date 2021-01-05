@@ -1602,13 +1602,13 @@ struct AnyFileWrapper { AnyFile *file; };
     // Create preview image
     Snapshot *snapshot = (Snapshot *)wrapper->file;
     
-    NSInteger width = snapshot->getImageWidth();
-    NSInteger height = snapshot->getImageHeight();
-    unsigned char *data = snapshot->getImageData();
+    NSInteger width = snapshot->imageWidth();
+    NSInteger height = snapshot->imageHeight();
+    unsigned char *data = snapshot->imageData();
     
     
     NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
-                             initWithBitmapDataPlanes:&data
+                             initWithBitmapDataPlanes: &data
                              pixelsWide:width
                              pixelsHigh:height
                              bitsPerSample:8
@@ -1628,7 +1628,7 @@ struct AnyFileWrapper { AnyFile *file; };
 }
 - (time_t)timeStamp
 {
-    return ((Snapshot *)wrapper->file)->getTimestamp();
+    return ((Snapshot *)wrapper->file)->timeStamp();
 }
 
 @end
