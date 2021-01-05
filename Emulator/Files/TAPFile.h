@@ -46,8 +46,6 @@ public:
     bool matchingBuffer(const u8 *buf, size_t len) override;
     bool matchingFile(const char *path) override;
     
-    // bool matchingFile(const char *filename) override { return isTAPFile(filename); }
-    void readFromBuffer(const u8 *buffer, size_t length) override;
     
     //
     // Retrieving tape information
@@ -61,4 +59,13 @@ public:
     
     // Returns the size of the data area in bytes
     size_t getDataSize() { return size - 0x14; }
+    
+    
+    //
+    // Repairing
+    //
+    
+public:
+    
+    void repair() override;
 };

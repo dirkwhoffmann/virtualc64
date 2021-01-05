@@ -134,10 +134,6 @@ protected:
      * afterwards.
      */
     void readFromFile(const char *path) throws;
-
-    /* Deserializes this object from a file that is already open.
-     */
-    void readFromFile(FILE *file) throws;
     
 public:
     
@@ -153,5 +149,17 @@ public:
      */
 	virtual size_t writeToFile(const char *path) throws;
 
-    // virtual size_t writeToFile(FILE *file) throws;
+
+    //
+    // Repairing
+    //
+    
+public:
+    
+    /* Some media files (CRTs, TAPs, T64s) contain known inconsistencies in
+     * their header signature. Some subclasses overwrite this function to
+     * provide a standardized place where those error can be fixed.
+     */
+    virtual void repair() { };
+    
 };

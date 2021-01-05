@@ -179,69 +179,6 @@ AnyFile::readFromFile(const char *path)
     setPath(path);
 }
 
-/*
-void
-AnyFile::readFromFile(const char *path)
-{
-    assert(path);
-        
-    // Get properties
-    struct stat fileProperties;
-    if (stat(path, &fileProperties) != 0) {
-        throw Error(ERROR_FILE_NOT_FOUND);
-        return;
-    }
-
-    // Check type
-    if (!matchingFile(path)) {
-        throw Error(ERROR_INVALID_TYPE);
-    }
-
-    // Open
-    FILE *file;
-    if (!(file = fopen(path, "r"))) {
-        throw Error(ERROR_CANT_READ);
-    }
-
-    // Read
-    try { readFromFile(file); }
-    catch (Error &err) { fclose(file); throw err; }
-    fclose(file);
-    
-    setPath(path);
-}
-*/
-
-void
-AnyFile::readFromFile(FILE *file)
-{
-    assert(file);
-    
-    // Get size
-    fseek(file, 0, SEEK_END);
-    size_t size = (size_t)ftell(file);
-    rewind(file);
-    
-    // Allocate memory
-    u8 *buffer = nullptr;
-    if (!(buffer = new u8[size])) {
-        throw Error(ERROR_OUT_OF_MEMORY);
-    }
-
-    // Read from file
-    int c;
-    for (unsigned i = 0; i < size; i++) {
-        if ((c = fgetc(file)) == EOF) break;
-        buffer[i] = (u8)c;
-    }
-    
-    // Read from buffer
-    try { readFromBuffer(buffer, size); }
-    catch (Error &err) { delete[] buffer; throw err; }
-    
-    delete[] buffer;
-}
-
 void
 AnyFile::readFromBuffer(const u8 *buf, size_t len)
 {

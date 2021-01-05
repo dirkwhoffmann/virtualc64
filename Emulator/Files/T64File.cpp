@@ -196,10 +196,8 @@ T64File::matchingFile(const char *path)
 void
 T64File::readFromBuffer(const u8 *buffer, size_t length)
 {
-    AnyFile::readFromBuffer(buffer, length);
-    
-    // Some T64 archives contain incosistencies. We fix them asap
-    (void)repair();
+    AnyFile::readFromBuffer(buffer, length);    
+    repair();
 }
 
 PETName<16>
@@ -292,7 +290,7 @@ T64File::directoryItemIsPresent(int item)
     return false;
 }
 
-bool
+void
 T64File::repair()
 {
     unsigned i, n;
@@ -309,9 +307,10 @@ T64File::repair()
 
         u16 noOfItemsStatedInHeader = collectionCount();
         if (noOfItems != noOfItemsStatedInHeader) {
-        
-            trace(FILE_DEBUG, "Repairing corrupted T64 archive: Changing number of items from %d to %d.\n", noOfItemsStatedInHeader, noOfItems);
-        
+            
+            warn("T64: Changing number of items from %d to %d.\n",
+                  noOfItemsStatedInHeader, noOfItems);
+            
             data[0x24] = LO_BYTE(noOfItems);
             data[0x25] = HI_BYTE(noOfItems);
             
@@ -330,8 +329,8 @@ T64File::repair()
         u16 startAddrInContainer = LO_LO_HI_HI(data[n], data[n+1], data[n+2], data[n+3]);
 
         if (startAddrInContainer >= size) {
-            warn("T64 archive is corrupt (offset mismatch). Sorry, can't repair.\n");
-            return false;
+            warn("T64: Offset mismatch. Sorry, can't repair.\n");
+            return;
         }
     
         //
@@ -351,12 +350,11 @@ T64File::repair()
             // Let's assume that the rest of the file data belongs to this file ...
             u16 fixedEndAddrInMemory = startAddrInMemory + (size - startAddrInContainer);
 
-            trace(FILE_DEBUG, "Repairing corrupted T64 archive: Changing end address of item %d from %04X to %04X.\n", i, endAddrInMemory, fixedEndAddrInMemory);
+            warn("T64: Changing end address of item %d from %04X to %04X.\n",
+                 i, endAddrInMemory, fixedEndAddrInMemory);
 
             data[n] = LO_BYTE(fixedEndAddrInMemory);
             data[n+1] = HI_BYTE(fixedEndAddrInMemory);
         }
     }
-    
-    return 1; // Archive repaired successfully
 }

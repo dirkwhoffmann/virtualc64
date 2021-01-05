@@ -73,7 +73,7 @@ private:
     
     
     //
-    // Scanning and repairing a T64 file
+    // Scanning and repairing
     //
     
 public:
@@ -81,8 +81,7 @@ public:
     // Checks if the header contains information at the specified location
     bool directoryItemIsPresent(int n);
 
-    /* Checks the file for inconsistencies and tries to repair it. This method
-     * can eliminate the following inconsistencies:
+    /* This methods eliminates the following inconsistencies:
      *
      *   - number of files:
      *     Some archives state falsely in their header that zero files are
@@ -93,9 +92,6 @@ public:
      *     0xC3C6, which is wrong (e.g., paradrd.t64). This value will be
      *     changed such that getByte() will read until the end of the physical
      *     file.
-     *
-     * Returns true if archive was consistent or could be repaired. Returns
-     * false if an inconsistency has been detected that could not be repaired.
-     */
-    bool repair();
+    */
+    void repair() override;
 };

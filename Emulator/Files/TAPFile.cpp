@@ -68,27 +68,12 @@ TAPFile::matchingFile(const char *path)
 }
 
 void
-TAPFile::readFromBuffer(const u8 *buffer, size_t length)
+TAPFile::repair()
 {
-    AnyFile::readFromBuffer(buffer, length);
+    usize length = LO_LO_HI_HI(data[0x10], data[0x11], data[0x12], data[0x13]);
+    usize header = 0x14;
     
-    u32 l = LO_LO_HI_HI(data[0x10], data[0x11], data[0x12], data[0x13]);
-    if (l + 0x14 /* Header */ != size) {
-        warn("readFromBuffer: Expected %d bytes, found %lu\n", l, size - 0x14);
+    if (length + header != size) {
+        warn("TAP: Expected %lu bytes, found %lu\n", length + header, size);
     }
 }
-
-/*
-const char *
-TAPFile::description1()
-{
-    switch (TAPversion()) {
-            
-        case 0:  sprintf(str, "TAP type 0 (Original pulse layout)"); break;
-        case 1:  sprintf(str, "TAP type 1 (Advanced pulse layout)"); break;
-        default: sprintf(str, "TAP type %d (Unknown)", TAPversion());
-    }
-    
-    return str;
-}
-*/

@@ -116,13 +116,12 @@ public:
     // Prints some information about this cartridge
     void dump();
     
-    /* Checks the file for inconsistencies and tries to repair it. This method
-     * can eliminate the following inconsistencies:
+    /* This method eliminates the following inconsistencies:
      *
      *   - Invalid cartridge IDs:
      *     Some non-standard cartridges are marked  as standard. If such a
      *     cartridge is recognised, the ID is rectified.
      *
      */
-    void repair();
+    void repair() override;
 };

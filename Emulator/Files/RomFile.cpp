@@ -481,9 +481,9 @@ RomFile::readFromBuffer(const u8 *buffer, size_t length)
     AnyFile::readFromBuffer(buffer, length);
     
     romType =
-    isBasicRomBuffer(buffer, length) ? FILETYPE_BASIC_ROM :
-    isCharRomBuffer(buffer, length) ? FILETYPE_CHAR_ROM :
-    isKernalRomBuffer(buffer, length) ? FILETYPE_KERNAL_ROM :
-    isVC1541RomBuffer(buffer, length) ? FILETYPE_VC1541_ROM :
+    isBasicRomBuffer(data, size) ? FILETYPE_BASIC_ROM :
+    isCharRomBuffer(data, size) ? FILETYPE_CHAR_ROM :
+    isKernalRomBuffer(data, size) ? FILETYPE_KERNAL_ROM :
+    isVC1541RomBuffer(data, size) ? FILETYPE_VC1541_ROM :
     FILETYPE_UNKNOWN;
 }
