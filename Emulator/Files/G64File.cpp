@@ -13,6 +13,20 @@ const u8 /* "GCR-1541" */
 G64File::magicBytes[] = { 0x47, 0x43, 0x52, 0x2D, 0x31, 0x35, 0x34, 0x31 };
 
 bool
+G64File::isCompatibleName(const std::string &name)
+{
+    auto s = suffix(name);
+    return s == "g64" || s == "G64";
+}
+
+bool
+G64File::isCompatibleStream(std::istream &stream)
+{
+    if (streamLength(stream) < 0x2AC) return false;
+    return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
+}
+
+bool
 G64File::isCompatibleBuffer(const u8 *buffer, size_t length)
 {
     if (length < 0x02AC) return false;

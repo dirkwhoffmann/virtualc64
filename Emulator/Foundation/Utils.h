@@ -155,6 +155,9 @@ char *extractFilenameWithoutSuffix(const char *path);
 // Checks the suffix of a file name
 bool checkFileSuffix(const char *filename, const char *suffix);
 
+// Extracts the suffix from a filename
+std::string suffix(const std::string &name);
+
 // Returns the size of a file in bytes
 long getSizeOfFile(const char *filename);
 
@@ -170,10 +173,18 @@ bool checkFileSize(const char *filename, long min = -1, long max = -1);
 // Checks the header signature (magic bytes) of a file or buffer
 bool matchingFileHeader(const char *path, const u8 *header, size_t length);
 bool matchingBufferHeader(const u8 *buffer, const u8 *header, size_t length);
+bool matchingStreamHeader(std::istream &stream, const u8 *header, size_t length);
 
 // Loads a file from disk
 bool loadFile(const char *path, u8 **buffer, long *size);
 bool loadFile(const char *path, const char *name, u8 **buffer, long *size);
+
+
+//
+// Handling streams
+//
+
+usize streamLength(std::istream &stream);
 
 
 //

@@ -48,6 +48,68 @@ const u8 RomFile::magicVC1541RomBytes[vc1541RomSignatureCnt][3] = {
 };
 
 bool
+RomFile::isCompatibleStream(std::istream &stream)
+{
+    return
+    isCompatibleBasicRomStream(stream) ||
+    isCompatibleCharRomStream(stream) ||
+    isCompatibleKernalRomStream(stream) ||
+    isCompatibleVC1541RomStream(stream);
+}
+
+bool
+RomFile::isCompatibleBasicRomStream(std::istream &stream)
+{
+    if (streamLength(stream) != 0x2000) return false;
+
+    for (size_t i = 0; i < basicRomSignatureCnt; i++) {
+        if (matchingStreamHeader(stream, magicBasicRomBytes[i], sizeof(magicBasicRomBytes[i]))) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool
+RomFile::isCompatibleCharRomStream(std::istream &stream)
+{
+    if (streamLength(stream) != 0x1000) return false;
+
+    for (size_t i = 0; i < basicRomSignatureCnt; i++) {
+        if (matchingStreamHeader(stream, magicCharRomBytes[i], sizeof(magicCharRomBytes[i]))) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool
+RomFile::isCompatibleKernalRomStream(std::istream &stream)
+{
+    if (streamLength(stream) != 0x2000) return false;
+
+    for (size_t i = 0; i < kernalRomSignatureCnt; i++) {
+        if (matchingStreamHeader(stream, magicKernalRomBytes[i], sizeof(magicKernalRomBytes[i]))) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool
+RomFile::isCompatibleVC1541RomStream(std::istream &stream)
+{
+    if (streamLength(stream) != 0x4000) return false;
+
+    for (size_t i = 0; i < vc1541RomSignatureCnt; i++) {
+        if (matchingStreamHeader(stream, magicVC1541RomBytes[i], sizeof(magicVC1541RomBytes[i]))) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool
 RomFile::isCompatibleBuffer(const u8 *buffer, size_t length)
 {
     return

@@ -14,6 +14,20 @@ const u8 CRTFile::magicBytes[] = {
     'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ' };
 
 bool
+CRTFile::isCompatibleName(const std::string &name)
+{
+    auto s = suffix(name);
+    return s == "crt" || s == "CRT";
+}
+
+bool
+CRTFile::isCompatibleStream(std::istream &stream)
+{
+    if (streamLength(stream) < 0x40) return false;
+    return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
+}
+
+bool
 CRTFile::isCompatibleBuffer(const u8 *buffer, size_t length)
 {
     if (length < 0x40) return false;

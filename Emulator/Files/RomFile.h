@@ -36,6 +36,13 @@ public:
     //
     
     // Returns true if buffer contains a ROM image
+    static bool isCompatibleName(const std::string &name) { return true; }
+    static bool isCompatibleStream(std::istream &stream);
+    static bool isCompatibleBasicRomStream(std::istream &stream);
+    static bool isCompatibleCharRomStream(std::istream &stream);
+    static bool isCompatibleKernalRomStream(std::istream &stream);
+    static bool isCompatibleVC1541RomStream(std::istream &stream);
+    
     static bool isCompatibleBuffer(const u8 *buf, size_t len);
     static bool isBasicRomBuffer(const u8 *buf, size_t len);
     static bool isCharRomBuffer(const u8 *buf, size_t len);

@@ -12,6 +12,19 @@
 const u8 Snapshot::magicBytes[] = { 'V', 'C', '6', '4' };
 
 bool
+Snapshot::isCompatibleName(const std::string &name)
+{
+    return true; // name == "VC64"; 
+}
+
+bool
+Snapshot::isCompatibleStream(std::istream &stream)
+{
+    if (streamLength(stream) < 0x15) return false; 
+    return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
+}
+
+bool
 Snapshot::isCompatibleBuffer(const u8 *buf, size_t len)
 {
     assert(buf != NULL);

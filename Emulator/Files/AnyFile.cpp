@@ -25,7 +25,6 @@ AnyFile::make(const u8 *buffer, size_t length)
     
     try { obj->readFromBuffer(buffer, length); } catch (Error &err) {
         delete obj;
-        printf("Prior to throw\n");
         throw err;
     }
     
@@ -39,7 +38,6 @@ AnyFile::make(const char *path)
     
     try { obj->readFromFile(path); } catch (Error &err) {
         delete obj;
-        printf("Prior to throw\n");
         throw err;
     }
 
@@ -187,23 +185,6 @@ AnyFile::readFromStream(std::istream &stream)
     return size;
 }
 
-/*
-usize
-AnyFile::writeToBuffer(u8 **buf)
-{
-    assert(buf);
-
-    std::ostringstream stream;
-    usize len = writeToStream(stream);
-    
-    char *data = new u8[len];
-    stream.write(data, len);
-    
-    *buf = (u8 *)data;
-    return len;
-}
-*/
-
 usize
 AnyFile::writeToFile(const char *path)
 {
@@ -219,6 +200,18 @@ AnyFile::writeToFile(const char *path)
     assert(result == size);
     
     return size;
+}
+
+usize
+AnyFile::writeToBuffer(u8 *buf)
+{
+    assert(buf);
+
+    std::ostringstream stream;
+    usize len = writeToStream(stream);
+    stream.write((char *)buf, len);
+    
+    return len;
 }
 
 usize

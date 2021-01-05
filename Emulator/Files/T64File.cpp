@@ -17,6 +17,20 @@
 const u8 T64File::magicBytes[] = { 0x43, 0x36, 0x34 };
 
 bool
+T64File::isCompatibleName(const std::string &name)
+{
+    auto s = suffix(name);
+    return s == "t64" || s == "T64";
+}
+
+bool
+T64File::isCompatibleStream(std::istream &stream)
+{
+    if (streamLength(stream) < 0x40) return false;
+    return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
+}
+
+bool
 T64File::isCompatibleBuffer(const u8 *buffer, size_t length)
 {
     if (length < 0x40)

@@ -10,6 +10,27 @@
 #include "C64.h"
 
 bool
+D64File::isCompatibleName(const std::string &name)
+{
+    auto s = suffix(name);
+    return s == "d64" || s == "D64";
+}
+
+bool
+D64File::isCompatibleStream(std::istream &stream)
+{
+    usize len = streamLength(stream);
+    
+    return
+    len == D64_683_SECTORS ||
+    len == D64_683_SECTORS_ECC ||
+    len == D64_768_SECTORS ||
+    len == D64_768_SECTORS_ECC ||
+    len == D64_802_SECTORS ||
+    len == D64_802_SECTORS_ECC;
+}
+
+bool
 D64File::isCompatibleBuffer(const u8 *buf, size_t len)
 {
     assert(buf);

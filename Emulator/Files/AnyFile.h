@@ -44,6 +44,20 @@ public:
     template <class T> static T *make(const char *path);
     template <class T> static T *make(FILE *file);
 
+    template <class T> static T *make(std::istream &stream)
+    {
+        if (!T::isCompatibleStream(stream)) return nullptr;
+        
+        T *obj = new T();
+        
+        try { obj->readFromStream(stream); } catch (Error &err) {
+            delete obj;
+            throw err;
+        }
+        
+        return obj;
+    }
+
     
     //
     // Initializing
@@ -122,7 +136,7 @@ protected:
 public:
     
     usize writeToFile(const char *path) throws;
-    // usize writeToBuffer(u8 **buf) throws;
+    usize writeToBuffer(u8 *buf) throws;
     virtual usize writeToStream(std::ostream &stream) throws;
     
 

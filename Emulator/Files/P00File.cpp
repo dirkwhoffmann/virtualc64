@@ -14,6 +14,20 @@ const u8
 P00File::magicBytes[] = { 0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65 };
 
 bool
+P00File::isCompatibleName(const std::string &name)
+{
+    auto s = suffix(name);
+    return s == "p00" || s == "P00";
+}
+
+bool
+P00File::isCompatibleStream(std::istream &stream)
+{
+    if (streamLength(stream) < 0x1A) return false;
+    return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
+}
+
+bool
 P00File::isCompatibleBuffer(const u8 *buffer, size_t length)
 {
     if (length < 0x1A) return false;

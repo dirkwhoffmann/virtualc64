@@ -21,6 +21,13 @@ TAPFile::isCompatibleBuffer(const u8 *buffer, size_t length)
 }
 
 bool
+TAPFile::isCompatibleName(const std::string &name)
+{
+    auto s = suffix(name);
+    return s == "tap" || s == "TAP" || s == "t64" || s == "T64";
+}
+
+bool
 TAPFile::isCompatibleFile(const char *filename)
 {
     assert (filename != NULL);

@@ -222,6 +222,13 @@ checkFileSuffix(const char *filename, const char *suffix)
 		return false;
 }
 
+std::string
+suffix(const std::string &name)
+{
+    auto idx = name.rfind('.');
+    return idx != std::string::npos ? name.substr(idx + 1) : "";
+}
+
 bool isDirectory(const char *path)
 {
     struct stat fileProperties;
@@ -284,8 +291,8 @@ checkFileSize(const char *filename, long min, long max)
 bool
 matchingFileHeader(const char *path, const u8 *header, size_t length)
 {
-    assert(path != NULL);
-    assert(header != NULL);
+    assert(path);
+    assert(header);
     
     bool result = true;
     FILE *file;
@@ -308,14 +315,29 @@ matchingFileHeader(const char *path, const u8 *header, size_t length)
 bool
 matchingBufferHeader(const u8 *buffer, const u8 *header, size_t length)
 {
-    assert(buffer != NULL);
-    assert(header != NULL);
+    assert(buffer);
+    assert(header);
 
     for (size_t i = 0; i < length; i++) {
         if (header[i] != buffer[i])
         return false;
     }
 
+    return true;
+}
+
+bool matchingStreamHeader(std::istream &stream, const u8 *header, size_t length)
+{
+    stream.seekg(0, std::ios::beg);
+    
+    for (size_t i = 0; i < length; i++) {
+        int c = stream.get();
+        if (c != (int)header[i]) {
+            stream.seekg(0, std::ios::beg);
+            return false;
+        }
+    }
+    stream.seekg(0, std::ios::beg);
     return true;
 }
 
@@ -366,6 +388,19 @@ loadFile(const char *path, const char *name, u8 **buffer, long *size)
     strcat(fullpath, name);
     
     return loadFile(fullpath, buffer, size);
+}
+
+usize
+streamLength(std::istream &stream)
+{
+    auto cur = stream.tellg();
+    stream.seekg(0, std::ios::beg);
+    auto beg = stream.tellg();
+    stream.seekg(0, std::ios::end);
+    auto end = stream.tellg();
+    stream.seekg(cur, std::ios::beg);
+    
+    return (usize)(end - beg);
 }
 
 u32

@@ -11,6 +11,19 @@
 #include "FSDevice.h"
 
 bool
+PRGFile::isCompatibleName(const std::string &name)
+{
+    auto s = suffix(name);
+    return s == "prg" || s == "PRG";
+}
+
+bool
+PRGFile::isCompatibleStream(std::istream &stream)
+{
+    return (streamLength(stream) >= 2);
+}
+
+bool
 PRGFile::isCompatibleBuffer(const u8 *buffer, size_t length)
 {
     return length >= 2;
@@ -29,36 +42,6 @@ PRGFile::isCompatibleFile(const char *path)
     
     return true;
 }
-
-/*
-PRGFile *
-PRGFile::makeWithBuffer(const u8 *buffer, size_t length)
-{
-    PRGFile *archive = new PRGFile();
-    
-    if (!archive->oldReadFromBuffer(buffer, length)) {
-        
-        delete archive;
-        return NULL;
-    }
-    
-    return archive;
-}
-
-PRGFile *
-PRGFile::makeWithFile(const char *path)
-{
-    PRGFile *archive = new PRGFile();
-    
-    if (!archive->oldReadFromFile(path)) {
-        
-        delete archive;
-        return NULL;
-    }
-    
-    return archive;
-}
-*/
 
 PRGFile *
 PRGFile::makeWithFileSystem(FSDevice *fs, int item)

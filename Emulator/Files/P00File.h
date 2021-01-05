@@ -23,6 +23,8 @@ class P00File : public AnyCollection {
     
 public:
 
+    static bool isCompatibleName(const std::string &name);
+    static bool isCompatibleStream(std::istream &stream);
     static bool isCompatibleBuffer(const u8 *buf, size_t len);    
     static bool isCompatibleFile(const char *path);
     
