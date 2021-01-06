@@ -31,6 +31,14 @@ func create<T: MakeWithFile>(url: URL) throws -> T {
     return obj!
 }
 
+func create<T: MakeWithDisk>(disk: DiskProxy) throws -> T {
+    
+    var err = ErrorCode.OK
+    let obj = T.make(withDisk: disk, error: &err)
+    if err != ErrorCode.OK { throw MyError(err) }
+    return obj!
+}
+
 func create<T: MakeWithFileSystem>(fs: FSDeviceProxy) throws -> T {
     
     var err = ErrorCode.OK
@@ -70,6 +78,17 @@ extension AnyFileProxy {
         if err != .OK { throw MyError(err) }
         
         return result
+    }
+}
+
+extension FSDeviceProxy {
+    
+    func exportDirectory(url: URL) throws {
+            
+        var err = ErrorCode.OK
+        if exportDirectory(url.path, error: &err) == false {
+            throw MyError(err)
+        }
     }
 }
 

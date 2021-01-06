@@ -198,10 +198,7 @@ class ExportDialog: DialogController {
         // Try to extract the file system
         var err = ErrorCode.OK
         volume = FSDeviceProxy.make(withDisk: disk, error: &err)
-        
-        // Try to extract the file system
-        // if d64 != nil { volume = FSDeviceProxy.make(withD64: d64) }
-        
+                
         // REMOVE ASAP
         track("Exporter: Volume:")
         volume?.printDirectory()
@@ -554,20 +551,14 @@ class ExportDialog: DialogController {
     
     func exportToDirectory(url: URL) {
         
-        var err = ErrorCode.OK
-        _ = volume!.exportDirectory(url.path, error: &err)
-        
-        switch err {
-
-        case .DIR_NOT_EMPTY:
-            
-            parent.critical("The destination directory is not empty.",
-                            "To prevent accidental exports, the disk exporter " +
-                            "refuses to work on non-empty folders.")
-            
-        default:
-
+        do {
+            try volume!.exportDirectory(url: url)
             hideSheet()
+
+        } catch let error as MyError {
+            error.warning("Cannot export to directory")
+        } catch {
+            fatalError()
         }
     }
     

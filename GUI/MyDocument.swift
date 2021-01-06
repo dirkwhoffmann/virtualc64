@@ -366,22 +366,19 @@ class MyDocument: NSDocument {
     func export(disk: DiskProxy, to url: URL) throws {
 
         track("disk: \(disk) to: \(url)")
-        var err = ErrorCode.OK
         
-        if url.c64FileType == .G64 {
-         
-            if let g64 = G64FileProxy.make(withDisk: disk, error: &err) {
-                try export(file: g64, to: url)
-            }
+        var file: AnyFileProxy?
+        
+        switch url.c64FileType {
+        
+        case .G64:
+            file = try create(disk: disk) as G64FileProxy
 
-        } else {
-            
-            if let fs = FSDeviceProxy.make(withDisk: disk, error: &err) {
-                try export(fs: fs, to: url)
-            } else {
-                throw ExportError.undecodableDisk
-            }
+        default:
+            throw MyError.init(ErrorCode.FILE_TYPE_MISMATCH)
         }
+    
+        try export(file: file!, to: url)
     }
     
     func export(fs: FSDeviceProxy, to url: URL) throws {

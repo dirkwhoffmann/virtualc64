@@ -34,7 +34,8 @@ class MyError: Error {
         case .DIR_CANT_CREATE:
             return "Unable to create directory."
         case .DIR_NOT_EMPTY:
-            return "Directory is not empty."
+            return "To prevent accidental exports, the disk exporter " +
+                "refuses to work on non-empty folders."
         case .ROM_BASIC_MISSING:
             return "The emulator cannot launch because no Basic Rom installed."
         case .ROM_CHAR_MISSING:
