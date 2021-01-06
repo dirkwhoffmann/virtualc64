@@ -11,28 +11,29 @@
 
 #include "C64Object.h"
 
-template <int len> struct PETName : C64Object {
-    
+template <int len> class PETName : C64Object {
+        
     // PETSCII representation
     u8 pet[len + 1];
     
     // ASCII representation
-    char str[len + 1];
+    char asc[len + 1];
     
     // The pad characters (usually 0xA0)
     u8 pad;
     
+public:
     
     PETName(const u8 *_pet, u8 _pad = 0xA0) : pad(_pad)
     {
         assert(_pet);
         
         memset(pet, pad, sizeof(pet));
-        memset(str, 0x0, sizeof(str));
+        memset(asc, 0x0, sizeof(asc));
         
         for (int i = 0; i < len && _pet[i] != pad; i++) {
                     
-            str[i] = petscii2printable(_pet[i], '_');
+            asc[i] = petscii2printable(_pet[i], '_');
             pet[i] = _pet[i];
         }
     }
@@ -42,18 +43,18 @@ template <int len> struct PETName : C64Object {
         assert(_str);
         
         memset(pet, pad, sizeof(pet));
-        memset(str, 0x0, sizeof(str));
+        memset(asc, 0x0, sizeof(asc));
         
         for (int i = 0; i < len && _str[i] != 0x00; i++) {
             
-            str[i] = _str[i];
+            asc[i] = _str[i];
             pet[i] = ascii2pet(_str[i]);
         }
     }
 
-    PETName(std::string str) : PETName(str.c_str())
-    {
-    }
+    PETName(std::string str) : PETName(str.c_str()) { }
+    
+    const char *getDescription() override { return "PETName"; }
     
     bool operator== (PETName &rhs)
     {
@@ -75,6 +76,7 @@ template <int len> struct PETName : C64Object {
     }
 
     void write(u8 *p) { write(p, len); }
-    const char *getDescription() override { return "PETName"; }
-    const char *c_str() { return str; }
+
+    const char *c_str() { return asc; }
+    std::string str() { return string(asc); }
 };

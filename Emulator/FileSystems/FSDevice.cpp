@@ -901,9 +901,8 @@ bool
 FSDevice::exportFile(FSDirEntry *entry, const char *path, FSError *err)
 {
     debug(FS_DEBUG, "Exporting file %s to %s\n", entry->getName().c_str(), path);
-    printf("Exporting file %s to %s\n", entry->getName().c_str(), path);
 
-    std::string name = string(path) + "/" + string(entry->getName().c_str());
+    std::string name = string(path) + "/" + entry->getName().str();
     
     std::ofstream stream(name);
     if (!stream.is_open()) {
