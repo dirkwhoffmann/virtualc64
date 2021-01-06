@@ -764,18 +764,27 @@ C64::acquireThreadLock()
 bool
 C64::isReady(ErrorCode *err)
 {
-    if (!hasRom(ROM_TYPE_BASIC) || !hasRom(ROM_TYPE_CHAR) || !hasRom(ROM_TYPE_KERNAL)) {
-        if (err) *err = ERROR_ROM_MISSING;
+    bool mega = hasMega65Rom(ROM_TYPE_BASIC) && hasMega65Rom(ROM_TYPE_KERNAL);
+    
+    if (!hasRom(ROM_TYPE_BASIC)) {
+        if (err) *err = ERROR_ROM_BASIC_MISSING;
+        return false;
+    }
+    if (!hasRom(ROM_TYPE_CHAR)) {
+        if (err) *err = ERROR_ROM_CHAR_MISSING;
+        return false;
+    }
+    if (!hasRom(ROM_TYPE_KERNAL) || FORCE_ROM_MISSING) {
+        if (err) *err = ERROR_ROM_KERNAL_MISSING;
+        return false;
+    }
+    if (FORCE_MEGA64_MISMATCH ||
+        (mega && strcmp(mega65BasicRev(), mega65KernalRev()) != 0)) {
+        if (err) *err = ERROR_ROM_MEGA65_MISMATCH;
         return false;
     }
     
-    if (hasMega65Rom(ROM_TYPE_BASIC) && hasMega65Rom(ROM_TYPE_KERNAL)) {
-        if (strcmp(mega65BasicRev(), mega65KernalRev()) != 0) {
-            if (err) *err = ERROR_ROM_MEGA65_MISMATCH;
-            return false;
-        }
-    }
-    
+    if (err) *err = ERROR_OK;
     return true;
 }
 

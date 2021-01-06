@@ -174,28 +174,6 @@ extension MyDocument {
         alert.addButton(withTitle: "OK")
         alert.runModal()
     }
-    
-    func showConfigurationAltert(_ error: ErrorCode) {
-        
-        var msg: String
-        
-        switch error {
-        case .ROM_MISSING:
-            msg = "A Basic Rom, Character Rom, and Kernal Rom is required to power up."
-        case .ROM_MEGA65_MISMATCH:
-            msg = "The emulator cannot launch because OpenROMs with mismatched version strings have been installed."
-        default:
-            msg = ""
-        }
-        
-        let alert = NSAlert()
-        alert.alertStyle = .informational
-        alert.icon = NSImage.init(named: "rom_mega65")
-        alert.messageText = "Configuration error"
-        alert.informativeText = msg
-        alert.addButton(withTitle: "OK")
-        alert.runModal()
-    }
 }
 
 extension MyController {

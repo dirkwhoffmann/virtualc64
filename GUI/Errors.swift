@@ -35,6 +35,15 @@ class MyError: Error {
             return "Unable to create directory."
         case .DIR_NOT_EMPTY:
             return "Directory is not empty."
+        case .ROM_BASIC_MISSING:
+            return "The emulator cannot launch because no Basic Rom installed."
+        case .ROM_CHAR_MISSING:
+            return "The emulator cannot launch because no Kernal Rom installed."
+        case .ROM_KERNAL_MISSING:
+            return "The emulator cannot launch because no Kernal Rom installed."
+        case .ROM_MEGA65_MISMATCH:
+            return "The emulator cannot launch because Open Roms with " +
+                "mismatched version strings are installed."
         case .SNP_UNSUPPORTED:
             return "This snaphshot was created with a different version of VirtualC64."
         case .CRT_UNSUPPORTED:
