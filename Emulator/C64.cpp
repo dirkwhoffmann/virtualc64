@@ -1122,11 +1122,11 @@ C64::loadFromSnapshot(Snapshot *snapshot)
     assert(!isRunning());
     
     // Check if this snapshot is compatible with the emulator
-    if (snapshot->isTooOld()) {
+    if (snapshot->isTooOld() || FORCE_SNAPSHOT_TOO_OLD) {
         messageQueue.put(MSG_SNAPSHOT_TOO_OLD);
         return false;
     }
-    if (snapshot->isTooNew()) {
+    if (snapshot->isTooNew() || FORCE_SNAPSHOT_TOO_NEW) {
         messageQueue.put(MSG_SNAPSHOT_TOO_NEW);
         return false;
     }

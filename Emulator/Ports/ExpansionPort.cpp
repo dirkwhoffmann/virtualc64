@@ -218,7 +218,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
     assert(c);
     
     // Only proceed if this cartridge is supported
-    if (!c->isSupported()) {
+    if (!c->isSupported() || FORCE_UNSUPPORTED_CRT) {
         c64.putMessage(MSG_UNSUPPORTED_CRT, c->getCartridgeType());
         return false;
     }

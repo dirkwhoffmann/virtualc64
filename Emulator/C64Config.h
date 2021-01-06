@@ -29,7 +29,6 @@
 // Uncomment to override a configuration setting
 // EMPTY LIST SO FAR
 
-
 //
 // Debug settings
 //
@@ -83,19 +82,15 @@ static const int DRV_DEBUG       = 0; // Floppy drive
 static const int TAP_DEBUG       = 0; // Datasette
 static const int KBD_DEBUG       = 0; // Keyboard
 
-
-// Default debug level for all components (Set to 1 in release build)
-#define DEBUG_LEVEL 1
-
-
-// CLEANUP:
 //
-// OPTIMIZATION:
+// Forced error conditions
 //
-// Check, how -Ofast compares to -O3
-// Check how USE_OPTIMIZATION_PROFILE = true influences runtime
-//
-// 
+
+static const int FORCE_UNSUPPORTED_CRT  = 1;
+static const int FORCE_SNAPSHOT_TOO_OLD = 1;
+static const int FORCE_SNAPSHOT_TOO_NEW = 0;
+
+// IDEAS:
 // Update IEC bus inside CIA and VIA. Use delay flags if neccessary
 // Use a simpler implementation for the raster irq trigger. Edge sensitive matching value
 // Call CA1 action in VIA class only if the pin value really has changed.
