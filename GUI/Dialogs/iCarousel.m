@@ -963,7 +963,11 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
             CGFloat spacing = [self valueForOption:iCarouselOptionSpacing withDefault:1.0];
             CGFloat width = _vertical ? self.bounds.size.height: self.bounds.size.width;
             CGFloat itemWidth = _itemWidth * spacing;
-            _numberOfVisibleItems = ceil(width / itemWidth) + 2;
+            if (itemWidth != 0) {
+                _numberOfVisibleItems = ceil(width / itemWidth) + 2;
+            } else {
+                _numberOfVisibleItems = 0;
+            }
             break;
         }
         case iCarouselTypeCoverFlow:
@@ -973,7 +977,11 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
             CGFloat spacing = [self valueForOption:iCarouselOptionSpacing withDefault:0.25];
             CGFloat width = _vertical ? self.bounds.size.height: self.bounds.size.width;
             CGFloat itemWidth = _itemWidth * spacing;
-            _numberOfVisibleItems = ceil(width / itemWidth) + 2;
+            if (itemWidth != 0) {
+                _numberOfVisibleItems = ceil(width / itemWidth) + 2;
+            } else {
+                _numberOfVisibleItems = 0;
+            }
             break;
         }
         case iCarouselTypeRotary:
