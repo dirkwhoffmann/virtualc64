@@ -31,6 +31,7 @@ public:
     // Constructing
     //
     
+    static Folder *makeWithFolder(const std::string &path) throws;
     static Folder *makeWithFolder(const char *path) throws;
 
         

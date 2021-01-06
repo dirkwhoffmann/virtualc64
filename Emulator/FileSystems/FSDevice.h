@@ -55,6 +55,7 @@ public:
     static FSDevice *makeWithCollection(AnyCollection *collection, FSError *error);
 
     // Creates a file system with the files from a disk folder
+    static FSDevice *makeWithFolder(const std::string &path, FSError *error);
     static FSDevice *makeWithFolder(const char *path, FSError *error);
 
     
@@ -274,8 +275,10 @@ public:
     bool importVolume(const u8 *src, usize size, FSError *error = nullptr);
     
     // Imports a folder from the host file system
-    bool importDirectory(const char *path);
-    bool importDirectory(const char *path, DIR *dir);
+    bool importDirectory(const std::string &path);
+    bool importDirectory(const std::string &path, DIR *dir);
+    [[deprecated]] bool importDirectory(const char *path);
+    // bool importDirectory(const char *path, DIR *dir);
 
     // Exports the volume to a buffer
     bool exportVolume(u8 *dst, usize size, FSError *error = nullptr);

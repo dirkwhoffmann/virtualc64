@@ -142,18 +142,23 @@ bool isZero(const u8 *ptr, usize size);
 
 
 //
-// Handling file
+// Handling files
 //
 
 /* Extracts a certain component from a path. Every function returns a newly
  * created string which needs to be deleted manually.
  */
-char *extractFilename(const char *path);
+string extractFileName(const string &s);
+string extractSuffix(const string &s);
+string stripSuffix(const string &s); 
+// string extractFileNameWithoutSuffix(const string &s);
+
+char *extractFileName(const char *path);
 char *extractSuffix(const char *path);
-char *extractFilenameWithoutSuffix(const char *path);
+char *extractFileNameWithoutSuffix(const char *path);
 
 // Checks the suffix of a file name
-bool checkFileSuffix(const char *filename, const char *suffix);
+[[deprecated]] bool checkFileSuffix(const char *filename, const char *suffix);
 
 // Extracts the suffix from a filename
 std::string suffix(const std::string &name);
@@ -168,16 +173,18 @@ bool isDirectory(const char *path);
 long numDirectoryItems(const char *path);
 
 // Checks the size of a file
-bool checkFileSize(const char *filename, long min = -1, long max = -1);
+[[deprecated]] bool checkFileSize(const char *filename, long min = -1, long max = -1);
 
 // Checks the header signature (magic bytes) of a file or buffer
-bool matchingFileHeader(const char *path, const u8 *header, usize length);
-bool matchingBufferHeader(const u8 *buffer, const u8 *header, usize length);
+[[deprecated]] bool matchingFileHeader(const char *path, const u8 *header, usize length);
+[[deprecated]] bool matchingBufferHeader(const u8 *buffer, const u8 *header, usize length);
 bool matchingStreamHeader(std::istream &stream, const u8 *header, usize length);
 
 // Loads a file from disk
-bool loadFile(const char *path, u8 **buffer, long *size);
-bool loadFile(const char *path, const char *name, u8 **buffer, long *size);
+bool loadFile(const std::string &path, u8 **bufptr, long *lenptr);
+bool loadFile(const std::string &path, const std::string &name, u8 **bufptr, long *lenptr);
+bool loadFile(const char *path, u8 **bufptr, long *lenptr);
+bool loadFile(const char *path, const char *name, u8 **bufptr, long *lenptr);
 
 
 //

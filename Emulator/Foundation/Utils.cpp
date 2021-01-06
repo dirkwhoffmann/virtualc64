@@ -169,13 +169,57 @@ bool isZero(const u8 *ptr, usize size)
     return true;
 }
 
+string
+extractFileName(const string &s)
+{
+    auto idx = s.rfind('/');
+    auto pos = idx != std::string::npos ? idx + 1 : 0;
+    auto len = std::string::npos;
+    return s.substr(pos, len);
+}
+
+string
+extractSuffix(const string &s)
+{
+    auto idx = s.rfind('.');
+    auto pos = idx != std::string::npos ? idx + 1 : 0;
+    auto len = std::string::npos;
+    return s.substr(pos, len);
+}
+
+string stripSuffix(const string &s)
+{
+    auto idx = s.rfind('.');
+    auto pos = 0;
+    auto len = idx != std::string::npos ? idx : std::string::npos;
+    return s.substr(pos, len);
+}
+
+/*
+string
+extractFileNameWithoutSuffix(const string &s)
+{
+    auto i1 = s.rfind('/');
+    auto i2 = s.rfind('.');
+    printf("i1 = %ld i2 = %ld\n", i1, i2);
+    auto pos = i1 != std::string::npos ? i1 + 1 : 0;
+    auto len = i2 != std::string::npos && i2 > i1 ? i2 - i1 : std::string::npos;
+    
+    return s.substr(pos, len);
+}
+*/
+
 char *
-extractFilename(const char *path)
+extractFileName(const char *path)
 {
     assert(path);
     
+    string s(path);
+    return strdup(extractFileName(s).c_str());
+    /*
     const char *pos = strrchr(path, '/');
     return pos ? strdup(pos + 1) : strdup(path);
+    */
 }
 
 char *
@@ -183,17 +227,26 @@ extractSuffix(const char *path)
 {
     assert(path);
     
+    string s(path);
+    return strdup(extractSuffix(s).c_str());
+    /*
     const char *pos = strrchr(path, '.');
     return pos ? strdup(pos + 1) : strdup("");
+    */
 }
 
 char *
-extractFilenameWithoutSuffix(const char *path)
+extractFileNameWithoutSuffix(const char *path)
 {
     assert(path);
     
+    string s(path);
+    return strdup(stripSuffix(extractFileName(s)).c_str());
+    /*
+    assert(path);
+    
     char *result;
-    char *filename = extractFilename(path);
+    char *filename = extractFileName(path);
     char *suffix   = extractSuffix(filename);
     
     if (strlen(suffix) == 0)
@@ -204,6 +257,7 @@ extractFilenameWithoutSuffix(const char *path)
     free(filename);
     free(suffix);
     return result;
+    */
 }
 
 bool
@@ -341,15 +395,36 @@ bool matchingStreamHeader(std::istream &stream, const u8 *header, usize length)
     return true;
 }
 
-bool
-loadFile(const char *path, u8 **buffer, long *size)
+bool loadFile(const std::string &path, u8 **bufptr, long *lenptr)
 {
-    assert(path != nullptr);
-    assert(buffer != nullptr);
-    assert(size != nullptr);
+    assert(bufptr); assert(lenptr);
 
-    *buffer = nullptr;
-    *size = 0;
+    std::ifstream stream(path);
+    if (!stream.is_open()) return false;
+    
+    usize len = streamLength(stream);
+    u8 *buf = new u8[len];
+    stream.read((char *)buf, len);
+    
+    *bufptr = buf;
+    *lenptr = len;
+    return true;
+}
+
+bool loadFile(const std::string &path, const std::string &name, u8 **bufptr, long *lenptr)
+{
+    return loadFile(path + "/" + name, bufptr, lenptr);
+}
+
+[[deprecated]] bool
+loadFile(const char *path, u8 **bufptr, long *lenptr)
+{
+    assert(path);
+    assert(bufptr);
+    assert(lenptr);
+
+    *bufptr = nullptr;
+    *lenptr = 0;
     
     // Get file size
     long bytes = getSizeOfFile(path);
@@ -371,13 +446,13 @@ loadFile(const char *path, u8 **buffer, long *size)
     }
     
     fclose(file);
-    *buffer = data;
-    *size = bytes;
+    *bufptr = data;
+    *lenptr = bytes;
     return true;
 }
 
-bool
-loadFile(const char *path, const char *name, u8 **buffer, long *size)
+[[deprecated]] bool
+loadFile(const char *path, const char *name, u8 **bufptr, long *lenptr)
 {
     assert(path != nullptr);
     assert(name != nullptr);
@@ -387,7 +462,7 @@ loadFile(const char *path, const char *name, u8 **buffer, long *size)
     strcat(fullpath, "/");
     strcat(fullpath, name);
     
-    return loadFile(fullpath, buffer, size);
+    return loadFile(fullpath, bufptr, lenptr);
 }
 
 usize

@@ -23,19 +23,19 @@ public:
     virtual ~AnyCollection() { }
     
     // Returns the name of this collection
-    virtual PETName<16> collectionName() { return PETName<16>(""); } // = 0;
+    virtual PETName<16> collectionName() = 0;
     
     // Returns the number of items stored in this collection
-    virtual u64 collectionCount() { return 0; } // = 0;
+    virtual u64 collectionCount() = 0;
     
     // Returns the name of a certain item
-    virtual PETName<16> itemName(unsigned nr) { return PETName<16>(""); } // = 0;
+    virtual PETName<16> itemName(unsigned nr) = 0;
     
     // Returns the size of a certain in bytes
-    virtual u64 itemSize(unsigned nr) { return 0; } // = 0;
+    virtual u64 itemSize(unsigned nr) = 0;
         
     // Reads a byte from a certain item
-    virtual u8 readByte(unsigned nr, u64 pos) { return 0; } //  = 0;
+    virtual u8 readByte(unsigned nr, u64 pos) = 0;
 
     
     //

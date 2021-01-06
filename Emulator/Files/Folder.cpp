@@ -22,19 +22,25 @@ Folder::isFolder(const char *path)
 }
 
 Folder *
-Folder::makeWithFolder(const char *path)
+Folder::makeWithFolder(const std::string &path)
 {
-    assert(path);
-    
     Folder *folder = new Folder();
     
     FSError err;
     if (!(folder->fs = FSDevice::makeWithFolder(path, &err))) {
-        warn("Failed to create file system from folder %s\n", path);
         delete folder;
+        // TODO: throw
+        warn("Failed to create file system from folder %s\n", path.c_str());
         return nullptr;
     }
     return folder;
+}
+
+Folder *
+Folder::makeWithFolder(const char *path)
+{
+    assert(path);
+    return makeWithFolder(string(path));
 }
     
 PETName<16>

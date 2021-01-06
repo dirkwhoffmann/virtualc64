@@ -122,16 +122,14 @@ FSDevice::makeWithCollection(AnyCollection *collection, FSError *err)
 }
 
 FSDevice *
-FSDevice::makeWithFolder(const char *path, FSError *error)
+FSDevice::makeWithFolder(const std::string &path, FSError *error)
 {
-    assert(path);
-    
     // Create the device
     FSDevice *device = makeWithType(DISK_TYPE_SS_SD);
     assert(device);
     
     // Write BAM
-    auto name = PETName<16>(path);
+    auto name = PETName<16>(extractFileName(path));
     device->bamPtr()->writeBAM(name);
     
     // Import the folder
@@ -143,6 +141,13 @@ FSDevice::makeWithFolder(const char *path, FSError *error)
     
     device->printDirectory();
     return device;
+}
+
+FSDevice *
+FSDevice::makeWithFolder(const char *path, FSError *error)
+{
+    assert(path);
+    return makeWithFolder(std::string(path), error);
 }
 
 FSDevice::FSDevice(u32 capacity)
@@ -739,10 +744,25 @@ FSDevice::importVolume(const u8 *src, usize size, FSError *error)
 }
 
 bool
+FSDevice::importDirectory(const string &path)
+{
+    if (DIR *dir = opendir(path.c_str())) {
+        
+        bool result = importDirectory(path, dir);
+        closedir(dir);
+        return result;
+    }
+
+    warn("Error opening directory %s\n", path.c_str());
+    return false;
+}
+
+bool
 FSDevice::importDirectory(const char *path)
 {
     assert(path);
-    
+    return importDirectory(string(path));
+    /*
     if (DIR *dir = opendir(path)) {
         
         bool result = importDirectory(path, dir);
@@ -752,13 +772,12 @@ FSDevice::importDirectory(const char *path)
 
     warn("Error opening directory %s\n", path);
     return false;
+    */
 }
 
 bool
-FSDevice::importDirectory(const char *path, DIR *dir)
+FSDevice::importDirectory(const std::string &path, DIR *dir)
 {
-    assert(dir);
-    
     struct dirent *item;
     bool result = true;
     
@@ -767,29 +786,36 @@ FSDevice::importDirectory(const char *path, DIR *dir)
         // Skip '.', '..' and all hidden files
         if (item->d_name[0] == '.') continue;
         
-        // Assemble file name
-        char *name = new char [strlen(path) + strlen(item->d_name) + 2];
-        strcpy(name, path);
-        strcat(name, "/");
-        strcat(name, item->d_name);
+        // Assemble file name (TODO: PORT TO std::string)
+        std::string name = std::string(item->d_name);
+        std::string full = path + "/" + name;
         
-        msg("importDirectory: Processing %s\n", name);
+        msg("importDirectory: Processing %s (%s)\n", name.c_str(), full.c_str());
         
         if (item->d_type == DT_DIR) continue;
         
-        u8 *buffer; long size;
-        if (loadFile(name, &buffer, &size)) {
+        u8 *buf; long len;
+        if (loadFile(full, &buf, &len)) {
             
-            if (!makeFile(PETName<16>(item->d_name), buffer, size)) {
-                warn("Failed to import file %s\n", name);
+            PETName<16> pet = PETName<16>(stripSuffix(name));
+            if (!makeFile(pet, buf, len)) {
+                warn("Failed to import file %s\n", name.c_str());
                 result = false;
             }
-            delete(buffer);
+            delete[] buf;
         }
-        delete [] name;
     }
     return result;
 }
+
+/*
+bool
+FSDevice::importDirectory(const char *path, DIR *dir)
+{
+    assert(dir);
+    return importDirectory(std::string(path), dir);
+}
+*/
 
 bool
 FSDevice::exportVolume(u8 *dst, usize size, FSError *error)
