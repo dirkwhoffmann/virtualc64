@@ -522,10 +522,12 @@ class ExportDialog: DialogController {
             try parent.mydocument.export(drive: driveID!, to: url)
             myAppDelegate.noteNewRecentlyExportedDiskURL(url, drive: driveID!)
             drive?.setModifiedDisk(false)
-            self.hideSheet()
-            
+            hideSheet()
+
+        } catch let error as MyError {
+            error.warning("Cannot export disk")
         } catch {
-            parent.mydocument.showExportErrorAlert(url: url)
+            fatalError()
         }
     }
 
