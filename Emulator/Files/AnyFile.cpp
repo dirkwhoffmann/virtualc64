@@ -62,7 +62,7 @@ AnyFile::readFromFile(const char *path)
     std::ifstream stream(path);
 
     if (!stream.is_open()) {
-        throw Error(ERROR_CANT_READ);
+        throw VC64Error(ERROR_FILE_CANT_READ);
     }
     
     usize result = readFromStream(stream);
@@ -115,7 +115,7 @@ AnyFile::writeToFile(const char *path)
     std::ofstream stream(path);
 
     if (!stream.is_open()) {
-        throw Error(ERROR_CANT_WRITE);
+        throw VC64Error(ERROR_FILE_CANT_WRITE);
     }
     
     usize result = writeToStream(stream);

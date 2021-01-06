@@ -64,11 +64,11 @@ public:
     
     template <class T> static T *make(std::istream &stream)
     {
-        if (!T::isCompatibleStream(stream)) throw Error(ERROR_INVALID_TYPE);
+        if (!T::isCompatibleStream(stream)) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
         
         T *obj = new T();
         
-        try { obj->readFromStream(stream); } catch (Error &err) {
+        try { obj->readFromStream(stream); } catch (VC64Error &err) {
             delete obj;
             throw err;
         }
@@ -85,7 +85,7 @@ public:
     template <class T> static T *make(const char *path)
     {
         std::ifstream stream(path);
-        if (!stream.is_open()) throw Error(ERROR_FILE_NOT_FOUND);
+        if (!stream.is_open()) throw VC64Error(ERROR_FILE_NOT_FOUND);
         return make <T> (stream);
     }
 

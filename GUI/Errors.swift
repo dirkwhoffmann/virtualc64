@@ -19,41 +19,43 @@ class MyError: Error {
         
         case .OK:
             fatalError()
-        case .UNKNOWN:
-            return "An unknown error has occurred."
         case .OUT_OF_MEMORY:
             return "Out of memory."
         case .FILE_NOT_FOUND:
             return "File not found."
-        case .INVALID_TYPE:
+        case .FILE_TYPE_MISMATCH:
             return "The content of the file does not match its format."
-        case .CANT_READ:
+        case .FILE_CANT_READ:
             return "The file could not be opened for reading."
-        case .CANT_WRITE:
+        case .FILE_CANT_WRITE:
             return "The file could not be opened for writing."
-        case .UNSUPPORTED_SNAPSHOT:
+        case .FILE_CANT_CREATE:
+            return "Unable to create file."
+        case .DIR_CANT_CREATE:
+            return "Unable to create directory."
+        case .DIR_NOT_EMPTY:
+            return "Directory is not empty."
+        case .SNP_UNSUPPORTED:
             return "This snaphshot was created with a different version of VirtualC64."
-        case .UNSUPPORTED_CRT:
+        case .CRT_UNSUPPORTED:
             return "The format of this cartridge is not supported by the emulator yet."
+        case .FS_UNSUPPORTED:
+            return "Unsupported file system type."
+        case .FS_WRONG_CAPACITY:
+            return "Wrong file system capacity."
+        case .FS_CORRUPTED:
+            return "Corrupted file system."
+        case .FS_HAS_CYCLES:
+            return "The file system has cyclic references."
+        case .FS_CANT_IMPORT:
+            return "Failed to import the file system."
+        case .FS_EXPECTED_VAL,
+             .FS_EXPECTED_MIN,
+             .FS_EXPECTED_MAX:
+            fatalError()
+        
         default:
             return ""
-            /*
-                ERROR_UNSUPPORTED,
-                ERROR_WRONG_CAPACITY,
-                ERROR_HAS_CYCLES,
-                ERROR_CORRUPTED,
-                ERROR_IMPORT_ERROR,
-
-                // Block errros
-                ERROR_EXPECTED,
-                ERROR_EXPECTED_MIN,
-                ERROR_EXPECTED_MAX,
-
-                // Export errors
-                ERROR_DIRECTORY_NOT_EMPTY,
-                ERROR_CANNOT_CREATE_DIR,
-                ERROR_CANNOT_CREATE_FILE
-            */
         }
     }
     

@@ -86,8 +86,8 @@ static const int KBD_DEBUG       = 0; // Keyboard
 // Forced error conditions
 //
 
-static const int FORCE_UNSUPPORTED_CRT  = 1;
-static const int FORCE_SNAPSHOT_TOO_OLD = 1;
+static const int FORCE_UNSUPPORTED_CRT  = 0;
+static const int FORCE_SNAPSHOT_TOO_OLD = 0;
 static const int FORCE_SNAPSHOT_TOO_NEW = 0;
 
 // IDEAS:

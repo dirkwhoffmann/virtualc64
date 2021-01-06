@@ -78,7 +78,7 @@ enum_long(FS_ERROR)
     
     // File system errors
     FS_ERROR_UNKNOWN,
-    FS_ERROR_UNSUPPORTED,
+    FS_ERROR_UNSUPPORTED_FS,
     FS_ERROR_WRONG_CAPACITY,
     FS_ERROR_OUT_OF_MEMORY,
     FS_ERROR_HAS_CYCLES,
@@ -108,7 +108,7 @@ inline const char *FSErrorName(FSError value)
             
         case FS_ERROR_OK:                   return "OK";
         case FS_ERROR_UNKNOWN:              return "UNKNOWN";
-        case FS_ERROR_UNSUPPORTED:          return "UNSUPPORTED";
+        case FS_ERROR_UNSUPPORTED_FS:          return "UNSUPPORTED";
         case FS_ERROR_WRONG_CAPACITY:       return "WRONG_CAPACITY";
         case FS_ERROR_HAS_CYCLES:           return "HAS_CYCLES";
         case FS_ERROR_CORRUPTED:            return "CORRUPTED";

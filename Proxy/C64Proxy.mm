@@ -1541,7 +1541,7 @@ struct AnyFileWrapper { AnyFile *file; };
     NSInteger result = 0;
     
     try { result = wrapper->file->writeToFile([path fileSystemRepresentation]); }
-    catch (Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
     
     return result;
 }
@@ -1577,7 +1577,7 @@ struct AnyFileWrapper { AnyFile *file; };
     Snapshot *file = nil;
     
     try { file = AnyFile::make <Snapshot> ((const u8 *)buf, len); }
-    catch (Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
     
     return [self make: file];
 }
@@ -1587,7 +1587,7 @@ struct AnyFileWrapper { AnyFile *file; };
     Snapshot *file = nil;
     
     try { file = AnyFile::make <Snapshot> ([path fileSystemRepresentation]); }
-    catch (Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
     
     return [self make: file];
 }
@@ -1655,7 +1655,7 @@ struct AnyFileWrapper { AnyFile *file; };
     CRTFile *file = nil;
     
     try { file = AnyFile::make <CRTFile> ([path fileSystemRepresentation]); }
-    catch (Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
     
     return [self make: file];
 }
@@ -1665,7 +1665,7 @@ struct AnyFileWrapper { AnyFile *file; };
     CRTFile *file = nil;
     
     try { file = AnyFile::make <CRTFile> ((const u8 *)buf, len); }
-    catch (Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
         
     return [self make: file];
 }
@@ -1718,7 +1718,7 @@ struct AnyFileWrapper { AnyFile *file; };
     TAPFile *file = nil;
     
     try { file = AnyFile::make <TAPFile> ([path fileSystemRepresentation]); }
-    catch (Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
     
     return [self make: file];
 }
@@ -1728,7 +1728,7 @@ struct AnyFileWrapper { AnyFile *file; };
     TAPFile *file = nil;
     
     try { file = AnyFile::make <TAPFile> ((const u8 *)buf, len); }
-    catch (Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
     
     return [self make: file];
 }
@@ -1781,7 +1781,7 @@ struct AnyFileWrapper { AnyFile *file; };
     T64File *file = nil;
     
     try { file = AnyFile::make <T64File> ([path fileSystemRepresentation]); }
-    catch (Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
     
     return [self make: file];
 }
@@ -1791,7 +1791,7 @@ struct AnyFileWrapper { AnyFile *file; };
     T64File *file = nil;
     
     try { file = AnyFile::make <T64File> ((const u8 *)buf, len); }
-    catch (Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
         
     return [self make: file];
 }
@@ -1822,7 +1822,7 @@ struct AnyFileWrapper { AnyFile *file; };
     PRGFile *file = nil;
     
     try { file = AnyFile::make <PRGFile> ([path fileSystemRepresentation]); }
-    catch (Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
     
     return [self make: file];
 }
@@ -1832,7 +1832,7 @@ struct AnyFileWrapper { AnyFile *file; };
     PRGFile *file = nil;
     
     try { file = AnyFile::make <PRGFile> ((const u8 *)buf, len); }
-    catch (Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
         
     return [self make: file];
 }
@@ -1863,7 +1863,7 @@ struct AnyFileWrapper { AnyFile *file; };
     Folder *folder = nil;
     
     try { folder = Folder::makeWithFolder([path fileSystemRepresentation]); }
-    catch (Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
         
     return [self make: folder];
 }
@@ -1893,7 +1893,7 @@ struct AnyFileWrapper { AnyFile *file; };
     P00File *file = nil;
     
     try { file = AnyFile::make <P00File> ([path fileSystemRepresentation]); }
-    catch (Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
     
     return [self make: file];
 }
@@ -1903,7 +1903,7 @@ struct AnyFileWrapper { AnyFile *file; };
     P00File *file = nil;
     
     try { file = AnyFile::make <P00File> ((const u8 *)buf, len); }
-    catch (Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
         
     return [self make: file];
 }
@@ -1939,7 +1939,7 @@ struct AnyFileWrapper { AnyFile *file; };
     D64File *file = nil;
     
     try { file = AnyFile::make <D64File> ([path fileSystemRepresentation]); }
-    catch (Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
     
     return [self make: file];
 }
@@ -1949,7 +1949,7 @@ struct AnyFileWrapper { AnyFile *file; };
     D64File *file= nil;
     
     try { file = AnyFile::make <D64File> ((const u8 *)buf, len); }
-    catch (Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
         
     return [self make: file];
 }
@@ -2007,7 +2007,7 @@ struct AnyFileWrapper { AnyFile *file; };
     G64File *file = nil;
     
     try { file = AnyFile::make <G64File> ([path fileSystemRepresentation]); }
-    catch (Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
     
     return [self make: file];
 }
@@ -2017,7 +2017,7 @@ struct AnyFileWrapper { AnyFile *file; };
     G64File *file = nil;
     
     try { file = AnyFile::make <G64File> ((const u8 *)buf, len); }
-    catch (Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
         
     return [self make: file];
 }
@@ -2338,7 +2338,7 @@ struct AnyFileWrapper { AnyFile *file; };
 - (BOOL) loadRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)err;
 {
     try { wrapper->c64->loadRomFromFile(type, [[url path] UTF8String]); }
-    catch (Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
     return YES;
 }
 /*

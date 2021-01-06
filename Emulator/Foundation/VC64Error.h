@@ -12,11 +12,11 @@
 #include "C64PublicTypes.h"
 #include <exception>
 
-struct Error : public std::exception
+struct VC64Error : public std::exception
 {
     ErrorCode errorCode;
     
-    Error(ErrorCode code) : errorCode(code) { }
+    VC64Error(ErrorCode code) : errorCode(code) { }
     
     const char *what() const throw() override {
 

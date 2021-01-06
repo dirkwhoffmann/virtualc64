@@ -160,78 +160,71 @@ inline bool isRomErrorCode(long value) {
 enum_long(ERRORCode)
 {
     ERROR_OK,
-    ERROR_UNKNOWN,
+    // ERROR_UNKNOWN,
 
-    // Memory errors
+    // Memory
     ERROR_OUT_OF_MEMORY,
 
-    // File errors
+    // File IO
     ERROR_FILE_NOT_FOUND,
-    ERROR_INVALID_TYPE,
-    ERROR_CANT_READ,
-    ERROR_CANT_WRITE,
+    ERROR_FILE_TYPE_MISMATCH,
+    ERROR_FILE_CANT_READ,
+    ERROR_FILE_CANT_WRITE,
+    ERROR_FILE_CANT_CREATE,
+    ERROR_DIR_CANT_CREATE,
+    ERROR_DIR_NOT_EMPTY,
 
     // Snapshots
-    ERROR_UNSUPPORTED_SNAPSHOT,
+    ERROR_SNP_UNSUPPORTED,
 
     // Cartridges
-    ERROR_UNSUPPORTED_CRT,
+    ERROR_CRT_UNSUPPORTED,
     
     // File system errors
-    ERROR_UNSUPPORTED,
-    ERROR_WRONG_CAPACITY,
-    ERROR_HAS_CYCLES,
-    ERROR_CORRUPTED,
-    ERROR_IMPORT_ERROR,
-
-    // Block errros
-    ERROR_EXPECTED,
-    ERROR_EXPECTED_MIN,
-    ERROR_EXPECTED_MAX,
-
-    // Export errors
-    ERROR_DIRECTORY_NOT_EMPTY,
-    ERROR_CANNOT_CREATE_DIR,
-    ERROR_CANNOT_CREATE_FILE
+    ERROR_FS_UNSUPPORTED,
+    ERROR_FS_WRONG_CAPACITY,
+    ERROR_FS_CORRUPTED,
+    ERROR_FS_HAS_CYCLES,
+    ERROR_FS_CANT_IMPORT,
+    ERROR_FS_EXPECTED_VAL,
+    ERROR_FS_EXPECTED_MIN,
+    ERROR_FS_EXPECTED_MAX
 };
 typedef ERRORCode ErrorCode;
 
 inline bool isErrorCode(long value)
 {
-    return (unsigned long)value <= ERROR_CANNOT_CREATE_FILE;
+    return (unsigned long)value <= ERROR_FILE_CANT_CREATE;
 }
 
 inline const char *ErrorCodeName(ErrorCode value)
 {
     switch (value) {
             
-        case ERROR_OK:                    return "OK";
-        case ERROR_UNKNOWN:               return "UNKNOWN";
+        case ERROR_OK:                  return "OK";
 
-        case ERROR_OUT_OF_MEMORY:         return "OUT_OF_MEMORY";
+        case ERROR_OUT_OF_MEMORY:       return "OUT_OF_MEMORY";
 
-        case ERROR_FILE_NOT_FOUND:        return "FILE_NOT_FOUND";
-        case ERROR_INVALID_TYPE:          return "INVALID_TYPE";
-        case ERROR_CANT_READ:             return "CANT_READ";
-        case ERROR_CANT_WRITE:            return "CANT_WRITE";
+        case ERROR_FILE_NOT_FOUND:      return "FILE_NOT_FOUND";
+        case ERROR_FILE_TYPE_MISMATCH:  return "FILE_TYPE_MISMATCH";
+        case ERROR_FILE_CANT_READ:      return "FILE_CANT_READ";
+        case ERROR_FILE_CANT_WRITE:     return "FILE_CANT_WRITE";
+        case ERROR_FILE_CANT_CREATE:    return "FILE_CANT_CREATE";
+        case ERROR_DIR_CANT_CREATE:     return "DIR_CANT_CREATE";
+        case ERROR_DIR_NOT_EMPTY:       return "DIR_NOT_EMPTY";
 
-        case ERROR_UNSUPPORTED_SNAPSHOT:  return "UNSUPPORTED_SNAPSHOT";
+        case ERROR_SNP_UNSUPPORTED:     return "SNP_UNSUPPORTED";
             
-        case ERROR_UNSUPPORTED_CRT:       return "UNSUPPORTED_CRT";
+        case ERROR_CRT_UNSUPPORTED:     return "CRT_UNSUPPORTED";
 
-        case ERROR_UNSUPPORTED:           return "UNSUPPORTED";
-        case ERROR_WRONG_CAPACITY:        return "WRONG_CAPACITY";
-        case ERROR_HAS_CYCLES:            return "HAS_CYCLES";
-        case ERROR_CORRUPTED:             return "CORRUPTED";
-        case ERROR_IMPORT_ERROR:          return "IMPORT_ERROR";
-
-        case ERROR_DIRECTORY_NOT_EMPTY:   return "DIRECTORY_NOT_EMPTY";
-        case ERROR_CANNOT_CREATE_DIR:     return "CANNOT_CREATE_DIR";
-        case ERROR_CANNOT_CREATE_FILE:    return "CANNOT_CREATE_FILE";
-
-        case ERROR_EXPECTED:              return "EXPECTED";
-        case ERROR_EXPECTED_MIN:          return "EXPECTED_MIN";
-        case ERROR_EXPECTED_MAX:          return "EXPECTED_MAX";
+        case ERROR_FS_UNSUPPORTED:      return "FS_UNSUPPORTED";
+        case ERROR_FS_WRONG_CAPACITY:   return "FS_WRONG_CAPACITY";
+        case ERROR_FS_CORRUPTED:        return "FS_CORRUPTED";
+        case ERROR_FS_HAS_CYCLES:       return "FS_HAS_CYCLES";
+        case ERROR_FS_CANT_IMPORT:      return "FS_CANT_IMPORT";
+        case ERROR_FS_EXPECTED_VAL:     return "FS_EXPECTED_VAL";
+        case ERROR_FS_EXPECTED_MIN:     return "FS_EXPECTED_MIN";
+        case ERROR_FS_EXPECTED_MAX:     return "FS_EXPECTED_MAX";
     }
     return "???";
 }

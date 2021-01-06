@@ -10,7 +10,7 @@
 #pragma once
 
 #include "Debug.h"
-#include "Error.h"
+#include "VC64Error.h"
 #include "C64Config.h"
 #include "C64Constants.h"
 #include "C64Types.h"
