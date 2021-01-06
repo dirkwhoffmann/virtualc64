@@ -98,15 +98,8 @@ class MyDocument: NSDocument {
     
     func createAttachment(from url: URL) throws {
         
-        let types = [ FileType.V64,
-                      FileType.CRT,
-                      FileType.T64,
-                      FileType.P00,
-                      FileType.PRG,
-                      FileType.FOLDER,
-                      FileType.D64,
-                      FileType.G64,
-                      FileType.TAP ]
+        let types: [FileType] =
+            [ .V64, .CRT, .T64, .P00, .PRG, .FOLDER, .D64, .G64, .TAP ]
         
         try createAttachment(from: url, allowedTypes: types)
     }
