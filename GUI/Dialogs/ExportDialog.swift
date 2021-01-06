@@ -196,7 +196,8 @@ class ExportDialog: DialogController {
         d64 = D64FileProxy.make(withDrive: drive)
 
         // Try to extract the file system
-        volume = FSDeviceProxy.make(withDisk: disk)
+        var err = ErrorCode.OK
+        volume = FSDeviceProxy.make(withDisk: disk, error: &err)
         
         // Try to extract the file system
         // if d64 != nil { volume = FSDeviceProxy.make(withD64: d64) }

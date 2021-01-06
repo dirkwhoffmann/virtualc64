@@ -357,7 +357,7 @@ class MyDocument: NSDocument {
     
     func export(drive id: DriveID, to url: URL) throws {
         
-        track("drive: \(id) to: \(url)")
+        track("drive: \(id.rawValue) to: \(url)")
         
         let disk = c64.drive(id)?.disk
         try export(disk: disk!, to: url)
@@ -366,16 +366,17 @@ class MyDocument: NSDocument {
     func export(disk: DiskProxy, to url: URL) throws {
 
         track("disk: \(disk) to: \(url)")
+        var err = ErrorCode.OK
         
         if url.c64FileType == .G64 {
          
-            if let g64 = G64FileProxy.make(withDisk: disk) {
+            if let g64 = G64FileProxy.make(withDisk: disk, error: &err) {
                 try export(file: g64, to: url)
             }
 
         } else {
             
-            if let fs = FSDeviceProxy.make(withDisk: disk) {
+            if let fs = FSDeviceProxy.make(withDisk: disk, error: &err) {
                 try export(fs: fs, to: url)
             } else {
                 throw ExportError.undecodableDisk

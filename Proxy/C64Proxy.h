@@ -713,8 +713,12 @@ struct AnyFileWrapper;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
 @end
 
+@protocol MakeWithDisk
++ (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err;
+@end
+
 @protocol MakeWithFileSystem
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)fs error:(ErrorCode *)err;
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err;
 @end
 
 //
@@ -854,13 +858,13 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> {
 //
 
 @interface D64FileProxy :
-AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> {
+AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk, MakeWithFileSystem> {
 }
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
++ (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err;
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err;
 
-+ (instancetype)makeWithDisk:(DiskProxy *)proxy;
 + (instancetype)makeWithDrive:(DriveProxy *)proxy;
 
 @property (readonly) NSInteger numTracks;
@@ -872,11 +876,12 @@ AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> {
 // G64File proxy
 //
 
-@interface G64FileProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> {
+@interface G64FileProxy :
+AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk> {
 }
 + (instancetype) makeWithFile:(NSString *)path error:(ErrorCode *)err;
 + (instancetype) makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
-+ (instancetype) makeWithDisk:(DiskProxy *)diskProxy;
++ (instancetype) makeWithDisk:(DiskProxy *)diskProxy error:(ErrorCode *)err;
 
 @end
 
@@ -890,7 +895,7 @@ AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> {
 }
 
 + (instancetype)makeWithD64:(D64FileProxy *)proxy;
-+ (instancetype)makeWithDisk:(DiskProxy *)proxy;
++ (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err;
 + (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy;
 
 @property (readonly) struct FSDeviceWrapper *wrapper;

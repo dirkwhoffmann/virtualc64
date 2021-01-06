@@ -963,12 +963,11 @@ struct AnyFileWrapper { AnyFile *file; };
     return [self make:volume];
 }
 
-+ (instancetype)makeWithDisk:(DiskProxy *)proxy
++ (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err;
 {
     Disk *disk = [proxy wrapper]->disk;
 
-    ErrorCode err;
-    FSDevice *volume = FSDevice::makeWithDisk(disk, &err);
+    FSDevice *volume = FSDevice::makeWithDisk(disk, err);
     return [self make:volume];
 }
 
@@ -1946,7 +1945,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype) makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
-    D64File *file= nil;
+    D64File *file = nil;
     
     try { file = AnyFile::make <D64File> ((const u8 *)buf, len); }
     catch (VC64Error &exception) { *err = exception.errorCode; }
@@ -1954,11 +1953,15 @@ struct AnyFileWrapper { AnyFile *file; };
     return [self make: file];
 }
 
-+ (instancetype) makeWithDisk:(DiskProxy *)proxy
++ (instancetype) makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err
 {
+    D64File *file = nil;
     Disk *disk = (Disk *)([proxy wrapper]->disk);
-    D64File *archive = D64File::makeWithDisk(disk);
-    return archive ? [self make: archive] : nullptr;
+
+    try { file = D64File::makeWithDisk(disk);
+    } catch (VC64Error &exception) { *err = exception.errorCode; }
+    
+    return [self make: file];
 }
 
 + (instancetype) makeWithDrive:(DriveProxy *)proxy
@@ -2022,11 +2025,15 @@ struct AnyFileWrapper { AnyFile *file; };
     return [self make: file];
 }
 
-+ (instancetype) makeWithDisk:(DiskProxy *)diskProxy
++ (instancetype) makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err
 {
-    Disk *disk = [diskProxy wrapper]->disk;
-    G64File *archive = G64File::makeWithDisk(disk);
-    return [self make: archive];
+    G64File *file = nil;
+    Disk *disk = (Disk *)([proxy wrapper]->disk);
+
+    try { file = G64File::makeWithDisk(disk);
+    } catch (VC64Error &exception) { *err = exception.errorCode; }
+    
+    return [self make: file];
 }
 
 @end
