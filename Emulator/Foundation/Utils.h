@@ -153,9 +153,9 @@ string extractSuffix(const string &s);
 string stripSuffix(const string &s); 
 // string extractFileNameWithoutSuffix(const string &s);
 
-char *extractFileName(const char *path);
-char *extractSuffix(const char *path);
-char *extractFileNameWithoutSuffix(const char *path);
+[[deprecated]] char *extractFileName(const char *path);
+[[deprecated]] char *extractSuffix(const char *path);
+[[deprecated]] char *extractFileNameWithoutSuffix(const char *path);
 
 // Checks the suffix of a file name
 [[deprecated]] bool checkFileSuffix(const char *filename, const char *suffix);
