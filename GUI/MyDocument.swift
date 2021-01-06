@@ -395,49 +395,29 @@ class MyDocument: NSDocument {
         
         track("fs: \(fs) to: \(url)")
 
-        var err = ErrorCode.OK
+        var file: AnyFileProxy?
                 
         switch url.c64FileType {
         
         case .D64:
-            
-            if let d64 = D64FileProxy.make(withFileSystem: fs, error: &err) {
-                try export(file: d64, to: url)
-            } else {
-                throw ExportError.fileSystemError(error: err)
-            }
+            file = try create(fs: fs) as D64FileProxy
             
         case .T64:
-            
-            if let t64 = T64FileProxy.make(withFileSystem: fs, error: &err) {
-                try export(file: t64, to: url)
-            } else {
-                throw ExportError.fileSystemError(error: err)
-            }
+            file = try create(fs: fs) as T64FileProxy
             
         case .PRG:
-            
             if fs.numFiles > 1 { showMultipleFilesAlert(format: "PRG") }
+            file = try create(fs: fs) as PRGFileProxy
             
-            if let prg = PRGFileProxy.make(withFileSystem: fs, error: &err) {
-                try export(file: prg, to: url)
-            } else {
-                throw ExportError.fileSystemError(error: err)
-            }
-
         case .P00:
-            
             if fs.numFiles > 1 { showMultipleFilesAlert(format: "P00") }
-            
-            if let p00 = P00FileProxy.make(withFileSystem: fs, error: &err) {
-                try export(file: p00, to: url)
-            } else {
-                throw ExportError.fileSystemError(error: err)
-            }
+            file = try create(fs: fs) as P00FileProxy
 
         default:
-            throw ExportError.invalidFormat(format: url.c64FileType)
+            throw MyError.init(ErrorCode.FILE_TYPE_MISMATCH)
         }
+        
+        try export(file: file!, to: url)
     }
     
     func export(file: AnyFileProxy, to url: URL) throws {
