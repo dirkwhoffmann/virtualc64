@@ -383,6 +383,14 @@ class MyDocument: NSDocument {
     }
     
     func export(fs: FSDeviceProxy, to url: URL) throws {
+
+        func showMultipleFilesAlert(format: String) {
+
+            let msg1 = "Only the first file will be exported."
+            let msg2 = "The \(format) format is designed to store a single file."
+            
+            MyError.informational(msg1, msg2)
+        }
         
         track("fs: \(fs) to: \(url)")
 
@@ -408,9 +416,7 @@ class MyDocument: NSDocument {
             
         case .PRG:
             
-            if fs.numFiles > 1 {
-                showDiskHasMultipleFilesAlert(format: "PRG")
-            }
+            if fs.numFiles > 1 { showMultipleFilesAlert(format: "PRG") }
             
             if let prg = PRGFileProxy.make(withFileSystem: fs) {
                 try export(file: prg, to: url)
@@ -420,9 +426,7 @@ class MyDocument: NSDocument {
 
         case .P00:
             
-            if fs.numFiles > 1 {
-                showDiskHasMultipleFilesAlert(format: "P00")
-            }
+            if fs.numFiles > 1 { showMultipleFilesAlert(format: "P00") }
             
             if let p00 = P00FileProxy.make(withFileSystem: fs) {
                 try export(file: p00, to: url)

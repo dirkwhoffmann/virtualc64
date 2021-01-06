@@ -48,7 +48,7 @@ static const int CPU_DEBUG       = 0; // CPU
 static const int IRQ_DEBUG       = 0; // Interrupts
 
 // Memory
-static const int MEM_DEBUG       = 1; // RAM, ROM
+static const int MEM_DEBUG       = 0; // RAM, ROM
 
 // CIAs
 static const int CIA_DEBUG       = 0; // Complex Interface Adapter
@@ -87,7 +87,7 @@ static const int KBD_DEBUG       = 0; // Keyboard
 //
 
 static const int FORCE_ROM_MISSING      = 0;
-static const int FORCE_MEGA64_MISMATCH  = 1;
+static const int FORCE_MEGA64_MISMATCH  = 0;
 static const int FORCE_UNSUPPORTED_CRT  = 0;
 static const int FORCE_SNAPSHOT_TOO_OLD = 0;
 static const int FORCE_SNAPSHOT_TOO_NEW = 0;

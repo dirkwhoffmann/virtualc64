@@ -130,6 +130,7 @@ extension MyDocument {
         }
     }
     
+    @available(*, deprecated)
     func showDiskIsEmptyAlert(format: String) {
         
         let alert = NSAlert()
@@ -141,6 +142,8 @@ extension MyDocument {
         alert.runModal()
     }
     
+    /*
+    @available(*, deprecated)
     func showDiskHasMultipleFilesAlert(format: String) {
         
         let alert = NSAlert()
@@ -151,7 +154,9 @@ extension MyDocument {
         alert.addButton(withTitle: "OK")
         alert.runModal()
     }
+    */
     
+    @available(*, deprecated)
     func showExportErrorAlert(url: URL) {
         
         let path = url.path
@@ -164,6 +169,7 @@ extension MyDocument {
         alert.runModal()
     }
 
+    @available(*, deprecated)
     func showCannotDecodeDiskAlert() {
 
         let alert = NSAlert()
@@ -178,16 +184,19 @@ extension MyDocument {
 
 extension MyController {
             
+    @available(*, deprecated)
     func warning(_ msg1: String, _ msg2: String, icon: String? = nil) {
 
         alert(msg1, msg2, style: .warning, icon: icon)
     }
 
+    @available(*, deprecated)
     func critical(_ msg1: String, _ msg2: String, icon: String? = nil) {
 
         alert(msg1, msg2, style: .critical, icon: icon)
     }
 
+    @available(*, deprecated)
     func alert(_ msg1: String, _ msg2: String, style: NSAlert.Style, icon: String?) {
         
         let alert = NSAlert()

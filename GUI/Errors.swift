@@ -85,7 +85,12 @@ class MyError: Error {
             alert.runModal()
         }
     }
-    
+
+    static func informational(_ msg1: String, _ msg2: String,
+                              async: Bool = false, icon: String? = nil) {
+        alert(msg1, msg2, style: .informational, async: async, icon: icon)
+    }
+
     static func warning(_ msg1: String, _ msg2: String,
                         async: Bool = false, icon: String? = nil) {
         alert(msg1, msg2, style: .warning, async: async, icon: icon)
