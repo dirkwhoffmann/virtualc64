@@ -1020,6 +1020,9 @@ DQ
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="devRightAction:" target="-2" id="lKW-md-BVT"/>
+                                            </connections>
                                         </popUpButton>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DEd-H4-9Gs">
                                             <rect key="frame" x="18" y="116" width="128" height="25"/>
@@ -1034,6 +1037,9 @@ DQ
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="devLeftAction:" target="-2" id="2vi-jA-2a6"/>
+                                            </connections>
                                         </popUpButton>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jq2-R5-tnZ">
                                             <rect key="frame" x="19" y="179" width="128" height="25"/>
@@ -1048,6 +1054,9 @@ DQ
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="devHatSwitchAction:" target="-2" id="1YN-FO-MUg"/>
+                                            </connections>
                                         </popUpButton>
                                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="14V-Fu-PMw">
                                             <rect key="frame" x="154" y="80" width="292" height="163"/>
@@ -1288,6 +1297,9 @@ DQ
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="devPresetAction:" target="-2" id="GAE-EB-S3j"/>
+                                            </connections>
                                         </popUpButton>
                                         <button verticalHuggingPriority="750" id="mXn-pJ-3SC">
                                             <rect key="frame" x="529" y="10" width="59" height="32"/>
@@ -1296,6 +1308,9 @@ DQ
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="okAction:" target="-2" id="Z8t-E7-mWw"/>
+                                            </connections>
                                         </button>
                                         <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j2Z-CO-BzJ">
                                             <rect key="frame" x="180" y="419" width="239" height="24"/>
@@ -1307,6 +1322,9 @@ DQ
                                                     <segment label="External Device 2" tag="1"/>
                                                 </segments>
                                             </segmentedCell>
+                                            <connections>
+                                                <action selector="selectDeviceAction:" target="-2" id="wns-xL-TpY"/>
+                                            </connections>
                                         </segmentedControl>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tIy-QU-Q46">
                                             <rect key="frame" x="18" y="400" width="564" height="14"/>
