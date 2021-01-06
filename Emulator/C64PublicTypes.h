@@ -145,22 +145,9 @@ enum_long(INSPECTION_TARGET)
 };
 typedef INSPECTION_TARGET InspectionTarget;
 
-typedef enum
-{
-    ERR_OK,
-    ERR_ROM_MISSING,
-    ERR_ROM_MEGA65_MISMATCH
-}
-RomErrorCode;
-
-inline bool isRomErrorCode(long value) {
-    return value >= ERR_OK && value <= ERR_ROM_MEGA65_MISMATCH;
-}
-
 enum_long(ERROR_CODE)
 {
     ERROR_OK,
-    // ERROR_UNKNOWN,
 
     // Memory
     ERROR_OUT_OF_MEMORY,
@@ -174,13 +161,17 @@ enum_long(ERROR_CODE)
     ERROR_DIR_CANT_CREATE,
     ERROR_DIR_NOT_EMPTY,
 
+    // Roms
+    ERROR_ROM_MISSING,
+    ERROR_ROM_MEGA65_MISMATCH,
+    
     // Snapshots
     ERROR_SNP_UNSUPPORTED,
 
     // Cartridges
     ERROR_CRT_UNSUPPORTED,
     
-    // File system errors
+    // File systems
     ERROR_FS_UNSUPPORTED,
     ERROR_FS_WRONG_CAPACITY,
     ERROR_FS_CORRUPTED,

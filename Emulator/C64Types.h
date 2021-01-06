@@ -216,6 +216,9 @@ struct ErrorCodeEnum : Reflection<ErrorCodeEnum, ErrorCode> {
             case ERROR_DIR_CANT_CREATE:     return "DIR_CANT_CREATE";
             case ERROR_DIR_NOT_EMPTY:       return "DIR_NOT_EMPTY";
                 
+            case ERROR_ROM_MISSING:         return "ROM_MISSING";
+            case ERROR_ROM_MEGA65_MISMATCH: return "ROM_MEGA65_MISMATCH";
+                
             case ERROR_SNP_UNSUPPORTED:     return "SNP_UNSUPPORTED";
                 
             case ERROR_CRT_UNSUPPORTED:     return "CRT_UNSUPPORTED";

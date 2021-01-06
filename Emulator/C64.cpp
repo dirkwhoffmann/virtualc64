@@ -762,16 +762,16 @@ C64::acquireThreadLock()
 }
 
 bool
-C64::isReady(RomErrorCode *error)
+C64::isReady(ErrorCode *err)
 {
     if (!hasRom(ROM_TYPE_BASIC) || !hasRom(ROM_TYPE_CHAR) || !hasRom(ROM_TYPE_KERNAL)) {
-        if (error) *error = ERR_ROM_MISSING;
+        if (err) *err = ERROR_ROM_MISSING;
         return false;
     }
     
     if (hasMega65Rom(ROM_TYPE_BASIC) && hasMega65Rom(ROM_TYPE_KERNAL)) {
         if (strcmp(mega65BasicRev(), mega65KernalRev()) != 0) {
-            if (error) *error = ERR_ROM_MEGA65_MISMATCH;
+            if (err) *err = ERROR_ROM_MEGA65_MISMATCH;
             return false;
         }
     }

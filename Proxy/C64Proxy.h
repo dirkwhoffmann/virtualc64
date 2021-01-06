@@ -125,7 +125,7 @@ struct AnyFileWrapper;
 - (void) clearInspectionTarget;
 @property (readonly) BOOL debugMode;
 
-- (BOOL) isReady:(RomErrorCode *)error;
+- (BOOL) isReady:(ErrorCode *)err;
 - (BOOL) isReady;
 - (void) powerOn;
 - (void) powerOff;

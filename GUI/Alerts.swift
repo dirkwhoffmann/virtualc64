@@ -175,14 +175,14 @@ extension MyDocument {
         alert.runModal()
     }
     
-    func showConfigurationAltert(_ error: RomErrorCode) {
+    func showConfigurationAltert(_ error: ErrorCode) {
         
         var msg: String
         
         switch error {
-        case ERR_ROM_MISSING:
+        case .ROM_MISSING:
             msg = "A Basic Rom, Character Rom, and Kernal Rom is required to power up."
-        case ERR_ROM_MEGA65_MISMATCH:
+        case .ROM_MEGA65_MISMATCH:
             msg = "The emulator cannot launch because OpenROMs with mismatched version strings have been installed."
         default:
             msg = ""

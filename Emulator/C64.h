@@ -344,7 +344,7 @@ public:
     /* Returns true if a call to powerOn() will be successful.
      * It returns false, e.g., if no Rom is installed.
      */
-    bool isReady(RomErrorCode *error = nullptr);
+    bool isReady(ErrorCode *err = nullptr);
     
     
     //

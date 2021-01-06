@@ -399,7 +399,7 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func powerAction(_ sender: Any!) {
         
-        var error: RomErrorCode = ERR_OK
+        var error = ErrorCode.OK
 
         if c64.isPoweredOn {
             c64.powerOff()
