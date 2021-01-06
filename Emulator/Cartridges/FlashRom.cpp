@@ -48,7 +48,7 @@ FlashRom::~FlashRom()
 void
 FlashRom::loadBank(unsigned bank, u8 *data)
 {
-    assert(data != NULL);
+    assert(data);
     memcpy(rom + bank * 0x2000, data, 0x2000);
 }
 

@@ -31,7 +31,7 @@ public:
     // Constructing
     //
     
-    static Folder *makeWithFolder(const char *path);
+    static Folder *makeWithFolder(const char *path) throws;
 
         
     //

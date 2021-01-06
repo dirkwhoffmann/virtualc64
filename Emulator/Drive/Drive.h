@@ -67,7 +67,7 @@ public:
     //
     
     // A disk waiting to be inserted
-    class Disk *diskToInsert = NULL;
+    class Disk *diskToInsert = nullptr;
 
     // State change delay counter (checked in the vsync handler)
     i64 diskChangeCounter = -1;

@@ -47,7 +47,7 @@ ExpansionPort::_load(u8 *buffer)
     
     // Load cartridge (if any)
     if (crtType != CRT_NONE) {
-        assert(cartridge != NULL);
+        assert(cartridge);
         delete cartridge;
         cartridge = Cartridge::makeWithType(c64, crtType);
         reader.ptr += cartridge->load(reader.ptr);
@@ -82,7 +82,7 @@ ExpansionPort::_dump()
     msg(" Game line:  %d\n", gameLine);
     msg("Exrom line:  %d\n", exromLine);
 
-    if (cartridge == NULL) {
+    if (cartridge == nullptr) {
         msg("No cartridge attached\n");
     } else {
         cartridge->dump();
@@ -292,7 +292,7 @@ ExpansionPort::detachCartridge()
         suspend();
         
         delete cartridge;
-        cartridge = NULL;
+        cartridge = nullptr;
         crtType = CRT_NONE;
         
         setCartridgeMode(CRTMODE_OFF);
@@ -334,7 +334,7 @@ ExpansionPort::numButtons()
 const char *
 ExpansionPort::getButtonTitle(unsigned nr)
 {
-     return cartridge ? cartridge->getButtonTitle(nr) : NULL;
+     return cartridge ? cartridge->getButtonTitle(nr) : nullptr;
 }
  
 void
@@ -382,7 +382,7 @@ ExpansionPort::switchIsRight()
 const char *
 ExpansionPort::getSwitchDescription(i8 pos)
 {
-    return cartridge ? cartridge->getSwitchDescription(pos) : NULL;
+    return cartridge ? cartridge->getSwitchDescription(pos) : nullptr;
 }
 
 const char *

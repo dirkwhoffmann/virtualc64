@@ -534,7 +534,7 @@ Drive::vsyncHandler()
             diskToInsert->save(buffer);
             disk.load(buffer);
             delete[] buffer;
-            diskToInsert = NULL;
+            diskToInsert = nullptr;
 
             // Inform listeners
             c64.putMessage(MSG_DISK_INSERTED, deviceNr);

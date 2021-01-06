@@ -119,7 +119,7 @@ Expert::pokeIO1(u16 addr, u8 value)
 const char *
 Expert::getButtonTitle(unsigned nr)
 {
-    return (nr == 1) ? "Reset" : (nr == 2) ? "ESM" : NULL;
+    return (nr == 1) ? "Reset" : (nr == 2) ? "ESM" : nullptr;
 }
 
 void
@@ -165,7 +165,7 @@ Expert::pressButton(unsigned nr)
 const char *
 Expert::getSwitchDescription(i8 pos)
 {
-    return (pos == -1) ? "Prg" : (pos == 0) ? "Off" : (pos == 1) ? "On" : NULL;
+    return (pos == -1) ? "Prg" : (pos == 0) ? "Off" : (pos == 1) ? "On" : nullptr;
 }
 
 bool

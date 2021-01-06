@@ -55,7 +55,7 @@ ActionReplay3::pokeIO1(u16 addr, u8 value)
 const char *
 ActionReplay3::getButtonTitle(unsigned nr)
 {
-    return (nr == 1) ? "Freeze" : (nr == 2) ? "Reset" : NULL;
+    return (nr == 1) ? "Freeze" : (nr == 2) ? "Reset" : nullptr;
 }
 
 void
@@ -198,7 +198,7 @@ ActionReplay::pokeIO2(u16 addr, u8 value)
 const char *
 ActionReplay::getButtonTitle(unsigned nr)
 {
-    return (nr == 1) ? "Freeze" : (nr == 2) ? "Reset" : NULL;
+    return (nr == 1) ? "Freeze" : (nr == 2) ? "Reset" : nullptr;
 }
 
 void

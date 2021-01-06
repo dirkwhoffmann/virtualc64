@@ -18,7 +18,7 @@ class CartridgeRom : public C64Component {
 protected:
     
     // Rom data
-    u8 *rom = NULL;
+    u8 *rom = nullptr;
     
 public:
     
@@ -40,7 +40,7 @@ public:
 public:
     
     CartridgeRom(C64 &ref);
-    CartridgeRom(C64 &ref, u16 _size, u16 _loadAddress, const u8 *buffer = NULL);
+    CartridgeRom(C64 &ref, u16 _size, u16 _loadAddress, const u8 *buffer = nullptr);
     ~CartridgeRom();
     const char *getDescription() override { return "CartridgeRom"; }
 

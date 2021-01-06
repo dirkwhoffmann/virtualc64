@@ -30,8 +30,8 @@
 
 class ExpansionPort : public C64Component {
     
-    // Attached cartridge (NULL if no cartridge is plugged in)
-    Cartridge *cartridge = NULL;
+    // Attached cartridge (nullptr if no cartridge is plugged in)
+    Cartridge *cartridge = nullptr;
     
     // Type of the attached cartridge
     CartridgeType crtType = CRT_NONE;
@@ -136,7 +136,7 @@ public:
     //
     
     // Returns true if a cartridge is attached to the expansion port
-    bool getCartridgeAttached() { return cartridge != NULL; }
+    bool getCartridgeAttached() { return cartridge != nullptr; }
 
     // Attaches a cartridge to the expansion port
     bool attachCartridge(Cartridge *c);
@@ -190,7 +190,7 @@ public:
     bool switchIsLeft();
     bool switchIsRight();
     
-    /* Returns a textual description for a switch position or NULL if the
+    /* Returns a textual description for a switch position or nullptr if the
      * switch cannot be positioned this way.
      */
     const char *getSwitchDescription(i8 pos);

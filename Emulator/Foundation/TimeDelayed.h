@@ -25,7 +25,7 @@ template <class T, int capacity> class TimeDelayed {
     u8 delay = 0;
     
     // Pointer to reference clock
-    i64 *clock = NULL;
+    i64 *clock = nullptr;
 
     
     //
@@ -44,7 +44,7 @@ public:
         clear();
     }
     
-    TimeDelayed(u8 delay) : TimeDelayed(delay, NULL) { };
+    TimeDelayed(u8 delay) : TimeDelayed(delay, nullptr) { };
           
     // Sets the reference clock (either the C64 clock or a drive clock)
     void setClock(u64 *clock) { this->clock = (i64 *)clock; }

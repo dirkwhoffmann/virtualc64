@@ -72,9 +72,9 @@ Datasette::ejectTape()
     
     pressStop();
     
-    assert(data != NULL);
+    assert(data);
     free(data);
-    data = NULL;
+    data = nullptr;
     size = 0;
     type = 0;
     durationInCycles = 0;

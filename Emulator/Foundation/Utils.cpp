@@ -59,7 +59,7 @@ ascii2pet(u8 asciichar)
 void
 ascii2petStr(char *str)
 {
-    assert(str != NULL);
+    assert(str);
     for (; *str != 0; str++) {
         *str = ascii2pet(*str);
     }
@@ -172,7 +172,7 @@ bool isZero(const u8 *ptr, usize size)
 char *
 extractFilename(const char *path)
 {
-    assert(path != NULL);
+    assert(path);
     
     const char *pos = strrchr(path, '/');
     return pos ? strdup(pos + 1) : strdup(path);
@@ -181,7 +181,7 @@ extractFilename(const char *path)
 char *
 extractSuffix(const char *path)
 {
-    assert(path != NULL);
+    assert(path);
     
     const char *pos = strrchr(path, '.');
     return pos ? strdup(pos + 1) : strdup("");
@@ -190,7 +190,7 @@ extractSuffix(const char *path)
 char *
 extractFilenameWithoutSuffix(const char *path)
 {
-    assert(path != NULL);
+    assert(path);
     
     char *result;
     char *filename = extractFilename(path);
@@ -209,8 +209,8 @@ extractFilenameWithoutSuffix(const char *path)
 bool
 checkFileSuffix(const char *filename, const char *suffix)
 {
-	assert(filename != NULL);
-	assert(suffix != NULL);
+	assert(filename);
+	assert(suffix);
 	
 	if (strlen(suffix) > strlen(filename))
 		return false;
@@ -262,7 +262,7 @@ getSizeOfFile(const char *filename)
 {
     struct stat fileProperties;
     
-    if (filename == NULL)
+    if (filename == nullptr)
         return -1;
     
     if (stat(filename, &fileProperties) != 0)
@@ -297,7 +297,7 @@ matchingFileHeader(const char *path, const u8 *header, usize length)
     bool result = true;
     FILE *file;
     
-    if ((file = fopen(path, "r")) == NULL) {
+    if ((file = fopen(path, "r")) == nullptr) {
         return false;
     }
     for (usize i = 0; i < length; i++) {
@@ -406,7 +406,7 @@ streamLength(std::istream &stream)
 u32
 fnv_1a_32(u8 *addr, usize size)
 {
-    if (addr == NULL || size == 0) return 0;
+    if (addr == nullptr || size == 0) return 0;
 
     u32 hash = fnv_1a_init32();
 
@@ -420,7 +420,7 @@ fnv_1a_32(u8 *addr, usize size)
 u64
 fnv_1a_64(u8 *addr, usize size)
 {
-    if (addr == NULL || size == 0) return 0;
+    if (addr == nullptr || size == 0) return 0;
 
     u64 hash = fnv_1a_init64();
 
@@ -434,7 +434,7 @@ fnv_1a_64(u8 *addr, usize size)
 u32
 crc32(const u8 *addr, usize size)
 {
-    if (addr == NULL || size == 0) return 0;
+    if (addr == nullptr || size == 0) return 0;
 
     u32 result = 0;
 

@@ -39,7 +39,7 @@ FreezeFrame::peekIO2(u16 addr)
 const char *
 FreezeFrame::getButtonTitle(unsigned nr)
 {
-    return (nr == 1) ? "Freeze" : NULL;
+    return (nr == 1) ? "Freeze" : nullptr;
 }
 
 void

@@ -8,7 +8,6 @@
 // -----------------------------------------------------------------------------
 
 #include "C64.h"
-// #include <dirent.h>
 
 bool
 Folder::isFolder(const char *path)

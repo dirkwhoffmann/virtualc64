@@ -37,7 +37,7 @@ Snapshot::Snapshot(usize capacity)
     header->major = V_MAJOR;
     header->minor = V_MINOR;
     header->subminor = V_SUBMINOR;
-    header->timestamp = time(NULL);
+    header->timestamp = time(nullptr);
 }
 
 Snapshot *

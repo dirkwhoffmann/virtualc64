@@ -14,11 +14,12 @@
 #include "PETName.h"
 
 /* All media files are organized in the class hierarchy displayed below. Two
- * abstract classes are involed: AnyFile and AnyCollection. AnyFiles provided
+ * abstract classes are involed: AnyFile and AnyCollection. AnyFiles provides
  * basic functionality for reading and writing files, streams, and buffers.
  * AnyCollection provides an abstract interface for accessing single files.
- * This interface is implemented by those file classes that provide easy
- * access to single files.
+ * This interface is implemented for those formats that organize their contents
+ * as a collection of files (in contrast to those formats that organzie their
+ * contents as a collection of tracks or sectors, or do not store files at all).
  *
  *     ---------
  *    | AnyFile |

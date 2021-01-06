@@ -25,7 +25,7 @@ CartridgeRom::CartridgeRom(C64 &ref, u16 size, u16 loadAddress, const u8 *buffer
 
 CartridgeRom::~CartridgeRom()
 {
-    assert(rom != NULL);
+    assert(rom);
     delete[] rom;
 }
 
@@ -79,19 +79,19 @@ CartridgeRom::_save(u8 *buffer)
 
 bool
 CartridgeRom::mapsToL() {
-    assert(rom != NULL);
+    assert(rom);
     return loadAddress == 0x8000 && size <= 0x2000;
 }
 
 bool
 CartridgeRom::mapsToLH() {
-    assert(rom != NULL);
+    assert(rom);
     return loadAddress == 0x8000 && size > 0x2000;
 }
 
 bool
 CartridgeRom::mapsToH() {
-    assert(rom != NULL);
+    assert(rom);
     return loadAddress == 0xA000 || loadAddress == 0xE000;
 }
 

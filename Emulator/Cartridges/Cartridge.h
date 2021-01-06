@@ -304,10 +304,10 @@ public:
     // Returns the number of available cartridge buttons
     virtual long numButtons() { return 0; }
     
-    /* Returns a textual description for a button or NULL, if there is no
+    /* Returns a textual description for a button or nullptr, if there is no
      * button with the specified number.
      */
-    virtual const char *getButtonTitle(unsigned nr) { return NULL; }
+    virtual const char *getButtonTitle(unsigned nr) { return nullptr; }
     
     // Presses a button (make sure to call releaseButton() afterwards)
     virtual void pressButton(unsigned nr) { }
@@ -329,12 +329,12 @@ public:
     bool switchIsLeft() { return getSwitch() < 0; }
     bool switchIsRight() { return getSwitch() > 0; }
     
-    /* Returns a textual description for a switch position or NULL if the
+    /* Returns a textual description for a switch position or nullptr if the
      * switch cannot be positioned this way.
      */
-    virtual const char *getSwitchDescription(i8 pos) { return NULL; }
+    virtual const char *getSwitchDescription(i8 pos) { return nullptr; }
     const char *getSwitchDescription() { return getSwitchDescription(getSwitch()); }
-    bool validSwitchPosition(i8 pos) { return getSwitchDescription(pos) != NULL; }
+    bool validSwitchPosition(i8 pos) { return getSwitchDescription(pos) != nullptr; }
     
     // Puts the switch in a certain position
     virtual void setSwitch(i8 pos);

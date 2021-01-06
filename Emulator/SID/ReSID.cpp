@@ -31,7 +31,7 @@ ReSID::~ReSID()
 void
 ReSID::_reset()
 {
-    assert(sid != NULL);
+    assert(sid);
 
     RESET_SNAPSHOT_ITEMS
     

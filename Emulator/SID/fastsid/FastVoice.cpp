@@ -96,7 +96,7 @@ FastVoice::initWaveTables()
 void
 FastVoice::init(FastSID *owner, unsigned voiceNr, FastVoice *prevVoice)
 {
-    assert(prevVoice != NULL);
+    assert(prevVoice);
     
     nr = voiceNr;
     fastsid = owner; 
@@ -153,7 +153,7 @@ FastVoice::updateWaveTablePtr()
             break;
             
         default:
-            wavetable = NULL;
+            wavetable = nullptr;
     }
 }
 

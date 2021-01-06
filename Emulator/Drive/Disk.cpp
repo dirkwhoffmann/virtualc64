@@ -133,7 +133,7 @@ Disk::make(C64 &ref, DOSType type, PETName<16> name)
         default:
         {
             assert(false);
-            return NULL;
+            return nullptr;
         }
     }
 }
@@ -267,7 +267,7 @@ Disk::encodeGcr(u8 *values, usize length, Track t, HeadPos offset)
 u8
 Disk::decodeGcrNibble(u8 *gcr)
 {
-    assert(gcr != NULL);
+    assert(gcr);
     
     u8 codeword = (gcr[0] << 4) | (gcr[1] << 3) | (gcr[2] << 2) | (gcr[3] << 1) | gcr[4];
     assert(codeword < 32);
@@ -278,7 +278,7 @@ Disk::decodeGcrNibble(u8 *gcr)
 u8
 Disk::decodeGcr(u8 *gcr)
 {
-    assert(gcr != NULL);
+    assert(gcr);
     
     u8 nibble1 = decodeGcrNibble(gcr);
     u8 nibble2 = decodeGcrNibble(gcr + 5);

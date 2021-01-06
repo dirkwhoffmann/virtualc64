@@ -20,7 +20,7 @@ class Datasette : public C64Component {
     //
     
     // Data buffer (contains the raw data of the TAP archive)
-    u8 *data = NULL;
+    u8 *data = nullptr;
     
     // Size of the attached data buffer
     u64 size = 0;
@@ -169,7 +169,7 @@ public:
     
     // Returns the pulse length at the current head position
     int pulseLength(int *skip);
-    int pulseLength() { return pulseLength(NULL); }
+    int pulseLength() { return pulseLength(nullptr); }
 
     
     //

@@ -42,7 +42,7 @@ WarpSpeed::pokeIO2(u16 addr, u8 value)
 const char *
 WarpSpeed::getButtonTitle(unsigned nr)
 {
-    return (nr == 1) ? "Reset" : NULL;
+    return (nr == 1) ? "Reset" : nullptr;
 }
 
 void

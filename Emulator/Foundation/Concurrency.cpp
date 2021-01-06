@@ -11,7 +11,7 @@
 
 Mutex::Mutex()
 {
-    pthread_mutex_init(&mutex, NULL);
+    pthread_mutex_init(&mutex, nullptr);
 }
 
 Mutex::~Mutex()
