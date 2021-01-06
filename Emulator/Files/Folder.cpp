@@ -26,7 +26,7 @@ Folder::makeWithFolder(const std::string &path)
 {
     Folder *folder = new Folder();
     
-    FSError err;
+    ErrorCode err;
     if (!(folder->fs = FSDevice::makeWithFolder(path, &err))) {
         delete folder;
         // TODO: throw

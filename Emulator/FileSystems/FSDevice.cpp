@@ -32,7 +32,7 @@ FSDevice::makeWithType(DiskType type, DOSType vType)
 }
 
 FSDevice *
-FSDevice::makeWithD64(D64File *d64, FSError *err)
+FSDevice::makeWithD64(D64File *d64, ErrorCode *err)
 {
     assert(d64);
 
@@ -57,7 +57,7 @@ FSDevice::makeWithD64(D64File *d64, FSError *err)
 }
 
 FSDevice *
-FSDevice::makeWithDisk(class Disk *disk, FSError *err)
+FSDevice::makeWithDisk(class Disk *disk, ErrorCode *err)
 {
     assert(disk);
 
@@ -74,7 +74,7 @@ FSDevice::makeWithDisk(class Disk *disk, FSError *err)
         case D64_802_SECTORS: descriptor.numCyls = 42; break;
 
         default:
-            *err = FS_ERROR_CORRUPTED;
+            *err = ERROR_FS_CORRUPTED;
             return nullptr;
     }
         
@@ -91,7 +91,7 @@ FSDevice::makeWithDisk(class Disk *disk, FSError *err)
 }
 
 FSDevice *
-FSDevice::makeWithCollection(AnyCollection *collection, FSError *err)
+FSDevice::makeWithCollection(AnyCollection *collection, ErrorCode *err)
 {
     assert(collection);
         
@@ -122,7 +122,7 @@ FSDevice::makeWithCollection(AnyCollection *collection, FSError *err)
 }
 
 FSDevice *
-FSDevice::makeWithFolder(const std::string &path, FSError *error)
+FSDevice::makeWithFolder(const std::string &path, ErrorCode *err)
 {
     // Create the device
     FSDevice *device = makeWithType(DISK_TYPE_SS_SD);
@@ -134,7 +134,7 @@ FSDevice::makeWithFolder(const std::string &path, FSError *error)
     
     // Import the folder
     if (!device->importDirectory(path)) {
-        *error = FS_ERROR_IMPORT_ERROR;
+        *err = ERROR_FS_CANT_IMPORT;
         delete device;
         return nullptr;
     }
@@ -144,10 +144,10 @@ FSDevice::makeWithFolder(const std::string &path, FSError *error)
 }
 
 FSDevice *
-FSDevice::makeWithFolder(const char *path, FSError *error)
+FSDevice::makeWithFolder(const char *path, ErrorCode *err)
 {
     assert(path);
-    return makeWithFolder(std::string(path), error);
+    return makeWithFolder(std::string(path), err);
 }
 
 FSDevice::FSDevice(u32 capacity)
@@ -652,7 +652,7 @@ FSDevice::check(bool strict)
     return result;
 }
 
-FSError
+ErrorCode
 FSDevice::check(u32 blockNr, u32 pos, u8 *expected, bool strict)
 {
     return blocks[blockNr]->check(pos, expected, strict);
@@ -711,7 +711,7 @@ FSDevice::readByte(u32 block, u32 offset)
 }
 
 bool
-FSDevice::importVolume(const u8 *src, usize size, FSError *error)
+FSDevice::importVolume(const u8 *src, usize size, ErrorCode *err)
 {
     assert(src != nullptr);
 
@@ -720,7 +720,7 @@ FSDevice::importVolume(const u8 *src, usize size, FSError *error)
     // Only proceed if the buffer size matches
     if (blocks.size() * 256 != size) {
         warn("BUFFER SIZE MISMATCH (%lu %lu)\n", blocks.size(), blocks.size() * 256);
-        if (error) *error = FS_ERROR_WRONG_CAPACITY;
+        if (err) *err = ERROR_FS_WRONG_CAPACITY;
         return false;
     }
         
@@ -731,7 +731,7 @@ FSDevice::importVolume(const u8 *src, usize size, FSError *error)
         blocks[i]->importBlock(data);
     }
     
-    if (error) *error = FS_ERROR_OK;
+    if (err) *err = ERROR_OK;
 
     // Run a directory scan
     scanDirectory();
@@ -820,19 +820,19 @@ FSDevice::importDirectory(const char *path, DIR *dir)
 */
 
 bool
-FSDevice::exportVolume(u8 *dst, usize size, FSError *error)
+FSDevice::exportVolume(u8 *dst, usize size, ErrorCode *err)
 {
-    return exportBlocks(0, layout.numBlocks() - 1, dst, size, error);
+    return exportBlocks(0, layout.numBlocks() - 1, dst, size, err);
 }
 
 bool
-FSDevice::exportBlock(u32 nr, u8 *dst, usize size, FSError *error)
+FSDevice::exportBlock(u32 nr, u8 *dst, usize size, ErrorCode *err)
 {
-    return exportBlocks(nr, nr, dst, size, error);
+    return exportBlocks(nr, nr, dst, size, err);
 }
 
 bool
-FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, usize size, FSError *error)
+FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, usize size, ErrorCode *err)
 {
     assert(last < layout.numBlocks());
     assert(first <= last);
@@ -844,7 +844,7 @@ FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, usize size, FSError *error)
 
     // Only proceed if the source buffer contains the right amount of data
     if (count * 256 != size) {
-        if (error) *error = FS_ERROR_WRONG_CAPACITY;
+        if (err) *err = ERROR_FS_WRONG_CAPACITY;
         return false;
     }
         
@@ -859,17 +859,17 @@ FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, usize size, FSError *error)
 
     debug(FS_DEBUG, "Success\n");
     
-    if (error) *error = FS_ERROR_OK;
+    if (err) *err = ERROR_OK;
     return true;
 }
 
 bool
-FSDevice::exportDirectory(const std::string &path, FSError *err)
+FSDevice::exportDirectory(const std::string &path, ErrorCode *err)
 {
     // Only proceed if path points to an empty directory
     usize numItems = numDirectoryItems(path);
     if (numItems != 0) {
-        if (err) *err = FS_ERROR_DIRECTORY_NOT_EMPTY;
+        if (err) *err = ERROR_DIR_NOT_EMPTY;
         return false;
     }
     
@@ -891,12 +891,12 @@ FSDevice::exportDirectory(const std::string &path, FSError *err)
     }
     
     msg("Exported %lu items", dir.size());
-    if (err) *err = FS_ERROR_OK;
+    if (err) *err = ERROR_OK;
     return true;
 }
 
 bool
-FSDevice::exportFile(FSDirEntry *entry, const std::string &path, FSError *err)
+FSDevice::exportFile(FSDirEntry *entry, const std::string &path, ErrorCode *err)
 {
     std::string name = path + "/" + entry->getName().str();
     debug(FS_DEBUG, "Exporting file to %s\n", name.c_str());
@@ -904,7 +904,7 @@ FSDevice::exportFile(FSDirEntry *entry, const std::string &path, FSError *err)
     std::ofstream stream(name);
     if (!stream.is_open()) {
         // TODO: throw
-        *err = FS_ERROR_CANNOT_CREATE_FILE;
+        *err = ERROR_FILE_CANT_CREATE;
         return false;
     }
 
@@ -913,7 +913,7 @@ FSDevice::exportFile(FSDirEntry *entry, const std::string &path, FSError *err)
 }
 
 void
-FSDevice::exportFile(FSDirEntry *entry, std::ofstream &stream, FSError *err)
+FSDevice::exportFile(FSDirEntry *entry, std::ofstream &stream, ErrorCode *err)
 {
     std::set<Block> visited;
 

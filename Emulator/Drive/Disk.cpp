@@ -152,7 +152,7 @@ Disk::makeWithD64(C64 &ref, D64File *d64)
 {
     assert(d64);
         
-    FSError err;
+    ErrorCode err;
     FSDevice *fs = FSDevice::makeWithD64(d64, &err);
     if (fs == nullptr) return nullptr;
     
@@ -176,7 +176,7 @@ Disk::makeWithCollection(C64 &ref, AnyCollection *collection)
 {
     assert(collection);
         
-    FSError err;
+    ErrorCode err;
     FSDevice *fs = FSDevice::makeWithCollection(collection, &err);
     if (fs == nullptr) return nullptr;
     

@@ -46,17 +46,17 @@ public:
     static FSDevice *makeWithType(DiskType type, DOSType vType = DOS_TYPE_NODOS);
 
     // Creates a file system from a D64 image
-    static FSDevice *makeWithD64(class D64File *d64, FSError *error);
+    static FSDevice *makeWithD64(class D64File *d64, ErrorCode *err);
 
     // Creates a file system from a GCR encoded disk
-    static FSDevice *makeWithDisk(class Disk *disk, FSError *error);
+    static FSDevice *makeWithDisk(class Disk *disk, ErrorCode *err);
 
     // Creates a file from an object implementing the AnyCollection interface
-    static FSDevice *makeWithCollection(AnyCollection *collection, FSError *error);
+    static FSDevice *makeWithCollection(AnyCollection *collection, ErrorCode *err);
 
     // Creates a file system with the files from a disk folder
-    static FSDevice *makeWithFolder(const std::string &path, FSError *error);
-    static FSDevice *makeWithFolder(const char *path, FSError *error);
+    static FSDevice *makeWithFolder(const std::string &path, ErrorCode *err);
+    static FSDevice *makeWithFolder(const char *path, ErrorCode *err);
 
     
     //
@@ -242,7 +242,7 @@ public:
     FSErrorReport check(bool strict);
 
     // Checks a single byte in a certain block
-    FSError check(u32 blockNr, u32 pos, u8 *expected, bool strict);
+    ErrorCode check(u32 blockNr, u32 pos, u8 *expected, bool strict);
     
     // Checks if a certain block is corrupted
     bool isCorrupted(u32 blockNr) { return getCorrupted(blockNr) != 0; }
@@ -272,7 +272,7 @@ public:
     u8 readByte(TSLink ts, u32 offset) { return readByte(layout.blockNr(ts), offset); }
 
     // Imports the volume from a buffer
-    bool importVolume(const u8 *src, usize size, FSError *error = nullptr);
+    bool importVolume(const u8 *src, usize size, ErrorCode *err = nullptr);
     
     // Imports a folder from the host file system
     bool importDirectory(const std::string &path);
@@ -281,15 +281,15 @@ public:
     // bool importDirectory(const char *path, DIR *dir);
 
     // Exports the volume to a buffer
-    bool exportVolume(u8 *dst, usize size, FSError *err = nullptr);
+    bool exportVolume(u8 *dst, usize size, ErrorCode *err = nullptr);
 
     // Exports a single block or a range of blocks
-    bool exportBlock(u32 nr, u8 *dst, usize size, FSError *err = nullptr);
-    bool exportBlocks(u32 first, u32 last, u8 *dst, usize size, FSError *err = nullptr);
+    bool exportBlock(u32 nr, u8 *dst, usize size, ErrorCode *err = nullptr);
+    bool exportBlocks(u32 first, u32 last, u8 *dst, usize size, ErrorCode *err = nullptr);
 
     // Exports all files or a single file to a folder in the host file system
-    bool exportDirectory(const std::string &path, FSError *err);
-    bool exportFile(FSDirEntry *item, const std::string &path, FSError *err);
-    void exportFile(FSDirEntry *entry, std::ofstream &stream, FSError *err);
+    bool exportDirectory(const std::string &path, ErrorCode *err);
+    bool exportFile(FSDirEntry *item, const std::string &path, ErrorCode *err);
+    void exportFile(FSDirEntry *entry, std::ofstream &stream, ErrorCode *err);
 
 };

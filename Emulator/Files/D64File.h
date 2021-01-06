@@ -31,7 +31,7 @@ public:
   
     static D64File *makeWithDisk(class Disk *disk);
     static D64File *makeWithDrive(class Drive *drive);
-    static D64File *makeWithVolume(class FSDevice &volume, FSError *err);
+    static D64File *makeWithVolume(class FSDevice &volume, ErrorCode *err);
 
 
     //

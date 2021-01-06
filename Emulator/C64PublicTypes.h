@@ -157,7 +157,7 @@ inline bool isRomErrorCode(long value) {
     return value >= ERR_OK && value <= ERR_ROM_MEGA65_MISMATCH;
 }
 
-enum_long(ERRORCode)
+enum_long(ERROR_CODE)
 {
     ERROR_OK,
     // ERROR_UNKNOWN,
@@ -188,46 +188,12 @@ enum_long(ERRORCode)
     ERROR_FS_CANT_IMPORT,
     ERROR_FS_EXPECTED_VAL,
     ERROR_FS_EXPECTED_MIN,
-    ERROR_FS_EXPECTED_MAX
+    ERROR_FS_EXPECTED_MAX,
+    
+    ERROR_COUNT
 };
-typedef ERRORCode ErrorCode;
+typedef ERROR_CODE ErrorCode;
 
-inline bool isErrorCode(long value)
-{
-    return (unsigned long)value <= ERROR_FILE_CANT_CREATE;
-}
-
-inline const char *ErrorCodeName(ErrorCode value)
-{
-    switch (value) {
-            
-        case ERROR_OK:                  return "OK";
-
-        case ERROR_OUT_OF_MEMORY:       return "OUT_OF_MEMORY";
-
-        case ERROR_FILE_NOT_FOUND:      return "FILE_NOT_FOUND";
-        case ERROR_FILE_TYPE_MISMATCH:  return "FILE_TYPE_MISMATCH";
-        case ERROR_FILE_CANT_READ:      return "FILE_CANT_READ";
-        case ERROR_FILE_CANT_WRITE:     return "FILE_CANT_WRITE";
-        case ERROR_FILE_CANT_CREATE:    return "FILE_CANT_CREATE";
-        case ERROR_DIR_CANT_CREATE:     return "DIR_CANT_CREATE";
-        case ERROR_DIR_NOT_EMPTY:       return "DIR_NOT_EMPTY";
-
-        case ERROR_SNP_UNSUPPORTED:     return "SNP_UNSUPPORTED";
-            
-        case ERROR_CRT_UNSUPPORTED:     return "CRT_UNSUPPORTED";
-
-        case ERROR_FS_UNSUPPORTED:      return "FS_UNSUPPORTED";
-        case ERROR_FS_WRONG_CAPACITY:   return "FS_WRONG_CAPACITY";
-        case ERROR_FS_CORRUPTED:        return "FS_CORRUPTED";
-        case ERROR_FS_HAS_CYCLES:       return "FS_HAS_CYCLES";
-        case ERROR_FS_CANT_IMPORT:      return "FS_CANT_IMPORT";
-        case ERROR_FS_EXPECTED_VAL:     return "FS_EXPECTED_VAL";
-        case ERROR_FS_EXPECTED_MIN:     return "FS_EXPECTED_MIN";
-        case ERROR_FS_EXPECTED_MAX:     return "FS_EXPECTED_MAX";
-    }
-    return "???";
-}
 
 //
 // Structures

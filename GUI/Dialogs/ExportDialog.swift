@@ -553,12 +553,12 @@ class ExportDialog: DialogController {
     
     func exportToDirectory(url: URL) {
         
-        var err = FSError.OK
+        var err = ErrorCode.OK
         _ = volume!.exportDirectory(url.path, error: &err)
         
         switch err {
 
-        case .DIRECTORY_NOT_EMPTY:
+        case .DIR_NOT_EMPTY:
             
             parent.critical("The destination directory is not empty.",
                             "To prevent accidental exports, the disk exporter " +

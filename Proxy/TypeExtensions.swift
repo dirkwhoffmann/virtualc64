@@ -89,7 +89,7 @@ extension FSUsage {
     }
 }
 
-extension FSError {
+extension ErrorCode {
     
     func description(expected exp: Int = 0) -> String {
         
@@ -97,11 +97,11 @@ extension FSError {
         
         case .OK:
             return ""
-        case .EXPECTED:
+        case .FS_EXPECTED_VAL:
             return String.init(format: "Expected $%02X", exp)
-        case .EXPECTED_MIN:
+        case .FS_EXPECTED_MIN:
             return String.init(format: "Expected a value greater or equal %d", exp)
-        case .EXPECTED_MAX:
+        case .FS_EXPECTED_MAX:
             return String.init(format: "Expected a value less or equal %d", exp)
 
         default:

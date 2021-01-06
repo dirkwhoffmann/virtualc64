@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "C64PublicTypes.h"
+#include "C64Types.h"
 #include <exception>
 
 struct VC64Error : public std::exception
@@ -20,6 +20,6 @@ struct VC64Error : public std::exception
     
     const char *what() const throw() override {
 
-        return ErrorCodeName(errorCode);
+        return  ErrorCodeEnum::key(errorCode);
     }
 };

@@ -349,7 +349,7 @@ class MyDocument: NSDocument {
     
     enum ExportError: Error {
         case invalidFormat(format: FileType)
-        case fileSystemError(error: FSError)
+        case fileSystemError(error: ErrorCode)
         case undecodableDisk
         case other
     }
@@ -386,7 +386,7 @@ class MyDocument: NSDocument {
         
         track("fs: \(fs) to: \(url)")
 
-        var err = FSError.OK
+        var err = ErrorCode.OK
                 
         switch url.c64FileType {
         

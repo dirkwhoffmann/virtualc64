@@ -958,8 +958,8 @@ struct AnyFileWrapper { AnyFile *file; };
 {
     AnyFile *file = [proxy wrapper]->file;
 
-    FSError error;
-    FSDevice *volume = FSDevice::makeWithD64((D64File *)file, &error);
+    ErrorCode err;
+    FSDevice *volume = FSDevice::makeWithD64((D64File *)file, &err);
     return [self make:volume];
 }
 
@@ -967,8 +967,8 @@ struct AnyFileWrapper { AnyFile *file; };
 {
     Disk *disk = [proxy wrapper]->disk;
 
-    FSError error;
-    FSDevice *volume = FSDevice::makeWithDisk(disk, &error);
+    ErrorCode err;
+    FSDevice *volume = FSDevice::makeWithDisk(disk, &err);
     return [self make:volume];
 }
 
@@ -976,8 +976,8 @@ struct AnyFileWrapper { AnyFile *file; };
 {
     AnyFile *file = [proxy wrapper]->file;
 
-    FSError error;
-    FSDevice *volume = FSDevice::makeWithCollection((AnyCollection *)file, &error);
+    ErrorCode err;
+    FSDevice *volume = FSDevice::makeWithCollection((AnyCollection *)file, &err);
     return [self make:volume];
 }
 
@@ -1086,10 +1086,10 @@ struct AnyFileWrapper { AnyFile *file; };
     return wrapper->device->check(strict);
 }
 
-- (FSError) check:(NSInteger)blockNr
-              pos:(NSInteger)pos
-         expected:(unsigned char *)exp
-           strict:(BOOL)strict
+- (ErrorCode) check:(NSInteger)blockNr
+                pos:(NSInteger)pos
+           expected:(unsigned char *)exp
+             strict:(BOOL)strict
 {
     return wrapper->device->check((u32)blockNr, (u32)pos, exp, strict);
 }
@@ -1124,7 +1124,7 @@ struct AnyFileWrapper { AnyFile *file; };
     return wrapper->device->readByte((u32)block, (u32)offset);
 }
 
-- (BOOL) exportDirectory:(NSString *)path error:(FSError *)err
+- (BOOL) exportDirectory:(NSString *)path error:(ErrorCode *)err
 {
     return wrapper->device->exportDirectory([path fileSystemRepresentation], err);
 }
@@ -1968,11 +1968,11 @@ struct AnyFileWrapper { AnyFile *file; };
     return archive ? [self make: archive] : nullptr;
 }
 
-+ (instancetype)makeWithVolume:(FSDeviceProxy *)proxy error:(FSError *)error
++ (instancetype)makeWithVolume:(FSDeviceProxy *)proxy error:(ErrorCode *)err
 {
     FSDevice *device = (FSDevice *)([proxy wrapper]->device);
     
-    D64File *archive = D64File::makeWithVolume(*device, error);
+    D64File *archive = D64File::makeWithVolume(*device, err);
     return archive ? [self make: archive] : nullptr;
 }
 

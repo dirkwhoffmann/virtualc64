@@ -851,7 +851,7 @@ struct AnyFileWrapper;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
 + (instancetype)makeWithDisk:(DiskProxy *)proxy;
 + (instancetype)makeWithDrive:(DriveProxy *)proxy;
-+ (instancetype)makeWithVolume:(FSDeviceProxy *)proxy error:(FSError *)error;
++ (instancetype)makeWithVolume:(FSDeviceProxy *)proxy error:(ErrorCode *)error;
 
 @property (readonly) NSInteger numTracks;
 @property (readonly) NSInteger numHalftracks;
@@ -908,7 +908,7 @@ struct AnyFileWrapper;
 - (FSBlockType)blockType:(NSInteger)blockNr;
 - (FSUsage)itemType:(NSInteger)blockNr pos:(NSInteger)pos;
 - (FSErrorReport)check:(BOOL)strict;
-- (FSError)check:(NSInteger)nr pos:(NSInteger)pos expected:(unsigned char *)exp strict:(BOOL)strict;
+- (ErrorCode)check:(NSInteger)nr pos:(NSInteger)pos expected:(unsigned char *)exp strict:(BOOL)strict;
 - (BOOL)isCorrupted:(NSInteger)blockNr;
 - (NSInteger)getCorrupted:(NSInteger)blockNr;
 - (NSInteger)nextCorrupted:(NSInteger)blockNr;
@@ -916,7 +916,7 @@ struct AnyFileWrapper;
 - (void)printDirectory;
 
 - (NSInteger)readByte:(NSInteger)block offset:(NSInteger)offset;
-- (BOOL)exportDirectory:(NSString *)path error:(FSError *)err;
+- (BOOL)exportDirectory:(NSString *)path error:(ErrorCode *)err;
 
 - (void)dump;
 - (void)info;

@@ -77,7 +77,7 @@ D64File::makeWithDrive(Drive *drive)
 }
 
 D64File *
-D64File::makeWithVolume(FSDevice &volume, FSError *error)
+D64File::makeWithVolume(FSDevice &volume, ErrorCode *err)
 {
     D64File *d64 = nullptr;
         
@@ -91,7 +91,7 @@ D64File::makeWithVolume(FSDevice &volume, FSError *error)
             assert(false);
     }
 
-    if (!volume.exportVolume(d64->data, d64->size, error)) {
+    if (!volume.exportVolume(d64->data, d64->size, err)) {
         delete d64;
         return nullptr;
     }

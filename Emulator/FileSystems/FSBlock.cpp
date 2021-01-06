@@ -161,7 +161,7 @@ FSBlock::itemType(u32 byte)
     return FS_USAGE_UNKNOWN;
 }
 
-FSError
+ErrorCode
 FSBlock::check(u32 byte, u8 *expected, bool strict)
 {
     assert(byte < 256);
@@ -189,7 +189,7 @@ FSBlock::check(u32 byte, u8 *expected, bool strict)
             
             if (strict && byte >= 0xAB && byte <= 0xFF) EXPECT_BYTE(0x00);
 
-            return FS_ERROR_OK;
+            return ERROR_OK;
             
         case FS_BLOCKTYPE_DIR:
             
@@ -208,34 +208,35 @@ FSBlock::check(u32 byte, u8 *expected, bool strict)
                 }
             }
             
-            return FS_ERROR_OK;
+            return ERROR_OK;
             
         case FS_BLOCKTYPE_DATA:
             
             if (byte == 0 && strict) EXPECT_TRACK_REF (data[byte + 1]);
             if (byte == 1 && strict) EXPECT_SECTOR_REF(data[byte - 1]);
 
-            return FS_ERROR_OK;
+            return ERROR_OK;
             
         default:
             assert(false);
     }
     
-    return FS_ERROR_OK;
+    return ERROR_OK;
 }
 
 unsigned
 FSBlock::check(bool strict)
 {
-    FSError error;
+    ErrorCode err;
     unsigned count = 0;
     u8 expected;
     
     for (u32 i = 0; i < 256; i++) {
         
-        if ((error = check(i, &expected, strict)) != FS_ERROR_OK) {
+        if ((err = check(i, &expected, strict)) != ERROR_OK) {
             count++;
-            debug(FS_DEBUG, "Block %d [%d.%d]: %s\n", nr, i / 4, i % 4, FSErrorName(error));
+            debug(FS_DEBUG, "Block %d [%d.%d]: %s\n",
+                  nr, i / 4, i % 4, ErrorCodeEnum::key(err));
         }
     }
     

@@ -84,7 +84,7 @@ public:
     FSUsage itemType(u32 byte);
 
     // Checks the integrity of a certain byte in this block
-    FSError check(u32 byte, u8 *expected, bool strict);
+    ErrorCode check(u32 byte, u8 *expected, bool strict);
 
     // Scans the block data and returns the number of errors
     unsigned check(bool strict);
@@ -114,13 +114,13 @@ typedef FSBlock* BlockPtr;
 typedef FSBlock* BlockPtr;
 
 #define EXPECT_BYTE(exp) { \
-if (value != (exp)) { *expected = (exp); return FS_ERROR_EXPECTED; } }
+if (value != (exp)) { *expected = (exp); return ERROR_FS_EXPECTED_VAL; } }
 
 #define EXPECT_MIN(min) { \
-if (value < (min)) { *expected = (min); return FS_ERROR_EXPECTED_MIN; } }
+if (value < (min)) { *expected = (min); return ERROR_FS_EXPECTED_MIN; } }
 
 #define EXPECT_MAX(max) { \
-if (value > (max)) { *expected = (max); return FS_ERROR_EXPECTED_MAX; } }
+if (value > (max)) { *expected = (max); return ERROR_FS_EXPECTED_MAX; } }
 
 #define EXPECT_RANGE(min,max) { \
 EXPECT_MIN(min); EXPECT_MAX(max) }
