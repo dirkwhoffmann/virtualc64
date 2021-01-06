@@ -281,13 +281,15 @@ public:
     // bool importDirectory(const char *path, DIR *dir);
 
     // Exports the volume to a buffer
-    bool exportVolume(u8 *dst, usize size, FSError *error = nullptr);
+    bool exportVolume(u8 *dst, usize size, FSError *err = nullptr);
 
     // Exports a single block or a range of blocks
-    bool exportBlock(u32 nr, u8 *dst, usize size, FSError *error = nullptr);
-    bool exportBlocks(u32 first, u32 last, u8 *dst, usize size, FSError *error = nullptr);
+    bool exportBlock(u32 nr, u8 *dst, usize size, FSError *err = nullptr);
+    bool exportBlocks(u32 first, u32 last, u8 *dst, usize size, FSError *err = nullptr);
 
-    // Exports a single file or all files to a folder in the host file system
-    bool exportFile(FSDirEntry *item, const char *path, FSError *error);
-    bool exportDirectory(const char *path, FSError *error);
+    // Exports all files or a single file to a folder in the host file system
+    bool exportDirectory(const char *path, FSError *err);
+    bool exportFile(FSDirEntry *item, const char *path, FSError *err);
+    void exportFile(FSDirEntry *entry, std::ofstream &stream, FSError *err);
+
 };

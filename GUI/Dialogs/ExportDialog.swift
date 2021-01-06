@@ -553,14 +553,10 @@ class ExportDialog: DialogController {
     
     func exportToDirectory(url: URL) {
         
-        track("url = \(url)")
-        track("IMPLEMENTATION MISSING")
-        fatalError()
+        var err = FSError.OK
+        _ = volume!.exportDirectory(url.path, error: &err)
         
-        /*
-        let error = volume!.export(url.path)
-        
-        switch error {
+        switch err {
 
         case .DIRECTORY_NOT_EMPTY:
             
@@ -572,7 +568,6 @@ class ExportDialog: DialogController {
 
             hideSheet()
         }
-        */
     }
     
     //

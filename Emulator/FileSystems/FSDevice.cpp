@@ -192,7 +192,7 @@ FSDevice::printDirectory()
     scanDirectory();
     
     for (auto &item : dir) {
-        msg("%3llu \"%16s\" %s (%5llu bytes)\n",
+        msg("%3llu \"%-16s\" %s (%5llu bytes)\n",
             fileBlocks(item),
             item->getName().c_str(), item->typeString(), fileSize(item));
     }
@@ -429,21 +429,23 @@ FSDevice::fileSize(FSDirEntry *entry)
     assert(entry);
     
     u64 size = 0;
+    std::set<Block> visited;
 
     // Start at the first data block
     BlockPtr b = blockPtr(entry->firstBlock());
 
     // Iterate through the block chain
-    while (b) {
-        
+    while (b && visited.find(b->nr) == visited.end()) {
+                
+        visited.insert(b->nr);
         BlockPtr next = nextBlockPtr(b);
                 
         if (next) {
             size += 254;
             b = next;
         } else {
-            // The number of remaining bytes are stored in the sector link
-            size += MIN(b->data[1], 254);
+            // The number of remaining bytes can be derived from the sector link
+            size += b->data[1] ? b->data[1] - 1 : 0;
         }
         b = next;
     }
@@ -862,15 +864,6 @@ FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, usize size, FSError *error)
 }
 
 bool
-FSDevice::exportFile(FSDirEntry *item, const char *path, FSError *error)
-{
-    debug(FS_DEBUG, "Exporting file %s to %s\n", item->getName().c_str(), path);
-
-    assert(false);
-    return false;
-}
-
-bool
 FSDevice::exportDirectory(const char *path, FSError *err)
 {
     assert(path);
@@ -882,13 +875,18 @@ FSDevice::exportDirectory(const char *path, FSError *err)
         return false;
     }
     
-    // Rescan the directory to get variable 'dir' up to date
+    // Rescan the directory to get the directory cache up to date
     scanDirectory();
     
     // Export all items
-    for (auto const& item : dir) {
+    for (auto const& entry : dir) {
 
-        if (!exportFile(item, path, err)) {
+        if (entry->getFileType() != FS_FILETYPE_PRG) {
+            msg("Skipping file %s\n", entry->getName().c_str());
+            continue;
+        }
+        
+        if (!exportFile(entry, path, err)) {
             msg("Export error: %ld\n", (long)*err);
             return false;
         }
@@ -897,4 +895,44 @@ FSDevice::exportDirectory(const char *path, FSError *err)
     msg("Exported %lu items", dir.size());
     if (err) *err = FS_ERROR_OK;
     return true;
+}
+
+bool
+FSDevice::exportFile(FSDirEntry *entry, const char *path, FSError *err)
+{
+    debug(FS_DEBUG, "Exporting file %s to %s\n", entry->getName().c_str(), path);
+    printf("Exporting file %s to %s\n", entry->getName().c_str(), path);
+
+    std::string name = string(path) + "/" + string(entry->getName().c_str());
+    
+    std::ofstream stream(name);
+    if (!stream.is_open()) {
+        // TODO: throw
+        *err = FS_ERROR_CANNOT_CREATE_FILE;
+        return false;
+    }
+
+    exportFile(entry, stream, err);
+    return true;
+}
+
+void
+FSDevice::exportFile(FSDirEntry *entry, std::ofstream &stream, FSError *err)
+{
+    std::set<Block> visited;
+
+    // Start at the first data block
+    BlockPtr b = blockPtr(entry->firstBlock());
+
+    // Iterate through the block chain
+    while (b && visited.find(b->nr) == visited.end()) {
+                
+        visited.insert(b->nr);
+        BlockPtr next = nextBlockPtr(b);
+                
+        usize size = next ? 254 : b->data[1] ? b->data[1] - 1 : 0;
+        stream.write((char *)(b->data + 2), size);
+        
+        b = next;
+    }
 }

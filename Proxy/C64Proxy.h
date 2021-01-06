@@ -859,7 +859,7 @@ struct AnyFileWrapper;
 @end
 
 //
-// G64File
+// G64File proxy
 //
 
 @interface G64FileProxy : AnyFileProxy <Makeable> {
@@ -871,7 +871,7 @@ struct AnyFileWrapper;
 @end
 
 //
-// FSDevice
+// FSDevice proxy
 //
 
 @interface FSDeviceProxy : NSObject {

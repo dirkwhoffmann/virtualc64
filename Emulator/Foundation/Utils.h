@@ -28,6 +28,7 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <string>
+#include <set>
 #include <sstream>
 #include <fstream>
 
