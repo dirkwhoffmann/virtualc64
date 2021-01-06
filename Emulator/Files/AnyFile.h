@@ -62,7 +62,7 @@ public:
     
 public:
     
-    template <class T> static T *make(std::istream &stream)
+    template <class T> static T *make(std::istream &stream) throws
     {
         if (!T::isCompatibleStream(stream)) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
         
@@ -75,14 +75,14 @@ public:
         return obj;
     }
 
-    template <class T> static T *make(const u8 *buf, usize len)
+    template <class T> static T *make(const u8 *buf, usize len) throws
     {
         std::stringstream stream;
         stream.write((const char *)buf, len);
         return make <T> (stream);
     }
     
-    template <class T> static T *make(const char *path)
+    template <class T> static T *make(const char *path) throws
     {
         std::ifstream stream(path);
         if (!stream.is_open()) throw VC64Error(ERROR_FILE_NOT_FOUND);

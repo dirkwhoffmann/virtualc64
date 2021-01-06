@@ -1796,7 +1796,7 @@ struct AnyFileWrapper { AnyFile *file; };
     return [self make: file];
 }
 
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err;
 {
     FSDevice *fs = [proxy wrapper]->device;
     T64File *archive = T64File::makeWithFileSystem(fs);
@@ -1837,7 +1837,7 @@ struct AnyFileWrapper { AnyFile *file; };
     return [self make: file];
 }
 
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err
 {
     FSDevice *fs = [proxy wrapper]->device;
     PRGFile *archive = PRGFile::makeWithFileSystem(fs);
@@ -1908,7 +1908,7 @@ struct AnyFileWrapper { AnyFile *file; };
     return [self make: file];
 }
 
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err
 {
     FSDevice *fs = [proxy wrapper]->device;
     P00File *archive = P00File::makeWithFileSystem(fs);
@@ -1968,7 +1968,7 @@ struct AnyFileWrapper { AnyFile *file; };
     return archive ? [self make: archive] : nullptr;
 }
 
-+ (instancetype)makeWithVolume:(FSDeviceProxy *)proxy error:(ErrorCode *)err
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err
 {
     FSDevice *device = (FSDevice *)([proxy wrapper]->device);
     

@@ -11,7 +11,7 @@
 // Factory extensions
 //
 
-func create<T: Makeable>(buffer: UnsafeRawPointer, length: Int) throws -> T {
+func create<T: MakeWithBuffer>(buffer: UnsafeRawPointer, length: Int) throws -> T {
     
     track()
     
@@ -23,10 +23,18 @@ func create<T: Makeable>(buffer: UnsafeRawPointer, length: Int) throws -> T {
     return obj!
 }
 
-func create<T: Makeable>(url: URL) throws -> T {
+func create<T: MakeWithFile>(url: URL) throws -> T {
     
     var err = ErrorCode.OK
     let obj = T.make(withFile: url.path, error: &err)
+    if err != ErrorCode.OK { throw MyError(err) }
+    return obj!
+}
+
+func create<T: MakeWithFileSystem>(fs: FSDeviceProxy) throws -> T {
+    
+    var err = ErrorCode.OK
+    let obj = T.make(withFileSystem: fs, error: &err)
     if err != ErrorCode.OK { throw MyError(err) }
     return obj!
 }

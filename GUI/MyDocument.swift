@@ -347,6 +347,7 @@ class MyDocument: NSDocument {
     // Exporting disks
     //
     
+    @available(*, deprecated)
     enum ExportError: Error {
         case invalidFormat(format: FileType)
         case fileSystemError(error: ErrorCode)
@@ -399,8 +400,8 @@ class MyDocument: NSDocument {
         switch url.c64FileType {
         
         case .D64:
-
-            if let d64 = D64FileProxy.make(withVolume: fs, error: &err) {
+            
+            if let d64 = D64FileProxy.make(withFileSystem: fs, error: &err) {
                 try export(file: d64, to: url)
             } else {
                 throw ExportError.fileSystemError(error: err)
@@ -408,7 +409,7 @@ class MyDocument: NSDocument {
             
         case .T64:
             
-            if let t64 = T64FileProxy.make(withFileSystem: fs) {
+            if let t64 = T64FileProxy.make(withFileSystem: fs, error: &err) {
                 try export(file: t64, to: url)
             } else {
                 throw ExportError.fileSystemError(error: err)
@@ -418,7 +419,7 @@ class MyDocument: NSDocument {
             
             if fs.numFiles > 1 { showMultipleFilesAlert(format: "PRG") }
             
-            if let prg = PRGFileProxy.make(withFileSystem: fs) {
+            if let prg = PRGFileProxy.make(withFileSystem: fs, error: &err) {
                 try export(file: prg, to: url)
             } else {
                 throw ExportError.fileSystemError(error: err)
@@ -428,7 +429,7 @@ class MyDocument: NSDocument {
             
             if fs.numFiles > 1 { showMultipleFilesAlert(format: "P00") }
             
-            if let p00 = P00FileProxy.make(withFileSystem: fs) {
+            if let p00 = P00FileProxy.make(withFileSystem: fs, error: &err) {
                 try export(file: p00, to: url)
             } else {
                 throw ExportError.fileSystemError(error: err)
