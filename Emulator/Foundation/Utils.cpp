@@ -283,6 +283,11 @@ suffix(const std::string &name)
     return idx != std::string::npos ? name.substr(idx + 1) : "";
 }
 
+bool isDirectory(const std::string &path)
+{
+    return isDirectory(path.c_str());
+}
+
 bool isDirectory(const char *path)
 {
     struct stat fileProperties;
@@ -296,9 +301,14 @@ bool isDirectory(const char *path)
     return S_ISDIR(fileProperties.st_mode);
 }
 
-long numDirectoryItems(const char *path)
+usize numDirectoryItems(const std::string &path)
 {
-    long count = 0;
+    return numDirectoryItems(path.c_str());
+}
+
+usize numDirectoryItems(const char *path)
+{
+    usize count = 0;
     
     if (DIR *dir = opendir(path)) {
         

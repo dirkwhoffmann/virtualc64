@@ -864,12 +864,10 @@ FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, usize size, FSError *error)
 }
 
 bool
-FSDevice::exportDirectory(const char *path, FSError *err)
+FSDevice::exportDirectory(const std::string &path, FSError *err)
 {
-    assert(path);
-        
     // Only proceed if path points to an empty directory
-    long numItems = numDirectoryItems(path);
+    usize numItems = numDirectoryItems(path);
     if (numItems != 0) {
         if (err) *err = FS_ERROR_DIRECTORY_NOT_EMPTY;
         return false;
@@ -898,12 +896,11 @@ FSDevice::exportDirectory(const char *path, FSError *err)
 }
 
 bool
-FSDevice::exportFile(FSDirEntry *entry, const char *path, FSError *err)
+FSDevice::exportFile(FSDirEntry *entry, const std::string &path, FSError *err)
 {
-    debug(FS_DEBUG, "Exporting file %s to %s\n", entry->getName().c_str(), path);
+    std::string name = path + "/" + entry->getName().str();
+    debug(FS_DEBUG, "Exporting file to %s\n", name.c_str());
 
-    std::string name = string(path) + "/" + entry->getName().str();
-    
     std::ofstream stream(name);
     if (!stream.is_open()) {
         // TODO: throw

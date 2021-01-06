@@ -288,8 +288,8 @@ public:
     bool exportBlocks(u32 first, u32 last, u8 *dst, usize size, FSError *err = nullptr);
 
     // Exports all files or a single file to a folder in the host file system
-    bool exportDirectory(const char *path, FSError *err);
-    bool exportFile(FSDirEntry *item, const char *path, FSError *err);
+    bool exportDirectory(const std::string &path, FSError *err);
+    bool exportFile(FSDirEntry *item, const std::string &path, FSError *err);
     void exportFile(FSDirEntry *entry, std::ofstream &stream, FSError *err);
 
 };

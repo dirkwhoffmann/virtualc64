@@ -168,10 +168,12 @@ std::string suffix(const std::string &name);
 long getSizeOfFile(const char *filename);
 
 // Checks if a path points to a directory
+bool isDirectory(const std::string &path);
 bool isDirectory(const char *path);
 
 // Returns the number of files in a directory
-long numDirectoryItems(const char *path);
+usize numDirectoryItems(const std::string &path);
+usize numDirectoryItems(const char *path);
 
 // Checks the size of a file
 [[deprecated]] bool checkFileSize(const char *filename, long min = -1, long max = -1);
