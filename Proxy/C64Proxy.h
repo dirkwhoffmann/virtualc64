@@ -36,6 +36,7 @@
 @class MouseProxy;
 @class AnyFileProxy;
 @class AnyCollectionProxy;
+@class RomFileProxy;
 @class CRTFileProxy;
 @class TAPFileProxy;
 @class SnapshotProxy;
@@ -167,8 +168,9 @@
 
 - (BOOL) isRom:(RomType)type url:(NSURL *)url;
 
-- (BOOL) loadRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)err;
-- (BOOL) loadRom:(RomType)type data:(NSData *)data error:(ErrorCode *)err;
+- (void) loadRom:(RomFileProxy *)proxy;
+- (BOOL) loadRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)err __attribute__ ((deprecated));
+- (BOOL) loadRom:(RomType)type data:(NSData *)data error:(ErrorCode *)err __attribute__ ((deprecated));
 - (BOOL) saveRom:(RomType)type url:(NSURL *)url;
 - (void) deleteRom:(RomType)type;
 
@@ -616,6 +618,19 @@
 
 @property (readonly, strong) NSImage *previewImage;
 @property (readonly) time_t timeStamp;
+
+@end
+
+//
+// RomFile proxy
+//
+
+@interface RomFileProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> { }
+
++ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
+ 
+@property (readonly) RomType romType;
 
 @end
 

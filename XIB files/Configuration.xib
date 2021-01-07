@@ -2456,10 +2456,10 @@ Gw
     <resources>
         <image name="devGamepad1Template" width="20" height="21"/>
         <image name="devGamepad2Template" width="20" height="21"/>
-        <image name="devKeyset1Template" width="24" height="24"/>
-        <image name="devKeyset2Template" width="24" height="24"/>
-        <image name="devMouseTemplate" width="24" height="24"/>
-        <image name="devNoneTemplate" width="24" height="24"/>
+        <image name="devKeyset1Template" width="20" height="20"/>
+        <image name="devKeyset2Template" width="20" height="20"/>
+        <image name="devMouseTemplate" width="20" height="20"/>
+        <image name="devNoneTemplate" width="20" height="20"/>
         <image name="keyset1Template" width="24" height="24"/>
         <image name="keyset2Template" width="24" height="24"/>
         <image name="lockIcon" width="121" height="171"/>

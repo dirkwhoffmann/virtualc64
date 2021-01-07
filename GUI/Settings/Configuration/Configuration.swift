@@ -407,25 +407,20 @@ class Configuration {
     
     func loadRomUserDefaults() {
         
+        func load(_ url: URL?, type: FileType) {
+            
+            if url != nil {
+                if let file = try? create(url: url!) as RomFileProxy {
+                    if file.type == type { c64.loadRom(file) }
+                }
+            }
+        }
+        
         c64.suspend()
-        
-        if let url = UserDefaults.basicRomUrl {
-            track("Seeking Basic Rom")
-            try? c64.loadRom(type: .BASIC, url: url)
-        }
-        if let url = UserDefaults.kernalRomUrl {
-            track("Seeking Kernal Rom")
-            try? c64.loadRom(type: .KERNAL, url: url)
-        }
-        if let url = UserDefaults.charRomUrl {
-            track("Seeking Character Rom")
-            try? c64.loadRom(type: .CHAR, url: url)
-        }
-        if let url = UserDefaults.vc1541RomUrl {
-            track("Seeking VC1541 Rom")
-            try? c64.loadRom(type: .VC1541, url: url)
-        }
-        
+        load(UserDefaults.basicRomUrl, type: .BASIC_ROM)
+        load(UserDefaults.charRomUrl, type: .CHAR_ROM)
+        load(UserDefaults.kernalRomUrl, type: .KERNAL_ROM)
+        load(UserDefaults.vc1541RomUrl, type: .VC1541_ROM)
         c64.resume()
     }
     

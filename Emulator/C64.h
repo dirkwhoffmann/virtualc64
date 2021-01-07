@@ -549,9 +549,10 @@ private:
 public:
     
     // Installs a Rom
-    bool loadRom(RomType type, RomFile *file);
-    bool loadRomFromBuffer(RomType type, const u8 *buffer, usize length);
-    bool loadRomFromFile(RomType type, const char *path);
+    void loadRom(RomFile *file);
+    [[deprecated]] bool loadRom(RomType type, RomFile *file);
+    [[deprecated]] bool loadRomFromBuffer(RomType type, const u8 *buffer, usize length);
+    [[deprecated]] bool loadRomFromFile(RomType type, const char *path);
     
     // Erases an installed Rom
     void deleteRom(RomType type);

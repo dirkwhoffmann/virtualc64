@@ -258,14 +258,19 @@ extension ConfigurationController {
 
         track()
         
-        let basicRom = NSDataAsset(name: "basic_generic")?.data
-        let charRom = NSDataAsset(name: "chargen_openroms")?.data
-        let kernalRom = NSDataAsset(name: "kernal_generic")?.data
-        
-        // Install OpenROMs
-        try? c64.loadRom(type: .BASIC, data: basicRom)
-        try? c64.loadRom(type: .CHAR, data: charRom)
-        try? c64.loadRom(type: .KERNAL, data: kernalRom)
+        let basic = NSData(data: NSDataAsset(name: "basic_generic")!.data)
+        let char = NSData(data: NSDataAsset(name: "chargen_openroms")!.data)
+        let kernal = NSData(data: NSDataAsset(name: "kernal_generic")!.data)
+
+        if let rom = try? create(buffer: basic.bytes, length: basic.length) as RomFileProxy {
+            c64.loadRom(rom)
+        }
+        if let rom = try? create(buffer: char.bytes, length: char.length) as RomFileProxy {
+            c64.loadRom(rom)
+        }
+        if let rom = try? create(buffer: kernal.bytes, length: kernal.length) as RomFileProxy {
+            c64.loadRom(rom)
+        }
         
         refresh()
     }

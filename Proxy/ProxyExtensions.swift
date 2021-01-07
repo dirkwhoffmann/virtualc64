@@ -53,6 +53,7 @@ func create<T: MakeWithFileSystem>(fs: FSDeviceProxy) throws -> T {
 
 extension C64Proxy {
     
+    @available(*, deprecated)
     func loadRom(type: RomType, url: URL) throws {
 
         var err = ErrorCode.OK
@@ -60,6 +61,7 @@ extension C64Proxy {
         if err != .OK { throw MyError(err) }
     }
 
+    @available(*, deprecated)
     func loadRom(type: RomType, data: Data?) throws {
 
         var err = ErrorCode.OK

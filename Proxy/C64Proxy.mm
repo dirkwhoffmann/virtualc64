@@ -1566,7 +1566,30 @@
 @end
 
 //
-// CRT
+// RomFile proxy
+//
+
+@implementation RomFileProxy
+
++ (instancetype)make:(RomFile *)file
+{
+    return file ? [[self alloc] initWith:file] : nil;
+}
+
++ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
+{
+    return [self make: AnyFile::make <RomFile> ([path fileSystemRepresentation], err)];
+}
+
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
+{
+    return [self make: AnyFile::make <RomFile> ((const u8 *)buf, len, err)];
+}
+
+@end
+
+//
+// CRT proxy
 //
 
 @implementation CRTFileProxy
@@ -2171,6 +2194,11 @@
 - (BOOL) isRom:(RomType)type url:(NSURL *)url
 {
     return RomFile::isRomFile(type, [[url path] UTF8String]);
+}
+
+- (void) loadRom:(RomFileProxy *)proxy
+{
+    [self c64]->loadRom((RomFile *)proxy->obj);
 }
 
 - (BOOL)loadRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)err;

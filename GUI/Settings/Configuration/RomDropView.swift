@@ -61,11 +61,12 @@ class RomDropView: NSImageView {
         
         if url != nil {
             do {
-                try c64.loadRom(type: type, url: url!)
+                let rom = try create(url: url!) as RomFileProxy
+                c64.loadRom(rom)
                 return true
             } catch {
-                let filename = url!.lastPathComponent
-                (error as? MyError)?.warning("Cannot open Rom file \"\(filename)\"")
+                let name = url!.lastPathComponent
+                (error as? MyError)?.warning("Cannot open Rom file \"\(name)\"")
             }
         }
         return false
