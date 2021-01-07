@@ -7,16 +7,9 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-
 #import "C64Proxy.h"
 #import "C64.h"
 #import "VirtualC64-Swift.h"
-
-/* C++ class wrappers. We wrap into standard C structures to avoid any
- * reference to C++ in the objc code seen by Swift.
- */
-// struct Wrapper { void *obj; };
-
 
 //
 // Base Proxy
@@ -26,7 +19,9 @@
 
 - (instancetype) initWith:(void *)ref
 {
-    if (self = [super init]) { obj = ref; }
+    if (self = [super init]) {
+        obj = ref;
+    }
     return self;
 }
 
@@ -1922,10 +1917,9 @@
 
 - (void)kill
 {
-    assert([self c64] != NULL);
-    NSLog(@"C64Proxy::kill");
+    NSLog(@"kill");
     
-    // Kill the emulator
+    assert([self c64] != NULL);
     delete [self c64];
     obj = NULL;
 }
@@ -1935,12 +1929,22 @@
     return releaseBuild();
 }
 
+- (BOOL)warp
+{
+    return [self c64]->inWarpMode();
+}
+
+- (void)setWarp:(BOOL)enable;
+{
+    [self c64]->setWarp(enable);
+}
+
 - (BOOL)debugMode
 {
     return [self c64]->inDebugMode();
 }
 
-- (void)setDebug:(BOOL)enable
+- (void)setDebugMode:(BOOL)enable
 {
     [self c64]->setDebug(enable);
 }
@@ -2154,14 +2158,9 @@
     [self c64]->stepOver();
 }
 
-- (BOOL)warp
+- (BOOL) hasRom:(RomType)type
 {
-    return [self c64]->inWarpMode();
-}
-
-- (void)setWarp:(BOOL)enable;
-{
-    [self c64]->setWarp(enable);
+    return [self c64]->hasRom(type);
 }
 
 - (BOOL)hasBasicRom
@@ -2199,6 +2198,11 @@
     return [self c64]->hasMega65Rom(ROM_TYPE_KERNAL);
 }
 
+- (BOOL) isRom:(RomType)type url:(NSURL *)url
+{
+    return RomFile::isRomFile(type, [[url path] UTF8String]);
+}
+
 - (BOOL)isBasicRom:(NSURL *)url
 {
     return RomFile::isBasicRomFile([[url path] UTF8String]);
@@ -2233,6 +2237,11 @@
     return [self c64]->loadRomFromBuffer(type, bytes, [data length]);
 }
 
+- (BOOL) saveRom:(RomType)type url:(NSURL *)url
+{
+    return [self c64]->saveRom(type, [[url path] UTF8String]);
+}
+
 - (BOOL)saveBasicRom:(NSURL *)url
 {
     return [self c64]->saveRom(ROM_TYPE_BASIC, [[url path] UTF8String]);
@@ -2251,6 +2260,11 @@
 - (BOOL)saveVC1541Rom:(NSURL *)url
 {
     return [self c64]->saveRom(ROM_TYPE_VC1541, [[url path] UTF8String]);
+}
+
+- (void) deleteRom:(RomType)type
+{
+    [self c64]->deleteRom(type);
 }
 
 - (void)deleteBasicRom
@@ -2273,6 +2287,11 @@
     [self c64]->deleteRom(ROM_TYPE_VC1541);
 }
 
+- (RomIdentifier) romIdentifier:(RomType)type
+{
+    return [self c64]->romIdentifier(type);
+}
+
 - (RomIdentifier)basicRomIdentifier
 {
     return [self c64]->romIdentifier(ROM_TYPE_BASIC);
@@ -2291,6 +2310,12 @@
 - (RomIdentifier)vc1541RomIdentifier
 {
     return [self c64]->romIdentifier(ROM_TYPE_VC1541);
+}
+
+- (NSString *) romTitle:(RomType)type
+{
+    const char *str = [self c64]->romTitle(type);
+    return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 
 - (NSString *)basicRomTitle
@@ -2317,6 +2342,12 @@
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 
+- (NSString *)romSubTitle:(RomType)type
+{
+    const char *str = [self c64]->romSubTitle(type);
+    return str ? [NSString stringWithUTF8String:str] : NULL;
+}
+
 - (NSString *)basicRomSubTitle
 {
     const char *str = [self c64]->romSubTitle(ROM_TYPE_BASIC);
@@ -2338,6 +2369,12 @@
 - (NSString *)vc1541RomSubTitle
 {
     const char *str = [self c64]->romSubTitle(ROM_TYPE_VC1541);
+    return str ? [NSString stringWithUTF8String:str] : NULL;
+}
+
+- (NSString *)romRevision:(RomType)type
+{
+    const char *str = [self c64]->romRevision(type);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 

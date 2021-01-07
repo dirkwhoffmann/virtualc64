@@ -64,12 +64,30 @@ RomFile::isCompatibleStream(std::istream &stream)
 }
 
 bool
+RomFile::isRomStream(RomType type, std::istream &stream)
+{
+    switch (type) {
+        case ROM_TYPE_BASIC:   return isBasicRomStream(stream);
+        case ROM_TYPE_CHAR:    return isCharRomStream(stream);
+        case ROM_TYPE_KERNAL:  return isKernalRomStream(stream);
+        case ROM_TYPE_VC1541:  return isVC1541RomStream(stream);
+
+        default:
+            assert(false);
+            return false;
+    }
+}
+
+bool
 RomFile::isBasicRomStream(std::istream &stream)
 {
     if (streamLength(stream) != 0x2000) return false;
 
     for (usize i = 0; i < basicRomSignatureCnt; i++) {
-        if (matchingStreamHeader(stream, magicBasicRomBytes[i], sizeof(magicBasicRomBytes[i]))) {
+        
+        if (matchingStreamHeader(stream,
+                                 magicBasicRomBytes[i],
+                                 sizeof(magicBasicRomBytes[i]))) {
             return true;
         }
     }
@@ -82,7 +100,10 @@ RomFile::isCharRomStream(std::istream &stream)
     if (streamLength(stream) != 0x1000) return false;
 
     for (usize i = 0; i < basicRomSignatureCnt; i++) {
-        if (matchingStreamHeader(stream, magicCharRomBytes[i], sizeof(magicCharRomBytes[i]))) {
+        
+        if (matchingStreamHeader(stream,
+                                 magicCharRomBytes[i],
+                                 sizeof(magicCharRomBytes[i]))) {
             return true;
         }
     }
@@ -95,7 +116,10 @@ RomFile::isKernalRomStream(std::istream &stream)
     if (streamLength(stream) != 0x2000) return false;
 
     for (usize i = 0; i < kernalRomSignatureCnt; i++) {
-        if (matchingStreamHeader(stream, magicKernalRomBytes[i], sizeof(magicKernalRomBytes[i]))) {
+        
+        if (matchingStreamHeader(stream,
+                                 magicKernalRomBytes[i],
+                                 sizeof(magicKernalRomBytes[i]))) {
             return true;
         }
     }
@@ -108,11 +132,57 @@ RomFile::isVC1541RomStream(std::istream &stream)
     if (streamLength(stream) != 0x4000) return false;
 
     for (usize i = 0; i < vc1541RomSignatureCnt; i++) {
-        if (matchingStreamHeader(stream, magicVC1541RomBytes[i], sizeof(magicVC1541RomBytes[i]))) {
+        
+        if (matchingStreamHeader(stream,
+                                 magicVC1541RomBytes[i],
+                                 sizeof(magicVC1541RomBytes[i]))) {
             return true;
         }
     }
     return false;
+}
+
+bool
+RomFile::isRomFile(RomType type, const char *path)
+{
+    switch (type) {
+        case ROM_TYPE_BASIC:   return isBasicRomFile(path);
+        case ROM_TYPE_CHAR:    return isCharRomFile(path);
+        case ROM_TYPE_KERNAL:  return isKernalRomFile(path);
+        case ROM_TYPE_VC1541:  return isVC1541RomFile(path);
+
+        default:
+            assert(false);
+            return false;
+    }
+}
+
+bool
+RomFile::isBasicRomFile(const char *path)
+{
+    std::ifstream stream(path);
+    return stream.is_open() ? isBasicRomStream(stream) : false;
+}
+
+bool
+RomFile::isCharRomFile(const char *path)
+{
+    std::ifstream stream(path);
+    return stream.is_open() ? isCharRomStream(stream) : false;
+}
+
+bool
+RomFile::isKernalRomFile(const char *path)
+{
+    std::ifstream stream(path);
+    return stream.is_open() ? isKernalRomStream(stream) : false;
+}
+
+bool
+RomFile::isVC1541RomFile(const char *path)
+{
+    std::ifstream stream(path);
+    return stream.is_open() ? isVC1541RomStream(stream) : false;
 }
 
 RomIdentifier
@@ -373,34 +443,6 @@ RomFile::revision(RomIdentifier rev)
             
         default:                      return "";
     }
-}
-
-bool
-RomFile::isBasicRomFile(const char *path)
-{
-    std::ifstream stream(path);
-    return stream.is_open() ? isBasicRomStream(stream) : false;
-}
-
-bool
-RomFile::isCharRomFile(const char *path)
-{
-    std::ifstream stream(path);
-    return stream.is_open() ? isCharRomStream(stream) : false;
-}
-
-bool
-RomFile::isKernalRomFile(const char *path)
-{
-    std::ifstream stream(path);
-    return stream.is_open() ? isKernalRomStream(stream) : false;
-}
-
-bool
-RomFile::isVC1541RomFile(const char *path)
-{
-    std::ifstream stream(path);
-    return stream.is_open() ? isVC1541RomStream(stream) : false;
 }
 
 usize

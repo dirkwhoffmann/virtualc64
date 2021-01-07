@@ -38,11 +38,13 @@ public:
     static bool isCompatibleName(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
     
+    static bool isRomStream(RomType type, std::istream &stream);
     static bool isBasicRomStream(std::istream &stream);
     static bool isCharRomStream(std::istream &stream);
     static bool isKernalRomStream(std::istream &stream);
     static bool isVC1541RomStream(std::istream &stream);
     
+    static bool isRomFile(RomType type, const char *path);
     static bool isBasicRomFile(const char *path);
     static bool isCharRomFile(const char *path);
     static bool isKernalRomFile(const char *path);

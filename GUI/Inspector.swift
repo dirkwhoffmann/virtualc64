@@ -316,7 +316,7 @@ class Inspector: DialogController {
     override func showWindow(_ sender: Any?) {
 
         super.showWindow(self)
-        c64.setDebug(true)
+        c64.debugMode = true
         updateInspectionTarget()
         
         drvWarningText.isHidden = true
@@ -421,8 +421,8 @@ extension Inspector: NSWindowDelegate {
         track("Closing inspector")
         
         // Leave debug mode
-        c64?.setDebug(false)
-        c64?.clearInspectionTarget()
+        c64?.debugMode = false
+        c64?.inspectionTarget = .NONE
     }
 }
 
