@@ -53,7 +53,7 @@ struct FSDeviceWrapper;
 struct DriveWrapper;
 //struct DiskWrapper;
 // struct DatasetteWrapper;
-struct MouseWrapper;
+// struct MouseWrapper;
 struct AnyFileWrapper;
 
 //
@@ -83,9 +83,7 @@ struct AnyFileWrapper;
 //
 
 @interface C64Proxy : HardwareComponentProxy {
-    
-    // struct C64Wrapper *wrapper;
-    
+        
     CPUProxy *cpu;
     GuardsProxy *breakpoints;
     GuardsProxy *watchpoints;
@@ -105,7 +103,6 @@ struct AnyFileWrapper;
     MouseProxy *mouse;
 }
 
-// @property (readonly) struct C64Wrapper *wrapper;
 @property (readonly, strong) CPUProxy *cpu;
 @property (readonly, strong) GuardsProxy *breakpoints;
 @property (readonly, strong) GuardsProxy *watchpoints;
@@ -170,7 +167,6 @@ struct AnyFileWrapper;
 - (BOOL)configure:(Option)opt drive:(DriveID)id value:(NSInteger)val;
 - (BOOL)configure:(Option)opt drive:(DriveID)id enable:(BOOL)val;
 - (void)configure:(C64Model)value;
-// - (C64Model) model __attribute__ ((deprecated));
 
 // Accessing the message queue
 - (Message)message;
@@ -603,10 +599,7 @@ struct AnyFileWrapper;
 // Mouse proxy
 //
 
-@interface MouseProxy : NSObject {
-    
-    struct MouseWrapper *wrapper;
-}
+@interface MouseProxy : HardwareComponentProxy { }
 
 @property MouseModel model;
 @property (readonly) NSInteger port;

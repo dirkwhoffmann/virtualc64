@@ -16,23 +16,10 @@
  * reference to C++ in the objc code seen by Swift.
  */
 struct Wrapper { void *obj; };
-// struct C64Wrapper { C64 *c64; };
-// struct CpuWrapper { CPU<C64Memory> *cpu; };
-// struct GuardsWrapper { Guards *guards; };
-// struct MemoryWrapper { C64Memory *mem; };
-// struct VicWrapper { VICII *vic; };
-// struct CiaWrapper { CIA *cia; };
-// struct KeyboardWrapper { Keyboard *keyboard; };
-// struct ControlPortWrapper { ControlPort *port; };
-// struct SidBridgeWrapper { SIDBridge *sid; };
-// struct IecWrapper { IEC *iec; };
-// struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
+
+
 struct FSDeviceWrapper { FSDevice *device; };
-// struct ViaWrapper { VIA6522 *via; };
-// struct DiskWrapper { Disk *disk; };
 struct DriveWrapper { Drive *drive; };
-// struct DatasetteWrapper { Datasette *datasette; };
-struct MouseWrapper { Mouse *mouse; };
 struct AnyFileWrapper { AnyFile *file; };
 
 //
@@ -1436,53 +1423,49 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation MouseProxy
 
-- (instancetype)initWithMouse:(Mouse *)mouse
+- (Mouse *)mouse
 {
-    if (self = [super init]) {
-        wrapper = new MouseWrapper();
-        wrapper->mouse = mouse;
-    }
-    return self;
+    return (Mouse *)obj;
 }
 
 - (MouseModel)model
 {
-    return wrapper->mouse->getModel();
+    return [self mouse]->getModel();
 }
 
 - (void)setModel:(MouseModel)model
 {
-    wrapper->mouse->setModel(model);
+    [self mouse]->setModel(model);
 }
 
 - (NSInteger)port
 {
-    return wrapper->mouse->getPort();
+    return [self mouse]->getPort();
 }
 
 - (void)connect:(NSInteger)toPort
 {
-    wrapper->mouse->connectMouse((unsigned)toPort);
+    [self mouse]->connectMouse((unsigned)toPort);
 }
 
 - (void)disconnect
 {
-    wrapper->mouse->disconnectMouse();
+    [self mouse]->disconnectMouse();
 }
 
 - (void)setXY:(NSPoint)pos
 {
-    wrapper->mouse->setXY((i64)pos.x, (i64)pos.y);
+    [self mouse]->setXY((i64)pos.x, (i64)pos.y);
 }
 
 - (void)setLeftButton:(BOOL)pressed
 {
-    wrapper->mouse->setLeftButton(pressed);
+    [self mouse]->setLeftButton(pressed);
 }
 
 - (void)setRightButton:(BOOL)pressed
 {
-    wrapper->mouse->setRightButton(pressed);
+    [self mouse]->setRightButton(pressed);
 }
 
 @end
@@ -1956,7 +1939,7 @@ struct AnyFileWrapper { AnyFile *file; };
     drive8 = [[DriveProxy alloc] initWithVC1541:&c64->drive8];
     drive9 = [[DriveProxy alloc] initWithVC1541:&c64->drive9];
     datasette = [[DatasetteProxy alloc] initWith:&c64->datasette];
-    mouse = [[MouseProxy alloc] initWithMouse:&c64->mouse];
+    mouse = [[MouseProxy alloc] initWith:&c64->mouse];
 
     return self;
 }
