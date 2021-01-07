@@ -169,8 +169,6 @@
 - (BOOL) isRom:(RomType)type url:(NSURL *)url;
 
 - (void) loadRom:(RomFileProxy *)proxy;
-- (BOOL) loadRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)err __attribute__ ((deprecated));
-- (BOOL) loadRom:(RomType)type data:(NSData *)data error:(ErrorCode *)err __attribute__ ((deprecated));
 - (BOOL) saveRom:(RomType)type url:(NSURL *)url;
 - (void) deleteRom:(RomType)type;
 

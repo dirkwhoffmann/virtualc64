@@ -152,19 +152,6 @@ string stripSuffix(const string &s)
 }
 
 /*
-string
-extractFileNameWithoutSuffix(const string &s)
-{
-    auto i1 = s.rfind('/');
-    auto i2 = s.rfind('.');
-    printf("i1 = %ld i2 = %ld\n", i1, i2);
-    auto pos = i1 != std::string::npos ? i1 + 1 : 0;
-    auto len = i2 != std::string::npos && i2 > i1 ? i2 - i1 : std::string::npos;
-    
-    return s.substr(pos, len);
-}
-*/
-
 char *
 extractFileName(const char *path)
 {
@@ -172,10 +159,6 @@ extractFileName(const char *path)
     
     string s(path);
     return strdup(extractFileName(s).c_str());
-    /*
-    const char *pos = strrchr(path, '/');
-    return pos ? strdup(pos + 1) : strdup(path);
-    */
 }
 
 char *
@@ -185,10 +168,6 @@ extractSuffix(const char *path)
     
     string s(path);
     return strdup(extractSuffix(s).c_str());
-    /*
-    const char *pos = strrchr(path, '.');
-    return pos ? strdup(pos + 1) : strdup("");
-    */
 }
 
 char *
@@ -198,24 +177,9 @@ extractFileNameWithoutSuffix(const char *path)
     
     string s(path);
     return strdup(stripSuffix(extractFileName(s)).c_str());
-    /*
-    assert(path);
-    
-    char *result;
-    char *filename = extractFileName(path);
-    char *suffix   = extractSuffix(filename);
-    
-    if (strlen(suffix) == 0)
-        result = strdup(filename);
-    else
-        result = strndup(filename, strlen(filename) - strlen(suffix) - 1);
-    
-    free(filename);
-    free(suffix);
-    return result;
-    */
 }
-
+*/
+/*
 bool
 checkFileSuffix(const char *filename, const char *suffix)
 {
@@ -231,6 +195,7 @@ checkFileSuffix(const char *filename, const char *suffix)
 	else
 		return false;
 }
+*/
 
 std::string
 suffix(const std::string &name)

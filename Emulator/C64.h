@@ -312,13 +312,9 @@ public:
     
     void setWarp(bool enable);
     bool inWarpMode() { return warpMode; }
-    [[deprecated]] void enableWarpMode() { setWarp(true); }
-    [[deprecated]] void disableWarpMode() { setWarp(false); }
 
     void setDebug(bool enable);
     bool inDebugMode() { return debugMode; }
-    [[deprecated]] void enableDebugMode() { setDebug(true); }
-    [[deprecated]] void disableDebugMode() { setDebug(false); }
     
 private:
 
@@ -549,10 +545,7 @@ private:
 public:
     
     // Installs a Rom
-    void loadRom(RomFile *file);
-    [[deprecated]] bool loadRom(RomType type, RomFile *file);
-    [[deprecated]] bool loadRomFromBuffer(RomType type, const u8 *buffer, usize length);
-    [[deprecated]] bool loadRomFromFile(RomType type, const char *path);
+    void installRom(RomFile *file);
     
     // Erases an installed Rom
     void deleteRom(RomType type);

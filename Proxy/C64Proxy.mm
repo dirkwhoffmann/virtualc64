@@ -2144,13 +2144,6 @@
     [self c64]->configure(model);
 }
 
-/*
-- (C64Model)model
-{
-    return [self c64]->getModel();
-}
-*/
-
 - (Message)message
 {
     return [self c64]->getMessage();
@@ -2198,21 +2191,7 @@
 
 - (void) loadRom:(RomFileProxy *)proxy
 {
-    [self c64]->loadRom((RomFile *)proxy->obj);
-}
-
-- (BOOL)loadRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)err;
-{
-    try { [self c64]->loadRomFromFile(type, [[url path] UTF8String]); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
-    return YES;
-}
-
-- (BOOL)loadRom:(RomType)type data:(NSData *)data error:(ErrorCode *)err;
-{
-    if (data == nil) return NO;
-    const u8 *bytes = (const u8 *)[data bytes];
-    return [self c64]->loadRomFromBuffer(type, bytes, [data length]);
+    [self c64]->installRom((RomFile *)proxy->obj);
 }
 
 - (BOOL) saveRom:(RomType)type url:(NSURL *)url

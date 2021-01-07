@@ -158,14 +158,15 @@ bool isZero(const u8 *ptr, usize size);
 string extractFileName(const string &s);
 string extractSuffix(const string &s);
 string stripSuffix(const string &s); 
-// string extractFileNameWithoutSuffix(const string &s);
 
+/*
 [[deprecated]] char *extractFileName(const char *path);
 [[deprecated]] char *extractSuffix(const char *path);
 [[deprecated]] char *extractFileNameWithoutSuffix(const char *path);
+*/
 
 // Checks the suffix of a file name
-[[deprecated]] bool checkFileSuffix(const char *filename, const char *suffix);
+// [[deprecated]] bool checkFileSuffix(const char *filename, const char *suffix);
 
 // Extracts the suffix from a filename
 std::string suffix(const std::string &name);
