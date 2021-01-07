@@ -865,7 +865,7 @@ AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk, MakeWithFileSystem> {
 + (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err;
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err;
 
-+ (instancetype)makeWithDrive:(DriveProxy *)proxy __attribute__ ((deprecated));
+// + (instancetype)makeWithDrive:(DriveProxy *)proxy __attribute__ ((deprecated));
 
 @property (readonly) NSInteger numTracks;
 @property (readonly) NSInteger numHalftracks;

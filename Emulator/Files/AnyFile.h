@@ -116,6 +116,34 @@ public:
         return nullptr;
     }
     
+    template <class T> static T *make(class Disk *disk) throws
+    {
+        return T::makeWithDisk(disk);
+    }
+
+    template <class T> static T *make(class Disk *disk, ErrorCode *err)
+    {
+        *err = ERROR_OK;
+        
+        try { return make <T> (disk); }
+        catch (VC64Error &exception) { *err = exception.errorCode; }
+        return nullptr;
+    }
+
+    template <class T> static T *make(class FSDevice &fs) throws
+    {
+        return T::makeWithFileSystem(fs);
+    }
+
+    template <class T> static T *make(class FSDevice &fs, ErrorCode *err)
+    {
+        *err = ERROR_OK;
+        
+        try { return make <T> (fs); }
+        catch (VC64Error &exception) { *err = exception.errorCode; }
+        return nullptr;
+    }
+    
     
     //
     // Initializing

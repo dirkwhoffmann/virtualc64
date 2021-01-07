@@ -117,6 +117,16 @@ G64File::makeWithDisk(Disk *disk)
     return make <G64File> (stream);
 }
 
+G64File *
+G64File::makeWithDisk(class Disk *disk, ErrorCode *err)
+{
+    *err = ERROR_OK;
+    
+    try { return makeWithDisk(disk); }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
+    return nullptr;
+}
+
 usize
 G64File::getSizeOfHalftrack(Halftrack ht)
 {

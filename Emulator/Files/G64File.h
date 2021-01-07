@@ -23,7 +23,8 @@ public:
     static bool isCompatibleName(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
     
-    static G64File *makeWithDisk(Disk *disk);
+    static G64File *makeWithDisk(Disk *disk) throws;
+    static G64File *makeWithDisk(Disk *disk, ErrorCode *err);
 
     
     //

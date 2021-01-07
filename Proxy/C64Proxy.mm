@@ -1809,12 +1809,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithFolder:(NSString *)path error:(ErrorCode *)err
 {
-    Folder *folder = nil;
-    
-    try { folder = Folder::makeWithFolder([path fileSystemRepresentation]); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
-        
-    return [self make: folder];
+    return [self make: Folder::makeWithFolder([path fileSystemRepresentation], err)];
 }
 
 - (FSDeviceProxy *)fileSystem
@@ -1885,28 +1880,14 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype) makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err
 {
-    D64File *file = nil;
     Disk *disk = (Disk *)([proxy wrapper]->disk);
-
-    try { file = D64File::makeWithDisk(disk);
-    } catch (VC64Error &exception) { *err = exception.errorCode; }
-    
-    return [self make: file];
-}
-
-+ (instancetype) makeWithDrive:(DriveProxy *)proxy
-{
-    Drive *drive = (Drive *)([proxy wrapper]->drive);
-    D64File *archive = D64File::makeWithDrive(drive);
-    return archive ? [self make: archive] : nullptr;
+    return [self make: AnyFile::make <D64File> (disk, err)];
 }
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err
 {
-    FSDevice *device = (FSDevice *)([proxy wrapper]->device);
-    
-    D64File *archive = D64File::makeWithVolume(*device, err);
-    return archive ? [self make: archive] : nullptr;
+    FSDevice *fs = (FSDevice *)([proxy wrapper]->device);
+    return [self make: AnyFile::make <D64File> (*fs, err)];    
 }
 
 - (NSInteger)numTracks
@@ -1937,22 +1918,12 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype) makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
-    G64File *file = nil;
-    
-    try { file = AnyFile::make <G64File> ([path fileSystemRepresentation]); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
-    
-    return [self make: file];
+    return [self make: AnyFile::make <G64File> ([path fileSystemRepresentation], err)];
 }
 
 + (instancetype) makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
-    G64File *file = nil;
-    
-    try { file = AnyFile::make <G64File> ((const u8 *)buf, len); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
-        
-    return [self make: file];
+    return [self make: AnyFile::make <G64File> ((const u8 *)buf, len, err)];
 }
 
 + (instancetype) makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err

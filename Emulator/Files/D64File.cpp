@@ -70,14 +70,7 @@ D64File::makeWithDisk(Disk *disk)
 }
 
 D64File *
-D64File::makeWithDrive(Drive *drive)
-{
-    assert(drive);
-    return makeWithDisk(&drive->disk);
-}
-
-D64File *
-D64File::makeWithVolume(FSDevice &volume, ErrorCode *err)
+D64File::makeWithFileSystem(FSDevice &volume)
 {
     D64File *d64 = nullptr;
         
@@ -91,9 +84,11 @@ D64File::makeWithVolume(FSDevice &volume, ErrorCode *err)
             assert(false);
     }
 
-    if (!volume.exportVolume(d64->data, d64->size, err)) {
+    ErrorCode err;
+    if (!volume.exportVolume(d64->data, d64->size, &err)) {
+
         delete d64;
-        return nullptr;
+        throw VC64Error(err);
     }
     
     return d64;
