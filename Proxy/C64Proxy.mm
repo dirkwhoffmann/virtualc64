@@ -1571,24 +1571,14 @@ struct AnyFileWrapper { AnyFile *file; };
     return [[self alloc] initWithFile:snapshot];
 }
 
-+ (instancetype) makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
-{
-    Snapshot *file = nil;
-    
-    try { file = AnyFile::make <Snapshot> ((const u8 *)buf, len); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
-    
-    return [self make: file];
-}
-
 + (instancetype) makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
-    Snapshot *file = nil;
-    
-    try { file = AnyFile::make <Snapshot> ([path fileSystemRepresentation]); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
-    
-    return [self make: file];
+    return [self make: AnyFile::make <Snapshot> ([path fileSystemRepresentation], err)];
+}
+
++ (instancetype) makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
+{
+    return [self make: AnyFile::make <Snapshot> ((const u8 *)buf, len, err)];
 }
 
 + (instancetype) makeWithC64:(C64Proxy *)c64proxy
@@ -1651,22 +1641,12 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype) makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
-    CRTFile *file = nil;
-    
-    try { file = AnyFile::make <CRTFile> ([path fileSystemRepresentation]); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
-    
-    return [self make: file];
+    return [self make: AnyFile::make <CRTFile> ([path fileSystemRepresentation], err)];
 }
 
 + (instancetype) makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
-    CRTFile *file = nil;
-    
-    try { file = AnyFile::make <CRTFile> ((const u8 *)buf, len); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
-        
-    return [self make: file];
+    return [self make: AnyFile::make <CRTFile> ((const u8 *)buf, len, err)];
 }
 
 - (CRTFile *)unwrap
@@ -1714,22 +1694,12 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
-    TAPFile *file = nil;
-    
-    try { file = AnyFile::make <TAPFile> ([path fileSystemRepresentation]); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
-    
-    return [self make: file];
+    return [self make: AnyFile::make <TAPFile> ([path fileSystemRepresentation], err)];
 }
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
-    TAPFile *file = nil;
-    
-    try { file = AnyFile::make <TAPFile> ((const u8 *)buf, len); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
-    
-    return [self make: file];
+    return [self make: AnyFile::make <TAPFile> ((const u8 *)buf, len, err)];
 }
 
 - (TAPFile *)unwrap
@@ -1777,22 +1747,12 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
-    T64File *file = nil;
-    
-    try { file = AnyFile::make <T64File> ([path fileSystemRepresentation]); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
-    
-    return [self make: file];
+    return [self make: AnyFile::make <T64File> ([path fileSystemRepresentation], err)];
 }
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
-    T64File *file = nil;
-    
-    try { file = AnyFile::make <T64File> ((const u8 *)buf, len); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
-        
-    return [self make: file];
+    return [self make: AnyFile::make <T64File> ((const u8 *)buf, len, err)];
 }
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err;
@@ -1818,22 +1778,12 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
-    PRGFile *file = nil;
-    
-    try { file = AnyFile::make <PRGFile> ([path fileSystemRepresentation]); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
-    
-    return [self make: file];
+    return [self make: AnyFile::make <PRGFile> ([path fileSystemRepresentation], err)];
 }
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
-    PRGFile *file = nil;
-    
-    try { file = AnyFile::make <PRGFile> ((const u8 *)buf, len); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
-        
-    return [self make: file];
+    return [self make: AnyFile::make <PRGFile> ((const u8 *)buf, len, err)];
 }
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err
@@ -1889,22 +1839,12 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
-    P00File *file = nil;
-    
-    try { file = AnyFile::make <P00File> ([path fileSystemRepresentation]); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
-    
-    return [self make: file];
+    return [self make: AnyFile::make <P00File> ([path fileSystemRepresentation], err)];
 }
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
-    P00File *file = nil;
-    
-    try { file = AnyFile::make <P00File> ((const u8 *)buf, len); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
-        
-    return [self make: file];
+    return [self make: AnyFile::make <P00File> ((const u8 *)buf, len, err)];
 }
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err
@@ -1935,22 +1875,12 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype) makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
-    D64File *file = nil;
-    
-    try { file = AnyFile::make <D64File> ([path fileSystemRepresentation]); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
-    
-    return [self make: file];
+    return [self make: AnyFile::make <D64File> ([path fileSystemRepresentation], err)];
 }
 
 + (instancetype) makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
-    D64File *file = nil;
-    
-    try { file = AnyFile::make <D64File> ((const u8 *)buf, len); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
-        
-    return [self make: file];
+    return [self make: AnyFile::make <D64File> ((const u8 *)buf, len, err)];
 }
 
 + (instancetype) makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err
