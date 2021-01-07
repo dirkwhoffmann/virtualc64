@@ -256,7 +256,7 @@ HardwareComponent::setWarp(bool enable)
 }
 
 void
-HardwareComponent::settrace(bool enable)
+HardwareComponent::setDebug(bool enable)
 {
     if (debugMode == enable) return;
     
@@ -264,9 +264,9 @@ HardwareComponent::settrace(bool enable)
 
      // Enable or disable debug mode for all subcomponents
      for (HardwareComponent *c : subComponents) {
-         c->settrace(enable);
+         c->setDebug(enable);
      }
 
      // Enable debug mode for this component
-     _settrace(enable);
+     _setDebug(enable);
 }

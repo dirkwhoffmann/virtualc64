@@ -243,8 +243,8 @@ protected:
     virtual void _setWarp(bool enable) { }
     
     // Switches debug mode on or off
-    void settrace(bool enable);
-    virtual void _settrace(bool enable) { }
+    void setDebug(bool enable);
+    virtual void _setDebug(bool enable) { }
 
 //
 // Standard implementations of _reset, _load, and _save

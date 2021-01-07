@@ -147,9 +147,7 @@ class MyController: NSWindowController, MessageReceiver {
         case .on: warp = true
         }
         
-        if warp != c64.warp() {
-            warp ? c64.warpOn() : c64.warpOff()
-        }
+        if warp != c64.warp { c64.warp = warp }
     }
     
     //

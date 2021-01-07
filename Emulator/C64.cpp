@@ -547,6 +547,14 @@ C64::setWarp(bool enable)
 }
 
 void
+C64::setDebug(bool enable)
+{
+    suspend();
+    HardwareComponent::setDebug(enable);
+    resume();
+}
+
+void
 C64::powerOn()
 {
     trace(RUN_DEBUG, "powerOn()\n");
@@ -701,7 +709,7 @@ C64::_setWarp(bool enable)
 }
 
 void
-C64::_settrace(bool enable)
+C64::_setDebug(bool enable)
 {
     suspend();
     updateVicFunctionTable();

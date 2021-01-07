@@ -119,8 +119,9 @@ struct AnyFileWrapper;
 - (void) kill;
 
 @property (readonly) BOOL isReleaseBuild;
-- (void) enableDebugging;
-- (void) disableDebugging;
+- (void) setDebug:(BOOL)enable;
+- (void) enableDebugging __attribute__ ((deprecated));
+- (void) disableDebugging __attribute__ ((deprecated));
 @property InspectionTarget inspectionTarget;
 - (void) clearInspectionTarget;
 @property (readonly) BOOL debugMode;
@@ -172,9 +173,9 @@ struct AnyFileWrapper;
 - (void) stepInto;
 - (void) stepOver;
 
-- (BOOL) warp;
-- (void) warpOn;
-- (void) warpOff;
+@property BOOL warp;
+- (void) warpOn __attribute__ ((deprecated));
+- (void) warpOff __attribute__ ((deprecated));
 
 // Handling ROMs
 - (BOOL) hasBasicRom;
