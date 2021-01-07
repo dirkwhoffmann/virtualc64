@@ -947,15 +947,12 @@
 
 @implementation FSDeviceProxy
 
-+ (instancetype)make:(FSDevice *)volume
++ (instancetype)make:(FSDevice *)fs
 {
-    if (volume == NULL) { return nil; }
-    
-    FSDeviceProxy *proxy = [[self alloc] initWith: volume];
-    return proxy;
+    return fs ? [[self alloc] initWith: fs] : nil;
 }
 
-+ (instancetype)makeWithD64:(D64FileProxy *)proxy
++ (instancetype)makeWithD64:(D64FileProxy *)proxy __attribute__ ((deprecated))
 {
     ErrorCode err;
     FSDevice *volume = FSDevice::makeWithD64((D64File *)proxy->obj, &err);
@@ -968,7 +965,7 @@
     return [self make:volume];
 }
 
-+ (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy
++ (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy __attribute__ ((deprecated))
 {
     ErrorCode err;
     FSDevice *volume = FSDevice::makeWithCollection((AnyCollection *)proxy->obj, &err);
@@ -1461,10 +1458,13 @@
 
 + (AnyFileProxy *)makeWithFile:(AnyFile *)file
 {
-    if (file == nil) {
-        return nil;
-    }
-    return [[self alloc] initWith:file];
+    return file ? [[self alloc] initWith:file] : nil;
+}
+
+- (void)dealloc
+{
+    NSLog(@"dealloc");
+    delete (AnyFile *)obj;
 }
 
 - (AnyFile *)file
@@ -1507,10 +1507,7 @@
 
 + (instancetype)make:(Snapshot *)snapshot
 {
-    if (snapshot == NULL) {
-        return nil;
-    }
-    return [[self alloc] initWith:snapshot];
+    return snapshot ? [[self alloc] initWith:snapshot] : nil;
 }
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
@@ -1770,8 +1767,7 @@
 
 + (instancetype)make:(D64File *)archive
 {
-    if (archive == NULL) return nil;
-    return [[self alloc] initWith:archive];
+    return archive ? [[self alloc] initWith:archive] : nil;
 }
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
@@ -2379,7 +2375,6 @@
     return RomFile::isPatchedRom(rev);
 }
 
-// Flashing files
 - (BOOL)flash:(AnyFileProxy *)proxy
 {
     return [self c64]->flash((AnyFile *)proxy->obj);

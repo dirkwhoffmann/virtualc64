@@ -34,7 +34,6 @@
 @class DiskProxy;
 @class DatasetteProxy;
 @class MouseProxy;
-
 @class AnyFileProxy;
 @class AnyCollectionProxy;
 @class CRTFileProxy;
@@ -48,7 +47,7 @@
 @class FSDeviceProxy;
 
 //
-// Root of all proxy classes
+// Base proxies
 //
 
 @interface BaseProxy : NSObject {
@@ -58,10 +57,6 @@
 }
 
 @end
-
-//
-// HardwareComponent proxy
-//
 
 @interface HardwareComponentProxy : BaseProxy { }
 
@@ -75,42 +70,42 @@
 
 @interface C64Proxy : HardwareComponentProxy {
         
-    CPUProxy *cpu;
-    GuardsProxy *breakpoints;
-    GuardsProxy *watchpoints;
-    MemoryProxy *mem;
-    VICProxy *vic;
     CIAProxy *cia1;
     CIAProxy *cia2;
-    SIDProxy *sid;
-    KeyboardProxy *keyboard;
     ControlPortProxy *port1;
     ControlPortProxy *port2;
-    IECProxy *iec;
-    ExpansionPortProxy *expansionport;
+    CPUProxy *cpu;
+    DatasetteProxy *datasette;
     DriveProxy *drive8;
     DriveProxy *drive9;
-    DatasetteProxy *datasette;
+    ExpansionPortProxy *expansionport;
+    GuardsProxy *breakpoints;
+    GuardsProxy *watchpoints;
+    IECProxy *iec;
+    KeyboardProxy *keyboard;
+    MemoryProxy *mem;
     MouseProxy *mouse;
+    SIDProxy *sid;
+    VICProxy *vic;
 }
 
-@property (readonly, strong) CPUProxy *cpu;
-@property (readonly, strong) GuardsProxy *breakpoints;
-@property (readonly, strong) GuardsProxy *watchpoints;
-@property (readonly, strong) MemoryProxy *mem;
-@property (readonly, strong) VICProxy *vic;
 @property (readonly, strong) CIAProxy *cia1;
 @property (readonly, strong) CIAProxy *cia2;
-@property (readonly, strong) SIDProxy *sid;
-@property (readonly, strong) KeyboardProxy *keyboard;
 @property (readonly, strong) ControlPortProxy *port1;
 @property (readonly, strong) ControlPortProxy *port2;
-@property (readonly, strong) IECProxy *iec;
-@property (readonly, strong) ExpansionPortProxy *expansionport;
+@property (readonly, strong) CPUProxy *cpu;
+@property (readonly, strong) DatasetteProxy *datasette;
 @property (readonly, strong) DriveProxy *drive8;
 @property (readonly, strong) DriveProxy *drive9;
-@property (readonly, strong) DatasetteProxy *datasette;
+@property (readonly, strong) ExpansionPortProxy *expansionport;
+@property (readonly, strong) GuardsProxy *breakpoints;
+@property (readonly, strong) GuardsProxy *watchpoints;
+@property (readonly, strong) IECProxy *iec;
+@property (readonly, strong) KeyboardProxy *keyboard;
+@property (readonly, strong) MemoryProxy *mem;
 @property (readonly, strong) MouseProxy *mouse;
+@property (readonly, strong) SIDProxy *sid;
+@property (readonly, strong) VICProxy *vic;
 
 - (DriveProxy *) drive:(DriveID)id;
 
@@ -624,6 +619,8 @@
 //
 
 @interface AnyFileProxy : BaseProxy { }
+
+- (void)dealloc;
 
 @property (readonly) FileType type;
 @property (readonly) NSString *name;
