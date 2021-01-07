@@ -56,7 +56,7 @@
 // struct CiaWrapper;
 // struct SidBridgeWrapper;
 // struct KeyboardWrapper;
-struct ControlPortWrapper;
+// struct ControlPortWrapper;
 struct IecWrapper;
 struct ExpansionPortWrapper;
 struct FSDeviceWrapper;
@@ -345,8 +345,6 @@ struct AnyFileWrapper;
 
 - (CIAInfo)getInfo;
 
-- (void)poke:(u16)addr value:(u8)value __attribute__ ((deprecated));
-
 @end
 
 
@@ -443,9 +441,7 @@ struct AnyFileWrapper;
 // Control port proxy
 //
 
-@interface ControlPortProxy : NSObject { struct ControlPortWrapper *wrapper; }
-
-- (void)dump;
+@interface ControlPortProxy : HardwareComponentProxy { }
 
 - (void)trigger:(GamePadAction)event;
 - (BOOL)autofire;
@@ -459,12 +455,10 @@ struct AnyFileWrapper;
 
 
 //
-// Expansion port proxy
+// ExpansionPort proxy
 //
 
-@interface ExpansionPortProxy : NSObject { struct ExpansionPortWrapper *wrapper; }
-
-- (void) dump;
+@interface ExpansionPortProxy : HardwareComponentProxy { }
 
 - (BOOL)cartridgeAttached;
 - (CartridgeType)cartridgeType;

@@ -23,7 +23,7 @@ struct Wrapper { void *obj; };
 // struct VicWrapper { VICII *vic; };
 // struct CiaWrapper { CIA *cia; };
 // struct KeyboardWrapper { Keyboard *keyboard; };
-struct ControlPortWrapper { ControlPort *port; };
+// struct ControlPortWrapper { ControlPort *port; };
 // struct SidBridgeWrapper { SIDBridge *sid; };
 struct IecWrapper { IEC *iec; };
 struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
@@ -362,34 +362,18 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation CIAProxy
 
-/*
-- (instancetype) initWithCIA:(CIA *)cia
-{
-    if (self = [super init]) {
-        wrapper = new CiaWrapper();
-        wrapper->cia = cia;
-    }
-    return self;
-}
-*/
-
 - (CIA *)cia
 {
     return (CIA *)obj;
 }
 
-- (CIAInfo) getInfo
+- (CIAInfo)getInfo
 {
     return [self cia]->getInfo();
 }
-- (void) dump
+- (void)dump
 {
     [self cia]->dump();
-}
-- (void) poke:(u16)addr value:(u8)value {
-    [self cia]->suspend();
-    [self cia]->poke(addr, value);
-    [self cia]->resume();
 }
 
 @end
@@ -570,7 +554,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation IECProxy
 
-- (instancetype) initWithIEC:(IEC *)iec
+- (instancetype)initWithIEC:(IEC *)iec
 {
     if (self = [super init]) {
         wrapper = new IecWrapper();
@@ -579,17 +563,16 @@ struct AnyFileWrapper { AnyFile *file; };
     return self;
 }
 
-- (void) dump
+- (void)dump
 {
     wrapper->iec->dump();
 }
-- (BOOL) busy
+- (BOOL)busy
 {
     return wrapper->iec->isBusy();
 }
 
 @end
-
 
 //
 // Keyboard
@@ -602,107 +585,107 @@ struct AnyFileWrapper { AnyFile *file; };
     return (Keyboard *)obj;
 }
 
-- (BOOL) keyIsPressed:(NSInteger)nr
+- (BOOL)keyIsPressed:(NSInteger)nr
 {
     return [self kb]->isPressed(nr);
 }
 
-- (BOOL) keyIsPressedAtRow:(NSInteger)row col:(NSInteger)col
+- (BOOL)keyIsPressedAtRow:(NSInteger)row col:(NSInteger)col
 {
     return [self kb]->isPressed(row, col);
 }
 
-- (BOOL) controlIsPressed
+- (BOOL)controlIsPressed
 {
     return [self kb]->ctrlIsPressed();
 }
 
-- (BOOL) commodoreIsPressed
+- (BOOL)commodoreIsPressed
 {
     return [self kb]->commodoreIsPressed();
 }
 
-- (BOOL) leftShiftIsPressed
+- (BOOL)leftShiftIsPressed
 {
     return [self kb]->leftShiftIsPressed();
 }
 
-- (BOOL) rightShiftIsPressed
+- (BOOL)rightShiftIsPressed
 {
     return [self kb]->rightShiftIsPressed();
 }
 
-- (BOOL) shiftLockIsPressed
+- (BOOL)shiftLockIsPressed
 {
     return [self kb]->shiftLockIsPressed();
 }
 
-- (void) pressKey:(NSInteger)nr
+- (void)pressKey:(NSInteger)nr
 {
     [self kb]->press(nr);
 }
 
-- (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col
+- (void)pressKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
     [self kb]->pressRowCol(row, col);
 }
 
-- (void) pressShiftLock
+- (void)pressShiftLock
 {
     [self kb]->pressShiftLock();
 }
 
-- (void) releaseKey:(NSInteger)nr
+- (void)releaseKey:(NSInteger)nr
 {
     [self kb]->release(nr);
 }
 
-- (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col
+- (void)releaseKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
     [self kb]->releaseRowCol(row, col);
 }
 
-- (void) releaseShiftLock
+- (void)releaseShiftLock
 {
     [self kb]->releaseShiftLock();
 }
 
-- (void) releaseAll
+- (void)releaseAll
 {
     [self kb]->releaseAll();
 }
 
-- (void) toggleKey:(NSInteger)nr
+- (void)toggleKey:(NSInteger)nr
 {
     [self kb]->toggle(nr);
 }
 
-- (void) toggleKeyAtRow:(NSInteger)row col:(NSInteger)col
+- (void)toggleKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
     [self kb]->toggle(row, col);
 }
 
-- (void) toggleShiftLock
+- (void)toggleShiftLock
 {
     [self kb]->toggleShiftLock();
 }
 
-- (void) scheduleKeyPress:(NSInteger)nr delay:(NSInteger)delay
+- (void)scheduleKeyPress:(NSInteger)nr delay:(NSInteger)delay
 {
     [self kb]->scheduleKeyPress(nr, delay);
 }
 
-- (void) scheduleKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay
+- (void)scheduleKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay
 {
     [self kb]->scheduleKeyPress(row, col, delay);
 }
 
-- (void) scheduleKeyRelease:(NSInteger)nr delay:(NSInteger)delay
+- (void)scheduleKeyRelease:(NSInteger)nr delay:(NSInteger)delay
 {
     [self kb]->scheduleKeyRelease(nr, delay);
 }
 
-- (void) scheduleKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay
+- (void)scheduleKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay
 {
     [self kb]->scheduleKeyRelease(row, col, delay);
 }
@@ -715,46 +698,44 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation ControlPortProxy
 
-- (instancetype) initWithJoystick:(ControlPort *)port
+- (ControlPort *)port
 {
-    if (self = [super init]) {
-        wrapper = new ControlPortWrapper();
-        wrapper->port = port;
-    }
-    return self;
+    return (ControlPort *)obj;
 }
 
-- (void) dump
+- (void)trigger:(GamePadAction)event
 {
-    wrapper->port->dump();
+    [self port]->trigger(event);
 }
-- (void) trigger:(GamePadAction)event
+
+- (BOOL)autofire
 {
-    wrapper->port->trigger(event);
+    return [self port]->getAutofire();
 }
-- (BOOL) autofire
+
+- (void)setAutofire:(BOOL)value
 {
-    return wrapper->port->getAutofire();
+    return [self port]->setAutofire(value);
 }
-- (void) setAutofire:(BOOL)value
+
+- (NSInteger)autofireBullets
 {
-    return wrapper->port->setAutofire(value);
+    return [self port]->getAutofireBullets();
 }
-- (NSInteger) autofireBullets
+
+- (void)setAutofireBullets:(NSInteger)value
 {
-    return (NSInteger)wrapper->port->getAutofireBullets();
+    [self port]->setAutofireBullets((int)value);
 }
-- (void) setAutofireBullets:(NSInteger)value
+
+- (float)autofireFrequency
 {
-    wrapper->port->setAutofireBullets((int)value);
+    return [self port]->getAutofireFrequency();
 }
-- (float) autofireFrequency
+
+- (void)setAutofireFrequency:(float)value
 {
-    return wrapper->port->getAutofireFrequency();
-}
-- (void) setAutofireFrequency:(float)value
-{
-    wrapper->port->setAutofireFrequency(value);
+    [self port]->setAutofireFrequency(value);
 }
 
 @end
@@ -765,117 +746,133 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation ExpansionPortProxy
 
-- (instancetype) initWithExpansionPort:(ExpansionPort *)expansionPort
+- (ExpansionPort *)eport
 {
-    if (self = [super init]) {
-        wrapper = new ExpansionPortWrapper();
-        wrapper->expansionPort = expansionPort;
-    }
-    return self;
+    return (ExpansionPort *)obj;
 }
-- (void) dump
+
+- (CartridgeType)cartridgeType
 {
-    wrapper->expansionPort->dump();
+    return [self eport]->getCartridgeType();
 }
-- (CartridgeType) cartridgeType
+
+- (BOOL)cartridgeAttached
 {
-    return wrapper->expansionPort->getCartridgeType();
+    return [self eport]->getCartridgeAttached();
 }
-- (BOOL) cartridgeAttached
-{
-    return wrapper->expansionPort->getCartridgeAttached();
-}
-- (BOOL) attachCartridgeAndReset:(CRTFileProxy *)c
+
+- (BOOL)attachCartridgeAndReset:(CRTFileProxy *)c
 {
     CRTFile *file = (CRTFile *)([c wrapper]->file);
-    return wrapper->expansionPort->attachCartridgeAndReset(file);
+    return [self eport]->attachCartridgeAndReset(file);
 }
-- (void) attachGeoRamCartridge:(NSInteger)capacity
+
+- (void)attachGeoRamCartridge:(NSInteger)capacity
 {
-    wrapper->expansionPort->attachGeoRamCartridge((u32)capacity);
+    [self eport]->attachGeoRamCartridge((u32)capacity);
 }
-- (void) attachIsepicCartridge
+
+- (void)attachIsepicCartridge
 {
-    wrapper->expansionPort->attachIsepicCartridge();
+    [self eport]->attachIsepicCartridge();
 }
-- (void) detachCartridgeAndReset
+
+- (void)detachCartridgeAndReset
 {
-    wrapper->expansionPort->detachCartridgeAndReset();
+    [self eport]->detachCartridgeAndReset();
 }
-- (NSInteger) numButtons
+
+- (NSInteger)numButtons
 {
-    return wrapper->expansionPort->numButtons();
+    return [self eport]->numButtons();
 }
-- (NSString *) getButtonTitle:(NSInteger)nr
+
+- (NSString *)getButtonTitle:(NSInteger)nr
 {
-    const char *str = wrapper->expansionPort->getButtonTitle((unsigned)nr);
+    const char *str = [self eport]->getButtonTitle((unsigned)nr);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
+
 - (void) pressButton:(NSInteger)nr
 {
-    wrapper->expansionPort->pressButton((unsigned)nr);
+    [self eport]->pressButton((unsigned)nr);
 }
+
 - (void) releaseButton:(NSInteger)nr
 {
-    wrapper->expansionPort->releaseButton((unsigned)nr);
+    [self eport]->releaseButton((unsigned)nr);
 }
+
 - (BOOL) hasSwitch
 {
-    return wrapper->expansionPort->hasSwitch();
+    return [self eport]->hasSwitch();
 }
+
 - (NSInteger) switchPosition
 {
-    return wrapper->expansionPort->getSwitch();
+    return [self eport]->getSwitch();
 }
+
 - (NSString *) switchDescription:(NSInteger)pos
 {
-    const char *str = wrapper->expansionPort->getSwitchDescription(pos);
+    const char *str = [self eport]->getSwitchDescription(pos);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
+
 - (NSString *) currentSwitchDescription
 {
-    const char *str = wrapper->expansionPort->getSwitchDescription();
+    const char *str = [self eport]->getSwitchDescription();
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
+
 - (BOOL) validSwitchPosition:(NSInteger)pos
 {
-    return wrapper->expansionPort->validSwitchPosition(pos);
+    return [self eport]->validSwitchPosition(pos);
 }
+
 - (BOOL) switchIsNeutral
 {
-    return wrapper->expansionPort->switchIsNeutral();
+    return [self eport]->switchIsNeutral();
 }
+
 - (BOOL) switchIsLeft
 {
-    return wrapper->expansionPort->switchIsLeft();
+    return [self eport]->switchIsLeft();
 }
+
 - (BOOL) switchIsRight
 {
-    return wrapper->expansionPort->switchIsRight();
+    return [self eport]->switchIsRight();
 }
+
 - (void) setSwitchPosition:(NSInteger)pos
 {
-    wrapper->expansionPort->setSwitch(pos);
+    [self eport]->setSwitch(pos);
 }
+
 - (BOOL) hasLed
 {
-    return wrapper->expansionPort->hasLED();
+    return [self eport]->hasLED();
 }
+
 - (BOOL) led
 {
-    return wrapper->expansionPort->getLED();
+    return [self eport]->getLED();
 }
+
 - (void) setLed:(BOOL)value
 {
-    wrapper->expansionPort->setLED(value);
+    [self eport]->setLED(value);
 }
+
 - (BOOL) hasBattery
 {
-    return wrapper->expansionPort->hasBattery();
+    return [self eport]->hasBattery();
 }
+
 - (void) setBattery:(BOOL)value
 {
-    wrapper->expansionPort->setBattery(value);
+    [self eport]->setBattery(value);
 }
 
 @end
@@ -888,7 +885,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @synthesize wrapper;
 
-- (instancetype) initWithDisk525:(Disk *)disk
+- (instancetype)initWithDisk525:(Disk *)disk
 {
     if (self = [super init]) {
         wrapper = new DiskWrapper();
@@ -896,67 +893,83 @@ struct AnyFileWrapper { AnyFile *file; };
     }
     return self;
 }
-- (void) dump
+
+- (void)dump
 {
     wrapper->disk->dump();
 }
+
 - (BOOL)writeProtected
 {
     return wrapper->disk->isWriteProtected();
 }
+
 - (void)setWriteProtected:(BOOL)b
 {
     wrapper->disk->setWriteProtection(b);
 }
+
 - (void)toggleWriteProtection
 {
     wrapper->disk->toggleWriteProtection();
 }
+
 - (NSInteger)nonemptyHalftracks
 {
     return (NSInteger)wrapper->disk->nonemptyHalftracks();
 }
+
 - (void)analyzeTrack:(Track)t
 {
     wrapper->disk->analyzeTrack(t);
 }
+
 - (void)analyzeHalftrack:(Halftrack)ht
 {
     wrapper->disk->analyzeHalftrack(ht);
 }
+
 - (NSInteger)numErrors
 {
     return wrapper->disk->numErrors();
 }
+
 - (NSString *)errorMessage:(NSInteger)nr
 {
     std::string s = wrapper->disk->errorMessage((unsigned)nr);
     return [NSString stringWithUTF8String:s.c_str()];
 }
+
 - (NSInteger)firstErroneousBit:(NSInteger)nr
 {
     return wrapper->disk->firstErroneousBit((unsigned)nr);
 }
+
 - (NSInteger)lastErroneousBit:(NSInteger)nr
 {
     return wrapper->disk->lastErroneousBit((unsigned)nr);
 }
+
 - (SectorInfo)sectorInfo:(Sector)s
 {
     return wrapper->disk->sectorLayout(s);
 }
+
 - (const char *)trackBitsAsString
 {
     return wrapper->disk->trackBitsAsString();
 }
+
 - (const char *)diskNameAsString
 {
     return wrapper->disk->diskNameAsString();
 }
+
 - (const char *)sectorHeaderBytesAsString:(Sector)nr hex:(BOOL)hex
 {
     return wrapper->disk->sectorHeaderBytesAsString(nr, hex);
 }
+
 - (const char *)sectorDataBytesAsString:(Sector)nr hex:(BOOL)hex
 {
     return wrapper->disk->sectorDataBytesAsString(nr, hex);
@@ -972,7 +985,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @synthesize wrapper;
 
-- (instancetype) initWithDevice:(FSDevice *)volume
+- (instancetype)initWithDevice:(FSDevice *)volume
 {
     if (self = [super init]) {
         wrapper = new FSDeviceWrapper();
@@ -981,7 +994,7 @@ struct AnyFileWrapper { AnyFile *file; };
     return self;
 }
 
-+ (instancetype) make:(FSDevice *)volume
++ (instancetype)make:(FSDevice *)volume
 {
     if (volume == NULL) { return nil; }
     
@@ -989,7 +1002,7 @@ struct AnyFileWrapper { AnyFile *file; };
     return proxy;
 }
 
-+ (instancetype) makeWithD64:(D64FileProxy *)proxy
++ (instancetype)makeWithD64:(D64FileProxy *)proxy
 {
     AnyFile *file = [proxy wrapper]->file;
 
@@ -1015,47 +1028,47 @@ struct AnyFileWrapper { AnyFile *file; };
     return [self make:volume];
 }
 
-- (DOSType) dos
+- (DOSType)dos
 {
     return wrapper->device->dos();
 }
 
-- (NSInteger) numCyls
+- (NSInteger)numCyls
 {
     return wrapper->device->getNumCyls();
 }
 
-- (NSInteger) numHeads
+- (NSInteger)numHeads
 {
     return wrapper->device->getNumHeads();
 }
 
-- (NSInteger) numTracks
+- (NSInteger)numTracks
 {
     return wrapper->device->getNumTracks();
 }
 
-- (NSInteger) numSectors:(NSInteger)track
+- (NSInteger)numSectors:(NSInteger)track
 {
     return wrapper->device->getNumSectors((Track)track);
 }
 
-- (NSInteger) numBlocks
+- (NSInteger)numBlocks
 {
     return wrapper->device->getNumBlocks();
 }
 
-- (NSInteger) numFreeBlocks
+- (NSInteger)numFreeBlocks
 {
     return wrapper->device->numFreeBlocks();
 }
 
-- (NSInteger) numUsedBlocks
+- (NSInteger)numUsedBlocks
 {
     return wrapper->device->numUsedBlocks();
 }
 
-- (NSInteger) numFiles
+- (NSInteger)numFiles
 {
     return wrapper->device->numFiles();
 }
@@ -1201,7 +1214,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation VIAProxy
 
-- (instancetype) initWithVIA:(VIA6522 *)via
+- (instancetype)initWithVIA:(VIA6522 *)via
 {
     if (self = [super init]) {
         wrapper = new ViaWrapper();
@@ -1209,6 +1222,7 @@ struct AnyFileWrapper { AnyFile *file; };
     }
     return self;
 }
+
 - (void) dump
 {
     wrapper->via->dump();
@@ -1224,7 +1238,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @synthesize wrapper, via1, via2, disk;
 
-- (instancetype) initWithVC1541:(Drive *)drive
+- (instancetype)initWithVC1541:(Drive *)drive
 {
     if (self = [super init]) {
         wrapper = new DriveWrapper();
@@ -1236,7 +1250,7 @@ struct AnyFileWrapper { AnyFile *file; };
     return self;
 }
 
-- (VIAProxy *) via:(NSInteger)num {
+- (VIAProxy *)via:(NSInteger)num {
 	switch (num) {
 		case 1:
 			return [self via1];
@@ -1248,75 +1262,75 @@ struct AnyFileWrapper { AnyFile *file; };
 	}
 }
 
-- (DriveConfig) getConfig
+- (DriveConfig)getConfig
 {
     return wrapper->drive->getConfig();
 }
 
-- (void) dump
+- (void)dump
 {
     wrapper->drive->dump();
 }
 
-- (BOOL) isConnected
+- (BOOL)isConnected
 {
     return wrapper->drive->getConfigItem(OPT_DRIVE_CONNECT) != 0;
 }
 
-- (BOOL) isSwitchedOn
+- (BOOL)isSwitchedOn
 {
     return wrapper->drive->getConfigItem(OPT_DRIVE_POWER_SWITCH) != 0;
 }
 
-- (BOOL) readMode
+- (BOOL)readMode
 {
     return wrapper->drive->readMode();
 }
 
-- (BOOL) writeMode
+- (BOOL)writeMode
 {
     return wrapper->drive->writeMode();
 }
 
-- (BOOL) redLED
+- (BOOL)redLED
 {
     return wrapper->drive->getRedLED();
 }
 
-- (BOOL) hasDisk
+- (BOOL)hasDisk
 {
     return wrapper->drive->hasDisk();
 }
 
-- (BOOL) hasModifiedDisk
+- (BOOL)hasModifiedDisk
 {
     return wrapper->drive->hasModifiedDisk();
 }
 
-- (void) setModifiedDisk:(BOOL)b
+- (void)setModifiedDisk:(BOOL)b
 {
     wrapper->drive->setModifiedDisk(b);
 }
 
-- (void) insertD64:(D64FileProxy *)proxy
+- (void)insertD64:(D64FileProxy *)proxy
 {
     D64File *d64 = (D64File *)([proxy wrapper]->file);
     wrapper->drive->insertD64(d64);
 }
 
-- (void) insertG64:(G64FileProxy *)proxy
+- (void)insertG64:(G64FileProxy *)proxy
 {
     G64File *g64 = (G64File *)([proxy wrapper]->file);
     wrapper->drive->insertG64(g64);
 }
 
-- (void) insertFileSystem:(FSDeviceProxy *)proxy
+- (void)insertFileSystem:(FSDeviceProxy *)proxy
 {
     FSDevice *device = (FSDevice *)([proxy wrapper]->device);
     wrapper->drive->insertFileSystem(device);
 }
 
-- (void) insertCollection:(AnyCollectionProxy *)disk
+- (void)insertCollection:(AnyCollectionProxy *)disk
 {
     AnyCollection *collection = (AnyCollection *)([disk wrapper]->file);
     wrapper->drive->insertDisk(collection);
@@ -1327,57 +1341,57 @@ struct AnyFileWrapper { AnyFile *file; };
     wrapper->drive->insertNewDisk(fsType);
 }
 
-- (void) ejectDisk
+- (void)ejectDisk
 {
     wrapper->drive->ejectDisk();
 }
 
-- (BOOL) writeProtected
+- (BOOL)writeProtected
 {
     return wrapper->drive->disk.isWriteProtected();
 }
 
-- (void) setWriteProtection:(BOOL)b
+- (void)setWriteProtection:(BOOL)b
 {
     wrapper->drive->disk.setWriteProtection(b);
 }
 
-- (BOOL) hasWriteProtectedDisk
+- (BOOL)hasWriteProtectedDisk
 {
     return wrapper->drive->hasWriteProtectedDisk();
 }
 
-- (Track) track
+- (Track)track
 {
     return wrapper->drive->getTrack();
 }
 
-- (Halftrack) halftrack
+- (Halftrack)halftrack
 {
     return wrapper->drive->getHalftrack();
 }
 
-- (u16) sizeOfHalftrack:(Halftrack)ht
+- (u16)sizeOfHalftrack:(Halftrack)ht
 {
     return wrapper->drive->sizeOfHalftrack(ht);
 }
 
-- (u16) sizeOfCurrentHalftrack
+- (u16)sizeOfCurrentHalftrack
 {
     return wrapper->drive->sizeOfCurrentHalftrack();
 }
 
-- (u16) offset
+- (u16)offset
 {
     return wrapper->drive->getOffset();
 }
 
-- (u8) readBitFromHead
+- (u8)readBitFromHead
 {
     return wrapper->drive->readBitFromHead();
 }
 
-- (BOOL) isRotating
+- (BOOL)isRotating
 {
     return wrapper->drive->isRotating();
 }
@@ -1391,7 +1405,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation DatasetteProxy
 
-- (instancetype) initWithDatasette:(Datasette *)datasette
+- (instancetype)initWithDatasette:(Datasette *)datasette
 {
     if (self = [super init]) {
         wrapper = new DatasetteWrapper();
@@ -1400,46 +1414,48 @@ struct AnyFileWrapper { AnyFile *file; };
     return self;
 }
 
-- (BOOL) hasTape
+- (BOOL)hasTape
 {
     return wrapper->datasette->hasTape();
 }
-- (NSInteger) type
+
+- (NSInteger)type
 {
     return wrapper->datasette->getType();
 }
-- (BOOL) motor
+
+- (BOOL)motor
 {
     return wrapper->datasette->getMotor();
 }
-- (BOOL) playKey
+
+- (BOOL)playKey
 {
     return wrapper->datasette->getPlayKey();
 }
-/*
-- (void) dump
-{
-    wrapper->datasette->dump();
-}
-*/
-- (void) pressPlay
+
+- (void)pressPlay
 {
     wrapper->datasette->pressPlay();
 }
-- (void) pressStop
+
+- (void)pressStop
 {
     wrapper->datasette->pressStop();
 }
-- (void) rewind
+
+- (void)rewind
 {
     wrapper->datasette->rewind();
 }
-- (BOOL) insertTape:(TAPFileProxy *)tape
+
+- (BOOL)insertTape:(TAPFileProxy *)tape
 {
     TAPFile *file = (TAPFile *)([tape wrapper]->file);
     return wrapper->datasette->insertTape(file);
 }
-- (void) ejectTape
+
+- (void)ejectTape
 {
     wrapper->datasette->ejectTape();
 }
@@ -1453,7 +1469,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation MouseProxy
 
-- (instancetype) initWithMouse:(Mouse *)mouse
+- (instancetype)initWithMouse:(Mouse *)mouse
 {
     if (self = [super init]) {
         wrapper = new MouseWrapper();
@@ -1462,40 +1478,47 @@ struct AnyFileWrapper { AnyFile *file; };
     return self;
 }
 
-- (MouseModel) model
+- (MouseModel)model
 {
     return wrapper->mouse->getModel();
 }
-- (void) setModel:(MouseModel)model
+
+- (void)setModel:(MouseModel)model
 {
     wrapper->mouse->setModel(model);
 }
-- (NSInteger) port
+
+- (NSInteger)port
 {
     return wrapper->mouse->getPort();
 }
-- (void) connect:(NSInteger)toPort
+
+- (void)connect:(NSInteger)toPort
 {
     wrapper->mouse->connectMouse((unsigned)toPort);
 }
-- (void) disconnect
+
+- (void)disconnect
 {
     wrapper->mouse->disconnectMouse();
 }
-- (void) setXY:(NSPoint)pos
+
+- (void)setXY:(NSPoint)pos
 {
     wrapper->mouse->setXY((i64)pos.x, (i64)pos.y);
 }
-- (void) setLeftButton:(BOOL)pressed
+
+- (void)setLeftButton:(BOOL)pressed
 {
     wrapper->mouse->setLeftButton(pressed);
 }
-- (void) setRightButton:(BOOL)pressed
+
+- (void)setRightButton:(BOOL)pressed
 {
     wrapper->mouse->setRightButton(pressed);
 }
-@end
 
+@end
 
 //
 // AnyFile
@@ -1503,7 +1526,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation AnyFileProxy
 
-- (instancetype) initWithFile:(AnyFile *)file
+- (instancetype)initWithFile:(AnyFile *)file
 {
     if (file == nil) {
         return nil;
@@ -1515,7 +1538,7 @@ struct AnyFileWrapper { AnyFile *file; };
     return self;
 }
 
-+ (AnyFileProxy *) makeWithFile:(AnyFile *)file
++ (AnyFileProxy *)makeWithFile:(AnyFile *)file
 {
     if (file == nil) {
         return nil;
@@ -1538,7 +1561,7 @@ struct AnyFileWrapper { AnyFile *file; };
     return [NSString stringWithUTF8String:wrapper->file->getName().c_str()];
 }
 
-- (u64) fnv
+- (u64)fnv
 {
     return wrapper->file->fnv();
 }
@@ -1554,7 +1577,7 @@ struct AnyFileWrapper { AnyFile *file; };
     return wrapper->file->writeToFile([path fileSystemRepresentation], err);
 }
 
-- (void) dealloc
+- (void)dealloc
 {
     // NSLog(@"AnyFileProxy::dealloc");
     
@@ -1572,7 +1595,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation SnapshotProxy
 
-+ (instancetype) make:(Snapshot *)snapshot
++ (instancetype)make:(Snapshot *)snapshot
 {
     if (snapshot == NULL) {
         return nil;
@@ -1580,17 +1603,17 @@ struct AnyFileWrapper { AnyFile *file; };
     return [[self alloc] initWithFile:snapshot];
 }
 
-+ (instancetype) makeWithFile:(NSString *)path error:(ErrorCode *)err
++ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
     return [self make: AnyFile::make <Snapshot> ([path fileSystemRepresentation], err)];
 }
 
-+ (instancetype) makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
     return [self make: AnyFile::make <Snapshot> ((const u8 *)buf, len, err)];
 }
 
-+ (instancetype) makeWithC64:(C64Proxy *)c64proxy
++ (instancetype)makeWithC64:(C64Proxy *)c64proxy
 {
     C64 *c64 = (C64 *)c64proxy->obj;
     c64->suspend();
@@ -1643,17 +1666,17 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation CRTFileProxy
 
-+ (instancetype) make:(CRTFile *)container
++ (instancetype)make:(CRTFile *)container
 {
     return container ? [[self alloc] initWithFile:container] : nil;
 }
 
-+ (instancetype) makeWithFile:(NSString *)path error:(ErrorCode *)err
++ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
     return [self make: AnyFile::make <CRTFile> ([path fileSystemRepresentation], err)];
 }
 
-+ (instancetype) makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
     return [self make: AnyFile::make <CRTFile> ((const u8 *)buf, len, err)];
 }
@@ -1734,13 +1757,6 @@ struct AnyFileWrapper { AnyFile *file; };
     return (AnyCollection *)([self wrapper]->file);
 }
 
-/*
-- (NSInteger)itemSize:(NSInteger)nr
-{
-    return [self unwrap]->itemSize((unsigned)nr);
-}
-*/
-
 @end
 
 
@@ -1797,7 +1813,6 @@ struct AnyFileWrapper { AnyFile *file; };
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err
 {
     FSDevice *fs = [proxy wrapper]->device;
-//    return [self make: PRGFile::makeWithFileSystem(fs)];
     return [self make: PRGFile::make <PRGFile> (*fs, err)];
 }
 
@@ -1827,7 +1842,6 @@ struct AnyFileWrapper { AnyFile *file; };
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err
 {
     FSDevice *fs = [proxy wrapper]->device;
-    // return [self make: P00File::makeWithFileSystem(fs)];
     return [self make: P00File::make <P00File> (*fs, err)];
 }
 
@@ -1844,23 +1858,23 @@ struct AnyFileWrapper { AnyFile *file; };
     return (D64File *)wrapper->file;
 }
 
-+ (instancetype) make:(D64File *)archive
++ (instancetype)make:(D64File *)archive
 {
     if (archive == NULL) return nil;
     return [[self alloc] initWithFile:archive];
 }
 
-+ (instancetype) makeWithFile:(NSString *)path error:(ErrorCode *)err
++ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
     return [self make: AnyFile::make <D64File> ([path fileSystemRepresentation], err)];
 }
 
-+ (instancetype) makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
     return [self make: AnyFile::make <D64File> ((const u8 *)buf, len, err)];
 }
 
-+ (instancetype) makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err
++ (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err
 {
     Disk *disk = (Disk *)([proxy wrapper]->disk);
     return [self make: AnyFile::make <D64File> (*disk, err)];
@@ -1878,7 +1892,7 @@ struct AnyFileWrapper { AnyFile *file; };
     return disk->numTracks();
 }
 
-- (NSInteger) numHalftracks
+- (NSInteger)numHalftracks
 {
     D64File *disk = (D64File *)([self wrapper]->file);
     return disk->numHalftracks();
@@ -1892,23 +1906,22 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation G64FileProxy
 
-+ (instancetype) make:(G64File *)archive
++ (instancetype)make:(G64File *)archive
 {
-    if (archive == NULL) return nil;
-    return [[self alloc] initWithFile:archive];
+    return archive ? [[self alloc] initWithFile:archive] : nil;
 }
 
-+ (instancetype) makeWithFile:(NSString *)path error:(ErrorCode *)err
++ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
 {
     return [self make: AnyFile::make <G64File> ([path fileSystemRepresentation], err)];
 }
 
-+ (instancetype) makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
 {
     return [self make: AnyFile::make <G64File> ((const u8 *)buf, len, err)];
 }
 
-+ (instancetype) makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err
++ (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err
 {
     Disk *disk = (Disk *)([proxy wrapper]->disk);
     return [self make: AnyFile::make <G64File> (*disk, err)];
@@ -1969,10 +1982,10 @@ struct AnyFileWrapper { AnyFile *file; };
     cia2 = [[CIAProxy alloc] initWith:&c64->cia2];
     sid = [[SIDProxy alloc] initWith:&c64->sid];
     keyboard = [[KeyboardProxy alloc] initWith:&c64->keyboard];
-    port1 = [[ControlPortProxy alloc] initWithJoystick:&c64->port1];
-    port2 = [[ControlPortProxy alloc] initWithJoystick:&c64->port2];
+    port1 = [[ControlPortProxy alloc] initWith:&c64->port1];
+    port2 = [[ControlPortProxy alloc] initWith:&c64->port2];
     iec = [[IECProxy alloc] initWithIEC:&c64->iec];
-    expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:&c64->expansionport];
+    expansionport = [[ExpansionPortProxy alloc] initWith:&c64->expansionport];
     drive8 = [[DriveProxy alloc] initWithVC1541:&c64->drive8];
     drive9 = [[DriveProxy alloc] initWithVC1541:&c64->drive9];
     datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
