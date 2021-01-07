@@ -45,8 +45,12 @@ class MyError: Error {
         case .ROM_MEGA65_MISMATCH:
             return "The emulator cannot launch because Open Roms with " +
                 "mismatched version strings are installed."
-        case .SNP_UNSUPPORTED:
-            return "This snaphshot was created with a different version of VirtualC64."
+        case .SNP_TOO_OLD:
+            return "The snapshot was created with an older version of " +
+                "VirtualC64 and is incompatible with this release."
+        case .SNP_TOO_NEW:
+            return "The snapshot was created with a newer version of " +
+                "VirtualC64 and is incompatible with this release."
         case .CRT_UNSUPPORTED:
             return "The format of this cartridge is not supported by the emulator yet."
         case .FS_UNSUPPORTED:
@@ -110,7 +114,21 @@ class MyError: Error {
         MyError.warning(msg, description, async: async, icon: icon)
     }
     
+    //
+    // Customized alerts
+    //
+    
     func cantOpen(url: URL, async: Bool = false) {
         warning("\"\(url.lastPathComponent)\" can't be opened.", async: async)
+    }
+    
+    static func unsupportedCrtAlert(type: Int, async: Bool = false) {
+        
+        let crtType = CartridgeType.init(rawValue: type)
+        let name = crtType?.description ?? "Unknown"
+        
+        warning("This cartridge cannot be attached.",
+                "The emulator does not support cartridges of type " +
+                    "\(type) " + "(\(name)) yet.", async: async)
     }
 }

@@ -12,6 +12,8 @@
 bool
 Cartridge::isSupportedType(CartridgeType type)
 {
+    if (FORCE_UNSUPPORTED_CRT) return false;
+    
     switch (type) {
         
         case CRT_NORMAL:

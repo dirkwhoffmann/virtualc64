@@ -720,8 +720,7 @@ extension MyController {
 
         case .UNSUPPORTED_CRT:
 
-            warning("This cartridge cannot be attached.",
-                    "The emulator does not support type \(msg.data) cartridges yet.")
+            MyError.unsupportedCrtAlert(type: msg.data)
             
         case .CRT_ATTACHED:
 
@@ -744,16 +743,12 @@ extension MyController {
             
         case .SNAPSHOT_TOO_OLD:
             
-            warning("Unable to restore snapshot",
-                    "The snapshot was created with an older version of " +
-                        "VirtualC64 which is incompatible with this release.")
-            
+            MyError.init(.SNP_TOO_OLD).warning("Unable to restore snapshot")
+                        
         case .SNAPSHOT_TOO_NEW:
             
-            warning("Unable to restore snapshot",
-                    "The snapshot was created with a newer version of " +
-                        "VirtualC64 which is incompatible with this release.")
-            
+            MyError.init(.SNP_TOO_NEW).warning("Unable to restore snapshot")
+
         case .AUTO_SNAPSHOT_TAKEN:
             
             track("MSG_AUTO_SNAPSHOT_TAKEN")

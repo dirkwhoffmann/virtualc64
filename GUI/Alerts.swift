@@ -156,6 +156,7 @@ extension MyDocument {
     }
     */
     
+    /*
     @available(*, deprecated)
     func showExportErrorAlert(url: URL) {
         
@@ -168,7 +169,8 @@ extension MyDocument {
         alert.addButton(withTitle: "OK")
         alert.runModal()
     }
-
+    */
+    
     @available(*, deprecated)
     func showCannotDecodeDiskAlert() {
 

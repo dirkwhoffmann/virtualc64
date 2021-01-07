@@ -346,23 +346,16 @@ class MyDocument: NSDocument {
     //
     // Exporting disks
     //
-    
-    /*
-    @available(*, deprecated)
-    enum ExportError: Error {
-        case invalidFormat(format: FileType)
-        case fileSystemError(error: ErrorCode)
-        case undecodableDisk
-        case other
-    }
-    */
-    
+        
     func export(drive id: DriveID, to url: URL) throws {
         
         track("drive: \(id.rawValue) to: \(url)")
         
-        let disk = c64.drive(id)?.disk
+        let drive = c64.drive(id)
+        let disk = c64.drive(id).disk
         try export(disk: disk!, to: url)
+        
+        drive?.setModifiedDisk(false)
     }
  
     func export(disk: DiskProxy, to url: URL) throws {

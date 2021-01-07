@@ -221,8 +221,10 @@ struct ErrorCodeEnum : Reflection<ErrorCodeEnum, ErrorCode> {
             case ERROR_ROM_KERNAL_MISSING:  return "ROM_KERNAL_MISSING";
             case ERROR_ROM_MEGA65_MISMATCH: return "ROM_MEGA65_MISMATCH";
                 
-            case ERROR_SNP_UNSUPPORTED:     return "SNP_UNSUPPORTED";
-                
+//            case ERROR_SNP_UNSUPPORTED:     return "SNP_UNSUPPORTED";
+            case ERROR_SNP_TOO_OLD:         return "SNP_TOO_OLD";
+            case ERROR_SNP_TOO_NEW:         return "SNP_TOO_NEW";
+
             case ERROR_CRT_UNSUPPORTED:     return "CRT_UNSUPPORTED";
                 
             case ERROR_FS_UNSUPPORTED:      return "FS_UNSUPPORTED";

@@ -627,9 +627,11 @@ extension MyController: NSMenuItemValidation {
             
             do {
                 try mydocument.export(drive: id, to: url)
-                c64.drive(id)?.setModifiedDisk(false)
+                
+            } catch let error as MyError {
+                error.warning("Cannot export disk to file \"\(url.path)\"")
             } catch {
-                mydocument.showExportErrorAlert(url: url)
+                fatalError()
             }
         }
     }
