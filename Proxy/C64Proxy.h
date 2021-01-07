@@ -48,10 +48,10 @@
 @class FSDeviceProxy;
 
 struct Wrapper;
-struct C64Wrapper;
-struct CpuWrapper;
+// struct C64Wrapper;
+// struct CpuWrapper;
 struct GuardsWrapper;
-struct MemoryWrapper;
+// struct MemoryWrapper;
 struct VicWrapper;
 struct CiaWrapper;
 struct SidBridgeWrapper;
@@ -75,7 +75,7 @@ struct AnyFileWrapper;
 @interface BaseProxy : NSObject {
     
     // Reference to the wrapped C++ object
-    void *obj;
+    @public void *obj;
 }
 
 - (void)dump;
@@ -109,7 +109,7 @@ struct AnyFileWrapper;
     MouseProxy *mouse;
 }
 
-@property (readonly) struct C64Wrapper *wrapper;
+// @property (readonly) struct C64Wrapper *wrapper;
 @property (readonly, strong) CPUProxy *cpu;
 @property (readonly, strong) GuardsProxy *breakpoints;
 @property (readonly, strong) GuardsProxy *watchpoints;
@@ -276,7 +276,7 @@ struct AnyFileWrapper;
 // CPU proxy
 //
 
-@interface CPUProxy : NSObject { struct CpuWrapper *wrapper; }
+@interface CPUProxy : BaseProxy { }
 
 - (CPUInfo)getInfo;
 - (NSInteger)loggedInstructions;

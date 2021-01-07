@@ -16,10 +16,10 @@
  * reference to C++ in the objc code seen by Swift.
  */
 struct Wrapper { void *obj; };
-struct C64Wrapper { C64 *c64; };
-struct CpuWrapper { CPU<C64Memory> *cpu; };
+// struct C64Wrapper { C64 *c64; };
+// struct CpuWrapper { CPU<C64Memory> *cpu; };
 struct GuardsWrapper { Guards *guards; };
-struct MemoryWrapper { C64Memory *mem; };
+// struct MemoryWrapper { C64Memory *mem; };
 struct VicWrapper { VICII *vic; };
 struct CiaWrapper { CIA *cia; };
 struct KeyboardWrapper { Keyboard *keyboard; };
@@ -134,12 +134,13 @@ struct AnyFileWrapper { AnyFile *file; };
 @end
 
 //
-// CPU
+// CPU proxy
 //
 
 @implementation CPUProxy
 
 // Constructing
+/*
 - (instancetype) initWithCPU:(CPU<C64Memory> *)cpu
 {
     if (self = [super init]) {
@@ -148,89 +149,94 @@ struct AnyFileWrapper { AnyFile *file; };
     }
     return self;
 }
+*/
 
-// Proxy methods
+- (CPU<C64Memory> *)cpu
+{
+    return (CPU<C64Memory> *)obj;
+}
+
 - (CPUInfo) getInfo
 {
-    return wrapper->cpu->getInfo();
+    return [self cpu]->getInfo();
 }
 - (NSInteger) loggedInstructions
 {
-    return wrapper->cpu->debugger.loggedInstructions();
+    return [self cpu]->debugger.loggedInstructions();
 }
 - (NSInteger) loggedPCRel:(NSInteger)nr
 {
-    return wrapper->cpu->debugger.loggedPC0Rel((int)nr);
+    return [self cpu]->debugger.loggedPC0Rel((int)nr);
 }
 - (NSInteger) loggedPCAbs:(NSInteger)nr
 {
-    return wrapper->cpu->debugger.loggedPC0Abs((int)nr);
+    return [self cpu]->debugger.loggedPC0Abs((int)nr);
 }
 - (RecordedInstruction) getRecordedInstruction:(NSInteger)index
 {
-    return wrapper->cpu->debugger.logEntryAbs((int)index);
+    return [self cpu]->debugger.logEntryAbs((int)index);
 }
 - (void) clearLog
 {
-    wrapper->cpu->debugger.clearLog();
+    [self cpu]->debugger.clearLog();
 }
 - (void) dump
 {
-    wrapper->cpu->dump();
+    [self cpu]->dump();
 }
 - (bool) isJammed
 {
-    return wrapper->cpu->isJammed();
+    return [self cpu]->isJammed();
 }
 - (void) setHex
 {
-    wrapper->cpu->debugger.hex = true;
+    [self cpu]->debugger.hex = true;
 }
 - (void) setDec
 {
-    wrapper->cpu->debugger.hex = false;
+    [self cpu]->debugger.hex = false;
 }
 - (i64) cycle
 {
-    return (i64)wrapper->cpu->cycle;
+    return (i64)[self cpu]->cycle;
 }
 - (u16) pc
 {
-    return wrapper->cpu->getPC0();
+    return [self cpu]->getPC0();
 }
 - (NSString *) disassembleRecordedInstr:(NSInteger)i length:(NSInteger *)len
 {
-    const char *str = wrapper->cpu->debugger.disassembleRecordedInstr((int)i, len);
+    const char *str = [self cpu]->debugger.disassembleRecordedInstr((int)i, len);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) disassembleRecordedBytes:(NSInteger)i
 {
-    const char *str = wrapper->cpu->debugger.disassembleRecordedBytes((int)i);
+    const char *str = [self cpu]->debugger.disassembleRecordedBytes((int)i);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) disassembleRecordedFlags:(NSInteger)i
 {
-    const char *str = wrapper->cpu->debugger.disassembleRecordedFlags((int)i);
+    const char *str = [self cpu]->debugger.disassembleRecordedFlags((int)i);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) disassembleRecordedPC:(NSInteger)i
 {
-    const char *str = wrapper->cpu->debugger.disassembleRecordedPC((int)i);
+    const char *str = [self cpu]->debugger.disassembleRecordedPC((int)i);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) disassembleInstr:(NSInteger)addr length:(NSInteger *)len
 {
-    const char *str = wrapper->cpu->debugger.disassembleInstr(addr, len);
+    const char *str = [self cpu]->debugger.disassembleInstr(addr, len);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) disassembleBytes:(NSInteger)addr
 {
-    const char *str = wrapper->cpu->debugger.disassembleBytes(addr);
+    const char *str = [self cpu]->debugger.disassembleBytes(addr);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *) disassembleAddr:(NSInteger)addr
 {
-    const char *str = wrapper->cpu->debugger.disassembleAddr(addr);
+    const char *str = [self cpu]->debugger.disassembleAddr(addr);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 
@@ -1579,7 +1585,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype) makeWithC64:(C64Proxy *)c64proxy
 {
-    C64 *c64 = [c64proxy wrapper]->c64;
+    C64 *c64 = (C64 *)c64proxy->obj;
     c64->suspend();
     Snapshot *snapshot = Snapshot::makeWithC64(c64);
     c64->resume();
@@ -1948,7 +1954,7 @@ struct AnyFileWrapper { AnyFile *file; };
     obj = c64;
     
     mem = [[MemoryProxy alloc] initWith:&c64->mem];
-    cpu = [[CPUProxy alloc] initWithCPU:&c64->cpu];
+    cpu = [[CPUProxy alloc] initWith:&c64->cpu];
     breakpoints = [[GuardsProxy alloc] initWithGuards:&c64->cpu.debugger.breakpoints];
     watchpoints = [[GuardsProxy alloc] initWithGuards:&c64->cpu.debugger.watchpoints];
     vic = [[VICProxy alloc] initWithVIC:&c64->vic];
