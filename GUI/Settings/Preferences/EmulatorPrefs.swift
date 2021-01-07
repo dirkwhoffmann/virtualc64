@@ -171,7 +171,7 @@ extension PreferencesController {
         
         pref.closeWithoutAsking = (sender.state == .on)
         for c in myAppDelegate.controllers {
-            c.needsSaving = c.c64.isRunning
+            c.needsSaving = c.c64.running
         }
         refresh()
     }

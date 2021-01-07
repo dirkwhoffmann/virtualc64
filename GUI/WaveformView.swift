@@ -12,7 +12,7 @@ class WaveformView: NSView {
     @IBOutlet weak var inspector: Inspector!
     
     var sid: SIDProxy { return inspector.c64.sid }
-    var running: Bool { return inspector.c64.isRunning }
+    var running: Bool { return inspector.c64.running }
     
     // Remembers the highest amplitude (used for auto scaling)
     var highestAmplitude: Float = 0.001

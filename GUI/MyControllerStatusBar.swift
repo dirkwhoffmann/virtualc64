@@ -41,7 +41,7 @@ extension MyController {
         let on8 = c64.drive8.isSwitchedOn()
         let on9 = c64.drive9.isSwitchedOn()
 
-        let running = c64.isRunning
+        let running = c64.running
         let debug = c64.debugMode
         let jammed = c64.cpu.isJammed()
         let warp = c64.warp

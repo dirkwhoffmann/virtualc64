@@ -34,7 +34,7 @@ extension MyController: NSWindowDelegate {
         track()
         
         // Stop emulator if it is configured to pause in background
-        pauseInBackgroundSavedState = c64.isRunning
+        pauseInBackgroundSavedState = c64.running
         if pref.pauseInBackground { c64.pause() }
     }
     

@@ -47,7 +47,7 @@ extension Inspector {
             sprY.assignFormatter(fmt8)
         }
                 
-        if c64.isRunning {
+        if c64.running {
 
             // If the emulator is running, it is likely that the VIC state has
             // been captured while the emualtion thread is waiting. As a result,

@@ -33,12 +33,12 @@ class MyToolbar: NSToolbar {
         kb?.isEnabled = !visible
         
         // Disable the Pause and Reset button if the emulator if powered off
-        let poweredOn = c64.isPoweredOn
+        let poweredOn = c64.poweredOn
         pause?.isEnabled = poweredOn
         reset?.isEnabled = poweredOn
 
         // Adjust the appearance of the Pause button
-        if c64.isRunning {
+        if c64.running {
             pause?.image = NSImage.init(named: "pauseTemplate")
             pauseButton.label = "Pause"
         } else {

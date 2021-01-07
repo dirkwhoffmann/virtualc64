@@ -75,7 +75,7 @@ class RomDropView: NSImageView {
 class BasicRomDropView: RomDropView {
 
     override func acceptDragSource(url: URL) -> Bool {
-        return c64.isPoweredOff && c64.isBasicRom(url)
+        return c64.poweredOff && c64.isBasicRom(url)
     }
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
@@ -85,7 +85,7 @@ class BasicRomDropView: RomDropView {
 
 class CharRomDropView: RomDropView {
     override func acceptDragSource(url: URL) -> Bool {
-        return c64.isPoweredOff && c64.isCharRom(url)
+        return c64.poweredOff && c64.isCharRom(url)
     }
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         return performDrag(type: .CHAR, url: sender.url)
@@ -95,7 +95,7 @@ class CharRomDropView: RomDropView {
 class KernalRomDropView: RomDropView {
 
     override func acceptDragSource(url: URL) -> Bool {
-        return c64.isPoweredOff && c64.isKernalRom(url)
+        return c64.poweredOff && c64.isKernalRom(url)
     }
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         return performDrag(type: .KERNAL, url: sender.url)
@@ -105,7 +105,7 @@ class KernalRomDropView: RomDropView {
 class Vc1541RomDropView: RomDropView {
     
     override func acceptDragSource(url: URL) -> Bool {
-        return c64.isPoweredOff && c64.isVC1541Rom(url)
+        return c64.poweredOff && c64.isVC1541Rom(url)
     }
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         return performDrag(type: .VC1541, url: sender.url)

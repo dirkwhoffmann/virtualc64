@@ -332,7 +332,7 @@ class Inspector: DialogController {
     func continuousRefresh() {
         
         if isRunning { refresh(count: refreshCnt) }
-        isRunning = c64.isRunning
+        isRunning = c64.running
         refreshCnt += 1
     }
     
@@ -342,7 +342,7 @@ class Inspector: DialogController {
         
         if full {
             
-            if c64.isRunning {
+            if c64.running {
                 stopAndGoButton.image = NSImage.init(named: "pauseTemplate")
                 stepIntoButton.isEnabled = false
                 stepOverButton.isEnabled = false

@@ -1,17 +1,20 @@
-//
-// This file is part of VirtualC64 - A cycle accurate Commodore 64 emulator
+// -----------------------------------------------------------------------------
+// This file is part of VirtualC64
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
-// Licensed under the GNU General Public License v3
+// Licensed under the GNU General Public License v2
 //
 // See https://www.gnu.org for license information
-//
+// -----------------------------------------------------------------------------
 
 
 #import "C64Proxy.h"
 #import "C64.h"
 #import "VirtualC64-Swift.h"
 
+/* C++ class wrappers. We wrap into standard C structures to avoid any
+ * reference to C++ in the objc code seen by Swift.
+ */
 struct C64Wrapper { C64 *c64; };
 struct CpuWrapper { CPU<C64Memory> *cpu; };
 struct GuardsWrapper { Guards *guards; };
@@ -1988,6 +1991,7 @@ struct AnyFileWrapper { AnyFile *file; };
     wrapper->c64->setDebug(enable);
 }
 
+/*
 - (void) enableDebugging
 {
     wrapper->c64->enableDebugMode();
@@ -1997,6 +2001,7 @@ struct AnyFileWrapper { AnyFile *file; };
 {
     wrapper->c64->disableDebugMode();
 }
+*/
 
 - (InspectionTarget)inspectionTarget
 {
@@ -2038,37 +2043,37 @@ struct AnyFileWrapper { AnyFile *file; };
     wrapper->c64->inspect();
 }
 
-- (void) reset
+- (void)reset
 {
     wrapper->c64->reset();
 }
 
-- (void) dump
+- (void)dump
 {
     wrapper->c64->dump();
 }
 
-- (BOOL) isPoweredOn
+- (BOOL)poweredOn
 {
     return wrapper->c64->isPoweredOn();
 }
 
-- (BOOL) isPoweredOff
+- (BOOL)poweredOff
 {
     return wrapper->c64->isPoweredOff();
 }
 
-- (BOOL) isRunning
+- (BOOL)running
 {
     return wrapper->c64->isRunning();
 }
 
-- (BOOL) isPaused
+- (BOOL)paused
 {
     return wrapper->c64->isPaused();
 }
 
-- (void) run
+- (void)run
 {
     wrapper->c64->run();
 }
@@ -2216,6 +2221,7 @@ struct AnyFileWrapper { AnyFile *file; };
     wrapper->c64->setWarp(enable);
 }
 
+/*
 - (void)warpOn
 {
     wrapper->c64->enableWarpMode();
@@ -2225,7 +2231,7 @@ struct AnyFileWrapper { AnyFile *file; };
 {
     wrapper->c64->disableWarpMode();
 }
-
+*/
 - (BOOL)hasBasicRom
 {
     return wrapper->c64->hasRom(ROM_TYPE_BASIC);

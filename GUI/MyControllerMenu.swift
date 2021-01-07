@@ -11,8 +11,8 @@ extension MyController: NSMenuItemValidation {
     
     open func validateMenuItem(_ item: NSMenuItem) -> Bool {
 
-        let powered = c64.isPoweredOn
-        let running = c64.isRunning
+        let powered = c64.poweredOn
+        let running = c64.running
  
         var driveID: DriveID { return DriveID.init(rawValue: item.tag)! }
         var drive: DriveProxy { return c64.drive(driveID) }
@@ -401,7 +401,7 @@ extension MyController: NSMenuItemValidation {
         
         var error = ErrorCode.OK
 
-        if c64.isPoweredOn {
+        if c64.poweredOn {
             c64.powerOff()
             return
         }
