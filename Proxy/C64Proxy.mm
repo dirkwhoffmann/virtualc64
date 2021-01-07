@@ -15,6 +15,7 @@
 /* C++ class wrappers. We wrap into standard C structures to avoid any
  * reference to C++ in the objc code seen by Swift.
  */
+struct Wrapper { void *obj; };
 struct C64Wrapper { C64 *c64; };
 struct CpuWrapper { CPU<C64Memory> *cpu; };
 struct GuardsWrapper { Guards *guards; };
@@ -33,6 +34,27 @@ struct DriveWrapper { Drive *drive; };
 struct DatasetteWrapper { Datasette *datasette; };
 struct MouseWrapper { Mouse *mouse; };
 struct AnyFileWrapper { AnyFile *file; };
+
+//
+// HardwareComponent proxy
+//
+
+@implementation BaseProxy
+
+-(void)dump
+{
+    // TODO: FIX ASAP
+    HardwareComponent *hw = (HardwareComponent *)obj;
+    hw->dump();
+}
+
+- (instancetype) initWith:(void *)ref
+{
+    if (self = [super init]) { obj = ref; }
+    return self;
+}
+
+@end
 
 //
 // Guards (Breakpoints, Watchpoints)
@@ -216,77 +238,74 @@ struct AnyFileWrapper { AnyFile *file; };
 
 
 //
-// Memory
+// Memory proxy
 //
 
 @implementation MemoryProxy
 
-- (instancetype) initWithMemory:(C64Memory *)mem
+- (C64Memory *)mem
 {
-    if (self = [super init]) {
-        wrapper = new MemoryWrapper();
-        wrapper->mem = mem;
-    }
-    return self;
+    return (C64Memory *)obj;
 }
+
 - (MemInfo) getInfo
 {
-    return wrapper->mem->getInfo();
+    return [self mem]->getInfo();
 }
 - (void) dump
 {
-    wrapper->mem->dump();
+    [self mem]->dump();
 }
 - (MemoryType) peekSource:(u16)addr
 {
-    return wrapper->mem->getPeekSource(addr);
+    return [self mem]->getPeekSource(addr);
 }
 - (MemoryType) pokeTarget:(u16)addr
 {
-    return wrapper->mem->getPokeTarget(addr);
+    return [self mem]->getPokeTarget(addr);
 }
 - (u8) spypeek:(u16)addr source:(MemoryType)source
 {
-    return wrapper->mem->spypeek(addr, source);
+    return [self mem]->spypeek(addr, source);
 }
 - (u8) spypeek:(u16)addr
 {
-    return wrapper->mem->spypeek(addr);
+    return [self mem]->spypeek(addr);
 }
 - (u8) spypeekIO:(u16)addr
 {
-    return wrapper->mem->spypeekIO(addr);
+    return [self mem]->spypeekIO(addr);
 }
 - (u8) spypeekColor:(u16)addr
 {
-    return wrapper->mem->spypeekColor(addr);
+    return [self mem]->spypeekColor(addr);
 }
 - (void) poke:(u16)addr value:(u8)value target:(MemoryType)target
 {
-    wrapper->mem->suspend();
-    wrapper->mem->poke(addr, value, target);
-    wrapper->mem->resume();
+    [self mem]->suspend();
+    [self mem]->poke(addr, value, target);
+    [self mem]->resume();
 }
 - (void) poke:(u16)addr value:(u8)value
 {
-    wrapper->mem->suspend();
-    wrapper->mem->poke(addr, value);
-    wrapper->mem->resume();
+    [self mem]->suspend();
+    [self mem]->poke(addr, value);
+    [self mem]->resume();
 }
 - (void) pokeIO:(u16)addr value:(u8)value
 {
-    wrapper->mem->suspend();
-    wrapper->mem->pokeIO(addr, value);
-    wrapper->mem->resume();
+    [self mem]->suspend();
+    [self mem]->pokeIO(addr, value);
+    [self mem]->resume();
 }
 - (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src
 {
-    const char *str = wrapper->mem->memdump(addr, num, hex, src);
+    const char *str = [self mem]->memdump(addr, num, hex, src);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 - (NSString *)txtdump:(NSInteger)addr num:(NSInteger)num src:(MemoryType)src
 {
-    const char *str = wrapper->mem->txtdump(addr, num, src);
+    const char *str = [self mem]->txtdump(addr, num, src);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 
@@ -1931,7 +1950,7 @@ struct AnyFileWrapper { AnyFile *file; };
     wrapper->c64 = c64;
     
     // Create sub proxys
-    mem = [[MemoryProxy alloc] initWithMemory:&c64->mem];
+    mem = [[MemoryProxy alloc] initWith:&c64->mem];
     cpu = [[CPUProxy alloc] initWithCPU:&c64->cpu];
     breakpoints = [[GuardsProxy alloc] initWithGuards:&c64->cpu.debugger.breakpoints];
     watchpoints = [[GuardsProxy alloc] initWithGuards:&c64->cpu.debugger.watchpoints];

@@ -47,6 +47,7 @@
 @class G64FileProxy;
 @class FSDeviceProxy;
 
+struct Wrapper;
 struct C64Wrapper;
 struct CpuWrapper;
 struct GuardsWrapper;
@@ -66,6 +67,20 @@ struct DiskWrapper;
 struct DatasetteWrapper;
 struct MouseWrapper;
 struct AnyFileWrapper;
+
+//
+// Root of all proxy classes
+//
+
+@interface BaseProxy : NSObject {
+    
+    // Reference to the wrapped C++ object
+    void *obj;
+}
+
+- (void)dump;
+
+@end
 
 //
 // C64 proxy
@@ -298,11 +313,9 @@ struct AnyFileWrapper;
 // Memory proxy
 //
 
-@interface MemoryProxy : NSObject { struct MemoryWrapper *wrapper; }
+@interface MemoryProxy : BaseProxy { }
 
 - (MemInfo)getInfo;
-
-- (void)dump;
 
 - (MemoryType)peekSource:(u16)addr;
 - (MemoryType)pokeTarget:(u16)addr;
