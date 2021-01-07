@@ -21,7 +21,7 @@ struct Wrapper { void *obj; };
 // struct GuardsWrapper { Guards *guards; };
 // struct MemoryWrapper { C64Memory *mem; };
 // struct VicWrapper { VICII *vic; };
-struct CiaWrapper { CIA *cia; };
+// struct CiaWrapper { CIA *cia; };
 struct KeyboardWrapper { Keyboard *keyboard; };
 struct ControlPortWrapper { ControlPort *port; };
 struct SidBridgeWrapper { SIDBridge *sid; };
@@ -362,6 +362,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation CIAProxy
 
+/*
 - (instancetype) initWithCIA:(CIA *)cia
 {
     if (self = [super init]) {
@@ -370,18 +371,25 @@ struct AnyFileWrapper { AnyFile *file; };
     }
     return self;
 }
+*/
+
+- (CIA *)cia
+{
+    return (CIA *)obj;
+}
+
 - (CIAInfo) getInfo
 {
-    return wrapper->cia->getInfo();
+    return [self cia]->getInfo();
 }
 - (void) dump
 {
-    wrapper->cia->dump();
+    [self cia]->dump();
 }
 - (void) poke:(u16)addr value:(u8)value {
-    wrapper->cia->suspend();
-    wrapper->cia->poke(addr, value);
-    wrapper->cia->resume();
+    [self cia]->suspend();
+    [self cia]->poke(addr, value);
+    [self cia]->resume();
 }
 
 @end
@@ -1960,8 +1968,8 @@ struct AnyFileWrapper { AnyFile *file; };
     breakpoints = [[GuardsProxy alloc] initWith:&c64->cpu.debugger.breakpoints];
     watchpoints = [[GuardsProxy alloc] initWith:&c64->cpu.debugger.watchpoints];
     vic = [[VICProxy alloc] initWith:&c64->vic];
-    cia1 = [[CIAProxy alloc] initWithCIA:&c64->cia1];
-    cia2 = [[CIAProxy alloc] initWithCIA:&c64->cia2];
+    cia1 = [[CIAProxy alloc] initWith:&c64->cia1];
+    cia2 = [[CIAProxy alloc] initWith:&c64->cia2];
     sid = [[SIDProxy alloc] initWithSID:&c64->sid];
     keyboard = [[KeyboardProxy alloc] initWithKeyboard:&c64->keyboard];
     port1 = [[ControlPortProxy alloc] initWithJoystick:&c64->port1];
@@ -2193,10 +2201,12 @@ struct AnyFileWrapper { AnyFile *file; };
     [self c64]->configure(model);
 }
 
+/*
 - (C64Model)model
 {
     return [self c64]->getModel();
 }
+*/
 
 - (Message)message
 {

@@ -53,7 +53,7 @@
 // struct GuardsWrapper;
 // struct MemoryWrapper;
 // struct VicWrapper;
-struct CiaWrapper;
+// struct CiaWrapper;
 struct SidBridgeWrapper;
 struct KeyboardWrapper;
 struct ControlPortWrapper;
@@ -182,7 +182,7 @@ struct AnyFileWrapper;
 - (BOOL)configure:(Option)opt drive:(DriveID)id value:(NSInteger)val;
 - (BOOL)configure:(Option)opt drive:(DriveID)id enable:(BOOL)val;
 - (void)configure:(C64Model)value;
-- (C64Model) model __attribute__ ((deprecated));
+// - (C64Model) model __attribute__ ((deprecated));
 
 // Accessing the message queue
 - (Message)message;
@@ -327,9 +327,9 @@ struct AnyFileWrapper;
 - (u8)spypeekIO:(u16)addr;
 - (u8)spypeekColor:(u16)addr;
 
-- (void)poke:(u16)addr value:(u8)value target:(MemoryType)target;
-- (void)poke:(u16)addr value:(u8)value;
-- (void)pokeIO:(u16)addr value:(u8)value;
+- (void)poke:(u16)addr value:(u8)value target:(MemoryType)target __attribute__ ((deprecated));
+- (void)poke:(u16)addr value:(u8)value __attribute__ ((deprecated));
+- (void)pokeIO:(u16)addr value:(u8)value __attribute__ ((deprecated));
 
 - (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src;
 - (NSString *)txtdump:(NSInteger)addr num:(NSInteger)num src:(MemoryType)src;
@@ -341,11 +341,11 @@ struct AnyFileWrapper;
 // CIA proxy
 //
 
-@interface CIAProxy : NSObject { struct CiaWrapper *wrapper; }
+@interface CIAProxy : HardwareComponentProxy { }
 
 - (CIAInfo)getInfo;
-- (void)dump;
-- (void)poke:(u16)addr value:(u8)value;
+
+- (void)poke:(u16)addr value:(u8)value __attribute__ ((deprecated));
 
 @end
 
