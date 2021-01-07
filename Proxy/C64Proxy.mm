@@ -22,9 +22,9 @@ struct Wrapper { void *obj; };
 // struct MemoryWrapper { C64Memory *mem; };
 // struct VicWrapper { VICII *vic; };
 // struct CiaWrapper { CIA *cia; };
-struct KeyboardWrapper { Keyboard *keyboard; };
+// struct KeyboardWrapper { Keyboard *keyboard; };
 struct ControlPortWrapper { ControlPort *port; };
-struct SidBridgeWrapper { SIDBridge *sid; };
+// struct SidBridgeWrapper { SIDBridge *sid; };
 struct IecWrapper { IEC *iec; };
 struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
 struct FSDeviceWrapper { FSDevice *device; };
@@ -482,77 +482,84 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation SIDProxy
 
-- (instancetype) initWithSID:(SIDBridge *)sid
+- (SIDBridge *)bridge
 {
-    if (self = [super init]) {
-        wrapper = new SidBridgeWrapper();
-        wrapper->sid = sid;
-    }
-    return self;
+    return (SIDBridge *)obj;
 }
-- (void) dump
+
+- (SIDInfo)getInfo:(NSInteger)nr
 {
-    wrapper->sid->dump();
+    return [self bridge]->getInfo((unsigned)nr);
 }
-- (SIDInfo) getInfo:(NSInteger)nr
+
+- (VoiceInfo)getVoiceInfo:(NSInteger)nr voice:(NSInteger)voice
 {
-    return wrapper->sid->getInfo((unsigned)nr);
+    return [self bridge]->getVoiceInfo((unsigned)nr, (unsigned)voice);
 }
-- (VoiceInfo) getVoiceInfo:(NSInteger)nr voice:(NSInteger)voice
+
+- (double)sampleRate
 {
-    return wrapper->sid->getVoiceInfo((unsigned)nr, (unsigned)voice);
-} 
-- (double) sampleRate
-{
-    return wrapper->sid->getSampleRate();
+    return [self bridge]->getSampleRate();
 }
-- (void) setSampleRate:(double)rate
+
+- (void)setSampleRate:(double)rate
 {
-    wrapper->sid->setSampleRate(rate);
+    [self bridge]->setSampleRate(rate);
 }
-- (NSInteger) ringbufferSize
+
+- (NSInteger)ringbufferSize
 {
-    return wrapper->sid->stream.cap();
+    return [self bridge]->stream.cap();
 }
-- (void) ringbufferData:(NSInteger)offset left:(float *)l right:(float *)r
+
+- (void)ringbufferData:(NSInteger)offset left:(float *)l right:(float *)r
 {
-    wrapper->sid->ringbufferData(offset, l, r);
+    [self bridge]->ringbufferData(offset, l, r);
 }
-- (double) fillLevel
+
+- (double)fillLevel
 {
-    return wrapper->sid->stream.fillLevel();
+    return [self bridge]->stream.fillLevel();
 }
-- (NSInteger) bufferUnderflows
+
+- (NSInteger)bufferUnderflows
 {
-    return wrapper->sid->bufferUnderflows;
+    return [self bridge]->bufferUnderflows;
 }
-- (NSInteger) bufferOverflows
+
+- (NSInteger)bufferOverflows
 {
-    return wrapper->sid->bufferOverflows;
+    return [self bridge]->bufferOverflows;
 }
-- (void) copyMono:(float *)target size:(NSInteger)n
+
+- (void)copyMono:(float *)target size:(NSInteger)n
 {
-    wrapper->sid->copyMono(target, n);
+    [self bridge]->copyMono(target, n);
 }
-- (void) copyStereo:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n
+
+- (void)copyStereo:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n
 {
-    wrapper->sid->copyStereo(target1, target2, n);
+    [self bridge]->copyStereo(target1, target2, n);
 }
-- (void) copyInterleaved:(float *)target size:(NSInteger)n
+
+- (void)copyInterleaved:(float *)target size:(NSInteger)n
 {
-    wrapper->sid->copyInterleaved(target, n);
+    [self bridge]->copyInterleaved(target, n);
 }
-- (void) rampUp
+
+- (void)rampUp
 {
-    wrapper->sid->rampUp();
+    [self bridge]->rampUp();
 }
-- (void) rampUpFromZero
+
+- (void)rampUpFromZero
 {
-    wrapper->sid->rampUpFromZero();
+    [self bridge]->rampUpFromZero();
 }
-- (void) rampDown
+
+- (void)rampDown
 {
-    wrapper->sid->rampDown();
+    [self bridge]->rampDown();
 }
 
 @end
@@ -590,127 +597,117 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation KeyboardProxy
 
-- (instancetype) initWithKeyboard:(Keyboard *)keyboard
+- (Keyboard *)kb
 {
-    if (self = [super init]) {
-        wrapper = new KeyboardWrapper();
-        wrapper->keyboard = keyboard;
-    }
-    return self;
-}
-
-- (void) dump
-{
-    wrapper->keyboard->dump();
+    return (Keyboard *)obj;
 }
 
 - (BOOL) keyIsPressed:(NSInteger)nr
 {
-    return wrapper->keyboard->isPressed(nr);
+    return [self kb]->isPressed(nr);
 }
 
 - (BOOL) keyIsPressedAtRow:(NSInteger)row col:(NSInteger)col
 {
-    return wrapper->keyboard->isPressed(row, col);
+    return [self kb]->isPressed(row, col);
 }
 
 - (BOOL) controlIsPressed
 {
-    return wrapper->keyboard->ctrlIsPressed();
+    return [self kb]->ctrlIsPressed();
 }
 
 - (BOOL) commodoreIsPressed
 {
-    return wrapper->keyboard->commodoreIsPressed();
+    return [self kb]->commodoreIsPressed();
 }
 
 - (BOOL) leftShiftIsPressed
 {
-    return wrapper->keyboard->leftShiftIsPressed();
+    return [self kb]->leftShiftIsPressed();
 }
 
 - (BOOL) rightShiftIsPressed
 {
-    return wrapper->keyboard->rightShiftIsPressed();
+    return [self kb]->rightShiftIsPressed();
 }
 
 - (BOOL) shiftLockIsPressed
 {
-    return wrapper->keyboard->shiftLockIsPressed();
+    return [self kb]->shiftLockIsPressed();
 }
 
 - (void) pressKey:(NSInteger)nr
 {
-    wrapper->keyboard->press(nr);
+    [self kb]->press(nr);
 }
 
 - (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
-    wrapper->keyboard->pressRowCol(row, col);
+    [self kb]->pressRowCol(row, col);
 }
 
 - (void) pressShiftLock
 {
-    wrapper->keyboard->pressShiftLock();
+    [self kb]->pressShiftLock();
 }
 
 - (void) releaseKey:(NSInteger)nr
 {
-    wrapper->keyboard->release(nr);
+    [self kb]->release(nr);
 }
 
 - (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
-    wrapper->keyboard->releaseRowCol(row, col);
+    [self kb]->releaseRowCol(row, col);
 }
 
 - (void) releaseShiftLock
 {
-    wrapper->keyboard->releaseShiftLock();
+    [self kb]->releaseShiftLock();
 }
 
 - (void) releaseAll
 {
-    wrapper->keyboard->releaseAll();
+    [self kb]->releaseAll();
 }
 
 - (void) toggleKey:(NSInteger)nr
 {
-    wrapper->keyboard->toggle(nr);
+    [self kb]->toggle(nr);
 }
 
 - (void) toggleKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
-    wrapper->keyboard->toggle(row, col);
+    [self kb]->toggle(row, col);
 }
 
 - (void) toggleShiftLock
 {
-    wrapper->keyboard->toggleShiftLock();
+    [self kb]->toggleShiftLock();
 }
 
 - (void) scheduleKeyPress:(NSInteger)nr delay:(NSInteger)delay
 {
-    wrapper->keyboard->scheduleKeyPress(nr, delay);
+    [self kb]->scheduleKeyPress(nr, delay);
 }
 
 - (void) scheduleKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay
 {
-    wrapper->keyboard->scheduleKeyPress(row, col, delay);
+    [self kb]->scheduleKeyPress(row, col, delay);
 }
 
 - (void) scheduleKeyRelease:(NSInteger)nr delay:(NSInteger)delay
 {
-    wrapper->keyboard->scheduleKeyRelease(nr, delay);
+    [self kb]->scheduleKeyRelease(nr, delay);
 }
 
 - (void) scheduleKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay
 {
-    wrapper->keyboard->scheduleKeyRelease(row, col, delay);
+    [self kb]->scheduleKeyRelease(row, col, delay);
 }
 
 @end
-
 
 //
 // Control port
@@ -1970,8 +1967,8 @@ struct AnyFileWrapper { AnyFile *file; };
     vic = [[VICProxy alloc] initWith:&c64->vic];
     cia1 = [[CIAProxy alloc] initWith:&c64->cia1];
     cia2 = [[CIAProxy alloc] initWith:&c64->cia2];
-    sid = [[SIDProxy alloc] initWithSID:&c64->sid];
-    keyboard = [[KeyboardProxy alloc] initWithKeyboard:&c64->keyboard];
+    sid = [[SIDProxy alloc] initWith:&c64->sid];
+    keyboard = [[KeyboardProxy alloc] initWith:&c64->keyboard];
     port1 = [[ControlPortProxy alloc] initWithJoystick:&c64->port1];
     port2 = [[ControlPortProxy alloc] initWithJoystick:&c64->port2];
     iec = [[IECProxy alloc] initWithIEC:&c64->iec];

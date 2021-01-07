@@ -54,8 +54,8 @@
 // struct MemoryWrapper;
 // struct VicWrapper;
 // struct CiaWrapper;
-struct SidBridgeWrapper;
-struct KeyboardWrapper;
+// struct SidBridgeWrapper;
+// struct KeyboardWrapper;
 struct ControlPortWrapper;
 struct IecWrapper;
 struct ExpansionPortWrapper;
@@ -380,11 +380,10 @@ struct AnyFileWrapper;
 // SID proxy
 //
 
-@interface SIDProxy : NSObject { struct SidBridgeWrapper *wrapper; }
+@interface SIDProxy : HardwareComponentProxy { }
 
 - (SIDInfo)getInfo:(NSInteger)nr;
 - (VoiceInfo)getVoiceInfo:(NSInteger)nr voice:(NSInteger)voice;
-- (void)dump;
 
 - (double)sampleRate;
 - (void)setSampleRate:(double)rate;
@@ -410,9 +409,7 @@ struct AnyFileWrapper;
 // Keyboard proxy
 //
 
-@interface KeyboardProxy : NSObject { struct KeyboardWrapper *wrapper; }
-
-- (void)dump;
+@interface KeyboardProxy : HardwareComponentProxy { }
 
 - (BOOL)keyIsPressed:(NSInteger)nr;
 - (BOOL)keyIsPressedAtRow:(NSInteger)row col:(NSInteger)col;
@@ -441,7 +438,6 @@ struct AnyFileWrapper;
 - (void)scheduleKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay;
 
 @end
-
 
 //
 // Control port proxy
