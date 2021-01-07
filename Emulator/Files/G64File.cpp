@@ -35,14 +35,12 @@ G64File::G64File(usize capacity)
 }
 
 G64File *
-G64File::makeWithDisk(Disk *disk)
+G64File::makeWithDisk(Disk &disk)
 {
-    assert(disk);
-    
     // Determine empty halftracks
     bool empty[85];
     for (Halftrack ht = 1; ht <= 84; ht++) {
-        empty[ht] = disk->halftrackIsEmpty(ht);
+        empty[ht] = disk.halftrackIsEmpty(ht);
     }
     
     // Determine file offsets for all halftracks
@@ -82,10 +80,10 @@ G64File::makeWithDisk(Disk *disk)
         
         if (!empty[ht]) {
 
-            u16 numDataBytes = disk->lengthOfHalftrack(ht) / 8;
+            u16 numDataBytes = disk.lengthOfHalftrack(ht) / 8;
             u16 numFillBytes = maxBytesOnTrack - numDataBytes;
 
-            if (disk->lengthOfHalftrack(ht) % 8 != 0) {
+            if (disk.lengthOfHalftrack(ht) % 8 != 0) {
                 printf("WARNING: Size of halftrack %d is not a multiple of 8\n", ht);
             }
             assert(pos == offset[ht]);
@@ -93,7 +91,7 @@ G64File::makeWithDisk(Disk *disk)
             buffer[pos++] = HI_BYTE(numDataBytes);
             
             for (unsigned i = 0; i < numDataBytes; i++) {
-                buffer[pos++] = disk->data.halftrack[ht][i];
+                buffer[pos++] = disk.data.halftrack[ht][i];
             }
             for (unsigned i = 0; i < numFillBytes; i++) {
                 buffer[pos++] = 0xFF;
@@ -118,7 +116,7 @@ G64File::makeWithDisk(Disk *disk)
 }
 
 G64File *
-G64File::makeWithDisk(class Disk *disk, ErrorCode *err)
+G64File::makeWithDisk(class Disk &disk, ErrorCode *err)
 {
     *err = ERROR_OK;
     

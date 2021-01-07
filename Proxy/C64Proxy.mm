@@ -967,7 +967,7 @@ struct AnyFileWrapper { AnyFile *file; };
 {
     Disk *disk = [proxy wrapper]->disk;
 
-    FSDevice *volume = FSDevice::makeWithDisk(disk, err);
+    FSDevice *volume = FSDevice::makeWithDisk(*disk, err);
     return [self make:volume];
 }
 
@@ -1881,7 +1881,7 @@ struct AnyFileWrapper { AnyFile *file; };
 + (instancetype) makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err
 {
     Disk *disk = (Disk *)([proxy wrapper]->disk);
-    return [self make: AnyFile::make <D64File> (disk, err)];
+    return [self make: AnyFile::make <D64File> (*disk, err)];
 }
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err
@@ -1931,7 +1931,7 @@ struct AnyFileWrapper { AnyFile *file; };
     G64File *file = nil;
     Disk *disk = (Disk *)([proxy wrapper]->disk);
 
-    try { file = G64File::makeWithDisk(disk);
+    try { file = G64File::makeWithDisk(*disk);
     } catch (VC64Error &exception) { *err = exception.errorCode; }
     
     return [self make: file];

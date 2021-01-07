@@ -116,12 +116,12 @@ public:
         return nullptr;
     }
     
-    template <class T> static T *make(class Disk *disk) throws
+    template <class T> static T *make(class Disk &disk) throws
     {
         return T::makeWithDisk(disk);
     }
 
-    template <class T> static T *make(class Disk *disk, ErrorCode *err)
+    template <class T> static T *make(class Disk &disk, ErrorCode *err)
     {
         *err = ERROR_OK;
         

@@ -29,10 +29,7 @@ public:
     static bool isCompatibleName(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
   
-    static D64File *makeWithDisk(class Disk *disk) throws;
-    // static D64File *makeWithDisk(class Disk *disk, ErrorCode *err);
-
-    // [[deprecated]] static D64File *makeWithDrive(class Drive *drive);
+    static D64File *makeWithDisk(class Disk &disk) throws;
     static D64File *makeWithFileSystem(class FSDevice &volume) throws;
 
 

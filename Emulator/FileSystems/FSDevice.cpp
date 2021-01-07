@@ -57,13 +57,11 @@ FSDevice::makeWithD64(D64File *d64, ErrorCode *err)
 }
 
 FSDevice *
-FSDevice::makeWithDisk(class Disk *disk, ErrorCode *err)
+FSDevice::makeWithDisk(class Disk &disk, ErrorCode *err)
 {
-    assert(disk);
-
     // Translate the GCR stream into a byte stream
     u8 buffer[D64_802_SECTORS];
-    usize len = disk->decodeDisk(buffer);
+    usize len = disk.decodeDisk(buffer);
     
     // Create a suitable device descriptor
     FSDeviceDescriptor descriptor = FSDeviceDescriptor(DISK_TYPE_SS_SD);

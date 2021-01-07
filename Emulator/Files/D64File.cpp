@@ -51,14 +51,12 @@ D64File::D64File(unsigned tracks, bool ecc) : D64File()
 }
 
 D64File *
-D64File::makeWithDisk(Disk *disk)
+D64File::makeWithDisk(Disk &disk)
 {
-    assert(disk);
-
     u8 buffer[D64_802_SECTORS];
     
     // Serialize disk data into a byte stream
-    usize len = disk->decodeDisk(buffer);
+    usize len = disk.decodeDisk(buffer);
 
     // Check if the disk has been fully decoded
     if (len != D64_683_SECTORS && len != D64_768_SECTORS && len != D64_802_SECTORS) {

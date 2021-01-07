@@ -49,7 +49,7 @@ public:
     static FSDevice *makeWithD64(class D64File *d64, ErrorCode *err);
 
     // Creates a file system from a GCR encoded disk
-    static FSDevice *makeWithDisk(class Disk *disk, ErrorCode *err);
+    static FSDevice *makeWithDisk(class Disk &disk, ErrorCode *err);
 
     // Creates a file from an object implementing the AnyCollection interface
     static FSDevice *makeWithCollection(AnyCollection *collection, ErrorCode *err);
