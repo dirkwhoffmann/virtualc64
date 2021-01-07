@@ -42,8 +42,12 @@ bool releaseBuild();
 //
 
 // Returns a byte from a u16 value
-#define HI_BYTE(x) (u8)((x) >> 8)
 #define LO_BYTE(x) (u8)((x) & 0xFF)
+#define HI_BYTE(x) (u8)((x) >> 8)
+
+// Returns the low word or the high word of a 32 bit value
+#define LO_WORD(x) (u16)((x) & 0xFFFF)
+#define HI_WORD(x) (u16)((x) >> 16)
 
 // Builds a larger integer in little endian byte format
 #define LO_HI(x,y) (u16)((y) << 8 | (x))
@@ -85,30 +89,37 @@ bool releaseBuild();
 #define FALLING_EDGE(x,y) ((x) && !(y))
 #define FALLING_EDGE_BIT(x,y,n) (((x) & (1 << (n))) && !((y) & (1 << (n))))
 
+// Checks is a number is even or odd
+#define IS_EVEN(x) (!IS_ODD(x))
+#define IS_ODD(x) ((x) & 1)
+
 
 //
-// Converting low level data objects
+// Accessing memory
 //
 
-// Returns the number of characters in a null terminated unichar array
-usize strlen16(const u16 *unichars);
+// Reads a value in big-endian format
+#define R8BE(a)  (*(u8 *)(a))
+#define R16BE(a) HI_LO(*(u8 *)(a), *(u8 *)((a)+1))
+#define R32BE(a) HI_HI_LO_LO(*(u8 *)(a), *(u8 *)((a)+1), *(u8 *)((a)+2), *(u8 *)((a)+3))
 
-/* Converts a PETSCII character to a printable character. Replaces all
- * unprintable characters by subst.
- */
-u8 petscii2printable(u8 c, u8 subst);
+#define R8BE_ALIGNED(a)  (*(u8 *)(a))
+#define R16BE_ALIGNED(a) (htons(*(u16 *)(a)))
+#define R32BE_ALIGNED(a) (htonl(*(u32 *)(a)))
 
-/* Converts an ASCII character to a PETSCII character. This function translates
- * into the unshifted PET character set. I.e., lower case characters are
- * converted to uppercase characters. Returns ' ' for ASCII characters with no
- * PETSCII representation.
- */
-u8 ascii2pet(u8 asciichar);
+// Writes a value in big-endian format
+#define W8BE(a,v)  { *(u8 *)(a) = (v); }
+#define W16BE(a,v) { *(u8 *)(a) = HI_BYTE(v); *(u8 *)((a)+1) = LO_BYTE(v); }
+#define W32BE(a,v) { W16BE(a,HI_WORD(v)); W16BE((a)+2,LO_WORD(v)); }
 
-/* Converts an ASCII string into a PETSCII string. Applies function ascii2pet
- * to all characters of a string.
- */
-void ascii2petStr(char *str);
+#define W8BE_ALIGNED(a,v)  { *(u8 *)(a) = (u8)(v); }
+#define W16BE_ALIGNED(a,v) { *(u16 *)(a) = ntohs((u16)v); }
+#define W32BE_ALIGNED(a,v) { *(u32 *)(a) = ntohl((u32)v); }
+
+
+//
+// Pretty printing
+//
 
 // Writes an integer into a string in decimal format
 void sprint8d(char *s, u8 value);
@@ -121,11 +132,6 @@ void sprint16x(char *s, u16 value);
 // Writes an integer into a string in binary format
 void sprint8b(char *s, u8 value);
 void sprint16b(char *s, u16 value);
-
-
-//
-// Pretty printing
-//
 
 // Prints a hex dump of a buffer to the console (for debugging)
 void hexdump(u8 *p, usize size, usize cols, usize pad);

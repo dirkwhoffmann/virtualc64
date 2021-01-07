@@ -24,6 +24,20 @@ template <int len> class PETName : C64Object {
     
 public:
     
+    static u8 petscii2printable(u8 c, u8 subst)
+    {
+        if (c >= 0x20 && c <= 0x7E) return c; // 0x20 = ' ', 0x7E = '~'
+        return subst;
+    }
+    
+    static u8 ascii2pet(u8 asciichar)
+    {
+        if (asciichar == 0x00) return 0x00;
+        
+        asciichar = toupper(asciichar);
+        return asciichar >= 0x20 && asciichar <= 0x5D ? asciichar : ' ';
+    }
+    
     PETName(const u8 *_pet, u8 _pad = 0xA0) : pad(_pad)
     {
         assert(_pet);

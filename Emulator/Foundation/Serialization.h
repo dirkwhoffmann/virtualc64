@@ -21,81 +21,82 @@
 // Basic memory buffer I/O
 //
 
-inline u8 read8(u8 *& buffer)
+inline u8 read8(u8 *& buf)
 {
-    u8 result = *buffer;
-    buffer += 1;
+    u8 result = R8BE(buf);
+    buf += 1;
     return result;
 }
 
-inline u16 read16(u8 *& buffer)
+inline u16 read16(u8 *& buf)
 {
-    u16 result = ntohs(*((u16 *)buffer));
-    buffer += 2;
+    u16 result = R16BE(buf);
+    buf += 2;
     return result;
 }
 
-inline u32 read32(u8 *& buffer)
+inline u32 read32(u8 *& buf)
 {
-    u32 result = ntohl(*((u32 *)buffer));
-    buffer += 4;
+    u32 result = R32BE(buf);
+    buf += 4;
     return result;
 }
 
-inline u64 read64(u8 *& buffer)
+inline u64 read64(u8 *& buf)
 {
-    u32 hi = read32(buffer);
-    u32 lo = read32(buffer);
+    u32 hi = read32(buf);
+    u32 lo = read32(buf);
     return ((u64)hi << 32) | lo;
 }
 
-inline float readFloat(u8 *& buffer)
+inline float readFloat(u8 *& buf)
 {
     float result;
-    *((u32 *)(&result)) = read32(buffer);
+    *((u32 *)(&result)) = read32(buf);
     return result;
 }
 
-inline double readDouble(u8 *& buffer)
+inline double readDouble(u8 *& buf)
 {
     double result;
-    *((u64 *)(&result)) = read64(buffer);
+    *((u64 *)(&result)) = read64(buf);
     return result;
 }
  
-inline void write8(u8 *& buffer, u8 value)
+inline void write8(u8 *& buf, u8 value)
 {
-    *buffer = value;
-    buffer += 1;
+    W8BE(buf, value);
+    buf += 1;
 }
 
-inline void write16(u8 *& buffer, u16 value)
+inline void write16(u8 *& buf, u16 value)
 {
-    *((u16 *)buffer) = htons(value);
-    buffer += 2;
+    W16BE(buf, value);
+    buf += 2;
 }
 
-inline void write32(u8 *& buffer, u32 value)
+inline void write32(u8 *& buf, u32 value)
 {
-    *((u32 *)buffer) = htonl(value);
-    buffer += 4;
+    W32BE(buf, value);
+    buf += 4;
 }
 
-inline void write64(u8 *& buffer, u64 value)
+inline void write64(u8 *& buf, u64 value)
 {
-    write32(buffer, (u32)(value >> 32));
-    write32(buffer, (u32)(value));
+    write32(buf, (u32)(value >> 32));
+    write32(buf, (u32)(value));
 }
 
-inline void writeFloat(u8 *& buffer, float value)
+inline void writeFloat(u8 *& buf, float value)
 {
-    write32(buffer, *((u32 *)(&value)));
+    write32(buf, *((u32 *)(&value)));
 }
 
-inline void writeDouble(u8 *& buffer, double value)
+inline void writeDouble(u8 *& buf, double value)
 {
-    write64(buffer, *((u64 *)(&value)));
+    write64(buf, *((u64 *)(&value)));
 }
+
 
 //
 // Counter (determines the state size)

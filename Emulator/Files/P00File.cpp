@@ -53,11 +53,13 @@ P00File::makeWithFileSystem(FSDevice *fs, int item)
     strcpy((char *)p, "C64File");
     p += 8;
     
-    // Write name in PET format (17 bytes)
-    strncpy((char *)p, fs->fileName(item).c_str(), 17);
-    for (unsigned i = 0; i < 17; i++, p++)
-    *p = ascii2pet(*p);
+    // Write name in PET format (16 bytes)
+    fs->fileName(item).write(p);
+    p += 16;
     
+    // Always 0 (1 byte)
+    *p++ = 0;
+
     // Record size (applies to REL files, only) (1 byte)
     *p++ = 0;
         

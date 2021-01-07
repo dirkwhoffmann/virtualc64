@@ -21,50 +21,6 @@ releaseBuild()
 #endif
 }
 
-struct timeval t;
-
-usize
-strlen16(const u16 *unichars)
-{
-    usize count = 0;
-    
-    if (unichars)
-        while(unichars[count]) count++;
-    
-    return count;
-}
-
-u8
-petscii2printable(u8 c, u8 subst)
-{
-    if (c >= 0x20 /*' '*/ && c <= 0x7E /* ~ */) return c;
-    return subst;
-}
-
-u8
-ascii2pet(u8 asciichar)
-{
-    if (asciichar == 0x00)
-        return 0x00;
-    
-    asciichar = toupper(asciichar);
-    
-    if (asciichar >= 0x20 && asciichar <= 0x5D) {
-        return asciichar;
-    } else {
-        return ' ';
-    }
-}
-
-void
-ascii2petStr(char *str)
-{
-    assert(str);
-    for (; *str != 0; str++) {
-        *str = ascii2pet(*str);
-    }
-}
-
 void
 sprint8d(char *s, u8 value)
 {
