@@ -120,25 +120,25 @@ extension ConfigurationController {
 
         let poweredOff         = c64.poweredOff
         
-        let basicIdentifier    = c64.basicRomIdentifier()
+        let basicIdentifier    = c64.romIdentifier(.BASIC)
         let hasBasic           = basicIdentifier != .ROM_MISSING
         let hasCommodoreBasic  = c64.isCommodoreRom(basicIdentifier)
         let hasMega65Basic     = c64.hasMega65BasicRom()
         let hasPatchedBasic    = c64.isPatchedRom(basicIdentifier)
 
-        let charIdentifier     = c64.charRomIdentifier()
+        let charIdentifier     = c64.romIdentifier(.CHAR)
         let hasChar            = charIdentifier != .ROM_MISSING
         let hasCommodoreChar   = c64.isCommodoreRom(charIdentifier)
         let hasMega65Char      = c64.hasMega65CharRom()
         let hasPatchedChar     = c64.isPatchedRom(charIdentifier)
 
-        let kernalIdentifier   = c64.kernalRomIdentifier()
+        let kernalIdentifier   = c64.romIdentifier(.KERNAL)
         let hasKernal          = kernalIdentifier != .ROM_MISSING
         let hasCommodoreKernal = c64.isCommodoreRom(kernalIdentifier)
         let hasMega65Kernal    = c64.hasMega65KernelRom()
         let hasPatchedKernal   = c64.isPatchedRom(kernalIdentifier)
 
-        let vc1541Identifier   = c64.vc1541RomIdentifier()
+        let vc1541Identifier   = c64.romIdentifier(.VC1541)
         let hasVC1541          = vc1541Identifier != .ROM_MISSING
         let hasCommodoreVC1541 = c64.isCommodoreRom(vc1541Identifier)
         let hasPatchedVC1541   = c64.isPatchedRom(vc1541Identifier)
@@ -185,21 +185,21 @@ extension ConfigurationController {
             hasVC1541          ? romUnknown : romMissing
 
         // Titles and subtitles
-        basicTitle.stringValue = hasBasic ? c64.basicRomTitle() : "Basic Rom"
-        basicSubtitle.stringValue = hasBasic ? c64.basicRomSubTitle() : "Required"
-        basicSubsubtitle.stringValue = c64.basicRomRevision()
+        basicTitle.stringValue = hasBasic ? c64.romTitle(.BASIC) : "Basic Rom"
+        basicSubtitle.stringValue = hasBasic ? c64.romSubTitle(.BASIC) : "Required"
+        basicSubsubtitle.stringValue = c64.romRevision(.BASIC)
 
-        charTitle.stringValue = hasChar ? c64.charRomTitle() : "Character Rom"
-        charSubtitle.stringValue = hasChar ? c64.charRomSubTitle() : "Required"
-        charSubsubtitle.stringValue = c64.charRomRevision()
+        charTitle.stringValue = hasChar ? c64.romTitle(.CHAR) : "Character Rom"
+        charSubtitle.stringValue = hasChar ? c64.romSubTitle(.CHAR) : "Required"
+        charSubsubtitle.stringValue = c64.romRevision(.CHAR)
 
-        kernalTitle.stringValue = hasKernal ? c64.kernalRomTitle() : "Kernal Rom"
-        kernalSubtitle.stringValue = hasKernal ? c64.kernalRomSubTitle() : "Required"
-        kernalSubsubtitle.stringValue = c64.kernalRomRevision()
+        kernalTitle.stringValue = hasKernal ? c64.romTitle(.KERNAL) : "Kernal Rom"
+        kernalSubtitle.stringValue = hasKernal ? c64.romSubTitle(.KERNAL) : "Required"
+        kernalSubsubtitle.stringValue = c64.romRevision(.KERNAL)
 
-        vc1541Title.stringValue = hasVC1541 ? c64.vc1541RomTitle() : "VC1541 Rom"
-        vc1541Subtitle.stringValue = hasVC1541 ? c64.vc1541RomSubTitle() : "Optional"
-        vc1541Subsubtitle.stringValue = c64.vc1541RomRevision()
+        vc1541Title.stringValue = hasVC1541 ? c64.romTitle(.VC1541) : "VC1541 Rom"
+        vc1541Subtitle.stringValue = hasVC1541 ? c64.romSubTitle(.VC1541) : "Optional"
+        vc1541Subsubtitle.stringValue = c64.romRevision(.VC1541)
 
         // Hide some controls
         basicDeleteButton.isHidden = !hasBasic

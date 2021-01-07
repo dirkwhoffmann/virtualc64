@@ -438,22 +438,22 @@ class Configuration {
         if let url = UserDefaults.basicRomUrl {
             track("Saving Basic Rom")
             try? fm.removeItem(at: url)
-            c64.saveBasicRom(url)
+            c64.saveRom(.BASIC, url: url)
         }
         if let url = UserDefaults.charRomUrl {
             track("Saving Character Rom")
             try? fm.removeItem(at: url)
-            c64.saveCharRom(url)
+            c64.saveRom(.CHAR, url: url)
         }
         if let url = UserDefaults.kernalRomUrl {
             track("Saving Kernal Rom")
             try? fm.removeItem(at: url)
-            c64.saveKernalRom(url)
+            c64.saveRom(.KERNAL, url: url)
         }
         if let url = UserDefaults.vc1541RomUrl {
             track("Saving VC1541 Rom")
             try? fm.removeItem(at: url)
-            c64.saveVC1541Rom(url)
+            c64.saveRom(.VC1541, url: url)
         }
 
         c64.resume()
