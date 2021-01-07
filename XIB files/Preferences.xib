@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -57,23 +56,23 @@
                 <outlet property="devUsagePage" destination="RGm-hm-8cV" id="4BC-Tm-fej"/>
                 <outlet property="devVendorID" destination="jPs-gb-ZHe" id="zQQ-Ao-1yz"/>
                 <outlet property="devVersion" destination="PKb-bS-Bnd" id="CW7-2p-SmA"/>
-                <outlet property="emuAspectRatioButton" destination="XLu-74-7AG" id="Xjx-CV-MUc"/>
-                <outlet property="emuAutoSnapshots" destination="DON-RP-HPW" id="bQG-hM-4dz"/>
-                <outlet property="emuCloseWithoutAskingButton" destination="f7R-rS-Csv" id="Htu-GY-zf4"/>
-                <outlet property="emuDriveBlankDiskFormat" destination="bwB-V1-tah" id="LeB-tg-x37"/>
-                <outlet property="emuDriveConnectSound" destination="MoH-pd-2Vc" id="cOj-52-AIy"/>
-                <outlet property="emuDriveEjectSound" destination="eoZ-fx-PYz" id="TyN-G5-UZp"/>
-                <outlet property="emuDriveHeadSound" destination="fAM-PN-etl" id="cEY-KM-L7X"/>
-                <outlet property="emuDriveInsertSound" destination="NLO-3F-AyX" id="aGw-Ou-zrF"/>
-                <outlet property="emuDriveSoundPan" destination="u7j-T4-a5u" id="dY7-nD-dzc"/>
-                <outlet property="emuDriveSounds" destination="x3B-1Z-mQV" id="zwp-hD-uhN"/>
-                <outlet property="emuEjectUnasked" destination="TCJ-4m-Fvr" id="2tQ-by-wbz"/>
-                <outlet property="emuExitOnEscButton" destination="8tU-em-5LP" id="yfd-1d-BGx"/>
-                <outlet property="emuPauseInBackground" destination="UxY-mR-8ll" id="qPU-uQ-Fnx"/>
-                <outlet property="emuScreenshotSourcePopup" destination="UhB-rO-Fiw" id="j4T-T7-esc"/>
-                <outlet property="emuScreenshotTargetPopup" destination="LXm-7Y-K8D" id="tjb-Sp-IsE"/>
-                <outlet property="emuSnapshotInterval" destination="ITl-Yu-WOZ" id="hfk-Lq-dZd"/>
-                <outlet property="emuWarpMode" destination="YaP-a1-P0K" id="vrS-Wr-jID"/>
+                <outlet property="genAspectRatioButton" destination="XLu-74-7AG" id="Xjx-CV-MUc"/>
+                <outlet property="genAutoSnapshots" destination="DON-RP-HPW" id="bQG-hM-4dz"/>
+                <outlet property="genCloseWithoutAskingButton" destination="f7R-rS-Csv" id="Htu-GY-zf4"/>
+                <outlet property="genDriveBlankDiskFormat" destination="bwB-V1-tah" id="LeB-tg-x37"/>
+                <outlet property="genDriveConnectSound" destination="MoH-pd-2Vc" id="cOj-52-AIy"/>
+                <outlet property="genDriveEjectSound" destination="eoZ-fx-PYz" id="TyN-G5-UZp"/>
+                <outlet property="genDriveHeadSound" destination="fAM-PN-etl" id="cEY-KM-L7X"/>
+                <outlet property="genDriveInsertSound" destination="NLO-3F-AyX" id="aGw-Ou-zrF"/>
+                <outlet property="genDriveSoundPan" destination="u7j-T4-a5u" id="dY7-nD-dzc"/>
+                <outlet property="genDriveSounds" destination="x3B-1Z-mQV" id="zwp-hD-uhN"/>
+                <outlet property="genEjectUnasked" destination="TCJ-4m-Fvr" id="2tQ-by-wbz"/>
+                <outlet property="genExitOnEscButton" destination="8tU-em-5LP" id="yfd-1d-BGx"/>
+                <outlet property="genPauseInBackground" destination="UxY-mR-8ll" id="qPU-uQ-Fnx"/>
+                <outlet property="genScreenshotSourcePopup" destination="UhB-rO-Fiw" id="j4T-T7-esc"/>
+                <outlet property="genScreenshotTargetPopup" destination="LXm-7Y-K8D" id="tjb-Sp-IsE"/>
+                <outlet property="genSnapshotInterval" destination="ITl-Yu-WOZ" id="hfk-Lq-dZd"/>
+                <outlet property="genWarpMode" destination="YaP-a1-P0K" id="vrS-Wr-jID"/>
                 <outlet property="keyBox" destination="FmQ-sb-BjR" id="MgX-Dg-0CW"/>
                 <outlet property="keyMapText" destination="fCj-zh-fKC" id="1Oe-cc-kEt"/>
                 <outlet property="keyMappingPopup" destination="Wq6-3c-FTh" id="bLH-aw-mcu"/>
@@ -143,7 +142,7 @@ DQ
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="emuPresetAction:" target="-2" id="Lj6-EB-kht"/>
+                                                <action selector="genPresetAction:" target="-2" id="Lj6-EB-kht"/>
                                             </connections>
                                         </popUpButton>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fwF-Xv-2d2">
@@ -163,7 +162,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="emuDriveSoundsAction:" target="-2" id="VJ0-so-DH8"/>
+                                                <action selector="genDriveSoundsAction:" target="-2" id="VJ0-so-DH8"/>
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZCE-Ts-7pP">
@@ -183,7 +182,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="emuAutoSnapshotAction:" target="-2" id="EZS-Vb-sFw"/>
+                                                <action selector="genAutoSnapshotAction:" target="-2" id="EZS-Vb-sFw"/>
                                             </connections>
                                         </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="67N-11-Cx6">
@@ -208,7 +207,7 @@ DQ
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <action selector="emuSnapshotIntervalAction:" target="-2" id="rtm-gu-JEo"/>
+                                                <action selector="genSnapshotIntervalAction:" target="-2" id="rtm-gu-JEo"/>
                                             </connections>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kfl-9t-0Ir">
@@ -256,7 +255,7 @@ DQ
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="emuBlankDiskFormatAction:" target="-2" id="a9O-cb-1cm"/>
+                                                <action selector="genBlankDiskFormatAction:" target="-2" id="a9O-cb-1cm"/>
                                             </connections>
                                         </popUpButton>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YaP-a1-P0K">
@@ -280,7 +279,7 @@ DQ
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="emuWarpModeAction:" target="-2" id="GrP-3b-Ynu"/>
+                                                <action selector="genWarpModeAction:" target="-2" id="GrP-3b-Ynu"/>
                                             </connections>
                                         </popUpButton>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MoH-pd-2Vc">
@@ -291,7 +290,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="emuDriveConnectSoundAction:" target="-2" id="E6m-Od-zGF"/>
+                                                <action selector="genDriveConnectSoundAction:" target="-2" id="E6m-Od-zGF"/>
                                             </connections>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NLO-3F-AyX">
@@ -302,7 +301,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="emuDriveInsertSoundAction:" target="-2" id="NES-ig-lOG"/>
+                                                <action selector="genDriveInsertSoundAction:" target="-2" id="NES-ig-lOG"/>
                                             </connections>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eoZ-fx-PYz">
@@ -313,7 +312,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="emuDriveEjectSoundAction:" target="-2" id="Tcs-d8-TS6"/>
+                                                <action selector="genDriveEjectSoundAction:" target="-2" id="Tcs-d8-TS6"/>
                                             </connections>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fAM-PN-etl">
@@ -324,7 +323,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="emuDriveHeadSoundAction:" target="-2" id="JpH-bj-FBX"/>
+                                                <action selector="genDriveHeadSoundAction:" target="-2" id="JpH-bj-FBX"/>
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gug-gb-6um">
@@ -344,7 +343,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="emuAspectRatioAction:" target="-2" id="939-Df-dKB"/>
+                                                <action selector="genAspectRatioAction:" target="-2" id="939-Df-dKB"/>
                                             </connections>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8tU-em-5LP">
@@ -355,7 +354,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="emuExitOnEscAction:" target="-2" id="F0y-jo-lxq"/>
+                                                <action selector="genExitOnEscAction:" target="-2" id="F0y-jo-lxq"/>
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bh0-j6-w1x">
@@ -375,7 +374,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="emuEjectWithoutAskingAction:" target="-2" id="7k0-2z-Ao8"/>
+                                                <action selector="genEjectWithoutAskingAction:" target="-2" id="7k0-2z-Ao8"/>
                                             </connections>
                                         </button>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u7j-T4-a5u">
@@ -399,7 +398,7 @@ DQ
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="emuDriveSoundPanAction:" target="-2" id="jqB-AL-vnT"/>
+                                                <action selector="genDriveSoundPanAction:" target="-2" id="jqB-AL-vnT"/>
                                             </connections>
                                         </popUpButton>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z1f-aS-ewB">
@@ -444,7 +443,7 @@ DQ
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="emuScreenshotSourceAction:" target="-2" id="prz-B8-H99"/>
+                                                <action selector="genScreenshotSourceAction:" target="-2" id="prz-B8-H99"/>
                                             </connections>
                                         </popUpButton>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RGS-3w-Ood">
@@ -473,7 +472,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="emuPauseInBackgroundAction:" target="-2" id="ZdY-p5-M26"/>
+                                                <action selector="genPauseInBackgroundAction:" target="-2" id="ZdY-p5-M26"/>
                                             </connections>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f7R-rS-Csv">
@@ -484,7 +483,7 @@ DQ
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="emuCloseWithoutAskingAction:" target="-2" id="hYV-fs-aa6"/>
+                                                <action selector="genCloseWithoutAskingAction:" target="-2" id="hYV-fs-aa6"/>
                                             </connections>
                                         </button>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LXm-7Y-K8D">
@@ -514,7 +513,7 @@ DQ
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="emuScreenshotTargetAction:" target="-2" id="0fx-Tv-s2a"/>
+                                                <action selector="genScreenshotTargetAction:" target="-2" id="0fx-Tv-s2a"/>
                                             </connections>
                                         </popUpButton>
                                     </subviews>

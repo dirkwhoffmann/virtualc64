@@ -20,31 +20,31 @@ class PreferencesController: DialogController {
     //
         
     // Drive
-    @IBOutlet weak var emuDriveBlankDiskFormat: NSPopUpButton!
-    @IBOutlet weak var emuEjectUnasked: NSButton!
-    @IBOutlet weak var emuDriveSounds: NSButton!
-    @IBOutlet weak var emuDriveSoundPan: NSPopUpButton!
-    @IBOutlet weak var emuDriveInsertSound: NSButton!
-    @IBOutlet weak var emuDriveEjectSound: NSButton!
-    @IBOutlet weak var emuDriveHeadSound: NSButton!
-    @IBOutlet weak var emuDriveConnectSound: NSButton!
+    @IBOutlet weak var genDriveBlankDiskFormat: NSPopUpButton!
+    @IBOutlet weak var genEjectUnasked: NSButton!
+    @IBOutlet weak var genDriveSounds: NSButton!
+    @IBOutlet weak var genDriveSoundPan: NSPopUpButton!
+    @IBOutlet weak var genDriveInsertSound: NSButton!
+    @IBOutlet weak var genDriveEjectSound: NSButton!
+    @IBOutlet weak var genDriveHeadSound: NSButton!
+    @IBOutlet weak var genDriveConnectSound: NSButton!
 
     // Fullscreen
-    @IBOutlet weak var emuAspectRatioButton: NSButton!
-    @IBOutlet weak var emuExitOnEscButton: NSButton!
+    @IBOutlet weak var genAspectRatioButton: NSButton!
+    @IBOutlet weak var genExitOnEscButton: NSButton!
 
     // Snapshots and Screenshots
-    @IBOutlet weak var emuAutoSnapshots: NSButton!
-    @IBOutlet weak var emuSnapshotInterval: NSTextField!
-    @IBOutlet weak var emuScreenshotSourcePopup: NSPopUpButton!
-    @IBOutlet weak var emuScreenshotTargetPopup: NSPopUpButton!
+    @IBOutlet weak var genAutoSnapshots: NSButton!
+    @IBOutlet weak var genSnapshotInterval: NSTextField!
+    @IBOutlet weak var genScreenshotSourcePopup: NSPopUpButton!
+    @IBOutlet weak var genScreenshotTargetPopup: NSPopUpButton!
         
     // Warp mode
-    @IBOutlet weak var emuWarpMode: NSPopUpButton!
+    @IBOutlet weak var genWarpMode: NSPopUpButton!
 
     // Misc
-    @IBOutlet weak var emuPauseInBackground: NSButton!
-    @IBOutlet weak var emuCloseWithoutAskingButton: NSButton!
+    @IBOutlet weak var genPauseInBackground: NSButton!
+    @IBOutlet weak var genCloseWithoutAskingButton: NSButton!
     
     //
     // Controls
@@ -178,7 +178,7 @@ class PreferencesController: DialogController {
         if let id = tabView.selectedTabViewItem?.identifier as? String {
             
             switch id {
-            case "Emulator": refreshEmulatorTab()
+            case "General": refreshGeneralTab()
             case "Controls": refreshControlsTab()
             case "Devices": refreshDevicesTab()
             case "Keyboard": refreshKeyboardTab()
@@ -192,7 +192,7 @@ class PreferencesController: DialogController {
         if let id = tabView.selectedTabViewItem?.identifier as? String {
             
             switch id {
-            case "Emulator": selectEmulatorTab()
+            case "General": selectGeneralTab()
             case "Controls": selectControlsTab()
             case "Devices": selectDevicesTab()
             case "Keyboard": selectKeyboardTab()
@@ -260,10 +260,10 @@ extension PreferencesController: NSTextFieldDelegate {
             
             switch view {
                 
-            case emuSnapshotInterval:
+            case genSnapshotInterval:
                 
                 if formatter?.number(from: view.stringValue) != nil {
-                    emuSnapshotIntervalAction(view)
+                    genSnapshotIntervalAction(view)
                 }
 
             case conAutofireBullets:
