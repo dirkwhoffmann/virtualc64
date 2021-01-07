@@ -47,24 +47,12 @@
 @class G64FileProxy;
 @class FSDeviceProxy;
 
-// struct Wrapper;
-// struct C64Wrapper;
-// struct CpuWrapper;
-// struct GuardsWrapper;
-// struct MemoryWrapper;
-// struct VicWrapper;
-// struct CiaWrapper;
-// struct SidBridgeWrapper;
-// struct KeyboardWrapper;
-// struct ControlPortWrapper;
-// struct IecWrapper;
-// struct ExpansionPortWrapper;
+
 struct FSDeviceWrapper;
 struct FSDeviceWrapper;
 struct DriveWrapper;
-// struct ViaWrapper;
-struct DiskWrapper;
-struct DatasetteWrapper;
+//struct DiskWrapper;
+// struct DatasetteWrapper;
 struct MouseWrapper;
 struct AnyFileWrapper;
 
@@ -572,14 +560,8 @@ struct AnyFileWrapper;
 // Disk proxy
 //
 
-@interface DiskProxy : NSObject {
+@interface DiskProxy : HardwareComponentProxy { }
     
-    struct DiskWrapper *wrapper;
-}
-
-@property (readonly) struct DiskWrapper *wrapper;
-
-- (void)dump;
 - (BOOL)writeProtected;
 - (void)setWriteProtected:(BOOL)b;
 - (void)toggleWriteProtection;
@@ -602,10 +584,7 @@ struct AnyFileWrapper;
 // Datasette proxy
 //
 
-@interface DatasetteProxy : NSObject {
-    
-    struct DatasetteWrapper *wrapper;
-}
+@interface DatasetteProxy : HardwareComponentProxy { }
 
 @property (readonly) BOOL hasTape;
 @property (readonly) NSInteger type;

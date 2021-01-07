@@ -29,9 +29,9 @@ struct Wrapper { void *obj; };
 // struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
 struct FSDeviceWrapper { FSDevice *device; };
 // struct ViaWrapper { VIA6522 *via; };
-struct DiskWrapper { Disk *disk; };
+// struct DiskWrapper { Disk *disk; };
 struct DriveWrapper { Drive *drive; };
-struct DatasetteWrapper { Datasette *datasette; };
+// struct DatasetteWrapper { Datasette *datasette; };
 struct MouseWrapper { Mouse *mouse; };
 struct AnyFileWrapper { AnyFile *file; };
 
@@ -875,96 +875,85 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation DiskProxy
 
-@synthesize wrapper;
-
-- (instancetype)initWithDisk525:(Disk *)disk
+- (Disk *)disk
 {
-    if (self = [super init]) {
-        wrapper = new DiskWrapper();
-        wrapper->disk = disk;
-    }
-    return self;
-}
-
-- (void)dump
-{
-    wrapper->disk->dump();
+    return (Disk *)obj;
 }
 
 - (BOOL)writeProtected
 {
-    return wrapper->disk->isWriteProtected();
+    return [self disk]->isWriteProtected();
 }
 
 - (void)setWriteProtected:(BOOL)b
 {
-    wrapper->disk->setWriteProtection(b);
+    [self disk]->setWriteProtection(b);
 }
 
 - (void)toggleWriteProtection
 {
-    wrapper->disk->toggleWriteProtection();
+    [self disk]->toggleWriteProtection();
 }
 
 - (NSInteger)nonemptyHalftracks
 {
-    return (NSInteger)wrapper->disk->nonemptyHalftracks();
+    return [self disk]->nonemptyHalftracks();
 }
 
 - (void)analyzeTrack:(Track)t
 {
-    wrapper->disk->analyzeTrack(t);
+    [self disk]->analyzeTrack(t);
 }
 
 - (void)analyzeHalftrack:(Halftrack)ht
 {
-    wrapper->disk->analyzeHalftrack(ht);
+    [self disk]->analyzeHalftrack(ht);
 }
 
 - (NSInteger)numErrors
 {
-    return wrapper->disk->numErrors();
+    return [self disk]->numErrors();
 }
 
 - (NSString *)errorMessage:(NSInteger)nr
 {
-    std::string s = wrapper->disk->errorMessage((unsigned)nr);
+    std::string s = [self disk]->errorMessage((unsigned)nr);
     return [NSString stringWithUTF8String:s.c_str()];
 }
 
 - (NSInteger)firstErroneousBit:(NSInteger)nr
 {
-    return wrapper->disk->firstErroneousBit((unsigned)nr);
+    return [self disk]->firstErroneousBit((unsigned)nr);
 }
 
 - (NSInteger)lastErroneousBit:(NSInteger)nr
 {
-    return wrapper->disk->lastErroneousBit((unsigned)nr);
+    return [self disk]->lastErroneousBit((unsigned)nr);
 }
 
 - (SectorInfo)sectorInfo:(Sector)s
 {
-    return wrapper->disk->sectorLayout(s);
+    return [self disk]->sectorLayout(s);
 }
 
 - (const char *)trackBitsAsString
 {
-    return wrapper->disk->trackBitsAsString();
+    return [self disk]->trackBitsAsString();
 }
 
 - (const char *)diskNameAsString
 {
-    return wrapper->disk->diskNameAsString();
+    return [self disk]->diskNameAsString();
 }
 
 - (const char *)sectorHeaderBytesAsString:(Sector)nr hex:(BOOL)hex
 {
-    return wrapper->disk->sectorHeaderBytesAsString(nr, hex);
+    return [self disk]->sectorHeaderBytesAsString(nr, hex);
 }
 
 - (const char *)sectorDataBytesAsString:(Sector)nr hex:(BOOL)hex
 {
-    return wrapper->disk->sectorDataBytesAsString(nr, hex);
+    return [self disk]->sectorDataBytesAsString(nr, hex);
 }
 
 @end
@@ -1005,8 +994,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err;
 {
-    Disk *disk = [proxy wrapper]->disk;
-
+    Disk *disk = (Disk *)proxy->obj;
     FSDevice *volume = FSDevice::makeWithDisk(*disk, err);
     return [self make:volume];
 }
@@ -1228,7 +1216,7 @@ struct AnyFileWrapper { AnyFile *file; };
         wrapper->drive = drive;
         via1 = [[VIAProxy alloc] initWith:&drive->via1];
         via2 = [[VIAProxy alloc] initWith:&drive->via2];
-        disk = [[DiskProxy alloc] initWithDisk525:&drive->disk];
+        disk = [[DiskProxy alloc] initWith:&drive->disk];
     }
     return self;
 }
@@ -1388,59 +1376,55 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation DatasetteProxy
 
-- (instancetype)initWithDatasette:(Datasette *)datasette
+- (Datasette *)datasette
 {
-    if (self = [super init]) {
-        wrapper = new DatasetteWrapper();
-        wrapper->datasette = datasette;
-    }
-    return self;
+    return (Datasette *)obj;
 }
 
 - (BOOL)hasTape
 {
-    return wrapper->datasette->hasTape();
+    return [self datasette]->hasTape();
 }
 
 - (NSInteger)type
 {
-    return wrapper->datasette->getType();
+    return [self datasette]->getType();
 }
 
 - (BOOL)motor
 {
-    return wrapper->datasette->getMotor();
+    return [self datasette]->getMotor();
 }
 
 - (BOOL)playKey
 {
-    return wrapper->datasette->getPlayKey();
+    return [self datasette]->getPlayKey();
 }
 
 - (void)pressPlay
 {
-    wrapper->datasette->pressPlay();
+    [self datasette]->pressPlay();
 }
 
 - (void)pressStop
 {
-    wrapper->datasette->pressStop();
+    [self datasette]->pressStop();
 }
 
 - (void)rewind
 {
-    wrapper->datasette->rewind();
+    [self datasette]->rewind();
 }
 
 - (BOOL)insertTape:(TAPFileProxy *)tape
 {
     TAPFile *file = (TAPFile *)([tape wrapper]->file);
-    return wrapper->datasette->insertTape(file);
+    return [self datasette]->insertTape(file);
 }
 
 - (void)ejectTape
 {
-    wrapper->datasette->ejectTape();
+    [self datasette]->ejectTape();
 }
 
 @end
@@ -1859,7 +1843,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err
 {
-    Disk *disk = (Disk *)([proxy wrapper]->disk);
+    Disk *disk = (Disk *)proxy->obj;
     return [self make: AnyFile::make <D64File> (*disk, err)];
 }
 
@@ -1906,8 +1890,8 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err
 {
-    Disk *disk = (Disk *)([proxy wrapper]->disk);
-    return [self make: AnyFile::make <G64File> (*disk, err)];
+    // Disk *disk = (Disk *)proxy->obj;
+    return [self make: AnyFile::make <G64File> (*(Disk *)proxy->obj, err)];
 }
 
 @end
@@ -1971,7 +1955,7 @@ struct AnyFileWrapper { AnyFile *file; };
     expansionport = [[ExpansionPortProxy alloc] initWith:&c64->expansionport];
     drive8 = [[DriveProxy alloc] initWithVC1541:&c64->drive8];
     drive9 = [[DriveProxy alloc] initWithVC1541:&c64->drive9];
-    datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
+    datasette = [[DatasetteProxy alloc] initWith:&c64->datasette];
     mouse = [[MouseProxy alloc] initWithMouse:&c64->mouse];
 
     return self;
