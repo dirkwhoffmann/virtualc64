@@ -86,9 +86,9 @@ struct AnyFileWrapper;
 // C64 proxy
 //
 
-@interface C64Proxy : NSObject {
+@interface C64Proxy : BaseProxy {
     
-    struct C64Wrapper *wrapper;
+    // struct C64Wrapper *wrapper;
     
     CPUProxy *cpu;
     GuardsProxy *breakpoints;
@@ -135,8 +135,6 @@ struct AnyFileWrapper;
 
 @property (readonly) BOOL isReleaseBuild;
 - (void)setDebug:(BOOL)enable;
-// - (void) enableDebugging __attribute__ ((deprecated));
-// - (void) disableDebugging __attribute__ ((deprecated));
 @property InspectionTarget inspectionTarget;
 - (void)clearInspectionTarget;
 @property (readonly) BOOL debugMode;
@@ -189,10 +187,6 @@ struct AnyFileWrapper;
 - (void)stepOver;
 
 @property BOOL warp;
-/*
-- (void) warpOn __attribute__ ((deprecated));
-- (void) warpOff __attribute__ ((deprecated));
-*/
 
 // Handling ROMs
 - (BOOL) hasBasicRom;
