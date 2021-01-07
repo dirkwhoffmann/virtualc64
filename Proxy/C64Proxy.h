@@ -52,7 +52,7 @@
 // struct CpuWrapper;
 // struct GuardsWrapper;
 // struct MemoryWrapper;
-struct VicWrapper;
+// struct VicWrapper;
 struct CiaWrapper;
 struct SidBridgeWrapper;
 struct KeyboardWrapper;
@@ -78,6 +78,14 @@ struct AnyFileWrapper;
     @public void *obj;
 }
 
+@end
+
+//
+// HardwareComponent proxy
+//
+
+@interface HardwareComponentProxy : BaseProxy { }
+
 - (void)dump;
 
 @end
@@ -86,7 +94,7 @@ struct AnyFileWrapper;
 // C64 proxy
 //
 
-@interface C64Proxy : BaseProxy {
+@interface C64Proxy : HardwareComponentProxy {
     
     // struct C64Wrapper *wrapper;
     
@@ -276,7 +284,7 @@ struct AnyFileWrapper;
 // CPU proxy
 //
 
-@interface CPUProxy : BaseProxy { }
+@interface CPUProxy : HardwareComponentProxy { }
 
 - (CPUInfo)getInfo;
 - (NSInteger)loggedInstructions;
@@ -307,7 +315,7 @@ struct AnyFileWrapper;
 // Memory proxy
 //
 
-@interface MemoryProxy : BaseProxy { }
+@interface MemoryProxy : HardwareComponentProxy { }
 
 - (MemInfo)getInfo;
 
@@ -347,7 +355,7 @@ struct AnyFileWrapper;
 //
 
 
-@interface VICProxy : NSObject { struct VicWrapper *wrapper; }
+@interface VICProxy : HardwareComponentProxy { }
 
 - (BOOL)isPAL;
 - (void *)stableEmuTexture;
@@ -362,7 +370,6 @@ struct AnyFileWrapper;
 
 - (VICIIInfo)getInfo;
 - (SpriteInfo)getSpriteInfo:(NSInteger)sprite;
-- (void)dump;
 
 - (u32 *)noise;
 

@@ -20,7 +20,7 @@ struct Wrapper { void *obj; };
 // struct CpuWrapper { CPU<C64Memory> *cpu; };
 // struct GuardsWrapper { Guards *guards; };
 // struct MemoryWrapper { C64Memory *mem; };
-struct VicWrapper { VICII *vic; };
+// struct VicWrapper { VICII *vic; };
 struct CiaWrapper { CIA *cia; };
 struct KeyboardWrapper { Keyboard *keyboard; };
 struct ControlPortWrapper { ControlPort *port; };
@@ -36,22 +36,33 @@ struct MouseWrapper { Mouse *mouse; };
 struct AnyFileWrapper { AnyFile *file; };
 
 //
-// HardwareComponent proxy
+// Base Proxy
 //
 
 @implementation BaseProxy
-
--(void)dump
-{
-    // TODO: FIX ASAP
-    HardwareComponent *hw = (HardwareComponent *)obj;
-    hw->dump();
-}
 
 - (instancetype) initWith:(void *)ref
 {
     if (self = [super init]) { obj = ref; }
     return self;
+}
+
+@end
+
+//
+// HardwareComponent proxy
+//
+
+@implementation HardwareComponentProxy
+
+-(HardwareComponent *)hwc
+{
+    return (HardwareComponent *)obj;
+}
+
+-(void)dump
+{
+    [self hwc]->dump();
 }
 
 @end
@@ -381,48 +392,35 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation VICProxy
 
-- (instancetype) initWithVIC:(VICII *)vic
+- (VICII *)vicii
 {
-    if (self = [super init]) {
-        wrapper = new VicWrapper();
-        wrapper->vic = vic;
-    }
-    return self;
+    return (VICII *)obj;
 }
-/*
-- (NSInteger) videoPalette
+
+- (BOOL)isPAL
 {
-    return (NSInteger)wrapper->vic->getPalette();
+    return [self vicii]->isPAL();
 }
-- (void) setVideoPalette:(NSInteger)value
+
+- (VICIIInfo)getInfo {
+    return [self vicii]->getInfo();
+}
+
+- (SpriteInfo)getSpriteInfo:(NSInteger)sprite
 {
-    wrapper->vic->setPalette((Palette)value);
+    return [self vicii]->getSpriteInfo((unsigned)sprite);
 }
-*/
-- (BOOL) isPAL
+
+- (void *)stableEmuTexture
 {
-    return wrapper->vic->isPAL();
+    return [self vicii]->stableEmuTexture();
 }
-- (VICIIInfo) getInfo {
-    return wrapper->vic->getInfo();
-}
-- (void) dump
-{
-    wrapper->vic->dump();
-}
-- (SpriteInfo) getSpriteInfo:(NSInteger)sprite
-{
-    return wrapper->vic->getSpriteInfo((unsigned)sprite);
-}
-- (void *) stableEmuTexture
-{
-    return wrapper->vic->stableEmuTexture();
-}
-- (NSColor *) color:(NSInteger)nr
+
+- (NSColor *)color:(NSInteger)nr
 {
     assert (0 <= nr && nr < 16);
     
-    u32 color = wrapper->vic->getColor((unsigned)nr);
+    u32 color = [self vicii]->getColor((unsigned)nr);
     u8 r = color & 0xFF;
     u8 g = (color >> 8) & 0xFF;
     u8 b = (color >> 16) & 0xFF;
@@ -432,64 +430,40 @@ struct AnyFileWrapper { AnyFile *file; };
                                       blue:(float)b/255.0
                                      alpha:1.0];
 }
-- (UInt32) rgbaColor:(NSInteger)nr palette:(Palette)palette
+
+- (UInt32)rgbaColor:(NSInteger)nr palette:(Palette)palette
 {
     assert (0 <= nr && nr < 16);
-    return wrapper->vic->getColor((unsigned)nr, palette);
+    return [self vicii]->getColor((unsigned)nr, palette);
 }
+
 - (double)brightness
 {
-    return wrapper->vic->getBrightness();
+    return [self vicii]->getBrightness();
 }
 - (void)setBrightness:(double)value
 {
-    wrapper->vic->setBrightness(value);
+    [self vicii]->setBrightness(value);
 }
 - (double)contrast
 {
-    return wrapper->vic->getContrast();
+    return [self vicii]->getContrast();
 }
 - (void)setContrast:(double)value
 {
-    wrapper->vic->setContrast(value);
+    [self vicii]->setContrast(value);
 }
 - (double)saturation
 {
-    return wrapper->vic->getSaturation();
+    return [self vicii]->getSaturation();
 }
 - (void)setSaturation:(double)value
 {
-    wrapper->vic->setSaturation(value);
+    [self vicii]->setSaturation(value);
 }
-/*
-- (BOOL) hideSprites
+- (u32 *)noise
 {
-    return wrapper->vic->hideSprites;
-}
-- (void) setHideSprites:(BOOL)b
-{
-    wrapper->vic->setHideSprites(b);
-}
-- (BOOL) showIrqLines
-{
-    return wrapper->vic->markIRQLines;
-}
-- (void) setShowIrqLines:(BOOL)b
-{
-    wrapper->vic->setShowIrqLines(b);
-}
-- (BOOL) showDmaLines
-{
-    return wrapper->vic->markDMALines;
-}
-- (void) setShowDmaLines:(BOOL)b
-{
-    wrapper->vic->setShowDmaLines(b);
-}
-*/
-- (u32 *) noise
-{
-    return wrapper->vic->getNoise();
+    return [self vicii]->getNoise();
 }
 
 @end
@@ -1985,7 +1959,7 @@ struct AnyFileWrapper { AnyFile *file; };
     cpu = [[CPUProxy alloc] initWith:&c64->cpu];
     breakpoints = [[GuardsProxy alloc] initWith:&c64->cpu.debugger.breakpoints];
     watchpoints = [[GuardsProxy alloc] initWith:&c64->cpu.debugger.watchpoints];
-    vic = [[VICProxy alloc] initWithVIC:&c64->vic];
+    vic = [[VICProxy alloc] initWith:&c64->vic];
     cia1 = [[CIAProxy alloc] initWithCIA:&c64->cia1];
     cia2 = [[CIAProxy alloc] initWithCIA:&c64->cia2];
     sid = [[SIDProxy alloc] initWithSID:&c64->sid];
