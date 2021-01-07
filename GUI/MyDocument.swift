@@ -347,6 +347,7 @@ class MyDocument: NSDocument {
     // Exporting disks
     //
     
+    /*
     @available(*, deprecated)
     enum ExportError: Error {
         case invalidFormat(format: FileType)
@@ -354,6 +355,7 @@ class MyDocument: NSDocument {
         case undecodableDisk
         case other
     }
+    */
     
     func export(drive id: DriveID, to url: URL) throws {
         
@@ -367,18 +369,16 @@ class MyDocument: NSDocument {
 
         track("disk: \(disk) to: \(url)")
         
-        var file: AnyFileProxy?
-        
-        switch url.c64FileType {
-        
-        case .G64:
-            file = try create(disk: disk) as G64FileProxy
+        if url.c64FileType == .G64 {
+         
+            let g64 = try create(disk: disk) as G64FileProxy
+            try export(file: g64, to: url)
 
-        default:
-            throw MyError.init(ErrorCode.FILE_TYPE_MISMATCH)
+        } else {
+            
+            let fs = try create(disk: disk) as FSDeviceProxy
+            try export(fs: fs, to: url)
         }
-    
-        try export(file: file!, to: url)
     }
     
     func export(fs: FSDeviceProxy, to url: URL) throws {

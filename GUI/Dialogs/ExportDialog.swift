@@ -192,13 +192,13 @@ class ExportDialog: DialogController {
         // Get the disk from the specified drive
         disk = c64.drive(nr)?.disk
         
-        // Try to decode the disk with the D64 decoder (DEPRECATED)
-        d64 = D64FileProxy.make(withDrive: drive)
-
         // Try to extract the file system
         var err = ErrorCode.OK
         volume = FSDeviceProxy.make(withDisk: disk, error: &err)
-                
+        
+        // Try to decode the disk with the D64 decoder (DEPRECATED)
+        d64 = D64FileProxy.make(withFileSystem: volume, error: &err)
+
         // REMOVE ASAP
         track("Exporter: Volume:")
         volume?.printDirectory()

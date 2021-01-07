@@ -889,7 +889,7 @@ AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk> {
 // FSDevice proxy
 //
 
-@interface FSDeviceProxy : NSObject {
+@interface FSDeviceProxy : NSObject <MakeWithDisk> {
     
     struct FSDeviceWrapper *wrapper;
 }
