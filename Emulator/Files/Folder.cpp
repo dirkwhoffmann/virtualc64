@@ -37,12 +37,29 @@ Folder::makeWithFolder(const std::string &path)
 }
 
 Folder *
+Folder::makeWithFolder(const std::string &path, ErrorCode *err)
+{
+    *err = ERROR_OK;
+    
+    try { return makeWithFolder(path); }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
+    return nullptr;
+}
+
+Folder *
 Folder::makeWithFolder(const char *path)
 {
     assert(path);
     return makeWithFolder(string(path));
 }
-    
+ 
+Folder *
+Folder::makeWithFolder(const char *path, ErrorCode *err)
+{
+    assert(path);
+    return makeWithFolder(string(path), err);
+}
+
 PETName<16>
 Folder::collectionName()
 {
