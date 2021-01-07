@@ -15,12 +15,8 @@
 /* C++ class wrappers. We wrap into standard C structures to avoid any
  * reference to C++ in the objc code seen by Swift.
  */
-struct Wrapper { void *obj; };
+// struct Wrapper { void *obj; };
 
-
-struct FSDeviceWrapper { FSDevice *device; };
-struct DriveWrapper { Drive *drive; };
-struct AnyFileWrapper { AnyFile *file; };
 
 //
 // Base Proxy
@@ -742,7 +738,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 - (BOOL)attachCartridgeAndReset:(CRTFileProxy *)c
 {
-    CRTFile *file = (CRTFile *)([c wrapper]->file);
+    CRTFile *file = (CRTFile *)c->obj;
     return [self eport]->attachCartridgeAndReset(file);
 }
 
@@ -951,113 +947,102 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation FSDeviceProxy
 
-@synthesize wrapper;
-
-- (instancetype)initWithDevice:(FSDevice *)volume
-{
-    if (self = [super init]) {
-        wrapper = new FSDeviceWrapper();
-        wrapper->device = volume;
-    }
-    return self;
-}
-
 + (instancetype)make:(FSDevice *)volume
 {
     if (volume == NULL) { return nil; }
     
-    FSDeviceProxy *proxy = [[self alloc] initWithDevice: volume];
+    FSDeviceProxy *proxy = [[self alloc] initWith: volume];
     return proxy;
 }
 
 + (instancetype)makeWithD64:(D64FileProxy *)proxy
 {
-    AnyFile *file = [proxy wrapper]->file;
-
     ErrorCode err;
-    FSDevice *volume = FSDevice::makeWithD64((D64File *)file, &err);
+    FSDevice *volume = FSDevice::makeWithD64((D64File *)proxy->obj, &err);
     return [self make:volume];
 }
 
 + (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err;
 {
-    Disk *disk = (Disk *)proxy->obj;
-    FSDevice *volume = FSDevice::makeWithDisk(*disk, err);
+    FSDevice *volume = FSDevice::makeWithDisk(*(Disk *)proxy->obj, err);
     return [self make:volume];
 }
 
 + (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy
 {
-    AnyFile *file = [proxy wrapper]->file;
-
     ErrorCode err;
-    FSDevice *volume = FSDevice::makeWithCollection((AnyCollection *)file, &err);
+    FSDevice *volume = FSDevice::makeWithCollection((AnyCollection *)proxy->obj, &err);
     return [self make:volume];
+}
+
+- (FSDevice *)fs
+{
+    return (FSDevice *)obj;
 }
 
 - (DOSType)dos
 {
-    return wrapper->device->dos();
+    return [self fs]->dos();
 }
 
 - (NSInteger)numCyls
 {
-    return wrapper->device->getNumCyls();
+    return [self fs]->getNumCyls();
 }
 
 - (NSInteger)numHeads
 {
-    return wrapper->device->getNumHeads();
+    return [self fs]->getNumHeads();
 }
 
 - (NSInteger)numTracks
 {
-    return wrapper->device->getNumTracks();
+    return [self fs]->getNumTracks();
 }
 
 - (NSInteger)numSectors:(NSInteger)track
 {
-    return wrapper->device->getNumSectors((Track)track);
+    return [self fs]->getNumSectors((Track)track);
 }
 
 - (NSInteger)numBlocks
 {
-    return wrapper->device->getNumBlocks();
+    return [self fs]->getNumBlocks();
 }
 
 - (NSInteger)numFreeBlocks
 {
-    return wrapper->device->numFreeBlocks();
+    return [self fs]->numFreeBlocks();
 }
 
 - (NSInteger)numUsedBlocks
 {
-    return wrapper->device->numUsedBlocks();
+    return [self fs]->numUsedBlocks();
 }
 
 - (NSInteger)numFiles
 {
-    return wrapper->device->numFiles();
+    return [self fs]->numFiles();
 }
 
 - (NSInteger)cylNr:(NSInteger)t
 {
-    return (NSInteger)wrapper->device->layout.cylNr((Track)t);
+    return [self fs]->layout.cylNr((Track)t);
 }
 
 - (NSInteger)headNr:(NSInteger)t
 {
-    return (NSInteger)wrapper->device->layout.headNr((Track)t);
+    return [self fs]->layout.headNr((Track)t);
 }
 
 - (NSInteger)trackNr:(NSInteger)c head:(NSInteger)h
 {
-    return (NSInteger)wrapper->device->layout.trackNr((Cylinder)c, (Head)h);
+    return [self fs]->layout.trackNr((Cylinder)c, (Head)h);
 }
 
 - (TSLink)tsLink:(NSInteger)b
 {
-    return wrapper->device->layout.tsLink((Block)b);
+    return [self fs]->layout.tsLink((Block)b);
 }
 
 - (NSInteger)trackNr:(NSInteger)b
@@ -1072,32 +1057,32 @@ struct AnyFileWrapper { AnyFile *file; };
 
 - (NSInteger)blockNr:(TSLink)ts
 {
-    return (NSInteger)wrapper->device->layout.blockNr(ts);
+    return [self fs]->layout.blockNr(ts);
 }
 
 - (NSInteger)blockNr:(NSInteger)t sector:(NSInteger)s
 {
-    return (NSInteger)wrapper->device->layout.blockNr((Track)t, (Sector)s);
+    return [self fs]->layout.blockNr((Track)t, (Sector)s);
 }
 
 - (NSInteger)blockNr:(NSInteger)c head:(NSInteger)h sector:(NSInteger)s
 {
-    return (NSInteger)wrapper->device->layout.blockNr((Cylinder)c, (Head)h, (Sector)s);
+    return [self fs]->layout.blockNr((Cylinder)c, (Head)h, (Sector)s);
 }
 
 - (FSBlockType) blockType:(NSInteger)blockNr
 {
-    return wrapper->device->blockType((u32)blockNr);
+    return [self fs]->blockType((u32)blockNr);
 }
 
 - (FSUsage) itemType:(NSInteger)blockNr pos:(NSInteger)pos
 {
-    return wrapper->device->usage((u32)blockNr, (u32)pos);
+    return [self fs]->usage((u32)blockNr, (u32)pos);
 }
 
 - (FSErrorReport) check:(BOOL)strict
 {
-    return wrapper->device->check(strict);
+    return [self fs]->check(strict);
 }
 
 - (ErrorCode) check:(NSInteger)blockNr
@@ -1105,72 +1090,72 @@ struct AnyFileWrapper { AnyFile *file; };
            expected:(unsigned char *)exp
              strict:(BOOL)strict
 {
-    return wrapper->device->check((u32)blockNr, (u32)pos, exp, strict);
+    return [self fs]->check((u32)blockNr, (u32)pos, exp, strict);
 }
 
 - (BOOL) isCorrupted:(NSInteger)blockNr
 {
-    return wrapper->device->isCorrupted((u32)blockNr);
+    return [self fs]->isCorrupted((u32)blockNr);
 }
 
 - (NSInteger) getCorrupted:(NSInteger)blockNr
 {
-    return wrapper->device->getCorrupted((u32)blockNr);
+    return [self fs]->getCorrupted((u32)blockNr);
 }
 
 - (NSInteger) nextCorrupted:(NSInteger)blockNr
 {
-    return wrapper->device->nextCorrupted((u32)blockNr);
+    return [self fs]->nextCorrupted((u32)blockNr);
 }
 
 - (NSInteger) prevCorrupted:(NSInteger)blockNr
 {
-    return wrapper->device->prevCorrupted((u32)blockNr);
+    return [self fs]->prevCorrupted((u32)blockNr);
 }
 
 - (void) printDirectory
 {
-    return wrapper->device->printDirectory();
+    return [self fs]->printDirectory();
 }
 
 - (NSInteger) readByte:(NSInteger)block offset:(NSInteger)offset
 {
-    return wrapper->device->readByte((u32)block, (u32)offset);
+    return [self fs]->readByte((u32)block, (u32)offset);
 }
 
 - (BOOL) exportDirectory:(NSString *)path error:(ErrorCode *)err
 {
-    return wrapper->device->exportDirectory([path fileSystemRepresentation], err);
+    return [self fs]->exportDirectory([path fileSystemRepresentation], err);
 }
 
 - (void) dump
 {
-    wrapper->device->dump();
+    [self fs]->dump();
 }
 
 - (void) info
 {
-    wrapper->device->info();
+    [self fs]->info();
 }
 
 - (NSString *)fileName:(NSInteger)nr
 {
-    return @(wrapper->device->fileName((unsigned)nr).c_str());
+    return @([self fs]->fileName((unsigned)nr).c_str());
 }
 
 - (FSFileType)fileType:(NSInteger)nr
 {
-    return wrapper->device->fileType((unsigned)nr);
+    return [self fs]->fileType((unsigned)nr);
 }
 
 - (NSInteger)fileSize:(NSInteger)nr
 {
-    return wrapper->device->fileSize((unsigned)nr);
+    return [self fs]->fileSize((unsigned)nr);
 }
 
 - (NSInteger)fileBlocks:(NSInteger)nr
 {
-    return wrapper->device->fileBlocks((unsigned)nr);
+    return [self fs]->fileBlocks((unsigned)nr);
 }
 
 @end
@@ -1194,18 +1179,21 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation DriveProxy
 
-@synthesize wrapper, via1, via2, disk;
+@synthesize via1, via2, disk;
 
 - (instancetype)initWithVC1541:(Drive *)drive
 {
-    if (self = [super init]) {
-        wrapper = new DriveWrapper();
-        wrapper->drive = drive;
+    if ([self initWith:drive]) {
         via1 = [[VIAProxy alloc] initWith:&drive->via1];
         via2 = [[VIAProxy alloc] initWith:&drive->via2];
         disk = [[DiskProxy alloc] initWith:&drive->disk];
     }
     return self;
+}
+
+- (Drive *)drive
+{
+    return (Drive *)obj;
 }
 
 - (VIAProxy *)via:(NSInteger)num {
@@ -1222,136 +1210,132 @@ struct AnyFileWrapper { AnyFile *file; };
 
 - (DriveConfig)getConfig
 {
-    return wrapper->drive->getConfig();
+    return [self drive]->getConfig();
 }
 
 - (void)dump
 {
-    wrapper->drive->dump();
+    [self drive]->dump();
 }
 
 - (BOOL)isConnected
 {
-    return wrapper->drive->getConfigItem(OPT_DRIVE_CONNECT) != 0;
+    return [self drive]->getConfigItem(OPT_DRIVE_CONNECT) != 0;
 }
 
 - (BOOL)isSwitchedOn
 {
-    return wrapper->drive->getConfigItem(OPT_DRIVE_POWER_SWITCH) != 0;
+    return [self drive]->getConfigItem(OPT_DRIVE_POWER_SWITCH) != 0;
 }
 
 - (BOOL)readMode
 {
-    return wrapper->drive->readMode();
+    return [self drive]->readMode();
 }
 
 - (BOOL)writeMode
 {
-    return wrapper->drive->writeMode();
+    return [self drive]->writeMode();
 }
 
 - (BOOL)redLED
 {
-    return wrapper->drive->getRedLED();
+    return [self drive]->getRedLED();
 }
 
 - (BOOL)hasDisk
 {
-    return wrapper->drive->hasDisk();
+    return [self drive]->hasDisk();
 }
 
 - (BOOL)hasModifiedDisk
 {
-    return wrapper->drive->hasModifiedDisk();
+    return [self drive]->hasModifiedDisk();
 }
 
 - (void)setModifiedDisk:(BOOL)b
 {
-    wrapper->drive->setModifiedDisk(b);
+    [self drive]->setModifiedDisk(b);
 }
 
 - (void)insertD64:(D64FileProxy *)proxy
 {
-    D64File *d64 = (D64File *)([proxy wrapper]->file);
-    wrapper->drive->insertD64(d64);
+    [self drive]->insertD64((D64File *)proxy->obj);
 }
 
 - (void)insertG64:(G64FileProxy *)proxy
 {
-    G64File *g64 = (G64File *)([proxy wrapper]->file);
-    wrapper->drive->insertG64(g64);
+    [self drive]->insertG64((G64File *)proxy->obj);
 }
 
 - (void)insertFileSystem:(FSDeviceProxy *)proxy
 {
-    FSDevice *device = (FSDevice *)([proxy wrapper]->device);
-    wrapper->drive->insertFileSystem(device);
+    [self drive]->insertFileSystem((FSDevice *)proxy->obj);
 }
 
-- (void)insertCollection:(AnyCollectionProxy *)disk
+- (void)insertCollection:(AnyCollectionProxy *)proxy
 {
-    AnyCollection *collection = (AnyCollection *)([disk wrapper]->file);
-    wrapper->drive->insertDisk(collection);
+    [self drive]->insertDisk((AnyCollection *)proxy->obj);
 }
 
 - (void) insertNewDisk:(DOSType)fsType
 {
-    wrapper->drive->insertNewDisk(fsType);
+    [self drive]->insertNewDisk(fsType);
 }
 
 - (void)ejectDisk
 {
-    wrapper->drive->ejectDisk();
+    [self drive]->ejectDisk();
 }
 
 - (BOOL)writeProtected
 {
-    return wrapper->drive->disk.isWriteProtected();
+    return [self drive]->disk.isWriteProtected();
 }
 
 - (void)setWriteProtection:(BOOL)b
 {
-    wrapper->drive->disk.setWriteProtection(b);
+    [self drive]->disk.setWriteProtection(b);
 }
 
 - (BOOL)hasWriteProtectedDisk
 {
-    return wrapper->drive->hasWriteProtectedDisk();
+    return [self drive]->hasWriteProtectedDisk();
 }
 
 - (Track)track
 {
-    return wrapper->drive->getTrack();
+    return [self drive]->getTrack();
 }
 
 - (Halftrack)halftrack
 {
-    return wrapper->drive->getHalftrack();
+    return [self drive]->getHalftrack();
 }
 
 - (u16)sizeOfHalftrack:(Halftrack)ht
 {
-    return wrapper->drive->sizeOfHalftrack(ht);
+    return [self drive]->sizeOfHalftrack(ht);
 }
 
 - (u16)sizeOfCurrentHalftrack
 {
-    return wrapper->drive->sizeOfCurrentHalftrack();
+    return [self drive]->sizeOfCurrentHalftrack();
 }
 
 - (u16)offset
 {
-    return wrapper->drive->getOffset();
+    return [self drive]->getOffset();
 }
 
 - (u8)readBitFromHead
 {
-    return wrapper->drive->readBitFromHead();
+    return [self drive]->readBitFromHead();
 }
 
 - (BOOL)isRotating
 {
-    return wrapper->drive->isRotating();
+    return [self drive]->isRotating();
 }
 
 @end
@@ -1403,10 +1387,9 @@ struct AnyFileWrapper { AnyFile *file; };
     [self datasette]->rewind();
 }
 
-- (BOOL)insertTape:(TAPFileProxy *)tape
+- (BOOL)insertTape:(TAPFileProxy *)proxy
 {
-    TAPFile *file = (TAPFile *)([tape wrapper]->file);
-    return [self datasette]->insertTape(file);
+    return [self datasette]->insertTape((TAPFile *)proxy->obj);
 }
 
 - (void)ejectTape
@@ -1476,65 +1459,42 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation AnyFileProxy
 
-- (instancetype)initWithFile:(AnyFile *)file
-{
-    if (file == nil) {
-        return nil;
-    }
-    if (self = [super init]) {
-        wrapper = new AnyFileWrapper();
-        wrapper->file = file;
-    }
-    return self;
-}
-
 + (AnyFileProxy *)makeWithFile:(AnyFile *)file
 {
     if (file == nil) {
         return nil;
     }
-    return [[self alloc] initWithFile:file];
+    return [[self alloc] initWith:file];
 }
 
-- (AnyFileWrapper *)wrapper
+- (AnyFile *)file
 {
-    return wrapper;
+    return (AnyFile *)obj;
 }
 
 - (FileType)type
 {
-    return wrapper->file->type();
+    return [self file]->type();
 }
 
 - (NSString *)name
 {
-    return [NSString stringWithUTF8String:wrapper->file->getName().c_str()];
+    return [NSString stringWithUTF8String:[self file]->getName().c_str()];
 }
 
 - (u64)fnv
 {
-    return wrapper->file->fnv();
+    return [self file]->fnv();
 }
 
 - (void)setPath:(NSString *)path
 {
-    AnyFile *file = (AnyFile *)([self wrapper]->file);
-    file->path = [path UTF8String];
+    [self file]->path = [path UTF8String];
 }
 
 - (NSInteger)writeToFile:(NSString *)path error:(ErrorCode *)err
 {
-    return wrapper->file->writeToFile([path fileSystemRepresentation], err);
-}
-
-- (void)dealloc
-{
-    // NSLog(@"AnyFileProxy::dealloc");
-    
-    if (wrapper) {
-        if (wrapper->file) delete wrapper->file;
-        delete wrapper;
-    }
+    return [self file]->writeToFile([path fileSystemRepresentation], err);
 }
 
 @end
@@ -1550,7 +1510,7 @@ struct AnyFileWrapper { AnyFile *file; };
     if (snapshot == NULL) {
         return nil;
     }
-    return [[self alloc] initWithFile:snapshot];
+    return [[self alloc] initWith:snapshot];
 }
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
@@ -1572,17 +1532,20 @@ struct AnyFileWrapper { AnyFile *file; };
     return [self make:snapshot];
 }
 
+- (Snapshot *)snapshot
+{
+    return (Snapshot *)obj;
+}
+
 - (NSImage *)previewImage
 {
     // Return cached image (if any)
     if (preview) { return preview; }
     
     // Create preview image
-    Snapshot *snapshot = (Snapshot *)wrapper->file;
-    
-    NSInteger width = snapshot->imageWidth();
-    NSInteger height = snapshot->imageHeight();
-    unsigned char *data = snapshot->imageData();
+    NSInteger width = [self snapshot]->imageWidth();
+    NSInteger height = [self snapshot]->imageHeight();
+    unsigned char *data = [self snapshot]->imageData();
     
     
     NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
@@ -1605,7 +1568,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 - (time_t)timeStamp
 {
-    return ((Snapshot *)wrapper->file)->timeStamp();
+    return [self snapshot]->timeStamp();
 }
 
 @end
@@ -1618,7 +1581,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)make:(CRTFile *)container
 {
-    return container ? [[self alloc] initWithFile:container] : nil;
+    return container ? [[self alloc] initWith:container] : nil;
 }
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
@@ -1631,34 +1594,34 @@ struct AnyFileWrapper { AnyFile *file; };
     return [self make: AnyFile::make <CRTFile> ((const u8 *)buf, len, err)];
 }
 
-- (CRTFile *)unwrap
+- (CRTFile *)crt
 {
-    return (CRTFile *)wrapper->file;
+    return (CRTFile *)obj;
 }
 
 - (CartridgeType)cartridgeType
 {
-    return [self unwrap]->cartridgeType();
+    return [self crt]->cartridgeType();
 }
 
 - (BOOL)isSupported
 {
-    return [self unwrap]->isSupported();
+    return [self crt]->isSupported();
 }
 
 - (NSInteger)initialExromLine
 {
-    return [self unwrap]->initialExromLine();
+    return [self crt]->initialExromLine();
 }
 
 - (NSInteger)initialGameLine
 {
-    return [self unwrap]->initialGameLine();
+    return [self crt]->initialGameLine();
 }
 
 - (NSInteger)chipCount
 {
-    return [self unwrap]->chipCount();
+    return [self crt]->chipCount();
 }
 
 @end
@@ -1671,7 +1634,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)make:(TAPFile *)container
 {
-    return container ? [[self alloc] initWithFile:container] : nil;
+    return container ? [[self alloc] initWith:container] : nil;
 }
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
@@ -1684,14 +1647,14 @@ struct AnyFileWrapper { AnyFile *file; };
     return [self make: AnyFile::make <TAPFile> ((const u8 *)buf, len, err)];
 }
 
-- (TAPFile *)unwrap
+- (TAPFile *)tap
 {
-    return (TAPFile *)wrapper->file;
+    return (TAPFile *)obj;
 }
 
 - (TAPVersion)version
 {
-    return [self unwrap]->version();
+    return [self tap]->version();
 }
 
 @end
@@ -1704,7 +1667,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 - (AnyCollection *)unwrap
 {
-    return (AnyCollection *)([self wrapper]->file);
+    return (AnyCollection *)obj;
 }
 
 @end
@@ -1718,7 +1681,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)make:(T64File *)archive
 {
-    return archive ? [[self alloc] initWithFile:archive] : nil;
+    return archive ? [[self alloc] initWith:archive] : nil;
 }
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
@@ -1733,8 +1696,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err;
 {
-    FSDevice *fs = [proxy wrapper]->device;
-    return [self make: T64File::makeWithFileSystem(fs)];
+    return [self make: T64File::makeWithFileSystem((FSDevice *)proxy->obj)];
 }
 
 @end
@@ -1747,7 +1709,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)make:(PRGFile *)archive
 {
-    return archive ? [[self alloc] initWithFile:archive] : nil;
+    return archive ? [[self alloc] initWith:archive] : nil;
 }
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
@@ -1762,8 +1724,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err
 {
-    FSDevice *fs = [proxy wrapper]->device;
-    return [self make: PRGFile::make <PRGFile> (*fs, err)];
+    return [self make: AnyFile::make <PRGFile> (*(FSDevice *)proxy->obj, err)];
 }
 
 @end
@@ -1776,7 +1737,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)make:(P00File *)archive
 {
-    return archive ? [[self alloc] initWithFile:archive] : nil;
+    return archive ? [[self alloc] initWith:archive] : nil;
 }
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
@@ -1791,8 +1752,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err
 {
-    FSDevice *fs = [proxy wrapper]->device;
-    return [self make: P00File::make <P00File> (*fs, err)];
+    return [self make: AnyFile::make <P00File> (*(FSDevice *)proxy->obj, err)];
 }
 
 @end
@@ -1803,15 +1763,15 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation D64FileProxy
 
-- (D64File *)unwrap
+- (D64File *)d64
 {
-    return (D64File *)wrapper->file;
+    return (D64File *)obj;
 }
 
 + (instancetype)make:(D64File *)archive
 {
     if (archive == NULL) return nil;
-    return [[self alloc] initWithFile:archive];
+    return [[self alloc] initWith:archive];
 }
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
@@ -1832,20 +1792,17 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err
 {
-    FSDevice *fs = (FSDevice *)([proxy wrapper]->device);
-    return [self make: AnyFile::make <D64File> (*fs, err)];    
+    return [self make: AnyFile::make <D64File> (*(FSDevice *)proxy->obj, err)];
 }
 
 - (NSInteger)numTracks
 {
-    D64File *disk = (D64File *)([self wrapper]->file);
-    return disk->numTracks();
+    return [self d64]->numTracks();
 }
 
 - (NSInteger)numHalftracks
 {
-    D64File *disk = (D64File *)([self wrapper]->file);
-    return disk->numHalftracks();
+    return [self d64]->numHalftracks();
 }
 
 @end
@@ -1858,7 +1815,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)make:(G64File *)archive
 {
-    return archive ? [[self alloc] initWithFile:archive] : nil;
+    return archive ? [[self alloc] initWith:archive] : nil;
 }
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
@@ -1887,7 +1844,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)make:(Folder *)folder
 {
-    return folder ? [[self alloc] initWithFile:folder] : nil;
+    return folder ? [[self alloc] initWith:folder] : nil;
 }
 
 + (instancetype)makeWithFolder:(NSString *)path error:(ErrorCode *)err
@@ -1895,10 +1852,14 @@ struct AnyFileWrapper { AnyFile *file; };
     return [self make: Folder::makeWithFolder([path fileSystemRepresentation], err)];
 }
 
+- (Folder *)folder
+{
+    return (Folder *)obj;
+}
+
 - (FSDeviceProxy *)fileSystem
 {
-    Folder *folder = (Folder *)([self wrapper]->file);
-    return [FSDeviceProxy make:folder->getFS()];
+    return [FSDeviceProxy make:[self folder]->getFS()];
 }
 
 @end
@@ -2102,8 +2063,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 - (void)loadFromSnapshot:(SnapshotProxy *)proxy
 {
-    Snapshot *snapshot = (Snapshot *)([proxy wrapper]->file);
-    [self c64]->loadFromSnapshot(snapshot);
+    [self c64]->loadFromSnapshot((Snapshot *)proxy->obj);
 }
 
 - (C64Configuration)config
@@ -2420,15 +2380,14 @@ struct AnyFileWrapper { AnyFile *file; };
 }
 
 // Flashing files
-- (BOOL)flash:(AnyFileProxy *)file
+- (BOOL)flash:(AnyFileProxy *)proxy
 {
-    return [self c64]->flash([file wrapper]->file);
+    return [self c64]->flash((AnyFile *)proxy->obj);
 }
 
 - (BOOL)flash:(AnyCollectionProxy *)proxy item:(NSInteger)nr
 {
-    AnyCollection *collection = (AnyCollection *)([proxy wrapper]->file);
-    return [self c64]->flash(collection, (unsigned)nr);
+    return [self c64]->flash((AnyCollection *)proxy->obj, (unsigned)nr);
 }
 
 @end

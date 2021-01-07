@@ -47,15 +47,6 @@
 @class G64FileProxy;
 @class FSDeviceProxy;
 
-
-struct FSDeviceWrapper;
-struct FSDeviceWrapper;
-struct DriveWrapper;
-//struct DiskWrapper;
-// struct DatasetteWrapper;
-// struct MouseWrapper;
-struct AnyFileWrapper;
-
 //
 // Root of all proxy classes
 //
@@ -491,16 +482,13 @@ struct AnyFileWrapper;
 // Drive proxy
 //
 
-@interface DriveProxy : NSObject {
-    
-    struct DriveWrapper *wrapper;
+@interface DriveProxy : HardwareComponentProxy {
     
     VIAProxy *via1;
     VIAProxy *via2;
     DiskProxy *disk;
 }
 
-@property (readonly) struct DriveWrapper *wrapper;
 @property (readonly) VIAProxy *via1;
 @property (readonly) VIAProxy *via2;
 @property (readonly) DiskProxy *disk;
@@ -635,12 +623,7 @@ struct AnyFileWrapper;
 // AnyFile proxy
 //
 
-@interface AnyFileProxy : NSObject {
-    
-    struct AnyFileWrapper *wrapper;
-}
-
-- (struct AnyFileWrapper *)wrapper;
+@interface AnyFileProxy : BaseProxy { }
 
 @property (readonly) FileType type;
 @property (readonly) NSString *name;
@@ -792,16 +775,12 @@ AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk> { }
 // FSDevice proxy
 //
 
-@interface FSDeviceProxy : NSObject <MakeWithDisk> {
-    
-    struct FSDeviceWrapper *wrapper;
-}
+@interface FSDeviceProxy : BaseProxy <MakeWithDisk> { }
 
 + (instancetype)makeWithD64:(D64FileProxy *)proxy;
 + (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err;
 + (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy;
 
-@property (readonly) struct FSDeviceWrapper *wrapper;
 @property (readonly) DOSType dos;
 @property (readonly) NSInteger numCyls;
 @property (readonly) NSInteger numHeads;
