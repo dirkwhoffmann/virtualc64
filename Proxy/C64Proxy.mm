@@ -869,7 +869,7 @@ struct AnyFileWrapper { AnyFile *file; };
 {
     return wrapper->disk->isWriteProtected();
 }
-- (void)setWriteProtection:(BOOL)b
+- (void)setWriteProtected:(BOOL)b
 {
     wrapper->disk->setWriteProtection(b);
 }
@@ -1365,14 +1365,28 @@ struct AnyFileWrapper { AnyFile *file; };
     return self;
 }
 
-- (void) dump
-{
-    wrapper->datasette->dump();
-}
 - (BOOL) hasTape
 {
     return wrapper->datasette->hasTape();
 }
+- (NSInteger) type
+{
+    return wrapper->datasette->getType();
+}
+- (BOOL) motor
+{
+    return wrapper->datasette->getMotor();
+}
+- (BOOL) playKey
+{
+    return wrapper->datasette->getPlayKey();
+}
+/*
+- (void) dump
+{
+    wrapper->datasette->dump();
+}
+*/
 - (void) pressPlay
 {
     wrapper->datasette->pressPlay();
@@ -1394,42 +1408,7 @@ struct AnyFileWrapper { AnyFile *file; };
 {
     wrapper->datasette->ejectTape();
 }
-- (NSInteger) getType
-{
-    return wrapper->datasette->getType();
-}
-- (long) durationInCycles
-{
-    return wrapper->datasette->getDurationInCycles();
-}
-- (int) durationInSeconds
-{
-    return wrapper->datasette->getDurationInSeconds();
-}
-- (NSInteger) head
-{
-    return wrapper->datasette->getHead();
-}
-- (NSInteger) headInCycles
-{
-    return wrapper->datasette->getHeadInCycles();
-}
-- (int) headInSeconds
-{
-    return wrapper->datasette->getHeadInSeconds();
-}
-- (void) setHeadInCycles:(long)value
-{
-    wrapper->datasette->setHeadInCycles(value);
-}
-- (BOOL) motor
-{
-    return wrapper->datasette->getMotor();
-}
-- (BOOL) playKey
-{
-    return wrapper->datasette->getPlayKey();
-}
+
 @end
 
 
@@ -2009,6 +1988,10 @@ struct AnyFileWrapper { AnyFile *file; };
 - (void) disableDebugging
 {
     wrapper->c64->disableDebugMode();
+}
+- (InspectionTarget)inspectionTarget
+{
+    return wrapper->c64->getInspectionTarget();
 }
 - (void) setInspectionTarget:(InspectionTarget)target
 {

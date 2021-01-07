@@ -13,7 +13,7 @@
 #include "C64Constants.h"
 #include "C64PublicTypes.h"
 
-// Forward declarations of proxy classes
+// Forward declarations
 @class MyController;
 @class C64Proxy;
 @class CPUProxy;
@@ -44,9 +44,9 @@
 @class G64FileProxy;
 @class FSDeviceProxy;
 
-// Forward declarations of wrappers for C++ classes.
-// We wrap classes into normal C structs to avoid any reference to C++.
-
+/* Forward declarations of all C++ class wrappers. We wrap into standard C
+ * structures to avoid any reference to C++.
+ */
 struct C64Wrapper;
 struct CpuWrapper;
 struct GuardsWrapper;
@@ -118,10 +118,10 @@ struct AnyFileWrapper;
 - (void) dealloc;
 - (void) kill;
 
-@property (readonly, getter=isReleaseBuild) BOOL releaseBuild;
+@property (readonly) BOOL isReleaseBuild;
 - (void) enableDebugging;
 - (void) disableDebugging;
-- (void) setInspectionTarget:(InspectionTarget)target;
+@property InspectionTarget inspectionTarget;
 - (void) clearInspectionTarget;
 @property (readonly) BOOL debugMode;
 
@@ -149,7 +149,7 @@ struct AnyFileWrapper;
 @property (readonly) SnapshotProxy *latestUserSnapshot;
 - (void) loadFromSnapshot:(SnapshotProxy *)proxy;
 
-- (C64Configuration) config;
+@property (readonly) C64Configuration config;
 - (NSInteger) getConfig:(Option)opt;
 - (NSInteger) getConfig:(Option)opt id:(NSInteger)id;
 - (NSInteger) getConfig:(Option)opt drive:(DriveID)id;
@@ -192,19 +192,7 @@ struct AnyFileWrapper;
 - (BOOL) isVC1541Rom:(NSURL *)url;
 
 - (BOOL) loadRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)err;
-/*
-- (BOOL) loadBasicRomFromFile:(NSURL *)url;
-- (BOOL) loadCharRomFromFile:(NSURL *)url;
-- (BOOL) loadKernalRomFromFile:(NSURL *)url;
-- (BOOL) loadVC1541RomFromFile:(NSURL *)url;
-*/
 - (BOOL) loadRom:(RomType)type data:(NSData *)data error:(ErrorCode *)err;
-/*
-- (BOOL) loadBasicRomFromBuffer:(NSData *)buffer;
-- (BOOL) loadCharRomFromBuffer:(NSData *)buffer;
-- (BOOL) loadKernalRomFromBuffer:(NSData *)buffer;
-- (BOOL) loadVC1541RomFromBuffer:(NSData *)buffer;
-*/
 
 - (BOOL) saveBasicRom:(NSURL *)url;
 - (BOOL) saveCharRom:(NSURL *)url;
@@ -250,10 +238,7 @@ struct AnyFileWrapper;
 // Guards (Breakpoints, Watchpoints)
 //
 
-@interface GuardsProxy : NSObject {
-    
-    struct GuardsWrapper *wrapper;
-}
+@interface GuardsProxy : NSObject { struct GuardsWrapper *wrapper; }
 
 @property (readonly) NSInteger count;
 - (NSInteger) addr:(NSInteger)nr;
@@ -279,10 +264,7 @@ struct AnyFileWrapper;
 // CPU proxy
 //
 
-@interface CPUProxy : NSObject {
-    
-    struct CpuWrapper *wrapper;
-}
+@interface CPUProxy : NSObject { struct CpuWrapper *wrapper; }
 
 - (CPUInfo) getInfo;
 - (NSInteger) loggedInstructions;
@@ -313,10 +295,7 @@ struct AnyFileWrapper;
 // Memory proxy
 //
 
-@interface MemoryProxy : NSObject {
-    
-    struct MemoryWrapper *wrapper;
-}
+@interface MemoryProxy : NSObject { struct MemoryWrapper *wrapper; }
 
 - (MemInfo) getInfo;
 
@@ -344,10 +323,7 @@ struct AnyFileWrapper;
 // CIA proxy
 //
 
-@interface CIAProxy : NSObject {
-    
-    struct CiaWrapper *wrapper;
-}
+@interface CIAProxy : NSObject { struct CiaWrapper *wrapper; }
 
 - (CIAInfo) getInfo;
 - (void) dump;
@@ -361,15 +337,9 @@ struct AnyFileWrapper;
 //
 
 
-@interface VICProxy : NSObject {
-    
-	struct VicWrapper *wrapper;
-}
+@interface VICProxy : NSObject { struct VicWrapper *wrapper; }
 
-// - (NSInteger) videoPalette;
-// - (void) setVideoPalette:(NSInteger)value;
 - (BOOL) isPAL;
-
 - (void *) stableEmuTexture;
 - (NSColor *) color:(NSInteger)nr;
 - (UInt32) rgbaColor:(NSInteger)nr palette:(Palette)palette;
@@ -384,15 +354,6 @@ struct AnyFileWrapper;
 - (SpriteInfo) getSpriteInfo:(NSInteger)sprite;
 - (void) dump;
 
-/*
-- (BOOL) hideSprites;
-- (void) setHideSprites:(BOOL)b;
-- (BOOL) showIrqLines;
-- (void) setShowIrqLines:(BOOL)b;
-- (BOOL) showDmaLines;
-- (void) setShowDmaLines:(BOOL)b;
-*/
-
 - (u32 *) noise;
 
 @end
@@ -402,10 +363,7 @@ struct AnyFileWrapper;
 // SID proxy
 //
 
-@interface SIDProxy : NSObject {
-    
-    struct SidBridgeWrapper *wrapper;
-}
+@interface SIDProxy : NSObject { struct SidBridgeWrapper *wrapper; }
 
 - (SIDInfo) getInfo:(NSInteger)nr;
 - (VoiceInfo) getVoiceInfo:(NSInteger)nr voice:(NSInteger)voice;
@@ -435,10 +393,7 @@ struct AnyFileWrapper;
 // Keyboard proxy
 //
 
-@interface KeyboardProxy : NSObject {
-    
-    struct KeyboardWrapper *wrapper;
-}
+@interface KeyboardProxy : NSObject { struct KeyboardWrapper *wrapper; }
 
 - (void) dump;
 
@@ -475,10 +430,7 @@ struct AnyFileWrapper;
 // Control port proxy
 //
 
-@interface ControlPortProxy : NSObject {
-    
-    struct ControlPortWrapper *wrapper;
-}
+@interface ControlPortProxy : NSObject { struct ControlPortWrapper *wrapper; }
 
 - (void) dump;
 
@@ -497,10 +449,7 @@ struct AnyFileWrapper;
 // Expansion port proxy
 //
 
-@interface ExpansionPortProxy : NSObject {
-    
-    struct ExpansionPortWrapper *wrapper;
-}
+@interface ExpansionPortProxy : NSObject { struct ExpansionPortWrapper *wrapper; }
 
 - (void) dump;
 
@@ -540,10 +489,7 @@ struct AnyFileWrapper;
 // IEC bus proxy
 //
 
-@interface IECProxy : NSObject {
-    
-    struct IecWrapper *wrapper;
-}
+@interface IECProxy : NSObject { struct IecWrapper *wrapper; }
 
 - (void) dump;
 - (BOOL) busy;
@@ -612,10 +558,7 @@ struct AnyFileWrapper;
 // VIA proxy
 //
 
-@interface VIAProxy : NSObject {
-    
-    struct ViaWrapper *wrapper;
-}
+@interface VIAProxy : NSObject { struct ViaWrapper *wrapper; }
 
 - (void) dump;
 
@@ -633,9 +576,9 @@ struct AnyFileWrapper;
 
 @property (readonly) struct DiskWrapper *wrapper;
 
-- (void) dump;
+- (void)dump;
 - (BOOL)writeProtected;
-- (void)setWriteProtection:(BOOL)b;
+- (void)setWriteProtected:(BOOL)b;
 - (void)toggleWriteProtection;
 - (NSInteger)nonemptyHalftracks;
 - (void)analyzeTrack:(Track)t;
@@ -649,6 +592,7 @@ struct AnyFileWrapper;
 - (const char *)trackBitsAsString;
 - (const char *)sectorHeaderBytesAsString:(Sector)nr hex:(BOOL)hex;
 - (const char *)sectorDataBytesAsString:(Sector)nr hex:(BOOL)hex;
+
 @end
 
 //
@@ -660,24 +604,16 @@ struct AnyFileWrapper;
     struct DatasetteWrapper *wrapper;
 }
 
-- (void) dump;
-
-- (BOOL) hasTape;
+@property (readonly) BOOL hasTape;
+@property (readonly) NSInteger type;
+@property (readonly) BOOL motor;
+@property (readonly) BOOL playKey;
 
 - (void) pressPlay;
 - (void) pressStop;
 - (void) rewind;
 - (void) ejectTape;
 - (BOOL) insertTape:(TAPFileProxy *)tape;
-- (NSInteger) getType; 
-- (long) durationInCycles;
-- (int) durationInSeconds;
-- (NSInteger) head;
-- (NSInteger) headInCycles;
-- (int) headInSeconds;
-- (void) setHeadInCycles:(long)value;
-- (BOOL) motor;
-- (BOOL) playKey;
 
 @end
 
@@ -690,9 +626,8 @@ struct AnyFileWrapper;
     struct MouseWrapper *wrapper;
 }
 
-- (MouseModel) model;
-- (void) setModel:(MouseModel)model;
-- (NSInteger) port;
+@property MouseModel model;
+@property (readonly) NSInteger port;
 - (void) connect:(NSInteger)toPort;
 - (void) disconnect;
 - (void) setXY:(NSPoint)pos;
@@ -735,6 +670,7 @@ struct AnyFileWrapper;
 @property (readonly) FileType type;
 @property (readonly) NSString *name;
 @property (readonly) u64 fnv;
+
 - (void)setPath:(NSString *)path;
 - (NSInteger)writeToFile:(NSString *)path error:(ErrorCode *)err;
 
@@ -745,8 +681,6 @@ struct AnyFileWrapper;
 //
 
 @interface AnyCollectionProxy : AnyFileProxy { }
-
-// - (NSInteger)itemSize:(NSInteger)nr __attribute__ ((deprecated));
 
 @end
 

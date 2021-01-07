@@ -257,6 +257,7 @@ private:
 public:
        
     void inspect();
+    InspectionTarget getInspectionTarget();
     void setInspectionTarget(InspectionTarget target);
     void clearInspectionTarget();
     

@@ -74,7 +74,7 @@ extension PreferencesController {
          conAutofireFrequency.isEnabled = conAutofire.state == .on
         
         // Mouse
-        let model = c64.mouse.model()
+        let model = c64.mouse.model
         conMouseModel.selectItem(withTag: model.rawValue)
         conMouseInfo.isHidden = model == .C1350
     }
@@ -174,7 +174,8 @@ extension PreferencesController {
     
     @IBAction func conMouseModelAction(_ sender: NSPopUpButton!) {
         
-        proxy?.mouse.setModel(MouseModel.init(rawValue: sender.selectedTag())!)
+        // proxy?.mouse.setModel(MouseModel.init(rawValue: sender.selectedTag())!)
+        proxy?.mouse.model = MouseModel.init(rawValue: sender.selectedTag())!
         refresh()
     }
         

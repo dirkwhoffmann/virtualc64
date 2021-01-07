@@ -72,8 +72,8 @@ extension MyController {
             debugIcon: debug,
             muteIcon: warp || muted,
             
-            tapeIcon: c64.datasette.hasTape(),
-            tapeProgress: c64.datasette.motor(),
+            tapeIcon: c64.datasette.hasTape,
+            tapeProgress: c64.datasette.motor,
             
             crtIcon: hasCrt,
             crtSwitch: hasCrt && c64.expansionport.hasSwitch(),

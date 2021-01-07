@@ -503,7 +503,7 @@ extension MyController {
              * not switched on or off by push notification (message), because
              * some games continously switch the datasette motor on and off.
              */
-            if c64.datasette.motor() && c64.datasette.playKey() {
+            if c64.datasette.motor && c64.datasette.playKey {
                 tapeProgress.startAnimation(self)
             } else {
                 tapeProgress.stopAnimation(self)

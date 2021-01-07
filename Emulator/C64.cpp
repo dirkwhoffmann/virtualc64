@@ -129,6 +129,12 @@ C64::_reset()
     rasterCycle = 1;
 }
 
+InspectionTarget
+C64::getInspectionTarget()
+{
+    return inspectionTarget;
+}
+
 void
 C64::setInspectionTarget(InspectionTarget target)
 {

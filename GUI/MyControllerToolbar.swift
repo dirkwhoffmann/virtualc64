@@ -34,10 +34,10 @@ extension MyController {
         config.gameDevice2 = (config.gameDevice1 == config.gameDevice2) ? InputDevice.none : config.gameDevice2
         
         // Connect or disconnect analog mouse
-        if c64.mouse.port() != 1 && config.gameDevice1 == InputDevice.mouse {
+        if c64.mouse.port != 1 && config.gameDevice1 == InputDevice.mouse {
             c64.mouse.connect(1)
         }
-        if c64.mouse.port() == 1 && config.gameDevice1 != InputDevice.mouse {
+        if c64.mouse.port == 1 && config.gameDevice1 != InputDevice.mouse {
             c64.mouse.disconnect()
         }
                 
@@ -60,10 +60,10 @@ extension MyController {
         config.gameDevice1 = (config.gameDevice1 == config.gameDevice2) ? InputDevice.none : config.gameDevice1
         
         // Connect or disconnect analog mouse
-        if c64.mouse.port() != 2 && config.gameDevice2 == InputDevice.mouse {
+        if c64.mouse.port != 2 && config.gameDevice2 == InputDevice.mouse {
             c64.mouse.connect(2)
         }
-        if c64.mouse.port() == 2 && config.gameDevice2 != InputDevice.mouse {
+        if c64.mouse.port == 2 && config.gameDevice2 != InputDevice.mouse {
             c64.mouse.disconnect()
         }
         
