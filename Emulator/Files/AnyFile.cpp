@@ -108,6 +108,22 @@ AnyFile::readFromStream(std::istream &stream)
 }
 
 usize
+AnyFile::writeToStream(std::ostream &stream)
+{
+    stream.write((char *)data, size);
+    return size;
+}
+
+usize
+AnyFile::writeToStream(std::ostream &stream, ErrorCode *err)
+{
+    *err = ERROR_OK;
+    try { return writeToStream(stream); }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
+    return 0;
+}
+
+usize
 AnyFile::writeToFile(const char *path)
 {
     assert(path);
@@ -125,6 +141,15 @@ AnyFile::writeToFile(const char *path)
 }
 
 usize
+AnyFile::writeToFile(const char *path, ErrorCode *err)
+{
+    *err = ERROR_OK;
+    try { return writeToFile(path); }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
+    return 0;
+}
+
+usize
 AnyFile::writeToBuffer(u8 *buf)
 {
     assert(buf);
@@ -137,8 +162,10 @@ AnyFile::writeToBuffer(u8 *buf)
 }
 
 usize
-AnyFile::writeToStream(std::ostream &stream)
+AnyFile::writeToBuffer(u8 *buf, ErrorCode *err)
 {
-    stream.write((char *)data, size);
-    return size;
+    *err = ERROR_OK;
+    try { return writeToBuffer(buf); }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
+    return 0;
 }

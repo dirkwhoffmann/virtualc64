@@ -146,7 +146,7 @@ extension AnyFileProxy {
         
     func icon(protected: Bool = false) -> NSImage {
      
-        switch type() {
+        switch type {
      
         case .CRT:
             return NSImage.init(named: "cartridge")!

@@ -230,6 +230,7 @@ struct ErrorCodeEnum : Reflection<ErrorCodeEnum, ErrorCode> {
             case ERROR_FS_UNSUPPORTED:      return "FS_UNSUPPORTED";
             case ERROR_FS_WRONG_CAPACITY:   return "FS_WRONG_CAPACITY";
             case ERROR_FS_CORRUPTED:        return "FS_CORRUPTED";
+            case ERROR_FS_HAS_NO_FILES:     return "ERROR_FS_HAS_NO_FILES";
             case ERROR_FS_HAS_CYCLES:       return "FS_HAS_CYCLES";
             case ERROR_FS_CANT_IMPORT:      return "FS_CANT_IMPORT";
             case ERROR_FS_EXPECTED_VAL:     return "FS_EXPECTED_VAL";

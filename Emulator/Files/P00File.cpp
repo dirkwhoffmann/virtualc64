@@ -32,29 +32,27 @@ P00File::isCompatibleStream(std::istream &stream)
 }
 
 P00File *
-P00File::makeWithFileSystem(FSDevice *fs, int item)
+P00File::makeWithFileSystem(FSDevice &fs)
 {
-    assert(fs);
+    unsigned item = 0;
+    usize itemSize = fs.fileSize(item);
 
     debug(FILE_DEBUG, "Creating P00 archive...\n");
 
     // Only proceed if the requested file exists
-    if (fs->numFiles() <= (u64)item) return nullptr;
+    if (fs.numFiles() <= item) throw VC64Error(ERROR_FS_HAS_NO_FILES);
         
     // Create new archive
-    usize fileSize = fs->fileSize(item);
-    usize p00Size = fileSize + 8 + 17 + 1;
+    usize p00Size = itemSize + 8 + 17 + 1;
     P00File *p00 = new P00File(p00Size);
-        
-    debug(FILE_DEBUG, "File size = %zu\n", fileSize);
-    
+            
     // Write magic bytes (8 bytes)
     u8 *p = p00->data;
     strcpy((char *)p, "C64File");
     p += 8;
     
     // Write name in PET format (16 bytes)
-    fs->fileName(item).write(p);
+    fs.fileName(item).write(p);
     p += 16;
     
     // Always 0 (1 byte)
@@ -64,7 +62,7 @@ P00File::makeWithFileSystem(FSDevice *fs, int item)
     *p++ = 0;
         
     // Add data
-    fs->copyFile(item, p, fileSize);
+    fs.copyFile(item, p, itemSize);
         
     return p00;
 }

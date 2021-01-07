@@ -589,7 +589,7 @@ extension MyController {
         case .RESET:
 
             mydocument.deleteBootDiskID()
-            mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
+            mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
             inspector?.fullRefresh()
 
         case .MUTE_ON:
@@ -651,7 +651,7 @@ extension MyController {
             if pref.driveSounds && pref.driveInsertSound {
                 macAudio.playSound(name: "1541_door_closed_2", volume: 0.2)
             }
-            mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
+            mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
             refreshStatusBarDiskIcons(drive: driveID)
             inspector?.fullRefresh()
 
@@ -664,7 +664,7 @@ extension MyController {
             inspector?.fullRefresh()
 
         case .FILE_FLASHED:
-            mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
+            mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
             
         case .DISK_PROTECT,
              .DISK_SAVED,
@@ -710,7 +710,7 @@ extension MyController {
 
         case .VC1530_TAPE:
             
-            mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
+            mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
             refreshStatusBar()
 
         case .VC1530_NO_TAPE,
@@ -724,7 +724,7 @@ extension MyController {
             
         case .CRT_ATTACHED:
 
-            mydocument.setBootDiskID(mydocument.attachment?.fnv() ?? 0)
+            mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
             refreshStatusBar()
 
         case .CRT_DETACHED:

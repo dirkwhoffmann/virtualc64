@@ -732,10 +732,10 @@ struct AnyFileWrapper;
 
 - (struct AnyFileWrapper *)wrapper;
 
-- (FileType)type;
+@property (readonly) FileType type;
+@property (readonly) NSString *name;
+@property (readonly) u64 fnv;
 - (void)setPath:(NSString *)path;
-- (NSString *)name;
-- (u64) fnv;
 - (NSInteger)writeToFile:(NSString *)path error:(ErrorCode *)err;
 
 @end
@@ -744,10 +744,9 @@ struct AnyFileWrapper;
 // AnyCollection proxy
 //
 
-@interface AnyCollectionProxy : AnyFileProxy {
-}
+@interface AnyCollectionProxy : AnyFileProxy { }
 
-- (NSInteger)itemSize:(NSInteger)nr;
+// - (NSInteger)itemSize:(NSInteger)nr __attribute__ ((deprecated));
 
 @end
 
@@ -755,8 +754,8 @@ struct AnyFileWrapper;
 // Snapshot proxy
 //
 
-@interface SnapshotProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> {
-
+@interface SnapshotProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer>
+{
    NSImage *preview;
 }
 
@@ -773,8 +772,7 @@ struct AnyFileWrapper;
 // CRTFile proxy
 //
 
-@interface CRTFileProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> {
-}
+@interface CRTFileProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> { }
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
@@ -791,8 +789,7 @@ struct AnyFileWrapper;
 // TAPFile proxy
 //
 
-@interface TAPFileProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> {
-}
+@interface TAPFileProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> { }
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
@@ -806,8 +803,8 @@ struct AnyFileWrapper;
 //
 
 @interface T64FileProxy :
-AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> {
-}
+AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
+
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err;
@@ -819,24 +816,11 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> {
 //
 
 @interface PRGFileProxy :
-AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> {
-}
+AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
+
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err;
-
-@end
-
-//
-// Folder proxy
-//
-
-@interface FolderProxy : AnyCollectionProxy {
-}
-
-+ (instancetype)makeWithFolder:(NSString *)path error:(ErrorCode *)err;
-
-@property (readonly) FSDeviceProxy *fileSystem;
 
 @end
 
@@ -845,8 +829,8 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> {
 //
 
 @interface P00FileProxy :
-AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> {
-}
+AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
+
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err;
@@ -858,14 +842,12 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> {
 //
 
 @interface D64FileProxy :
-AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk, MakeWithFileSystem> {
-}
+AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk, MakeWithFileSystem> { }
+
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
 + (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err;
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err;
-
-// + (instancetype)makeWithDrive:(DriveProxy *)proxy __attribute__ ((deprecated));
 
 @property (readonly) NSInteger numTracks;
 @property (readonly) NSInteger numHalftracks;
@@ -877,11 +859,23 @@ AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk, MakeWithFileSystem> {
 //
 
 @interface G64FileProxy :
-AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk> {
-}
+AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk> { }
+
 + (instancetype) makeWithFile:(NSString *)path error:(ErrorCode *)err;
 + (instancetype) makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
 + (instancetype) makeWithDisk:(DiskProxy *)diskProxy error:(ErrorCode *)err;
+
+@end
+
+//
+// Folder proxy
+//
+
+@interface FolderProxy : AnyCollectionProxy { }
+
++ (instancetype)makeWithFolder:(NSString *)path error:(ErrorCode *)err;
+
+@property (readonly) FSDeviceProxy *fileSystem;
 
 @end
 

@@ -1509,12 +1509,6 @@ struct AnyFileWrapper { AnyFile *file; };
     return [[self alloc] initWithFile:file];
 }
 
-- (void)setPath:(NSString *)path
-{
-    AnyFile *file = (AnyFile *)([self wrapper]->file);
-    file->path = [path UTF8String];
-}
-
 - (AnyFileWrapper *)wrapper
 {
     return wrapper;
@@ -1535,14 +1529,15 @@ struct AnyFileWrapper { AnyFile *file; };
     return wrapper->file->fnv();
 }
 
+- (void)setPath:(NSString *)path
+{
+    AnyFile *file = (AnyFile *)([self wrapper]->file);
+    file->path = [path UTF8String];
+}
+
 - (NSInteger)writeToFile:(NSString *)path error:(ErrorCode *)err
 {
-    NSInteger result = 0;
-    
-    try { result = wrapper->file->writeToFile([path fileSystemRepresentation]); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
-    
-    return result;
+    return wrapper->file->writeToFile([path fileSystemRepresentation], err);
 }
 
 - (void) dealloc
@@ -1592,7 +1587,8 @@ struct AnyFileWrapper { AnyFile *file; };
 
 - (NSImage *)previewImage
 {
-    if (preview != NULL) { return preview; }
+    // Return cached image (if any)
+    if (preview) { return preview; }
     
     // Create preview image
     Snapshot *snapshot = (Snapshot *)wrapper->file;
@@ -1617,10 +1613,9 @@ struct AnyFileWrapper { AnyFile *file; };
     preview = [[NSImage alloc] initWithSize:[rep size]];
     [preview addRepresentation:rep];
     
-    // image.makeGlossy()
-
     return preview;
 }
+
 - (time_t)timeStamp
 {
     return ((Snapshot *)wrapper->file)->timeStamp();
@@ -1725,10 +1720,12 @@ struct AnyFileWrapper { AnyFile *file; };
     return (AnyCollection *)([self wrapper]->file);
 }
 
+/*
 - (NSInteger)itemSize:(NSInteger)nr
 {
     return [self unwrap]->itemSize((unsigned)nr);
 }
+*/
 
 @end
 
@@ -1741,8 +1738,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)make:(T64File *)archive
 {
-    if (archive == NULL) return nil;
-    return [[self alloc] initWithFile:archive];
+    return archive ? [[self alloc] initWithFile:archive] : nil;
 }
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
@@ -1758,8 +1754,7 @@ struct AnyFileWrapper { AnyFile *file; };
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err;
 {
     FSDevice *fs = [proxy wrapper]->device;
-    T64File *archive = T64File::makeWithFileSystem(fs);
-    return [self make: archive];
+    return [self make: T64File::makeWithFileSystem(fs)];
 }
 
 @end
@@ -1772,8 +1767,7 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype)make:(PRGFile *)archive
 {
-    if (archive == NULL) return nil;
-    return [[self alloc] initWithFile:archive];
+    return archive ? [[self alloc] initWithFile:archive] : nil;
 }
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
@@ -1789,47 +1783,21 @@ struct AnyFileWrapper { AnyFile *file; };
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err
 {
     FSDevice *fs = [proxy wrapper]->device;
-    PRGFile *archive = PRGFile::makeWithFileSystem(fs);
-    return [self make: archive];
+//    return [self make: PRGFile::makeWithFileSystem(fs)];
+    return [self make: PRGFile::make <PRGFile> (*fs, err)];
 }
 
 @end
 
 //
-// Folder
-//
-
-@implementation FolderProxy
-
-+ (instancetype)make:(Folder *)folder
-{
-    if (folder == NULL) return nil;
-    return [[self alloc] initWithFile:folder];
-}
-
-+ (instancetype)makeWithFolder:(NSString *)path error:(ErrorCode *)err
-{
-    return [self make: Folder::makeWithFolder([path fileSystemRepresentation], err)];
-}
-
-- (FSDeviceProxy *)fileSystem
-{
-    Folder *folder = (Folder *)([self wrapper]->file);
-    return [FSDeviceProxy make:folder->getFS()];
-}
-
-@end
-
-//
-// P00
+// P00 proxy
 //
 
 @implementation P00FileProxy
 
 + (instancetype)make:(P00File *)archive
 {
-    if (archive == NULL) return nil;
-    return [[self alloc] initWithFile:archive];
+    return archive ? [[self alloc] initWithFile:archive] : nil;
 }
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
@@ -1845,14 +1813,14 @@ struct AnyFileWrapper { AnyFile *file; };
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err
 {
     FSDevice *fs = [proxy wrapper]->device;
-    P00File *archive = P00File::makeWithFileSystem(fs);
-    return [self make: archive];    
+    // return [self make: P00File::makeWithFileSystem(fs)];
+    return [self make: P00File::make <P00File> (*fs, err)];
 }
 
 @end
 
 //
-// D64
+// D64 proxy
 //
 
 @implementation D64FileProxy
@@ -1905,7 +1873,7 @@ struct AnyFileWrapper { AnyFile *file; };
 @end
 
 //
-// G64
+// G64 proxy
 //
 
 @implementation G64FileProxy
@@ -1928,13 +1896,32 @@ struct AnyFileWrapper { AnyFile *file; };
 
 + (instancetype) makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err
 {
-    G64File *file = nil;
     Disk *disk = (Disk *)([proxy wrapper]->disk);
+    return [self make: AnyFile::make <G64File> (*disk, err)];
+}
 
-    try { file = G64File::makeWithDisk(*disk);
-    } catch (VC64Error &exception) { *err = exception.errorCode; }
-    
-    return [self make: file];
+@end
+
+//
+// Folder proxy
+//
+
+@implementation FolderProxy
+
++ (instancetype)make:(Folder *)folder
+{
+    return folder ? [[self alloc] initWithFile:folder] : nil;
+}
+
++ (instancetype)makeWithFolder:(NSString *)path error:(ErrorCode *)err
+{
+    return [self make: Folder::makeWithFolder([path fileSystemRepresentation], err)];
+}
+
+- (FSDeviceProxy *)fileSystem
+{
+    Folder *folder = (Folder *)([self wrapper]->file);
+    return [FSDeviceProxy make:folder->getFS()];
 }
 
 @end

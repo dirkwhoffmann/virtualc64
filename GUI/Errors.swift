@@ -59,6 +59,8 @@ class MyError: Error {
             return "Wrong file system capacity."
         case .FS_CORRUPTED:
             return "Corrupted file system."
+        case .FS_HAS_NO_FILES:
+            return "The file system contains no files."
         case .FS_HAS_CYCLES:
             return "The file system has cyclic references."
         case .FS_CANT_IMPORT:

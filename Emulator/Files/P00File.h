@@ -18,7 +18,7 @@ public:
     static bool isCompatibleName(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
     
-    static P00File *makeWithFileSystem(class FSDevice *fs, int item = 0);
+    static P00File *makeWithFileSystem(class FSDevice &fs);
     
     P00File() : AnyCollection() { }
     P00File(usize capacity) : AnyCollection(capacity) { }

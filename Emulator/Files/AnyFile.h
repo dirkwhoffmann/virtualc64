@@ -186,16 +186,21 @@ public:
     
 protected:
 
+    virtual usize readFromStream(std::istream &stream) throws;
     usize readFromFile(const char *path) throws;
     usize readFromBuffer(const u8 *buf, usize len) throws;
-    virtual usize readFromStream(std::istream &stream) throws;
 
 public:
     
-    usize writeToFile(const char *path) throws;
-    usize writeToBuffer(u8 *buf) throws;
     virtual usize writeToStream(std::ostream &stream) throws;
+    usize writeToStream(std::ostream &stream, ErrorCode *err);
+
+    usize writeToFile(const char *path) throws;
+    usize writeToFile(const char *path, ErrorCode *err);
     
+    usize writeToBuffer(u8 *buf) throws;
+    usize writeToBuffer(u8 *buf, ErrorCode *err);
+
 
     //
     // Repairing

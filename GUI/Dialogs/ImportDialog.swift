@@ -154,7 +154,7 @@ class ImportDialog: DialogController {
         }
         
         // Load screenshots (if any)
-        let fnv = myDocument.attachment!.fnv()
+        let fnv = myDocument.attachment!.fnv
         if fnv != 0 {
             for url in Screenshot.collectFiles(forDisk: fnv) {
                 if let screenshot = Screenshot.init(fromUrl: url) {
