@@ -155,7 +155,7 @@ extension MyController {
 
         if drive == .DRIVE8 {
             
-            if c64.iec.busy() && c64.drive8.isRotating() {
+            if c64.iec.busy && c64.drive8.isRotating() {
                 spinning8.startAnimation(self)
                 spinning8.isHidden = !statusBar
             } else {
@@ -165,7 +165,7 @@ extension MyController {
             
         } else {
             
-            if c64.iec.busy() && c64.drive9.isRotating() {
+            if c64.iec.busy && c64.drive9.isRotating() {
                 spinning9.startAnimation(self)
                 spinning9.isHidden = !statusBar
             } else {

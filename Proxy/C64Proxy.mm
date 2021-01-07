@@ -25,10 +25,10 @@ struct Wrapper { void *obj; };
 // struct KeyboardWrapper { Keyboard *keyboard; };
 // struct ControlPortWrapper { ControlPort *port; };
 // struct SidBridgeWrapper { SIDBridge *sid; };
-struct IecWrapper { IEC *iec; };
-struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
+// struct IecWrapper { IEC *iec; };
+// struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
 struct FSDeviceWrapper { FSDevice *device; };
-struct ViaWrapper { VIA6522 *via; };
+// struct ViaWrapper { VIA6522 *via; };
 struct DiskWrapper { Disk *disk; };
 struct DriveWrapper { Drive *drive; };
 struct DatasetteWrapper { Datasette *datasette; };
@@ -554,22 +554,14 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation IECProxy
 
-- (instancetype)initWithIEC:(IEC *)iec
+- (IEC *)iec
 {
-    if (self = [super init]) {
-        wrapper = new IecWrapper();
-        wrapper->iec = iec;
-    }
-    return self;
+    return (IEC *)obj;
 }
 
-- (void)dump
-{
-    wrapper->iec->dump();
-}
 - (BOOL)busy
 {
-    return wrapper->iec->isBusy();
+    return [self iec]->isBusy();
 }
 
 @end
@@ -1214,18 +1206,9 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation VIAProxy
 
-- (instancetype)initWithVIA:(VIA6522 *)via
+- (VIA6522 *)via
 {
-    if (self = [super init]) {
-        wrapper = new ViaWrapper();
-        wrapper->via = via;
-    }
-    return self;
-}
-
-- (void) dump
-{
-    wrapper->via->dump();
+    return (VIA6522 *)obj;
 }
 
 @end
@@ -1243,8 +1226,8 @@ struct AnyFileWrapper { AnyFile *file; };
     if (self = [super init]) {
         wrapper = new DriveWrapper();
         wrapper->drive = drive;
-        via1 = [[VIAProxy alloc] initWithVIA:&drive->via1];
-        via2 = [[VIAProxy alloc] initWithVIA:&drive->via2];
+        via1 = [[VIAProxy alloc] initWith:&drive->via1];
+        via2 = [[VIAProxy alloc] initWith:&drive->via2];
         disk = [[DiskProxy alloc] initWithDisk525:&drive->disk];
     }
     return self;
@@ -1984,7 +1967,7 @@ struct AnyFileWrapper { AnyFile *file; };
     keyboard = [[KeyboardProxy alloc] initWith:&c64->keyboard];
     port1 = [[ControlPortProxy alloc] initWith:&c64->port1];
     port2 = [[ControlPortProxy alloc] initWith:&c64->port2];
-    iec = [[IECProxy alloc] initWithIEC:&c64->iec];
+    iec = [[IECProxy alloc] initWith:&c64->iec];
     expansionport = [[ExpansionPortProxy alloc] initWith:&c64->expansionport];
     drive8 = [[DriveProxy alloc] initWithVC1541:&c64->drive8];
     drive9 = [[DriveProxy alloc] initWithVC1541:&c64->drive9];

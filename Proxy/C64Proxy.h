@@ -57,12 +57,12 @@
 // struct SidBridgeWrapper;
 // struct KeyboardWrapper;
 // struct ControlPortWrapper;
-struct IecWrapper;
-struct ExpansionPortWrapper;
+// struct IecWrapper;
+// struct ExpansionPortWrapper;
 struct FSDeviceWrapper;
 struct FSDeviceWrapper;
 struct DriveWrapper;
-struct ViaWrapper;
+// struct ViaWrapper;
 struct DiskWrapper;
 struct DatasetteWrapper;
 struct MouseWrapper;
@@ -496,10 +496,9 @@ struct AnyFileWrapper;
 // IEC bus proxy
 //
 
-@interface IECProxy : NSObject { struct IecWrapper *wrapper; }
+@interface IECProxy : HardwareComponentProxy { }
 
-- (void)dump;
-- (BOOL)busy;
+@property (readonly) BOOL busy;
 
 @end
 
@@ -564,9 +563,7 @@ struct AnyFileWrapper;
 // VIA proxy
 //
 
-@interface VIAProxy : NSObject { struct ViaWrapper *wrapper; }
-
-- (void)dump;
+@interface VIAProxy : HardwareComponentProxy { }
 
 @end
 
