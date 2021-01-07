@@ -18,7 +18,7 @@
 struct Wrapper { void *obj; };
 // struct C64Wrapper { C64 *c64; };
 // struct CpuWrapper { CPU<C64Memory> *cpu; };
-struct GuardsWrapper { Guards *guards; };
+// struct GuardsWrapper { Guards *guards; };
 // struct MemoryWrapper { C64Memory *mem; };
 struct VicWrapper { VICII *vic; };
 struct CiaWrapper { CIA *cia; };
@@ -62,73 +62,84 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation GuardsProxy
 
-- (instancetype) initWithGuards:(Guards *)guards
+- (Guards *)guards
 {
-    if (self = [super init]) {
-        wrapper = new GuardsWrapper();
-        wrapper->guards = guards;
-    }
-    return self;
+    return (Guards *)obj;
 }
-- (NSInteger) count
+
+- (NSInteger)count
 {
-    return wrapper->guards->elements();
+    return [self guards]->elements();
 }
-- (NSInteger) addr:(NSInteger)nr
+
+- (NSInteger)addr:(NSInteger)nr
 {
-    return wrapper->guards->guardAddr(nr);
+    return [self guards]->guardAddr(nr);
 }
-- (BOOL) isEnabled:(NSInteger)nr
+
+- (BOOL)isEnabled:(NSInteger)nr
 {
-    return wrapper->guards->isEnabled(nr);
+    return [self guards]->isEnabled(nr);
 }
-- (BOOL) isDisabled:(NSInteger)nr
+
+- (BOOL)isDisabled:(NSInteger)nr
 {
-    return wrapper->guards->isDisabled(nr);
+    return [self guards]->isDisabled(nr);
 }
-- (void) enable:(NSInteger)nr
+
+- (void)enable:(NSInteger)nr
 {
-    wrapper->guards->enable(nr);
+    [self guards]->enable(nr);
 }
-- (void) disable:(NSInteger)nr
+
+- (void)disable:(NSInteger)nr
 {
-    wrapper->guards->disable(nr);
+    [self guards]->disable(nr);
 }
-- (void) remove:(NSInteger)nr
+
+- (void)remove:(NSInteger)nr
 {
-    return wrapper->guards->remove(nr);
+    return [self guards]->remove(nr);
 }
-- (void) replace:(NSInteger)nr addr:(NSInteger)addr
+
+- (void)replace:(NSInteger)nr addr:(NSInteger)addr
 {
-    wrapper->guards->replace(nr, (u32)addr);
+    [self guards]->replace(nr, (u32)addr);
 }
-- (BOOL) isSetAt:(NSInteger)addr
+
+- (BOOL)isSetAt:(NSInteger)addr
 {
-    return wrapper->guards->isSetAt((u32)addr);
+    return [self guards]->isSetAt((u32)addr);
 }
-- (BOOL) isSetAndEnabledAt:(NSInteger)addr
+
+- (BOOL)isSetAndEnabledAt:(NSInteger)addr
 {
-    return wrapper->guards->isSetAndEnabledAt((u32)addr);
+    return [self guards]->isSetAndEnabledAt((u32)addr);
 }
-- (BOOL) isSetAndDisabledAt:(NSInteger)addr
+
+- (BOOL)isSetAndDisabledAt:(NSInteger)addr
 {
-    return wrapper->guards->isSetAndDisabledAt((u32)addr);
+    return [self guards]->isSetAndDisabledAt((u32)addr);
 }
-- (void) enableAt:(NSInteger)addr
+
+- (void)enableAt:(NSInteger)addr
 {
-    wrapper->guards->enableAt((u32)addr);
+    [self guards]->enableAt((u32)addr);
 }
-- (void) disableAt:(NSInteger)addr
+
+- (void)disableAt:(NSInteger)addr
 {
-    wrapper->guards->disableAt((u32)addr);
+    [self guards]->disableAt((u32)addr);
 }
-- (void) addAt:(NSInteger)addr
+
+- (void)addAt:(NSInteger)addr
 {
-    wrapper->guards->addAt((u32)addr);
+    [self guards]->addAt((u32)addr);
 }
-- (void) removeAt:(NSInteger)addr
+
+- (void)removeAt:(NSInteger)addr
 {
-    wrapper->guards->removeAt((u32)addr);
+    [self guards]->removeAt((u32)addr);
 }
 
 @end
@@ -139,102 +150,108 @@ struct AnyFileWrapper { AnyFile *file; };
 
 @implementation CPUProxy
 
-// Constructing
-/*
-- (instancetype) initWithCPU:(CPU<C64Memory> *)cpu
-{
-    if (self = [super init]) {
-        wrapper = new CpuWrapper();
-        wrapper->cpu = cpu;
-    }
-    return self;
-}
-*/
-
 - (CPU<C64Memory> *)cpu
 {
     return (CPU<C64Memory> *)obj;
 }
 
-- (CPUInfo) getInfo
+- (CPUInfo)getInfo
 {
     return [self cpu]->getInfo();
 }
-- (NSInteger) loggedInstructions
+
+- (NSInteger)loggedInstructions
 {
     return [self cpu]->debugger.loggedInstructions();
 }
-- (NSInteger) loggedPCRel:(NSInteger)nr
+
+- (NSInteger)loggedPCRel:(NSInteger)nr
 {
     return [self cpu]->debugger.loggedPC0Rel((int)nr);
 }
-- (NSInteger) loggedPCAbs:(NSInteger)nr
+
+- (NSInteger)loggedPCAbs:(NSInteger)nr
 {
     return [self cpu]->debugger.loggedPC0Abs((int)nr);
 }
-- (RecordedInstruction) getRecordedInstruction:(NSInteger)index
+
+- (RecordedInstruction)getRecordedInstruction:(NSInteger)index
 {
     return [self cpu]->debugger.logEntryAbs((int)index);
 }
-- (void) clearLog
+
+- (void)clearLog
 {
     [self cpu]->debugger.clearLog();
 }
-- (void) dump
+
+- (void)dump
 {
     [self cpu]->dump();
 }
-- (bool) isJammed
+
+- (bool)isJammed
 {
     return [self cpu]->isJammed();
 }
-- (void) setHex
+
+- (void)setHex
 {
     [self cpu]->debugger.hex = true;
 }
-- (void) setDec
+
+- (void)setDec
 {
     [self cpu]->debugger.hex = false;
 }
-- (i64) cycle
+
+- (i64)cycle
 {
     return (i64)[self cpu]->cycle;
 }
-- (u16) pc
+
+- (u16)pc
 {
     return [self cpu]->getPC0();
 }
-- (NSString *) disassembleRecordedInstr:(NSInteger)i length:(NSInteger *)len
+
+- (NSString *)disassembleRecordedInstr:(NSInteger)i length:(NSInteger *)len
 {
     const char *str = [self cpu]->debugger.disassembleRecordedInstr((int)i, len);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) disassembleRecordedBytes:(NSInteger)i
+
+- (NSString *)disassembleRecordedBytes:(NSInteger)i
 {
     const char *str = [self cpu]->debugger.disassembleRecordedBytes((int)i);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) disassembleRecordedFlags:(NSInteger)i
+
+- (NSString *)disassembleRecordedFlags:(NSInteger)i
 {
     const char *str = [self cpu]->debugger.disassembleRecordedFlags((int)i);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) disassembleRecordedPC:(NSInteger)i
+
+- (NSString *)disassembleRecordedPC:(NSInteger)i
 {
     const char *str = [self cpu]->debugger.disassembleRecordedPC((int)i);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) disassembleInstr:(NSInteger)addr length:(NSInteger *)len
+
+- (NSString *)disassembleInstr:(NSInteger)addr length:(NSInteger *)len
 {
     const char *str = [self cpu]->debugger.disassembleInstr(addr, len);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) disassembleBytes:(NSInteger)addr
+
+- (NSString *)disassembleBytes:(NSInteger)addr
 {
     const char *str = [self cpu]->debugger.disassembleBytes(addr);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
-- (NSString *) disassembleAddr:(NSInteger)addr
+
+- (NSString *)disassembleAddr:(NSInteger)addr
 {
     const char *str = [self cpu]->debugger.disassembleAddr(addr);
     return str ? [NSString stringWithUTF8String:str] : NULL;
@@ -254,56 +271,67 @@ struct AnyFileWrapper { AnyFile *file; };
     return (C64Memory *)obj;
 }
 
-- (MemInfo) getInfo
+- (MemInfo)getInfo
 {
     return [self mem]->getInfo();
 }
-- (void) dump
+
+- (void)dump
 {
     [self mem]->dump();
 }
-- (MemoryType) peekSource:(u16)addr
+
+- (MemoryType)peekSource:(u16)addr
 {
     return [self mem]->getPeekSource(addr);
 }
-- (MemoryType) pokeTarget:(u16)addr
+
+- (MemoryType)pokeTarget:(u16)addr
 {
     return [self mem]->getPokeTarget(addr);
 }
-- (u8) spypeek:(u16)addr source:(MemoryType)source
+
+- (u8)spypeek:(u16)addr source:(MemoryType)source
 {
     return [self mem]->spypeek(addr, source);
 }
-- (u8) spypeek:(u16)addr
+
+- (u8)spypeek:(u16)addr
 {
     return [self mem]->spypeek(addr);
 }
-- (u8) spypeekIO:(u16)addr
+
+- (u8)spypeekIO:(u16)addr
 {
     return [self mem]->spypeekIO(addr);
 }
-- (u8) spypeekColor:(u16)addr
+
+- (u8)spypeekColor:(u16)addr
 {
     return [self mem]->spypeekColor(addr);
 }
-- (void) poke:(u16)addr value:(u8)value target:(MemoryType)target
+
+- (void)poke:(u16)addr value:(u8)value target:(MemoryType)target
 {
     [self mem]->suspend();
     [self mem]->poke(addr, value, target);
     [self mem]->resume();
 }
-- (void) poke:(u16)addr value:(u8)value
+
+- (void)poke:(u16)addr value:(u8)value
 {
     [self mem]->suspend();
     [self mem]->poke(addr, value);
     [self mem]->resume();
 }
-- (void) pokeIO:(u16)addr value:(u8)value
+
+- (void)pokeIO:(u16)addr value:(u8)value
 {
     [self mem]->suspend();
     [self mem]->pokeIO(addr, value);
     [self mem]->resume();
 }
+
 - (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src
 {
     const char *str = [self mem]->memdump(addr, num, hex, src);
@@ -1955,8 +1983,8 @@ struct AnyFileWrapper { AnyFile *file; };
     
     mem = [[MemoryProxy alloc] initWith:&c64->mem];
     cpu = [[CPUProxy alloc] initWith:&c64->cpu];
-    breakpoints = [[GuardsProxy alloc] initWithGuards:&c64->cpu.debugger.breakpoints];
-    watchpoints = [[GuardsProxy alloc] initWithGuards:&c64->cpu.debugger.watchpoints];
+    breakpoints = [[GuardsProxy alloc] initWith:&c64->cpu.debugger.breakpoints];
+    watchpoints = [[GuardsProxy alloc] initWith:&c64->cpu.debugger.watchpoints];
     vic = [[VICProxy alloc] initWithVIC:&c64->vic];
     cia1 = [[CIAProxy alloc] initWithCIA:&c64->cia1];
     cia2 = [[CIAProxy alloc] initWithCIA:&c64->cia2];

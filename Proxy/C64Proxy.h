@@ -47,10 +47,10 @@
 @class G64FileProxy;
 @class FSDeviceProxy;
 
-struct Wrapper;
+// struct Wrapper;
 // struct C64Wrapper;
 // struct CpuWrapper;
-struct GuardsWrapper;
+// struct GuardsWrapper;
 // struct MemoryWrapper;
 struct VicWrapper;
 struct CiaWrapper;
@@ -250,7 +250,7 @@ struct AnyFileWrapper;
 // Guards (Breakpoints, Watchpoints)
 //
 
-@interface GuardsProxy : NSObject { struct GuardsWrapper *wrapper; }
+@interface GuardsProxy : BaseProxy { }
 
 @property (readonly) NSInteger count;
 - (NSInteger)addr:(NSInteger)nr;
