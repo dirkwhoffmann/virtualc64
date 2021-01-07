@@ -2163,64 +2163,14 @@
     return [self c64]->hasRom(type);
 }
 
-- (BOOL)hasBasicRom
+- (BOOL)hasMega65Rom:(RomType)type
 {
-    return [self c64]->hasRom(ROM_TYPE_BASIC);
-}
-
-- (BOOL)hasCharRom
-{
-    return [self c64]->hasRom(ROM_TYPE_CHAR);
-}
-
-- (BOOL)hasKernalRom
-{
-    return [self c64]->hasRom(ROM_TYPE_KERNAL);
-}
-
-- (BOOL)hasVC1541Rom
-{
-    return [self c64]->hasRom(ROM_TYPE_VC1541);
-}
-
-- (BOOL)hasMega65BasicRom
-{
-    return [self c64]->hasMega65Rom(ROM_TYPE_BASIC);
-}
-
-- (BOOL)hasMega65CharRom
-{
-    return [self c64]->hasMega65Rom(ROM_TYPE_CHAR);
-}
-
-- (BOOL)hasMega65KernelRom
-{
-    return [self c64]->hasMega65Rom(ROM_TYPE_KERNAL);
+    return [self c64]->hasMega65Rom(type);
 }
 
 - (BOOL) isRom:(RomType)type url:(NSURL *)url
 {
     return RomFile::isRomFile(type, [[url path] UTF8String]);
-}
-
-- (BOOL)isBasicRom:(NSURL *)url
-{
-    return RomFile::isBasicRomFile([[url path] UTF8String]);
-}
-
-- (BOOL)isCharRom:(NSURL *)url
-{
-    return RomFile::isCharRomFile([[url path] UTF8String]);
-}
-
-- (BOOL)isKernalRom:(NSURL *)url
-{
-    return RomFile::isKernalRomFile([[url path] UTF8String]);
-}
-
-- (BOOL)isVC1541Rom:(NSURL *)url
-{
-    return RomFile::isVC1541RomFile([[url path] UTF8String]);
 }
 
 - (BOOL)loadRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)err;
@@ -2242,74 +2192,14 @@
     return [self c64]->saveRom(type, [[url path] UTF8String]);
 }
 
-- (BOOL)saveBasicRom:(NSURL *)url
-{
-    return [self c64]->saveRom(ROM_TYPE_BASIC, [[url path] UTF8String]);
-}
-
-- (BOOL)saveCharRom:(NSURL *)url
-{
-    return [self c64]->saveRom(ROM_TYPE_CHAR, [[url path] UTF8String]);
-}
-
-- (BOOL)saveKernalRom:(NSURL *)url
-{
-    return [self c64]->saveRom(ROM_TYPE_KERNAL, [[url path] UTF8String]);
-}
-
-- (BOOL)saveVC1541Rom:(NSURL *)url
-{
-    return [self c64]->saveRom(ROM_TYPE_VC1541, [[url path] UTF8String]);
-}
-
 - (void) deleteRom:(RomType)type
 {
     [self c64]->deleteRom(type);
 }
 
-- (void)deleteBasicRom
-{
-    [self c64]->deleteRom(ROM_TYPE_BASIC);
-}
-
-- (void)deleteKernalRom
-{
-    [self c64]->deleteRom(ROM_TYPE_KERNAL);
-}
-
-- (void)deleteCharRom
-{
-    [self c64]->deleteRom(ROM_TYPE_CHAR);
-}
-
-- (void)deleteVC1541Rom
-{
-    [self c64]->deleteRom(ROM_TYPE_VC1541);
-}
-
 - (RomIdentifier) romIdentifier:(RomType)type
 {
     return [self c64]->romIdentifier(type);
-}
-
-- (RomIdentifier)basicRomIdentifier
-{
-    return [self c64]->romIdentifier(ROM_TYPE_BASIC);
-}
-
-- (RomIdentifier)kernalRomIdentifier
-{
-    return [self c64]->romIdentifier(ROM_TYPE_KERNAL);
-}
-
-- (RomIdentifier)charRomIdentifier
-{
-    return [self c64]->romIdentifier(ROM_TYPE_CHAR);
-}
-
-- (RomIdentifier)vc1541RomIdentifier
-{
-    return [self c64]->romIdentifier(ROM_TYPE_VC1541);
 }
 
 - (NSString *) romTitle:(RomType)type

@@ -123,19 +123,19 @@ extension ConfigurationController {
         let basicIdentifier    = c64.romIdentifier(.BASIC)
         let hasBasic           = basicIdentifier != .ROM_MISSING
         let hasCommodoreBasic  = c64.isCommodoreRom(basicIdentifier)
-        let hasMega65Basic     = c64.hasMega65BasicRom()
+        let hasMega65Basic     = c64.hasMega65Rom(.BASIC)
         let hasPatchedBasic    = c64.isPatchedRom(basicIdentifier)
 
         let charIdentifier     = c64.romIdentifier(.CHAR)
         let hasChar            = charIdentifier != .ROM_MISSING
         let hasCommodoreChar   = c64.isCommodoreRom(charIdentifier)
-        let hasMega65Char      = c64.hasMega65CharRom()
+        let hasMega65Char      = c64.hasMega65Rom(.CHAR)
         let hasPatchedChar     = c64.isPatchedRom(charIdentifier)
 
         let kernalIdentifier   = c64.romIdentifier(.KERNAL)
         let hasKernal          = kernalIdentifier != .ROM_MISSING
         let hasCommodoreKernal = c64.isCommodoreRom(kernalIdentifier)
-        let hasMega65Kernal    = c64.hasMega65KernelRom()
+        let hasMega65Kernal    = c64.hasMega65Rom(.KERNAL)
         let hasPatchedKernal   = c64.isPatchedRom(kernalIdentifier)
 
         let vc1541Identifier   = c64.romIdentifier(.VC1541)
@@ -229,28 +229,28 @@ extension ConfigurationController {
     @IBAction func romDeleteBasicAction(_ sender: Any!) {
 
         proxy?.powerOff()
-        proxy?.deleteBasicRom()
+        proxy?.deleteRom(.BASIC)
         refresh()
     }
     
     @IBAction func romDeleteCharAction(_ sender: Any!) {
 
         proxy?.powerOff()
-        proxy?.deleteCharRom()
+        proxy?.deleteRom(.CHAR)
         refresh()
     }
     
     @IBAction func romDeleteKernalAction(_ sender: Any!) {
 
         proxy?.powerOff()
-        proxy?.deleteKernalRom()
+        proxy?.deleteRom(.KERNAL)
         refresh()
     }
     
     @IBAction func romDeleteVC1541Action(_ sender: Any!) {
 
         proxy?.powerOff()
-        proxy?.deleteVC1541Rom()
+        proxy?.deleteRom(.VC1541)
         refresh()
     }
         

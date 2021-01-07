@@ -162,66 +162,24 @@
 - (void)stepInto;
 - (void)stepOver;
 
-// Handling ROMs
 - (BOOL) hasRom:(RomType)type;
-- (BOOL) hasBasicRom __attribute__ ((deprecated));
-- (BOOL) hasCharRom __attribute__ ((deprecated));
-- (BOOL) hasKernalRom __attribute__ ((deprecated));
-- (BOOL) hasVC1541Rom __attribute__ ((deprecated));
-
-- (BOOL) hasMega65BasicRom;
-- (BOOL) hasMega65CharRom;
-- (BOOL) hasMega65KernelRom;
+- (BOOL) hasMega65Rom:(RomType)type;
 
 - (BOOL) isRom:(RomType)type url:(NSURL *)url;
-- (BOOL) isBasicRom:(NSURL *)url __attribute__ ((deprecated));
-- (BOOL) isCharRom:(NSURL *)url __attribute__ ((deprecated));
-- (BOOL) isKernalRom:(NSURL *)url __attribute__ ((deprecated));
-- (BOOL) isVC1541Rom:(NSURL *)url __attribute__ ((deprecated));
 
 - (BOOL) loadRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)err;
 - (BOOL) loadRom:(RomType)type data:(NSData *)data error:(ErrorCode *)err;
-
 - (BOOL) saveRom:(RomType)type url:(NSURL *)url;
-- (BOOL) saveBasicRom:(NSURL *)url __attribute__ ((deprecated));
-- (BOOL) saveCharRom:(NSURL *)url __attribute__ ((deprecated));
-- (BOOL) saveKernalRom:(NSURL *)url __attribute__ ((deprecated));
-- (BOOL) saveVC1541Rom:(NSURL *)url __attribute__ ((deprecated));
-
 - (void) deleteRom:(RomType)type;
-- (void) deleteBasicRom;
-- (void) deleteKernalRom;
-- (void) deleteCharRom;
-- (void) deleteVC1541Rom;
 
 - (RomIdentifier) romIdentifier:(RomType)type;
-- (RomIdentifier) basicRomIdentifier __attribute__ ((deprecated));
-- (RomIdentifier) kernalRomIdentifier __attribute__ ((deprecated));
-- (RomIdentifier) charRomIdentifier __attribute__ ((deprecated));
-- (RomIdentifier) vc1541RomIdentifier __attribute__ ((deprecated));
-
-- (NSString *) romTitle:(RomType)type;
-- (NSString *) basicRomTitle __attribute__ ((deprecated));
-- (NSString *) charRomTitle __attribute__ ((deprecated));
-- (NSString *) kernalRomTitle __attribute__ ((deprecated));
-- (NSString *) vc1541RomTitle __attribute__ ((deprecated));
-
-- (NSString *) romSubTitle:(RomType)type;
-- (NSString *) basicRomSubTitle __attribute__ ((deprecated));
-- (NSString *) charRomSubTitle __attribute__ ((deprecated));
-- (NSString *) kernalRomSubTitle __attribute__ ((deprecated));
-- (NSString *) vc1541RomSubTitle __attribute__ ((deprecated));
-
-- (NSString *) romRevision:(RomType)type;
-- (NSString *) basicRomRevision __attribute__ ((deprecated));
-- (NSString *) charRomRevision __attribute__ ((deprecated));
-- (NSString *) kernalRomRevision __attribute__ ((deprecated));
-- (NSString *) vc1541RomRevision __attribute__ ((deprecated));
-
 - (BOOL)isCommodoreRom:(RomIdentifier)rev;
 - (BOOL)isPatchedRom:(RomIdentifier)rev;
 
-// Flashing files
+- (NSString *) romTitle:(RomType)type;
+- (NSString *) romSubTitle:(RomType)type;
+- (NSString *) romRevision:(RomType)type;
+
 - (BOOL)flash:(AnyFileProxy *)container;
 - (BOOL)flash:(AnyCollectionProxy *)proxy item:(NSInteger)nr;
 
