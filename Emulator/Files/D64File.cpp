@@ -50,6 +50,7 @@ D64File::D64File(unsigned tracks, bool ecc) : D64File()
     data = new u8[size]();
 }
 
+/*
 D64File *
 D64File::makeWithDisk(Disk &disk)
 {
@@ -66,6 +67,7 @@ D64File::makeWithDisk(Disk &disk)
     // Create object from byte stream
     return make <D64File> (buffer, len);
 }
+*/
 
 D64File *
 D64File::makeWithFileSystem(FSDevice &volume)

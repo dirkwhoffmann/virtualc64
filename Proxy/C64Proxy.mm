@@ -951,7 +951,7 @@
 + (instancetype)makeWithD64:(D64FileProxy *)proxy
 {
     ErrorCode err;
-    FSDevice *volume = FSDevice::makeWithD64((D64File *)proxy->obj, &err);
+    FSDevice *volume = FSDevice::makeWithD64(*(D64File *)proxy->obj, &err);
     return [self make:volume];
 }
 

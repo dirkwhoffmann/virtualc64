@@ -34,8 +34,8 @@ public:
     static Folder *makeWithFolder(const std::string &path) throws;
     static Folder *makeWithFolder(const std::string &path, ErrorCode *err);
 
-    [[deprecated]] static Folder *makeWithFolder(const char *path) throws;
-    [[deprecated]] static Folder *makeWithFolder(const char *path, ErrorCode *err);
+    // [[deprecated]] static Folder *makeWithFolder(const char *path) throws;
+    // [[deprecated]] static Folder *makeWithFolder(const char *path, ErrorCode *err);
 
         
     //

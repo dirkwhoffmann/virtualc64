@@ -41,7 +41,7 @@ public:
 
     static FSDevice *makeWithFormat(FSDeviceDescriptor &layout);
     static FSDevice *makeWithType(DiskType type, DOSType vType = DOS_TYPE_NODOS);
-    static FSDevice *makeWithD64(class D64File *d64, ErrorCode *err);
+    static FSDevice *makeWithD64(class D64File &d64, ErrorCode *err);
     static FSDevice *makeWithDisk(class Disk &disk, ErrorCode *err);
     static FSDevice *makeWithCollection(AnyCollection *collection);
 

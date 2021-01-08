@@ -45,7 +45,7 @@ struct FSDeviceDescriptor : C64Object {
     FSDeviceDescriptor(DiskType type, DOSType dos = DOS_TYPE_CBM);
 
     // Creates a device descriptor from a D64 file
-    FSDeviceDescriptor(class D64File *d64);
+    FSDeviceDescriptor(class D64File &d64);
 
     const char *getDescription() override { return "FSLayout"; }
     

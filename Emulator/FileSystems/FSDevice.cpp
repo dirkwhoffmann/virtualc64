@@ -32,10 +32,8 @@ FSDevice::makeWithType(DiskType type, DOSType vType)
 }
 
 FSDevice *
-FSDevice::makeWithD64(D64File *d64, ErrorCode *err)
+FSDevice::makeWithD64(D64File &d64, ErrorCode *err)
 {
-    assert(d64);
-
     // Get device descriptor
     FSDeviceDescriptor descriptor = FSDeviceDescriptor(d64);
         
@@ -43,14 +41,14 @@ FSDevice::makeWithD64(D64File *d64, ErrorCode *err)
     FSDevice *device = makeWithFormat(descriptor);
 
     // Import file system
-    if (!device->importVolume(d64->data, d64->size, err)) {
+    if (!device->importVolume(d64.data, d64.size, err)) {
         delete device;
         return nullptr;
     }
     
     // Import error codes (if any)
     for (Block b = 0; b < device->blocks.size(); b++) {
-        device->setErrorCode(b, d64->getErrorCode(b));
+        device->setErrorCode(b, d64.getErrorCode(b));
     }
     
     return device;
