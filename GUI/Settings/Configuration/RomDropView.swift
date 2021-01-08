@@ -61,7 +61,7 @@ class RomDropView: NSImageView {
         
         if url != nil {
             do {
-                let rom = try Proxy.create(url: url!) as RomFileProxy
+                let rom = try Proxy.make(url: url!) as RomFileProxy
                 c64.loadRom(rom)
                 return true
             } catch {

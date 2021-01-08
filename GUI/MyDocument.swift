@@ -165,28 +165,28 @@ class MyDocument: NSDocument {
         switch type {
         
         case .V64:
-            try result = Proxy.create(buffer: buffer, length: length) as SnapshotProxy
+            try result = Proxy.make(buffer: buffer, length: length) as SnapshotProxy
             
         case .CRT:
-            try result = Proxy.create(buffer: buffer, length: length) as CRTFileProxy
+            try result = Proxy.make(buffer: buffer, length: length) as CRTFileProxy
             
         case .D64:
-            try result = Proxy.create(buffer: buffer, length: length) as D64FileProxy
+            try result = Proxy.make(buffer: buffer, length: length) as D64FileProxy
             
         case .T64:
-            try result = Proxy.create(buffer: buffer, length: length) as T64FileProxy
+            try result = Proxy.make(buffer: buffer, length: length) as T64FileProxy
             
         case .PRG:
-            try result = Proxy.create(buffer: buffer, length: length) as PRGFileProxy
+            try result = Proxy.make(buffer: buffer, length: length) as PRGFileProxy
             
         case .P00:
-            try result = Proxy.create(buffer: buffer, length: length) as P00FileProxy
+            try result = Proxy.make(buffer: buffer, length: length) as P00FileProxy
             
         case .G64:
-            try result = Proxy.create(buffer: buffer, length: length) as G64FileProxy
+            try result = Proxy.make(buffer: buffer, length: length) as G64FileProxy
             
         case .TAP:
-            try result = Proxy.create(buffer: buffer, length: length) as TAPFileProxy
+            try result = Proxy.make(buffer: buffer, length: length) as TAPFileProxy
             
         default:
             fatalError()
@@ -253,7 +253,7 @@ class MyDocument: NSDocument {
         if let file = attachment as? D64FileProxy {
 
             if proceedWithUnexportedDisk(drive: id) {
-                if let fs = try? Proxy.create(d64: file) as FSDeviceProxy {
+                if let fs = try? Proxy.make(d64: file) as FSDeviceProxy {
                     drive.insertFileSystem(fs)
                     return true
                 }
@@ -262,7 +262,7 @@ class MyDocument: NSDocument {
         if let file = attachment as? AnyCollectionProxy {
             
             if proceedWithUnexportedDisk(drive: id) {
-                if let fs = try? Proxy.create(collection: file) as FSDeviceProxy {
+                if let fs = try? Proxy.make(collection: file) as FSDeviceProxy {
                     drive.insertFileSystem(fs)
                     return true
                 }
@@ -370,12 +370,12 @@ class MyDocument: NSDocument {
         
         if url.c64FileType == .G64 {
          
-            let g64 = try Proxy.create(disk: disk) as G64FileProxy
+            let g64 = try Proxy.make(disk: disk) as G64FileProxy
             try export(file: g64, to: url)
 
         } else {
             
-            let fs = try Proxy.create(disk: disk) as FSDeviceProxy
+            let fs = try Proxy.make(disk: disk) as FSDeviceProxy
             try export(fs: fs, to: url)
         }
     }
@@ -397,18 +397,18 @@ class MyDocument: NSDocument {
         switch url.c64FileType {
         
         case .D64:
-            file = try Proxy.create(fs: fs) as D64FileProxy
+            file = try Proxy.make(fs: fs) as D64FileProxy
             
         case .T64:
-            file = try Proxy.create(fs: fs) as T64FileProxy
+            file = try Proxy.make(fs: fs) as T64FileProxy
             
         case .PRG:
             if fs.numFiles > 1 { showMultipleFilesAlert(format: "PRG") }
-            file = try Proxy.create(fs: fs) as PRGFileProxy
+            file = try Proxy.make(fs: fs) as PRGFileProxy
             
         case .P00:
             if fs.numFiles > 1 { showMultipleFilesAlert(format: "P00") }
-            file = try Proxy.create(fs: fs) as P00FileProxy
+            file = try Proxy.make(fs: fs) as P00FileProxy
 
         default:
             throw MyError.init(ErrorCode.FILE_TYPE_MISMATCH)

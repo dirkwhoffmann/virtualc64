@@ -13,7 +13,7 @@
 
 extension Proxy {
     
-    static func create<T: MakeWithBuffer>(buffer: UnsafeRawPointer, length: Int) throws -> T {
+    static func make<T: MakeWithBuffer>(buffer: UnsafeRawPointer, length: Int) throws -> T {
         
         track()
         
@@ -24,7 +24,7 @@ extension Proxy {
         return obj!
     }
     
-    static func create<T: MakeWithFile>(url: URL) throws -> T {
+    static func make<T: MakeWithFile>(url: URL) throws -> T {
         
         var err = ErrorCode.OK
         let obj = T.make(withFile: url.path, error: &err)
@@ -32,7 +32,7 @@ extension Proxy {
         return obj!
     }
     
-    static func create<T: MakeWithDisk>(disk: DiskProxy) throws -> T {
+    static func make<T: MakeWithDisk>(disk: DiskProxy) throws -> T {
         
         var err = ErrorCode.OK
         let obj = T.make(withDisk: disk, error: &err)
@@ -40,7 +40,7 @@ extension Proxy {
         return obj!
     }
     
-    static func create<T: MakeWithFileSystem>(fs: FSDeviceProxy) throws -> T {
+    static func make<T: MakeWithFileSystem>(fs: FSDeviceProxy) throws -> T {
         
         var err = ErrorCode.OK
         let obj = T.make(withFileSystem: fs, error: &err)
@@ -48,7 +48,7 @@ extension Proxy {
         return obj!
     }
     
-    static func create<T: MakeWithCollection>(collection: AnyCollectionProxy) throws -> T {
+    static func make<T: MakeWithCollection>(collection: AnyCollectionProxy) throws -> T {
         
         var err = ErrorCode.OK
         let obj = T.make(withCollection: collection, error: &err)
@@ -56,7 +56,7 @@ extension Proxy {
         return obj!
     }
     
-    static func create<T: MakeWithD64>(d64: D64FileProxy) throws -> T {
+    static func make<T: MakeWithD64>(d64: D64FileProxy) throws -> T {
         
         var err = ErrorCode.OK
         let obj = T.make(withD64: d64, error: &err)
