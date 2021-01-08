@@ -59,7 +59,7 @@ public:
     // Methods from C64Object
     //
 
-    const char *getDescription() override { return "Snapshot"; }
+    const char *getDescription() const override { return "Snapshot"; }
 
     
     //

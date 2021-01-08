@@ -563,7 +563,7 @@ private:
 public:
 	
     VICII(C64 &ref);
-    const char *getDescription() override { return "VICII"; }
+    const char *getDescription() const override { return "VICII"; }
 
 private:
     

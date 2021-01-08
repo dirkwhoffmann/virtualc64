@@ -24,8 +24,8 @@ class Expert : public Cartridge {
 public:
     
     Expert(C64 &ref);
-    const char *getDescription() override { return "Expert"; }
-    CartridgeType getCartridgeType() override { return CRT_EXPERT; }
+    const char *getDescription() const override { return "Expert"; }
+    CartridgeType getCartridgeType() const override { return CRT_EXPERT; }
 
 private:
     

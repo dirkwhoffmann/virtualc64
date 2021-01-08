@@ -68,7 +68,7 @@ public:
 
     PETName(std::string str) : PETName(str.c_str()) { }
     
-    const char *getDescription() override { return "PETName"; }
+    const char *getDescription() const override { return "PETName"; }
     
     bool operator== (PETName &rhs)
     {

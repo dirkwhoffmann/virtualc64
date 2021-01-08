@@ -126,7 +126,7 @@ public:
 public:
 	
 	SIDBridge(C64 &ref);
-    const char *getDescription() override { return "SIDBridge"; }
+    const char *getDescription() const override { return "SIDBridge"; }
 
 private:
     

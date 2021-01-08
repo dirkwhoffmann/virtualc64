@@ -16,8 +16,8 @@ class KcsPower : public Cartridge {
 public:
     
     KcsPower(C64 &ref);
-    const char *getDescription() override { return "Ksc"; }
-    CartridgeType getCartridgeType() override { return CRT_KCS_POWER; }
+    const char *getDescription() const override { return "Ksc"; }
+    CartridgeType getCartridgeType() const override { return CRT_KCS_POWER; }
     
 private:
     

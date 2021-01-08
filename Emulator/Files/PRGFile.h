@@ -33,7 +33,7 @@ public:
     // Methods from C64Object
     //
     
-    const char *getDescription() override { return "PRGFile"; }
+    const char *getDescription() const override { return "PRGFile"; }
     
     
     //

@@ -19,8 +19,8 @@ class StructuredBasic : public Cartridge {
 public:
     
     StructuredBasic(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() override { return "StructuredBasic"; }
-    CartridgeType getCartridgeType() override { return CRT_STRUCTURED_BASIC; }
+    const char *getDescription() const override { return "StructuredBasic"; }
+    CartridgeType getCartridgeType() const override { return CRT_STRUCTURED_BASIC; }
         
     
     //

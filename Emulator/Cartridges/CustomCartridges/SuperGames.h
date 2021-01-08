@@ -19,8 +19,8 @@ class SuperGames : public Cartridge {
 public:
     
     SuperGames(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() override { return "Supergames"; }
-    CartridgeType getCartridgeType() override { return CRT_SUPER_GAMES; }
+    const char *getDescription() const override { return "Supergames"; }
+    CartridgeType getCartridgeType() const override { return CRT_SUPER_GAMES; }
         
     
     //

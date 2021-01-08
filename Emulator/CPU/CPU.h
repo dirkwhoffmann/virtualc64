@@ -404,7 +404,7 @@ class C64CPU : public CPU<C64Memory> {
 public:
     
     C64CPU(C64& ref, C64Memory& memref) : CPU(ref, memref) { }
-    const char *getDescription() override { return "CPU"; }
+    const char *getDescription() const override { return "CPU"; }
     
     CPURevision model() override { return MOS_6510; }
     bool isC64CPU() override { return true; }
@@ -421,7 +421,7 @@ class DriveCPU : public CPU<DriveMemory> {
 public:
     
     DriveCPU(C64& ref, DriveMemory &memref) : CPU(ref, memref) { }
-    const char *getDescription() override { return "DriveCPU"; }
+    const char *getDescription() const override { return "DriveCPU"; }
     
     CPURevision model() override { return MOS_6502; }
     bool isC64CPU() override { return false; }

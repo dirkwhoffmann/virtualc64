@@ -16,8 +16,8 @@ class Westermann : public Cartridge {
 public:
     
     Westermann(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() override { return "Westermann"; }
-    CartridgeType getCartridgeType() override { return CRT_WESTERMANN; }
+    const char *getDescription() const override { return "Westermann"; }
+    CartridgeType getCartridgeType() const override { return CRT_WESTERMANN; }
     
     
     //

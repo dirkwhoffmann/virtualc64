@@ -31,7 +31,7 @@ Drive::Drive(DriveID id, C64 &ref) : C64Component(ref), deviceNr(id)
 }
 
 const char *
-Drive::getDescription()
+Drive::getDescription() const
 {
     assert(deviceNr == DRIVE8 || deviceNr == DRIVE9);
     return deviceNr == DRIVE8 ? "Drive8" : "Drive9";

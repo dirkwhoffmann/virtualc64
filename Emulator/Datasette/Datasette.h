@@ -75,7 +75,7 @@ public:
  
     Datasette(C64 &ref) : C64Component(ref) { };
     ~Datasette();
-    const char *getDescription() override { return "Datasette"; }
+    const char *getDescription() const override { return "Datasette"; }
     
 private:
     

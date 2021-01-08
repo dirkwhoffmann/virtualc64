@@ -28,8 +28,8 @@ class Isepic : public Cartridge {
 public:
     
     Isepic(C64 &ref);
-    const char *getDescription() override { return "Isepic"; }
-    CartridgeType getCartridgeType() override { return CRT_ISEPIC; }
+    const char *getDescription() const override { return "Isepic"; }
+    CartridgeType getCartridgeType() const override { return CRT_ISEPIC; }
     
 private:
     

@@ -27,7 +27,7 @@ public:
     // Methods from C64Object
     //
     
-    const char *getDescription() override { return "TAPFile"; }
+    const char *getDescription() const override { return "TAPFile"; }
     
     
     //

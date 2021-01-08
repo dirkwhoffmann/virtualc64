@@ -177,7 +177,7 @@ public:
 public:
     
     Disk(C64 &ref);
-    const char *getDescription() override { return "Disk"; }
+    const char *getDescription() const override { return "Disk"; }
     
 private:
     

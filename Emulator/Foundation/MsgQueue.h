@@ -32,7 +32,7 @@ class MsgQueue : public C64Object {
     
 public:
         
-    const char *getDescription() override { return "MessageQueue"; }
+    const char *getDescription() const override { return "MessageQueue"; }
 
     // Registers a listener together with it's callback function
     void addListener(const void *listener, Callback *func);

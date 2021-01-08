@@ -17,7 +17,7 @@ Oscillator::Oscillator(C64& ref) : C64Component(ref)
 }
 
 const char *
-Oscillator::getDescription()
+Oscillator::getDescription() const
 {
 #ifdef __MACH__
     return "Oscillator (Mac)";

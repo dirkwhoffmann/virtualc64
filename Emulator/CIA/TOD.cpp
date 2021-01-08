@@ -14,7 +14,7 @@ TOD::TOD(C64 &ref, CIA &ciaref) : C64Component(ref), cia(ciaref)
 }
 
 const char *
-TOD::getDescription()
+TOD::getDescription() const
 {
     return cia.isCIA1() ? "TOD1" : "TOD2";
 }

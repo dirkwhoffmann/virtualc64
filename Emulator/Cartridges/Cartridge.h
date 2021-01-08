@@ -136,7 +136,7 @@ public:
     
     Cartridge(C64 &ref);
     ~Cartridge();
-    const char *getDescription() override { return "Cartridge"; }
+    const char *getDescription() const override { return "Cartridge"; }
 
     /* Resets the Game and the Exrom line. The default implementation resets
      * the values to ones found in the CRT file. A few custom cartridges need
@@ -158,10 +158,10 @@ protected:
 public:
     
     // Returns the cartridge type
-    virtual CartridgeType getCartridgeType() { return CRT_NORMAL; }
+    virtual CartridgeType getCartridgeType() const { return CRT_NORMAL; }
     
     // Checks whether this cartridge is supported by the emulator yet
-    bool isSupported() { return isSupportedType(getCartridgeType()); }
+    bool isSupported() const { return isSupportedType(getCartridgeType()); }
     
 protected:
     

@@ -39,7 +39,7 @@ public:
     // Methods from C64Object
     //
     
-    const char *getDescription() override { return "G64File"; }
+    const char *getDescription() const override { return "G64File"; }
 
     
     //

@@ -25,8 +25,8 @@ public:
     //
     
     PageFox(C64 &ref);
-    const char *getDescription() override { return "PageFox"; }
-    CartridgeType getCartridgeType() override { return CRT_PAGEFOX; }
+    const char *getDescription() const override { return "PageFox"; }
+    CartridgeType getCartridgeType() const override { return CRT_PAGEFOX; }
     
 private:
     

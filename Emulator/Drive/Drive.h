@@ -199,7 +199,7 @@ public:
 public:
     
     Drive(DriveID id, C64 &ref);
-    const char *getDescription() override;
+    const char *getDescription() const override;
 
 private:
 

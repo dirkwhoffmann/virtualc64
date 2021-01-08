@@ -49,7 +49,7 @@ public:
     
     ExpansionPort(C64 &ref) : C64Component(ref) { };
     ~ExpansionPort();
-    const char *getDescription() override { return "ExpansionPort"; }
+    const char *getDescription() const override { return "ExpansionPort"; }
 
 private:
     
