@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/dirkwhoffmann/virtualc64.svg?branch=master)](https://travis-ci.org/dirkwhoffmann/virtualc64)
 
-![alt Logo](http://www.dirkwhoffmann.de/virtualC64/pics/banner.png#1)
+![alt ComingSoon](https://user-images.githubusercontent.com/12561945/104033580-042c6d80-51d0-11eb-9fb9-bbf3a6c0feab.png)
 
 ## About
 
