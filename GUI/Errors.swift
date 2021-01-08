@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-class MyError: Error {
+class VC64Error: Error {
     
     var errorCode: ErrorCode
     
@@ -109,11 +109,11 @@ class MyError: Error {
     }
 
     func warning(_ msg: String, async: Bool = false, icon: String? = nil) {
-        MyError.warning(msg, description, async: async, icon: icon)
+        VC64Error.warning(msg, description, async: async, icon: icon)
     }
 
     func critical(_ msg: String, async: Bool = false, icon: String? = nil) {
-        MyError.warning(msg, description, async: async, icon: icon)
+        VC64Error.warning(msg, description, async: async, icon: icon)
     }
     
     //

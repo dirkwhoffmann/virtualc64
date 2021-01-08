@@ -309,7 +309,7 @@ class MyDocument: NSDocument {
         
         do {
             try createAttachment(from: url)
-        } catch let error as MyError {
+        } catch let error as VC64Error {
             error.cantOpen(url: url)
         }
     }
@@ -321,7 +321,7 @@ class MyDocument: NSDocument {
         do {
             try createAttachment(from: url)
             mountAttachment()
-        } catch let error as MyError {
+        } catch let error as VC64Error {
             error.cantOpen(url: url)
         }
     }
@@ -387,7 +387,7 @@ class MyDocument: NSDocument {
             let msg1 = "Only the first file will be exported."
             let msg2 = "The \(format) format is designed to store a single file."
             
-            MyError.informational(msg1, msg2)
+            VC64Error.informational(msg1, msg2)
         }
         
         track("fs: \(fs) to: \(url)")
@@ -411,7 +411,7 @@ class MyDocument: NSDocument {
             file = try Proxy.make(fs: fs) as P00FileProxy
 
         default:
-            throw MyError.init(ErrorCode.FILE_TYPE_MISMATCH)
+            throw VC64Error.init(ErrorCode.FILE_TYPE_MISMATCH)
         }
         
         try export(file: file!, to: url)

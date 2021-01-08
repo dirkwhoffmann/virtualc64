@@ -19,7 +19,7 @@ extension Proxy {
         
         var err = ErrorCode.OK
         let obj = T.make(withBuffer: buffer, length: length, error: &err)
-        if err != ErrorCode.OK { throw MyError(err) }
+        if err != ErrorCode.OK { throw VC64Error(err) }
         if obj == nil { fatalError() }
         return obj!
     }
@@ -28,7 +28,7 @@ extension Proxy {
         
         var err = ErrorCode.OK
         let obj = T.make(withFile: url.path, error: &err)
-        if err != ErrorCode.OK { throw MyError(err) }
+        if err != ErrorCode.OK { throw VC64Error(err) }
         return obj!
     }
     
@@ -36,7 +36,7 @@ extension Proxy {
         
         var err = ErrorCode.OK
         let obj = T.make(withDisk: disk, error: &err)
-        if err != ErrorCode.OK { throw MyError(err) }
+        if err != ErrorCode.OK { throw VC64Error(err) }
         return obj!
     }
     
@@ -44,7 +44,7 @@ extension Proxy {
         
         var err = ErrorCode.OK
         let obj = T.make(withFileSystem: fs, error: &err)
-        if err != ErrorCode.OK { throw MyError(err) }
+        if err != ErrorCode.OK { throw VC64Error(err) }
         return obj!
     }
     
@@ -52,7 +52,7 @@ extension Proxy {
         
         var err = ErrorCode.OK
         let obj = T.make(withCollection: collection, error: &err)
-        if err != ErrorCode.OK { throw MyError(err) }
+        if err != ErrorCode.OK { throw VC64Error(err) }
         return obj!
     }
     
@@ -60,7 +60,7 @@ extension Proxy {
         
         var err = ErrorCode.OK
         let obj = T.make(withD64: d64, error: &err)
-        if err != ErrorCode.OK { throw MyError(err) }
+        if err != ErrorCode.OK { throw VC64Error(err) }
         return obj!
     }
 }
@@ -80,7 +80,7 @@ extension AnyFileProxy {
         
         var err = ErrorCode.OK
         let result = write(toFile: url.path, error: &err)
-        if err != .OK { throw MyError(err) }
+        if err != .OK { throw VC64Error(err) }
         
         return result
     }
@@ -92,7 +92,7 @@ extension FSDeviceProxy {
             
         var err = ErrorCode.OK
         if exportDirectory(url.path, error: &err) == false {
-            throw MyError(err)
+            throw VC64Error(err)
         }
     }
 }

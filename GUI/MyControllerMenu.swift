@@ -407,7 +407,7 @@ extension MyController: NSMenuItemValidation {
         }
         
         if !c64.isReady(&error) {
-            MyError.init(error).warning("Unable to power up the emulator")
+            VC64Error.init(error).warning("Unable to power up the emulator")
             return
         }
         
@@ -602,7 +602,7 @@ extension MyController: NSMenuItemValidation {
             
         } catch {
             
-            (error as? MyError)?.cantOpen(url: url)
+            (error as? VC64Error)?.cantOpen(url: url)
         }
     }
     
@@ -628,7 +628,7 @@ extension MyController: NSMenuItemValidation {
             do {
                 try mydocument.export(drive: id, to: url)
                 
-            } catch let error as MyError {
+            } catch let error as VC64Error {
                 error.warning("Cannot export disk to file \"\(url.path)\"")
             } catch {
                 fatalError()
@@ -747,7 +747,7 @@ extension MyController: NSMenuItemValidation {
             
         } catch {
 
-            (error as? MyError)?.cantOpen(url: url)
+            (error as? VC64Error)?.cantOpen(url: url)
         }
     }
 
@@ -815,7 +815,7 @@ extension MyController: NSMenuItemValidation {
             
         } catch {
 
-            (error as? MyError)?.cantOpen(url: url)
+            (error as? VC64Error)?.cantOpen(url: url)
         }
     }
     

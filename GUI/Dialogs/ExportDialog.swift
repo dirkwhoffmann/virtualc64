@@ -524,7 +524,7 @@ class ExportDialog: DialogController {
             drive?.setModifiedDisk(false)
             hideSheet()
 
-        } catch let error as MyError {
+        } catch let error as VC64Error {
             error.warning("Cannot export disk")
         } catch {
             fatalError()
@@ -557,7 +557,7 @@ class ExportDialog: DialogController {
             try volume!.exportDirectory(url: url)
             hideSheet()
 
-        } catch let error as MyError {
+        } catch let error as VC64Error {
             error.warning("Cannot export to directory")
         } catch {
             fatalError()

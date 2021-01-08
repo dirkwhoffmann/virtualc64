@@ -95,8 +95,8 @@ public:
     virtual bool setConfigItem(Option option, long id, long value) { return false; }
     
     // Dumps debug information about the current configuration to the console
-    void dumpConfig();
-    virtual void _dumpConfig() { }
+    void dumpConfig() const;
+    virtual void _dumpConfig() const { }
     
     
     //

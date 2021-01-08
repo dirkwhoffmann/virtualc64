@@ -412,7 +412,7 @@ SIDBridge::setSamplingMethod(SamplingMethod method)
 }
 
 void
-SIDBridge::_dumpConfig()
+SIDBridge::_dumpConfig() const
 {
     msg("  Chip revision : %s\n",   SIDRevisionEnum::key(config.revision));
     msg("    Enable mask : %x\n",   config.enabled);

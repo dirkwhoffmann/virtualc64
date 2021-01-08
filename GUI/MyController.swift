@@ -718,7 +718,7 @@ extension MyController {
 
         case .CRT_UNSUPPORTED:
 
-            MyError.unsupportedCrtAlert(type: msg.data)
+            VC64Error.unsupportedCrtAlert(type: msg.data)
             
         case .CRT_ATTACHED:
 
@@ -741,11 +741,11 @@ extension MyController {
             
         case .SNAPSHOT_TOO_OLD:
             
-            MyError.init(.SNP_TOO_OLD).warning("Unable to restore snapshot")
+            VC64Error.init(.SNP_TOO_OLD).warning("Unable to restore snapshot")
                         
         case .SNAPSHOT_TOO_NEW:
             
-            MyError.init(.SNP_TOO_NEW).warning("Unable to restore snapshot")
+            VC64Error.init(.SNP_TOO_NEW).warning("Unable to restore snapshot")
 
         case .AUTO_SNAPSHOT_TAKEN:
             

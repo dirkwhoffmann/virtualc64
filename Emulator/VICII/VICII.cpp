@@ -431,7 +431,7 @@ VICII::_inspect()
 }
 
 void
-VICII::_dumpConfig()
+VICII::_dumpConfig() const
 {
     msg("    Chip model : %lld (%s)\n", config.revision, VICRevisionEnum::key(config.revision));
     msg("  Gray dot bug : %s\n", config.grayDotBug ? "yes" : "no");
@@ -554,13 +554,13 @@ VICII::getCyclesPerLine(VICRevision revision)
 }
 
 bool
-VICII::isLastCycleInRasterline(unsigned cycle)
+VICII::isLastCycleInRasterline(unsigned cycle) const
 {
     return cycle >= getCyclesPerLine();
 }
 
 long
-VICII::getRasterlinesPerFrame()
+VICII::getRasterlinesPerFrame() const
 {
     switch (config.revision) {
             
@@ -577,7 +577,7 @@ VICII::getRasterlinesPerFrame()
 }
 
 long
-VICII::numVisibleRasterlines()
+VICII::numVisibleRasterlines() const
 {
     switch (config.revision) {
             
@@ -594,7 +594,7 @@ VICII::numVisibleRasterlines()
 }
 
 bool
-VICII::isVBlankLine(unsigned rasterline)
+VICII::isVBlankLine(unsigned rasterline) const
 {
     switch (config.revision) {
             
@@ -611,32 +611,32 @@ VICII::isVBlankLine(unsigned rasterline)
 }
 
 void *
-VICII::stableEmuTexture()
+VICII::stableEmuTexture() const
 {
     return emuTexture == emuTexture1 ? emuTexture2 : emuTexture1;
 }
 
 void *
-VICII::stableDmaTexture()
+VICII::stableDmaTexture() const
 {
     return dmaTexture == dmaTexture1 ? dmaTexture2 : dmaTexture1;
 }
 
 u32 *
-VICII::getNoise()
+VICII::getNoise() const
 {
     int offset = rand() % (512 * 512);
     return noise + offset;
 }
 
 u16
-VICII::rasterline()
+VICII::rasterline() const
 {
     return c64.rasterLine;
 }
 
 u8
-VICII::rastercycle()
+VICII::rastercycle() const
 {
     return c64.rasterCycle;
 }
@@ -712,8 +712,8 @@ VICII::setMainFrameFF(bool value)
 }
 
 bool
-VICII::badLineCondition() {
-    
+VICII::badLineCondition() const
+{    
     /* A Bad Line Condition is given at any arbitrary clock cycle, if at the
      * negative edge of ø0 at the beginning of the cycle
      * [1] RASTER >= $30 and RASTER <= $f7 and
@@ -752,7 +752,7 @@ VICII::triggerIrq(u8 source)
 }
 
 u16
-VICII::lightpenX()
+VICII::lightpenX() const
 {
     u8 cycle = c64.rasterCycle;
     
@@ -782,7 +782,7 @@ VICII::lightpenX()
 }
 
 u16
-VICII::lightpenY()
+VICII::lightpenY() const
 {
     return yCounter;
 }
@@ -864,7 +864,7 @@ VICII::checkForLightpenIrqAtStartOfFrame()
 //
 
 u8
-VICII::spriteDepth(u8 nr)
+VICII::spriteDepth(u8 nr) const
 {
     return
     GET_BIT(reg.delayed.sprPriority, nr) ?
@@ -873,7 +873,7 @@ VICII::spriteDepth(u8 nr)
 }
 
 u8
-VICII::compareSpriteY()
+VICII::compareSpriteY() const
 {
     u8 result = 0;
     
