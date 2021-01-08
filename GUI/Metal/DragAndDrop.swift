@@ -96,7 +96,7 @@ public extension MetalView {
             let nsData = fileData! as NSData
             let rawPtr = nsData.bytes
             
-            let snapshot: SnapshotProxy? = try? create(buffer: rawPtr, length: length)
+            let snapshot: SnapshotProxy? = try? Proxy.create(buffer: rawPtr, length: length)
             if snapshot == nil { return false }
             
             if document.proceedWithUnexportedDisk() {

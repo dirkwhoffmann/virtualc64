@@ -11,55 +11,58 @@
 // Factory extensions
 //
 
-func create<T: MakeWithBuffer>(buffer: UnsafeRawPointer, length: Int) throws -> T {
+extension Proxy {
     
-    track()
+    static func create<T: MakeWithBuffer>(buffer: UnsafeRawPointer, length: Int) throws -> T {
+        
+        track()
+        
+        var err = ErrorCode.OK
+        let obj = T.make(withBuffer: buffer, length: length, error: &err)
+        if err != ErrorCode.OK { throw MyError(err) }
+        if obj == nil { fatalError() }
+        return obj!
+    }
     
-    var err = ErrorCode.OK
-    let obj = T.make(withBuffer: buffer, length: length, error: &err)
-    if err != ErrorCode.OK { throw MyError(err) }
-    if obj == nil { fatalError() }
-    return obj!
-}
-
-func create<T: MakeWithFile>(url: URL) throws -> T {
+    static func create<T: MakeWithFile>(url: URL) throws -> T {
+        
+        var err = ErrorCode.OK
+        let obj = T.make(withFile: url.path, error: &err)
+        if err != ErrorCode.OK { throw MyError(err) }
+        return obj!
+    }
     
-    var err = ErrorCode.OK
-    let obj = T.make(withFile: url.path, error: &err)
-    if err != ErrorCode.OK { throw MyError(err) }
-    return obj!
-}
-
-func create<T: MakeWithDisk>(disk: DiskProxy) throws -> T {
+    static func create<T: MakeWithDisk>(disk: DiskProxy) throws -> T {
+        
+        var err = ErrorCode.OK
+        let obj = T.make(withDisk: disk, error: &err)
+        if err != ErrorCode.OK { throw MyError(err) }
+        return obj!
+    }
     
-    var err = ErrorCode.OK
-    let obj = T.make(withDisk: disk, error: &err)
-    if err != ErrorCode.OK { throw MyError(err) }
-    return obj!
-}
-
-func create<T: MakeWithFileSystem>(fs: FSDeviceProxy) throws -> T {
+    static func create<T: MakeWithFileSystem>(fs: FSDeviceProxy) throws -> T {
+        
+        var err = ErrorCode.OK
+        let obj = T.make(withFileSystem: fs, error: &err)
+        if err != ErrorCode.OK { throw MyError(err) }
+        return obj!
+    }
     
-    var err = ErrorCode.OK
-    let obj = T.make(withFileSystem: fs, error: &err)
-    if err != ErrorCode.OK { throw MyError(err) }
-    return obj!
-}
-
-func create<T: MakeWithCollection>(collection: AnyCollectionProxy) throws -> T {
+    static func create<T: MakeWithCollection>(collection: AnyCollectionProxy) throws -> T {
+        
+        var err = ErrorCode.OK
+        let obj = T.make(withCollection: collection, error: &err)
+        if err != ErrorCode.OK { throw MyError(err) }
+        return obj!
+    }
     
-    var err = ErrorCode.OK
-    let obj = T.make(withCollection: collection, error: &err)
-    if err != ErrorCode.OK { throw MyError(err) }
-    return obj!
-}
-
-func create<T: MakeWithD64>(d64: D64FileProxy) throws -> T {
-    
-    var err = ErrorCode.OK
-    let obj = T.make(withD64: d64, error: &err)
-    if err != ErrorCode.OK { throw MyError(err) }
-    return obj!
+    static func create<T: MakeWithD64>(d64: D64FileProxy) throws -> T {
+        
+        var err = ErrorCode.OK
+        let obj = T.make(withD64: d64, error: &err)
+        if err != ErrorCode.OK { throw MyError(err) }
+        return obj!
+    }
 }
 
 //

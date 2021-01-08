@@ -15,7 +15,7 @@
 // Base Proxy
 //
 
-@implementation BaseProxy
+@implementation Proxy
 
 - (instancetype) initWith:(void *)ref
 {

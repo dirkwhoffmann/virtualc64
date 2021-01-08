@@ -51,7 +51,7 @@
 // Base proxies
 //
 
-@interface BaseProxy : NSObject {
+@interface Proxy : NSObject {
     
     // Reference to the wrapped C++ object
     @public void *obj;
@@ -59,7 +59,7 @@
 
 @end
 
-@interface HardwareComponentProxy : BaseProxy { }
+@interface HardwareComponentProxy : Proxy { }
 
 - (void)dump;
 
@@ -189,7 +189,7 @@
 // Guards (Breakpoints, Watchpoints)
 //
 
-@interface GuardsProxy : BaseProxy { }
+@interface GuardsProxy : Proxy { }
 
 @property (readonly) NSInteger count;
 - (NSInteger)addr:(NSInteger)nr;
@@ -582,7 +582,7 @@
 // AnyFile proxy
 //
 
-@interface AnyFileProxy : BaseProxy { }
+@interface AnyFileProxy : Proxy { }
 
 - (void)dealloc;
 
@@ -745,7 +745,7 @@ AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk> { }
 // FSDevice proxy
 //
 
-@interface FSDeviceProxy : BaseProxy <MakeWithDisk, MakeWithCollection, MakeWithD64> { }
+@interface FSDeviceProxy : Proxy <MakeWithDisk, MakeWithCollection, MakeWithD64> { }
 
 + (instancetype)makeWithD64:(D64FileProxy *)d64 error:(ErrorCode *)err;;
 + (instancetype)makeWithDisk:(DiskProxy *)disk error:(ErrorCode *)err;
