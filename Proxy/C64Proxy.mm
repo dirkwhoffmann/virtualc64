@@ -1248,7 +1248,7 @@
     [self drive]->setModifiedDisk(b);
 }
 
-- (void)insertD64:(D64FileProxy *)proxy __attribute__ ((deprecated))
+- (void)insertD64:(D64FileProxy *)proxy
 {
     [self drive]->insertD64((D64File *)proxy->obj);
 }

@@ -22,7 +22,6 @@ class ImportDialog: DialogController {
     @IBOutlet weak var carousel: iCarousel!
 
     // Proxy objects (created from the attachment when the sheet opens)
-    var d64: D64FileProxy?
     var g64: G64FileProxy?
     var tap: TAPFileProxy?
     var crt: CRTFileProxy?
@@ -89,11 +88,11 @@ class ImportDialog: DialogController {
 
         case is D64FileProxy:
 
-            d64 = myDocument.attachment as? D64FileProxy
+            let d64 = myDocument.attachment as? D64FileProxy
             volume = FSDeviceProxy.make(withD64: d64!)
             
             titleString = "Commodore 64 Floppy Disk"
-            subtitle1String = volume?.layoutInfo ?? d64?.layoutInfo ?? ""
+            subtitle1String = volume?.layoutInfo ?? ""
             subtitle2String = volume?.dos.description ?? ""
             subtitle3String = volume?.filesInfo ?? ""
             
@@ -113,7 +112,7 @@ class ImportDialog: DialogController {
             }
 
             titleString = "Commodore 64 Floppy Disk (from T64 file)"
-            subtitle1String = volume?.layoutInfo ?? d64?.layoutInfo ?? ""
+            subtitle1String = volume?.layoutInfo ?? ""
             subtitle2String = volume?.dos.description ?? ""
             subtitle3String = volume?.filesInfo ?? ""
 
@@ -124,7 +123,7 @@ class ImportDialog: DialogController {
             }
 
             titleString = "Commodore 64 Floppy Disk (from PRG file)"
-            subtitle1String = volume?.layoutInfo ?? d64?.layoutInfo ?? ""
+            subtitle1String = volume?.layoutInfo ?? ""
             subtitle2String = volume?.dos.description ?? ""
             subtitle3String = volume?.filesInfo ?? ""
 
@@ -135,7 +134,7 @@ class ImportDialog: DialogController {
             }
 
             titleString = "Commodore 64 Floppy Disk (from P00 file)"
-            subtitle1String = volume?.layoutInfo ?? d64?.layoutInfo ?? ""
+            subtitle1String = volume?.layoutInfo ?? ""
             subtitle2String = volume?.dos.description ?? ""
             subtitle3String = volume?.filesInfo ?? ""
 
@@ -311,13 +310,7 @@ class ImportDialog: DialogController {
         
         track("insertAction: \(sender.tag)")
 
-        if d64 != nil {
-            
-            track("Inserting D64")
-            drive.insertD64(d64)
-            drive.setWriteProtection(writeProtect)
-        
-        } else if volume != nil {
+        if volume != nil {
             
             track("Inserting Volume")
             drive.insertFileSystem(volume)

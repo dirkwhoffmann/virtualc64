@@ -248,17 +248,21 @@ class MyDocument: NSDocument {
     @discardableResult
     func mountAttachmentAsDisk(drive id: DriveID) -> Bool {
 
+        let drive = c64.drive(id)!
+        
         if let file = attachment as? D64FileProxy {
 
             if proceedWithUnexportedDisk(drive: id) {
-                c64.drive(id)?.insertD64(file)
+                let fs = FSDeviceProxy.make(withD64: file)
+                drive.insertFileSystem(fs)
                 return true
             }
         }
         if let file = attachment as? AnyCollectionProxy {
             
             if proceedWithUnexportedDisk(drive: id) {
-                c64.drive(id)?.insertCollection(file)
+                let fs = FSDeviceProxy.make(withCollection: file)
+                drive.insertFileSystem(fs)
                 return true
             }
         }

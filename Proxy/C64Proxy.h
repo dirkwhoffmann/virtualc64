@@ -467,10 +467,10 @@
 - (BOOL)hasModifiedDisk;
 - (void)setModifiedDisk:(BOOL)b;
 - (void)insertNewDisk:(DOSType)fstype;
-- (void)insertD64:(D64FileProxy *)disk;
+- (void)insertD64:(D64FileProxy *)disk __attribute__ ((deprecated));
 - (void)insertG64:(G64FileProxy *)disk;
 - (void)insertFileSystem:(FSDeviceProxy *)proxy;
-- (void)insertCollection:(AnyCollectionProxy *)disk;
+- (void)insertCollection:(AnyCollectionProxy *)disk __attribute__ ((deprecated));
 - (void)ejectDisk;
 - (BOOL)writeProtected;
 - (void)setWriteProtection:(BOOL)b;
