@@ -47,7 +47,7 @@ Drive::_reset()
 }
 
 long
-Drive::getConfigItem(Option option)
+Drive::getConfigItem(Option option) const
 {
     switch (option) {
             

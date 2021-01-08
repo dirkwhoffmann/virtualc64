@@ -78,15 +78,11 @@ private:
     
 public:
     
-    MemConfig getConfig() { return config; }
+    MemConfig getConfig() const { return config; }
     
-    long getConfigItem(Option option);
+    long getConfigItem(Option option) const;
     bool setConfigItem(Option option, long value) override;
     
-    /*
-    RamPattern getRamPattern() { return config.ramPattern; }
-    void setRamPattern(RamPattern pattern) { config.ramPattern = pattern; }
-    */
     
     //
     // Analyzing

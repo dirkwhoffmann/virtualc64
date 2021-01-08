@@ -114,7 +114,7 @@ C64Memory::_reset()
 }
 
 long
-C64Memory::getConfigItem(Option option)
+C64Memory::getConfigItem(Option option) const
 {
     switch (option) {
             

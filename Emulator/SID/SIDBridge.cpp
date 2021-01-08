@@ -41,7 +41,7 @@ SIDBridge::_reset()
 }
 
 long
-SIDBridge::getConfigItem(Option option)
+SIDBridge::getConfigItem(Option option) const
 {
     switch (option) {
             
@@ -70,7 +70,7 @@ SIDBridge::getConfigItem(Option option)
 }
 
 long
-SIDBridge::getConfigItem(Option option, long id)
+SIDBridge::getConfigItem(Option option, long id) const
 {
     
     switch (option) {

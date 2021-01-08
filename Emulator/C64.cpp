@@ -149,7 +149,7 @@ C64::clearInspectionTarget()
 }
 
 C64Configuration
-C64::getConfig()
+C64::getConfig() const
 {
     C64Configuration config;
     
@@ -167,7 +167,7 @@ C64::getConfig()
 }
 
 long
-C64::getConfigItem(Option option)
+C64::getConfigItem(Option option) const
 {
     switch (option) {
             
@@ -221,7 +221,7 @@ C64::getConfigItem(Option option)
 }
 
 long
-C64::getConfigItem(Option option, long id)
+C64::getConfigItem(Option option, long id) const
 {
     switch (option) {
             
@@ -238,7 +238,7 @@ C64::getConfigItem(Option option, long id)
         case OPT_DRIVE_POWER_SWITCH:
         {
             assert(isDriveID(id));
-            Drive &drive = id == DRIVE8 ? drive8 : drive9;
+            const Drive &drive = id == DRIVE8 ? drive8 : drive9;
             return drive.getConfigItem(option);
         }
         default:

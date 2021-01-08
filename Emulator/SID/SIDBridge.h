@@ -139,10 +139,10 @@ private:
     
 public:
     
-    SIDConfig getConfig() { return config; }
+    SIDConfig getConfig() const { return config; }
     
-    long getConfigItem(Option option);
-    long getConfigItem(Option option, long id);
+    long getConfigItem(Option option) const;
+    long getConfigItem(Option option, long id) const;
 
     bool setConfigItem(Option option, long value) override;
     bool setConfigItem(Option option, long id, long value) override;

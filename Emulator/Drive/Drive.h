@@ -212,9 +212,9 @@ private:
     
 public:
     
-    DriveConfig getConfig() { return config; }
+    DriveConfig getConfig() const { return config; }
     
-    long getConfigItem(Option option);
+    long getConfigItem(Option option) const;
     bool setConfigItem(Option option, long value) override;
     bool setConfigItem(Option option, long id, long value) override;
         

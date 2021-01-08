@@ -138,7 +138,7 @@ VICII::resetDmaTexture(int nr)
 }
 
 long
-VICII::getConfigItem(Option option)
+VICII::getConfigItem(Option option) const
 {
     switch (option) {
             

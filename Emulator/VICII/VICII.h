@@ -582,12 +582,12 @@ private:
     
 public:
     
-    VICConfig getConfig() { return config; }
+    VICConfig getConfig() const { return config; }
     
-    long getConfigItem(Option option);
+    long getConfigItem(Option option) const;
     bool setConfigItem(Option option, long value) override;
     
-    VICRevision getRevision() { return config.revision; }    
+    VICRevision getRevision() const { return config.revision; }    
     void setRevision(VICRevision revision);
     
     void setDmaDebugColor(MemAccess type, GpuColor color);

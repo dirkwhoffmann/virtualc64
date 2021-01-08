@@ -30,7 +30,7 @@ CIA::_reset()
 }
 
 long
-CIA::getConfigItem(Option option)
+CIA::getConfigItem(Option option) const
 {
     switch (option) {
             

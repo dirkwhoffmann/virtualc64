@@ -66,7 +66,7 @@ private:
     
 public:
     
-    MouseConfig getConfig() { return config; }
+    MouseConfig getConfig() const { return config; }
     
     MouseModel getModel() { return config.model; }
     void setModel(MouseModel model);

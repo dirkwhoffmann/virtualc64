@@ -226,11 +226,11 @@ private:
 public:
     
     // Returns the currently set configuration
-    C64Configuration getConfig();
+    C64Configuration getConfig() const;
     
     // Gets a single configuration item
-    long getConfigItem(Option option);
-    long getConfigItem(Option option, long id);
+    long getConfigItem(Option option) const;
+    long getConfigItem(Option option, long id) const;
     
     // Sets a single configuration item
     bool configure(Option option, long value);
