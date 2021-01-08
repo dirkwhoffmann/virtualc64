@@ -4,7 +4,7 @@
 
 ### About
 
-VirtualC64 emulates a Commodore 64 on your Apple Macintosh. TThis project attempts to create an emulator that combines three key objectives: A high emulation accuracy, an easy-to-use interface, and a well-documented and easy-to-understand code base. VirtualC64 has a long development history under its belt. Originally, the emulator was intended as a demonstration of a virtual CPU environment that can be used in a one-year or two-year course on computer engineering. Over the years, VirtualC64 has become more and more accurate and evolved into a full-blown emulator.
+VirtualC64 emulates a Commodore 64 on your Apple Macintosh. The project attempts to create an emulator that combines three key objectives: A high emulation accuracy, an easy-to-use interface, and a well-documented and easy-to-understand code base. VirtualC64 has a long development history under its belt. Originally, the emulator was intended as a demonstrator of a virtual CPU environment that can be used in a one-year or two-year course on computer engineering. Over the years, VirtualC64 has become more and more accurate and evolved into a full-blown emulator.
 
 <img width="461" alt="Bildschirmfoto 2021-01-08 um 15 51 16" src="https://user-images.githubusercontent.com/12561945/104055957-f090ff00-51ef-11eb-8de8-e2ff5b925269.png">
 
@@ -25,4 +25,5 @@ At present, the emulator supports only a limited number of third-party game cont
 ### Where to go from here?
 
 - [VirtualC64 Homepage](http://www.dirkwhoffmann.de/software/virtualc64.html)
+- [VirtualC64 Web](https://github.com/dirkwhoffmann/virtualc64web)
 - [vAmiga](https://github.com/dirkwhoffmann/vAmiga)
