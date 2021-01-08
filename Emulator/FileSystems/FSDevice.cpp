@@ -165,15 +165,6 @@ FSDevice::makeWithFolder(const std::string &path, ErrorCode *err)
     return nullptr;
 }
 
-/*
-FSDevice *
-FSDevice::makeWithFolder(const char *path, ErrorCode *err)
-{
-    assert(path);
-    return makeWithFolder(std::string(path), err);
-}
-*/
-
 FSDevice::FSDevice(u32 capacity)
 {
     debug(FS_DEBUG, "Creating device with %d blocks\n", capacity);

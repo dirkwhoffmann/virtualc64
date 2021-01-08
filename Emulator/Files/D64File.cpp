@@ -50,25 +50,6 @@ D64File::D64File(unsigned tracks, bool ecc) : D64File()
     data = new u8[size]();
 }
 
-/*
-D64File *
-D64File::makeWithDisk(Disk &disk)
-{
-    u8 buffer[D64_802_SECTORS];
-    
-    // Serialize disk data into a byte stream
-    usize len = disk.decodeDisk(buffer);
-
-    // Check if the disk has been fully decoded
-    if (len != D64_683_SECTORS && len != D64_768_SECTORS && len != D64_802_SECTORS) {
-        return nullptr;
-    }
-    
-    // Create object from byte stream
-    return make <D64File> (buffer, len);
-}
-*/
-
 D64File *
 D64File::makeWithFileSystem(FSDevice &volume)
 {

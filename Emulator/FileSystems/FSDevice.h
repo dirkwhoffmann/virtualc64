@@ -53,7 +53,6 @@ public:
     
     static FSDevice *makeWithFolder(const std::string &path) throws;
     static FSDevice *makeWithFolder(const std::string &path, ErrorCode *err);
-    [[deprecated]] static FSDevice *makeWithFolder(const char *path, ErrorCode *err);
 
     
     //

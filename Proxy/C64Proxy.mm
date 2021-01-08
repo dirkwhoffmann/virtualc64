@@ -1793,26 +1793,10 @@
 {
     return [self make: AnyFile::make <D64File> ((const u8 *)buf, len, err)];
 }
-/*
-+ (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err
-{
-    Disk *disk = (Disk *)proxy->obj;
-    return [self make: AnyFile::make <D64File> (*disk, err)];
-}
-*/
+
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err
 {
     return [self make: AnyFile::make <D64File> (*(FSDevice *)proxy->obj, err)];
-}
-
-- (NSInteger)numTracks
-{
-    return [self d64]->numTracks();
-}
-
-- (NSInteger)numHalftracks
-{
-    return [self d64]->numHalftracks();
 }
 
 @end
