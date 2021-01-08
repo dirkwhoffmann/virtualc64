@@ -302,7 +302,7 @@ public:
      * address of the currently executed command, even if some microcycles of
      * the command have already been computed.
      */
-    u16 getPC0() { return reg.pc0; }
+    u16 getPC0() const { return reg.pc0; }
     
     void jumpToAddress(u16 addr) { reg.pc0 = reg.pc = addr; next = fetch; }
     void setPCL(u8 lo) { reg.pc = (reg.pc & 0xff00) | lo; }
@@ -311,29 +311,29 @@ public:
     void incPCL(u8 offset = 1) { setPCL(LO_BYTE(reg.pc) + offset); }
     void incPCH(u8 offset = 1) { setPCH(HI_BYTE(reg.pc) + offset); }
 
-    bool getN() { return reg.sr.n; }
+    bool getN() const { return reg.sr.n; }
     void setN(bool value) { reg.sr.n = value; }
     
-    bool getV() { return reg.sr.v; }
+    bool getV() const { return reg.sr.v; }
     void setV(bool value) { reg.sr.v = value; }
     
-    bool getB() { return reg.sr.b; }
+    bool getB() const { return reg.sr.b; }
     void setB(bool value) { reg.sr.b = value; }
     
-    bool getD() { return reg.sr.d; }
+    bool getD() const { return reg.sr.d; }
     void setD(bool value) { reg.sr.d = value; }
     
-    bool getI() { return reg.sr.i; }
+    bool getI() const { return reg.sr.i; }
     void setI(bool value) { reg.sr.i = value; }
     
-    bool getZ() { return reg.sr.z; }
+    bool getZ() const { return reg.sr.z; }
     void setZ(bool value) { reg.sr.z = value; }
     
-    bool getC() { return reg.sr.c; }
+    bool getC() const { return reg.sr.c; }
     void setC(bool value) { reg.sr.c = value; }
     
-    u8 getP();
-    u8 getPWithClearedB();
+    u8 getP() const;
+    u8 getPWithClearedB() const;
     void setP(u8 p);
     void setPWithoutB(u8 p);
     
@@ -375,10 +375,10 @@ public:
 public:
 
     // Returns true if the CPU is jammed
-    bool isJammed() { return next == JAM || next == JAM_2; }
+    bool isJammed() const { return next == JAM || next == JAM_2; }
     
     // Returns true if the next cycle marks the beginning of an instruction
-    bool inFetchPhase() { return next == fetch; }
+    bool inFetchPhase() const { return next == fetch; }
 
     // Executes the next micro instruction
     void executeOneCycle();

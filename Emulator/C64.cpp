@@ -92,7 +92,7 @@ C64::~C64()
 }
 
 void
-C64::prefix()
+C64::prefix() const
 {
     fprintf(stderr, "[%lld] (%3d,%3d) %04X ", frame, rasterLine, rasterCycle, cpu.getPC0());
 }

@@ -91,7 +91,7 @@ CPU<M>::_dump() const
 }
 
 template <typename M> u8
-CPU<M>::getP()
+CPU<M>::getP() const
 {
     u8 result = 0b00100000;
     
@@ -108,7 +108,7 @@ CPU<M>::getP()
 }
 
 template <typename M> u8
-CPU<M>::getPWithClearedB()
+CPU<M>::getPWithClearedB() const
 {
     return getP() & ~B_FLAG;
 }
@@ -193,8 +193,8 @@ template void    CPU<C64Memory>::_dump() const;
 template void    CPU<C64Memory>::_setDebug(bool enable);
 template void    CPU<C64Memory>::_reset();
 template void    CPU<C64Memory>::_inspect();
-template u8      CPU<C64Memory>::getP();
-template u8      CPU<C64Memory>::getPWithClearedB();
+template u8      CPU<C64Memory>::getP() const;
+template u8      CPU<C64Memory>::getPWithClearedB() const;
 template void    CPU<C64Memory>::setP(u8 p);
 template void    CPU<C64Memory>::setPWithoutB(u8 p);
 template void    CPU<C64Memory>::pullDownNmiLine(IntSource source);
@@ -209,8 +209,8 @@ template void    CPU<DriveMemory>::_dump() const;
 template void    CPU<DriveMemory>::_setDebug(bool enable);
 template void    CPU<DriveMemory>::_reset();
 template void    CPU<DriveMemory>::_inspect();
-template u8      CPU<DriveMemory>::getP();
-template u8      CPU<DriveMemory>::getPWithClearedB();
+template u8      CPU<DriveMemory>::getP() const;
+template u8      CPU<DriveMemory>::getPWithClearedB() const;
 template void    CPU<DriveMemory>::setP(u8 p);
 template void    CPU<DriveMemory>::setPWithoutB(u8 p);
 template void    CPU<DriveMemory>::pullDownNmiLine(IntSource source);

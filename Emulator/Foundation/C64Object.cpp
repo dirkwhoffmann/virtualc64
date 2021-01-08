@@ -10,7 +10,7 @@
 #include "C64Object.h"
 
 void
-C64Object::prefix()
+C64Object::prefix() const
 {
     fprintf(stderr, "%s: ", getDescription());
 }
