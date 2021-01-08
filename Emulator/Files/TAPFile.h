@@ -34,7 +34,7 @@ public:
     // Methods from AnyFile
     //
     
-    FileType type() override { return FILETYPE_TAP; }
+    FileType type() const override { return FILETYPE_TAP; }
     PETName<16> getName() override;
     
     

@@ -40,7 +40,7 @@ public:
     // Methods from AnyFile
     //
 
-    FileType type() override { return FILETYPE_PRG; }
+    FileType type() const override { return FILETYPE_PRG; }
     
     
     //

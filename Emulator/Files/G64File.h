@@ -46,7 +46,7 @@ public:
     // Methods from AnyFile
     //
     
-    FileType type() override { return FILETYPE_G64; }
+    FileType type() const override { return FILETYPE_G64; }
         
   
     //

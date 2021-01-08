@@ -52,7 +52,7 @@ public:
     //
     
     PETName<16> getName() override;
-    FileType type() override { return FILETYPE_CRT; }
+    FileType type() const override { return FILETYPE_CRT; }
     usize readFromStream(std::istream &stream) override;
 
     

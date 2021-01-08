@@ -40,7 +40,7 @@ public:
     // Methods from AnyFile
     //
     
-    FileType type() override { return FILETYPE_T64; }
+    FileType type() const override { return FILETYPE_T64; }
     PETName<16> getName() override;
         
 

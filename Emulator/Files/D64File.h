@@ -11,20 +11,21 @@
 
 #include "AnyFile.h"
 
-// D64 files come in six different sizes
-#define D64_683_SECTORS 174848
-#define D64_683_SECTORS_ECC 175531
-#define D64_768_SECTORS 196608
-#define D64_768_SECTORS_ECC 197376
-#define D64_802_SECTORS 205312
-#define D64_802_SECTORS_ECC 206114
 
 class D64File : public AnyFile {
-        
+
+public:
+    
+    // D64 files come in six different sizes
+    static const usize D64_683_SECTORS     = 174848;
+    static const usize D64_683_SECTORS_ECC = 175531;
+    static const usize D64_768_SECTORS     = 196608;
+    static const usize D64_768_SECTORS_ECC = 197376;
+    static const usize D64_802_SECTORS     = 205312;
+    static const usize D64_802_SECTORS_ECC = 206114;
+    
     // Error information stored in the D64 archive
     u8 errors[802];
-    
-public:
     
     static bool isCompatibleName(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
@@ -52,7 +53,7 @@ public:
     // Methods from AnyFile
     //
     
-    FileType type() override { return FILETYPE_D64; }
+    FileType type() const override { return FILETYPE_D64; }
     PETName<16> getName() override;
     usize readFromStream(std::istream &stream) override;
 

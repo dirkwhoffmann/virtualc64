@@ -66,7 +66,7 @@ public:
     // Methods from AnyFile
     //
         
-    FileType type() override { return FILETYPE_V64; }
+    FileType type() const override { return FILETYPE_V64; }
     
     
     //

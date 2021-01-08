@@ -166,7 +166,7 @@ public:
     virtual PETName<16> getName();
 
     // Returns the media type of this file
-    virtual FileType type() { return FILETYPE_UNKNOWN; }
+    virtual FileType type() const { return FILETYPE_UNKNOWN; }
      
     // Returns a unique fingerprint
     u64 fnv();

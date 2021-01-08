@@ -49,7 +49,7 @@ public:
     // Methods from AnyFile
     //
 
-    FileType type() override { return FILETYPE_FOLDER; }
+    FileType type() const override { return FILETYPE_FOLDER; }
     
     
     //

@@ -74,6 +74,6 @@ public:
     // Methods from AnyFile
     //
     
-    FileType type() override { return romType; }
+    FileType type() const override { return romType; }
     usize readFromStream(std::istream &stream) override;
 };

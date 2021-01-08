@@ -58,16 +58,16 @@ FSDevice *
 FSDevice::makeWithDisk(class Disk &disk, ErrorCode *err)
 {
     // Translate the GCR stream into a byte stream
-    u8 buffer[D64_802_SECTORS];
+    u8 buffer[D64File::D64_802_SECTORS];
     usize len = disk.decodeDisk(buffer);
     
     // Create a suitable device descriptor
     FSDeviceDescriptor descriptor = FSDeviceDescriptor(DISK_TYPE_SS_SD);
     switch (len) {
             
-        case D64_683_SECTORS: descriptor.numCyls = 35; break;
-        case D64_768_SECTORS: descriptor.numCyls = 40; break;
-        case D64_802_SECTORS: descriptor.numCyls = 42; break;
+        case D64File::D64_683_SECTORS: descriptor.numCyls = 35; break;
+        case D64File::D64_768_SECTORS: descriptor.numCyls = 40; break;
+        case D64File::D64_802_SECTORS: descriptor.numCyls = 42; break;
 
         default:
             *err = ERROR_FS_CORRUPTED;
