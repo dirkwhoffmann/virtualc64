@@ -16,7 +16,11 @@ When the emulator launches for the first time, you will be prompted to add four 
 
 With VirtualC64 I tried to create a virtual computer that is as transparent as possible. For this purpose the emulator offers numerous panels that allow to inspect and monitor the individual components of the C64. In addition, it is possible to stop the computer any time and single-step through the currently executed program.
 
-![inspectors](https://user-images.githubusercontent.com/12561945/104055815-ac056380-51ef-11eb-98f9-416faa9522eb.png)
+<p float="left">
+<img width="250" src="https://user-images.githubusercontent.com/12561945/104067844-30fa7800-5204-11eb-964d-849742d8ab6b.png"> 
+<img width="250" src="https://user-images.githubusercontent.com/12561945/104067941-5d15f900-5204-11eb-9cc7-b299c1785e70.png">
+<img width="250" src="https://user-images.githubusercontent.com/12561945/104068377-1674ce80-5205-11eb-823b-d13d525042a2.png">
+</p>
 
 ### Third-party gamepad support
 
