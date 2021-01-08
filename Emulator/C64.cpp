@@ -130,7 +130,7 @@ C64::_reset()
 }
 
 InspectionTarget
-C64::getInspectionTarget()
+C64::getInspectionTarget() const
 {
     return inspectionTarget;
 }
@@ -142,11 +142,13 @@ C64::setInspectionTarget(InspectionTarget target)
     inspectionTarget = target;
 }
 
+/*
 void
 C64::clearInspectionTarget()
 {
     inspectionTarget = INSPECTION_TARGET_NONE;
 }
+*/
 
 C64Configuration
 C64::getConfig() const
@@ -323,7 +325,7 @@ C64::setConfigItem(Option option, long value)
 }
 
 C64Model
-C64::getModel()
+C64::getModel() const
 {
     VICRevision vicref = (VICRevision)vic.getConfigItem(OPT_VIC_REVISION);
     bool grayDotBug    = vic.getConfigItem(OPT_GRAY_DOT_BUG);

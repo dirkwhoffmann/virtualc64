@@ -1963,13 +1963,6 @@
     [self c64]->setInspectionTarget(target);
 }
 
-/*
-- (void)clearInspectionTarget
-{
-    [self c64]->clearInspectionTarget();
-}
-*/
-
 - (BOOL)isReady:(ErrorCode *)err
 {
     return [self c64]->isReady(err);

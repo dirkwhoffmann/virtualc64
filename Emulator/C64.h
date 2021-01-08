@@ -240,7 +240,7 @@ public:
     void configure(C64Model model);
 
     // Returns the C64 model matching the current configuration
-    C64Model getModel();
+    C64Model getModel() const;
         
     // Updates the VICII function table according to the selected model
     void updateVicFunctionTable();
@@ -257,9 +257,9 @@ private:
 public:
        
     void inspect();
-    InspectionTarget getInspectionTarget();
+    InspectionTarget getInspectionTarget() const;
     void setInspectionTarget(InspectionTarget target);
-    void clearInspectionTarget();
+    void clearInspectionTarget() { setInspectionTarget(INSPECTION_TARGET_NONE); }
     
 private:
     
