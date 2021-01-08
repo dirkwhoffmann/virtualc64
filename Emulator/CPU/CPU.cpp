@@ -22,6 +22,15 @@ CPU<M>::CPU(C64& ref, M& memref) : C64Component(ref), mem(memref)
 	registerInstructions();
 }
 
+template<> CPURevision CPU<C64Memory>::model() const { return MOS_6510; }
+template<> CPURevision CPU<DriveMemory>::model() const { return MOS_6502; }
+
+template<> bool CPU<C64Memory>::isC64CPU() const { return true; }
+template<> bool CPU<DriveMemory>::isC64CPU() const { return false; }
+
+template<> bool CPU<C64Memory>::isDriveCPU() const { return false; }
+template<> bool CPU<DriveMemory>::isDriveCPU() const { return true; }
+
 template <typename M> void
 CPU<M>::_reset()
 {

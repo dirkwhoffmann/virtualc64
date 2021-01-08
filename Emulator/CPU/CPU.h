@@ -24,16 +24,11 @@ class CPU : public C64Component {
     friend class CPUDebugger;
     friend class Breakpoints;
     friend class Watchpoints;
-        
-private:
-    
+            
     // Result of the latest inspection
     CPUInfo info;
+        
     
-    // Address of the first disassembled instruction in memory
-    // u16 instrStart;
-    
-
     //
     // Sub components
     //
@@ -58,9 +53,9 @@ public:
     
 public:
     
-    virtual CPURevision model() = 0;
-    virtual bool isC64CPU() = 0;
-    virtual bool isDriveCPU() = 0;
+    CPURevision model() const;
+    bool isC64CPU() const;
+    bool isDriveCPU() const;
 
     
     //
@@ -405,10 +400,6 @@ public:
     
     C64CPU(C64& ref, C64Memory& memref) : CPU(ref, memref) { }
     const char *getDescription() const override { return "CPU"; }
-    
-    CPURevision model() override { return MOS_6510; }
-    bool isC64CPU() override { return true; }
-    bool isDriveCPU() override { return false; }
 };
 
 
@@ -421,9 +412,5 @@ class DriveCPU : public CPU<DriveMemory> {
 public:
     
     DriveCPU(C64& ref, DriveMemory &memref) : CPU(ref, memref) { }
-    const char *getDescription() const override { return "DriveCPU"; }
-    
-    CPURevision model() override { return MOS_6502; }
-    bool isC64CPU() override { return false; }
-    bool isDriveCPU() override { return true; }
+    const char *getDescription() const override { return "DriveCPU"; }    
 };
