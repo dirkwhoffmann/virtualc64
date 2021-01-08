@@ -18,6 +18,8 @@ When the emulator launches for the first time, you will be prompted to add four 
 
 With VirtualC64 I tried to create a virtual computer that is as transparent as possible. For this purpose the emulator offers numerous panels that allow to inspect and monitor the individual components of the C64. In addition, it is possible to stop the computer any time and single-step through the currently executed program.
 
+![inspectors](https://user-images.githubusercontent.com/12561945/104055815-ac056380-51ef-11eb-98f9-416faa9522eb.png)
+
 ### Third-party gamepad support
 
 At present, the emulator supports only a limited number of third-party game controllers. However, I am trying to expand the list of supported devices constantly. Since I can only make the necessary code changes for devices in my possession, I have created an [Amazon wish list](https://www.amazon.de/hz/wishlist/ls/35K6X4B0FIEOF?ref_=wl_share) containing a number of yet incompatible devices. If you want to have another controller supported, please let me know the exact model name. I will then add it to the wishlist, and with a bit of luck, a noble donor will be found who will order the device. 
