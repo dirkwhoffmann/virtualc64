@@ -29,7 +29,7 @@ public:
     static bool isCompatibleName(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
   
-    static D64File *makeWithDisk(class Disk &disk) throws;
+    [[deprecated]] static D64File *makeWithDisk(class Disk &disk) throws;
     static D64File *makeWithFileSystem(class FSDevice &volume) throws;
 
 
@@ -58,7 +58,7 @@ public:
 
         
     //
-    // Accessing tracks and sectors
+    // Querying properties
     //
     
 public:

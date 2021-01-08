@@ -155,11 +155,12 @@ extension AnyFileProxy {
 }
 
 extension D64FileProxy {
-       
+    /*
     var layoutInfo: String {
 
         return "Single sided, single density disk with \(numTracks) tracks"
     }
+    */
 }
 
 extension CRTFileProxy {

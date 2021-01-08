@@ -39,22 +39,12 @@ public:
     
 public:
 
-    // Creates a file system with a custom device descriptor
     static FSDevice *makeWithFormat(FSDeviceDescriptor &layout);
-
-    // Creates a file system for a standard floppy disk
     static FSDevice *makeWithType(DiskType type, DOSType vType = DOS_TYPE_NODOS);
-
-    // Creates a file system from a D64 image
     static FSDevice *makeWithD64(class D64File *d64, ErrorCode *err);
-
-    // Creates a file system from a GCR encoded disk
     static FSDevice *makeWithDisk(class Disk &disk, ErrorCode *err);
-
-    // Creates a file from an object implementing the AnyCollection interface
     static FSDevice *makeWithCollection(AnyCollection *collection);
 
-    // Creates a file system with the files from a disk folder
     static FSDevice *makeWithFolder(const std::string &path, ErrorCode *err);
     static FSDevice *makeWithFolder(const char *path, ErrorCode *err);
 

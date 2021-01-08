@@ -401,8 +401,8 @@ class ExportDialog: DialogController {
         var text = "This disk contains un unknown track and sector format"
         var color = NSColor.warningColor
         
-        if d64 != nil {
-            text = d64!.layoutInfo
+        if volume != nil {
+            text = volume!.layoutInfo
             color = .secondaryLabelColor
         }
 

@@ -699,15 +699,15 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 //
 
 @interface D64FileProxy :
-AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk, MakeWithFileSystem> { }
+AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 
 + (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
-+ (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err;
+// + (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err __attribute__ ((deprecated));
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err;
 
-@property (readonly) NSInteger numTracks;
-@property (readonly) NSInteger numHalftracks;
+@property (readonly) NSInteger numTracks __attribute__ ((deprecated));
+@property (readonly) NSInteger numHalftracks __attribute__ ((deprecated));
 
 @end
 

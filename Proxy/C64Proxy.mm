@@ -1794,13 +1794,13 @@
 {
     return [self make: AnyFile::make <D64File> ((const u8 *)buf, len, err)];
 }
-
+/*
 + (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err
 {
     Disk *disk = (Disk *)proxy->obj;
     return [self make: AnyFile::make <D64File> (*disk, err)];
 }
-
+*/
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err
 {
     return [self make: AnyFile::make <D64File> (*(FSDevice *)proxy->obj, err)];
@@ -1860,7 +1860,8 @@
 
 + (instancetype)makeWithFolder:(NSString *)path error:(ErrorCode *)err
 {
-    return [self make: Folder::makeWithFolder([path fileSystemRepresentation], err)];
+    std::string str = string([path fileSystemRepresentation]);
+    return [self make: Folder::makeWithFolder(str, err)];
 }
 
 - (Folder *)folder
