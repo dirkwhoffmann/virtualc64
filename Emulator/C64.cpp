@@ -778,7 +778,7 @@ C64::acquireThreadLock()
 }
 
 bool
-C64::isReady(ErrorCode *err)
+C64::isReady(ErrorCode *err) const
 {
     bool mega = hasMega65Rom(ROM_TYPE_BASIC) && hasMega65Rom(ROM_TYPE_KERNAL);
     
@@ -1170,7 +1170,7 @@ C64::loadFromSnapshot(Snapshot *snapshot)
 }
 
 u32
-C64::romCRC32(RomType type)
+C64::romCRC32(RomType type) const
 {
     switch (type) {
             
@@ -1188,7 +1188,7 @@ C64::romCRC32(RomType type)
 }
 
 u64
-C64::romFNV64(RomType type)
+C64::romFNV64(RomType type) const
 {
     switch (type) {
             
@@ -1206,13 +1206,13 @@ C64::romFNV64(RomType type)
 }
 
 RomIdentifier
-C64::romIdentifier(RomType type)
+C64::romIdentifier(RomType type) const
 {
     return RomFile::identifier(romFNV64(type));
 }
 
 const char *
-C64::romTitle(RomType type)
+C64::romTitle(RomType type) const
 {
     switch (type) {
             
@@ -1251,7 +1251,7 @@ C64::romTitle(RomType type)
 }
 
 const char *
-C64::romSubTitle(u64 fnv)
+C64::romSubTitle(u64 fnv) const
 {
     RomIdentifier rev = RomFile::identifier(fnv);
     
@@ -1263,7 +1263,7 @@ C64::romSubTitle(u64 fnv)
 }
 
 const char *
-C64::romSubTitle(RomType type)
+C64::romSubTitle(RomType type) const
 {
     switch (type) {
             
@@ -1298,7 +1298,7 @@ C64::romSubTitle(RomType type)
 }
 
 const char *
-C64::romRevision(RomType type)
+C64::romRevision(RomType type) const
 {
     switch (type) {
              
@@ -1330,7 +1330,7 @@ C64::romRevision(RomType type)
 }
 
 bool
-C64::hasRom(RomType type)
+C64::hasRom(RomType type) const
 {
     switch (type) {
             
@@ -1358,7 +1358,7 @@ C64::hasRom(RomType type)
 }
 
 bool
-C64::hasMega65Rom(RomType type)
+C64::hasMega65Rom(RomType type) const
 {
     switch (type) {
             
@@ -1385,7 +1385,7 @@ C64::hasMega65Rom(RomType type)
 }
 
 char *
-C64::mega65BasicRev()
+C64::mega65BasicRev() const
 {
     static char rev[17];
     rev[0] = 0;
@@ -1397,7 +1397,7 @@ C64::mega65BasicRev()
 }
 
 char *
-C64::mega65KernalRev()
+C64::mega65KernalRev() const
 {
     static char rev[17];
     rev[0] = 0;

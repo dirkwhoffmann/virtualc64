@@ -311,10 +311,10 @@ public:
     void pause();
     
     void setWarp(bool enable);
-    bool inWarpMode() { return warpMode; }
+    bool inWarpMode() const { return warpMode; }
 
     void setDebug(bool enable);
-    bool inDebugMode() { return debugMode; }
+    bool inDebugMode() const { return debugMode; }
     
 private:
 
@@ -342,7 +342,7 @@ public:
     /* Returns true if a call to powerOn() will be successful.
      * It returns false, e.g., if no Rom is installed.
      */
-    bool isReady(ErrorCode *err = nullptr);
+    bool isReady(ErrorCode *err = nullptr) const;
     
     
     //
@@ -516,31 +516,31 @@ public:
 public:
     
     // Computes a Rom checksum
-    u32 romCRC32(RomType type);
-    u64 romFNV64(RomType type);
+    u32 romCRC32(RomType type) const;
+    u64 romFNV64(RomType type) const;
      
     // Returns a unique identifier for the installed ROMs
-    RomIdentifier romIdentifier(RomType type);
+    RomIdentifier romIdentifier(RomType type) const;
     
     // Returns printable titles for the installed ROMs
-    const char *romTitle(RomType type);
+    const char *romTitle(RomType type) const;
     
     // Returns printable sub titles for the installed ROMs
-    const char *romSubTitle(u64 fnv);
-    const char *romSubTitle(RomType type);
+    const char *romSubTitle(u64 fnv) const;
+    const char *romSubTitle(RomType type) const;
     
     // Returns printable revision strings or hash values for the installed ROMs
-    const char *romRevision(RomType type);
+    const char *romRevision(RomType type) const;
     
     // Checks if a certain Rom is present
-    bool hasRom(RomType type);
-    bool hasMega65Rom(RomType type);
+    bool hasRom(RomType type) const;
+    bool hasMega65Rom(RomType type) const;
 
 private:
     
     // Returns a revision string if a Mega65 Rom is installed
-    char *mega65BasicRev();
-    char *mega65KernalRev();
+    char *mega65BasicRev() const;
+    char *mega65KernalRev() const;
 
 public:
     

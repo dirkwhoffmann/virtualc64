@@ -260,7 +260,7 @@ streamLength(std::istream &stream)
 }
 
 u32
-fnv_1a_32(u8 *addr, usize size)
+fnv_1a_32(const u8 *addr, usize size)
 {
     if (addr == nullptr || size == 0) return 0;
 
@@ -274,7 +274,7 @@ fnv_1a_32(u8 *addr, usize size)
 }
 
 u64
-fnv_1a_64(u8 *addr, usize size)
+fnv_1a_64(const u8 *addr, usize size)
 {
     if (addr == nullptr || size == 0) return 0;
 
