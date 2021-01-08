@@ -43,7 +43,7 @@ public:
     static FSDevice *makeWithType(DiskType type, DOSType vType = DOS_TYPE_NODOS);
     static FSDevice *makeWithD64(class D64File &d64, ErrorCode *err);
     static FSDevice *makeWithDisk(class Disk &disk, ErrorCode *err);
-    static FSDevice *makeWithCollection(AnyCollection *collection);
+    static FSDevice *makeWithCollection(AnyCollection &collection, ErrorCode *err);
 
     static FSDevice *makeWithFolder(const std::string &path, ErrorCode *err);
     static FSDevice *makeWithFolder(const char *path, ErrorCode *err);

@@ -157,11 +157,10 @@ Disk::makeWithG64(C64 &ref, G64File *g64)
 }
 
 Disk *
-Disk::makeWithCollection(C64 &ref, AnyCollection *collection)
+Disk::makeWithCollection(C64 &ref, AnyCollection &collection)
 {
-    assert(collection);
-        
-    FSDevice *fs = FSDevice::makeWithCollection(collection);
+    ErrorCode err;
+    FSDevice *fs = FSDevice::makeWithCollection(collection, &err);
     assert(fs);
     
     Disk *disk = makeWithFileSystem(ref, *fs);

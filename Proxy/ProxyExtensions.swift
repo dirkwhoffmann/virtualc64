@@ -46,6 +46,22 @@ func create<T: MakeWithFileSystem>(fs: FSDeviceProxy) throws -> T {
     return obj!
 }
 
+func create<T: MakeWithCollection>(collection: AnyCollectionProxy) throws -> T {
+    
+    var err = ErrorCode.OK
+    let obj = T.make(withCollection: collection, error: &err)
+    if err != ErrorCode.OK { throw MyError(err) }
+    return obj!
+}
+
+func create<T: MakeWithD64>(d64: D64FileProxy) throws -> T {
+    
+    var err = ErrorCode.OK
+    let obj = T.make(withD64: d64, error: &err)
+    if err != ErrorCode.OK { throw MyError(err) }
+    return obj!
+}
+
 //
 // Exception passing
 //
@@ -68,7 +84,7 @@ extension AnyFileProxy {
 }
 
 extension FSDeviceProxy {
-    
+        
     func exportDirectory(url: URL) throws {
             
         var err = ErrorCode.OK

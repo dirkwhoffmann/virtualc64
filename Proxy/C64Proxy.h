@@ -562,12 +562,21 @@
 @end
 
 @protocol MakeWithDisk
-+ (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err;
++ (instancetype)makeWithDisk:(DiskProxy *)disk error:(ErrorCode *)err;
 @end
 
 @protocol MakeWithFileSystem
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err;
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)fs error:(ErrorCode *)err;
 @end
+
+@protocol MakeWithCollection
++ (instancetype)makeWithCollection:(AnyCollectionProxy *)collection error:(ErrorCode *)err;
+@end
+
+@protocol MakeWithD64
++ (instancetype)makeWithD64:(D64FileProxy *)d64 error:(ErrorCode *)err;
+@end
+
 
 //
 // AnyFile proxy
@@ -740,11 +749,11 @@ AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk> { }
 // FSDevice proxy
 //
 
-@interface FSDeviceProxy : BaseProxy <MakeWithDisk> { }
+@interface FSDeviceProxy : BaseProxy <MakeWithDisk, MakeWithCollection, MakeWithD64> { }
 
-+ (instancetype)makeWithD64:(D64FileProxy *)proxy;
-+ (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err;
-+ (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy;
++ (instancetype)makeWithD64:(D64FileProxy *)d64 error:(ErrorCode *)err;;
++ (instancetype)makeWithDisk:(DiskProxy *)disk error:(ErrorCode *)err;
++ (instancetype)makeWithCollection:(AnyCollectionProxy *)collection error:(ErrorCode *)err;
 
 @property (readonly) DOSType dos;
 @property (readonly) NSInteger numCyls;

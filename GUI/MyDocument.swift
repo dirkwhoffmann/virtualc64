@@ -253,17 +253,19 @@ class MyDocument: NSDocument {
         if let file = attachment as? D64FileProxy {
 
             if proceedWithUnexportedDisk(drive: id) {
-                let fs = FSDeviceProxy.make(withD64: file)
-                drive.insertFileSystem(fs)
-                return true
+                if let fs = try? create(d64: file) as FSDeviceProxy {
+                    drive.insertFileSystem(fs)
+                    return true
+                }
             }
         }
         if let file = attachment as? AnyCollectionProxy {
             
             if proceedWithUnexportedDisk(drive: id) {
-                let fs = FSDeviceProxy.make(withCollection: file)
-                drive.insertFileSystem(fs)
-                return true
+                if let fs = try? create(collection: file) as FSDeviceProxy {
+                    drive.insertFileSystem(fs)
+                    return true
+                }
             }
         }
         return false

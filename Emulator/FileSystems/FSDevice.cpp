@@ -87,29 +87,27 @@ FSDevice::makeWithDisk(class Disk &disk, ErrorCode *err)
 }
 
 FSDevice *
-FSDevice::makeWithCollection(AnyCollection *collection)
+FSDevice::makeWithCollection(AnyCollection &collection, ErrorCode *err)
 {
-    assert(collection);
-        
     // Create the device
     FSDevice *device = makeWithType(DISK_TYPE_SS_SD);
     assert(device);
     
     // Write BAM
-    auto name = PETName<16>(collection->collectionName());
+    auto name = PETName<16>(collection.collectionName());
     device->bamPtr()->writeBAM(name);
 
     // Loop over all items
-    u32 numberOfItems = (u32)collection->collectionCount();
+    u32 numberOfItems = (u32)collection.collectionCount();
     for (u32 i = 0; i < numberOfItems; i++) {
         
         // Serialize item into a buffer
-        u64 size = collection->itemSize(i);
+        u64 size = collection.itemSize(i);
         u8 *buffer = new u8[size];
-        collection->copyItem(i, buffer, size);
+        collection.copyItem(i, buffer, size);
         
         // Create a file for this item
-        device->makeFile(collection->itemName(i), buffer, size);
+        device->makeFile(collection.itemName(i), buffer, size);
         delete[] buffer;
     }
     

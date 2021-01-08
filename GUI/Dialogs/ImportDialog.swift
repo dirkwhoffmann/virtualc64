@@ -88,9 +88,10 @@ class ImportDialog: DialogController {
 
         case is D64FileProxy:
 
-            let d64 = myDocument.attachment as? D64FileProxy
-            volume = FSDeviceProxy.make(withD64: d64!)
-            
+            if let d64 = myDocument.attachment as? D64FileProxy {
+                volume = try? create(d64: d64) as FSDeviceProxy
+            }
+                                                                            
             titleString = "Commodore 64 Floppy Disk"
             subtitle1String = volume?.layoutInfo ?? ""
             subtitle2String = volume?.dos.description ?? ""
@@ -107,8 +108,8 @@ class ImportDialog: DialogController {
 
         case is T64FileProxy:
             
-            if let c = myDocument.attachment as? AnyCollectionProxy {
-                volume = FSDeviceProxy.make(withCollection: c)
+            if let coll = myDocument.attachment as? AnyCollectionProxy {
+                volume = try? create(collection: coll) as FSDeviceProxy
             }
 
             titleString = "Commodore 64 Floppy Disk (from T64 file)"
@@ -118,8 +119,8 @@ class ImportDialog: DialogController {
 
         case is PRGFileProxy:
             
-            if let c = myDocument.attachment as? AnyCollectionProxy {
-                volume = FSDeviceProxy.make(withCollection: c)
+            if let coll = myDocument.attachment as? AnyCollectionProxy {
+                volume = try? create(collection: coll) as FSDeviceProxy
             }
 
             titleString = "Commodore 64 Floppy Disk (from PRG file)"
@@ -129,8 +130,8 @@ class ImportDialog: DialogController {
 
         case is P00FileProxy:
             
-            if let c = myDocument.attachment as? AnyCollectionProxy {
-                volume = FSDeviceProxy.make(withCollection: c)
+            if let coll = myDocument.attachment as? AnyCollectionProxy {
+                volume = try? create(collection: coll) as FSDeviceProxy
             }
 
             titleString = "Commodore 64 Floppy Disk (from P00 file)"
@@ -140,8 +141,8 @@ class ImportDialog: DialogController {
 
         case is FolderProxy:
             
-            if let f = myDocument.attachment as? FolderProxy {
-                volume = f.fileSystem
+            if let folder = myDocument.attachment as? FolderProxy {
+                volume = folder.fileSystem
             }
             titleString = "Disk from a file system folder"
             subtitle1String = "Comprises all PRG files found in this directory"

@@ -346,7 +346,7 @@ public:
     void insertNewDisk(DOSType fstype, PETName<16> name);
     void insertFileSystem(class FSDevice *device);
     void insertG64(G64File *g64);
-    void insertDisk(AnyCollection *archive);
+    void insertDisk(AnyCollection &archive);
     void ejectDisk();
 
 

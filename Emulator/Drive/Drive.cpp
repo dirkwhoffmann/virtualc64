@@ -442,9 +442,9 @@ Drive::insertG64(G64File *g64)
 }
 
 void
-Drive::insertDisk(AnyCollection *collection)
+Drive::insertDisk(AnyCollection &collection)
 {
-    debug(DSKCHG_DEBUG, "insertDisk(collection %p)\n", collection);
+    debug(DSKCHG_DEBUG, "insertDisk(collection)\n");
     insertDisk(Disk::makeWithCollection(c64, collection));
 }
 

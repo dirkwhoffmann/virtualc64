@@ -948,23 +948,22 @@
     return fs ? [[self alloc] initWith: fs] : nil;
 }
 
-+ (instancetype)makeWithD64:(D64FileProxy *)proxy
-{
-    ErrorCode err;
-    FSDevice *volume = FSDevice::makeWithD64(*(D64File *)proxy->obj, &err);
-    return [self make:volume];
-}
-
 + (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err;
 {
-    FSDevice *volume = FSDevice::makeWithDisk(*(Disk *)proxy->obj, err);
+    FSDevice *fs = FSDevice::makeWithDisk(*(Disk *)proxy->obj, err);
+    return [self make:fs];
+}
+
++ (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy error:(ErrorCode *)err;
+{
+    FSDevice *volume = FSDevice::makeWithCollection(*(AnyCollection *)proxy->obj, err);
     return [self make:volume];
 }
 
-+ (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy
++ (instancetype)makeWithD64:(D64FileProxy *)proxy error:(ErrorCode *)err;
 {
-    FSDevice *volume = FSDevice::makeWithCollection((AnyCollection *)proxy->obj);
-    return [self make:volume];
+    FSDevice *fs = FSDevice::makeWithD64(*(D64File *)proxy->obj, err);
+    return [self make:fs];
 }
 
 - (FSDevice *)fs
