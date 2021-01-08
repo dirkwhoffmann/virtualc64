@@ -60,12 +60,12 @@ EasyFlash::_dump()
 }
 
 void
-EasyFlash::loadChip(unsigned nr, CRTFile *c)
+EasyFlash::loadChip(unsigned nr, CRTFile &crt)
 {
-    u16 chipSize = c->chipSize(nr);
-    u16 chipAddr = c->chipAddr(nr);
-    u16 chipBank = c->chipBank(nr);
-    u8 *chipData = c->chipData(nr);
+    u16 chipSize = crt.chipSize(nr);
+    u16 chipAddr = crt.chipAddr(nr);
+    u16 chipBank = crt.chipBank(nr);
+    u8 *chipData = crt.chipData(nr);
     
     if(chipSize != 0x2000) {
         warn("Package %d has chip size %04X. Expected 0x2000.\n", nr, chipSize);

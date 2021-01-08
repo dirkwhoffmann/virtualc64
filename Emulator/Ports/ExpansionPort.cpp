@@ -259,7 +259,7 @@ ExpansionPort::attachCartridge(CRTFile *file, bool reset)
     
     // Create cartridge from cartridge file
     Cartridge *cartridge;
-    if (!(cartridge = Cartridge::makeWithCRTFile(c64, file))) {
+    if (!(cartridge = Cartridge::makeWithCRTFile(c64, *file))) {
         return false;
     }
     

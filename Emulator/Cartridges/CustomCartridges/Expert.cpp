@@ -46,11 +46,11 @@ Expert::_dump()
 }
 
 void
-Expert::loadChip(unsigned nr, CRTFile *c)
+Expert::loadChip(unsigned nr, CRTFile &crt)
 {
-    u16 chipSize = c->chipSize(nr);
-    u16 chipAddr = c->chipAddr(nr);
-    u8 *chipData = c->chipData(nr);
+    u16 chipSize = crt.chipSize(nr);
+    u16 chipAddr = crt.chipAddr(nr);
+    u8 *chipData = crt.chipData(nr);
     
     // Check file integrity
     if (nr != 0 || chipSize != 0x2000 || chipAddr != 0x8000) {

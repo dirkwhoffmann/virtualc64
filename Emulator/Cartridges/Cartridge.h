@@ -125,7 +125,7 @@ public:
 
     // Factory methods
     static Cartridge *makeWithType(C64 &c64, CartridgeType type) throws;
-    static Cartridge *makeWithCRTFile(C64 &c64, CRTFile *file);
+    static Cartridge *makeWithCRTFile(C64 &c64, CRTFile &file) throws;
 
     
     //
@@ -225,7 +225,7 @@ public:
     //
     
     // Reads in a chip packet from a CRT file
-    virtual void loadChip(unsigned nr, CRTFile *c);
+    virtual void loadChip(unsigned nr, CRTFile &c);
     
     // Banks in a rom chip into the ROML or the ROMH space
     void bankInROML(unsigned nr, u16 size, u16 offset);

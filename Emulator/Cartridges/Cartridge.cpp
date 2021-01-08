@@ -116,20 +116,18 @@ Cartridge::makeWithType(C64 &c64, CartridgeType type)
 }
 
 Cartridge *
-Cartridge::makeWithCRTFile(C64 &c64, CRTFile *file)
+Cartridge::makeWithCRTFile(C64 &c64, CRTFile &file)
 {
-    Cartridge *cart;
-    
-    cart = makeWithType(c64, file->cartridgeType());
-    assert(cart != nullptr);
+    Cartridge *cart = makeWithType(c64, file.cartridgeType());
+    assert(cart);
     
     // Remember powerup values for game line and exrom line
-    cart->gameLineInCrtFile = file->initialGameLine();
-    cart->exromLineInCrtFile = file->initialExromLine();
+    cart->gameLineInCrtFile = file.initialGameLine();
+    cart->exromLineInCrtFile = file.initialExromLine();
 
     // Load chip packets
     cart->numPackets = 0;
-    for (unsigned i = 0; i < file->chipCount(); i++) {
+    for (unsigned i = 0; i < file.chipCount(); i++) {
         cart->loadChip(i, file);
     }
     
@@ -400,14 +398,13 @@ Cartridge::eraseRAM(u8 value)
 }
 
 void
-Cartridge::loadChip(unsigned nr, CRTFile *c)
+Cartridge::loadChip(unsigned nr, CRTFile &c)
 {
     assert(nr < MAX_PACKETS);
-    assert(c != nullptr);
     
-    u16 size = c->chipSize(nr);
-    u16 start = c->chipAddr(nr);
-    u16 type = c->chipType(nr);
+    u16 size = c.chipSize(nr);
+    u16 start = c.chipAddr(nr);
+    u16 type = c.chipType(nr);
     
     // Perform some consistency checks
     if (start < 0x8000) {
@@ -428,7 +425,7 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
     switch (type) {
         
         case 0: // ROM
-        packet[nr] = new CartridgeRom(c64, size, start, c->chipData(nr));
+        packet[nr] = new CartridgeRom(c64, size, start, c.chipData(nr));
         break;
         
         case 1: // RAM
@@ -437,7 +434,7 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
         
         case 2: // Flash ROM
         warn("Chip %d is a Flash Rom. Creating a Rom instead.\n", nr);
-        packet[nr] = new CartridgeRom(c64, size, start, c->chipData(nr));
+        packet[nr] = new CartridgeRom(c64, size, start, c.chipData(nr));
         break;
         
         default:
