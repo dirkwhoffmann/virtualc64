@@ -126,7 +126,7 @@ Disk::make(C64 &ref, DOSType type, PETName<16> name)
             printf("FS_CBM_DOS");
             FSDevice *fs = FSDevice::makeWithType(DISK_TYPE_SS_SD, DOS_TYPE_CBM);
             fs->setName(name);
-            Disk *disk = makeWithFileSystem(ref, fs);
+            Disk *disk = makeWithFileSystem(ref, *fs);
             delete fs;
             return disk;
         }
@@ -139,30 +139,13 @@ Disk::make(C64 &ref, DOSType type, PETName<16> name)
 }
 
 Disk *
-Disk::makeWithFileSystem(C64 &ref, FSDevice *device)
+Disk::makeWithFileSystem(C64 &ref, FSDevice &fs)
 {
     Disk *disk = new Disk(ref);
 
-    disk->encode(device);
+    disk->encode(fs);
     return disk;
 }
-
-/*
-Disk *
-Disk::makeWithD64(C64 &ref, D64File *d64)
-{
-    assert(d64);
-        
-    ErrorCode err;
-    FSDevice *fs = FSDevice::makeWithD64(d64, &err);
-    if (fs == nullptr) return nullptr;
-    
-    Disk *disk = makeWithFileSystem(ref, fs);
-    delete fs;
-    
-    return disk;
-}
-*/
 
 Disk *
 Disk::makeWithG64(C64 &ref, G64File *g64)
@@ -181,7 +164,7 @@ Disk::makeWithCollection(C64 &ref, AnyCollection *collection)
     FSDevice *fs = FSDevice::makeWithCollection(collection);
     assert(fs);
     
-    Disk *disk = makeWithFileSystem(ref, fs);
+    Disk *disk = makeWithFileSystem(ref, *fs);
     delete fs;
     
     return disk;
@@ -759,10 +742,8 @@ Disk::encodeG64(G64File *a)
 }
 
 void
-Disk::encode(FSDevice *fs, bool alignTracks)
-{
-    assert(fs);
-    
+Disk::encode(FSDevice &fs, bool alignTracks)
+{    
     // 64COPY (fails on VICE test drive/skew)
     /*
     int tailGap[4] = { 9, 9, 9, 9 };
@@ -798,7 +779,7 @@ Disk::encode(FSDevice *fs, bool alignTracks)
     */
     
     usize encodedBits;
-    unsigned numTracks = fs->getNumTracks();
+    unsigned numTracks = fs.getNumTracks();
 
     trace(GCR_DEBUG, "Encoding disk with %d tracks\n", numTracks);
 
@@ -831,7 +812,7 @@ Disk::encode(FSDevice *fs, bool alignTracks)
 }
 
 usize
-Disk::encodeTrack(FSDevice *fs, Track t, u8 tailGap, HeadPos start)
+Disk::encodeTrack(FSDevice &fs, Track t, u8 tailGap, HeadPos start)
 {
     assert(isTrackNumber(t));
     trace(GCR_DEBUG, "Encoding track %d\n", t);
@@ -850,21 +831,20 @@ Disk::encodeTrack(FSDevice *fs, Track t, u8 tailGap, HeadPos start)
 }
 
 usize
-Disk::encodeSector(FSDevice *fs, Track t, Sector s, HeadPos start, int tailGap)
+Disk::encodeSector(FSDevice &fs, Track t, Sector s, HeadPos start, int tailGap)
 {
-    assert(fs);
     assert(isValidTrackSectorPair(t, s));
     
     TSLink ts = TSLink{t,s};
     
     HeadPos offset = start;
-    u8 errorCode = fs->getErrorCode(ts);
+    u8 errorCode = fs.getErrorCode(ts);
         
     trace(GCR_DEBUG, "  Encoding track/sector %d/%d\n", t, s);
     
     // Get disk id and compute checksum
-    u8 id1 = fs->diskId1();
-    u8 id2 = fs->diskId2();
+    u8 id1 = fs.diskId1();
+    u8 id2 = fs.diskId2();
     u8 checksum = id1 ^ id2 ^ t ^ s; // Header checksum byte
     
     // SYNC (0xFF 0xFF 0xFF 0xFF 0xFF)
@@ -946,7 +926,7 @@ Disk::encodeSector(FSDevice *fs, Track t, Sector s, HeadPos start, int tailGap)
     checksum = 0;
     for (unsigned i = 0; i < 256; i++, offset += 10) {
         // u8 byte = (u8)d64->readTrack();
-        u8 byte = fs->readByte(ts, i);
+        u8 byte = fs.readByte(ts, i);
         checksum ^= byte;
         encodeGcr(byte, t, offset);
     }

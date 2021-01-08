@@ -849,7 +849,7 @@ SIDBridge::clearRingbuffer()
 void
 SIDBridge::ringbufferData(usize offset, float *left, float *right)
 {
-    SamplePair &pair = stream.current((int)offset);
+    const SamplePair &pair = stream.current((int)offset);
     *left = pair.left;
     *right = pair.right;
 }

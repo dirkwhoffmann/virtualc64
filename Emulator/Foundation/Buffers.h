@@ -44,7 +44,7 @@ template <class T, usize capacity> struct RingBuffer
     // Querying the fill status
     //
 
-    usize cap() { return capacity; }
+    usize cap() const { return capacity; }
     usize count() const { return (capacity + w - r) % capacity; }
     usize free() const { return capacity - count() - 1; }
     double fillLevel() const { return (double)count() / capacity; }
@@ -56,27 +56,28 @@ template <class T, usize capacity> struct RingBuffer
     // Working with indices
     //
 
-    int begin() const { return r; }
-    int end() const { return w; }
     static int next(int i) { return (capacity + i + 1) % capacity; }
     static int prev(int i) { return (capacity + i - 1) % capacity; }
+
+    int begin() const { return r; }
+    int end() const { return w; }
 
 
     //
     // Reading and writing elements
     //
 
-    T& current()
+    const T& current() const
     {
         return elements[r];
     }
 
-    T& current(int offset)
+    const T& current(int offset) const
     {
         return elements[(r + offset) % capacity];
     }
     
-    T& read()
+    const T& read()
     {
         assert(!isEmpty());
 
@@ -85,7 +86,7 @@ template <class T, usize capacity> struct RingBuffer
         return elements[oldr];
     }
 
-    T& read(T fallback)
+    const T& read(T fallback)
     {
         if (isEmpty()) write(fallback);
         return read();

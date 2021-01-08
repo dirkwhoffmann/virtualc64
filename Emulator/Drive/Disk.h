@@ -165,7 +165,7 @@ public:
 public:
     
     static Disk *make(C64 &ref, DOSType type, PETName<16> name);
-    static Disk *makeWithFileSystem(C64 &ref, class FSDevice *device);
+    static Disk *makeWithFileSystem(C64 &ref, class FSDevice &device);
     static Disk *makeWithG64(C64 &ref, G64File *g64);
     static Disk *makeWithCollection(C64 &ref, AnyCollection *archive);
 
@@ -451,7 +451,7 @@ public:
      * and data blocks, checksums and gaps. If alignTracks is true, the first
      * sector always starts at the beginning of a track.
      */
-    void encode(FSDevice *fs, bool alignTracks = false);
+    void encode(FSDevice &fs, bool alignTracks = false);
     
 private:
     
@@ -463,13 +463,13 @@ private:
      * follwowing sectors with odd sector numbers. The number of written bits
      * is returned.
      */
-    usize encodeTrack(FSDevice *fs, Track t, u8 tailGap, HeadPos start);
+    usize encodeTrack(FSDevice &fs, Track t, u8 tailGap, HeadPos start);
     
     /* Encode a single sector. This function translates the logical byte
      * sequence of a single sector into the native VC1541 byte representation.
      * The sector is closed by 'gap' tail gap bytes. The number of written bits
      * is returned.
      */
-    usize encodeSector(FSDevice *fs, Track t, Sector sector, HeadPos start, int gap);
+    usize encodeSector(FSDevice &fs, Track t, Sector sector, HeadPos start, int gap);
 };
  

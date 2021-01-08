@@ -1708,7 +1708,7 @@
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err;
 {
-    return [self make: T64File::makeWithFileSystem((FSDevice *)proxy->obj)];
+    return [self make: T64File::makeWithFileSystem(*(FSDevice *)proxy->obj)];
 }
 
 @end

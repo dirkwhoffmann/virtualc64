@@ -33,24 +33,19 @@ T64File::isCompatibleStream(std::istream &stream)
 }
 
 T64File *
-T64File::makeWithFileSystem(class FSDevice *fs)
+T64File::makeWithFileSystem(class FSDevice &fs)
 {
-    assert(fs);
-        
     debug(FILE_DEBUG, "Creating T64 archive...\n");
     
     // Analyze the file system
-    u16 numFiles = (u16)fs->numFiles();
+    u16 numFiles = (u16)fs.numFiles();
     std::vector<u64> length(numFiles);
     usize dataLength = 0;
     for (u16 i = 0; i < numFiles; i++) {
-        length[i] = fs->fileSize(i) - 2;
+        length[i] = fs.fileSize(i) - 2;
         dataLength += length[i];
     }
     
-    for (auto &it : length) {
-        printf("Length = %lld\n", it);
-    }
     // Create new archive
     u16 maxFiles = MAX(numFiles, 30);
     usize fileSize = 64 + maxFiles * 32 + dataLength;
@@ -82,7 +77,7 @@ T64File::makeWithFileSystem(class FSDevice *fs)
     *ptr++ = 0x00;
     
     // User description (24 bytes, padded with 0x20)
-    auto name = PETName<24>(fs->getName().c_str(), 0x20);
+    auto name = PETName<24>(fs.getName().c_str(), 0x20);
     name.write(ptr);
     ptr += 24;
     
@@ -107,7 +102,7 @@ T64File::makeWithFileSystem(class FSDevice *fs)
         *ptr++ = 0x82;
         
         // Start address (2 bytes)
-        u16 startAddr = fs->loadAddr(n);
+        u16 startAddr = fs.loadAddr(n);
         *ptr++ = LO_BYTE(startAddr);
         *ptr++ = HI_BYTE(startAddr);
         
@@ -130,7 +125,7 @@ T64File::makeWithFileSystem(class FSDevice *fs)
         ptr += 4;
         
         // File name (16 bytes)
-        PETName<16> name = fs->fileName(n);
+        PETName<16> name = fs.fileName(n);
         name.write(ptr);
         ptr += 16;
     }
@@ -141,7 +136,7 @@ T64File::makeWithFileSystem(class FSDevice *fs)
     
     for (unsigned n = 0; n < numFiles; n++) {
     
-        fs->copyFile(n, ptr, length[n], 2);
+        fs.copyFile(n, ptr, length[n], 2);
         ptr += length[n];
     }
 

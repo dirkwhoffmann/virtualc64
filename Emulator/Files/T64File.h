@@ -18,7 +18,7 @@ public:
     static bool isCompatibleName(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
     
-    static T64File *makeWithFileSystem(class FSDevice *fs);
+    static T64File *makeWithFileSystem(class FSDevice &fs);
 
     
     //
