@@ -68,7 +68,7 @@ P00File::makeWithFileSystem(FSDevice &fs)
 }
     
 PETName<16>
-P00File::getName()
+P00File::getName() const
 {
     return PETName<16>(data + 8, 0x00);
 }

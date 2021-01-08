@@ -163,7 +163,7 @@ public:
 public:
     
     // Returns the logical name of this file
-    virtual PETName<16> getName();
+    virtual PETName<16> getName() const;
 
     // Returns the media type of this file
     virtual FileType type() const { return FILETYPE_UNKNOWN; }

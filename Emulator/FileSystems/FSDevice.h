@@ -87,7 +87,7 @@ public:
     DOSType dos() { return layout.dos; }
     
     // Gets or sets the disk name
-    PETName<16> getName();
+    PETName<16> getName() const;
     void setName(PETName<16> name);
 
     // Returns the first or second disk ID character
@@ -132,7 +132,7 @@ public:
     // Queries a pointer from the block storage (may return nullptr)
     FSBlock *blockPtr(Block b);
     FSBlock *blockPtr(TSLink ts) { return blockPtr(layout.blockNr(ts)); }
-    FSBlock *bamPtr() { return blocks[357]; }
+    FSBlock *bamPtr() const { return blocks[357]; }
     
     // Follows the block chain link of a specific block
     FSBlock *nextBlockPtr(Block b);

@@ -146,7 +146,7 @@ T64File::makeWithFileSystem(class FSDevice &fs)
 }
 
 PETName<16>
-T64File::getName()
+T64File::getName() const
 {
     return PETName<16>(data + 0x28, 0x20);
 }

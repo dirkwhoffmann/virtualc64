@@ -33,7 +33,7 @@ CRTFile::isCompatibleStream(std::istream &stream)
 }
 
 PETName<16>
-CRTFile::getName()
+CRTFile::getName() const
 {
     return PETName<16>(data + 0x20, 0x00);
 }

@@ -27,7 +27,7 @@ TAPFile::isCompatibleStream(std::istream &stream)
 }
 
 PETName<16>
-TAPFile::getName()
+TAPFile::getName() const
 {
     return PETName<16>(data + 8);
 }

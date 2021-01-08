@@ -30,7 +30,7 @@ AnyFile::~AnyFile()
 }
 
 PETName<16>
-AnyFile::getName()
+AnyFile::getName() const
 {
     auto idx = path.rfind('/');
     usize start = idx != std::string::npos ? idx + 1 : 0;

@@ -51,8 +51,8 @@ public:
     // Methods from AnyFile
     //
     
-    PETName<16> getName() override;
     FileType type() const override { return FILETYPE_CRT; }
+    PETName<16> getName() const override;
     usize readFromStream(std::istream &stream) override;
 
     

@@ -54,7 +54,7 @@ public:
     //
     
     FileType type() const override { return FILETYPE_D64; }
-    PETName<16> getName() override;
+    PETName<16> getName() const override;
     usize readFromStream(std::istream &stream) override;
 
         
@@ -65,16 +65,16 @@ public:
 public:
     
     // Returns the number of halftracks or tracks stored in this file
-    Track numHalftracks();
-    Track numTracks() { return numHalftracks() / 2; }
+    Track numHalftracks() const;
+    Track numTracks() const { return numHalftracks() / 2; }
 
     // Returns the error code for the specified sector (01 = no error)
-    u8 getErrorCode(Block b);
+    u8 getErrorCode(Block b) const;
     
 private:
     
     // Translates a track and sector number into an offset (-1 if invalid)
-    int offset(Track track, Sector sector);
+    int offset(Track track, Sector sector) const;
     
     
     //
@@ -84,5 +84,5 @@ private:
 public:
     
     // Dumps the contents of a sector
-    void dump(Track track, Sector sector);
+    void dump(Track track, Sector sector) const;
 };

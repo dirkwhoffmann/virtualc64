@@ -266,7 +266,7 @@ FSDevice::nextBlockPtr(FSBlock *ptr)
 }
 
 PETName<16>
-FSDevice::getName()
+FSDevice::getName() const
 {
     FSBlock *bam = bamPtr();
     return PETName<16>(bam->data + 0x90);

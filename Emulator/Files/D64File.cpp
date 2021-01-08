@@ -95,7 +95,7 @@ D64File::makeWithFileSystem(FSDevice &volume)
 }
 
 PETName<16>
-D64File::getName()
+D64File::getName() const
 {
     return PETName<16>(data + offset(18, 0) + 0x90);
 }
@@ -166,7 +166,7 @@ D64File::readFromStream(std::istream &stream)
 }
 
 Track
-D64File::numHalftracks()
+D64File::numHalftracks() const
 {
     switch (size) {
             
@@ -181,14 +181,14 @@ D64File::numHalftracks()
 }
 
 u8
-D64File::getErrorCode(Block b)
+D64File::getErrorCode(Block b) const
 {
     assert(b < 802);
     return errors[b];
 }
 
 int
-D64File::offset(Track track, Sector sector)
+D64File::offset(Track track, Sector sector) const
 {
     // secCnt[track] is the number of the first sector on track 'track'
     const unsigned secCnt[43] = {  0 /* pad */,
@@ -207,7 +207,7 @@ D64File::offset(Track track, Sector sector)
 }
 
 void
-D64File::dump(Track track, Sector sector)
+D64File::dump(Track track, Sector sector) const
 {
     hexdump(data + offset(track, sector), 256);
 }

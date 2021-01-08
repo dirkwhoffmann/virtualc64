@@ -35,7 +35,7 @@ public:
     //
     
     FileType type() const override { return FILETYPE_TAP; }
-    PETName<16> getName() override;
+    PETName<16> getName() const override;
     
     
     //

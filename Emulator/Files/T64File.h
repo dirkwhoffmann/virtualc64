@@ -41,7 +41,7 @@ public:
     //
     
     FileType type() const override { return FILETYPE_T64; }
-    PETName<16> getName() override;
+    PETName<16> getName() const override;
         
 
     //
