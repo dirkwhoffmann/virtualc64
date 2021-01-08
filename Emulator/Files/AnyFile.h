@@ -78,7 +78,6 @@ public:
     template <class T> static T *make(std::istream &stream, ErrorCode *err)
     {
         *err = ERROR_OK;
-        
         try { return make <T> (stream); }
         catch (VC64Error &exception) { *err = exception.errorCode; }
         return nullptr;
@@ -94,7 +93,6 @@ public:
     template <class T> static T *make(const u8 *buf, usize len, ErrorCode *err)
     {
         *err = ERROR_OK;
-        
         try { return make <T> (buf, len); }
         catch (VC64Error &exception) { *err = exception.errorCode; }
         return nullptr;
@@ -110,7 +108,6 @@ public:
     template <class T> static T *make(const char *path, ErrorCode *err)
     {
         *err = ERROR_OK;
-        
         try { return make <T> (path); }
         catch (VC64Error &exception) { *err = exception.errorCode; }
         return nullptr;
@@ -124,7 +121,6 @@ public:
     template <class T> static T *make(class Disk &disk, ErrorCode *err)
     {
         *err = ERROR_OK;
-        
         try { return make <T> (disk); }
         catch (VC64Error &exception) { *err = exception.errorCode; }
         return nullptr;
@@ -138,7 +134,6 @@ public:
     template <class T> static T *make(class FSDevice &fs, ErrorCode *err)
     {
         *err = ERROR_OK;
-        
         try { return make <T> (fs); }
         catch (VC64Error &exception) { *err = exception.errorCode; }
         return nullptr;

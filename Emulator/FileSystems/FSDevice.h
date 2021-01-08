@@ -41,12 +41,19 @@ public:
 
     static FSDevice *makeWithFormat(FSDeviceDescriptor &layout);
     static FSDevice *makeWithType(DiskType type, DOSType vType = DOS_TYPE_NODOS);
+    
+    static FSDevice *makeWithD64(class D64File &d64) throws;
     static FSDevice *makeWithD64(class D64File &d64, ErrorCode *err);
+    
+    static FSDevice *makeWithDisk(class Disk &disk) throws;
     static FSDevice *makeWithDisk(class Disk &disk, ErrorCode *err);
+    
+    static FSDevice *makeWithCollection(AnyCollection &collection) throws;
     static FSDevice *makeWithCollection(AnyCollection &collection, ErrorCode *err);
-
+    
+    static FSDevice *makeWithFolder(const std::string &path) throws;
     static FSDevice *makeWithFolder(const std::string &path, ErrorCode *err);
-    static FSDevice *makeWithFolder(const char *path, ErrorCode *err);
+    [[deprecated]] static FSDevice *makeWithFolder(const char *path, ErrorCode *err);
 
     
     //
@@ -262,7 +269,8 @@ public:
     u8 readByte(TSLink ts, u32 offset) { return readByte(layout.blockNr(ts), offset); }
 
     // Imports the volume from a buffer
-    bool importVolume(const u8 *src, usize size, ErrorCode *err = nullptr);
+    void importVolume(const u8 *src, usize size) throws;
+    bool importVolume(const u8 *src, usize size, ErrorCode *err);
     
     // Imports a folder from the host file system
     bool importDirectory(const std::string &path);

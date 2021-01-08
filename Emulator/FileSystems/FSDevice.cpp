@@ -32,7 +32,7 @@ FSDevice::makeWithType(DiskType type, DOSType vType)
 }
 
 FSDevice *
-FSDevice::makeWithD64(D64File &d64, ErrorCode *err)
+FSDevice::makeWithD64(D64File &d64)
 {
     // Get device descriptor
     FSDeviceDescriptor descriptor = FSDeviceDescriptor(d64);
@@ -41,10 +41,8 @@ FSDevice::makeWithD64(D64File &d64, ErrorCode *err)
     FSDevice *device = makeWithFormat(descriptor);
 
     // Import file system
-    if (!device->importVolume(d64.data, d64.size, err)) {
-        delete device;
-        return nullptr;
-    }
+    try { device->importVolume(d64.data, d64.size); }
+    catch (VC64Error &exception) { delete device; throw exception; }
     
     // Import error codes (if any)
     for (Block b = 0; b < device->blocks.size(); b++) {
@@ -55,7 +53,16 @@ FSDevice::makeWithD64(D64File &d64, ErrorCode *err)
 }
 
 FSDevice *
-FSDevice::makeWithDisk(class Disk &disk, ErrorCode *err)
+FSDevice::makeWithD64(D64File &d64, ErrorCode *err)
+{
+    *err = ERROR_OK;
+    try { return makeWithD64(d64); }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
+    return nullptr;
+}
+  
+FSDevice *
+FSDevice::makeWithDisk(class Disk &disk)
 {
     // Translate the GCR stream into a byte stream
     u8 buffer[D64File::D64_802_SECTORS];
@@ -70,24 +77,30 @@ FSDevice::makeWithDisk(class Disk &disk, ErrorCode *err)
         case D64File::D64_802_SECTORS: descriptor.numCyls = 42; break;
 
         default:
-            *err = ERROR_FS_CORRUPTED;
-            return nullptr;
+            throw VC64Error(ERROR_FS_CORRUPTED);
     }
         
     // Create the device
     FSDevice *device = makeWithFormat(descriptor);
 
     // Import file system
-    if (!device->importVolume(buffer, len, err)) {
-        delete device;
-        return nullptr;
-    }
-    
+    try { device->importVolume(buffer, len); }
+    catch (VC64Error &exception) { delete device; throw exception; }
+        
     return device;
 }
 
 FSDevice *
-FSDevice::makeWithCollection(AnyCollection &collection, ErrorCode *err)
+FSDevice::makeWithDisk(class Disk &disk, ErrorCode *err)
+{
+    *err = ERROR_OK;
+    try { return makeWithDisk(disk); }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
+    return nullptr;
+}
+
+FSDevice *
+FSDevice::makeWithCollection(AnyCollection &collection)
 {
     // Create the device
     FSDevice *device = makeWithType(DISK_TYPE_SS_SD);
@@ -116,7 +129,16 @@ FSDevice::makeWithCollection(AnyCollection &collection, ErrorCode *err)
 }
 
 FSDevice *
-FSDevice::makeWithFolder(const std::string &path, ErrorCode *err)
+FSDevice::makeWithCollection(AnyCollection &collection, ErrorCode *err)
+{
+    *err = ERROR_OK;
+    try { return makeWithCollection(collection); }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
+    return nullptr;
+}
+
+FSDevice *
+FSDevice::makeWithFolder(const std::string &path)
 {
     // Create the device
     FSDevice *device = makeWithType(DISK_TYPE_SS_SD);
@@ -127,22 +149,30 @@ FSDevice::makeWithFolder(const std::string &path, ErrorCode *err)
     device->bamPtr()->writeBAM(name);
     
     // Import the folder
-    if (!device->importDirectory(path)) {
-        *err = ERROR_FS_CANT_IMPORT;
-        delete device;
-        return nullptr;
-    }
+    try { device->importDirectory(path); }
+    catch (VC64Error &exception) { delete device; throw exception; }
     
     device->printDirectory();
     return device;
 }
 
 FSDevice *
+FSDevice::makeWithFolder(const std::string &path, ErrorCode *err)
+{
+    *err = ERROR_OK;
+    try { return makeWithFolder(path); }
+    catch (VC64Error &exception) { *err = exception.errorCode; }
+    return nullptr;
+}
+
+/*
+FSDevice *
 FSDevice::makeWithFolder(const char *path, ErrorCode *err)
 {
     assert(path);
     return makeWithFolder(std::string(path), err);
 }
+*/
 
 FSDevice::FSDevice(u32 capacity)
 {
@@ -702,6 +732,14 @@ FSDevice::readByte(u32 block, u32 offset)
     assert(block < blocks.size());
     
     return blocks[block]->data[offset];
+}
+
+void
+FSDevice::importVolume(const u8 *src, usize size)
+{
+    ErrorCode err;
+    importVolume(src, size, &err);
+    if (err != ERROR_OK) { throw VC64Error(err); }
 }
 
 bool
