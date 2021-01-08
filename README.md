@@ -1,12 +1,16 @@
 [![Build Status](https://travis-ci.org/dirkwhoffmann/virtualc64.svg?branch=master)](https://travis-ci.org/dirkwhoffmann/virtualc64)
 
-![alt ComingSoon](https://user-images.githubusercontent.com/12561945/104033580-042c6d80-51d0-11eb-9fb9-bbf3a6c0feab.png)
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/12561945/104033580-042c6d80-51d0-11eb-9fb9-bbf3a6c0feab.png"> 
+</p>
 
 ### About
 
 VirtualC64 emulates a Commodore 64 on your Apple Macintosh. The project attempts to create an emulator that combines three key objectives: A high emulation accuracy, an easy-to-use interface, and a well-documented and easy-to-understand code base. VirtualC64 has a long development history under its belt. Originally, the emulator was intended as a demonstrator of a virtual CPU environment that can be used in a one-year or two-year course on computer engineering. Over the years, VirtualC64 has become more and more accurate and evolved into a full-blown emulator.
 
-<img width="461" alt="Bildschirmfoto 2021-01-08 um 15 51 16" src="https://user-images.githubusercontent.com/12561945/104055957-f090ff00-51ef-11eb-8de8-e2ff5b925269.png">
+<p align="center">
+  <img width = "500" src="https://user-images.githubusercontent.com/12561945/104055957-f090ff00-51ef-11eb-8de8-e2ff5b925269.png"> 
+</p>
 
 ### ROMs
 
@@ -16,7 +20,7 @@ When the emulator launches for the first time, you will be prompted to add four 
 
 With VirtualC64 I tried to create a virtual computer that is as transparent as possible. For this purpose the emulator offers numerous panels that allow to inspect and monitor the individual components of the C64. In addition, it is possible to stop the computer any time and single-step through the currently executed program.
 
-<p float="left">
+<p align="center">
 <img width="250" src="https://user-images.githubusercontent.com/12561945/104067844-30fa7800-5204-11eb-964d-849742d8ab6b.png"> 
 <img width="250" src="https://user-images.githubusercontent.com/12561945/104067941-5d15f900-5204-11eb-9cc7-b299c1785e70.png">
 <img width="250" src="https://user-images.githubusercontent.com/12561945/104068377-1674ce80-5205-11eb-823b-d13d525042a2.png">
