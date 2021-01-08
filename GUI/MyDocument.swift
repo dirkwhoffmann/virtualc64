@@ -290,7 +290,7 @@ class MyDocument: NSDocument {
     func mountAttachmentAsCartridge() -> Bool {
         
         guard let cartridge = attachment as? CRTFileProxy else { return false }
-        return c64.expansionport.attachCartridgeAndReset(cartridge)
+        return c64.expansionport.attachCartridge(cartridge, reset: true)
     }
 
     //

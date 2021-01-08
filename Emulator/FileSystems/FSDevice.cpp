@@ -89,7 +89,7 @@ FSDevice::makeWithDisk(class Disk &disk, ErrorCode *err)
 }
 
 FSDevice *
-FSDevice::makeWithCollection(AnyCollection *collection, ErrorCode *err)
+FSDevice::makeWithCollection(AnyCollection *collection)
 {
     assert(collection);
         

@@ -176,9 +176,8 @@ Disk::makeWithCollection(C64 &ref, AnyCollection *collection)
 {
     assert(collection);
         
-    ErrorCode err;
-    FSDevice *fs = FSDevice::makeWithCollection(collection, &err);
-    if (fs == nullptr) return nullptr;
+    FSDevice *fs = FSDevice::makeWithCollection(collection);
+    assert(fs);
     
     Disk *disk = makeWithFileSystem(ref, fs);
     delete fs;

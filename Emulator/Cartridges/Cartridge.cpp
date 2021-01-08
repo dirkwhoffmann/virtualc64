@@ -78,8 +78,6 @@ Cartridge::isROMHaddr (u16 addr)
 Cartridge *
 Cartridge::makeWithType(C64 &c64, CartridgeType type)
 {
-    assert(isSupportedType(type));
-    
     switch (type) {
             
         case CRT_NORMAL:           return new Cartridge(c64);
@@ -113,8 +111,7 @@ Cartridge::makeWithType(C64 &c64, CartridgeType type)
         case CRT_GEO_RAM:          return new GeoRAM(c64);
             
         default:
-            assert(false);
-            return nullptr;
+            throw VC64Error(ERROR_CRT_UNSUPPORTED);
     }
 }
 

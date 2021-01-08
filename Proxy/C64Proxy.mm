@@ -731,15 +731,14 @@
     return [self eport]->getCartridgeAttached();
 }
 
-- (BOOL)attachCartridgeAndReset:(CRTFileProxy *)c
+- (BOOL)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset
 {
-    CRTFile *file = (CRTFile *)c->obj;
-    return [self eport]->attachCartridgeAndReset(file);
+    return [self eport]->attachCartridge((CRTFile *)c->obj, reset);
 }
 
 - (void)attachGeoRamCartridge:(NSInteger)capacity
 {
-    [self eport]->attachGeoRamCartridge((u32)capacity);
+    [self eport]->attachGeoRamCartridge(capacity);
 }
 
 - (void)attachIsepicCartridge
@@ -962,8 +961,7 @@
 
 + (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy __attribute__ ((deprecated))
 {
-    ErrorCode err;
-    FSDevice *volume = FSDevice::makeWithCollection((AnyCollection *)proxy->obj, &err);
+    FSDevice *volume = FSDevice::makeWithCollection((AnyCollection *)proxy->obj);
     return [self make:volume];
 }
 
@@ -1250,7 +1248,7 @@
     [self drive]->setModifiedDisk(b);
 }
 
-- (void)insertD64:(D64FileProxy *)proxy
+- (void)insertD64:(D64FileProxy *)proxy __attribute__ ((deprecated))
 {
     [self drive]->insertD64((D64File *)proxy->obj);
 }

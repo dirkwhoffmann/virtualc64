@@ -52,7 +52,7 @@ public:
     static FSDevice *makeWithDisk(class Disk &disk, ErrorCode *err);
 
     // Creates a file from an object implementing the AnyCollection interface
-    static FSDevice *makeWithCollection(AnyCollection *collection, ErrorCode *err);
+    static FSDevice *makeWithCollection(AnyCollection *collection);
 
     // Creates a file system with the files from a disk folder
     static FSDevice *makeWithFolder(const std::string &path, ErrorCode *err);

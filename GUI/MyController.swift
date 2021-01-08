@@ -716,7 +716,7 @@ extension MyController {
             
             refreshStatusBar()
 
-        case .UNSUPPORTED_CRT:
+        case .CRT_UNSUPPORTED:
 
             MyError.unsupportedCrtAlert(type: msg.data)
             

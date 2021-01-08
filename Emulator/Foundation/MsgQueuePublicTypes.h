@@ -75,7 +75,7 @@ enum_long(MSG)
     MSG_VC1530_PROGRESS,
 
     // Peripherals (Expansion port)
-    MSG_UNSUPPORTED_CRT,
+    MSG_CRT_UNSUPPORTED,
     MSG_CRT_ATTACHED,
     MSG_CRT_DETACHED,
     MSG_CART_SWITCH,

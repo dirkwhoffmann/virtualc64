@@ -394,7 +394,7 @@
 
 - (BOOL)cartridgeAttached;
 - (CartridgeType)cartridgeType;
-- (BOOL)attachCartridgeAndReset:(CRTFileProxy *)c;
+- (BOOL)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset;
 - (void)attachGeoRamCartridge:(NSInteger)capacity;
 - (void)attachIsepicCartridge;
 - (void)detachCartridgeAndReset;

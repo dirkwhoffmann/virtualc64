@@ -139,8 +139,8 @@ public:
     bool getCartridgeAttached() { return cartridge != nullptr; }
 
     // Attaches a cartridge to the expansion port
-    bool attachCartridge(Cartridge *c);
-    bool attachCartridgeAndReset(CRTFile *c);
+    bool attachCartridge(CRTFile *c, bool reset = true);
+    void attachCartridge(Cartridge *c);
     void attachGeoRamCartridge(usize capacity);
     void attachIsepicCartridge();
 

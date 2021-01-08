@@ -212,17 +212,12 @@ ExpansionPort::setCartridgeMode(CRTMode mode)
     }
 }
 
-bool
+void
 ExpansionPort::attachCartridge(Cartridge *c)
 {
     assert(c);
-    
-    // Only proceed if this cartridge is supported
-    if (!c->isSupported()) {
-        c64.putMessage(MSG_UNSUPPORTED_CRT, c->getCartridgeType());
-        return false;
-    }
-    
+    assert(c->isSupported());
+               
     // Remove old cartridge (if any) and assign new one
     detachCartridge();
     cartridge = c;
@@ -235,30 +230,6 @@ ExpansionPort::attachCartridge(Cartridge *c)
     if (cartridge->hasSwitch()) c64.putMessage(MSG_CART_SWITCH);
     
     debug(EXP_DEBUG, "Cartridge attached to expansion port");
-    return true;
-}
-
-bool
-ExpansionPort::attachCartridgeAndReset(CRTFile *file)
-{
-    assert(file);
-    
-    bool result = false;
-
-    // Only proceed if this cartridge is supported
-    if (!file->isSupported()) {
-        c64.putMessage(MSG_UNSUPPORTED_CRT, file->cartridgeType());
-        return false;
-    }
-    
-    if (Cartridge *cartridge = Cartridge::makeWithCRTFile(c64, file)) {
-        
-        suspend();
-        if ((result = attachCartridge(cartridge))) c64.reset();
-        resume();
-    }
-    
-    return result;
 }
 
 void
@@ -272,7 +243,33 @@ ExpansionPort::attachGeoRamCartridge(usize kb)
     
     Cartridge *geoRAM = Cartridge::makeWithType(c64, CRT_GEO_RAM);
     geoRAM->setRamCapacity(kb * 1024);
-    (void)attachCartridge(geoRAM);
+    attachCartridge(geoRAM);
+}
+
+bool
+ExpansionPort::attachCartridge(CRTFile *file, bool reset)
+{
+    assert(file);
+    
+    // Only proceed if this cartridge is supported
+    if (!file->isSupported()) {
+        c64.putMessage(MSG_CRT_UNSUPPORTED, file->cartridgeType());
+        return false;
+    }
+    
+    // Create cartridge from cartridge file
+    Cartridge *cartridge;
+    if (!(cartridge = Cartridge::makeWithCRTFile(c64, file))) {
+        return false;
+    }
+    
+    // Attach cartridge
+    suspend();
+    attachCartridge(cartridge);
+    if (reset) c64.reset();
+    resume();
+    
+    return true;
 }
 
 void
