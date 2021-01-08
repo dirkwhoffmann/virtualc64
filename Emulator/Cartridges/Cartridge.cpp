@@ -398,13 +398,13 @@ Cartridge::eraseRAM(u8 value)
 }
 
 void
-Cartridge::loadChip(unsigned nr, CRTFile &c)
+Cartridge::loadChip(unsigned nr, const CRTFile &crt)
 {
     assert(nr < MAX_PACKETS);
     
-    u16 size = c.chipSize(nr);
-    u16 start = c.chipAddr(nr);
-    u16 type = c.chipType(nr);
+    u16 size = crt.chipSize(nr);
+    u16 start = crt.chipAddr(nr);
+    u16 type = crt.chipType(nr);
     
     // Perform some consistency checks
     if (start < 0x8000) {
@@ -425,7 +425,7 @@ Cartridge::loadChip(unsigned nr, CRTFile &c)
     switch (type) {
         
         case 0: // ROM
-        packet[nr] = new CartridgeRom(c64, size, start, c.chipData(nr));
+        packet[nr] = new CartridgeRom(c64, size, start, crt.chipData(nr));
         break;
         
         case 1: // RAM
@@ -434,7 +434,7 @@ Cartridge::loadChip(unsigned nr, CRTFile &c)
         
         case 2: // Flash ROM
         warn("Chip %d is a Flash Rom. Creating a Rom instead.\n", nr);
-        packet[nr] = new CartridgeRom(c64, size, start, c.chipData(nr));
+        packet[nr] = new CartridgeRom(c64, size, start, crt.chipData(nr));
         break;
         
         default:

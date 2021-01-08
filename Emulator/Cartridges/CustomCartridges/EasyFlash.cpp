@@ -60,7 +60,7 @@ EasyFlash::_dump()
 }
 
 void
-EasyFlash::loadChip(unsigned nr, CRTFile &crt)
+EasyFlash::loadChip(unsigned nr, const CRTFile &crt)
 {
     u16 chipSize = crt.chipSize(nr);
     u16 chipAddr = crt.chipAddr(nr);

@@ -225,7 +225,7 @@ public:
     //
     
     // Reads in a chip packet from a CRT file
-    virtual void loadChip(unsigned nr, CRTFile &c);
+    virtual void loadChip(unsigned nr, const CRTFile &c);
     
     // Banks in a rom chip into the ROML or the ROMH space
     void bankInROML(unsigned nr, u16 size, u16 offset);

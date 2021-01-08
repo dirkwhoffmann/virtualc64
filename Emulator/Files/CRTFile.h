@@ -82,22 +82,22 @@ public:
     //
     
     // Returns how many chips are contained in this cartridge
-    u8 chipCount() { return numberOfChips; }
+    u8 chipCount() const { return numberOfChips; }
     
     // Returns where the data of a certain chip can be found
-    u8 *chipData(unsigned nr) { return chips[nr]+0x10; }
+    u8 *chipData(unsigned nr) const { return chips[nr]+0x10; }
     
     // Returns the size of the chip (8 KB or 16 KB)
-    u16 chipSize(unsigned nr) { return LO_HI(chips[nr][0xF], chips[nr][0xE]); }
+    u16 chipSize(unsigned nr) const { return LO_HI(chips[nr][0xF], chips[nr][0xE]); }
     
     // Returns the type of the chip (0 = ROM, 1 = RAM, 2 = Flash ROM)
-    u16 chipType(unsigned nr) { return LO_HI(chips[nr][0x9], chips[nr][0x8]); }
+    u16 chipType(unsigned nr) const { return LO_HI(chips[nr][0x9], chips[nr][0x8]); }
     
     // Returns the bank number for this chip
-    u16 chipBank(unsigned nr) { return LO_HI(chips[nr][0xB], chips[nr][0xA]); }
+    u16 chipBank(unsigned nr) const { return LO_HI(chips[nr][0xB], chips[nr][0xA]); }
         
     // Returns the start of the chip rom in address space
-    u16 chipAddr(unsigned nr) { return LO_HI(chips[nr][0xD], chips[nr][0xC]); }
+    u16 chipAddr(unsigned nr) const { return LO_HI(chips[nr][0xD], chips[nr][0xC]); }
 
 
     //

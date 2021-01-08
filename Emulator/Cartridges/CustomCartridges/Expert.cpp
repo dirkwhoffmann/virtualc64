@@ -46,7 +46,7 @@ Expert::_dump()
 }
 
 void
-Expert::loadChip(unsigned nr, CRTFile &crt)
+Expert::loadChip(unsigned nr, const CRTFile &crt)
 {
     u16 chipSize = crt.chipSize(nr);
     u16 chipAddr = crt.chipAddr(nr);
