@@ -676,7 +676,7 @@ C64::_pause()
 }
 
 void
-C64::_dump()
+C64::_dump() const
 {
     msg("C64:\n");
     msg("----\n\n");

@@ -41,7 +41,7 @@ EasyFlash::_reset()
 }
 
 void
-EasyFlash::_dump()
+EasyFlash::_dump() const
 {
     Cartridge::_dump();
     
@@ -55,8 +55,8 @@ EasyFlash::_dump()
     }
     msg("\n");
     
-    flashRomL.dump();
-    flashRomH.dump();
+    // flashRomL.dump();
+    // flashRomH.dump();
 }
 
 void

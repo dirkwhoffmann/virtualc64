@@ -60,7 +60,7 @@ Keyboard::_reset()
 }
 
 void 
-Keyboard::_dump()
+Keyboard::_dump() const
 {
 	msg("Keyboard:\n");
 	msg("---------\n\n");

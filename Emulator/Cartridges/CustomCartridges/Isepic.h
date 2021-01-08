@@ -84,14 +84,14 @@ private:
     // Operating switches
     //
     
-    bool hasSwitch() override { return true; }
-    const char *getSwitchDescription(i8 pos) override;
+    bool hasSwitch() const override { return true; }
+    const char *getSwitchDescription(i8 pos) const override;
     void setSwitch(i8 pos) override;
-    bool switchInOffPosition() { return switchIsLeft(); }
-    bool switchInOnPosition() { return switchIsRight(); }
+    bool switchInOffPosition() const { return switchIsLeft(); }
+    bool switchInOnPosition() const { return switchIsRight(); }
     
-    bool cartIsVisible() { return switchInOnPosition(); }
-    bool cartIsHidden() { return !cartIsVisible(); }
+    bool cartIsVisible() const { return switchInOnPosition(); }
+    bool cartIsHidden() const { return !cartIsVisible(); }
     
     
     //

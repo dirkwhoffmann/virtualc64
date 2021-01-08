@@ -314,7 +314,7 @@ SIDBridge::setClockFrequency(u32 frequency)
 }
 
 SIDRevision
-SIDBridge::getRevision()
+SIDBridge::getRevision() const
 {
     SIDRevision result = resid[0].getRevision();
     
@@ -338,7 +338,7 @@ SIDBridge::setRevision(SIDRevision revision)
 }
 
 double
-SIDBridge::getSampleRate()
+SIDBridge::getSampleRate() const
 {
     double result = resid[0].getSampleRate();
     
@@ -364,7 +364,7 @@ SIDBridge::setSampleRate(double rate)
 }
 
 bool
-SIDBridge::getAudioFilter()
+SIDBridge::getAudioFilter() const
 {
     bool result = resid[0].getAudioFilter();
     
@@ -388,7 +388,7 @@ SIDBridge::setAudioFilter(bool enable)
 }
 
 SamplingMethod
-SIDBridge::getSamplingMethod()
+SIDBridge::getSamplingMethod() const
 {
     SamplingMethod result = resid[0].getSamplingMethod();
     
@@ -451,18 +451,16 @@ SIDBridge::_pause()
 }
 
 void 
-SIDBridge::_dump()
+SIDBridge::_dump() const
 {
     _dump(0);
 }
 
 void
-SIDBridge::_dump(int nr)
+SIDBridge::_dump(int nr) const
 {
-    resid[nr].inspect();
-    
-    SIDInfo sidinfo;
-    VoiceInfo voiceinfo[3];
+    // SIDInfo sidinfo;
+    // VoiceInfo voiceinfo[3];
     SIDRevision residRev = resid[nr].getRevision();
     SIDRevision fastsidRev = fastsid[nr].getRevision();
     
@@ -474,12 +472,14 @@ SIDBridge::_dump(int nr)
     msg("Emulate filter : %s\n", resid[nr].getAudioFilter() ? "yes" : "no");
     msg("\n");
 
+    /*
     sidinfo = resid[nr].getInfo();
     voiceinfo[0] = resid[nr].getVoiceInfo(0);
     voiceinfo[1] = resid[nr].getVoiceInfo(1);
     voiceinfo[2] = resid[nr].getVoiceInfo(2);
     _dump(sidinfo, voiceinfo);
-
+    */
+    
     msg("FastSID:\n");
     msg("--------\n");
     msg("    Chip model : %s\n", SIDRevisionEnum::key(fastsidRev));
@@ -488,15 +488,17 @@ SIDBridge::_dump(int nr)
     msg("Emulate filter : %s\n", fastsid[nr].getAudioFilter() ? "yes" : "no");
     msg("\n");
         
+    /*
     sidinfo = fastsid[nr].getInfo();
     voiceinfo[0] = fastsid[nr].getVoiceInfo(0);
     voiceinfo[1] = fastsid[nr].getVoiceInfo(1);
     voiceinfo[2] = fastsid[nr].getVoiceInfo(2);
     _dump(sidinfo, voiceinfo);
+    */
 }
 
 void
-SIDBridge::_dump(SIDInfo &info, VoiceInfo (&vinfo)[3])
+SIDBridge::_dump(SIDInfo &info, VoiceInfo (&vinfo)[3]) const
 {
     u8 ft = info.filterType;
     msg("        Volume: %d\n", info.volume);

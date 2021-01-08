@@ -41,7 +41,7 @@ TOD::_reset()
 }
 
 void 
-TOD::_dump()
+TOD::_dump() const
 {
 	msg("            Time of day : %02X:%02X:%02X:%02X\n",
         tod.hours, tod.minutes, tod.seconds, tod.tenth);

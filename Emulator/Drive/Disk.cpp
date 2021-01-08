@@ -197,7 +197,7 @@ Disk::_reset()
 }
 
 void
-Disk::_dump()
+Disk::_dump() const
 {
     msg("Floppy disk\n");
     msg("-----------\n\n");
@@ -351,14 +351,14 @@ Disk::nonemptyHalftracks()
 }
 
 u16
-Disk::lengthOfHalftrack(Halftrack ht)
+Disk::lengthOfHalftrack(Halftrack ht) const
 {
     assert(isHalftrackNumber(ht));
     return length.halftrack[ht];
 }
 
 u16
-Disk::lengthOfTrack(Track t)
+Disk::lengthOfTrack(Track t) const
 {
     assert(isTrackNumber(t));
     return length.track[t][0];

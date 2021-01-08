@@ -66,7 +66,7 @@ public:
 
 private:
     
-    void _dump() override;
+    void _dump() const override;
 
     
     //
@@ -182,20 +182,20 @@ public:
     //
     
     // Returns true if the cartridge has a switch
-    bool hasSwitch();
+    bool hasSwitch() const;
     
     // Returns the current switch position
-    i8 getSwitch();
-    bool switchIsNeutral();
-    bool switchIsLeft();
-    bool switchIsRight();
+    i8 getSwitch() const;
+    bool switchIsNeutral() const;
+    bool switchIsLeft() const;
+    bool switchIsRight() const;
     
     /* Returns a textual description for a switch position or nullptr if the
      * switch cannot be positioned this way.
      */
-    const char *getSwitchDescription(i8 pos);
-    const char *getSwitchDescription();
-    bool validSwitchPosition(i8 pos);
+    const char *getSwitchDescription(i8 pos) const;
+    const char *getSwitchDescription() const;
+    bool validSwitchPosition(i8 pos) const;
     
     // Puts the switch in the provided position
     void setSwitch(u8 pos) { if (cartridge) cartridge->setSwitch(pos); }
@@ -206,10 +206,10 @@ public:
     //
     
     // Returns true if the cartridge has a LED
-    bool hasLED();
+    bool hasLED() const;
     
     // Returns true if the LED is switched on
-    bool getLED();
+    bool getLED() const;
     
     // Switches the LED on or off
     void setLED(bool value);

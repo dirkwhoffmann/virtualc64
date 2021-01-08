@@ -141,7 +141,7 @@ Drive::setConfigItem(Option option, long id, long value)
 }
 
 void 
-Drive::_dump()
+Drive::_dump() const
 {
 	msg("VC1541\n");
 	msg("------\n\n");
@@ -150,7 +150,6 @@ Drive::_dump()
 	msg("            SYNC : %d\n", sync);
     msg("       Read mode : %s\n", readMode() ? "YES" : "NO");
 	msg("\n");
-    mem.dump();
 }
 
 void

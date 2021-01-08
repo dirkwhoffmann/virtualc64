@@ -22,7 +22,7 @@ PageFox::_reset()
 }
 
 void
-PageFox::_dump()
+PageFox::_dump() const
 {
     Cartridge::_dump();
     

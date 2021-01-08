@@ -227,7 +227,7 @@ private:
     
 private:
     
-    void _dump() override;
+    void _dump() const override;
     
     
     //
@@ -284,19 +284,19 @@ private:
 public:
     
     // Returns true if this object emulates is VIA2
-    bool isVia2();
+    bool isVia2() const;
     
     // Getters for the data directon registers
-    u8 getDDRA() { return ddra; }
-    u8 getDDRB() { return ddrb; }
+    u8 getDDRA() const { return ddra; }
+    u8 getDDRB() const { return ddrb; }
 
     // Getters for peripheral ports
-    u8 getPA() { return pa; }
-    u8 getPB() { return pb; }
+    u8 getPA() const { return pa; }
+    u8 getPB() const { return pb; }
 
     // Getter for the peripheral control pins
-    bool getCA2() { return ca2; }
-    bool getCB2() { return cb2; }
+    bool getCA2() const { return ca2; }
+    bool getCB2() const { return cb2; }
 
     // Emulates the virtual VIA for one cycle
     void execute(); 
@@ -355,17 +355,17 @@ private:
     // 
 
     // Returns true iff timer 1 is in free-run mode (continous interrupts)
-    bool freeRun() { return (acr & 0x40) != 0; }
+    bool freeRun() const { return (acr & 0x40) != 0; }
 
     // Returns true iff timer 2 counts pulses on pin PB6
-    bool countPulses() { return (acr & 0x20) != 0; }
+    bool countPulses() const { return (acr & 0x20) != 0; }
     
     // Returns true iff an output pulse is generated on each T1 load operation
-    bool PB7OutputEnabled() { return (acr & 0x80) != 0; }
+    bool PB7OutputEnabled() const { return (acr & 0x80) != 0; }
     
     // Checks if input latching is enabled
-    bool inputLatchingEnabledA() { return (GET_BIT(acr,0)); }
-    bool inputLatchingEnabledB() { return (GET_BIT(acr,1)); }
+    bool inputLatchingEnabledA() const { return (GET_BIT(acr,0)); }
+    bool inputLatchingEnabledB() const { return (GET_BIT(acr,1)); }
 
     
     //
@@ -373,10 +373,10 @@ private:
     //
 
     // Reads the control bits from the peripheral control register
-    u8 ca1Control() { return pcr & 0x01; }
-    u8 ca2Control() { return (pcr >> 1) & 0x07; }
-    u8 cb1Control() { return (pcr >> 4) & 0x01; }
-    u8 cb2Control() { return (pcr >> 5) & 0x07; }
+    u8 ca1Control() const { return pcr & 0x01; }
+    u8 ca2Control() const { return (pcr >> 1) & 0x07; }
+    u8 cb1Control() const { return (pcr >> 4) & 0x01; }
+    u8 cb2Control() const { return (pcr >> 5) & 0x07; }
 
     
     //

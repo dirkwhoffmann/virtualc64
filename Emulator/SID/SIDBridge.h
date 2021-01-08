@@ -155,18 +155,18 @@ public:
     void setClockFrequency(u32 frequency);
 
     // DEPRECATED: Use OPT_xxx
-    SIDRevision getRevision();
+    SIDRevision getRevision() const;
     void setRevision(SIDRevision revision);
     
-    double getSampleRate();
+    double getSampleRate() const;
     void setSampleRate(double rate);
     
     // DEPRECATED: Use OPT_xxx
-    bool getAudioFilter();
+    bool getAudioFilter() const;
     void setAudioFilter(bool enable);
 
     // DEPRECATED: Use OPT_xxx
-    SamplingMethod getSamplingMethod();
+    SamplingMethod getSamplingMethod() const;
     void setSamplingMethod(SamplingMethod method);
 
 private:
@@ -185,9 +185,9 @@ public:
     
 private:
     
-    void _dump() override;
-    void _dump(int nr);
-    void _dump(SIDInfo &info, VoiceInfo (&vinfo)[3]);
+    void _dump() const override;
+    void _dump(int nr) const;
+    void _dump(SIDInfo &info, VoiceInfo (&vinfo)[3]) const;
 
     
     //

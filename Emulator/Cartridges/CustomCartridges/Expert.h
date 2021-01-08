@@ -36,7 +36,7 @@ private:
     // Initializing
     //
 
-    void _dump() override;
+    void _dump() const override;
 
     
     //
@@ -85,8 +85,8 @@ private:
     void poke(u16 addr, u8 value) override;
     void pokeIO1(u16 addr, u8 value) override;
     
-    bool cartridgeRamIsVisible(u16 addr);
-    bool cartridgeRamIsWritable(u16 addr);
+    bool cartridgeRamIsVisible(u16 addr) const;
+    bool cartridgeRamIsWritable(u16 addr) const;
 
     
     //
@@ -102,11 +102,11 @@ private:
     // Operating switches
     //
     
-    bool hasSwitch() override { return true; }
-    const char *getSwitchDescription(i8 pos) override;
-    bool switchInPrgPosition() { return switchIsLeft(); }
-    bool switchInOffPosition() { return switchIsNeutral(); }
-    bool switchInOnPosition() { return switchIsRight(); }
+    bool hasSwitch() const override { return true; }
+    const char *getSwitchDescription(i8 pos) const override;
+    bool switchInPrgPosition() const { return switchIsLeft(); }
+    bool switchInOffPosition() const { return switchIsNeutral(); }
+    bool switchInOnPosition() const { return switchIsRight(); }
     
     
     //

@@ -225,7 +225,7 @@ public:
     
 private:
     
-    void _dump() override;
+    void _dump() const override;
 
     
     //
@@ -369,12 +369,12 @@ private:
 public:
 
     // Returns the current access mode of this drive (read or write)
-    bool readMode() { return via2.getCB2(); }
-    bool writeMode() { return !readMode(); }
+    bool readMode() const { return via2.getCB2(); }
+    bool writeMode() const { return !readMode(); }
     
     // Returns the current halftrack or track number
-    Halftrack getHalftrack() { return halftrack; }
-    Track getTrack() { return (halftrack + 1) / 2; }
+    Halftrack getHalftrack() const { return halftrack; }
+    Track getTrack() const { return (halftrack + 1) / 2; }
         
     // Returns the number of bits in a halftrack
     u16 sizeOfHalftrack(Halftrack ht) {
@@ -382,7 +382,7 @@ public:
     u16 sizeOfCurrentHalftrack() { return sizeOfHalftrack(halftrack); }
 
     // Returns the position of the drive head inside the current track
-    HeadPos getOffset() { return offset; }
+    HeadPos getOffset() const { return offset; }
 
     // Moves head one halftrack up
     void moveHeadUp();

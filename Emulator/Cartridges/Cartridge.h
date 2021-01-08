@@ -165,7 +165,7 @@ public:
     
 protected:
     
-    void _dump() override;
+    void _dump() const override;
         
     
     //
@@ -292,7 +292,7 @@ public:
     void setBattery(bool value) { battery = value; }
 
     // Reads or write RAM cells
-    u8 peekRAM(u16 addr);
+    u8 peekRAM(u16 addr) const;
     void pokeRAM(u16 addr, u8 value);
     void eraseRAM(u8 value);
 
@@ -321,20 +321,20 @@ public:
     //
     
     // Returns true if the cartridge has a switch
-    virtual bool hasSwitch() { return false; }
+    virtual bool hasSwitch() const { return false; }
 
     // Returns the current switch position
-    virtual i8 getSwitch() { return switchPos; }
-    bool switchIsNeutral() { return getSwitch() == 0; }
-    bool switchIsLeft() { return getSwitch() < 0; }
-    bool switchIsRight() { return getSwitch() > 0; }
+    virtual i8 getSwitch() const { return switchPos; }
+    bool switchIsNeutral() const { return getSwitch() == 0; }
+    bool switchIsLeft() const { return getSwitch() < 0; }
+    bool switchIsRight() const { return getSwitch() > 0; }
     
     /* Returns a textual description for a switch position or nullptr if the
      * switch cannot be positioned this way.
      */
-    virtual const char *getSwitchDescription(i8 pos) { return nullptr; }
-    const char *getSwitchDescription() { return getSwitchDescription(getSwitch()); }
-    bool validSwitchPosition(i8 pos) { return getSwitchDescription(pos) != nullptr; }
+    virtual const char *getSwitchDescription(i8 pos) const { return nullptr; }
+    const char *getSwitchDescription() const { return getSwitchDescription(getSwitch()); }
+    bool validSwitchPosition(i8 pos) const { return getSwitchDescription(pos) != nullptr; }
     
     // Puts the switch in a certain position
     virtual void setSwitch(i8 pos);

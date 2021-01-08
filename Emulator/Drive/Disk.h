@@ -190,7 +190,7 @@ private:
     
 private:
     
-    void _dump() override;
+    void _dump() const override;
 
     
     //
@@ -364,8 +364,8 @@ public:
 public:
     
     // Returns the length of a halftrack in bits
-    u16 lengthOfHalftrack(Halftrack ht);
-    u16 lengthOfTrack(Track t);
+    u16 lengthOfHalftrack(Halftrack ht) const;
+    u16 lengthOfTrack(Track t) const;
     
     /* Analyzes the sector layout. The functions determines the start and end
      * offsets of all sectors and writes them into variable trackLayout.

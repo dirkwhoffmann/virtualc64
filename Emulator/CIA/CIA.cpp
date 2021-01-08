@@ -123,10 +123,8 @@ CIA::_inspect()
 }
 
 void
-CIA::_dump()
+CIA::_dump() const
 {
-    _inspect();
-
     msg("                Sleeping : %s\n", sleeping ? "yes" : "no");
     msg("               Tiredness : %d\n", tiredness);
     msg(" Most recent sleep cycle : %lld\n", sleepCycle);
@@ -150,13 +148,13 @@ CIA::_dump()
     msg("      Interrupt mask reg : %02X\n", info.imr);
     msg("\n");
 //    msg("                     SDR : %02X %02X\n", info.sdr, sdr);
-//     msg("              serCounter : %02X\n", serCounter);
+//    msg("              serCounter : %02X\n", serCounter);
     msg("\n");
     msg("                     CNT : %d\n", CNT);
     msg("                     INT : %d\n", INT);
     msg("\n");
 
-    tod.dump();
+    // tod.dump();
 }
 
 void

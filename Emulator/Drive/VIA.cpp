@@ -30,7 +30,7 @@ void VIA6522::_reset()
 }
 
 void 
-VIA6522::_dump()
+VIA6522::_dump() const
 {
     const char *latchingA = inputLatchingEnabledA() ? "enabled" : "disabled";
     const char *latchingB = inputLatchingEnabledB() ? "enabled" : "disabled";
@@ -59,7 +59,7 @@ VIA6522::_dump()
 }
 
 bool
-VIA6522::isVia2()
+VIA6522::isVia2() const
 {
     return this == &drive.via2;
 }

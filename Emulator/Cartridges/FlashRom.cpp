@@ -64,7 +64,7 @@ FlashRom::_reset()
 }
 
 void
-FlashRom::_dump()
+FlashRom::_dump() const
 {
     msg("FlashRom\n");
     msg("--------\n\n");

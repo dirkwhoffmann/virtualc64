@@ -71,7 +71,7 @@ CPU<M>::_setDebug(bool enable)
 }
 
 template <typename M> void
-CPU<M>::_dump()
+CPU<M>::_dump() const
 {
 	msg("CPU:\n");
 	msg("----\n\n");
@@ -87,7 +87,7 @@ CPU<M>::_dump()
     msg("   NMI routine : %02X%02X\n", mem.spypeek(0xFFFB), mem.spypeek(0xFFFA));
 	msg("\n");
     
-    pport.dump();
+    // pport.dump();
 }
 
 template <typename M> u8
@@ -189,7 +189,7 @@ CPU<M>::setRDY(bool value)
 
 template         CPU<C64Memory>::CPU(C64& ref, C64Memory& memref);
 template CPUInfo CPU<C64Memory>::getInfo();
-template void    CPU<C64Memory>::_dump();
+template void    CPU<C64Memory>::_dump() const;
 template void    CPU<C64Memory>::_setDebug(bool enable);
 template void    CPU<C64Memory>::_reset();
 template void    CPU<C64Memory>::_inspect();
@@ -205,7 +205,7 @@ template void    CPU<C64Memory>::setRDY(bool value);
 
 template         CPU<DriveMemory>::CPU(C64& ref, DriveMemory& memref);
 template CPUInfo CPU<DriveMemory>::getInfo();
-template void    CPU<DriveMemory>::_dump();
+template void    CPU<DriveMemory>::_dump() const;
 template void    CPU<DriveMemory>::_setDebug(bool enable);
 template void    CPU<DriveMemory>::_reset();
 template void    CPU<DriveMemory>::_inspect();

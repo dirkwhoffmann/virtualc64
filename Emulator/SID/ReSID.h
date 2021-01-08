@@ -84,19 +84,19 @@ private:
     
 public:
     
-    u32 getClockFrequency();
+    u32 getClockFrequency() const;
     void setClockFrequency(u32 frequency);
     
-    SIDRevision getRevision();
+    SIDRevision getRevision() const;
     void setRevision(SIDRevision m);
     
-    double getSampleRate() { return sampleRate; }
+    double getSampleRate() const { return sampleRate; }
     void setSampleRate(double rate);
     
-    bool getAudioFilter() { return emulateFilter; }
+    bool getAudioFilter() const { return emulateFilter; }
     void setAudioFilter(bool enable);
     
-    SamplingMethod getSamplingMethod();
+    SamplingMethod getSamplingMethod() const;
     void setSamplingMethod(SamplingMethod value);
     
     

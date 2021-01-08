@@ -105,11 +105,11 @@ public:
     }
     
     // Reads the most recent pipeline element
-    T current() { return pipeline[0]; }
+    T current() const { return pipeline[0]; }
     
     // Reads a value from the pipeline with the standard delay
     // T delayed() { return pipeline[MAX(0, timeStamp - *clock + delay)]; }
-    T delayed() {
+    T delayed() const {
         i64 offset = timeStamp - *clock + delay;
         if (__builtin_expect(offset <= 0, 1)) {
             return pipeline[0];
@@ -119,7 +119,7 @@ public:
     }
     
     // Reads a value from the pipeline with a custom delay
-    T readWithDelay(u8 delay) {
+    T readWithDelay(u8 delay) const {
         assert(delay <= this->capacity);
         return pipeline[MAX(0, timeStamp - *clock + delay)];
     }

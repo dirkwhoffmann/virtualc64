@@ -31,10 +31,8 @@ Expert::_reset()
 }
 
 void
-Expert::_dump()
+Expert::_dump() const
 {
-    Cartridge::dump();
-    
     msg("             active: %d\n", active);
     msg("             switch: %d ", getSwitch());
     if (switchInPrgPosition()) msg("(PRG)\n");
@@ -163,13 +161,13 @@ Expert::pressButton(unsigned nr)
 
 
 const char *
-Expert::getSwitchDescription(i8 pos)
+Expert::getSwitchDescription(i8 pos) const
 {
     return (pos == -1) ? "Prg" : (pos == 0) ? "Off" : (pos == 1) ? "On" : nullptr;
 }
 
 bool
-Expert::cartridgeRamIsVisible(u16 addr)
+Expert::cartridgeRamIsVisible(u16 addr) const
 {
     if (addr < 0x8000) {
         assert(false); // Should never be called for this address space
@@ -185,7 +183,7 @@ Expert::cartridgeRamIsVisible(u16 addr)
 }
 
 bool
-Expert::cartridgeRamIsWritable(u16 addr)
+Expert::cartridgeRamIsWritable(u16 addr) const
 {
     return isROMLaddr(addr);
 }

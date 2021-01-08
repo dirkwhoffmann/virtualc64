@@ -39,7 +39,7 @@ private:
     
 private:
     
-    void _dump() override;
+    void _dump() const override;
     
     
     //
@@ -74,11 +74,11 @@ private:
     // Intepreting the control register
     //
         
-    u16 bankSelect()  { return (ctrlReg & 0b00010) >> 1; }
-    u8 chipSelect()   { return (ctrlReg & 0b01100) >> 2; }
-    u8 bank()         { return (ctrlReg & 0b00110) >> 1; }
-    u8 disabled()     { return (ctrlReg & 0b10000) >> 4; }
-    u8 ramIsVisible() { return chipSelect() == 0b10; }
+    u16 bankSelect() const { return (ctrlReg & 0b00010) >> 1; }
+    u8 chipSelect() const { return (ctrlReg & 0b01100) >> 2; }
+    u8 bank() const { return (ctrlReg & 0b00110) >> 1; }
+    u8 disabled() const { return (ctrlReg & 0b10000) >> 4; }
+    u8 ramIsVisible() const { return chipSelect() == 0b10; }
     
     //
     // Accessing cartridge memory

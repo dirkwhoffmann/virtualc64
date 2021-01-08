@@ -73,7 +73,7 @@ private:
     
 private:
     
-    void _dump() override;
+    void _dump() const override;
     void dumpTrace();
 
     

@@ -26,7 +26,7 @@ DriveMemory::_reset()
 }
 
 void 
-DriveMemory::_dump()
+DriveMemory::_dump() const
 {
 	msg("VC1541 Memory:\n");
 	msg("--------------\n\n");

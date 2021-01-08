@@ -201,7 +201,7 @@ Cartridge::resetWithoutDeletingRam()
 }
 
 void
-Cartridge::_dump()
+Cartridge::_dump() const
 {
     msg("\n");
     msg("Cartridge\n");
@@ -377,7 +377,7 @@ Cartridge::setRamCapacity(usize size)
 }
 
 u8
-Cartridge::peekRAM(u16 addr)
+Cartridge::peekRAM(u16 addr) const
 {
     assert(addr < ramCapacity);
     return externalRam[addr];

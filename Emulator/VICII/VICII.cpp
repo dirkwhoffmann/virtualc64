@@ -442,7 +442,7 @@ VICII::_dumpConfig() const
 }
 
 void 
-VICII::_dump()
+VICII::_dump() const
 {
     u8 ctrl1 = reg.current.ctrl1;
     u8 ctrl2 = reg.current.ctrl2; 

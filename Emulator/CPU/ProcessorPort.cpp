@@ -10,7 +10,7 @@
 #include "C64.h"
 
 void
-ProcessorPort::_dump()
+ProcessorPort::_dump() const
 {
     msg("Processor port:\n");
     msg("---------------\n\n");

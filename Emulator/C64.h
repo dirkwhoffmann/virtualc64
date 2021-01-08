@@ -263,7 +263,7 @@ public:
     
 private:
     
-    void _dump() override;
+    void _dump() const override;
 
     
     
@@ -570,7 +570,7 @@ public:
 public:
     
     // Returns the ultimax flag
-    bool getUltimax() { return ultimax; }
+    bool getUltimax() const { return ultimax; }
     
     /* Setter for ultimax mode. When the peek / poke lookup table is updated,
      * this function is called if a certain combination is present on the Game

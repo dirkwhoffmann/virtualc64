@@ -49,7 +49,7 @@ ReSID::_reset()
 }
 
 u32
-ReSID::getClockFrequency()
+ReSID::getClockFrequency() const
 {
     assert((u32)sid->clock_frequency == clockFrequency);
     return (u32)sid->clock_frequency;
@@ -117,7 +117,7 @@ ReSID::willSaveToBuffer(u8 *buffer)
 }
 
 SIDRevision
-ReSID::getRevision()
+ReSID::getRevision() const
 {
     assert((SIDRevision)sid->sid_model == model);
     return model;
@@ -168,7 +168,8 @@ ReSID::setAudioFilter(bool value)
 }
 
 SamplingMethod
-ReSID::getSamplingMethod() {
+ReSID::getSamplingMethod() const
+{
     assert((SamplingMethod)sid->sampling == samplingMethod);
     return samplingMethod;
 }

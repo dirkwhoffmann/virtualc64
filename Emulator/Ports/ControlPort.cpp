@@ -43,7 +43,7 @@ ControlPort::didLoadFromBuffer(u8 *buffer)
 }
 
 void
-ControlPort::_dump()
+ControlPort::_dump() const
 {
     msg("ControlPort port %d\n", nr);
     msg("------------------\n");
@@ -152,7 +152,7 @@ ControlPort::setAutofireBullets(int value)
 }
 
 u8
-ControlPort::bitmask() {
+ControlPort::bitmask() const {
     
     u8 result = 0xFF;
     
