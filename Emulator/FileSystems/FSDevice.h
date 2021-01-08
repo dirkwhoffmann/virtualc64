@@ -77,7 +77,7 @@ public:
 public:
     
     // Prints debug information
-    void dump();
+    void dump() const;
 
     // Prints a directory listing
     void printDirectory();

@@ -189,7 +189,7 @@ FSDevice::info()
 }
 
 void
-FSDevice::dump()
+FSDevice::dump() const
 {
     // Dump all blocks
     for (usize i = 0; i < blocks.size(); i++)  {

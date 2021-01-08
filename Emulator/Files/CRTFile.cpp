@@ -70,20 +70,20 @@ CRTFile::readFromStream(std::istream &stream)
 }
 
 CartridgeType
-CRTFile::cartridgeType() {
+CRTFile::cartridgeType() const {
     
     u16 type = LO_HI(data[0x17], data[0x16]);
     return CartridgeType(type);
 }
 
 bool
-CRTFile::isSupported()
+CRTFile::isSupported() const
 {
     return Cartridge::isSupportedType(cartridgeType());
 }
 
 void
-CRTFile::dump()
+CRTFile::dump() const
 {
     msg("Cartridge: %s\n", getName().c_str());
     msg("   Header: %08X bytes (normally 0x40)\n", headerSize());

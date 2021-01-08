@@ -71,7 +71,7 @@ public:
 public:
     
     // Prints some debug information for this block
-    void dump();
+    void dump() const;
     
     
     //

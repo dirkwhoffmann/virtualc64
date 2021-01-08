@@ -130,7 +130,7 @@ public:
     }
     
     // Dumps debug information about the internal state to the console
-    void dump();
+    void dump() const;
     virtual void _dump() const { }
     
  

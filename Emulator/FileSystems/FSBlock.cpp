@@ -96,7 +96,7 @@ FSBlock::writeBAM(PETName<16> &name)
 }
 
 void
-FSBlock::dump()
+FSBlock::dump() const
 {
     
 }
