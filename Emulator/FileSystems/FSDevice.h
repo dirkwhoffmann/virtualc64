@@ -277,8 +277,6 @@ public:
     // Imports a folder from the host file system
     bool importDirectory(const std::string &path);
     bool importDirectory(const std::string &path, DIR *dir);
-    [[deprecated]] bool importDirectory(const char *path);
-    // bool importDirectory(const char *path, DIR *dir);
 
     // Exports the volume to a buffer
     bool exportVolume(u8 *dst, usize size, ErrorCode *err = nullptr);

@@ -166,7 +166,6 @@ public:
     
     static Disk *make(C64 &ref, DOSType type, PETName<16> name);
     static Disk *makeWithFileSystem(C64 &ref, class FSDevice *device);
-    [[deprecated]] static Disk *makeWithD64(C64 &ref, D64File *d64);
     static Disk *makeWithG64(C64 &ref, G64File *g64);
     static Disk *makeWithCollection(C64 &ref, AnyCollection *archive);
 

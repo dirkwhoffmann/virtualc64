@@ -159,15 +159,6 @@ string extractFileName(const string &s);
 string extractSuffix(const string &s);
 string stripSuffix(const string &s); 
 
-/*
-[[deprecated]] char *extractFileName(const char *path);
-[[deprecated]] char *extractSuffix(const char *path);
-[[deprecated]] char *extractFileNameWithoutSuffix(const char *path);
-*/
-
-// Checks the suffix of a file name
-// [[deprecated]] bool checkFileSuffix(const char *filename, const char *suffix);
-
 // Extracts the suffix from a filename
 std::string suffix(const std::string &name);
 
@@ -182,19 +173,12 @@ bool isDirectory(const char *path);
 usize numDirectoryItems(const std::string &path);
 usize numDirectoryItems(const char *path);
 
-// Checks the size of a file
-[[deprecated]] bool checkFileSize(const char *filename, long min = -1, long max = -1);
-
 // Checks the header signature (magic bytes) of a file or buffer
-[[deprecated]] bool matchingFileHeader(const char *path, const u8 *header, usize length);
-[[deprecated]] bool matchingBufferHeader(const u8 *buffer, const u8 *header, usize length);
 bool matchingStreamHeader(std::istream &stream, const u8 *header, usize length);
 
 // Loads a file from disk
 bool loadFile(const std::string &path, u8 **bufptr, long *lenptr);
 bool loadFile(const std::string &path, const std::string &name, u8 **bufptr, long *lenptr);
-bool loadFile(const char *path, u8 **bufptr, long *lenptr);
-bool loadFile(const char *path, const char *name, u8 **bufptr, long *lenptr);
 
 
 //

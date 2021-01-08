@@ -345,7 +345,6 @@ public:
     void insertNewDisk(DOSType fstype);
     void insertNewDisk(DOSType fstype, PETName<16> name);
     void insertFileSystem(class FSDevice *device);
-    [[deprecated]] void insertD64(D64File *d64);
     void insertG64(G64File *g64);
     void insertDisk(AnyCollection *archive);
     void ejectDisk();

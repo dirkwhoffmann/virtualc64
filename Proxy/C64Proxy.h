@@ -117,7 +117,6 @@
 @property BOOL warp;
 @property BOOL debugMode;
 @property InspectionTarget inspectionTarget;
-- (void)clearInspectionTarget __attribute__ ((deprecated));
 
 - (BOOL)isReady:(ErrorCode *)err;
 - (BOOL)isReady;
@@ -258,10 +257,6 @@
 - (u8)spypeek:(u16)addr;
 - (u8)spypeekIO:(u16)addr;
 - (u8)spypeekColor:(u16)addr;
-
-- (void)poke:(u16)addr value:(u8)value target:(MemoryType)target __attribute__ ((deprecated));
-- (void)poke:(u16)addr value:(u8)value __attribute__ ((deprecated));
-- (void)pokeIO:(u16)addr value:(u8)value __attribute__ ((deprecated));
 
 - (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src;
 - (NSString *)txtdump:(NSInteger)addr num:(NSInteger)num src:(MemoryType)src;
@@ -467,10 +462,8 @@
 - (BOOL)hasModifiedDisk;
 - (void)setModifiedDisk:(BOOL)b;
 - (void)insertNewDisk:(DOSType)fstype;
-- (void)insertD64:(D64FileProxy *)disk __attribute__ ((deprecated));
 - (void)insertG64:(G64FileProxy *)disk;
 - (void)insertFileSystem:(FSDeviceProxy *)proxy;
-- (void)insertCollection:(AnyCollectionProxy *)disk __attribute__ ((deprecated));
 - (void)ejectDisk;
 - (BOOL)writeProtected;
 - (void)setWriteProtection:(BOOL)b;

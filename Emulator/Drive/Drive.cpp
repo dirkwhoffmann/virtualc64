@@ -434,12 +434,14 @@ Drive::insertFileSystem(FSDevice *device)
     insertDisk(Disk::makeWithFileSystem(c64, device));
 }
 
+/*
 void
 Drive::insertD64(D64File *d64)
 {
     debug(DSKCHG_DEBUG, "insertD64(%p)\n", d64);
     insertDisk(Disk::makeWithD64(c64, d64));
 }
+*/
 
 void
 Drive::insertG64(G64File *g64)

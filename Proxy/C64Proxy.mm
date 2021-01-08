@@ -300,6 +300,7 @@
     return [self mem]->spypeekColor(addr);
 }
 
+/*
 - (void)poke:(u16)addr value:(u8)value target:(MemoryType)target
 {
     [self mem]->suspend();
@@ -320,6 +321,7 @@
     [self mem]->pokeIO(addr, value);
     [self mem]->resume();
 }
+*/
 
 - (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src
 {
@@ -946,7 +948,7 @@
     return fs ? [[self alloc] initWith: fs] : nil;
 }
 
-+ (instancetype)makeWithD64:(D64FileProxy *)proxy __attribute__ ((deprecated))
++ (instancetype)makeWithD64:(D64FileProxy *)proxy
 {
     ErrorCode err;
     FSDevice *volume = FSDevice::makeWithD64((D64File *)proxy->obj, &err);
@@ -959,7 +961,7 @@
     return [self make:volume];
 }
 
-+ (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy __attribute__ ((deprecated))
++ (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy
 {
     FSDevice *volume = FSDevice::makeWithCollection((AnyCollection *)proxy->obj);
     return [self make:volume];
@@ -1248,11 +1250,6 @@
     [self drive]->setModifiedDisk(b);
 }
 
-- (void)insertD64:(D64FileProxy *)proxy
-{
-    [self drive]->insertD64((D64File *)proxy->obj);
-}
-
 - (void)insertG64:(G64FileProxy *)proxy
 {
     [self drive]->insertG64((G64File *)proxy->obj);
@@ -1263,10 +1260,12 @@
     [self drive]->insertFileSystem((FSDevice *)proxy->obj);
 }
 
+/*
 - (void)insertCollection:(AnyCollectionProxy *)proxy
 {
     [self drive]->insertDisk((AnyCollection *)proxy->obj);
 }
+*/
 
 - (void) insertNewDisk:(DOSType)fsType
 {
@@ -1980,10 +1979,12 @@
     [self c64]->setInspectionTarget(target);
 }
 
+/*
 - (void)clearInspectionTarget
 {
     [self c64]->clearInspectionTarget();
 }
+*/
 
 - (BOOL)isReady:(ErrorCode *)err
 {

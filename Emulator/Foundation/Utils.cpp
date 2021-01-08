@@ -151,52 +151,6 @@ string stripSuffix(const string &s)
     return s.substr(pos, len);
 }
 
-/*
-char *
-extractFileName(const char *path)
-{
-    assert(path);
-    
-    string s(path);
-    return strdup(extractFileName(s).c_str());
-}
-
-char *
-extractSuffix(const char *path)
-{
-    assert(path);
-    
-    string s(path);
-    return strdup(extractSuffix(s).c_str());
-}
-
-char *
-extractFileNameWithoutSuffix(const char *path)
-{
-    assert(path);
-    
-    string s(path);
-    return strdup(stripSuffix(extractFileName(s)).c_str());
-}
-*/
-/*
-bool
-checkFileSuffix(const char *filename, const char *suffix)
-{
-	assert(filename);
-	assert(suffix);
-	
-	if (strlen(suffix) > strlen(filename))
-		return false;
-	
-	filename += (strlen(filename) - strlen(suffix));
-	if (strcmp(filename, suffix) == 0)
-		return true;
-	else
-		return false;
-}
-*/
-
 std::string
 suffix(const std::string &name)
 {
@@ -256,61 +210,6 @@ getSizeOfFile(const char *filename)
     return fileProperties.st_size;
 }
 
-bool
-checkFileSize(const char *filename, long min, long max)
-{
-    long filesize = getSizeOfFile(filename);
-    
-    if (filesize == -1) {
-        return false;
-    }
-    if (min > 0 && filesize < min) {
-        return false;
-    }
-    if (max > 0 && filesize > max) {
-        return false;
-    }
-    return true;
-}
-
-bool
-matchingFileHeader(const char *path, const u8 *header, usize length)
-{
-    assert(path);
-    assert(header);
-    
-    bool result = true;
-    FILE *file;
-    
-    if ((file = fopen(path, "r")) == nullptr) {
-        return false;
-    }
-    for (usize i = 0; i < length; i++) {
-        int c = fgetc(file);
-        if (c != (int)header[i]) {
-            result = false;
-            break;
-        }
-    }
-
-    fclose(file);
-    return result;
-}
-
-bool
-matchingBufferHeader(const u8 *buffer, const u8 *header, usize length)
-{
-    assert(buffer);
-    assert(header);
-
-    for (usize i = 0; i < length; i++) {
-        if (header[i] != buffer[i])
-        return false;
-    }
-
-    return true;
-}
-
 bool matchingStreamHeader(std::istream &stream, const u8 *header, usize length)
 {
     stream.seekg(0, std::ios::beg);
@@ -345,55 +244,6 @@ bool loadFile(const std::string &path, u8 **bufptr, long *lenptr)
 bool loadFile(const std::string &path, const std::string &name, u8 **bufptr, long *lenptr)
 {
     return loadFile(path + "/" + name, bufptr, lenptr);
-}
-
-[[deprecated]] bool
-loadFile(const char *path, u8 **bufptr, long *lenptr)
-{
-    assert(path);
-    assert(bufptr);
-    assert(lenptr);
-
-    *bufptr = nullptr;
-    *lenptr = 0;
-    
-    // Get file size
-    long bytes = getSizeOfFile(path);
-    if (bytes == -1) return false;
-    
-    // Open file
-    FILE *file = fopen(path, "r");
-    if (file == nullptr) return false;
-     
-    // Allocate memory
-    u8 *data = new u8[bytes];
-    if (data == nullptr) { fclose(file); return false; }
-    
-    // Read data
-    for (unsigned i = 0; i < bytes; i++) {
-        int c = fgetc(file);
-        if (c == EOF) break;
-        data[i] = (u8)c;
-    }
-    
-    fclose(file);
-    *bufptr = data;
-    *lenptr = bytes;
-    return true;
-}
-
-[[deprecated]] bool
-loadFile(const char *path, const char *name, u8 **bufptr, long *lenptr)
-{
-    assert(path != nullptr);
-    assert(name != nullptr);
-
-    char *fullpath = new char[strlen(path) + strlen(name) + 2];
-    strcpy(fullpath, path);
-    strcat(fullpath, "/");
-    strcat(fullpath, name);
-    
-    return loadFile(fullpath, bufptr, lenptr);
 }
 
 usize

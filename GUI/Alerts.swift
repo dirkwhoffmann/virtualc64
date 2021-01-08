@@ -129,87 +129,10 @@ extension MyDocument {
             return true
         }
     }
-    
-    @available(*, deprecated)
-    func showDiskIsEmptyAlert(format: String) {
-        
-        let alert = NSAlert()
-        alert.alertStyle = .critical
-        alert.icon = NSImage.init(named: "diskette")
-        alert.messageText = "Cannot export an empty disk."
-        alert.informativeText = "The \(format) format is designed to store a single file."
-        alert.addButton(withTitle: "OK")
-        alert.runModal()
-    }
-    
-    /*
-    @available(*, deprecated)
-    func showDiskHasMultipleFilesAlert(format: String) {
-        
-        let alert = NSAlert()
-        alert.alertStyle = .informational
-        alert.icon = NSImage.init(named: "diskette")
-        alert.messageText = "Only the first file will be exported."
-        alert.informativeText = "The \(format) format is designed to store a single file."
-        alert.addButton(withTitle: "OK")
-        alert.runModal()
-    }
-    */
-    
-    /*
-    @available(*, deprecated)
-    func showExportErrorAlert(url: URL) {
-        
-        let path = url.path
-        let alert = NSAlert()
-        alert.alertStyle = .critical
-        alert.icon = NSImage.init(named: "diskette")
-        alert.messageText = "Failed to export disk to file"
-        alert.informativeText = "\(path)."
-        alert.addButton(withTitle: "OK")
-        alert.runModal()
-    }
-    */
-    
-    @available(*, deprecated)
-    func showCannotDecodeDiskAlert() {
-
-        let alert = NSAlert()
-        alert.alertStyle = .critical
-        alert.icon = NSImage.init(named: "diskette")
-        alert.messageText = "Failed to decode all sectors."
-        alert.informativeText = "The disk is either copy protected or corrupted."
-        alert.addButton(withTitle: "OK")
-        alert.runModal()
-    }
 }
 
 extension MyController {
             
-    @available(*, deprecated)
-    func warning(_ msg1: String, _ msg2: String, icon: String? = nil) {
-
-        alert(msg1, msg2, style: .warning, icon: icon)
-    }
-
-    @available(*, deprecated)
-    func critical(_ msg1: String, _ msg2: String, icon: String? = nil) {
-
-        alert(msg1, msg2, style: .critical, icon: icon)
-    }
-
-    @available(*, deprecated)
-    func alert(_ msg1: String, _ msg2: String, style: NSAlert.Style, icon: String?) {
-        
-        let alert = NSAlert()
-        alert.alertStyle = style
-        if icon != nil { alert.icon = NSImage.init(named: icon!) }
-        alert.messageText = msg1
-        alert.informativeText = msg2
-        alert.addButton(withTitle: "OK")
-        alert.runModal()
-    }
-    
     func proceedWithUnexportedDisk(drive: DriveID) -> Bool {
         return mydocument?.proceedWithUnexportedDisk(drive: drive) ?? false
     }
@@ -217,5 +140,4 @@ extension MyController {
     func proceedWithUnexportedDisk() -> Bool {
         return mydocument?.proceedWithUnexportedDisk() ?? false
     }
-
 }

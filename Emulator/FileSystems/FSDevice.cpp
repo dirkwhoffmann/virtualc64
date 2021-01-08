@@ -757,23 +757,14 @@ FSDevice::importDirectory(const string &path)
     return false;
 }
 
+/*
 bool
 FSDevice::importDirectory(const char *path)
 {
     assert(path);
     return importDirectory(string(path));
-    /*
-    if (DIR *dir = opendir(path)) {
-        
-        bool result = importDirectory(path, dir);
-        closedir(dir);
-        return result;
-    }
-
-    warn("Error opening directory %s\n", path);
-    return false;
-    */
 }
+*/
 
 bool
 FSDevice::importDirectory(const std::string &path, DIR *dir)

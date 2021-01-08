@@ -147,6 +147,7 @@ Disk::makeWithFileSystem(C64 &ref, FSDevice *device)
     return disk;
 }
 
+/*
 Disk *
 Disk::makeWithD64(C64 &ref, D64File *d64)
 {
@@ -161,6 +162,7 @@ Disk::makeWithD64(C64 &ref, D64File *d64)
     
     return disk;
 }
+*/
 
 Disk *
 Disk::makeWithG64(C64 &ref, G64File *g64)
