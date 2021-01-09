@@ -102,13 +102,13 @@ private:
     
 public:
     
-    u8 read();
-    u8 readDirection();
+    u8 read() const;
+    u8 readDirection() const;
 
     void write(u8 value);
     void writeDirection(u8 value);
 
-    bool getLoram() { return read() & 0x1; }
-    bool getHiram() { return read() & 0x2; }
-    bool getCharen() { return read() & 0x4; }
+    bool getLoram() const { return read() & 0x1; }
+    bool getHiram() const { return read() & 0x2; }
+    bool getCharen() const { return read() & 0x4; }
 };

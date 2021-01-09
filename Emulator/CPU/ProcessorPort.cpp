@@ -22,7 +22,7 @@ ProcessorPort::_dump() const
 }
             
 u8
-ProcessorPort::read()
+ProcessorPort::read() const
 {
     // If the port bits are configured as inputs and no datasette is attached,
     // the following values are returned:
@@ -51,7 +51,7 @@ ProcessorPort::read()
 }
 
 u8
-ProcessorPort::readDirection()
+ProcessorPort::readDirection() const
 {
     return direction;
 }

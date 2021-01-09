@@ -231,7 +231,7 @@ CPUDebugger::watchpointMatches(u32 addr)
 }
 
 int
-CPUDebugger::loggedInstructions()
+CPUDebugger::loggedInstructions() const
 {
     return logCnt < LOG_BUFFER_CAPACITY ? (int)logCnt : LOG_BUFFER_CAPACITY;
 }
@@ -257,36 +257,36 @@ CPUDebugger::logInstruction()
     logBuffer[i].flags = cpu.getP();
 }
 
-RecordedInstruction &
-CPUDebugger::logEntryRel(int n)
+const RecordedInstruction &
+CPUDebugger::logEntryRel(int n) const
 {
     assert(n < loggedInstructions());
     return logBuffer[(logCnt - 1 - n) % LOG_BUFFER_CAPACITY];
 }
 
-RecordedInstruction &
-CPUDebugger::logEntryAbs(int n)
+const RecordedInstruction &
+CPUDebugger::logEntryAbs(int n) const
 {
     assert(n < loggedInstructions());
     return logEntryRel(loggedInstructions() - n - 1);
 }
 
 u16
-CPUDebugger::loggedPC0Rel(int n)
+CPUDebugger::loggedPC0Rel(int n) const
 {
     assert(n < loggedInstructions());
     return logBuffer[(logCnt - 1 - n) % LOG_BUFFER_CAPACITY].pc;
 }
 
 u16
-CPUDebugger::loggedPC0Abs(int n)
+CPUDebugger::loggedPC0Abs(int n) const
 {
     assert(n < loggedInstructions());
     return loggedPC0Rel(loggedInstructions() - n - 1);
 }
 
 unsigned
-CPUDebugger::getLengthOfInstruction(u8 opcode)
+CPUDebugger::getLengthOfInstruction(u8 opcode) const
 {
     switch(addressingMode[opcode]) {
         case ADDR_IMPLIED:
@@ -311,49 +311,49 @@ CPUDebugger::getLengthOfInstruction(u8 opcode)
 }
 
 unsigned
-CPUDebugger::getLengthOfInstructionAtAddress(u16 addr)
+CPUDebugger::getLengthOfInstructionAtAddress(u16 addr) const
 {
     return getLengthOfInstruction(cpu.mem.spypeek(addr));
 }
 
 unsigned
-CPUDebugger::getLengthOfCurrentInstruction()
+CPUDebugger::getLengthOfCurrentInstruction() const
 {
     return getLengthOfInstructionAtAddress(cpu.getPC0());
 }
 
 u16
-CPUDebugger::getAddressOfNextInstruction()
+CPUDebugger::getAddressOfNextInstruction() const
 {
     return cpu.getPC0() + getLengthOfCurrentInstruction();
 }
 
 const char *
-CPUDebugger::disassembleRecordedInstr(int i, long *len)
+CPUDebugger::disassembleRecordedInstr(int i, long *len) const
 {
     return disassembleInstr(logEntryAbs(i), len);
 }
 
 const char *
-CPUDebugger::disassembleRecordedBytes(int i)
+CPUDebugger::disassembleRecordedBytes(int i) const
 {
     return disassembleBytes(logEntryAbs(i));
 }
 
 const char *
-CPUDebugger::disassembleRecordedFlags(int i)
+CPUDebugger::disassembleRecordedFlags(int i) const
 {
     return disassembleRecordedFlags(logEntryAbs(i));
 }
 
 const char *
-CPUDebugger::disassembleRecordedPC(int i)
+CPUDebugger::disassembleRecordedPC(int i) const
 {
     return disassembleAddr(logEntryAbs(i).pc);
 }
 
 const char *
-CPUDebugger::disassembleInstr(u16 addr, long *len)
+CPUDebugger::disassembleInstr(u16 addr, long *len) const
 {
     RecordedInstruction instr;
     
@@ -366,7 +366,7 @@ CPUDebugger::disassembleInstr(u16 addr, long *len)
 }
 
 const char *
-CPUDebugger::disassembleBytes(u16 addr)
+CPUDebugger::disassembleBytes(u16 addr) const
 {
     RecordedInstruction instr;
      
@@ -378,7 +378,7 @@ CPUDebugger::disassembleBytes(u16 addr)
 }
 
 const char *
-CPUDebugger::disassembleAddr(u16 addr)
+CPUDebugger::disassembleAddr(u16 addr) const
 {
     static char result[6];
 
@@ -387,25 +387,25 @@ CPUDebugger::disassembleAddr(u16 addr)
 }
 
 const char *
-CPUDebugger::disassembleInstruction(long *len)
+CPUDebugger::disassembleInstruction(long *len) const
 {
     return disassembleInstr(cpu.getPC0(), len);
 }
 
 const char *
-CPUDebugger::disassembleDataBytes()
+CPUDebugger::disassembleDataBytes() const
 {
     return disassembleBytes(cpu.getPC0());
 }
 
 const char *
-CPUDebugger::disassemblePC()
+CPUDebugger::disassemblePC() const
 {
     return disassembleAddr(cpu.getPC0());
 }
 
 const char *
-CPUDebugger::disassembleInstr(RecordedInstruction &instr, long *len)
+CPUDebugger::disassembleInstr(const RecordedInstruction &instr, long *len) const
 {
     static char result[16];
         
@@ -505,7 +505,7 @@ CPUDebugger::disassembleInstr(RecordedInstruction &instr, long *len)
 }
 
 const char *
-CPUDebugger::disassembleBytes(RecordedInstruction &instr)
+CPUDebugger::disassembleBytes(const RecordedInstruction &instr) const
 {
     static char result[13]; char *ptr = result;
     
@@ -526,7 +526,7 @@ CPUDebugger::disassembleBytes(RecordedInstruction &instr)
 }
 
 const char *
-CPUDebugger::disassembleRecordedFlags(RecordedInstruction &instr)
+CPUDebugger::disassembleRecordedFlags(const RecordedInstruction &instr) const
 {
     static char result[9];
     

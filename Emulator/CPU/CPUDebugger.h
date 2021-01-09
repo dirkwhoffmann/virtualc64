@@ -251,7 +251,7 @@ public:
     //
         
     // Returns the number of logged instructions
-    int loggedInstructions();
+    int loggedInstructions() const;
     
     // Logs an instruction
     void logInstruction();
@@ -261,10 +261,10 @@ public:
      *    xxxRel: n == 0 returns the most recently recorded entry
      *    xxxAbs: n == 0 returns the oldest entry
      */
-    RecordedInstruction &logEntryRel(int n);
-    RecordedInstruction &logEntryAbs(int n);
-    u16 loggedPC0Rel(int n);
-    u16 loggedPC0Abs(int n);
+    const RecordedInstruction &logEntryRel(int n) const;
+    const RecordedInstruction &logEntryAbs(int n) const;
+    u16 loggedPC0Rel(int n) const;
+    u16 loggedPC0Abs(int n) const;
 
     // Clears the log buffer
     void clearLog() { logCnt = 0; }
@@ -274,36 +274,36 @@ public:
     //
     
     // Returns the length of an instruction in bytes
-    unsigned getLengthOfInstruction(u8 opcode);
-    unsigned getLengthOfInstructionAtAddress(u16 addr);
-    unsigned getLengthOfCurrentInstruction();
+    unsigned getLengthOfInstruction(u8 opcode) const;
+    unsigned getLengthOfInstructionAtAddress(u16 addr) const;
+    unsigned getLengthOfCurrentInstruction() const;
 
     // Returns the address of the instruction following the current one
-    u16 getAddressOfNextInstruction();
+    u16 getAddressOfNextInstruction() const;
     
     //
     // Running the disassembler
     //
         
     // Disassembles a previously recorded instruction
-    const char *disassembleRecordedInstr(int i, long *len);
-    const char *disassembleRecordedBytes(int i);
-    const char *disassembleRecordedFlags(int i);
-    const char *disassembleRecordedPC(int i);
+    const char *disassembleRecordedInstr(int i, long *len) const;
+    const char *disassembleRecordedBytes(int i) const;
+    const char *disassembleRecordedFlags(int i) const;
+    const char *disassembleRecordedPC(int i) const;
 
     // Disassembles the instruction at the specified address
-    const char *disassembleInstr(u16 addr, long *len);
-    const char *disassembleBytes(u16 addr);
-    const char *disassembleAddr(u16 addr);
+    const char *disassembleInstr(u16 addr, long *len) const;
+    const char *disassembleBytes(u16 addr) const;
+    const char *disassembleAddr(u16 addr) const;
 
     // Disassembles the currently executed instruction
-    const char *disassembleInstruction(long *len);
-    const char *disassembleDataBytes();
-    const char *disassemblePC();
+    const char *disassembleInstruction(long *len) const;
+    const char *disassembleDataBytes() const;
+    const char *disassemblePC() const;
 
 private:
     
-    const char *disassembleInstr(RecordedInstruction &instr, long *len);
-    const char *disassembleBytes(RecordedInstruction &instr);
-    const char *disassembleRecordedFlags(RecordedInstruction &instr);
+    const char *disassembleInstr(const RecordedInstruction &instr, long *len) const;
+    const char *disassembleBytes(const RecordedInstruction &instr) const;
+    const char *disassembleRecordedFlags(const RecordedInstruction &instr) const;
 };
