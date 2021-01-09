@@ -41,13 +41,13 @@ FSDeviceDescriptor::FSDeviceDescriptor(D64File &d64)
 }
 
 bool
-FSDeviceDescriptor::isValidLink(TSLink ref)
+FSDeviceDescriptor::isValidLink(TSLink ref) const
 {
     return isTrackNr(ref.t) && ref.s >= 0 && ref.s < numSectors(ref.t);
 }
 
 u32
-FSDeviceDescriptor::speedZone(Track t)
+FSDeviceDescriptor::speedZone(Track t) const
 {
     assert(isTrackNr(t));
     
@@ -62,7 +62,7 @@ FSDeviceDescriptor::speedZone(Track t)
 }
 
 u32
-FSDeviceDescriptor::numSectors(Track t)
+FSDeviceDescriptor::numSectors(Track t) const
 {
     if (!isTrackNr(t)) return 0;
     
@@ -79,7 +79,7 @@ FSDeviceDescriptor::numSectors(Track t)
 }
 
 u32
-FSDeviceDescriptor::numBlocks()
+FSDeviceDescriptor::numBlocks() const
 {
     u32 result = 0;
     
@@ -91,7 +91,7 @@ FSDeviceDescriptor::numBlocks()
 }
 
 TSLink
-FSDeviceDescriptor::tsLink(Block b)
+FSDeviceDescriptor::tsLink(Block b) const
 {
     for (Track i = 1; i <= numTracks(); i++) {
 
@@ -104,7 +104,7 @@ FSDeviceDescriptor::tsLink(Block b)
 }
 
 Block
-FSDeviceDescriptor::blockNr(TSLink ts)
+FSDeviceDescriptor::blockNr(TSLink ts) const
 {
     if (!isValidLink(ts)) return (Block)(-1);
     
@@ -117,7 +117,7 @@ FSDeviceDescriptor::blockNr(TSLink ts)
 }
 
 TSLink
-FSDeviceDescriptor::nextBlockRef(TSLink ref)
+FSDeviceDescriptor::nextBlockRef(TSLink ref) const
 {
     assert(isValidLink(ref));
     

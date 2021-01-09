@@ -214,7 +214,7 @@ FSDevice::printDirectory()
 }
 
 u32
-FSDevice::numFreeBlocks()
+FSDevice::numFreeBlocks() const
 {
     u32 result = 0;
     
@@ -226,7 +226,7 @@ FSDevice::numFreeBlocks()
 }
 
 u32
-FSDevice::numUsedBlocks()
+FSDevice::numUsedBlocks() const
 {
     u32 result = 0;
     
@@ -238,19 +238,19 @@ FSDevice::numUsedBlocks()
 }
 
 FSBlockType
-FSDevice::blockType(Block b)
+FSDevice::blockType(Block b) const
 {
     return blockPtr(b) ? blocks[b]->type() : FS_BLOCKTYPE_UNKNOWN;
 }
 
 FSUsage
-FSDevice::usage(Block b, u32 pos)
+FSDevice::usage(Block b, u32 pos) const
 {
     return blockPtr(b) ? blocks[b]->itemType(pos) : FS_USAGE_UNUSED;
 }
 
 u8
-FSDevice::getErrorCode(Block b)
+FSDevice::getErrorCode(Block b) const
 {
     return blockPtr(b) ? blocks[b]->errorCode : 0;
 }
@@ -262,13 +262,13 @@ FSDevice::setErrorCode(Block b, u8 code)
 }
 
 FSBlock *
-FSDevice::blockPtr(Block b)
+FSDevice::blockPtr(Block b) const
 {
     return (u64)b < (u64)blocks.size() ? blocks[b] : nullptr;
 }
 
 FSBlock *
-FSDevice::nextBlockPtr(Block b)
+FSDevice::nextBlockPtr(Block b) const
 {
     FSBlock *ptr = blockPtr(b);
     
@@ -279,7 +279,7 @@ FSDevice::nextBlockPtr(Block b)
 }
 
 FSBlock *
-FSDevice::nextBlockPtr(FSBlock *ptr)
+FSDevice::nextBlockPtr(FSBlock *ptr) const
 {
     return ptr ? blockPtr(ptr->tsLink()) : nullptr;
 }
@@ -299,7 +299,7 @@ FSDevice::setName(PETName<16> name)
 }
 
 bool
-FSDevice::isFree(TSLink ts)
+FSDevice::isFree(TSLink ts) const
 {
     u32 byte, bit;
     FSBlock *bam = locateAllocBit(ts, &byte, &bit);
@@ -308,7 +308,7 @@ FSDevice::isFree(TSLink ts)
 }
 
 TSLink
-FSDevice::nextFreeBlock(TSLink ref)
+FSDevice::nextFreeBlock(TSLink ref) const
 {
     if (!layout.isValidLink(ref)) return {0,0};
     
@@ -379,13 +379,13 @@ FSDevice::allocate(TSLink ts, u32 n)
 }
 
 FSBlock *
-FSDevice::locateAllocBit(Block b, u32 *byte, u32 *bit)
+FSDevice::locateAllocBit(Block b, u32 *byte, u32 *bit) const
 {
     return locateAllocBit(layout.tsLink(b), byte, bit);
 }
 
 FSBlock *
-FSDevice::locateAllocBit(TSLink ts, u32 *byte, u32 *bit)
+FSDevice::locateAllocBit(TSLink ts, u32 *byte, u32 *bit) const
 {
     assert(layout.isValidLink(ts));
         
@@ -404,42 +404,42 @@ FSDevice::locateAllocBit(TSLink ts, u32 *byte, u32 *bit)
 }
 
 PETName<16>
-FSDevice::fileName(unsigned nr)
+FSDevice::fileName(unsigned nr) const
 {
     assert(nr < numFiles());
     return fileName(dir[nr]);
 }
 
 PETName<16>
-FSDevice::fileName(FSDirEntry *entry)
+FSDevice::fileName(FSDirEntry *entry) const
 {
     assert(entry);
     return PETName<16>(entry->fileName);
 }
 
 FSFileType
-FSDevice::fileType(unsigned nr)
+FSDevice::fileType(unsigned nr) const
 {
     assert(nr < numFiles());
     return fileType(dir[nr]);
 }
 
 FSFileType
-FSDevice::fileType(FSDirEntry *entry)
+FSDevice::fileType(FSDirEntry *entry) const
 {
     assert(entry);
     return entry->getFileType();
 }
 
 u64
-FSDevice::fileSize(unsigned nr)
+FSDevice::fileSize(unsigned nr) const
 {
     assert(nr < numFiles());
     return fileSize(dir[nr]);
 }
 
 u64
-FSDevice::fileSize(FSDirEntry *entry)
+FSDevice::fileSize(FSDirEntry *entry) const
 {
     assert(entry);
     
@@ -469,28 +469,28 @@ FSDevice::fileSize(FSDirEntry *entry)
 }
 
 u64
-FSDevice::fileBlocks(unsigned nr)
+FSDevice::fileBlocks(unsigned nr) const
 {
     assert(nr < numFiles());
     return fileBlocks(dir[nr]);
 }
 
 u64
-FSDevice::fileBlocks(FSDirEntry *entry)
+FSDevice::fileBlocks(FSDirEntry *entry) const
 {
     assert(entry);
     return HI_LO(entry->fileSizeHi, entry->fileSizeLo);
 }
 
 u16
-FSDevice::loadAddr(unsigned nr)
+FSDevice::loadAddr(unsigned nr) const
 {
     assert(nr < numFiles());
     return loadAddr(dir[nr]);
 }
 
 u16
-FSDevice::loadAddr(FSDirEntry *entry)
+FSDevice::loadAddr(FSDirEntry *entry) const
 {
     assert(entry);
     u8 addr[2]; copyFile(entry, addr, 2);
@@ -498,14 +498,14 @@ FSDevice::loadAddr(FSDirEntry *entry)
 }
 
 void
-FSDevice::copyFile(unsigned nr, u8 *buf, u64 len, u64 offset)
+FSDevice::copyFile(unsigned nr, u8 *buf, u64 len, u64 offset) const
 {
     assert(nr < numFiles());
     copyFile(dir[nr], buf, len, offset);
 }
 
 void
-FSDevice::copyFile(FSDirEntry *entry, u8 *buf, u64 len, u64 offset)
+FSDevice::copyFile(FSDirEntry *entry, u8 *buf, u64 len, u64 offset) const
 {
     assert(entry);
     
@@ -531,7 +531,7 @@ FSDevice::copyFile(FSDirEntry *entry, u8 *buf, u64 len, u64 offset)
 }
 
 FSDirEntry *
-FSDevice::nextFreeDirEntry()
+FSDevice::getOrCreateNextFreeDirEntry()
 {
     // The directory starts on track 18, sector 1
     FSBlock *ptr = blockPtr(TSLink{18,1});
@@ -588,7 +588,7 @@ bool
 FSDevice::makeFile(PETName<16> name, const u8 *buf, usize cnt)
 {
     // Search the next free directory slot
-    FSDirEntry *dir = nextFreeDirEntry();
+    FSDirEntry *dir = getOrCreateNextFreeDirEntry();
 
     // Create the file if we've found a free slot
     if (dir) return makeFile(name, dir, buf, cnt);
@@ -674,13 +674,13 @@ FSDevice::check(u32 blockNr, u32 pos, u8 *expected, bool strict)
 }
 
 u32
-FSDevice::getCorrupted(u32 blockNr)
+FSDevice::getCorrupted(u32 blockNr) const
 {
     return blockPtr(blockNr) ? blocks[blockNr]->corrupted : 0;
 }
 
 bool
-FSDevice::isCorrupted(u32 blockNr, u32 n)
+FSDevice::isCorrupted(u32 blockNr, u32 n) const
 {
     usize numBlocks = blocks.size();
     
@@ -695,7 +695,7 @@ FSDevice::isCorrupted(u32 blockNr, u32 n)
 }
 
 u32
-FSDevice::nextCorrupted(u32 blockNr)
+FSDevice::nextCorrupted(u32 blockNr) const
 {
     usize numBlocks = blocks.size();
     
@@ -706,7 +706,7 @@ FSDevice::nextCorrupted(u32 blockNr)
 }
 
 u32
-FSDevice::prevCorrupted(u32 blockNr)
+FSDevice::prevCorrupted(u32 blockNr) const
 {
     usize numBlocks = blocks.size();
     
@@ -717,7 +717,7 @@ FSDevice::prevCorrupted(u32 blockNr)
 }
 
 u8
-FSDevice::readByte(u32 block, u32 offset)
+FSDevice::readByte(u32 block, u32 offset) const
 {
     assert(offset < 256);
     assert(block < blocks.size());

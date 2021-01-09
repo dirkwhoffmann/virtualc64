@@ -49,7 +49,7 @@ public:
 public:
     
     // Returns the type of this block
-    FSBlockType type();
+    FSBlockType type() const;
     
     // Returns the track / sector link stored in the fist two bytes
     TSLink tsLink() { return TSLink { data[0], data[1] }; }
@@ -81,13 +81,13 @@ public:
 public:
     
     // Returns the role of a certain byte in this block
-    FSUsage itemType(u32 byte);
+    FSUsage itemType(u32 byte) const;
 
     // Checks the integrity of a certain byte in this block
-    ErrorCode check(u32 byte, u8 *expected, bool strict);
+    ErrorCode check(u32 byte, u8 *expected, bool strict) const;
 
     // Scans the block data and returns the number of errors
-    unsigned check(bool strict);
+    unsigned check(bool strict) const;
 
       
     //
