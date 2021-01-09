@@ -253,9 +253,9 @@ public:
     virtual u8 peekRomL(u16 addr);
     virtual u8 peekRomH(u16 addr);
 
-    virtual u8 spypeek(u16 addr) { return peek(addr); }
-    virtual u8 spypeekRomL(u16 addr) { return peekRomL(addr); }
-    virtual u8 spypeekRomH(u16 addr) { return peekRomH(addr); }
+    virtual u8 spypeek(u16 addr) const;
+    virtual u8 spypeekRomL(u16 addr) const;
+    virtual u8 spypeekRomH(u16 addr) const;
 
     virtual void poke(u16 addr, u8 value);
     virtual void pokeRomL(u16 addr, u8 value) { return; }
@@ -265,8 +265,8 @@ public:
     virtual u8 peekIO1(u16 addr) { return 0; }
     virtual u8 peekIO2(u16 addr) { return 0; }
 
-    virtual u8 spypeekIO1(u16 addr) { return peekIO1(addr); }
-    virtual u8 spypeekIO2(u16 addr) { return peekIO2(addr); }
+    virtual u8 spypeekIO1(u16 addr) const { return 0; }
+    virtual u8 spypeekIO2(u16 addr) const { return 0; }
     
     virtual void pokeIO1(u16 addr, u8 value) { }
     virtual void pokeIO2(u16 addr, u8 value) { }

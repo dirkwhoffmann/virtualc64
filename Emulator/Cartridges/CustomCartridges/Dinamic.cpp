@@ -25,7 +25,7 @@ Dinamic::peekIO1(u16 addr)
 }
 
 u8
-Dinamic::spypeekIO1(u16 addr)
+Dinamic::spypeekIO1(u16 addr) const
 {
     return 0;
 }

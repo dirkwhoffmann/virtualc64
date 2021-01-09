@@ -30,9 +30,9 @@ KcsPower::peekIO1(u16 addr)
 }
 
 u8
-KcsPower::spypeekIO1(u16 addr)
+KcsPower::spypeekIO1(u16 addr) const
 {
-    return peekRomL(0x1E00 | (addr & 0xFF));
+    return spypeekRomL(0x1E00 | (addr & 0xFF));
 }
 
 u8

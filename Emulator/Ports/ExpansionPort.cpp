@@ -121,7 +121,7 @@ ExpansionPort::peekIO1(u16 addr)
 }
 
 u8
-ExpansionPort::spypeekIO1(u16 addr)
+ExpansionPort::spypeekIO1(u16 addr) const
 {
     return cartridge ? cartridge->spypeekIO1(addr) : vic.getDataBusPhi1();
 }
@@ -133,7 +133,7 @@ ExpansionPort::peekIO2(u16 addr)
 }
 
 u8
-ExpansionPort::spypeekIO2(u16 addr)
+ExpansionPort::spypeekIO2(u16 addr) const
 {
     return cartridge ? cartridge->spypeekIO2(addr) : vic.getDataBusPhi1();
 }

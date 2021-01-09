@@ -81,7 +81,7 @@ FinalIII::setControlReg(u8 value)
 }
 
 bool
-FinalIII::writeEnabled()
+FinalIII::writeEnabled() const
 {
     return !hidden() || freeezeButtonIsPressed;
 }

@@ -33,16 +33,15 @@ ActionReplay3::peek(u16 addr)
 }
 
 u8
-ActionReplay3::peekIO1(u16 addr)
+ActionReplay3::peekIO2(u16 addr)
 {
-    return 0;
+    return disabled() ? 0 : packet[bank()]->peek(0x1F00 + (addr & 0xFF));
 }
 
 u8
-ActionReplay3::peekIO2(u16 addr)
+ActionReplay3::spypeekIO2(u16 addr) const
 {
-    u16 offset = addr - 0xDF00;
-    return disabled() ? 0 : packet[bank()]->peek(0x1F00 + offset);
+    return disabled() ? 0 : packet[bank()]->spypeek(0x1F00 + (addr & 0xFF));
 }
 
 void
@@ -164,16 +163,32 @@ ActionReplay::peekIO1(u16 addr)
 }
 
 u8
+ActionReplay::spypeekIO1(u16 addr) const
+{
+    return control;
+}
+
+u8
 ActionReplay::peekIO2(u16 addr)
 {
     assert(addr >= 0xDF00 && addr <= 0xDFFF);
-    u16 offset = addr & 0xFF;
     
-    // I/O space 2 mirrors $1F00 to $1FFF from the selected ROM bank or RAM.
     if (ramIsEnabled(addr)) {
-        return peekRAM(0x1F00 + offset);
+        return peekRAM(0x1F00 + (addr & 0xFF));
     } else {
-        return packet[chipL]->peek(0x1F00 + offset);
+        return packet[chipL]->peek(0x1F00 + (addr & 0xFF));
+    }
+}
+
+u8
+ActionReplay::spypeekIO2(u16 addr) const
+{
+    assert(addr >= 0xDF00 && addr <= 0xDFFF);
+    
+    if (ramIsEnabled(addr)) {
+        return peekRAM(0x1F00 + (addr & 0xFF));
+    } else {
+        return packet[chipL]->spypeek(0x1F00 + (addr & 0xFF));
     }
 }
 
@@ -285,7 +300,7 @@ ActionReplay::setControlReg(u8 value)
 }
 
 bool
-ActionReplay::ramIsEnabled(u16 addr)
+ActionReplay::ramIsEnabled(u16 addr) const
 {
     if (control & 0x20) {
         
@@ -305,19 +320,19 @@ ActionReplay::ramIsEnabled(u16 addr)
 //
 
 bool
-AtomicPower::game()
+AtomicPower::game() const
 {
     return specialMapping() ? 0 : ActionReplay::game();
 }
 
 bool
-AtomicPower::exrom()
+AtomicPower::exrom() const
 {
     return specialMapping() ? 0 : ActionReplay::exrom();
 }
 
 bool
-AtomicPower::ramIsEnabled(u16 addr)
+AtomicPower::ramIsEnabled(u16 addr) const
 {
     if (control & 0x20) {
         

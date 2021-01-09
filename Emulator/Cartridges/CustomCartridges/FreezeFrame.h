@@ -31,9 +31,9 @@ private:
 public:
     
     u8 peekIO1(u16 addr) override;
-    u8 spypeekIO1(u16 addr) override { return 0; }
+    u8 spypeekIO1(u16 addr) const override { return 0; }
     u8 peekIO2(u16 addr) override;
-    u8 spypeekIO2(u16 addr) override { return 0; }
+    u8 spypeekIO2(u16 addr) const override { return 0; }
 
     
     //
