@@ -896,25 +896,7 @@ extension MyController: NSMenuItemValidation {
         // Dummy action method to enable menu item validation
     }
     
-    @IBAction func toggleSwitchAction(_ sender: NSButton!) {
-        
-        // tag remembers if we previously pulled left or right
-        let dir = sender.tag
-        let pos = c64.expansionport.switchPosition()
-        
-        // Move to the next valid switch position
-        for newPos in [pos + dir, pos + 2 * dir, pos - dir, pos - 2 * dir] {
-            
-            if c64.expansionport.validSwitchPosition(newPos) {
-                track("old pos = \(pos) new pos = \(newPos)")
-                
-                c64.expansionport.setSwitchPosition(newPos)
-                sender.tag = (newPos > pos) ? 1 : -1
-                break
-            }
-        }
-    }
-        
+    
     //
     // Action methods (Debug menu)
     //

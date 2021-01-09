@@ -10,10 +10,7 @@
             <connections>
                 <outlet property="clockSpeed" destination="214" id="216"/>
                 <outlet property="clockSpeedBar" destination="212" id="215"/>
-                <outlet property="crtButton1" destination="lFn-7a-MSQ" id="PDj-6q-G6u"/>
-                <outlet property="crtButton2" destination="WXT-md-2lk" id="kGk-bZ-cof"/>
                 <outlet property="crtIcon" destination="2003" id="CVl-nZ-xP2"/>
-                <outlet property="crtSwitch" destination="nGE-Yp-TgF" id="i83-HJ-RBg"/>
                 <outlet property="debugIcon" destination="6c9-VQ-Wmb" id="2dW-WG-eAT"/>
                 <outlet property="diskIcon8" destination="1045" id="wFy-Xz-5J7"/>
                 <outlet property="diskIcon9" destination="D1i-Ep-fTN" id="4H9-ek-oFn"/>
@@ -103,17 +100,6 @@
                             <font key="font" metaFont="menu" size="10"/>
                         </buttonCell>
                     </button>
-                    <button hidden="YES" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="lFn-7a-MSQ">
-                        <rect key="frame" x="348" y="2" width="20" height="20"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtButtonOffTemplate" imagePosition="only" alignment="right" alternateImage="crtButtonOnTemplate" imageScaling="proportionallyUpOrDown" id="IJt-r3-Tyd">
-                            <behavior key="behavior" lightByContents="YES"/>
-                            <font key="font" metaFont="menu" size="10"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="pressCartridgeButton1Action:" target="-2" id="G7M-GS-6Os"/>
-                        </connections>
-                    </button>
                     <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="H1X-Kk-fcE">
                         <rect key="frame" x="280" y="4" width="16" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -156,17 +142,6 @@
                             <outlet property="parent" destination="-2" id="DoA-Vt-vqv"/>
                         </connections>
                     </customView>
-                    <button hidden="YES" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="WXT-md-2lk">
-                        <rect key="frame" x="368" y="2" width="20" height="20"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtButtonOffTemplate" imagePosition="only" alignment="right" alternateImage="crtButtonOnTemplate" imageScaling="proportionallyUpOrDown" id="daD-pA-smb">
-                            <behavior key="behavior" lightByContents="YES"/>
-                            <font key="font" metaFont="menu" size="10"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="pressCartridgeButton2Action:" target="-1" id="465-Oy-aeF"/>
-                        </connections>
-                    </button>
                     <button hidden="YES" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="LJd-96-8ze">
                         <rect key="frame" x="484" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
@@ -198,17 +173,6 @@
                         </buttonCell>
                         <connections>
                             <action selector="pressCartridgeButton2Action:" target="-1" id="r8J-zq-Djz"/>
-                        </connections>
-                    </button>
-                    <button hidden="YES" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="nGE-Yp-TgF">
-                        <rect key="frame" x="324" y="1" width="24" height="20"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtSwitchNeutralTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="0s7-pA-Q79">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu" size="10"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="toggleSwitchAction:" target="-1" id="MvY-UF-tSi"/>
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eRV-bT-c7s">
@@ -485,9 +449,7 @@
         <image name="LEDgray" width="128" height="128"/>
         <image name="clickTemplate" width="36" height="36"/>
         <image name="confTemplate" width="37" height="36"/>
-        <image name="crtButtonOffTemplate" width="24" height="24"/>
         <image name="crtButtonOnTemplate" width="24" height="24"/>
-        <image name="crtSwitchNeutralTemplate" width="24" height="24"/>
         <image name="crtTemplate" width="24" height="24"/>
         <image name="devGamepad1Template" width="20" height="21"/>
         <image name="devGamepad2Template" width="20" height="21"/>

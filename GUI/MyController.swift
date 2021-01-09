@@ -176,9 +176,6 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var tapeIcon: NSButton!
     @IBOutlet weak var tapeProgress: NSProgressIndicator!
     @IBOutlet weak var crtIcon: NSButton!
-    @IBOutlet weak var crtSwitch: NSButton!
-    @IBOutlet weak var crtButton1: NSButton!
-    @IBOutlet weak var crtButton2: NSButton!
     @IBOutlet weak var clockSpeed: NSTextField!
     @IBOutlet weak var clockSpeedBar: NSLevelIndicator!
     @IBOutlet weak var warpIcon: NSButton!
@@ -730,8 +727,8 @@ extension MyController {
             refreshStatusBar()
             
         case .CART_SWITCH:
-            
-            refreshStatusBarCartridgeIcons()
+
+            break
             
         case .KB_AUTO_RELEASE:
             
