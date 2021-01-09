@@ -815,6 +815,7 @@ public:
     
     // Peeks a value from a VICII register without side effects
     u8 spypeek(u16 addr);
+    u8 spypeek(u16 addr) const;
     
     // Returns the ultimax flag
     u8 getUltimax() { return ultimax; }

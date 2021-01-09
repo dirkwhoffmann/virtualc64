@@ -604,7 +604,7 @@ CIA::wakeUp(Cycle targetCycle)
 }
 
 Cycle
-CIA::idleSince()
+CIA::idleSince() const
 {
     return isAwake() ? 0 : cpu.cycle - sleepCycle;
 }

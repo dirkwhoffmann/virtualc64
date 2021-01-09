@@ -332,8 +332,9 @@ public:
     u8 peek(u16 addr);
     
     // Reads a value from a CIA register without causing side effects
+    u8 spypeek(u16 addr) const;
     u8 spypeek(u16 addr);
-    
+
     // Writes a value into a CIA register
     void poke(u16 addr, u8 value);
     
@@ -447,16 +448,16 @@ public:
     void wakeUp(Cycle targetCycle);
     
     // Returns true if the CIA is in idle state
-    bool isSleeping() { return sleeping; }
+    bool isSleeping() const { return sleeping; }
     
     // Returns true if the CIA is awake
-    bool isAwake() { return !sleeping; }
+    bool isAwake() const { return !sleeping; }
     
     // The CIA is idle since this number of cycles
-    Cycle idleSince();
+    Cycle idleSince() const;
     
     // Total number of cycles the CIA was idle
-    Cycle idleTotal() { return idleCycles; }
+    Cycle idleTotal() const { return idleCycles; }
 };
 
 

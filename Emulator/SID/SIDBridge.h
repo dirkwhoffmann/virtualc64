@@ -147,9 +147,9 @@ public:
     bool setConfigItem(Option option, long value) override;
     bool setConfigItem(Option option, long id, long value) override;
 
-    bool isEnabled(int nr) { return GET_BIT(config.enabled, nr); }
+    bool isEnabled(int nr) const { return GET_BIT(config.enabled, nr); }
     
-    bool isMuted();
+    bool isMuted() const;
 
     u32 getClockFrequency();
     void setClockFrequency(u32 frequency);
@@ -341,13 +341,14 @@ public:
 public:
     
     // Translates a memory address to the mapped in SID
-    int mappedSID(u16 addr); 
+    usize mappedSID(u16 addr) const;
     
 	// Special peek function for the I/O memory range
 	u8 peek(u16 addr);
 	
     // Same as peek without side effects
     u8 spypeek(u16 addr);
+    u8 spypeek(u16 addr) const;
     
 	// Special poke function for the I/O memory range
 	void poke(u16 addr, u8 value);

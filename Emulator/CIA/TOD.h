@@ -150,28 +150,28 @@ private:
     //
 
     // Returns the hours digits of the time of day clock
-     u8 getTodHours() { return (frozen ? latch.hours : tod.hours) & 0x9F; }
+     u8 getTodHours() const { return (frozen ? latch.hours : tod.hours) & 0x9F; }
 
      // Returns the minutes digits of the time of day clock
-     u8 getTodMinutes() { return (frozen ? latch.minutes : tod.minutes) & 0x7F; }
+     u8 getTodMinutes() const { return (frozen ? latch.minutes : tod.minutes) & 0x7F; }
 
      // Returns the seconds digits of the time of day clock
-     u8 getTodSeconds() { return (frozen ? latch.seconds : tod.seconds) & 0x7F; }
+     u8 getTodSeconds() const { return (frozen ? latch.seconds : tod.seconds) & 0x7F; }
 
      // Returns the tenth-of-a-second digits of the time of day clock
-     u8 getTodTenth() { return (frozen ? latch.tenth : tod.tenth) & 0x0F; }
+     u8 getTodTenth() const { return (frozen ? latch.tenth : tod.tenth) & 0x0F; }
 
      // Returns the hours digits of the alarm time
-     u8 getAlarmHours() { return alarm.hours & 0x9F; }
+     u8 getAlarmHours() const { return alarm.hours & 0x9F; }
 
      // Returns the minutes digits of the alarm time
-     u8 getAlarmMinutes() { return alarm.minutes & 0x7F; }
+     u8 getAlarmMinutes() const { return alarm.minutes & 0x7F; }
 
      // Returns the seconds digits of the alarm time
-     u8 getAlarmSeconds() { return alarm.seconds & 0x7F; }
+     u8 getAlarmSeconds() const { return alarm.seconds & 0x7F; }
 
      // Returns the tenth-of-a-second digits of the alarm time
-     u8 getAlarmTenth() { return alarm.tenth & 0x0F; }
+     u8 getAlarmTenth() const { return alarm.tenth & 0x0F; }
      
      // Sets the hours digits of the time of day clock
      void setTodHours(u8 value) { tod.hours = value & 0x9F; checkForInterrupt(); }

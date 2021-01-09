@@ -276,7 +276,7 @@ SIDBridge::setConfigItem(Option option, long id, long value)
 }
 
 bool
-SIDBridge::isMuted()
+SIDBridge::isMuted() const
 {
     if (config.volL == 0 && config.volR == 0) return true;
     
@@ -612,8 +612,8 @@ SIDBridge::rampDown()
     ignoreNextUnderOrOverflow();
 }
 
-int
-SIDBridge::mappedSID(u16 addr)
+usize
+SIDBridge::mappedSID(u16 addr) const
 {
     addr &= 0xFFE0;
     
@@ -631,7 +631,7 @@ SIDBridge::peek(u16 addr)
     executeUntil(cpu.cycle);
  
     // Select the target SID
-    int sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
+    usize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
 
     addr &= 0x1F;
 
@@ -653,7 +653,27 @@ SIDBridge::peek(u16 addr)
 u8
 SIDBridge::spypeek(u16 addr)
 {
-    return peek(addr);
+    return const_cast<const SIDBridge*>(this)->spypeek(addr);
+}
+
+u8
+SIDBridge::spypeek(u16 addr) const
+{
+    // Select the target SID
+    usize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
+
+    addr &= 0x1F;
+
+    if (sidNr == 0) {
+        if (addr == 0x19) { return mouse.readPotX(); }
+        if (addr == 0x1A) { return mouse.readPotY(); }
+    }
+
+    /* At the moment, only FastSID allows us to peek into the SID registers
+     * without causing side effects. Hence, we get the return value from there,
+     * regardless of the selected SID engine.
+     */
+    return fastsid[sidNr].spypeek(addr);
 }
 
 void 
@@ -663,7 +683,7 @@ SIDBridge::poke(u16 addr, u8 value)
     executeUntil(cpu.cycle);
  
     // Select the target SID
-    int sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
+    usize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
 
     addr &= 0x1F;
     

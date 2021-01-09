@@ -286,6 +286,22 @@ FastSID::peek(u16 addr)
     }
 }
 
+u8
+FastSID::spypeek(u16 addr) const
+{
+    switch (addr) {
+            
+        case 0x19: // POTX
+        case 0x1A: // POTY
+            
+            return 0xFF;
+            
+        default:
+            
+            return sidreg[addr];
+    }
+}
+
 void
 FastSID::poke(u16 addr, u8 value)
 {
