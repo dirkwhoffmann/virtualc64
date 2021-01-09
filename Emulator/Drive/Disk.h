@@ -60,7 +60,7 @@ private:
     
     /* GCR encoding table. Maps 4 data bits to 5 GCR bits.
      */
-    const u8 gcr[16] = {
+    static constexpr u8 gcr[16] = {
         
         0x0a, 0x0b, 0x12, 0x13, /*  0 -  3 */
         0x0e, 0x0f, 0x16, 0x17, /*  4 -  7 */
@@ -71,7 +71,7 @@ private:
     /* Inverse GCR encoding table. Maps 5 GCR bits to 4 data bits. Invalid
      * patterns are marked with 255.
      */
-    const u8 invgcr[32] = {
+    static constexpr u8 invgcr[32] = {
         
         255, 255, 255, 255, /* 0x00 - 0x03 */
         255, 255, 255, 255, /* 0x04 - 0x07 */
@@ -226,11 +226,11 @@ private:
 
 public:
     
-    bool isWriteProtected() { return writeProtected; }
+    bool isWriteProtected() const { return writeProtected; }
     void setWriteProtection(bool b) { writeProtected = b; }
     void toggleWriteProtection() { writeProtected = !writeProtected; }
 
-    bool isModified() { return modified; }
+    bool isModified() const { return modified; }
     void setModified(bool b);
     
     
@@ -241,11 +241,11 @@ public:
 public:
     
     // Converts a 4 bit binary value to a 5 bit GCR codeword or vice versa
-    u8 bin2gcr(u8 value) { assert(value < 16); return gcr[value]; }
-    u8 gcr2bin(u8 value) { assert(value < 32); return invgcr[value]; }
+    static u8 bin2gcr(u8 value) { assert(value < 16); return gcr[value]; }
+    static u8 gcr2bin(u8 value) { assert(value < 32); return invgcr[value]; }
 
     // Returns true if the provided 5 bit codeword is a valid GCR codeword
-    bool isGcr(u8 value) { assert(value < 32); return invgcr[value] != 0xFF; }
+    static bool isGcr(u8 value) { assert(value < 32); return invgcr[value] != 0xFF; }
     
     /* Encodes a byte stream as a GCR bit stream. The first function encodes
      * a single byte and the second functions encodes multiple bytes. For each
@@ -271,10 +271,10 @@ public:
     //
     
     // Returns true if the provided drive head position is valid
-    bool isValidHeadPos(Halftrack ht, HeadPos pos);
+    bool isValidHeadPos(Halftrack ht, HeadPos pos) const;
     
     // Fixes a wrapped over head position
-    HeadPos wrap(Halftrack ht, HeadPos pos);
+    HeadPos wrap(Halftrack ht, HeadPos pos) const;
     
     /* Returns the duration of a single bit in 1/10 nano seconds. The returned
      * value is the time span the drive head resists over the specified bit.
@@ -282,18 +282,18 @@ public:
      * written to disk. Function "_bitDelay" expects the head position to be
      * inside the halftrack bounds.
      */
-    u64 _bitDelay(Halftrack ht, HeadPos pos);
-    u64 bitDelay(Halftrack ht, HeadPos pos) { return _bitDelay(ht, wrap(ht, pos)); }
+    u64 _bitDelay(Halftrack ht, HeadPos pos) const;
+    u64 bitDelay(Halftrack ht, HeadPos pos) const { return _bitDelay(ht, wrap(ht, pos)); }
     
     /* Reads or writes a single bit. The functions come in two variants. The
      * first variants expect the provided head position inside the valid
      * halftrack bounds. The other variants wrap over the head position first.
      */
-    u8 _readBitFromHalftrack(Halftrack ht, HeadPos pos) {
+    u8 _readBitFromHalftrack(Halftrack ht, HeadPos pos) const {
         assert(isValidHeadPos(ht, pos));
         return (data.halftrack[ht][pos / 8] & (0x80 >> (pos % 8))) != 0;
     }
-    u8 readBitFromHalftrack(Halftrack ht, HeadPos pos) {
+    u8 readBitFromHalftrack(Halftrack ht, HeadPos pos) const {
         return _readBitFromHalftrack(ht, wrap(ht, pos));
     }
     void _writeBitToHalftrack(Halftrack ht, HeadPos pos, bool bit) {
@@ -352,9 +352,9 @@ public:
     /* Checks whether a track or halftrack is cleared. Avoid calling these
      * methods frequently, because they scan the whole track.
      */
-    bool trackIsEmpty(Track t);
-    bool halftrackIsEmpty(Halftrack ht);
-    unsigned nonemptyHalftracks();
+    bool trackIsEmpty(Track t) const;
+    bool halftrackIsEmpty(Halftrack ht) const;
+    unsigned nonemptyHalftracks() const;
 
     
     //
@@ -389,16 +389,16 @@ public:
         assert(isSectorNumber(nr)); return trackInfo.sectorInfo[nr]; }
     
     // Returns the number of entries in the error log
-    unsigned numErrors() { return (unsigned)errorLog.size(); }
+    usize numErrors() { return errorLog.size(); }
     
     // Reads an error message from the error log
-    std::string errorMessage(unsigned nr) { return errorLog.at(nr); }
+    std::string errorMessage(unsigned nr) const { return errorLog.at(nr); }
     
     // Reads the error begin index from the error log
-    usize firstErroneousBit(unsigned nr) { return errorStartIndex.at(nr); }
+    usize firstErroneousBit(unsigned nr) const { return errorStartIndex.at(nr); }
     
     // Reads the error end index from the error log
-    usize lastErroneousBit(unsigned nr) { return errorEndIndex.at(nr); }
+    usize lastErroneousBit(unsigned nr) const { return errorEndIndex.at(nr); }
     
     // Returns a textual representation of the disk name
     const char *diskNameAsString();

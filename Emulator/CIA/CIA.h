@@ -344,14 +344,14 @@ public:
 public:
     
     // Returns the data registers (call updatePA() or updatePB() first)
-    u8 getPA() { return PA; }
-    u8 getPB() { return PB; }
+    u8 getPA() const { return PA; }
+    u8 getPB() const { return PB; }
 
 private:
     
     // Returns the data direction register
-    u8 getDDRA() { return DDRA; }
-    u8 getDDRB() { return DDRB; }
+    u8 getDDRA() const { return DDRA; }
+    u8 getDDRB() const { return DDRB; }
     
     // Computes the value we currently see at port A
     virtual void updatePA() = 0;

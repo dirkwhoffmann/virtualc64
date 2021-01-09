@@ -678,7 +678,7 @@ VIA6522::pokePCR(u8 value)
 }
 
 u8
-VIA6522::portAinternal()
+VIA6522::portAinternal() const
 {
     return ora;
 }
@@ -690,7 +690,7 @@ VIA6522::updatePA()
 }
 
 u8
-VIA6522::portBinternal()
+VIA6522::portBinternal() const
 {
     return orb;
 }
@@ -708,40 +708,6 @@ VIA6522::updatePB()
         }
     }
 }
-
-/*
-void
-VIA6522::toggleCA1()
-{
-    // Check for active transition (positive or negative edge)
-    u8 ctrl = ca1Control();
-    bool active = (ca1 && ctrl == 0) || (!ca1 && ctrl == 1);
-    ca1 = !ca1;
-    
-    if (!ca1)
-        CA1LowAction();
-    
-    if (!active)
-        return;
-    
-    // Set interrupt flag
-    setInterruptFlag_CA1();
-    if (GET_BIT(ier, 1)) {
-        delay |= VIAInterrupt1;
-    }
-    
-    // Latch peripheral port into input register if latching is enabled
-    if (inputLatchingEnabledA()) {
-        updatePA();
-        ira = pa;
-    }
-    
-    // Check for handshake mode with CA2
-    if (ca2Control() == 4) {
-        ca2 = true;
-    }
-}
-*/
 
 void
 VIA6522::setCA1(bool value)
@@ -853,13 +819,13 @@ VIA1::releaseIrqLine() {
 }
 
 u8
-VIA1::portAexternal()
+VIA1::portAexternal() const
 {
     return 0xFF;
 }
 
 u8
-VIA1::portBexternal()
+VIA1::portBexternal() const
 {
     // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
     // -----------------------------------------------------------------
@@ -891,14 +857,14 @@ VIA1::updatePB()
 // 
 
 u8
-VIA2::portAexternal()
+VIA2::portAexternal() const
 {
     // TODO: Which value is returned in write mode?
     return drive.readShiftreg & 0xFF;
 }
 
 u8
-VIA2::portBexternal()
+VIA2::portBexternal() const
 {
     bool sync     = drive.getSync();
     bool barrier  = drive.getLightBarrier();

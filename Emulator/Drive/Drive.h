@@ -309,14 +309,13 @@ public:
 public:
     
     // Checks if a disk is present
-    bool hasDisk() { return insertionStatus == DISK_FULLY_INSERTED; }
-    // bool hasPartiallyInsertedDisk() { return insertionStatus == PARTIALLY_INSERTED; }
-    bool hasPartiallyRemovedDisk() {
+    bool hasDisk() const { return insertionStatus == DISK_FULLY_INSERTED; }
+    bool hasPartiallyRemovedDisk() const {
         return insertionStatus == DISK_PARTIALLY_INSERTED || insertionStatus == DISK_PARTIALLY_EJECTED; }
-    bool hasWriteProtectedDisk() { return hasDisk() && disk.isWriteProtected(); }
+    bool hasWriteProtectedDisk() const { return hasDisk() && disk.isWriteProtected(); }
 
     // Gets or sets the modification status
-    bool hasModifiedDisk() { return hasDisk() && disk.isModified(); }
+    bool hasModifiedDisk() const { return hasDisk() && disk.isModified(); }
     void setModifiedDisk(bool value);
  
     /* Returns the current state of the write protection barrier. If the light
@@ -326,7 +325,7 @@ public:
      * this is normal drive behavior or an emulator bug. Any hint on this is
      * very welcome!
      */
-    bool getLightBarrier() {
+    bool getLightBarrier() const {
         return
         (cpu.cycle < 1500000)
         || hasPartiallyRemovedDisk()
@@ -391,7 +390,7 @@ public:
     void moveHeadDown();
 
     // Returns the current value of the sync signal
-    bool getSync() { return sync; }
+    bool getSync() const { return sync; }
     
     /* Updates the byte ready line. The byte ready line is connected to pin CA1
      * of VIA2. Pulling this signal low causes important side effects. Firstly,
@@ -404,7 +403,7 @@ public:
     void raiseByteReady();
     
     // Returns the current track zone (0 to 3)
-    bool getZone() { return zone; }
+    bool getZone() const { return zone; }
 
     // Sets the current track zone (0 to 3)
     void setZone(u8 value);

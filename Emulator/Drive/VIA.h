@@ -386,19 +386,19 @@ private:
 protected:
     
     // Bit values driving port A from inside the chip
-    u8 portAinternal();
+    u8 portAinternal() const;
 
     // Bit values driving port A from outside the chip
-    virtual u8 portAexternal() = 0;
+    virtual u8 portAexternal() const = 0;
 
     // Updates variable pa with bit values visible at port A
     virtual void updatePA();
 
     // Bit values driving port B from inside the chip
-    u8 portBinternal();
+    u8 portBinternal() const;
     
     // Bit values driving port B from outside the chip
-    virtual u8 portBexternal() = 0;
+    virtual u8 portBexternal() const = 0;
     
     // Updates variable pa with bit values visible at port B
     virtual void updatePB();
@@ -518,8 +518,8 @@ public:
     ~VIA1() { }
     const char *getDescription() const override { return "VIA1"; }
     
-    u8 portAexternal() override;
-    u8 portBexternal() override;
+    u8 portAexternal() const override;
+    u8 portBexternal() const override;
     void updatePB() override;
     void pullDownIrqLine() override;
     void releaseIrqLine() override;
@@ -536,8 +536,8 @@ public:
     ~VIA2() { }
     const char *getDescription() const override { return "VIA2"; }
 
-    u8 portAexternal() override;
-    u8 portBexternal() override;
+    u8 portAexternal() const override;
+    u8 portBexternal() const override;
     void updatePB() override;
     void pullDownIrqLine() override;
     void releaseIrqLine() override;
