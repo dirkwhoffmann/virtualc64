@@ -35,16 +35,37 @@ class Keyboard : public C64Component {
     friend struct KeyAction;
     
     // Maping from key numbers to keyboard matrix positions
-    static const u8 rowcol[66][2];
+    static constexpr u8 rowcol[66][2] =
+    {
+        // First physical row
+        {7, 1}, {7, 0}, {7, 3}, {1, 0}, {1, 3}, {2, 0}, {2, 3}, {3, 0},
+        {3, 3}, {4, 0}, {4, 3}, {5, 0}, {5, 3}, {6, 0}, {6, 3}, {0, 0},
+        {0, 4},
+        
+        // Second physical row
+        {7, 2}, {7, 6}, {1, 1}, {1, 6}, {2, 1}, {2, 6}, {3, 1}, {3, 6},
+        {4, 1}, {4, 6}, {5, 1}, {5, 6}, {6, 1}, {6, 6}, {9, 9}, {0, 5},
+        
+        // Third physical row
+        {7, 7}, {9, 9}, {1, 2}, {1, 5}, {2, 2}, {2, 5}, {3, 2}, {3, 5},
+        {4, 2}, {4, 5}, {5, 2}, {5, 5}, {6, 2}, {6, 5}, {0, 1}, {0, 6},
+        
+        // Fourth physical row
+        {7, 5}, {1, 7}, {1, 4}, {2, 7}, {2, 4}, {3, 7}, {3, 4}, {4, 7},
+        {4, 4}, {5, 7}, {5, 4}, {6, 7}, {6, 4}, {0, 7}, {0, 2}, {0, 3},
+        
+        // Fifth physical row
+        {7, 4}
+    };
     
 	// The C64 keyboard matrix indexed by row
-	u8 kbMatrixRow[8];
+    u8 kbMatrixRow[8] = { };
 
     // The C64 keyboard matrix indexed by column
-    u8 kbMatrixCol[8];
+    u8 kbMatrixCol[8] = { };
 
     // Indicates if the shift lock is currently pressed
-    bool shiftLock;
+    bool shiftLock = false;
         
     // Key action list (for auto typing)
     std::queue<KeyAction> actions;
@@ -109,15 +130,15 @@ private:
 public:
     
     // Checks whether a certain key is being pressed
-    bool isPressed(long nr);
-    bool isPressed(u8 row, u8 col);
-    bool commodoreIsPressed() { return isPressed(7,5); }
-    bool ctrlIsPressed() { return isPressed(7,2); }
-    bool runstopIsPressed() { return isPressed(7,7); }
-    bool leftShiftIsPressed() { return isPressed(1,7); }
-    bool rightShiftIsPressed() { return isPressed(6,4); }
-    bool shiftLockIsPressed() { return shiftLock; }
-    bool restoreIsPressed();
+    bool isPressed(long nr) const;
+    bool isPressed(u8 row, u8 col) const;
+    bool commodoreIsPressed() const { return isPressed(7,5); }
+    bool ctrlIsPressed() const { return isPressed(7,2); }
+    bool runstopIsPressed() const { return isPressed(7,7); }
+    bool leftShiftIsPressed() const { return isPressed(1,7); }
+    bool rightShiftIsPressed() const { return isPressed(6,4); }
+    bool shiftLockIsPressed() const { return shiftLock; }
+    bool restoreIsPressed() const;
     
 	// Presses a key
     void press(long nr);
