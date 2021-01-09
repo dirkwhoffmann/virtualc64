@@ -788,15 +788,15 @@ public:
     u32 *getNoise() const;
     
     // Returns a C64 color in 32 bit big endian RGBA format
-    u32 getColor(unsigned nr);
+    u32 getColor(unsigned nr) const { return rgbaTable[nr]; }
     u32 getColor(unsigned nr, Palette palette);
     
     // Gets or sets a monitor parameter
-    double getBrightness() { return brightness; }
+    double getBrightness() const { return brightness; }
     void setBrightness(double value);
-    double getContrast() { return contrast; }
+    double getContrast() const { return contrast; }
     void setContrast(double value);
-    double getSaturation() { return saturation; }
+    double getSaturation() const { return saturation; }
     void setSaturation(double value);
     
 private:
@@ -823,10 +823,10 @@ public:
     void setUltimax(bool value);
     
     // Returns the latest value of the VICII's data bus during phi1
-    u8 getDataBusPhi1() { return dataBusPhi1; }
+    u8 getDataBusPhi1() const { return dataBusPhi1; }
 
     // Returns the latest value of the VICII's data bus during phi2
-    u8 getDataBusPhi2() { return dataBusPhi2; }
+    u8 getDataBusPhi2() const { return dataBusPhi2; }
 
     /* Schedules the VICII bank to to switched. This method is called if the
      * bank switch is triggered by a change of CIA2::PA or CIA2::DDRA.
@@ -858,7 +858,7 @@ private:
     u8 memSpyAccess(u16 addr);
 
     // Returns true if memAccess will read from Character ROM
-    bool isCharRomAddr(u16 addr);
+    bool isCharRomAddr(u16 addr) const;
 
     // Performs a DRAM refresh (r-access)
     template <VICIIMode type> void rAccess();
@@ -1016,7 +1016,7 @@ private:
     /* Indicates if a c-access can occur. A c-access can only be performed if
      * the BA line is down for more than 2 cycles.
      */
-    bool BApulledDownForAtLeastThreeCycles() { return baLine.delayed(); }
+    bool BApulledDownForAtLeastThreeCycles() const { return baLine.delayed(); }
     
 	// Triggers a VICII interrupt
 	void triggerIrq(u8 source);

@@ -26,12 +26,14 @@ double gammaCorrect(double value, double source, double target)
     return round(value);
 }
 
+/*
 u32
-VICII::getColor(unsigned nr)
+VICII::getColor(unsigned nr) const
 {
     assert(nr < 16);
     return rgbaTable[nr];
 }
+*/
 
 u32
 VICII::getColor(unsigned nr, Palette palette)
