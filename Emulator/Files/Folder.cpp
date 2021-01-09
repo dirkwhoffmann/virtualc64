@@ -53,25 +53,25 @@ Folder::collectionName()
 }
 
 u64
-Folder::collectionCount()
+Folder::collectionCount() const
 {
     return fs->numFiles();
 }
 
 PETName<16>
-Folder::itemName(unsigned nr)
+Folder::itemName(unsigned nr) const
 {
     return fs->fileName(nr);
 }
 
 u64
-Folder::itemSize(unsigned nr)
+Folder::itemSize(unsigned nr) const
 {
     return fs->fileSize(nr);
 }
 
 u8
-Folder::readByte(unsigned nr, u64 pos)
+Folder::readByte(unsigned nr, u64 pos) const
 {
     u8 result;
     fs->copyFile(nr, &result, 1, pos);
@@ -79,7 +79,7 @@ Folder::readByte(unsigned nr, u64 pos)
 }
 
 void
-Folder::copyItem(unsigned nr, u8 *buf, u64 len, u64 offset)
+Folder::copyItem(unsigned nr, u8 *buf, u64 len, u64 offset) const
 {
     fs->copyFile(nr, buf, len, offset);
 }

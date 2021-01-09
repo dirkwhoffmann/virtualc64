@@ -158,34 +158,22 @@ T64File::collectionName()
 }
 
 u64
-T64File::collectionCount()
+T64File::collectionCount() const
 {
     return LO_HI(data[0x24], data[0x25]);
 }
 
 PETName<16>
-T64File::itemName(unsigned nr)
+T64File::itemName(unsigned nr) const
 {
     assert(nr < collectionCount());
     
     u8 padChar = 0x20;
     return PETName<16>(data + 0x50 + nr * 0x20, padChar);
-    /*
-    string result = "";
-
-    unsigned first = 0x50 + (nr * 0x20);
-    unsigned last  = 0x60 + (nr * 0x20);
-    
-    for (unsigned i = first; i < last; i++) {
-        result += (char)(data[i] == 0x20 ? ' ' : data[i]);
-    }
-
-    return name;
-    */
 }
 
 u64
-T64File::itemSize(unsigned nr)
+T64File::itemSize(unsigned nr) const
 {
     assert(nr < collectionCount());
     
@@ -194,7 +182,7 @@ T64File::itemSize(unsigned nr)
 }
 
 u8
-T64File::readByte(unsigned nr, u64 pos)
+T64File::readByte(unsigned nr, u64 pos) const
 {
     assert(nr < collectionCount());
     assert(pos < itemSize(nr));
@@ -214,13 +202,13 @@ T64File::readByte(unsigned nr, u64 pos)
 }
 
 u16
-T64File::memStart(unsigned nr)
+T64File::memStart(unsigned nr) const
 {
     return LO_HI(data[0x42 + nr * 0x20], data[0x43 + nr * 0x20]);
 }
 
 u16
-T64File::memEnd(unsigned nr)
+T64File::memEnd(unsigned nr) const
 {
     return LO_HI(data[0x44 + nr * 0x20], data[0x45 + nr * 0x20]);
 }
