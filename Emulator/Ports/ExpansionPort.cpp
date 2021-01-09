@@ -323,13 +323,13 @@ ExpansionPort::setBattery(bool value)
 }
 
 long
-ExpansionPort::numButtons()
+ExpansionPort::numButtons() const
 {
     return cartridge ? cartridge->numButtons() : 0;
 }
 
 const char *
-ExpansionPort::getButtonTitle(unsigned nr)
+ExpansionPort::getButtonTitle(unsigned nr) const
 {
      return cartridge ? cartridge->getButtonTitle(nr) : nullptr;
 }

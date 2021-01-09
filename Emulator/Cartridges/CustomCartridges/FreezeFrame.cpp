@@ -49,9 +49,9 @@ FreezeFrame::spypeekIO2(u16 addr) const
 }
 
 const char *
-FreezeFrame::getButtonTitle(unsigned nr)
+FreezeFrame::getButtonTitle(unsigned nr) const
 {
-    return (nr == 1) ? "Freeze" : nullptr;
+    return nr == 1 ? "Freeze" : nullptr;
 }
 
 void

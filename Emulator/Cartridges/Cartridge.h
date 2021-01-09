@@ -120,8 +120,8 @@ public:
     static bool isSupportedType(CartridgeType type);
     
     // Returns true if addr is located in the ROML or the ROMH address space
-    static bool isROMLaddr (u16 addr);
-    static bool isROMHaddr (u16 addr);
+    static bool isROMLaddr(u16 addr);
+    static bool isROMHaddr(u16 addr);
 
     // Factory methods
     static Cartridge *makeWithType(C64 &c64, CartridgeType type) throws;
@@ -286,7 +286,7 @@ public:
     void setRamCapacity(usize size);
 
     // Returns true if RAM data is preserved during a reset
-    bool getBattery() { return battery; }
+    bool getBattery() const { return battery; }
 
     // Enables or disables persistent RAM
     void setBattery(bool value) { battery = value; }
@@ -302,12 +302,12 @@ public:
     //
 
     // Returns the number of available cartridge buttons
-    virtual long numButtons() { return 0; }
+    virtual long numButtons() const { return 0; }
     
     /* Returns a textual description for a button or nullptr, if there is no
      * button with the specified number.
      */
-    virtual const char *getButtonTitle(unsigned nr) { return nullptr; }
+    virtual const char *getButtonTitle(unsigned nr) const { return nullptr; }
     
     // Presses a button (make sure to call releaseButton() afterwards)
     virtual void pressButton(unsigned nr) { }

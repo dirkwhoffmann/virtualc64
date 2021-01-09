@@ -115,9 +115,9 @@ FinalIII::updateGame()
 }
 
 const char *
-FinalIII::getButtonTitle(unsigned nr)
+FinalIII::getButtonTitle(unsigned nr) const
 {
-    return (nr == 1) ? "Freeze" : (nr == 2) ? "Reset" : nullptr;
+    return nr == 1 ? "Freeze" : nr == 2 ? "Reset" : nullptr;
 }
 
 void

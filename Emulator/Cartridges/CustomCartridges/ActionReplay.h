@@ -48,8 +48,8 @@ public:
     // Handling buttons
     //
 
-    long numButtons() override { return 2; }
-    const char *getButtonTitle(unsigned nr) override;
+    long numButtons() const override { return 2; }
+    const char *getButtonTitle(unsigned nr) const override;
     void pressButton(unsigned nr) override;
     void releaseButton(unsigned nr) override;
 };
@@ -102,8 +102,8 @@ public:
     // Handling buttons
     //
     
-    long numButtons() override { return 2; }
-    const char *getButtonTitle(unsigned nr) override;
+    long numButtons() const override { return 2; }
+    const char *getButtonTitle(unsigned nr) const override;
     void pressButton(unsigned nr) override;
     void releaseButton(unsigned nr) override;
 };

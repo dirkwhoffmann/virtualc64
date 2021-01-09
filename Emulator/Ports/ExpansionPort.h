@@ -165,10 +165,10 @@ public:
     //
     
     // Returns the number of available cartridge buttons
-    long numButtons();
+    long numButtons() const;
     
     // Returns a textual description for a button
-    const char *getButtonTitle(unsigned nr);
+    const char *getButtonTitle(unsigned nr) const;
     
     // Presses a button (make sure to call releaseButton() afterwards)
     void pressButton(unsigned nr);

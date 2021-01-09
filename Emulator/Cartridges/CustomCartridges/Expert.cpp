@@ -121,9 +121,9 @@ Expert::pokeIO1(u16 addr, u8 value)
 }
 
 const char *
-Expert::getButtonTitle(unsigned nr)
+Expert::getButtonTitle(unsigned nr) const
 {
-    return (nr == 1) ? "Reset" : (nr == 2) ? "ESM" : nullptr;
+    return nr == 1 ? "Reset" : nr == 2 ? "ESM" : nullptr;
 }
 
 void
