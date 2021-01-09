@@ -636,8 +636,8 @@ SIDBridge::peek(u16 addr)
     addr &= 0x1F;
 
     if (sidNr == 0) {
-        if (addr == 0x19) return mouse.readPotX();
-        if (addr == 0x1A) return mouse.readPotY();
+        if (addr == 0x19) { mouse.updatePotX(); return mouse.readPotX(); }
+        if (addr == 0x1A) { mouse.updatePotY(); return mouse.readPotY(); }
     }
     
     switch (config.engine) {

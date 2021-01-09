@@ -28,28 +28,32 @@ NeosMouse::_reset()
 }
 
 u8
-NeosMouse::readPotX()
+NeosMouse::readPotX() const
 {
     return rightButton ? 0xFF : 0x00;
 }
 
 u8
-NeosMouse::readPotY()
+NeosMouse::readPotY() const
 {
     return 0xFF;
 }
 
-u8
-NeosMouse::readControlPort(i64 targetX, i64 targetY)
+void
+NeosMouse::updateControlPort(usize portNr, i64 targetX, i64 targetY)
 {
-    u8 result = leftButton ? 0xE0 : 0xF0;
-    
     // Check for time out
     if (state != 0 && cpu.cycle > (triggerCycle + 232) /* from VICE */) {
         state = 0;
         latchPosition(targetX, targetY);
     }
-    
+}
+
+u8
+NeosMouse::readControlPort() const
+{
+    u8 result = leftButton ? 0xE0 : 0xF0;
+
     switch (state) {
             
         case 0: // Transmit X_HIGH

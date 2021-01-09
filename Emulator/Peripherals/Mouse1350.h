@@ -81,11 +81,11 @@ public:
     void setRightMouseButton(bool value) { rightButton = value; }
 
     // Returns the pot bits as set by the mouse
-    u8 readPotX();
-    u8 readPotY();
+    u8 readPotX() const;
+    u8 readPotY() const;
     
     // Returns the control port bits triggered by the mouse
-    u8 readControlPort();
+    u8 readControlPort() const;
     
     // Execution function (Translates movement deltas into joystick events)
     void execute(i64 targetX, i64 targetY);

@@ -124,7 +124,7 @@ private:
 public:
     
     // Returns true if a tape is inserted
-    bool hasTape() { return size != 0; }
+    bool hasTape() const { return size != 0; }
     
     //Inserts a TAP archive as a virtual tape
     bool insertTape(TAPFile *a);
@@ -133,13 +133,13 @@ public:
     void ejectTape();
 
     // Returns the tape type (TAP format, 0 or 1).
-    u8 getType() { return type; }
+    u8 getType() const { return type; }
 
     // Returns the tape length in cycles.
-    u64 getDurationInCycles() { return durationInCycles; }
+    u64 getDurationInCycles() const { return durationInCycles; }
     
     // Returns the tape length in seconds.
-    u32 getDurationInSeconds() { return (u32)(durationInCycles / (u64)PAL_CLOCK_FREQUENCY); }
+    u32 getDurationInSeconds() const { return (u32)(durationInCycles / (u64)PAL_CLOCK_FREQUENCY); }
 
     
     //
@@ -156,20 +156,20 @@ public:
     void advanceHead(bool silent = false);
     
     // Returns the head position
-    u64 getHead() { return head; }
+    u64 getHead() const { return head; }
 
     // Returns the head position in CPU cycles
-    u64 getHeadInCycles() { return headInCycles; }
+    u64 getHeadInCycles() const { return headInCycles; }
 
     // Returns the head position in seconds
-    u32 getHeadInSeconds() { return headInSeconds; }
+    u32 getHeadInSeconds() const { return headInSeconds; }
     
     // Sets the current head position in cycles.
     void setHeadInCycles(u64 value);
     
     // Returns the pulse length at the current head position
-    int pulseLength(int *skip);
-    int pulseLength() { return pulseLength(nullptr); }
+    int pulseLength(int *skip) const;
+    int pulseLength() const { return pulseLength(nullptr); }
 
     
     //
@@ -177,7 +177,7 @@ public:
     //
     
     // Returns true if the play key is pressed
-    bool getPlayKey() { return playKey; }
+    bool getPlayKey() const { return playKey; }
 
     // Press play on tape
     void pressPlay(); 
@@ -186,7 +186,7 @@ public:
     void pressStop();
 
     // Returns true if the datasette motor is switched on
-    bool getMotor() { return motor; }
+    bool getMotor() const { return motor; }
 
     // Switches the motor on or off
     void setMotor(bool value) { motor = value; }

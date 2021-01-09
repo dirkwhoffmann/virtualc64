@@ -162,8 +162,8 @@ ControlPort::bitmask() const {
     if (axisX ==  1) CLR_BIT(result, 3);
     if (button)      CLR_BIT(result, 4);
     
-    u8 mouseBits = mouse.readControlPort(nr);
-    result &= mouseBits;
+    mouse.updateControlPort(nr);
+    result &= mouse.readControlPort(nr);
     
     return result;
 }

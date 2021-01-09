@@ -22,19 +22,19 @@ Mouse1351::_reset()
 }
 
 u8
-Mouse1351::readPotX()
+Mouse1351::readPotX() const
 {
     return mouseXBits();
 }
 
 u8
-Mouse1351::readPotY()
+Mouse1351::readPotY() const
 {
     return mouseYBits();
 }
 
 u8
-Mouse1351::readControlPort()
+Mouse1351::readControlPort() const
 {
     u8 result = 0xFF;
     

@@ -26,19 +26,19 @@ Mouse1350::_reset()
 }
 
 u8
-Mouse1350::readPotX()
+Mouse1350::readPotX() const
 {
     return rightButton ? 0x00 : 0xFF;
 }
 
 u8
-Mouse1350::readPotY()
+Mouse1350::readPotY() const
 {
     return 0xFF;
 }
 
 u8
-Mouse1350::readControlPort()
+Mouse1350::readControlPort() const
 {
     return controlPort & (leftButton ? 0xEF : 0xFF);
 }

@@ -93,11 +93,14 @@ public:
     void setRightMouseButton(bool value) { rightButton = value; }
     
     // Returns the pot bits as set by the mouse
-    u8 readPotX();
-    u8 readPotY();
+    u8 readPotX() const;
+    u8 readPotY() const;
+    
+    // Updates the control port bits (must be called before reading)
+    void updateControlPort(usize portNr, i64 targetX, i64 targetY);
     
     // Returns the control port bits triggered by the mouse
-    u8 readControlPort(i64 targetX, i64 targetY);
+    u8 readControlPort() const;
         
     // Triggers a state change
     void risingStrobe(int portNr, i64 targetX, i64 targetY);

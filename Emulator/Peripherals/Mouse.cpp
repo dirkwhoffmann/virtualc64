@@ -103,21 +103,33 @@ Mouse::fallingStrobe(int portNr)
     mouseNeos.fallingStrobe(portNr, targetX, targetY);
 }
 
+void
+Mouse::updatePotX()
+{
+    if (port > 0 && config.model == MOUSE_C1351) {
+        mouse1351.executeX(targetX);
+    }
+}
+
+void
+Mouse::updatePotY()
+{
+    if (port > 0 && config.model == MOUSE_C1351) {
+        mouse1351.executeY(targetY);
+    }
+}
+
+void updatePotY();
+
 u8
-Mouse::readPotX()
+Mouse::readPotX() const
 {
     if (port > 0) {
+        
         switch(config.model) {
-                
-            case MOUSE_C1350:
-                return mouse1350.readPotX();
-                
-            case MOUSE_C1351:
-                mouse1351.executeX(targetX);
-                return mouse1351.readPotX();
-                
-            case MOUSE_NEOS:
-                return mouseNeos.readPotX();
+            case MOUSE_C1350: return mouse1350.readPotX();
+            case MOUSE_C1351: return mouse1351.readPotX();
+            case MOUSE_NEOS:  return mouseNeos.readPotX();
                 
             default:
                 assert(false);
@@ -127,17 +139,15 @@ Mouse::readPotX()
 }
 
 u8
-Mouse::readPotY()
+Mouse::readPotY() const
 {
     if (port > 0) {
+        
         switch(config.model) {
-            case MOUSE_C1350:
-                return mouse1350.readPotY();
-            case MOUSE_C1351:
-                mouse1351.executeY(targetY);
-                return mouse1351.readPotY();
-            case MOUSE_NEOS:
-                return mouseNeos.readPotY();
+            case MOUSE_C1350: return mouse1350.readPotY();
+            case MOUSE_C1351: return mouse1351.readPotY();
+            case MOUSE_NEOS:  return mouseNeos.readPotY();
+
             default:
                 assert(false);
         }
@@ -145,17 +155,24 @@ Mouse::readPotY()
     return 0xFF;
 }
 
+void
+Mouse::updateControlPort(usize portNr)
+{
+    if (port == portNr && config.model == MOUSE_NEOS) {
+        mouseNeos.updateControlPort(portNr, targetX, targetY);
+    }
+}
+
 u8
-Mouse::readControlPort(unsigned portNr)
+Mouse::readControlPort(usize portNr) const
 {    
     if (port == portNr) {
+        
         switch(config.model) {
-            case MOUSE_C1350:
-                return mouse1350.readControlPort();
-            case MOUSE_C1351:
-                return mouse1351.readControlPort();
-            case MOUSE_NEOS:
-                return mouseNeos.readControlPort(targetX, targetY);
+            case MOUSE_C1350: return mouse1350.readControlPort();
+            case MOUSE_C1351: return mouse1351.readControlPort();
+            case MOUSE_NEOS:  return mouseNeos.readControlPort();
+            
             default:
                 assert(false);
         }
