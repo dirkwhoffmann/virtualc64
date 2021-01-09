@@ -119,15 +119,15 @@ public:
     
 public:
     
-    bool getGameLine() { return gameLine; }
+    bool getGameLine() const { return gameLine; }
     void setGameLine(bool value);
     
-    bool getExromLine() { return exromLine; }
+    bool getExromLine() const { return exromLine; }
     void setExromLine(bool value);
     
     void setGameAndExrom(bool game, bool exrom);
     
-    CRTMode getCartridgeMode();
+    CRTMode getCartridgeMode() const;
     void setCartridgeMode(CRTMode mode);
 
     
@@ -136,7 +136,7 @@ public:
     //
     
     // Returns true if a cartridge is attached to the expansion port
-    bool getCartridgeAttached() { return cartridge != nullptr; }
+    bool getCartridgeAttached() const { return cartridge != nullptr; }
 
     // Attaches a cartridge to the expansion port
     bool attachCartridge(CRTFile *c, bool reset = true);
@@ -154,7 +154,7 @@ public:
     //
     
     // Returns true if the attached cartridge has a RAM backing battery
-    bool hasBattery();
+    bool hasBattery() const;
 
     // Enables or disables RAM backing during a reset.
     void setBattery(bool value);

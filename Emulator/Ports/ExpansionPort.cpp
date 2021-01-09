@@ -190,7 +190,7 @@ ExpansionPort::setGameAndExrom(bool game, bool exrom)
 }
 
 CRTMode
-ExpansionPort::getCartridgeMode()
+ExpansionPort::getCartridgeMode() const
 {
     switch ((exromLine ? 0b10 : 0) | (gameLine ? 0b01 : 0)) {
             
@@ -311,7 +311,7 @@ ExpansionPort::detachCartridgeAndReset()
 }
 
 bool
-ExpansionPort::hasBattery()
+ExpansionPort::hasBattery() const
 {
     return cartridge ? cartridge->getBattery() : false;
 }

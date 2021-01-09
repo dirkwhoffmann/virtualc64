@@ -81,16 +81,16 @@ private:
 public:
     
     // Returns true if this Rom chip maps to ROML
-    bool mapsToL();
+    bool mapsToL() const;
     
     // Returns true if this Rom chip maps to ROMH
-    bool mapsToH();
+    bool mapsToH() const;
 
     // Returns true if this Rom chip maps to both ROML and ROMH
-    bool mapsToLH();
+    bool mapsToLH() const;
     
     // Reads or writes a byte
     u8 peek(u16 addr);
-    u8 spypeek(u16 addr) { return peek(addr); }
+    u8 spypeek(u16 addr) const;
     void poke(u16 addr, u8 value) { }
 };

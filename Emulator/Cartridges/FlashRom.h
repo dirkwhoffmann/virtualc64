@@ -120,9 +120,9 @@ public:
     u8 peek(unsigned bank, u16 addr) {
         assert(isBankNumber(bank)); return peek(bank * 0x2000 + addr); }
     
-    u8 spypeek(u32 addr) { return peek(addr); }
-    u8 spypeek(unsigned bank, u16 addr) {
-        assert(isBankNumber(bank)); return peek(bank * 0x2000 + addr); }
+    u8 spypeek(u32 addr) const;
+    u8 spypeek(unsigned bank, u16 addr) const {
+        assert(isBankNumber(bank)); return spypeek(bank * 0x2000 + addr); }
     
     void poke(u32 addr, u8 value);
     void poke(unsigned bank, u16 addr, u8 value) {

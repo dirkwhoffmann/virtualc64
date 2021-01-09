@@ -67,13 +67,13 @@ private:
     
 public:
     
-    bool getAutofire() { return autofire; }
+    bool getAutofire() const { return autofire; }
     void setAutofire(bool value);
 
-    int getAutofireBullets() { return autofireBullets; }
+    int getAutofireBullets() const { return autofireBullets; }
     void setAutofireBullets(int value);
 
-    float getAutofireFrequency() { return autofireFrequency; }
+    float getAutofireFrequency() const { return autofireFrequency; }
     void setAutofireFrequency(float value) { autofireFrequency = value; }
     
     
@@ -131,8 +131,4 @@ public:
      * in the same order as they show up in the CIA's data port registers.
      */
     u8 bitmask() const;
-
-    // Returns the potentiometer values (analog mouse)
-    // u8 potX();
-    // u8 potY();
 };

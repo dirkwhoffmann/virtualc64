@@ -345,10 +345,10 @@ public:
     //
     
     // Returns true if the cartridge has a LED
-    virtual bool hasLED() { return false; }
+    virtual bool hasLED() const { return false; }
     
     // Returns true if the LED is switched on
-    virtual bool getLED() { return led; }
+    virtual bool getLED() const { return led; }
     
     // Switches the LED on or off
     virtual void setLED(bool value) { led = value; }

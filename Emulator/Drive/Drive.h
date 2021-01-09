@@ -284,19 +284,19 @@ private:
 public:
 
     // Checks whether the drive is active (connected and switched on)
-    bool isActive() { return active; }
+    bool isActive() const { return active; }
     
     // Returns the device number
-    DriveID getDeviceNr() { return deviceNr; }
+    DriveID getDeviceNr() const { return deviceNr; }
         
     // Returns true iff the red drive LED is on
-    bool getRedLED() { return redLED; };
+    bool getRedLED() const { return redLED; };
 
     // Turns the red drive LED on or off
     void setRedLED(bool b);
 
     // Returns true iff the drive engine is on
-    bool isRotating() { return spinning; };
+    bool isRotating() const { return spinning; };
 
     // Turns the drive engine on or off
     void setRotating(bool b);
@@ -409,7 +409,7 @@ public:
     void setZone(u8 value);
 
     // Reads a single bit from the disk head (result is 0 or 1)
-    u8 readBitFromHead() { return disk.readBitFromHalftrack(halftrack, offset); }
+    u8 readBitFromHead() const { return disk.readBitFromHalftrack(halftrack, offset); }
     
     // Writes a single bit to the disk head
     void writeBitToHead(u8 bit) { disk.writeBitToHalftrack(halftrack, offset, bit); }
