@@ -214,13 +214,6 @@ ReSID::peek(u16 addr)
     return sid->read(addr);
 }
 
-u8
-ReSID::spypeek(u16 addr)
-{
-    // Not supported for reSID
-    assert(false);
-}
-
 void 
 ReSID::poke(u16 addr, u8 value)
 {

@@ -358,40 +358,16 @@ VIA6522::peekORB()
 u8
 VIA6522::spypeek(u16 addr)
 {
+    return const_cast<const VIA6522*>(this)->spypeek(addr);
+}
+
+u8
+VIA6522::spypeek(u16 addr) const
+{
     assert (addr <= 0xF);
     
-    // spypeek is not functional yet, because the VIA counter values are
-    // wrong if the chip is in idle state. Fix this before using this function.
-    // Look at CIA::spypeek to see how this can be done.
+    // spypeek is not supported by this component, yet.
     assert(false);
-    
-    switch(addr) {
-            
-        case 0x4: // T1 low-order counter
-        
-            return LO_BYTE(t1);
-            
-        case 0x8: // T2 low-order latch/counter
-            
-            return LO_BYTE(t2);
-            
-        case 0xA: // Shift register
-        case 0xB: // Auxiliary control register
-        case 0xC: // Peripheral control register
-            
-            break; // TODO
-            
-        case 0xD: { // IFR - Interrupt Flag Register
-            
-            u8 ioD = ifr & 0x7F;
-            u8 irq = (ifr & ier) ? 0x80 : 0x00;
-            return ioD | irq;
-        }
-  
-        default:
-            return peek(addr);
-    }
-    
     return 0;
 }
 

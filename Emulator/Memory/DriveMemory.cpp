@@ -64,6 +64,12 @@ DriveMemory::peek(u16 addr)
 u8
 DriveMemory::spypeek(u16 addr)
 {
+    return const_cast<const DriveMemory*>(this)->spypeek(addr);
+}
+
+u8
+DriveMemory::spypeek(u16 addr) const
+{
     if (addr >= 0x8000) {
         return rom[addr & 0x3FFF];
     } else {

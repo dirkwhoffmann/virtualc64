@@ -215,7 +215,6 @@ public:
 
     // Reads or writes a SID register
 	u8 peek(u16 addr);
-    u8 spypeek(u16 addr);
 	void poke(u16 addr, u8 value);
 	
     
