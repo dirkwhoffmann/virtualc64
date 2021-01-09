@@ -230,10 +230,10 @@ CPUDebugger::watchpointMatches(u32 addr)
     return watchpoints.eval(addr);
 }
 
-int
+usize
 CPUDebugger::loggedInstructions() const
 {
-    return logCnt < LOG_BUFFER_CAPACITY ? (int)logCnt : LOG_BUFFER_CAPACITY;
+    return logCnt < LOG_BUFFER_CAPACITY ? logCnt : LOG_BUFFER_CAPACITY;
 }
 
 void
@@ -241,9 +241,9 @@ CPUDebugger::logInstruction()
 {
     u16 pc = cpu.getPC0();
     u8 opcode = cpu.mem.spypeek(pc);
-    unsigned length = getLengthOfInstruction(opcode);
+    usize length = getLengthOfInstruction(opcode);
 
-    int i = logCnt++ % LOG_BUFFER_CAPACITY;
+    usize i = logCnt++ % LOG_BUFFER_CAPACITY;
     
     logBuffer[i].cycle = cpu.cycle;
     logBuffer[i].pc = pc;
@@ -258,34 +258,34 @@ CPUDebugger::logInstruction()
 }
 
 const RecordedInstruction &
-CPUDebugger::logEntryRel(int n) const
+CPUDebugger::logEntryRel(usize n) const
 {
     assert(n < loggedInstructions());
     return logBuffer[(logCnt - 1 - n) % LOG_BUFFER_CAPACITY];
 }
 
 const RecordedInstruction &
-CPUDebugger::logEntryAbs(int n) const
+CPUDebugger::logEntryAbs(usize n) const
 {
     assert(n < loggedInstructions());
     return logEntryRel(loggedInstructions() - n - 1);
 }
 
 u16
-CPUDebugger::loggedPC0Rel(int n) const
+CPUDebugger::loggedPC0Rel(usize n) const
 {
     assert(n < loggedInstructions());
     return logBuffer[(logCnt - 1 - n) % LOG_BUFFER_CAPACITY].pc;
 }
 
 u16
-CPUDebugger::loggedPC0Abs(int n) const
+CPUDebugger::loggedPC0Abs(usize n) const
 {
     assert(n < loggedInstructions());
     return loggedPC0Rel(loggedInstructions() - n - 1);
 }
 
-unsigned
+usize
 CPUDebugger::getLengthOfInstruction(u8 opcode) const
 {
     switch(addressingMode[opcode]) {
@@ -310,13 +310,13 @@ CPUDebugger::getLengthOfInstruction(u8 opcode) const
     return 1;
 }
 
-unsigned
+usize
 CPUDebugger::getLengthOfInstructionAtAddress(u16 addr) const
 {
     return getLengthOfInstruction(cpu.mem.spypeek(addr));
 }
 
-unsigned
+usize
 CPUDebugger::getLengthOfCurrentInstruction() const
 {
     return getLengthOfInstructionAtAddress(cpu.getPC0());
@@ -509,7 +509,7 @@ CPUDebugger::disassembleBytes(const RecordedInstruction &instr) const
 {
     static char result[13]; char *ptr = result;
     
-    int len = getLengthOfInstruction(instr.byte1);
+    usize len = getLengthOfInstruction(instr.byte1);
     
     if (hex) {
         if (len >= 1) { sprint8x(ptr, instr.byte1); ptr[2] = ' '; ptr += 3; }

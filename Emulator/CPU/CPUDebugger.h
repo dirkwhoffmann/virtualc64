@@ -163,7 +163,7 @@ private:
      * eventually exceeds the log buffer capacity. Use 'loggedInstruction()'
      * to obtain the number of available instructions in the log buffer.
      */
-    long logCnt = 0;
+    usize logCnt = 0;
 
     /* Soft breakpoint for implementing single-stepping.
      * In contrast to a standard (hard) breakpoint, a soft breakpoint is
@@ -251,7 +251,7 @@ public:
     //
         
     // Returns the number of logged instructions
-    int loggedInstructions() const;
+    usize loggedInstructions() const;
     
     // Logs an instruction
     void logInstruction();
@@ -261,10 +261,10 @@ public:
      *    xxxRel: n == 0 returns the most recently recorded entry
      *    xxxAbs: n == 0 returns the oldest entry
      */
-    const RecordedInstruction &logEntryRel(int n) const;
-    const RecordedInstruction &logEntryAbs(int n) const;
-    u16 loggedPC0Rel(int n) const;
-    u16 loggedPC0Abs(int n) const;
+    const RecordedInstruction &logEntryRel(usize n) const;
+    const RecordedInstruction &logEntryAbs(usize n) const;
+    u16 loggedPC0Rel(usize n) const;
+    u16 loggedPC0Abs(usize n) const;
 
     // Clears the log buffer
     void clearLog() { logCnt = 0; }
@@ -274,9 +274,9 @@ public:
     //
     
     // Returns the length of an instruction in bytes
-    unsigned getLengthOfInstruction(u8 opcode) const;
-    unsigned getLengthOfInstructionAtAddress(u16 addr) const;
-    unsigned getLengthOfCurrentInstruction() const;
+    usize getLengthOfInstruction(u8 opcode) const;
+    usize getLengthOfInstructionAtAddress(u16 addr) const;
+    usize getLengthOfCurrentInstruction() const;
 
     // Returns the address of the instruction following the current one
     u16 getAddressOfNextInstruction() const;
