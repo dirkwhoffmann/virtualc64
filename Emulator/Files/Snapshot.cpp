@@ -56,7 +56,7 @@ Snapshot::makeWithC64(C64 *c64)
 }
 
 bool
-Snapshot::isTooOld()
+Snapshot::isTooOld() const
 {    
     if (data[4] < V_MAJOR) return true; else if (data[4] > V_MAJOR) return false;
     if (data[5] < V_MINOR) return true; else if (data[5] > V_MINOR) return false;
@@ -64,7 +64,7 @@ Snapshot::isTooOld()
 }
 
 bool
-Snapshot::isTooNew()
+Snapshot::isTooNew() const
 {
     if (data[4] > V_MAJOR) return true; else if (data[4] < V_MAJOR) return false;
     if (data[5] > V_MINOR) return true; else if (data[5] < V_MINOR) return false;

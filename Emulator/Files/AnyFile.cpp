@@ -42,7 +42,7 @@ AnyFile::getName() const
 }
 
 u64
-AnyFile::fnv()
+AnyFile::fnv() const
 {
     return data ? fnv_1a_64(data, size) : 0;    
 }
