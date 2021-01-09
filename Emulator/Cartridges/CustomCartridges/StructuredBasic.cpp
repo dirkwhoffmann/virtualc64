@@ -40,6 +40,12 @@ StructuredBasic::peekIO1(u16 addr)
     return 0;
 }
 
+u8
+StructuredBasic::spypeekIO1(u16 addr) const
+{
+    return 0;
+}
+
 void
 StructuredBasic::pokeIO1(u16 addr, u8 value)
 {

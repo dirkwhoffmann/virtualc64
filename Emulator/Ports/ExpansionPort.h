@@ -102,7 +102,7 @@ private:
 public:
     
     u8 peek(u16 addr);
-    u8 spypeek(u16 addr);
+    u8 spypeek(u16 addr) const;
     u8 peekIO1(u16 addr);
     u8 spypeekIO1(u16 addr) const;
     u8 peekIO2(u16 addr);

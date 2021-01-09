@@ -54,6 +54,12 @@ KcsPower::peekIO2(u16 addr)
     }
 }
 
+u8
+KcsPower::spypeekIO2(u16 addr) const
+{
+    return peekRAM(addr & 0x7F);
+}
+
 void
 KcsPower::pokeIO1(u16 addr, u8 value)
 {

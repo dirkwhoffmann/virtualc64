@@ -277,7 +277,7 @@ public:
     //
     
     // Returns the RAM size in bytes
-    usize getRamCapacity();
+    usize getRamCapacity() const;
 
     /* Assigns external RAM to this cartridge. This functions frees any
      * previously assigned RAM and allocates memory of the specified size. The

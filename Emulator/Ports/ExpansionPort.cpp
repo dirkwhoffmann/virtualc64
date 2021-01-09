@@ -102,7 +102,7 @@ ExpansionPort::peek(u16 addr)
 }
 
 u8
-ExpansionPort::spypeek(u16 addr)
+ExpansionPort::spypeek(u16 addr) const
 {
     return cartridge ? cartridge->spypeek(addr) : 0;
 }

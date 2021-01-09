@@ -91,7 +91,6 @@ public:
     void peekIOIdle(u16 addr) { }
     
     // Reads a value from memory without side effects
-    u8 spypeek(u16 addr);
     u8 spypeek(u16 addr) const;
 
     // Writes a value into memory

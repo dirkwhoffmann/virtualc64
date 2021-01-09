@@ -333,7 +333,6 @@ public:
     
     // Reads a value from a CIA register without causing side effects
     u8 spypeek(u16 addr) const;
-    u8 spypeek(u16 addr);
 
     // Writes a value into a CIA register
     void poke(u16 addr, u8 value);

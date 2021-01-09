@@ -354,12 +354,6 @@ C64Memory::peekIO(u16 addr)
 }
 
 u8
-C64Memory::spypeek(u16 addr, MemoryType source)
-{
-    return const_cast<const C64Memory*>(this)->spypeek(addr, source);
-}
-
-u8
 C64Memory::spypeek(u16 addr, MemoryType source) const
 {
     switch(source) {
@@ -395,12 +389,6 @@ C64Memory::spypeek(u16 addr, MemoryType source) const
             assert(false);
             return 0;
     }
-}
-
-u8
-C64Memory::spypeekIO(u16 addr)
-{
-    return const_cast<const C64Memory*>(this)->spypeekIO(addr);
 }
 
 u8

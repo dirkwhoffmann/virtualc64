@@ -22,9 +22,21 @@ WarpSpeed::peekIO1(u16 addr)
 }
 
 u8
+WarpSpeed::spypeekIO1(u16 addr) const
+{
+    return Cartridge::spypeekRomL(0x1E00 | (addr & 0xFF));
+}
+
+u8
 WarpSpeed::peekIO2(u16 addr)
 {
     return Cartridge::peekRomL(0x1F00 | (addr & 0xFF));
+}
+
+u8
+WarpSpeed::spypeekIO2(u16 addr) const
+{
+    return Cartridge::spypeekRomL(0x1F00 | (addr & 0xFF));
 }
 
 void

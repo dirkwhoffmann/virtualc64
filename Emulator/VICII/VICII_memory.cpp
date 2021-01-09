@@ -295,12 +295,6 @@ VICII::peek(u16 addr)
 }
 
 u8
-VICII::spypeek(u16 addr)
-{
-    return const_cast<const VICII*>(this)->spypeek(addr);
-}
-
-u8
 VICII::spypeek(u16 addr) const
 {
     assert(addr <= 0x3F);

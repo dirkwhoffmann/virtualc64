@@ -88,15 +88,18 @@ public:
     
     void resetCartConfig() override;
     u8 peekRomL(u16 addr) override;
+    u8 spypeekRomL(u16 addr) const override;
     u8 peekRomH(u16 addr) override;
+    u8 spypeekRomH(u16 addr) const override;
     void pokeRomL(u16 addr, u8 value) override;
     void pokeRomH(u16 addr, u8 value) override;
     u8 peekIO1(u16 addr) override;
+    u8 spypeekIO1(u16 addr) const override;
     void pokeIO1(u16 addr, u8 value) override;
     void updatePeekPokeLookupTables() override;
     
 private:
     
-    u16 ramAddrL(u16 addr) { return (bankSelect() << 14) + (addr & 0x1FFF); }
-    u16 ramAddrH(u16 addr) { return 0x2000 + ramAddrL(addr); }
+    u16 ramAddrL(u16 addr) const { return (bankSelect() << 14) + (addr & 0x1FFF); }
+    u16 ramAddrH(u16 addr) const { return 0x2000 + ramAddrL(addr); }
 };

@@ -356,12 +356,6 @@ VIA6522::peekORB()
 }
 
 u8
-VIA6522::spypeek(u16 addr)
-{
-    return const_cast<const VIA6522*>(this)->spypeek(addr);
-}
-
-u8
 VIA6522::spypeek(u16 addr) const
 {
     assert (addr <= 0xF);

@@ -328,7 +328,6 @@ private:
 public:
     
     // Same as peek, but without side effects
-    u8 spypeek(u16 addr);
     u8 spypeek(u16 addr) const;
     
 	/* Special poke function for the I/O memory range. The poke function only

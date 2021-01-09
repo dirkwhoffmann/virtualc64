@@ -24,3 +24,9 @@ Rex::peekIO2(u16 addr)
     
     return 0;
 }
+
+u8
+Rex::spypeekIO2(u16 addr) const
+{
+    return 0;
+}

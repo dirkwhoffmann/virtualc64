@@ -651,12 +651,6 @@ SIDBridge::peek(u16 addr)
 }
 
 u8
-SIDBridge::spypeek(u16 addr)
-{
-    return const_cast<const SIDBridge*>(this)->spypeek(addr);
-}
-
-u8
 SIDBridge::spypeek(u16 addr) const
 {
     // Select the target SID

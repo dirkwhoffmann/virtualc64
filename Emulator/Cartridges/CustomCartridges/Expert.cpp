@@ -86,6 +86,12 @@ Expert::peekIO1(u16 addr)
     return 0;
 }
 
+u8
+Expert::spypeekIO1(u16 addr) const
+{
+    return 0;
+}
+
 void
 Expert::poke(u16 addr, u8 value)
 {

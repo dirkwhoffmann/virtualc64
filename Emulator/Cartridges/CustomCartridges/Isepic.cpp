@@ -57,6 +57,12 @@ Isepic::peekIO1(u16 addr)
 }
 
 u8
+Isepic::spypeekIO1(u16 addr) const
+{
+    return 0;
+}
+
+u8
 Isepic::peekIO2(u16 addr)
 {
     assert(addr >= 0xDF00 && addr <= 0xDFFF);
@@ -65,6 +71,16 @@ Isepic::peekIO2(u16 addr)
         return peekRAM((page * 256) + (addr & 0xFF));
     } else {
         return Cartridge::peekIO2(addr);
+    }
+}
+
+u8
+Isepic::spypeekIO2(u16 addr) const
+{
+    if (cartIsVisible()) {
+        return peekRAM((page * 256) + (addr & 0xFF));
+    } else {
+        return Cartridge::spypeekIO2(addr);
     }
 }
 

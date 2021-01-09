@@ -381,7 +381,7 @@ Cartridge::poke(u16 addr, u8 value)
 }
 
 usize
-Cartridge::getRamCapacity()
+Cartridge::getRamCapacity() const
 {
     if (ramCapacity == 0) {
         assert(externalRam == nullptr);

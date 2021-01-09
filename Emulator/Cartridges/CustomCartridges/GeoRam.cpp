@@ -30,7 +30,20 @@ GeoRAM::peekIO1(u16 addr)
 }
 
 u8
+GeoRAM::spypeekIO1(u16 addr) const
+{
+    assert(addr >= 0xDE00 && addr <= 0xDEFF);
+    return peekRAM(offset(addr - 0xDE00));
+}
+
+u8
 GeoRAM::peekIO2(u16 addr)
+{
+    return 0;
+}
+
+u8
+GeoRAM::spypeekIO2(u16 addr) const
 {
     return 0;
 }
@@ -53,7 +66,7 @@ GeoRAM::pokeIO2(u16 addr, u8 value)
 }
 
 unsigned
-GeoRAM::offset(u8 addr)
+GeoRAM::offset(u8 addr) const
 {
     /* From VICE:
      * "The GeoRAM is a banked memory system. It uses the registers at

@@ -22,6 +22,8 @@ public:
     void _reset() override;
 
     u8 peekIO1(u16 addr) override { return control; }
+    u8 spypeekIO1(u16 addr) const override { return control; }
     u8 peekIO2(u16 addr) override { return 0; }
+    u8 spypeekIO2(u16 addr) const override { return 0; }
     void pokeIO1(u16 addr, u8 value) override;
 };

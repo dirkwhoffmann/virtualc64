@@ -29,10 +29,22 @@ FreezeFrame::peekIO1(u16 addr)
 }
 
 u8
+FreezeFrame::spypeekIO1(u16 addr) const
+{
+    return 0;
+}
+
+u8
 FreezeFrame::peekIO2(u16 addr)
 {
     // Reading from IO2 disables the cartridge
     expansionport.setCartridgeMode(CRTMODE_OFF);
+    return 0;
+}
+
+u8
+FreezeFrame::spypeekIO2(u16 addr) const
+{
     return 0;
 }
 
