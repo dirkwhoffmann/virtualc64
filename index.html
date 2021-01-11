@@ -58,12 +58,10 @@
 		}
 //		var running = false;
 		function toggle_run() {
-			var vc64web = $('#vc64web').contents();
+			$('#vc64web').contents().find('#button_run').click();
+			var vc64web = document.getElementById("vc64web").contentWindow;
+			running = vc64web.is_running() && vc64web.required_roms_loaded;
 
-			var run_button = vc64web.find('#button_run');
-			run_button.click();
-
-			running = document.getElementById("vc64web").contentWindow.is_running();
 			//running = !running;
 			$("#toggle_icon").html(
 				running ?
