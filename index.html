@@ -17,7 +17,6 @@
 		.emulator_view {
 			margin-bottom: 70px;
 			width: 100%;
-			height: 100%;
 		}
 	</style>
 	<script>
@@ -42,6 +41,10 @@
 		<button onclick="toggle_run();"><img src="images/pause.png" width="25px" alt=""></button>
 		<button onclick=""><img src="images/mute.png" width="25px" alt=""></button>
 		`);
+			
+			var ratio = , $div = emu_container;
+			$div.height($div.width() * 200/320);
+			$(window).bind('resize', function() { $div.height($div.width() * 200/320); });			
 		}
 		function toggle_run() {
 			var vc64web = $('#vc64web').contents()
