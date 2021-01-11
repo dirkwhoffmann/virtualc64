@@ -51,18 +51,20 @@
   <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
 		</svg>
 		`); 
-			running=true;
+//			running=true;
 			$div = emu_container;
 			$div.height($div.width() * 200/320);
 			$(window).bind('resize', function() { $div.height($div.width() * 200/320); });			
 		}
-		var running = false;
+//		var running = false;
 		function toggle_run() {
 			var vc64web = $('#vc64web').contents();
 
 			var run_button = vc64web.find('#button_run');
 			run_button.click();
-			running = !running;
+
+			running = document.getElementById("vc64web").contentWindow.is_running();
+			//running = !running;
 			$("#toggle_icon").html(
 				running ?
 			`
