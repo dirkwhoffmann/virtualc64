@@ -41,8 +41,7 @@
 		<button onclick="toggle_run();"><img src="images/pause.png" width="25px" alt=""></button>
 		<button onclick=""><img src="images/mute.png" width="25px" alt=""></button>
 		`);
-			
-			var ratio = , $div = emu_container;
+			$div = emu_container;
 			$div.height($div.width() * 200/320);
 			$(window).bind('resize', function() { $div.height($div.width() * 200/320); });			
 		}
