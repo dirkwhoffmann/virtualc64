@@ -29,13 +29,13 @@ Guard::eval(u32 addr)
 //
 
 Guard *
-Guards::guardWithNr(long nr)
+Guards::guardWithNr(long nr) const
 {
     return nr < count ? &guards[nr] : nullptr;
 }
 
 Guard *
-Guards::guardAtAddr(u32 addr)
+Guards::guardAtAddr(u32 addr) const
 {
     for (int i = 0; i < count; i++) {
         if (guards[i].addr == addr) return &guards[i];
@@ -45,7 +45,7 @@ Guards::guardAtAddr(u32 addr)
 }
 
 bool
-Guards::isSetAt(u32 addr)
+Guards::isSetAt(u32 addr) const
 {
     Guard *guard = guardAtAddr(addr);
 
@@ -53,7 +53,7 @@ Guards::isSetAt(u32 addr)
 }
 
 bool
-Guards::isSetAndEnabledAt(u32 addr)
+Guards::isSetAndEnabledAt(u32 addr) const
 {
     Guard *guard = guardAtAddr(addr);
 
@@ -61,7 +61,7 @@ Guards::isSetAndEnabledAt(u32 addr)
 }
 
 bool
-Guards::isSetAndDisabledAt(u32 addr)
+Guards::isSetAndDisabledAt(u32 addr) const
 {
     Guard *guard = guardAtAddr(addr);
 
@@ -69,7 +69,7 @@ Guards::isSetAndDisabledAt(u32 addr)
 }
 
 bool
-Guards::isSetAndConditionalAt(u32 addr)
+Guards::isSetAndConditionalAt(u32 addr) const
 {
     Guard *guard = guardAtAddr(addr);
 
@@ -129,7 +129,7 @@ Guards::replace(long nr, u32 addr)
 }
 
 bool
-Guards::isEnabled(long nr)
+Guards::isEnabled(long nr) const
 {
     return nr < count ? guards[nr].enabled : false;
 }

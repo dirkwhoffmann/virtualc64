@@ -72,16 +72,16 @@ public:
     // Inspecting the guard list
     //
     
-    long elements() { return count; }
-    Guard *guardWithNr(long nr);
-    Guard *guardAtAddr(u32 addr);
+    long elements() const { return count; }
+    Guard *guardWithNr(long nr) const;
+    Guard *guardAtAddr(u32 addr) const;
     
-    u32 guardAddr(long nr) { return nr < count ? guards[nr].addr : 0; }
+    u32 guardAddr(long nr) const { return nr < count ? guards[nr].addr : 0; }
     
-    bool isSetAt(u32 addr);
-    bool isSetAndEnabledAt(u32 addr);
-    bool isSetAndDisabledAt(u32 addr);
-    bool isSetAndConditionalAt(u32 addr);
+    bool isSetAt(u32 addr) const;
+    bool isSetAndEnabledAt(u32 addr) const;
+    bool isSetAndDisabledAt(u32 addr) const;
+    bool isSetAndConditionalAt(u32 addr) const;
     
     //
     // Adding or removing guards
@@ -99,7 +99,7 @@ public:
     // Enabling or disabling guards
     //
     
-    bool isEnabled(long nr);
+    bool isEnabled(long nr) const;
     bool isDisabled(long nr) { return !isEnabled(nr); }
     
     void setEnable(long nr, bool val);

@@ -638,13 +638,13 @@ CIA1::releaseInterruptLine()
 //                    -------
 
 u8
-CIA1::portAinternal()
+CIA1::portAinternal() const
 {
     return PRA;
 }
 
 u8
-CIA1::portAexternal()
+CIA1::portAexternal() const
 {
     return 0xFF;
     // return keyboard.getColumnValues(PB);
@@ -685,16 +685,15 @@ CIA1::updatePA()
 //                    -------
 
 u8
-CIA1::portBinternal()
+CIA1::portBinternal() const
 {
     return PRB;
 }
 
 u8
-CIA1::portBexternal()
+CIA1::portBexternal() const
 {
     return 0xFF;
-    // return keyboard.getRowValues(PA);
 }
 
 void
@@ -769,13 +768,13 @@ CIA2::releaseInterruptLine()
 //                        -------
 
 u8
-CIA2::portAinternal()
+CIA2::portAinternal() const
 {
     return PRA;
 }
 
 u8
-CIA2::portAexternal()
+CIA2::portAexternal() const
 {
     u8 result = 0x3F;
     result |= (iec.clockLine ? 0x40 : 0x00);
@@ -808,7 +807,7 @@ CIA2::updatePA()
 //                        -------
 
 u8
-CIA2::portBinternal()
+CIA2::portBinternal() const
 {
     u8 result = PRB;
     
@@ -824,7 +823,7 @@ CIA2::portBinternal()
 }
 
 u8
-CIA2::portBexternal()
+CIA2::portBexternal() const
 {
     // User port is not implemented. All pins are high if nothing is connected.
     return 0xFF;

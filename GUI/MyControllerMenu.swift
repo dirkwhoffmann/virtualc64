@@ -896,7 +896,6 @@ extension MyController: NSMenuItemValidation {
         // Dummy action method to enable menu item validation
     }
     
-    
     //
     // Action methods (Debug menu)
     //
