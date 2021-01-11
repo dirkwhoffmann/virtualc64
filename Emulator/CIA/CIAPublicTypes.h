@@ -58,9 +58,9 @@ typedef union
 {
     struct {
         u8 tenth;
-        u8 seconds;
-        u8 minutes;
-        u8 hours;
+        u8 sec;
+        u8 min;
+        u8 hour;
     };
     u32 value;
 }
