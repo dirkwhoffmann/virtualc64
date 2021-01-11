@@ -16,6 +16,8 @@
 	<style>
 		.emulator_view {
 			margin-bottom: 70px;
+			width: 384px;
+			height: 240px;
 		}
 	</style>
 	<script>
@@ -34,7 +36,7 @@
 			current_active_emulator = emu_container.attr('id');
 			//turn picture into iframe
 			emu_container.html(`
-		<iframe id="vc64web" width="100%"
+		<iframe id="vc64web" width="100%" height="100%"
 			src="https://dirkwhoffmann.github.io/virtualc64web/${params}#${address}">
 		</iframe>
 		<button onclick="toggle_run();"><img src="images/pause.png" width="25px" alt=""></button>
