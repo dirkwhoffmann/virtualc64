@@ -1,1 +1,245 @@
-My GitHub Page
+<!DOCTYPE HTML>
+<!--
+	Arcana by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+	<!-- <title>Arcana by HTML5 UP</title> -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+
+	<!-- web emulator view stuff start-->
+	<style>
+		.emulator_view {
+			margin-bottom: 70px;
+		}
+	</style>
+	<script>
+		let saved_pic_html = null;
+		let current_active_emulator = null;
+		function load_title(element, params, address) {
+			//close any other active emulator frame
+			if (saved_pic_html != null) {
+				//restore preview pic
+				$('#' + current_active_emulator).html(saved_pic_html);
+			}
+
+			//save preview pic
+			var emu_container = $(element).parent();
+			saved_pic_html = emu_container.html();
+			current_active_emulator = emu_container.attr('id');
+			//turn picture into iframe
+			emu_container.html(`
+		<iframe id="vc64web" width="100%"
+			src="https://dirkwhoffmann.github.io/virtualc64web/${params}#${address}">
+		</iframe>
+		<button onclick="toggle_run();"><img src="images/pause.png" width="25px" alt=""></button>
+		<button onclick=""><img src="images/mute.png" width="25px" alt=""></button>
+		`);
+		}
+		function toggle_run() {
+			var vc64web = $('#vc64web').contents()
+			var run_button = vc64web.find('#button_run');
+			run_button.click();
+		}
+
+	</script>
+	<!-- web emulator view stuff end-->
+
+</head>
+
+<body class="is-preload">
+	<div id="page-wrapper">
+
+		<!-- Header -->
+		<div id="header">
+
+			<!-- Logo -->
+			<h1><a href="index.html" id="logo">VirtualC64<em> for macOS and Web</em></a></h1>
+
+			<!-- Nav -->
+			<nav id="nav">
+				<ul>
+					<li class="current"><a href="index.html">News</a></li>
+					<li><a href="about.html">About</a></li>
+					<li><a href="https://github.com/dirkwhoffmann/virtualc64">Code</a></li>
+					<li><a href="https://github.com/dirkwhoffmann/virtualc64/issues">Issues</a></li>
+					<li><a href="https://github.com/dirkwhoffmann/virtualc64/discussions">Discussions</a></li>
+					<li><a href="https://github.com/dirkwhoffmann/virtualc64/wiki">Wiki</a></li>
+					<li><a href="impressum.html">Impressum</a></li>
+				</ul>
+			</nav>
+		</div>
+
+		<!-- Banner -->
+		<section id="banner">
+			<header>
+				<!-- <h2><em>V4.0 beta testing has started. Participate today and download v4.0 beta 1:</em></h2> -->
+				<!-- <a href="#" class="button">Download</a> -->
+			</header>
+		</section>
+
+		<!-- Main -->
+		<section class="wrapper style1">
+			<div class="container">
+				<div class="row gtr-200">
+					<div class="col-8 col-12-narrower imp-narrower">
+						<div id="content">
+
+							<!-- Content -->
+
+							<article>
+								<header>
+									<h2>News</h2>
+								</header>
+
+								<h3><em>10.01.2010 &nbsp;</em>v4.0 (Beta 1) will be released shortly</h3>
+								<p>It has been some time since Virtual 3.4 was released and there have been no updates
+									since then. One reason for this is that I have been working intensively on vAmiga
+									during the last months. Another reason is that I added a lot more new features to
+									the new version than originally planned. This took its time.
+									But as of today VirtualC64 4.0 is nearly finished and ready for beta testing. We are
+									happy to announce that the first public beta release will be available within days.
+								</p>
+								<span class="image featured"><img src="images/v40announce.jpg" width="50px" alt=""></span>
+
+								<h3><em>25.11.2020 &nbsp;</em>No ARM support in v3.x series</h3>
+								<p>Please note that VirtualC64 3.4 is not compatible with Apple Silicon Macs will
+									probably never be. However, we are working on ARM support in v4.0 which is going to
+									be released soon.</p>
+
+								<h3><em>18.11.2020 &nbsp;</em> Third-party game pad support</h3>
+
+								<p>At the moment, VirtualC64 is still lacking support for some popular game controllers.
+									Since I can only make the necessary code changes for devices in mypossession, I have
+									created
+									an <a
+										href="https://www.amazon.de/hz/wishlist/ls/35K6X4B0FIEOF/ref=nav_wishlist_lists_2?_encoding=UTF8&type=wishlist">Amazon
+										wishlist</a> containing a number of yet incompatible devices. If you want to
+									have another controller supported, please let me know the exact model name. I will
+									then add it to the wishlist, and with a bit of luck, a noble donor will be found who
+									will order the device.
+								</p>
+
+								<h3><em>2.7.2020 &nbsp;</em> VirtualC64 3.4 released</h3>
+
+								<p>This version will probably be the last in the 3.x series. For the upcoming
+									version 4.0 I plan to backport large parts of code from vAmiga. This will
+									lead to major changes that will not only affect the internal code base but
+									also the user interface.
+								</p>
+
+								<h3><em>5.3.2020 &nbsp;</em> New web site in place</h3>
+
+								<p>The old web page is gone for good. I replaced it by a new template scheme which
+									allows me to publish in a more blog-style manner.</p>
+							</article>
+
+						</div>
+					</div>
+					<div class="col-4 col-12-narrower">
+						<div id="sidebar2">
+
+							<!-- Sidebar -->
+
+							<section>
+								<h3>Project activity</h3>
+								<p>
+									<img alt="GitHub watchers"
+										src="https://img.shields.io/github/watchers/dirkwhoffmann/virtualC64?style=social">
+									<img alt="GitHub Repo stars"
+										src="https://img.shields.io/github/stars/dirkwhoffmann/virtualC64?style=social">
+									<img alt="GitHub forks"
+										src="https://img.shields.io/github/forks/dirkwhoffmann/virtualC64?style=social"><br><br>
+									<img alt="GitHub build status"
+										src="https://travis-ci.org/dirkwhoffmann/virtualC64.svg?branch=master"><br>
+									<img alt="GitHub release (latest by date)"
+										src="https://img.shields.io/github/downloads/dirkwhoffmann/virtualC64/latest/total">
+									<img alt="GitHub all releases"
+										src="https://img.shields.io/github/downloads/dirkwhoffmann/virtualC64/total"><br>
+									<img alt="GitHub issues"
+										src="https://img.shields.io/github/issues/dirkwhoffmann/virtualC64">
+									<img alt="GitHub closed issues"
+										src="https://img.shields.io/github/issues-closed/dirkwhoffmann/virtualC64"><br>
+									<img alt="GitHub code size in bytes"
+										src="https://img.shields.io/github/languages/code-size/dirkwhoffmann/virtualC64">
+									<img alt="GitHub repo size"
+										src="https://img.shields.io/github/repo-size/dirkwhoffmann/virtualC64">
+								</p>
+							</section>
+							<section>
+								<h3>Older Releases</h3>
+								<ul class="links">
+									<li><a href="https://github.com/dirkwhoffmann/virtualc64/releases/tag/v3.4">VirtualC64
+											3.4</a></li>
+									<li><a href="https://github.com/dirkwhoffmann/virtualc64/releases/tag/v3.3">VirtualC64
+											3.3</a></li>
+								</ul>
+							</section>
+							<section>
+								<h3>VirtualC64 Web</h3>
+								<span class="image featured"><img src="images/vcweb.png" alt="" /></span>
+								<p>The core emulator is designed to be compatible with WebAssembly and can now run in
+									your
+									browser.</p>
+								<div id="emuview0" class="emulator_view"><a href="#"
+										onclick="load_title(this, '#openROMS=true#2ndSID=d420#navbar=hidden', 'http://csdb.dk/getinternalfile.php/206403/to_norah.prg');return false;">
+										<img src="images/nora.jpg" width="100%"></a>
+								</div>
+								<footer>
+									<a href="https://github.com/dirkwhoffmann/virtualc64web" class="button">Learn
+										more</a>
+								</footer>
+							</section>
+							<section>
+								<h3>Looking for 16-bit?</h3>
+								<p>vAmiga emulates an Amiga on your Mac and is as user-friendly as VirtualC64. Check it
+									out today.</p>
+								<span class="image featured"><img src="images/ad-va.png" alt="vAmiga" /></span>
+								<footer>
+									<a href="vamiga.html" class="button">Learn more</a>
+								</footer>
+							</section>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Footer -->
+		<div id="footer">
+
+			<!-- Icons -->
+			<ul class="icons">
+				<li><a href="https://github.com/dirkwhoffmann" class="icon brands fa-github"><span
+							class="label">GitHub</span></a></li>
+			</ul>
+
+			<!-- Copyright -->
+			<div class="copyright">
+				<ul class="menu">
+					<li>&copy; <a href="http://www.dirkwhoffmann.de">Dirk W. Hoffmann</a></li>
+					<li><a href="impressum.html">Impressum</a></li>
+					<li><a href="impressum.html">Datenschutz</a></li>
+					<li><a href="http://html5up.net">HTML5 UP</a></li>
+				</ul>
+			</div>
+
+		</div>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.dropotron.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+</body>
+
+</html>
