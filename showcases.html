@@ -1,0 +1,232 @@
+<!DOCTYPE HTML>
+<!--
+	Arcana by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+	<!-- <title>Arcana by HTML5 UP</title> -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+
+	<!-- web emulator view stuff start-->
+	<style>
+		.emulator_view {
+			margin-bottom: 70px;
+			width: 100%;
+		}
+
+		.bi {
+			margin-top: 15px;
+		}
+
+		.icon_btn {
+			background-color: transparent;
+			color: black;
+			margin-right: 15px;
+		}
+	</style>
+	<script>
+		let saved_pic_html = null;
+		let current_active_emulator = null;
+		function load_title(element, params, address) {
+			stop_emu_view();
+			//save preview pic
+			var emu_container = $(element).parent();
+			saved_pic_html = emu_container.html();
+			current_active_emulator = emu_container.attr('id');
+			//turn picture into iframe
+			emu_container.html(`
+		<iframe id="vc64web" width="100%" height="100%"
+			src="https://dirkwhoffmann.github.io/virtualc64web/${params}#${address}">
+		</iframe>
+		<svg  class="icon_btn" onclick="stop_emu_view();" xmlns="http://www.w3.org/2000/svg" width="2.0em" height="2.0em" fill="currentColor" class="bi bi-pause-btn" viewBox="0 0 16 16">
+			<path d="M6.5 5A1.5 1.5 0 0 0 5 6.5v3A1.5 1.5 0 0 0 6.5 11h3A1.5 1.5 0 0 0 11 9.5v-3A1.5 1.5 0 0 0 9.5 5h-3z"/>
+			<path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+		</svg>
+
+		<svg  id="toggle_icon" class="icon_btn" onclick="toggle_run();" xmlns="http://www.w3.org/2000/svg" width="2.0em" height="2.0em" fill="currentColor" class="bi bi-pause-btn" viewBox="0 0 16 16">
+  <path d="M6.25 5C5.56 5 5 5.56 5 6.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C7.5 5.56 6.94 5 6.25 5zm3.5 0c-.69 0-1.25.56-1.25 1.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C11 5.56 10.44 5 9.75 5z"/>
+  <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+		</svg>
+		`);
+			$div = emu_container;
+			$div.height($div.width() * 200 / 320);
+			$(window).bind('resize', function () { $div.height($div.width() * 200 / 320); });
+		}
+		function toggle_run() {
+			var vc64web = document.getElementById("vc64web").contentWindow;
+			if (vc64web.required_roms_loaded)// that means emu already runs
+			{
+				//click emulators run toggle button
+				$('#vc64web').contents().find('#button_run').click();
+
+				$("#toggle_icon").html(
+					vc64web.is_running() ?
+						`
+				<path d="M6.25 5C5.56 5 5 5.56 5 6.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C7.5 5.56 6.94 5 6.25 5zm3.5 0c-.69 0-1.25.56-1.25 1.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C11 5.56 10.44 5 9.75 5z"/>
+				<path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+				`:
+						`
+				<path d="M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/>
+				<path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+				`
+				);
+			}
+		}
+		function stop_emu_view() {
+			//close any other active emulator frame
+			if (saved_pic_html != null) {
+				//restore preview pic
+				$('#' + current_active_emulator).html(saved_pic_html);
+			}
+		}
+
+	</script>
+	<!-- web emulator view stuff end-->
+
+</head>
+
+<body class="is-preload">
+	<div id="page-wrapper">
+
+		<!-- Header -->
+		<div id="header">
+
+			<!-- Logo -->
+			<h1><a href="index.html" id="logo">VirtualC64<em> Web</em></a></h1>
+
+			<!-- Nav -->
+			<nav id="nav">
+				<ul>
+					<li><a href="index.html">News</a></li>
+					<li><a href="about.html">About</a></li>
+					<li><a href="https://github.com/dirkwhoffmann/virtualc64">Code</a></li>
+					<li><a href="https://github.com/dirkwhoffmann/virtualc64/issues">Issues</a></li>
+					<li><a href="https://github.com/dirkwhoffmann/virtualc64/discussions">Discussions</a></li>
+					<li><a href="https://github.com/dirkwhoffmann/virtualc64/wiki">Wiki</a></li>
+					<li><a href="impressum.html">Impressum</a></li>
+				</ul>
+			</nav>
+		</div>
+
+		<!-- Banner -->
+		<!--<section class="wrapper style1">
+			<div class="container">
+				<div id="content">
+					<article>
+						<span class="image featured"><img src="images/banner-vw.png" alt="" /></span>
+					</article>
+				</div>
+			</div>
+		</section>-->
+
+		<!-- Main -->
+		<section class="wrapper style1">
+			<div class="container">
+				<div class="row gtr-200">
+					<div class="col-6 col-12-narrower imp-narrower">
+						<div id="content">
+							<!-- Content -->
+							<article>
+								<header>
+									<h2>Holla</h2>
+								</header>
+
+								<p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt
+									ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+									ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure
+									reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+									Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt
+									mollit anim id est laborum.
+								</p>
+							</article>
+						</div>
+					</div>
+					<div class="col-6 col-12-narrower">
+						<div id="sidebar2">
+							<!-- Column 2 -->
+							<section>
+								<div id="emuview1" class="emulator_view"><a href="#"
+										onclick="load_title(this, '#openROMS=true#2ndSID=d420#navbar=hidden#wide=true#border=false', 'http://csdb.dk/getinternalfile.php/30568/Adventure 1.T64');return false;">
+										<img src="images/advland.png" width="100%"></a>
+								</div>
+							</section>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="wrapper style1">
+			<div class="container">
+				<div class="row gtr-200">
+					<div class="col-6 col-12-narrower imp-narrower">
+						<div id="content">
+							<!-- Content -->
+							<article>
+								<header>
+									<h2>Die Waldfee</h2>
+								</header>
+
+								<p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt
+									ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+									ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure
+									reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+									Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt
+									mollit anim id est laborum.
+								</p>
+							</article>
+						</div>
+					</div>
+					<div class="col-6 col-12-narrower">
+						<div id="sidebar2">
+							<!-- Column 2 -->
+							<section>
+								<div id="emuview3" class="emulator_view"><a href="#"
+										onclick="load_title(this, '#openROMS=true#2ndSID=d420#navbar=hidden#wide=true#border=false', 'http://csdb.dk/getinternalfile.php/206403/to_norah.prg');return false;">
+										<img src="images/nora.jpg" width="100%"></a>
+								</div>
+							</section>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Footer -->
+		<div id="footer">
+
+			<!-- Icons -->
+			<ul class="icons">
+				<li><a href="https://github.com/dirkwhoffmann" class="icon brands fa-github"><span
+							class="label">GitHub</span></a></li>
+			</ul>
+
+			<!-- Copyright -->
+			<div class="copyright">
+				<ul class="menu">
+					<li>&copy; <a href="http://www.dirkwhoffmann.de">Dirk W. Hoffmann</a></li>
+					<li><a href="impressum.html">Impressum</a></li>
+					<li><a href="impressum.html">Datenschutz</a></li>
+					<li><a href="http://html5up.net">HTML5 UP</a></li>
+				</ul>
+			</div>
+
+		</div>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.dropotron.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+</body>
+
+</html>
