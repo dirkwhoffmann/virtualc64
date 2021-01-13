@@ -30,7 +30,7 @@ CIA::_reset()
 }
 
 long
-CIA::getConfigItem(Option option)
+CIA::getConfigItem(Option option) const
 {
     switch (option) {
             
@@ -123,10 +123,8 @@ CIA::_inspect()
 }
 
 void
-CIA::_dump()
+CIA::_dump() const
 {
-    _inspect();
-
     msg("                Sleeping : %s\n", sleeping ? "yes" : "no");
     msg("               Tiredness : %d\n", tiredness);
     msg(" Most recent sleep cycle : %lld\n", sleepCycle);
@@ -150,13 +148,13 @@ CIA::_dump()
     msg("      Interrupt mask reg : %02X\n", info.imr);
     msg("\n");
 //    msg("                     SDR : %02X %02X\n", info.sdr, sdr);
-//     msg("              serCounter : %02X\n", serCounter);
+//    msg("              serCounter : %02X\n", serCounter);
     msg("\n");
     msg("                     CNT : %d\n", CNT);
     msg("                     INT : %d\n", INT);
     msg("\n");
 
-    tod.dump();
+    // tod.dump();
 }
 
 void
@@ -606,7 +604,7 @@ CIA::wakeUp(Cycle targetCycle)
 }
 
 Cycle
-CIA::idleSince()
+CIA::idleSince() const
 {
     return isAwake() ? 0 : cpu.cycle - sleepCycle;
 }
@@ -640,13 +638,13 @@ CIA1::releaseInterruptLine()
 //                    -------
 
 u8
-CIA1::portAinternal()
+CIA1::portAinternal() const
 {
     return PRA;
 }
 
 u8
-CIA1::portAexternal()
+CIA1::portAexternal() const
 {
     return 0xFF;
     // return keyboard.getColumnValues(PB);
@@ -687,16 +685,15 @@ CIA1::updatePA()
 //                    -------
 
 u8
-CIA1::portBinternal()
+CIA1::portBinternal() const
 {
     return PRB;
 }
 
 u8
-CIA1::portBexternal()
+CIA1::portBexternal() const
 {
     return 0xFF;
-    // return keyboard.getRowValues(PA);
 }
 
 void
@@ -771,13 +768,13 @@ CIA2::releaseInterruptLine()
 //                        -------
 
 u8
-CIA2::portAinternal()
+CIA2::portAinternal() const
 {
     return PRA;
 }
 
 u8
-CIA2::portAexternal()
+CIA2::portAexternal() const
 {
     u8 result = 0x3F;
     result |= (iec.clockLine ? 0x40 : 0x00);
@@ -810,7 +807,7 @@ CIA2::updatePA()
 //                        -------
 
 u8
-CIA2::portBinternal()
+CIA2::portBinternal() const
 {
     u8 result = PRB;
     
@@ -826,7 +823,7 @@ CIA2::portBinternal()
 }
 
 u8
-CIA2::portBexternal()
+CIA2::portBexternal() const
 {
     // User port is not implemented. All pins are high if nothing is connected.
     return 0xFF;

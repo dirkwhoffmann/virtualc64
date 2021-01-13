@@ -39,7 +39,7 @@ private:
     
 private:
     
-    void _dump() override;
+    void _dump() const override;
     
     
     //
@@ -74,11 +74,11 @@ private:
     // Intepreting the control register
     //
         
-    u16 bankSelect()  { return (ctrlReg & 0b00010) >> 1; }
-    u8 chipSelect()   { return (ctrlReg & 0b01100) >> 2; }
-    u8 bank()         { return (ctrlReg & 0b00110) >> 1; }
-    u8 disabled()     { return (ctrlReg & 0b10000) >> 4; }
-    u8 ramIsVisible() { return chipSelect() == 0b10; }
+    u16 bankSelect() const { return (ctrlReg & 0b00010) >> 1; }
+    u8 chipSelect() const { return (ctrlReg & 0b01100) >> 2; }
+    u8 bank() const { return (ctrlReg & 0b00110) >> 1; }
+    u8 disabled() const { return (ctrlReg & 0b10000) >> 4; }
+    u8 ramIsVisible() const { return chipSelect() == 0b10; }
     
     //
     // Accessing cartridge memory
@@ -88,15 +88,18 @@ public:
     
     void resetCartConfig() override;
     u8 peekRomL(u16 addr) override;
+    u8 spypeekRomL(u16 addr) const override;
     u8 peekRomH(u16 addr) override;
+    u8 spypeekRomH(u16 addr) const override;
     void pokeRomL(u16 addr, u8 value) override;
     void pokeRomH(u16 addr, u8 value) override;
     u8 peekIO1(u16 addr) override;
+    u8 spypeekIO1(u16 addr) const override;
     void pokeIO1(u16 addr, u8 value) override;
     void updatePeekPokeLookupTables() override;
     
 private:
     
-    u16 ramAddrL(u16 addr) { return (bankSelect() << 14) + (addr & 0x1FFF); }
-    u16 ramAddrH(u16 addr) { return 0x2000 + ramAddrL(addr); }
+    u16 ramAddrL(u16 addr) const { return (bankSelect() << 14) + (addr & 0x1FFF); }
+    u16 ramAddrH(u16 addr) const { return 0x2000 + ramAddrL(addr); }
 };

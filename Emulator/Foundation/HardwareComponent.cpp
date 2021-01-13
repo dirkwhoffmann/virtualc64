@@ -212,7 +212,7 @@ HardwareComponent::inspect()
 }
 
 void
-HardwareComponent::dumpConfig()
+HardwareComponent::dumpConfig() const
 {
     // Dump the configuration of all subcomponents
     for (HardwareComponent *c : subComponents) {
@@ -226,7 +226,7 @@ HardwareComponent::dumpConfig()
 }
 
 void
-HardwareComponent::dump()
+HardwareComponent::dump() const
 {
     // Dump all subcomponents
     for (HardwareComponent *c : subComponents) {

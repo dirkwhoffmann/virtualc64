@@ -22,6 +22,15 @@ CPU<M>::CPU(C64& ref, M& memref) : C64Component(ref), mem(memref)
 	registerInstructions();
 }
 
+template<> CPURevision CPU<C64Memory>::model() const { return MOS_6510; }
+template<> CPURevision CPU<DriveMemory>::model() const { return MOS_6502; }
+
+template<> bool CPU<C64Memory>::isC64CPU() const { return true; }
+template<> bool CPU<DriveMemory>::isC64CPU() const { return false; }
+
+template<> bool CPU<C64Memory>::isDriveCPU() const { return false; }
+template<> bool CPU<DriveMemory>::isDriveCPU() const { return true; }
+
 template <typename M> void
 CPU<M>::_reset()
 {
@@ -62,7 +71,7 @@ CPU<M>::_setDebug(bool enable)
 }
 
 template <typename M> void
-CPU<M>::_dump()
+CPU<M>::_dump() const
 {
 	msg("CPU:\n");
 	msg("----\n\n");
@@ -78,11 +87,11 @@ CPU<M>::_dump()
     msg("   NMI routine : %02X%02X\n", mem.spypeek(0xFFFB), mem.spypeek(0xFFFA));
 	msg("\n");
     
-    pport.dump();
+    // pport.dump();
 }
 
 template <typename M> u8
-CPU<M>::getP()
+CPU<M>::getP() const
 {
     u8 result = 0b00100000;
     
@@ -99,7 +108,7 @@ CPU<M>::getP()
 }
 
 template <typename M> u8
-CPU<M>::getPWithClearedB()
+CPU<M>::getPWithClearedB() const
 {
     return getP() & ~B_FLAG;
 }
@@ -180,12 +189,12 @@ CPU<M>::setRDY(bool value)
 
 template         CPU<C64Memory>::CPU(C64& ref, C64Memory& memref);
 template CPUInfo CPU<C64Memory>::getInfo();
-template void    CPU<C64Memory>::_dump();
+template void    CPU<C64Memory>::_dump() const;
 template void    CPU<C64Memory>::_setDebug(bool enable);
 template void    CPU<C64Memory>::_reset();
 template void    CPU<C64Memory>::_inspect();
-template u8      CPU<C64Memory>::getP();
-template u8      CPU<C64Memory>::getPWithClearedB();
+template u8      CPU<C64Memory>::getP() const;
+template u8      CPU<C64Memory>::getPWithClearedB() const;
 template void    CPU<C64Memory>::setP(u8 p);
 template void    CPU<C64Memory>::setPWithoutB(u8 p);
 template void    CPU<C64Memory>::pullDownNmiLine(IntSource source);
@@ -196,12 +205,12 @@ template void    CPU<C64Memory>::setRDY(bool value);
 
 template         CPU<DriveMemory>::CPU(C64& ref, DriveMemory& memref);
 template CPUInfo CPU<DriveMemory>::getInfo();
-template void    CPU<DriveMemory>::_dump();
+template void    CPU<DriveMemory>::_dump() const;
 template void    CPU<DriveMemory>::_setDebug(bool enable);
 template void    CPU<DriveMemory>::_reset();
 template void    CPU<DriveMemory>::_inspect();
-template u8      CPU<DriveMemory>::getP();
-template u8      CPU<DriveMemory>::getPWithClearedB();
+template u8      CPU<DriveMemory>::getP() const;
+template u8      CPU<DriveMemory>::getPWithClearedB() const;
 template void    CPU<DriveMemory>::setP(u8 p);
 template void    CPU<DriveMemory>::setPWithoutB(u8 p);
 template void    CPU<DriveMemory>::pullDownNmiLine(IntSource source);

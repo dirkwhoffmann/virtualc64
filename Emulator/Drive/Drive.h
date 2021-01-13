@@ -212,9 +212,9 @@ private:
     
 public:
     
-    DriveConfig getConfig() { return config; }
+    DriveConfig getConfig() const { return config; }
     
-    long getConfigItem(Option option);
+    long getConfigItem(Option option) const;
     bool setConfigItem(Option option, long value) override;
     bool setConfigItem(Option option, long id, long value) override;
         
@@ -225,7 +225,7 @@ public:
     
 private:
     
-    void _dump() override;
+    void _dump() const override;
 
     
     //
@@ -284,19 +284,19 @@ private:
 public:
 
     // Checks whether the drive is active (connected and switched on)
-    bool isActive() { return active; }
+    bool isActive() const { return active; }
     
     // Returns the device number
-    DriveID getDeviceNr() { return deviceNr; }
+    DriveID getDeviceNr() const { return deviceNr; }
         
     // Returns true iff the red drive LED is on
-    bool getRedLED() { return redLED; };
+    bool getRedLED() const { return redLED; };
 
     // Turns the red drive LED on or off
     void setRedLED(bool b);
 
     // Returns true iff the drive engine is on
-    bool isRotating() { return spinning; };
+    bool isRotating() const { return spinning; };
 
     // Turns the drive engine on or off
     void setRotating(bool b);
@@ -309,14 +309,13 @@ public:
 public:
     
     // Checks if a disk is present
-    bool hasDisk() { return insertionStatus == DISK_FULLY_INSERTED; }
-    // bool hasPartiallyInsertedDisk() { return insertionStatus == PARTIALLY_INSERTED; }
-    bool hasPartiallyRemovedDisk() {
+    bool hasDisk() const { return insertionStatus == DISK_FULLY_INSERTED; }
+    bool hasPartiallyRemovedDisk() const {
         return insertionStatus == DISK_PARTIALLY_INSERTED || insertionStatus == DISK_PARTIALLY_EJECTED; }
-    bool hasWriteProtectedDisk() { return hasDisk() && disk.isWriteProtected(); }
+    bool hasWriteProtectedDisk() const { return hasDisk() && disk.isWriteProtected(); }
 
     // Gets or sets the modification status
-    bool hasModifiedDisk() { return hasDisk() && disk.isModified(); }
+    bool hasModifiedDisk() const { return hasDisk() && disk.isModified(); }
     void setModifiedDisk(bool value);
  
     /* Returns the current state of the write protection barrier. If the light
@@ -326,7 +325,7 @@ public:
      * this is normal drive behavior or an emulator bug. Any hint on this is
      * very welcome!
      */
-    bool getLightBarrier() {
+    bool getLightBarrier() const {
         return
         (cpu.cycle < 1500000)
         || hasPartiallyRemovedDisk()
@@ -369,12 +368,12 @@ private:
 public:
 
     // Returns the current access mode of this drive (read or write)
-    bool readMode() { return via2.getCB2(); }
-    bool writeMode() { return !readMode(); }
+    bool readMode() const { return via2.getCB2(); }
+    bool writeMode() const { return !readMode(); }
     
     // Returns the current halftrack or track number
-    Halftrack getHalftrack() { return halftrack; }
-    Track getTrack() { return (halftrack + 1) / 2; }
+    Halftrack getHalftrack() const { return halftrack; }
+    Track getTrack() const { return (halftrack + 1) / 2; }
         
     // Returns the number of bits in a halftrack
     u16 sizeOfHalftrack(Halftrack ht) {
@@ -382,7 +381,7 @@ public:
     u16 sizeOfCurrentHalftrack() { return sizeOfHalftrack(halftrack); }
 
     // Returns the position of the drive head inside the current track
-    HeadPos getOffset() { return offset; }
+    HeadPos getOffset() const { return offset; }
 
     // Moves head one halftrack up
     void moveHeadUp();
@@ -391,7 +390,7 @@ public:
     void moveHeadDown();
 
     // Returns the current value of the sync signal
-    bool getSync() { return sync; }
+    bool getSync() const { return sync; }
     
     /* Updates the byte ready line. The byte ready line is connected to pin CA1
      * of VIA2. Pulling this signal low causes important side effects. Firstly,
@@ -404,13 +403,13 @@ public:
     void raiseByteReady();
     
     // Returns the current track zone (0 to 3)
-    bool getZone() { return zone; }
+    bool getZone() const { return zone; }
 
     // Sets the current track zone (0 to 3)
     void setZone(u8 value);
 
     // Reads a single bit from the disk head (result is 0 or 1)
-    u8 readBitFromHead() { return disk.readBitFromHalftrack(halftrack, offset); }
+    u8 readBitFromHead() const { return disk.readBitFromHalftrack(halftrack, offset); }
     
     // Writes a single bit to the disk head
     void writeBitToHead(u8 bit) { disk.writeBitToHalftrack(halftrack, offset, bit); }

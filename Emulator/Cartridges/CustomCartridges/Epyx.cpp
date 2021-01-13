@@ -32,6 +32,12 @@ Epyx::peekRomL(u16 addr)
 }
 
 u8
+Epyx::spypeekRomL(u16 addr) const
+{
+    return Cartridge::spypeekRomL(addr);
+}
+
+u8
 Epyx::peekIO1(u16 addr)
 {
     dischargeCapacitor();
@@ -39,7 +45,19 @@ Epyx::peekIO1(u16 addr)
 }
 
 u8
+Epyx::spypeekIO1(u16 addr) const
+{
+    return 0;
+}
+
+u8
 Epyx::peekIO2(u16 addr)
+{
+    return const_cast<const Epyx*>(this)->spypeekIO2(addr);
+}
+
+u8
+Epyx::spypeekIO2(u16 addr) const
 {
     // I/O 2 mirrors the last 256 ROM bytes
     return packet[0]->peek(addr & 0x1FFF);

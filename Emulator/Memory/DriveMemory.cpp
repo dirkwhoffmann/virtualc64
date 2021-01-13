@@ -26,7 +26,7 @@ DriveMemory::_reset()
 }
 
 void 
-DriveMemory::_dump()
+DriveMemory::_dump() const
 {
 	msg("VC1541 Memory:\n");
 	msg("--------------\n\n");
@@ -62,7 +62,7 @@ DriveMemory::peek(u16 addr)
 }
 
 u8
-DriveMemory::spypeek(u16 addr)
+DriveMemory::spypeek(u16 addr) const
 {
     if (addr >= 0x8000) {
         return rom[addr & 0x3FFF];

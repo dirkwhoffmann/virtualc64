@@ -92,7 +92,7 @@ C64::~C64()
 }
 
 void
-C64::prefix()
+C64::prefix() const
 {
     fprintf(stderr, "[%lld] (%3d,%3d) %04X ", frame, rasterLine, rasterCycle, cpu.getPC0());
 }
@@ -130,7 +130,7 @@ C64::_reset()
 }
 
 InspectionTarget
-C64::getInspectionTarget()
+C64::getInspectionTarget() const
 {
     return inspectionTarget;
 }
@@ -142,14 +142,16 @@ C64::setInspectionTarget(InspectionTarget target)
     inspectionTarget = target;
 }
 
+/*
 void
 C64::clearInspectionTarget()
 {
     inspectionTarget = INSPECTION_TARGET_NONE;
 }
+*/
 
 C64Configuration
-C64::getConfig()
+C64::getConfig() const
 {
     C64Configuration config;
     
@@ -167,7 +169,7 @@ C64::getConfig()
 }
 
 long
-C64::getConfigItem(Option option)
+C64::getConfigItem(Option option) const
 {
     switch (option) {
             
@@ -221,7 +223,7 @@ C64::getConfigItem(Option option)
 }
 
 long
-C64::getConfigItem(Option option, long id)
+C64::getConfigItem(Option option, long id) const
 {
     switch (option) {
             
@@ -238,7 +240,7 @@ C64::getConfigItem(Option option, long id)
         case OPT_DRIVE_POWER_SWITCH:
         {
             assert(isDriveID(id));
-            Drive &drive = id == DRIVE8 ? drive8 : drive9;
+            const Drive &drive = id == DRIVE8 ? drive8 : drive9;
             return drive.getConfigItem(option);
         }
         default:
@@ -323,7 +325,7 @@ C64::setConfigItem(Option option, long value)
 }
 
 C64Model
-C64::getModel()
+C64::getModel() const
 {
     VICRevision vicref = (VICRevision)vic.getConfigItem(OPT_VIC_REVISION);
     bool grayDotBug    = vic.getConfigItem(OPT_GRAY_DOT_BUG);
@@ -676,7 +678,7 @@ C64::_pause()
 }
 
 void
-C64::_dump()
+C64::_dump() const
 {
     msg("C64:\n");
     msg("----\n\n");
@@ -776,7 +778,7 @@ C64::acquireThreadLock()
 }
 
 bool
-C64::isReady(ErrorCode *err)
+C64::isReady(ErrorCode *err) const
 {
     bool mega = hasMega65Rom(ROM_TYPE_BASIC) && hasMega65Rom(ROM_TYPE_KERNAL);
     
@@ -1168,7 +1170,7 @@ C64::loadFromSnapshot(Snapshot *snapshot)
 }
 
 u32
-C64::romCRC32(RomType type)
+C64::romCRC32(RomType type) const
 {
     switch (type) {
             
@@ -1186,7 +1188,7 @@ C64::romCRC32(RomType type)
 }
 
 u64
-C64::romFNV64(RomType type)
+C64::romFNV64(RomType type) const
 {
     switch (type) {
             
@@ -1204,13 +1206,13 @@ C64::romFNV64(RomType type)
 }
 
 RomIdentifier
-C64::romIdentifier(RomType type)
+C64::romIdentifier(RomType type) const
 {
     return RomFile::identifier(romFNV64(type));
 }
 
 const char *
-C64::romTitle(RomType type)
+C64::romTitle(RomType type) const
 {
     switch (type) {
             
@@ -1249,7 +1251,7 @@ C64::romTitle(RomType type)
 }
 
 const char *
-C64::romSubTitle(u64 fnv)
+C64::romSubTitle(u64 fnv) const
 {
     RomIdentifier rev = RomFile::identifier(fnv);
     
@@ -1261,7 +1263,7 @@ C64::romSubTitle(u64 fnv)
 }
 
 const char *
-C64::romSubTitle(RomType type)
+C64::romSubTitle(RomType type) const
 {
     switch (type) {
             
@@ -1296,7 +1298,7 @@ C64::romSubTitle(RomType type)
 }
 
 const char *
-C64::romRevision(RomType type)
+C64::romRevision(RomType type) const
 {
     switch (type) {
              
@@ -1328,7 +1330,7 @@ C64::romRevision(RomType type)
 }
 
 bool
-C64::hasRom(RomType type)
+C64::hasRom(RomType type) const
 {
     switch (type) {
             
@@ -1356,7 +1358,7 @@ C64::hasRom(RomType type)
 }
 
 bool
-C64::hasMega65Rom(RomType type)
+C64::hasMega65Rom(RomType type) const
 {
     switch (type) {
             
@@ -1383,7 +1385,7 @@ C64::hasMega65Rom(RomType type)
 }
 
 char *
-C64::mega65BasicRev()
+C64::mega65BasicRev() const
 {
     static char rev[17];
     rev[0] = 0;
@@ -1395,7 +1397,7 @@ C64::mega65BasicRev()
 }
 
 char *
-C64::mega65KernalRev()
+C64::mega65KernalRev() const
 {
     static char rev[17];
     rev[0] = 0;
@@ -1455,19 +1457,23 @@ C64::deleteRom(RomType type)
         case ROM_TYPE_BASIC:
         {
             memset(mem.rom + 0xA000, 0, 0x2000);
+            break;
         }
         case ROM_TYPE_CHAR:
         {
             memset(mem.rom + 0xD000, 0, 0x1000);
+            break;
         }
         case ROM_TYPE_KERNAL:
         {
             memset(mem.rom + 0xE000, 0, 0x2000);
+            break;
         }
         case ROM_TYPE_VC1541:
         {
             memset(drive8.mem.rom, 0, 0x4000);
             memset(drive9.mem.rom, 0, 0x4000);
+            break;
         }
         default: assert(false);
     }

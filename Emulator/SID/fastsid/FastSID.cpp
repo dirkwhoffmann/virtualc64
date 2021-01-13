@@ -154,10 +154,8 @@ FastSID::setClockFrequency(u32 frequency)
 }
 
 void
-FastSID::_dump()
+FastSID::_dump() const
 {
-    SIDInfo info = getInfo();
-
     msg("    Chip model: %s\n",
         (model == MOS_6581) ? "6581" :
         (model == MOS_8580) ? "8580" : "???");
@@ -165,16 +163,17 @@ FastSID::_dump()
     msg(" CPU frequency: %d\n", cpuFrequency);
     msg("Emulate filter: %s\n", emulateFilter ? "yes" : "no");
 
-    u8 ft = info.filterType;
-    msg("        Volume: %d\n", info.volume);
+    u8 ft = filterType();
+    msg("        Volume: %d\n", sidVolume());
     msg("   Filter type: %s\n",
         (ft == FASTSID_LOW_PASS) ? "LOW PASS" :
         (ft == FASTSID_HIGH_PASS) ? "HIGH PASS" :
         (ft == FASTSID_BAND_PASS) ? "BAND PASS" : "NONE");
-    msg("Filter cut off: %d\n", info.filterCutoff);
-    msg("Filter resonance: %d\n", info.filterResonance);
-    msg("Filter enable bits: %X\n\n", info.filterEnableBits);
+    msg("Filter cut off: %d\n", filterCutoff());
+    msg("Filter resonance: %d\n", filterResonance());
+    msg("Filter enable bits: %X\n\n", sidreg[0x17] & 0x0F);
 
+    /*
     for (unsigned i = 0; i < 3; i++) {
         VoiceInfo vinfo = getVoiceInfo(i);
         u8 wf = vinfo.waveform;
@@ -192,6 +191,7 @@ FastSID::_dump()
         msg("            Sustain rate: %d\n", vinfo.sustainRate);
         msg("            Release rate: %d\n", vinfo.releaseRate);
     }
+    */
 }
 
 SIDInfo
@@ -283,6 +283,22 @@ FastSID::peek(u16 addr)
         default:
             
             return latchedDataBus;
+    }
+}
+
+u8
+FastSID::spypeek(u16 addr) const
+{
+    switch (addr) {
+            
+        case 0x19: // POTX
+        case 0x1A: // POTY
+            
+            return 0xFF;
+            
+        default:
+            
+            return sidreg[addr];
     }
 }
 

@@ -105,7 +105,7 @@ Datasette::advanceHead(bool silent)
 }
 
 int
-Datasette::pulseLength(int *skip)
+Datasette::pulseLength(int *skip) const
 {
     assert(head < size);
 

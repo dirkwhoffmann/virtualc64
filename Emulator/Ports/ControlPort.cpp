@@ -43,7 +43,7 @@ ControlPort::didLoadFromBuffer(u8 *buffer)
 }
 
 void
-ControlPort::_dump()
+ControlPort::_dump() const
 {
     msg("ControlPort port %d\n", nr);
     msg("------------------\n");
@@ -152,7 +152,7 @@ ControlPort::setAutofireBullets(int value)
 }
 
 u8
-ControlPort::bitmask() {
+ControlPort::bitmask() const {
     
     u8 result = 0xFF;
     
@@ -162,8 +162,8 @@ ControlPort::bitmask() {
     if (axisX ==  1) CLR_BIT(result, 3);
     if (button)      CLR_BIT(result, 4);
     
-    u8 mouseBits = mouse.readControlPort(nr);
-    result &= mouseBits;
+    mouse.updateControlPort(nr);
+    result &= mouse.readControlPort(nr);
     
     return result;
 }

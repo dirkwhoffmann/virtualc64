@@ -67,13 +67,13 @@ private:
     
 public:
     
-    bool getAutofire() { return autofire; }
+    bool getAutofire() const { return autofire; }
     void setAutofire(bool value);
 
-    int getAutofireBullets() { return autofireBullets; }
+    int getAutofireBullets() const { return autofireBullets; }
     void setAutofireBullets(int value);
 
-    float getAutofireFrequency() { return autofireFrequency; }
+    float getAutofireFrequency() const { return autofireFrequency; }
     void setAutofireFrequency(float value) { autofireFrequency = value; }
     
     
@@ -83,7 +83,7 @@ public:
     
 private:
     
-    void _dump() override;
+    void _dump() const override;
     
     
     //
@@ -130,9 +130,5 @@ public:
     /* Returns the current joystick movement in form a bit mask. The bits are
      * in the same order as they show up in the CIA's data port registers.
      */
-    u8 bitmask();
-
-    // Returns the potentiometer values (analog mouse)
-    u8 potX();
-    u8 potY();
+    u8 bitmask() const;
 };

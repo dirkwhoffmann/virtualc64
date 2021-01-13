@@ -137,7 +137,7 @@ CIA::peek(u16 addr)
 }
 
 u8
-CIA::spypeek(u16 addr)
+CIA::spypeek(u16 addr) const
 {
     bool running;
 

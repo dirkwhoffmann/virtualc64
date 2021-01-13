@@ -10,7 +10,7 @@
 #include "C64.h"
 
 void
-ProcessorPort::_dump()
+ProcessorPort::_dump() const
 {
     msg("Processor port:\n");
     msg("---------------\n\n");
@@ -22,7 +22,7 @@ ProcessorPort::_dump()
 }
             
 u8
-ProcessorPort::read()
+ProcessorPort::read() const
 {
     // If the port bits are configured as inputs and no datasette is attached,
     // the following values are returned:
@@ -51,7 +51,7 @@ ProcessorPort::read()
 }
 
 u8
-ProcessorPort::readDirection()
+ProcessorPort::readDirection() const
 {
     return direction;
 }

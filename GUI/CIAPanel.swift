@@ -123,13 +123,13 @@ extension Inspector {
         ciaIMRbinary.intValue = Int32(ciaInfo.imr)
         ciaIntLineLow.state = ciaInfo.intLine ? .off : .on
         
-        ciaTodHours.intValue = Int32(ciaInfo.tod.time.hours)
-        ciaTodMinutes.intValue = Int32(ciaInfo.tod.time.minutes)
-        ciaTodSeconds.intValue = Int32(ciaInfo.tod.time.seconds)
+        ciaTodHours.intValue = Int32(ciaInfo.tod.time.hour)
+        ciaTodMinutes.intValue = Int32(ciaInfo.tod.time.min)
+        ciaTodSeconds.intValue = Int32(ciaInfo.tod.time.sec)
         ciaTodTenth.intValue = Int32(ciaInfo.tod.time.tenth)
-        ciaAlarmHours.intValue = Int32(ciaInfo.tod.alarm.hours)
-        ciaAlarmMinutes.intValue = Int32(ciaInfo.tod.alarm.minutes)
-        ciaAlarmSeconds.intValue = Int32(ciaInfo.tod.alarm.seconds)
+        ciaAlarmHours.intValue = Int32(ciaInfo.tod.alarm.hour)
+        ciaAlarmMinutes.intValue = Int32(ciaInfo.tod.alarm.min)
+        ciaAlarmSeconds.intValue = Int32(ciaInfo.tod.alarm.sec)
         ciaAlarmTenth.intValue = Int32(ciaInfo.tod.alarm.tenth)
         ciaTodIntEnable.state = ciaInfo.todIntEnable ? .on : .off
 

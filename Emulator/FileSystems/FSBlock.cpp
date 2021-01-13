@@ -15,7 +15,7 @@ FSBlock::FSBlock(FSDevice& _device, u32 _nr) : device(_device), nr(_nr)
 }
 
 FSBlockType
-FSBlock::type()
+FSBlock::type() const
 {
     TSLink ts = device.layout.tsLink(nr);
   
@@ -96,13 +96,13 @@ FSBlock::writeBAM(PETName<16> &name)
 }
 
 void
-FSBlock::dump()
+FSBlock::dump() const
 {
     
 }
 
 FSUsage
-FSBlock::itemType(u32 byte)
+FSBlock::itemType(u32 byte) const
 {
     switch (type()) {
             
@@ -162,7 +162,7 @@ FSBlock::itemType(u32 byte)
 }
 
 ErrorCode
-FSBlock::check(u32 byte, u8 *expected, bool strict)
+FSBlock::check(u32 byte, u8 *expected, bool strict) const
 {
     assert(byte < 256);
     u8 value = data[byte];
@@ -225,7 +225,7 @@ FSBlock::check(u32 byte, u8 *expected, bool strict)
 }
 
 unsigned
-FSBlock::check(bool strict)
+FSBlock::check(bool strict) const
 {
     ErrorCode err;
     unsigned count = 0;

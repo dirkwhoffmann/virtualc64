@@ -54,37 +54,37 @@ struct FSDeviceDescriptor : C64Object {
     // Performing integrity checks
     //
     
-    bool isCylinderNr(Cylinder c) { return 1 <= c && c <= numCyls; }
-    bool isHeadNr(Head h) { return h == 0 || h == 1; }
-    bool isTrackNr(Track t) { return 1 <= t && t <= numCyls * numHeads; }
-    bool isValidLink(TSLink ref);
+    bool isCylinderNr(Cylinder c) const { return 1 <= c && c <= numCyls; }
+    bool isHeadNr(Head h) const { return h == 0 || h == 1; }
+    bool isTrackNr(Track t) const { return 1 <= t && t <= numCyls * numHeads; }
+    bool isValidLink(TSLink ref) const;
 
     
     //
     // Querying device properties
     //
     
-    u32 numTracks() { return numCyls * numHeads; }
-    u32 speedZone(Track track);
-    u32 numSectors(Track track);
-    u32 numBlocks();
+    u32 numTracks() const { return numCyls * numHeads; }
+    u32 speedZone(Track track) const;
+    u32 numSectors(Track track) const;
+    u32 numBlocks() const;
 
     
     //
     // Translating blocks, tracks, sectors, and heads
     //
 
-    Cylinder cylNr(Track t) { return t <= numCyls ? t : t - numCyls; }
-    Head headNr(Track t) { return t <= numCyls ? 0 : 1; }
-    Track trackNr(Cylinder c, Head h) { return c + h * numCyls; }
+    Cylinder cylNr(Track t) const { return t <= numCyls ? t : t - numCyls; }
+    Head headNr(Track t) const { return t <= numCyls ? 0 : 1; }
+    Track trackNr(Cylinder c, Head h) const { return c + h * numCyls; }
 
-    TSLink tsLink(Block b);
-    Track trackNr(Block b) { return tsLink(b).t; }
-    Sector sectorNr(Block b) { return tsLink(b).s; }
+    TSLink tsLink(Block b) const;
+    Track trackNr(Block b) const { return tsLink(b).t; }
+    Sector sectorNr(Block b) const { return tsLink(b).s; }
     
-    Block blockNr(TSLink ts);
-    Block blockNr(Track t, Sector s) { return blockNr(TSLink{t,s}); }
-    Block blockNr(Cylinder c, Head h, Sector s) { return blockNr(trackNr(c,h), s); }
+    Block blockNr(TSLink ts) const;
+    Block blockNr(Track t, Sector s) const { return blockNr(TSLink{t,s}); }
+    Block blockNr(Cylinder c, Head h, Sector s) const { return blockNr(trackNr(c,h), s); }
 
     
     //
@@ -93,6 +93,6 @@ struct FSDeviceDescriptor : C64Object {
     
 public:
     
-    bool nextBlock(Block b, Block *nb);
-    TSLink nextBlockRef(TSLink b);
+    bool nextBlock(Block b, Block *nb) const;
+    TSLink nextBlockRef(TSLink b) const;
 };

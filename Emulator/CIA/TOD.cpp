@@ -35,20 +35,20 @@ TOD::_reset()
 {
     RESET_SNAPSHOT_ITEMS
     
-    tod.hours = 1;
+    tod.hour = 1;
     stopped = true;
     hz = 60;
 }
 
 void 
-TOD::_dump()
+TOD::_dump() const
 {
 	msg("            Time of day : %02X:%02X:%02X:%02X\n",
-        tod.hours, tod.minutes, tod.seconds, tod.tenth);
+        tod.hour, tod.min, tod.sec, tod.tenth);
 	msg("                  Alarm : %02X:%02X:%02X:%02X\n",
-        alarm.hours, alarm.minutes, alarm.seconds, alarm.tenth);
+        alarm.hour, alarm.min, alarm.sec, alarm.tenth);
 	msg("                  Latch : %02X:%02X:%02X:%02X\n",
-        latch.hours, latch.minutes, latch.seconds, latch.tenth);
+        latch.hour, latch.min, latch.sec, latch.tenth);
 	msg("                 Frozen : %s\n", frozen ? "yes" : "no");
 	msg("                Stopped : %s\n", stopped ? "yes" : "no");
 	msg("\n");
@@ -70,20 +70,20 @@ TOD::increment()
         tod.tenth = 0;
         
         // Seconds
-        if (tod.seconds != 0x59) {
-            tod.seconds = incBCD(tod.seconds) & 0x7F;
+        if (tod.sec != 0x59) {
+            tod.sec = incBCD(tod.sec) & 0x7F;
         } else {
-            tod.seconds = 0;
+            tod.sec = 0;
             
             // Minutes
-            if (tod.minutes != 0x59) {
-                tod.minutes = incBCD(tod.minutes) & 0x7F;
+            if (tod.min != 0x59) {
+                tod.min = incBCD(tod.min) & 0x7F;
             } else {
-                tod.minutes = 0;
+                tod.min = 0;
                 
                 // Hours
-                u8 pm = tod.hours & 0x80;
-                u8 hr = tod.hours & 0x1F;
+                u8 pm = tod.hour & 0x80;
+                u8 hr = tod.hour & 0x1F;
                 
                 if (hr == 0x11) {
                     pm ^= 0x80;
@@ -98,17 +98,17 @@ TOD::increment()
                     hr = hr_hi | ((hr_lo + 1) & 0x0F);
                 }
                 
-                tod.hours = pm | hr;
+                tod.hour = pm | hr;
             }
         }
     }
 
-    checkForInterrupt(); 
+    checkIrq(); 
     return;
 }
 
 void
-TOD::checkForInterrupt()
+TOD::checkIrq()
 {
     if (!matching && tod.value == alarm.value) {
         cia.todInterrupt();

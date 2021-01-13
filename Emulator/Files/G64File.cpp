@@ -126,7 +126,7 @@ G64File::makeWithDisk(class Disk &disk, ErrorCode *err)
 }
 
 usize
-G64File::getSizeOfHalftrack(Halftrack ht)
+G64File::getSizeOfHalftrack(Halftrack ht) const
 {
     assert(isHalftrackNumber(ht));
     
@@ -135,7 +135,7 @@ G64File::getSizeOfHalftrack(Halftrack ht)
 }
 
 void
-G64File::copyHalftrack(Halftrack ht, u8 *buf)
+G64File::copyHalftrack(Halftrack ht, u8 *buf) const
 {
     assert(buf);
 
@@ -146,7 +146,7 @@ G64File::copyHalftrack(Halftrack ht, u8 *buf)
 }
 
 usize
-G64File::getStartOfHalftrack(Halftrack ht)
+G64File::getStartOfHalftrack(Halftrack ht) const
 {
     assert(isHalftrackNumber(ht));
     

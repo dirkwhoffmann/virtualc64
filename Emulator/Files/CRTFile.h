@@ -61,20 +61,20 @@ public:
     //
     
     // Returns the version number of the cartridge
-    u16 cartridgeVersion() { return LO_HI(data[0x15], data[0x14]); }
+    u16 cartridgeVersion() const { return LO_HI(data[0x15], data[0x14]); }
     
     // Returns the size of the cartridge header
-    u32 headerSize() { return HI_HI_LO_LO(data[0x10], data[0x11], data[0x12], data[0x13]); }
+    u32 headerSize() const { return HI_HI_LO_LO(data[0x10], data[0x11], data[0x12], data[0x13]); }
     
     // Returns the cartridge type (e.g., SimonsBasic, FinalIII)
-    CartridgeType cartridgeType();
+    CartridgeType cartridgeType() const;
 
     // Checks whether the cartridge type is supported by the emulator, yet
-    bool isSupported();
+    bool isSupported() const;
     
     // Returns the initial value of the Exrom line and the Game line
-    bool initialExromLine() { return data[0x18] != 0; }
-    bool initialGameLine() { return data[0x19] != 0; }
+    bool initialExromLine() const { return data[0x18] != 0; }
+    bool initialGameLine() const { return data[0x19] != 0; }
     
     
     //
@@ -105,7 +105,7 @@ public:
     //
 
     // Prints some information about this cartridge
-    void dump();
+    void dump() const;
     
     void repair() override;
 };

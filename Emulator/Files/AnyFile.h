@@ -164,7 +164,7 @@ public:
     virtual FileType type() const { return FILETYPE_UNKNOWN; }
      
     // Returns a unique fingerprint
-    u64 fnv();
+    u64 fnv() const;
     
     
     //

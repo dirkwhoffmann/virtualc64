@@ -74,7 +74,7 @@ ExpansionPort::_save(u8 *buffer)
 }
 
 void
-ExpansionPort::_dump()
+ExpansionPort::_dump() const
 {
     msg("Expansion port\n");
     msg("--------------\n");
@@ -102,7 +102,7 @@ ExpansionPort::peek(u16 addr)
 }
 
 u8
-ExpansionPort::spypeek(u16 addr)
+ExpansionPort::spypeek(u16 addr) const
 {
     return cartridge ? cartridge->spypeek(addr) : 0;
 }
@@ -121,7 +121,7 @@ ExpansionPort::peekIO1(u16 addr)
 }
 
 u8
-ExpansionPort::spypeekIO1(u16 addr)
+ExpansionPort::spypeekIO1(u16 addr) const
 {
     return cartridge ? cartridge->spypeekIO1(addr) : vic.getDataBusPhi1();
 }
@@ -133,7 +133,7 @@ ExpansionPort::peekIO2(u16 addr)
 }
 
 u8
-ExpansionPort::spypeekIO2(u16 addr)
+ExpansionPort::spypeekIO2(u16 addr) const
 {
     return cartridge ? cartridge->spypeekIO2(addr) : vic.getDataBusPhi1();
 }
@@ -190,7 +190,7 @@ ExpansionPort::setGameAndExrom(bool game, bool exrom)
 }
 
 CRTMode
-ExpansionPort::getCartridgeMode()
+ExpansionPort::getCartridgeMode() const
 {
     switch ((exromLine ? 0b10 : 0) | (gameLine ? 0b01 : 0)) {
             
@@ -311,7 +311,7 @@ ExpansionPort::detachCartridgeAndReset()
 }
 
 bool
-ExpansionPort::hasBattery()
+ExpansionPort::hasBattery() const
 {
     return cartridge ? cartridge->getBattery() : false;
 }
@@ -323,13 +323,13 @@ ExpansionPort::setBattery(bool value)
 }
 
 long
-ExpansionPort::numButtons()
+ExpansionPort::numButtons() const
 {
     return cartridge ? cartridge->numButtons() : 0;
 }
 
 const char *
-ExpansionPort::getButtonTitle(unsigned nr)
+ExpansionPort::getButtonTitle(unsigned nr) const
 {
      return cartridge ? cartridge->getButtonTitle(nr) : nullptr;
 }
@@ -347,61 +347,61 @@ ExpansionPort::releaseButton(unsigned nr)
 }
 
 bool
-ExpansionPort::hasSwitch()
+ExpansionPort::hasSwitch() const
 {
     return cartridge ? cartridge->hasSwitch() : false;
 }
 
 i8
-ExpansionPort::getSwitch()
+ExpansionPort::getSwitch() const
 {
     return cartridge ? cartridge->getSwitch() : 0;
 }
 
 bool
-ExpansionPort::switchIsNeutral()
+ExpansionPort::switchIsNeutral() const
 {
     return cartridge ? cartridge->switchIsNeutral() : false;
 }
    
 bool
-ExpansionPort::switchIsLeft()
+ExpansionPort::switchIsLeft() const
 {
     return cartridge ? cartridge->switchIsLeft() : false;
 }
    
 bool
-ExpansionPort::switchIsRight()
+ExpansionPort::switchIsRight() const
 {
     return cartridge ? cartridge->switchIsRight() : false;
 }
 
 const char *
-ExpansionPort::getSwitchDescription(i8 pos)
+ExpansionPort::getSwitchDescription(i8 pos) const
 {
     return cartridge ? cartridge->getSwitchDescription(pos) : nullptr;
 }
 
 const char *
-ExpansionPort::getSwitchDescription()
+ExpansionPort::getSwitchDescription() const
 {
     return getSwitchDescription(getSwitch());
 }
 
 bool
-ExpansionPort::validSwitchPosition(i8 pos)
+ExpansionPort::validSwitchPosition(i8 pos) const
 {
     return cartridge ? cartridge->validSwitchPosition(pos) : false;    
 }
 
 bool
-ExpansionPort::hasLED()
+ExpansionPort::hasLED() const
 {
     return cartridge ? cartridge->hasLED() : false;
 }
  
 bool
-ExpansionPort::getLED()
+ExpansionPort::getLED() const
 {
     return cartridge ? cartridge->getLED() : false;
 }

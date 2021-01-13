@@ -78,15 +78,11 @@ private:
     
 public:
     
-    MemConfig getConfig() { return config; }
+    MemConfig getConfig() const { return config; }
     
-    long getConfigItem(Option option);
+    long getConfigItem(Option option) const;
     bool setConfigItem(Option option, long value) override;
     
-    /*
-    RamPattern getRamPattern() { return config.ramPattern; }
-    void setRamPattern(RamPattern pattern) { config.ramPattern = pattern; }
-    */
     
     //
     // Analyzing
@@ -99,7 +95,7 @@ public:
 private:
     
     void _inspect() override;
-    void _dump() override;
+    void _dump() const override;
 
     
     //
@@ -165,10 +161,10 @@ public:
     void peekIOIdle(u16 addr) { (void)peekIO(addr); }
     
     // Reads a value from memory without side effects
-    u8 spypeek(u16 addr, MemoryType source);
-    u8 spypeek(u16 addr) { return spypeek(addr, peekSrc[addr >> 12]); }
-    u8 spypeekIO(u16 addr);
-    u8 spypeekColor(u16 addr);
+    u8 spypeek(u16 addr, MemoryType source) const;
+    u8 spypeek(u16 addr) const { return spypeek(addr, peekSrc[addr >> 12]); }
+    u8 spypeekIO(u16 addr) const;
+    u8 spypeekColor(u16 addr) const;
 
     // Writing a value into memory
     void poke(u16 addr, u8 value, MemoryType target);

@@ -87,5 +87,5 @@ public:
     void suspend();
     void resume();
     
-    void prefix() override;
+    void prefix() const override;
 };

@@ -45,7 +45,7 @@ C64Component::resume()
 }
 
 void
-C64Component::prefix()
+C64Component::prefix() const
 {
     c64.prefix();
 }

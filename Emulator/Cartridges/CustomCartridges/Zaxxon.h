@@ -31,5 +31,5 @@ private:
 public:
         
     u8 peekRomL(u16 addr) override;
-    u8 spypeekRomL(u16 addr) override;
+    u8 spypeekRomL(u16 addr) const override;
 };

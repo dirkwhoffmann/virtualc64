@@ -30,9 +30,9 @@ KcsPower::peekIO1(u16 addr)
 }
 
 u8
-KcsPower::spypeekIO1(u16 addr)
+KcsPower::spypeekIO1(u16 addr) const
 {
-    return peekRomL(0x1E00 | (addr & 0xFF));
+    return spypeekRomL(0x1E00 | (addr & 0xFF));
 }
 
 u8
@@ -54,6 +54,12 @@ KcsPower::peekIO2(u16 addr)
     }
 }
 
+u8
+KcsPower::spypeekIO2(u16 addr) const
+{
+    return peekRAM(addr & 0x7F);
+}
+
 void
 KcsPower::pokeIO1(u16 addr, u8 value)
 {
@@ -69,9 +75,9 @@ KcsPower::pokeIO2(u16 addr, u8 value)
 }
 
 const char *
-KcsPower::getButtonTitle(unsigned nr)
+KcsPower::getButtonTitle(unsigned nr) const
 {
-    return (nr == 1) ? "Freeze" : nullptr;
+    return nr == 1 ? "Freeze" : nullptr;
 }
 
 void

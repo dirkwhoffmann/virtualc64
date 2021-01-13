@@ -201,7 +201,7 @@ Cartridge::resetWithoutDeletingRam()
 }
 
 void
-Cartridge::_dump()
+Cartridge::_dump() const
 {
     msg("\n");
     msg("Cartridge\n");
@@ -327,6 +327,39 @@ Cartridge::peekRomH(u16 addr)
     return packet[chipH]->peek(addr + offsetH);
 }
 
+u8
+Cartridge::spypeek(u16 addr) const
+{
+    assert(isROMLaddr(addr) || isROMHaddr(addr));
+
+    u16 relAddr = addr & 0x1FFF;
+
+    // Question: Is it correct to return a value from RAM if no ROM is mapped?
+    if (isROMLaddr(addr)) {
+        return (relAddr < mappedBytesL) ? spypeekRomL(relAddr) : mem.ram[addr];
+    } else {
+        return (relAddr < mappedBytesH) ? spypeekRomH(relAddr) : mem.ram[addr];
+    }
+}
+
+u8
+Cartridge::spypeekRomL(u16 addr) const
+{
+    assert(addr <= 0x1FFF);
+    assert(chipL >= 0 && chipL < numPackets);
+    
+    return packet[chipL]->spypeek(addr + offsetL);
+}
+
+u8
+Cartridge::spypeekRomH(u16 addr) const
+{
+    assert(addr <= 0x1FFF);
+    assert(chipH >= 0 && chipH < numPackets);
+    
+    return packet[chipH]->spypeek(addr + offsetH);
+}
+
 void
 Cartridge::poke(u16 addr, u8 value)
 {
@@ -348,7 +381,7 @@ Cartridge::poke(u16 addr, u8 value)
 }
 
 usize
-Cartridge::getRamCapacity()
+Cartridge::getRamCapacity() const
 {
     if (ramCapacity == 0) {
         assert(externalRam == nullptr);
@@ -377,7 +410,7 @@ Cartridge::setRamCapacity(usize size)
 }
 
 u8
-Cartridge::peekRAM(u16 addr)
+Cartridge::peekRAM(u16 addr) const
 {
     assert(addr < ramCapacity);
     return externalRam[addr];

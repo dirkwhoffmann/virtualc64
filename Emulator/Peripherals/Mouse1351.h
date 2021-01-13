@@ -75,17 +75,17 @@ public:
     void setRightMouseButton(bool value) { rightButton = value; }
     
     // Returns the pot bits as set by the mouse
-    u8 readPotX();
-    u8 readPotY();
+    u8 readPotX() const;
+    u8 readPotY() const;
     
     // Returns the control port bits triggered by the mouse
-    u8 readControlPort();
+    u8 readControlPort() const;
     
     // Execution function (Smoothly moves the mouse to the target position)
     void executeX(i64 targetX);
     void executeY(i64 targetY);
 
     // Returns the mouse bits as they show up in the SID register
-    u8 mouseXBits() { return (mouseX & 0x3F) << 1; }
-    u8 mouseYBits() { return (mouseY & 0x3F) << 1; }
+    u8 mouseXBits() const { return (mouseX & 0x3F) << 1; }
+    u8 mouseYBits() const { return (mouseY & 0x3F) << 1; }
 };

@@ -9,10 +9,10 @@
 
 #pragma once
 
-#include "Debug.h"
-#include "VC64Error.h"
 #include "C64Config.h"
 #include "C64Constants.h"
+#include "Debug.h"
+#include "VC64Error.h"
 #include "C64Types.h"
 
 #include <limits.h>
@@ -201,8 +201,8 @@ inline u32 fnv_1a_it32(u32 prev, u32 value) { return (prev ^ value) * 0x1000193;
 inline u64 fnv_1a_it64(u64 prev, u64 value) { return (prev ^ value) * 0x100000001b3; }
 
 // Computes a FNV-1a checksum for a given buffer
-u32 fnv_1a_32(u8 *addr, usize size);
-u64 fnv_1a_64(u8 *addr, usize size);
+u32 fnv_1a_32(const u8 *addr, usize size);
+u64 fnv_1a_64(const u8 *addr, usize size);
 
 // Computes a CRC-32 checksum for a given buffer
 u32 crc32(const u8 *addr, usize size);

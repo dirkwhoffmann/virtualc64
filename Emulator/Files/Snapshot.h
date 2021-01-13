@@ -74,20 +74,20 @@ public:
     //
         
     // Returns a pointer to the snapshot header
-    SnapshotHeader *header() { return (SnapshotHeader *)data; }
+    SnapshotHeader *header() const { return (SnapshotHeader *)data; }
 
     // Checks the snapshot version number
-    bool isTooOld();
-    bool isTooNew();
+    bool isTooOld() const;
+    bool isTooNew() const;
     bool matches() { return !isTooOld() && !isTooNew(); }
     
     u8 *getData() { return data + sizeof(SnapshotHeader); }
     
     // Queries time and screenshot properties
-    time_t timeStamp() { return header()->timestamp; }
-    u8 *imageData() { return (u8 *)(header()->screenshot.screen); }
-    usize imageWidth() { return header()->screenshot.width; }
-    usize imageHeight() { return header()->screenshot.height; }
+    time_t timeStamp() const { return header()->timestamp; }
+    u8 *imageData() const { return (u8 *)(header()->screenshot.screen); }
+    usize imageWidth() const { return header()->screenshot.width; }
+    usize imageHeight() const { return header()->screenshot.height; }
     
     // Records a screenshot
     void takeScreenshot(class C64 *c64);

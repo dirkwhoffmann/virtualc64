@@ -19,15 +19,6 @@ template <class T, typename E> struct Reflection {
     // Returns the shortened key as a C string
     static const char *key(long nr) { return T::key((E)nr); }
     
-    // Returns the key component or the full key as a C++ string
-    /*
-    static string suffix(long nr) { return string(key(nr)); }
-    static string prefix() { return suffix(-1); }
-    static string fullKey(long nr) {
-        return prefix() + "_" + (T::isValid(nr) ? suffix(nr) : "???");
-    }
-    */
-    
     // Verifies a key (used by the configuration methods)
     static bool verify(long nr, long min = 1) {
         

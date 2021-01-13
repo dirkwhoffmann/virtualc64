@@ -51,10 +51,7 @@ extension MyController {
         // Floppy drives
         refreshStatusBarDriveItems(drive: .DRIVE8)
         refreshStatusBarDriveItems(drive: .DRIVE9)
-        
-        // Cartridges
-        refreshStatusBarCartridgeIcons()
-        
+                
         // Warp mode
         refreshStatusBarWarpIcon()
         
@@ -76,9 +73,6 @@ extension MyController {
             tapeProgress: c64.datasette.motor,
             
             crtIcon: hasCrt,
-            crtSwitch: hasCrt && c64.expansionport.hasSwitch(),
-            crtButton1: hasCrt && c64.expansionport.numButtons() >= 1,
-            crtButton2: hasCrt && c64.expansionport.numButtons() >= 2,
             
             warpIcon: running,
             clockSpeed: running,
@@ -174,15 +168,7 @@ extension MyController {
             }
         }
     }
-        
-    func refreshStatusBarCartridgeIcons() {
-        
-        crtSwitch.image = cartridgeSwitch
-        crtSwitch.toolTip = c64.expansionport.currentSwitchDescription()
-        crtButton1.toolTip = c64.expansionport.getButtonTitle(1)
-        crtButton2.toolTip = c64.expansionport.getButtonTitle(2)
-    }
-    
+
     func refreshStatusBarWarpIcon() {
         
         warpIcon.image = hourglass

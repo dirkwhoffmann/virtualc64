@@ -25,6 +25,12 @@ SimonsBasic::peekIO1(u16 addr)
     return Cartridge::peekIO1(addr);
 }
 
+u8
+SimonsBasic::spypeekIO1(u16 addr) const
+{
+    return Cartridge::spypeekIO1(addr);
+}
+
 void
 SimonsBasic::pokeIO1(u16 addr, u8 value)
 {

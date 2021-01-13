@@ -29,6 +29,10 @@ struct MSGTypeEnum : Reflection<MSGTypeEnum, MsgType> {
         switch (value) {
                 
             case MSG_NONE:                 return "NONE";
+                
+            case MSG_REGISTER:             return "MSG_REGISTER";
+            case MSG_UNREGISTER:           return "MSG_UNREGISTER";
+
             case MSG_CONFIG:               return "CONFIG";
             case MSG_POWER_ON:             return "POWER_ON";
             case MSG_POWER_OFF:            return "POWER_OFF";

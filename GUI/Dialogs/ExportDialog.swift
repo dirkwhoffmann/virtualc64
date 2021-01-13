@@ -495,7 +495,6 @@ class ExportDialog: DialogController {
     func exportToFile(allowedTypes: [String]) {
      
         track("allowedTypes = \(allowedTypes)")
-        let firstAllowed = allowedTypes.first ?? ""
 
         savePanel = NSSavePanel()
         savePanel.prompt = "Export"
@@ -503,12 +502,13 @@ class ExportDialog: DialogController {
         savePanel.nameFieldLabel = "Export As:"
         savePanel.canCreateDirectories = true
         savePanel.allowsOtherFileTypes = false
-        
+        savePanel.nameFieldStringValue = "Untitled." + allowedTypes.first!
         savePanel.beginSheetModal(for: window!, completionHandler: { result in
             if result == .OK {
                 if let url = self.savePanel.url {
-                    let suffix = url.pathExtension == "" ? firstAllowed : ""
-                    self.exportToFile(url: url.appendingPathExtension(suffix))
+                    // let suffix = url.pathExtension == "" ? firstAllowed : ""
+                    // self.exportToFile(url: url.appendingPathExtension(suffix))
+                    self.exportToFile(url: url)
                 }
             }
         })
@@ -524,7 +524,7 @@ class ExportDialog: DialogController {
             drive?.setModifiedDisk(false)
             hideSheet()
 
-        } catch let error as MyError {
+        } catch let error as VC64Error {
             error.warning("Cannot export disk")
         } catch {
             fatalError()
@@ -557,7 +557,7 @@ class ExportDialog: DialogController {
             try volume!.exportDirectory(url: url)
             hideSheet()
 
-        } catch let error as MyError {
+        } catch let error as VC64Error {
             error.warning("Cannot export to directory")
         } catch {
             fatalError()

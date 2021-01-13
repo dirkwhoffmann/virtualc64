@@ -45,7 +45,7 @@ private:
     
 private:
     
-    void _dump() override;
+    void _dump() const override;
     
     
     //
@@ -91,8 +91,8 @@ public:
     void peekIOIdle(u16 addr) { }
     
     // Reads a value from memory without side effects
-    u8 spypeek(u16 addr);
-    
+    u8 spypeek(u16 addr) const;
+
     // Writes a value into memory
     void poke(u16 addr, u8 value);
     void pokeZP(u8 addr, u8 value) { ram[addr] = value; }

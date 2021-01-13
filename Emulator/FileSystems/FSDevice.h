@@ -77,7 +77,7 @@ public:
 public:
     
     // Prints debug information
-    void dump();
+    void dump() const;
 
     // Prints a directory listing
     void printDirectory();
@@ -90,29 +90,29 @@ public:
 public:
     
     // Returns the DOS version of this file system
-    DOSType dos() { return layout.dos; }
+    DOSType dos() const { return layout.dos; }
     
     // Gets or sets the disk name
     PETName<16> getName() const;
     void setName(PETName<16> name);
 
     // Returns the first or second disk ID character
-    u8 diskId1() { return bamPtr()->data[0xA2]; }
-    u8 diskId2() { return bamPtr()->data[0xA3]; }
+    u8 diskId1() const { return bamPtr()->data[0xA2]; }
+    u8 diskId2() const { return bamPtr()->data[0xA3]; }
     
     // Reports layout information
-    u32 getNumCyls() { return layout.numCyls; }
-    u32 getNumHeads() { return layout.numHeads; }
-    u32 getNumTracks() { return layout.numTracks(); }
-    u32 getNumSectors(Track track) { return layout.numSectors(track); }
-    u32 getNumBlocks() { return layout.numBlocks(); }
+    u32 getNumCyls() const { return layout.numCyls; }
+    u32 getNumHeads() const { return layout.numHeads; }
+    u32 getNumTracks() const { return layout.numTracks(); }
+    u32 getNumSectors(Track track) const { return layout.numSectors(track); }
+    u32 getNumBlocks() const { return layout.numBlocks(); }
 
     // Returns the number of free or used blocks
-    u32 numFreeBlocks();
-    u32 numUsedBlocks();
+    u32 numFreeBlocks() const;
+    u32 numUsedBlocks() const;
 
     // Returns the number of stored files (run a directory scan first!)
-    u32 numFiles() { return (u32)dir.size(); }
+    u32 numFiles() const { return (u32)dir.size(); }
     
     
     //
@@ -122,28 +122,28 @@ public:
 public:
     
     // Returns the type of a certain block
-    FSBlockType blockType(Block b);
-    FSBlockType blockType(TSLink ts) { return blockType(layout.blockNr(ts)); }
+    FSBlockType blockType(Block b) const;
+    FSBlockType blockType(TSLink ts) const { return blockType(layout.blockNr(ts)); }
     
     // Informs about the usage of a certain byte in a certain block
-    FSUsage usage(Block b, u32 pos);
-    FSUsage usage(TSLink ts, u32 pos) { return usage(layout.blockNr(ts), pos); }
+    FSUsage usage(Block b, u32 pos) const;
+    FSUsage usage(TSLink ts, u32 pos) const { return usage(layout.blockNr(ts), pos); }
 
     // Gets or sets the error code for a certain block
-    u8 getErrorCode(Block b);
-    u8 getErrorCode(TSLink ts) { return getErrorCode(layout.blockNr(ts)); }
+    u8 getErrorCode(Block b) const;
+    u8 getErrorCode(TSLink ts) const { return getErrorCode(layout.blockNr(ts)); }
     void setErrorCode(Block b, u8 code);
-    void getErrorCode(TSLink ts, u8 code) { setErrorCode(layout.blockNr(ts), code); }
+    void setErrorCode(TSLink ts, u8 code) { setErrorCode(layout.blockNr(ts), code); }
 
     // Queries a pointer from the block storage (may return nullptr)
-    FSBlock *blockPtr(Block b);
-    FSBlock *blockPtr(TSLink ts) { return blockPtr(layout.blockNr(ts)); }
+    FSBlock *blockPtr(Block b) const;
+    FSBlock *blockPtr(TSLink ts) const { return blockPtr(layout.blockNr(ts)); }
     FSBlock *bamPtr() const { return blocks[357]; }
     
     // Follows the block chain link of a specific block
-    FSBlock *nextBlockPtr(Block b);
-    FSBlock *nextBlockPtr(TSLink ts) { return nextBlockPtr(layout.blockNr(ts)); }
-    FSBlock *nextBlockPtr(FSBlock *ptr);
+    FSBlock *nextBlockPtr(Block b) const;
+    FSBlock *nextBlockPtr(TSLink ts) const { return nextBlockPtr(layout.blockNr(ts)); }
+    FSBlock *nextBlockPtr(FSBlock *ptr) const;
 
     
     //
@@ -151,12 +151,12 @@ public:
     //
     
     // Checks if a block is marked as free in the allocation bitmap
-    bool isFree(Block b) { return isFree(layout.tsLink(b)); }
-    bool isFree(TSLink ts);
+    bool isFree(Block b) const { return isFree(layout.tsLink(b)); }
+    bool isFree(TSLink ts) const;
 
     // Returns the first or the next free block in the interleaving chain
-    TSLink nextFreeBlock(TSLink start);
-    TSLink firstFreeBlock() { return nextFreeBlock({1,0}); }
+    TSLink nextFreeBlock(TSLink start) const;
+    TSLink firstFreeBlock() const { return nextFreeBlock({1,0}); }
 
     // Marks a block as allocated or free
     void markAsAllocated(Block b) { setAllocBit(b, 0); }
@@ -175,8 +175,8 @@ public:
 private:
     
     // Locates the allocation bit for a certain block
-    FSBlock *locateAllocBit(Block b, u32 *byte, u32 *bit);
-    FSBlock *locateAllocBit(TSLink ref, u32 *byte, u32 *bit);
+    FSBlock *locateAllocBit(Block b, u32 *byte, u32 *bit) const;
+    FSBlock *locateAllocBit(TSLink ref, u32 *byte, u32 *bit) const;
 
     
     //
@@ -186,28 +186,28 @@ private:
 public:
     
     // Returns the name of a file
-    PETName<16> fileName(unsigned nr);
-    PETName<16> fileName(FSDirEntry *entry);
+    PETName<16> fileName(unsigned nr) const;
+    PETName<16> fileName(FSDirEntry *entry) const;
 
     // Returns the type of a file
-    FSFileType fileType(unsigned nr);
-    FSFileType fileType(FSDirEntry *entry);
+    FSFileType fileType(unsigned nr) const;
+    FSFileType fileType(FSDirEntry *entry) const;
     
     // Returns the precise size of a file in bytes
-    u64 fileSize(unsigned nr);
-    u64 fileSize(FSDirEntry *entry);
+    u64 fileSize(unsigned nr) const;
+    u64 fileSize(FSDirEntry *entry) const;
     
     // Returns the size of a file in blocks (read from the BAM)
-    u64 fileBlocks(unsigned nr);
-    u64 fileBlocks(FSDirEntry *entry);
+    u64 fileBlocks(unsigned nr) const;
+    u64 fileBlocks(FSDirEntry *entry) const;
 
     // Returns the load address of a file
-    u16 loadAddr(unsigned nr);
-    u16 loadAddr(FSDirEntry *entry);
+    u16 loadAddr(unsigned nr) const;
+    u16 loadAddr(FSDirEntry *entry) const;
     
     // Copies the file contents into a buffer
-    void copyFile(unsigned nr, u8 *buf, u64 len, u64 offset = 0);
-    void copyFile(FSDirEntry *entry, u8 *buf, u64 len, u64 offset = 0);
+    void copyFile(unsigned nr, u8 *buf, u64 len, u64 offset = 0) const;
+    void copyFile(FSDirEntry *entry, u8 *buf, u64 len, u64 offset = 0) const;
 
     // Scans the directory and stores the result in variable 'dir'
     void scanDirectory(bool skipInvisible = true);
@@ -217,8 +217,8 @@ public:
     // Writing files
     //
 
-    // Returns the next free directory entry
-    FSDirEntry *nextFreeDirEntry(); 
+    // Returns the next free directory entry or creates one
+    FSDirEntry *getOrCreateNextFreeDirEntry(); 
                     
     // Creates a new file
     bool makeFile(PETName<16> name, const u8 *buf, usize cnt);
@@ -240,21 +240,21 @@ public:
     // Checks a single byte in a certain block
     ErrorCode check(u32 blockNr, u32 pos, u8 *expected, bool strict);
     
-    // Checks if a certain block is corrupted
-    bool isCorrupted(u32 blockNr) { return getCorrupted(blockNr) != 0; }
-
     // Returns the position in the corrupted block list (0 = OK)
-    u32 getCorrupted(u32 blockNr);
+    u32 getCorrupted(u32 blockNr) const;
+
+    // Checks if a certain block is corrupted
+    bool isCorrupted(u32 blockNr) const { return getCorrupted(blockNr) != 0; }
 
     // Returns the number of the next or previous corrupted block
-    u32 nextCorrupted(u32 blockNr);
-    u32 prevCorrupted(u32 blockNr);
+    u32 nextCorrupted(u32 blockNr) const;
+    u32 prevCorrupted(u32 blockNr) const;
 
     // Checks if a certain block is the n-th corrupted block
-    bool isCorrupted(u32 blockNr, u32 n);
+    bool isCorrupted(u32 blockNr, u32 n) const;
 
     // Returns the number of the the n-th corrupted block
-    u32 seekCorruptedBlock(u32 n);
+    u32 seekCorruptedBlock(u32 n) const;
 
     
     //
@@ -264,8 +264,8 @@ public:
 public:
         
     // Reads a single byte from a block
-    u8 readByte(Block block, u32 offset);
-    u8 readByte(TSLink ts, u32 offset) { return readByte(layout.blockNr(ts), offset); }
+    u8 readByte(Block block, u32 offset) const;
+    u8 readByte(TSLink ts, u32 offset) const { return readByte(layout.blockNr(ts), offset); }
 
     // Imports the volume from a buffer
     void importVolume(const u8 *src, usize size) throws;

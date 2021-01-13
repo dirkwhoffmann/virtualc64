@@ -29,6 +29,12 @@ FreezeFrame::peekIO1(u16 addr)
 }
 
 u8
+FreezeFrame::spypeekIO1(u16 addr) const
+{
+    return 0;
+}
+
+u8
 FreezeFrame::peekIO2(u16 addr)
 {
     // Reading from IO2 disables the cartridge
@@ -36,10 +42,16 @@ FreezeFrame::peekIO2(u16 addr)
     return 0;
 }
 
-const char *
-FreezeFrame::getButtonTitle(unsigned nr)
+u8
+FreezeFrame::spypeekIO2(u16 addr) const
 {
-    return (nr == 1) ? "Freeze" : nullptr;
+    return 0;
+}
+
+const char *
+FreezeFrame::getButtonTitle(unsigned nr) const
+{
+    return nr == 1 ? "Freeze" : nullptr;
 }
 
 void

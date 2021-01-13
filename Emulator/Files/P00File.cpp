@@ -80,13 +80,13 @@ P00File::collectionName()
 }
 
 u64
-P00File::collectionCount()
+P00File::collectionCount() const
 {
     return 1;
 }
 
 PETName<16>
-P00File::itemName(unsigned nr)
+P00File::itemName(unsigned nr) const
 {
     assert(nr == 0);
     u8 padChar = 0x00;
@@ -94,14 +94,14 @@ P00File::itemName(unsigned nr)
 }
 
 u64
-P00File::itemSize(unsigned nr)
+P00File::itemSize(unsigned nr) const
 {
     assert(nr == 0);
     return size - 0x1A;
 }
 
 u8
-P00File::readByte(unsigned nr, u64 pos)
+P00File::readByte(unsigned nr, u64 pos) const
 {
     assert(nr == 0);
     assert(pos < itemSize(nr));

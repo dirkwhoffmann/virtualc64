@@ -60,7 +60,7 @@ private:
 	bool stopped;
 	
     /* Indicates if tod time matches the alarm time. This value is read in
-     * checkForInterrupt() for edge detection.
+     * checkIrq() for edge detection.
      */
     bool matching;
     
@@ -111,7 +111,7 @@ public:
 private:
     
     void _inspect() override;
-    void _dump() override;
+    void _dump() const override;
     
     
     //
@@ -150,59 +150,52 @@ private:
     //
 
     // Returns the hours digits of the time of day clock
-     u8 getTodHours() { return (frozen ? latch.hours : tod.hours) & 0x9F; }
+     u8 getTodHours() const { return (frozen ? latch.hour : tod.hour) & 0x9F; }
 
      // Returns the minutes digits of the time of day clock
-     u8 getTodMinutes() { return (frozen ? latch.minutes : tod.minutes) & 0x7F; }
+     u8 getTodMinutes() const { return (frozen ? latch.min : tod.min) & 0x7F; }
 
      // Returns the seconds digits of the time of day clock
-     u8 getTodSeconds() { return (frozen ? latch.seconds : tod.seconds) & 0x7F; }
+     u8 getTodSeconds() const { return (frozen ? latch.sec : tod.sec) & 0x7F; }
 
      // Returns the tenth-of-a-second digits of the time of day clock
-     u8 getTodTenth() { return (frozen ? latch.tenth : tod.tenth) & 0x0F; }
+     u8 getTodTenth() const { return (frozen ? latch.tenth : tod.tenth) & 0x0F; }
 
      // Returns the hours digits of the alarm time
-     u8 getAlarmHours() { return alarm.hours & 0x9F; }
+     u8 getAlarmHours() const { return alarm.hour & 0x9F; }
 
      // Returns the minutes digits of the alarm time
-     u8 getAlarmMinutes() { return alarm.minutes & 0x7F; }
+     u8 getAlarmMinutes() const { return alarm.min & 0x7F; }
 
      // Returns the seconds digits of the alarm time
-     u8 getAlarmSeconds() { return alarm.seconds & 0x7F; }
+     u8 getAlarmSeconds() const { return alarm.sec & 0x7F; }
 
      // Returns the tenth-of-a-second digits of the alarm time
-     u8 getAlarmTenth() { return alarm.tenth & 0x0F; }
+     u8 getAlarmTenth() const { return alarm.tenth & 0x0F; }
      
      // Sets the hours digits of the time of day clock
-     void setTodHours(u8 value) { tod.hours = value & 0x9F; checkForInterrupt(); }
+     void setTodHours(u8 value) { tod.hour = value & 0x9F; checkIrq(); }
      
      // Sets the minutes digits of the time of day clock
-     void setTodMinutes(u8 value) {
-         tod.minutes = value & 0x7F; checkForInterrupt(); }
+     void setTodMinutes(u8 value) { tod.min = value & 0x7F; checkIrq(); }
      
      // Sets the seconds digits of the time of day clock
-     void setTodSeconds(u8 value) {
-         tod.seconds = value & 0x7F; checkForInterrupt(); }
+     void setTodSeconds(u8 value) { tod.sec = value & 0x7F; checkIrq(); }
      
      // Sets the tenth-of-a-second digits of the time of day clock
-     void setTodTenth(u8 value) {
-         tod.tenth = value & 0x0F; checkForInterrupt(); }
+     void setTodTenth(u8 value) { tod.tenth = value & 0x0F; checkIrq(); }
      
      // Sets the hours digits of the alarm time
-     void setAlarmHours(u8 value) {
-         alarm.hours = value & 0x9F; checkForInterrupt(); }
+     void setAlarmHours(u8 value) { alarm.hour = value & 0x9F; checkIrq(); }
      
      // Sets the minutes digits of the alarm time
-     void setAlarmMinutes(u8 value) {
-         alarm.minutes = value & 0x7F; checkForInterrupt(); }
+     void setAlarmMinutes(u8 value) { alarm.min = value & 0x7F; checkIrq(); }
      
      // Sets the seconds digits of the alarm time
-     void setAlarmSeconds(u8 value) {
-         alarm.seconds = value & 0x7F; checkForInterrupt(); }
+     void setAlarmSeconds(u8 value) { alarm.sec = value & 0x7F; checkIrq(); }
      
      // Sets the tenth-of-a-second digits of the time of day clock
-     void setAlarmTenth(u8 value) {
-         alarm.tenth = value & 0x0F; checkForInterrupt(); }
+     void setAlarmTenth(u8 value) { alarm.tenth = value & 0x0F; checkIrq(); }
 
     
     //
@@ -226,8 +219,6 @@ private:
 	// Increments the TOD clock by one tenth of a second
 	void increment();
 
-    /* Updates variable 'matching'. If a positive edge occurs, the connected
-     * CIA will be requested to trigger an interrupt.
-     */
-    void checkForInterrupt();
+    // Updates variable 'matching'. A positive edge triggers an interrupt.
+    void checkIrq();
 };

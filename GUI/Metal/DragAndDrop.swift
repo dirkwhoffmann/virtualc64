@@ -116,7 +116,7 @@ public extension MetalView {
                     try document.createAttachment(from: url)
                     return document.mountAttachment()
                 } catch {
-                    (error as? MyError)?.cantOpen(url: url)
+                    (error as? VC64Error)?.cantOpen(url: url)
                 }
             }
             return false

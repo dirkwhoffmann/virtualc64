@@ -22,6 +22,12 @@ MagicDesk::peekIO1(u16 addr)
     return control;
 }
 
+u8
+MagicDesk::spypeekIO1(u16 addr) const
+{
+    return control;
+}
+
 void
 MagicDesk::pokeIO1(u16 addr, u8 value)
 {

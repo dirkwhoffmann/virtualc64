@@ -295,7 +295,7 @@ VICII::peek(u16 addr)
 }
 
 u8
-VICII::spypeek(u16 addr)
+VICII::spypeek(u16 addr) const
 {
     assert(addr <= 0x3F);
     
@@ -683,7 +683,7 @@ VICII::memSpyAccess(u16 addr)
 }
 
 bool
-VICII::isCharRomAddr(u16 addr)
+VICII::isCharRomAddr(u16 addr) const
 {
     addr = (addr | bankAddr) >> 12;
     return addr == 1 || addr == 9;

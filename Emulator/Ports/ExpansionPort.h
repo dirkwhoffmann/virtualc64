@@ -66,7 +66,7 @@ public:
 
 private:
     
-    void _dump() override;
+    void _dump() const override;
 
     
     //
@@ -102,11 +102,11 @@ private:
 public:
     
     u8 peek(u16 addr);
-    u8 spypeek(u16 addr);
+    u8 spypeek(u16 addr) const;
     u8 peekIO1(u16 addr);
-    u8 spypeekIO1(u16 addr);
+    u8 spypeekIO1(u16 addr) const;
     u8 peekIO2(u16 addr);
-    u8 spypeekIO2(u16 addr);
+    u8 spypeekIO2(u16 addr) const;
     
     void poke(u16 addr, u8 value);
     void pokeIO1(u16 addr, u8 value);
@@ -119,15 +119,15 @@ public:
     
 public:
     
-    bool getGameLine() { return gameLine; }
+    bool getGameLine() const { return gameLine; }
     void setGameLine(bool value);
     
-    bool getExromLine() { return exromLine; }
+    bool getExromLine() const { return exromLine; }
     void setExromLine(bool value);
     
     void setGameAndExrom(bool game, bool exrom);
     
-    CRTMode getCartridgeMode();
+    CRTMode getCartridgeMode() const;
     void setCartridgeMode(CRTMode mode);
 
     
@@ -136,7 +136,7 @@ public:
     //
     
     // Returns true if a cartridge is attached to the expansion port
-    bool getCartridgeAttached() { return cartridge != nullptr; }
+    bool getCartridgeAttached() const { return cartridge != nullptr; }
 
     // Attaches a cartridge to the expansion port
     bool attachCartridge(CRTFile *c, bool reset = true);
@@ -154,7 +154,7 @@ public:
     //
     
     // Returns true if the attached cartridge has a RAM backing battery
-    bool hasBattery();
+    bool hasBattery() const;
 
     // Enables or disables RAM backing during a reset.
     void setBattery(bool value);
@@ -165,10 +165,10 @@ public:
     //
     
     // Returns the number of available cartridge buttons
-    long numButtons();
+    long numButtons() const;
     
     // Returns a textual description for a button
-    const char *getButtonTitle(unsigned nr);
+    const char *getButtonTitle(unsigned nr) const;
     
     // Presses a button (make sure to call releaseButton() afterwards)
     void pressButton(unsigned nr);
@@ -182,20 +182,20 @@ public:
     //
     
     // Returns true if the cartridge has a switch
-    bool hasSwitch();
+    bool hasSwitch() const;
     
     // Returns the current switch position
-    i8 getSwitch();
-    bool switchIsNeutral();
-    bool switchIsLeft();
-    bool switchIsRight();
+    i8 getSwitch() const;
+    bool switchIsNeutral() const;
+    bool switchIsLeft() const;
+    bool switchIsRight() const;
     
     /* Returns a textual description for a switch position or nullptr if the
      * switch cannot be positioned this way.
      */
-    const char *getSwitchDescription(i8 pos);
-    const char *getSwitchDescription();
-    bool validSwitchPosition(i8 pos);
+    const char *getSwitchDescription(i8 pos) const;
+    const char *getSwitchDescription() const;
+    bool validSwitchPosition(i8 pos) const;
     
     // Puts the switch in the provided position
     void setSwitch(u8 pos) { if (cartridge) cartridge->setSwitch(pos); }
@@ -206,10 +206,10 @@ public:
     //
     
     // Returns true if the cartridge has a LED
-    bool hasLED();
+    bool hasLED() const;
     
     // Returns true if the LED is switched on
-    bool getLED();
+    bool getLED() const;
     
     // Switches the LED on or off
     void setLED(bool value);

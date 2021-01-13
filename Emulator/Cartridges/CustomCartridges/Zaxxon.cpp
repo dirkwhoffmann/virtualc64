@@ -37,11 +37,11 @@ Zaxxon::peekRomL(u16 addr)
 }
 
 u8
-Zaxxon::spypeekRomL(u16 addr)
+Zaxxon::spypeekRomL(u16 addr) const
 {
     if (addr < 0x1000) {
-        return Cartridge::peekRomL(addr);
+        return Cartridge::spypeekRomL(addr);
     } else {
-        return Cartridge::peekRomL(addr - 0x1000);
+        return Cartridge::spypeekRomL(addr - 0x1000);
     }
 }

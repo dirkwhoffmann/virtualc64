@@ -66,7 +66,7 @@ class RomDropView: NSImageView {
                 return true
             } catch {
                 let name = url!.lastPathComponent
-                (error as? MyError)?.warning("Cannot open Rom file \"\(name)\"")
+                (error as? VC64Error)?.warning("Cannot open Rom file \"\(name)\"")
             }
         }
         return false

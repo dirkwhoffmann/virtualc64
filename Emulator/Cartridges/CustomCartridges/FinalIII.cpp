@@ -33,10 +33,22 @@ FinalIII::peekIO1(u16 addr)
 }
 
 u8
+FinalIII::spypeekIO1(u16 addr) const
+{
+    return spypeekRomL(addr & 0x1FFF);
+}
+
+u8
 FinalIII::peekIO2(u16 addr)
 {
     // I/O space 2 space mirrors $1F00 to $1FFF from ROML
     return peekRomL(addr & 0x1FFF);
+}
+
+u8
+FinalIII::spypeekIO2(u16 addr) const
+{
+    return spypeekRomL(addr & 0x1FFF);
 }
 
 void
@@ -81,7 +93,7 @@ FinalIII::setControlReg(u8 value)
 }
 
 bool
-FinalIII::writeEnabled()
+FinalIII::writeEnabled() const
 {
     return !hidden() || freeezeButtonIsPressed;
 }
@@ -103,9 +115,9 @@ FinalIII::updateGame()
 }
 
 const char *
-FinalIII::getButtonTitle(unsigned nr)
+FinalIII::getButtonTitle(unsigned nr) const
 {
-    return (nr == 1) ? "Freeze" : (nr == 2) ? "Reset" : nullptr;
+    return nr == 1 ? "Freeze" : nr == 2 ? "Reset" : nullptr;
 }
 
 void

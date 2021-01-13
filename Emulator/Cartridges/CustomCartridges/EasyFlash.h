@@ -52,7 +52,7 @@ private:
     
 private:
     
-    void _dump() override;
+    void _dump() const override;
     
     
     //
@@ -105,10 +105,12 @@ public:
     void pokeRomL(u16 addr, u8 value) override;
     void pokeRomH(u16 addr, u8 value) override;
     u8 peekIO1(u16 addr) override;
+    u8 spypeekIO1(u16 addr) const override;
     u8 peekIO2(u16 addr) override;
+    u8 spypeekIO2(u16 addr) const override;
     void pokeIO1(u16 addr, u8 value) override;
     void pokeIO2(u16 addr, u8 value) override;
     void pokeBankReg(u8 value);
     void pokeModeReg(u8 value);
-    bool hasLED() override { return true; }
+    bool hasLED() const override { return true; }
 };

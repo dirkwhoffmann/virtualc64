@@ -210,7 +210,7 @@ public:
     C64();
     ~C64();
     const char *getDescription() const override { return "C64"; }
-    void prefix() override;
+    void prefix() const override;
 
     void reset();
 
@@ -226,11 +226,11 @@ private:
 public:
     
     // Returns the currently set configuration
-    C64Configuration getConfig();
+    C64Configuration getConfig() const;
     
     // Gets a single configuration item
-    long getConfigItem(Option option);
-    long getConfigItem(Option option, long id);
+    long getConfigItem(Option option) const;
+    long getConfigItem(Option option, long id) const;
     
     // Sets a single configuration item
     bool configure(Option option, long value);
@@ -240,7 +240,7 @@ public:
     void configure(C64Model model);
 
     // Returns the C64 model matching the current configuration
-    C64Model getModel();
+    C64Model getModel() const;
         
     // Updates the VICII function table according to the selected model
     void updateVicFunctionTable();
@@ -257,13 +257,13 @@ private:
 public:
        
     void inspect();
-    InspectionTarget getInspectionTarget();
+    InspectionTarget getInspectionTarget() const;
     void setInspectionTarget(InspectionTarget target);
-    void clearInspectionTarget();
+    void clearInspectionTarget() { setInspectionTarget(INSPECTION_TARGET_NONE); }
     
 private:
     
-    void _dump() override;
+    void _dump() const override;
 
     
     
@@ -311,10 +311,10 @@ public:
     void pause();
     
     void setWarp(bool enable);
-    bool inWarpMode() { return warpMode; }
+    bool inWarpMode() const { return warpMode; }
 
     void setDebug(bool enable);
-    bool inDebugMode() { return debugMode; }
+    bool inDebugMode() const { return debugMode; }
     
 private:
 
@@ -342,7 +342,7 @@ public:
     /* Returns true if a call to powerOn() will be successful.
      * It returns false, e.g., if no Rom is installed.
      */
-    bool isReady(ErrorCode *err = nullptr);
+    bool isReady(ErrorCode *err = nullptr) const;
     
     
     //
@@ -516,31 +516,31 @@ public:
 public:
     
     // Computes a Rom checksum
-    u32 romCRC32(RomType type);
-    u64 romFNV64(RomType type);
+    u32 romCRC32(RomType type) const;
+    u64 romFNV64(RomType type) const;
      
     // Returns a unique identifier for the installed ROMs
-    RomIdentifier romIdentifier(RomType type);
+    RomIdentifier romIdentifier(RomType type) const;
     
     // Returns printable titles for the installed ROMs
-    const char *romTitle(RomType type);
+    const char *romTitle(RomType type) const;
     
     // Returns printable sub titles for the installed ROMs
-    const char *romSubTitle(u64 fnv);
-    const char *romSubTitle(RomType type);
+    const char *romSubTitle(u64 fnv) const;
+    const char *romSubTitle(RomType type) const;
     
     // Returns printable revision strings or hash values for the installed ROMs
-    const char *romRevision(RomType type);
+    const char *romRevision(RomType type) const;
     
     // Checks if a certain Rom is present
-    bool hasRom(RomType type);
-    bool hasMega65Rom(RomType type);
+    bool hasRom(RomType type) const;
+    bool hasMega65Rom(RomType type) const;
 
 private:
     
     // Returns a revision string if a Mega65 Rom is installed
-    char *mega65BasicRev();
-    char *mega65KernalRev();
+    char *mega65BasicRev() const;
+    char *mega65KernalRev() const;
 
 public:
     
@@ -570,7 +570,7 @@ public:
 public:
     
     // Returns the ultimax flag
-    bool getUltimax() { return ultimax; }
+    bool getUltimax() const { return ultimax; }
     
     /* Setter for ultimax mode. When the peek / poke lookup table is updated,
      * this function is called if a certain combination is present on the Game

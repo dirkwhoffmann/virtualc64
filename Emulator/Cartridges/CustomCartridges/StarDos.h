@@ -66,7 +66,9 @@ private:
     //
     
     u8 peekIO1(u16 addr) override { charge(); return 0; }
+    u8 spypeekIO1(u16 addr) const override { return 0; }
     u8 peekIO2(u16 addr) override { discharge(); return 0; }
+    u8 spypeekIO2(u16 addr) const override { return 0; }
     void pokeIO1(u16 addr, u8 value) override { charge(); }
     void pokeIO2(u16 addr, u8 value) override { discharge(); }
     

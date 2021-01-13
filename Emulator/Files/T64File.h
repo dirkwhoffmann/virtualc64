@@ -49,15 +49,15 @@ public:
     //
 
     PETName<16> collectionName() override;
-    u64 collectionCount() override;
-    PETName<16> itemName(unsigned nr) override;
-    u64 itemSize(unsigned nr) override;
-    u8 readByte(unsigned nr, u64 pos) override;
+    u64 collectionCount() const override;
+    PETName<16> itemName(unsigned nr) const override;
+    u64 itemSize(unsigned nr) const override;
+    u8 readByte(unsigned nr, u64 pos) const override;
     
 private:
 
-    u16 memStart(unsigned nr);
-    u16 memEnd(unsigned nr);
+    u16 memStart(unsigned nr) const;
+    u16 memEnd(unsigned nr) const;
     
     
     //

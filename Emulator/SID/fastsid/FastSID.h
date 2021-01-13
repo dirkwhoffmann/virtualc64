@@ -124,16 +124,16 @@ private:
     
 public:
     
-    u32 getClockFrequency() { return cpuFrequency; }
+    u32 getClockFrequency() const { return cpuFrequency; }
     void setClockFrequency(u32 frequency);
     
-    SIDRevision getRevision() { return model; }
+    SIDRevision getRevision() const { return model; }
     void setRevision(SIDRevision m);
     
-    double getSampleRate() { return (double)sampleRate; }
+    double getSampleRate() const { return (double)sampleRate; }
     void setSampleRate(double rate);
     
-    bool getAudioFilter() { return emulateFilter; }
+    bool getAudioFilter() const { return emulateFilter; }
     void setAudioFilter(bool value) { emulateFilter = value; }
     
     
@@ -148,7 +148,7 @@ public:
 
 private:
     
-    void _dump() override;
+    void _dump() const override;
 
     
     //
@@ -192,6 +192,7 @@ public:
         
     // Reads or writes a SID register
     u8 peek(u16 addr);
+    u8 spypeek(u16 addr) const;
     void poke(u16 addr, u8 value);
     
     
@@ -219,33 +220,33 @@ private:
     //
     
     // Returns the currently set SID volume
-    u8 sidVolume() { return sidreg[0x18] & 0x0F; }
+    u8 sidVolume() const { return sidreg[0x18] & 0x0F; }
     
     /* Returns true iff voice 3 is disconnected from the audio output. Setting
      * voice 3 to bypass the filter (FILT3 = 0) and setting bit 7 in the Mod/Vol
      * register to one prevents voice 3 from reaching the audio output.
      */
-    bool voiceThreeDisconnected() { return filterOff(2) && (sidreg[0x18] & 0x80); }
+    bool voiceThreeDisconnected() const { return filterOff(2) && (sidreg[0x18] & 0x80); }
     
     // Filter related configuration items
     
     // Returns the filter cutoff frequency (11 bit value)
-    u16 filterCutoff() { return (sidreg[0x16] << 3) | (sidreg[0x15] & 0x07); }
+    u16 filterCutoff() const { return (sidreg[0x16] << 3) | (sidreg[0x15] & 0x07); }
 
     // Returns the filter resonance (4 bit value)
-    u8 filterResonance() { return sidreg[0x17] >> 4; }
+    u8 filterResonance() const { return sidreg[0x17] >> 4; }
 
     // Returns true iff the specified voice schould be filtered
-    bool filterOn(unsigned voice) { return GET_BIT(sidreg[0x17], voice) != 0; }
+    bool filterOn(unsigned voice) const { return GET_BIT(sidreg[0x17], voice) != 0; }
 
     // Returns true iff the specified voice schould not be filtered
-    bool filterOff(unsigned voice) { return GET_BIT(sidreg[0x17], voice) == 0; }
+    bool filterOff(unsigned voice) const { return GET_BIT(sidreg[0x17], voice) == 0; }
 
     // Returns true iff the external filter bit is set
-    bool filterExtBit() { return GET_BIT(sidreg[0x17], 7) != 0; }
+    bool filterExtBit() const { return GET_BIT(sidreg[0x17], 7) != 0; }
     
     // Returns the currently set filter type
-    u8 filterType() { return sidreg[0x18] & 0x70; }
+    u8 filterType() const { return sidreg[0x18] & 0x70; }
     
     
     /* Updates internal data structures. This method is called on each filter

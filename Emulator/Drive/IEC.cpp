@@ -32,12 +32,12 @@ IEC::_reset()
 }
 
 void 
-IEC::_dump()
+IEC::_dump() const
 {
 	msg("IEC bus\n");
 	msg("-------\n");
 	msg("\n");
-	dumpTrace();
+	// dumpTrace();
 	msg("\n");
     msg("    DDRB (VIA1) : %02X (Drive 1)\n", drive8.via1.getDDRB());
     msg("    DDRB (VIA1) : %02X (Drive 2)\n", drive9.via1.getDDRB());

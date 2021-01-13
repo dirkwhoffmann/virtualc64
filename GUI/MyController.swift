@@ -176,9 +176,6 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var tapeIcon: NSButton!
     @IBOutlet weak var tapeProgress: NSProgressIndicator!
     @IBOutlet weak var crtIcon: NSButton!
-    @IBOutlet weak var crtSwitch: NSButton!
-    @IBOutlet weak var crtButton1: NSButton!
-    @IBOutlet weak var crtButton2: NSButton!
     @IBOutlet weak var clockSpeed: NSTextField!
     @IBOutlet weak var clockSpeedBar: NSLevelIndicator!
     @IBOutlet weak var warpIcon: NSButton!
@@ -551,6 +548,12 @@ extension MyController {
 
         switch msg.type {
     
+        case .REGISTER:
+            track("Registered to message queue")
+            
+        case .UNREGISTER:
+            track("Unregistered from message queue")
+
         case .CONFIG:
 
             inspector?.fullRefresh()
@@ -718,7 +721,7 @@ extension MyController {
 
         case .CRT_UNSUPPORTED:
 
-            MyError.unsupportedCrtAlert(type: msg.data)
+            VC64Error.unsupportedCrtAlert(type: msg.data)
             
         case .CRT_ATTACHED:
 
@@ -730,8 +733,8 @@ extension MyController {
             refreshStatusBar()
             
         case .CART_SWITCH:
-            
-            refreshStatusBarCartridgeIcons()
+
+            break
             
         case .KB_AUTO_RELEASE:
             
@@ -741,11 +744,11 @@ extension MyController {
             
         case .SNAPSHOT_TOO_OLD:
             
-            MyError.init(.SNP_TOO_OLD).warning("Unable to restore snapshot")
+            VC64Error.init(.SNP_TOO_OLD).warning("Unable to restore snapshot")
                         
         case .SNAPSHOT_TOO_NEW:
             
-            MyError.init(.SNP_TOO_NEW).warning("Unable to restore snapshot")
+            VC64Error.init(.SNP_TOO_NEW).warning("Unable to restore snapshot")
 
         case .AUTO_SNAPSHOT_TAKEN:
             

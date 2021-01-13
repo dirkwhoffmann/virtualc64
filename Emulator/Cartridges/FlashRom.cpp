@@ -64,7 +64,7 @@ FlashRom::_reset()
 }
 
 void
-FlashRom::_dump()
+FlashRom::_dump() const
 {
     msg("FlashRom\n");
     msg("--------\n\n");
@@ -96,6 +96,12 @@ FlashRom::didSaveToBuffer(u8 *buffer)
 
 u8
 FlashRom::peek(u32 addr)
+{
+    return const_cast<const FlashRom*>(this)->spypeek(addr);
+}
+
+u8
+FlashRom::spypeek(u32 addr) const
 {
     assert(addr < romSize);
     

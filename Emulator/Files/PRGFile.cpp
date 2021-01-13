@@ -50,32 +50,29 @@ PRGFile::collectionName()
 }
 
 u64
-PRGFile::collectionCount()
+PRGFile::collectionCount() const
 {
     return 1;
 }
 
 PETName<16>
-PRGFile::itemName(unsigned nr)
+PRGFile::itemName(unsigned nr) const
 {
     assert(nr == 0);
-    
     return PETName<16>(getName());
 }
 
 u64
-PRGFile::itemSize(unsigned nr)
+PRGFile::itemSize(unsigned nr) const
 {
     assert(nr == 0);
-    
     return size;
 }
 
 u8
-PRGFile::readByte(unsigned nr, u64 pos)
+PRGFile::readByte(unsigned nr, u64 pos) const
 {
     assert(nr == 0);
     assert(pos < itemSize(nr));
-    
     return data[pos];
 }

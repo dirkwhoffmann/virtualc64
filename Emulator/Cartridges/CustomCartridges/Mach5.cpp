@@ -22,9 +22,21 @@ Mach5::peekIO1(u16 addr)
 }
 
 u8
+Mach5::spypeekIO1(u16 addr) const
+{
+    return spypeekRomL(0x1E00 | LO_BYTE(addr));
+}
+
+u8
 Mach5::peekIO2(u16 addr)
 {
     return peekRomL(0x1F00 | LO_BYTE(addr));
+}
+
+u8
+Mach5::spypeekIO2(u16 addr) const
+{
+    return spypeekRomL(0x1F00 | LO_BYTE(addr));
 }
 
 void

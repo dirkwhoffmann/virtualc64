@@ -41,7 +41,7 @@ SIDBridge::_reset()
 }
 
 long
-SIDBridge::getConfigItem(Option option)
+SIDBridge::getConfigItem(Option option) const
 {
     switch (option) {
             
@@ -70,7 +70,7 @@ SIDBridge::getConfigItem(Option option)
 }
 
 long
-SIDBridge::getConfigItem(Option option, long id)
+SIDBridge::getConfigItem(Option option, long id) const
 {
     
     switch (option) {
@@ -276,7 +276,7 @@ SIDBridge::setConfigItem(Option option, long id, long value)
 }
 
 bool
-SIDBridge::isMuted()
+SIDBridge::isMuted() const
 {
     if (config.volL == 0 && config.volR == 0) return true;
     
@@ -314,7 +314,7 @@ SIDBridge::setClockFrequency(u32 frequency)
 }
 
 SIDRevision
-SIDBridge::getRevision()
+SIDBridge::getRevision() const
 {
     SIDRevision result = resid[0].getRevision();
     
@@ -338,7 +338,7 @@ SIDBridge::setRevision(SIDRevision revision)
 }
 
 double
-SIDBridge::getSampleRate()
+SIDBridge::getSampleRate() const
 {
     double result = resid[0].getSampleRate();
     
@@ -364,7 +364,7 @@ SIDBridge::setSampleRate(double rate)
 }
 
 bool
-SIDBridge::getAudioFilter()
+SIDBridge::getAudioFilter() const
 {
     bool result = resid[0].getAudioFilter();
     
@@ -388,7 +388,7 @@ SIDBridge::setAudioFilter(bool enable)
 }
 
 SamplingMethod
-SIDBridge::getSamplingMethod()
+SIDBridge::getSamplingMethod() const
 {
     SamplingMethod result = resid[0].getSamplingMethod();
     
@@ -412,7 +412,7 @@ SIDBridge::setSamplingMethod(SamplingMethod method)
 }
 
 void
-SIDBridge::_dumpConfig()
+SIDBridge::_dumpConfig() const
 {
     msg("  Chip revision : %s\n",   SIDRevisionEnum::key(config.revision));
     msg("    Enable mask : %x\n",   config.enabled);
@@ -451,18 +451,16 @@ SIDBridge::_pause()
 }
 
 void 
-SIDBridge::_dump()
+SIDBridge::_dump() const
 {
     _dump(0);
 }
 
 void
-SIDBridge::_dump(int nr)
+SIDBridge::_dump(int nr) const
 {
-    resid[nr].inspect();
-    
-    SIDInfo sidinfo;
-    VoiceInfo voiceinfo[3];
+    // SIDInfo sidinfo;
+    // VoiceInfo voiceinfo[3];
     SIDRevision residRev = resid[nr].getRevision();
     SIDRevision fastsidRev = fastsid[nr].getRevision();
     
@@ -474,12 +472,14 @@ SIDBridge::_dump(int nr)
     msg("Emulate filter : %s\n", resid[nr].getAudioFilter() ? "yes" : "no");
     msg("\n");
 
+    /*
     sidinfo = resid[nr].getInfo();
     voiceinfo[0] = resid[nr].getVoiceInfo(0);
     voiceinfo[1] = resid[nr].getVoiceInfo(1);
     voiceinfo[2] = resid[nr].getVoiceInfo(2);
     _dump(sidinfo, voiceinfo);
-
+    */
+    
     msg("FastSID:\n");
     msg("--------\n");
     msg("    Chip model : %s\n", SIDRevisionEnum::key(fastsidRev));
@@ -488,15 +488,17 @@ SIDBridge::_dump(int nr)
     msg("Emulate filter : %s\n", fastsid[nr].getAudioFilter() ? "yes" : "no");
     msg("\n");
         
+    /*
     sidinfo = fastsid[nr].getInfo();
     voiceinfo[0] = fastsid[nr].getVoiceInfo(0);
     voiceinfo[1] = fastsid[nr].getVoiceInfo(1);
     voiceinfo[2] = fastsid[nr].getVoiceInfo(2);
     _dump(sidinfo, voiceinfo);
+    */
 }
 
 void
-SIDBridge::_dump(SIDInfo &info, VoiceInfo (&vinfo)[3])
+SIDBridge::_dump(SIDInfo &info, VoiceInfo (&vinfo)[3]) const
 {
     u8 ft = info.filterType;
     msg("        Volume: %d\n", info.volume);
@@ -610,8 +612,8 @@ SIDBridge::rampDown()
     ignoreNextUnderOrOverflow();
 }
 
-int
-SIDBridge::mappedSID(u16 addr)
+usize
+SIDBridge::mappedSID(u16 addr) const
 {
     addr &= 0xFFE0;
     
@@ -629,13 +631,13 @@ SIDBridge::peek(u16 addr)
     executeUntil(cpu.cycle);
  
     // Select the target SID
-    int sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
+    usize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
 
     addr &= 0x1F;
 
     if (sidNr == 0) {
-        if (addr == 0x19) return mouse.readPotX();
-        if (addr == 0x1A) return mouse.readPotY();
+        if (addr == 0x19) { mouse.updatePotX(); return mouse.readPotX(); }
+        if (addr == 0x1A) { mouse.updatePotY(); return mouse.readPotY(); }
     }
     
     switch (config.engine) {
@@ -649,9 +651,23 @@ SIDBridge::peek(u16 addr)
 }
 
 u8
-SIDBridge::spypeek(u16 addr)
+SIDBridge::spypeek(u16 addr) const
 {
-    return peek(addr);
+    // Select the target SID
+    usize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
+
+    addr &= 0x1F;
+
+    if (sidNr == 0) {
+        if (addr == 0x19) { return mouse.readPotX(); }
+        if (addr == 0x1A) { return mouse.readPotY(); }
+    }
+
+    /* At the moment, only FastSID allows us to peek into the SID registers
+     * without causing side effects. Hence, we get the return value from there,
+     * regardless of the selected SID engine.
+     */
+    return fastsid[sidNr].spypeek(addr);
 }
 
 void 
@@ -661,7 +677,7 @@ SIDBridge::poke(u16 addr, u8 value)
     executeUntil(cpu.cycle);
  
     // Select the target SID
-    int sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
+    usize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
 
     addr &= 0x1F;
     
@@ -713,7 +729,7 @@ SIDBridge::executeCycles(u64 numCycles)
                 for (int i = 1; i < 4; i++) {
                     if (isEnabled(i)) {
                         u64 numSamples2 = fastsid[i].executeCycles(numCycles, sidStream[i]);
-                        numSamples = min(numSamples, numSamples2);
+                        numSamples = MIN(numSamples, numSamples2);
                     }
                 }
             }
@@ -729,7 +745,7 @@ SIDBridge::executeCycles(u64 numCycles)
                 for (int i = 1; i < 4; i++) {
                     if (isEnabled(i)) {
                         u64 numSamples2 = resid[i].executeCycles(numCycles, sidStream[i]);
-                        numSamples = min(numSamples, numSamples2);
+                        numSamples = MIN(numSamples, numSamples2);
                     }
                 }
             }

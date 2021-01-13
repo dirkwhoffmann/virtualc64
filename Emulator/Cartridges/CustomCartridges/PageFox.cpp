@@ -22,7 +22,7 @@ PageFox::_reset()
 }
 
 void
-PageFox::_dump()
+PageFox::_dump() const
 {
     Cartridge::_dump();
     
@@ -58,6 +58,20 @@ PageFox::peekRomL(u16 addr)
 }
 
 u8
+PageFox::spypeekRomL(u16 addr) const
+{
+    u8 result;
+    
+    if (ramIsVisible()) {
+        result = peekRAM(ramAddrL(addr));
+    } else {
+        result = Cartridge::spypeekRomL(addr);
+    }
+    
+    return result;
+}
+
+u8
 PageFox::peekRomH(u16 addr)
 {
     u8 result;
@@ -68,6 +82,20 @@ PageFox::peekRomH(u16 addr)
     } else {
         result = Cartridge::peekRomH(addr);
         debug(CRT_DEBUG, "peekRomH(%x) = %x\n", addr, result);
+    }
+
+    return result;
+}
+
+u8
+PageFox::spypeekRomH(u16 addr) const
+{
+    u8 result;
+    
+    if (ramIsVisible()) {
+        result = peekRAM(ramAddrH(addr));
+    } else {
+        result = Cartridge::spypeekRomH(addr);
     }
 
     return result;
@@ -101,9 +129,13 @@ PageFox::pokeRomH(u16 addr, u8 value)
 u8
 PageFox::peekIO1(u16 addr)
 {
-    u8 result = ctrlReg & 0b11111;
-    debug(CRT_DEBUG, "peekIO1(%x) = %x\n", addr, result);
-    return result;
+    return ctrlReg & 0b11111;
+}
+
+u8
+PageFox::spypeekIO1(u16 addr) const
+{
+    return ctrlReg & 0b11111;
 }
 
 void

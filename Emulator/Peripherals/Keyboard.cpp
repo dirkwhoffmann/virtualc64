@@ -21,7 +21,7 @@ KeyAction::KeyAction(bool _press, u8 _nr, u64 _delay)
 KeyAction::KeyAction(bool _press, u8 _row, u8 _col, u64 _delay)
 : press(_press), row(_row), col(_col), delay(_delay)
 {
-    const u8 _nr[64] = {
+    constexpr u8 _nr[64] = {
         
         15, 47, 63, 64, 16, 32, 48, 62,
         3, 19, 35, 4, 51, 36, 20, 50,
@@ -39,17 +39,6 @@ KeyAction::KeyAction(bool _press, u8 _row, u8 _col, u64 _delay)
     nr = _nr[8 * row + col];
 }
 
-/*
-void
-KeyAction::perform(Keyboard &kb)
-{
-    debug(KBD_DEBUG, "%s %d (%d,%d)\n", press ? "Pressing" : "Releasing", nr, row, col);
-    
-    press ? kb._press(nr) : kb._release(nr);
-    kb.delay = delay;
-}
-*/
-
 void 
 Keyboard::_reset() 
 {
@@ -60,7 +49,7 @@ Keyboard::_reset()
 }
 
 void 
-Keyboard::_dump()
+Keyboard::_dump() const
 {
 	msg("Keyboard:\n");
 	msg("---------\n\n");
@@ -260,7 +249,7 @@ Keyboard::_releaseAll()
 }
 
 bool
-Keyboard::isPressed(long nr)
+Keyboard::isPressed(long nr) const
 {
     assert(nr < 66);
     
@@ -272,7 +261,7 @@ Keyboard::isPressed(long nr)
 }
 
 bool
-Keyboard::isPressed(u8 row, u8 col)
+Keyboard::isPressed(u8 row, u8 col) const
 {
     bool result1 = (kbMatrixRow[row] & (1 << col)) == 0;
 
@@ -285,7 +274,7 @@ Keyboard::isPressed(u8 row, u8 col)
 }
 
 bool
-Keyboard::restoreIsPressed()
+Keyboard::restoreIsPressed() const
 {
     return cpu.nmiLine & INTSRC_KBD;
 }
@@ -403,6 +392,7 @@ Keyboard::vsyncHandler()
     }
 }
 
+/*
 const u8
 Keyboard::rowcol[66][2] = {
     
@@ -426,3 +416,4 @@ Keyboard::rowcol[66][2] = {
     // Fifth physical row
     {7, 4}
 };
+*/

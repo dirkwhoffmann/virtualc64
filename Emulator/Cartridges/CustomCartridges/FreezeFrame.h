@@ -31,17 +31,17 @@ private:
 public:
     
     u8 peekIO1(u16 addr) override;
-    u8 spypeekIO1(u16 addr) override { return 0; }
+    u8 spypeekIO1(u16 addr) const override;
     u8 peekIO2(u16 addr) override;
-    u8 spypeekIO2(u16 addr) override { return 0; }
+    u8 spypeekIO2(u16 addr) const override;
 
     
     //
     // Operating buttons
     //
     
-    long numButtons() override { return 1; }
-    const char *getButtonTitle(unsigned nr) override;
+    long numButtons() const override { return 1; }
+    const char *getButtonTitle(unsigned nr) const override;
     void pressButton(unsigned nr) override;
     void releaseButton(unsigned nr) override;
 };

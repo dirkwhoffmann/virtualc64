@@ -114,7 +114,7 @@ C64Memory::_reset()
 }
 
 long
-C64Memory::getConfigItem(Option option)
+C64Memory::getConfigItem(Option option) const
 {
     switch (option) {
             
@@ -176,7 +176,7 @@ C64Memory::_inspect()
 }
 
 void 
-C64Memory::_dump()
+C64Memory::_dump() const
 {
 	msg("C64 Memory:\n");
 	msg("-----------\n");
@@ -354,7 +354,7 @@ C64Memory::peekIO(u16 addr)
 }
 
 u8
-C64Memory::spypeek(u16 addr, MemoryType source)
+C64Memory::spypeek(u16 addr, MemoryType source) const
 {
     switch(source) {
             
@@ -374,7 +374,13 @@ C64Memory::spypeek(u16 addr, MemoryType source)
             return expansionport.spypeek(addr);
             
         case M_PP:
-            return peek(addr, M_PP);
+            if (addr >= 0x02) {
+                return ram[addr];
+            } else if (addr == 0x00) {
+                return cpu.pport.readDirection();
+            } else {
+                return cpu.pport.read();
+            }
       
         case M_NONE:
             return ram[addr];
@@ -386,7 +392,7 @@ C64Memory::spypeek(u16 addr, MemoryType source)
 }
 
 u8
-C64Memory::spypeekIO(u16 addr)
+C64Memory::spypeekIO(u16 addr) const
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
     
@@ -406,6 +412,12 @@ C64Memory::spypeekIO(u16 addr)
             
             return sid.spypeek(addr & 0x001F);
             
+        case 0x8: // Color Ram
+        case 0x9: // Color Ram
+        case 0xA: // Color Ram
+        case 0xB: // Color Ram
+            return spypeekColor(addr - 0xD8000);
+
         case 0xC: // CIA 1
             
             // Only the lower 4 bits are used for adressing the CIA I/O space.
@@ -425,13 +437,13 @@ C64Memory::spypeekIO(u16 addr)
             return expansionport.spypeekIO2(addr);
 
         default:
-            
-            return peek(addr);
+            assert(false);
+            return 0;
     }
 }
 
 u8
-C64Memory::spypeekColor(u16 addr)
+C64Memory::spypeekColor(u16 addr) const
 {
     assert(addr <= 0x400);
     return colorRam[addr];

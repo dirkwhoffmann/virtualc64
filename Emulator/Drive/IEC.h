@@ -73,7 +73,7 @@ private:
     
 private:
     
-    void _dump() override;
+    void _dump() const override;
     void dumpTrace();
 
     
@@ -122,7 +122,7 @@ private:
 public:
 
     // Returns true if the IEC is transfering data
-    bool isBusy() { return busActivity > 0; }
+    bool isBusy() const { return busActivity > 0; }
     
     // Requensts an update of the bus lines from the C64 side
     // DEPRECATED

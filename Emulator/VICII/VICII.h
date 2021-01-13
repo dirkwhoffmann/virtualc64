@@ -582,12 +582,12 @@ private:
     
 public:
     
-    VICConfig getConfig() { return config; }
+    VICConfig getConfig() const { return config; }
     
-    long getConfigItem(Option option);
+    long getConfigItem(Option option) const;
     bool setConfigItem(Option option, long value) override;
     
-    VICRevision getRevision() { return config.revision; }    
+    VICRevision getRevision() const { return config.revision; }    
     void setRevision(VICRevision revision);
     
     void setDmaDebugColor(MemAccess type, GpuColor color);
@@ -595,7 +595,7 @@ public:
     
 private:
     
-    void _dumpConfig() override;
+    void _dumpConfig() const override;
 
 
     //
@@ -610,7 +610,7 @@ public:
 private:
     
     void _inspect() override;
-    void _dump() override;
+    void _dump() const override;
 
     
     //
@@ -719,19 +719,19 @@ public:
     
     // Returns true if a PAL chip is plugged in
     static bool isPAL(VICRevision revision);
-    bool isPAL() { return isPAL(config.revision); }
+    bool isPAL() const { return isPAL(config.revision); }
     
     // Returns true if a NTSC chip is plugged in
     static bool isNTSC(VICRevision revision);
-    bool isNTSC() { return isNTSC(config.revision); }
+    bool isNTSC() const { return isNTSC(config.revision); }
 
     // Returns true if a newer MOS 856x chip is plugged in
     static bool is856x(VICRevision revision);
-    bool is856x() { return is856x(config.revision); }
+    bool is856x() const { return is856x(config.revision); }
     
     // Returns true if an older MOS 656x chip is plugged in
     static bool is656x(VICRevision revision);
-    bool is656x() { return is656x(config.revision); }
+    bool is656x() const { return is656x(config.revision); }
 
     // Returns true if light pen interrupts are triggered with a delay
     static bool delayedLightPenIrqs(VICRevision revision);
@@ -739,26 +739,26 @@ public:
 
     // Returns the clock frequencay of the selected VICII model
     static unsigned getFrequency(VICRevision revision);
-    unsigned getFrequency() { return getFrequency(config.revision); }
+    unsigned getFrequency() const { return getFrequency(config.revision); }
     
     // Returns the number of CPU cycles performed per rasterline
     static unsigned getCyclesPerLine(VICRevision revision);
-    unsigned getCyclesPerLine() { return getCyclesPerLine(config.revision); }
+    unsigned getCyclesPerLine() const { return getCyclesPerLine(config.revision); }
     
     // Returns true if the end of the rasterline has been reached
-    bool isLastCycleInRasterline(unsigned cycle);
+    bool isLastCycleInRasterline(unsigned cycle) const;
     
     // Returns the number of rasterlines drawn per frame
-    long getRasterlinesPerFrame();
+    long getRasterlinesPerFrame() const;
 
     // Returns the number of visible rasterlines in a single frame
-    long numVisibleRasterlines();
+    long numVisibleRasterlines() const;
 
     // Returns true if rasterline belongs to the VBLANK area
-    bool isVBlankLine(unsigned rasterline);
+    bool isVBlankLine(unsigned rasterline) const;
     
     // Returns the number of CPU cycles executed in one frame
-    long getCyclesPerFrame() {
+    long getCyclesPerFrame() const {
         return getRasterlinesPerFrame() * getCyclesPerLine(); }
     
     /* Returns the number of frames drawn per second. The result is returned as
@@ -766,12 +766,12 @@ public:
      * expected values exactly (50 Hz for PAL and 60 Hz for NTSC). E.g., a PAL
      * C64 outputs 50.125 Hz.
      */
-    double getFramesPerSecond() {
+    double getFramesPerSecond() const {
         return (double)getFrequency() / (double)getCyclesPerFrame();
     }
     
     // Returns the time interval between two frames in nanoseconds
-    u64 getFrameDelay() {
+    u64 getFrameDelay() const {
         return u64(1000000000.0 / getFramesPerSecond());
     }
     
@@ -781,22 +781,22 @@ public:
     //
     
     // Returns the currently stable textures
-    void *stableEmuTexture();
-    void *stableDmaTexture();
+    void *stableEmuTexture() const;
+    void *stableDmaTexture() const;
     
     // Returns a pointer to randon noise
-    u32 *getNoise();
+    u32 *getNoise() const;
     
     // Returns a C64 color in 32 bit big endian RGBA format
-    u32 getColor(unsigned nr);
+    u32 getColor(unsigned nr) const { return rgbaTable[nr]; }
     u32 getColor(unsigned nr, Palette palette);
     
     // Gets or sets a monitor parameter
-    double getBrightness() { return brightness; }
+    double getBrightness() const { return brightness; }
     void setBrightness(double value);
-    double getContrast() { return contrast; }
+    double getContrast() const { return contrast; }
     void setContrast(double value);
-    double getSaturation() { return saturation; }
+    double getSaturation() const { return saturation; }
     void setSaturation(double value);
     
 private:
@@ -814,7 +814,7 @@ private:
 public:
     
     // Peeks a value from a VICII register without side effects
-    u8 spypeek(u16 addr);
+    u8 spypeek(u16 addr) const;
     
     // Returns the ultimax flag
     u8 getUltimax() { return ultimax; }
@@ -823,10 +823,10 @@ public:
     void setUltimax(bool value);
     
     // Returns the latest value of the VICII's data bus during phi1
-    u8 getDataBusPhi1() { return dataBusPhi1; }
+    u8 getDataBusPhi1() const { return dataBusPhi1; }
 
     // Returns the latest value of the VICII's data bus during phi2
-    u8 getDataBusPhi2() { return dataBusPhi2; }
+    u8 getDataBusPhi2() const { return dataBusPhi2; }
 
     /* Schedules the VICII bank to to switched. This method is called if the
      * bank switch is triggered by a change of CIA2::PA or CIA2::DDRA.
@@ -858,7 +858,7 @@ private:
     u8 memSpyAccess(u16 addr);
 
     // Returns true if memAccess will read from Character ROM
-    bool isCharRomAddr(u16 addr);
+    bool isCharRomAddr(u16 addr) const;
 
     // Performs a DRAM refresh (r-access)
     template <VICIIMode type> void rAccess();
@@ -902,16 +902,16 @@ private:
     /* Returns the current rasterline. This value is not always identical to
      * the yCounter, because the yCounter is incremented with a little delay.
      */
-    u16 rasterline();
+    u16 rasterline() const;
 
     // Returns the current rasterline cycle
-    u8 rastercycle();
+    u8 rastercycle() const;
 
     /* Indicates if yCounter needs to be reset in this rasterline. PAL models
      * reset the yCounter in cycle 2 in the first rasterline wheras NTSC models
      * reset the yCounter in cycle 2 in the middle of the lower border area.
      */
-    bool yCounterOverflow() { return rasterline() == (isPAL() ? 0 : 238); }
+    bool yCounterOverflow() const { return rasterline() == (isPAL() ? 0 : 238); }
 
 
     //
@@ -958,10 +958,10 @@ private:
     void setMainFrameFF(bool value);
     
     // Returns a comparison value for the border flipflops
-    u16 leftComparisonValue() { return isCSEL() ? 24 : 31; }
-    u16 rightComparisonValue() { return isCSEL() ? 344 : 335; }
-    u16 upperComparisonValue() { return isRSEL() ? 51 : 55; }
-    u16 lowerComparisonValue() { return isRSEL() ? 251 : 247; }
+    u16 leftComparisonValue() const { return isCSEL() ? 24 : 31; }
+    u16 rightComparisonValue() const { return isCSEL() ? 344 : 335; }
+    u16 upperComparisonValue() const { return isRSEL() ? 51 : 55; }
+    u16 lowerComparisonValue() const { return isRSEL() ? 251 : 247; }
     
   
 	//
@@ -971,27 +971,27 @@ private:
 public:
 		
     // Returns the current value of the DEN (Display ENabled) bit
-    bool DENbit() { return GET_BIT(reg.current.ctrl1, 4); }
+    bool DENbit() const { return GET_BIT(reg.current.ctrl1, 4); }
     
     // Returns the number of the next interrupt rasterline
-    u16 rasterInterruptLine() {
+    u16 rasterInterruptLine() const {
         return ((reg.current.ctrl1 & 0x80) << 1) | rasterIrqLine;
     }
     
     // Returns the masked CB13 bit
-    u8 CB13() { return memSelect & 0x08; }
+    u8 CB13() const { return memSelect & 0x08; }
 
     // Returns the masked CB13/CB12/CB11 bits
-    u8 CB13CB12CB11() { return memSelect & 0x0E; }
+    u8 CB13CB12CB11() const { return memSelect & 0x0E; }
 
     // Returns the masked VM13/VM12/VM11/VM10 bits
-    u8 VM13VM12VM11VM10() { return memSelect & 0xF0; }
+    u8 VM13VM12VM11VM10() const { return memSelect & 0xF0; }
 
 	// Returns the state of the CSEL bit
-	bool isCSEL() { return GET_BIT(reg.current.ctrl2, 3); }
+	bool isCSEL() const { return GET_BIT(reg.current.ctrl2, 3); }
     
 	// Returns the state of the RSEL bit
-    bool isRSEL() { return GET_BIT(reg.current.ctrl1, 3); }
+    bool isRSEL() const { return GET_BIT(reg.current.ctrl1, 3); }
 
 
     //
@@ -1001,7 +1001,7 @@ public:
 private:
     
     // Returns true if the bad line condition holds
-    bool badLineCondition();
+    bool badLineCondition() const;
     
     
     //
@@ -1016,7 +1016,7 @@ private:
     /* Indicates if a c-access can occur. A c-access can only be performed if
      * the BA line is down for more than 2 cycles.
      */
-    bool BApulledDownForAtLeastThreeCycles() { return baLine.delayed(); }
+    bool BApulledDownForAtLeastThreeCycles() const { return baLine.delayed(); }
     
 	// Triggers a VICII interrupt
 	void triggerIrq(u8 source);
@@ -1034,8 +1034,8 @@ public:
 private:
 
     // Returns the coordinate of a light pen event
-    u16 lightpenX();
-    u16 lightpenY();
+    u16 lightpenX() const;
+    u16 lightpenY() const;
     
     /* Trigger a lightpen interrupt if conditions are met. This function is
      * called on each negative transition of the LP pin. It latches the x and
@@ -1060,10 +1060,10 @@ private:
 private:
 
     // Gets the depth of a sprite (will be written into the z buffer)
-    u8 spriteDepth(u8 nr);
+    u8 spriteDepth(u8 nr) const;
     
     // Compares the Y coordinates of all sprites with the yCounter
-    u8 compareSpriteY();
+    u8 compareSpriteY() const;
     
     /* Turns off sprite dma if conditions are met. In cycle 16, the mcbase
      * pointer is advanced three bytes for all dma enabled sprites. Advancing
@@ -1339,11 +1339,11 @@ private:
 public: 
 
     // Returns the current screen geometry
-    ScreenGeometry getScreenGeometry(void);
+    ScreenGeometry getScreenGeometry(void) const;
     
     // Returns the coordinates of a certain sprite
-    u16 getSpriteX(int nr) { assert(nr < 8); return reg.current.sprX[nr]; }
-    u8 getSpriteY(int nr) { assert(nr < 8); return reg.current.sprY[nr]; }
+    u16 getSpriteX(int nr) const { assert(nr < 8); return reg.current.sprX[nr]; }
+    u8 getSpriteY(int nr) const { assert(nr < 8); return reg.current.sprY[nr]; }
 
     // Cuts out certain graphics layers
     void cutLayers();

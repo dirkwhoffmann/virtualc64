@@ -139,39 +139,39 @@ private:
     
 public:
     
-    SIDConfig getConfig() { return config; }
+    SIDConfig getConfig() const { return config; }
     
-    long getConfigItem(Option option);
-    long getConfigItem(Option option, long id);
+    long getConfigItem(Option option) const;
+    long getConfigItem(Option option, long id) const;
 
     bool setConfigItem(Option option, long value) override;
     bool setConfigItem(Option option, long id, long value) override;
 
-    bool isEnabled(int nr) { return GET_BIT(config.enabled, nr); }
+    bool isEnabled(int nr) const { return GET_BIT(config.enabled, nr); }
     
-    bool isMuted();
+    bool isMuted() const;
 
     u32 getClockFrequency();
     void setClockFrequency(u32 frequency);
 
     // DEPRECATED: Use OPT_xxx
-    SIDRevision getRevision();
+    SIDRevision getRevision() const;
     void setRevision(SIDRevision revision);
     
-    double getSampleRate();
+    double getSampleRate() const;
     void setSampleRate(double rate);
     
     // DEPRECATED: Use OPT_xxx
-    bool getAudioFilter();
+    bool getAudioFilter() const;
     void setAudioFilter(bool enable);
 
     // DEPRECATED: Use OPT_xxx
-    SamplingMethod getSamplingMethod();
+    SamplingMethod getSamplingMethod() const;
     void setSamplingMethod(SamplingMethod method);
 
 private:
     
-    void _dumpConfig() override;
+    void _dumpConfig() const override;
     
     
     //
@@ -185,9 +185,9 @@ public:
     
 private:
     
-    void _dump() override;
-    void _dump(int nr);
-    void _dump(SIDInfo &info, VoiceInfo (&vinfo)[3]);
+    void _dump() const override;
+    void _dump(int nr) const;
+    void _dump(SIDInfo &info, VoiceInfo (&vinfo)[3]) const;
 
     
     //
@@ -341,13 +341,13 @@ public:
 public:
     
     // Translates a memory address to the mapped in SID
-    int mappedSID(u16 addr); 
+    usize mappedSID(u16 addr) const;
     
 	// Special peek function for the I/O memory range
 	u8 peek(u16 addr);
 	
     // Same as peek without side effects
-    u8 spypeek(u16 addr);
+    u8 spypeek(u16 addr) const;
     
 	// Special poke function for the I/O memory range
 	void poke(u16 addr, u8 value);

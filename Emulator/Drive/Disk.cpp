@@ -101,14 +101,6 @@ Disk::isValidHalftrackSectorPair(Halftrack ht, Sector s)
     return s < numberOfSectorsInHalftrack(ht);
 }
 
-/*
-Disk *
-Disk::make(C64 &ref, FSType type)
-{
-    return make(ref, type, PETName<16>("NEW DISK"));
-}
-*/
-
 Disk *
 Disk::make(C64 &ref, DOSType type, PETName<16> name)
 {
@@ -197,7 +189,7 @@ Disk::_reset()
 }
 
 void
-Disk::_dump()
+Disk::_dump() const
 {
     msg("Floppy disk\n");
     msg("-----------\n\n");
@@ -270,20 +262,20 @@ Disk::decodeGcr(u8 *gcr)
 }
 
 bool
-Disk::isValidHeadPos(Halftrack ht, HeadPos pos)
+Disk::isValidHeadPos(Halftrack ht, HeadPos pos) const
 {
     return isHalftrackNumber(ht) && pos < length.halftrack[ht];
 }
 
 HeadPos
-Disk::wrap(Halftrack ht, HeadPos pos)
+Disk::wrap(Halftrack ht, HeadPos pos) const
 {
     u16 len = length.halftrack[ht];
     return pos < 0 ? pos + len : pos >= len ? pos - len : pos;
 }
 
 u64
-Disk::_bitDelay(Halftrack ht, HeadPos pos) {
+Disk::_bitDelay(Halftrack ht, HeadPos pos) const {
     
     assert(isValidHeadPos(ht, pos));
 
@@ -322,7 +314,7 @@ Disk::clearDisk()
 }
 
 bool
-Disk::halftrackIsEmpty(Halftrack ht)
+Disk::halftrackIsEmpty(Halftrack ht) const
 {
     assert(isHalftrackNumber(ht));
     for (unsigned i = 0; i < sizeof(data.halftrack[ht]); i++)
@@ -331,14 +323,14 @@ Disk::halftrackIsEmpty(Halftrack ht)
 }
 
 bool
-Disk::trackIsEmpty(Track t)
+Disk::trackIsEmpty(Track t) const
 {
     assert(isTrackNumber(t));
     return halftrackIsEmpty(2 * t - 1);
 }
 
 unsigned
-Disk::nonemptyHalftracks()
+Disk::nonemptyHalftracks() const
 {
     unsigned result = 0;
     
@@ -351,14 +343,14 @@ Disk::nonemptyHalftracks()
 }
 
 u16
-Disk::lengthOfHalftrack(Halftrack ht)
+Disk::lengthOfHalftrack(Halftrack ht) const
 {
     assert(isHalftrackNumber(ht));
     return length.halftrack[ht];
 }
 
 u16
-Disk::lengthOfTrack(Track t)
+Disk::lengthOfTrack(Track t) const
 {
     assert(isTrackNumber(t));
     return length.track[t][0];

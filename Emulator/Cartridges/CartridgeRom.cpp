@@ -78,25 +78,32 @@ CartridgeRom::_save(u8 *buffer)
 }
 
 bool
-CartridgeRom::mapsToL() {
+CartridgeRom::mapsToL() const {
     assert(rom);
     return loadAddress == 0x8000 && size <= 0x2000;
 }
 
 bool
-CartridgeRom::mapsToLH() {
+CartridgeRom::mapsToLH() const {
     assert(rom);
     return loadAddress == 0x8000 && size > 0x2000;
 }
 
 bool
-CartridgeRom::mapsToH() {
+CartridgeRom::mapsToH() const {
     assert(rom);
     return loadAddress == 0xA000 || loadAddress == 0xE000;
 }
 
 u8
 CartridgeRom::peek(u16 addr)
+{
+    assert(addr < size);
+    return rom[addr];
+}
+
+u8
+CartridgeRom::spypeek(u16 addr) const
 {
     assert(addr < size);
     return rom[addr];

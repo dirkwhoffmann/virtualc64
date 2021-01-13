@@ -11,7 +11,7 @@
 
 
 ScreenGeometry
-VICII::getScreenGeometry(void)
+VICII::getScreenGeometry(void) const
 {
     unsigned rows = GET_BIT(reg.current.ctrl1, 3) ? 25 : 24;
     unsigned cols = GET_BIT(reg.current.ctrl2, 3) ? 40 : 38;

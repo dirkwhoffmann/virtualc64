@@ -11,6 +11,7 @@
 
 #include "C64Object.h"
 #include "Serialization.h"
+#include "Concurrency.h"
 
 /* This class defines the base functionality of all hardware components. It
  * comprises functions for initializing, configuring, and serializing the
@@ -95,8 +96,8 @@ public:
     virtual bool setConfigItem(Option option, long id, long value) { return false; }
     
     // Dumps debug information about the current configuration to the console
-    void dumpConfig();
-    virtual void _dumpConfig() { }
+    void dumpConfig() const;
+    virtual void _dumpConfig() const { }
     
     
     //
@@ -130,8 +131,8 @@ public:
     }
     
     // Dumps debug information about the internal state to the console
-    void dump();
-    virtual void _dump() { }
+    void dump() const;
+    virtual void _dump() const { }
     
  
     //

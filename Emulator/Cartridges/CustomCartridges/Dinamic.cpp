@@ -18,14 +18,12 @@ Dinamic::_reset()
 u8
 Dinamic::peekIO1(u16 addr)
 {
-    if (addr <= 0xDE0F) {
-        bankIn(addr & 0xF);
-    }
+    if (addr <= 0xDE0F) bankIn(addr & 0xF);
     return 0;
 }
 
 u8
-Dinamic::spypeekIO1(u16 addr)
+Dinamic::spypeekIO1(u16 addr) const
 {
     return 0;
 }

@@ -66,7 +66,7 @@ private:
     
 public:
     
-    MouseConfig getConfig() { return config; }
+    MouseConfig getConfig() const { return config; }
     
     MouseModel getModel() { return config.model; }
     void setModel(MouseModel model);
@@ -117,12 +117,19 @@ public:
     void risingStrobe(int portNr);
     void fallingStrobe(int portNr);
     
-    // Returns the pot bits as set by the mouse
-    u8 readPotX();
-    u8 readPotY();
+    // Updates the pot bits (must be called before reading)
+    void updatePotX();
+    void updatePotY();
 
+    // Reads the pot bits that show up in the SID registers
+    u8 readPotX() const;
+    u8 readPotY() const;
+
+    // Updates the control port bits (must be called before reading)
+    void updateControlPort(usize portNr);
+    
     // Returns the control port bits as set by the mouse
-    u8 readControlPort(unsigned portNr);
+    u8 readControlPort(usize portNr) const;
 
     // Performs periodic actions for this device
     void execute();
