@@ -15,6 +15,10 @@ enum_long(MSG)
 {
     MSG_NONE = 0,
     
+    // Message queue
+    MSG_REGISTER,
+    MSG_UNREGISTER,
+    
     // Emulator state
     MSG_CONFIG,
     MSG_POWER_ON,

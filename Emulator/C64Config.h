@@ -39,9 +39,9 @@ static const int XFILES          = 0; // Report paranormal activity
 
 // Runloop
 static const int RUN_DEBUG       = 0; // Run loop, component states, timing
+static const int QUEUE_DEBUG     = 0; // Message queue
 static const int TIM_DEBUG       = 0; // Timing (thread synchronization)
 static const int SNP_DEBUG       = 0; // Serializing (snapshots)
-static const int MSG_DEBUG       = 0; // Message queue
 
 // CPU
 static const int CPU_DEBUG       = 0; // CPU

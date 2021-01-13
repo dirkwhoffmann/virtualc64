@@ -9,45 +9,58 @@
 
 #pragma once
 
-#include "C64Object.h"
-// #include "C64PublicTypes.h"
-#include <map>
+#include "HardwareComponent.h"
 
-using namespace std;
+class MsgQueue : public HardwareComponent {
+        
+    // Ring buffer storing all pending messages
+    RingBuffer<Message, 64> queue;
+            
+    // List of registered listeners
+    std::vector<std::pair <const void *, Callback *> > listeners;
 
-class MsgQueue : public C64Object {
-        
-    // Maximum number of queued messages
-    const static usize capacity = 64;
     
-     // Ring buffer storing all pending messages
-    Message queue[capacity];
-    
-    // The ring buffer's read and write pointers
-    int r = 0;
-    int w = 0;
-        
-    // List of all registered listeners
-    map <const void *, Callback *> listeners;
+    //
+    // Methods from HardwareComponent
+    //
     
 public:
         
     const char *getDescription() const override { return "MessageQueue"; }
 
+private:
+    
+    void _reset() override { };
+    
+    size_t _size() override { return 0; }
+    size_t _load(u8 *buffer) override { return 0; }
+    size_t _save(u8 *buffer) override { return 0; }
+    
+    
+    //
+    // Managing the queue
+    //
+    
+public:
+    
     // Registers a listener together with it's callback function
     void addListener(const void *listener, Callback *func);
     
     // Unregisters a listener
     void removeListener(const void *listener);
     
-    // Returns the next pending message, or MSG_NONE if the queue is empty
+    // Returns the next pending message, or nullptr if the queue is empty
     Message get();
     
     // Writes a message into the queue and propagates it to all listeners
-    void put(MsgType type, u64 data = 0);
+    void put(MsgType type, i64 data = 0);
     
+    // Dumps the current contents of the message queue to the console
+    void dump();
+    void dump(const Message &msg);
+
 private:
     
-    // Propagates a single message to all registered listeners
-    void propagate(Message *msg);
+    // Used by 'put' to propagates a single message to all registered listeners
+    void propagate(const Message &msg) const;
 };

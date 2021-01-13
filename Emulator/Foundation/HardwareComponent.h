@@ -11,6 +11,7 @@
 
 #include "C64Object.h"
 #include "Serialization.h"
+#include "Concurrency.h"
 
 /* This class defines the base functionality of all hardware components. It
  * comprises functions for initializing, configuring, and serializing the

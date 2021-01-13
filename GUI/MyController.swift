@@ -548,6 +548,12 @@ extension MyController {
 
         switch msg.type {
     
+        case .REGISTER:
+            track("Registered to message queue")
+            
+        case .UNREGISTER:
+            track("Unregistered from message queue")
+
         case .CONFIG:
 
             inspector?.fullRefresh()

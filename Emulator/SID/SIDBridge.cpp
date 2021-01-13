@@ -729,7 +729,7 @@ SIDBridge::executeCycles(u64 numCycles)
                 for (int i = 1; i < 4; i++) {
                     if (isEnabled(i)) {
                         u64 numSamples2 = fastsid[i].executeCycles(numCycles, sidStream[i]);
-                        numSamples = min(numSamples, numSamples2);
+                        numSamples = MIN(numSamples, numSamples2);
                     }
                 }
             }
@@ -745,7 +745,7 @@ SIDBridge::executeCycles(u64 numCycles)
                 for (int i = 1; i < 4; i++) {
                     if (isEnabled(i)) {
                         u64 numSamples2 = resid[i].executeCycles(numCycles, sidStream[i]);
-                        numSamples = min(numSamples, numSamples2);
+                        numSamples = MIN(numSamples, numSamples2);
                     }
                 }
             }

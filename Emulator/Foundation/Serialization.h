@@ -10,6 +10,7 @@
 #pragma once
 
 #include "C64Types.h"
+#include "Buffers.h"
 #include "CPUInstructions.h"
 #include "TimeDelayed.h"
 #include "Volume.h"
