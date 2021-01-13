@@ -89,14 +89,21 @@
 				render_run_state();
 			}
 		}
+
+		var last_run_state=null;
 		function render_run_state()
 		{
 			var vc64web = document.getElementById("vc64web").contentWindow;
 			if(vc64web.required_roms_loaded)// that means emu already runs
 			{
+				var is_running = vc64web.is_running();
+				if(last_run_state == is_running)
+					return;
+
 				$("#toggle_icon").html(
-					vc64web.is_running() ? pause_icon : run_icon
+					is_running ? pause_icon : run_icon
 				);
+				last_run_state = is_running;
 			}
 		}
 
@@ -115,10 +122,9 @@
 			}
 		}
 
-
 		function toggle_audio()
 		{			
-			var context = get_audio_context();
+			var context = get_audio_context();			
 			if (context !=null)
 			{
 				if(context.state == 'suspended') {
@@ -136,13 +142,20 @@
 		function render_current_audio_state()
 		{
 			var context = get_audio_context();
+			if(context == null && last_audio_state == null)
+				return;
+			if(context != null && last_audio_state == context.state)
+				return;
+
 			if(context == null)
 			{
-				$('#btn_unlock_audio').empty();				
+				$('#btn_unlock_audio').empty();	
+				last_audio_state=null;			
 			}
 			else
 			{
 				$('#btn_unlock_audio').html( context.state == 'running' ? audio_unlocked_icon : audio_locked_icon );
+				last_audio_state=context.state;
 			}
 		}
 
