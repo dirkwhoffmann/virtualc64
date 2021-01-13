@@ -56,6 +56,7 @@
 			$div = emu_container;
 			$div.height($div.width() * 200 / 320);
 			$(window).bind('resize', function () { $div.height($div.width() * 200 / 320); });
+			$('#vc64web').focus();
 		}
 		function toggle_run() {
 			var vc64web = document.getElementById("vc64web").contentWindow;
