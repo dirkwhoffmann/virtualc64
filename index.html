@@ -37,7 +37,10 @@
 			saved_pic_html = emu_container.html();
 			current_active_emulator = emu_container.attr('id');
 			//turn picture into iframe
-			emu_container.html(`
+
+
+
+			var emuview_html = `
 		<iframe id="vc64web" width="100%" height="100%"
 			src="https://dirkwhoffmann.github.io/virtualc64web/${params}#${address}">
 		</iframe>
@@ -50,7 +53,20 @@
   <path d="M6.25 5C5.56 5 5 5.56 5 6.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C7.5 5.56 6.94 5 6.25 5zm3.5 0c-.69 0-1.25.56-1.25 1.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C11 5.56 10.44 5 9.75 5z"/>
   <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
 		</svg>
-		`); 
+		`;
+
+			/*var context = new (window.AudioContext || window.webkitAudioContext)();
+			if (context !== undefined && context.state == 'suspended') {*/
+                emuview_html +=	`<svg id="btn_unlock_audio" class="icon_btn" 
+				onclick="unlock_audio();" 
+				xmlns="http://www.w3.org/2000/svg" width="2.0em" height="2.0em" fill="currentColor" class="bi bi-pause-btn" viewBox="0 0 16 16">
+					<path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"/>
+  <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z"/>
+  <path d="M8.707 11.182A4.486 4.486 0 0 0 10.025 8a4.486 4.486 0 0 0-1.318-3.182L8 5.525A3.489 3.489 0 0 1 9.025 8 3.49 3.49 0 0 1 8 10.475l.707.707zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z"/>
+		</svg>`;
+            //}
+			emu_container.html(emuview_html); 
+
 			$div = emu_container;
 			$div.height($div.width() * 200/320);
 			$(window).bind('resize', function() { $div.height($div.width() * 200/320); });			
@@ -75,6 +91,28 @@
 				);
 			}
 		}
+		function unlock_audio()
+		{			
+			$('#btn_unlock_audio').hide();
+
+			var vc64web = document.getElementById("vc64web").contentWindow;
+            if (typeof vc64web.Module === 'undefined'
+                || typeof vc64web.Module.SDL2 == 'undefined'
+                || typeof vc64web.Module.SDL2.audioContext == 'undefined')
+                return;
+            if (vc64web.Module.SDL2.audioContext.state == 'suspended') {
+                vc64web.Module.SDL2.audioContext.resume();
+			}
+			
+/*			var context = new (window.AudioContext || window.webkitAudioContext)();
+			if(context == 'suspended')
+				context.resume();
+			else
+				context.suspend();
+*/
+		}
+
+
 		function stop_emu_view() {
 			//close any other active emulator frame
 			if (saved_pic_html != null) {
