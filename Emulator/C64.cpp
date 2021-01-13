@@ -1457,19 +1457,23 @@ C64::deleteRom(RomType type)
         case ROM_TYPE_BASIC:
         {
             memset(mem.rom + 0xA000, 0, 0x2000);
+            break;
         }
         case ROM_TYPE_CHAR:
         {
             memset(mem.rom + 0xD000, 0, 0x1000);
+            break;
         }
         case ROM_TYPE_KERNAL:
         {
             memset(mem.rom + 0xE000, 0, 0x2000);
+            break;
         }
         case ROM_TYPE_VC1541:
         {
             memset(drive8.mem.rom, 0, 0x4000);
             memset(drive9.mem.rom, 0, 0x4000);
+            break;
         }
         default: assert(false);
     }
