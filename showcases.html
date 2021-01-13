@@ -56,6 +56,7 @@
 			$div = emu_container;
 			$div.height($div.width() * 200 / 320);
 			$(window).bind('resize', function () { $div.height($div.width() * 200 / 320); });
+			$('#vc64web').focus();
 		}
 		function toggle_run() {
 			var vc64web = document.getElementById("vc64web").contentWindow;
@@ -151,7 +152,7 @@
 							<!-- Column 2 -->
 							<section>
 								<div id="emuview1" class="emulator_view"><a href="#"
-										onclick="load_title(this, '#openROMS=true#2ndSID=d420#navbar=hidden#wide=true#border=false', 'http://csdb.dk/getinternalfile.php/30568/Adventure 1.T64');return false;">
+										onclick="load_title(this, '#openROMS=true#2ndSID=d420#navbar=hidden#wide=true#border=false', 'http://dirkwhoffmann.github.io/virtualc64/media/advland.prg' /*'http://csdb.dk/getinternalfile.php/30568/Adventure 1.T64'*/);return false;">
 										<img src="images/advland.png" width="100%"></a>
 								</div>
 							</section>
