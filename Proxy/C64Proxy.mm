@@ -539,11 +539,6 @@
     return (IEC *)obj;
 }
 
-- (BOOL)busy
-{
-    return [self iec]->isBusy();
-}
-
 @end
 
 //
