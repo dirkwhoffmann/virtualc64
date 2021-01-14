@@ -51,24 +51,14 @@ CIA::setConfigItem(Option option, long value)
         case OPT_CIA_REVISION:
             
             if (!CIARevisionEnum::verify(value)) return false;
-            /*
-            if (!CIARevisionEnum::isValid(value)) {
-                warn("Invalid CIA revision: %ld\n", value);
-                return false;
-            }
-            */
-            if (config.revision == value) {
-                return false;
-            }
+            if (config.revision == value)  return false;
             
             config.revision = (CIARevision)value;
             return true;
             
         case OPT_TIMER_B_BUG:
             
-            if (config.timerBBug == value) {
-                return false;
-            }
+            if (config.timerBBug == value) return false;
 
             config.timerBBug = value;
             return true;

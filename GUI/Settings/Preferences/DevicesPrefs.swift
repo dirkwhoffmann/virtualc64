@@ -42,10 +42,15 @@ extension PreferencesController {
         devVendorID.stringValue = vend
         devProductID.stringValue = prod
         devTransport.stringValue = property(kIOHIDTransportKey)
-        devUsage.stringValue = property(kIOHIDPrimaryUsageKey)
         devUsagePage.stringValue = property(kIOHIDPrimaryUsagePageKey)
         devLocationID.stringValue = property(kIOHIDLocationIDKey)
         devUniqueID.stringValue = property(kIOHIDUniqueIDKey)
+
+        if let usageDescription = pad?.device?.usageDescription {
+            devUsage.stringValue = usageDescription
+        } else {
+            devUsage.stringValue = property(kIOHIDPrimaryUsageKey)
+        }
 
         devLeftScheme.selectItem(withTag: db.left(vendorID: vend, productID: prod))
         devRightScheme.selectItem(withTag: db.right(vendorID: vend, productID: prod))
