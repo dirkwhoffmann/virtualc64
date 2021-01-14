@@ -162,7 +162,7 @@
                             <menuItem isSeparatorItem="YES" id="f6W-1J-YBf"/>
                             <menuItem title="Take Snapshot" keyEquivalent="t" id="BX4-y5-PoI">
                                 <connections>
-                                    <action selector="takeSnapshot:" target="-1" id="BVn-tv-ofw"/>
+                                    <action selector="takeSnapshotAction:" target="-1" id="jhF-O1-8rn"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="74">
