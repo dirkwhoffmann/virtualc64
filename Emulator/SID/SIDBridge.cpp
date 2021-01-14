@@ -789,8 +789,8 @@ SIDBridge::mixSingleSID(u64 numSamples)
         r *= volR.current;
         
         // Apply ear protection
-        assert(abs(l) < 0.15);
-        assert(abs(r) < 0.15);
+        assert(abs(l) < 1);
+        assert(abs(r) < 1);
         
         stream.write(SamplePair { l, r } );
     }
