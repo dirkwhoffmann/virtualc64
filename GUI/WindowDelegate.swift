@@ -156,7 +156,7 @@ extension MyController {
         track()
         
         // Only proceed in window mode
-        if renderer.fullscreen { return }
+        if renderer?.fullscreen == true { return }
         
         // Get window frame
         guard var frame = window?.frame else { return }
