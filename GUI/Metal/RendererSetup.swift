@@ -55,7 +55,7 @@ extension Renderer {
         assert(library != nil, "Metal library must not be nil")
     }
     
-    internal func buildTextures() {
+    func buildTextures() {
         
         track()
         
@@ -68,6 +68,12 @@ extension Renderer {
         bgTexture = device.makeTexture(size: TextureSize.background, usage: r)
         assert(bgTexture != nil, "Failed to create bgTexture")
         
+        // Background texture used in fullscreen mode
+        let c1 = (0x00, 0x00, 0x00, 0xFF)
+        let c2 = (0x44, 0x44, 0x44, 0xFF)
+        bgFullscreenTexture = device.makeTexture(size: TextureSize.background, gradient: [c1, c2], usage: r)
+        assert(bgFullscreenTexture != nil, "Failed to create bgFullscreenTexture")
+
         // Emulator texture (long frames)
         emulatorTexture = device.makeTexture(size: TextureSize.original, usage: r)
         assert(emulatorTexture != nil, "Failed to create emulatorTexture")

@@ -91,6 +91,7 @@ class Renderer: NSObject, MTKViewDelegate {
 
     // Background texture
     var bgTexture: MTLTexture! = nil
+    var bgFullscreenTexture: MTLTexture! = nil
     
     // Texture to hold the pixel depth information
     var depthTexture: MTLTexture! = nil
@@ -473,7 +474,7 @@ class Renderer: NSObject, MTKViewDelegate {
         let paused = parent.c64.paused
         let poweredOff = parent.c64.poweredOff
         let renderBackground = poweredOff || animates != 0 || fullscreen
-        let renderForeground = !poweredOff && alpha.current > 0.0
+        let renderForeground = alpha.current > 0.0
 
         // Perform a single animation step
         if animates != 0 { performAnimationStep() }
@@ -494,9 +495,15 @@ class Renderer: NSObject, MTKViewDelegate {
                                           index: 1)
             
             // Configure fragment shader
-            fragmentUniforms.alpha = 1.0
-            commandEncoder.setFragmentTexture(bgTexture, index: 0)
-            commandEncoder.setFragmentTexture(bgTexture, index: 1)
+            if fullscreen {
+                fragmentUniforms.alpha = 1.0
+                commandEncoder.setFragmentTexture(bgFullscreenTexture, index: 0)
+                commandEncoder.setFragmentTexture(bgFullscreenTexture, index: 1)
+            } else {
+                fragmentUniforms.alpha = noise.current
+                commandEncoder.setFragmentTexture(bgTexture, index: 0)
+                commandEncoder.setFragmentTexture(bgTexture, index: 1)
+            }
             commandEncoder.setFragmentBytes(&fragmentUniforms,
                                             length: MemoryLayout<FragmentUniforms>.stride,
                                             index: 1)
