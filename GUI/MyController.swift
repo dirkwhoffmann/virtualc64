@@ -675,9 +675,15 @@ extension MyController {
             
             refreshStatusBar()
     
-        case .IEC_BUS_BUSY,
-             .IEC_BUS_IDLE:
+        case .IEC_BUS_BUSY:
             
+            // track("IEC_BUS_BUSY")
+            updateWarp()
+            refreshStatusBarDriveActivity()
+
+        case .IEC_BUS_IDLE:
+
+            // track("IEC_BUS_IDLE")
             updateWarp()
             refreshStatusBarDriveActivity()
 

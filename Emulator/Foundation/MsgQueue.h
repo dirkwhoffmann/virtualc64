@@ -53,7 +53,7 @@ public:
     Message get();
     
     // Writes a message into the queue and propagates it to all listeners
-    void put(MsgType type, i64 data = 0);
+    void put(MsgType type, long data = 0);
     
     // Dumps the current contents of the message queue to the console
     void dump();

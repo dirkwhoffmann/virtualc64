@@ -100,7 +100,6 @@ extension IOHIDDevice {
         return builtInKey == "1"
     }
     
-    // Translates the primary usage key to a informative description
     var usageDescription: String? {
         
         track("kHIDUsage_GD_Mouse = \(kHIDUsage_GD_Mouse)")

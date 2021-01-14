@@ -57,14 +57,17 @@ MsgQueue::get()
 }
  
 void
-MsgQueue::put(MsgType type, i64 data)
+MsgQueue::put(MsgType type, long data)
 {
     synchronized {
                         
-        debug (QUEUE_DEBUG, "%s [%lld]\n", MSGTypeEnum::key(type), data);
+        debug (QUEUE_DEBUG, "%s [%ld]\n", MsgTypeEnum::key(type), data);
         
         // Delete the oldest message if the queue overflows
-        if (queue.isFull()) (void)queue.read();
+        if (queue.isFull()) {
+            auto msg = queue.read();
+            debug(QUEUE_DEBUG, "Lost %s\n", MsgTypeEnum::key(msg.type));
+        }
     
         // Write data
         Message msg = { type, data };
@@ -86,7 +89,7 @@ MsgQueue::dump()
 void
 MsgQueue::dump(const Message &msg)
 {
-    msg("%s [%ld]\n", MSGTypeEnum::key(msg.type), msg.data);
+    msg("%s [%ld]\n", MsgTypeEnum::key(msg.type), msg.data);
 }
 
 void
