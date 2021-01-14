@@ -404,7 +404,7 @@ FSDevice::locateAllocBit(TSLink ts, u32 *byte, u32 *bit) const
 }
 
 PETName<16>
-FSDevice::fileName(unsigned nr) const
+FSDevice::fileName(usize nr) const
 {
     assert(nr < numFiles());
     return fileName(dir[nr]);
@@ -418,7 +418,7 @@ FSDevice::fileName(FSDirEntry *entry) const
 }
 
 FSFileType
-FSDevice::fileType(unsigned nr) const
+FSDevice::fileType(usize nr) const
 {
     assert(nr < numFiles());
     return fileType(dir[nr]);
@@ -432,7 +432,7 @@ FSDevice::fileType(FSDirEntry *entry) const
 }
 
 u64
-FSDevice::fileSize(unsigned nr) const
+FSDevice::fileSize(usize nr) const
 {
     assert(nr < numFiles());
     return fileSize(dir[nr]);
@@ -469,7 +469,7 @@ FSDevice::fileSize(FSDirEntry *entry) const
 }
 
 u64
-FSDevice::fileBlocks(unsigned nr) const
+FSDevice::fileBlocks(usize nr) const
 {
     assert(nr < numFiles());
     return fileBlocks(dir[nr]);
@@ -483,7 +483,7 @@ FSDevice::fileBlocks(FSDirEntry *entry) const
 }
 
 u16
-FSDevice::loadAddr(unsigned nr) const
+FSDevice::loadAddr(usize nr) const
 {
     assert(nr < numFiles());
     return loadAddr(dir[nr]);
@@ -498,7 +498,7 @@ FSDevice::loadAddr(FSDirEntry *entry) const
 }
 
 void
-FSDevice::copyFile(unsigned nr, u8 *buf, u64 len, u64 offset) const
+FSDevice::copyFile(usize nr, u8 *buf, u64 len, u64 offset) const
 {
     assert(nr < numFiles());
     copyFile(dir[nr], buf, len, offset);

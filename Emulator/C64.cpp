@@ -1592,3 +1592,23 @@ C64::flash(AnyCollection *file, unsigned nr)
     messageQueue.put(MSG_FILE_FLASHED);
     return result;
 }
+
+bool
+C64::flash(const FSDevice &fs, usize nr)
+{
+    bool result = true;
+    
+    u16 addr = fs.loadAddr(nr);
+    u64 size = fs.fileSize(nr);
+    if (size <= 2) return false;
+    
+    suspend();
+                
+    size = MIN(size - 2, 0x10000 - addr);
+    fs.copyFile(nr, mem.ram + addr, size, 2);
+
+    resume();
+    
+    messageQueue.put(MSG_FILE_FLASHED);
+    return result;
+}

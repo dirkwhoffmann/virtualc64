@@ -180,7 +180,7 @@
 - (NSString *) romRevision:(RomType)type;
 
 - (BOOL)flash:(AnyFileProxy *)container;
-- (BOOL)flash:(AnyCollectionProxy *)proxy item:(NSInteger)nr;
+- (BOOL)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr;
 
 @end
 

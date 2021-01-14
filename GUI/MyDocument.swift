@@ -281,17 +281,7 @@ class MyDocument: NSDocument {
         }
         return false
     }
-    
-    @discardableResult
-    func flashAttachmentIntoMemory() -> Bool {
         
-        if let archive = attachment as? AnyCollectionProxy {
-            
-            return parent.c64.flash(archive, item: 0)
-        }
-        return false
-    }
-    
     @discardableResult
     func mountAttachmentAsCartridge() -> Bool {
         

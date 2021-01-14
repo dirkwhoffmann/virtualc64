@@ -350,9 +350,7 @@ class ImportDialog: DialogController {
         
         track("flashAction: \(sender.selectedTag())")
         
-        let collection = myDocument.attachment as! AnyCollectionProxy
-        parent.c64.flash(collection, item: sender.selectedTag())
-
+        parent.c64.flash(volume, item: sender.selectedTag())
         parent.keyboard.type("RUN\n")
         parent.renderer.rotateLeft()
         hideSheet()
