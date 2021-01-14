@@ -153,10 +153,16 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Inspector..." id="lLA-nI-jYm">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Inspector..." keyEquivalent="" id="lLA-nI-jYm">
+                                <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
                                 <connections>
                                     <action selector="inspectorAction:" target="-1" id="tpP-z8-bBt"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Monitor..." id="02W-sT-jHS">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="monitorAction:" target="-1" id="PAk-Ig-aX3"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="f6W-1J-YBf"/>
@@ -165,19 +171,25 @@
                                     <action selector="takeSnapshotAction:" target="-1" id="jhF-O1-8rn"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Browse Snapshots..." id="EcZ-LE-gfc">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="browseSnapshotsAction:" target="-1" id="ias-aN-eeK"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="74">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Save Screenshot..." id="2aL-ZH-0LC">
+                            <menuItem title="Take Screenshot" id="Tby-pB-6Ff">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="saveScreenshotDialog:" target="-1" id="wgq-rs-LCi"/>
+                                    <action selector="takeScreenshotAction:" target="-1" id="JuK-WR-Nhn"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Quick Save Screenshot" keyEquivalent="s" id="7oe-oV-MnG">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                            <menuItem title="Browse Screenshots..." id="2aL-ZH-0LC">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="quicksaveScreenshot:" target="-1" id="3hD-6J-vdQ"/>
+                                    <action selector="browseScreenshotsAction:" target="-1" id="2lN-BD-hwW"/>
                                 </connections>
                             </menuItem>
                         </items>

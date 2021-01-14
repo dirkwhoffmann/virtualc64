@@ -698,7 +698,7 @@ extension MyController {
             if pref.driveSounds && pref.driveConnectSound {
                 macAudio.playSound(name: "1541_power_on_0", volume: 0.15)
             }
-            myAppDelegate.hideOrShowDriveMenus(proxy: c64)
+            hideOrShowDriveMenus()
             refreshStatusBar()
             
         case .DRIVE_INACTIVE:
@@ -706,7 +706,7 @@ extension MyController {
             if pref.driveSounds && pref.driveConnectSound {
                 // playSound(name: "drive_click", volume: 1.0)
             }
-            myAppDelegate.hideOrShowDriveMenus(proxy: c64)
+            hideOrShowDriveMenus()
             refreshStatusBar()
 
         case .VC1530_TAPE:
@@ -766,6 +766,7 @@ extension MyController {
             track("MSG_SNAPSHOT_RESTORED")
             renderer.blendIn(steps: 20)
             renderer.updateTextureRect()
+            hideOrShowDriveMenus()
             refreshStatusBar()
             
         default:

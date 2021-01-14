@@ -179,6 +179,12 @@ extension MyController: NSMenuItemValidation {
         return true
     }
 
+    func hideOrShowDriveMenus() {
+        
+        myAppDelegate.drive8Menu.isHidden = !config.drive8Connected
+        myAppDelegate.drive9Menu.isHidden = !config.drive9Connected
+    }
+    
     //
     // Action methods (App menu)
     //
@@ -300,10 +306,7 @@ extension MyController: NSMenuItemValidation {
         
         if !restoreLatestSnapshot() {
             NSSound.beep()
-            return
         }
-        
-        renderer.blendIn(steps: 20)
     }
     
     @IBAction func browseSnapshotsAction(_ sender: Any!) {

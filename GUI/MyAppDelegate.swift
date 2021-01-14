@@ -214,16 +214,6 @@ var proxy: C64Proxy? {
             break
         }
     }
-    
-    //
-    // Hiding menus
-    //
-    
-    func hideOrShowDriveMenus(proxy: C64Proxy) {
-                    
-        drive8Menu.isHidden = !proxy.drive8.isConnected()
-        drive9Menu.isHidden = !proxy.drive9.isConnected()
-    }
 }
 
 //
@@ -245,7 +235,7 @@ extension MyAppDelegate {
                 }
                 
                 // Update the visibility of all drive menus
-                hideOrShowDriveMenus(proxy: c.c64)
+                c.hideOrShowDriveMenus()
                 
             } else {
                 
