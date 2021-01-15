@@ -28,6 +28,7 @@
 		5018BFAB24B4843200551848 /* Primitives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018BFAA24B4843200551848 /* Primitives.swift */; };
 		5018BFB124B48DC400551848 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018BFB024B48DC400551848 /* Renderer.swift */; };
 		5018BFB324B48DD500551848 /* RendererSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018BFB224B48DD500551848 /* RendererSetup.swift */; };
+		501B80C325B1702500C90284 /* MyDocumentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501B80C225B1702500C90284 /* MyDocumentController.swift */; };
 		501E427C20D975AD000BB48D /* IconD64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427720D975AC000BB48D /* IconD64.icns */; };
 		501E427D20D975AD000BB48D /* IconCRT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427820D975AC000BB48D /* IconCRT.icns */; };
 		501E427E20D975AD000BB48D /* IconT64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427920D975AD000BB48D /* IconT64.icns */; };
@@ -288,6 +289,7 @@
 		5018BFAA24B4843200551848 /* Primitives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Primitives.swift; sourceTree = "<group>"; };
 		5018BFB024B48DC400551848 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		5018BFB224B48DD500551848 /* RendererSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererSetup.swift; sourceTree = "<group>"; };
+		501B80C225B1702500C90284 /* MyDocumentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDocumentController.swift; sourceTree = "<group>"; };
 		501E427720D975AC000BB48D /* IconD64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconD64.icns; sourceTree = "<group>"; };
 		501E427820D975AC000BB48D /* IconCRT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconCRT.icns; sourceTree = "<group>"; };
 		501E427920D975AD000BB48D /* IconT64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconT64.icns; sourceTree = "<group>"; };
@@ -792,6 +794,7 @@
 			children = (
 				506D3DCD20223E5E009742CF /* MyAppDelegate.swift */,
 				506D3DCF20224BF4009742CF /* MyDocument.swift */,
+				501B80C225B1702500C90284 /* MyDocumentController.swift */,
 				505184E124F23CBF002C6124 /* Foundation */,
 				50BE4B5624E7F786008F39C9 /* Extensions */,
 				506CE96621998C4500B70A3A /* Metal */,
@@ -1542,6 +1545,7 @@
 				5002FA8121C2654B00DA4BBC /* ControlsPrefs.swift in Sources */,
 				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,
 				500EA6C724B09037009AA7D7 /* C64Component.cpp in Sources */,
+				501B80C325B1702500C90284 /* MyDocumentController.swift in Sources */,
 				504C438324AF29AC00E69CAE /* HardwareComponent.cpp in Sources */,
 				50E9B92D201F299500065A89 /* MyController.swift in Sources */,
 				50DBB44B2025CE5700489271 /* Utils.swift in Sources */,

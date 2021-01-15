@@ -50,6 +50,8 @@ var proxy: C64Proxy? {
 @NSApplicationMain
 @objc public class MyAppDelegate: NSObject, NSApplicationDelegate {
        
+    let myDocumentController = MyDocumentController()
+    
     @IBOutlet weak var drive8Menu: NSMenuItem!
     @IBOutlet weak var drive9Menu: NSMenuItem!
 
