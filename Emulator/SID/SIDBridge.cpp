@@ -25,6 +25,10 @@ SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
     
     config.engine = SIDENGINE_RESID;
     config.enabled = 1;
+    config.address[0] = 0xD400;
+    config.address[1] = 0xD420;
+    config.address[2] = 0xD440;
+    config.address[3] = 0xD460;
     
     for (int i = 0; i < 4; i++) {
         resid[i].setClockFrequency(PAL_CLOCK_FREQUENCY);
@@ -246,7 +250,7 @@ SIDBridge::setConfigItem(Option option, long id, long value)
             assert(id >= 0 && id <= 3);
 
             config.vol[id] = MIN(100, MAX(0, value));
-            vol[id] = pow((double)config.vol[id] / 100, 1.4) * 0.0000125;
+            vol[id] = pow((double)config.vol[id] / 100, 1.4) * 0.000025;
 
             if (wasMuted != isMuted()) {
                 messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
@@ -789,8 +793,8 @@ SIDBridge::mixSingleSID(u64 numSamples)
         r *= volR.current;
         
         // Apply ear protection
-        assert(abs(l) < 0.15);
-        assert(abs(r) < 0.15);
+        assert(abs(l) < 1.0);
+        assert(abs(r) < 1.0);
         
         stream.write(SamplePair { l, r } );
     }
@@ -835,8 +839,8 @@ SIDBridge::mixMultiSID(u64 numSamples)
         r *= volR.current;
         
         // Apply ear protection
-        assert(abs(l) < 0.15);
-        assert(abs(r) < 0.15);
+        assert(abs(l) < 1.0);
+        assert(abs(r) < 1.0);
         
         stream.write(SamplePair { l, r } );
     }

@@ -342,13 +342,11 @@ Drive::setRedLED(bool b)
 void
 Drive::setRotating(bool b)
 {
-    if (!spinning && b) {
-        spinning = true;
-        c64.putMessage(MSG_DRIVE_MOTOR_ON, deviceNr);
-    } else if (spinning && !b) {
-        spinning = false;
-        c64.putMessage(MSG_DRIVE_MOTOR_OFF, deviceNr);
-    }
+    if (spinning == b) return;
+    
+    spinning = b;
+    c64.putMessage(b ? MSG_DRIVE_MOTOR_ON : MSG_DRIVE_MOTOR_OFF, deviceNr);
+    iec.updateTransferStatus();
 }
 
 void

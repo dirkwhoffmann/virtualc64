@@ -49,9 +49,12 @@ public:
     
 private:
     
-	// Used to determine if the bus is idle or if data is transferred
-	u32 busActivity;
-	
+	// Watchdog timer to determine if there is traffic on the bus
+	u32 busActivity = 0;
+
+    // Indicates whether data is being transferred from or to a drive
+    bool transferring = false;
+
     
     //
     // Initializing
@@ -120,9 +123,6 @@ private:
     //
     
 public:
-
-    // Returns true if the IEC is transfering data
-    bool isBusy() const { return busActivity > 0; }
     
     // Requensts an update of the bus lines from the C64 side
     // DEPRECATED
@@ -143,6 +143,9 @@ public:
      * transmitted on the bus.
      */
 	void execute();
+    
+    // Updates variable transferring
+    void updateTransferStatus();
     
 private:
     

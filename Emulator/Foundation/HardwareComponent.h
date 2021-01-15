@@ -111,7 +111,7 @@ public:
      * Note: Because this function accesses the internal emulator state with
      * many non-atomic operations, it must not be called on a running emulator.
      * To carry out inspections while the emulator is running, set up an
-     * inspection target via Amiga::setInspectionTarget().
+     * inspection target via C64::setInspectionTarget().
      */
     void inspect();
     virtual void _inspect() { }

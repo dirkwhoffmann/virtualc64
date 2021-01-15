@@ -66,10 +66,6 @@ class GamePadManager {
             [
                 kIOHIDDeviceUsagePageKey: kHIDPage_GenericDesktop,
                 kIOHIDDeviceUsageKey: kHIDUsage_GD_MultiAxisController
-            ],
-            [
-                kIOHIDDeviceUsagePageKey: kHIDPage_GenericDesktop,
-                kIOHIDDeviceUsageKey: kHIDUsage_GD_Mouse
             ]
         ]
         
@@ -150,20 +146,6 @@ class GamePadManager {
         return gamePads[slot]?.icon ?? NSImage.init(named: "devGamepad1Template")!
     }
 
-    /*
-    func getSlot(port: Int) -> Int {
-        
-        var result = InputDevice.none
-        
-        for (slot, pad) in gamePads where pad.port == port {
-            assert(result == InputDevice.none)
-            result = slot
-        }
-        
-        return result
-    }
-    */
-    
     //
     // HID support
     //
@@ -177,8 +159,10 @@ class GamePadManager {
         lock.lock(); defer { lock.unlock() }
         track()
         
+        // device.listProperties()
+
         // Ignore internal devices
-        if device.isBuiltIn { return }
+        if device.isInternalDevice { return }
         
         // Find a free slot for the new device
         guard let slot = findFreeSlot() else { return }

@@ -184,9 +184,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>4.0b1</string>
+	<string>4.0b2</string>
 	<key>CFBundleVersion</key>
-	<string>4.0b1</string>
+	<string>4.0b2</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.entertainment</string>
 	<key>NSAppTransportSecurity</key>
@@ -209,7 +209,7 @@
 	<key>SUEnableSystemProfiling</key>
 	<string>NO</string>
 	<key>SUFeedURL</key>
-	<string>http://dirkwhoffmann.de/virtualc64/VirtualC64Appcast.xml</string>
+	<string>http://dirkwhoffmann.github.io/virtualc64/VirtualC64Appcast.xml</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
 	<key>SUPublicEDKey</key>

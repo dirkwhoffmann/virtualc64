@@ -151,21 +151,23 @@ extension MyController: NSWindowDelegate {
 
 extension MyController {
     
-    // Adjusts the windows vertical size programatically
     func adjustWindowSize() {
         
         track()
-        if var frame = window?.frame {
-            
-            // Compute size correction
-            let newsize = windowWillResize(window!, to: frame.size)
-            let correction = newsize.height - frame.size.height
-            
-            // Adjust frame
-            frame.origin.y -= correction
-            frame.size = newsize
-            
-            window!.setFrame(frame, display: true)
-        }
+        
+        // Only proceed in window mode
+        if renderer?.fullscreen == true { return }
+        
+        // Get window frame
+        guard var frame = window?.frame else { return }
+        
+        // Compute size correction
+        let newsize = windowWillResize(window!, to: frame.size)
+        let correction = newsize.height - frame.size.height
+        
+        // Adjust frame
+        frame.origin.y -= correction
+        frame.size = newsize
+        window!.setFrame(frame, display: true)
     }
 }

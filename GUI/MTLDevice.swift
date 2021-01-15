@@ -33,6 +33,17 @@ extension MTLDevice {
         return makeTexture(size: size, buffer: buffer, usage: usage)
     }
     
+    func makeTexture(size: MTLSize,
+                     gradient: [ (Int, Int, Int, Int) ],
+                     usage: MTLTextureUsage = [.shaderRead]) -> MTLTexture? {
+        
+        let capacity = size.width * size.height
+        let buffer = UnsafeMutablePointer<UInt32>.allocate(capacity: capacity)
+        buffer.drawGradient(size: size, gradient: gradient)
+        
+        return makeTexture(size: size, buffer: buffer, usage: usage)
+    }
+    
     func makeBackgroundTexture() -> MTLTexture? {
 
          // Grab the current wallpaper as an NSImage
@@ -100,5 +111,5 @@ extension MTLDevice {
          
          // Return image as texture
          return wallpaper?.toTexture(device: self)
-     }
+    }
 }

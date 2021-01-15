@@ -471,6 +471,13 @@ class Configuration {
         sidRevision = defaults.sidRevision.rawValue
         sidFilter = defaults.sidFilter
         
+        sidEnable1 = defaults.sidEnable1
+        sidEnable2 = defaults.sidEnable2
+        sidEnable3 = defaults.sidEnable3
+        sidAddress1 = defaults.sidAddress1
+        sidAddress2 = defaults.sidAddress2
+        sidAddress3 = defaults.sidAddress3
+
         glueLogic = defaults.glueLogic.rawValue
         ramPattern = defaults.ramPattern.rawValue
         

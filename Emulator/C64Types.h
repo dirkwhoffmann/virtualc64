@@ -15,6 +15,7 @@
 #pragma once
 
 #include "C64PublicTypes.h"
+
 #include "CartridgeTypes.h"
 #include "CIATypes.h"
 #include "CPUTypes.h"

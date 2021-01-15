@@ -46,18 +46,14 @@ extension IOHIDDevice {
     }
     
     var name: String { return property(key: kIOHIDProductKey) ?? "" }
-    
     var vendorID: String { return property(key: kIOHIDVendorIDKey) ?? "" }
-    
     var productID: String { return property(key: kIOHIDProductIDKey) ?? "" }
-
     var locationID: String { return property(key: kIOHIDLocationIDKey) ?? "" }
+    var usageKey: String { return property(key: kIOHIDPrimaryUsageKey) ?? "" }
+    var builtInKey: String { return property(key: kIOHIDBuiltInKey) ?? "" }
+    var transportKey: String { return property(key: kIOHIDTransportKey) ?? "" }
 
-    var primaryUsage: String { return property(key: kIOHIDPrimaryUsageKey) ?? "" }
-    
-    // var isBuiltIn: Bool { return property(key: kIOHIDBuiltInKey) == "1" }
-
-    var isMouse: Bool { return primaryUsage == "\(kHIDUsage_GD_Mouse)" }
+    var isMouse: Bool { return usageKey == "\(kHIDUsage_GD_Mouse)" }
             
     func listProperties() {
         
@@ -87,7 +83,7 @@ extension IOHIDDevice {
         }
     }
     
-    var isBuiltIn: Bool {
+    var isInternalDevice: Bool {
         
         /* The purpose of this function is to distinguish internal from external
          * HID devices. Note: The old implementation only checked the BuiltIn
@@ -97,10 +93,29 @@ extension IOHIDDevice {
          * evaluates the Transport property and classifies each wireless device
          * as external.
          */
-        if property(key: kIOHIDTransportKey)?.hasPrefix("Bluetooth") == true {
+        if transportKey.hasPrefix("Bluetooth") == true {
             return false
         }
         
-        return property(key: kIOHIDBuiltInKey) == "1"
+        return builtInKey == "1"
+    }
+    
+    var usageDescription: String? {
+        
+        track("kHIDUsage_GD_Mouse = \(kHIDUsage_GD_Mouse)")
+        
+        if let usage = Int(usageKey) {
+            
+            switch usage {
+            case kHIDUsage_GD_Mouse:               return "Mouse"
+            case kHIDUsage_GD_Joystick:            return "Joystick"
+            case kHIDUsage_GD_GamePad:             return "GamePad"
+            case kHIDUsage_GD_Keyboard:            return "Keyboard"
+            case kHIDUsage_GD_Keypad:              return "Keypad"
+            case kHIDUsage_GD_MultiAxisController: return "Multi axis controller"
+            default: break
+            }
+        }
+        return nil
     }
 }

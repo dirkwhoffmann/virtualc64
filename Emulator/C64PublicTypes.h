@@ -15,8 +15,7 @@
  * Objective-C.
  */
 
-#ifndef C64_PUBLIC_TYPES_H
-#define C64_PUBLIC_TYPES_H
+#pragma once
 
 #include "Aliases.h"
 
@@ -239,5 +238,3 @@ static const C64ConfigurationDeprecated configurations[] = {
     // C64_OLD_NTSC
     { VICREV_NTSC_6567_R56A, false, MOS_6526, false, MOS_6581, true, GLUE_LOGIC_DISCRETE, RAM_PATTERN_C64 }
 };
-
-#endif

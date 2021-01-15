@@ -50,6 +50,8 @@ var proxy: C64Proxy? {
 @NSApplicationMain
 @objc public class MyAppDelegate: NSObject, NSApplicationDelegate {
        
+    let myDocumentController = MyDocumentController()
+    
     @IBOutlet weak var drive8Menu: NSMenuItem!
     @IBOutlet weak var drive9Menu: NSMenuItem!
 
@@ -214,16 +216,6 @@ var proxy: C64Proxy? {
             break
         }
     }
-    
-    //
-    // Hiding menus
-    //
-    
-    func hideOrShowDriveMenus(proxy: C64Proxy) {
-                    
-        drive8Menu.isHidden = !proxy.drive8.isConnected()
-        drive9Menu.isHidden = !proxy.drive9.isConnected()
-    }
 }
 
 //
@@ -245,7 +237,7 @@ extension MyAppDelegate {
                 }
                 
                 // Update the visibility of all drive menus
-                hideOrShowDriveMenus(proxy: c.c64)
+                c.hideOrShowDriveMenus()
                 
             } else {
                 

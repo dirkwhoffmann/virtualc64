@@ -36,10 +36,10 @@ class MyController: NSWindowController, MessageReceiver {
     // Reference to the connected document
     var mydocument: MyDocument!
     
-    // Amiga proxy
-    // Implements a bridge between the emulator written in C++ and the
-    // GUI written in Swift. Because Swift cannot interact with C++ directly,
-    // the proxy is written in Objective-C.
+    /* Proxy object. The proxy implements a bridge between the emulator written
+     * in C++ and the GUI written in Swift. Because Swift cannot interact with
+     * C++ directly, the proxy is written in Objective-C.
+     */
     var c64: C64Proxy!
     
     // Inspector panel of this emulator instance
@@ -675,9 +675,15 @@ extension MyController {
             
             refreshStatusBar()
     
-        case .IEC_BUS_BUSY,
-             .IEC_BUS_IDLE:
+        case .IEC_BUS_BUSY:
             
+            // track("IEC_BUS_BUSY")
+            updateWarp()
+            refreshStatusBarDriveActivity()
+
+        case .IEC_BUS_IDLE:
+
+            // track("IEC_BUS_IDLE")
             updateWarp()
             refreshStatusBarDriveActivity()
 
@@ -698,7 +704,7 @@ extension MyController {
             if pref.driveSounds && pref.driveConnectSound {
                 macAudio.playSound(name: "1541_power_on_0", volume: 0.15)
             }
-            myAppDelegate.hideOrShowDriveMenus(proxy: c64)
+            hideOrShowDriveMenus()
             refreshStatusBar()
             
         case .DRIVE_INACTIVE:
@@ -706,7 +712,7 @@ extension MyController {
             if pref.driveSounds && pref.driveConnectSound {
                 // playSound(name: "drive_click", volume: 1.0)
             }
-            myAppDelegate.hideOrShowDriveMenus(proxy: c64)
+            hideOrShowDriveMenus()
             refreshStatusBar()
 
         case .VC1530_TAPE:
@@ -766,6 +772,7 @@ extension MyController {
             track("MSG_SNAPSHOT_RESTORED")
             renderer.blendIn(steps: 20)
             renderer.updateTextureRect()
+            hideOrShowDriveMenus()
             refreshStatusBar()
             
         default:

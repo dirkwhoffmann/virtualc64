@@ -186,27 +186,27 @@ private:
 public:
     
     // Returns the name of a file
-    PETName<16> fileName(unsigned nr) const;
+    PETName<16> fileName(usize nr) const;
     PETName<16> fileName(FSDirEntry *entry) const;
 
     // Returns the type of a file
-    FSFileType fileType(unsigned nr) const;
+    FSFileType fileType(usize nr) const;
     FSFileType fileType(FSDirEntry *entry) const;
     
     // Returns the precise size of a file in bytes
-    u64 fileSize(unsigned nr) const;
+    u64 fileSize(usize nr) const;
     u64 fileSize(FSDirEntry *entry) const;
     
     // Returns the size of a file in blocks (read from the BAM)
-    u64 fileBlocks(unsigned nr) const;
+    u64 fileBlocks(usize nr) const;
     u64 fileBlocks(FSDirEntry *entry) const;
 
     // Returns the load address of a file
-    u16 loadAddr(unsigned nr) const;
+    u16 loadAddr(usize nr) const;
     u16 loadAddr(FSDirEntry *entry) const;
     
     // Copies the file contents into a buffer
-    void copyFile(unsigned nr, u8 *buf, u64 len, u64 offset = 0) const;
+    void copyFile(usize nr, u8 *buf, u64 len, u64 offset = 0) const;
     void copyFile(FSDirEntry *entry, u8 *buf, u64 len, u64 offset = 0) const;
 
     // Scans the directory and stores the result in variable 'dir'

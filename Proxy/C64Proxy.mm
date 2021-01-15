@@ -539,11 +539,6 @@
     return (IEC *)obj;
 }
 
-- (BOOL)busy
-{
-    return [self iec]->isBusy();
-}
-
 @end
 
 //
@@ -2290,9 +2285,9 @@
     return [self c64]->flash((AnyFile *)proxy->obj);
 }
 
-- (BOOL)flash:(AnyCollectionProxy *)proxy item:(NSInteger)nr
+- (BOOL)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr
 {
-    return [self c64]->flash((AnyCollection *)proxy->obj, (unsigned)nr);
+    return [self c64]->flash(*(FSDevice *)proxy->obj, (unsigned)nr);
 }
 
 @end

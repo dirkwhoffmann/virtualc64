@@ -99,12 +99,12 @@ bool IEC::_updateIecLines()
 void
 IEC::updateIecLines()
 {
-	bool signals_changed;
+    bool wasIdle = !busActivity;
 
 	// Update bus lines
-	signals_changed = _updateIecLines();	
+	bool signalsChanged = _updateIecLines();
 
-    if (signals_changed) {
+    if (signalsChanged) {
         
         cia2.updatePA();
         
@@ -114,19 +114,11 @@ IEC::updateIecLines()
         
         // dumpTrace();
         
-		if (busActivity == 0) {
-            
-            // Reset watchdog counter
-            busActivity = 30;
-            
-			// Bus has just been activated
-            c64.putMessage(MSG_IEC_BUS_BUSY);
+        // Reset watchdog timer
+        busActivity = 30;
 
-        } else {
-            
-            // Reset watchdog counter
-            busActivity = 30;
-        }
+        // Update the transfer status if the bus was idle
+        if (wasIdle) updateTransferStatus();
 	}
 }
 
@@ -166,12 +158,18 @@ void
 IEC::execute()
 {
 	if (busActivity > 0) {
-        
-		if (--busActivity == 0) {
-            
-			// Bus goes idle
-            c64.putMessage(MSG_IEC_BUS_IDLE);
-		}
+        if (--busActivity == 0) updateTransferStatus();
 	}
 }
 
+void
+IEC::updateTransferStatus()
+{
+    bool rotating = drive8.isRotating() || drive9.isRotating();
+    bool newValue = rotating && busActivity > 0;
+    
+    if (transferring != newValue) {
+        transferring = newValue;
+        c64.putMessage(newValue ? MSG_IEC_BUS_BUSY : MSG_IEC_BUS_IDLE);
+    }
+}
