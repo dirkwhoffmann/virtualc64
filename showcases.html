@@ -15,79 +15,17 @@
 	<!-- web emulator view stuff start-->
 	<style>
 		.emulator_view {
-			margin-bottom: 70px;
 			width: 100%;
 		}
-
-		.bi {
-			margin-top: 15px;
-		}
-
 		.icon_btn {
 			background-color: transparent;
 			color: black;
 			margin-right: 15px;
+			cursor: grab;
 		}
 	</style>
-	<script>
-		let saved_pic_html = null;
-		let current_active_emulator = null;
-		function load_title(element, params, address) {
-			stop_emu_view();
-			//save preview pic
-			var emu_container = $(element).parent();
-			saved_pic_html = emu_container.html();
-			current_active_emulator = emu_container.attr('id');
-			//turn picture into iframe
-			emu_container.html(`
-		<iframe id="vc64web" width="100%" height="100%"
-			src="https://dirkwhoffmann.github.io/virtualc64web/${params}#${address}">
-		</iframe>
-		<svg  class="icon_btn" onclick="stop_emu_view();" xmlns="http://www.w3.org/2000/svg" width="2.0em" height="2.0em" fill="currentColor" class="bi bi-pause-btn" viewBox="0 0 16 16">
-			<path d="M6.5 5A1.5 1.5 0 0 0 5 6.5v3A1.5 1.5 0 0 0 6.5 11h3A1.5 1.5 0 0 0 11 9.5v-3A1.5 1.5 0 0 0 9.5 5h-3z"/>
-			<path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
-		</svg>
-
-		<svg  id="toggle_icon" class="icon_btn" onclick="toggle_run();" xmlns="http://www.w3.org/2000/svg" width="2.0em" height="2.0em" fill="currentColor" class="bi bi-pause-btn" viewBox="0 0 16 16">
-  <path d="M6.25 5C5.56 5 5 5.56 5 6.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C7.5 5.56 6.94 5 6.25 5zm3.5 0c-.69 0-1.25.56-1.25 1.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C11 5.56 10.44 5 9.75 5z"/>
-  <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
-		</svg>
-		`);
-			$div = emu_container;
-			$div.height($div.width() * 200 / 320);
-			$(window).bind('resize', function () { $div.height($div.width() * 200 / 320); });
-		}
-		function toggle_run() {
-			var vc64web = document.getElementById("vc64web").contentWindow;
-			if (vc64web.required_roms_loaded)// that means emu already runs
-			{
-				//click emulators run toggle button
-				$('#vc64web').contents().find('#button_run').click();
-
-				$("#toggle_icon").html(
-					vc64web.is_running() ?
-						`
-				<path d="M6.25 5C5.56 5 5 5.56 5 6.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C7.5 5.56 6.94 5 6.25 5zm3.5 0c-.69 0-1.25.56-1.25 1.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C11 5.56 10.44 5 9.75 5z"/>
-				<path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
-				`:
-						`
-				<path d="M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/>
-				<path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
-				`
-				);
-			}
-		}
-		function stop_emu_view() {
-			//close any other active emulator frame
-			if (saved_pic_html != null) {
-				//restore preview pic
-				$('#' + current_active_emulator).html(saved_pic_html);
-			}
-		}
-
-	</script>
+	<script src="vc64web_player.js"></script>
 	<!-- web emulator view stuff end-->
-
 </head>
 
 <body class="is-preload">
@@ -227,6 +165,7 @@
 	<script src="assets/js/breakpoints.min.js"></script>
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
+
 </body>
 
 </html>
