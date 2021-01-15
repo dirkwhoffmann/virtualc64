@@ -250,7 +250,7 @@ SIDBridge::setConfigItem(Option option, long id, long value)
             assert(id >= 0 && id <= 3);
 
             config.vol[id] = MIN(100, MAX(0, value));
-            vol[id] = pow((double)config.vol[id] / 100, 1.4) * 0.0000125;
+            vol[id] = pow((double)config.vol[id] / 100, 1.4) * 0.000025;
 
             if (wasMuted != isMuted()) {
                 messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
@@ -793,8 +793,8 @@ SIDBridge::mixSingleSID(u64 numSamples)
         r *= volR.current;
         
         // Apply ear protection
-        assert(abs(l) < 1);
-        assert(abs(r) < 1);
+        assert(abs(l) < 1.0);
+        assert(abs(r) < 1.0);
         
         stream.write(SamplePair { l, r } );
     }
@@ -839,8 +839,8 @@ SIDBridge::mixMultiSID(u64 numSamples)
         r *= volR.current;
         
         // Apply ear protection
-        assert(abs(l) < 0.15);
-        assert(abs(r) < 0.15);
+        assert(abs(l) < 1.0);
+        assert(abs(r) < 1.0);
         
         stream.write(SamplePair { l, r } );
     }
