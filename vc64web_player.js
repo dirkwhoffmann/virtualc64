@@ -15,7 +15,7 @@ var vc64web_player={
         //turn picture into iframe
         var emuview_html = `
 <div style="display:flex;flex-direction:column;">
-<iframe id="vc64web" width="100%" height="100%"
+<iframe id="vc64web" width="100%" height="100%" onclick="event.preventDefault();$vc64web.focus();return false;"
     src="https://dirkwhoffmann.github.io/virtualc64web/${params}#${address}">
 </iframe>
 <div style="display: flex"><svg  class="icon_btn" onclick="vc64web_player.stop_emu_view();" xmlns="http://www.w3.org/2000/svg" width="2.0em" height="2.0em" fill="currentColor" class="bi bi-pause-btn" viewBox="0 0 16 16">
@@ -42,12 +42,14 @@ ${this.audio_locked_icon}
         $vc64web.height($vc64web.width() * 200/320);
         $(window).bind('resize', function() { $vc64web.height($vc64web.width() * 200/320); });
 
-        $vc64web.focus();
-
         this.state_poller = setInterval(function(){ 
+            if(document.activeElement.nodeName.toLowerCase() == 'body')
+            { 
+                $vc64web.focus();
+            }
             vc64web_player.render_run_state();
             vc64web_player.render_current_audio_state();
-        }, 1000);
+        }, 900);
 
     },
 
