@@ -25,6 +25,10 @@ SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
     
     config.engine = SIDENGINE_RESID;
     config.enabled = 1;
+    config.address[0] = 0xD400;
+    config.address[1] = 0xD420;
+    config.address[2] = 0xD440;
+    config.address[3] = 0xD460;
     
     for (int i = 0; i < 4; i++) {
         resid[i].setClockFrequency(PAL_CLOCK_FREQUENCY);

@@ -22,7 +22,7 @@ class GamePad {
     var prefs: Preferences { return manager.parent.pref }
     var db: DeviceDatabase { return manager.parent.myAppDelegate.database }
     
-    // The Amiga port this device is connected to (1, 2, or nil)
+    // The control port this device is connected to (1, 2, or nil)
     var port: Int?
 
     // Reference to the device object

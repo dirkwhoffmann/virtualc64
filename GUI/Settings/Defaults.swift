@@ -854,18 +854,18 @@ extension Keys {
         static let sidSampling        = "VC64_AUD_Sampling"
         
         // In
-        static let vol0               = "VAMIGA_AUD_Volume0"
-        static let vol1               = "VAMIGA_AUD_Volume1"
-        static let vol2               = "VAMIGA_AUD_Volume2"
-        static let vol3               = "VAMIGA_AUD_Volume3"
-        static let pan0               = "VAMIGA_AUD_Pan0"
-        static let pan1               = "VAMIGA_AUD_Pan1"
-        static let pan2               = "VAMIGA_AUD_Pan2"
-        static let pan3               = "VAMIGA_AUD_Pan3"
+        static let vol0               = "VC64_AUD_Volume0"
+        static let vol1               = "VC64_AUD_Volume1"
+        static let vol2               = "VC64_AUD_Volume2"
+        static let vol3               = "VC64_AUD_Volume3"
+        static let pan0               = "VC64_AUD_Pan0"
+        static let pan1               = "VC64_AUD_Pan1"
+        static let pan2               = "VC64_AUD_Pan2"
+        static let pan3               = "VC64_AUD_Pan3"
         
         // Out
-        static let volL               = "VAMIGA_AUD_VolumeL"
-        static let volR               = "VAMIGA_AUD_VolumeR"
+        static let volL               = "VC64_AUD_VolumeL"
+        static let volR               = "VC64_AUD_VolumeR"
     }
 }
 

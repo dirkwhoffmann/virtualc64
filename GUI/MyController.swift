@@ -36,10 +36,10 @@ class MyController: NSWindowController, MessageReceiver {
     // Reference to the connected document
     var mydocument: MyDocument!
     
-    // Amiga proxy
-    // Implements a bridge between the emulator written in C++ and the
-    // GUI written in Swift. Because Swift cannot interact with C++ directly,
-    // the proxy is written in Objective-C.
+    /* Proxy object. The proxy implements a bridge between the emulator written
+     * in C++ and the GUI written in Swift. Because Swift cannot interact with
+     * C++ directly, the proxy is written in Objective-C.
+     */
     var c64: C64Proxy!
     
     // Inspector panel of this emulator instance

@@ -11,8 +11,6 @@ class MyDocumentController: NSDocumentController {
     
     override func makeDocument(withContentsOf url: URL,
                                ofType typeName: String) throws -> NSDocument {
-
-        track("typeName: \(typeName)")
         
         // For media files, attach the file to a new untitled document
         if typeName.uppercased() != "V64" {
