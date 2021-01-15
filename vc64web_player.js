@@ -10,7 +10,7 @@ function load_title(element, params, address) {
 
     //turn picture into iframe
     var emuview_html = `
-<div style="display:flex;flex-direction:column;height:100%">
+<div style="display:flex;flex-direction:column;">
 <iframe id="vc64web" width="100%" height="100%"
     src="https://dirkwhoffmann.github.io/virtualc64web/${params}#${address}">
 </iframe>
@@ -35,11 +35,11 @@ ${audio_locked_icon}
 `;
     emu_container.html(emuview_html); 
 
-    $div = emu_container;
-    $div.height($div.width() * 200/320);
-    $(window).bind('resize', function() { $div.height($div.width() * 200/320); });
+    $vc64web = $('#vc64web');
+    $vc64web.height($vc64web.width() * 200/320);
+    $(window).bind('resize', function() { $vc64web.height($vc64web.width() * 200/320); });
 
-    $('#vc64web').focus();
+    $vc64web.focus();
 
     state_poller = setInterval(function(){ 
         render_run_state();
@@ -64,7 +64,7 @@ function toggle_run() {
     if(vc64web.required_roms_loaded)// that means emu already runs
     {
         //click emulators run toggle button
-        $('#vc64web').contents().find('#button_run').click();
+        $vc64web.contents().find('#button_run').click();
 
         render_run_state();
     }
