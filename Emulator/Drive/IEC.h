@@ -144,6 +144,9 @@ public:
      */
 	void execute();
     
+    // Returns true if data is currently transferred over the bus
+    bool isTransferring() { return transferring; }
+    
     // Updates variable transferring
     void updateTransferStatus();
     

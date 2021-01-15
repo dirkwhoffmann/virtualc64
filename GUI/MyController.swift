@@ -142,7 +142,7 @@ class MyController: NSWindowController, MessageReceiver {
         var warp: Bool
         
         switch pref.warpMode {
-        case .auto: warp = c64.iec.busy
+        case .auto: warp = c64.iec.transferring
         case .off: warp = false
         case .on: warp = true
         }
