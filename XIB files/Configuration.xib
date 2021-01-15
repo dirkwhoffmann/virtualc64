@@ -67,7 +67,7 @@
                 <outlet property="romLockText" destination="Upv-e6-bJa" id="KIe-4I-7Yn"/>
                 <outlet property="romOkButton" destination="sYt-GY-XZQ" id="x48-u0-P2N"/>
                 <outlet property="romPowerButton" destination="7kO-E0-VCD" id="B6z-qV-8e8"/>
-                <outlet property="vc1541DeleteButton" destination="5aa-kC-14X" id="M1r-50-IEw"/>
+                <outlet property="vc1541DeleteButton" destination="yeR-GI-m2K" id="7KY-FI-Qfv"/>
                 <outlet property="vc1541DropView" destination="A84-Oz-THd" id="dJE-QV-9gG"/>
                 <outlet property="vc1541Subsubtitle" destination="DMA-Yr-TF0" id="JyR-Rz-yQz"/>
                 <outlet property="vc1541Subtitle" destination="hMS-xE-H7T" id="0k1-GI-MJa"/>
@@ -264,9 +264,9 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nSa-0I-2sF">
-                                            <rect key="frame" x="152" y="274" width="20" height="20"/>
+                                            <rect key="frame" x="152" y="271" width="20.5" height="28"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="trashTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="a6v-tc-VAW">
+                                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSTouchBarDeleteTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="a6v-tc-VAW">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -293,9 +293,9 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wF6-vA-6xk">
-                                            <rect key="frame" x="426" y="274" width="20" height="20"/>
+                                            <rect key="frame" x="426" y="271" width="20.5" height="28"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="trashTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="uI4-ym-kRa">
+                                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSTouchBarDeleteTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="uI4-ym-kRa">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -331,9 +331,9 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sT6-dg-rcI">
-                                            <rect key="frame" x="153" y="143" width="20" height="21"/>
+                                            <rect key="frame" x="153" y="140" width="20.5" height="29"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="trashTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="lf6-i6-pGt">
+                                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSTouchBarDeleteTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="lf6-i6-pGt">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -368,17 +368,6 @@ Gw
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5aa-kC-14X">
-                                            <rect key="frame" x="426" y="143" width="20" height="20"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="trashTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="ndi-2O-Hce">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="romDeleteVC1541Action:" target="-2" id="JAB-n3-gPW"/>
-                                            </connections>
-                                        </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m0b-3R-CyB">
                                             <rect key="frame" x="424" y="373" width="169" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -434,6 +423,17 @@ Gw
                                             </buttonCell>
                                             <connections>
                                                 <action selector="unlockAction:" target="-2" id="mOh-nu-bDg"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yeR-GI-m2K">
+                                            <rect key="frame" x="426" y="145" width="19.5" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSTouchBarDeleteTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="Cjv-qL-mSw">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="romDeleteVC1541Action:" target="-2" id="JHa-3l-aX1"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -2294,6 +2294,7 @@ Gw
         <userDefaultsController representsSharedInstance="YES" id="boj-yF-D6X"/>
     </objects>
     <resources>
+        <image name="NSTouchBarDeleteTemplate" width="15" height="17"/>
         <image name="devGamepad1Template" width="20" height="21"/>
         <image name="devGamepad2Template" width="20" height="21"/>
         <image name="devKeyset1Template" width="20" height="20"/>
@@ -2309,6 +2310,5 @@ Gw
         <image name="pref_sid" width="514" height="514"/>
         <image name="pref_vicii_pal" width="514" height="516"/>
         <image name="rom_missing" width="129" height="157"/>
-        <image name="trashTemplate" width="512" height="512"/>
     </resources>
 </document>
