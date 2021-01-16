@@ -23,13 +23,11 @@ var vc64web_player={
         }
     },
     saved_pic_html: null,
-    current_active_container: null,
     load_into: function (element, params, address) {
         this.stop_emu_view();
         //save preview pic
         var emu_container = $(element).parent();
         this.saved_pic_html = emu_container.html();
-        this.current_active_container = emu_container;
 
         //turn picture into iframe
         var emuview_html = `
@@ -208,7 +206,7 @@ ${this.overlay_on_icon}
         //close any other active emulator frame
         if (this.saved_pic_html != null) {
             //restore preview pic
-            this.current_active_container.html(this.saved_pic_html);
+            $('#player_container').parent().html(this.saved_pic_html); 
         }
         if(this.state_poller != null)
         {
