@@ -174,7 +174,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIconFile</key>
-	<string>IconVirtualC64</string>
+	<string>AppIcon</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -184,9 +184,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>4.0b2</string>
+	<string>4.0b3</string>
 	<key>CFBundleVersion</key>
-	<string>4.0b2</string>
+	<string>4.0b3</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.entertainment</string>
 	<key>NSAppTransportSecurity</key>
@@ -200,8 +200,6 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>OSAScriptingDefinition</key>
-	<string>VirtualC64.sdef</string>
 	<key>SUAllowsAutomaticUpdates</key>
 	<string>NO</string>
 	<key>SUEnableAutomaticChecks</key>
@@ -209,7 +207,7 @@
 	<key>SUEnableSystemProfiling</key>
 	<string>NO</string>
 	<key>SUFeedURL</key>
-	<string>http://dirkwhoffmann.github.io/virtualc64/VirtualC64Appcast.xml</string>
+	<string>https://dirkwhoffmann.github.io/virtualc64/VirtualC64Appcast.xml</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
 	<key>SUPublicEDKey</key>
