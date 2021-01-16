@@ -49,11 +49,12 @@ var proxy: C64Proxy? {
 
 @NSApplicationMain
 @objc public class MyAppDelegate: NSObject, NSApplicationDelegate {
-       
-    let myDocumentController = MyDocumentController()
-    
+           
     @IBOutlet weak var drive8Menu: NSMenuItem!
     @IBOutlet weak var drive9Menu: NSMenuItem!
+
+    // Replace the old document controller by instantiating a custom controller
+    let myDocumentController = MyDocumentController()
 
     var documents: [MyDocument] {
         return NSDocumentController.shared.documents as? [MyDocument] ?? []

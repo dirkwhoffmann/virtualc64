@@ -69,7 +69,7 @@ private:
     };
         
     // CPU cycle at the last call to executeUntil()
-    u64 cycles = 0;
+    Cycle cycles = 0;
     
     // Current CPU frequency
     u32 cpuFrequency = PAL_CLOCK_FREQUENCY;
@@ -147,7 +147,7 @@ public:
     bool setConfigItem(Option option, long value) override;
     bool setConfigItem(Option option, long id, long value) override;
 
-    bool isEnabled(int nr) const { return GET_BIT(config.enabled, nr); }
+    bool isEnabled(usize nr) const { return GET_BIT(config.enabled, nr); }
     
     bool isMuted() const;
 
@@ -310,16 +310,16 @@ public:
     /* Executes SID until a certain cycle is reached.
      * // The function returns the number of produced sound samples (not yet).
      */
-    void executeUntil(u64 targetCycle);
+    void executeUntil(Cycle targetCycle);
 
     // Executes SID for a certain number of CPU cycles
-	i64 executeCycles(u64 numCycles);
+	usize executeCycles(usize numCycles);
 
 private:
     
     // Called by executeCycles to produce the final stereo stream
-    void mixSingleSID(u64 numSamples);
-    void mixMultiSID(u64 numSamples);
+    void mixSingleSID(usize numSamples);
+    void mixMultiSID(usize numSamples);
 
     
     //
