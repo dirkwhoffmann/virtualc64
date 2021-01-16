@@ -1,5 +1,5 @@
 /**
- * vc64web player
+ * official vc64web player.
  */
 
 var vc64web_player={
@@ -14,7 +14,7 @@ var vc64web_player={
 
         //turn picture into iframe
         var emuview_html = `
-<div style="display:flex;flex-direction:column;">
+<div id="player_container" style="display:flex;flex-direction:column;">
 <iframe id="vc64web" width="100%" height="100%" onclick="event.preventDefault();$vc64web.focus();return false;"
     src="https://dirkwhoffmann.github.io/virtualc64web/${params}#${address}">
 </iframe>
@@ -28,7 +28,11 @@ ${this.pause_icon}
 <svg id="btn_unlock_audio" class="icon_btn" onclick="vc64web_player.toggle_audio();" xmlns="http://www.w3.org/2000/svg" width="2.0em" height="2.0em" fill="currentColor" class="bi bi-pause-btn" viewBox="0 0 16 16">
 ${this.audio_locked_icon}
 </svg>
-<a title="open fullwindow in new browser tab" style="margin-left:auto;border:none;width:1.5em;margin-top:4px" onclick="vc64web_player.stop_emu_view();" href="https://dirkwhoffmann.github.io/virtualc64web/${params}#${address}" target="blank">
+
+<svg id="btn_overlay" class="icon_btn" style="margin-top:4px;margin-left:auto" onclick="vc64web_player.toggle_overlay();" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="currentColor" class="bi bi-pause-btn" viewBox="0 0 16 16">
+${this.overlay_on_icon}
+</svg>
+<a title="open fullwindow in new browser tab" style="border:none;width:1.5em;margin-top:4px" onclick="vc64web_player.stop_emu_view();" href="https://dirkwhoffmann.github.io/virtualc64web/${params}#${address}" target="blank">
     <svg class="icon_btn" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="currentColor" class="bi bi-pause-btn" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm5.854 8.803a.5.5 0 1 1-.708-.707L9.243 6H6.475a.5.5 0 1 1 0-1h3.975a.5.5 0 0 1 .5.5v3.975a.5.5 0 1 1-1 0V6.707l-4.096 4.096z"/>
 </svg>
@@ -40,7 +44,13 @@ ${this.audio_locked_icon}
 
         $vc64web = $('#vc64web');
         $vc64web.height($vc64web.width() * 200/320);
-        $(window).bind('resize', function() { $vc64web.height($vc64web.width() * 200/320); });
+        $(window).bind('resize', function() { 
+            if( vc64web_player.is_overlay)
+            {
+                vc64web_player.scale_overlay();
+            }
+            $vc64web.height($vc64web.width() * 200/320); 
+        });
 
         this.state_poller = setInterval(function(){ 
             if(document.activeElement.nodeName.toLowerCase() == 'body')
@@ -63,7 +73,42 @@ ${this.audio_locked_icon}
     pause_icon:`<path d="M6.25 5C5.56 5 5 5.56 5 6.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C7.5 5.56 6.94 5 6.25 5zm3.5 0c-.69 0-1.25.56-1.25 1.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C11 5.56 10.44 5 9.75 5z"/>
         <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
         `,
-
+    overlay_on_icon:`<path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1h-4zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5z"/>`,
+    overlay_off_icon:`<path d="M5.5 0a.5.5 0 0 1 .5.5v4A1.5 1.5 0 0 1 4.5 6h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5zm5 0a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 10 4.5v-4a.5.5 0 0 1 .5-.5zM0 10.5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 6 11.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5zm10 1a1.5 1.5 0 0 1 1.5-1.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4z"/>`,
+    is_overlay: false,
+    toggle_overlay: function () {
+        var container = $('#player_container');
+        if( container.css('position') == "fixed")
+        {
+            this.is_overlay=false;
+            $('#btn_overlay').html(this.overlay_on_icon);
+            $('#player_container').css({"position": "", "top": "", "left": "", "width": "", "background-color": ""});
+        }
+        else
+        {
+            $('#btn_overlay').html(this.overlay_off_icon);
+            this.scale_overlay();
+            this.is_overlay=true;
+        }
+        $vc64web.height($vc64web.width() * 200/320);
+    },
+    scale_overlay: function(){
+        var ratio=1.6;
+        var w1=window.innerWidth/window.innerWidth;
+        var w2=window.innerHeight * ratio /window.innerWidth;
+        var width_percent = Math.min(w1,w2)*100;
+        var margin_left = Math.round((100-width_percent)/2);
+        var calc_pixel_height = window.innerWidth*width_percent/100 / ratio;
+        var height_percent = calc_pixel_height/window.innerHeight *100;
+        var margin_top  = Math.round((100 -  height_percent )/2);
+        width_percent = Math.round(width_percent);
+        if(margin_top<5)
+        {//give some extra room for height of player bottom bar controls 
+            width_percent -= 6; 
+            margin_left += 3;
+        }
+        $('#player_container').css({"position": "fixed", "top": `${margin_top}vh`, "left": `${margin_left}vw`, "width": `${width_percent}vw`,  "background-color": "white"});
+    },
     toggle_run: function () {
         var vc64web = document.getElementById("vc64web").contentWindow;
         if(vc64web.required_roms_loaded)// that means emu already runs
