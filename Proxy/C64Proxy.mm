@@ -539,6 +539,11 @@
     return (IEC *)obj;
 }
 
+- (BOOL)transferring
+{
+    return [self iec]->isTransferring();
+}
+
 @end
 
 //

@@ -142,7 +142,7 @@ Datasette::pressPlay()
     playKey = true;
 
     // Schedule first pulse
-    uint64_t length = pulseLength();
+    usize length = pulseLength();
     nextRisingEdge = length / 2;
     nextFallingEdge = length;
     advanceHead();
@@ -174,7 +174,7 @@ Datasette::_execute()
         if (head < size) {
 
             // Schedule the next pulse
-            uint64_t length = pulseLength();
+            usize length = pulseLength();
             nextRisingEdge = length / 2;
             nextFallingEdge = length;
             advanceHead();

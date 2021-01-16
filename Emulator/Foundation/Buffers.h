@@ -81,7 +81,7 @@ template <class T, usize capacity> struct RingBuffer
     {
         assert(!isEmpty());
 
-        int oldr = r;
+        auto oldr = r;
         r = next(r);
         return elements[oldr];
     }
@@ -96,7 +96,7 @@ template <class T, usize capacity> struct RingBuffer
     {
         assert(!isFull());
 
-        int oldw = w;
+        auto oldw = w;
         w = next(w);
         elements[oldw] = element;
     }

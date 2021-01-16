@@ -189,8 +189,8 @@
                 <outlet property="sprSelector" destination="EZb-5s-Pgg" id="AHm-np-2Eb"/>
                 <outlet property="sprX" destination="qpd-Tj-dnU" id="nBB-VU-SBZ"/>
                 <outlet property="sprY" destination="XJd-h2-TLR" id="ZzH-fB-s05"/>
-                <outlet property="stepIntoButton" destination="XcS-nk-XBp" id="WJQ-2Z-1F9"/>
-                <outlet property="stepOverButton" destination="EYA-b4-jd8" id="mJJ-RB-PNP"/>
+                <outlet property="stepIntoButton" destination="EYA-b4-jd8" id="X7c-oQ-vYS"/>
+                <outlet property="stepOverButton" destination="XcS-nk-XBp" id="Blq-Hv-IZy"/>
                 <outlet property="stopAndGoButton" destination="DQ4-Ah-ce3" id="hhb-ps-zLf"/>
                 <outlet property="vicBadLine" destination="rwy-dP-ExT" id="sxv-Tp-qqI"/>
                 <outlet property="vicBgColor0" destination="39J-Yj-f8L" id="gtk-bG-Nn0"/>
@@ -254,7 +254,7 @@
                     <button toolTip="Step Into" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EYA-b4-jd8">
                         <rect key="frame" x="51" y="10" width="32" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="stepIntoTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="axesIndependently" inset="2" id="r8o-lg-ef1">
+                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="stepIntoTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="r8o-lg-ef1">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -265,7 +265,7 @@
                     <button toolTip="Run / Pause" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DQ4-Ah-ce3">
                         <rect key="frame" x="19" y="10" width="32" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="pauseTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="axesIndependently" inset="2" id="vTp-Cf-cv9">
+                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="pauseTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="vTp-Cf-cv9">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -276,7 +276,7 @@
                     <button toolTip="Step Over" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XcS-nk-XBp">
                         <rect key="frame" x="82" y="10" width="32" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="stepOverTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="axesIndependently" inset="2" id="BIq-PM-Ogu">
+                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="stepOverTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="BIq-PM-Ogu">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -4026,7 +4026,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                             <clipView key="contentView" drawsBackground="NO" id="aIH-Gg-Lix">
                                                 <rect key="frame" x="1" y="1" width="528" height="294"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Z0G-5d-mCN">
                                                         <rect key="frame" x="0.0" y="0.0" width="528" height="294"/>
@@ -4056,7 +4056,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                             <clipView key="contentView" drawsBackground="NO" id="gvT-zI-kOz">
                                                 <rect key="frame" x="1" y="1" width="113" height="294"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tableView wantsLayer="YES" focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="15" headerView="qMK-jo-JSe" id="QHD-zl-BVw" customClass="TrackTableView" customModule="VirtualC64" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="113" height="269"/>
@@ -4065,7 +4065,7 @@
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
-                                                            <tableColumn identifier="bank" width="101" maxWidth="3.4028234663852886e+38" id="rr7-ac-kMl" userLabel="Item">
+                                                            <tableColumn identifier="bank" width="72" maxWidth="3.4028234663852886e+38" id="rr7-ac-kMl" userLabel="Item">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Track">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -4103,7 +4103,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                             <clipView key="contentView" drawsBackground="NO" id="qo3-j4-7on">
                                                 <rect key="frame" x="1" y="1" width="113" height="294"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tableView wantsLayer="YES" focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="15" headerView="BSO-7Z-azM" id="fpd-S5-ZTi" customClass="SectorTableView" customModule="VirtualC64" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="113" height="269"/>
@@ -4112,7 +4112,7 @@
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
-                                                            <tableColumn identifier="bank" width="101" maxWidth="3.4028234663852886e+38" id="TfR-6b-goh" userLabel="Item">
+                                                            <tableColumn identifier="bank" width="72" maxWidth="3.4028234663852886e+38" id="TfR-6b-goh" userLabel="Item">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Sector">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

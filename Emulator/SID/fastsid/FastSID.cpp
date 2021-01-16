@@ -357,24 +357,30 @@ FastSID::poke(u16 addr, u8 value)
 }
 
 i64
-FastSID::executeCycles(u64 numCycles, SampleStream &stream)
+FastSID::executeCycles(usize numCycles, SampleStream &stream)
 {
-    u64 buflength = stream.cap();
+    usize buflength = stream.cap();
     
     executedCycles += numCycles;
     
     // Compute the number of sound samples to produce
     double samplesPerCycle = (double)sampleRate / (double)cpuFrequency;
-    uint64_t shouldHave = (uint64_t)(executedCycles * samplesPerCycle);
+    usize shouldHave = (usize)(executedCycles * samplesPerCycle);
     
     // How many sound samples are missing?
-    uint64_t samples = shouldHave - computedSamples;
+    usize samples = shouldHave - computedSamples;
     computedSamples = shouldHave;
     
     // Do some consistency checking
     if (samples > buflength) {
         warn("Number of missing sound samples exceeds buffer size\n");
         samples = buflength;
+    }
+    
+    // Check for a buffer overflow
+    if (unlikely(samples > stream.free())) {
+        warn("SID %d: SAMPLE BUFFER OVERFLOW", nr);
+        stream.clear();
     }
     
     // Compute missing samples
@@ -386,7 +392,7 @@ FastSID::executeCycles(u64 numCycles, SampleStream &stream)
 }
 
 i64
-FastSID::executeCycles(u64 numCycles)
+FastSID::executeCycles(usize numCycles)
 {
     return executeCycles(numCycles, bridge.sidStream[nr]);
 }

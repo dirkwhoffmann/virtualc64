@@ -438,7 +438,7 @@ usize
 SIDBridge::didLoadFromBuffer(u8 *buffer)
 {
     clearRingbuffer();
-    for (int i = 0; i < 4; i++) sidStream[i].clear(0);
+    for (usize i = 0; i < 4; i++) sidStream[i].clear(0);
     return 0;
 }
 
@@ -691,22 +691,24 @@ SIDBridge::poke(u16 addr, u8 value)
 }
 
 void
-SIDBridge::executeUntil(u64 targetCycle)
+SIDBridge::executeUntil(Cycle targetCycle)
 {
-    i64 missingCycles  = targetCycle - cycles;
-    i64 consumedCycles = executeCycles(missingCycles);
+    assert(targetCycle >= cycles);
+    
+    usize missingCycles  = targetCycle - cycles;
+    usize consumedCycles = executeCycles(missingCycles);
 
     cycles += consumedCycles;
     
     debug(SID_EXEC,
-          "target: %lld missing: %lld consumed: %lld reached: %lld still missing: %lld\n",
+          "target: %lld missing: %zd consumed: %zd reached: %lld still missing: %lld\n",
           targetCycle, missingCycles, consumedCycles, cycles, targetCycle - cycles);
 }
 
-i64
-SIDBridge::executeCycles(u64 numCycles)
+usize
+SIDBridge::executeCycles(usize numCycles)
 {
-    u64 numSamples;
+    usize numSamples;
     
     // Run reSID for at least one cycle to make pipelined writes work
     if (numCycles == 0) {
@@ -730,7 +732,7 @@ SIDBridge::executeCycles(u64 numCycles)
             
             // Run all other SIDS (if any)
             if (config.enabled > 1) {
-                for (int i = 1; i < 4; i++) {
+                for (usize i = 1; i < 4; i++) {
                     if (isEnabled(i)) {
                         u64 numSamples2 = fastsid[i].executeCycles(numCycles, sidStream[i]);
                         numSamples = MIN(numSamples, numSamples2);
@@ -746,7 +748,7 @@ SIDBridge::executeCycles(u64 numCycles)
             
             // Run all other SIDS (if any)
             if (config.enabled > 1) {
-                for (int i = 1; i < 4; i++) {
+                for (usize i = 1; i < 4; i++) {
                     if (isEnabled(i)) {
                         u64 numSamples2 = resid[i].executeCycles(numCycles, sidStream[i]);
                         numSamples = MIN(numSamples, numSamples2);
@@ -766,7 +768,7 @@ SIDBridge::executeCycles(u64 numCycles)
 }
 
 void
-SIDBridge::mixSingleSID(u64 numSamples)
+SIDBridge::mixSingleSID(usize numSamples)
 {    
     stream.lock();
     
@@ -779,7 +781,7 @@ SIDBridge::mixSingleSID(u64 numSamples)
           vol[0], pan[0], volL.current, volR.current);
 
     // Convert sound samples to floating point values and write into ringbuffer
-    for (unsigned i = 0; i < numSamples; i++) {
+    for (usize i = 0; i < numSamples; i++) {
         
         // Read SID sample from ring buffer
         float ch0 = (float)sidStream[0].read() * vol[0];
@@ -802,7 +804,7 @@ SIDBridge::mixSingleSID(u64 numSamples)
 }
         
 void
-SIDBridge::mixMultiSID(u64 numSamples)
+SIDBridge::mixMultiSID(usize numSamples)
 {
     stream.lock();
     
@@ -815,7 +817,7 @@ SIDBridge::mixMultiSID(u64 numSamples)
           vol[0], pan[0], volL.current, volR.current);
 
     // Convert sound samples to floating point values and write into ringbuffer
-    for (unsigned i = 0; i < numSamples; i++) {
+    for (usize i = 0; i < numSamples; i++) {
         
         float ch0, ch1, ch2, ch3, l, r;
         
@@ -862,7 +864,6 @@ SIDBridge::clearSampleBuffer(long nr)
 void
 SIDBridge::clearRingbuffer()
 {
-    // stream.clear();
     alignWritePtr();
 }
 

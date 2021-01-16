@@ -425,7 +425,7 @@
 
 @interface IECProxy : HardwareComponentProxy { }
 
-@property (readonly) BOOL busy;
+@property (readonly) BOOL transferring;
 
 @end
 
