@@ -1,16 +1,35 @@
 /**
  * official vc64web player.
+ * checks whether jquery is already there, if not lazy loads it when emulator is started
  */
 
 var vc64web_player={
+    loadScript: function (url, callback){
+        var script = document.createElement("script")
+        script.type = "text/javascript";
+        script.onload = callback;
+        script.src = url;
+        document.getElementsByTagName("head")[0].appendChild(script);
+    },
+    load: function(element, params, address) {
+        if(window.jQuery)
+        {
+            this.load_into(element,params, address);
+        }
+        else
+        {
+            this.loadScript("https://dirkwhoffmann.github.io/virtualc64web/js/jquery-3.5.0.min.js" , 
+            function(){vc64web_player.load_into(element,params, address);});
+        }
+    },
     saved_pic_html: null,
-    current_active_emulator: null,
-    load: function (element, params, address) {
+    current_active_container: null,
+    load_into: function (element, params, address) {
         this.stop_emu_view();
         //save preview pic
         var emu_container = $(element).parent();
         this.saved_pic_html = emu_container.html();
-        this.current_active_emulator = emu_container.attr('id');
+        this.current_active_container = emu_container;
 
         //turn picture into iframe
         var emuview_html = `
@@ -82,7 +101,7 @@ ${this.overlay_on_icon}
         {
             this.is_overlay=false;
             $('#btn_overlay').html(this.overlay_on_icon);
-            $('#player_container').css({"position": "", "top": "", "left": "", "width": "", "background-color": "", "z-index": ""});
+            $('#player_container').css({"position": "", "top": "", "left": "", "width": "", "z-index": ""});
         }
         else
         {
@@ -107,7 +126,7 @@ ${this.overlay_on_icon}
             width_percent -= 6; 
             margin_left += 3;
         }
-        $('#player_container').css({"position": "fixed", "top": `${margin_top}vh`, "left": `${margin_left}vw`, "width": `${width_percent}vw`,  "background-color": "white", "z-index": 1000});
+        $('#player_container').css({"position": "fixed", "top": `${margin_top}vh`, "left": `${margin_left}vw`, "width": `${width_percent}vw`, "z-index": 1000});
     },
     toggle_run: function () {
         var vc64web = document.getElementById("vc64web").contentWindow;
@@ -189,7 +208,7 @@ ${this.overlay_on_icon}
         //close any other active emulator frame
         if (this.saved_pic_html != null) {
             //restore preview pic
-            $('#' + this.current_active_emulator).html(this.saved_pic_html);
+            this.current_active_container.html(this.saved_pic_html);
         }
         if(this.state_poller != null)
         {
