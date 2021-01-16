@@ -82,7 +82,7 @@ ${this.overlay_on_icon}
         {
             this.is_overlay=false;
             $('#btn_overlay').html(this.overlay_on_icon);
-            $('#player_container').css({"position": "", "top": "", "left": "", "width": "", "background-color": ""});
+            $('#player_container').css({"position": "", "top": "", "left": "", "width": "", "background-color": "", "z-index": ""});
         }
         else
         {
@@ -107,7 +107,7 @@ ${this.overlay_on_icon}
             width_percent -= 6; 
             margin_left += 3;
         }
-        $('#player_container').css({"position": "fixed", "top": `${margin_top}vh`, "left": `${margin_left}vw`, "width": `${width_percent}vw`,  "background-color": "white"});
+        $('#player_container').css({"position": "fixed", "top": `${margin_top}vh`, "left": `${margin_left}vw`, "width": `${width_percent}vw`,  "background-color": "white", "z-index": 1000});
     },
     toggle_run: function () {
         var vc64web = document.getElementById("vc64web").contentWindow;
