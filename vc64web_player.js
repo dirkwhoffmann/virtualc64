@@ -26,8 +26,11 @@ var vc64web_player={
     load_into: function (element, params, address) {
         this.stop_emu_view();
         //save preview pic
-        var emu_container = $(element).parent();
+        var this_element = $(element);
+        var emu_container = this_element.parent();
         this.saved_pic_html = emu_container.html();
+
+        var preview_pic_width= this_element.width();
 
         //turn picture into iframe
         var emuview_html = `
@@ -58,6 +61,8 @@ ${this.overlay_on_icon}
 </div>
 `;
         emu_container.html(emuview_html); 
+
+        $('#player_container').css("width",preview_pic_width);
 
         $vc64web = $('#vc64web');
         $vc64web.height($vc64web.width() * 200/320);
