@@ -23,6 +23,7 @@ var vc64web_player={
         }
     },
     saved_pic_html: null,
+    preview_pic_width: "100%",
     load_into: function (element, params, address) {
         this.stop_emu_view();
         //save preview pic
@@ -30,7 +31,7 @@ var vc64web_player={
         var emu_container = this_element.parent();
         this.saved_pic_html = emu_container.html();
 
-        var preview_pic_width= this_element.width();
+        this.preview_pic_width= this_element.width();
 
         //turn picture into iframe
         var emuview_html = `
@@ -62,7 +63,7 @@ ${this.overlay_on_icon}
 `;
         emu_container.html(emuview_html); 
 
-        $('#player_container').css("width",preview_pic_width);
+        $('#player_container').css("width",this.preview_pic_width);
 
         $vc64web = $('#vc64web');
         $vc64web.height($vc64web.width() * 200/320);
@@ -104,7 +105,7 @@ ${this.overlay_on_icon}
         {
             this.is_overlay=false;
             $('#btn_overlay').html(this.overlay_on_icon);
-            $('#player_container').css({"position": "", "top": "", "left": "", "width": "", "z-index": ""});
+            $('#player_container').css({"position": "", "top": "", "left": "", "width": this.preview_pic_width, "z-index": ""});
         }
         else
         {
