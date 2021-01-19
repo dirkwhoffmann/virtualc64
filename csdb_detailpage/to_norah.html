@@ -54,6 +54,11 @@ function unmarkrel(rid) {
 
 
 <style>
+		.button_play {
+			color: white;
+			background-color: #2575ff;
+			border: none;
+		}
 		#player_container {
 			background-color: black;
 		}
@@ -64,7 +69,7 @@ function unmarkrel(rid) {
 			background-color: transparent;
 			color: white;
 			margin-right: 15px;
-			cursor: grab;
+			cursor: pointer;
 		}
 </style>
 <!-- player stuff ends -->
@@ -148,11 +153,11 @@ google_ad_height = 600;
 <br>
 <b>Download :</b><br>
 <table cellspacing="1" cellpadding="0"><tbody><tr><td><a href="https://csdb.dk/release/download.php?id=244581">http://csdb.dk/getinternalfile.php/206403/to_norah.prg</a> (downloads: 851) 
-<button type="button" onclick="vc64web_player.load(document.querySelector(`#preview_pic`), '#2ndSID=d420#openROMS=true#navbar=hidden#wide=true#border=false', 'http://csdb.dk/getinternalfile.php/206403/to_norah.prg');return false;">play</button>
+<button type="button" onclick="vc64web_player.load(document.querySelector(`#preview_pic`), '#2ndSID=d420#openROMS=true#navbar=hidden#wide=true#border=false', 'http://csdb.dk/getinternalfile.php/206403/to_norah.prg');return false;" class="button_play">play</button>
 </td></tr>
 <tr><td><a href="https://csdb.dk/release/download.php?id=244582">http://csdb.dk/getinternalfile.php/206404/To-Norah-d420.sid</a> (downloads: 235)</td></tr>
 <tr><td><a href="https://csdb.dk/release/download.php?id=244608">http://csdb.dk/getinternalfile.php/206430/to_norah_nosidcheck.prg</a> (downloads: 178)
-<button type="button" onclick="vc64web_player.load(document.querySelector(`#preview_pic`), '#openROMS=true#navbar=hidden#wide=true#border=false', 'http://csdb.dk/getinternalfile.php/206430/to_norah_nosidcheck.prg');return false;">play</button>
+<button type="button" onclick="vc64web_player.load(document.querySelector(`#preview_pic`), '#openROMS=true#navbar=hidden#wide=true#border=false', 'http://csdb.dk/getinternalfile.php/206430/to_norah_nosidcheck.prg');return false;" class="button_play">play</button>
 </td></tr>
 </tbody></table><br><b>Look for downloads on external sites:</b><br>
 &nbsp;<a href="http://ftp.pokefinder.org/index.php?s=To%20Norah&amp;sourceid=csdb" target="_blank">Pokefinder.org</a><br>
