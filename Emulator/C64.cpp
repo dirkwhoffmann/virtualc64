@@ -1046,6 +1046,11 @@ void
 C64::endFrame()
 {
     frame++;
+    
+    /*
+    if ((frame % 50) == 0) printf("Ping %p\n", this);
+    */
+    
     vic.endFrame();
     
     // Increment time of day clocks every tenth of a second

@@ -12,7 +12,7 @@
 #include "C64Config.h"
 #include "C64Constants.h"
 #include "Debug.h"
-#include "VC64Error.h"
+#include "Errors.h"
 #include "C64Types.h"
 
 #include <limits.h>
@@ -152,9 +152,7 @@ bool isZero(const u8 *ptr, usize size);
 // Handling files
 //
 
-/* Extracts a certain component from a path. Every function returns a newly
- * created string which needs to be deleted manually.
- */
+// Extracts a certain component from a path
 string extractFileName(const string &s);
 string extractSuffix(const string &s);
 string stripSuffix(const string &s); 

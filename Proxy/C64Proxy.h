@@ -577,7 +577,6 @@
 + (instancetype)makeWithD64:(D64FileProxy *)d64 error:(ErrorCode *)err;
 @end
 
-
 //
 // AnyFile proxy
 //

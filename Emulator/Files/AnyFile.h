@@ -57,7 +57,7 @@ public:
     
 
     //
-    // Generating
+    // Creating
     //
     
 public:
@@ -172,7 +172,7 @@ public:
     //
 
     // Copies the file contents into a buffer starting at the provided offset
-    void flash(u8 *buffer, usize offset = 0);
+    void flash(u8 *buf, usize offset = 0);
 
     
     //
@@ -204,8 +204,8 @@ public:
 public:
     
     /* This function is called in the default implementation of readFromStream.
-     * It is overwritten by some subclasses to fix known inconsistencies in
-     * certain media files.
+     * It can be overwritten to fix known inconsistencies in certain media
+     * files.
      */
     virtual void repair() { };    
 };

@@ -276,7 +276,7 @@
 		50031B33206FABA400A1969B /* OldSnapshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OldSnapshotDialog.xib; sourceTree = "<group>"; };
 		50031B39206FB0FC00A1969B /* SnapshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
 		5009CF3224C0B8EF00F674FF /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
-		500C7C43259FC09B00F5CC1F /* VC64Error.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VC64Error.h; sourceTree = "<group>"; };
+		500C7C43259FC09B00F5CC1F /* Errors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Errors.h; sourceTree = "<group>"; };
 		500EA6C524B09037009AA7D7 /* C64Component.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64Component.cpp; sourceTree = "<group>"; };
 		500EA6C624B09037009AA7D7 /* C64Component.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Component.h; sourceTree = "<group>"; };
 		50133B96200D4EED00167227 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
@@ -1262,7 +1262,7 @@
 				50A2D7B024AF94B400671F38 /* Aliases.h */,
 				50F062E4258DFC2A009A6B21 /* Debug.h */,
 				50E806BE25A1C2B800F08732 /* Reflection.h */,
-				500C7C43259FC09B00F5CC1F /* VC64Error.h */,
+				500C7C43259FC09B00F5CC1F /* Errors.h */,
 				504C42F224AF29AB00E69CAE /* Utils.h */,
 				504C42EF24AF29AB00E69CAE /* Utils.cpp */,
 				50CCC309256FAC870052619A /* Concurrency.h */,

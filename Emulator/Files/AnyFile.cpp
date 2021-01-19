@@ -55,36 +55,6 @@ AnyFile::flash(u8 *buffer, usize offset)
 }
 
 usize
-AnyFile::readFromFile(const char *path)
-{
-    assert(path);
-        
-    std::ifstream stream(path);
-
-    if (!stream.is_open()) {
-        throw VC64Error(ERROR_FILE_CANT_READ);
-    }
-    
-    usize result = readFromStream(stream);
-    assert(result == size);
-    
-    this->path = path;
-    return size;
-}
-
-usize
-AnyFile::readFromBuffer(const u8 *buf, usize len)
-{
-    assert(buf);
-
-    std::istringstream stream(std::string((const char *)buf, len));
-    
-    usize result = readFromStream(stream);
-    assert(result == size);
-    return size;
-}
-
-usize
 AnyFile::readFromStream(std::istream &stream)
 {
     // Get stream size
@@ -104,6 +74,36 @@ AnyFile::readFromStream(std::istream &stream)
     // Repair the file (if applicable)
     repair();
     
+    return size;
+}
+
+usize
+AnyFile::readFromFile(const char *path)
+{
+    assert(path);
+        
+    std::ifstream stream(path);
+
+    if (!stream.is_open()) {
+        throw VC64Error(ERROR_FILE_CANT_READ);
+    }
+    
+    usize result = readFromStream(stream);
+    assert(result == size);
+    
+    this->path = string(path);
+    return size;
+}
+
+usize
+AnyFile::readFromBuffer(const u8 *buf, usize len)
+{
+    assert(buf);
+
+    std::istringstream stream(std::string((const char *)buf, len));
+    
+    usize result = readFromStream(stream);
+    assert(result == size);
     return size;
 }
 

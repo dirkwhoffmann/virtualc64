@@ -19,6 +19,9 @@
 
 - (instancetype) initWith:(void *)ref
 {
+    if (ref == nil) {
+        return nil;
+    }
     if (self = [super init]) {
         obj = ref;
     }
@@ -1865,7 +1868,6 @@
 
 @implementation C64Proxy
 
-// @synthesize wrapper;
 @synthesize mem, cpu, breakpoints, watchpoints, vic, cia1, cia2, sid;
 @synthesize keyboard, port1, port2, iec;
 @synthesize expansionport, drive8, drive9, datasette, mouse;
