@@ -34,14 +34,22 @@ extension MyController: NSWindowDelegate {
         track()
         
         // Stop emulator if it is configured to pause in background
-        pauseInBackgroundSavedState = c64.running
-        if pref.pauseInBackground { c64.pause() }
+        if c64 != nil {
+            pauseInBackgroundSavedState = c64.running
+            if pref.pauseInBackground { c64.pause() }
+        }
     }
     
     public func windowWillClose(_ notification: Notification) {
         
         track()
         
+        // Stop timers
+        timerLock.lock()
+        timer?.invalidate()
+        timer = nil
+        timerLock.unlock()
+
         // Disconnect and close auxiliary windows
         inspector?.c64 = nil
         inspector?.close()
@@ -50,22 +58,20 @@ extension MyController: NSWindowDelegate {
         
         // Close virtual keyboard
         // virtualKeyboard?.close()
-        
-        // Stop timers
-        timerLock.lock()
-        timer?.invalidate()
-        timer = nil
-        timerLock.unlock()
-        
+                
         // Disconnect the audio engine from the emulator
         macAudio.shutDown()
         
-        // Quit message queue
+        // Unsubscribe from the message queue
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
         c64.removeListener(myself)
   
-        // Stop metal view
+        // Stop metal
         renderer.cleanup()
+        
+        // Kill the emulator
+        c64.kill()
+        c64 = nil        
     }
     
     public func windowWillEnterFullScreen(_ notification: Notification) {

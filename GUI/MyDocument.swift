@@ -55,13 +55,7 @@ class MyDocument: NSDocument {
         // Create emulator instance
         c64 = C64Proxy()
     }
- 
-    deinit {
-        
-        track()
-        c64.kill()
-    }
-    
+     
     override open func makeWindowControllers() {
         
         track()
