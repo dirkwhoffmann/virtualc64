@@ -59,7 +59,7 @@ var vc64web_player={
 <iframe id="vc64web" width="100%" height="100%" onclick="event.preventDefault();$vc64web.focus();return false;"
     src="https://dirkwhoffmann.github.io/virtualc64web/${params}#${address}">
 </iframe>
-<div style="display: flex"><svg  class="player_icon_btn" onclick="vc64web_player.stop_emu_view();" xmlns="http://www.w3.org/2000/svg" width="2.0em" height="2.0em" fill="currentColor" class="bi bi-pause-btn" viewBox="0 0 16 16">
+<div style="display: flex"><svg  class="player_icon_btn" onclick="vc64web_player.stop_emu_view();return false;" xmlns="http://www.w3.org/2000/svg" width="2.0em" height="2.0em" fill="currentColor" class="bi bi-pause-btn" viewBox="0 0 16 16">
     <path d="M6.5 5A1.5 1.5 0 0 0 5 6.5v3A1.5 1.5 0 0 0 6.5 11h3A1.5 1.5 0 0 0 11 9.5v-3A1.5 1.5 0 0 0 9.5 5h-3z"/>
     <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
 </svg>
@@ -70,7 +70,7 @@ ${this.pause_icon}
 ${this.audio_locked_icon}
 </svg>
 
-<svg id="btn_overlay" class="player_icon_btn" style="margin-top:4px;margin-left:auto" onclick="vc64web_player.toggle_overlay();" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="currentColor" class="bi bi-pause-btn" viewBox="0 0 16 16">
+<svg id="btn_overlay" class="player_icon_btn" style="margin-top:4px;margin-left:auto" onclick="vc64web_player.toggle_overlay();return false;" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="currentColor" class="bi bi-pause-btn" viewBox="0 0 16 16">
 ${this.overlay_on_icon}
 </svg>
 <a id="btn_open_in_extra_tab" title="open fullwindow in new browser tab" style="border:none;width:1.5em;margin-top:4px" onclick="vc64web_player.stop_emu_view();" href="https://dirkwhoffmann.github.io/virtualc64web/${params}#${address}" target="blank">
