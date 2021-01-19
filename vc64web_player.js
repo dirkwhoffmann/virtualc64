@@ -25,13 +25,33 @@ var vc64web_player={
     saved_pic_html: null,
     preview_pic_width: "100%",
     load_into: function (element, params, address) {
-        this.stop_emu_view();
-        //save preview pic
-        var this_element = $(element);
-        var emu_container = this_element.parent();
-        this.saved_pic_html = emu_container.html();
+        var this_element=null;
+        if(element == null)
+        {
+            if(this.saved_pic_html != null)
+            {
+                //that is also the case when another player is still active... because the preview pic is saved
+                //then get the other running player
+                this_element = $(document.querySelector('#player_container'));
+            }
+            else
+            {
+                alert("parameter element in the call vc64web_player.load(element, ...) is null.");
+                return;
+            }
+        }
+        else
+        {
+            var this_element = $(element);
+        }
 
-        this.preview_pic_width= this_element.width();
+        var emu_container = this_element.parent();
+        
+        this.stop_emu_view();
+
+        //save preview pic
+        this.saved_pic_html = emu_container.html();
+        this.preview_pic_width= emu_container.children(":first").width();
 
         //turn picture into iframe
         var emuview_html = `
@@ -213,6 +233,7 @@ ${this.overlay_on_icon}
         if (this.saved_pic_html != null) {
             //restore preview pic
             $('#player_container').parent().html(this.saved_pic_html); 
+            this.saved_pic_html=null;
         }
         if(this.state_poller != null)
         {
