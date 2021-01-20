@@ -1,6 +1,9 @@
 /**
  * official vc64web player.
  * checks whether jquery is already there, if not lazy loads it when emulator is started
+ * TODO: communicate vie postMessage() 
+ * https://stackoverflow.com/questions/25098021/securityerror-blocked-a-frame-with-origin-from-accessing-a-cross-origin-frame
+ * window.postMessage() (or window.parent.postMessage()) to circumvent CORS
  */
 
 var vc64web_player={
@@ -55,7 +58,7 @@ var vc64web_player={
 
         //turn picture into iframe
         var emuview_html = `
-<div id="player_container" style="display:flex;flex-direction:column;" onclick="return false;">
+<div id="player_container" style="display:flex;flex-direction:column;">
 <iframe id="vc64web" width="100%" height="100%" onclick="event.preventDefault();$vc64web.focus();return false;"
     src="https://dirkwhoffmann.github.io/virtualc64web/${params}#${address}">
 </iframe>
