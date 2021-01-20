@@ -69,7 +69,6 @@ C64::C64()
         &drive8,
         &drive9,
         &datasette,
-        &mouse,
         &oscillator
     };
     
@@ -1068,20 +1067,12 @@ C64::endFrame()
     keyboard.vsyncHandler();
     drive8.vsyncHandler();
     drive9.vsyncHandler();
-
-    // Update mouse coordinates
-    mouse.execute();
     
     // Check if the run loop is requested to stop
     if (stopFlag) { stopFlag = false; signalStop(); }
     
     // Count some sheep (zzzzzz) ...
     oscillator.synchronize();
-    /*
-    if (!inWarpMode()) {
-        synchronizeTiming();
-    }
-    */
 }
 
 void

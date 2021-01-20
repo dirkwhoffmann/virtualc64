@@ -97,14 +97,14 @@ public:
     u8 readPotY() const;
     
     // Updates the control port bits (must be called before reading)
-    void updateControlPort(usize portNr, i64 targetX, i64 targetY);
+    void updateControlPort(i64 targetX, i64 targetY);
     
     // Returns the control port bits triggered by the mouse
     u8 readControlPort() const;
         
     // Triggers a state change
-    void risingStrobe(PortId port, i64 targetX, i64 targetY);
-    void fallingStrobe(PortId port, i64 targetX, i64 targetY);
+    void risingStrobe(i64 targetX, i64 targetY);
+    void fallingStrobe(i64 targetX, i64 targetY);
     
 private:
     

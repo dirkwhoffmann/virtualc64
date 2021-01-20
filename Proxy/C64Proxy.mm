@@ -673,44 +673,24 @@
 
 @implementation ControlPortProxy
 
+@synthesize mouse;
+@synthesize joystick;
+
+- (instancetype) initWith:(void *)ref
+{
+    if (self = [super init]) {
+        
+        ControlPort *port = (ControlPort *)ref;
+        obj = ref;
+        joystick = [[JoystickProxy alloc] initWith:&port->joystick];
+        mouse = [[MouseProxy alloc] initWith:&port->mouse];
+    }
+    return self;
+}
+
 - (ControlPort *)port
 {
     return (ControlPort *)obj;
-}
-
-- (void)trigger:(GamePadAction)event
-{
-    [self port]->trigger(event);
-}
-
-- (BOOL)autofire
-{
-    return [self port]->getAutofire();
-}
-
-- (void)setAutofire:(BOOL)value
-{
-    return [self port]->setAutofire(value);
-}
-
-- (NSInteger)autofireBullets
-{
-    return [self port]->getAutofireBullets();
-}
-
-- (void)setAutofireBullets:(NSInteger)value
-{
-    [self port]->setAutofireBullets((int)value);
-}
-
-- (float)autofireFrequency
-{
-    return [self port]->getAutofireFrequency();
-}
-
-- (void)setAutofireFrequency:(float)value
-{
-    [self port]->setAutofireFrequency(value);
 }
 
 @end
@@ -1392,7 +1372,7 @@
 
 
 //
-// Mouse
+// Mouse proxy
 //
 
 @implementation MouseProxy
@@ -1412,21 +1392,6 @@
     [self mouse]->setModel(model);
 }
 
-- (NSInteger)port
-{
-    return [self mouse]->getPort();
-}
-
-- (void)connect:(PortId)toPort
-{
-    [self mouse]->connectMouse(toPort);
-}
-
-- (void)disconnect
-{
-    [self mouse]->disconnectMouse();
-}
-
 - (void)setXY:(NSPoint)pos
 {
     [self mouse]->setXY((i64)pos.x, (i64)pos.y);
@@ -1440,6 +1405,59 @@
 - (void)setRightButton:(BOOL)pressed
 {
     [self mouse]->setRightButton(pressed);
+}
+
+- (void) trigger:(GamePadAction)event
+{
+    [self mouse]->trigger(event);
+}
+
+@end
+
+//
+// Joystick proxy
+//
+
+@implementation JoystickProxy
+
+- (Joystick *)joystick
+{
+    return (Joystick *)obj;
+}
+
+- (void) trigger:(GamePadAction)event
+{
+    [self joystick]->trigger(event);
+}
+
+- (BOOL) autofire
+{
+    return [self joystick]->getAutofire();
+}
+
+- (void) setAutofire:(BOOL)value
+{
+    return [self joystick]->setAutofire(value);
+}
+
+- (NSInteger) autofireBullets
+{
+    return (NSInteger)[self joystick]->getAutofireBullets();
+}
+
+- (void) setAutofireBullets:(NSInteger)value
+{
+    [self joystick]->setAutofireBullets((int)value);
+}
+
+- (float) autofireFrequency
+{
+    return [self joystick]->getAutofireFrequency();
+}
+
+- (void) setAutofireFrequency:(float)value
+{
+    [self joystick]->setAutofireFrequency(value);
 }
 
 @end
@@ -1870,7 +1888,7 @@
 
 @synthesize mem, cpu, breakpoints, watchpoints, vic, cia1, cia2, sid;
 @synthesize keyboard, port1, port2, iec;
-@synthesize expansionport, drive8, drive9, datasette, mouse;
+@synthesize expansionport, drive8, drive9, datasette;
 
 - (instancetype) init
 {
@@ -1897,7 +1915,6 @@
     drive8 = [[DriveProxy alloc] initWithVC1541:&c64->drive8];
     drive9 = [[DriveProxy alloc] initWithVC1541:&c64->drive9];
     datasette = [[DatasetteProxy alloc] initWith:&c64->datasette];
-    mouse = [[MouseProxy alloc] initWith:&c64->mouse];
 
     return self;
 }

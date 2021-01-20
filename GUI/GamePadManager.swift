@@ -53,6 +53,9 @@ class GamePadManager {
         gamePads[2]!.setIcon(name: "devKeyset2Template")
         gamePads[2]!.keyMap = 2
                 
+        // Tell the mouse event receiver where the mouse resides
+        parent.metal.mouse = gamePads[0]!
+
         // Prepare to accept HID devices
         let deviceCriteria = [
             [

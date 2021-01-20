@@ -74,7 +74,6 @@ protected:
     Drive &drive8;
     Drive &drive9;
     Datasette &datasette;
-    Mouse &mouse;
     MsgQueue &messageQueue;
     Oscillator &oscillator;
     

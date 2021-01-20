@@ -648,19 +648,19 @@ CIA1::updatePA()
     PA = (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
 
     // Get lines which are driven actively low by port 2
-    u8 rowMask = ~PRB & DDRB & port1.bitmask();
+    u8 rowMask = ~PRB & DDRB & port1.getControlPort();
     
     // Pull lines low that are connected by a pressed key
     PA &= keyboard.getColumnValues(rowMask);
     
     // The control port can always bring the port lines low
-    PA &= port2.bitmask();
+    PA &= port2.getControlPort();
     
     // An edge on PA4 triggers the NeosMouse on port 2
     if (FALLING_EDGE_BIT(oldPA, PA, 4))
-        mouse.fallingStrobe(PORT_TWO);
+        port2.mouse.fallingStrobe();
     if (RISING_EDGE_BIT(oldPA, PA, 4))
-        mouse.risingStrobe(PORT_TWO);
+        port2.mouse.risingStrobe();
 }
 
 //                    -------
@@ -694,7 +694,7 @@ CIA1::updatePB()
     PB = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
  
     // Get lines which are driven actively low by port 1
-    u8 columnMask = ~PRA & DDRA & port2.bitmask();
+    u8 columnMask = ~PRA & DDRA & port2.getControlPort();
     
     // Pull lines low that are connected by a pressed key
     PB &= keyboard.getRowValues(columnMask);
@@ -708,16 +708,16 @@ CIA1::updatePB()
         REPLACE_BIT(PB, 7, PB67TimerOut & (1 << 7));
     
     // The control port can always bring the port lines low
-    PB &= port1.bitmask();
+    PB &= port1.getControlPort();
     
     // PB4 is connected to the VICII (LP pin).
     vic.setLP(GET_BIT(PB, 4) != 0);
     
     // An edge on PB4 triggers the NeosMouse on port 1
     if (FALLING_EDGE_BIT(oldPB, PB, 4))
-        mouse.fallingStrobe(PORT_ONE);
+        port1.mouse.fallingStrobe();
     if (RISING_EDGE_BIT(oldPB, PB, 4))
-        mouse.risingStrobe(PORT_ONE);
+        port1.mouse.risingStrobe();
 }
 
 

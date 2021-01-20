@@ -20,56 +20,14 @@ extension MyController {
          
     @IBAction func port1Action(_ sender: NSPopUpButton) {
         
-        setPort1(sender.selectedTag())
+        config.gameDevice1 = sender.selectedTag()
     }
  
-    func setPort1(_ value: Int) {
-        
-        track("setPort1: \(value)")
-        
-        // Remember selection
-        config.gameDevice1 = value
-        
-        // Avoid double mappings
-        config.gameDevice2 = (config.gameDevice1 == config.gameDevice2) ? InputDevice.none : config.gameDevice2
-        
-        // Connect or disconnect analog mouse
-        if c64.mouse.port != 1 && config.gameDevice1 == InputDevice.mouse {
-            c64.mouse.connect(.ONE)
-        }
-        if c64.mouse.port == 1 && config.gameDevice1 != InputDevice.mouse {
-            c64.mouse.disconnect()
-        }
-                
-        toolbar.validateVisibleItems()
-    }
-    
     @IBAction func port2Action(_ sender: NSPopUpButton) {
         
-        setPort2(sender.selectedTag())
+        config.gameDevice2 = sender.selectedTag()
     }
-    
-    func setPort2(_ value: Int) {
-        
-        track("setPort2: \(value)")
-        
-        // Remember selection
-        config.gameDevice2 = value
-        
-        // Avoid double mappings
-        config.gameDevice1 = (config.gameDevice1 == config.gameDevice2) ? InputDevice.none : config.gameDevice1
-        
-        // Connect or disconnect analog mouse
-        if c64.mouse.port != 2 && config.gameDevice2 == InputDevice.mouse {
-            c64.mouse.connect(.TWO)
-        }
-        if c64.mouse.port == 2 && config.gameDevice2 != InputDevice.mouse {
-            c64.mouse.disconnect()
-        }
-        
-        toolbar.validateVisibleItems()
-    }
-            
+                
     @IBAction func inspectAction(_ sender: NSSegmentedControl) {
         
         switch sender.selectedSegment {

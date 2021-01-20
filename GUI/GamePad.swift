@@ -372,8 +372,8 @@ class GamePad {
         
         let c64 = manager.parent.c64!
         
-        if port == 1 { for event in events { c64.port1.trigger(event) } }
-        if port == 2 { for event in events { c64.port2.trigger(event) } }
+        if port == 1 { for event in events { c64.port1.joystick.trigger(event) } }
+        if port == 2 { for event in events { c64.port2.joystick.trigger(event) } }
         
         // Notify other components (if requested)
         if notify { manager.parent.myAppDelegate.devicePulled(events: events) }
@@ -386,21 +386,29 @@ class GamePad {
         
         let c64 = manager.parent.c64!
         
-        if port == 1 { for event in events { c64.port1.trigger(event) } }
-        if port == 2 { for event in events { c64.port2.trigger(event) } }
+        if port == 1 { for event in events { c64.port1.mouse.trigger(event) } }
+        if port == 2 { for event in events { c64.port2.mouse.trigger(event) } }
         
         return events != []
     }
     
-    func processMouseEvents(delta: NSPoint) {
-        
-        /*
+    func processMouseEvents(xy: NSPoint) {
+
         let c64 = manager.parent.c64!
         
-        if port == 1 { c64.mouse1.setDeltaXY(delta) }
-        if port == 2 { c64.mouse2.setDeltaXY(delta) }
-        */
+        if port == 1 { c64.port1.mouse.setXY(xy) }
+        if port == 2 { c64.port2.mouse.setXY(xy) }
     }
+    
+    /*
+    func processMouseEvents(delta: NSPoint) {
+        
+        let c64 = manager.parent.c64!
+        
+        if port == 1 { c64.port1.mouse.setDeltaXY(delta) }
+        if port == 2 { c64.port2.mouse.setDeltaXY(delta) }
+    }
+    */
     
     func processKeyDownEvent(macKey: MacKey) -> Bool {
                 
@@ -435,13 +443,11 @@ class GamePad {
         let c64 = manager.parent.c64!
         
         if isMouse {
-            /*
-            if port == 1 { for event in events { c64.mouse1.trigger(event) } }
-            if port == 2 { for event in events { c64.mouse2.trigger(event) } }
-            */
+            if port == 1 { for e in events { c64.port1.mouse.trigger(e) } }
+            if port == 2 { for e in events { c64.port2.mouse.trigger(e) } }
         } else {
-            if port == 1 { for event in events { c64.port1.trigger(event) } }
-            if port == 2 { for event in events { c64.port2.trigger(event) } }
+            if port == 1 { for e in events { c64.port1.joystick.trigger(e) } }
+            if port == 2 { for e in events { c64.port2.joystick.trigger(e) } }
         }
     }
 }

@@ -17,35 +17,37 @@
 // Forward declarations
 //
 
-@class MyController;
-@class C64Proxy;
-@class CPUProxy;
-@class GuardsProxy;
-@class MemoryProxy;
-@class VICProxy;
-@class CIAProxy;
-@class SIDProxy;
-@class KeyboardProxy;
-@class ControlPortProxy;
-@class IECProxy;
-@class ExpansionPortProxy;
-@class DriveProxy;
-@class VIAProxy;
-@class DiskProxy;
-@class DatasetteProxy;
-@class MouseProxy;
 @class AnyFileProxy;
 @class AnyCollectionProxy;
-@class RomFileProxy;
+@class C64Proxy;
+@class CIAProxy;
+@class ControlPortProxy;
+@class CPUProxy;
 @class CRTFileProxy;
-@class TAPFileProxy;
+@class D64FileProxy;
+@class DatasetteProxy;
+@class DiskProxy;
+@class DriveProxy;
+@class ExpansionPortProxy;
+@class FSDeviceProxy;
+@class G64FileProxy;
+@class GuardsProxy;
+@class IECProxy;
+@class JoystickProxy;
+@class KeyboardProxy;
+@class MemoryProxy;
+@class MouseProxy;
+@class MyController;
+@class P00FileProxy;
+@class PRGFileProxy;
+@class RomFileProxy;
+@class SIDProxy;
 @class SnapshotProxy;
 @class T64FileProxy;
-@class PRGFileProxy;
-@class P00FileProxy;
-@class D64FileProxy;
-@class G64FileProxy;
-@class FSDeviceProxy;
+@class TAPFileProxy;
+@class VIAProxy;
+@class VICProxy;
+
 
 //
 // Base proxies
@@ -104,7 +106,6 @@
 @property (readonly, strong) IECProxy *iec;
 @property (readonly, strong) KeyboardProxy *keyboard;
 @property (readonly, strong) MemoryProxy *mem;
-@property (readonly, strong) MouseProxy *mouse;
 @property (readonly, strong) SIDProxy *sid;
 @property (readonly, strong) VICProxy *vic;
 
@@ -365,18 +366,17 @@
 @end
 
 //
-// Control port proxy
+// ControlPort proxy
 //
 
-@interface ControlPortProxy : HardwareComponentProxy { }
+@interface ControlPortProxy : HardwareComponentProxy {
+    
+    JoystickProxy *joystick;
+    MouseProxy *mouse;
+}
 
-- (void)trigger:(GamePadAction)event;
-- (BOOL)autofire;
-- (void)setAutofire:(BOOL)value;
-- (NSInteger)autofireBullets;
-- (void)setAutofireBullets:(NSInteger)value;
-- (float)autofireFrequency;
-- (void)setAutofireFrequency:(float)value;
+@property (readonly) JoystickProxy *joystick;
+@property (readonly) MouseProxy *mouse;
 
 @end
 
@@ -540,14 +540,27 @@
 @interface MouseProxy : HardwareComponentProxy { }
 
 @property MouseModel model;
-@property (readonly) NSInteger port;
-- (void)connect:(PortId)toPort;
-- (void)disconnect;
 - (void)setXY:(NSPoint)pos;
-- (void)setLeftButton:(BOOL)pressed;
-- (void)setRightButton:(BOOL)pressed;
+- (void)setLeftButton:(BOOL)pressed __attribute__ ((deprecated));
+- (void)setRightButton:(BOOL)pressed __attribute__ ((deprecated));
+- (void) trigger:(GamePadAction)event;
 
 @end
+
+
+//
+// Joystick proxy
+//
+
+@interface JoystickProxy : HardwareComponentProxy { }
+
+- (void) trigger:(GamePadAction)event;
+@property BOOL autofire;
+@property NSInteger autofireBullets;
+@property float autofireFrequency;
+
+@end
+
 
 //
 // F I L E   T Y P E   P R O X Y S

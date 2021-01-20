@@ -61,10 +61,6 @@ static const int SID_DEBUG       = 0; // Sound Interface Device
 static const int SID_EXEC        = 0; // Sound Interface Device (execution)
 static const int IEC_DEBUG       = 0; // IEC bus
 
-// Ports
-static const int PORT_DEBUG      = 0; // Control ports and connected devices
-static const int EXP_DEBUG       = 0; // Expansion port
-
 // Drive
 static const int DSK_DEBUG       = 0; // Disk controller execution
 static const int DSKCHG_DEBUG    = 0; // Disk changing procedure
@@ -77,10 +73,13 @@ static const int FILE_DEBUG      = 0; // Media files (D64,T64,...)
 
 // Peripherals
 static const int JOY_DEBUG       = 0; // Joystick
-static const int MOUSE_DEBUG     = 1; // Mouse
+static const int MOUSE_DEBUG     = 0; // Mouse
 static const int DRV_DEBUG       = 0; // Floppy drive
 static const int TAP_DEBUG       = 0; // Datasette
 static const int KBD_DEBUG       = 0; // Keyboard
+static const int PORT_DEBUG      = 1; // Control ports and connected devices
+static const int EXP_DEBUG       = 0; // Expansion port
+
 
 //
 // Forced error conditions

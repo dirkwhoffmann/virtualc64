@@ -16,9 +16,13 @@
 
 class Mouse : public C64Component {
     
+    // Reference to the control port this device belongs to
+    ControlPort &port;
+
     // Current configuration
     MouseConfig config;
 
+    
     //
     // Sub components
     //
@@ -34,9 +38,6 @@ private:
     // A Neos (analog) mouse
     NeosMouse mouseNeos = NeosMouse(c64);
         
-    // The port the mouse is connected to
-    PortId port = PORT_NONE;
-
     /* Target mouse position. In order to achieve a smooth mouse movement, a
      * new mouse coordinate is not written directly into mouseX and mouseY.
      * Instead, these variables are set. In execute(), mouseX and mouseY are
@@ -52,13 +53,22 @@ private:
     
 public:
     
-    Mouse(C64 &ref);
+    Mouse(C64 &ref, ControlPort& pref);
     const char *getDescription() const override { return "Mouse"; }
     
 private:
     
     void _reset() override;
 
+    
+    //
+    // Analyzing
+    //
+    
+private:
+    
+    void _dump() const override;
+    
     
     //
     // Configuring
@@ -99,13 +109,6 @@ private:
     
 public:
     
-    // Returns the port the mouse is connected to (0 = unconnected)
-    PortId getPort() { return port; }
-    
-    // Connects the mouse to the specified port
-    void connectMouse(PortId port);
-    void disconnectMouse() { connectMouse(PORT_NONE); }
-
     // Emulates a mouse movement event
     void setXY(i64 x, i64 y);
 
@@ -113,10 +116,19 @@ public:
     void setLeftButton(bool value);
     void setRightButton(bool value);
     
-    // Triggers a state change (Neos mouse only)
-    void risingStrobe(PortId port);
-    void fallingStrobe(PortId port);
+    // Triggers a gamepad event
+    void trigger(GamePadAction event);
     
+    // Triggers a state change (Neos mouse only)
+    void risingStrobe();
+    void fallingStrobe();
+    
+    // Updates the control port bits (must be called before reading)
+    void updateControlPort();
+    
+    // Returns the control port bits as set by the mouse
+    u8 getControlPort() const;
+
     // Updates the pot bits (must be called before reading)
     void updatePotX();
     void updatePotY();
@@ -124,12 +136,6 @@ public:
     // Reads the pot bits that show up in the SID registers
     u8 readPotX() const;
     u8 readPotY() const;
-
-    // Updates the control port bits (must be called before reading)
-    void updateControlPort(PortId port);
-    
-    // Returns the control port bits as set by the mouse
-    u8 readControlPort(PortId port) const;
 
     // Performs periodic actions for this device
     void execute();

@@ -11,6 +11,11 @@ public class MetalView: MTKView {
     
     @IBOutlet weak var parent: MyController!
     
+    var prefs: Preferences { return parent.pref }
+    
+    // Reference to the first mouse (internal, always connected)
+    var mouse: GamePad?
+
     required public init(coder: NSCoder) {
     
         super.init(coder: coder)

@@ -564,8 +564,8 @@ SIDBridge::getInfo(unsigned nr)
         default: assert(false);
     }
     
-    info.potX = mouse.readPotX();
-    info.potY = mouse.readPotY();
+    info.potX = port1.mouse.readPotX() & port2.mouse.readPotX();
+    info.potY = port1.mouse.readPotY() & port2.mouse.readPotY();
     
     return info;
 }
@@ -640,8 +640,22 @@ SIDBridge::peek(u16 addr)
     addr &= 0x1F;
 
     if (sidNr == 0) {
-        if (addr == 0x19) { mouse.updatePotX(); return mouse.readPotX(); }
-        if (addr == 0x1A) { mouse.updatePotY(); return mouse.readPotY(); }
+        
+        if (addr == 0x19) {
+            
+            // TODO: Implement port multiplexing
+            port1.updatePotX();
+            port2.updatePotX();
+            return port1.readPotX() & port2.readPotX();
+        }
+        
+        if (addr == 0x1A) {
+
+            // TODO: Implement port multiplexing
+            port1.updatePotY();
+            port2.updatePotY();
+            return port1.readPotY() & port2.readPotY();
+        }
     }
     
     switch (config.engine) {
@@ -663,8 +677,8 @@ SIDBridge::spypeek(u16 addr) const
     addr &= 0x1F;
 
     if (sidNr == 0) {
-        if (addr == 0x19) { return mouse.readPotX(); }
-        if (addr == 0x1A) { return mouse.readPotY(); }
+        if (addr == 0x19) { return port1.readPotX() & port2.readPotX(); }
+        if (addr == 0x1A) { return port1.readPotY() & port2.readPotY(); }
     }
 
     /* At the moment, only FastSID allows us to peek into the SID registers

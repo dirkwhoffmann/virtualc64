@@ -52,22 +52,22 @@ public extension MetalView {
 
     override func mouseDown(with event: NSEvent) {
 
-        parent.c64.mouse.setLeftButton(true)
+        mouse!.processMouseEvents(events: [.PRESS_LEFT])
     }
     
     override func mouseUp(with event: NSEvent) {
 
-        parent.c64.mouse.setLeftButton(false)
+        mouse!.processMouseEvents(events: [.RELEASE_LEFT])
     }
     
     override func rightMouseUp(with event: NSEvent) {
 
-        parent.c64.mouse.setRightButton(false)
+        mouse!.processMouseEvents(events: [.PRESS_RIGHT])
     }
     
     override func rightMouseDown(with event: NSEvent) {
 
-        parent.c64.mouse.setRightButton(true)
+        mouse!.processMouseEvents(events: [.RELEASE_RIGHT])
     }
     
     override func mouseMoved(with event: NSEvent) {
@@ -85,7 +85,8 @@ public extension MetalView {
         let newY = parent.mouseXY.y * scaleY
 
         let newLocation = NSPoint.init(x: newX, y: newY)
-        parent.c64.mouse.setXY(newLocation)
+        
+        mouse?.processMouseEvents(xy: newLocation)
         //track("\(dx) \(dy)\n");
     }
     

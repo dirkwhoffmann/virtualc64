@@ -10,80 +10,45 @@
 #pragma once
 
 #include "C64Component.h"
+#include "Joystick.h"
 #include "Mouse.h"
 
 class ControlPort : public C64Component {
 
-private:
+    friend class Mouse;
+    friend class Joystick;
     
     // The represented control port
     PortId nr;
-    
-    // The result of the latest inspection
-    // ControlPortInfo info;
-    
+        
     // The connected device
     ControlPortDevice device = CPDEVICE_NONE;
 
-    // True, if button is pressed
-    bool button;
 
-    /* Horizontal joystick position
-     * Valid valued are -1 (LEFT), 1 (RIGHT), or 0 (RELEASED)
-     */
-    int axisX;
+    //
+    // Sub components
+    //
 
-    /* Vertical joystick position
-     * Valid valued are -1 (UP), 1 (DOWN), or 0 (RELEASED)
-     */
-    int axisY;
+public:
     
-    // True if multi-shot mode in enabled
-    bool autofire;
+    Mouse mouse = Mouse(c64, *this);
+    Joystick joystick = Joystick(c64, *this);
 
-    // Number of bullets per gun volley
-    int autofireBullets;
-
-    // Autofire frequency in Hz
-    float autofireFrequency;
-
-    // Bullet counter used in multi-fire mode
-    u64 bulletCounter; 
-
-    // Next frame to auto-press or auto-release the fire button
-    u64 nextAutofireFrame;
-    
-    
+        
     //
     // Initializing
     //
     
 public:
  
-    ControlPort(PortId id, C64 &ref);
+    ControlPort(C64 &ref, PortId id);
     const char *getDescription() const override { return "ControlPort"; }
 
 private:
     
-    void _reset() override;
+    void _reset() override { RESET_SNAPSHOT_ITEMS };
     
-    
-    //
-    // Configuring
-    //
-    
-public:
-    
-    bool getAutofire() const { return autofire; }
-    void setAutofire(bool value);
 
-    int getAutofireBullets() const { return autofireBullets; }
-    void setAutofireBullets(int value);
-
-    float getAutofireFrequency() const { return autofireFrequency; }
-    void setAutofireFrequency(float value) { autofireFrequency = value; }
-    
-    
     //
     // Analyzing
     //
@@ -112,7 +77,6 @@ private:
     usize _size() override { COMPUTE_SNAPSHOT_SIZE }
     usize _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     usize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-    usize didLoadFromBuffer(u8 *buffer) override;
     
     
     //
@@ -121,21 +85,20 @@ private:
     
 public:
     
-
-
-    // Updates variable nextAutofireFrame
-    void scheduleNextShot();
-    
-    /* This method is invoked at the end of each frame. It is needed to
-     * implement the autofire functionality, only.
-     */
+    // Invoked at the end of each frame
     void execute();
+        
+    // Updates the control port bits (must be called before reading)
+    void updateControlPort();
     
-    // Triggers a joystick event
-    void trigger(GamePadAction event);
+    // Returns the control port bits as set by the mouse
+    u8 getControlPort() const;
     
-    /* Returns the current joystick movement in form a bit mask. The bits are
-     * in the same order as they show up in the CIA's data port registers.
-     */
-    u8 bitmask() const;
+    // Updates the pot bits (must be called before reading)
+    void updatePotX();
+    void updatePotY();
+    
+    // Reads the pot bits that show up in the SID registers
+    u8 readPotX() const;
+    u8 readPotY() const;
 };

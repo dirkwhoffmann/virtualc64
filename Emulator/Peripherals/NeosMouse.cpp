@@ -40,7 +40,7 @@ NeosMouse::readPotY() const
 }
 
 void
-NeosMouse::updateControlPort(usize portNr, i64 targetX, i64 targetY)
+NeosMouse::updateControlPort(i64 targetX, i64 targetY)
 {
     // Check for time out
     if (state != 0 && cpu.cycle > (triggerCycle + 232) /* from VICE */) {
@@ -80,7 +80,7 @@ NeosMouse::readControlPort() const
 }
 
 void
-NeosMouse::risingStrobe(PortId port, i64 targetX, i64 targetY)
+NeosMouse::risingStrobe(i64 targetX, i64 targetY)
 {
     // Perform rising edge state changes
     switch (state) {
@@ -99,7 +99,7 @@ NeosMouse::risingStrobe(PortId port, i64 targetX, i64 targetY)
 }
 
 void
-NeosMouse::fallingStrobe(PortId port, i64 targetX, i64 targetY)
+NeosMouse::fallingStrobe(i64 targetX, i64 targetY)
 {
     // Perform falling edge state changes
     switch (state) {

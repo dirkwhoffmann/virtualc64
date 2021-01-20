@@ -92,8 +92,8 @@ public:
     Keyboard keyboard = Keyboard(*this);
     
     // Ports
-    ControlPort port1 = ControlPort(PORT_ONE, *this);
-    ControlPort port2 = ControlPort(PORT_TWO, *this);
+    ControlPort port1 = ControlPort(*this, PORT_ONE);
+    ControlPort port2 = ControlPort(*this, PORT_TWO);
     ExpansionPort expansionport = ExpansionPort(*this);
     
     // Bus connecting the VC1541 floppy drives
@@ -105,10 +105,7 @@ public:
     
     // Datasette
     Datasette datasette = Datasette(*this);
-    
-    // Mouse
-    Mouse mouse = Mouse(*this);
-    
+        
     /* Communication channel to the GUI. The GUI registers a listener and a
      * callback function to retrieve messages.
      */

@@ -12,10 +12,10 @@ extension PreferencesController {
     func refreshControlsTab() {
         
         track()
-
-        let port1 = c64.port1!
-        let port2 = c64.port2!
         
+        let joystick1 = c64.port1.joystick!
+        let joystick2 = c64.port2.joystick!
+
         func refreshKey(map: Int, dir: GamePadAction, button: NSButton, txt: NSTextField) {
             
             var keyDesc = ""
@@ -58,23 +58,24 @@ extension PreferencesController {
         conDisconnectKeys.state = pref.disconnectJoyKeys ? .on : .off
         
         // Joystick buttons
-         assert(pref.autofire == port2.autofire())
-         assert(pref.autofireBullets == port2.autofireBullets())
-         assert(pref.autofireFrequency == port2.autofireFrequency())
-         assert(port1.autofire() == port2.autofire())
-         assert(port1.autofireBullets() == port2.autofireBullets())
-         assert(port1.autofireFrequency() == port2.autofireFrequency())
-         conAutofire.state = pref.autofire ? .on : .off
-         conAutofireCease.state = pref.autofireBullets > 0 ? .on : .off
-         conAutofireBullets.integerValue = Int(pref.autofireBullets.magnitude)
-         conAutofireFrequency.floatValue = pref.autofireFrequency
-         conAutofireCease.isEnabled = conAutofire.state == .on
-         conAutofireCeaseText.textColor = conAutofire.state == .on ? .controlTextColor : .disabledControlTextColor
-         conAutofireBullets.isEnabled = conAutofire.state == .on
-         conAutofireFrequency.isEnabled = conAutofire.state == .on
+        assert(pref.autofire == joystick2.autofire)
+        assert(pref.autofireBullets == joystick2.autofireBullets)
+        assert(pref.autofireFrequency == joystick2.autofireFrequency)
+        assert(joystick1.autofire == joystick2.autofire)
+        assert(joystick1.autofireBullets == joystick2.autofireBullets)
+        assert(joystick1.autofireFrequency == joystick2.autofireFrequency)
+        conAutofire.state = pref.autofire ? .on : .off
+        conAutofireCease.state = pref.autofireBullets > 0 ? .on : .off
+        conAutofireBullets.integerValue = Int(pref.autofireBullets.magnitude)
+        conAutofireFrequency.floatValue = pref.autofireFrequency
+        conAutofireCease.isEnabled = conAutofire.state == .on
+        conAutofireCeaseText.textColor = conAutofire.state == .on ? .controlTextColor : .disabledControlTextColor
+        conAutofireBullets.isEnabled = conAutofire.state == .on
+        conAutofireFrequency.isEnabled = conAutofire.state == .on
         
         // Mouse
-        let model = c64.mouse.model
+        let model = c64.port1.mouse.model
+        assert(model == c64.port2.mouse.model)
         conMouseModel.selectItem(withTag: model.rawValue)
         conMouseInfo.isHidden = model == .C1350
     }
@@ -174,8 +175,8 @@ extension PreferencesController {
     
     @IBAction func conMouseModelAction(_ sender: NSPopUpButton!) {
         
-        // proxy?.mouse.setModel(MouseModel.init(rawValue: sender.selectedTag())!)
-        proxy?.mouse.model = MouseModel.init(rawValue: sender.selectedTag())!
+        proxy?.port1.mouse.model = MouseModel.init(rawValue: sender.selectedTag())!
+        proxy?.port2.mouse.model = MouseModel.init(rawValue: sender.selectedTag())!
         refresh()
     }
         
