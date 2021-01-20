@@ -340,7 +340,7 @@ public:
     
 public:
     
-    // Translates a memory address to the mapped in SID
+    // Translates a memory address to the mapped SID
     usize mappedSID(u16 addr) const;
     
 	// Special peek function for the I/O memory range
@@ -348,6 +348,10 @@ public:
 	
     // Same as peek without side effects
     u8 spypeek(u16 addr) const;
+    
+    // Reads the pot bits that show up in register 0x19 and 0x1A
+    u8 readPotX() const;
+    u8 readPotY() const;
     
 	// Special poke function for the I/O memory range
 	void poke(u16 addr, u8 value);

@@ -175,8 +175,7 @@ extension PreferencesController {
     
     @IBAction func conMouseModelAction(_ sender: NSPopUpButton!) {
         
-        proxy?.port1.mouse.model = MouseModel.init(rawValue: sender.selectedTag())!
-        proxy?.port2.mouse.model = MouseModel.init(rawValue: sender.selectedTag())!
+        pref.mouseModelIntValue = sender.selectedTag()
         refresh()
     }
         

@@ -106,8 +106,19 @@ class Preferences {
     }
     
     // Mouse
-    var mouseModel = MouseModel.C1350
-    
+    var mouseModel = ControlsDefaults.std.mouseModel {
+        didSet {
+            for c64 in myAppDelegate.proxies {
+                c64.port1.mouse.model = mouseModel
+                c64.port2.mouse.model = mouseModel
+            }
+        }
+    }
+    var mouseModelIntValue: Int {
+        get { return Int(mouseModel.rawValue) }
+        set { mouseModel = MouseModel(rawValue: newValue) ?? .C1350 }
+    }
+
     //
     // Keyboard
     //
@@ -204,6 +215,11 @@ class Preferences {
         autofire = defaults.bool(forKey: Keys.Con.autofire)
         autofireBullets = defaults.integer(forKey: Keys.Con.autofireBullets)
         autofireFrequency = defaults.float(forKey: Keys.Con.autofireFrequency)
+        
+        // Mouse
+        mouseModelIntValue = defaults.integer(forKey: Keys.Con.mouseModel)
+        
+        track("mouseModel = \(mouseModelIntValue)")
     }
     
     func saveControlsUserDefaults() {
@@ -220,6 +236,11 @@ class Preferences {
         defaults.set(autofire, forKey: Keys.Con.autofire)
         defaults.set(autofireBullets, forKey: Keys.Con.autofireBullets)
         defaults.set(autofireFrequency, forKey: Keys.Con.autofireFrequency)
+        
+        // Mouse
+        defaults.set(mouseModelIntValue, forKey: Keys.Con.mouseModel)
+        
+        track("mouseModel = \(mouseModelIntValue)")
     }
     
     //

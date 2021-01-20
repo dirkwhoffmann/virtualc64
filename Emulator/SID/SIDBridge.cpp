@@ -643,18 +643,15 @@ SIDBridge::peek(u16 addr)
         
         if (addr == 0x19) {
             
-            // TODO: Implement port multiplexing
             port1.updatePotX();
             port2.updatePotX();
-            return port1.readPotX() & port2.readPotX();
+            return readPotX();
         }
-        
         if (addr == 0x1A) {
 
-            // TODO: Implement port multiplexing
             port1.updatePotY();
             port2.updatePotY();
-            return port1.readPotY() & port2.readPotY();
+            return readPotY();
         }
     }
     
@@ -686,6 +683,28 @@ SIDBridge::spypeek(u16 addr) const
      * regardless of the selected SID engine.
      */
     return fastsid[sidNr].spypeek(addr);
+}
+
+u8
+SIDBridge::readPotX() const
+{
+    u8 result = 0xFF;
+
+    if (GET_BIT(cia1.getPA(), 7) == 0) result &= port1.readPotX();
+    if (GET_BIT(cia1.getPA(), 6) == 0) result &= port2.readPotX();
+
+    return result;
+}
+
+u8
+SIDBridge::readPotY() const
+{
+    u8 result = 0xFF;
+
+    if (GET_BIT(cia1.getPA(), 7) == 0) result &= port1.readPotY();
+    if (GET_BIT(cia1.getPA(), 6) == 0) result &= port2.readPotY();
+
+    return result;
 }
 
 void 

@@ -220,6 +220,7 @@ class PreferencesController: DialogController {
         track()
         pref.saveGeneralUserDefaults()
         pref.saveControlsUserDefaults()
+        pref.saveKeyboardUserDefaults()
         myAppDelegate.database.save()
         hideSheet()
     }
