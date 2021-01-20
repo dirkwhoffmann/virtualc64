@@ -55,7 +55,7 @@ var vc64web_player={
 
         //turn picture into iframe
         var emuview_html = `
-<div id="player_container" style="display:flex;flex-direction:column;">
+<div id="player_container" style="display:flex;flex-direction:column;" onclick="return false;">
 <iframe id="vc64web" width="100%" height="100%" onclick="event.preventDefault();$vc64web.focus();return false;"
     src="https://dirkwhoffmann.github.io/virtualc64web/${params}#${address}">
 </iframe>

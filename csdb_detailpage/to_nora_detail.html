@@ -38,15 +38,7 @@ function getreason(link,text) {
 <!-- End Cookie Consent plugin -->
 <!-- player stuff starts-->
 <script src="https://dirkwhoffmann.github.io/virtualc64/vc64web_player.js"></script>
-
 <style>
-		.btn_play {
-			background-color: transparent;
-			color: #2575ff;
-			border: none;
-			cursor: pointer;
-			vertical-align: text-top;
-		}
 		#player_container {
 			background-color: black;
 		}
@@ -57,6 +49,10 @@ function getreason(link,text) {
 			background-color: transparent;
 			color: white;
 			margin-right: 15px;
+			cursor: pointer;
+		}
+		.btn_play {
+			color: #2575ff;
 			cursor: pointer;
 		}
 </style>
@@ -91,13 +87,17 @@ You are not logged in&nbsp;</font></td>
 
 <font size="6"><a href="https://csdb.dk/release/index.php?id=197970"><font color="#FFFFFF">To Norah</font></a></font>&nbsp;&nbsp;&nbsp;[2020]<br>
 <center>
-<a href="to_norah.html"><img id="preview_pic" src="to_nora_detail-Dateien/197970.png" alt="To Norah" width="768" vspace="0" hspace="0" height="544" border="0"></a><br><br><b>Download :</b><br>
+<a href="to_norah.html"><!-- player stuff start: here id previewpic added--><img id="preview_pic" src="to_nora_detail-Dateien/197970.png" alt="To Norah" width="768" vspace="0" hspace="0" height="544" border="0"><!-- player stuff end--></a><br><br><b>Download :</b><br>
 <table cellspacing="1" cellpadding="0"><tbody><tr><td><a href="https://csdb.dk/release/download.php?id=244581">http://csdb.dk/getinternalfile.php/206403/to_norah.prg</a> (downloads: 852)
-<button type="button" class="btn_play" onclick="vc64web_player.load(document.querySelector(`#preview_pic`), '#2ndSID=d420#openROMS=true#navbar=hidden#wide=true#border=false', 'http://csdb.dk/getinternalfile.php/206403/to_norah.prg');return false;">play</button>
+<!-- player stuff start-->
+<span class="btn_play" onclick="vc64web_player.load(document.querySelector(`#preview_pic`), '#2ndSID=d420#openROMS=true#navbar=hidden#wide=true#border=false', 'http://csdb.dk/getinternalfile.php/206403/to_norah.prg');">play</span>
+<!-- player stuff end-->
 </td></tr>
 <tr><td><a href="https://csdb.dk/release/download.php?id=244582">http://csdb.dk/getinternalfile.php/206404/To-Norah-d420.sid</a> (downloads: 236)</td></tr>
 <tr><td><a href="https://csdb.dk/release/download.php?id=244608">http://csdb.dk/getinternalfile.php/206430/to_norah_nosidcheck.prg</a> (downloads: 180)
-<button type="button" class="btn_play" onclick="vc64web_player.load(document.querySelector(`#preview_pic`), '#openROMS=true#navbar=hidden#wide=true#border=false', 'http://csdb.dk/getinternalfile.php/206430/to_norah_nosidcheck.prg');return false;">play</button>
+<!-- player stuff start-->
+<span class="btn_play" onclick="vc64web_player.load(document.querySelector(`#preview_pic`), '#openROMS=true#navbar=hidden#wide=true#border=false', 'http://csdb.dk/getinternalfile.php/206430/to_norah_nosidcheck.prg');">play</span>
+<!-- player stuff end-->
 </td></tr>
 </tbody></table><br></center>
 
