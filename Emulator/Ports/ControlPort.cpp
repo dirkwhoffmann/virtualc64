@@ -9,11 +9,11 @@
  
 #include "C64.h"
 
-ControlPort::ControlPort(int portNr, C64 &ref) : C64Component(ref)
+ControlPort::ControlPort(PortId id, C64 &ref) : C64Component(ref)
 {
-    assert(portNr == 1 || portNr == 2);
+    assert_enum(PortId, id);
     
-    nr = portNr;
+    nr = id;
     autofire = false;
     autofireBullets = -3;
     autofireFrequency = 2.5;
@@ -45,7 +45,7 @@ ControlPort::didLoadFromBuffer(u8 *buffer)
 void
 ControlPort::_dump() const
 {
-    msg("ControlPort port %d\n", nr);
+    msg("ControlPort port %lld\n", nr);
     msg("------------------\n");
     msg("Button:  %s AxisX: %d AxisY: %d\n", button ? "YES" : "NO", axisX, axisY);
     msg("Bitmask: %02X\n", bitmask());

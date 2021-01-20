@@ -34,8 +34,8 @@ private:
     // A Neos (analog) mouse
     NeosMouse mouseNeos = NeosMouse(c64);
         
-    // The port the mouse is connected to (0 = unconnected)
-    unsigned port = 0;
+    // The port the mouse is connected to
+    PortId port = PORT_NONE;
 
     /* Target mouse position. In order to achieve a smooth mouse movement, a
      * new mouse coordinate is not written directly into mouseX and mouseY.
@@ -100,11 +100,11 @@ private:
 public:
     
     // Returns the port the mouse is connected to (0 = unconnected)
-    unsigned getPort() { return port; }
+    PortId getPort() { return port; }
     
     // Connects the mouse to the specified port
-    void connectMouse(unsigned port);
-    void disconnectMouse() { connectMouse(0); }
+    void connectMouse(PortId port);
+    void disconnectMouse() { connectMouse(PORT_NONE); }
 
     // Emulates a mouse movement event
     void setXY(i64 x, i64 y);
@@ -114,8 +114,8 @@ public:
     void setRightButton(bool value);
     
     // Triggers a state change (Neos mouse only)
-    void risingStrobe(int portNr);
-    void fallingStrobe(int portNr);
+    void risingStrobe(PortId port);
+    void fallingStrobe(PortId port);
     
     // Updates the pot bits (must be called before reading)
     void updatePotX();
@@ -126,10 +126,10 @@ public:
     u8 readPotY() const;
 
     // Updates the control port bits (must be called before reading)
-    void updateControlPort(usize portNr);
+    void updateControlPort(PortId port);
     
     // Returns the control port bits as set by the mouse
-    u8 readControlPort(usize portNr) const;
+    u8 readControlPort(PortId port) const;
 
     // Performs periodic actions for this device
     void execute();

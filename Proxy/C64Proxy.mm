@@ -1417,9 +1417,9 @@
     return [self mouse]->getPort();
 }
 
-- (void)connect:(NSInteger)toPort
+- (void)connect:(PortId)toPort
 {
-    [self mouse]->connectMouse((unsigned)toPort);
+    [self mouse]->connectMouse(toPort);
 }
 
 - (void)disconnect

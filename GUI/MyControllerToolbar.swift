@@ -35,7 +35,7 @@ extension MyController {
         
         // Connect or disconnect analog mouse
         if c64.mouse.port != 1 && config.gameDevice1 == InputDevice.mouse {
-            c64.mouse.connect(1)
+            c64.mouse.connect(.ONE)
         }
         if c64.mouse.port == 1 && config.gameDevice1 != InputDevice.mouse {
             c64.mouse.disconnect()
@@ -61,7 +61,7 @@ extension MyController {
         
         // Connect or disconnect analog mouse
         if c64.mouse.port != 2 && config.gameDevice2 == InputDevice.mouse {
-            c64.mouse.connect(2)
+            c64.mouse.connect(.TWO)
         }
         if c64.mouse.port == 2 && config.gameDevice2 != InputDevice.mouse {
             c64.mouse.disconnect()

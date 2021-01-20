@@ -40,10 +40,10 @@ Mouse::setModel(MouseModel model)
 }
 
 void
-Mouse::connectMouse(unsigned portNr)
+Mouse::connectMouse(PortId port)
 {
-    assert(portNr <= 2);
-    port = portNr;
+    assert_enum(PortId, port);
+    this->port = port;
 }
 
 void
@@ -92,15 +92,15 @@ Mouse::setRightButton(bool value)
 }
 
 void
-Mouse::risingStrobe(int portNr)
+Mouse::risingStrobe(PortId port)
 {
-    mouseNeos.risingStrobe(portNr, targetX, targetY);
+    mouseNeos.risingStrobe(port, targetX, targetY);
 }
 
 void
-Mouse::fallingStrobe(int portNr)
+Mouse::fallingStrobe(PortId port)
 {
-    mouseNeos.fallingStrobe(portNr, targetX, targetY);
+    mouseNeos.fallingStrobe(port, targetX, targetY);
 }
 
 void
@@ -156,17 +156,17 @@ Mouse::readPotY() const
 }
 
 void
-Mouse::updateControlPort(usize portNr)
+Mouse::updateControlPort(PortId port)
 {
-    if (port == portNr && config.model == MOUSE_NEOS) {
-        mouseNeos.updateControlPort(portNr, targetX, targetY);
+    if (this->port == port && config.model == MOUSE_NEOS) {
+        mouseNeos.updateControlPort(port, targetX, targetY);
     }
 }
 
 u8
-Mouse::readControlPort(usize portNr) const
+Mouse::readControlPort(PortId port) const
 {    
-    if (port == portNr) {
+    if (this->port == port) {
         
         switch(config.model) {
             case MOUSE_C1350: return mouse1350.readControlPort();

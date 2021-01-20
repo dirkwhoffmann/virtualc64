@@ -11,14 +11,34 @@
 
 #pragma once
 
+//
+// Enumerations
+//
+
 enum_long(MOUSE_MODEL)
 {
     MOUSE_C1350,
     MOUSE_C1351,
     MOUSE_NEOS,
+    
     MOUSE_COUNT
 };
 typedef MOUSE_MODEL MouseModel;
+
+enum_long(PORT_ID)
+{
+    PORT_NONE,
+    PORT_ONE,
+    PORT_TWO,
+    
+    PORT_COUNT
+};
+typedef PORT_ID PortId;
+
+
+//
+// Structures
+//
 
 typedef struct
 {

@@ -541,7 +541,7 @@
 
 @property MouseModel model;
 @property (readonly) NSInteger port;
-- (void)connect:(NSInteger)toPort;
+- (void)connect:(PortId)toPort;
 - (void)disconnect;
 - (void)setXY:(NSPoint)pos;
 - (void)setLeftButton:(BOOL)pressed;

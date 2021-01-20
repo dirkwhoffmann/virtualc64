@@ -92,8 +92,8 @@ public:
     Keyboard keyboard = Keyboard(*this);
     
     // Ports
-    ControlPort port1 = ControlPort(1, *this);
-    ControlPort port2 = ControlPort(2, *this);
+    ControlPort port1 = ControlPort(PORT_ONE, *this);
+    ControlPort port2 = ControlPort(PORT_TWO, *this);
     ExpansionPort expansionport = ExpansionPort(*this);
     
     // Bus connecting the VC1541 floppy drives

@@ -163,7 +163,7 @@ public:
     // Returns the media type of this file
     virtual FileType type() const { return FILETYPE_UNKNOWN; }
      
-    // Returns a unique fingerprint
+    // Returns a fingerprint (hash value) for this file
     u64 fnv() const;
     
     

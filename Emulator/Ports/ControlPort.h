@@ -15,8 +15,8 @@ class ControlPort : public C64Component {
 
 private:
     
-    // Represented control port (1 or 2)
-    int nr;
+    // Represented control port (first or second)
+    PortId nr;
     
     // True, if button is pressed
     bool button;
@@ -53,7 +53,7 @@ private:
     
 public:
  
-    ControlPort(int p, C64 &ref);
+    ControlPort(PortId id, C64 &ref);
     const char *getDescription() const override { return "ControlPort"; }
 
 private:

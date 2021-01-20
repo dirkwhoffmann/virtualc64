@@ -103,8 +103,8 @@ public:
     u8 readControlPort() const;
         
     // Triggers a state change
-    void risingStrobe(int portNr, i64 targetX, i64 targetY);
-    void fallingStrobe(int portNr, i64 targetX, i64 targetY);
+    void risingStrobe(PortId port, i64 targetX, i64 targetY);
+    void fallingStrobe(PortId port, i64 targetX, i64 targetY);
     
 private:
     

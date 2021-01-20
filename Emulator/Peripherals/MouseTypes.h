@@ -36,3 +36,24 @@ struct MouseModelEnum : Reflection<MouseModelEnum, MouseModel> {
         return "???";
     }
 };
+
+struct PortIdEnum : Reflection<PortIdEnum, PortId> {
+    
+    static bool isValid(long value)
+    {
+        return (unsigned long)value < PORT_COUNT;
+    }
+    
+    static const char *prefix() { return "PORT"; }
+    static const char *key(PortId value)
+    {
+        switch (value) {
+                
+            case PORT_NONE:   return "NONE";
+            case PORT_ONE:    return "ONE";
+            case PORT_TWO:    return "TWO";
+            case PORT_COUNT:  return "???";
+        }
+        return "???";
+    }
+};
