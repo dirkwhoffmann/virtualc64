@@ -60,6 +60,8 @@ Mouse::setXY(i64 x, i64 y)
 void
 Mouse::setLeftButton(bool value)
 {
+    debug(PORT_DEBUG, "setLeftButton(%d)\n", value);
+    
     switch(config.model) {
             
         case MOUSE_C1350: mouse1350.setLeftMouseButton(value); break;
@@ -75,6 +77,8 @@ Mouse::setLeftButton(bool value)
 void
 Mouse::setRightButton(bool value)
 {
+    debug(PORT_DEBUG, "setRightButton(%d)\n", value);
+
     switch(config.model) {
             
         case MOUSE_C1350: mouse1350.setRightMouseButton(value); break;
@@ -92,6 +96,8 @@ Mouse::trigger(GamePadAction event)
 {
     assert_enum(GamePadAction, event);
 
+    debug(PORT_DEBUG, "trigger(%lld)\n", event);
+    
     switch (event) {
 
         case PRESS_LEFT: setLeftButton(true); break;

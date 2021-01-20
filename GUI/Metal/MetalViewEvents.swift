@@ -59,17 +59,17 @@ public extension MetalView {
 
         mouse!.processMouseEvents(events: [.RELEASE_LEFT])
     }
-    
-    override func rightMouseUp(with event: NSEvent) {
+
+    override func rightMouseDown(with event: NSEvent) {
 
         mouse!.processMouseEvents(events: [.PRESS_RIGHT])
     }
-    
-    override func rightMouseDown(with event: NSEvent) {
+
+    override func rightMouseUp(with event: NSEvent) {
 
         mouse!.processMouseEvents(events: [.RELEASE_RIGHT])
     }
-    
+        
     override func mouseMoved(with event: NSEvent) {
         
         let dx = event.deltaX
