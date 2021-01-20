@@ -42,6 +42,8 @@ Mouse::setModel(MouseModel model)
 void
 Mouse::connectMouse(PortId port)
 {
+    debug(MOUSE_DEBUG, "connectMouse(%lld)\n", port);
+    
     assert_enum(PortId, port);
     this->port = port;
 }
@@ -167,8 +169,11 @@ u8
 Mouse::readControlPort(PortId port) const
 {    
     if (this->port == port) {
+    
+        printf("Mouse::readControlPort(%lld %lld)\n", port, config.model);
         
         switch(config.model) {
+                
             case MOUSE_C1350: return mouse1350.readControlPort();
             case MOUSE_C1351: return mouse1351.readControlPort();
             case MOUSE_NEOS:  return mouseNeos.readControlPort();

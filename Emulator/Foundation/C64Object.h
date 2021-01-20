@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "C64Types.h"
+#include "C64PublicTypes.h"
 #include "Utils.h"
 #include "Concurrency.h"
 #include "Colors.h"

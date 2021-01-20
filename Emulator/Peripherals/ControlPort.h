@@ -10,14 +10,21 @@
 #pragma once
 
 #include "C64Component.h"
+#include "Mouse.h"
 
 class ControlPort : public C64Component {
 
 private:
     
-    // Represented control port (first or second)
+    // The represented control port
     PortId nr;
     
+    // The result of the latest inspection
+    // ControlPortInfo info;
+    
+    // The connected device
+    ControlPortDevice device = CPDEVICE_NONE;
+
     // True, if button is pressed
     bool button;
 

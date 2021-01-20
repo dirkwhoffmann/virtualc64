@@ -168,6 +168,7 @@
 		508081E925110FFE0084B060 /* Dinamic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508081E725110FFE0084B060 /* Dinamic.cpp */; };
 		508081EC2511206D0084B060 /* StructuredBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508081EA2511206D0084B060 /* StructuredBasic.cpp */; };
 		5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* MacAudio.swift */; };
+		5085D89D25B848940043B15C /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5085D89B25B848940043B15C /* Joystick.cpp */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		50995F2A24DBCDE400F40713 /* CPUDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50995F2824DBCDE400F40713 /* CPUDebugger.cpp */; };
 		50A077F8258A18B9005ACF5B /* FSDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A077F6258A18B9005ACF5B /* FSDevice.cpp */; };
@@ -542,6 +543,8 @@
 		508081EA2511206D0084B060 /* StructuredBasic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StructuredBasic.cpp; sourceTree = "<group>"; };
 		508081EB2511206D0084B060 /* StructuredBasic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StructuredBasic.h; sourceTree = "<group>"; };
 		5081AB621EF29E6400D6F616 /* MacAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacAudio.swift; sourceTree = "<group>"; };
+		5085D89B25B848940043B15C /* Joystick.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Joystick.cpp; sourceTree = "<group>"; };
+		5085D89C25B848940043B15C /* Joystick.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Joystick.h; sourceTree = "<group>"; };
 		5092A5B0200BC4B70037754D /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
 		5093D6A824B19E9200BDF924 /* Serialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Serialization.h; sourceTree = "<group>"; };
 		50995F2824DBCDE400F40713 /* CPUDebugger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPUDebugger.cpp; sourceTree = "<group>"; };
@@ -768,19 +771,6 @@
 			path = Dialogs;
 			sourceTree = "<group>";
 		};
-		5014B35024C4B44F009EFA63 /* Ports */ = {
-			isa = PBXGroup;
-			children = (
-				504C433B24AF29AC00E69CAE /* PortPublicTypes.h */,
-				50B1A61625A203B100201A2C /* PortTypes.h */,
-				504C434024AF29AC00E69CAE /* ControlPort.h */,
-				504C433E24AF29AC00E69CAE /* ControlPort.cpp */,
-				504C434324AF29AC00E69CAE /* ExpansionPort.h */,
-				504C434524AF29AC00E69CAE /* ExpansionPort.cpp */,
-			);
-			path = Ports;
-			sourceTree = "<group>";
-		};
 		50176C6D0A6F7357009E80BD /* GUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -836,7 +826,6 @@
 				504C430424AF29AB00E69CAE /* VICII */,
 				504C431124AF29AC00E69CAE /* SID */,
 				504C42E024AF29AB00E69CAE /* Memory */,
-				5014B35024C4B44F009EFA63 /* Ports */,
 				504C434724AF29AC00E69CAE /* Drive */,
 				504C430E24AF29AC00E69CAE /* Datasette */,
 				504C42F924AF29AB00E69CAE /* Peripherals */,
@@ -990,6 +979,14 @@
 		504C42F924AF29AB00E69CAE /* Peripherals */ = {
 			isa = PBXGroup;
 			children = (
+				504C433B24AF29AC00E69CAE /* PortPublicTypes.h */,
+				50B1A61625A203B100201A2C /* PortTypes.h */,
+				504C434024AF29AC00E69CAE /* ControlPort.h */,
+				504C433E24AF29AC00E69CAE /* ControlPort.cpp */,
+				504C434324AF29AC00E69CAE /* ExpansionPort.h */,
+				504C434524AF29AC00E69CAE /* ExpansionPort.cpp */,
+				5085D89C25B848940043B15C /* Joystick.h */,
+				5085D89B25B848940043B15C /* Joystick.cpp */,
 				504C430024AF29AB00E69CAE /* MousePublicTypes.h */,
 				50B1A61825A208D900201A2C /* MouseTypes.h */,
 				504C430124AF29AB00E69CAE /* Mouse.h */,
@@ -1510,6 +1507,7 @@
 				5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */,
 				504C437724AF29AC00E69CAE /* G64File.cpp in Sources */,
 				5052A7C125A0AC0700E62EDD /* Errors.swift in Sources */,
+				5085D89D25B848940043B15C /* Joystick.cpp in Sources */,
 				504C438924AF29AC00E69CAE /* NeosMouse.cpp in Sources */,
 				5080501825873EC9004FE1F5 /* ExportDialog.swift in Sources */,
 				504C435924AF29AC00E69CAE /* Ocean.cpp in Sources */,
