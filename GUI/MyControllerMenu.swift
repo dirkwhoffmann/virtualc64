@@ -487,31 +487,31 @@ extension MyController: NSMenuItemValidation {
 
     // -----------------------------------------------------------------
     @IBAction func runstopAction(_ sender: Any!) {
-        keyboard.pressKey(C64Key.runStop)
+        keyboard.pressKey(C64Key.runStop, duration: 4)
     }
     @IBAction func restoreAction(_ sender: Any!) {
-        keyboard.pressKey(C64Key.restore)
+        keyboard.pressKey(C64Key.restore, duration: 4)
     }
     @IBAction func runstopRestoreAction(_ sender: Any!) {
-        keyboard.pressKeys([C64Key.runStop, C64Key.restore])
+        keyboard.pressKeys([C64Key.runStop, C64Key.restore], duration: 4)
     }
     @IBAction func commodoreKeyAction(_ sender: Any!) {
-        keyboard.pressKey(C64Key.commodore)
+        keyboard.pressKey(C64Key.commodore, duration: 4)
     }
     @IBAction func clearKeyAction(_ sender: Any!) {
-        keyboard.pressKeys([C64Key.home, C64Key.shift])
+        keyboard.pressKeys([C64Key.home, C64Key.shift], duration: 4)
     }
     @IBAction func homeKeyAction(_ sender: Any!) {
-        keyboard.pressKey(C64Key.home)
+        keyboard.pressKey(C64Key.home, duration: 4)
     }
     @IBAction func insertKeyAction(_ sender: Any!) {
-        keyboard.pressKeys([C64Key.delete, C64Key.shift])
+        keyboard.pressKeys([C64Key.delete, C64Key.shift], duration: 4)
     }
     @IBAction func deleteKeyAction(_ sender: Any!) {
-        keyboard.pressKey(C64Key.delete)
+        keyboard.pressKey(C64Key.delete, duration: 4)
     }
     @IBAction func leftarrowKeyAction(_ sender: Any!) {
-        keyboard.pressKey(C64Key.leftArrow)
+        keyboard.pressKey(C64Key.leftArrow, duration: 4)
     }
     @IBAction func shiftLockAction(_ sender: Any!) {
         
