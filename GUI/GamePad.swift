@@ -188,7 +188,7 @@ class GamePad {
         macKey2.carbonFlags = 0
         guard let n = keyMap, let direction = prefs.keyMaps[n][macKey2] else { return [] }
                     
-        track("keyDownEvents \(direction)")
+        // track("keyDownEvents \(direction)")
 
         switch GamePadAction(rawValue: direction) {
             
@@ -229,7 +229,7 @@ class GamePad {
         macKey2.carbonFlags = 0
         guard let n = keyMap, let direction = prefs.keyMaps[n][macKey2] else { return [] }
                 
-        track("keyUpEvents \(direction)")
+        // track("keyUpEvents \(direction)")
         
         switch GamePadAction(rawValue: direction) {
             
