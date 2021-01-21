@@ -7,6 +7,7 @@
  */
 
 var vc64web_player={
+    listens: false,
     loadScript: function (url, callback){
         var script = document.createElement("script")
         script.type = "text/javascript";
@@ -15,6 +16,22 @@ var vc64web_player={
         document.getElementsByTagName("head")[0].appendChild(script);
     },
     load: function(element, params, address) {
+        if(this.listens == false)
+        {
+            window.addEventListener('message', event => {
+                if(event.data.msg == "render_run_state")
+                {
+                    this.render_run_state(event.data.value);
+                }
+                else if(event.data.msg == "render_current_audio_state")
+                {
+                    this.render_current_audio_state(event.data.value);
+                }
+            });
+            this.listens=true;
+        }
+        
+        
         if(window.jQuery)
         {
             this.load_into(element,params, address);
@@ -56,11 +73,12 @@ var vc64web_player={
         this.saved_pic_html = emu_container.html();
         this.preview_pic_width= emu_container.children(":first").width();
 
+        var vc64web_url = "https://dirkwhoffmann.github.io/virtualc64web/";
         //turn picture into iframe
         var emuview_html = `
 <div id="player_container" style="display:flex;flex-direction:column;">
 <iframe id="vc64web" width="100%" height="100%" onclick="event.preventDefault();$vc64web.focus();return false;"
-    src="https://dirkwhoffmann.github.io/virtualc64web/${params}#${address}">
+    src="${vc64web_url}${params}#${address}">
 </iframe>
 <div style="display: flex"><svg  class="player_icon_btn" onclick="vc64web_player.stop_emu_view();return false;" xmlns="http://www.w3.org/2000/svg" width="2.0em" height="2.0em" fill="currentColor" class="bi bi-pause-btn" viewBox="0 0 16 16">
     <path d="M6.5 5A1.5 1.5 0 0 0 5 6.5v3A1.5 1.5 0 0 0 6.5 11h3A1.5 1.5 0 0 0 11 9.5v-3A1.5 1.5 0 0 0 9.5 5h-3z"/>
@@ -103,8 +121,12 @@ ${this.overlay_on_icon}
             { 
                 $vc64web.focus();
             }
-            vc64web_player.render_run_state();
-            vc64web_player.render_current_audio_state();
+            
+            var vc64web = document.getElementById("vc64web").contentWindow;
+            vc64web.postMessage("poll_state", "*");
+            
+            //vc64web_player.render_run_state();
+            //vc64web_player.render_current_audio_state();
         }, 900);
 
     },
@@ -157,79 +179,35 @@ ${this.overlay_on_icon}
     },
     toggle_run: function () {
         var vc64web = document.getElementById("vc64web").contentWindow;
-        if(vc64web.required_roms_loaded)// that means emu already runs
-        {
-            //click emulators run toggle button
-            $vc64web.contents().find('#button_run').click();
+//        if(vc64web.required_roms_loaded)// that means emu already runs
 
-            this.render_run_state();
-        }
+        //click emulators run toggle button
+        //$vc64web.contents().find('#button_run').click();
+        vc64web.postMessage("button_run()", "*");
+        //this.render_run_state();
     },
-
     last_run_state:null,
-    render_run_state: function ()
+    render_run_state: function (is_running)
     {
-        var vc64web = document.getElementById("vc64web").contentWindow;
-        if(vc64web.required_roms_loaded)// that means emu already runs
-        {
-            var is_running = vc64web.is_running();
-            if(this.last_run_state == is_running)
-                return;
+        if(this.last_run_state == is_running)
+            return;
 
-            $("#toggle_icon").html(
-                is_running ? this.pause_icon : this.run_icon
-            );
-            this.last_run_state = is_running;
-        }
-    },
-    get_audio_context: function ()
-    {
-        var vc64web = document.getElementById("vc64web").contentWindow;
-        if (typeof vc64web.Module === 'undefined'
-            || typeof vc64web.Module.SDL2 == 'undefined'
-            || typeof vc64web.Module.SDL2.audioContext == 'undefined')
-        {
-            return null;
-        }
-        else
-        {
-            return vc64web.Module.SDL2.audioContext;
-        }
+        $("#toggle_icon").html(
+            is_running ? this.pause_icon : this.run_icon
+        );
+        this.last_run_state = is_running;
     },
     toggle_audio: function()
     {			
-        var context = this.get_audio_context();			
-        if (context !=null)
-        {
-            if(context.state == 'suspended') {
-                context.resume();
-            }
-            else if (context.state == 'running')
-            {
-                context.suspend();
-            }
-        }
-        this.render_current_audio_state();
+        var vc64web = document.getElementById("vc64web").contentWindow;
+        vc64web.postMessage("toggle_audio()", "*");
+        //this.render_current_audio_state();
     },
     last_audio_state:null,
-    render_current_audio_state: function()
+    render_current_audio_state: function(state)
     {
-        var context = this.get_audio_context();
-        if(context == null && this.last_audio_state == null)
-            return;
-        if(context != null && this.last_audio_state == context.state)
-            return;
-
-        if(context == null)
-        {
-            $('#btn_unlock_audio').empty();	
-            this.last_audio_state=null;			
-        }
-        else
-        {
-            $('#btn_unlock_audio').html( context.state == 'running' ? this.audio_unlocked_icon : this.audio_locked_icon );
-            this.last_audio_state=context.state;
-        }
+        $('#btn_unlock_audio').html( state == 'running' ? this.audio_unlocked_icon : this.audio_locked_icon );
+        this.last_audio_state=state;
     },
     stop_emu_view: function() {
         //close any other active emulator frame
