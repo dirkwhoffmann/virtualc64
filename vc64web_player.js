@@ -1,9 +1,6 @@
 /**
  * official vc64web player.
  * checks whether jquery is already there, if not lazy loads it when emulator is started
- * TODO: communicate vie postMessage() 
- * https://stackoverflow.com/questions/25098021/securityerror-blocked-a-frame-with-origin-from-accessing-a-cross-origin-frame
- * window.postMessage() (or window.parent.postMessage()) to circumvent CORS
  */
 
 var vc64web_player={
@@ -30,8 +27,6 @@ var vc64web_player={
             });
             this.listens=true;
         }
-        
-        
         if(window.jQuery)
         {
             this.load_into(element,params, address);
@@ -124,9 +119,6 @@ ${this.overlay_on_icon}
             
             var vc64web = document.getElementById("vc64web").contentWindow;
             vc64web.postMessage("poll_state", "*");
-            
-            //vc64web_player.render_run_state();
-            //vc64web_player.render_current_audio_state();
         }, 900);
 
     },
@@ -179,12 +171,8 @@ ${this.overlay_on_icon}
     },
     toggle_run: function () {
         var vc64web = document.getElementById("vc64web").contentWindow;
-//        if(vc64web.required_roms_loaded)// that means emu already runs
-
         //click emulators run toggle button
-        //$vc64web.contents().find('#button_run').click();
         vc64web.postMessage("button_run()", "*");
-        //this.render_run_state();
     },
     last_run_state:null,
     render_run_state: function (is_running)
@@ -201,7 +189,6 @@ ${this.overlay_on_icon}
     {			
         var vc64web = document.getElementById("vc64web").contentWindow;
         vc64web.postMessage("toggle_audio()", "*");
-        //this.render_current_audio_state();
     },
     last_audio_state:null,
     render_current_audio_state: function(state)
