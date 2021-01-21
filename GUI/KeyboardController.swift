@@ -90,6 +90,8 @@ class KeyboardController: NSObject {
     
     func flagsChanged(with event: NSEvent) {
                 
+        // track("ls: \(leftShift) rs: \(rightShift) lc: \(leftControl) rc: \(rightControl) lo: \(leftOption) ro: \(rightOption)")
+        
         // Determine the pressed or released key
         switch Int(event.keyCode) {
             
@@ -123,6 +125,8 @@ class KeyboardController: NSObject {
     }
     
     func keyDown(with macKey: MacKey) {
+        
+        track("\(macKey.keyCode)")
         
         // Check if this key is used for joystick emulation
         if parent.gamePad1?.processKeyDownEvent(macKey: macKey) == true {
@@ -162,6 +166,8 @@ class KeyboardController: NSObject {
         
     func keyUp(with macKey: MacKey) {
         
+        track("\(macKey.keyCode)")
+
         // Check if this key is used for joystick emulation
         if parent.gamePad1?.processKeyUpEvent(macKey: macKey) == true {
             if pref.disconnectJoyKeys { return }

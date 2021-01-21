@@ -184,8 +184,12 @@ class GamePad {
     // Translates a key press event to a list of gamepad actions
     func keyDownEvents(_ macKey: MacKey) -> [GamePadAction] {
         
-        guard let n = keyMap, let direction = prefs.keyMaps[n][macKey] else { return [] }
+        var macKey2 = macKey
+        macKey2.carbonFlags = 0
+        guard let n = keyMap, let direction = prefs.keyMaps[n][macKey2] else { return [] }
                     
+        track("keyDownEvents \(direction)")
+
         switch GamePadAction(rawValue: direction) {
             
         case .PULL_UP:
@@ -221,8 +225,12 @@ class GamePad {
     // Handles a key release event
     func keyUpEvents(_ macKey: MacKey) -> [GamePadAction] {
         
-        guard let n = keyMap, let direction = prefs.keyMaps[n][macKey] else { return [] }
+        var macKey2 = macKey
+        macKey2.carbonFlags = 0
+        guard let n = keyMap, let direction = prefs.keyMaps[n][macKey2] else { return [] }
                 
+        track("keyUpEvents \(direction)")
+        
         switch GamePadAction(rawValue: direction) {
             
         case .PULL_UP:

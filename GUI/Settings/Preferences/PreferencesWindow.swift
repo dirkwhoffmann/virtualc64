@@ -39,6 +39,12 @@ class PreferencesWindow: NSWindow {
     override func flagsChanged(with event: NSEvent) {
         
         track()
+
+        /* We do not allow the Cmd and Opt keys as emulation keys because they
+         * interact directly with the OS when pressed in combination with
+         * certain other keys.
+         */
+        
         let controller = delegate as? PreferencesController
         
         switch Int(event.keyCode) {
@@ -48,11 +54,13 @@ class PreferencesWindow: NSWindow {
         case kVK_RightShift where event.modifierFlags.contains(.shift):
             controller?.keyDown(with: MacKey.rightShift)
             
+        /*
         case kVK_Control where event.modifierFlags.contains(.control):
             controller?.keyDown(with: MacKey.control)
         case kVK_RightControl where event.modifierFlags.contains(.control):
             controller?.keyDown(with: MacKey.rightControl)
-            
+        */
+        
         case kVK_Option where event.modifierFlags.contains(.option):
             controller?.keyDown(with: MacKey.option)
         case kVK_RightOption where event.modifierFlags.contains(.option):

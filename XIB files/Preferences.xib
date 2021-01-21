@@ -1307,6 +1307,9 @@ DQ
                                             <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="wb6-8h-Opa">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
+                                                <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="okAction:" target="-2" id="Z8t-E7-mWw"/>
