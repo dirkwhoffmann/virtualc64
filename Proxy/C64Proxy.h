@@ -64,6 +64,7 @@
 @interface HardwareComponentProxy : Proxy { }
 
 - (void)dump;
+- (void)dumpConfig;
 
 @end
 
@@ -119,13 +120,12 @@
 @property BOOL debugMode;
 @property InspectionTarget inspectionTarget;
 
-- (BOOL)isReady:(ErrorCode *)err;
+- (BOOL)isReady:(ErrorCode *)ec;
 - (BOOL)isReady;
 - (void)powerOn;
 - (void)powerOff;
 - (void)inspect;
 - (void)reset;
-- (void)dump;
 
 @property (readonly) BOOL poweredOn;
 @property (readonly) BOOL poweredOff;
@@ -187,7 +187,7 @@
 
 
 //
-// Guards (Breakpoints, Watchpoints)
+// Guards proxy (Breakpoints, Watchpoints)
 //
 
 @interface GuardsProxy : Proxy { }
@@ -223,7 +223,6 @@
 - (NSInteger)loggedPCRel:(NSInteger)nr;
 - (NSInteger)loggedPCAbs:(NSInteger)nr;
 - (void)clearLog;
-- (void)dump;
 - (bool)isJammed;
 
 - (void)setHex;
@@ -448,8 +447,6 @@
 - (VIAProxy *)via:(NSInteger)num;
 
 - (DriveConfig)getConfig;
-
-- (void)dump;
 
 - (BOOL)isConnected;
 - (BOOL)isSwitchedOn;
@@ -797,7 +794,6 @@ AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk> { }
 - (NSInteger)readByte:(NSInteger)block offset:(NSInteger)offset;
 - (BOOL)exportDirectory:(NSString *)path error:(ErrorCode *)err;
 
-- (void)dump;
 - (void)info;
 
 - (NSString *)fileName:(NSInteger)nr;

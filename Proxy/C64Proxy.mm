@@ -46,6 +46,11 @@
     [self hwc]->dump();
 }
 
+- (void)dumpConfig
+{
+    [self hwc]->dumpConfig();
+}
+
 @end
 
 //
@@ -177,11 +182,6 @@
     [self cpu]->debugger.clearLog();
 }
 
-- (void)dump
-{
-    [self cpu]->dump();
-}
-
 - (bool)isJammed
 {
     return [self cpu]->isJammed();
@@ -268,11 +268,6 @@
     return [self mem]->getInfo();
 }
 
-- (void)dump
-{
-    [self mem]->dump();
-}
-
 - (MemoryType)peekSource:(u16)addr
 {
     return [self mem]->getPeekSource(addr);
@@ -353,10 +348,6 @@
 - (CIAInfo)getInfo
 {
     return [self cia]->getInfo();
-}
-- (void)dump
-{
-    [self cia]->dump();
 }
 
 @end
@@ -2010,11 +2001,6 @@
 - (void)reset
 {
     [self c64]->reset();
-}
-
-- (void)dump
-{
-    [self c64]->dump();
 }
 
 - (BOOL)poweredOn

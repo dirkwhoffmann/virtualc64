@@ -145,44 +145,64 @@ RomFile::isVC1541RomStream(std::istream &stream)
 bool
 RomFile::isRomFile(RomType type, const char *path)
 {
-    switch (type) {
-        case ROM_TYPE_BASIC:   return isBasicRomFile(path);
-        case ROM_TYPE_CHAR:    return isCharRomFile(path);
-        case ROM_TYPE_KERNAL:  return isKernalRomFile(path);
-        case ROM_TYPE_VC1541:  return isVC1541RomFile(path);
-
-        default:
-            assert(false);
-            return false;
-    }
+    std::ifstream stream(path);
+    return isRomStream(type, stream);
 }
 
 bool
 RomFile::isBasicRomFile(const char *path)
 {
-    std::ifstream stream(path);
-    return stream.is_open() ? isBasicRomStream(stream) : false;
+    return isRomFile(ROM_TYPE_BASIC, path);
 }
 
 bool
 RomFile::isCharRomFile(const char *path)
 {
-    std::ifstream stream(path);
-    return stream.is_open() ? isCharRomStream(stream) : false;
+    return isRomFile(ROM_TYPE_CHAR, path);
 }
 
 bool
 RomFile::isKernalRomFile(const char *path)
 {
-    std::ifstream stream(path);
-    return stream.is_open() ? isKernalRomStream(stream) : false;
+    return isRomFile(ROM_TYPE_KERNAL, path);
 }
 
 bool
 RomFile::isVC1541RomFile(const char *path)
 {
-    std::ifstream stream(path);
-    return stream.is_open() ? isVC1541RomStream(stream) : false;
+    return isRomFile(ROM_TYPE_VC1541, path);
+}
+
+bool
+RomFile::isRomBuffer(RomType type, const u8 *buf, usize len)
+{
+    std::stringstream stream;
+    stream.write((const char *)buf, len);
+    return isRomStream(type, stream);
+}
+
+bool
+RomFile::isBasicRomBuffer(const u8 *buf, usize len)
+{
+    return isRomBuffer(ROM_TYPE_BASIC, buf, len);
+}
+
+bool
+RomFile::isCharRomBuffer(const u8 *buf, usize len)
+{
+    return isRomBuffer(ROM_TYPE_CHAR, buf, len);
+}
+
+bool
+RomFile::isKernalRomBuffer(const u8 *buf, usize len)
+{
+    return isRomBuffer(ROM_TYPE_KERNAL, buf, len);
+}
+
+bool
+RomFile::isVC1541RomBuffer(const u8 *buf, usize len)
+{
+    return isRomBuffer(ROM_TYPE_VC1541, buf, len);
 }
 
 RomIdentifier
