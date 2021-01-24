@@ -26,10 +26,15 @@ T64File::isCompatibleName(const std::string &name)
 bool
 T64File::isCompatibleStream(std::istream &stream)
 {
-    const u8 magicBytes[] = { 0x43, 0x36, 0x34 };
-    
+    const u8 magicT64[] = { 'C', '6', '4' };
+    const u8 magicTAP[] = { 'C', '6', '4', '-', 'T', 'A', 'P', 'E' };
+
     if (streamLength(stream) < 0x40) return false;
-    return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
+    
+    // T64 files must begin with "C64" and must not begin with "C64-TAPE"
+    return
+    !matchingStreamHeader(stream, magicTAP, sizeof(magicTAP)) &&
+    matchingStreamHeader(stream, magicT64, sizeof(magicT64));
 }
 
 T64File *
