@@ -32,9 +32,9 @@ private:
     
     void _reset() override { };
     
-    size_t _size() override { return 0; }
-    size_t _load(u8 *buffer) override { return 0; }
-    size_t _save(u8 *buffer) override { return 0; }
+    usize _size() override { return 0; }
+    usize _load(u8 *buffer) override { return 0; }
+    usize _save(u8 *buffer) override { return 0; }
     
     
     //

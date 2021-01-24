@@ -101,14 +101,16 @@ public:
         return nullptr;
     }
     
-    template <class T> static T *make(const char *path) throws
+    template <class T> static T *make(const string &path) throws
     {
+        if (!T::isCompatibleName(path)) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+        
         std::ifstream stream(path);
         if (!stream.is_open()) throw VC64Error(ERROR_FILE_NOT_FOUND);
         return make <T> (stream);
     }
 
-    template <class T> static T *make(const char *path, ErrorCode *err)
+    template <class T> static T *make(const string &path, ErrorCode *err)
     {
         *err = ERROR_OK;
         try { return make <T> (path); }
