@@ -154,11 +154,8 @@ AnyFile::writeToBuffer(u8 *buf)
 {
     assert(buf);
 
-    std::ostringstream stream;
-    usize len = writeToStream(stream);
-    stream.write((char *)buf, len);
-    
-    return len;
+    memcpy(buf, data, size);
+    return size;
 }
 
 usize
