@@ -79,32 +79,53 @@
 							</header>
 
 							<p> First it started only as an experiment last year and <strong>then it became a passion for redefining browser based c64 emulation. </strong>
-								<br><br>
-								Technically 🤓 vc64web is just a C64 emulator that is <strong>based solely on HTML5 techniques </strong> e.g. javascript and WASM. It is therefore runnable on modern desktop browsers and also on web browsers for touch devices like phones and tablets ...								
-								<br>
-								🤤 we baked some nice features into it that were <strong>not seen by us yet in any other existing C64 web emulation</strong>.
-								<br>
-								these include
-<ul>
-<li>an online interface to the csdb.dk named scene browser (powered by CSDb web services)</li>
-<li>a vc64web player for embedding demos and C64 programs in own webpages in a super simple way see demos below</li>  
-<li>free definable action buttons and remapping possible</li>
-<li>program your own javascripts inside the emulator GUI for creating bot controller support (e.g. aimbots, auto defense bot, etc...)</li>
-<li>supports direct start ... a link to a C64 file (zip, d64, ...) as an call parameter (e.g. https://dirkwhoffmann.github.io/virtualc64web/#http://csdb.dk/getinternalfile.php/205771/CopperBooze.prg )</li>
-<li>supports dragging of CSDB-Download and Release-Links from CSDb.dk website browser window into the vc64web browser window ...</li>
-<li>It supports PWA standard which gives it the appearance of an nearly native app e.g. runs offline, no browser addressbar and so on ... to install it nativley as a PWA on iOS or Android devices for example -> save it to homescreen</li>
-</ul>
+								<br><br>								
+								<img src="showcases/navbar.png" />
 
-other features are
-<ul>
-	<li>supports external gamecontroller and touch device as joystick</li>
-	<li>snaphot saving to the local browser web storage ...</li>
-	<li>supports multivolumne titles in zip archives</li>
-</ul>
+								<div style="margin-top:30px;font-size:larger">
+								you like a cinematic retro expierience, we got the button for you.
+								</div>
+								<img src="showcases/widescreen.png"/>
+
+								<div style="margin-top:30px;font-size: larger;">
+								the big picture ... going immersive deep without distraction with thin beezels 
+								</div>
+								[picture of borderless]
+								
+
+								<div style="margin-top:30px;font-size: larger;">
+								getting into the groove with clean and high quality sound ! we built in the latest resid processor and you can even double it ...</div>
+								<img src="showcases/sound.png" />
+								
+
+								
+								<div style="margin-top:30px;font-size: larger;">
+								ready for a scroll ? A gorgous view of the hottest demos is boosting you to easily select and instantly run them by just a click ..
+								</div>
+								<div style="display:flex; justify-content:center;width: 100vw;"><img src="showcases/scenebrowser.png" style="width: 60vw"/></div>
+								
+
+								<div style="margin-top:30px;font-size: larger;">
+								we know the amount of demo productions is huge ? We crafted a favourite button for this ... 
+								</div>
+								<img src="showcases/favourite.png" style="width: 60vw"/>
+
+
+
+								<div style="margin-top:30px;font-size: larger;">
+									get your fingers dirty and code little scripts to beat games AI ... can your code beat the game designers code of the 80ties?   
+								</div>
+								[picture of a short script with sprite positions ...]
+
+								<div style="margin-top:30px;font-size: larger;">
+									No keyboard ? You are being on a touchscreen device right ? 
+									No problem define keys and overlay action buttons and also remapping of keyboard keys is possible ...
+								</div>
+								[picture of custom key buttons with emojis]
 
 <br>
 <br>
-<p>The demo scene is great they surprise and amaze us with technical and artful masterpieces on the Commodore C64 ... here are some of the most adored demos picked and hand selected by us.</p>
+<p>The demo scene is great they surprise and amaze us every day with technical and artful new masterpieces for the Commodore C64 ... here are some of the most adored demos picked and hand selected by us.</p>
 
 						</article>
 
@@ -139,7 +160,8 @@ other features are
 							<section>
 								<div id="emuview1" class="emulator_view"><a href="#"
 										onclick="vc64web_player.load(this, '#openROMS=true#2ndSID=d420#navbar=hidden#wide=true#border=false', 'http://dirkwhoffmann.github.io/virtualc64/media/advland.prg');return false;">
-										<img src="images/advland.png" width="100%"></a>
+										<img src="images/advland.png" width="100%">
+										</a>
 								</div>
 							</section>
 						</div>
@@ -201,6 +223,36 @@ other features are
 <p>							we selected only those demos which don't need any original commodore rom chips (which are copyrighted). there are even more exciting demos out there which need a commodore floppy disk rom chip. For those you can plaug the original rom chips into the emulator. Then head to the emulator builtin demo scene browser and look for top demos to see other mindblowing productions coming in every week. 
 
 </p>
+
+
+								Technically vc64web is just a C64 emulator that is <strong>based solely on HTML5 techniques </strong> e.g. javascript and WASM. It is therefore runnable on modern desktop browsers and also on web browsers for touch devices like phones and tablets ...								
+								<br><br>
+
+								but be sure ... we baked some nice <strong>features</strong> into it that were <strong>not seen by us yet in any other existing C64 web emulation</strong>.
+								<br>
+								these include
+								<ul>
+<li></li>
+<li>a vc64web player for embedding demos and C64 programs in own webpages in a super simple way see demos below</li>  
+<li>free definable action buttons and remapping possible</li>
+<li>program your own javascripts inside the emulator GUI for creating bot controller support (e.g. aimbots, auto defense bot, etc...)</li>
+<li>supports direct start ... a link to a C64 file (zip, d64, ...) as an call parameter (e.g. https://dirkwhoffmann.github.io/virtualc64web/#http://csdb.dk/getinternalfile.php/205771/CopperBooze.prg )</li>
+<li>supports dragging of CSDB-Download and Release-Links from CSDb.dk website browser window into the vc64web browser window ...</li>
+<li>It supports PWA standard which gives it the appearance of an nearly native app e.g. runs offline, no browser addressbar and so on ... to install it nativley as a PWA on iOS or Android devices for example -> save it to homescreen</li>
+</ul>
+
+other features are
+<ul>
+	<li>supports external gamecontroller and touch device as joystick</li>
+	<li>snaphot saving to the local browser web storage ...</li>
+	<li>supports multivolumne titles in zip archives</li>
+</ul>
+
+
+
+
+
+
 				</article>
 
 			</div>
