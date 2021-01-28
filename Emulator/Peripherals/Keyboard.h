@@ -13,8 +13,10 @@
 
 struct KeyAction {
     
+    enum class Action { press, release, releaseAll };
+    
     // Action type (true = press, false = release)
-    bool press;
+    Action type;
 
     // Key identifier (0 .. 65)
     u8 nr;
@@ -26,8 +28,8 @@ struct KeyAction {
     i64 delay;
 
     // Constructors
-    KeyAction(bool _press, u8 _nr, u64 _delay);
-    KeyAction(bool _press, u8 _row, u8 _col, u64 _delay);
+    KeyAction(Action _type, u8 _nr, u64 _delay);
+    KeyAction(Action _type, u8 _row, u8 _col, u64 _delay);
 };
 
 class Keyboard : public C64Component {
@@ -209,6 +211,7 @@ public:
     void scheduleKeyPress(u8 row, u8 col, i64 delay);
     void scheduleKeyRelease(long nr, i64 delay);
     void scheduleKeyRelease(u8 row, u8 col, i64 delay);
+    void scheduleKeyReleaseAll(i64 delay);
 
 private:
     
@@ -219,8 +222,8 @@ private:
     void abortAutoTyping();
     
     // Workhorses for scheduleKeyPress and scheduleKeyRelease
-    void _scheduleKeyAction(bool press, long nr, i64 delay);
-    void _scheduleKeyAction(bool press, u8 row, u8 col, i64 delay);
+    void _scheduleKeyAction(KeyAction::Action type, long nr, i64 delay);
+    void _scheduleKeyAction(KeyAction::Action type, u8 row, u8 col, i64 delay);
 
     
     //

@@ -9,8 +9,8 @@
 
 #include "C64.h"
 
-KeyAction::KeyAction(bool _press, u8 _nr, u64 _delay)
-: press(_press), nr(_nr), delay(_delay)
+KeyAction::KeyAction(Action _type, u8 _nr, u64 _delay)
+: type(_type), nr(_nr), delay(_delay)
 {
     assert(nr < 66);
     
@@ -18,8 +18,8 @@ KeyAction::KeyAction(bool _press, u8 _nr, u64 _delay)
     col = Keyboard::rowcol[nr][1];
 }
 
-KeyAction::KeyAction(bool _press, u8 _row, u8 _col, u64 _delay)
-: press(_press), row(_row), col(_col), delay(_delay)
+KeyAction::KeyAction(Action _type, u8 _row, u8 _col, u64 _delay)
+: type(_type), row(_row), col(_col), delay(_delay)
 {
     constexpr u8 _nr[64] = {
         
@@ -302,25 +302,31 @@ Keyboard::toggle(u8 row, u8 col)
 void
 Keyboard::scheduleKeyPress(long nr, i64 delay)
 {
-    synchronized { _scheduleKeyAction(true, nr, delay); }
+    synchronized { _scheduleKeyAction(KeyAction::Action::press, nr, delay); }
 }
 
 void
 Keyboard::scheduleKeyPress(u8 row, u8 col, i64 delay)
 {
-    synchronized { _scheduleKeyAction(true, row, col, delay); }
+    synchronized { _scheduleKeyAction(KeyAction::Action::press, row, col, delay); }
 }
 
 void
 Keyboard::scheduleKeyRelease(long nr, i64 delay)
 {
-    synchronized { _scheduleKeyAction(false, nr, delay); }
+    synchronized { _scheduleKeyAction(KeyAction::Action::release, nr, delay); }
 }
 
 void
 Keyboard::scheduleKeyRelease(u8 row, u8 col, i64 delay)
 {
-    synchronized { _scheduleKeyAction(false, row, col, delay); }
+    synchronized { _scheduleKeyAction(KeyAction::Action::release, row, col, delay); }
+}
+
+void
+Keyboard::scheduleKeyReleaseAll(i64 delay)
+{
+    synchronized { _scheduleKeyAction(KeyAction::Action::releaseAll, 0, delay); }
 }
 
 void
@@ -346,21 +352,21 @@ Keyboard::abortAutoTyping()
 }
 
 void
-Keyboard::_scheduleKeyAction(bool press, long nr, i64 delay)
+Keyboard::_scheduleKeyAction(KeyAction::Action type, long nr, i64 delay)
 {
-    debug(KBD_DEBUG, "Recording %d %ld %lld\n", press, nr, delay);
+    debug(KBD_DEBUG, "Recording %d %ld %lld\n", type, nr, delay);
 
     addDelay(delay);
-    actions.push(KeyAction(press, nr, 0));
+    actions.push(KeyAction(type, nr, 0));
 }
 
 void
-Keyboard::_scheduleKeyAction(bool press, u8 row, u8 col, i64 delay)
+Keyboard::_scheduleKeyAction(KeyAction::Action type, u8 row, u8 col, i64 delay)
 {
-    debug(KBD_DEBUG, "Recording %d %d %d %lld\n", press, row, col, delay);
+    debug(KBD_DEBUG, "Recording %d %d %d %lld\n", type, row, col, delay);
     
     addDelay(delay);
-    actions.push(KeyAction(press, row, col, 0));
+    actions.push(KeyAction(type, row, col, 0));
 }
 
 void
@@ -379,11 +385,32 @@ Keyboard::vsyncHandler()
             KeyAction action = actions.front();
             actions.pop();
 
-            trace(KBD_DEBUG, "%s key (%d,%d) next: %lld\n",
-                  action.press ? "Pressing" : "Releasing",
-                  action.row, action.col, action.delay);
+            /*
+            trace(KBD_DEBUG, "%d: key (%d,%d) next: %lld\n",
+                  action.type, action.row, action.col, action.delay);
+            */
             
-            action.press ? _press(action.nr) : _release(action.nr);
+            switch (action.type) {
+                    
+                case KeyAction::Action::press:
+                    
+                    debug(KBD_DEBUG, "Pressing (%d,%d)\n", action.row, action.col);
+                    _press(action.nr);
+                    break;
+                    
+                case KeyAction::Action::release:
+
+                    debug(KBD_DEBUG, "Releasing (%d,%d)\n", action.row, action.col);
+                    _release(action.nr);
+                    break;
+
+                case KeyAction::Action::releaseAll:
+                    
+                    debug(KBD_DEBUG, "Releasing all\n");
+                    _releaseAll();
+                    break;
+            }
+                    
             delay = action.delay;
             
             if (delay) break;

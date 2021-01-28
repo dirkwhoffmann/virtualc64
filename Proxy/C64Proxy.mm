@@ -656,6 +656,11 @@
     [self kb]->scheduleKeyRelease(row, col, delay);
 }
 
+- (void)scheduleKeyReleaseAll:(NSInteger)delay
+{
+    [self kb]->scheduleKeyReleaseAll(delay);
+}
+
 @end
 
 //
