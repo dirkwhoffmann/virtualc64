@@ -11,8 +11,8 @@
 
 import Carbon.HIToolbox
 
-/* Mapping from Mac key codes to textual representations.
- * The mapping only covers keys with an empty standard representation.
+/* Mapping from Mac key codes to textual representations. This mapping covers
+ * keys with an empty standard representation.
  */
 let mac2string: [Int: String] = [
     
@@ -95,6 +95,11 @@ struct MacKey: Codable {
         self.init(keyCode: event.keyCode, flags: event.modifierFlags)
     }
     
+    func hash(into hasher: inout Hasher) {
+        
+        hasher.combine(keyCode)
+    }
+    
     // Returns the modifier flags of this key
     var modifierFlags: NSEvent.ModifierFlags {
         
@@ -123,55 +128,6 @@ struct MacKey: Codable {
         
         return ""
     }
-    
-    // Keycode in hex format as a string
-    // var keyCodeStr: String { return String.init(format: "%02X", keyCode) }
-    
-    // Textual description of this key
-    // var description: String?
-
-    /*
-    init(keyCode: UInt16, characters: String? = nil) {
-        
-        self.keyCode = keyCode
-        self.description = characters
-    }
-    
-    init(keyCode: Int, characters: String? = nil) {
-        
-        self.init(keyCode: UInt16(keyCode), characters: characters)
-    }
-    
-    init(with event: NSEvent) {
-        
-        keyCode = event.keyCode
-        
-        let stdSymbols: [Int: String] = [
-            kVK_Return:     "\u{21a9}",
-            kVK_Tab:        "\u{21e5}",
-            kVK_Space:      "\u{23b5}",
-            kVK_Delete:     "\u{232b}",
-            kVK_Escape:     "\u{238b}",
-            kVK_Shift:      "\u{21e7}",
-            kVK_Option:     "\u{2325}",
-            kVK_Control:    "\u{2303}",
-            kVK_F1:         "F1",
-            kVK_F2:         "F2",
-            kVK_F3:         "F3",
-            kVK_F4:         "F4",
-            kVK_F5:         "F5",
-            kVK_F6:         "F6",
-            kVK_F7:         "F7",
-            kVK_F8:         "F8",
-            kVK_LeftArrow:  "\u{2190}",
-            kVK_RightArrow: "\u{2192}",
-            kVK_DownArrow:  "\u{2193}",
-            kVK_UpArrow:    "\u{2191}"
-        ]
-        
-        description = stdSymbols[Int(keyCode)] ?? event.charactersIgnoringModifiers
-    }
-    */
 }
 
 extension MacKey: Equatable, Hashable {
@@ -180,21 +136,6 @@ extension MacKey: Equatable, Hashable {
         return lhs.keyCode == rhs.keyCode
     }
 }
-
-/*
-extension MacKey {
-    
-    static let escape       = MacKey.init(keyCode: kVK_Escape)
-    static let shift        = MacKey.init(keyCode: kVK_Shift)
-    static let rightShift   = MacKey.init(keyCode: kVK_RightShift)
-    static let option       = MacKey.init(keyCode: kVK_Option)
-    static let rightOption  = MacKey.init(keyCode: kVK_RightOption)
-    static let control      = MacKey.init(keyCode: kVK_Control)
-    static let rightControl = MacKey.init(keyCode: kVK_RightControl)
-    static let command      = MacKey.init(keyCode: kVK_Command)
-    static let rightCommand = MacKey.init(keyCode: kVK_RightCommand)
-}
-*/
 
 extension MacKey {
     

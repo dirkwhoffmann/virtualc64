@@ -30,10 +30,11 @@ class KeyboardController: NSObject {
     // written in keyDown and picked up in keyUp.
     var pressedKeys: [Int: [C64Key]] = [:]
     
-    // Checks if the internal values are consistent with the provides flags.
-    // There should never be an insonsistency. But if there is, we release the
-    // suspicous key. Otherwise, we risk to block the C64's keyboard matrix
-    // for good.
+    /* Checks if the internal values are consistent with the provides flags.
+     * There should never be an insonsistency. But if there is, we release the
+     * suspicous key. Otherwise, we risk to permanently block the C64's
+     * keyboard matrix
+     */
     /*
     func checkConsistency(withEvent event: NSEvent) {
         
@@ -46,11 +47,11 @@ class KeyboardController: NSObject {
         }
         if control != flags.contains(NSEvent.ModifierFlags.control) {
             keyUp(with: MacKey.control)
-            Swift.print("*** SHIFT inconsistency *** \(control)")
+            Swift.print("*** CONTROL inconsistency *** \(control)")
         }
         if option != flags.contains(NSEvent.ModifierFlags.option) {
             keyUp(with: MacKey.option)
-            Swift.print("*** SHIFT inconsistency *** \(option)")
+            Swift.print("*** OPTION inconsistency *** \(option)")
         }
     }
     */
@@ -79,12 +80,13 @@ class KeyboardController: NSObject {
             return
         }
         
-        // track("Key str: \(event.characters) \(event.keyCode)")
+        // track("keyDown: \(event.characters ?? "") \(event.keyCode)")
         keyDown(with: MacKey.init(event: event))
     }
     
     func keyUp(with event: NSEvent) {
                 
+        // track("keyUp: \(event.characters ?? "") \(event.keyCode)")
         keyUp(with: MacKey.init(event: event))
     }
     
@@ -104,6 +106,7 @@ class KeyboardController: NSObject {
             rightShift ? keyDown(with: MacKey.rightShift) : keyUp(with: MacKey.rightShift)
             
         case kVK_Control:
+            track("kVK_Control")
             leftControl = event.modifierFlags.contains(.control) ? !leftControl : false
             leftControl ? keyDown(with: MacKey.control) : keyUp(with: MacKey.control)
             

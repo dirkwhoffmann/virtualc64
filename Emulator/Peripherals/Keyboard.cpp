@@ -219,7 +219,7 @@ Keyboard::_release(long nr)
 void
 Keyboard::_releaseRowCol(u8 row, u8 col)
 {
-    debug(KBD_DEBUG, "releaseRowCol(%d,%d)\n", row, col);
+    debug(KBD_DEBUG, "_releaseRowCol(%d,%d)\n", row, col);
 
     assert(row < 8);
     assert(col < 8);
@@ -242,6 +242,8 @@ Keyboard::_releaseRestore()
 void
 Keyboard::_releaseAll()
 {
+    debug(KBD_DEBUG, "_releaseAll()\n");
+    
     for (unsigned i = 0; i < 8; i++) {
         kbMatrixRow[i] = kbMatrixCol[i] = 0xFF;
     }
