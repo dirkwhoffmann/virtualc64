@@ -79,7 +79,6 @@
                 <outlet property="keyMappingPopup" destination="Wq6-3c-FTh" id="bLH-aw-mcu"/>
                 <outlet property="keyMappingText" destination="nYs-ee-j0m" id="7l3-HU-l0x"/>
                 <outlet property="keyTrashButton" destination="Wkv-m0-U55" id="XBG-jD-ZY2"/>
-                <outlet property="keyTrashText" destination="fYf-Al-G6G" id="oeu-UJ-fID"/>
                 <outlet property="tabView" destination="1IQ-Eq-q6N" id="ZZH-Iq-MWx"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="XCH-C3-15M"/>
             </connections>

@@ -125,7 +125,7 @@ class Preferences {
     
     // Mapping
     var mapKeysByPosition = false
-    var keyMap: [MacKey: C64Key] = [:] 
+    var keyMap: [MacKey: C64Key] = [:]
     
     //
     // General
@@ -218,8 +218,6 @@ class Preferences {
         
         // Mouse
         mouseModelIntValue = defaults.integer(forKey: Keys.Con.mouseModel)
-        
-        track("mouseModel = \(mouseModelIntValue)")
     }
     
     func saveControlsUserDefaults() {
@@ -252,6 +250,16 @@ class Preferences {
         let defaults = UserDefaults.standard
         mapKeysByPosition = defaults.bool(forKey: Keys.Kbd.mapKeysByPosition)
         defaults.decode(&keyMap, forKey: Keys.Kbd.keyMap)
+        
+        // Remove double mappings (if any)
+        var values: [Int] = []
+        for (k, v) in keyMap {
+            if values.contains(v.nr) {
+                track("Removing conflicting key map assignment \(k.keyCode) -> \(v.nr)")
+                keyMap[k] = nil
+            }
+            values.append(v.nr)
+        }
     }
     
     func saveKeyboardUserDefaults() {

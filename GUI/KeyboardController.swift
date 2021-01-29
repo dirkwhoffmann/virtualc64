@@ -205,7 +205,7 @@ class KeyboardController: NSObject {
         
         // First row of C64 keyboard
         MacKey.Ansi.grave: C64Key.leftArrow,
-        MacKey.Iso.hat: C64Key.leftArrow,
+        // MacKey.Iso.hat: C64Key.leftArrow,
         MacKey.Ansi.digit0: C64Key.digit0,
         MacKey.Ansi.digit1: C64Key.digit1,
         MacKey.Ansi.digit2: C64Key.digit2,
@@ -269,9 +269,9 @@ class KeyboardController: NSObject {
         MacKey.Ansi.period: C64Key.period,
         MacKey.Ansi.slash: C64Key.slash,
         MacKey.curRight: C64Key.curLeftRight,
-        MacKey.curLeft: C64Key.curLeftRight,
+        // MacKey.curLeft: C64Key.curLeftRight,
         MacKey.curDown: C64Key.curUpDown,
-        MacKey.curUp: C64Key.curUpDown,
+        // MacKey.curUp: C64Key.curUpDown,
         MacKey.F7: C64Key.F7F8,
 
         // Fifth row of C64 keyboard
