@@ -309,6 +309,12 @@ ExpansionPort::detachCartridgeAndReset()
     resume();
 }
 
+usize
+ExpansionPort::getRamCapacity() const
+{
+    return cartridge ? cartridge->getRamCapacity() : 0;
+}
+
 bool
 ExpansionPort::hasBattery() const
 {

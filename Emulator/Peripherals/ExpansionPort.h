@@ -153,10 +153,13 @@ public:
     // Managing on-board RAM
     //
     
+    // Returns the size of the on-board RAM in bytes
+    usize getRamCapacity() const;
+    
     // Returns true if the attached cartridge has a RAM backing battery
     bool hasBattery() const;
 
-    // Enables or disables RAM backing during a reset.
+    // Enables or disables RAM backing during a reset
     void setBattery(bool value);
     
     

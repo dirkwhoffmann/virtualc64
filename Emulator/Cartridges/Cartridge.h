@@ -276,7 +276,7 @@ public:
     // Managing on-board RAM
     //
     
-    // Returns the RAM size in bytes
+    // Returns the size of the on-board RAM in bytes
     usize getRamCapacity() const;
 
     /* Assigns external RAM to this cartridge. This functions frees any

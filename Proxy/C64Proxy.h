@@ -413,6 +413,8 @@
 - (BOOL)led;
 - (void)setLed:(BOOL)value;
 
+@property (readonly) NSInteger ramCapacity;
+
 - (BOOL)hasBattery;
 - (void)setBattery:(BOOL)value;
 

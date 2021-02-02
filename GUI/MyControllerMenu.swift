@@ -116,6 +116,14 @@ extension MyController: NSMenuItemValidation {
         case #selector(MyController.attachGeoRamDummyAction(_:)):
             item.state = (c64.expansionport.cartridgeType() == .GEO_RAM) ? .on : .off
             
+        case #selector(MyController.attachGeoRamAction(_:)):
+            item.state = (c64.expansionport.cartridgeType() == .GEO_RAM &&
+                            c64.expansionport.ramCapacity == item.tag * 1024) ? .on : .off
+            
+        case #selector(MyController.geoRamBatteryAction(_:)):
+            item.state = c64.expansionport.hasBattery() ? .on : .off
+            return c64.expansionport.cartridgeType() == .GEO_RAM
+
         case #selector(MyController.attachIsepicAction(_:)):
             item.state = (c64.expansionport.cartridgeType() == .ISEPIC) ? .on : .off
             
@@ -160,11 +168,7 @@ extension MyController: NSMenuItemValidation {
             item.isHidden = title == nil
             item.state = c64.expansionport.switchIsRight() ? .on : .off
             return title != nil
-            
-        case #selector(MyController.geoRamBatteryAction(_:)):
-            item.state = c64.expansionport.hasBattery() ? .on : .off
-            return c64.expansionport.cartridgeType() == .GEO_RAM
-            
+
         // Debug menu
         case #selector(MyController.traceAction(_:)):
             return !c64.isReleaseBuild

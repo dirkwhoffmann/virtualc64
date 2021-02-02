@@ -815,6 +815,11 @@
     [self eport]->setLED(value);
 }
 
+- (NSInteger) ramCapacity
+{
+    return (NSInteger)[self eport]->getRamCapacity();
+}
+
 - (BOOL) hasBattery
 {
     return [self eport]->hasBattery();
