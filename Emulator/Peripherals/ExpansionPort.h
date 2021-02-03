@@ -31,7 +31,8 @@
 class ExpansionPort : public C64Component {
     
     // Attached cartridge (nullptr if no cartridge is plugged in)
-    Cartridge *cartridge = nullptr;
+    std::unique_ptr<Cartridge> cartridge;
+//     Cartridge *cartridge = nullptr;
     
     // Type of the attached cartridge
     CartridgeType crtType = CRT_NONE;

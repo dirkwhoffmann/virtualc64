@@ -47,9 +47,7 @@ ExpansionPort::_load(u8 *buffer)
     
     // Load cartridge (if any)
     if (crtType != CRT_NONE) {
-        assert(cartridge);
-        delete cartridge;
-        cartridge = Cartridge::makeWithType(c64, crtType);
+        cartridge = std::unique_ptr<Cartridge>(Cartridge::makeWithType(c64, crtType));
         reader.ptr += cartridge->load(reader.ptr);
     }
     
@@ -220,7 +218,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
                
     // Remove old cartridge (if any) and assign new one
     detachCartridge();
-    cartridge = c;
+    cartridge = std::unique_ptr<Cartridge>(c);
     crtType = c->getCartridgeType();
     
     // Reset cartridge to update exrom and game line on the expansion port
@@ -287,7 +285,6 @@ ExpansionPort::detachCartridge()
         
         suspend();
         
-        delete cartridge;
         cartridge = nullptr;
         crtType = CRT_NONE;
         
