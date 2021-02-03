@@ -426,7 +426,7 @@ class Configuration {
 
     func saveRomUserDefaults() {
         
-        func save(_ type: RomType) throws {
+        func save(_ type: RomType, _ url: URL?) throws {
             
             if url == nil { throw VC64Error(ErrorCode.FILE_CANT_WRITE) }
             try? fm.removeItem(at: url!)
@@ -442,10 +442,10 @@ class Configuration {
         
         do {
         
-            url = UserDefaults.basicRomUrl;  try save(.BASIC)
-            url = UserDefaults.charRomUrl;   try save(.CHAR)
-            url = UserDefaults.kernalRomUrl; try save(.KERNAL)
-            url = UserDefaults.vc1541RomUrl; try save(.VC1541)
+            url = UserDefaults.basicRomUrl;  try save(.BASIC, url)
+            url = UserDefaults.charRomUrl;   try save(.CHAR, url)
+            url = UserDefaults.kernalRomUrl; try save(.KERNAL, url)
+            url = UserDefaults.vc1541RomUrl; try save(.VC1541, url)
             
         } catch {
             if error is VC64Error && url != nil {
