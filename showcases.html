@@ -301,7 +301,8 @@
 							<!-- Column 2 -->
 							<section>
 								<div id="emuview0" class="emulator_view"><a href="#"
-										onclick="vc64web_player.load(this, '#openROMS=true#navbar=hidden#wide=true#border=false#port2=true', 'http://csdb.dk/getinternalfile.php/92366/VVVVVV.prg');return false;">
+										ontouchstart="touch_param='#touch=true';"
+										onclick="let extra_param='#touch=true'; if(typeof touch_param != 'undefined'){extra_param=touch_param;touch_param='';} vc64web_player.load(this, extra_param+'#openROMS=true#navbar=hidden#wide=true#border=false#port2=true', 'http://csdb.dk/getinternalfile.php/92366/VVVVVV.prg');return false;">
 										<img src="showcases/vvvvvv.png" width="100%">
 										</a>
 								</div>
