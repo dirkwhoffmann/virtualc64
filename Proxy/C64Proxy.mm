@@ -2185,9 +2185,9 @@
     [self c64]->installRom((RomFile *)proxy->obj);
 }
 
-- (BOOL) saveRom:(RomType)type url:(NSURL *)url
+- (void) saveRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)err
 {
-    return [self c64]->saveRom(type, [[url path] UTF8String]);
+    [self c64]->saveRom(type, [[url path] UTF8String], err);
 }
 
 - (void) deleteRom:(RomType)type

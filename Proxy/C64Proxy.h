@@ -169,7 +169,7 @@
 - (BOOL) isRom:(RomType)type url:(NSURL *)url;
 
 - (void) loadRom:(RomFileProxy *)proxy;
-- (BOOL) saveRom:(RomType)type url:(NSURL *)url;
+- (void) saveRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)ec;
 - (void) deleteRom:(RomType)type;
 
 - (RomIdentifier) romIdentifier:(RomType)type;
@@ -567,27 +567,27 @@
 //
 
 @protocol MakeWithFile
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
++ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)ec;
 @end
 
 @protocol MakeWithBuffer
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)ec;
 @end
 
 @protocol MakeWithDisk
-+ (instancetype)makeWithDisk:(DiskProxy *)disk error:(ErrorCode *)err;
++ (instancetype)makeWithDisk:(DiskProxy *)disk error:(ErrorCode *)ec;
 @end
 
 @protocol MakeWithFileSystem
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)fs error:(ErrorCode *)err;
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)fs error:(ErrorCode *)ec;
 @end
 
 @protocol MakeWithCollection
-+ (instancetype)makeWithCollection:(AnyCollectionProxy *)collection error:(ErrorCode *)err;
++ (instancetype)makeWithCollection:(AnyCollectionProxy *)collection error:(ErrorCode *)ec;
 @end
 
 @protocol MakeWithD64
-+ (instancetype)makeWithD64:(D64FileProxy *)d64 error:(ErrorCode *)err;
++ (instancetype)makeWithD64:(D64FileProxy *)d64 error:(ErrorCode *)ec;
 @end
 
 //

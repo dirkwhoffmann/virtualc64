@@ -548,8 +548,9 @@ public:
     void deleteRom(RomType type);
     
     // Saves a Rom to disk
-    bool saveRom(RomType rom, const char *path);
-    
+    void saveRom(RomType rom, const char *path) throws;
+    void saveRom(RomType rom, const char *path, ErrorCode *ec);
+
     
     //
     // Flashing files

@@ -423,34 +423,41 @@ class Configuration {
         load(UserDefaults.vc1541RomUrl, type: .VC1541_ROM)
         c64.resume()
     }
-    
+
     func saveRomUserDefaults() {
         
+        func save(_ type: RomType) throws {
+            
+            if url == nil { throw VC64Error(ErrorCode.FILE_CANT_WRITE) }
+            try? fm.removeItem(at: url!)
+            try c64.saveRom(type, url: url!)
+        }
+        
+        track()
+
         let fm = FileManager.default
+        var url: URL?
         
         c64.suspend()
         
-        if let url = UserDefaults.basicRomUrl {
-            track("Saving Basic Rom")
-            try? fm.removeItem(at: url)
-            c64.saveRom(.BASIC, url: url)
+        do {
+        
+            url = UserDefaults.basicRomUrl;  try save(.BASIC)
+            url = UserDefaults.charRomUrl;   try save(.CHAR)
+            url = UserDefaults.kernalRomUrl; try save(.KERNAL)
+            url = UserDefaults.vc1541RomUrl; try save(.VC1541)
+            
+        } catch {
+            if error is VC64Error && url != nil {
+                VC64Error.warning("Failed to save Roms",
+                                  "Can't write to file \(url!.path)")
+            }
+            if error is VC64Error && url == nil {
+                VC64Error.warning("Failed to save Roms",
+                                  "Unable to access the application defaults folder")
+            }
         }
-        if let url = UserDefaults.charRomUrl {
-            track("Saving Character Rom")
-            try? fm.removeItem(at: url)
-            c64.saveRom(.CHAR, url: url)
-        }
-        if let url = UserDefaults.kernalRomUrl {
-            track("Saving Kernal Rom")
-            try? fm.removeItem(at: url)
-            c64.saveRom(.KERNAL, url: url)
-        }
-        if let url = UserDefaults.vc1541RomUrl {
-            track("Saving VC1541 Rom")
-            try? fm.removeItem(at: url)
-            c64.saveRom(.VC1541, url: url)
-        }
-
+            
         c64.resume()
     }
     

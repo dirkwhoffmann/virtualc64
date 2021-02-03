@@ -70,7 +70,13 @@ extension Proxy {
 //
 
 extension C64Proxy {
-    
+ 
+    func saveRom(_ type: RomType, url: URL) throws {
+
+        var err = ErrorCode.OK
+        saveRom(type, url: url, error: &err)
+        if err != .OK { throw VC64Error(err) }        
+    }
 }
 
 extension AnyFileProxy {
