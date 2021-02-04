@@ -54,14 +54,7 @@ void
 GameKiller::pressButton(unsigned nr)
 {
     if (nr == 1) {
-        
-        // Pressing the freeze button triggers an NMI
-        suspend();
-        control = 0;
-        expansionport.setCartridgeMode(CRTMODE_OFF);
-        cpu.pullDownNmiLine(INTSRC_EXP);
-        cpu.releaseNmiLine(INTSRC_EXP);
-        resume();
+        c64.signalExpPortNmi();
     }
 }
 
@@ -69,12 +62,9 @@ void
 GameKiller::releaseButton(unsigned nr)
 {
     if (nr == 1) {
-        
-        /*
         suspend();
         cpu.releaseNmiLine(INTSRC_EXP);
         resume();
-        */
     }
 }
 
@@ -89,3 +79,13 @@ GameKiller::updatePeekPokeLookupTables()
         mem.peekSrc[0xF] = M_CRTHI;
     }
 }
+
+void
+GameKiller::nmiWillTrigger()
+{
+    debug(CRT_DEBUG, "nmiWillTrigger");
+    
+    control = 0;
+    expansionport.setCartridgeMode(CRTMODE_OFF);
+}
+

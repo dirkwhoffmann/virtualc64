@@ -51,5 +51,6 @@ private:
     //
 
     void updatePeekPokeLookupTables() override;
+    void nmiWillTrigger() override;
 };
 

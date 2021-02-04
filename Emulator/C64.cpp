@@ -885,14 +885,21 @@ C64::runLoop()
             // Are we requested to terminate the run loop?
             if (runLoopCtrl & ACTION_FLAG_STOP) {
                 clearActionFlags(ACTION_FLAG_STOP);
-                trace(RUN_DEBUG, "RL_STOP\n");
+                trace(RUN_DEBUG, "STOP\n");
                 break;
+            }
+            
+            // Are we requested to pull the NMI line down?
+            if (runLoopCtrl & ACTION_FLAG_EXTERNAL_NMI) {
+                cpu.pullDownNmiLine(INTSRC_EXP);
+                trace(RUN_DEBUG, "EXTERNAL_NMI\n");
+                clearActionFlags(ACTION_FLAG_EXTERNAL_NMI);
             }
             
             // Is the CPU jammed due the execution of an illegal instruction?
             if (runLoopCtrl & ACTION_FLAG_CPU_JAMMED) {
                 putMessage(MSG_CPU_JAMMED);
-                trace(RUN_DEBUG, "RL_CPU_JAMMED\n");
+                trace(RUN_DEBUG, "CPU_JAMMED\n");
                 clearActionFlags(ACTION_FLAG_CPU_JAMMED);
                 break;
             }

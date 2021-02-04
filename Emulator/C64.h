@@ -480,7 +480,7 @@ public:
     void signalInspect() { setActionFlags(ACTION_FLAG_INSPECT); }
     void signalJammed() { setActionFlags(ACTION_FLAG_CPU_JAMMED); }
     void signalStop() { setActionFlags(ACTION_FLAG_STOP); }
-
+    void signalExpPortNmi() { setActionFlags(ACTION_FLAG_EXTERNAL_NMI); }
 
     //
     // Handling snapshots

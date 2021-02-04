@@ -363,7 +363,7 @@ public:
     void releaseNmiLine(IntSource source);
     void pullDownIrqLine(IntSource source);
     void releaseIrqLine(IntSource source);
-    
+        
     // Sets the RDY line
     void setRDY(bool value);
     
