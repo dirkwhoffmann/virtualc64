@@ -6,14 +6,12 @@
     <description>Most recent changes with links to updates.</description>
     <language>en</language> 
     <item>
-    <!--
         <title>Version 4.0</title>
         <sparkle:releaseNotesLink>
             http://www.dirkwhoffmann.de/virtualc64/rnotes.html
         </sparkle:releaseNotesLink>
         <pubDate>Fri, 15 Jan 2021 14:00:00 +0000</pubDate>
         <enclosure url="https://github.com/dirkwhoffmann/virtualc64/releases/download/v4.0b1/VirtualC64.app.zip" sparkle:version="4.1" length="22080285" type="application/octet-stream" sparkle:dsaSignature="MCwCFBhQSrahNVDBXyn/gT6V13H53XEWAhRGd533Zugjx8MC4oSsFQAdsXG1Rg=="/>
-    -->
     </item> 
    </channel>
 </rss>
