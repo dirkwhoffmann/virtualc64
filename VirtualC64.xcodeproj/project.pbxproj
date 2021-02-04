@@ -237,6 +237,7 @@
 		50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ED5BF712DD99C000596417 /* Speedometer.swift */; };
 		50F062E1258DD0A3009A6B21 /* ExportDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F062E0258DD0A3009A6B21 /* ExportDialog.xib */; };
 		50F062E3258DE564009A6B21 /* TypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F062E2258DE564009A6B21 /* TypeExtensions.swift */; };
+		50F0EB7A25CC33B3002D0D72 /* GameKiller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F0EB7825CC33B3002D0D72 /* GameKiller.cpp */; };
 		50F2381E12DF505B00B1F275 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F2381D12DF505B00B1F275 /* Quartz.framework */; };
 		50F420CA250BA3460043DE56 /* Colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F420C8250BA3460043DE56 /* Colors.cpp */; };
 		50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DA30F28EADC0040592B /* MyDocument.xib */; };
@@ -644,6 +645,8 @@
 		50F062E0258DD0A3009A6B21 /* ExportDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportDialog.xib; sourceTree = "<group>"; };
 		50F062E2258DE564009A6B21 /* TypeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeExtensions.swift; sourceTree = "<group>"; };
 		50F062E4258DFC2A009A6B21 /* Debug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Debug.h; sourceTree = "<group>"; };
+		50F0EB7825CC33B3002D0D72 /* GameKiller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameKiller.cpp; sourceTree = "<group>"; };
+		50F0EB7925CC33B3002D0D72 /* GameKiller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameKiller.h; sourceTree = "<group>"; };
 		50F2381D12DF505B00B1F275 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		50F420C8250BA3460043DE56 /* Colors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colors.cpp; sourceTree = "<group>"; };
 		50F420C9250BA3460043DE56 /* Colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colors.h; sourceTree = "<group>"; };
@@ -874,6 +877,8 @@
 				504C42B124AF29AB00E69CAE /* FreezeFrame.cpp */,
 				504C42AF24AF29AB00E69CAE /* Funplay.h */,
 				504C42A624AF29AB00E69CAE /* Funplay.cpp */,
+				50F0EB7925CC33B3002D0D72 /* GameKiller.h */,
+				50F0EB7825CC33B3002D0D72 /* GameKiller.cpp */,
 				504C429F24AF29AB00E69CAE /* GeoRam.h */,
 				504C42A124AF29AB00E69CAE /* GeoRam.cpp */,
 				504C42AA24AF29AB00E69CAE /* Isepic.h */,
@@ -1622,6 +1627,7 @@
 				50D3092824C71B0A00B92563 /* Monitor.swift in Sources */,
 				504C436C24AF29AC00E69CAE /* Isepic.cpp in Sources */,
 				5018BFB324B48DD500551848 /* RendererSetup.swift in Sources */,
+				50F0EB7A25CC33B3002D0D72 /* GameKiller.cpp in Sources */,
 				504C437D24AF29AC00E69CAE /* CRTFile.cpp in Sources */,
 				504C439624AF29AC00E69CAE /* pot.cc in Sources */,
 				504C43A124AF29AC00E69CAE /* IEC.cpp in Sources */,

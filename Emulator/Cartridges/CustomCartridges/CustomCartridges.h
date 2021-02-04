@@ -19,6 +19,7 @@
 #include "FinalIII.h"
 #include "FreezeFrame.h"
 #include "Funplay.h"
+#include "GameKiller.h"
 #include "GeoRam.h"
 #include "Isepic.h"
 #include "Kcs.h"

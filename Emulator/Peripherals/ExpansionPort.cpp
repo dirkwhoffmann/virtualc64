@@ -203,10 +203,11 @@ void
 ExpansionPort::setCartridgeMode(CRTMode mode)
 {
     switch (mode) {
+            
         case CRTMODE_16K:     setGameAndExrom(0,0); return;
         case CRTMODE_8K:      setGameAndExrom(1,0); return;
         case CRTMODE_ULTIMAX: setGameAndExrom(0,1); return;
-        default:          setGameAndExrom(1,1);
+        default:              setGameAndExrom(1,1);
     }
 }
 

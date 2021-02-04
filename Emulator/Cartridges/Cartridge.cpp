@@ -45,6 +45,8 @@ Cartridge::isSupportedType(CartridgeType type)
             
         case CRT_ACTION_REPLAY3:
             
+        case CRT_GAME_KILLER:
+            
         case CRT_FREEZE_FRAME:
 
         case CRT_MACH5:
@@ -103,6 +105,7 @@ Cartridge::makeWithType(C64 &c64, CartridgeType type)
         case CRT_STARDOS:          return new StarDos(c64);
         case CRT_EASYFLASH:        return new EasyFlash(c64);
         case CRT_ACTION_REPLAY3:   return new ActionReplay3(c64);
+        case CRT_GAME_KILLER:      return new GameKiller(c64);
         case CRT_FREEZE_FRAME:     return new FreezeFrame(c64);
         case CRT_MACH5:            return new Mach5(c64);
         case CRT_PAGEFOX:          return new PageFox(c64);
