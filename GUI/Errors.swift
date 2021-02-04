@@ -123,12 +123,6 @@ class VC64Error: Error {
     func cantOpen(url: URL, async: Bool = false) {
         warning("\"\(url.lastPathComponent)\" can't be opened.", async: async)
     }
-
-    /*
-    func cantSaveRom(url: URL, async: Bool = false) {
-        warning("Can't save Rom to \"\(url.path)\".", async: async)
-    }
-    */
     
     static func unsupportedCrtAlert(type: Int, async: Bool = false) {
         

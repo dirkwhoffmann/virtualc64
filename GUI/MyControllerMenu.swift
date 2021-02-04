@@ -375,24 +375,29 @@ extension MyController: NSMenuItemValidation {
         keyboard.type(text)
     }
     
+    @IBAction func pauseAction(_ sender: Any!) {
+        
+        if c64.running { c64.pause() }
+    }
+
+    @IBAction func continueAction(_ sender: Any!) {
+        
+        if c64.paused { c64.run() }
+    }
+
     @IBAction func stopAndGoAction(_ sender: Any!) {
         
-        track("MyControllerMenu")
         c64.stopAndGo()
     }
     
     @IBAction func stepIntoAction(_ sender: Any!) {
 
-        track("MyControllerMenu")
         c64.stepInto()
-        // inspector.refresh()
     }
     
     @IBAction func stepOverAction(_ sender: Any!) {
         
-        track("MyControllerMenu")
         c64.stepOver()
-        // inspector.refresh()
     }
     
     @IBAction func resetAction(_ sender: Any!) {

@@ -1476,7 +1476,7 @@
 
 - (void)dealloc
 {
-    NSLog(@"dealloc");
+    // NSLog(@"dealloc");
     delete (AnyFile *)obj;
 }
 
@@ -1936,7 +1936,7 @@
 
 - (void)dealloc
 {
-    NSLog(@"dealloc");
+    NSLog(@"C64 dealloc");
 }
 
 - (void)kill

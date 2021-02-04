@@ -40,10 +40,10 @@ class MyToolbar: NSToolbar {
         // Adjust the appearance of the Pause button
         if c64.running {
             pause?.image = NSImage.init(named: "pauseTemplate")
-            pauseButton.label = "Pause"
+            pauseButton.label = "State" // Pause"
         } else {
             pause?.image = NSImage.init(named: "runTemplate")
-            pauseButton.label = "Run"
+            pauseButton.label = "State" // Run"
         }
         
         // Change the label of reset button. If we don't do this, the

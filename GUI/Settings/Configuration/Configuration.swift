@@ -441,7 +441,6 @@ class Configuration {
         c64.suspend()
         
         do {
-        
             url = UserDefaults.basicRomUrl;  try save(.BASIC, url)
             url = UserDefaults.charRomUrl;   try save(.CHAR, url)
             url = UserDefaults.kernalRomUrl; try save(.KERNAL, url)
