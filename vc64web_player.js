@@ -119,13 +119,18 @@ ${this.overlay_on_icon}
         });
 
         this.state_poller = setInterval(function(){ 
+            let vc64web=document.getElementById("vc64web");
+            if( document.activeElement == vc64web)
+            {//this if is only needed for safari, when it goes into overlay
+                document.activeElement.blur();
+                vc64web.focus();
+            }
             if(document.activeElement.nodeName.toLowerCase() == 'body')
             { 
-                $vc64web.focus();
+                vc64web.focus();
             }
-            
-            var vc64web = document.getElementById("vc64web").contentWindow;
-            vc64web.postMessage("poll_state", "*");
+
+            vc64web.contentWindow.postMessage("poll_state", "*");
         }, 900);
 
     },
