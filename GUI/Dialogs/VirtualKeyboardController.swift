@@ -126,10 +126,14 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
         track()
         
         c64.keyboard.pressKey(nr)
-        c64.keyboard.scheduleKeyReleaseAll(2)
         refresh()
-        
-        if autoClose { cancelAction(self) }
+
+        if autoClose {
+            c64.keyboard.scheduleKeyReleaseAll(2)
+            cancelAction(self)
+        } else {
+            c64.keyboard.scheduleKeyRelease(nr, delay: 2)
+        }
     }
     
     func holdKey(nr: Int) {
@@ -153,8 +157,8 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
 
     @IBAction func caseSelectorAction(_ sender: NSSegmentedControl!) {
         
-        let segment = sender.selectedSegment
-        track("segment = \(segment)")
+        // let segment = sender.selectedSegment
+        // track("segment = \(segment)")
         refresh()
     }
 }
@@ -169,7 +173,16 @@ class KeycapButton: NSButton {
             controller.pressKey(nr: self.tag)
         }
     }
-    
+
+    override func mouseUp(with event: NSEvent) {
+        
+        if let controller = window?.delegate as? VirtualKeyboardController {
+            
+            track()
+            controller.refresh()
+        }
+    }
+
     override func rightMouseDown(with event: NSEvent) {
     
         if let controller = window?.delegate as? VirtualKeyboardController {
