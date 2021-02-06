@@ -16,7 +16,7 @@
 // Snapshot version number
 #define V_MAJOR 4
 #define V_MINOR 0
-#define V_SUBMINOR 2
+#define V_SUBMINOR 3
 
 // Uncomment these settings in a release build
 #define RELEASEBUILD
@@ -68,7 +68,7 @@ static const int GCR_DEBUG       = 0; // Disk encoding / decoding
 static const int FS_DEBUG        = 0; // File System Classes
 
 // Media
-static const int CRT_DEBUG       = 1; // Cartridges
+static const int CRT_DEBUG       = 0; // Cartridges
 static const int FILE_DEBUG      = 0; // Media files (D64,T64,...)
 
 // Peripherals

@@ -18,7 +18,6 @@
                 <outlet property="drive9Menu" destination="zmi-bv-6va" id="At6-Mn-w7m"/>
             </connections>
         </customObject>
-        <customObject id="411" userLabel="Sparkle Updater" customClass="SUUpdater"/>
         <menu title="MainMenu" systemMenu="main" id="29" userLabel="MainMenu">
             <items>
                 <menuItem title="Virtual C64" id="56">
@@ -28,11 +27,6 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="orderFrontStandardAboutPanel:" target="-2" id="142"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Check for Updates..." keyEquivalent="u" id="412">
-                                <connections>
-                                    <action selector="checkForUpdates:" target="411" id="413"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="tOL-V1-ZdE"/>
