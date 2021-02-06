@@ -297,6 +297,7 @@
 		501E427B20D975AD000BB48D /* IconVirtualC64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconVirtualC64.icns; sourceTree = "<group>"; };
 		5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTravelTouchBar.swift; sourceTree = "<group>"; };
 		5026118D259CACB60066E754 /* PETName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PETName.h; sourceTree = "<group>"; };
+		502C9B8025CED07900052178 /* GameKiller.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameKiller.hpp; sourceTree = "<group>"; };
 		50300AEC258B2C5400D261E3 /* FSDirEntry.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSDirEntry.cpp; sourceTree = "<group>"; };
 		50300AED258B2C5400D261E3 /* FSDirEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSDirEntry.h; sourceTree = "<group>"; };
 		5031D59B200B81D20088C802 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
@@ -907,6 +908,7 @@
 				504C429524AF29AB00E69CAE /* Westermann.cpp */,
 				504C42B824AF29AB00E69CAE /* Zaxxon.h */,
 				504C42B024AF29AB00E69CAE /* Zaxxon.cpp */,
+				502C9B8025CED07900052178 /* GameKiller.hpp */,
 			);
 			path = CustomCartridges;
 			sourceTree = "<group>";
