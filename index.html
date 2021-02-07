@@ -179,10 +179,24 @@
 										<img src="images/nora.jpg" width="100%"></a>
 								</div>
 								<br>
-								<div id="emuview1" class="emulator_view"><a style="border:none" href="#"
+								<div id="emuview1" class="emulator_view"><a href="#"
+										ontouchstart="touch_param='#touch=true';"
+										onclick="let extra_param=''; if(typeof touch_param != 'undefined'){extra_param=touch_param;touch_param='';} vc64web_player.load(this, extra_param+'#openROMS=true#navbar=hidden#wide=true#border=false#port2=true', 'http://csdb.dk/getinternalfile.php/92366/VVVVVV.prg');return false;">
+										<img src="https://dirkwhoffmann.github.io/virtualc64web/doc/images/vvvvvv.png" width="100%">
+									</a>
+								</div>
+								<br>
+								<div id="emuview2" class="emulator_view"><a href="#"
+										ontouchstart="touch_param='#touch=true';"
+										onclick="let extra_param=''; if(typeof touch_param != 'undefined'){extra_param=touch_param;touch_param='';} vc64web_player.load(this, extra_param+'#openROMS=true#navbar=hidden#wide=true#border=false#port2=true', 'http://csdb.dk/getinternalfile.php/162224/moonspire - the draxx war preview.crt');return false;">
+										<img src="https://dirkwhoffmann.github.io/virtualc64web/doc/images/moonspire2.png" width="100%">
+									</a>
+								</div>
+
+								<!--div id="emuview3" class="emulator_view"><a style="border:none" href="#"
 										onclick="vc64web_player.load(this, '#openROMS=true#2ndSID=d420#navbar=hidden#wide=true#border=false', 'http://dirkwhoffmann.github.io/virtualc64/media/advland.prg');return false;">
 										<img src="images/advland.png" width="100%"></a>
-								</div>
+								</div-->
 								<br>
 								<footer>
 									<a href="https://dirkwhoffmann.github.io/virtualc64web/doc/about.html"
