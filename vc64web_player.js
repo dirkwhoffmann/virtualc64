@@ -72,8 +72,8 @@ var vc64web_player={
         //turn picture into iframe
         var emuview_html = `
 <div id="player_container" style="display:flex;flex-direction:column;">
-<iframe id="vc64web" width="100%" height="100%" onclick="event.preventDefault();$vc64web.focus();return false;"
-    src="${vc64web_url}${params}#${address}">
+<iframe id="vc64web" width="100%" height="100%" src="${vc64web_url}${params}#${address}"
+>
 </iframe>
 <div style="display: flex"><svg  class="player_icon_btn" onclick="vc64web_player.stop_emu_view();return false;" xmlns="http://www.w3.org/2000/svg" width="2.0em" height="2.0em" fill="currentColor" class="bi bi-pause-btn" viewBox="0 0 16 16">
     <path d="M6.5 5A1.5 1.5 0 0 0 5 6.5v3A1.5 1.5 0 0 0 6.5 11h3A1.5 1.5 0 0 0 11 9.5v-3A1.5 1.5 0 0 0 9.5 5h-3z"/>
@@ -118,23 +118,22 @@ ${this.overlay_on_icon}
             $vc64web.height($vc64web.width() * 200/320); 
         });
 
-        this.state_poller = setInterval(function(){ 
-            let vc64web=document.getElementById("vc64web");
-            if( document.activeElement == vc64web)
-            {//this if is only needed for safari, when it goes into overlay
-                document.activeElement.blur();
-                vc64web.focus();
-            }
-            if(document.activeElement.nodeName.toLowerCase() == 'body')
-            { 
-                vc64web.focus();
-            }
+        document.addEventListener("click", this.grab_focus);
+        document.getElementById("vc64web").onload = this.grab_focus;
 
+        this.state_poller = setInterval(function(){ 
+            let vc64web=document.getElementById("vc64web");            
             vc64web.contentWindow.postMessage("poll_state", "*");
         }, 900);
-
     },
-
+    grab_focus: function(){            
+        let vc64web=document.getElementById("vc64web");            
+        if(vc64web != null)
+        {
+            document.activeElement.blur();
+            vc64web.focus();
+        }
+    },
     state_poller: null,
     audio_locked_icon:`<path d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06zm7.137 2.096a.5.5 0 0 1 0 .708L12.207 8l1.647 1.646a.5.5 0 0 1-.708.708L11.5 8.707l-1.646 1.647a.5.5 0 0 1-.708-.708L10.793 8 9.146 6.354a.5.5 0 1 1 .708-.708L11.5 7.293l1.646-1.647a.5.5 0 0 1 .708 0z"/>`,
     audio_unlocked_icon:`<path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"/>
@@ -165,6 +164,11 @@ ${this.overlay_on_icon}
             this.is_overlay=true;
         }
         $vc64web.height($vc64web.width() * 200/320);
+        
+        let vc64web=document.getElementById("vc64web");
+        //the blur and refocus is only needed for safari, when it goes into overlay
+        document.activeElement.blur(); 
+        vc64web.focus();
     },
     scale_overlay: function(){
         var ratio=1.6;
@@ -226,6 +230,9 @@ ${this.overlay_on_icon}
         {
             clearInterval(this.state_poller);
         }
-        this.last_run_state=null; this.last_audio_state=null;
+        this.last_run_state=null; 
+        this.last_audio_state=null;
+
+        document.removeEventListener("click", this.grab_focus);
     }
 }
