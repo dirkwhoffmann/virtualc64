@@ -47,18 +47,11 @@ FSDeviceDescriptor::isValidLink(TSLink ref) const
 }
 
 u32
-FSDeviceDescriptor::speedZone(Track t) const
+FSDeviceDescriptor::speedZone(Cylinder t) const
 {
     assert(isTrackNr(t));
     
-    return
-    (t <= 17) ? 3 :
-    (t <= 24) ? 2 :
-    (t <= 30) ? 1 :
-    (t <= 35) ? 0 :
-    (t <= 52) ? 3 :     // Second side (DS disks only)
-    (t <= 59) ? 2 :     // Second side (DS disks only)
-    (t <= 65) ? 1 : 0;  // Second side (DS disks only)
+    return (t <= 17) ? 3 : (t <= 24) ? 2 : (t <= 30) ? 1 : 0;
 }
 
 u32

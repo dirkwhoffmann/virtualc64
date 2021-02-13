@@ -65,8 +65,8 @@ struct FSDeviceDescriptor : C64Object {
     //
     
     u32 numTracks() const { return numCyls * numHeads; }
-    u32 speedZone(Track track) const;
-    u32 numSectors(Track track) const;
+    u32 speedZone(Cylinder track) const;
+    u32 numSectors(Cylinder track) const;
     u32 numBlocks() const;
 
     
