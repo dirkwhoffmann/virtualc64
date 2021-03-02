@@ -141,6 +141,7 @@ class KeyboardController: NSObject {
 
         // Positional key mapping
         if pref.mapKeysByPosition {
+            parent.virtualKeyboard?.refresh();
             keyDown(with: macKey, keyMap: pref.keyMap)
             return
         }
