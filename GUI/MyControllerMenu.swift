@@ -484,8 +484,9 @@ extension MyController: NSMenuItemValidation {
             track("Virtual keyboard already open")
         } else {
             track("Opeining virtual keyboard as a window")
-            virtualKeyboard?.showWindow()
         }
+
+        virtualKeyboard?.showWindow()
     }
     
     @IBAction func clearKeyboardMatrixAction(_ sender: Any!) {

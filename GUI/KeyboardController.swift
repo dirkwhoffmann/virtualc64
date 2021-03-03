@@ -141,6 +141,7 @@ class KeyboardController: NSObject {
 
         // Positional key mapping
         if pref.mapKeysByPosition {
+            parent.virtualKeyboard?.refresh();
             keyDown(with: macKey, keyMap: pref.keyMap)
             return
         }
@@ -158,6 +159,7 @@ class KeyboardController: NSObject {
                 keyboard.pressKey(atRow: key.row, col: key.col)
             }
         }
+        parent.virtualKeyboard?.refresh();
     }
     
     func keyDown(with macKey: MacKey, keyMap: [MacKey: C64Key]) {
@@ -191,6 +193,7 @@ class KeyboardController: NSObject {
                 keyboard.releaseKey(atRow: key.row, col: key.col)
             }
         }
+        parent.virtualKeyboard?.refresh();
     }
     
     func keyUp(with macKey: MacKey, keyMap: [MacKey: C64Key]) {
