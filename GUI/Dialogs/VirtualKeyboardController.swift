@@ -63,13 +63,12 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
         for tag in 0 ... 65 {
             keyView[tag] = window!.contentView!.viewWithTag(tag) as? NSButton
         }
-        
-        refresh()
     }
 
     override func sheetDidShow() {
 
         track()
+        refresh()
     }
     
     func windowWillClose(_ notification: Notification) {
