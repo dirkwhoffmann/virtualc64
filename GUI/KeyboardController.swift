@@ -9,7 +9,6 @@
 
 import Carbon.HIToolbox
 
-//!@ brief Keyboard event handler
 class KeyboardController: NSObject {
     
     var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
@@ -141,7 +140,7 @@ class KeyboardController: NSObject {
 
         // Positional key mapping
         if pref.mapKeysByPosition {
-            parent.virtualKeyboard?.refresh();
+            parent.virtualKeyboard?.refresh()
             keyDown(with: macKey, keyMap: pref.keyMap)
             return
         }
@@ -159,7 +158,7 @@ class KeyboardController: NSObject {
                 keyboard.pressKey(atRow: key.row, col: key.col)
             }
         }
-        parent.virtualKeyboard?.refresh();
+        parent.virtualKeyboard?.refresh()
     }
     
     func keyDown(with macKey: MacKey, keyMap: [MacKey: C64Key]) {
@@ -193,7 +192,7 @@ class KeyboardController: NSObject {
                 keyboard.releaseKey(atRow: key.row, col: key.col)
             }
         }
-        parent.virtualKeyboard?.refresh();
+        parent.virtualKeyboard?.refresh()
     }
     
     func keyUp(with macKey: MacKey, keyMap: [MacKey: C64Key]) {
@@ -333,7 +332,7 @@ class KeyboardController: NSObject {
         // Press key
         keyboard.pressKey(key.nr)
 
-        //Schedule the key release
+        // Schedule the key release
         if numFrames != nil {
             keyboard.scheduleKeyRelease(key.nr, delay: numFrames!)
         }
@@ -346,7 +345,7 @@ class KeyboardController: NSObject {
             keyboard.pressKey(key.nr)
         }
         
-        //Schedule the key releases
+        // Schedule the key releases
         if numFrames != nil {
             for key in keys {
                 keyboard.scheduleKeyRelease(key.nr, delay: numFrames!)

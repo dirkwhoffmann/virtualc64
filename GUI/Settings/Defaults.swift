@@ -532,7 +532,7 @@ extension Keys {
     
     struct Hwd {
         
-        //VICII
+        // VICII
         static let vicRevision    = "VC64_HW_VicRev"
         static let vicGrayDotBug  = "VC64_HW_VicGrayDotBug"
         

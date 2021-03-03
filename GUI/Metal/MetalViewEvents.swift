@@ -87,7 +87,6 @@ public extension MetalView {
         let newLocation = NSPoint.init(x: newX, y: newY)
         
         mouse?.processMouseEvents(xy: newLocation)
-        //track("\(dx) \(dy)\n");
     }
     
     override func mouseDragged(with event: NSEvent) {

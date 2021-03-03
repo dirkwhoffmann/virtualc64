@@ -255,7 +255,7 @@ FastSID::setSampleRate(double rate)
     init(sampleRate, cpuFrequency);
 }
 
-//! Special peek function for the I/O memory range.
+// Special peek function for the I/O memory range.
 u8
 FastSID::peek(u16 addr)
 {

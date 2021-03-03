@@ -13,12 +13,12 @@ extension NSPasteboard.PasteboardType {
 
 public extension MetalView {
     
-    //! Returns a list of supported drag and drop types
+    // Returns a list of supported drag and drop types
     func acceptedTypes() -> [NSPasteboard.PasteboardType] {
         return [.compatibleFileURL, .string, .fileContents]
     }
 
-    //! Register supported drag and drop types
+    // Register supported drag and drop types
     func setupDragAndDrop() {
     
         registerForDraggedTypes(acceptedTypes())
