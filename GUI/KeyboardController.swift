@@ -138,24 +138,26 @@ class KeyboardController: NSObject {
             if pref.disconnectJoyKeys { return }
         }
 
-        // Positional key mapping
+        // Check mapping mode
         if pref.mapKeysByPosition {
-            parent.virtualKeyboard?.refresh()
+
+            // Positional key mapping
             keyDown(with: macKey, keyMap: pref.keyMap)
-            return
-        }
 
-        // Symbolic key mapping
-        let c64Keys = translate(macKey: macKey)
-        
-        if c64Keys != [] {
-
-            // Store key combination for later use in keyUp
-            pressedKeys[macKey.keyCode] = c64Keys
-        
-            // Press all required keys
-            for key in c64Keys {
-                keyboard.pressKey(atRow: key.row, col: key.col)
+        } else {
+            
+            // Symbolic key mapping
+            let c64Keys = translate(macKey: macKey)
+            
+            if c64Keys != [] {
+                
+                // Store key combination for later use in keyUp
+                pressedKeys[macKey.keyCode] = c64Keys
+                
+                // Press all required keys
+                for key in c64Keys {
+                    keyboard.pressKey(atRow: key.row, col: key.col)
+                }
             }
         }
         parent.virtualKeyboard?.refresh()
@@ -179,17 +181,20 @@ class KeyboardController: NSObject {
         if parent.gamePad2?.processKeyUpEvent(macKey: macKey) == true {
             if pref.disconnectJoyKeys { return }
         }
-        
-        // Positional key mapping
+
+        // Check mapping mode
         if pref.mapKeysByPosition {
+
+            // Positional key mapping
             keyUp(with: macKey, keyMap: pref.keyMap)
-            return
-        }
-        
-        // Symbolic key mapping
-        if let c64Keys = pressedKeys[macKey.keyCode] {
-            for key in c64Keys {
-                keyboard.releaseKey(atRow: key.row, col: key.col)
+            
+        } else {
+            
+            // Symbolic key mapping
+            if let c64Keys = pressedKeys[macKey.keyCode] {
+                for key in c64Keys {
+                    keyboard.releaseKey(atRow: key.row, col: key.col)
+                }
             }
         }
         parent.virtualKeyboard?.refresh()

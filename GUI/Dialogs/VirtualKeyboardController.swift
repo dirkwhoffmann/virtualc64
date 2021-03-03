@@ -85,6 +85,9 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
 
     func refresh() {
                 
+        // Only proceed if the keyboard is visible
+        if window == nil || !window!.isVisible { return }
+        
         var newModifiers: Modifier = []
         
         if keyboard.leftShiftIsPressed() { newModifiers.insert(.shift) }
