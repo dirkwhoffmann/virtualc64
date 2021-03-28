@@ -47,8 +47,6 @@ class Preferences {
     var snapshotInterval = 0 {
         didSet { for c in myAppDelegate.controllers { c.startSnapshotTimer() } }
     }
-    var autoScreenshots = GeneralDefaults.std.autoScreenshots
-    
     var screenshotSource = GeneralDefaults.std.screenshotSource
     var screenshotTarget = GeneralDefaults.std.screenshotTarget
     var screenshotTargetIntValue: Int {
@@ -152,7 +150,6 @@ class Preferences {
         // Snapshots and screenshots
         autoSnapshots = defaults.bool(forKey: Keys.Gen.autoSnapshots)
         snapshotInterval = defaults.integer(forKey: Keys.Gen.autoSnapshotInterval)
-        autoScreenshots = defaults.bool(forKey: Keys.Gen.autoScreenshots)
         screenshotSource = defaults.integer(forKey: Keys.Gen.screenshotSource)
         screenshotTargetIntValue = defaults.integer(forKey: Keys.Gen.screenshotTarget)
         
@@ -186,7 +183,6 @@ class Preferences {
         // Snapshots and screenshots
         defaults.set(autoSnapshots, forKey: Keys.Gen.autoSnapshots)
         defaults.set(snapshotInterval, forKey: Keys.Gen.autoSnapshotInterval)
-        defaults.set(autoScreenshots, forKey: Keys.Gen.autoScreenshots)
         defaults.set(screenshotSource, forKey: Keys.Gen.screenshotSource)
         
         // Warp mode

@@ -524,6 +524,12 @@ CA
                                     <action selector="formatDiskAction:" target="-1" id="IvR-x1-Puy"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Soft Reset" id="gGM-0D-O3J">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="softResetAction:" target="-1" id="XvM-YJ-QXM"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="QAf-kY-aho"/>
                             <menuItem title="Clear Keyboard Matrix" id="8aX-Ro-7wg">
                                 <modifierMask key="keyEquivalentModifierMask"/>

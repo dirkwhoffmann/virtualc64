@@ -139,7 +139,6 @@ struct Keys {
         // Snapshots and screenshots
         static let autoSnapshots          = "VC64_GEN_AutoSnapshots"
         static let autoSnapshotInterval   = "VC64_GEN_ScreenshotInterval"
-        static let autoScreenshots        = "VC64_GEN_AutoScreenshots"
         static let screenshotSource       = "VC64_GEN_ScreenshotSource"
         static let screenshotTarget       = "VC64_GEN_ScreenshotTarget"
         
@@ -173,7 +172,6 @@ struct GeneralDefaults {
     // Snapshots and Screenshots
     let autoSnapshots: Bool
     let autoSnapshotInterval: Int
-    let autoScreenshots: Bool
     let screenshotSource: Int
     let screenshotTarget: NSBitmapImageRep.FileType
     
@@ -205,7 +203,6 @@ struct GeneralDefaults {
         
         autoSnapshots: false,
         autoSnapshotInterval: 20,
-        autoScreenshots: false,
         screenshotSource: 0,
         screenshotTarget: .png,
         
@@ -237,7 +234,6 @@ extension UserDefaults {
             
             Keys.Gen.autoSnapshots: defaults.autoSnapshots,
             Keys.Gen.autoSnapshotInterval: defaults.autoSnapshotInterval,
-            Keys.Gen.autoScreenshots: defaults.autoScreenshots,
             Keys.Gen.screenshotSource: defaults.screenshotSource,
             Keys.Gen.screenshotTarget: Int(defaults.screenshotTarget.rawValue),
             
@@ -270,7 +266,6 @@ extension UserDefaults {
                      
                      Keys.Gen.autoSnapshots,
                      Keys.Gen.autoSnapshotInterval,
-                     Keys.Gen.autoScreenshots,
                      Keys.Gen.screenshotSource,
                      Keys.Gen.screenshotTarget,
                      
