@@ -2080,7 +2080,7 @@
     [self c64]->loadFromSnapshot((Snapshot *)proxy->obj);
 }
 
-- (C64Configuration)config
+- (C64Config)config
 {
     return [self c64]->getConfig();
 }

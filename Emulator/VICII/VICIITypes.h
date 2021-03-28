@@ -59,35 +59,35 @@ VICClrSprBgCollReg);
 // Reflection APIs
 //
 
-struct VICRevisionEnum : Reflection<VICRevisionEnum, VICRevision> {
+struct VICIIRevisionEnum : Reflection<VICIIRevisionEnum, VICIIRevision> {
     
     static bool isValid(long value)
     {
         return
-        (value == VICREV_PAL_6569_R1) ||
-        (value == VICREV_PAL_6569_R3) ||
-        (value == VICREV_PAL_8565) ||
-        (value == VICREV_NTSC_6567) ||
-        (value == VICREV_NTSC_6567_R56A) ||
-        (value == VICREV_NTSC_8562);
+        (value == VICII_PAL_6569_R1) ||
+        (value == VICII_PAL_6569_R3) ||
+        (value == VICII_PAL_8565) ||
+        (value == VICII_NTSC_6567) ||
+        (value == VICII_NTSC_6567_R56A) ||
+        (value == VICII_NTSC_8562);
     }
 
-    static const char *prefix() { return "VICREV"; }
-    static const char *key(VICRevision value)
+    static const char *prefix() { return "VICII"; }
+    static const char *key(VICIIRevision value)
     {
         switch (value) {
                 
-            case VICREV_PAL_6569_R1:    return "PAL_6569_R1";
-            case VICREV_PAL_6569_R3:    return "PAL_6569_R3";
-            case VICREV_PAL_8565:       return "PAL_8565";
-            case VICREV_NTSC_6567:      return "NTSC_6567";
-            case VICREV_NTSC_6567_R56A: return "NTSC_6567_R56A";
-            case VICREV_NTSC_8562:      return "NTSC_8562";
+            case VICII_PAL_6569_R1:    return "PAL_6569_R1";
+            case VICII_PAL_6569_R3:    return "PAL_6569_R3";
+            case VICII_PAL_8565:       return "PAL_8565";
+            case VICII_NTSC_6567:      return "NTSC_6567";
+            case VICII_NTSC_6567_R56A: return "NTSC_6567_R56A";
+            case VICII_NTSC_8562:      return "NTSC_8562";
         }
         return "???";
     }
     
-    static bool verify(long nr) { return Reflection::verify(nr,VICREV_NTSC_8562); }
+    static bool verify(long nr) { return Reflection::verify(nr,VICII_NTSC_8562); }
 };
 
 struct GlueLogicEnum : Reflection<GlueLogicEnum, GlueLogic> {

@@ -13,16 +13,16 @@
 // Enumerations
 //
 
-enum_long(VICREV)
+enum_long(VICII_REV)
 {
-    VICREV_PAL_6569_R1 = 1,
-    VICREV_PAL_6569_R3 = 2,
-    VICREV_PAL_8565 = 4,
-    VICREV_NTSC_6567_R56A = 8,
-    VICREV_NTSC_6567 = 16,
-    VICREV_NTSC_8562 = 32
+    VICII_PAL_6569_R1 = 1,
+    VICII_PAL_6569_R3 = 2,
+    VICII_PAL_8565 = 4,
+    VICII_NTSC_6567_R56A = 8,
+    VICII_NTSC_6567 = 16,
+    VICII_NTSC_8562 = 32
 };
-typedef VICREV VICRevision;
+typedef VICII_REV VICIIRevision;
 
 enum_long(GLUE_LOGIC)
 {
@@ -94,7 +94,7 @@ typedef DMA_DISPLAY_MODE DmaDisplayMode;
 
 typedef struct
 {
-    VICRevision revision;
+    VICIIRevision revision;
     bool grayDotBug;
     GlueLogic glueLogic;
     Palette palette;
@@ -113,7 +113,7 @@ typedef struct
     bool checkSSCollisions;
     bool checkSBCollisions;
 }
-VICConfig;
+VICIIConfig;
 
 typedef struct
 {

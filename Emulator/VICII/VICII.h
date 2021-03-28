@@ -17,7 +17,7 @@ class VICII : public C64Component {
     friend class C64Memory;
     
     // Current configuration
-    VICConfig config;
+    VICIIConfig config;
     
     // Result of the latest inspection
     VICIIInfo info;
@@ -582,13 +582,13 @@ private:
     
 public:
     
-    VICConfig getConfig() const { return config; }
+    VICIIConfig getConfig() const { return config; }
     
     long getConfigItem(Option option) const;
     bool setConfigItem(Option option, long value) override;
     
-    VICRevision getRevision() const { return config.revision; }    
-    void setRevision(VICRevision revision);
+    VICIIRevision getRevision() const { return config.revision; }    
+    void setRevision(VICIIRevision revision);
     
     void setDmaDebugColor(MemAccess type, GpuColor color);
     void setDmaDebugColor(MemAccess type, RgbColor color);
@@ -718,31 +718,31 @@ private:
 public:
     
     // Returns true if a PAL chip is plugged in
-    static bool isPAL(VICRevision revision);
+    static bool isPAL(VICIIRevision revision);
     bool isPAL() const { return isPAL(config.revision); }
     
     // Returns true if a NTSC chip is plugged in
-    static bool isNTSC(VICRevision revision);
+    static bool isNTSC(VICIIRevision revision);
     bool isNTSC() const { return isNTSC(config.revision); }
 
     // Returns true if a newer MOS 856x chip is plugged in
-    static bool is856x(VICRevision revision);
+    static bool is856x(VICIIRevision revision);
     bool is856x() const { return is856x(config.revision); }
     
     // Returns true if an older MOS 656x chip is plugged in
-    static bool is656x(VICRevision revision);
+    static bool is656x(VICIIRevision revision);
     bool is656x() const { return is656x(config.revision); }
 
     // Returns true if light pen interrupts are triggered with a delay
-    static bool delayedLightPenIrqs(VICRevision revision);
+    static bool delayedLightPenIrqs(VICIIRevision revision);
     bool delayedLightPenIrqs() { return delayedLightPenIrqs(config.revision); }
 
     // Returns the clock frequencay of the selected VICII model
-    static unsigned getFrequency(VICRevision revision);
+    static unsigned getFrequency(VICIIRevision revision);
     unsigned getFrequency() const { return getFrequency(config.revision); }
     
     // Returns the number of CPU cycles performed per rasterline
-    static unsigned getCyclesPerLine(VICRevision revision);
+    static unsigned getCyclesPerLine(VICIIRevision revision);
     unsigned getCyclesPerLine() const { return getCyclesPerLine(config.revision); }
     
     // Returns true if the end of the rasterline has been reached

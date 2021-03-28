@@ -553,7 +553,7 @@ extension Keys {
 
 struct HardwareDefaults {
     
-    var vicRevision: VICRevision
+    var vicRevision: VICIIRevision
     var vicGrayDotBug: Bool
     
     var ciaRevision: CIARevision

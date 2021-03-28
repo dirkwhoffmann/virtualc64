@@ -67,6 +67,9 @@
  */
 class C64 : public HardwareComponent {
         
+    // Current configuration
+    C64Config config;
+
     // The currently set inspection target (only evaluated in debug mode)
     InspectionTarget inspectionTarget;
 
@@ -223,7 +226,7 @@ private:
 public:
     
     // Returns the currently set configuration
-    C64Configuration getConfig() const;
+    C64Config getConfig() const { return config; }
     
     // Gets a single configuration item
     long getConfigItem(Option option) const;

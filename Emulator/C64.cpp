@@ -72,6 +72,9 @@ C64::C64()
         &oscillator
     };
     
+    // Set the initial configuration
+    config.cycleLimit = INT64_MAX;
+    
     // Set up the initial state
     initialize();
     _reset();
@@ -139,32 +142,6 @@ C64::setInspectionTarget(InspectionTarget target)
 {
     assert_enum(InspectionTarget, target);
     inspectionTarget = target;
-}
-
-/*
-void
-C64::clearInspectionTarget()
-{
-    inspectionTarget = INSPECTION_TARGET_NONE;
-}
-*/
-
-C64Configuration
-C64::getConfig() const
-{
-    C64Configuration config;
-    
-    config.vic = vic.getConfig();
-    config.cia1 = cia1.getConfig();
-    config.cia2 = cia2.getConfig();
-    config.sid = sid.getConfig();
-    config.mem = mem.getConfig();
-    
-    // Assure both CIAs are configured equally
-    assert(config.cia1.revision == config.cia1.revision);
-    assert(config.cia1.timerBBug == config.cia2.timerBBug);
-    
-    return config;
 }
 
 long
@@ -290,7 +267,7 @@ C64::configure(C64Model model)
     switch(model) {
             
         case C64_MODEL_PAL:
-            configure(OPT_VIC_REVISION, VICREV_PAL_6569_R3);
+            configure(OPT_VIC_REVISION, VICII_PAL_6569_R3);
             configure(OPT_GRAY_DOT_BUG, false);
             configure(OPT_CIA_REVISION, MOS_6526);
             configure(OPT_TIMER_B_BUG,  true);
@@ -301,7 +278,7 @@ C64::configure(C64Model model)
             break;
             
         case C64_MODEL_PAL_II:
-            configure(OPT_VIC_REVISION, VICREV_PAL_8565);
+            configure(OPT_VIC_REVISION, VICII_PAL_8565);
             configure(OPT_GRAY_DOT_BUG, true);
             configure(OPT_CIA_REVISION, MOS_8521);
             configure(OPT_TIMER_B_BUG,  false);
@@ -312,7 +289,7 @@ C64::configure(C64Model model)
             break;
 
         case C64_MODEL_PAL_OLD:
-            configure(OPT_VIC_REVISION, VICREV_PAL_6569_R1);
+            configure(OPT_VIC_REVISION, VICII_PAL_6569_R1);
             configure(OPT_GRAY_DOT_BUG, false);
             configure(OPT_CIA_REVISION, MOS_6526);
             configure(OPT_TIMER_B_BUG,  true);
@@ -323,7 +300,7 @@ C64::configure(C64Model model)
             break;
 
         case C64_MODEL_NTSC:
-            configure(OPT_VIC_REVISION, VICREV_NTSC_6567);
+            configure(OPT_VIC_REVISION, VICII_NTSC_6567);
             configure(OPT_GRAY_DOT_BUG, false);
             configure(OPT_CIA_REVISION, MOS_6526);
             configure(OPT_TIMER_B_BUG,  false);
@@ -334,7 +311,7 @@ C64::configure(C64Model model)
             break;
 
         case C64_MODEL_NTSC_II:
-            configure(OPT_VIC_REVISION, VICREV_NTSC_8562);
+            configure(OPT_VIC_REVISION, VICII_NTSC_8562);
             configure(OPT_GRAY_DOT_BUG, true);
             configure(OPT_CIA_REVISION, MOS_8521);
             configure(OPT_TIMER_B_BUG,  true);
@@ -345,7 +322,7 @@ C64::configure(C64Model model)
             break;
 
         case C64_MODEL_NTSC_OLD:
-            configure(OPT_VIC_REVISION, VICREV_NTSC_6567_R56A);
+            configure(OPT_VIC_REVISION, VICII_NTSC_6567_R56A);
             configure(OPT_GRAY_DOT_BUG, false);
             configure(OPT_CIA_REVISION, MOS_6526);
             configure(OPT_TIMER_B_BUG,  false);
@@ -369,7 +346,7 @@ C64::setConfigItem(Option option, long value)
             
         case OPT_VIC_REVISION:
         {
-            u64 newFrequency = VICII::getFrequency((VICRevision)value);
+            u64 newFrequency = VICII::getFrequency((VICIIRevision)value);
 
             if (frequency == newFrequency) {
                 assert(durationOfOneCycle == 10000000000 / newFrequency);
@@ -421,9 +398,9 @@ C64::updateVicFunctionTable()
     // Assign model specific execution functions
     switch (vic.getRevision()) {
             
-        case VICREV_PAL_6569_R1:
-        case VICREV_PAL_6569_R3:
-        case VICREV_PAL_8565:
+        case VICII_PAL_6569_R1:
+        case VICII_PAL_6569_R3:
+        case VICII_PAL_8565:
             
             if (dmaDebug) {
                 vicfunc[1] = &VICII::cycle1<PAL_DEBUG_CYCLE>;
@@ -470,7 +447,7 @@ C64::updateVicFunctionTable()
             vicfunc[65] = nullptr;
             break;
             
-        case VICREV_NTSC_6567_R56A:
+        case VICII_NTSC_6567_R56A:
             
             if (dmaDebug) {
                 vicfunc[1] = &VICII::cycle1<PAL_DEBUG_CYCLE>;
@@ -518,8 +495,8 @@ C64::updateVicFunctionTable()
             vicfunc[65] = nullptr;
             break;
             
-        case VICREV_NTSC_6567:
-        case VICREV_NTSC_8562:
+        case VICII_NTSC_6567:
+        case VICII_NTSC_8562:
             
             if (dmaDebug) {
                 vicfunc[1] = &VICII::cycle1<NTSC_DEBUG_CYCLE>;

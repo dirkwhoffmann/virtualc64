@@ -56,7 +56,7 @@ VICII::VICII(C64 &ref) : C64Component(ref)
 void
 VICII::_initialize()
 {
-    setRevision(VICREV_PAL_8565);
+    setRevision(VICII_PAL_8565);
     
     config.hideSprites = false;
     config.checkSBCollisions = true;
@@ -180,11 +180,11 @@ VICII::setConfigItem(Option option, long value)
             
         case OPT_VIC_REVISION:
             
-            if (!VICRevisionEnum::verify(value)) return false;
+            if (!VICIIRevisionEnum::verify(value)) return false;
             if (config.revision == value) return false;
             
             suspend();
-            config.revision = (VICRevision)value;
+            config.revision = (VICIIRevision)value;
             setRevision(config.revision);
             resume();
             return true;
@@ -327,9 +327,9 @@ VICII::setConfigItem(Option option, long value)
 }
 
 void
-VICII::setRevision(VICRevision revision)
+VICII::setRevision(VICIIRevision revision)
 {
-    assert_enum(VICRevision, revision);
+    assert_enum(VICIIRevision, revision);
     
     debug(VIC_DEBUG, "setRevision(%ld)\n", (long)revision);
     
@@ -433,7 +433,7 @@ VICII::_inspect()
 void
 VICII::_dumpConfig() const
 {
-    msg("    Chip model : %lld (%s)\n", config.revision, VICRevisionEnum::key(config.revision));
+    msg("    Chip model : %s\n", VICIIRevisionEnum::key(config.revision));
     msg("  Gray dot bug : %s\n", config.grayDotBug ? "yes" : "no");
     msg("           PAL : %s\n", isPAL() ? "yes" : "no");
     msg("          NTSC : %s\n", isNTSC() ? "yes" : "no");
@@ -492,43 +492,43 @@ VICII::_run()
 }
 
 bool
-VICII::isPAL(VICRevision revision)
+VICII::isPAL(VICIIRevision revision)
 {
-    return revision & (VICREV_PAL_6569_R1 | VICREV_PAL_6569_R3 | VICREV_PAL_8565);
+    return revision & (VICII_PAL_6569_R1 | VICII_PAL_6569_R3 | VICII_PAL_8565);
 }
 
 bool
-VICII::isNTSC(VICRevision revision)
+VICII::isNTSC(VICIIRevision revision)
 {
-     return revision & (VICREV_NTSC_6567 | VICREV_NTSC_6567_R56A | VICREV_NTSC_8562);
+     return revision & (VICII_NTSC_6567 | VICII_NTSC_6567_R56A | VICII_NTSC_8562);
 }
 
 bool
-VICII::is856x(VICRevision revision)
+VICII::is856x(VICIIRevision revision)
 {
-     return revision & (VICREV_PAL_8565 | VICREV_NTSC_8562);
+     return revision & (VICII_PAL_8565 | VICII_NTSC_8562);
 }
  
 bool
-VICII::is656x(VICRevision revision)
+VICII::is656x(VICIIRevision revision)
 {
-     return revision & ~(VICREV_PAL_8565 | VICREV_NTSC_8562);
+     return revision & ~(VICII_PAL_8565 | VICII_NTSC_8562);
 }
 
 bool
-VICII::delayedLightPenIrqs(VICRevision revision)
+VICII::delayedLightPenIrqs(VICIIRevision revision)
 {
-     return revision & (VICREV_PAL_6569_R1 | VICREV_NTSC_6567_R56A);
+     return revision & (VICII_PAL_6569_R1 | VICII_NTSC_6567_R56A);
 }
 
 unsigned
-VICII::getFrequency(VICRevision revision)
+VICII::getFrequency(VICIIRevision revision)
 {
     switch (revision) {
             
-        case VICREV_NTSC_6567:
-        case VICREV_NTSC_8562:
-        case VICREV_NTSC_6567_R56A:
+        case VICII_NTSC_6567:
+        case VICII_NTSC_8562:
+        case VICII_NTSC_6567_R56A:
             return NTSC_CLOCK_FREQUENCY;
             
         default:
@@ -537,15 +537,15 @@ VICII::getFrequency(VICRevision revision)
 }
 
 unsigned
-VICII::getCyclesPerLine(VICRevision revision)
+VICII::getCyclesPerLine(VICIIRevision revision)
 {
     switch (revision) {
             
-        case VICREV_NTSC_6567_R56A:
+        case VICII_NTSC_6567_R56A:
             return 64;
             
-        case VICREV_NTSC_6567:
-        case VICREV_NTSC_8562:
+        case VICII_NTSC_6567:
+        case VICII_NTSC_8562:
             return 65;
             
         default:
@@ -564,11 +564,11 @@ VICII::getRasterlinesPerFrame() const
 {
     switch (config.revision) {
             
-        case VICREV_NTSC_6567_R56A:
+        case VICII_NTSC_6567_R56A:
             return 262;
             
-        case VICREV_NTSC_6567:
-        case VICREV_NTSC_8562:
+        case VICII_NTSC_6567:
+        case VICII_NTSC_8562:
             return 263;
             
         default:
@@ -581,11 +581,11 @@ VICII::numVisibleRasterlines() const
 {
     switch (config.revision) {
             
-        case VICREV_NTSC_6567_R56A:
+        case VICII_NTSC_6567_R56A:
             return 234;
             
-        case VICREV_NTSC_6567:
-        case VICREV_NTSC_8562:
+        case VICII_NTSC_6567:
+        case VICII_NTSC_8562:
             return 235;
             
         default:
@@ -598,11 +598,11 @@ VICII::isVBlankLine(unsigned rasterline) const
 {
     switch (config.revision) {
             
-        case VICREV_NTSC_6567_R56A:
+        case VICII_NTSC_6567_R56A:
             return rasterline < 16 || rasterline >= 16 + 234;
             
-        case VICREV_NTSC_6567:
-        case VICREV_NTSC_8562:
+        case VICII_NTSC_6567:
+        case VICII_NTSC_8562:
             return rasterline < 16 || rasterline >= 16 + 235;
             
         default:
@@ -758,21 +758,21 @@ VICII::lightpenX() const
     
     switch (config.revision) {
             
-        case VICREV_PAL_6569_R1:
-        case VICREV_PAL_6569_R3:
+        case VICII_PAL_6569_R1:
+        case VICII_PAL_6569_R3:
 
             return 4 + (cycle < 14 ? 392 + (8 * cycle) : (cycle - 14) * 8);
 
-        case VICREV_PAL_8565:
+        case VICII_PAL_8565:
             
             return 2 + (cycle < 14 ? 392 + (8 * cycle) : (cycle - 14) * 8);
             
-        case VICREV_NTSC_6567:
-        case VICREV_NTSC_6567_R56A:
+        case VICII_NTSC_6567:
+        case VICII_NTSC_6567_R56A:
             
             return 4 + (cycle < 14 ? 400 + (8 * cycle) : (cycle - 14) * 8);
             
-        case VICREV_NTSC_8562:
+        case VICII_NTSC_8562:
             
             return 2 + (cycle < 14 ? 400 + (8 * cycle) : (cycle - 14) * 8);
             
@@ -834,17 +834,17 @@ VICII::checkForLightpenIrqAtStartOfFrame()
     // Latch coordinate (values according to VICE 3.1)
     switch (config.revision) {
             
-        case VICREV_PAL_6569_R1:
-        case VICREV_PAL_6569_R3:
-        case VICREV_PAL_8565:
+        case VICII_PAL_6569_R1:
+        case VICII_PAL_6569_R3:
+        case VICII_PAL_8565:
             
             latchedLPX = 209;
             latchedLPY = 0;
             break;
             
-        case VICREV_NTSC_6567:
-        case VICREV_NTSC_6567_R56A:
-        case VICREV_NTSC_8562:
+        case VICII_NTSC_6567:
+        case VICII_NTSC_6567_R56A:
+        case VICII_NTSC_8562:
             
             latchedLPX = 213;
             latchedLPY = 0;

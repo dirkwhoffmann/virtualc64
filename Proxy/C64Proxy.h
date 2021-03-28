@@ -143,7 +143,7 @@
 @property (readonly) SnapshotProxy *latestUserSnapshot;
 - (void)loadFromSnapshot:(SnapshotProxy *)proxy;
 
-@property (readonly) C64Configuration config;
+// @property (readonly) C64Configuration config;
 - (NSInteger)getConfig:(Option)opt;
 - (NSInteger)getConfig:(Option)opt id:(NSInteger)id;
 - (NSInteger)getConfig:(Option)opt drive:(DriveID)id;

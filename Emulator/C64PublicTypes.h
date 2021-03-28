@@ -195,47 +195,6 @@ typedef ERROR_CODE ErrorCode;
 
 typedef struct
 {
-    VICConfig vic;
-    CIAConfig cia1;
-    CIAConfig cia2;
-    SIDConfig sid;
-    MemConfig mem;
+    Cycle cycleLimit;
 }
-C64Configuration;
-
-/*
-typedef struct
-{
-    VICRevision vic;
-    bool grayDotBug;
-    CIARevision cia;
-    bool timerBBug;
-    SIDRevision sid;
-    bool sidFilter;
-    GlueLogic glue;
-    RamPattern pattern;
-}
-C64ConfigurationDeprecated;
-
-// Configurations of standard C64 models
-static const C64ConfigurationDeprecated configurations[] = {
-    
-    // C64 PAL
-    { VICREV_PAL_6569_R3, false, MOS_6526, true, MOS_6581, true, GLUE_LOGIC_DISCRETE, RAM_PATTERN_C64 },
-    
-    // C64_II_PAL
-    { VICREV_PAL_8565, true, MOS_8521, false, MOS_8580, true, GLUE_LOGIC_IC, RAM_PATTERN_C64C },
-    
-    // C64_OLD_PAL
-    { VICREV_PAL_6569_R1, false, MOS_6526, true, MOS_6581, true, GLUE_LOGIC_DISCRETE, RAM_PATTERN_C64 },
-
-    // C64_NTSC
-    { VICREV_NTSC_6567, false, MOS_6526, false, MOS_6581, true, GLUE_LOGIC_DISCRETE, RAM_PATTERN_C64 },
-
-    // C64_II_NTSC
-    { VICREV_NTSC_8562, true, MOS_8521, true, MOS_8580, true, GLUE_LOGIC_IC, RAM_PATTERN_C64C },
-    
-    // C64_OLD_NTSC
-    { VICREV_NTSC_6567_R56A, false, MOS_6526, false, MOS_6581, true, GLUE_LOGIC_DISCRETE, RAM_PATTERN_C64 }
-};
-*/
+C64Config;
