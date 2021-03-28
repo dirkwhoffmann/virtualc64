@@ -137,7 +137,7 @@ VICII::resetDmaTexture(int nr)
     }
 }
 
-long
+i64
 VICII::getConfigItem(Option option) const
 {
     switch (option) {
@@ -174,7 +174,7 @@ VICII::getConfigItem(Option option) const
 }
 
 bool
-VICII::setConfigItem(Option option, long value)
+VICII::setConfigItem(Option option, i64 value)
 {
     switch (option) {
             

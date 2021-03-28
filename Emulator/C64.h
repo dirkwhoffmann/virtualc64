@@ -229,12 +229,12 @@ public:
     C64Config getConfig() const { return config; }
     
     // Gets a single configuration item
-    long getConfigItem(Option option) const;
-    long getConfigItem(Option option, long id) const;
+    i64 getConfigItem(Option option) const;
+    i64 getConfigItem(Option option, long id) const;
     
     // Sets a single configuration item
-    bool configure(Option option, long value);
-    bool configure(Option option, long id, long value);
+    bool configure(Option option, i64 value);
+    bool configure(Option option, long id, i64 value);
 
     // Configures the C64 to match a specific C64 model
     void configure(C64Model model);
@@ -244,7 +244,7 @@ public:
 
 private:
 
-    bool setConfigItem(Option option, long value) override;
+    bool setConfigItem(Option option, i64 value) override;
 
     
     //

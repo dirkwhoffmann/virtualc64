@@ -46,7 +46,7 @@ Drive::_reset()
     halftrack = 41;
 }
 
-long
+i64
 Drive::getConfigItem(Option option) const
 {
     switch (option) {
@@ -62,7 +62,7 @@ Drive::getConfigItem(Option option) const
 }
 
 bool
-Drive::setConfigItem(Option option, long value)
+Drive::setConfigItem(Option option, i64 value)
 {
     switch (option) {
             
@@ -83,7 +83,7 @@ Drive::setConfigItem(Option option, long value)
 }
 
 bool
-Drive::setConfigItem(Option option, long id, long value)
+Drive::setConfigItem(Option option, long id, i64 value)
 {
     if (id != deviceNr) return false;
     

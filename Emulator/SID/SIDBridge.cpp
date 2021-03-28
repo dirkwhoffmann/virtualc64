@@ -44,7 +44,7 @@ SIDBridge::_reset()
     clearRingbuffer();
 }
 
-long
+i64
 SIDBridge::getConfigItem(Option option) const
 {
     switch (option) {
@@ -73,7 +73,7 @@ SIDBridge::getConfigItem(Option option) const
     }
 }
 
-long
+i64
 SIDBridge::getConfigItem(Option option, long id) const
 {
     
@@ -98,7 +98,7 @@ SIDBridge::getConfigItem(Option option, long id) const
 }
 
 bool
-SIDBridge::setConfigItem(Option option, long value)
+SIDBridge::setConfigItem(Option option, i64 value)
 {
     bool wasMuted = isMuted();
         
@@ -190,7 +190,7 @@ SIDBridge::setConfigItem(Option option, long value)
 }
 
 bool
-SIDBridge::setConfigItem(Option option, long id, long value)
+SIDBridge::setConfigItem(Option option, long id, i64 value)
 {
     bool wasMuted = isMuted();
 
@@ -230,7 +230,7 @@ SIDBridge::setConfigItem(Option option, long id, long value)
             }
 
             if (value < 0xD400 || value > 0xD7E0 || (value & 0x1F)) {
-                warn("Invalid SID address: %lx\n", value);
+                warn("Invalid SID address: %llx\n", value);
                 warn("Valid values: D400, D420, ... D7E0\n");
                 return false;
             }
@@ -264,7 +264,7 @@ SIDBridge::setConfigItem(Option option, long id, long value)
             
             assert(id >= 0 && id <= 3);
             if (value < 0 || value > 200) {
-                warn("Invalid pan: %ld\n", value);
+                warn("Invalid pan: %lld\n", value);
                 warn("Valid values: 0 ... 200\n");
                 return false;
             }

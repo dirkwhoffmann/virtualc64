@@ -29,7 +29,7 @@ CIA::_reset()
 	latchB = 0xFFFF;
 }
 
-long
+i64
 CIA::getConfigItem(Option option) const
 {
     switch (option) {
@@ -44,7 +44,7 @@ CIA::getConfigItem(Option option) const
 }
 
 bool
-CIA::setConfigItem(Option option, long value)
+CIA::setConfigItem(Option option, i64 value)
 {
     switch (option) {
             

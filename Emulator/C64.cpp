@@ -144,7 +144,7 @@ C64::setInspectionTarget(InspectionTarget target)
     inspectionTarget = target;
 }
 
-long
+i64
 C64::getConfigItem(Option option) const
 {
     switch (option) {
@@ -198,7 +198,7 @@ C64::getConfigItem(Option option) const
     }
 }
 
-long
+i64
 C64::getConfigItem(Option option, long id) const
 {
     switch (option) {
@@ -226,9 +226,9 @@ C64::getConfigItem(Option option, long id) const
 }
 
 bool
-C64::configure(Option option, long value)
+C64::configure(Option option, i64 value)
 {
-    trace(CNF_DEBUG, "configure(option: %lld, value: %ld\n", option, value);
+    trace(CNF_DEBUG, "configure(option: %lld, value: %lld\n", option, value);
 
     // Propagate configuration request to all components
     bool changed = HardwareComponent::configure(option, value);
@@ -243,9 +243,9 @@ C64::configure(Option option, long value)
 }
 
 bool
-C64::configure(Option option, long id, long value)
+C64::configure(Option option, long id, i64 value)
 {
-    trace(CNF_DEBUG, "configure(option: %lld, id: %ld, value: %ld\n", option, id, value);
+    trace(CNF_DEBUG, "configure(option: %lld, id: %ld, value: %lld\n", option, id, value);
     
     // Propagate configuration request to all components
     bool changed = HardwareComponent::configure(option, id, value);
@@ -340,7 +340,7 @@ C64::configure(C64Model model)
 }
 
 bool
-C64::setConfigItem(Option option, long value)
+C64::setConfigItem(Option option, i64 value)
 {
     switch (option) {
             
